@@ -12,150 +12,137 @@
 <summary><strong>In this doc</strong></summary>
 
 - [Component specifications](#component-specifications)
-    - [CSS (1st-gen / Spectrum 1)](#css-1st-gen--spectrum-1)
-    - [Figma — S2 Web (desktop scale)](#figma--s2-web-desktop-scale)
-    - [SWC (1st-gen)](#swc-1st-gen)
+    - [CSS](#css)
+    - [SWC](#swc)
 - [Comparison](#comparison)
     - [DOM structure changes](#dom-structure-changes)
     - [CSS => SWC mapping](#css--swc-mapping)
 - [Summary of changes](#summary-of-changes)
+    - [CSS => SWC implementation gaps](#css--swc-implementation-gaps)
+    - [CSS Spectrum 2 changes](#css-spectrum-2-changes)
 - [Resources](#resources)
 
 </details>
 
 <!-- Document content (editable) -->
 
-Spectrum 2 CSS-to-SWC migration notes for **`swc-accordion`** and **`swc-accordion-item`**. For accessibility behavior (APG accordion pattern, headings, keyboard), see [Accordion accessibility migration analysis](./accessibility-migration-analysis.md).
-
-**Status:** Phase 1 prep — 1st-gen inventory captured below. **Next:** With **spectrum-css** checked out on **`spectrum-two`** beside this repo, complete selector extraction from component `metadata.json`, three-way DOM comparison, and token mapping per [Analyze rendering and styling](../../02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_analyze-rendering-and-styling/README.md).
+Spectrum 2 CSS-to-SWC migration notes for **`sp-accordion`** and **`sp-accordion-item`**. For accessibility behavior (APG accordion pattern, headings, keyboard), see [Accordion accessibility migration analysis](./accessibility-migration-analysis.md).
 
 ---
 
 ## Component specifications
 
-### CSS (1st-gen / Spectrum 1)
+### CSS
 
-1st-gen packages import generated Spectrum CSS:
-
-- [`1st-gen/packages/accordion/src/spectrum-accordion.css`](../../../../1st-gen/packages/accordion/src/spectrum-accordion.css) — host tokens, size/density variants, `--spectrum-logical-rotation` for disclosure.
-- [`1st-gen/packages/accordion/src/spectrum-accordion-item.css`](../../../../1st-gen/packages/accordion/src/spectrum-accordion-item.css) — `:host`, `#heading`, `#header`, `#content`, `.iconContainer`, state variants (`[open]`, `[disabled]`, hover, focus-visible).
+Source: `spectrum-css` `spectrum-two` branch → `components/accordion/dist/metadata.json`
 
 <details>
-<summary>Modifier highlights (`--mod-*` / `--spectrum-accordion-*`)</summary>
+<summary>CSS selectors</summary>
 
-Representative tokens consumed in 1st-gen (not exhaustive — extract full list from Spectrum CSS when completing this doc):
+**Base component:**
 
-- `--mod-accordion-item-width`, `--mod-accordion-item-height`, `--mod-accordion-min-block-size`
-- `--mod-accordion-divider-color`, `--mod-accordion-divider-thickness`
-- `--mod-accordion-disclosure-indicator-height`, `--mod-accordion-edge-to-disclosure-indicator-space`, `--mod-accordion-disclosure-indicator-to-text-space`, `--mod-accordion-edge-to-text-space`
-- `--mod-accordion-item-header-*` (padding, font, line-height, colors)
-- `--mod-accordion-item-content-*` (padding, font, color)
-- `--mod-accordion-background-color-*`, `--mod-accordion-corner-radius`, `--mod-accordion-focus-indicator-*`
-- System overrides in [`accordion-overrides.css`](../../../../1st-gen/packages/accordion/src/accordion-overrides.css)
+- `.spectrum-Accordion`
 
-</details>
+**Subcomponents:**
 
-**TBD (Spectrum 2):** Mirror this section from `spectrum-css` **`spectrum-two`** accordion component (`metadata.json`, `index.css`, stories template) when the sibling checkout is available. Use [Figma — S2 Web (desktop scale)](#figma--s2-web-desktop-scale) below as the **design** source until that extraction is complete; reconcile any delta with `metadata.json` line by line (do not assume Figma and CSS stay in lockstep without verification).
+- `.spectrum-Accordion-item`
+- `.spectrum-Accordion-itemContent`
+- `.spectrum-Accordion-itemDirectActions`
+- `.spectrum-Accordion-itemHeader`
+- `.spectrum-Accordion-itemHeading`
+- `.spectrum-Accordion-itemIndicator`
+- `.spectrum-Accordion-itemTitle`
 
-### Figma — S2 Web (desktop scale)
+**Variants:**
 
-**Canonical link (dev mode):** [S2 — Web (Desktop scale) — Accordion](https://www.figma.com/design/Mngz9H7WZLbrCvGQf3GnsY/S2---Web--Desktop-scale-?node-id=39469-5419&p=f&m=dev) (`node-id=39469-5419`).
+- `.spectrum-Accordion--compact`
+- `.spectrum-Accordion--quiet`
+- `.spectrum-Accordion--sizeL`
+- `.spectrum-Accordion--sizeS`
+- `.spectrum-Accordion--sizeXL`
+- `.spectrum-Accordion--spacious`
+- `.spectrum-Accordion.spectrum-Accordion--noInlinePadding`
 
-The following is transcribed from the **published Accordion** page in that file (export reviewed May 2025; doc stamp **Last updated May 16, 2025** / Kami F.). Treat Figma as **visual and variant inventory**; **coded** selectors and tokens still come from **spectrum-css** `spectrum-two` when available.
+**States:**
 
-#### Definition
+- `.spectrum-Accordion-item.is-disabled`
+- `.spectrum-Accordion-item.is-open > .spectrum-Accordion-itemContent`
+- `.spectrum-Accordion-item.is-open > .spectrum-Accordion-itemHeading .spectrum-Accordion-itemIndicator`
+- `.spectrum-Accordion-item:first-child`
+- `.spectrum-Accordion-itemHeader.spectrum-Accordion-itemHeader:active`
+- `.spectrum-Accordion-itemHeader:focus-visible`
+- `.spectrum-Accordion-itemHeader:has(+ .spectrum-Accordion-itemDirectActions)`
+- `.spectrum-Accordion-itemHeader:hover`
+- `.spectrum-Accordion--quiet .spectrum-Accordion-itemHeader:active`
+- `.spectrum-Accordion--quiet .spectrum-Accordion-itemHeader:hover`
 
-An accordion shows a list of items that can be expanded or collapsed to reveal more content. The pattern can support **zero, one, or multiple** expanded items at a time (aligns quantity-of-open with product API such as [`allowsMultipleExpanded`](https://react-spectrum.adobe.com/Accordion), not with “quiet vs default” styling).
+**Language-specific:**
 
-<details>
-<summary>Accordion (root) — properties in Figma</summary>
+- `.spectrum-Accordion:lang(ja)`
+- `.spectrum-Accordion:lang(ko)`
+- `.spectrum-Accordion:lang(zh)`
 
-| Figma property | Role (from doc copy) |
-|---|---|
-| **Quiet** | Boolean — change appearance / communication of status |
-| **Variant** | Variant control on the accordion set (see item matrix for spacing/style family) |
+**Compound selectors:**
 
-Figma defaults shown in the property table include **Quiet = False** for the accordion-level control where listed.
-
-</details>
-
-<details>
-<summary>Accordion item — properties in Figma</summary>
-
-| Figma property | Role (from doc copy) |
-|---|---|
-| **State** | **Open** (and interactive states shown in grids — **Hover**, **Down**, **Disabled**) |
-| **Quiet** | Boolean — aligns with accordion “quiet” visual family |
-| **Density** | **Compact**, **Regular**, **Spacious** — “change density” between items |
-| **Show paddings** | Toggle — show/hide padding guides (design-tool only; corresponds to **no inline padding** style in Spectrum CSS — **not** a public SWC prop) |
-| **Show direct actions** | Toggle — show/hide **direct actions** region (optional chrome next to title) |
-| **Show switch** | Toggle — show/hide **switch** in the header row |
-| **Show action button** | Toggle — show/hide **action button** |
-| **@ Title** | Text — title string |
-| **Instance swap** | Local component swaps where applicable |
-
-**Migration implication:** Optional header affordances (**direct actions**, **switch**, **action button**) match the direction of richer headers in React Spectrum S2 (**`AccordionItemHeader`**, action controls). 1st-gen SWC uses a single header label + chevron only; **2nd-gen** may need **named slots** or internal structure once S2 template and a11y review land (see [migration plan](./migration-plan.md) and [accessibility analysis](./accessibility-migration-analysis.md)).
-
-**Density note:** Figma places **Density** on the **item** component with three steps (**Compact** / **Regular** / **Spacious**). 1st-gen reflects **`density`** on **`sp-accordion`** only (`compact` \| `spacious` \| unset). Reconcile host vs item during Step 1 when comparing `metadata.json` to this file — [migration plan — `density`](./migration-plan.md#public-api) defines reflected **`regular`** and full typing parity with React Spectrum.
-
-**Show paddings:** Treat as documentation and **CSS custom-property** coverage only ([migration plan](./migration-plan.md) — spacing overrides + a dedicated Storybook story, **no** component attribute).
+- `.spectrum-Accordion--compact.spectrum-Accordion--sizeL`
+- `.spectrum-Accordion--compact.spectrum-Accordion--sizeS`
+- `.spectrum-Accordion--compact.spectrum-Accordion--sizeXL`
+- `.spectrum-Accordion--spacious.spectrum-Accordion--sizeL`
+- `.spectrum-Accordion--spacious.spectrum-Accordion--sizeS`
+- `.spectrum-Accordion--spacious.spectrum-Accordion--sizeXL`
+- `.spectrum-Accordion:dir(rtl)`
 
 </details>
 
 <details>
-<summary>Sizes, states, and styles (Figma matrices)</summary>
+<summary>Passthroughs</summary>
 
-- **Sizes:** **S**, **M**, **L**, **XL** (maps to existing SWC **`size`** scale).
-- **States (interactive):** **Default**, **Hover**, **Down**, **Disabled** across the published grids.
-- **Style families:** **Default** vs **Quiet**, crossed with **open/closed** and **density** rows (**Compact**, **Regular**, **Spacious**) in the canvases.
-
-**Figma caveat:** Keyboard **focus** state is **not** represented in the file; the spec points authors to Spectrum **coded** components and site docs for focus treatment.
-
-</details>
-
-#### Usage guidelines (from Figma — do not mix)
-
-- **Do not mix default and quiet accordion items inside one accordion.** Default accordions must not contain quiet items, and quiet accordions must not contain default items — the doc states this avoids **conflicting interaction behaviors**.
-- **Quiet hover and dividers:** The quiet accordion item hover state uses **rounded corners**. Using that inside a **default** accordion (with dividers) produces **gaps at corners** that the default divider treatment does not fill; only **keyboard focus** outline is expected to read similarly against dividers. **Prefer one style family per accordion** for both UX and markup/CSS predictability.
-
-This reinforces **accordion-wide `quiet`** (and consistent items) as the primary authoring model for 2nd-gen; avoid advertising **per-item `quiet`** that could violate this guidance unless Spectrum explicitly documents an exception ([migration plan](./migration-plan.md)).
-
-### SWC (1st-gen)
-
-<details>
-<summary>Attributes / properties (`sp-accordion`)</summary>
-
-- `allow-multiple` (boolean)
-- `density` (`compact` | `spacious`)
-- `level` (number, default 3)
-- `size` (`s` | `m` | `l` | `xl`)
+None found for this component.
 
 </details>
 
 <details>
-<summary>Attributes / properties (`sp-accordion-item`)</summary>
+<summary>Modifiers</summary>
 
-- `open` (boolean)
-- `label` (string)
-- `disabled` (boolean)
-- `level` (number — overwritten by parent when slotted)
-- `size` (from parent)
+None found for this component.
+
+</details>
+
+### SWC
+
+Source: `spectrum-web-components` `main` branch → `1st-gen/packages/accordion/src/Accordion.ts` and `AccordionItem.ts`
+
+<details>
+<summary>Attributes (sp-accordion)</summary>
+
+- `allow-multiple` (boolean) — allows multiple items open simultaneously
+- `density` (`compact` | `spacious`) — spacing between item content and borders
+- `level` (number, default 3) — heading level (2–6) propagated to all items
+- `size` (`s` | `m` | `l` | `xl`) — propagated to all child items
+
+</details>
+
+<details>
+<summary>Attributes (sp-accordion-item)</summary>
+
+- `open` (boolean) — whether the item is expanded
+- `label` (string) — header title text
+- `disabled` (boolean) — disables the item
+- `level` (number, default 3) — heading level; overwritten by parent `sp-accordion`
+- `size` — inherited from parent `sp-accordion`
 
 </details>
 
 <details>
 <summary>Slots</summary>
 
-- **`sp-accordion`:** default — `sp-accordion-item` children.
-- **`sp-accordion-item`:** default — panel body.
+**`sp-accordion`:**
 
-</details>
+- Default slot: `sp-accordion-item` children
 
-<details>
-<summary>Nested components / assets</summary>
+**`sp-accordion-item`:**
 
-- 1st-gen: `sp-icon-chevron100` from `@spectrum-web-components/icons-ui` and chevron styles from `@spectrum-web-components/icon`
-- 2nd-gen: prefer **`swc-icon`** internally for the disclosure indicator ([migration plan](./migration-plan.md))
+- Default slot: panel body content (revealed when item is open)
 
 </details>
 
@@ -166,60 +153,250 @@ This reinforces **accordion-wide `quiet`** (and consistent items) as the primary
 ### DOM structure changes
 
 <details>
-<summary>Spectrum Web Components (1st-gen `AccordionItem`)</summary>
-
-Conceptual shadow output:
+<summary>Spectrum Web Components:</summary>
 
 ```html
-<h2 id="heading">
-  <!-- optional: .iconContainer + sp-icon-chevron100 -->
-  <button id="header" aria-expanded="..." aria-controls="content">...</button>
-</h2>
+<!-- sp-accordion shadow DOM: -->
+<slot></slot>
+
+<!-- sp-accordion-item shadow DOM (size="m" example): -->
+<h3 id="heading">
+  <span class="iconContainer">
+    <sp-icon-chevron100
+      class="indicator spectrum-UIIcon-ChevronRight100"
+      slot="icon"
+    ></sp-icon-chevron100>
+  </span>
+  <button
+    id="header"
+    type="button"
+    aria-expanded="false"
+    aria-controls="content"
+  >
+    Label text
+  </button>
+</h3>
 <div id="content" role="region" aria-labelledby="header">
   <slot></slot>
 </div>
 ```
 
-**`sp-accordion`:** single default `<slot>`; parent coordinates items via events and assigned nodes.
+</details>
+
+<details>
+<summary>Legacy (CSS main branch):</summary>
+
+```html
+<!-- Branch verified: main; first import: "@spectrum-css/icon/stories/template.js" -->
+<!-- Distinguishing feature vs spectrum-two: no ActionButton/Switch imports; icon in span.spectrum-Accordion-itemIconContainer outside button -->
+<div class="spectrum-Accordion spectrum-Accordion--sizeM" role="region">
+  <div class="spectrum-Accordion-item is-open" role="presentation">
+    <h3 class="spectrum-Accordion-itemHeading">
+      <button
+        class="spectrum-Accordion-itemHeader"
+        type="button"
+        id="spectrum-accordion-item-0-header"
+        aria-controls="spectrum-accordion-item-0-content"
+        aria-expanded="true"
+      >
+        Heading
+      </button>
+      <span class="spectrum-Accordion-itemIconContainer">
+        <!-- ChevronDown (open) or ChevronRight (closed) -->
+        <svg class="spectrum-Icon spectrum-UIIcon-ChevronDown100 spectrum-Accordion-itemIndicator">...</svg>
+      </span>
+    </h3>
+    <div
+      class="spectrum-Accordion-itemContent"
+      role="region"
+      id="spectrum-accordion-item-0-content"
+      aria-labelledby="spectrum-accordion-item-0-header"
+    >
+      Content
+    </div>
+  </div>
+</div>
+```
 
 </details>
 
 <details>
-<summary>Spectrum 2 (TBD — CSS template)</summary>
+<summary>Spectrum 2 (CSS spectrum-two branch):</summary>
 
-Paste or link the S2 template markup from **spectrum-css** `spectrum-two` when available. Compare heading/button/slot structure and class names to the above.
+```html
+<!-- Branch verified: spectrum-two; first import: "@spectrum-css/actionbutton/stories/template.js" -->
+<!-- Distinguishing feature vs main: ActionButton + Switch imports present; icon moved inside button; span.spectrum-Accordion-itemTitle wraps heading text -->
+<div class="spectrum-Accordion spectrum-Accordion--quiet" role="region">
+  <div class="spectrum-Accordion-item is-open" role="presentation">
+    <h3 class="spectrum-Accordion-itemHeading">
+      <button
+        class="spectrum-Accordion-itemHeader is-hover"
+        type="button"
+        id="spectrum-accordion-item-0-header"
+        aria-controls="spectrum-accordion-item-0-content"
+        aria-expanded="true"
+      >
+        <!-- Icon is now the FIRST CHILD inside the button -->
+        <svg class="spectrum-Icon spectrum-UIIcon-ChevronDown100 spectrum-Accordion-itemIndicator">...</svg>
+        <span class="spectrum-Accordion-itemTitle">Heading</span>
+      </button>
+      <!-- Optional direct actions (new in S2): -->
+      <div class="spectrum-Accordion-itemDirectActions">
+        <!-- Icon-only ActionButton and/or Switch component -->
+      </div>
+    </h3>
+    <div
+      class="spectrum-Accordion-itemContent"
+      role="region"
+      id="spectrum-accordion-item-0-content"
+      aria-labelledby="spectrum-accordion-item-0-header"
+    >
+      Content
+    </div>
+  </div>
+</div>
+```
 
-**Design reference (until template is pasted):** [Figma — S2 Web (desktop scale)](#figma--s2-web-desktop-scale) — sizes **S–XL**, **Default/Quiet**, **Compact/Regular/Spacious** density, optional header actions/switch/button, and **do-not-mix** quiet vs default usage.
+</details>
+
+<details>
+<summary>Diff: Legacy (CSS main) → Spectrum 2 (CSS spectrum-two)</summary>
+
+```diff
+--- Legacy DOM structure (main branch)
++++ Spectrum 2 DOM structure (spectrum-two branch)
+@@ AccordionItem function signature @@
+ export const AccordionItem = ({
+   ...
+   isOpen = false,
++  isHovered = false,
++  isActive = false,
++  isFocused = false,
++  hasActionButton = false,
++  hasSwitch = false,
++  actionButtonIconName = "",
++  size = "m",
+   iconSize = "m",
+   ...
+ })
+
+@@ AccordionItem button @@
+-  <button
+-    class="${rootClass}Header"
++  <button
++    class="spectrum-Accordion-itemHeader [is-hover] [is-active] [is-focus-visible]"
+     type="button" ...
+   >
+-    ${heading}
+-  </button>
+-  <span class="${rootClass}IconContainer">
+-    ${Icon({ iconName: !isOpen ? "ChevronRight" : "ChevronDown", ... })}
+-  </span>
++    ${Icon({ iconName: "ChevronRight75/100/200/300" based on size, ... })}
++    <span class="${rootClass}Title">${heading}</span>
++  </button>
++  ${when(hasActionButton || hasSwitch,
++    <div class="${rootClass}DirectActions">
++      ${ActionButton(...)}
++      ${Switch(...)}
++    </div>
++  )}
+
+@@ Template function signature @@
+ export const Template = ({
+   rootClass = "spectrum-Accordion",
+   size = "m",
+   density = "regular",
++  isQuiet = false,
++  hasNoInlinePadding = false,
+   items = [],
++  hasActionButtons = false,
++  actionButtonIconName = "",
++  hasSwitches = false,
+   ...
+ })
+
+@@ Template root class map @@
+-  [`${rootClass}--size${size?.toUpperCase()}`]: typeof size !== "undefined",
++  [`${rootClass}--size${size?.toUpperCase()}`]: typeof size !== "undefined" && size !== "m",
++  [`${rootClass}--quiet`]: isQuiet,
++  [`${rootClass}--noInlinePadding`]: hasNoInlinePadding,
+```
 
 </details>
 
 ### CSS => SWC mapping
 
-**TBD.** Populate during Step 1 QA: map S2 selectors and `--mod-*` successors to 2nd-gen host parts, internal nodes, and any supported `--swc-accordion-*` surface per [component custom property exposure](../../../02_style-guide/01_css/02_custom-properties.md#component-custom-property-exposure).
+| CSS selector | Attribute or slot | Status |
+|---|---|---|
+| `.spectrum-Accordion` | `sp-accordion` host element | Implemented |
+| `.spectrum-Accordion-item` | `sp-accordion-item` child element | Implemented |
+| `.spectrum-Accordion-itemHeading` | `h[2-6]#heading` | Implemented |
+| `.spectrum-Accordion-itemHeader` | `button#header` | Implemented |
+| `.spectrum-Accordion-itemIndicator` | chevron icon with `indicator` class | Implemented |
+| `.spectrum-Accordion-itemContent` | `div#content` | Implemented |
+| `.spectrum-Accordion-item.is-disabled` | `disabled` attribute | Implemented |
+| `.spectrum-Accordion-item.is-open > .spectrum-Accordion-itemContent` | `open` attribute | Implemented |
+| `.spectrum-Accordion-item.is-open > .spectrum-Accordion-itemHeading .spectrum-Accordion-itemIndicator` | `open` attribute | Implemented |
+| `.spectrum-Accordion-item:first-child` | CSS structural selector (no WC attribute needed) | Implemented |
+| `.spectrum-Accordion-itemHeader:focus-visible` | Native `:focus-visible` on `button#header` | Implemented |
+| `.spectrum-Accordion-itemHeader:hover` | Native `:hover` on `button#header` | Implemented |
+| `.spectrum-Accordion-itemHeader.spectrum-Accordion-itemHeader:active` | Native `:active` on `button#header` | Implemented |
+| `.spectrum-Accordion--compact` | `density="compact"` | Implemented |
+| `.spectrum-Accordion--spacious` | `density="spacious"` | Implemented |
+| `.spectrum-Accordion--sizeL`, `.spectrum-Accordion--sizeS`, `.spectrum-Accordion--sizeXL` | `size="l"`, `size="s"`, `size="xl"` | Implemented |
+| `.spectrum-Accordion--compact.spectrum-Accordion--sizeL/S/XL` | `density="compact"` + `size` | Implemented |
+| `.spectrum-Accordion--spacious.spectrum-Accordion--sizeL/S/XL` | `density="spacious"` + `size` | Implemented |
+| `.spectrum-Accordion:lang(ja)`, `.spectrum-Accordion:lang(ko)`, `.spectrum-Accordion:lang(zh)` | Language-specific styling | Implemented |
+| `.spectrum-Accordion:dir(rtl)` | RTL direction | Implemented |
+| `.spectrum-Accordion--quiet` | — | Missing from WC |
+| `.spectrum-Accordion--quiet .spectrum-Accordion-itemHeader:active` | — | Missing from WC |
+| `.spectrum-Accordion--quiet .spectrum-Accordion-itemHeader:hover` | — | Missing from WC |
+| `.spectrum-Accordion.spectrum-Accordion--noInlinePadding` | — | Missing from WC |
+| `.spectrum-Accordion-itemDirectActions` | — | Missing from WC |
+| `.spectrum-Accordion-itemHeader:has(+ .spectrum-Accordion-itemDirectActions)` | — | Missing from WC |
+| `.spectrum-Accordion-itemTitle` | — | Missing from WC |
+| — | `allow-multiple` | Missing from CSS |
+| — | `level` | Missing from CSS |
 
 ---
 
 ## Summary of changes
 
-| Area | 1st-gen today | 2nd-gen direction (high level) |
-|---|---|---|
-| Styling source | Spectrum 1 generated CSS in package | Spectrum 2 tokens from **spectrum-css** `spectrum-two`; narrow public customization. |
-| DOM | `#heading` / `#header` / `#content`, optional chevron wrapper | Align with S2 template; preserve APG shape from [accessibility migration analysis](./accessibility-migration-analysis.md). |
-| Quiet vs default | No `quiet` on accordion or item | **Figma / S2:** accordion-level **Quiet** and item-level quiet must **not** be mixed with the opposite style inside one accordion ([Figma section](#figma--s2-web-desktop-scale)). Implement **`quiet`** as a single family per instance ([migration plan](./migration-plan.md)). |
-| Header chrome | Title + chevron only | **Figma** shows optional **direct actions**, **switch**, **action button** toggles — likely **slots** or subregions; align with [React Spectrum `AccordionItemHeader`](https://react-spectrum.adobe.com/Accordion) when scoping Phase 5/7. |
-| Density / size | `density` + `size` on accordion, chevron scales by size | **Figma** item **Density:** **Compact** / **Regular** / **Spacious**; sizes **S–XL**. Reconcile host vs item propagation with `metadata.json` + [migration plan `density`](./migration-plan.md#public-api). |
-| States | `open`, `disabled`, hover/focus in CSS | Match **Default / Hover / Down / Disabled** from Figma; **focus-visible** not in Figma — follow APG + [accessibility analysis](./accessibility-migration-analysis.md). |
-| Custom properties | Broad `--spectrum-accordion-*` / `--mod-*` | Replace with S2 equivalents; document breaking token renames in [migration plan](./migration-plan.md). |
+### CSS => SWC implementation gaps
+
+**Missing from WC** (CSS features that need new implementation):
+
+- **`quiet` variant** — `.spectrum-Accordion--quiet` is new in S2; no corresponding attribute exists in the 1st-gen component. Requires adding a `quiet` boolean property to `sp-accordion` (with appropriate propagation to items) and dedicated quiet hover/active states on the item header. **Figma usage guidance:** do not mix default and quiet items inside one accordion — the styles are mutually exclusive and produce conflicting interaction behaviors. The quiet hover state uses rounded corners, which creates corner gaps when placed inside a default accordion that uses dividers; prefer one style family per accordion instance.
+- **`noInlinePadding` modifier** — `.spectrum-Accordion--noInlinePadding` is new in S2; no corresponding attribute exists in 1st-gen.
+- **Direct actions area** — `.spectrum-Accordion-itemDirectActions` is a new optional region inside the item heading (sibling of the button) that houses an ActionButton and/or Switch. Neither element nor the associated `:has(+ .spectrum-Accordion-itemDirectActions)` state selector has any 1st-gen equivalent.
+- **`itemTitle` span** — Heading text in S2 is wrapped in `<span class="spectrum-Accordion-itemTitle">` inside the button; 1st-gen renders the `label` property as a direct text node. The DOM structure of `AccordionItem.renderHeading()` must change.
+
+**Missing from CSS** (WC features with no CSS selector equivalent):
+
+- `allow-multiple` — purely behavioral (JS toggle logic); no CSS impact, no migration action needed.
+- `level` — controls heading element type (`h2`–`h6`); accessibility/structural only, no CSS impact.
+
+### CSS Spectrum 2 changes
+
+- **Icon relocated inside button**: The chevron indicator moved from a `<span class="spectrum-Accordion-itemIconContainer">` placed after and outside the `<button>` to the first child element inside the button. The `spectrum-Accordion-itemIconContainer` wrapper span was removed entirely in S2. The SWC render currently places the icon in `<span class="iconContainer">` before the button; both the wrapper and position must change.
+- **Heading text wrapped in `span.spectrum-Accordion-itemTitle`**: Previously a bare text node inside the button; in S2 it becomes `<span class="spectrum-Accordion-itemTitle">`.
+- **Direct actions area added**: New `div.spectrum-Accordion-itemDirectActions` inside the item heading (sibling of the button, after it), conditionally rendering an icon-only ActionButton and/or a Switch.
+- **`quiet` variant and its states added**: `.spectrum-Accordion--quiet` on the root with scoped hover/active overrides (`.spectrum-Accordion--quiet .spectrum-Accordion-itemHeader:hover/active`). Previously absent from both S1 CSS and SWC.
+- **`noInlinePadding` modifier added**: `.spectrum-Accordion--noInlinePadding` on the root is new in S2.
 
 ---
 
 ## Resources
 
-| Resource | Link |
-|---|---|
-| Figma — S2 Web (Desktop scale), Accordion | [figma.com/design/Mngz9H7WZLbrCvGQf3GnsY](https://www.figma.com/design/Mngz9H7WZLbrCvGQf3GnsY/S2---Web--Desktop-scale-?node-id=39469-5419&p=f&m=dev) |
-| 1st-gen accordion package | [`1st-gen/packages/accordion/`](../../../../1st-gen/packages/accordion/) |
-| Migration plan | [migration-plan.md](./migration-plan.md) |
-| Accessibility analysis | [accessibility-migration-analysis.md](./accessibility-migration-analysis.md) |
-| Analyze rendering and styling (workflow) | [README](../../02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_analyze-rendering-and-styling/README.md) |
-| Spectrum CSS (external) | [github.com/adobe/spectrum-css](https://github.com/adobe/spectrum-css) — use **`spectrum-two`** branch |
+- [CSS migration](https://github.com/adobe/spectrum-css/pull/3684)
+- [CSS Direct actions fast follow](https://github.com/adobe/spectrum-css/pull/4020)
+- [Spectrum 2 preview](https://spectrumcss.z13.web.core.windows.net/pr-2352/index.html?path=/story/components-accordion--default)
+- [React](https://react-spectrum.adobe.com/Accordion)
+- [Figma — S2 Web (Desktop scale), Accordion](https://www.figma.com/design/Mngz9H7WZLbrCvGQf3GnsY/S2---Web--Desktop-scale-?node-id=39469-5419&p=f&m=dev)
+- [1st-gen accordion package](../../../../1st-gen/packages/accordion/)
+- [Migration plan](./migration-plan.md)
+- [Accessibility analysis](./accessibility-migration-analysis.md)
+- [Migration prep (phase 1)](./migration-prep.md)
+- [Analyze rendering and styling (workflow)](../../02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_analyze-rendering-and-styling/README.md)
+- [Spectrum CSS — use `spectrum-two` branch](https://github.com/adobe/spectrum-css)
