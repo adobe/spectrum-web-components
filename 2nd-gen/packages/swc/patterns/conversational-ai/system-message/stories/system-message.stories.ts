@@ -63,9 +63,8 @@ const withSystemTurn = (story: () => unknown) => html`
  * - **Wrapper** — Root container: `class="swc-conversationalAi-systemProse swc-Typography--prose"`.
  *   `swc-Typography--prose` applies consistent vertical spacing between block-level children; the conversational
  *   class adds pattern-specific tuning for system replies.
- * - **Body** — Use **`swc-Body`** on paragraphs and list containers where you want explicit body styling.
- * - **Headings** — Use semantic `<h2>`–`<h4>` with **`swc-Heading`** plus a size modifier (e.g.
- *   **`swc-Heading--sizeXS`**) for subsection titles inside the prose flow.
+ * - **Body** — Use semantic paragraphs and lists for body styling.
+ * - **Headings** — Use semantic `<h2>`–`<h4>`.
  * - **Lists / links** — Keep lists and `<a href>` inside the prose wrapper so margins and link treatments stay
  *   consistent with Spectrum prose styles.
  */
