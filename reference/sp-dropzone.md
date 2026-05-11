@@ -25,7 +25,7 @@ import '@spectrum-web-components/dropzone/sp-dropzone.js';
 
 | Name                        | Description                                                                                   |
 | --------------------------- | --------------------------------------------------------------------------------------------- |
-| `sp-dropzone-should-accept` | A cancellable event that confirms whether or not a file dropped on the UI should be accepted. |
 | `sp-dropzone-dragover`      | Announces when files have been dragged over the UI, but not yet dropped.                      |
 | `sp-dropzone-dragleave`     | Announces when dragged files have been moved out of the UI without having been dropped.       |
 | `sp-dropzone-drop`          | Announces when dragged files have been dropped on the UI.                                     |
+| `sp-dropzone-should-accept` | A cancellable event that confirms whether or not a file dropped on the UI should be accepted. |

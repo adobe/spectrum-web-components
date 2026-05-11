@@ -1,6 +1,6 @@
 # Spectrum Web Components - Spectrum 1 Full API Reference
 
-> Generated 2026-05-08. For the link index see [llms.txt](https://opensource.adobe.com/spectrum-web-components/llms.txt).
+> Generated 2026-05-11. For the link index see [llms.txt](https://opensource.adobe.com/spectrum-web-components/llms.txt).
 
 All public `sp-*` components with their full attribute, slot, event, and CSS
 custom property tables. Useful when you want the entire API in one context window.
@@ -1224,10 +1224,10 @@ import '@spectrum-web-components/dropzone/sp-dropzone.js';
 
 | Name                        | Description                                                                                   |
 | --------------------------- | --------------------------------------------------------------------------------------------- |
-| `sp-dropzone-should-accept` | A cancellable event that confirms whether or not a file dropped on the UI should be accepted. |
 | `sp-dropzone-dragover`      | Announces when files have been dragged over the UI, but not yet dropped.                      |
 | `sp-dropzone-dragleave`     | Announces when dragged files have been moved out of the UI without having been dropped.       |
 | `sp-dropzone-drop`          | Announces when dragged files have been dropped on the UI.                                     |
+| `sp-dropzone-should-accept` | A cancellable event that confirms whether or not a file dropped on the UI should be accepted. |
 
 ---
 ## sp-field-group
