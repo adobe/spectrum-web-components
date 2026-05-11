@@ -177,7 +177,7 @@ const meta: Meta = {
 
 ## Layout and decorators
 
-Use `flexLayout: true` for stories displaying multiple items (sizes, variants, states). This applies flex layout with consistent spacing.
+Use `flexLayout: 'row-wrap'` for stories displaying multiple items (sizes, variants, states). This applies flex layout with consistent spacing.
 
 ```typescript
 export const Sizes: Story = {
@@ -187,7 +187,7 @@ export const Sizes: Story = {
     <swc-badge size="l">Large</swc-badge>
     <swc-badge size="xl">Extra-large</swc-badge>
   `,
-  parameters: { flexLayout: true },
+  parameters: { flexLayout: 'row-wrap' },
   tags: ['options'],
 };
 ```
@@ -199,7 +199,7 @@ Extend with `parameters.styles` or use styles alone for custom layouts:
 ```typescript
 export const Sizes: Story = {
   parameters: {
-    flexLayout: true,
+    flexLayout: 'row-wrap',
     styles: {
       'flex-wrap': 'wrap',
       'max-inline-size': '80ch',
@@ -220,14 +220,14 @@ export const GridLayout: Story = {
 
 ### Static color decorator
 
-For static color stories, use `staticColorsDemo: true` with `flexLayout: true`:
+For static color stories, use `staticColorsDemo: true` with `flexLayout: 'row-wrap'`:
 
 ```typescript
 export const StaticColors: Story = {
     render: (args) => html`
         ${['white', 'black'].map((color) => template({ 'static-color': color }),
     parameters: {
-        flexLayout: true,
+        flexLayout: 'row-wrap',
         staticColorsDemo: true
     },
     tags: ['options', '!test'],
@@ -267,10 +267,15 @@ export const StaticColors: Story = {
 | `'a11y'`              | Accessibility story                           |
 | `'migrated'`          | On meta object                                |
 
+### Optional tags
+
+- `'description-only'` - Story contains only descriptive content (no interactive component rendered)
+- `'upcoming'` - Story demonstrates a feature or variant that is not yet available
+
 ### Exclusion tags
 
-- `'!test'` - Exclude from test runs
-- `'!dev'` - Exclude from dev Storybook
+- `'!dev'` - Exclude from the development Storybook sidebar without affecting tests
+- `'!test'` - Exclude from **all three** automated test runners simultaneously: Vitest play functions, aXe WCAG compliance, and VRT snapshots. Use only when testing would produce false positives due to context the test runner cannot see — the canonical case is static-color stories, where axe evaluates contrast against the page background rather than the decorator gradient. **When you apply `'!test'` to a story, you must add a corresponding test story with a custom render and `parameters: { staticColorsDemo: true }` to restore behavioral coverage.** Do not apply `'!test'` because a story is complex, has no `play` function, or has a real accessibility issue. See [Excluding stories from tests](../../CONTRIBUTOR-DOCS/02_style-guide/04_testing/01_testing-overview.md#excluding-stories-from-tests).
 
 ## Story types
 
@@ -353,7 +358,7 @@ export const Anatomy: Story = {
     ${template({ ...args /* text + icon */ })}
   `,
   tags: ['anatomy'],
-  parameters: { flexLayout: true },
+  parameters: { flexLayout: 'row-wrap' },
 };
 ```
 
@@ -382,7 +387,7 @@ export const Sizes: Story = {
     ${template({ ...args, size: 'l', label: 'Large' })}
   `,
   tags: ['options'],
-  parameters: { flexLayout: true },
+  parameters: { flexLayout: 'row-wrap' },
 };
 
 /**
@@ -471,7 +476,7 @@ export const States: Story = {
     ${template({ ...args, disabled: true })}
   `,
   tags: ['states'],
-  parameters: { flexLayout: true },
+  parameters: { flexLayout: 'row-wrap' },
 };
 ```
 
@@ -649,7 +654,7 @@ See `asset.stories.ts` for complete examples.
 ### ✅ Do
 
 - Tag stories correctly: `anatomy`, `options`, `states`, `behaviors`, `a11y`
-- Use `flexLayout: true` for multi-item stories
+- Use `flexLayout: 'row-wrap'` for multi-item stories
 - Include comprehensive JSDoc (except Playground and Overview)
 - Use meaningful, realistic content
 - Let the DocumentTemplate handle section rendering automatically
@@ -663,9 +668,9 @@ See `asset.stories.ts` for complete examples.
 - [ ] Subtitle is concise and non-repetitive (plain text only, no links)
 - [ ] Overview: `['overview']` tag, common use case args, no JSDoc on story itself
 - [ ] Playground: `['autodocs', 'dev']` tags, no JSDoc, common use case args
-- [ ] Anatomy: all slots + content properties, `['anatomy']` tag, `flexLayout: true`
-- [ ] Options: all uncovered attributes, `['options']` tag, `flexLayout: true`
-- [ ] States: consolidated states, `['states']` tag, `flexLayout: true` (if applicable)
+- [ ] Anatomy: all slots + content properties, `['anatomy']` tag, `flexLayout: 'row-wrap'`
+- [ ] Options: all uncovered attributes, `['options']` tag, `flexLayout: 'row-wrap'`
+- [ ] States: consolidated states, `['states']` tag, `flexLayout: 'row-wrap'` (if applicable)
 - [ ] Behaviors: `['behaviors']` tag (if applicable)
 - [ ] Accessibility: features + best practices, `['a11y']` tag
 - [ ] Static colors: three-story pattern with `staticColorsDemo` (if applicable)

@@ -19,6 +19,7 @@
     - [CSS => SWC mapping](#css--swc-mapping)
 - [Summary of changes](#summary-of-changes)
     - [CSS => SWC implementation gaps](#css--swc-implementation-gaps)
+    - [TODOs](#todos)
     - [CSS Spectrum 2 changes](#css-spectrum-2-changes)
 - [Resources](#resources)
 
@@ -342,6 +343,14 @@ No significant structural changes.
 - **Style variants**: `outline` and `subtle` styles
 
 **Note**: Fixed positioning exists in both SWC and Spectrum 2 CSS but is not in the design spec. Consider whether to keep this for 2nd gen.
+
+### TODOs
+
+#### 31 March 2026
+
+Fixed positioning is documented in the design system guidance. Badges can be placed floating in a container or fixed to any edge, losing their default corner rounding on the fixed edge.
+
+New variants for badge, including notification and indicator were created. Further support and implementation for these missing variants (that are new to S2) are captured in SWC-1831.
 
 ### CSS Spectrum 2 changes
 

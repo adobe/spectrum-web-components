@@ -80,4 +80,16 @@ test.describe('Divider - ARIA Snapshots', () => {
       - separator
     `);
   });
+
+  test('should not be keyboard focusable', async ({ page }) => {
+    const root = await gotoStory(
+      page,
+      'components-divider--overview',
+      'swc-divider'
+    );
+    const divider = root.locator('swc-divider');
+    await expect(divider).not.toBeFocused();
+    await page.keyboard.press('Tab');
+    await expect(divider).not.toBeFocused();
+  });
 });

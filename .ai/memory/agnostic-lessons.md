@@ -42,6 +42,12 @@ Accumulated lessons from working sessions on this project. Grouped by category. 
 
 ---
 
+## Documentation
+
+- **Contributor migration-analysis markdown**: Prefer plain sentences with backticks for roles, elements, and code. Bold is fine sparingly for scanning cues; follow `accessibility-migration-analysis` skill (≈30% cap on bold markup for body prose, single spans for multi-word emphasis).
+
+---
+
 ## CI / build
 
 - **`yarn lint:ai` runs the AI tooling validator**: `node .ai/scripts/validate.js` checks story tags, AGENTS.md paths, and config schema. Run it locally before pushing with `yarn lint:ai`.

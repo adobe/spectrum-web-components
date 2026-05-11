@@ -47,6 +47,10 @@
       "types": "./dist/components/status-light/index.d.ts",
       "import": "./dist/components/status-light/index.js"
     },
+    "./components/tabs": {
+      "types": "./dist/components/tabs/index.d.ts",
+      "import": "./dist/components/tabs/index.js"
+    },
     "./controllers": {
       "types": "./dist/controllers/index.d.ts",
       "import": "./dist/controllers/index.js"
@@ -156,6 +160,9 @@
       ],
       "components/status-light": [
         "dist/components/status-light/index.d.ts"
+      ],
+      "components/tabs": [
+        "dist/components/tabs/index.d.ts"
       ],
       "controllers": [
         "dist/controllers/index.d.ts"

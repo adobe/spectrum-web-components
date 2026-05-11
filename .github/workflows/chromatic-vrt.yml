@@ -8,6 +8,7 @@ on:
       - '2nd-gen/**'
       - '.github/workflows/chromatic-vrt.yml'
   pull_request:
+    types: [opened, synchronize, reopened, labeled, ready_for_review]
     paths:
       - '2nd-gen/**'
       - '.github/workflows/chromatic-vrt.yml'

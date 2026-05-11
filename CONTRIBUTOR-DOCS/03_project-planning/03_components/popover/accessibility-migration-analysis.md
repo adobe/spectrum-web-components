@@ -29,7 +29,6 @@
     - [Live regions, loading, and announcements](#live-regions-loading-and-announcements)
     - [Motion (dedicated recommendations subsection)](#motion-dedicated-recommendations-subsection)
     - [Keyboard and focus](#keyboard-and-focus)
-    - [“Not focusable” (skill boilerplate)](#not-focusable-skill-boilerplate)
 - [Testing](#testing)
     - [Automated tests](#automated-tests)
     - [Playwright-only or host-only accessibility gates](#playwright-only-or-host-only-accessibility-gates)
@@ -145,9 +144,7 @@ None: target is a host that does not require `aria-labelledby` / `aria-described
 
 Focus management and keyboard navigation (Escape, arrow keys, roving tabindex, and the rest) are **owned by the consumer components** that use `swc-popover` (menu, listbox, tooltip, and similar), not by the popover host. The host does not implement dismissing with Escape, focus return, or focus trap by default. For **anchored** UIs, wire behavior from the pattern you are shipping ([menubutton](https://www.w3.org/WAI/ARIA/apg/patterns/menubutton/), [combobox](https://www.w3.org/WAI/ARIA/apg/patterns/combobox/)) in those **parents**. For **modals and dialogs** (popover **styles** only, not this host), use the [dialog (modal) pattern](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/) and your app’s overlay and focus tools. The `swc-popover` host is not a prescribed “tab to the popover” target; focus belongs on triggers and interactive descendants per the pattern the **parent** component implements.
 
-### “Not focusable” (skill boilerplate)
-
-**Does not apply** as the sole keyboard-and-focus subsection. The accessibility-migration-analysis template uses the single sentence *“Not focusable. Keyboard navigation should skip this component and move to the next focusable element.”* for static decoration (for example [Divider](../divider/accessibility-migration-analysis.md)). The popover host is a positioning shell; slotted controls are focusable when the composed pattern requires it, so the [Keyboard and focus](#keyboard-and-focus) subsection above applies instead of that boilerplate.
+The template one-sentence *“Not focusable. Keyboard navigation should skip this component and move to the next focusable element.”* is for static decoration (for example [Divider](../divider/accessibility-migration-analysis.md)). It does not apply here: this host is a positioning shell; slotted controls are focusable when the composed pattern requires it—the guidance above replaces that boilerplate (no separate “Not focusable” subsection).
 
 ---
 
