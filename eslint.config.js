@@ -149,6 +149,7 @@ export default defineConfig([
       '**/custom-elements.json',
       '**/tokens.css',
       '**/tokens.json',
+      '2nd-gen/packages/swc/stylesheets/global/**',
       // Config and tooling files (Node env; skip lint to avoid needing node globals for many files)
       '**/*.config.js',
       '**/*.config.cjs',
