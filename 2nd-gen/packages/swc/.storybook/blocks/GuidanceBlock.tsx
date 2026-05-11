@@ -10,7 +10,12 @@
  * governing permissions and limitations under the License.
  */
 
-import { Markdown, Source, useOf } from '@storybook/addon-docs/blocks';
+import {
+  HeaderMdx,
+  Markdown,
+  Source,
+  useOf,
+} from '@storybook/addon-docs/blocks';
 import React, { Fragment } from 'react';
 import customElements from '../custom-elements.json' with { type: 'json' };
 
@@ -78,7 +83,17 @@ export const GuidanceBlock = ({
 
   return (
     <div className="guidance-block" data-member={member}>
-      {title && <h3>{title}</h3>}
+      {title && (
+        <HeaderMdx
+          as="h3"
+          id={title
+            .toLowerCase()
+            .replace(/[^a-z0-9]+/g, '-')
+            .replace(/(^-|-$)/g, '')}
+        >
+          {title}
+        </HeaderMdx>
+      )}
       {guidanceTags.map((guidance, index) => (
         <div key={index} data-guidance-type={guidance.tag}>
           {renderGuidanceContent(guidance.content)}
