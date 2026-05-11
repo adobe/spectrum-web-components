@@ -109,7 +109,7 @@ if (storybookMode !== 'ci-a11y') {
     {
       directory: 'learn-about-swc',
       // Keep learn-about docs minimal in production.
-      files: storybookMode === 'build' ? '{overview,get-started}.mdx' : '*.mdx',
+      files: '*.mdx',
       titlePrefix: 'Learn about SWC',
     },
     {
