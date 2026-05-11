@@ -109,34 +109,21 @@ import '@spectrum-web-components/action-button/sp-action-button.js';
 
 ## Attributes
 
-| Name              | Type                                                                                                                                                                                                                                | Default    | Description                                                                                                                                         |
-| ----------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `emphasized`      | `boolean`                                                                                                                                                                                                                           | `false`    |                                                                                                                                                     |
-| `hold-affordance` | `boolean`                                                                                                                                                                                                                           | `false`    |                                                                                                                                                     |
-| `quiet`           | `boolean`                                                                                                                                                                                                                           | `false`    |                                                                                                                                                     |
-| `role`            | `string`                                                                                                                                                                                                                            | `'button'` |                                                                                                                                                     |
-| `selected`        | `boolean`                                                                                                                                                                                                                           | `false`    | Whether an Action Button with `role='button'` should also be `aria-pressed='true'`                                                                  |
-| `toggles`         | `boolean`                                                                                                                                                                                                                           | `false`    | Whether to automatically manage the `selected` attribute on interaction and whether `aria-pressed="false"` should be used when `selected === false` |
-| `static-color`    | `'white' | 'black' | undefined`                                                                                                                                                                                                     | -          | The static color variant to use for the action button.                                                                                              |
-| `value`           | `string`                                                                                                                                                                                                                            | -          |                                                                                                                                                     |
-| `download`        | `string | undefined`                                                                                                                                                                                                                | -          | Causes the browser to treat the linked URL as a download.                                                                                           |
-| `label`           | `string | undefined`                                                                                                                                                                                                                | -          | An accessible label that describes the component. It will be applied to aria-label, but not visually rendered.                                      |
-| `href`            | `string | undefined`                                                                                                                                                                                                                | -          | The URL that the hyperlink points to.                                                                                                               |
-| `target`          | `'_blank' | '_parent' | '_self' | '_top' | undefined`                                                                                                                                                                               | -          | Where to display the linked URL, as the name for a browsing context (a tab, window, or &lt;iframe&gt;).                                             |
-| `referrerpolicy`  | `| 'no-referrer'
-      | 'no-referrer-when-downgrade'
-      | 'origin'
-      | 'origin-when-cross-origin'
-      | 'same-origin'
-      | 'strict-origin'
-      | 'strict-origin-when-cross-origin'
-      | 'unsafe-url' | undefined` | -          | How much of the referrer to send when following the link.                                                                                           |
-| `rel`             | `string | undefined`                                                                                                                                                                                                                | -          | The relationship of the linked URL as space-separated link types.                                                                                   |
-| `active`          | `boolean`                                                                                                                                                                                                                           | `false`    |                                                                                                                                                     |
-| `type`            | `'button' | 'submit' | 'reset'`                                                                                                                                                                                                     | `'button'` | The default behavior of the button. Possible values are: `button` (default), `submit`, and `reset`.                                                 |
-| `disabled`        | `boolean`                                                                                                                                                                                                                           | `false`    | Disable this control. It will not receive focus or events                                                                                           |
-| `autofocus`       | `boolean`                                                                                                                                                                                                                           | `false`    | When this control is rendered, focus it automatically                                                                                               |
-| `tabIndex`        | `number`                                                                                                                                                                                                                            | -          | The tab index to apply to this control. See general documentation about the tabindex HTML property                                                  |
+| Name               | Type                            | Default    | Description                                                                                                                                                                          |
+| ------------------ | ------------------------------- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `emphasized`       | `boolean`                       | `false`    |                                                                                                                                                                                      |
+| `hold-affordance`  | `boolean`                       | `false`    |                                                                                                                                                                                      |
+| `quiet`            | `boolean`                       | `false`    |                                                                                                                                                                                      |
+| `role`             | `string`                        | `'button'` |                                                                                                                                                                                      |
+| `selected`         | `boolean`                       | `false`    | Whether an Action Button with `role='button'` should also be `aria-pressed='true'`                                                                                                   |
+| `toggles`          | `boolean`                       | `false`    | Whether to automatically manage the `selected` attribute on interaction and whether `aria-pressed="false"` should be used when `selected === false`                                  |
+| `static-color`     | `'white' | 'black' | undefined` | -          | The static color variant to use for the action button.                                                                                                                               |
+| `value`            | `string`                        | -          |                                                                                                                                                                                      |
+| `size`             | `ElementSize`                   | -          | The size of the button.                                                                                                                                                              |
+| `disabled`         | `boolean`                       | `false`    | Whether the button is disabled. Removes focusability and prevents interaction.                                                                                                       |
+| `pending`          | `boolean`                       | `false`    | Whether the button is in a pending (busy) state. The button remains focusable but activation is suppressed.                                                                          |
+| `accessible-label` | `string | undefined`            | -          | Accessible label forwarded to the internal `<button>` element as `aria-label`. Required for icon-only buttons, which have no visible text.                                           |
+| `pending-label`    | `string | undefined`            | -          | Custom accessible label used during the pending state. When omitted, the pending label is derived from the resolved non-busy accessible name plus a busy suffix (e.g. "Save, busy"). |
 
 ## Slots
 
@@ -151,7 +138,6 @@ import '@spectrum-web-components/action-button/sp-action-button.js';
 | ----------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `longpress` | Synthesizes a "longpress" interaction that signifies a `pointerdown` event that is >=300ms or a keyboard event where code is `Space` or code is `ArrowDown` while `altKey===true`. |
 | `change`    | Announces a change in the `selected` property of an action button                                                                                                                  |
-| `keydown`   | Trick :focus-visible polyfill into thinking keyboard based focus                                                                                                                   |
 
 ---
 ## sp-action-group
@@ -455,33 +441,18 @@ import '@spectrum-web-components/button/sp-button.js';
 
 ## Attributes
 
-| Name             | Type                                                                                                                                                                                                                                | Default     | Description                                                                                                    |
-| ---------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- | -------------------------------------------------------------------------------------------------------------- |
-| `pending-label`  | `string`                                                                                                                                                                                                                            | `'Pending'` |                                                                                                                |
-| `pending`        | `boolean`                                                                                                                                                                                                                           | `false`     |                                                                                                                |
-| `variant`        | `ButtonVariants`                                                                                                                                                                                                                    | -           | The visual variant to apply to this button.                                                                    |
-| `static-color`   | `'black' | 'white' | undefined`                                                                                                                                                                                                     | -           | The static color variant to use for this button.                                                               |
-| `treatment`      | `ButtonTreatments`                                                                                                                                                                                                                  | `'fill'`    | The visual treatment to apply to this button.                                                                  |
-| `quiet`          | `boolean`                                                                                                                                                                                                                           | -           | Style this button to be less obvious                                                                           |
-| `no-wrap`        | `boolean`                                                                                                                                                                                                                           | `false`     | Disables text wrapping within the button component's label.                                                    |
-| `download`       | `string | undefined`                                                                                                                                                                                                                | -           | Causes the browser to treat the linked URL as a download.                                                      |
-| `label`          | `string | undefined`                                                                                                                                                                                                                | -           | An accessible label that describes the component. It will be applied to aria-label, but not visually rendered. |
-| `href`           | `string | undefined`                                                                                                                                                                                                                | -           | The URL that the hyperlink points to.                                                                          |
-| `target`         | `'_blank' | '_parent' | '_self' | '_top' | undefined`                                                                                                                                                                               | -           | Where to display the linked URL, as the name for a browsing context (a tab, window, or &lt;iframe&gt;).        |
-| `referrerpolicy` | `| 'no-referrer'
-      | 'no-referrer-when-downgrade'
-      | 'origin'
-      | 'origin-when-cross-origin'
-      | 'same-origin'
-      | 'strict-origin'
-      | 'strict-origin-when-cross-origin'
-      | 'unsafe-url' | undefined` | -           | How much of the referrer to send when following the link.                                                      |
-| `rel`            | `string | undefined`                                                                                                                                                                                                                | -           | The relationship of the linked URL as space-separated link types.                                              |
-| `active`         | `boolean`                                                                                                                                                                                                                           | `false`     |                                                                                                                |
-| `type`           | `'button' | 'submit' | 'reset'`                                                                                                                                                                                                     | `'button'`  | The default behavior of the button. Possible values are: `button` (default), `submit`, and `reset`.            |
-| `disabled`       | `boolean`                                                                                                                                                                                                                           | `false`     | Disable this control. It will not receive focus or events                                                      |
-| `autofocus`      | `boolean`                                                                                                                                                                                                                           | `false`     | When this control is rendered, focus it automatically                                                          |
-| `tabIndex`       | `number`                                                                                                                                                                                                                            | -           | The tab index to apply to this control. See general documentation about the tabindex HTML property             |
+| Name               | Type                            | Default     | Description                                                                                                                                                                          |
+| ------------------ | ------------------------------- | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `pending-label`    | `string | undefined`            | `'Pending'` | Custom accessible label used during the pending state. When omitted, the pending label is derived from the resolved non-busy accessible name plus a busy suffix (e.g. "Save, busy"). |
+| `pending`          | `boolean`                       | `false`     | Whether the button is in a pending (busy) state. The button remains focusable but activation is suppressed.                                                                          |
+| `variant`          | `ButtonVariants`                | -           | The visual variant to apply to this button.                                                                                                                                          |
+| `static-color`     | `'black' | 'white' | undefined` | -           | The static color variant to use for this button.                                                                                                                                     |
+| `treatment`        | `ButtonTreatments`              | `'fill'`    | The visual treatment to apply to this button.                                                                                                                                        |
+| `quiet`            | `boolean`                       | -           | Style this button to be less obvious.                                                                                                                                                |
+| `no-wrap`          | `boolean`                       | -           | Disables text wrapping within the button component's label.                                                                                                                          |
+| `size`             | `ElementSize`                   | -           | The size of the button.                                                                                                                                                              |
+| `disabled`         | `boolean`                       | `false`     | Whether the button is disabled. Removes focusability and prevents interaction.                                                                                                       |
+| `accessible-label` | `string | undefined`            | -           | Accessible label forwarded to the internal `<button>` element as `aria-label`. Required for icon-only buttons, which have no visible text.                                           |
 
 ## Slots
 
@@ -489,12 +460,6 @@ import '@spectrum-web-components/button/sp-button.js';
 | ----------- | -------------------------- |
 | `(default)` | text label of the Button   |
 | `icon`      | The icon to use for Button |
-
-## Events
-
-| Name      | Description                                                      |
-| --------- | ---------------------------------------------------------------- |
-| `keydown` | Trick :focus-visible polyfill into thinking keyboard based focus |
 
 ---
 ## sp-button-group
@@ -621,42 +586,24 @@ import '@spectrum-web-components/button/sp-clear-button.js';
 
 ## Attributes
 
-| Name             | Type                                                                                                                                                                                                                                | Default    | Description                                                                                                                                                  |
-| ---------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `label`          | `string | undefined`                                                                                                                                                                                                                | -          | An accessible label that describes the component. It will be applied to aria-label, but not visually rendered. This attribute is required for clear buttons. |
-| `quiet`          | `boolean`                                                                                                                                                                                                                           | `false`    |                                                                                                                                                              |
-| `variant`        | `'overBackground' | undefined`                                                                                                                                                                                                      | -          | The visual variant to apply to this button.                                                                                                                  |
-| `static-color`   | `'white' | undefined`                                                                                                                                                                                                               | -          | The visual variant to apply to this button.                                                                                                                  |
-| `download`       | `string | undefined`                                                                                                                                                                                                                | -          | Causes the browser to treat the linked URL as a download.                                                                                                    |
-| `href`           | `string | undefined`                                                                                                                                                                                                                | -          | The URL that the hyperlink points to.                                                                                                                        |
-| `target`         | `'_blank' | '_parent' | '_self' | '_top' | undefined`                                                                                                                                                                               | -          | Where to display the linked URL, as the name for a browsing context (a tab, window, or &lt;iframe&gt;).                                                      |
-| `referrerpolicy` | `| 'no-referrer'
-      | 'no-referrer-when-downgrade'
-      | 'origin'
-      | 'origin-when-cross-origin'
-      | 'same-origin'
-      | 'strict-origin'
-      | 'strict-origin-when-cross-origin'
-      | 'unsafe-url' | undefined` | -          | How much of the referrer to send when following the link.                                                                                                    |
-| `rel`            | `string | undefined`                                                                                                                                                                                                                | -          | The relationship of the linked URL as space-separated link types.                                                                                            |
-| `active`         | `boolean`                                                                                                                                                                                                                           | `false`    |                                                                                                                                                              |
-| `type`           | `'button' | 'submit' | 'reset'`                                                                                                                                                                                                     | `'button'` | The default behavior of the button. Possible values are: `button` (default), `submit`, and `reset`.                                                          |
-| `disabled`       | `boolean`                                                                                                                                                                                                                           | `false`    | Disable this control. It will not receive focus or events                                                                                                    |
-| `autofocus`      | `boolean`                                                                                                                                                                                                                           | `false`    | When this control is rendered, focus it automatically                                                                                                        |
-| `tabIndex`       | `number`                                                                                                                                                                                                                            | -          | The tab index to apply to this control. See general documentation about the tabindex HTML property                                                           |
+| Name               | Type                           | Default | Description                                                                                                                                                                          |
+| ------------------ | ------------------------------ | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `label`            | `string`                       | -       | An accessible label that describes the component. It will be applied to aria-label, but not visually rendered. This attribute is required for clear buttons.                         |
+| `quiet`            | `boolean`                      | `false` |                                                                                                                                                                                      |
+| `variant`          | `'overBackground' | undefined` | -       | The visual variant to apply to this button.                                                                                                                                          |
+| `static-color`     | `'white' | undefined`          | -       | The visual variant to apply to this button.                                                                                                                                          |
+| `size`             | `ElementSize`                  | -       | The size of the button.                                                                                                                                                              |
+| `disabled`         | `boolean`                      | `false` | Whether the button is disabled. Removes focusability and prevents interaction.                                                                                                       |
+| `pending`          | `boolean`                      | `false` | Whether the button is in a pending (busy) state. The button remains focusable but activation is suppressed.                                                                          |
+| `accessible-label` | `string | undefined`           | -       | Accessible label forwarded to the internal `<button>` element as `aria-label`. Required for icon-only buttons, which have no visible text.                                           |
+| `pending-label`    | `string | undefined`           | -       | Custom accessible label used during the pending state. When omitted, the pending label is derived from the resolved non-busy accessible name plus a busy suffix (e.g. "Save, busy"). |
 
 ## Slots
 
-| Name        | Description                                           |
-| ----------- | ----------------------------------------------------- |
-| `(default)` | text content to be displayed in the Button element    |
-| `icon`      | icon element(s) to display at the start of the button |
-
-## Events
-
-| Name      | Description                                                      |
-| --------- | ---------------------------------------------------------------- |
-| `keydown` | Trick :focus-visible polyfill into thinking keyboard based focus |
+| Name        | Description            |
+| ----------- | ---------------------- |
+| `(default)` | Visible button label.  |
+| `icon`      | Optional leading icon. |
 
 ---
 ## sp-close-button
@@ -670,41 +617,22 @@ import '@spectrum-web-components/button/sp-close-button.js';
 
 ## Attributes
 
-| Name             | Type                                                                                                                                                                                                                                | Default    | Description                                                                                                    |
-| ---------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- | -------------------------------------------------------------------------------------------------------------- |
-| `variant`        | `ButtonStaticColors | ''`                                                                                                                                                                                                           | `''`       | The visual variant to apply to this button.                                                                    |
-| `static-color`   | `'black' | 'white' | undefined`                                                                                                                                                                                                     | -          |                                                                                                                |
-| `download`       | `string | undefined`                                                                                                                                                                                                                | -          | Causes the browser to treat the linked URL as a download.                                                      |
-| `label`          | `string | undefined`                                                                                                                                                                                                                | -          | An accessible label that describes the component. It will be applied to aria-label, but not visually rendered. |
-| `href`           | `string | undefined`                                                                                                                                                                                                                | -          | The URL that the hyperlink points to.                                                                          |
-| `target`         | `'_blank' | '_parent' | '_self' | '_top' | undefined`                                                                                                                                                                               | -          | Where to display the linked URL, as the name for a browsing context (a tab, window, or &lt;iframe&gt;).        |
-| `referrerpolicy` | `| 'no-referrer'
-      | 'no-referrer-when-downgrade'
-      | 'origin'
-      | 'origin-when-cross-origin'
-      | 'same-origin'
-      | 'strict-origin'
-      | 'strict-origin-when-cross-origin'
-      | 'unsafe-url' | undefined` | -          | How much of the referrer to send when following the link.                                                      |
-| `rel`            | `string | undefined`                                                                                                                                                                                                                | -          | The relationship of the linked URL as space-separated link types.                                              |
-| `active`         | `boolean`                                                                                                                                                                                                                           | `false`    |                                                                                                                |
-| `type`           | `'button' | 'submit' | 'reset'`                                                                                                                                                                                                     | `'button'` | The default behavior of the button. Possible values are: `button` (default), `submit`, and `reset`.            |
-| `disabled`       | `boolean`                                                                                                                                                                                                                           | `false`    | Disable this control. It will not receive focus or events                                                      |
-| `autofocus`      | `boolean`                                                                                                                                                                                                                           | `false`    | When this control is rendered, focus it automatically                                                          |
-| `tabIndex`       | `number`                                                                                                                                                                                                                            | -          | The tab index to apply to this control. See general documentation about the tabindex HTML property             |
+| Name               | Type                            | Default | Description                                                                                                                                                                          |
+| ------------------ | ------------------------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `variant`          | `ButtonStaticColors | ''`       | `''`    | The visual variant to apply to this button.                                                                                                                                          |
+| `static-color`     | `'black' | 'white' | undefined` | -       |                                                                                                                                                                                      |
+| `size`             | `ElementSize`                   | -       | The size of the button.                                                                                                                                                              |
+| `disabled`         | `boolean`                       | `false` | Whether the button is disabled. Removes focusability and prevents interaction.                                                                                                       |
+| `pending`          | `boolean`                       | `false` | Whether the button is in a pending (busy) state. The button remains focusable but activation is suppressed.                                                                          |
+| `accessible-label` | `string | undefined`            | -       | Accessible label forwarded to the internal `<button>` element as `aria-label`. Required for icon-only buttons, which have no visible text.                                           |
+| `pending-label`    | `string | undefined`            | -       | Custom accessible label used during the pending state. When omitted, the pending label is derived from the resolved non-busy accessible name plus a busy suffix (e.g. "Save, busy"). |
 
 ## Slots
 
-| Name        | Description                                           |
-| ----------- | ----------------------------------------------------- |
-| `(default)` | text label of the Close Button                        |
-| `icon`      | icon element(s) to display at the start of the button |
-
-## Events
-
-| Name      | Description                                                      |
-| --------- | ---------------------------------------------------------------- |
-| `keydown` | Trick :focus-visible polyfill into thinking keyboard based focus |
+| Name        | Description                    |
+| ----------- | ------------------------------ |
+| `(default)` | text label of the Close Button |
+| `icon`      | Optional leading icon.         |
 
 ---
 ## sp-coach-indicator
@@ -1359,42 +1287,23 @@ import '@spectrum-web-components/infield-button/sp-infield-button.js';
 
 ## Attributes
 
-| Name             | Type                                                                                                                                                                                                                                | Default    | Description                                                                                                    |
-| ---------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- | -------------------------------------------------------------------------------------------------------------- |
-| `block`          | `'start' | 'end'`                                                                                                                                                                                                                   | -          | Whether to style the button as if it is at the start or end of a vertical stack                                |
-| `inline`         | `'start' | 'end'`                                                                                                                                                                                                                   | -          | Whether to style the button as if it is at the start or end of a horizontal group                              |
-| `quiet`          | `boolean`                                                                                                                                                                                                                           | `false`    |                                                                                                                |
-| `download`       | `string | undefined`                                                                                                                                                                                                                | -          | Causes the browser to treat the linked URL as a download.                                                      |
-| `label`          | `string | undefined`                                                                                                                                                                                                                | -          | An accessible label that describes the component. It will be applied to aria-label, but not visually rendered. |
-| `href`           | `string | undefined`                                                                                                                                                                                                                | -          | The URL that the hyperlink points to.                                                                          |
-| `target`         | `'_blank' | '_parent' | '_self' | '_top' | undefined`                                                                                                                                                                               | -          | Where to display the linked URL, as the name for a browsing context (a tab, window, or &lt;iframe&gt;).        |
-| `referrerpolicy` | `| 'no-referrer'
-      | 'no-referrer-when-downgrade'
-      | 'origin'
-      | 'origin-when-cross-origin'
-      | 'same-origin'
-      | 'strict-origin'
-      | 'strict-origin-when-cross-origin'
-      | 'unsafe-url' | undefined` | -          | How much of the referrer to send when following the link.                                                      |
-| `rel`            | `string | undefined`                                                                                                                                                                                                                | -          | The relationship of the linked URL as space-separated link types.                                              |
-| `active`         | `boolean`                                                                                                                                                                                                                           | `false`    |                                                                                                                |
-| `type`           | `'button' | 'submit' | 'reset'`                                                                                                                                                                                                     | `'button'` | The default behavior of the button. Possible values are: `button` (default), `submit`, and `reset`.            |
-| `disabled`       | `boolean`                                                                                                                                                                                                                           | `false`    | Disable this control. It will not receive focus or events                                                      |
-| `autofocus`      | `boolean`                                                                                                                                                                                                                           | `false`    | When this control is rendered, focus it automatically                                                          |
-| `tabIndex`       | `number`                                                                                                                                                                                                                            | -          | The tab index to apply to this control. See general documentation about the tabindex HTML property             |
+| Name               | Type                 | Default | Description                                                                                                                                                                          |
+| ------------------ | -------------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `block`            | `'start' | 'end'`    | -       | Whether to style the button as if it is at the start or end of a vertical stack                                                                                                      |
+| `inline`           | `'start' | 'end'`    | -       | Whether to style the button as if it is at the start or end of a horizontal group                                                                                                    |
+| `quiet`            | `boolean`            | `false` |                                                                                                                                                                                      |
+| `size`             | `ElementSize`        | -       | The size of the button.                                                                                                                                                              |
+| `disabled`         | `boolean`            | `false` | Whether the button is disabled. Removes focusability and prevents interaction.                                                                                                       |
+| `pending`          | `boolean`            | `false` | Whether the button is in a pending (busy) state. The button remains focusable but activation is suppressed.                                                                          |
+| `accessible-label` | `string | undefined` | -       | Accessible label forwarded to the internal `<button>` element as `aria-label`. Required for icon-only buttons, which have no visible text.                                           |
+| `pending-label`    | `string | undefined` | -       | Custom accessible label used during the pending state. When omitted, the pending label is derived from the resolved non-busy accessible name plus a busy suffix (e.g. "Save, busy"). |
 
 ## Slots
 
-| Name        | Description                                           |
-| ----------- | ----------------------------------------------------- |
-| `(default)` | text content to be displayed in the Button element    |
-| `icon`      | icon element(s) to display at the start of the button |
-
-## Events
-
-| Name      | Description                                                      |
-| --------- | ---------------------------------------------------------------- |
-| `keydown` | Trick :focus-visible polyfill into thinking keyboard based focus |
+| Name        | Description            |
+| ----------- | ---------------------- |
+| `(default)` | Visible button label.  |
+| `icon`      | Optional leading icon. |
 
 ---
 ## sp-link
@@ -1762,41 +1671,22 @@ import '@spectrum-web-components/picker-button/sp-picker-button.js';
 
 ## Attributes
 
-| Name             | Type                                                                                                                                                                                                                                | Default    | Description                                                                                                    |
-| ---------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- | -------------------------------------------------------------------------------------------------------------- |
-| `invalid`        | `boolean`                                                                                                                                                                                                                           | `false`    |                                                                                                                |
-| `position`       | `'left' | 'right'`                                                                                                                                                                                                                  | `'right'`  |                                                                                                                |
-| `download`       | `string | undefined`                                                                                                                                                                                                                | -          | Causes the browser to treat the linked URL as a download.                                                      |
-| `label`          | `string | undefined`                                                                                                                                                                                                                | -          | An accessible label that describes the component. It will be applied to aria-label, but not visually rendered. |
-| `href`           | `string | undefined`                                                                                                                                                                                                                | -          | The URL that the hyperlink points to.                                                                          |
-| `target`         | `'_blank' | '_parent' | '_self' | '_top' | undefined`                                                                                                                                                                               | -          | Where to display the linked URL, as the name for a browsing context (a tab, window, or &lt;iframe&gt;).        |
-| `referrerpolicy` | `| 'no-referrer'
-      | 'no-referrer-when-downgrade'
-      | 'origin'
-      | 'origin-when-cross-origin'
-      | 'same-origin'
-      | 'strict-origin'
-      | 'strict-origin-when-cross-origin'
-      | 'unsafe-url' | undefined` | -          | How much of the referrer to send when following the link.                                                      |
-| `rel`            | `string | undefined`                                                                                                                                                                                                                | -          | The relationship of the linked URL as space-separated link types.                                              |
-| `active`         | `boolean`                                                                                                                                                                                                                           | `false`    |                                                                                                                |
-| `type`           | `'button' | 'submit' | 'reset'`                                                                                                                                                                                                     | `'button'` | The default behavior of the button. Possible values are: `button` (default), `submit`, and `reset`.            |
-| `disabled`       | `boolean`                                                                                                                                                                                                                           | `false`    | Disable this control. It will not receive focus or events                                                      |
-| `autofocus`      | `boolean`                                                                                                                                                                                                                           | `false`    | When this control is rendered, focus it automatically                                                          |
-| `tabIndex`       | `number`                                                                                                                                                                                                                            | -          | The tab index to apply to this control. See general documentation about the tabindex HTML property             |
+| Name               | Type                 | Default   | Description                                                                                                                                                                          |
+| ------------------ | -------------------- | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `invalid`          | `boolean`            | `false`   |                                                                                                                                                                                      |
+| `position`         | `'left' | 'right'`   | `'right'` |                                                                                                                                                                                      |
+| `size`             | `ElementSize`        | -         | The size of the button.                                                                                                                                                              |
+| `disabled`         | `boolean`            | `false`   | Whether the button is disabled. Removes focusability and prevents interaction.                                                                                                       |
+| `pending`          | `boolean`            | `false`   | Whether the button is in a pending (busy) state. The button remains focusable but activation is suppressed.                                                                          |
+| `accessible-label` | `string | undefined` | -         | Accessible label forwarded to the internal `<button>` element as `aria-label`. Required for icon-only buttons, which have no visible text.                                           |
+| `pending-label`    | `string | undefined` | -         | Custom accessible label used during the pending state. When omitted, the pending label is derived from the resolved non-busy accessible name plus a busy suffix (e.g. "Save, busy"). |
 
 ## Slots
 
-| Name        | Description                                           |
-| ----------- | ----------------------------------------------------- |
-| `(default)` | text content to be displayed in the Button element    |
-| `icon`      | icon element(s) to display at the start of the button |
-
-## Events
-
-| Name      | Description                                                      |
-| --------- | ---------------------------------------------------------------- |
-| `keydown` | Trick :focus-visible polyfill into thinking keyboard based focus |
+| Name        | Description            |
+| ----------- | ---------------------- |
+| `(default)` | Visible button label.  |
+| `icon`      | Optional leading icon. |
 
 ---
 ## sp-popover
