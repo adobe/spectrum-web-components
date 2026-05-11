@@ -798,6 +798,16 @@ When referencing other components in the JSDoc description above meta:
 - **Tag appropriately** - Use correct tags for each section
 - **Add JSDoc comments** - Explain what each story demonstrates (except Playground and Overview)
 
+### No filler closing sentences
+
+Do not end JSDoc comments with sentences that restate what the reader can already see rendered in Storybook, such as:
+
+- "All sizes shown below for comparison."
+- "Both variants shown below for comparison."
+- "Label-only and icon-with-label wrapping shown below for comparison."
+
+These add no information. End the comment when the substantive content ends.
+
 ### JSDoc heading levels
 
 All headings in JSDoc comments must start at level 3 (`###`) or deeper:

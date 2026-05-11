@@ -250,6 +250,19 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@adobe/vite-global-elements-css@workspace:2nd-gen/packages/tools/vite-global-elements-css":
+  version: 0.0.0-use.local
+  resolution: "@adobe/vite-global-elements-css@workspace:2nd-gen/packages/tools/vite-global-elements-css"
+  dependencies:
+    postcss: "npm:8.5.9"
+    vite: "npm:8.0.8"
+    vitest: "npm:4.0.15"
+  peerDependencies:
+    postcss: 8.5.9
+    vite: 8.0.8
+  languageName: unknown
+  linkType: soft
+
 "@apideck/better-ajv-errors@npm:^0.3.1":
   version: 0.3.6
   resolution: "@apideck/better-ajv-errors@npm:0.3.6"

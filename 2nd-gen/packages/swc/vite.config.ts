@@ -11,6 +11,7 @@
  */
 
 import postcssToken from '@adobe/postcss-token';
+import { globalElementCSS } from '@adobe/vite-global-elements-css';
 import autoprefixer from 'autoprefixer';
 import { readFile, writeFile } from 'fs/promises';
 import { glob } from 'glob';
@@ -62,6 +63,9 @@ function processStylesheets(): Plugin {
 
 export default defineConfig({
   plugins: [
+    globalElementCSS({
+      elements: [{ component: 'button' }],
+    }),
     litCss({ exclude: ['./stylesheets/**/*.css'] }),
     processStylesheets(),
     dts({
@@ -132,6 +136,10 @@ export default defineConfig({
       '@adobe/spectrum-wc': resolve(__dirname, './components'),
       '@adobe/postcss-token': resolve(__dirname, '../tools/postcss-token'),
       '@adobe/swc-tokens': resolve(__dirname, '../tools/swc-tokens'),
+      '@adobe/vite-global-elements-css': resolve(
+        __dirname,
+        '../tools/vite-global-elements-css'
+      ),
     },
   },
   server: {

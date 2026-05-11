@@ -461,7 +461,7 @@ For troubleshooting and detailed patterns (e.g. 1st-gen Constructable Stylesheet
 | Problem | Solution |
 |--------|----------|
 | Styles not applied; `adoptedStylesheets` empty | Never override `createRenderRoot()` to set shadow root options; use `static override shadowRootOptions = { ...ParentClass.shadowRootOptions, delegatesFocus: true }` instead. Overriding `createRenderRoot()` without calling `super` bypasses Lit’s `adoptStyles()`, silently dropping all component CSS. |
-| CSS selector targets wrong element | Class name in CSS (e.g. `.swc-Button__label`) does not match what `render()` emits. Grep the render template for the old name and update it before blaming the CSS. |
+| CSS selector targets wrong element | Class name in CSS (e.g. `.swc-Button-label`) does not match what `render()` emits. Grep the render template for the old name and update it before blaming the CSS. |
 | `order/properties-order` errors | Reorder declarations to match `linters/stylelint-property-order.js` (e.g. display → position → flex → box sizing → margin → font → overflow → pointer-events → content → opacity → transition). |
 | `no-descending-specificity` errors | Place lower-specificity selectors before higher-specificity ones (e.g. `:host([disabled])` before `:host([checked][disabled])`; single-attribute or single-pseudo before compound selectors). Split rule blocks if needed so order is consistent. |
 | Token / `declaration-strict-value` | Replace hard-coded colors, font-size, etc. with `token("...")`. |
