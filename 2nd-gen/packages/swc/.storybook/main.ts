@@ -82,7 +82,11 @@ const stories: StorybookConfig['stories'] = [
 if (storybookMode !== 'ci-a11y') {
   stories.push({
     directory: '../components',
-    files: '**/*.mdx',
+    // Production-style builds exclude internal-only docs; local/dev keeps the full set.
+    files:
+      storybookMode === 'build'
+        ? '**/!(*.internal).mdx'
+        : '**/*.mdx',
     titlePrefix: 'Components',
   });
 
