@@ -254,19 +254,19 @@ Skills are used on-demand. When a task matches a skill’s purpose, the agent re
 - Use when: Scaffolding is in place and the approved `migration-plan.md` defines the intended public contract for 2nd-gen
 - Provides: Property/method porting workflow, type definition guidance, API contract review, and drift detection against the approved migration plan
 
-#### Migration — phase 4: styling (`migration-styling`)
-
-- **purpose**: Migrate CSS to the 2nd-gen structure, apply Spectrum 2 tokens, and ensure stylelint passes
-- **How to invoke**: Say "migrate styling for [component]", "port CSS for [component]", or "phase 4 migration for [component]"
-- Use when: API is in place and the approved `migration-plan.md` defines the intended visual scope; translating 1st-gen CSS to 2nd-gen with Spectrum 2 design tokens
-- Provides: CSS migration checklist, token mapping guidance, stylelint validation steps, and checks against approved visual scope and custom-property decisions
-
-#### Migration — phase 5: accessibility (`migration-a11y`)
+#### Migration — phase 4: accessibility (`migration-a11y`)
 
 - **purpose**: Implement WCAG-aligned semantics, ARIA, keyboard support, and focus management, and document accessibility behavior
-- **How to invoke**: Say "migrate accessibility for [component]", "implement a11y for [component]", or "phase 5 migration for [component]"
-- Use when: Styling is complete and the approved `migration-plan.md` plus accessibility analysis define the must-ship semantics and behavior
+- **How to invoke**: Say "migrate accessibility for [component]", "implement a11y for [component]", or "phase 4 migration for [component]"
+- Use when: API is in place and the approved `migration-plan.md` plus accessibility analysis define the must-ship semantics and behavior
 - Provides: WCAG checklist, ARIA pattern guidance, keyboard/focus requirements, a11y documentation template, and checks against approved accessibility changes in the migration plan
+
+#### Migration — phase 5: styling (`migration-styling`)
+
+- **purpose**: Migrate CSS to the 2nd-gen structure, apply Spectrum 2 tokens, and ensure stylelint passes
+- **How to invoke**: Say "migrate styling for [component]", "port CSS for [component]", or "phase 5 migration for [component]"
+- Use when: Accessibility is complete and the approved `migration-plan.md` defines the intended visual scope; translating 1st-gen CSS to 2nd-gen with Spectrum 2 design tokens
+- Provides: CSS migration checklist, token mapping guidance, stylelint validation steps, and checks against approved visual scope and custom-property decisions
 
 #### Migration — phase 6: testing (`migration-testing`)
 
@@ -337,6 +337,18 @@ Skills are used on-demand. When a task matches a skill’s purpose, the agent re
 - **How to invoke**: Ask to implement a feature or fix a bug (e.g. “add feature X”, “fix this bug”); the agent may use TDD by default. To invoke explicitly, say “use TDD”, “write tests first”, or “red-green-refactor”.
 - Use when: Implementing any feature or bugfix, before writing implementation code
 - Provides: TDD cycle, verification checklist, good/bad test examples, anti-patterns to avoid
+
+## Workflows
+
+Workflows are reference documents that support agent and contributor workflows. They live in `.ai/workflows/`.
+
+### Available workflows
+
+#### Reusable prompts
+
+- **File**: `.ai/workflows/reusable-prompts.md`
+- **Purpose**: A reference list of natural-language phrases that trigger each skill or phase. Use these as copy-paste shortcuts when invoking skills in chat (e.g. "Phase 4 migration for [component]" triggers `migration-a11y`).
+- **Covers**: Memory/lesson capture, all 8 washing-machine migration phases, and the most common invocation phrases for each
 
 ## Using rules and skills across tools and IDEs
 
