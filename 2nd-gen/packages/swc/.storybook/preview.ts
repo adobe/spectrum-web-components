@@ -205,7 +205,7 @@ const preview = {
           ['Conversational AI', ['README', 'Prompt field', 'User message']],
           'Guides',
           [
-            'Accessibility guides',
+            'Accessibility',
             [
               'Overview',
               'Semantic HTML and ARIA',
