@@ -86,7 +86,12 @@ function getEntries() {
   return entries;
 }
 
-export default defineConfig({
+export default defineConfig(({ mode }) => ({
+  define: {
+    'process.env.NODE_ENV': JSON.stringify(
+      mode === 'development' ? 'development' : 'production'
+    ),
+  },
   plugins: [
     dts({
       include: ['**/*.ts'],
@@ -125,4 +130,4 @@ export default defineConfig({
   esbuild: {
     target: 'es2018',
   },
-});
+}));
