@@ -55,6 +55,13 @@ Write tests for [component]
 Phase 6 for [component] migration
 Phase 6 migration for [component]
 
+- Conformance (sub-task after Phase 6)
+
+Check code conformance for [component]
+Run conformance checks for [component]
+Style guide review for [component]
+Conformance for [component] migration
+
 - Phase 7
 
 Document [component]
