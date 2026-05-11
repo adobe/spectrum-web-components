@@ -479,14 +479,14 @@ export const StaticColors: Story = {
 export const StaticColors: Story = {
   render: (args) => html`
     <div
-      style="display: flex; gap: 16px; flex-wrap: wrap;  justify-content: center;"
+      style="display: flex; gap: 16px; flex-wrap: wrap; justify-content: center;"
     >
       ${FILL_STYLES.map((fillStyle) =>
         template({ ...args, 'static-color': 'white', 'fill-style': fillStyle })
       )}
     </div>
     <div
-      style="display: flex; gap: 16px; flex-wrap: wrap;  justify-content: center;"
+      style="display: flex; gap: 16px; flex-wrap: wrap; justify-content: center;"
     >
       ${FILL_STYLES.map((fillStyle) =>
         template({ ...args, 'static-color': 'black', 'fill-style': fillStyle })
