@@ -18,12 +18,13 @@ import { fileURLToPath } from 'url';
 import { mergeConfig } from 'vite';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-type StorybookMode = 'dev' | 'build' | 'ci-a11y';
 
 // Modes:
 // - dev: full local Storybook, including docs and test stories
 // - build: production Storybook build, excluding internal and test stories
 // - ci-a11y: minimal component-only Storybook used by CI accessibility checks
+type StorybookMode = 'dev' | 'build' | 'ci-a11y';
+
 const storybookMode: StorybookMode =
   process.env.SWC_STORYBOOK_MODE === 'ci-a11y'
     ? 'ci-a11y'
@@ -61,7 +62,7 @@ const stories: StorybookConfig['stories'] = [
     // Production-style builds exclude internal-only stories; local/dev keeps the full set.
     files:
       storybookMode === 'build'
-        ? '**/!(*.internal|asset).stories.ts'
+        ? '**/!(*.internal).stories.ts'
         : '**/*.stories.ts',
   },
   {

@@ -27,7 +27,6 @@ import styles from './tabs.css';
  * `aria-orientation` are co-located on the same inner element.
  *
  * @element swc-tabs
- * @status unsupported
  * @since 0.0.1
  *
  * @slot - Tab items (`swc-tab` elements)

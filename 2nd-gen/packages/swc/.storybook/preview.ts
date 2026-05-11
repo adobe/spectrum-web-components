@@ -49,17 +49,6 @@ setStorybookHelpersConfig(storybookHelperOptions);
 // Set the Custom Elements Manifest for automatic controls generation
 setCustomElementsManifest(customElements);
 
-const swcStorybookMode =
-  typeof process !== 'undefined' ? process.env.SWC_STORYBOOK_MODE : undefined;
-const viteEnv = (import.meta as { env?: { PROD?: boolean } }).env;
-const isProductionMode =
-  typeof process !== 'undefined'
-    ? process.env.NODE_ENV === 'production'
-    : Boolean(viteEnv?.PROD);
-
-const storybookMode =
-  swcStorybookMode === 'ci-a11y' ? 'ci-a11y' : isProductionMode ? 'build' : 'dev';
-
 const preview = {
   globalTypes: {
     theme: {
@@ -495,11 +484,5 @@ const preview = {
   tags: ['!autodocs', '!dev'], // We only want the playground stories to be visible in the docs and sidenav. Since a majority of our stories are tagged with '!autodocs' and '!dev', we set those tags globally. We can opt in to visibility by adding the 'autodocs' or 'dev' tags to individual stories.
   loaders: [FontLoader],
 };
-
-if (storybookMode === 'build') {
-  preview.parameters.docs.codePanel = false;
-  preview.parameters.docs.canvas.withToolbar = false;
-  preview.parameters.docs.canvas.sourceState = 'none';
-}
 
 export default preview;

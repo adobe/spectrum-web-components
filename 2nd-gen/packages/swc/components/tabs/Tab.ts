@@ -24,7 +24,6 @@ import styles from './tab.css';
  * [migration guide](../migration.md).
  *
  * @element swc-tab
- * @status unsupported
  * @since 0.0.1
  *
  * @slot - Text label of the tab
