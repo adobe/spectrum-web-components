@@ -525,6 +525,21 @@ export const Inline: Story = {
   tags: ['behaviors'],
 };
 
+// ──────────────────────────────────
+//    UPCOMING FEATURES STORIES
+// ──────────────────────────────────
+
+/**
+ * ### Notification and indicator badge types
+ *
+ * - **Notification**: Displays a numeric count to signal unread or pending items, such as a message counter on an icon
+ * - **Indicator**: A dot-only badge that signals activity or updated content without showing a count
+ */
+export const UpcomingFeatures: Story = {
+  tags: ['upcoming', 'description-only'],
+};
+UpcomingFeatures.storyName = 'Upcoming features';
+
 // ────────────────────────────────
 //    ACCESSIBILITY STORIES
 // ────────────────────────────────

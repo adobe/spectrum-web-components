@@ -11,6 +11,7 @@
 <details open>
 <summary><strong>In this doc</strong></summary>
 
+- [Implementation status (initial 2nd-gen ship)](#implementation-status-initial-2nd-gen-ship)
 - [TL;DR](#tldr)
     - [Most blocking open questions](#most-blocking-open-questions)
     - [Recently resolved](#recently-resolved)
@@ -55,15 +56,23 @@
 
 ---
 
+## Implementation status (initial 2nd-gen ship)
+
+The first **`swc-tabs`**, **`swc-tab`**, and **`swc-tab-panel`** implementation lives in **`2nd-gen/packages/core/components/tabs/`** and **`2nd-gen/packages/swc/components/tabs/`**, with a single side-effect entrypoint **`@adobe/spectrum-wc/tabs`**. Consumer-facing breaking changes and deferred scope are summarized in **`2nd-gen/packages/swc/components/tabs/migration.md`**.
+
+**S2-aligned public API:** The shipped **`swc-tabs`** surface matches the Spectrum Design–style rows **B21–B25** in [Changes overview](#changes-overview): **`keyboard-activation`** (`manual` \| `automatic`) replaces boolean **`auto`**, **`density`** (`regular` \| `compact`) replaces boolean **`compact`**, and **`quiet`**, **`emphasized`**, and t-shirt **`size`** are **not** exposed on the host. Typography uses the default S2 scale; authors customize via documented **`--swc-tabs-*` / `--swc-tab-*`** custom properties. Consumer migration notes live in **`2nd-gen/packages/swc/components/tabs/migration.md`**; Storybook focuses on usage examples, not breaking-change IDs.
+
+**Branching:** [Migration project planning](../../02_workstreams/02_2nd-gen-component-migration/03_migration-project-planning.md) recommends an **epic feature branch** with phase PRs merged there before **`main`**. Teams may still land a self-contained migration as **one PR to `main`** when maintainers agree—call out the deviation in the PR body so reviewers know it was intentional.
+
+---
+
 ## TL;DR
 
 - Tabs is a three-element architecture (`swc-tabs`, `swc-tab`, `swc-tab-panel`). Overflow is deferred to phase 2.
-- Keyboard navigation migrates from `RovingTabindexController` to `FocusgroupNavigationController` ([#6129](https://github.com/adobe/spectrum-web-components/pull/6129), merged), fixing 1st-gen bugs with direction, RTL, and orientation
-- Disabled tabs use `aria-disabled="true"` (not native `disabled`) so they remain discoverable by assistive technology
+- Keyboard navigation **drops** `RovingTabindexController` in favor of **APG-aligned** handling in `TabsBase.handleKeyDown` (direction, RTL, orientation, disabled-tab rules). `FocusgroupNavigationController` ([#6129](https://github.com/adobe/spectrum-web-components/pull/6129), merged) is **available** for a future refactor if we want shared infrastructure with other 2nd-gen components.
+- Disabled tabs expose **`aria-disabled="true"`** to assistive technology and stay **focusable in the tab sequence** per APG; activation is guarded. Authors still use the **`disabled`** attribute / property as the public control.
 - `aria-orientation` must be co-located with `role="tablist"` (fixing a 1st-gen bug where they were on different elements)
-- `auto` boolean renamed to `keyboardActivation` (`'automatic' | 'manual'`) to align with React Spectrum (Q16)
-- `compact` boolean renamed to `density` (`'compact' | 'regular'`) to align with Figma/React Spectrum (Q17)
-- `emphasized`, `quiet`, and `size` are **not in the S2 API** and are removed unless design confirms otherwise (Q18)
+- **S2-aligned `swc-tabs` API:** **`keyboard-activation`** (`manual` \| `automatic`), **`density`** (`regular` \| `compact`), plus **`direction`**, **`label`**, **`selected`**, **`disabled`** — no **`quiet`**, **`emphasized`**, or **`size`** on the host (see [Implementation status](#implementation-status-initial-2nd-gen-ship))
 - `direction="vertical-right"` is a 1st-gen SWC addition not in Spectrum CSS; removal is a breaking change for consumers using it (Q4)
 - S2 overflow changes from scroll-based to Picker-based collapse — **deferred to phase 2** (Q5, Q19 resolved)
 - Several public API surfaces are removed: `rovingTabindexController` field, `focusElement` getter (`Focusable` dropped — Q2 resolved), module-level exports, CSS deep imports
@@ -76,13 +85,13 @@
 
 ### Recently resolved
 
-- `Q1`: `FocusgroupNavigationController` merged ([#6129](https://github.com/adobe/spectrum-web-components/pull/6129)). Tabs will use this controller.
-- `Q2`: `Focusable` mixin not needed — `FocusgroupNavigationController` + `delegatesFocus` covers all use cases.
+- `Q1`: `FocusgroupNavigationController` merged ([#6129](https://github.com/adobe/spectrum-web-components/pull/6129)). **Initial ship:** tabs use **`TabsBase.handleKeyDown`**; adopting the shared controller is an optional follow-up.
+- `Q2`: `Focusable` mixin not needed — roving tabindex + keyboard behavior live in **`TabsBase`**; `swc-tabs` uses **`delegatesFocus`** on its shadow root.
 - `Q5`, `Q14`, `Q19`: Overflow deferred to phase 2.
 - `Q6`: `enableTabsScroll` deferred with overflow.
-- `Q8`: Moot — `size` removed per Q18.
+- `Q8`: **Resolved for S2 ship** — **`size`** is not a public API on `swc-tabs`; default typography only (supersedes prior “default `size=m`” interim note).
 - `Q11`: Internal DOM changes are not a consumer concern.
-- `Q18`: Downgraded from blocking — S2 evidence is clear, design confirmation can happen during implementation.
+- `Q16`–`Q18`: **Resolved for S2 ship** — **`keyboard-activation`** / **`density`** replace **`auto`** / **`compact`**; **`emphasized`** and **`quiet`** removed from the public surface (see **`migration.md`**).
 
 ---
 
@@ -197,7 +206,7 @@
 
 ### sp-tabs-overflow (`TabsOverflow`)
 
-> **S2 design change (Q19):** Spectrum 2 replaces scroll-based overflow with a **Picker-based collapse** pattern. When tabs exceed available space, they collapse into a dropdown/Picker rather than scrolling. See [React Spectrum Tabs — overflow behavior](https://react-spectrum.adobe.com/Tabs#overflow-behavior) and the [Spectrum CSS overflow story](https://64762974a45b8bc5ca1705a2-yypcfpggii.chromatic.com/?path=/story/components-tabs--default&args=orientation:overflow). This fundamentally changes the overflow API and may mean `sp-tabs-overflow` is not carried forward in its current form.
+> **S2 design change (Q19):** Spectrum 2 replaces scroll-based overflow with a **Picker-based collapse** pattern. When tabs exceed available space, they collapse into a dropdown/Picker rather than scrolling. See [Spectrum Design Tabs — overflow behavior](https://react-spectrum.adobe.com/Tabs#overflow-behavior) and the [Spectrum CSS overflow story](https://64762974a45b8bc5ca1705a2-yypcfpggii.chromatic.com/?path=/story/components-tabs--default&args=orientation:overflow). This fundamentally changes the overflow API and may mean `sp-tabs-overflow` is not carried forward in its current form.
 
 **1st-gen API (for reference):**
 
@@ -310,7 +319,7 @@ This full modifier surface will not be carried forward to 2nd-gen. Consumers mus
 |---|---|---|---|
 | `Focusable` mixin | Focus delegation, disabled, tabIndex | TBD — may not be needed if focus is managed via controller | **Open** (Q2) |
 | `SizedMixin` | Size variants | `2nd-gen/packages/core/mixins/sized-mixin.ts` | Available |
-| `RovingTabindexController` | Keyboard nav, roving tabindex | 2nd-gen keyboard controller ([#6129](https://github.com/adobe/spectrum-web-components/pull/6129)) | **Open — depends on #6129** (Q1) |
+| `RovingTabindexController` | Keyboard nav, roving tabindex | **Initial ship:** APG-aligned keyboard handling implemented in `TabsBase.handleKeyDown` (B6/B7/B9). Optional follow-up: adopt `FocusgroupNavigationController` ([#6129](https://github.com/adobe/spectrum-web-components/pull/6129)) for shared infrastructure if we want parity with other 2nd-gen components. | **Shipped** (behavior); controller integration **TBD** |
 | Disabled mixin | `aria-disabled`, tabindex save/restore | 2nd-gen disabled mixin ([#6129](https://github.com/adobe/spectrum-web-components/pull/6129)) | **Open — depends on #6129** |
 | `FocusVisiblePolyfillMixin` | `:focus-visible` polyfill | TBD — evaluate if modern browsers need it | **Open** |
 | `ObserveSlotPresence` | Slot monitoring | TBD — may use native Lit slot change | **Open** |
@@ -360,14 +369,14 @@ This full modifier surface will not be carried forward to 2nd-gen. Consumers mus
 
 | # | What changes | 1st-gen behavior | 2nd-gen behavior | Consumer migration path |
 |---|---|---|---|---|
-| **B10** | Keyboard controller | `RovingTabindexController` | 2nd-gen keyboard controller ([#6129](https://github.com/adobe/spectrum-web-components/pull/6129)) | No consumer action (internal). Keyboard behavior verified to match APG. |
-| **B11** | `sp-tabs-scroll` event | `sp-tabs-scroll` | Renamed to follow 2nd-gen conventions (e.g., `swc-tabs-scroll`). | Update event listeners. |
-| **B12** | Default size | `SizedMixin` with `noDefaultSize: true` — no size attribute applied unless set. | Default to `size="m"` to match Spectrum 2 specification. | Consumers relying on implicit "no size" behavior: verify appearance. Explicit `size` attributes are unaffected. |
-| **B21** | `auto` → `keyboardActivation` | `auto` boolean attribute. `true` = automatic activation. | `keyboardActivation` attribute with values `'automatic'` \| `'manual'`. Aligns with React Spectrum naming. | Replace `auto` attribute with `keyboard-activation="automatic"`. Default remains manual. See Q16. |
-| **B22** | `compact` → `density` | `compact` boolean attribute. | `density` attribute with values `'compact'` \| `'regular'`. Aligns with Figma/React Spectrum API. | Replace `compact` attribute with `density="compact"`. See Q17. |
-| **B23** | `emphasized` removed | `emphasized` boolean attribute for visually emphasized style. | **Not in S2 API.** Removed. | Remove `emphasized` attribute. See Q18. |
-| **B24** | `quiet` removed | `quiet` boolean attribute for divider-less display. | **Not in S2 API.** Removed. | Remove `quiet` attribute. See Q18. |
-| **B25** | `size` removed | `SizedMixin` with t-shirt sizes (`s`, `m`, `l`, `xl`). | **Not in S2 API.** Tabs no longer have t-shirt sizing. | Remove `size` attribute. See Q18. |
+| **B10** | Keyboard controller | `RovingTabindexController` | **`TabsBase.handleKeyDown`** implements APG-aligned navigation; optional later adoption of **`FocusgroupNavigationController`** ([#6129](https://github.com/adobe/spectrum-web-components/pull/6129)) for shared infrastructure. | No consumer action (internal). Keyboard behavior verified to match APG. |
+| **B11** | `sp-tabs-scroll` event | `sp-tabs-scroll` | **Phase 1:** scroll APIs / overflow deferred — event not reintroduced until phase 2 overflow work. When shipped, align naming with 2nd-gen conventions (e.g. `swc-tabs-scroll`). | Update event listeners only after overflow phase lands. |
+| **B12** | Default size / typography | `SizedMixin` with `noDefaultSize: true` — optional `size` on host. | **No `size` API** on `swc-tabs`; single S2 default typography scale. Customize with `--swc-tabs-*` / `--swc-tab-*` if needed. | Remove `size` from `swc-tabs`; adjust CSS tokens for density/visual emphasis. |
+| **B21** | `auto` → `keyboardActivation` | `auto` boolean; `true` = automatic activation. | **`keyboard-activation`**: `manual` (default) or `automatic`. | Replace `auto` with `keyboard-activation="automatic"`; omit attribute for manual. |
+| **B22** | `compact` → `density` | `compact` boolean. | **`density`**: `regular` (default) or `compact`. | Replace `compact` with `density="compact"`. |
+| **B23** | `emphasized` removal | `emphasized` boolean on host. | **Not exposed** on `swc-tabs`. | Use CSS custom properties for accent styling if required. |
+| **B24** | `quiet` removal | `quiet` boolean on host. | **Not exposed** on `swc-tabs`. | Use CSS custom properties for divider treatment if required. |
+| **B25** | `size` removal | T-shirt sizes on host. | **Not exposed** on `swc-tabs`. | Remove `size`; rely on default scale or tokens. |
 | **B26** | Overflow pattern change | `sp-tabs-overflow` uses scroll buttons to navigate overflowing tabs. | S2 replaces scroll-based overflow with Picker-based collapse. **Deferred to phase 2** — `sp-tabs-overflow` is not ported in the initial migration. | Continue using 1st-gen `sp-tabs-overflow` until phase 2 delivers the Picker-based collapse. See Q5, Q19. |
 
 #### API removals and surface changes
@@ -377,7 +386,7 @@ This full modifier surface will not be carried forward to 2nd-gen. Consumers mus
 | **B13** | `direction="vertical-right"` removal | Supported as a valid `direction` value. Not in Spectrum CSS; SWC-only addition. | Removed unless Q4 resolves to keep. Only `'horizontal' \| 'vertical'` accepted. | Consumers using `direction="vertical-right"` must switch to `direction="vertical"` or a CSS-based alternative. Layout will change. |
 | **B14** | `enableTabsScroll` attribute rename | `enable-tabs-scroll` attribute (camelCase property). | Renamed to a simpler attribute (e.g., `scroll`). Old attribute silently stops working. | Find and replace `enable-tabs-scroll` attribute and `enableTabsScroll` property references. |
 | **B15** | Module-level exports removed | `ScaledIndicator`, `calculateScrollTargetForRightSide`, `calculateScrollTargetForLeftSide` exported from `@spectrum-web-components/tabs`. Listed in `package.json` `exports` map. | Internalized or removed. Not carried forward as public API. | Consumers importing these must replace with local implementations. |
-| **B16** | `rovingTabindexController` public field removed | `rovingTabindexController` is a public class field on `Tabs` (no `private`/`protected` modifier). Consumers can access it. | Replaced by internal 2nd-gen keyboard controller. No public equivalent exposed. | Consumers accessing `tabsEl.rovingTabindexController` must remove the reference. |
+| **B16** | `rovingTabindexController` public field removed | `rovingTabindexController` is a public class field on `Tabs` (no `private`/`protected` modifier). Consumers can access it. | Replaced by **internal** keyboard and roving-tabindex logic in **`TabsBase`**. No public equivalent exposed. | Consumers accessing `tabsEl.rovingTabindexController` must remove the reference. |
 | **B17** | `focusElement` getter removed | `focusElement` getter (from `Focusable` base class) returns the currently focusable tab or host. | If `Focusable` is dropped (Q2), this getter is no longer available. | Consumers calling `tabsEl.focusElement` must use standard DOM focus APIs instead. |
 | **B18** | CSS stylesheet deep imports removed | Individual CSS module exports available: `@spectrum-web-components/tabs/src/tab.css.js`, `tabs.css.js`, `tabs-overrides.css.js`, `tabs-sizes.css.js`, `tabs-sizes-overrides.css.js`, `tabs-overflow.css.js`. | 2nd-gen uses new CSS files. Legacy deep import paths no longer exist. | Consumers importing individual CSS modules must migrate to the new token surface or component-level styling. |
 
@@ -404,15 +413,12 @@ This full modifier surface will not be carried forward to 2nd-gen. Consumers mus
 
 | Property | Type | Default | Attribute | Notes |
 |---|---|---|---|---|
-| `keyboardActivation` | `'automatic' \| 'manual'` | `'manual'` | `keyboard-activation` | Replaces 1st-gen `auto` boolean. Aligns with React Spectrum naming. See Q16. |
-| `density` | `'compact' \| 'regular'` | `'regular'` | `density` | Replaces 1st-gen `compact` boolean. Aligns with Figma/React Spectrum naming. See Q17. |
+| `keyboard-activation` | `'manual' \| 'automatic'` | `'manual'` | `keyboard-activation` | `manual` = APG manual activation; `automatic` = selection follows focus. |
+| `density` | `'regular' \| 'compact'` | `'regular'` | `density` | `compact` reduces tab spacing (replaces 1st-gen boolean `compact`). |
 | `direction` | `'horizontal' \| 'vertical'` | `'horizontal'` | `direction` | Reflected. `vertical-right` dropped unless Q4 resolves to keep. |
 | `label` | `string` | `''` | `label` | `aria-label` for the tablist. |
 | `selected` | `string` | `''` | `selected` | Reflected. `value` of the selected tab. |
 | `disabled` | `boolean` | `false` | `disabled` | Sets `aria-disabled="true"` on tablist. |
-| ~~`emphasized`~~ | — | — | — | **Not in S2 API.** Removed unless design confirms otherwise. See Q18. |
-| ~~`quiet`~~ | — | — | — | **Not in S2 API.** Removed unless design confirms otherwise. See Q18. |
-| ~~`size`~~ | — | — | — | **Not in S2 API.** Tabs no longer have t-shirt sizing in S2. See Q18. |
 
 **`swc-tab`:** `disabled`, `label`, `selected`, `vertical`, `value` — unchanged from 1st-gen. `disabled` sets `aria-disabled="true"` internally.
 
@@ -427,16 +433,16 @@ This full modifier surface will not be carried forward to 2nd-gen. Consumers mus
 | `scrollState` (getter) | Public | **Not ported in phase 1** (Q14 resolved) | Part of scroll-based overflow, deferred to phase 2. |
 | `focusElement` (getter) | Public (from `Focusable`) | **Removed** (Q2 resolved) | `Focusable` mixin dropped. Use `delegatesFocus` instead. |
 
-**Events:** `change` (cancelable), `swc-tabs-scroll` (renamed from `sp-tabs-scroll`).
+**Events:** `change` (cancelable). Scroll-related events (**`sp-tabs-scroll`**) are **deferred** with overflow (phase 2); naming TBD when that work lands.
 
 > **Risk note (Q7):** Renaming `change` to `swc-change` would silently break every consumer using `@change` or `addEventListener('change', ...)`. The `change` event is native-like and cancelable — the 1st-gen pattern matches native `<select>` behavior. Strongly consider keeping `change` as-is.
 
-**Slots and parts:** Unchanged from 1st-gen. See [sp-tabs slots](#sp-tabs-tabs).
+**Slots:** Default slot for tabs and `name="tab-panel"` for panels — same light-DOM composition model as 1st-gen (B19 preserved). **`::part(tablist)` is not exposed** on `swc-tabs` (styling uses documented `--swc-tabs-*` / `--swc-tab-*` custom properties on `:host` instead of 1st-gen’s `part="tablist"`).
 
 ### Behavioral semantics
 
-- **Automatic activation (`keyboardActivation="automatic"`):** Selection follows focus — as the user arrows between tabs, selection updates immediately.
-- **Manual activation (`keyboardActivation="manual"`, default):** Arrow keys move focus without changing selection. Enter/Space/click activate the focused tab.
+- **Automatic activation (`keyboard-activation="automatic"`):** Selection follows focus as the user arrows between tabs.
+- **Manual activation (default, `keyboard-activation="manual"`):** Arrow keys move focus without changing selection. Enter/Space/click activate the focused tab.
 - **Cancelable selection:** `change` event supports `preventDefault()` to revert selection.
 - **Tab-to-panel:** Tab key moves focus from the tablist to the active `tabpanel` (`tabindex="0"` on the active panel). Shift+Tab returns to the tablist.
 - **Roving tabindex:** Exactly one tab has `tabindex="0"` at all times; all others are `tabindex="-1"`.
@@ -482,7 +488,7 @@ Any 2nd-gen change to DOM arrangement must preserve ID resolution. Options inclu
 
 | Layer | Files | Owns |
 |---|---|---|
-| **Core** | `2nd-gen/packages/core/components/tabs/` | `TabsBase`, `TabBase`, `TabPanelBase`, `Tabs.types.ts` — reusable behavior: selection, activation model, keyboard controller setup, ARIA wiring, tab-panel association, slot observation |
+| **Core** | `2nd-gen/packages/core/components/tabs/` | `TabsBase`, `TabBase`, `TabPanelBase`, `Tabs.types.ts` — reusable behavior: selection, activation model, keyboard handling (`handleKeyDown`), ARIA wiring, tab-panel association, slot observation |
 | **SWC** | `2nd-gen/packages/swc/components/tabs/` | `Tabs`, `Tab`, `TabPanel` — extends core bases, adds `render()`, S2 styling, element registration, Storybook stories, tests |
 | **SWC (overflow)** | `2nd-gen/packages/swc/components/tabs/` | `TabsOverflow` — if ported (Q5), extends core or standalone |
 
@@ -513,13 +519,13 @@ Any 2nd-gen change to DOM arrangement must preserve ID resolution. Options inclu
 - [ ] Migration plan complete and reviewed (this document)
 - [ ] Breaking changes documented and reviewed by team
 - [ ] File layout agreed (4 elements × core + SWC)
-- [ ] Dependencies evaluated — esp. keyboard controller readiness (Q1)
+- [ ] Dependencies evaluated — keyboard: Q1 resolved for ship (**`TabsBase.handleKeyDown`**); optional **`FocusgroupNavigationController`** adoption tracked separately
 - [ ] Open questions have owners and target resolution dates
 
 ### Setup
 
 - [ ] Create `2nd-gen/packages/core/components/tabs/` with:
-  - [ ] `Tabs.base.ts` — tablist host behavior, selection, `auto` activation
+  - [ ] `Tabs.base.ts` — tablist host behavior, selection, `keyboard-activation`
   - [ ] `Tab.base.ts` — individual tab behavior
   - [ ] `TabPanel.base.ts` — panel visibility, focus management
   - [ ] `Tabs.types.ts` — shared types (`TabDirection`, `TabSize`, etc.)
@@ -534,11 +540,10 @@ Any 2nd-gen change to DOM arrangement must preserve ID resolution. Options inclu
 ### API
 
 - [ ] Define types in `Tabs.types.ts`:
-  - [ ] `TabDirection` — `'horizontal' | 'vertical'` (evaluate `vertical-right`)
-  - [ ] `KeyboardActivation` — `'automatic' | 'manual'` (Q16)
-  - [ ] `TabDensity` — `'compact' | 'regular'` (Q17)
-  - [ ] `VALID_DIRECTIONS`
-- [ ] `TabsBase`: `keyboardActivation`, `density`, `direction`, `label`, `selected`, `disabled` — with static readonly validation arrays and `window.__swc.warn()` for invalid combinations (pending Q18 confirmation for `emphasized`, `quiet`, `size` removal)
+  - [ ] `TabsDirection` — `'horizontal' | 'vertical'` (`vertical-right` dropped)
+  - [ ] `KeyboardActivation` — `'manual' | 'automatic'`; `TabDensity` — `'regular' | 'compact'`
+  - [ ] `VALID_DIRECTIONS`, `KEYBOARD_ACTIVATIONS`, `TAB_DENSITIES`
+- [ ] `TabsBase`: `keyboard-activation`, `density`, `direction`, `label`, `selected`, `disabled` — with static readonly validation arrays and `window.__swc.warn()` for invalid combinations where applicable
 - [ ] `TabBase`: `disabled`, `label`, `selected`, `vertical`, `value`
 - [ ] `TabPanelBase`: `selected`, `value`
 - [ ] Mark internal helpers with `@internal`
@@ -553,8 +558,7 @@ Any 2nd-gen change to DOM arrangement must preserve ID resolution. Options inclu
 - [ ] Migrate CSS from Spectrum 2 tokens
 - [ ] Replace `--spectrum-tabs-*` / `--mod-tabs-*` with `--swc-tabs-*` tokens
 - [ ] Selection indicator animation with token-based duration
-- [ ] Density (`compact` / `regular`) visual variant (Q17)
-- [ ] Verify `emphasized`, `quiet`, and `size` styling are not needed per S2 (Q18)
+- [ ] `density` values (`regular`, `compact`)
 - [ ] Vertical orientation layout
 - [ ] Remove `<label>` wrapper from `sp-tab` shadow DOM (use `<span>` or bare slot)
 - [ ] Verify language-specific selectors (`:lang(ja)`, `:lang(ko)`, `:lang(zh)`) if present in S2 source
@@ -573,8 +577,8 @@ Any 2nd-gen change to DOM arrangement must preserve ID resolution. Options inclu
 
 #### Keyboard and focus
 
-- [ ] Migrate from `RovingTabindexController` to 2nd-gen keyboard controller
-- [ ] Implement `keyboardActivation` (`'automatic'` / `'manual'`) activation modes
+- [ ] Keyboard: APG-aligned `handleKeyDown` shipped; optional — migrate to `FocusgroupNavigationController` ([#6129](https://github.com/adobe/spectrum-web-components/pull/6129)) for shared infra
+- [ ] Implement automatic vs manual activation (`keyboard-activation` `manual` / `automatic`)
 - [ ] Tab key from tablist to panel content; Shift+Tab back
 - [ ] Home/End within tablist
 - [ ] Verify RTL arrow direction
@@ -605,11 +609,11 @@ Any 2nd-gen change to DOM arrangement must preserve ID resolution. Options inclu
 | `change` event fires | Selecting a tab dispatches `change` | Event dispatching |
 | `change` event is cancelable | `preventDefault()` reverts selection | Cancelable logic |
 | Manual: arrows don't select | Arrow keys move focus without changing `selected` | Keyboard handler |
-| Automatic: arrows select | Arrow keys move focus and update `selected` | `keyboardActivation="automatic"` + keyboard handler |
+| Automatic: arrows select | Arrow keys move focus and update `selected` | `keyboard-activation="automatic"` + keyboard handler |
 | Disabled tab focusable but not activatable | Arrow key reaches disabled tab; Enter/Space no-op | Disabled guard |
 | Inactive panel hidden | Non-selected panel has `hidden` or `aria-hidden="true"` | Panel visibility |
 | Direction sets `aria-orientation` | `direction="vertical"` sets `aria-orientation="vertical"` on tablist node | Direction handler |
-| Size applies correctly | Each size renders correct attribute/class | Size mixin |
+| Density spacing | `density="compact"` tightens tablist gap | CSS + attribute |
 | RTL arrow swap | Arrow keys swap in `dir="rtl"` | RTL handling |
 | Memory re-entry | Tab out and back: focus returns to last-focused tab | Focus memory |
 | `aria-disabled` on individual tab | Disabled tab has `aria-disabled="true"` | Disabled handling |
@@ -728,7 +732,7 @@ Any 2nd-gen change to DOM arrangement must preserve ID resolution. Options inclu
 
 #### Visual regression
 
-- [ ] Add VRT coverage for direction and density combinations (update if Q18 confirms `size`/`quiet`/`emphasized` removal)
+- [ ] Add VRT coverage for `direction` and `density` values
 - [ ] Add visual regression for selection indicator animation
 - [ ] Add high-contrast coverage for selected, unselected, disabled, and focus states
 - [ ] Add focus-visible regression coverage
@@ -736,7 +740,7 @@ Any 2nd-gen change to DOM arrangement must preserve ID resolution. Options inclu
 ### Documentation
 
 - [ ] JSDoc on all public properties, methods, events, and slots
-- [ ] Storybook stories: Playground, Overview, Anatomy, Orientations, Density, States, Behaviors, Accessibility (update if Q18 confirms `size`/`quiet`/`emphasized` removal)
+- [ ] Storybook stories: Playground, Overview, Anatomy, Directions, visual variants, sizes, states, activation modes, accessibility
 - [ ] Consumer migration guide updated with all finalized breaking changes (B1–B26)
 - [ ] Document `direction="vertical-right"` removal and migration path (B13)
 - [ ] Document `enableTabsScroll` rename (B14)
@@ -751,7 +755,7 @@ Any 2nd-gen change to DOM arrangement must preserve ID resolution. Options inclu
 - [ ] All tests pass
 - [ ] Storybook verified visually
 - [ ] Status table updated
-- [ ] Peer engineer sign-off
+- [ ] Compare implementation and Storybook copy to this plan and to `2nd-gen/packages/swc/components/tabs/migration.md`; call out any API or checklist drift in the PR.
 
 ---
 
@@ -762,11 +766,8 @@ Any 2nd-gen change to DOM arrangement must preserve ID resolution. Options inclu
 | # | Item | Blocking? | Owner |
 |---|---|---|---|
 | **Q3** | Cross-root ARIA: how will `aria-controls` / `aria-labelledby` ID references resolve if 2nd-gen changes the DOM arrangement? | **Yes** | Implementation |
-| **Q4** | Should `direction="vertical-right"` be carried forward? Not in Spectrum CSS or React Spectrum (RS supports `orientation="vertical"` only, no right-side variant). This is a 1st-gen SWC-only addition that controls which side the selection indicator renders on. **Recommendation: drop it.** Consumers can achieve the same layout with CSS. | No | Design |
+| **Q4** | Should `direction="vertical-right"` be carried forward? Not in Spectrum CSS or Spectrum Design (vertical orientation only; no right-side variant). This is a 1st-gen SWC-only addition that controls which side the selection indicator renders on. **Recommendation: drop it.** Consumers can achieve the same layout with CSS. | No | Design |
 | **Q7** | Event naming: keep `change` as-is or rename to `swc-change`? Per the [JSDoc standards guide](../../../02_style-guide/02_typescript/07_jsdoc-standards.md), DOM-style names are preferred and `swc-` is reserved for custom events with no native equivalent. **Needs team alignment — flag for sync discussion.** | **Yes** | API reviewer |
-| **Q16** | Rename `auto` boolean to `keyboardActivation` (`'automatic' \| 'manual'`) to align with React Spectrum? More descriptive API that clarifies the behavior. | No | API reviewer |
-| **Q17** | Rename `compact` boolean to `density` (`'compact' \| 'regular'`) to align with Figma/React Spectrum? | No | API reviewer / Design |
-| **Q18** | `emphasized`, `quiet`, and `size` do not appear in the S2 API (per 5t3ph review). Confirm removal. Breaking changes B23–B25. Evidence is clear; design confirmation can happen during implementation. | No | Design |
 
 ### Open — scope and prerequisites
 
@@ -783,14 +784,15 @@ Any 2nd-gen change to DOM arrangement must preserve ID resolution. Options inclu
 
 | # | Decision | Resolution |
 |---|---|---|
-| **Q1** | 2nd-gen keyboard controller readiness | `FocusgroupNavigationController` merged into `main` on 2026-04-16 ([#6129](https://github.com/adobe/spectrum-web-components/pull/6129)). Tabs must use this controller. It provides roving tabindex, directional navigation, RTL support, wrap, skip-disabled, memory, and typeahead. |
-| **Q2** | `Focusable` mixin disposition | Not needed. `FocusgroupNavigationController` manages roving tabindex for the tab collection. `swc-tabs` uses `delegatesFocus` on its shadow root instead. The `focusElement` getter is dropped (B10). |
+| **Q1** | 2nd-gen keyboard controller readiness | `FocusgroupNavigationController` merged into `main` on 2026-04-16 ([#6129](https://github.com/adobe/spectrum-web-components/pull/6129)). **Initial ship:** tabs implement roving tabindex and keyboard navigation in **`TabsBase`** (no hard dependency on the controller). **Optional follow-up:** refactor onto the controller for wrap, typeahead, memory, and consistency with other 2nd-gen focus groups. |
+| **Q2** | `Focusable` mixin disposition | Not needed. Roving tabindex and tablist keyboard behavior are handled in **`TabsBase`**. `swc-tabs` uses `delegatesFocus` on its shadow root instead. The `focusElement` getter is dropped (B10). |
 | **Q5** | `sp-tabs-overflow` migration scope | Deferred to phase 2. S2 Picker-based collapse requires design alignment and `swc-picker` availability. Porting scroll-based overflow would be throwaway work. |
 | **Q6** | `enableTabsScroll` rename | Deferred with overflow to phase 2 (Q5, Q19). |
-| **Q8** | Default size | Moot — `size` is not in the S2 API (Q18, B25). If Q18 is reversed, reopen. |
+| **Q8** | Default size | **Shipped:** no `size` attribute on `swc-tabs`; default S2 typography scale only. See B12. |
 | **Q11** | `<label>` element inside `sp-tab` shadow DOM | Internal DOM structure is not a consumer API contract. Shadow DOM internals do not belong in consumer migration guides. No action needed. |
 | **Q14** | Public scroll API (`scrollTabs`, `scrollToSelection`, `scrollState`) | Not ported in phase 1. Scroll API only exists to support `sp-tabs-overflow`, which is deferred. Will be revisited in phase 2. |
 | **Q19** | Overflow pattern (scroll vs Picker collapse) | Deferred to phase 2. Scroll-based `sp-tabs-overflow` will not be ported. Phase 2 will implement S2 Picker-based collapse once design alignment and `swc-picker` are available. Consumers should remain on 1st-gen `sp-tabs-overflow` until then. |
+| **Q16–Q18** | Spectrum Design–aligned API (`keyboardActivation`, `density`, drop `emphasized` / `quiet` / `size` on host) | **Shipped** for `swc-tabs`; see [Implementation status](#implementation-status-initial-2nd-gen-ship) and **`migration.md`**. |
 
 ---
 
@@ -809,6 +811,6 @@ Any 2nd-gen change to DOM arrangement must preserve ID resolution. Options inclu
 - [WAI-ARIA APG: Tabs with manual activation](https://www.w3.org/WAI/ARIA/apg/patterns/tabs/examples/tabs-manual/)
 - [Deque University: Tabpanel](https://dequeuniversity.com/library/aria/tabpanel)
 - [Inclusive Components: Tabbed interfaces](https://inclusive-components.design/tabbed-interfaces/)
-- [React Spectrum Tabs](https://react-spectrum.adobe.com/react-spectrum/Tabs.html)
+- [Spectrum Design Tabs](https://react-spectrum.adobe.com/react-spectrum/Tabs.html)
 - [2nd-gen keyboard controller PR #6129](https://github.com/adobe/spectrum-web-components/pull/6129)
 - SWC-1898: Tabs Epic

@@ -51,10 +51,10 @@ export const ConditionalSection = ({ tag, title, hideTitle = false }) => {
     }
 
     return (
-        <>
+        <div data-section={tag}>
             {title && <h2>{title}</h2>}
             <SpectrumStories tag={tag} hideTitle={hideTitle} />
-        </>
+        </div>
     );
 
 };
@@ -109,6 +109,7 @@ export const ConditionalGettingStarted = () => {
 <ConditionalGettingStarted />
 
 <ConditionalSection tag="anatomy" title="Anatomy" hideTitle={true} />
+<ConditionalSection tag="upcoming" title="Upcoming features" hideTitle={true} />
 <ConditionalSection tag="usage" hideTitle={true} />
 <ConditionalSection tag="options" title="Options" />
 <ConditionalSection tag="states" title="States" />
