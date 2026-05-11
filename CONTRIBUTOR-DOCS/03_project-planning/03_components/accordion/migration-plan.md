@@ -55,14 +55,14 @@
 ## TL;DR
 
 - **No 2nd-gen accordion** package exists yet under `2nd-gen/packages/`; Setup phase creates core + SWC scaffolds.
-- **Accessibility migration analysis** is the behavioral contract for WCAG 2.2 AA; 2nd-gen diverges from 1st-gen on keyboard (no `FocusGroupController` arrow/Home/End on the host, no roving `tabindex` between item hosts), disabled header semantics (`aria-disabled` + panel `inert`), closed-panel hiding (`hidden` vs `display: none` only), heading **API** (**slotted** header label vs string **`label`**), and **Space** handling (**SWC-1487**).
+- **Accessibility migration analysis** is the behavioral contract for WCAG 2.2 AA; 2nd-gen diverges from 1st-gen on keyboard (no `FocusGroupController` arrow/Home/End on the host, no roving `tabindex` between item hosts), disabled header semantics (`aria-disabled` + panel `inert`), closed-panel hiding (`hidden` vs `display: none` only), heading **API** (**slotted** heading text **only** — **no** string **`label`**, clean break vs 1st-gen), and **Space** handling (**SWC-1487**).
 - **Rendering-and-styling migration analysis** is **in progress** — 1st-gen inventory and DOM summary are in [rendering-and-styling migration analysis](./rendering-and-styling-migration-analysis.md); finish S2 selector/token pass before Phase 4, with **spectrum-css** in the [same workspace](../../02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md#workspace-setup).
 - **React Spectrum S2 parity (planning):** Align public surface where authors expect cross-product parity — **`quiet`** on the accordion (from RS **`isQuiet`**) and **`disabled`** on the accordion host (**accordion-wide** disable, from RS **`isDisabled`** on **`Accordion`**), in addition to per-item **`disabled`**. Details: [React Spectrum alignment considerations](#react-spectrum-alignment-considerations).
 - **Severity:** **Normal** for migration planning. Escalate to **Major** only if Spectrum 2 accordion CSS is missing or core infrastructure blocks a core/SWC split (not observed today).
 
 ### Most blocking open questions
 
-None for **starting** implementation, provided the rendering roadmap is expanded before styling work. Resolve **`label` vs slot precedence**, **final slot names** (heading vs panel), and **toggle event naming** before API freeze (see [Open — API and scope](#open--api-and-scope)). After [rendering-and-styling migration analysis](./rendering-and-styling-migration-analysis.md) is completed with the [analyze rendering and styling](../../02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_analyze-rendering-and-styling/README.md) workflow, do a **consistency pass** on this plan and remove stale draft placeholders.
+None for **starting** implementation, provided the rendering roadmap is expanded before styling work. **`label` vs slot** is **decided:** slotted heading only — **no** 2nd-gen **`label`** (see [accessibility migration analysis](./accessibility-migration-analysis.md)). Still resolve **final slot names** (heading vs panel), and **toggle event naming** before API freeze (see [Open — API and scope](#open--api-and-scope)). After [rendering-and-styling migration analysis](./rendering-and-styling-migration-analysis.md) is completed with the [analyze rendering and styling](../../02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_analyze-rendering-and-styling/README.md) workflow, do a **consistency pass** on this plan and remove stale draft placeholders.
 
 ---
 
@@ -198,7 +198,7 @@ Inherited: `SizedMixin(Focusable)` — `tabIndex` / `focus` / `blur` / `click` d
 | # | What changes | 1st-gen behavior | 2nd-gen / target behavior | Consumer migration path |
 |---|---|---|---|---|
 | **B1** | Tags and package | `sp-*`, `@spectrum-web-components/accordion` | `swc-*`, 2nd-gen package layout | Update imports and tag names. |
-| **B2** | Heading label API | String `label` only; default slot = **panel** | Slotted **header** label (see [Shadow DOM output](#shadow-dom-output-rendered-html)); optional temporary **`label`** fallback TBD | Migrate off **`label`** to slotted heading text; separate **panel** slot if the default slot becomes heading-only ([accessibility migration analysis](./accessibility-migration-analysis.md)). |
+| **B2** | Heading label API | String `label` only; default slot = **panel** | Slotted **header** label only — **no** 2nd-gen **`label`** attribute (clean break; see [accessibility migration analysis](./accessibility-migration-analysis.md)) | Migrate **`label="…"`** to slotted heading text; separate **panel** slot if the default slot becomes heading-only. |
 | **B3** | Keyboard — headers | `FocusGroupController`: ArrowUp/Down, Home, End with `preventDefault`; roving `tabindex` on item hosts | Tab / Shift+Tab through all focusables; no default header-only arrows; see [Why we omit roving tabindex…](./accessibility-migration-analysis.md#why-we-omit-roving-tabindex-and-optional-header-only-arrows) | Remove reliance on arrow keys between headers. |
 | **B4** | Disabled item | Native `disabled` on shadow `<button>` + host `aria-disabled` | Prefer `aria-disabled` on header, `inert` on panel; do not fake disabled with `tabindex="-1"` on header | Tests and SR workflows that assumed native disabled-only behavior. |
 | **B5** | Closed panel | `display: none` on `#content` | `hidden` (or equivalent) per a11y analysis | Usually none if markup unchanged; a11y tree may differ slightly. |
@@ -231,7 +231,7 @@ No 2nd-gen package yet — this section records **planned** decisions from analy
 | Accordion — `disabled` | Boolean; reflected attribute **`disabled`** | Parity with RS **`isDisabled`** on **`Accordion`**: **accordion-wide** disable — every item non-interactive (no expand/collapse), same **a11y** posture as item-level disable ([accessibility migration analysis](./accessibility-migration-analysis.md): header **`aria-disabled`**, panel **`inert`**). When the host is **`disabled`**, that gate **wins** over per-item **`disabled`** being false. When the host clears **`disabled`**, each item’s own **`disabled`** applies again unchanged. For **visual** disabled state on descendants, prefer **container queries** or host-driven styling so you do **not** reflect host **`disabled`** onto every child **solely** for CSS—only use per-item flags where behavior or a11y requires it. |
 | Item | `open`, `disabled` | Same semantics as today unless renamed for consistency. **No** public **`quiet`** on the item. |
 | Item (implementation) | **`protected` `heading`** (`2`–`6`) | **Not** public API—not reflected, not set by consumers. Parent **`level`** assigns **`heading`** on each slotted item (core/SWC lifecycle). |
-| Heading text | Slotted (see [Shadow DOM output](#shadow-dom-output-rendered-html)) | **Rationale:** a string **`label`** cannot mirror phrasing content (`<strong>`, `<code>`) into the header’s accessible name the way slotted light DOM can; matches [accessibility migration analysis](./accessibility-migration-analysis.md). **Breaking** vs 1st-gen **`label`**; precedence **slot wins** if optional **`label`** exists temporarily (dev warning). |
+| Heading text | Slotted (see [Shadow DOM output](#shadow-dom-output-rendered-html)) | **Rationale:** a string **`label`** cannot mirror phrasing content (`<strong>`, `<code>`) into the header’s accessible name the way slotted light DOM can; matches [accessibility migration analysis](./accessibility-migration-analysis.md). **Breaking** vs 1st-gen **`label`**: **clean break** — 2nd-gen does **not** expose **`label`**; authors migrate markup to the heading slot only. |
 | Events | Renamed toggle event | Exact string TBD. |
 
 ### React Spectrum alignment considerations
@@ -306,8 +306,8 @@ Gates align with [01_washing-machine-workflow.md](../../02_workstreams/02_2nd-ge
 
 ### API
 
-- [ ] Public properties, attributes, and events match agreed 2nd-gen surface (including renames and optional `label` deprecation); include reflected **`density`** (`compact` \| `regular` \| `spacious`), **`quiet`** (host only), and host **`disabled`** per [React Spectrum alignment considerations](#react-spectrum-alignment-considerations)
-- [ ] Dev-mode warning when **`density`** is omitted (if adopted) and if both slot and `label` are supported temporarily and both are set
+- [ ] Public properties, attributes, and events match agreed 2nd-gen surface (including renames; **no** string **`label`** on item — heading via slot only); include reflected **`density`** (`compact` \| `regular` \| `spacious`), **`quiet`** (host only), and host **`disabled`** per [React Spectrum alignment considerations](#react-spectrum-alignment-considerations)
+- [ ] Dev-mode warning when **`density`** is omitted (if adopted)
 - [ ] Exclusive open (`allow-multiple` false): decide **`RadioController`** vs inline sibling-close logic; if controller is shared, document API and add tests
 
 ### Styling
@@ -346,7 +346,6 @@ Gates align with [01_washing-machine-workflow.md](../../02_workstreams/02_2nd-ge
 | Topic | Question |
 |---|---|
 | **Standalone item** | **Direction:** **`swc-accordion-item`** without a parent stays **supported** with reasonable defaults (**`protected` `heading`** defaults to **`3`**, same as today’s accordion default)—matches existing tests and story patterns. Ticket any change if product requires parent-only usage. |
-| **`label` vs slot** | Retain **`label`** as deprecated fallback for one major? Precedence if both (analysis: **slot wins** + dev warning). |
 | Heading slot content | Text-only vs inline phrasing (`<strong>`, `<code>`) in heading slot. |
 | Toggle event | Exact `swc-*` event name. |
 | Rendering doc | Who expands [rendering-and-styling migration analysis](./rendering-and-styling-migration-analysis.md) with S2 paths before Phase 4? |
