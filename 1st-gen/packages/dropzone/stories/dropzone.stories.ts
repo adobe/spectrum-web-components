@@ -206,3 +206,64 @@ export const Controlled = (): TemplateResult => {
     <controlled-dropzone></controlled-dropzone>
   `;
 };
+
+const logEvent = (event: Event): void => {
+  console.log(event.type);
+};
+
+/**
+ * Dev-only story for verifying drag-and-drop events fire correctly
+ * across platforms (e.g. Windows Chrome).
+ */
+export const EventLogger = (): TemplateResult => {
+  return html`
+    <sp-dropzone
+      id="dropzone"
+      tabindex="0"
+      @sp-dropzone-should-accept=${logEvent}
+      @sp-dropzone-dragover=${logEvent}
+      @sp-dropzone-dragleave=${logEvent}
+      @sp-dropzone-drop=${logEvent}
+    >
+      <sp-illustrated-message heading="Drag and Drop Your Image">
+        ${illustration}
+      </sp-illustrated-message>
+      <div>
+        <label for="file-input">
+          <sp-link
+            href="javascript:;"
+            onclick="this.parentElement.nextElementSibling.click()"
+          >
+            Select an Image
+          </sp-link>
+          from your computer
+        </label>
+        <input
+          type="file"
+          id="file-input"
+          accept="image/*"
+          style="display: none"
+        />
+      </div>
+      <div>
+        or
+        <sp-link href="http://stock.adobe.com" target="_blank">
+          Search Adobe Stock
+        </sp-link>
+      </div>
+    </sp-dropzone>
+  `;
+};
+
+EventLogger.parameters = {
+  tags: ['!dev'],
+};
+
+EventLogger.swc_vrt = {
+  skip: true,
+};
+
+EventLogger.parameters = {
+  // Disables Chromatic's snapshotting on a global level
+  chromatic: { disableSnapshot: true },
+};

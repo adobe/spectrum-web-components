@@ -31,6 +31,10 @@
       "types": "./dist/components/badge/index.d.ts",
       "import": "./dist/components/badge/index.js"
     },
+    "./components/button": {
+      "types": "./dist/components/button/index.d.ts",
+      "import": "./dist/components/button/index.js"
+    },
     "./components/divider": {
       "types": "./dist/components/divider/index.d.ts",
       "import": "./dist/components/divider/index.js"
@@ -148,6 +152,9 @@
       ],
       "components/badge": [
         "dist/components/badge/index.d.ts"
+      ],
+      "components/button": [
+        "dist/components/button/index.d.ts"
       ],
       "components/divider": [
         "dist/components/divider/index.d.ts"

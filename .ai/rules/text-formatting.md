@@ -44,3 +44,45 @@ alwaysApply: false
 - Be concise and direct
 - Avoid jargon unless technically necessary
 - Define abbreviations on first use
+
+## Punctuation
+
+### Em dashes
+
+Do not use em dashes (`—`) in documentation prose or code comments. Replace them with the punctuation that matches the sentence's intent:
+
+| Em dash usage                         | Replace with                  |
+| ------------------------------------- | ----------------------------- |
+| Clause separator                      | Semicolon (`;`)               |
+| Introducing elaboration or an example | Colon (`:`) or a new sentence |
+| Parenthetical aside                   | Comma or parentheses          |
+
+```markdown
+<!-- ❌ Bad -->
+
+appearance — disabled colors and an animated spinner
+fill-only — fill-style="outline" is not supported
+
+<!-- ✅ Good -->
+
+appearance: disabled colors and an animated spinner
+fill-only; fill-style="outline" is not supported
+```
+
+## Internal references
+
+### No Jira ticket references in documentation
+
+Do not include Jira ticket numbers (e.g. `SWC-1139`, `SWC-2034`) in documentation files, JSDoc comments, or MDX guides. They are internal tracking IDs that add no value to readers outside the team and become stale or inaccessible over time. Describe the factual constraint or behavior instead.
+
+```markdown
+<!-- ❌ Bad -->
+
+verify contrast on hover (SWC-1139)
+tracked for a future release (SWC-2035)
+
+<!-- ✅ Good -->
+
+verify that the background color maintains sufficient contrast on hover
+not part of the initial 2nd-gen Button scope
+```

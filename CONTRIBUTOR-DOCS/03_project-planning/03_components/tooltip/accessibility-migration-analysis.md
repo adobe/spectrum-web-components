@@ -50,9 +50,9 @@ This guide explains accessibility for the planned 2nd gen Tooltip (`swc-tooltip`
 
 ### Quick scan
 
-1. Place and show tooltips in a predictable way (**[CSS anchor positioning](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_anchor_positioning)** first; add JavaScript only when the browser lacks anchors or CSS cannot do the job). See the [CSS-Tricks anchor positioning guide](https://css-tricks.com/css-anchor-positioning-guide/).
+1. Keep placement **predictable and testable** for users. Near-term overlay and Tooltip delivery still leans on **JavaScript placement** (for example **Floating UI** in Ruben’s overlay/popover work)—not **CSS anchor positioning** as the default yet, because anchor support is still uneven across browsers and gaps remain (caret alignment, collision refinement). Treat deep positioning stack choices as **[rendering-and-styling migration](./rendering-and-styling-migration-analysis.md)** scope; this doc stays focused on **roles, names, keyboard, pointer, and SR behavior**. **[MDN anchor positioning](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_anchor_positioning)** and the [CSS-Tricks anchor positioning guide](https://css-tricks.com/css-anchor-positioning-guide/) stay useful background for where CSS may eventually reduce JS.
 2. Give everyone a fair path—not only hover. Keyboard users need the same cue when an element is focused. On touch, **prefer toggletip (explicit toggle)** or a dedicated help affordance—not **`longpress`**/`triggerInteraction='longpress'` as the primary way to expose brief hints (**[SWC-2022](https://jira.corp.adobe.com/browse/SWC-2022)**, **[SWC-1465](https://jira.corp.adobe.com/browse/SWC-1465)** Notes).
-3. Match established patterns ([Inclusive Components: Tooltips and toggletips](https://inclusive-components.design/tooltips-toggletips/)) where they fit.
+3. Match established patterns ([Sarah Higley: Tooltips in the time of WCAG 2.1](https://sarahmhigley.com/writing/tooltips-in-wcag-21/), [Inclusive Components: Tooltips and toggletips](https://inclusive-components.design/tooltips-toggletips/)) where they fit.
 
 ### Verified gap in today’s Tooltip (`sp-tooltip`)
 
@@ -91,13 +91,18 @@ Popover-style chrome (`swc-popover`, etc.) may still wrap the visuals—see [pop
 
 ### What a tooltip is
 
-- A Tooltip is brief extra text for a control someone can Tab to—that pattern is spelled out in the [APG Tooltip pattern](https://www.w3.org/WAI/ARIA/apg/patterns/tooltip/).
+- A Tooltip is brief extra text for a **real control** someone can Tab to (for example a **button**, **link**, or **text field**). It is **not** a free-floating label you bolt onto static copy—that pattern is spelled out in the [APG Tooltip pattern](https://www.w3.org/WAI/ARIA/apg/patterns/tooltip/).
+- **Toggletips** (popover-style surfaces and derivatives) intentionally pair with a **dedicated disclosure control**; do **not** stretch Tooltip into a “button to nowhere” that exists only to open help. Prefer **`swc-popover`**, **`sp-contextual-help`**, or another popover-derived pattern when the UX needs an explicit affordance—see [Sarah Higley: Tooltips in the time of WCAG 2.1](https://sarahmhigley.com/writing/tooltips-in-wcag-21/) and [Inclusive Components: Tooltips and toggletips](https://inclusive-components.design/tooltips-toggletips/).
 - While the hint shows, connect it with **`aria-describedby`**. Toggle-style variants may add **`aria-expanded`** / **`aria-controls`** (see [Inclusive Components: Tooltips and toggletips](https://inclusive-components.design/tooltips-toggletips/)).
 - Keyboard focus stays on the trigger. Tooltip text is **`role="tooltip"`** and is not normally in Tab order.
 
 ### When to use something else
 
-Pick **contextual help** when the UX is “user opens explicit help, and for headings, static text strips, grouped fields the user taps “help” beside, richer copy or links inside the panel. See [Spectrum Contextual help](https://spectrum.adobe.com/page/contextual-help/), [`sp-contextual-help`](../../../../1st-gen/packages/contextual-help/README.md), [React Spectrum ContextualHelp](https://react-spectrum.adobe.com/ContextualHelp) vs [Tooltip](https://react-spectrum.adobe.com/Tooltip) (non-interactive layouts).
+Pick **contextual help** when the UX is “user opens explicit help”—not “hint follows focus.” Guides:
+
+| Use contextual help instead | Links |
+| --- | --- |
+| Headings, static text strips, grouped fields the user taps “help” beside, richer copy or links inside the panel | [Spectrum Contextual help](https://spectrum.adobe.com/page/contextual-help/), [`sp-contextual-help`](../../../../1st-gen/packages/contextual-help/README.md), [React Spectrum ContextualHelp](https://react-spectrum.adobe.com/ContextualHelp) vs [Tooltip](https://react-spectrum.adobe.com/Tooltip) (non-interactive layouts) |
 
 - **Do not** treat Tooltip as **contextual help** or as a focusable **`dialog`**-style surface. Patterns that expose **interactive** bubble content, **`role="dialog"`** choreography, moving **focus inside** the popup, or a **persistent “help opens here” panel** belong in **`sp-contextual-help`**, **popover**, or **dialog**—not under **`role="tooltip"`**. See **[SWC-1465](https://jira.corp.adobe.com/browse/SWC-1465)** (**Notes**) for authoring guidance (**[APG](#pattern-in-the-apg)** non-modal dialog caveat points at the same boundary).
 - Long or interactive content wears out screen reader users if forced through **`aria-describedby`** only—Deque explains why in **[Deque Tooltip](https://dequeuniversity.com/library/aria/tooltip)**. Move heavy UI to **`dialog`**, **`popover`**, or contextual help.
@@ -109,12 +114,12 @@ Pick **contextual help** when the UX is “user opens explicit help, and for hea
 - Contextual-help popovers are **`sp-contextual-help`**, not Tooltip—when that is what you intend, skip **`role="tooltip"`** (**[When to use something else](#when-to-use-something-else)**).
 - Not a **focusable** hint or an APG **non-modal `dialog`** wrapped in Tooltip chrome—those are **contextual help** / **popover** / **`dialog`**, not Tooltip (**[When to use something else](#when-to-use-something-else)**).
 - Not a menu, listbox, or full **`dialog`** with links/buttons trapped inside Tooltip chrome—those belong under **[When to use something else](#when-to-use-something-else)**.
-- Not the control’s sole **name**. The paired control keeps its readable name; Tooltip text only adds hints.
+- Not a substitute for a **visible** control when users need discoverable help—**prefer popover-derived patterns** (explicit button or info icon that opens **`aria-expanded`** content) instead of a Tooltip that is the only visible cue. **`aria-labelledby`** from tooltip copy onto an **icon-only button** can satisfy the **accessible name** in narrow cases ([Carbon Tooltip accessibility](https://carbondesignsystem.com/components/tooltip/accessibility/)), but product guidance here is still: **default to popover/contextual help** so the affordance and **`role`** story stay distinct from **`role="tooltip"`** supplementary text.
 
 ### Related
 
 - 1st-gen: [`sp-overlay`](../../../../1st-gen/packages/overlay/README.md) **`type="hint"`** plus [`overlay-trigger`](../../../../1st-gen/packages/overlay/overlay-trigger.md) handle stacking plus **`aria-describedby`** heuristics today.
-- 2nd-gen: prefer anchored CSS placement (**`position-anchor`**) rather than overlays owning every tooltip placement; keep popover visuals optional, not teleport-by-default stacks.
+- 2nd-gen: keep placement implementation aligned with **[Tooltip rendering and styling](./rendering-and-styling-migration-analysis.md)** (overlay/Floating UI roadmap today); revisit **CSS anchor positioning** when browser support and caret/collision behavior meet product bars.
 
 ---
 
@@ -133,6 +138,7 @@ Follow the **[APG Tooltip pattern](https://www.w3.org/WAI/ARIA/apg/patterns/tool
 More demos and patterns:
 
 - **[Deque Tooltip](https://dequeuniversity.com/library/aria/tooltip)** — hover/focus dwell + **`Escape`**
+- **[Sarah Higley: Tooltips in the time of WCAG 2.1](https://sarahmhigley.com/writing/tooltips-in-wcag-21/)** — tooltip vs toggletip, dismissal, WCAG **1.4.13** framing
 - **[Inclusive Components](https://inclusive-components.design/tooltips-toggletips/)** — toggletip/touch fills gaps where hover misses
 
 ### Guidelines that apply
@@ -142,7 +148,7 @@ More demos and patterns:
 | [Use of color (1.4.1)](https://www.w3.org/TR/WCAG22/#use-of-color) | Do not rely on color **`variant`** alone—add readable words/icons; same spirit as [USWDS general tests](https://designsystem.digital.gov/components/tooltip/accessibility-tests/) and [non-text contrast (1.4.11)](https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast) cues. |
 | [Contrast minimum (1.4.3)](https://www.w3.org/TR/WCAG22/#contrast-minimum) | Tooltip text reaches **≥4.5:1** against its own background for normal-sized copy. |
 | [Non-text contrast (1.4.11)](https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast) | Tooltip rim/tip/outline meets **≥3:1** against the nearby page—not just text vs tooltip fill ([USWDS checklist](https://designsystem.digital.gov/components/tooltip/accessibility-tests/)). |
-| [Content on hover or focus (1.4.13)](https://www.w3.org/TR/WCAG22/#content-on-hover-or-focus) | **`Escape`** closes hint without dragging focus elsewhere. Users can hover onto bubble safely ([APG](#pattern-in-the-apg), [USWDS](https://designsystem.digital.gov/components/tooltip/accessibility-tests/)). Close cleanly on blur for focus mode; supply touch-dismiss paths too. |
+| [Content on hover or focus (1.4.13)](https://www.w3.org/TR/WCAG22/#content-on-hover-or-focus) | **`Escape`** closes hint without dragging focus elsewhere. Users can hover onto bubble safely ([APG](#pattern-in-the-apg), [USWDS](https://designsystem.digital.gov/components/tooltip/accessibility-tests/)). Close cleanly on blur for focus mode; supply touch-dismiss paths too. Keep the bubble available until the user dismisses it (**no arbitrary auto-timeout**) or the hint is **no longer valid** (for example a loading state finished). |
 | [Resize text (1.4.4)](https://www.w3.org/TR/WCAG22/#resize-text) / [Reflow (1.4.10)](https://www.w3.org/TR/WCAG22/#reflow) | At browser **200%** zoom tooltip + trigger remain readable—bubble hides nothing vital ([USWDS zoom bundle](https://designsystem.digital.gov/components/tooltip/accessibility-tests/)). Use **`position-try-fallbacks`** plus short copy guidance ([Deque Tooltip](https://dequeuniversity.com/library/aria/tooltip)). |
 | [Info and relationships (1.3.1)](https://www.w3.org/TR/WCAG22/#info-and-relationships) / [Meaningful sequence (1.3.2)](https://www.w3.org/TR/WCAG22/#meaningful-sequence) | Hear trigger first, tooltip second—in natural order ([USWDS SR tests](https://designsystem.digital.gov/components/tooltip/accessibility-tests/)). |
 | [Pointer gestures (2.5.1)](https://www.w3.org/TR/WCAG22/#pointer-gestures) / [Target size (2.5.8)](https://www.w3.org/TR/WCAG22/#target-size-minimum) | Touch users lack hover—expose **toggle/toggletip** (or an explicit help control) before relying on **`longpress`**; sized targets meet Spectrum minimums/exceptions docs. See **[SWC-2022](https://jira.corp.adobe.com/browse/SWC-2022)** / **[SWC-1465](https://jira.corp.adobe.com/browse/SWC-1465)** (**Notes**). |
@@ -155,7 +161,7 @@ More demos and patterns:
 
 **Note:** USWDS tests cite WCAG **2.1 AA** wording; Spectrum still shoots for **WCAG 2.2 AA** (`## Overview`)—overlap is strong—track any extra **2.2** checks separately in product QA.
 
-**Bottom line.** Ship **`role="tooltip"`**, stop hover-only overlays, anchor with **[CSS anchor positioning](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_anchor_positioning)** ([guide](https://css-tricks.com/css-anchor-positioning-guide/)), and push heavy UI toward dialogs/popovers ([Deque tooltip dialog](https://dequeuniversity.com/library/aria/tooltip-dialog)).
+**Bottom line.** Ship **`role="tooltip"`**, stop hover-only overlays, keep placement predictable (see **[rendering-and-styling migration](./rendering-and-styling-migration-analysis.md)** for Floating UI vs future anchors), and push heavy UI toward dialogs/popovers ([Deque tooltip dialog](https://dequeuniversity.com/library/aria/tooltip-dialog)).
 
 ---
 
@@ -167,7 +173,7 @@ More demos and patterns:
 | [SWC-1465](https://jira.corp.adobe.com/browse/SWC-1465) | Story | To Do | Unresolved | Docs: **`aria-describedby`** guidance for Tooltip | Tie to **`describeTrigger`/`none`** and cross-root **`HoverController`** behavior. Document Tooltip vs **`sp-contextual-help`**: **no focusable-tooltip / tooltip-as-dialog pattern**. For touch: **prefer toggletip (`aria-expanded`/`aria-controls`)** over **`longpress`** / **`triggerInteraction='longpress'`** for supplementary hints; align overlay + directive docs (**[Interaction](#interaction-pointer-keyboard-and-touch)**). |
 | [SWC-2022](https://jira.corp.adobe.com/browse/SWC-2022) | Story | To Do | Unresolved | Tooltip: implement accessibility features | **Cross-program ticket** (typically **`gen2`**-labelled migration work). Tracks shipping toggletip-first touch and shrinking reliance on **`longpress`**/`overlay-trigger` for Tooltip-class hints (**[Quick scan](#quick-scan)**). See **SWC-1465** for doc-side guidance. |
 | [SWC-321](https://jira.corp.adobe.com/browse/SWC-321) | Bug | To Do | Unresolved | Clicking **open**, **self-managed** tooltip on **action-button** triggers underlying button ([#3969](https://github.com/adobe/spectrum-web-components/issues/3969)) | Regression-test **hit-target layering** (**`pointer-events`**, stacking order, dismiss-on-press). Align dismiss-on-pointer behavior with React Spectrum **`shouldCloseOnPress`** ([React Spectrum Tooltip](https://react-spectrum.adobe.com/Tooltip)). |
-| [SWC-324](https://jira.corp.adobe.com/browse/SWC-324) | Bug | To Do | Unresolved | Shared **`sp-tooltip`/`sp-overlay`** across buttons — content swaps but ghost position persists | Overlay must **re-anchor** when active trigger identity changes; **anchor-name** keyed to trigger helps; add perf-safe regression (**SWC-2025**). |
+| [SWC-324](https://jira.corp.adobe.com/browse/SWC-324) | Bug | To Do | Unresolved | Shared **`sp-tooltip`/`sp-overlay`** across buttons — content swaps but ghost position persists | Overlay must **re-anchor** when active trigger identity changes; keep placement refs keyed to the **active** trigger (see **[Positioning](#positioning-css-anchor-and-javascript-fallbacks)** + **[rendering-and-styling migration](./rendering-and-styling-migration-analysis.md)**); add perf-safe regression (**SWC-2025**). |
 | [SWC-890](https://jira.corp.adobe.com/browse/SWC-890) | Bug | To Do | Unresolved | Tooltip in **ActionMenu** logs overlay warning (**#5462**) | Stacks with menu/hint overlays — validate **`OverlayTrigger`** coexistence docs + Storybook (**SWC-2026**). |
 | [SWC-994](https://jira.corp.adobe.com/browse/SWC-994) | Bug | To Do | Unresolved | Tooltip **max-width** overrides **`--mod`** variable | Token/mod fidelity — fold into **Spectrum 2** visual pass (**SWC-2023**). |
 | [SWC-286](https://jira.corp.adobe.com/browse/SWC-286) | Story | Done | Done | VoiceOver reads tooltip/overlay content | Carry forward SR passes for supplementary description vs duplication on focus. |
@@ -201,11 +207,11 @@ Borrow ideas from—not rules from—Carbon / Red Hat / IBM:
 | --- | --- |
 | **`role="tooltip"`** | Prescribe on surfaced content; disallow host role swaps into menu/dialog metaphors ([Deque tooltip dialog](https://dequeuniversity.com/library/aria/tooltip-dialog)). |
 | **`id`** | Stable unique id per instance so **`aria-describedby`** and **`aria-controls`** resolve deterministically. |
-| **`aria-labelledby`** (unnamed triggers) | [Carbon](https://carbondesignsystem.com/components/tooltip/accessibility/) illustrates wiring **tooltip** copy as the trigger’s **accessible name** for **unnamed icon-only** controls (**`aria-labelledby`**); use that pattern when **`aria-describedby`** supplemental text would wrongly leave the element **without a name**. |
+| **`aria-labelledby`** (unnamed triggers) | [Carbon](https://carbondesignsystem.com/components/tooltip/accessibility/) shows **`aria-labelledby`** from tooltip text onto **icon-only** triggers when that text must be the **accessible name**. Prefer a **popover-derived** disclosure (explicit control + **`aria-expanded`**) so help is not only exposed on hover/focus; reserve this wiring for legacy or tightly scoped cases where the trigger is still a **real** focusable widget. |
 | **`aria-describedby` on trigger** | Present only while visibly rendered (APG rhythm). Reserve for **extra** hints when the control **already** has an obvious **name**—avoid duplicating naming strings that **`aria-labelledby`**/`aria-label` already convey (**[When to use something else](#when-to-use-something-else)**, **[What it is not](#what-it-is-not)**). Preserve **`describeTrigger="none"`** semantics from **`sp-overlay`** whenever names already announce the hint ([describeTrigger](../../../../1st-gen/packages/overlay/src/Overlay.ts)). |
 | **Visibility bookkeeping** | Remove relationships when collapsed; **`inert`/`aria-hidden`** track actual presentation. **APG:** popup with focusable internals belongs in **non-modal `dialog`/popover**—**in product terms** that is **contextual help** / **popover** / **`dialog`**, not a Tooltip mode (**[APG Tooltip pattern](https://www.w3.org/WAI/ARIA/apg/patterns/tooltip/)**; **[When to use something else](#when-to-use-something-else)**). |
-| **Toggletip mode** | When touch mandates explicit buttons, expose **`aria-expanded`/`aria-controls`** per [Inclusive Components](https://inclusive-components.design/tooltips-toggletips/). Document `trigger="toggle"` (name TBD) separately from hover+focus presets. |
-| **Spectrum variants (**`info`/`negative`**)** | Visual cues only—tie semantic states (e.g. **`aria-invalid`**) through explicit authoring guidance rather than silent auto-mapping; pair hue with legible text so meaning never relies on color alone (**[USWDS general](https://designsystem.digital.gov/components/tooltip/accessibility-tests/)** / **1.4.1** in [Guidelines that apply](#guidelines-that-apply)). (Note that the `positive` variant was deprecated in 1st-gen.) |
+| **Toggletip mode** | When touch needs deterministic open/close, ship a **dedicated control** (not Tooltip pretending to be one). Expose **`aria-expanded`/`aria-controls`** per [Inclusive Components](https://inclusive-components.design/tooltips-toggletips/) and [Sarah Higley: Tooltips in the time of WCAG 2.1](https://sarahmhigley.com/writing/tooltips-in-wcag-21/). Document `trigger="toggle"` (name TBD) separately from hover+focus presets. |
+| **Spectrum variants (**`neutral`/`info`/`negative`**)** | Spectrum 2 keeps **neutral**, **info**, and **negative**; **`positive`** is **deprecated**—do not introduce new **`positive`** usage in docs or examples. Visual cues only—tie semantic states (e.g. **`aria-invalid`**) through explicit authoring guidance rather than silent auto-mapping; pair hue with legible text so meaning never relies on color alone (**[USWDS general](https://designsystem.digital.gov/components/tooltip/accessibility-tests/)** / **1.4.1** in [Guidelines that apply](#guidelines-that-apply)). |
 
 ### Shadow DOM and cross-root ARIA Issues
 
@@ -220,11 +226,11 @@ Borrow ideas from—not rules from—Carbon / Red Hat / IBM:
 
 ### Form-associated custom properties (labels, `ElementInternals`)
 
-**Does not apply.** Tooltip is not a **[form-associated custom element](https://html.spec.whatwg.org/multipage/custom-elements.html#form-associated-custom-element)**; associated inputs keep their **`ElementInternals`**/`label` contracts while tooltip offers supplemental hints via **`aria-describedby`** only.
+**Does not apply.** Tooltip is not a **[form-associated custom element](https://html.spec.whatwg.org/multipage/custom-elements.html#form-associated-custom-element)**; associated inputs keep their **`ElementInternals`**/`label` contracts while tooltip offers supplemental hints via **`aria-describedby`** only. The heading stays so this file lines up with sibling **accessibility migration analysis** docs and the **accessibility-migration-analysis** contributor skill (template subsections that do not apply keep the heading and a short rationale).
 
 ### Live regions, loading, and announcements
 
-**Does not apply.** Avoid `aria-live` flips during routine hint toggles—stick to relational ARIA (**`aria-describedby`**) and button/toggletip state. **`aria-live="assertive"`** remains unacceptable for supplementary hints.
+**Does not apply.** Avoid `aria-live` flips during routine hint toggles—stick to relational ARIA (**`aria-describedby`**) and button/toggletip state. **`aria-live="assertive"`** remains unacceptable for supplementary hints. Same “keep the heading” convention as **Form-associated** above.
 
 ### Motion (dedicated recommendations subsection)
 
@@ -232,10 +238,12 @@ Borrow ideas from—not rules from—Carbon / Red Hat / IBM:
 
 ### Positioning: CSS anchor and JavaScript fallbacks
 
+**Scope note.** Placement math, Floating UI vs overlay stacks, and future **CSS anchor positioning** experiments live in **[Tooltip rendering and styling](./rendering-and-styling-migration-analysis.md)** and **[Popover accessibility](../popover/accessibility-migration-analysis.md)**. This subsection only records **a11y-adjacent** expectations (predictability, re-anchor when triggers swap, zoom safety).
+
 | Topic | What to do |
 | --- | --- |
-| Primary mechanism | Prefer CSS anchors (**`anchor-name`**, **`position-anchor`**, `anchor()`, logical edges). Start with **[MDN anchor positioning](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_anchor_positioning)** and [CSS-Tricks guide](https://css-tricks.com/css-anchor-positioning-guide/). Lift DOM layers only when clipping forces it—otherwise keep Tooltip near triggers to reduce scroll juggling. |
-| JavaScript allowances | Use JS fallback when browsers lack anchors, collision logic beats **`@position-try`**, or active trigger swaps need re-anchor (**[SWC-324](https://jira.corp.adobe.com/browse/SWC-324)**). Do not silently fall back to the old overlay teleport every time. |
+| Primary mechanism (today) | Ship **predictable** placement via the overlay/Floating UI plan the rendering doc tracks; do not promise pure **CSS anchor positioning** as the default Tooltip strategy until browser support and caret/collision polish meet product bars. **[MDN anchor positioning](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_anchor_positioning)** + [CSS-Tricks guide](https://css-tricks.com/css-anchor-positioning-guide/) remain forward-looking references. |
+| JavaScript allowances | Use JS when collision logic beats declarative **`@position-try`**, clipping needs lifted layers, or active trigger swaps need re-anchor (**[SWC-324](https://jira.corp.adobe.com/browse/SWC-324)**). Do not silently fall back to the old overlay teleport every time. |
 | RTL / Spectrum placement vocabulary | Map `start`/`end`; mirror **[SWC-917 popover precedent](https://jira.corp.adobe.com/browse/SWC-917)** for parity. Older Firefox/Safari tip bugs (**[SWC-539](https://jira.corp.adobe.com/browse/SWC-539)** / **[SWC-532](https://jira.corp.adobe.com/browse/SWC-532)** / **[SWC-530](https://jira.corp.adobe.com/browse/SWC-530)**) proved we still need screenshots—logical CSS alone misses pixels. |
 | **`--mod`**, max-width, long text | Respect mods (**[SWC-994](https://jira.corp.adobe.com/browse/SWC-994)**) + wrapping (**[SWC-1331](https://jira.corp.adobe.com/browse/SWC-1331)** Done) inside Spectrum 2 fidelity (**[SWC-2023](https://jira.corp.adobe.com/browse/SWC-2023)**). QA: zoom **≈200%** so Tooltip never hides critical UI (**[USWDS magnification prompts](https://designsystem.digital.gov/components/tooltip/accessibility-tests/)**, [Guidelines](#guidelines-that-apply)). |
 
@@ -266,7 +274,7 @@ Translate React TooltipTrigger props (**`open`**, **`delay`**, **`shouldCloseOnP
 Use **[USWDS Tooltip accessibility tests](https://designsystem.digital.gov/components/tooltip/accessibility-tests/)** as your checklist headings—each row lines up with this doc:
 
 1. **Look & contrast.** Color carries meaning plus text (**1.4.1**), text contrasts with bubble (**4.5:1**), bubble edge contrasts page (**≥3:1**) — see **[Guidelines](#guidelines-that-apply)**.
-2. **Hover & focus.** Pointer can move trigger → bubble (**1.4.13**). **`Escape`** closes without bouncing focus oddly.
+2. **Hover & focus.** Pointer can move trigger → bubble (**1.4.13**). **`Escape`** closes without bouncing focus oddly. No surprise **auto-dismiss timers** unless the hint truly becomes invalid.
 3. **Zoom.** Browser zoom **≈200%** still readable / does not bury page chrome — same prompts as **[USWDS zoom](https://designsystem.digital.gov/components/tooltip/accessibility-tests/)**.
 4. **Keyboard.** **`Tab`** shows Tooltip, **`Tab`** onward closes, traps never form, focus ring noticeable — echoes keyboard block on **USWDS** + **[Recommendations](#recommendations-swc-tooltip)**.
 5. **Screen reader.** Announce trigger wording first, Tooltip second (**1.3.1**, **1.3.2**) plus **[manual steps below](#manual-and-screen-reader-testing)**.
@@ -279,7 +287,7 @@ Automated suites only cover slices of Tooltip behavior—remember **[USWDS](http
 | --- | --- |
 | **Unit / component** | Every mode (**hover**, **focus-visible**, **toggletip/toggle**, and—where retained—**`longpress`**) flips **`aria-describedby`/`aria-expanded`**. `describeTrigger="none"` never orphan ids. Simulate **`Tab`** / **`Escape`** + bubble dwell (**1.4.13**) where unit harness allows. Prioritize regressions affecting **toggle** paths over **`longpress`** stacking (**[SWC-2022](https://jira.corp.adobe.com/browse/SWC-2022)**). |
 | **aXe + Storybook** | Catch duplicate `aria-*`, forbidden interactives inside **`role="tooltip"`**, tint/touch regressions feeding **[USWDS general](https://designsystem.digital.gov/components/tooltip/accessibility-tests/)** rows once tokens render. |
-| **Playwright snapshots** | Snapshot anchor math for **`swc-action-button`** + Tooltip across browsers; regress historical Safari/Firefox offsets (**[SWC-539](https://jira.corp.adobe.com/browse/SWC-539)**, **[SWC-532](https://jira.corp.adobe.com/browse/SWC-532)**, **[SWC-530](https://jira.corp.adobe.com/browse/SWC-530)**); retarget overlays when triggers swap (**[SWC-324](https://jira.corp.adobe.com/browse/SWC-324)**). Sweep doc backlog (**[SWC-420](https://jira.corp.adobe.com/browse/SWC-420)**, **[SWC-421](https://jira.corp.adobe.com/browse/SWC-421)**, **[SWC-166](https://jira.corp.adobe.com/browse/SWC-166)**) into **[SWC-2025](https://jira.corp.adobe.com/browse/SWC-2025)** bundles. Toss in **viewport ≈200%** smoke so Tooltip never overlaps vital UI (**[USWDS zoom](https://designsystem.digital.gov/components/tooltip/accessibility-tests/)** parity). |
+| **Playwright snapshots** | Snapshot **placement** for **`swc-action-button`** + Tooltip across browsers; regress historical Safari/Firefox offsets (**[SWC-539](https://jira.corp.adobe.com/browse/SWC-539)**, **[SWC-532](https://jira.corp.adobe.com/browse/SWC-532)**, **[SWC-530](https://jira.corp.adobe.com/browse/SWC-530)**); retarget overlays when triggers swap (**[SWC-324](https://jira.corp.adobe.com/browse/SWC-324)**). Sweep doc backlog (**[SWC-420](https://jira.corp.adobe.com/browse/SWC-420)**, **[SWC-421](https://jira.corp.adobe.com/browse/SWC-421)**, **[SWC-166](https://jira.corp.adobe.com/browse/SWC-166)**) into **[SWC-2025](https://jira.corp.adobe.com/browse/SWC-2025)** bundles. Toss in **viewport ≈200%** smoke so Tooltip never overlaps vital UI (**[USWDS zoom](https://designsystem.digital.gov/components/tooltip/accessibility-tests/)** parity). |
 
 ### Playwright-only or host-only accessibility gates
 
@@ -300,7 +308,7 @@ Manual flow (paired with **[Screen reader testing](../../../../2nd-gen/packages/
 
 - [ ] Ship Tooltip with **`role="tooltip"`**, stable **`id`**, clean **`aria-describedby`**, and documented **`describeTrigger`/opt-outs** (**[SWC-1558](https://jira.corp.adobe.com/browse/SWC-1558)**, **[SWC-1465](https://jira.corp.adobe.com/browse/SWC-1465)**/**[SWC-2022](https://jira.corp.adobe.com/browse/SWC-2022)**).
 - [ ] Cover hover, focus, touch, and keyboard timelines that mirror **Deque** + internal guides.
-- [ ] Teach CSS-anchor-first layout + spelled-out JS fallback (**[guide](https://css-tricks.com/css-anchor-positioning-guide/)**) inside migration + Storybook.
+- [ ] Align Tooltip placement docs with **Floating UI / overlay** roadmap in **[rendering-and-styling migration](./rendering-and-styling-migration-analysis.md)**; treat **CSS anchor positioning** as follow-up once browser support + caret/collision gaps close (**[guide](https://css-tricks.com/css-anchor-positioning-guide/)**).
 - [ ] Split toggletip **`aria-expanded`/`aria-controls`** plans from **`aria-describedby`-only** hints.
 - [ ] Confirm **`Escape`** closes hints without trapping focus.
 - [ ] Automated suites exercise shadow/light **`aria-describedby`**, stacking/hit-testing (**[SWC-321](https://jira.corp.adobe.com/browse/SWC-321)**, **[SWC-890](https://jira.corp.adobe.com/browse/SWC-890)**), overlay re-anchor (**[SWC-324](https://jira.corp.adobe.com/browse/SWC-324)**) under **[SWC-2025](https://jira.corp.adobe.com/browse/SWC-2025)** umbrellas.
@@ -318,6 +326,7 @@ Manual flow (paired with **[Screen reader testing](../../../../2nd-gen/packages/
 - [IBM Carbon — Tooltip accessibility](https://carbondesignsystem.com/components/tooltip/accessibility/)
 - [USWDS — Tooltip](https://designsystem.digital.gov/components/tooltip/); [USWDS — Tooltip accessibility tests](https://designsystem.digital.gov/components/tooltip/accessibility-tests/) (manual WCAG 2.1 AA matrix; retest in product context)
 - [Red Hat — Tooltip accessibility](https://ux.redhat.com/elements/tooltip/accessibility/)
+- [Sarah Higley — Tooltips in the time of WCAG 2.1](https://sarahmhigley.com/writing/tooltips-in-wcag-21/)
 - [Inclusive Components: Tooltips and toggletips](https://inclusive-components.design/tooltips-toggletips/)
 - [CSS-Tricks: CSS anchor positioning guide](https://css-tricks.com/css-anchor-positioning-guide/)
 - [MDN: CSS anchor positioning](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_anchor_positioning)
