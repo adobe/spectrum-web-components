@@ -71,6 +71,20 @@ const RADIO_CONTROLLER_API = {
       description:
         'Optional callback with the same payload as the swc-radio-controller-selection-change event.',
     },
+    {
+      name: 'confirmSelectionChange',
+      type: '(detail: RadioControllerConfirmSelectionChangeDetail) => boolean',
+      defaultValue: 'undefined',
+      description:
+        'Optional gate before select/deselect mutators; return false to abort (DOM unchanged).',
+    },
+    {
+      name: 'selectionBinding',
+      type: 'RadioControllerSelectionKeyBinding',
+      defaultValue: 'undefined',
+      description:
+        'Optional string key parallel to HTMLElement selection (getKey, resolveKey, optional hostCommit).',
+    },
   ],
   methods: [
     {
@@ -87,6 +101,28 @@ const RADIO_CONTROLLER_API = {
       returns: 'HTMLElement | null',
       description:
         'Returns the last asserted exclusive item, or null when none.',
+    },
+    {
+      name: 'getSelectedKey',
+      signature: 'getSelectedKey()',
+      returns: 'string',
+      description:
+        'When selectionBinding is set, returns current, previewed, or pending key.',
+    },
+    {
+      name: 'syncSelectedKey',
+      signature:
+        'syncSelectedKey(key: string, options?: { silent?: boolean }): void',
+      returns: 'void',
+      description:
+        'Programmatic key sync; silent skips hostCommit and confirmSelectionChange.',
+    },
+    {
+      name: 'flushPendingSelectedKey',
+      signature: 'flushPendingSelectedKey(): void',
+      returns: 'void',
+      description:
+        'After getItems is non-empty, resolves an early pending key (e.g. attribute before slot).',
     },
     {
       name: 'setOptions',
@@ -156,6 +192,24 @@ const RADIO_CONTROLLER_API = {
       kind: 'type',
       description: 'TypeScript detail shape for the selection change event.',
     },
+    {
+      name: 'RadioControllerConfirmSelectionChangeDetail',
+      kind: 'type',
+      description:
+        'Payload for confirmSelectionChange: candidate and prior exclusive HTMLElement (after roster normalization).',
+    },
+    {
+      name: 'RadioControllerSelectionKeyBinding',
+      kind: 'type',
+      description:
+        'getKey, resolveKey, optional hostCommit — mirrors a string id next to HTMLElement selection.',
+    },
+    {
+      name: 'RadioControllerHostCommitDetail',
+      kind: 'type',
+      description:
+        'candidateKey and priorKey passed to selectionBinding.hostCommit.',
+    },
   ],
 } as const;
 
@@ -166,8 +220,9 @@ const RADIO_CONTROLLER_API = {
 /**
  * `RadioController` enforces **one asserted sibling at a time** inside your reactive host. You
  * supply **`getItems`** (who participates) and **`selectItem` / `deselectItem`** (how DOM or ARIA
- * reflects the winner and the losers). It does **not** wire native `<input type="radio">`; use
- * it for custom roles (`radio`, `menuitemradio`, accordion headers, and similar).
+ * reflects the winner and the losers). Optional **`confirmSelectionChange`** and **`selectionBinding`**
+ * gate transitions or mirror a string **key** (see **`swc-tabs`**). It does **not** wire native
+ * `<input type="radio">`; use it for custom roles (`radio`, `menuitemradio`, accordion headers, and similar).
  *
  * @see {@link https://www.w3.org/WAI/ARIA/apg/patterns/radio/examples/radio-rating/ | APG rating radio group}
  * @see {@link https://www.w3.org/WAI/ARIA/apg/patterns/menubar/ | APG menu / menubar}
@@ -179,7 +234,7 @@ const meta: Meta = {
   parameters: {
     docs: {
       subtitle:
-        'Exclusive selection with configurable DOM updates; pointer clicks, optional Enter/Space (keydownActivation), and toggleItem.',
+        'Exclusive selection; pointer, optional Enter/Space (keydownActivation), confirmSelectionChange, selectionBinding, toggleItem.',
       canvas: { sourceState: 'none' },
     },
     controllerApi: RADIO_CONTROLLER_API,
@@ -217,7 +272,7 @@ export const Overview: Story = {
 /**
  * ## Anatomy of a `RadioController`
  *
- * The`RadioController` is a contructor with the following parameters:
+ * The `RadioController` is a contructor with the following parameters:
  * - `host: ReactiveElement` - the host element
  * - `options: RadioControllerOptions` - the options for the controller
  *   - `getItems: () => HTMLElement[]` - the function that returns the current list of `HTMLElement` nodes
@@ -227,6 +282,8 @@ export const Overview: Story = {
  *   - `defaultToFirstSelectable: boolean` - optional: whether the controller should select the first item if no item is selected
  *   - `keydownActivation: boolean` - optional: when true, **Enter** / **Space** on a focused eligible item asserts it (tabs-style manual activation); default is click-only
  *   - `onSelectionChange: (detail: RadioControllerSelectionChangeDetail) => void` - optional: the function that is called when the selection changes
+ *   - `confirmSelectionChange: (detail: RadioControllerConfirmSelectionChangeDetail) => boolean` - optional: called **before** mutators; return **false** to abort (DOM unchanged)
+ *   - `selectionBinding: RadioControllerSelectionKeyBinding` - optional: **`getKey`**, **`resolveKey`**, optional **`hostCommit`** for a host-facing string key (for example **`tab-id`** on **`swc-tabs`**)
  *
  * ```typescript
  * import { RadioController } from '@spectrum-web-components/core/controllers';
@@ -288,6 +345,19 @@ export const Overview: Story = {
  *
  * The controller does **not** interpret `aria-checked` or `aria-expanded` to infer selection; it
  * only drives your callbacks. Keep visual state and ARIA in sync inside those two functions.
+ *
+ * ### `confirmSelectionChange` and `selectionBinding`
+ *
+ * **`confirmSelectionChange`** runs **before** **`selectItem`** / **`deselectItem`**. Return **`false`**
+ * to veto the transition so **`selectedItem`** stays on **`prior`** and mutators do not run — use this
+ * when the host must run a cancelable event or policy check first.
+ *
+ * **`selectionBinding`** pairs a **string key** with the asserted **`HTMLElement`**: implement
+ * **`getKey`**, **`resolveKey`**, and optionally **`hostCommit`** when the host exposes an id attribute
+ * (for example **`swc-tabs`** `selected` / **`tab-id`**). Use **`getSelectedKey()`**,
+ * **`syncSelectedKey(key, { silent })`** for programmatic updates (**`silent`** skips **`hostCommit`**
+ * and **`confirmSelectionChange`**), and **`flushPendingSelectedKey()`** after **`getItems`** becomes
+ * non-empty when the attribute was parsed before slotted tabs existed.
  */
 export const Usage: Story = {
   tags: ['usage', 'description-only'],
@@ -571,6 +641,8 @@ export const RatingOnSelectionChangeAlert: Story = {
  * | `defaultToFirstSelectable` | `boolean` | `false` | When true, `refresh` may select the first eligible item if none asserted. |
  * | `keydownActivation` | `boolean` | `false` | When true, Enter/Space on a focused eligible item asserts it (manual tabs-style activation). |
  * | `onSelectionChange` | `(detail) => void` | — | Callback when selection changes. |
+ * | `confirmSelectionChange` | `(detail) => boolean` | — | Before mutators; return false to abort. |
+ * | `selectionBinding` | see type | — | String key + resolveKey + optional hostCommit. |
  *
  * See the **API** table above for the full machine-readable contract.
  */
@@ -601,6 +673,13 @@ export const API: Story = {
  *
  * Keep `aria-checked`, `aria-expanded`, and related attributes in sync inside your
  * **`selectItem`** / **`deselectItem`** callbacks; the controller does not infer state from the DOM.
+ *
+ * ### Cancelable selection (`confirmSelectionChange`, `selectionBinding.hostCommit`)
+ *
+ * When you need a host **`change`** event (or similar) **before** DOM mutators run — for example
+ * **`swc-tabs`** — use **`confirmSelectionChange`** or **`selectionBinding.hostCommit`**. Returning
+ * **`false`** or **`preventDefault()`** on the dispatched event aborts the transition; **`getSelectedKey()`**
+ * can expose the **pending** key during **`hostCommit`** so listeners see the proposed value.
  */
 export const Accessibility: Story = {
   tags: ['a11y', 'description-only'],

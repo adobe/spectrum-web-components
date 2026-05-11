@@ -24,8 +24,6 @@ Treat **`focusgroup-navigation-controller`** as the structural template (not nec
 | Tests                    | `2nd-gen/packages/core/controllers/focusgroup-navigation-controller/test/focusgroup-navigation-controller.test.ts`       |
 | Core re-export           | `2nd-gen/packages/core/controllers/index.ts`                                                                             |
 
-A second aligned example (post-refactor, no duplicate snippet file): **`radio-controller/`** in the same tree.
-
 ## Directory layout (new controller)
 
 Use **kebab-case** folder names matching the public import path segment (e.g. `my-feature-controller/`).

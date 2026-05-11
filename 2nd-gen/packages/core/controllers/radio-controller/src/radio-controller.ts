@@ -61,6 +61,22 @@ export type RadioControllerOptions = {
 
   /** Optional listener mirroring {@link radioControllerSelectionChange}. */
   onSelectionChange?: (detail: RadioControllerSelectionChangeDetail) => void;
+
+  /**
+   * Called **before** **`selectItem`** / **`deselectItem`** run for the proposed transition.
+   * Return **`false`** to abort — mutators do not run, **`selectedItem`** stays **`prior`**, and no
+   * selection-change dispatch occurs. Omit for unconditional commits.
+   */
+  confirmSelectionChange?: (
+    detail: RadioControllerConfirmSelectionChangeDetail
+  ) => boolean;
+
+  /**
+   * Mirrors a string key (for example **`tab-id`**) alongside **`HTMLElement`** selection. When
+   * set, {@link RadioController.getSelectedKey}, {@link RadioController.syncSelectedKey}, and
+   * optional {@link RadioControllerSelectionKeyBinding.hostCommit} run on the controller.
+   */
+  selectionBinding?: RadioControllerSelectionKeyBinding;
 };
 
 /**
@@ -75,6 +91,41 @@ export const radioControllerSelectionChange =
 export type RadioControllerSelectionChangeDetail = {
   /** Active exclusive entry, or null after an intentional clear. */
   selectedItem: HTMLElement | null;
+};
+
+/**
+ * Payload for {@link RadioControllerOptions.confirmSelectionChange}.
+ */
+export type RadioControllerConfirmSelectionChangeDetail = {
+  /** Exclusive entry after roster normalization (applied next if confirm returns true). */
+  candidate: HTMLElement | null;
+  /** Exclusive entry before this transition. */
+  prior: HTMLElement | null;
+};
+
+/**
+ * Maps between exclusive **`HTMLElement`** participants and a host-facing string key (for example
+ * **`tab-id`** on **`swc-tab`**).
+ */
+export type RadioControllerSelectionKeyBinding = {
+  getKey: (item: HTMLElement) => string;
+  /** Resolve **`key`** using the current **`getItems`** roster (return **`null`** when unknown). */
+  resolveKey: (key: string) => HTMLElement | null;
+
+  /**
+   * Runs **before** mutators on user-driven transitions (**not** during {@link RadioController.syncSelectedKey}
+   * with **`silent: true`**). Return **`false`** to abort. During this call, {@link RadioController.getSelectedKey}
+   * temporarily reflects **`candidateKey`** so cancelable host **`change`** listeners see the pending value.
+   */
+  hostCommit?: (
+    detail: RadioControllerHostCommitDetail
+  ) => boolean;
+};
+
+/** Payload for {@link RadioControllerSelectionKeyBinding.hostCommit}. */
+export type RadioControllerHostCommitDetail = {
+  candidateKey: string;
+  priorKey: string;
 };
 
 /**
@@ -102,9 +153,10 @@ export function deepestRadioItemContaining(
  * disconnected, inert, not visible, native **`disabled`**, or **`aria-disabled="true"`** are never
  * eligible and primary clicks on them do not change selection. This controller handles
  * capture-phase **`click`**, optional capture-phase **`keydown`** for **Enter** / **Space** when
- * **`keydownActivation`** is **`true`**, **`setSelectedItem`**, and **`toggleItem`** — it does not
- * implement arrow keys, roving **`tabindex`**, programmatic **`focus()`**, or an active-item/focus
- * sync callback.
+ * **`keydownActivation`** is **`true`**, **`setSelectedItem`**, and **`toggleItem`**. Optional
+ * **`confirmSelectionChange`** runs **before** mutators and may veto a transition so DOM stays on
+ * **`prior`**. It does not implement arrow keys, roving **`tabindex`**, programmatic **`focus()`**,
+ * or an active-item/focus sync callback.
  *
  * @see https://www.w3.org/WAI/ARIA/apg/patterns/radio/examples/radio-rating/
  * @see https://www.w3.org/WAI/ARIA/apg/patterns/menubar/
@@ -126,9 +178,32 @@ export class RadioController implements ReactiveController {
     >,
     never
   > &
-    Pick<RadioControllerOptions, 'onSelectionChange'>;
+    Pick<
+      RadioControllerOptions,
+      | 'onSelectionChange'
+      | 'confirmSelectionChange'
+      | 'selectionBinding'
+    >;
 
   private selectedItem: HTMLElement | null = null;
+
+  /** Canonical key when {@link RadioControllerOptions.selectionBinding} is set. */
+  private selectedKey = '';
+
+  /**
+   * Key waiting for a non-empty **`getItems`** roster (for example attribute **`selected`** before
+   * slot assignment).
+   */
+  private pendingSelectedKey: string | null = null;
+
+  /** So {@link getSelectedKey} matches pending selection during {@link RadioControllerSelectionKeyBinding.hostCommit}. */
+  private previewSelectedKey: string | null = null;
+
+  /** Skips **`hostCommit`** and **`confirmSelectionChange`** (programmatic **`syncSelectedKey`**). */
+  private silentCommit = false;
+
+  /** Temporarily hides **`getItems`** so **`refresh`** can clear assertion when **`toggles`** is false. */
+  private suppressRawItems = false;
 
   private keydownListenerAttached = false;
 
@@ -187,6 +262,8 @@ export class RadioController implements ReactiveController {
       defaultToFirstSelectable: options.defaultToFirstSelectable ?? false,
       keydownActivation: options.keydownActivation ?? false,
       onSelectionChange: options.onSelectionChange,
+      confirmSelectionChange: options.confirmSelectionChange,
+      selectionBinding: options.selectionBinding,
     };
 
     host.addController(this);
@@ -195,6 +272,119 @@ export class RadioController implements ReactiveController {
   /** Returns the last asserted exclusive sibling tracked by this controller instance. */
   public getSelectedItem(): HTMLElement | null {
     return this.selectedItem;
+  }
+
+  /**
+   * When {@link RadioControllerOptions.selectionBinding} is set, returns the key for the current (or
+   * previewed) selection; otherwise **`''`**.
+   */
+  public getSelectedKey(): string {
+    if (!this.options.selectionBinding) {
+      return '';
+    }
+    if (this.previewSelectedKey !== null) {
+      return this.previewSelectedKey;
+    }
+    if (this.pendingSelectedKey !== null) {
+      return this.pendingSelectedKey;
+    }
+    return this.selectedKey;
+  }
+
+  /**
+   * Re-applies {@link pendingSelectedKey} after the item roster is populated (call from host
+   * **`slotchange`** when **`getItems`** becomes non-empty).
+   */
+  public flushPendingSelectedKey(): void {
+    if (this.pendingSelectedKey === null || !this.options.selectionBinding) {
+      return;
+    }
+    if (this.callGetItems().length === 0) {
+      return;
+    }
+    const key = this.pendingSelectedKey;
+    const item = this.options.selectionBinding.resolveKey(key);
+    if (item) {
+      this.pendingSelectedKey = null;
+      this.syncSelectedKey(key, { silent: true });
+    } else {
+      this.pendingSelectedKey = null;
+      this.syncSelectedKey('', { silent: true });
+    }
+  }
+
+  /**
+   * Applies **`key`** through **`resolveKey`** / **`setSelectedItem`**, or clears the asserted item
+   * when **`key`** is **`''`** (uses an empty roster pass when **`toggles`** is **`false`**).
+   */
+  public syncSelectedKey(key: string, options?: { silent?: boolean }): void {
+    if (!this.options.selectionBinding) {
+      return;
+    }
+
+    const silent = options?.silent ?? false;
+    const wasSilent = this.silentCommit;
+    this.silentCommit = silent;
+
+    try {
+      if (key === '') {
+        this.pendingSelectedKey = null;
+        this.clearExclusiveAssertionWhenEmptyKey();
+        this.syncSelectedKeyFieldFromState();
+        this.host.requestUpdate?.('selected');
+        return;
+      }
+
+      let item = this.options.selectionBinding.resolveKey(key);
+      if (!item && key !== '' && this.callGetItems().length === 0) {
+        this.pendingSelectedKey = key;
+        this.host.requestUpdate?.('selected');
+        return;
+      }
+      if (!item) {
+        this.pendingSelectedKey = null;
+        this.clearExclusiveAssertionWhenEmptyKey();
+        this.syncSelectedKeyFieldFromState();
+        this.host.requestUpdate?.('selected');
+        return;
+      }
+
+      this.setSelectedItem(item);
+      this.host.requestUpdate?.('selected');
+    } finally {
+      this.silentCommit = wasSilent;
+    }
+  }
+
+  /** Keeps {@link selectedKey} aligned with {@link selectedItem} after structural updates. */
+  private syncSelectedKeyFieldFromState(): void {
+    if (!this.options.selectionBinding) {
+      return;
+    }
+    this.selectedKey = this.selectedItem
+      ? this.options.selectionBinding.getKey(this.selectedItem)
+      : '';
+  }
+
+  private clearExclusiveAssertionWhenEmptyKey(): void {
+    if (this.canClearSelection()) {
+      this.setSelectedItem(null);
+      return;
+    }
+    this.suppressRawItems = true;
+    try {
+      this.refresh();
+    } finally {
+      this.suppressRawItems = false;
+    }
+    this.refresh();
+  }
+
+  private callGetItems(): HTMLElement[] {
+    if (this.suppressRawItems) {
+      return [];
+    }
+    return this.options.getItems();
   }
 
   /** Merges option deltas and reapplies {@link refresh}. */
@@ -225,6 +415,10 @@ export class RadioController implements ReactiveController {
       deselectItem: partial.deselectItem ?? this.options.deselectItem,
       onSelectionChange:
         partial.onSelectionChange ?? this.options.onSelectionChange,
+      confirmSelectionChange:
+        partial.confirmSelectionChange ?? this.options.confirmSelectionChange,
+      selectionBinding:
+        partial.selectionBinding ?? this.options.selectionBinding,
     };
 
     this.syncKeydownActivationListener();
@@ -343,6 +537,53 @@ export class RadioController implements ReactiveController {
     }
 
     const prior = this.selectedItem;
+
+    const binding = this.options.selectionBinding;
+
+    if (binding?.hostCommit && !this.silentCommit) {
+      const candidateKey = asserted ? binding.getKey(asserted) : '';
+      const priorKey = prior ? binding.getKey(prior) : '';
+      this.previewSelectedKey = candidateKey;
+      try {
+        const ok = binding.hostCommit({
+          candidateKey,
+          priorKey,
+        });
+        if (ok === false) {
+          return;
+        }
+      } finally {
+        this.previewSelectedKey = null;
+      }
+    }
+
+    if (this.options.confirmSelectionChange && !this.silentCommit) {
+      const ok = this.options.confirmSelectionChange({
+        candidate: asserted,
+        prior,
+      });
+      if (!ok) {
+        return;
+      }
+    }
+
+    this.applyExclusiveMutators(asserted);
+
+    this.selectedItem = asserted;
+
+    if (binding) {
+      this.selectedKey = asserted ? binding.getKey(asserted) : '';
+      this.pendingSelectedKey = null;
+      this.host.requestUpdate?.('selected');
+    }
+
+    if (prior !== asserted) {
+      this.dispatchSelectionChange();
+    }
+  }
+
+  /** Applies **`selectItem`** / **`deselectItem`** so **`asserted`** is the exclusive winner. */
+  private applyExclusiveMutators(asserted: HTMLElement | null): void {
     const raw = this.getScopedRawItems();
 
     for (const candidate of raw) {
@@ -351,12 +592,6 @@ export class RadioController implements ReactiveController {
       } else {
         this.options.deselectItem(candidate);
       }
-    }
-
-    this.selectedItem = asserted;
-
-    if (prior !== asserted) {
-      this.dispatchSelectionChange();
     }
   }
 
@@ -407,9 +642,9 @@ export class RadioController implements ReactiveController {
 
   /** Raw query filtered to elements owned by the reactive host subtree. */
   private getScopedRawItems(): HTMLElement[] {
-    return this.options
-      .getItems()
-      .filter((element) => this.isNodeWithinHostScope(element));
+    return this.callGetItems().filter((element) =>
+      this.isNodeWithinHostScope(element)
+    );
   }
 
   /**

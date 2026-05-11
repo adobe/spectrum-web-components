@@ -29,6 +29,9 @@ export {
   deepestRadioItemContaining,
   RadioController,
   radioControllerSelectionChange,
+  type RadioControllerConfirmSelectionChangeDetail,
+  type RadioControllerHostCommitDetail,
   type RadioControllerOptions,
   type RadioControllerSelectionChangeDetail,
+  type RadioControllerSelectionKeyBinding,
 } from './radio-controller/index.js';
