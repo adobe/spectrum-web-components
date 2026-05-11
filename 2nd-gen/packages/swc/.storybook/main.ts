@@ -116,6 +116,11 @@ if (storybookMode !== 'ci-a11y') {
       directory: 'guides',
       files: '**/!(*documentation).mdx',
       titlePrefix: 'Guides',
+    },
+    {
+      directory: 'resources',
+      files: '**/*.mdx',
+      titlePrefix: 'Resources',
     }
   );
 }
