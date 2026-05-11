@@ -52,11 +52,13 @@ export class Dropzone extends SpectrumElement {
   public get dropEffect(): DropEffects {
     return this._dropEffect;
   }
+
   public set dropEffect(value: DropEffects) {
     if (['copy', 'move', 'link', 'none'].includes(value)) {
       this._dropEffect = value;
     }
   }
+
   private _dropEffect: DropEffects = 'copy';
 
   /**
@@ -87,66 +89,100 @@ export class Dropzone extends SpectrumElement {
     this.removeEventListener('drop', this.onDrop);
     this.removeEventListener('dragover', this.onDragOver);
     this.removeEventListener('dragleave', this.onDragLeave);
+
+    this.clearDebouncedDragLeave();
   }
 
   public onDragOver(event: DragEvent): void {
-    const shouldAcceptEvent = new CustomEvent('sp-dropzone-should-accept', {
-      bubbles: true,
-      cancelable: true,
-      composed: true,
-      detail: event,
-    });
+    /**
+     * Required for Chrome/Windows to consistently allow dropping.
+     * Without preventDefault(), Chrome may suppress the drop event.
+     */
+    event.preventDefault();
+
+    const shouldAcceptEvent = new CustomEvent<DragEvent>(
+      'sp-dropzone-should-accept',
+      {
+        bubbles: true,
+        cancelable: true,
+        composed: true,
+        detail: event,
+      }
+    );
+
     const shouldAccept = this.dispatchEvent(shouldAcceptEvent);
+
     if (!event.dataTransfer) {
       return;
     }
+
     if (!shouldAccept) {
       event.dataTransfer.dropEffect = 'none';
       return;
     }
 
-    event.preventDefault();
-
     this.clearDebouncedDragLeave();
 
-    this.isDragged = true;
+    if (!this.isDragged) {
+      this.isDragged = true;
+    }
 
     event.dataTransfer.dropEffect = this.dropEffect;
-    const dragOverEvent = new CustomEvent('sp-dropzone-dragover', {
-      bubbles: true,
-      composed: true,
-      detail: event,
-    });
-    this.dispatchEvent(dragOverEvent);
+
+    this.dispatchEvent(
+      new CustomEvent<DragEvent>('sp-dropzone-dragover', {
+        bubbles: true,
+        composed: true,
+        detail: event,
+      })
+    );
   }
 
   public onDragLeave(event: DragEvent): void {
+    /**
+     * Ignore internal dragleave events triggered while moving
+     * between children inside the dropzone.
+     */
+    if (event.relatedTarget && this.contains(event.relatedTarget as Node)) {
+      return;
+    }
+
     this.clearDebouncedDragLeave();
 
     this.debouncedDragLeave = window.setTimeout(() => {
       this.isDragged = false;
 
-      const dragLeave = new CustomEvent('sp-dropzone-dragleave', {
-        bubbles: true,
-        composed: true,
-        detail: event,
-      });
-      this.dispatchEvent(dragLeave);
+      this.dispatchEvent(
+        new CustomEvent<DragEvent>('sp-dropzone-dragleave', {
+          bubbles: true,
+          composed: true,
+          detail: event,
+        })
+      );
     }, 100);
   }
 
   public onDrop(event: DragEvent): void {
+    /**
+     * Prevent browser default behavior (opening files in browser).
+     */
     event.preventDefault();
+
+    if (!this.isDragged) {
+      return;
+    }
 
     this.clearDebouncedDragLeave();
 
     this.isDragged = false;
-    const dropEvent = new CustomEvent('sp-dropzone-drop', {
-      bubbles: true,
-      composed: true,
-      detail: event,
-    });
-    this.dispatchEvent(dropEvent);
+
+    this.dispatchEvent(
+      new CustomEvent<DragEvent>('sp-dropzone-drop', {
+        bubbles: true,
+        composed: true,
+        detail: event,
+      })
+    );
   }
 
   protected override render(): TemplateResult {
@@ -156,7 +192,7 @@ export class Dropzone extends SpectrumElement {
   }
 
   protected clearDebouncedDragLeave(): void {
-    if (this.debouncedDragLeave) {
+    if (this.debouncedDragLeave !== null) {
       clearTimeout(this.debouncedDragLeave);
       this.debouncedDragLeave = null;
     }
