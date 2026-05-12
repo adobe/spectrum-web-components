@@ -55,18 +55,6 @@ const withSystemTurn = (story: () => unknown) => html`
  * **Presentation order is fixed** by the component (shadow slot order); host children may appear in any order if
  * each uses the correct **`slot`** name. For thread alignment, wrap in `<swc-conversation-turn type="system">`.
  *
- * ### Typography in the default slot
- *
- * Rich AI body copy should use Spectrum typography **utility classes** on semantic HTML. Applications must load **`typography.css`** from
- * `@adobe/spectrum-wc` after design tokens. See **Typography** and the typography [consumer migration guide](/docs/components-typography-consumer-migration-guide--readme).
- *
- * - **Wrapper** — Root container: `class="swc-conversationalAi-systemProse swc-Typography--prose"`.
- *   `swc-Typography--prose` applies consistent vertical spacing between block-level children; the conversational
- *   class adds pattern-specific tuning for system replies.
- * - **Body** — Use semantic paragraphs and lists for body styling.
- * - **Headings** — Use semantic `<h2>`–`<h4>`.
- * - **Lists / links** — Keep lists and `<a href>` inside the prose wrapper so margins and link treatments stay
- *   consistent with Spectrum prose styles.
  */
 const meta: Meta = {
   title: 'Conversational AI/System message',
@@ -130,12 +118,18 @@ export const Overview: Story = {
  * Put the AI reply in the **default slot** as semantic HTML styled with Spectrum
  * token variables.
  *
- * 1. **Stylesheet** — Import **`typography.css`** from **`@adobe/spectrum-wc`** after design tokens.
- * 2. **Wrapper** — Root `<div class="swc-conversationalAi-systemProse swc-Typography--prose">` around the AI body.
- *    **`swc-Typography--prose`** applies vertical rhythm between blocks; **`swc-conversationalAi-systemProse`** adds pattern-specific spacing for system messages.
- * 3. **Body** — Use **`swc-Body`** on `<p>` and on `<ul>` / `<ol>` when you want explicit body styling.
- * 4. **Headings** — Use **`swc-Heading`** with a size modifier (e.g. **`swc-Heading--sizeXS`**) on `<h2>`–`<h4>` for subsections inside the prose flow.
- * 5. **Links & lists** — Keep `<a href>` and lists inside the prose wrapper so Spectrum prose/link treatments apply.
+ * ### Typography in the default slot
+ *
+ * Rich AI body copy should use Spectrum typography **utility classes** on semantic HTML. Applications must load **`typography.css`** from
+ * `@adobe/spectrum-wc` after design tokens. See **Typography** and the typography [consumer migration guide](/docs/components-typography-consumer-migration-guide--readme).
+ *
+ * - **Wrapper** — Root container: `class="swc-conversationalAi-systemProse swc-Typography--prose"`.
+ *   `swc-Typography--prose` applies consistent vertical spacing between block-level children; the conversational
+ *   class adds pattern-specific tuning for system replies.
+ * - **Body** — Use semantic paragraphs and lists for body styling.
+ * - **Headings** — Use semantic `<h2>`–`<h4>`.
+ * - **Lists / links** — Keep lists and `<a href>` inside the prose wrapper so margins and link treatments stay
+ *   consistent with Spectrum prose styles.
  */
 export const Anatomy: Story = {
   args: {
