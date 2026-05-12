@@ -10,14 +10,14 @@ Replace `<sp-button>` with `<swc-button>`, update the import, and migrate rename
 
 ### Renamed
 
-| Area                        | Spectrum 1 (`sp-button`)                       | Spectrum 2 (`swc-button`)                    |
-| --------------------------- | ---------------------------------------------- | -------------------------------------------- |
-| Tag                         | `sp-button`                                    | `swc-button`                                 |
-| Import path                 | `@spectrum-web-components/button/sp-button.js` | `@adobe/spectrum-wc/button`                  |
-| Visual treatment            | `treatment="fill"` / `treatment="outline"`     | `fill-style="fill"` / `fill-style="outline"` |
-| Accessible name (icon-only) | `label="..."`                                  | `accessible-label="..."`                     |
-| Text truncation             | `no-wrap`                                      | `truncate`                                   |
-| CSS custom props            | `--mod-button-*` / `--spectrum-button-*`       | `--swc-button-*` (see [Styling](#styling))   |
+| Area                        | Spectrum 1 (`sp-button`)                       | Spectrum 2 (`swc-button`)                            |
+| --------------------------- | ---------------------------------------------- | ---------------------------------------------------- |
+| Tag                         | `sp-button`                                    | `swc-button`                                         |
+| Import path                 | `@spectrum-web-components/button/sp-button.js` | `@adobe/spectrum-wc/components/button/swc-button.js` |
+| Visual treatment            | `treatment="fill"` / `treatment="outline"`     | `fill-style="fill"` / `fill-style="outline"`         |
+| Accessible name (icon-only) | `label="..."`                                  | `accessible-label="..."`                             |
+| Text truncation             | `no-wrap`                                      | `truncate`                                           |
+| CSS custom props            | `--mod-button-*` / `--spectrum-button-*`       | `--swc-button-*` (see [Styling](#styling))           |
 
 ### Added in Spectrum 2
 
@@ -44,7 +44,7 @@ Replace `<sp-button>` with `<swc-button>`, update the import, and migrate rename
 // Before
 import '@spectrum-web-components/button/sp-button.js';
 // After
-import '@adobe/spectrum-wc/button';
+import '@adobe/spectrum-wc/components/button/swc-button.js';
 ```
 
 ### 2. Rename the tag and `treatment` attribute
@@ -202,7 +202,7 @@ Public custom properties:
 
 ## Checklist
 
-- [ ] Update imports from `@spectrum-web-components/button/sp-button.js` to `@adobe/spectrum-wc/button`
+- [ ] Update imports from `@spectrum-web-components/button/sp-button.js` to `@adobe/spectrum-wc/components/button/swc-button.js`
 - [ ] Rename all `<sp-button>` to `<swc-button>`
 - [ ] Rename `treatment` attribute to `fill-style`
 - [ ] Replace `quiet` with `fill-style="outline"`
