@@ -30,7 +30,7 @@ Controllers are not published as packages. Instead, they are imported directly f
 Import the controller directly from the core package:
 
 \`\`\`typescript
-import { ${baseClassName} } from '@spectrum-web-components/core/controllers/${packageName}.js';
+import { ${baseClassName} } from '@adobe/spectrum-wc/components/core/controllers/${packageName}.js';
 \`\`\`
 `}</Markdown>
     );
@@ -50,20 +50,22 @@ import { ${baseClassName} } from '@spectrum-web-components/core/controllers/${pa
 Add the package to your project:
 
 \`\`\`zsh
-yarn add @spectrum-web-components/${packageName}
+yarn add @adobe/spectrum-wc
 \`\`\`
 
 Import the side effectful registration of \`<${tagName}>\` via:
 
 \`\`\`typescript
-import '@spectrum-web-components/${packageName}/${tagName}.js';
+import '@adobe/spectrum-wc/components/${packageName}/${tagName}.js';
 \`\`\`
 
-When looking to leverage the \`${baseClassName}\` base class as a type and/or for extension purposes, do so via:
+To reference the \`${baseClassName}\` type, import it as a type-only import:
 
 \`\`\`typescript
-import { ${baseClassName} } from '@spectrum-web-components/${packageName}';
+import type { ${baseClassName} } from '@adobe/spectrum-wc/components/${packageName}';
 \`\`\`
+
+> The class is exposed primarily for type purposes. Extending it is possible, but the internal shape is not part of the public API — if you choose to subclass, you do so at your own risk and may need to adjust your code between releases.
 `;
 
     return <Markdown>{markdownContent}</Markdown>;

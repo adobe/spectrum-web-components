@@ -52,10 +52,10 @@ Before writing anything, read `CONTRIBUTOR-DOCS/03_project-planning/03_component
 
 All guides follow the same import and tag name conventions. Do not grep for these — derive them from the component name:
 
-|                    | Spectrum 1                                               | Spectrum 2                       |
-| ------------------ | -------------------------------------------------------- | -------------------------------- |
-| Tag                | `sp-[component]`                                         | `swc-[component]`                |
-| Side-effect import | `@spectrum-web-components/[component]/sp-[component].js` | `@adobe/spectrum-wc/[component]` |
+|                    | Spectrum 1                                               | Spectrum 2                                                     |
+| ------------------ | -------------------------------------------------------- | -------------------------------------------------------------- |
+| Tag                | `sp-[component]`                                         | `swc-[component]`                                              |
+| Side-effect import | `@spectrum-web-components/[component]/sp-[component].js` | `@adobe/spectrum-wc/components/[component]/swc-[component].js` |
 
 Use the badge guide at `2nd-gen/packages/swc/components/badge/consumer-migration-guide.mdx` as the canonical format reference.
 

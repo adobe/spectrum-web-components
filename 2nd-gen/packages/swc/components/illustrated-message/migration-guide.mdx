@@ -1,8 +1,8 @@
 import { Meta } from '@storybook/addon-docs/blocks';
 
-<Meta title="Illustrated message/Consumer migration guide" />
+<Meta title="Illustrated message/Migration guide" />
 
-# Illustrated message consumer migration guide
+# Illustrated message migration guide
 
 Replace `<sp-illustrated-message>` with `<swc-illustrated-message>`, move heading and description content into semantic slots, and declare illustration accessibility intent on your SVG.
 
@@ -10,12 +10,12 @@ Replace `<sp-illustrated-message>` with `<swc-illustrated-message>`, move headin
 
 ### Renamed
 
-| Area                  | Spectrum 1                                                               | Spectrum 2                               |
-| --------------------- | ------------------------------------------------------------------------ | ---------------------------------------- |
-| Tag name              | `sp-illustrated-message`                                                 | `swc-illustrated-message`                |
-| Package               | `@spectrum-web-components/illustrated-message`                           | `@adobe/spectrum-wc`                     |
-| Import                | `@spectrum-web-components/illustrated-message/sp-illustrated-message.js` | `@adobe/spectrum-wc/illustrated-message` |
-| CSS custom properties | `--mod-illustrated-message-*`                                            | `--swc-illustrated-message-*`            |
+| Area                  | Spectrum 1                                                               | Spectrum 2                                                                     |
+| --------------------- | ------------------------------------------------------------------------ | ------------------------------------------------------------------------------ |
+| Tag name              | `sp-illustrated-message`                                                 | `swc-illustrated-message`                                                      |
+| Package               | `@spectrum-web-components/illustrated-message`                           | `@adobe/spectrum-wc`                                                           |
+| Import                | `@spectrum-web-components/illustrated-message/sp-illustrated-message.js` | `@adobe/spectrum-wc/components/illustrated-message/swc-illustrated-message.js` |
+| CSS custom properties | `--mod-illustrated-message-*`                                            | `--swc-illustrated-message-*`                                                  |
 
 ### Added in Spectrum 2
 
@@ -41,7 +41,7 @@ Replace `<sp-illustrated-message>` with `<swc-illustrated-message>`, move headin
 import '@spectrum-web-components/illustrated-message/sp-illustrated-message.js';
 
 // After
-import '@adobe/spectrum-wc/illustrated-message';
+import '@adobe/spectrum-wc/components/illustrated-message/swc-illustrated-message.js';
 ```
 
 ### 2. Rename the tag

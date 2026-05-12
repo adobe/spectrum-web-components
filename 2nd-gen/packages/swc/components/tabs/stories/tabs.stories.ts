@@ -35,7 +35,7 @@ const events = ['change'];
  * Tabs and panels are matched by their `tab-id` attributes.
  *
  * Breaking changes and migration steps from `sp-tabs` live in the
- * [consumer migration guide](../migration.md), not in Storybook copy.
+ * [migration guide](../migration.md), not in Storybook copy.
  */
 export const meta: Meta = {
   title: 'Tabs',

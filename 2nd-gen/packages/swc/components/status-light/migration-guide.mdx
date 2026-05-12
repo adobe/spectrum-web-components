@@ -1,8 +1,8 @@
 import { Meta } from '@storybook/addon-docs/blocks';
 
-<Meta title="Status light/Consumer migration guide" />
+<Meta title="Status light/Migration guide" />
 
-# Status light consumer migration guide
+# Status light migration guide
 
 Replace `<sp-status-light>` with `<swc-status-light>`, update the import, and remove any `disabled` usage or `accent` variant.
 
@@ -23,10 +23,10 @@ Update your import:
 import '@spectrum-web-components/status-light/sp-status-light.js';
 
 // After
-import '@adobe/spectrum-wc/status-light';
+import '@adobe/spectrum-wc/components/status-light/swc-status-light.js';
 ```
 
-> `@adobe/spectrum-wc` is a monolithic package. Importing via subpath (e.g. `@adobe/spectrum-wc/status-light`) loads only that component's bundle.
+> `@adobe/spectrum-wc` is a monolithic package. Importing via subpath (e.g. `@adobe/spectrum-wc/components/status-light/swc-status-light.js`) registers and loads only that component's bundle.
 
 ## What changed
 
@@ -35,7 +35,7 @@ import '@adobe/spectrum-wc/status-light';
 | Area              | Spectrum 1 (`sp-status-light`)          | Spectrum 2 (`swc-status-light`)                                                |
 | ----------------- | --------------------------------------- | ------------------------------------------------------------------------------ |
 | Tag               | `sp-status-light`                       | `swc-status-light`                                                             |
-| Import path       | `@spectrum-web-components/status-light` | `@adobe/spectrum-wc/status-light`                                              |
+| Import path       | `@spectrum-web-components/status-light` | `@adobe/spectrum-wc/components/status-light/swc-status-light.js`               |
 | CSS custom props  | `--mod-status-light-*`                  | `--swc-status-light-*` (see [Styling](#styling))                               |
 | Default `variant` | `'info'`                                | `'neutral'` — use `variant="info"` when you need the previous default emphasis |
 

@@ -20,7 +20,7 @@ import styles from './icon.css';
  *
  * @element swc-icon
  * @status internal
- * @since 0.0.1
+ * @since 2.0.0
  *
  * @example
  * <swc-icon label="Search">

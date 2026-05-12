@@ -49,7 +49,7 @@ import { html } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
-import '@adobe/spectrum-wc/[component]';
+import '@adobe/spectrum-wc/components/[component]/swc-[component].js';
 
 import {
   [COMPONENT]_VALID_SIZES,
