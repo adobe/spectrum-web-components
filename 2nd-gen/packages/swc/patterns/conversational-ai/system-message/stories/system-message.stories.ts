@@ -213,7 +213,7 @@ export const Loading: Story = {
  * ### Best practices
  *
  * - Use semantic HTML in the **default slot** (paragraphs, lists, headings) for screen reader clarity
- * - Style default-slot content with **`swc-Typography--prose`**, **`swc-Heading`**, and **`swc-Body`** after loading **`typography.css`** (see Anatomy / component docs above)
+ * - Style default-slot content with **`swc-Typography--prose`** after loading **`typography.css`** (see Anatomy / component docs above)
  * - Ensure source links have descriptive text
  */
 export const Accessibility: Story = {
