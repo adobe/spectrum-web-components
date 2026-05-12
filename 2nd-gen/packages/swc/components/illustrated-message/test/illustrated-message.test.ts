@@ -15,7 +15,7 @@ import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import { IllustratedMessage } from '@adobe/spectrum-wc/illustrated-message';
 
-import '@adobe/spectrum-wc/illustrated-message';
+import '@adobe/spectrum-wc/components/illustrated-message/swc-illustrated-message.js';
 
 import {
   getComponent,

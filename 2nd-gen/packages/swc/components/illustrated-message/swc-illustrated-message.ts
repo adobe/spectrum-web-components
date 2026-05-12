@@ -9,4 +9,14 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-export * from './Divider.js';
+import { defineElement } from '@spectrum-web-components/core/element/index.js';
+
+import { IllustratedMessage } from './IllustratedMessage.js';
+
+declare global {
+  interface HTMLElementTagNameMap {
+    'swc-illustrated-message': IllustratedMessage;
+  }
+}
+
+defineElement('swc-illustrated-message', IllustratedMessage);

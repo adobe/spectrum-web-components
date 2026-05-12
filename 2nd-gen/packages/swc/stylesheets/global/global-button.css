@@ -16,82 +16,66 @@
 
 @layer swc-global-elements {.swc-Button, .swc-Button * {
   box-sizing: border-box;
-}
-
-.swc-Button {
+}.swc-Button {
   -webkit-tap-highlight-color: transparent;
   display: inline-flex;
   position: relative;
-  gap: var(--swc-button-gap, token("text-to-visual-100"));
   align-items: center;
   justify-content: center;
+  margin: 0;
+  text-transform: none;
+  text-decoration: none;
+  border-style: solid;
+  overflow: visible;
+  cursor: pointer;
+  user-select: none;
+  --_swc-button-border-width: token("border-width-200");
+  --_swc-button-min-block-size: var(--swc-button-min-block-size, token("component-height-100"));
+
+  gap: var(--swc-button-gap, token("text-to-visual-100"));
   max-inline-size: var(--swc-button-max-inline-size, inherit);
   min-block-size: var(--_swc-button-min-block-size);
   padding-block: calc(var(--swc-button-padding-vertical, token("component-padding-vertical-100")) - var(--_swc-button-border-width));
   padding-inline: calc(var(--swc-button-edge-to-text, token("component-pill-edge-to-text-100")) - var(--_swc-button-border-width));
-  margin: 0;
   font-family: token("sans-serif-font");
   font-size: var(--swc-button-font-size, token("font-size-100"));
   font-weight: token("bold-font-weight");
   line-height: round(down, calc(token("line-height-100") * 1em), 1px);
   color: var(--swc-button-content-color-default, token("gray-25"));
-  text-transform: none;
-  text-decoration: none;
   background-color: var(--swc-button-background-color-default, token("neutral-background-color-default"));
   border-color: var(--swc-button-border-color-default, transparent);
-  border-style: solid;
   border-width: var(--_swc-button-border-width);
   border-radius: var(--swc-button-border-radius, calc(var(--_swc-button-min-block-size) / 2));
-  overflow: visible;
-  cursor: pointer;
-  user-select: none;
   transition-timing-function: token("animation-ease-in-out");
   transition-duration: token("animation-duration-100");
   transition-property: outline, border-color, color, background-color, transform;
-
-  --_swc-button-border-width: token("border-width-200");
-  --_swc-button-min-block-size: var(--swc-button-min-block-size, token("component-height-100"));
-}
-
-.swc-Button:focus-visible {
+}.swc-Button:focus-visible {
+  outline: token("focus-indicator-thickness") solid var(--swc-button-focus-indicator-color, token("focus-indicator-color"));
+  outline-offset: token("focus-indicator-gap");
   color: var(--swc-button-content-color-focus, token("gray-25"));
   background-color: var(--swc-button-background-color-focus, token("neutral-background-color-key-focus"));
   border-color: var(--swc-button-border-color-focus, transparent);
-  outline: token("focus-indicator-thickness") solid var(--swc-button-focus-indicator-color, token("focus-indicator-color"));
-  outline-offset: token("focus-indicator-gap");
-}
-
-.swc-Button:disabled:is(*, :hover) {
+}.swc-Button:disabled:is(*, :hover) {
   color: var(--swc-button-content-color-disabled, token("disabled-content-color"));
   background-color: var(--swc-button-background-color-disabled, token("disabled-background-color"));
   border-color: var(--swc-button-border-color-disabled, transparent);
   cursor: default;
   transform: none;
-}
-
-.swc-Button:hover {
+}.swc-Button:hover {
   color: var(--swc-button-content-color-hover, token("gray-25"));
   background-color: var(--swc-button-background-color-hover, token("neutral-background-color-hover"));
   border-color: var(--swc-button-border-color-hover, transparent);
-}
-
-.swc-Button:active {
+}.swc-Button:active {
   color: var(--swc-button-content-color-down, token("gray-25"));
   background-color: var(--swc-button-background-color-down, token("neutral-background-color-down"));
   border-color: var(--swc-button-border-color-down, transparent);
   transform: var(--swc-button-down-state-transform, perspective(var(--_swc-button-min-block-size)) translate3d(0, 0, token("component-size-difference-down")));
   will-change: transform;
-}
-
-.swc-Button-label {
+}.swc-Button-label {
   text-align: center;
-}
-
-.swc-Button--hasIcon .swc-Button-label {
+}.swc-Button--hasIcon .swc-Button-label {
   text-align: start;
-}
-
-.swc-Button-icon,
+}.swc-Button-icon,
 .swc-Button-pendingSpinner {
   --_swc-button-icon-size: var(--swc-button-icon-size, token("workflow-icon-size-100"));
   --_swc-button-icon-block-size: var(--swc-button-icon-block-size, var(--_swc-button-icon-size));
@@ -102,14 +86,10 @@
   block-size: var(--_swc-button-icon-block-size);
   margin-block: calc((var(--_swc-button-icon-block-size) - 1lh) / 2 * -1);
   margin-inline-start: calc(var(--swc-button-edge-to-visual, token("component-pill-edge-to-visual-100")) - var(--swc-button-edge-to-text, token("component-pill-edge-to-text-100")));
-}
-
-.swc-Button-icon {
+}.swc-Button-icon {
   color: inherit;
   fill: currentcolor;
-}
-
-.swc-Button--sizeS {
+}.swc-Button--sizeS {
   --swc-button-min-block-size: token("component-height-75");
   --swc-button-font-size: token("font-size-75");
   --swc-button-gap: token("text-to-visual-75");
@@ -118,9 +98,7 @@
   --swc-button-edge-to-visual-only: token("component-pill-edge-to-visual-only-75");
   --swc-button-padding-vertical: token("component-padding-vertical-75");
   --swc-button-icon-size: token("workflow-icon-size-75");
-}
-
-.swc-Button--sizeL {
+}.swc-Button--sizeL {
   --swc-button-min-block-size: token("component-height-200");
   --swc-button-font-size: token("font-size-200");
   --swc-button-gap: token("text-to-visual-200");
@@ -129,9 +107,7 @@
   --swc-button-edge-to-visual-only: token("component-pill-edge-to-visual-only-200");
   --swc-button-padding-vertical: token("component-padding-vertical-200");
   --swc-button-icon-size: token("workflow-icon-size-200");
-}
-
-.swc-Button--sizeXl {
+}.swc-Button--sizeXl {
   --swc-button-min-block-size: token("component-height-300");
   --swc-button-font-size: token("font-size-300");
   --swc-button-gap: token("text-to-visual-300");
@@ -140,9 +116,7 @@
   --swc-button-edge-to-visual-only: token("component-pill-edge-to-visual-only-300");
   --swc-button-padding-vertical: token("component-padding-vertical-300");
   --swc-button-icon-size: token("workflow-icon-size-300");
-}
-
-.swc-Button--accent {
+}.swc-Button--accent {
   --swc-button-content-color-default: token("white");
   --swc-button-content-color-hover: token("white");
   --swc-button-content-color-down: token("white");
@@ -151,9 +125,7 @@
   --swc-button-background-color-hover: token("accent-background-color-hover");
   --swc-button-background-color-down: token("accent-background-color-down");
   --swc-button-background-color-focus: token("accent-background-color-key-focus");
-}
-
-.swc-Button--negative {
+}.swc-Button--negative {
   --swc-button-content-color-default: token("white");
   --swc-button-content-color-hover: token("white");
   --swc-button-content-color-down: token("white");
@@ -162,9 +134,7 @@
   --swc-button-background-color-hover: token("negative-background-color-hover");
   --swc-button-background-color-down: token("negative-background-color-down");
   --swc-button-background-color-focus: token("negative-background-color-key-focus");
-}
-
-.swc-Button--secondary {
+}.swc-Button--secondary {
   --swc-button-content-color-default: token("neutral-content-color-default");
   --swc-button-content-color-hover: token("neutral-content-color-hover");
   --swc-button-content-color-down: token("neutral-content-color-down");
@@ -173,9 +143,7 @@
   --swc-button-background-color-hover: token("gray-200");
   --swc-button-background-color-down: token("gray-200");
   --swc-button-background-color-focus: token("gray-200");
-}
-
-.swc-Button--primary.swc-Button--outline {
+}.swc-Button--primary.swc-Button--outline {
   --swc-button-background-color-default: transparent;
   --swc-button-background-color-hover: token("gray-100");
   --swc-button-background-color-down: token("gray-100");
@@ -190,9 +158,7 @@
   --swc-button-content-color-focus: token("neutral-content-color-key-focus");
   --swc-button-background-color-disabled: transparent;
   --swc-button-border-color-disabled: token("disabled-border-color");
-}
-
-.swc-Button--secondary.swc-Button--outline {
+}.swc-Button--secondary.swc-Button--outline {
   --swc-button-background-color-default: transparent;
   --swc-button-background-color-hover: token("gray-100");
   --swc-button-background-color-down: token("gray-100");
@@ -203,9 +169,7 @@
   --swc-button-border-color-focus: token("gray-400");
   --swc-button-background-color-disabled: transparent;
   --swc-button-border-color-disabled: token("disabled-border-color");
-}
-
-.swc-Button--staticWhite {
+}.swc-Button--staticWhite {
   --swc-button-focus-indicator-color: token("static-white-focus-indicator-color");
   --swc-button-background-color-default: token("transparent-white-800");
   --swc-button-background-color-hover: token("transparent-white-900");
@@ -218,9 +182,7 @@
   --swc-button-background-color-disabled: token("disabled-static-white-background-color");
   --swc-button-border-color-disabled: transparent;
   --swc-button-content-color-disabled: token("disabled-static-white-content-color");
-}
-
-.swc-Button--staticWhite.swc-Button--secondary {
+}.swc-Button--staticWhite.swc-Button--secondary {
   --swc-button-background-color-default: token("transparent-white-100");
   --swc-button-background-color-hover: token("transparent-white-200");
   --swc-button-background-color-down: token("transparent-white-200");
@@ -229,9 +191,7 @@
   --swc-button-content-color-hover: token("transparent-white-900");
   --swc-button-content-color-down: token("transparent-white-900");
   --swc-button-content-color-focus: token("transparent-white-900");
-}
-
-.swc-Button--staticWhite.swc-Button--outline {
+}.swc-Button--staticWhite.swc-Button--outline {
   --swc-button-background-color-default: token("transparent-white-25");
   --swc-button-background-color-hover: token("transparent-white-100");
   --swc-button-background-color-down: token("transparent-white-100");
@@ -247,9 +207,7 @@
   --swc-button-background-color-disabled: token("transparent-white-25");
   --swc-button-border-color-disabled: token("disabled-static-white-border-color");
   --swc-button-content-color-disabled: token("disabled-static-white-content-color");
-}
-
-.swc-Button--staticWhite.swc-Button--secondary.swc-Button--outline {
+}.swc-Button--staticWhite.swc-Button--secondary.swc-Button--outline {
   --swc-button-background-color-default: token("transparent-white-25");
   --swc-button-background-color-hover: token("transparent-white-100");
   --swc-button-background-color-down: token("transparent-white-100");
@@ -258,9 +216,7 @@
   --swc-button-border-color-hover: token("transparent-white-400");
   --swc-button-border-color-down: token("transparent-white-400");
   --swc-button-border-color-focus: token("transparent-white-400");
-}
-
-.swc-Button--staticBlack {
+}.swc-Button--staticBlack {
   --swc-button-focus-indicator-color: token("static-black-focus-indicator-color");
   --swc-button-background-color-default: token("transparent-black-800");
   --swc-button-background-color-hover: token("transparent-black-900");
@@ -273,9 +229,7 @@
   --swc-button-background-color-disabled: token("disabled-static-black-background-color");
   --swc-button-border-color-disabled: transparent;
   --swc-button-content-color-disabled: token("disabled-static-black-content-color");
-}
-
-.swc-Button--staticBlack.swc-Button--secondary {
+}.swc-Button--staticBlack.swc-Button--secondary {
   --swc-button-background-color-default: token("transparent-black-100");
   --swc-button-background-color-hover: token("transparent-black-200");
   --swc-button-background-color-down: token("transparent-black-200");
@@ -284,9 +238,7 @@
   --swc-button-content-color-hover: token("transparent-black-900");
   --swc-button-content-color-down: token("transparent-black-900");
   --swc-button-content-color-focus: token("transparent-black-900");
-}
-
-.swc-Button--staticBlack.swc-Button--outline {
+}.swc-Button--staticBlack.swc-Button--outline {
   --swc-button-background-color-default: token("transparent-black-25");
   --swc-button-background-color-hover: token("transparent-black-100");
   --swc-button-background-color-down: token("transparent-black-100");
@@ -302,9 +254,7 @@
   --swc-button-background-color-disabled: token("transparent-black-25");
   --swc-button-border-color-disabled: token("disabled-static-black-border-color");
   --swc-button-content-color-disabled: token("disabled-static-black-content-color");
-}
-
-.swc-Button--staticBlack.swc-Button--secondary.swc-Button--outline {
+}.swc-Button--staticBlack.swc-Button--secondary.swc-Button--outline {
   --swc-button-background-color-default: token("transparent-black-25");
   --swc-button-background-color-hover: token("transparent-black-100");
   --swc-button-background-color-down: token("transparent-black-100");
@@ -313,40 +263,28 @@
   --swc-button-border-color-hover: token("transparent-black-400");
   --swc-button-border-color-down: token("transparent-black-400");
   --swc-button-border-color-focus: token("transparent-black-400");
-}
-
-.swc-Button--iconOnly {
+}.swc-Button--iconOnly {
   --swc-button-border-radius: token("corner-radius-full");
   --swc-button-gap: 0;
 
   padding-inline: calc(var(--swc-button-edge-to-visual-only, token("component-pill-edge-to-visual-only-100")) - var(--_swc-button-border-width));
-}
-
-.swc-Button--iconOnly .swc-Button-icon {
+}.swc-Button--iconOnly .swc-Button-icon {
   --swc-button-edge-to-visual: 0;
 
   align-self: center;
-}
-
-.swc-Button--truncate .swc-Button-label {
+}.swc-Button--truncate .swc-Button-label {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-}
-
-.swc-Button--justified {
+}.swc-Button--justified {
   flex-grow: 1;
   justify-self: stretch;
   inline-size: 100%;
-}
-
-@media (prefers-reduced-motion: reduce) {
+}@media (prefers-reduced-motion: reduce) {
   .swc-Button {
     transition-duration: 0ms;
   }
 }
-}
-
-.swc-Button {
+}.swc-Button {
 all: revert-layer !important;
 }

@@ -16,7 +16,7 @@ import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
 import { Asset } from '@adobe/spectrum-wc/asset';
 
-import '@adobe/spectrum-wc/asset';
+import '@adobe/spectrum-wc/components/asset/swc-asset.js';
 
 // ────────────────
 //    METADATA

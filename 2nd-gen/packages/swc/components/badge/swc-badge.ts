@@ -9,4 +9,14 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-export * from './Divider.js';
+import { defineElement } from '@spectrum-web-components/core/element/index.js';
+
+import { Badge } from './Badge.js';
+
+declare global {
+  interface HTMLElementTagNameMap {
+    'swc-badge': Badge;
+  }
+}
+
+defineElement('swc-badge', Badge);

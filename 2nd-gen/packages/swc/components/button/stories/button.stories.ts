@@ -25,7 +25,7 @@ import {
   type ButtonVariant,
 } from '@spectrum-web-components/core/components/button';
 
-import '@adobe/spectrum-wc/button';
+import '@adobe/spectrum-wc/components/button/swc-button.js';
 
 // ────────────────
 //    METADATA
