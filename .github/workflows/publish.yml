@@ -168,7 +168,7 @@ jobs:
 
       - name: Refresh lockfile and rebuild
         run: |
-          yarn install --refresh-lockfile
+          yarn install
           yarn build
 
       - name: Publish all packages
@@ -298,7 +298,7 @@ jobs:
         if: steps.extract-tag.outputs.tag == 'latest'
         run: |
           git add .
-          HUSKY=0 git commit -m "chore: release packages #publish" || echo "No changes to commit"
+          git commit -m "chore: release packages #publish" || echo "No changes to commit"
           git push
 
       - name: Create git tag
