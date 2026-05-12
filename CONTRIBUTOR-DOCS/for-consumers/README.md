@@ -44,9 +44,10 @@ This folder holds only:
 |---|---|
 | **Get started** — install, first component, framework notes | [Get started — Welcome](https://opensource.adobe.com/spectrum-web-components/docs/get-started-welcome--readme) |
 | **Components** — the full 2nd-gen library with live demos | [Components](https://opensource.adobe.com/spectrum-web-components/docs/components-badge--readme) |
-| **Customization → Cheatsheet** — quick reference for theming, scales, tokens, fonts | [Learn → Customization → Cheatsheet](https://opensource.adobe.com/spectrum-web-components/docs/learn-customization-cheatsheet--readme) |
+| **Customization → Cheatsheet** — quick reference for theming, scales, tokens, fonts | [Learn → Customization → Cheatsheet](https://opensource.adobe.com/spectrum-web-components/docs/learn-customization-cheat-sheet--readme) |
 | **Customization → Long-form docs** — getting started, component styles, fonts, global elements, theme and scales | Each page is a sibling of the cheatsheet in the `Learn → Customization` sidebar section |
-| **Accessibility → Overview** — how SWC handles a11y and how to layer your own | [Learn → Accessibility → Overview](https://opensource.adobe.com/spectrum-web-components/docs/learn-accessibility-overview--readme) |
+| **Accessibility → Cheatsheet** — quick reference for shipping accessible SWC apps | [Learn → Accessibility → Cheatsheet](https://opensource.adobe.com/spectrum-web-components/docs/learn-accessibility-cheat-sheet--readme) |
+| **Accessibility → Long-form docs** — overview, semantic HTML and ARIA, keyboard / screen reader / WAVE testing, headings and landmarks, pattern libraries, resources | Each page is a sibling of the cheatsheet in the `Learn → Accessibility` sidebar section |
 | **Reference → Component status** — at-a-glance status matrix with live badges | [Reference → Component status](https://opensource.adobe.com/spectrum-web-components/docs/reference-component-status--readme) |
 
 ## Files in this folder

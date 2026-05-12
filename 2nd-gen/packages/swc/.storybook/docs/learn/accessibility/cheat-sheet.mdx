@@ -1,0 +1,134 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Accessibility/Cheat sheet" />
+
+# Accessibility cheat sheet
+
+A scannable quick reference for shipping accessible interfaces with 2nd-gen Spectrum Web Components. For depth, follow the links into the long-form docs that sit below this page in the sidebar — this cheat sheet is the index, not a replacement.
+
+## At a glance
+
+Accessibility (often shortened to **a11y**) is making your app usable by everyone, including people who use assistive technologies. SWC components ship with sensible defaults — proper roles, keyboard support, focus management — but the **composition is yours**: how you assemble pages, label controls, structure content, and handle dynamic state determines whether your app is accessible end-to-end.
+
+The work breaks into three layers:
+
+1. **Use semantic HTML.** Native elements (`<button>`, `<a>`, `<nav>`, `<main>`, headings) are the foundation. ARIA fills gaps; it does not replace HTML.
+2. **Compose SWC components correctly.** Provide accessible names, manage focus, respect keyboard contracts.
+3. **Test.** Keyboard-only, at least one screen reader, plus an automated tool like WAVE or axe.
+
+If you skip any layer, your app will fail accessibility for some users.
+
+## Quick reference
+
+| Want to...                                             | Read                                                                                           | One-line summary                                                                                           |
+| ------------------------------------------------------ | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| Understand what accessibility means and why it matters | [Overview](/docs/learn-accessibility-overview--readme)                                         | Disability types, assistive technologies, legal and ethical context.                                       |
+| Choose between semantic HTML and ARIA                  | [Semantic HTML and ARIA](/docs/learn-accessibility-semantic-html-and-aria--readme)             | Native elements first, ARIA second; never both for the same job.                                           |
+| Structure a page so screen readers can navigate it     | [Headings and landmarks](/docs/learn-accessibility-headings-and-landmarks--readme)             | One `h1` per page, no skipped levels, real `<main>` / `<nav>` / `<header>` landmarks.                      |
+| Test keyboard navigation                               | [Keyboard testing](/docs/learn-accessibility-keyboard-testing--readme)                         | <kbd>Tab</kbd> through every interactive element; <kbd>Esc</kbd> closes overlays; focus is always visible. |
+| Test with a screen reader                              | [Screen reader testing](/docs/learn-accessibility-screen-reader-testing--readme)               | VoiceOver on macOS or NVDA on Windows; learn browse vs focus mode.                                         |
+| Run an automated accessibility scan in the browser     | [WAVE toolbar testing](/docs/learn-accessibility-wave-toolbar-testing--readme)                 | WAVE extension's Structure, Order, Details, and Contrast tabs.                                             |
+| Find established UI patterns for complex widgets       | [Accessible pattern libraries](/docs/learn-accessibility-accessible-pattern-libraries--readme) | ARIA Authoring Practices Guide (APG) and friends.                                                          |
+| Get to WCAG criteria, checklists, and external guides  | [Resources](/docs/learn-accessibility-resources--readme)                                       | Curated external references.                                                                               |
+
+## Common one-liners
+
+### Use a native button — not a styled div
+
+```html
+<!-- Yes: native semantics + keyboard + focus for free -->
+<button type="button">Save</button>
+
+<!-- No: forces you to reimplement role, keyboard, and focus -->
+<div onclick="save()">Save</div>
+```
+
+If you need Spectrum styling on native elements, see [Global element styling](/docs/learn-customization-global-elements--readme) for the opt-in cascade layer.
+
+### Give every interactive control an accessible name
+
+```html
+<!-- Visible text label IS the accessible name (preferred) -->
+<swc-button>Save document</swc-button>
+
+<!-- Icon-only: provide an aria-label -->
+<swc-button aria-label="Save document">
+  <swc-icon slot="icon" name="save" />
+</swc-button>
+
+<!-- Input: visible label associated by id (or wrapped) -->
+<label for="email">Email</label>
+<swc-textfield id="email" />
+```
+
+The accessible name appears in the accessibility tree (what screen readers announce). No name = "button" with no further detail.
+
+### Set up landmarks and one h1 per page
+
+```html
+<header>
+  <swc-action-button aria-label="Open menu">…</swc-action-button>
+  <h1>Page title</h1>
+</header>
+<nav aria-label="Primary">…</nav>
+<main>
+  <h2>Section</h2>
+  <p>Content…</p>
+</main>
+<footer>…</footer>
+```
+
+Screen reader users jump between landmarks and between headings. A page with neither is hard to scan.
+
+### Test keyboard-only
+
+Disconnect the mouse (or just don't touch it). Walk the entire page using <kbd>Tab</kbd>, <kbd>Shift</kbd>+<kbd>Tab</kbd>, <kbd>Enter</kbd>, <kbd>Space</kbd>, arrow keys, <kbd>Esc</kbd>. Confirm:
+
+- Every interactive element is reachable
+- Tab order matches visual order
+- Focus is always visible
+- Overlays trap focus and <kbd>Esc</kbd> closes them
+- No element traps focus permanently
+
+### Quick screen reader smoke test (macOS)
+
+1. Open System Settings → Accessibility → VoiceOver → enable (or <kbd>⌘</kbd>+<kbd>F5</kbd>)
+2. With your page open, press <kbd>VO</kbd>+<kbd>A</kbd> to start reading (`VO` = <kbd>Ctrl</kbd>+<kbd>Option</kbd>)
+3. Press <kbd>VO</kbd>+<kbd>U</kbd> to open the rotor; arrow through Landmarks and Headings to verify your page structure makes sense
+4. Tab through interactive elements; confirm each one announces a meaningful role + name + state
+
+See [Screen reader testing](/docs/learn-accessibility-screen-reader-testing--readme) for the full workflow, plus equivalents on Windows (NVDA) and mobile.
+
+### Run an automated scan with WAVE
+
+Install the [WAVE browser extension](https://wave.webaim.org/extension/). On any page, click the extension icon. Inspect:
+
+- **Structure** tab — heading outline + landmarks (the page's spine)
+- **Order** tab — focus order overlay vs. visual layout
+- **Contrast** tab — color contrast failures, including from CSS
+
+WAVE catches mechanical issues. It cannot judge whether your labels are _meaningful_, only that they exist.
+
+### Run automated a11y tests in CI (contributor flow)
+
+If you're contributing to SWC itself, the test runner enforces aXe and ARIA snapshot tests on every story.
+
+```bash
+yarn test:a11y       # all 2nd-gen a11y tests
+yarn test:a11y:ui    # interactive Playwright UI for debugging
+```
+
+See [Running accessibility tests](https://github.com/adobe/spectrum-web-components/blob/main/CONTRIBUTOR-DOCS/for-contributors/running-accessibility-tests.md) for the full guide.
+
+## Where to go next
+
+The long-form docs in this sidebar section cover the same topics in depth, with examples, edge cases, and WCAG mappings:
+
+- **[Overview](/docs/learn-accessibility-overview--readme)** — what accessibility is, why it matters, types of disabilities, assistive technologies
+- **[Semantic HTML and ARIA](/docs/learn-accessibility-semantic-html-and-aria--readme)** — native first, ARIA second; cross-root challenges with custom elements
+- **[Headings and landmarks](/docs/learn-accessibility-headings-and-landmarks--readme)** — page outline, landmark conventions, SWC examples, related WCAG criteria
+- **[Keyboard testing](/docs/learn-accessibility-keyboard-testing--readme)** — platform setup, navigation basics, testing checklist, common fixes
+- **[Screen reader testing](/docs/learn-accessibility-screen-reader-testing--readme)** — pairings, modes, shortcuts (VoiceOver, NVDA, JAWS)
+- **[WAVE toolbar testing](/docs/learn-accessibility-wave-toolbar-testing--readme)** — install, run a report, interpret each tab
+- **[Accessible pattern libraries](/docs/learn-accessibility-accessible-pattern-libraries--readme)** — APG and friends, for complex widgets
+- **[Resources](/docs/learn-accessibility-resources--readme)** — WCAG, W3C WAI, external checklists

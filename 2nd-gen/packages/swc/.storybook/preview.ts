@@ -205,7 +205,7 @@ const preview = {
             'When to use SWC',
             'Customization',
             [
-              'Cheatsheet',
+              'Cheat sheet',
               'Getting Started',
               'Theme and Scales',
               'Fonts',
@@ -214,6 +214,7 @@ const preview = {
             ],
             'Accessibility',
             [
+              'Cheat sheet',
               'Overview',
               'Semantic HTML and ARIA',
               'Headings and landmarks',

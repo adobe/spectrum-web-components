@@ -1,0 +1,102 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Customization/Cheat sheet" />
+
+# Customization cheat sheet
+
+A scannable quick reference for customizing 2nd-gen Spectrum Web Components. For depth, follow the links into the long-form docs that sit below this page in the sidebar — this cheat sheet is the index, not a replacement.
+
+## At a glance
+
+2nd-gen SWC customization is **CSS, not JavaScript context**. There is no `<sp-theme>` component to wrap your app in. Instead, you:
+
+1. Include the SWC stylesheet once at the application level
+2. Set theme and scale via **classes** (`.swc-theme--dark`, `.swc-theme--sizeL`) on whatever element should govern that scope
+3. Override visual details via **CSS custom properties** named `--swc-*` (per-component or globally)
+
+That's the whole model. Everything else is detail.
+
+## Quick reference
+
+| Want to customize...                                      | Read                                                                        | One-line summary                                                                                                   |
+| --------------------------------------------------------- | --------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| The basic install — stylesheet, app background            | [Getting started](/docs/learn-customization-getting-started--readme)        | Include `@adobe/spectrum-wc/swc.css`; optionally set `--swc-application-background`.                               |
+| Fonts (Adobe Clean Spectrum VF, CJK, locales)             | [Fonts](/docs/learn-customization-fonts--readme)                            | Adobe Fonts kit (Typekit) is recommended; the language toggle in Storybook loads the right kit on demand.          |
+| A specific component's appearance                         | [Component styles](/docs/learn-customization-component-styles--readme)      | Scope your selector to the variant/state you want to change; override the `--swc-<component>-*` custom properties. |
+| Theme (light / dark / adaptive) or scale (medium / large) | [Theme and scales](/docs/learn-customization-theme-and-scales--readme)      | Add `.swc-theme` plus a theme class and/or a scale class to the element that should govern that scope.             |
+| Native elements that match Spectrum (button, link, etc.)  | [Global element styling](/docs/learn-customization-global-elements--readme) | Opt-in cascade layer applies Spectrum styles to native `<button>`, `<a>`, etc. so they match SWC components.       |
+
+## Common one-liners
+
+### Include the stylesheet
+
+```html
+<link rel="stylesheet" href="node_modules/@adobe/spectrum-wc/dist/swc.css" />
+```
+
+Or via a JS import if your bundler supports CSS imports:
+
+```js
+import '@adobe/spectrum-wc/swc.css';
+```
+
+### Set the app background
+
+```css
+:root {
+  --swc-application-background: var(--swc-gray-100);
+}
+```
+
+Use a Spectrum color token so the background adapts to theme automatically.
+
+### Switch to dark theme
+
+```html
+<body class="swc-theme swc-theme--dark">
+  <!-- your app -->
+</body>
+```
+
+Available theme classes: `swc-theme--light`, `swc-theme--dark`, `swc-theme--adaptive` (follows OS setting).
+
+### Switch to large scale
+
+```html
+<body class="swc-theme swc-theme--sizeL">
+  <!-- your app — components inside render at the L scale -->
+</body>
+```
+
+Available scale classes: `swc-theme--sizeM` (default), `swc-theme--sizeL`. Scope is per-element — nest different scales in different parts of your app if you need to.
+
+### Override a single component custom property
+
+```css
+/* Increase font size on extra-large badges only */
+swc-badge[size='xl'] {
+  --swc-badge-font-size: var(--swc-font-size-400);
+}
+```
+
+Always scope to the variant/state you're targeting (`[size='xl']`, `[variant='positive']`, etc.). Bare element selectors are too broad and cause unintended overrides.
+
+### Override a design token globally
+
+```css
+:root {
+  --swc-accent-color-1000: var(--swc-blue-1100);
+}
+```
+
+Replaces the accent color across all components. Use sparingly — global overrides apply everywhere.
+
+## Where to go next
+
+The long-form docs in this sidebar section cover the same topics in depth, with edge cases, troubleshooting, and migration notes from 1st-gen:
+
+- **[Getting started](/docs/learn-customization-getting-started--readme)** — required setup, stylesheet inclusion, app background, PostCSS options
+- **[Component styles](/docs/learn-customization-component-styles--readme)** — selector scoping, override exclusions, migration from `--mod-*` (1st-gen) to `--swc-*` (2nd-gen)
+- **[Fonts](/docs/learn-customization-fonts--readme)** — Adobe Fonts vs self-hosted, fallback stack, CJK support, language switching, troubleshooting
+- **[Global element styling](/docs/learn-customization-global-elements--readme)** — opt-in cascade layer for native `<button>`, `<a>`, headings; override patterns
+- **[Theme and scales](/docs/learn-customization-theme-and-scales--readme)** — theme classes, scale classes, dynamic responsive scaling

@@ -8,8 +8,8 @@ The published Storybook is the canonical home for consumer docs:
 
 - **[Get started](https://opensource.adobe.com/spectrum-web-components/docs/get-started-welcome--readme)** — install, first component, framework notes
 - **[Components](https://opensource.adobe.com/spectrum-web-components/docs/components-badge--readme)** — the full 2nd-gen component library
-- **[Customization](https://opensource.adobe.com/spectrum-web-components/docs/learn-customization-cheatsheet--readme)** — cheatsheet plus long-form guides for theming, tokens, fonts, scales, and global element styles
-- **[Accessibility](https://opensource.adobe.com/spectrum-web-components/docs/learn-accessibility-overview--readme)** — how SWC handles a11y and how to layer your own
+- **[Customization](https://opensource.adobe.com/spectrum-web-components/docs/learn-customization-cheat-sheet--readme)** — cheatsheet plus long-form guides for theming, tokens, fonts, scales, and global element styles
+- **[Accessibility](https://opensource.adobe.com/spectrum-web-components/docs/learn-accessibility-cheat-sheet--readme)** — cheatsheet plus long-form guides for testing, ARIA, screen readers, and WCAG
 
 A minimal install for readers who want a quick reference without leaving GitHub:
 
