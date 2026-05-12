@@ -195,7 +195,7 @@ const preview = {
         method: 'alphabetical-by-kind',
         order: [
           'Learn about SWC',
-          ['Overview', 'Get started', 'When to use SWC', 'Gen1 vs Gen2'],
+          ['Overview', 'Get started', 'Gen1 vs Gen2', 'Migrate from Gen1'],
           'Resources',
           ['Support and compatibility', 'Changelog'],
           'Core',
@@ -323,6 +323,7 @@ const preview = {
                 'Accordion',
                 [
                   'Accessibility migration analysis',
+                  'Migration plan',
                   'Rendering and styling migration analysis',
                 ],
                 'Action button',
