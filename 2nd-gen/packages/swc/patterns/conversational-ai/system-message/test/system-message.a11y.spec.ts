@@ -27,10 +27,7 @@ test.describe('SystemMessage - ARIA Snapshots', () => {
       - paragraph: Response generated
       - paragraph: Main response content.
       - button "Give feedback"
-      - list:
-        - listitem:
-          - link "Source one":
-            - /url: "#source-1"
+      - button "Sources"
       - text: Try a follow-up prompt.
     `);
   });
