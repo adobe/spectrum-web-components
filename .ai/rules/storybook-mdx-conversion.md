@@ -1,123 +1,99 @@
 ---
-description: Converts contributor documentation from Markdown to MDX for Storybook rendering — adds imports, Meta tag, and converts HTML comments to JSX comments without altering any other content.
+description: How CONTRIBUTOR-DOCS Markdown is auto-mirrored into Storybook MDX, and which surfaces are NOT auto-generated.
 globs: '**/*.md,**/*.mdx'
 alwaysApply: false
 ---
 
-# Storybook MDX conversion
+# Storybook MDX generation (audience-aware SSOT)
 
-Converts markdown files to MDX format compatible with Storybook rendering.
+SWC's 2nd-gen documentation uses a **dual SSOT** model split by audience. This rule explains which content is auto-generated to Storybook from MD sources, which content is hand-authored MDX directly in `.storybook/`, and which content lives only on GitHub.
 
-## When to apply
+See: `CONTRIBUTOR-DOCS/project-planning/05_strategies/audience-based-docs-reorganization-plan.md` and `audience-based-docs-storybook-residency-audit.md` for the full architecture.
 
-Apply this rule when converting `.md` files to `.mdx` files for display in Storybook, particularly for documentation pages in the 2nd-gen SWC Storybook guides.
+## What is auto-generated, what is hand-authored
 
-## Conversion steps
+| Source                                      | Format          | Audience              | How it reaches Storybook                                                                                                                                                                                                   |
+| ------------------------------------------- | --------------- | --------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `CONTRIBUTOR-DOCS/for-contributors/*.md`    | MD              | Contributors          | **Auto-mirrored** to `.storybook/docs/contribute/for-contributors/` by `generate-contributor-docs.mjs`. Gated to dev builds.                                                                                               |
+| `CONTRIBUTOR-DOCS/for-maintainers/*.md`     | MD              | Maintainers           | **Auto-mirrored** to `.storybook/docs/contribute/for-maintainers/`. Gated to dev builds.                                                                                                                                   |
+| `CONTRIBUTOR-DOCS/project-planning/**/*.md` | MD              | Maintainers, planning | **Auto-mirrored** to `.storybook/docs/contribute/project-planning/`. Gated to dev builds.                                                                                                                                  |
+| `CONTRIBUTOR-DOCS/for-consumers/*.md`       | MD              | Consumers             | **Not** auto-mirrored. Rich consumer content lives as hand-authored MDX in `.storybook/docs/{get-started,learn,reference}/`. `for-consumers/` holds only process docs (e.g. the issue tracker workflow) and a thin README. |
+| `CONTRIBUTOR-DOCS/reference/*.{yml,yaml}`   | YAML            | (data)                | Not mirrored. The YAML is consumed by hand-authored MDX in `.storybook/docs/reference/` at build time (e.g. component status matrix).                                                                                      |
+| `.storybook/docs/get-started/*.mdx`         | MDX             | Consumers             | **Hand-authored MDX SSOT.** Includes live `<Canvas>`, `<swc-*>` demos.                                                                                                                                                     |
+| `.storybook/docs/learn/**/*.mdx`            | MDX             | Consumers, evaluators | **Hand-authored MDX SSOT.** Customization, accessibility, about-SWC. Often uses live component embeds.                                                                                                                     |
+| `.storybook/docs/reference/*.mdx`           | MDX             | Consumers, designers  | **Hand-authored MDX SSOT.** Component status matrix with live badges, design tokens, core package overview.                                                                                                                |
+| `.storybook/docs/contribute/**/*.mdx`       | MDX (generated) | Contributors          | **DO NOT EDIT.** Regenerated from `CONTRIBUTOR-DOCS/` on every `yarn dev` / `yarn storybook`. Edits will be overwritten.                                                                                                   |
+| `.storybook/DocumentTemplate.mdx`           | MDX             | (Storybook infra)     | Hand-authored template that renders the docs page for each component story.                                                                                                                                                |
 
-### 1. File extension and imports
+## The audience-aware SSOT principle
 
-- Change file extension from `.md` to `.mdx`
-- Add Storybook imports at the top of the file:
+A doc lives where its **primary audience** finds it natively:
 
-```typescript
-import { Meta } from '@storybook/addon-docs/blocks';
-```
+- Storybook-primary audiences (consumers, designers, evaluators) → **MDX SSOTs in `.storybook/docs/`** so they can use live `<Canvas>`, story imports, and other Storybook-only features.
+- GitHub-primary audiences (contributors, maintainers, planners) → **MD SSOTs in `CONTRIBUTOR-DOCS/`** so they render natively on GitHub during code review and repo exploration. The generator mirrors these into Storybook as a convenience.
 
-- Add a blank line after imports
+Cross-surface mirroring is one-way and only for the GitHub-primary content. Consumer-primary MDX in `.storybook/docs/` is never copied back to CONTRIBUTOR-DOCS.
 
-### 2. Meta tag
+## The generator
 
-- Add a `<Meta title="Your Title Here" />` tag after the imports
-- The title should match the document's main heading
-- Add a blank line after the Meta tag
+Path: `2nd-gen/packages/swc/.storybook/scripts/generate-contributor-docs.mjs`.
 
-### 3. Convert HTML comments to JSX comments
+What it does on every run:
 
-Replace HTML comments with JSX-style comments:
+1. Walks the **three included audience folders** (`for-contributors/`, `for-maintainers/`, `project-planning/`) inside `CONTRIBUTOR-DOCS/`. Files in other folders are not touched.
+2. Emits one `.mdx` per `.md` into `.storybook/docs/contribute/`, mirroring the source folder tree.
+3. Strips the generated breadcrumbs + TOC blocks (those belong on GitHub, not Storybook).
+4. Rewrites intra-tree `.md` links to Storybook `/docs/contribute-...` routes.
+5. Rewrites links to source files (`.ts`, `.css`, etc.) to GitHub `blob/main/...` URLs.
+6. Sanitizes HTML for MDX (self-closes void tags, converts angle-bracket emails to mailto links, converts `<!-- -->` to `{/* */}`).
+7. Adds a `<Meta title="..." />` block to each emitted MDX.
+8. Renames `README.md` → `index.mdx` so each folder has a clean index in Storybook.
+9. Updates `preview.ts` `storySort.order` between the `GENERATED:CONTRIBUTOR-DOCS-SORT` marker comments so the sidebar order tracks the source tree.
 
-**Before (Markdown):**
+When the generator runs:
 
-```markdown
-<!-- Document title (editable) -->
-```
+- `yarn generate:contributor-docs` (direct invocation)
+- Pre-hook of `yarn storybook` and `yarn dev` (so local dev always sees fresh output)
+- Pre-hook of `yarn storybook:build` (so the production build is consistent — but the entire `Contribute` titlePrefix block is gated to non-build mode in `main.ts`, so the generated content is NOT shipped to production Storybook)
 
-**After (MDX):**
+## Output gating
 
-```mdx
-{/* Document title (editable) */}
-```
+The whole `Contribute` titlePrefix is wrapped in `storybookMode !== 'build'` in `main.ts`. Why:
 
-### 4. Preserve all other content
+- Contributors are comfortable in code. When they need a contributor doc, they're browsing GitHub, running `yarn dev` locally, or asking an AI agent that retrieves MD.
+- Production Storybook (the public docs site) ships **only the consumer-facing surface**: `Get started`, `Components`, `Patterns`, `Learn`, `Reference`.
+- This keeps the public site clean and signals appropriate detail to non-contributors.
 
-- Keep all markdown syntax as-is (headings, lists, links, code blocks, etc.)
-- Keep all `<details>` and `<summary>` HTML elements unchanged
-- Keep all list formatting and indentation unchanged
-- Preserve all relative link paths (e.g., `./for-contributors/README.md`)
-- Do not modify any content within `<details>` blocks or navigation lists
+This decision is locked. Do not relax the gate.
 
-## Example transformation
+## Do not hand-edit generated MDX
 
-**Before (README.md):**
+`.storybook/docs/contribute/` is `.gitignore`d. Any hand-edits will be overwritten the next time the generator runs (which happens on every `yarn dev` / `yarn storybook`).
 
-```markdown
-<!-- Document title (editable) -->
+To change contributor-doc content:
 
-# Contributor Documentation
+1. Edit the corresponding `.md` file under `CONTRIBUTOR-DOCS/`
+2. Run the nav script if your edit changed headings or structure: `node CONTRIBUTOR-DOCS/for-contributors/authoring-contributor-docs/update-nav.js`
+3. The generator picks up the change on the next `yarn dev` / `yarn storybook` run
 
-<!-- Generated TOC - DO NOT EDIT -->
+## Hand-authored MDX rules
 
-<details open>
-<summary><strong>In this doc</strong></summary>
+`.storybook/docs/{get-started,learn,reference}/*.mdx` files ARE hand-authored. When editing them:
 
-- [About Spectrum Web Components](#about-spectrum-web-components)
-
-</details>
-
-<!-- Document content (editable) -->
-
-## About Spectrum Web Components
-
-Content here...
-```
-
-**After (README.mdx):**
-
-```mdx
-import { Meta } from '@storybook/addon-docs/blocks';
-
-<Meta title="Contributor Documentation" />
-{/* Document title (editable) */}
-
-# Contributor Documentation
-
-{/* Generated TOC - DO NOT EDIT */}
-
-<details open>
-<summary><strong>In this doc</strong></summary>
-
-- [About Spectrum Web Components](#about-spectrum-web-components)
-
-</details>
-
-{/* Document content (editable) */}
-
-## About Spectrum Web Components
-
-Content here...
-```
+1. Use the existing `<Meta title="..." />` block to control sidebar placement
+2. Use Storybook addon-docs blocks (`<Canvas>`, `<Story>`, `<Description>`, etc.) when embedding live demos
+3. Match the URL format the rest of the sidebar uses (titlePrefix-derived); see `preview.ts` `storySort.order` for canonical naming
+4. Self-close void HTML tags (`<br />`, `<hr />`, `<img ... />`) — MDX requires it
+5. Use JSX comments `{/* */}`, not HTML comments
+6. Image imports via Vite (`import bg from '../assets/...'`) work for hand-authored MDX
 
 ## Critical rules
 
-1. **Only add imports and Meta tag** - Do not modify any other structural elements
-2. **Preserve exact formatting** - Keep all whitespace, indentation, and line breaks
-3. **Convert ALL HTML comments** - Every `<!-- comment -->` must become `{/* comment */}`
-4. **Keep markdown links** - Do not convert `.md` links to `.mdx` (Storybook may need the original paths)
-5. **Blank lines matter** - Maintain blank line after imports and after Meta tag
+1. **One source per audience.** Never duplicate content between `CONTRIBUTOR-DOCS/` and `.storybook/docs/`. Pick the audience-appropriate home and link from the other surface if cross-linking is needed.
+2. **Do not edit auto-generated MDX** under `.storybook/docs/contribute/`. Edit the MD source instead.
+3. **Do not relax the Contribute gate.** Production Storybook is consumer-only by design.
+4. **Do not move consumer content to CONTRIBUTOR-DOCS** to "make it git-reviewable." Consumer content's primary surface is the Storybook docs site; PR review happens on the MDX file in `.storybook/docs/` directly.
 
-## Common mistakes to avoid
+## What survived from the prior conversion rule
 
-❌ Don't change the document's heading structure
-❌ Don't modify navigation lists or TOC content
-❌ Don't convert markdown to JSX (keep lists as markdown lists)
-❌ Don't add extra formatting or styling
-❌ Don't forget to convert ALL HTML comments to JSX comments
+The previous version of this rule described a manual `.md → .mdx` conversion process for contributor docs. That manual process is replaced by the generator. Authoring rules for hand-authored MDX (Meta block, JSX comments, self-closed void elements) remain valid for `.storybook/docs/{get-started,learn,reference}/` files.

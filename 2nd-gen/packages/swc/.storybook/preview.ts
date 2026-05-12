@@ -229,9 +229,6 @@ const preview = {
           'Contribute',
           // GENERATED:CONTRIBUTOR-DOCS-SORT - Do not edit manually. Run `yarn generate:contributor-docs` to update.
           [
-            'Contributor documentation',
-            'For consumers',
-            ['Using the issue tracker'],
             'For contributors',
             [
               'Authoring contributor docs',

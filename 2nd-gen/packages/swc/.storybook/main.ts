@@ -116,10 +116,12 @@ if (storybookMode !== 'ci-a11y') {
 
   // Contribute subtree is dev-only. Production Storybook ships the consumer-facing surface only;
   // contributor docs are consumed via GitHub or local `yarn dev` instead.
+  // Auto-generated from CONTRIBUTOR-DOCS/{for-contributors,for-maintainers,project-planning}/
+  // by 2nd-gen/packages/swc/.storybook/scripts/generate-contributor-docs.mjs.
   // See: CONTRIBUTOR-DOCS/project-planning/05_strategies/audience-based-docs-storybook-residency-audit.md
   if (storybookMode !== 'build') {
     stories.push({
-      directory: 'contributor-docs',
+      directory: 'docs/contribute',
       files: '**/*.mdx',
       titlePrefix: 'Contribute',
     });
