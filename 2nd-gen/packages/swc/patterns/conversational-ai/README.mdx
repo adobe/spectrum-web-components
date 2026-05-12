@@ -1,4 +1,5 @@
 import { Meta, Canvas } from '@storybook/addon-docs/blocks';
+import { addons } from '@storybook/preview-api';
 
 import * as ConversationThreadStories from './conversation-thread/stories/conversation-thread.stories';
 import * as ConversationTurnStories from './conversation-turn/stories/conversation-turn.stories';
@@ -77,10 +78,13 @@ Text input with built-in `default`, `loading`, and `generation-complete` modes. 
   additionalActions={[
     {
       title: 'Component docs',
-      onClick: () => {
-        window.location.href =
-          '?path=/docs/patterns-conversational-ai-prompt-field--docs';
-      },
+      onClick: () =>
+        addons
+          .getChannel()
+          .emit(
+            'navigateUrl',
+            '/?path=/docs/patterns-conversational-ai-prompt-field--docs'
+          ),
     },
   ]}
 />
@@ -94,10 +98,13 @@ Renders a staged attachment inside `swc-prompt-field` before the message is sent
   additionalActions={[
     {
       title: 'Component docs',
-      onClick: () => {
-        window.location.href =
-          '?path=/docs/patterns-conversational-ai-upload-artifact--docs';
-      },
+      onClick: () =>
+        addons
+          .getChannel()
+          .emit(
+            'navigateUrl',
+            '/?path=/docs/patterns-conversational-ai-upload-artifact--docs'
+          ),
     },
   ]}
 />
@@ -117,10 +124,13 @@ Vertical thread wrapper. Applies a roving `tabindex` so <kbd>ArrowUp</kbd> / <kb
   additionalActions={[
     {
       title: 'Component docs',
-      onClick: () => {
-        window.location.href =
-          '?path=/docs/patterns-conversational-ai-conversation-thread--docs';
-      },
+      onClick: () =>
+        addons
+          .getChannel()
+          .emit(
+            'navigateUrl',
+            '/?path=/docs/patterns-conversational-ai-conversation-thread--docs'
+          ),
     },
   ]}
 />
@@ -134,10 +144,13 @@ A column-aligned slot for one participant. Set `type="user"` or `type="system"` 
   additionalActions={[
     {
       title: 'Component docs',
-      onClick: () => {
-        window.location.href =
-          '?path=/docs/patterns-conversational-ai-conversation-turn--docs';
-      },
+      onClick: () =>
+        addons
+          .getChannel()
+          .emit(
+            'navigateUrl',
+            '/?path=/docs/patterns-conversational-ai-conversation-turn--docs'
+          ),
     },
   ]}
 />
@@ -155,10 +168,13 @@ The user's message bubble. Explicit `type="copy"`, `type="card"`, or `type="medi
   additionalActions={[
     {
       title: 'Component docs',
-      onClick: () => {
-        window.location.href =
-          '?path=/docs/patterns-conversational-ai-user-message--docs';
-      },
+      onClick: () =>
+        addons
+          .getChannel()
+          .emit(
+            'navigateUrl',
+            '/?path=/docs/patterns-conversational-ai-user-message--docs'
+          ),
     },
   ]}
 />
@@ -178,10 +194,13 @@ Container for the system reply. The default slot holds the response prose; named
   additionalActions={[
     {
       title: 'Component docs',
-      onClick: () => {
-        window.location.href =
-          '?path=/docs/patterns-conversational-ai-system-message--docs';
-      },
+      onClick: () =>
+        addons
+          .getChannel()
+          .emit(
+            'navigateUrl',
+            '/?path=/docs/patterns-conversational-ai-system-message--docs'
+          ),
     },
   ]}
 />
@@ -195,10 +214,13 @@ A loading indicator while the response is generating and a collapsible reasoning
   additionalActions={[
     {
       title: 'Component docs',
-      onClick: () => {
-        window.location.href =
-          '?path=/docs/patterns-conversational-ai-response-status--docs';
-      },
+      onClick: () =>
+        addons
+          .getChannel()
+          .emit(
+            'navigateUrl',
+            '/?path=/docs/patterns-conversational-ai-response-status--docs'
+          ),
     },
   ]}
 />
@@ -212,10 +234,13 @@ Positive / negative feedback control. Emits a bubbled status event so products c
   additionalActions={[
     {
       title: 'Component docs',
-      onClick: () => {
-        window.location.href =
-          '?path=/docs/patterns-conversational-ai-message-feedback--docs';
-      },
+      onClick: () =>
+        addons
+          .getChannel()
+          .emit(
+            'navigateUrl',
+            '/?path=/docs/patterns-conversational-ai-message-feedback--docs'
+          ),
     },
   ]}
 />
@@ -229,10 +254,13 @@ Collapsible numbered list of the sources used to generate the response.
   additionalActions={[
     {
       title: 'Component docs',
-      onClick: () => {
-        window.location.href =
-          '?path=/docs/patterns-conversational-ai-message-sources--docs';
-      },
+      onClick: () =>
+        addons
+          .getChannel()
+          .emit(
+            'navigateUrl',
+            '/?path=/docs/patterns-conversational-ai-message-sources--docs'
+          ),
     },
   ]}
 />
@@ -252,10 +280,13 @@ Wraps follow-up suggestions with an optional heading.
   additionalActions={[
     {
       title: 'Component docs',
-      onClick: () => {
-        window.location.href =
-          '?path=/docs/patterns-conversational-ai-suggestion-group--docs';
-      },
+      onClick: () =>
+        addons
+          .getChannel()
+          .emit(
+            'navigateUrl',
+            '/?path=/docs/patterns-conversational-ai-suggestion-group--docs'
+          ),
     },
   ]}
 />
@@ -269,10 +300,13 @@ Interactive chip used inside the group. Emits a bubbled `swc-suggestion` event w
   additionalActions={[
     {
       title: 'Component docs',
-      onClick: () => {
-        window.location.href =
-          '?path=/docs/patterns-conversational-ai-suggestion-group-suggestion-item--docs';
-      },
+      onClick: () =>
+        addons
+          .getChannel()
+          .emit(
+            'navigateUrl',
+            '/?path=/docs/patterns-conversational-ai-suggestion-group-suggestion-item--docs'
+          ),
     },
   ]}
 />
