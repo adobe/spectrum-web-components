@@ -26,7 +26,7 @@ import '@spectrum-web-components/divider/sp-divider.js';
 import '@adobe/spectrum-wc/components/divider/swc-divider.js';
 ```
 
-> `@adobe/spectrum-wc` is a monolithic package. Importing via subpath (e.g. `@adobe/spectrum-wc/divider`) loads only that component's bundle.
+> `@adobe/spectrum-wc` is a monolithic package. Importing via the per-component side-effect path (e.g. `@adobe/spectrum-wc/components/divider/swc-divider.js`) registers and loads only that element.
 
 ## What changed
 
