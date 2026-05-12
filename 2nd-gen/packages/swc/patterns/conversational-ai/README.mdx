@@ -22,7 +22,7 @@ A composable set of web components for building AI conversational interfaces wit
 
 ## Full example
 
-An end-to-end conversation with streaming generation, file upload, feedback, and follow-up suggestions. Try sending a prompt, attaching a file, or selecting a suggestion.
+An end-to-end conversation with streaming generation, file upload, feedback, and follow-up suggestions. This example illustrates interactions like sending prompts, attaching files, and selecting suggestions.
 
 <Canvas of={ConversationThreadStories.FullPattern} sourceState="none" />
 
@@ -72,13 +72,35 @@ The composer surface where the user types a prompt and attaches files.
 
 Text input with built-in `default`, `loading`, and `generation-complete` modes. Emits submit, input, stop, and upload-click events so products can drive their own generation pipeline.
 
-<Canvas of={PromptFieldStories.Overview} />
+<Canvas
+  of={PromptFieldStories.Overview}
+  additionalActions={[
+    {
+      title: 'Component docs',
+      onClick: () => {
+        window.location.href =
+          '?path=/docs/patterns-conversational-ai-prompt-field--docs';
+      },
+    },
+  ]}
+/>
 
 #### `swc-upload-artifact`
 
-Renders an attached file. Used both inside `swc-prompt-field` (before send) and inside a user turn (after send). Supports `card` and `media` types and an optional `dismissible` affordance.
+Renders a staged attachment inside `swc-prompt-field` before the message is sent. Supports `card` and `media` types and an optional `dismissible` affordance.
 
-<Canvas of={UploadArtifactStories.Overview} />
+<Canvas
+  of={UploadArtifactStories.Overview}
+  additionalActions={[
+    {
+      title: 'Component docs',
+      onClick: () => {
+        window.location.href =
+          '?path=/docs/patterns-conversational-ai-upload-artifact--docs';
+      },
+    },
+  ]}
+/>
 
 ---
 
@@ -90,13 +112,35 @@ How turns are stacked, aligned, and navigated with the keyboard.
 
 Vertical thread wrapper. Applies a roving `tabindex` so <kbd>ArrowUp</kbd> / <kbd>ArrowDown</kbd> move between turns and <kbd>Home</kbd> / <kbd>End</kbd> jump to the first or last turn.
 
-<Canvas of={ConversationThreadStories.Overview} />
+<Canvas
+  of={ConversationThreadStories.Overview}
+  additionalActions={[
+    {
+      title: 'Component docs',
+      onClick: () => {
+        window.location.href =
+          '?path=/docs/patterns-conversational-ai-conversation-thread--docs';
+      },
+    },
+  ]}
+/>
 
 #### `swc-conversation-turn`
 
 A column-aligned slot for one participant. Set `type="user"` or `type="system"` to align right or left, and stack consecutive messages in a single turn for grouped spacing.
 
-<Canvas of={ConversationTurnStories.Overview} />
+<Canvas
+  of={ConversationTurnStories.Overview}
+  additionalActions={[
+    {
+      title: 'Component docs',
+      onClick: () => {
+        window.location.href =
+          '?path=/docs/patterns-conversational-ai-conversation-turn--docs';
+      },
+    },
+  ]}
+/>
 
 ---
 
@@ -106,7 +150,18 @@ A column-aligned slot for one participant. Set `type="user"` or `type="system"` 
 
 The user's message bubble. Explicit `type="copy"`, `type="card"`, or `type="media"` controls the rendering for text, file attachments, and image attachments respectively.
 
-<Canvas of={UserMessageStories.Anatomy} />
+<Canvas
+  of={UserMessageStories.Content}
+  additionalActions={[
+    {
+      title: 'Component docs',
+      onClick: () => {
+        window.location.href =
+          '?path=/docs/patterns-conversational-ai-user-message--docs';
+      },
+    },
+  ]}
+/>
 
 ---
 
@@ -118,25 +173,69 @@ The system reply is a stack of optional parts inside a single `swc-system-messag
 
 Container for the system reply. The default slot holds the response prose; named slots (`status`, `feedback`, `sources`, `suggestions`) attach the supporting parts below in a consistent order.
 
-<Canvas of={SystemMessageStories.Overview} />
+<Canvas
+  of={SystemMessageStories.Overview}
+  additionalActions={[
+    {
+      title: 'Component docs',
+      onClick: () => {
+        window.location.href =
+          '?path=/docs/patterns-conversational-ai-system-message--docs';
+      },
+    },
+  ]}
+/>
 
 #### `swc-response-status`
 
 A loading indicator while the response is generating and a collapsible reasoning trace once it completes.
 
-<Canvas of={ResponseStatusStories.Loading} />
+<Canvas
+  of={ResponseStatusStories.Loading}
+  additionalActions={[
+    {
+      title: 'Component docs',
+      onClick: () => {
+        window.location.href =
+          '?path=/docs/patterns-conversational-ai-response-status--docs';
+      },
+    },
+  ]}
+/>
 
 #### `swc-message-feedback`
 
 Positive / negative feedback control. Emits a bubbled status event so products can capture sentiment.
 
-<Canvas of={MessageFeedbackStories.Overview} />
+<Canvas
+  of={MessageFeedbackStories.Overview}
+  additionalActions={[
+    {
+      title: 'Component docs',
+      onClick: () => {
+        window.location.href =
+          '?path=/docs/patterns-conversational-ai-message-feedback--docs';
+      },
+    },
+  ]}
+/>
 
 #### `swc-message-sources`
 
 Collapsible numbered list of the sources used to generate the response.
 
-<Canvas of={MessageSourcesStories.Overview} />
+<Canvas
+  of={MessageSourcesStories.Overview}
+  additionalActions={[
+    {
+      title: 'Component docs',
+      onClick: () => {
+        window.location.href =
+          '?path=/docs/patterns-conversational-ai-message-sources--docs';
+      },
+    },
+  ]}
+/>
 
 ---
 
@@ -148,10 +247,32 @@ After a reply, offer the user a curated list of next prompts.
 
 Wraps follow-up suggestions with an optional heading.
 
-<Canvas of={SuggestionGroupStories.Overview} />
+<Canvas
+  of={SuggestionGroupStories.Overview}
+  additionalActions={[
+    {
+      title: 'Component docs',
+      onClick: () => {
+        window.location.href =
+          '?path=/docs/patterns-conversational-ai-suggestion-group--docs';
+      },
+    },
+  ]}
+/>
 
 #### `swc-suggestion-item`
 
 Interactive chip used inside the group. Emits a bubbled `swc-suggestion` event when activated; products can route this back into their submit pipeline.
 
-<Canvas of={SuggestionItemStories.Overview} />
+<Canvas
+  of={SuggestionItemStories.Overview}
+  additionalActions={[
+    {
+      title: 'Component docs',
+      onClick: () => {
+        window.location.href =
+          '?path=/docs/patterns-conversational-ai-suggestion-group-suggestion-item--docs';
+      },
+    },
+  ]}
+/>
