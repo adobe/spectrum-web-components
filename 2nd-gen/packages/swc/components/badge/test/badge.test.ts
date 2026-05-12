@@ -15,7 +15,7 @@ import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import { Badge } from '@adobe/spectrum-wc/badge';
 
-import '@adobe/spectrum-wc/badge';
+import '@adobe/spectrum-wc/components/badge/swc-badge.js';
 
 import {
   BADGE_VALID_SIZES,

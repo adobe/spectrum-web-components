@@ -17,7 +17,7 @@ import { ref } from 'lit/directives/ref.js';
 import { Chevron75Icon } from '@adobe/spectrum-wc/icon/elements/index.js';
 import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
 
-import '@adobe/spectrum-wc/icon';
+import '@adobe/spectrum-wc/components/icon/swc-icon.js';
 
 import { uniqueId } from '../../../utils/id.js';
 

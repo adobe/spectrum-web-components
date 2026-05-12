@@ -17,7 +17,7 @@ import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
 import { Divider } from '@adobe/spectrum-wc/divider';
 
-import '@adobe/spectrum-wc/divider';
+import '@adobe/spectrum-wc/components/divider/swc-divider.js';
 
 // ────────────────
 //    METADATA

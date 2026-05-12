@@ -27,6 +27,10 @@
       "types": "./dist/*.css.d.ts",
       "default": "./dist/*.css"
     },
+    "./components/*.js": {
+      "types": "./dist/components/*.d.ts",
+      "default": "./dist/components/*.js"
+    },
     "./components/*": {
       "types": "./dist/components/*/index.d.ts",
       "import": "./dist/components/*/index.js"
