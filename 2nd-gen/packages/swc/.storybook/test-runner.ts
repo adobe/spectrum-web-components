@@ -52,14 +52,19 @@ const config: TestRunnerConfig = {
         axeBuilder.disableRules(a11yConfig.disabledRules);
       }
 
-      // Both addon-a11y and the test-runner run axe in the same preview iframe.
-      // waitForFunction can resolve just before the addon starts a new run, so
-      // analyze() may still find axe running. Retry up to 5 times with backoff.
-      let results;
+      // On the docs page the preview runs in a nested iframe; wait on that
+      // frame's window, not the shell's, which has no axe instance.
+      const previewFrame =
+        targetPage.frames().find((f) => f.url().includes('/iframe.html')) ??
+        targetPage.mainFrame();
+
+      let results!: Awaited<ReturnType<typeof axeBuilder.analyze>>;
       let lastError: Error | null = null;
       for (let attempt = 0; attempt < 5; attempt++) {
         try {
-          await targetPage.waitForFunction(() => !(window as any).axe?.running);
+          await previewFrame.waitForFunction(
+            () => !(window as any).axe?.running
+          );
           results = await axeBuilder.analyze();
           lastError = null;
           break;
