@@ -565,44 +565,40 @@ jobs:
           regression_dir: << parameters.dir >>
 
 workflows:
-  build:
+  # Each gen lives in its own workflow so we can gate at the workflow level.
+  # Job-level `when:` clauses conflict with jobs that declare `parameters:`
+  # (e.g. matrix jobs like `test-2ndgen-browser` and `visual`), so the
+  # workflow-level gate is the only place this works cleanly.
+  build-2nd-gen:
+    when: << pipeline.parameters.run_2nd_gen >>
     jobs:
-      # 2nd-gen tests
       - test-2ndgen-browser:
-          when: << pipeline.parameters.run_2nd_gen >>
           name: test-2ndgen-browser-<< matrix.browser >>
           matrix:
             parameters:
               browser: [chromium, firefox, webkit]
-      - test-2ndgen-a11y:
-          when: << pipeline.parameters.run_2nd_gen >>
-      - test-2ndgen-axe:
-          when: << pipeline.parameters.run_2nd_gen >>
-      # 1st-gen tests
-      - test-chromium:
-          when: << pipeline.parameters.run_1st_gen >>
-      - test-chromium-memory:
-          when: << pipeline.parameters.run_1st_gen >>
-      - test-firefox:
-          when: << pipeline.parameters.run_1st_gen >>
-      - test-webkit:
-          when: << pipeline.parameters.run_1st_gen >>
-      - test-chromium-coverage:
-          when: << pipeline.parameters.run_1st_gen >>
+      - test-2ndgen-a11y
+      - test-2ndgen-axe
+
+  build-1st-gen:
+    when: << pipeline.parameters.run_1st_gen >>
+    jobs:
+      - test-chromium
+      - test-chromium-memory
+      - test-firefox
+      - test-webkit
+      - test-chromium-coverage
       - hcm-visual:
-          when: << pipeline.parameters.run_1st_gen >>
           filters:
             branches:
               # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
               ignore: /pull\/[0-9]+/
       - beta-docs:
-          when: << pipeline.parameters.run_1st_gen >>
           filters:
             branches:
               # Beta docs are only published from main
               only: main
       - visual:
-          when: << pipeline.parameters.run_1st_gen >>
           name: << matrix.system >>-<< matrix.color >>-<< matrix.scale >>-<< matrix.dir >>
           matrix:
             parameters:
@@ -615,7 +611,6 @@ workflows:
               # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
               ignore: /pull\/[0-9]+/
       - visual:
-          when: << pipeline.parameters.run_1st_gen >>
           name: << matrix.system >>-<< matrix.color >>-<< matrix.scale >>-<< matrix.dir >>
           matrix:
             parameters:
