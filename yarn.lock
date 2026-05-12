@@ -195,6 +195,7 @@ __metadata:
   dependencies:
     "@adobe/postcss-token": "workspace:*"
     "@adobe/swc-tokens": "workspace:*"
+    "@adobe/vite-global-elements-css": "workspace:*"
     "@axe-core/playwright": "npm:4.11.2"
     "@chromatic-com/storybook": "npm:5.0.1"
     "@custom-elements-manifest/analyzer": "npm:0.10.8"
@@ -250,7 +251,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@adobe/vite-global-elements-css@workspace:2nd-gen/packages/tools/vite-global-elements-css":
+"@adobe/vite-global-elements-css@workspace:*, @adobe/vite-global-elements-css@workspace:2nd-gen/packages/tools/vite-global-elements-css":
   version: 0.0.0-use.local
   resolution: "@adobe/vite-global-elements-css@workspace:2nd-gen/packages/tools/vite-global-elements-css"
   dependencies:
