@@ -44,7 +44,7 @@ export class ColorLoupe extends ColorLoupeBase {
 
   protected override render(): TemplateResult {
     return html`
-      <div class="swc-ColorLoup">
+      <div class="swc-ColorLoupe">
         <div class="swc-ColorLoupe-checkerboard swc-ColorLoupe--clipped"></div>
         <div
           class="swc-ColorLoupe-colorFill swc-ColorLoupe--clipped"
