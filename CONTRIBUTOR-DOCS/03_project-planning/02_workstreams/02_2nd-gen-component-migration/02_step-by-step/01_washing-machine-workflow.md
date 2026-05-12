@@ -253,7 +253,7 @@ See [Step 2](02_factor-rendering-out-of-1st-gen-component.md) and [Step 3](03_mo
 |--------|----------|
 | Wrong base or mixin | See Badge and [Step 2](02_factor-rendering-out-of-1st-gen-component.md). |
 | CSS not applied | Add `static override get styles()` and import the CSS module. See Badge. |
-| Package not exporting | Add to package exports (e.g. `@adobe/spectrum-wc/badge`). |
+| Package not exporting | Add to package exports (e.g. `@adobe/spectrum-wc/components/badge/swc-badge.js`). |
 
 ### Quality gate
 

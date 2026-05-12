@@ -30,7 +30,7 @@ import styles from './progress-circle.css';
  * They can represent determinate (with a specific progress value) or indeterminate (loading) progress. If no `progress` value is given, the progress circle is indeterminate.
  *
  * @element swc-progress-circle
- * @since 0.0.1
+ * @since 2.0.0
  *
  * @example
  * <swc-progress-circle progress="75" label="Loading progress"></swc-progress-circle>

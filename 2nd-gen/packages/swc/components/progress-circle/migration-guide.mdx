@@ -1,8 +1,8 @@
 import { Meta } from '@storybook/addon-docs/blocks';
 
-<Meta title="Progress circle/Consumer migration guide" />
+<Meta title="Progress circle/Migration guide" />
 
-# Progress circle consumer migration guide
+# Progress circle migration guide
 
 Replace `<sp-progress-circle>` with `<swc-progress-circle>`, update the import, and use `progress` omission instead of the `indeterminate` attribute.
 
@@ -23,20 +23,20 @@ Update your import:
 import '@spectrum-web-components/progress-circle/sp-progress-circle.js';
 
 // After
-import '@adobe/spectrum-wc/progress-circle';
+import '@adobe/spectrum-wc/components/progress-circle/swc-progress-circle.js';
 ```
 
-> `@adobe/spectrum-wc` is a monolithic package. Importing via subpath (e.g. `@adobe/spectrum-wc/progress-circle`) loads only that component's bundle.
+> `@adobe/spectrum-wc` is a monolithic package. Importing via subpath (e.g. `@adobe/spectrum-wc/components/progress-circle/swc-progress-circle.js`) registers and loads only that component's bundle.
 
 ## What changed
 
 ### Renamed
 
-| Area             | Spectrum 1 (`sp-progress-circle`)          | Spectrum 2 (`swc-progress-circle`)                  |
-| ---------------- | ------------------------------------------ | --------------------------------------------------- |
-| Tag              | `sp-progress-circle`                       | `swc-progress-circle`                               |
-| Import path      | `@spectrum-web-components/progress-circle` | `@adobe/spectrum-wc/progress-circle`                |
-| CSS custom props | `--mod-progress-circle-*`                  | `--swc-progress-circle-*` (see [Styling](#styling)) |
+| Area             | Spectrum 1 (`sp-progress-circle`)          | Spectrum 2 (`swc-progress-circle`)                                     |
+| ---------------- | ------------------------------------------ | ---------------------------------------------------------------------- |
+| Tag              | `sp-progress-circle`                       | `swc-progress-circle`                                                  |
+| Import path      | `@spectrum-web-components/progress-circle` | `@adobe/spectrum-wc/components/progress-circle/swc-progress-circle.js` |
+| CSS custom props | `--mod-progress-circle-*`                  | `--swc-progress-circle-*` (see [Styling](#styling))                    |
 
 ### Added in Spectrum 2
 

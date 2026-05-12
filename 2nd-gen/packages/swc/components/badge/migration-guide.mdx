@@ -1,8 +1,8 @@
 import { Meta } from '@storybook/addon-docs/blocks';
 
-<Meta title="Badge/Consumer migration guide" />
+<Meta title="Badge/Migration guide" />
 
-# Badge consumer migration guide
+# Badge migration guide
 
 Replace `<sp-badge>` with `<swc-badge>`, update the import, and check any badges that relied on the `informative` default variant — the default is now `neutral`.
 
@@ -23,10 +23,10 @@ Update your import:
 import '@spectrum-web-components/badge/sp-badge.js';
 
 // After
-import '@adobe/spectrum-wc/badge';
+import '@adobe/spectrum-wc/components/badge/swc-badge.js';
 ```
 
-> `@adobe/spectrum-wc` is a monolithic package. Importing via subpath (e.g. `@adobe/spectrum-wc/badge`) loads only that component's bundle.
+> `@adobe/spectrum-wc` is a monolithic package. Importing via subpath (e.g. `@adobe/spectrum-wc/components/badge/swc-badge.js`) registers and loads only that component's bundle.
 
 ## What changed
 
@@ -35,7 +35,7 @@ import '@adobe/spectrum-wc/badge';
 | Area              | Spectrum 1 (`sp-badge`)                | Spectrum 2 (`swc-badge`)                                 |
 | ----------------- | -------------------------------------- | -------------------------------------------------------- |
 | Tag               | `sp-badge`                             | `swc-badge`                                              |
-| Import path       | `@spectrum-web-components/badge`       | `@adobe/spectrum-wc/badge`                               |
+| Import path       | `@spectrum-web-components/badge`       | `@adobe/spectrum-wc/components/badge/swc-badge.js`       |
 | CSS custom props  | `--mod-badge-*` / `--spectrum-badge-*` | `--swc-badge-*` (see [Styling](#styling))                |
 | Default `variant` | `'informative'`                        | `'neutral'` — see [step 2](#2-check-the-default-variant) |
 | Default `size`    | No reflected default (`noDefaultSize`) | `'s'` — the `size` attribute is set by default           |

@@ -1,8 +1,8 @@
 import { Meta } from '@storybook/addon-docs/blocks';
 
-<Meta title="Icon/Consumer migration guide" />
+<Meta title="Icon/Migration guide" />
 
-# Icon consumer migration guide
+# Icon migration guide
 
 Replace `<sp-icon>` with `<swc-icon>`, update the import, and provide icon content via the default slot instead of `name` or `src`.
 
@@ -23,20 +23,20 @@ Update your import:
 import '@spectrum-web-components/icon/sp-icon.js';
 
 // After
-import '@adobe/spectrum-wc/icon';
+import '@adobe/spectrum-wc/components/icon/swc-icon.js';
 ```
 
-> `@adobe/spectrum-wc` is a monolithic package. Importing via subpath (e.g. `@adobe/spectrum-wc/icon`) loads only that component's bundle.
+> `@adobe/spectrum-wc` is a monolithic package. Importing via subpath (e.g. `@adobe/spectrum-wc/components/icon/swc-icon.js`) registers and loads only that component's bundle.
 
 ## What changed
 
 ### Renamed
 
-| Area             | Spectrum 1 (`sp-icon`)          | Spectrum 2 (`swc-icon`)                  |
-| ---------------- | ------------------------------- | ---------------------------------------- |
-| Tag              | `sp-icon`                       | `swc-icon`                               |
-| Import path      | `@spectrum-web-components/icon` | `@adobe/spectrum-wc/icon`                |
-| CSS custom props | `--mod-icon-*`                  | `--swc-icon-*` (see [Styling](#styling)) |
+| Area             | Spectrum 1 (`sp-icon`)          | Spectrum 2 (`swc-icon`)                          |
+| ---------------- | ------------------------------- | ------------------------------------------------ |
+| Tag              | `sp-icon`                       | `swc-icon`                                       |
+| Import path      | `@spectrum-web-components/icon` | `@adobe/spectrum-wc/components/icon/swc-icon.js` |
+| CSS custom props | `--mod-icon-*`                  | `--swc-icon-*` (see [Styling](#styling))         |
 
 ### Removed in Spectrum 2
 
@@ -69,10 +69,10 @@ The `name` attribute (iconset registry lookup) and `src` attribute (image URL) h
 
 **Migrating `name`-based icons with Lit:**
 
-Icon factory functions are re-exported from `@adobe/spectrum-wc/icon`. Each factory returns a Lit `TemplateResult` and must be used inside a `html` tagged template literal.
+Icon factory functions are available from `@adobe/spectrum-wc/components/icon/elements/index.js`. Each factory returns a Lit `TemplateResult` and must be used inside a `html` tagged template literal.
 
 ```ts
-import { Arrow100Icon } from '@adobe/spectrum-wc/icon';
+import { Arrow100Icon } from '@adobe/spectrum-wc/components/icon/elements/index.js';
 import { html } from 'lit';
 
 // Inside a Lit template:

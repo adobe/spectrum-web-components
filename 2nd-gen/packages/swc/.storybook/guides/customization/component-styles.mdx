@@ -15,9 +15,9 @@ Component styles can be customized in a few ways, listed in the recommended orde
 
 SWC strongly recommends using the least intrusive method possible for assigning custom styles. This will help keep your component styles overall inline with Spectrum design recommendations, and reduce the likelihood of compatibility issues as the library evolves.
 
-## Migration from SWC 1st-gen
+## Migration from SWC Gen1
 
-For SWC 2nd-gen, the custom property API surface has been reduced, and `--mod` properties have been removed.
+For SWC Gen2, the custom property API surface has been reduced, and `--mod` properties have been removed.
 
 Additionally, the namespace for custom properties has changed from `spectrum` to `swc`.
 
@@ -89,7 +89,7 @@ It is strongly encouraged to re-assign color values to existing Spectrum color t
 
 For scaling values, you will need to provide both the medium and large values, even if only one value has been revised. Scaling values need to be attached to both `:root` and `.swc-theme` to continue successfully supporting dynamic scaling.
 
-Overrides should be included after the [main library stylesheet](docs/guides-customization-getting-started--readme), which allows overrides to work via the natural CSS cascade.
+Overrides should be included after the [main library stylesheet](docs/guides-customization-getting-started--docs), which allows overrides to work via the natural CSS cascade.
 
 ```css
 /* Assumes @adobe/spectrum-wc/swc.css is loaded prior */

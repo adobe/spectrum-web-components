@@ -195,7 +195,9 @@ const preview = {
         method: 'alphabetical-by-kind',
         order: [
           'Learn about SWC',
-          ['Overview', 'When to use SWC', '1st-gen vs 2nd-gen'],
+          ['Overview', 'Get started', 'When to use SWC', 'Gen1 vs Gen2'],
+          'Resources',
+          ['Support and compatibility', 'Changelog'],
           'Core',
           ['Overview', 'Controllers'],
           'Components',
@@ -203,7 +205,7 @@ const preview = {
           ['Conversational AI', ['README', 'Prompt field', 'User message']],
           'Guides',
           [
-            'Accessibility guides',
+            'Accessibility',
             [
               'Overview',
               'Semantic HTML and ARIA',

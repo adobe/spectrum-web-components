@@ -1,8 +1,8 @@
 import { Meta } from '@storybook/addon-docs/blocks';
 
-<Meta title="Divider/Consumer migration guide" />
+<Meta title="Divider/Migration guide" />
 
-# Divider consumer migration guide
+# Divider migration guide
 
 Replace `<sp-divider>` with `<swc-divider>` and update the import. The public attribute API is unchanged.
 
@@ -23,20 +23,20 @@ Update your import:
 import '@spectrum-web-components/divider/sp-divider.js';
 
 // After
-import '@adobe/spectrum-wc/divider';
+import '@adobe/spectrum-wc/components/divider/swc-divider.js';
 ```
 
-> `@adobe/spectrum-wc` is a monolithic package. Importing via subpath (e.g. `@adobe/spectrum-wc/divider`) loads only that component's bundle.
+> `@adobe/spectrum-wc` is a monolithic package. Importing via subpath (e.g. `@adobe/spectrum-wc/components/divider/swc-divider.js`) registers and loads only that component's bundle.
 
 ## What changed
 
 ### Renamed
 
-| Area             | Spectrum 1 (`sp-divider`)          | Spectrum 2 (`swc-divider`)                  |
-| ---------------- | ---------------------------------- | ------------------------------------------- |
-| Tag              | `sp-divider`                       | `swc-divider`                               |
-| Import path      | `@spectrum-web-components/divider` | `@adobe/spectrum-wc/components/divider`     |
-| CSS custom props | `--mod-divider-*`                  | `--swc-divider-*` (see [Styling](#styling)) |
+| Area             | Spectrum 1 (`sp-divider`)          | Spectrum 2 (`swc-divider`)                             |
+| ---------------- | ---------------------------------- | ------------------------------------------------------ |
+| Tag              | `sp-divider`                       | `swc-divider`                                          |
+| Import path      | `@spectrum-web-components/divider` | `@adobe/spectrum-wc/components/divider/swc-divider.js` |
+| CSS custom props | `--mod-divider-*`                  | `--swc-divider-*` (see [Styling](#styling))            |
 
 ### Removed in Spectrum 2
 
