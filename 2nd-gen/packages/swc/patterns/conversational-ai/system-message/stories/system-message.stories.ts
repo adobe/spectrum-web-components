@@ -36,7 +36,7 @@ const slotMessageRich = `<div class="swc-conversationalAi-systemProse swc-Typogr
 
 const slotFeedback = `<swc-message-feedback slot="feedback"></swc-message-feedback>`;
 
-const slotSourcesRich = `<swc-message-sources slot="sources"><li><a href="#">Adobe Experience Manager documentation</a></li><li><a href="#">Creative Cloud release notes 2026</a></li><li><a href="#">Firefly API getting started guide</a></li></swc-message-sources>`;
+const slotSourcesRich = `<swc-message-sources slot="sources"><a href="#">Adobe Experience Manager documentation</a><a href="#">Creative Cloud release notes 2026</a><a href="#">Firefly API getting started guide</a></swc-message-sources>`;
 
 const slotSuggestionsRich = `<swc-suggestion-group slot="suggestions" heading="What would you like to do next?"><swc-suggestion-item>Create a year-over-year growth chart for the next decade</swc-suggestion-item><swc-suggestion-item>Generate a congratulatory poster</swc-suggestion-item><swc-suggestion-item>Summarize development pipeline</swc-suggestion-item></swc-suggestion-group>`;
 
@@ -132,7 +132,7 @@ export const Anatomy: Story = {
     'status-slot': `<swc-response-status slot="status">I used the prompt and source context to draft a concise, presentation-ready response structure.</swc-response-status>`,
     'default-slot': `<div class="swc-conversationalAi-systemProse swc-Typography--prose"><p>Here is the AI-generated response content.</p></div>`,
     'feedback-slot': slotFeedback,
-    'sources-slot': `<swc-message-sources slot="sources"><li><a href="#">Source one</a></li></swc-message-sources>`,
+    'sources-slot': `<swc-message-sources slot="sources"><a href="#">Source one</a></swc-message-sources>`,
     'suggestions-slot': `<swc-suggestion-group slot="suggestions" heading="What would you like to do next?"><swc-suggestion-item>Follow up suggestion one</swc-suggestion-item><swc-suggestion-item>Follow up suggestion two</swc-suggestion-item></swc-suggestion-group>`,
   },
   decorators: [withSystemTurn],
@@ -177,7 +177,7 @@ export const Loading: Story = {
             </div>
             <swc-message-feedback slot="feedback"></swc-message-feedback>
             <swc-message-sources slot="sources">
-              <li><a href="#">Adobe Experience Manager documentation</a></li>
+              <a href="#">Adobe Experience Manager documentation</a>
             </swc-message-sources>
           </swc-system-message>
         </swc-conversation-turn>
@@ -218,7 +218,7 @@ export const Accessibility: Story = {
     'status-slot': `<swc-response-status slot="status">I used the prompt and source context to draft a concise, presentation-ready response structure.</swc-response-status>`,
     'default-slot': `<div class="swc-conversationalAi-systemProse swc-Typography--prose"><p>According to the assets, there is a clear journey from beginning to end. Let's start with overarching themes and build from there.</p></div>`,
     'feedback-slot': slotFeedback,
-    'sources-slot': `<swc-message-sources slot="sources" open><li><a href="#">Adobe Experience Manager documentation</a></li><li><a href="#">Creative Cloud release notes 2026</a></li></swc-message-sources>`,
+    'sources-slot': `<swc-message-sources slot="sources" open><a href="#">Adobe Experience Manager documentation</a><a href="#">Creative Cloud release notes 2026</a></swc-message-sources>`,
     'suggestions-slot': `<swc-suggestion-group slot="suggestions" heading="What would you like to do next?"><swc-suggestion-item>Create a year-over-year growth chart for the next decade</swc-suggestion-item><swc-suggestion-item>Generate a congratulatory poster</swc-suggestion-item></swc-suggestion-group>`,
   },
   decorators: [withSystemTurn],
@@ -238,9 +238,9 @@ export const AccessibilityIsolated: Story = {
       <p slot="status">Response generated</p>
       <p>Main response content.</p>
       <button slot="feedback">Give feedback</button>
-      <ul slot="sources">
-        <li><a href="#source-1">Source one</a></li>
-      </ul>
+      <swc-message-sources slot="sources">
+        <a href="#source-1">Source one</a>
+      </swc-message-sources>
       <div slot="suggestions">Try a follow-up prompt.</div>
     </swc-system-message>
   `,

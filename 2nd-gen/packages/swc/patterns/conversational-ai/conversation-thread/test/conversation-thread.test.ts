@@ -116,7 +116,7 @@ export const OverviewTest: Story = {
     });
 
     await step(
-      'slot changes keep roving tabindex correct for added/removed turns',
+      'slot changes preserve the current roving target while focus is inside the thread',
       async () => {
         const addedTurn = document.createElement('swc-conversation-turn');
         addedTurn.setAttribute('type', 'user');
@@ -128,10 +128,11 @@ export const OverviewTest: Story = {
           canvasElement.querySelectorAll<HTMLElement>('swc-conversation-turn')
         );
         expect(currentTurns.length).toBe(4);
+        expect(el.activeIndex).toBe(0);
         expect(currentTurns[0]?.getAttribute('tabindex')).toBe('0');
         expect(currentTurns[3]?.getAttribute('tabindex')).toBe('-1');
 
-        const removedTurn = currentTurns[0];
+        const removedTurn = currentTurns[1];
         removedTurn?.remove();
         await el.updateComplete;
 
@@ -139,8 +140,57 @@ export const OverviewTest: Story = {
           canvasElement.querySelectorAll<HTMLElement>('swc-conversation-turn')
         );
         expect(currentTurns.length).toBe(3);
-        expect(removedTurn?.hasAttribute('tabindex')).toBe(false);
+        expect(el.activeIndex).toBe(0);
         expect(currentTurns[0]?.getAttribute('tabindex')).toBe('0');
+      }
+    );
+
+    await step(
+      're-entry targets newest turn without stealing focus from the prompt',
+      async () => {
+        const promptField = document.createElement('input');
+        promptField.type = 'text';
+        canvasElement.append(promptField);
+
+        let currentTurns = Array.from(
+          canvasElement.querySelectorAll<HTMLElement>('swc-conversation-turn')
+        );
+        currentTurns[0]?.focus();
+        await el.updateComplete;
+        expect(el.activeIndex).toBe(0);
+
+        promptField.focus();
+        await el.updateComplete;
+        el.focus();
+        await el.updateComplete;
+        expect(el.activeIndex).toBe(currentTurns.length - 1);
+        expect(canvasElement.ownerDocument.activeElement).toBe(
+          currentTurns[currentTurns.length - 1]
+        );
+
+        promptField.focus();
+        expect(canvasElement.ownerDocument.activeElement).toBe(promptField);
+
+        const appendedTurn = document.createElement('swc-conversation-turn');
+        appendedTurn.setAttribute('type', 'system');
+        appendedTurn.textContent = 'Newest system turn';
+        el.append(appendedTurn);
+        await el.updateComplete;
+
+        currentTurns = Array.from(
+          canvasElement.querySelectorAll<HTMLElement>('swc-conversation-turn')
+        );
+        expect(canvasElement.ownerDocument.activeElement).toBe(promptField);
+        expect(el.activeIndex).toBe(currentTurns.length - 1);
+        expect(
+          currentTurns[currentTurns.length - 1]?.getAttribute('tabindex')
+        ).toBe('0');
+
+        el.focus();
+        await el.updateComplete;
+        expect(canvasElement.ownerDocument.activeElement).toBe(
+          currentTurns[currentTurns.length - 1]
+        );
       }
     );
   },

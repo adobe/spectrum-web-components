@@ -1,0 +1,42 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Support and compatibility" />
+
+# Support and compatibility
+
+This page provides comprehensive information on versioning, public APIs, browser support, and issue severity classification to ensure a seamless integration experience for developers. Below, you'll find detailed guidelines and policies to help you understand our commitment to maintaining the stability and compatibility of Spectrum Web Components.
+
+## Versioning
+
+SWC follows [semantic versioning](https://semver.org/). Patch releases avoid breaking changes. Breaking changes ship in a new major version, with release notes and migration guidance when needed.
+
+### Pre-releases
+
+Pre-release dist-tags (for example `beta` or `next`) may be published for early validation. Install with your package manager’s tag syntax, for example:
+
+```bash
+npm install @adobe/spectrum-wc@beta
+```
+
+Pre-releases can change more often than stable lines. Pin versions in production, read the [Changelog](/docs/resources-changelog--docs), and report issues you hit so we can harden the stable release.
+
+## Public APIs
+
+Our public API consists of:
+
+- Component APIs (properties, attributes, slots, events, and documented behavior)
+- TypeScript definitions published with the package
+- Supported import paths documented in this site and in package `exports`
+
+## Browser support
+
+We support the latest two major versions of these desktop browsers:
+
+- Google Chrome
+- Mozilla Firefox
+- Microsoft Edge
+- Apple Safari for macOS
+
+Internet Explorer is not supported.
+
+We support all viewport sizes across supported desktop browsers. While our components are designed to be responsive and mobile-friendly, we do not yet fully support mobile browsers due to limited testing on mobile hardware. We advise testing updates on mobile devices before updating and are happy to address any reported issues.

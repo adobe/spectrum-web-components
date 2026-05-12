@@ -9,13 +9,101 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-import { expect, fixture, html } from '@open-wc/testing';
+import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
+import { stub } from 'sinon';
 
 import '@spectrum-web-components/illustrated-message/sp-illustrated-message.js';
 
 import { IllustratedMessage } from '../';
 
 describe('Illustrated Message', () => {
+  describe('dev mode', () => {
+    let consoleWarnStub!: ReturnType<typeof stub>;
+    before(() => {
+      window.__swc.verbose = true;
+      consoleWarnStub = stub(console, 'warn');
+    });
+    afterEach(() => {
+      consoleWarnStub.resetHistory();
+    });
+    after(() => {
+      window.__swc.verbose = false;
+      consoleWarnStub.restore();
+    });
+    it('warns when deprecated "heading" property is used', async () => {
+      const el = await fixture<IllustratedMessage>(html`
+        <sp-illustrated-message
+          heading="Drag and Drop Your File"
+        ></sp-illustrated-message>
+      `);
+
+      await elementUpdated(el);
+
+      expect(consoleWarnStub.called).to.be.true;
+      const spyCall = consoleWarnStub.getCall(0);
+      expect(
+        spyCall.args[0].includes('deprecated'),
+        'confirm deprecation message'
+      ).to.be.true;
+      expect(
+        spyCall.args[0].includes('heading'),
+        'confirm message references heading property'
+      ).to.be.true;
+      expect(
+        spyCall.args[spyCall.args.length - 1],
+        'confirm `data` shape'
+      ).to.deep.equal({
+        data: {
+          localName: 'sp-illustrated-message',
+          type: 'api',
+          level: 'deprecation',
+        },
+      });
+    });
+
+    it('warns when deprecated "description" property is used', async () => {
+      const el = await fixture<IllustratedMessage>(html`
+        <sp-illustrated-message
+          description="Additional descriptive text"
+        ></sp-illustrated-message>
+      `);
+
+      await elementUpdated(el);
+
+      expect(consoleWarnStub.called).to.be.true;
+      const spyCall = consoleWarnStub.getCall(0);
+      expect(
+        spyCall.args[0].includes('deprecated'),
+        'confirm deprecation message'
+      ).to.be.true;
+      expect(
+        spyCall.args[0].includes('description'),
+        'confirm message references description property'
+      ).to.be.true;
+      expect(
+        spyCall.args[spyCall.args.length - 1],
+        'confirm `data` shape'
+      ).to.deep.equal({
+        data: {
+          localName: 'sp-illustrated-message',
+          type: 'api',
+          level: 'deprecation',
+        },
+      });
+    });
+
+    it('does not warn when slot-based API is used', async () => {
+      await fixture<IllustratedMessage>(html`
+        <sp-illustrated-message>
+          <h2 slot="heading">Drag and Drop Your File</h2>
+          <span slot="description">Additional descriptive text</span>
+        </sp-illustrated-message>
+      `);
+
+      expect(consoleWarnStub.called).to.be.false;
+    });
+  });
+
   it('loads', async () => {
     const el = await fixture<IllustratedMessage>(html`
       <sp-illustrated-message

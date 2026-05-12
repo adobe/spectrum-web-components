@@ -72,6 +72,17 @@ export class IconBase extends SpectrumElement {
         this.systemResolver.system === 'spectrum-two' ? 2 : 1;
     }
 
+    if (window.__swc?.DEBUG) {
+      if (changes.has('size') && (this.size === 'xxs' || this.size === 'xxl')) {
+        window.__swc.warn(
+          this,
+          `<${this.localName}> the "${this.size}" size value is deprecated and will be removed in Spectrum 2. Use "${this.size === 'xxs' ? 'xs' : 'xl'}" instead.`,
+          'https://opensource.adobe.com/spectrum-web-components/second-gen/?path=/docs/icon-consumer-migration-guide--docs',
+          { level: 'deprecation' }
+        );
+      }
+    }
+
     super.update(changes);
   }
 

@@ -10,23 +10,16 @@
  * governing permissions and limitations under the License.
  */
 
-/**
- * @todo The S1 types can be removed once we are no longer maintaining 1st-gen.
- * @todo Rename STATUSLIGHT_ prefix to STATUS_LIGHT_ to align with type prefix
- * naming convention (use underscore separators for multi-word names). This
- * requires updating all imports in 1st-gen and 2nd-gen that reference these
- * constants.
- */
 import type { ElementSize } from '@spectrum-web-components/core/mixins/index.js';
 
-export const STATUSLIGHT_VALID_SIZES = [
+export const STATUS_LIGHT_VALID_SIZES = [
   's',
   'm',
   'l',
   'xl',
 ] as const satisfies readonly ElementSize[];
 
-export const STATUSLIGHT_VARIANTS_SEMANTIC = [
+export const STATUS_LIGHT_VARIANTS_SEMANTIC = [
   'neutral',
   'info',
   'positive',
@@ -34,16 +27,7 @@ export const STATUSLIGHT_VARIANTS_SEMANTIC = [
   'notice',
 ] as const;
 
-export const STATUSLIGHT_VARIANTS_SEMANTIC_S1 = [
-  ...STATUSLIGHT_VARIANTS_SEMANTIC,
-  'accent',
-] as const;
-
-export const STATUSLIGHT_VARIANTS_SEMANTIC_S2 = [
-  ...STATUSLIGHT_VARIANTS_SEMANTIC,
-] as const;
-
-export const STATUSLIGHT_VARIANTS_COLOR_S1 = [
+export const STATUS_LIGHT_VARIANTS_COLOR = [
   'fuchsia',
   'indigo',
   'magenta',
@@ -53,10 +37,6 @@ export const STATUSLIGHT_VARIANTS_COLOR_S1 = [
   'chartreuse',
   'celery',
   'cyan',
-] as const;
-
-export const STATUSLIGHT_VARIANTS_COLOR_S2 = [
-  ...STATUSLIGHT_VARIANTS_COLOR_S1,
   'pink',
   'turquoise',
   'brown',
@@ -64,32 +44,17 @@ export const STATUSLIGHT_VARIANTS_COLOR_S2 = [
   'silver',
 ] as const;
 
-export const STATUSLIGHT_VARIANTS_S1 = [
-  ...STATUSLIGHT_VARIANTS_SEMANTIC_S1,
-  ...STATUSLIGHT_VARIANTS_COLOR_S1,
+export const STATUS_LIGHT_VARIANTS = [
+  ...STATUS_LIGHT_VARIANTS_SEMANTIC,
+  ...STATUS_LIGHT_VARIANTS_COLOR,
 ] as const;
 
-export const STATUSLIGHT_VARIANTS_S2 = [
-  ...STATUSLIGHT_VARIANTS_SEMANTIC_S2,
-  ...STATUSLIGHT_VARIANTS_COLOR_S2,
-] as const;
-
-export type StatusLightSemanticVariantS1 =
-  (typeof STATUSLIGHT_VARIANTS_SEMANTIC_S1)[number];
-export type StatusLightSemanticVariantS2 =
-  (typeof STATUSLIGHT_VARIANTS_SEMANTIC_S2)[number];
 export type StatusLightSemanticVariant =
-  | StatusLightSemanticVariantS1
-  | StatusLightSemanticVariantS2;
+  (typeof STATUS_LIGHT_VARIANTS_SEMANTIC)[number];
 
-export type StatusLightColorVariantS1 =
-  (typeof STATUSLIGHT_VARIANTS_COLOR_S1)[number];
-export type StatusLightColorVariantS2 =
-  (typeof STATUSLIGHT_VARIANTS_COLOR_S2)[number];
 export type StatusLightColorVariant =
-  | StatusLightColorVariantS1
-  | StatusLightColorVariantS2;
+  (typeof STATUS_LIGHT_VARIANTS_COLOR)[number];
 
-export type StatusLightVariantS1 = (typeof STATUSLIGHT_VARIANTS_S1)[number];
-export type StatusLightVariantS2 = (typeof STATUSLIGHT_VARIANTS_S2)[number];
-export type StatusLightVariant = StatusLightVariantS1 | StatusLightVariantS2;
+export type StatusLightVariant = (typeof STATUS_LIGHT_VARIANTS)[number];
+
+export type StatusLightSize = (typeof STATUS_LIGHT_VALID_SIZES)[number];

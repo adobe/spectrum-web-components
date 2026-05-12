@@ -67,20 +67,6 @@ const preview = {
         dynamicTitle: true,
       },
     },
-    scale: {
-      name: 'Scale',
-      description: 'Global scale for components',
-      defaultValue: 'medium',
-      type: 'string',
-      toolbar: {
-        title: 'Scale',
-        items: [
-          { value: 'medium', title: 'Medium' },
-          { value: 'large', title: 'Large' },
-        ],
-        dynamicTitle: true,
-      },
-    },
     lang: {
       name: 'Language',
       description:
@@ -137,7 +123,6 @@ const preview = {
   },
   initialGlobals: {
     theme: 'light',
-    scale: 'medium',
     lang: 'en-US',
     textDirection: 'auto',
   },
@@ -210,7 +195,9 @@ const preview = {
         method: 'alphabetical-by-kind',
         order: [
           'Learn about SWC',
-          ['Overview', 'When to use SWC', '1st-gen vs 2nd-gen'],
+          ['Overview', 'Get started', 'When to use SWC', 'Gen1 vs Gen2'],
+          'Resources',
+          ['Support and compatibility', 'Changelog'],
           'Core',
           ['Overview', 'Controllers'],
           'Components',
@@ -218,7 +205,7 @@ const preview = {
           ['Conversational AI', ['README', 'Prompt field', 'User message']],
           'Guides',
           [
-            'Accessibility guides',
+            'Accessibility',
             [
               'Overview',
               'Semantic HTML and ARIA',
@@ -256,6 +243,7 @@ const preview = {
               'Using stackblitz',
               '2nd-gen testing',
               'Tools vs packages',
+              'Writing migration guides',
               'Focus management',
             ],
             'Style guide',
@@ -332,6 +320,11 @@ const preview = {
               ],
               'Components',
               [
+                'Accordion',
+                [
+                  'Accessibility migration analysis',
+                  'Rendering and styling migration analysis',
+                ],
                 'Action button',
                 ['Rendering and styling migration analysis'],
                 'Action group',
@@ -390,6 +383,7 @@ const preview = {
                 'Illustrated message',
                 [
                   'Accessibility migration analysis',
+                  'Migration plan',
                   'Rendering and styling migration analysis',
                 ],
                 'Infield button',
@@ -401,6 +395,17 @@ const preview = {
                   'Accessibility migration analysis',
                   'Rendering and styling migration analysis',
                 ],
+                'Menu',
+                [
+                  'Accessibility migration analysis',
+                  'Rendering and styling migration analysis',
+                ],
+                'Menu group',
+                ['Accessibility migration analysis'],
+                'Menu item',
+                ['Accessibility migration analysis'],
+                'Menu separator',
+                ['Accessibility migration analysis'],
                 'Meter',
                 [
                   'Accessibility migration analysis',
@@ -459,7 +464,10 @@ const preview = {
                 'Thumbnail',
                 ['Rendering and styling migration analysis'],
                 'Tooltip',
-                ['Rendering and styling migration analysis'],
+                [
+                  'Accessibility migration analysis',
+                  'Rendering and styling migration analysis',
+                ],
               ],
               'Milestones',
               'Strategies',

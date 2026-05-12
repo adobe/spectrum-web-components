@@ -1,10 +1,10 @@
 import { Meta } from '@storybook/addon-docs/blocks';
 
-<Meta title="Accessibility guides/Semantic HTML and ARIA" />
+<Meta title="Accessibility/Semantic HTML and ARIA" />
 
 # Semantic HTML, ARIA, and cross-root accessibility
 
-This guide explains how to think about **semantic HTML** and **WAI-ARIA** when building or consuming Spectrum Web Components. It also covers **cross-root ARIA** limitations in shadow DOM and why they matter for custom elements. For how **landmarks** and **headings** should shape an entire page, see [Headings and landmarks](/docs/guides-accessibility-guides-headings-and-landmarks--readme); you can **check** the rendered outline with [WAVE toolbar testing](/docs/guides-accessibility-guides-wave-toolbar-testing--readme#structure-tab).
+This guide explains how to think about **semantic HTML** and **WAI-ARIA** when building or consuming Spectrum Web Components. It also covers **cross-root ARIA** limitations in shadow DOM and why they matter for custom elements. For how **landmarks** and **headings** should shape an entire page, see [Headings and landmarks](/docs/guides-accessibility-guides-headings-and-landmarks--docs); you can **check** the rendered outline with [WAVE toolbar testing](/docs/guides-accessibility-guides-wave-toolbar-testing--readme#structure-tab).
 
 ## Semantics and HTML
 
@@ -41,7 +41,7 @@ If you must use a non-interactive wrapper for layout, keep **real** controls as 
 
 ### How semantics help assistive technologies
 
-Screen readers and other assistive technologies expose an **accessibility tree** derived from the DOM. Semantic elements map to familiar roles and names (for example, a `button` is announced as a button; a labelled text field exposes its label association). Headings define an **outline** users can navigate by. Landmark regions (`main`, `nav`, `header`, and similar) help users jump to the right part of the page. See [Understanding success criterion 1.3.1: info and relationships](https://www.w3.org/WAI/WCAG22/Understanding/info-and-relationships.html) in WCAG 2.2 for why programmatic relationships and structure matter. Practical guidance: [Headings and landmarks](/docs/guides-accessibility-guides-headings-and-landmarks--readme) (outlines, `aria-labelledby`, and avoiding **too many** generic regions), and in-browser **verification** with [WAVE](/docs/guides-accessibility-guides-wave-toolbar-testing--readme#structure-tab).
+Screen readers and other assistive technologies expose an **accessibility tree** derived from the DOM. Semantic elements map to familiar roles and names (for example, a `button` is announced as a button; a labelled text field exposes its label association). Headings define an **outline** users can navigate by. Landmark regions (`main`, `nav`, `header`, and similar) help users jump to the right part of the page. See [Understanding success criterion 1.3.1: info and relationships](https://www.w3.org/WAI/WCAG22/Understanding/info-and-relationships.html) in WCAG 2.2 for why programmatic relationships and structure matter. Practical guidance: [Headings and landmarks](/docs/guides-accessibility-guides-headings-and-landmarks--docs) (outlines, `aria-labelledby`, and avoiding **too many** generic regions), and in-browser **verification** with [WAVE](/docs/guides-accessibility-guides-wave-toolbar-testing--readme#structure-tab).
 
 ## ARIA as a secondary method
 
@@ -67,7 +67,7 @@ Use ARIA **only when native HTML cannot express the needed role, state, or relat
 
 ### Custom elements and the host node
 
-Custom elements such as `<swc-*>` are often **not** mapped to a specific HTML role on the host. Components in this library typically project **native** controls inside shadow DOM or expose appropriate ARIA on the host where the implementation supports it. When authoring features, prefer **delegating** to native elements inside the shadow tree and documenting required light-DOM structure (labels, headings) for consumers. Consumers document **heading** levels and page **landmarks** in app shells; see [Headings and landmarks](/docs/guides-accessibility-guides-headings-and-landmarks--readme) for `heading-level`, slots, and end-to-end outline patterns.
+Custom elements such as `<swc-*>` are often **not** mapped to a specific HTML role on the host. Components in this library typically project **native** controls inside shadow DOM or expose appropriate ARIA on the host where the implementation supports it. When authoring features, prefer **delegating** to native elements inside the shadow tree and documenting required light-DOM structure (labels, headings) for consumers. Consumers document **heading** levels and page **landmarks** in app shells; see [Headings and landmarks](/docs/guides-accessibility-guides-headings-and-landmarks--docs) for `heading-level`, slots, and end-to-end outline patterns.
 
 ## Cross-root ARIA challenges
 
@@ -105,7 +105,7 @@ These workarounds can be fragile or verbose. Documenting **what consumers must p
 
 ## Further reading
 
-- [Headings and landmarks](/docs/guides-accessibility-guides-headings-and-landmarks--readme) — page-level landmarks and `h1`–`h6` structure, WCAG table, and WAVE
+- [Headings and landmarks](/docs/guides-accessibility-guides-headings-and-landmarks--docs) — page-level landmarks and `h1`–`h6` structure, WCAG table, and WAVE
 - [Using ARIA](https://www.w3.org/TR/using-aria/) — including the [first rule of ARIA use](https://www.w3.org/TR/using-aria/#rule1).
 - [ARIA authoring practices guide](https://www.w3.org/WAI/ARIA/apg/) — patterns and keyboard models for composite widgets.
 - [MDN: semantics in HTML](https://developer.mozilla.org/en-US/docs/Glossary/Semantics#semantics_in_html) — glossary entry tying semantics to accessibility.

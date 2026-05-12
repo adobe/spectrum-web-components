@@ -35,7 +35,7 @@ VRT covers things that are hard to test programmatically:
 
 Every story is a VRT test case. When you create a story in your `*.stories.ts` file, it automatically becomes part of VRT. No extra code is needed.
 
-Stories tagged with `'!test'` are excluded from VRT runs (useful for interactive-only demos like `StaticColors`).
+Stories tagged with `'!test'` are excluded from VRT runs. See [Excluding stories from tests](01_testing-overview.md#excluding-stories-from-tests) for when and why to use this tag.
 
 ## Tips for reliable VRT
 
