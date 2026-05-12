@@ -38,10 +38,10 @@ You do not need to wait until the component is feature-complete — guides can b
 Each migration guide lives alongside the component it documents:
 
 ```
-2nd-gen/packages/swc/components/[component-name]/consumer-migration-guide.mdx
+2nd-gen/packages/swc/components/[component-name]/migration-guide.mdx
 ```
 
-The file is MDX. Storybook's config picks it up automatically and renders it at `Components / [Component name] / Consumer migration guide`.
+The file is MDX. Storybook's config picks it up automatically and renders it at `Components / [Component name] / Migration guide`.
 
 ## Document structure
 
@@ -81,7 +81,7 @@ The agent will:
 
 ## Checklist
 
-- [ ] File is at `2nd-gen/packages/swc/components/[component]/consumer-migration-guide.mdx`
+- [ ] File is at `2nd-gen/packages/swc/components/[component]/migration-guide.mdx`
 - [ ] Starts with the correct MDX header (`import { Meta }` + `<Meta title="...">`)
 - [ ] All required sections are present (What changed, Update your code, Checklist)
 - [ ] Every step in Update your code has a before/after code block
@@ -94,6 +94,6 @@ The agent will:
 
 The following migration guides are good references:
 
-- `2nd-gen/packages/swc/components/badge/consumer-migration-guide.mdx` — default variant change, new attributes, CSS custom properties
-- `2nd-gen/packages/swc/components/avatar/consumer-migration-guide.mdx` — attribute renames, removed feature, CSS custom properties
-- `2nd-gen/packages/swc/components/status-light/consumer-migration-guide.mdx` — removed attribute, new color variants
+- `2nd-gen/packages/swc/components/badge/migration-guide.mdx` — default variant change, new attributes, CSS custom properties
+- `2nd-gen/packages/swc/components/avatar/migration-guide.mdx` — attribute renames, removed feature, CSS custom properties
+- `2nd-gen/packages/swc/components/status-light/migration-guide.mdx` — removed attribute, new color variants

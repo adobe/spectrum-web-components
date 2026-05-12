@@ -97,7 +97,7 @@ argTypes.subtle = {
 };
 
 /**
- * Similar to [status lights](/docs/components-status-light--readme), they use color and text to convey status or category information.
+ * Similar to [status lights](/docs/components-status-light--docs), they use color and text to convey status or category information.
  *
  * Badges come in three styles: bold fill (default), subtle fill, and outline.
  * Choose one style consistently within a product - `outline` and `subtle` fill draw similar attention levels.

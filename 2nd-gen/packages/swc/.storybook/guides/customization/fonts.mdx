@@ -5,7 +5,7 @@ import * as StatusLightStories from '../../../components/status-light/stories/st
 
 # Fonts
 
-2nd-gen SWC uses **Adobe Clean Spectrum VF** (Variable Font), which is the updated font family introduced with Spectrum 2. This is different from 1st-gen SWC, which uses the legacy **Adobe Clean** font.
+Gen2 SWC uses **Adobe Clean Spectrum VF** (Variable Font), which is the updated font family introduced with Spectrum 2. This is different from Gen1 SWC, which uses the legacy **Adobe Clean** font.
 
 ## What's new in Adobe Clean Spectrum VF
 
@@ -17,7 +17,7 @@ Adobe Clean Spectrum VF is the default typeface for Spectrum 2. While it looks v
 - **Performance and consistency** - Bug fixes and greater consistency across tools used in product design
 - **Modern font development** - Unified vertical metrics in line with current best practices, reducing the need for manual pixel tweaks in layouts
 
-## Font loading in 2nd-gen Storybook
+## Font loading in Gen2 Storybook
 
 Adobe Clean Spectrum VF (and CJK fonts when needed) are loaded via Adobe Fonts (Typekit) for preview and development. The **Language** decorator in the toolbar (globe icon) controls which kit is active:
 
@@ -57,7 +57,7 @@ Use the **Language** toolbar above to change the locale. The sample below will r
 
 ## Using fonts in your application
 
-**Important:** If you're implementing 2nd-gen SWC in your application, you **must also** include Adobe Clean Spectrum VF in your project. The components will not render correctly with legacy Adobe Clean or system fonts.
+**Important:** If you're implementing Gen2 SWC in your application, you **must also** include Adobe Clean Spectrum VF in your project. The components will not render correctly with legacy Adobe Clean or system fonts.
 
 ### Option 1: Adobe Fonts (Typekit) - Recommended
 
@@ -98,7 +98,7 @@ If you need to self-host the fonts:
 
 ## Font fallback stack
 
-2nd-gen SWC uses the following font fallback stacks:
+Gen2 SWC uses the following font fallback stacks:
 
 ### Sans-serif (default)
 
@@ -241,9 +241,9 @@ window.__SWC_FONT_KIT_IDS__ = {
 
 The language decorator (`decorators/language.ts`) handles the rest automatically — it reads the kit ID from `__SWC_FONT_KIT_IDS__`, injects the script, and calls `Typekit.load()` to activate the fonts.
 
-## Differences from 1st-gen
+## Differences from Gen1
 
-| Aspect           | 1st-gen                    | 2nd-gen                       |
+| Aspect           | Gen1                       | Gen2                          |
 | ---------------- | -------------------------- | ----------------------------- |
 | Primary font     | Adobe Clean                | Adobe Clean Spectrum VF       |
 | Font technology  | Traditional                | Variable Font                 |

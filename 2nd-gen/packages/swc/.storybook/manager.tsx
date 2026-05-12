@@ -11,8 +11,11 @@
  */
 /// <reference types="./storybook-env.d.ts" />
 
-import { addons } from '@storybook/manager-api';
+import { GithubIcon } from '@storybook/icons';
+import { addons, types } from '@storybook/manager-api';
 import { create } from '@storybook/theming';
+import React from 'react';
+import { IconButton } from 'storybook/internal/components';
 
 import logo from './assets/logo.svg';
 
@@ -20,6 +23,28 @@ import '../stylesheets/swc.css';
 import '../stylesheets/typography.css';
 import '../stylesheets/global/global-elements.css';
 import './assets/manager.css';
+
+addons.register('swc/github-link', () => {
+  addons.add('swc/github-link/tool', {
+    type: types.TOOLEXTRA,
+    title: 'View on GitHub',
+    match: () => true,
+    render: () => (
+      <IconButton
+        title="View on GitHub"
+        onClick={() =>
+          window.open(
+            'https://github.com/adobe/spectrum-web-components',
+            '_blank',
+            'noopener,noreferrer'
+          )
+        }
+      >
+        <GithubIcon />
+      </IconButton>
+    ),
+  });
+});
 
 const root = document.body ?? document.documentElement;
 if (root) {
