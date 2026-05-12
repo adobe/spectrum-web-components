@@ -108,9 +108,7 @@ export const Anatomy: Story = {
           label="Prompt"
           placeholder=${defaultPlaceholder}
         ></swc-prompt-field>
-        <span class="swc-Detail swc-Detail--sizeS">
-          Base structure
-        </span>
+        <span class="swc-Detail swc-Detail--sizeS">Base structure</span>
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;">
         <swc-prompt-field label="Prompt" placeholder=${defaultPlaceholder}>
@@ -118,9 +116,7 @@ export const Anatomy: Story = {
             AI output may be inaccurate. Verify before using.
           </div>
         </swc-prompt-field>
-        <span class="swc-Detail swc-Detail--sizeS">
-          legal slot only
-        </span>
+        <span class="swc-Detail swc-Detail--sizeS">legal slot only</span>
       </div>
     </div>
   `,
@@ -209,11 +205,17 @@ export const Modes: Story = {
 export const Artifact: Story = {
   render: () => html`
     <div style="display:flex;flex-direction:column;gap:32px;">
-      <p class="swc-Detail swc-Detail--sizeS" style="margin:0;max-inline-size:720px;">
-        <strong>artifact</strong> — Slot multiple
-        <code>&lt;swc-upload-artifact slot="artifact"&gt;</code> nodes; the field lays them out in a wrapping row
-        above the textarea. More variants:
-        <strong>Multi-artifacts</strong>.
+      <p
+        class="swc-Detail swc-Detail--sizeS"
+        style="margin:0;max-inline-size:720px;"
+      >
+        <strong>artifact</strong>
+        — Slot multiple
+        <code>&lt;swc-upload-artifact slot="artifact"&gt;</code>
+        nodes; the field lays them out in a wrapping row above the textarea.
+        More variants:
+        <strong>Multi-artifacts</strong>
+        .
       </p>
       <div style="display:flex;flex-direction:column;gap:8px;">
         <swc-prompt-field
@@ -233,7 +235,7 @@ export const Artifact: Story = {
           <swc-upload-artifact slot="artifact" type="media" dismissible>
             <div
               slot="thumbnail"
-              style="inline-size:100%;block-size:100%;background:linear-gradient(135deg,#6366f1,#ec4899);"
+              style="background:linear-gradient(135deg,#6366f1,#ec4899);"
               role="img"
               aria-label="Campaign still"
             ></div>
@@ -241,7 +243,7 @@ export const Artifact: Story = {
           <swc-upload-artifact slot="artifact" type="media" dismissible>
             <div
               slot="thumbnail"
-              style="inline-size:100%;block-size:100%;background:linear-gradient(135deg,#0ea5e9,#22c55e);"
+              style="background:linear-gradient(135deg,#0ea5e9,#22c55e);"
               role="img"
               aria-label="Storyboard frame"
             ></div>
@@ -256,9 +258,7 @@ export const Artifact: Story = {
           label="Prompt"
           placeholder=${defaultPlaceholder}
         ></swc-prompt-field>
-        <span class="swc-Detail swc-Detail--sizeS">
-          None
-        </span>
+        <span class="swc-Detail swc-Detail--sizeS">None</span>
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;">
         <swc-prompt-field label="Prompt" placeholder=${defaultPlaceholder}>
@@ -273,9 +273,7 @@ export const Artifact: Story = {
             <span slot="subtitle">2026</span>
           </swc-upload-artifact>
         </swc-prompt-field>
-        <span class="swc-Detail swc-Detail--sizeS">
-          Single card
-        </span>
+        <span class="swc-Detail swc-Detail--sizeS">Single card</span>
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;">
         <swc-prompt-field label="Prompt" placeholder=${defaultPlaceholder}>
@@ -284,13 +282,10 @@ export const Artifact: Story = {
               slot="thumbnail"
               src="https://placehold.co/160x120/png"
               alt="Attachment preview"
-              style="inline-size:100%;block-size:100%;min-block-size:0;object-fit:cover;"
             />
           </swc-upload-artifact>
         </swc-prompt-field>
-        <span class="swc-Detail swc-Detail--sizeS">
-          Single media
-        </span>
+        <span class="swc-Detail swc-Detail--sizeS">Single media</span>
       </div>
     </div>
   `,
