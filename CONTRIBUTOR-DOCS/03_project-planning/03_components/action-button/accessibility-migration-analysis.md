@@ -31,7 +31,6 @@
     - [Live regions, loading, and announcements](#live-regions-loading-and-announcements)
     - [Hold affordance and alternatives to synthesized longpress](#hold-affordance-and-alternatives-to-synthesized-longpress)
     - [Keyboard and focus](#keyboard-and-focus)
-    - [Toolbars, `role="group"`, and segmented control](#toolbars-rolegroup-and-segmented-control)
 - [Testing](#testing)
     - [Automated tests](#automated-tests)
 - [Summary checklist](#summary-checklist)
@@ -47,7 +46,7 @@ This doc describes how **`swc-action-button`** should behave for **accessibility
 
 **Pending / loading** uses the **same** contract as **`swc-button`**: **pending** visuals appear in [Spectrum 2 — Action button (Figma)](https://www.figma.com/design/Mngz9H7WZLbrCvGQf3GnsY/S2---Web--Desktop-scale-?node-id=702-2877); align **motion**, delay, and announcement patterns with Spectrum loading guidance ([Figma — Loading animation discovery](https://www.figma.com/design/42VzvpW262EAUbYsadO4e8/Loading-animation-discovery)) and internal **general / accessibility guidance** for loading indicators (delay before show, determinate vs indeterminate, placement, status announcements, and motion). 1st-gen **`sp-action-button`** does **not** expose a **pending** API today; if 2nd-gen adds one, follow the **Recommendations** and **Live regions** sections below and keep parity with **`swc-button`**.
 
-**Hold affordance / longpress:** Use [React Aria: Menu — long press](https://react-aria.adobe.com/Menu#long-press) and [React Spectrum `MenuTrigger`](https://react-spectrum.adobe.com/react-spectrum/MenuTrigger.html) as the reference for accessible **hold affordance** / **longpress** behavior, rather than treating 1st-gen **`hold-affordance`** / **`longpress`** as normative. **React Aria** documents **hold affordance** with **Alt** + **Down arrow** so **keyboard** users get parity with **longpress** on pointer. Use **`aria-describedby`** on the **focus target** for **additional** instruction so **screen reader** users understand that **keyboard** pattern (and how it relates to **touch** **longpress** where relevant)—keep that text out of the accessible **name**. When 1st-gen **`longpress`** behavior is preserved or mirrored, align implementation and API notes with those **React Aria** semantics. [React Spectrum `ActionButton`](https://react-spectrum.adobe.com/ActionButton) documents **`usePress`** for the **primary** action; pair it with **MenuTrigger** / **Menu** long-press guidance when the UX combines a default press with a **menu** or overlay opened by **longpress**.
+**Hold affordance / longpress:** Use [React Aria: Menu — long press](https://react-aria.adobe.com/Menu#long-press) and [React Spectrum `MenuTrigger`](https://react-spectrum.adobe.com/react-spectrum/MenuTrigger.html) as the reference for accessible **hold affordance** / **longpress** behavior, rather than treating 1st-gen **`hold-affordance`** / **`longpress`** as normative. **React Aria** documents **hold affordance** with **Alt** + **Down arrow** so **keyboard** users get parity with **longpress** on pointer. Use **`aria-describedby`** on the **focus target** for **additional** instruction so **screen reader** users understand that **keyboard** pattern (and how it relates to **touch** **longpress** where relevant)—keep that text out of the accessible **name**. 
 
 **Storybook (consumer / end-user docs):** **`swc-action-button`** Storybook and other **consumer-facing** component documentation **must** state that a **split button**—one **button** for the **primary** action and a **separate** **button** for the content that would otherwise be reached via **longpress**—is **much more accessible** than using **longpress** alone.
 
@@ -248,15 +247,6 @@ See [Button accessibility migration analysis](../button/accessibility-migration-
 - **MenuTrigger / longpress-style menu:** If product aligns with [React Aria: Menu — long press](https://react-aria.adobe.com/Menu#long-press) and [React Spectrum `MenuTrigger`](https://react-spectrum.adobe.com/react-spectrum/MenuTrigger.html), document **Alt** + **Down arrow** as the **keyboard** path to open the **menu** (in addition to any **longpress** path) and verify it in [Keyboard testing](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/keyboard_testing.mdx).
 - **1st-gen hold keyboard path** (**Space** or **Alt** + **Down arrow** hold, release fires **`longpress`**): any 2nd-gen carryover must be **documented**, **tested** with **screen readers**, paired with **`aria-describedby`** instructions where a **single** surface remains, and **paired** with non-timed alternatives per [Hold affordance and alternatives to synthesized longpress](#hold-affordance-and-alternatives-to-synthesized-longpress).
 - **`swc-action-group`:** **Arrow** navigation and **roving `tabindex`** should respect **`role="group"`** on **`swc-button-group`** and any outer **`toolbar`** contract; align keyboard tables with [Toolbar pattern](https://www.w3.org/WAI/ARIA/apg/patterns/toolbar/) and the [Toolbar example](https://www.w3.org/WAI/ARIA/apg/patterns/toolbar/examples/toolbar/).
-
-### Toolbars, `role="group"`, and segmented control
-
-| Topic | What to do |
-| --- | --- |
-| **`swc-segmented-control`** | Own **radio group** semantics via **`swc-segmented-control-button`** children; keep **`swc-action-button`** out of that **radiogroup** shape. |
-| **`swc-button-group`** | Inside **`swc-action-group`**, **`swc-button-group`** **always** exposes **`role="group"`** around **`swc-action-button`** siblings. Name the **group** for screen readers. |
-| **`role="toolbar"`** placement | Prefer **APG**-style **`toolbar`** on the **ancestor** that wraps **all** clusters (and other widgets), with inner **`role="group"`** sections—see **Copy / Cut / Paste** in the [Toolbar example](https://www.w3.org/WAI/ARIA/apg/patterns/toolbar/examples/toolbar/). **React Spectrum** may use **`toolbar`** on a narrower element; capture the SWC vs RS difference in Storybook docs so testers know which landmark to expect. |
-| **Keyboard** | Nested **radio** behavior inside a **toolbar** differs from standalone **radiogroup** (horizontal arrows owned by **toolbar**—**APG** documents this). **`swc-segmented-control`** should implement the **radio group** pattern appropriate to its **DOM** position (inside vs outside a **toolbar**). |
 
 ---
 
