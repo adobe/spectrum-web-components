@@ -41,8 +41,6 @@ const config: TestRunnerConfig = {
       targetPage: typeof page,
       viewLabel: 'story' | 'docs'
     ): Promise<string | null> => {
-      await targetPage.waitForFunction(() => !(window as any).axe?.running);
-
       const axeBuilder = new AxeBuilder({ page: targetPage })
         .include('#storybook-root')
         .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa']);
@@ -55,21 +53,30 @@ const config: TestRunnerConfig = {
       }
 
       // Both addon-a11y and the test-runner run axe in the same preview iframe.
-      // The waitForFunction above can resolve just before the addon starts a new run,
-      // so analyze() may find axe already running. Retry once after waiting.
+      // waitForFunction can resolve just before the addon starts a new run, so
+      // analyze() may still find axe running. Retry up to 5 times with backoff.
       let results;
-      try {
-        results = await axeBuilder.analyze();
-      } catch (error) {
-        if (
-          error instanceof Error &&
-          error.message.includes('Axe is already running')
-        ) {
+      let lastError: Error | null = null;
+      for (let attempt = 0; attempt < 5; attempt++) {
+        try {
           await targetPage.waitForFunction(() => !(window as any).axe?.running);
           results = await axeBuilder.analyze();
-        } else {
-          throw error;
+          lastError = null;
+          break;
+        } catch (error) {
+          if (
+            error instanceof Error &&
+            error.message.includes('Axe is already running')
+          ) {
+            lastError = error;
+            await targetPage.waitForTimeout(100 * (attempt + 1));
+          } else {
+            throw error;
+          }
         }
+      }
+      if (lastError) {
+        throw lastError;
       }
 
       // Filter violations using rule-specific exclusions from story parameters.
