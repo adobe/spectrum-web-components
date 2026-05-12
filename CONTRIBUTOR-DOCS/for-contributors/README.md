@@ -12,6 +12,7 @@
 <summary><strong>Beneath this doc</strong></summary>
 
 - [Authoring contributor docs](authoring-contributor-docs/README.md)
+    - Templates
     - [Writing migration guides](authoring-contributor-docs/writing-migration-guides.md)
 - [Focus management](focus-management.md)
 - [Getting involved](getting-involved.md)

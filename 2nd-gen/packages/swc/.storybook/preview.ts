@@ -232,7 +232,11 @@ const preview = {
             'For contributors',
             [
               'Authoring contributor docs',
-              ['Writing migration guides'],
+              [
+                'Templates',
+                ['Consumer quickstart'],
+                'Writing migration guides',
+              ],
               'Focus management',
               'Getting involved',
               'Maintaining stackblitz examples',

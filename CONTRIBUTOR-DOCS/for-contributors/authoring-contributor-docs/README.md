@@ -31,6 +31,8 @@
 <details open>
 <summary><strong>Beneath this doc</strong></summary>
 
+- Templates
+    - [Consumer quickstart template](templates/consumer-quickstart.md)
 - [Writing migration guides](writing-migration-guides.md)
 
 </details>

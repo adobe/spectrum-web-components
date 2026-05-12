@@ -16,7 +16,7 @@
 <details open>
 <summary><strong>Beneath this doc</strong></summary>
 
-- For Consumers
+- [For consumers](for-consumers/README.md)
     - [Using the issue tracker](for-consumers/using-the-issue-tracker.md)
 - [Contributor guides](for-contributors/README.md)
     - [Authoring contributor docs](for-contributors/authoring-contributor-docs/README.md)

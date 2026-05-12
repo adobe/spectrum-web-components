@@ -1,0 +1,60 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+import '@adobe/spectrum-wc/badge';
+
+<Meta title="Welcome" />
+
+# Welcome to Spectrum Web Components
+
+Spectrum Web Components (SWC) is a library of [web components](https://developer.mozilla.org/docs/Web/Web_Components) that implements Adobe's [Spectrum design system](https://spectrum.adobe.com/). Drop these components into plain HTML, vanilla JavaScript, or any framework to build interfaces with Adobe's design language.
+
+This is the 2nd generation of SWC — aligned with [Spectrum 2](https://s2.spectrum.adobe.com/), with improved architecture, performance, and accessibility.
+
+## Install
+
+Add the package:
+
+```bash
+yarn add @adobe/spectrum-wc
+```
+
+Import the components you need (the import registers the custom element with the browser):
+
+```js
+import '@adobe/spectrum-wc/badge';
+```
+
+Include the SWC stylesheet at the application level:
+
+```html
+<link rel="stylesheet" href="node_modules/@adobe/spectrum-wc/dist/swc.css" />
+```
+
+For deeper customization (custom properties, scale modifiers, font loading), see the [Customization cheatsheet](/docs/learn-customization-cheatsheet--readme).
+
+## Your first component
+
+Drop a `<swc-badge>` into your markup:
+
+```html
+<swc-badge variant="positive">Approved</swc-badge>
+```
+
+It renders as:
+
+<swc-badge variant="positive">Approved</swc-badge>
+
+That's a real, live `<swc-badge>` — the same custom element you'll use in your app. Browse the [Components](/docs/components-badge--readme) section of this sidebar to see every component, its variants, sizes, states, and copy-paste examples.
+
+## Framework note
+
+SWC components are framework-agnostic standard custom elements; they work everywhere custom elements work.
+
+For React, official wrappers are planned. There are no current plans for first-party Vue or Svelte support — those frameworks already consume custom elements natively, so most use cases work without wrappers.
+
+## Where to go next
+
+- **[Components](/docs/components-badge--readme)** — the full 2nd-gen component library, every variant and state with live demos
+- **[Learn → Customization → Cheatsheet](/docs/learn-customization-cheatsheet--readme)** — fastest path to tweak styles, themes, scales, and tokens
+- **[Learn → Accessibility → Overview](/docs/learn-accessibility-overview--readme)** — how SWC handles a11y and how to layer your own
+- **[Contributing](https://github.com/adobe/spectrum-web-components/blob/main/CONTRIBUTOR-DOCS/for-contributors/getting-involved.md)** — bug reports, feature requests, and code contributions (lives on GitHub)

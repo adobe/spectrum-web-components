@@ -1,6 +1,6 @@
 <!-- Generated breadcrumbs - DO NOT EDIT -->
 
-[CONTRIBUTOR-DOCS](../README.md) / For Consumers / Using the issue tracker
+[CONTRIBUTOR-DOCS](../README.md) / [For consumers](README.md) / Using the issue tracker
 
 <!-- Document title (editable) -->
 
