@@ -41,6 +41,8 @@ const config: TestRunnerConfig = {
       targetPage: typeof page,
       viewLabel: 'story' | 'docs'
     ): Promise<string | null> => {
+      await targetPage.waitForFunction(() => !(window as any).axe?.running);
+
       const axeBuilder = new AxeBuilder({ page: targetPage })
         .include('#storybook-root')
         .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa']);

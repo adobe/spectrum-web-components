@@ -17,7 +17,7 @@ Read the migration plan at `CONTRIBUTOR-DOCS/03_project-planning/03_components/[
 
 - **Architecture: core vs SWC split** — defines exactly what each layer owns; follow this verbatim.
 - **Shared semantics reuse** (or equivalent) — may explicitly restrict what the base class owns so that other components can extend it without inheriting this component's visual surface. If this section exists, any properties identified as visual or component-specific belong on the concrete SWC class, not the base.
-- **Global alignment contract** — may constrain how the component stylesheet relates to global stylesheets; note this for Phase 4.
+- **Global alignment contract** — may constrain how the component stylesheet relates to global stylesheets; note this for Phase 5.
 
 If the plan's API checklist and an architectural decision section contradict each other, the architectural decision section governs. Update the checklist to reflect the correct split and note the reason.
 

@@ -1,0 +1,213 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Button/Consumer migration guide" />
+
+# Button consumer migration guide
+
+Replace `<sp-button>` with `<swc-button>`, update the import, and migrate renamed attributes.
+
+## What changed
+
+### Renamed
+
+| Area                        | Spectrum 1 (`sp-button`)                       | Spectrum 2 (`swc-button`)                    |
+| --------------------------- | ---------------------------------------------- | -------------------------------------------- |
+| Tag                         | `sp-button`                                    | `swc-button`                                 |
+| Import path                 | `@spectrum-web-components/button/sp-button.js` | `@adobe/spectrum-wc/button`                  |
+| Visual treatment            | `treatment="fill"` / `treatment="outline"`     | `fill-style="fill"` / `fill-style="outline"` |
+| Accessible name (icon-only) | `label="..."`                                  | `accessible-label="..."`                     |
+| Text truncation             | `no-wrap`                                      | `truncate`                                   |
+| CSS custom props            | `--mod-button-*` / `--spectrum-button-*`       | `--swc-button-*` (see [Styling](#styling))   |
+
+### Added in Spectrum 2
+
+| Addition                      | Notes                                                                                                                                              |
+| ----------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `justified` boolean attribute | Stretches the button to fill its container's inline size. The container must allow the element to grow.                                            |
+| `pending-label` derivation    | When `pending` is set and no `pending-label` is provided, the accessible name is automatically derived as `"[label], busy"` (e.g. `"Save, busy"`). |
+
+### Removed in Spectrum 2
+
+| Removed                                                    | Replacement                                                              |
+| ---------------------------------------------------------- | ------------------------------------------------------------------------ |
+| `href`, `target`, `download`, `referrerpolicy`, `rel`      | Use a native `<a>` element with global button styles (see step 5 below). |
+| `quiet` boolean attribute                                  | Use `fill-style="outline"` instead.                                      |
+| Variant aliases: `cta`, `overBackground`, `white`, `black` | Use `variant` + `static-color` (see step 3 below).                       |
+| `label` attribute                                          | Use `accessible-label` instead.                                          |
+| `--mod-button-*` custom properties                         | Use `--swc-button-*` equivalents (see [Styling](#styling)).              |
+
+## Update your code
+
+### 1. Update the import
+
+```js
+// Before
+import '@spectrum-web-components/button/sp-button.js';
+// After
+import '@adobe/spectrum-wc/button';
+```
+
+### 2. Rename the tag and `treatment` attribute
+
+```html
+<!-- Before -->
+<sp-button variant="primary" treatment="fill">Save</sp-button>
+<sp-button variant="primary" treatment="outline">Cancel</sp-button>
+<sp-button variant="primary" quiet>Cancel</sp-button>
+<!-- After -->
+<swc-button variant="primary" fill-style="fill">Save</swc-button>
+<swc-button variant="primary" fill-style="outline">Cancel</swc-button>
+<swc-button variant="primary" fill-style="outline">Cancel</swc-button>
+```
+
+`fill-style="fill"` is the default and may be omitted.
+
+### 3. Replace deprecated variant aliases
+
+The deprecated aliases `cta`, `overBackground`, `white`, and `black` are removed. Migrate to canonical `variant` + `static-color` combinations:
+
+```html
+<!-- Before -->
+<sp-button variant="cta">Save</sp-button>
+<sp-button variant="overBackground">Action</sp-button>
+<sp-button variant="white">Action</sp-button>
+<sp-button variant="black">Action</sp-button>
+<!-- After -->
+<swc-button variant="accent">Save</swc-button>
+<swc-button variant="primary" static-color="white">Action</swc-button>
+<swc-button variant="primary" static-color="white">Action</swc-button>
+<swc-button variant="primary" static-color="black">Action</swc-button>
+```
+
+`static-color` is only supported with `primary` and `secondary` variants.
+
+### 4. Rename `label` to `accessible-label`
+
+```html
+<!-- Before -->
+<sp-button label="Add item">
+  <svg slot="icon">...</svg>
+</sp-button>
+<!-- After -->
+<swc-button accessible-label="Add item">
+  <svg slot="icon">...</svg>
+</swc-button>
+```
+
+### 5. Migrate link-mode usage to native anchors
+
+`<sp-button href="...">` is removed. Use a native `<a>` element with [global button styles](/docs/guides-customization-global-element-styling--readme) instead:
+
+```html
+<!-- Before -->
+<sp-button href="/dashboard" variant="primary">Go to dashboard</sp-button>
+<!-- After -->
+<a href="/dashboard" class="swc-Button">Go to dashboard</a>
+```
+
+Import the global button stylesheet:
+
+```js
+import '@adobe/spectrum-wc/global-button.css';
+```
+
+### 6. Rename `no-wrap` to `truncate`
+
+```html
+<!-- Before -->
+<sp-button no-wrap>Long label that should not wrap</sp-button>
+<!-- After -->
+<swc-button truncate>Long label that should not wrap</swc-button>
+```
+
+## Accessibility
+
+- **Icon-only buttons** must have `accessible-label` on the host. See [step 4](#4-rename-label-to-accessible-label).
+- **Pending state**: when `pending` is set, the button announces as `"[label], busy"` by default. Supply `pending-label` to override with a more specific description of the in-progress operation.
+- **Disabled vs. pending**: use `pending` to keep the button focusable while an operation is in progress. Use `disabled` to remove it from the tab order entirely. Do not set both at the same time.
+- **Navigation**: do not use `<swc-button>` for navigation. Buttons activate on both Enter and Space; links activate on Enter only. Use a native `<a>` with global button styles instead (see [step 5](#5-migrate-link-mode-usage-to-native-anchors)).
+- **Form submission**: `<swc-button>` behaves as `type="button"` only. For `submit` and `reset`, use a native `<button>` with [global button styles](/docs/guides-customization-global-element-styling--readme) until form-associated behavior is added in a future release.
+
+## Styling
+
+Spectrum 2 exposes a new set of public CSS custom properties on `<swc-button>`.
+
+{/* @todo Replace the inline-styled callouts in this section with `<swc-inline-alert>` once it is migrated to Spectrum 2. */}
+
+<div
+  style={{
+    borderLeft: '4px solid #dba842',
+    background: 'rgba(219, 168, 66, 0.12)',
+    padding: '12px 16px',
+    margin: '16px 0',
+    borderRadius: '4px',
+  }}
+>
+  <strong>⚠️ Breaking change.</strong> Spectrum 1{' '}
+  <code>{'--mod-button-*'}</code> properties <strong>do not apply</strong> to{' '}
+  <code>{'<swc-button>'}</code>. Remove or replace every{' '}
+  <code>{'--mod-button-*'}</code> override with the{' '}
+  <code>{'--swc-button-*'}</code> equivalents below. Not every Spectrum 1
+  property has a 1:1 replacement, so read the list below carefully.
+</div>
+
+Public custom properties:
+
+{/* @todo Replace the Description column with the `@cssproperty` JSDoc descriptions from `<swc-button>`'s CEM entry once they are added in a follow-up PR. */}
+
+| Custom property                          | Description                                                    |
+| ---------------------------------------- | -------------------------------------------------------------- |
+| `--swc-button-min-block-size`            | Minimum block size of the button.                              |
+| `--swc-button-border-radius`             | Corner radius. Defaults to half the height (pill shape).       |
+| `--swc-button-padding-vertical`          | Block padding (adjusted for border width).                     |
+| `--swc-button-edge-to-text`              | Inline padding from edge to text.                              |
+| `--swc-button-edge-to-visual`            | Inline padding from edge to icon when a label is also present. |
+| `--swc-button-edge-to-visual-only`       | Inline padding from edge to icon when no label is present.     |
+| `--swc-button-font-size`                 | Font size of the button label.                                 |
+| `--swc-button-gap`                       | Gap between icon and label.                                    |
+| `--swc-button-icon-size`                 | Size (inline and block) of the slotted icon.                   |
+| `--swc-button-icon-inline-size`          | Inline size override for the slotted icon.                     |
+| `--swc-button-icon-block-size`           | Block size override for the slotted icon.                      |
+| `--swc-button-focus-indicator-color`     | Color of the focus ring outline.                               |
+| `--swc-button-background-color-default`  | Background color in the default state.                         |
+| `--swc-button-border-color-default`      | Border color in the default state.                             |
+| `--swc-button-content-color-default`     | Text and icon color in the default state.                      |
+| `--swc-button-background-color-hover`    | Background color on hover.                                     |
+| `--swc-button-border-color-hover`        | Border color on hover.                                         |
+| `--swc-button-content-color-hover`       | Text and icon color on hover.                                  |
+| `--swc-button-background-color-focus`    | Background color when focused.                                 |
+| `--swc-button-border-color-focus`        | Border color when focused.                                     |
+| `--swc-button-content-color-focus`       | Text and icon color when focused.                              |
+| `--swc-button-background-color-down`     | Background color when pressed.                                 |
+| `--swc-button-border-color-down`         | Border color when pressed.                                     |
+| `--swc-button-content-color-down`        | Text and icon color when pressed.                              |
+| `--swc-button-background-color-disabled` | Background color when disabled or pending.                     |
+| `--swc-button-border-color-disabled`     | Border color when disabled or pending.                         |
+| `--swc-button-content-color-disabled`    | Text and icon color when disabled or pending.                  |
+
+<div
+  style={{
+    borderLeft: '4px solid #e34850',
+    background: 'rgba(227, 72, 80, 0.10)',
+    padding: '12px 16px',
+    margin: '16px 0',
+    borderRadius: '4px',
+  }}
+>
+  <strong>🚫 Do not target internals.</strong> Internal classes,{' '}
+  <code>{'--_swc-button-*'}</code> private properties, and shadow DOM are{' '}
+  <strong>not public API</strong>. Styling applied to them will break without
+  warning on minor releases.
+</div>
+
+## Checklist
+
+- [ ] Update imports from `@spectrum-web-components/button/sp-button.js` to `@adobe/spectrum-wc/button`
+- [ ] Rename all `<sp-button>` to `<swc-button>`
+- [ ] Rename `treatment` attribute to `fill-style`
+- [ ] Replace `quiet` with `fill-style="outline"`
+- [ ] Replace deprecated variant aliases (`cta`, `overBackground`, `white`, `black`) with `variant` + `static-color`
+- [ ] Rename `label` to `accessible-label` on icon-only buttons
+- [ ] Migrate `href` usage to native `<a>` with global button styles
+- [ ] Rename `no-wrap` to `truncate`
+- [ ] Replace `--mod-button-*` CSS overrides with `--swc-button-*` equivalents

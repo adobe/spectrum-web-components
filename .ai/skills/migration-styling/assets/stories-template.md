@@ -1,6 +1,6 @@
-# Phase 4 stories template
+# Phase 5 stories template
 
-A minimal `[component].stories.ts` file for visual verification of 2nd-gen CSS during Phase 4. Full JSDoc and the Accessibility story are deferred — JSDoc belongs to Phase 7 (Documentation); the Accessibility story belongs to the accessibility phase.
+A minimal `[component].stories.ts` file for visual verification of 2nd-gen CSS during Phase 5. Full JSDoc and the Accessibility story are deferred — JSDoc belongs to Phase 7 (Documentation); the Accessibility story belongs to the accessibility phase.
 
 ## What to replace
 
@@ -58,7 +58,7 @@ import {
   type [Component]Size,
   type [Component]Variant,
   // …add other types used in satisfies constraints below
-} from '../../../../core/components/[component]/[Component].types.js';
+} from '@spectrum-web-components/core/components/[component]';
 
 // ────────────────
 //    METADATA
@@ -84,7 +84,7 @@ argTypes.size = {
  * [One or two sentences describing what the component does and when to use it.
  * Keep this brief — detailed usage guidance belongs in Phase 7 docs.]
  */
-export const meta: Meta = {
+const meta: Meta = {
   title: '[Component]',
   component: 'swc-[component]',
   parameters: {
@@ -101,11 +101,7 @@ export const meta: Meta = {
   tags: ['migrated'],
 };
 
-export default {
-  ...meta,
-  title: '[Component]',
-  excludeStories: ['meta'],
-} as Meta;
+export default meta;
 
 // ────────────────────
 //    HELPERS
@@ -247,7 +243,7 @@ export const States: Story = {
 //    ACCESSIBILITY STORIES
 // ────────────────────────────────
 
-// TODO: will complete in separate accessibility pass of phase 5
+// TODO: will complete in separate documentation pass of phase 7
 ```
 
 ## Checklist before moving to CSS work

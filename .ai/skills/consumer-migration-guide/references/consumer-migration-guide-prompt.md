@@ -138,7 +138,7 @@ Document the **Spectrum 2 component's actual public custom properties** — not 
 
 Cover only:
 
-- The public custom properties the Spectrum 2 component exposes, as a **table** with `Custom property | Description | Notes` columns. Use the Notes column to call out scope constraints (e.g. "semantic variants only", "outline variants only", exclusions mandated by the CSS style guide). Leave Notes empty for properties with no constraint.
+- The public custom properties the Spectrum 2 component exposes, as a table. Use two columns (`Custom property | Description`) when no properties have scope constraints. Add a third `Notes` column only when at least one property needs it (e.g. "semantic variants only", "outline variants only", exclusions mandated by the CSS style guide). Do not include a Notes column with all-empty cells.
 - Include this JSX comment immediately above the table so future passes can replace the hand-written descriptions with the canonical copy once it lands:
 
   ```mdx

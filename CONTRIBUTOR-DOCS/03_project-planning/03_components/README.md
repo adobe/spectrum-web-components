@@ -20,6 +20,7 @@
 
 - Accordion
     - [Accordion accessibility migration analysis](accordion/accessibility-migration-analysis.md)
+    - [Accordion migration plan](accordion/migration-plan.md)
     - [Accordion migration roadmap](accordion/rendering-and-styling-migration-analysis.md)
 - Action Button
     - [Action button migration roadmap](action-button/rendering-and-styling-migration-analysis.md)
@@ -128,6 +129,7 @@
 - Thumbnail
     - [Thumbnail migration roadmap](thumbnail/rendering-and-styling-migration-analysis.md)
 - Tooltip
+    - [Tooltip accessibility migration analysis](tooltip/accessibility-migration-analysis.md)
     - [Tooltip migration roadmap](tooltip/rendering-and-styling-migration-analysis.md)
 
 </details>
