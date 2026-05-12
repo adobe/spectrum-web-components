@@ -83,12 +83,11 @@
   block-size: auto;
 }
 
-/* Each slotted item is expected to be a <li> */
-::slotted(li) {
+.swc-MessageSources-item {
   display: flex;
   gap: token("spacing-100");
   align-items: center;
-  font-size: token("font-size-100") !important;
+  font-size: token("font-size-100");
   font-weight: token("regular-font-weight");
   line-height: token("line-height-font-size-100");
   color: token("neutral-content-color-default");
@@ -96,7 +95,7 @@
   counter-increment: sources;
 }
 
-::slotted(li)::before {
+.swc-MessageSources-item::before {
   display: inline-flex;
   flex-shrink: 0;
   align-items: center;
@@ -109,4 +108,14 @@
   background: token("gray-100");
   border-radius: token("corner-radius-100");
   content: counter(sources);
+}
+
+.swc-MessageSources-link {
+  color: token("neutral-content-color-default");
+  text-underline-offset: 2px;
+}
+
+/* Slotted source anchors provide data only; hide from layout and assistive tech. */
+slot[hidden] {
+  display: none;
 }
