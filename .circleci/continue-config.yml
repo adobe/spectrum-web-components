@@ -41,6 +41,33 @@ parameters:
     type: boolean
     default: false
 commands:
+  halt-if-1st-gen-skipped:
+    description: >
+      Exit the current job successfully when the pipeline parameter
+      `run_1st_gen` is `false`. Used to short-circuit 1st-gen test jobs when
+      a PR only touches 2nd-gen files. The job still reports as a green
+      status check, which is required to satisfy GitHub branch protection.
+    steps:
+      - run:
+          name: Halt if 1st-gen is gated off
+          command: |
+            if [ "<< pipeline.parameters.run_1st_gen >>" = "false" ]; then
+              echo "Change does not affect 1st-gen — halting job successfully."
+              circleci-agent step halt
+            fi
+  halt-if-2nd-gen-skipped:
+    description: >
+      Exit the current job successfully when the pipeline parameter
+      `run_2nd_gen` is `false`. Mirrors `halt-if-1st-gen-skipped` for 2nd-gen
+      test jobs on 1st-gen-only PRs.
+    steps:
+      - run:
+          name: Halt if 2nd-gen is gated off
+          command: |
+            if [ "<< pipeline.parameters.run_2nd_gen >>" = "false" ]; then
+              echo "Change does not affect 2nd-gen — halting job successfully."
+              circleci-agent step halt
+            fi
   install-azcopy:
     description: 'Install AzCopy and set up authentication'
     steps:
@@ -251,6 +278,7 @@ jobs:
     parallelism: 5
 
     steps:
+      - halt-if-1st-gen-skipped
       - downstream
       - run:
           name: Run chromium tests
@@ -266,6 +294,7 @@ jobs:
     executor: node
 
     steps:
+      - halt-if-1st-gen-skipped
       - downstream
       - run:
           name: Run chromium tests with coverage
@@ -278,6 +307,7 @@ jobs:
     parallelism: 5
 
     steps:
+      - halt-if-1st-gen-skipped
       - downstream
       - run:
           name: Run memory tests
@@ -293,6 +323,7 @@ jobs:
     parallelism: 5
 
     steps:
+      - halt-if-1st-gen-skipped
       - downstream
       - run:
           name: Run firefox tests
@@ -307,6 +338,7 @@ jobs:
     parallelism: 5
 
     steps:
+      - halt-if-1st-gen-skipped
       - downstream
       - run:
           name: Run webkit tests
@@ -324,6 +356,7 @@ jobs:
         type: string
 
     steps:
+      - halt-if-2nd-gen-skipped
       - downstream-2ndgen
       - run:
           name: Run 2nd-gen browser tests (coverage on Chromium)
@@ -347,6 +380,7 @@ jobs:
     executor: node
 
     steps:
+      - halt-if-2nd-gen-skipped
       - downstream-2ndgen
       - run:
           name: Run 2nd-gen ARIA snapshot tests
@@ -363,6 +397,7 @@ jobs:
     executor: node
 
     steps:
+      - halt-if-2nd-gen-skipped
       - downstream
       - run:
           name: Build 2nd-gen Storybook (production)
@@ -380,6 +415,7 @@ jobs:
     executor: node
 
     steps:
+      - halt-if-1st-gen-skipped
       - downstream
       - run:
           name: Generate Custom Elements Manifest
@@ -426,6 +462,7 @@ jobs:
     executor: node
 
     steps:
+      - halt-if-1st-gen-skipped
       - downstream
       - restore_cache:
           name: Restore Golden Images Cache
@@ -557,6 +594,7 @@ jobs:
       dir:
         type: string
     steps:
+      - halt-if-1st-gen-skipped
       - downstream
       - run-regressions:
           regression_system: << parameters.system >>
@@ -565,13 +603,16 @@ jobs:
           regression_dir: << parameters.dir >>
 
 workflows:
-  # Each gen lives in its own workflow so we can gate at the workflow level.
-  # Job-level `when:` clauses conflict with jobs that declare `parameters:`
-  # (e.g. matrix jobs like `test-2ndgen-browser` and `visual`), so the
-  # workflow-level gate is the only place this works cleanly.
-  build-2nd-gen:
-    when: << pipeline.parameters.run_2nd_gen >>
+  # Every job runs unconditionally so GitHub branch-protection always sees
+  # the per-job status checks (ci/circleci: test-chromium, etc.). The first
+  # step in each gated job is `halt-if-1st-gen-skipped` or
+  # `halt-if-2nd-gen-skipped`, which exits the job successfully when its
+  # gen's pipeline parameter is `false`. Net effect: skipped gens still
+  # report success via a fast no-op, instead of being absent from the
+  # status check list.
+  build:
     jobs:
+      # 2nd-gen tests
       - test-2ndgen-browser:
           name: test-2ndgen-browser-<< matrix.browser >>
           matrix:
@@ -579,10 +620,7 @@ workflows:
               browser: [chromium, firefox, webkit]
       - test-2ndgen-a11y
       - test-2ndgen-axe
-
-  build-1st-gen:
-    when: << pipeline.parameters.run_1st_gen >>
-    jobs:
+      # 1st-gen tests
       - test-chromium
       - test-chromium-memory
       - test-firefox
