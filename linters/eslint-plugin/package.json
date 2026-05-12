@@ -1,6 +1,6 @@
 {
   "name": "@spectrum-web-components/eslint-plugin",
-  "version": "1.0.0",
+  "version": "1.12.0",
   "private": true,
   "description": "ESLint plugin for Spectrum Web Components (prevent-argument-names, document-active-element)",
   "license": "Apache-2.0",

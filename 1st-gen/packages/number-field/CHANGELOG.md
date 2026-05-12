@@ -1,5 +1,27 @@
 # Change Log
 
+## 1.12.0
+
+### Patch Changes
+
+- [#6038](https://github.com/adobe/spectrum-web-components/pull/6038) [`2db830c`](https://github.com/adobe/spectrum-web-components/commit/2db830cded30717fb9cbe4d335d0f3bcf9fea6b9) Thanks [@rise-erpelding](https://github.com/rise-erpelding)! - **Added**: Added truncated-value tooltip behavior for single-line text inputs.
+  - `<sp-textfield>` now shows a tooltip with the full value when the displayed value is visually truncated (via `TruncatedValueTooltipController`).
+  - Tooltip placement can be controlled with the `tooltip-placement` attribute on `<sp-textfield>` or `<sp-number-field>`
+  - `<sp-number-field>` inherits the same truncation tooltip behavior from `TextfieldBase`, including formatted numeric/currency values.
+  - `type="password"` textfields no longer use ellipsis truncation styling (`text-overflow: clip`) to avoid awkward visual truncation.
+
+  **Changed**: `sp-overlay` (internal)
+  - Added internal property `describeTrigger` (`'auto' | 'none'`, default `'auto'`). When set to `'none'`, the overlay does not set `aria-describedby` on the trigger when open (handled in `HoverController` and `LongpressController`), avoiding double announcement for screen readers when the overlay content duplicates the trigger (e.g. truncated-value tooltips). Textfield’s truncated-value tooltip uses this so the tooltip is visual-only for a11y.
+
+- Updated dependencies [[`295f465`](https://github.com/adobe/spectrum-web-components/commit/295f4651451bb0523ceb8f8155dd0bcc77ab2f31), [`ba14a2b`](https://github.com/adobe/spectrum-web-components/commit/ba14a2b6361a0089a9a8c72232f245cde0716d89), [`dc6a8e8`](https://github.com/adobe/spectrum-web-components/commit/dc6a8e8db1b08080373c3664babc1feebde8f6c6), [`90c3010`](https://github.com/adobe/spectrum-web-components/commit/90c30101391d4d78922575e9f0bb407e02d9c2d5), [`f37dec6`](https://github.com/adobe/spectrum-web-components/commit/f37dec6ae39fd89a4c12e084b4a0f4d9092d79b0), [`2db830c`](https://github.com/adobe/spectrum-web-components/commit/2db830cded30717fb9cbe4d335d0f3bcf9fea6b9)]:
+  - @spectrum-web-components/textfield@1.12.0
+  - @spectrum-web-components/base@1.12.0
+  - @spectrum-web-components/reactive-controllers@1.12.0
+  - @spectrum-web-components/infield-button@1.12.0
+  - @spectrum-web-components/icon@1.12.0
+  - @spectrum-web-components/icons-ui@1.12.0
+  - @spectrum-web-components/shared@1.12.0
+
 ## 1.11.2
 
 ### Patch Changes

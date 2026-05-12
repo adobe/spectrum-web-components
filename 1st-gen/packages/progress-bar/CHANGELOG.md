@@ -1,5 +1,21 @@
 # Change Log
 
+## 1.12.0
+
+### Patch Changes
+
+- [#6001](https://github.com/adobe/spectrum-web-components/pull/6001) [`f9e0896`](https://github.com/adobe/spectrum-web-components/commit/f9e0896d7b3863f3ce45228e5868214d4939ee85) Thanks [@cdransf](https://github.com/cdransf)! - **Fixed**: Added `aria-valuetext` attribute to `<sp-progress-bar>` and `<sp-progress-circle>` to provide human-readable percentage values for screen readers. Screen readers now announce "50 percent" instead of just "50", improving accessibility for users with vision disabilities. The attribute uses localized percentage formatting via `Intl.NumberFormat` and updates automatically when progress changes.
+
+  **Fixed**: Added `aria-valuemin` and `aria-valuemax` attributes to `<sp-progress-circle>` to align with WAI-ARIA progressbar specification, matching the existing implementation in `<sp-progress-bar>`.
+
+- [#5997](https://github.com/adobe/spectrum-web-components/pull/5997) [`a43a2f9`](https://github.com/adobe/spectrum-web-components/commit/a43a2f96e5612017e6089808f77c8631dfd55527) Thanks [@cdransf](https://github.com/cdransf)! - **Fixed**: Added `aria-valuetext` attribute to `<sp-progress-bar>` to provide human-readable percentage values for screen readers. Screen readers now announce "50 percent" instead of just "50", improving accessibility for users with vision disabilities. The attribute uses localized percentage formatting via `Intl.NumberFormat` and updates automatically when progress changes.
+
+- Updated dependencies [[`ba14a2b`](https://github.com/adobe/spectrum-web-components/commit/ba14a2b6361a0089a9a8c72232f245cde0716d89), [`dc6a8e8`](https://github.com/adobe/spectrum-web-components/commit/dc6a8e8db1b08080373c3664babc1feebde8f6c6), [`90c3010`](https://github.com/adobe/spectrum-web-components/commit/90c30101391d4d78922575e9f0bb407e02d9c2d5), [`f37dec6`](https://github.com/adobe/spectrum-web-components/commit/f37dec6ae39fd89a4c12e084b4a0f4d9092d79b0)]:
+  - @spectrum-web-components/base@1.12.0
+  - @spectrum-web-components/reactive-controllers@1.12.0
+  - @spectrum-web-components/field-label@1.12.0
+  - @spectrum-web-components/shared@1.12.0
+
 ## 1.11.2
 
 ### Patch Changes
