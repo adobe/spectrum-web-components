@@ -2,29 +2,21 @@
 
 ## 2.0.0-beta1
 
-### Minor Changes
+First public beta of `@adobe/spectrum-wc` — the 2nd-generation Spectrum Web Components library built on Spectrum 2 design tokens. This release ships 9 components, 1 pattern, and a shared core package. All components move from per-component `@spectrum-web-components/*` packages to a single `@adobe/spectrum-wc` package with subpath imports and are renamed from `sp-*` to `swc-*`.
 
-- **feat(button):** Add Gen2 `<swc-button>`. See the [component docs](https://spectrum-web-components.adobe.com/?path=/docs/components-button--readme) for the API and the [consumer migration guide](https://spectrum-web-components.adobe.com/?path=/docs/components-button-consumer-migration-guide--readme) for upgrading from Gen1 `sp-button`.
+### Added
 
-- **feat(avatar):** Add Gen2 `<swc-avatar>`. See the [component docs](https://spectrum-web-components.adobe.com/?path=/docs/components-avatar--readme) for the API and the [consumer migration guide](https://spectrum-web-components.adobe.com/?path=/docs/components-avatar-consumer-migration-guide--readme) for upgrading from Gen1 `sp-avatar`.
+- `Button` — Added `<swc-button>` with full Spectrum 2 visual fidelity, global element styles, and consumer migration guide. [#6254](https://github.com/adobe/spectrum-web-components/pull/6254)
+- `Avatar` — Added `<swc-avatar>` with Spectrum 2 tokens and updated size API. [#6113](https://github.com/adobe/spectrum-web-components/pull/6113)
+- `Badge` — Added `<swc-badge>` with Spectrum 2 tokens and icon support. [#5718](https://github.com/adobe/spectrum-web-components/pull/5718)
+- `Divider` — Added `<swc-divider>` with Spectrum 2 tokens and static color support. [#5798](https://github.com/adobe/spectrum-web-components/pull/5798)
+- `Illustrated Message` — Added `<swc-illustrated-message>` with slot-based heading API and size/orientation attributes. [#6207](https://github.com/adobe/spectrum-web-components/pull/6207)
+- `Progress Circle` — Added `<swc-progress-circle>` with ARIA attributes and Spectrum 2 tokens. [#5743](https://github.com/adobe/spectrum-web-components/pull/5743)
+- `Status Light` — Added `<swc-status-light>` with Spectrum 2 tokens and extended color variants. [#5800](https://github.com/adobe/spectrum-web-components/pull/5800)
+- `Tabs` — Added `<swc-tabs>`, `<swc-tab>`, and `<swc-tab-panel>` with keyboard navigation and overflow handling. [#6183](https://github.com/adobe/spectrum-web-components/pull/6183)
+- `Typography` — Added typography utility classes for Spectrum 2 type scales. [#6031](https://github.com/adobe/spectrum-web-components/pull/6031)
+- `Conversational AI` — Added composable AI chat pattern with message, action bar, and scroll components (no Gen1 counterpart). [#6170](https://github.com/adobe/spectrum-web-components/pull/6170)
 
-- **feat(badge):** Add Gen2 `<swc-badge>`. See the [component docs](https://spectrum-web-components.adobe.com/?path=/docs/components-badge--readme) for the API and the [consumer migration guide](https://spectrum-web-components.adobe.com/?path=/docs/components-badge-consumer-migration-guide--readme) for upgrading from Gen1 `sp-badge`.
+### Dependencies
 
-- **feat(divider):** Add Gen2 `<swc-divider>`. See the [component docs](https://spectrum-web-components.adobe.com/?path=/docs/components-divider--readme) for the API and the [consumer migration guide](https://spectrum-web-components.adobe.com/?path=/docs/components-divider-consumer-migration-guide--readme) for upgrading from Gen1 `sp-divider`.
-
-- **feat(illustrated-message):** Add Gen2 `<swc-illustrated-message>`. See the [component docs](https://spectrum-web-components.adobe.com/?path=/docs/components-illustrated-message--readme) for the API and the [consumer migration guide](https://spectrum-web-components.adobe.com/?path=/docs/components-illustrated-message-consumer-migration-guide--readme) for upgrading from Gen1 `sp-illustrated-message`.
-
-- **feat(progress-circle):** Add Gen2 `<swc-progress-circle>`. See the [component docs](https://spectrum-web-components.adobe.com/?path=/docs/components-progress-circle--readme) for the API and the [consumer migration guide](https://spectrum-web-components.adobe.com/?path=/docs/components-progress-circle-consumer-migration-guide--readme) for upgrading from Gen1 `sp-progress-circle`.
-
-- **feat(status-light):** Add Gen2 `<swc-status-light>`. See the [component docs](https://spectrum-web-components.adobe.com/?path=/docs/components-status-light--readme) for the API and the [consumer migration guide](https://spectrum-web-components.adobe.com/?path=/docs/components-status-light-consumer-migration-guide--readme) for upgrading from Gen1 `sp-status-light`.
-
-- **feat(tabs):** Add Gen2 `<swc-tabs>`, `<swc-tab>`, and `<swc-tab-panel>`. See the [component docs](https://spectrum-web-components.adobe.com/?path=/docs/components-tabs--readme) for the API and the [migration guide](https://spectrum-web-components.adobe.com/?path=/docs/components-tabs-migration--readme) for upgrading from Gen1 `sp-tabs`.
-
-- **feat(typography):** Add Gen2 typography utility classes. See the [component docs](https://spectrum-web-components.adobe.com/?path=/docs/components-typography--readme) for the full class reference and the [consumer migration guide](https://spectrum-web-components.adobe.com/?path=/docs/components-typography-consumer-migration-guide--readme) for upgrading from Gen1 typography.
-
-- **feat(conversational-ai):** Add Gen2 Conversational AI pattern: a composable set of web components for AI chat surfaces (no Gen1 counterpart). See the [pattern docs](https://spectrum-web-components.adobe.com/?path=/docs/conversational-ai-readme--docs).
-
-### Patch Changes
-
-- Updated dependencies:
-  - @spectrum-web-components/core@2.0.0-beta1
+- `@spectrum-web-components/core@2.0.0-beta1`
