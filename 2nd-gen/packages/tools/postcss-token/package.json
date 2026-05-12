@@ -1,6 +1,6 @@
 {
   "name": "@adobe/postcss-token",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "private": true,
   "description": "Second generation Spectrum Web Components token processing",
   "license": "Apache-2.0",

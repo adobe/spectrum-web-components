@@ -1,5 +1,30 @@
 # Change Log
 
+## 1.12.0
+
+### Patch Changes
+
+- [#6043](https://github.com/adobe/spectrum-web-components/pull/6043) [`295f465`](https://github.com/adobe/spectrum-web-components/commit/295f4651451bb0523ceb8f8155dd0bcc77ab2f31) Thanks [@blunteshwar](https://github.com/blunteshwar)! - - **Fixed**: `aria-label` on the internal `<input>` and `<textarea>` elements is now omitted when no label value is available, rather than being set to an empty string. An explicit `aria-label=""` was suppressing the accessible name for screen reader users, causing the field to be announced as "edit blank" even when a visible `<sp-field-label>` was associated. Resolves WCAG 2.5.3 (Label in Name) violation.
+
+- [#6038](https://github.com/adobe/spectrum-web-components/pull/6038) [`2db830c`](https://github.com/adobe/spectrum-web-components/commit/2db830cded30717fb9cbe4d335d0f3bcf9fea6b9) Thanks [@rise-erpelding](https://github.com/rise-erpelding)! - **Added**: Added truncated-value tooltip behavior for single-line text inputs.
+  - `<sp-textfield>` now shows a tooltip with the full value when the displayed value is visually truncated (via `TruncatedValueTooltipController`).
+  - Tooltip placement can be controlled with the `tooltip-placement` attribute on `<sp-textfield>` or `<sp-number-field>`
+  - `<sp-number-field>` inherits the same truncation tooltip behavior from `TextfieldBase`, including formatted numeric/currency values.
+  - `type="password"` textfields no longer use ellipsis truncation styling (`text-overflow: clip`) to avoid awkward visual truncation.
+
+  **Changed**: `sp-overlay` (internal)
+  - Added internal property `describeTrigger` (`'auto' | 'none'`, default `'auto'`). When set to `'none'`, the overlay does not set `aria-describedby` on the trigger when open (handled in `HoverController` and `LongpressController`), avoiding double announcement for screen readers when the overlay content duplicates the trigger (e.g. truncated-value tooltips). Textfield’s truncated-value tooltip uses this so the tooltip is visual-only for a11y.
+
+- Updated dependencies [[`ba14a2b`](https://github.com/adobe/spectrum-web-components/commit/ba14a2b6361a0089a9a8c72232f245cde0716d89), [`08484b8`](https://github.com/adobe/spectrum-web-components/commit/08484b826a9e6c73f01e7d12246889ec82f3e3a3), [`4819238`](https://github.com/adobe/spectrum-web-components/commit/481923863cdc7c03c56f4f9ed2d231e219648dcc), [`c4823d9`](https://github.com/adobe/spectrum-web-components/commit/c4823d94fd149634ab1a94db27155b408a399af3), [`dc6a8e8`](https://github.com/adobe/spectrum-web-components/commit/dc6a8e8db1b08080373c3664babc1feebde8f6c6), [`f37dec6`](https://github.com/adobe/spectrum-web-components/commit/f37dec6ae39fd89a4c12e084b4a0f4d9092d79b0), [`2db830c`](https://github.com/adobe/spectrum-web-components/commit/2db830cded30717fb9cbe4d335d0f3bcf9fea6b9), [`4c3977a`](https://github.com/adobe/spectrum-web-components/commit/4c3977a7e2fab30d0ed0ee9d3e58d21e03f76e34)]:
+  - @spectrum-web-components/base@1.12.0
+  - @spectrum-web-components/overlay@1.12.0
+  - @spectrum-web-components/tooltip@1.12.0
+  - @spectrum-web-components/help-text@1.12.0
+  - @spectrum-web-components/icon@1.12.0
+  - @spectrum-web-components/icons-ui@1.12.0
+  - @spectrum-web-components/icons-workflow@1.12.0
+  - @spectrum-web-components/shared@1.12.0
+
 ## 1.11.2
 
 ### Patch Changes
