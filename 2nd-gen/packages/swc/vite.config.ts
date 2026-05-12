@@ -94,6 +94,7 @@ export default defineConfig({
     lib: {
       entry: [
         ...glob.sync(resolve(__dirname, 'components/*/index.ts')),
+        ...glob.sync(resolve(__dirname, 'components/*/swc-*.ts')),
         ...glob.sync(resolve(__dirname, 'patterns/*/*/index.ts')),
       ].reduce(
         (entries, file) => {
@@ -131,16 +132,38 @@ export default defineConfig({
   },
   resolve: {
     // Needed for Storybook to work
-    alias: {
-      '@spectrum-web-components/core': resolve(__dirname, '../core'),
-      '@adobe/spectrum-wc': resolve(__dirname, './components'),
-      '@adobe/postcss-token': resolve(__dirname, '../tools/postcss-token'),
-      '@adobe/swc-tokens': resolve(__dirname, '../tools/swc-tokens'),
-      '@adobe/vite-global-elements-css': resolve(
-        __dirname,
-        '../tools/vite-global-elements-css'
-      ),
-    },
+    alias: [
+      {
+        find: '@spectrum-web-components/core',
+        replacement: resolve(__dirname, '../core'),
+      },
+      // Long-form imports (e.g. `@adobe/spectrum-wc/components/badge/swc-badge.js`)
+      // resolve directly to the source under `./components`. This must come before
+      // the short-form alias below so the more specific prefix wins.
+      {
+        find: '@adobe/spectrum-wc/components',
+        replacement: resolve(__dirname, 'components'),
+      },
+      // Short-form imports (e.g. `@adobe/spectrum-wc/badge`) point at the source
+      // package layout under `./components`, mirroring the published package's
+      // `./*` export which resolves to `./dist/components/*/index.js`.
+      {
+        find: '@adobe/spectrum-wc',
+        replacement: resolve(__dirname, 'components'),
+      },
+      {
+        find: '@adobe/postcss-token',
+        replacement: resolve(__dirname, '../tools/postcss-token'),
+      },
+      {
+        find: '@adobe/swc-tokens',
+        replacement: resolve(__dirname, '../tools/swc-tokens'),
+      },
+      {
+        find: '@adobe/vite-global-elements-css',
+        replacement: resolve(__dirname, '../tools/vite-global-elements-css'),
+      },
+    ],
   },
   server: {
     fs: {

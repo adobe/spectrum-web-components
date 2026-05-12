@@ -16,8 +16,8 @@ import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
 import { Badge } from '@adobe/spectrum-wc/badge';
 
-import '@adobe/spectrum-wc/badge';
-import '@adobe/spectrum-wc/icon';
+import '@adobe/spectrum-wc/components/badge/swc-badge.js';
+import '@adobe/spectrum-wc/components/icon/swc-icon.js';
 
 import {
   BADGE_VALID_SIZES,

@@ -15,7 +15,7 @@ import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import { Icon } from '@adobe/spectrum-wc/icon';
 
-import '@adobe/spectrum-wc/icon';
+import '@adobe/spectrum-wc/components/icon/swc-icon.js';
 
 import { getComponent } from '../../../utils/test-utils.js';
 import meta from '../stories/icon.internal.stories.js';

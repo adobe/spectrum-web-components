@@ -24,7 +24,7 @@ import {
   type StatusLightSize,
 } from '@spectrum-web-components/core/components/status-light';
 
-import '@adobe/spectrum-wc/status-light';
+import '@adobe/spectrum-wc/components/status-light/swc-status-light.js';
 
 import { getTranslationKey } from '../../../.storybook/helpers/get-translation-key.js';
 import translations from '../../../.storybook/intl/translations.json';
