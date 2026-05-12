@@ -18,11 +18,13 @@ Make sure to capture lessons from our work today
 Prep [component] for migration
 Run migration prep for [component]
 Phase 1 for [component] migration
+Phase 1 migration for [component]
 
 - Phase 2
 
 Scaffold [component] for 2nd-gen
 Phase 2 for [component] migration
+Phase 2 migration for [component]
 Create the core and SWC structure for [component]
 
 - Phase 3
@@ -30,33 +32,46 @@ Create the core and SWC structure for [component]
 Migrate the API for [component]
 Move properties and types for [component]
 Phase 3 for [component] migration
+Phase 3 migration for [component]
 
 - Phase 4
 
-Migrate styles for [component]
+Implement accessibility for [component]
+Add a11y for [component]
 Phase 4 for [component] migration
-Apply Spectrum 2 tokens for [component]
+Phase 4 migration for [component]
 
 - Phase 5
 
-Implement accessibility for [component]
-Add a11y for [component]
+Migrate styles for [component]
 Phase 5 for [component] migration
+Phase 5 migration for [component]
+Apply Spectrum 2 tokens for [component]
 
 - Phase 6
 
 Add tests for [component]
 Write tests for [component]
 Phase 6 for [component] migration
+Phase 6 migration for [component]
+
+- Conformance (sub-task after Phase 6)
+
+Check code conformance for [component]
+Run conformance checks for [component]
+Style guide review for [component]
+Conformance for [component] migration
 
 - Phase 7
 
 Document [component]
 Add stories for [component]
 Phase 7 for [component] migration
+Phase 7 migration for [component]
 
 - Phase 8
 
 Review [component] migration
 PR review for [component]
 Phase 8 for [component] migration
+Phase 8 migration for [component]

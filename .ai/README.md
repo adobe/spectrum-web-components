@@ -116,7 +116,17 @@ These two rules share the same glob (`2nd-gen/**/stories/**`) and work as a pair
 - **comments**: Convert all `<!-- -->` HTML comments to `{/* */}` JSX comments
 - **preserve_content**: Keep all markdown syntax, HTML elements, links, and formatting unchanged
 
-#### Deep understanding
+#### Code conformance
+
+- **lint_first**: Run ESLint, Stylelint, and Prettier before any manual review so mechanical errors are resolved first
+- **typescript**: Review against the TypeScript style guide (`CONTRIBUTOR-DOCS/02_style-guide/02_typescript/`)
+- **css**: Review against the CSS style guide (`CONTRIBUTOR-DOCS/02_style-guide/01_css/`)
+- **tests**: Review against the testing style guide (`CONTRIBUTOR-DOCS/02_style-guide/04_testing/`)
+- **stories**: Review against `.ai/rules/stories-format.md` and `.ai/rules/stories-documentation.md`
+- **guideline_gaps**: Surface uncovered-but-correct patterns to the user as proposed PR comments; do not change the guideline directly
+- Applies to: 2nd-gen component files (on-demand)
+
+#### Deep understanding (rule)
 
 - **apply_intelligently**: Use for non-trivial work (multiple files, new area, complex behavior); do not use for simple, self-contained requests (e.g. creating a regex, one-line fix, single known file) to avoid wasting tokens and overloading context. Before writing non-trivial code, do deep research on the relevant part of the codebase first.
 - **action** (when the rule applies): Scope → deep read → write persistent report (e.g. research.md at repo root) → pause for user review → proceed only after validation. Full workflow in `.ai/skills/deep-understanding/SKILL.md`
@@ -148,6 +158,7 @@ These two rules share the same glob (`2nd-gen/**/stories/**`) and work as a pair
 | stories-documentation          |       x        |           |              | `2nd-gen/**/stories/**`           |
 | stories-format                 |       x        |           |              | `2nd-gen/**/stories/**`           |
 | deep-understanding             |                |     x     |              | —                                 |
+| code-conformance               |                |     x     |              | —                                 |
 | component-readme               |                |     x     |              | `1st-gen/packages/*/README.md`    |
 | contributor-doc-update         |                |     x     |              | `CONTRIBUTOR-DOCS/**`             |
 | github-description             |                |     x     |              | —                                 |
@@ -254,19 +265,19 @@ Skills are used on-demand. When a task matches a skill’s purpose, the agent re
 - Use when: Scaffolding is in place and the approved `migration-plan.md` defines the intended public contract for 2nd-gen
 - Provides: Property/method porting workflow, type definition guidance, API contract review, and drift detection against the approved migration plan
 
-#### Migration — phase 4: styling (`migration-styling`)
-
-- **purpose**: Migrate CSS to the 2nd-gen structure, apply Spectrum 2 tokens, and ensure stylelint passes
-- **How to invoke**: Say "migrate styling for [component]", "port CSS for [component]", or "phase 4 migration for [component]"
-- Use when: API is in place and the approved `migration-plan.md` defines the intended visual scope; translating 1st-gen CSS to 2nd-gen with Spectrum 2 design tokens
-- Provides: CSS migration checklist, token mapping guidance, stylelint validation steps, and checks against approved visual scope and custom-property decisions
-
-#### Migration — phase 5: accessibility (`migration-a11y`)
+#### Migration — phase 4: accessibility (`migration-a11y`)
 
 - **purpose**: Implement WCAG-aligned semantics, ARIA, keyboard support, and focus management, and document accessibility behavior
-- **How to invoke**: Say "migrate accessibility for [component]", "implement a11y for [component]", or "phase 5 migration for [component]"
-- Use when: Styling is complete and the approved `migration-plan.md` plus accessibility analysis define the must-ship semantics and behavior
+- **How to invoke**: Say "migrate accessibility for [component]", "implement a11y for [component]", or "phase 4 migration for [component]"
+- Use when: API is in place and the approved `migration-plan.md` plus accessibility analysis define the must-ship semantics and behavior
 - Provides: WCAG checklist, ARIA pattern guidance, keyboard/focus requirements, a11y documentation template, and checks against approved accessibility changes in the migration plan
+
+#### Migration — phase 5: styling (`migration-styling`)
+
+- **purpose**: Migrate CSS to the 2nd-gen structure, apply Spectrum 2 tokens, and ensure stylelint passes
+- **How to invoke**: Say "migrate styling for [component]", "port CSS for [component]", or "phase 5 migration for [component]"
+- Use when: Accessibility is complete and the approved `migration-plan.md` defines the intended visual scope; translating 1st-gen CSS to 2nd-gen with Spectrum 2 design tokens
+- Provides: CSS migration checklist, token mapping guidance, stylelint validation steps, and checks against approved visual scope and custom-property decisions
 
 #### Migration — phase 6: testing (`migration-testing`)
 
@@ -274,6 +285,13 @@ Skills are used on-demand. When a task matches a skill’s purpose, the agent re
 - **How to invoke**: Say "write tests for [component] migration", "add migration tests for [component]", or "phase 6 migration for [component]"
 - Use when: Implementation is feature-complete and the approved `migration-plan.md` can be used to derive the must-ship test matrix before review
 - Provides: Test coverage checklist, unit/a11y/play-function patterns, test-running verification, and plan-driven coverage checks for breaking changes and regressions
+
+#### Migration — conformance sub-task (`migration-conformance`)
+
+- **purpose**: Verify all migrated files conform to project style guides, run all linters, and surface any guideline gaps as PR comment notes
+- **How to invoke**: Say "check code conformance for [component]", "run conformance checks for [component]", "style guide review for [component]", or "conformance for [component] migration"
+- Use when: Phase 6 (migration-testing) is complete and all tests pass; reviewing TypeScript, CSS, test files, and Storybook stories against their respective style guides before documentation
+- Provides: Four-domain review workflow (TypeScript, CSS, tests, stories), linter run commands, per-file-type style guide references, and a guideline-gap documentation pattern for surfacing improvements in the PR
 
 #### Migration — phase 7: documentation (`migration-documentation`)
 
@@ -289,7 +307,7 @@ Skills are used on-demand. When a task matches a skill’s purpose, the agent re
 - Use when: Documentation is complete and the approved `migration-plan.md` can be used as the review baseline; preparing the migration for code review and merge
 - Provides: Pre-PR checklist (lint, tests, build, Storybook), workstream status update steps, PR description guidance, and verification that code/docs/tests still match the approved migration plan
 
-#### Deep understanding
+#### Deep understanding (`deep-understanding`)
 
 - **purpose**: Require a thorough deep-read of the relevant codebase before planning or implementing; write findings to a persistent markdown file (e.g. `research.md`) so the user can review and correct before any work proceeds
 - **How to invoke**: Enforced by an **always-applied rule** — at session start and before any code writing, the agent does deep research and writes a report; no need to ask. You can still say “read this folder in depth and write research.md” or “study [system] in great detail” to scope or reinforce.
@@ -337,6 +355,18 @@ Skills are used on-demand. When a task matches a skill’s purpose, the agent re
 - **How to invoke**: Ask to implement a feature or fix a bug (e.g. “add feature X”, “fix this bug”); the agent may use TDD by default. To invoke explicitly, say “use TDD”, “write tests first”, or “red-green-refactor”.
 - Use when: Implementing any feature or bugfix, before writing implementation code
 - Provides: TDD cycle, verification checklist, good/bad test examples, anti-patterns to avoid
+
+## Workflows
+
+Workflows are reference documents that support agent and contributor workflows. They live in `.ai/workflows/`.
+
+### Available workflows
+
+#### Reusable prompts
+
+- **File**: `.ai/workflows/reusable-prompts.md`
+- **Purpose**: A reference list of natural-language phrases that trigger each skill or phase. Use these as copy-paste shortcuts when invoking skills in chat (e.g. "Phase 4 migration for [component]" triggers `migration-a11y`).
+- **Covers**: Memory/lesson capture, all 8 washing-machine migration phases, and the most common invocation phrases for each
 
 ## Using rules and skills across tools and IDEs
 

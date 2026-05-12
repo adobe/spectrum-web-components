@@ -25,23 +25,23 @@ import '@spectrum-web-components/tabs/sp-tab.js';
 import '@spectrum-web-components/tabs/sp-tab-panel.js';
 
 // After (single import registers all three elements)
-import '@adobe/spectrum-wc/tabs';
+import '@adobe/spectrum-wc/components/tabs/swc-tabs.js';
 ```
 
-> `@adobe/spectrum-wc` is a monolithic package. Importing via subpath (e.g. `@adobe/spectrum-wc/tabs`) loads only that component's bundle.
+> `@adobe/spectrum-wc` is a monolithic package. Importing via subpath (e.g. `@adobe/spectrum-wc/components/tabs/swc-tabs.js`) registers and loads only that component's bundle.
 
 ## What changed
 
 ### Renamed
 
-| Area                    | Spectrum 1                                               | Spectrum 2                                   |
-| ----------------------- | -------------------------------------------------------- | -------------------------------------------- |
-| Tag names               | `<sp-tabs>`, `<sp-tab>`, `<sp-tab-panel>`                | `<swc-tabs>`, `<swc-tab>`, `<swc-tab-panel>` |
-| Package                 | `@spectrum-web-components/tabs`                          | `@adobe/spectrum-wc`                         |
-| Import                  | `@spectrum-web-components/tabs/sp-tabs.js` (per element) | `@adobe/spectrum-wc/tabs` (single import)    |
-| Tab/panel identifier    | `value` attribute                                        | `tab-id` attribute                           |
-| Tablist accessible name | `label` on `<sp-tabs>`                                   | `accessible-label` on `<swc-tabs>`           |
-| CSS custom properties   | `--mod-tabs-*`                                           | `--swc-tabs-*`, `--swc-tab-*`                |
+| Area                    | Spectrum 1                                               | Spectrum 2                                                       |
+| ----------------------- | -------------------------------------------------------- | ---------------------------------------------------------------- |
+| Tag names               | `<sp-tabs>`, `<sp-tab>`, `<sp-tab-panel>`                | `<swc-tabs>`, `<swc-tab>`, `<swc-tab-panel>`                     |
+| Package                 | `@spectrum-web-components/tabs`                          | `@adobe/spectrum-wc`                                             |
+| Import                  | `@spectrum-web-components/tabs/sp-tabs.js` (per element) | `@adobe/spectrum-wc/components/tabs/swc-tabs.js` (single import) |
+| Tab/panel identifier    | `value` attribute                                        | `tab-id` attribute                                               |
+| Tablist accessible name | `label` on `<sp-tabs>`                                   | `accessible-label` on `<swc-tabs>`                               |
+| CSS custom properties   | `--mod-tabs-*`                                           | `--swc-tabs-*`, `--swc-tab-*`                                    |
 
 ### Added in Spectrum 2
 
@@ -202,7 +202,7 @@ Spectrum 2 uses a different custom property prefix. Spectrum 1 overrides will no
 
 ## Checklist
 
-- [ ] Remove `@spectrum-web-components/tabs` and import from `@adobe/spectrum-wc/tabs` instead
+- [ ] Remove `@spectrum-web-components/tabs` and import from `@adobe/spectrum-wc/components/tabs/swc-tabs.js` instead
 - [ ] Replace `<sp-tabs>` with `<swc-tabs>`, `<sp-tab>` with `<swc-tab>`, `<sp-tab-panel>` with `<swc-tab-panel>`
 - [ ] Rename `value` attribute to `tab-id` on every tab and tab panel
 - [ ] Rename `label` attribute to `accessible-label` on `<swc-tabs>`
