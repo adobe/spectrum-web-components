@@ -17,15 +17,6 @@ orbs:
   path-filtering: circleci/path-filtering@1.3.0
   continuation: circleci/continuation@2.0.0
 
-# Override the path-filtering orb's default executor. The orb's `cimg/base:current`
-# default currently ships Python 3.9, which the bootstrap pip script no longer
-# supports (minimum is 3.10). `cimg/python:3.12` has pip + pyyaml preinstalled.
-executors:
-  python:
-    docker:
-      - image: cimg/python:3.12
-    resource_class: small
-
 jobs:
   continue-all:
     docker:
@@ -47,7 +38,9 @@ workflows:
     jobs:
       - path-filtering/filter:
           name: filter-paths
-          executor: python
+          # Pin Python to 3.12. The orb defaults `tag` to "3.9", which the
+          # bootstrap pip script no longer supports (minimum is 3.10).
+          tag: '3.12'
           base-revision: main
           # Mapping format: <regex> <param-name> <param-value>
           # Negative lookahead means a path NOT under the listed prefix.
