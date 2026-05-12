@@ -39,6 +39,9 @@ test.describe('ColorLoupe - ARIA Snapshots', () => {
       'aria-hidden',
       'true'
     );
+    await expect(root).not.toHaveAttribute('aria-label');
+    await expect(root).not.toHaveAttribute('aria-labelledby');
+    await expect(root).not.toHaveAttribute('role');
   });
 
   test('should hide SVG from the accessibility tree for accessibility story', async ({
@@ -53,5 +56,8 @@ test.describe('ColorLoupe - ARIA Snapshots', () => {
       'aria-hidden',
       'true'
     );
+    await expect(root).not.toHaveAttribute('aria-label');
+    await expect(root).not.toHaveAttribute('aria-labelledby');
+    await expect(root).not.toHaveAttribute('role');
   });
 });

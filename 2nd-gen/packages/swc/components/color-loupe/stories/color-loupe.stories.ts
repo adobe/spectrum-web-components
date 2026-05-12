@@ -14,7 +14,7 @@ import { html } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
-import '@adobe/spectrum-wc/color-loupe';
+import '@adobe/spectrum-wc/components/color-loupe/swc-color-loupe.js';
 
 // ────────────────
 //    METADATA
@@ -37,10 +37,8 @@ const meta: Meta = {
     open: true,
   },
   argTypes,
-  actions: {
-    handles: events,
-  },
   parameters: {
+    actions: { handles: events },
     design: {
       type: 'figma',
       url: 'https://www.figma.com/design/Mngz9H7WZLbrCvGQf3GnsY/S2---Desktop?node-id=13065-162',

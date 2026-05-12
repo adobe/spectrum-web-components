@@ -11,7 +11,6 @@
  */
 
 import { CSSResultArray, html, TemplateResult } from 'lit';
-import { classMap } from 'lit/directives/class-map.js';
 import { styleMap } from 'lit/directives/style-map.js';
 
 import { ColorLoupeBase } from '@spectrum-web-components/core/components/color-loupe';
@@ -45,11 +44,7 @@ export class ColorLoupe extends ColorLoupeBase {
 
   protected override render(): TemplateResult {
     return html`
-      <div
-        class=${classMap({
-          ['swc-ColorLoupe']: true,
-        })}
-      >
+      <div class="swc-ColorLoup">
         <div class="swc-ColorLoupe-checkerboard swc-ColorLoupe--clipped"></div>
         <div
           class="swc-ColorLoupe-colorFill swc-ColorLoupe--clipped"
