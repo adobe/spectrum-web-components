@@ -36,13 +36,9 @@ Every changelog entry — whether in a `.changeset/*.md` file or in the final `C
 `Component` — Description of the change. [#PR](link)
 ```
 
-For breaking changes, prefix with the marker:
-
-```
-🚨 BREAKING: `Component` — Description of what broke and how to migrate. [#PR](link)
-```
-
 That's it. Component name in backticks, em dash, consumer-facing description, PR link.
+
+> On the rare occasion a change is breaking, prefix with `🚨 BREAKING:` — but most 2nd-gen work is additive (new components, new features, bug fixes), so this should be uncommon.
 
 ## Writing a changeset
 
@@ -52,11 +48,21 @@ Run `yarn changeset`, select the affected packages, choose a bump type, then wri
 
 | Bump type | When to use | Example |
 |---|---|---|
+| `minor` | New component or new feature | Added a new component or attribute |
 | `patch` | Bug fix, no API change | Fixed a rendering issue |
-| `minor` | New feature, backwards-compatible | Added a new attribute |
-| `major` | Breaking change requiring consumer update | Renamed or removed an attribute |
+| `major` | Breaking change requiring consumer update (rare) | Renamed or removed an attribute |
 
 ### Examples
+
+**New component** (the most common case during migration):
+
+```markdown
+---
+'@adobe/spectrum-wc': minor
+---
+
+`Button` — Added `<swc-button>` with full Spectrum 2 visual fidelity. See the [component docs](https://opensource.adobe.com/spectrum-web-components/?path=/docs/components-button--readme) and [consumer migration guide](https://opensource.adobe.com/spectrum-web-components/?path=/docs/components-button-consumer-migration-guide--readme). [#6254](https://github.com/adobe/spectrum-web-components/pull/6254)
+```
 
 **Patch** (bug fix):
 
@@ -68,7 +74,7 @@ Run `yarn changeset`, select the affected packages, choose a bump type, then wri
 `Badge` — Fixed contrast ratio in dark theme for `notice` variant. [#6285](https://github.com/adobe/spectrum-web-components/pull/6285)
 ```
 
-**Minor** (new feature):
+**Minor** (new feature on an existing component):
 
 ```markdown
 ---
@@ -78,24 +84,13 @@ Run `yarn changeset`, select the affected packages, choose a bump type, then wri
 `Button` — Added `justified` attribute for full-width layout. [#6254](https://github.com/adobe/spectrum-web-components/pull/6254)
 ```
 
-**Major** (breaking change):
-
-```markdown
----
-'@adobe/spectrum-wc': major
----
-
-🚨 BREAKING: `Avatar` — Renamed `label` attribute to `alt`. Removed `href` link mode; wrap in a native `<a>` instead. [#6113](https://github.com/adobe/spectrum-web-components/pull/6113)
-```
-
 **Multiple changes in one changeset** (when a single PR affects multiple components):
 
 ```markdown
 ---
-'@adobe/spectrum-wc': major
+'@adobe/spectrum-wc': minor
 ---
 
-🚨 BREAKING: `Badge` — Default `variant` changed from `informative` to `neutral`. [#6122](https://github.com/adobe/spectrum-web-components/pull/6122)
 `Badge` — Added `subtle` and `outline` style attributes. [#6122](https://github.com/adobe/spectrum-web-components/pull/6122)
 `Status Light` — Added new color variants: `pink`, `turquoise`, `brown`, `cinnamon`, `silver`. [#6122](https://github.com/adobe/spectrum-web-components/pull/6122)
 ```
@@ -109,31 +104,23 @@ Run `yarn changeset`, select the affected packages, choose a bump type, then wri
 
 ## CHANGELOG output
 
-At release time, the script collates changeset entries under a version heading. `🚨 BREAKING` entries sort to the top. The result looks like this:
+At release time, the script collates changeset entries under a version heading. A typical release looks like this:
 
 ```markdown
 ## 2.1.0
 
-- 🚨 BREAKING: `Avatar` — Renamed `label` to `alt`. Removed `href`. [#6113](link)
 - `Button` — Added `justified` attribute for full-width layout. [#6254](link)
 - `Badge` — Fixed contrast ratio in dark theme for `notice` variant. [#6285](link)
 ```
 
-For major releases with many entries, add section headings for scannability:
+For larger releases with many entries, add section headings for scannability:
 
 ```markdown
-## 2.0.0-beta1
-
-First public beta of `@adobe/spectrum-wc`.
-
-### Breaking changes
-
-- 🚨 BREAKING: `Button` — Renamed `treatment` to `fill-style`, removed `href` link mode. [#6254](link)
-- 🚨 BREAKING: `Avatar` — Renamed `label` to `alt`, default `size` changed from 100 to 500. [#6113](link)
+## 2.0.0-beta2
 
 ### Added
 
-- `Button` — Added `justified` attribute. [#6254](link)
+- `Checkbox` — Added `<swc-checkbox>` with Spectrum 2 tokens. See the [component docs](link) and [consumer migration guide](link). [#6300](link)
 - `Conversational AI` — New pattern for AI chat surfaces. [#6170](link)
 
 ### Fixed
@@ -145,10 +132,9 @@ Section headings are optional — use them only when a release has enough entrie
 
 ## How it works
 
-The `.changeset/config.json` points to a custom changelog function (`scripts/changelog-passthrough.cjs`) instead of the default `@changesets/changelog-github`. This function:
+The release pipeline has two steps that shape the 2nd-gen CHANGELOG:
 
-1. Receives the changeset body from the changesets library
-2. Returns it as a CHANGELOG bullet — **no commit hashes, no author attributions, no reformatting**
-3. The changesets `version` command collates all entries under the computed version heading
+1. **Passthrough** — `.changeset/config.json` points to a custom changelog function (`scripts/changelog-passthrough.cjs`) instead of the default `@changesets/changelog-github`. It receives the changeset body and returns it as a CHANGELOG bullet — no commit hashes, no author attributions, no reformatting.
+2. **Cleanup** — The changesets library adds `### Minor Changes` / `### Patch Changes` headings automatically. A post-processing script (`scripts/clean-changelog.cjs`) strips those headings from the 2nd-gen CHANGELOGs so entries are flat bullets under the version heading. This runs automatically during `yarn publish` (see `scripts/publish.js`).
 
-The function is intentionally minimal (~20 lines). If you need to understand or maintain it, read `scripts/changelog-passthrough.cjs`.
+Both scripts are intentionally minimal. If you need to understand or maintain them, read `scripts/changelog-passthrough.cjs` and `scripts/clean-changelog.cjs`.
