@@ -61,7 +61,7 @@ argTypes.size = {
 };
 
 /**
- * Status lights describe the condition of an entity. Much like [badges](../?path=/docs/components-badge--readme), they can be used to convey semantic meaning, such as statuses and categories.
+ * Status lights describe the condition of an entity. Much like [badges](../?path=/docs/components-badge--docs), they can be used to convey semantic meaning, such as statuses and categories.
  */
 const meta: Meta = {
   title: 'Status light',
@@ -406,7 +406,7 @@ function withLocaleWrapperRender(
 /**
  * Status light with label driven by the Language toolbar and translations.json.
  * Use this story in the Fonts guide to demonstrate font loading and translated copy.
- * Learn more about [loading the expected fonts](/docs/guides-customization-fonts--readme).
+ * Learn more about [loading the expected fonts](/docs/guides-customization-fonts--docs).
  */
 // @todo: this story is docs-only, but we should start capturing Chromatic baselines for internationalized content in components. SWC-1871
 export const WithLocaleWrapper: Story = {

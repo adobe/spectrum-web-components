@@ -170,7 +170,7 @@ function pathToTitle(filePath) {
  * Convert a title to a Storybook doc ID.
  *
  * @param {string} title - The Storybook title
- * @returns {string} The doc ID (e.g., "contributor-docs-contributor-guides-getting-involved--readme")
+ * @returns {string} The doc ID (e.g., "contributor-docs-contributor-guides-getting-involved--docs")
  */
 function titleToDocId(title) {
   const fullTitle = title;
@@ -179,7 +179,7 @@ function titleToDocId(title) {
     .replace(/\//g, '-')
     .replace(/\s+/g, '-')
     .replace(/[^a-z0-9-]/g, '');
-  return `contributor-docs-${id}--readme`;
+  return `contributor-docs-${id}--docs`;
 }
 
 /**

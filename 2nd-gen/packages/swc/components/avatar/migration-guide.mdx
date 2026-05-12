@@ -1,8 +1,8 @@
 import { Meta } from '@storybook/addon-docs/blocks';
 
-<Meta title="Avatar/Consumer migration guide" />
+<Meta title="Avatar/Migration guide" />
 
-# Avatar consumer migration guide
+# Avatar migration guide
 
 Replace `<sp-avatar>` with `<swc-avatar>`, update the import, and rename several attributes. The `href` (link) capability has been removed.
 
@@ -23,10 +23,10 @@ Update your import:
 import '@spectrum-web-components/avatar/sp-avatar.js';
 
 // After
-import '@adobe/spectrum-wc/avatar';
+import '@adobe/spectrum-wc/components/avatar/swc-avatar.js';
 ```
 
-> `@adobe/spectrum-wc` is a monolithic package. Importing via subpath (e.g. `@adobe/spectrum-wc/avatar`) loads only that component's bundle.
+> `@adobe/spectrum-wc` is a monolithic package. Importing via subpath (e.g. `@adobe/spectrum-wc/components/avatar/swc-avatar.js`) registers and loads only that component's bundle.
 
 ## What changed
 
@@ -35,7 +35,7 @@ import '@adobe/spectrum-wc/avatar';
 | Area                      | Spectrum 1 (`sp-avatar`)                       | Spectrum 2 (`swc-avatar`)                                                     |
 | ------------------------- | ---------------------------------------------- | ----------------------------------------------------------------------------- |
 | Tag                       | `sp-avatar`                                    | `swc-avatar`                                                                  |
-| Import path               | `@spectrum-web-components/avatar/sp-avatar.js` | `@adobe/spectrum-wc/avatar`                                                   |
+| Import path               | `@spectrum-web-components/avatar/sp-avatar.js` | `@adobe/spectrum-wc/components/avatar/swc-avatar.js`                          |
 | `label` attribute         | Accessible label for the image                 | Renamed to `alt` — see [step 2](#2-rename-label-to-alt)                       |
 | `is-decorative` attribute | Marks avatar as decorative (hides from AT)     | Renamed to `decorative` — see [step 3](#3-rename-is-decorative-to-decorative) |
 | CSS custom props          | `--mod-avatar-*`                               | `--swc-avatar-*` (see [Styling](#styling))                                    |

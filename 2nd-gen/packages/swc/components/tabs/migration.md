@@ -35,7 +35,7 @@ import '@spectrum-web-components/tabs/sp-tab.js';
 import '@spectrum-web-components/tabs/sp-tab-panel.js';
 
 // After (single import registers all three elements)
-import '@adobe/spectrum-wc/tabs';
+import '@adobe/spectrum-wc/components/tabs/swc-tabs.js';
 ```
 
 ---
@@ -46,7 +46,7 @@ import '@adobe/spectrum-wc/tabs';
 | ------------------------------------------------------------------ | -------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
 | Tag names                                                          | `sp-tabs`, `sp-tab`, `sp-tab-panel`                      | `swc-tabs`, `swc-tab`, `swc-tab-panel`                                                                              |
 | Package                                                            | `@spectrum-web-components/tabs`                          | `@adobe/spectrum-wc`                                                                                                |
-| Import paths                                                       | `@spectrum-web-components/tabs/sp-tabs.js` (per-element) | `@adobe/spectrum-wc/tabs` (single import)                                                                           |
+| Import paths                                                       | `@spectrum-web-components/tabs/sp-tabs.js` (per-element) | `@adobe/spectrum-wc/components/tabs/swc-tabs.js` (single import)                                                    |
 | Default size                                                       | None (no `size` on host in 1st-gen)                      | **No `size` API** — typography uses the S2 default scale only (see [S2-aligned public API](#s2-aligned-public-api)) |
 | `auto` / `compact` / `quiet` / `emphasized` / `size` on `swc-tabs` | 1st-gen booleans / `SizedMixin` sizes                    | **Removed** — use `keyboard-activation` and `density` instead (see [S2-aligned public API](#s2-aligned-public-api)) |
 | `keyboard-activation`                                              | N/A (1st-gen used boolean `auto`)                        | `manual` (default) or `automatic` — see [Activation model](#activation-model)                                       |

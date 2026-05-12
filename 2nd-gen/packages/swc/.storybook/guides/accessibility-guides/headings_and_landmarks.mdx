@@ -1,6 +1,6 @@
 import { Meta } from '@storybook/addon-docs/blocks';
 
-<Meta title="Accessibility guides/Headings and landmarks" />
+<Meta title="Accessibility/Headings and landmarks" />
 
 # Headings and landmarks
 
@@ -10,16 +10,16 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
 ### How screen readers use headings and landmarks
 
-Together, landmarks and headings form a **navigation map** for people who do not use visual scanning. In [browse (or **document**)](/docs/guides-accessibility-guides-screen-reader-testing--readme) mode, screen reader users are not limited to a single linear read-through: they can **jump** to significant structure using **landmarks** and **headings**, often with dedicated **shortcuts**.
+Together, landmarks and headings form a **navigation map** for people who do not use visual scanning. In [browse (or **document**)](/docs/guides-accessibility-guides-screen-reader-testing--docs) mode, screen reader users are not limited to a single linear read-through: they can **jump** to significant structure using **landmarks** and **headings**, often with dedicated **shortcuts**.
 
 - **Headings:** Many screen readers let users move from heading to heading with one key. For example, **NVDA** and **JAWS** on Windows use **H** for the next heading and **Shift**+**H** for the previous heading; **VoiceOver** on macOS has its own **heading** navigation in the **rotor** and related commands. A **logical** `h1`–`h6` tree is what makes that a reliable **outline** of the page.
 - **Landmarks:** The same **browse** mode usually exposes a **landmarks** (or “regions”) list or **rotor** entry so users can jump to **main**, **navigation**, **complementary** content, and other regions. The exact **shortcuts** differ (for example, **D** in NVDA, **R** in JAWS, and **VoiceOver**’s **landmarks** ring in the **rotor**; see the table in [Screen reader testing](/docs/guides-accessibility-guides-screen-reader-testing--readme#screen-reader-modes)). A small set of **clear**, **uniquely labeled** landmarks is as important as a good heading hierarchy for “where am I on this page?”
 
-For a full **shortcut** list, an overview of **screen reader modes** (including **browse** and **focus**), and a testing **workflow**, see [Screen reader testing](/docs/guides-accessibility-guides-screen-reader-testing--readme).
+For a full **shortcut** list, an overview of **screen reader modes** (including **browse** and **focus**), and a testing **workflow**, see [Screen reader testing](/docs/guides-accessibility-guides-screen-reader-testing--docs).
 
 The sections that follow go deeper on **markup**: the [related WCAG 2.2 success criteria](#related-wcag-success-criteria) table, **landmarks** (including when **too many** add noise), **heading** levels and `aria` patterns, and [practical notes for Spectrum Web Components](#examples-in-a-spectrum-web-components-context) (for example, **`heading-level`**, slotted vs shadow **headings**). When you are ready to **check** the outline in the browser, the WAVE extension’s **Structure** tab lists **headings** and **regions** and flags gaps or odd levels. See [WAVE toolbar testing](/docs/guides-accessibility-guides-wave-toolbar-testing--readme#structure-tab).
 
-> **Note:** This guide is about **markup and page structure**. It works alongside [screen reader testing](/docs/guides-accessibility-guides-screen-reader-testing--readme), [keyboard testing](/docs/guides-accessibility-guides-keyboard-testing--readme), and [semantic HTML and ARIA](/docs/guides-accessibility-guides-semantic-html-aria--readme).
+> **Note:** This guide is about **markup and page structure**. It works alongside [screen reader testing](/docs/guides-accessibility-guides-screen-reader-testing--docs), [keyboard testing](/docs/guides-accessibility-guides-keyboard-testing--docs), and [semantic HTML and ARIA](/docs/guides-accessibility-guides-semantic-html-aria--docs).
 
 ## Headings
 
@@ -39,11 +39,11 @@ Jumping from `h1` to `h3` without an `h2` can **break the outline** for users wh
 
 ## Landmarks
 
-**Landmark regions** identify major areas of a page. In HTML, elements such as `main`, `nav`, `header`, `footer`, and `aside` (and, when **named**, `section`—see [MDN: the `section` element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/section#accessibility)) expose familiar roles so assistive technology can list them in a “landmarks” or **rotor** view. How semantics map to the accessibility tree is also summarized in [How semantics help assistive technologies](/docs/guides-accessibility-guides-semantic-html-aria--readme#how-semantics-help-assistive-technologies) in [Semantic HTML and ARIA](/docs/guides-accessibility-guides-semantic-html-aria--readme). For how users **move** by landmark in browse mode, see [How screen readers use headings and landmarks](#how-screen-readers-use-headings-and-landmarks).
+**Landmark regions** identify major areas of a page. In HTML, elements such as `main`, `nav`, `header`, `footer`, and `aside` (and, when **named**, `section`—see [MDN: the `section` element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/section#accessibility)) expose familiar roles so assistive technology can list them in a “landmarks” or **rotor** view. How semantics map to the accessibility tree is also summarized in [How semantics help assistive technologies](/docs/guides-accessibility-guides-semantic-html-aria--readme#how-semantics-help-assistive-technologies) in [Semantic HTML and ARIA](/docs/guides-accessibility-guides-semantic-html-aria--docs). For how users **move** by landmark in browse mode, see [How screen readers use headings and landmarks](#how-screen-readers-use-headings-and-landmarks).
 
 ### Prefer native HTML landmarks to ARIA-only landmarks
 
-See [Why prefer semantic elements](/docs/guides-accessibility-guides-semantic-html-aria--readme#why-prefer-semantic-elements) and [ARIA as a secondary method](/docs/guides-accessibility-guides-semantic-html-aria--readme#aria-as-a-secondary-method) in [Semantic HTML and ARIA](/docs/guides-accessibility-guides-semantic-html-aria--readme): prefer native landmark elements when they match the job, and add ARIA only when HTML cannot express the needed role or relationship. In practice, use `main`, `nav`, `header`, `footer`, and `aside` in the **light DOM** (with appropriate **labels** where a landmark type can repeat) instead of generic `div`s with ARIA `role` attributes—unless a pattern in the [ARIA authoring practices guide (APG)](https://www.w3.org/WAI/ARIA/apg/) calls for a specific widget role. The same “prefer HTML” point appears in MDN’s [ARIA `region` role: **Best practices, Prefer HTML**](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Roles/region_role#prefer_html).
+See [Why prefer semantic elements](/docs/guides-accessibility-guides-semantic-html-aria--readme#why-prefer-semantic-elements) and [ARIA as a secondary method](/docs/guides-accessibility-guides-semantic-html-aria--readme#aria-as-a-secondary-method) in [Semantic HTML and ARIA](/docs/guides-accessibility-guides-semantic-html-aria--docs): prefer native landmark elements when they match the job, and add ARIA only when HTML cannot express the needed role or relationship. In practice, use `main`, `nav`, `header`, `footer`, and `aside` in the **light DOM** (with appropriate **labels** where a landmark type can repeat) instead of generic `div`s with ARIA `role` attributes—unless a pattern in the [ARIA authoring practices guide (APG)](https://www.w3.org/WAI/ARIA/apg/) calls for a specific widget role. The same “prefer HTML” point appears in MDN’s [ARIA `region` role: **Best practices, Prefer HTML**](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Roles/region_role#prefer_html).
 
 ### Don't overuse landmarks
 
@@ -59,11 +59,11 @@ A **sidebar** or **repeated** block that is the same on every page may use a **s
 
 The **first heading** in **main** content is often the page’s primary topic. If **site-wide navigation** and **banners** come first in the DOM, they should still be **correctly marked** (`nav`, `header`, landmarks) so users can **skip** to `main` (for example, [bypass blocks / skip links](https://www.w3.org/WAI/WCAG22/Understanding/bypass-blocks.html)). **Do not** put the main page `h1` only in a place that is not the primary content if that would misrepresent the document in the **outline**—[WAVE’s **Structure** tab](/docs/guides-accessibility-guides-wave-toolbar-testing--readme#structure-tab) can help you review this.
 
-For how screen readers use **headings** in browse mode, see [How screen readers use headings and landmarks](#how-screen-readers-use-headings-and-landmarks); for platform **shortcuts**, see [Screen reader testing](/docs/guides-accessibility-guides-screen-reader-testing--readme).
+For how screen readers use **headings** in browse mode, see [How screen readers use headings and landmarks](#how-screen-readers-use-headings-and-landmarks); for platform **shortcuts**, see [Screen reader testing](/docs/guides-accessibility-guides-screen-reader-testing--docs).
 
 ### Sections and `aria-labelledby`
 
-For a region with a heading, you can associate the heading with the section using `aria-labelledby` on the **sectioning** element, pointing to the heading’s `id`. That strengthens the **programmatic** relationship for assistive technology. See [Semantic HTML and ARIA](/docs/guides-accessibility-guides-semantic-html-aria--readme) for how light-DOM structure fits custom elements; do not use heading markup **only** for visual weight.
+For a region with a heading, you can associate the heading with the section using `aria-labelledby` on the **sectioning** element, pointing to the heading’s `id`. That strengthens the **programmatic** relationship for assistive technology. See [Semantic HTML and ARIA](/docs/guides-accessibility-guides-semantic-html-aria--docs) for how light-DOM structure fits custom elements; do not use heading markup **only** for visual weight.
 
 ## Examples in a Spectrum Web Components context
 
@@ -115,12 +115,12 @@ After you build, use [WAVE’s **Structure** tab](/docs/guides-accessibility-gui
 
 **In Storybook**
 
-- [Overview](/docs/guides-accessibility-guides-overview--readme) — all accessibility guides in this section
-- [WAVE toolbar testing](/docs/guides-accessibility-guides-wave-toolbar-testing--readme) — use the **Structure** tab to verify headings and regions
-- [Screen reader testing](/docs/guides-accessibility-guides-screen-reader-testing--readme) — heading and landmark navigation shortcuts, testing workflow
-- [Keyboard testing](/docs/guides-accessibility-guides-keyboard-testing--readme) — focus order and tab order
-- [Semantic HTML and ARIA](/docs/guides-accessibility-guides-semantic-html-aria--readme) — why prefer native elements, ARIA as secondary, and light-DOM expectations
-- [Accessibility resources](/docs/guides-accessibility-guides-accessibility-resources--readme) — broader links
+- [Overview](/docs/guides-accessibility-guides-overview--docs) — all accessibility guides in this section
+- [WAVE toolbar testing](/docs/guides-accessibility-guides-wave-toolbar-testing--docs) — use the **Structure** tab to verify headings and regions
+- [Screen reader testing](/docs/guides-accessibility-guides-screen-reader-testing--docs) — heading and landmark navigation shortcuts, testing workflow
+- [Keyboard testing](/docs/guides-accessibility-guides-keyboard-testing--docs) — focus order and tab order
+- [Semantic HTML and ARIA](/docs/guides-accessibility-guides-semantic-html-aria--docs) — why prefer native elements, ARIA as secondary, and light-DOM expectations
+- [Accessibility resources](/docs/guides-accessibility-guides-accessibility-resources--docs) — broader links
 
 **W3C WAI**
 
