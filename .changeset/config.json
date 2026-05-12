@@ -3,7 +3,7 @@
   "access": "public",
   "baseBranch": "main",
   "changelog": [
-    "@changesets/changelog-github",
+    "../scripts/changelog-passthrough.cjs",
     {
       "repo": "adobe/spectrum-web-components"
     }
