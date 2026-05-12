@@ -169,11 +169,11 @@ Intentionally omitted. If grouped regions affect motion, follow the **menu** / *
 
 ### Keyboard testing
 
-Follow the 2nd-gen Storybook [Keyboard testing](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/keyboard_testing.mdx) guide on a **composed** path with `swc-menu` (see [Menu — Keyboard testing](../menu/accessibility-migration-analysis.md#keyboard-testing)). Confirm **arrow** navigation across **group** **boundaries**; roving focus is owned by the parent menu and [`FocusgroupNavigationController`](https://github.com/adobe/spectrum-web-components/pull/6129), with no focus traps and no roving stops on the presentation/label **region** (see [Keyboard and focus](#keyboard-and-focus) on this page).
+Follow the 2nd-gen Storybook [Keyboard testing](../../../../2nd-gen/packages/swc/.storybook/docs/learn/accessibility/keyboard-testing.mdx) guide on a **composed** path with `swc-menu` (see [Menu — Keyboard testing](../menu/accessibility-migration-analysis.md#keyboard-testing)). Confirm **arrow** navigation across **group** **boundaries**; roving focus is owned by the parent menu and [`FocusgroupNavigationController`](https://github.com/adobe/spectrum-web-components/pull/6129), with no focus traps and no roving stops on the presentation/label **region** (see [Keyboard and focus](#keyboard-and-focus) on this page).
 
 ### Manual and screen reader testing
 
-Exercise **menu** stories that include **labeled groups**; confirm group **names** are discoverable and that behavior matches [Menu — Manual and screen reader testing](../menu/accessibility-migration-analysis.md#manual-and-screen-reader-testing-mandatory-host-alone). Use [Screen reader testing](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx) as needed.
+Exercise **menu** stories that include **labeled groups**; confirm group **names** are discoverable and that behavior matches [Menu — Manual and screen reader testing](../menu/accessibility-migration-analysis.md#manual-and-screen-reader-testing-mandatory-host-alone). Use [Screen reader testing](../../../../2nd-gen/packages/swc/.storybook/docs/learn/accessibility/screen-reader-testing.mdx) as needed.
 
 ---
 
@@ -198,5 +198,5 @@ Exercise **menu** stories that include **labeled groups**; confirm group **names
 - [WAI-ARIA: `presentation`](https://www.w3.org/TR/wai-aria/#presentation)
 - [spectrum-web-components PR #6129 — Focusgroup navigation controller](https://github.com/adobe/spectrum-web-components/pull/6129)
 - [WCAG 2.2](https://www.w3.org/TR/WCAG22/)
-- [2nd-gen Storybook: Keyboard testing](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/keyboard_testing.mdx)
-- [2nd-gen Storybook: Screen reader testing](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx)
+- [2nd-gen Storybook: Keyboard testing](../../../../2nd-gen/packages/swc/.storybook/docs/learn/accessibility/keyboard-testing.mdx)
+- [2nd-gen Storybook: Screen reader testing](../../../../2nd-gen/packages/swc/.storybook/docs/learn/accessibility/screen-reader-testing.mdx)

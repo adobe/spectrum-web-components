@@ -71,7 +71,7 @@ This doc describes how **`swc-button`** should behave for **accessibility** in 2
 ### Pattern in the APG
 
 - [Button pattern](https://www.w3.org/WAI/ARIA/apg/patterns/button/) — keyboard activation, **`aria-pressed`** when toggling, **`aria-expanded`** when controlling a popup; ensure a **discernible name**.
-- [Link pattern](https://www.w3.org/WAI/ARIA/apg/patterns/link/) — applies to **`swc-link`** and native **`<a>`** (**not** **`swc-button`**): **Enter** / **Return** only (native links do **not** activate with **Space**); name from visible text or **`aria-label`** when needed. See [Keyboard testing](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/keyboard_testing.mdx).
+- [Link pattern](https://www.w3.org/WAI/ARIA/apg/patterns/link/) — applies to **`swc-link`** and native **`<a>`** (**not** **`swc-button`**): **Enter** / **Return** only (native links do **not** activate with **Space**); name from visible text or **`aria-label`** when needed. See [Keyboard testing](../../../../2nd-gen/packages/swc/.storybook/docs/learn/accessibility/keyboard-testing.mdx).
 - Prefer **native** `<button>` and `<a href>` so the browser supplies **context menu**, **modifier+click**, **middle-click**, **long-press**, and **reader** defaults without reimplementation.
 
 ### Guidelines that apply
@@ -79,7 +79,7 @@ This doc describes how **`swc-button`** should behave for **accessibility** in 2
 | Idea | Plain meaning |
 | --- | --- |
 | [Name, role, value (WCAG 4.1.2)](https://www.w3.org/TR/WCAG22/#name-role-value) | **Role**, **name**, and state on the **focused** native **`<button>`** inside **`swc-button`**—**not** duplicated on the **host** with **`role="button"`**. For links, semantics live on **`swc-link`** / **`<a>`**. |
-| [Keyboard (WCAG 2.1.1)](https://www.w3.org/TR/WCAG22/#keyboard) | **`swc-button`:** **Enter** / **Return** or **Space** on the inner **`<button>`**. **Links:** **Enter** / **Return** only. Match native behavior. Details: [Keyboard testing](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/keyboard_testing.mdx). |
+| [Keyboard (WCAG 2.1.1)](https://www.w3.org/TR/WCAG22/#keyboard) | **`swc-button`:** **Enter** / **Return** or **Space** on the inner **`<button>`**. **Links:** **Enter** / **Return** only. Match native behavior. Details: [Keyboard testing](../../../../2nd-gen/packages/swc/.storybook/docs/learn/accessibility/keyboard-testing.mdx). |
 | [Focus visible (WCAG 2.4.7)](https://www.w3.org/TR/WCAG22/#focus-visible) | Focus ring follows the **inner** **`<button>`** (after delegation). |
 | [Target size (WCAG 2.5.8)](https://www.w3.org/TR/WCAG22/#target-size-minimum) | Hit targets for primary actions should meet **minimum target size** unless an exception applies. |
 | [Pause, stop, hide (WCAG 2.2.2)](https://www.w3.org/WAI/WCAG22/Understanding/pause-stop-hide.html) | **Loading animation** on the control should respect **reduced motion** where the platform supports it; align with Spectrum motion tokens and product guidance. |
@@ -211,7 +211,7 @@ Adobe Jira is authoritative for current status and resolution; refresh cells whe
 
 ### Keyboard and focus
 
-- **`swc-button`:** Keys apply to the **focused** **`<button>`** (after delegation): **Enter** / **Return** **or** **Space** activates ([Keyboard testing](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/keyboard_testing.mdx)). When **`aria-disabled="true"`** (pending), follow platform / React-style convention: **no** activation until work completes—document in Storybook.
+- **`swc-button`:** Keys apply to the **focused** **`<button>`** (after delegation): **Enter** / **Return** **or** **Space** activates ([Keyboard testing](../../../../2nd-gen/packages/swc/.storybook/docs/learn/accessibility/keyboard-testing.mdx)). When **`aria-disabled="true"`** (pending), follow platform / React-style convention: **no** activation until work completes—document in Storybook.
 - **Links** (**`swc-link`** / native **`<a>`**): **Enter** / **Return** only—**Space** must **not** activate (see same keyboard guide).
 - **Tab order:** One **logical** control per appearance; **Tab** stops on the **internal** **`<button>`**, with focus ring on that node.
 
@@ -238,7 +238,7 @@ Adobe Jira is authoritative for current status and resolution; refresh cells whe
 - [ ] **Pending:** **`aria-disabled="true"`** on the inner **`<button>`**, **still focusable**—align with **[SWC-459](https://jira.corp.adobe.com/browse/SWC-459)** and **React**-style loading buttons; **animated icon**, not **`swc-progress-circle`**; **polite** / **status** announcements; **no assertive** live region for default loading.
 - [ ] **Reduced motion** / delay-before-show called out in docs where implementation exists.
 - [ ] Cross-links to [Figma — Loading animation discovery](https://www.figma.com/design/42VzvpW262EAUbYsadO4e8/Loading-animation-discovery) and [button rendering roadmap](./rendering-and-styling-migration-analysis.md).
-- [ ] Keyboard behavior matches [Keyboard testing](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/keyboard_testing.mdx): **`swc-button`** = Enter/Return or Space; **links** tested on **`swc-link`** / `<a>`.
+- [ ] Keyboard behavior matches [Keyboard testing](../../../../2nd-gen/packages/swc/.storybook/docs/learn/accessibility/keyboard-testing.mdx): **`swc-button`** = Enter/Return or Space; **links** tested on **`swc-link`** / `<a>`.
 - [ ] **`aria-labelledby`** / **`aria-describedby`** across light + shadow DOM: **deferred** until **`ElementInternals`** + **axe-core** story is clear ([SWC-48](https://jira.corp.adobe.com/browse/SWC-48)).
 - [ ] **`submit`** / **`reset`**: **deferred** until same **`ElementInternals`** + tooling path; document **`type="button"`** default for initial scope.
 
@@ -248,7 +248,7 @@ Adobe Jira is authoritative for current status and resolution; refresh cells whe
 
 - [WAI-ARIA APG: Button](https://www.w3.org/WAI/ARIA/apg/patterns/button/)
 - [WAI-ARIA APG: Link](https://www.w3.org/WAI/ARIA/apg/patterns/link/)
-- [Keyboard testing (2nd-gen Storybook accessibility guide)](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/keyboard_testing.mdx) — link vs button activation keys
+- [Keyboard testing (2nd-gen Storybook accessibility guide)](../../../../2nd-gen/packages/swc/.storybook/docs/learn/accessibility/keyboard-testing.mdx) — link vs button activation keys
 - [Using ARIA (read this first)](https://www.w3.org/WAI/ARIA/apg/practices/read-me-first/)
 - [WCAG 2.2](https://www.w3.org/TR/WCAG22/)
 - [Figma: Loading animation discovery](https://www.figma.com/design/42VzvpW262EAUbYsadO4e8/Loading-animation-discovery)

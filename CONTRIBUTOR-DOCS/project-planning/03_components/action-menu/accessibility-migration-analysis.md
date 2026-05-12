@@ -208,7 +208,7 @@ Intentionally omitted. If popover open/close uses motion, treat it like other la
 
 ### Keyboard testing
 
-Follow the 2nd-gen Storybook [Keyboard testing](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/keyboard_testing.mdx) guide on a fully composed path (**`swc-action-menu`** or **`swc-menu`**: **trigger** + **internal** **`role="menu"`** **(shadow)** + **`swc-popover`**, not the 1st-gen overlay stack). Cover the [menu button pattern](https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/) on the trigger (open/close, focus return) and in-menu keys on the **open** **menu** **surface** ([FocusgroupNavigationController](https://github.com/adobe/spectrum-web-components/pull/6129)); if implemented, cover [printable character navigation (not typeahead)](../menu/accessibility-migration-analysis.md#printable-character-navigation-optional-not-typeahead) on the top-level list and in submenus. Include Escape, **submenu** **item** / **`submenu` slot** cases, and small-viewport popover positioning as relevant. See [Menu: Keyboard testing](../menu/accessibility-migration-analysis.md#keyboard-testing) for menu surface detail, [Menu item: Keyboard and focus](../menu-item/accessibility-migration-analysis.md#keyboard-and-focus) for **submenu** **rows**, and [Recommendations: Keyboard and focus](#keyboard-and-focus) here.
+Follow the 2nd-gen Storybook [Keyboard testing](../../../../2nd-gen/packages/swc/.storybook/docs/learn/accessibility/keyboard-testing.mdx) guide on a fully composed path (**`swc-action-menu`** or **`swc-menu`**: **trigger** + **internal** **`role="menu"`** **(shadow)** + **`swc-popover`**, not the 1st-gen overlay stack). Cover the [menu button pattern](https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/) on the trigger (open/close, focus return) and in-menu keys on the **open** **menu** **surface** ([FocusgroupNavigationController](https://github.com/adobe/spectrum-web-components/pull/6129)); if implemented, cover [printable character navigation (not typeahead)](../menu/accessibility-migration-analysis.md#printable-character-navigation-optional-not-typeahead) on the top-level list and in submenus. Include Escape, **submenu** **item** / **`submenu` slot** cases, and small-viewport popover positioning as relevant. See [Menu: Keyboard testing](../menu/accessibility-migration-analysis.md#keyboard-testing) for menu surface detail, [Menu item: Keyboard and focus](../menu-item/accessibility-migration-analysis.md#keyboard-and-focus) for **submenu** **rows**, and [Recommendations: Keyboard and focus](#keyboard-and-focus) here.
 
 ### Playwright-only or host-only accessibility gates
 
@@ -216,7 +216,7 @@ Mirror test cases from 1st-gen defects in the Jira table; add 2nd-gen stories fo
 
 ### Manual and screen reader testing
 
-- macOS + iOS VoiceOver, NVDA; follow [Keyboard testing](#keyboard-testing) and [Screen reader testing](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx) on a fully composed **`swc-action-menu`** (or equivalent **Menu** host) path (**trigger** + **`swc-popover`**, not the 1st-gen overlay stack).
+- macOS + iOS VoiceOver, NVDA; follow [Keyboard testing](#keyboard-testing) and [Screen reader testing](../../../../2nd-gen/packages/swc/.storybook/docs/learn/accessibility/screen-reader-testing.mdx) on a fully composed **`swc-action-menu`** (or equivalent **Menu** host) path (**trigger** + **`swc-popover`**, not the 1st-gen overlay stack).
 - Submenus and mobile/touch ([SWC-686](https://jira.corp.adobe.com/browse/SWC-686), [SWC-89](https://jira.corp.adobe.com/browse/SWC-89)): tray-related issues may not apply until tray is in scope; still verify popover-positioned menus on small viewports where relevant.
 
 Do not require checkbox or radio menu item stories or selection-mode coverage until [Menu migration scope](../menu/accessibility-migration-analysis.md#migration-scope-current) closes; the APG [editor menubar example](https://www.w3.org/WAI/ARIA/apg/patterns/menubar/examples/menubar-editor/) remains a future reference when that work ships.
@@ -248,6 +248,6 @@ If 2nd-gen supports **cascading** **menus** via **`swc-menu-item`’s** **`subme
 - [Menu item accessibility migration analysis](../menu-item/accessibility-migration-analysis.md)
 - [Popover accessibility migration analysis](../popover/accessibility-migration-analysis.md)
 - [PR #6129 — Focusgroup navigation](https://github.com/adobe/spectrum-web-components/pull/6129)
-- [2nd-gen Storybook: Keyboard testing](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/keyboard_testing.mdx)
-- [2nd-gen Storybook: Screen reader testing](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx)
+- [2nd-gen Storybook: Keyboard testing](../../../../2nd-gen/packages/swc/.storybook/docs/learn/accessibility/keyboard-testing.mdx)
+- [2nd-gen Storybook: Screen reader testing](../../../../2nd-gen/packages/swc/.storybook/docs/learn/accessibility/screen-reader-testing.mdx)
 - [WCAG 2.2](https://www.w3.org/TR/WCAG22/)

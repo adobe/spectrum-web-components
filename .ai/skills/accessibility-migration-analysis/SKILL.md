@@ -34,7 +34,7 @@ You are an accessibility auditor, not a documenter. Your job is to verify what t
   `CONTRIBUTOR-DOCS/project-planning/03_components/[component-name]/accessibility-migration-analysis.md`
 - **Pairing:** Link to `./rendering-and-styling-migration-analysis.md` from **Overview → Also read**
 - **Nav:** After adding the file or changing `##` / `###` headings, run `node update-nav.js` from `CONTRIBUTOR-DOCS/for-contributors/07_authoring-contributor-docs`. Register the doc in `03_components/README.md` when introducing a new component folder.
-- **Non-focusable** components: include `### Manual screen reader testing` under `## Testing` (see [Testing](#testing) in **Full instructions**), with **browse mode** and a link to `2nd-gen/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx`.
+- **Non-focusable** components: include `### Manual screen reader testing` under `## Testing` (see [Testing](#testing) in **Full instructions**), with **browse mode** and a link to `2nd-gen/packages/swc/.storybook/docs/learn/accessibility/screen-reader-testing.mdx`.
 
 ### Reference examples (consistency)
 
@@ -52,7 +52,7 @@ Use these existing docs when matching structure, headings, tables, and phrasing:
 - **Path:** `CONTRIBUTOR-DOCS/project-planning/03_components/<component-name>/accessibility-migration-analysis.md`
 - **Pairing:** Link to `./rendering-and-styling-migration-analysis.md` from **Overview → Also read**.
 - **Nav:** After adding a file or changing `##` / `###` headings, run `node update-nav.js` from `CONTRIBUTOR-DOCS/for-contributors/07_authoring-contributor-docs` (see **contributor-doc-update** rule). Register the doc in `03_components/README.md` when introducing a new component folder.
-- **Non-focusable** components: add `### Manual screen reader testing` (browse mode + `2nd-gen/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx`)—see **Full instructions** under `## Testing`.
+- **Non-focusable** components: add `### Manual screen reader testing` (browse mode + `2nd-gen/packages/swc/.storybook/docs/learn/accessibility/screen-reader-testing.mdx`)—see **Full instructions** under `## Testing`.
 
 ### Important
 
@@ -191,7 +191,7 @@ Use a **single** `### Keyboard and focus` subsection under `## Recommendations`.
 
 **Reference (required in the contributor doc when this subsection exists):** Link to the 2nd-gen Storybook accessibility guide in the repo. From `CONTRIBUTOR-DOCS/project-planning/03_components/<component>/accessibility-migration-analysis.md`, the relative path is:
 
-`../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx`
+`../../../../2nd-gen/packages/swc/.storybook/docs/learn/accessibility/screen-reader-testing.mdx`
 
 In the **body**, point to the **Browse mode (document/scan mode)** section. Add the same link (or a short line such as “2nd-gen Storybook: Screen reader testing” pointing to that file) under **`## References`**. Add a **summary checklist** item that **manual SR testing** uses **browse mode** per that guide.
 
@@ -204,7 +204,7 @@ In the **body**, point to the **Browse mode (document/scan mode)** section. Add 
 ## References
 
 - Include WAI-ARIA, WCAG 2.2, APG “Read me first” (or equivalent), and the component rendering-and-styling migration link at minimum. Add APG pattern links when used in the doc.
-- When the doc includes `### Manual screen reader testing` for a non-focusable component, add the 2nd-gen Storybook screen reader testing guide: `2nd-gen/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx` (in contributor docs, link with `../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx` from `03_components/<component>/accessibility-migration-analysis.md`; adjust if the file moves).
+- When the doc includes `### Manual screen reader testing` for a non-focusable component, add the 2nd-gen Storybook screen reader testing guide: `2nd-gen/packages/swc/.storybook/docs/learn/accessibility/screen-reader-testing.mdx` (in contributor docs, link with `../../../../2nd-gen/packages/swc/.storybook/docs/learn/accessibility/screen-reader-testing.mdx` from `03_components/<component>/accessibility-migration-analysis.md`; adjust if the file moves).
 - When the doc discusses progress, loading, busy, or spinner behavior and you point authors at the Loading animation discovery Figma file in the body, list it again here: [Loading animation discovery](https://www.figma.com/design/42VzvpW262EAUbYsadO4e8/Loading-animation-discovery).
 
 ## Writing style

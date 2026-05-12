@@ -170,7 +170,7 @@ Gaps in **1st-gen** **`<sp-meter>`** that **2nd-gen** **`swc-meter`** should fix
 
 ### Manual screen reader testing
 
-The **meter** is not in the **Tab** order, so you will not reach it the same way as **focusable** **controls** when a **screen** **reader** is in **forms** or **application**-style **focus** **navigation**. Use **browse** **mode** (document or scan mode) to read the page in **content** **order** and **encounter** the **meter** so you can verify its **name** and **value** are announced. See the 2nd-gen Storybook [Screen reader testing](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx) guide, including **Browse mode (document/scan mode)**.
+The **meter** is not in the **Tab** order, so you will not reach it the same way as **focusable** **controls** when a **screen** **reader** is in **forms** or **application**-style **focus** **navigation**. Use **browse** **mode** (document or scan mode) to read the page in **content** **order** and **encounter** the **meter** so you can verify its **name** and **value** are announced. See the 2nd-gen Storybook [Screen reader testing](../../../../2nd-gen/packages/swc/.storybook/docs/learn/accessibility/screen-reader-testing.mdx) guide, including **Browse mode (document/scan mode)**.
 
 ---
 
@@ -183,7 +183,7 @@ The **meter** is not in the **Tab** order, so you will not reach it the same way
 - [ ] **Dev warning** (if any) uses the **`swc-meter`** name and a **useful** issues list.
 - [ ] **1st-gen** issues (combined **role**, missing min/max/valuetext) are **regression-tested** in 2nd-gen.
 - [ ] **aXe** (WCAG 2.x) runs on **meter** stories.
-- [ ] **Manual** **screen** **reader** **testing** uses **browse** **mode** per the Storybook [Screen reader testing](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx) guide, because the **meter** is **not** **keyboard** **focusable**.
+- [ ] **Manual** **screen** **reader** **testing** uses **browse** **mode** per the Storybook [Screen reader testing](../../../../2nd-gen/packages/swc/.storybook/docs/learn/accessibility/screen-reader-testing.mdx) guide, because the **meter** is **not** **keyboard** **focusable**.
 
 ---
 
@@ -200,4 +200,4 @@ The **meter** is not in the **Tab** order, so you will not reach it the same way
 - [Progress bar accessibility migration analysis](../progress-bar/accessibility-migration-analysis.md)
 - [Progress circle accessibility migration analysis](../progress-circle/accessibility-migration-analysis.md)
 - [Meter migration roadmap](./rendering-and-styling-migration-analysis.md)
-- [2nd-gen Storybook: Screen reader testing](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx)
+- [2nd-gen Storybook: Screen reader testing](../../../../2nd-gen/packages/swc/.storybook/docs/learn/accessibility/screen-reader-testing.mdx)

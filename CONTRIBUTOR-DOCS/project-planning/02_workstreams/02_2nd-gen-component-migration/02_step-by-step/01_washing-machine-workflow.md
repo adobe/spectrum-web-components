@@ -389,7 +389,7 @@ If you are renaming or removing a public prop or attribute, confirm with the tea
 
 1. **Read the component's accessibility migration analysis** — `CONTRIBUTOR-DOCS/project-planning/03_components/<component>/accessibility-migration-analysis.md`. The analysis defines the APG pattern (if any), required ARIA roles/states/properties, shadow DOM considerations, accessibility tree shape, keyboard and focus behavior, and the testing checklist. **Everything you implement in this phase flows from that document.**  
 2. **Follow the [Accessibility testing](https://github.com/adobe/spectrum-web-components/blob/main/CONTRIBUTOR-DOCS/for-contributors/running-accessibility-tests.md) guide** and the PR template checklist.
-3.  **Use 2nd-gen Storybook accessibility guides:** `2nd-gen/packages/swc/.storybook/guides/accessibility-guides/` — codebase-specific a11y patterns and docs surfaced in Storybook (complement the contributor guide and APG).
+3.  **Use 2nd-gen Storybook accessibility guides:** `2nd-gen/packages/swc/.storybook/docs/learn/accessibility/` — codebase-specific a11y patterns and docs surfaced in Storybook (complement the contributor guide and APG).
 4. **Identify the APG pattern** for your component type (e.g. button, combobox) — [WCAG ARIA Authoring Practices Guide (APG)](https://www.w3.org/WAI/ARIA/apg/patterns/).
 5. **Implement:** Semantics (prefer native HTML), ARIA where needed, keyboard support, focus management (trap in overlays), screen reader exposure. Test with assistive tech; document in JSDoc.
 6. **Native vs custom controls:** Native form control (e.g. Checkbox) → `delegatesFocus: true`. Custom control (e.g. Radio) → `role` and `aria-*` on host, manage focus/keyboard. See Checkbox and Radio as references.
@@ -651,5 +651,5 @@ Use Badge as the reference implementation:
 - **Testing:** [2nd gen testing conventions](../../../../for-contributors/style-guide/testing/testing-overview.md)
 - **WCAG APG:** [https://www.w3.org/WAI/ARIA/apg/patterns/](https://www.w3.org/WAI/ARIA/apg/patterns/)
 - **Component analysis:** [03_components/](../../../03_components) — Step 1 [Cursor prompt](./01_analyze-rendering-and-styling/README.md); optional **component-migration-analysis** Cursor skill alongside that flow.
-- **2nd-gen Storybook guides:** [2nd-gen/packages/swc/.storybook/guides/](../../../../../2nd-gen/packages/swc/.storybook/guides)
-- **Accessibility:** [2nd-gen/packages/swc/.storybook/guides/accessibility-guides/](../../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides)
+- **2nd-gen Storybook guides:** [2nd-gen/packages/swc/.storybook/docs/learn/](../../../../../2nd-gen/packages/swc/.storybook/docs/learn)
+- **Accessibility:** [2nd-gen/packages/swc/.storybook/docs/learn/accessibility/](../../../../../2nd-gen/packages/swc/.storybook/docs/learn/accessibility)

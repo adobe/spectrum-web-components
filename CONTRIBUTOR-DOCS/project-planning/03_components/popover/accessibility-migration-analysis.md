@@ -77,7 +77,7 @@ This document sets accessibility expectations for 2nd-gen **Popover** in Spectru
 ### Pattern in the APG
 
 - The [APG “read me first”](https://www.w3.org/WAI/ARIA/apg/practices/read-me-first/) model does not define a “popover” widget. Overlay **surfaces** are exposed to assistive technology through **dialog**, **listbox** / **menu** / **grid** popup, and other patterns plus their controlling widgets (for example [combobox](https://www.w3.org/WAI/ARIA/apg/patterns/combobox/)).
-- **Name, role, and value** (WCAG 4.1.2) for the interactive experience come from slotted content and the trigger pattern, not from the unlabeled shell. See [Semantic HTML and ARIA (2nd-gen guide)](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/semantic_html_aria.mdx).
+- **Name, role, and value** (WCAG 4.1.2) for the interactive experience come from slotted content and the trigger pattern, not from the unlabeled shell. See [Semantic HTML and ARIA (2nd-gen guide)](../../../../2nd-gen/packages/swc/.storybook/docs/learn/accessibility/semantic-html-and-aria.mdx).
 
 ### Guidelines that apply
 
@@ -88,7 +88,7 @@ This document sets accessibility expectations for 2nd-gen **Popover** in Spectru
 | [Name, role, value (4.1.2)](https://www.w3.org/WAI/WCAG22/Understanding/name-role-value) | Belongs in focusable, labeled content (listbox, menu, dialog body), not unlabeled chrome—whether that is the `swc-popover` host or a **modal** **surface** that only uses **shared** **popover** **styles**. |
 | [Animation from interactions (2.3.3)](https://www.w3.org/WAI/WCAG22/Understanding/animation-from-interactions) (if open or placement transitions) | If the layer adds entry/exit motion, respect `prefers-reduced-motion` (or equivalent). |
 
-**Bottom line:** Shared popover **styles** and the **`swc-popover` host** cover **presentation** and **anchor** placement for **anchored** UIs. **Modals and dialogs** use **popover** **styles** on the **dialog** **surface** but **not** the **`swc-popover` host**—they are not positioned **relative to a trigger** like a **menu** or **tooltip**. Accessibility comes from the **pattern** and **content**; use [Keyboard testing (2nd-gen guide)](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/keyboard_testing.mdx) for the pattern you ship.
+**Bottom line:** Shared popover **styles** and the **`swc-popover` host** cover **presentation** and **anchor** placement for **anchored** UIs. **Modals and dialogs** use **popover** **styles** on the **dialog** **surface** but **not** the **`swc-popover` host**—they are not positioned **relative to a trigger** like a **menu** or **tooltip**. Accessibility comes from the **pattern** and **content**; use [Keyboard testing (2nd-gen guide)](../../../../2nd-gen/packages/swc/.storybook/docs/learn/accessibility/keyboard-testing.mdx) for the pattern you ship.
 
 ---
 
@@ -164,14 +164,14 @@ The template one-sentence *“Not focusable. Keyboard navigation should skip thi
 
 ### Manual and screen reader testing (mandatory, host alone)
 
-**Does not apply** as a **required** [screen reader testing](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx) pass for the **host** with **no** real **content** (scaffold-only stories are not an end user task). Use the screen reader guide for **composed** patterns: `swc-popover` with menu or listbox; **modals** and **dialogs** use **popover** **styles** on the **surface** and a **separate** **modal** / **dialog** **pattern** (not the `swc-popover` host).
+**Does not apply** as a **required** [screen reader testing](../../../../2nd-gen/packages/swc/.storybook/docs/learn/accessibility/screen-reader-testing.mdx) pass for the **host** with **no** real **content** (scaffold-only stories are not an end user task). Use the screen reader guide for **composed** patterns: `swc-popover` with menu or listbox; **modals** and **dialogs** use **popover** **styles** on the **surface** and a **separate** **modal** / **dialog** **pattern** (not the `swc-popover` host).
 
 ---
 
 ## Summary checklist
 
 - [ ] Consumer guide and 1st-gen deprecation ([SWC-2003](https://jira.corp.adobe.com/browse/SWC-2003), [SWC-1227](https://jira.corp.adobe.com/browse/SWC-1227)) explain shared **popover styles** vs `swc-popover`, and what accessibility the product still owns.
-- [ ] [SWC-1994](https://jira.corp.adobe.com/browse/SWC-1994) and Storybook ([SWC-2002](https://jira.corp.adobe.com/browse/SWC-2002) if used) state **no** default ARIA / focus / keyboard on `swc-popover`, and link to the [Semantic HTML and ARIA](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/semantic_html_aria.mdx) and APG-aligned **composed** examples.
+- [ ] [SWC-1994](https://jira.corp.adobe.com/browse/SWC-1994) and Storybook ([SWC-2002](https://jira.corp.adobe.com/browse/SWC-2002) if used) state **no** default ARIA / focus / keyboard on `swc-popover`, and link to the [Semantic HTML and ARIA](../../../../2nd-gen/packages/swc/.storybook/docs/learn/accessibility/semantic-html-and-aria.mdx) and APG-aligned **composed** examples.
 - [ ] Visual and RTL **tip** placement (SWC-917) does not regress in 2nd-gen.
 
 ## References
@@ -179,6 +179,6 @@ The template one-sentence *“Not focusable. Keyboard navigation should skip thi
 - 1st-gen: [`sp-popover`](../../../../1st-gen/packages/popover/README.md), [overlay](../../../../1st-gen/packages/overlay/README.md)
 - [APG: read me first](https://www.w3.org/WAI/ARIA/apg/practices/read-me-first/)
 - [APG: dialog (modal)](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/), [menubutton](https://www.w3.org/WAI/ARIA/apg/patterns/menubutton/), [combobox](https://www.w3.org/WAI/ARIA/apg/patterns/combobox/)
-- 2nd-gen: [Semantic HTML and ARIA](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/semantic_html_aria.mdx), [Keyboard testing](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/keyboard_testing.mdx), [Screen reader testing](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx)
+- 2nd-gen: [Semantic HTML and ARIA](../../../../2nd-gen/packages/swc/.storybook/docs/learn/accessibility/semantic-html-and-aria.mdx), [Keyboard testing](../../../../2nd-gen/packages/swc/.storybook/docs/learn/accessibility/keyboard-testing.mdx), [Screen reader testing](../../../../2nd-gen/packages/swc/.storybook/docs/learn/accessibility/screen-reader-testing.mdx)
 - [React Spectrum: Popover](https://react-spectrum.adobe.com/Popover)
 - [Popover migration roadmap (this repo)](./rendering-and-styling-migration-analysis.md)

@@ -200,9 +200,9 @@ const preview = {
           ['Conversational AI', ['README', 'Prompt field', 'User message']],
           'Learn',
           [
-            'Overview',
-            'When to use SWC',
+            'About SWC',
             '1st-gen vs 2nd-gen',
+            'When to use SWC',
             'Customization',
             [
               'Cheatsheet',
@@ -210,9 +210,9 @@ const preview = {
               'Theme and Scales',
               'Fonts',
               'Component Styles',
-              'Global Element Styling',
+              'Global elements',
             ],
-            'Accessibility guides',
+            'Accessibility',
             [
               'Overview',
               'Semantic HTML and ARIA',
@@ -221,7 +221,7 @@ const preview = {
               'Keyboard testing',
               'Screen reader testing',
               'WAVE toolbar testing',
-              'Accessibility resources',
+              'Resources',
             ],
           ],
           'Core',

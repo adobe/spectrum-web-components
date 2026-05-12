@@ -629,7 +629,7 @@ These items require manual assistive-technology (AT) verification and cannot be 
 - [2nd-gen global button stylesheet](../../../../2nd-gen/packages/swc/stylesheets/global/global-button.css)
 - [2nd-gen global elements stylesheet](../../../../2nd-gen/packages/swc/stylesheets/global/global-elements.css)
 - [React Spectrum S2 Button](https://react-spectrum.adobe.com/Button)
-- [Global element styling guide](../../../../2nd-gen/packages/swc/.storybook/guides/customization/global-elements.mdx)
+- [Global element styling guide](../../../../2nd-gen/packages/swc/.storybook/docs/learn/customization/global-elements.mdx)
 - [Badge migration reference](../../02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md#reference-badge-migration)
 - SWC-48: ElementInternals RFC
 - SWC-1139: ensure contrast ratio for static white, outline on :hover

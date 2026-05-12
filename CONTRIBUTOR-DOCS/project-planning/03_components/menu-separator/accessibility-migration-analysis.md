@@ -154,11 +154,11 @@ Intentionally omitted. Separator lines follow **menu** / **popover** motion guid
 
 ### Keyboard testing
 
-Follow the 2nd-gen Storybook [Keyboard testing](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/keyboard_testing.mdx) guide on a full menu path: either **`swc-menu`** or **`swc-action-menu`** (each a menu-button **host** with **`swc-popover`** and an **internal** **`role="menu"`** **in** **shadow** **DOM**; see [Menu — Keyboard testing](../menu/accessibility-migration-analysis.md#keyboard-testing)). Confirm **ArrowUp**/**ArrowDown** moves between **`menuitem`** entries past separators without focusing the separator row as a selectable command.
+Follow the 2nd-gen Storybook [Keyboard testing](../../../../2nd-gen/packages/swc/.storybook/docs/learn/accessibility/keyboard-testing.mdx) guide on a full menu path: either **`swc-menu`** or **`swc-action-menu`** (each a menu-button **host** with **`swc-popover`** and an **internal** **`role="menu"`** **in** **shadow** **DOM**; see [Menu — Keyboard testing](../menu/accessibility-migration-analysis.md#keyboard-testing)). Confirm **ArrowUp**/**ArrowDown** moves between **`menuitem`** entries past separators without focusing the separator row as a selectable command.
 
 ### Manual and screen reader testing
 
-Compose **menu + separator + items** paths; reconcile with [Menu — Manual and screen reader testing](../menu/accessibility-migration-analysis.md#manual-and-screen-reader-testing-mandatory-host-alone) guidance. Optionally compare announcement patterns with **`sp-menu-separator`** before behaviour parity freezes. Follow [Screen reader testing](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx).
+Compose **menu + separator + items** paths; reconcile with [Menu — Manual and screen reader testing](../menu/accessibility-migration-analysis.md#manual-and-screen-reader-testing-mandatory-host-alone) guidance. Optionally compare announcement patterns with **`sp-menu-separator`** before behaviour parity freezes. Follow [Screen reader testing](../../../../2nd-gen/packages/swc/.storybook/docs/learn/accessibility/screen-reader-testing.mdx).
 
 ---
 
@@ -184,5 +184,5 @@ Compose **menu + separator + items** paths; reconcile with [Menu — Manual and 
 - [WAI-ARIA APG: Editor Menubar example (includes menu **separators**)](https://www.w3.org/WAI/ARIA/apg/patterns/menubar/examples/menubar-editor/)
 - [spectrum-web-components PR #6129 — Focusgroup navigation controller](https://github.com/adobe/spectrum-web-components/pull/6129)
 - [WCAG 2.2](https://www.w3.org/TR/WCAG22/)
-- [2nd-gen Storybook: Keyboard testing](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/keyboard_testing.mdx)
-- [2nd-gen Storybook: Screen reader testing](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx)
+- [2nd-gen Storybook: Keyboard testing](../../../../2nd-gen/packages/swc/.storybook/docs/learn/accessibility/keyboard-testing.mdx)
+- [2nd-gen Storybook: Screen reader testing](../../../../2nd-gen/packages/swc/.storybook/docs/learn/accessibility/screen-reader-testing.mdx)

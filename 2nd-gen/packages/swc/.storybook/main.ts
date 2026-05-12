@@ -85,9 +85,9 @@ if (storybookMode !== 'ci-a11y') {
       files: '**/*.mdx',
       titlePrefix: 'Components',
     },
-    // Consumer landing — empty until Phase 7 populates .storybook/get-started/index.mdx
+    // Consumer landing — empty until Phase 7 populates .storybook/docs/get-started/index.mdx
     {
-      directory: 'get-started',
+      directory: 'docs/get-started',
       files: '**/*.mdx',
       titlePrefix: 'Get started',
     },
@@ -100,16 +100,11 @@ if (storybookMode !== 'ci-a11y') {
       ...CORE_STORY_ROOT,
       files: '**/stories/*.stories.ts',
     },
-    // Learn — consolidates the prior "Learn about SWC" and "Guides" titlePrefixes into a single persona section.
-    // The directories stay in place during Phase 4; Phase 5 physically moves them into .storybook/docs/learn/.
+    // Learn — consumer-audience educational content (about SWC, customization, accessibility).
+    // MDX SSOTs hand-authored in .storybook/docs/learn/ for live demos and rich UX.
     {
-      directory: 'learn-about-swc',
-      files: '*.mdx',
-      titlePrefix: 'Learn',
-    },
-    {
-      directory: 'guides',
-      files: '**/!(*documentation).mdx',
+      directory: 'docs/learn',
+      files: '**/*.mdx',
       titlePrefix: 'Learn',
     },
     {

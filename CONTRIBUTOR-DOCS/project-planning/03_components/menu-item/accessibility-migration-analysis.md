@@ -160,11 +160,11 @@ On a parent `role="menu"` list (top-level or submenu surface as implemented), a 
 
 ### Keyboard testing
 
-Follow [Keyboard testing](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/keyboard_testing.mdx) on a composed **trigger + menu** path ([Menu — Keyboard testing](../menu/accessibility-migration-analysis.md#keyboard-testing)). Include **menu item** behaviors: activate, move with arrows, submenu **Escape**/**return** as covered by shared stories; if your build implements it, [printable character navigation](../menu/accessibility-migration-analysis.md#printable-character-navigation-optional-not-typeahead) on the submenu list as well as the top-level list.
+Follow [Keyboard testing](../../../../2nd-gen/packages/swc/.storybook/docs/learn/accessibility/keyboard-testing.mdx) on a composed **trigger + menu** path ([Menu — Keyboard testing](../menu/accessibility-migration-analysis.md#keyboard-testing)). Include **menu item** behaviors: activate, move with arrows, submenu **Escape**/**return** as covered by shared stories; if your build implements it, [printable character navigation](../menu/accessibility-migration-analysis.md#printable-character-navigation-optional-not-typeahead) on the submenu list as well as the top-level list.
 
 ### Manual and screen reader testing
 
-Use [Screen reader testing](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx) with the **composed** menu pattern ([Menu](../menu/accessibility-migration-analysis.md)); verify **link** rows announce **once** and **match** **[Cards](https://inclusive-components.design/cards/)** expectations.
+Use [Screen reader testing](../../../../2nd-gen/packages/swc/.storybook/docs/learn/accessibility/screen-reader-testing.mdx) with the **composed** menu pattern ([Menu](../menu/accessibility-migration-analysis.md)); verify **link** rows announce **once** and **match** **[Cards](https://inclusive-components.design/cards/)** expectations.
 
 ---
 
@@ -188,5 +188,5 @@ Use [Screen reader testing](../../../../2nd-gen/packages/swc/.storybook/guides/a
 - [WAI-ARIA APG: Disclosure navigation](https://www.w3.org/WAI/ARIA/apg/patterns/disclosure/examples/disclosure-navigation/)
 - [spectrum-web-components PR #6129 — Focusgroup navigation controller](https://github.com/adobe/spectrum-web-components/pull/6129)
 - [WCAG 2.2](https://www.w3.org/TR/WCAG22/)
-- [2nd-gen Storybook: Keyboard testing](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/keyboard_testing.mdx)
-- [2nd-gen Storybook: Screen reader testing](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx)
+- [2nd-gen Storybook: Keyboard testing](../../../../2nd-gen/packages/swc/.storybook/docs/learn/accessibility/keyboard-testing.mdx)
+- [2nd-gen Storybook: Screen reader testing](../../../../2nd-gen/packages/swc/.storybook/docs/learn/accessibility/screen-reader-testing.mdx)
