@@ -1,0 +1,57 @@
+/**
+ * Copyright 2026 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+/* Shared base styles for all button-like components (swc-button, swc-action-button, etc.).
+   Provides native <button> resets, base layout, and standardized state tokens.
+   Import as the first entry in a component's static styles CSSResultArray so that
+   component-specific rules can override these defaults. */
+
+/* @global-exclude: host display/alignment apply to the custom element wrapper, not the native element */
+:host {
+  display: inline-block;
+  vertical-align: top;
+}
+
+/* @global-exclude-end */
+
+* {
+  box-sizing: border-box;
+}
+
+.swc-Button {
+  -webkit-tap-highlight-color: transparent;
+  display: inline-flex;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  text-transform: none;
+  text-decoration: none;
+  border-style: solid;
+  overflow: visible;
+  cursor: pointer;
+  user-select: none;
+}
+
+.swc-Button:focus-visible {
+  outline: token("focus-indicator-thickness") solid var(--swc-button-focus-indicator-color, token("focus-indicator-color"));
+  outline-offset: token("focus-indicator-gap");
+}
+
+/* Inflated specificity to prevent variant override */
+.swc-Button:disabled:is(*, :hover) {
+  color: var(--swc-button-content-color-disabled, token("disabled-content-color"));
+  background-color: var(--swc-button-background-color-disabled, token("disabled-background-color"));
+  border-color: var(--swc-button-border-color-disabled, transparent);
+  cursor: default;
+  transform: none;
+}

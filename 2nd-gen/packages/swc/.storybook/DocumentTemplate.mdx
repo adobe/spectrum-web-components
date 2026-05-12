@@ -7,6 +7,7 @@ import {
   ArgTypes,
   Description,
   Subtitle,
+  HeaderMdx,
   useOf,
 } from '@storybook/addon-docs/blocks';
 import {
@@ -40,6 +41,12 @@ export const AdvancedExamplesStories = () => {
 
 }
 
+export const slugify = (s) =>
+  s
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/(^-|-$)/g, '');
+
 export const ConditionalSection = ({ tag, title, hideTitle = false }) => {
     const resolvedOf = useOf('meta', ['meta']);
     const hasStories = Object.values(resolvedOf.csfFile.stories).some(
@@ -52,7 +59,7 @@ export const ConditionalSection = ({ tag, title, hideTitle = false }) => {
 
     return (
         <div data-section={tag}>
-            {title && <h2>{title}</h2>}
+            {title && <HeaderMdx as="h2" id={slugify(title)}>{title}</HeaderMdx>}
             <SpectrumStories tag={tag} hideTitle={hideTitle} />
         </div>
     );
@@ -68,7 +75,7 @@ const hasCustomAPIDocs = tags.includes('api') || Object.values(resolvedOf.csfFil
     if (!hasCustomAPIDocs) {
         return (
           <>
-            <h2>API</h2>
+            <HeaderMdx as="h2" id="api">API</HeaderMdx>
 
             <Primary />
             <Controls />
@@ -78,7 +85,7 @@ const hasCustomAPIDocs = tags.includes('api') || Object.values(resolvedOf.csfFil
 
     return (
         <>
-            <h2>API</h2>
+            <HeaderMdx as="h2" id="api">API</HeaderMdx>
             <Primary />
             <Controls />
 

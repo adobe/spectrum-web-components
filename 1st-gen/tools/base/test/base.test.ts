@@ -33,6 +33,26 @@ describe('Base', () => {
     const dir = getComputedStyle(el).direction;
     expect(dir).to.equal('rtl');
   });
+  it('reports `isLTR` as `true` when direction is `ltr`', async () => {
+    document.dir = 'ltr';
+    const el = await fixture<DirElement>(html`
+      <dir-element></dir-element>
+    `);
+
+    await elementUpdated(el);
+
+    expect(el.isLTR).to.be.true;
+  });
+  it('reports `isLTR` as `false` when direction is `rtl`', async () => {
+    document.dir = 'rtl';
+    const el = await fixture<DirElement>(html`
+      <dir-element></dir-element>
+    `);
+
+    await elementUpdated(el);
+
+    expect(el.isLTR).to.be.false;
+  });
   it('has a static VERSION property', () => {
     expect(DirElement.VERSION).to.equal(version);
   });

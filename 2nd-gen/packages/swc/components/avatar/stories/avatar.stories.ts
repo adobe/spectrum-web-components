@@ -16,7 +16,7 @@ import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
 import { Avatar } from '@adobe/spectrum-wc/avatar';
 
-import '@adobe/spectrum-wc/avatar';
+import '@adobe/spectrum-wc/components/avatar/swc-avatar.js';
 
 import { AVATAR_VALID_SIZES } from '../../../../core/components/avatar/Avatar.types.js';
 

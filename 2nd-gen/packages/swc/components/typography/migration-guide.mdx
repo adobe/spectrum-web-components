@@ -1,8 +1,8 @@
 import { Meta } from '@storybook/addon-docs/blocks';
 
-<Meta title="Typography/Consumer migration guide" />
+<Meta title="Typography/Migration guide" />
 
-# Typography consumer migration guide
+# Typography migration guide
 
 Update the import path and rename every `.spectrum-*` class to its `.swc-*` equivalent. There is no tag name change — typography is a set of CSS utility classes, not a web component.
 
@@ -23,19 +23,19 @@ Update your import:
 import '@spectrum-web-components/styles/typography.css';
 
 // After
-import '@adobe/spectrum-wc/typography.css';
+import '@adobe/spectrum-wc/components/typography/typography.css';
 ```
 
-> `@adobe/spectrum-wc` is a monolithic package. Importing via subpath (e.g. `@adobe/spectrum-wc/typography.css`) loads only that component's bundle.
+> `@adobe/spectrum-wc` is a monolithic package. Importing via subpath (e.g. `@adobe/spectrum-wc/components/typography/typography.css`) loads only that component's stylesheet.
 
 ## What changed
 
 ### Renamed
 
-| Area         | Spectrum 1                                       | Spectrum 2                          |
-| ------------ | ------------------------------------------------ | ----------------------------------- |
-| Import path  | `@spectrum-web-components/styles/typography.css` | `@adobe/spectrum-wc/typography.css` |
-| Class prefix | `.spectrum-Heading`, `.spectrum-Body`, etc.      | `.swc-Heading`, `.swc-Body`, etc.   |
+| Area         | Spectrum 1                                       | Spectrum 2                                                |
+| ------------ | ------------------------------------------------ | --------------------------------------------------------- |
+| Import path  | `@spectrum-web-components/styles/typography.css` | `@adobe/spectrum-wc/components/typography/typography.css` |
+| Class prefix | `.spectrum-Heading`, `.spectrum-Body`, etc.      | `.swc-Heading`, `.swc-Body`, etc.                         |
 
 ### Added in Spectrum 2
 

@@ -18,7 +18,7 @@ import styles from './illustrated-message.css';
 
 /**
  * @element swc-illustrated-message
- * @since 0.0.1
+ * @since 2.0.0
  *
  * @example
  * <swc-illustrated-message>

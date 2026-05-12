@@ -10,7 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
-import { CSSResultArray, html, TemplateResult } from 'lit';
+import { CSSResultArray, html, PropertyValues, TemplateResult } from 'lit';
 import { property } from 'lit/decorators.js';
 
 import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
@@ -61,15 +61,28 @@ export class ConversationTurn extends SpectrumElement {
     return this.type === 'user' ? 'User message' : 'System message';
   }
 
+  public override connectedCallback(): void {
+    super.connectedCallback();
+    this._applyHostSemantics();
+  }
+
+  protected override willUpdate(changedProperties: PropertyValues<this>): void {
+    if (
+      changedProperties.has('type') ||
+      changedProperties.has('accessibleLabel')
+    ) {
+      this._applyHostSemantics();
+    }
+  }
+
+  private _applyHostSemantics(): void {
+    this.setAttribute('role', 'group');
+    this.setAttribute('aria-label', this._turnAriaLabel);
+  }
+
   protected override render(): TemplateResult {
     return html`
-      <div
-        class="swc-ConversationTurn"
-        role="group"
-        aria-label=${this._turnAriaLabel}
-      >
-        <slot></slot>
-      </div>
+      <div class="swc-ConversationTurn"><slot></slot></div>
     `;
   }
 }

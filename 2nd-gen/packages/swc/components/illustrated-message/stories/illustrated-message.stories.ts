@@ -17,6 +17,8 @@ import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
 import { IllustratedMessage } from '@adobe/spectrum-wc/illustrated-message';
 
+import '@adobe/spectrum-wc/components/illustrated-message/swc-illustrated-message.js';
+
 // ────────────────
 //    METADATA
 // ────────────────

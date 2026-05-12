@@ -74,7 +74,7 @@ const threadExampleSource = `<swc-conversation-thread style="max-inline-size: 72
       </div>
       <swc-message-feedback slot="feedback"></swc-message-feedback>
       <swc-message-sources slot="sources">
-        <li><a href="#source-1">Brand brief Q1 2026</a></li>
+        <a href="#source-1">Brand brief Q1 2026</a>
       </swc-message-sources>
     </swc-system-message>
   </swc-conversation-turn>
@@ -107,7 +107,7 @@ const renderThread = () => html`
         </div>
         <swc-message-feedback slot="feedback"></swc-message-feedback>
         <swc-message-sources slot="sources">
-          <li><a href="#source-1">Brand brief Q1 2026</a></li>
+          <a href="#source-1">Brand brief Q1 2026</a>
         </swc-message-sources>
       </swc-system-message>
     </swc-conversation-turn>
@@ -496,8 +496,8 @@ class ConversationFullPatternDemo extends LitElement {
                     data-sources-id=${turn.id}
                     ?open=${!!turn.sourcesOpen}
                   >
-                    <li><a href="#">Brand brief Q1 2026</a></li>
-                    <li><a href="#">Market research summary</a></li>
+                    <a href="#">Brand brief Q1 2026</a>
+                    <a href="#">Market research summary</a>
                   </swc-message-sources>
                 `}
             ${turn.loading
@@ -656,7 +656,7 @@ const fullPatternSource = `<div style="max-width:800px; margin:auto; padding:24p
         </div>
         <swc-message-feedback slot="feedback"></swc-message-feedback>
         <swc-message-sources slot="sources">
-          <li><a href="#">Brand brief Q1 2026</a></li>
+          <a href="#">Brand brief Q1 2026</a>
         </swc-message-sources>
       </swc-system-message>
     </swc-conversation-turn>
@@ -713,6 +713,7 @@ export const Overview: Story = {
  * ### Keyboard behavior
  *
  * - Tab enters the thread on the active turn.
+ * - Shift+Tab from controls after the thread returns to the active turn.
  * - ArrowUp and ArrowDown move between turns.
  * - Home and End jump to first and last turn.
  *
@@ -720,6 +721,7 @@ export const Overview: Story = {
  *
  * - The thread applies roving `tabindex` across slotted `<swc-conversation-turn>` children.
  * - Exactly one turn is tabbable at a time.
+ * - A newly appended turn becomes the active roving target.
  */
 export const Accessibility: Story = {
   render: renderThread,

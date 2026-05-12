@@ -18,12 +18,13 @@ import { fileURLToPath } from 'url';
 import { mergeConfig } from 'vite';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-type StorybookMode = 'dev' | 'build' | 'ci-a11y';
 
 // Modes:
 // - dev: full local Storybook, including docs and test stories
 // - build: production Storybook build, excluding internal and test stories
 // - ci-a11y: minimal component-only Storybook used by CI accessibility checks
+type StorybookMode = 'dev' | 'build' | 'ci-a11y';
+
 const storybookMode: StorybookMode =
   process.env.SWC_STORYBOOK_MODE === 'ci-a11y'
     ? 'ci-a11y'
@@ -79,22 +80,36 @@ const stories: StorybookConfig['stories'] = [
  * that can pull in 1st-gen-linked dependencies the test build does not need.
  */
 if (storybookMode !== 'ci-a11y') {
+  stories.push({
+    directory: '../components',
+    // Production-style builds exclude internal-only docs; local/dev keeps the full set.
+    files: storybookMode === 'build' ? '**/!(*.internal).mdx' : '**/*.mdx',
+    titlePrefix: 'Components',
+  });
+
+  // Production Storybook excludes core and contributor docs entirely.
+  if (storybookMode !== 'build') {
+    stories.push(
+      {
+        ...CORE_STORY_ROOT,
+        files: '**/*.mdx',
+      },
+      {
+        ...CORE_STORY_ROOT,
+        files: '**/stories/*.stories.ts',
+      },
+      {
+        directory: 'contributor-docs',
+        files: '**/*.mdx',
+        titlePrefix: 'Contributor docs',
+      }
+    );
+  }
+
   stories.push(
     {
-      directory: '../components',
-      files: '**/*.mdx',
-      titlePrefix: 'Components',
-    },
-    {
-      ...CORE_STORY_ROOT,
-      files: '**/*.mdx',
-    },
-    {
-      ...CORE_STORY_ROOT,
-      files: '**/stories/*.stories.ts',
-    },
-    {
       directory: 'learn-about-swc',
+      // Keep learn-about docs minimal in production.
       files: '*.mdx',
       titlePrefix: 'Learn about SWC',
     },
@@ -104,14 +119,9 @@ if (storybookMode !== 'ci-a11y') {
       titlePrefix: 'Guides',
     },
     {
-      directory: 'contributor-docs',
+      directory: 'resources',
       files: '**/*.mdx',
-      titlePrefix: 'Contributor docs',
-    },
-    {
-      directory: '../components',
-      files: '**/*.mdx',
-      titlePrefix: 'Components',
+      titlePrefix: 'Resources',
     }
   );
 }
@@ -164,7 +174,7 @@ if (storybookMode !== 'ci-a11y') {
 const config: StorybookConfig = {
   stories,
   docs: {
-    defaultName: 'README',
+    defaultName: 'Docs',
   },
   framework: '@storybook/web-components-vite',
   core: {
@@ -215,14 +225,27 @@ const config: StorybookConfig = {
         },
       ],
       resolve: {
-        alias: {
-          '@spectrum-web-components/core': resolve(__dirname, '../../core'),
-          '@adobe/spectrum-wc': resolve(__dirname, '../components'),
-          '@adobe/postcss-token': resolve(
-            __dirname,
-            '../../tools/postcss-token'
-          ),
-        },
+        alias: [
+          {
+            find: '@spectrum-web-components/core',
+            replacement: resolve(__dirname, '../../core'),
+          },
+          // Long-form imports (e.g. `@adobe/spectrum-wc/components/badge/swc-badge.js`)
+          // resolve directly to the source under `./components`. This must come
+          // before the short-form alias below so the more specific prefix wins.
+          {
+            find: '@adobe/spectrum-wc/components',
+            replacement: resolve(__dirname, '../components'),
+          },
+          {
+            find: '@adobe/spectrum-wc',
+            replacement: resolve(__dirname, '../components'),
+          },
+          {
+            find: '@adobe/postcss-token',
+            replacement: resolve(__dirname, '../../tools/postcss-token'),
+          },
+        ],
       },
     });
   },
