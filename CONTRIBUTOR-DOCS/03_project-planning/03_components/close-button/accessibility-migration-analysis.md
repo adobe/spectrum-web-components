@@ -1,0 +1,195 @@
+<!-- Generated breadcrumbs - DO NOT EDIT -->
+
+[CONTRIBUTOR-DOCS](../../../README.md) / [Project planning](../../README.md) / [Components](../README.md) / Close Button / Close button accessibility migration analysis
+
+<!-- Document title (editable) -->
+
+# Close button accessibility migration analysis
+
+<!-- Generated TOC - DO NOT EDIT -->
+
+<details open>
+<summary><strong>In this doc</strong></summary>
+
+- [Overview](#overview)
+    - [Also read](#also-read)
+    - [What it is](#what-it-is)
+    - [When to use something else](#when-to-use-something-else)
+    - [What it is not](#what-it-is-not)
+- [ARIA and WCAG context](#aria-and-wcag-context)
+    - [Pattern in the APG](#pattern-in-the-apg)
+    - [Guidelines that apply](#guidelines-that-apply)
+- [Related 1st-gen accessibility (Jira)](#related-1st-gen-accessibility-jira)
+- [1st-gen implementation notes](#1st-gen-implementation-notes)
+- [Recommendations: `<swc-close-button>`](#recommendations-swc-close-button)
+    - [ARIA roles, states, and properties](#aria-roles-states-and-properties)
+    - [Shadow DOM and cross-root ARIA Issues](#shadow-dom-and-cross-root-aria-issues)
+    - [Form-associated buttons (`submit` / `reset`) — deferred](#form-associated-buttons-submit--reset--deferred)
+    - [Accessibility tree expectations](#accessibility-tree-expectations)
+    - [Live regions, loading, and announcements](#live-regions-loading-and-announcements)
+    - [Keyboard and focus](#keyboard-and-focus)
+- [Testing](#testing)
+    - [Automated tests](#automated-tests)
+- [Summary checklist](#summary-checklist)
+- [References](#references)
+
+</details>
+
+<!-- Document content (editable) -->
+
+## Overview
+
+This doc describes how **`swc-close-button`** should behave for **accessibility** in 2nd-gen, targeting **WCAG 2.2 Level AA**. It aligns with [Button accessibility migration analysis](../button/accessibility-migration-analysis.md) and the same **native button**, **focus delegation**, and **naming** expectations as compact **chrome** controls in [Action button migration roadmap](../action-button/rendering-and-styling-migration-analysis.md): a **real** **`<button type="button">`**, **delegated focus**, a **discernible name**, and **no** duplicate host **`role="button"`** when an inner button is the focus target. **`swc-close-button`** is the **dismiss** affordance for dialogs, banners, action bars, and similar surfaces—authors must not ship it **icon-only** without an explicit **accessible name** that matches the **action** (for example **Close** vs **Clear selection**).
+
+### Also read
+
+[Button migration roadmap](../button/rendering-and-styling-migration-analysis.md) (shared **`ButtonBase`** lineage today). [Button accessibility migration analysis](../button/accessibility-migration-analysis.md). [Action button migration roadmap](../action-button/rendering-and-styling-migration-analysis.md). Tooltip policy for chrome controls: [Tooltip accessibility migration analysis](../tooltip/accessibility-migration-analysis.md).
+
+### What it is
+
+- **`swc-close-button`:** A **compact** control whose **primary** job is to **close** or **dismiss** a region (dialog, popover, toast, selection bar, etc.). It is **keyboard-focusable** and activates with **Enter** / **Return** or **Space** like any **button** ([APG Button](https://www.w3.org/WAI/ARIA/apg/patterns/button/)).
+- **Name:** Comes from the **`label`** attribute (reflected to the underlying button when wired), visible slotted text (1st-gen places default slot content in a **visually hidden** span so the **cross** icon can dominate layout), and/or **`aria-label`** on the focus target—**every** instance needs a **name** that describes the **outcome** for assistive technologies.
+
+### When to use something else
+
+- **Primary actions** or **non-dismiss** work → [Button](../button/accessibility-migration-analysis.md) or [Action button](../action-button/rendering-and-styling-migration-analysis.md).
+- **Clear field** without closing a container → **`swc-clear-button`** (separate migration; same **name** discipline applies).
+
+### What it is not
+
+- **Not an unnamed icon:** A bare **cross** with **no** **`label`**, **no** slotted text, and **no** **`aria-label`** fails **WCAG 4.1.2** ([SWC-1150](https://jira.corp.adobe.com/browse/SWC-1150)).
+- **Not a misleading name:** The **accessible name** must match the **real** action (**Close** vs **Clear selection**, etc.—see [SWC-550](https://jira.corp.adobe.com/browse/SWC-550)).
+
+---
+
+## ARIA and WCAG context
+
+### Pattern in the APG
+
+- [Button pattern](https://www.w3.org/WAI/ARIA/apg/patterns/button/) — **Enter** / **Return** or **Space** activates; discernible **name**; **`aria-disabled`** when the control must stay **focusable** but not act (align with [Button accessibility migration analysis](../button/accessibility-migration-analysis.md) **pending** guidance if a future variant adds async dismiss).
+- [Dialog pattern](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/) — **Close** controls belong in **dialog** / **alertdialog** choreography; focus management and **Escape** behavior are owned by the **dialog** host, but the **close** control still needs a correct **name** and **keyboard** contract.
+
+### Guidelines that apply
+
+| Idea | Plain meaning |
+| --- | --- |
+| [Name, role, value (WCAG 4.1.2)](https://www.w3.org/TR/WCAG22/#name-role-value) | **button** role on the **focus target**; **name** reflects the **dismiss** action in context, not a generic glyph. |
+| [Keyboard (WCAG 2.1.1)](https://www.w3.org/TR/WCAG22/#keyboard) | **Tab** reaches the control; **Enter** / **Space** activate ([Keyboard testing](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/keyboard_testing.mdx)). |
+| [Focus visible (WCAG 2.4.7)](https://www.w3.org/TR/WCAG22/#focus-visible) | Focus ring on the **inner** **`<button>`** when using delegation. |
+| [Target size (WCAG 2.5.8)](https://www.w3.org/TR/WCAG22/#target-size-minimum) | Hit target meets **minimum** size or documented **exception** (compact chrome). |
+| [Non-text contrast (WCAG 1.4.11)](https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast) | **Cross** icon and **focus** ring meet **3:1** against adjacent colors where applicable (shared **button** token work). |
+| [Content on hover or focus (WCAG 1.4.13)](https://www.w3.org/TR/WCAG22/#content-on-hover-or-focus) | If a **Tooltip** is paired with **`swc-close-button`**, follow overlay dismissal and **keyboard** parity ([Tooltip accessibility migration analysis](../tooltip/accessibility-migration-analysis.md); [SWC-600](https://jira.corp.adobe.com/browse/SWC-600)). |
+
+**Bottom line:** **`swc-close-button`** is a **named** **dismiss** **button** with the same **focus** and **delegation** expectations as **`swc-button`**; **label** strings must match **user-visible** intent in context.
+
+---
+
+## Related 1st-gen accessibility (Jira)
+
+Adobe Jira is authoritative for current status and resolution; refresh cells when you triage. Rows below omit issues labeled **`gen2`** / **`gen-2`** from the shared **Button / ButtonBase / Close button** query and omit **audit** epic **[SWC-872](https://jira.corp.adobe.com/browse/SWC-872)** (cross-cutting audit).
+
+| Jira | Type | Status (snapshot) | Resolution (snapshot) | Summary |
+| --- | --- | --- | --- | --- |
+| [SWC-1150](https://jira.corp.adobe.com/browse/SWC-1150) | Bug | Done | Fixed | Button does not have a name — **`sp-close-button`** (Label, Disabled region) |
+| [SWC-550](https://jira.corp.adobe.com/browse/SWC-550) | Bug | Done | Duplicate | Action Bar close button is labelled clear selection |
+| [SWC-600](https://jira.corp.adobe.com/browse/SWC-600) | Story | To Do | Unresolved | Should we allow tooltips on Close and Clear buttons? |
+| [SWC-1039](https://jira.corp.adobe.com/browse/SWC-1039) | Bug | Done | Fixed | **`button-base`** **`aria-label`** not updating on change |
+| [SWC-1333](https://jira.corp.adobe.com/browse/SWC-1333) | Bug | To Do | Unresolved | **`sp-button`** does not support **`aria-label`** — track **`ButtonBase`** / attribute reflection; **`swc-close-button`** must mirror whatever **`swc-button`** ships |
+| [SWC-48](https://jira.corp.adobe.com/browse/SWC-48) | Epic | To Do | — | ElementInternals RFC — form-associated custom elements |
+| [SWC-598](https://jira.corp.adobe.com/browse/SWC-598) | Epic | In Progress | — | Consider refactoring ButtonBase, Action Button, and Button |
+
+---
+
+## 1st-gen implementation notes
+
+**`sp-close-button`** lives in the **`button`** package and extends **`StyledButton`** → **`ButtonBase`** (same **`focusElement`** / anchor concerns as [Button accessibility migration analysis](../button/accessibility-migration-analysis.md) until 2nd-gen converges on **inner** **`<button>`** + **delegation**). Default content is wrapped in a **visually hidden** span so the **cross** icon remains the visible affordance—authors still owe a **real** **name** via **`label`**, slot text, or reflected **`aria-*`** on the focus target.
+
+```79:87:1st-gen/packages/button/src/CloseButton.ts
+  protected override get buttonContent(): TemplateResult[] {
+    return [
+      crossIcon[this.size](),
+      html`
+        <span id="label" class="visually-hidden">
+          <slot @slotchange=${this.manageTextObservedSlot}></slot>
+        </span>
+      `,
+    ];
+  }
+```
+
+---
+
+## Recommendations: `<swc-close-button>`
+
+### ARIA roles, states, and properties
+
+| Topic | What to do |
+| --- | --- |
+| **Native mapping** | Render a **real** `<button type="button">`. Prefer **`delegatesFocus`** so **Tab** and **activation** hit the **inner** **`<button>`**; **host** must **not** duplicate **`role="button"`** as the only focusable surface. |
+| **Name (required)** | **Always** set a **discernible name**: default **`label`** for icon-first chrome, slotted accessible text, or **`aria-label`** on the **button** surface. Match **verb** to **effect** (**Close**, **Dismiss**, **Clear selection**). |
+| **`aria-disabled`** | If a **non-interactive** but **focusable** dismiss state is needed (rare), follow the same **`aria-disabled`** + **focusable** pattern as **`swc-button`** **pending**—do **not** use **`role="progressbar"`** on decorative spinners. |
+| **Icon** | **Cross** icon is decorative when the **name** already says **Close**; otherwise give the icon an accessible name only if it adds non-duplicate information. |
+
+### Shadow DOM and cross-root ARIA Issues
+
+**Deferred:** Same **`aria-labelledby`** / **`aria-describedby`** **ID** limits across **shadow** roots as **`swc-button`** until **`ElementInternals`** and **axe-core** coverage mature — track **[SWC-48](https://jira.corp.adobe.com/browse/SWC-48)**.
+
+### Form-associated buttons (`submit` / `reset`) — deferred
+
+**Does not apply** to **`type="submit"`** / **`reset`** for **`swc-close-button`** product shape; **same platform** dependencies as **`swc-button`** if a future refactor shares one **internal** **`<button>`** implementation inside custom elements—track **[SWC-48](https://jira.corp.adobe.com/browse/SWC-48)** for **shared** **`ButtonBase`** work. Heading kept for parity with sibling **accessibility migration analysis** docs.
+
+### Accessibility tree expectations
+
+- **Role:** **button**.
+- **Name:** From **`label`**, visible/slot text piped to the **button**, or **`aria-label`**—must **update** when authors change attributes ([SWC-1039](https://jira.corp.adobe.com/browse/SWC-1039)).
+- **State:** Native **`disabled`** when removed from interaction; **`aria-disabled="true"`** only when product explicitly keeps dismiss **focusable** but inactive.
+
+### Live regions, loading, and announcements
+
+**Does not apply** for the current **1st-gen** **`sp-close-button`** (no **pending** surface). If product adds **async close**, align with [Figma — Loading animation discovery](https://www.figma.com/design/42VzvpW262EAUbYsadO4e8/Loading-animation-discovery) and **`swc-button`** guidance—**never** **`aria-live="assertive"`** for routine UI.
+
+### Keyboard and focus
+
+- **Enter** / **Return** or **Space** activates ([Keyboard testing](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/keyboard_testing.mdx)).
+- **Tab** order: one **logical** dismiss control per surface; focus ring on the **inner** **`<button>`** after delegation.
+- **Dialog** hosts manage **Escape** and **focus return**; **`swc-close-button`** still exposes a **consistent** **name** and **activation** behavior.
+
+---
+
+## Testing
+
+### Automated tests
+
+| Kind of test | What to check |
+| --- | --- |
+| **Unit** | Inner **`<button>`**; **delegated focus**; **`label`** / **`aria-label`** reflected; **no** unnamed icon-only default. |
+| **aXe + Storybook** | Default, **`disabled`**, **`static-color`**, sizes, and **in-context** stories (dialog, action bar, alert banner). |
+| **Playwright ARIA snapshots** | **button** role and **name**; regression for **[SWC-1150](https://jira.corp.adobe.com/browse/SWC-1150)**. |
+| **Playwright keyboard** | **Enter** / **Space** activation. |
+| **Integration** | **Action bar** string matches action ([SWC-550](https://jira.corp.adobe.com/browse/SWC-550)); tooltip pairing if **[SWC-600](https://jira.corp.adobe.com/browse/SWC-600)** resolves to supported API. |
+
+---
+
+## Summary checklist
+
+- [ ] **Inner** **`<button type="button">`** with **focus delegation**; **host** does **not** fake a second **button** in the tab order.
+- [ ] **Every** instance has a **correct** **accessible name** (**Close** vs **Clear selection**, etc.) — [SWC-1150](https://jira.corp.adobe.com/browse/SWC-1150), [SWC-550](https://jira.corp.adobe.com/browse/SWC-550).
+- [ ] **`aria-label`** / **`label`** updates propagate to the focus target — [SWC-1039](https://jira.corp.adobe.com/browse/SWC-1039); align with **[SWC-1333](https://jira.corp.adobe.com/browse/SWC-1333)** **`swc-button`** outcome.
+- [ ] **Tooltip** usage (if allowed) matches [Tooltip accessibility migration analysis](../tooltip/accessibility-migration-analysis.md) — [SWC-600](https://jira.corp.adobe.com/browse/SWC-600).
+- [ ] Cross-root **`aria-labelledby`** / **`aria-describedby`** **deferred** per **`swc-button`** — [SWC-48](https://jira.corp.adobe.com/browse/SWC-48).
+- [ ] **`ButtonBase`** refactor alignment — [SWC-598](https://jira.corp.adobe.com/browse/SWC-598).
+
+---
+
+## References
+
+- [WAI-ARIA APG: Button](https://www.w3.org/WAI/ARIA/apg/patterns/button/)
+- [WAI-ARIA APG: Dialog](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/)
+- [WAI-ARIA APG: Read me first](https://www.w3.org/WAI/ARIA/apg/practices/read-me-first/)
+- [WCAG 2.2](https://www.w3.org/TR/WCAG22/)
+- [Button accessibility migration analysis](../button/accessibility-migration-analysis.md)
+- [Action button migration roadmap](../action-button/rendering-and-styling-migration-analysis.md)
+- [Tooltip accessibility migration analysis](../tooltip/accessibility-migration-analysis.md)
+- [Button migration roadmap](../button/rendering-and-styling-migration-analysis.md)
+- [Keyboard testing (2nd-gen Storybook accessibility guide)](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/keyboard_testing.mdx)
+- [Figma: Loading animation discovery](https://www.figma.com/design/42VzvpW262EAUbYsadO4e8/Loading-animation-discovery) (if async dismiss is added later)
