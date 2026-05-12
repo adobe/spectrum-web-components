@@ -114,21 +114,15 @@ export const Status: Story = {
     <div style="display:flex;flex-direction:column;gap:24px;">
       <div style="display:flex;flex-direction:column;gap:8px;">
         <swc-message-feedback></swc-message-feedback>
-        <span class="swc-Detail swc-Detail--sizeS">
-          Unset
-        </span>
+        <span class="swc-Detail swc-Detail--sizeS">Unset</span>
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;">
         <swc-message-feedback status="positive"></swc-message-feedback>
-        <span class="swc-Detail swc-Detail--sizeS">
-          Positive
-        </span>
+        <span class="swc-Detail swc-Detail--sizeS">Positive</span>
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;">
         <swc-message-feedback status="negative"></swc-message-feedback>
-        <span class="swc-Detail swc-Detail--sizeS">
-          Negative
-        </span>
+        <span class="swc-Detail swc-Detail--sizeS">Negative</span>
       </div>
     </div>
   `,

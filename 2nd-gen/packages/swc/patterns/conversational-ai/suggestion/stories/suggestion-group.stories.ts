@@ -107,9 +107,7 @@ export const SuggestionCount: Story = {
             Create a slide deck from this
           </swc-suggestion-item>
         </swc-suggestion-group>
-        <span class="swc-Detail swc-Detail--sizeS">
-          One suggestion
-        </span>
+        <span class="swc-Detail swc-Detail--sizeS">One suggestion</span>
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;">
         <swc-suggestion-group heading="What would you like to do next?">
@@ -161,9 +159,7 @@ export const Heading: Story = {
           </swc-suggestion-item>
           <swc-suggestion-item>Translate to Spanish</swc-suggestion-item>
         </swc-suggestion-group>
-        <span class="swc-Detail swc-Detail--sizeS">
-          Default heading
-        </span>
+        <span class="swc-Detail swc-Detail--sizeS">Default heading</span>
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;">
         <swc-suggestion-group heading="Suggested next actions">
@@ -175,9 +171,7 @@ export const Heading: Story = {
           </swc-suggestion-item>
           <swc-suggestion-item>Translate to Spanish</swc-suggestion-item>
         </swc-suggestion-group>
-        <span class="swc-Detail swc-Detail--sizeS">
-          Custom heading
-        </span>
+        <span class="swc-Detail swc-Detail--sizeS">Custom heading</span>
       </div>
     </div>
   `,

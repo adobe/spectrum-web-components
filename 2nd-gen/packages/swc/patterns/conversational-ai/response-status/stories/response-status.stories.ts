@@ -148,9 +148,7 @@ export const Loading: Story = {
     <div style="display:flex;flex-direction:column;gap:24px;">
       <div style="display:flex;flex-direction:column;gap:8px;">
         <swc-response-status loading></swc-response-status>
-        <span class="swc-Detail swc-Detail--sizeS">
-          Loading
-        </span>
+        <span class="swc-Detail swc-Detail--sizeS">Loading</span>
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;">
         <swc-response-status>
@@ -201,18 +199,14 @@ export const Reasoning: Story = {
           I grouped your request into a presentation outline and prioritized key
           business messages.
         </swc-response-status>
-        <span class="swc-Detail swc-Detail--sizeS">
-          Reasoning collapsed
-        </span>
+        <span class="swc-Detail swc-Detail--sizeS">Reasoning collapsed</span>
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;">
         <swc-response-status open>
           Step 1: Analyzing the request… Step 2: Searching for relevant context…
           Step 3: Composing response.
         </swc-response-status>
-        <span class="swc-Detail swc-Detail--sizeS">
-          Reasoning expanded
-        </span>
+        <span class="swc-Detail swc-Detail--sizeS">Reasoning expanded</span>
       </div>
     </div>
   `,

@@ -104,14 +104,14 @@ export const Overview: Story = {
  */
 export const MultiArtifact: Story = {
   render: () => html`
-    <div style="display:flex;flex-direction:column;gap:16px;max-inline-size:720px;">
+    <div
+      style="display:flex;flex-direction:column;gap:16px;max-inline-size:720px;"
+    >
       <p class="swc-Detail swc-Detail--sizeS" style="margin:0;">
-        Mirrors the prompt-field Attachment strip: cards and media tiles together, plus an extra card to
-        stress-test wrapping at narrow widths.
+        Mirrors the prompt-field Attachment strip: cards and media tiles
+        together, plus an extra card to stress-test wrapping at narrow widths.
       </p>
-      <div
-        style="display:flex;flex-wrap:wrap;gap:12px;align-items:flex-start;"
-      >
+      <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:flex-start;">
         <swc-upload-artifact type="card" dismissible>
           <div
             slot="thumbnail"

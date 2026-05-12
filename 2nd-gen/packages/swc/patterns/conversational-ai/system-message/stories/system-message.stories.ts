@@ -166,9 +166,7 @@ export const Loading: Story = {
             <swc-response-status slot="status" loading></swc-response-status>
           </swc-system-message>
         </swc-conversation-turn>
-        <span class="swc-Detail swc-Detail--sizeS">
-          Generating response
-        </span>
+        <span class="swc-Detail swc-Detail--sizeS">Generating response</span>
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;">
         <swc-conversation-turn type="system">
@@ -189,9 +187,7 @@ export const Loading: Story = {
             </swc-message-sources>
           </swc-system-message>
         </swc-conversation-turn>
-        <span class="swc-Detail swc-Detail--sizeS">
-          Response complete
-        </span>
+        <span class="swc-Detail swc-Detail--sizeS">Response complete</span>
       </div>
     </div>
   `,

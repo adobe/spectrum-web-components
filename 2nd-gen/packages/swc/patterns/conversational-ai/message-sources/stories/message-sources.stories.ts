@@ -131,9 +131,7 @@ export const Open: Story = {
           <a href="#">Adobe Experience Manager documentation</a>
           <a href="#">Creative Cloud release notes 2026</a>
         </swc-message-sources>
-        <span class="swc-Detail swc-Detail--sizeS">
-          Collapsed
-        </span>
+        <span class="swc-Detail swc-Detail--sizeS">Collapsed</span>
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;">
         <swc-message-sources open>
@@ -141,9 +139,7 @@ export const Open: Story = {
           <a href="#">Creative Cloud release notes 2026</a>
           <a href="#">Firefly API getting started guide</a>
         </swc-message-sources>
-        <span class="swc-Detail swc-Detail--sizeS">
-          Expanded
-        </span>
+        <span class="swc-Detail swc-Detail--sizeS">Expanded</span>
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;">
         <swc-message-sources open label="References">
