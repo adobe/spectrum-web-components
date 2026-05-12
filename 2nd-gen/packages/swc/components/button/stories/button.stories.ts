@@ -66,7 +66,7 @@ args.size = 'm';
  * Buttons trigger actions when activated. Use a button when users need to take an
  * action like saving changes or triggering a workflow step.
  *
- * For navigation, [use a link with global button styles](/docs/guides-customization-global-element-styling--readme) instead.
+ * For navigation, [use a link with global button styles](/docs/learn-customization-global-elements--readme) instead.
  */
 const meta: Meta = {
   title: 'Button',
@@ -484,7 +484,7 @@ export const Justified: Story = {
  *   as it is intentionally forwarded to the internal native control.
  * - Do not set both `pending` and `disabled` at the same time. Use `pending` to keep the
  *   button focusable while unavailable, or `disabled` to remove it from the tab order entirely.
- * - For navigation, use a native `<a>` element and leverage [global element styles](/docs/guides-customization-global-element-styling--readme), not `<swc-button>`. The
+ * - For navigation, use a native `<a>` element and leverage [global element styles](/docs/learn-customization-global-elements--readme), not `<swc-button>`. The
  *   button element activates on both Enter and Space; links activate on Enter only.
  *
  * ### Host event contract
@@ -505,7 +505,7 @@ export const Justified: Story = {
  * - **Cross-root ARIA** (`aria-labelledby` / `aria-describedby` from outside the
  *   shadow root).
  * - **Form-associated `submit` / `reset` types**: the button currently behaves as
- *   `type="button"` only. Use native `<button type="submit">` or [global button styles](/docs/guides-customization-global-element-styling--readme)
+ *   `type="button"` only. Use native `<button type="submit">` or [global button styles](/docs/learn-customization-global-elements--readme)
  *   for form submission until this lands.
  */
 export const Accessibility: Story = {
@@ -549,7 +549,7 @@ export const Accessibility: Story = {
  *
  * - **Form submission** (`type="submit"` / `type="reset"`): Native form participation.
  *   Until then, use a native `<button type="submit">` with
- *   [global button styles](/docs/guides-customization-global-element-styling--readme).
+ *   [global button styles](/docs/learn-customization-global-elements--readme).
  * - **`genai` variant**: For generative AI actions.
  * - **`premium` variant**: For premium or upgrade flows.
  */

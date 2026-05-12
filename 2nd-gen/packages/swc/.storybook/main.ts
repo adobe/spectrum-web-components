@@ -85,6 +85,13 @@ if (storybookMode !== 'ci-a11y') {
       files: '**/*.mdx',
       titlePrefix: 'Components',
     },
+    // Consumer landing — empty until Phase 7 populates .storybook/get-started/index.mdx
+    {
+      directory: 'get-started',
+      files: '**/*.mdx',
+      titlePrefix: 'Get started',
+    },
+    // Reference / core package — keeps Core titlePrefix until Phase 9 establishes the Reference section
     {
       ...CORE_STORY_ROOT,
       files: '**/*.mdx',
@@ -93,20 +100,17 @@ if (storybookMode !== 'ci-a11y') {
       ...CORE_STORY_ROOT,
       files: '**/stories/*.stories.ts',
     },
+    // Learn — consolidates the prior "Learn about SWC" and "Guides" titlePrefixes into a single persona section.
+    // The directories stay in place during Phase 4; Phase 5 physically moves them into .storybook/docs/learn/.
     {
       directory: 'learn-about-swc',
       files: '*.mdx',
-      titlePrefix: 'Learn about SWC',
+      titlePrefix: 'Learn',
     },
     {
       directory: 'guides',
       files: '**/!(*documentation).mdx',
-      titlePrefix: 'Guides',
-    },
-    {
-      directory: 'contributor-docs',
-      files: '**/*.mdx',
-      titlePrefix: 'Contributor docs',
+      titlePrefix: 'Learn',
     },
     {
       directory: '../components',
@@ -114,6 +118,17 @@ if (storybookMode !== 'ci-a11y') {
       titlePrefix: 'Components',
     }
   );
+
+  // Contribute subtree is dev-only. Production Storybook ships the consumer-facing surface only;
+  // contributor docs are consumed via GitHub or local `yarn dev` instead.
+  // See: CONTRIBUTOR-DOCS/project-planning/05_strategies/audience-based-docs-storybook-residency-audit.md
+  if (storybookMode !== 'build') {
+    stories.push({
+      directory: 'contributor-docs',
+      files: '**/*.mdx',
+      titlePrefix: 'Contribute',
+    });
+  }
 }
 
 // Test stories are dev-only fixtures and should not ship in production Storybook.

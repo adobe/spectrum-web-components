@@ -306,7 +306,7 @@ export const TextWrapping: Story = {
  * - Screen readers will announce the status light content as static text
  * - No keyboard interaction is required or expected
  *
- * > Important: In focus mode, only interactive elements and their associated labels/descriptions are announced. If content is not a label or description for a focusable element, it will not be read. For non-interactive content, screen reader users must [switch to Browse mode](https://swcpreviews.z13.web.core.windows.net/pr-6122/docs/second-gen-storybook/?path=/docs/guides-accessibility-guides-screen-reader-testing--readme#screen-reader-modes). This is expected behavior, not a bug — ensure you test both modes when evaluating component accessibility.
+ * > Important: In focus mode, only interactive elements and their associated labels/descriptions are announced. If content is not a label or description for a focusable element, it will not be read. For non-interactive content, screen reader users must [switch to Browse mode](https://swcpreviews.z13.web.core.windows.net/pr-6122/docs/second-gen-storybook/?path=/docs/learn-accessibility-screen-reader-testing--readme#screen-reader-modes). This is expected behavior, not a bug — ensure you test both modes when evaluating component accessibility.
  * ### Best practices
  *
  * - Always provide a descriptive text label that explains the status
@@ -406,7 +406,7 @@ function withLocaleWrapperRender(
 /**
  * Status light with label driven by the Language toolbar and translations.json.
  * Use this story in the Fonts guide to demonstrate font loading and translated copy.
- * Learn more about [loading the expected fonts](/docs/guides-customization-fonts--readme).
+ * Learn more about [loading the expected fonts](/docs/learn-customization-fonts--readme).
  */
 // @todo: this story is docs-only, but we should start capturing Chromatic baselines for internationalized content in components. SWC-1871
 export const WithLocaleWrapper: Story = {

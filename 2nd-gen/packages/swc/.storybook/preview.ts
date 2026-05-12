@@ -194,15 +194,24 @@ const preview = {
       storySort: {
         method: 'alphabetical-by-kind',
         order: [
-          'Learn about SWC',
-          ['Overview', 'When to use SWC', '1st-gen vs 2nd-gen'],
-          'Core',
-          ['Overview', 'Controllers'],
+          'Get started',
           'Components',
           'Patterns',
           ['Conversational AI', ['README', 'Prompt field', 'User message']],
-          'Guides',
+          'Learn',
           [
+            'Overview',
+            'When to use SWC',
+            '1st-gen vs 2nd-gen',
+            'Customization',
+            [
+              'Cheatsheet',
+              'Getting Started',
+              'Theme and Scales',
+              'Fonts',
+              'Component Styles',
+              'Global Element Styling',
+            ],
             'Accessibility guides',
             [
               'Overview',
@@ -214,16 +223,10 @@ const preview = {
               'WAVE toolbar testing',
               'Accessibility resources',
             ],
-            'Customization',
-            [
-              'Getting Started',
-              'Theme and Scales',
-              'Fonts',
-              'Component Styles',
-              'Global Element Styling',
-            ],
           ],
-          'Contributor docs',
+          'Core',
+          ['Overview', 'Controllers'],
+          'Contribute',
           // GENERATED:CONTRIBUTOR-DOCS-SORT - Do not edit manually. Run `yarn generate:contributor-docs` to update.
           [
             'Contributor documentation',
@@ -469,6 +472,7 @@ const preview = {
               [
                 'Audience based docs content audit',
                 'Audience based docs reorganization plan',
+                'Audience based docs storybook residency audit',
                 'Focus management strategy rfc',
               ],
             ],
