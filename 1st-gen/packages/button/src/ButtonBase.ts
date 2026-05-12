@@ -114,9 +114,17 @@ export class ButtonBase extends ObserveSlotText(LikeAnchor(Focusable), '', [
     }
 
     if (this.anchorElement) {
+      // Check if the click already went through the anchor element.
+      // If so, the browser will handle navigation naturally and we
+      // don't need to proxy the click (which would cause double navigation).
+      const path = event?.composedPath() || [];
+      if (path.includes(this.anchorElement)) {
+        return false;
+      }
       // Click HTML anchor element by proxy, but only for non-modified clicks
       this.anchorElement.click();
       handled = true;
+      return handled;
       // if the button type is `submit` or `reset`
     } else if (this.type !== 'button') {
       // create an HTML Button Element by proxy, click it, and remove it
@@ -159,11 +167,9 @@ export class ButtonBase extends ObserveSlotText(LikeAnchor(Focusable), '', [
     switch (code) {
       case 'Space':
         event.preventDefault();
-        // allows button to activate when `Space` is pressed
-        if (typeof this.href === 'undefined') {
-          this.addEventListener('keyup', this.handleKeyup);
-          this.active = true;
-        }
+        // allows button or link to activate when `Space` is pressed
+        this.addEventListener('keyup', this.handleKeyup);
+        this.active = true;
         break;
       default:
         break;
@@ -228,10 +234,26 @@ export class ButtonBase extends ObserveSlotText(LikeAnchor(Focusable), '', [
     this.addEventListener('keypress', this.handleKeypress);
   }
 
+  private warnLinkAPIDeprecation(): void {
+    if (window.__swc?.DEBUG) {
+      const componentSlug =
+        this.localName === 'sp-action-button' ? 'action-button' : 'button';
+      window.__swc.warn(
+        this,
+        `The "href" attribute on <${this.localName}> is deprecated and will be removed in a future release. Use a native HTML anchor (<a>) element with Spectrum global element styling instead. Import "@spectrum-web-components/styles/global-elements.css" to enable button styling on native elements.`,
+        `'https://opensource.adobe.com/spectrum-web-components/components/${componentSlug}/#accessibility'`,
+        { level: 'deprecation' }
+      );
+    }
+  }
+
   protected override updated(changed: PropertyValues): void {
     super.updated(changed);
     if (changed.has('href')) {
       this.manageAnchor();
+      if (this.href && this.href.length > 0) {
+        this.warnLinkAPIDeprecation();
+      }
     }
 
     if (changed.has('label')) {

@@ -17,7 +17,10 @@ export const DIVIDER_VALID_SIZES = [
   'm',
   'l',
 ] as const satisfies ElementSize[];
-export const DIVIDER_STATIC_COLORS = ['white', 'black'] as const;
+export const DIVIDER_STATIC_COLORS = [
+  'white',
+  'black',
+] as const satisfies readonly string[];
 
 export type DividerStaticColor = (typeof DIVIDER_STATIC_COLORS)[number];
 

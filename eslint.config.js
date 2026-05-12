@@ -149,6 +149,7 @@ export default defineConfig([
       '**/custom-elements.json',
       '**/tokens.css',
       '**/tokens.json',
+      '2nd-gen/packages/swc/stylesheets/global/**',
       // Config and tooling files (Node env; skip lint to avoid needing node globals for many files)
       '**/*.config.js',
       '**/*.config.cjs',
@@ -278,11 +279,14 @@ export default defineConfig([
             'element', // Custom element tag name
             'slot', // Slot documentation
             'csspart', // CSS part documentation
+            'cssprop', // CSS custom property documentation (shorthand)
             'cssproperty', // CSS custom property documentation
             'fires', // Event documentation
             'attr', // Attribute shorthand
             'attribute', // Attribute documentation
             'internal', // Internal member marker
+            'status', // Component maturity status (preview, early-access, deprecated)
+            'since', // Version when the component was introduced
           ],
         },
       ],
@@ -410,6 +414,7 @@ export default defineConfig([
       'scripts/**/*',
       '**/scripts/**/*.js',
       '**/scripts/**/*.ts',
+      '**/scripts/**/*.mjs',
       'linters/**/*.js',
       '.github/**/*.js',
       '1st-gen/test/visual/**/*.js',
@@ -426,6 +431,20 @@ export default defineConfig([
     ],
     languageOptions: {
       globals: globals.node,
+    },
+  },
+
+  // ────────────────────────────────────────────────────────────────────────────
+  // Storybook config files: Node globals and tooling imports
+  // ────────────────────────────────────────────────────────────────────────────
+  {
+    files: ['2nd-gen/packages/swc/.storybook/**/*.ts'],
+    languageOptions: {
+      globals: globals.node,
+    },
+    rules: {
+      'import/no-extraneous-dependencies': 'off',
+      '@typescript-eslint/explicit-function-return-type': 'off',
     },
   },
 
@@ -516,7 +535,12 @@ export default defineConfig([
   // Scripts: allow console.log and devDependencies imports
   // ────────────────────────────────────────────────────────────────────────────
   {
-    files: ['**/scripts/**/*.js', '**/scripts/**/*.ts', 'scripts/**/*'],
+    files: [
+      '**/scripts/**/*.js',
+      '**/scripts/**/*.ts',
+      '**/scripts/**/*.mjs',
+      'scripts/**/*',
+    ],
     rules: {
       'no-console': 'off',
       'import/no-extraneous-dependencies': 'off',

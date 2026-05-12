@@ -22,7 +22,7 @@ parameters:
   # 3. Commit this change to the PR branch where the changes exist.
   current_golden_images_hash:
     type: string
-    default: 18ed38365df0f860c743922352cc49b46c6477c2
+    default: 75b8c3cdc71a773889e3bdd1032f89ff73c12475
 
   wireit_cache_name:
     type: string
@@ -49,36 +49,55 @@ commands:
             echo 'export AZCOPY_TENANT_ID="$AZURE_TENANT_ID"' >> $BASH_ENV
             source $BASH_ENV
             azcopy --version
-  downstream:
+  setup-node-dependencies:
+    description: 'Checkout code and install node dependencies'
     steps:
       - checkout
       - restore_cache:
           keys:
-            - v4c-dependencies-{{ arch }}-{{ checksum "yarn.lock" }}
-      - restore_cache:
-          keys:
-            - v4b-<< pipeline.parameters.wireit_cache_name >>-{{ arch }}-{{ checksum "1st-gen/package.json" }}-
+            - cache-deps-yarn-{{ arch }}-{{ checksum "yarn.lock" }}
       - run:
           name: Installing Dependencies
           command: |
             corepack enable
             yarn --immutable
+  save-node-dependencies-cache:
+    description: 'Save node dependency cache'
+    steps:
+      - save_cache:
+          paths:
+            - ~/.cache/yarn
+          key: cache-deps-yarn-{{ arch }}-{{ checksum "yarn.lock" }}
+  downstream:
+    steps:
+      - setup-node-dependencies
+      - restore_cache:
+          keys:
+            - cache-wireit-1st-gen-{{ arch }}-{{ checksum "1st-gen/package.json" }}-
       - run:
           name: Build the project
           command: |
             yarn build
-
-      - save_cache:
-          paths:
-            - ~/.cache/yarn
-            - ~/.cache/ms-playwright
-          key: v4c-dependencies-{{ arch }}-{{ checksum "yarn.lock" }}
+      - save-node-dependencies-cache
       - save_cache:
           paths:
             - 1st-gen/.wireit
-          key: v4b-wireit-{{ arch }}-{{ checksum "1st-gen/package.json" }}-{{ epoch }}
+          key: cache-wireit-1st-gen-{{ arch }}-{{ checksum "1st-gen/package.json" }}-{{ .Revision }}
       - attach_workspace:
           at: /
+  downstream-2ndgen:
+    description: 'Setup and build for 2nd-gen tests'
+    steps:
+      - setup-node-dependencies
+      - run:
+          name: Build 2nd-gen project
+          command: |
+            yarn build:2nd-gen
+      - run:
+          name: Generate Custom Elements Manifest
+          command: |
+            yarn workspace @adobe/spectrum-wc analyze
+      - save-node-dependencies-cache
   run-regressions:
     parameters:
       regression_system:
@@ -206,12 +225,12 @@ commands:
           name: Build Golden Images Revision Cache
           paths:
             - 1st-gen/test/visual/screenshots-baseline
-          key: v2-golden-images-{{ .Revision }}-<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-{{ epoch }}
+          key: v2-golden-images-{{ .Revision }}-<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-{{ .Branch }}
       - save_cache:
           name: Build Golden Images Branch Cache
           paths:
             - 1st-gen/test/visual/screenshots-baseline
-          key: v2-golden-images-{{ .Branch }}-<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-{{ epoch }}
+          key: v2-golden-images-{{ .Branch }}-<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-{{ .Revision }}
 
 jobs:
   test-chromium:
@@ -283,6 +302,66 @@ jobs:
             yarn workspace @spectrum-web-components/1st-gen test:start --files $TEST --config web-test-runner.config.ci-webkit.js --group unit-ci
       - store_test_results:
           path: /root/project/results/
+
+  # 2nd-gen integration tests
+  test-2ndgen-browser:
+    executor: node
+    parameters:
+      browser:
+        type: string
+
+    steps:
+      - downstream-2ndgen
+      - run:
+          name: Run 2nd-gen browser tests (coverage on Chromium)
+          command: |
+            if [ "<< parameters.browser >>" = "chromium" ]; then
+              VITEST_BROWSER_INSTANCES=chromium yarn workspace @spectrum-web-components/2nd-gen test:coverage
+            else
+              VITEST_BROWSER_INSTANCES=<< parameters.browser >> yarn test:2nd-gen
+            fi
+      - store_test_results:
+          path: /root/project/2nd-gen/packages/swc/test-results
+      - when:
+          condition:
+            equal: ['chromium', << parameters.browser >>]
+          steps:
+            - store_artifacts:
+                path: 2nd-gen/packages/swc/coverage
+
+  # 2nd-gen ARIA snapshot tests (Playwright)
+  test-2ndgen-a11y:
+    executor: node
+
+    steps:
+      - downstream-2ndgen
+      - run:
+          name: Run 2nd-gen ARIA snapshot tests
+          command: |
+            yarn test:a11y:2nd
+      - store_test_results:
+          path: /root/project/2nd-gen/test/playwright-a11y/results
+      - store_artifacts:
+          path: 2nd-gen/test/playwright-a11y/report
+
+  # 2nd-gen axe-core WCAG tests (Storybook test-runner)
+  # NOTE: Uses full `downstream` because Storybook build has 1st-gen references
+  test-2ndgen-axe:
+    executor: node
+
+    steps:
+      - downstream
+      - run:
+          name: Build 2nd-gen Storybook (production)
+          command: |
+            NODE_ENV=production SWC_STORYBOOK_MODE=ci-a11y yarn workspace @adobe/spectrum-wc storybook:build
+      - run:
+          name: Run axe-core WCAG tests
+          command: |
+            mkdir -p 2nd-gen/packages/swc/test-results
+            yarn start-server-and-test "npx http-server 2nd-gen/packages/swc/storybook-static -p 6006 --silent" http://127.0.0.1:6006 "JEST_JUNIT_OUTPUT_DIR=./test-results JEST_JUNIT_OUTPUT_NAME=junit.xml yarn workspace @adobe/spectrum-wc test:storybook --url http://127.0.0.1:6006 --index-json --ci --junit"
+      - store_test_results:
+          path: /root/project/2nd-gen/packages/swc/test-results
 
   beta-docs:
     executor: node
@@ -446,12 +525,12 @@ jobs:
           name: Build Golden Images Revision Cache
           paths:
             - 1st-gen/test/visual/screenshots-baseline
-          key: v2-golden-images-{{ .Revision }}-hcm-{{ epoch }}
+          key: v2-golden-images-{{ .Revision }}-hcm-{{ .Branch }}
       - save_cache:
           name: Build Golden Images Branch Cache
           paths:
             - 1st-gen/test/visual/screenshots-baseline
-          key: v2-golden-images-{{ .Branch }}-hcm-{{ epoch }}
+          key: v2-golden-images-{{ .Branch }}-hcm-{{ .Revision }}
 
   visual:
     executor: node
@@ -475,6 +554,15 @@ jobs:
 workflows:
   build:
     jobs:
+      # 2nd-gen tests
+      - test-2ndgen-browser:
+          name: test-2ndgen-browser-<< matrix.browser >>
+          matrix:
+            parameters:
+              browser: [chromium, firefox, webkit]
+      - test-2ndgen-a11y
+      - test-2ndgen-axe
+      # 1st-gen tests
       - test-chromium
       - test-chromium-memory
       - test-firefox

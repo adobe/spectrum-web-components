@@ -20,13 +20,19 @@ import styles from './divider.css';
 
 /**
  * @element swc-divider
+ * @since 2.0.0
+ *
+ * @cssprop --swc-divider-background-color - Background color of the divider.
+ * @cssprop --swc-divider-thickness - Thickness of the divider.
  */
 export class Divider extends DividerBase {
-  // ────────────────────
+  // ──────────────────────────────
   //     RENDERING & STYLING
-  // ────────────────────
+  // ──────────────────────────────
 
-  public static override styles: CSSResultArray = [styles];
+  public static override get styles(): CSSResultArray {
+    return [styles];
+  }
 
   protected override render(): TemplateResult {
     return html`
@@ -36,7 +42,7 @@ export class Divider extends DividerBase {
           [`swc-Divider--size${this.size?.toUpperCase()}`]: this.size != null,
           [`swc-Divider--static${capitalize(this.staticColor)}`]:
             this.staticColor != null,
-          [`swc-Divider--vertical`]: this.vertical,
+          ['swc-Divider--vertical']: this.vertical,
         })}
       ></div>
     `;

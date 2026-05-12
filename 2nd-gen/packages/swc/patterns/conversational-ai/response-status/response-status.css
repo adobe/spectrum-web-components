@@ -1,0 +1,104 @@
+/**
+ * Copyright 2026 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+:host {
+  display: block;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+.swc-ResponseStatus {
+  display: flex;
+  flex-direction: column;
+  gap: token("spacing-100");
+}
+
+/* ─────────────────────────────────────
+   Status row (icon + label [+ checkmark])
+   ───────────────────────────────────── */
+
+.swc-ResponseStatus-row {
+  display: flex;
+  gap: token("spacing-100");
+  align-items: center;
+  block-size: var(--swc-response-status-row-block-size, 32px);
+}
+
+/* When the row is a button (reasoning toggle) */
+.swc-ResponseStatus-row--button {
+  padding: 0;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+/* Progress circle — indeterminate loading indicator */
+
+.swc-ResponseStatus-loadingSlot {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+}
+
+.swc-ResponseStatus-label {
+  font-family: token("sans-serif-font");
+  font-size: token("font-size-100");
+  font-weight: token("regular-font-weight");
+  line-height: token("line-height-font-size-100");
+  color: token("neutral-subdued-content-color-default");
+}
+
+.swc-ResponseStatus-row--button:hover .swc-ResponseStatus-label {
+  color: token("gray-800");
+}
+
+/* ─────────────────────────────────────
+   Chevron direction
+   ───────────────────────────────────── */
+
+.swc-ResponseStatus-chevron {
+  flex-shrink: 0;
+  transition: transform token("animation-duration-100") ease;
+}
+
+.swc-ResponseStatus-chevron--down {
+  transform: rotate(90deg);
+}
+
+/* ─────────────────────────────────────
+   Reasoning panel
+   ───────────────────────────────────── */
+
+.swc-ResponseStatus-reasoning-panel {
+  interpolate-size: allow-keywords;
+  display: block;
+  visibility: hidden;
+  block-size: 0;
+  font-family: token("sans-serif-font");
+  font-size: token("font-size-100");
+  font-weight: token("regular-font-weight");
+  line-height: token("line-height-font-size-100");
+  color: token("neutral-subdued-content-color-default");
+  overflow: hidden;
+  transition:
+    block-size token("animation-duration-200") token("animation-ease-in-out"),
+    visibility token("animation-duration-200") linear;
+}
+
+.swc-ResponseStatus-row--button[aria-expanded="true"] + .swc-ResponseStatus-reasoning-panel {
+  visibility: visible;
+  block-size: auto;
+}

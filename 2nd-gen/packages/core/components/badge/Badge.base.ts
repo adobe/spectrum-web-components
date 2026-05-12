@@ -18,7 +18,9 @@ import { ObserveSlotPresence } from '@spectrum-web-components/core/mixins/observ
 import { ObserveSlotText } from '@spectrum-web-components/core/mixins/observe-slot-text.js';
 
 import {
+  BADGE_VALID_SIZES,
   BADGE_VARIANTS_SEMANTIC,
+  type BadgeSize,
   type BadgeVariant,
   FIXED_VALUES,
   type FixedValues,
@@ -32,13 +34,23 @@ import {
  *
  * @slot - Text label of the badge.
  * @slot icon - Optional icon that appears to the left of the label
+ *
+ * @todo review the mixin composition here. We currently have 3 levels of mixins on this class, but the mixin composition guide recommends a maximum of 2.
  */
 export abstract class BadgeBase extends SizedMixin(
   ObserveSlotText(ObserveSlotPresence(SpectrumElement, '[slot="icon"]'), ''),
   {
-    noDefaultSize: true,
+    validSizes: BADGE_VALID_SIZES,
+    defaultSize: 's',
   }
 ) {
+  /**
+   * The size of the badge.
+   *
+   * @default s
+   */
+  declare public size: BadgeSize;
+
   // ─────────────────────────
   //     API TO OVERRIDE
   // ─────────────────────────
@@ -81,7 +93,7 @@ export abstract class BadgeBase extends SizedMixin(
    * and should be narrowed in each subclass.
    */
   @property({ type: String, reflect: true })
-  public variant: BadgeVariant = 'informative';
+  public variant: BadgeVariant = 'neutral';
 
   // ──────────────────
   //     SHARED API
@@ -100,51 +112,44 @@ export abstract class BadgeBase extends SizedMixin(
 
   /**
    * The fixed position of the badge.
-   *
-   * @todo The purpose of the bespoke getter and setter is unclear, as it
-   * looks like they may be behaving just like a standard Lit reactive
-   * property. Explore replacing after the Barebones milestone.
    */
-  @property({ reflect: true })
-  public get fixed(): FixedValues | undefined {
-    return this._fixed;
-  }
+  @property({ type: String, reflect: true })
+  public fixed?: FixedValues;
 
-  public set fixed(fixed: FixedValues | undefined) {
-    if (fixed === this.fixed) {
-      return;
-    }
-    const oldValue = this.fixed;
-    this._fixed = fixed;
-    if (fixed) {
-      this.setAttribute('fixed', fixed);
-    } else {
-      this.removeAttribute('fixed');
-    }
-    this.requestUpdate('fixed', oldValue);
-  }
+  /**
+   * Whether the badge is subtle.
+   */
+  @property({ type: Boolean, reflect: true })
+  public subtle: boolean = false;
 
-  private _fixed?: FixedValues;
+  /**
+   * Whether the badge is outlined.
+   *
+   * Can only be used with semantic variants.
+   */
+  @property({ type: Boolean, reflect: true })
+  public outline: boolean = false;
 
   // ──────────────────────
   //     IMPLEMENTATION
   // ──────────────────────
 
   /**
-   * @internal Used for rendering gap when the badge has an icon.
+   * @internal
+   *
+   * Used for rendering gap when the badge has an icon.
    */
   protected get hasIcon(): boolean {
     return this.slotContentIsPresent;
   }
 
   protected override update(changedProperties: PropertyValues): void {
-    super.update(changedProperties);
     if (window.__swc?.DEBUG) {
       const constructor = this.constructor as typeof BadgeBase;
       if (!constructor.VARIANTS.includes(this.variant)) {
         window.__swc.warn(
           this,
-          `<${this.localName}> element expect the "variant" attribute to be one of the following:`,
+          `<${this.localName}> element expects the "variant" attribute to be one of the following:`,
           'https://opensource.adobe.com/spectrum-web-components/components/badge/#variants',
           {
             issues: [...constructor.VARIANTS],
@@ -167,5 +172,6 @@ export abstract class BadgeBase extends SizedMixin(
         );
       }
     }
+    super.update(changedProperties);
   }
 }

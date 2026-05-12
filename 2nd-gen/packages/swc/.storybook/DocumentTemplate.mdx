@@ -7,9 +7,16 @@ import {
   ArgTypes,
   Description,
   Subtitle,
+  HeaderMdx,
   useOf,
 } from '@storybook/addon-docs/blocks';
-import { GettingStarted, SpectrumStories, OverviewStory } from './blocks';
+import {
+  ApiTable,
+  GettingStarted,
+  OverviewStory,
+  SpectrumStories,
+  StatusBadge,
+} from './blocks';
 
 export const checkIsSingleStory = () => {
   const resolvedOf = useOf('meta', ['meta']);
@@ -34,6 +41,12 @@ export const AdvancedExamplesStories = () => {
 
 }
 
+export const slugify = (s) =>
+  s
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/(^-|-$)/g, '');
+
 export const ConditionalSection = ({ tag, title, hideTitle = false }) => {
     const resolvedOf = useOf('meta', ['meta']);
     const hasStories = Object.values(resolvedOf.csfFile.stories).some(
@@ -45,9 +58,39 @@ export const ConditionalSection = ({ tag, title, hideTitle = false }) => {
     }
 
     return (
-        <>
-            {title && <h2>{title}</h2>}
+        <div data-section={tag}>
+            {title && <HeaderMdx as="h2" id={slugify(title)}>{title}</HeaderMdx>}
             <SpectrumStories tag={tag} hideTitle={hideTitle} />
+        </div>
+    );
+
+};
+export const ConditionalAPISection = () => {
+const resolvedOf = useOf('meta', ['meta']);
+const tags = resolvedOf?.csfFile?.meta?.tags ?? [];
+const hasCustomAPIDocs = tags.includes('api') || Object.values(resolvedOf.csfFile.stories).some(
+(story) => story.tags?.includes('api')
+);
+
+    if (!hasCustomAPIDocs) {
+        return (
+          <>
+            <HeaderMdx as="h2" id="api">API</HeaderMdx>
+
+            <Primary />
+            <Controls />
+          </>
+        );
+    }
+
+    return (
+        <>
+            <HeaderMdx as="h2" id="api">API</HeaderMdx>
+            <Primary />
+            <Controls />
+
+            <hr />
+            <SpectrumStories tag="api" hideTitle={true} />
         </>
     );
 
@@ -65,6 +108,7 @@ export const ConditionalGettingStarted = () => {
 <Meta isTemplate />
 
 <Title />
+<StatusBadge />
 <Subtitle />
 <Description />
 <SingleStoryDescription />
@@ -72,16 +116,19 @@ export const ConditionalGettingStarted = () => {
 <ConditionalGettingStarted />
 
 <ConditionalSection tag="anatomy" title="Anatomy" hideTitle={true} />
+<ConditionalSection tag="upcoming" title="Upcoming features" hideTitle={true} />
+<ConditionalSection tag="usage" hideTitle={true} />
 <ConditionalSection tag="options" title="Options" />
 <ConditionalSection tag="states" title="States" />
 <ConditionalSection tag="behaviors" title="Behaviors" />
 <ConditionalSection tag="a11y" title="Accessibility" hideTitle={true} />
+<ConditionalSection tag="full-pattern" title="Full pattern" />
 
 ## API
 
-<Primary />
-<Controls />
+<ApiTable />
 <AdvancedExamplesStories />
+<ConditionalSection tag="appendix" title="Appendix" hideTitle={true} />
 
 ## Feedback
 

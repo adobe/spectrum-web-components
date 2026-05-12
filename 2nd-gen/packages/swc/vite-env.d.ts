@@ -11,6 +11,7 @@
  */
 
 /// <reference types="vite/client" />
+/// <reference path="../core/global.d.ts" />
 
 declare module '*.css' {
   import { CSSResult } from 'lit';

@@ -23,25 +23,25 @@
       "types": "./dist/components/asset/index.d.ts",
       "import": "./dist/components/asset/index.js"
     },
+    "./components/avatar": {
+      "types": "./dist/components/avatar/index.d.ts",
+      "import": "./dist/components/avatar/index.js"
+    },
     "./components/badge": {
       "types": "./dist/components/badge/index.d.ts",
       "import": "./dist/components/badge/index.js"
+    },
+    "./components/button": {
+      "types": "./dist/components/button/index.d.ts",
+      "import": "./dist/components/button/index.js"
     },
     "./components/divider": {
       "types": "./dist/components/divider/index.d.ts",
       "import": "./dist/components/divider/index.js"
     },
-    "./components/link": {
-      "types": "./dist/components/link/index.d.ts",
-      "import": "./dist/components/link/index.js"
-    },
-    "./components/checkbox": {
-      "types": "./dist/components/checkbox/index.d.ts",
-      "import": "./dist/components/checkbox/index.js"
-    },
-    "./components/radio": {
-      "types": "./dist/components/radio/index.d.ts",
-      "import": "./dist/components/radio/index.js"
+    "./components/icon": {
+      "types": "./dist/components/icon/index.d.ts",
+      "import": "./dist/components/icon/index.js"
     },
     "./components/progress-circle": {
       "types": "./dist/components/progress-circle/index.d.ts",
@@ -51,9 +51,17 @@
       "types": "./dist/components/status-light/index.d.ts",
       "import": "./dist/components/status-light/index.js"
     },
+    "./components/tabs": {
+      "types": "./dist/components/tabs/index.d.ts",
+      "import": "./dist/components/tabs/index.js"
+    },
     "./controllers": {
       "types": "./dist/controllers/index.d.ts",
       "import": "./dist/controllers/index.js"
+    },
+    "./controllers/focus-group-navigation-controller.js": {
+      "types": "./dist/controllers/focus-group-navigation-controller/focus-group-navigation-controller.d.ts",
+      "import": "./dist/controllers/focus-group-navigation-controller/focus-group-navigation-controller.js"
     },
     "./controllers/index.js": {
       "types": "./dist/controllers/index.d.ts",
@@ -139,20 +147,20 @@
       "components/asset": [
         "dist/components/asset/index.d.ts"
       ],
+      "components/avatar": [
+        "dist/components/avatar/index.d.ts"
+      ],
       "components/badge": [
         "dist/components/badge/index.d.ts"
+      ],
+      "components/button": [
+        "dist/components/button/index.d.ts"
       ],
       "components/divider": [
         "dist/components/divider/index.d.ts"
       ],
-      "components/link": [
-        "dist/components/link/index.d.ts"
-      ],
-      "components/checkbox": [
-        "dist/components/checkbox/index.d.ts"
-      ],
-      "components/radio": [
-        "dist/components/radio/index.d.ts"
+      "components/icon": [
+        "dist/components/icon/index.d.ts"
       ],
       "components/progress-circle": [
         "dist/components/progress-circle/index.d.ts"
@@ -160,8 +168,14 @@
       "components/status-light": [
         "dist/components/status-light/index.d.ts"
       ],
+      "components/tabs": [
+        "dist/components/tabs/index.d.ts"
+      ],
       "controllers": [
         "dist/controllers/index.d.ts"
+      ],
+      "controllers/focus-group-navigation-controller/focus-group-navigation-controller.js": [
+        "dist/controllers/ocus-group-navigation-controller/focus-group-navigation-controller.d.ts"
       ],
       "controllers/index.js": [
         "dist/controllers/index.d.ts"
@@ -221,7 +235,7 @@
     "glob": "11.0.3",
     "rimraf": "6.0.1",
     "typescript": "5.9.2",
-    "vite": "7.1.7",
+    "vite": "8.0.8",
     "vite-plugin-dts": "4.5.4"
   },
   "keywords": [

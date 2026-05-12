@@ -10,7 +10,11 @@
  * governing permissions and limitations under the License.
  */
 
-import { html, TemplateResult } from '@spectrum-web-components/base';
+import {
+  html,
+  PropertyValues,
+  TemplateResult,
+} from '@spectrum-web-components/base';
 import {
   property,
   query,
@@ -47,6 +51,28 @@ export class Icon extends IconBase {
 
   public override firstUpdated(): void {
     this.updateIconPromise = this.updateIcon();
+  }
+
+  protected override updated(changes: PropertyValues): void {
+    super.updated(changes);
+    if (window.__swc?.DEBUG) {
+      if (changes.has('name') && this.name !== undefined) {
+        window.__swc.warn(
+          this,
+          `<${this.localName}> the "name" attribute is deprecated and will be removed in Spectrum 2. Slot an SVG directly or use an icon factory function instead.`,
+          'https://opensource.adobe.com/spectrum-web-components/second-gen/?path=/docs/icon-consumer-migration-guide--docs',
+          { level: 'deprecation' }
+        );
+      }
+      if (changes.has('src') && this.src !== undefined) {
+        window.__swc.warn(
+          this,
+          `<${this.localName}> the "src" attribute is deprecated and will be removed in Spectrum 2. Slot an <svg> or <img> element directly instead.`,
+          'https://opensource.adobe.com/spectrum-web-components/second-gen/?path=/docs/icon-consumer-migration-guide--docs',
+          { level: 'deprecation' }
+        );
+      }
+    }
   }
 
   public override attributeChangedCallback(

@@ -1,6 +1,6 @@
 import { Markdown, useOf } from '@storybook/addon-docs/blocks';
 import React from 'react';
-import { formatComponentName } from '../helpers/index.js';
+import { formatTitle } from '../helpers/index.js';
 
 /**
  * A block that renders getting started instructions for a Spectrum Web Component.
@@ -11,42 +11,63 @@ import { formatComponentName } from '../helpers/index.js';
  * @param componentName - Optional override for the component class name (defaults to derived PascalCase from title)
  * @param tagName - Optional override for the custom element tag name (defaults to swc-{packageName})
  */
-export const GettingStarted = ({ of, tags }: { of?: any; tag?: string }) => {
+export const GettingStarted = ({ of, tags }: { of?: any; tags?: string }) => {
   const resolvedOf = useOf(of || 'meta', ['meta']);
 
-  if (tags.includes('utility')) return null;
+  if (tags?.includes('utility')) return null;
 
-  // Extract component name in kebab-case from the title (e.g., "Components/Progress Circle" -> "progress-circle")
-  const packageName = formatComponentName(resolvedOf.preparedMeta?.title);
+  if (tags?.includes('controller')) {
+    // Extract component name in kebab-case from the title (e.g., "Components/Progress Circle" -> "progress-circle")
+    const packageName = formatTitle(resolvedOf.preparedMeta?.title);
 
-  // Extract component name in PascalCase from the title (e.g., "Components/Progress Circle" -> "ProgressCircle")
-  const baseClassName = formatComponentName(
-    resolvedOf.preparedMeta?.title,
-    'pascal'
-  );
+    // Extract component name in PascalCase from the title (e.g., "Components/Progress Circle" -> "ProgressCircle")
+    const baseClassName = formatTitle(resolvedOf.preparedMeta?.title, 'pascal');
+    return (
+      <Markdown>{`## Getting started
 
-  const tagName = `swc-${packageName}`;
+Controllers are not published as packages. Instead, they are imported directly from the core package.
 
-  const markdownContent = `## Getting started
+Import the controller directly from the core package:
+
+\`\`\`typescript
+import { ${baseClassName} } from '@adobe/spectrum-wc/components/core/controllers/${packageName}.js';
+\`\`\`
+`}</Markdown>
+    );
+  }
+
+  if (tags?.includes('migrated')) {
+    // Extract component name in kebab-case from the title (e.g., "Components/Progress Circle" -> "progress-circle")
+    const packageName = formatTitle(resolvedOf.preparedMeta?.title);
+
+    // Extract component name in PascalCase from the title (e.g., "Components/Progress Circle" -> "ProgressCircle")
+    const baseClassName = formatTitle(resolvedOf.preparedMeta?.title, 'pascal');
+
+    const tagName = `swc-${packageName}`;
+
+    const markdownContent = `## Getting started
 
 Add the package to your project:
 
 \`\`\`zsh
-yarn add @spectrum-web-components/${packageName}
+yarn add @adobe/spectrum-wc
 \`\`\`
 
 Import the side effectful registration of \`<${tagName}>\` via:
 
 \`\`\`typescript
-import '@spectrum-web-components/${packageName}/${tagName}.js';
+import '@adobe/spectrum-wc/components/${packageName}/${tagName}.js';
 \`\`\`
 
-When looking to leverage the \`${baseClassName}\` base class as a type and/or for extension purposes, do so via:
+To reference the \`${baseClassName}\` type, import it as a type-only import:
 
 \`\`\`typescript
-import { ${baseClassName} } from '@spectrum-web-components/${packageName}';
+import type { ${baseClassName} } from '@adobe/spectrum-wc/components/${packageName}';
 \`\`\`
+
+> The class is exposed primarily for type purposes. Extending it is possible, but the internal shape is not part of the public API — if you choose to subclass, you do so at your own risk and may need to adjust your code between releases.
 `;
 
-  return <Markdown>{markdownContent}</Markdown>;
+    return <Markdown>{markdownContent}</Markdown>;
+  }
 };

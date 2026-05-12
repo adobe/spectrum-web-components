@@ -1,0 +1,717 @@
+---
+description: Enforces consistent file structure, section separators, meta configuration, story tags, layout parameters, and JSDoc conventions for 2nd-gen Storybook stories files.
+globs: 2nd-gen/packages/swc/components/*/stories/**
+alwaysApply: false
+---
+
+# Storybook stories format standards
+
+Enforce consistent formatting and technical structure for Storybook stories files in 2nd-gen components.
+
+**See also**: `.ai/rules/stories-documentation.md` for comprehensive guidance on WHAT to document (content, patterns, examples).
+
+## Scope
+
+Apply to all `.stories.ts` files in `2nd-gen/packages/swc/components/*/stories/`.
+
+**Note**: Component-specific `.usage.mdx` files are no longer needed. The `DocumentTemplate.mdx` automatically renders all documentation sections based on story tags.
+
+## File structure
+
+### Stories file (`.stories.ts`)
+
+Required structure with visual separators between sections:
+
+1. **Copyright header** (lines 1-11)
+2. **Imports**
+3. **METADATA** - Meta object with component configuration
+4. **HELPERS** - Shared label mappings and utilities (if needed)
+5. **AUTODOCS STORY** - Playground story
+6. **OVERVIEW STORY** - Emblematic default use case shown on the docs page
+7. **ANATOMY STORIES** - Component structure (if applicable)
+8. **OPTIONS STORIES** - Variants, sizes, styles
+9. **STATES STORIES** - Component states (if applicable)
+10. **BEHAVIORS STORIES** - Built-in functionality (if applicable)
+11. **ACCESSIBILITY STORIES** - A11y demonstration
+
+#### Visual separators
+
+```typescript
+// ────────────────
+//    METADATA
+// ────────────────
+
+// ────────────────────
+//    HELPERS
+// ────────────────────
+
+// ────────────────────
+//    AUTODOCS STORY
+// ────────────────────
+
+// ──────────────────────────
+//    OVERVIEW STORY
+// ──────────────────────────
+
+// ──────────────────────────
+//    ANATOMY STORIES
+// ──────────────────────────
+
+// ──────────────────────────
+//    OPTIONS STORIES
+// ──────────────────────────
+
+// ──────────────────────────
+//    STATES STORIES
+// ──────────────────────────
+
+// ──────────────────────────────
+//    BEHAVIORS STORIES
+// ──────────────────────────────
+
+// ────────────────────────────────
+//    ACCESSIBILITY STORIES
+// ────────────────────────────────
+```
+
+## Key Principles
+
+### Always Pass Args Through
+
+When using custom `render` functions, **always** spread `...args` into template calls:
+
+```typescript
+// ✅ Good - args are passed through
+export const MyStory: Story = {
+  render: (args) => html`
+    ${template({ ...args, size: 's' })}
+  `,
+};
+
+// ❌ Bad - args are lost
+export const MyStory: Story = {
+  render: (args) => html`
+    ${template({ size: 's' })}
+  `,
+};
+```
+
+This ensures:
+
+- Storybook controls work correctly
+- Args from the Playground/global level are respected
+- Component defaults can be overridden
+
+### When to Use render vs args
+
+- **Use `args` directly**: When the default render is sufficient (single component, no wrapper)
+- **Use `render: (args) =>`**: When you need multiple instances, custom HTML structure, or conditional rendering
+
+```typescript
+// ✅ Good - simple case uses args
+export const Overview: Story = {
+  args: { size: 'm', label: 'Example' },
+  tags: ['overview'],
+};
+
+// ✅ Good - complex case uses render with args
+export const Sizes: Story = {
+  render: (args) => html`
+    ${template({ ...args, size: 's' })} ${template({ ...args, size: 'm' })}
+    ${template({ ...args, size: 'l' })}
+  `,
+  tags: ['options'],
+};
+```
+
+### Documentation sections (auto-generated)
+
+**Component-specific `.usage.mdx` files are no longer needed.** The `DocumentTemplate.mdx` automatically renders all standard documentation sections based on story tags:
+
+- **Anatomy** (tag: `anatomy`) - Rendered with `hideTitle`
+- **Options** (tag: `options`)
+- **States** (tag: `states`)
+- **Behaviors** (tag: `behaviors`)
+- **Accessibility** (tag: `a11y`) - Rendered with `hideTitle`
+
+Each section only renders if stories with the corresponding tag exist. The template handles:
+
+- Installation instructions (auto-generated)
+- Section headers and ordering
+- Conditional rendering based on story availability
+
+**What you need to do**: Just tag your stories appropriately. The documentation structure is handled automatically.
+
+## Meta configuration
+
+### Required fields
+
+```typescript
+/**
+ * Component description explaining its purpose and key features.
+ *
+ * This description is displayed in the Overview story. It should provide context about
+ * what the component does and when to use it. If referencing other components, link to
+ * their Storybook paths using relative URLs (e.g., `<swc-badge>` becomes
+ * `[Badge](../?path=/docs/badge--overview)`).
+ */
+const meta: Meta = {
+  title: 'Component name',
+  component: 'swc-component-name',
+  args,
+  argTypes,
+  render: (args) => template(args),
+  parameters: {
+    actions: { handles: events }, // If events exist
+    docs: {
+      subtitle: `Component description`, // Required - displayed in Overview, cannot include links
+    },
+    design: { type: 'figma', url: 'https://www.figma.com/...' }, // Recommended
+    stackblitz: { url: 'https://stackblitz.com/...' }, // Recommended
+  },
+  tags: ['migrated'],
+};
+```
+
+**Important notes:**
+
+- **JSDoc description above meta**: Displayed in the Overview story. Can include markdown links to other components.
+- **`parameters.docs.subtitle`**: Displayed as the subtitle in the Overview story. Cannot include links (plain text only).
+- **Avoid repetition**: The subtitle and JSDoc description should complement each other, not duplicate content. The subtitle is a brief summary; the JSDoc provides fuller context.
+- **Component links**: When referencing other components in the JSDoc description, use relative Storybook paths: `[ComponentName](../?path=/docs/component-name--overview)`
+
+## Layout and decorators
+
+Use `flexLayout: 'row-wrap'` for stories displaying multiple items (sizes, variants, states). This applies flex layout with consistent spacing.
+
+```typescript
+export const Sizes: Story = {
+  render: () => html`
+    <swc-badge size="s">Small</swc-badge>
+    <swc-badge size="m">Medium</swc-badge>
+    <swc-badge size="l">Large</swc-badge>
+    <swc-badge size="xl">Extra-large</swc-badge>
+  `,
+  parameters: { flexLayout: 'row-wrap' },
+  tags: ['options'],
+};
+```
+
+### Customizing layout
+
+Extend with `parameters.styles` or use styles alone for custom layouts:
+
+```typescript
+export const Sizes: Story = {
+  parameters: {
+    flexLayout: 'row-wrap',
+    styles: {
+      'flex-wrap': 'wrap',
+      'max-inline-size': '80ch',
+    },
+  },
+};
+
+// Or fully custom (no flex defaults):
+export const GridLayout: Story = {
+  parameters: {
+    styles: {
+      display: 'grid',
+      'grid-template-columns': 'repeat(3, 1fr)',
+    },
+  },
+};
+```
+
+### Static color decorator
+
+For static color stories, use `staticColorsDemo: true` with `flexLayout: 'row-wrap'`:
+
+```typescript
+export const StaticColors: Story = {
+    render: (args) => html`
+        ${['white', 'black'].map((color) => template({ 'static-color': color }),
+    parameters: {
+        flexLayout: 'row-wrap',
+        staticColorsDemo: true
+    },
+    tags: ['options', '!test'],
+};
+```
+
+The decorator displays two background zones—dark gradient for `static-color="white"` content, light gradient for `static-color="black"` content.
+
+## Story ordering
+
+Control display order within sections using `section-order`. Stories sort by lowest value first, then alphabetically for ties or missing values.
+
+```typescript
+export const Sizes: Story = {
+  tags: ['options'],
+  parameters: { 'section-order': 1 },
+};
+
+export const StaticColors: Story = {
+  tags: ['options'],
+  parameters: { 'section-order': 10 },
+};
+```
+
+## Tags
+
+### Required tags
+
+| Tag                   | Usage                                         |
+| --------------------- | --------------------------------------------- |
+| `'autodocs'`, `'dev'` | Playground story only                         |
+| `'overview'`          | Overview story                                |
+| `'anatomy'`           | Anatomy stories                               |
+| `'options'`           | Variant, size, and style stories              |
+| `'states'`            | State demonstration stories                   |
+| `'behaviors'`         | Method, event, and automatic behavior stories |
+| `'a11y'`              | Accessibility story                           |
+| `'migrated'`          | On meta object                                |
+
+### Optional tags
+
+- `'description-only'` - Story contains only descriptive content (no interactive component rendered)
+- `'upcoming'` - Story demonstrates a feature or variant that is not yet available
+
+### Exclusion tags
+
+- `'!dev'` - Exclude from the development Storybook sidebar without affecting tests
+- `'!test'` - Exclude from **all three** automated test runners simultaneously: Vitest play functions, aXe WCAG compliance, and VRT snapshots. Use only when testing would produce false positives due to context the test runner cannot see — the canonical case is static-color stories, where axe evaluates contrast against the page background rather than the decorator gradient. **When you apply `'!test'` to a story, you must add a corresponding test story with a custom render and `parameters: { staticColorsDemo: true }` to restore behavioral coverage.** Do not apply `'!test'` because a story is complex, has no `play` function, or has a real accessibility issue. See [Excluding stories from tests](../../CONTRIBUTOR-DOCS/02_style-guide/04_testing/01_testing-overview.md#excluding-stories-from-tests).
+
+## Story types
+
+### Playground
+
+First story after meta. No JSDoc comment. Set args to the most common use case—this appears as the docs page preview.
+
+```typescript
+export const Playground: Story = {
+  args: {
+    /* most common use case */
+  },
+  tags: ['autodocs', 'dev'],
+};
+```
+
+**Note**: Use `args` directly (not `render`) when the default render is sufficient. Only use `render: (args) => html` when you need custom rendering.
+
+Include comprehensive JSDoc comment above the meta object explaining what the component does.
+
+Every story export must have a JSDoc comment explaining:
+
+- What it demonstrates
+- Any important context or usage notes
+- Best practices if relevant
+
+**Exceptions**: Do NOT add JSDoc comments above the Playground or Overview stories.
+
+Use markdown formatting within JSDoc:
+
+- `**Bold**` for emphasis
+- Bullet lists for multiple points
+- Code formatting with backticks
+
+```typescript
+/**
+ * A `<swc-component-name>` is a UI element that displays a **status** or **message**.
+ */
+export const Playground: Story = {
+  args: {
+    /* most common use case */
+  },
+  tags: ['autodocs', 'dev'],
+};
+```
+
+### Overview
+
+Quick introduction showing the component in its most common use case. No JSDoc comment needed.
+
+```typescript
+export const Overview: Story = {
+  args: {
+    // Most common/representative configuration
+  },
+  tags: ['overview'],
+};
+```
+
+**Note**: Use `args` directly when possible. Only use `render: (args) =>` if you need custom HTML structure around the component.
+
+### Anatomy
+
+Document all slots and content-rendering properties (e.g., `label`, `icon`, `src`). Combine variations into one story.
+
+**Important**: When using `render: (args) =>`, **always** spread `...args` into template calls to ensure Storybook controls work correctly.
+
+```typescript
+/**
+ * A component-name consists of:
+ *
+ * - **Default slot**: Primary content
+ * - **icon slot**: Optional icon element
+ * - **label**: Text label rendered by the component
+ */
+export const Anatomy: Story = {
+  render: (args) => html`
+    ${template({ ...args /* text only */ })}
+    ${template({ ...args /* icon only */ })}
+    ${template({ ...args /* text + icon */ })}
+  `,
+  tags: ['anatomy'],
+  parameters: { flexLayout: 'row-wrap' },
+};
+```
+
+### Options
+
+Document every attribute/property not covered in Anatomy, States, or Behaviors. Consolidate related options into single stories. Use this order for story section-order:
+
+| Story                     | Content                                           |
+| ------------------------- | ------------------------------------------------- |
+| `Sizes`                   | All size variants                                 |
+| `SemanticVariants`        | Positive, informative, negative, notice, neutral  |
+| `NonSemanticVariants`     | Color-coded categories (seafoam, indigo, etc.)    |
+| `StaticColors`            | Static color pattern (see below)                  |
+| `Quiet/Subtle/Emphasized` | Quiet, subtle, emphasized variants                |
+| `Outline`                 | Outline variants                                  |
+| `Positioning`             | Positioning modifiers (fixed, absolute, relative) |
+
+```typescript
+/**
+ * Components come in multiple sizes to fit various contexts.
+ */
+export const Sizes: Story = {
+  render: (args) => html`
+    ${template({ ...args, size: 's', label: 'Small' })}
+    ${template({ ...args, size: 'm', label: 'Medium' })}
+    ${template({ ...args, size: 'l', label: 'Large' })}
+  `,
+  tags: ['options'],
+  parameters: { flexLayout: 'row-wrap' },
+};
+
+/**
+ * Semantic variants provide meaning through color.
+ *
+ * Use these variants for the following statuses:
+ *
+ * - **Informative**: active, in use, live, published
+ * - **Neutral**: archived, deleted, paused, draft, not started, ended
+ * - **Positive**: approved, complete, success, new, purchased, licensed
+ * - **Notice**: needs approval, pending, scheduled, syncing, indexing, processing
+ * - **Negative**: error, alert, rejected, failed
+ *
+ */
+export const SemanticVariants: Story = {
+  render: (args) => html`
+    ${template({ ...args, variant: 'positive' })}
+    ${template({ ...args, variant: 'informative' })}
+    ${template({ ...args, variant: 'negative' })}
+    ${template({ ...args, variant: 'notice' })}
+    ${template({ ...args, variant: 'neutral' })}
+  `,
+  tags: ['options'],
+};
+
+/**
+ * Non-semantic variants use color-coded categories.
+ */
+export const NonSemanticVariants: Story = {
+  render: (args) => html`
+    ${template({ ...args, variant: 'seafoam' })}
+    ${template({ ...args, variant: 'indigo' })} ${/* ... other colors */ ''}
+  `,
+  tags: ['options'],
+};
+```
+
+#### Static color pattern
+
+For components with a `static-color` attribute, use whichever of these two patterns best fits the component's visual surface:
+
+**Three-story pattern** — use when each color can be shown independently (simple components with a single fill style):
+
+1. **`StaticBlack`** - `static-color="black"` on light background
+2. **`StaticWhite`** - `static-color="white"` on dark background
+3. **`StaticColors`** - Both variants side-by-side
+
+```typescript
+/**
+ * Use `static-color` for display over images or colored backgrounds.
+ */
+export const StaticBlack: Story = {
+  args: { 'static-color': 'black' },
+  parameters: { styles: { color: 'black' } },
+  tags: ['options'],
+};
+
+export const StaticWhite: Story = {
+  args: { 'static-color': 'white' },
+  parameters: { styles: { color: 'white' } },
+  tags: ['options'],
+};
+
+export const StaticColors: Story = {
+  render: (args) => html`
+    ${['white', 'black'].map(
+      (color) => html`
+        ${template({ ...args, 'static-color': color })}
+      `
+    )}
+  `,
+  parameters: { flexLayout: 'row-wrap', staticColorsDemo: true },
+  tags: ['options', '!test'],
+};
+```
+
+**Combined-story pattern** — use when the component has additional dimensions (e.g., fill styles) that are most clearly shown together in a single story. Use structural `<div>` wrappers instead of `flexLayout` here: the `staticColorsDemo` decorator targets `:first-child` and `:last-child` to apply the dark/light background zones, so the two color groups must be direct children of the render output.
+
+```typescript
+/**
+ * Use `static-color` for display over images or colored backgrounds.
+ * Both fill styles are shown for each color.
+ */
+export const StaticColors: Story = {
+  render: (args) => html`
+    <div
+      style="display: flex; gap: 16px; flex-wrap: wrap; justify-content: center;"
+    >
+      ${FILL_STYLES.map((fillStyle) =>
+        template({ ...args, 'static-color': 'white', 'fill-style': fillStyle })
+      )}
+    </div>
+    <div
+      style="display: flex; gap: 16px; flex-wrap: wrap; justify-content: center;"
+    >
+      ${FILL_STYLES.map((fillStyle) =>
+        template({ ...args, 'static-color': 'black', 'fill-style': fillStyle })
+      )}
+    </div>
+  `,
+  parameters: { staticColorsDemo: true },
+  tags: ['options', '!test'],
+};
+```
+
+In the three-story pattern, `staticColorsDemo: true` enables the background zone decorator and `flexLayout: 'row-wrap'` handles item spacing. In the combined-story pattern, use structural `<div>` children instead of `flexLayout` so the decorator's `:first-child`/`:last-child` zone targeting is preserved.
+
+### States
+
+Combine all states into one story when possible.
+
+```typescript
+/**
+ * Components can exist in various states.
+ */
+export const States: Story = {
+  render: (args) => html`
+    ${template({ ...args })} ${template({ ...args, selected: true })}
+    ${template({ ...args, disabled: true })}
+  `,
+  tags: ['states'],
+  parameters: { flexLayout: 'row-wrap' },
+};
+```
+
+Complex states (e.g., animated indeterminate) may warrant separate stories.
+
+```typescript
+/**
+ * Indeterminate state shows unknown progress.
+ */
+export const Indeterminate: Story = {
+  tags: ['states'],
+  args: {
+    indeterminate: true,
+  },
+};
+```
+
+### Behaviors
+
+Document automatic (built-in) behaviors, like text-wrapping, as well as, all methods, and all events.
+
+```typescript
+/**
+ * Long text automatically wraps to multiple lines.
+ */
+export const TextWrapping: Story = {
+  render: (args) => html`
+    ${template({ 'default-slot': 'Long text that wraps to multiple lines' })}
+  `,
+  tags: ['behaviors'],
+};
+```
+
+### Accessibility
+
+Required for every component. Document features and best practices.
+
+```typescript
+/**
+ * ### Features
+ * The `<sp-component-name>` element implements several accessibility features:
+ *
+ * 1. **Feature name**: Description (e.g., keyboard navigation, ARIA states, roles, properties)
+ * 2. **Feature name**: Description
+ *
+ * ### Best practices
+ *
+ * - Best practice, such as, "Always provide a descriptive label"
+ * - Best practice, such as, "Ensure sufficient color contrast"
+ */
+export const Accessibility: Story = {
+  tags: ['a11y'],
+};
+```
+
+## JSDoc requirements
+
+Every story export requires a JSDoc comment explaining what it demonstrates, **except Playground**.
+
+Use markdown formatting:
+
+- `**Bold**` for emphasis
+- Bullet lists for multiple points
+- Backticks for code
+
+```typescript
+/**
+ * Semantic variants provide meaning through color:
+ * - **Positive**: approved, complete, success
+ * - **Negative**: error, alert, rejected
+ */
+export const SemanticVariants: Story = {
+  /* ... */
+};
+```
+
+## Accessibility requirements
+
+All stories must demonstrate accessible usage:
+
+1. **Include required labels** - `label`, `aria-label`, or slot content as needed
+2. **Use meaningful content** - No "Lorem ipsum" placeholder text
+3. **Show proper ARIA usage** - Correct attributes when applicable
+4. **Never show inaccessible patterns**
+
+| Component type      | Required                     |
+| ------------------- | ---------------------------- |
+| Progress indicators | `label` attribute            |
+| Buttons/actions     | Visible text or `aria-label` |
+| Form fields         | `<label>` or `aria-label`    |
+| Images/icons        | `alt` or `aria-label`        |
+
+```typescript
+// ✅ Good
+export const Sizes: Story = {
+  render: (args) => html`
+    ${template({ ...args, size: 's', label: 'Uploading file' })}
+    ${template({ ...args, size: 'm', label: 'Processing request' })}
+  `,
+};
+
+// ❌ Bad - missing required label
+export const Sizes: Story = {
+  render: (args) => html`
+    ${template({ ...args, size: 's' })} ${template({ ...args, size: 'm' })}
+  `,
+};
+```
+
+## Image assets
+
+When stories require placeholder images, use the [picsum.photos](https://picsum.photos/) API instead of local image assets. This keeps the repository lightweight and provides consistent, high-quality images.
+
+### Use static IDs for VRT consistency
+
+**Always use static image IDs** to ensure visual regression tests (VRTs) produce consistent snapshots. Random images cause false positives in VRT comparisons.
+
+**URL format**: `https://picsum.photos/id/{ID}/{WIDTH}/{HEIGHT}`
+
+```typescript
+// ✅ Good - static ID ensures consistent VRT snapshots
+'default-slot': `<img src="https://picsum.photos/id/64/80/80" alt="User avatar" />`
+
+// ✅ Good - with blur effect
+'default-slot': `<img src="https://picsum.photos/id/56/80/80/?blur=2" alt="Background preview" />`
+
+// ❌ Bad - random image causes VRT failures
+'default-slot': `<img src="https://picsum.photos/80/80" alt="Random image" />`
+```
+
+### Recommended static IDs
+
+Use these IDs for common use cases:
+
+| ID  | Description        | Example URL                          |
+| --- | ------------------ | ------------------------------------ |
+| 64  | Portrait/avatar    | `https://picsum.photos/id/64/80/80`  |
+| 56  | Background/texture | `https://picsum.photos/id/56/80/80`  |
+| 823 | Person/profile     | `https://picsum.photos/id/823/80/80` |
+
+### Example usage
+
+```typescript
+const anatomyArgs = [
+  {
+    variant: 'file',
+    label: 'README.md',
+  },
+  {
+    label: 'User avatar',
+    'default-slot': `<img src="https://picsum.photos/id/64/80/80" alt="User avatar preview" />`,
+  },
+];
+
+export const Anatomy: Story = {
+  render: (args) => html`
+    ${anatomyArgs.map((arg) => template({ ...args, ...arg }))}
+  `,
+  tags: ['anatomy'],
+};
+```
+
+See `asset.stories.ts` for complete examples.
+
+## Quick reference
+
+### ❌ Don't
+
+- Add JSDoc to Playground or Overview story
+- Use 'usage' tag (deprecated)
+- Omit `subtitle` in meta parameters
+- Use placeholder text
+- Demonstrate inaccessible patterns
+
+### ✅ Do
+
+- Tag stories correctly: `anatomy`, `options`, `states`, `behaviors`, `a11y`
+- Use `flexLayout: 'row-wrap'` for multi-item stories
+- Include comprehensive JSDoc (except Playground and Overview)
+- Use meaningful, realistic content
+- Let the DocumentTemplate handle section rendering automatically
+
+## Checklist
+
+- [ ] Copyright header (2025)
+- [ ] Visual separators between sections
+- [ ] Meta: title, component, args, argTypes, render, `parameters.docs.subtitle`, `tags: ['migrated']`
+- [ ] Meta JSDoc description above meta object (with component links if applicable)
+- [ ] Subtitle is concise and non-repetitive (plain text only, no links)
+- [ ] Playground: `['autodocs', 'dev']` tags, no JSDoc, common use case args
+- [ ] Overview: `['overview']` tag, common use case args, no JSDoc on story itself
+- [ ] Anatomy: all slots + content properties, `['anatomy']` tag, `flexLayout: 'row-wrap'`
+- [ ] Options: all uncovered attributes, `['options']` tag, `flexLayout: 'row-wrap'`
+- [ ] States: consolidated states, `['states']` tag, `flexLayout: 'row-wrap'` (if applicable)
+- [ ] Behaviors: `['behaviors']` tag (if applicable)
+- [ ] Accessibility: features + best practices, `['a11y']` tag
+- [ ] Static colors: three-story or combined-story pattern with `staticColorsDemo` (if applicable)
+- [ ] Story order: `section-order` parameter where needed
+- [ ] All stories accessible with meaningful content
+- [ ] Image assets: use `picsum.photos` with static IDs (if applicable)

@@ -1,0 +1,95 @@
+/**
+ * Copyright 2026 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+import { PropertyValues, SpectrumElement } from '@spectrum-web-components/base';
+import { property } from '@spectrum-web-components/base/src/decorators.js';
+import { SizedMixin } from '@spectrum-web-components/base/src/sizedMixin.js';
+
+import {
+  STATUSLIGHT_VALID_SIZES,
+  type StatusLightVariant,
+} from './StatusLight.types.js';
+
+/**
+ * A status light is a great way to convey semantic meaning and the condition of an entity, such as statuses and categories.
+ *
+ * @slot - The text label of the status light.
+ * @attribute {ElementSize} size - The size of the status light.
+ */
+export abstract class StatusLightBase extends SizedMixin(SpectrumElement, {
+  validSizes: STATUSLIGHT_VALID_SIZES,
+  noDefaultSize: true,
+}) {
+  // ─────────────────────────
+  //     API TO OVERRIDE
+  // ─────────────────────────
+
+  /**
+   * @internal
+   *
+   * A readonly array of the valid color variants for the status light.
+   */
+  static readonly VARIANTS_COLOR: readonly string[];
+
+  /**
+   * @internal
+   *
+   * A readonly array of the valid semantic variants for the status light.
+   */
+  static readonly VARIANTS_SEMANTIC: readonly string[];
+
+  /**
+   * @internal
+   *
+   * A readonly array of all valid variants for the status light.
+   */
+  static readonly VARIANTS: readonly string[];
+
+  /**
+   * @internal
+   *
+   * The variant of the status light.
+   */
+  @property({ type: String, reflect: true })
+  public variant: StatusLightVariant = 'info';
+
+  // ──────────────────────
+  //     IMPLEMENTATION
+  // ──────────────────────
+
+  protected override updated(changes: PropertyValues): void {
+    super.updated(changes);
+    if (window.__swc?.DEBUG) {
+      const constructor = this.constructor as typeof StatusLightBase;
+      if (!constructor.VARIANTS.includes(this.variant)) {
+        window.__swc.warn(
+          this,
+          `<${this.localName}> element expects the "variant" attribute to be one of the following:`,
+          'https://opensource.adobe.com/spectrum-web-components/components/status-light/#variants',
+          {
+            issues: [...constructor.VARIANTS],
+          }
+        );
+      }
+      // Check disabled property if it exists (S1 only)
+      if (this.hasAttribute('disabled') && !('disabled' in this)) {
+        window.__swc.warn(
+          this,
+          `<${this.localName}> element does not support the disabled state.`,
+          'https://opensource.adobe.com/spectrum-web-components/components/status-light/#states',
+          {
+            issues: ['disabled is not a supported property in Spectrum 2'],
+          }
+        );
+      }
+    }
+  }
+}

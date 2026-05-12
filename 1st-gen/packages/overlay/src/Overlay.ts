@@ -400,6 +400,19 @@ export class Overlay extends ComputedOverlayBase {
   triggerInteraction?: TriggerInteraction;
 
   /**
+   * When set to `'none'`, the overlay will not set `aria-describedby` on the
+   * trigger when open, so the trigger is not described by the overlay content.
+   * Use for hint overlays whose content duplicates the trigger (e.g. truncated
+   * value tooltips) to avoid double announcement by screen readers.
+   *
+   * @internal
+   * @type {"auto" | "none"}
+   * @default "auto"
+   */
+  @property({ attribute: false })
+  describeTrigger: 'auto' | 'none' = 'auto';
+
+  /**
    * Configures the open/close heuristics of the Overlay.
    *
    * @type {"auto" | "hint" | "manual" | "modal" | "page"}
@@ -583,8 +596,14 @@ export class Overlay extends ComputedOverlayBase {
     }
     if (targetOpenState) {
       const focusTrap = await import('focus-trap');
+      // When `receives-focus="false"`, pass `initialFocus: false` so the trap
+      // still captures Tab but does not move focus on activation. Without this,
+      // focus-trap would move focus before `applyFocus` runs, bypassing the
+      // `receivesFocus === 'false'` guard there.
+      const initialFocus =
+        this.receivesFocus === 'false' ? false : focusEl || undefined;
       this._focusTrap = focusTrap.createFocusTrap(this.dialogEl, {
-        initialFocus: focusEl || undefined,
+        initialFocus,
         tabbableOptions: {
           getShadowRoot: true,
         },

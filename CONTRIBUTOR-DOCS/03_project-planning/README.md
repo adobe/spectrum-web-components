@@ -26,8 +26,10 @@
     - [Component Improvements](02_workstreams/04_component-improvements/README.md)
     - [1st-gen Spectrum 2 Enhancements](02_workstreams/05_1st-gen-spectrum-2-enhancements/README.md)
 - [Components](03_components/README.md)
+    - Accordion
     - Action Button
     - Action Group
+    - Action Menu
     - Alert Banner
     - Asset
     - Avatar
@@ -36,6 +38,7 @@
     - Button Group
     - Checkbox
     - Color Field
+    - Color Loupe
     - Divider
     - Dropzone
     - Field Group
@@ -45,10 +48,15 @@
     - Infield Button
     - Infield Progress Circle
     - Link
+    - Menu
+    - Menu Group
+    - Menu Item
+    - Menu Separator
     - Meter
     - Number Field
     - Opacity Checkerboard
     - Picker Button
+    - Popover
     - Progress Bar
     - Progress Circle
     - Radio
@@ -58,12 +66,15 @@
     - Swatch
     - Swatch Group
     - Switch
+    - Tabs
     - Tag
     - Tags
     - Textfield
     - Thumbnail
     - Tooltip
 - [Milestones](04_milestones/README.md)
+- Strategies
+    - [Focus Management Strategy: 2nd-Gen Proposal](05_strategies/focus-management-strategy-rfc.md)
 
 </details>
 
