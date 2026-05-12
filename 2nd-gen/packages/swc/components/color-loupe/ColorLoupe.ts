@@ -25,7 +25,6 @@ import styles from './color-loupe.css';
  * color selection controls such as `<swc-color-field>`.
  *
  * @element swc-color-loupe
- * @status unsupported
  * @since 0.0.1
  *
  * @example
