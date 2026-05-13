@@ -18,12 +18,13 @@ import { fileURLToPath } from 'url';
 import { mergeConfig } from 'vite';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-type StorybookMode = 'dev' | 'build' | 'ci-a11y';
 
 // Modes:
 // - dev: full local Storybook, including docs and test stories
 // - build: production Storybook build, excluding internal and test stories
 // - ci-a11y: minimal component-only Storybook used by CI accessibility checks
+type StorybookMode = 'dev' | 'build' | 'ci-a11y';
+
 const storybookMode: StorybookMode =
   process.env.SWC_STORYBOOK_MODE === 'ci-a11y'
     ? 'ci-a11y'
@@ -79,35 +80,19 @@ const stories: StorybookConfig['stories'] = [
  * that can pull in 1st-gen-linked dependencies the test build does not need.
  */
 if (storybookMode !== 'ci-a11y') {
+  stories.push({
+    directory: '../components',
+    // Production-style builds exclude internal-only docs; local/dev keeps the full set.
+    files: storybookMode === 'build' ? '**/!(*.internal).mdx' : '**/*.mdx',
+    titlePrefix: 'Components',
+  });
+
   stories.push(
-    {
-      directory: '../components',
-      files: '**/*.mdx',
-      titlePrefix: 'Components',
-    },
-    // Consumer landing — empty until Phase 7 populates .storybook/docs/get-started/index.mdx
+    // Consumer landing — empty until Phase 7 populates docs/get-started/index.mdx
     {
       directory: 'docs/get-started',
       files: '**/*.mdx',
       titlePrefix: 'Get started',
-    },
-    // Reference — consumer-audience reference content (MDX SSOTs).
-    // Phase 9 added the component status matrix. Core (below) will eventually
-    // become a child of Reference in a follow-up phase.
-    {
-      directory: 'docs/reference',
-      files: '**/*.mdx',
-      titlePrefix: 'Reference',
-    },
-    // Reference / core package — keeps Core titlePrefix for now; folding Core
-    // under Reference is a follow-up (would change /docs/core-* routes).
-    {
-      ...CORE_STORY_ROOT,
-      files: '**/*.mdx',
-    },
-    {
-      ...CORE_STORY_ROOT,
-      files: '**/stories/*.stories.ts',
     },
     // Learn — consumer-audience educational content (about SWC, customization, accessibility).
     // MDX SSOTs hand-authored in .storybook/docs/learn/ for live demos and rich UX.
@@ -116,12 +101,35 @@ if (storybookMode !== 'ci-a11y') {
       files: '**/*.mdx',
       titlePrefix: 'Learn',
     },
+    // Reference — consumer-audience reference content (MDX SSOTs).
+    // Component status, design tokens, changelog, support, migration guides.
     {
-      directory: '../components',
+      directory: 'docs/reference',
       files: '**/*.mdx',
-      titlePrefix: 'Components',
+      titlePrefix: 'Reference',
+    },
+    // Resources — changelog, migrate from gen1, support and compatibility.
+    {
+      directory: 'docs/resources',
+      files: '**/*.mdx',
+      titlePrefix: 'Resources',
     }
   );
+
+  // Core package — visible in dev only. Folding Core under Reference is a
+  // follow-up that would change /docs/core-* routes for existing consumers.
+  if (storybookMode !== 'build') {
+    stories.push(
+      {
+        ...CORE_STORY_ROOT,
+        files: '**/*.mdx',
+      },
+      {
+        ...CORE_STORY_ROOT,
+        files: '**/stories/*.stories.ts',
+      }
+    );
+  }
 
   // Contribute subtree is dev-only. Production Storybook ships the consumer-facing surface only;
   // contributor docs are consumed via GitHub or local `yarn dev` instead.
@@ -154,8 +162,9 @@ if (storybookMode === 'dev') {
 }
 
 /**
- * ci-a11y mode needs docs (for MDX parsing) and a11y; everything else
- * (designs, vitest, chromatic, screen-reader) is unnecessary overhead.
+ * ci-a11y mode needs docs (for MDX parsing); addon-a11y is excluded because
+ * the test-runner handles axe analysis directly. Everything else (designs,
+ * vitest, chromatic, screen-reader) is unnecessary overhead.
  */
 const addons: StorybookConfig['addons'] = [
   {
@@ -169,12 +178,12 @@ const addons: StorybookConfig['addons'] = [
       },
     },
   },
-  '@storybook/addon-a11y',
   '@github-ui/storybook-addon-performance-panel/universal',
 ];
 
 if (storybookMode !== 'ci-a11y') {
   addons.push(
+    '@storybook/addon-a11y',
     '@storybook/addon-designs',
     '@storybook/addon-vitest',
     '@chromatic-com/storybook',
@@ -185,7 +194,7 @@ if (storybookMode !== 'ci-a11y') {
 const config: StorybookConfig = {
   stories,
   docs: {
-    defaultName: 'README',
+    defaultName: 'Docs',
   },
   framework: '@storybook/web-components-vite',
   core: {
@@ -236,14 +245,27 @@ const config: StorybookConfig = {
         },
       ],
       resolve: {
-        alias: {
-          '@spectrum-web-components/core': resolve(__dirname, '../../core'),
-          '@adobe/spectrum-wc': resolve(__dirname, '../components'),
-          '@adobe/postcss-token': resolve(
-            __dirname,
-            '../../tools/postcss-token'
-          ),
-        },
+        alias: [
+          {
+            find: '@spectrum-web-components/core',
+            replacement: resolve(__dirname, '../../core'),
+          },
+          // Long-form imports (e.g. `@adobe/spectrum-wc/components/badge/swc-badge.js`)
+          // resolve directly to the source under `./components`. This must come
+          // before the short-form alias below so the more specific prefix wins.
+          {
+            find: '@adobe/spectrum-wc/components',
+            replacement: resolve(__dirname, '../components'),
+          },
+          {
+            find: '@adobe/spectrum-wc',
+            replacement: resolve(__dirname, '../components'),
+          },
+          {
+            find: '@adobe/postcss-token',
+            replacement: resolve(__dirname, '../../tools/postcss-token'),
+          },
+        ],
       },
     });
   },

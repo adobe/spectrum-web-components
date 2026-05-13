@@ -74,6 +74,10 @@ export const components: Record<string, ComponentOverride> = {
     parity: 'full',
     notes: 'Stable component shape; public API frozen.',
   },
+  'color-loupe': {
+    parity: 'partial',
+    notes: 'Migrated in #6184; design parity tracked against the Spectrum 2 spec.',
+  },
   // Add other components as their parity/Figma/StackBlitz/Notes information becomes available.
   // Example template:
   //   '<short-name>': {

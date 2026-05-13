@@ -667,37 +667,71 @@ The MDX file at `.storybook/docs/learn/when-to-use-swc.mdx` (moved there in Phas
 
 ### Phase 11 — Validate
 
+The validation gate has three programmatic checks (hard fail) and two manual checks (eye-test). All five must pass before Phase 12 (commit + PR) starts.
+
+**Programmatic gates (hard fail if any reports an error):**
+
 ```bash
-# From repo root
-yarn install
-yarn build
-
-# From 2nd-gen/packages/swc
-yarn generate:contributor-docs     # generator runs cleanly, emits to .storybook/docs/contribute/
-yarn dev                           # Storybook starts; sidebar shows Get started, Components, Patterns, Learn, Reference, Contribute
-yarn build-storybook               # production build succeeds; Contribute section absent from build output
-
-# Nav script handles the new tree
+# Gate 1 — CONTRIBUTOR-DOCS link integrity
 node CONTRIBUTOR-DOCS/for-contributors/authoring-contributor-docs/update-nav.js
+# expected: "✅ All links valid!"
+
+# Gate 2 — Storybook auto-generated content emits cleanly
+cd 2nd-gen/packages/swc && yarn generate:contributor-docs
+# expected: "Generated N .mdx files in .storybook/docs/contribute" — no warnings about
+# unresolvable links other than the known plan-template placeholders
+
+# Gate 3 — Storybook DEV build starts AND indexes every page cleanly
+cd 2nd-gen/packages/swc && yarn storybook
+# Watch the startup output. The gate FAILS if any of these appear:
+#   "🚨 Unable to index ./.storybook/..."   (MDX parse / JSX import error)
+#   "Could not parse expression with acorn" (raw JSX comment or stray conflict marker)
+#   "Cannot find module"                    (broken relative import — story / asset / data file)
+#   "Module not found"                      (same)
+#   "Custom element ... already defined"    (double-registration; usually fine but a smell)
+# expected: "Storybook ready! - Local: http://localhost:6006/" with no 🚨 above it
+
+# Gate 4 — Storybook PRODUCTION build succeeds AND ships only the consumer surface
+cd 2nd-gen/packages/swc && yarn storybook:build
+# Inspect storybook-static/index.json (or open the built site):
+#   - The route prefixes /docs/contribute-* must be ABSENT
+#   - The route prefixes /docs/core-* must be ABSENT
+#   - The route prefixes /docs/get-started-*, /docs/learn-*, /docs/reference-*,
+#     /docs/resources-*, /docs/components-* must all be PRESENT
+# expected: production build completes; gated routes excluded
 ```
 
-**Manual smoke test in Storybook (`yarn dev`):**
+**Why each gate matters (lessons from this branch):**
 
-- `Get started` is first in the sidebar with the consumer landing page rendered and the live `<swc-badge>` visible
+- Gate 1 was the only check we ran for most of the build; it catches CONTRIBUTOR-DOCS link rot but says nothing about Storybook's MDX layer.
+- Gate 2 catches generator regressions (wrong output path, missing folder, malformed MDX emission).
+- Gate 3 catches every class of breakage that bit us during the merge with main:
+  - Stale conflict markers that slip past the standard 7-char grep (rename/rename conflicts use 8-char markers)
+  - Broken relative imports in MDX (depth-shifted `../assets/` or `../../../components/` paths)
+  - Imports of files that don't define what they used to (e.g. `components/badge/index.js` no longer registers `<swc-badge>` after the per-element side-effect refactor in #6273 — must import `swc-badge.js` for registration)
+  - JSX/MDX syntax errors in hand-authored content
+  Storybook reports each as `🚨 Unable to index ./.storybook/...`. **One such message = gate failure.**
+- Gate 4 catches the consumer-surface contract (Contribute and Core must be hidden from the public site).
+
+**Manual smoke test in `yarn dev` (after Gate 3 passes):**
+
+- `Get started` is first in the sidebar with the consumer landing page rendered and the live `<swc-badge>` visible (proves runtime element registration + asset imports work)
 - `Components` ordering is unchanged from current main
-- `Learn → Customization → Cheatsheet` is the first child, followed by the five long-form docs (Getting started, Component styles, Fonts, Global elements, Theme and scales)
-- `Learn → Accessibility → Overview` shows the existing accessibility content at its new location
-- Typography story's `/docs/learn-customization-fonts--readme` link resolves
-- Button stories' `/docs/learn-customization-global-elements--readme` links resolve
-- `Reference → Component status` shows the matrix with live `<swc-badge>` per row
-- `Contribute` section is visible in dev with `Contributor guides`, `Style guide`, `Releasing SWC`, `Project planning` subtrees
+- `Learn → Customization → Cheat sheet` is the first child, followed by the five long-form docs (Getting started, Component styles, Fonts, Global elements, Theme and scales)
+- `Learn → Accessibility → Cheat sheet` is the first child, followed by the eight long-form docs
+- `Learn → Customization → Fonts` (or wherever the typography story's link points) resolves; the typography story page loads
+- Button stories' `/docs/learn-customization-global-elements--docs` links resolve
+- `Reference → Component status` shows the matrix with **live `<swc-badge>` per row** (proves the matrix's custom-element registration works — this specifically caught us mid-merge when the badge import broke)
+- `Resources → Migrate from Gen1` (and siblings) render
+- `Contribute` section is visible in dev with `For contributors`, `For maintainers`, `Project planning` subtrees
 
-**Production smoke test (`yarn build-storybook`):**
+**Manual smoke test in `yarn storybook:build` output (after Gate 4 passes):**
 
 - `Contribute` section is **absent** from the built Storybook output
-- All consumer-facing routes still resolve
+- `Core` is **absent** from the built Storybook output
+- All consumer-facing routes still resolve in the built site
 
-**Scope check:**
+**Scope check (last):**
 
 ```bash
 git diff --name-only origin/main..HEAD \
@@ -707,11 +741,11 @@ git diff --name-only origin/main..HEAD \
   | grep -v "components/progress-circle/stories/progress-circle.stories.ts" \
   | grep -v "components/badge/stories/badge.stories.ts" \
   | grep -v "components/button/stories/button.stories.ts" \
-  | grep -v "components/button/consumer-migration-guide.mdx"
+  | grep -v "components/button/migration-guide.mdx"
 # expected: empty output
 ```
 
-The six permitted `components/` exceptions are all from Phase 4c's outbound-link updates. Any other `components/` diff is a scope violation and must be reverted before commit.
+The six permitted `components/` exceptions are all from Phase 4c's outbound-link updates. Any other `components/` diff is a scope violation and must be reverted before commit. (Note: the button migration guide was renamed in main from `consumer-migration-guide.mdx` to `migration-guide.mdx` during the merge; the scope check honors the new filename.)
 
 ### Phase 12 — Commit & PR
 

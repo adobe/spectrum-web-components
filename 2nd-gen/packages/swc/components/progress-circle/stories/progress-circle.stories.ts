@@ -21,7 +21,7 @@ import {
   type ProgressCircleSize,
 } from '@spectrum-web-components/core/components/progress-circle';
 
-import '@adobe/spectrum-wc/progress-circle';
+import '@adobe/spectrum-wc/components/progress-circle/swc-progress-circle.js';
 
 // ────────────────
 //    METADATA

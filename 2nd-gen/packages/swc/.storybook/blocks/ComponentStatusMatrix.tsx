@@ -19,8 +19,10 @@ import {
   type ComponentOverride,
 } from '../../../../../CONTRIBUTOR-DOCS/reference/component-status.data';
 
-// Register the badge component so the live <swc-badge> cells render in the docs iframe.
-import '../../components/badge/index.js';
+// Register the badge custom element so the live <swc-badge> cells render in the
+// docs iframe. After the per-element side-effect-entry refactor (#6273), the bare
+// index.js only exports the class — registration lives in the swc-<tag>.js file.
+import '../../components/badge/swc-badge.js';
 
 /**
  * Maps a CEM `@status` value to a Spectrum badge variant.

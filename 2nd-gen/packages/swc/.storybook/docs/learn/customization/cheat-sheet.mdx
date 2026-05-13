@@ -18,13 +18,13 @@ That's the whole model. Everything else is detail.
 
 ## Quick reference
 
-| Want to customize...                                      | Read                                                                        | One-line summary                                                                                                   |
-| --------------------------------------------------------- | --------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
-| The basic install — stylesheet, app background            | [Getting started](/docs/learn-customization-getting-started--readme)        | Include `@adobe/spectrum-wc/swc.css`; optionally set `--swc-application-background`.                               |
-| Fonts (Adobe Clean Spectrum VF, CJK, locales)             | [Fonts](/docs/learn-customization-fonts--readme)                            | Adobe Fonts kit (Typekit) is recommended; the language toggle in Storybook loads the right kit on demand.          |
-| A specific component's appearance                         | [Component styles](/docs/learn-customization-component-styles--readme)      | Scope your selector to the variant/state you want to change; override the `--swc-<component>-*` custom properties. |
-| Theme (light / dark / adaptive) or scale (medium / large) | [Theme and scales](/docs/learn-customization-theme-and-scales--readme)      | Add `.swc-theme` plus a theme class and/or a scale class to the element that should govern that scope.             |
-| Native elements that match Spectrum (button, link, etc.)  | [Global element styling](/docs/learn-customization-global-elements--readme) | Opt-in cascade layer applies Spectrum styles to native `<button>`, `<a>`, etc. so they match SWC components.       |
+| Want to customize...                                      | Read                                                                      | One-line summary                                                                                                   |
+| --------------------------------------------------------- | ------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| The basic install — stylesheet, app background            | [Getting started](/docs/learn-customization-getting-started--docs)        | Include `@adobe/spectrum-wc/swc.css`; optionally set `--swc-application-background`.                               |
+| Fonts (Adobe Clean Spectrum VF, CJK, locales)             | [Fonts](/docs/learn-customization-fonts--docs)                            | Adobe Fonts kit (Typekit) is recommended; the language toggle in Storybook loads the right kit on demand.          |
+| A specific component's appearance                         | [Component styles](/docs/learn-customization-component-styles--docs)      | Scope your selector to the variant/state you want to change; override the `--swc-<component>-*` custom properties. |
+| Theme (light / dark / adaptive) or scale (medium / large) | [Theme and scales](/docs/learn-customization-theme-and-scales--docs)      | Add `.swc-theme` plus a theme class and/or a scale class to the element that should govern that scope.             |
+| Native elements that match Spectrum (button, link, etc.)  | [Global element styling](/docs/learn-customization-global-elements--docs) | Opt-in cascade layer applies Spectrum styles to native `<button>`, `<a>`, etc. so they match SWC components.       |
 
 ## Common one-liners
 
@@ -95,8 +95,8 @@ Replaces the accent color across all components. Use sparingly — global overri
 
 The long-form docs in this sidebar section cover the same topics in depth, with edge cases, troubleshooting, and migration notes from 1st-gen:
 
-- **[Getting started](/docs/learn-customization-getting-started--readme)** — required setup, stylesheet inclusion, app background, PostCSS options
-- **[Component styles](/docs/learn-customization-component-styles--readme)** — selector scoping, override exclusions, migration from `--mod-*` (1st-gen) to `--swc-*` (2nd-gen)
-- **[Fonts](/docs/learn-customization-fonts--readme)** — Adobe Fonts vs self-hosted, fallback stack, CJK support, language switching, troubleshooting
-- **[Global element styling](/docs/learn-customization-global-elements--readme)** — opt-in cascade layer for native `<button>`, `<a>`, headings; override patterns
-- **[Theme and scales](/docs/learn-customization-theme-and-scales--readme)** — theme classes, scale classes, dynamic responsive scaling
+- **[Getting started](/docs/learn-customization-getting-started--docs)** — required setup, stylesheet inclusion, app background, PostCSS options
+- **[Component styles](/docs/learn-customization-component-styles--docs)** — selector scoping, override exclusions, migration from `--mod-*` (1st-gen) to `--swc-*` (2nd-gen)
+- **[Fonts](/docs/learn-customization-fonts--docs)** — Adobe Fonts vs self-hosted, fallback stack, CJK support, language switching, troubleshooting
+- **[Global element styling](/docs/learn-customization-global-elements--docs)** — opt-in cascade layer for native `<button>`, `<a>`, headings; override patterns
+- **[Theme and scales](/docs/learn-customization-theme-and-scales--docs)** — theme classes, scale classes, dynamic responsive scaling

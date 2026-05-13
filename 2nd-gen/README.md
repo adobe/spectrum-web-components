@@ -6,10 +6,10 @@ The second generation of Spectrum Web Components — aligned with [Spectrum 2](h
 
 The published Storybook is the canonical home for consumer docs:
 
-- **[Get started](https://opensource.adobe.com/spectrum-web-components/docs/get-started-welcome--readme)** — install, first component, framework notes
-- **[Components](https://opensource.adobe.com/spectrum-web-components/docs/components-badge--readme)** — the full 2nd-gen component library
-- **[Customization](https://opensource.adobe.com/spectrum-web-components/docs/learn-customization-cheat-sheet--readme)** — cheatsheet plus long-form guides for theming, tokens, fonts, scales, and global element styles
-- **[Accessibility](https://opensource.adobe.com/spectrum-web-components/docs/learn-accessibility-cheat-sheet--readme)** — cheatsheet plus long-form guides for testing, ARIA, screen readers, and WCAG
+- **[Get started](https://opensource.adobe.com/spectrum-web-components/docs/get-started-welcome--docs)** — install, first component, framework notes
+- **[Components](https://opensource.adobe.com/spectrum-web-components/docs/components-badge--docs)** — the full 2nd-gen component library
+- **[Customization](https://opensource.adobe.com/spectrum-web-components/docs/learn-customization-cheat-sheet--docs)** — cheatsheet plus long-form guides for theming, tokens, fonts, scales, and global element styles
+- **[Accessibility](https://opensource.adobe.com/spectrum-web-components/docs/learn-accessibility-cheat-sheet--docs)** — cheatsheet plus long-form guides for testing, ARIA, screen readers, and WCAG
 
 A minimal install for readers who want a quick reference without leaving GitHub:
 
@@ -27,7 +27,7 @@ import '@adobe/spectrum-wc/badge';
 <swc-badge variant="positive">Approved</swc-badge>
 ```
 
-For the full onboarding flow with live demos, head to [Get started](https://opensource.adobe.com/spectrum-web-components/docs/get-started-welcome--readme) in the published docs.
+For the full onboarding flow with live demos, head to [Get started](https://opensource.adobe.com/spectrum-web-components/docs/get-started-welcome--docs) in the published docs.
 
 ## For contributors
 

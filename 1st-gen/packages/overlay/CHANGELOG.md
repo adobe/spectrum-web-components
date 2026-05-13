@@ -1,5 +1,39 @@
 # Change Log
 
+## 1.12.0
+
+### Patch Changes
+
+- [#6194](https://github.com/adobe/spectrum-web-components/pull/6194) [`08484b8`](https://github.com/adobe/spectrum-web-components/commit/08484b826a9e6c73f01e7d12246889ec82f3e3a3) Thanks [@Rajdeepc](https://github.com/Rajdeepc)! - **Fixed**: Overlay positioning on iOS Safari and WKWebView hosts (such as the Adobe Express iOS app). Popovers opened via `Overlay.open()` or the `trigger` Lit directive previously rendered `visualViewport.offsetTop` pixels (typically 30-40 px) below their trigger when the layout viewport diverged from the visual viewport — for example with the URL bar showing, with pinch-zoom, with the virtual keyboard open, or when a host app overlaid a bottom sheet.
+
+  `PlacementController` now subtracts `visualViewport.offsetLeft / offsetTop` from the computed coordinates on WebKit (where the popover top layer paints relative to the visual viewport), and subscribes to `visualViewport`'s `resize` and `scroll` so an open overlay re-anchors to its trigger when the viewports realign. Other browsers are unaffected.
+
+- [#6193](https://github.com/adobe/spectrum-web-components/pull/6193) [`4819238`](https://github.com/adobe/spectrum-web-components/commit/481923863cdc7c03c56f4f9ed2d231e219648dcc) Thanks [@rubencarvalho](https://github.com/rubencarvalho)! - **Fixed**: `receives-focus="false"` on Overlay is now respected for `type="modal"` and `type="page"` overlays. Modals and pages now leave focus on the trigger when receives-focus="false". The focus-trap is still active so Tab/Shift+Tab continue to cycle within the dialog.
+
+- [#6044](https://github.com/adobe/spectrum-web-components/pull/6044) [`c4823d9`](https://github.com/adobe/spectrum-web-components/commit/c4823d94fd149634ab1a94db27155b408a399af3) Thanks [@Rajdeepc](https://github.com/Rajdeepc)! - **Fixed**: Added automatic ARIA attribute management to `<overlay-trigger>` for screen reader accessibility (WCAG 1.3.2 Meaningful Sequence):
+  - `aria-expanded` is now automatically set on the trigger element, reflecting the overlay's open/closed state
+  - `aria-controls` is set on the trigger element, pointing to the overlay content's `id` (generated if not provided)
+  - `aria-haspopup` is set to `"dialog"` by default (respects consumer overrides; component tracks its own values to allow type changes)
+  - ARIA attributes are cleaned up from the trigger element when the overlay-trigger is disconnected, the trigger element changes, or content is removed
+  - Updated dialog README behaviors example to use `<overlay-trigger>` for automatic ARIA management
+  - Added comprehensive accessibility documentation to overlay-trigger covering ARIA attributes, focus management, keyboard navigation, and screen reader considerations
+
+- [#6038](https://github.com/adobe/spectrum-web-components/pull/6038) [`2db830c`](https://github.com/adobe/spectrum-web-components/commit/2db830cded30717fb9cbe4d335d0f3bcf9fea6b9) Thanks [@rise-erpelding](https://github.com/rise-erpelding)! - **Added**: Added truncated-value tooltip behavior for single-line text inputs.
+  - `<sp-textfield>` now shows a tooltip with the full value when the displayed value is visually truncated (via `TruncatedValueTooltipController`).
+  - Tooltip placement can be controlled with the `tooltip-placement` attribute on `<sp-textfield>` or `<sp-number-field>`
+  - `<sp-number-field>` inherits the same truncation tooltip behavior from `TextfieldBase`, including formatted numeric/currency values.
+  - `type="password"` textfields no longer use ellipsis truncation styling (`text-overflow: clip`) to avoid awkward visual truncation.
+
+  **Changed**: `sp-overlay` (internal)
+  - Added internal property `describeTrigger` (`'auto' | 'none'`, default `'auto'`). When set to `'none'`, the overlay does not set `aria-describedby` on the trigger when open (handled in `HoverController` and `LongpressController`), avoiding double announcement for screen readers when the overlay content duplicates the trigger (e.g. truncated-value tooltips). Textfield’s truncated-value tooltip uses this so the tooltip is visual-only for a11y.
+
+- Updated dependencies [[`018d316`](https://github.com/adobe/spectrum-web-components/commit/018d3163efb830478e1d1e2e1f696639c1423e84), [`ba14a2b`](https://github.com/adobe/spectrum-web-components/commit/ba14a2b6361a0089a9a8c72232f245cde0716d89), [`0d3e317`](https://github.com/adobe/spectrum-web-components/commit/0d3e3176944c9f3502f28dfa28f6cee21da05fda), [`26f16c4`](https://github.com/adobe/spectrum-web-components/commit/26f16c42613d96ed89baeebf6d1ec274768571e5), [`dc6a8e8`](https://github.com/adobe/spectrum-web-components/commit/dc6a8e8db1b08080373c3664babc1feebde8f6c6), [`90c3010`](https://github.com/adobe/spectrum-web-components/commit/90c30101391d4d78922575e9f0bb407e02d9c2d5), [`f37dec6`](https://github.com/adobe/spectrum-web-components/commit/f37dec6ae39fd89a4c12e084b4a0f4d9092d79b0)]:
+  - @spectrum-web-components/action-button@1.12.0
+  - @spectrum-web-components/base@1.12.0
+  - @spectrum-web-components/reactive-controllers@1.12.0
+  - @spectrum-web-components/theme@1.12.0
+  - @spectrum-web-components/shared@1.12.0
+
 ## 1.11.2
 
 ### Patch Changes

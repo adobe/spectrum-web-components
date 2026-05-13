@@ -26,7 +26,7 @@ import {
  * Modifiers are available to use the serif font stack, and other sub-variants.
  * CJK adjustments are applied based on the `:lang()` selector.
  *
- * Learn more about [loading the expected fonts](/docs/learn-customization-fonts--readme).
+ * Learn more about [loading the expected fonts](/docs/learn-customization-fonts--docs).
  */
 const meta: Meta<TypographyTemplateProps> = {
   title: 'Typography',

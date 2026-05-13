@@ -1,6 +1,6 @@
 {
   "name": "@spectrum-web-components/close-button",
-  "version": "1.11.2",
+  "version": "1.12.0",
   "description": "Web component implementation of a Spectrum design CloseButton",
   "license": "Apache-2.0",
   "author": "Adobe",
@@ -39,7 +39,7 @@
   ],
   "types": "./src/index.d.ts",
   "dependencies": {
-    "@spectrum-web-components/base": "1.11.2"
+    "@spectrum-web-components/base": "1.12.0"
   },
   "keywords": [
     "design-system",

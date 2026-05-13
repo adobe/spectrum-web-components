@@ -15,7 +15,7 @@ import React, { useEffect, useRef } from 'react';
 import customElements from '../custom-elements.json' with { type: 'json' };
 
 // Register the badge component for use in the docs iframe
-import '../../components/badge/index.js';
+import '../../components/badge/swc-badge.js';
 
 type Status = 'preview' | 'deprecated' | 'internal';
 
@@ -68,8 +68,8 @@ const Badge = ({
  * ```ts
  * /**
  *  * @element swc-my-component
- *  * @status preview
- *  * @since 1.0.0
+ *  * @status internal
+ *  * @since 2.0.0
  *  *\/
  * ```
  *

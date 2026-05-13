@@ -20,16 +20,16 @@ If you skip any layer, your app will fail accessibility for some users.
 
 ## Quick reference
 
-| Want to...                                             | Read                                                                                           | One-line summary                                                                                           |
-| ------------------------------------------------------ | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
-| Understand what accessibility means and why it matters | [Overview](/docs/learn-accessibility-overview--readme)                                         | Disability types, assistive technologies, legal and ethical context.                                       |
-| Choose between semantic HTML and ARIA                  | [Semantic HTML and ARIA](/docs/learn-accessibility-semantic-html-and-aria--readme)             | Native elements first, ARIA second; never both for the same job.                                           |
-| Structure a page so screen readers can navigate it     | [Headings and landmarks](/docs/learn-accessibility-headings-and-landmarks--readme)             | One `h1` per page, no skipped levels, real `<main>` / `<nav>` / `<header>` landmarks.                      |
-| Test keyboard navigation                               | [Keyboard testing](/docs/learn-accessibility-keyboard-testing--readme)                         | <kbd>Tab</kbd> through every interactive element; <kbd>Esc</kbd> closes overlays; focus is always visible. |
-| Test with a screen reader                              | [Screen reader testing](/docs/learn-accessibility-screen-reader-testing--readme)               | VoiceOver on macOS or NVDA on Windows; learn browse vs focus mode.                                         |
-| Run an automated accessibility scan in the browser     | [WAVE toolbar testing](/docs/learn-accessibility-wave-toolbar-testing--readme)                 | WAVE extension's Structure, Order, Details, and Contrast tabs.                                             |
-| Find established UI patterns for complex widgets       | [Accessible pattern libraries](/docs/learn-accessibility-accessible-pattern-libraries--readme) | ARIA Authoring Practices Guide (APG) and friends.                                                          |
-| Get to WCAG criteria, checklists, and external guides  | [Resources](/docs/learn-accessibility-resources--readme)                                       | Curated external references.                                                                               |
+| Want to...                                             | Read                                                                                         | One-line summary                                                                                           |
+| ------------------------------------------------------ | -------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| Understand what accessibility means and why it matters | [Overview](/docs/learn-accessibility-overview--docs)                                         | Disability types, assistive technologies, legal and ethical context.                                       |
+| Choose between semantic HTML and ARIA                  | [Semantic HTML and ARIA](/docs/learn-accessibility-semantic-html-and-aria--docs)             | Native elements first, ARIA second; never both for the same job.                                           |
+| Structure a page so screen readers can navigate it     | [Headings and landmarks](/docs/learn-accessibility-headings-and-landmarks--docs)             | One `h1` per page, no skipped levels, real `<main>` / `<nav>` / `<header>` landmarks.                      |
+| Test keyboard navigation                               | [Keyboard testing](/docs/learn-accessibility-keyboard-testing--docs)                         | <kbd>Tab</kbd> through every interactive element; <kbd>Esc</kbd> closes overlays; focus is always visible. |
+| Test with a screen reader                              | [Screen reader testing](/docs/learn-accessibility-screen-reader-testing--docs)               | VoiceOver on macOS or NVDA on Windows; learn browse vs focus mode.                                         |
+| Run an automated accessibility scan in the browser     | [WAVE toolbar testing](/docs/learn-accessibility-wave-toolbar-testing--docs)                 | WAVE extension's Structure, Order, Details, and Contrast tabs.                                             |
+| Find established UI patterns for complex widgets       | [Accessible pattern libraries](/docs/learn-accessibility-accessible-pattern-libraries--docs) | ARIA Authoring Practices Guide (APG) and friends.                                                          |
+| Get to WCAG criteria, checklists, and external guides  | [Resources](/docs/learn-accessibility-resources--docs)                                       | Curated external references.                                                                               |
 
 ## Common one-liners
 
@@ -43,7 +43,7 @@ If you skip any layer, your app will fail accessibility for some users.
 <div onclick="save()">Save</div>
 ```
 
-If you need Spectrum styling on native elements, see [Global element styling](/docs/learn-customization-global-elements--readme) for the opt-in cascade layer.
+If you need Spectrum styling on native elements, see [Global element styling](/docs/learn-customization-global-elements--docs) for the opt-in cascade layer.
 
 ### Give every interactive control an accessible name
 
@@ -97,7 +97,7 @@ Disconnect the mouse (or just don't touch it). Walk the entire page using <kbd>T
 3. Press <kbd>VO</kbd>+<kbd>U</kbd> to open the rotor; arrow through Landmarks and Headings to verify your page structure makes sense
 4. Tab through interactive elements; confirm each one announces a meaningful role + name + state
 
-See [Screen reader testing](/docs/learn-accessibility-screen-reader-testing--readme) for the full workflow, plus equivalents on Windows (NVDA) and mobile.
+See [Screen reader testing](/docs/learn-accessibility-screen-reader-testing--docs) for the full workflow, plus equivalents on Windows (NVDA) and mobile.
 
 ### Run an automated scan with WAVE
 
@@ -124,11 +124,11 @@ See [Running accessibility tests](https://github.com/adobe/spectrum-web-componen
 
 The long-form docs in this sidebar section cover the same topics in depth, with examples, edge cases, and WCAG mappings:
 
-- **[Overview](/docs/learn-accessibility-overview--readme)** — what accessibility is, why it matters, types of disabilities, assistive technologies
-- **[Semantic HTML and ARIA](/docs/learn-accessibility-semantic-html-and-aria--readme)** — native first, ARIA second; cross-root challenges with custom elements
-- **[Headings and landmarks](/docs/learn-accessibility-headings-and-landmarks--readme)** — page outline, landmark conventions, SWC examples, related WCAG criteria
-- **[Keyboard testing](/docs/learn-accessibility-keyboard-testing--readme)** — platform setup, navigation basics, testing checklist, common fixes
-- **[Screen reader testing](/docs/learn-accessibility-screen-reader-testing--readme)** — pairings, modes, shortcuts (VoiceOver, NVDA, JAWS)
-- **[WAVE toolbar testing](/docs/learn-accessibility-wave-toolbar-testing--readme)** — install, run a report, interpret each tab
-- **[Accessible pattern libraries](/docs/learn-accessibility-accessible-pattern-libraries--readme)** — APG and friends, for complex widgets
-- **[Resources](/docs/learn-accessibility-resources--readme)** — WCAG, W3C WAI, external checklists
+- **[Overview](/docs/learn-accessibility-overview--docs)** — what accessibility is, why it matters, types of disabilities, assistive technologies
+- **[Semantic HTML and ARIA](/docs/learn-accessibility-semantic-html-and-aria--docs)** — native first, ARIA second; cross-root challenges with custom elements
+- **[Headings and landmarks](/docs/learn-accessibility-headings-and-landmarks--docs)** — page outline, landmark conventions, SWC examples, related WCAG criteria
+- **[Keyboard testing](/docs/learn-accessibility-keyboard-testing--docs)** — platform setup, navigation basics, testing checklist, common fixes
+- **[Screen reader testing](/docs/learn-accessibility-screen-reader-testing--docs)** — pairings, modes, shortcuts (VoiceOver, NVDA, JAWS)
+- **[WAVE toolbar testing](/docs/learn-accessibility-wave-toolbar-testing--docs)** — install, run a report, interpret each tab
+- **[Accessible pattern libraries](/docs/learn-accessibility-accessible-pattern-libraries--docs)** — APG and friends, for complex widgets
+- **[Resources](/docs/learn-accessibility-resources--docs)** — WCAG, W3C WAI, external checklists

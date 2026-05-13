@@ -1,0 +1,74 @@
+/**
+ * Copyright 2026 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+/// <reference types="./storybook-env.d.ts" />
+
+import { GithubIcon } from '@storybook/icons';
+import { addons, types } from '@storybook/manager-api';
+import { create } from '@storybook/theming';
+import React from 'react';
+import { IconButton } from 'storybook/internal/components';
+
+import logo from './assets/logo.svg';
+
+import '../stylesheets/swc.css';
+import '../stylesheets/typography.css';
+import '../stylesheets/global/global-elements.css';
+import './assets/manager.css';
+
+addons.register('swc/github-link', () => {
+  addons.add('swc/github-link/tool', {
+    type: types.TOOLEXTRA,
+    title: 'View on GitHub',
+    match: () => true,
+    render: () => (
+      <IconButton
+        title="View on GitHub"
+        onClick={() =>
+          window.open(
+            'https://github.com/adobe/spectrum-web-components',
+            '_blank',
+            'noopener,noreferrer'
+          )
+        }
+      >
+        <GithubIcon />
+      </IconButton>
+    ),
+  });
+});
+
+const root = document.body ?? document.documentElement;
+if (root) {
+  root.classList.add('spectrum', 'spectrum--light', 'spectrum--medium');
+}
+
+addons.setConfig({
+  theme: create({
+    base: 'light',
+
+    brandTitle: 'Adobe | Spectrum Web Components',
+    brandUrl: '?path=/docs/about-swc-overview--readme', // TODO: Add the correct URL once we are publishing 2nd-gen
+    brandImage: logo,
+    brandTarget: '_self',
+
+    fontBase: 'var(--swc-sans-font-family-stack)',
+
+    // SB did not accept the var here
+    textColor: 'rgb(34 34 34)',
+
+    // Only applies to "Playground" background
+    appPreviewBg:
+      'var( --swc-gray-25, light-dark(rgb(255 255 255), rgb(17 17 17)))',
+
+    inputBorderRadius: 4,
+  }),
+});
