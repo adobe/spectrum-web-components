@@ -15,6 +15,7 @@ import { property, queryAssignedElements } from 'lit/decorators.js';
 
 import { FocusgroupNavigationController } from '@spectrum-web-components/core/controllers/index.js';
 import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
+import { getActiveElement } from '@spectrum-web-components/core/utils/index.js';
 
 import styles from './conversation-thread.css';
 
@@ -24,7 +25,8 @@ import styles from './conversation-thread.css';
  * Slotted `<swc-conversation-turn>` children participate in a roving `tabindex` model:
  * one active turn is tabbable while the rest are programmatically focusable.
  * Use <kbd>ArrowUp</kbd> / <kbd>ArrowDown</kbd> to move, and <kbd>Home</kbd> / <kbd>End</kbd>
- * to jump to the first/last turn.
+ * to jump to the first/last turn. When new turns are appended, the newest turn
+ * becomes the active roving target so re-entering the thread returns to latest content.
  *
  * @element swc-conversation-thread
  * @slot - Conversation turns, typically `<swc-conversation-turn>` elements.
@@ -39,7 +41,6 @@ export class ConversationThread extends SpectrumElement {
   @queryAssignedElements({ flatten: true, selector: 'swc-conversation-turn' })
   private _assignedTurns!: HTMLElement[];
 
-  private _items: HTMLElement[] = [];
   private focusgroupNavigationController = new FocusgroupNavigationController(
     this,
     {
@@ -58,14 +59,27 @@ export class ConversationThread extends SpectrumElement {
    *
    * Before focusing, we refresh the slotted turn list and roving-tabindex state so
    * we never target a stale turn when messages were added/removed just before focus.
-   * Then we focus the controller's active item, with a fallback to `activeIndex`.
    */
   public override focus(options?: FocusOptions): void {
-    this._syncFocusableItems();
-    const active =
-      this.focusgroupNavigationController.getActiveItem() ??
-      this._items[this._clampIndex(this.activeIndex)];
+    this._syncRovingFocusTarget();
+    const turns = this._getItemsFromSlot();
+    const active = this.focusgroupNavigationController.getActiveItem();
     active?.focus(options);
+    if (!active && turns.length) {
+      turns[this._clampIndex(this.activeIndex, turns)]?.focus(options);
+    }
+  }
+
+  /**
+   * Sets the active roving turn to the last slotted turn.
+   * This aligns focus re-entry with the latest message in the thread.
+   */
+  public setActiveIndexToLast(): void {
+    const turns = this._getItemsFromSlot();
+    if (!turns.length) {
+      return;
+    }
+    this._setActiveTurn(turns[turns.length - 1]);
   }
 
   protected override updated(changedProperties: PropertyValues<this>): void {
@@ -79,48 +93,72 @@ export class ConversationThread extends SpectrumElement {
     return Array.from(this._assignedTurns ?? []);
   }
 
-  private _clampIndex(index: number): number {
-    if (!this._items.length) {
+  private _clampIndex(index: number, turns: HTMLElement[]): number {
+    if (!turns.length) {
       return 0;
     }
 
-    return Math.min(Math.max(index, 0), this._items.length - 1);
+    return Math.min(Math.max(index, 0), turns.length - 1);
   }
 
-  private _syncFocusableItems(): void {
-    const nextItems = this._getItemsFromSlot();
-
-    for (const previousItem of this._items) {
-      if (!nextItems.includes(previousItem)) {
-        previousItem.removeAttribute('tabindex');
+  private _syncRovingFocusTarget(setLatestAsTabStop = false): void {
+    this.focusgroupNavigationController.refresh();
+    const turns = this._getItemsFromSlot();
+    if (!turns.length) {
+      if (this.activeIndex !== 0) {
+        this.activeIndex = 0;
       }
-    }
-
-    this._items = nextItems;
-    if (!this._items.length) {
       return;
     }
 
-    this.focusgroupNavigationController.refresh();
+    if (setLatestAsTabStop) {
+      this.focusgroupNavigationController.setActiveItem(
+        turns[turns.length - 1]
+      );
+    }
     this._syncActiveIndex(this.focusgroupNavigationController.getActiveItem());
   }
 
   private _syncActiveItemFromProperty(): void {
-    if (!this._items.length) {
+    const turns = this._getItemsFromSlot();
+    if (!turns.length) {
       return;
     }
 
-    const nextIndex = this._clampIndex(this.activeIndex);
-    const nextActive = this._items[nextIndex];
-    if (!nextActive) {
-      return;
-    }
-    this.focusgroupNavigationController.setActiveItem(nextActive);
-    this._syncActiveIndex(this.focusgroupNavigationController.getActiveItem());
+    this._setActiveTurn(turns[this._clampIndex(this.activeIndex, turns)]);
   }
 
   private _handleSlotChange(): void {
-    this._syncFocusableItems();
+    const hadRovingTarget = this._getItemsFromSlot().some((turn) =>
+      turn.hasAttribute('tabindex')
+    );
+    this._syncRovingFocusTarget(hadRovingTarget && !this._hasFocusWithin());
+  }
+
+  private _handleFocusOut(event: FocusEvent): void {
+    const next = event.relatedTarget;
+    if (next instanceof Node && this.contains(next)) {
+      return;
+    }
+
+    this.setActiveIndexToLast();
+  }
+
+  private _hasFocusWithin(): boolean {
+    const active = getActiveElement(
+      this.getRootNode() as Document | ShadowRoot
+    );
+
+    return active instanceof Node && this.contains(active);
+  }
+
+  private _setActiveTurn(turn: HTMLElement | undefined): void {
+    if (!turn) {
+      return;
+    }
+
+    this.focusgroupNavigationController.setActiveItem(turn);
+    this._syncActiveIndex(this.focusgroupNavigationController.getActiveItem());
   }
 
   private _syncActiveIndex(active: HTMLElement | null): void {
@@ -131,7 +169,7 @@ export class ConversationThread extends SpectrumElement {
       return;
     }
 
-    const index = this._items.indexOf(active);
+    const index = this._getItemsFromSlot().indexOf(active);
     if (index !== -1 && index !== this.activeIndex) {
       this.activeIndex = index;
     }
@@ -139,7 +177,7 @@ export class ConversationThread extends SpectrumElement {
 
   protected override render(): TemplateResult {
     return html`
-      <div class="swc-ConversationThread">
+      <div class="swc-ConversationThread" @focusout=${this._handleFocusOut}>
         <slot @slotchange=${this._handleSlotChange}></slot>
       </div>
     `;

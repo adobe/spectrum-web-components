@@ -1,0 +1,120 @@
+/**
+ * Copyright 2026 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+:host {
+  display: flex;
+  flex-direction: column;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* ── Tablist container ─────────────────────────────────── */
+
+.tablist {
+  --_swc-tabs-gap: token("spacing-500");
+
+  display: flex;
+  position: relative;
+  gap: var(--_swc-tabs-gap);
+  align-items: center;
+}
+
+/* ── Density: compact ──────────────────────────────────── */
+
+:host([density="compact"]) .tablist {
+  --_swc-tabs-gap: token("tab-item-to-tab-item-horizontal-medium");
+  --swc-tab-height: token("tab-item-compact-height-medium");
+  --swc-tab-padding-block: token("tab-item-top-to-text-compact-medium");
+  --swc-tab-padding-block-end: token("tab-item-bottom-to-text-compact-medium");
+}
+
+/* ── Vertical direction ────────────────────────────────── */
+
+:host([direction="vertical"]) {
+  flex-direction: row;
+  gap: token("spacing-500");
+}
+
+:host([direction="vertical"][density="compact"]) {
+  gap: token("tab-item-to-tab-item-horizontal-medium");
+}
+
+:host([direction="vertical"]) .tablist {
+  --_swc-tabs-gap: token("spacing-500");
+
+  flex-direction: column;
+  align-items: flex-start;
+  padding-inline-start: token("tab-item-start-to-edge-medium");
+}
+
+:host([direction="vertical"][density="compact"]) .tablist {
+  --_swc-tabs-gap: token("tab-item-to-tab-item-horizontal-medium");
+}
+
+/* ── Selection indicator ───────────────────────────────── */
+
+.selection-indicator {
+  position: absolute;
+  z-index: 1;
+  background-color: var(--swc-tabs-indicator-color, token("neutral-content-color-default"));
+  border-radius: token("corner-radius-100");
+  pointer-events: none;
+  transition: transform 130ms ease-in-out;
+}
+
+.selection-indicator.first-position {
+  transition: none;
+}
+
+:host([direction="horizontal"]) .selection-indicator,
+:host(:not([direction])) .selection-indicator {
+  inset-block-end: 0;
+  inset-inline-start: 0;
+  inline-size: 100px;
+  block-size: token("border-width-200");
+  transform-origin: left center;
+}
+
+:host([direction="vertical"]) .selection-indicator {
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  inline-size: token("border-width-200");
+  block-size: 100px;
+  transform-origin: center top;
+}
+
+/* ── Disabled state ────────────────────────────────────── */
+
+:host([disabled]) {
+  pointer-events: none;
+}
+
+:host([disabled]) ::slotted(swc-tab) {
+  cursor: default;
+
+  --swc-tab-text-color: token("disabled-content-color");
+}
+
+:host([disabled]) .selection-indicator {
+  --swc-tabs-indicator-color: token("disabled-border-color");
+}
+
+/* ── High contrast ─────────────────────────────────────── */
+
+@media (forced-colors: active) {
+  .selection-indicator {
+    /* stylelint-disable-next-line scale-unlimited/declaration-strict-value */
+    background-color: Highlight;
+  }
+}

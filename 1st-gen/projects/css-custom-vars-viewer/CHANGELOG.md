@@ -1,5 +1,22 @@
 # Change Log
 
+## 1.12.0
+
+### Patch Changes
+
+- Updated dependencies [[`018d316`](https://github.com/adobe/spectrum-web-components/commit/018d3163efb830478e1d1e2e1f696639c1423e84), [`ba14a2b`](https://github.com/adobe/spectrum-web-components/commit/ba14a2b6361a0089a9a8c72232f245cde0716d89), [`cb7eaa7`](https://github.com/adobe/spectrum-web-components/commit/cb7eaa7d41653a6765a99180b8c07fcba9d77891), [`1aca50a`](https://github.com/adobe/spectrum-web-components/commit/1aca50a095ae386929c11005a9a92e14c5095d47), [`1280f9a`](https://github.com/adobe/spectrum-web-components/commit/1280f9ad05452ebacebf3d655a23260bd0ec5a6e), [`26f16c4`](https://github.com/adobe/spectrum-web-components/commit/26f16c42613d96ed89baeebf6d1ec274768571e5), [`dc6a8e8`](https://github.com/adobe/spectrum-web-components/commit/dc6a8e8db1b08080373c3664babc1feebde8f6c6), [`f37dec6`](https://github.com/adobe/spectrum-web-components/commit/f37dec6ae39fd89a4c12e084b4a0f4d9092d79b0), [`52947c8`](https://github.com/adobe/spectrum-web-components/commit/52947c8877ae7fd6eda794a536454756e9b2c1e1), [`a420e49`](https://github.com/adobe/spectrum-web-components/commit/a420e495a479f411bef970739d860b0fcfe5f7fa), [`4c3977a`](https://github.com/adobe/spectrum-web-components/commit/4c3977a7e2fab30d0ed0ee9d3e58d21e03f76e34), [`c720445`](https://github.com/adobe/spectrum-web-components/commit/c7204456810326960b31f80955e842cc3e5555e3), [`f842573`](https://github.com/adobe/spectrum-web-components/commit/f8425730004d2ed091810858f7254a952e16b909)]:
+  - @spectrum-web-components/styles@1.12.0
+  - @spectrum-web-components/base@1.12.0
+  - @spectrum-web-components/picker@1.12.0
+  - @spectrum-web-components/menu@1.12.0
+  - @spectrum-web-components/theme@1.12.0
+  - @spectrum-web-components/toast@1.12.0
+  - @spectrum-web-components/field-label@1.12.0
+  - @spectrum-web-components/link@1.12.0
+  - @spectrum-web-components/swatch@1.12.0
+  - @spectrum-web-components/table@1.12.0
+  - @spectrum-web-components/story-decorator@1.12.0
+
 ## 1.11.2
 
 ### Patch Changes

@@ -22,6 +22,7 @@ type Constructor<T = Record<string, unknown>> = {
 
 export interface SpectrumInterface {
   shadowRoot: ShadowRoot;
+  isLTR: boolean;
   hasVisibleFocusInTree(): boolean;
 }
 
@@ -33,6 +34,9 @@ export function SpectrumMixin<T extends Constructor<ReactiveElement>>(
      * @internal
      */
     public override shadowRoot!: ShadowRoot;
+    public get isLTR(): boolean {
+      return getComputedStyle(this).direction !== 'rtl';
+    }
     public hasVisibleFocusInTree(): boolean {
       const getAncestors = (root: Document = document): HTMLElement[] => {
         let currentNode = root.activeElement as HTMLElement;

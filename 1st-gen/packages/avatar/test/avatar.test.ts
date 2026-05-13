@@ -211,7 +211,7 @@ describe('Avatar', () => {
       window.__swc.verbose = false;
       consoleWarnStub.restore();
     });
-    it('does not warn when label is provided', async () => {
+    it('does not warn about accessibility when label is provided', async () => {
       const el = await fixture<Avatar>(html`
         <sp-avatar
           label="Shantanu Narayen"
@@ -221,9 +221,13 @@ describe('Avatar', () => {
 
       await elementUpdated(el);
 
-      expect(consoleWarnStub.called).to.be.false;
+      // A deprecation warn fires for the deprecated `label` attribute, but not an accessibility warn.
+      const accessibilityWarnCalled = consoleWarnStub.args.some(
+        (args: unknown[]) => (args[0] as string).includes('accessible')
+      );
+      expect(accessibilityWarnCalled, 'no accessibility warning').to.be.false;
     });
-    it('does not warn when is-decorative is provided', async () => {
+    it('does not warn about accessibility when is-decorative is provided', async () => {
       const el = await fixture<Avatar>(html`
         <sp-avatar
           is-decorative
@@ -233,7 +237,111 @@ describe('Avatar', () => {
 
       await elementUpdated(el);
 
-      expect(consoleWarnStub.called).to.be.false;
+      // A deprecation warn fires for the deprecated `is-decorative` attribute, but not an accessibility warn.
+      const accessibilityWarnCalled = consoleWarnStub.args.some(
+        (args: unknown[]) => (args[0] as string).includes('accessible')
+      );
+      expect(accessibilityWarnCalled, 'no accessibility warning').to.be.false;
+    });
+    it('warns about deprecated "label" attribute', async () => {
+      const el = await fixture<Avatar>(html`
+        <sp-avatar
+          label="Shantanu Narayen"
+          src="https://picsum.photos/500/500"
+        ></sp-avatar>
+      `);
+
+      await elementUpdated(el);
+
+      expect(consoleWarnStub.called).to.be.true;
+      const spyCall = consoleWarnStub.getCall(0);
+      expect(
+        (spyCall.args[0] as string).includes('deprecated'),
+        'confirm deprecation message'
+      ).to.be.true;
+      expect(
+        (spyCall.args[0] as string).includes('"label"'),
+        'confirm label attribute named'
+      ).to.be.true;
+      expect(
+        spyCall.args[spyCall.args.length - 1],
+        'confirm `data` shape'
+      ).to.deep.equal({
+        data: {
+          localName: 'sp-avatar',
+          type: 'api',
+          level: 'deprecation',
+        },
+      });
+    });
+    it('warns about deprecated "is-decorative" attribute', async () => {
+      const el = await fixture<Avatar>(html`
+        <sp-avatar
+          is-decorative
+          src="https://picsum.photos/500/500"
+        ></sp-avatar>
+      `);
+
+      await elementUpdated(el);
+
+      expect(consoleWarnStub.called).to.be.true;
+      const spyCall = consoleWarnStub.getCall(0);
+      expect(
+        (spyCall.args[0] as string).includes('deprecated'),
+        'confirm deprecation message'
+      ).to.be.true;
+      expect(
+        (spyCall.args[0] as string).includes('"is-decorative"'),
+        'confirm is-decorative attribute named'
+      ).to.be.true;
+      expect(
+        spyCall.args[spyCall.args.length - 1],
+        'confirm `data` shape'
+      ).to.deep.equal({
+        data: {
+          localName: 'sp-avatar',
+          type: 'api',
+          level: 'deprecation',
+        },
+      });
+    });
+    it('warns about deprecated "href" attribute', async () => {
+      const el = await fixture<Avatar>(html`
+        <sp-avatar
+          label="Shantanu Narayen"
+          src="https://picsum.photos/500/500"
+          href="https://adobe.com"
+        ></sp-avatar>
+      `);
+
+      await elementUpdated(el);
+
+      expect(consoleWarnStub.called).to.be.true;
+      const deprecationCalls = consoleWarnStub.args.filter((args: unknown[]) =>
+        (args[0] as string).includes('"href"')
+      );
+      expect(deprecationCalls.length, 'href deprecation warn fired').to.be.gte(
+        1
+      );
+      const spyCall = consoleWarnStub
+        .getCalls()
+        .find((call: { args: unknown[] }) =>
+          (call.args[0] as string).includes('"href"')
+        )!;
+      expect(
+        (spyCall.args[0] as string).includes('deprecated'),
+        'confirm deprecation message'
+      ).to.be.true;
+      expect(
+        spyCall.args[spyCall.args.length - 1],
+        'confirm `data` shape'
+      ).to.deep.equal({
+        data: {
+          localName: 'sp-avatar',
+          type: 'api',
+          level: 'deprecation',
+        },
+      });
     });
     it('warns when neither label nor is-decorative is provided', async () => {
       const el = await fixture<Avatar>(html`
