@@ -311,8 +311,16 @@ jobs:
           git commit --no-verify -m "chore: release packages #publish" || echo "No changes to commit"
 
       - name: Push changes
-        if: steps.extract-tag.outputs.tag == 'latest'
-        run: git push
+        if: steps.extract-tag.outputs.tag == 'latest' || steps.extract-tag.outputs.tag == 'snapshot-test'
+        env:
+          TAG: ${{ steps.extract-tag.outputs.tag }}
+          HEAD_REF: ${{ github.head_ref }}
+        run: |
+          if [ "$TAG" == "latest" ]; then
+            git push
+          else
+            git push origin HEAD:$HEAD_REF
+          fi
 
       - name: Create git tag
         if: steps.extract-tag.outputs.tag == 'latest'
