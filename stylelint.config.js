@@ -99,5 +99,11 @@ export default {
         'no-duplicate-selectors': null,
       },
     },
+    {
+      files: ['2nd-gen/packages/swc/stylesheets/global/**/*.css'],
+      rules: {
+        'no-descending-specificity': null,
+      },
+    },
   ],
 };
