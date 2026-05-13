@@ -1,5 +1,37 @@
 # Change Log
 
+## 1.12.0
+
+### Minor Changes
+
+- [#6051](https://github.com/adobe/spectrum-web-components/pull/6051) [`c720445`](https://github.com/adobe/spectrum-web-components/commit/c7204456810326960b31f80955e842cc3e5555e3) Thanks [@5t3ph](https://github.com/5t3ph)! - - **Added**: Introduced global button element styles in `@spectrum-web-components/styles` via `global-button.css` and `global-elements.css` (including public exports), enabling native links with `.spectrum-Button*` classes to render with Spectrum button styling.
+  - **Documented**: Added 1st-gen button guidance and Storybook examples for rendering native `<a>` links as static button-styled UI, including limitations (for example, no disabled or pending support for link-based buttons).
+
+### Patch Changes
+
+- [#6069](https://github.com/adobe/spectrum-web-components/pull/6069) [`c4f24a8`](https://github.com/adobe/spectrum-web-components/commit/c4f24a83a8e53a761dcc0ed44eaaab4cb7708c96) Thanks [@cdransf](https://github.com/cdransf)! - - **Deprecated**: The link API (`href`, `target`, `download`, `referrerpolicy`, `rel`) on `<sp-button>` is now deprecated. A dev mode warning is emitted when `href` is used, directing consumers to native HTML anchor elements with `@spectrum-web-components/styles/global-elements.css`.
+  - **Documented**: Updated button README with deprecation notices.
+
+- [#5937](https://github.com/adobe/spectrum-web-components/pull/5937) [`bcd9639`](https://github.com/adobe/spectrum-web-components/commit/bcd9639b4d49a7afd16b7c8e8ec3e86a3ff0b07c) Thanks [@Rajdeepc](https://github.com/Rajdeepc)! - **Fixed** issue where clicking `sp-button` or `sp-action-button` with `href` and `target="_blank"` opened two tabs in Chrome instead of one.
+
+  The fix checks if the anchor element is already in the click event's composed path before triggering a proxy click. When the user clicks directly on the button, the absolutely-positioned anchor naturally receives the click, so no proxy is needed. The proxy click is now only triggered for keyboard activation and VoiceOver, where the anchor isn't in the click path.
+
+- [#6254](https://github.com/adobe/spectrum-web-components/pull/6254) [`38a463f`](https://github.com/adobe/spectrum-web-components/commit/38a463f7f4745373d143cdb08c7d87ba932cf1dd) Thanks [@5t3ph](https://github.com/5t3ph)! - **deprecate(button):** Mark 1st-gen `sp-button` properties and exports as deprecated ahead of 2nd-gen migration.
+  - `quiet` property: deprecated with `@deprecated` JSDoc and runtime `window.__swc.warn()`; use `treatment="outline"` instead
+  - `treatment` property: deprecated with `@deprecated` JSDoc; use `fill-style` in 2nd-gen
+  - `no-wrap` property: deprecated with `@deprecated` JSDoc; use `truncate` in 2nd-gen
+  - Type and const exports deprecated: `ButtonVariants`, `ButtonTreatments`, `ButtonStaticColors`, `DeprecatedButtonVariants`, `VALID_VARIANTS`, `VALID_STATIC_COLORS`
+
+- Updated dependencies [[`ba14a2b`](https://github.com/adobe/spectrum-web-components/commit/ba14a2b6361a0089a9a8c72232f245cde0716d89), [`f9e0896`](https://github.com/adobe/spectrum-web-components/commit/f9e0896d7b3863f3ce45228e5868214d4939ee85), [`dc6a8e8`](https://github.com/adobe/spectrum-web-components/commit/dc6a8e8db1b08080373c3664babc1feebde8f6c6), [`90c3010`](https://github.com/adobe/spectrum-web-components/commit/90c30101391d4d78922575e9f0bb407e02d9c2d5), [`f37dec6`](https://github.com/adobe/spectrum-web-components/commit/f37dec6ae39fd89a4c12e084b4a0f4d9092d79b0), [`7b153b5`](https://github.com/adobe/spectrum-web-components/commit/7b153b5433a8f6d47850f8939b058f7bc431c48c)]:
+  - @spectrum-web-components/base@1.12.0
+  - @spectrum-web-components/progress-circle@1.12.0
+  - @spectrum-web-components/reactive-controllers@1.12.0
+  - @spectrum-web-components/clear-button@1.12.0
+  - @spectrum-web-components/close-button@1.12.0
+  - @spectrum-web-components/icon@1.12.0
+  - @spectrum-web-components/icons-ui@1.12.0
+  - @spectrum-web-components/shared@1.12.0
+
 ## 1.11.2
 
 ### Patch Changes

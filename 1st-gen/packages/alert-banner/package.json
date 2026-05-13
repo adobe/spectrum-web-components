@@ -1,6 +1,6 @@
 {
   "name": "@spectrum-web-components/alert-banner",
-  "version": "1.11.2",
+  "version": "1.12.0",
   "description": "Web component implementation of a Spectrum design AlertBanner",
   "license": "Apache-2.0",
   "author": "Adobe",
@@ -54,9 +54,9 @@
   ],
   "types": "./src/index.d.ts",
   "dependencies": {
-    "@spectrum-web-components/base": "1.11.2",
-    "@spectrum-web-components/button": "1.11.2",
-    "@spectrum-web-components/icons-workflow": "1.11.2"
+    "@spectrum-web-components/base": "1.12.0",
+    "@spectrum-web-components/button": "1.12.0",
+    "@spectrum-web-components/icons-workflow": "1.12.0"
   },
   "keywords": [
     "design-system",

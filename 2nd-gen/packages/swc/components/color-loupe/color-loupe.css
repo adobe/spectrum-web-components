@@ -1,0 +1,114 @@
+/**
+ * Copyright 2026 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+:host {
+  --_swc-color-loupe-width: token("color-loupe-width");
+
+  display: block;
+  position: absolute;
+  inset-block-end: calc((token("color-handle-size") - token("color-handle-outer-border-width")) + token("color-loupe-bottom-to-color-handle"));
+  inset-inline-end: calc(50% - (var(--_swc-color-loupe-width) / 2));
+  inline-size: var(--_swc-color-loupe-width);
+  block-size: token("color-loupe-height");
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.swc-ColorLoupe {
+  position: relative;
+  inline-size: 100%;
+  block-size: 100%;
+  pointer-events: none;
+  opacity: 0;
+  filter: drop-shadow(token("drop-shadow-elevated-x") token("drop-shadow-elevated-y") token("drop-shadow-elevated-blur") token("drop-shadow-elevated-color"));
+  transform: translateY(8px);
+  transform-origin: bottom center;
+  transition:
+    transform 100ms ease-in-out,
+    opacity 125ms ease-in-out;
+}
+
+/* Opacity checkerboard shown behind transparent picked colors.
+   The dark-square token has separate light/dark theme values, so
+   we use light-dark() with the explicit theme variants. */
+.swc-ColorLoupe-checkerboard {
+  position: absolute;
+  inset-block-start: 2px;
+  inset-inline-start: 2px;
+  inline-size: 100%;
+  block-size: 100%;
+  background: repeating-conic-gradient(light-dark(var(--swc-opacity-checkerboard-square-dark-light), var(--swc-opacity-checkerboard-square-dark-dark)) 0% 25%, token("opacity-checkerboard-square-light") 0% 50%) 0 0 / token("opacity-checkerboard-square-size-medium") token("opacity-checkerboard-square-size-medium");
+}
+
+/* Color fill layer — displays the picked color set by the component via
+   the --swc-color-loupe-picked-color custom property. */
+.swc-ColorLoupe-colorFill {
+  position: absolute;
+  inset-block-start: 2px;
+  inset-inline-start: 2px;
+  inline-size: 100%;
+  block-size: 100%;
+  background: var(--swc-color-loupe-picked-color);
+}
+
+/* SVG overlay — inherits host dimensions */
+.swc-ColorLoupe-svg {
+  position: absolute;
+  inline-size: inherit;
+  block-size: inherit;
+}
+
+/* Inner border: thin stroke separating color fill from the loupe edge */
+.swc-ColorLoupe-innerBorder {
+  fill: none;
+  stroke: token("color-loupe-inner-border");
+  stroke-width: token("color-loupe-inner-border-width");
+}
+
+/* Outer border: wider stroke forming the loupe outline */
+.swc-ColorLoupe-outerBorder {
+  --_swc-color-loupe-outer-border-color: token("color-loupe-outer-border");
+
+  fill: none;
+  stroke: var(--_swc-color-loupe-outer-border-color);
+  stroke-width: calc(token("color-loupe-outer-border-width") + 2px);
+}
+
+/* Clip utility — applied to the checkerboard and color-fill layers to
+   constrain them to the loupe teardrop silhouette. Modifier class is placed
+   after all subcomponent rules per the documented rule order. */
+.swc-ColorLoupe--clipped {
+  clip-path: path("M 22 60 C 18.2 56 14.6 51.7 11.3 47.2 C 8.3 43.3 5.7 39.1 3.5 34.7 C 1.2 30 0 25.9 0 22.4 C 0 17.2 1.8 12.2 5 8.2 C 8.2 4.2 12.7 1.5 17.6 0.4 C 22.6 -0.6 27.8 0.2 32.3 2.6 C 36.8 5 40.3 8.9 42.3 13.7 C 43.4 16.4 44 19.4 44 22.4 C 44 25.9 42.8 30 40.5 34.7 C 38.3 39.1 35.7 43.3 32.7 47.3 C 29.4 51.7 25.8 56 22 60 Z");
+}
+
+/* Compensates for sub-pixel rounding in RTL that shifts the loupe */
+:host(:dir(rtl)) {
+  inset-inline-end: calc(50% - (var(--_swc-color-loupe-width) / 2) - 1px);
+}
+
+:host([open]) .swc-ColorLoupe {
+  opacity: 1;
+  transform: translate(0, 0);
+}
+
+@media (forced-colors: active) {
+  .swc-ColorLoupe-colorFill,
+  .swc-ColorLoupe-checkerboard {
+    forced-color-adjust: none;
+  }
+
+  .swc-ColorLoupe-outerBorder {
+    --_swc-color-loupe-outer-border-color: CanvasText;
+  }
+}

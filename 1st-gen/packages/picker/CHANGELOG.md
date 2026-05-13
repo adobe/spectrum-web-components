@@ -1,5 +1,34 @@
 # Change Log
 
+## 1.12.0
+
+### Minor Changes
+
+- [#6005](https://github.com/adobe/spectrum-web-components/pull/6005) [`cb7eaa7`](https://github.com/adobe/spectrum-web-components/commit/cb7eaa7d41653a6765a99180b8c07fcba9d77891) Thanks [@nikkimk](https://github.com/nikkimk)! - - **Added**: Added a new `ExpandableElement` base class for expandable picker-like components with overlay functionality.
+  - **Deprecated**: `PickerBase` class is deprecated and will be removed in a future release. Use a `ExpandableElement` base class instead. As a result `Picker instanceof PickerBase` will now return false.
+
+### Patch Changes
+
+- [#6028](https://github.com/adobe/spectrum-web-components/pull/6028) [`1280f9a`](https://github.com/adobe/spectrum-web-components/commit/1280f9ad05452ebacebf3d655a23260bd0ec5a6e) Thanks [@rubencarvalho](https://github.com/rubencarvalho)! - **Fixed**: Changed `composed` from `true` to `false` on the synthetic `scroll` event dispatched by the Picker's internal scroll handler. This prevents the event from crossing shadow DOM boundaries, which under certain edge cases could cause ancestor scrollable containers (e.g., overlays or popovers) to close unexpectedly when scrolling within the Picker's menu.
+
+- [#6061](https://github.com/adobe/spectrum-web-components/pull/6061) [`4c3977a`](https://github.com/adobe/spectrum-web-components/commit/4c3977a7e2fab30d0ed0ee9d3e58d21e03f76e34) Thanks [@rubencarvalho](https://github.com/rubencarvalho)! - **Fixed**: Self-managed tooltips slotted into host components (Action Menu, Picker) no longer emit false `[TRAVERSAL_EXHAUSTED]` warnings. Added a public `triggerElement` setter on `sp-tooltip` that allows host components to explicitly wire their internal trigger element, bypassing the ancestor-based composed-tree traversal that fails when the intended trigger is a sibling of the tooltip slot rather than an ancestor.
+
+- Updated dependencies [[`c4f24a8`](https://github.com/adobe/spectrum-web-components/commit/c4f24a83a8e53a761dcc0ed44eaaab4cb7708c96), [`bcd9639`](https://github.com/adobe/spectrum-web-components/commit/bcd9639b4d49a7afd16b7c8e8ec3e86a3ff0b07c), [`ba14a2b`](https://github.com/adobe/spectrum-web-components/commit/ba14a2b6361a0089a9a8c72232f245cde0716d89), [`1aca50a`](https://github.com/adobe/spectrum-web-components/commit/1aca50a095ae386929c11005a9a92e14c5095d47), [`08484b8`](https://github.com/adobe/spectrum-web-components/commit/08484b826a9e6c73f01e7d12246889ec82f3e3a3), [`4819238`](https://github.com/adobe/spectrum-web-components/commit/481923863cdc7c03c56f4f9ed2d231e219648dcc), [`c4823d9`](https://github.com/adobe/spectrum-web-components/commit/c4823d94fd149634ab1a94db27155b408a399af3), [`f9e0896`](https://github.com/adobe/spectrum-web-components/commit/f9e0896d7b3863f3ce45228e5868214d4939ee85), [`dc6a8e8`](https://github.com/adobe/spectrum-web-components/commit/dc6a8e8db1b08080373c3664babc1feebde8f6c6), [`90c3010`](https://github.com/adobe/spectrum-web-components/commit/90c30101391d4d78922575e9f0bb407e02d9c2d5), [`f37dec6`](https://github.com/adobe/spectrum-web-components/commit/f37dec6ae39fd89a4c12e084b4a0f4d9092d79b0), [`2db830c`](https://github.com/adobe/spectrum-web-components/commit/2db830cded30717fb9cbe4d335d0f3bcf9fea6b9), [`38a463f`](https://github.com/adobe/spectrum-web-components/commit/38a463f7f4745373d143cdb08c7d87ba932cf1dd), [`7b153b5`](https://github.com/adobe/spectrum-web-components/commit/7b153b5433a8f6d47850f8939b058f7bc431c48c), [`4c3977a`](https://github.com/adobe/spectrum-web-components/commit/4c3977a7e2fab30d0ed0ee9d3e58d21e03f76e34), [`c720445`](https://github.com/adobe/spectrum-web-components/commit/c7204456810326960b31f80955e842cc3e5555e3)]:
+  - @spectrum-web-components/button@1.12.0
+  - @spectrum-web-components/base@1.12.0
+  - @spectrum-web-components/menu@1.12.0
+  - @spectrum-web-components/overlay@1.12.0
+  - @spectrum-web-components/progress-circle@1.12.0
+  - @spectrum-web-components/reactive-controllers@1.12.0
+  - @spectrum-web-components/tooltip@1.12.0
+  - @spectrum-web-components/field-label@1.12.0
+  - @spectrum-web-components/icon@1.12.0
+  - @spectrum-web-components/icons-ui@1.12.0
+  - @spectrum-web-components/icons-workflow@1.12.0
+  - @spectrum-web-components/popover@1.12.0
+  - @spectrum-web-components/tray@1.12.0
+  - @spectrum-web-components/shared@1.12.0
+
 ## 1.11.2
 
 ### Patch Changes
