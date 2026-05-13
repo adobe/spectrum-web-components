@@ -49,19 +49,19 @@ Run `yarn changeset`, select the affected packages, choose a bump type, then wri
 | Bump type | When to use | Example |
 |---|---|---|
 | `minor` | New component or new feature | Added a new component or attribute |
-| `patch` | Bug fix, no API change | Fixed a rendering issue |
-| `major` | Breaking change requiring consumer update (rare) | Renamed or removed an attribute |
+| `patch` | Bug fix, deprecation warning, or non-breaking internal change | Fixed a rendering issue, added Gen1 deprecation warning |
+| `major` | Breaking change requiring consumer update (rare — requires detailed planning and cross-team communication before merging) | Renamed or removed an attribute |
 
 ### Examples
 
-**New component** (the most common case during migration):
+**New component** (the most common case during migration). Always link to the component's Storybook docs and consumer migration guide so consumers know where to find details:
 
 ```markdown
 ---
 '@adobe/spectrum-wc': minor
 ---
 
-`Button` — Added `<swc-button>` with full Spectrum 2 visual fidelity. See the [component docs](https://opensource.adobe.com/spectrum-web-components/?path=/docs/components-button--readme) and [consumer migration guide](https://opensource.adobe.com/spectrum-web-components/?path=/docs/components-button-consumer-migration-guide--readme). [#6254](https://github.com/adobe/spectrum-web-components/pull/6254)
+`Accordion` — Added `<swc-accordion>` with Spectrum 2 tokens. See the [component docs](https://opensource.adobe.com/spectrum-web-components/?path=/docs/components-accordion--readme) and [consumer migration guide](https://opensource.adobe.com/spectrum-web-components/?path=/docs/components-accordion-consumer-migration-guide--readme). [#7000](https://github.com/adobe/spectrum-web-components/pull/7000)
 ```
 
 **Patch** (bug fix):
@@ -84,7 +84,7 @@ Run `yarn changeset`, select the affected packages, choose a bump type, then wri
 `Button` — Added `justified` attribute for full-width layout. [#6254](https://github.com/adobe/spectrum-web-components/pull/6254)
 ```
 
-**Multiple changes in one changeset** (when a single PR affects multiple components):
+**Multiple components in one PR** — create a separate changeset for each component:
 
 ```markdown
 ---
@@ -92,43 +92,51 @@ Run `yarn changeset`, select the affected packages, choose a bump type, then wri
 ---
 
 `Badge` — Added `subtle` and `outline` style attributes. [#6122](https://github.com/adobe/spectrum-web-components/pull/6122)
-`Status Light` — Added new color variants: `pink`, `turquoise`, `brown`, `cinnamon`, `silver`. [#6122](https://github.com/adobe/spectrum-web-components/pull/6122)
 ```
+
+```markdown
+---
+'@adobe/spectrum-wc': patch
+---
+
+`Status Light` — Fixed missing `cyan` variant in forced-colors mode. [#6122](https://github.com/adobe/spectrum-web-components/pull/6122)
+```
+
+Separate changesets keep each entry clean and allow different bump types per component. Run `yarn changeset` once per component.
 
 ### Rules
 
-- **One changeset per PR** (preferred). Multiple are allowed when a PR contains unrelated changes.
-- **Include `@spectrum-web-components/core`** in the frontmatter when core logic changed. The `linked` config in `.changeset/config.json` versions core and swc together automatically.
-- **Write for consumers, not contributors.** Describe user-visible impact, not implementation details.
+- **One changeset per component change** (preferred). This ensures each CHANGELOG entry is self-contained and correctly typed.
+- **Always list the package you changed** in the frontmatter. The `linked` config in `.changeset/config.json` keeps `@adobe/spectrum-wc` and `@spectrum-web-components/core` at the same version automatically — you only need to list the one you touched:
+
+  | What changed | Frontmatter |
+  |---|---|
+  | Component only (e.g., added `<swc-checkbox>`) | `'@adobe/spectrum-wc': minor` |
+  | Core only (e.g., new mixin in core) | `'@spectrum-web-components/core': minor` |
+  | Both core and component in the same PR | Create **two changesets** — one for each package, each describing its own change |
+
+- **Write for consumers, not contributors.** Describe user-visible impact, not implementation details. Use **past simple tense** ("Added", "Fixed", "Removed" — not "Adds", "Fixing", "Will remove"). When a change requires consumer action, append a `Consumer action:` note; for changes that need no action, omit it.
+
+  | | Example |
+  |---|---|
+  | Good | `Badge` — Fixed contrast ratio in dark theme. No consumer action required. |
+  | Good | `Button` — Added `justified` attribute for full-width layout. |
+  | Good | `Avatar` — Removed `href` link mode. Consumer action: wrap in a native `<a>` instead. |
+  | Bad | `Badge` — Fixes contrast ratio _(wrong tense)_ |
+  | Bad | `Badge` — Refactored internal rendering pipeline _(implementation detail, not consumer-facing)_ |
 - **PR review is the quality gate.** What you write shows up in the CHANGELOG exactly as written — reviewers should check changeset quality alongside code quality.
 
 ## CHANGELOG output
 
-At release time, the script collates changeset entries under a version heading. A typical release looks like this:
+At release time, the script collates changeset entries under a version heading. The output is fully automated — no manual editing required:
 
 ```markdown
 ## 2.1.0
 
 - `Button` — Added `justified` attribute for full-width layout. [#6254](link)
 - `Badge` — Fixed contrast ratio in dark theme for `notice` variant. [#6285](link)
+- `Accordion` — Added `<swc-accordion>` with Spectrum 2 tokens. See the [component docs](link) and [consumer migration guide](link). [#7000](link)
 ```
-
-For larger releases with many entries, add section headings for scannability:
-
-```markdown
-## 2.0.0-beta2
-
-### Added
-
-- `Checkbox` — Added `<swc-checkbox>` with Spectrum 2 tokens. See the [component docs](link) and [consumer migration guide](link). [#6300](link)
-- `Conversational AI` — New pattern for AI chat surfaces. [#6170](link)
-
-### Fixed
-
-- `Progress Circle` — Added missing `role` and ARIA attributes. [#6001](link)
-```
-
-Section headings are optional — use them only when a release has enough entries to benefit from grouping.
 
 ## How it works
 
