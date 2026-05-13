@@ -1,5 +1,28 @@
 # Change Log
 
+## 1.12.0
+
+### Patch Changes
+
+- [#6044](https://github.com/adobe/spectrum-web-components/pull/6044) [`c4823d9`](https://github.com/adobe/spectrum-web-components/commit/c4823d94fd149634ab1a94db27155b408a399af3) Thanks [@Rajdeepc](https://github.com/Rajdeepc)! - **Fixed**: Added automatic ARIA attribute management to `<overlay-trigger>` for screen reader accessibility (WCAG 1.3.2 Meaningful Sequence):
+  - `aria-expanded` is now automatically set on the trigger element, reflecting the overlay's open/closed state
+  - `aria-controls` is set on the trigger element, pointing to the overlay content's `id` (generated if not provided)
+  - `aria-haspopup` is set to `"dialog"` by default (respects consumer overrides; component tracks its own values to allow type changes)
+  - ARIA attributes are cleaned up from the trigger element when the overlay-trigger is disconnected, the trigger element changes, or content is removed
+  - Updated dialog README behaviors example to use `<overlay-trigger>` for automatic ARIA management
+  - Added comprehensive accessibility documentation to overlay-trigger covering ARIA attributes, focus management, keyboard navigation, and screen reader considerations
+
+- Updated dependencies [[`c4f24a8`](https://github.com/adobe/spectrum-web-components/commit/c4f24a83a8e53a761dcc0ed44eaaab4cb7708c96), [`bcd9639`](https://github.com/adobe/spectrum-web-components/commit/bcd9639b4d49a7afd16b7c8e8ec3e86a3ff0b07c), [`ba14a2b`](https://github.com/adobe/spectrum-web-components/commit/ba14a2b6361a0089a9a8c72232f245cde0716d89), [`1b04268`](https://github.com/adobe/spectrum-web-components/commit/1b042684251181403d1f565e3893492c67501a96), [`dc6a8e8`](https://github.com/adobe/spectrum-web-components/commit/dc6a8e8db1b08080373c3664babc1feebde8f6c6), [`f37dec6`](https://github.com/adobe/spectrum-web-components/commit/f37dec6ae39fd89a4c12e084b4a0f4d9092d79b0), [`38a463f`](https://github.com/adobe/spectrum-web-components/commit/38a463f7f4745373d143cdb08c7d87ba932cf1dd), [`7b153b5`](https://github.com/adobe/spectrum-web-components/commit/7b153b5433a8f6d47850f8939b058f7bc431c48c), [`c720445`](https://github.com/adobe/spectrum-web-components/commit/c7204456810326960b31f80955e842cc3e5555e3)]:
+  - @spectrum-web-components/button@1.12.0
+  - @spectrum-web-components/base@1.12.0
+  - @spectrum-web-components/divider@1.12.0
+  - @spectrum-web-components/alert-dialog@1.12.0
+  - @spectrum-web-components/button-group@1.12.0
+  - @spectrum-web-components/icons-workflow@1.12.0
+  - @spectrum-web-components/modal@1.12.0
+  - @spectrum-web-components/underlay@1.12.0
+  - @spectrum-web-components/shared@1.12.0
+
 ## 1.11.2
 
 ### Patch Changes

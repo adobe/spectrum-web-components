@@ -1,5 +1,15 @@
 # Change Log
 
+## 1.12.0
+
+### Patch Changes
+
+- Updated dependencies [[`018d316`](https://github.com/adobe/spectrum-web-components/commit/018d3163efb830478e1d1e2e1f696639c1423e84), [`ba14a2b`](https://github.com/adobe/spectrum-web-components/commit/ba14a2b6361a0089a9a8c72232f245cde0716d89), [`08484b8`](https://github.com/adobe/spectrum-web-components/commit/08484b826a9e6c73f01e7d12246889ec82f3e3a3), [`4819238`](https://github.com/adobe/spectrum-web-components/commit/481923863cdc7c03c56f4f9ed2d231e219648dcc), [`c4823d9`](https://github.com/adobe/spectrum-web-components/commit/c4823d94fd149634ab1a94db27155b408a399af3), [`26f16c4`](https://github.com/adobe/spectrum-web-components/commit/26f16c42613d96ed89baeebf6d1ec274768571e5), [`dc6a8e8`](https://github.com/adobe/spectrum-web-components/commit/dc6a8e8db1b08080373c3664babc1feebde8f6c6), [`f37dec6`](https://github.com/adobe/spectrum-web-components/commit/f37dec6ae39fd89a4c12e084b4a0f4d9092d79b0), [`2db830c`](https://github.com/adobe/spectrum-web-components/commit/2db830cded30717fb9cbe4d335d0f3bcf9fea6b9), [`52947c8`](https://github.com/adobe/spectrum-web-components/commit/52947c8877ae7fd6eda794a536454756e9b2c1e1), [`a420e49`](https://github.com/adobe/spectrum-web-components/commit/a420e495a479f411bef970739d860b0fcfe5f7fa), [`4c3977a`](https://github.com/adobe/spectrum-web-components/commit/4c3977a7e2fab30d0ed0ee9d3e58d21e03f76e34), [`c720445`](https://github.com/adobe/spectrum-web-components/commit/c7204456810326960b31f80955e842cc3e5555e3), [`f842573`](https://github.com/adobe/spectrum-web-components/commit/f8425730004d2ed091810858f7254a952e16b909)]:
+  - @spectrum-web-components/styles@1.12.0
+  - @spectrum-web-components/base@1.12.0
+  - @spectrum-web-components/overlay@1.12.0
+  - @spectrum-web-components/tooltip@1.12.0
+
 ## 1.11.2
 
 ### Patch Changes

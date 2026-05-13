@@ -1,5 +1,62 @@
 # Change Log
 
+## 1.12.0
+
+### Minor Changes
+
+- [#6071](https://github.com/adobe/spectrum-web-components/pull/6071) [`26f16c4`](https://github.com/adobe/spectrum-web-components/commit/26f16c42613d96ed89baeebf6d1ec274768571e5) Thanks [@5t3ph](https://github.com/5t3ph)! - - **Added**: Introduced global action button element styles in `@spectrum-web-components/styles` via `global-action-button.css`, enabling native links with `.spectrum-ActionButton*` classes to render with Spectrum action button styling.
+  - **Documented**: Added 1st-gen action button guidance and Storybook examples for rendering native `<a>` links as static actio button-styled UI, including limitations (for example, no disabled, selected, or hold affordance support for link-based buttons).
+
+- [#6051](https://github.com/adobe/spectrum-web-components/pull/6051) [`c720445`](https://github.com/adobe/spectrum-web-components/commit/c7204456810326960b31f80955e842cc3e5555e3) Thanks [@5t3ph](https://github.com/5t3ph)! - - **Added**: Introduced global button element styles in `@spectrum-web-components/styles` via `global-button.css` and `global-elements.css` (including public exports), enabling native links with `.spectrum-Button*` classes to render with Spectrum button styling.
+  - **Documented**: Added 1st-gen button guidance and Storybook examples for rendering native `<a>` links as static button-styled UI, including limitations (for example, no disabled or pending support for link-based buttons).
+
+- [#6097](https://github.com/adobe/spectrum-web-components/pull/6097) [`f842573`](https://github.com/adobe/spectrum-web-components/commit/f8425730004d2ed091810858f7254a952e16b909) Thanks [@marissahuysentruyt](https://github.com/marissahuysentruyt)! - - **Fixed**: Improved `<sp-switch>` contrast in S1 and Express to meet WCAG SC 1.4.11 Non-text Contrast (3:1 minimum). The unselected track border was added in S1 and Express, matching the S2 pattern of matching the handle background color to the track border color per interaction state.
+  - **Fixed**: Corrected `<sp-switch>` handle border colors for selected states in S1 and Express. Handle border now resolves to `--spectrum-gray-75` against the filled/selected track background.
+  - **Fixed**: Improved `<sp-switch>` Forced Colors (Windows High Contrast) mode. Replaced `box-shadow` track borders with proper `border` declarations, expanded `--highcontrast-switch-border-color` to full state-specific tokens (default, hover, focus, down, disabled), and corrected handle border colors to use system colors (`ButtonFace` for selected, `GrayText` for disabled).
+  - **Changed**: Renamed `--spectrum-switch-border-width-themed` to `--spectrum-switch-border-width` on `<sp-switch>`. The border width is now a consistent 2px in all themes. **The `--mod-switch-border-width-themed` variable remains unaffected.**
+  - **Changed**: Renamed `--highcontrast-switch-border-color` to `--highcontrast-switch-border-color-default` on `<sp-switch>`, and expanded it to full per-state tokens (`hover`, `focus`, `down`, `disabled`). Previously a single token controlled the track border color in all forced-colors states.
+
+  **If you were overriding `--highcontrast-switch-border-color` in Windows High Contrast styles, update your usage to the appropriate state-specific token.**
+
+  ```css
+  /* Before */
+  sp-switch {
+    --highcontrast-switch-border-color: Highlight;
+  }
+
+  /* After */
+  sp-switch {
+    --highcontrast-switch-border-color-default: Highlight;
+  }
+  ```
+
+### Patch Changes
+
+- [#6025](https://github.com/adobe/spectrum-web-components/pull/6025) [`018d316`](https://github.com/adobe/spectrum-web-components/commit/018d3163efb830478e1d1e2e1f696639c1423e84) Thanks [@TarunAdobe](https://github.com/TarunAdobe)! - Updated 1st-gen Action Button color wiring so S2 colors match spec while Spectrum 1 remains visually unchanged.
+  - Updated S2-only token values in `1st-gen/tools/styles/tokens-v2/system-theme-bridge.css`:
+    - `--system-action-button-content-color-selected` -> `var(--spectrum-gray-25)`
+    - static quiet disabled backgrounds:
+      - black -> `var(--spectrum-transparent-black-25)`
+      - white -> `var(--spectrum-transparent-white-25)`
+    - added S2 static content tokens:
+      - `--system-action-button-static-black-content-color-{default,hover,down,focus}`
+      - `--system-action-button-static-white-content-color-{default,hover,down,focus}`
+  - Updated `1st-gen/packages/action-button/src/action-button-overrides.css` to map new S2 `--system-*` static content tokens into `--spectrum-*` action-button vars.
+  - Updated `1st-gen/packages/action-button/src/spectrum-action-button.css` static color content assignments to read from `--spectrum-actionbutton-static-*-content-color-*` with S1-safe fallbacks:
+    - black fallback remains `var(--spectrum-black)`
+    - white fallback remains `var(--spectrum-white)`
+
+- [#6065](https://github.com/adobe/spectrum-web-components/pull/6065) [`52947c8`](https://github.com/adobe/spectrum-web-components/commit/52947c8877ae7fd6eda794a536454756e9b2c1e1) Thanks [@marissahuysentruyt](https://github.com/marissahuysentruyt)! - **Added**: New switch component tokens and styles were mapped to bring more fidelity for Spectrum 2 foundations theme. Switch now uses system theme tokens for track and handle border colors, handle background, and themed border width; S1 and Express handle border colors are preserved. Users can hook into `--mod-switch-border-width-themed` to adjust the switch input border; `--mod-switch-border-color-*` to modify the switch input border color; `--mod-switch-handle-border-color-*` to change the handle/thumb border color.
+
+  **Fixed**: S2 foundations switch emphasized down state color was fixed to reflect the S2 switch down state design spec. The high contrast input border color for S2, and a high-contrast typo are fixed.
+
+  **Fixed**: Theme bridge token additions and updates in `@spectrum-web-components/styles` (Spectrum, Express, and tokens-v2) support the switch overrides.
+
+- [#6020](https://github.com/adobe/spectrum-web-components/pull/6020) [`a420e49`](https://github.com/adobe/spectrum-web-components/commit/a420e495a479f411bef970739d860b0fcfe5f7fa) Thanks [@rubencarvalho](https://github.com/rubencarvalho)! - **Fixed**: Updated tag content and border colors in S2 Foundations. Content color updated from `--spectrum-neutral-subdued-content-color-default` (gray-700) to `--spectrum-neutral-content-color-default` (gray-800), and border color aligned to use the same `--spectrum-neutral-content-color-*` tokens. Both changes apply to all interaction states (default, hover, active, focus).
+
+- Updated dependencies [[`ba14a2b`](https://github.com/adobe/spectrum-web-components/commit/ba14a2b6361a0089a9a8c72232f245cde0716d89), [`dc6a8e8`](https://github.com/adobe/spectrum-web-components/commit/dc6a8e8db1b08080373c3664babc1feebde8f6c6), [`f37dec6`](https://github.com/adobe/spectrum-web-components/commit/f37dec6ae39fd89a4c12e084b4a0f4d9092d79b0)]:
+  - @spectrum-web-components/base@1.12.0
+
 ## 1.11.2
 
 ### Patch Changes
