@@ -14,7 +14,7 @@
  * Hybrid changesets changelog function.
  *
  * - 2nd-gen packages (`@adobe/spectrum-wc`, `@spectrum-web-components/core`):
- *   Returns changeset bodies verbatim as CHANGELOG bullets. No commit
+ *   Returns changeset bodies as CHANGELOG bullets. No commit
  *   hashes, no author attributions, no reformatting.
  *
  * - 1st-gen packages (everything else): Delegates to
@@ -36,7 +36,7 @@ const SECOND_GEN_PACKAGES = [
 ];
 
 function is2ndGen(changeset) {
-  return changeset.releases.some((r) => SECOND_GEN_PACKAGES.includes(r.name));
+  return changeset.releases.every((r) => SECOND_GEN_PACKAGES.includes(r.name));
 }
 
 module.exports = {
@@ -54,7 +54,12 @@ module.exports = {
       return '';
     }
 
-    return '\n\n' + lines.map((line) => `- ${line}`).join('\n');
+    return (
+      '\n\n' +
+      lines
+        .map((line) => (line.startsWith('#') ? line : `- ${line}`))
+        .join('\n')
+    );
   },
 
   async getDependencyReleaseLine(changesets, dependenciesUpdated, options) {
