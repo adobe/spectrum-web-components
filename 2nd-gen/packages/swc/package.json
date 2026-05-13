@@ -85,6 +85,7 @@
   "devDependencies": {
     "@adobe/postcss-token": "workspace:*",
     "@adobe/swc-tokens": "workspace:*",
+    "@adobe/vite-global-elements-css": "workspace:*",
     "@axe-core/playwright": "4.11.2",
     "@chromatic-com/storybook": "5.0.1",
     "@custom-elements-manifest/analyzer": "0.10.8",
