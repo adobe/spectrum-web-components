@@ -41,8 +41,6 @@ const config: TestRunnerConfig = {
       targetPage: typeof page,
       viewLabel: 'story' | 'docs'
     ): Promise<string | null> => {
-      await targetPage.waitForFunction(() => !(window as any).axe?.running);
-
       const axeBuilder = new AxeBuilder({ page: targetPage })
         .include('#storybook-root')
         .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa']);
@@ -54,23 +52,7 @@ const config: TestRunnerConfig = {
         axeBuilder.disableRules(a11yConfig.disabledRules);
       }
 
-      // Both addon-a11y and the test-runner run axe in the same preview iframe.
-      // The waitForFunction above can resolve just before the addon starts a new run,
-      // so analyze() may find axe already running. Retry once after waiting.
-      let results;
-      try {
-        results = await axeBuilder.analyze();
-      } catch (error) {
-        if (
-          error instanceof Error &&
-          error.message.includes('Axe is already running')
-        ) {
-          await targetPage.waitForFunction(() => !(window as any).axe?.running);
-          results = await axeBuilder.analyze();
-        } else {
-          throw error;
-        }
-      }
+      const results = await axeBuilder.analyze();
 
       // Filter violations using rule-specific exclusions from story parameters.
       // parameters.a11y.exclude: { 'rule-id': ['selector1', 'selector2'] }
