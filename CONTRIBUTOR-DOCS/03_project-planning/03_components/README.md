@@ -52,6 +52,8 @@
     - [Color field migration roadmap](color-field/rendering-and-styling-migration-analysis.md)
 - Color Loupe
     - [Color loupe accessibility migration analysis](color-loupe/accessibility-migration-analysis.md)
+    - [Color loupe migration checklist](color-loupe/migration-checklist.md)
+    - [Color loupe migration analysis](color-loupe/rendering-and-styling-migration-analysis.md)
 - Divider
     - [Divider accessibility migration analysis](divider/accessibility-migration-analysis.md)
     - [Divider migration roadmap](divider/rendering-and-styling-migration-analysis.md)

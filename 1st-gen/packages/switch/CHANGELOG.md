@@ -1,5 +1,41 @@
 # Change Log
 
+## 1.12.0
+
+### Minor Changes
+
+- [#6097](https://github.com/adobe/spectrum-web-components/pull/6097) [`f842573`](https://github.com/adobe/spectrum-web-components/commit/f8425730004d2ed091810858f7254a952e16b909) Thanks [@marissahuysentruyt](https://github.com/marissahuysentruyt)! - - **Fixed**: Improved `<sp-switch>` contrast in S1 and Express to meet WCAG SC 1.4.11 Non-text Contrast (3:1 minimum). The unselected track border was added in S1 and Express, matching the S2 pattern of matching the handle background color to the track border color per interaction state.
+  - **Fixed**: Corrected `<sp-switch>` handle border colors for selected states in S1 and Express. Handle border now resolves to `--spectrum-gray-75` against the filled/selected track background.
+  - **Fixed**: Improved `<sp-switch>` Forced Colors (Windows High Contrast) mode. Replaced `box-shadow` track borders with proper `border` declarations, expanded `--highcontrast-switch-border-color` to full state-specific tokens (default, hover, focus, down, disabled), and corrected handle border colors to use system colors (`ButtonFace` for selected, `GrayText` for disabled).
+  - **Changed**: Renamed `--spectrum-switch-border-width-themed` to `--spectrum-switch-border-width` on `<sp-switch>`. The border width is now a consistent 2px in all themes. **The `--mod-switch-border-width-themed` variable remains unaffected.**
+  - **Changed**: Renamed `--highcontrast-switch-border-color` to `--highcontrast-switch-border-color-default` on `<sp-switch>`, and expanded it to full per-state tokens (`hover`, `focus`, `down`, `disabled`). Previously a single token controlled the track border color in all forced-colors states.
+
+  **If you were overriding `--highcontrast-switch-border-color` in Windows High Contrast styles, update your usage to the appropriate state-specific token.**
+
+  ```css
+  /* Before */
+  sp-switch {
+    --highcontrast-switch-border-color: Highlight;
+  }
+
+  /* After */
+  sp-switch {
+    --highcontrast-switch-border-color-default: Highlight;
+  }
+  ```
+
+### Patch Changes
+
+- [#6065](https://github.com/adobe/spectrum-web-components/pull/6065) [`52947c8`](https://github.com/adobe/spectrum-web-components/commit/52947c8877ae7fd6eda794a536454756e9b2c1e1) Thanks [@marissahuysentruyt](https://github.com/marissahuysentruyt)! - **Added**: New switch component tokens and styles were mapped to bring more fidelity for Spectrum 2 foundations theme. Switch now uses system theme tokens for track and handle border colors, handle background, and themed border width; S1 and Express handle border colors are preserved. Users can hook into `--mod-switch-border-width-themed` to adjust the switch input border; `--mod-switch-border-color-*` to modify the switch input border color; `--mod-switch-handle-border-color-*` to change the handle/thumb border color.
+
+  **Fixed**: S2 foundations switch emphasized down state color was fixed to reflect the S2 switch down state design spec. The high contrast input border color for S2, and a high-contrast typo are fixed.
+
+  **Fixed**: Theme bridge token additions and updates in `@spectrum-web-components/styles` (Spectrum, Express, and tokens-v2) support the switch overrides.
+
+- Updated dependencies [[`ba14a2b`](https://github.com/adobe/spectrum-web-components/commit/ba14a2b6361a0089a9a8c72232f245cde0716d89), [`dc6a8e8`](https://github.com/adobe/spectrum-web-components/commit/dc6a8e8db1b08080373c3664babc1feebde8f6c6), [`f37dec6`](https://github.com/adobe/spectrum-web-components/commit/f37dec6ae39fd89a4c12e084b4a0f4d9092d79b0)]:
+  - @spectrum-web-components/base@1.12.0
+  - @spectrum-web-components/checkbox@1.12.0
+
 ## 1.11.2
 
 ### Patch Changes

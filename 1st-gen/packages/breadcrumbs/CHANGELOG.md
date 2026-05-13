@@ -1,5 +1,19 @@
 # Change Log
 
+## 1.12.0
+
+### Patch Changes
+
+- Updated dependencies [[`ba14a2b`](https://github.com/adobe/spectrum-web-components/commit/ba14a2b6361a0089a9a8c72232f245cde0716d89), [`1aca50a`](https://github.com/adobe/spectrum-web-components/commit/1aca50a095ae386929c11005a9a92e14c5095d47), [`dc6a8e8`](https://github.com/adobe/spectrum-web-components/commit/dc6a8e8db1b08080373c3664babc1feebde8f6c6), [`f37dec6`](https://github.com/adobe/spectrum-web-components/commit/f37dec6ae39fd89a4c12e084b4a0f4d9092d79b0), [`4c3977a`](https://github.com/adobe/spectrum-web-components/commit/4c3977a7e2fab30d0ed0ee9d3e58d21e03f76e34), [`cb7eaa7`](https://github.com/adobe/spectrum-web-components/commit/cb7eaa7d41653a6765a99180b8c07fcba9d77891)]:
+  - @spectrum-web-components/base@1.12.0
+  - @spectrum-web-components/menu@1.12.0
+  - @spectrum-web-components/action-menu@1.12.0
+  - @spectrum-web-components/icon@1.12.0
+  - @spectrum-web-components/icons-ui@1.12.0
+  - @spectrum-web-components/icons-workflow@1.12.0
+  - @spectrum-web-components/link@1.12.0
+  - @spectrum-web-components/shared@1.12.0
+
 ## 1.11.2
 
 ### Patch Changes

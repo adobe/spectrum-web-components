@@ -95,6 +95,7 @@ export abstract class StatusLightBase extends SizedMixin(SpectrumElement, {
     super.updated(changes);
     if (window.__swc?.DEBUG) {
       const constructor = this.constructor as typeof StatusLightBase;
+      // @ts-expect-error -- intentional runtime guard: 1st-gen consumers may pass 'accent'
       if (this.variant === 'accent') {
         window.__swc.warn(
           this,
