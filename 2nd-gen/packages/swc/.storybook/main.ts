@@ -91,7 +91,16 @@ if (storybookMode !== 'ci-a11y') {
       files: '**/*.mdx',
       titlePrefix: 'Get started',
     },
-    // Reference / core package — keeps Core titlePrefix until Phase 9 establishes the Reference section
+    // Reference — consumer-audience reference content (MDX SSOTs).
+    // Phase 9 added the component status matrix. Core (below) will eventually
+    // become a child of Reference in a follow-up phase.
+    {
+      directory: 'docs/reference',
+      files: '**/*.mdx',
+      titlePrefix: 'Reference',
+    },
+    // Reference / core package — keeps Core titlePrefix for now; folding Core
+    // under Reference is a follow-up (would change /docs/core-* routes).
     {
       ...CORE_STORY_ROOT,
       files: '**/*.mdx',

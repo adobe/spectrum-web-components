@@ -225,6 +225,8 @@ const preview = {
               'Resources',
             ],
           ],
+          'Reference',
+          ['Component status'],
           'Core',
           ['Overview', 'Controllers'],
           'Contribute',

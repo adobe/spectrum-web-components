@@ -1,0 +1,46 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+import { ComponentStatusMatrix } from '../../blocks/ComponentStatusMatrix';
+
+<Meta title="Component status" />
+
+# Component status
+
+At-a-glance status for every 2nd-gen Spectrum Web Component. The matrix dogfoods the library — every status and parity cell is a real live `<swc-badge>`.
+
+<ComponentStatusMatrix />
+
+## How to read this matrix
+
+**Component** — the custom-element tag name. Use this name in your markup once you've imported the component.
+
+**Status** — the maturity stage from the component's `@status` JSDoc tag. Components without an explicit tag default to **Preview** (the sane assumption for migrated 2nd-gen components).
+
+- **Preview** — public API may still change between releases. Suitable for early integration with the expectation of small follow-up tweaks.
+- **Stable** — public API is frozen. Safe for production with our standard semver guarantees.
+- **Deprecated** — supported for one more major release; a replacement exists.
+- **Internal** — exists in the manifest but is not intended for direct consumer use.
+- **Unsupported** — present in the codebase but explicitly not recommended.
+
+**Since** — the package version that first shipped this component, from the `@since` JSDoc tag. A dash means we have not tagged a `@since` yet.
+
+**RSP 2 parity** — coverage relative to the [React Spectrum 2](https://s2.spectrum.adobe.com/) component of the same name. Measured against RSP 2, not against 1st-gen SWC:
+
+- **Full** — same set of props, slots, behavior, and accessibility contracts as the RSP 2 component.
+- **Partial** — most of RSP 2's surface is in place; some pieces are still in flight. Hover a component's notes column for specifics where available.
+- **None** — no equivalent shipped yet.
+
+Components default to **Partial** until proven otherwise; explicit overrides live in `CONTRIBUTOR-DOCS/reference/component-status.data.ts`.
+
+**Figma** and **StackBlitz** — design-source and runnable-example links when available. Empty cells mean the link hasn't been recorded yet (PR-discussable; edit the data file to add or update).
+
+**Notes** — free-text qualifiers from the data file: caveats, in-flight items, or anything not captured in the other columns.
+
+## Updating the matrix
+
+The matrix combines two sources:
+
+- **Status, Since, and the component list** come from the [Custom Elements Manifest](https://github.com/webcomponents/custom-elements-manifest), built from each component's class JSDoc by `cem.config.js`. To change these values, update the `@status` / `@since` tags on the component's class.
+- **Parity, Figma, StackBlitz, Notes** come from [`CONTRIBUTOR-DOCS/reference/component-status.data.ts`](https://github.com/adobe/spectrum-web-components/blob/main/CONTRIBUTOR-DOCS/reference/component-status.data.ts). Edit that file in a PR; changes appear in this matrix on the next Storybook build.
+
+The CEM regenerates on every `yarn dev` / `yarn storybook` / `yarn build-storybook` run, so the matrix always reflects the current state of the codebase.

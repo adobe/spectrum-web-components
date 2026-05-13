@@ -38,6 +38,7 @@
     - [Components](project-planning/03_components/README.md)
     - [Milestones](project-planning/04_milestones/README.md)
     - Strategies
+- Reference
 
 </details>
 
