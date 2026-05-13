@@ -2,9 +2,9 @@
 
 # Spectrum consumer migration guide prompt
 
-For the **[COMPONENT_NAME]** component(s), create one consumer-facing migration guide per component at `2nd-gen/packages/swc/components/[component-name]/consumer-migration-guide.mdx`.
+For the **[COMPONENT_NAME]** component(s), create one consumer-facing migration guide per component at `2nd-gen/packages/swc/components/[component-name]/migration-guide.mdx`.
 
-The file must be **MDX**, not plain Markdown. Storybook's config (`2nd-gen/packages/swc/.storybook/main.ts`) picks up `**/*.mdx` under `../components` with `titlePrefix: 'Components'`, so the guide renders at `Components/[Component name]/Consumer migration guide`.
+The file must be **MDX**, not plain Markdown. Storybook's config (`2nd-gen/packages/swc/.storybook/main.ts`) picks up `**/*.mdx` under `../components` with `titlePrefix: 'Components'`, so the guide renders at `Components/[Component name]/Migration guide`.
 
 The guide ships alongside the Spectrum 2 component source. Do **not** create or move this file under `CONTRIBUTOR-DOCS/`.
 
@@ -60,9 +60,9 @@ Start every guide with this exact template:
 ```mdx
 import { Meta } from '@storybook/addon-docs/blocks';
 
-<Meta title="[Component name]/Consumer migration guide" />
+<Meta title="[Component name]/Migration guide" />
 
-# [Component name] consumer migration guide
+# [Component name] migration guide
 ```
 
 - Use sentence case for `[Component name]` (for example `Badge`, `Action button`).
@@ -100,7 +100,7 @@ Do **not** add: `Overview`, `Before you migrate`, `Migration in one sentence`, `
 Example:
 
 ```mdx
-# Badge consumer migration guide
+# Badge migration guide
 
 Replace `<sp-badge>` with `<swc-badge>` and update the import. The public API is unchanged.
 ```
