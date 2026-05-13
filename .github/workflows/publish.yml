@@ -294,12 +294,33 @@ jobs:
             echo "❌ Publish failed — NPM authentication did not succeed" >> $GITHUB_STEP_SUMMARY
           fi
 
-      - name: Commit and push changes
-        if: steps.extract-tag.outputs.tag == 'latest'
+      - name: Debug workspace state before commit
+        if: steps.extract-tag.outputs.tag == 'latest' || steps.extract-tag.outputs.tag == 'snapshot-test'
+        run: |
+          echo "=== yarn workspaces list (first 20) ==="
+          yarn workspaces list 2>&1 | head -20
+          echo "=== lockfile diff (package version lines) ==="
+          git diff yarn.lock | grep '^[+-].*version:' | head -40
+          echo "=== staged package.json count ==="
+          git diff --cached --name-only | grep 'package.json' | wc -l
+
+      - name: Commit version bump
+        if: steps.extract-tag.outputs.tag == 'latest' || steps.extract-tag.outputs.tag == 'snapshot-test'
         run: |
           git add .
-          git commit -m "chore: release packages #publish" || echo "No changes to commit"
-          git push
+          git commit --no-verify -m "chore: release packages #publish" || echo "No changes to commit"
+
+      - name: Push changes
+        if: steps.extract-tag.outputs.tag == 'latest' || steps.extract-tag.outputs.tag == 'snapshot-test'
+        env:
+          TAG: ${{ steps.extract-tag.outputs.tag }}
+          HEAD_REF: ${{ github.head_ref }}
+        run: |
+          if [ "$TAG" == "latest" ]; then
+            git push
+          else
+            git push origin HEAD:$HEAD_REF
+          fi
 
       - name: Create git tag
         if: steps.extract-tag.outputs.tag == 'latest'
