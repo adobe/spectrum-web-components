@@ -82,7 +82,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
 Use exactly this **H2** order. Omit any section that has no component-specific content rather than writing filler.
 
-1. `# [Component name] consumer migration guide` — H1, followed by **one sentence** summarizing the migration.
+1. `# [Component name] migration guide` — H1, followed by **one sentence** summarizing the migration.
 2. `## What changed` — up to three tables (`### Renamed`, `### Added in Spectrum 2`, `### Removed in Spectrum 2`). Omit any sub-section with no entries. **Never** include an `### Unchanged` sub-section.
 3. `## Update your code` — numbered steps in the order the consumer performs them. Every step includes a before/after snippet.
 4. `## Accessibility` — consumer-facing a11y actions only. Do not repeat code examples already shown in `## Update your code` — link back to the relevant step instead. Skip if nothing changed.
