@@ -10,7 +10,7 @@ Replace `<sp-tabs>`, `<sp-tab>`, and `<sp-tab-panel>` with their `swc-` equivale
 
 ```bash
 # Remove
-yarn remove @spectrum-web-components/tabs
+yarn remove @spectrum-web-components/tabs @spectrum-web-components/tab @spectrum-web-components/tab-panel
 
 # Add
 yarn add @adobe/spectrum-wc
@@ -204,7 +204,7 @@ Spectrum 2 uses a different custom property prefix. Spectrum 1 overrides will no
 
 ## Checklist
 
-- [ ] Remove `@spectrum-web-components/tabs` and replace imports of `sp-tabs.js`, `sp-tab.js`, and `sp-tab-panel.js` with `@adobe/spectrum-wc/components/tabs/swc-tabs.js`, `swc-tab.js`, and `swc-tab-panel.js`
+- [ ] Remove `@spectrum-web-components/tabs`, `@spectrum-web-components/tab`, and `@spectrum-web-components/tab-panel` and replace imports with `@adobe/spectrum-wc/components/tabs/swc-tabs.js`, `swc-tab.js`, and `swc-tab-panel.js`
 - [ ] Replace `<sp-tabs>` with `<swc-tabs>`, `<sp-tab>` with `<swc-tab>`, `<sp-tab-panel>` with `<swc-tab-panel>`
 - [ ] Rename `value` attribute to `tab-id` on every tab and tab panel
 - [ ] Rename `label` attribute to `accessible-label` on `<swc-tabs>`
