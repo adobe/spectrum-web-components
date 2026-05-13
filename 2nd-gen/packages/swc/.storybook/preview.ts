@@ -363,7 +363,11 @@ const preview = {
                 'Color field',
                 ['Rendering and styling migration analysis'],
                 'Color loupe',
-                ['Accessibility migration analysis'],
+                [
+                  'Accessibility migration analysis',
+                  'Migration checklist',
+                  'Rendering and styling migration analysis',
+                ],
                 'Divider',
                 [
                   'Accessibility migration analysis',
