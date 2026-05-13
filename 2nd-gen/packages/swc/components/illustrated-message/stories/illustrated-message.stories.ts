@@ -56,7 +56,7 @@ argTypes.orientation = {
  * via slots.
  */
 export const meta: Meta = {
-  title: 'Illustrated message',
+  title: 'Illustrated Message',
   component: 'swc-illustrated-message',
   args,
   argTypes,
@@ -76,7 +76,7 @@ export const meta: Meta = {
 
 export default {
   ...meta,
-  title: 'Illustrated message',
+  title: 'Illustrated Message',
   excludeStories: ['meta'],
 } as Meta;
 

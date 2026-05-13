@@ -184,17 +184,17 @@ const meta: Meta = {
 
 These rules apply to every `title` field in meta objects and every `<Meta title="..." />` in MDX files.
 
-- **Sentence case always.** Every word except the first is lowercase unless it is a proper noun or acronym (`API`, `ARIA`, `MDX`). This applies to component names too: `'Action button'` not `'Action Button'`, `'Color loupe'` not `'Color Loupe'`.
+- **Component names are proper nouns — keep their title case.** `'Action Button'`, `'Illustrated Message'`, `'Color Loupe'`. Each word in the component name is capitalised.
+- **Everything else uses sentence case.** Page labels, section names, and group names that are not component names: `'Pattern overview'`, `'Migration guide'`, `'Color components'`.
 - **No filename as label.** Never use a bare filename (`README`, `CHANGELOG`) as a Storybook title or page name. Use a descriptive label: `'Pattern overview'`, `'Migration guide'`.
-- **Flatten single-component groups.** If a Storybook group contains only one component, do not nest it. Use a flat title (`'Color loupe'`) rather than a group path (`'Color components/Color loupe'`).
+- **Flatten single-component groups.** If a Storybook group contains only one component, do not nest it. Use a flat title (`'Color Loupe'`) rather than a group path (`'Color Components/Color Loupe'`).
 
 | ❌ Don't                         | ✅ Do                                  |
 | -------------------------------- | -------------------------------------- |
-| `'Action Button'`                | `'Action button'`                      |
-| `'Color Components/Color Loupe'` | `'Color loupe'` (flattened)            |
+| `'Color Components/Color Loupe'` | `'Color Loupe'` (flattened)            |
 | `'Conversational AI/README'`     | `'Conversational AI/Pattern overview'` |
 | `'Badge/Migration Guide'`        | `'Badge/Migration guide'`              |
-| `'Illustrated Message'`          | `'Illustrated message'`                |
+| `'Pattern Overview'`             | `'Pattern overview'`                   |
 
 ## Layout and decorators
 
