@@ -30,7 +30,7 @@ const { events, args, argTypes, template } =
  * color slider, and color wheel — visibility is managed by the parent.
  */
 const meta: Meta = {
-  title: 'Color Components/Color Loupe',
+  title: 'Color components/Color Loupe',
   component: 'swc-color-loupe',
   args: {
     ...args,
