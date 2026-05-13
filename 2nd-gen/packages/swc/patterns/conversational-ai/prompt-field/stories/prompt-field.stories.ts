@@ -223,12 +223,7 @@ export const Artifact: Story = {
           value="Use attached assets for a launch plan."
         >
           <swc-upload-artifact slot="artifact" type="card" dismissible>
-            <div
-              slot="thumbnail"
-              style="background:var(--swc-gray-200);"
-              role="img"
-              aria-label="PDF"
-            ></div>
+            <div slot="thumbnail" role="img" aria-label="PDF"></div>
             <span slot="title">Brand guidelines</span>
             <span slot="subtitle">PDF</span>
           </swc-upload-artifact>
@@ -263,12 +258,7 @@ export const Artifact: Story = {
       <div style="display:flex;flex-direction:column;gap:8px;">
         <swc-prompt-field label="Prompt" placeholder=${defaultPlaceholder}>
           <swc-upload-artifact slot="artifact" type="card" dismissible>
-            <div
-              slot="thumbnail"
-              style="background:var(--swc-gray-200);"
-              role="img"
-              aria-label="PDF"
-            ></div>
+            <div slot="thumbnail" role="img" aria-label="PDF"></div>
             <span slot="title">Hilton commercial assets</span>
             <span slot="subtitle">2026</span>
           </swc-upload-artifact>
@@ -438,7 +428,7 @@ class PromptFieldBehaviorDemo extends LitElement {
                         slot="thumbnail"
                         role="img"
                         aria-label="File thumbnail"
-                        style="inline-size:40px;block-size:40px;background:var(--swc-gray-200);border-radius:4px;"
+                        style="inline-size:40px;block-size:40px;"
                       ></div>
                       <span slot="title">${artifact.fileName}</span>
                       <span slot="subtitle">${artifact.sizeLabel}</span>

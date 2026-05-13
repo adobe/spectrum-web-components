@@ -113,12 +113,7 @@ export const MultiArtifact: Story = {
       </p>
       <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:flex-start;">
         <swc-upload-artifact type="card" dismissible>
-          <div
-            slot="thumbnail"
-            style="background:var(--swc-gray-200);"
-            role="img"
-            aria-label="PDF"
-          ></div>
+          <div slot="thumbnail" role="img" aria-label="PDF"></div>
           <span slot="title">Brand guidelines</span>
           <span slot="subtitle">PDF</span>
         </swc-upload-artifact>
@@ -139,12 +134,7 @@ export const MultiArtifact: Story = {
           ></div>
         </swc-upload-artifact>
         <swc-upload-artifact type="card" dismissible>
-          <div
-            slot="thumbnail"
-            style="background:var(--swc-gray-200);"
-            role="img"
-            aria-label="Spreadsheet"
-          ></div>
+          <div slot="thumbnail" role="img" aria-label="Spreadsheet"></div>
           <span slot="title">Q2 metrics draft</span>
           <span slot="subtitle">XLSX</span>
         </swc-upload-artifact>
