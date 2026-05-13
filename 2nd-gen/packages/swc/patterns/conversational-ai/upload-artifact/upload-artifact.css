@@ -144,12 +144,26 @@
   text-overflow: ellipsis;
 }
 
+:host([type="media"]) {
+  inline-size: var(--swc-upload-artifact-preview-size, 68px);
+  block-size: var(--swc-upload-artifact-preview-size, 68px);
+}
+
+:host([type="media"]) .swc-UploadArtifact {
+  inline-size: 100%;
+  block-size: 100%;
+}
+
 :host([type="media"]) .swc-UploadArtifact-surface {
   flex-direction: column;
-  gap: token("spacing-100");
+  gap: 0;
+  inline-size: 100%;
+  block-size: 100%;
 }
 
 :host([type="media"]) .swc-UploadArtifact-thumbnail {
+  inline-size: 100%;
+  block-size: 100%;
   border-radius: token("corner-radius-200");
   overflow: hidden;
 }
@@ -159,6 +173,12 @@
   inline-size: 100%;
   block-size: auto;
   object-fit: cover;
+}
+
+:host([type="media"]) .swc-UploadArtifact-thumbnail ::slotted(*) {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
 }
 
 :host([type="media"]) .swc-UploadArtifact-meta {
@@ -182,32 +202,4 @@
 
 :host([type="media"]) .swc-UploadArtifact-subtitle {
   line-height: token("line-height-font-size-75");
-}
-
-/* Preview-only media (no title/subtitle) fills hosts like prompt-field tiles. */
-:host([type="media"][data-preview-only]) {
-  inline-size: var(--swc-upload-artifact-preview-size, 68px);
-  block-size: var(--swc-upload-artifact-preview-size, 68px);
-}
-
-:host([type="media"][data-preview-only]) .swc-UploadArtifact {
-  inline-size: 100%;
-  block-size: 100%;
-}
-
-:host([type="media"][data-preview-only]) .swc-UploadArtifact-surface {
-  gap: 0;
-  inline-size: 100%;
-  block-size: 100%;
-}
-
-:host([type="media"][data-preview-only]) .swc-UploadArtifact-thumbnail {
-  inline-size: 100%;
-  block-size: 100%;
-}
-
-:host([type="media"][data-preview-only]) .swc-UploadArtifact-thumbnail ::slotted(*) {
-  display: block;
-  inline-size: 100%;
-  block-size: 100%;
 }
