@@ -1,10 +1,10 @@
 <!-- Generated breadcrumbs - DO NOT EDIT -->
 
-[CONTRIBUTOR-DOCS](../../../README.md) / [Project planning](../../README.md) / [Components](../README.md) / Color Loupe / Color loupe migration checklist
+[CONTRIBUTOR-DOCS](../../../README.md) / [Project planning](../../README.md) / [Components](../README.md) / Color Loupe / Color loupe migration plan
 
 <!-- Document title (editable) -->
 
-# Color loupe migration checklist
+# Color loupe migration plan
 
 <!-- Generated TOC - DO NOT EDIT -->
 
@@ -35,7 +35,7 @@
     - [Integration / E2E tests](#integration--e2e-tests)
     - [Browser compatibility](#browser-compatibility)
 - [Phase 8: Storybook documentation (SWC-1790)](#phase-8-storybook-documentation-swc-1790)
-- [Phase 9: Consumer migration guide (SWC-1791)](#phase-9-consumer-migration-guide-swc-1791)
+- [Phase 9: Migration guide (SWC-1791)](#phase-9-migration-guide-swc-1791)
 - [Phase 10: Review and finalize (SWC-1792)](#phase-10-review-and-finalize-swc-1792)
 - [Known issues and decisions](#known-issues-and-decisions)
 - [References](#references)
@@ -284,7 +284,7 @@ This checklist tracks the full 2nd-gen migration of the **`<sp-color-loupe>`** c
 
 ---
 
-## Phase 9: Consumer migration guide (SWC-1791)
+## Phase 9: Migration guide (SWC-1791)
 
 > Goal: Produce a guide for teams upgrading from `<sp-color-loupe>` (1st-gen) to `<swc-color-loupe>` (2nd-gen).
 
@@ -310,7 +310,7 @@ This checklist tracks the full 2nd-gen migration of the **`<sp-color-loupe>`** c
 - [ ] Code reviewed by at least one other engineer
 - [ ] Accessibility review complete — known gaps documented with references to SWC-1193
 - [ ] Storybook docs reviewed for accuracy and accessible content
-- [ ] Consumer migration guide reviewed and approved
+- [ ] Migration guide reviewed and approved
 - [ ] No open blocking issues or unresolved questions
 - [ ] Changeset written and included in PR
 - [ ] PR linked to parent epic [SWC-1781](https://jira.corp.adobe.com/browse/SWC-1781)

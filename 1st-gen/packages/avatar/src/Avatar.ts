@@ -137,7 +137,7 @@ export class Avatar extends LikeAnchor(Focusable) {
         window.__swc.warn(
           this,
           `<${this.localName}> the "label" attribute is deprecated and will be removed in Spectrum 2. Use the "alt" attribute instead.`,
-          'https://opensource.adobe.com/spectrum-web-components/second-gen/?path=/docs/avatar-consumer-migration-guide--docs',
+          'https://spectrum-web-components.adobe.com/?path=/docs/components-avatar-migration-guide--docs',
           { level: 'deprecation' }
         );
       }
@@ -145,7 +145,7 @@ export class Avatar extends LikeAnchor(Focusable) {
         window.__swc.warn(
           this,
           `<${this.localName}> the "is-decorative" attribute is deprecated and will be removed in Spectrum 2. Use the "decorative" attribute instead.`,
-          'https://opensource.adobe.com/spectrum-web-components/second-gen/?path=/docs/avatar-consumer-migration-guide--docs',
+          'https://spectrum-web-components.adobe.com/?path=/docs/components-avatar-migration-guide--docs',
           { level: 'deprecation' }
         );
       }
@@ -153,7 +153,7 @@ export class Avatar extends LikeAnchor(Focusable) {
         window.__swc.warn(
           this,
           `<${this.localName}> the "href" attribute is deprecated and will be removed in Spectrum 2. Wrap <${this.localName}> in an <a> element instead.`,
-          'https://opensource.adobe.com/spectrum-web-components/second-gen/?path=/docs/avatar-consumer-migration-guide--docs',
+          'https://spectrum-web-components.adobe.com/?path=/docs/components-avatar-migration-guide--docs',
           { level: 'deprecation' }
         );
       }

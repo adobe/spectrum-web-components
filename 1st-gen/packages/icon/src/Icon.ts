@@ -60,7 +60,7 @@ export class Icon extends IconBase {
         window.__swc.warn(
           this,
           `<${this.localName}> the "name" attribute is deprecated and will be removed in Spectrum 2. Slot an SVG directly or use an icon factory function instead.`,
-          'https://opensource.adobe.com/spectrum-web-components/second-gen/?path=/docs/icon-consumer-migration-guide--docs',
+          'https://opensource.adobe.com/spectrum-web-components/second-gen/?path=/docs/icon-migration-guide--docs',
           { level: 'deprecation' }
         );
       }
@@ -68,7 +68,7 @@ export class Icon extends IconBase {
         window.__swc.warn(
           this,
           `<${this.localName}> the "src" attribute is deprecated and will be removed in Spectrum 2. Slot an <svg> or <img> element directly instead.`,
-          'https://opensource.adobe.com/spectrum-web-components/second-gen/?path=/docs/icon-consumer-migration-guide--docs',
+          'https://opensource.adobe.com/spectrum-web-components/second-gen/?path=/docs/icon-migration-guide--docs',
           { level: 'deprecation' }
         );
       }

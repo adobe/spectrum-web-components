@@ -31,6 +31,8 @@
     - [Observation 9 — Filename typos that survived to `origin/main`](#observation-9--filename-typos-that-survived-to-originmain)
     - [Observation 10 — `12_tools-vs-packages.md` title doesn't match its scope](#observation-10--12tools-vs-packagesmd-title-doesnt-match-its-scope)
     - [Observation 11 — Latent consumer-audience content inside `focus-management.md`](#observation-11--latent-consumer-audience-content-inside-focus-managementmd)
+    - [Observation 12 — Get-started welcome page accuracy review](#observation-12--get-started-welcome-page-accuracy-review)
+    - [Observation 13 — `.ai/rules/code-conformance.md` may be wrong genre](#observation-13--airulescode-conformancemd-may-be-wrong-genre)
 - [Cross-reference](#cross-reference)
 
 </details>
@@ -256,6 +258,35 @@ Also: `03_project-planning/04_milestones/README.md` has a single H2 ("Barebones"
 **Recommendation:** in a follow-up content PR, split the file. The contributor-facing implementation guide stays where it is. A new consumer-facing companion at `.storybook/docs/learn/focus-management.mdx` covers what consumers need to know about SWC's focus behavior without diving into mixin internals. Cross-link explicitly. This observation also appears in the [storybook residency audit](./audience-based-docs-storybook-residency-audit.md) since the consumer-facing companion would live in the `.storybook/docs/` tree.
 
 **Not addressed in the structural PR.** The file moves intact during Phase 2 of the reorganization plan.
+
+### Observation 12 — Get-started welcome page accuracy review
+
+**File:** `2nd-gen/packages/swc/.storybook/docs/get-started/index.mdx`.
+
+**Context:** during the post-merge IA refinement, content from main's competing `learn-about-swc/get-started.mdx` was absorbed into our welcome page (multi-package-manager install snippet, JS import of `swc.css`, `swc-theme--dark` example, `swc-badge.js` per-element import, link out to the new Migration subsection and Reference / Support and compatibility). The whole page was reorganized to flow through Install → Theme → First component → Framework note → Where to go next.
+
+**Concern (process, not content):** the absorption happened mid-PR. A fresh end-to-end read of the page after every link target in this branch settles (component routes, cheat-sheet routes, Migration subsection routes, Reference subsection routes) is warranted to make sure every link resolves and the reading order remains coherent.
+
+**Recommendation:** in a follow-up content PR after the audience reorg lands, re-read the welcome page end-to-end. Verify:
+
+- Every `/docs/*--docs` link resolves in production Storybook
+- The Theme paragraph still makes sense alongside the Customization cheat sheet (no overlap or contradiction)
+- The framework note matches the current state of React-wrapper plans
+- "Where to go next" links cover the highest-traffic next steps and nothing else
+
+**Not addressed in the structural PR.** The page is functionally complete; this is a polish/freshness review.
+
+### Observation 13 — `.ai/rules/code-conformance.md` may be wrong genre
+
+**File:** `.ai/rules/code-conformance.md` (added in main #6270, ~1500 words).
+
+**Concern:** the project distinguishes between **rules** (short directives the AI tools follow inline) and **skills** (long workflows that get invoked explicitly). The new `code-conformance` "rule" reads more like a skill — multi-section checklist, linter commands, per-domain manual review steps, anti-pattern lists. Its companion `migration-conformance` SKILL.md is comparatively thin and mostly references the rule.
+
+The pair may be inverted: the long-form conformance walkthrough belongs in a skill, with a short rule citing the skill for AI tooling that needs to surface conformance behavior inline.
+
+**Recommendation:** flag to the `.ai/` style-guide owners for a rule-vs-skill split review. Not blocking.
+
+**Not addressed in the structural PR.** This is an `.ai/` authoring concern, not part of the audience-doc reorg.
 
 ## Cross-reference
 

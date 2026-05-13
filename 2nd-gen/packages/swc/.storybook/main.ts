@@ -102,17 +102,11 @@ if (storybookMode !== 'ci-a11y') {
       titlePrefix: 'Learn',
     },
     // Reference — consumer-audience reference content (MDX SSOTs).
-    // Component status, design tokens, changelog, support, migration guides.
+    // Component status, design tokens, changelog, support and compatibility.
     {
       directory: 'docs/reference',
       files: '**/*.mdx',
       titlePrefix: 'Reference',
-    },
-    // Resources — changelog, migrate from gen1, support and compatibility.
-    {
-      directory: 'docs/resources',
-      files: '**/*.mdx',
-      titlePrefix: 'Resources',
     }
   );
 

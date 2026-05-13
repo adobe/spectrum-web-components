@@ -82,7 +82,7 @@ The codebase already has the doc infrastructure — `CONTRIBUTOR-DOCS/` (100+ MD
 
 ### Out of scope
 
-- **Changes to how individual components are documented.** No shifts of descriptions, subtitles, or prose between stories and source files. No JSDoc rewrites on component classes. No story restructuring. **Permitted exception:** Phase 4's titlePrefix renames force ~11 outbound-link updates across 6 component-dir files (typography stories, button stories, status-light stories, progress-circle stories, badge stories, button consumer-migration-guide) — these are mechanical path swaps with no content change, forced by the Storybook IA shift.
+- **Changes to how individual components are documented.** No shifts of descriptions, subtitles, or prose between stories and source files. No JSDoc rewrites on component classes. No story restructuring. **Permitted exception:** Phase 4's titlePrefix renames force ~11 outbound-link updates across 6 component-dir files (typography stories, button stories, status-light stories, progress-circle stories, badge stories, button migration-guide) — these are mechanical path swaps with no content change, forced by the Storybook IA shift.
 - **Content edits to contributor docs themselves.** The 11 observations captured in the [content audit](./audience-based-docs-content-audit.md) and the [storybook residency audit](./audience-based-docs-storybook-residency-audit.md) — duplicate-home cleanups, stub READMEs, scope-sharpening for a11y testing docs, the migration step-by-step relocation question, `04_milestones/` content, `tools-vs-packages.md` rename, the latent consumer chunk in `focus-management.md` — are explicitly **out of scope for this PR**. They each become their own follow-up content PR after the structural change lands.
 - Component implementation, tests, CSS — untouched.
 - New CEM tags or block-library extensions — separate concern, future work.
@@ -447,7 +447,7 @@ The titlePrefix renames change Storybook route prefixes. Component-dir files tha
 | `progress-circle/stories/progress-circle.stories.ts` | 1 | `/docs/guides-accessibility-guides-screen-reader-testing--readme` → `/docs/learn-accessibility-screen-reader-testing--readme` |
 | `badge/stories/badge.stories.ts` | 1 | same accessibility-guides redirect |
 | `button/stories/button.stories.ts` | 4 | `/docs/guides-customization-global-element-styling--readme` → `/docs/learn-customization-global-elements--readme` (note: also picks up the `global-elements` filename hygiene from Phase 5) |
-| `button/consumer-migration-guide.mdx` | 2 | same global-elements redirect |
+| `button/migration-guide.mdx` | 2 | same global-elements redirect |
 
 Total: 11 link updates across 6 files. These are the only `components/` diffs in the entire reorganization PR. No prose, JSDoc, or story shape changes.
 

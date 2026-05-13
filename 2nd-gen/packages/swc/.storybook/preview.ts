@@ -201,7 +201,6 @@ const preview = {
           'Learn',
           [
             'About SWC',
-            'Gen1 vs Gen2',
             'Customization',
             [
               'Cheat sheet',
@@ -223,11 +222,11 @@ const preview = {
               'WAVE toolbar testing',
               'Resources',
             ],
+            'Migration',
+            ['Gen1 vs Gen2', 'Migrate from Gen1'],
           ],
           'Reference',
-          ['Component status'],
-          'Resources',
-          ['Support and compatibility', 'Migrate from Gen1', 'Changelog'],
+          ['Component status', 'Changelog', 'Support and compatibility'],
           'Core',
           ['Overview', 'Controllers'],
           'Contribute',
@@ -372,7 +371,7 @@ const preview = {
                 'Color loupe',
                 [
                   'Accessibility migration analysis',
-                  'Migration checklist',
+                  'Migration plan',
                   'Rendering and styling migration analysis',
                 ],
                 'Divider',

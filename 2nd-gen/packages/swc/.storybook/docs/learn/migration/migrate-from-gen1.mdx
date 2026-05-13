@@ -1,12 +1,12 @@
 import { Meta } from '@storybook/addon-docs/blocks';
 
-<Meta title="Migrate from Gen1" />
+<Meta title="Migration/Migrate from Gen1" />
 
 # Migrate from Gen1
 
 This page walks an application team through moving from SWC Gen1 (`@spectrum-web-components/*`) to SWC Gen2 (`@adobe/spectrum-wc`). You do not have to migrate everything at once — Gen1 and Gen2 are designed to coexist in the same app so you can move one component (or one screen) at a time.
 
-For a high-level comparison of what changed, see [Gen1 vs Gen2](/docs/learn-about-swc-gen1-vs-gen2--docs).
+For a high-level comparison of what changed, see [Gen1 vs Gen2](/docs/learn-migration-gen1-vs-gen2--docs).
 
 ## TL;DR
 
@@ -72,7 +72,7 @@ Available classes:
 
 - `swc-theme--light` / `swc-theme--dark` / `swc-theme--adaptive` (follows OS preference)
 
-You can scope a theme to a region by applying these classes lower in the tree. See the [Theme and scales guide](/docs/guides-customization-theme-and-scales--docs) for the full list.
+You can scope a theme to a region by applying these classes lower in the tree. See the [Theme and scales guide](/docs/learn-customization-theme-and-scales--docs) for the full list.
 
 > The Gen1 `<sp-theme>` element only affects its `<sp-*>` descendants. The Gen2 `swc-theme*` classes only affect `<swc-*>` descendants. The two systems do not interfere with each other.
 
@@ -80,7 +80,7 @@ You can scope a theme to a region by applying these classes lower in the tree. S
 
 Gen2 uses Adobe Clean Spectrum VF, the Spectrum 2 font family. It looks visually identical to Adobe Clean (the Gen1 font) but ships updated metrics for better vertical alignment inside components.
 
-How you load it depends on your environment — for Adobe Fonts (Typekit), CDN, or self-hosted setups, see the [Fonts guide](/docs/guides-customization-fonts--docs).
+How you load it depends on your environment — for Adobe Fonts (Typekit), CDN, or self-hosted setups, see the [Fonts guide](/docs/learn-customization-fonts--docs).
 
 ## Step 5 — Replace components one at a time
 
@@ -130,7 +130,7 @@ swc-badge {
 
 Each per-component migration guide includes a mapping table for that component's properties. The general namespacing rule: `--mod-` becomes `--swc-`, and `--spectrum-` (token references) also become `--swc-` because Gen2 republishes Spectrum 2 tokens under its own namespace.
 
-For deeper context on component-level customization, see [Component styles](/docs/guides-customization-component-styles--docs).
+For deeper context on component-level customization, see [Component styles](/docs/learn-customization-component-styles--docs).
 
 ### `<sp-theme>` → CSS classes
 
@@ -166,10 +166,10 @@ Running Gen1 and Gen2 together is expected during migration, but avoid keeping b
 - Remove the corresponding `@spectrum-web-components/*` per-element import as soon as the last `<sp-*>` usage of that component is gone, so each migrated component drops out of the bundle.
 - Migrate one component at a time, by route or feature area if possible, so the dual-import window for any given page is short.
 
-For versioning policy, supported browsers, and severity classification, see [Support and compatibility](/docs/resources-support-and-compatibility--docs).
+For versioning policy, supported browsers, and severity classification, see [Support and compatibility](/docs/reference-support-and-compatibility--docs).
 
 ## Get help
 
 - Each component documents its own breaking changes in `<Component>/Migration guide`.
-- The [customization guides](/docs/guides-customization-getting-started--docs) cover styling, theming, and fonts in depth.
+- The [customization guides](/docs/learn-customization-getting-started--docs) cover styling, theming, and fonts in depth.
 - [Open an issue on GitHub](https://github.com/adobe/spectrum-web-components/issues/new/choose) for migration questions or gaps.

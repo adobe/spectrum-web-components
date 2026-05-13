@@ -161,7 +161,7 @@ Filename hygiene applied during the move:
 
 The reorganization plan's phases are restructured to match this residency model. Key changes from the prior plan:
 
-1. **Phase 4 (Storybook sidebar IA)** — `titlePrefix` renames + `Contribute` subtree gating + outbound component-dir link updates. No directory moves yet. The `Guides → Learn` rename forces ~11 outbound link updates across 6 component-dir files (typography stories, status-light stories, button stories, button consumer-migration-guide, progress-circle stories, badge stories). This exceeds the prior plan's "exactly one components/ diff" prediction; the updates are pure-mechanical link redirects, no content change.
+1. **Phase 4 (Storybook sidebar IA)** — `titlePrefix` renames + `Contribute` subtree gating + outbound component-dir link updates. No directory moves yet. The `Guides → Learn` rename forces ~11 outbound link updates across 6 component-dir files (typography stories, status-light stories, button stories, button migration-guide, progress-circle stories, badge stories). This exceeds the prior plan's "exactly one components/ diff" prediction; the updates are pure-mechanical link redirects, no content change.
 
 2. **Phase 5 (Storybook reorganization)** — moves the 16 doc-MDX files from `.storybook/learn-about-swc/` and `.storybook/guides/` into the new `.storybook/docs/learn/` tree. Updates `main.ts` `directory` entries. Filenames get hyphenated where they had underscores. The existing `<Meta title="..." />` blocks in each file are updated to match the new title segments where needed.
 

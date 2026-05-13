@@ -5,6 +5,8 @@
 .claude/handoffs
 .claude/settings.local.json
 .claude/worktrees
+# deep-understanding skill working artifact — see .ai/rules/deep-understanding.md
+**/research.md
 yarn-error.log
 build-storybook.log
 .DS_STORE

@@ -741,7 +741,7 @@ Any 2nd-gen change to DOM arrangement must preserve ID resolution. Options inclu
 
 - [ ] JSDoc on all public properties, methods, events, and slots
 - [ ] Storybook stories: Playground, Overview, Anatomy, Directions, visual variants, sizes, states, activation modes, accessibility
-- [ ] Consumer migration guide updated with all finalized breaking changes (B1–B26)
+- [ ] Migration guide updated with all finalized breaking changes (B1–B26)
 - [ ] Document `direction="vertical-right"` removal and migration path (B13)
 - [ ] Document `enableTabsScroll` rename (B14)
 - [ ] Document module-level export removal (B15)
@@ -802,7 +802,7 @@ Any 2nd-gen change to DOM arrangement must preserve ID resolution. Options inclu
 - [CSS style guide — Custom properties](../../../for-contributors/style-guide/css/custom-properties.md)
 - [1st-gen source](../../../../1st-gen/packages/tabs/src)
 - [1st-gen tests](../../../../1st-gen/packages/tabs/test)
-- [Consumer migration guide](../../../../2nd-gen/packages/swc/components/tabs/migration.md)
+- [Migration guide](../../../../2nd-gen/packages/swc/components/tabs/migration.md)
 - [WAI-ARIA 1.2](https://www.w3.org/TR/wai-aria-1.2/)
 - [WCAG 2.2](https://www.w3.org/TR/WCAG22/)
 - [Using ARIA (read this first)](https://www.w3.org/WAI/ARIA/apg/practices/read-me-first/)
