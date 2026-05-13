@@ -1,6 +1,6 @@
 {
   "name": "@spectrum-web-components/stylelint-header-plugin",
-  "version": "1.12.0",
+  "version": "1.12.1-snapshot-test.20260513115335",
   "private": true,
   "description": "Stylelint plugin for validating copyright header comments in CSS files",
   "license": "Apache-2.0",

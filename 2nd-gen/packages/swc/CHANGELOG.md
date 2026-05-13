@@ -1,5 +1,17 @@
 # @adobe/spectrum-wc
 
+## 0.2.0-snapshot-test.20260513115335
+
+### Minor Changes
+
+- [#6184](https://github.com/adobe/spectrum-web-components/pull/6184) [`68261b1`](https://github.com/adobe/spectrum-web-components/commit/68261b1cf230f385be59f7e4fa1b09fd361b27c6) Thanks [@blunteshwar](https://github.com/blunteshwar)! - **feat(color-loupe):** Add 2nd-gen `<swc-color-loupe>` with Spectrum 2 visual fidelity. Key changes from 1st-gen `<sp-color-loupe>`:
+  - Pure visual, non-interactive component — accessibility semantics are delegated to the parent color picker or color field
+  - SVG loupe graphic carries `aria-hidden="true"`; no role, label, or tab stop on the host
+  - `open` property controls visibility via CSS opacity and transform transitions
+  - `color` property accepts any valid CSS color string, including colors with alpha transparency revealed over an opacity checkerboard
+
+  See the [migration guide](https://spectrum-web-components.adobe.com/?path=/docs/color-components-color-loupe-migration-guide--docs) for upgrading from 1st-gen `sp-color-loupe`.
+
 ## 0.1.0
 
 ### Minor Changes

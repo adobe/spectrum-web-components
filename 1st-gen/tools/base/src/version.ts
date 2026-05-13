@@ -17,7 +17,7 @@
 /**
  * The version of the 1st-gen Spectrum Web Components library.
  */
-export const version = '1.12.0';
+export const version = '1.12.1-snapshot-test.20260513115335';
 
 /**
  * The version of the core base package.

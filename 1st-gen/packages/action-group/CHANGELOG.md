@@ -1,5 +1,15 @@
 # Change Log
 
+## 1.12.1-snapshot-test.20260513115335
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @spectrum-web-components/action-button@1.12.1-snapshot-test.20260513115335
+  - @spectrum-web-components/icons-workflow@1.12.1-snapshot-test.20260513115335
+  - @spectrum-web-components/base@1.12.1-snapshot-test.20260513115335
+  - @spectrum-web-components/reactive-controllers@1.12.1-snapshot-test.20260513115335
+
 ## 1.12.0
 
 ### Patch Changes

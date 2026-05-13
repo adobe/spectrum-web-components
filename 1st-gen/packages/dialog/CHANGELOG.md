@@ -1,5 +1,20 @@
 # Change Log
 
+## 1.12.1-snapshot-test.20260513115335
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @spectrum-web-components/alert-dialog@1.12.1-snapshot-test.20260513115335
+  - @spectrum-web-components/button@1.12.1-snapshot-test.20260513115335
+  - @spectrum-web-components/button-group@1.12.1-snapshot-test.20260513115335
+  - @spectrum-web-components/divider@1.12.1-snapshot-test.20260513115335
+  - @spectrum-web-components/icons-workflow@1.12.1-snapshot-test.20260513115335
+  - @spectrum-web-components/modal@1.12.1-snapshot-test.20260513115335
+  - @spectrum-web-components/underlay@1.12.1-snapshot-test.20260513115335
+  - @spectrum-web-components/base@1.12.1-snapshot-test.20260513115335
+  - @spectrum-web-components/shared@1.12.1-snapshot-test.20260513115335
+
 ## 1.12.0
 
 ### Patch Changes

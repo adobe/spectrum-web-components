@@ -1,5 +1,13 @@
 # Change Log
 
+## 1.2.12-snapshot-test.20260513115335
+
+### Patch Changes
+
+- Updated dependencies [[`82e4446`](https://github.com/adobe/spectrum-web-components/commit/82e4446adb2837e23b503d92a825ae3bb12c3a8a)]:
+  - @spectrum-web-components/bundle@1.12.1-snapshot-test.20260513115335
+  - @spectrum-web-components/custom-vars-viewer@1.12.1-snapshot-test.20260513115335
+
 ## 1.2.11
 
 ### Patch Changes
