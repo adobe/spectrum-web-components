@@ -304,12 +304,15 @@ jobs:
           echo "=== staged package.json count ==="
           git diff --cached --name-only | grep 'package.json' | wc -l
 
-      - name: Commit and push changes
+      - name: Commit version bump
         if: steps.extract-tag.outputs.tag == 'latest' || steps.extract-tag.outputs.tag == 'snapshot-test'
         run: |
           git add .
           git commit --no-verify -m "chore: release packages #publish" || echo "No changes to commit"
-          git push
+
+      - name: Push changes
+        if: steps.extract-tag.outputs.tag == 'latest'
+        run: git push
 
       - name: Create git tag
         if: steps.extract-tag.outputs.tag == 'latest'
