@@ -151,6 +151,10 @@ Inherited: `SizedMixin(Focusable)` — `tabIndex` / `focus` / `blur` / `click` d
   <!-- optional chevron (2nd-gen: prefer swc-icon) + -->
   <button id="header" aria-expanded="..." aria-controls="content">...</button>
 </h2>
+<!-- actions container is a sibling to <h*>, NOT inside it — keeps heading accessible name clean -->
+<div class="actions" hidden>
+  <slot name="actions"></slot>
+</div>
 <div id="content" role="region" aria-labelledby="header">
   <slot></slot>
 </div>
@@ -233,7 +237,7 @@ No 2nd-gen package yet — this section records **planned** decisions from analy
 | Item (implementation) | **`protected` `heading`** (`2`–`6`) | **Not** public API—not reflected, not set by consumers. Parent **`level`** assigns **`heading`** on each slotted item (core/SWC lifecycle). |
 | Heading text | Slotted (see [Shadow DOM output](#shadow-dom-output-rendered-html)) | **Rationale:** a string **`label`** cannot mirror phrasing content (`<strong>`, `<code>`) into the header’s accessible name the way slotted light DOM can; matches [accessibility migration analysis](./accessibility-migration-analysis.md). **Breaking** vs 1st-gen **`label`**: **clean break** — 2nd-gen does **not** expose **`label`**; authors migrate markup to the heading slot only. |
 | Events | Renamed toggle event | Exact string TBD. |
-| Direct actions (item header affordances) | `slot="direct-actions"` on `swc-accordion-item` — open-ended; any content may be slotted | Container (`.spectrum-Accordion-itemDirectActions`) rendered in initial migration as a sibling to the header button inside the heading element. `slotchange` observer hides the container when empty. `stopPropagation` on the container prevents slot clicks from toggling the accordion. Specific supported content (`swc-action-button`, `swc-switch`) and disabled-state propagation are open questions; see [Open — API and scope](#open--api-and-scope). |
+| Direct actions (item header affordances) | `slot="actions"` on `swc-accordion-item` (working name — not frozen); open-ended, any content may be slotted | Container (`.spectrum-Accordion-itemDirectActions`) rendered as a **sibling to the `<h*>` element** (not inside it); placing it inside `<h*>` would bleed its text content into the heading's accessible name. `slotchange` observer hides the container when empty. `stopPropagation` on the container prevents slot clicks from toggling the accordion. Specific supported content (`swc-action-button`, `swc-switch`) are open questions; see [Open — API and scope](#open--api-and-scope). |
 | `noInlinePadding` modifier | Not a public attribute | `.spectrum-Accordion--noInlinePadding` controls inline padding removal (new in S2). **Not** exposed as an API attribute — expose the relevant padding via `--swc-accordion-*` custom properties so consumers can remove or adjust inline padding directly. See [rendering-and-styling migration analysis](./rendering-and-styling-migration-analysis.md#css--swc-implementation-gaps). |
 
 ### React Spectrum alignment considerations
@@ -355,7 +359,7 @@ Gates align with [01_washing-machine-workflow.md](../../02_workstreams/02_2nd-ge
 | Chevron / disclosure icon | Prefer **`swc-icon`** internally; finalize icon asset/name against S2. |
 | Accordion host **`disabled`** | Confirm **controlled** **`open`** cannot expand while host **`disabled`**; prefer **container-query** / host styling for descendant disabled visuals ([Public API](#public-api) **`disabled`** note). |
 | **`density`** dev warning | Confirm **omit-attribute** warning ships with accordion (recommended; same spirit as Badge **`variant`**). |
-| **Direct actions — disabled state** | When `swc-accordion-item` is disabled, should content in `slot=”direct-actions”` also be disabled? Disabled state is not propagated to slotted content automatically; requires explicit propagation if desired. Decide before direct action content lands (i.e., before `swc-action-button` / `swc-switch` are wired in). |
+| **Direct actions — disabled state** | **Decided:** Do **not** propagate `disabled` to slotted actions content. The actions slot may hold affordances whose purpose is precisely to explain or resolve why the item is disabled (e.g., an “Upgrade” button, or an action button attached to a popover describing deprecation). Coupling disablement would remove those affordances exactly when they are most needed. |
 | **Direct actions — content constraints** | Slot is open-ended by design. Confirm whether to add a dev-mode warning for unsupported content types when `swc-action-button` and `swc-switch` are available, or leave fully unrestricted. |
 | **`RadioController`** scope | Ship **inside** `AccordionBase` first vs extract to **core** for **radio group**, **`role=”menuitemradio”`** menus, **tabs**, and/or coordinate with a **refactor** of **`FocusgroupNavigationController`** (split “selection flags” vs “focus roving”)? **Depends on** menu / radio / tabs migration timing and whether teams want one shared **selection-sync** API vs local loops per component. |
 
