@@ -15,14 +15,14 @@ Read the migration plan at `CONTRIBUTOR-DOCS/03_project-planning/03_components/[
 
 ## When to use this skill
 
-- Phase 5 (migration-a11y) is complete
+- Phases 4 (migration-a11y) and 5 (migration-styling) are complete
 - The user asks to "add tests" or "write tests" for a migrated component
 - The user asks to add play functions, a11y specs, or unit tests
 - The user refers to "Phase 6" of the 2nd-gen component migration workstream
 
 ## When NOT to use
 
-- Phase 5 is not complete — accessibility behavior must be implemented before it can be tested
+- Phases 4 and 5 are not complete — accessibility behavior and styling must be implemented before they can be tested
 - You are fixing an existing test failure unrelated to migration
 
 ## How to invoke

@@ -114,3 +114,8 @@
   color: token("neutral-content-color-default");
   text-underline-offset: 2px;
 }
+
+/* Slotted source anchors provide data only; hide from layout and assistive tech. */
+slot[hidden] {
+  display: none;
+}

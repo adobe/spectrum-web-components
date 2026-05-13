@@ -11,12 +11,13 @@
  */
 
 import { CSSResultArray, html, TemplateResult } from 'lit';
-import { property } from 'lit/decorators.js';
+import { property, state } from 'lit/decorators.js';
+import { ref } from 'lit/directives/ref.js';
 
 import { Chevron75Icon } from '@adobe/spectrum-wc/icon/elements/index.js';
 import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
 
-import '@adobe/spectrum-wc/icon';
+import '@adobe/spectrum-wc/components/icon/swc-icon.js';
 
 import { uniqueId } from '../../../utils/id.js';
 
@@ -25,11 +26,13 @@ import styles from './message-sources.css';
 /**
  * Collapsible list of sources used to generate an AI response.
  *
- * Slot source items as `<li>` elements, typically containing links.
- * Each slotted list item will be wrapped with a numbered badge automatically via CSS counters.
+ * Slot `<a>` elements into the default slot. Each anchor's **text content**
+ * is used as the visible label — rich HTML inside the anchor is not preserved.
+ * All attributes on the original anchor (`href`, `target`, `rel`, `data-*`,
+ * etc.) are forwarded to the rendered link. Non-anchor elements are ignored.
  *
  * @element swc-message-sources
- * @slot - Source link items (rendered as a numbered list when expanded)
+ * @slot - Anchor (`<a>`) elements projected into a numbered list when expanded
  * @fires swc-message-sources-toggle - Dispatched when the panel is toggled.
  * Detail: `{ open: boolean }`
  */
@@ -41,6 +44,13 @@ export class MessageSources extends SpectrumElement {
     label: string;
     target: string | null;
     rel: string | null;
+  }> = [];
+
+  @state()
+  private sourceLinks: Array<{
+    href: string;
+    label: string;
+    extraAttributes: Array<[string, string]>;
   }> = [];
 
   /**
@@ -82,13 +92,19 @@ export class MessageSources extends SpectrumElement {
         (element): element is HTMLAnchorElement =>
           element instanceof HTMLAnchorElement
       )
-      .map((anchor) => ({
-        href: anchor.getAttribute('href') ?? '#',
-        label: anchor.textContent?.trim() ?? '',
-        target: anchor.getAttribute('target'),
-        rel: anchor.getAttribute('rel'),
-      }));
-    this.requestUpdate();
+      .map((anchor) => {
+        const extraAttributes: Array<[string, string]> = [];
+        for (const attr of Array.from(anchor.attributes)) {
+          if (attr.name !== 'href' && attr.name !== 'class') {
+            extraAttributes.push([attr.name, attr.value]);
+          }
+        }
+        return {
+          href: anchor.getAttribute('href') ?? '#',
+          label: anchor.textContent?.trim() ?? '',
+          extraAttributes,
+        };
+      });
   }
 
   protected override render(): TemplateResult {
@@ -133,8 +149,13 @@ export class MessageSources extends SpectrumElement {
                 <a
                   class="swc-MessageSources-link"
                   href=${link.href}
-                  target=${link.target ?? ''}
-                  rel=${link.rel ?? ''}
+                  ${ref((el) => {
+                    if (el instanceof HTMLAnchorElement) {
+                      for (const [name, value] of link.extraAttributes) {
+                        el.setAttribute(name, value);
+                      }
+                    }
+                  })}
                 >
                   ${link.label}
                 </a>

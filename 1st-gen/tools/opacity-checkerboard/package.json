@@ -1,6 +1,6 @@
 {
   "name": "@spectrum-web-components/opacity-checkerboard",
-  "version": "1.11.2",
+  "version": "1.12.0",
   "description": "",
   "license": "Apache-2.0",
   "author": "Adobe",
@@ -41,7 +41,7 @@
   ],
   "types": "./src/opacity-checkerboard.d.ts",
   "dependencies": {
-    "@spectrum-web-components/base": "1.11.2"
+    "@spectrum-web-components/base": "1.12.0"
   },
   "keywords": [
     "design-system",

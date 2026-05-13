@@ -8,8 +8,36 @@ on:
     branches:
       - main
 
+permissions:
+  contents: read
+  pull-requests: read
+
 jobs:
+  # Detect whether the change touches anything that affects 1st-gen coverage.
+  # Root-level changes (not under 1st-gen/ or 2nd-gen/) count as 1st-gen too,
+  # so the report still runs when shared tooling/config changes.
+  detect-changes:
+    runs-on: ubuntu-latest
+    outputs:
+      first_gen: ${{ steps.filter.outputs.first_gen_any_changed }}
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Detect 1st-gen-relevant changes
+        id: filter
+        uses: step-security/changed-files@v46
+        with:
+          files_yaml: |
+            first_gen:
+              - '**'
+              - '!2nd-gen/**'
+
   code-coverage-report:
+    needs: detect-changes
+    # Skip when only 2nd-gen files changed. Skipped jobs report success in
+    # branch-protection checks, so no extra gate job is needed.
+    if: needs.detect-changes.outputs.first_gen == 'true'
     name: Generate and upload coverage report
     runs-on: ubuntu-latest
     steps:

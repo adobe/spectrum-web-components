@@ -17,6 +17,8 @@ import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
 import { IllustratedMessage } from '@adobe/spectrum-wc/illustrated-message';
 
+import '@adobe/spectrum-wc/components/illustrated-message/swc-illustrated-message.js';
+
 // ────────────────
 //    METADATA
 // ────────────────
@@ -306,6 +308,20 @@ export const DescriptionWithLink: Story = {
   tags: ['behaviors'],
 };
 DescriptionWithLink.storyName = 'Description with link';
+
+// ────────────────────────────────
+//    UPCOMING FEATURES STORIES
+// ────────────────────────────────
+
+/**
+ * ### Button group slot
+ *
+ * - Add a group of action buttons alongside the heading and description using the `button-group` slot
+ */
+export const UpcomingFeatures: Story = {
+  tags: ['upcoming', 'description-only'],
+};
+UpcomingFeatures.storyName = 'Upcoming features';
 
 // ────────────────────────────────
 //    ACCESSIBILITY STORIES

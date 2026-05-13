@@ -142,7 +142,7 @@ No mixins, no shared utilities, no other SWC components composed inside. No depe
 |---|---|---|
 | **A1** | `size` attribute (`s` \| `m` \| `l`, default `m`) | Net-new t-shirt sizing. `m` is the base style, no extra ruleset needed. Implemented via `:host([size="..."])` attribute selectors, not modifier classes. |
 | **A2** | `orientation` string attribute (`'vertical'` \| `'horizontal'`, default `'vertical'`) | Net-new layout variant. Consumers not using it are unaffected. |
-| **A3** | `actions` slot | Net-new. Leave untyped — a focus group navigation controller will be needed in a future follow-up. |
+| **A3** | `button-group` slot | Net-new. Leave untyped — a focus group navigation controller will be needed in a future follow-up. |
 
 ---
 
@@ -165,7 +165,7 @@ These are derived from the a11y analysis and rendering roadmap. Confirmed items 
 | *(default)* | Decorative or informative SVG | Decorative SVGs should have `aria-hidden="true"`; informative need `role="img"` + `aria-label` |
 | `heading` | Single `<span>` | Restriction is semantic contract; dev-mode warning for non-`span` root nodes |
 | `description` | Phrasing content | Links must be real `<a>` or link components with visible names |
-| `actions` | **New.** Button group (untyped) | Leave untyped. Focus group navigation controller to be implemented in a future follow-up. |
+| `button-group` | **New.** Button group (untyped) | Leave untyped. Focus group navigation controller to be implemented in a future follow-up. |
 
 ### CSS custom properties (2nd-gen)
 
@@ -229,7 +229,7 @@ Follow the [Badge migration reference](../../02_workstreams/02_2nd-gen-component
 - [ ] Dev-mode `__swc.warn()` if heading slot root is not a `span`
 - [ ] Heading slot restricted to `<span>` only; shadow DOM owns the heading tag
 - [ ] Decorative illustration guidance documented (`aria-hidden="true"` on SVG); informative illustration guidance documented (`role="img"` + `aria-label`)
-- [ ] Actions slot button labels documented
+- [ ] `button-group` slot button labels documented
 
 ### Testing
 
@@ -242,7 +242,7 @@ Follow the [Badge migration reference](../../02_workstreams/02_2nd-gen-component
 
 - [ ] JSDoc on all public props, slots, and CSS custom properties
 - [ ] Storybook argTypes driven by `ILLUSTRATED_MESSAGE_VALID_SIZES` and `ILLUSTRATED_MESSAGE_VALID_HEADING_LEVELS` static arrays
-- [ ] Migration notes: `heading-level` replaces hard-coded `h2`; heading slot now `span`-only; new `size`, `orientation`, `actions` slot
+- [ ] Migration notes: `heading-level` replaces hard-coded `h2`; heading slot now `span`-only; new `size`, `orientation`, `button-group` slot
 - [ ] Storybook examples vary `heading-level` by context (not always `2`)
 - [ ] Decorative vs meaningful illustration guidance in Storybook
 
@@ -261,7 +261,7 @@ Follow the [Badge migration reference](../../02_workstreams/02_2nd-gen-component
 |---|---|---|---|
 | **Q1** | **`heading` attribute + `heading` slot precedence:** Slot takes precedence via `<slot name="heading">${this.heading}</slot>` — attribute is the fallback, slot content overrides it when present. | **Resolved** |
 | **Q2** | **`heading-level` clamping vs type-error:** Silently clamp using `Math.max(2, Math.min(6, level))` — consistent with `AccordionItem.getHeadingLevel()` precedent in the codebase. | **Resolved** |
-| **Q3** | **Actions slot type:** Leave untyped — consumer slots any button group content. A focus group navigation controller will need to be implemented in a future follow-up. | **Resolved** |
+| **Q3** | **`button-group` slot type:** Leave untyped — consumer slots any button group content. A focus group navigation controller will need to be implemented in a future follow-up. | **Resolved** |
 | **Q4** | **Typography styles dependency (SWC-1545):** 2nd-gen has typography classes but whether they will be importable in the same way as S1's `bodyStyles`/`headingStyles` is TBD. Tracked in SWC-1545. | Open | SWC-1545 |
 
 ---

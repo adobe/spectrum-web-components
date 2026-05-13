@@ -642,6 +642,60 @@ describe('ColorWheel', () => {
       (el.color as { h: number; s: number; l: number; a: number }).l
     ).to.be.within(0.69, 0.71);
   });
+  it('does not change value when clicking outside the ring', async () => {
+    const el = await fixture<ColorWheel>(html`
+      <sp-color-wheel
+        style="--mod-colorwheel-width: 160px; --mod-colorwheel-height: 160px;"
+      ></sp-color-wheel>
+    `);
+
+    await elementUpdated(el);
+
+    const { handle } = el as unknown as { handle: HTMLElement };
+    handle.setPointerCapture = () => {
+      return;
+    };
+    handle.releasePointerCapture = () => {
+      return;
+    };
+
+    const initialValue = el.value;
+    const root = el.shadowRoot ? el.shadowRoot : el;
+    const gradient = root.querySelector('[name="gradient"]') as HTMLElement;
+    const rect = el.getBoundingClientRect();
+
+    // Click at a corner of the bounding box — distance > outerRadius, outside the ring.
+    gradient.dispatchEvent(
+      new PointerEvent('pointerdown', {
+        pointerId: 1,
+        clientX: Math.round(rect.left + rect.width - 1),
+        clientY: Math.round(rect.top + 1),
+        bubbles: true,
+        composed: true,
+        cancelable: true,
+      })
+    );
+
+    await elementUpdated(el);
+
+    expect(el.value).to.equal(initialValue);
+
+    // Click at the center of the element — inside the inner hole, outside the ring.
+    gradient.dispatchEvent(
+      new PointerEvent('pointerdown', {
+        pointerId: 1,
+        clientX: Math.round(rect.left + rect.width / 2),
+        clientY: Math.round(rect.top + rect.height / 2),
+        bubbles: true,
+        composed: true,
+        cancelable: true,
+      })
+    );
+
+    await elementUpdated(el);
+
+    expect(el.value).to.equal(initialValue);
+  });
   it('can have `change` events prevented', async () => {
     const color = { h: '0', s: '20%', l: '70%' };
     const el = await fixture<ColorWheel>(html`

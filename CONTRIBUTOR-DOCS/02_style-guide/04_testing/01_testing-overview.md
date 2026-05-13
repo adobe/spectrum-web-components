@@ -13,6 +13,7 @@
 
 - [What to test](#what-to-test)
 - [What not to test](#what-not-to-test)
+- [Excluding stories from tests](#excluding-stories-from-tests)
 
 </details>
 
@@ -44,3 +45,37 @@ Test things that users and developers depend on:
 - Framework internals (Lit rendering, Storybook internals)
 - Third-party library behavior
 - Every possible prop combination (test meaningful ones)
+
+## Excluding stories from tests
+
+The `'!test'` tag excludes a story from all three automated test runners at once:
+
+- **Vitest play functions** — the story's `play` function is not executed
+- **aXe WCAG compliance** (`test:a11y` via `test-runner.ts`) — axe does not analyze the story
+- **Visual regression tests** — the story is not captured in VRT snapshots
+
+Use `'!test'` only when automated testing would produce **false positives** — results that appear as failures but do not reflect real defects. The most common case is static-color stories: axe evaluates contrast against the page background, not the decorator's gradient, so a `static-color="white"` button fails contrast thresholds in isolation even though it passes in real usage on a dark background.
+
+```typescript
+export const StaticColors: Story = {
+  // axe reports false-positive contrast failures because it evaluates colors
+  // against the page background, not the staticColorsDemo gradient decorator.
+  tags: ['options', '!test'],
+  parameters: { staticColorsDemo: true },
+};
+```
+
+**Appropriate uses:**
+
+- A story depends on a background or layout context (e.g., a gradient decorator) that axe cannot account for when checking contrast
+- A story is a pure animation or motion demo with no stable DOM state to assert against
+
+**Inappropriate uses:**
+
+- The story is complex or hard to test — simplify or split it instead
+- The story has a real accessibility issue — fix the issue rather than excluding the story
+- The story simply lacks a `play` function — omitting `play` is fine; adding `!test` creates a gap in aXe and VRT coverage too
+
+Every `'!test'` story is a blind spot across all three test layers. Add a comment explaining the reason when you apply the tag, and add a corresponding test story with a custom render (see [Testing static color variants](02_storybook-testing.md#testing-static-color-variants)) to restore behavioral coverage.
+
+The `'!dev'` tag is separate: it removes a story from the development Storybook sidebar without affecting any test runner.

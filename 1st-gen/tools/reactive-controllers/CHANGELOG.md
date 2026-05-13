@@ -1,5 +1,14 @@
 # Change Log
 
+## 1.12.0
+
+### Patch Changes
+
+- [#5871](https://github.com/adobe/spectrum-web-components/pull/5871) [`90c3010`](https://github.com/adobe/spectrum-web-components/commit/90c30101391d4d78922575e9f0bb407e02d9c2d5) Thanks [@caseyisonit](https://github.com/caseyisonit)! - **Updated** The `getColor()` method now accepts `ColorSpace.Space` instead of `ColorSpace` as the format parameter type, which correctly reflects the colorjs.io type structure.
+
+- Updated dependencies [[`f9e0896`](https://github.com/adobe/spectrum-web-components/commit/f9e0896d7b3863f3ce45228e5868214d4939ee85), [`7b153b5`](https://github.com/adobe/spectrum-web-components/commit/7b153b5433a8f6d47850f8939b058f7bc431c48c)]:
+  - @spectrum-web-components/progress-circle@1.12.0
+
 ## 1.11.2
 
 ### Patch Changes

@@ -1,0 +1,19 @@
+diff --git a/dist/index.js b/dist/index.js
+index 744e2cdce7310b7c1cf20a5f2b3228e6979380aa..7372026a7190845e60549cf8e8f1f85aa95fed1d 100644
+--- a/dist/index.js
++++ b/dist/index.js
+@@ -376,14 +376,6 @@ function getReactEvents(component) {
+ function getCssProperties(component, enabled = true) {
+   const resets = {};
+   const args = {};
+-  component?.cssProperties?.forEach((part) => {
+-    resets[part.name] = {
+-      name: part.name,
+-      table: {
+-        disable: true
+-      }
+-    };
+-  });
+   component?.cssProperties?.forEach((property) => {
+     args[property.name] = {
+       name: property.name,

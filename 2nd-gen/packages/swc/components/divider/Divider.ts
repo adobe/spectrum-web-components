@@ -20,10 +20,7 @@ import styles from './divider.css';
 
 /**
  * @element swc-divider
- * @since 0.0.1
- *
- * Give horizontal dividers a definite **inline size** and vertical dividers a definite **block size**
- * when the surrounding layout leaves percentages unresolved (see divider CSS minimum tracks).
+ * @since 2.0.0
  *
  * @cssprop --swc-divider-background-color - Background color of the divider.
  * @cssprop --swc-divider-thickness - Thickness of the divider.

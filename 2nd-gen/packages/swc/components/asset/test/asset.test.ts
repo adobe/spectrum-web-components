@@ -15,7 +15,7 @@ import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import { Asset } from '@adobe/spectrum-wc/asset';
 
-import '@adobe/spectrum-wc/asset';
+import '@adobe/spectrum-wc/components/asset/swc-asset.js';
 
 import {
   getComponent,

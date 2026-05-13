@@ -16,7 +16,7 @@ import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
 import { Avatar } from '@adobe/spectrum-wc/avatar';
 
-import '@adobe/spectrum-wc/avatar';
+import '@adobe/spectrum-wc/components/avatar/swc-avatar.js';
 
 import { AVATAR_VALID_SIZES } from '../../../../core/components/avatar/Avatar.types.js';
 
@@ -294,6 +294,26 @@ export const Disabled: Story = {
   parameters: { 'section-order': 4 },
   tags: ['options'],
 };
+
+// ──────────────────────────────────
+//    UPCOMING FEATURES STORIES
+// ──────────────────────────────────
+
+/**
+ * ### Additional avatar types
+ *
+ * - **Gradient image**: Shows a generated colorful gradient when no photo is available
+ * - **Initials**: Shows the user's initials inside the avatar circle as a photo fallback
+ * - **Guest**: Shows a default guest icon when no user identity is known
+ *
+ * ### Avatar Group
+ *
+ * - Display a collection of avatars in a stacked layout with configurable overlap and overflow
+ */
+export const UpcomingFeatures: Story = {
+  tags: ['upcoming', 'description-only'],
+};
+UpcomingFeatures.storyName = 'Upcoming features';
 
 // ────────────────────────────────
 //    ACCESSIBILITY STORIES
