@@ -28,6 +28,56 @@ parameters:
     type: string
     default: wireit
 commands:
+  halt-if-not-affected:
+    description: >
+      Exit the current job successfully when the PR does not touch any file
+      relevant to the named gen. "Relevant" means at least one changed file
+      is outside the other gen's directory (root-level files count as
+      relevant to both). The job still reports a green status check, which
+      is what GitHub branch protection wants. On `main`, the gate is a
+      no-op and every job runs.
+    parameters:
+      gen:
+        type: enum
+        enum: [1st-gen, 2nd-gen]
+        description: Which gen's relevance to check for this job.
+    steps:
+      - checkout
+      - run:
+          name: Halt if << parameters.gen >> not affected by this change
+          command: |
+            set -e
+
+            if [ "$CIRCLE_BRANCH" = "main" ]; then
+              echo "Running on main; no gate applied."
+              exit 0
+            fi
+
+            # Make sure origin/main is fetched so we can diff against it.
+            # No --depth: a stale PR can have a deep merge-base, and the
+            # fetch is fast since CircleCI's checkout already has shared history.
+            git fetch --quiet origin main 2>/dev/null || true
+
+            CHANGED=$(git diff --name-only origin/main...HEAD 2>/dev/null || echo "")
+            if [ -z "$CHANGED" ]; then
+              echo "Could not compute diff vs origin/main; running to be safe."
+              exit 0
+            fi
+
+            case "<< parameters.gen >>" in
+              1st-gen) EXCLUDE="2nd-gen/" ;;
+              2nd-gen) EXCLUDE="1st-gen/" ;;
+            esac
+
+            # Affected if at least one changed file is NOT under the other gen's prefix.
+            if echo "$CHANGED" | grep -qv "^${EXCLUDE}"; then
+              echo "<< parameters.gen >>-relevant changes detected:"
+              echo "$CHANGED" | grep -v "^${EXCLUDE}" | head -20
+              echo "Running."
+            else
+              echo "All changes are under ${EXCLUDE}; halting because << parameters.gen >> is not affected."
+              circleci-agent step halt
+            fi
   install-azcopy:
     description: 'Install AzCopy and set up authentication'
     steps:
@@ -238,6 +288,8 @@ jobs:
     parallelism: 5
 
     steps:
+      - halt-if-not-affected:
+          gen: 1st-gen
       - downstream
       - run:
           name: Run chromium tests
@@ -253,6 +305,8 @@ jobs:
     executor: node
 
     steps:
+      - halt-if-not-affected:
+          gen: 1st-gen
       - downstream
       - run:
           name: Run chromium tests with coverage
@@ -265,6 +319,8 @@ jobs:
     parallelism: 5
 
     steps:
+      - halt-if-not-affected:
+          gen: 1st-gen
       - downstream
       - run:
           name: Run memory tests
@@ -280,6 +336,8 @@ jobs:
     parallelism: 5
 
     steps:
+      - halt-if-not-affected:
+          gen: 1st-gen
       - downstream
       - run:
           name: Run firefox tests
@@ -294,6 +352,8 @@ jobs:
     parallelism: 5
 
     steps:
+      - halt-if-not-affected:
+          gen: 1st-gen
       - downstream
       - run:
           name: Run webkit tests
@@ -311,6 +371,8 @@ jobs:
         type: string
 
     steps:
+      - halt-if-not-affected:
+          gen: 2nd-gen
       - downstream-2ndgen
       - run:
           name: Run 2nd-gen browser tests (coverage on Chromium)
@@ -334,6 +396,8 @@ jobs:
     executor: node
 
     steps:
+      - halt-if-not-affected:
+          gen: 2nd-gen
       - downstream-2ndgen
       - run:
           name: Run 2nd-gen ARIA snapshot tests
@@ -350,6 +414,8 @@ jobs:
     executor: node
 
     steps:
+      - halt-if-not-affected:
+          gen: 2nd-gen
       - downstream
       - run:
           name: Build 2nd-gen Storybook (production)
@@ -367,6 +433,8 @@ jobs:
     executor: node
 
     steps:
+      - halt-if-not-affected:
+          gen: 1st-gen
       - downstream
       - run:
           name: Generate Custom Elements Manifest
@@ -413,6 +481,8 @@ jobs:
     executor: node
 
     steps:
+      - halt-if-not-affected:
+          gen: 1st-gen
       - downstream
       - restore_cache:
           name: Restore Golden Images Cache
@@ -544,6 +614,8 @@ jobs:
       dir:
         type: string
     steps:
+      - halt-if-not-affected:
+          gen: 1st-gen
       - downstream
       - run-regressions:
           regression_system: << parameters.system >>
@@ -552,6 +624,12 @@ jobs:
           regression_dir: << parameters.dir >>
 
 workflows:
+  # Every job runs unconditionally so GitHub branch-protection always sees
+  # the per-job status checks (ci/circleci: test-chromium, etc.). The first
+  # step in each gated job is `halt-if-not-affected`, which diffs the PR
+  # against origin/main and exits the job successfully when the named gen
+  # is not touched. Net effect: skipped gens still report success via a
+  # fast no-op, instead of being absent from the status check list.
   build:
     jobs:
       # 2nd-gen tests

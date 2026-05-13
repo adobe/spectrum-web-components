@@ -1,0 +1,119 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Color Components/Color loupe/Migration guide" />
+
+# Color loupe migration guide
+
+Replace `<sp-color-loupe>` with `<swc-color-loupe>`, update the import, and remove any `--mod-colorloupe-*` or `--spectrum-picked-color` CSS overrides.
+
+## What changed
+
+### Renamed
+
+| Area        | Spectrum 1                                               | Spectrum 2                                  |
+| ----------- | -------------------------------------------------------- | ------------------------------------------- |
+| Tag name    | `sp-color-loupe`                                         | `swc-color-loupe`                           |
+| Import path | `@spectrum-web-components/color-loupe/sp-color-loupe.js` | `@adobe/spectrum-wc/components/color-loupe` |
+
+### Removed in Spectrum 2
+
+| Removed                                       | Replacement                                                                               |
+| --------------------------------------------- | ----------------------------------------------------------------------------------------- |
+| `--spectrum-picked-color` CSS custom property | Use the `color` attribute (see [step 3](#3-set-the-picked-color-via-the-color-attribute)) |
+| All `--mod-colorloupe-*` CSS override hooks   | None — the customization surface is intentionally removed                                 |
+
+## Update your code
+
+### 1. Update the import
+
+```js
+// Before
+import '@spectrum-web-components/color-loupe/sp-color-loupe.js';
+
+// After
+import '@adobe/spectrum-wc/components/color-loupe';
+```
+
+### 2. Rename the tag
+
+```html
+<!-- Before -->
+<sp-color-loupe open color="rgba(0, 128, 255, 0.7)"></sp-color-loupe>
+
+<!-- After -->
+<swc-color-loupe open color="rgba(0, 128, 255, 0.7)"></swc-color-loupe>
+```
+
+The `open` and `color` attributes work identically.
+
+### 3. Set the picked color via the `color` attribute
+
+If you were driving the displayed color through `--spectrum-picked-color` or a `--mod-colorloupe-*` property, switch to the `color` attribute (or `element.color` in JavaScript). All valid CSS color strings are accepted, including formats with alpha transparency.
+
+```html
+<!-- Before: setting color via CSS custom property -->
+<style>
+  sp-color-loupe {
+    --spectrum-picked-color: rgba(0, 128, 255, 0.7);
+  }
+</style>
+<sp-color-loupe open></sp-color-loupe>
+
+<!-- After: set color directly on the element -->
+<swc-color-loupe open color="rgba(0, 128, 255, 0.7)"></swc-color-loupe>
+```
+
+## Accessibility
+
+The loupe is a visual-only, presentational element with no interactive role. No consumer-facing markup changes are required. Accessibility semantics must continue to be provided by the parent color picker control (`aria-label`, live region announcements, and so on) — the loupe itself does not receive focus and does not require ARIA attributes.
+
+## Styling
+
+{/* @todo Replace the inline-styled callouts in this section with `<swc-inline-alert>` once it is migrated to Spectrum 2. */}
+
+<div
+  style={{
+    borderLeft: '4px solid #dba842',
+    background: 'rgba(219, 168, 66, 0.12)',
+    padding: '12px 16px',
+    margin: '16px 0',
+    borderRadius: '4px',
+  }}
+>
+  <strong>⚠️ Breaking change.</strong> Spectrum 1{' '}
+  <code>{'--mod-colorloupe-*'}</code> properties and{' '}
+  <code>{'--spectrum-picked-color'}</code> <strong>do not apply</strong> to{' '}
+  <code>{'<swc-color-loupe>'}</code>. Remove every{' '}
+  <code>{'--mod-colorloupe-*'}</code> and{' '}
+  <code>{'--spectrum-picked-color'}</code> override from your stylesheets. There
+  are no 1:1 CSS replacements — set the displayed color through the{' '}
+  <code>color</code> attribute instead.
+</div>
+
+`<swc-color-loupe>` exposes no public CSS custom properties for consumer overrides. The component's visual appearance is fully governed by Spectrum 2 design tokens.
+
+| Custom property | Description                 | Notes                                             |
+| --------------- | --------------------------- | ------------------------------------------------- |
+| —               | No public custom properties | Use the `color` attribute to set the picked color |
+
+<div
+  style={{
+    borderLeft: '4px solid #e34850',
+    background: 'rgba(227, 72, 80, 0.10)',
+    padding: '12px 16px',
+    margin: '16px 0',
+    borderRadius: '4px',
+  }}
+>
+  <strong>🚫 Do not target internals.</strong> Internal classes,{' '}
+  <code>{'--_swc-color-loupe-*'}</code> private properties, and shadow DOM are{' '}
+  <strong>not public API</strong>. Styling applied to them will break without
+  warning on minor releases.
+</div>
+
+## Checklist
+
+- [ ] Update the import from `@spectrum-web-components/color-loupe/sp-color-loupe.js` to `@adobe/spectrum-wc/components/color-loupe`
+- [ ] Rename every `<sp-color-loupe>` tag to `<swc-color-loupe>`
+- [ ] Remove all `--spectrum-picked-color` and `--mod-colorloupe-*` CSS overrides
+- [ ] Set the displayed color via the `color` attribute (or `element.color` in JavaScript)

@@ -1,5 +1,30 @@
 # Change Log
 
+## 1.12.0
+
+### Minor Changes
+
+- [#6067](https://github.com/adobe/spectrum-web-components/pull/6067) [`ba14a2b`](https://github.com/adobe/spectrum-web-components/commit/ba14a2b6361a0089a9a8c72232f245cde0716d89) Thanks [@caseyisonit](https://github.com/caseyisonit)! - Refactored size mixin exports and badge type naming for consistency.
+
+  **@spectrum-web-components/base (1st-gen)**
+  - **Added**: New exports `ELEMENT_SIZES` and `DEFAULT_ELEMENT_SIZES` for typed size arrays
+  - **Deprecated**: `ElementSizes` record is now deprecated in favor of `ELEMENT_SIZES`. The export is preserved for backward compatibility but will be removed in a future major release.
+
+  **@spectrum-web-components/core (2nd-gen)**
+  - **Changed**: Replaced `ElementSizes` record with `ELEMENT_SIZES` const array and `DEFAULT_ELEMENT_SIZES`
+  - **Changed**: `VALID_SIZES` arrays are now typed as `readonly ElementSize[]` for better type safety
+  - **Changed**: Badge type exports renamed for consistency:
+    - `BADGE_VARIANTS_S2` → `BADGE_VARIANTS`
+    - `BADGE_VARIANTS_COLOR_S2` → `BADGE_VARIANTS_COLOR`
+    - `BadgeVariantS2` → `BadgeVariant`
+    - `BadgeColorVariantS2` → `BadgeColorVariant`
+
+### Patch Changes
+
+- [#6263](https://github.com/adobe/spectrum-web-components/pull/6263) [`dc6a8e8`](https://github.com/adobe/spectrum-web-components/commit/dc6a8e8db1b08080373c3664babc1feebde8f6c6) Thanks [@rubencarvalho](https://github.com/rubencarvalho)! - **Fixed**: Re-added `isLTR` getter to `SpectrumMixin` and `SpectrumInterface` that was silently removed in #5936. The getter returns `getComputedStyle(this).direction !== 'rtl'`, preserving the original semantics while aligning with the updated `dir` implementation.
+
+- [#5936](https://github.com/adobe/spectrum-web-components/pull/5936) [`f37dec6`](https://github.com/adobe/spectrum-web-components/commit/f37dec6ae39fd89a4c12e084b4a0f4d9092d79b0) Thanks [@rubencarvalho](https://github.com/rubencarvalho)! - **Refactored**: Overhauled text direction management across the component library. Previously, `SpectrumElement` and `sp-theme` actively managed `dir` by traversing the DOM on connect, setting `dir` attributes on every component, and observing changes via `MutationObserver`. This has been replaced with a passive approach that relies on the native CSS `:dir()` pseudo-class and `getComputedStyle(this).direction` for JavaScript access, letting the browser's built-in direction inheritance do the work. Removed redundant `dir` property overrides from individual components, replaced `[dir]` attribute selectors with `:dir()` in stylesheets, and converted physical CSS properties to logical equivalents where applicable.
+
 ## 1.11.2
 
 ### Patch Changes

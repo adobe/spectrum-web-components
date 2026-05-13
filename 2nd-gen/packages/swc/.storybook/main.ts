@@ -225,14 +225,27 @@ const config: StorybookConfig = {
         },
       ],
       resolve: {
-        alias: {
-          '@spectrum-web-components/core': resolve(__dirname, '../../core'),
-          '@adobe/spectrum-wc': resolve(__dirname, '../components'),
-          '@adobe/postcss-token': resolve(
-            __dirname,
-            '../../tools/postcss-token'
-          ),
-        },
+        alias: [
+          {
+            find: '@spectrum-web-components/core',
+            replacement: resolve(__dirname, '../../core'),
+          },
+          // Long-form imports (e.g. `@adobe/spectrum-wc/components/badge/swc-badge.js`)
+          // resolve directly to the source under `./components`. This must come
+          // before the short-form alias below so the more specific prefix wins.
+          {
+            find: '@adobe/spectrum-wc/components',
+            replacement: resolve(__dirname, '../components'),
+          },
+          {
+            find: '@adobe/spectrum-wc',
+            replacement: resolve(__dirname, '../components'),
+          },
+          {
+            find: '@adobe/postcss-token',
+            replacement: resolve(__dirname, '../../tools/postcss-token'),
+          },
+        ],
       },
     });
   },
