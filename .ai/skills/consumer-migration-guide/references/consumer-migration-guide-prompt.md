@@ -65,7 +65,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
 # [Component name] migration guide
 ```
 
-- Use sentence case for `[Component name]` (for example `Badge`, `Action button`).
+- Use title case for `[Component name]` — component names are proper nouns (for example `Badge`, `Action Button`).
 - Do **not** prefix `<Meta title>` with `Components/` — `titlePrefix` supplies it.
 - Use sentence case for all other headings.
 - Prefer tables, bullets, and fenced code blocks over prose.
