@@ -14,6 +14,13 @@ import { CSSResultArray, html, TemplateResult } from 'lit';
 
 import { AccordionItemBase } from '@spectrum-web-components/core/components/accordion';
 
+import '../icon/swc-icon.js';
+
+import { Chevron75Icon } from '../icon/elements/Chevron75Icon.js';
+import { Chevron100Icon } from '../icon/elements/Chevron100Icon.js';
+import { Chevron200Icon } from '../icon/elements/Chevron200Icon.js';
+import { Chevron300Icon } from '../icon/elements/Chevron300Icon.js';
+
 import styles from './accordion.css';
 
 /**
@@ -23,14 +30,80 @@ import styles from './accordion.css';
  * @since 2.0.0
  *
  * @example
- * <swc-accordion-item>Content</swc-accordion-item>
+ * <swc-accordion-item>
+ *   <span slot="label">Section heading</span>
+ *   Panel content goes here.
+ * </swc-accordion-item>
  */
 export class AccordionItem extends AccordionItemBase {
+  // ──────────────────────────────
+  //     RENDERING & STYLING
+  // ──────────────────────────────
+
   public static override get styles(): CSSResultArray {
     return [styles];
   }
 
+  private chevronForSize(): TemplateResult {
+    switch (this.size) {
+      case 's':
+        return Chevron75Icon();
+      case 'l':
+        return Chevron200Icon();
+      case 'xl':
+        return Chevron300Icon();
+      case 'm':
+      default:
+        return Chevron100Icon();
+    }
+  }
+
+  private handleActionsSlotChange(event: Event): void {
+    const slot = event.target as HTMLSlotElement;
+    const container = slot.parentElement as HTMLElement | null;
+    if (container) {
+      container.hidden = slot.assignedNodes({ flatten: true }).length === 0;
+    }
+  }
+
+  private handleActionsContainerInteraction(event: Event): void {
+    event.stopPropagation();
+  }
+
   protected override render(): TemplateResult {
-    return html``;
+    // <h3> is a static stub; the heading level becomes dynamic in a later commit.
+    return html`
+      <h3>
+        <button
+          id="header"
+          type="button"
+          aria-expanded="false"
+          aria-controls="content"
+        >
+          <swc-icon class="spectrum-Accordion-itemIndicator" aria-hidden="true">
+            ${this.chevronForSize()}
+          </swc-icon>
+          <span class="spectrum-Accordion-itemTitle">
+            <slot name="label"></slot>
+          </span>
+        </button>
+      </h3>
+      <div
+        class="spectrum-Accordion-itemDirectActions"
+        hidden
+        @click=${this.handleActionsContainerInteraction}
+        @keydown=${this.handleActionsContainerInteraction}
+      >
+        <slot name="actions" @slotchange=${this.handleActionsSlotChange}></slot>
+      </div>
+      <div
+        id="content"
+        class="spectrum-Accordion-itemContent"
+        role="region"
+        aria-labelledby="header"
+      >
+        <slot></slot>
+      </div>
+    `;
   }
 }
