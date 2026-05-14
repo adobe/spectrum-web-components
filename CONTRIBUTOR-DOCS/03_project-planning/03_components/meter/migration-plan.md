@@ -151,8 +151,8 @@ Plus the host receives `role="meter progressbar"` (invalid combined ARIA role st
 | `SpectrumElement` from `@spectrum-web-components/base` | `@spectrum-web-components/core/element/index.js` | Available |
 | `SizedMixin` from `@spectrum-web-components/base` | `@spectrum-web-components/core/mixins/index.js` | Available |
 | `LanguageResolutionController` from `reactive-controllers` | `@spectrum-web-components/core/controllers/language-resolution.js` | Available |
-| `getLabelFromSlot` from `shared` | `@spectrum-web-components/core/utils/get-label-from-slot.js` | Available |
-| `ObserveSlotText` from `shared` | Not needed in 2nd-gen — handle via `slotchange` directly (precedent: `ProgressCircleBase`) | N/A |
+| `getLabelFromSlot` from `shared` | Not needed in 2nd-gen — the named `label` slot with `aria-labelledby` requires no text extraction | N/A |
+| `ObserveSlotText` from `shared` | Not needed in 2nd-gen — `label`-slot presence tracked via `slotchange` in `LinearProgressMixin`; no text extraction | N/A |
 | `<sp-field-label>` rendered in shadow | `<swc-field-label>` does **not** exist yet | **Not migrated** — 2nd-gen renders plain `<span class="swc-Meter-label">` / `<span class="swc-Meter-value">` (SWC-namespaced selectors; `<span>` because `role="meter"` is not pair-able with native `<label>`). See B8 in [Must ship](#must-ship--breaking-or-a11y-required). |
 | _(new)_ shared behavior with progress-bar | `LinearProgressMixin` in `2nd-gen/packages/core/mixins/linear-progress.mixin.ts` | **New in this migration** — created alongside Meter so the future progress-bar migration can consume it without additional breaking changes. |
 
@@ -175,7 +175,6 @@ Rationale for keeping role and animation out of the mixin:
 ### Related components and ordering notes
 
 - **Progress bar** ([`1st-gen/packages/progress-bar`](../../../../1st-gen/packages/progress-bar/)) — independent migration on its own epic. Will consume `LinearProgressMixin` and `linear-progress-base.css` without changes to those files (the mixin and shared CSS are designed to be additive-only after Meter ships).
-- **Progress circle** ([`2nd-gen/packages/swc/components/progress-circle`](../../../../2nd-gen/packages/swc/components/progress-circle/)) — already migrated. Used as the structural precedent for `aria-value*` plumbing, slot-as-label hoisting, locale-aware formatting, and the dev-mode accessible-name warning. Not extended and not part of the `LinearProgressMixin` surface (it is circular, not bar-shaped).
 - **Field label** — internal render dependency; not migrated. 2nd-gen `<swc-meter>` renders plain `<span class="swc-Meter-label">` / `<span class="swc-Meter-value">` inside its shadow root (`<span>`, not `<label>`, because `role="meter"` is not pair-able with native `<label>` semantics; the `meter` role element uses `aria-labelledby` to reference the `<span>` containing the label slot). SWC-namespaced selectors per the [contributor docs selector patterns](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/01_component-css.md#selector-patterns). No dependency on `<swc-field-label>`.
 - **Description** — exposed as a **`description`** named slot on `<swc-meter>`. The slot's shadow container carries an internal id and is `aria-describedby`-referenced from the role element. "Help text" terminology is not used because it implies a form field; meter is a non-interactive display.
 
@@ -219,7 +218,7 @@ None outstanding. All architecture and dependency decisions are settled per dire
 | #  | What changes | 1st-gen behavior | 2nd-gen behavior | Consumer migration path |
 | -- | ------------ | ---------------- | ---------------- | ----------------------- |
 | **B9** | ARIA role placement. _(Source: [accessibility-migration-analysis.md § Role and value attributes](./accessibility-migration-analysis.md#role-and-value-attributes); [WAI-ARIA 1.2 `meter`](https://www.w3.org/TR/wai-aria-1.2/#meter); [APG meter pattern](https://www.w3.org/WAI/ARIA/apg/patterns/meter/); initiative leads a11y direction.)_ | `role="meter progressbar"` (invalid combined ARIA role token) set on the host. | `role="meter"` only, set on the shadow `.swc-Meter` element (not the host). All `aria-value*`, `aria-label`, `aria-labelledby`, `aria-describedby` for the meter live on that role element. Nothing role-related is set on the host. | None — AT-only. Tests/snapshots that assert the combined string or host-level ARIA update. |
-| **B10** | Value attributes. _(Source: [accessibility-migration-analysis.md § ARIA roles, states, and properties](./accessibility-migration-analysis.md#aria-roles-states-and-properties); React Spectrum S2 Meter API.)_ | Only `aria-valuenow` is set; no `aria-valuemin`/`aria-valuemax`/`aria-valuetext`. | `aria-valuemin=<minValue>`, `aria-valuemax=<maxValue>`, `aria-valuenow=<value>`, and `aria-valuetext=<formatted value>` (formatted by the `format` shorthand attribute and locale). | None — AT-only. |
+| **B10** | Value attributes. _(Source: [accessibility-migration-analysis.md § ARIA roles, states, and properties](./accessibility-migration-analysis.md#aria-roles-states-and-properties); React Spectrum S2 Meter API.)_ | Only `aria-valuenow` is set; no `aria-valuemin`/`aria-valuemax`/`aria-valuetext`. | `aria-valuemin=<minValue>`, `aria-valuemax=<maxValue>`, `aria-valuenow=<value>`, and `aria-valuetext=<formatted value>` (formatted via `Intl.NumberFormat` using `formatOptions` and the resolved locale). | None — AT-only. |
 | **B11** | Accessible-name model. _(Source: initiative leads a11y direction.)_ | `aria-label` mirrors the `label` property; slot text hoists into `label`. Six inputs total (`label`, default slot, `aria-label`, `aria-labelledby`, `aria-describedby`, `aria-details`). | Three inputs: **`label` named slot** (visible label, `aria-labelledby`-referenced by the role element); **`accessibleLabel` JS property / `accessible-label` attribute** (rare-case a11y fallback when there is no visible label, e.g. a data grid of meters — sets `aria-label` on the role element); **`description` named slot** (additional text below the meter, `aria-describedby`-referenced by the role element). Raw `aria-label`/`aria-labelledby`/`aria-describedby`/`aria-details` passthroughs are not part of the public API. DEBUG dev-mode warning when no accessible name is provable (neither `label` slot content nor `accessibleLabel` is set). | Consumers using `label="..."` move text into the `label` slot (or set `accessibleLabel` when the meter has no visible label). Consumers using `aria-*` passthroughs use the matching slot. |
 
 ### Additive — ships when ready, zero breakage for consumers already on 2nd-gen
@@ -235,7 +234,7 @@ None outstanding. All architecture and dependency decisions are settled per dire
 
 ## 2nd-gen API decisions
 
-These are derived from the 1st-gen implementation, the rendering and styling roadmap, the accessibility migration analysis, the `spectrum-css` `spectrum-two` source, the React S2 implementation, and the `ProgressCircle` 2nd-gen precedent. Confidence labels:
+These are derived from the 1st-gen implementation, the rendering and styling roadmap, the accessibility migration analysis, the `spectrum-css` `spectrum-two` source, and the React S2 implementation. Confidence labels:
 
 - **Confirmed**: directly supported by source material.
 - **Inferred**: recommended based on multiple signals; not explicitly specified in one authoritative source.
@@ -305,7 +304,7 @@ Sourced from [`accessibility-migration-analysis.md`](./accessibility-migration-a
 - **Placement rationale.** `role` + `aria-value*` live on the shadow `.swc-Meter` element (not the host). Because the `label` and `description` slot containers are also inside the same shadow root, `aria-labelledby` and `aria-describedby` reference shadow-DOM-internal IDs with no cross-root ARIA concern. Cross-root ARIA (Reference Target / cross-root ARIA spec) is not yet shipped in stable browsers and is not needed for this pattern.
 - **Accessible name** resolves in this order: (1) `label` named slot content → the role element receives `aria-labelledby="<label-container-id>"`; (2) `accessibleLabel` property (rare-case fallback when there is no visible label, e.g. a data grid of meters) → the role element receives `aria-label="${accessibleLabel}"`. Default slot text is **not** used as a name source. Raw `aria-label`/`aria-labelledby` passthroughs are not part of the public API. DEBUG-mode warning when neither resolves a name.
 - **Description.** When the `description` named slot has assigned nodes, the slot's shadow container is rendered with an internal id and the role element receives `aria-describedby="<description-container-id>"`. When the slot is empty, the description container block is conditionally omitted from the render (Lit `?` directive), not toggled via the `hidden` attribute. Raw `aria-describedby`/`aria-details` passthroughs are not part of the public API.
-- DEBUG-mode console warning when no accessible name is provable (precedent: `ProgressCircleBase`).
+- DEBUG-mode console warning when no accessible name is provable.
 - No `aria-live` by default. The accessibility analysis explicitly forbids `aria-live="assertive"`; `polite` is reserved for rare primary-announcement cases and is not part of the baseline.
 - Non-text contrast: track and fill must meet **3:1**, including the at-risk `value=minValue` state (visually 0%). Mitigate per `Loading animation discovery` Figma guidance for the bar-and-track treatment.
 
@@ -313,9 +312,9 @@ Sourced from [`accessibility-migration-analysis.md`](./accessibility-migration-a
 
 ## Architecture: core vs SWC split
 
-> The 1st-gen component is a **reference only** — 2nd-gen is built independently. Neither generation imports from the other. No shared base with progress-circle.
+> The 1st-gen component is a **reference only** — 2nd-gen is built independently. Neither generation imports from the other.
 
-Follow the [Badge migration reference](../../02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md#reference-badge-migration) and the `ProgressCircleBase` precedent for structural patterns (without inheriting from it).
+Follow the [Badge migration reference](../../02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md#reference-badge-migration) for structural patterns.
 
 | Layer | Path | Contains |
 | --- | --- | --- |
@@ -510,7 +509,7 @@ All drafting-time questions are resolved. Resolutions:
 
 | Ticket | Deferred item | Why deferred | Related plan section |
 | ------ | ------------- | ------------ | -------------------- |
-| _(file as new SWC ticket under SWC-2005 with `deferred` label)_ | `static-color="auto"` (React Spectrum) | `spectrum-css` `spectrum-two` does not include a `staticAuto` modifier. Adding it requires a Spectrum CSS change and a token decision. | [Public API → `staticColor`](#public-api), [Additive A1](#additive--ships-when-ready-zero-breakage-for-consumers-already-on-2nd-gen) |
+| _(file as new SWC ticket under SWC-2005 with `deferred` label)_ | `static-color="auto"` (React Spectrum) | `spectrum-css` `spectrum-two` does not include a `staticAuto` modifier. Adding it requires a Spectrum CSS change and a token decision. | [Public API → `staticColor`](#public-api) |
 
 ---
 
@@ -532,8 +531,8 @@ All drafting-time questions are resolved. Resolutions:
 - [Spectrum CSS — `spectrum-two` branch, `components/meter/index.css`](https://github.com/adobe/spectrum-css/blob/spectrum-two/components/meter/index.css)
 - [Spectrum CSS — `spectrum-two` branch, `components/progressbar/index.css`](https://github.com/adobe/spectrum-css/blob/spectrum-two/components/progressbar/index.css)
 - [React Spectrum S2 Meter](https://react-spectrum.adobe.com/Meter)
-- [2nd-gen reference — `ProgressCircleBase`](../../../../2nd-gen/packages/core/components/progress-circle/ProgressCircle.base.ts)
-- [2nd-gen reference — `ProgressCircle`](../../../../2nd-gen/packages/swc/components/progress-circle/ProgressCircle.ts)
+- [2nd-gen code reference — `ProgressCircleBase`](../../../../2nd-gen/packages/core/components/progress-circle/ProgressCircle.base.ts) — locale formatting via `LanguageResolutionController` + `Intl.NumberFormat`; DEBUG accessible-name warning pattern
+- [2nd-gen code reference — `ProgressCircle`](../../../../2nd-gen/packages/swc/components/progress-circle/ProgressCircle.ts) — SWC layer render shape and `aria-value*` binding pattern
 - [Badge migration reference](../../02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md#reference-badge-migration)
 - [Figma — Loading animation discovery](https://www.figma.com/design/42VzvpW262EAUbYsadO4e8/Loading-animation-discovery?node-id=478-948207)
 - Epic: [SWC-2005](https://jira.corp.adobe.com/browse/SWC-2005) — Meter component migration
