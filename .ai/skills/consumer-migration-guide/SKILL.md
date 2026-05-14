@@ -1,7 +1,7 @@
 ---
 name: consumer-migration-guide
 description: Use when creating a per-component migration guide for application developers upgrading from Spectrum 1 Web Components to Spectrum 2 components.
-globs: 2nd-gen/packages/swc/components/*/consumer-migration-guide.mdx
+globs: 2nd-gen/packages/swc/components/*/migration-guide.mdx
 alwaysApply: false
 ---
 
@@ -26,7 +26,7 @@ Create per-component migration guidance for application developers upgrading app
 ### Output
 
 - **One `.mdx` file per component** at:
-  `2nd-gen/packages/swc/components/[component-name]/consumer-migration-guide.mdx`
+  `2nd-gen/packages/swc/components/[component-name]/migration-guide.mdx`
 - The file is Storybook-renderable MDX. Start every guide with this template so it picks up the `Components` title prefix wired in `2nd-gen/packages/swc/.storybook/main.ts`:
 
   ```mdx
@@ -57,7 +57,7 @@ All guides follow the same import and tag name conventions. Do not grep for thes
 | Tag                | `sp-[component]`                                         | `swc-[component]`                                              |
 | Side-effect import | `@spectrum-web-components/[component]/sp-[component].js` | `@adobe/spectrum-wc/components/[component]/swc-[component].js` |
 
-Use the badge guide at `2nd-gen/packages/swc/components/badge/consumer-migration-guide.mdx` as the canonical format reference.
+Use the badge guide at `2nd-gen/packages/swc/components/badge/migration-guide.mdx` as the canonical format reference.
 
 ### Required source inputs
 
