@@ -56,13 +56,12 @@
 
 - **No 2nd-gen accordion** package exists yet under `2nd-gen/packages/`; Setup phase creates core + SWC scaffolds.
 - **Accessibility migration analysis** is the behavioral contract for WCAG 2.2 AA; 2nd-gen diverges from 1st-gen on keyboard (no `FocusGroupController` arrow/Home/End on the host, no roving `tabindex` between item hosts), disabled header semantics (`aria-disabled` + panel `inert`), closed-panel hiding (`hidden` vs `display: none` only), heading **API** (**slotted** heading text **only** — **no** string **`label`**, clean break vs 1st-gen), and **Space** handling (**SWC-1487**).
-- **Rendering-and-styling migration analysis** is **in progress** — 1st-gen inventory and DOM summary are in [rendering-and-styling migration analysis](./rendering-and-styling-migration-analysis.md); finish S2 selector/token pass before Phase 4, with **spectrum-css** in the [same workspace](../../02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md#workspace-setup).
 - **React Spectrum S2 parity (planning):** Align public surface where authors expect cross-product parity — **`quiet`** on the accordion (from RS **`isQuiet`**) and **`disabled`** on the accordion host (**accordion-wide** disable, from RS **`isDisabled`** on **`Accordion`**), in addition to per-item **`disabled`**. Details: [React Spectrum alignment considerations](#react-spectrum-alignment-considerations).
 - **Severity:** **Normal** for migration planning. Escalate to **Major** only if Spectrum 2 accordion CSS is missing or core infrastructure blocks a core/SWC split (not observed today).
 
 ### Most blocking open questions
 
-None for **starting** implementation, provided the rendering roadmap is expanded before styling work. **`label` vs slot** is **decided:** slotted heading only — **no** 2nd-gen **`label`** (see [accessibility migration analysis](./accessibility-migration-analysis.md)). Still resolve **final slot names** (heading vs panel), and **toggle event naming** before API freeze (see [Open — API and scope](#open--api-and-scope)). After [rendering-and-styling migration analysis](./rendering-and-styling-migration-analysis.md) is completed with the [analyze rendering and styling](../../02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_analyze-rendering-and-styling/README.md) workflow, do a **consistency pass** on this plan and remove stale draft placeholders.
+None for **starting** implementation. **`label` vs slot** is **decided:** slotted heading only — **no** 2nd-gen **`label`** (see [accessibility migration analysis](./accessibility-migration-analysis.md)). Still resolve **final slot names** (heading vs panel), and **toggle event naming** before API freeze (see [Open — API and scope](#open--api-and-scope)).
 
 ---
 
@@ -141,16 +140,23 @@ Inherited: `SizedMixin(Focusable)` — `tabIndex` / `focus` / `blur` / `click` d
 
 1st-gen accordion pulls Spectrum 1 styles from [`spectrum-accordion.css`](../../../../1st-gen/packages/accordion/src/spectrum-accordion.css), [`spectrum-accordion-item.css`](../../../../1st-gen/packages/accordion/src/spectrum-accordion-item.css), and related files; authors could reach a **broad** **`--spectrum-accordion-*`** / **`--mod-*`** surface for overrides.
 
-**2nd-gen:** This full modifier surface **will not** be carried forward. Replace with S2 tokens and a **narrow**, reviewed customization story (see [rendering-and-styling migration analysis](./rendering-and-styling-migration-analysis.md) and Phase 4 mapping). 
+**2nd-gen:** This full modifier surface **will not** be carried forward. Replace with S2 tokens and a **narrow**, reviewed customization story (see Phase 4 mapping).
+
 ### Shadow DOM output (rendered HTML)
 
 **`sp-accordion-item` (conceptual):**
 
 ```html
 <h2 id="heading">
-  <!-- optional chevron (2nd-gen: prefer swc-icon) + -->
-  <button id="header" aria-expanded="..." aria-controls="content">...</button>
+  <button id="header" aria-expanded="..." aria-controls="content">
+    <!-- swc-icon chevron, first child inside the button; 1st-gen placed this in a span before the button, outside it -->
+    <span class="spectrum-Accordion-itemTitle"><!-- slotted heading text; 1st-gen rendered label as a bare text node --></span>
+  </button>
 </h2>
+<!-- actions container is a sibling to <h*>, NOT inside it — keeps heading accessible name clean -->
+<div class="actions" hidden>
+  <slot name="actions"></slot>
+</div>
 <div id="content" role="region" aria-labelledby="header">
   <slot></slot>
 </div>
@@ -182,7 +188,7 @@ Inherited: `SizedMixin(Focusable)` — `tabIndex` / `focus` / `blur` / `click` d
 |---|---|
 | **Upstream 2nd-gen components** | Accordion does not require another incomplete 2nd-gen composite; it uses **core** + **base** + **icons** patterns. Follow the [badge migration reference](../../02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md#reference-badge-migration) for core/SWC layout. |
 | **Cross-component API alignment** | **`level`** / heading naming should stay aligned with **illustrated message** and **card** when those specs exist ([accessibility migration analysis](./accessibility-migration-analysis.md)). **`quiet`** / host **`disabled`** naming should match other 2nd-gen components that expose the same Spectrum concepts ([React Spectrum alignment considerations](#react-spectrum-alignment-considerations)). |
-| **Step 1 (analyze rendering and styling)** | [Rendering roadmap](./rendering-and-styling-migration-analysis.md) is **in progress** — finish S2 selector and token pass with **spectrum-css** `spectrum-two` beside this repo before treating Step 1 as complete. |
+| **Step 1 (analyze rendering and styling)** | Complete — key findings and DOM changes are captured in this plan. |
 
 ---
 
@@ -227,18 +233,20 @@ No 2nd-gen package yet — this section records **planned** decisions from analy
 |---|---|---|
 | Accordion | `allow-multiple` (or aligned name), **public** **`level`** (`2`–`6`), **`density`**, `size` | **`level`** is the **only** author-facing control for heading depth for all items. **`size`** propagates to assigned items (same as 1st-gen). See **`density`** row. |
 | Accordion — `density` | Reflected string **`compact`** \| **`regular`** \| **`spacious`** | Align with [React Spectrum **`density`**](https://react-spectrum.adobe.com/Accordion) and S2: **`regular`** is the default spacing (1st-gen **omitted** / legacy default maps here). **TypeScript** and docs should list **all three** values even though **`regular`** is default. **Dev warning** when the attribute is **omitted** is **recommended** (same spirit as Badge **`variant`**) so authors stay explicit—confirm at API freeze. Host-only (1st-gen does **not** assign **`density`** on **`AccordionItem`** in script). |
-| Accordion — `quiet` | Boolean; reflected attribute **`quiet`** | Parity with [React Spectrum **`isQuiet`**](https://react-spectrum.adobe.com/Accordion). **Accordion host only** — propagate effective quiet styling to assigned items internally. **Do not** expose **per-item** **`quiet`**: quiet removes dividers between rows; mixing styles per item is **visually chaotic** and **contradicts** Figma usage guidance ([rendering-and-styling migration analysis — Figma](./rendering-and-styling-migration-analysis.md#figma--s2-web-desktop-scale)). |
+| Accordion — `quiet` | Boolean; reflected attribute **`quiet`** | Parity with [React Spectrum **`isQuiet`**](https://react-spectrum.adobe.com/Accordion). **Accordion host only** — propagate effective quiet styling to assigned items internally. **Do not** expose **per-item** **`quiet`**: mixing default and quiet items is **visually incompatible**; the quiet hover state uses rounded corners, which creates corner gaps when placed inside a default accordion that uses dividers. Prefer one style family per accordion instance. |
 | Accordion — `disabled` | Boolean; reflected attribute **`disabled`** | Parity with RS **`isDisabled`** on **`Accordion`**: **accordion-wide** disable — every item non-interactive (no expand/collapse), same **a11y** posture as item-level disable ([accessibility migration analysis](./accessibility-migration-analysis.md): header **`aria-disabled`**, panel **`inert`**). When the host is **`disabled`**, that gate **wins** over per-item **`disabled`** being false. When the host clears **`disabled`**, each item’s own **`disabled`** applies again unchanged. For **visual** disabled state on descendants, prefer **container queries** or host-driven styling so you do **not** reflect host **`disabled`** onto every child **solely** for CSS—only use per-item flags where behavior or a11y requires it. |
 | Item | `open`, `disabled` | Same semantics as today unless renamed for consistency. **No** public **`quiet`** on the item. |
 | Item (implementation) | **`protected` `heading`** (`2`–`6`) | **Not** public API—not reflected, not set by consumers. Parent **`level`** assigns **`heading`** on each slotted item (core/SWC lifecycle). |
 | Heading text | Slotted (see [Shadow DOM output](#shadow-dom-output-rendered-html)) | **Rationale:** a string **`label`** cannot mirror phrasing content (`<strong>`, `<code>`) into the header’s accessible name the way slotted light DOM can; matches [accessibility migration analysis](./accessibility-migration-analysis.md). **Breaking** vs 1st-gen **`label`**: **clean break** — 2nd-gen does **not** expose **`label`**; authors migrate markup to the heading slot only. |
 | Events | Renamed toggle event | Exact string TBD. |
+| Direct actions (item header affordances) | `slot="actions"` on `swc-accordion-item` (working name — not frozen); open-ended, any content may be slotted | (spectrum-css container class `.spectrum-Accordion-itemDirectActions`) rendered as a **sibling to the `<h*>` element** (not inside it); placing it inside `<h*>` would bleed its text content into the heading's accessible name. `slotchange` observer hides the container when empty. `stopPropagation` on the container prevents slot clicks from toggling the accordion. Specific supported content (`swc-action-button`, `swc-switch`) are open questions; see [Open — API and scope](#open--api-and-scope). |
+| `noInlinePadding` modifier | Not a public attribute | The spectrum-css modifier class `.spectrum-Accordion--noInlinePadding` controls inline padding removal (new in S2). **Not** exposed as an API attribute — expose the relevant padding via `--swc-accordion-*` custom properties so consumers can remove or adjust inline padding directly. |
 
 ### React Spectrum alignment considerations
 
 [React Spectrum S2 — Accordion](https://react-spectrum.adobe.com/Accordion) exposes **`isQuiet`** and **`isDisabled`** on the **`Accordion`** root (and **`isQuiet`** / **`isDisabled`** on **`AccordionItem`**). 1st-gen **`sp-accordion`** has **neither** host **`quiet`** nor host **`disabled`**; only **`sp-accordion-item`** supports **`disabled`**. For 2nd-gen, treat the following as **API planning targets** so Spectrum authors can mirror React examples in markup:
 
-1. **`quiet`:** Map RS **`isQuiet`** to boolean **`quiet`** on **`swc-accordion`** (Spectrum 2 CSS uses the same name). Propagate styling to items **internally**; **do not** add a public **per-item** **`quiet`** API ([rendering-and-styling migration analysis](./rendering-and-styling-migration-analysis.md#figma--s2-web-desktop-scale)).
+1. **`quiet`:** Map RS **`isQuiet`** to boolean **`quiet`** on **`swc-accordion`** (Spectrum 2 CSS uses the same name). Propagate styling to items **internally**; **do not** add a public **per-item** **`quiet`** API.
 
 2. **Accordion-wide `disabled`:** Map RS **`isDisabled`** on **`Accordion`** to **`disabled`** on **`swc-accordion`**. Implementation should drive the same behavior as “every item disabled” without authors having to set **`disabled`** on each item: block toggles, apply quiet/disabled visuals per design, and apply the **disabled item** a11y matrix on **every** header/panel pair. **Controlled-mode** authors who set **`open`** on items should not be able to expand while the host stays **`disabled`** (treat like item-level guardrails today, extended to the whole set).
 
@@ -269,7 +277,6 @@ For **`allow-multiple` false**, the parent must keep **at most one** item **`ope
 | Document | Use |
 |---|---|
 | [Accessibility migration analysis](./accessibility-migration-analysis.md) | WCAG 2.2 AA target, disabled matrix, keyboard, testing expectations. |
-| [Rendering-and-styling migration analysis](./rendering-and-styling-migration-analysis.md) | S2 CSS and token mapping — **in progress**; complete S2 sections before Phase 4. |
 | [Washing machine workflow](../../02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md) | Phase order and quality gates. |
 
 ---
@@ -294,7 +301,7 @@ Gates align with [01_washing-machine-workflow.md](../../02_workstreams/02_2nd-ge
 ### Preparation (this ticket)
 
 - [ ] Preparation inputs tracked (Figma, epic id, S2 rendering pass) per team process—no separate contributor prep doc for accordion
-- [ ] This plan + accessibility analysis + expanded rendering roadmap reviewed
+- [ ] This plan + accessibility analysis reviewed
 - [ ] Breaking changes and consumer migration notes agreed
 - [ ] Open questions in [Blockers and open questions](#blockers-and-open-questions) resolved or ticketed
 - [ ] Plan reviewed by at least one other engineer
@@ -313,7 +320,7 @@ Gates align with [01_washing-machine-workflow.md](../../02_workstreams/02_2nd-ge
 ### Styling
 
 - [ ] S2 CSS integrated; stylelint clean
-- [ ] Document token / `--mod-*` → S2 (or `--swc-*`) mapping for consumers; include **`density` × `size`** matrix ([rendering-and-styling migration analysis](./rendering-and-styling-migration-analysis.md#summary-of-changes))
+- [ ] Document token / `--mod-*` → S2 (or `--swc-*`) mapping for consumers; include **`density` × `size`** matrix
 
 ### Accessibility
 
@@ -348,11 +355,12 @@ Gates align with [01_washing-machine-workflow.md](../../02_workstreams/02_2nd-ge
 | **Standalone item** | **Direction:** **`swc-accordion-item`** without a parent stays **supported** with reasonable defaults (**`protected` `heading`** defaults to **`3`**, same as today’s accordion default)—matches existing tests and story patterns. Ticket any change if product requires parent-only usage. |
 | Heading slot content | Text-only vs inline phrasing (`<strong>`, `<code>`) in heading slot. |
 | Toggle event | Exact `swc-*` event name. |
-| Rendering doc | Who expands [rendering-and-styling migration analysis](./rendering-and-styling-migration-analysis.md) with S2 paths before Phase 4? |
 | Chevron / disclosure icon | Prefer **`swc-icon`** internally; finalize icon asset/name against S2. |
 | Accordion host **`disabled`** | Confirm **controlled** **`open`** cannot expand while host **`disabled`**; prefer **container-query** / host styling for descendant disabled visuals ([Public API](#public-api) **`disabled`** note). |
 | **`density`** dev warning | Confirm **omit-attribute** warning ships with accordion (recommended; same spirit as Badge **`variant`**). |
-| **`RadioController`** scope | Ship **inside** `AccordionBase` first vs extract to **core** for **radio group**, **`role="menuitemradio"`** menus, **tabs**, and/or coordinate with a **refactor** of **`FocusgroupNavigationController`** (split “selection flags” vs “focus roving”)? **Depends on** menu / radio / tabs migration timing and whether teams want one shared **selection-sync** API vs local loops per component. |
+| **Direct actions — disabled state** | **Decided:** Do **not** propagate `disabled` to slotted actions content. The actions slot may hold affordances whose purpose is precisely to explain or resolve why the item is disabled (e.g., an “Upgrade” button, or an action button attached to a popover describing deprecation). Coupling disablement would remove those affordances exactly when they are most needed. |
+| **Direct actions — content constraints** | Slot is open-ended by design. Confirm whether to add a dev-mode warning for unsupported content types when `swc-action-button` and `swc-switch` are available, or leave fully unrestricted. |
+| **`RadioController`** scope | Ship **inside** `AccordionBase` first vs extract to **core** for **radio group**, **`role=”menuitemradio”`** menus, **tabs**, and/or coordinate with a **refactor** of **`FocusgroupNavigationController`** (split “selection flags” vs “focus roving”)? **Depends on** menu / radio / tabs migration timing and whether teams want one shared **selection-sync** API vs local loops per component. |
 
 **Not a blocker:** Missing 2nd-gen package before implementation starts is expected.
 
@@ -370,7 +378,6 @@ Gates align with [01_washing-machine-workflow.md](../../02_workstreams/02_2nd-ge
 - [Washing machine workflow](../../02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md)
 - [Migration project planning (epics / tickets)](../../02_workstreams/02_2nd-gen-component-migration/03_migration-project-planning.md)
 - [Accessibility migration analysis](./accessibility-migration-analysis.md)
-- [Rendering and styling migration analysis](./rendering-and-styling-migration-analysis.md)
 - [1st-gen source — `Accordion.ts`](../../../../1st-gen/packages/accordion/src/Accordion.ts)
 - [1st-gen source — `AccordionItem.ts`](../../../../1st-gen/packages/accordion/src/AccordionItem.ts)
 - [1st-gen tests directory](../../../../1st-gen/packages/accordion/test/)
