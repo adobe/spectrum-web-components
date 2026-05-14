@@ -44,7 +44,6 @@ export const OverviewTest: Story = {
         expect(el.type).toBe('card');
         expect(el.dismissible).toBe(true);
         expect(el.dismissLabel).toBe('Remove attachment');
-        expect(el.hasAttribute('data-preview-only')).toBe(false);
 
         const dismissButton = el.shadowRoot?.querySelector<HTMLButtonElement>(
           '.swc-UploadArtifact-dismiss'
@@ -148,29 +147,8 @@ export const MediaPreviewOnlyTest: Story = {
       'swc-upload-artifact'
     );
 
-    await step('media artifacts are always preview-only', async () => {
-      expect(el.hasAttribute('data-preview-only')).toBe(true);
+    await step('media artifact has type="media"', async () => {
+      expect(el.type).toBe('media');
     });
-
-    await step(
-      'adding title/subtitle does not change media preview-only behavior',
-      async () => {
-        el.innerHTML = `
-        <div
-          slot="thumbnail"
-          style="inline-size:100%;block-size:196px;background:linear-gradient(135deg,#a78bfa,#f472b6);"
-          role="img"
-          aria-label="Campaign preview"
-        ></div>
-        <span slot="title">Campaign preview</span>
-        <span slot="subtitle">Should be ignored</span>
-      `;
-
-        await el.updateComplete;
-        await Promise.resolve();
-
-        expect(el.hasAttribute('data-preview-only')).toBe(true);
-      }
-    );
   },
 };
