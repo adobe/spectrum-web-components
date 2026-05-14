@@ -16,7 +16,7 @@ import { property, queryAll } from 'lit/decorators.js';
 import { FocusgroupNavigationController } from '@spectrum-web-components/core/controllers/index.js';
 import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
 
-import '@adobe/spectrum-wc/icon';
+import '@adobe/spectrum-wc/components/icon/swc-icon.js';
 
 import { ThumbDownIcon, ThumbUpIcon } from '../utils/icons/index.js';
 

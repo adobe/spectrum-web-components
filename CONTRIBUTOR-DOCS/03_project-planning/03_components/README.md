@@ -20,6 +20,7 @@
 
 - Accordion
     - [Accordion accessibility migration analysis](accordion/accessibility-migration-analysis.md)
+    - [Accordion migration plan](accordion/migration-plan.md)
     - [Accordion migration roadmap](accordion/rendering-and-styling-migration-analysis.md)
 - Action Button
     - [Action button migration roadmap](action-button/rendering-and-styling-migration-analysis.md)
@@ -51,6 +52,8 @@
     - [Color field migration roadmap](color-field/rendering-and-styling-migration-analysis.md)
 - Color Loupe
     - [Color loupe accessibility migration analysis](color-loupe/accessibility-migration-analysis.md)
+    - [Color loupe migration checklist](color-loupe/migration-checklist.md)
+    - [Color loupe migration analysis](color-loupe/rendering-and-styling-migration-analysis.md)
 - Divider
     - [Divider accessibility migration analysis](divider/accessibility-migration-analysis.md)
     - [Divider migration roadmap](divider/rendering-and-styling-migration-analysis.md)

@@ -68,8 +68,8 @@ const Badge = ({
  * ```ts
  * /**
  *  * @element swc-my-component
- *  * @status preview
- *  * @since 1.0.0
+ *  * @status internal
+ *  * @since 2.0.0
  *  *\/
  * ```
  *

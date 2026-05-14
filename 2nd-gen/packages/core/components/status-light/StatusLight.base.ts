@@ -95,11 +95,12 @@ export abstract class StatusLightBase extends SizedMixin(SpectrumElement, {
     super.updated(changes);
     if (window.__swc?.DEBUG) {
       const constructor = this.constructor as typeof StatusLightBase;
+      // @ts-expect-error -- intentional runtime guard: 1st-gen consumers may pass 'accent'
       if (this.variant === 'accent') {
         window.__swc.warn(
           this,
           `<${this.localName}> does not support the "accent" variant in Spectrum 2. Use "neutral" or "info" depending on intent.`,
-          'https://opensource.adobe.com/spectrum-web-components/second-gen/?path=/docs/status-light-consumer-migration-guide--docs',
+          'https://spectrum-web-components.adobe.com/?path=/docs/status-light-migration-guide--docs',
           { level: 'deprecation' }
         );
       } else if (!constructor.VARIANTS.includes(this.variant)) {
@@ -116,7 +117,7 @@ export abstract class StatusLightBase extends SizedMixin(SpectrumElement, {
         window.__swc.warn(
           this,
           `<${this.localName}> does not support the "disabled" attribute. It was deprecated in Spectrum 1 and has been removed in Spectrum 2.`,
-          'https://opensource.adobe.com/spectrum-web-components/second-gen/?path=/docs/status-light-consumer-migration-guide--docs',
+          'https://spectrum-web-components.adobe.com/?path=/docs/status-light-migration-guide--docs',
           { level: 'deprecation' }
         );
       }

@@ -116,8 +116,9 @@ export const Overview: Story = {
 /**
  * ### Features
  *
- * Each `<swc-conversation-turn>` exposes a single **`role="group"`** landmark in
- * the shadow tree with **`aria-label`**.
+ * Each `<swc-conversation-turn>` exposes **`role="group"`** and an
+ * **`aria-label`** on the host element. This ensures the element that receives
+ * roving keyboard focus has an accessible role and name.
  *
  * Default labels are derived from **`type`**:
  *
@@ -128,6 +129,13 @@ export const Overview: Story = {
  *
  * Sighted users infer the speaker from alignment; this label gives screen reader
  * users the same turn context before the slotted message content is read.
+ *
+ * When used inside `<swc-conversation-thread>`, ArrowUp and ArrowDown move
+ * focus between turns. Tab leaves the thread for the next page control, and
+ * Shift+Tab back into the thread returns to the current roving focus target.
+ * When focus has left the thread, newly appended turns become the next tab
+ * target so users can return from the prompt field to the latest response
+ * without focus being moved while they type.
  */
 export const Accessibility: Story = {
   render: () => html`

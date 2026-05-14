@@ -15,6 +15,7 @@
 - [Size modifier pattern](#size-modifier-pattern)
 - [Inline SVG](#inline-svg)
 - [classMap patterns](#classmap-patterns)
+- [Inline CSS strings from component properties](#inline-css-strings-from-component-properties)
 - [Shadow root customization](#shadow-root-customization)
 
 </details>
@@ -220,6 +221,45 @@ class=${classMap({
 })}
 ```
 
+## Inline CSS strings from component properties
+
+Some components accept a property whose value is a CSS string — for example, `<swc-color-loupe>` exposes a `color` property that accepts any valid CSS color. When the value must influence rendering, set it as a **CSS custom property via `styleMap`**, and have the component's stylesheet consume that custom property.
+
+```ts
+// ColorLoupe.ts
+<div
+  class="swc-ColorLoupe-colorFill"
+  style=${styleMap({
+    '--swc-color-loupe-picked-color': this.color,
+  })}
+></div>
+```
+
+```css
+/* color-loupe.css */
+.swc-ColorLoupe-colorFill {
+  background: var(--swc-color-loupe-picked-color);
+}
+```
+
+When a property value reaches an inline `style` attribute — directly or via `styleMap` — the browser's CSS parser reads it verbatim. That means:
+
+- **Only accept CSS strings from trusted sources.** Component properties that participate in an inline `style` (or a `styleMap` entry) must be treated as trusted input. Do not expose such properties to arbitrary user-generated content without validation at the call site.
+- **Use a CSS custom property, not a full declaration.** Set `--swc-<component>-<role>: ${value}` via `styleMap` rather than interpolating an entire declaration. This scopes what the property can affect to what the component's CSS explicitly consumes.
+- **Document the contract on the property.** The property's JSDoc must state that the value is passed to the CSS parser as-is and that callers are responsible for ensuring it is a valid, trusted CSS value.
+
+```ts
+// ✅ Good — typed CSS property, scoped via a custom property
+style=${styleMap({
+  '--swc-color-loupe-picked-color': this.color,
+})}
+
+// ❌ Bad — full inline declaration interpolated from a property.
+//    The entire declaration is re-parsed on every render, and a malformed
+//    value can corrupt adjacent styles. Always route property values through
+//    a custom property that the stylesheet consumes explicitly.
+style="background: ${this.color}"
+```
 ## Shadow root customization
 
 To customize shadow root options (e.g., enabling `delegatesFocus`), always use the static `shadowRootOptions` property. **Never override `createRenderRoot()`** to set shadow root options.

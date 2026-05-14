@@ -3,6 +3,347 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.12.0](https://github.com/adobe/spectrum-web-components/compare/v1.11.2...v1.12.0) (2026-05-12)
+
+## Minor Changes
+
+**sp-base**: Refactored size mixin exports and badge type naming for consistency.
+
+**@spectrum-web-components/base (1st-gen)**
+
+- **Added**: New exports `ELEMENT_SIZES` and `DEFAULT_ELEMENT_SIZES` for typed size arrays
+- **Deprecated**: `ElementSizes` record is now deprecated in favor of `ELEMENT_SIZES`. The export is preserved for backward compatibility but will be removed in a future major release.
+
+**@spectrum-web-components/core (2nd-gen)**
+
+- **Changed**: Replaced `ElementSizes` record with `ELEMENT_SIZES` const array and `DEFAULT_ELEMENT_SIZES`
+- **Changed**: `VALID_SIZES` arrays are now typed as `readonly ElementSize[]` for better type safety
+- **Changed**: Badge type exports renamed for consistency:
+  - `BADGE_VARIANTS_S2` → `BADGE_VARIANTS`
+  - `BADGE_VARIANTS_COLOR_S2` → `BADGE_VARIANTS_COLOR`
+  - `BadgeVariantS2` → `BadgeVariant`
+  - `BadgeColorVariantS2` → `BadgeColorVariant`
+
+**sp-core**: Refactored size mixin exports and badge type naming for consistency.
+
+**@spectrum-web-components/base (1st-gen)**
+
+- **Added**: New exports `ELEMENT_SIZES` and `DEFAULT_ELEMENT_SIZES` for typed size arrays
+- **Deprecated**: `ElementSizes` record is now deprecated in favor of `ELEMENT_SIZES`. The export is preserved for backward compatibility but will be removed in a future major release.
+
+**@spectrum-web-components/core (2nd-gen)**
+
+- **Changed**: Replaced `ElementSizes` record with `ELEMENT_SIZES` const array and `DEFAULT_ELEMENT_SIZES`
+- **Changed**: `VALID_SIZES` arrays are now typed as `readonly ElementSize[]` for better type safety
+- **Changed**: Badge type exports renamed for consistency:
+  - `BADGE_VARIANTS_S2` → `BADGE_VARIANTS`
+  - `BADGE_VARIANTS_COLOR_S2` → `BADGE_VARIANTS_COLOR`
+  - `BadgeVariantS2` → `BadgeVariant`
+  - `BadgeColorVariantS2` → `BadgeColorVariant`
+
+**sp-picker**: - **Added**: Added a new `ExpandableElement` base class for expandable picker-like components with overlay functionality.
+
+- **Deprecated**: `PickerBase` class is deprecated and will be removed in a future release. Use a `ExpandableElement` base class instead. As a result `Picker instanceof PickerBase` will now return false.
+
+**sp-action-button**: - **Added**: Introduced global action button element styles in `@spectrum-web-components/styles` via `global-action-button.css`, enabling native links with `.spectrum-ActionButton*` classes to render with Spectrum action button styling.
+
+- **Documented**: Added 1st-gen action button guidance and Storybook examples for rendering native `<a>` links as static actio button-styled UI, including limitations (for example, no disabled, selected, or hold affordance support for link-based buttons).
+
+**sp-styles**: - **Added**: Introduced global action button element styles in `@spectrum-web-components/styles` via `global-action-button.css`, enabling native links with `.spectrum-ActionButton*` classes to render with Spectrum action button styling.
+
+- **Documented**: Added 1st-gen action button guidance and Storybook examples for rendering native `<a>` links as static actio button-styled UI, including limitations (for example, no disabled, selected, or hold affordance support for link-based buttons).
+
+**sp-core**: **Breaking**: `<swc-badge>` migration includes new `subtle`/`outline` styles, additional non-semantic color variants, and default behavior updates (`variant="neutral"` and reflected `size="s"` when omitted). `--mod-badge-*` hooks are removed, and `--swc-badge-*` hooks are **not** a strict 1:1 replacement surface for every previous override. See the badge consumer migration guide.
+
+**Breaking**: `<swc-divider>` migration reflects `size="m"` when omitted (visual medium behavior remains unchanged). `--mod-divider-*` hooks are removed, and the new public styling surface (`--swc-divider-thickness`, `--swc-divider-background-color`) is **not** a strict 1:1 replacement for prior size/static-color-specific overrides. See the divider consumer migration guide.
+
+**Breaking**: `<swc-progress-circle>` migration removes the `indeterminate` attribute (omit `progress` or set `progress = null` instead), no longer renders light DOM children as labels (use `label`/`aria-label`), and adds `static-color="black"` support. `--mod-progress-circle-*` hooks are removed, and `--swc-progress-circle-*` hooks are **not** a strict 1:1 replacement for all prior behavior. See the progress circle consumer migration guide.
+
+**Breaking**: `<swc-status-light>` migration removes the deprecated `disabled` attribute, removes the `accent` variant, and updates default behavior (`variant="neutral"` when omitted). `--mod-status-light-*` hooks are removed, and `--swc-status-light-*` hooks are **not** a strict 1:1 replacement for every previous override pattern. `StatusLightSize` is exported from core for typed usage. See the status light consumer migration guide.
+
+**sp-badge**: **Breaking**: `<swc-badge>` migration includes new `subtle`/`outline` styles, additional non-semantic color variants, and default behavior updates (`variant="neutral"` and reflected `size="s"` when omitted). `--mod-badge-*` hooks are removed, and `--swc-badge-*` hooks are **not** a strict 1:1 replacement surface for every previous override. See the badge consumer migration guide.
+
+**Breaking**: `<swc-divider>` migration reflects `size="m"` when omitted (visual medium behavior remains unchanged). `--mod-divider-*` hooks are removed, and the new public styling surface (`--swc-divider-thickness`, `--swc-divider-background-color`) is **not** a strict 1:1 replacement for prior size/static-color-specific overrides. See the divider consumer migration guide.
+
+**Breaking**: `<swc-progress-circle>` migration removes the `indeterminate` attribute (omit `progress` or set `progress = null` instead), no longer renders light DOM children as labels (use `label`/`aria-label`), and adds `static-color="black"` support. `--mod-progress-circle-*` hooks are removed, and `--swc-progress-circle-*` hooks are **not** a strict 1:1 replacement for all prior behavior. See the progress circle consumer migration guide.
+
+**Breaking**: `<swc-status-light>` migration removes the deprecated `disabled` attribute, removes the `accent` variant, and updates default behavior (`variant="neutral"` when omitted). `--mod-status-light-*` hooks are removed, and `--swc-status-light-*` hooks are **not** a strict 1:1 replacement for every previous override pattern. `StatusLightSize` is exported from core for typed usage. See the status light consumer migration guide.
+
+**sp-divider**: **Breaking**: `<swc-badge>` migration includes new `subtle`/`outline` styles, additional non-semantic color variants, and default behavior updates (`variant="neutral"` and reflected `size="s"` when omitted). `--mod-badge-*` hooks are removed, and `--swc-badge-*` hooks are **not** a strict 1:1 replacement surface for every previous override. See the badge consumer migration guide.
+
+**Breaking**: `<swc-divider>` migration reflects `size="m"` when omitted (visual medium behavior remains unchanged). `--mod-divider-*` hooks are removed, and the new public styling surface (`--swc-divider-thickness`, `--swc-divider-background-color`) is **not** a strict 1:1 replacement for prior size/static-color-specific overrides. See the divider consumer migration guide.
+
+**Breaking**: `<swc-progress-circle>` migration removes the `indeterminate` attribute (omit `progress` or set `progress = null` instead), no longer renders light DOM children as labels (use `label`/`aria-label`), and adds `static-color="black"` support. `--mod-progress-circle-*` hooks are removed, and `--swc-progress-circle-*` hooks are **not** a strict 1:1 replacement for all prior behavior. See the progress circle consumer migration guide.
+
+**Breaking**: `<swc-status-light>` migration removes the deprecated `disabled` attribute, removes the `accent` variant, and updates default behavior (`variant="neutral"` when omitted). `--mod-status-light-*` hooks are removed, and `--swc-status-light-*` hooks are **not** a strict 1:1 replacement for every previous override pattern. `StatusLightSize` is exported from core for typed usage. See the status light consumer migration guide.
+
+**sp-progress-circle**: **Breaking**: `<swc-badge>` migration includes new `subtle`/`outline` styles, additional non-semantic color variants, and default behavior updates (`variant="neutral"` and reflected `size="s"` when omitted). `--mod-badge-*` hooks are removed, and `--swc-badge-*` hooks are **not** a strict 1:1 replacement surface for every previous override. See the badge consumer migration guide.
+
+**Breaking**: `<swc-divider>` migration reflects `size="m"` when omitted (visual medium behavior remains unchanged). `--mod-divider-*` hooks are removed, and the new public styling surface (`--swc-divider-thickness`, `--swc-divider-background-color`) is **not** a strict 1:1 replacement for prior size/static-color-specific overrides. See the divider consumer migration guide.
+
+**Breaking**: `<swc-progress-circle>` migration removes the `indeterminate` attribute (omit `progress` or set `progress = null` instead), no longer renders light DOM children as labels (use `label`/`aria-label`), and adds `static-color="black"` support. `--mod-progress-circle-*` hooks are removed, and `--swc-progress-circle-*` hooks are **not** a strict 1:1 replacement for all prior behavior. See the progress circle consumer migration guide.
+
+**Breaking**: `<swc-status-light>` migration removes the deprecated `disabled` attribute, removes the `accent` variant, and updates default behavior (`variant="neutral"` when omitted). `--mod-status-light-*` hooks are removed, and `--swc-status-light-*` hooks are **not** a strict 1:1 replacement for every previous override pattern. `StatusLightSize` is exported from core for typed usage. See the status light consumer migration guide.
+
+**sp-status-light**: **Breaking**: `<swc-badge>` migration includes new `subtle`/`outline` styles, additional non-semantic color variants, and default behavior updates (`variant="neutral"` and reflected `size="s"` when omitted). `--mod-badge-*` hooks are removed, and `--swc-badge-*` hooks are **not** a strict 1:1 replacement surface for every previous override. See the badge consumer migration guide.
+
+**Breaking**: `<swc-divider>` migration reflects `size="m"` when omitted (visual medium behavior remains unchanged). `--mod-divider-*` hooks are removed, and the new public styling surface (`--swc-divider-thickness`, `--swc-divider-background-color`) is **not** a strict 1:1 replacement for prior size/static-color-specific overrides. See the divider consumer migration guide.
+
+**Breaking**: `<swc-progress-circle>` migration removes the `indeterminate` attribute (omit `progress` or set `progress = null` instead), no longer renders light DOM children as labels (use `label`/`aria-label`), and adds `static-color="black"` support. `--mod-progress-circle-*` hooks are removed, and `--swc-progress-circle-*` hooks are **not** a strict 1:1 replacement for all prior behavior. See the progress circle consumer migration guide.
+
+**Breaking**: `<swc-status-light>` migration removes the deprecated `disabled` attribute, removes the `accent` variant, and updates default behavior (`variant="neutral"` when omitted). `--mod-status-light-*` hooks are removed, and `--swc-status-light-*` hooks are **not** a strict 1:1 replacement for every previous override pattern. `StatusLightSize` is exported from core for typed usage. See the status light consumer migration guide.
+
+**sp-core**: **feat(tabs):** Add 2nd-gen tabs (`swc-tabs`, `swc-tab`, `swc-tab-panel`) with Spectrum 2 styling, selection indicator, and WAI-ARIA tabs keyboard behavior. A single side-effect import `@adobe/spectrum-wc/components/tabs/swc-tabs.js` registers all three elements. See `components/tabs/migration.md` for migration from 1st-gen `sp-tabs`.
+
+**sp-illustrated-message**: Migrated `<sp-illustrated-message>` to Spectrum 2 (2nd-gen) architecture.
+
+- **Added**: 2nd-gen `<swc-illustrated-message>` component with Spectrum 2 design tokens and styling
+- **Added**: `size` attribute (`s`, `m`, `l`) for controlling component size
+- **Added**: `orientation` attribute (`vertical`, `horizontal`) for layout control
+- **Added**: `heading` slot as the preferred API for providing heading content
+- **Deprecated**: `heading` attribute on `<sp-illustrated-message>` in favor of the `heading` slot; a dev mode warning is emitted when the attribute is used
+
+**sp-button**: - **Added**: Introduced global button element styles in `@spectrum-web-components/styles` via `global-button.css` and `global-elements.css` (including public exports), enabling native links with `.spectrum-Button*` classes to render with Spectrum button styling.
+
+- **Documented**: Added 1st-gen button guidance and Storybook examples for rendering native `<a>` links as static button-styled UI, including limitations (for example, no disabled or pending support for link-based buttons).
+
+**sp-styles**: - **Added**: Introduced global button element styles in `@spectrum-web-components/styles` via `global-button.css` and `global-elements.css` (including public exports), enabling native links with `.spectrum-Button*` classes to render with Spectrum button styling.
+
+- **Documented**: Added 1st-gen button guidance and Storybook examples for rendering native `<a>` links as static button-styled UI, including limitations (for example, no disabled or pending support for link-based buttons).
+
+**sp-accordion**: **Added**: Added `level` property to `<sp-accordion-item>` to allow customization of the semantic heading level (2-6) used for accordion item titles. The property defaults to `3`, maintaining backward compatibility with existing implementations.
+
+This change enables developers to maintain proper document structure and accessibility by matching accordion heading levels to their page's heading hierarchy.
+
+**sp-switch**: - **Fixed**: Improved `<sp-switch>` contrast in S1 and Express to meet WCAG SC 1.4.11 Non-text Contrast (3:1 minimum). The unselected track border was added in S1 and Express, matching the S2 pattern of matching the handle background color to the track border color per interaction state.
+
+- **Fixed**: Corrected `<sp-switch>` handle border colors for selected states in S1 and Express. Handle border now resolves to `--spectrum-gray-75` against the filled/selected track background.
+
+- **Fixed**: Improved `<sp-switch>` Forced Colors (Windows High Contrast) mode. Replaced `box-shadow` track borders with proper `border` declarations, expanded `--highcontrast-switch-border-color` to full state-specific tokens (default, hover, focus, down, disabled), and corrected handle border colors to use system colors (`ButtonFace` for selected, `GrayText` for disabled).
+
+- **Changed**: Renamed `--spectrum-switch-border-width-themed` to `--spectrum-switch-border-width` on `<sp-switch>`. The border width is now a consistent 2px in all themes. **The `--mod-switch-border-width-themed` variable remains unaffected.**
+
+- **Changed**: Renamed `--highcontrast-switch-border-color` to `--highcontrast-switch-border-color-default` on `<sp-switch>`, and expanded it to full per-state tokens (`hover`, `focus`, `down`, `disabled`). Previously a single token controlled the track border color in all forced-colors states.
+
+**If you were overriding `--highcontrast-switch-border-color` in Windows High Contrast styles, update your usage to the appropriate state-specific token.**
+
+```css
+/* Before */
+sp-switch {
+  --highcontrast-switch-border-color: Highlight;
+}
+
+/* After */
+sp-switch {
+  --highcontrast-switch-border-color-default: Highlight;
+}
+```
+
+**sp-styles**: - **Fixed**: Improved `<sp-switch>` contrast in S1 and Express to meet WCAG SC 1.4.11 Non-text Contrast (3:1 minimum). The unselected track border was added in S1 and Express, matching the S2 pattern of matching the handle background color to the track border color per interaction state.
+
+- **Fixed**: Corrected `<sp-switch>` handle border colors for selected states in S1 and Express. Handle border now resolves to `--spectrum-gray-75` against the filled/selected track background.
+
+- **Fixed**: Improved `<sp-switch>` Forced Colors (Windows High Contrast) mode. Replaced `box-shadow` track borders with proper `border` declarations, expanded `--highcontrast-switch-border-color` to full state-specific tokens (default, hover, focus, down, disabled), and corrected handle border colors to use system colors (`ButtonFace` for selected, `GrayText` for disabled).
+
+- **Changed**: Renamed `--spectrum-switch-border-width-themed` to `--spectrum-switch-border-width` on `<sp-switch>`. The border width is now a consistent 2px in all themes. **The `--mod-switch-border-width-themed` variable remains unaffected.**
+
+- **Changed**: Renamed `--highcontrast-switch-border-color` to `--highcontrast-switch-border-color-default` on `<sp-switch>`, and expanded it to full per-state tokens (`hover`, `focus`, `down`, `disabled`). Previously a single token controlled the track border color in all forced-colors states.
+
+**If you were overriding `--highcontrast-switch-border-color` in Windows High Contrast styles, update your usage to the appropriate state-specific token.**
+
+```css
+/* Before */
+sp-switch {
+  --highcontrast-switch-border-color: Highlight;
+}
+
+/* After */
+sp-switch {
+  --highcontrast-switch-border-color-default: Highlight;
+}
+```
+
+## Patch Changes
+
+**sp-color-area**: **Fixed**: Corrected an issue where the brightness axis in `ColorArea` was inverted on the Y-axis, causing the handle position to not match the expected brightness value. Dragging the handle now correctly maps to the HSV brightness scale.
+
+**sp-color-wheel**: **Fixed**: `<sp-color-wheel>` no longer changes its value when the user clicks outside the visible ring. Pointer events on the gradient slot are now constrained by a geometric hit-test against the ring's inner and outer radii, so clicks in the transparent corners of the component's square bounding box or inside the center hole are ignored.
+
+**sp-button**: - **Deprecated**: The link API (`href`, `target`, `download`, `referrerpolicy`, `rel`) on `<sp-button>` is now deprecated. A dev mode warning is emitted when `href` is used, directing consumers to native HTML anchor elements with `@spectrum-web-components/styles/global-elements.css`.
+
+- **Documented**: Updated button README with deprecation notices.
+
+**sp-action-button**: Updated 1st-gen Action Button color wiring so S2 colors match spec while Spectrum 1 remains visually unchanged.
+
+- Updated S2-only token values in `1st-gen/tools/styles/tokens-v2/system-theme-bridge.css`:
+  - `--system-action-button-content-color-selected` -> `var(--spectrum-gray-25)`
+  - static quiet disabled backgrounds:
+    - black -> `var(--spectrum-transparent-black-25)`
+    - white -> `var(--spectrum-transparent-white-25)`
+  - added S2 static content tokens:
+    - `--system-action-button-static-black-content-color-{default,hover,down,focus}`
+    - `--system-action-button-static-white-content-color-{default,hover,down,focus}`
+
+- Updated `1st-gen/packages/action-button/src/action-button-overrides.css` to map new S2 `--system-*` static content tokens into `--spectrum-*` action-button vars.
+
+- Updated `1st-gen/packages/action-button/src/spectrum-action-button.css` static color content assignments to read from `--spectrum-actionbutton-static-*-content-color-*` with S1-safe fallbacks:
+  - black fallback remains `var(--spectrum-black)`
+  - white fallback remains `var(--spectrum-white)`
+
+**sp-styles**: Updated 1st-gen Action Button color wiring so S2 colors match spec while Spectrum 1 remains visually unchanged.
+
+- Updated S2-only token values in `1st-gen/tools/styles/tokens-v2/system-theme-bridge.css`:
+  - `--system-action-button-content-color-selected` -> `var(--spectrum-gray-25)`
+  - static quiet disabled backgrounds:
+    - black -> `var(--spectrum-transparent-black-25)`
+    - white -> `var(--spectrum-transparent-white-25)`
+  - added S2 static content tokens:
+    - `--system-action-button-static-black-content-color-{default,hover,down,focus}`
+    - `--system-action-button-static-white-content-color-{default,hover,down,focus}`
+
+- Updated `1st-gen/packages/action-button/src/action-button-overrides.css` to map new S2 `--system-*` static content tokens into `--spectrum-*` action-button vars.
+
+- Updated `1st-gen/packages/action-button/src/spectrum-action-button.css` static color content assignments to read from `--spectrum-actionbutton-static-*-content-color-*` with S1-safe fallbacks:
+  - black fallback remains `var(--spectrum-black)`
+  - white fallback remains `var(--spectrum-white)`
+
+**sp-button**: **Fixed** issue where clicking `sp-button` or `sp-action-button` with `href` and `target="_blank"` opened two tabs in Chrome instead of one.
+
+The fix checks if the anchor element is already in the click event's composed path before triggering a proxy click. When the user clicks directly on the button, the absolutely-positioned anchor naturally receives the click, so no proxy is needed. The proxy click is now only triggered for keyboard activation and VoiceOver, where the anchor isn't in the click path.
+
+**sp-dropzone**: **Fixed**: `sp-dropzone-drop` event not firing on Windows Chrome. Moved `event.preventDefault()` to the top of `onDragOver` so the browser always treats the element as a valid drop target, regardless of `dataTransfer` availability or `shouldAccept` state. Added `isDragged` guard in `onDrop` to prevent dispatching `sp-dropzone-drop` for rejected drags. Added `relatedTarget` check in `onDragLeave` to suppress spurious dragleave events when moving between child elements. Added cleanup of pending dragleave timeout in `disconnectedCallback`.
+
+**sp-textfield**: - **Fixed**: `aria-label` on the internal `<input>` and `<textarea>` elements is now omitted when no label value is available, rather than being set to an empty string. An explicit `aria-label=""` was suppressing the accessible name for screen reader users, causing the field to be announced as "edit blank" even when a visible `<sp-field-label>` was associated. Resolves WCAG 2.5.3 (Label in Name) violation.
+
+**sp-badge**: **Fixed**: Normalized `exports` condition ordering in package.json manifests so `development` appears before `default`.
+
+**sp-contextual-help**: **Fixed**: Normalized `exports` condition ordering in package.json manifests so `development` appears before `default`.
+
+**sp-divider**: **Fixed**: Normalized `exports` condition ordering in package.json manifests so `development` appears before `default`.
+
+**sp-action-button**: - **Deprecated**: The link API (`href`, `target`, `download`, `referrerpolicy`, `rel`) on `<sp-action-button>` is now deprecated. A dev mode warning is emitted when `href` is used, directing consumers to native HTML anchor elements with `@spectrum-web-components/styles/global-elements.css`.
+
+- **Documented**: Updated action button README with deprecation notices.
+
+**sp-menu**: - **Added**: Mobile drill-down navigation for `<sp-menu>` via the `mobile-view` attribute. Submenus replace the current menu content with a back button and the submenu's items instead of opening a flyout overlay, which is friendlier on small screens. Honors `prefers-reduced-motion` for the slide animation, supports localized back labels via `mobile-back-label`, and mirrors the back-arrow icon in RTL.
+
+**sp-slider**: **Fixed**: Improved accessibility for multi-handle sliders per WCAG 3.3.2 (Labels or Instructions):
+
+- Added value tooltips that appear on hover/focus for multi-handle sliders when value labels are hidden (`label-visibility="none"` or `label-visibility="text"`)
+- Tooltips now display the formatted value for each handle, ensuring users can identify individual handle values
+- Added high contrast mode support for value tooltips
+- Added debug warning when multi-handle sliders are missing `label` attributes on handles
+
+**sp-overlay**: **Fixed**: Overlay positioning on iOS Safari and WKWebView hosts (such as the Adobe Express iOS app). Popovers opened via `Overlay.open()` or the `trigger` Lit directive previously rendered `visualViewport.offsetTop` pixels (typically 30-40 px) below their trigger when the layout viewport diverged from the visual viewport — for example with the URL bar showing, with pinch-zoom, with the virtual keyboard open, or when a host app overlaid a bottom sheet.
+
+`PlacementController` now subtracts `visualViewport.offsetLeft / offsetTop` from the computed coordinates on WebKit (where the popover top layer paints relative to the visual viewport), and subscribes to `visualViewport`'s `resize` and `scroll` so an open overlay re-anchors to its trigger when the viewports realign. Other browsers are unaffected.
+
+**sp-overlay**: **Fixed**: `receives-focus="false"` on Overlay is now respected for `type="modal"` and `type="page"` overlays. Modals and pages now leave focus on the trigger when receives-focus="false". The focus-trap is still active so Tab/Shift+Tab continue to cycle within the dialog.
+
+**sp-overlay**: **Fixed**: Added automatic ARIA attribute management to `<overlay-trigger>` for screen reader accessibility (WCAG 1.3.2 Meaningful Sequence):
+
+- `aria-expanded` is now automatically set on the trigger element, reflecting the overlay's open/closed state
+- `aria-controls` is set on the trigger element, pointing to the overlay content's `id` (generated if not provided)
+- `aria-haspopup` is set to `"dialog"` by default (respects consumer overrides; component tracks its own values to allow type changes)
+- ARIA attributes are cleaned up from the trigger element when the overlay-trigger is disconnected, the trigger element changes, or content is removed
+- Updated dialog README behaviors example to use `<overlay-trigger>` for automatic ARIA management
+- Added comprehensive accessibility documentation to overlay-trigger covering ARIA attributes, focus management, keyboard navigation, and screen reader considerations
+
+**sp-dialog**: **Fixed**: Added automatic ARIA attribute management to `<overlay-trigger>` for screen reader accessibility (WCAG 1.3.2 Meaningful Sequence):
+
+- `aria-expanded` is now automatically set on the trigger element, reflecting the overlay's open/closed state
+- `aria-controls` is set on the trigger element, pointing to the overlay content's `id` (generated if not provided)
+- `aria-haspopup` is set to `"dialog"` by default (respects consumer overrides; component tracks its own values to allow type changes)
+- ARIA attributes are cleaned up from the trigger element when the overlay-trigger is disconnected, the trigger element changes, or content is removed
+- Updated dialog README behaviors example to use `<overlay-trigger>` for automatic ARIA management
+- Added comprehensive accessibility documentation to overlay-trigger covering ARIA attributes, focus management, keyboard navigation, and screen reader considerations
+
+**sp-picker**: **Fixed**: Changed `composed` from `true` to `false` on the synthetic `scroll` event dispatched by the Picker's internal scroll handler. This prevents the event from crossing shadow DOM boundaries, which under certain edge cases could cause ancestor scrollable containers (e.g., overlays or popovers) to close unexpectedly when scrolling within the Picker's menu.
+
+**sp-progress-bar**: **Fixed**: Added `aria-valuetext` attribute to `<sp-progress-bar>` and `<sp-progress-circle>` to provide human-readable percentage values for screen readers. Screen readers now announce "50 percent" instead of just "50", improving accessibility for users with vision disabilities. The attribute uses localized percentage formatting via `Intl.NumberFormat` and updates automatically when progress changes.
+
+**Fixed**: Added `aria-valuemin` and `aria-valuemax` attributes to `<sp-progress-circle>` to align with WAI-ARIA progressbar specification, matching the existing implementation in `<sp-progress-bar>`.
+
+**sp-progress-circle**: **Fixed**: Added `aria-valuetext` attribute to `<sp-progress-bar>` and `<sp-progress-circle>` to provide human-readable percentage values for screen readers. Screen readers now announce "50 percent" instead of just "50", improving accessibility for users with vision disabilities. The attribute uses localized percentage formatting via `Intl.NumberFormat` and updates automatically when progress changes.
+
+**Fixed**: Added `aria-valuemin` and `aria-valuemax` attributes to `<sp-progress-circle>` to align with WAI-ARIA progressbar specification, matching the existing implementation in `<sp-progress-bar>`.
+
+**sp-progress-bar**: **Fixed**: Added `aria-valuetext` attribute to `<sp-progress-bar>` to provide human-readable percentage values for screen readers. Screen readers now announce "50 percent" instead of just "50", improving accessibility for users with vision disabilities. The attribute uses localized percentage formatting via `Intl.NumberFormat` and updates automatically when progress changes.
+
+**sp-base**: **Fixed**: Re-added `isLTR` getter to `SpectrumMixin` and `SpectrumInterface` that was silently removed in #5936. The getter returns `getComputedStyle(this).direction !== 'rtl'`, preserving the original semantics while aligning with the updated `dir` implementation.
+
+**sp-reactive-controllers**: **Updated** The `getColor()` method now accepts `ColorSpace.Space` instead of `ColorSpace` as the format parameter type, which correctly reflects the colorjs.io type structure.
+
+**sp-base**: **Refactored**: Overhauled text direction management across the component library. Previously, `SpectrumElement` and `sp-theme` actively managed `dir` by traversing the DOM on connect, setting `dir` attributes on every component, and observing changes via `MutationObserver`. This has been replaced with a passive approach that relies on the native CSS `:dir()` pseudo-class and `getComputedStyle(this).direction` for JavaScript access, letting the browser's built-in direction inheritance do the work. Removed redundant `dir` property overrides from individual components, replaced `[dir]` attribute selectors with `:dir()` in stylesheets, and converted physical CSS properties to logical equivalents where applicable.
+
+**sp-theme**: **Refactored**: Overhauled text direction management across the component library. Previously, `SpectrumElement` and `sp-theme` actively managed `dir` by traversing the DOM on connect, setting `dir` attributes on every component, and observing changes via `MutationObserver`. This has been replaced with a passive approach that relies on the native CSS `:dir()` pseudo-class and `getComputedStyle(this).direction` for JavaScript access, letting the browser's built-in direction inheritance do the work. Removed redundant `dir` property overrides from individual components, replaced `[dir]` attribute selectors with `:dir()` in stylesheets, and converted physical CSS properties to logical equivalents where applicable.
+
+**sp-core**: **Refactored**: Overhauled text direction management across the component library. Previously, `SpectrumElement` and `sp-theme` actively managed `dir` by traversing the DOM on connect, setting `dir` attributes on every component, and observing changes via `MutationObserver`. This has been replaced with a passive approach that relies on the native CSS `:dir()` pseudo-class and `getComputedStyle(this).direction` for JavaScript access, letting the browser's built-in direction inheritance do the work. Removed redundant `dir` property overrides from individual components, replaced `[dir]` attribute selectors with `:dir()` in stylesheets, and converted physical CSS properties to logical equivalents where applicable.
+
+**sp-overlay**: **Added**: Added truncated-value tooltip behavior for single-line text inputs.
+
+- `<sp-textfield>` now shows a tooltip with the full value when the displayed value is visually truncated (via `TruncatedValueTooltipController`).
+- Tooltip placement can be controlled with the `tooltip-placement` attribute on `<sp-textfield>` or `<sp-number-field>`
+- `<sp-number-field>` inherits the same truncation tooltip behavior from `TextfieldBase`, including formatted numeric/currency values.
+- `type="password"` textfields no longer use ellipsis truncation styling (`text-overflow: clip`) to avoid awkward visual truncation.
+
+**Changed**: `sp-overlay` (internal)
+
+- Added internal property `describeTrigger` (`'auto' | 'none'`, default `'auto'`). When set to `'none'`, the overlay does not set `aria-describedby` on the trigger when open (handled in `HoverController` and `LongpressController`), avoiding double announcement for screen readers when the overlay content duplicates the trigger (e.g. truncated-value tooltips). Textfield’s truncated-value tooltip uses this so the tooltip is visual-only for a11y.
+
+**sp-textfield**: **Added**: Added truncated-value tooltip behavior for single-line text inputs.
+
+- `<sp-textfield>` now shows a tooltip with the full value when the displayed value is visually truncated (via `TruncatedValueTooltipController`).
+- Tooltip placement can be controlled with the `tooltip-placement` attribute on `<sp-textfield>` or `<sp-number-field>`
+- `<sp-number-field>` inherits the same truncation tooltip behavior from `TextfieldBase`, including formatted numeric/currency values.
+- `type="password"` textfields no longer use ellipsis truncation styling (`text-overflow: clip`) to avoid awkward visual truncation.
+
+**Changed**: `sp-overlay` (internal)
+
+- Added internal property `describeTrigger` (`'auto' | 'none'`, default `'auto'`). When set to `'none'`, the overlay does not set `aria-describedby` on the trigger when open (handled in `HoverController` and `LongpressController`), avoiding double announcement for screen readers when the overlay content duplicates the trigger (e.g. truncated-value tooltips). Textfield’s truncated-value tooltip uses this so the tooltip is visual-only for a11y.
+
+**sp-number-field**: **Added**: Added truncated-value tooltip behavior for single-line text inputs.
+
+- `<sp-textfield>` now shows a tooltip with the full value when the displayed value is visually truncated (via `TruncatedValueTooltipController`).
+- Tooltip placement can be controlled with the `tooltip-placement` attribute on `<sp-textfield>` or `<sp-number-field>`
+- `<sp-number-field>` inherits the same truncation tooltip behavior from `TextfieldBase`, including formatted numeric/currency values.
+- `type="password"` textfields no longer use ellipsis truncation styling (`text-overflow: clip`) to avoid awkward visual truncation.
+
+**Changed**: `sp-overlay` (internal)
+
+- Added internal property `describeTrigger` (`'auto' | 'none'`, default `'auto'`). When set to `'none'`, the overlay does not set `aria-describedby` on the trigger when open (handled in `HoverController` and `LongpressController`), avoiding double announcement for screen readers when the overlay content duplicates the trigger (e.g. truncated-value tooltips). Textfield’s truncated-value tooltip uses this so the tooltip is visual-only for a11y.
+
+**sp-button**: **deprecate(button):** Mark 1st-gen `sp-button` properties and exports as deprecated ahead of 2nd-gen migration.
+
+- `quiet` property: deprecated with `@deprecated` JSDoc and runtime `window.__swc.warn()`; use `treatment="outline"` instead
+- `treatment` property: deprecated with `@deprecated` JSDoc; use `fill-style` in 2nd-gen
+- `no-wrap` property: deprecated with `@deprecated` JSDoc; use `truncate` in 2nd-gen
+- Type and const exports deprecated: `ButtonVariants`, `ButtonTreatments`, `ButtonStaticColors`, `DeprecatedButtonVariants`, `VALID_VARIANTS`, `VALID_STATIC_COLORS`
+
+**sp-switch**: **Added**: New switch component tokens and styles were mapped to bring more fidelity for Spectrum 2 foundations theme. Switch now uses system theme tokens for track and handle border colors, handle background, and themed border width; S1 and Express handle border colors are preserved. Users can hook into `--mod-switch-border-width-themed` to adjust the switch input border; `--mod-switch-border-color-*` to modify the switch input border color; `--mod-switch-handle-border-color-*` to change the handle/thumb border color.
+
+**Fixed**: S2 foundations switch emphasized down state color was fixed to reflect the S2 switch down state design spec. The high contrast input border color for S2, and a high-contrast typo are fixed.
+
+**Fixed**: Theme bridge token additions and updates in `@spectrum-web-components/styles` (Spectrum, Express, and tokens-v2) support the switch overrides.
+
+**sp-styles**: **Added**: New switch component tokens and styles were mapped to bring more fidelity for Spectrum 2 foundations theme. Switch now uses system theme tokens for track and handle border colors, handle background, and themed border width; S1 and Express handle border colors are preserved. Users can hook into `--mod-switch-border-width-themed` to adjust the switch input border; `--mod-switch-border-color-*` to modify the switch input border color; `--mod-switch-handle-border-color-*` to change the handle/thumb border color.
+
+**Fixed**: S2 foundations switch emphasized down state color was fixed to reflect the S2 switch down state design spec. The high contrast input border color for S2, and a high-contrast typo are fixed.
+
+**Fixed**: Theme bridge token additions and updates in `@spectrum-web-components/styles` (Spectrum, Express, and tokens-v2) support the switch overrides.
+
+**sp-tags**: **Fixed**: Updated tag content and border colors in S2 Foundations. Content color updated from `--spectrum-neutral-subdued-content-color-default` (gray-700) to `--spectrum-neutral-content-color-default` (gray-800), and border color aligned to use the same `--spectrum-neutral-content-color-*` tokens. Both changes apply to all interaction states (default, hover, active, focus).
+
+**sp-styles**: **Fixed**: Updated tag content and border colors in S2 Foundations. Content color updated from `--spectrum-neutral-subdued-content-color-default` (gray-700) to `--spectrum-neutral-content-color-default` (gray-800), and border color aligned to use the same `--spectrum-neutral-content-color-*` tokens. Both changes apply to all interaction states (default, hover, active, focus).
+
+**sp-tooltip**: **Fixed**: Self-managed tooltips slotted into host components (Action Menu, Picker) no longer emit false `[TRAVERSAL_EXHAUSTED]` warnings. Added a public `triggerElement` setter on `sp-tooltip` that allows host components to explicitly wire their internal trigger element, bypassing the ancestor-based composed-tree traversal that fails when the intended trigger is a sibling of the tooltip slot rather than an ancestor.
+
+**sp-action-menu**: **Fixed**: Self-managed tooltips slotted into host components (Action Menu, Picker) no longer emit false `[TRAVERSAL_EXHAUSTED]` warnings. Added a public `triggerElement` setter on `sp-tooltip` that allows host components to explicitly wire their internal trigger element, bypassing the ancestor-based composed-tree traversal that fails when the intended trigger is a sibling of the tooltip slot rather than an ancestor.
+
+**sp-picker**: **Fixed**: Self-managed tooltips slotted into host components (Action Menu, Picker) no longer emit false `[TRAVERSAL_EXHAUSTED]` warnings. Added a public `triggerElement` setter on `sp-tooltip` that allows host components to explicitly wire their internal trigger element, bypassing the ancestor-based composed-tree traversal that fails when the intended trigger is a sibling of the tooltip slot rather than an ancestor.
+
+**sp-action-menu**: **Replaced**: Dependency on `PickerBase` with `ExpandableElement`from `@spectrum-web-components/action-menu` to separate Action Menu from Picker.
+
 # [1.11.2](https://github.com/adobe/spectrum-web-components/compare/v1.11.1...v1.11.2) (2026-02-03)
 
 ## Patch Changes

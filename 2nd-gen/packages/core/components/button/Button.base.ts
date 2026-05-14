@@ -95,7 +95,7 @@ export abstract class ButtonBase extends SizedMixin(
   //     IMPLEMENTATION
   // ──────────────────────
 
-  private _pendingTimer: number | null = null;
+  private _pendingTimer: ReturnType<typeof setTimeout> | null = null;
 
   protected get hasIcon(): boolean {
     return this.slotContentIsPresent;

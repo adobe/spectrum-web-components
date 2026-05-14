@@ -195,7 +195,9 @@ const preview = {
         method: 'alphabetical-by-kind',
         order: [
           'Learn about SWC',
-          ['Overview', 'When to use SWC', '1st-gen vs 2nd-gen'],
+          ['Overview', 'Get started', 'Gen1 vs Gen2'],
+          'Resources',
+          ['Support and compatibility', 'Migrate from Gen1', 'Changelog'],
           'Core',
           ['Overview', 'Controllers'],
           'Components',
@@ -203,7 +205,7 @@ const preview = {
           ['Conversational AI', ['README', 'Prompt field', 'User message']],
           'Guides',
           [
-            'Accessibility guides',
+            'Accessibility',
             [
               'Overview',
               'Semantic HTML and ARIA',
@@ -321,6 +323,7 @@ const preview = {
                 'Accordion',
                 [
                   'Accessibility migration analysis',
+                  'Migration plan',
                   'Rendering and styling migration analysis',
                 ],
                 'Action button',
@@ -360,7 +363,11 @@ const preview = {
                 'Color field',
                 ['Rendering and styling migration analysis'],
                 'Color loupe',
-                ['Accessibility migration analysis'],
+                [
+                  'Accessibility migration analysis',
+                  'Migration checklist',
+                  'Rendering and styling migration analysis',
+                ],
                 'Divider',
                 [
                   'Accessibility migration analysis',

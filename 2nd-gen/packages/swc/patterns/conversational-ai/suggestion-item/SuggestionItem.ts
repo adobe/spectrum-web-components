@@ -14,7 +14,7 @@ import { CSSResultArray, html, TemplateResult } from 'lit';
 
 import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
 
-import '@adobe/spectrum-wc/icon';
+import '@adobe/spectrum-wc/components/icon/swc-icon.js';
 
 import { ArrowCurvedIcon } from '../utils/icons/index.js';
 

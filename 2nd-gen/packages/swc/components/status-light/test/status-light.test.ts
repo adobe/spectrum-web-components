@@ -19,7 +19,7 @@ import type {
 
 import { StatusLight } from '@adobe/spectrum-wc/status-light';
 
-import '@adobe/spectrum-wc/status-light';
+import '@adobe/spectrum-wc/components/status-light/swc-status-light.js';
 
 import {
   STATUS_LIGHT_VALID_SIZES,

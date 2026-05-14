@@ -45,38 +45,30 @@ export const OverviewTest: Story = {
       expect(first.getAttribute('type')).toBe('system');
     });
 
-    await step(
-      'turn exposes role group and aria-label for screen readers',
-      async () => {
-        first.type = 'user';
-        first.accessibleLabel = '';
-        await first.updateComplete;
-        const root = first.shadowRoot?.querySelector('.swc-ConversationTurn');
-        expect(root).toBeTruthy();
-        expect(root?.getAttribute('role')).toBe('group');
-        expect(root?.getAttribute('aria-label')).toBe('User message');
+    await step('turn host exposes role group and aria-label', async () => {
+      first.type = 'user';
+      first.accessibleLabel = '';
+      await first.updateComplete;
 
-        first.type = 'system';
-        await first.updateComplete;
-        const rootAfter = first.shadowRoot?.querySelector(
-          '.swc-ConversationTurn'
-        );
-        expect(rootAfter?.getAttribute('aria-label')).toBe('System message');
-      }
-    );
+      expect(first.getAttribute('role')).toBe('group');
+      expect(first.getAttribute('aria-label')).toBe('User message');
+
+      first.type = 'system';
+      await first.updateComplete;
+      expect(first.getAttribute('aria-label')).toBe('System message');
+    });
 
     await step('accessible-label overrides type-derived label', async () => {
       first.type = 'system';
       first.accessibleLabel = 'Mensaje del sistema';
       await first.updateComplete;
 
-      const root = first.shadowRoot?.querySelector('.swc-ConversationTurn');
       expect(first.accessibleLabel).toBe('Mensaje del sistema');
-      expect(root?.getAttribute('aria-label')).toBe('Mensaje del sistema');
+      expect(first.getAttribute('aria-label')).toBe('Mensaje del sistema');
 
       first.accessibleLabel = '   ';
       await first.updateComplete;
-      expect(root?.getAttribute('aria-label')).toBe('System message');
+      expect(first.getAttribute('aria-label')).toBe('System message');
     });
   },
 };

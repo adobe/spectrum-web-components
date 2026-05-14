@@ -58,7 +58,7 @@
 
 ## Implementation status (initial 2nd-gen ship)
 
-The first **`swc-tabs`**, **`swc-tab`**, and **`swc-tab-panel`** implementation lives in **`2nd-gen/packages/core/components/tabs/`** and **`2nd-gen/packages/swc/components/tabs/`**, with a single side-effect entrypoint **`@adobe/spectrum-wc/tabs`**. Consumer-facing breaking changes and deferred scope are summarized in **`2nd-gen/packages/swc/components/tabs/migration.md`**.
+The first **`swc-tabs`**, **`swc-tab`**, and **`swc-tab-panel`** implementation lives in **`2nd-gen/packages/core/components/tabs/`** and **`2nd-gen/packages/swc/components/tabs/`**, with a single side-effect entrypoint **`@adobe/spectrum-wc/components/tabs/swc-tabs.js`**. Consumer-facing breaking changes and deferred scope are summarized in **`2nd-gen/packages/swc/components/tabs/migration.md`**.
 
 **S2-aligned public API:** The shipped **`swc-tabs`** surface matches the Spectrum Design–style rows **B21–B25** in [Changes overview](#changes-overview): **`keyboard-activation`** (`manual` \| `automatic`) replaces boolean **`auto`**, **`density`** (`regular` \| `compact`) replaces boolean **`compact`**, and **`quiet`**, **`emphasized`**, and t-shirt **`size`** are **not** exposed on the host. Typography uses the default S2 scale; authors customize via documented **`--swc-tabs-*` / `--swc-tab-*`** custom properties. Consumer migration notes live in **`2nd-gen/packages/swc/components/tabs/migration.md`**; Storybook focuses on usage examples, not breaking-change IDs.
 
@@ -347,7 +347,7 @@ This full modifier surface will not be carried forward to 2nd-gen. Consumers mus
 |---|---|---|---|---|
 | **B1** | Tag name rename | `sp-tabs`, `sp-tab`, `sp-tab-panel`, `sp-tabs-overflow` | `swc-tabs`, `swc-tab`, `swc-tab-panel`, `swc-tabs-overflow` | Find and replace all 1st-gen tag names. |
 | **B2** | Package rename | `@spectrum-web-components/tabs` | `@adobe/spectrum-wc` | `yarn remove` old, `yarn add` new. |
-| **B3** | Import paths | `@spectrum-web-components/tabs/sp-tabs.js` (per-element) | `@adobe/spectrum-wc/tabs` (single import) | Update import statements. |
+| **B3** | Import paths | `@spectrum-web-components/tabs/sp-tabs.js` (per-element) | `@adobe/spectrum-wc/components/tabs/swc-tabs.js` (single import) | Update import statements. |
 
 #### CSS custom properties
 
