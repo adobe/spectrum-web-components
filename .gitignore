@@ -24,6 +24,9 @@ documentation/api-docs
 documentation/dist
 searchIndex.json
 
+# AI
+**/research.md
+
 # dependency folders
 coverage
 lib
