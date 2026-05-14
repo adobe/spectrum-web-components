@@ -61,11 +61,11 @@
 - **Component**: `<sp-meter>` (1st-gen, `@spectrum-web-components/meter@1.11.2`) → `<swc-meter>` (2nd-gen).
 - **What this is**: a non-focusable, read-only bar that shows a value (`value`, default range 0–100) inside a fixed range. ARIA pattern is **`role="meter"`**, distinct from `progressbar` task progress (separate component).
 - **Architecture**: independent component. **No shared base** with progress-bar / progress-circle. Bar/track/fill styles live in `meter.css`, copied from `spectrum-css` `spectrum-two` (`progressbar/index.css` + `meter/index.css`). Core layer holds `MeterBase` for API, ARIA plumbing, and locale-aware formatting; SWC layer renders S2 markup against the `swc-Meter` wrapper class.
-- **API alignment**: 2nd-gen aligns with [React Spectrum S2 Meter](https://react-spectrum.adobe.com/Meter.html) and the Figma `S2 / Web (Desktop scale)` Meter frame supplied with this plan. Net effect: rename `progress` → `value`, add `minValue`/`maxValue`, replace `side-label` boolean with `label-position` enum, expose `value-label`, expose `formatOptions` (`Intl.NumberFormatOptions`) as a JS property, align `variant` set to `{informative (default), positive, notice, negative}`, expose `static-color` as `{white, black}`, and add a `help-text` string attribute.
-- **Must-ship breaking/a11y**: tag rename `<sp-meter>` → `<swc-meter>`; replace 1st-gen's invalid combined `role="meter progressbar"` with `role="meter"` only; add `aria-valuemin`, `aria-valuemax`, and `aria-valuetext` (localized formatted value); drop `--mod-*` passthroughs in favor of a reviewed `--swc-meter-*` set; render inside a `<div class="swc-Meter">` wrapper instead of styling the host.
-- **Net-new from S2/React**: arbitrary numeric range (`minValue`/`maxValue`); custom `value-label` (e.g. `"1 of 4"`); custom `formatOptions` (`Intl.NumberFormatOptions`, JS property only — full pass-through to `Intl.NumberFormat`); `static-color="black"`; `help-text` string attribute rendered inside the meter's S2 helptext region.
-- **Field-label rendering**: 1st-gen renders internal `<sp-field-label>` for label and percent. 2nd-gen renders plain `<label class="swc-Meter-label">` / `<label class="swc-Meter-value">` (SWC-prefixed selectors per the [contributor docs selector patterns](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/01_component-css.md#selector-patterns)) until `<swc-field-label>` is migrated.
-- **Accessible name simplification**: Replace 1st-gen's `label` attribute + raw `aria-*` passthroughs with two inputs only — default slot (primary visible label) and `accessible-label` attribute (a11y-only fallback).
+- **API alignment**: 2nd-gen aligns with [React Spectrum S2 Meter](https://react-spectrum.adobe.com/Meter.html) and the Figma `S2 / Web (Desktop scale)` Meter frame supplied with this plan. Net effect: rename `progress` → `value`, add `minValue`/`maxValue`, replace `side-label` boolean with `label-position` enum, expose `value-label`, expose `formatOptions` (`Intl.NumberFormatOptions`) as a JS property, align `variant` set to `{informative (default), positive, notice, negative}`, expose `static-color` as `{white, black}`, and add `label` + `description` named slots.
+- **Must-ship breaking/a11y**: tag rename `<sp-meter>` → `<swc-meter>`; replace 1st-gen's invalid combined `role="meter progressbar"` with `role="meter"` only, placed on the shadow `.swc-Meter` element (not the host); add `aria-valuemin`, `aria-valuemax`, and `aria-valuetext` (localized formatted value) on the role element; drop `--mod-*` passthroughs in favor of a reviewed `--swc-meter-*` set; render inside a `<div class="swc-Meter">` wrapper instead of styling the host.
+- **Net-new from S2/React**: arbitrary numeric range (`minValue`/`maxValue`); custom `value-label` (e.g. `"1 of 4"`); custom `formatOptions` (`Intl.NumberFormatOptions`, JS property only — full pass-through to `Intl.NumberFormat`); `static-color="black"`; **`description` named slot** for additional text below the meter (not a "help-text" attribute — meter is not a form field).
+- **Field-label rendering**: 1st-gen renders internal `<sp-field-label>` for label and percent. 2nd-gen renders plain `<span>` elements inside the shadow root (SWC-prefixed selectors per the [contributor docs selector patterns](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/01_component-css.md#selector-patterns)). `<label>` is not used because `role="meter"` is not pair-able with native `<label>` semantics.
+- **Accessible-name model**: visible label via the **`label`** named slot; the `meter` role element in shadow DOM `aria-labelledby`-references the label slot's container id. `accessibleLabel` JS property (attr `accessible-label`) is reserved for **rare cases without a visible label** (e.g. a data grid of meters) — when provided, the role element sets it as `aria-label`. Description via the **`description`** named slot; the role element `aria-describedby`-references its container id.
 
 ### Most blocking open questions
 
@@ -113,7 +113,7 @@ None custom. (No `dispatchEvent` calls in `Meter.ts`.)
 1st-gen exposes the following `--mod-*` properties via inheritance from progress-bar styles (`@import url("./spectrum-progress-bar.css"); @import url("./progress-bar-overrides.css");` in [`meter.css`](../../../../1st-gen/packages/meter/src/meter.css)) and the meter-specific overrides:
 
 - Passthroughs (progress-bar): `--mod-progressbar-fill-color`, `--mod-progressbar-max-size`, `--mod-progressbar-min-size`, `--mod-progressbar-thickness`
-- Meter modifiers: `--mod-meter-help-text-to-progress-bar`, `--mod-meter-max-width`, `--mod-meter-min-width`
+- Meter modifiers: `--mod-meter-help-text-to-progress-bar`, `--mod-meter-max-width`, `--mod-meter-min-width` _(1st-gen names retained for historical accuracy; the corresponding 2nd-gen exposure is `--swc-meter-description-spacing` etc. — the term "help text" is dropped per the new naming)_
 
 This full modifier surface will not be carried forward to 2nd-gen.
 
@@ -153,7 +153,7 @@ Plus the host receives `role="meter progressbar"` (invalid combined ARIA role st
 | `LanguageResolutionController` from `reactive-controllers`                 | `@spectrum-web-components/core/controllers/language-resolution.js`                                  | Available     |
 | `getLabelFromSlot` from `shared`                                           | `@spectrum-web-components/core/utils/get-label-from-slot.js`                                        | Available     |
 | `ObserveSlotText` from `shared`                                            | Not needed in 2nd-gen — handle via `slotchange` directly (precedent: `ProgressCircleBase`)          | N/A           |
-| `<sp-field-label>` rendered in shadow                                      | `<swc-field-label>` does **not** exist yet                                                          | **Not migrated** — 2nd-gen renders plain `<label class="swc-Meter-label">` / `<label class="swc-Meter-value">` (SWC-namespaced selectors). See B8 in [Must ship](#must-ship--breaking-or-a11y-required). |
+| `<sp-field-label>` rendered in shadow                                      | `<swc-field-label>` does **not** exist yet                                                          | **Not migrated** — 2nd-gen renders plain `<span class="swc-Meter-label">` (in the `label` slot's shadow container) / `<span class="swc-Meter-value">` (SWC-namespaced selectors; `<span>` because `role="meter"` is not pair-able with native `<label>`). See B8 in [Must ship](#must-ship--breaking-or-a11y-required). |
 
 ---
 
@@ -173,8 +173,8 @@ Rationale:
 
 - **Progress bar** ([`1st-gen/packages/progress-bar`](../../../../1st-gen/packages/progress-bar/)) — independent migration on its own epic. No coupling to this work.
 - **Progress circle** ([`2nd-gen/packages/swc/components/progress-circle`](../../../../2nd-gen/packages/swc/components/progress-circle/)) — already migrated. Used as the structural precedent for `aria-value*` plumbing, slot-as-label hoisting, locale-aware formatting, and the dev-mode accessible-name warning. Not extended.
-- **Field label** — internal render dependency; not migrated. 2nd-gen `<swc-meter>` renders plain `<label class="swc-Meter-label">` / `<label class="swc-Meter-value">` (SWC-namespaced selectors per the [contributor docs selector patterns](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/01_component-css.md#selector-patterns)). No dependency on `<swc-field-label>`.
-- **Help text** — exposed as a `help-text` string attribute on `<swc-meter>` (not a slot). Renders as plain text inside the internal `swc-Meter-helptext` region. Consumers needing rich/interactive help-text content compose externally and wire `aria-describedby` themselves.
+- **Field label** — internal render dependency; not migrated. 2nd-gen `<swc-meter>` renders plain `<span class="swc-Meter-label">` / `<span class="swc-Meter-value">` inside its shadow root (`<span>`, not `<label>`, because `role="meter"` is not pair-able with native `<label>` semantics; the `meter` role element uses `aria-labelledby` to reference the `<span>` containing the label slot). SWC-namespaced selectors per the [contributor docs selector patterns](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/01_component-css.md#selector-patterns). No dependency on `<swc-field-label>`.
+- **Description** — exposed as a **`description`** named slot on `<swc-meter>`. The slot's shadow container carries an internal id and is `aria-describedby`-referenced from the role element. "Help text" terminology is not used because it implies a form field; meter is a non-interactive display.
 
 ### User confirmation needed
 
@@ -203,28 +203,28 @@ None outstanding. All architecture and dependency decisions are settled per dire
 | **B3** | Add `minValue` and `maxValue`. _(Source: React Spectrum S2 Meter API.)_ | No range customization; `progress` is implicitly 0–100. | `minValue` (number, default 0) and `maxValue` (number, default 100) define the range. `value` is clamped to this range. | None for consumers using the implicit 0–100 range. New API for consumers needing arbitrary ranges. |
 | **B4** | `side-label` boolean → `label-position` enum. _(Source: React Spectrum S2 Meter API; matches React's `labelPosition`.)_ | `<sp-meter side-label>` boolean attribute. | `<swc-meter label-position="side">`. Values: `'top'` (default) and `'side'`. | Replace `side-label` with `label-position="side"`. Default behavior (top) unchanged. |
 | **B5** | Variant set normalized. _(Source: React Spectrum S2 Meter API; Figma `S2 / Web (Desktop scale)` Meter frame.)_ | `{positive, notice, negative, ''}` — empty string is "informative" by behavior, not name. | `{informative, positive, notice, negative}` — `informative` is the named default. | Consumers relying on the empty-string default set `variant="informative"` explicitly or omit the attribute. Consumers passing `positive`/`notice`/`negative` are unchanged. |
-| **B6** | `--mod-*` passthroughs removed (`--mod-progressbar-*`, `--mod-meter-*`). _(Source: [CSS style guide — custom properties](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#component-custom-property-exposure).)_ | Consumers customize via `--mod-*`. | Customize via a small reviewed set of `--swc-meter-*` tokens. | Replace `--mod-progressbar-fill-color`, `--mod-progressbar-thickness`, `--mod-meter-min-width`, `--mod-meter-max-width`, `--mod-meter-help-text-to-progress-bar` with the corresponding `--swc-meter-*` properties (final list locked in implementation). |
+| **B6** | `--mod-*` passthroughs removed (`--mod-progressbar-*`, `--mod-meter-*`). _(Source: [CSS style guide — custom properties](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#component-custom-property-exposure).)_ | Consumers customize via `--mod-*`. | Customize via a small reviewed set of `--swc-meter-*` tokens. | Replace `--mod-progressbar-fill-color`, `--mod-progressbar-thickness`, `--mod-meter-min-width`, `--mod-meter-max-width`, `--mod-meter-help-text-to-progress-bar` with the corresponding `--swc-meter-*` properties (final list locked in implementation; the spacing token is renamed to `--swc-meter-description-spacing` to match the `description` slot terminology). |
 
 #### Styling and visuals
 
 | #  | What changes | 1st-gen behavior | 2nd-gen behavior | Consumer migration path |
 | -- | ------------ | ---------------- | ---------------- | ----------------------- |
-| **B8** | Internal label rendering. _(Source: contributor docs selector patterns.)_ | `<sp-field-label>` rendered twice in shadow (label + percentage). | Plain `<label class="swc-Meter-label">` / `<label class="swc-Meter-value">` (SWC-namespaced selectors) until `<swc-field-label>` is migrated. | None for top-level consumers. Consumers querying `sp-field-label` inside shadow DOM update selectors. |
+| **B8** | Internal label rendering. _(Source: contributor docs selector patterns; `role="meter"` does not pair with native `<label>`.)_ | `<sp-field-label>` rendered twice in shadow (label + percentage). | Plain `<span class="swc-Meter-label">` / `<span class="swc-Meter-value">` (SWC-namespaced selectors; `<span>`, not `<label>`). The shadow `meter` role element uses `aria-labelledby` to reference the `label` slot's container `<span>`. | None for top-level consumers. Consumers querying `sp-field-label` inside shadow DOM update selectors. |
 
 #### Accessibility and behavior
 
 | #  | What changes | 1st-gen behavior | 2nd-gen behavior | Consumer migration path |
 | -- | ------------ | ---------------- | ---------------- | ----------------------- |
-| **B9** | ARIA role. _(Source: [accessibility-migration-analysis.md § Role and value attributes](./accessibility-migration-analysis.md#role-and-value-attributes); [WAI-ARIA 1.2 `meter`](https://www.w3.org/TR/wai-aria-1.2/#meter); [APG meter pattern](https://www.w3.org/WAI/ARIA/apg/patterns/meter/).)_ | `role="meter progressbar"` (invalid combined ARIA role token). | `role="meter"` only, fixed on the host. | None — AT-only. Tests/snapshots that assert the combined string update. |
+| **B9** | ARIA role placement. _(Source: [accessibility-migration-analysis.md § Role and value attributes](./accessibility-migration-analysis.md#role-and-value-attributes); [WAI-ARIA 1.2 `meter`](https://www.w3.org/TR/wai-aria-1.2/#meter); [APG meter pattern](https://www.w3.org/WAI/ARIA/apg/patterns/meter/); initiative leads a11y direction.)_ | `role="meter progressbar"` (invalid combined ARIA role token) set on the host. | `role="meter"` only, set on the shadow `.swc-Meter` element (not the host). All `aria-value*`, `aria-label`, `aria-labelledby`, `aria-describedby` for the meter live on that role element. Nothing role-related is set on the host. | None — AT-only. Tests/snapshots that assert the combined string or host-level ARIA update. |
 | **B10** | Value attributes. _(Source: [accessibility-migration-analysis.md § ARIA roles, states, and properties](./accessibility-migration-analysis.md#aria-roles-states-and-properties); React Spectrum S2 Meter API.)_ | Only `aria-valuenow` is set; no `aria-valuemin`/`aria-valuemax`/`aria-valuetext`. | `aria-valuemin=<minValue>`, `aria-valuemax=<maxValue>`, `aria-valuenow=<value>`, and `aria-valuetext=<formatted value>` (formatted by the `format` shorthand attribute and locale). | None — AT-only. |
-| **B11** | Accessible-name source. _(Source: 1st-gen `Meter.ts` `firstUpdated`/`updated`; ProgressCircle precedent.)_ | `aria-label` mirrors the `label` property; slot text hoists into `label`. Six inputs total (`label`, slot, `aria-label`, `aria-labelledby`, `aria-describedby`, `aria-details`). | Two inputs: **default slot** (primary visible label) and **`accessible-label`** attribute (a11y-only fallback when no visible text). Raw `aria-label`/`aria-labelledby`/`aria-describedby`/`aria-details` passthroughs dropped from public API. DEBUG dev-mode warning when no accessible name is provable. | Consumers using `label="..."` migrate to `accessible-label="..."` (or move text into the default slot). Consumers using `aria-*` passthroughs move text into the default slot or `accessible-label`. |
+| **B11** | Accessible-name model. _(Source: initiative leads a11y direction.)_ | `aria-label` mirrors the `label` property; slot text hoists into `label`. Six inputs total (`label`, default slot, `aria-label`, `aria-labelledby`, `aria-describedby`, `aria-details`). | Three inputs: **`label` named slot** (visible label, `aria-labelledby`-referenced by the role element); **`accessibleLabel` JS property / `accessible-label` attribute** (rare-case a11y fallback when there is no visible label, e.g. a data grid of meters — sets `aria-label` on the role element); **`description` named slot** (additional text below the meter, `aria-describedby`-referenced by the role element). Raw `aria-label`/`aria-labelledby`/`aria-describedby`/`aria-details` passthroughs are not part of the public API. DEBUG dev-mode warning when no accessible name is provable (neither `label` slot content nor `accessibleLabel` is set). | Consumers using `label="..."` move text into the `label` slot (or set `accessibleLabel` when the meter has no visible label). Consumers using `aria-*` passthroughs use the matching slot. |
 
 ### Additive — ships when ready, zero breakage for consumers already on 2nd-gen
 
 | #  | What is added | Notes |
 | -- | ------------- | ----- |
 | **A1** | `static-color="black"` | `spectrum-css` `spectrum-two` adds the `staticBlack` modifier (`progressbar/index.css` line 189). 1st-gen has white only. Ships in this migration. |
-| **A2** | `help-text` string attribute | New for S2 (`spectrum-css` `spectrum-two` adds the helptext region inside the meter HTML; ported as `swc-Meter-helptext` in `meter.css`). Public API: a `help-text` string attribute / `helpText` property. Renders as plain text inside the internal `swc-Meter-helptext` region. The component wires `aria-describedby` to that internal element when `helpText` is non-empty. Ships in this migration. |
+| **A2** | `description` named slot | New for S2 (`spectrum-css` `spectrum-two` adds the description region inside the meter HTML; ported as `swc-Meter-description` in `meter.css`). Public API: `slot="description"` for additional text below the meter. Renders into an internal `<span class="swc-Meter-description">` container; the shadow `meter` role element `aria-describedby`-references that container's id when the slot has assigned nodes. "Help text" terminology is not used because it implies a form field. Ships in this migration. |
 | **A3** | `value-label` (string attribute). _(Source: React Spectrum S2 `valueLabel`.)_ | New for S2/React. Replaces the auto-formatted percentage. `<swc-meter value-label="1 of 4">` overrides the rendered value text and feeds `aria-valuetext`. String only — matches React's `valueLabel` API; no slot version. Auto-formatting (Intl.NumberFormat) remains the default when omitted. |
 | **A4** | `formatOptions` JS property. _(Source: React Spectrum S2 `formatOptions`.)_ | `Intl.NumberFormatOptions` object — JS property only, not a string attribute. Full pass-through to `Intl.NumberFormat` so the API stays in sync with the native spec as new fields ship (`notation`, `roundingMode`, `signDisplay`, future additions). Default `{ style: 'percent' }`. Drives both the rendered value text and `aria-valuetext`. Ignored when `value-label` is set. |
 
@@ -247,10 +247,9 @@ These are derived from the 1st-gen implementation, the rendering and styling roa
 | `value`         | `number`                                                      | `0`           | `value`           | **Confirmed.** Renamed from 1st-gen `progress`. Clamped to `[minValue, maxValue]`. Drives `aria-valuenow` and the bar fill. |
 | `minValue`      | `number`                                                      | `0`           | `min-value`       | **Confirmed.** Reflected. Bottom of the value range. Mirrors React Spectrum `minValue`. |
 | `maxValue`      | `number`                                                      | `100`         | `max-value`       | **Confirmed.** Reflected. Top of the value range. Mirrors React Spectrum `maxValue`. |
-| `accessibleLabel` | `string`                                                    | `''`          | `accessible-label` | **Confirmed.** Reflected. Optional. Used when there is no visible label in the default slot. Default slot text takes precedence when both are present. |
+| `accessibleLabel` | `string`                                                    | `''`          | `accessible-label` | **Confirmed.** Reflected. **Rare-case fallback** used when there is no visible `label` slot content — e.g. a data grid of meters where each meter's name is implied by its row/column context. Sets `aria-label` on the shadow `meter` role element when provided. When the `label` slot has content, `accessibleLabel` is ignored (`aria-labelledby` to the slot container takes precedence). |
 | `valueLabel`    | `string \| undefined`                                         | `undefined`   | `value-label`     | **Confirmed.** Custom value text (e.g. `"1 of 4"`). Overrides the auto-formatted percent in both rendered text and `aria-valuetext`. Mirrors React Spectrum `valueLabel`. |
 | `formatOptions` | `Intl.NumberFormatOptions \| undefined`                       | `{ style: 'percent' }` | _(property only)_ | **Confirmed.** JS property only — full pass-through to `Intl.NumberFormat`. Avoids flattening or remapping native spec fields (`notation`, `roundingMode`, `signDisplay`, etc.). Drives the auto-formatted value text and `aria-valuetext` when `value-label` is not set. |
-| `helpText`      | `string`                                                      | `''`          | `help-text`       | **Confirmed.** Reflected. Renders as plain text inside the internal `swc-Meter-helptext` region. When non-empty, the component wires `aria-describedby` on the host to the internal element. |
 | `variant`       | `'informative' \| 'positive' \| 'notice' \| 'negative'`       | `'informative'` | `variant`       | **Confirmed.** Reflected. Default is the named `informative` value (1st-gen used the empty string for this case). |
 | `labelPosition` | `'top' \| 'side'`                                             | `'top'`       | `label-position`  | **Confirmed.** Reflected. Replaces 1st-gen `side-label` boolean. |
 | `staticColor`   | `'white' \| 'black' \| undefined`                             | `undefined`   | `static-color`    | **Confirmed.** Reflected. `'auto'` from React Spectrum is **deferred** — `spectrum-css` `spectrum-two` does not include a `staticAuto` modifier. |
@@ -260,7 +259,7 @@ These are derived from the 1st-gen implementation, the rendering and styling roa
 
 Confirmed against the Figma `S2 / Web (Desktop scale)` Meter primary frame supplied with this plan, the React Spectrum S2 Meter API, and `spectrum-css` `spectrum-two`.
 
-All variants (`informative` default, `positive`, `notice`, `negative`) support all sizes (`s`, `m` default, `l`, `xl`), both `label-position` values (`top` default, `side`), both `static-color` values (`white`, `black`), the full `value` range (0–100, including 0%/25%/50%/75%/100%), and the `help-text` attribute. There are no variant-restricted features.
+All variants (`informative` default, `positive`, `notice`, `negative`) support all sizes (`s`, `m` default, `l`, `xl`), both `label-position` values (`top` default, `side`), both `static-color` values (`white`, `black`), the full `value` range (0–100, including 0%/25%/50%/75%/100%), and both `label` + `description` slots. There are no variant-restricted features.
 
 `label-position="side"` is exposed via `spectrum-css` `spectrum-two` `progressbar/index.css` `.spectrum-ProgressBar--sideLabel` (line 144), even though the Figma Desktop frame focuses on top-label. Side-label coverage in implementation/tests is required for parity with React Spectrum.
 
@@ -268,7 +267,8 @@ All variants (`informative` default, `positive`, `notice`, `negative`) support a
 
 | Slot          | Content              | Notes |
 | ------------- | -------------------- | ----- |
-| (default)     | Primary visible meter label | **Confirmed.** Default slot is the **primary** visible label and primary a11y name source. Slot text hoists into `accessibleLabel` via `slotchange` + `getLabelFromSlot` only when `accessibleLabel` is unset. |
+| `label`       | Visible meter label  | **Confirmed.** Named slot. Renders inside `<span class="swc-Meter-label">` in the shadow root. The container's internal id is referenced by `aria-labelledby` on the shadow `meter` role element. Slot text is **not** copied into `aria-label`. |
+| `description` | Description text below the meter | **Confirmed.** Named slot. Renders inside `<span class="swc-Meter-description">` in the shadow root. When the slot has assigned nodes, the container's internal id is referenced by `aria-describedby` on the shadow `meter` role element; otherwise the container is not rendered. |
 
 #### CSS custom properties (2nd-gen)
 
@@ -281,7 +281,7 @@ Initial expected set for `<swc-meter>` (final list locked in implementation):
 - `--swc-meter-thickness` — overrides the bar thickness.
 - `--swc-meter-min-width` — overrides the meter inline-size minimum.
 - `--swc-meter-max-width` — overrides the meter inline-size maximum.
-- `--swc-meter-help-text-spacing` — overrides spacing between bar and help text.
+- `--swc-meter-description-spacing` — overrides spacing between bar and the description slot.
 - `--swc-meter-label-to-value-spacing` — overrides spacing between label and value text in `label-position="side"`.
 
 ### Behavioral semantics
@@ -298,10 +298,10 @@ Initial expected set for `<swc-meter>` (final list locked in implementation):
 Sourced from [`accessibility-migration-analysis.md`](./accessibility-migration-analysis.md) and the React Spectrum S2 Meter API:
 
 - `role="meter"` set on the host in `firstUpdated`. Always set (no "if not already set" conditional). Fixed; not author-overridable.
-- `aria-valuemin=<minValue>`, `aria-valuemax=<maxValue>`, `aria-valuenow=<value>` (clamped), `aria-valuetext=<formatted value>` set on host. Update on every relevant property change and on locale change.
+- `aria-valuemin=<minValue>`, `aria-valuemax=<maxValue>`, `aria-valuenow=<value>` (clamped), `aria-valuetext=<formatted value>` are declared on the `.swc-Meter` role element in the template. Re-rendered on every relevant property change and on locale change.
 - **Placement rationale.** `role` + `aria-value*` live on the host (not on the shadow `.swc-Meter` wrapper) so consumer-supplied IDREFs bind correctly. Cross-root ARIA (Reference Target / cross-root ARIA spec) is not yet shipped in stable browsers.
-- **Accessible name** from one of: default slot text (primary), or the `accessible-label` attribute (fallback). Slot wins when both are present. The component sets `aria-label` on the host internally to expose the resolved name. Raw `aria-label`/`aria-labelledby` passthroughs are not part of the public API.
-- **Description.** When the `help-text` attribute is non-empty, the meter renders the text in the internal `swc-Meter-helptext` region and wires `aria-describedby` on the host to that element's internal id. Raw `aria-describedby`/`aria-details` passthroughs are not part of the public API.
+- **Accessible name** resolves in this order: (1) `label` named slot content → the role element receives `aria-labelledby="<label-container-id>"`; (2) `accessibleLabel` property (rare-case fallback when there is no visible label, e.g. a data grid of meters) → the role element receives `aria-label="${accessibleLabel}"`. Default slot text is **not** used as a name source. Raw `aria-label`/`aria-labelledby` passthroughs are not part of the public API. DEBUG-mode warning when neither resolves a name.
+- **Description.** When the `description` named slot has assigned nodes, the slot's shadow container is rendered with an internal id and the role element receives `aria-describedby="<description-container-id>"`. When the slot is empty, the description container block is conditionally omitted from the render (Lit `?` directive), not toggled via the `hidden` attribute. Raw `aria-describedby`/`aria-details` passthroughs are not part of the public API.
 - DEBUG-mode console warning when no accessible name is provable (precedent: `ProgressCircleBase`).
 - No `aria-live` by default. The accessibility analysis explicitly forbids `aria-live="assertive"`; `polite` is reserved for rare primary-announcement cases and is not part of the baseline.
 - Non-text contrast: track and fill must meet **3:1**, including the at-risk `value=minValue` state (visually 0%). Mitigate per `Loading animation discovery` Figma guidance for the bar-and-track treatment.
@@ -316,35 +316,49 @@ Follow the [Badge migration reference](../../02_workstreams/02_2nd-gen-component
 
 | Layer    | Path                                              | Contains                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
 | -------- | ------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Core** | `2nd-gen/packages/core/components/meter/`         | `Meter.base.ts`, `Meter.types.ts`, `index.ts`. Owns: typed property declarations (`value`, `minValue`, `maxValue`, `accessibleLabel`, `valueLabel`, `formatOptions`, `helpText`, `variant`, `labelPosition`, `staticColor`, `size`); `value` clamping; locale-aware formatting via `LanguageResolutionController` (rename to `LocaleResolutionController` tracked as a deferred cross-cutting follow-up); `aria-value*` plumbing on the host (not on the `.swc-Meter` wrapper, to keep consumer IDREFs working until cross-root ARIA ships); `role="meter"` assignment on host in `firstUpdated`; default-slot-as-name hoisting via `getLabelFromSlot` into `accessibleLabel`; `aria-describedby` wiring to the internal `swc-Meter-helptext` element when `helpText` is non-empty; DEBUG-mode accessible-name warning; constants `METER_VALID_SIZES`, `METER_STATIC_COLORS_S2`, `METER_VARIANTS`, `METER_LABEL_POSITIONS`. **No rendering.** **No JSX/Lit template.** |
+| **Core** | `2nd-gen/packages/core/components/meter/`         | `Meter.base.ts`, `Meter.types.ts`, `index.ts`. Owns: typed property declarations (`value`, `minValue`, `maxValue`, `accessibleLabel`, `valueLabel`, `formatOptions`, `variant`, `labelPosition`, `staticColor`, `size`); `value` clamping; locale-aware formatting via `LanguageResolutionController` (rename to `LocaleResolutionController` tracked as a deferred cross-cutting follow-up); internal id generation for the `label` and `description` slot containers; resolution of `aria-labelledby` / `aria-describedby` / `aria-label` values that the SWC layer applies to the shadow role element; `description` slot assignment-tracking (`slotchange` on the named slot) to drive conditional rendering of the description container; DEBUG-mode accessible-name warning when neither the `label` slot has assigned nodes nor `accessibleLabel` is set; constants `METER_VALID_SIZES`, `METER_STATIC_COLORS_S2`, `METER_VARIANTS`, `METER_LABEL_POSITIONS`. **No rendering.** **No JSX/Lit template.** Nothing role/ARIA-related is set on the host. |
 | **SWC**  | `2nd-gen/packages/swc/components/meter/`          | `Meter.ts` (extends `MeterBase`), `meter.css`, `index.ts`, element registration `swc-meter`, `stories/`, `test/`, `consumer-migration-guide.mdx`. Owns: S2 rendering with the `swc-Meter` wrapper, S2 token bindings, `static-color="white"`/`static-color="black"` classes, all visual styling.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
 
 Planned rendering shape for `Meter.ts.render()`:
 
 ```html
+<!-- Host element (<swc-meter>) carries no ARIA. -->
 <div
   class="swc-Meter swc-Meter--size<S> swc-Meter--<variant> [swc-Meter--sideLabel] [swc-Meter--staticWhite|swc-Meter--staticBlack]"
+  role="meter"
+  aria-valuemin=${minValue}
+  aria-valuemax=${maxValue}
+  aria-valuenow=${clampedValue}
+  aria-valuetext=${formattedValue}
+  ${labelSlotHasAssignedNodes ? html`aria-labelledby="${labelContainerId}"` : (accessibleLabel ? html`aria-label="${accessibleLabel}"` : nothing)}
+  ${descriptionSlotHasAssignedNodes ? html`aria-describedby="${descriptionContainerId}"` : nothing}
 >
-  <label class="swc-Meter-label">
-    <slot @slotchange=...>{accessibleLabel}</slot>
-  </label>
-  <label class="swc-Meter-value">
-    {valueLabel ?? auto-formatted value}
-  </label>
+  <span class="swc-Meter-label" id="${labelContainerId}">
+    <slot name="label" @slotchange=${onLabelSlotChange}></slot>
+  </span>
+  <span class="swc-Meter-value">
+    ${valueLabel ?? autoFormattedValue}
+  </span>
   <div class="swc-Meter-track">
-    <div class="swc-Meter-fill" style="inline-size: <fillPercent>%;"></div>
+    <div class="swc-Meter-fill" style="inline-size: ${fillPercent}%;"></div>
   </div>
-  <div class="swc-Meter-helptext" id="<internal-id>" hidden=${!helpText}>
-    {helpText}
-  </div>
+  ${descriptionSlotHasAssignedNodes
+    ? html`
+        <span class="swc-Meter-description" id="${descriptionContainerId}">
+          <slot name="description"></slot>
+        </span>
+      `
+    : nothing}
 </div>
 ```
 
 Notes:
 
 - `<fillPercent>` is `((value − minValue) / (maxValue − minValue)) * 100`, clamped to `[0, 100]`.
-- The `helptext` wrapper carries an internal id and is hidden via the `hidden` attribute when `helpText` is empty (skip rendering / drop spacing). When non-empty, the host's `aria-describedby` references this id.
-- All labeling (`swc-Meter-label`, `swc-Meter-value`, `swc-Meter-helptext`) is supported across every variant and `static-color` mode — full label parity with React Spectrum + `spectrum-css` `spectrum-two`. The Figma `Static white` / `Static black` panels omit text for visual simplicity only; that is not a spec constraint.
+- **Role + all ARIA** (`role`, `aria-value*`, `aria-label` / `aria-labelledby`, `aria-describedby`) are set on the shadow `.swc-Meter` element. The host is ARIA-free.
+- **Conditional rendering** is used for the `description` slot container (and for `aria-labelledby` / `aria-label` / `aria-describedby` attributes themselves) — emit only when the corresponding source has content. No `hidden` attribute toggling.
+- **`<span>` not `<label>`** for both the label and value containers. `role="meter"` is not pair-able with native `<label>` semantics; `<span>` + `aria-labelledby` is the correct association.
+- All labeling (`swc-Meter-label`, `swc-Meter-value`, `swc-Meter-description`) is supported across every variant and `static-color` mode — full label parity with React Spectrum + `spectrum-css` `spectrum-two`. The Figma `Static white` / `Static black` panels omit text for visual simplicity only; that is not a spec constraint.
 - Class names use the `swc-` prefix per [contributor docs selector patterns](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/01_component-css.md#selector-patterns). The S2 CSS rules from `spectrum-css` `spectrum-two` are ported into `meter.css` with selectors rewritten to the SWC namespace; values/tokens are preserved.
 
 ---
@@ -372,13 +386,13 @@ Notes:
 #### Naming and public surface
 
 - [ ] `Meter.types.ts`: define `METER_VALID_SIZES = ['s','m','l','xl'] as const`, `METER_STATIC_COLORS = ['white','black'] as const`, `METER_VARIANTS = ['informative','positive','notice','negative'] as const`, `METER_LABEL_POSITIONS = ['top','side'] as const`, and the corresponding `MeterSize`, `MeterStaticColor`, `MeterVariant`, `MeterLabelPosition` types
-- [ ] `Meter.base.ts`: declare typed properties — `value` (number, default 0), `minValue` (number, default 0), `maxValue` (number, default 100), `accessibleLabel` (string, default `''`, attr `accessible-label`), `valueLabel` (string, optional), `formatOptions` (`Intl.NumberFormatOptions`, default `{ style: 'percent' }`, JS property only — no attribute), `helpText` (string, default `''`, attr `help-text`), `variant` (typed enum, default `'informative'`), `labelPosition` (typed enum, default `'top'`), `staticColor` (typed, optional), `size` (typed, default `'m'` via `SizedMixin`)
-- [ ] `Meter.base.ts` `firstUpdated`: set `role="meter"` on host (always; no conditional)
+- [ ] `Meter.base.ts`: declare typed properties — `value` (number, default 0), `minValue` (number, default 0), `maxValue` (number, default 100), `accessibleLabel` (string, default `''`, attr `accessible-label`; rare-case fallback when no `label` slot content), `valueLabel` (string, optional), `formatOptions` (`Intl.NumberFormatOptions`, default `{ style: 'percent' }`, JS property only — no attribute), `variant` (typed enum, default `'informative'`), `labelPosition` (typed enum, default `'top'`), `staticColor` (typed, optional), `size` (typed, default `'m'` via `SizedMixin`)
+- [ ] `Meter.base.ts`: no `role` or `aria-*` assignment on the host. Role + ARIA are declared in the SWC layer's render template on the `.swc-Meter` shadow element.
 - [ ] `Meter.base.ts` `updated`: maintain `aria-valuemin=<minValue>`, `aria-valuemax=<maxValue>`, `aria-valuenow=<clamped value>`, `aria-valuetext=<formatted value>`, and `aria-label=<resolved name>` (slot text > `accessibleLabel`) per [Accessibility semantics notes](#accessibility-semantics-notes-2nd-gen)
 - [ ] `Meter.base.ts`: clamp `value` into `[minValue, maxValue]` for both rendering and ARIA
 - [ ] `Meter.base.ts`: format value via `Intl.NumberFormat(language, formatOptions ?? { style: 'percent' })`; for percent style, feed normalized fraction
-- [ ] `Meter.base.ts`: handle default-slot `slotchange` to hoist slot text into the resolved a11y name via `getLabelFromSlot` (slot wins over `accessibleLabel`; precedent: `ProgressCircleBase.handleSlotchange`)
-- [ ] `Meter.base.ts`: when `helpText` is non-empty, render text inside the internal `swc-Meter-helptext` element and set `aria-describedby` on the host to that element's internal id
+- [ ] `Meter.base.ts`: handle `label`-slot `slotchange` to flag whether the slot has assigned nodes; the SWC layer uses this to decide between `aria-labelledby="<label-container-id>"` (slot has content) and `aria-label="${accessibleLabel}"` (rare-case fallback when slot is empty and `accessibleLabel` is set)
+- [ ] `Meter.base.ts`: handle `description`-slot `slotchange` to flag whether the slot has assigned nodes; the SWC layer conditionally renders the description container and emits `aria-describedby` on the role element only when the slot has content
 - [ ] `Meter.base.ts`: emit DEBUG-mode warning when no accessible name is provable, mirroring `ProgressCircleBase`
 
 #### Alignment checks
@@ -399,7 +413,7 @@ Notes:
 - [ ] Variant fill colors via tokens (`positive-visual-color`, `notice-visual-color`, `negative-visual-color`; `accent-content-color-default` for the `informative` default)
 - [ ] Static-color rules for both `staticWhite` and `staticBlack` modifiers
 - [ ] `label-position="side"` layout rule (`.swc-Meter--sideLabel`) mirroring `spectrum-css` `spectrum-two` `.spectrum-ProgressBar--sideLabel`
-- [ ] Help-text spacing rule (`--swc-meter-help-text-spacing`) and visibility gating via `hidden` attribute when `helpText` is empty
+- [ ] Description spacing rule (`--swc-meter-description-spacing`). The description container is conditionally rendered (not present in the DOM when the `description` slot has no assigned nodes); no `hidden` attribute is used.
 
 #### Visual model and regressions
 
@@ -411,10 +425,11 @@ Notes:
 
 #### Naming and semantics
 
-- [ ] Single `role="meter"` on host. No combined role string.
-- [ ] `aria-valuemin=<minValue>`, `aria-valuemax=<maxValue>`, `aria-valuenow=<clamped value>`, `aria-valuetext=<formatted value>` on host
-- [ ] Accessible name from default slot text (primary) or `accessible-label` attribute (fallback). No raw `aria-label`/`aria-labelledby` passthrough.
-- [ ] `aria-describedby` wired to the internal `swc-Meter-helptext` element when `helpText` is non-empty
+- [ ] Single `role="meter"` on the shadow `.swc-Meter` element (not the host). No combined role string.
+- [ ] `aria-valuemin=<minValue>`, `aria-valuemax=<maxValue>`, `aria-valuenow=<clamped value>`, `aria-valuetext=<formatted value>` on the `.swc-Meter` role element
+- [ ] Accessible name resolved in this order: `label` slot content → `aria-labelledby="<label-container-id>"` on the role element; otherwise `accessibleLabel` → `aria-label="${accessibleLabel}"` on the role element. No raw `aria-label`/`aria-labelledby` passthrough.
+- [ ] `aria-describedby="<description-container-id>"` on the role element when the `description` slot has assigned nodes; absent otherwise
+- [ ] Host element carries no `role` and no `aria-*` attributes
 - [ ] DEBUG warning when no accessible name is provable
 - [ ] Non-focusable: no `tabindex`, host receives no interactive role
 
@@ -428,18 +443,18 @@ Notes:
 ### Testing
 
 - [ ] Port `1st-gen/packages/meter/test/meter.test.ts` coverage that still applies, adapted to the new API (variant validation, label-from-slot, `value`→`aria-valuenow`, locale resolution `en-US` and `ar-sa`)
-- [ ] Add Playwright `meter.a11y.spec.ts` with `toMatchAriaSnapshot` covering size × variant × `label-position` × static-color × key `value` values (0%, 50%, 100%) × `help-text` presence
+- [ ] Add Playwright `meter.a11y.spec.ts` with `toMatchAriaSnapshot` covering size × variant × `label-position` × static-color × key `value` values (0%, 50%, 100%) × `label` slot vs `accessibleLabel` × `description` slot present/absent
 
 #### Behavior
 
-- [ ] Single `role="meter"` (assert exact attribute string; regression for B9)
+- [ ] Single `role="meter"` set on the shadow `.swc-Meter` element; host has no `role` attribute (regression for B9)
 - [ ] `aria-valuemin`/`aria-valuemax`/`aria-valuenow`/`aria-valuetext` correctness across `value = minValue / midpoint / maxValue`
 - [ ] Custom `minValue`/`maxValue` clamps `value` correctly and feeds ARIA accordingly
 - [ ] `aria-valuetext` matches default percent format in `en-US` (e.g. `50%`) and `ar-sa` (Arabic-Indic digits + `٪`)
 - [ ] `value-label` (attribute) overrides auto-formatted text
 - [ ] `formatOptions` drives auto-formatted text (e.g. `{ style: 'currency', currency: 'USD' }`, `{ style: 'unit', unit: 'inch' }`, `{ style: 'decimal' }`; default `{ style: 'percent' }`)
 - [ ] `label-position="side"` lays out label inline with value and bar
-- [ ] DEBUG warning fires when no accessible name is provable; does not fire when default slot text or `accessible-label` is present
+- [ ] DEBUG warning fires when no accessible name is provable; does not fire when either the `label` slot has assigned nodes or `accessibleLabel` is set
 - [ ] Host is not focusable (`document.activeElement` skips it on `Tab`)
 
 #### Visual regression
@@ -447,7 +462,7 @@ Notes:
 - [ ] Add VRT coverage for size × variant × `label-position` combinations
 - [ ] Add VRT coverage for both `static-color` values on their approved backgrounds (per Figma `Static white` / `Static black` panels)
 - [ ] Add VRT coverage for `value = 0%`, `25%`, `50%`, `75%`, `100%` (3:1 contrast checks at 0%)
-- [ ] Add VRT coverage for `help-text` attribute set vs unset
+- [ ] Add VRT coverage for `description` slot present vs absent
 - [ ] Add forced-colors / high-contrast VRT coverage
 
 ### Documentation
@@ -479,8 +494,8 @@ All drafting-time questions are resolved. Resolutions:
 - **Q1 (architecture)** — Closed. Independent `<swc-meter>` with no shared base. Bar styles live in `meter.css`. Reflected in [Architecture: core vs SWC split](#architecture-core-vs-swc-split) and [Migration sequencing and prerequisites](#migration-sequencing-and-prerequisites).
 - **Q2 (variants)** — Closed. `{informative (default), positive, notice, negative}` per React Spectrum S2 + Figma. Reflected in [Public API](#public-api) and B5.
 - **Q3 (static colors)** — Closed. `{white, black}` per `spectrum-css` `spectrum-two` + Figma. React's `'auto'` deferred (no S2 CSS support). Reflected in [Public API](#public-api), A1, and the deferred-ticket table below.
-- **Q4 (help text)** — Closed. `help-text` is a string attribute / `helpText` JS property; rendered as plain text in the internal `swc-Meter-helptext` region; component wires `aria-describedby` to that element when non-empty. Reflected in A2 and the rendering shape in [Architecture: core vs SWC split](#architecture-core-vs-swc-split).
-- **Q5 (field-label)** — Closed. Render plain `<label class="swc-Meter-label">` / `<label class="swc-Meter-value">` (SWC-namespaced selectors). No dependency on `<swc-field-label>`. Reflected in B8.
+- **Q4 (description, formerly "help text")** — Closed. Exposed as the `description` named slot (not a "help-text" attribute — meter is not a form field). Slot content renders inside `<span class="swc-Meter-description">` in the shadow root; the shadow `meter` role element `aria-describedby`-references that container's internal id when the slot has assigned nodes. Container is conditionally rendered (no `hidden` attribute toggling). Reflected in A2, the Slots table, the Architecture render shape, and the Migration checklist.
+- **Q5 (field-label)** — Closed. Render plain `<span class="swc-Meter-label">` / `<span class="swc-Meter-value">` (SWC-namespaced selectors; `<span>` rather than `<label>` because `role="meter"` is not pair-able with native `<label>` semantics — the `meter` role element associates via `aria-labelledby`). No dependency on `<swc-field-label>`. Reflected in B8.
 - **Q6 (Jira tickets)** — Closed. Confirmed via `mcp__corp-jira__search_jira_issues` against SWC-2005: 11 children exist (SWC-2006 through SWC-2016) covering accessibility recommendations, planning, setup, API, accessibility implementation, visual fidelity, code style, testing, documentation, consumer migration guide, and final review. All breaking changes (B1–B6, B8–B11) and additives (A1, A2, A3, A4) ship within these phase tickets — no separate breaking-change tickets are required.
 
 ### Deferred items
