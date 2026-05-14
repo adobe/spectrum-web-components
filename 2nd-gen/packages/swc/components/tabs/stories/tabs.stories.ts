@@ -91,7 +91,7 @@ export const meta: Meta = {
       url: 'https://www.figma.com/design/PLACEHOLDER',
     },
     stackblitz: {
-      url: 'https://stackblitz.com/edit/PLACEHOLDER',
+      url: 'https://stackblitz.com/edit/vitejs-vite-5jtmpzjk?file=package.json',
     },
   },
   tags: ['migrated'],

@@ -61,7 +61,9 @@ const meta: Meta = {
       subtitle: 'A circular profile image for identifying a person or entity.',
     },
     // @todo Add Figma design link: design: { type: 'figma', url: '<avatar-node-url>' }
-    // @todo Add Stackblitz link: stackblitz: { url: '<stackblitz-url>' }
+    stackblitz: {
+      url: 'https://stackblitz.com/edit/vitejs-vite-bfsrbyma?file=package.json',
+    },
     flexLayout: 'row-wrap',
   },
   tags: ['migrated'],
