@@ -23,19 +23,19 @@ Update your import:
 import '@spectrum-web-components/styles/typography.css';
 
 // After
-import '@adobe/spectrum-wc/components/typography/typography.css';
+import '@adobe/spectrum-wc/typography.css';
 ```
 
-> `@adobe/spectrum-wc` is a monolithic package. Importing via subpath (e.g. `@adobe/spectrum-wc/components/typography/typography.css`) loads only that component's stylesheet.
+> `@adobe/spectrum-wc` is a monolithic package. Importing via subpath (e.g. `@adobe/spectrum-wc/typography.css`) loads only that stylesheet.
 
 ## What changed
 
 ### Renamed
 
-| Area         | Spectrum 1                                       | Spectrum 2                                                |
-| ------------ | ------------------------------------------------ | --------------------------------------------------------- |
-| Import path  | `@spectrum-web-components/styles/typography.css` | `@adobe/spectrum-wc/components/typography/typography.css` |
-| Class prefix | `.spectrum-Heading`, `.spectrum-Body`, etc.      | `.swc-Heading`, `.swc-Body`, etc.                         |
+| Area         | Spectrum 1                                       | Spectrum 2                          |
+| ------------ | ------------------------------------------------ | ----------------------------------- |
+| Import path  | `@spectrum-web-components/styles/typography.css` | `@adobe/spectrum-wc/typography.css` |
+| Class prefix | `.spectrum-Heading`, `.spectrum-Body`, etc.      | `.swc-Heading`, `.swc-Body`, etc.   |
 
 ### Added in Spectrum 2
 
