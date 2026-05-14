@@ -17,11 +17,12 @@ Apply any time:
 
 ## Before declaring a phase complete
 
-Before ending a response that declares a migration phase complete, verify against two sources:
+Before ending a response that declares a migration phase complete, verify against two sources and perform one update:
 
 1. **Phase skill quality gate** — every checklist item in the active skill's quality gate section
 2. **Migration plan** — read `CONTRIBUTOR-DOCS/03_project-planning/03_components/[component]/migration-plan.md` and verify that the work done in this phase matches what the plan specifies for it. If the plan is missing, note that as a risk. If the implementation drifted from the plan, call it out explicitly — do not silently accept drift.
 3. **Consistency pass** — the checks described in `.ai/rules/consistency-pass.md` have been run on files changed in this phase, or are explicitly deferred and noted in the checkpoint
+4. **Status table** — update `CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_2nd-gen-component-migration/01_status.md` to reflect the completed phase for this component
 
 Do not silently skip incomplete items. If something cannot be completed, say so and record it in the checkpoint.
 
@@ -29,7 +30,7 @@ Do not silently skip incomplete items. If something cannot be completed, say so 
 
 When you complete a migration phase, end your response with a Migration Checkpoint block using this exact format:
 
-```
+```markdown
 ---
 **Migration Checkpoint: [Component Name]**
 Phase completed: [N] — [Phase Name]

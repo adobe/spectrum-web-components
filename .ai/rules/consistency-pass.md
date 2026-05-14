@@ -57,6 +57,8 @@ Read the plan sections covering the current phase and verify the implementation 
 
 Flag any divergence. If a change was confirmed in-session, update the plan and proceed to Check 2.
 
+Once implementation and plan are aligned, update the plan's checklists for the current phase to reflect the work completed. Mark off completed items, fill in any "to be determined" fields that were resolved during this phase, and note any decisions made. The plan checklists are the record that this phase was done and what was produced — keep them current.
+
 ### Check 2: Intra-plan consistency (cascading updates)
 
 When any part of the plan changes — whether from a session-confirmed decision or a correction — scan the entire plan for other sections affected by that change. Plans are multi-section documents where a single decision can appear in several places.
@@ -85,9 +87,11 @@ Code conformance:
 
 Plan validity:
 - ✅ Implementation matches plan for this phase
+- ✅ Phase checklist updated
 - ✅ No cascading inconsistencies found
 - ⚠️ [plan section] — [implementation diverges from plan; flagging for confirmation before updating]
 - ⚠️ [plan section] — [cascading effect of confirmed change X; updated]
+- ⚠️ Phase checklist — [items that could not be marked complete; reason]
 - ❌ [plan section] — [implementation diverges in a way that may require re-alignment]
 ```
 
