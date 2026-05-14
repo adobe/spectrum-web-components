@@ -301,7 +301,7 @@ Gates align with [01_washing-machine-workflow.md](../../02_workstreams/02_2nd-ge
 ### Preparation (this ticket)
 
 - [ ] Preparation inputs tracked (Figma, epic id, S2 rendering pass) per team process—no separate contributor prep doc for accordion
-- [ ] This plan + accessibility analysis + expanded rendering roadmap reviewed
+- [ ] This plan + accessibility analysis reviewed
 - [ ] Breaking changes and consumer migration notes agreed
 - [ ] Open questions in [Blockers and open questions](#blockers-and-open-questions) resolved or ticketed
 - [ ] Plan reviewed by at least one other engineer
