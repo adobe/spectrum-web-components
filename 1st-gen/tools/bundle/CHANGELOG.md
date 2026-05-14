@@ -1,5 +1,85 @@
 # Change Log
 
+## 1.12.0
+
+### Patch Changes
+
+- Updated dependencies [[`8a5997e`](https://github.com/adobe/spectrum-web-components/commit/8a5997ebb39121217b292af040572f58ca5a5ff2), [`49049dd`](https://github.com/adobe/spectrum-web-components/commit/49049dd548c9b0589cccdf221e74944aa098758e), [`c4f24a8`](https://github.com/adobe/spectrum-web-components/commit/c4f24a83a8e53a761dcc0ed44eaaab4cb7708c96), [`018d316`](https://github.com/adobe/spectrum-web-components/commit/018d3163efb830478e1d1e2e1f696639c1423e84), [`bcd9639`](https://github.com/adobe/spectrum-web-components/commit/bcd9639b4d49a7afd16b7c8e8ec3e86a3ff0b07c), [`d303db5`](https://github.com/adobe/spectrum-web-components/commit/d303db5af77f334b51b497a4d606cf88f11b244f), [`295f465`](https://github.com/adobe/spectrum-web-components/commit/295f4651451bb0523ceb8f8155dd0bcc77ab2f31), [`ba14a2b`](https://github.com/adobe/spectrum-web-components/commit/ba14a2b6361a0089a9a8c72232f245cde0716d89), [`cb7eaa7`](https://github.com/adobe/spectrum-web-components/commit/cb7eaa7d41653a6765a99180b8c07fcba9d77891), [`1b04268`](https://github.com/adobe/spectrum-web-components/commit/1b042684251181403d1f565e3893492c67501a96), [`0d3e317`](https://github.com/adobe/spectrum-web-components/commit/0d3e3176944c9f3502f28dfa28f6cee21da05fda), [`1aca50a`](https://github.com/adobe/spectrum-web-components/commit/1aca50a095ae386929c11005a9a92e14c5095d47), [`3995697`](https://github.com/adobe/spectrum-web-components/commit/3995697f1302df82541db3fb9ffc970ed0a27e30), [`08484b8`](https://github.com/adobe/spectrum-web-components/commit/08484b826a9e6c73f01e7d12246889ec82f3e3a3), [`4819238`](https://github.com/adobe/spectrum-web-components/commit/481923863cdc7c03c56f4f9ed2d231e219648dcc), [`c4823d9`](https://github.com/adobe/spectrum-web-components/commit/c4823d94fd149634ab1a94db27155b408a399af3), [`1280f9a`](https://github.com/adobe/spectrum-web-components/commit/1280f9ad05452ebacebf3d655a23260bd0ec5a6e), [`f9e0896`](https://github.com/adobe/spectrum-web-components/commit/f9e0896d7b3863f3ce45228e5868214d4939ee85), [`a43a2f9`](https://github.com/adobe/spectrum-web-components/commit/a43a2f96e5612017e6089808f77c8631dfd55527), [`26f16c4`](https://github.com/adobe/spectrum-web-components/commit/26f16c42613d96ed89baeebf6d1ec274768571e5), [`dc6a8e8`](https://github.com/adobe/spectrum-web-components/commit/dc6a8e8db1b08080373c3664babc1feebde8f6c6), [`90c3010`](https://github.com/adobe/spectrum-web-components/commit/90c30101391d4d78922575e9f0bb407e02d9c2d5), [`f37dec6`](https://github.com/adobe/spectrum-web-components/commit/f37dec6ae39fd89a4c12e084b4a0f4d9092d79b0), [`2db830c`](https://github.com/adobe/spectrum-web-components/commit/2db830cded30717fb9cbe4d335d0f3bcf9fea6b9), [`38a463f`](https://github.com/adobe/spectrum-web-components/commit/38a463f7f4745373d143cdb08c7d87ba932cf1dd), [`7b153b5`](https://github.com/adobe/spectrum-web-components/commit/7b153b5433a8f6d47850f8939b058f7bc431c48c), [`52947c8`](https://github.com/adobe/spectrum-web-components/commit/52947c8877ae7fd6eda794a536454756e9b2c1e1), [`a420e49`](https://github.com/adobe/spectrum-web-components/commit/a420e495a479f411bef970739d860b0fcfe5f7fa), [`3956705`](https://github.com/adobe/spectrum-web-components/commit/3956705c5a1b44ee8af7369a84ad905c1bcc8ed8), [`4c3977a`](https://github.com/adobe/spectrum-web-components/commit/4c3977a7e2fab30d0ed0ee9d3e58d21e03f76e34), [`cb7eaa7`](https://github.com/adobe/spectrum-web-components/commit/cb7eaa7d41653a6765a99180b8c07fcba9d77891), [`c720445`](https://github.com/adobe/spectrum-web-components/commit/c7204456810326960b31f80955e842cc3e5555e3), [`0b362b0`](https://github.com/adobe/spectrum-web-components/commit/0b362b075f876a7811874fc36a64fd466e2dd479), [`f842573`](https://github.com/adobe/spectrum-web-components/commit/f8425730004d2ed091810858f7254a952e16b909)]:
+  - @spectrum-web-components/color-area@1.12.0
+  - @spectrum-web-components/color-wheel@1.12.0
+  - @spectrum-web-components/button@1.12.0
+  - @spectrum-web-components/action-button@1.12.0
+  - @spectrum-web-components/styles@1.12.0
+  - @spectrum-web-components/dropzone@1.12.0
+  - @spectrum-web-components/textfield@1.12.0
+  - @spectrum-web-components/base@1.12.0
+  - @spectrum-web-components/picker@1.12.0
+  - @spectrum-web-components/badge@1.12.0
+  - @spectrum-web-components/contextual-help@1.12.0
+  - @spectrum-web-components/divider@1.12.0
+  - @spectrum-web-components/menu@1.12.0
+  - @spectrum-web-components/slider@1.12.0
+  - @spectrum-web-components/overlay@1.12.0
+  - @spectrum-web-components/dialog@1.12.0
+  - @spectrum-web-components/progress-bar@1.12.0
+  - @spectrum-web-components/progress-circle@1.12.0
+  - @spectrum-web-components/reactive-controllers@1.12.0
+  - @spectrum-web-components/theme@1.12.0
+  - @spectrum-web-components/number-field@1.12.0
+  - @spectrum-web-components/status-light@1.12.0
+  - @spectrum-web-components/switch@1.12.0
+  - @spectrum-web-components/tags@1.12.0
+  - @spectrum-web-components/illustrated-message@1.12.0
+  - @spectrum-web-components/tooltip@1.12.0
+  - @spectrum-web-components/action-menu@1.12.0
+  - @spectrum-web-components/accordion@1.12.0
+  - @spectrum-web-components/action-bar@1.12.0
+  - @spectrum-web-components/alert-banner@1.12.0
+  - @spectrum-web-components/button-group@1.12.0
+  - @spectrum-web-components/coachmark@1.12.0
+  - @spectrum-web-components/infield-button@1.12.0
+  - @spectrum-web-components/picker-button@1.12.0
+  - @spectrum-web-components/search@1.12.0
+  - @spectrum-web-components/toast@1.12.0
+  - @spectrum-web-components/action-group@1.12.0
+  - @spectrum-web-components/combobox@1.12.0
+  - @spectrum-web-components/tabs@1.12.0
+  - @spectrum-web-components/card@1.12.0
+  - @spectrum-web-components/truncated@1.12.0
+  - @spectrum-web-components/color-field@1.12.0
+  - @spectrum-web-components/asset@1.12.0
+  - @spectrum-web-components/avatar@1.12.0
+  - @spectrum-web-components/breadcrumbs@1.12.0
+  - @spectrum-web-components/checkbox@1.12.0
+  - @spectrum-web-components/clear-button@1.12.0
+  - @spectrum-web-components/close-button@1.12.0
+  - @spectrum-web-components/color-handle@1.12.0
+  - @spectrum-web-components/color-loupe@1.12.0
+  - @spectrum-web-components/color-slider@1.12.0
+  - @spectrum-web-components/field-group@1.12.0
+  - @spectrum-web-components/field-label@1.12.0
+  - @spectrum-web-components/help-text@1.12.0
+  - @spectrum-web-components/icon@1.12.0
+  - @spectrum-web-components/icons@1.12.0
+  - @spectrum-web-components/icons-ui@1.12.0
+  - @spectrum-web-components/icons-workflow@1.12.0
+  - @spectrum-web-components/iconset@1.12.0
+  - @spectrum-web-components/link@1.12.0
+  - @spectrum-web-components/meter@1.12.0
+  - @spectrum-web-components/modal@1.12.0
+  - @spectrum-web-components/popover@1.12.0
+  - @spectrum-web-components/radio@1.12.0
+  - @spectrum-web-components/sidenav@1.12.0
+  - @spectrum-web-components/split-view@1.12.0
+  - @spectrum-web-components/swatch@1.12.0
+  - @spectrum-web-components/table@1.12.0
+  - @spectrum-web-components/thumbnail@1.12.0
+  - @spectrum-web-components/top-nav@1.12.0
+  - @spectrum-web-components/tray@1.12.0
+  - @spectrum-web-components/underlay@1.12.0
+  - @spectrum-web-components/grid@1.12.0
+  - @spectrum-web-components/shared@1.12.0
+
 ## 1.11.2
 
 ### Patch Changes

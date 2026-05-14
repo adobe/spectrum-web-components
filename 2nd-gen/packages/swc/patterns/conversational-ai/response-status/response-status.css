@@ -39,10 +39,13 @@
 
 /* When the row is a button (reasoning toggle) */
 .swc-ResponseStatus-row--button {
-  padding: 0;
+  inline-size: fit-content;
+  padding: var(--swc-sources-toggle-padding, 3px) token("spacing-100");
   background: transparent;
   border: none;
+  border-radius: token("corner-radius-medium-default");
   cursor: pointer;
+  transition: background token("animation-duration-100") token("animation-ease-in-out");
 }
 
 /* Progress circle — indeterminate loading indicator */
@@ -63,6 +66,10 @@
 
 .swc-ResponseStatus-row--button:hover .swc-ResponseStatus-label {
   color: token("gray-800");
+}
+
+.swc-ResponseStatus-row--button:hover {
+  background: token("gray-100");
 }
 
 /* ─────────────────────────────────────
@@ -87,6 +94,7 @@
   display: block;
   visibility: hidden;
   block-size: 0;
+  padding-inline: token("spacing-100");
   font-family: token("sans-serif-font");
   font-size: token("font-size-100");
   font-weight: token("regular-font-weight");
