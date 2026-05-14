@@ -334,8 +334,9 @@ Planned rendering shape for `Meter.ts.render()`:
   aria-valuemax=${maxValue}
   aria-valuenow=${clampedValue}
   aria-valuetext=${formattedValue}
-  ${labelSlotHasAssignedNodes ? html`aria-labelledby="${labelContainerId}"` : (accessibleLabel ? html`aria-label="${accessibleLabel}"` : nothing)}
-  ${descriptionSlotHasAssignedNodes ? html`aria-describedby="${descriptionContainerId}"` : nothing}
+  aria-labelledby=${ifDefined(labelSlotHasAssignedNodes ? labelContainerId : undefined)}
+  aria-label=${ifDefined(!labelSlotHasAssignedNodes && accessibleLabel ? accessibleLabel : undefined)}
+  aria-describedby=${ifDefined(descriptionSlotHasAssignedNodes ? descriptionContainerId : undefined)}
 >
   <span class="swc-Meter-label" id="${labelContainerId}">
     <slot name="label" @slotchange=${onLabelSlotChange}></slot>
@@ -360,7 +361,7 @@ Notes:
 
 - `<fillPercent>` is `((value − minValue) / (maxValue − minValue)) * 100`, clamped to `[0, 100]`.
 - **Role + all ARIA** (`role`, `aria-value*`, `aria-label` / `aria-labelledby`, `aria-describedby`) are set on the shadow `.swc-Meter` element. The host is ARIA-free.
-- **Conditional rendering** is used for the `description` slot container (and for `aria-labelledby` / `aria-label` / `aria-describedby` attributes themselves) — emit only when the corresponding source has content. No `hidden` attribute toggling.
+- **Conditional rendering** is used for the `description` slot container — emit only when the slot has assigned nodes. No `hidden` attribute toggling. The three ARIA attributes (`aria-labelledby`, `aria-label`, `aria-describedby`) use `ifDefined` to omit the attribute when the value would be `undefined`; `aria-labelledby` and `aria-label` are mutually exclusive (split into two separate bindings rather than a nested ternary).
 - **`<span>` not `<label>`** for both the label and value containers. `role="meter"` is not pair-able with native `<label>` semantics; `<span>` + `aria-labelledby` is the correct association.
 - All labeling (`swc-Meter-label`, `swc-Meter-value`, `swc-Meter-description`) is supported across every variant and `static-color` mode — full label parity with React Spectrum + `spectrum-css` `spectrum-two`. The Figma `Static white` / `Static black` panels omit text for visual simplicity only; that is not a spec constraint.
 - Class names use the `swc-` prefix per [contributor docs selector patterns](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/01_component-css.md#selector-patterns). S2 CSS rules that are shared with progress-bar (bar/track/fill, size tokens, label/value layout, static-color) go into `linear-progress-base.css` with selectors rewritten to the SWC namespace. Meter-specific rules (variant fill colors, description spacing) go into `meter.css`, which `@import`s `linear-progress-base.css`. Values/tokens are preserved throughout.
