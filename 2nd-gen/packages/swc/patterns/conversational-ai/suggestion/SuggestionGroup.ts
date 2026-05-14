@@ -48,22 +48,15 @@ export class SuggestionGroup extends SpectrumElement {
     return [styles];
   }
 
-  private _getHeadingElement(): HTMLElement | null {
-    const slot = this.shadowRoot?.querySelector<HTMLSlotElement>(
-      'slot[name="heading"]'
-    );
-    return (
-      (slot?.assignedElements({ flatten: true })[0] as HTMLElement) ?? null
-    );
-  }
-
   /**
    * Assigns a stable id to the slotted heading (when it lacks one) and
    * synchronises host ARIA attributes. Called on every `slotchange` so
    * the accessible name is always current after light-DOM mutations.
    */
   private _handleHeadingSlotChange(): void {
-    const heading = this._getHeadingElement();
+    const heading = this.shadowRoot
+      ?.querySelector<HTMLSlotElement>('slot[name="heading"]')
+      ?.assignedElements({ flatten: true })[0] as HTMLElement | null;
     if (heading && !heading.id) {
       heading.id = this._headingId;
     }
@@ -77,7 +70,9 @@ export class SuggestionGroup extends SpectrumElement {
    * gets a proper group name.
    */
   private _syncHostGroupSemantics(): void {
-    const heading = this._getHeadingElement();
+    const heading = this.shadowRoot
+      ?.querySelector<HTMLSlotElement>('slot[name="heading"]')
+      ?.assignedElements({ flatten: true })[0] as HTMLElement | null;
     const accessibleLabel = this.accessibleLabel.trim();
 
     if (!heading && !accessibleLabel) {
