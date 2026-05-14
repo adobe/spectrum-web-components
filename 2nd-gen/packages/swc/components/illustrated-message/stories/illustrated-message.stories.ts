@@ -70,7 +70,7 @@ export const meta: Meta = {
       url: 'https://www.figma.com/design/Mngz9H7WZLbrCvGQf3GnsY/S2---Web--Desktop-scale-?node-id=20032-601&p=f&t=v3YDUMXflgtF0NtJ-0',
     },
     stackblitz: {
-      url: 'https://stackblitz.com/edit/vitejs-vite-akpphxht?file=package.json',
+      url: 'https://stackblitz.com/edit/vitejs-vite-akpphxht?file=src%2Fmy-element.ts',
     },
   },
   tags: ['migrated'],

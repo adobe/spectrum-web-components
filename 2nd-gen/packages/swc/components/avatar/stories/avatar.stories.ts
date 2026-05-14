@@ -62,7 +62,7 @@ const meta: Meta = {
     },
     // @todo Add Figma design link: design: { type: 'figma', url: '<avatar-node-url>' }
     stackblitz: {
-      url: 'https://stackblitz.com/edit/vitejs-vite-bfsrbyma?file=package.json',
+      url: 'https://stackblitz.com/edit/vitejs-vite-bfsrbyma?file=src%2Fmy-element.ts',
     },
     flexLayout: 'row-wrap',
   },

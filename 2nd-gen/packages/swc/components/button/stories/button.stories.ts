@@ -76,7 +76,7 @@ const meta: Meta = {
       subtitle: `Buttons trigger actions when activated.`,
     },
     stackblitz: {
-      url: 'https://stackblitz.com/edit/vitejs-vite-efws3xzp?file=package.json',
+      url: 'https://stackblitz.com/edit/vitejs-vite-efws3xzp?file=src%2Fmy-element.ts',
     },
   },
   args,
