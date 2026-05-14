@@ -11,7 +11,7 @@
  */
 
 import { CSSResultArray, html, PropertyValues, TemplateResult } from 'lit';
-import { property, queryAssignedElements } from 'lit/decorators.js';
+import { property } from 'lit/decorators.js';
 
 import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
 
@@ -42,9 +42,6 @@ export class SuggestionGroup extends SpectrumElement {
   @property({ type: String, attribute: 'accessible-label' })
   public accessibleLabel = '';
 
-  @queryAssignedElements({ slot: 'heading', flatten: true })
-  private _assignedHeadingElements!: HTMLElement[];
-
   private readonly _headingId = uniqueId('swc-suggestion-group-heading');
 
   public static override get styles(): CSSResultArray {
@@ -52,43 +49,38 @@ export class SuggestionGroup extends SpectrumElement {
   }
 
   private _getHeadingElement(): HTMLElement | null {
-    const headingElement = this._assignedHeadingElements?.[0] ?? null;
-    if (!headingElement) {
-      return null;
-    }
-    return headingElement;
-  }
-
-  private _handleHeadingSlotChange(event: Event): void {
-    const slot = event.target as HTMLSlotElement;
-    const headingElement = slot.assignedElements({ flatten: true })[0] as
-      | HTMLElement
-      | undefined;
-    if (headingElement && !headingElement.id) {
-      headingElement.id = this._headingId;
-    }
-    this.requestUpdate();
+    const slot = this.shadowRoot?.querySelector<HTMLSlotElement>(
+      'slot[name="heading"]'
+    );
+    return (
+      (slot?.assignedElements({ flatten: true })[0] as HTMLElement) ?? null
+    );
   }
 
   /**
-   * `aria-labelledby` on nodes inside the shadow root cannot reliably reference
-   * slotted light-DOM headings. Expose `role="group"` and labeling on the host
-   * so the heading id resolves and assistive tech gets a proper group name.
+   * Assigns a stable id to the slotted heading (when it lacks one) and
+   * synchronises host ARIA attributes. Called on every `slotchange` so
+   * the accessible name is always current after light-DOM mutations.
    */
-  private _ensureHeadingId(): void {
-    const headingElement = this._getHeadingElement();
-    if (headingElement && !headingElement.id) {
-      headingElement.id = this._headingId;
+  private _handleHeadingSlotChange(): void {
+    const heading = this._getHeadingElement();
+    if (heading && !heading.id) {
+      heading.id = this._headingId;
     }
+    this._syncHostGroupSemantics();
   }
 
+  /**
+   * `aria-labelledby` on nodes inside the shadow root cannot reliably
+   * reference slotted light-DOM headings. Expose `role="group"` and
+   * labeling on the host so the heading id resolves and assistive tech
+   * gets a proper group name.
+   */
   private _syncHostGroupSemantics(): void {
-    const headingElement = this._getHeadingElement();
-    const hasHeading = headingElement !== null;
+    const heading = this._getHeadingElement();
     const accessibleLabel = this.accessibleLabel.trim();
-    const hasAccessibleLabel = accessibleLabel.length > 0;
 
-    if (!hasHeading && !hasAccessibleLabel) {
+    if (!heading && !accessibleLabel) {
       this.removeAttribute('role');
       this.removeAttribute('aria-label');
       this.removeAttribute('aria-labelledby');
@@ -97,15 +89,14 @@ export class SuggestionGroup extends SpectrumElement {
 
     this.setAttribute('role', 'group');
 
-    if (hasAccessibleLabel) {
+    if (accessibleLabel) {
       this.setAttribute('aria-label', accessibleLabel);
       this.removeAttribute('aria-labelledby');
       return;
     }
 
-    const headingId = headingElement?.id ?? '';
-    if (headingId.length > 0) {
-      this.setAttribute('aria-labelledby', headingId);
+    if (heading?.id) {
+      this.setAttribute('aria-labelledby', heading.id);
       this.removeAttribute('aria-label');
       return;
     }
@@ -114,19 +105,17 @@ export class SuggestionGroup extends SpectrumElement {
     this.removeAttribute('aria-labelledby');
   }
 
-  protected override updated(_changedProperties: PropertyValues<this>): void {
-    super.updated(_changedProperties);
-    this._ensureHeadingId();
-    this._syncHostGroupSemantics();
+  protected override updated(changed: PropertyValues<this>): void {
+    super.updated(changed);
+    if (changed.has('accessibleLabel')) {
+      this._syncHostGroupSemantics();
+    }
   }
 
   protected override render(): TemplateResult {
-    const headingElement = this._getHeadingElement();
-    const hasHeading = headingElement !== null;
-
     return html`
       <div class="swc-SuggestionGroup">
-        <div class="swc-SuggestionGroup-title" ?hidden=${!hasHeading}>
+        <div class="swc-SuggestionGroup-title">
           <slot
             name="heading"
             @slotchange=${this._handleHeadingSlotChange}

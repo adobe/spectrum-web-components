@@ -91,8 +91,6 @@ export const OverviewTest: Story = {
         `;
         el.accessibleLabel = 'Custom suggestions label';
         await el.updateComplete;
-        await Promise.resolve();
-        await el.updateComplete;
 
         const heading = el.shadowRoot?.querySelector(
           '.swc-SuggestionGroup-title'
@@ -109,8 +107,7 @@ export const OverviewTest: Story = {
         <swc-suggestion-item>Create a slide deck from this</swc-suggestion-item>
       `;
       await el.updateComplete;
-      await Promise.resolve();
-      await el.updateComplete;
+
       const headingSlot = el.shadowRoot?.querySelector<HTMLSlotElement>(
         'slot[name="heading"]'
       );
@@ -129,8 +126,6 @@ export const OverviewTest: Story = {
           <swc-suggestion-item>Create a slide deck from this</swc-suggestion-item>
         `;
         el.accessibleLabel = 'Overridden suggestions label';
-        await el.updateComplete;
-        await Promise.resolve();
         await el.updateComplete;
 
         expect(el.getAttribute('aria-label')).toBe(

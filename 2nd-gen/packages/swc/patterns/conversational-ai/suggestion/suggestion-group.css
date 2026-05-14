@@ -30,6 +30,10 @@
   display: block;
 }
 
+.swc-SuggestionGroup-title:not(:has(::slotted(*))) {
+  display: none;
+}
+
 .swc-SuggestionGroup-title ::slotted(*) {
   margin: 0;
 }

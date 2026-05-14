@@ -154,8 +154,6 @@ export const InsideSuggestionGroupTest: Story = {
       'parent exposes heading and group labeling on the host (not inner shadow nodes)',
       async () => {
         await group.updateComplete;
-        await Promise.resolve();
-        await group.updateComplete;
 
         const titleRegion = group.shadowRoot?.querySelector(
           '.swc-SuggestionGroup-title'
@@ -170,7 +168,6 @@ export const InsideSuggestionGroupTest: Story = {
           headingSlot?.assignedElements({ flatten: true }) ?? [];
         const firstHeading = headingElements[0] as HTMLElement | undefined;
 
-        expect(titleRegion?.hasAttribute('hidden')).toBe(false);
         expect(firstHeading?.textContent?.trim()).toBe(
           'What would you like to do next?'
         );
