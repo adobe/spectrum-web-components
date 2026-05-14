@@ -42,7 +42,7 @@ This doc explains how **`swc-accordion`** and **`swc-accordion-item`** should be
 
 ### Also read
 
-[Accordion migration roadmap](./rendering-and-styling-migration-analysis.md) for DOM and styling migration. [Accordion migration plan](./migration-plan.md) for API freeze, slots, and sequencing.
+[Accordion migration plan](./migration-plan.md) for DOM, styling, API decisions, and sequencing.
 
 [Illustrated message migration roadmap](../illustrated-message/rendering-and-styling-migration-analysis.md) — when aligning **heading / title** APIs across components. A **card** migration roadmap should be treated the same way once it exists under this section.
 
@@ -241,6 +241,5 @@ Pick one mechanism per state. **Do not** mix `tabindex="-1"` sweeps with the val
 - [Using ARIA (read this first)](https://www.w3.org/WAI/ARIA/apg/practices/read-me-first/)
 - [WAI-ARIA 1.2: `aria-disabled` (state)](https://www.w3.org/TR/wai-aria-1.2/#aria-disabled)
 - [HTML: the `inert` attribute](https://html.spec.whatwg.org/multipage/interaction.html#the-inert-attribute)
-- [Accordion migration roadmap](./rendering-and-styling-migration-analysis.md)
 - [Accordion migration plan](./migration-plan.md)
 - [Illustrated message migration roadmap](../illustrated-message/rendering-and-styling-migration-analysis.md)
