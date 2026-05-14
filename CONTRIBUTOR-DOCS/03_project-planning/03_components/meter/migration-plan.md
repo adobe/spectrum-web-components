@@ -60,7 +60,7 @@
 
 - **Component**: `<sp-meter>` (1st-gen, `@spectrum-web-components/meter@1.11.2`) → `<swc-meter>` (2nd-gen).
 - **What this is**: a non-focusable, read-only bar that shows a value (`value`, default range 0–100) inside a fixed range. ARIA pattern is **`role="meter"`**, distinct from `progressbar` task progress (separate component).
-- **Architecture**: independent component. **No shared base** with progress-bar / progress-circle. Bar/track/fill styles live in `meter.css`, copied from `spectrum-css` `spectrum-two` (`progressbar/index.css` + `meter/index.css`). Core layer holds `MeterBase` for API, ARIA plumbing, and locale-aware formatting; SWC layer renders S2 markup against the `swc-Meter` wrapper class.
+- **Architecture**: `<swc-meter>` shares a **thin `LinearProgressMixin`** in `core` with the future `<swc-progress-bar>`. The mixin holds every property, computed value, and behavior that both components share (value clamping, fill-fraction, locale formatting, slot tracking, DEBUG warning) but is intentionally silent on ARIA role and animation — those are left to each component's own base class. `MeterBase` extends `LinearProgressMixin` and adds `variant` + meter-specific ARIA resolution. The SWC layer renders S2 markup against the `swc-Meter` wrapper class. Shared bar/track/fill/label-layout CSS lives in a `linear-progress-base.css` file that both `meter.css` and future `progress-bar.css` import.
 - **API alignment**: 2nd-gen aligns with [React Spectrum S2 Meter](https://react-spectrum.adobe.com/Meter.html) and the Figma `S2 / Web (Desktop scale)` Meter frame supplied with this plan. Net effect: rename `progress` → `value`, add `minValue`/`maxValue`, replace `side-label` boolean with `label-position` enum, expose `value-label`, expose `formatOptions` (`Intl.NumberFormatOptions`) as a JS property, align `variant` set to `{informative (default), positive, notice, negative}`, expose `static-color` as `{white, black}`, and add `label` + `description` named slots.
 - **Must-ship breaking/a11y**: tag rename `<sp-meter>` → `<swc-meter>`; replace 1st-gen's invalid combined `role="meter progressbar"` with `role="meter"` only, placed on the shadow `.swc-Meter` element (not the host); add `aria-valuemin`, `aria-valuemax`, and `aria-valuetext` (localized formatted value) on the role element; drop `--mod-*` passthroughs in favor of a reviewed `--swc-meter-*` set; render inside a `<div class="swc-Meter">` wrapper instead of styling the host.
 - **Net-new from S2/React**: arbitrary numeric range (`minValue`/`maxValue`); custom `value-label` (e.g. `"1 of 4"`); custom `formatOptions` (`Intl.NumberFormatOptions`, JS property only — full pass-through to `Intl.NumberFormat`); `static-color="black"`; **`description` named slot** for additional text below the meter (not a "help-text" attribute — meter is not a form field).
@@ -146,14 +146,15 @@ Plus the host receives `role="meter progressbar"` (invalid combined ARIA role st
 
 2nd-gen equivalents:
 
-| 1st-gen import                                                             | 2nd-gen equivalent                                                                                  | Status        |
-| -------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- | ------------- |
-| `SpectrumElement` from `@spectrum-web-components/base`                     | `@spectrum-web-components/core/element/index.js`                                                    | Available     |
-| `SizedMixin` from `@spectrum-web-components/base`                          | `@spectrum-web-components/core/mixins/index.js`                                                     | Available     |
-| `LanguageResolutionController` from `reactive-controllers`                 | `@spectrum-web-components/core/controllers/language-resolution.js`                                  | Available     |
-| `getLabelFromSlot` from `shared`                                           | `@spectrum-web-components/core/utils/get-label-from-slot.js`                                        | Available     |
-| `ObserveSlotText` from `shared`                                            | Not needed in 2nd-gen — handle via `slotchange` directly (precedent: `ProgressCircleBase`)          | N/A           |
-| `<sp-field-label>` rendered in shadow                                      | `<swc-field-label>` does **not** exist yet                                                          | **Not migrated** — 2nd-gen renders plain `<span class="swc-Meter-label">` (in the `label` slot's shadow container) / `<span class="swc-Meter-value">` (SWC-namespaced selectors; `<span>` because `role="meter"` is not pair-able with native `<label>`). See B8 in [Must ship](#must-ship--breaking-or-a11y-required). |
+| 1st-gen import | 2nd-gen equivalent | Status |
+| --- | --- | --- |
+| `SpectrumElement` from `@spectrum-web-components/base` | `@spectrum-web-components/core/element/index.js` | Available |
+| `SizedMixin` from `@spectrum-web-components/base` | `@spectrum-web-components/core/mixins/index.js` | Available |
+| `LanguageResolutionController` from `reactive-controllers` | `@spectrum-web-components/core/controllers/language-resolution.js` | Available |
+| `getLabelFromSlot` from `shared` | `@spectrum-web-components/core/utils/get-label-from-slot.js` | Available |
+| `ObserveSlotText` from `shared` | Not needed in 2nd-gen — handle via `slotchange` directly (precedent: `ProgressCircleBase`) | N/A |
+| `<sp-field-label>` rendered in shadow | `<swc-field-label>` does **not** exist yet | **Not migrated** — 2nd-gen renders plain `<span class="swc-Meter-label">` / `<span class="swc-Meter-value">` (SWC-namespaced selectors; `<span>` because `role="meter"` is not pair-able with native `<label>`). See B8 in [Must ship](#must-ship--breaking-or-a11y-required). |
+| _(new)_ shared behavior with progress-bar | `LinearProgressMixin` in `2nd-gen/packages/core/mixins/linear-progress.mixin.ts` | **New in this migration** — created alongside Meter so the future progress-bar migration can consume it without additional breaking changes. |
 
 ---
 
@@ -161,18 +162,20 @@ Plus the host receives `role="meter progressbar"` (invalid combined ARIA role st
 
 ### Dependency-aware recommendation
 
-`<swc-meter>` is migrated **independently** of `<swc-progress-bar>`. No shared base is extracted in core.
+`<swc-meter>` is migrated as the **first consumer of `LinearProgressMixin`**, a thin shared mixin in core. The mixin captures the shared API surface and behavior (value clamping, formatting, slot tracking, DEBUG warning) that meter and the future `<swc-progress-bar>` both need. The mixin is **intentionally silent** on ARIA role, indeterminate state, and animation — those stay in each component's own base class. CSS sharing follows the same boundary: shared bar/track/fill and label-layout rules live in `linear-progress-base.css`; each component's `*.css` imports it and adds only what is component-specific.
 
-Rationale:
+Creating the mixin during the Meter migration (rather than waiting for the progress-bar epic) means the progress-bar team inherits a tested, reviewed contract with no additional breaking changes to consumers.
 
-- 1st-gen `<sp-meter>` extended progress-bar visuals via CSS `@import` of `spectrum-progress-bar.css` and `progress-bar-overrides.css`. In 2nd-gen, this is replaced with a self-contained `meter.css` that copies the relevant bar/track/fill rules from `spectrum-css` `spectrum-two` ([`components/progressbar/index.css`](https://github.com/adobe/spectrum-css/blob/spectrum-two/components/progressbar/index.css)) plus the meter-specific rules from [`components/meter/index.css`](https://github.com/adobe/spectrum-css/blob/spectrum-two/components/meter/index.css).
-- The 1st-gen progress-bar package is not migrated yet; making meter wait on or share with it would couple two epics unnecessarily and slow SWC-2005.
-- The components have different ARIA semantics (`role="meter"` vs `role="progressbar"`), different default behaviors (meter is determinate-only; progress-bar can be indeterminate), and different value semantics. A shared base would have to gate most of its API per subclass anyway.
+Rationale for keeping role and animation out of the mixin:
+
+- `role="meter"` vs `role="progressbar"` require different `aria-value*` behavior (progress-bar omits `aria-valuenow` when indeterminate; meter is always determinate). Mixing these in one base would require gating logic that makes the mixin harder to reason about.
+- The indeterminate animation is entirely progress-bar-specific and has no meter equivalent. Keeping it out of the mixin keeps the mixin small and easy to test in isolation.
+- The 1st-gen `<sp-meter>` inherited CSS via `@import` of `spectrum-progress-bar.css`, which created maintenance coupling. The shared CSS file approach keeps the visual contract explicit without re-introducing that coupling.
 
 ### Related components and ordering notes
 
-- **Progress bar** ([`1st-gen/packages/progress-bar`](../../../../1st-gen/packages/progress-bar/)) — independent migration on its own epic. No coupling to this work.
-- **Progress circle** ([`2nd-gen/packages/swc/components/progress-circle`](../../../../2nd-gen/packages/swc/components/progress-circle/)) — already migrated. Used as the structural precedent for `aria-value*` plumbing, slot-as-label hoisting, locale-aware formatting, and the dev-mode accessible-name warning. Not extended.
+- **Progress bar** ([`1st-gen/packages/progress-bar`](../../../../1st-gen/packages/progress-bar/)) — independent migration on its own epic. Will consume `LinearProgressMixin` and `linear-progress-base.css` without changes to those files (the mixin and shared CSS are designed to be additive-only after Meter ships).
+- **Progress circle** ([`2nd-gen/packages/swc/components/progress-circle`](../../../../2nd-gen/packages/swc/components/progress-circle/)) — already migrated. Used as the structural precedent for `aria-value*` plumbing, slot-as-label hoisting, locale-aware formatting, and the dev-mode accessible-name warning. Not extended and not part of the `LinearProgressMixin` surface (it is circular, not bar-shaped).
 - **Field label** — internal render dependency; not migrated. 2nd-gen `<swc-meter>` renders plain `<span class="swc-Meter-label">` / `<span class="swc-Meter-value">` inside its shadow root (`<span>`, not `<label>`, because `role="meter"` is not pair-able with native `<label>` semantics; the `meter` role element uses `aria-labelledby` to reference the `<span>` containing the label slot). SWC-namespaced selectors per the [contributor docs selector patterns](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/01_component-css.md#selector-patterns). No dependency on `<swc-field-label>`.
 - **Description** — exposed as a **`description`** named slot on `<swc-meter>`. The slot's shadow container carries an internal id and is `aria-describedby`-referenced from the role element. "Help text" terminology is not used because it implies a form field; meter is a non-interactive display.
 
@@ -288,7 +291,7 @@ Initial expected set for `<swc-meter>` (final list locked in implementation):
 
 - **Read-only display.** Host is not focusable. No `tabindex`. Keyboard skips the component.
 - **Value clamping.** `value` is clamped into `[minValue, maxValue]` for both rendering (`fill` width as `(value − minValue) / (maxValue − minValue)`) and `aria-valuenow`. `minValue` defaults to `0`, `maxValue` to `100`; default behavior matches the 1st-gen 0–100 range.
-- **Locale-aware formatting.** When `value-label` is unset, format the visible value and `aria-valuetext` via `new Intl.NumberFormat(language, formatOptions ?? { style: 'percent' })`. The `language` argument comes from the shared `LanguageResolutionController` (subscribed in `MeterBase`); on `language-resolver-updated`, the formatted value + `aria-valuetext` are re-rendered. For percent style, feed the normalized fraction `(value − minValue) / (maxValue − minValue)`. Re-format on any of `value`, `minValue`, `maxValue`, `valueLabel`, `formatOptions` changing.
+- **Locale-aware formatting.** When `value-label` is unset, format the visible value and `aria-valuetext` via `new Intl.NumberFormat(language, formatOptions ?? { style: 'percent' })`. The `language` argument comes from the shared `LanguageResolutionController` (subscribed in `LinearProgressMixin`); on `language-resolver-updated`, the formatted value + `aria-valuetext` are re-rendered. For percent style, feed the normalized fraction `(value − minValue) / (maxValue − minValue)`. Re-format on any of `value`, `minValue`, `maxValue`, `valueLabel`, `formatOptions` changing.
 - **`value-label` precedence.** Non-empty `value-label` attribute overrides auto-formatted text in both the visible value cell and `aria-valuetext`. String only — no slot version (matches React's `valueLabel` API).
 - **Variant validation.** `variant` is a typed enum; unknown values fall back to `'informative'`. Tracked in `Meter.types.ts` rather than via the 1st-gen string-coercing setter.
 - **No custom events.** No `dispatchEvent` calls; behavior parity with 1st-gen.
@@ -310,14 +313,16 @@ Sourced from [`accessibility-migration-analysis.md`](./accessibility-migration-a
 
 ## Architecture: core vs SWC split
 
-> The 1st-gen component is a **reference only** — 2nd-gen is built independently. Neither generation imports from the other. **No shared base** with progress-bar or progress-circle.
+> The 1st-gen component is a **reference only** — 2nd-gen is built independently. Neither generation imports from the other. No shared base with progress-circle.
 
 Follow the [Badge migration reference](../../02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md#reference-badge-migration) and the `ProgressCircleBase` precedent for structural patterns (without inheriting from it).
 
-| Layer    | Path                                              | Contains                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
-| -------- | ------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Core** | `2nd-gen/packages/core/components/meter/`         | `Meter.base.ts`, `Meter.types.ts`, `index.ts`. Owns: typed property declarations (`value`, `minValue`, `maxValue`, `accessibleLabel`, `valueLabel`, `formatOptions`, `variant`, `labelPosition`, `staticColor`, `size`); `value` clamping; locale-aware formatting via `LanguageResolutionController` (rename to `LocaleResolutionController` tracked as a deferred cross-cutting follow-up); internal id generation for the `label` and `description` slot containers; resolution of `aria-labelledby` / `aria-describedby` / `aria-label` values that the SWC layer applies to the shadow role element; `description` slot assignment-tracking (`slotchange` on the named slot) to drive conditional rendering of the description container; DEBUG-mode accessible-name warning when neither the `label` slot has assigned nodes nor `accessibleLabel` is set; constants `METER_VALID_SIZES`, `METER_STATIC_COLORS_S2`, `METER_VARIANTS`, `METER_LABEL_POSITIONS`. **No rendering.** **No JSX/Lit template.** Nothing role/ARIA-related is set on the host. |
-| **SWC**  | `2nd-gen/packages/swc/components/meter/`          | `Meter.ts` (extends `MeterBase`), `meter.css`, `index.ts`, element registration `swc-meter`, `stories/`, `test/`, `consumer-migration-guide.mdx`. Owns: S2 rendering with the `swc-Meter` wrapper, S2 token bindings, `static-color="white"`/`static-color="black"` classes, all visual styling.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| Layer | Path | Contains |
+| --- | --- | --- |
+| **Mixin** | `2nd-gen/packages/core/mixins/linear-progress.mixin.ts` | `LinearProgressMixin`. The thin shared layer. Owns: typed property declarations for all shared props (`value`, `minValue`, `maxValue`, `accessibleLabel`, `valueLabel`, `formatOptions`, `labelPosition`, `staticColor`, `size`); shared type constants (`LINEAR_PROGRESS_VALID_SIZES`, `LINEAR_PROGRESS_LABEL_POSITIONS`, `LINEAR_PROGRESS_STATIC_COLORS`); `value` clamping; fill-fraction computation; locale-aware formatting via `LanguageResolutionController`; internal id generation for the `label` and `description` slot containers; `label`-slot and `description`-slot `slotchange` tracking; resolution of `aria-labelledby` / `aria-describedby` / `aria-label` values exposed as getters for the SWC render template; DEBUG-mode accessible-name warning. **No ARIA role. No indeterminate state. No rendering.** |
+| **Core** | `2nd-gen/packages/core/components/meter/` | `Meter.base.ts` (extends `LinearProgressMixin`), `Meter.types.ts`, `index.ts`. Owns only what is meter-specific on top of the mixin: `variant` typed property (`METER_VARIANTS` constant); any meter-specific ARIA decisions not already resolved by the mixin. **No rendering. No JSX/Lit template.** |
+| **SWC** | `2nd-gen/packages/swc/components/meter/` | `Meter.ts` (extends `MeterBase`), `meter.css`, `index.ts`, element registration `swc-meter`, `stories/`, `test/`, `consumer-migration-guide.mdx`. Owns: S2 rendering with the `swc-Meter` wrapper, `role="meter"` + all `aria-value*` bindings on the role element, S2 token bindings, `static-color="white"`/`static-color="black"` classes, meter-specific visual styling. Imports `linear-progress-base.css` for shared bar/track/fill and label-layout rules. |
+| **Shared CSS** | `2nd-gen/packages/swc/shared/linear-progress-base.css` | Shared bar/track/fill structure, size tokens, label/value text layout (top vs side), static-color (white/black) treatment, i18n modifiers. Imported by `meter.css` and (in the future) `progress-bar.css`. Contains no variant fill colors, no indeterminate animation. |
 
 Planned rendering shape for `Meter.ts.render()`:
 
@@ -359,7 +364,7 @@ Notes:
 - **Conditional rendering** is used for the `description` slot container (and for `aria-labelledby` / `aria-label` / `aria-describedby` attributes themselves) — emit only when the corresponding source has content. No `hidden` attribute toggling.
 - **`<span>` not `<label>`** for both the label and value containers. `role="meter"` is not pair-able with native `<label>` semantics; `<span>` + `aria-labelledby` is the correct association.
 - All labeling (`swc-Meter-label`, `swc-Meter-value`, `swc-Meter-description`) is supported across every variant and `static-color` mode — full label parity with React Spectrum + `spectrum-css` `spectrum-two`. The Figma `Static white` / `Static black` panels omit text for visual simplicity only; that is not a spec constraint.
-- Class names use the `swc-` prefix per [contributor docs selector patterns](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/01_component-css.md#selector-patterns). The S2 CSS rules from `spectrum-css` `spectrum-two` are ported into `meter.css` with selectors rewritten to the SWC namespace; values/tokens are preserved.
+- Class names use the `swc-` prefix per [contributor docs selector patterns](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/01_component-css.md#selector-patterns). S2 CSS rules that are shared with progress-bar (bar/track/fill, size tokens, label/value layout, static-color) go into `linear-progress-base.css` with selectors rewritten to the SWC namespace. Meter-specific rules (variant fill colors, description spacing) go into `meter.css`, which `@import`s `linear-progress-base.css`. Values/tokens are preserved throughout.
 
 ---
 
@@ -375,9 +380,11 @@ Notes:
 
 ### Setup
 
-- [ ] Create `2nd-gen/packages/core/components/meter/` with `Meter.base.ts`, `Meter.types.ts`, `index.ts`
-- [ ] Create `2nd-gen/packages/swc/components/meter/` with `Meter.ts`, `meter.css`, `index.ts`, `stories/`, `test/`
-- [ ] Wire exports in both core and swc `package.json` files
+- [ ] Create `2nd-gen/packages/core/mixins/linear-progress.mixin.ts` with the `LinearProgressMixin` stub and its shared type constants (`LINEAR_PROGRESS_VALID_SIZES`, `LINEAR_PROGRESS_LABEL_POSITIONS`, `LINEAR_PROGRESS_STATIC_COLORS`)
+- [ ] Create `2nd-gen/packages/swc/shared/linear-progress-base.css` as an empty stub (content added in Styling phase)
+- [ ] Create `2nd-gen/packages/core/components/meter/` with `Meter.base.ts` (extends `LinearProgressMixin`), `Meter.types.ts` (`METER_VARIANTS` + `MeterVariant`), `index.ts`
+- [ ] Create `2nd-gen/packages/swc/components/meter/` with `Meter.ts`, `meter.css` (`@import`s `linear-progress-base.css`), `index.ts`, `stories/`, `test/`
+- [ ] Wire exports in `core` and `swc` `package.json` files; export `LinearProgressMixin` from core's mixins barrel
 - [ ] Add to root workspace; confirm `yarn build:2nd-gen` passes with the empty stubs in place
 - [ ] Verify `spectrum-css` is checked out at `spectrum-two` branch as sibling directory (`../spectrum-css`)
 
@@ -385,15 +392,15 @@ Notes:
 
 #### Naming and public surface
 
-- [ ] `Meter.types.ts`: define `METER_VALID_SIZES = ['s','m','l','xl'] as const`, `METER_STATIC_COLORS = ['white','black'] as const`, `METER_VARIANTS = ['informative','positive','notice','negative'] as const`, `METER_LABEL_POSITIONS = ['top','side'] as const`, and the corresponding `MeterSize`, `MeterStaticColor`, `MeterVariant`, `MeterLabelPosition` types
-- [ ] `Meter.base.ts`: declare typed properties — `value` (number, default 0), `minValue` (number, default 0), `maxValue` (number, default 100), `accessibleLabel` (string, default `''`, attr `accessible-label`; rare-case fallback when no `label` slot content), `valueLabel` (string, optional), `formatOptions` (`Intl.NumberFormatOptions`, default `{ style: 'percent' }`, JS property only — no attribute), `variant` (typed enum, default `'informative'`), `labelPosition` (typed enum, default `'top'`), `staticColor` (typed, optional), `size` (typed, default `'m'` via `SizedMixin`)
-- [ ] `Meter.base.ts`: no `role` or `aria-*` assignment on the host. Role + ARIA are declared in the SWC layer's render template on the `.swc-Meter` shadow element.
-- [ ] `Meter.base.ts`: compute and expose the derived values used by the SWC render template — clamped `value`, formatted value text, resolved `aria-label` / `aria-labelledby` / `aria-describedby` decisions — so the SWC layer can bind them declaratively in the template on the `.swc-Meter` role element. No `aria-*` attributes are set imperatively on the host or on shadow elements from `updated`. See [Accessibility semantics notes](#accessibility-semantics-notes-2nd-gen).
-- [ ] `Meter.base.ts`: clamp `value` into `[minValue, maxValue]` for both rendering and ARIA
-- [ ] `Meter.base.ts`: format value via `Intl.NumberFormat(language, formatOptions ?? { style: 'percent' })`; for percent style, feed normalized fraction
-- [ ] `Meter.base.ts`: handle `label`-slot `slotchange` to flag whether the slot has assigned nodes; the SWC layer uses this to decide between `aria-labelledby="<label-container-id>"` (slot has content) and `aria-label="${accessibleLabel}"` (rare-case fallback when slot is empty and `accessibleLabel` is set)
-- [ ] `Meter.base.ts`: handle `description`-slot `slotchange` to flag whether the slot has assigned nodes; the SWC layer conditionally renders the description container and emits `aria-describedby` on the role element only when the slot has content
-- [ ] `Meter.base.ts`: emit DEBUG-mode warning when no accessible name is provable, mirroring `ProgressCircleBase`
+- [ ] `linear-progress.mixin.ts`: define shared type constants — `LINEAR_PROGRESS_VALID_SIZES = ['s','m','l','xl'] as const`, `LINEAR_PROGRESS_STATIC_COLORS = ['white','black'] as const`, `LINEAR_PROGRESS_LABEL_POSITIONS = ['top','side'] as const`, and the corresponding `LinearProgressSize`, `LinearProgressStaticColor`, `LinearProgressLabelPosition` types; export `LinearProgressMixin` that applies all items below
+- [ ] `linear-progress.mixin.ts`: declare typed properties — `value` (number, default 0), `minValue` (number, default 0), `maxValue` (number, default 100), `accessibleLabel` (string, default `''`, attr `accessible-label`), `valueLabel` (string, optional), `formatOptions` (`Intl.NumberFormatOptions`, default `{ style: 'percent' }`, JS property only — no attribute), `labelPosition` (typed enum, default `'top'`), `staticColor` (typed, optional), `size` (typed, default `'m'` via `SizedMixin`)
+- [ ] `linear-progress.mixin.ts`: clamp `value` into `[minValue, maxValue]`; compute fill fraction `(value − minValue) / (maxValue − minValue)`; expose both as getters consumed by the SWC render template
+- [ ] `linear-progress.mixin.ts`: format value via `Intl.NumberFormat(language, formatOptions ?? { style: 'percent' })`; subscribe `LanguageResolutionController`; re-format on locale change and on changes to `value`, `minValue`, `maxValue`, `valueLabel`, `formatOptions`; expose formatted text as a getter
+- [ ] `linear-progress.mixin.ts`: handle `label`-slot `slotchange` to flag whether the slot has assigned nodes; expose the flag and the resolved `aria-labelledby`/`aria-label` decision as getters for use in the SWC render template
+- [ ] `linear-progress.mixin.ts`: handle `description`-slot `slotchange` to flag whether the slot has assigned nodes; expose the flag as a getter so the SWC layer can conditionally render the description container and emit `aria-describedby`
+- [ ] `linear-progress.mixin.ts`: emit DEBUG-mode warning when no accessible name is provable (neither `label` slot has assigned nodes nor `accessibleLabel` is set), mirroring `ProgressCircleBase`
+- [ ] `Meter.types.ts`: define `METER_VARIANTS = ['informative','positive','notice','negative'] as const` and `MeterVariant` type (shared size/static-color/label-position constants live in the mixin)
+- [ ] `Meter.base.ts`: extend `LinearProgressMixin`; declare only `variant` typed property (default `'informative'`); no `role` or `aria-*` assignment on the host; all shared behavior is handled by the mixin
 
 #### Alignment checks
 
@@ -408,7 +415,7 @@ Notes:
 > Follow the [CSS style guide](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/) as the source of truth for all styling work. Key references: [migration steps](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/04_spectrum-swc-migration.md), [custom properties](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md), [anti-patterns](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/05_anti-patterns.md).
 
 - [ ] Render the internal wrapper as `<div class="swc-Meter">`; do not target `:host` for component visuals
-- [ ] Copy S2 source from `spectrum-css` `spectrum-two` branch — `components/meter/index.css` plus the relevant rules from `components/progressbar/index.css` (the meter file is mostly progress-bar passthroughs and contains no bar visuals on its own) — into `meter.css` as the baseline
+- [ ] Copy S2 source from `spectrum-css` `spectrum-two` branch — `components/meter/index.css` plus the relevant rules from `components/progressbar/index.css` — and split into: (a) shared bar/track/fill structure, size tokens, label/value text layout, static-color treatment, and i18n modifiers → `linear-progress-base.css` (rewrite selectors to the `swc-` namespace); (b) meter-specific rules (variant fill colors, description spacing) → `meter.css`, which `@import`s `linear-progress-base.css`
 - [ ] Strip all `--mod-*` properties; replace with the reviewed `--swc-meter-*` set defined in [2nd-gen API decisions](#2nd-gen-api-decisions)
 - [ ] Variant fill colors via tokens (`positive-visual-color`, `notice-visual-color`, `negative-visual-color`; `accent-content-color-default` for the `informative` default)
 - [ ] Static-color rules for both `staticWhite` and `staticBlack` modifiers
@@ -469,6 +476,7 @@ Notes:
 
 #### General
 
+- [ ] JSDoc on `LinearProgressMixin` in `linear-progress.mixin.ts` — document all shared properties, getters, and behavior
 - [ ] JSDoc on all public props, slots, and CSS custom properties in `Meter.base.ts` and `Meter.ts`
 - [ ] Storybook stories: Playground, Overview, Anatomy, Sizes, Variants, LabelPosition (top vs side), Values (0/25/50/75/100%), CustomRange (`min-value`/`max-value`), ValueLabel, FormatOptions, Description (`description` slot present vs absent), StaticWhite, StaticBlack, StaticColors (combined), Accessibility (per [stories-format](../../../../.ai/rules/stories-format.md) and [stories-documentation](../../../../.ai/rules/stories-documentation.md))
 - [ ] Storybook `subtitle` plain text; JSDoc above meta carries the longer description
@@ -491,7 +499,7 @@ Notes:
 
 All drafting-time questions are resolved. Resolutions:
 
-- **Q1 (architecture)** — Closed. Independent `<swc-meter>` with no shared base. Bar styles live in `meter.css`. Reflected in [Architecture: core vs SWC split](#architecture-core-vs-swc-split) and [Migration sequencing and prerequisites](#migration-sequencing-and-prerequisites).
+- **Q1 (architecture)** — Closed. `<swc-meter>` shares `LinearProgressMixin` in core with the future `<swc-progress-bar>`. Bar styles are split: shared rules live in `linear-progress-base.css`; meter-specific rules (variant fill colors, description spacing) live in `meter.css`. Reflected in [Architecture: core vs SWC split](#architecture-core-vs-swc-split) and [Migration sequencing and prerequisites](#migration-sequencing-and-prerequisites).
 - **Q2 (variants)** — Closed. `{informative (default), positive, notice, negative}` per React Spectrum S2 + Figma. Reflected in [Public API](#public-api) and B5.
 - **Q3 (static colors)** — Closed. `{white, black}` per `spectrum-css` `spectrum-two` + Figma. React's `'auto'` deferred (no S2 CSS support). Reflected in [Public API](#public-api), A1, and the deferred-ticket table below.
 - **Q4 (description, formerly "help text")** — Closed. Exposed as the `description` named slot (not a "help-text" attribute — meter is not a form field). Slot content renders inside `<span class="swc-Meter-description">` in the shadow root; the shadow `meter` role element `aria-describedby`-references that container's internal id when the slot has assigned nodes. Container is conditionally rendered (no `hidden` attribute toggling). Reflected in A2, the Slots table, the Architecture render shape, and the Migration checklist.
