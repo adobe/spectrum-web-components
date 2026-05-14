@@ -46,9 +46,11 @@ Run `yarn changeset`, select the affected packages, choose a bump type, then wri
 
 ### Bump types
 
+Bump types follow [semantic versioning](https://semver.org/) — the version number communicates the nature of the change to consumers.
+
 | Bump type | When to use | Example |
 |---|---|---|
-| `minor` | New component or new feature | Added a new component or attribute |
+| `minor` | New component, new feature, or deprecating an attribute with a new replacement | Added a new component or attribute, deprecated `label` in favor of `alt` |
 | `patch` | Bug fix, deprecation warning, or non-breaking internal change | Fixed a rendering issue, added Gen1 deprecation warning |
 | `major` | Breaking change requiring consumer update (rare — requires detailed planning and cross-team communication before merging) | Renamed or removed an attribute |
 
@@ -131,7 +133,7 @@ Separate changesets keep each entry clean and allow different bump types per com
 At release time, the script collates changeset entries under a version heading. The output is fully automated — no manual editing required:
 
 ```markdown
-## 2.1.0
+## 0.2.0
 
 - `Button` — Added `justified` attribute for full-width layout. [#6254](link)
 - `Badge` — Fixed contrast ratio in dark theme for `notice` variant. [#6285](link)
