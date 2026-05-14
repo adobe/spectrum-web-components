@@ -23,6 +23,7 @@
 - [Related 1st-gen accessibility (Jira)](#related-1st-gen-accessibility-jira)
 - [Recommendations: `<swc-accordion>` / `<swc-accordion-item>`](#recommendations-swc-accordion--swc-accordion-item)
     - [ARIA roles, states, and properties](#aria-roles-states-and-properties)
+    - [Header label, optional actions, and Figma vs React Spectrum](#header-label-optional-actions-and-figma-vs-react-spectrum)
     - [Shadow DOM and cross-root ARIA Issues](#shadow-dom-and-cross-root-aria-issues)
     - [Accessibility tree expectations](#accessibility-tree-expectations)
     - [Keyboard and focus](#keyboard-and-focus)
@@ -37,13 +38,15 @@
 
 ## Overview
 
-This doc explains how **`swc-accordion`** and **`swc-accordion-item`** should behave for **accessibility**. The target is **WCAG 2.2 Level AA**. It complements the accordion **rendering-and-styling** migration doc and reflects the **accordion** pattern in the [ARIA Authoring Practices Guide (APG)](https://www.w3.org/WAI/ARIA/apg/patterns/accordion/), Deque’s **single** vs **multiselect** examples, and [Heydon Pickering’s collapsible sections](https://inclusive-components.design/collapsible-sections/) guidance (**`<button>`** inside a real **`<h*>`**; do not put **`role="button"`** on the heading element). The **preferred** implementation uses a **slot for heading text** and a **`heading-level`** property so shadow DOM can render **`<h*>` > `<button>`** with Spectrum styling.
+This doc explains how **`swc-accordion`** and **`swc-accordion-item`** should behave for **accessibility**. The target is **WCAG 2.2 Level AA**. It complements the [accordion migration plan](./migration-plan.md) and reflects the **accordion** pattern in the [ARIA Authoring Practices Guide (APG)](https://www.w3.org/WAI/ARIA/apg/patterns/accordion/), Deque’s **single** vs **multiselect** examples, and [Heydon Pickering’s collapsible sections](https://inclusive-components.design/collapsible-sections/) guidance (**`<button>`** inside a real **`<h*>`**; do not put **`role="button"`** on the heading element). The **preferred** implementation uses a **slot for the section label** (into the disclosure **`<button>`**) plus a **`heading-level`** property so shadow DOM can render **`<h*>` > `<button>`** with Spectrum styling. **Optional** header **direct actions** use a **second** slot—**working name `slot="actions"`**, **final slot name not frozen**—see [Header label, optional actions, and Figma vs React Spectrum](#header-label-optional-actions-and-figma-vs-react-spectrum).
 
 ### Also read
 
-[Accordion migration roadmap](./rendering-and-styling-migration-analysis.md) for DOM and styling migration.
+[Accordion migration plan](./migration-plan.md) for DOM, styling, API decisions, and sequencing.
 
 [Illustrated message migration roadmap](../illustrated-message/rendering-and-styling-migration-analysis.md) — when aligning **heading / title** APIs across components. A **card** migration roadmap should be treated the same way once it exists under this section.
+
+Spectrum 2 **accordion** visuals (including direct actions): [S2 — Web (desktop scale): Accordion (Figma)](https://www.figma.com/design/Mngz9H7WZLbrCvGQf3GnsY/S2---Web--Desktop-scale-?node-id=124732-6479).
 
 ### What an accordion is
 
@@ -110,11 +113,48 @@ It is also **risky** to handle **ArrowUp** / **ArrowDown** (or **Home** / **End*
 | **Disabled item** | **Header** **button:** set **`aria-disabled="true"`** and **block** **activation** in script. **Do** **not** use the HTML **`disabled`** **attribute** on the **header** **button** as the **sole** **disabled** **mechanism**—native **`disabled`** often **excludes** the **control** from the **Tab** order, which can **hide** the **item** from **screen** **reader** **users** in **focus** (virtual **cursor**) **mode**. **`aria-disabled`** **keeps** the **header** **focusable** and **exposes** the **disabled** state. **Panel** **root** (content **container** for the **item**): set the **`inert`** **attribute** so the **panel** and its **descendants** in the **flat** **tree** are [inert](https://html.spec.whatwg.org/multipage/interaction.html#the-inert-attribute) (no **focus**, no **pointer**-**target** for **that** **subtree**). **Do** **not** use **`tabindex="-1"`** **instead** of **`aria-disabled`** / **`inert`**—for **example** **`tabindex="-1"`** on the **header** **removes** it from **sequential** **focus** **navigation**, and **`tabindex="-1"`** on **children** is **not** a **substitute** for **`inert`** on the **panel** (which **inerts** the **whole** **subtree**). See **Accessibility** **tree** **expectations** below. |
 | **Single vs multiple open** | **`swc-accordion`** should support **at most one** expanded item or **multiple** expanded items ([Deque single](https://dequeuniversity.com/library/aria/accordion-single) vs [Deque multiselect](https://dequeuniversity.com/library/aria/accordion-multi)). Behavior must match documented props (e.g. analogous to **`allow-multiple`** on **`sp-accordion`**). |
 | **Heading shape (a11y)** | Shadow DOM renders the heading element (`<h2>`–`<h6>` per `level`) wrapping a native **`<button>`** so screen readers get **heading level + button** without **`role="button"`** on the heading ([Inclusive Components](https://inclusive-components.design/collapsible-sections/)). Consumers do not pass a full `<h*>` in light DOM; they supply text and set `level` for the outline. **`heading-level`** / **`level`** property accepts **`2`–`6`** (mirror 1st-gen **`level`** on **`sp-accordion-item`**). |
-| **Heading API (1st-gen → 2nd-gen, breaking)** | 1st-gen exposes a string **`label`** attribute (`AccordionItem.label`) rendered into shadow DOM. **2nd-gen decision (clean break, same posture as other migrated components):** ship **no** **`label`** on **`swc-accordion-item`** — heading copy **only** via the **heading slot** (exact slot name at API freeze). **Do not** add a deprecated **`label`** path or dual-source precedence; document migration as **`label="…"` → slotted heading** in the migration guide and Storybook so later phases do not reintroduce **`label`**. Remaining decisions before implementation: (1) Accepted slot content (text only vs allowing inline phrasing such as `<strong>` / `<code>`). (2) Slot-change handling: re-evaluate accessible name; no focusable descendants are expected inside the label. |
+| **Heading API (1st-gen → 2nd-gen, breaking)** | 1st-gen exposes a string **`label`** attribute (`AccordionItem.label`) rendered into shadow DOM. **2nd-gen decision (clean break, same posture as other migrated components):** ship **no** **`label`** on **`swc-accordion-item`** — heading copy **only** via the **heading / label slot** (exact slot name at API freeze). **Do not** add a deprecated **`label`** path or dual-source precedence; document migration as **`label="…"` → slotted heading** in the migration guide and Storybook so later phases do not reintroduce **`label`**. Remaining decisions before implementation: (1) Accepted slot content (text only vs allowing inline phrasing such as `<strong>` / `<code>`). (2) Slot-change handling: re-evaluate accessible name; **no** **focusable** descendants inside the **label** slot—interactive controls belong in the **optional header affordance** slot (**working name `actions`**—see [Header label, optional actions, and Figma vs React Spectrum](#header-label-optional-actions-and-figma-vs-react-spectrum)). (3) Disabled / **`inert`** interaction with slotted actions per [migration plan](./migration-plan.md). |
 | **Consistency** | Align **`heading-level`** / **`level`** naming, range, and **default** with **[Illustrated message](../illustrated-message/rendering-and-styling-migration-analysis.md)** and **card** (once specified) so teams use **one** mental model for section titles. |
 | **Keyboard — Space** | On **`keydown`** / **`keyup`** for **Space** while focus is on the header **`button`**, **`preventDefault()`** so the browser does **not** scroll the page or an **overflow** container; then **toggle** open/closed per APG ([SWC-1487](https://jira.corp.adobe.com/browse/SWC-1487)). |
 | **Keyboard — Tab** | Rely on the **normal** **Tab** / **Shift+Tab** order only ([APG example](https://www.w3.org/WAI/ARIA/apg/patterns/accordion/examples/accordion/)). **Do not** use **roving** **`tabindex`** on header **buttons** and **do not** implement **arrow**-key (or **Home** / **End**) moves **only** between **headers**; both conflict with **focus** **inside** **open** **panels** and with **scrolling** when **`preventDefault`** is misapplied to **arrows** on a **header**. |
 | **Do not** | Put **`role="button"`** on a **heading** instead of using a **`<button>`** inside the heading ([Inclusive Components](https://inclusive-components.design/collapsible-sections/)). |
+
+### Header label, optional actions, and Figma vs React Spectrum
+
+**Product / API shape**
+
+- **Figma** ([S2 — Accordion](https://www.figma.com/design/Mngz9H7WZLbrCvGQf3GnsY/S2---Web--Desktop-scale-?node-id=124732-6479)) shows **direct actions** as **explicit** toggles such as **show direct actions**, **show switch**, and **show action button**—a fixed matrix for **design exploration**. In practice **show direct actions** reads as the **general** “**stuff beside the title**” region, while the other toggles control **which** control appears in that region.
+- **React Spectrum** exposes **[`AccordionItemHeader`](https://react-spectrum.adobe.com/Accordion#accordionitemheader)** with **open-ended** children (any **ReactNode**)—see [React Spectrum — Accordion](https://react-spectrum.adobe.com/Accordion). **[`AccordionItemPanel`](https://react-spectrum.adobe.com/Accordion#accordionitempanel)** documents optional **`aria-describedby`** / **`aria-labelledby`** on the panel when authors need richer panel labeling.
+
+**Design / engineering consensus (accessibility)**
+
+- **Spectrum design + accessibility engineering** align that **SWC** should **own** optional **direct actions** in the **DOM** for **ARIA** and **focus** reasons: interactive affordances (**Edit**, **switch**, etc.) must live **outside** the disclosure **`<button>`** (and **not** inside the same **click** / **keyboard** target as **expand/collapse**). Putting them **inside** the heading **button** mangles **names**, **roles**, and **activation**, and adds **awkward** **tab** stops **before** the **panel** in ways that are hard to explain to screen reader users.
+- Some **Spectrum CSS** reference markup places affordances **inside** a **heading** tag for **layout** only; **SWC** must **not** copy that if it would put **focusable** widgets **inside** the disclosure **`<button>`**. Prefer this shadow DOM shape: **`<h*>`** wrapping **only** the disclosure **`<button>`** (named from the **label** slot), with the actions container as a **sibling to `<h*>`** (not inside it) so the heading's accessible name stays clean:
+
+  ```html
+  <h3><button id="header" aria-expanded="..." aria-controls="content">...</button></h3>
+  <div class="actions"><slot name="actions"></slot></div>
+  <div id="content" role="region" aria-labelledby="header"><slot></slot></div>
+  ```
+
+  Any content inside `<h*>` — including a sibling div to the button — can bleed into the heading's accessible name, so the actions container must live outside the heading element entirely. **Tab** order stays **disclosure** → **slotted actions** → **panel** when expanded, matching intent from the design thread.
+- **Slots:** one for the **section label** (projected into the disclosure **`<button>`**—**no** **focusable** descendants in that slot) and a **second** slot for **optional** chrome beside the title. **Working slot name `actions`**; final name is not frozen ([migration plan](./migration-plan.md#open--api-and-scope)).
+
+**`aria-describedby` in consumer docs (Storybook) — required**
+
+- **Consumer-facing** Storybook (and usage docs) **must** include an example where the **label** region exposes a stable **`id`** and the **optional** slot’s **wrapper** uses **`aria-describedby`** pointing at that **`id`**, so screen reader users hear how **“Edit”** (or a **switch**) relates to **“Bellows”** / the section title. Keep **`id`** values **unique** in the document. **`slot="actions"`** below is **illustrative** until the slot name is frozen:
+
+```html
+<swc-accordion-item>
+  <div id="bellows-heading" slot="label">Bellows</div>
+  <div slot="actions" aria-describedby="bellows-heading">
+    <button type="button">Edit</button>
+  </div>
+  <div>The bellows is the expandable section in the middle of the accordion.</div>
+</swc-accordion-item>
+```
+
+- If **`aria-describedby`** targets live in **light DOM** and the disclosure **`<button>`** stays in **shadow DOM**, the same **cross-root** **IDREF** caveats as other components apply—prefer wiring **descriptions** where **id** and **referrer** share a **root**, or document supported patterns explicitly.
 
 ### Shadow DOM and cross-root ARIA Issues
 
@@ -126,7 +166,8 @@ It is also **risky** to handle **ArrowUp** / **ArrowDown** (or **Home** / **End*
 **Per expanded item**
 
 - **Heading:** **heading** role at **level** from **`heading-level`** / **`level`**; **button** nested inside (Inclusive / APG shape).
-- **Trigger:** **button**, name from slotted **label** text (and optional icon **decorative**).
+- **Trigger:** **button**, name from slotted **label** text (and optional **decorative** icon on the disclosure control only).
+- **Optional slotted header actions:** If the second slot (**working name `actions`**, **final name TBD**) hosts **buttons**, **switches**, or other widgets, each keeps its **own** **role** and **accessible name**—**not** merged into the disclosure **button**. **Tab** order follows **DOM** order; document the expected order (disclosure vs actions vs panel) in Storybook. Do **not** place those widgets **inside** the disclosure **`<button>`**.
 - **`aria-expanded`:** **`true`** when panel is shown, **`false`** when hidden.
 - **Panel:** **`role="region"`**, named via **`aria-labelledby`** to the trigger (APG). When the panel is not visible, it must **not** expose interactive descendants in the tab order ([Collapsible sections](https://inclusive-components.design/collapsible-sections/)).
 
@@ -165,9 +206,9 @@ Pick one mechanism per state. **Do not** mix `tabindex="-1"` sweeps with the val
 | Kind of test | What to check |
 |--------------|----------------|
 | **Unit** | **`aria-expanded`** toggles with open state; **`aria-controls`** id matches panel; panel **`role`** and **`aria-labelledby`**; **disabled** items: **`aria-disabled`** on **header** **`button`**, **`inert`** on **panel** (assert **no** **`tabindex="-1"`** **substitute** for that **pair**); **activation** blocked; **Space** on enabled header calls **`preventDefault()`** and toggles without unintended scroll. |
-| **aXe + Storybook** | **WCAG 2.x** rules on accordion stories (single vs multiple open, disabled item). |
-| **Playwright ARIA snapshots** | Snapshot **tree** for open/closed items; **`heading`** role **level** changes when **`heading-level`** / **`level`** changes. |
-| **Keyboard** | **Tab** / **Shift+Tab** through all focusables; **no** roving `tabindex` on headers; **no** default **arrow**-key “header-only” **navigation** that could **interfere** with **scroll**; **Space** on header **`preventDefault`** + **toggle** per [SWC-1487](https://jira.corp.adobe.com/browse/SWC-1487); **Enter** per APG. |
+| **aXe + Storybook** | **WCAG 2.x** rules on accordion stories (single vs multiple open, disabled item, **`quiet`**, host **`disabled`**). Include at least one story with **optional header actions** (e.g. **Edit** **button**, **switch**) and verify **Tab** order + **`aria-describedby`** example from [Header label, optional actions, and Figma vs React Spectrum](#header-label-optional-actions-and-figma-vs-react-spectrum). |
+| **Playwright ARIA snapshots** | Snapshot **tree** for open/closed items; **`heading`** role **level** changes when **`heading-level`** / **`level`** changes; when header actions exist, disclosure **`button`** name is **separate** from slotted **action** controls. |
+| **Keyboard** | **Tab** / **Shift+Tab** through all focusables including slotted header **actions** before panel content when DOM order places them there; **no** roving `tabindex` on headers; **no** default **arrow**-key “header-only” **navigation** that could **interfere** with **scroll**; **Space** on header **`preventDefault`** + **toggle** per [SWC-1487](https://jira.corp.adobe.com/browse/SWC-1487); **Enter** per APG. |
 
 ---
 
@@ -179,6 +220,7 @@ Pick one mechanism per state. **Do not** mix `tabindex="-1"` sweeps with the val
 - [ ] No **`role="button"`** on the heading element; shadow DOM uses **`<button>`** inside **`<h2>`–`<h6>`**.
 - [ ] **Keyboard** and **disabled** behavior covered by tests and docs; **Space** on the header **`preventDefault()`** + **toggle** (no spurious scroll in overflow layouts). **No** roving `tabindex` on headers; **no** default arrow-key / Home / End “next header” behavior that blocks scroll; **Tab** is the main way to move between headers and in-panel focusables, matching the [APG accordion example](https://www.w3.org/WAI/ARIA/apg/patterns/accordion/examples/accordion/).
 - [ ] **Disabled** **items:** **header** uses **`aria-disabled="true"`** (focusable, no toggle); **panel** **container** uses **`inert`** so **subtree** is inert; **no** **`tabindex="-1"`** **instead** of that **pair**; verify with **screen** **reader** **focus** **mode** and **unit** / **aXe** where **applicable**.
+- [ ] **Optional header actions** (second slot—**working name `actions`**, **final name not frozen**): disclosure **`button`** stays **separate** from slotted widgets; **consumer** Storybook **must** include the **`aria-describedby`** pattern tying the affordance wrapper to the **label** **`id`** ([Header label, optional actions, and Figma vs React Spectrum](#header-label-optional-actions-and-figma-vs-react-spectrum)); **Tab** / snapshots cover **switch** + **button** cases.
 - [ ] **References** below include APG, Deque, and Inclusive Components links used in this doc.
 
 ---
@@ -190,10 +232,14 @@ Pick one mechanism per state. **Do not** mix `tabindex="-1"` sweeps with the val
 - [Deque University: Accordion (Single)](https://dequeuniversity.com/library/aria/accordion-single)
 - [Deque University: Accordion (Multiselect)](https://dequeuniversity.com/library/aria/accordion-multi)
 - [Inclusive Components: Collapsible sections](https://inclusive-components.design/collapsible-sections/)
+- [Inclusive Components: Cards — pseudo content trick](https://inclusive-components.design/cards/#thepseudocontenttrick) (header affordances beside title)
+- [React Spectrum — Accordion](https://react-spectrum.adobe.com/Accordion), [`AccordionItemHeader`](https://react-spectrum.adobe.com/Accordion#accordionitemheader), and [`AccordionItemPanel`](https://react-spectrum.adobe.com/Accordion#accordionitempanel)
+- [Spectrum CSS — Accordion story (actions + switches)](https://spectrumcss.z13.web.core.windows.net/pr-2352/index.html?path=/story/components-accordion--default&args=hasActionButtons:!true;hasSwitches:!true) (layout reference; verify **a11y** in SWC)
+- [S2 — Web (desktop scale): Accordion (Figma)](https://www.figma.com/design/Mngz9H7WZLbrCvGQf3GnsY/S2---Web--Desktop-scale-?node-id=124732-6479)
 - [WAI-ARIA 1.2](https://www.w3.org/TR/wai-aria-1.2/)
 - [WCAG 2.2](https://www.w3.org/TR/WCAG22/)
 - [Using ARIA (read this first)](https://www.w3.org/WAI/ARIA/apg/practices/read-me-first/)
 - [WAI-ARIA 1.2: `aria-disabled` (state)](https://www.w3.org/TR/wai-aria-1.2/#aria-disabled)
 - [HTML: the `inert` attribute](https://html.spec.whatwg.org/multipage/interaction.html#the-inert-attribute)
-- [Accordion migration roadmap](./rendering-and-styling-migration-analysis.md)
+- [Accordion migration plan](./migration-plan.md)
 - [Illustrated message migration roadmap](../illustrated-message/rendering-and-styling-migration-analysis.md)
