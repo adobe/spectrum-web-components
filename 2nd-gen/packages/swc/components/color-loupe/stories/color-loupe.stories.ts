@@ -237,7 +237,7 @@ export const ParentDrivenVisibility: Story = {
         data-loupe-demo
         style="display: flex; flex-direction: column; align-items: center; gap: 24px; padding-block-start: 80px;"
       >
-        <!-- Color handle placeholder — eventual parent will be swc-color-handle -->
+        <!-- Color handle mock: provides the position:relative anchor for the loupe -->
         <div
           style="position: relative; inline-size: 24px; block-size: 24px; border-radius: 50%; background-color: rgba(0, 128, 255, 0.7); outline: 2px solid white; box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.25);"
         >

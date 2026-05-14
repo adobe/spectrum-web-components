@@ -184,6 +184,7 @@ export const ParentDrivenVisibilityTest: Story = {
     await step('loupe starts closed', async () => {
       expect(loupe.open).toBe(false);
       expect(btn.getAttribute('aria-expanded')).toBe('false');
+      expect(btn.textContent?.trim()).toBe('Show loupe');
     });
 
     await step('clicking the button opens the loupe', async () => {
@@ -191,7 +192,7 @@ export const ParentDrivenVisibilityTest: Story = {
       await loupe.updateComplete;
       expect(loupe.open).toBe(true);
       expect(btn.getAttribute('aria-expanded')).toBe('true');
-      expect(btn.textContent).toBe('Hide loupe');
+      expect(btn.textContent?.trim()).toBe('Hide loupe');
     });
 
     await step('clicking the button again closes the loupe', async () => {
@@ -199,7 +200,7 @@ export const ParentDrivenVisibilityTest: Story = {
       await loupe.updateComplete;
       expect(loupe.open).toBe(false);
       expect(btn.getAttribute('aria-expanded')).toBe('false');
-      expect(btn.textContent).toBe('Show loupe');
+      expect(btn.textContent?.trim()).toBe('Show loupe');
     });
   },
 };
