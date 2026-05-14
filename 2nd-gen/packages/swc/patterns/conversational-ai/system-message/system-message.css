@@ -63,5 +63,4 @@
   display: flex;
   flex-direction: column;
   gap: var(--swc-system-message-content-gap, token("spacing-100"));
-  padding-inline: token("spacing-300");
 }
