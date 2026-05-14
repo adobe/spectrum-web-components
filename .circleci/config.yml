@@ -69,13 +69,20 @@ commands:
               2nd-gen) EXCLUDE="1st-gen/" ;;
             esac
 
-            # Affected if at least one changed file is NOT under the other gen's prefix.
-            if echo "$CHANGED" | grep -qv "^${EXCLUDE}"; then
+            # Paths that never affect either gen's tests: contributor docs, AI
+            # rules/skills, changeset files, linter config, scripts, root-level
+            # markdown files, and the license file.
+            DOCS_PATTERN="^(CONTRIBUTOR-DOCS/|\.ai/|\.changeset/|linters/|scripts/|[^/]+\.md$|LICENSE$)"
+
+            # Strip other-gen files and docs-only files; what remains is relevant.
+            RELEVANT=$(echo "$CHANGED" | grep -v "^${EXCLUDE}" | grep -vE "${DOCS_PATTERN}" || true)
+
+            if [ -n "$RELEVANT" ]; then
               echo "<< parameters.gen >>-relevant changes detected:"
-              echo "$CHANGED" | grep -v "^${EXCLUDE}" | head -20
+              echo "$RELEVANT" | head -20
               echo "Running."
             else
-              echo "All changes are under ${EXCLUDE}; halting because << parameters.gen >> is not affected."
+              echo "Only docs/other-gen changes; halting because << parameters.gen >> is not affected."
               circleci-agent step halt
             fi
   install-azcopy:

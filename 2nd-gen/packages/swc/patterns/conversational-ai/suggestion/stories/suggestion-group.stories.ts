@@ -107,11 +107,7 @@ export const SuggestionCount: Story = {
             Create a slide deck from this
           </swc-suggestion-item>
         </swc-suggestion-group>
-        <span
-          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-700);"
-        >
-          One suggestion
-        </span>
+        <span class="swc-Detail swc-Detail--sizeS">One suggestion</span>
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;">
         <swc-suggestion-group heading="What would you like to do next?">
@@ -123,9 +119,7 @@ export const SuggestionCount: Story = {
           </swc-suggestion-item>
           <swc-suggestion-item>Translate to Spanish</swc-suggestion-item>
         </swc-suggestion-group>
-        <span
-          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-700);"
-        >
+        <span class="swc-Detail swc-Detail--sizeS">
           Three suggestions (recommended)
         </span>
       </div>
@@ -139,9 +133,7 @@ export const SuggestionCount: Story = {
           <swc-suggestion-item>Export as talking points</swc-suggestion-item>
           <swc-suggestion-item>Suggest a subject line</swc-suggestion-item>
         </swc-suggestion-group>
-        <span
-          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-700);"
-        >
+        <span class="swc-Detail swc-Detail--sizeS">
           Five suggestions (wraps)
         </span>
       </div>
@@ -167,11 +159,7 @@ export const Heading: Story = {
           </swc-suggestion-item>
           <swc-suggestion-item>Translate to Spanish</swc-suggestion-item>
         </swc-suggestion-group>
-        <span
-          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-700);"
-        >
-          Default heading
-        </span>
+        <span class="swc-Detail swc-Detail--sizeS">Default heading</span>
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;">
         <swc-suggestion-group heading="Suggested next actions">
@@ -183,11 +171,7 @@ export const Heading: Story = {
           </swc-suggestion-item>
           <swc-suggestion-item>Translate to Spanish</swc-suggestion-item>
         </swc-suggestion-group>
-        <span
-          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-700);"
-        >
-          Custom heading
-        </span>
+        <span class="swc-Detail swc-Detail--sizeS">Custom heading</span>
       </div>
     </div>
   `,
