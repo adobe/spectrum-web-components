@@ -19,7 +19,10 @@ import '@adobe/spectrum-wc/color-loupe';
 
 import { getComponent } from '../../../utils/test-utils.js';
 import meta from '../stories/color-loupe.stories.js';
-import { Overview } from '../stories/color-loupe.stories.js';
+import {
+  Overview,
+  ParentDrivenVisibility,
+} from '../stories/color-loupe.stories.js';
 
 export default {
   ...meta,
@@ -161,6 +164,43 @@ export const ColorPropertyTest: Story = {
       expect(
         fill.style.getPropertyValue('--swc-color-loupe-picked-color')
       ).toContain('0, 255, 0');
+    });
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Parent-driven visibility (button trigger)
+// ──────────────────────────────────────────────────────────────
+
+export const ParentDrivenVisibilityTest: Story = {
+  ...ParentDrivenVisibility,
+  play: async ({ canvasElement, step }) => {
+    const loupe = await getComponent<ColorLoupe>(
+      canvasElement,
+      'swc-color-loupe'
+    );
+    const btn = canvasElement.querySelector('swc-button') as HTMLElement;
+
+    await step('loupe starts closed', async () => {
+      expect(loupe.open).toBe(false);
+      expect(btn.getAttribute('aria-expanded')).toBe('false');
+      expect(btn.textContent?.trim()).toBe('Show loupe');
+    });
+
+    await step('clicking the button opens the loupe', async () => {
+      btn.click();
+      await loupe.updateComplete;
+      expect(loupe.open).toBe(true);
+      expect(btn.getAttribute('aria-expanded')).toBe('true');
+      expect(btn.textContent?.trim()).toBe('Hide loupe');
+    });
+
+    await step('clicking the button again closes the loupe', async () => {
+      btn.click();
+      await loupe.updateComplete;
+      expect(loupe.open).toBe(false);
+      expect(btn.getAttribute('aria-expanded')).toBe('false');
+      expect(btn.textContent?.trim()).toBe('Show loupe');
     });
   },
 };
