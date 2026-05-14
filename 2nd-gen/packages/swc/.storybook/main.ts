@@ -143,8 +143,9 @@ if (storybookMode === 'dev') {
 }
 
 /**
- * ci-a11y mode needs docs (for MDX parsing) and a11y; everything else
- * (designs, vitest, chromatic, screen-reader) is unnecessary overhead.
+ * ci-a11y mode needs docs (for MDX parsing); addon-a11y is excluded because
+ * the test-runner handles axe analysis directly. Everything else (designs,
+ * vitest, chromatic, screen-reader) is unnecessary overhead.
  */
 const addons: StorybookConfig['addons'] = [
   {
@@ -158,12 +159,12 @@ const addons: StorybookConfig['addons'] = [
       },
     },
   },
-  '@storybook/addon-a11y',
   '@github-ui/storybook-addon-performance-panel/universal',
 ];
 
 if (storybookMode !== 'ci-a11y') {
   addons.push(
+    '@storybook/addon-a11y',
     '@storybook/addon-designs',
     '@storybook/addon-vitest',
     '@chromatic-com/storybook',
