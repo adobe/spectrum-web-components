@@ -124,8 +124,7 @@ export const Overview: Story = {
  * `@adobe/spectrum-wc` after design tokens. See **Typography** and the typography [consumer migration guide](/docs/components-typography-consumer-migration-guide--readme).
  *
  * - **Wrapper** — Root container: `class="swc-Typography--prose"`.
- *   `swc-Typography--prose` applies consistent vertical spacing between block-level children; the conversational
- *   class adds pattern-specific tuning for system replies.
+ *   `swc-Typography--prose` applies consistent vertical spacing between block-level children.
  * - **Body** — Use semantic paragraphs and lists for body styling.
  * - **Headings** — Use semantic `<h2>`–`<h4>`.
  * - **Lists / links** — Keep lists and `<a href>` inside the prose wrapper so margins and link treatments stay
