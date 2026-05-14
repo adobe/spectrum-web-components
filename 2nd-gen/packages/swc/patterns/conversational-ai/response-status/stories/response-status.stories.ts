@@ -148,20 +148,14 @@ export const Loading: Story = {
     <div style="display:flex;flex-direction:column;gap:24px;">
       <div style="display:flex;flex-direction:column;gap:8px;">
         <swc-response-status loading></swc-response-status>
-        <span
-          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-700);"
-        >
-          Loading
-        </span>
+        <span class="swc-Detail swc-Detail--sizeS">Loading</span>
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;">
         <swc-response-status>
           I grouped your request into a presentation outline and prioritized key
           business messages.
         </swc-response-status>
-        <span
-          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-700);"
-        >
+        <span class="swc-Detail swc-Detail--sizeS">
           Complete (default label)
         </span>
       </div>
@@ -170,9 +164,7 @@ export const Loading: Story = {
           I grouped your request into a presentation outline and prioritized key
           business messages.
         </swc-response-status>
-        <span
-          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-700);"
-        >
+        <span class="swc-Detail swc-Detail--sizeS">
           Complete (custom label)
         </span>
       </div>
@@ -198,9 +190,7 @@ export const Reasoning: Story = {
     <div style="display:flex;flex-direction:column;gap:24px;">
       <div style="display:flex;flex-direction:column;gap:8px;">
         <swc-response-status></swc-response-status>
-        <span
-          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-700);"
-        >
+        <span class="swc-Detail swc-Detail--sizeS">
           Complete without reasoning content (no disclosure chevron)
         </span>
       </div>
@@ -209,22 +199,14 @@ export const Reasoning: Story = {
           I grouped your request into a presentation outline and prioritized key
           business messages.
         </swc-response-status>
-        <span
-          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-700);"
-        >
-          Reasoning collapsed
-        </span>
+        <span class="swc-Detail swc-Detail--sizeS">Reasoning collapsed</span>
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;">
         <swc-response-status open>
           Step 1: Analyzing the request… Step 2: Searching for relevant context…
           Step 3: Composing response.
         </swc-response-status>
-        <span
-          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-700);"
-        >
-          Reasoning expanded
-        </span>
+        <span class="swc-Detail swc-Detail--sizeS">Reasoning expanded</span>
       </div>
     </div>
   `,

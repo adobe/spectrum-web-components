@@ -15,6 +15,7 @@ import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
 import '@adobe/spectrum-wc/components/color-loupe/swc-color-loupe.js';
+import '@adobe/spectrum-wc/components/button/swc-button.js';
 
 // ────────────────
 //    METADATA
@@ -27,7 +28,7 @@ const { events, args, argTypes, template } =
  * An `<swc-color-loupe>` shows the output color that would otherwise be
  * covered by a cursor, stylus, or finger during color selection. It is a
  * visual-only companion to color selection components such as color area,
- * color slider, and color wheel — visibility is managed by the parent.
+ * color slider, and color wheel. Visibility is controlled by a parent component such as `<swc-color-handle>`.
  */
 const meta: Meta = {
   title: 'Color Components/Color Loupe',
@@ -200,7 +201,8 @@ OpenAndClosedStates.storyName = 'Open and closed states';
 
 /**
  * The color loupe's `open` state is entirely managed by its parent color
- * component — the loupe does not manage its own visibility:
+ * component; the loupe does not manage its own visibility. A parent such as
+ * `<swc-color-handle>` controls when it appears:
  *
  * - **Touch input**: The loupe automatically appears during touch interactions
  *   with any color component (`<swc-color-area>`, `<swc-color-slider>`,
@@ -211,24 +213,52 @@ OpenAndClosedStates.storyName = 'Open and closed states';
  *   selecting a color and back to `false` when the interaction ends
  *
  * The loupe animates its visibility with CSS transitions: `opacity` over
- * 125 ms and `transform` (vertical offset) over 100 ms.
+ * 125 ms and `transform` (vertical offset) over 100 ms. The button below
+ * simulates that trigger relationship.
  */
 export const ParentDrivenVisibility: Story = {
-  render: (args) => html`
-    ${labeledLoupe('Touch active', {
-      ...args,
-      open: true,
-      color: 'rgba(0, 200, 100, 0.8)',
-    })}
-    ${labeledLoupe('Idle', {
-      ...args,
-      open: false,
-      color: 'rgba(0, 200, 100, 0.8)',
-    })}
-  `,
+  render: (args) => {
+    const toggle = (event: MouseEvent) => {
+      const btn = event.currentTarget as HTMLElement;
+      const root = btn.closest('[data-loupe-demo]') as HTMLElement;
+      const loupe = root?.querySelector('swc-color-loupe') as HTMLElement & {
+        open: boolean;
+      };
+      if (!loupe) {
+        return;
+      }
+      loupe.open = !loupe.open;
+      btn.textContent = loupe.open ? 'Hide loupe' : 'Show loupe';
+      btn.setAttribute('aria-expanded', String(loupe.open));
+    };
+
+    return html`
+      <div
+        data-loupe-demo
+        style="display: flex; flex-direction: column; align-items: center; gap: 24px; padding-block-start: 80px;"
+      >
+        <!-- Color handle mock: provides the position:relative anchor for the loupe -->
+        <div
+          style="position: relative; inline-size: 24px; block-size: 24px; border-radius: 50%; background-color: rgba(0, 128, 255, 0.7); outline: 2px solid white; box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.25);"
+        >
+          ${template({ ...args, open: false, color: 'rgba(0, 128, 255, 0.7)' })}
+        </div>
+        <swc-button
+          variant="secondary"
+          fill-style="outline"
+          aria-expanded="false"
+          @click=${toggle}
+        >
+          Show loupe
+        </swc-button>
+      </div>
+    `;
+  },
   tags: ['behaviors'],
   parameters: {
-    flexLayout: 'row-wrap',
+    styles: {
+      'min-block-size': '240px',
+    },
   },
 };
 ParentDrivenVisibility.storyName = 'Parent-driven visibility';

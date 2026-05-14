@@ -42,6 +42,7 @@
   gap: token("spacing-300");
   padding: token("spacing-300");
   background: token("background-layer-2-color");
+  border: 1px solid transparent;
   border-radius: token("corner-radius-800");
   box-shadow: token("drop-shadow-emphasized-default-x") token("drop-shadow-emphasized-default-y") token("drop-shadow-emphasized-default-blur") token("drop-shadow-emphasized-default-color");
   overflow: hidden;
@@ -79,7 +80,7 @@
 .swc-PromptField-artifacts {
   display: flex;
   flex-wrap: wrap;
-  gap: token("spacing-100");
+  gap: token("spacing-300");
   align-items: start;
 }
 
@@ -92,17 +93,15 @@
   flex: 0 0 auto;
 }
 
-/* Figma (node 2:2035): single card artifact is 324px wide. */
 .swc-PromptField-artifacts--single > slot::slotted([type="card"]) {
-  flex: 0 1 var(--swc-prompt-field-artifact-single-inline-size, 324px);
-  inline-size: min(100%, 324px);
-  max-inline-size: var(--swc-prompt-field-artifact-single-max-inline-size, 324px);
+  flex-shrink: 1;
+  flex-basis: auto;
 }
 
 /* Multi-artifact card layout targets 3+ cards per row responsively. */
 .swc-PromptField-artifacts--multiple > slot::slotted([type="card"]) {
-  flex: 1 1 var(--swc-prompt-field-artifact-multiple-inline-size, 160px);
-  min-inline-size: var(--swc-prompt-field-artifact-min-inline-size, 160px);
+  flex-shrink: 1;
+  flex-basis: auto;
 }
 
 /* Prompt-field media artifact uses 68×68 preview tile. */
@@ -191,7 +190,7 @@
   padding: 0;
   color: token("gray-800");
   background: transparent;
-  border: none;
+  border: 1px solid transparent;
   border-radius: token("corner-radius-500");
   cursor: pointer;
 }
@@ -223,7 +222,7 @@
   padding: 0;
   color: token("gray-25");
   background: token("neutral-background-color-default");
-  border: none;
+  border: 1px solid transparent;
   border-radius: token("corner-radius-full");
   cursor: pointer;
   transition: background token("animation-duration-100") ease;
@@ -238,7 +237,7 @@
   padding: 0;
   color: token("gray-25");
   background: token("gray-900");
-  border: none;
+  border: 1px solid transparent;
   border-radius: token("corner-radius-full");
   cursor: pointer;
   transition: background token("animation-duration-100") ease;
@@ -303,4 +302,8 @@
 
 .swc-PromptField-legal-disclaimer a {
   color: inherit;
+}
+
+.swc-PromptField-artifacts[hidden] {
+  display: none !important;
 }
