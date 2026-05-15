@@ -753,7 +753,7 @@ describe('ColorWheel', () => {
 
     await elementUpdated(el);
 
-    expect(el.value).to.not.equal(initialValue);
+    expect(el.value).to.be.closeTo(270, 10);
   });
   it('can have `change` events prevented', async () => {
     const color = { h: '0', s: '20%', l: '70%' };
