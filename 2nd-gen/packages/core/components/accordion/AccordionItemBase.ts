@@ -61,9 +61,10 @@ export abstract class AccordionItemBase extends SpectrumElement {
    * @internal
    * Heading level (2–6) propagated by the parent accordion. Defaults to 3
    * for standalone items. Used by the concrete render() to emit the correct
-   * <h*> element; made reactive in a later commit.
+   * <h*> element; made reactive in a later commit. Public so AccordionBase
+   * can write to instances without a type assertion.
    */
-  protected heading: number = 3;
+  public heading: number = 3;
 
   // ──────────────────────
   //     IMPLEMENTATION
