@@ -71,7 +71,7 @@ Tooltip is a visually simple component with high behavioral complexity in its au
 - **Infrastructure change:** `sp-overlay` dependency dropped. 2nd-gen uses native popover API + Floating UI per the [Overlay Strategy RFC](https://www.dropbox.com/scl/fi/eae4rywxitn4zfmuw4o59/RFC-Overlay-strategy-for-1st-gen-and-2nd-gen.paper?rlkey=ljezd8mt8joy2zc3lv88usrh6&dl=0). The `self-managed` attribute is removed (B6); automatic trigger wiring is on by default; the `manual` attribute opts out. Internal mechanics change significantly.
 - **Automatic trigger integration is additive:** Deferred pending extraction of `PlacementController` (viewport-aware positioning) and `HoverController` (warm-up/cooldown timing, focus parity). Initial 2nd-gen tooltip ships `for` and `trigger-element` as active API — ARIA relationship wiring fires on `open` change from day one (see A4). Hover/focus event wiring and screen positioning require the controllers. `delayed`, `disabled`, and `manual` are in the API shape but inactive until the additive phase. Before scheduling the additive implementation ticket, confirm that both controllers have been extracted and are consumable per the Overlay RFC.
 - **Authoring pattern change:** `<swc-tooltip>` is authored as a sibling of the trigger — not inside it as in 1st-gen. With `popover="auto"` moving the tooltip to the top layer at render time, physical DOM nesting is no longer needed. Trigger resolution uses the `for` attribute to reference the trigger by ID in the same document tree root; `trigger-element` provides an element reference override for cross-shadow-root and programmatic cases where ID resolution does not apply. Add `manual` to opt out of automatic wiring entirely. The 1st-gen ancestor-walking (`resolveSelfManagedTriggerElement`) is not ported.
-- **Two open questions:** Q1 (`tip-padding` semantics, non-blocking) and **Q2** (`popover="auto"` stack isolation regression vs 1st-gen `type="hint"` — **blocks additive phase scheduling**). See [Blockers and open questions](#blockers-and-open-questions).
+- **One open question:** Q1 (`tip-padding` semantics, non-blocking). See [Blockers and open questions](#blockers-and-open-questions).
 
 ---
 
@@ -562,7 +562,7 @@ In the initial release, `placement` applies only the CSS class (tip direction). 
 
 The impact is most acute in the additive phase, when `HoverController` will call `showPopover()` on hover — hovering a trigger next to an open picker will close the picker. The initial release is unaffected (no hover wiring).
 
-**See Q2 in [Blockers and open questions](#blockers-and-open-questions).** Resolution options are tracked there; this section will be updated once a path is chosen. The consumer migration guide and Behaviors story must document whichever behavior ships.
+**Resolved (Path A):** The auto-stack behavior is accepted. This is a known difference from 1st-gen and must be documented in the consumer migration guide and the Behaviors story.
 
 ---
 
@@ -690,6 +690,8 @@ The impact is most acute in the additive phase, when `HoverController` will call
 - [ ] Consumer migration guide: remove `self-managed` attribute from all existing tooltip usage; automatic trigger wiring is on by default with no attribute required; add `manual` only when programmatic open/close control is needed (B6)
 - [ ] Consumer migration guide: authoring pattern change — move `<sp-tooltip>` out of the trigger component (1st-gen pattern); add `id` to the trigger element and `for="[id]"` to the tooltip; the tooltip may be placed anywhere in the same document tree root (additive phase)
 - [ ] Consumer migration guide: for cross-shadow-root triggers or programmatic wiring where ID resolution cannot reach the trigger, set the `trigger-element` property to a direct element reference (additive phase)
+- [ ] Consumer migration guide: document that `popover="auto"` auto-stack behavior differs from 1st-gen `type="hint"` isolation — opening a tooltip closes other open auto popovers (menus, pickers); this is accepted behavior, not a bug
+- [ ] Behaviors story: note the auto-stack behavior and that it is expected (Q2 resolved, Path A)
 
 #### Accessibility
 
@@ -721,7 +723,7 @@ The impact is most acute in the additive phase, when `HoverController` will call
 | # | Item | Blocking? | Status | Owner |
 | --- | ---- | --------- | ------ | ----- |
 | Q1 | **`tip-padding` semantics.** In 1st-gen, `tipPadding` was passed to `sp-overlay` for tip position calculation. The arrow middleware analog no longer applies since the tip is CSS-centered. Determine whether `tip-padding` maps to `shift`/`flip` middleware padding (minimum space between tooltip container and viewport edge) or whether it can be dropped without consumer impact. | No — implementation detail | Open; resolve as part of PlacementController integration ticket | Ticket owner |
-| Q2 | **`popover="auto"` stack isolation regression.** In 1st-gen, `type="hint"` overlays were isolated: opening a tooltip did not dismiss open menus or pickers, and was only closed by Escape or another hint on the same trigger. `popover="auto"` has no isolation tier — any auto popover opening (including a tooltip hover) dismisses all other auto popovers. Resolution paths: (A) accept the behavior and document it; (B) use `popover="manual"` + explicit `showPopover()`/`hidePopover()` and reimplement Escape/light-dismiss manually; (C) block automatic-mode shipping on `popover="hint"` browser support (proposed in the popover spec; not yet widely available). Path A is simplest but represents a genuine UX regression. This is not blocking the initial release (no hover wiring ships), but must be resolved before the automatic trigger integration additive phase is scheduled. | Yes — blocking additive phase scheduling | Open | RFC/team decision |
+| Q2 | **`popover="auto"` stack isolation regression.** In 1st-gen, `type="hint"` overlays were isolated — opening a tooltip did not dismiss open menus or pickers. `popover="auto"` has no isolation tier; any auto popover opening dismisses all others. **Resolved: Path A accepted.** The behavior is documented as a known difference from 1st-gen. No workaround; document in consumer migration guide and Behaviors story. | N/A | Resolved | Team |
 
 ### Deferred implementation tickets
 
