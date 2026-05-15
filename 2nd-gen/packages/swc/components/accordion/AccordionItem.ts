@@ -108,25 +108,50 @@ export class AccordionItem extends AccordionItemBase {
     event.stopPropagation();
   }
 
+  private renderHeadingWrapper(content: TemplateResult): TemplateResult {
+    switch (this.heading) {
+      case 2:
+        return html`
+          <h2>${content}</h2>
+        `;
+      case 4:
+        return html`
+          <h4>${content}</h4>
+        `;
+      case 5:
+        return html`
+          <h5>${content}</h5>
+        `;
+      case 6:
+        return html`
+          <h6>${content}</h6>
+        `;
+      default:
+        return html`
+          <h3>${content}</h3>
+        `;
+    }
+  }
+
   protected override render(): TemplateResult {
-    // <h3> is a static stub; the heading level becomes dynamic in a later commit.
+    const button = html`
+      <button
+        id="header"
+        type="button"
+        aria-expanded=${this.open ? 'true' : 'false'}
+        aria-controls="content"
+        @click=${this.toggle}
+      >
+        <swc-icon class="spectrum-Accordion-itemIndicator" aria-hidden="true">
+          ${this.chevronForSize()}
+        </swc-icon>
+        <span class="spectrum-Accordion-itemTitle">
+          <slot name="label"></slot>
+        </span>
+      </button>
+    `;
     return html`
-      <h3>
-        <button
-          id="header"
-          type="button"
-          aria-expanded=${this.open ? 'true' : 'false'}
-          aria-controls="content"
-          @click=${this.toggle}
-        >
-          <swc-icon class="spectrum-Accordion-itemIndicator" aria-hidden="true">
-            ${this.chevronForSize()}
-          </swc-icon>
-          <span class="spectrum-Accordion-itemTitle">
-            <slot name="label"></slot>
-          </span>
-        </button>
-      </h3>
+      ${this.renderHeadingWrapper(button)}
       <div
         class="spectrum-Accordion-itemDirectActions"
         hidden
