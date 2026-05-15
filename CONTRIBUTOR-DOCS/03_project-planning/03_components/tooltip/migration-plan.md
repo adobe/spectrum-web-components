@@ -624,20 +624,20 @@ The impact is most acute in the additive phase, when `HoverController` will call
 
 #### Naming and semantics
 
-- [ ] `role="tooltip"` set on the host element via `connectedCallback` in Core base class (SWC-1558)
-- [ ] Stable, unique `id` per instance; required for consumer manual wiring and debugging (element references, not string IDs, are used for ARIA wiring)
-- [ ] `Element.ariaDescribedByElements` set on the trigger's inner interactive element (via `querySelector('button')`, or host element fallback) when tooltip opens; removed on close (see [ARIA relationship wiring](#aria-relationship-wiring))
-- [ ] Document `Element.ariaDescribedByElements` inner-button approach and browser support in Accessibility story (see [Accessibility semantics notes](#accessibility-semantics-notes-2nd-gen))
+- [x] `role="tooltip"` set on the host element via `connectedCallback` in Core base class (SWC-1558)
+- [skip] Stable, unique `id` per instance — deliberate skip; consumer provides `id` on the trigger element via the `for` attribute relationship; the tooltip's own `id` is the consumer's responsibility; internal ARIA wiring uses `ariaDescribedByElements` (element references) and does not require a string id
+- [x] `Element.ariaDescribedByElements` set on the trigger's inner interactive element (via `querySelector('button')`, or host element fallback) when tooltip opens; removed on close (see [ARIA relationship wiring](#aria-relationship-wiring))
+- [ ] Document `Element.ariaDescribedByElements` inner-button approach and browser support in Accessibility story (see [Accessibility semantics notes](#accessibility-semantics-notes-2nd-gen)) **(Phase 7 — documentation)**
 
 #### State verification
 
-- [ ] `[open]` reflects on host when tooltip is visible
+- [x] `[open]` reflects on host when tooltip is visible
 - [ ] `[disabled]` prevents automatic mode from responding to hover/focus events **(additive phase)**
-- [ ] Closed tooltip is hidden from AT (`popover` attribute or explicit `aria-hidden`/`inert`)
-- [ ] `Escape` closes tooltip; focus stays on trigger; no focus trap
+- [x] Closed tooltip is hidden from AT (`popover` attribute or explicit `aria-hidden`/`inert`)
+- [x] `Escape` closes tooltip; focus stays on trigger; no focus trap — handled by native `popover="auto"`
 - [ ] Pointer can move from trigger to tooltip bubble without tooltip closing (WCAG 1.4.13) **(additive phase — HoverController)**
-- [ ] High-contrast border present in forced-colors mode
-- [ ] Variant colors paired with readable text (not relying on color alone)
+- [ ] High-contrast border present in forced-colors mode **(Phase 5 — styling)**
+- [ ] Variant colors paired with readable text (not relying on color alone) **(Phase 5 — styling)**
 
 ### Testing
 
