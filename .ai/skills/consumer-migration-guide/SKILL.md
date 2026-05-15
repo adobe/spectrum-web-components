@@ -34,12 +34,12 @@ Create per-component migration guidance for application developers upgrading app
 
   <Meta title="[Component name]/Migration guide" />
 
-  # [Component name] consumer migration guide
+  # [Component name] migration guide
   ```
 
   Use sentence case for `[Component name]` (for example `Badge`, `Action button`). Do **not** include `Components/` in the `<Meta title>` — `titlePrefix` already adds it, so the doc renders at `Components/[Component name]/Migration guide`.
 
-- Consumer migration guides live alongside the Spectrum 2 component source so the doc ships with the component code. Do **not** add them to `CONTRIBUTOR-DOCS/`.
+- Migration guides live alongside the Spectrum 2 component source so the doc ships with the component code. Do **not** add them to `CONTRIBUTOR-DOCS/`.
 - **Do not link to project-planning / `CONTRIBUTOR-DOCS` docs** from the guide. Those are maintainer-facing; consumers don't need them. Link only to public consumer docs (e.g. the Spectrum 1 README on npm or the Spectrum 2 component Storybook page) when a link genuinely helps.
 - **Nav:** The guide lives in the component directory, so the `CONTRIBUTOR-DOCS` `update-nav.js` script does not manage it. Do not register it in `CONTRIBUTOR-DOCS/project-planning/03_components/README.md`, and do not include auto-generated breadcrumbs or TOC markers intended for that script.
 - **MDX gotchas:** Keep bare tag names (`<sp-badge>`, `<swc-badge>`, etc.) wrapped in backticks in prose, and keep HTML/JS examples inside fenced code blocks. Avoid loose `{` / `}` outside code blocks; MDX parses them as JS expressions.

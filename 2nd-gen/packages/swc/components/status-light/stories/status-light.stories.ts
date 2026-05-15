@@ -75,7 +75,7 @@ const meta: Meta = {
       url: 'https://www.figma.com/design/Mngz9H7WZLbrCvGQf3GnsY/S2---Desktop?node-id=36797-954',
     },
     stackblitz: {
-      url: 'https://stackblitz.com/edit/vitejs-vite-y2kz1rkx?file=package.json',
+      url: 'https://stackblitz.com/edit/vitejs-vite-rdaytnkj?file=src%2Fmy-element.ts',
     },
     flexLayout: 'row-wrap',
   },

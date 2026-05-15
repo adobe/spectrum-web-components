@@ -13,8 +13,6 @@
 :host {
   display: block;
   inline-size: 100%;
-  container-name: swc-conversation-turn;
-  container-type: inline-size;
 }
 
 :host(:focus-visible) {

@@ -21,18 +21,22 @@
 }
 
 .swc-SuggestionItem {
+  -webkit-tap-highlight-color: transparent;
   display: inline-flex;
   align-items: center;
+  block-size: var(--swc-suggestion-item-min-block-size, token("component-height-100"));
+  padding: 0;
   font-family: token("sans-serif-font");
-  font-size: token("font-size-200");
+  font-size: token("font-size-100");
   font-style: token("default-font-style");
   font-weight: token("regular-font-weight");
-  line-height: token("line-height-font-size-200");
+  line-height: token("line-height-font-size-100");
   color: token("neutral-content-color-default");
   background: token("gray-100");
-  border: none;
+  border: 1px solid transparent;
   border-radius: token("corner-radius-extra-large-default");
   cursor: pointer;
+  transition: background token("animation-duration-100") token("animation-ease-in-out");
 }
 
 .swc-SuggestionItem:hover,
@@ -66,5 +70,11 @@
   display: inline-flex;
   padding-block: var(--swc-suggestion-item-label-padding-block, 7px);
   padding-inline-end: var(--swc-suggestion-item-label-padding-inline-end, token("spacing-300"));
-  text-align: left;
+  text-align: start;
+}
+
+@media (forced-colors: active) {
+  .swc-SuggestionItem:focus-visible {
+    outline-color: CanvasText;
+  }
 }

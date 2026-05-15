@@ -118,7 +118,7 @@ const meta: Meta = {
       url: 'https://www.figma.com/design/Mngz9H7WZLbrCvGQf3GnsY/S2---Desktop?node-id=36806-6551',
     },
     stackblitz: {
-      url: 'https://stackblitz.com/edit/vitejs-vite-4glrpeeb?file=package.json',
+      url: 'https://stackblitz.com/edit/vitejs-vite-aqp4tpvf?file=src%2Fmy-element.ts',
     },
     flexLayout: 'row-wrap',
   },

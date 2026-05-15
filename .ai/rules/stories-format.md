@@ -180,6 +180,22 @@ const meta: Meta = {
 - **Avoid repetition**: The subtitle and JSDoc description should complement each other, not duplicate content. The subtitle is a brief summary; the JSDoc provides fuller context.
 - **Component links**: When referencing other components in the JSDoc description, use relative Storybook paths: `[ComponentName](../?path=/docs/component-name--overview)`
 
+### Title naming conventions
+
+These rules apply to every `title` field in meta objects and every `<Meta title="..." />` in MDX files.
+
+- **Component names are proper nouns — keep their title case.** `'Action Button'`, `'Illustrated Message'`, `'Color Loupe'`. Each word in the component name is capitalised.
+- **Everything else uses sentence case.** Page labels, section names, and group names that are not component names: `'Pattern overview'`, `'Migration guide'`.
+- **No filename as label.** Never use a bare filename (`README`, `CHANGELOG`) as a Storybook title or page name. Use a descriptive label: `'Pattern overview'`, `'Migration guide'`.
+- **Flatten single-component groups.** If a Storybook group contains only one component, do not nest it. Use a flat title (`'Color Loupe'`) rather than a group path (`'Color Components/Color Loupe'`).
+
+| ❌ Don't                         | ✅ Do                                  |
+| -------------------------------- | -------------------------------------- |
+| `'Color Components/Color Loupe'` | `'Color Loupe'` (flattened)            |
+| `'Conversational AI/README'`     | `'Conversational AI/Pattern overview'` |
+| `'Badge/Migration Guide'`        | `'Badge/Migration guide'`              |
+| `'Pattern Overview'`             | `'Pattern overview'`                   |
+
 ## Layout and decorators
 
 Use `flexLayout: 'row-wrap'` for stories displaying multiple items (sizes, variants, states). This applies flex layout with consistent spacing.
@@ -702,6 +718,7 @@ See `asset.stories.ts` for complete examples.
 - [ ] Copyright header (2025)
 - [ ] Visual separators between sections
 - [ ] Meta: title, component, args, argTypes, render, `parameters.docs.subtitle`, `tags: ['migrated']`
+- [ ] `title` uses sentence case, no filename labels, group is not a single-component wrapper
 - [ ] Meta JSDoc description above meta object (with component links if applicable)
 - [ ] Subtitle is concise and non-repetitive (plain text only, no links)
 - [ ] Playground: `['autodocs', 'dev']` tags, no JSDoc, common use case args
