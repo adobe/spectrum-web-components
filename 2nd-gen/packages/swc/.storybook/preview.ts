@@ -197,7 +197,10 @@ const preview = {
           'Get started',
           'Components',
           'Patterns',
-          ['Conversational AI', ['README', 'Prompt field', 'User message']],
+          [
+            'Conversational AI',
+            ['Pattern overview', 'Prompt field', 'User message'],
+          ],
           'Learn',
           [
             'About SWC',
@@ -473,6 +476,7 @@ const preview = {
                 'Tooltip',
                 [
                   'Accessibility migration analysis',
+                  'Migration plan',
                   'Rendering and styling migration analysis',
                 ],
               ],

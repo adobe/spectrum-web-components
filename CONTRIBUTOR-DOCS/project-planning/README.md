@@ -37,6 +37,7 @@
     - Button
     - Button Group
     - Checkbox
+    - Close Button
     - Color Field
     - Color Loupe
     - Divider
