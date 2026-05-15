@@ -22,8 +22,6 @@ import '../../suggestion/index.js';
 import '../../suggestion-item/index.js';
 import '../../response-status/index.js';
 
-import '../../system-prose-demo.css';
-
 // ────────────────
 //    METADATA
 // ────────────────
@@ -32,7 +30,7 @@ const { args, argTypes, template } = getStorybookHelpers('swc-system-message');
 
 const slotStatusRich = `<swc-response-status slot="status" open>The user said make a presentation deck but didn't specify duration of deck. Assumption is a brief presentation. I should check previous Hilton executive presentation decks and extract the structure.</swc-response-status>`;
 
-const slotMessageRich = `<div class="swc-conversationalAi-systemProse swc-Typography--prose"><p>According to the assets, there is a clear journey from beginning to end. Let's start with overarching themes and build from there.</p><p style="font-size:var(--swc-font-size-400);font-weight:800;line-height:var(--swc-line-height-font-size-400);color:var(--swc-gray-900);margin:0;">Big idea/ core narrative: The warmth of welcome</p><p>Hospitality begins the moment our customers set foot off their plane. We are more than accommodation, and we service a diverse base. We hope to be the anchor and bounce board for all who stay with us.</p><p style="font-size:var(--swc-font-size-300);font-weight:800;line-height:var(--swc-line-height-font-size-300);color:var(--swc-gray-900);margin:0;">Belonging happens at Hilton</p><p>We strive to be familiar but exceed expectations. These assets highlight how belonging is personified.</p><p style="font-size:var(--swc-font-size-300);font-weight:800;line-height:var(--swc-line-height-font-size-300);color:var(--swc-gray-900);margin:0;">We are more than accommodation</p><ul><li>Airport pick up service</li><li>Local recommendations</li><li>Everyday excursions</li><li>Customizable experience</li></ul></div>`;
+const slotMessageRich = `<div class="swc-Typography--prose"><p>According to the assets, there is a clear journey from beginning to end. Let's start with overarching themes and build from there.</p><h2>Big idea/ core narrative: The warmth of welcome</h2><p>Hospitality begins the moment our customers set foot off their plane. We are more than accommodation, and we service a diverse base. We hope to be the anchor and bounce board for all who stay with us.</p><h3>Belonging happens at Hilton</h3><p>We strive to be familiar but exceed expectations. These assets highlight how belonging is personified.</p><h3>We are more than accommodation</h3><ul><li>Airport pick up service</li><li>Local recommendations</li><li>Everyday excursions</li><li>Customizable experience</li></ul></div>`;
 
 const slotFeedback = `<swc-message-feedback slot="feedback"></swc-message-feedback>`;
 
@@ -120,17 +118,22 @@ export const Overview: Story = {
  * Put the AI reply in the **default slot** as semantic HTML styled with Spectrum
  * token variables.
  *
- * - **`<p>`** for body copy; reset vertical margins for predictable stacking.
- * - **`<ul>` / `<ol>`** for lists; set **margin** and **padding-inline-start**
- *   to match design specs.
- * - **Headings** (`<h2>`–`<h4>`) only when semantic outline matters; otherwise use
- *   stronger paragraph typography for in-flow section titles.
- * - **`<a href>`** for links; use accent colour and underline treatment.
+ * ### Typography in the default slot
+ *
+ * Rich AI body copy should use Spectrum typography **utility classes** on semantic HTML. Applications must load **`typography.css`** from
+ * `@adobe/spectrum-wc` after design tokens. See **Typography** and the typography [consumer migration guide](/docs/components-typography-consumer-migration-guide--readme).
+ *
+ * - **Wrapper** — Root container: `class="swc-Typography--prose"`.
+ *   `swc-Typography--prose` applies consistent vertical spacing between block-level children.
+ * - **Body** — Use semantic paragraphs and lists for body styling.
+ * - **Headings** — Use semantic `<h2>`–`<h4>`.
+ * - **Lists / links** — Keep lists and `<a href>` inside the prose wrapper so margins and link treatments stay
+ *   consistent with Spectrum prose styles.
  */
 export const Anatomy: Story = {
   args: {
     'status-slot': `<swc-response-status slot="status">I used the prompt and source context to draft a concise, presentation-ready response structure.</swc-response-status>`,
-    'default-slot': `<div class="swc-conversationalAi-systemProse swc-Typography--prose"><p>Here is the AI-generated response content.</p></div>`,
+    'default-slot': `<div class="swc-Typography--prose"><p>Here is the AI-generated response content.</p></div>`,
     'feedback-slot': slotFeedback,
     'sources-slot': `<swc-message-sources slot="sources"><a href="#">Source one</a></swc-message-sources>`,
     'suggestions-slot': `<swc-suggestion-group slot="suggestions" heading="What would you like to do next?"><swc-suggestion-item>Follow up suggestion one</swc-suggestion-item><swc-suggestion-item>Follow up suggestion two</swc-suggestion-item></swc-suggestion-group>`,
@@ -156,11 +159,7 @@ export const Loading: Story = {
             <swc-response-status slot="status" loading></swc-response-status>
           </swc-system-message>
         </swc-conversation-turn>
-        <span
-          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-700);"
-        >
-          Generating response
-        </span>
+        <span class="swc-Detail swc-Detail--sizeS">Generating response</span>
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;">
         <swc-conversation-turn type="system">
@@ -169,7 +168,7 @@ export const Loading: Story = {
               I used the prompt and source context to draft a concise,
               presentation-ready response structure.
             </swc-response-status>
-            <div class="swc-conversationalAi-systemProse swc-Typography--prose">
+            <div class="swc-Typography--prose">
               <p>
                 According to the assets, there is a clear journey from beginning
                 to end.
@@ -181,11 +180,7 @@ export const Loading: Story = {
             </swc-message-sources>
           </swc-system-message>
         </swc-conversation-turn>
-        <span
-          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-700);"
-        >
-          Response complete
-        </span>
+        <span class="swc-Detail swc-Detail--sizeS">Response complete</span>
       </div>
     </div>
   `,
@@ -211,12 +206,13 @@ export const Loading: Story = {
  * ### Best practices
  *
  * - Use semantic HTML in the **default slot** (paragraphs, lists, headings) for screen reader clarity
+ * - Style default-slot content with **`swc-Typography--prose`** after loading **`typography.css`** (see Anatomy / component docs above)
  * - Ensure source links have descriptive text
  */
 export const Accessibility: Story = {
   args: {
     'status-slot': `<swc-response-status slot="status">I used the prompt and source context to draft a concise, presentation-ready response structure.</swc-response-status>`,
-    'default-slot': `<div class="swc-conversationalAi-systemProse swc-Typography--prose"><p>According to the assets, there is a clear journey from beginning to end. Let's start with overarching themes and build from there.</p></div>`,
+    'default-slot': `<div class="swc-Typography--prose"><p>According to the assets, there is a clear journey from beginning to end. Let's start with overarching themes and build from there.</p></div>`,
     'feedback-slot': slotFeedback,
     'sources-slot': `<swc-message-sources slot="sources" open><a href="#">Adobe Experience Manager documentation</a><a href="#">Creative Cloud release notes 2026</a></swc-message-sources>`,
     'suggestions-slot': `<swc-suggestion-group slot="suggestions" heading="What would you like to do next?"><swc-suggestion-item>Create a year-over-year growth chart for the next decade</swc-suggestion-item><swc-suggestion-item>Generate a congratulatory poster</swc-suggestion-item></swc-suggestion-group>`,

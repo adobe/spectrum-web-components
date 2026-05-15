@@ -399,13 +399,20 @@ jobs:
                 path: 2nd-gen/packages/swc/coverage
 
   # 2nd-gen ARIA snapshot tests (Playwright)
+  # NOTE: Uses full `downstream` because Storybook build has 1st-gen references
+  # (contributor-docs generation, CEM analysis). The tests run against the
+  # built static Storybook to avoid Vite dev-server cold-start flakiness.
   test-2ndgen-a11y:
     executor: node
 
     steps:
       - halt-if-not-affected:
           gen: 2nd-gen
-      - downstream-2ndgen
+      - downstream
+      - run:
+          name: Build 2nd-gen Storybook (ci-a11y mode)
+          command: |
+            NODE_ENV=production SWC_STORYBOOK_MODE=ci-a11y yarn workspace @adobe/spectrum-wc storybook:build
       - run:
           name: Run 2nd-gen ARIA snapshot tests
           command: |

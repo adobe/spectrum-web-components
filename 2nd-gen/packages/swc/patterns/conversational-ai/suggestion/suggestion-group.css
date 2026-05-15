@@ -24,18 +24,18 @@
   display: flex;
   flex-direction: column;
   gap: token("spacing-100");
-
-  h3 {
-    font-size: token("font-size-300");
-  }
 }
 
 .swc-SuggestionGroup-title {
   margin: 0;
   font-family: token("sans-serif-font");
   font-weight: token("bold-font-weight");
-  line-height: token("line-height-font-size-300");
+  line-height: token("line-height-font-size-200");
   color: token("gray-900");
+
+  h3 {
+    font-size: token("font-size-200");
+  }
 }
 
 .swc-SuggestionGroup-items {

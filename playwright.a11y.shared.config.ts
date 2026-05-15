@@ -10,7 +10,11 @@
  * governing permissions and limitations under the License.
  */
 
-import { devices, type PlaywrightTestConfig } from '@playwright/test';
+import {
+  devices,
+  PlaywrightTestProject,
+  type PlaywrightTestConfig,
+} from '@playwright/test';
 
 const reportOutputFolder = '2nd-gen/test/playwright-a11y/report';
 const junitOutputFile = '2nd-gen/test/playwright-a11y/results/junit.xml';
@@ -31,7 +35,7 @@ export const a11yUse: PlaywrightTestConfig['use'] = {
   screenshot: 'only-on-failure',
 };
 
-export const firstGenA11yProject: PlaywrightTestConfig['projects'][number] = {
+export const firstGenA11yProject: PlaywrightTestProject = {
   name: '1st-gen',
   testDir: './1st-gen/',
   testMatch: '**/packages/*/test/**/*.a11y.spec.ts',
@@ -41,7 +45,7 @@ export const firstGenA11yProject: PlaywrightTestConfig['projects'][number] = {
   },
 };
 
-export const secondGenA11yProject: PlaywrightTestConfig['projects'][number] = {
+export const secondGenA11yProject: PlaywrightTestProject = {
   name: '2nd-gen',
   testDir: './2nd-gen/',
   testMatch: [
@@ -54,18 +58,24 @@ export const secondGenA11yProject: PlaywrightTestConfig['projects'][number] = {
   },
 };
 
-export const firstGenStorybookServer: PlaywrightTestConfig['webServer'][number] =
-  {
-    command: 'cd 1st-gen && yarn storybook',
-    port: 8080,
-    reuseExistingServer: !process.env.CI,
-    timeout: 120 * 1000,
-  };
+export const firstGenStorybookServer: PlaywrightTestConfig['webServer'] = {
+  command: 'cd 1st-gen && yarn storybook',
+  port: 8080,
+  reuseExistingServer: !process.env.CI,
+  timeout: 120 * 1000,
+};
 
-export const secondGenComponentsOnlyStorybookServer: PlaywrightTestConfig['webServer'][number] =
+// In CI, serve a prebuilt Storybook so test workers hit static assets instead
+// of a Vite dev server. The dev server's lazy compilation + WebSocket reloads
+// caused 30s timeouts on `customElements.whenDefined` when 8 workers hit cold
+// modules in parallel. CI jobs must run `storybook:build` before invoking
+// Playwright (see `.circleci/config.yml`). Locally we keep the dev server for
+// fast iteration.
+export const secondGenComponentsOnlyStorybookServer: PlaywrightTestConfig['webServer'] =
   {
-    command:
-      'cd 2nd-gen/packages/swc && SWC_STORYBOOK_MODE=ci-a11y yarn storybook',
+    command: process.env.CI
+      ? 'npx http-server 2nd-gen/packages/swc/storybook-static -p 6006 --silent'
+      : 'cd 2nd-gen/packages/swc && SWC_STORYBOOK_MODE=ci-a11y yarn storybook',
     port: 6006,
     reuseExistingServer: !process.env.CI,
     timeout: 120 * 1000,
