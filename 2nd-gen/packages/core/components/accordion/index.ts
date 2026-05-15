@@ -10,6 +10,6 @@
  * governing permissions and limitations under the License.
  */
 
-export * from './AccordionBase.js';
-export * from './AccordionItemBase.js';
+export * from './Accordion.base.js';
+export * from './AccordionItem.base.js';
 export * from './Accordion.types.js';
