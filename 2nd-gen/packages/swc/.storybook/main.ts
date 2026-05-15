@@ -102,7 +102,8 @@ if (storybookMode !== 'ci-a11y') {
       titlePrefix: 'Learn',
     },
     // Reference — consumer-audience reference content (MDX SSOTs).
-    // Component status, design tokens, changelog, support and compatibility.
+    // Changelog, support and compatibility. The live component status matrix
+    // is deferred to a follow-up branch (`caseyisonit/cem-component-matrix`).
     {
       directory: 'docs/reference',
       files: '**/*.mdx',

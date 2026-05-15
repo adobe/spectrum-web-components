@@ -226,7 +226,7 @@ const preview = {
             ['Gen1 vs Gen2', 'Migrate from Gen1'],
           ],
           'Reference',
-          ['Component status', 'Changelog', 'Support and compatibility'],
+          ['Changelog', 'Support and compatibility'],
           'Core',
           ['Overview', 'Controllers'],
           'Contribute',

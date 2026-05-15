@@ -5,8 +5,11 @@
 .claude/handoffs
 .claude/settings.local.json
 .claude/worktrees
-# deep-understanding skill working artifact — see .ai/rules/deep-understanding.md
+# deep-understanding skill working artifacts — see .ai/rules/deep-understanding.md
+# Default name (research.md) plus any branch-specific suffixed variants so multiple
+# active branches can each carry their own research without overwriting each other.
 **/research.md
+**/research-*.md
 yarn-error.log
 build-storybook.log
 .DS_STORE
