@@ -25,7 +25,7 @@
 - [Recommendations: `<swc-close-button>`](#recommendations-swc-close-button)
     - [ARIA roles, states, and properties](#aria-roles-states-and-properties)
     - [Shadow DOM and cross-root ARIA Issues](#shadow-dom-and-cross-root-aria-issues)
-    - [Form-associated buttons (`submit` / `reset`) — deferred](#form-associated-buttons-submit--reset--deferred)
+    - [Form-associated buttons (`submit` / `reset`)](#form-associated-buttons-submit--reset)
     - [Accessibility tree expectations](#accessibility-tree-expectations)
     - [Live regions, loading, and announcements](#live-regions-loading-and-announcements)
     - [Keyboard and focus](#keyboard-and-focus)
@@ -40,11 +40,11 @@
 
 ## Overview
 
-This doc describes how **`swc-close-button`** should behave for **accessibility** in 2nd-gen, targeting **WCAG 2.2 Level AA**. It aligns with [Button accessibility migration analysis](../button/accessibility-migration-analysis.md) and the same **native button**, **focus delegation**, and **naming** expectations as compact **chrome** controls in [Action button migration roadmap](../action-button/rendering-and-styling-migration-analysis.md): a **real** **`<button type="button">`**, **delegated focus**, a **discernible name**, and **no** duplicate host **`role="button"`** when an inner button is the focus target. **`swc-close-button`** is the **dismiss** affordance for dialogs, banners, action bars, and similar surfaces—authors must not ship it **icon-only** without an explicit **accessible name** that matches the **action** (for example **Close** vs **Clear selection**). For **how** **close** differs from **default button** and **clear**, see [Button, close button, and clear button (compared)](#button-close-button-and-clear-button-compared).
+This doc describes how **`swc-close-button`** should behave for **accessibility** in 2nd-gen, targeting **WCAG 2.2 Level AA**. **`sp-close-button`** lives in the **`button`** package and extends **`StyledButton`** → **`ButtonBase`** in 1st-gen (alongside **`sp-button`**); 2nd-gen semantics should stay aligned with [Button migration plan](../button/migration-plan.md) for shared **`ButtonBase`** / **core** sequencing, **`aria-label`** / **`label`** reflection, and other **`swc-button`** outcomes tracked there (**e.g.** [SWC-1333](https://jira.corp.adobe.com/browse/SWC-1333)). It aligns with [Button accessibility migration analysis](../button/accessibility-migration-analysis.md) and the same **native button**, **focus delegation**, and **naming** expectations as compact **chrome** controls in [Action button migration roadmap](../action-button/rendering-and-styling-migration-analysis.md): a **real** **`<button type="button">`**, **delegated focus**, a **discernible name**, and **no** duplicate host **`role="button"`** when an inner button is the focus target. **`swc-close-button`** is the **dismiss** affordance for dialogs, banners, action bars, and similar surfaces—authors must not ship it **icon-only** without an explicit **accessible name** that matches the **action** (for example **Close** vs **Clear selection**). For **how** **close** differs from **default button** and **clear**, see [Button, close button, and clear button (compared)](#button-close-button-and-clear-button-compared).
 
 ### Also read
 
-[Button migration roadmap](../button/rendering-and-styling-migration-analysis.md) (shared **`ButtonBase`** lineage today). [Button accessibility migration analysis](../button/accessibility-migration-analysis.md). [Action button migration roadmap](../action-button/rendering-and-styling-migration-analysis.md). Field adornments that often pair with **clear** (not **close**): [In-field button](../infield-button/rendering-and-styling-migration-analysis.md), [Search](../search/rendering-and-styling-migration-analysis.md). Tooltip policy for chrome controls: [Tooltip accessibility migration analysis](../tooltip/accessibility-migration-analysis.md).
+[Button migration plan](../button/migration-plan.md) (**`ButtonBase`**, **`swc-button`** sequencing, core vs **SWC** split). [Button migration roadmap](../button/rendering-and-styling-migration-analysis.md) (layout, CSS, DOM). [Button accessibility migration analysis](../button/accessibility-migration-analysis.md). [Action button migration roadmap](../action-button/rendering-and-styling-migration-analysis.md). Field adornments that often pair with **clear** (not **close**): [In-field button](../infield-button/rendering-and-styling-migration-analysis.md), [Search](../search/rendering-and-styling-migration-analysis.md). Tooltip policy for chrome controls: [Tooltip accessibility migration analysis](../tooltip/accessibility-migration-analysis.md).
 
 ### Button, close button, and clear button (compared)
 
@@ -129,7 +129,7 @@ Adobe Jira is authoritative for current status and resolution; refresh cells whe
 
 ## 1st-gen implementation notes
 
-**`sp-close-button`** lives in the **`button`** package and extends **`StyledButton`** → **`ButtonBase`** (same **`focusElement`** / anchor concerns as [Button accessibility migration analysis](../button/accessibility-migration-analysis.md) until 2nd-gen converges on **inner** **`<button>`** + **delegation**). Default content is wrapped in a **visually hidden** span so the **cross** icon remains the visible affordance—authors still owe a **real** **name** via **`label`**, slot text, or reflected **`aria-*`** on the focus target.
+**`sp-close-button`** lives in the **`button`** package and extends **`StyledButton`** → **`ButtonBase`** (same **`focusElement`** / anchor concerns as [Button accessibility migration analysis](../button/accessibility-migration-analysis.md) until 2nd-gen converges on **inner** **`<button>`** + **delegation**). **2nd-gen** implementation order and shared **core** decisions should follow [Button migration plan](../button/migration-plan.md). Default content is wrapped in a **visually hidden** span so the **cross** icon remains the visible affordance—authors still owe a **real** **name** via **`label`**, slot text, or reflected **`aria-*`** on the focus target.
 
 ```79:87:1st-gen/packages/button/src/CloseButton.ts
   protected override get buttonContent(): TemplateResult[] {
@@ -161,9 +161,9 @@ Adobe Jira is authoritative for current status and resolution; refresh cells whe
 
 **Deferred:** Same **`aria-labelledby`** / **`aria-describedby`** **ID** limits across **shadow** roots as **`swc-button`** until **`ElementInternals`** and **axe-core** coverage mature — track **[SWC-48](https://jira.corp.adobe.com/browse/SWC-48)**.
 
-### Form-associated buttons (`submit` / `reset`) — deferred
+### Form-associated buttons (`submit` / `reset`)
 
-**Does not apply** to **`type="submit"`** / **`reset`** for **`swc-close-button`** product shape; **same platform** dependencies as **`swc-button`** if a future refactor shares one **internal** **`<button>`** implementation inside custom elements—track **[SWC-48](https://jira.corp.adobe.com/browse/SWC-48)** for **shared** **`ButtonBase`** work. Heading kept for parity with sibling **accessibility migration analysis** docs.
+**Does not apply** to **`type="submit"`** / **`reset`** for **`swc-close-button`** product shape.
 
 ### Accessibility tree expectations
 
@@ -204,7 +204,7 @@ Adobe Jira is authoritative for current status and resolution; refresh cells whe
 - [ ] **`aria-label`** / **`label`** updates propagate to the focus target — [SWC-1039](https://jira.corp.adobe.com/browse/SWC-1039); align with **[SWC-1333](https://jira.corp.adobe.com/browse/SWC-1333)** **`swc-button`** outcome.
 - [ ] **Tooltip** usage (if allowed) matches [Tooltip accessibility migration analysis](../tooltip/accessibility-migration-analysis.md) — [SWC-600](https://jira.corp.adobe.com/browse/SWC-600).
 - [ ] Cross-root **`aria-labelledby`** / **`aria-describedby`** **deferred** per **`swc-button`** — [SWC-48](https://jira.corp.adobe.com/browse/SWC-48).
-- [ ] **`ButtonBase`** refactor alignment — [SWC-598](https://jira.corp.adobe.com/browse/SWC-598).
+- [ ] **`ButtonBase`** / shared **button** core alignment — [SWC-598](https://jira.corp.adobe.com/browse/SWC-598); follow [Button migration plan](../button/migration-plan.md) for sequencing with **`swc-button`**.
 - [ ] Docs and Storybook distinguish **`swc-close-button`** (**dismiss** surface) from **`swc-clear-button`** (**clear** value) and from default **`swc-button`** (**general** commit)—[Button, close button, and clear button (compared)](#button-close-button-and-clear-button-compared).
 
 ---
@@ -216,9 +216,10 @@ Adobe Jira is authoritative for current status and resolution; refresh cells whe
 - [WAI-ARIA APG: Read me first](https://www.w3.org/WAI/ARIA/apg/practices/read-me-first/)
 - [WCAG 2.2](https://www.w3.org/TR/WCAG22/)
 - [Button accessibility migration analysis](../button/accessibility-migration-analysis.md)
+- [Button migration plan](../button/migration-plan.md) (**`ButtonBase`**, **`swc-button`** migration sequencing)
+- [Button migration roadmap](../button/rendering-and-styling-migration-analysis.md)
 - [Search rendering and styling migration analysis](../search/rendering-and-styling-migration-analysis.md) (**`sp-clear-button`** in context)
 - [Action button migration roadmap](../action-button/rendering-and-styling-migration-analysis.md)
 - [Tooltip accessibility migration analysis](../tooltip/accessibility-migration-analysis.md)
-- [Button migration roadmap](../button/rendering-and-styling-migration-analysis.md)
 - [Keyboard testing (2nd-gen Storybook accessibility guide)](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/keyboard_testing.mdx)
 - [Figma: Loading animation discovery](https://www.figma.com/design/42VzvpW262EAUbYsadO4e8/Loading-animation-discovery) (if async dismiss is added later)
