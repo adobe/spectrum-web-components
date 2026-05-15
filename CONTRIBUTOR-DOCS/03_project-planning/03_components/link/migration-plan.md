@@ -65,17 +65,14 @@
 ## TL;DR
 
 - **Atypical migration.** The approved [accessibility migration analysis](./accessibility-migration-analysis.md) positions 2nd-gen **default** link delivery as **Spectrum link styles on native `<a href>`** in the light DOM (especially inside prose / typography), **not** a per-sentence `<sp-link>` custom element. **Q2 (resolved):** **CSS + native `<a>` only** — no transitional `sp-link` compatibility CE in scope for this migration.
-- **Styling gap (confirmed from roadmap).** Spectrum 2 adds `.spectrum-Link--inline` for inline copy; 1st-gen `sp-link` does not map that modifier yet ([rendering analysis](./rendering-and-styling-migration-analysis.md)). Closing this gap belongs in **must ship** work for S2 parity, regardless of CE vs CSS-only packaging.
+- **Styling / S2 parity.** Spectrum CSS may use internal selectors (e.g. `.spectrum-Link--inline`) while mapping S2; **authors do not get an “inline” variant** in the sense 1st-gen `variant` attributes worked. Default `<a>` styles should **inherit surrounding typography** and “blend in” inside paragraphs; Storybook demonstrates links **in body copy** without treating inline as a separate consumer-facing variant ([rendering analysis](./rendering-and-styling-migration-analysis.md) remains the CSS source reference).
 - **A11y-required corrections.** Remove or deprecate **`disabled` on navigational links** ([SWC-966](https://jira.corp.adobe.com/browse/SWC-966)); align contrast and “link vs body text” presentation with WCAG expectations ([SWC-1160](https://jira.corp.adobe.com/browse/SWC-1160)); document **quiet** links for **section-scoped** patterns (e.g. footers), not undifferentiated body prose (per accessibility analysis).
 - **Consumer migration.** Track global native-anchor styling and API deprecation direction ([SWC-926](https://jira.corp.adobe.com/browse/SWC-926), [SWC-1428](https://jira.corp.adobe.com/browse/SWC-1428)) in the written migration path for teams still on `sp-link`.
-- **Open decisions:** **Q4** only — confirm or override the canonical **repo location and import story** for link CSS (see [Recommended packaging (default)](#recommended-packaging-default)). **Epic:** [SWC-1956](https://jira.corp.adobe.com/browse/SWC-1956) (resolved). **Q1** (Figma scope) and **Q2** (architecture) are **resolved** — see [Blockers and open questions](#blockers-and-open-questions).
+- **Packaging defaults (Q4):** **Resolved** for engineering direction — see [Recommended packaging (default)](#recommended-packaging-default) and **PR 6304** peer review (2026-05-15). **Additive:** confirm **trailing icon** with Design / React (Figma update ~Feb 2026); not required for initial release.
 
 ### Most blocking open questions
 
-- **Q4** ([Architecture and behavior](#architecture-and-behavior)): Confirm canonical **2nd-gen repo location** for link rules — default is **[`stylesheets/link.css` + compose into `typography.css`](#recommended-packaging-default)** unless you explicitly override (e.g. different filename, no `@import` into typography, or `global-elements.css` with design sign-off).
-- **Q1** ([Design](#design)): **Resolved** — [Figma — S2 / Web, Link (`18850-110`)](https://www.figma.com/design/Mngz9H7WZLbrCvGQf3GnsY/S2---Web--Desktop-scale-?node-id=18850-110); confirmed to cover **overview, properties, and variants**.
-- **Q2** ([Architecture and behavior](#architecture-and-behavior)): **Resolved** — **CSS + native `<a>` only** (no transitional `sp-link` / CE in this migration).
-- **Q3** ([Scope and prerequisites](#scope-and-prerequisites)): **Resolved** — migration Epic is [SWC-1956](https://jira.corp.adobe.com/browse/SWC-1956).
+- **None currently.** **Q1** (Figma), **Q2** (native `<a>` only), **Q3** (Epic), and **Q4** (packaging defaults) are **resolved** — see [Blockers and open questions](#blockers-and-open-questions). **Additive follow-up:** trailing icon (Figma) — sync with Design / React; see **A3** under [Additive](#additive--ships-when-ready-zero-breakage-for-consumers-already-on-2nd-gen).
 
 ---
 
@@ -162,18 +159,22 @@ No component-specific custom events documented on `Link`. Activation follows the
 
 ### User confirmation needed
 
-- Confirm **Q4**: canonical link CSS home — [default recommendation](#recommended-packaging-default) is **`stylesheets/link.css`** composed into **`typography.css`**; override only if Typography / CSS owners agree on a different split.
+- **Implementation:** Typography + CSS owners execute the [Recommended packaging (default)](#recommended-packaging-default) approach (generator change + `link.css` + optional `global-link.css`) and finalize **BEM** class names during build-out.
 
 ### Recommended packaging (default)
 
-**Q2 is resolved** (CSS + native `<a>` only — no compatibility CE). Unless **Q4** chooses a different layout, treat Link like **Typography** for repo shape: **no `2nd-gen/packages/core/components/link/`** (Typography today has **no** core `.ts` layer — only [`2nd-gen/packages/swc/components/typography/`](../../../../2nd-gen/packages/swc/components/typography/) for stories/tests/docs and [`2nd-gen/packages/swc/stylesheets/typography.css`](../../../../2nd-gen/packages/swc/stylesheets/typography.css) for rules).
+**Q2 is resolved** (CSS + native `<a>` only — no compatibility CE). Treat Link like **Typography** for repo shape: **no `2nd-gen/packages/core/components/link/`** (Typography today has **no** core `.ts` layer — only [`2nd-gen/packages/swc/components/typography/`](../../../../2nd-gen/packages/swc/components/typography/) for stories/tests/docs and [`2nd-gen/packages/swc/stylesheets/typography.css`](../../../../2nd-gen/packages/swc/stylesheets/typography.css) for generated rules).
 
 - **NPM package:** still **`@adobe/spectrum-wc`** (`2nd-gen/packages/swc`); there is no separate link-only package.
-- **Stylesheet source of truth:** add **`2nd-gen/packages/swc/stylesheets/link.css`** (name TBD) holding Spectrum 2 link rules migrated from Spectrum CSS; keeps ownership and review scope clear.
-- **Compose into prose by default:** **`@import`** (or build-time equivalent) that **`link.css`** from **`typography.css`** so apps loading typography for `.swc-Typography--prose` get correct native `<a href>` styling without a second manual import.
-- **Optional direct import:** document importing **`link.css`** alone for apps that need link appearance **without** full typography — same package, different entry.
-- **`global-elements.css`:** use only if design explicitly wants **unscoped** native-anchor styling; higher blast radius — not the default recommendation.
+- **Primary link stylesheet:** **`2nd-gen/packages/swc/stylesheets/link.css`** — all **variant / modifier** rules live here; authors apply **BEM-style classes** on `<a>` for presentation. **Do not** encode presentation as custom attributes (beyond normal HTML anchor attributes such as `href`, `rel`, etc.).
+- **Prose default appearance (no `@import`):** extend the **typography stylesheet generator** so emitted `typography.css` **includes the default link appearance inside `.swc-Typography--prose`** (append generated rules; keep **link.css** and **typography generation** as **separate concerns** — do **not** `@import` `link.css` into `typography.css`). Consumers who need **full modifier control** load **`link.css`** separately and apply modifier classes as documented.
+- **Section wrappers:** add **wrapper utilities** (e.g. **`swc-Links`** plural + modifiers) so footers / sidebars can style **all** anchors in a region **without** per-link classes on every `<a>`.
+- **Opt-in global baseline:** ship **`2nd-gen/packages/swc/stylesheets/global/global-link.css`** for **bare `<a>`** baseline styling app-wide when explicitly imported — **no** extra wrapper selector required; **do not** put this file in the **cascade layer** pattern used elsewhere — it should behave like an easily overridden **link reset**, not a locked layer.
 - **Core folder:** for this CSS-only path, **no** core TypeScript is required, matching Typography.
+
+#### Peer review — PR 6304 (requested changes, incorporated)
+
+Engineering review on [PR 6304](https://github.com/adobe/spectrum-web-components/pull/6304) records the above: confirm **`link.css`** location; **no** custom element; **no `@import`** into typography (generator instead); **BEM classes** for presentation; **quiet** may require a **modifier pair** analogous to React’s `isStandalone` for removing underline; **inline** is **not** an author-facing variant (inherit + stories); **`swc-Links`** section utility; **`global-link.css`** opt-in without cascade layers; **trailing icon** in Figma → **additive** / Design+React check-in, not blocking v1.
 
 ---
 
@@ -192,7 +193,7 @@ No component-specific custom events documented on `Link`. Activation follows the
 
 | # | What changes | 1st-gen behavior | 2nd-gen behavior | Consumer migration path |
 | --- | ------------ | ---------------- | ---------------- | ----------------------- |
-| **B3** | **S2 inline** presentation | No `spectrum-Link--inline` mapping | CSS includes inline / standalone semantics per S2 | Update markup/classes per final Typography + Link docs once **Q4** packaging is settled |
+| **B3** | **S2 typography + link parity** | 1st-gen `sp-link` predates some S2 selector nuances | Default anchors in prose **inherit** surrounding type; internal CSS may mirror Spectrum’s inline/standalone selectors where needed — **not** a new author “variant” vs 1st-gen (no `inline` attribute parity) | Rely on **typography generator** + **`link.css`** docs; add Storybook for **link inside body copy** |
 | **B4** | **Token / contrast** fixes | Known contrast risk vs body ([SWC-1160](https://jira.corp.adobe.com/browse/SWC-1160)) | S2 tokens + tests in prose contexts | Retest adjacent-text contrast in authored examples |
 
 #### Accessibility and behavior
@@ -208,18 +209,21 @@ No component-specific custom events documented on `Link`. Activation follows the
 | --- | ------------- | ----- |
 | **A1** | Optional **compatibility** `sp-link` | **Out of scope** — **Q2** approved CSS + native `<a>` only (no CE) |
 | **A2** | Extra Storybook coverage for **static color** on imagery / dark backgrounds | Visual regression alongside typography stories |
+| **A3** | **Trailing icon** (Figma S2 / Web, ~Feb 2026) | **Additive** — not in React yet; confirm with **Design / React**; not a blocker for initial link CSS / prose work |
 
 ---
 
 ## 2nd-gen API decisions
 
-These are derived from 1st-gen, the [rendering roadmap](./rendering-and-styling-migration-analysis.md), the [accessibility analysis](./accessibility-migration-analysis.md), and [React Spectrum Link](https://react-spectrum.adobe.com/Link). **Q1** (Figma) and **Q2** (native `<a>` only) are **resolved**. **Q4** remains if packaging needs an explicit owner sign-off beyond the default below (**Q3** / Epic: [SWC-1956](https://jira.corp.adobe.com/browse/SWC-1956)).
+These are derived from 1st-gen, the [rendering roadmap](./rendering-and-styling-migration-analysis.md), the [accessibility analysis](./accessibility-migration-analysis.md), and [React Spectrum Link](https://react-spectrum.adobe.com/Link). **Q1** (Figma), **Q2** (native `<a>` only), **Q3** (Epic), and **Q4** (packaging — [PR 6304](https://github.com/adobe/spectrum-web-components/pull/6304) review) are **resolved** for planning purposes. Remaining work is **implementation** plus **additive** **A3** coordination.
 
 ### Public API
 
 #### Properties / attributes (2nd-gen)
 
-**Confirmed (Q2):** no custom element — use native HTML attributes on `<a>` (`href`, `target`, `rel`, `download`, `referrerpolicy`, `aria-label`, `lang`, etc.). No transitional `sp-link` in this migration.
+**Confirmed (Q2):** no custom element. Authors use **standard HTML** on `<a>` for behavior and semantics (`href`, `target`, `rel`, `download`, `referrerpolicy`, `aria-label`, `lang`, etc.).
+
+**Presentation:** **BEM-style classes only** (and documented **wrapper** utilities such as **`swc-Links`**) — do **not** introduce shadow-CE-style **presentation attributes** (e.g. no `quiet="` on a hostless pattern); map old `sp-link` attributes to **classes** in migration docs.
 
 #### Visual matrix (2nd-gen)
 
@@ -227,10 +231,10 @@ N/A as a “fill / outline” matrix. Planned **presentation modes** (from roadm
 
 | Mode | Notes |
 | ---- | ----- |
-| Default / primary inline (S2) | **Confirmed** against Figma handoff (**Q1**) — implement per S2 / CSS once **Q4** packaging is settled |
-| Secondary | `variant="secondary"` today → class or data-attribute pattern on `<a>` (**Inferred**) |
-| Quiet | Boolean-style presentation; **scope** per **B5** |
-| Static white / black | `static-color` analog as classes on `<a>` for on-image / on-tint contexts |
+| Default (body / prose) | Anchors **inherit** surrounding typography; default link color / decoration per S2 inside `.swc-Typography--prose` (generator) and/or **`link.css`** — **not** an “inline variant” for authors |
+| Secondary | **BEM modifier class** (replaces `variant="secondary"` on `sp-link`) |
+| Quiet | **BEM modifiers** — likely **two classes** required (analogous to React requiring **`isStandalone`** to remove underline); document exact pairing when CSS lands |
+| Static white / black | **BEM modifier classes** on `<a>` (replaces `static-color` attribute) |
 
 #### Slots (2nd-gen)
 
@@ -245,7 +249,7 @@ Initial expectation for **Link** is a **small reviewed set** (likely tied to typ
 ### Behavioral semantics
 
 - **Navigation:** real `href` or framework `Link` that renders a real `<a>`; avoid JS-only “fake” links for standard navigation (**Confirmed** from accessibility analysis).
-- **Quiet + critical flows:** treat as design-governed; engineering ships CSS but docs must encode constraints (**Confirmed** policy direction from accessibility analysis).
+- **Quiet + critical flows:** treat as design-governed; engineering ships CSS but docs must encode constraints (**Confirmed** policy direction from accessibility analysis). **Implementation note (PR 6304):** quiet underline removal may require **paired modifier classes** (see visual matrix).
 
 ### Accessibility semantics notes (2nd-gen)
 
@@ -257,12 +261,12 @@ Follow the [accessibility migration analysis](./accessibility-migration-analysis
 
 > The 1st-gen component is a **reference only** — 2nd-gen is built independently. Neither generation imports from the other.
 
-**Link-specific deviation:** the [Badge migration reference](../../02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md#reference-badge-migration) describes the default **core + `sp-*` SWC** split. For Link, the **primary** 2nd-gen deliverable is **shared CSS + documentation** with **native anchors** (**Q2** resolved). **Q4** only adjusts *where* those rules live in-repo if the default packaging is overridden.
+**Link-specific deviation:** the [Badge migration reference](../../02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md#reference-badge-migration) describes the default **core + `sp-*` SWC** split. For Link, the **primary** 2nd-gen deliverable is **shared CSS + documentation** with **native anchors** (**Q2** resolved). Packaging defaults are **set** in [Recommended packaging (default)](#recommended-packaging-default) (including **PR 6304** review).
 
 | Layer | Path | Contains |
 | ----- | ---- | -------- |
 | **Core** | `2nd-gen/packages/core/components/link/` | **N/A** — **Q2** resolved: CSS + native `<a>` only (same as Typography; no core) |
-| **SWC** | `2nd-gen/packages/swc/components/link/` | **N/A** — no `sp-link` CE; rules under [`stylesheets/`](../../../../2nd-gen/packages/swc/stylesheets/) per [Recommended packaging (default)](#recommended-packaging-default) unless **Q4** overrides; stories/tests extend **Typography** |
+| **SWC** | `2nd-gen/packages/swc/components/link/` | **N/A** — no `sp-link` CE; rules under [`stylesheets/`](../../../../2nd-gen/packages/swc/stylesheets/) and [`stylesheets/global/`](../../../../2nd-gen/packages/swc/stylesheets/) per [Recommended packaging (default)](#recommended-packaging-default); stories/tests extend **Typography** |
 
 Planned rendering shape (native-`<a>` model — **preferred**):
 
@@ -284,7 +288,7 @@ Planned rendering shape (native-`<a>` model — **preferred**):
 
 ### Setup
 
-- [ ] Confirm **Q4** (or accept default): `stylesheets/link.css` + import from `typography.css` — see [Recommended packaging (default)](#recommended-packaging-default)
+- [ ] Implement [Recommended packaging (default)](#recommended-packaging-default): `link.css`, typography **generator** updates for prose defaults, optional `global-link.css`, `swc-Links` utilities — no `@import` of `link.css` into `typography.css`
 - [ ] If a new package is created: wire exports in the relevant `package.json` files
 - [ ] Check out `spectrum-css` at `spectrum-two` branch as sibling directory
 
@@ -337,8 +341,8 @@ Planned rendering shape (native-`<a>` model — **preferred**):
 
 #### Visual regression
 
-- [ ] VRT: default / secondary / quiet / static black / static white × hover / focus-visible (scoped to final home per **Q4**)
-- [ ] VRT: inline vs standalone presentation per **Q1** Figma / **Q4** stylesheet home
+- [ ] VRT: default / secondary / quiet / static black / static white × hover / focus-visible (per `link.css` + prose / wrapper stories)
+- [ ] VRT: links **inside running text** vs **section / quiet** stories (paired modifiers per plan)
 
 ### Documentation
 
@@ -373,7 +377,7 @@ Planned rendering shape (native-`<a>` model — **preferred**):
 | # | Item | Blocking? | Status | Owner |
 | --- | ---- | --------- | ------ | ----- |
 | **Q2** | **Architecture:** **CSS + native `<a>` only** — no transitional `sp-link` / CE in this migration | No | Resolved | Architecture + accessibility reviewers |
-| **Q4** | Canonical **code location** for link CSS — default **[`link.css` + compose into `typography.css`](#recommended-packaging-default)**; confirm with Typography + CSS owners or document an override (e.g. no `@import` into typography, different filename, or `global-elements.css` with explicit design sign-off) | Yes, until confirmed or defaulted | Open | CSS reviewer + Typography owner |
+| **Q4** | **Packaging:** `link.css` + typography **generator** (no `@import`), **`swc-Links`** section utilities, **`global/global-link.css`** opt-in per [Recommended packaging (default)](#recommended-packaging-default); **PR 6304** review incorporated | No | Resolved | CSS + Typography (PR 6304 — 5t3ph) |
 
 ### Scope and prerequisites
 
@@ -417,10 +421,12 @@ Planned rendering shape (native-`<a>` model — **preferred**):
 
 ## What is still provisional
 
-- **Repo layout / import graph** for link CSS until **Q4** is confirmed or explicitly defaulted to [Recommended packaging (default)](#recommended-packaging-default).
+- **Exact BEM class names** and the final **quiet** modifier **pairing** — finalize during CSS implementation and Storybook.
+- **Trailing icon** presentation — **additive** (**A3**); align with Design / React when ready.
 
 ## What to provide next
 
-1. **Q4:** Typography + CSS owners **confirm the default** (`stylesheets/link.css` + pulled into `typography.css`) or **write down an override** (what changes, and why).
+1. **Implementation pass:** land `link.css`, typography generator output, `global-link.css`, and `swc-Links` per [Recommended packaging (default)](#recommended-packaging-default).
+2. **Design / React:** short sync on **trailing icon** (Figma) when scheduling **A3**.
 
 When deferred work is ticketed under [SWC-1956](https://jira.corp.adobe.com/browse/SWC-1956), replace drafting-time rows in [Blockers and open questions](#blockers-and-open-questions) with the deferred-ticket table format described in the migration-prep skill (`Ticket`, `Deferred item`, `Why deferred`, `Related plan section`).
