@@ -97,7 +97,7 @@ export class AccordionItem extends AccordionItemBase {
     }
   }
 
-  private handleActionsSlotChange(event: Event): void {
+  private syncActionsContainerVisibility(event: Event): void {
     const slot = event.target as HTMLSlotElement;
     const container = slot.parentElement as HTMLElement | null;
     if (container) {
@@ -105,7 +105,7 @@ export class AccordionItem extends AccordionItemBase {
     }
   }
 
-  private handleActionsContainerInteraction(event: Event): void {
+  private stopActionsContainerPropagation(event: Event): void {
     event.stopPropagation();
   }
 
@@ -117,7 +117,7 @@ export class AccordionItem extends AccordionItemBase {
   }
 
   private renderHeadingWrapper(content: TemplateResult): TemplateResult {
-    switch (this.heading) {
+    switch (this.headingLevel) {
       case 2:
         return html`
           <h2>${content}</h2>
@@ -167,10 +167,13 @@ export class AccordionItem extends AccordionItemBase {
       <div
         class="spectrum-Accordion-itemDirectActions"
         hidden
-        @click=${this.handleActionsContainerInteraction}
-        @keydown=${this.handleActionsContainerInteraction}
+        @click=${this.stopActionsContainerPropagation}
+        @keydown=${this.stopActionsContainerPropagation}
       >
-        <slot name="actions" @slotchange=${this.handleActionsSlotChange}></slot>
+        <slot
+          name="actions"
+          @slotchange=${this.syncActionsContainerVisibility}
+        ></slot>
       </div>
       <div
         id="content"

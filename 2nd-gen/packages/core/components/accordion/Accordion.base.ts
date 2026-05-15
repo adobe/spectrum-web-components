@@ -17,10 +17,11 @@ import { SpectrumElement } from '@spectrum-web-components/core/element/index.js'
 
 import {
   type AccordionDensity,
+  type AccordionHeadingLevel,
   type AccordionSize,
   SWC_ACCORDION_ITEM_TOGGLE_EVENT,
 } from './Accordion.types.js';
-import { AccordionItemBase } from './AccordionItemBase.js';
+import { AccordionItemBase } from './AccordionItem.base.js';
 
 /**
  * Base class for accordion components. Manages item propagation, heading
@@ -79,7 +80,7 @@ export abstract class AccordionBase extends SpectrumElement {
   //     IMPLEMENTATION
   // ──────────────────────
 
-  private handleItemToggle = (event: Event): void => {
+  private closeSiblingsOnOpen = (event: Event): void => {
     if (this.disabled) {
       event.preventDefault();
       return;
@@ -105,7 +106,7 @@ export abstract class AccordionBase extends SpectrumElement {
     }
   };
 
-  protected updateItems(): void {
+  protected syncAccordionItems(): void {
     const slot = this.renderRoot?.querySelector('slot');
     if (!slot) {
       return;
@@ -114,9 +115,9 @@ export abstract class AccordionBase extends SpectrumElement {
       .assignedElements({ flatten: true })
       .filter((el): el is AccordionItemBase => el instanceof AccordionItemBase);
     for (const item of items) {
-      item.heading = this.level;
+      item.setManagedHeading(this.level as AccordionHeadingLevel);
       item.size = this.size;
-      item.parentDisabled = this.disabled;
+      item.setManagedParentDisabled(this.disabled);
     }
   }
 
@@ -124,7 +125,7 @@ export abstract class AccordionBase extends SpectrumElement {
     super.connectedCallback();
     this.addEventListener(
       SWC_ACCORDION_ITEM_TOGGLE_EVENT,
-      this.handleItemToggle
+      this.closeSiblingsOnOpen
     );
   }
 
@@ -132,7 +133,7 @@ export abstract class AccordionBase extends SpectrumElement {
     super.disconnectedCallback();
     this.removeEventListener(
       SWC_ACCORDION_ITEM_TOGGLE_EVENT,
-      this.handleItemToggle
+      this.closeSiblingsOnOpen
     );
   }
 
@@ -148,7 +149,7 @@ export abstract class AccordionBase extends SpectrumElement {
       changedProperties.has('size') ||
       changedProperties.has('disabled')
     ) {
-      this.updateItems();
+      this.syncAccordionItems();
     }
     super.update(changedProperties);
   }
@@ -158,7 +159,7 @@ export abstract class AccordionBase extends SpectrumElement {
     if (window.__swc?.DEBUG && !this.hasAttribute('density')) {
       window.__swc.warn(
         this,
-        `<${this.localName}> should have an explicit "density" attribute set. Defaulting to "regular", which corresponds to the 1st-gen default.`,
+        `<${this.localName}> should have an explicit "density" attribute set. Defaulting to "regular".`,
         'https://opensource.adobe.com/spectrum-web-components/components/accordion/',
         { type: 'api', level: 'low' }
       );

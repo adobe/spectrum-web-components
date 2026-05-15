@@ -15,6 +15,7 @@ import { property, state } from 'lit/decorators.js';
 import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
 
 import {
+  type AccordionHeadingLevel,
   type AccordionSize,
   SWC_ACCORDION_ITEM_TOGGLE_EVENT,
 } from './Accordion.types.js';
@@ -60,11 +61,10 @@ export abstract class AccordionItemBase extends SpectrumElement {
   /**
    * @internal
    * Heading level (2–6) propagated by the parent accordion. Defaults to 3
-   * for standalone items. Public so AccordionBase can write to instances
-   * without a type assertion.
+   * for standalone items.
    */
   @state()
-  public heading: number = 3;
+  protected headingLevel: AccordionHeadingLevel = 3;
 
   /**
    * @internal
@@ -74,7 +74,7 @@ export abstract class AccordionItemBase extends SpectrumElement {
    * when the accordion is re-enabled.
    */
   @state()
-  public parentDisabled: boolean = false;
+  protected parentDisabled: boolean = false;
 
   // ──────────────────────
   //     IMPLEMENTATION
@@ -93,5 +93,21 @@ export abstract class AccordionItemBase extends SpectrumElement {
         cancelable: true,
       })
     );
+  }
+
+  /**
+   * @internal
+   * Synchronizes parent-managed heading level onto the item.
+   */
+  public setManagedHeading(heading: AccordionHeadingLevel): void {
+    this.headingLevel = heading;
+  }
+
+  /**
+   * @internal
+   * Synchronizes parent-managed disabled state onto the item.
+   */
+  public setManagedParentDisabled(disabled: boolean): void {
+    this.parentDisabled = disabled;
   }
 }
