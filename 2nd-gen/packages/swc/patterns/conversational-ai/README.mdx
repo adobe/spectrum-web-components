@@ -1,38 +1,312 @@
 import { Meta, Canvas } from '@storybook/addon-docs/blocks';
+import { addons } from '@storybook/preview-api';
+
 import * as ConversationThreadStories from './conversation-thread/stories/conversation-thread.stories';
+import * as ConversationTurnStories from './conversation-turn/stories/conversation-turn.stories';
+import * as PromptFieldStories from './prompt-field/stories/prompt-field.stories';
+import * as UploadArtifactStories from './upload-artifact/stories/upload-artifact.stories';
+import * as UserMessageStories from './user-message/stories/user-message.stories';
+import * as SystemMessageStories from './system-message/stories/system-message.stories';
+import * as ResponseStatusStories from './response-status/stories/response-status.stories';
+import * as MessageFeedbackStories from './message-feedback/stories/message-feedback.stories';
+import * as MessageSourcesStories from './message-sources/stories/message-sources.stories';
+import * as SuggestionGroupStories from './suggestion/stories/suggestion-group.stories';
+import * as SuggestionItemStories from './suggestion-item/stories/suggestion-item.stories';
 
 <Meta title="Conversational AI/README" />
 
 # Conversational AI
 
-A complete set of building blocks for composing AI chat interfaces in Gen2 Spectrum Web Components. The pattern covers the full response lifecycle — from user input through AI generation, output, feedback, source attribution, and follow-up suggestions.
+A composable set of web components for building AI conversational interfaces with Spectrum. The pattern covers the full experience lifecycle — prompt entry, generation status, response output, source attribution, feedback, and follow-up suggestions.
 
 ---
 
 ## Full example
 
+An end-to-end conversation with streaming generation, file upload, feedback, and follow-up suggestions. This example illustrates interactions like sending prompts, attaching files, and selecting suggestions.
+
 <Canvas of={ConversationThreadStories.FullPattern} sourceState="none" />
 
 ---
 
-## Components
+## Anatomy of a conversation
 
-| Element                   | Description                                                                                           |
-| ------------------------- | ----------------------------------------------------------------------------------------------------- |
-| `swc-prompt-field`        | Text input surface for entering or refining a prompt                                                  |
-| `swc-upload-artifact`     | Shared upload artifact primitive with `card` and `media` types, used in prompt-field surfaces         |
-| `swc-conversation-thread` | Thread wrapper that stacks turns and enables ArrowUp/ArrowDown keyboard navigation between messages   |
-| `swc-conversation-turn`   | Column alignment for one participant turn; stack consecutive messages in one turn for grouped spacing |
-| `swc-user-message`        | User message bubble with explicit `type="copy\|card\|media"` rendering                                |
-| `swc-system-message`      | System reply stack; **default slot** guidance is after the API table on the System message docs page  |
-| `swc-response-status`     | Loading / generation-complete status indicator                                                        |
-| `swc-message-feedback`    | Positive / negative feedback control                                                                  |
-| `swc-message-sources`     | Collapsible numbered list of response sources                                                         |
-| `swc-suggestion-group`    | Follow-up suggestion group with optional title and slotted suggestion items                           |
-| `swc-suggestion-item`     | Interactive chip action used inside `swc-suggestion-group`; emits bubbled selection event             |
+A complete chat surface composes three layers:
+
+1. **Thread** — `swc-conversation-thread` wraps the running conversation and provides arrow-key navigation across turns.
+2. **Turns** — each `swc-conversation-turn` is one column-aligned message group, typed `user` or `system`.
+3. **Messages and supporting parts** — turns contain `swc-user-message` or `swc-system-message`, plus optional response status, feedback, sources, and follow-up suggestions.
+
+A minimal composition tree:
+
+```html
+<swc-conversation-thread>
+  <swc-conversation-turn type="user">
+    <swc-user-message>…</swc-user-message>
+  </swc-conversation-turn>
+
+  <swc-conversation-turn type="system">
+    <swc-system-message>
+      <swc-response-status slot="status">…</swc-response-status>
+      <!-- response prose in the default slot -->
+      <swc-message-feedback slot="feedback"></swc-message-feedback>
+      <swc-message-sources slot="sources">…</swc-message-sources>
+      <swc-suggestion-group slot="suggestions">…</swc-suggestion-group>
+    </swc-system-message>
+  </swc-conversation-turn>
+</swc-conversation-thread>
+
+<swc-prompt-field></swc-prompt-field>
+```
 
 ---
 
-## Tokens
+## Building blocks
 
-All components resolve styles through `token()` calls that map to `var(--swc-*)` custom properties. No hard-coded colours or sizes — set the standard Spectrum token layer to theme the pattern globally.
+The pattern groups its components by their role in the lifecycle. Each section below renders a live preview; visit the sibling docs pages for the full API.
+
+### Input
+
+The composer surface where the user types a prompt and attaches files.
+
+#### `swc-prompt-field`
+
+Text input with built-in `default`, `loading`, and `generation-complete` modes. Emits submit, input, stop, and upload-click events so products can drive their own generation pipeline.
+
+<Canvas
+  of={PromptFieldStories.Overview}
+  additionalActions={[
+    {
+      title: 'Component docs',
+      onClick: () =>
+        addons
+          .getChannel()
+          .emit(
+            'navigateUrl',
+            '/?path=/docs/patterns-conversational-ai-prompt-field--docs'
+          ),
+    },
+  ]}
+/>
+
+#### `swc-upload-artifact`
+
+Renders a staged attachment inside `swc-prompt-field` before the message is sent. Supports `card` and `media` types and an optional `dismissible` affordance.
+
+<Canvas
+  of={UploadArtifactStories.Overview}
+  additionalActions={[
+    {
+      title: 'Component docs',
+      onClick: () =>
+        addons
+          .getChannel()
+          .emit(
+            'navigateUrl',
+            '/?path=/docs/patterns-conversational-ai-upload-artifact--docs'
+          ),
+    },
+  ]}
+/>
+
+---
+
+### Conversation structure
+
+How turns are stacked, aligned, and navigated with the keyboard.
+
+#### `swc-conversation-thread`
+
+Vertical thread wrapper. Applies a roving `tabindex` so <kbd>ArrowUp</kbd> / <kbd>ArrowDown</kbd> move between turns and <kbd>Home</kbd> / <kbd>End</kbd> jump to the first or last turn.
+
+<Canvas
+  of={ConversationThreadStories.Overview}
+  additionalActions={[
+    {
+      title: 'Component docs',
+      onClick: () =>
+        addons
+          .getChannel()
+          .emit(
+            'navigateUrl',
+            '/?path=/docs/patterns-conversational-ai-conversation-thread--docs'
+          ),
+    },
+  ]}
+/>
+
+#### `swc-conversation-turn`
+
+A column-aligned slot for one participant. Set `type="user"` or `type="system"` to align right or left, and stack consecutive messages in a single turn for grouped spacing.
+
+<Canvas
+  of={ConversationTurnStories.Overview}
+  additionalActions={[
+    {
+      title: 'Component docs',
+      onClick: () =>
+        addons
+          .getChannel()
+          .emit(
+            'navigateUrl',
+            '/?path=/docs/patterns-conversational-ai-conversation-turn--docs'
+          ),
+    },
+  ]}
+/>
+
+---
+
+### User turn
+
+#### `swc-user-message`
+
+The user's message bubble. Explicit `type="copy"`, `type="card"`, or `type="media"` controls the rendering for text, file attachments, and image attachments respectively.
+
+<Canvas
+  of={UserMessageStories.Content}
+  additionalActions={[
+    {
+      title: 'Component docs',
+      onClick: () =>
+        addons
+          .getChannel()
+          .emit(
+            'navigateUrl',
+            '/?path=/docs/patterns-conversational-ai-user-message--docs'
+          ),
+    },
+  ]}
+/>
+
+---
+
+### System turn
+
+The system reply is a stack of optional parts inside a single `swc-system-message`.
+
+#### `swc-system-message`
+
+Container for the system reply. The default slot holds the response prose; named slots (`status`, `feedback`, `sources`, `suggestions`) attach the supporting parts below in a consistent order.
+
+<Canvas
+  of={SystemMessageStories.Overview}
+  additionalActions={[
+    {
+      title: 'Component docs',
+      onClick: () =>
+        addons
+          .getChannel()
+          .emit(
+            'navigateUrl',
+            '/?path=/docs/patterns-conversational-ai-system-message--docs'
+          ),
+    },
+  ]}
+/>
+
+#### `swc-response-status`
+
+A loading indicator while the response is generating and a collapsible reasoning trace once it completes.
+
+<Canvas
+  of={ResponseStatusStories.Loading}
+  additionalActions={[
+    {
+      title: 'Component docs',
+      onClick: () =>
+        addons
+          .getChannel()
+          .emit(
+            'navigateUrl',
+            '/?path=/docs/patterns-conversational-ai-response-status--docs'
+          ),
+    },
+  ]}
+/>
+
+#### `swc-message-feedback`
+
+Positive / negative feedback control. Emits a bubbled status event so products can capture sentiment.
+
+<Canvas
+  of={MessageFeedbackStories.Overview}
+  additionalActions={[
+    {
+      title: 'Component docs',
+      onClick: () =>
+        addons
+          .getChannel()
+          .emit(
+            'navigateUrl',
+            '/?path=/docs/patterns-conversational-ai-message-feedback--docs'
+          ),
+    },
+  ]}
+/>
+
+#### `swc-message-sources`
+
+Collapsible numbered list of the sources used to generate the response.
+
+<Canvas
+  of={MessageSourcesStories.Overview}
+  additionalActions={[
+    {
+      title: 'Component docs',
+      onClick: () =>
+        addons
+          .getChannel()
+          .emit(
+            'navigateUrl',
+            '/?path=/docs/patterns-conversational-ai-message-sources--docs'
+          ),
+    },
+  ]}
+/>
+
+---
+
+### Follow-ups
+
+After a reply, offer the user a curated list of next prompts.
+
+#### `swc-suggestion-group`
+
+Wraps follow-up suggestions with an optional heading.
+
+<Canvas
+  of={SuggestionGroupStories.Overview}
+  additionalActions={[
+    {
+      title: 'Component docs',
+      onClick: () =>
+        addons
+          .getChannel()
+          .emit(
+            'navigateUrl',
+            '/?path=/docs/patterns-conversational-ai-suggestion-group--docs'
+          ),
+    },
+  ]}
+/>
+
+#### `swc-suggestion-item`
+
+Interactive chip used inside the group. Emits a bubbled `swc-suggestion` event when activated; products can route this back into their submit pipeline.
+
+<Canvas
+  of={SuggestionItemStories.Overview}
+  additionalActions={[
+    {
+      title: 'Component docs',
+      onClick: () =>
+        addons
+          .getChannel()
+          .emit(
+            'navigateUrl',
+            '/?path=/docs/patterns-conversational-ai-suggestion-group-suggestion-item--docs'
+          ),
+    },
+  ]}
+/>

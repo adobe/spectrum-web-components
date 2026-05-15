@@ -9,15 +9,4 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-
-/**
- * Reference styles for system prose inside `swc-system-message` default slot.
- * This is not a component — Storybook imports it for demos; products should copy or map
- * equivalent rules to their design tokens.
- */
-
-.swc-conversationalAi-systemProse ul,
-.swc-conversationalAi-systemProse ol {
-  padding-inline-start: 20px;
-  margin: 0;
-}
+export * from './ColorLoupe.base.js';

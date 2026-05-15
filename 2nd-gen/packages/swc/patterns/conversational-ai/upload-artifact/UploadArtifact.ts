@@ -46,26 +46,8 @@ export class UploadArtifact extends SpectrumElement {
   @property({ type: String, attribute: 'dismiss-label' })
   public dismissLabel = 'Remove attachment';
 
-  /** Internal flag reflected for preview-only host styling hooks. */
-  @property({ type: Boolean, attribute: 'data-preview-only', reflect: true })
-  private _previewOnly = false;
-
   public static override get styles(): CSSResultArray {
     return [styles];
-  }
-
-  private _syncMode(): void {
-    this._previewOnly = this.type === 'media';
-  }
-
-  protected override updated(changed: Map<string, unknown>): void {
-    if (changed.has('type')) {
-      this._syncMode();
-    }
-  }
-
-  protected override firstUpdated(): void {
-    this._syncMode();
   }
 
   private _handleDismissClick(): void {

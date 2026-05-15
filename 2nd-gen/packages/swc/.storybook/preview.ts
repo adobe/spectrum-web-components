@@ -195,9 +195,9 @@ const preview = {
         method: 'alphabetical-by-kind',
         order: [
           'Learn about SWC',
-          ['Overview', 'Get started', 'When to use SWC', 'Gen1 vs Gen2'],
+          ['Overview', 'Get started', 'Gen1 vs Gen2'],
           'Resources',
-          ['Support and compatibility', 'Changelog'],
+          ['Support and compatibility', 'Migrate from Gen1', 'Changelog'],
           'Core',
           ['Overview', 'Controllers'],
           'Components',
@@ -363,7 +363,11 @@ const preview = {
                 'Color field',
                 ['Rendering and styling migration analysis'],
                 'Color loupe',
-                ['Accessibility migration analysis'],
+                [
+                  'Accessibility migration analysis',
+                  'Migration checklist',
+                  'Rendering and styling migration analysis',
+                ],
                 'Divider',
                 [
                   'Accessibility migration analysis',
