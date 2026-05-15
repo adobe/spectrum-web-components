@@ -109,6 +109,13 @@ export class AccordionItem extends AccordionItemBase {
     event.stopPropagation();
   }
 
+  private handleHeaderKeydown(event: Event): void {
+    if ((event as KeyboardEvent).key === ' ') {
+      event.preventDefault();
+      this.toggle();
+    }
+  }
+
   private renderHeadingWrapper(content: TemplateResult): TemplateResult {
     switch (this.heading) {
       case 2:
@@ -145,6 +152,7 @@ export class AccordionItem extends AccordionItemBase {
           this.disabled || this.parentDisabled ? 'true' : undefined
         )}
         @click=${this.toggle}
+        @keydown=${this.handleHeaderKeydown}
       >
         <swc-icon class="spectrum-Accordion-itemIndicator" aria-hidden="true">
           ${this.chevronForSize()}
