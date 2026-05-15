@@ -24,7 +24,7 @@ import {
   type StatusLightSize,
 } from '@spectrum-web-components/core/components/status-light';
 
-import '@adobe/spectrum-wc/status-light';
+import '@adobe/spectrum-wc/components/status-light/swc-status-light.js';
 
 import { getTranslationKey } from '../../../.storybook/helpers/get-translation-key.js';
 import translations from '../../../.storybook/intl/translations.json';
@@ -75,7 +75,7 @@ const meta: Meta = {
       url: 'https://www.figma.com/design/Mngz9H7WZLbrCvGQf3GnsY/S2---Desktop?node-id=36797-954',
     },
     stackblitz: {
-      url: 'https://stackblitz.com/edit/vitejs-vite-y2kz1rkx?file=package.json',
+      url: 'https://stackblitz.com/edit/vitejs-vite-rdaytnkj?file=src%2Fmy-element.ts',
     },
     flexLayout: 'row-wrap',
   },

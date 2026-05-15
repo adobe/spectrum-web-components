@@ -32,7 +32,6 @@
     - [Live regions, loading, and announcements](#live-regions-loading-and-announcements)
     - [Hold affordance and alternatives to synthesized longpress](#hold-affordance-and-alternatives-to-synthesized-longpress)
     - [Keyboard and focus](#keyboard-and-focus)
-    - [Toolbars, `role="group"`, and segmented control](#toolbars-rolegroup-and-segmented-control)
 - [Testing](#testing)
     - [Automated tests](#automated-tests)
 - [Summary checklist](#summary-checklist)
@@ -264,15 +263,6 @@ See [Button accessibility migration analysis](../button/accessibility-migration-
 - **MenuTrigger / longpress-style menu:** If product aligns with [React Aria: Menu — long press](https://react-aria.adobe.com/Menu#long-press) and [React Spectrum `MenuTrigger`](https://react-spectrum.adobe.com/react-spectrum/MenuTrigger.html) **and** **`longpress-enabled`** is **true**, document **Alt** + **Down arrow** as the **keyboard** path to open the **menu** (in addition to any **longpress** path), wire **`aria-describedby`** from **`longpress-help-text`**, and verify in [Keyboard testing](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/keyboard_testing.mdx). When **`longpress-enabled`** is **false**, **do not** document **longpress**-specific **`aria-describedby`** copy for that instance.
 - **1st-gen hold keyboard path** (**Space** or **Alt** + **Down arrow** hold, release fires **`longpress`**): any 2nd-gen carryover must be **documented**, **tested** with **screen readers**, and—when exposed as **`longpress-enabled`** on a **single** surface—paired with **`longpress-help-text`** / **`aria-describedby`** and non-timed alternatives per [Hold affordance and alternatives to synthesized longpress](#hold-affordance-and-alternatives-to-synthesized-longpress).
 - **`swc-action-group`:** **Arrow** navigation and **roving `tabindex`** should respect **`role="group"`** on **`swc-button-group`** and any outer **`toolbar`** contract; align keyboard tables with [Toolbar pattern](https://www.w3.org/WAI/ARIA/apg/patterns/toolbar/) and the [Toolbar example](https://www.w3.org/WAI/ARIA/apg/patterns/toolbar/examples/toolbar/).
-
-### Toolbars, `role="group"`, and segmented control
-
-| Topic | What to do |
-| --- | --- |
-| **`swc-segmented-control`** | Own **radio group** semantics via **`swc-segmented-control-button`** children; keep **`swc-action-button`** out of that **radiogroup** shape. |
-| **`swc-button-group`** | Inside **`swc-action-group`**, **`swc-button-group`** **always** exposes **`role="group"`** around **`swc-action-button`** siblings. Name the **group** for screen readers. |
-| **`role="toolbar"`** placement | Prefer **APG**-style **`toolbar`** on the **ancestor** that wraps **all** clusters (and other widgets), with inner **`role="group"`** sections—see **Copy / Cut / Paste** in the [Toolbar example](https://www.w3.org/WAI/ARIA/apg/patterns/toolbar/examples/toolbar/). **React Spectrum** may use **`toolbar`** on a narrower element; capture the SWC vs RS difference in Storybook docs so testers know which landmark to expect. |
-| **Keyboard** | Nested **radio** behavior inside a **toolbar** differs from standalone **radiogroup** (horizontal arrows owned by **toolbar**—**APG** documents this). **`swc-segmented-control`** should implement the **radio group** pattern appropriate to its **DOM** position (inside vs outside a **toolbar**). |
 
 ---
 

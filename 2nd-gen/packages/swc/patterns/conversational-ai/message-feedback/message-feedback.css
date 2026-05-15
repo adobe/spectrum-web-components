@@ -35,7 +35,7 @@
   padding: 0;
   color: token("neutral-content-color-default");
   background: transparent;
-  border: none;
+  border: 1px solid transparent;
   border-radius: var(--swc-message-feedback-button-border-radius, token("corner-radius-300"));
   cursor: pointer;
   transition:
@@ -61,4 +61,16 @@
 
 .swc-MessageFeedback-button[aria-pressed="true"]:hover {
   background: token("neutral-background-color-selected-hover");
+}
+
+@media (forced-colors: active) {
+  .swc-MessageFeedback-button[aria-pressed="true"],
+  .swc-MessageFeedback-button[aria-pressed="true"]:hover {
+    color: SelectedItemText;
+    background: SelectedItem;
+  }
+
+  .swc-MessageFeedback-button[aria-pressed="true"]:hover {
+    border-color: Highlight;
+  }
 }

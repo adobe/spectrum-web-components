@@ -1,5 +1,16 @@
 # Change Log
 
+## 1.12.0
+
+### Patch Changes
+
+- Updated dependencies [[`c4f24a8`](https://github.com/adobe/spectrum-web-components/commit/c4f24a83a8e53a761dcc0ed44eaaab4cb7708c96), [`bcd9639`](https://github.com/adobe/spectrum-web-components/commit/bcd9639b4d49a7afd16b7c8e8ec3e86a3ff0b07c), [`295f465`](https://github.com/adobe/spectrum-web-components/commit/295f4651451bb0523ceb8f8155dd0bcc77ab2f31), [`ba14a2b`](https://github.com/adobe/spectrum-web-components/commit/ba14a2b6361a0089a9a8c72232f245cde0716d89), [`dc6a8e8`](https://github.com/adobe/spectrum-web-components/commit/dc6a8e8db1b08080373c3664babc1feebde8f6c6), [`f37dec6`](https://github.com/adobe/spectrum-web-components/commit/f37dec6ae39fd89a4c12e084b4a0f4d9092d79b0), [`2db830c`](https://github.com/adobe/spectrum-web-components/commit/2db830cded30717fb9cbe4d335d0f3bcf9fea6b9), [`38a463f`](https://github.com/adobe/spectrum-web-components/commit/38a463f7f4745373d143cdb08c7d87ba932cf1dd), [`c720445`](https://github.com/adobe/spectrum-web-components/commit/c7204456810326960b31f80955e842cc3e5555e3)]:
+  - @spectrum-web-components/button@1.12.0
+  - @spectrum-web-components/textfield@1.12.0
+  - @spectrum-web-components/base@1.12.0
+  - @spectrum-web-components/icon@1.12.0
+  - @spectrum-web-components/icons-workflow@1.12.0
+
 ## 1.11.2
 
 ### Patch Changes

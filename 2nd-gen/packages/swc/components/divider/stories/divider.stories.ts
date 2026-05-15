@@ -17,7 +17,7 @@ import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
 import { Divider } from '@adobe/spectrum-wc/divider';
 
-import '@adobe/spectrum-wc/divider';
+import '@adobe/spectrum-wc/components/divider/swc-divider.js';
 
 // ────────────────
 //    METADATA
@@ -76,7 +76,7 @@ const meta: Meta = {
       url: 'https://www.figma.com/design/Mngz9H7WZLbrCvGQf3GnsY/S2---Desktop?node-id=13642-334',
     },
     stackblitz: {
-      url: 'https://stackblitz.com/edit/vitejs-vite-rqfjtpgz?file=package.json',
+      url: 'https://stackblitz.com/edit/vitejs-vite-dbcd31ow?file=src%2Fmy-element.ts',
     },
     flexLayout: 'row-nowrap',
   },

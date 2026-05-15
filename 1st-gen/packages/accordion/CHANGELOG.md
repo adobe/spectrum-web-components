@@ -1,5 +1,22 @@
 # Change Log
 
+## 1.12.0
+
+### Minor Changes
+
+- [#5969](https://github.com/adobe/spectrum-web-components/pull/5969) [`0b362b0`](https://github.com/adobe/spectrum-web-components/commit/0b362b075f876a7811874fc36a64fd466e2dd479) Thanks [@rubencarvalho](https://github.com/rubencarvalho)! - **Added**: Added `level` property to `<sp-accordion-item>` to allow customization of the semantic heading level (2-6) used for accordion item titles. The property defaults to `3`, maintaining backward compatibility with existing implementations.
+
+  This change enables developers to maintain proper document structure and accessibility by matching accordion heading levels to their page's heading hierarchy.
+
+### Patch Changes
+
+- Updated dependencies [[`ba14a2b`](https://github.com/adobe/spectrum-web-components/commit/ba14a2b6361a0089a9a8c72232f245cde0716d89), [`dc6a8e8`](https://github.com/adobe/spectrum-web-components/commit/dc6a8e8db1b08080373c3664babc1feebde8f6c6), [`90c3010`](https://github.com/adobe/spectrum-web-components/commit/90c30101391d4d78922575e9f0bb407e02d9c2d5), [`f37dec6`](https://github.com/adobe/spectrum-web-components/commit/f37dec6ae39fd89a4c12e084b4a0f4d9092d79b0)]:
+  - @spectrum-web-components/base@1.12.0
+  - @spectrum-web-components/reactive-controllers@1.12.0
+  - @spectrum-web-components/icon@1.12.0
+  - @spectrum-web-components/icons-ui@1.12.0
+  - @spectrum-web-components/shared@1.12.0
+
 ## 1.11.2
 
 ### Patch Changes

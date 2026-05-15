@@ -13,7 +13,9 @@
 import { html, type TemplateResult } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
-import '@adobe/spectrum-wc/tabs';
+import '@adobe/spectrum-wc/components/tabs/swc-tabs.js';
+import '@adobe/spectrum-wc/components/tabs/swc-tab.js';
+import '@adobe/spectrum-wc/components/tabs/swc-tab-panel.js';
 
 import {
   KEYBOARD_ACTIVATIONS,
@@ -89,7 +91,7 @@ export const meta: Meta = {
       url: 'https://www.figma.com/design/PLACEHOLDER',
     },
     stackblitz: {
-      url: 'https://stackblitz.com/edit/PLACEHOLDER',
+      url: 'https://stackblitz.com/edit/vitejs-vite-5jtmpzjk?file=src%2Fmy-element.ts',
     },
   },
   tags: ['migrated'],

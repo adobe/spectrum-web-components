@@ -17,6 +17,8 @@ import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
 import { IllustratedMessage } from '@adobe/spectrum-wc/illustrated-message';
 
+import '@adobe/spectrum-wc/components/illustrated-message/swc-illustrated-message.js';
+
 // ────────────────
 //    METADATA
 // ────────────────
@@ -67,7 +69,9 @@ export const meta: Meta = {
       type: 'figma',
       url: 'https://www.figma.com/design/Mngz9H7WZLbrCvGQf3GnsY/S2---Web--Desktop-scale-?node-id=20032-601&p=f&t=v3YDUMXflgtF0NtJ-0',
     },
-    // @todo SWC-1992 Add Stackblitz link: stackblitz: { url: '<stackblitz-url>' }
+    stackblitz: {
+      url: 'https://stackblitz.com/edit/vitejs-vite-akpphxht?file=src%2Fmy-element.ts',
+    },
   },
   tags: ['migrated'],
 };

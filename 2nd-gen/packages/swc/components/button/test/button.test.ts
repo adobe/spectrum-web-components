@@ -22,7 +22,7 @@ import {
   BUTTON_VARIANTS,
 } from '@spectrum-web-components/core/components/button';
 
-import '@adobe/spectrum-wc/button';
+import '@adobe/spectrum-wc/components/button/swc-button.js';
 
 import {
   getComponent,

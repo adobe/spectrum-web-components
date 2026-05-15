@@ -143,8 +143,9 @@ if (storybookMode === 'dev') {
 }
 
 /**
- * ci-a11y mode needs docs (for MDX parsing) and a11y; everything else
- * (designs, vitest, chromatic, screen-reader) is unnecessary overhead.
+ * ci-a11y mode needs docs (for MDX parsing); addon-a11y is excluded because
+ * the test-runner handles axe analysis directly. Everything else (designs,
+ * vitest, chromatic, screen-reader) is unnecessary overhead.
  */
 const addons: StorybookConfig['addons'] = [
   {
@@ -158,12 +159,12 @@ const addons: StorybookConfig['addons'] = [
       },
     },
   },
-  '@storybook/addon-a11y',
   '@github-ui/storybook-addon-performance-panel/universal',
 ];
 
 if (storybookMode !== 'ci-a11y') {
   addons.push(
+    '@storybook/addon-a11y',
     '@storybook/addon-designs',
     '@storybook/addon-vitest',
     '@chromatic-com/storybook',
@@ -225,14 +226,27 @@ const config: StorybookConfig = {
         },
       ],
       resolve: {
-        alias: {
-          '@spectrum-web-components/core': resolve(__dirname, '../../core'),
-          '@adobe/spectrum-wc': resolve(__dirname, '../components'),
-          '@adobe/postcss-token': resolve(
-            __dirname,
-            '../../tools/postcss-token'
-          ),
-        },
+        alias: [
+          {
+            find: '@spectrum-web-components/core',
+            replacement: resolve(__dirname, '../../core'),
+          },
+          // Long-form imports (e.g. `@adobe/spectrum-wc/components/badge/swc-badge.js`)
+          // resolve directly to the source under `./components`. This must come
+          // before the short-form alias below so the more specific prefix wins.
+          {
+            find: '@adobe/spectrum-wc/components',
+            replacement: resolve(__dirname, '../components'),
+          },
+          {
+            find: '@adobe/spectrum-wc',
+            replacement: resolve(__dirname, '../components'),
+          },
+          {
+            find: '@adobe/postcss-token',
+            replacement: resolve(__dirname, '../../tools/postcss-token'),
+          },
+        ],
       },
     });
   },

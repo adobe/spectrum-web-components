@@ -25,7 +25,7 @@ import {
   type ButtonVariant,
 } from '@spectrum-web-components/core/components/button';
 
-import '@adobe/spectrum-wc/button';
+import '@adobe/spectrum-wc/components/button/swc-button.js';
 
 // ────────────────
 //    METADATA
@@ -74,6 +74,9 @@ const meta: Meta = {
   parameters: {
     docs: {
       subtitle: `Buttons trigger actions when activated.`,
+    },
+    stackblitz: {
+      url: 'https://stackblitz.com/edit/vitejs-vite-efws3xzp?file=src%2Fmy-element.ts',
     },
   },
   args,

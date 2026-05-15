@@ -19,7 +19,7 @@ import {
   type IconSize,
 } from '@spectrum-web-components/core/components/icon';
 
-import '@adobe/spectrum-wc/icon';
+import '@adobe/spectrum-wc/components/icon/swc-icon.js';
 
 import { Chevron100Icon } from '../elements/index.js';
 import * as iconElements from '../elements/index.js';
