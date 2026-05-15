@@ -39,7 +39,7 @@
 
 ## Overview
 
-This doc describes how **`swc-button-group`** should behave for **accessibility** in 2nd-gen, targeting **WCAG 2.2 Level AA**. It pairs with [Button group migration roadmap](./rendering-and-styling-migration-analysis.md) for layout, tokens, and DOM. **`swc-button-group`** is a **layout and semantics wrapper** for **related** **`swc-button`** actions (for example dialog or form footers). The host **must** expose **`role="group"`**, **must not** be used as **`role="radiogroup"`**, and **slotted** children **should** be **`swc-button`** instances so every focusable control remains a **standard** **button** with a **discernible name** ([Button accessibility migration analysis](../button/accessibility-migration-analysis.md)). Align shared **button** / **`ButtonBase`** sequencing with [Button migration plan](../button/migration-plan.md).
+This doc describes how **`swc-button-group`** should behave for **accessibility** in 2nd-gen, targeting **WCAG 2.2 Level AA**. It pairs with [Button group migration roadmap](./rendering-and-styling-migration-analysis.md) for layout, tokens, and DOM. **`swc-button-group`** is a **layout and semantics wrapper** for **related** **`swc-button`** actions (for example dialog or form footers). The host **must** expose **`role="group"`**, **must not** be used as **`role="radiogroup"`**, **must not** implement **toggle-group** behavior (mutually or collectively **pressed** / **toolbar**-style **toggle** clusters belong on **`swc-toggle-group`**), and **slotted** children **should** be **`swc-button`** instances so every focusable control remains a **standard** **button** with a **discernible name** ([Button accessibility migration analysis](../button/accessibility-migration-analysis.md)). Align shared **button** / **`ButtonBase`** sequencing with [Button migration plan](../button/migration-plan.md).
 
 ### Also read
 
@@ -53,12 +53,14 @@ This doc describes how **`swc-button-group`** should behave for **accessibility*
 ### When to use something else
 
 - **Mutually exclusive** options (one-of-many **radio** behavior, **segment** UI) → **`swc-segmented-control`** / **`swc-segmented-control-button`** (**`radiogroup`** semantics)—**not** **`swc-button-group`** (see **What it is not**).
+- **Toggle** behavior (a **group** of controls where **selection** / **`aria-pressed`** / **roving** focus among **toggles** is coordinated)—**not** **`swc-button-group`**. Consumers **should** use **`swc-toggle-group`** when product needs **toggle** semantics at the **group** level.
 - **Compact** **toolbar** / **action-strip** **`swc-action-button`** clusters inside **`swc-action-group`** → follow [Action group migration roadmap](../action-group/rendering-and-styling-migration-analysis.md) and [Action button migration roadmap](../action-button/rendering-and-styling-migration-analysis.md); outer **`role="toolbar"`** and inner **`swc-button-group`** with **`role="group"`** remain the **APG**-style split.
 
 ### What it is not
 
 - **`role="radiogroup"`:** **`swc-button-group`** **must not** implement **radio-group** semantics or **`aria-checked`** on children for selection. Use **`swc-segmented-control`** when design implies **exclusive** choice.
-- **A single focusable widget:** The **group** **host** is **not** a substitute for **roving** **`tabindex`** on a **radiogroup**; it only **groups** **buttons**.
+- **Toggle group:** **`swc-button-group`** **must not** own **`aria-pressed`** coordination, **single-selection** among **toggles**, or **`toolbar`**-style **toggle** clusters. Use **`swc-toggle-group`** when the UX is **toggle**-based at the **group** level; **`swc-button-group`** stays **plain** **`button`** actions only.
+- **A single focusable widget:** The **group** **host** is **not** a substitute for **roving** **`tabindex`** on a **radiogroup** or **toggle** strip; it only **groups** **buttons**.
 
 ### Program (2nd-gen, Jira snapshot)
 
@@ -84,7 +86,7 @@ Planning and migration work is tracked in Adobe Jira with **`gen2`** labels (for
 | [Target size (WCAG 2.5.8)](https://www.w3.org/TR/WCAG22/#target-size-minimum) | Spacing and **button** sizes meet **minimum** targets or documented exceptions. |
 | [Non-text contrast (WCAG 1.4.11)](https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast) | **Button** borders, **focus** rings, and chrome meet **3:1** where applicable. |
 
-**Bottom line:** **`swc-button-group`** = **`role="group"`** + **`swc-button`** children; mirror the **toolbar** example’s **named** **button** cluster—not **radiogroup**.
+**Bottom line:** **`swc-button-group`** = **`role="group"`** + **`swc-button`** children; mirror the **toolbar** example’s **named** **button** cluster—not **radiogroup**, not **toggle-group** semantics (**`swc-toggle-group`**).
 
 ---
 
@@ -105,13 +107,13 @@ Adobe Jira is authoritative for current status and resolution; refresh cells whe
 
 | Topic | What to do |
 | --- | --- |
-| **Prescribed host role** | **`swc-button-group`** maps to **one** landmark-like collection: **`role="group"`**. **Must not** author **`role="radiogroup"`**, **`role="toolbar"`** on this host unless product explicitly promotes a **toolbar** strip (prefer **APG** layering: **`toolbar`** on an **ancestor**, **`group`** here). For **exclusive** selection UX, use **`swc-segmented-control`**, not a **role** override on **`swc-button-group`**. |
+| **Prescribed host role** | **`swc-button-group`** maps to **one** landmark-like collection: **`role="group"`**. **Must not** author **`role="radiogroup"`**, **`role="toolbar"`** on this host unless product explicitly promotes a **toolbar** strip (prefer **APG** layering: **`toolbar`** on an **ancestor**, **`group`** here). For **exclusive** selection UX, use **`swc-segmented-control`**, not a **role** override on **`swc-button-group`**. **Must not** implement **toggle-group** APIs or **pressed**-state orchestration on the **host**—use **`swc-toggle-group`**. |
 | **Group name** | When the **group** carries **distinct meaning** (for example **“Edit actions”**, **dialog footer actions**), set **`aria-label`** or **`aria-labelledby`** on the **host**. If the **only** distinction is each **button** label and no extra grouping cue is needed, the name can be **omitted**—verify with **screen reader** review so the **experience** is not overly verbose. |
 | **`aria-orientation`** | When **`vertical`** is **true**, set **`aria-orientation="vertical"`** on the **group**; when **horizontal**, **`aria-orientation="horizontal"`** (or omit if default **horizontal** is clear for the AT). |
-| **Child elements** | **Default** slotted controls **should** be **`swc-button`** so semantics stay **`role="button"`** with **`swc-button`** **delegation** and **pending** / **disabled** rules from [Button accessibility migration analysis](../button/accessibility-migration-analysis.md). **Do not** document **`swc-button-group`** as the home for **radio** semantics. |
+| **Child elements** | **Default** slotted controls **should** be **`swc-button`** so semantics stay **`role="button"`** with **`swc-button`** **delegation** and **pending** / **disabled** rules from [Button accessibility migration analysis](../button/accessibility-migration-analysis.md). **Do not** document **`swc-button-group`** as the home for **radio** semantics or **toggle-group** coordination. |
 | **Disable all (optional API)** | If 2nd-gen adds **group-level** **disable** (compare [React Spectrum `ButtonGroup` `isDisabled`](https://react-spectrum.adobe.com/ButtonGroup)), propagate **disabled** or **`aria-disabled`** to each **`swc-button`** per **`swc-button`** patterns—**never** rely on **inactive** appearance alone. |
-| **`size` / `vertical`** | **Visual** layout props; **do not** map to **radio** or **pressed** state. **`vertical`** must pair with **`aria-orientation`** as above. |
-| **Docs** | Storybook and migration guides **must** state **no** **`radiogroup`** on **`swc-button-group`** and point authors to **`swc-segmented-control`** for **segmented** / **one-of-many** **button** UX. |
+| **`size` / `vertical`** | **Visual** layout props; **do not** map to **radio**, **pressed**, or **toggle-selection** state. **`vertical`** must pair with **`aria-orientation`** as above. |
+| **Docs** | Storybook and migration guides **must** state **no** **`radiogroup`** on **`swc-button-group`** and point authors to **`swc-segmented-control`** for **segmented** / **one-of-many** **button** UX and to **`swc-toggle-group`** for **toggle** **groups**. |
 
 ### Shadow DOM and cross-root ARIA Issues
 
@@ -149,9 +151,9 @@ None
 
 | Kind of test | What to check |
 | --- | --- |
-| **Unit** | **Host** exposes **`role="group"`** (or equivalent); **`vertical`** toggles **`aria-orientation`**; optional **group** **name** attributes; **no** **`role="radiogroup"`**; slotted **`swc-button`** count and **size**/`disabled` propagation when implemented. |
-| **aXe + Storybook** | Horizontal / **vertical**, **named** and **unnamed** groups, **disabled** group variant, multi-**button** layouts; assert **child** **`swc-button`** names and **no** **radio** roles on **group** or **buttons** for **button-group** stories. |
-| **Playwright ARIA snapshots** | **group** role on host; **button** roles on children; **aria-orientation** when **vertical**; regression that **group** is **not** **radiogroup**. |
+| **Unit** | **Host** exposes **`role="group"`** (or equivalent); **`vertical`** toggles **`aria-orientation`**; optional **group** **name** attributes; **no** **`role="radiogroup"`**; **no** **toggle-group**-specific props or **pressed** orchestration on **host**; slotted **`swc-button`** count and **size**/`disabled` propagation when implemented. |
+| **aXe + Storybook** | Horizontal / **vertical**, **named** and **unnamed** groups, **disabled** group variant, multi-**button** layouts; assert **child** **`swc-button`** names and **no** **radio** roles on **group** or **buttons** for **button-group** stories; stories **do not** model **exclusive** **toggle** selection (that belongs on **`swc-toggle-group`**). |
+| **Playwright ARIA snapshots** | **group** role on host; **button** roles on children; **aria-orientation** when **vertical**; regression that **group** is **not** **radiogroup** and **not** a **toggle** container pattern. |
 | **Playwright keyboard** | **Tab** order through **buttons**; **Enter** / **Space** on each **button**; **toolbar**-wrapped cases if applicable. |
 
 ---
@@ -162,8 +164,9 @@ None
 - [ ] **Group** **name** provided when **`aria-label`** / **`aria-labelledby`** improves comprehension without noise.
 - [ ] **Children** are **`swc-button`**; each meets [Button accessibility migration analysis](../button/accessibility-migration-analysis.md) **name** / **focus** / **delegation** rules.
 - [ ] **No** **`radiogroup`** / **radio** semantics—**segmented** UX uses **`swc-segmented-control`**.
+- [ ] **No** **toggle-group** behavior on **`swc-button-group`**—**toggle** UX uses **`swc-toggle-group`**.
 - [ ] **Toolbar** composition: outer **`toolbar`** + inner **`group`** matches [APG Toolbar example](https://www.w3.org/WAI/ARIA/apg/patterns/toolbar/examples/toolbar/) and [Action button migration roadmap](../action-button/rendering-and-styling-migration-analysis.md) layering notes.
-- [ ] Storybook and consumer migration guide ([SWC-2077](https://jira.corp.adobe.com/browse/SWC-2077) program scope) explain **group** vs **segmented control** and link **`swc-button`** **children**.
+- [ ] Storybook and consumer migration guide ([SWC-2077](https://jira.corp.adobe.com/browse/SWC-2077) program scope) explain **group** vs **segmented control** vs **toggle group** and link **`swc-button`** **children**.
 - [ ] Cross-links to [Button group migration roadmap](./rendering-and-styling-migration-analysis.md), [Button migration plan](../button/migration-plan.md), and [Spectrum 2 — Button group (Figma)](https://www.figma.com/design/Mngz9H7WZLbrCvGQf3GnsY/S2---Web--Desktop-scale-?node-id=13663-6530).
 
 ---
