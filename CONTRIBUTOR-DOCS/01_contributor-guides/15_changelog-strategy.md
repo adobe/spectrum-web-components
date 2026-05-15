@@ -130,15 +130,28 @@ Separate changesets keep each entry clean and allow different bump types per com
 
 ## CHANGELOG output
 
-At release time, the script collates changeset entries under a version heading. The output is fully automated — no manual editing required:
+At release time, the script collates changeset entries under a version heading. The output is fully automated — no manual editing required.
+
+**Typical non-breaking release** (minor or patch only) — one consumer-visible feature might look like this:
+
+```markdown
+## 2.1.0
+
+- `Button` — Added wiggle radius to button. [#6210](link)
+```
+
+**Release that includes breaking changes** — Changesets emits **major** bullets before minor and patch for the same version; `clean-changelog.cjs` removes the `### … Changes` headings but preserves that order, so 🚨 **BREAKING** lines still appear first. The result looks like this:
 
 ```markdown
 ## 0.2.0
 
+- 🚨 BREAKING: `Avatar` — Renamed `label` to `alt`. Removed `href`. [#6113](link)
 - `Button` — Added `justified` attribute for full-width layout. [#6254](link)
 - `Badge` — Fixed contrast ratio in dark theme for `notice` variant. [#6285](link)
 - `Accordion` — Added `<swc-accordion>` with Spectrum 2 tokens. See the [component docs](link) and [consumer migration guide](link). [#7000](link)
 ```
+
+For major releases with many entries, add short section headings in the changeset bodies (or split across releases) so the merged CHANGELOG stays easy to scan.
 
 ## How it works
 
