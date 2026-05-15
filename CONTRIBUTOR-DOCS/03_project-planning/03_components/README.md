@@ -75,6 +75,7 @@
     - [In-field progress circle migration roadmap](infield-progress-circle/rendering-and-styling-migration-analysis.md)
 - Link
     - [Link accessibility migration analysis](link/accessibility-migration-analysis.md)
+    - [Link migration plan](link/migration-plan.md)
     - [Link migration roadmap](link/rendering-and-styling-migration-analysis.md)
 - Menu
     - [Menu accessibility migration analysis](menu/accessibility-migration-analysis.md)
