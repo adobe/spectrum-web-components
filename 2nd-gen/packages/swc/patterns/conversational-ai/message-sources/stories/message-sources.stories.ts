@@ -131,11 +131,7 @@ export const Open: Story = {
           <a href="#">Adobe Experience Manager documentation</a>
           <a href="#">Creative Cloud release notes 2026</a>
         </swc-message-sources>
-        <span
-          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-700);"
-        >
-          Collapsed
-        </span>
+        <span class="swc-Detail swc-Detail--sizeS">Collapsed</span>
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;">
         <swc-message-sources open>
@@ -143,20 +139,14 @@ export const Open: Story = {
           <a href="#">Creative Cloud release notes 2026</a>
           <a href="#">Firefly API getting started guide</a>
         </swc-message-sources>
-        <span
-          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-700);"
-        >
-          Expanded
-        </span>
+        <span class="swc-Detail swc-Detail--sizeS">Expanded</span>
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;">
         <swc-message-sources open label="References">
           <a href="#">Adobe Experience Manager documentation</a>
           <a href="#">Creative Cloud release notes 2026</a>
         </swc-message-sources>
-        <span
-          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-700);"
-        >
+        <span class="swc-Detail swc-Detail--sizeS">
           Expanded with custom label
         </span>
       </div>
