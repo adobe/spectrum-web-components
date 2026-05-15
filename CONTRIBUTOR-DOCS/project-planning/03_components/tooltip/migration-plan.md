@@ -30,6 +30,7 @@
     - [Public API](#public-api)
     - [Behavioral semantics](#behavioral-semantics)
     - [Accessibility semantics notes (2nd-gen)](#accessibility-semantics-notes-2nd-gen)
+    - [ARIA relationship wiring](#aria-relationship-wiring)
 - [Architecture: core vs SWC split](#architecture-core-vs-swc-split)
 - [Controller integration assumptions](#controller-integration-assumptions)
     - [Event dispatch ownership](#event-dispatch-ownership)
@@ -431,7 +432,7 @@ In the initial release, the tooltip uses native popover for open/close but has n
 - Tooltips must respond to both hover and keyboard focus. React Spectrum's `trigger="focus"` (focus-only mode) is not applicable here: WCAG 1.4.13 requires the tooltip to be available via pointer hover, so restricting to focus-only would fail mouse users. Both trigger methods are always active in automatic mode.
 - Toggletip mode (touch/longpress disclosure pattern, SWC-2022) is not applicable for the 2nd-gen Tooltip. Consumers needing toggletip behavior should use `swc-popover` or a popover-derived component instead.
 
-#### ARIA relationship wiring
+### ARIA relationship wiring
 
 The SWC layer uses `Element.ariaDescribedByElements` to wire the ARIA relationship between the trigger and tooltip on `open` change. This API was chosen specifically because 2nd-gen button-like components render a semantic `<button>` inside their shadow DOM — the inner button is the AT-facing interactive element, not the host. A string `aria-describedby` attribute on the trigger host cannot reference an element across a shadow boundary; `ariaDescribedByElements` uses element references that bypass cross-root ID scoping. String-ID `aria-describedby` on the host must not be used as a fallback.
 
@@ -751,7 +752,7 @@ Create these tickets before this migration PR closes. Link each to Epic SWC-2017
 - [1st-gen README](../../../../1st-gen/packages/tooltip/README.md)
 - [React Spectrum S2 Tooltip](https://react-spectrum.adobe.com/Tooltip)
 - [`ariaDescribedByElements` cross-root POC (CodePen)](https://codepen.io/spectrum-css/pen/pvNEVda?editors=0010) — validates inner shadow `<button>` wiring across Chrome/Edge 135+, Firefox 136+, Safari 16.4+; AT-validated with NVDA and VoiceOver
-- [Spectrum CSS — `tooltip/index.css` on `spectrum-two` branch](../../../../../spectrum-css/components/tooltip/index.css)
+- [Spectrum CSS — `tooltip/index.css` on `spectrum-two` branch](https://github.com/adobe/spectrum-css/blob/spectrum-two/components/tooltip/index.css)
 - [Badge migration reference](../../02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md#reference-badge-migration)
 - Epic: SWC-2017 — Tooltip migration
 - SWC-1558: Tooltip missing `role="tooltip"` (must-ship a11y fix)

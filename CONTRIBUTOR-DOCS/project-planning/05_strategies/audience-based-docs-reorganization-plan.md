@@ -675,6 +675,9 @@ The validation gate has three programmatic checks (hard fail) and two manual che
 # Gate 1 — CONTRIBUTOR-DOCS link integrity
 node CONTRIBUTOR-DOCS/for-contributors/authoring-contributor-docs/update-nav.js
 # expected: "✅ All links valid!"
+# Zero broken links. This branch is responsible for fixing every link reported,
+# regardless of whether the link came in via the branch's own work or via a merge
+# from main. A clean Gate 1 is a hard precondition for Phase 12.
 
 # Gate 2 — Storybook auto-generated content emits cleanly
 cd 2nd-gen/packages/swc && yarn generate:contributor-docs
@@ -697,7 +700,9 @@ cd 2nd-gen/packages/swc && yarn storybook:build
 #   - The route prefixes /docs/contribute-* must be ABSENT
 #   - The route prefixes /docs/core-* must be ABSENT
 #   - The route prefixes /docs/get-started-*, /docs/learn-*, /docs/reference-*,
-#     /docs/resources-*, /docs/components-* must all be PRESENT
+#     /docs/components-*, /docs/patterns-* must all be PRESENT
+#   - /docs/resources-* must be ABSENT (the Resources titlePrefix was retired in
+#     Phase 9.5; its three pages were redistributed to Learn/Migration and Reference)
 # expected: production build completes; gated routes excluded
 ```
 
@@ -721,8 +726,8 @@ cd 2nd-gen/packages/swc && yarn storybook:build
 - `Learn → Accessibility → Cheat sheet` is the first child, followed by the eight long-form docs
 - `Learn → Customization → Fonts` (or wherever the typography story's link points) resolves; the typography story page loads
 - Button stories' `/docs/learn-customization-global-elements--docs` links resolve
-- `Reference → Component status` shows the matrix with **live `<swc-badge>` per row** (proves the matrix's custom-element registration works — this specifically caught us mid-merge when the badge import broke)
-- `Resources → Migrate from Gen1` (and siblings) render
+- `Reference → Changelog` and `Reference → Support and compatibility` render (the live component status matrix is deferred to follow-up branch `caseyisonit/cem-component-matrix` per the team's scope-tightening decision)
+- `Learn → Migration → Migrate from Gen1` and `Learn → Migration → Gen1 vs Gen2` render (these were moved out of the retired `Resources` titlePrefix in Phase 9.5)
 - `Contribute` section is visible in dev with `For contributors`, `For maintainers`, `Project planning` subtrees
 
 **Manual smoke test in `yarn storybook:build` output (after Gate 4 passes):**
@@ -738,14 +743,27 @@ git diff --name-only origin/main..HEAD \
   | grep -E "^2nd-gen/packages/(swc|core)/components/" \
   | grep -v "components/typography/stories/typography.stories.ts" \
   | grep -v "components/status-light/stories/status-light.stories.ts" \
+  | grep -v "components/status-light/migration-guide.mdx" \
   | grep -v "components/progress-circle/stories/progress-circle.stories.ts" \
+  | grep -v "components/progress-circle/migration-guide.mdx" \
+  | grep -v "components/illustrated-message/migration-guide.mdx" \
+  | grep -v "components/color-loupe/migration-guide.mdx" \
   | grep -v "components/badge/stories/badge.stories.ts" \
   | grep -v "components/button/stories/button.stories.ts" \
   | grep -v "components/button/migration-guide.mdx"
 # expected: empty output
 ```
 
-The six permitted `components/` exceptions are all from Phase 4c's outbound-link updates. Any other `components/` diff is a scope violation and must be reverted before commit. (Note: the button migration guide was renamed in main from `consumer-migration-guide.mdx` to `migration-guide.mdx` during the merge; the scope check honors the new filename.)
+The permitted `components/` exceptions fall into two groups:
+
+1. **Outbound-link updates from Phase 4c** — five `.stories.ts` files (typography, status-light, progress-circle, badge, button) plus `button/migration-guide.mdx`. Their JSDoc prose was rewritten to point at the new audience-folder routes (`/docs/guides-*` → `/docs/learn-*`, etc.).
+
+2. **Title-case Meta + H1 fixes** — four multi-word `migration-guide.mdx` files (color-loupe, illustrated-message, progress-circle, status-light) updated to follow the proper-noun title-case convention main introduced in #6291 (`Color Loupe`, `Illustrated Message`, `Progress Circle`, `Status Light`). Landed in merge cleanup commit `9fbf08d838`.
+
+Any other `components/` diff is a scope violation and must be reverted before commit. Notes:
+
+- The button migration guide was renamed in main from `consumer-migration-guide.mdx` to `migration-guide.mdx`; the scope check honors the new filename.
+- The component status matrix (Phase 9 of the original plan) was extracted to follow-up branch `caseyisonit/cem-component-matrix` in commit `b44348bda7`; its components-touching files are no longer in this branch's scope.
 
 ### Phase 12 — Commit & PR
 
