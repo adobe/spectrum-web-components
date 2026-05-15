@@ -54,7 +54,23 @@ const config: TestRunnerConfig = {
         axeBuilder.disableRules(a11yConfig.disabledRules);
       }
 
-      const results = await axeBuilder.analyze();
+      // Both addon-a11y and the test-runner run axe in the same preview iframe.
+      // The waitForFunction above can resolve just before the addon starts a new run,
+      // so analyze() may find axe already running. Retry once after waiting.
+      let results;
+      try {
+        results = await axeBuilder.analyze();
+      } catch (error) {
+        if (
+          error instanceof Error &&
+          error.message.includes('Axe is already running')
+        ) {
+          await targetPage.waitForFunction(() => !(window as any).axe?.running);
+          results = await axeBuilder.analyze();
+        } else {
+          throw error;
+        }
+      }
 
       // Filter violations using rule-specific exclusions from story parameters.
       // parameters.a11y.exclude: { 'rule-id': ['selector1', 'selector2'] }

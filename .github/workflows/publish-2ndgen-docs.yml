@@ -5,6 +5,11 @@ on:
   push:
     branches:
       - main
+    # Skip the publish when a main push only touches 1st-gen files. Root-level
+    # changes (anything outside `1st-gen/`) still trigger the workflow so shared
+    # config / scripts / 2nd-gen edits keep deploying the 2nd-gen docs.
+    paths-ignore:
+      - '1st-gen/**'
 
 permissions:
   contents: read

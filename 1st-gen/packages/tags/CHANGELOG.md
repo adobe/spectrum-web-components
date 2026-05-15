@@ -1,5 +1,17 @@
 # Change Log
 
+## 1.12.0
+
+### Patch Changes
+
+- [#6020](https://github.com/adobe/spectrum-web-components/pull/6020) [`a420e49`](https://github.com/adobe/spectrum-web-components/commit/a420e495a479f411bef970739d860b0fcfe5f7fa) Thanks [@rubencarvalho](https://github.com/rubencarvalho)! - **Fixed**: Updated tag content and border colors in S2 Foundations. Content color updated from `--spectrum-neutral-subdued-content-color-default` (gray-700) to `--spectrum-neutral-content-color-default` (gray-800), and border color aligned to use the same `--spectrum-neutral-content-color-*` tokens. Both changes apply to all interaction states (default, hover, active, focus).
+
+- Updated dependencies [[`c4f24a8`](https://github.com/adobe/spectrum-web-components/commit/c4f24a83a8e53a761dcc0ed44eaaab4cb7708c96), [`bcd9639`](https://github.com/adobe/spectrum-web-components/commit/bcd9639b4d49a7afd16b7c8e8ec3e86a3ff0b07c), [`ba14a2b`](https://github.com/adobe/spectrum-web-components/commit/ba14a2b6361a0089a9a8c72232f245cde0716d89), [`dc6a8e8`](https://github.com/adobe/spectrum-web-components/commit/dc6a8e8db1b08080373c3664babc1feebde8f6c6), [`90c3010`](https://github.com/adobe/spectrum-web-components/commit/90c30101391d4d78922575e9f0bb407e02d9c2d5), [`f37dec6`](https://github.com/adobe/spectrum-web-components/commit/f37dec6ae39fd89a4c12e084b4a0f4d9092d79b0), [`38a463f`](https://github.com/adobe/spectrum-web-components/commit/38a463f7f4745373d143cdb08c7d87ba932cf1dd), [`c720445`](https://github.com/adobe/spectrum-web-components/commit/c7204456810326960b31f80955e842cc3e5555e3)]:
+  - @spectrum-web-components/button@1.12.0
+  - @spectrum-web-components/base@1.12.0
+  - @spectrum-web-components/reactive-controllers@1.12.0
+  - @spectrum-web-components/shared@1.12.0
+
 ## 1.11.2
 
 ### Patch Changes

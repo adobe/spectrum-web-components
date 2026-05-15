@@ -1,5 +1,22 @@
 # Change Log
 
+## 1.12.0
+
+### Minor Changes
+
+- [#6207](https://github.com/adobe/spectrum-web-components/pull/6207) [`3956705`](https://github.com/adobe/spectrum-web-components/commit/3956705c5a1b44ee8af7369a84ad905c1bcc8ed8) Thanks [@miwha-adobe](https://github.com/miwha-adobe)! - Migrated `<sp-illustrated-message>` to Spectrum 2 (2nd-gen) architecture.
+  - **Added**: 2nd-gen `<swc-illustrated-message>` component with Spectrum 2 design tokens and styling
+  - **Added**: `size` attribute (`s`, `m`, `l`) for controlling component size
+  - **Added**: `orientation` attribute (`vertical`, `horizontal`) for layout control
+  - **Added**: `heading` slot as the preferred API for providing heading content
+  - **Deprecated**: `heading` attribute on `<sp-illustrated-message>` in favor of the `heading` slot; a dev mode warning is emitted when the attribute is used
+
+### Patch Changes
+
+- Updated dependencies [[`018d316`](https://github.com/adobe/spectrum-web-components/commit/018d3163efb830478e1d1e2e1f696639c1423e84), [`ba14a2b`](https://github.com/adobe/spectrum-web-components/commit/ba14a2b6361a0089a9a8c72232f245cde0716d89), [`26f16c4`](https://github.com/adobe/spectrum-web-components/commit/26f16c42613d96ed89baeebf6d1ec274768571e5), [`dc6a8e8`](https://github.com/adobe/spectrum-web-components/commit/dc6a8e8db1b08080373c3664babc1feebde8f6c6), [`f37dec6`](https://github.com/adobe/spectrum-web-components/commit/f37dec6ae39fd89a4c12e084b4a0f4d9092d79b0), [`52947c8`](https://github.com/adobe/spectrum-web-components/commit/52947c8877ae7fd6eda794a536454756e9b2c1e1), [`a420e49`](https://github.com/adobe/spectrum-web-components/commit/a420e495a479f411bef970739d860b0fcfe5f7fa), [`c720445`](https://github.com/adobe/spectrum-web-components/commit/c7204456810326960b31f80955e842cc3e5555e3), [`f842573`](https://github.com/adobe/spectrum-web-components/commit/f8425730004d2ed091810858f7254a952e16b909)]:
+  - @spectrum-web-components/styles@1.12.0
+  - @spectrum-web-components/base@1.12.0
+
 ## 1.11.2
 
 ### Patch Changes
