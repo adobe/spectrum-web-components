@@ -1,6 +1,6 @@
 # Migration plan contract
 
-Use the migration plan at `CONTRIBUTOR-DOCS/03_project-planning/03_components/[component]/migration-plan.md` as the preferred planning baseline for all later migration phases when it is available and current.
+Use the migration plan at `CONTRIBUTOR-DOCS/project-planning/03_components/[component]/migration-plan.md` as the preferred planning baseline for all later migration phases when it is available and current.
 
 ## What later phases should consume
 

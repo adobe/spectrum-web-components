@@ -2,7 +2,7 @@
 
 # Spectrum Migration Documentation Prompt
 
-For the **[COMPONENT_NAME]** component(s), create comprehensive migration documentation in individual markdown files under CONTRIBUTOR-DOCS: one file per component in `CONTRIBUTOR-DOCS/03_project-planning/03_components/[component-name]/rendering-and-styling-migration-analysis.md`, following this exact structure:
+For the **[COMPONENT_NAME]** component(s), create comprehensive migration documentation in individual markdown files under CONTRIBUTOR-DOCS: one file per component in `CONTRIBUTOR-DOCS/project-planning/03_components/[component-name]/rendering-and-styling-migration-analysis.md`, following this exact structure:
 
 **IMPORTANT**: All files must be created on the original spectrum-web-components branch where the session started.
 
@@ -23,8 +23,8 @@ For additional context on goals and common pitfalls, reference `migration-roadma
 
 - **One markdown file per component**
 - Use the component/package name from the spectrum-web-components repository:
-- File path format: `CONTRIBUTOR-DOCS/03_project-planning/03_components/[component-name]/rendering-and-styling-migration-analysis.md`
-- Example: `CONTRIBUTOR-DOCS/03_project-planning/03_components/alert-banner/rendering-and-styling-migration-analysis.md`, `.../dialog/rendering-and-styling-migration-analysis.md`
+- File path format: `CONTRIBUTOR-DOCS/project-planning/03_components/[component-name]/rendering-and-styling-migration-analysis.md`
+- Example: `CONTRIBUTOR-DOCS/project-planning/03_components/alert-banner/rendering-and-styling-migration-analysis.md`, `.../dialog/rendering-and-styling-migration-analysis.md`
 
 ## Component Documentation Structure
 
@@ -350,7 +350,7 @@ Under this heading, add a placeholder section for resources with a bulleted list
 
 ## Output format notes
 
-- Create one markdown file per component at `CONTRIBUTOR-DOCS/03_project-planning/03_components/[component-name]/rendering-and-styling-migration-analysis.md` (use the component's kebab-case folder name from spectrum-web-components)
+- Create one markdown file per component at `CONTRIBUTOR-DOCS/project-planning/03_components/[component-name]/rendering-and-styling-migration-analysis.md` (use the component's kebab-case folder name from spectrum-web-components)
 - The filename is always `rendering-and-styling-migration-analysis.md`; the folder name is the component name
 - Use proper markdown formatting with Level 1 heading for component name
 - Ensure all <details> elements are properly closed

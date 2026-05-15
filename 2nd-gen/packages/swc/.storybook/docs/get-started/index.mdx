@@ -1,0 +1,74 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+import '@adobe/spectrum-wc/components/badge/swc-badge.js';
+
+<Meta title="Welcome" />
+
+# Welcome to Spectrum Web Components
+
+Spectrum Web Components (SWC) is a library of [web components](https://developer.mozilla.org/docs/Web/Web_Components) that implements Adobe's [Spectrum design system](https://spectrum.adobe.com/). Drop these components into plain HTML, vanilla JavaScript, or any framework to build interfaces with Adobe's design language.
+
+This is the 2nd generation of SWC — aligned with [Spectrum 2](https://s2.spectrum.adobe.com/), with improved architecture, performance, and accessibility. If you are coming from Gen1 (`@spectrum-web-components/*`), the [Migrate from Gen1](/docs/learn-migration-migrate-from-gen1--docs) guide walks through coexistence and step-by-step adoption.
+
+## Install
+
+Add the package with your package manager of choice:
+
+```bash
+yarn add @adobe/spectrum-wc
+# or
+npm install @adobe/spectrum-wc
+# or
+pnpm add @adobe/spectrum-wc
+```
+
+Import the SWC stylesheet once in your application entry point. The stylesheet loads Spectrum 2 design tokens, typography, and base app styles:
+
+```js
+import '@adobe/spectrum-wc/swc.css';
+```
+
+Apply `swc-theme` plus a color-scheme class to a root element so nested components inherit the theme. Without a class, the theme defaults to light:
+
+```html
+<html class="swc-theme swc-theme--dark">
+  <body>
+    <!-- your app -->
+  </body>
+</html>
+```
+
+Available color-scheme classes: `swc-theme--light`, `swc-theme--dark`, `swc-theme--adaptive` (follows the OS setting). For deeper customization — custom properties, scale modifiers, font loading — see the [Customization cheat sheet](/docs/learn-customization-cheat-sheet--docs).
+
+## Your first component
+
+Import the component module to register the custom element with the browser, then drop the tag into your markup. You only need to import the components you use:
+
+```js
+import '@adobe/spectrum-wc/components/badge/swc-badge.js';
+```
+
+```html
+<swc-badge variant="positive">Approved</swc-badge>
+```
+
+It renders as:
+
+<swc-badge variant="positive">Approved</swc-badge>
+
+That's a real, live `<swc-badge>` — the same custom element you'll use in your app. Browse the [Components](/docs/components-badge--docs) section of this sidebar to see every component, its variants, sizes, states, and copy-paste examples.
+
+## Framework note
+
+SWC components are framework-agnostic standard custom elements; they work everywhere custom elements work.
+
+For React, official wrappers are planned. There are no current plans for first-party Vue or Svelte support — those frameworks already consume custom elements natively, so most use cases work without wrappers.
+
+## Where to go next
+
+- **[Components](/docs/components-badge--docs)** — the full 2nd-gen component library, every variant and state with live demos
+- **[Learn → Customization → Cheat sheet](/docs/learn-customization-cheat-sheet--docs)** — fastest path to tweak styles, themes, scales, and tokens
+- **[Learn → Accessibility → Cheat sheet](/docs/learn-accessibility-cheat-sheet--docs)** — quick-reference for shipping accessible SWC apps; links into the long-form guides
+- **[Learn → Migration → Migrate from Gen1](/docs/learn-migration-migrate-from-gen1--docs)** — step-by-step coexistence + adoption path from `@spectrum-web-components/*` to `@adobe/spectrum-wc`
+- **[Reference → Support and compatibility](/docs/reference-support-and-compatibility--docs)** — versioning, public APIs, browser support, issue severity
+- **[Contributing](https://github.com/adobe/spectrum-web-components/blob/main/CONTRIBUTOR-DOCS/for-contributors/getting-involved.md)** — bug reports, feature requests, and code contributions (lives on GitHub)

@@ -87,7 +87,32 @@ if (storybookMode !== 'ci-a11y') {
     titlePrefix: 'Components',
   });
 
-  // Production Storybook excludes core and contributor docs entirely.
+  stories.push(
+    // Consumer landing — empty until Phase 7 populates docs/get-started/index.mdx
+    {
+      directory: 'docs/get-started',
+      files: '**/*.mdx',
+      titlePrefix: 'Get started',
+    },
+    // Learn — consumer-audience educational content (about SWC, customization, accessibility).
+    // MDX SSOTs hand-authored in .storybook/docs/learn/ for live demos and rich UX.
+    {
+      directory: 'docs/learn',
+      files: '**/*.mdx',
+      titlePrefix: 'Learn',
+    },
+    // Reference — consumer-audience reference content (MDX SSOTs).
+    // Changelog, support and compatibility. The live component status matrix
+    // is deferred to a follow-up branch (`caseyisonit/cem-component-matrix`).
+    {
+      directory: 'docs/reference',
+      files: '**/*.mdx',
+      titlePrefix: 'Reference',
+    }
+  );
+
+  // Core package — visible in dev only. Folding Core under Reference is a
+  // follow-up that would change /docs/core-* routes for existing consumers.
   if (storybookMode !== 'build') {
     stories.push(
       {
@@ -97,33 +122,22 @@ if (storybookMode !== 'ci-a11y') {
       {
         ...CORE_STORY_ROOT,
         files: '**/stories/*.stories.ts',
-      },
-      {
-        directory: 'contributor-docs',
-        files: '**/*.mdx',
-        titlePrefix: 'Contributor docs',
       }
     );
   }
 
-  stories.push(
-    {
-      directory: 'learn-about-swc',
-      // Keep learn-about docs minimal in production.
-      files: '*.mdx',
-      titlePrefix: 'Learn about SWC',
-    },
-    {
-      directory: 'guides',
-      files: '**/!(*documentation).mdx',
-      titlePrefix: 'Guides',
-    },
-    {
-      directory: 'resources',
+  // Contribute subtree is dev-only. Production Storybook ships the consumer-facing surface only;
+  // contributor docs are consumed via GitHub or local `yarn dev` instead.
+  // Auto-generated from CONTRIBUTOR-DOCS/{for-contributors,for-maintainers,project-planning}/
+  // by 2nd-gen/packages/swc/.storybook/scripts/generate-contributor-docs.mjs.
+  // See: CONTRIBUTOR-DOCS/project-planning/05_strategies/audience-based-docs-storybook-residency-audit.md
+  if (storybookMode !== 'build') {
+    stories.push({
+      directory: 'docs/contribute',
       files: '**/*.mdx',
-      titlePrefix: 'Resources',
-    }
-  );
+      titlePrefix: 'Contribute',
+    });
+  }
 }
 
 // Test stories are dev-only fixtures and should not ship in production Storybook.

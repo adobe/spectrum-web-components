@@ -41,12 +41,12 @@ Create per-component migration guidance for application developers upgrading app
 
 - Migration guides live alongside the Spectrum 2 component source so the doc ships with the component code. Do **not** add them to `CONTRIBUTOR-DOCS/`.
 - **Do not link to project-planning / `CONTRIBUTOR-DOCS` docs** from the guide. Those are maintainer-facing; consumers don't need them. Link only to public consumer docs (e.g. the Spectrum 1 README on npm or the Spectrum 2 component Storybook page) when a link genuinely helps.
-- **Nav:** The guide lives in the component directory, so the `CONTRIBUTOR-DOCS` `update-nav.js` script does not manage it. Do not register it in `CONTRIBUTOR-DOCS/03_project-planning/03_components/README.md`, and do not include auto-generated breadcrumbs or TOC markers intended for that script.
+- **Nav:** The guide lives in the component directory, so the `CONTRIBUTOR-DOCS` `update-nav.js` script does not manage it. Do not register it in `CONTRIBUTOR-DOCS/project-planning/03_components/README.md`, and do not include auto-generated breadcrumbs or TOC markers intended for that script.
 - **MDX gotchas:** Keep bare tag names (`<sp-badge>`, `<swc-badge>`, etc.) wrapped in backticks in prose, and keep HTML/JS examples inside fenced code blocks. Avoid loose `{` / `}` outside code blocks; MDX parses them as JS expressions.
 
 ### Step 0: Read the migration plan first
 
-Before writing anything, read `CONTRIBUTOR-DOCS/03_project-planning/03_components/[component]/migration-plan.md`. Locate every item in the documentation checklist that is flagged as "deferred to consumer migration guide" — these are the breaking changes Phase 7 has already identified as needing coverage here. They are the primary input for this guide's `## What changed` and `## Update your code` sections. If the migration plan is absent, derive the breaking changes from the 1st-gen and 2nd-gen source comparison and note the risk.
+Before writing anything, read `CONTRIBUTOR-DOCS/project-planning/03_components/[component]/migration-plan.md`. Locate every item in the documentation checklist that is flagged as "deferred to consumer migration guide" — these are the breaking changes Phase 7 has already identified as needing coverage here. They are the primary input for this guide's `## What changed` and `## Update your code` sections. If the migration plan is absent, derive the breaking changes from the 1st-gen and 2nd-gen source comparison and note the risk.
 
 ### Consistent import and tag patterns
 
@@ -63,7 +63,7 @@ Use the badge guide at `2nd-gen/packages/swc/components/badge/migration-guide.md
 
 Verify claims against the real implementation and docs before writing:
 
-- **Migration plan:** `CONTRIBUTOR-DOCS/03_project-planning/03_components/[component]/migration-plan.md` — primary source for what breaking changes to cover (see Step 0 above)
+- **Migration plan:** `CONTRIBUTOR-DOCS/project-planning/03_components/[component]/migration-plan.md` — primary source for what breaking changes to cover (see Step 0 above)
 - **Spectrum 1 docs and source:** `1st-gen/packages/[component-name]/README.md`, public element files such as `sp-*.ts`, stories, and tests when needed
 - **Spectrum 2 docs and source:** `2nd-gen/packages/swc/components/[component-name]/src/`, stories, tests, and any package README or docs that describe the public API
 - **Related migration docs:** the component's `rendering-and-styling-migration-analysis.md` and `accessibility-migration-analysis.md` when present

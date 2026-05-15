@@ -37,11 +37,27 @@ const CONTRIBUTOR_DOCS_DIR = resolve(
   STORYBOOK_DIR,
   '../../../../CONTRIBUTOR-DOCS'
 );
-const OUTPUT_DIR = resolve(STORYBOOK_DIR, 'contributor-docs');
+const OUTPUT_DIR = resolve(STORYBOOK_DIR, 'docs/contribute');
 const PREVIEW_FILE = resolve(STORYBOOK_DIR, 'preview.ts');
 const REPO_ROOT = resolve(STORYBOOK_DIR, '../../../..');
 const GITHUB_REPO_URL =
   'https://github.com/adobe/spectrum-web-components/blob/main';
+
+/**
+ * Audience folders auto-mirrored from CONTRIBUTOR-DOCS to .storybook/docs/contribute/.
+ *
+ * Only the GitHub-primary audiences are mirrored. Consumer-primary content
+ * (`for-consumers/`) and reference content (`reference/`) live as hand-authored
+ * MDX SSOTs in `.storybook/docs/{get-started,learn,reference}/` and are NOT
+ * auto-generated. See `audience-based-docs-storybook-residency-audit.md`.
+ *
+ * The whole Contribute subtree is also gated to dev builds in main.ts.
+ */
+const INCLUDED_AUDIENCE_FOLDERS = [
+  'for-contributors',
+  'for-maintainers',
+  'project-planning',
+];
 
 // Markers for the auto-generated sort order in preview.ts
 const SORT_ORDER_START_MARKER =
@@ -160,17 +176,20 @@ function pathToTitle(filePath) {
   const filtered = titleParts.filter(Boolean);
 
   if (filtered.length === 0) {
-    return 'Contributor documentation';
+    // Falls back for any file that filters down to nothing (e.g. a stray root
+    // README that slips through audience filtering). With INCLUDED_AUDIENCE_FOLDERS
+    // gating the walker this should not fire in practice.
+    return 'Contribute';
   }
 
   return filtered.join('/');
 }
 
 /**
- * Convert a title to a Storybook doc ID.
+ * Convert a title to a Storybook doc ID under the `Contribute` titlePrefix.
  *
- * @param {string} title - The Storybook title
- * @returns {string} The doc ID (e.g., "contributor-docs-contributor-guides-getting-involved--docs")
+ * @param {string} title - The Storybook title (without the `Contribute/` prefix)
+ * @returns {string} The doc ID (e.g., "contribute-for-contributors-getting-involved--docs")
  */
 function titleToDocId(title) {
   const fullTitle = title;
@@ -179,7 +198,7 @@ function titleToDocId(title) {
     .replace(/\//g, '-')
     .replace(/\s+/g, '-')
     .replace(/[^a-z0-9-]/g, '');
-  return `contributor-docs-${id}--docs`;
+  return `contribute-${id}--docs`;
 }
 
 /**
@@ -627,8 +646,19 @@ function main() {
     rmSync(OUTPUT_DIR, { recursive: true });
   }
 
-  const files = collectMarkdownFiles(CONTRIBUTOR_DOCS_DIR);
-  console.log(`Found ${files.length} markdown files\n`);
+  // Collect only the GitHub-primary audience folders. See INCLUDED_AUDIENCE_FOLDERS above.
+  const files = [];
+  for (const folder of INCLUDED_AUDIENCE_FOLDERS) {
+    const folderPath = join(CONTRIBUTOR_DOCS_DIR, folder);
+    if (!existsSync(folderPath)) {
+      console.warn(`Warning: expected audience folder not found: ${folder}`);
+      continue;
+    }
+    collectMarkdownFiles(folderPath, files);
+  }
+  console.log(
+    `Found ${files.length} markdown files across ${INCLUDED_AUDIENCE_FOLDERS.join(', ')}\n`
+  );
 
   const linkMap = buildLinkMap(files);
 
@@ -649,13 +679,23 @@ function main() {
     `\nGenerated ${converted} .mdx files in ${relative(process.cwd(), OUTPUT_DIR)}`
   );
 
-  // Update the sort order in preview.ts
-  // Structure: ['Contributor documentation', 'Contributor guides', [...], 'Style guide', [...], ...]
-  // 'Contributor documentation' is the index page, followed by alternating category/children pairs
-  const sortOrder = [
-    'Contributor documentation',
-    ...buildSortOrder(CONTRIBUTOR_DOCS_DIR),
-  ];
+  // Build the sort order: walks each included audience folder in turn so the
+  // sidebar groups Contribute → For contributors → … / For maintainers → … /
+  // Project planning → … in audit-friendly order.
+  const sortOrder = [];
+  for (const folder of INCLUDED_AUDIENCE_FOLDERS) {
+    const folderPath = join(CONTRIBUTOR_DOCS_DIR, folder);
+    if (!existsSync(folderPath)) {
+      continue;
+    }
+    const displayName = nameToDisplayName(folder);
+    const children = buildSortOrder(folderPath);
+    if (children.length > 0) {
+      sortOrder.push(displayName, children);
+    } else {
+      sortOrder.push(displayName);
+    }
+  }
   updatePreviewSortOrder(sortOrder);
 }
 

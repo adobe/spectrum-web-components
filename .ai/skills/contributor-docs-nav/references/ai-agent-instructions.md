@@ -54,7 +54,7 @@ Execute the script when:
 ### How to run
 
 ```bash
-cd CONTRIBUTOR-DOCS/01_contributor-guides/07_authoring-contributor-docs
+cd CONTRIBUTOR-DOCS/for-contributors/07_authoring-contributor-docs
 node update-nav.js
 ```
 
@@ -127,7 +127,7 @@ The script automatically verifies all internal markdown links after updating nav
 ```
 Script reports: "File not found: ../migration/overview.md"
 → Search metadata for files matching "migration" or "overview"
-→ Find: "03_project-planning/01_migration-status.md"
+→ Find: "project-planning/01_migration-status.md"
 → Update link with correct relative path
 → Report: "Fixed broken link: updated path to migration status doc"
 ```

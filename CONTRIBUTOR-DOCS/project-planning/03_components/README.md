@@ -1,0 +1,150 @@
+<!-- Generated breadcrumbs - DO NOT EDIT -->
+
+[CONTRIBUTOR-DOCS](../../README.md) / [Project planning](../README.md) / Components
+
+<!-- Document title (editable) -->
+
+# Components
+
+<!-- Generated TOC - DO NOT EDIT -->
+
+<details open>
+<summary><strong>In this doc</strong></summary>
+
+- [About this section](#about-this-section)
+
+</details>
+
+<details open>
+<summary><strong>Beneath this doc</strong></summary>
+
+- Accordion
+    - [Accordion accessibility migration analysis](accordion/accessibility-migration-analysis.md)
+    - [Accordion migration plan](accordion/migration-plan.md)
+    - [Accordion migration roadmap](accordion/rendering-and-styling-migration-analysis.md)
+- Action Button
+    - [Action button migration roadmap](action-button/rendering-and-styling-migration-analysis.md)
+- Action Group
+    - [Action group migration roadmap](action-group/rendering-and-styling-migration-analysis.md)
+- Action Menu
+    - [Action menu accessibility migration analysis](action-menu/accessibility-migration-analysis.md)
+    - [Action menu migration roadmap](action-menu/rendering-and-styling-migration-analysis.md)
+- Alert Banner
+    - [Alert Banner migration roadmap](alert-banner/rendering-and-styling-migration-analysis.md)
+- Asset
+    - [Asset migration roadmap](asset/rendering-and-styling-migration-analysis.md)
+- Avatar
+    - [Avatar accessibility migration analysis](avatar/accessibility-migration-analysis.md)
+    - [Avatar — 2nd-Gen Migration Plan](avatar/migration-plan.md)
+    - [Avatar accessibility migration analysis](avatar/rendering-and-styling-migration-analysis.md)
+- Badge
+    - [Badge accessibility migration analysis](badge/accessibility-migration-analysis.md)
+    - [Badge migration roadmap](badge/rendering-and-styling-migration-analysis.md)
+- Button
+    - [Button accessibility migration analysis](button/accessibility-migration-analysis.md)
+    - [Button Migration Plan](button/migration-plan.md)
+    - [Button migration roadmap](button/rendering-and-styling-migration-analysis.md)
+- Button Group
+    - [Button Group migration roadmap](button-group/rendering-and-styling-migration-analysis.md)
+- Checkbox
+    - [Checkbox migration roadmap](checkbox/rendering-and-styling-migration-analysis.md)
+- Close Button
+    - [Close button accessibility migration analysis](close-button/accessibility-migration-analysis.md)
+- Color Field
+    - [Color field migration roadmap](color-field/rendering-and-styling-migration-analysis.md)
+- Color Loupe
+    - [Color loupe accessibility migration analysis](color-loupe/accessibility-migration-analysis.md)
+    - [Color loupe migration plan](color-loupe/migration-plan.md)
+    - [Color loupe migration analysis](color-loupe/rendering-and-styling-migration-analysis.md)
+- Divider
+    - [Divider accessibility migration analysis](divider/accessibility-migration-analysis.md)
+    - [Divider migration roadmap](divider/rendering-and-styling-migration-analysis.md)
+- Dropzone
+    - [Dropzone migration roadmap](dropzone/rendering-and-styling-migration-analysis.md)
+- Field Group
+    - [Field Group migration roadmap](field-group/rendering-and-styling-migration-analysis.md)
+- Field Label
+    - [Field label migration roadmap](field-label/rendering-and-styling-migration-analysis.md)
+- Help Text
+    - [Help text migration roadmap](help-text/rendering-and-styling-migration-analysis.md)
+- Illustrated Message
+    - [Illustrated message accessibility migration analysis](illustrated-message/accessibility-migration-analysis.md)
+    - [`sp-illustrated-message` Migration Plan](illustrated-message/migration-plan.md)
+    - [Illustrated message migration roadmap](illustrated-message/rendering-and-styling-migration-analysis.md)
+- Infield Button
+    - [In-field button migration roadmap](infield-button/rendering-and-styling-migration-analysis.md)
+- Infield Progress Circle
+    - [In-field progress circle migration roadmap](infield-progress-circle/rendering-and-styling-migration-analysis.md)
+- Link
+    - [Link accessibility migration analysis](link/accessibility-migration-analysis.md)
+    - [Link migration roadmap](link/rendering-and-styling-migration-analysis.md)
+- Menu
+    - [Menu accessibility migration analysis](menu/accessibility-migration-analysis.md)
+    - [Menu migration roadmap](menu/rendering-and-styling-migration-analysis.md)
+- Menu Group
+    - [Menu group accessibility migration analysis](menu-group/accessibility-migration-analysis.md)
+- Menu Item
+    - [Menu item accessibility migration analysis](menu-item/accessibility-migration-analysis.md)
+- Menu Separator
+    - [Menu separator accessibility migration analysis](menu-separator/accessibility-migration-analysis.md)
+- Meter
+    - [Meter accessibility migration analysis](meter/accessibility-migration-analysis.md)
+    - [Meter migration roadmap](meter/rendering-and-styling-migration-analysis.md)
+- Number Field
+    - [Number field migration roadmap](number-field/rendering-and-styling-migration-analysis.md)
+- Opacity Checkerboard
+    - [Opacity Checkerboard migration roadmap](opacity-checkerboard/rendering-and-styling-migration-analysis.md)
+- Picker Button
+    - [Picker button migration roadmap](picker-button/rendering-and-styling-migration-analysis.md)
+- Popover
+    - [Popover accessibility migration analysis](popover/accessibility-migration-analysis.md)
+    - [Popover migration roadmap](popover/rendering-and-styling-migration-analysis.md)
+- Progress Bar
+    - [Progress bar accessibility migration analysis](progress-bar/accessibility-migration-analysis.md)
+    - [Progress bar migration roadmap](progress-bar/rendering-and-styling-migration-analysis.md)
+- Progress Circle
+    - [Progress circle accessibility migration analysis](progress-circle/accessibility-migration-analysis.md)
+    - [Progress Circle migration roadmap](progress-circle/rendering-and-styling-migration-analysis.md)
+- Radio
+    - [Radio migration roadmap](radio/rendering-and-styling-migration-analysis.md)
+- Search
+    - [Search migration roadmap](search/rendering-and-styling-migration-analysis.md)
+- Slider
+    - [Slider migration roadmap](slider/rendering-and-styling-migration-analysis.md)
+- Status Light
+    - [Status light accessibility migration analysis](status-light/accessibility-migration-analysis.md)
+    - [Status Light migration roadmap](status-light/rendering-and-styling-migration-analysis.md)
+- Swatch
+    - [Swatch migration roadmap](swatch/rendering-and-styling-migration-analysis.md)
+- Swatch Group
+    - [Swatch Group migration roadmap](swatch-group/rendering-and-styling-migration-analysis.md)
+- Switch
+    - [Switch migration roadmap](switch/rendering-and-styling-migration-analysis.md)
+- Tabs
+    - [Tabs accessibility migration analysis](tabs/accessibility-migration-analysis.md)
+    - [Tabs migration plan](tabs/migration-plan.md)
+    - [Tabs migration roadmap](tabs/rendering-and-styling-migration-analysis.md)
+- Tag
+    - [Tag migration roadmap](tag/rendering-and-styling-migration-analysis.md)
+- Tags
+    - [Tags migration roadmap](tags/rendering-and-styling-migration-analysis.md)
+- Textfield
+    - [Textfield and Textarea migration roadmap](textfield/rendering-and-styling-migration-analysis.md)
+- Thumbnail
+    - [Thumbnail migration roadmap](thumbnail/rendering-and-styling-migration-analysis.md)
+- Tooltip
+    - [Tooltip accessibility migration analysis](tooltip/accessibility-migration-analysis.md)
+    - [Tooltip migration plan](tooltip/migration-plan.md)
+    - [Tooltip migration roadmap](tooltip/rendering-and-styling-migration-analysis.md)
+
+</details>
+
+<!-- Document content (editable) -->
+
+## About this section
+
+This section provides a **component-centric view** of individual components and how they are affected by multiple workstreams. Use it to understand each component's roadmap and status.
+
+Each component has its own folder (kebab-case). Inside you'll find analysis and planning docs for that component—for example, **rendering-and-styling-migration-analysis.md** for Spectrum 2 CSS-to-SWC migration. The same structure is intended for future peer docs (e.g. a11y analysis, comparative API analysis).
+
+For a workstream-centric view of the same work, see [Workstreams](../02_workstreams/README.md). For how the two views fit together, see the [Project planning overview](../README.md).

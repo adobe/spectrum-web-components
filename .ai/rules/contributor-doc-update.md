@@ -25,7 +25,7 @@ alwaysApply: false
 
 1. **Run the nav script** from the contributor docs script folder (from project root):
    ```bash
-   cd CONTRIBUTOR-DOCS/01_contributor-guides/07_authoring-contributor-docs
+   cd CONTRIBUTOR-DOCS/for-contributors/07_authoring-contributor-docs
    node update-nav.js
    ```
 2. **Confirm** the script completes without errors.

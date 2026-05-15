@@ -5,7 +5,7 @@ description: Phase 1 of 1st-gen to 2nd-gen component migration. Use to understan
 
 # Migration prep (Phase 1)
 
-[Phase 1](../../../CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_2nd-gen-component-migration/README.md) of the 1st-gen → 2nd-gen component migration. The goal is to thoroughly understand the component and produce a written migration plan—covering API surface, breaking changes, file layout, and naming decisions—before any code is moved or refactored.
+[Phase 1](../../../CONTRIBUTOR-DOCS/project-planning/02_workstreams/02_2nd-gen-component-migration/README.md) of the 1st-gen → 2nd-gen component migration. The goal is to thoroughly understand the component and produce a written migration plan—covering API surface, breaking changes, file layout, and naming decisions—before any code is moved or refactored.
 
 ## Mindset
 
@@ -55,10 +55,10 @@ Prompt the user to ensure they have checked out `spectrum-css` at `spectrum-two`
 
 Review these sources before filling out the plan:
 
-- The Phase 1 workflow guidance in **[Phase 1: Preparation](../../../CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md#phase-1-preparation)**
-- The 2nd-gen migration status table in `CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_2nd-gen-component-migration/01_status.md`
-- The component's rendering and styling analysis doc in `CONTRIBUTOR-DOCS/03_project-planning/03_components/[component]/`
-- The component's accessibility migration analysis doc in `CONTRIBUTOR-DOCS/03_project-planning/03_components/[component]/`, if available
+- The Phase 1 workflow guidance in **[Phase 1: Preparation](../../../CONTRIBUTOR-DOCS/project-planning/02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md#phase-1-preparation)**
+- The 2nd-gen migration status table in `CONTRIBUTOR-DOCS/project-planning/02_workstreams/02_2nd-gen-component-migration/01_status.md`
+- The component's rendering and styling analysis doc in `CONTRIBUTOR-DOCS/project-planning/03_components/[component]/`
+- The component's accessibility migration analysis doc in `CONTRIBUTOR-DOCS/project-planning/03_components/[component]/`, if available
 - The 1st-gen source, tests, README, and any shared mixins or helpers it depends on
 - Relevant bug tickets and prior migration decisions
 - Relevant Figma and React Spectrum references for naming, variants, and expected behavior
@@ -263,7 +263,7 @@ Instead:
 ## Output
 
 - Copy the template at [assets/migration-prep-template.md](assets/migration-prep-template.md)
-- Save the filled-in plan to `CONTRIBUTOR-DOCS/03_project-planning/03_components/[component]/migration-plan.md`
+- Save the filled-in plan to `CONTRIBUTOR-DOCS/project-planning/03_components/[component]/migration-plan.md`
 - Treat [references/migration-plan-contract.md](references/migration-plan-contract.md) as the shared baseline later migration phases will use to stay aligned with the approved plan
 - In `References`, prefer explicit source entries over generic repo-level links when the exact artifact is known. For Spectrum CSS, use the reviewed component source path when possible (typically `spectrum-css/components/[component]/index.css` on the `spectrum-two` branch) rather than only linking the repo root or branch overview
 - Replace all `[component]` and `[Component]` placeholders before finalizing
@@ -327,7 +327,7 @@ Example resume hooks:
 
 ## Workflow
 
-1. Follow **[Phase 1: Preparation](../../../CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md#phase-1-preparation)** in the washing machine workflow doc.
+1. Follow **[Phase 1: Preparation](../../../CONTRIBUTOR-DOCS/project-planning/02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md#phase-1-preparation)** in the washing machine workflow doc.
 2. Gather the required inputs listed above before drafting.
 3. Copy [assets/migration-prep-template.md](assets/migration-prep-template.md) to the component's `migration-plan.md`.
 4. Resolve the component's actual repo naming before finalizing links and paths. Prefer existing repo paths over the user's phrasing.

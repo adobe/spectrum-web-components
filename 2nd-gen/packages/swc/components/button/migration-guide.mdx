@@ -96,7 +96,7 @@ The deprecated aliases `cta`, `overBackground`, `white`, and `black` are removed
 
 ### 5. Migrate link-mode usage to native anchors
 
-`<sp-button href="...">` is removed. Use a native `<a>` element with [global button styles](/docs/guides-customization-global-element-styling--readme) instead:
+`<sp-button href="...">` is removed. Use a native `<a>` element with [global button styles](/docs/learn-customization-global-elements--readme) instead:
 
 ```html
 <!-- Before -->
@@ -126,7 +126,7 @@ import '@adobe/spectrum-wc/global-button.css';
 - **Pending state**: when `pending` is set, the button announces as `"[label], busy"` by default. Supply `pending-label` to override with a more specific description of the in-progress operation.
 - **Disabled vs. pending**: use `pending` to keep the button focusable while an operation is in progress. Use `disabled` to remove it from the tab order entirely. Do not set both at the same time.
 - **Navigation**: do not use `<swc-button>` for navigation. Buttons activate on both Enter and Space; links activate on Enter only. Use a native `<a>` with global button styles instead (see [step 5](#5-migrate-link-mode-usage-to-native-anchors)).
-- **Form submission**: `<swc-button>` behaves as `type="button"` only. For `submit` and `reset`, use a native `<button>` with [global button styles](/docs/guides-customization-global-element-styling--readme) until form-associated behavior is added in a future release.
+- **Form submission**: `<swc-button>` behaves as `type="button"` only. For `submit` and `reset`, use a native `<button>` with [global button styles](/docs/learn-customization-global-elements--readme) until form-associated behavior is added in a future release.
 
 ## Styling
 
