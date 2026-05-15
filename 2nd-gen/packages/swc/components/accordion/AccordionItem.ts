@@ -12,7 +12,10 @@
 
 import { CSSResultArray, html, TemplateResult } from 'lit';
 
-import { AccordionItemBase } from '@spectrum-web-components/core/components/accordion';
+import {
+  AccordionItemBase,
+  SWC_ACCORDION_ITEM_TOGGLE_EVENT,
+} from '@spectrum-web-components/core/components/accordion';
 
 import '../icon/swc-icon.js';
 
@@ -37,12 +40,47 @@ import styles from './accordion.css';
  */
 export class AccordionItem extends AccordionItemBase {
   // ──────────────────────────────
-  //     RENDERING & STYLING
+  //     STYLING
   // ──────────────────────────────
 
   public static override get styles(): CSSResultArray {
     return [styles];
   }
+
+  // ──────────────────────────────
+  //     DELEGATION
+  // ──────────────────────────────
+
+  public override focus(options?: FocusOptions): void {
+    this.shadowRoot?.getElementById('header')?.focus(options);
+  }
+
+  public override click(): void {
+    this.shadowRoot?.getElementById('header')?.click();
+  }
+
+  // ──────────────────────────────
+  //     TOGGLE BEHAVIOR
+  // ──────────────────────────────
+
+  protected override toggle(): void {
+    if (this.disabled) {
+      return;
+    }
+    this.open = !this.open;
+    const event = new Event(SWC_ACCORDION_ITEM_TOGGLE_EVENT, {
+      bubbles: true,
+      composed: true,
+      cancelable: true,
+    });
+    if (!this.dispatchEvent(event)) {
+      this.open = !this.open;
+    }
+  }
+
+  // ──────────────────────────────
+  //     RENDERING
+  // ──────────────────────────────
 
   private chevronForSize(): TemplateResult {
     switch (this.size) {
@@ -77,8 +115,9 @@ export class AccordionItem extends AccordionItemBase {
         <button
           id="header"
           type="button"
-          aria-expanded="false"
+          aria-expanded=${this.open ? 'true' : 'false'}
           aria-controls="content"
+          @click=${this.toggle}
         >
           <swc-icon class="spectrum-Accordion-itemIndicator" aria-hidden="true">
             ${this.chevronForSize()}
