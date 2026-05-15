@@ -32,9 +32,10 @@
 
 .swc-MessageSources-toggle {
   display: inline-flex;
-  gap: var(--swc-sources-toggle-gap, token("spacing-75"));
+  gap: var(--swc-sources-toggle-gap, token("spacing-100"));
   align-items: center;
-  padding: 5px 0;
+  inline-size: fit-content;
+  padding: var(--swc-sources-toggle-padding, 3px) token("spacing-100");
   font-family: token("sans-serif-font");
   font-size: token("font-size-100");
   font-weight: token("bold-font-weight");
@@ -42,11 +43,14 @@
   color: token("neutral-content-color-default");
   background: transparent;
   border: none;
+  border-radius: token("corner-radius-medium-default");
   cursor: pointer;
+  transition: background token("animation-duration-100") token("animation-ease-in-out");
 }
 
 .swc-MessageSources-toggle:hover {
   color: token("gray-800");
+  background: token("gray-100");
 }
 
 .swc-MessageSources-chevron {
@@ -68,7 +72,7 @@
   flex-direction: column;
   gap: var(--swc-message-sources-list-gap, token("spacing-75"));
   block-size: 0;
-  padding: 0;
+  padding: 0 token("spacing-100");
   margin: 0;
   overflow: hidden;
   list-style: none;
