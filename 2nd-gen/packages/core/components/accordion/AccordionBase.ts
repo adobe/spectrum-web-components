@@ -10,7 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
-import { html, PropertyValues, TemplateResult } from 'lit';
+import { PropertyValues } from 'lit';
 import { property } from 'lit/decorators.js';
 
 import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
@@ -105,8 +105,8 @@ export abstract class AccordionBase extends SpectrumElement {
     }
   };
 
-  private updateItems(): void {
-    const slot = this.shadowRoot?.querySelector('slot');
+  protected updateItems(): void {
+    const slot = this.renderRoot?.querySelector('slot');
     if (!slot) {
       return;
     }
@@ -163,11 +163,5 @@ export abstract class AccordionBase extends SpectrumElement {
         { type: 'api', level: 'low' }
       );
     }
-  }
-
-  protected override render(): TemplateResult {
-    return html`
-      <slot @slotchange=${this.updateItems}></slot>
-    `;
   }
 }
