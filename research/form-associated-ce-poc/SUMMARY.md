@@ -5,8 +5,10 @@
 
 ## Demo
 
-Open `index.html` in any browser (or paste into CodePen) to interact with the PoC.
-No build step, no dependencies; axe-core loads from CDN on demand.
+**StackBlitz:** [Open live demo](https://stackblitz.com/github/adobe/spectrum-web-components/tree/rajdeepchandra/chore-face-textfield-poc-swc-2052/research/form-associated-ce-poc?file=index.html)
+
+Or open `index.html` locally in any browser (no build step required).
+axe-core loads from CDN on demand when you click the audit button.
 
 ---
 
@@ -315,7 +317,8 @@ The 1st-gen `TextfieldBase` (in `1st-gen/packages/textfield/src/Textfield.ts`) u
 
 ## 11. Files in this PoC
 
-| File         | Purpose                                                  |
-| ------------ | -------------------------------------------------------- |
-| `index.html` | Self-contained demo; paste into CodePen or serve locally |
-| `SUMMARY.md` | This document; internal findings for the direction PR    |
+| File           | Purpose                                                        |
+| -------------- | -------------------------------------------------------------- |
+| `index.html`   | Self-contained demo; opens directly in StackBlitz or a browser |
+| `SUMMARY.md`   | This document; internal findings for the direction PR          |
+| `package.json` | Minimal Vite config so StackBlitz can serve the demo           |
