@@ -62,7 +62,7 @@ const meta: Meta = {
       url: 'https://www.figma.com/design/Mngz9H7WZLbrCvGQf3GnsY/S2---Web--Desktop-scale-?node-id=13061-181&p=f&t=l8WhfseyuepkVXrl-0',
     },
     stackblitz: {
-      url: 'https://stackblitz.com/edit/vitejs-vite-xx1plot6?file=package.json',
+      url: 'https://stackblitz.com/edit/vitejs-vite-xmvjuhyk?file=src%2Fmy-element.ts',
     },
     flexLayout: 'row-wrap',
   },
