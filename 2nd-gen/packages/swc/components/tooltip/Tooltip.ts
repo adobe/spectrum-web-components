@@ -9,7 +9,7 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-import { CSSResultArray, html, TemplateResult } from 'lit';
+import { CSSResultArray, html, PropertyValues, TemplateResult } from 'lit';
 
 import { TooltipBase } from '@spectrum-web-components/core/components/tooltip';
 
@@ -36,15 +36,118 @@ export class Tooltip extends TooltipBase {
     return [styles];
   }
 
+  // Reflects the browser's actual popover state. Used to guard showPopover/hidePopover
+  // calls in updated() so the toggle listener can sync this.open without re-triggering
+  // the API (preventing a setter → showPopover → toggle → setter cycle).
+  private get isPopoverOpen(): boolean {
+    return this.matches(':popover-open');
+  }
+
+  protected override updated(changedProperties: PropertyValues): void {
+    super.updated(changedProperties);
+    if (changedProperties.has('open')) {
+      if (this.open !== this.isPopoverOpen) {
+        if (this.open) {
+          this.showPopover();
+        } else {
+          this.hidePopover();
+        }
+      }
+      this.syncAriaRelationship();
+    }
+  }
+
+  private resolveTrigger(): HTMLElement | null {
+    if (this.triggerElement) {
+      return this.triggerElement;
+    }
+    if (this.for) {
+      const root = this.getRootNode() as Document | ShadowRoot;
+      const trigger = root.getElementById(this.for);
+      if (!trigger && window.__swc?.DEBUG) {
+        window.__swc.warn(
+          this,
+          `<${this.localName}> for="${this.for}" did not resolve to an element in the current tree root. Check that the referenced id exists in the same document tree root.`,
+          'https://opensource.adobe.com/spectrum-web-components/components/tooltip/',
+          { level: 'high' }
+        );
+      }
+      return trigger;
+    }
+    return null;
+  }
+
+  private syncAriaRelationship(): void {
+    const trigger = this.resolveTrigger();
+    if (!trigger) {
+      return;
+    }
+    const target = (trigger.shadowRoot?.querySelector('button') ??
+      trigger) as Element & {
+      ariaDescribedByElements: Element[] | null;
+    };
+    const current = target.ariaDescribedByElements ?? [];
+    target.ariaDescribedByElements = this.open
+      ? [...current.filter((el) => el !== this), this]
+      : current.filter((el) => el !== this);
+  }
+
+  private dispatchAfterEvent(isOpen: boolean): void {
+    this.dispatchEvent(
+      new CustomEvent(isOpen ? 'swc-after-open' : 'swc-after-close', {
+        bubbles: true,
+        composed: true,
+      })
+    );
+  }
+
+  private readonly handleBeforeToggle = (event: Event): void => {
+    const { newState } = event as ToggleEvent;
+    const eventName = newState === 'open' ? 'swc-open' : 'swc-close';
+    this.dispatchEvent(
+      new CustomEvent(eventName, { bubbles: true, composed: true })
+    );
+  };
+
+  private readonly handleToggle = (event: Event): void => {
+    const { newState } = event as ToggleEvent;
+    const isOpen = newState === 'open';
+    if (isOpen === this.open) {
+      return;
+    }
+    this.open = isOpen;
+    // When no CSS transition is active, dispatch after-* immediately since transitionend will not fire.
+    if (getComputedStyle(this).transitionDuration === '0s') {
+      this.dispatchAfterEvent(isOpen);
+    }
+  };
+
+  private readonly handleTransitionEnd = (event: TransitionEvent): void => {
+    if (event.target !== this) {
+      return;
+    }
+    this.dispatchAfterEvent(this.open);
+  };
+
+  public override connectedCallback(): void {
+    super.connectedCallback();
+    this.setAttribute('popover', 'auto');
+    this.addEventListener('beforetoggle', this.handleBeforeToggle);
+    this.addEventListener('toggle', this.handleToggle);
+    this.addEventListener('transitionend', this.handleTransitionEnd);
+  }
+
+  public override disconnectedCallback(): void {
+    super.disconnectedCallback();
+    this.removeEventListener('beforetoggle', this.handleBeforeToggle);
+    this.removeEventListener('toggle', this.handleToggle);
+    this.removeEventListener('transitionend', this.handleTransitionEnd);
+  }
+
   protected override render(): TemplateResult {
     return html`
       <span class="swc-Tooltip-tip"></span>
       <span class="swc-Tooltip-label"><slot></slot></span>
     `;
-  }
-
-  public override connectedCallback(): void {
-    super.connectedCallback();
-    this.setAttribute('popover', 'auto');
   }
 }

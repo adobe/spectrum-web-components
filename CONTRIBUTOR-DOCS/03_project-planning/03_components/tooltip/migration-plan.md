@@ -573,7 +573,7 @@ The impact is most acute in the additive phase, when `HoverController` will call
 - [x] Dependencies identified
 - [x] Breaking changes documented
 - [x] 2nd-gen API decisions drafted
-- [ ] Plan reviewed by at least one other engineer
+- [x] Plan reviewed by at least one other engineer
 
 ### Setup
 
@@ -586,9 +586,15 @@ The impact is most acute in the additive phase, when `HoverController` will call
 
 #### Naming and public surface
 
-- [ ] `Tooltip.types.ts`: define `TooltipVariant` (`'neutral' | 'informative' | 'negative'`); define `TooltipPlacement` (all physical + logical values)
-- [ ] `Tooltip.base.ts`: define all properties with decorators (including `for` and `triggerElement` declarations); assign `role="tooltip"`; no rendering. No DOM traversal logic.
-- [ ] `Tooltip.ts` (SWC): rendering, `popover="auto"` on host, `beforetoggle`/`toggle`/`transitionend` listeners for state sync and `swc-open`/`swc-after-open`/`swc-close`/`swc-after-close` dispatch, trigger resolution via `for`/`trigger-element`, `Element.ariaDescribedByElements` wiring on `open` change. (`PlacementController`/`HoverController` integration is additive phase.)
+- [x] `Tooltip.types.ts`: define `TooltipVariant` (`'neutral' | 'informative' | 'negative'`); define `TooltipPlacement` (all physical + logical values)
+- [x] `Tooltip.base.ts`: define all properties with decorators (including `for` and `triggerElement` declarations); assign `role="tooltip"`; no rendering. No DOM traversal logic.
+- [x] `Tooltip.ts` (SWC): rendering, `popover="auto"` on host, `beforetoggle`/`toggle`/`transitionend` listeners for state sync and `swc-open`/`swc-after-open`/`swc-close`/`swc-after-close` dispatch, trigger resolution via `for`/`trigger-element`, `Element.ariaDescribedByElements` wiring on `open` change. (`PlacementController`/`HoverController` integration is additive phase.)
+
+#### 1st-gen deprecation notices
+
+- [x] `@deprecated` JSDoc on `selfManaged` property; runtime warn in existing `connectedCallback` code path when `selfManaged` is true
+- [x] `@deprecated` JSDoc on `tipPadding` property (no existing setter; JSDoc only)
+- [x] Runtime deprecation warns in existing `variant` setter for `'info'` (renamed) and `'positive'` (removed)
 
 #### Alignment checks
 
