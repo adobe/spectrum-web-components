@@ -10,7 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
-import { CSSResultArray } from 'lit';
+import { CSSResultArray, html, TemplateResult } from 'lit';
 
 import { AccordionBase } from '@spectrum-web-components/core/components/accordion';
 
@@ -33,5 +33,11 @@ import styles from './accordion.css';
 export class Accordion extends AccordionBase {
   public static override get styles(): CSSResultArray {
     return [styles];
+  }
+
+  protected override render(): TemplateResult {
+    return html`
+      <slot @slotchange=${this.updateItems}></slot>
+    `;
   }
 }
