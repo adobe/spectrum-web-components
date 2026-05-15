@@ -132,6 +132,7 @@
     - [Thumbnail migration roadmap](thumbnail/rendering-and-styling-migration-analysis.md)
 - Tooltip
     - [Tooltip accessibility migration analysis](tooltip/accessibility-migration-analysis.md)
+    - [Tooltip migration plan](tooltip/migration-plan.md)
     - [Tooltip migration roadmap](tooltip/rendering-and-styling-migration-analysis.md)
 
 </details>
