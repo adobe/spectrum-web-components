@@ -43,7 +43,7 @@ export class SuggestionGroup extends SpectrumElement {
   public accessibleLabel = '';
 
   @queryAssignedElements({ slot: 'heading', flatten: true })
-  private _assignedHeadings: HTMLElement[] = [];
+  private _assignedHeadings!: HTMLElement[];
 
   private readonly _headingId = uniqueId('swc-suggestion-group-heading');
 
