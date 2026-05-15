@@ -720,7 +720,6 @@ describe('ColorWheel', () => {
       return;
     };
 
-    const initialValue = el.value;
     const root = el.shadowRoot ? el.shadowRoot : el;
     const gradient = root.querySelector('[name="gradient"]') as HTMLElement;
     const originalRect = el.getBoundingClientRect();
