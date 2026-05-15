@@ -27,11 +27,12 @@ Required structure with visual separators between sections:
 3. **METADATA** - Meta object with component configuration
 4. **HELPERS** - Shared label mappings and utilities (if needed)
 5. **AUTODOCS STORY** - Playground story
-6. **ANATOMY STORIES** - Component structure (if applicable)
-7. **OPTIONS STORIES** - Variants, sizes, styles
-8. **STATES STORIES** - Component states (if applicable)
-9. **BEHAVIORS STORIES** - Built-in functionality (if applicable)
-10. **ACCESSIBILITY STORIES** - A11y demonstration
+6. **OVERVIEW STORY** - Emblematic default use case shown on the docs page
+7. **ANATOMY STORIES** - Component structure (if applicable)
+8. **OPTIONS STORIES** - Variants, sizes, styles
+9. **STATES STORIES** - Component states (if applicable)
+10. **BEHAVIORS STORIES** - Built-in functionality (if applicable)
+11. **ACCESSIBILITY STORIES** - A11y demonstration
 
 #### Visual separators
 
@@ -47,6 +48,10 @@ Required structure with visual separators between sections:
 // ────────────────────
 //    AUTODOCS STORY
 // ────────────────────
+
+// ──────────────────────────
+//    OVERVIEW STORY
+// ──────────────────────────
 
 // ──────────────────────────
 //    ANATOMY STORIES
@@ -175,9 +180,25 @@ const meta: Meta = {
 - **Avoid repetition**: The subtitle and JSDoc description should complement each other, not duplicate content. The subtitle is a brief summary; the JSDoc provides fuller context.
 - **Component links**: When referencing other components in the JSDoc description, use relative Storybook paths: `[ComponentName](../?path=/docs/component-name--overview)`
 
+### Title naming conventions
+
+These rules apply to every `title` field in meta objects and every `<Meta title="..." />` in MDX files.
+
+- **Component names are proper nouns — keep their title case.** `'Action Button'`, `'Illustrated Message'`, `'Color Loupe'`. Each word in the component name is capitalised.
+- **Everything else uses sentence case.** Page labels, section names, and group names that are not component names: `'Pattern overview'`, `'Migration guide'`.
+- **No filename as label.** Never use a bare filename (`README`, `CHANGELOG`) as a Storybook title or page name. Use a descriptive label: `'Pattern overview'`, `'Migration guide'`.
+- **Flatten single-component groups.** If a Storybook group contains only one component, do not nest it. Use a flat title (`'Color Loupe'`) rather than a group path (`'Color Components/Color Loupe'`).
+
+| ❌ Don't                         | ✅ Do                                  |
+| -------------------------------- | -------------------------------------- |
+| `'Color Components/Color Loupe'` | `'Color Loupe'` (flattened)            |
+| `'Conversational AI/README'`     | `'Conversational AI/Pattern overview'` |
+| `'Badge/Migration Guide'`        | `'Badge/Migration guide'`              |
+| `'Pattern Overview'`             | `'Pattern overview'`                   |
+
 ## Layout and decorators
 
-Use `flexLayout: true` for stories displaying multiple items (sizes, variants, states). This applies flex layout with consistent spacing.
+Use `flexLayout: 'row-wrap'` for stories displaying multiple items (sizes, variants, states). This applies flex layout with consistent spacing.
 
 ```typescript
 export const Sizes: Story = {
@@ -187,7 +208,7 @@ export const Sizes: Story = {
     <swc-badge size="l">Large</swc-badge>
     <swc-badge size="xl">Extra-large</swc-badge>
   `,
-  parameters: { flexLayout: true },
+  parameters: { flexLayout: 'row-wrap' },
   tags: ['options'],
 };
 ```
@@ -199,7 +220,7 @@ Extend with `parameters.styles` or use styles alone for custom layouts:
 ```typescript
 export const Sizes: Story = {
   parameters: {
-    flexLayout: true,
+    flexLayout: 'row-wrap',
     styles: {
       'flex-wrap': 'wrap',
       'max-inline-size': '80ch',
@@ -220,14 +241,14 @@ export const GridLayout: Story = {
 
 ### Static color decorator
 
-For static color stories, use `staticColorsDemo: true` with `flexLayout: true`:
+For static color stories, use `staticColorsDemo: true` with `flexLayout: 'row-wrap'`:
 
 ```typescript
 export const StaticColors: Story = {
     render: (args) => html`
         ${['white', 'black'].map((color) => template({ 'static-color': color }),
     parameters: {
-        flexLayout: true,
+        flexLayout: 'row-wrap',
         staticColorsDemo: true
     },
     tags: ['options', '!test'],
@@ -267,10 +288,15 @@ export const StaticColors: Story = {
 | `'a11y'`              | Accessibility story                           |
 | `'migrated'`          | On meta object                                |
 
+### Optional tags
+
+- `'description-only'` - Story contains only descriptive content (no interactive component rendered)
+- `'upcoming'` - Story demonstrates a feature or variant that is not yet available
+
 ### Exclusion tags
 
-- `'!test'` - Exclude from test runs
-- `'!dev'` - Exclude from dev Storybook
+- `'!dev'` - Exclude from the development Storybook sidebar without affecting tests
+- `'!test'` - Exclude from **all three** automated test runners simultaneously: Vitest play functions, aXe WCAG compliance, and VRT snapshots. Use only when testing would produce false positives due to context the test runner cannot see — the canonical case is static-color stories, where axe evaluates contrast against the page background rather than the decorator gradient. **When you apply `'!test'` to a story, you must add a corresponding test story with a custom render and `parameters: { staticColorsDemo: true }` to restore behavioral coverage.** Do not apply `'!test'` because a story is complex, has no `play` function, or has a real accessibility issue. See [Excluding stories from tests](../../CONTRIBUTOR-DOCS/02_style-guide/04_testing/01_testing-overview.md#excluding-stories-from-tests).
 
 ## Story types
 
@@ -353,7 +379,7 @@ export const Anatomy: Story = {
     ${template({ ...args /* text + icon */ })}
   `,
   tags: ['anatomy'],
-  parameters: { flexLayout: true },
+  parameters: { flexLayout: 'row-wrap' },
 };
 ```
 
@@ -382,7 +408,7 @@ export const Sizes: Story = {
     ${template({ ...args, size: 'l', label: 'Large' })}
   `,
   tags: ['options'],
-  parameters: { flexLayout: true },
+  parameters: { flexLayout: 'row-wrap' },
 };
 
 /**
@@ -422,7 +448,9 @@ export const NonSemanticVariants: Story = {
 
 #### Static color pattern
 
-For components with `static-color` attribute, implement three stories:
+For components with a `static-color` attribute, use whichever of these two patterns best fits the component's visual surface:
+
+**Three-story pattern** — use when each color can be shown independently (simple components with a single fill style):
 
 1. **`StaticBlack`** - `static-color="black"` on light background
 2. **`StaticWhite`** - `static-color="white"` on dark background
@@ -434,13 +462,13 @@ For components with `static-color` attribute, implement three stories:
  */
 export const StaticBlack: Story = {
   args: { 'static-color': 'black' },
-  parameters: { flexLayout: false, styles: { color: 'black' } },
+  parameters: { styles: { color: 'black' } },
   tags: ['options'],
 };
 
 export const StaticWhite: Story = {
   args: { 'static-color': 'white' },
-  parameters: { flexLayout: false, styles: { color: 'white' } },
+  parameters: { styles: { color: 'white' } },
   tags: ['options'],
 };
 
@@ -452,10 +480,41 @@ export const StaticColors: Story = {
       `
     )}
   `,
-  parameters: { flexLayout: false, staticColorsDemo: true },
+  parameters: { flexLayout: 'row-wrap', staticColorsDemo: true },
   tags: ['options', '!test'],
 };
 ```
+
+**Combined-story pattern** — use when the component has additional dimensions (e.g., fill styles) that are most clearly shown together in a single story. Use structural `<div>` wrappers instead of `flexLayout` here: the `staticColorsDemo` decorator targets `:first-child` and `:last-child` to apply the dark/light background zones, so the two color groups must be direct children of the render output.
+
+```typescript
+/**
+ * Use `static-color` for display over images or colored backgrounds.
+ * Both fill styles are shown for each color.
+ */
+export const StaticColors: Story = {
+  render: (args) => html`
+    <div
+      style="display: flex; gap: 16px; flex-wrap: wrap; justify-content: center;"
+    >
+      ${FILL_STYLES.map((fillStyle) =>
+        template({ ...args, 'static-color': 'white', 'fill-style': fillStyle })
+      )}
+    </div>
+    <div
+      style="display: flex; gap: 16px; flex-wrap: wrap; justify-content: center;"
+    >
+      ${FILL_STYLES.map((fillStyle) =>
+        template({ ...args, 'static-color': 'black', 'fill-style': fillStyle })
+      )}
+    </div>
+  `,
+  parameters: { staticColorsDemo: true },
+  tags: ['options', '!test'],
+};
+```
+
+In the three-story pattern, `staticColorsDemo: true` enables the background zone decorator and `flexLayout: 'row-wrap'` handles item spacing. In the combined-story pattern, use structural `<div>` children instead of `flexLayout` so the decorator's `:first-child`/`:last-child` zone targeting is preserved.
 
 ### States
 
@@ -471,7 +530,7 @@ export const States: Story = {
     ${template({ ...args, disabled: true })}
   `,
   tags: ['states'],
-  parameters: { flexLayout: true },
+  parameters: { flexLayout: 'row-wrap' },
 };
 ```
 
@@ -649,7 +708,7 @@ See `asset.stories.ts` for complete examples.
 ### ✅ Do
 
 - Tag stories correctly: `anatomy`, `options`, `states`, `behaviors`, `a11y`
-- Use `flexLayout: true` for multi-item stories
+- Use `flexLayout: 'row-wrap'` for multi-item stories
 - Include comprehensive JSDoc (except Playground and Overview)
 - Use meaningful, realistic content
 - Let the DocumentTemplate handle section rendering automatically
@@ -659,16 +718,17 @@ See `asset.stories.ts` for complete examples.
 - [ ] Copyright header (2025)
 - [ ] Visual separators between sections
 - [ ] Meta: title, component, args, argTypes, render, `parameters.docs.subtitle`, `tags: ['migrated']`
+- [ ] `title` uses sentence case, no filename labels, group is not a single-component wrapper
 - [ ] Meta JSDoc description above meta object (with component links if applicable)
 - [ ] Subtitle is concise and non-repetitive (plain text only, no links)
-- [ ] Overview: `['overview']` tag, common use case args, no JSDoc on story itself
 - [ ] Playground: `['autodocs', 'dev']` tags, no JSDoc, common use case args
-- [ ] Anatomy: all slots + content properties, `['anatomy']` tag, `flexLayout: true`
-- [ ] Options: all uncovered attributes, `['options']` tag, `flexLayout: true`
-- [ ] States: consolidated states, `['states']` tag, `flexLayout: true` (if applicable)
+- [ ] Overview: `['overview']` tag, common use case args, no JSDoc on story itself
+- [ ] Anatomy: all slots + content properties, `['anatomy']` tag, `flexLayout: 'row-wrap'`
+- [ ] Options: all uncovered attributes, `['options']` tag, `flexLayout: 'row-wrap'`
+- [ ] States: consolidated states, `['states']` tag, `flexLayout: 'row-wrap'` (if applicable)
 - [ ] Behaviors: `['behaviors']` tag (if applicable)
 - [ ] Accessibility: features + best practices, `['a11y']` tag
-- [ ] Static colors: three-story pattern with `staticColorsDemo` (if applicable)
+- [ ] Static colors: three-story or combined-story pattern with `staticColorsDemo` (if applicable)
 - [ ] Story order: `section-order` parameter where needed
 - [ ] All stories accessible with meaningful content
 - [ ] Image assets: use `picsum.photos` with static IDs (if applicable)

@@ -642,6 +642,118 @@ describe('ColorWheel', () => {
       (el.color as { h: number; s: number; l: number; a: number }).l
     ).to.be.within(0.69, 0.71);
   });
+  it('does not change value when clicking outside the ring', async () => {
+    const el = await fixture<ColorWheel>(html`
+      <sp-color-wheel
+        style="--mod-colorwheel-width: 160px; --mod-colorwheel-height: 160px;"
+      ></sp-color-wheel>
+    `);
+
+    await elementUpdated(el);
+
+    const { handle } = el as unknown as { handle: HTMLElement };
+    handle.setPointerCapture = () => {
+      return;
+    };
+    handle.releasePointerCapture = () => {
+      return;
+    };
+
+    const initialValue = el.value;
+    const root = el.shadowRoot ? el.shadowRoot : el;
+    const gradient = root.querySelector('[name="gradient"]') as HTMLElement;
+    const rect = el.getBoundingClientRect();
+
+    // Click at a corner of the bounding box — distance > outerRadius, outside the ring.
+    gradient.dispatchEvent(
+      new PointerEvent('pointerdown', {
+        pointerId: 1,
+        clientX: Math.round(rect.left + rect.width - 1),
+        clientY: Math.round(rect.top + 1),
+        bubbles: true,
+        composed: true,
+        cancelable: true,
+      })
+    );
+
+    await elementUpdated(el);
+
+    expect(el.value).to.equal(initialValue);
+
+    // Click at the center of the element — inside the inner hole, outside the ring.
+    gradient.dispatchEvent(
+      new PointerEvent('pointerdown', {
+        pointerId: 1,
+        clientX: Math.round(rect.left + rect.width / 2),
+        clientY: Math.round(rect.top + rect.height / 2),
+        bubbles: true,
+        composed: true,
+        cancelable: true,
+      })
+    );
+
+    await elementUpdated(el);
+
+    expect(el.value).to.equal(initialValue);
+  });
+  it('refreshes cached layout before the ring hit-test', async () => {
+    // Wrap the wheel so we can translate it after mount. Translating an
+    // ancestor changes the wheel's viewport-relative position without firing
+    // ResizeObserver (which only fires on size changes), simulating the
+    // scroll/layout-shift case where the cached boundingClientRect goes stale.
+    const wrapper = await fixture<HTMLDivElement>(html`
+      <div>
+        <sp-color-wheel
+          style="--mod-colorwheel-width: 160px; --mod-colorwheel-height: 160px;"
+        ></sp-color-wheel>
+      </div>
+    `);
+    const el = wrapper.querySelector('sp-color-wheel') as ColorWheel;
+
+    await elementUpdated(el);
+
+    const { handle } = el as unknown as { handle: HTMLElement };
+    handle.setPointerCapture = () => {
+      return;
+    };
+    handle.releasePointerCapture = () => {
+      return;
+    };
+
+    const root = el.shadowRoot ? el.shadowRoot : el;
+    const gradient = root.querySelector('[name="gradient"]') as HTMLElement;
+    const originalRect = el.getBoundingClientRect();
+
+    // Shift the wheel after the cache was populated by `firstUpdated`. Use a
+    // wrapper transform so layout (and ResizeObserver) does not retrigger.
+    const offsetX = 200;
+    const offsetY = 50;
+    wrapper.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
+
+    // Click at the top-center of the wheel's NEW position. This lands inside
+    // the ring relative to the new rect (hue ≈ 270°) but lies outside the OLD
+    // cached rect. Without refreshing the cache, isPointerInRing would
+    // compute this as outside the ring and silently reject the click.
+    const clientX = Math.round(
+      originalRect.left + offsetX + originalRect.width / 2
+    );
+    const clientY = Math.round(originalRect.top + offsetY + 1);
+
+    gradient.dispatchEvent(
+      new PointerEvent('pointerdown', {
+        pointerId: 1,
+        clientX,
+        clientY,
+        bubbles: true,
+        composed: true,
+        cancelable: true,
+      })
+    );
+
+    await elementUpdated(el);
+
+    expect(el.value).to.be.closeTo(270, 10);
+  });
   it('can have `change` events prevented', async () => {
     const color = { h: '0', s: '20%', l: '70%' };
     const el = await fixture<ColorWheel>(html`

@@ -15,12 +15,14 @@
 - [Size modifier pattern](#size-modifier-pattern)
 - [Inline SVG](#inline-svg)
 - [classMap patterns](#classmap-patterns)
+- [Inline CSS strings from component properties](#inline-css-strings-from-component-properties)
+- [Shadow root customization](#shadow-root-customization)
 
 </details>
 
 <!-- Document content (editable) -->
 
-This guide covers rendering-specific patterns for 2nd-gen component templates, including helper functions, size transformations, inline SVG accessibility, and classMap usage.
+This guide covers rendering-specific patterns for 2nd-gen component templates, including helper functions, size transformations, inline SVG accessibility, classMap usage, and shadow root customization.
 
 ## Helper functions
 
@@ -218,3 +220,91 @@ class=${classMap({
   [`swc-Badge--${this.variant}`]: true, // Bracketed
 })}
 ```
+
+## Inline CSS strings from component properties
+
+Some components accept a property whose value is a CSS string — for example, `<swc-color-loupe>` exposes a `color` property that accepts any valid CSS color. When the value must influence rendering, set it as a **CSS custom property via `styleMap`**, and have the component's stylesheet consume that custom property.
+
+```ts
+// ColorLoupe.ts
+<div
+  class="swc-ColorLoupe-colorFill"
+  style=${styleMap({
+    '--swc-color-loupe-picked-color': this.color,
+  })}
+></div>
+```
+
+```css
+/* color-loupe.css */
+.swc-ColorLoupe-colorFill {
+  background: var(--swc-color-loupe-picked-color);
+}
+```
+
+When a property value reaches an inline `style` attribute — directly or via `styleMap` — the browser's CSS parser reads it verbatim. That means:
+
+- **Only accept CSS strings from trusted sources.** Component properties that participate in an inline `style` (or a `styleMap` entry) must be treated as trusted input. Do not expose such properties to arbitrary user-generated content without validation at the call site.
+- **Use a CSS custom property, not a full declaration.** Set `--swc-<component>-<role>: ${value}` via `styleMap` rather than interpolating an entire declaration. This scopes what the property can affect to what the component's CSS explicitly consumes.
+- **Document the contract on the property.** The property's JSDoc must state that the value is passed to the CSS parser as-is and that callers are responsible for ensuring it is a valid, trusted CSS value.
+
+```ts
+// ✅ Good — typed CSS property, scoped via a custom property
+style=${styleMap({
+  '--swc-color-loupe-picked-color': this.color,
+})}
+
+// ❌ Bad — full inline declaration interpolated from a property.
+//    The entire declaration is re-parsed on every render, and a malformed
+//    value can corrupt adjacent styles. Always route property values through
+//    a custom property that the stylesheet consumes explicitly.
+style="background: ${this.color}"
+```
+## Shadow root customization
+
+To customize shadow root options (e.g., enabling `delegatesFocus`), always use the static `shadowRootOptions` property. **Never override `createRenderRoot()`** to set shadow root options.
+
+**Why this matters:** Lit's default `createRenderRoot()` calls `adoptStyles()` to inject the component's CSS into the shadow DOM via `adoptedStylesheets`. Any `createRenderRoot()` override that does not call `super.createRenderRoot()` silently bypasses this step — the component renders, but no styles are applied and no error is thrown.
+
+**Correct pattern:**
+
+```ts
+// ✅ Good — uses the documented Lit API; default createRenderRoot() runs adoptStyles()
+export abstract class ButtonBase extends SizedMixin(SpectrumElement, {
+  validSizes: BUTTON_VALID_SIZES,
+}) {
+  static override shadowRootOptions: ShadowRootInit = {
+    ...SpectrumElement.shadowRootOptions,
+    delegatesFocus: true,
+  };
+}
+```
+
+**Anti-pattern:**
+
+```ts
+// ❌ Bad — bypasses adoptStyles(); all component CSS is silently ignored
+export abstract class ButtonBase extends SpectrumElement {
+  protected override createRenderRoot(): ShadowRoot {
+    return this.attachShadow({ mode: 'open', delegatesFocus: true });
+  }
+}
+```
+
+The spreading of `...SpectrumElement.shadowRootOptions` (or the parent class's `shadowRootOptions`) preserves any options set by the base class, such as `mode: 'open'`.
+
+**When `createRenderRoot()` is appropriate:**
+
+Override `createRenderRoot()` only when you need to change the render target itself (e.g., rendering into the light DOM instead of a shadow root). In those cases, call `super.createRenderRoot()` or manually call `adoptStyles()` to preserve style injection:
+
+```ts
+// ✅ Acceptable — light DOM render target, adoptStyles called manually
+import { adoptStyles, unsafeCSS } from 'lit';
+
+protected override createRenderRoot(): Element {
+  adoptStyles(this, (this.constructor as typeof LitElement).elementStyles);
+  return this;
+}
+```
+
+This scenario is rare in SWC components. If you find yourself considering it, discuss with the team first.

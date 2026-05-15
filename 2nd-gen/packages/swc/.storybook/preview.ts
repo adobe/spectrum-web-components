@@ -23,6 +23,7 @@ import { withLanguageWrapper } from './decorators/language.js';
 import { withStaticColorPlayground } from './decorators/static-color-playground.js';
 import DocumentTemplate from './DocumentTemplate.mdx';
 import { FontLoader } from './loaders/font-loader.js';
+import { transformDocsSource } from './utils/docs-source-transform.js';
 
 import '../stylesheets/swc.css';
 import '../stylesheets/typography.css';
@@ -62,20 +63,6 @@ const preview = {
           { value: 'light', title: 'Light' },
           { value: 'dark', title: 'Dark' },
           { value: 'adaptive', title: 'Adaptive' },
-        ],
-        dynamicTitle: true,
-      },
-    },
-    scale: {
-      name: 'Scale',
-      description: 'Global scale for components',
-      defaultValue: 'medium',
-      type: 'string',
-      toolbar: {
-        title: 'Scale',
-        items: [
-          { value: 'medium', title: 'Medium' },
-          { value: 'large', title: 'Large' },
         ],
         dynamicTitle: true,
       },
@@ -136,7 +123,6 @@ const preview = {
   },
   initialGlobals: {
     theme: 'light',
-    scale: 'medium',
     lang: 'en-US',
     textDirection: 'auto',
   },
@@ -197,34 +183,11 @@ const preview = {
       },
       source: {
         excludeDecorators: true,
-        type: 'auto',
+        // Prefer serialized DOM so docs code panels show HTML for stories that use
+        // custom render functions; type "auto" often surfaces raw source instead.
+        type: 'dynamic',
         language: 'html',
-        transform: async (source: string) => {
-          try {
-            const prettier = await import('prettier/standalone');
-            const prettierPluginHtml = await import('prettier/plugins/html');
-            const prettierPluginBabel = await import('prettier/plugins/babel');
-            const prettierPluginEstree =
-              await import('prettier/plugins/estree');
-
-            return prettier.format(source, {
-              parser: 'html',
-              plugins: [
-                prettierPluginHtml.default,
-                prettierPluginBabel.default,
-                prettierPluginEstree.default,
-              ],
-              tabWidth: 2,
-              useTabs: false,
-              singleQuote: true,
-              printWidth: 80,
-            });
-          } catch (error) {
-            // If formatting fails, return the original source
-            console.error('Failed to format source code:', error);
-            return source;
-          }
-        },
+        transform: transformDocsSource,
       },
     },
     options: {
@@ -232,20 +195,25 @@ const preview = {
         method: 'alphabetical-by-kind',
         order: [
           'Learn about SWC',
-          ['Overview', 'When to use SWC', '1st-gen vs 2nd-gen'],
+          ['Overview', 'Get started', 'Gen1 vs Gen2'],
+          'Resources',
+          ['Support and compatibility', 'Migrate from Gen1', 'Changelog'],
           'Core',
           ['Overview', 'Controllers'],
           'Components',
+          'Patterns',
+          ['Conversational AI', ['README', 'Prompt field', 'User message']],
           'Guides',
           [
-            'Accessibility guides',
+            'Accessibility',
             [
               'Overview',
               'Semantic HTML and ARIA',
+              'Headings and landmarks',
               'Accessible pattern libraries',
               'Keyboard testing',
               'Screen reader testing',
-              'Wave toolbar testing',
+              'WAVE toolbar testing',
               'Accessibility resources',
             ],
             'Customization',
@@ -275,6 +243,7 @@ const preview = {
               'Using stackblitz',
               '2nd-gen testing',
               'Tools vs packages',
+              'Writing migration guides',
               'Focus management',
             ],
             'Style guide',
@@ -351,6 +320,12 @@ const preview = {
               ],
               'Components',
               [
+                'Accordion',
+                [
+                  'Accessibility migration analysis',
+                  'Migration plan',
+                  'Rendering and styling migration analysis',
+                ],
                 'Action button',
                 ['Rendering and styling migration analysis'],
                 'Action group',
@@ -388,7 +363,11 @@ const preview = {
                 'Color field',
                 ['Rendering and styling migration analysis'],
                 'Color loupe',
-                ['Accessibility migration analysis'],
+                [
+                  'Accessibility migration analysis',
+                  'Migration checklist',
+                  'Rendering and styling migration analysis',
+                ],
                 'Divider',
                 [
                   'Accessibility migration analysis',
@@ -405,6 +384,7 @@ const preview = {
                 'Illustrated message',
                 [
                   'Accessibility migration analysis',
+                  'Migration plan',
                   'Rendering and styling migration analysis',
                 ],
                 'Infield button',
@@ -416,6 +396,17 @@ const preview = {
                   'Accessibility migration analysis',
                   'Rendering and styling migration analysis',
                 ],
+                'Menu',
+                [
+                  'Accessibility migration analysis',
+                  'Rendering and styling migration analysis',
+                ],
+                'Menu group',
+                ['Accessibility migration analysis'],
+                'Menu item',
+                ['Accessibility migration analysis'],
+                'Menu separator',
+                ['Accessibility migration analysis'],
                 'Meter',
                 [
                   'Accessibility migration analysis',
@@ -475,7 +466,10 @@ const preview = {
                 'Thumbnail',
                 ['Rendering and styling migration analysis'],
                 'Tooltip',
-                ['Rendering and styling migration analysis'],
+                [
+                  'Accessibility migration analysis',
+                  'Rendering and styling migration analysis',
+                ],
               ],
               'Milestones',
               'Strategies',

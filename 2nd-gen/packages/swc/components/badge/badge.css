@@ -11,7 +11,7 @@
  */
 
 :host {
-  display: inline-block;
+  display: inline-flex;
   place-self: start;
   vertical-align: middle;
 }
@@ -20,33 +20,43 @@
   box-sizing: border-box;
 }
 
+/* Size `s` is the default. tokens are set directly on .swc-Badge, so no :host([size="s"]) needed */
 .swc-Badge {
   --_swc-badge-border-width: token("border-width-200");
-  --_swc-badge-border-width-deduction: calc(var(--_swc-badge-border-width) * 2);
-  --_swc-badge-padding-block: token("component-top-to-text-100") token("component-bottom-to-text-100");
+  --_swc-badge-padding-block: var(--swc-badge-padding-block, token("component-padding-vertical-75"));
+  --_swc-badge-padding-inline-start: var(--swc-badge-padding-inline-start, var(--swc-badge-padding-inline, token("component-edge-to-text-75")));
+  --_swc-badge-padding-inline: var(--swc-badge-padding-inline, token("component-edge-to-text-75"));
+  --_swc-badge-line-height: var(--swc-badge-line-height, token("line-height-font-size-75"));
 
   display: inline-flex;
-  gap: var(--swc-badge-gap, token("text-to-visual-100"));
+  gap: var(--swc-badge-gap, token("text-to-visual-75"));
   align-items: center;
-  min-block-size: var(--swc-badge-height, token("component-height-100"));
-  padding-block: calc(var(--swc-badge-padding-block, var(--_swc-badge-padding-block)) - var(--_swc-badge-border-width-deduction));
-  padding-inline: calc(var(--swc-badge-padding-inline, token("component-edge-to-text-100")) - var(--_swc-badge-border-width-deduction));
+  min-block-size: var(--swc-badge-height, token("component-height-75"));
+  padding-block: calc(var(--_swc-badge-padding-block) - var(--_swc-badge-border-width));
+  padding-inline-start: calc(var(--_swc-badge-padding-inline-start) - var(--_swc-badge-border-width));
+  padding-inline-end: calc(var(--_swc-badge-padding-inline) - var(--_swc-badge-border-width));
   color: var(--swc-badge-label-icon-color, token("white"));
-  background: var(--swc-badge-background-color, token("accent-background-color-default"));
+  background: var(--swc-badge-background-color, token("neutral-subdued-background-color-default"));
   border: var(--_swc-badge-border-width) solid var(--swc-badge-border-color, transparent);
-  border-radius: var(--swc-badge-corner-radius, token("corner-radius-medium-size-medium"));
+  border-radius: var(--swc-badge-corner-radius, token("corner-radius-medium-size-small"));
   cursor: default;
 }
 
-.swc-Badge:has(.swc-Badge-icon) {
-  --swc-badge-padding-inline: var(--swc-badge-with-icon-padding-inline, token("component-edge-to-visual-100"));
+.swc-Badge:where(:has(.swc-Badge-icon):not(.swc-Badge--no-label)) {
+  --swc-badge-padding-inline-start: var(--swc-badge-with-icon-padding-inline, token("component-edge-to-visual-75"));
+}
+
+.swc-Badge--no-label:where(:has(.swc-Badge-icon)) {
+  --swc-badge-padding-block: var(--swc-badge-with-icon-only-padding-block, token("component-edge-to-visual-only-75"));
+  --swc-badge-padding-inline-start: var(--swc-badge-with-icon-only-padding-inline, token("component-edge-to-visual-only-75"));
+  --swc-badge-padding-inline: var(--swc-badge-with-icon-only-padding-inline, token("component-edge-to-visual-only-75"));
+  --swc-badge-gap: 0;
 }
 
 .swc-Badge-label {
-  font-size: var(--swc-badge-font-size, token("font-size-100"));
+  font-size: var(--swc-badge-font-size, token("font-size-75"));
   font-weight: token("medium-font-weight");
-  text-box: cap alphabetic;
-  line-height: var(--swc-badge-line-height, token("line-height-100"));
+  line-height: var(--_swc-badge-line-height);
 
   &:lang(ja),
   &:lang(zh),
@@ -56,7 +66,7 @@
 }
 
 .swc-Badge-icon {
-  --_swc-badge-icon-size: token("workflow-icon-size-100");
+  --_swc-badge-icon-size: token("workflow-icon-size-75");
 
   display: grid;
   flex-shrink: 0;
@@ -65,15 +75,18 @@
   block-size: var(--swc-badge-icon-size, var(--_swc-badge-icon-size));
 }
 
-:host([size="s"]) {
-  --swc-badge-height: token("component-height-75");
-  --swc-badge-corner-radius: token("corner-radius-medium-size-small");
-  --swc-badge-gap: token("text-to-visual-75");
-  --swc-badge-padding-inline: token("component-edge-to-text-75");
-  --swc-badge-with-icon-padding-inline: token("component-edge-to-visual-75");
-  --swc-badge-padding-block: token("component-top-to-text-75") token("component-bottom-to-text-75");
-  --swc-badge-font-size: token("font-size-75");
-  --swc-badge-icon-size: token("workflow-icon-size-75");
+:host([size="m"]) {
+  --swc-badge-height: token("component-height-100");
+  --swc-badge-corner-radius: token("corner-radius-medium-size-medium");
+  --swc-badge-gap: token("text-to-visual-100");
+  --swc-badge-padding-inline: token("component-edge-to-text-100");
+  --swc-badge-with-icon-padding-inline: token("component-edge-to-visual-100");
+  --swc-badge-with-icon-only-padding-inline: token("component-edge-to-visual-only-100");
+  --swc-badge-with-icon-only-padding-block: token("component-edge-to-visual-only-100");
+  --swc-badge-padding-block: token("component-padding-vertical-100");
+  --swc-badge-font-size: token("font-size-100");
+  --swc-badge-icon-size: token("workflow-icon-size-100");
+  --swc-badge-line-height: token("line-height-font-size-100");
 }
 
 :host([size="l"]) {
@@ -82,9 +95,12 @@
   --swc-badge-gap: token("text-to-visual-200");
   --swc-badge-padding-inline: token("component-edge-to-text-200");
   --swc-badge-with-icon-padding-inline: token("component-edge-to-visual-200");
-  --swc-badge-padding-block: token("component-top-to-text-200") token("component-bottom-to-text-200");
+  --swc-badge-with-icon-only-padding-inline: token("component-edge-to-visual-only-200");
+  --swc-badge-with-icon-only-padding-block: token("component-edge-to-visual-only-200");
+  --swc-badge-padding-block: token("component-padding-vertical-200");
   --swc-badge-font-size: token("font-size-200");
   --swc-badge-icon-size: token("workflow-icon-size-200");
+  --swc-badge-line-height: token("line-height-font-size-200");
 }
 
 :host([size="xl"]) {
@@ -93,9 +109,12 @@
   --swc-badge-gap: token("text-to-visual-300");
   --swc-badge-padding-inline: token("component-edge-to-text-300");
   --swc-badge-with-icon-padding-inline: token("component-edge-to-visual-300");
-  --swc-badge-padding-block: token("component-top-to-text-300") token("component-bottom-to-text-300");
+  --swc-badge-with-icon-only-padding-inline: token("component-edge-to-visual-only-300");
+  --swc-badge-with-icon-only-padding-block: token("component-edge-to-visual-only-300");
+  --swc-badge-padding-block: token("component-padding-vertical-300");
   --swc-badge-font-size: token("font-size-300");
   --swc-badge-icon-size: token("workflow-icon-size-300");
+  --swc-badge-line-height: token("line-height-font-size-300");
 }
 
 .swc-Badge--fixed-inline-start {
@@ -126,10 +145,10 @@
   --swc-badge-label-icon-color: token("black");
 }
 
-/* NOTE: `accent` is the default color */
+/* NOTE: `neutral` is the default color */
 
-:host([variant="neutral"]) {
-  --swc-badge-background-color: token("neutral-subdued-background-color-default");
+:host([variant="accent"]) {
+  --swc-badge-background-color: token("accent-background-color-default");
 }
 
 :host([variant="informative"]) {

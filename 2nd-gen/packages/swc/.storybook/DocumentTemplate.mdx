@@ -7,13 +7,14 @@ import {
   ArgTypes,
   Description,
   Subtitle,
+  HeaderMdx,
   useOf,
 } from '@storybook/addon-docs/blocks';
 import {
   ApiTable,
   GettingStarted,
-  SpectrumStories,
   OverviewStory,
+  SpectrumStories,
   StatusBadge,
 } from './blocks';
 
@@ -40,6 +41,12 @@ export const AdvancedExamplesStories = () => {
 
 }
 
+export const slugify = (s) =>
+  s
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/(^-|-$)/g, '');
+
 export const ConditionalSection = ({ tag, title, hideTitle = false }) => {
     const resolvedOf = useOf('meta', ['meta']);
     const hasStories = Object.values(resolvedOf.csfFile.stories).some(
@@ -51,10 +58,10 @@ export const ConditionalSection = ({ tag, title, hideTitle = false }) => {
     }
 
     return (
-        <>
-            {title && <h2>{title}</h2>}
+        <div data-section={tag}>
+            {title && <HeaderMdx as="h2" id={slugify(title)}>{title}</HeaderMdx>}
             <SpectrumStories tag={tag} hideTitle={hideTitle} />
-        </>
+        </div>
     );
 
 };
@@ -68,7 +75,7 @@ const hasCustomAPIDocs = tags.includes('api') || Object.values(resolvedOf.csfFil
     if (!hasCustomAPIDocs) {
         return (
           <>
-            <h2>API</h2>
+            <HeaderMdx as="h2" id="api">API</HeaderMdx>
 
             <Primary />
             <Controls />
@@ -78,7 +85,7 @@ const hasCustomAPIDocs = tags.includes('api') || Object.values(resolvedOf.csfFil
 
     return (
         <>
-            <h2>API</h2>
+            <HeaderMdx as="h2" id="api">API</HeaderMdx>
             <Primary />
             <Controls />
 
@@ -109,11 +116,13 @@ export const ConditionalGettingStarted = () => {
 <ConditionalGettingStarted />
 
 <ConditionalSection tag="anatomy" title="Anatomy" hideTitle={true} />
+<ConditionalSection tag="upcoming" title="Upcoming features" hideTitle={true} />
 <ConditionalSection tag="usage" hideTitle={true} />
 <ConditionalSection tag="options" title="Options" />
 <ConditionalSection tag="states" title="States" />
 <ConditionalSection tag="behaviors" title="Behaviors" />
 <ConditionalSection tag="a11y" title="Accessibility" hideTitle={true} />
+<ConditionalSection tag="full-pattern" title="Full pattern" />
 
 ## API
 

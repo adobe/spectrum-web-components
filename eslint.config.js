@@ -149,6 +149,7 @@ export default defineConfig([
       '**/custom-elements.json',
       '**/tokens.css',
       '**/tokens.json',
+      '2nd-gen/packages/swc/stylesheets/global/**',
       // Config and tooling files (Node env; skip lint to avoid needing node globals for many files)
       '**/*.config.js',
       '**/*.config.cjs',
@@ -278,6 +279,7 @@ export default defineConfig([
             'element', // Custom element tag name
             'slot', // Slot documentation
             'csspart', // CSS part documentation
+            'cssprop', // CSS custom property documentation (shorthand)
             'cssproperty', // CSS custom property documentation
             'fires', // Event documentation
             'attr', // Attribute shorthand

@@ -40,7 +40,7 @@ export abstract class IconBase extends SizedMixin(SpectrumElement, {
   /**
    * Accessible label for the icon.
    */
-  @property()
+  @property({ type: String })
   public label = '';
 
   @queryAssignedElements({ flatten: true })

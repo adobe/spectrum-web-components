@@ -17,7 +17,7 @@ Read the migration plan at `CONTRIBUTOR-DOCS/03_project-planning/03_components/[
 
 - **Architecture: core vs SWC split** — defines exactly what each layer owns; follow this verbatim.
 - **Shared semantics reuse** (or equivalent) — may explicitly restrict what the base class owns so that other components can extend it without inheriting this component's visual surface. If this section exists, any properties identified as visual or component-specific belong on the concrete SWC class, not the base.
-- **Global alignment contract** — may constrain how the component stylesheet relates to global stylesheets; note this for Phase 4.
+- **Global alignment contract** — may constrain how the component stylesheet relates to global stylesheets; note this for Phase 5.
 
 If the plan's API checklist and an architectural decision section contradict each other, the architectural decision section governs. Update the checklist to reflect the correct split and note the reason.
 
@@ -50,5 +50,11 @@ Before creating any files:
 2. **Identify any contradiction** between the plan's API checklist items and its architectural decisions. If a checklist item places properties on the base class that an architectural section says belong on the SWC class, the architectural section wins — update the checklist and note the reason before proceeding.
 
 Then follow **[Phase 2: Setup](../../../CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md#phase-2-setup)** in the washing machine workflow doc — it covers what to do, what to check, common problems, and the quality gate for this phase.
+
+**Key file split (SWC package):**
+
+- `index.ts` — class re-export only (`export * from './Component.js'`). No `defineElement`, no `HTMLElementTagNameMap` augmentation.
+- `swc-<tag>.ts` — side-effect entry point. Contains `defineElement('swc-<tag>', Component)` and the `HTMLElementTagNameMap` augmentation. Use `2nd-gen/packages/swc/components/badge/swc-badge.ts` as the reference.
+- `package.json` — must export `./components/<name>/swc-<tag>.js` so consumers can import `@adobe/spectrum-wc/components/<name>/swc-<tag>.js` to register the element without pulling in a class re-export.
 
 If the required file layout or naming in code would drift from the migration plan, follow [`migration-plan-contract`](../migration-prep/references/migration-plan-contract.md).

@@ -24,12 +24,14 @@
 - [Variant implementation patterns](#variant-implementation-patterns)
 - [State implementation patterns](#state-implementation-patterns)
 - [Size variant patterns](#size-variant-patterns)
+- [Modifier overrides on inner elements](#modifier-overrides-on-inner-elements)
 - [Animation and transition patterns](#animation-and-transition-patterns)
 - [Forced colors requirements](#forced-colors-requirements)
 - [Managing Specificity](#managing-specificity)
     - [Shadow DOM Specificity and Custom Property Inheritance](#shadow-dom-specificity-and-custom-property-inheritance)
     - [Using Cascade Layers (`@layer`)](#using-cascade-layers-layer)
 - [Component Specs vs. Component Styles](#component-specs-vs-component-styles)
+    - [Vertical spacing tokens: `component-padding-vertical-*` vs `component-top-to-text-*`](#vertical-spacing-tokens-component-padding-vertical--vs-component-top-to-text-)
 - [Color Themes](#color-themes)
     - [Modifying Non-Color Properties](#modifying-non-color-properties)
 - [Closing Note for Contributors](#closing-note-for-contributors)
@@ -126,7 +128,7 @@ For the full list and annotated examples, see the [property order quick referenc
   padding-block: calc(/* ... */);
   padding-inline: calc(/* ... */);
   color: var(--swc-badge-label-icon-color, token("white"));
-  background: var(--swc-badge-background-color, token("accent-background-color-default"));
+  background: var(--swc-badge-background-color, token("neutral-subdued-background-color-default"));
   border: var(--_swc-badge-border-width) solid var(--swc-badge-border-color, transparent);
   border-radius: var(--swc-badge-corner-radius, token("corner-radius-medium-size-medium"));
   cursor: default;
@@ -183,7 +185,7 @@ Use comments to explain non-obvious choices. Keep them short and use sentence ca
 **Example from [Badge](../../../2nd-gen/packages/swc/components/badge/badge.css)**:
 
 ```css
-/* NOTE: `accent` is the default color */
+/* NOTE: `neutral` is the default color */
 
 :host([variant="neutral"]) {
   --swc-badge-background-color: token("neutral-subdued-background-color-default");
@@ -216,7 +218,20 @@ Use `:host([attribute])` when the variant or state should expose custom properti
 
 ### When to use classes vs attributes
 
-See [variant implementation patterns](#variant-implementation-patterns) for the full decision table. In short: `:host([attribute])` for exposed customization, `.swc-ComponentName--variant` for implementation details.
+See [variant implementation patterns](#variant-implementation-patterns) for the full decision table. In short:
+
+- `:host([attribute])` — consumer-settable attributes that should expose a customization surface (size, variant, disabled, pending)
+- `.swc-ComponentName--modifier` — implementation details not meant for consumer override, and any state *derived* from slot content or internal logic rather than set by the consumer
+
+Derived states are a key case to get right. If a visual mode is fully determinable from slot composition (e.g. icon present + no label text → icon-only layout), do not create a consumer-settable attribute for it. Compute it in the component class and apply it as a class modifier via `classMap`. This keeps the attribute API honest: every attribute on the host element is something a consumer intentionally set.
+
+```typescript
+// ✅ Derived state applied via classMap — not a consumer attribute
+class=${classMap({
+  'swc-Button': true,
+  'swc-Button--iconOnly': this.hasIcon && !this.hasLabel,
+})}
+```
 
 ### Managing specificity with `:where()`
 
@@ -226,13 +241,14 @@ See [Managing Specificity](#managing-specificity) for full guidance. In short: w
 
 Variants change how the component looks. Use the right selector based on customization intent of [custom property exposure](02_custom-properties.md#component-custom-property-exposure).
 
-| Variant type       | Selector                                 | Example                                |
-| ------------------ | ---------------------------------------- | -------------------------------------- |
-| Size               | `:host([size="s"])`                      | Exposes `--swc-badge-height`, etc.     |
-| Semantic color     | `:host([variant="positive"])`            | Exposes `--swc-badge-background-color` |
-| Non-semantic color | `.swc-ComponentName--magenta`            | No exposure; implementation detail     |
-| Static color       | `.swc-ComponentName--staticWhite`        | No exposure; ensures contrast          |
-| Geometric          | `.swc-ComponentName--fixed-inline-start` | No exposure; layout modifier           |
+| Variant type       | Selector                                 | Example                                       |
+| ------------------ | ---------------------------------------- | --------------------------------------------- |
+| Size               | `:host([size="s"])`                      | Exposes `--swc-badge-height`, etc.            |
+| Semantic color     | `:host([variant="positive"])`            | Exposes `--swc-badge-background-color`        |
+| Non-semantic color | `.swc-ComponentName--magenta`            | No exposure; implementation detail            |
+| Static color       | `.swc-ComponentName--staticWhite`        | No exposure; ensures contrast                 |
+| Geometric          | `.swc-ComponentName--fixed-inline-start` | No exposure; layout modifier                  |
+| Derived state      | `.swc-ComponentName--iconOnly`           | Computed from slots; not consumer-settable    |
 
 **Example from [Badge](../../../2nd-gen/packages/swc/components/badge/badge.css)**:
 
@@ -261,6 +277,8 @@ States reflect user interaction or component condition. Attach them to `:host` w
 
 **Note**: Badge and Status Light are non-interactive, so they do not define focus or disabled states. See interactive components (e.g. Button) for examples.
 
+**Derived states are not on `:host`**: If a state is computed from slot content (e.g. icon-only), it is not a consumer-settable attribute and must not appear in the state table above. Express it as a class modifier on the internal element via `classMap`. See [When to use classes vs attributes](#when-to-use-classes-vs-attributes).
+
 ## Size variant patterns
 
 Size variants (s, m, l, xl) use `:host([size="..."])` and update custom properties. Do not add size classes to `render()`.
@@ -269,14 +287,51 @@ Size variants (s, m, l, xl) use `:host([size="..."])` and update custom properti
 
 ```css
 :host([size="s"]) {
-  --swc-statuslight-top-to-text: token("component-top-to-text-75");
-  --swc-statuslight-height: token("component-height-75");
-  --swc-statuslight-dot-size: token("status-light-dot-size-small");
-  --swc-statuslight-font-size: token("font-size-75");
+  --swc-status-light-padding-block: token("component-padding-vertical-75");
+  --swc-status-light-top-to-dot: token("status-light-top-to-dot-small");
+  --swc-status-light-text-to-visual: token("status-light-text-to-visual-75");
+  --swc-status-light-height: token("component-height-75");
+  --swc-status-light-dot-size: token("status-light-dot-size-small");
+  --swc-status-light-font-size: token("font-size-75");
+  --swc-status-light-line-height: token("line-height-font-size-75");
 }
 ```
 
 **Why**: Size is part of the customization surface. Consumers can override `swc-badge[size="l"] { --swc-badge-height: 48px; }`.
+
+## Modifier overrides on inner elements
+
+When a structural modifier needs to change inner-element spacing or positioning, set the relevant custom properties in the modifier rule rather than writing a compound selector that re-states individual properties directly.
+
+For **derived state modifiers** (computed in the component class, not consumer-settable), use the class form:
+
+```css
+/* ❌ Compound selector re-asserts individual properties */
+.swc-Button--iconOnly slot[name="icon"]::slotted(*) {
+  margin-block-start: 0;
+  margin-inline-start: 0;
+}
+
+/* ✅ Override the custom properties the element already reads */
+.swc-Button--iconOnly slot[name="icon"]::slotted(*) {
+  --swc-button-edge-to-visual: 0;
+}
+```
+
+For **consumer-set state modifiers** expressed as host attributes (e.g. `pending`, `disabled`), the same principle applies using `:host([attr])`:
+
+```css
+/* ✅ Use the custom property override pattern on host attribute selectors too */
+:host([pending]) .swc-Button-icon {
+  --swc-button-icon-opacity: 0;
+}
+```
+
+The inner element's base `calc()` expressions already consume the custom property through their `var()` chains, so resetting the variable is sufficient — no additional override rules needed.
+
+**Why**: Layout logic stays consolidated in the base rule. Modifier states only update values; they do not restate structure. This avoids compound selectors that would need to grow in step with any future changes to the inner element's base rule.
+
+📖 See: [Custom properties → Selector conventions](02_custom-properties.md#selector-conventions)
 
 ## Animation and transition patterns
 
@@ -295,7 +350,10 @@ Use `@keyframes` at the top of the file. Apply animations via custom properties 
 
 ```css
 .swc-ProgressCircle--indeterminate .swc-ProgressCircle-fill {
-  animation: swc-fills-rotate 1s cubic-bezier(0.6, 0.1, 0.3, 0.9) infinite;
+  transform-origin: center;
+  animation:
+    swc-fills-rotate 1s cubic-bezier(0.6, 0.1, 0.3, 0.9) infinite,
+    swc-dashoffset-animation 1s cubic-bezier(0.25, 0.1, 0.25, 1.3) infinite;
   will-change: transform;
 }
 ```
@@ -313,14 +371,14 @@ Forced colors mode (Windows High Contrast, etc.) replaces colors with system val
 1. **Check first**: Do not add forced-colors styles if the browser already makes the component visible.
 2. **Place last**: Put `@media (forced-colors: active)` at the end of the stylesheet so it overrides other styles.
 3. **Use internal selectors**: Target `.swc-ComponentName` or internal elements, not `:host`. This prevents accidental consumer overrides from breaking accessibility.
-4. **Reuse custom properties**: Override component custom properties (e.g. `--swc-statuslight-content-color`) so the rest of the stylesheet still works.
+4. **Reuse custom properties**: Override component custom properties (e.g. `--swc-status-light-content-color`) so the rest of the stylesheet still works.
 
 **Example from [Status Light](../../../2nd-gen/packages/swc/components/status-light/status-light.css)**:
 
 ```css
 @media (forced-colors: active) {
   .swc-StatusLight {
-    --swc-statuslight-content-color: CanvasText;
+    --swc-status-light-content-color: CanvasText;
     forced-color-adjust: none;
 
     &::before {
@@ -513,6 +571,19 @@ For example:
     - Badge also uses `:has()` to conditionally adjust padding when icons are present; this replaces Spectrum-era spacing rules.
 
 The ultimate intent here is to prioritize working with the grain of CSS layout models.
+
+### Vertical spacing tokens: `component-padding-vertical-*` vs `component-top-to-text-*`
+
+When setting block padding on a component, choose the token family based on the design intent and which generation of Spectrum the component targets.
+
+| Token family | Generation | Intent |
+| --- | --- | --- |
+| `component-padding-vertical-{scale}` | S2 (2nd-gen) | True block padding; produces visually centered text with Adobe Clean VF |
+| `component-top-to-text-{scale}` / `component-bottom-to-text-{scale}` | S1 / legacy S2 | Offset values that compensated for glyph positioning in the old typeface |
+
+The distinction exists because Adobe Clean VF improved glyph positioning within the text box. In S1 and early S2 Spectrum CSS, `component-top-to-text-*` and `component-bottom-to-text-*` were offset values applied to balance out the extra space above/below glyphs and achieve visual centering. With the improved typeface, that offset is no longer needed — `component-padding-vertical-*` represents the actual design intent.
+
+**Rule**: Use `component-padding-vertical-*` in 2nd-gen components. If you encounter `component-top-to-text-*` or `component-bottom-to-text-*` in a source file being migrated, replace them with `component-padding-vertical-*` at the same scale index — do not carry the offset tokens forward.
 
 ## Color Themes
 

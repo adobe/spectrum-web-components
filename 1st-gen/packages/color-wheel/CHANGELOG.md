@@ -1,5 +1,17 @@
 # Change Log
 
+## 1.12.0
+
+### Patch Changes
+
+- [#6262](https://github.com/adobe/spectrum-web-components/pull/6262) [`49049dd`](https://github.com/adobe/spectrum-web-components/commit/49049dd548c9b0589cccdf221e74944aa098758e) Thanks [@rubencarvalho](https://github.com/rubencarvalho)! - **Fixed**: `<sp-color-wheel>` no longer changes its value when the user clicks outside the visible ring. Pointer events on the gradient slot are now constrained by a geometric hit-test against the ring's inner and outer radii, so clicks in the transparent corners of the component's square bounding box or inside the center hole are ignored.
+
+- Updated dependencies [[`ba14a2b`](https://github.com/adobe/spectrum-web-components/commit/ba14a2b6361a0089a9a8c72232f245cde0716d89), [`dc6a8e8`](https://github.com/adobe/spectrum-web-components/commit/dc6a8e8db1b08080373c3664babc1feebde8f6c6), [`90c3010`](https://github.com/adobe/spectrum-web-components/commit/90c30101391d4d78922575e9f0bb407e02d9c2d5), [`f37dec6`](https://github.com/adobe/spectrum-web-components/commit/f37dec6ae39fd89a4c12e084b4a0f4d9092d79b0)]:
+  - @spectrum-web-components/base@1.12.0
+  - @spectrum-web-components/reactive-controllers@1.12.0
+  - @spectrum-web-components/color-handle@1.12.0
+  - @spectrum-web-components/shared@1.12.0
+
 ## 1.11.2
 
 ### Patch Changes

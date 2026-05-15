@@ -18,6 +18,10 @@
 <details open>
 <summary><strong>Beneath this doc</strong></summary>
 
+- Accordion
+    - [Accordion accessibility migration analysis](accordion/accessibility-migration-analysis.md)
+    - [Accordion migration plan](accordion/migration-plan.md)
+    - [Accordion migration roadmap](accordion/rendering-and-styling-migration-analysis.md)
 - Action Button
     - [Action button migration roadmap](action-button/rendering-and-styling-migration-analysis.md)
 - Action Group
@@ -48,6 +52,8 @@
     - [Color field migration roadmap](color-field/rendering-and-styling-migration-analysis.md)
 - Color Loupe
     - [Color loupe accessibility migration analysis](color-loupe/accessibility-migration-analysis.md)
+    - [Color loupe migration checklist](color-loupe/migration-checklist.md)
+    - [Color loupe migration analysis](color-loupe/rendering-and-styling-migration-analysis.md)
 - Divider
     - [Divider accessibility migration analysis](divider/accessibility-migration-analysis.md)
     - [Divider migration roadmap](divider/rendering-and-styling-migration-analysis.md)
@@ -61,6 +67,7 @@
     - [Help text migration roadmap](help-text/rendering-and-styling-migration-analysis.md)
 - Illustrated Message
     - [Illustrated message accessibility migration analysis](illustrated-message/accessibility-migration-analysis.md)
+    - [`sp-illustrated-message` Migration Plan](illustrated-message/migration-plan.md)
     - [Illustrated message migration roadmap](illustrated-message/rendering-and-styling-migration-analysis.md)
 - Infield Button
     - [In-field button migration roadmap](infield-button/rendering-and-styling-migration-analysis.md)
@@ -69,6 +76,15 @@
 - Link
     - [Link accessibility migration analysis](link/accessibility-migration-analysis.md)
     - [Link migration roadmap](link/rendering-and-styling-migration-analysis.md)
+- Menu
+    - [Menu accessibility migration analysis](menu/accessibility-migration-analysis.md)
+    - [Menu migration roadmap](menu/rendering-and-styling-migration-analysis.md)
+- Menu Group
+    - [Menu group accessibility migration analysis](menu-group/accessibility-migration-analysis.md)
+- Menu Item
+    - [Menu item accessibility migration analysis](menu-item/accessibility-migration-analysis.md)
+- Menu Separator
+    - [Menu separator accessibility migration analysis](menu-separator/accessibility-migration-analysis.md)
 - Meter
     - [Meter accessibility migration analysis](meter/accessibility-migration-analysis.md)
     - [Meter migration plan](meter/migration-plan.md)
@@ -116,6 +132,7 @@
 - Thumbnail
     - [Thumbnail migration roadmap](thumbnail/rendering-and-styling-migration-analysis.md)
 - Tooltip
+    - [Tooltip accessibility migration analysis](tooltip/accessibility-migration-analysis.md)
     - [Tooltip migration roadmap](tooltip/rendering-and-styling-migration-analysis.md)
 
 </details>

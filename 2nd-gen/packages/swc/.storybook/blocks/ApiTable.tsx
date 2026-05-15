@@ -10,7 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
-import { useOf } from '@storybook/addon-docs/blocks';
+import { HeaderMdx, useOf } from '@storybook/addon-docs/blocks';
 import type {
   Attribute,
   ClassField,
@@ -111,7 +111,9 @@ function PropertiesTable({
 
   return (
     <>
-      <h3>Properties</h3>
+      <HeaderMdx as="h3" id="properties">
+        Properties
+      </HeaderMdx>
       <div style={scrollStyle}>
         <table style={tableStyle}>
           <thead>
@@ -171,7 +173,9 @@ function SlotsTable({ slots }: { slots: Slot[] }) {
   if (slots.length === 0) return null;
   return (
     <>
-      <h3>Slots</h3>
+      <HeaderMdx as="h3" id="slots">
+        Slots
+      </HeaderMdx>
       <div style={scrollStyle}>
         <table style={tableStyle}>
           <thead>
@@ -201,7 +205,9 @@ function EventsTable({ events }: { events: CemEvent[] }) {
 
   return (
     <>
-      <h3>Events</h3>
+      <HeaderMdx as="h3" id="events">
+        Events
+      </HeaderMdx>
       <div style={scrollStyle}>
         <table style={tableStyle}>
           <thead>
@@ -230,7 +236,9 @@ function CssPropsTable({ cssProps }: { cssProps: CssCustomProperty[] }) {
   if (cssProps.length === 0) return null;
   return (
     <>
-      <h3>CSS Custom Properties</h3>
+      <HeaderMdx as="h3" id="css-custom-properties">
+        CSS Custom Properties
+      </HeaderMdx>
       <div style={scrollStyle}>
         <table style={tableStyle}>
           <thead>
@@ -263,7 +271,9 @@ function CssPartsTable({ cssParts }: { cssParts: CssPart[] }) {
   if (cssParts.length === 0) return null;
   return (
     <>
-      <h3>CSS Parts</h3>
+      <HeaderMdx as="h3" id="css-parts">
+        CSS Parts
+      </HeaderMdx>
       <div style={scrollStyle}>
         <table style={tableStyle}>
           <thead>

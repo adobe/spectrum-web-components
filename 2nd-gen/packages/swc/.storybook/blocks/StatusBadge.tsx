@@ -15,9 +15,9 @@ import React, { useEffect, useRef } from 'react';
 import customElements from '../custom-elements.json' with { type: 'json' };
 
 // Register the badge component for use in the docs iframe
-import '../../components/badge/index.js';
+import '@adobe/spectrum-wc/components/badge/swc-badge.js';
 
-type Status = 'preview' | 'deprecated' | 'internal' | 'unsupported';
+type Status = 'preview' | 'deprecated' | 'internal';
 
 const STATUS_CONFIG: Record<
   Status,
@@ -26,7 +26,6 @@ const STATUS_CONFIG: Record<
   preview: { label: 'Preview', variant: 'fuchsia' },
   deprecated: { label: 'Deprecated', variant: 'negative', outline: true },
   internal: { label: 'Internal', variant: 'neutral', outline: true },
-  unsupported: { label: 'Unsupported', variant: 'negative' },
 };
 
 /**
@@ -69,8 +68,8 @@ const Badge = ({
  * ```ts
  * /**
  *  * @element swc-my-component
- *  * @status preview
- *  * @since 1.0.0
+ *  * @status internal
+ *  * @since 2.0.0
  *  *\/
  * ```
  *

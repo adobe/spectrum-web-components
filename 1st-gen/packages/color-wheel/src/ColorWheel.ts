@@ -186,6 +186,7 @@ export class ColorWheel extends Focusable {
   }
 
   private boundingClientRect!: DOMRect;
+  private _trackWidth = 0;
   private _pointerDown = false;
 
   private handlePointerdown(event: PointerEvent): void {
@@ -195,7 +196,7 @@ export class ColorWheel extends Focusable {
     }
     this._pointerDown = true;
     this.colorController.savePreviousColor();
-    this.boundingClientRect = this.getBoundingClientRect();
+    this.cacheLayoutData();
     (event.target as HTMLElement).setPointerCapture(event.pointerId);
     if (event.pointerType === 'mouse') {
       this.focused = true;
@@ -257,11 +258,34 @@ export class ColorWheel extends Focusable {
     return (360 + (360 + (this.dir === 'ltr' ? value : 180 - value))) % 360;
   }
 
+  private isPointerInRing(event: PointerEvent): boolean {
+    const { width, height, left, top } = this.boundingClientRect;
+    const outerRadius = width / 2;
+    if (!outerRadius) {
+      return false;
+    }
+
+    const pointX = event.clientX - (left + outerRadius);
+    const pointY = event.clientY - (top + height / 2);
+    const distance = Math.sqrt(pointX * pointX + pointY * pointY);
+
+    return this._trackWidth > 0
+      ? distance >= outerRadius - this._trackWidth && distance <= outerRadius
+      : distance <= outerRadius;
+  }
+
   private handleGradientPointerdown(event: PointerEvent): void {
     if (
       event.button !== 0 ||
       (event.target as SVGElement).classList.contains('innerCircle')
     ) {
+      return;
+    }
+    // Refresh cached layout before the ring hit-test: getBoundingClientRect is
+    // viewport-relative, so scrolling or any layout shift since the last cache
+    // may otherwise make isPointerInRing reject valid clicks.
+    this.cacheLayoutData();
+    if (!this.isPointerInRing(event)) {
       return;
     }
     event.stopPropagation();
@@ -384,9 +408,16 @@ export class ColorWheel extends Focusable {
     `;
   }
 
+  private cacheLayoutData(): void {
+    this.boundingClientRect = this.getBoundingClientRect();
+    this._trackWidth =
+      parseFloat(getComputedStyle(this).getPropertyValue('--_track-width')) ||
+      0;
+  }
+
   protected override firstUpdated(changed: PropertyValues): void {
     super.firstUpdated(changed);
-    this.boundingClientRect = this.getBoundingClientRect();
+    this.cacheLayoutData();
     this.addEventListener('focus', this.handleFocus);
     this.addEventListener('blur', this.handleBlur);
   }
@@ -402,11 +433,9 @@ export class ColorWheel extends Focusable {
   public override connectedCallback(): void {
     super.connectedCallback();
     if (!this.observer && window.ResizeObserver) {
-      this.observer = new ResizeObserver((entries) => {
+      this.observer = new ResizeObserver(() => {
         requestAnimationFrame(() => {
-          for (const entry of entries) {
-            this.boundingClientRect = entry.contentRect;
-          }
+          this.cacheLayoutData();
           this.requestUpdate();
         });
       });

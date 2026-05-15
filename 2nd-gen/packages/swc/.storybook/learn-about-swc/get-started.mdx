@@ -1,0 +1,74 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+import headerImage from '../assets/images/banner_principles_S2_desktop_2x_1689964204945.png';
+
+<Meta title="Get started" />
+
+<img src={headerImage} alt="When to use SWC" class="docs-image" />
+
+# Get started
+
+If you are new to Spectrum Web Components (SWC), start here.
+
+## Install SWC
+
+Install the package in your app:
+
+```bash
+npm install @adobe/spectrum-wc
+```
+
+Depending on your project setup, you may use `yarn add` or `pnpm add`.
+
+This SWC package includes both components and patterns (composed UI flows built from multiple components for common product experiences).
+
+## Add the base stylesheet
+
+Import the SWC stylesheet once in your app setup, from your TypeScript/JavaScript entry or from your root CSS file.
+
+```ts
+import '@adobe/spectrum-wc/swc.css';
+```
+
+This will load the Spectrum 2 tokens, typography, and base app styles.
+
+Adobe Clean Spectrum VF fonts load separately — see the [Fonts guide](/docs/guides-customization-fonts--docs).
+
+## Set the application color scheme
+
+Apply `swc-theme` plus one color class on a root element. Nested SWC components inherit it. Without any class, the theme defaults to light.
+
+```html
+<html class="swc-theme swc-theme--dark">
+  <body>
+    <swc-badge variant="positive">Ready</swc-badge>
+  </body>
+</html>
+```
+
+- `swc-theme--light` — light color scheme.
+- `swc-theme--dark` — dark color scheme.
+- `swc-theme--adaptive` — follows the user's OS setting.
+
+## Use your first component
+
+Import the component module, then use its HTML tag in your markup.
+
+You only need to import the components you use.
+
+```ts
+import '@adobe/spectrum-wc/components/badge/swc-badge.js';
+```
+
+```html
+<swc-badge variant="positive">Ready</swc-badge>
+```
+
+You can open that component's documentation page for the feature overview, accessibility guidance, and the full API. For this example, see [Badge](/docs/components-badge--docs).
+
+## Where to look next
+
+- **Components** — individual building blocks: badge, button, avatar, progress-circle, and more.
+- **Patterns** — higher-level UI flows composed of components.
+- **Guides** — deeper setup: theme color schemes, fonts, customization, accessibility.
+- **[Support and compatibility](/docs/resources-support-and-compatibility--docs)** — versioning, APIs, and browser support for `@adobe/spectrum-wc`.
+- **[Changelog](/docs/resources-changelog--docs)** — release notes for `@adobe/spectrum-wc`.

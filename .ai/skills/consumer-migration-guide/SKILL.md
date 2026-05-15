@@ -1,7 +1,7 @@
 ---
 name: consumer-migration-guide
 description: Use when creating a per-component migration guide for application developers upgrading from Spectrum 1 Web Components to Spectrum 2 components.
-globs: 2nd-gen/packages/swc/components/*/consumer-migration-guide.mdx
+globs: 2nd-gen/packages/swc/components/*/migration-guide.mdx
 alwaysApply: false
 ---
 
@@ -26,28 +26,44 @@ Create per-component migration guidance for application developers upgrading app
 ### Output
 
 - **One `.mdx` file per component** at:
-  `2nd-gen/packages/swc/components/[component-name]/consumer-migration-guide.mdx`
+  `2nd-gen/packages/swc/components/[component-name]/migration-guide.mdx`
 - The file is Storybook-renderable MDX. Start every guide with this template so it picks up the `Components` title prefix wired in `2nd-gen/packages/swc/.storybook/main.ts`:
 
   ```mdx
   import { Meta } from '@storybook/addon-docs/blocks';
 
-  <Meta title="[Component name]/Consumer migration guide" />
+  <Meta title="[Component name]/Migration guide" />
 
-  # [Component name] consumer migration guide
+  # [Component name] migration guide
   ```
 
-  Use sentence case for `[Component name]` (for example `Badge`, `Action button`). Do **not** include `Components/` in the `<Meta title>` — `titlePrefix` already adds it, so the doc renders at `Components/[Component name]/Consumer migration guide`.
+  Use sentence case for `[Component name]` (for example `Badge`, `Action button`). Do **not** include `Components/` in the `<Meta title>` — `titlePrefix` already adds it, so the doc renders at `Components/[Component name]/Migration guide`.
 
-- Consumer migration guides live alongside the Spectrum 2 component source so the doc ships with the component code. Do **not** add them to `CONTRIBUTOR-DOCS/`.
+- Migration guides live alongside the Spectrum 2 component source so the doc ships with the component code. Do **not** add them to `CONTRIBUTOR-DOCS/`.
 - **Do not link to project-planning / `CONTRIBUTOR-DOCS` docs** from the guide. Those are maintainer-facing; consumers don't need them. Link only to public consumer docs (e.g. the Spectrum 1 README on npm or the Spectrum 2 component Storybook page) when a link genuinely helps.
 - **Nav:** The guide lives in the component directory, so the `CONTRIBUTOR-DOCS` `update-nav.js` script does not manage it. Do not register it in `CONTRIBUTOR-DOCS/03_project-planning/03_components/README.md`, and do not include auto-generated breadcrumbs or TOC markers intended for that script.
 - **MDX gotchas:** Keep bare tag names (`<sp-badge>`, `<swc-badge>`, etc.) wrapped in backticks in prose, and keep HTML/JS examples inside fenced code blocks. Avoid loose `{` / `}` outside code blocks; MDX parses them as JS expressions.
+
+### Step 0: Read the migration plan first
+
+Before writing anything, read `CONTRIBUTOR-DOCS/03_project-planning/03_components/[component]/migration-plan.md`. Locate every item in the documentation checklist that is flagged as "deferred to consumer migration guide" — these are the breaking changes Phase 7 has already identified as needing coverage here. They are the primary input for this guide's `## What changed` and `## Update your code` sections. If the migration plan is absent, derive the breaking changes from the 1st-gen and 2nd-gen source comparison and note the risk.
+
+### Consistent import and tag patterns
+
+All guides follow the same import and tag name conventions. Do not grep for these — derive them from the component name:
+
+|                    | Spectrum 1                                               | Spectrum 2                                                     |
+| ------------------ | -------------------------------------------------------- | -------------------------------------------------------------- |
+| Tag                | `sp-[component]`                                         | `swc-[component]`                                              |
+| Side-effect import | `@spectrum-web-components/[component]/sp-[component].js` | `@adobe/spectrum-wc/components/[component]/swc-[component].js` |
+
+Use the badge guide at `2nd-gen/packages/swc/components/badge/migration-guide.mdx` as the canonical format reference.
 
 ### Required source inputs
 
 Verify claims against the real implementation and docs before writing:
 
+- **Migration plan:** `CONTRIBUTOR-DOCS/03_project-planning/03_components/[component]/migration-plan.md` — primary source for what breaking changes to cover (see Step 0 above)
 - **Spectrum 1 docs and source:** `1st-gen/packages/[component-name]/README.md`, public element files such as `sp-*.ts`, stories, and tests when needed
 - **Spectrum 2 docs and source:** `2nd-gen/packages/swc/components/[component-name]/src/`, stories, tests, and any package README or docs that describe the public API
 - **Related migration docs:** the component's `rendering-and-styling-migration-analysis.md` and `accessibility-migration-analysis.md` when present
@@ -56,7 +72,8 @@ Verify claims against the real implementation and docs before writing:
 
 - Write for **application developers upgrading their code**, not only for component maintainers
 - Prefer **before/after examples**, explicit upgrade actions, and rollout guidance over implementation detail
-- Ask clarifying questions for uncertain mappings instead of guessing
+- Do not invent upgrade paths. If a mapping is uncertain, omit it and ask the user rather than guessing — wrong instructions can break consumer apps
+- Em dashes and Jira ticket references are prohibited in this guide; see `.ai/rules/text-formatting.md`
 
 ### Scope: minimal, public API only
 

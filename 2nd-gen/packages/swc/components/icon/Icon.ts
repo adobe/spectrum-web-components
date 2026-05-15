@@ -20,7 +20,7 @@ import styles from './icon.css';
  *
  * @element swc-icon
  * @status internal
- * @since 0.0.1
+ * @since 2.0.0
  *
  * @example
  * <swc-icon label="Search">
@@ -33,6 +33,10 @@ import styles from './icon.css';
  * import { Chevron100Icon } from './elements/Chevron100Icon.js';
  *
  * html`<swc-icon label="Expand">${Chevron100Icon()}</swc-icon>`;
+ *
+ * @cssprop --swc-icon-color - Color of the icon.
+ * @cssprop --swc-icon-inline-size - Inline size of the icon.
+ * @cssprop --swc-icon-block-size - Block size of the icon.
  */
 export class Icon extends IconBase {
   // ──────────────────────────────

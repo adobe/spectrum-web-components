@@ -298,7 +298,7 @@ jobs:
         if: steps.extract-tag.outputs.tag == 'latest'
         run: |
           git add .
-          git commit -m "chore: release packages #publish" || echo "No changes to commit"
+          git commit --no-verify -m "chore: release packages #publish" || echo "No changes to commit"
           git push
 
       - name: Create git tag
