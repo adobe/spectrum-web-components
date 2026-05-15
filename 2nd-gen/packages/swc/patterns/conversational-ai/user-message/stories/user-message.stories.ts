@@ -143,11 +143,7 @@ export const Content: Story = {
             for an executive update?
           </swc-user-message>
         </swc-conversation-turn>
-        <span
-          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-700);"
-        >
-          Copy
-        </span>
+        <span class="swc-Detail swc-Detail--sizeS">Copy</span>
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;">
         <swc-conversation-turn type="user">
@@ -162,11 +158,7 @@ export const Content: Story = {
             <span slot="subtitle">2026</span>
           </swc-user-message>
         </swc-conversation-turn>
-        <span
-          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-700);"
-        >
-          Card
-        </span>
+        <span class="swc-Detail swc-Detail--sizeS">Card</span>
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;">
         <swc-conversation-turn type="user">
@@ -181,11 +173,7 @@ export const Content: Story = {
             <span slot="subtitle">2026</span>
           </swc-user-message>
         </swc-conversation-turn>
-        <span
-          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-700);"
-        >
-          Media
-        </span>
+        <span class="swc-Detail swc-Detail--sizeS">Media</span>
       </div>
     </div>
   `,

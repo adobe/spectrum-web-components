@@ -43,6 +43,10 @@
       "types": "./dist/components/icon/index.d.ts",
       "import": "./dist/components/icon/index.js"
     },
+    "./components/illustrated-message": {
+      "types": "./dist/components/illustrated-message/index.d.ts",
+      "import": "./dist/components/illustrated-message/index.js"
+    },
     "./components/progress-circle": {
       "types": "./dist/components/progress-circle/index.d.ts",
       "import": "./dist/components/progress-circle/index.js"
@@ -161,6 +165,9 @@
       ],
       "components/icon": [
         "dist/components/icon/index.d.ts"
+      ],
+      "components/illustrated-message": [
+        "dist/components/illustrated-message/index.d.ts"
       ],
       "components/progress-circle": [
         "dist/components/progress-circle/index.d.ts"

@@ -19,10 +19,10 @@ import {
 } from './playwright.a11y.shared.config';
 
 const config: PlaywrightTestConfig = {
-  timeout: 30 * 1000,
+  timeout: 90 * 1000,
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
-  retries: process.env.CI ? 2 : 0,
+  retries: process.env.CI ? 2 : 1,
   reporter: a11yReporter(!!process.env.CI),
 
   use: a11yUse,

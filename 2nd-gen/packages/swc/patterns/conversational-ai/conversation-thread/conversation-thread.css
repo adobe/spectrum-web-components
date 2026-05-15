@@ -25,6 +25,6 @@
 .swc-ConversationThread {
   display: flex;
   flex-direction: column;
-  gap: var(--swc-conversation-thread-gap, 16px);
+  gap: var(--swc-conversation-thread-gap, token("spacing-100"));
   inline-size: 100%;
 }
