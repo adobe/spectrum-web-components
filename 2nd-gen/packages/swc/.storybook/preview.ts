@@ -202,7 +202,10 @@ const preview = {
           ['Overview', 'Controllers'],
           'Components',
           'Patterns',
-          ['Conversational AI', ['README', 'Prompt field', 'User message']],
+          [
+            'Conversational AI',
+            ['Pattern overview', 'Prompt field', 'User message'],
+          ],
           'Guides',
           [
             'Accessibility',
