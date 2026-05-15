@@ -185,7 +185,7 @@ const meta: Meta = {
 These rules apply to every `title` field in meta objects and every `<Meta title="..." />` in MDX files.
 
 - **Component names are proper nouns — keep their title case.** `'Action Button'`, `'Illustrated Message'`, `'Color Loupe'`. Each word in the component name is capitalised.
-- **Everything else uses sentence case.** Page labels, section names, and group names that are not component names: `'Pattern overview'`, `'Migration guide'`, `'Color components'`.
+- **Everything else uses sentence case.** Page labels, section names, and group names that are not component names: `'Pattern overview'`, `'Migration guide'`.
 - **No filename as label.** Never use a bare filename (`README`, `CHANGELOG`) as a Storybook title or page name. Use a descriptive label: `'Pattern overview'`, `'Migration guide'`.
 - **Flatten single-component groups.** If a Storybook group contains only one component, do not nest it. Use a flat title (`'Color Loupe'`) rather than a group path (`'Color Components/Color Loupe'`).
 
