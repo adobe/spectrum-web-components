@@ -202,7 +202,7 @@ Neither controller is available yet. The automatic trigger integration additive 
 | B1 | `slot="icon"` removed | Accepts an icon element in `slot="icon"`; rendered at label start for variant tooltips | Slot removed; no icon rendering in S2 Tooltip | Remove all `slot="icon"` usage; no replacement |
 | B2 | `variant="positive"` removed | Accepts `positive`; renders green background | Accepts `neutral`, `informative`, `negative` only | Replace `positive` with `informative`, `neutral`, or `negative` as content warrants |
 | B3 | `variant="info"` → `variant="informative"` | Accepts `info` string | `informative` — confirmed; aligns with 2nd-gen badge and Figma label | Update variant string; no CSS change needed |
-| B4 | Add logical placement values (type-only change) | Physical sub-variants only; `start`/`start-top`/`start-bottom`/`end`/`end-top`/`end-bottom` are missing from WC despite being in S2 CSS | All six logical placement values ship; RTL placement works correctly | No runtime change needed; update `TooltipPlacement` imports or exhaustive switch/satisfies checks if present |
+| B4 | Add logical placement values (type-only change) | Physical sub-variants only; `start`/`end` logical inline values missing from WC | `start` and `end` logical inline values ship; RTL placement works correctly. Sub-variants (`start-top`, `start-bottom`, `end-top`, `end-bottom`) are in S2 CSS but are not exposed in the public type — the supported set is `top`, `bottom`, `left`, `right`, `start`, `end`. | No runtime change needed; update `TooltipPlacement` imports or exhaustive switch/satisfies checks if present |
 | B5 | Event renames | Fires `sp-opened` and `sp-closed` (re-dispatched from internal `TooltipOpenable`) | Fires `swc-open`, `swc-after-open`, `swc-close`, `swc-after-close`. Timing also changes: native popover `beforetoggle`/`transitionend` fires at different points than the overlay-based sequence | Remove `sp-opened`/`sp-closed` listeners; add `swc-open`/`swc-after-open`/`swc-close`/`swc-after-close` listeners as needed; document timing difference in consumer migration guide |
 | B6 | `self-managed` attribute removed; automatic wiring is the default | `self-managed` required to opt into automatic trigger/hover integration; tooltip nested inside the trigger | Automatic wiring is on by default; no attribute needed. `manual` attribute opts out for programmatic control. | Remove `self-managed` from all existing usage. Move the tooltip element out of the trigger; add an `id` to the trigger and a `for="[id]"` attribute to the tooltip. The tooltip can be placed anywhere in the same document tree root. Add `manual` only when programmatic open/close control is needed. |
 
@@ -577,9 +577,9 @@ The impact is most acute in the additive phase, when `HoverController` will call
 
 ### Setup
 
-- [ ] Create `2nd-gen/packages/core/components/tooltip/`
-- [ ] Create `2nd-gen/packages/swc/components/tooltip/`
-- [ ] Wire exports in both `package.json` files
+- [x] Create `2nd-gen/packages/core/components/tooltip/`
+- [x] Create `2nd-gen/packages/swc/components/tooltip/`
+- [x] Wire exports in both `package.json` files
 - [ ] Confirm `spectrum-css` is checked out at `spectrum-two` branch as sibling directory (already confirmed available at path `../../../../../spectrum-css/`)
 
 ### API
