@@ -11,7 +11,7 @@
  */
 
 import { CSSResultArray, html, PropertyValues, TemplateResult } from 'lit';
-import { property } from 'lit/decorators.js';
+import { property, queryAssignedElements } from 'lit/decorators.js';
 
 import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
 
@@ -42,6 +42,9 @@ export class SuggestionGroup extends SpectrumElement {
   @property({ type: String, attribute: 'accessible-label' })
   public accessibleLabel = '';
 
+  @queryAssignedElements({ slot: 'heading', flatten: true })
+  private _assignedHeadings: HTMLElement[] = [];
+
   private readonly _headingId = uniqueId('swc-suggestion-group-heading');
 
   public static override get styles(): CSSResultArray {
@@ -54,9 +57,7 @@ export class SuggestionGroup extends SpectrumElement {
    * the accessible name is always current after light-DOM mutations.
    */
   private _handleHeadingSlotChange(): void {
-    const heading = this.shadowRoot
-      ?.querySelector<HTMLSlotElement>('slot[name="heading"]')
-      ?.assignedElements({ flatten: true })[0] as HTMLElement | null;
+    const heading = this._assignedHeadings[0];
     if (heading && !heading.id) {
       heading.id = this._headingId;
     }
@@ -70,9 +71,7 @@ export class SuggestionGroup extends SpectrumElement {
    * gets a proper group name.
    */
   private _syncHostGroupSemantics(): void {
-    const heading = this.shadowRoot
-      ?.querySelector<HTMLSlotElement>('slot[name="heading"]')
-      ?.assignedElements({ flatten: true })[0] as HTMLElement | null;
+    const heading = this._assignedHeadings[0];
     const accessibleLabel = this.accessibleLabel.trim();
 
     if (!heading && !accessibleLabel) {
