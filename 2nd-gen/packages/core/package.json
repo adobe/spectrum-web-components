@@ -1,6 +1,6 @@
 {
   "name": "@spectrum-web-components/core",
-  "version": "0.0.4",
+  "version": "0.1.0",
   "description": "Abstract base classes for Spectrum Web Components",
   "license": "Apache-2.0",
   "author": "Adobe",
@@ -42,6 +42,10 @@
     "./components/icon": {
       "types": "./dist/components/icon/index.d.ts",
       "import": "./dist/components/icon/index.js"
+    },
+    "./components/illustrated-message": {
+      "types": "./dist/components/illustrated-message/index.d.ts",
+      "import": "./dist/components/illustrated-message/index.js"
     },
     "./components/progress-circle": {
       "types": "./dist/components/progress-circle/index.d.ts",
@@ -161,6 +165,9 @@
       ],
       "components/icon": [
         "dist/components/icon/index.d.ts"
+      ],
+      "components/illustrated-message": [
+        "dist/components/illustrated-message/index.d.ts"
       ],
       "components/progress-circle": [
         "dist/components/progress-circle/index.d.ts"

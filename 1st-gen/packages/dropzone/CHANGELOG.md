@@ -1,5 +1,14 @@
 # Change Log
 
+## 1.12.0
+
+### Patch Changes
+
+- [#6243](https://github.com/adobe/spectrum-web-components/pull/6243) [`d303db5`](https://github.com/adobe/spectrum-web-components/commit/d303db5af77f334b51b497a4d606cf88f11b244f) Thanks [@Rajdeepc](https://github.com/Rajdeepc)! - **Fixed**: `sp-dropzone-drop` event not firing on Windows Chrome. Moved `event.preventDefault()` to the top of `onDragOver` so the browser always treats the element as a valid drop target, regardless of `dataTransfer` availability or `shouldAccept` state. Added `isDragged` guard in `onDrop` to prevent dispatching `sp-dropzone-drop` for rejected drags. Added `relatedTarget` check in `onDragLeave` to suppress spurious dragleave events when moving between child elements. Added cleanup of pending dragleave timeout in `disconnectedCallback`.
+
+- Updated dependencies [[`ba14a2b`](https://github.com/adobe/spectrum-web-components/commit/ba14a2b6361a0089a9a8c72232f245cde0716d89), [`dc6a8e8`](https://github.com/adobe/spectrum-web-components/commit/dc6a8e8db1b08080373c3664babc1feebde8f6c6), [`f37dec6`](https://github.com/adobe/spectrum-web-components/commit/f37dec6ae39fd89a4c12e084b4a0f4d9092d79b0)]:
+  - @spectrum-web-components/base@1.12.0
+
 ## 1.11.2
 
 ### Patch Changes

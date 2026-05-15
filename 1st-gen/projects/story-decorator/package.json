@@ -1,6 +1,6 @@
 {
   "name": "@spectrum-web-components/story-decorator",
-  "version": "1.11.2",
+  "version": "1.12.0",
   "description": "",
   "license": "Apache-2.0",
   "author": "Adobe",
@@ -67,14 +67,14 @@
   ],
   "types": "./src/index.d.ts",
   "dependencies": {
-    "@spectrum-web-components/base": "1.11.2",
-    "@spectrum-web-components/field-label": "1.11.2",
-    "@spectrum-web-components/menu": "1.11.2",
-    "@spectrum-web-components/overlay": "1.11.2",
-    "@spectrum-web-components/picker": "1.11.2",
-    "@spectrum-web-components/reactive-controllers": "1.11.2",
-    "@spectrum-web-components/switch": "1.11.2",
-    "@spectrum-web-components/theme": "1.11.2"
+    "@spectrum-web-components/base": "1.12.0",
+    "@spectrum-web-components/field-label": "1.12.0",
+    "@spectrum-web-components/menu": "1.12.0",
+    "@spectrum-web-components/overlay": "1.12.0",
+    "@spectrum-web-components/picker": "1.12.0",
+    "@spectrum-web-components/reactive-controllers": "1.12.0",
+    "@spectrum-web-components/switch": "1.12.0",
+    "@spectrum-web-components/theme": "1.12.0"
   },
   "peerDependencies": {
     "@storybook/preview-api": ">=8"
