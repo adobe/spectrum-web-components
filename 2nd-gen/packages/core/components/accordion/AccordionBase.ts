@@ -116,6 +116,7 @@ export abstract class AccordionBase extends SpectrumElement {
     for (const item of items) {
       item.heading = this.level;
       item.size = this.size;
+      item.parentDisabled = this.disabled;
     }
   }
 
@@ -142,7 +143,11 @@ export abstract class AccordionBase extends SpectrumElement {
         this.level = clamped;
       }
     }
-    if (changedProperties.has('level') || changedProperties.has('size')) {
+    if (
+      changedProperties.has('level') ||
+      changedProperties.has('size') ||
+      changedProperties.has('disabled')
+    ) {
       this.updateItems();
     }
     super.update(changedProperties);

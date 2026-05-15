@@ -11,6 +11,7 @@
  */
 
 import { CSSResultArray, html, TemplateResult } from 'lit';
+import { ifDefined } from 'lit/directives/if-defined.js';
 
 import {
   AccordionItemBase,
@@ -64,7 +65,7 @@ export class AccordionItem extends AccordionItemBase {
   // ──────────────────────────────
 
   protected override toggle(): void {
-    if (this.disabled) {
+    if (this.disabled || this.parentDisabled) {
       return;
     }
     this.open = !this.open;
@@ -140,6 +141,9 @@ export class AccordionItem extends AccordionItemBase {
         type="button"
         aria-expanded=${this.open ? 'true' : 'false'}
         aria-controls="content"
+        aria-disabled=${ifDefined(
+          this.disabled || this.parentDisabled ? 'true' : undefined
+        )}
         @click=${this.toggle}
       >
         <swc-icon class="spectrum-Accordion-itemIndicator" aria-hidden="true">
@@ -165,6 +169,7 @@ export class AccordionItem extends AccordionItemBase {
         class="spectrum-Accordion-itemContent"
         role="region"
         aria-labelledby="header"
+        .inert=${this.disabled || this.parentDisabled}
       >
         <slot></slot>
       </div>

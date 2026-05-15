@@ -66,6 +66,16 @@ export abstract class AccordionItemBase extends SpectrumElement {
   @state()
   public heading: number = 3;
 
+  /**
+   * @internal
+   * Set by the parent accordion when its own `disabled` is true. Causes the
+   * item to render as disabled (aria-disabled + inert panel) without clobbering
+   * the item's own `disabled` property, so the per-item state is preserved
+   * when the accordion is re-enabled.
+   */
+  @state()
+  public parentDisabled: boolean = false;
+
   // ──────────────────────
   //     IMPLEMENTATION
   // ──────────────────────
