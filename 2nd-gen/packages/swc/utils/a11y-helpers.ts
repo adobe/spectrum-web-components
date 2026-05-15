@@ -115,5 +115,11 @@ export async function gotoStory(
     waitUntil: 'domcontentloaded',
   });
 
+  // Wait for Storybook's JS modules to finish loading before checking for
+  // custom-element registration. `domcontentloaded` only signals that the
+  // HTML shell is parsed; the story's <script type="module"> tags may
+  // still be in flight, which is when `customElements.whenDefined` hangs.
+  await page.waitForLoadState('networkidle');
+
   return waitForStoryReady(page, elementSelector);
 }
