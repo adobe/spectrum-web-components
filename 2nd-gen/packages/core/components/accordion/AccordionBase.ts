@@ -18,6 +18,7 @@ import { SpectrumElement } from '@spectrum-web-components/core/element/index.js'
 import {
   type AccordionDensity,
   type AccordionSize,
+  SWC_ACCORDION_ITEM_TOGGLE_EVENT,
 } from './Accordion.types.js';
 import { AccordionItemBase } from './AccordionItemBase.js';
 
@@ -78,6 +79,32 @@ export abstract class AccordionBase extends SpectrumElement {
   //     IMPLEMENTATION
   // ──────────────────────
 
+  private handleItemToggle = (event: Event): void => {
+    if (this.disabled) {
+      event.preventDefault();
+      return;
+    }
+    if (this.allowMultiple) {
+      return;
+    }
+    const toggling = event.target;
+    if (!(toggling instanceof AccordionItemBase) || !toggling.open) {
+      return;
+    }
+    const slot = this.shadowRoot?.querySelector('slot');
+    if (!slot) {
+      return;
+    }
+    const items = slot
+      .assignedElements({ flatten: true })
+      .filter((el): el is AccordionItemBase => el instanceof AccordionItemBase);
+    for (const item of items) {
+      if (item !== toggling) {
+        item.open = false;
+      }
+    }
+  };
+
   private updateItems(): void {
     const slot = this.shadowRoot?.querySelector('slot');
     if (!slot) {
@@ -90,6 +117,22 @@ export abstract class AccordionBase extends SpectrumElement {
       item.heading = this.level;
       item.size = this.size;
     }
+  }
+
+  public override connectedCallback(): void {
+    super.connectedCallback();
+    this.addEventListener(
+      SWC_ACCORDION_ITEM_TOGGLE_EVENT,
+      this.handleItemToggle
+    );
+  }
+
+  public override disconnectedCallback(): void {
+    super.disconnectedCallback();
+    this.removeEventListener(
+      SWC_ACCORDION_ITEM_TOGGLE_EVENT,
+      this.handleItemToggle
+    );
   }
 
   protected override update(changedProperties: PropertyValues): void {
