@@ -10,7 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
-import { CSSResultArray, html, TemplateResult } from 'lit';
+import { CSSResultArray } from 'lit';
 
 import { AccordionBase } from '@spectrum-web-components/core/components/accordion';
 
@@ -23,16 +23,15 @@ import styles from './accordion.css';
  * @since 2.0.0
  *
  * @example
- * <swc-accordion>
- *   <swc-accordion-item>Content</swc-accordion-item>
+ * <swc-accordion density="regular">
+ *   <swc-accordion-item>
+ *     <span slot="label">Section heading</span>
+ *     Panel content goes here.
+ *   </swc-accordion-item>
  * </swc-accordion>
  */
 export class Accordion extends AccordionBase {
   public static override get styles(): CSSResultArray {
     return [styles];
-  }
-
-  protected override render(): TemplateResult {
-    return html``;
   }
 }
