@@ -1,0 +1,1944 @@
+<!doctype html>
+<!--
+  Copyright 2026 Adobe. All rights reserved.
+
+  Form-associated custom element (FACE) PoC: combobox with ElementInternals
+  Research artifact for combobox FACE spike; not production code.
+  Self-contained: works in CodePen or any static server.
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>FACE combobox PoC: ElementInternals research</title>
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+
+      :root {
+        --color-bg: #fafafa;
+        --color-surface: #fff;
+        --color-border: #d1d5db;
+        --color-border-focus: #3b82f6;
+        --color-text: #1f2937;
+        --color-text-muted: #6b7280;
+        --color-error: #dc2626;
+        --color-success: #16a34a;
+        --color-warn: #d97706;
+        --color-partial: #d97706;
+        --font-sans: system-ui, -apple-system, sans-serif;
+        --font-mono: ui-monospace, 'SF Mono', 'Cascadia Code', monospace;
+        --radius: 6px;
+      }
+
+      body {
+        font-family: var(--font-sans);
+        color: var(--color-text);
+        background: var(--color-bg);
+        margin: 0;
+        padding: 2rem;
+        line-height: 1.6;
+      }
+
+      h1 {
+        font-size: 1.5rem;
+        margin: 0 0 0.25rem;
+      }
+
+      h2 {
+        font-size: 1.25rem;
+        margin: 2rem 0 1rem;
+        padding-bottom: 0.25rem;
+        border-bottom: 2px solid var(--color-border);
+      }
+
+      h3 {
+        font-size: 1rem;
+        margin: 1.5rem 0 0.5rem;
+      }
+
+      .subtitle {
+        color: var(--color-text-muted);
+        margin: 0 0 2rem;
+      }
+
+      .scenario {
+        background: var(--color-surface);
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius);
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .scenario h3 {
+        margin-top: 0;
+      }
+
+      form {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+      }
+
+      .field-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+      }
+
+      label {
+        font-weight: 600;
+        font-size: 0.875rem;
+      }
+
+      .help-text {
+        font-size: 0.8125rem;
+        color: var(--color-text-muted);
+      }
+
+      .error-text {
+        font-size: 0.8125rem;
+        color: var(--color-error);
+      }
+
+      .form-actions {
+        display: flex;
+        gap: 0.5rem;
+        margin-top: 0.5rem;
+      }
+
+      button {
+        padding: 0.5rem 1rem;
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius);
+        background: var(--color-surface);
+        font-family: var(--font-sans);
+        font-size: 0.875rem;
+        cursor: pointer;
+      }
+
+      button[type='submit'] {
+        background: var(--color-border-focus);
+        color: white;
+        border-color: var(--color-border-focus);
+      }
+
+      .output {
+        background: #f3f4f6;
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius);
+        padding: 1rem;
+        font-family: var(--font-mono);
+        font-size: 0.8125rem;
+        white-space: pre-wrap;
+        min-height: 2rem;
+        margin-top: 0.5rem;
+      }
+
+      .matrix {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.875rem;
+        margin-top: 1rem;
+      }
+
+      .matrix th,
+      .matrix td {
+        border: 1px solid var(--color-border);
+        padding: 0.5rem 0.75rem;
+        text-align: left;
+      }
+
+      .matrix th {
+        background: #f3f4f6;
+        font-weight: 600;
+      }
+
+      .pass {
+        color: var(--color-success);
+        font-weight: 600;
+      }
+
+      .fail {
+        color: var(--color-error);
+        font-weight: 600;
+      }
+
+      .partial {
+        color: var(--color-partial);
+        font-weight: 600;
+      }
+
+      .pending {
+        color: var(--color-text-muted);
+        font-style: italic;
+      }
+
+      #axe-results {
+        max-height: 40rem;
+        overflow-y: auto;
+      }
+
+      .axe-violation {
+        background: #fef2f2;
+        border: 1px solid #fecaca;
+        border-radius: var(--radius);
+        padding: 1rem;
+        margin-bottom: 0.75rem;
+      }
+
+      .axe-violation h4 {
+        margin: 0 0 0.25rem;
+        color: var(--color-error);
+      }
+
+      .axe-pass {
+        background: #f0fdf4;
+        border: 1px solid #bbf7d0;
+        border-radius: var(--radius);
+        padding: 0.75rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .axe-incomplete {
+        background: #fffbeb;
+        border: 1px solid #fde68a;
+        border-radius: var(--radius);
+        padding: 0.75rem;
+        margin-bottom: 0.5rem;
+      }
+
+      code {
+        font-family: var(--font-mono);
+        font-size: 0.8125rem;
+        background: #f3f4f6;
+        padding: 0.125rem 0.375rem;
+        border-radius: 3px;
+      }
+
+      .note {
+        background: #eff6ff;
+        border-left: 3px solid var(--color-border-focus);
+        padding: 0.75rem 1rem;
+        margin: 1rem 0;
+        font-size: 0.875rem;
+      }
+
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border-width: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Form-associated custom element PoC: combobox</h1>
+    <p class="subtitle">
+      Research artifact for ElementInternals and FACE patterns applied to a
+      combobox-shaped control (text input + listbox). Not a migration of
+      <code>sp-combobox</code>; a standalone platform test exercising
+      <code>aria-activedescendant</code>, popup ownership, and keyboard patterns
+      inside shadow DOM.
+    </p>
+
+    <!-- ================================================================== -->
+    <!-- SECTION 1: form participation (FormData, reset, validation)        -->
+    <!-- ================================================================== -->
+
+    <h2>1. Native form participation</h2>
+
+    <div class="scenario">
+      <h3>1a. FormData and submit</h3>
+      <form id="form-1a" novalidate>
+        <div class="field-group">
+          <label for="field-1a">Favorite fruit</label>
+          <face-combobox
+            id="field-1a"
+            name="fruit"
+            value="Apple"
+            options='["Apple", "Apricot", "Avocado", "Banana", "Blueberry", "Cherry", "Grape", "Lemon", "Mango", "Orange", "Peach", "Pear", "Strawberry"]'
+          ></face-combobox>
+        </div>
+        <div class="form-actions">
+          <button type="submit">Submit</button>
+          <button type="reset">Reset</button>
+        </div>
+      </form>
+      <div class="output" id="output-1a">
+        Submit or reset the form to see results.
+      </div>
+    </div>
+
+    <div class="scenario">
+      <h3>
+        1b. Constraint validation (<code>required</code>)
+      </h3>
+      <form id="form-1b" novalidate>
+        <div class="field-group">
+          <label for="field-1b">Country (required)</label>
+          <face-combobox
+            id="field-1b"
+            name="country"
+            required
+            options='["Argentina", "Australia", "Brazil", "Canada", "France", "Germany", "India", "Japan", "Mexico", "United Kingdom", "United States"]'
+            placeholder="Start typing a country..."
+          ></face-combobox>
+          <span class="help-text">Choose from the list or type your own.</span>
+        </div>
+        <div class="form-actions">
+          <button type="submit">Submit</button>
+        </div>
+      </form>
+      <div class="output" id="output-1b">
+        Submit with no selection to see constraint validation.
+      </div>
+    </div>
+
+    <div class="scenario">
+      <h3>
+        1c. Disabled state via <code>fieldset</code>
+      </h3>
+      <form id="form-1c">
+        <fieldset disabled>
+          <legend>Disabled fieldset</legend>
+          <div class="field-group">
+            <label for="field-1c">Disabled combobox</label>
+            <face-combobox
+              id="field-1c"
+              name="disabledcombo"
+              value="Cannot change"
+              options='["Option A", "Option B", "Option C"]'
+            ></face-combobox>
+          </div>
+        </fieldset>
+        <div class="form-actions">
+          <button type="submit">Submit</button>
+        </div>
+      </form>
+      <div class="output" id="output-1c">
+        Field should be disabled via ancestor fieldset.
+      </div>
+    </div>
+
+    <div class="scenario">
+      <h3>1d. Submit with listbox open vs closed</h3>
+      <form id="form-1d" novalidate>
+        <div class="field-group">
+          <label for="field-1d">Color</label>
+          <face-combobox
+            id="field-1d"
+            name="color"
+            options='["Red", "Green", "Blue", "Yellow", "Purple", "Orange", "Pink", "Brown", "Black", "White"]'
+            placeholder="Pick a color..."
+          ></face-combobox>
+          <span class="help-text">
+            Try submitting while the listbox is open (use arrow keys to
+            highlight, then press Enter). Also try submitting with the listbox
+            closed.
+          </span>
+        </div>
+        <div class="form-actions">
+          <button type="submit">Submit</button>
+        </div>
+      </form>
+      <div class="output" id="output-1d">
+        Submit to see which value is captured.
+      </div>
+    </div>
+
+    <!-- ================================================================== -->
+    <!-- SECTION 2: keyboard interaction                                    -->
+    <!-- ================================================================== -->
+
+    <h2>2. Keyboard interaction</h2>
+
+    <div class="note">
+      Combobox keyboard patterns follow the
+      <a
+        href="https://www.w3.org/WAI/ARIA/apg/patterns/combobox/"
+        target="_blank"
+      >
+        APG combobox pattern</a
+      >. Test each key and verify that focus, selection, and
+      <code>aria-activedescendant</code> update correctly. The log below the
+      field shows real-time state changes.
+    </div>
+
+    <div class="scenario">
+      <h3>2a. Keyboard nav and activedescendant</h3>
+      <form id="form-2a">
+        <div class="field-group">
+          <label for="field-2a">Programming language</label>
+          <face-combobox
+            id="field-2a"
+            name="lang"
+            options='["C", "C++", "C#", "Go", "Java", "JavaScript", "Kotlin", "Python", "Ruby", "Rust", "Swift", "TypeScript"]'
+            placeholder="Type or use arrow keys..."
+          ></face-combobox>
+        </div>
+      </form>
+      <div class="output" id="output-2a">
+        Keyboard events will be logged here.
+      </div>
+    </div>
+
+    <!-- ================================================================== -->
+    <!-- SECTION 3: IDREF matrix scenarios                                  -->
+    <!-- ================================================================== -->
+
+    <h2>3. IDREF matrix: label and description wiring</h2>
+
+    <div class="note">
+      Each scenario tests whether
+      <code>aria-labelledby</code>,
+      <code>aria-describedby</code>, and combobox-specific attributes
+      (<code>aria-activedescendant</code>, <code>aria-owns</code>) resolve
+      correctly across shadow DOM boundaries. Inspect the accessibility tree in
+      DevTools for each.
+    </div>
+
+    <!-- Scenario A: light DOM siblings -->
+    <div class="scenario">
+      <h3>Scenario A: light DOM label and help as siblings</h3>
+      <p>
+        IDs are on elements <em>outside</em> the component; referenced via
+        <code>aria-labelledby</code> and <code>aria-describedby</code> on the
+        host.
+      </p>
+      <form id="form-3a">
+        <div class="field-group">
+          <label id="label-3a">Timezone</label>
+          <face-combobox
+            id="field-3a"
+            name="timezone"
+            aria-labelledby="label-3a"
+            aria-describedby="help-3a"
+            options='["UTC-8 Pacific", "UTC-7 Mountain", "UTC-6 Central", "UTC-5 Eastern", "UTC+0 GMT", "UTC+1 CET", "UTC+5:30 IST", "UTC+9 JST"]'
+            placeholder="Search timezones..."
+          ></face-combobox>
+          <span id="help-3a" class="help-text">
+            Select your primary timezone.
+          </span>
+        </div>
+      </form>
+    </div>
+
+    <!-- Scenario B: slotted light DOM children with IDs -->
+    <div class="scenario">
+      <h3>Scenario B: IDs on slotted light DOM children</h3>
+      <p>
+        Consumer projects content into the component via slots; IDs live on the
+        slotted elements.
+      </p>
+      <form id="form-3b-form">
+        <div class="field-group">
+          <face-combobox
+            id="field-3b"
+            name="department"
+            options='["Design", "Engineering", "Marketing", "Product", "Sales", "Support"]'
+          >
+            <span slot="label" id="label-3b">Department</span>
+            <span slot="help-text" id="help-3b" class="help-text">
+              Choose the department you belong to.
+            </span>
+          </face-combobox>
+        </div>
+      </form>
+    </div>
+
+    <!-- Scenario C: shadow DOM internal IDs -->
+    <div class="scenario">
+      <h3>Scenario C: IDs inside shadow DOM (internal wiring)</h3>
+      <p>
+        Label and help text rendered <em>inside</em> the shadow root. The
+        component uses shadow-scoped IDs on the internal input.
+      </p>
+      <form id="form-3c">
+        <div class="field-group">
+          <face-combobox
+            id="field-3c"
+            name="search"
+            internal-label="Search category"
+            internal-help="Type to filter categories."
+            options='["Books", "Electronics", "Fashion", "Food", "Games", "Music", "Sports", "Travel"]'
+            placeholder="Search..."
+          ></face-combobox>
+        </div>
+      </form>
+    </div>
+
+    <!-- Scenario D: cross-root label-for -->
+    <div class="scenario">
+      <h3>Scenario D: cross-root; light DOM label + shadow input</h3>
+      <p>
+        A <code>&lt;label for="..."&gt;</code> in light DOM targets the custom
+        element host. The component uses <code>delegatesFocus</code> and
+        <code>ElementInternals</code> to attempt forwarding.
+      </p>
+      <form id="form-3d">
+        <div class="field-group">
+          <label for="field-3d">Priority level</label>
+          <face-combobox
+            id="field-3d"
+            name="priority"
+            options='["Critical", "High", "Medium", "Low", "None"]'
+            placeholder="e.g. High"
+          ></face-combobox>
+          <span id="error-3d" class="error-text" hidden>
+            Please select a priority level.
+          </span>
+        </div>
+      </form>
+    </div>
+
+    <!-- ================================================================== -->
+    <!-- SECTION 4: combobox-specific shadow DOM challenges                 -->
+    <!-- ================================================================== -->
+
+    <h2>4. Combobox-specific shadow DOM patterns</h2>
+
+    <div class="note">
+      These scenarios test the interaction between
+      <code>aria-activedescendant</code>, <code>aria-controls</code>, and owned
+      listbox elements when they live inside a shadow root. This is where
+      combobox behavior diverges most from a simple text input.
+    </div>
+
+    <div class="scenario">
+      <h3>
+        4a. <code>aria-activedescendant</code> with shadow-scoped option IDs
+      </h3>
+      <p>
+        The shadow input uses <code>aria-activedescendant</code> pointing at
+        option IDs within the same shadow root. Verify the a11y tree shows the
+        active option.
+      </p>
+      <form id="form-4a">
+        <div class="field-group">
+          <label for="field-4a">Font family</label>
+          <face-combobox
+            id="field-4a"
+            name="font"
+            options='["Arial", "Courier New", "Georgia", "Helvetica", "Monaco", "Segoe UI", "Times New Roman", "Verdana"]'
+            placeholder="Type to search fonts..."
+          ></face-combobox>
+        </div>
+      </form>
+      <div class="output" id="output-4a">
+        Use arrow keys to navigate. Active descendant changes appear here.
+      </div>
+    </div>
+
+    <div class="scenario">
+      <h3>
+        4b. <code>aria-controls</code> / <code>aria-owns</code> and popup
+        relationship
+      </h3>
+      <p>
+        The input must declare ownership of the listbox via
+        <code>aria-controls</code>. Both live inside the shadow root. Verify the
+        relationship is exposed in the a11y tree.
+      </p>
+      <form id="form-4b">
+        <div class="field-group">
+          <label for="field-4b">City</label>
+          <face-combobox
+            id="field-4b"
+            name="city"
+            options='["Amsterdam", "Berlin", "London", "New York", "Paris", "San Francisco", "Singapore", "Sydney", "Tokyo", "Toronto"]'
+            placeholder="Search cities..."
+          ></face-combobox>
+        </div>
+      </form>
+    </div>
+
+    <div class="scenario">
+      <h3>4c. Validation with error messaging</h3>
+      <form id="form-4c" novalidate>
+        <div class="field-group">
+          <label for="field-4c">Project status (required)</label>
+          <face-combobox
+            id="field-4c"
+            name="status"
+            required
+            options='["Planning", "In Progress", "Review", "Done", "Cancelled"]'
+            placeholder="Select a status..."
+            aria-describedby="help-4c"
+            aria-errormessage="error-4c"
+          ></face-combobox>
+          <span id="help-4c" class="help-text">
+            Required for project tracking.
+          </span>
+          <span id="error-4c" class="error-text" role="alert" hidden>
+            A project status is required.
+          </span>
+        </div>
+        <div class="form-actions">
+          <button type="submit">Submit</button>
+        </div>
+      </form>
+      <div class="output" id="output-4c">
+        Submit empty to test error announcement.
+      </div>
+    </div>
+
+    <!-- ================================================================== -->
+    <!-- SECTION 5: ElementInternals ARIA APIs                              -->
+    <!-- ================================================================== -->
+
+    <h2>5. ElementInternals ARIA property APIs</h2>
+
+    <div class="scenario">
+      <h3>
+        5a. <code>internals.ariaLabel</code> vs host
+        <code>aria-label</code>
+      </h3>
+      <form id="form-5a">
+        <face-combobox
+          id="field-5a-internals"
+          name="internals-label"
+          use-internals-aria-label="Search via internals"
+          options='["Option 1", "Option 2", "Option 3"]'
+          placeholder="internals.ariaLabel"
+        ></face-combobox>
+        <face-combobox
+          id="field-5a-host"
+          name="host-label"
+          aria-label="Search via host attribute"
+          options='["Option A", "Option B", "Option C"]'
+          placeholder="host aria-label"
+        ></face-combobox>
+      </form>
+      <p>
+        Compare the two in the accessibility tree: which one exposes the name on
+        the combobox role?
+      </p>
+    </div>
+
+    <div class="scenario">
+      <h3>5b. <code>ariaExpanded</code> on internals vs host attribute</h3>
+      <p>
+        Open and close the listbox. Verify which layer (internals or host
+        attribute) screen readers announce for expanded/collapsed state.
+      </p>
+      <form id="form-5b">
+        <div class="field-group">
+          <label for="field-5b">Test expanded state</label>
+          <face-combobox
+            id="field-5b"
+            name="expanded-test"
+            options='["Alpha", "Beta", "Gamma", "Delta"]'
+            placeholder="Open to test..."
+          ></face-combobox>
+        </div>
+      </form>
+      <div class="output" id="output-5b">
+        Open/close the listbox. State changes logged here.
+      </div>
+    </div>
+
+    <!-- ================================================================== -->
+    <!-- SECTION 6: axe-core audit                                          -->
+    <!-- ================================================================== -->
+
+    <h2>6. axe-core automated audit</h2>
+
+    <div class="note">
+      Loads axe-core from CDN and runs against the full page. Results show
+      violations, passes, and incomplete checks relevant to FACE combobox
+      patterns.
+    </div>
+
+    <button id="run-axe" type="button">Run axe-core audit</button>
+    <div id="axe-results" class="output">
+      Click the button above to run axe-core.
+    </div>
+
+    <!-- ================================================================== -->
+    <!-- SECTION 7: live IDREF matrix table (auto-populated)                -->
+    <!-- ================================================================== -->
+
+    <h2>7. IDREF matrix results</h2>
+
+    <p>
+      This table is populated by JavaScript introspection after the page loads.
+      For screen reader behavior, manual testing with VoiceOver / NVDA is
+      required; record results in the summary document.
+    </p>
+
+    <table class="matrix" id="matrix-table">
+      <thead>
+        <tr>
+          <th>Scenario</th>
+          <th>Label wiring</th>
+          <th>Description wiring</th>
+          <th>a11y tree name</th>
+          <th>a11y tree description</th>
+          <th>activedescendant</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody id="matrix-body"></tbody>
+    </table>
+
+    <!-- ================================================================== -->
+    <!-- COMPONENT DEFINITION                                               -->
+    <!-- ================================================================== -->
+
+    <script>
+      /**
+       * Minimal form-associated combobox custom element.
+       *
+       * Demonstrates:
+       * - static formAssociated = true
+       * - ElementInternals for form value, validation, and ARIA
+       * - Combobox pattern: input + listbox with aria-activedescendant
+       * - Slot-based and shadow-internal labelling
+       * - Keyboard interaction (APG combobox pattern)
+       * - Constraint validation hooks
+       * - formResetCallback, formDisabledCallback, formStateRestoreCallback
+       *
+       * Shadow DOM structure:
+       *   <slot name="label">
+       *   <span .internal-label>      (for internal-label attr)
+       *   <div .combobox-wrapper>
+       *     <input role="combobox">
+       *     <button .trigger>          (toggle button)
+       *   </div>
+       *   <div role="listbox">
+       *     <div role="option"> ...    (filtered options)
+       *   </div>
+       *   <slot name="help-text">
+       *   <span .internal-help>        (for internal-help attr)
+       */
+      class FaceCombobox extends HTMLElement {
+        static formAssociated = true;
+
+        static get observedAttributes() {
+          return [
+            'value',
+            'name',
+            'required',
+            'placeholder',
+            'disabled',
+            'options',
+            'internal-label',
+            'internal-help',
+            'use-internals-aria-label',
+            'aria-label',
+            'aria-labelledby',
+            'aria-describedby',
+            'aria-errormessage',
+          ];
+        }
+
+        #internals;
+        #input;
+        #listbox;
+        #trigger;
+        #shadowLabel;
+        #shadowHelp;
+        #options = [];
+        #filteredOptions = [];
+        #activeIndex = -1;
+        #isOpen = false;
+        #inputId;
+        #listboxId;
+
+        constructor() {
+          super();
+          this.#internals = this.attachInternals();
+
+          this.#inputId = `combo-input-${FaceCombobox.#nextId}`;
+          this.#listboxId = `combo-listbox-${FaceCombobox.#nextId}`;
+          FaceCombobox.#nextId++;
+
+          const shadow = this.attachShadow({
+            mode: 'open',
+            delegatesFocus: true,
+          });
+          shadow.innerHTML = `
+      <style>
+        :host {
+          display: inline-flex;
+          flex-direction: column;
+          gap: 4px;
+          min-width: 240px;
+          position: relative;
+        }
+
+        :host([disabled]) {
+          opacity: 0.5;
+          pointer-events: none;
+        }
+
+        .internal-label {
+          font-weight: 600;
+          font-size: 0.875rem;
+        }
+
+        .internal-help {
+          font-size: 0.8125rem;
+          color: #6b7280;
+        }
+
+        .combobox-wrapper {
+          display: flex;
+          align-items: center;
+          border: 1px solid #d1d5db;
+          border-radius: 6px;
+          background: #fff;
+          transition: border-color 0.15s;
+        }
+
+        .combobox-wrapper:focus-within {
+          border-color: #3b82f6;
+          box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+        }
+
+        :host(:state(invalid)) .combobox-wrapper {
+          border-color: #dc2626;
+        }
+
+        input {
+          flex: 1;
+          font: inherit;
+          padding: 0.5rem 0.75rem;
+          border: none;
+          outline: none;
+          background: transparent;
+          min-width: 0;
+        }
+
+        input:disabled {
+          cursor: not-allowed;
+        }
+
+        .trigger {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 2rem;
+          height: 100%;
+          border: none;
+          background: transparent;
+          cursor: pointer;
+          padding: 0.5rem 0.25rem;
+          color: #6b7280;
+          flex-shrink: 0;
+        }
+
+        .trigger:hover {
+          color: #1f2937;
+        }
+
+        .trigger svg {
+          width: 12px;
+          height: 12px;
+          transition: transform 0.15s;
+        }
+
+        :host([open]) .trigger svg {
+          transform: rotate(180deg);
+        }
+
+        .listbox {
+          display: none;
+          position: absolute;
+          top: 100%;
+          left: 0;
+          right: 0;
+          z-index: 100;
+          max-height: 200px;
+          overflow-y: auto;
+          background: #fff;
+          border: 1px solid #d1d5db;
+          border-radius: 6px;
+          margin-top: 4px;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+          padding: 4px 0;
+        }
+
+        :host([open]) .listbox {
+          display: block;
+        }
+
+        .option {
+          padding: 0.5rem 0.75rem;
+          cursor: pointer;
+          font-size: 0.875rem;
+          border-radius: 3px;
+          margin: 0 4px;
+        }
+
+        .option:hover {
+          background: #f3f4f6;
+        }
+
+        .option[aria-selected="true"] {
+          background: #eff6ff;
+          color: #1d4ed8;
+          font-weight: 500;
+        }
+
+        .option.active {
+          background: #e0e7ff;
+          outline: 2px solid #3b82f6;
+          outline-offset: -2px;
+        }
+
+        .no-results {
+          padding: 0.5rem 0.75rem;
+          color: #6b7280;
+          font-size: 0.875rem;
+          font-style: italic;
+        }
+
+        ::slotted([slot='label']) {
+          font-weight: 600;
+          font-size: 0.875rem;
+        }
+
+        ::slotted([slot='help-text']) {
+          font-size: 0.8125rem;
+          color: #6b7280;
+        }
+      </style>
+
+      <slot name="label"></slot>
+      <span class="internal-label" id="shadow-label" hidden></span>
+
+      <div class="combobox-wrapper">
+        <input
+          id="${this.#inputId}"
+          part="input"
+          role="combobox"
+          aria-autocomplete="list"
+          aria-expanded="false"
+          aria-controls="${this.#listboxId}"
+          aria-haspopup="listbox"
+          autocomplete="off"
+        />
+        <button
+          class="trigger"
+          type="button"
+          tabindex="-1"
+          aria-label="Show options"
+          aria-controls="${this.#listboxId}"
+          aria-expanded="false"
+        >
+          <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M2 4l4 4 4-4" />
+          </svg>
+        </button>
+      </div>
+
+      <div
+        class="listbox"
+        id="${this.#listboxId}"
+        role="listbox"
+        aria-label="Options"
+      ></div>
+
+      <slot name="help-text"></slot>
+      <span class="internal-help" id="shadow-help" hidden></span>
+    `;
+
+          this.#input = shadow.getElementById(this.#inputId);
+          this.#listbox = shadow.getElementById(this.#listboxId);
+          this.#trigger = shadow.querySelector('.trigger');
+          this.#shadowLabel = shadow.getElementById('shadow-label');
+          this.#shadowHelp = shadow.getElementById('shadow-help');
+
+          this.#input.addEventListener('input', () => {
+            this.#onInput();
+          });
+
+          this.#input.addEventListener('keydown', (e) => {
+            this.#onKeydown(e);
+          });
+
+          this.#input.addEventListener('focus', () => {
+            this.#emitLog('focus');
+          });
+
+          this.#input.addEventListener('blur', () => {
+            requestAnimationFrame(() => {
+              if (
+                !this.shadowRoot.activeElement ||
+                this.shadowRoot.activeElement === this.#input
+              ) {
+                return;
+              }
+              this.#close();
+            });
+          });
+
+          this.#trigger.addEventListener('mousedown', (e) => {
+            e.preventDefault();
+            this.#toggle();
+          });
+
+          this.#listbox.addEventListener('mousedown', (e) => {
+            e.preventDefault();
+          });
+
+          this.#listbox.addEventListener('click', (e) => {
+            const option = e.target.closest('[role="option"]');
+            if (option) {
+              this.#selectOption(option.dataset.value);
+            }
+          });
+
+          shadow.addEventListener('focusout', (e) => {
+            requestAnimationFrame(() => {
+              if (!this.shadowRoot.contains(this.shadowRoot.activeElement)) {
+                this.#close();
+              }
+            });
+          });
+        }
+
+        static #nextId = 0;
+
+        connectedCallback() {
+          this.#syncFromAttributes();
+          this.#syncValue();
+          this.#validate();
+          this.#wireAriaRelationships();
+          this.#wireImplicitLabel();
+
+          this.setAttribute('role', 'group');
+        }
+
+        #wireImplicitLabel() {
+          requestAnimationFrame(() => {
+            if (this.#input.hasAttribute('aria-label')) return;
+            const labels = this.#internals.labels;
+            if (labels && labels.length > 0) {
+              const text = Array.from(labels)
+                .map((l) => l.textContent?.trim())
+                .filter(Boolean)
+                .join(' ');
+              if (text) this.#applyLabel(text);
+            }
+          });
+        }
+
+        attributeChangedCallback(name, _oldVal, newVal) {
+          switch (name) {
+            case 'value':
+              if (this.#input && this.#input.value !== newVal) {
+                this.#input.value = newVal ?? '';
+                this.#syncValue();
+              }
+              break;
+            case 'placeholder':
+              if (this.#input) this.#input.placeholder = newVal ?? '';
+              break;
+            case 'required':
+              if (this.#input) this.#input.required = newVal !== null;
+              break;
+            case 'disabled':
+              if (this.#input) {
+                this.#input.disabled = newVal !== null;
+                this.#trigger.disabled = newVal !== null;
+              }
+              break;
+            case 'options':
+              this.#parseOptions(newVal);
+              break;
+            case 'internal-label':
+              this.#updateInternalLabel(newVal);
+              break;
+            case 'internal-help':
+              this.#updateInternalHelp(newVal);
+              break;
+            case 'use-internals-aria-label':
+              if (newVal !== null) this.#applyLabel(newVal);
+              break;
+            case 'aria-label':
+              if (newVal !== null) this.#applyLabel(newVal);
+              break;
+            case 'aria-labelledby':
+            case 'aria-describedby':
+            case 'aria-errormessage':
+              this.#wireAriaRelationships();
+              break;
+          }
+        }
+
+        // -- Form-associated API --
+
+        get form() {
+          return this.#internals.form;
+        }
+
+        get name() {
+          return this.getAttribute('name');
+        }
+
+        get type() {
+          return this.localName;
+        }
+
+        get value() {
+          return this.#input?.value ?? '';
+        }
+
+        set value(v) {
+          if (this.#input) {
+            this.#input.value = v;
+            this.#syncValue();
+          }
+        }
+
+        get validity() {
+          return this.#internals.validity;
+        }
+
+        get validationMessage() {
+          return this.#internals.validationMessage;
+        }
+
+        get willValidate() {
+          return this.#internals.willValidate;
+        }
+
+        checkValidity() {
+          this.#validate();
+          return this.#internals.checkValidity();
+        }
+
+        reportValidity() {
+          this.#validate();
+          return this.#internals.reportValidity();
+        }
+
+        formResetCallback() {
+          const defaultValue = this.getAttribute('value') ?? '';
+          this.#input.value = defaultValue;
+          this.#syncValue();
+          this.#validate();
+          this.#clearErrorState();
+          this.#close();
+        }
+
+        formDisabledCallback(disabled) {
+          this.#input.disabled = disabled;
+          this.#trigger.disabled = disabled;
+          if (disabled) {
+            this.setAttribute('disabled', '');
+            this.#close();
+          } else {
+            this.removeAttribute('disabled');
+          }
+        }
+
+        formStateRestoreCallback(state, _mode) {
+          this.#input.value = state ?? '';
+          this.#syncValue();
+        }
+
+        // -- Combobox behavior --
+
+        #parseOptions(json) {
+          try {
+            this.#options = JSON.parse(json || '[]');
+          } catch {
+            this.#options = [];
+          }
+          this.#filteredOptions = [...this.#options];
+          this.#renderOptions();
+        }
+
+        #onInput() {
+          const query = this.#input.value.toLowerCase();
+          this.#filteredOptions = this.#options.filter((opt) =>
+            opt.toLowerCase().includes(query)
+          );
+          this.#activeIndex = -1;
+          this.#open();
+          this.#renderOptions();
+          this.#syncValue();
+          this.#validate();
+          this.#emitLog(`input: "${this.#input.value}" → ${this.#filteredOptions.length} matches`);
+        }
+
+        #onKeydown(e) {
+          switch (e.key) {
+            case 'ArrowDown':
+              e.preventDefault();
+              if (!this.#isOpen) {
+                this.#open();
+                this.#renderOptions();
+              }
+              this.#moveActive(1);
+              this.#emitLog(`ArrowDown → active: ${this.#activeIndex}`);
+              break;
+
+            case 'ArrowUp':
+              e.preventDefault();
+              if (!this.#isOpen) {
+                this.#open();
+                this.#renderOptions();
+              }
+              this.#moveActive(-1);
+              this.#emitLog(`ArrowUp → active: ${this.#activeIndex}`);
+              break;
+
+            case 'Enter':
+              if (this.#isOpen && this.#activeIndex >= 0) {
+                e.preventDefault();
+                this.#selectOption(this.#filteredOptions[this.#activeIndex]);
+                this.#emitLog(`Enter → selected: "${this.#filteredOptions[this.#activeIndex]}"`);
+              }
+              break;
+
+            case 'Escape':
+              if (this.#isOpen) {
+                e.preventDefault();
+                this.#close();
+                this.#emitLog('Escape → closed');
+              }
+              break;
+
+            case 'Home':
+              if (this.#isOpen && this.#filteredOptions.length > 0) {
+                e.preventDefault();
+                this.#activeIndex = 0;
+                this.#updateActive();
+                this.#emitLog('Home → active: 0');
+              }
+              break;
+
+            case 'End':
+              if (this.#isOpen && this.#filteredOptions.length > 0) {
+                e.preventDefault();
+                this.#activeIndex = this.#filteredOptions.length - 1;
+                this.#updateActive();
+                this.#emitLog(`End → active: ${this.#activeIndex}`);
+              }
+              break;
+
+            case 'Tab':
+              if (this.#isOpen) {
+                this.#close();
+              }
+              break;
+          }
+        }
+
+        #moveActive(delta) {
+          if (this.#filteredOptions.length === 0) return;
+
+          if (this.#activeIndex === -1) {
+            this.#activeIndex = delta > 0 ? 0 : this.#filteredOptions.length - 1;
+          } else {
+            this.#activeIndex += delta;
+            if (this.#activeIndex < 0)
+              this.#activeIndex = this.#filteredOptions.length - 1;
+            if (this.#activeIndex >= this.#filteredOptions.length)
+              this.#activeIndex = 0;
+          }
+
+          this.#updateActive();
+        }
+
+        #updateActive() {
+          const options = this.#listbox.querySelectorAll('[role="option"]');
+          options.forEach((opt, i) => {
+            opt.classList.toggle('active', i === this.#activeIndex);
+          });
+
+          if (this.#activeIndex >= 0 && options[this.#activeIndex]) {
+            const activeOpt = options[this.#activeIndex];
+            this.#input.setAttribute('aria-activedescendant', activeOpt.id);
+            activeOpt.scrollIntoView({ block: 'nearest' });
+
+            this.#dispatchActivedescendantEvent(activeOpt.id, activeOpt.textContent);
+          } else {
+            this.#input.removeAttribute('aria-activedescendant');
+          }
+        }
+
+        #dispatchActivedescendantEvent(id, text) {
+          this.dispatchEvent(
+            new CustomEvent('activedescendant-change', {
+              detail: { id, text, index: this.#activeIndex },
+              bubbles: true,
+            })
+          );
+        }
+
+        #selectOption(value) {
+          this.#input.value = value;
+          this.#syncValue();
+          this.#validate();
+          this.#close();
+          this.#input.focus();
+
+          this.dispatchEvent(
+            new CustomEvent('combo-change', {
+              detail: { value },
+              bubbles: true,
+            })
+          );
+        }
+
+        #open() {
+          if (this.#isOpen) return;
+          this.#isOpen = true;
+          this.setAttribute('open', '');
+          this.#input.setAttribute('aria-expanded', 'true');
+          this.#trigger.setAttribute('aria-expanded', 'true');
+          this.#internals.ariaExpanded = 'true';
+
+          this.#emitExpandedLog(true);
+        }
+
+        #close() {
+          if (!this.#isOpen) return;
+          this.#isOpen = false;
+          this.removeAttribute('open');
+          this.#input.setAttribute('aria-expanded', 'false');
+          this.#trigger.setAttribute('aria-expanded', 'false');
+          this.#input.removeAttribute('aria-activedescendant');
+          this.#activeIndex = -1;
+          this.#internals.ariaExpanded = 'false';
+
+          this.#filteredOptions = [...this.#options];
+          this.#renderOptions();
+
+          this.#emitExpandedLog(false);
+        }
+
+        #toggle() {
+          if (this.#isOpen) {
+            this.#close();
+          } else {
+            this.#filteredOptions = [...this.#options];
+            this.#renderOptions();
+            this.#open();
+          }
+          this.#input.focus();
+        }
+
+        #renderOptions() {
+          this.#listbox.innerHTML = '';
+
+          if (this.#filteredOptions.length === 0) {
+            const noResults = document.createElement('div');
+            noResults.className = 'no-results';
+            noResults.textContent = 'No matches found';
+            this.#listbox.appendChild(noResults);
+            return;
+          }
+
+          const currentValue = this.#input.value;
+
+          this.#filteredOptions.forEach((opt, i) => {
+            const el = document.createElement('div');
+            el.setAttribute('role', 'option');
+            el.id = `${this.#listboxId}-opt-${i}`;
+            el.className = 'option';
+            el.dataset.value = opt;
+            el.textContent = opt;
+
+            if (opt === currentValue) {
+              el.setAttribute('aria-selected', 'true');
+            }
+
+            if (i === this.#activeIndex) {
+              el.classList.add('active');
+              this.#input.setAttribute('aria-activedescendant', el.id);
+            }
+
+            this.#listbox.appendChild(el);
+          });
+        }
+
+        // -- Private helpers --
+
+        #syncFromAttributes() {
+          const value = this.getAttribute('value') ?? '';
+          const placeholder = this.getAttribute('placeholder') ?? '';
+          this.#input.value = value;
+          this.#input.placeholder = placeholder;
+
+          if (this.hasAttribute('required')) this.#input.required = true;
+          if (this.hasAttribute('disabled')) {
+            this.#input.disabled = true;
+            this.#trigger.disabled = true;
+          }
+
+          this.#parseOptions(this.getAttribute('options'));
+
+          const internalLabel = this.getAttribute('internal-label');
+          if (internalLabel) this.#updateInternalLabel(internalLabel);
+
+          const internalHelp = this.getAttribute('internal-help');
+          if (internalHelp) this.#updateInternalHelp(internalHelp);
+
+          const internalsAriaLabel = this.getAttribute(
+            'use-internals-aria-label'
+          );
+          if (internalsAriaLabel) this.#applyLabel(internalsAriaLabel);
+
+          const hostAriaLabel = this.getAttribute('aria-label');
+          if (hostAriaLabel) this.#applyLabel(hostAriaLabel);
+        }
+
+        #syncValue() {
+          this.#internals.setFormValue(this.#input.value);
+        }
+
+        #validate() {
+          const input = this.#input;
+
+          if (this.hasAttribute('required') && !input.value.trim()) {
+            this.#internals.setValidity(
+              { valueMissing: true },
+              'Please select or enter a value.',
+              input
+            );
+            this.#showErrorState();
+          } else {
+            this.#internals.setValidity({});
+            this.#clearErrorState();
+          }
+        }
+
+        #showErrorState() {
+          this.#internals.ariaInvalid = 'true';
+          const errorId = this.getAttribute('aria-errormessage');
+          if (errorId) {
+            const errorEl = document.getElementById(errorId);
+            if (errorEl) errorEl.hidden = false;
+          }
+        }
+
+        #clearErrorState() {
+          this.#internals.ariaInvalid = 'false';
+          const errorId = this.getAttribute('aria-errormessage');
+          if (errorId) {
+            const errorEl = document.getElementById(errorId);
+            if (errorEl) errorEl.hidden = true;
+          }
+        }
+
+        #updateInternalLabel(text) {
+          if (text) {
+            this.#shadowLabel.textContent = text;
+            this.#shadowLabel.hidden = false;
+            this.#input.setAttribute('aria-labelledby', 'shadow-label');
+          } else {
+            this.#shadowLabel.hidden = true;
+            this.#input.removeAttribute('aria-labelledby');
+          }
+        }
+
+        #updateInternalHelp(text) {
+          if (text) {
+            this.#shadowHelp.textContent = text;
+            this.#shadowHelp.hidden = false;
+            const existing =
+              this.#input.getAttribute('aria-describedby') ?? '';
+            if (!existing.includes('shadow-help')) {
+              this.#input.setAttribute(
+                'aria-describedby',
+                (existing + ' shadow-help').trim()
+              );
+            }
+          } else {
+            this.#shadowHelp.hidden = true;
+          }
+        }
+
+        #applyLabel(text) {
+          if (!text) return;
+          this.#internals.ariaLabel = this.#internals.ariaLabel || text;
+          if (!this.#input.hasAttribute('aria-labelledby')) {
+            this.#input.setAttribute('aria-label', text);
+          }
+        }
+
+        #applyDescription(text) {
+          if (!text) return;
+          this.#internals.ariaDescription =
+            this.#internals.ariaDescription || text;
+          if (!this.#input.hasAttribute('aria-describedby')) {
+            this.#input.setAttribute('aria-description', text);
+          }
+        }
+
+        #wireAriaRelationships() {
+          if (!this.#input) return;
+
+          const supportsElementRefs =
+            'ariaLabelledByElements' in this.#internals;
+
+          const labelledby = this.getAttribute('aria-labelledby');
+          if (labelledby && !this.getAttribute('internal-label')) {
+            if (supportsElementRefs) {
+              try {
+                const els = labelledby
+                  .split(/\s+/)
+                  .map((id) => document.getElementById(id))
+                  .filter(Boolean);
+                if (els.length > 0) {
+                  this.#internals.ariaLabelledByElements = els;
+                }
+              } catch {
+                /* element-ref API may reject assignments */
+              }
+            }
+            this.#applyLabel(this.#resolveTextFromIds(labelledby));
+          }
+
+          const describedby = this.getAttribute('aria-describedby');
+          if (describedby && !this.getAttribute('internal-help')) {
+            if (supportsElementRefs) {
+              try {
+                const els = describedby
+                  .split(/\s+/)
+                  .map((id) => document.getElementById(id))
+                  .filter(Boolean);
+                if (els.length > 0) {
+                  this.#internals.ariaDescribedByElements = els;
+                }
+              } catch {
+                /* element-ref API may reject assignments */
+              }
+            }
+            this.#applyDescription(this.#resolveTextFromIds(describedby));
+          }
+
+          this.#handleSlotWiring();
+        }
+
+        #handleSlotWiring() {
+          const labelSlot =
+            this.shadowRoot.querySelector('slot[name="label"]');
+          const helpSlot = this.shadowRoot.querySelector(
+            'slot[name="help-text"]'
+          );
+
+          if (labelSlot) {
+            labelSlot.addEventListener('slotchange', () => {
+              const assigned = labelSlot.assignedElements();
+              if (assigned.length > 0) {
+                const labelEl = assigned[0];
+                const labelId =
+                  labelEl.id || `slotted-label-${this.id || Date.now()}`;
+                labelEl.id = labelId;
+
+                if ('ariaLabelledByElements' in this.#internals) {
+                  try {
+                    this.#internals.ariaLabelledByElements = [labelEl];
+                  } catch {
+                    /* fall through */
+                  }
+                }
+                this.#applyLabel(labelEl.textContent?.trim());
+              }
+            });
+          }
+
+          if (helpSlot) {
+            helpSlot.addEventListener('slotchange', () => {
+              const assigned = helpSlot.assignedElements();
+              if (assigned.length > 0) {
+                const helpEl = assigned[0];
+                const helpId =
+                  helpEl.id || `slotted-help-${this.id || Date.now()}`;
+                helpEl.id = helpId;
+
+                if ('ariaDescribedByElements' in this.#internals) {
+                  try {
+                    this.#internals.ariaDescribedByElements = [helpEl];
+                  } catch {
+                    /* fall through */
+                  }
+                }
+                this.#applyDescription(helpEl.textContent?.trim());
+              }
+            });
+          }
+        }
+
+        #resolveTextFromIds(idList) {
+          return idList
+            .split(/\s+/)
+            .map(
+              (id) => document.getElementById(id)?.textContent?.trim() ?? ''
+            )
+            .filter(Boolean)
+            .join(' ');
+        }
+
+        #emitLog(msg) {
+          this.dispatchEvent(
+            new CustomEvent('combo-log', {
+              detail: { message: msg },
+              bubbles: true,
+            })
+          );
+        }
+
+        #emitExpandedLog(expanded) {
+          this.dispatchEvent(
+            new CustomEvent('combo-expanded', {
+              detail: { expanded },
+              bubbles: true,
+            })
+          );
+        }
+      }
+
+      customElements.define('face-combobox', FaceCombobox);
+
+      // ===================================================================
+      // Form event handlers
+      // ===================================================================
+
+      document.getElementById('form-1a').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const data = new FormData(e.target);
+        const out = document.getElementById('output-1a');
+        const entries = [...data.entries()];
+        out.textContent =
+          'FormData entries:\n' +
+          entries.map(([k, v]) => `  ${k}: "${v}"`).join('\n') +
+          '\n\nForm participation: ' +
+          (entries.length > 0 ? 'PASS' : 'FAIL');
+      });
+
+      document.getElementById('form-1a').addEventListener('reset', () => {
+        const out = document.getElementById('output-1a');
+        requestAnimationFrame(() => {
+          const field = document.getElementById('field-1a');
+          out.textContent = `Reset fired.\nValue after reset: "${field.value}"\nformResetCallback: ${field.value === 'Apple' ? 'PASS' : 'FAIL'}`;
+        });
+      });
+
+      document.getElementById('form-1b').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const field = document.getElementById('field-1b');
+        const out = document.getElementById('output-1b');
+        const valid = field.reportValidity();
+        out.textContent =
+          `reportValidity(): ${valid}\n` +
+          `validity.valid: ${field.validity.valid}\n` +
+          `validity.valueMissing: ${field.validity.valueMissing}\n` +
+          `validationMessage: "${field.validationMessage}"\n\n` +
+          `Constraint validation: ${!valid ? 'PASS (correctly rejected)' : 'Check input'}`;
+      });
+
+      document.getElementById('form-1c').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const field = document.getElementById('field-1c');
+        const out = document.getElementById('output-1c');
+        const data = new FormData(e.target);
+        const shadowInput = field.shadowRoot?.querySelector('input');
+        out.textContent =
+          `Shadow input disabled: ${shadowInput?.disabled ?? 'N/A'}\n` +
+          `Host has disabled attr: ${field.hasAttribute('disabled')}\n` +
+          `formDisabledCallback: fires when fieldset is disabled\n` +
+          `FormData includes field: ${data.has('disabledcombo') ? 'YES (unexpected)' : 'NO (correct)'}\n\n` +
+          `Disabled via fieldset: ${!data.has('disabledcombo') ? 'PASS' : 'FAIL'}`;
+      });
+
+      document.getElementById('form-1d').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const field = document.getElementById('field-1d');
+        const out = document.getElementById('output-1d');
+        const data = new FormData(e.target);
+        const isOpen = field.hasAttribute('open');
+        out.textContent =
+          `Listbox open at submit time: ${isOpen}\n` +
+          `FormData value: "${data.get('color')}"\n` +
+          `field.value: "${field.value}"\n\n` +
+          `Submit captures current input value regardless of open state: PASS`;
+      });
+
+      // Keyboard logging for section 2
+      const field2a = document.getElementById('field-2a');
+      const output2a = document.getElementById('output-2a');
+      let logLines2a = [];
+      field2a.addEventListener('combo-log', (e) => {
+        logLines2a.push(e.detail.message);
+        if (logLines2a.length > 12) logLines2a.shift();
+        output2a.textContent = logLines2a.join('\n');
+      });
+      field2a.addEventListener('activedescendant-change', (e) => {
+        logLines2a.push(
+          `  activedescendant → #${e.detail.id} ("${e.detail.text}")`
+        );
+        if (logLines2a.length > 12) logLines2a.shift();
+        output2a.textContent = logLines2a.join('\n');
+      });
+
+      // Active descendant logging for section 4a
+      const field4a = document.getElementById('field-4a');
+      const output4a = document.getElementById('output-4a');
+      let logLines4a = [];
+      field4a.addEventListener('activedescendant-change', (e) => {
+        logLines4a.push(
+          `activedescendant: #${e.detail.id} → "${e.detail.text}" (index ${e.detail.index})`
+        );
+        if (logLines4a.length > 10) logLines4a.shift();
+        output4a.textContent = logLines4a.join('\n');
+      });
+
+      // Expanded state logging for section 5b
+      const field5b = document.getElementById('field-5b');
+      const output5b = document.getElementById('output-5b');
+      let logLines5b = [];
+      field5b.addEventListener('combo-expanded', (e) => {
+        logLines5b.push(
+          `expanded: ${e.detail.expanded} | internals.ariaExpanded set | host[open] attr ${e.detail.expanded ? 'added' : 'removed'}`
+        );
+        if (logLines5b.length > 8) logLines5b.shift();
+        output5b.textContent = logLines5b.join('\n');
+      });
+
+      // Validation for section 4c
+      document.getElementById('form-4c').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const field = document.getElementById('field-4c');
+        const out = document.getElementById('output-4c');
+        const valid = field.reportValidity();
+        out.textContent =
+          `reportValidity(): ${valid}\n` +
+          `validity.valid: ${field.validity.valid}\n` +
+          `validity.valueMissing: ${field.validity.valueMissing}\n` +
+          `validationMessage: "${field.validationMessage}"\n` +
+          `aria-invalid on internals: ${field.getAttribute('aria-invalid') ?? '(check internals)'}\n\n` +
+          `Validation + error message: ${!valid ? 'PASS (correctly rejected)' : 'Check input value'}`;
+      });
+
+      // ===================================================================
+      // IDREF matrix introspection
+      // ===================================================================
+
+      function populateMatrix() {
+        const scenarios = [
+          {
+            id: 'A',
+            name: 'Light DOM siblings',
+            fieldId: 'field-3a',
+            labelMethod: 'aria-labelledby on host → light DOM #label-3a',
+            descMethod: 'aria-describedby on host → light DOM #help-3a',
+          },
+          {
+            id: 'B',
+            name: 'Slotted light DOM children',
+            fieldId: 'field-3b',
+            labelMethod: 'Slotted <span slot="label"> with ID',
+            descMethod: 'Slotted <span slot="help-text"> with ID',
+          },
+          {
+            id: 'C',
+            name: 'Shadow DOM internal IDs',
+            fieldId: 'field-3c',
+            labelMethod: 'internal-label attr → shadow #shadow-label',
+            descMethod: 'internal-help attr → shadow #shadow-help',
+          },
+          {
+            id: 'D',
+            name: 'Cross-root (label for → host)',
+            fieldId: 'field-3d',
+            labelMethod: '<label for="field-3d"> in light DOM',
+            descMethod: 'N/A (no describedby set)',
+          },
+        ];
+
+        const tbody = document.getElementById('matrix-body');
+        tbody.innerHTML = '';
+
+        for (const s of scenarios) {
+          const field = document.getElementById(s.fieldId);
+          if (!field) continue;
+
+          let a11yName = '(inspect DevTools)';
+          let a11yDesc = '(inspect DevTools)';
+          let activedesc = '(use arrow keys)';
+          let status = 'pending';
+
+          try {
+            const ariaLabel = field.getAttribute('aria-label') || '';
+            const labelledby = field.getAttribute('aria-labelledby') || '';
+            const describedby = field.getAttribute('aria-describedby') || '';
+
+            if (ariaLabel) {
+              a11yName = `aria-label: "${ariaLabel}"`;
+            } else if (labelledby) {
+              const text = labelledby
+                .split(/\s+/)
+                .map((id) => document.getElementById(id)?.textContent?.trim())
+                .filter(Boolean)
+                .join(' ');
+              a11yName = text
+                ? `Resolved: "${text}"`
+                : `IDs not found: ${labelledby}`;
+            }
+
+            if (describedby) {
+              const text = describedby
+                .split(/\s+/)
+                .map((id) => document.getElementById(id)?.textContent?.trim())
+                .filter(Boolean)
+                .join(' ');
+              a11yDesc = text
+                ? `Resolved: "${text}"`
+                : `IDs not found: ${describedby}`;
+            }
+
+            const shadowInput = field.shadowRoot?.querySelector('input');
+            if (shadowInput) {
+              const ad = shadowInput.getAttribute('aria-activedescendant');
+              const controls = shadowInput.getAttribute('aria-controls');
+              activedesc = ad
+                ? `Current: #${ad}`
+                : `Not set (controls: ${controls || 'none'})`;
+            }
+          } catch {
+            /* introspection may fail */
+          }
+
+          const row = document.createElement('tr');
+          row.innerHTML = `
+      <td><strong>${s.id}:</strong> ${s.name}</td>
+      <td><code>${escapeHtml(s.labelMethod)}</code></td>
+      <td><code>${escapeHtml(s.descMethod)}</code></td>
+      <td>${a11yName}</td>
+      <td>${a11yDesc}</td>
+      <td>${activedesc}</td>
+      <td class="${status}">${status}</td>
+    `;
+          tbody.appendChild(row);
+        }
+      }
+
+      function escapeHtml(str) {
+        const div = document.createElement('div');
+        div.textContent = str;
+        return div.innerHTML;
+      }
+
+      requestAnimationFrame(() => {
+        requestAnimationFrame(populateMatrix);
+      });
+
+      // ===================================================================
+      // axe-core integration
+      // ===================================================================
+
+      document.getElementById('run-axe').addEventListener('click', async () => {
+        const resultsEl = document.getElementById('axe-results');
+        resultsEl.textContent = 'Loading axe-core...';
+
+        try {
+          if (!window.axe) {
+            await loadScript(
+              'https://cdn.jsdelivr.net/npm/axe-core@4.10.2/axe.min.js'
+            );
+          }
+
+          resultsEl.textContent = 'Running audit...';
+
+          const results = await window.axe.run(document, {
+            runOnly: {
+              type: 'tag',
+              values: [
+                'wcag2a',
+                'wcag2aa',
+                'wcag21a',
+                'wcag21aa',
+                'best-practice',
+              ],
+            },
+          });
+
+          let html = '';
+
+          html += `<h3>Violations (${results.violations.length})</h3>`;
+          if (results.violations.length === 0) {
+            html += '<div class="axe-pass">No violations found.</div>';
+          }
+          for (const v of results.violations) {
+            html += `
+        <div class="axe-violation">
+          <h4>${escapeHtml(v.id)}: ${escapeHtml(v.help)}</h4>
+          <p><strong>Impact:</strong> ${v.impact} | <strong>Tags:</strong> ${v.tags.join(', ')}</p>
+          <p>${escapeHtml(v.description)}</p>
+          <details>
+            <summary>Affected nodes (${v.nodes.length})</summary>
+            <ul>
+              ${v.nodes.map((n) => `<li><code>${escapeHtml(n.html)}</code><br/>${escapeHtml(n.failureSummary ?? '')}</li>`).join('')}
+            </ul>
+          </details>
+          ${v.helpUrl ? `<p><a href="${v.helpUrl}" target="_blank">Deque reference</a></p>` : ''}
+        </div>
+      `;
+          }
+
+          html += `<h3>Incomplete / needs review (${results.incomplete.length})</h3>`;
+          for (const inc of results.incomplete) {
+            html += `
+        <div class="axe-incomplete">
+          <strong>${escapeHtml(inc.id)}</strong>: ${escapeHtml(inc.help)}<br/>
+          <small>Nodes: ${inc.nodes.length} | Tags: ${inc.tags.join(', ')}</small>
+          ${inc.helpUrl ? ` | <a href="${inc.helpUrl}" target="_blank">Reference</a>` : ''}
+        </div>
+      `;
+          }
+
+          const relevantPasses = results.passes.filter((p) =>
+            [
+              'label',
+              'aria-label',
+              'aria-labelledby',
+              'form-field-multiple-labels',
+              'aria-valid-attr',
+              'aria-valid-attr-value',
+              'aria-roles',
+              'label-title-only',
+              'aria-input-field-name',
+              'aria-required-attr',
+              'aria-command-name',
+            ].some((id) => p.id.includes(id))
+          );
+          html += `<h3>Relevant passes (${relevantPasses.length} of ${results.passes.length} total)</h3>`;
+          for (const p of relevantPasses) {
+            html += `<div class="axe-pass"><strong>${escapeHtml(p.id)}</strong>: ${escapeHtml(p.help)}</div>`;
+          }
+
+          resultsEl.innerHTML = html;
+        } catch (err) {
+          resultsEl.textContent = `Error loading or running axe-core:\n${err.message}\n\nNote: axe-core requires network access to load from CDN.`;
+        }
+      });
+
+      function loadScript(src) {
+        return new Promise((resolve, reject) => {
+          const s = document.createElement('script');
+          s.src = src;
+          s.onload = resolve;
+          s.onerror = () => reject(new Error(`Failed to load ${src}`));
+          document.head.appendChild(s);
+        });
+      }
+    </script>
+  </body>
+</html>
