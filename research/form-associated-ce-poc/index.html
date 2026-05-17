@@ -706,16 +706,14 @@
          */
         #wireImplicitLabel() {
           requestAnimationFrame(() => {
-            if (this.#internals.ariaLabel) return;
+            if (this.#input.hasAttribute('aria-label')) return;
             const labels = this.#internals.labels;
             if (labels && labels.length > 0) {
               const text = Array.from(labels)
                 .map((l) => l.textContent?.trim())
                 .filter(Boolean)
                 .join(' ');
-              if (text) {
-                this.#internals.ariaLabel = text;
-              }
+              if (text) this.#applyLabel(text);
             }
           });
         }
@@ -751,7 +749,7 @@
               break;
             case 'use-internals-aria-label':
               if (newVal !== null) {
-                this.#internals.ariaLabel = newVal;
+                this.#applyLabel(newVal);
               }
               break;
             case 'min-value':
@@ -866,8 +864,7 @@
           const internalsAriaLabel = this.getAttribute(
             'use-internals-aria-label'
           );
-          if (internalsAriaLabel)
-            this.#internals.ariaLabel = internalsAriaLabel;
+          if (internalsAriaLabel) this.#applyLabel(internalsAriaLabel);
         }
 
         #syncValue() {
@@ -949,6 +946,29 @@
           }
         }
 
+        /**
+         * Key finding: internals.ariaLabel sets the name on the HOST
+         * a11y node, but browsers expose the SHADOW INPUT as the
+         * primary control. Both must carry the label for consistent
+         * screen reader behavior.
+         */
+        #applyLabel(text) {
+          if (!text) return;
+          this.#internals.ariaLabel = this.#internals.ariaLabel || text;
+          if (!this.#input.hasAttribute('aria-labelledby')) {
+            this.#input.setAttribute('aria-label', text);
+          }
+        }
+
+        #applyDescription(text) {
+          if (!text) return;
+          this.#internals.ariaDescription =
+            this.#internals.ariaDescription || text;
+          if (!this.#input.hasAttribute('aria-describedby')) {
+            this.#input.setAttribute('aria-description', text);
+          }
+        }
+
         #wireAriaRelationships() {
           if (!this.#input) return;
 
@@ -970,11 +990,7 @@
                 // element-ref API may exist but reject assignments
               }
             }
-            const resolvedName = this.#resolveTextFromIds(labelledby);
-            if (resolvedName) {
-              this.#internals.ariaLabel =
-                this.#internals.ariaLabel || resolvedName;
-            }
+            this.#applyLabel(this.#resolveTextFromIds(labelledby));
           }
 
           const describedby = this.getAttribute('aria-describedby');
@@ -992,11 +1008,7 @@
                 // element-ref API may exist but reject assignments
               }
             }
-            const resolvedDesc = this.#resolveTextFromIds(describedby);
-            if (resolvedDesc) {
-              this.#internals.ariaDescription =
-                this.#internals.ariaDescription || resolvedDesc;
-            }
+            this.#applyDescription(this.#resolveTextFromIds(describedby));
           }
 
           this.#handleSlotWiring();
@@ -1017,22 +1029,14 @@
                   labelEl.id || `slotted-label-${this.id || Date.now()}`;
                 labelEl.id = labelId;
 
-                const supportsElementRefs =
-                  'ariaLabelledByElements' in this.#internals;
-                let elementRefWorked = false;
-                if (supportsElementRefs) {
+                if ('ariaLabelledByElements' in this.#internals) {
                   try {
                     this.#internals.ariaLabelledByElements = [labelEl];
-                    elementRefWorked = true;
                   } catch {
                     // fall through to string fallback
                   }
                 }
-                const labelText = labelEl.textContent?.trim();
-                if (labelText) {
-                  this.#internals.ariaLabel =
-                    this.#internals.ariaLabel || labelText;
-                }
+                this.#applyLabel(labelEl.textContent?.trim());
               }
             });
           }
@@ -1046,20 +1050,14 @@
                   helpEl.id || `slotted-help-${this.id || Date.now()}`;
                 helpEl.id = helpId;
 
-                const supportsElementRefs =
-                  'ariaDescribedByElements' in this.#internals;
-                if (supportsElementRefs) {
+                if ('ariaDescribedByElements' in this.#internals) {
                   try {
                     this.#internals.ariaDescribedByElements = [helpEl];
                   } catch {
                     // fall through to string fallback
                   }
                 }
-                const helpText = helpEl.textContent?.trim();
-                if (helpText) {
-                  this.#internals.ariaDescription =
-                    this.#internals.ariaDescription || helpText;
-                }
+                this.#applyDescription(helpEl.textContent?.trim());
               }
             });
           }
