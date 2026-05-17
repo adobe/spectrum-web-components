@@ -12,6 +12,27 @@ axe-core loads from CDN on demand when you click the audit button.
 
 ---
 
+## Automated test results (Chrome headless)
+
+| Test                    | Expected                         | Actual                                        | Status  |
+| ----------------------- | -------------------------------- | --------------------------------------------- | ------- |
+| 1a Submit               | FormData includes fullname       | fullname: "Jane Doe"                          | Pass    |
+| 1a Reset                | Restores to Jane Doe             | formResetCallback: PASS                       | Pass    |
+| 1b Empty required       | valueMissing: true               | Correctly rejected                            | Pass    |
+| 1b Pattern (uppercase)  | patternMismatch: true            | Correctly rejected                            | Pass    |
+| 1b Valid input          | validity.valid: true             | Accepted                                      | Pass    |
+| 1c Disabled fieldset    | Field excluded from FormData     | FormData: NO (correct)                        | Pass    |
+| 2A Light DOM siblings   | Name = "Email address"           | Resolved via `ariaLabel` fallback             | Pass    |
+| 2B Slotted children     | Name from slotted label          | Resolved via `ariaLabel` fallback             | Pass    |
+| 2C Shadow internal      | Name = "Search query"            | Direct shadow-scoped IDREF                    | Pass    |
+| 2D Cross-root label-for | Click label focuses field + name | Focus: pass; name via implicit label fallback | Partial |
+| 3a internals.ariaLabel  | Exposes name in a11y tree        | "Search via internals"                        | Pass    |
+| 3a host aria-label      | Exposes name in a11y tree        | "Search via host attribute"                   | Pass    |
+| 3b setValidity          | rangeUnderflow + error shown     | Error visible, validity correct               | Pass    |
+| 4 axe-core              | Audit runs, results shown        | 4 violations (color-contrast only)            | Pass    |
+
+---
+
 ## 1. Does native form submission and reset see the control's value?
 
 ### FormData
@@ -153,13 +174,21 @@ A native `<label for="field-id">` in light DOM targets the custom element host. 
 
 ## 4. axe-core findings
 
+### Automated test results (Chrome headless, axe-core 4.10.2)
+
+| axe rule         | Observed                                                               | Classification   | Notes                                                                  |
+| ---------------- | ---------------------------------------------------------------------- | ---------------- | ---------------------------------------------------------------------- |
+| `color-contrast` | 4 violations, 5 nodes (help text and placeholder contrast below 4.5:1) | True violation   | Fixable with darker text colors; not related to ElementInternals       |
+| `label`          | Did not flag FACE elements with `internals.ariaLabel` set              | Correctly passed | When `ariaLabel` string fallback is set, axe can read it from the host |
+| `color-contrast` | Shadow input text passes                                               | True pass        | axe traverses into open shadow roots for contrast checks               |
+
 ### Expected violations and false positives
 
 | axe rule                     | Behavior                                                  | Classification                                     | Notes                                                                                                |
 | ---------------------------- | --------------------------------------------------------- | -------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
 | `label`                      | May flag custom element as an input without a label       | False positive if `ariaLabel` is set via internals | axe cannot always read `ElementInternals` ARIA; Deque tracking under elementInternals-labeled issues |
 | `aria-input-field-name`      | May report missing accessible name on custom element host | False positive when name is set via internals      | Same root cause; axe inspects attributes, not internals                                              |
-| `color-contrast`             | Passes for the shadow input                               | True pass                                          | axe traverses into open shadow roots for contrast checks                                             |
+| `color-contrast`             | Flags help text and placeholder contrast                  | True violation                                     | Not FACE-specific; fix with darker muted text colors                                                 |
 | `form-field-multiple-labels` | N/A for this PoC                                          | N/A                                                | Would apply if both `<label for>` and `aria-labelledby` were active simultaneously                   |
 | `aria-valid-attr-value`      | Passes when IDREFs resolve in the same scope              | True pass                                          | Only fails if an IDREF points to a nonexistent ID in the same scope                                  |
 

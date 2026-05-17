@@ -284,7 +284,7 @@
         <code>pattern</code>
         )
       </h3>
-      <form id="form-1b">
+      <form id="form-1b" novalidate>
         <div class="field-group">
           <label for="field-1b">Username (required, lowercase only)</label>
           <face-text-field
@@ -491,7 +491,7 @@
         +
         <code>aria-errormessage</code>
       </h3>
-      <form id="form-3b">
+      <form id="form-3b" novalidate>
         <div class="field-group">
           <label for="field-3b">Age (must be 18 or older)</label>
           <face-text-field
@@ -695,6 +695,29 @@
           this.#syncValue();
           this.#validate();
           this.#wireAriaRelationships();
+          this.#wireImplicitLabel();
+        }
+
+        /**
+         * If a <label for="..."> in light DOM targets this host,
+         * browsers may not consistently expose the implicit label
+         * on the internals' a11y node. Read the label text and set
+         * ariaLabel as a fallback when no explicit labelling exists.
+         */
+        #wireImplicitLabel() {
+          requestAnimationFrame(() => {
+            if (this.#internals.ariaLabel) return;
+            const labels = this.#internals.labels;
+            if (labels && labels.length > 0) {
+              const text = Array.from(labels)
+                .map((l) => l.textContent?.trim())
+                .filter(Boolean)
+                .join(' ');
+              if (text) {
+                this.#internals.ariaLabel = text;
+              }
+            }
+          });
         }
 
         attributeChangedCallback(name, _oldVal, newVal) {
@@ -929,34 +952,50 @@
         #wireAriaRelationships() {
           if (!this.#input) return;
 
-          const tryElementRefs =
-            typeof this.#internals.ariaLabelledByElements !== 'undefined';
+          const supportsElementRefs =
+            'ariaLabelledByElements' in this.#internals;
 
           const labelledby = this.getAttribute('aria-labelledby');
           if (labelledby && !this.getAttribute('internal-label')) {
-            if (tryElementRefs) {
-              const els = labelledby
-                .split(/\s+/)
-                .map((id) => document.getElementById(id))
-                .filter(Boolean);
-              if (els.length > 0) {
-                this.#internals.ariaLabelledByElements = els;
+            if (supportsElementRefs) {
+              try {
+                const els = labelledby
+                  .split(/\s+/)
+                  .map((id) => document.getElementById(id))
+                  .filter(Boolean);
+                if (els.length > 0) {
+                  this.#internals.ariaLabelledByElements = els;
+                }
+              } catch {
+                // element-ref API may exist but reject assignments
               }
             }
-            this.#internals.ariaLabel =
-              this.#internals.ariaLabel || this.#resolveTextFromIds(labelledby);
+            const resolvedName = this.#resolveTextFromIds(labelledby);
+            if (resolvedName) {
+              this.#internals.ariaLabel =
+                this.#internals.ariaLabel || resolvedName;
+            }
           }
 
           const describedby = this.getAttribute('aria-describedby');
           if (describedby && !this.getAttribute('internal-help')) {
-            if (tryElementRefs) {
-              const els = describedby
-                .split(/\s+/)
-                .map((id) => document.getElementById(id))
-                .filter(Boolean);
-              if (els.length > 0) {
-                this.#internals.ariaDescribedByElements = els;
+            if (supportsElementRefs) {
+              try {
+                const els = describedby
+                  .split(/\s+/)
+                  .map((id) => document.getElementById(id))
+                  .filter(Boolean);
+                if (els.length > 0) {
+                  this.#internals.ariaDescribedByElements = els;
+                }
+              } catch {
+                // element-ref API may exist but reject assignments
               }
+            }
+            const resolvedDesc = this.#resolveTextFromIds(describedby);
+            if (resolvedDesc) {
+              this.#internals.ariaDescription =
+                this.#internals.ariaDescription || resolvedDesc;
             }
           }
 
@@ -978,12 +1017,21 @@
                   labelEl.id || `slotted-label-${this.id || Date.now()}`;
                 labelEl.id = labelId;
 
-                if (
-                  typeof this.#internals.ariaLabelledByElements !== 'undefined'
-                ) {
-                  this.#internals.ariaLabelledByElements = [labelEl];
-                } else {
-                  this.#input.setAttribute('aria-labelledby', labelId);
+                const supportsElementRefs =
+                  'ariaLabelledByElements' in this.#internals;
+                let elementRefWorked = false;
+                if (supportsElementRefs) {
+                  try {
+                    this.#internals.ariaLabelledByElements = [labelEl];
+                    elementRefWorked = true;
+                  } catch {
+                    // fall through to string fallback
+                  }
+                }
+                const labelText = labelEl.textContent?.trim();
+                if (labelText) {
+                  this.#internals.ariaLabel =
+                    this.#internals.ariaLabel || labelText;
                 }
               }
             });
@@ -998,12 +1046,19 @@
                   helpEl.id || `slotted-help-${this.id || Date.now()}`;
                 helpEl.id = helpId;
 
-                if (
-                  typeof this.#internals.ariaDescribedByElements !== 'undefined'
-                ) {
-                  this.#internals.ariaDescribedByElements = [helpEl];
-                } else {
-                  this.#input.setAttribute('aria-describedby', helpId);
+                const supportsElementRefs =
+                  'ariaDescribedByElements' in this.#internals;
+                if (supportsElementRefs) {
+                  try {
+                    this.#internals.ariaDescribedByElements = [helpEl];
+                  } catch {
+                    // fall through to string fallback
+                  }
+                }
+                const helpText = helpEl.textContent?.trim();
+                if (helpText) {
+                  this.#internals.ariaDescription =
+                    this.#internals.ariaDescription || helpText;
                 }
               }
             });
