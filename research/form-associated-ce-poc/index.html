@@ -693,6 +693,7 @@
         connectedCallback() {
           this.#syncFromAttributes();
           this.#syncValue();
+          this.#validate();
           this.#wireAriaRelationships();
         }
 
@@ -777,10 +778,12 @@
         }
 
         checkValidity() {
+          this.#validate();
           return this.#internals.checkValidity();
         }
 
         reportValidity() {
+          this.#validate();
           return this.#internals.reportValidity();
         }
 
