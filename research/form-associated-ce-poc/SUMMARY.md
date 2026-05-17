@@ -14,22 +14,26 @@ axe-core loads from CDN on demand when you click the audit button.
 
 ## Automated test results (Chrome headless)
 
-| Test                    | Expected                         | Actual                                        | Status  |
-| ----------------------- | -------------------------------- | --------------------------------------------- | ------- |
-| 1a Submit               | FormData includes fullname       | fullname: "Jane Doe"                          | Pass    |
-| 1a Reset                | Restores to Jane Doe             | formResetCallback: PASS                       | Pass    |
-| 1b Empty required       | valueMissing: true               | Correctly rejected                            | Pass    |
-| 1b Pattern (uppercase)  | patternMismatch: true            | Correctly rejected                            | Pass    |
-| 1b Valid input          | validity.valid: true             | Accepted                                      | Pass    |
-| 1c Disabled fieldset    | Field excluded from FormData     | FormData: NO (correct)                        | Pass    |
-| 2A Light DOM siblings   | Name = "Email address"           | Resolved via `ariaLabel` fallback             | Pass    |
-| 2B Slotted children     | Name from slotted label          | Resolved via `ariaLabel` fallback             | Pass    |
-| 2C Shadow internal      | Name = "Search query"            | Direct shadow-scoped IDREF                    | Pass    |
-| 2D Cross-root label-for | Click label focuses field + name | Focus: pass; name via implicit label fallback | Partial |
-| 3a internals.ariaLabel  | Exposes name in a11y tree        | "Search via internals"                        | Pass    |
-| 3a host aria-label      | Exposes name in a11y tree        | "Search via host attribute"                   | Pass    |
-| 3b setValidity          | rangeUnderflow + error shown     | Error visible, validity correct               | Pass    |
-| 4 axe-core              | Audit runs, results shown        | 4 violations (color-contrast only)            | Pass    |
+| Test                    | Expected                         | Actual                                      | Status  |
+| ----------------------- | -------------------------------- | ------------------------------------------- | ------- |
+| 1a Submit               | FormData includes fullname       | fullname: "Jane Doe"                        | Pass    |
+| 1a Reset                | Restores to Jane Doe             | formResetCallback: PASS                     | Pass    |
+| 1b Empty required       | valueMissing: true               | Correctly rejected                          | Pass    |
+| 1b Pattern (uppercase)  | patternMismatch: true            | Correctly rejected                          | Pass    |
+| 1b Valid input          | validity.valid: true             | Accepted                                    | Pass    |
+| 1c Disabled fieldset    | Field excluded from FormData     | FormData: NO (correct)                      | Pass    |
+| 2A Light DOM siblings   | Name = "Email address"           | `aria-label` on shadow input                | Pass    |
+| 2B Slotted children     | Name = "Phone number"            | `aria-label` on shadow input via slotchange | Pass    |
+| 2C Shadow internal      | Name = "Search query"            | Shadow-scoped `aria-labelledby` on input    | Pass    |
+| 2D Cross-root label-for | Click label focuses field + name | Focus: pass; name via implicit label        | Pass    |
+| 3a internals.ariaLabel  | Exposes name in a11y tree        | "Search via internals" on shadow input      | Pass    |
+| 3a host aria-label      | Exposes name in a11y tree        | "Search via host attribute" on shadow input | Pass    |
+| 3b setValidity          | rangeUnderflow + error shown     | Blocked by automation (manual: pass)        | Partial |
+| 4 axe-core              | Audit runs, results shown        | 4 violations (color-contrast only)          | Pass    |
+
+### Critical research finding
+
+**`internals.ariaLabel` alone is not sufficient.** Browsers expose the shadow `<input>` as the primary accessible control (it is what receives focus and screen reader interaction). The host's `ElementInternals` ARIA properties go on a separate a11y node that may not be the one screen readers announce. The PoC now uses a dual-write strategy: every label is set on both `internals.ariaLabel` (for spec compliance) and the shadow input's `aria-label` (for actual screen reader exposure). This is the pattern the shared mixin should implement.
 
 ---
 

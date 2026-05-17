@@ -589,6 +589,7 @@
             'internal-help',
             'use-internals-aria-label',
             'min-value',
+            'aria-label',
             'aria-labelledby',
             'aria-describedby',
             'aria-errormessage',
@@ -752,6 +753,11 @@
                 this.#applyLabel(newVal);
               }
               break;
+            case 'aria-label':
+              if (newVal !== null) {
+                this.#applyLabel(newVal);
+              }
+              break;
             case 'min-value':
             case 'aria-labelledby':
             case 'aria-describedby':
@@ -865,6 +871,9 @@
             'use-internals-aria-label'
           );
           if (internalsAriaLabel) this.#applyLabel(internalsAriaLabel);
+
+          const hostAriaLabel = this.getAttribute('aria-label');
+          if (hostAriaLabel) this.#applyLabel(hostAriaLabel);
         }
 
         #syncValue() {
