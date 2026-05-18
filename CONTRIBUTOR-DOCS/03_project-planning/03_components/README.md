@@ -23,6 +23,7 @@
     - [Accordion migration plan](accordion/migration-plan.md)
     - [Accordion migration roadmap](accordion/rendering-and-styling-migration-analysis.md)
 - Action Button
+    - [Action button accessibility migration analysis](action-button/accessibility-migration-analysis.md)
     - [Action button migration roadmap](action-button/rendering-and-styling-migration-analysis.md)
 - Action Group
     - [Action group migration roadmap](action-group/rendering-and-styling-migration-analysis.md)
@@ -48,6 +49,8 @@
     - [Button Group migration roadmap](button-group/rendering-and-styling-migration-analysis.md)
 - Checkbox
     - [Checkbox migration roadmap](checkbox/rendering-and-styling-migration-analysis.md)
+- Close Button
+    - [Close button accessibility migration analysis](close-button/accessibility-migration-analysis.md)
 - Color Field
     - [Color field migration roadmap](color-field/rendering-and-styling-migration-analysis.md)
 - Color Loupe
@@ -132,6 +135,7 @@
     - [Thumbnail migration roadmap](thumbnail/rendering-and-styling-migration-analysis.md)
 - Tooltip
     - [Tooltip accessibility migration analysis](tooltip/accessibility-migration-analysis.md)
+    - [Tooltip migration plan](tooltip/migration-plan.md)
     - [Tooltip migration roadmap](tooltip/rendering-and-styling-migration-analysis.md)
 
 </details>

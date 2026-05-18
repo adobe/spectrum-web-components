@@ -195,14 +195,17 @@ const preview = {
         method: 'alphabetical-by-kind',
         order: [
           'Learn about SWC',
-          ['Overview', 'Get started', 'When to use SWC', 'Gen1 vs Gen2'],
+          ['Overview', 'Get started', 'Gen1 vs Gen2'],
           'Resources',
-          ['Support and compatibility', 'Changelog'],
+          ['Support and compatibility', 'Migrate from Gen1', 'Changelog'],
           'Core',
           ['Overview', 'Controllers'],
           'Components',
           'Patterns',
-          ['Conversational AI', ['README', 'Prompt field', 'User message']],
+          [
+            'Conversational AI',
+            ['Pattern overview', 'Prompt field', 'User message'],
+          ],
           'Guides',
           [
             'Accessibility',
@@ -467,6 +470,7 @@ const preview = {
                 'Tooltip',
                 [
                   'Accessibility migration analysis',
+                  'Migration plan',
                   'Rendering and styling migration analysis',
                 ],
               ],

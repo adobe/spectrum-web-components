@@ -10,7 +10,7 @@
  * governing permissions and limitations under the License.
  */
 import { html } from 'lit';
-import { expect, waitFor } from '@storybook/test';
+import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import { ColorLoupe } from '@adobe/spectrum-wc/color-loupe';
@@ -19,7 +19,10 @@ import '@adobe/spectrum-wc/color-loupe';
 
 import { getComponent } from '../../../utils/test-utils.js';
 import meta from '../stories/color-loupe.stories.js';
-import { Overview } from '../stories/color-loupe.stories.js';
+import {
+  Overview,
+  ParentDrivenVisibility,
+} from '../stories/color-loupe.stories.js';
 
 export default {
   ...meta,
@@ -107,12 +110,10 @@ export const OpenAttributeTest: Story = {
       }
     );
 
-    // The loupe animates opacity over 125 ms, so poll via waitFor until the
-    // transition settles at the target value.
     await step('inner .swc-ColorLoupe has opacity 1 when open', async () => {
-      await waitFor(() => {
-        expect(getComputedStyle(getInnerLoupe()).opacity).toBe('1');
-      });
+      const innerLoupe = getInnerLoupe();
+      innerLoupe.getAnimations().forEach((a) => a.finish());
+      expect(getComputedStyle(innerLoupe).opacity).toBe('1');
     });
 
     await step('removes open attribute when set to false', async () => {
@@ -124,9 +125,9 @@ export const OpenAttributeTest: Story = {
     await step(
       'inner .swc-ColorLoupe returns to opacity 0 when closed again',
       async () => {
-        await waitFor(() => {
-          expect(getComputedStyle(getInnerLoupe()).opacity).toBe('0');
-        });
+        const innerLoupe = getInnerLoupe();
+        innerLoupe.getAnimations().forEach((a) => a.finish());
+        expect(getComputedStyle(innerLoupe).opacity).toBe('0');
       }
     );
   },
@@ -161,6 +162,43 @@ export const ColorPropertyTest: Story = {
       expect(
         fill.style.getPropertyValue('--swc-color-loupe-picked-color')
       ).toContain('0, 255, 0');
+    });
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Parent-driven visibility (button trigger)
+// ──────────────────────────────────────────────────────────────
+
+export const ParentDrivenVisibilityTest: Story = {
+  ...ParentDrivenVisibility,
+  play: async ({ canvasElement, step }) => {
+    const loupe = await getComponent<ColorLoupe>(
+      canvasElement,
+      'swc-color-loupe'
+    );
+    const btn = canvasElement.querySelector('swc-button') as HTMLElement;
+
+    await step('loupe starts closed', async () => {
+      expect(loupe.open).toBe(false);
+      expect(btn.getAttribute('aria-expanded')).toBe('false');
+      expect(btn.textContent?.trim()).toBe('Show loupe');
+    });
+
+    await step('clicking the button opens the loupe', async () => {
+      btn.click();
+      await loupe.updateComplete;
+      expect(loupe.open).toBe(true);
+      expect(btn.getAttribute('aria-expanded')).toBe('true');
+      expect(btn.textContent?.trim()).toBe('Hide loupe');
+    });
+
+    await step('clicking the button again closes the loupe', async () => {
+      btn.click();
+      await loupe.updateComplete;
+      expect(loupe.open).toBe(false);
+      expect(btn.getAttribute('aria-expanded')).toBe('false');
+      expect(btn.textContent?.trim()).toBe('Show loupe');
     });
   },
 };
