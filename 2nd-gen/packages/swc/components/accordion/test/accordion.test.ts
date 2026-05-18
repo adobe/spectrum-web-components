@@ -294,6 +294,63 @@ export const DisabledItemTest: Story = {
 
       expect(item.open, 'item remains closed after click').toBe(false);
     });
+
+    await step(
+      'setting open on a closed disabled item does not expand it',
+      async () => {
+        item.open = true;
+        await item.updateComplete;
+
+        expect(item.open, 'open property stays false').toBe(false);
+        expect(
+          panel.hasAttribute('hidden'),
+          'panel stays hidden after imperative open'
+        ).toBe(true);
+      }
+    );
+  },
+};
+
+export const DisabledOpenItemTest: Story = {
+  render: () => html`
+    <swc-accordion density="regular">
+      <swc-accordion-item disabled open>
+        <span slot="label">Disabled open item</span>
+        Panel content
+      </swc-accordion-item>
+    </swc-accordion>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const item = await getComponent<AccordionItem>(
+      canvasElement,
+      'swc-accordion-item'
+    );
+    const button = item.shadowRoot?.getElementById(
+      'header'
+    ) as HTMLButtonElement;
+    const panel = item.shadowRoot?.getElementById('content') as HTMLElement;
+
+    await step('disabled open item starts expanded', async () => {
+      expect(item.open, 'item starts open').toBe(true);
+    });
+
+    await step(
+      'setting open to false on a disabled item does not collapse it',
+      async () => {
+        item.open = false;
+        await item.updateComplete;
+
+        expect(item.open, 'open property stays true').toBe(true);
+        expect(
+          panel.hasAttribute('hidden'),
+          'panel stays visible after imperative close'
+        ).toBe(false);
+        expect(
+          button.getAttribute('aria-expanded'),
+          'aria-expanded stays true'
+        ).toBe('true');
+      }
+    );
   },
 };
 
@@ -361,6 +418,24 @@ export const HostDisabledTest: Story = {
       }
     );
 
+    await step(
+      'setting open on a closed item does not expand it when the host is disabled',
+      async () => {
+        item.open = true;
+        await item.updateComplete;
+
+        expect(item.open, 'open property stays false').toBe(false);
+        expect(
+          panel.hasAttribute('hidden'),
+          'panel stays hidden after imperative open'
+        ).toBe(true);
+        expect(
+          button.getAttribute('aria-expanded'),
+          'aria-expanded stays false'
+        ).toBe('false');
+      }
+    );
+
     await step('clearing host disabled allows the item to open', async () => {
       accordion.disabled = false;
       await accordion.updateComplete;
@@ -377,6 +452,49 @@ export const HostDisabledTest: Story = {
 
       expect(item.open, 'item opens after host is re-enabled').toBe(true);
     });
+  },
+};
+
+export const HostDisabledOpenItemTest: Story = {
+  render: () => html`
+    <swc-accordion disabled density="regular">
+      <swc-accordion-item open>
+        <span slot="label">Item</span>
+        Panel content
+      </swc-accordion-item>
+    </swc-accordion>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const item = await getComponent<AccordionItem>(
+      canvasElement,
+      'swc-accordion-item'
+    );
+    const button = item.shadowRoot?.getElementById(
+      'header'
+    ) as HTMLButtonElement;
+    const panel = item.shadowRoot?.getElementById('content') as HTMLElement;
+
+    await step('open item stays expanded while host is disabled', async () => {
+      expect(item.open, 'item starts open').toBe(true);
+    });
+
+    await step(
+      'setting open to false does not collapse the item when the host is disabled',
+      async () => {
+        item.open = false;
+        await item.updateComplete;
+
+        expect(item.open, 'open property stays true').toBe(true);
+        expect(
+          panel.hasAttribute('hidden'),
+          'panel stays visible after imperative close'
+        ).toBe(false);
+        expect(
+          button.getAttribute('aria-expanded'),
+          'aria-expanded stays true'
+        ).toBe('true');
+      }
+    );
   },
 };
 

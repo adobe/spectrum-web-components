@@ -38,7 +38,26 @@ export abstract class AccordionItemBase extends SpectrumElement {
    * Whether the accordion item panel is expanded.
    */
   @property({ type: Boolean, reflect: true })
-  public open: boolean = false;
+  public get open(): boolean {
+    return this._open;
+  }
+
+  public set open(value: boolean) {
+    if (this.hasUpdated && !this.mayExpand() && value !== this._open) {
+      return;
+    }
+    if (value === this._open) {
+      return;
+    }
+    const oldValue = this._open;
+    this._open = value;
+    if (value) {
+      this.setAttribute('open', '');
+    } else {
+      this.removeAttribute('open');
+    }
+    this.requestUpdate('open', oldValue);
+  }
 
   /**
    * Whether the accordion item is disabled. A disabled item keeps its header
@@ -53,6 +72,8 @@ export abstract class AccordionItemBase extends SpectrumElement {
    */
   @property({ type: String, reflect: true })
   public size?: AccordionSize;
+
+  private _open = false;
 
   // ──────────────────────
   //     INTERNAL STATE
@@ -82,11 +103,20 @@ export abstract class AccordionItemBase extends SpectrumElement {
 
   /**
    * @internal
+   * Whether the item may change `open` (expand or collapse). When false, the
+   * `open` setter and `toggle()` leave state unchanged.
+   */
+  protected mayExpand(): boolean {
+    return !this.disabled && !this.parentDisabled;
+  }
+
+  /**
+   * @internal
    * Toggles the item open state. Guards for disabled, flips `open`, dispatches
    * the toggle event, and reverts if the event is canceled.
    */
   protected toggle(): void {
-    if (this.disabled || this.parentDisabled) {
+    if (!this.mayExpand()) {
       return;
     }
     this.open = !this.open;
