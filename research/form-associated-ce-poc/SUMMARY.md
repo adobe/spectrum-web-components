@@ -184,16 +184,13 @@ A native `<label for="field-id">` in light DOM targets the custom element host. 
 - The referenced error element should use `role="alert"` or be in a live region for screen reader announcement.
 - **axe-core note:** axe may flag the custom element for missing `aria-errormessage` association if it cannot inspect the shadow tree; document expected behavior in Storybook test-runner exclusions.
 
-### `internals.ariaInvalid` — observed behavior and open questions
+### `internals.ariaInvalid` — observed behavior (confirmed via VoiceOver)
 
 - `internals.ariaInvalid = 'true'` sets the invalid state on the **host** a11y node.
 - This does **not** reflect as a DOM attribute on the host (unlike `this.setAttribute('aria-invalid', 'true')` which is a visible attribute).
-- Whether screen readers announce the invalid state depends on which node they read:
-  - If the SR focuses the **shadow input** (which happens with `delegatesFocus`), it may not see the host's internals-based invalid state.
-  - If the SR reads the **host** node, `ariaInvalid` should be exposed.
-- **Open question (verify with VO/NVDA):** Does `internals.ariaInvalid` produce an "invalid" announcement when focus is on the shadow input? Or does the host need `aria-invalid="true"` as a DOM attribute for SRs to pick it up?
+- **Confirmed:** VoiceOver DOES announce the invalid state when `internals.ariaInvalid` is set, even though focus is on the shadow input. The browser appears to propagate the invalid state from the host's internals to the focused control.
 - **Difference from host `aria-invalid` attribute:** The attribute is visible to axe-core and all DOM inspectors. `internals.ariaInvalid` may not be; Deque support is pending.
-- **Recommendation:** Until SR behavior is confirmed, consider also setting `aria-invalid` as a host attribute when the field is invalid, mirroring the internals state.
+- **Recommendation:** `internals.ariaInvalid` is sufficient for SR announcement. However, for axe-core compatibility, also setting `aria-invalid` as a host attribute is still advisable.
 
 ---
 
@@ -237,25 +234,37 @@ As of axe-core 4.10.x:
 
 ## 5. Screen reader testing notes
 
-> Fill in after manual testing sessions. Template below.
+### VoiceOver (macOS) — manual testing completed
 
-### VoiceOver (macOS)
+| Scenario                 | Name announced                        | Description announced                  | Error/invalid announced       | Result                |
+| ------------------------ | ------------------------------------- | -------------------------------------- | ----------------------------- | --------------------- |
+| A (Light DOM siblings)   | Yes — "Email address"                 | Yes — "We will never share your email" | N/A                           | Pass                  |
+| B (Slotted children)     | Yes — "Phone number"                  | Yes — "Include country code"           | N/A                           | Pass                  |
+| C (Shadow internal)      | Yes — "Search query"                  | Yes — "Type keywords to search"        | N/A                           | Pass                  |
+| D (Cross-root label-for) | Yes — "Favorite color"                | N/A                                    | N/A                           | Pass                  |
+| 3a internals-only        | No label announced (placeholder only) | N/A                                    | N/A                           | Pass (proves failure) |
+| 3a input-only            | Yes — "Search via shadow input"       | N/A                                    | N/A                           | Pass                  |
+| 3a dual-write            | Yes — "Search via dual write"         | N/A                                    | N/A                           | Pass                  |
+| 3b Validation            | N/A                                   | N/A                                    | Yes — invalid state announced | Pass                  |
 
-| Scenario | VO version | macOS version | Name announced | Description announced | Error/invalid announced | Notes |
-| -------- | ---------- | ------------- | -------------- | --------------------- | ----------------------- | ----- |
-| A        |            |               |                |                       |                         |       |
-| B        |            |               |                |                       |                         |       |
-| C        |            |               |                |                       |                         |       |
-| D        |            |               |                |                       |                         |       |
+### Strategy isolation findings (VoiceOver)
+
+| Strategy         | Label announced on focus?                         | Confirms                                                       |
+| ---------------- | ------------------------------------------------- | -------------------------------------------------------------- |
+| `internals-only` | **No** — VO reads placeholder or "edit text" only | `internals.ariaLabel` alone does NOT reach the focused control |
+| `input-only`     | **Yes** — VO reads the label                      | Shadow input `aria-label` is what SRs read                     |
+| `dual-write`     | **Yes** — VO reads the label                      | Resilient; recommended pattern                                 |
+
+### Key SR observations
+
+- `delegatesFocus` correctly routes focus to the shadow input; VoiceOver interacts with that element.
+- `internals.ariaLabel` writes to the host node's a11y identity, but VoiceOver does not announce it when focus is on the shadow input. This confirms the dual-write requirement.
+- `<label for="...">` + `delegatesFocus` (Scenario D) correctly announces the label in VoiceOver. Both click-to-focus and name announcement work.
+- `internals.ariaInvalid = 'true'` is announced by VoiceOver when the field enters an invalid state.
 
 ### NVDA (Windows)
 
-| Scenario | NVDA version | Browser/version | Name announced | Description announced | Error/invalid announced | Notes |
-| -------- | ------------ | --------------- | -------------- | --------------------- | ----------------------- | ----- |
-| A        |              |                 |                |                       |                         |       |
-| B        |              |                 |                |                       |                         |       |
-| C        |              |                 |                |                       |                         |       |
-| D        |              |                 |                |                       |                         |       |
+> Not tested in this session. Results expected to be similar based on browser a11y tree exposure.
 
 ---
 
