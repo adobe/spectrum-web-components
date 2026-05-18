@@ -236,8 +236,10 @@ Use the decision tree under **Decision trees** below. If the answer is "split," 
 ### What to do
 
 1. **Core:** Create `2nd-gen/packages/core/components/<name>/` with `Component.base.ts`, `Component.types.ts`, `index.ts`.
-2. **SWC:** Create `2nd-gen/packages/swc/components/<name>/` with `Component.ts`, `component.css`, `index.ts`, `stories/`, `test/`.
-3. **Wire up exports** in `index`/`package.json` so the component is importable.
+2. **SWC:** Create `2nd-gen/packages/swc/components/<name>/` with `Component.ts`, `component.css`, `index.ts`, `swc-<tag>.ts`, `stories/`, `test/`.
+   - `index.ts` — class re-export only (`export * from './Component.js'`). No `defineElement`, no `HTMLElementTagNameMap`.
+   - `swc-<tag>.ts` — side-effect entry point that calls `defineElement('swc-<tag>', Component)` and declares the `HTMLElementTagNameMap` augmentation. Use `2nd-gen/packages/swc/components/badge/swc-badge.ts` as the reference.
+3. **Wire up exports** in `package.json` with a `./components/<name>/swc-<tag>.js` export entry so the side-effect file is importable as `@adobe/spectrum-wc/components/<name>/swc-<tag>.js`.
 
 See [Step 2](02_factor-rendering-out-of-1st-gen-component.md) and [Step 3](03_move-base-class-to-2nd-gen-core.md) for directory layout, code structure, and reference implementations (Badge).
 
@@ -253,11 +255,13 @@ See [Step 2](02_factor-rendering-out-of-1st-gen-component.md) and [Step 3](03_mo
 |--------|----------|
 | Wrong base or mixin | See Badge and [Step 2](02_factor-rendering-out-of-1st-gen-component.md). |
 | CSS not applied | Add `static override get styles()` and import the CSS module. See Badge. |
-| Package not exporting | Add to package exports (e.g. `@adobe/spectrum-wc/components/badge/swc-badge.js`). |
+| Package not exporting | Add a `./components/<name>/swc-<tag>.js` entry to the SWC `package.json` exports map. |
+| `defineElement` in `index.ts` | Move it to `swc-<tag>.ts`; `index.ts` should only re-export the class. |
 
 ### Quality gate
 
-- [ ] All files exist; `nx build` (or equivalent) for the affected packages succeeds; component is importable in Storybook.
+- [ ] All files exist, including `swc-<tag>.ts`; `nx build` (or equivalent) for the affected packages succeeds.
+- [ ] `import '@adobe/spectrum-wc/components/<name>/swc-<tag>.js'` registers the element; `import { Class } from '@adobe/spectrum-wc/<name>'` does not.
 
 ---
 
