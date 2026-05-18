@@ -31,20 +31,6 @@ An end-to-end conversation with streaming generation, file upload, feedback, and
 
 ## Anatomy of a conversation
 
-| Element                   | Description                                                                                           |
-| ------------------------- | ----------------------------------------------------------------------------------------------------- |
-| `swc-prompt-field`        | Text input surface for entering or refining a prompt                                                  |
-| `swc-upload-artifact`     | Shared upload artifact primitive with `card` and `media` types, used in prompt-field surfaces         |
-| `swc-conversation-thread` | Thread wrapper that stacks turns and enables ArrowUp/ArrowDown keyboard navigation between messages   |
-| `swc-conversation-turn`   | Column alignment for one participant turn; stack consecutive messages in one turn for grouped spacing |
-| `swc-user-message`        | User message bubble with explicit `type="copy\|card\|media"` rendering                                |
-| `swc-system-message`      | System reply stack; **default slot** guidance is after the API table on the System message docs page  |
-| `swc-response-status`     | Loading / generation-complete status indicator                                                        |
-| `swc-message-feedback`    | Positive / negative feedback control                                                                  |
-| `swc-message-sources`     | Collapsible numbered list of response sources                                                         |
-| `swc-suggestion-group`    | Follow-up suggestion group with required `slot="heading"` title and slotted suggestion items          |
-| `swc-suggestion-item`     | Interactive chip action used inside `swc-suggestion-group`; emits bubbled selection event             |
-
 A complete chat surface composes three layers:
 
 1. **Thread** — `swc-conversation-thread` wraps the running conversation and provides arrow-key navigation across turns.
