@@ -31,6 +31,9 @@ import styles from './accordion.css';
  * @element swc-accordion-item
  * @since 2.0.0
  *
+ * @fires swc-accordion-item-toggle - Dispatched when the item open state is
+ *   toggled. Cancelable; `preventDefault()` reverts the change.
+ *
  * @example
  * <swc-accordion-item>
  *   <span slot="label">Section heading</span>
