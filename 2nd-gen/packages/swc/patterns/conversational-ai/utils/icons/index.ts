@@ -69,6 +69,16 @@ export const ThreeDotsIcon = (): TemplateResult => html`
   </svg>
 `;
 
+/** Circle outline — used for pending/active agentic steps. */
+export const CircleOutlineIcon = (): TemplateResult => html`
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+    <path
+      fill="currentColor"
+      d="M10 18.75C5.1748 18.75 1.25 14.8252 1.25 10C1.25 5.1748 5.1748 1.25 10 1.25C14.8252 1.25 18.75 5.1748 18.75 10C18.75 14.8252 14.8252 18.75 10 18.75ZM10 2.75C6.00195 2.75 2.75 6.00195 2.75 10C2.75 13.998 6.00195 17.25 10 17.25C13.998 17.25 17.25 13.998 17.25 10C17.25 6.00195 13.998 2.75 10 2.75Z"
+    />
+  </svg>
+`;
+
 /** Check-circle icon — used for "response generated" status. */
 export const CheckCircleIcon = (): TemplateResult => html`
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">

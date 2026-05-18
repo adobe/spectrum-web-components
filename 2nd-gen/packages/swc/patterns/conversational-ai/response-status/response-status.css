@@ -39,7 +39,8 @@
 
 /* When the row is a button (reasoning toggle) */
 .swc-ResponseStatus-row--button {
-  inline-size: fit-content;
+  inline-size: 100%;
+  max-inline-size: 580px;
   padding: var(--swc-sources-toggle-padding, 3px) token("spacing-100");
   background: transparent;
   border: none;
@@ -48,20 +49,25 @@
   transition: background token("animation-duration-100") token("animation-ease-in-out");
 }
 
-/* Progress circle — indeterminate loading indicator */
-
-.swc-ResponseStatus-loadingSlot {
-  display: inline-flex;
-  flex-shrink: 0;
-  align-items: center;
-}
-
 .swc-ResponseStatus-label {
   font-family: token("sans-serif-font");
   font-size: token("font-size-100");
   font-weight: token("regular-font-weight");
   line-height: token("line-height-font-size-100");
   color: token("neutral-subdued-content-color-default");
+}
+
+.swc-ResponseStatus-row--button .swc-ResponseStatus-label {
+  flex: 1;
+  text-align: start;
+}
+
+/* Progress circle — indeterminate loading indicator */
+
+.swc-ResponseStatus-loadingSlot {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
 }
 
 .swc-ResponseStatus-row--button:hover .swc-ResponseStatus-label {
@@ -109,4 +115,109 @@
 .swc-ResponseStatus-row--button[aria-expanded="true"] + .swc-ResponseStatus-reasoning-panel {
   visibility: visible;
   block-size: auto;
+}
+
+/* ─────────────────────────────────────
+   Agentic mode (spike)
+   ───────────────────────────────────── */
+
+.swc-ResponseStatus--agentic {
+  inline-size: 100%;
+  max-inline-size: 580px;
+}
+
+.swc-ResponseStatus-row--processing,
+.swc-ResponseStatus-row--button.swc-ResponseStatus-row--processing {
+  padding-inline: token("spacing-100");
+  background: token("gray-75");
+  border-radius: token("corner-radius-medium-default");
+}
+
+.swc-ResponseStatus-row--complete.swc-ResponseStatus-row--button {
+  padding-inline: token("spacing-50");
+  background: token("gray-100");
+}
+
+.swc-ResponseStatus-dots {
+  flex-shrink: 0;
+}
+
+.swc-ResponseStatus-check {
+  flex-shrink: 0;
+}
+
+.swc-ResponseStatus-panel {
+  interpolate-size: allow-keywords;
+  display: block;
+  visibility: hidden;
+  block-size: 0;
+  overflow: hidden;
+  transition:
+    block-size token("animation-duration-200") token("animation-ease-in-out"),
+    visibility token("animation-duration-200") linear;
+}
+
+.swc-ResponseStatus-row--button[aria-expanded="true"] + .swc-ResponseStatus-panel {
+  visibility: visible;
+  block-size: auto;
+}
+
+.swc-ResponseStatus-steps {
+  padding: token("spacing-100") 0 0;
+  margin: 0;
+  list-style: none;
+}
+
+.swc-ResponseStatus-step {
+  display: flex;
+  gap: token("spacing-100");
+  align-items: flex-start;
+}
+
+.swc-ResponseStatus-step + .swc-ResponseStatus-step {
+  margin-block-start: token("spacing-200");
+}
+
+.swc-ResponseStatus-step-rail {
+  display: flex;
+  flex-shrink: 0;
+  flex-direction: column;
+  align-items: center;
+  inline-size: 20px;
+}
+
+.swc-ResponseStatus-step-line {
+  flex: 1;
+  inline-size: 1px;
+  min-block-size: token("spacing-400");
+  margin-block: token("spacing-50");
+  background: token("gray-300");
+}
+
+.swc-ResponseStatus-step-icon--active {
+  color: token("gray-800");
+}
+
+.swc-ResponseStatus-step-body {
+  flex: 1;
+  min-inline-size: 0;
+  padding-block: 2px;
+}
+
+.swc-ResponseStatus-step-title {
+  margin: 0;
+  font-family: token("sans-serif-font");
+  font-size: token("font-size-75");
+  font-weight: token("bold-font-weight");
+  line-height: token("line-height-font-size-75");
+  color: token("neutral-content-color-default");
+}
+
+.swc-ResponseStatus-step-detail {
+  margin: token("spacing-75") 0 0;
+  font-family: token("sans-serif-font");
+  font-size: token("font-size-75");
+  font-weight: token("regular-font-weight");
+  line-height: token("line-height-font-size-100");
+  color: token("neutral-subdued-content-color-default");
 }
