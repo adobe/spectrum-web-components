@@ -508,41 +508,36 @@ const a11yItems = html`
 /**
  * ### Features
  *
- * The `<swc-accordion>` and `<swc-accordion-item>` elements implement several
- * accessibility features:
+ * The `<swc-accordion>` and `<swc-accordion-item>` elements implement the
+ * [WAI-ARIA Accordion pattern](https://www.w3.org/WAI/ARIA/apg/patterns/accordion/):
  *
  * #### Keyboard navigation
  *
- * - <kbd>Tab</kbd>: Moves focus to the next focusable element; header buttons
- *   and `actions` slot controls each have their own tab stop
- * - <kbd>Enter</kbd> or <kbd>Space</kbd>: Expands or collapses the focused header
- * - <kbd>Tab</kbd> past an actions button: Continues to the next item header
- *   without affecting accordion state
+ * - <kbd>Tab</kbd>: Moves focus into and between item header buttons
+ * - <kbd>Enter</kbd>: Activates the focused header button (browser-native click behavior)
+ * - <kbd>Space</kbd>: Toggles the focused item and prevents page scroll
  *
  * #### ARIA implementation
  *
- * 1. **Role**: Each header is a `<button>` inside a heading element (`h2`–`h6`,
- *    controlled by the `level` attribute), satisfying the disclosure widget pattern
- * 2. **Expanded state**: `aria-expanded="true/false"` on the header button
- *    announces open or closed to screen readers
- * 3. **Panel region**: The content `<div>` carries `role="region"` and
- *    `aria-labelledby` pointing to its header button, naming the region for
- *    landmark navigation
- * 4. **Disabled state**: `aria-disabled="true"` is set instead of the native
- *    `disabled` attribute, keeping the header in the tab order while blocking
- *    toggle interactions
- * 5. **Actions isolation**: Clicks and keydown events on the actions container
- *    are stopped from propagating, so action buttons never accidentally trigger
- *    the accordion toggle
+ * 1. **Heading wrapper**: Each header button is wrapped in an `h2`–`h6` element matching
+ *    the accordion's `level` attribute
+ * 2. **`aria-expanded`**: Set to `"true"` on open items, `"false"` on closed items
+ * 3. **`aria-controls`**: Points from the header button to the panel (`id="content"`)
+ * 4. **Panel role**: The panel has `role="region"` and `aria-labelledby` pointing to the
+ *    header button, making it a labeled landmark
+ * 5. **`aria-disabled`**: Set on the header button (not the native `disabled` attribute)
+ *    so disabled items remain keyboard-reachable
+ * 6. **`hidden`**: Added to closed panels to remove them from the accessibility tree
+ * 7. **`inert`**: Added to disabled-item panels to block interaction with their contents
  *
  * ### Best practices
  *
- * - Set the `level` attribute to match the surrounding page heading hierarchy
- *   so the structure makes sense to screen reader users navigating by headings
- * - Provide a descriptive `label` slot value that identifies the section
- *   content; avoid generic labels like "Section 1"
- * - When using the `actions` slot, give each button a visible label or
- *   `aria-label` that conveys its purpose independent of the heading text
+ * - Set a `level` that continues the existing page heading hierarchy without skipping levels
+ * - Provide meaningful, unique label text for each item so screen reader users can
+ *   navigate the heading list
+ * - When using the `actions` slot, include the item subject in the action's accessible
+ *   name (e.g., "Edit personal information" rather than "Edit") so it is unambiguous out of context
+ * - Always set `density` explicitly; use `regular` when unsure
  */
 export const Accessibility: Story = {
   render: (args) => html`

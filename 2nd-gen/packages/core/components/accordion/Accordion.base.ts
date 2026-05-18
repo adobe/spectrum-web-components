@@ -29,6 +29,15 @@ import { AccordionItemBase } from './AccordionItem.base.js';
  * Base class for accordion components. Manages item propagation, heading
  * level, density, and the exclusive-open constraint.
  *
+ * @attribute {boolean} allowMultiple - Reflected as `allow-multiple`. When set,
+ *   multiple items may be open at the same time.
+ * @attribute {number} level - Heading level (2–6) applied to every item header.
+ *   Values outside that range are clamped.
+ * @attribute {AccordionSize} size - Size applied to all items.
+ * @attribute {AccordionDensity} density - Vertical spacing between items.
+ * @attribute {boolean} quiet - Renders the accordion in its quiet visual variant.
+ * @attribute {boolean} disabled - Disables all items in the accordion.
+ *
  * @slot - One or more `swc-accordion-item` elements.
  */
 export abstract class AccordionBase extends SizedMixin(SpectrumElement, {
@@ -83,6 +92,16 @@ export abstract class AccordionBase extends SizedMixin(SpectrumElement, {
   //     IMPLEMENTATION
   // ──────────────────────
 
+  private assignedItems(): AccordionItemBase[] {
+    const slot = this.renderRoot?.querySelector('slot');
+    if (!slot) {
+      return [];
+    }
+    return slot
+      .assignedElements({ flatten: true })
+      .filter((el): el is AccordionItemBase => el instanceof AccordionItemBase);
+  }
+
   private closeSiblingsOnOpen = (event: Event): void => {
     if (this.disabled) {
       event.preventDefault();
@@ -92,35 +111,41 @@ export abstract class AccordionBase extends SizedMixin(SpectrumElement, {
       return;
     }
     const toggling = event.target;
-    if (!(toggling instanceof AccordionItemBase) || !toggling.open) {
+    if (!(toggling instanceof AccordionItemBase)) {
       return;
     }
-    const slot = this.shadowRoot?.querySelector('slot');
-    if (!slot) {
-      return;
-    }
-    const items = slot
-      .assignedElements({ flatten: true })
-      .filter((el): el is AccordionItemBase => el instanceof AccordionItemBase);
-    for (const item of items) {
-      if (item !== toggling) {
-        item.open = false;
+    // Defer until after dispatch returns so that a canceled toggle (where the
+    // item reverts open back to false) does not incorrectly close siblings.
+    queueMicrotask(() => {
+      if (!toggling.open) {
+        return;
       }
-    }
+      for (const item of this.assignedItems()) {
+        if (item !== toggling) {
+          item.open = false;
+        }
+      }
+    });
   };
 
   protected syncAccordionItems(): void {
-    const slot = this.renderRoot?.querySelector('slot');
-    if (!slot) {
-      return;
-    }
-    const items = slot
-      .assignedElements({ flatten: true })
-      .filter((el): el is AccordionItemBase => el instanceof AccordionItemBase);
-    for (const item of items) {
+    for (const item of this.assignedItems()) {
       item.setManagedHeading(this.level);
       item.size = this.size;
       item.setManagedParentDisabled(this.disabled);
+    }
+  }
+
+  private enforceExclusiveOpen(): void {
+    let foundOpen = false;
+    for (const item of this.assignedItems()) {
+      if (item.open) {
+        if (foundOpen) {
+          item.open = false;
+        } else {
+          foundOpen = true;
+        }
+      }
     }
   }
 
@@ -156,6 +181,15 @@ export abstract class AccordionBase extends SizedMixin(SpectrumElement, {
       changedProperties.has('disabled')
     ) {
       this.syncAccordionItems();
+    }
+    // changedProperties.get() returns the previous value; this fires only when
+    // disabled transitions from true → false (re-enable).
+    if (
+      changedProperties.has('disabled') &&
+      changedProperties.get('disabled') === true &&
+      !this.allowMultiple
+    ) {
+      this.enforceExclusiveOpen();
     }
     super.update(changedProperties);
   }
