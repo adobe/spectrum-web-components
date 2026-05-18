@@ -378,7 +378,57 @@ The 1st-gen `TextfieldBase` (in `1st-gen/packages/textfield/src/Textfield.ts`) u
 
 ---
 
-## 11. Files in this PoC
+## 11. Decisions from this exercise
+
+These are the confirmed decisions that should be adopted in the direction PR (SWC-2054) and applied to all 2nd-gen form components.
+
+### Confirmed: adopt
+
+| Decision                                                                                      | Evidence                                                                                                        | Impact                                                                                            |
+| --------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| Use `ElementInternals` + `static formAssociated = true` for all form-participating components | Form value, reset, disabled, validation all work natively. No polyfills. Chrome 77+, Firefox 98+, Safari 16.4+. | Replaces custom form logic from 1st-gen                                                           |
+| Always dual-write accessible names (internals + shadow input)                                 | `internals-only` strategy fails to announce in VoiceOver. Only the shadow input's `aria-label` is read by SRs.  | Shared mixin must implement `#applyLabel()` writing to both                                       |
+| Primary labelling: host `aria-labelledby` referencing light DOM IDs                           | Scenario A passes in all browsers and is axe-compatible                                                         | Consumers provide labels in light DOM; component resolves and forwards                            |
+| Support slot-based labels via `slotchange` wiring                                             | Scenario B passes; component reads slotted text and dual-writes                                                 | Standardize `label` and `help-text` slot names across all form fields                             |
+| Use `delegatesFocus: true` for focus management                                               | Replaces 1st-gen `Focusable` mixin + `focusElement` getter. `<label for>` click-to-focus confirmed working.     | Simpler, fewer moving parts                                                                       |
+| `internals.ariaInvalid` is sufficient for SR invalid announcements                            | VoiceOver announces invalid state when set via internals                                                        | No need to redundantly set `aria-invalid` attribute for SR purposes (but still advisable for axe) |
+| axe policy: story-level exclusions, never global disables                                     | axe cannot read internals-only ARIA; dual-write mitigates most issues                                           | Document exclusions with links to upstream Deque issues                                           |
+
+### Confirmed: avoid
+
+| Decision                                              | Reason                                                                |
+| ----------------------------------------------------- | --------------------------------------------------------------------- |
+| Do NOT rely on `internals.ariaLabel` alone            | SRs do not announce it on the focused shadow input                    |
+| Do NOT assume cross-root ARIA works                   | No production solution exists; `referenceTarget` is not cross-browser |
+| Do NOT use `ariaLabelledByElements` as sole mechanism | Chrome 130+ only; use as progressive enhancement with try-catch       |
+| Do NOT disable axe rules globally in CI               | Masks real violations; use per-story exclusions instead               |
+
+### Build next: shared form mixin
+
+The mixin should encapsulate:
+
+1. `static formAssociated = true`
+2. `this.attachInternals()` in constructor
+3. `setFormValue()` on every input change
+4. `setValidity()` mirroring the inner input's `ValidityState`
+5. `formResetCallback()` — restore to default attribute value
+6. `formDisabledCallback()` — forward disabled to inner input
+7. `formStateRestoreCallback()` — restore on browser back/forward
+8. Dual-write ARIA labelling (`#applyLabel` / `#applyDescription`)
+9. Slot wiring with `slotchange` listener (with deduplication guard)
+10. `delegatesFocus: true` on shadow root
+
+### Monitor for future simplification
+
+| Emerging API                      | When it ships cross-browser                                                                 | What it replaces                                                            |
+| --------------------------------- | ------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
+| `referenceTarget`                 | Track [Can I Use](https://caniuse.com/mdn-html_elements_template_shadowrootreferencetarget) | Eliminates need for text-based dual-write; allows direct IDREF across roots |
+| `ariaLabelledByElements`          | Firefox + Safari pending                                                                    | Eliminates need to resolve text from IDs; direct element references         |
+| axe-core ElementInternals support | Deque tracking under elementInternals label                                                 | Removes need for dual-write for axe compatibility                           |
+
+---
+
+## 12. Files in this PoC
 
 | File           | Purpose                                                        |
 | -------------- | -------------------------------------------------------------- |
