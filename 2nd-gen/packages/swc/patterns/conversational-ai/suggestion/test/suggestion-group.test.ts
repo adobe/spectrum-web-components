@@ -83,6 +83,28 @@ export const OverviewTest: Story = {
     );
 
     await step(
+      'does not mutate heading id when the slotted heading already has an id',
+      async () => {
+        el.innerHTML = `
+          <h3 id="consumer-heading-id" slot="heading">Suggestions</h3>
+          <swc-suggestion-item>Option A</swc-suggestion-item>
+        `;
+        await el.updateComplete;
+
+        const headingSlot = el.shadowRoot?.querySelector<HTMLSlotElement>(
+          'slot[name="heading"]'
+        );
+        const headingElements =
+          headingSlot?.assignedElements({ flatten: true }) ?? [];
+        const firstHeading = headingElements[0] as HTMLElement | undefined;
+
+        expect(firstHeading?.id).toBe('consumer-heading-id');
+        expect(el.getAttribute('aria-labelledby')).toBe('consumer-heading-id');
+        expect(el.getAttribute('role')).toBe('group');
+      }
+    );
+
+    await step(
       'accessible-label overrides the accessible name while heading stays visible',
       async () => {
         el.innerHTML = `
