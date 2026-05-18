@@ -83,6 +83,16 @@ export abstract class AccordionBase extends SizedMixin(SpectrumElement, {
   //     IMPLEMENTATION
   // ──────────────────────
 
+  private assignedItems(): AccordionItemBase[] {
+    const slot = this.renderRoot?.querySelector('slot');
+    if (!slot) {
+      return [];
+    }
+    return slot
+      .assignedElements({ flatten: true })
+      .filter((el): el is AccordionItemBase => el instanceof AccordionItemBase);
+  }
+
   private closeSiblingsOnOpen = (event: Event): void => {
     if (this.disabled) {
       event.preventDefault();
@@ -101,16 +111,7 @@ export abstract class AccordionBase extends SizedMixin(SpectrumElement, {
       if (!toggling.open) {
         return;
       }
-      const slot = this.shadowRoot?.querySelector('slot');
-      if (!slot) {
-        return;
-      }
-      const items = slot
-        .assignedElements({ flatten: true })
-        .filter(
-          (el): el is AccordionItemBase => el instanceof AccordionItemBase
-        );
-      for (const item of items) {
+      for (const item of this.assignedItems()) {
         if (item !== toggling) {
           item.open = false;
         }
@@ -119,14 +120,7 @@ export abstract class AccordionBase extends SizedMixin(SpectrumElement, {
   };
 
   protected syncAccordionItems(): void {
-    const slot = this.renderRoot?.querySelector('slot');
-    if (!slot) {
-      return;
-    }
-    const items = slot
-      .assignedElements({ flatten: true })
-      .filter((el): el is AccordionItemBase => el instanceof AccordionItemBase);
-    for (const item of items) {
+    for (const item of this.assignedItems()) {
       item.setManagedHeading(this.level);
       item.size = this.size;
       item.setManagedParentDisabled(this.disabled);
@@ -134,15 +128,8 @@ export abstract class AccordionBase extends SizedMixin(SpectrumElement, {
   }
 
   private enforceExclusiveOpen(): void {
-    const slot = this.renderRoot?.querySelector('slot');
-    if (!slot) {
-      return;
-    }
-    const items = slot
-      .assignedElements({ flatten: true })
-      .filter((el): el is AccordionItemBase => el instanceof AccordionItemBase);
     let foundOpen = false;
-    for (const item of items) {
+    for (const item of this.assignedItems()) {
       if (item.open) {
         if (foundOpen) {
           item.open = false;
