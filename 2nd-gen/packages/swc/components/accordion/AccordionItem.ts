@@ -26,7 +26,7 @@ import { Chevron100Icon } from '../icon/elements/Chevron100Icon.js';
 import { Chevron200Icon } from '../icon/elements/Chevron200Icon.js';
 import { Chevron300Icon } from '../icon/elements/Chevron300Icon.js';
 
-import styles from './accordion.css';
+import styles from './accordion-item.css';
 
 /**
  * An accordion item component that wraps a single expandable content section.
