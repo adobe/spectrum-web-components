@@ -594,7 +594,6 @@ class ConversationFullPatternDemo extends LitElement {
           flex-shrink: 0;
           padding-block-start: 8px;
         }
-
       </style>
       <div
         class="swc-ConversationFullPatternDemo-shell"

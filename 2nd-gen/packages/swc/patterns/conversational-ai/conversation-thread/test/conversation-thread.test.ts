@@ -183,6 +183,5 @@ export const OverviewTest: Story = {
         );
       }
     );
-
   },
 };
