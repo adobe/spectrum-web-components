@@ -30,6 +30,7 @@
     - [Public API](#public-api)
     - [Behavioral semantics](#behavioral-semantics)
     - [Accessibility semantics notes (2nd-gen)](#accessibility-semantics-notes-2nd-gen)
+    - [ARIA relationship wiring](#aria-relationship-wiring)
 - [Architecture: core vs SWC split](#architecture-core-vs-swc-split)
 - [Controller integration assumptions](#controller-integration-assumptions)
     - [Event dispatch ownership](#event-dispatch-ownership)
@@ -431,7 +432,7 @@ In the initial release, the tooltip uses native popover for open/close but has n
 - Tooltips must respond to both hover and keyboard focus. React Spectrum's `trigger="focus"` (focus-only mode) is not applicable here: WCAG 1.4.13 requires the tooltip to be available via pointer hover, so restricting to focus-only would fail mouse users. Both trigger methods are always active in automatic mode.
 - Toggletip mode (touch/longpress disclosure pattern, SWC-2022) is not applicable for the 2nd-gen Tooltip. Consumers needing toggletip behavior should use `swc-popover` or a popover-derived component instead.
 
-#### ARIA relationship wiring
+### ARIA relationship wiring
 
 The SWC layer uses `Element.ariaDescribedByElements` to wire the ARIA relationship between the trigger and tooltip on `open` change. This API was chosen specifically because 2nd-gen button-like components render a semantic `<button>` inside their shadow DOM — the inner button is the AT-facing interactive element, not the host. A string `aria-describedby` attribute on the trigger host cannot reference an element across a shadow boundary; `ariaDescribedByElements` uses element references that bypass cross-root ID scoping. String-ID `aria-describedby` on the host must not be used as a fallback.
 

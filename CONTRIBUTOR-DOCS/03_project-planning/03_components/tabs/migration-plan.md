@@ -802,7 +802,7 @@ Any 2nd-gen change to DOM arrangement must preserve ID resolution. Options inclu
 - [CSS style guide — Custom properties](../../../02_style-guide/01_css/02_custom-properties.md)
 - [1st-gen source](../../../../1st-gen/packages/tabs/src/)
 - [1st-gen tests](../../../../1st-gen/packages/tabs/test/)
-- [Consumer migration guide](../../../../2nd-gen/packages/swc/components/tabs/migration.md)
+- [Consumer migration guide](../../../../2nd-gen/packages/swc/components/tabs/migration-guide.mdx)
 - [WAI-ARIA 1.2](https://www.w3.org/TR/wai-aria-1.2/)
 - [WCAG 2.2](https://www.w3.org/TR/WCAG22/)
 - [Using ARIA (read this first)](https://www.w3.org/WAI/ARIA/apg/practices/read-me-first/)
