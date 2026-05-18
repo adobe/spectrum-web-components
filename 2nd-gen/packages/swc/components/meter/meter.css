@@ -1,0 +1,192 @@
+/*!
+ * Copyright 2026 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+/*
+ * Meter styles. Shared bar/track/fill and label-layout rules are inlined
+ * here for the meter migration; they will be lifted into
+ * `swc/shared/linear-progress-base.css` when `<swc-progress-bar>` migrates.
+ * Tokens are sourced from spectrum-css spectrum-two
+ * `components/progressbar/index.css` and `components/meter/index.css`.
+ */
+
+:host {
+  --swc-meter-thickness: token("progress-bar-thickness-medium");
+  --swc-meter-corner-radius: token("corner-radius-full");
+  --swc-meter-min-width: token("progress-bar-minimum-width");
+  --swc-meter-max-width: token("progress-bar-maximum-width");
+  --swc-meter-track-color: token("track-color");
+  --swc-meter-fill-color: token("accent-content-color-default");
+  --swc-meter-text-color: token("neutral-subdued-content-color-default");
+  --swc-meter-font-size: token("font-size-100");
+  --swc-meter-line-height: token("line-height-100");
+  --swc-meter-line-height-cjk: token("cjk-line-height-100");
+  --swc-meter-top-to-text: token("component-top-to-text-100");
+  --swc-meter-label-to-track: token("spacing-75");
+  --swc-meter-label-to-value-spacing: token("spacing-200");
+  --swc-meter-description-spacing: token("spacing-75");
+
+  display: inline-block;
+  inline-size: 100%;
+  min-inline-size: var(--swc-meter-min-width);
+  max-inline-size: var(--swc-meter-max-width);
+  vertical-align: top;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.swc-Meter {
+  display: grid;
+  position: relative;
+  grid-template-areas:
+    "value"
+    "track";
+  inline-size: 100%;
+}
+
+.swc-Meter-label,
+.swc-Meter-value {
+  margin-block-end: var(--swc-meter-label-to-track);
+  font-size: var(--swc-meter-font-size);
+  line-height: var(--swc-meter-line-height);
+  color: var(--swc-meter-text-color);
+  text-align: start;
+  overflow-wrap: break-word;
+
+  &:lang(ja),
+  &:lang(zh),
+  &:lang(ko) {
+    line-height: var(--swc-meter-line-height-cjk);
+  }
+}
+
+.swc-Meter-label {
+  margin-block-start: var(--swc-meter-top-to-text);
+}
+
+.swc-Meter-label.is-empty {
+  display: none;
+}
+
+.swc-Meter-value {
+  grid-area: value;
+  justify-self: end;
+  margin-inline-start: var(--swc-meter-label-to-value-spacing);
+  word-break: normal;
+}
+
+.swc-Meter-track {
+  grid-area: track;
+  inline-size: 100%;
+  block-size: var(--swc-meter-thickness);
+  background: var(--swc-meter-track-color);
+  border-radius: var(--swc-meter-corner-radius);
+  overflow: hidden;
+}
+
+.swc-Meter-fill {
+  block-size: var(--swc-meter-thickness);
+  background: var(--swc-meter-fill-color);
+  border: none;
+  border-radius: var(--swc-meter-corner-radius);
+  transition: inline-size 1s;
+}
+
+.swc-Meter-description {
+  margin-block-start: var(--swc-meter-description-spacing);
+  font-size: var(--swc-meter-font-size);
+  line-height: var(--swc-meter-line-height);
+  color: var(--swc-meter-text-color);
+}
+
+.swc-Meter-description.is-empty {
+  display: none;
+}
+
+/* Variants */
+.swc-Meter--positive {
+  --swc-meter-fill-color: token("positive-visual-color");
+}
+
+.swc-Meter--notice {
+  --swc-meter-fill-color: token("notice-visual-color");
+}
+
+.swc-Meter--negative {
+  --swc-meter-fill-color: token("negative-visual-color");
+}
+
+/* Side label */
+.swc-Meter--sideLabel {
+  grid-template-areas: "label track value";
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+}
+
+.swc-Meter--sideLabel ~ .swc-Meter-label,
+.swc-Meter--sideLabel .swc-Meter-label {
+  flex-grow: 0;
+  grid-area: label;
+  margin-block: 0;
+  margin-inline-end: var(--swc-meter-label-to-value-spacing);
+}
+
+.swc-Meter--sideLabel .swc-Meter-value {
+  order: 3;
+  margin-block: 0;
+  text-align: end;
+}
+
+/* Static colors */
+.swc-Meter--staticWhite {
+  --swc-meter-fill-color: token("static-white-track-indicator-color");
+  --swc-meter-track-color: token("static-white-track-color");
+  --swc-meter-text-color: token("static-white-text-color");
+}
+
+.swc-Meter--staticBlack {
+  --swc-meter-fill-color: token("static-black-track-indicator-color");
+  --swc-meter-track-color: token("static-black-track-color");
+  --swc-meter-text-color: token("static-black-text-color");
+}
+
+/* Sizes */
+:host([size="s"]) {
+  --swc-meter-thickness: token("progress-bar-thickness-small");
+  --swc-meter-font-size: token("font-size-75");
+  --swc-meter-top-to-text: token("component-top-to-text-75");
+}
+
+:host([size="l"]) {
+  --swc-meter-thickness: token("progress-bar-thickness-large");
+  --swc-meter-font-size: token("font-size-200");
+  --swc-meter-top-to-text: token("component-top-to-text-200");
+}
+
+:host([size="xl"]) {
+  --swc-meter-thickness: token("progress-bar-thickness-extra-large");
+  --swc-meter-font-size: token("font-size-300");
+  --swc-meter-top-to-text: token("component-top-to-text-300");
+}
+
+@media (forced-colors: active) {
+  .swc-Meter-track {
+    background: ButtonFace;
+    border: 1px solid ButtonText;
+    forced-color-adjust: none;
+  }
+
+  .swc-Meter-fill {
+    background: ButtonText;
+  }
+}
