@@ -41,7 +41,6 @@ export const OverviewTest: Story = {
     );
 
     await step('first turn is tabbable by default', async () => {
-      expect(el.activeIndex).toBe(0);
       expect(turns[0]?.getAttribute('tabindex')).toBe('0');
       expect(turns[1]?.getAttribute('tabindex')).toBe('-1');
       expect(turns[2]?.getAttribute('tabindex')).toBe('-1');
@@ -51,7 +50,6 @@ export const OverviewTest: Story = {
       turns[1]?.focus();
       await el.updateComplete;
 
-      expect(el.activeIndex).toBe(1);
       expect(turns[0]?.getAttribute('tabindex')).toBe('-1');
       expect(turns[1]?.getAttribute('tabindex')).toBe('0');
       expect(turns[2]?.getAttribute('tabindex')).toBe('-1');
@@ -69,7 +67,6 @@ export const OverviewTest: Story = {
       );
       await el.updateComplete;
 
-      expect(el.activeIndex).toBe(1);
       expect(canvasElement.ownerDocument.activeElement).toBe(turns[1]);
       expect(turns[1]?.getAttribute('tabindex')).toBe('0');
     });
@@ -84,7 +81,6 @@ export const OverviewTest: Story = {
       );
       await el.updateComplete;
 
-      expect(el.activeIndex).toBe(0);
       expect(canvasElement.ownerDocument.activeElement).toBe(turns[0]);
     });
 
@@ -100,7 +96,6 @@ export const OverviewTest: Story = {
         })
       );
       await el.updateComplete;
-      expect(el.activeIndex).toBe(2);
       expect(canvasElement.ownerDocument.activeElement).toBe(turns[2]);
 
       turns[2]?.dispatchEvent(
@@ -111,7 +106,6 @@ export const OverviewTest: Story = {
         })
       );
       await el.updateComplete;
-      expect(el.activeIndex).toBe(0);
       expect(canvasElement.ownerDocument.activeElement).toBe(turns[0]);
     });
 
@@ -128,7 +122,6 @@ export const OverviewTest: Story = {
           canvasElement.querySelectorAll<HTMLElement>('swc-conversation-turn')
         );
         expect(currentTurns.length).toBe(4);
-        expect(el.activeIndex).toBe(0);
         expect(currentTurns[0]?.getAttribute('tabindex')).toBe('0');
         expect(currentTurns[3]?.getAttribute('tabindex')).toBe('-1');
 
@@ -140,7 +133,6 @@ export const OverviewTest: Story = {
           canvasElement.querySelectorAll<HTMLElement>('swc-conversation-turn')
         );
         expect(currentTurns.length).toBe(3);
-        expect(el.activeIndex).toBe(0);
         expect(currentTurns[0]?.getAttribute('tabindex')).toBe('0');
       }
     );
@@ -157,13 +149,12 @@ export const OverviewTest: Story = {
         );
         currentTurns[0]?.focus();
         await el.updateComplete;
-        expect(el.activeIndex).toBe(0);
+        expect(currentTurns[0]?.getAttribute('tabindex')).toBe('0');
 
         promptField.focus();
         await el.updateComplete;
         el.focus();
         await el.updateComplete;
-        expect(el.activeIndex).toBe(currentTurns.length - 1);
         expect(canvasElement.ownerDocument.activeElement).toBe(
           currentTurns[currentTurns.length - 1]
         );
@@ -181,7 +172,6 @@ export const OverviewTest: Story = {
           canvasElement.querySelectorAll<HTMLElement>('swc-conversation-turn')
         );
         expect(canvasElement.ownerDocument.activeElement).toBe(promptField);
-        expect(el.activeIndex).toBe(currentTurns.length - 1);
         expect(
           currentTurns[currentTurns.length - 1]?.getAttribute('tabindex')
         ).toBe('0');
@@ -193,5 +183,6 @@ export const OverviewTest: Story = {
         );
       }
     );
+
   },
 };
