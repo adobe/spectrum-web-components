@@ -397,20 +397,17 @@
       </form>
     </div>
 
-    <!-- Scenario C: shadow DOM internal IDs -->
+    <!-- Scenario C: shadow DOM internal IDs (shadow-LOCAL resolution) -->
     <div class="scenario">
-      <h3>Scenario C: IDs inside shadow DOM (internal wiring)</h3>
+      <h3>Scenario C: shadow-local IDREF resolution (NOT cross-root)</h3>
       <p>
         Label and help text are rendered
-        <em>inside</em>
-        the shadow root. The component uses
-        <code>ElementInternals</code>
-        APIs (
-        <code>ariaLabelledByElements</code>
-        /
-        <code>ariaDescribedByElements</code>
-        where supported, or falls back to shadow-scoped IDs on the internal
-        input).
+        <em>inside the same shadow root</em>
+        as the input. The input's
+        <code>aria-labelledby</code>
+        references a shadow-scoped ID. This is
+        <strong>not</strong>
+        cross-root ARIA — both elements share the same tree scope.
       </p>
       <form id="form-2c">
         <div class="field-group">
@@ -459,29 +456,90 @@
     <h2>3. ElementInternals ARIA property APIs</h2>
 
     <div class="scenario">
-      <h3>
-        3a.
-        <code>internals.ariaLabel</code>
-        vs host
-        <code>aria-label</code>
-      </h3>
-      <form id="form-3a">
-        <face-text-field
-          id="field-3a-internals"
-          name="internals-label"
-          use-internals-aria-label="Search via internals"
-          placeholder="internals.ariaLabel"
-        ></face-text-field>
-        <face-text-field
-          id="field-3a-host"
-          name="host-label"
-          aria-label="Search via host attribute"
-          placeholder="host aria-label"
-        ></face-text-field>
-      </form>
+      <h3>3a. Isolated ARIA labelling strategies (one per field)</h3>
       <p>
-        Compare the two in the accessibility tree: which one exposes the name?
+        Each field uses exactly
+        <strong>one</strong>
+        labelling strategy in isolation. Inspect each in the accessibility tree
+        to determine which layer actually carries the accessible name to the
+        focused control.
       </p>
+      <form id="form-3a">
+        <div class="field-group">
+          <code>labelling-strategy="internals-only"</code>
+          <face-text-field
+            id="field-3a-internals"
+            name="internals-label"
+            use-internals-aria-label="Search via internals"
+            labelling-strategy="internals-only"
+            placeholder="internals.ariaLabel only"
+          ></face-text-field>
+          <span class="help-text">
+            Sets
+            <code>internals.ariaLabel</code>
+            only. Does the focused input announce this name?
+          </span>
+        </div>
+        <div class="field-group">
+          <code>labelling-strategy="input-only"</code>
+          <face-text-field
+            id="field-3a-input"
+            name="input-label"
+            use-internals-aria-label="Search via shadow input"
+            labelling-strategy="input-only"
+            placeholder="shadow input aria-label only"
+          ></face-text-field>
+          <span class="help-text">
+            Sets
+            <code>aria-label</code>
+            on the shadow
+            <code>&lt;input&gt;</code>
+            only. Does the focused input announce this name?
+          </span>
+        </div>
+        <div class="field-group">
+          <code>labelling-strategy="dual-write"</code>
+          <face-text-field
+            id="field-3a-dual"
+            name="dual-label"
+            use-internals-aria-label="Search via dual write"
+            labelling-strategy="dual-write"
+            placeholder="both internals + shadow input"
+          ></face-text-field>
+          <span class="help-text">
+            Sets both
+            <code>internals.ariaLabel</code>
+            and shadow input
+            <code>aria-label</code>
+            . Recommended resilient pattern.
+          </span>
+        </div>
+        <div class="field-group">
+          <code>aria-label (host attribute, input-only strategy)</code>
+          <face-text-field
+            id="field-3a-host"
+            name="host-label"
+            aria-label="Search via host attribute"
+            labelling-strategy="input-only"
+            placeholder="host aria-label → shadow input"
+          ></face-text-field>
+          <span class="help-text">
+            Host
+            <code>aria-label</code>
+            forwarded to shadow input only.
+          </span>
+        </div>
+      </form>
+      <div class="note">
+        <strong>Expected:</strong>
+        Only the shadow input's
+        <code>aria-label</code>
+        produces a SR announcement because
+        <code>delegatesFocus</code>
+        places focus there.
+        <code>internals.ariaLabel</code>
+        alone should NOT announce on the focused input.
+      </div>
     </div>
 
     <div class="scenario">
@@ -539,9 +597,12 @@
     <h2>5. IDREF matrix results</h2>
 
     <p>
-      This table is populated by JavaScript introspection after the page loads.
-      For screen reader behavior, manual testing with VoiceOver / NVDA is
-      required; record results in the summary document.
+      This table checks
+      <strong>DOM state</strong>
+      (attributes, resolved text content) — not the actual accessibility tree.
+      DOM wiring is a necessary precondition but does not guarantee SR exposure.
+      Verify actual computed names in DevTools Accessibility panel or with a
+      screen reader.
     </p>
 
     <table class="matrix" id="matrix-table">
@@ -550,8 +611,8 @@
           <th>Scenario</th>
           <th>Label wiring</th>
           <th>Description wiring</th>
-          <th>a11y tree name</th>
-          <th>a11y tree description</th>
+          <th>DOM name source</th>
+          <th>DOM description source</th>
           <th>Status</th>
         </tr>
       </thead>
@@ -600,6 +661,7 @@
         #input;
         #shadowLabel;
         #shadowHelp;
+        #slotListenersAttached = false;
 
         constructor() {
           super();
@@ -955,26 +1017,38 @@
           }
         }
 
-        /**
-         * Key finding: internals.ariaLabel sets the name on the HOST
-         * a11y node, but browsers expose the SHADOW INPUT as the
-         * primary control. Both must carry the label for consistent
-         * screen reader behavior.
-         */
+        get #labellingStrategy() {
+          return this.getAttribute('labelling-strategy') || 'dual-write';
+        }
+
         #applyLabel(text) {
           if (!text) return;
-          this.#internals.ariaLabel = this.#internals.ariaLabel || text;
-          if (!this.#input.hasAttribute('aria-labelledby')) {
-            this.#input.setAttribute('aria-label', text);
+          const strategy = this.#labellingStrategy;
+
+          if (strategy === 'internals-only' || strategy === 'dual-write') {
+            this.#internals.ariaLabel = this.#internals.ariaLabel || text;
+          }
+
+          if (strategy === 'input-only' || strategy === 'dual-write') {
+            if (!this.#input.hasAttribute('aria-labelledby')) {
+              this.#input.setAttribute('aria-label', text);
+            }
           }
         }
 
         #applyDescription(text) {
           if (!text) return;
-          this.#internals.ariaDescription =
-            this.#internals.ariaDescription || text;
-          if (!this.#input.hasAttribute('aria-describedby')) {
-            this.#input.setAttribute('aria-description', text);
+          const strategy = this.#labellingStrategy;
+
+          if (strategy === 'internals-only' || strategy === 'dual-write') {
+            this.#internals.ariaDescription =
+              this.#internals.ariaDescription || text;
+          }
+
+          if (strategy === 'input-only' || strategy === 'dual-write') {
+            if (!this.#input.hasAttribute('aria-describedby')) {
+              this.#input.setAttribute('aria-description', text);
+            }
           }
         }
 
@@ -1024,6 +1098,9 @@
         }
 
         #handleSlotWiring() {
+          if (this.#slotListenersAttached) return;
+          this.#slotListenersAttached = true;
+
           const labelSlot = this.shadowRoot.querySelector('slot[name="label"]');
           const helpSlot = this.shadowRoot.querySelector(
             'slot[name="help-text"]'
@@ -1138,14 +1215,21 @@
       document.getElementById('form-3b').addEventListener('submit', (e) => {
         e.preventDefault();
         const field = document.getElementById('field-3b');
+        const shadowInput = field.shadowRoot?.querySelector('input');
         const out = document.getElementById('output-3b');
         const valid = field.reportValidity();
         out.textContent =
           `reportValidity(): ${valid}\n` +
           `validity.valid: ${field.validity.valid}\n` +
           `validity.rangeUnderflow: ${field.validity.rangeUnderflow}\n` +
-          `validationMessage: "${field.validationMessage}"\n` +
-          `aria-invalid on internals: ${field.getAttribute('aria-invalid') ?? '(check internals)'}\n\n` +
+          `validationMessage: "${field.validationMessage}"\n\n` +
+          `--- internals.ariaInvalid observations ---\n` +
+          `host aria-invalid attr: ${field.getAttribute('aria-invalid') ?? '(not reflected)'}\n` +
+          `shadow input aria-invalid attr: ${shadowInput?.getAttribute('aria-invalid') ?? '(not set)'}\n` +
+          `NOTE: internals.ariaInvalid sets the invalid state on the HOST\n` +
+          `a11y node. Whether SRs announce this depends on whether they\n` +
+          `read the host or the shadow input. Verify manually with VO/NVDA.\n` +
+          `Compare: does host aria-invalid="true" attr differ from internals?\n\n` +
           `Custom validation: ${!valid ? 'PASS (correctly rejected)' : 'Check input value'}`;
       });
 
@@ -1191,8 +1275,6 @@
         for (const s of scenarios) {
           const field = document.getElementById(s.fieldId);
           if (!field) continue;
-
-          const internals = field.internals ?? null;
 
           let a11yName = '(inspect DevTools)';
           let a11yDesc = '(inspect DevTools)';

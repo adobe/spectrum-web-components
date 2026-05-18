@@ -33,7 +33,17 @@ axe-core loads from CDN on demand when you click the audit button.
 
 ### Critical research finding
 
-**`internals.ariaLabel` alone is not sufficient.** Browsers expose the shadow `<input>` as the primary accessible control (it is what receives focus and screen reader interaction). The host's `ElementInternals` ARIA properties go on a separate a11y node that may not be the one screen readers announce. The PoC now uses a dual-write strategy: every label is set on both `internals.ariaLabel` (for spec compliance) and the shadow input's `aria-label` (for actual screen reader exposure). This is the pattern the shared mixin should implement.
+**`internals.ariaLabel` alone is not sufficient.** Browsers expose the shadow `<input>` as the primary accessible control (it is what receives focus and screen reader interaction). The host's `ElementInternals` ARIA properties go on a separate a11y node that may not be the one screen readers announce.
+
+The PoC now isolates three labelling strategies via `labelling-strategy` attribute to prove this:
+
+| Strategy         | What it sets                          | Expected SR result                  |
+| ---------------- | ------------------------------------- | ----------------------------------- |
+| `internals-only` | Only `internals.ariaLabel` on host    | Fails — focused input has no name   |
+| `input-only`     | Only `aria-label` on shadow `<input>` | Works — this is the focused element |
+| `dual-write`     | Both internals + shadow input         | Works — resilient, recommended      |
+
+The dual-write pattern is recommended for production, but the isolated strategies prove that **the shadow input is what carries the semantics**, not the host's internals node.
 
 ---
 
@@ -107,18 +117,18 @@ Consumer projects content into the component via `<slot>`. IDs live on the slott
 1. Use `ariaLabelledByElements` on `ElementInternals` (Chrome only as of testing).
 2. Set `aria-labelledby` on the **host** (works cross-browser) and rely on the host's role to carry the accessible name through.
 
-### Scenario C: IDs inside shadow DOM (internal wiring)
+### Scenario C: shadow-local IDREF resolution (NOT cross-root)
 
-Label and help text rendered _inside_ the shadow root. Component uses shadow-scoped IDs on the internal input.
+Label and help text rendered _inside_ the shadow root. The internal input uses `aria-labelledby="shadow-label"` where both the input and `#shadow-label` share the same shadow root scope. This is standard same-scope IDREF resolution — **not** cross-root ARIA.
 
-| Aspect                                            | Chrome    | Firefox       | Safari    | Notes                                                  |
-| ------------------------------------------------- | --------- | ------------- | --------- | ------------------------------------------------------ |
-| Shadow input `aria-labelledby` → shadow-scoped ID | Pass      | Pass          | Pass      | Both elements share the same shadow root scope         |
-| Light DOM element referencing shadow ID           | Fail      | Fail          | Fail      | Expected: shadow IDs are encapsulated                  |
-| `internals.ariaLabel` set from shadow label text  | Pass      | Pass          | Pass      | Fallback approach; explicit string, not IDREF          |
-| Screen reader announces internal label            | Pass (VO) | Verify (NVDA) | Pass (VO) | Either via shadow-scoped IDREF or `ariaLabel` fallback |
+| Aspect                                            | Chrome    | Firefox       | Safari    | Notes                                                                          |
+| ------------------------------------------------- | --------- | ------------- | --------- | ------------------------------------------------------------------------------ |
+| Shadow input `aria-labelledby` → shadow-scoped ID | Pass      | Pass          | Pass      | Same-scope resolution; both elements in same shadow root                       |
+| Light DOM element referencing shadow ID           | Fail      | Fail          | Fail      | Expected: shadow IDs are encapsulated by design                                |
+| `internals.ariaLabel` set from shadow label text  | Pass      | Pass          | Pass      | String-based; no IDREF involved                                                |
+| Screen reader announces internal label            | Pass (VO) | Verify (NVDA) | Pass (VO) | Shadow-scoped IDREF on the input is what carries the name, not internals alone |
 
-**Conclusion:** Shadow-internal IDs work fine for _within-shadow_ wiring (input and label in the same shadow root). This is a valid pattern when the component **owns** both the label and the control. External consumers cannot reference shadow IDs, which is by design.
+**Conclusion:** This works because both elements are in the same scope. Do **not** infer that host ARIA can target shadow IDs or that external references can cross roots. This pattern is valid only when the component **owns** both label and control within its shadow tree.
 
 ### Scenario D: cross-root; light DOM `<label for>` targeting the host
 
@@ -173,6 +183,17 @@ A native `<label for="field-id">` in light DOM targets the custom element host. 
 - Pair with `ariaInvalid` on internals to toggle the invalid state.
 - The referenced error element should use `role="alert"` or be in a live region for screen reader announcement.
 - **axe-core note:** axe may flag the custom element for missing `aria-errormessage` association if it cannot inspect the shadow tree; document expected behavior in Storybook test-runner exclusions.
+
+### `internals.ariaInvalid` — observed behavior and open questions
+
+- `internals.ariaInvalid = 'true'` sets the invalid state on the **host** a11y node.
+- This does **not** reflect as a DOM attribute on the host (unlike `this.setAttribute('aria-invalid', 'true')` which is a visible attribute).
+- Whether screen readers announce the invalid state depends on which node they read:
+  - If the SR focuses the **shadow input** (which happens with `delegatesFocus`), it may not see the host's internals-based invalid state.
+  - If the SR reads the **host** node, `ariaInvalid` should be exposed.
+- **Open question (verify with VO/NVDA):** Does `internals.ariaInvalid` produce an "invalid" announcement when focus is on the shadow input? Or does the host need `aria-invalid="true"` as a DOM attribute for SRs to pick it up?
+- **Difference from host `aria-invalid` attribute:** The attribute is visible to axe-core and all DOM inspectors. `internals.ariaInvalid` may not be; Deque support is pending.
+- **Recommendation:** Until SR behavior is confirmed, consider also setting `aria-invalid` as a host attribute when the field is invalid, mirroring the internals state.
 
 ---
 
