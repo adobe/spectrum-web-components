@@ -12,6 +12,7 @@
 
 import { CSSResultArray, html, TemplateResult } from 'lit';
 import { ifDefined } from 'lit/directives/if-defined.js';
+import { html as staticHtml, unsafeStatic } from 'lit/static-html.js';
 
 import {
   AccordionItemBase,
@@ -117,28 +118,8 @@ export class AccordionItem extends AccordionItemBase {
   }
 
   private renderHeadingWrapper(content: TemplateResult): TemplateResult {
-    switch (this.headingLevel) {
-      case 2:
-        return html`
-          <h2>${content}</h2>
-        `;
-      case 4:
-        return html`
-          <h4>${content}</h4>
-        `;
-      case 5:
-        return html`
-          <h5>${content}</h5>
-        `;
-      case 6:
-        return html`
-          <h6>${content}</h6>
-        `;
-      default:
-        return html`
-          <h3>${content}</h3>
-        `;
-    }
+    const tag = unsafeStatic(`h${this.headingLevel}`);
+    return staticHtml`<${tag}>${content}</${tag}>`;
   }
 
   protected override render(): TemplateResult {

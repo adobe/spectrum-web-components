@@ -14,8 +14,10 @@ import { PropertyValues } from 'lit';
 import { property } from 'lit/decorators.js';
 
 import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
+import { SizedMixin } from '@spectrum-web-components/core/mixins/index.js';
 
 import {
+  ACCORDION_VALID_SIZES,
   type AccordionDensity,
   type AccordionHeadingLevel,
   type AccordionSize,
@@ -29,7 +31,10 @@ import { AccordionItemBase } from './AccordionItem.base.js';
  *
  * @slot - One or more `swc-accordion-item` elements.
  */
-export abstract class AccordionBase extends SpectrumElement {
+export abstract class AccordionBase extends SizedMixin(SpectrumElement, {
+  validSizes: ACCORDION_VALID_SIZES,
+  defaultSize: 'm',
+}) {
   // ──────────────────
   //     PUBLIC API
   // ──────────────────
@@ -46,14 +51,12 @@ export abstract class AccordionBase extends SpectrumElement {
    * Values outside that range are clamped.
    */
   @property({ type: Number, reflect: true })
-  public level: number = 3;
+  public level: AccordionHeadingLevel = 3;
 
   /**
-   * Size applied to all items. When set, overrides any size set on individual
-   * items.
+   * Size applied to all items. Defaults to `m`.
    */
-  @property({ type: String, reflect: true })
-  public size?: AccordionSize;
+  declare public size: AccordionSize;
 
   /**
    * Controls vertical spacing between items.
@@ -115,7 +118,7 @@ export abstract class AccordionBase extends SpectrumElement {
       .assignedElements({ flatten: true })
       .filter((el): el is AccordionItemBase => el instanceof AccordionItemBase);
     for (const item of items) {
-      item.setManagedHeading(this.level as AccordionHeadingLevel);
+      item.setManagedHeading(this.level);
       item.size = this.size;
       item.setManagedParentDisabled(this.disabled);
     }
@@ -139,7 +142,10 @@ export abstract class AccordionBase extends SpectrumElement {
 
   protected override update(changedProperties: PropertyValues): void {
     if (changedProperties.has('level')) {
-      const clamped = Math.min(6, Math.max(2, this.level));
+      const clamped = Math.min(
+        6,
+        Math.max(2, this.level)
+      ) as AccordionHeadingLevel;
       if (this.level !== clamped) {
         this.level = clamped;
       }

@@ -10,7 +10,14 @@
  * governing permissions and limitations under the License.
  */
 
-export const ACCORDION_VALID_SIZES = ['s', 'm', 'l', 'xl'] as const;
+import type { ElementSize } from '@spectrum-web-components/core/mixins/index.js';
+
+export const ACCORDION_VALID_SIZES = [
+  's',
+  'm',
+  'l',
+  'xl',
+] as const satisfies readonly ElementSize[];
 export type AccordionSize = (typeof ACCORDION_VALID_SIZES)[number];
 
 export const ACCORDION_DENSITIES = ['compact', 'regular', 'spacious'] as const;
