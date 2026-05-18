@@ -29,6 +29,15 @@ import { AccordionItemBase } from './AccordionItem.base.js';
  * Base class for accordion components. Manages item propagation, heading
  * level, density, and the exclusive-open constraint.
  *
+ * @attribute {boolean} allowMultiple - Reflected as `allow-multiple`. When set,
+ *   multiple items may be open at the same time.
+ * @attribute {number} level - Heading level (2–6) applied to every item header.
+ *   Values outside that range are clamped.
+ * @attribute {AccordionSize} size - Size applied to all items.
+ * @attribute {AccordionDensity} density - Vertical spacing between items.
+ * @attribute {boolean} quiet - Renders the accordion in its quiet visual variant.
+ * @attribute {boolean} disabled - Disables all items in the accordion.
+ *
  * @slot - One or more `swc-accordion-item` elements.
  */
 export abstract class AccordionBase extends SizedMixin(SpectrumElement, {

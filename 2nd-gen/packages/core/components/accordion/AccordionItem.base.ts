@@ -24,6 +24,11 @@ import {
  * Base class for accordion item components. Manages open/disabled state,
  * heading level (set by the parent accordion), and the toggle event.
  *
+ * @attribute {boolean} open - Whether the accordion item panel is expanded.
+ * @attribute {boolean} disabled - Whether the accordion item is disabled.
+ * @attribute {AccordionSize} size - Size of the item. Inherited from the parent
+ *   accordion when slotted; controls the chevron icon when used standalone.
+ *
  * @slot label - The heading text for this accordion item.
  * @slot actions - Optional actions rendered adjacent to the heading, outside
  *   the toggle button so they remain independently interactive.
