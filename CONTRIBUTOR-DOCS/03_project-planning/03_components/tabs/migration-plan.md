@@ -58,9 +58,9 @@
 
 ## Implementation status (initial 2nd-gen ship)
 
-The first **`swc-tabs`**, **`swc-tab`**, and **`swc-tab-panel`** implementation lives in **`2nd-gen/packages/core/components/tabs/`** and **`2nd-gen/packages/swc/components/tabs/`**, with a single side-effect entrypoint **`@adobe/spectrum-wc/components/tabs/swc-tabs.js`**. Consumer-facing breaking changes and deferred scope are summarized in **`2nd-gen/packages/swc/components/tabs/migration.md`**.
+The first **`swc-tabs`**, **`swc-tab`**, and **`swc-tab-panel`** implementation lives in **`2nd-gen/packages/core/components/tabs/`** and **`2nd-gen/packages/swc/components/tabs/`**, with a single side-effect entrypoint **`@adobe/spectrum-wc/components/tabs/swc-tabs.js`**. Consumer-facing breaking changes and deferred scope are summarized in **`2nd-gen/packages/swc/components/tabs/migration-guide.mdx`**.
 
-**S2-aligned public API:** The shipped **`swc-tabs`** surface matches the Spectrum Design–style rows **B21–B25** in [Changes overview](#changes-overview): **`keyboard-activation`** (`manual` \| `automatic`) replaces boolean **`auto`**, **`density`** (`regular` \| `compact`) replaces boolean **`compact`**, and **`quiet`**, **`emphasized`**, and t-shirt **`size`** are **not** exposed on the host. Typography uses the default S2 scale; authors customize via documented **`--swc-tabs-*` / `--swc-tab-*`** custom properties. Consumer migration notes live in **`2nd-gen/packages/swc/components/tabs/migration.md`**; Storybook focuses on usage examples, not breaking-change IDs.
+**S2-aligned public API:** The shipped **`swc-tabs`** surface matches the Spectrum Design–style rows **B21–B25** in [Changes overview](#changes-overview): **`keyboard-activation`** (`manual` \| `automatic`) replaces boolean **`auto`**, **`density`** (`regular` \| `compact`) replaces boolean **`compact`**, and **`quiet`**, **`emphasized`**, and t-shirt **`size`** are **not** exposed on the host. Typography uses the default S2 scale; authors customize via documented **`--swc-tabs-*` / `--swc-tab-*`** custom properties. Consumer migration notes live in **`2nd-gen/packages/swc/components/tabs/migration-guide.mdx`**; Storybook focuses on usage examples, not breaking-change IDs.
 
 **Branching:** [Migration project planning](../../02_workstreams/02_2nd-gen-component-migration/03_migration-project-planning.md) recommends an **epic feature branch** with phase PRs merged there before **`main`**. Teams may still land a self-contained migration as **one PR to `main`** when maintainers agree—call out the deviation in the PR body so reviewers know it was intentional.
 
@@ -91,7 +91,7 @@ The first **`swc-tabs`**, **`swc-tab`**, and **`swc-tab-panel`** implementation 
 - `Q6`: `enableTabsScroll` deferred with overflow.
 - `Q8`: **Resolved for S2 ship** — **`size`** is not a public API on `swc-tabs`; default typography only (supersedes prior “default `size=m`” interim note).
 - `Q11`: Internal DOM changes are not a consumer concern.
-- `Q16`–`Q18`: **Resolved for S2 ship** — **`keyboard-activation`** / **`density`** replace **`auto`** / **`compact`**; **`emphasized`** and **`quiet`** removed from the public surface (see **`migration.md`**).
+- `Q16`–`Q18`: **Resolved for S2 ship** — **`keyboard-activation`** / **`density`** replace **`auto`** / **`compact`**; **`emphasized`** and **`quiet`** removed from the public surface (see **`migration-guide.mdx`**).
 
 ---
 
@@ -755,7 +755,7 @@ Any 2nd-gen change to DOM arrangement must preserve ID resolution. Options inclu
 - [ ] All tests pass
 - [ ] Storybook verified visually
 - [ ] Status table updated
-- [ ] Compare implementation and Storybook copy to this plan and to `2nd-gen/packages/swc/components/tabs/migration.md`; call out any API or checklist drift in the PR.
+- [ ] Compare implementation and Storybook copy to this plan and to `2nd-gen/packages/swc/components/tabs/migration-guide.mdx`; call out any API or checklist drift in the PR.
 
 ---
 
@@ -792,7 +792,7 @@ Any 2nd-gen change to DOM arrangement must preserve ID resolution. Options inclu
 | **Q11** | `<label>` element inside `sp-tab` shadow DOM | Internal DOM structure is not a consumer API contract. Shadow DOM internals do not belong in consumer migration guides. No action needed. |
 | **Q14** | Public scroll API (`scrollTabs`, `scrollToSelection`, `scrollState`) | Not ported in phase 1. Scroll API only exists to support `sp-tabs-overflow`, which is deferred. Will be revisited in phase 2. |
 | **Q19** | Overflow pattern (scroll vs Picker collapse) | Deferred to phase 2. Scroll-based `sp-tabs-overflow` will not be ported. Phase 2 will implement S2 Picker-based collapse once design alignment and `swc-picker` are available. Consumers should remain on 1st-gen `sp-tabs-overflow` until then. |
-| **Q16–Q18** | Spectrum Design–aligned API (`keyboardActivation`, `density`, drop `emphasized` / `quiet` / `size` on host) | **Shipped** for `swc-tabs`; see [Implementation status](#implementation-status-initial-2nd-gen-ship) and **`migration.md`**. |
+| **Q16–Q18** | Spectrum Design–aligned API (`keyboardActivation`, `density`, drop `emphasized` / `quiet` / `size` on host) | **Shipped** for `swc-tabs`; see [Implementation status](#implementation-status-initial-2nd-gen-ship) and **`migration-guide.mdx`**. |
 
 ---
 
