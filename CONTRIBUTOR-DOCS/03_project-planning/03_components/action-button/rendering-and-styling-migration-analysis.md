@@ -11,6 +11,7 @@
 <details open>
 <summary><strong>In this doc</strong></summary>
 
+- [2nd-gen planning (API and consumer docs)](#2nd-gen-planning-api-and-consumer-docs)
 - [Component specifications](#component-specifications)
     - [CSS](#css)
     - [SWC](#swc)
@@ -25,6 +26,11 @@
 </details>
 
 <!-- Document content (editable) -->
+
+## 2nd-gen planning (API and consumer docs)
+
+- **Hold affordance / `longpress`:** Not part of the **initial** **`swc-action-button`** release—it is **deferred** until a **later** date. **Storybook** and **migration** copy **must** say so. **Until then**, apps that need **hold** can keep **`sp-action-button`** (1st-gen) with **`hold-affordance`**, **extend `swc-button`** (or an app-owned wrapper) to implement **longpress** with their own **a11y** testing, or use **`swc-action-group`** with **separate** **`swc-action-button`** instances instead of a timed gesture. Full rationale and **`longpress-enabled`** / **`longpress-help-text`** rules: [Action button accessibility migration analysis](./accessibility-migration-analysis.md).
+- **`toggles` / `selected` / `aria-pressed`:** **`swc-action-button`** does **not** carry 1st-gen **toggle** APIs. **Toolbar-style** toggles and **`aria-pressed`** belong on **`swc-toggle-button`** / **`swc-toggle-button-group`**, aligned with [React Spectrum: ToggleButton](https://react-spectrum.adobe.com/ToggleButton) and [ToggleButtonGroup](https://react-spectrum.adobe.com/ToggleButtonGroup). See the same **accessibility** doc for semantics and testing split.
 
 ## Component specifications
 
@@ -397,7 +403,7 @@
 
 | SWC attribute | CSS equivalent | Notes                                         |
 | ------------- | -------------- | --------------------------------------------- |
-| `toggles`     | N/A            | Manages selected state automatically on click |
+| `toggles`     | N/A            | 1st-gen only; 2nd-gen uses **`swc-toggle-button`** / **`swc-toggle-button-group`** ([React Spectrum: ToggleButton](https://react-spectrum.adobe.com/ToggleButton), [ToggleButtonGroup](https://react-spectrum.adobe.com/ToggleButtonGroup)) |
 | `value`       | N/A            | Used for identification in action groups      |
 | `role`        | N/A            | Dynamic ARIA role management                  |
 
@@ -415,6 +421,7 @@ The Action Button template is functionally identical between the main branch (le
 
 ## Resources
 
+- [Action button accessibility migration analysis](./accessibility-migration-analysis.md)
 - [CSS migration](https://github.com/adobe/spectrum-css/pull/2669)
 - [Spectrum 2 preview](https://spectrumcss.z13.web.core.windows.net/pr-2352/index.html?path=/docs/components-action-button--docs)
 - [React](https://react-spectrum.adobe.com/ActionButton)
