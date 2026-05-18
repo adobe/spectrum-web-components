@@ -167,14 +167,22 @@ No component-specific custom events documented on `Link`. Activation follows the
 
 - **NPM package:** still **`@adobe/spectrum-wc`** (`2nd-gen/packages/swc`); there is no separate link-only package.
 - **Primary link stylesheet:** **`2nd-gen/packages/swc/stylesheets/link.css`** — all **variant / modifier** rules live here; authors apply **BEM-style classes** on `<a>` for presentation. **Do not** encode presentation as custom attributes (beyond normal HTML anchor attributes such as `href`, `rel`, etc.).
-- **Prose default appearance (no `@import`):** extend the **typography stylesheet generator** so emitted `typography.css` **includes the default link appearance inside `.swc-Typography--prose`** (append generated rules; keep **link.css** and **typography generation** as **separate concerns** — do **not** `@import` `link.css` into `typography.css`). Consumers who need **full modifier control** load **`link.css`** separately and apply modifier classes as documented.
-- **Section wrappers:** add **wrapper utilities** (e.g. **`swc-Links`** plural + modifiers) so footers / sidebars can style **all** anchors in a region **without** per-link classes on every `<a>`.
+- **Typography generator — prose + link groups (no `@import`):** extend the **typography stylesheet generator** so emitted `typography.css` includes **default** anchor appearance for both document prose and link lists in **one** appended rule block — keep **`link.css`** and typography generation as **separate concerns** (do **not** `@import` `link.css` into `typography.css`). Example shape:
+
+  ```css
+  .swc-Typography--links  :where(a),
+  .swc-Typography--prose :where(a) { }
+  ```
+
+  Use **`:where(a)`** so specificity stays at class level and **BEM modifier classes** on `<a>` can override defaults. **`.swc-Typography--links`** is a **Typography modifier** (same pattern as `--prose`, `--emphasized`) for footers, sidebars, and `<ul>` link lists — not a separate `swc-Links` utility. Consumers who need **full modifier control** load **`link.css`** separately and apply modifier classes as documented.
+- **Documentation (Link → Typography, no story duplication):** Link-facing docs (migration guide / contributor notes / any Link MDX) should **call out** that **default** and **wrapper** anchor styles ship with the **Typography** package (`@adobe/spectrum-wc/typography.css`, modifiers **`.swc-Typography--prose`** and **`.swc-Typography--links`**, optional **`link.css`** for BEM modifiers). **Do not** duplicate the full Typography Storybook catalog under Link — cross-link [`typography` docs](../../../../2nd-gen/packages/swc/components/typography/) and the [Typography migration guide](../../../../2nd-gen/packages/swc/components/typography/migration-guide.mdx) instead.
+- **Storybook (Typography owns link-list demo):** add **one** Typography story for the links-specific use case — e.g. a **`<ul class="swc-Typography--links">`** with **~3** list items, each containing an `<a href>`. Keep prose-in-paragraph link examples in existing Typography prose stories; Link docs **reference** that story rather than re-implementing it.
 - **Opt-in global baseline:** ship **`2nd-gen/packages/swc/stylesheets/global/global-link.css`** for **bare `<a>`** baseline styling app-wide when explicitly imported — **no** extra wrapper selector required; **do not** put this file in the **cascade layer** pattern used elsewhere — it should behave like an easily overridden **link reset**, not a locked layer.
 - **Core folder:** for this CSS-only path, **no** core TypeScript is required, matching Typography.
 
 #### Peer review — PR 6304 (requested changes, incorporated)
 
-Engineering review on [PR 6304](https://github.com/adobe/spectrum-web-components/pull/6304) records the above: confirm **`link.css`** location; **no** custom element; **no `@import`** into typography (generator instead); **BEM classes** for presentation; **quiet** may require a **modifier pair** analogous to React’s `isStandalone` for removing underline; **inline** is **not** an author-facing variant (inherit + stories); **`swc-Links`** section utility; **`global-link.css`** opt-in without cascade layers; **trailing icon** in Figma → **additive** / Design+React check-in, not blocking v1.
+Engineering review on [PR 6304](https://github.com/adobe/spectrum-web-components/pull/6304) records the above: confirm **`link.css`** location; **no** custom element; **no `@import`** into typography (generator instead); **BEM classes** for presentation; **quiet** may require a **modifier pair** analogous to React’s `isStandalone` for removing underline; **inline** is **not** an author-facing variant (inherit + stories); **`swc-Typography--links`** + **`--prose`** default anchors via generator with **`:where(a)`** ([discussion](https://github.com/adobe/spectrum-web-components/pull/6304#discussion_r3259963381)); **Link docs → Typography callout** (no duplicate stories); **one Typography story** for `swc-Typography--links` link lists; **`global-link.css`** opt-in without cascade layers; **trailing icon** in Figma → **additive** / Design+React check-in, not blocking v1.
 
 ---
 
@@ -208,7 +216,7 @@ Engineering review on [PR 6304](https://github.com/adobe/spectrum-web-components
 | # | What is added | Notes |
 | --- | ------------- | ----- |
 | **A1** | Optional **compatibility** `sp-link` | **Out of scope** — **Q2** approved CSS + native `<a>` only (no CE) |
-| **A2** | Extra Storybook coverage for **static color** on imagery / dark backgrounds | Visual regression alongside typography stories |
+| **A2** | Extra Storybook coverage for **static color** on imagery / dark backgrounds | Visual regression alongside Typography stories (modifier / `link.css` demos — not a duplicate Typography catalog) |
 | **A3** | **Trailing icon** (Figma S2 / Web, ~Feb 2026) | **Additive** — not in React yet; confirm with **Design / React**; not a blocker for initial link CSS / prose work |
 
 ---
@@ -223,7 +231,7 @@ These are derived from 1st-gen, the [rendering roadmap](./rendering-and-styling-
 
 **Confirmed (Q2):** no custom element. Authors use **standard HTML** on `<a>` for behavior and semantics (`href`, `target`, `rel`, `download`, `referrerpolicy`, `aria-label`, `lang`, etc.).
 
-**Presentation:** **BEM-style classes only** (and documented **wrapper** utilities such as **`swc-Links`**) — do **not** introduce shadow-CE-style **presentation attributes** (e.g. no `quiet="` on a hostless pattern); map old `sp-link` attributes to **classes** in migration docs.
+**Presentation:** **BEM-style classes only** (and Typography modifiers such as **`.swc-Typography--links`** / **`.swc-Typography--prose`** for unclassed anchors inside wrappers) — do **not** introduce shadow-CE-style **presentation attributes** (e.g. no `quiet="` on a hostless pattern); map old `sp-link` attributes to **classes** in migration docs.
 
 #### Visual matrix (2nd-gen)
 
@@ -272,7 +280,7 @@ Planned rendering shape (native-`<a>` model — **preferred**):
 
 - **No shadow boundary** around the activation target for default prose links.
 - **CSS** applies Spectrum Link classes / design tokens to the author’s `<a>`.
-- **Docs + Storybook** show correct combinations with `swc-Typography--prose` (or successor) wrappers.
+- **Docs:** Link migration content **points to Typography** for base/wrapper styles; **Storybook:** Typography owns the **`swc-Typography--links`** list story and existing prose link examples — Link does not mirror the full Typography story set.
 
 ---
 
@@ -288,7 +296,7 @@ Planned rendering shape (native-`<a>` model — **preferred**):
 
 ### Setup
 
-- [ ] Implement [Recommended packaging (default)](#recommended-packaging-default): `link.css`, typography **generator** updates for prose defaults, optional `global-link.css`, `swc-Links` utilities — no `@import` of `link.css` into `typography.css`
+- [ ] Implement [Recommended packaging (default)](#recommended-packaging-default): `link.css`, typography **generator** updates (`.swc-Typography--links` / `--prose` + `:where(a)`), optional `global-link.css` — no `@import` of `link.css` into `typography.css`
 - [ ] If a new package is created: wire exports in the relevant `package.json` files
 - [ ] Check out `spectrum-css` at `spectrum-two` branch as sibling directory
 
@@ -348,12 +356,19 @@ Planned rendering shape (native-`<a>` model — **preferred**):
 
 #### General
 
-- [ ] JSDoc / MDX for public CSS entries (no CE — **Q2**)
-- [ ] Storybook: Typography / prose examples show `<a href>` patterns (per accessibility analysis summary checklist)
+- [ ] JSDoc / MDX for public CSS entries in **`link.css`** (no CE — **Q2**)
+- [ ] **Link docs callout (no story duplication):** document that default anchor appearance comes from **Typography** (`typography.css`, **`.swc-Typography--prose`**, **`.swc-Typography--links`**) and that **`link.css`** is for BEM modifier classes; cross-link [Typography migration guide](../../../../2nd-gen/packages/swc/components/typography/migration-guide.mdx) — **do not** copy the full Typography Storybook surface under Link
+- [ ] Prose / in-body `<a href>` patterns remain documented in **Typography** stories and migration guide (per accessibility analysis)
+
+#### Storybook (Typography)
+
+- [ ] Add **one** Typography story: **link list** use case — `<ul class="swc-Typography--links">` with **~3** `<li>` items, each with an `<a href>` (footers / sidebars pattern)
+- [ ] Confirm existing Typography **prose** story(ies) show `<a href>` inside running text (no separate Link storybook package required)
+- [ ] **A2:** static-color / on-image link demos live under Typography or `link.css` stories as needed — not a second full catalog
 
 #### Breaking changes
 
-- [ ] Migration guide section: `sp-link` → native `<a>` + classes; `disabled` removal; quiet usage guidance
+- [ ] Migration guide section: `sp-link` → native `<a>` + classes; `disabled` removal; quiet usage guidance; import path **`@adobe/spectrum-wc/typography.css`** (+ optional **`link.css`**)
 
 ### Review
 
@@ -377,7 +392,7 @@ Planned rendering shape (native-`<a>` model — **preferred**):
 | # | Item | Blocking? | Status | Owner |
 | --- | ---- | --------- | ------ | ----- |
 | **Q2** | **Architecture:** **CSS + native `<a>` only** — no transitional `sp-link` / CE in this migration | No | Resolved | Architecture + accessibility reviewers |
-| **Q4** | **Packaging:** `link.css` + typography **generator** (no `@import`), **`swc-Links`** section utilities, **`global/global-link.css`** opt-in per [Recommended packaging (default)](#recommended-packaging-default); **PR 6304** review incorporated | No | Resolved | CSS + Typography (PR 6304 — 5t3ph) |
+| **Q4** | **Packaging:** `link.css` + typography **generator** (no `@import`; **`.swc-Typography--links`** / **`--prose`** + `:where(a)`), **`global/global-link.css`** opt-in per [Recommended packaging (default)](#recommended-packaging-default); **PR 6304** review incorporated | No | Resolved | CSS + Typography (PR 6304 — 5t3ph) |
 
 ### Scope and prerequisites
 
@@ -426,7 +441,7 @@ Planned rendering shape (native-`<a>` model — **preferred**):
 
 ## What to provide next
 
-1. **Implementation pass:** land `link.css`, typography generator output, `global-link.css`, and `swc-Links` per [Recommended packaging (default)](#recommended-packaging-default).
+1. **Implementation pass:** land `link.css`, typography generator output (`.swc-Typography--links` / `--prose` + `:where(a)`), `global-link.css`, Link docs callout, and Typography **links list** story per [Recommended packaging (default)](#recommended-packaging-default).
 2. **Design / React:** short sync on **trailing icon** (Figma) when scheduling **A3**.
 
 When deferred work is ticketed under [SWC-1956](https://jira.corp.adobe.com/browse/SWC-1956), replace drafting-time rows in [Blockers and open questions](#blockers-and-open-questions) with the deferred-ticket table format described in the migration-prep skill (`Ticket`, `Deferred item`, `Why deferred`, `Related plan section`).
