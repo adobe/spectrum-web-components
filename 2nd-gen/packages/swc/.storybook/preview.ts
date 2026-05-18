@@ -363,6 +363,8 @@ const preview = {
                 ['Rendering and styling migration analysis'],
                 'Checkbox',
                 ['Rendering and styling migration analysis'],
+                'Close button',
+                ['Accessibility migration analysis'],
                 'Color field',
                 ['Rendering and styling migration analysis'],
                 'Color loupe',
