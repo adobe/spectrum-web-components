@@ -27,6 +27,8 @@ import {
 
 import '@adobe/spectrum-wc/components/button/swc-button.js';
 
+import { ButtonGroups as buttonGroupsRender } from './button.test.js';
+
 // ────────────────
 //    METADATA
 // ────────────────
@@ -542,6 +544,25 @@ export const Accessibility: Story = {
   tags: ['a11y'],
   parameters: { flexLayout: 'row-wrap' },
 };
+
+// ────────────────────────────────────
+//    VRT / TESTING GRID (see button.test.ts)
+// ────────────────────────────────────
+
+/**
+ * Full variant × treatment × content × state matrix for visual regression.
+ * Case list lives in [`button.test.ts`](./button.test.ts). Turn on **Testing preview**
+ * in the Storybook toolbar (beaker icon) to view the grid locally.
+ */
+export const ButtonGroups: Story = {
+  render: buttonGroupsRender as Story['render'],
+  parameters: {
+    layout: 'fullscreen',
+    flexLayout: false,
+  },
+  tags: ['!autodocs', 'dev'],
+};
+ButtonGroups.storyName = 'Testing grid';
 
 // ────────────────────────────────────
 //    UPCOMING FEATURES STORIES

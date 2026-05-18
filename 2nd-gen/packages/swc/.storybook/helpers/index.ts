@@ -12,3 +12,26 @@
 
 export { formatTitle } from './format-title.js';
 export { iconForSize } from './icon-for-size.js';
+export {
+  ArgGrid,
+  Container,
+  getRandomId,
+  Heading,
+  isChromatic,
+  renderContent,
+  Sizes,
+  States,
+  Variants,
+} from './testing-grid.js';
+export type {
+  ArgGridProps,
+  ContainerProps,
+  GridStoryContext,
+  GridTemplateFn,
+  HeadingProps,
+  SizesProps,
+  StateItem,
+  StatesProps,
+  TestCaseItem,
+  VariantsConfig,
+} from './testing-grid.js';

@@ -18,7 +18,11 @@ import {
 
 import customElements from './custom-elements.json';
 import { withContext } from './decorators/contexts.js';
-import { withFlexLayout, withStaticColorsDemo } from './decorators/index.js';
+import {
+  withFlexLayout,
+  withStaticColorsDemo,
+  withTestingPreview,
+} from './decorators/index.js';
 import { withLanguageWrapper } from './decorators/language.js';
 import { withStaticColorPlayground } from './decorators/static-color-playground.js';
 import DocumentTemplate from './DocumentTemplate.mdx';
@@ -120,17 +124,32 @@ const preview = {
         dynamicTitle: true,
       },
     },
+    testingPreview: {
+      name: 'Testing preview',
+      description: 'See how the story will look to Chromatic (testing grid)',
+      defaultValue: false,
+      toolbar: {
+        icon: 'beaker',
+        items: [
+          { value: true, title: 'Show testing preview' },
+          { value: false, title: 'Default mode' },
+        ],
+        dynamicTitle: true,
+      },
+    },
   },
   initialGlobals: {
     theme: 'light',
     lang: 'en-US',
     textDirection: 'auto',
+    testingPreview: false,
   },
   decorators: [
     withContext,
     withLanguageWrapper,
     withStaticColorPlayground,
     withStaticColorsDemo,
+    withTestingPreview,
     withFlexLayout,
   ],
   parameters: {

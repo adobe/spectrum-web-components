@@ -48,6 +48,20 @@ const componentName = formatComponentName(meta.title);
 3. Replaces spaces with hyphens for kebab-case
 4. Optionally converts to PascalCase by capitalizing each word and removing hyphens
 
+## Testing grid (`stories/*.test.ts`)
+
+Spectrum CSS keeps VRT case lists in a sibling module (e.g. `button.test.js`) that is **imported** by `button.stories.ts`, not indexed as its own Storybook file.
+
+For SWC:
+
+1. Add `components/<name>/stories/<name>.template.ts` — a **pure Lit** `Template()` (no `getStorybookHelpers().template`, which calls `useArgs()` per cell and breaks React hooks in large grids).
+2. Add `components/<name>/stories/<name>.test.ts` with `Variants()`, `ArgGrid`, `Container`, and `testData` / `stateData` using that template.
+3. Export the render function (e.g. `ButtonGroups`) from the test file.
+4. In `<name>.stories.ts`, wire a story: `render: ButtonGroups`.
+5. Toggle **Testing preview** in the Storybook toolbar (beaker) to view the grid locally.
+
+Play-function tests stay in `components/<name>/test/<name>.test.ts` (indexed under **Component/Tests** in dev Storybook only).
+
 ## Adding new helpers
 
 When adding new helpers to this directory:
