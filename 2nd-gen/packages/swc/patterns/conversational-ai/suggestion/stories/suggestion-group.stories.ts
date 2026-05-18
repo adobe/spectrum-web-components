@@ -164,7 +164,7 @@ export const SuggestionCount: Story = {
 
 /**
  * Consumers provide required heading semantics via `slot="heading"` based on page outline.
- * 
+ *
  * Note: Any element can be used as the heading given the semantics are correct but the visual styling (i.e. font size)
  * is always controlled by the `swc-suggestion-group` component itself.
  */
