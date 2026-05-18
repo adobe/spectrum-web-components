@@ -14,10 +14,7 @@ import { CSSResultArray, html, TemplateResult } from 'lit';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { html as staticHtml, unsafeStatic } from 'lit/static-html.js';
 
-import {
-  AccordionItemBase,
-  SWC_ACCORDION_ITEM_TOGGLE_EVENT,
-} from '@spectrum-web-components/core/components/accordion';
+import { AccordionItemBase } from '@spectrum-web-components/core/components/accordion';
 
 import '../icon/swc-icon.js';
 
@@ -62,25 +59,6 @@ export class AccordionItem extends AccordionItemBase {
   }
 
   // ──────────────────────────────
-  //     TOGGLE BEHAVIOR
-  // ──────────────────────────────
-
-  protected override toggle(): void {
-    if (this.disabled || this.parentDisabled) {
-      return;
-    }
-    this.open = !this.open;
-    const event = new Event(SWC_ACCORDION_ITEM_TOGGLE_EVENT, {
-      bubbles: true,
-      composed: true,
-      cancelable: true,
-    });
-    if (!this.dispatchEvent(event)) {
-      this.open = !this.open;
-    }
-  }
-
-  // ──────────────────────────────
   //     RENDERING
   // ──────────────────────────────
 
@@ -112,6 +90,10 @@ export class AccordionItem extends AccordionItemBase {
 
   private handleHeaderKeydown(event: Event): void {
     if ((event as KeyboardEvent).key === ' ') {
+      // Space requires preventDefault to suppress page scroll; toggle is then
+      // called explicitly. Enter is not handled here — the browser's native
+      // button activation fires a click event, which calls toggle() via the
+      // @click binding.
       event.preventDefault();
       this.toggle();
     }
@@ -161,6 +143,7 @@ export class AccordionItem extends AccordionItemBase {
         class="spectrum-Accordion-itemContent"
         role="region"
         aria-labelledby="header"
+        ?hidden=${!this.open}
         .inert=${this.disabled || this.parentDisabled}
       >
         <slot></slot>

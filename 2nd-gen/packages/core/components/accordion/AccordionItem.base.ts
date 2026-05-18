@@ -82,17 +82,22 @@ export abstract class AccordionItemBase extends SpectrumElement {
 
   /**
    * @internal
-   * Dispatches the toggle event. The concrete class wires this to the
-   * header button's click handler and adds open-state management.
+   * Toggles the item open state. Guards for disabled, flips `open`, dispatches
+   * the toggle event, and reverts if the event is canceled.
    */
   protected toggle(): void {
-    this.dispatchEvent(
-      new Event(SWC_ACCORDION_ITEM_TOGGLE_EVENT, {
-        bubbles: true,
-        composed: true,
-        cancelable: true,
-      })
-    );
+    if (this.disabled || this.parentDisabled) {
+      return;
+    }
+    this.open = !this.open;
+    const event = new Event(SWC_ACCORDION_ITEM_TOGGLE_EVENT, {
+      bubbles: true,
+      composed: true,
+      cancelable: true,
+    });
+    if (!this.dispatchEvent(event)) {
+      this.open = !this.open;
+    }
   }
 
   /**

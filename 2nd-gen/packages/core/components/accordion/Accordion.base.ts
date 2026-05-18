@@ -92,21 +92,30 @@ export abstract class AccordionBase extends SizedMixin(SpectrumElement, {
       return;
     }
     const toggling = event.target;
-    if (!(toggling instanceof AccordionItemBase) || !toggling.open) {
+    if (!(toggling instanceof AccordionItemBase)) {
       return;
     }
-    const slot = this.shadowRoot?.querySelector('slot');
-    if (!slot) {
-      return;
-    }
-    const items = slot
-      .assignedElements({ flatten: true })
-      .filter((el): el is AccordionItemBase => el instanceof AccordionItemBase);
-    for (const item of items) {
-      if (item !== toggling) {
-        item.open = false;
+    // Defer until after dispatch returns so that a canceled toggle (where the
+    // item reverts open back to false) does not incorrectly close siblings.
+    queueMicrotask(() => {
+      if (!toggling.open) {
+        return;
       }
-    }
+      const slot = this.shadowRoot?.querySelector('slot');
+      if (!slot) {
+        return;
+      }
+      const items = slot
+        .assignedElements({ flatten: true })
+        .filter(
+          (el): el is AccordionItemBase => el instanceof AccordionItemBase
+        );
+      for (const item of items) {
+        if (item !== toggling) {
+          item.open = false;
+        }
+      }
+    });
   };
 
   protected syncAccordionItems(): void {
@@ -121,6 +130,26 @@ export abstract class AccordionBase extends SizedMixin(SpectrumElement, {
       item.setManagedHeading(this.level);
       item.size = this.size;
       item.setManagedParentDisabled(this.disabled);
+    }
+  }
+
+  private enforceExclusiveOpen(): void {
+    const slot = this.renderRoot?.querySelector('slot');
+    if (!slot) {
+      return;
+    }
+    const items = slot
+      .assignedElements({ flatten: true })
+      .filter((el): el is AccordionItemBase => el instanceof AccordionItemBase);
+    let foundOpen = false;
+    for (const item of items) {
+      if (item.open) {
+        if (foundOpen) {
+          item.open = false;
+        } else {
+          foundOpen = true;
+        }
+      }
     }
   }
 
@@ -156,6 +185,15 @@ export abstract class AccordionBase extends SizedMixin(SpectrumElement, {
       changedProperties.has('disabled')
     ) {
       this.syncAccordionItems();
+    }
+    // changedProperties.get() returns the previous value; this fires only when
+    // disabled transitions from true → false (re-enable).
+    if (
+      changedProperties.has('disabled') &&
+      changedProperties.get('disabled') === true &&
+      !this.allowMultiple
+    ) {
+      this.enforceExclusiveOpen();
     }
     super.update(changedProperties);
   }
