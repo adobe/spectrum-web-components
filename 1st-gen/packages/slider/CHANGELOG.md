@@ -1,5 +1,23 @@
 # Change Log
 
+## 1.12.0
+
+### Patch Changes
+
+- [#5992](https://github.com/adobe/spectrum-web-components/pull/5992) [`3995697`](https://github.com/adobe/spectrum-web-components/commit/3995697f1302df82541db3fb9ffc970ed0a27e30) Thanks [@Rajdeepc](https://github.com/Rajdeepc)! - **Fixed**: Improved accessibility for multi-handle sliders per WCAG 3.3.2 (Labels or Instructions):
+  - Added value tooltips that appear on hover/focus for multi-handle sliders when value labels are hidden (`label-visibility="none"` or `label-visibility="text"`)
+  - Tooltips now display the formatted value for each handle, ensuring users can identify individual handle values
+  - Added high contrast mode support for value tooltips
+  - Added debug warning when multi-handle sliders are missing `label` attributes on handles
+
+- Updated dependencies [[`ba14a2b`](https://github.com/adobe/spectrum-web-components/commit/ba14a2b6361a0089a9a8c72232f245cde0716d89), [`dc6a8e8`](https://github.com/adobe/spectrum-web-components/commit/dc6a8e8db1b08080373c3664babc1feebde8f6c6), [`90c3010`](https://github.com/adobe/spectrum-web-components/commit/90c30101391d4d78922575e9f0bb407e02d9c2d5), [`f37dec6`](https://github.com/adobe/spectrum-web-components/commit/f37dec6ae39fd89a4c12e084b4a0f4d9092d79b0), [`2db830c`](https://github.com/adobe/spectrum-web-components/commit/2db830cded30717fb9cbe4d335d0f3bcf9fea6b9)]:
+  - @spectrum-web-components/base@1.12.0
+  - @spectrum-web-components/reactive-controllers@1.12.0
+  - @spectrum-web-components/theme@1.12.0
+  - @spectrum-web-components/number-field@1.12.0
+  - @spectrum-web-components/field-label@1.12.0
+  - @spectrum-web-components/shared@1.12.0
+
 ## 1.11.2
 
 ### Patch Changes

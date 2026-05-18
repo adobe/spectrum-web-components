@@ -1,5 +1,38 @@
 # Change Log
 
+## 1.12.0
+
+### Minor Changes
+
+- [#6071](https://github.com/adobe/spectrum-web-components/pull/6071) [`26f16c4`](https://github.com/adobe/spectrum-web-components/commit/26f16c42613d96ed89baeebf6d1ec274768571e5) Thanks [@5t3ph](https://github.com/5t3ph)! - - **Added**: Introduced global action button element styles in `@spectrum-web-components/styles` via `global-action-button.css`, enabling native links with `.spectrum-ActionButton*` classes to render with Spectrum action button styling.
+  - **Documented**: Added 1st-gen action button guidance and Storybook examples for rendering native `<a>` links as static actio button-styled UI, including limitations (for example, no disabled, selected, or hold affordance support for link-based buttons).
+
+### Patch Changes
+
+- [#6025](https://github.com/adobe/spectrum-web-components/pull/6025) [`018d316`](https://github.com/adobe/spectrum-web-components/commit/018d3163efb830478e1d1e2e1f696639c1423e84) Thanks [@TarunAdobe](https://github.com/TarunAdobe)! - Updated 1st-gen Action Button color wiring so S2 colors match spec while Spectrum 1 remains visually unchanged.
+  - Updated S2-only token values in `1st-gen/tools/styles/tokens-v2/system-theme-bridge.css`:
+    - `--system-action-button-content-color-selected` -> `var(--spectrum-gray-25)`
+    - static quiet disabled backgrounds:
+      - black -> `var(--spectrum-transparent-black-25)`
+      - white -> `var(--spectrum-transparent-white-25)`
+    - added S2 static content tokens:
+      - `--system-action-button-static-black-content-color-{default,hover,down,focus}`
+      - `--system-action-button-static-white-content-color-{default,hover,down,focus}`
+  - Updated `1st-gen/packages/action-button/src/action-button-overrides.css` to map new S2 `--system-*` static content tokens into `--spectrum-*` action-button vars.
+  - Updated `1st-gen/packages/action-button/src/spectrum-action-button.css` static color content assignments to read from `--spectrum-actionbutton-static-*-content-color-*` with S1-safe fallbacks:
+    - black fallback remains `var(--spectrum-black)`
+    - white fallback remains `var(--spectrum-white)`
+
+- [#6073](https://github.com/adobe/spectrum-web-components/pull/6073) [`0d3e317`](https://github.com/adobe/spectrum-web-components/commit/0d3e3176944c9f3502f28dfa28f6cee21da05fda) Thanks [@marissahuysentruyt](https://github.com/marissahuysentruyt)! - - **Deprecated**: The link API (`href`, `target`, `download`, `referrerpolicy`, `rel`) on `<sp-action-button>` is now deprecated. A dev mode warning is emitted when `href` is used, directing consumers to native HTML anchor elements with `@spectrum-web-components/styles/global-elements.css`.
+  - **Documented**: Updated action button README with deprecation notices.
+
+- Updated dependencies [[`c4f24a8`](https://github.com/adobe/spectrum-web-components/commit/c4f24a83a8e53a761dcc0ed44eaaab4cb7708c96), [`bcd9639`](https://github.com/adobe/spectrum-web-components/commit/bcd9639b4d49a7afd16b7c8e8ec3e86a3ff0b07c), [`ba14a2b`](https://github.com/adobe/spectrum-web-components/commit/ba14a2b6361a0089a9a8c72232f245cde0716d89), [`dc6a8e8`](https://github.com/adobe/spectrum-web-components/commit/dc6a8e8db1b08080373c3664babc1feebde8f6c6), [`f37dec6`](https://github.com/adobe/spectrum-web-components/commit/f37dec6ae39fd89a4c12e084b4a0f4d9092d79b0), [`38a463f`](https://github.com/adobe/spectrum-web-components/commit/38a463f7f4745373d143cdb08c7d87ba932cf1dd), [`c720445`](https://github.com/adobe/spectrum-web-components/commit/c7204456810326960b31f80955e842cc3e5555e3)]:
+  - @spectrum-web-components/button@1.12.0
+  - @spectrum-web-components/base@1.12.0
+  - @spectrum-web-components/icon@1.12.0
+  - @spectrum-web-components/icons-ui@1.12.0
+  - @spectrum-web-components/shared@1.12.0
+
 ## 1.11.2
 
 ### Patch Changes
