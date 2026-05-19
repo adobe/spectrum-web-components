@@ -13,8 +13,10 @@
 import prettier from 'prettier';
 
 /**
+ * Converts a CSF export name to a Storybook story slug segment.
+ *
  * @param {string} exportName - CSF export name (e.g. "SemanticVariants")
- * @returns {string}
+ * @returns {string} Kebab-case slug (e.g. "semantic-variants")
  */
 export function exportNameToStorySlug(exportName) {
   return exportName
@@ -24,20 +26,24 @@ export function exportNameToStorySlug(exportName) {
 }
 
 /**
- * @param {string} componentSlug - kebab-case folder name (e.g. "badge")
- * @param {string} exportName
- * @returns {string}
+ * Builds the Storybook story id used in iframe URLs.
+ *
+ * @param {string} componentSlug - Kebab-case folder name (e.g. "badge")
+ * @param {string} exportName - CSF export name
+ * @returns {string} Story id (e.g. "components-badge--anatomy")
  */
 export function buildStoryId(componentSlug, exportName) {
   return `components-${componentSlug}--${exportNameToStorySlug(exportName)}`;
 }
 
 /**
- * @param {import('playwright').Page} page
- * @param {string} storyId
- * @param {string} tagName
- * @param {string} baseUrl
- * @returns {Promise<string>}
+ * Captures rendered story markup from a Storybook iframe.
+ *
+ * @param {import('playwright').Page} page - Playwright page
+ * @param {string} storyId - Storybook story id
+ * @param {string} tagName - Primary custom element tag to wait for
+ * @param {string} baseUrl - Storybook base URL
+ * @returns {Promise<string>} Prettified HTML for the story content
  */
 export async function captureStoryHtml(page, storyId, tagName, baseUrl) {
   const url = `${baseUrl.replace(/\/$/, '')}/iframe.html?id=${storyId}&viewMode=story`;
@@ -71,7 +77,8 @@ export async function captureStoryHtml(page, storyId, tagName, baseUrl) {
         return false;
       }
 
-      const display = element.style.display || getComputedStyle(element).display;
+      const display =
+        element.style.display || getComputedStyle(element).display;
       return display === 'flex';
     };
 
@@ -105,8 +112,10 @@ export async function captureStoryHtml(page, storyId, tagName, baseUrl) {
 }
 
 /**
- * @param {string} html
- * @returns {string}
+ * Removes Lit and Storybook artifacts from captured HTML.
+ *
+ * @param {string} html - Raw captured HTML
+ * @returns {string} Cleaned HTML
  */
 function cleanCapturedHtml(html) {
   return html
@@ -117,9 +126,11 @@ function cleanCapturedHtml(html) {
 }
 
 /**
- * @param {string} html
- * @param {string} [label]
- * @returns {string}
+ * Wraps HTML in a fenced code block with an optional example heading.
+ *
+ * @param {string} html - Example HTML
+ * @param {string} [label] - Optional human-readable example label
+ * @returns {string} Markdown code block section
  */
 export function htmlExampleBlock(html, label) {
   const heading = label ? `#### Example: ${label}\n\n` : '';

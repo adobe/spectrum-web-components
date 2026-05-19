@@ -11,31 +11,44 @@
  */
 
 /**
- * @param {string} value
- * @returns {string}
+ * Escapes a table cell value for markdown pipe tables.
+ *
+ * @param {string} value - Raw cell value
+ * @returns {string} Escaped cell value
  */
 function escapeCell(value) {
-  return String(value ?? '').replace(/\|/g, '\\|').replace(/\n/g, ' ');
+  return String(value ?? '')
+    .replace(/\|/g, '\\|')
+    .replace(/\n/g, ' ');
 }
 
 /**
- * @param {string[][]} rows
- * @returns {string}
+ * Formats a markdown pipe table.
+ *
+ * @param {string[]} headers - Column headings
+ * @param {string[][]} rows - Table body rows
+ * @returns {string} Markdown table, or an empty string when there are no rows
  */
 function markdownTable(headers, rows) {
-  if (rows.length === 0) return '';
+  if (rows.length === 0) {
+    return '';
+  }
 
   const headerLine = `| ${headers.join(' | ')} |`;
   const separator = `| ${headers.map(() => '---').join(' | ')} |`;
-  const body = rows.map((row) => `| ${row.map(escapeCell).join(' | ')} |`).join('\n');
+  const body = rows
+    .map((row) => `| ${row.map(escapeCell).join(' | ')} |`)
+    .join('\n');
 
   return `${headerLine}\n${separator}\n${body}`;
 }
 
 /**
- * @param {import('custom-elements-manifest/schema').Package} cem
- * @param {string} tagName
- * @returns {import('custom-elements-manifest/schema').Declaration | undefined}
+ * Finds a custom element declaration in the CEM package.
+ *
+ * @param {import('custom-elements-manifest/schema').Package} cem - Custom elements manifest
+ * @param {string} tagName - Custom element tag name
+ * @returns {import('custom-elements-manifest/schema').Declaration | undefined} Matching declaration, if any
  */
 function findComponent(cem, tagName) {
   for (const mod of cem.modules ?? []) {
@@ -49,9 +62,11 @@ function findComponent(cem, tagName) {
 }
 
 /**
- * @param {import('custom-elements-manifest/schema').Package} cem
- * @param {string} tagName
- * @returns {string}
+ * Renders API reference tables from the custom elements manifest.
+ *
+ * @param {import('custom-elements-manifest/schema').Package} cem - Custom elements manifest
+ * @param {string} tagName - Custom element tag name
+ * @returns {string} Markdown API section
  */
 export function renderApiMarkdown(cem, tagName) {
   const component = findComponent(cem, tagName);
@@ -84,8 +99,7 @@ export function renderApiMarkdown(cem, tagName) {
         ? `\`${attr.name}\`${prop.reflects ? ' (reflects)' : ''}`
         : '-';
       const type = prop.type?.text ? `\`${prop.type.text}\`` : '-';
-      const defaultValue =
-        prop.default != null ? `\`${prop.default}\`` : '-';
+      const defaultValue = prop.default != null ? `\`${prop.default}\`` : '-';
 
       return [
         `\`${prop.name}\``,

@@ -11,9 +11,11 @@
  */
 
 /**
+ * Renders installation and import instructions for a component docs page.
+ *
  * @param {string} title - Storybook meta title (e.g. "Badge")
- * @param {'migrated' | 'controller' | 'utility'} [kind]
- * @returns {string}
+ * @param {'migrated' | 'controller' | 'utility'} [kind] - Component category for template selection
+ * @returns {string} Getting started markdown section
  */
 export function renderGettingStartedMarkdown(title, kind = 'migrated') {
   const packageName = title

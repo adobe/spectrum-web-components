@@ -23,21 +23,17 @@
  *   yarn generate:llm-docs -- --component badge
  */
 
+import { glob } from 'glob';
 import { execSync, spawn } from 'node:child_process';
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
-import { fileURLToPath } from 'node:url';
 import { setTimeout as sleep } from 'node:timers/promises';
-
-import { glob } from 'glob';
+import { fileURLToPath } from 'node:url';
 import { chromium } from 'playwright';
 
 import { renderApiMarkdown } from './llm-docs/api-markdown.mjs';
 import { renderGettingStartedMarkdown } from './llm-docs/getting-started.mjs';
-import {
-  parseDocsMdx,
-  parseStoriesMeta,
-} from './llm-docs/parse-docs-mdx.mjs';
+import { parseDocsMdx, parseStoriesMeta } from './llm-docs/parse-docs-mdx.mjs';
 import {
   buildStoryId,
   captureStoryHtml,
@@ -51,8 +47,10 @@ const CEM_PATH = resolve(SWC_DIR, '.storybook/custom-elements.json');
 const DEFAULT_STORYBOOK_URL = 'http://localhost:6006';
 
 /**
- * @param {string} exportName
- * @returns {string}
+ * Converts a CSF export name to a human-readable story label.
+ *
+ * @param {string} exportName - CSF export name (e.g. "SemanticVariants")
+ * @returns {string} Title-cased label (e.g. "Semantic Variants")
  */
 function humanizeExportName(exportName) {
   return exportNameToStorySlug(exportName)
@@ -62,8 +60,10 @@ function humanizeExportName(exportName) {
 }
 
 /**
- * @param {string} url
- * @returns {Promise<boolean>}
+ * Checks whether Storybook responds on the given URL.
+ *
+ * @param {string} url - Storybook base URL
+ * @returns {Promise<boolean>} True when the server returns a successful response
  */
 async function isStorybookUp(url) {
   try {
@@ -75,10 +75,12 @@ async function isStorybookUp(url) {
 }
 
 /**
- * @param {string} url
- * @returns {Promise<import('node:child_process').ChildProcess>}
+ * Starts a local Storybook dev server and waits until it is reachable.
+ *
+ * @param {string} url - Storybook base URL to poll
+ * @returns {Promise<import('node:child_process').ChildProcess>} Process handle for the dev server
  */
-async function startStorybook(url) {
+async function launchStorybook(url) {
   console.log('Starting Storybook (this may take a minute)…');
 
   const child = spawn(
@@ -108,21 +110,25 @@ async function startStorybook(url) {
   }
 
   child.kill();
-  throw new Error(
-    `Storybook did not become ready at ${url} within 3 minutes.`
-  );
+  throw new Error(`Storybook did not become ready at ${url} within 3 minutes.`);
 }
 
 /**
- * @param {string} componentDir
- * @param {import('playwright').Page} page
- * @param {string} storybookUrl
- * @returns {Promise<string>}
+ * Builds the LLM markdown document for a single component.
+ *
+ * @param {string} componentDir - Absolute path to the component folder
+ * @param {import('playwright').Page} page - Playwright page for story iframe capture
+ * @param {string} storybookUrl - Storybook base URL
+ * @returns {Promise<string>} Generated markdown content
  */
 async function generateComponentMarkdown(componentDir, page, storybookUrl) {
   const componentSlug = componentDir.split('/').pop();
   const docsMdxPath = join(componentDir, 'docs.mdx');
-  const storiesPath = join(componentDir, 'stories', `${componentSlug}.stories.ts`);
+  const storiesPath = join(
+    componentDir,
+    'stories',
+    `${componentSlug}.stories.ts`
+  );
 
   if (!existsSync(storiesPath)) {
     throw new Error(`Missing stories file: ${storiesPath}`);
@@ -185,7 +191,12 @@ async function generateComponentMarkdown(componentDir, page, storybookUrl) {
     }
   }
 
-  return parts.join('\n').replace(/\n{3,}/g, '\n\n').trimEnd() + '\n';
+  return (
+    parts
+      .join('\n')
+      .replace(/\n{3,}/g, '\n\n')
+      .trimEnd() + '\n'
+  );
 }
 
 async function main() {
@@ -193,7 +204,7 @@ async function main() {
   const componentArgIndex = args.indexOf('--component');
   const componentFilter =
     componentArgIndex >= 0 ? args[componentArgIndex + 1] : null;
-  const startStorybook = args.includes('--start-storybook');
+  const shouldStartStorybook = args.includes('--start-storybook');
   const storybookUrl = process.env.STORYBOOK_URL ?? DEFAULT_STORYBOOK_URL;
 
   if (!existsSync(CEM_PATH)) {
@@ -220,8 +231,8 @@ async function main() {
   let storybookProcess = null;
 
   if (!(await isStorybookUp(storybookUrl))) {
-    if (startStorybook) {
-      storybookProcess = await startStorybook(storybookUrl);
+    if (shouldStartStorybook) {
+      storybookProcess = await launchStorybook(storybookUrl);
     } else {
       console.error(
         `Storybook is not running at ${storybookUrl}.\n` +

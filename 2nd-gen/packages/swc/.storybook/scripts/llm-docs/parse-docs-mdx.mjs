@@ -20,8 +20,10 @@ const GETTING_STARTED_RE = /<GettingStarted\s*\/>/;
 const API_TABLE_RE = /<ApiTable\s*\/>/;
 
 /**
- * @param {string} storiesSource
- * @returns {{ title: string, component: string, migrated: boolean }}
+ * Extracts Storybook meta fields from a CSF stories file.
+ *
+ * @param {string} storiesSource - Raw stories file contents
+ * @returns {{ title: string, component: string, migrated: boolean }} Parsed meta fields
  */
 export function parseStoriesMeta(storiesSource) {
   const titleMatch = storiesSource.match(/title:\s*['"]([^'"]+)['"]/);
@@ -36,8 +38,10 @@ export function parseStoriesMeta(storiesSource) {
 }
 
 /**
- * @param {string} mdxSource
- * @returns {{ segments: import('./types.js').DocsSegment[]; subtitle: string }}
+ * Parses a component docs.mdx file into structured segments.
+ *
+ * @param {string} mdxSource - Raw docs.mdx contents
+ * @returns {{ segments: import('./types.js').DocsSegment[]; subtitle: string }} Parsed segments and subtitle
  */
 export function parseDocsMdx(mdxSource) {
   /** @type {import('./types.js').DocsSegment[]} */
@@ -74,7 +78,10 @@ export function parseDocsMdx(mdxSource) {
 
     if (SUBTITLE_OPEN.test(line)) {
       inSubtitle = true;
-      subtitle = line.replace(SUBTITLE_OPEN, '').replace(SUBTITLE_CLOSE, '').trim();
+      subtitle = line
+        .replace(SUBTITLE_OPEN, '')
+        .replace(SUBTITLE_CLOSE, '')
+        .trim();
       if (SUBTITLE_CLOSE.test(line)) {
         inSubtitle = false;
       }
