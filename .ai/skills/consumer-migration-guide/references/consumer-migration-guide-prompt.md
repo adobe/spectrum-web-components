@@ -2,9 +2,9 @@
 
 # Spectrum consumer migration guide prompt
 
-For the **[COMPONENT_NAME]** component(s), create one consumer-facing migration guide per component at `2nd-gen/packages/swc/components/[component-name]/consumer-migration-guide.mdx`.
+For the **[COMPONENT_NAME]** component(s), create one consumer-facing migration guide per component at `2nd-gen/packages/swc/components/[component-name]/migration-guide.mdx`.
 
-The file must be **MDX**, not plain Markdown. Storybook's config (`2nd-gen/packages/swc/.storybook/main.ts`) picks up `**/*.mdx` under `../components` with `titlePrefix: 'Components'`, so the guide renders at `Components/[Component name]/Consumer migration guide`.
+The file must be **MDX**, not plain Markdown. Storybook's config (`2nd-gen/packages/swc/.storybook/main.ts`) picks up `**/*.mdx` under `../components` with `titlePrefix: 'Components'`, so the guide renders at `Components/[Component name]/Migration guide`.
 
 The guide ships alongside the Spectrum 2 component source. Do **not** create or move this file under `CONTRIBUTOR-DOCS/`.
 
@@ -60,12 +60,12 @@ Start every guide with this exact template:
 ```mdx
 import { Meta } from '@storybook/addon-docs/blocks';
 
-<Meta title="[Component name]/Consumer migration guide" />
+<Meta title="[Component name]/Migration guide" />
 
-# [Component name] consumer migration guide
+# [Component name] migration guide
 ```
 
-- Use sentence case for `[Component name]` (for example `Badge`, `Action button`).
+- Use title case for `[Component name]` — component names are proper nouns (for example `Badge`, `Action Button`).
 - Do **not** prefix `<Meta title>` with `Components/` — `titlePrefix` supplies it.
 - Use sentence case for all other headings.
 - Prefer tables, bullets, and fenced code blocks over prose.
@@ -82,7 +82,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
 Use exactly this **H2** order. Omit any section that has no component-specific content rather than writing filler.
 
-1. `# [Component name] consumer migration guide` — H1, followed by **one sentence** summarizing the migration.
+1. `# [Component name] migration guide` — H1, followed by **one sentence** summarizing the migration.
 2. `## What changed` — up to three tables (`### Renamed`, `### Added in Spectrum 2`, `### Removed in Spectrum 2`). Omit any sub-section with no entries. **Never** include an `### Unchanged` sub-section.
 3. `## Update your code` — numbered steps in the order the consumer performs them. Every step includes a before/after snippet.
 4. `## Accessibility` — consumer-facing a11y actions only. Do not repeat code examples already shown in `## Update your code` — link back to the relevant step instead. Skip if nothing changed.
@@ -100,7 +100,7 @@ Do **not** add: `Overview`, `Before you migrate`, `Migration in one sentence`, `
 Example:
 
 ```mdx
-# Badge consumer migration guide
+# Badge migration guide
 
 Replace `<sp-badge>` with `<swc-badge>` and update the import. The public API is unchanged.
 ```
