@@ -37,7 +37,6 @@
   background: transparent;
   border: 1px solid transparent;
   border-radius: var(--swc-message-feedback-button-border-radius, token("corner-radius-300"));
-  cursor: pointer;
   transition:
     background token("animation-duration-100") ease,
     color token("animation-duration-100") ease;

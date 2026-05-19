@@ -37,7 +37,6 @@
   background: token("gray-200");
   border: 1px solid token("gray-25");
   border-radius: token("corner-radius-full");
-  cursor: pointer;
 }
 
 .swc-UploadArtifact-dismiss[hidden] {
