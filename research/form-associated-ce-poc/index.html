@@ -544,6 +544,123 @@
 
     <div class="scenario">
       <h3>
+        3c.
+        <code>internals.role</code>
+        and labelling constraints
+      </h3>
+      <p>
+        When the host has an explicit role via
+        <code>internals.role</code>
+        , does that change how labelling works? Does the host become the
+        "primary" accessible element, or does
+        <code>delegatesFocus</code>
+        still route SR interaction to the shadow input?
+      </p>
+      <form id="form-3c">
+        <div class="field-group">
+          <code>internals.role = "textbox" + internals-only label</code>
+          <face-text-field
+            id="field-3c-textbox-internals"
+            name="role-textbox-internals"
+            internals-role="textbox"
+            use-internals-aria-label="Textbox with internals role"
+            labelling-strategy="internals-only"
+            placeholder="role=textbox, internals.ariaLabel only"
+          ></face-text-field>
+          <span class="help-text">
+            Host has
+            <code>role="textbox"</code>
+            via internals +
+            <code>internals.ariaLabel</code>
+            . Does the SR now announce the label because the host IS the
+            textbox?
+          </span>
+        </div>
+        <div class="field-group">
+          <code>internals.role = "textbox" + dual-write label</code>
+          <face-text-field
+            id="field-3c-textbox-dual"
+            name="role-textbox-dual"
+            internals-role="textbox"
+            use-internals-aria-label="Textbox dual write"
+            labelling-strategy="dual-write"
+            placeholder="role=textbox, dual-write"
+          ></face-text-field>
+          <span class="help-text">
+            Host has
+            <code>role="textbox"</code>
+            + dual-write. Baseline comparison.
+          </span>
+        </div>
+        <div class="field-group">
+          <code>internals.role = "combobox" + internals-only label</code>
+          <face-text-field
+            id="field-3c-combobox-internals"
+            name="role-combobox-internals"
+            internals-role="combobox"
+            use-internals-aria-label="Combobox with internals role"
+            labelling-strategy="internals-only"
+            placeholder="role=combobox, internals.ariaLabel only"
+          ></face-text-field>
+          <span class="help-text">
+            Host has
+            <code>role="combobox"</code>
+            via internals +
+            <code>internals.ariaLabel</code>
+            . Combobox is a composite widget — does the SR treat the host as the
+            primary control?
+          </span>
+        </div>
+        <div class="field-group">
+          <code>internals.role = "combobox" + dual-write label</code>
+          <face-text-field
+            id="field-3c-combobox-dual"
+            name="role-combobox-dual"
+            internals-role="combobox"
+            use-internals-aria-label="Combobox dual write"
+            labelling-strategy="dual-write"
+            placeholder="role=combobox, dual-write"
+          ></face-text-field>
+          <span class="help-text">
+            Host has
+            <code>role="combobox"</code>
+            + dual-write. Baseline comparison.
+          </span>
+        </div>
+        <div class="field-group">
+          <code>internals.role = "textbox" + NO delegatesFocus</code>
+          <face-text-field-no-delegate
+            id="field-3c-textbox-no-delegate"
+            name="role-textbox-no-delegate"
+            internals-role="textbox"
+            use-internals-aria-label="Textbox no delegatesFocus"
+            labelling-strategy="internals-only"
+            placeholder="role=textbox, no delegatesFocus"
+          ></face-text-field-no-delegate>
+          <span class="help-text">
+            Same as above but
+            <strong>without</strong>
+            <code>delegatesFocus</code>
+            . Does the host now become the focused element and announce the
+            label?
+          </span>
+        </div>
+      </form>
+      <div class="note">
+        <strong>Key question:</strong>
+        When
+        <code>internals.role = "textbox"</code>
+        and the host is the element with a role, does
+        <code>internals.ariaLabel</code>
+        finally get announced? Or does
+        <code>delegatesFocus</code>
+        still send focus to the shadow input, bypassing the host's role
+        entirely?
+      </div>
+    </div>
+
+    <div class="scenario">
+      <h3>
         3b.
         <code>setValidity()</code>
         +
@@ -649,6 +766,7 @@
             'internal-label',
             'internal-help',
             'use-internals-aria-label',
+            'internals-role',
             'min-value',
             'aria-label',
             'aria-labelledby',
@@ -815,6 +933,11 @@
                 this.#applyLabel(newVal);
               }
               break;
+            case 'internals-role':
+              if (newVal !== null) {
+                this.#internals.role = newVal;
+              }
+              break;
             case 'aria-label':
               if (newVal !== null) {
                 this.#applyLabel(newVal);
@@ -928,6 +1051,9 @@
 
           const internalHelp = this.getAttribute('internal-help');
           if (internalHelp) this.#updateInternalHelp(internalHelp);
+
+          const internalsRole = this.getAttribute('internals-role');
+          if (internalsRole) this.#internals.role = internalsRole;
 
           const internalsAriaLabel = this.getAttribute(
             'use-internals-aria-label'
@@ -1159,6 +1285,96 @@
       }
 
       customElements.define('face-text-field', FaceTextField);
+
+      /**
+       * Variant WITHOUT delegatesFocus to test whether removing it
+       * changes how internals.role + internals.ariaLabel interact.
+       * If delegatesFocus is what bypasses the host role, then without
+       * it the host should be the focused element and announce its label.
+       */
+      class FaceTextFieldNoDelegate extends FaceTextField {
+        constructor() {
+          // Override: we need to re-create without delegatesFocus
+          // Since we can't call super() and re-attach shadow, we use a
+          // workaround: this class inherits everything except the shadow
+          // root configuration.
+          HTMLElement.prototype.constructor.call(
+            Object.setPrototypeOf(this, FaceTextFieldNoDelegate.prototype)
+          );
+        }
+      }
+
+      // Simpler approach: define a minimal standalone version without delegatesFocus
+      class FaceTextFieldNoDelegateFocus extends HTMLElement {
+        static formAssociated = true;
+
+        static get observedAttributes() {
+          return [
+            'value',
+            'placeholder',
+            'type',
+            'use-internals-aria-label',
+            'internals-role',
+            'labelling-strategy',
+          ];
+        }
+
+        #internals;
+        #input;
+
+        constructor() {
+          super();
+          this.#internals = this.attachInternals();
+          const shadow = this.attachShadow({ mode: 'open' });
+          shadow.innerHTML = `
+            <style>
+              :host { display: inline-flex; min-width: 200px; }
+              input {
+                font: inherit;
+                padding: 0.5rem 0.75rem;
+                border: 1px solid #d1d5db;
+                border-radius: 6px;
+                width: 100%;
+              }
+              input:focus { border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59,130,246,0.15); }
+            </style>
+            <input id="internal-input" part="input" />
+          `;
+          this.#input = shadow.getElementById('internal-input');
+          this.#input.addEventListener('input', () => {
+            this.#internals.setFormValue(this.#input.value);
+          });
+        }
+
+        connectedCallback() {
+          const role = this.getAttribute('internals-role');
+          if (role) this.#internals.role = role;
+
+          const label = this.getAttribute('use-internals-aria-label');
+          if (label) {
+            const strategy =
+              this.getAttribute('labelling-strategy') || 'dual-write';
+            if (strategy === 'internals-only' || strategy === 'dual-write') {
+              this.#internals.ariaLabel = label;
+            }
+            if (strategy === 'input-only' || strategy === 'dual-write') {
+              this.#input.setAttribute('aria-label', label);
+            }
+          }
+
+          const placeholder = this.getAttribute('placeholder');
+          if (placeholder) this.#input.placeholder = placeholder;
+        }
+
+        get value() {
+          return this.#input?.value ?? '';
+        }
+      }
+
+      customElements.define(
+        'face-text-field-no-delegate',
+        FaceTextFieldNoDelegateFocus
+      );
 
       // ===================================================================
       // Form event handlers
