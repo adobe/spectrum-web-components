@@ -56,14 +56,14 @@ Bump types follow [semantic versioning](https://semver.org/) — the version num
 
 ### Examples
 
-**New component** (the most common case during migration). Always link to the component's Storybook docs and consumer migration guide so consumers know where to find details:
+**New component** (the most common case during migration). Always link to the component's Storybook docs and migration guide so consumers know where to find details:
 
 ```markdown
 ---
 '@adobe/spectrum-wc': minor
 ---
 
-`Accordion` — Added `<swc-accordion>` with Spectrum 2 tokens. See the [component docs](https://opensource.adobe.com/spectrum-web-components/?path=/docs/components-accordion--readme) and [consumer migration guide](https://opensource.adobe.com/spectrum-web-components/?path=/docs/components-accordion-consumer-migration-guide--readme). [#7000](https://github.com/adobe/spectrum-web-components/pull/7000)
+`Accordion` — Added `<swc-accordion>` with Spectrum 2 tokens. See the [component docs](https://spectrum-web-components.adobe.com/?path=/docs/components-accordion--docs) and [migration guide](https://spectrum-web-components.adobe.com/?path=/docs/components-accordion-migration-guide--docs). [#7000](https://github.com/adobe/spectrum-web-components/pull/7000)
 ```
 
 **Patch** (bug fix):
@@ -148,7 +148,7 @@ At release time, the script collates changeset entries under a version heading. 
 - 🚨 BREAKING: `Avatar` — Renamed `label` to `alt`. Removed `href`. [#6113](link)
 - `Button` — Added `justified` attribute for full-width layout. [#6254](link)
 - `Badge` — Fixed contrast ratio in dark theme for `notice` variant. [#6285](link)
-- `Accordion` — Added `<swc-accordion>` with Spectrum 2 tokens. See the [component docs](link) and [consumer migration guide](link). [#7000](link)
+- `Accordion` — Added `<swc-accordion>` with Spectrum 2 tokens. See the [component docs](link) and [migration guide](link). [#7000](link)
 ```
 
 For major releases with many entries, add short section headings in the changeset bodies (or split across releases) so the merged CHANGELOG stays easy to scan.
