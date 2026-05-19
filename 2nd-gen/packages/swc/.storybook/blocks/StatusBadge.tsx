@@ -15,7 +15,7 @@ import React, { useEffect, useRef } from 'react';
 import customElements from '../custom-elements.json' with { type: 'json' };
 
 // Register the badge component for use in the docs iframe
-import '../../components/badge/index.js';
+import '@adobe/spectrum-wc/components/badge/swc-badge.js';
 
 type Status = 'preview' | 'deprecated' | 'internal';
 

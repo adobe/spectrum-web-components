@@ -277,9 +277,15 @@ export class ColorWheel extends Focusable {
   private handleGradientPointerdown(event: PointerEvent): void {
     if (
       event.button !== 0 ||
-      (event.target as SVGElement).classList.contains('innerCircle') ||
-      !this.isPointerInRing(event)
+      (event.target as SVGElement).classList.contains('innerCircle')
     ) {
+      return;
+    }
+    // Refresh cached layout before the ring hit-test: getBoundingClientRect is
+    // viewport-relative, so scrolling or any layout shift since the last cache
+    // may otherwise make isPointerInRing reject valid clicks.
+    this.cacheLayoutData();
+    if (!this.isPointerInRing(event)) {
       return;
     }
     event.stopPropagation();

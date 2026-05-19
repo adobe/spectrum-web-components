@@ -49,7 +49,8 @@ const meta: Meta = {
   render: (args) => template(args),
   parameters: {
     docs: {
-      subtitle: 'Prompt entry surface for conversational AI flows.',
+      subtitle:
+        'Prompt entry surface for conversational AI flows. Populate attachments by slotting one or more swc-upload-artifact nodes into artifact',
     },
     layout: 'padded',
   },
@@ -107,11 +108,7 @@ export const Anatomy: Story = {
           label="Prompt"
           placeholder=${defaultPlaceholder}
         ></swc-prompt-field>
-        <span
-          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-700);"
-        >
-          Base structure
-        </span>
+        <span class="swc-Detail swc-Detail--sizeS">Base structure</span>
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;">
         <swc-prompt-field label="Prompt" placeholder=${defaultPlaceholder}>
@@ -119,11 +116,7 @@ export const Anatomy: Story = {
             AI output may be inaccurate. Verify before using.
           </div>
         </swc-prompt-field>
-        <span
-          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-700);"
-        >
-          legal slot only
-        </span>
+        <span class="swc-Detail swc-Detail--sizeS">legal slot only</span>
       </div>
     </div>
   `,
@@ -151,9 +144,7 @@ export const Modes: Story = {
           label="Prompt"
           placeholder=${defaultPlaceholder}
         ></swc-prompt-field>
-        <span
-          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-700);"
-        >
+        <span class="swc-Detail swc-Detail--sizeS">
           mode="default" with empty value
         </span>
       </div>
@@ -162,9 +153,7 @@ export const Modes: Story = {
           label="Prompt"
           value="Summarize the API changes in this branch."
         ></swc-prompt-field>
-        <span
-          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-700);"
-        >
+        <span class="swc-Detail swc-Detail--sizeS">
           mode="default" with entered value
         </span>
       </div>
@@ -174,9 +163,7 @@ export const Modes: Story = {
           label="Prompt"
           value="Summarize the API changes in this branch."
         ></swc-prompt-field>
-        <span
-          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-700);"
-        >
+        <span class="swc-Detail swc-Detail--sizeS">
           mode="loading" (input remains editable)
         </span>
       </div>
@@ -186,9 +173,7 @@ export const Modes: Story = {
           label="Prompt"
           value="This input is disabled."
         ></swc-prompt-field>
-        <span
-          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-700);"
-        >
+        <span class="swc-Detail swc-Detail--sizeS">
           mode="disabled" (input and controls disabled)
         </span>
       </div>
@@ -202,48 +187,83 @@ export const Modes: Story = {
  * Artifact layout is inferred from the **`artifact`** slot content and supports multiple mixed items:
  *
  * - No slot content: no artifact region
- * - `swc-upload-artifact type="card"`: file-style card artifact
- * - `swc-upload-artifact type="media"`: media tile artifact
+ * - **`swc-upload-artifact type="card"`** — file-style card artifact
+ * - **`swc-upload-artifact type="media"`** — media tile artifact
+ *
+ * **Populate the attachment strip** by slotting **one `<swc-upload-artifact>` per file**, each with
+ * **`slot="artifact"`** (same slot name repeated). Mixed card + media entries wrap inside the composer like this story’s first example.
+ *
+ * For additional combinations (narrow widths, ellipsis, more tiles), see **[Multi-artifact](/docs/patterns-conversational-ai-upload-artifact--readme#multi-artifact)**.
  *
  * Upload button behavior:
  *
- * - Emits cancelable `swc-prompt-field-upload-click`; consumers own picker behavior
- * - Consumers can provide files via slotted artifacts and own file selection flow externally
+ * - Emits cancelable **`swc-prompt-field-upload-click`**; consumers own picker behavior
+ * - Consumers provide artifacts by slotting; file selection stays in app code
  *
- * Artifacts own dismiss behavior via `dismissible` and emit `swc-upload-artifact-dismiss`.
+ * Artifacts own dismiss behavior via **`dismissible`** and emit **`swc-upload-artifact-dismiss`**.
  */
 export const Artifact: Story = {
   render: () => html`
     <div style="display:flex;flex-direction:column;gap:32px;">
+      <p
+        class="swc-Detail swc-Detail--sizeS"
+        style="margin:0;max-inline-size:720px;"
+      >
+        <strong>artifact</strong>
+        — Slot multiple
+        <code>&lt;swc-upload-artifact slot="artifact"&gt;</code>
+        nodes; the field lays them out in a wrapping row above the textarea.
+        More variants:
+        <strong>Multi-artifacts</strong>
+        .
+      </p>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <swc-prompt-field
+          label="Prompt"
+          value="Use attached assets for a launch plan."
+        >
+          <swc-upload-artifact slot="artifact" type="card" dismissible>
+            <div slot="thumbnail" role="img" aria-label="PDF"></div>
+            <span slot="title">Brand guidelines</span>
+            <span slot="subtitle">PDF</span>
+          </swc-upload-artifact>
+          <swc-upload-artifact slot="artifact" type="media" dismissible>
+            <div
+              slot="thumbnail"
+              style="background:linear-gradient(135deg,#6366f1,#ec4899);"
+              role="img"
+              aria-label="Campaign still"
+            ></div>
+          </swc-upload-artifact>
+          <swc-upload-artifact slot="artifact" type="media" dismissible>
+            <div
+              slot="thumbnail"
+              style="background:linear-gradient(135deg,#0ea5e9,#22c55e);"
+              role="img"
+              aria-label="Storyboard frame"
+            ></div>
+          </swc-upload-artifact>
+        </swc-prompt-field>
+        <span class="swc-Detail swc-Detail--sizeS">
+          Mixed multi-artifact (card + media, wrapping strip)
+        </span>
+      </div>
       <div style="display:flex;flex-direction:column;gap:8px;">
         <swc-prompt-field
           label="Prompt"
           placeholder=${defaultPlaceholder}
         ></swc-prompt-field>
-        <span
-          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-700);"
-        >
-          None
-        </span>
+        <span class="swc-Detail swc-Detail--sizeS">None</span>
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;">
         <swc-prompt-field label="Prompt" placeholder=${defaultPlaceholder}>
           <swc-upload-artifact slot="artifact" type="card" dismissible>
-            <div
-              slot="thumbnail"
-              style="background:var(--swc-gray-200);"
-              role="img"
-              aria-label="PDF"
-            ></div>
+            <div slot="thumbnail" role="img" aria-label="PDF"></div>
             <span slot="title">Hilton commercial assets</span>
             <span slot="subtitle">2026</span>
           </swc-upload-artifact>
         </swc-prompt-field>
-        <span
-          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-700);"
-        >
-          Card
-        </span>
+        <span class="swc-Detail swc-Detail--sizeS">Single card</span>
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;">
         <swc-prompt-field label="Prompt" placeholder=${defaultPlaceholder}>
@@ -252,53 +272,10 @@ export const Artifact: Story = {
               slot="thumbnail"
               src="https://placehold.co/160x120/png"
               alt="Attachment preview"
-              style="inline-size:100%;block-size:100%;min-block-size:0;object-fit:cover;"
             />
           </swc-upload-artifact>
         </swc-prompt-field>
-        <span
-          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-700);"
-        >
-          Media
-        </span>
-      </div>
-      <div style="display:flex;flex-direction:column;gap:8px;">
-        <swc-prompt-field
-          label="Prompt"
-          value="Use attached assets for a launch plan."
-        >
-          <swc-upload-artifact slot="artifact" type="card" dismissible>
-            <div
-              slot="thumbnail"
-              style="background:var(--swc-gray-200);"
-              role="img"
-              aria-label="PDF"
-            ></div>
-            <span slot="title">Brand guidelines</span>
-            <span slot="subtitle">PDF</span>
-          </swc-upload-artifact>
-          <swc-upload-artifact slot="artifact" type="media" dismissible>
-            <div
-              slot="thumbnail"
-              style="inline-size:100%;block-size:100%;background:linear-gradient(135deg,#6366f1,#ec4899);"
-              role="img"
-              aria-label="Campaign still"
-            ></div>
-          </swc-upload-artifact>
-          <swc-upload-artifact slot="artifact" type="media" dismissible>
-            <div
-              slot="thumbnail"
-              style="inline-size:100%;block-size:100%;background:linear-gradient(135deg,#0ea5e9,#22c55e);"
-              role="img"
-              aria-label="Storyboard frame"
-            ></div>
-          </swc-upload-artifact>
-        </swc-prompt-field>
-        <span
-          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-700);"
-        >
-          Mixed multi-artifact set (wrapping layout)
-        </span>
+        <span class="swc-Detail swc-Detail--sizeS">Single media</span>
       </div>
     </div>
   `,
@@ -451,7 +428,7 @@ class PromptFieldBehaviorDemo extends LitElement {
                         slot="thumbnail"
                         role="img"
                         aria-label="File thumbnail"
-                        style="inline-size:40px;block-size:40px;background:var(--swc-gray-200);border-radius:4px;"
+                        style="inline-size:40px;block-size:40px;"
                       ></div>
                       <span slot="title">${artifact.fileName}</span>
                       <span slot="subtitle">${artifact.sizeLabel}</span>
@@ -469,15 +446,11 @@ class PromptFieldBehaviorDemo extends LitElement {
             hidden
             @change=${this._handleFileChange}
           />
-          <span
-            style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-700);"
-          >
+          <span class="swc-Detail swc-Detail--sizeS">
             Input, submit, upload trigger, and external artifact handling
           </span>
         </div>
-        <p
-          style="font-family:var(--swc-sans-serif-font);font-size:var(--swc-font-size-75);color:var(--swc-gray-800);margin:0;"
-        >
+        <p class="swc-Detail swc-Detail--sizeS" style="margin:0;">
           ${this.readout}
         </p>
       </div>
