@@ -101,6 +101,7 @@
     - [Picker button migration roadmap](picker-button/rendering-and-styling-migration-analysis.md)
 - Popover
     - [Popover accessibility migration analysis](popover/accessibility-migration-analysis.md)
+    - [Popover migration plan](popover/migration-plan.md)
     - [Popover migration roadmap](popover/rendering-and-styling-migration-analysis.md)
 - Progress Bar
     - [Progress bar accessibility migration analysis](progress-bar/accessibility-migration-analysis.md)
