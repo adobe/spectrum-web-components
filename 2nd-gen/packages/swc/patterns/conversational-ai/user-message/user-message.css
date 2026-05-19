@@ -17,9 +17,7 @@
  * media — shrinks to the fixed 180×180px inner card + 2×8px padding ≈ 196px square
  *
  * The host IS the visible bubble so focus rings rendered by the parent
- * `swc-conversation-turn` hug its border box exactly. `margin-inline-end`
- * stays on the host because margins sit outside the border box and therefore
- * outside the focus ring.
+ * `swc-conversation-turn` hug its border box exactly.
  */
 
 :host {
@@ -28,7 +26,6 @@
   max-inline-size: 536px;
   padding-block: var(--swc-user-message-padding-block, token("spacing-100"));
   padding-inline: var(--swc-user-message-padding-inline, token("spacing-300"));
-  margin-inline-end: var(--swc-user-message-margin-inline-end, token("spacing-400"));
   font-family: token("sans-serif-font");
   font-size: token("font-size-200");
   font-weight: token("regular-font-weight");
