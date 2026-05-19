@@ -757,6 +757,7 @@
         constructor() {
           super();
           this.#internals = this.attachInternals();
+          this.#internals.role = 'combobox';
 
           this.#inputId = `combo-input-${FaceCombobox.#nextId}`;
           this.#listboxId = `combo-listbox-${FaceCombobox.#nextId}`;
