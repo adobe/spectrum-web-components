@@ -212,7 +212,7 @@ export const Playground: Story = {
     'default-slot': 'Active',
     'icon-slot': undefined,
   },
-  tags: ['autodocs', 'dev'],
+  tags: ['dev'],
 };
 
 // ──────────────────────────────
