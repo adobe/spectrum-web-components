@@ -27,9 +27,6 @@ import { FocusGroupController } from '@spectrum-web-components/reactive-controll
 import styles from './accordion.css.js';
 import { AccordionItem } from './AccordionItem.js';
 
-const ACCORDION_MIGRATION_DOC_URL =
-  'https://opensource.adobe.com/spectrum-web-components/components/accordion/';
-
 /**
  * @element sp-accordion
  * @slot - The sp-accordion-item children to display.
@@ -75,19 +72,7 @@ export class Accordion extends SizedMixin(SpectrumElement, {
     isFocusableElement: (el: AccordionItem) => !el.disabled,
   });
 
-  /**
-   * @deprecated `focus()` on `<sp-accordion>` is deprecated and will be removed
-   * in Spectrum 2. Focus the header button inside `<sp-accordion-item>` instead.
-   */
   public override focus(): void {
-    if (window.__swc?.DEBUG) {
-      window.__swc.warn(
-        this,
-        `<${this.localName}> focus() is deprecated and will be removed in Spectrum 2. Focus the header button inside <sp-accordion-item> instead.`,
-        ACCORDION_MIGRATION_DOC_URL,
-        { level: 'deprecation' }
-      );
-    }
     this.focusGroupController.focus();
   }
 
@@ -114,23 +99,11 @@ export class Accordion extends SizedMixin(SpectrumElement, {
     });
   }
 
-  private syncAssignedItem(item: AccordionItem): void {
-    if (window.__swc?.DEBUG && item.level !== this.level) {
-      window.__swc.warn(
-        item,
-        `<${item.localName}> the "level" attribute is deprecated on accordion items and will be removed in Spectrum 2. Use "level" on <${this.localName}> instead.`,
-        ACCORDION_MIGRATION_DOC_URL,
-        { level: 'deprecation' }
-      );
-    }
-    item.size = this.size;
-    item.level = this.level;
-  }
-
   private handleSlotchange(): void {
     this.focusGroupController.clearElementCache();
     this.items.forEach((item) => {
-      this.syncAssignedItem(item);
+      item.size = this.size;
+      item.level = this.level;
     });
   }
 
@@ -143,7 +116,7 @@ export class Accordion extends SizedMixin(SpectrumElement, {
     }
     if (changed.has('level')) {
       this.items.forEach((item) => {
-        this.syncAssignedItem(item);
+        item.level = this.level;
       });
     }
   }
