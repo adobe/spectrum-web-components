@@ -251,4 +251,27 @@
       display: inline-block;
     }
   }
+
+  .link-samples {
+    #storybook-root & {
+      background-color: var(--swc-gray-25);
+      padding: 1.5rem;
+    }
+
+    &.link-samples--grid {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .link-row {
+      display: grid;
+      gap: 0.5rem;
+    }
+
+    .link-meta {
+      display: flex;
+      align-items: last baseline;
+      gap: 0.5rem;
+    }
+  }
 </style>

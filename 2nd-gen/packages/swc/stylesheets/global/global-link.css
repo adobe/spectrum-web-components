@@ -1,0 +1,109 @@
+/**
+ * Copyright 2026 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+/**
+ * Opt-in baseline styling for bare `<a href>` elements application-wide.
+ *
+ * Import explicitly when the app should apply standalone Spectrum link presentation
+ * without a wrapper class or per-link BEM classes. Not included in `swc.css` and
+ * intentionally outside cascade layers so it remains easy to override.
+ *
+ * Modifier classes (`.swc-Link--secondary`, etc.) live in `link.css` — import that
+ * file alongside this one when anchors need explicit presentation control.
+ */
+
+@import url("../link.css");
+
+@media (forced-colors: active) {
+  a:where(:not([class])) {
+    --_swc-link-high-contrast-text-color: LinkText;
+    --_swc-link-high-contrast-focus-indicator-color: LinkText;
+  }
+}
+
+a:where(:not([class])) {
+  --_swc-link-focus-indicator-thickness: token("focus-indicator-thickness");
+  --_swc-link-focus-indicator-gap: token("focus-indicator-gap");
+  --_swc-link-corner-radius: token("corner-radius-100");
+  --_swc-link-font-family: token("sans-serif-font");
+  --_swc-link-line-height: token("line-height-100");
+  --_swc-link-line-height-cjk: token("cjk-line-height-100");
+  --_swc-link-font-size: token("font-size-100");
+  --_swc-link-font-style: token("default-font-style");
+  --_swc-link-font-weight: token("medium-font-weight");
+  --_swc-link-inline-font-weight: token("regular-font-weight");
+  --_swc-link-text-underline-thickness: token("text-underline-thickness");
+  --_swc-link-text-underline-gap: token("text-underline-gap");
+  --_swc-link-text-color: var(
+    --swc-link-text-color,
+    token("accent-content-color-default")
+  );
+
+  text-decoration-skip: objects;
+  font-family: var(--swc-link-font-family, var(--_swc-link-font-family));
+  font-size: var(--swc-link-font-size, var(--_swc-link-font-size));
+  font-style: var(--swc-link-font-style, var(--_swc-link-font-style));
+  font-weight: var(--swc-link-font-weight, var(--_swc-link-font-weight));
+  line-height: var(--swc-link-line-height, var(--_swc-link-line-height));
+  color: var(--_swc-link-high-contrast-text-color, var(--_swc-link-text-color));
+  text-decoration: underline;
+  text-decoration-thickness: var(
+    --swc-link-text-underline-thickness,
+    var(--_swc-link-text-underline-thickness)
+  );
+  text-underline-offset: var(
+    --swc-link-text-underline-gap,
+    var(--_swc-link-text-underline-gap)
+  );
+  background-color: transparent;
+  cursor: pointer;
+  outline: none;
+  transition: color token("animation-duration-100") ease-in-out;
+
+  &:hover {
+    --_swc-link-text-color: var(
+      --swc-link-text-color-hover,
+      token("accent-content-color-hover")
+    );
+  }
+
+  &:active {
+    --_swc-link-text-color: var(
+      --swc-link-text-color-down,
+      token("accent-content-color-down")
+    );
+  }
+
+  &:focus-visible {
+    --_swc-link-text-color: var(
+      --swc-link-text-color-focus,
+      token("accent-content-color-key-focus")
+    );
+    
+    border-radius: var(--swc-link-corner-radius, var(--_swc-link-corner-radius));
+    outline: var(--_swc-link-focus-indicator-thickness) solid
+      var(
+        --_swc-link-high-contrast-focus-indicator-color,
+        var(--swc-link-focus-indicator-color, token("focus-indicator-color"))
+      );
+    outline-offset: var(--_swc-link-focus-indicator-gap);
+  }
+
+  &:lang(ja),
+  &:lang(zh),
+  &:lang(ko) {
+    line-height: var(
+      --swc-link-line-height-cjk,
+      var(--_swc-link-line-height-cjk)
+    );
+  }
+}

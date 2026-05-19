@@ -534,3 +534,41 @@
 .swc-Typography--emphasized:not(:lang(zh), :lang(ja), :lang(ko)) {
   font-style: token("italic-font-style");
 }
+
+/* =========================
+  Links (prose and link lists)
+  ========================= */
+.swc-Typography--prose :where(a),
+.swc-Typography--links :where(a) {
+  font-family: inherit;
+  font-size: inherit;
+  font-style: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  color: var(--swc-typography-link-text-color, token("accent-content-color-default"));
+  text-decoration: underline;
+  text-decoration-thickness: var(--swc-typography-link-text-underline-thickness, token("text-underline-thickness"));
+  text-underline-offset: var(--swc-typography-link-text-underline-gap, token("text-underline-gap"));
+  background-color: transparent;
+  cursor: pointer;
+  outline: none;
+  transition: color token("animation-duration-100") ease-in-out;
+}
+
+.swc-Typography--prose :where(a):hover,
+.swc-Typography--links :where(a):hover {
+  color: var(--swc-typography-link-text-color-hover, token("accent-content-color-hover"));
+}
+
+.swc-Typography--prose :where(a):active,
+.swc-Typography--links :where(a):active {
+  color: var(--swc-typography-link-text-color-down, token("accent-content-color-down"));
+}
+
+.swc-Typography--prose :where(a):focus-visible,
+.swc-Typography--links :where(a):focus-visible {
+  color: var(--swc-typography-link-text-color-focus, token("accent-content-color-key-focus"));
+  border-radius: token("corner-radius-100");
+  outline: token("focus-indicator-thickness") solid var(--swc-typography-link-focus-indicator-color, token("focus-indicator-color"));
+  outline-offset: token("focus-indicator-gap");
+}

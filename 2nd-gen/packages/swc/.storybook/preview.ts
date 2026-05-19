@@ -27,6 +27,7 @@ import { transformDocsSource } from './utils/docs-source-transform.js';
 
 import '../stylesheets/swc.css';
 import '../stylesheets/typography.css';
+import '../stylesheets/link.css';
 import '../stylesheets/global/global-elements.css';
 import './assets/preview.css';
 
@@ -330,7 +331,10 @@ const preview = {
                   'Rendering and styling migration analysis',
                 ],
                 'Action button',
-                ['Rendering and styling migration analysis'],
+                [
+                  'Accessibility migration analysis',
+                  'Rendering and styling migration analysis',
+                ],
                 'Action group',
                 ['Rendering and styling migration analysis'],
                 'Action menu',
@@ -360,9 +364,14 @@ const preview = {
                   'Rendering and styling migration analysis',
                 ],
                 'Button group',
-                ['Rendering and styling migration analysis'],
+                [
+                  'Accessibility migration analysis',
+                  'Rendering and styling migration analysis',
+                ],
                 'Checkbox',
                 ['Rendering and styling migration analysis'],
+                'Close button',
+                ['Accessibility migration analysis'],
                 'Color field',
                 ['Rendering and styling migration analysis'],
                 'Color loupe',
@@ -391,12 +400,16 @@ const preview = {
                   'Rendering and styling migration analysis',
                 ],
                 'Infield button',
-                ['Rendering and styling migration analysis'],
+                [
+                  'Accessibility migration analysis',
+                  'Rendering and styling migration analysis',
+                ],
                 'Infield progress circle',
                 ['Rendering and styling migration analysis'],
                 'Link',
                 [
                   'Accessibility migration analysis',
+                  'Migration plan',
                   'Rendering and styling migration analysis',
                 ],
                 'Menu',

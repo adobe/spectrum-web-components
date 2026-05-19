@@ -128,8 +128,68 @@ const CJK_OVERRIDES = {
 };
 
 const PROSE_CLASS = 'Typography--prose';
+const LINKS_CLASS = 'Typography--links';
+
 function proseSelector(prefix) {
   return `.${prefix}-${PROSE_CLASS}`;
+}
+
+function linksSelector(prefix) {
+  return `.${prefix}-${LINKS_CLASS}`;
+}
+
+/**
+ * Default native anchor appearance inside typography wrappers.
+ * Uses :where(a) so BEM modifiers from link.css can override.
+ */
+function generateTypographyAnchorRules(prefix) {
+  const prose = proseSelector(prefix);
+  const links = linksSelector(prefix);
+  const anchor = ':where(a)';
+  const wrapperSelectors = `${prose} ${anchor},\n${links} ${anchor}`;
+  const stateSelectors = (pseudo) =>
+    `${prose} ${anchor}${pseudo},\n${links} ${anchor}${pseudo}`;
+
+  const baseDecls = pickValidDecls({
+    'background-color': 'transparent',
+    'text-decoration-skip': 'objects',
+    'text-decoration': 'underline',
+    'text-decoration-thickness': `var(--${prefix}-typography-link-text-underline-thickness, token("text-underline-thickness"))`,
+    'text-underline-offset': `var(--${prefix}-typography-link-text-underline-gap, token("text-underline-gap"))`,
+    transition: `color token("animation-duration-100") ease-in-out`,
+    outline: 'none',
+    cursor: 'pointer',
+    color: `var(--${prefix}-typography-link-text-color, token("accent-content-color-default"))`,
+    'font-family': 'inherit',
+    'font-size': 'inherit',
+    'font-style': 'inherit',
+    'font-weight': 'inherit',
+    'line-height': 'inherit',
+  });
+
+  const hoverDecls = pickValidDecls({
+    color: `var(--${prefix}-typography-link-text-color-hover, token("accent-content-color-hover"))`,
+  });
+
+  const activeDecls = pickValidDecls({
+    color: `var(--${prefix}-typography-link-text-color-down, token("accent-content-color-down"))`,
+  });
+
+  const focusDecls = pickValidDecls({
+    color: `var(--${prefix}-typography-link-text-color-focus, token("accent-content-color-key-focus"))`,
+    outline: `token("focus-indicator-thickness") solid var(--${prefix}-typography-link-focus-indicator-color, token("focus-indicator-color"))`,
+    'outline-offset': 'token("focus-indicator-gap")',
+    'border-radius': 'token("corner-radius-100")',
+  });
+
+  return `/* =========================
+  Links (prose and link lists)
+  ========================= */
+${cssBlock(wrapperSelectors, baseDecls)}
+${cssBlock(stateSelectors(':hover'), hoverDecls)}
+${cssBlock(stateSelectors(':active'), activeDecls)}
+${cssBlock(stateSelectors(':focus-visible'), focusDecls)}
+`;
 }
 
 /**
@@ -784,6 +844,9 @@ export async function generateTypographyCssString(options = {}) {
   out += `.${prefix}-Typography--emphasized:not(${CJK_NOT_LIST}) {
   font-style: token("italic-font-style");
 }\n`;
+
+  out += '\n';
+  out += generateTypographyAnchorRules(prefix);
 
   return out;
 }

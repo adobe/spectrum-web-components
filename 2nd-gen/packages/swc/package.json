@@ -41,6 +41,12 @@
     "./global-elements.css": {
       "default": "./dist/global-elements.css"
     },
+    "./global-link.css": {
+      "default": "./dist/global-link.css"
+    },
+    "./link.css": {
+      "default": "./dist/link.css"
+    },
     "./patterns/*": {
       "types": "./dist/patterns/*/index.d.ts",
       "import": "./dist/patterns/*/index.js"
