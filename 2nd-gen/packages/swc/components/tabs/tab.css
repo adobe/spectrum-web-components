@@ -36,7 +36,6 @@
   padding-block: var(--swc-tab-padding-block, token("tab-item-top-to-text-medium")) var(--swc-tab-padding-block-end, token("tab-item-bottom-to-text-medium"));
   color: var(--_swc-tab-text-color);
   overflow: clip;
-  cursor: pointer;
   user-select: none;
 }
 
@@ -80,10 +79,6 @@
 
 :host([disabled]) {
   --swc-tab-text-color: token("disabled-content-color");
-}
-
-:host([disabled]) .swc-Tab {
-  cursor: default;
 }
 
 /* ── Focus ring ────────────────────────────────────────── */
