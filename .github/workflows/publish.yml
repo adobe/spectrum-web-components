@@ -135,6 +135,36 @@ jobs:
           echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
           echo "✓ NPM authentication configured for 2nd-gen (Adobe namespace)"
 
+      - name: Lock main branch
+        id: lock-main
+        if: steps.extract-tag.outputs.tag == 'latest' && env.HAS_LOCK_TOKEN == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.BRANCH_LOCK_PAT }}
+          HAS_LOCK_TOKEN: ${{ secrets.BRANCH_LOCK_PAT != '' }}
+        run: |
+          # Blocks all pushes to main except those from this workflow's GitHub Actions
+          # identity (integration ID 15368), so the `Commit and push changes` step at the
+          # end of this job can still push the release commit while everyone else waits.
+          RESPONSE=$(gh api -X POST /repos/${{ github.repository }}/rulesets \
+            -f name="Publish in progress (run ${{ github.run_id }})" \
+            -f target=branch \
+            -f enforcement=active \
+            -F 'conditions[ref_name][include][]=refs/heads/main' \
+            -F 'rules[][type]=update' \
+            -F 'bypass_actors[][actor_id]=15368' \
+            -F 'bypass_actors[][actor_type]=Integration' \
+            -F 'bypass_actors[][bypass_mode]=always')
+
+          RULESET_ID=$(echo "$RESPONSE" | jq -r '.id')
+          if [ -z "$RULESET_ID" ] || [ "$RULESET_ID" = "null" ]; then
+            echo "::error::Failed to create lock ruleset"
+            echo "$RESPONSE"
+            exit 1
+          fi
+
+          echo "ruleset_id=$RULESET_ID" >> $GITHUB_OUTPUT
+          echo "✓ Locked main; only this workflow can push (ruleset $RULESET_ID)"
+
       - name: Build all packages
         run: yarn build
 
@@ -304,3 +334,26 @@ jobs:
       - name: Create git tag
         if: steps.extract-tag.outputs.tag == 'latest'
         run: node ./1st-gen/scripts/create-git-tag.js
+
+      - name: Unlock main branch
+        if: always() && steps.lock-main.outputs.ruleset_id != ''
+        env:
+          GH_TOKEN: ${{ secrets.BRANCH_LOCK_PAT }}
+          RULESET_ID: ${{ steps.lock-main.outputs.ruleset_id }}
+        run: |
+          # Always runs (success or failure) so a failed publish doesn't leave main locked.
+          # Retries because a stuck lock blocks every contributor until manually removed.
+          for attempt in 1 2 3 4 5; do
+            if gh api -X DELETE \
+              /repos/${{ github.repository }}/rulesets/${RULESET_ID}; then
+              echo "✓ Unlocked main on attempt $attempt"
+              exit 0
+            fi
+            echo "✗ Unlock attempt $attempt failed; retrying in 5s"
+            sleep 5
+          done
+
+          echo "::error::Failed to unlock main after 5 attempts."
+          echo "::error::Manually delete ruleset ${RULESET_ID} at:"
+          echo "::error::https://github.com/${{ github.repository }}/settings/rules"
+          exit 1
