@@ -101,8 +101,6 @@
 }
 
 :host([disabled]) ::slotted(swc-tab) {
-  cursor: default;
-
   --swc-tab-text-color: token("disabled-content-color");
 }
 

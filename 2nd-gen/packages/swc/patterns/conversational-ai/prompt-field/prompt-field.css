@@ -192,7 +192,6 @@
   background: transparent;
   border: 1px solid transparent;
   border-radius: token("corner-radius-500");
-  cursor: pointer;
 }
 
 .swc-PromptField-upload:hover {
@@ -203,7 +202,6 @@
 .swc-PromptField-upload:disabled {
   color: token("gray-400");
   background: transparent;
-  cursor: default;
 }
 
 .swc-PromptField-upload swc-icon {
@@ -224,7 +222,6 @@
   background: token("neutral-background-color-default");
   border: 1px solid transparent;
   border-radius: token("corner-radius-full");
-  cursor: pointer;
   transition: background token("animation-duration-100") ease;
 }
 
@@ -239,14 +236,12 @@
   background: token("gray-900");
   border: 1px solid transparent;
   border-radius: token("corner-radius-full");
-  cursor: pointer;
   transition: background token("animation-duration-100") ease;
 }
 
 .swc-PromptField-send:disabled {
   color: token("gray-400");
   background: token("gray-100");
-  cursor: default;
 }
 
 .swc-PromptField-send:focus-visible,

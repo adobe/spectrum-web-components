@@ -56,9 +56,10 @@ export async function waitForCustomElement(
   page: Page,
   tagName: string
 ): Promise<void> {
-  await page.evaluate((tag) => {
-    return customElements.whenDefined(tag);
-  }, tagName);
+  await page.waitForFunction(
+    (tag) => customElements.get(tag) !== undefined,
+    tagName
+  );
 }
 
 /**

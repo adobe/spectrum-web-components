@@ -35,7 +35,6 @@
   background: token("gray-100");
   border: 1px solid transparent;
   border-radius: token("corner-radius-extra-large-default");
-  cursor: pointer;
   transition: background token("animation-duration-100") token("animation-ease-in-out");
 }
 
