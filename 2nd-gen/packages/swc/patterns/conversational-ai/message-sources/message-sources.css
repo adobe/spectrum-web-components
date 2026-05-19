@@ -44,7 +44,6 @@
   background: transparent;
   border: none;
   border-radius: token("corner-radius-medium-default");
-  cursor: pointer;
   transition: background token("animation-duration-100") token("animation-ease-in-out");
 }
 

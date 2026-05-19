@@ -500,10 +500,8 @@ class ConversationFullPatternDemo extends LitElement {
             ${turn.loading
               ? ''
               : html`
-                  <swc-suggestion-group
-                    slot="suggestions"
-                    heading="What would you like to do next?"
-                  >
+                  <swc-suggestion-group slot="suggestions">
+                    <h3 slot="heading">What would you like to do next?</h3>
                     ${DEMO_SUGGESTIONS.map(
                       (item) => html`
                         <swc-suggestion-item data-suggestion=${item}>
