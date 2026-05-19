@@ -64,7 +64,7 @@ argTypes.completeLabel = {
 };
 
 /**
- * Displays AI response progress with an indeterminate progress circle and optional reasoning disclosure.
+ * Displays AI response progress with an animated three-dot indicator and optional reasoning disclosure.
  */
 const meta: Meta = {
   title: 'Conversational AI/Response status',
@@ -119,7 +119,7 @@ export const Overview: Story = {
 /**
  * A response status indicator consists of:
  *
- * 1. **Status row** — An indeterminate progress circle (loading) or checkmark (complete) with a label
+ * 1. **Status row** — Animated three dots (loading) or checkmark (complete) with a label
  * 2. **Reasoning toggle** — Optional expandable disclosure for chain-of-thought content
  */
 export const Anatomy: Story = {
@@ -139,7 +139,7 @@ export const Anatomy: Story = {
 /**
  * The `loading` attribute controls which indicator is shown:
  *
- * - **`loading=true`** — Indeterminate progress circle + "Thinking…" label
+ * - **`loading=true`** — Animated three dots + "Thinking…" label
  * - **`loading=false`** — Checkmark + "Response generated" label
  * - Set `loading-label` or `complete-label` to customize row text per state
  */

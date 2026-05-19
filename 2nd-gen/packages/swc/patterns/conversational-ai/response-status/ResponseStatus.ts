@@ -18,14 +18,9 @@ import { Chevron75Icon } from '@adobe/spectrum-wc/icon/elements/index.js';
 import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
 
 import '@adobe/spectrum-wc/components/icon/swc-icon.js';
-import '@adobe/spectrum-wc/components/progress-circle/swc-progress-circle.js';
 
 import { uniqueId } from '../../../utils/id.js';
-import {
-  CheckCircleIcon,
-  CircleOutlineIcon,
-  ThreeDotsIcon,
-} from '../utils/icons/index.js';
+import { CheckCircleIcon, CircleOutlineIcon } from '../utils/icons/index.js';
 import {
   ResponseStatusStep,
   type ResponseStatusStepKind,
@@ -248,13 +243,11 @@ export class ResponseStatus extends SpectrumElement {
 
   private _renderThreeDots(): TemplateResult {
     return html`
-      <swc-icon
-        class="swc-ResponseStatus-dots"
-        style="--swc-icon-inline-size:26px;--swc-icon-block-size:6px;"
-        aria-hidden="true"
-      >
-        ${ThreeDotsIcon()}
-      </swc-icon>
+      <span class="swc-ResponseStatus-dots" aria-hidden="true">
+        <span class="swc-ResponseStatus-dot"></span>
+        <span class="swc-ResponseStatus-dot"></span>
+        <span class="swc-ResponseStatus-dot"></span>
+      </span>
     `;
   }
 
@@ -335,11 +328,7 @@ export class ResponseStatus extends SpectrumElement {
   private _renderStepIcon(status: ResponseStatusStepStatus): TemplateResult {
     if (status === 'complete') {
       return html`
-        <swc-icon
-          class="swc-ResponseStatus-step-icon"
-          style="--swc-icon-inline-size:14px;--swc-icon-block-size:14px;"
-          aria-hidden="true"
-        >
+        <swc-icon class="swc-ResponseStatus-step-icon" aria-hidden="true">
           ${CheckCircleIcon()}
         </swc-icon>
       `;
@@ -348,7 +337,6 @@ export class ResponseStatus extends SpectrumElement {
     return html`
       <swc-icon
         class="swc-ResponseStatus-step-icon swc-ResponseStatus-step-icon--${status}"
-        style="--swc-icon-inline-size:14px;--swc-icon-block-size:14px;"
         aria-hidden="true"
       >
         ${CircleOutlineIcon()}
@@ -406,13 +394,7 @@ export class ResponseStatus extends SpectrumElement {
   private _renderLoadingRow(label: string): TemplateResult {
     return html`
       <div class="swc-ResponseStatus-row" role="status" aria-label=${label}>
-        <span class="swc-ResponseStatus-loadingSlot">
-          <swc-progress-circle
-            size="s"
-            indeterminate
-            aria-hidden="true"
-          ></swc-progress-circle>
-        </span>
+        ${this._renderThreeDots()}
         <span class="swc-ResponseStatus-label">${label}</span>
       </div>
     `;
