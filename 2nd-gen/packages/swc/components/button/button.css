@@ -57,19 +57,22 @@
   transition-property: outline, border-color, color, background-color, transform;
 }
 
-.swc-Button:hover {
+.swc-Button:hover,
+.swc-Button.is-hover {
   color: var(--swc-button-content-color-hover, token("gray-25"));
   background-color: var(--swc-button-background-color-hover, token("neutral-background-color-hover"));
   border-color: var(--swc-button-border-color-hover, transparent);
 }
 
-.swc-Button:focus-visible {
+.swc-Button:focus-visible,
+.swc-Button.is-focus-visible {
   color: var(--swc-button-content-color-focus, token("gray-25"));
   background-color: var(--swc-button-background-color-focus, token("neutral-background-color-key-focus"));
   border-color: var(--swc-button-border-color-focus, transparent);
 }
 
-.swc-Button:active {
+.swc-Button:active,
+.swc-Button.is-active {
   color: var(--swc-button-content-color-down, token("gray-25"));
   background-color: var(--swc-button-background-color-down, token("neutral-background-color-down"));
   border-color: var(--swc-button-border-color-down, transparent);

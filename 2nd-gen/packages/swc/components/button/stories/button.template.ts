@@ -29,6 +29,8 @@ import type {
   ButtonVariant,
 } from '@spectrum-web-components/core/components/button';
 
+import type { ButtonVrtState } from '../Button.js';
+
 export type ButtonTemplateArgs = {
   variant?: ButtonVariant;
   'fill-style'?: ButtonFillStyle;
@@ -44,6 +46,10 @@ export type ButtonTemplateArgs = {
   /** HTML for the icon slot (must include `slot="icon"` on the root node). */
   'icon-slot'?: string;
   style?: string;
+  /** Storybook / VRT only — see `Button.vrtState`. */
+  'vrt-state'?: ButtonVrtState;
+  /** Storybook / VRT only — see `Button.vrtPendingActive`. */
+  'vrt-pending-active'?: boolean;
 };
 
 export function Template({
@@ -60,6 +66,8 @@ export function Template({
   'default-slot': defaultSlot = 'Button',
   'icon-slot': iconSlot,
   style,
+  'vrt-state': vrtState,
+  'vrt-pending-active': vrtPendingActive = false,
 }: ButtonTemplateArgs = {}): TemplateResult {
   return html`
     <swc-button
@@ -73,6 +81,8 @@ export function Template({
       ?truncate=${truncate}
       ?justified=${justified}
       accessible-label=${ifDefined(accessibleLabel)}
+      vrt-state=${ifDefined(vrtState)}
+      ?vrt-pending-active=${vrtPendingActive}
       style=${ifDefined(style)}
     >
       ${iconSlot ? unsafeHTML(iconSlot) : nothing}

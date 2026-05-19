@@ -557,7 +557,7 @@ export const Accessibility: Story = {
 export const ButtonGroups: Story = {
   render: buttonGroupsRender as Story['render'],
   parameters: {
-    layout: 'fullscreen',
+    layout: 'centered',
     flexLayout: false,
   },
   tags: ['!autodocs', 'dev'],

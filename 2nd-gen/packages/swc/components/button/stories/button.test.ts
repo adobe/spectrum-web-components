@@ -21,7 +21,10 @@
 import { html } from 'lit';
 import { styleMap } from 'lit/directives/style-map.js';
 
-import type { ButtonVariant } from '@spectrum-web-components/core/components/button';
+import {
+  BUTTON_VARIANTS,
+  type ButtonVariant,
+} from '@spectrum-web-components/core/components/button';
 
 import '@adobe/spectrum-wc/components/button/swc-button.js';
 
@@ -29,6 +32,7 @@ import {
   ArgGrid,
   Container,
   type GridTemplateFn,
+  States,
   Variants as withVariantsGrid,
 } from '../../../.storybook/helpers/index.js';
 import { Template } from './button.template.js';
@@ -39,6 +43,12 @@ const variantLabels: Record<ButtonVariant, string> = {
   accent: 'Accent',
   negative: 'Negative',
 };
+
+/** `static-color` is only supported on primary and secondary. */
+const STATIC_COLOR_VARIANTS = [
+  'primary',
+  'secondary',
+] as const satisfies readonly ButtonVariant[];
 
 const addIconSvg = `<svg slot="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36" aria-hidden="true" focusable="false"><path d="M31.5 17H19V4.5a1 1 0 0 0-2 0V17H4.5a1 1 0 0 0 0 2H17v12.5a1 1 0 0 0 2 0V19h12.5a1 1 0 0 0 0-2z"/></svg>`;
 
@@ -123,13 +133,60 @@ const ButtonFillStyleGroup: GridTemplateFn = (args, context) =>
     context
   );
 
-const ButtonVariantGroup: GridTemplateFn = (args, context) =>
+/** Interaction states shown under each variant (default row added by `States`). */
+const buttonInteractionStates = [
+  { testHeading: 'Default', 'vrt-state': 'default' as const },
+  { testHeading: 'Hovered', 'vrt-state': 'hover' as const },
+  { testHeading: 'Focused', 'vrt-state': 'focus' as const },
+  { testHeading: 'Active', 'vrt-state': 'active' as const },
+  { testHeading: 'Disabled', disabled: true },
+  {
+    testHeading: 'Pending',
+    pending: true,
+    'default-slot': 'Save',
+    'vrt-pending-active': true,
+    ignore: ['Static black', 'Static white'],
+  },
+];
+
+/**
+ * One variant: fill-style × content, with a column per interaction state.
+ */
+const ButtonVariantStatesSection: GridTemplateFn = (args, context) => {
+  const variant = args.variant as ButtonVariant;
+
+  return Container(
+    {
+      heading: variantLabels[variant],
+      level: 2,
+      withBorder: true,
+      direction: 'column',
+      content: States(
+        {
+          Template: ButtonFillStyleGroup,
+          stateData: buttonInteractionStates,
+          direction: 'row',
+          ...args,
+        },
+        context
+      ),
+    },
+    context
+  );
+};
+
+/** All variants stacked; each section groups states for that variant. */
+const ButtonVariantsByStateGrid: GridTemplateFn = (args, context) =>
   ArgGrid(
     {
-      Template: ButtonFillStyleGroup,
-      withBorder: false,
+      Template: ButtonVariantStatesSection,
       argKey: 'variant',
+      options: [...BUTTON_VARIANTS],
       labels: variantLabels,
+      withBorder: false,
+      withWrapperBorder: false,
+      direction: 'column',
+      level: 1,
       ...args,
     },
     context
@@ -142,7 +199,7 @@ export const ButtonGroups = withVariantsGrid({
   Template: ButtonContentGroup,
   testData: [
     {
-      Template: ButtonVariantGroup,
+      Template: ButtonVariantsByStateGrid,
     },
     {
       Template: (args, context) => html`
@@ -153,7 +210,14 @@ export const ButtonGroups = withVariantsGrid({
             background: staticWhiteBackground,
           })}
         >
-          ${ButtonVariantGroup({ ...args, 'static-color': 'white' }, context)}
+          ${ButtonVariantsByStateGrid(
+            {
+              ...args,
+              'static-color': 'white',
+              options: [...STATIC_COLOR_VARIANTS],
+            },
+            context
+          )}
         </div>
       `,
       testHeading: 'Static white',
@@ -167,7 +231,14 @@ export const ButtonGroups = withVariantsGrid({
             background: staticBlackBackground,
           })}
         >
-          ${ButtonVariantGroup({ ...args, 'static-color': 'black' }, context)}
+          ${ButtonVariantsByStateGrid(
+            {
+              ...args,
+              'static-color': 'black',
+              options: [...STATIC_COLOR_VARIANTS],
+            },
+            context
+          )}
         </div>
       `,
       testHeading: 'Static black',
@@ -193,18 +264,7 @@ export const ButtonGroups = withVariantsGrid({
       withStates: false,
     },
   ],
-  stateData: [
-    {
-      testHeading: 'Disabled',
-      disabled: true,
-    },
-    {
-      testHeading: 'Pending',
-      pending: true,
-      'default-slot': 'Save',
-      ignore: ['Static black', 'Static white'],
-    },
-  ],
+  stateData: [],
   sizeDirection: 'row',
   withSizes: true,
 });
