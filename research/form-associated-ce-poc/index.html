@@ -593,41 +593,6 @@
           </span>
         </div>
         <div class="field-group">
-          <code>internals.role = "combobox" + internals-only label</code>
-          <face-text-field
-            id="field-3c-combobox-internals"
-            name="role-combobox-internals"
-            internals-role="combobox"
-            use-internals-aria-label="Combobox with internals role"
-            labelling-strategy="internals-only"
-            placeholder="role=combobox, internals.ariaLabel only"
-          ></face-text-field>
-          <span class="help-text">
-            Host has
-            <code>role="combobox"</code>
-            via internals +
-            <code>internals.ariaLabel</code>
-            . Combobox is a composite widget — does the SR treat the host as the
-            primary control?
-          </span>
-        </div>
-        <div class="field-group">
-          <code>internals.role = "combobox" + dual-write label</code>
-          <face-text-field
-            id="field-3c-combobox-dual"
-            name="role-combobox-dual"
-            internals-role="combobox"
-            use-internals-aria-label="Combobox dual write"
-            labelling-strategy="dual-write"
-            placeholder="role=combobox, dual-write"
-          ></face-text-field>
-          <span class="help-text">
-            Host has
-            <code>role="combobox"</code>
-            + dual-write. Baseline comparison.
-          </span>
-        </div>
-        <div class="field-group">
           <code>internals.role = "textbox" + NO delegatesFocus</code>
           <face-text-field-no-delegate
             id="field-3c-textbox-no-delegate"
