@@ -262,6 +262,14 @@ Variants change how the component looks. Use the right selector based on customi
 }
 ```
 
+**Sub-elements that track a variant value**: use `inherit` on the sub-element rather than repeating the override in every variant rule. Since the sub-element is a descendant, `inherit` copies the computed value from the parent.
+
+```css
+.swc-Tooltip-tip {
+  background-color: inherit; /* always matches .swc-Tooltip's variant color */
+}
+```
+
 ## State implementation patterns
 
 States reflect user interaction or component condition. Attach them to `:host` when the host element carries the state.
@@ -274,6 +282,8 @@ States reflect user interaction or component condition. Attach them to `:host` w
 | Invalid  | `:host([invalid])`                        | Form validation     |
 
 **Why**: States on `:host` let consumers style `swc-badge[disabled]` or `swc-badge:focus-visible`. If the state lives on an internal element, target that element directly.
+
+**Prefer native pseudo-classes**: when the browser exposes a pseudo-class that maps to the same state, use it instead of the attribute selector. `:host(:popover-open)` is correct for a component using `popover="auto"`; `:host(:disabled)` is correct where the host element carries the disabled state natively. The pseudo-class reflects actual browser state rather than a synced property.
 
 **Note**: Badge and Status Light are non-interactive, so they do not define focus or disabled states. See interactive components (e.g. Button) for examples.
 

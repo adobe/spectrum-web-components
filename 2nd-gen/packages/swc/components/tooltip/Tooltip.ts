@@ -146,8 +146,10 @@ export class Tooltip extends TooltipBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Tooltip-tip"></span>
-      <span class="swc-Tooltip-label"><slot></slot></span>
+      <div class="swc-Tooltip">
+        <span class="swc-Tooltip-tip" aria-hidden="true"></span>
+        <slot></slot>
+      </div>
     `;
   }
 }

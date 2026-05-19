@@ -604,21 +604,21 @@ The impact is most acute in the additive phase, when `HoverController` will call
 
 > Follow the [CSS style guide](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/) as the source of truth for all styling work. Key references: [migration steps](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/04_spectrum-swc-migration.md), [custom properties](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md), [anti-patterns](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/05_anti-patterns.md).
 
-- [ ] Add `.swc-Tooltip` to the internal semantic container in `render()`; keep styling off `:host`
-- [ ] Copy S2 source from `spectrum-css/components/tooltip/index.css` (`spectrum-two` branch, not `/dist`) into `tooltip.css` as baseline
-- [ ] Map Spectrum CSS selectors to SWC equivalents following CSS selector guidance in CONTRIBUTOR_DOCS
-- [ ] Remove `.spectrum-Tooltip-typeIcon` styles (no icon in S2)
-- [ ] Add all six logical placement classes, consolidated with their non-logical equivalents: `start`, `start-top`, `start-bottom`, `end`, `end-top`, `end-bottom`
-- [ ] Verify CJK language modifiers (`:lang(ja)`, `:lang(ko)`, `:lang(zh)`)
-- [ ] Verify visibility in WHCM
-- [ ] Add `@cssprop` JSDoc tag for any exposed `--swc-*` property
-- [ ] Pass stylelint (property order, `no-descending-specificity`, token validation)
+- [x] Add `.swc-Tooltip` to the internal semantic container in `render()`; keep styling off `:host`
+- [x] Copy S2 source from `spectrum-css/components/tooltip/index.css` (`spectrum-two` branch, not `/dist`) into `tooltip.css` as baseline
+- [x] Map Spectrum CSS selectors to SWC equivalents following CSS selector guidance in CONTRIBUTOR_DOCS
+- [x] Remove `.spectrum-Tooltip-typeIcon` styles (no icon in S2)
+- [x] Add all six logical placement classes, consolidated with their non-logical equivalents: `start`, `start-top`, `start-bottom`, `end`, `end-top`, `end-bottom`
+- [x] Verify CJK language modifiers (`:lang(ja)`, `:lang(ko)`, `:lang(zh)`)
+- [x] Verify visibility in WHCM — `1px solid transparent` border in base; `CanvasText` fill on tip in forced-colors
+- [skip] Add `@cssprop` JSDoc tag for any exposed `--swc-*` property — no `--swc-*` properties exposed in Phase 5; revisited in additive phase if consumer override needs emerge
+- [x] Pass stylelint (property order, `no-descending-specificity`, token validation)
 
 #### Visual model and regressions
 
-- [ ] Confirm neutral, informative, negative backgrounds match Figma
-- [ ] Verify tip geometry across all placement values and RTL logical variants
-- [ ] Verify open/close animation (`translateY`/`translateX` per placement direction; S2 animation tokens)
+- [ ] Confirm neutral, informative, negative backgrounds match Figma **(requires Storybook visual review)**
+- [ ] Verify tip geometry across all placement values and RTL logical variants **(requires Storybook visual review)**
+- [ ] Verify open/close animation (`translateY`/`translateX` per placement direction; S2 animation tokens) **(requires Storybook visual review)**
 
 ### Accessibility
 
@@ -636,8 +636,8 @@ The impact is most acute in the additive phase, when `HoverController` will call
 - [x] Closed tooltip is hidden from AT (`popover` attribute or explicit `aria-hidden`/`inert`)
 - [x] `Escape` closes tooltip; focus stays on trigger; no focus trap — handled by native `popover="auto"`
 - [ ] Pointer can move from trigger to tooltip bubble without tooltip closing (WCAG 1.4.13) **(additive phase — HoverController)**
-- [ ] High-contrast border present in forced-colors mode **(Phase 5 — styling)**
-- [ ] Variant colors paired with readable text (not relying on color alone) **(Phase 5 — styling)**
+- [x] High-contrast border present in forced-colors mode
+- [x] Variant colors paired with readable text (not relying on color alone)
 
 ### Testing
 

@@ -105,6 +105,21 @@ When a private property captures a token value, reference the private property i
 
 This keeps all overrides and derived calculations linked to the private property. If the definition ever changes, every downstream call updates automatically.
 
+A private property can also alias another private property when the same value serves two logically distinct roles. The alias name captures the concept at the usage site; the single definition point keeps them in sync.
+
+```css
+.swc-Tooltip {
+  --_swc-tooltip-border-radius: token("corner-radius-400");
+  --_swc-tooltip-tip-corner-offset: var(--_swc-tooltip-border-radius);
+
+  border-radius: var(--_swc-tooltip-border-radius);
+}
+
+:host([placement="top-start"]) .swc-Tooltip-tip {
+  inset-inline-start: var(--_swc-tooltip-tip-corner-offset);
+}
+```
+
 ## Component Custom Property Exposure
 
 **Selector choice encodes API intent**: exposed properties are modified via `:host()`, while internal-only behavior is implemented with internal class selectors.
