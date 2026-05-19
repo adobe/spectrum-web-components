@@ -56,9 +56,10 @@ export async function waitForCustomElement(
   page: Page,
   tagName: string
 ): Promise<void> {
-  await page.evaluate((tag) => {
-    return customElements.whenDefined(tag);
-  }, tagName);
+  await page.waitForFunction(
+    (tag) => customElements.get(tag) !== undefined,
+    tagName
+  );
 }
 
 /**
@@ -114,6 +115,12 @@ export async function gotoStory(
   await page.goto(`/iframe.html?id=${storyId}&viewMode=story`, {
     waitUntil: 'domcontentloaded',
   });
+
+  // Wait for Storybook's JS modules to finish loading before checking for
+  // custom-element registration. `domcontentloaded` only signals that the
+  // HTML shell is parsed; the story's <script type="module"> tags may
+  // still be in flight, which is when `customElements.whenDefined` hangs.
+  await page.waitForLoadState('networkidle');
 
   return waitForStoryReady(page, elementSelector);
 }
