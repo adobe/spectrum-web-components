@@ -101,31 +101,40 @@ export class Tooltip extends TooltipBase {
     );
   }
 
+  // Guards dispatchAfterEvent so only the first transitionend per open/close cycle fires,
+  // preventing one after event from firing for each CSS property that transitions.
+  private afterEventPending = false;
+
   private readonly handleBeforeToggle = (event: Event): void => {
     const { newState } = event as ToggleEvent;
     const eventName = newState === 'open' ? 'swc-open' : 'swc-close';
     this.dispatchEvent(
       new CustomEvent(eventName, { bubbles: true, composed: true })
     );
+    // Set here so the flag is set regardless of whether this.open already matches
+    // newState. handleToggle exits early when open was set externally, which would
+    // otherwise leave the flag unset and suppress swc-after-open / swc-after-close.
+    this.afterEventPending = true;
   };
 
   private readonly handleToggle = (event: Event): void => {
     const { newState } = event as ToggleEvent;
     const isOpen = newState === 'open';
-    if (isOpen === this.open) {
-      return;
+    if (isOpen !== this.open) {
+      this.open = isOpen;
     }
-    this.open = isOpen;
     // When no CSS transition is active, dispatch after-* immediately since transitionend will not fire.
     if (getComputedStyle(this).transitionDuration === '0s') {
+      this.afterEventPending = false;
       this.dispatchAfterEvent(isOpen);
     }
   };
 
   private readonly handleTransitionEnd = (event: TransitionEvent): void => {
-    if (event.target !== this) {
+    if (event.target !== this || !this.afterEventPending) {
       return;
     }
+    this.afterEventPending = false;
     this.dispatchAfterEvent(this.open);
   };
 
