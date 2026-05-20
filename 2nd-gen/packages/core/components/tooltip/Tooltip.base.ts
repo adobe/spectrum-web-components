@@ -92,14 +92,19 @@ export abstract class TooltipBase extends SpectrumElement {
   public triggerElement: HTMLElement | null = null;
 
   /**
-   * Whether to apply warm-up and cooldown timing (1500ms each) to hover and focus events.
+   * Duration in milliseconds of the warm-up delay before the tooltip shows on pointer hover.
+   * Set to `0` to show immediately on hover. Keyboard focus (`focusin` when `:focus-visible`)
+   * always shows the tooltip immediately regardless of this value. The cooldown duration (before the next hover must wait again)
+   * matches this value. Warm-up/cooldown state is shared across all tooltips in the same document,
+   * so moving quickly between adjacent triggers (e.g. a toolbar) shows each subsequent tooltip
+   * immediately after the first warm-up elapses.
    *
    * Additive/deferred: active when `HoverController` is integrated.
    *
-   * @default false
+   * @default 1500
    */
-  @property({ type: Boolean, reflect: true })
-  public delayed: boolean = false;
+  @property({ type: Number, reflect: true })
+  public delay: number = 1500;
 
   /**
    * When set, prevents automatic trigger wiring from responding to hover and focus events.
