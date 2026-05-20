@@ -15,7 +15,6 @@ import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
 import '@adobe/spectrum-wc/components/color-loupe/swc-color-loupe.js';
-import '@adobe/spectrum-wc/components/button/swc-button.js';
 
 // ────────────────
 //    METADATA
@@ -31,7 +30,7 @@ const { events, args, argTypes, template } =
  * color slider, and color wheel. Visibility is controlled by a parent component such as `<swc-color-handle>`.
  */
 const meta: Meta = {
-  title: 'Color Components/Color Loupe',
+  title: 'Color Loupe',
   component: 'swc-color-loupe',
   args: {
     ...args,
@@ -217,6 +216,7 @@ OpenAndClosedStates.storyName = 'Open and closed states';
  * simulates that trigger relationship.
  */
 export const ParentDrivenVisibility: Story = {
+  loaders: [() => import('@adobe/spectrum-wc/components/button/swc-button.js')],
   render: (args) => {
     const toggle = (event: MouseEvent) => {
       const btn = event.currentTarget as HTMLElement;
