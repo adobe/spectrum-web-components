@@ -57,7 +57,6 @@ slot:not([name]) {
   inline-size: 100%;
   padding-block: var(--_swc-accordion-pad-top-m, token("accordion-top-to-text-medium")) var(--_swc-accordion-pad-bottom-m, token("accordion-bottom-to-text-medium"));
   padding-inline: token("accordion-edge-to-content-area-medium") token("accordion-edge-to-text");
-  font-family: token("sans-serif-font");
   font-size: token("font-size-200");
   font-weight: token("bold-font-weight");
   line-height: token("line-height-100");
@@ -161,6 +160,19 @@ slot:not([name]) {
   flex: 1;
 }
 
+/*
+ * Override light-DOM heading styles (browser defaults, host-document resets)
+ * that would otherwise win over the inherited header font. Applies to
+ * phrasing content like <strong> or <code> slotted into the label.
+ * The :not([class]) guard leaves intentionally-classed elements untouched.
+ * !important is required to win over any light-DOM styles targeting the
+ * slotted element (e.g. global h* resets from the host document).
+ */
+::slotted([slot="label"]:not([class])) {
+  margin: 0 !important;
+  font: inherit !important;
+}
+
 /* ── Direct actions (inline with heading, outside the toggle area) ───── */
 
 .spectrum-Accordion-itemDirectActions {
@@ -177,7 +189,6 @@ slot:not([name]) {
   flex: 0 0 100%;
   padding-block: token("accordion-content-area-top-to-content") token("accordion-content-area-bottom-to-content");
   padding-inline: var(--swc-accordion-content-padding-inline, token("accordion-edge-to-content-area-medium"));
-  font-family: token("sans-serif-font");
   font-size: token("font-size-100");
   font-weight: token("regular-font-weight");
   line-height: token("line-height-100");
