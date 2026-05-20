@@ -1,5 +1,30 @@
 # @adobe/spectrum-wc
 
+## 0.2.0
+
+### Minor Changes
+
+- [#6184](https://github.com/adobe/spectrum-web-components/pull/6184) [`68261b1`](https://github.com/adobe/spectrum-web-components/commit/68261b1cf230f385be59f7e4fa1b09fd361b27c6) Thanks [@blunteshwar](https://github.com/blunteshwar)! - **feat(color-loupe):** Add 2nd-gen `<swc-color-loupe>` with Spectrum 2 visual fidelity. Key changes from 1st-gen `<sp-color-loupe>`:
+  - Pure visual, non-interactive component — accessibility semantics are delegated to the parent color picker or color field
+  - SVG loupe graphic carries `aria-hidden="true"`; no role, label, or tab stop on the host
+  - `open` property controls visibility via CSS opacity and transform transitions
+  - `color` property accepts any valid CSS color string, including colors with alpha transparency revealed over an opacity checkerboard
+
+  See the [migration guide](https://spectrum-web-components.adobe.com/?path=/docs/color-components-color-loupe-migration-guide--docs) for upgrading from 1st-gen `sp-color-loupe`.
+
+- [#6224](https://github.com/adobe/spectrum-web-components/pull/6224) [`3ec4028`](https://github.com/adobe/spectrum-web-components/commit/3ec4028bb417b1e0d13f82bdac7d8a34720d8d68) Thanks [@TarunAdobe](https://github.com/TarunAdobe)! - **fix(suggestion-group):** require heading via `slot="heading"` instead of the `heading` string property.
+  - Removed the `heading` property; consumers now provide heading content and semantics via `<h3 slot="heading">`...</h3>` (or any element)
+  - `accessible-label` takes explicit precedence over heading-derived labeling when both are present
+  - Host exposes `role="group"` with `aria-labelledby` pointing at the slotted heading so the accessible name resolves across the shadow boundary
+  - Component still imposes heading typography (i.e. `font-size: token("font-size-200")`)
+
+### Patch Changes
+
+- [#6315](https://github.com/adobe/spectrum-web-components/pull/6315) [`6ac4d14`](https://github.com/adobe/spectrum-web-components/commit/6ac4d1454613edf4134586e4eb67627455081711) Thanks [@TarunAdobe](https://github.com/TarunAdobe)! - **refactor(conversational-ai):** Tighten `swc-conversation-thread` focus handling and story layout for conversational AI.
+  - Roving focus for the thread is driven only by `FocusgroupNavigationController`; the reflected `active-index` attribute and related public surface are removed.
+  - Conversation thread stories avoid host inline layout styles in favor of neutral wrappers where needed.
+  - `swc-user-message` no longer applies host `margin-inline-end` gutter; rely on thread or app shell spacing for edge inset.
+
 ## 0.1.0
 
 ### Minor Changes

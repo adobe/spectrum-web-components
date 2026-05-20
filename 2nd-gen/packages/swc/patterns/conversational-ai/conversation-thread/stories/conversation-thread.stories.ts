@@ -59,51 +59,19 @@ const meta: Meta = {
 export { meta };
 export default meta;
 
-const threadExampleSource = `<swc-conversation-thread style="max-inline-size: 720px;">
-  <swc-conversation-turn type="user">
-    <swc-user-message>
-      Can you help me create a 45-minute presentation, with animations, for an executive update?
-    </swc-user-message>
-  </swc-conversation-turn>
-  <swc-conversation-turn type="system">
-    <swc-system-message>
-      <swc-response-status slot="status">I interpreted your request as an executive narrative task and prioritized a concise, audience-ready structure.</swc-response-status>
-      <div class="swc-Typography--prose">
-        <h3>Big idea/core narrative: The warmth of welcome</h3>
-        <p>Hospitality begins the moment our customers set foot off their plane.</p>
-      </div>
-      <swc-message-feedback slot="feedback"></swc-message-feedback>
-      <swc-message-sources slot="sources">
-        <a href="#source-1">Brand brief Q1 2026</a>
-      </swc-message-sources>
-    </swc-system-message>
-  </swc-conversation-turn>
-  <swc-conversation-turn type="user">
-    <swc-user-message>Great. Can you shorten that into three slides?</swc-user-message>
-  </swc-conversation-turn>
-</swc-conversation-thread>`;
-
-const renderThread = () => html`
-  <swc-conversation-thread style="max-inline-size: 720px;">
+const threadExampleSource = `<div style="max-inline-size: 720px;">
+  <swc-conversation-thread>
     <swc-conversation-turn type="user">
       <swc-user-message>
-        Can you help me create a 45-minute presentation, with animations, for an
-        executive update?
+        Can you help me create a 45-minute presentation, with animations, for an executive update?
       </swc-user-message>
     </swc-conversation-turn>
-
     <swc-conversation-turn type="system">
       <swc-system-message>
-        <swc-response-status slot="status">
-          I interpreted your request as an executive narrative task and
-          prioritized a concise, audience-ready structure.
-        </swc-response-status>
+        <swc-response-status slot="status">I interpreted your request as an executive narrative task and prioritized a concise, audience-ready structure.</swc-response-status>
         <div class="swc-Typography--prose">
           <h3>Big idea/core narrative: The warmth of welcome</h3>
-          <p>
-            Hospitality begins the moment our customers set foot off their
-            plane.
-          </p>
+          <p>Hospitality begins the moment our customers set foot off their plane.</p>
         </div>
         <swc-message-feedback slot="feedback"></swc-message-feedback>
         <swc-message-sources slot="sources">
@@ -111,13 +79,49 @@ const renderThread = () => html`
         </swc-message-sources>
       </swc-system-message>
     </swc-conversation-turn>
-
     <swc-conversation-turn type="user">
-      <swc-user-message>
-        Great. Can you shorten that into three slides?
-      </swc-user-message>
+      <swc-user-message>Great. Can you shorten that into three slides?</swc-user-message>
     </swc-conversation-turn>
   </swc-conversation-thread>
+</div>`;
+
+const renderThread = () => html`
+  <div style="max-inline-size: 720px;">
+    <swc-conversation-thread>
+      <swc-conversation-turn type="user">
+        <swc-user-message>
+          Can you help me create a 45-minute presentation, with animations, for
+          an executive update?
+        </swc-user-message>
+      </swc-conversation-turn>
+
+      <swc-conversation-turn type="system">
+        <swc-system-message>
+          <swc-response-status slot="status">
+            I interpreted your request as an executive narrative task and
+            prioritized a concise, audience-ready structure.
+          </swc-response-status>
+          <div class="swc-Typography--prose">
+            <h3>Big idea/core narrative: The warmth of welcome</h3>
+            <p>
+              Hospitality begins the moment our customers set foot off their
+              plane.
+            </p>
+          </div>
+          <swc-message-feedback slot="feedback"></swc-message-feedback>
+          <swc-message-sources slot="sources">
+            <a href="#source-1">Brand brief Q1 2026</a>
+          </swc-message-sources>
+        </swc-system-message>
+      </swc-conversation-turn>
+
+      <swc-conversation-turn type="user">
+        <swc-user-message>
+          Great. Can you shorten that into three slides?
+        </swc-user-message>
+      </swc-conversation-turn>
+    </swc-conversation-thread>
+  </div>
 `;
 
 type DemoArtifact = {
@@ -571,9 +575,9 @@ class ConversationFullPatternDemo extends LitElement {
           min-block-size: 0;
           overflow-y: auto;
           overflow-x: hidden;
-          padding-inline: 4px 8px;
           padding-block-end: 24px;
-          scroll-padding-inline-end: 8px;
+          padding-block-start: 4px;
+          padding-inline: 4px;
           scroll-padding-block-end: 24px;
           overscroll-behavior: contain;
           scrollbar-width: none;
@@ -598,7 +602,7 @@ class ConversationFullPatternDemo extends LitElement {
         @swc-message-sources-toggle=${this.handleSourcesToggle}
       >
         <div class="swc-ConversationFullPatternDemo-scroll">
-          <swc-conversation-thread style="padding:4px;">
+          <swc-conversation-thread>
             ${this.renderTurns()}
           </swc-conversation-thread>
         </div>

@@ -85,6 +85,42 @@ commands:
               echo "Only docs/other-gen changes; halting because << parameters.gen >> is not affected."
               circleci-agent step halt
             fi
+  resolve-pr-base:
+    description: >
+      Resolve the PR's base branch and export `PR_BASE_BRANCH` to
+      `$BASH_ENV` for later steps to read. On `main`, sets the value to
+      `main`. When the base can't be determined (missing token, fork
+      without PR metadata, parse failure), leaves the value empty so
+      consumers can decide their own default.
+    steps:
+      - run:
+          name: Resolve PR base branch
+          command: |
+            set -e
+
+            BASE=""
+            if [ "$CIRCLE_BRANCH" = "main" ]; then
+              BASE="main"
+            else
+              PR_NUMBER=""
+              if [ -n "$CIRCLE_PULL_REQUEST" ]; then
+                PR_NUMBER=$(echo "$CIRCLE_PULL_REQUEST" | sed 's/.*\/pull\///')
+              elif [ -n "$CIRCLE_PR_NUMBER" ]; then
+                PR_NUMBER="$CIRCLE_PR_NUMBER"
+              elif [[ "$CIRCLE_BRANCH" =~ ^pull/[0-9]+$ ]]; then
+                PR_NUMBER=$(echo "$CIRCLE_BRANCH" | sed 's/pull\///')
+              fi
+
+              if [ -n "$PR_NUMBER" ] && [ -n "$GITHUB_TOKEN" ]; then
+                BASE=$(curl -s -H "Authorization: Bearer $GITHUB_TOKEN" \
+                  -H "Accept: application/vnd.github+json" \
+                  "https://api.github.com/repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/pulls/$PR_NUMBER" \
+                  | python3 -c "import json,sys; print(json.load(sys.stdin).get('base',{}).get('ref',''))" 2>/dev/null || echo "")
+              fi
+            fi
+
+            echo "Resolved PR base branch: '${BASE:-<unknown>}'"
+            echo "export PR_BASE_BRANCH=\"${BASE}\"" >> $BASH_ENV
   install-azcopy:
     description: 'Install AzCopy and set up authentication'
     steps:
@@ -381,12 +417,15 @@ jobs:
       - halt-if-not-affected:
           gen: 2nd-gen
       - downstream-2ndgen
+      - resolve-pr-base
       - run:
-          name: Run 2nd-gen browser tests (coverage on Chromium)
+          name: Run 2nd-gen browser tests (coverage on Chromium, base=main only)
           command: |
-            if [ "<< parameters.browser >>" = "chromium" ]; then
+            if [ "<< parameters.browser >>" = "chromium" ] && [ "$PR_BASE_BRANCH" = "main" ]; then
+              echo "Running chromium tests with coverage (PR base is main)."
               VITEST_BROWSER_INSTANCES=chromium yarn workspace @spectrum-web-components/2nd-gen test:coverage
             else
+              echo "Running << parameters.browser >> tests without coverage (browser=<< parameters.browser >>, base='${PR_BASE_BRANCH:-<unknown>}')."
               VITEST_BROWSER_INSTANCES=<< parameters.browser >> yarn test:2nd-gen
             fi
       - store_test_results:

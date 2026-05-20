@@ -1,5 +1,13 @@
 # Change Log
 
+## 1.12.1
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @spectrum-web-components/checkbox@1.12.1
+  - @spectrum-web-components/base@1.12.1
+
 ## 1.12.0
 
 ### Minor Changes
