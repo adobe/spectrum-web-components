@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.12.1](https://github.com/adobe/spectrum-web-components/compare/v1.12.0...v1.12.1) (2026-05-19)
+
+## Patch Changes
+
+**sp-color-wheel**: - **Fixed**: Clicks on the `<sp-color-wheel>` ring no longer intermittently fail after scrolling or layout shifts. The cached bounding rect used for the ring hit-test is now refreshed on every gradient `pointerdown`, so viewport-relative coordinates stay in sync with the wheel's current on-screen position.
+
 # [1.12.0](https://github.com/adobe/spectrum-web-components/compare/v1.11.2...v1.12.0) (2026-05-12)
 
 ## Minor Changes

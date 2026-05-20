@@ -1,5 +1,24 @@
 # Change Log
 
+## 1.12.1
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @spectrum-web-components/action-button@1.12.1
+  - @spectrum-web-components/field-label@1.12.1
+  - @spectrum-web-components/icon@1.12.1
+  - @spectrum-web-components/icons-workflow@1.12.1
+  - @spectrum-web-components/menu@1.12.1
+  - @spectrum-web-components/overlay@1.12.1
+  - @spectrum-web-components/picker@1.12.1
+  - @spectrum-web-components/popover@1.12.1
+  - @spectrum-web-components/progress-circle@1.12.1
+  - @spectrum-web-components/tooltip@1.12.1
+  - @spectrum-web-components/tray@1.12.1
+  - @spectrum-web-components/base@1.12.1
+  - @spectrum-web-components/shared@1.12.1
+
 ## 1.12.0
 
 ### Patch Changes
