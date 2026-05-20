@@ -56,6 +56,11 @@
     - [Specificity escalation → `:where()`](#specificity-escalation--where)
     - [Size classes in render → `:host([size])`](#size-classes-in-render--hostsize)
     - [`--mod-*` chain → single property](#--mod--chain--single-property)
+- [9. Nesting compound pseudo-classes on `:host()` via CSS nesting](#9-nesting-compound-pseudo-classes-on-host-via-css-nesting)
+    - [❌ Anti-Pattern](#-anti-pattern)
+    - [Why This Happens](#why-this-happens)
+    - [Why This Is a Problem](#why-this-is-a-problem)
+    - [✅ Correct Approach](#-correct-approach)
 - [Final Reminder](#final-reminder)
 
 </details>
@@ -418,6 +423,64 @@ After migration, Badge relies solely on `.swc-Badge` and attributes.
 | Before                                                  | After                                                    |
 | ------------------------------------------------------- | -------------------------------------------------------- |
 | `var(--mod-badge-height, var(--spectrum-badge-height))` | `var(--swc-badge-height, token("component-height-100"))` |
+
+## 9. Nesting compound pseudo-classes on `:host()` via CSS nesting
+
+### ❌ Anti-Pattern
+
+```css
+/* Intends to target the host in RTL when placement="start" is open */
+:host([placement="start"]:popover-open) {
+  transform: translateX(calc(-1 * var(--_swc-component-animation-distance)));
+
+  &:dir(rtl) {
+    transform: translateX(var(--_swc-component-animation-distance));
+  }
+}
+```
+
+### Why This Happens
+
+CSS nesting with `&` replaces `&` with the parent selector. Inside a `:host([...])` rule, `&:dir(rtl)` expands to `:host([...]):dir(rtl)` — a pseudo-class chained after the `:host()` function. This looks syntactically correct, but browsers do not support compound selectors appended outside of the `:host()` argument.
+
+### Why This Is a Problem
+
+- The rule silently fails: the `:dir()` override never applies
+- No lint or parse error is produced, making it hard to detect
+- Properties meant for RTL layout apply in all directions
+
+### ✅ Correct Approach
+
+Move all conditions inside the `:host()` argument as a compound selector:
+
+```css
+:host([placement="start"]:popover-open) {
+  transform: translateX(calc(-1 * var(--_swc-component-animation-distance)));
+}
+
+:host(:dir(rtl)[placement="start"]:popover-open) {
+  transform: translateX(var(--_swc-component-animation-distance));
+}
+```
+
+#### Exception: descendants are fine
+
+This restriction only applies when `:host()` is the outermost element being targeted. When nesting targets a **descendant** of the host, expanding `&:dir(rtl)` applies `:dir()` to the inner element — which is valid:
+
+```css
+/* ✅ Fine: :dir(rtl) targets .swc-Component-tip, not :host() */
+:host([placement="end"]) .swc-Component-tip {
+  transform: rotate(45deg);
+
+  &:dir(rtl) {
+    transform: rotate(-135deg);
+  }
+}
+```
+
+#### Migration note: `:dir()` in RTL-aware components
+
+`:dir()` is the most common pseudo-class where this issue surfaces during migrations because RTL overrides are nearly always added after a component's base styles are written. When adding `:dir()` to any `:host`-level rule during migration, always write it as a separate `:host(:dir(rtl)[...])` rule rather than a nested `&:dir(rtl)`.
 
 ## Final Reminder
 
