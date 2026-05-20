@@ -179,19 +179,19 @@
 /* Start placement: LTR = leftward, RTL = rightward */
 :host([placement="start"]:popover-open) {
   transform: translateX(calc(-1 * var(--_swc-tooltip-animation-distance)));
+}
 
-  &:dir(rtl) {
-    transform: translateX(var(--_swc-tooltip-animation-distance));
-  }
+:host(:dir(rtl)[placement="start"]:popover-open) {
+  transform: translateX(var(--_swc-tooltip-animation-distance));
 }
 
 /* End placement: LTR = rightward, RTL = leftward */
 :host([placement="end"]:popover-open) {
   transform: translateX(var(--_swc-tooltip-animation-distance));
+}
 
-  &:dir(rtl) {
-    transform: translateX(calc(-1 * var(--_swc-tooltip-animation-distance)));
-  }
+:host(:dir(rtl)[placement="end"]:popover-open) {
+  transform: translateX(calc(-1 * var(--_swc-tooltip-animation-distance)));
 }
 
 @starting-style {
@@ -208,13 +208,10 @@
    A rotated square with clip-path creates the directional arrow.
    ───────────────────────────────────────────────────────────────────────────── */
 
+/* Default: tip at bottom edge, pointing down ▽ (for top-placement tooltips) */
 .swc-Tooltip-tip {
   position: absolute;
-
-  /* Default: tip at bottom edge, pointing down ▽ (for top-placement tooltips) */
-  inset-block-start: calc(100% - (0.5 * var(--_swc-tooltip-tip-square-size)) - 0.5px);
-
-  /* stylelint-disable-next-line csstools/use-logical -- intentional: centers tip horizontally */
+  top: calc(100% - (0.5 * var(--_swc-tooltip-tip-square-size)) - 0.5px);
   left: calc(50% - (0.5 * var(--_swc-tooltip-tip-square-size)));
   inline-size: var(--_swc-tooltip-tip-square-size);
   block-size: var(--_swc-tooltip-tip-square-size);
@@ -228,7 +225,7 @@
 
 /* Top placements: tip at bottom edge pointing down ▽ (same as default; listed for clarity) */
 :host([placement="top"]) .swc-Tooltip-tip {
-  inset-block-start: calc(100% - (0.5 * var(--_swc-tooltip-tip-square-size)) - 0.5px);
+  top: calc(100% - (0.5 * var(--_swc-tooltip-tip-square-size)) - 0.5px);
   transform: rotate(-45deg);
 }
 
@@ -238,43 +235,46 @@
   transform: rotate(135deg);
 }
 
-/* Right / end placements: tip at left edge pointing left ◁ */
-:host([placement="right"]) .swc-Tooltip-tip,
-:host([placement="end"]) .swc-Tooltip-tip {
-  inset-block-start: calc(50% - (0.5 * var(--_swc-tooltip-tip-square-size)));
-  inset-inline: auto calc(100% - (0.5 * var(--_swc-tooltip-tip-square-size)) - 0.5px);
+/* Right placement (physical): tip at physical left edge pointing left ◁
+   Must use a physical property so the tip does not flip in RTL. */
+:host([placement="right"]) .swc-Tooltip-tip {
+  top: calc(50% - (0.5 * var(--_swc-tooltip-tip-square-size)));
+  left: calc(-0.5 * var(--_swc-tooltip-tip-square-size) + 0.5px);
   transform: rotate(45deg);
 }
 
-/* RTL: end points left ◁ (swap inline position) */
+/* End placement (logical): tip at logical inline-end edge, flips naturally in RTL.
+   inset-inline: auto X resets the base `left` (via inset-inline-start: auto) and
+   sets the correct edge via inset-inline-end — no position override needed in RTL. */
 :host([placement="end"]) .swc-Tooltip-tip {
-  &:dir(rtl) {
-    /* stylelint-disable-next-line csstools/use-logical -- intentional RTL override */
-    right: auto;
+  inset-block-start: calc(50% - (0.5 * var(--_swc-tooltip-tip-square-size)));
+  inset-inline: auto calc(100% - (0.5 * var(--_swc-tooltip-tip-square-size)) - 0.5px);
+  transform: rotate(45deg); /* LTR: points left ◁ */
 
-    /* stylelint-disable-next-line csstools/use-logical -- intentional RTL override */
-    left: calc(100% - (0.5 * var(--_swc-tooltip-tip-square-size)) - 0.5px);
-    transform: rotate(-135deg);
+  &:dir(rtl) {
+    transform: rotate(-135deg); /* RTL: end = left side, tip points right ▷ */
   }
 }
 
-/* Left / start placements: tip at right edge pointing right ▷ */
-:host([placement="left"]) .swc-Tooltip-tip,
-:host([placement="start"]) .swc-Tooltip-tip {
-  inset-block-start: calc(50% - (0.5 * var(--_swc-tooltip-tip-square-size)));
-  inset-inline-start: calc(100% - (0.5 * var(--_swc-tooltip-tip-square-size)) - 0.5px);
+/* Left placement (physical): tip at physical right edge pointing right ▷
+   Must use physical properties so the tip does not flip in RTL. */
+:host([placement="left"]) .swc-Tooltip-tip {
+  top: calc(50% - (0.5 * var(--_swc-tooltip-tip-square-size)));
+  right: calc(-0.5 * var(--_swc-tooltip-tip-square-size) + 0.5px);
+  left: auto;
   transform: rotate(-135deg);
 }
 
-/* RTL: start points right ▷ (swap inline position) */
+/* Start placement (logical): tip at logical inline-start edge, flips naturally in RTL.
+   In RTL inset-inline-start maps to right; the base physical left is then overridden
+   by the browser (right wins over left for RTL absolutely-positioned elements). */
 :host([placement="start"]) .swc-Tooltip-tip {
-  &:dir(rtl) {
-    /* stylelint-disable-next-line csstools/use-logical -- intentional RTL override */
-    right: calc(100% - (0.5 * var(--_swc-tooltip-tip-square-size)) - 0.5px);
+  inset-block-start: calc(50% - (0.5 * var(--_swc-tooltip-tip-square-size)));
+  inset-inline-start: calc(100% - (0.5 * var(--_swc-tooltip-tip-square-size)) - 0.5px);
+  transform: rotate(-135deg); /* LTR: points right ▷ */
 
-    /* stylelint-disable-next-line csstools/use-logical -- intentional RTL override */
-    left: auto;
-    transform: rotate(45deg);
+  &:dir(rtl) {
+    transform: rotate(45deg); /* RTL: start = right side, tip points left ◁ */
   }
 }
 

@@ -35,6 +35,7 @@ const postcssPlugins = [
       'logical-properties-and-values': false,
       'is-pseudo-class': false,
       'cascade-layers': false,
+      'dir-pseudo-class': false,
     },
   }),
 ];
