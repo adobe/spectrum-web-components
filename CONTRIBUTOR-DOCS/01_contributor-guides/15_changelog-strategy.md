@@ -42,7 +42,16 @@ That's it. Component name in backticks, em dash, consumer-facing description, PR
 
 ## Writing a changeset
 
-Run `yarn changeset`, select the affected packages, choose a bump type, then write the body using the format above.
+Run `yarn changeset` to start the interactive CLI. It will list every package in the monorepo. For 2nd-gen work, select one of these two packages:
+
+| Package | When to select |
+|---|---|
+| `@adobe/spectrum-wc` | Any component change (new component, feature, bug fix) |
+| `@spectrum-web-components/core` | Changes to shared core logic (mixins, controllers, base classes) |
+
+Skip all `@spectrum-web-components/*` 1st-gen packages — those follow a separate process. If your PR changes both core and a component, run `yarn changeset` twice and create one changeset for each package.
+
+After selecting the package, choose a bump type, then write the body using the format above.
 
 ### Bump types
 
@@ -86,7 +95,7 @@ Bump types follow [semantic versioning](https://semver.org/) — the version num
 `Button` — Added `justified` attribute for full-width layout.
 ```
 
-**Multiple components in one PR** — create a separate changeset for each component:
+**Multiple components with different bump types** — if a single PR adds a feature (minor) and fixes a bug (patch), create a separate changeset for each so the bump types are correct:
 
 ```markdown
 ---
@@ -104,17 +113,15 @@ Bump types follow [semantic versioning](https://semver.org/) — the version num
 `Status Light` — Fixed missing `cyan` variant in forced-colors mode.
 ```
 
-Separate changesets keep each entry clean and allow different bump types per component. Run `yarn changeset` once per component.
-
 ### Rules
 
-- **One changeset per component change** (preferred). This ensures each CHANGELOG entry is self-contained and correctly typed.
-- **Always list the package you changed** in the frontmatter. The `linked` config in `.changeset/config.json` keeps `@adobe/spectrum-wc` and `@spectrum-web-components/core` at the same version automatically — you only need to list the one you touched:
+- **One changeset per PR** is the default. Most PRs touch a single component and need a single changeset. Create multiple changesets only when the PR contains changes with different bump types (e.g., a minor addition and a patch fix).
+- **Select the right package** in the changeset frontmatter. The `linked` config in `.changeset/config.json` keeps `@adobe/spectrum-wc` and `@spectrum-web-components/core` at the same version automatically — you only need to list the one you touched:
 
   | What changed | Frontmatter |
   |---|---|
-  | Component only (e.g., added `<swc-checkbox>`) | `'@adobe/spectrum-wc': minor` |
-  | Core only (e.g., new mixin in core) | `'@spectrum-web-components/core': minor` |
+  | Component change (e.g., added `<swc-checkbox>`) | `'@adobe/spectrum-wc': minor` |
+  | Core change (e.g., new mixin in core) | `'@spectrum-web-components/core': minor` |
   | Both core and component in the same PR | Create **two changesets** — one for each package, each describing its own change |
 
 - **Write for consumers, not contributors.** Describe user-visible impact, not implementation details. Use **past simple tense** ("Added", "Fixed", "Removed" — not "Adds", "Fixing", "Will remove"). When a change requires consumer action, append a `Consumer action:` note; for changes that need no action, omit it.
@@ -130,31 +137,34 @@ Separate changesets keep each entry clean and allow different bump types per com
 
 ## CHANGELOG output
 
-At release time, the script collates changeset entries under a version heading. The output is fully automated — no manual editing required.
+At release time, changesets collates entries under a version heading, grouped by bump type (`### Minor Changes`, `### Patch Changes`). The output is fully automated — no manual editing required.
 
-**Typical non-breaking release** (minor or patch only) — one consumer-visible feature might look like this:
+**Typical release** — a minor feature and a patch fix in the same release:
 
 ```markdown
 ## 2.1.0
 
+### Minor Changes
+
 - `Button` — Added wiggle radius to button. [#6210](https://github.com/adobe/spectrum-web-components/pull/6210)
+
+### Patch Changes
+
+- `Badge` — Fixed contrast ratio in dark theme for `notice` variant. [#6285](https://github.com/adobe/spectrum-web-components/pull/6285)
 ```
 
-**Release that includes breaking changes** — major bullets appear before minor and patch. The result looks like this:
+**Single-entry release** — when only one changeset ships:
 
 ```markdown
-## 0.2.0
+## 2.0.1
 
-- BREAKING: `Avatar` — Renamed `label` to `alt`. Removed `href`. [#6113](https://github.com/adobe/spectrum-web-components/pull/6113)
-- `Button` — Added `justified` attribute for full-width layout. [#6254](https://github.com/adobe/spectrum-web-components/pull/6254)
+### Patch Changes
+
 - `Badge` — Fixed contrast ratio in dark theme for `notice` variant. [#6285](https://github.com/adobe/spectrum-web-components/pull/6285)
 ```
 
 ## How it works
 
-The release pipeline has two steps that shape the 2nd-gen CHANGELOG:
+`.changeset/config.json` points to a custom changelog function (`scripts/changelog-passthrough.cjs`) instead of the default `@changesets/changelog-github`. It receives the changeset body and returns it as a CHANGELOG bullet — no commit hashes, no author attributions, no reformatting. If the body does not already contain a PR link (`[#123](url)`), the script resolves one from the commit via the GitHub API and appends it automatically. Changesets handles the rest: version headings, bump-type grouping, and collation.
 
-1. **Passthrough** — `.changeset/config.json` points to a custom changelog function (`scripts/changelog-passthrough.cjs`) instead of the default `@changesets/changelog-github`. It receives the changeset body and returns it as a CHANGELOG bullet — no commit hashes, no author attributions, no reformatting. If the body does not already contain a PR link (`[#123](url)`), the script resolves one from the commit via the GitHub API and appends it automatically.
-2. **Cleanup** — The changesets library adds `### Minor Changes` / `### Patch Changes` headings automatically. A post-processing script (`scripts/clean-changelog.cjs`) strips those headings from the 2nd-gen CHANGELOGs so entries are flat bullets under the version heading. This runs automatically during `yarn publish` (see `scripts/publish.js`).
-
-Both scripts are intentionally minimal. If you need to understand or maintain them, read `scripts/changelog-passthrough.cjs` and `scripts/clean-changelog.cjs`.
+The script is intentionally minimal. If you need to understand or maintain it, read `scripts/changelog-passthrough.cjs`.

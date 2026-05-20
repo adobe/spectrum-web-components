@@ -92,10 +92,6 @@ async function publish() {
       'Updating global changelog'
     );
     run('yarn changeset version', 'Versioning packages');
-    run(
-      'node scripts/clean-changelog.cjs',
-      'Cleaning 2nd-gen changelog headings'
-    );
   }
   // Step 3: Update version files for both generations
   run(
