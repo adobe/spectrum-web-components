@@ -3,8 +3,9 @@
   "access": "public",
   "baseBranch": "main",
   "changelog": [
-    "../scripts/changelog-passthrough.cjs",
+    "@changesets/changelog-github",
     {
+      "disableThanks": true,
       "repo": "adobe/spectrum-web-components"
     }
   ],

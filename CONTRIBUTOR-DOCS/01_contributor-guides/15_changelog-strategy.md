@@ -26,7 +26,7 @@
 
 ## Core principle
 
-**What you write in the changeset is what appears in the CHANGELOG.** The release script is a collator, not a transformer. It reads your changeset body verbatim, prepends a bullet, and groups entries under a version heading. No rewriting, no reformatting. The only enrichment is a PR link, auto-appended if you omit it.
+**What you write in the changeset is what appears in the CHANGELOG.** Changesets reads your body verbatim, prepends a bullet, groups entries by bump type, and auto-appends a PR link and commit reference. No custom scripts, no post-processing — we use `@changesets/changelog-github` directly.
 
 ## The format
 
@@ -36,7 +36,7 @@ Every changelog entry — whether in a `.changeset/*.md` file or in the final `C
 `Component` — Description of the change. [#PR](link)
 ```
 
-That's it. Component name in backticks, em dash, consumer-facing description, PR link. The **PR link is auto-appended** at release time if you omit it — so you can write the changeset before opening your PR and the link will be resolved from the commit.
+That's it. Component name in backticks, em dash, consumer-facing description. You do not need to add a PR link — `@changesets/changelog-github` auto-prepends the PR link and commit reference at release time.
 
 > Breaking changes are not expected until the full component set is migrated. If one does arise, prefix with `BREAKING:` in the changeset body and coordinate with the team before merging.
 
@@ -95,7 +95,7 @@ Bump types follow [semantic versioning](https://semver.org/) — the version num
 `Button` — Added `justified` attribute for full-width layout.
 ```
 
-**Multiple components with different bump types** — if a single PR adds a feature (minor) and fixes a bug (patch), create a separate changeset for each so the bump types are correct:
+**Mixed bump types in one PR** (rare — prefer splitting into separate PRs when practical). This can happen when a feature exposes a small bug in the same or a sibling component and the fix is trivial enough that a separate ticket adds overhead. Create a separate changeset for each so the bump types are correct:
 
 ```markdown
 ---
@@ -131,8 +131,20 @@ Bump types follow [semantic versioning](https://semver.org/) — the version num
   | Good | `Badge` — Fixed contrast ratio in dark theme. No consumer action required. |
   | Good | `Button` — Added `justified` attribute for full-width layout. |
   | Good | `Avatar` — Removed `href` link mode. Consumer action: wrap in a native `<a>` instead. |
+  | Good | `Button` — Deprecated `treatment` attribute. Consumer action: use `fill-style` instead; `treatment` will be removed in a future release. |
   | Bad | `Badge` — Fixes contrast ratio _(wrong tense)_ |
   | Bad | `Badge` — Refactored internal rendering pipeline _(implementation detail, not consumer-facing)_ |
+
+  Full changeset example with `Consumer action:`:
+
+  ```markdown
+  ---
+  '@adobe/spectrum-wc': minor
+  ---
+
+  `Avatar` — Removed `href` link mode. Consumer action: wrap in a native `<a>` instead.
+  ```
+
 - **PR review is the quality gate.** What you write shows up in the CHANGELOG exactly as written — reviewers should check changeset quality alongside code quality.
 
 ## CHANGELOG output
@@ -146,25 +158,17 @@ At release time, changesets collates entries under a version heading, grouped by
 
 ### Minor Changes
 
-- `Button` — Added wiggle radius to button. [#6210](https://github.com/adobe/spectrum-web-components/pull/6210)
+- [#6210](https://github.com/adobe/spectrum-web-components/pull/6210) [`a1b2c3d`](https://github.com/adobe/spectrum-web-components/commit/a1b2c3d) - `Button` — Added wiggle radius to button.
 
 ### Patch Changes
 
-- `Badge` — Fixed contrast ratio in dark theme for `notice` variant. [#6285](https://github.com/adobe/spectrum-web-components/pull/6285)
+- [#6285](https://github.com/adobe/spectrum-web-components/pull/6285) [`e4f5g6h`](https://github.com/adobe/spectrum-web-components/commit/e4f5g6h) - `Badge` — Fixed contrast ratio in dark theme for `notice` variant.
 ```
 
-**Single-entry release** — when only one changeset ships:
-
-```markdown
-## 2.0.1
-
-### Patch Changes
-
-- `Badge` — Fixed contrast ratio in dark theme for `notice` variant. [#6285](https://github.com/adobe/spectrum-web-components/pull/6285)
-```
+Each entry is automatically prefixed with the PR link and commit reference by `@changesets/changelog-github`. The body you wrote in the changeset follows the dash.
 
 ## How it works
 
-`.changeset/config.json` points to a custom changelog function (`scripts/changelog-passthrough.cjs`) instead of the default `@changesets/changelog-github`. It receives the changeset body and returns it as a CHANGELOG bullet — no commit hashes, no author attributions, no reformatting. If the body does not already contain a PR link (`[#123](url)`), the script resolves one from the commit via the GitHub API and appends it automatically. Changesets handles the rest: version headings, bump-type grouping, and collation.
+`.changeset/config.json` uses `@changesets/changelog-github` with `disableThanks: true`. This is the standard changesets GitHub changelog generator — it auto-prepends the PR link and commit reference to each entry, groups entries by bump type (`### Minor Changes`, `### Patch Changes`), and handles version headings. The `disableThanks` option suppresses the `Thanks @author!` attribution so entries stay focused on the change itself.
 
-The script is intentionally minimal. If you need to understand or maintain it, read `scripts/changelog-passthrough.cjs`.
+No custom scripts are involved. The changeset body you write is preserved as-is; changesets handles all formatting and collation.
