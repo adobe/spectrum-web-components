@@ -23,6 +23,7 @@
     - [Accordion migration plan](accordion/migration-plan.md)
     - [Accordion migration roadmap](accordion/rendering-and-styling-migration-analysis.md)
 - Action Button
+    - [Action button accessibility migration analysis](action-button/accessibility-migration-analysis.md)
     - [Action button migration roadmap](action-button/rendering-and-styling-migration-analysis.md)
 - Action Group
     - [Action group migration roadmap](action-group/rendering-and-styling-migration-analysis.md)
@@ -45,9 +46,12 @@
     - [Button Migration Plan](button/migration-plan.md)
     - [Button migration roadmap](button/rendering-and-styling-migration-analysis.md)
 - Button Group
+    - [Button group accessibility migration analysis](button-group/accessibility-migration-analysis.md)
     - [Button Group migration roadmap](button-group/rendering-and-styling-migration-analysis.md)
 - Checkbox
     - [Checkbox migration roadmap](checkbox/rendering-and-styling-migration-analysis.md)
+- Close Button
+    - [Close button accessibility migration analysis](close-button/accessibility-migration-analysis.md)
 - Color Field
     - [Color field migration roadmap](color-field/rendering-and-styling-migration-analysis.md)
 - Color Loupe
@@ -70,11 +74,13 @@
     - [`sp-illustrated-message` Migration Plan](illustrated-message/migration-plan.md)
     - [Illustrated message migration roadmap](illustrated-message/rendering-and-styling-migration-analysis.md)
 - Infield Button
+    - [Infield button accessibility migration analysis](infield-button/accessibility-migration-analysis.md)
     - [In-field button migration roadmap](infield-button/rendering-and-styling-migration-analysis.md)
 - Infield Progress Circle
     - [In-field progress circle migration roadmap](infield-progress-circle/rendering-and-styling-migration-analysis.md)
 - Link
     - [Link accessibility migration analysis](link/accessibility-migration-analysis.md)
+    - [Link migration plan](link/migration-plan.md)
     - [Link migration roadmap](link/rendering-and-styling-migration-analysis.md)
 - Menu
     - [Menu accessibility migration analysis](menu/accessibility-migration-analysis.md)

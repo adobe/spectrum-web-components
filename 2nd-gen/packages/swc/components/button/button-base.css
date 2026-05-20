@@ -39,7 +39,6 @@
   text-decoration: none;
   border-style: solid;
   overflow: visible;
-  cursor: pointer;
   user-select: none;
 }
 
@@ -53,6 +52,5 @@
   color: var(--swc-button-content-color-disabled, token("disabled-content-color"));
   background-color: var(--swc-button-background-color-disabled, token("disabled-background-color"));
   border-color: var(--swc-button-border-color-disabled, transparent);
-  cursor: default;
   transform: none;
 }

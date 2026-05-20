@@ -36,7 +36,7 @@ const slotFeedback = `<swc-message-feedback slot="feedback"></swc-message-feedba
 
 const slotSourcesRich = `<swc-message-sources slot="sources"><a href="#">Adobe Experience Manager documentation</a><a href="#">Creative Cloud release notes 2026</a><a href="#">Firefly API getting started guide</a></swc-message-sources>`;
 
-const slotSuggestionsRich = `<swc-suggestion-group slot="suggestions" heading="What would you like to do next?"><swc-suggestion-item>Create a year-over-year growth chart for the next decade</swc-suggestion-item><swc-suggestion-item>Generate a congratulatory poster</swc-suggestion-item><swc-suggestion-item>Summarize development pipeline</swc-suggestion-item></swc-suggestion-group>`;
+const slotSuggestionsRich = `<swc-suggestion-group slot="suggestions"><h3 slot="heading">What would you like to do next?</h3><swc-suggestion-item>Create a year-over-year growth chart for the next decade</swc-suggestion-item><swc-suggestion-item>Generate a congratulatory poster</swc-suggestion-item><swc-suggestion-item>Summarize development pipeline</swc-suggestion-item></swc-suggestion-group>`;
 
 const richSlots = {
   'status-slot': slotStatusRich,

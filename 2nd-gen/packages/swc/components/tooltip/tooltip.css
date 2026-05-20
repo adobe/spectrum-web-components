@@ -14,7 +14,7 @@
    HOST
    Reset browser UA popover styles. All visual styles live on .swc-Tooltip.
    PlacementController (additive phase) will apply inset/left/top for
-   positioning; the UA margin: auto centering is the default until then.
+   positioning.
    ───────────────────────────────────────────────────────────────────────────── */
 
 :host {

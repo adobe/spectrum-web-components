@@ -10,7 +10,7 @@
  * governing permissions and limitations under the License.
  */
 import { html } from 'lit';
-import { expect, waitFor } from '@storybook/test';
+import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import { ColorLoupe } from '@adobe/spectrum-wc/color-loupe';
@@ -110,12 +110,10 @@ export const OpenAttributeTest: Story = {
       }
     );
 
-    // The loupe animates opacity over 125 ms, so poll via waitFor until the
-    // transition settles at the target value.
     await step('inner .swc-ColorLoupe has opacity 1 when open', async () => {
-      await waitFor(() => {
-        expect(getComputedStyle(getInnerLoupe()).opacity).toBe('1');
-      });
+      const innerLoupe = getInnerLoupe();
+      innerLoupe.getAnimations().forEach((a) => a.finish());
+      expect(getComputedStyle(innerLoupe).opacity).toBe('1');
     });
 
     await step('removes open attribute when set to false', async () => {
@@ -127,9 +125,9 @@ export const OpenAttributeTest: Story = {
     await step(
       'inner .swc-ColorLoupe returns to opacity 0 when closed again',
       async () => {
-        await waitFor(() => {
-          expect(getComputedStyle(getInnerLoupe()).opacity).toBe('0');
-        });
+        const innerLoupe = getInnerLoupe();
+        innerLoupe.getAnimations().forEach((a) => a.finish());
+        expect(getComputedStyle(innerLoupe).opacity).toBe('0');
       }
     );
   },

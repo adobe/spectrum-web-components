@@ -30,6 +30,7 @@
     - [Public API](#public-api)
     - [Behavioral semantics](#behavioral-semantics)
     - [Accessibility semantics notes (2nd-gen)](#accessibility-semantics-notes-2nd-gen)
+    - [ARIA relationship wiring](#aria-relationship-wiring)
 - [Architecture: core vs SWC split](#architecture-core-vs-swc-split)
 - [Controller integration assumptions](#controller-integration-assumptions)
     - [Event dispatch ownership](#event-dispatch-ownership)
@@ -438,7 +439,7 @@ In the initial release, the tooltip uses native popover for open/close but has n
 - Tooltips must respond to both hover and keyboard focus. React Spectrum's `trigger="focus"` (focus-only mode) is not applicable here: WCAG 1.4.13 requires the tooltip to be available via pointer hover, so restricting to focus-only would fail mouse users. Both trigger methods are always active in automatic mode.
 - Toggletip mode (touch/longpress disclosure pattern, SWC-2022) is not applicable for the 2nd-gen Tooltip. Consumers needing toggletip behavior should use `swc-popover` or a popover-derived component instead.
 
-#### ARIA relationship wiring
+### ARIA relationship wiring
 
 The SWC layer uses `Element.ariaDescribedByElements` to wire the ARIA relationship between the trigger and tooltip on `open` change. This API was chosen specifically because 2nd-gen button-like components render a semantic `<button>` inside their shadow DOM — the inner button is the AT-facing interactive element, not the host. A string `aria-describedby` attribute on the trigger host cannot reference an element across a shadow boundary; `ariaDescribedByElements` uses element references that bypass cross-root ID scoping. String-ID `aria-describedby` on the host must not be used as a fallback.
 
@@ -472,18 +473,16 @@ Follow the [Badge migration reference](../../02_workstreams/02_2nd-gen-component
 
 | Layer | Path | Contains |
 | ----- | ---- | -------- |
-| **Core** | `2nd-gen/packages/core/components/tooltip/` | `Tooltip.base.ts`, `Tooltip.types.ts`: property definitions (including `triggerElement` declaration), type validation, state management, accessible-name rules. Sets `role="tooltip"` on the host element via `connectedCallback` — no rendering required. No Floating UI. No DOM traversal. |
-| **SWC** | `2nd-gen/packages/swc/components/tooltip/` | `Tooltip.ts`, `tooltip.css`: rendering, stable `id` assignment on host, `popover="auto"` on host, `beforetoggle`/`toggle`/`transitionend` listeners for state sync and `swc-open`/`swc-after-open`/`swc-close`/`swc-after-close` dispatch, trigger resolution via `for` attribute (`getRootNode().getElementById(this.for)`) or explicit `trigger-element`, `Element.ariaDescribedByElements` wiring on the trigger's inner interactive element on `open` change (see [ARIA relationship wiring](#aria-relationship-wiring)), element registration, stories, tests. **Additive phase only:** `PlacementController` + `HoverController` integration; hover and focus-visible event wiring; warm-up/cooldown timing. |
+| **Core** | `2nd-gen/packages/core/components/tooltip/` | `Tooltip.base.ts`, `Tooltip.types.ts`: property definitions (including `triggerElement` declaration), type validation, state management, accessible-name rules. Sets `role="tooltip"` and `popover="auto"` on the host element via `connectedCallback`. Wires `beforetoggle`/`toggle`/`transitionend` listeners for state sync and `swc-open`/`swc-after-open`/`swc-close`/`swc-after-close` dispatch. Resolves trigger via `for` attribute or `triggerElement` property. Maintains `Element.ariaDescribedByElements` on the trigger's inner interactive element on `open` change. No rendering. No Floating UI. |
+| **SWC** | `2nd-gen/packages/swc/components/tooltip/` | `Tooltip.ts`, `tooltip.css`: rendering only (tip element, label slot). Element registration, stories, tests. **Additive phase only:** `PlacementController` + `HoverController` integration; hover and focus-visible event wiring; warm-up/cooldown timing. |
 
 Planned rendering shape (initial release):
 
-- Core sets `role="tooltip"` on the host element (`this.setAttribute('role', 'tooltip')` in `connectedCallback`). The host element IS the tooltip surface; no inner role-bearing container needed.
-- SWC assigns a stable `id` on the host (needed for consumer manual wiring and debugging; element references, not string IDs, are used for ARIA wiring) via an instance counter in `connectedCallback` if `this.id` is not already set: `if (!this.id) this.id = \`swc-tooltip-${++TooltipIdCounter}\``.
-- SWC renders: tip element (`<span class="swc-Tooltip-tip">`); label span with default slot; event dispatch.
-- In the initial release, SWC sets `popover="auto"` on the host, making the host element both the `role="tooltip"` element and the popover surface. In the additive phase, `PlacementController` and `HoverController` layer on top without structural changes to the host.
-- SWC wires the ARIA relationship on `open` change: resolves trigger via `for`/`trigger-element`, applies inner-button resolution (see [ARIA relationship wiring](#aria-relationship-wiring)), and sets `Element.ariaDescribedByElements = [tooltipHost]` on the resolved interactive surface. Removed on `open = false`. Active in both automatic and manual modes when `for` or `trigger-element` is set.
+- Core sets `role="tooltip"` and `popover="auto"` on the host element in `connectedCallback`. The host element IS the tooltip surface and the popover; no inner role-bearing container needed.
+- SWC renders: tip element (`<span class="swc-Tooltip-tip">`); label span with default slot.
+- Core wires the ARIA relationship on `open` change: resolves trigger via `for`/`trigger-element`, applies inner-button resolution (see [ARIA relationship wiring](#aria-relationship-wiring)), and sets `Element.ariaDescribedByElements = [tooltipHost]` on the resolved interactive surface. Removed on `open = false`. Active in both automatic and manual modes when `for` or `trigger-element` is set.
 
-**Resolved:** Ancestor-walking (`resolveSelfManagedTriggerElement()`) is not ported. 2nd-gen trigger resolution uses the `for` attribute (`getRootNode().getElementById(this.for)`) as the primary declarative mechanism, or the explicit `trigger-element` property for cross-shadow-root and programmatic cases — both implemented in SWC. Core declares the `triggerElement` property and its type. `HoverController` and `PlacementController` receive the resolved value from SWC and do not perform resolution themselves. SWC also uses the resolved value to drive ARIA relationship wiring directly on `open` change.
+**Resolved:** Ancestor-walking (`resolveSelfManagedTriggerElement()`) is not ported. 2nd-gen trigger resolution uses the `for` attribute (`getRootNode().getElementById(this.for)`) as the primary declarative mechanism, or the explicit `trigger-element` property for cross-shadow-root and programmatic cases — both implemented in Core. `HoverController` and `PlacementController` receive the resolved value from Core and do not perform resolution themselves.
 
 ---
 
