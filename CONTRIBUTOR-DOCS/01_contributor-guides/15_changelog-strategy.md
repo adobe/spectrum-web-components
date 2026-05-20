@@ -38,7 +38,7 @@ Every changelog entry — whether in a `.changeset/*.md` file or in the final `C
 
 That's it. Component name in backticks, em dash, consumer-facing description, PR link.
 
-> On the rare occasion a change is breaking, prefix with `🚨 BREAKING:` — but most 2nd-gen work is additive (new components, new features, bug fixes), so this should be uncommon.
+> Breaking changes are not expected until the full component set is migrated. If one does arise, prefix with `BREAKING:` in the changeset body and coordinate with the team before merging.
 
 ## Writing a changeset
 
@@ -140,18 +140,15 @@ At release time, the script collates changeset entries under a version heading. 
 - `Button` — Added wiggle radius to button. [#6210](link)
 ```
 
-**Release that includes breaking changes** — Changesets emits **major** bullets before minor and patch for the same version; `clean-changelog.cjs` removes the `### … Changes` headings but preserves that order, so 🚨 **BREAKING** lines still appear first. The result looks like this:
+**Release that includes breaking changes** — major bullets appear before minor and patch. The result looks like this:
 
 ```markdown
 ## 0.2.0
 
-- 🚨 BREAKING: `Avatar` — Renamed `label` to `alt`. Removed `href`. [#6113](link)
+- BREAKING: `Avatar` — Renamed `label` to `alt`. Removed `href`. [#6113](link)
 - `Button` — Added `justified` attribute for full-width layout. [#6254](link)
 - `Badge` — Fixed contrast ratio in dark theme for `notice` variant. [#6285](link)
-- `Accordion` — Added `<swc-accordion>` with Spectrum 2 tokens. See the [component docs](link) and [migration guide](link). [#7000](link)
 ```
-
-For major releases with many entries, add short section headings in the changeset bodies (or split across releases) so the merged CHANGELOG stays easy to scan.
 
 ## How it works
 
