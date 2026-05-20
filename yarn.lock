@@ -2031,7 +2031,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@changesets/get-github-info@npm:^0.6.0":
+"@changesets/get-github-info@npm:0.6.0, @changesets/get-github-info@npm:^0.6.0":
   version: 0.6.0
   resolution: "@changesets/get-github-info@npm:0.6.0"
   dependencies:
@@ -28742,6 +28742,7 @@ __metadata:
   dependencies:
     "@axe-core/playwright": "npm:4.11.2"
     "@changesets/cli": "npm:2.29.7"
+    "@changesets/get-github-info": "npm:0.6.0"
     "@commitlint/cli": "npm:19.8.1"
     "@commitlint/config-conventional": "npm:19.8.1"
     "@eslint/js": "npm:9.39.2"

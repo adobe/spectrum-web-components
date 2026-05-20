@@ -26,7 +26,7 @@
 
 ## Core principle
 
-**What you write in the changeset is what appears in the CHANGELOG.** The release script is a collator, not a transformer. It reads your changeset body verbatim, prepends a bullet, and groups entries under a version heading. No rewriting, no enrichment, no surprises.
+**What you write in the changeset is what appears in the CHANGELOG.** The release script is a collator, not a transformer. It reads your changeset body verbatim, prepends a bullet, and groups entries under a version heading. No rewriting, no reformatting. The only enrichment is a PR link, auto-appended if you omit it.
 
 ## The format
 
@@ -36,7 +36,7 @@ Every changelog entry — whether in a `.changeset/*.md` file or in the final `C
 `Component` — Description of the change. [#PR](link)
 ```
 
-That's it. Component name in backticks, em dash, consumer-facing description, PR link.
+That's it. Component name in backticks, em dash, consumer-facing description, PR link. The **PR link is auto-appended** at release time if you omit it — so you can write the changeset before opening your PR and the link will be resolved from the commit.
 
 > Breaking changes are not expected until the full component set is migrated. If one does arise, prefix with `BREAKING:` in the changeset body and coordinate with the team before merging.
 
@@ -56,14 +56,14 @@ Bump types follow [semantic versioning](https://semver.org/) — the version num
 
 ### Examples
 
-**New component** (the most common case during migration). Always link to the component's Storybook docs and migration guide so consumers know where to find details:
+**New component** (the most common case during migration). Always link to the component's Storybook docs and migration guide so consumers know where to find details. You can omit the PR link — it is auto-appended at release time:
 
 ```markdown
 ---
 '@adobe/spectrum-wc': minor
 ---
 
-`Accordion` — Added `<swc-accordion>` with Spectrum 2 tokens. See the [component docs](https://spectrum-web-components.adobe.com/?path=/docs/components-accordion--docs) and [migration guide](https://spectrum-web-components.adobe.com/?path=/docs/components-accordion-migration-guide--docs). [#7000](https://github.com/adobe/spectrum-web-components/pull/7000)
+`Accordion` — Added `<swc-accordion>` with Spectrum 2 tokens. See the [component docs](https://spectrum-web-components.adobe.com/?path=/docs/components-accordion--docs) and [migration guide](https://spectrum-web-components.adobe.com/?path=/docs/components-accordion-migration-guide--docs).
 ```
 
 **Patch** (bug fix):
@@ -73,7 +73,7 @@ Bump types follow [semantic versioning](https://semver.org/) — the version num
 '@adobe/spectrum-wc': patch
 ---
 
-`Badge` — Fixed contrast ratio in dark theme for `notice` variant. [#6285](https://github.com/adobe/spectrum-web-components/pull/6285)
+`Badge` — Fixed contrast ratio in dark theme for `notice` variant.
 ```
 
 **Minor** (new feature on an existing component):
@@ -83,7 +83,7 @@ Bump types follow [semantic versioning](https://semver.org/) — the version num
 '@adobe/spectrum-wc': minor
 ---
 
-`Button` — Added `justified` attribute for full-width layout. [#6254](https://github.com/adobe/spectrum-web-components/pull/6254)
+`Button` — Added `justified` attribute for full-width layout.
 ```
 
 **Multiple components in one PR** — create a separate changeset for each component:
@@ -93,7 +93,7 @@ Bump types follow [semantic versioning](https://semver.org/) — the version num
 '@adobe/spectrum-wc': minor
 ---
 
-`Badge` — Added `subtle` and `outline` style attributes. [#6122](https://github.com/adobe/spectrum-web-components/pull/6122)
+`Badge` — Added `subtle` and `outline` style attributes.
 ```
 
 ```markdown
@@ -101,7 +101,7 @@ Bump types follow [semantic versioning](https://semver.org/) — the version num
 '@adobe/spectrum-wc': patch
 ---
 
-`Status Light` — Fixed missing `cyan` variant in forced-colors mode. [#6122](https://github.com/adobe/spectrum-web-components/pull/6122)
+`Status Light` — Fixed missing `cyan` variant in forced-colors mode.
 ```
 
 Separate changesets keep each entry clean and allow different bump types per component. Run `yarn changeset` once per component.
@@ -137,7 +137,7 @@ At release time, the script collates changeset entries under a version heading. 
 ```markdown
 ## 2.1.0
 
-- `Button` — Added wiggle radius to button. [#6210](link)
+- `Button` — Added wiggle radius to button. [#6210](https://github.com/adobe/spectrum-web-components/pull/6210)
 ```
 
 **Release that includes breaking changes** — major bullets appear before minor and patch. The result looks like this:
@@ -145,16 +145,16 @@ At release time, the script collates changeset entries under a version heading. 
 ```markdown
 ## 0.2.0
 
-- BREAKING: `Avatar` — Renamed `label` to `alt`. Removed `href`. [#6113](link)
-- `Button` — Added `justified` attribute for full-width layout. [#6254](link)
-- `Badge` — Fixed contrast ratio in dark theme for `notice` variant. [#6285](link)
+- BREAKING: `Avatar` — Renamed `label` to `alt`. Removed `href`. [#6113](https://github.com/adobe/spectrum-web-components/pull/6113)
+- `Button` — Added `justified` attribute for full-width layout. [#6254](https://github.com/adobe/spectrum-web-components/pull/6254)
+- `Badge` — Fixed contrast ratio in dark theme for `notice` variant. [#6285](https://github.com/adobe/spectrum-web-components/pull/6285)
 ```
 
 ## How it works
 
 The release pipeline has two steps that shape the 2nd-gen CHANGELOG:
 
-1. **Passthrough** — `.changeset/config.json` points to a custom changelog function (`scripts/changelog-passthrough.cjs`) instead of the default `@changesets/changelog-github`. It receives the changeset body and returns it as a CHANGELOG bullet — no commit hashes, no author attributions, no reformatting.
+1. **Passthrough** — `.changeset/config.json` points to a custom changelog function (`scripts/changelog-passthrough.cjs`) instead of the default `@changesets/changelog-github`. It receives the changeset body and returns it as a CHANGELOG bullet — no commit hashes, no author attributions, no reformatting. If the body does not already contain a PR link (`[#123](url)`), the script resolves one from the commit via the GitHub API and appends it automatically.
 2. **Cleanup** — The changesets library adds `### Minor Changes` / `### Patch Changes` headings automatically. A post-processing script (`scripts/clean-changelog.cjs`) strips those headings from the 2nd-gen CHANGELOGs so entries are flat bullets under the version heading. This runs automatically during `yarn publish` (see `scripts/publish.js`).
 
 Both scripts are intentionally minimal. If you need to understand or maintain them, read `scripts/changelog-passthrough.cjs` and `scripts/clean-changelog.cjs`.

@@ -15,7 +15,9 @@
  *
  * - 2nd-gen packages (`@adobe/spectrum-wc`, `@spectrum-web-components/core`):
  *   Returns changeset bodies as CHANGELOG bullets. No commit
- *   hashes, no author attributions, no reformatting.
+ *   hashes, no author attributions, no reformatting. If the body
+ *   does not already contain a PR link, one is auto-appended by
+ *   resolving the changeset's commit via the GitHub API.
  *
  * - 1st-gen packages (everything else): Delegates to
  *   `@changesets/changelog-github` so existing behavior is unchanged.
@@ -29,11 +31,14 @@
 
 const githubChangelog = require('@changesets/changelog-github');
 const githubFunctions = githubChangelog.default || githubChangelog;
+const { getInfo } = require('@changesets/get-github-info');
 
 const SECOND_GEN_PACKAGES = [
   '@adobe/spectrum-wc',
   '@spectrum-web-components/core',
 ];
+
+const PR_LINK_PATTERN = /\[#\d+\]\(/;
 
 function is2ndGen(changeset) {
   return changeset.releases.every((r) => SECOND_GEN_PACKAGES.includes(r.name));
@@ -52,6 +57,21 @@ module.exports = {
 
     if (lines.length === 0) {
       return '';
+    }
+
+    const hasPRLink = lines.some((line) => PR_LINK_PATTERN.test(line));
+    if (!hasPRLink && changeset.commit && options?.repo) {
+      try {
+        const { links } = await getInfo({
+          repo: options.repo,
+          commit: changeset.commit,
+        });
+        if (links.pull) {
+          lines[lines.length - 1] += ` ${links.pull}`;
+        }
+      } catch {
+        // GitHub API unavailable — continue without PR link
+      }
     }
 
     return (
