@@ -124,15 +124,17 @@ export class AccordionItem extends AccordionItemBase {
     `;
     return html`
       <div class="swc-AccordionItem">
-        ${this.renderHeadingWrapper(button)}
-        ${when(
-          this.slotContentIsPresent,
-          () => html`
-            <div class="swc-AccordionItem-actions">
-              <slot name="actions"></slot>
-            </div>
-          `
-        )}
+        <div class="swc-AccordionItem-row">
+          ${this.renderHeadingWrapper(button)}
+          ${when(
+            this.slotContentIsPresent,
+            () => html`
+              <div class="swc-AccordionItem-actions">
+                <slot name="actions"></slot>
+              </div>
+            `
+          )}
+        </div>
         <div
           id="content"
           class="swc-AccordionItem-content"

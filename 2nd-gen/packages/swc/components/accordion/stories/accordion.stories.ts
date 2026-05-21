@@ -16,6 +16,7 @@ import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
 import '@adobe/spectrum-wc/components/accordion/swc-accordion.js';
 import '@adobe/spectrum-wc/components/accordion/swc-accordion-item.js';
+import '@adobe/spectrum-wc/components/button/swc-button.js';
 
 import {
   ACCORDION_DENSITIES,
