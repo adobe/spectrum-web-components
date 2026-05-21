@@ -61,6 +61,45 @@
   text-align: start;
 }
 
+/* Rolling header title (processing phase) */
+
+.swc-ResponseStatus-labelViewport {
+  flex: 1;
+  min-inline-size: 0;
+  block-size: var(--swc-response-status-label-line-size, 1.33em);
+  overflow: hidden;
+}
+
+.swc-ResponseStatus-labelStrip {
+  display: flex;
+  flex-direction: column;
+  transform: translateY(0);
+  transition: transform var(--swc-response-status-roll-duration, 500ms) token("animation-ease-in-out");
+}
+
+.swc-ResponseStatus-labelStrip--rolling {
+  transform: translateY(-50%);
+}
+
+.swc-ResponseStatus-labelLine {
+  display: block;
+  block-size: var(--swc-response-status-label-line-size, 1.33em);
+  font-family: token("sans-serif-font");
+  font-size: token("font-size-100");
+  font-weight: token("regular-font-weight");
+  line-height: token("line-height-font-size-100");
+  color: token("neutral-subdued-content-color-default");
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .swc-ResponseStatus-labelStrip {
+    transition: none;
+  }
+}
+
 /* Three-dot loading indicator */
 
 .swc-ResponseStatus-dots {
@@ -167,6 +206,8 @@
    ───────────────────────────────────── */
 
 .swc-ResponseStatus--agentic {
+  --swc-response-status-roll-duration: 650ms;
+
   gap: token("spacing-75");
   inline-size: 100%;
   max-inline-size: 580px;
@@ -203,7 +244,7 @@
     visibility token("animation-duration-200") linear;
 }
 
-.swc-ResponseStatus-row--button[aria-expanded="true"] + .swc-ResponseStatus-panel {
+.swc-ResponseStatus-panel--open {
   visibility: visible;
   block-size: auto;
 }
@@ -220,6 +261,28 @@
   grid-template-columns: 20px 1fr;
   align-items: stretch;
   column-gap: token("spacing-100");
+}
+
+.swc-ResponseStatus-step:last-child {
+  animation: swc-response-status-step-enter var(--swc-response-status-roll-duration, 500ms) token("animation-ease-in-out");
+}
+
+@keyframes swc-response-status-step-enter {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .swc-ResponseStatus-step:last-child {
+    animation: none;
+  }
 }
 
 .swc-ResponseStatus-step-rail {
@@ -241,6 +304,13 @@
   flex-shrink: 0;
   inline-size: token("workflow-icon-size-75");
   block-size: token("workflow-icon-size-75");
+  transition: color token("animation-duration-200") token("animation-ease-in-out");
+}
+
+.swc-ResponseStatus-step[data-status="complete"] .swc-ResponseStatus-step-icon {
+  transition:
+    color token("animation-duration-200") token("animation-ease-in-out"),
+    opacity token("animation-duration-200") token("animation-ease-in-out");
 }
 
 .swc-ResponseStatus-step-line {

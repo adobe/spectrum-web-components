@@ -10,7 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
-import { CSSResultArray, html, TemplateResult } from 'lit';
+import { CSSResultArray, html, PropertyValues, TemplateResult } from 'lit';
 import { property, state } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
@@ -60,6 +60,34 @@ export class ResponseStatus extends SpectrumElement {
   @state()
   private _steps: ResponseStatusStepData[] = [];
 
+  /** Active step title last shown in the header (after roll completes). */
+  @state()
+  private _headerActiveTitle = '';
+
+  @state()
+  private _rollFrom = '';
+
+  @state()
+  private _rollTo = '';
+
+  @state()
+  private _rolling = false;
+
+  /** Holds initiating copy before the first step roll when processing starts cold. */
+  @state()
+  private _awaitingInitiatingRoll = false;
+
+  private _rollTimeoutId: number | null = null;
+
+  private _initiatingDwellTimeoutId: number | null = null;
+
+  /** Set when the component has shown `phase="initiating"` in this run. */
+  private _sawInitiatingPhase = false;
+
+  private _prefersReducedMotion =
+    typeof window !== 'undefined' &&
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
   /** `true`: progress circle + status label (legacy), or processing phase (agentic). */
   @property({ type: Boolean, reflect: true })
   public loading = false;
@@ -79,6 +107,13 @@ export class ResponseStatus extends SpectrumElement {
   /** Label when `phase="initiating"` (or processing with no steps yet). */
   @property({ type: String, attribute: 'initiating-label', reflect: true })
   public initiatingLabel = 'Processing request';
+
+  /**
+   * Milliseconds to show {@link initiatingLabel} before the first step title roll
+   * when entering processing without a prior initiating phase.
+   */
+  @property({ type: Number, attribute: 'initiating-dwell-ms' })
+  public initiatingDwellMs = 1000;
 
   /** Status row label text shown while loading / processing without an active step. */
   @property({ type: String, reflect: true })
@@ -100,8 +135,302 @@ export class ResponseStatus extends SpectrumElement {
     return [styles];
   }
 
+  private _handleStepChildChange = (): void => {
+    this._syncSlotContent();
+  };
+
+  public override connectedCallback(): void {
+    super.connectedCallback();
+    this.addEventListener(
+      'swc-response-status-step-change',
+      this._handleStepChildChange
+    );
+  }
+
   protected override firstUpdated(): void {
     this._syncSlotContent();
+  }
+
+  private _stepsEqual(
+    left: ResponseStatusStepData[],
+    right: ResponseStatusStepData[]
+  ): boolean {
+    if (left.length !== right.length) {
+      return false;
+    }
+
+    return left.every(
+      (step, index) =>
+        step.title === right[index]?.title &&
+        step.detail === right[index]?.detail &&
+        step.kind === right[index]?.kind &&
+        step.status === right[index]?.status
+    );
+  }
+
+  private _getActiveStepFrom(
+    steps: ResponseStatusStepData[]
+  ): ResponseStatusStepData | undefined {
+    const active = steps.filter((step) => step.status === 'active');
+    if (active.length > 0) {
+      return active[active.length - 1];
+    }
+    return steps.find((step) => step.status === 'pending');
+  }
+
+  private _getActiveStepTitle(steps: ResponseStatusStepData[]): string {
+    return this._getActiveStepFrom(steps)?.title?.trim() ?? '';
+  }
+
+  private _isStepElement(element: Element): element is ResponseStatusStep {
+    return (
+      element instanceof ResponseStatusStep ||
+      element.localName === 'swc-response-status-step'
+    );
+  }
+
+  private _readStepElement(element: Element): ResponseStatusStepData {
+    const step = element as ResponseStatusStep;
+    const kind =
+      step.kind ||
+      (element.getAttribute('kind') as ResponseStatusStepKind | null) ||
+      'thinking';
+    const status =
+      step.status ||
+      (element.getAttribute('status') as ResponseStatusStepStatus | null) ||
+      'pending';
+
+    return {
+      title: (step.title || element.getAttribute('title') || '').trim(),
+      detail: (step.detail || element.getAttribute('detail') || '').trim(),
+      kind,
+      status,
+    };
+  }
+
+  private _clearRollTimeout(): void {
+    if (this._rollTimeoutId !== null) {
+      window.clearTimeout(this._rollTimeoutId);
+      this._rollTimeoutId = null;
+    }
+  }
+
+  private _clearInitiatingDwell(): void {
+    if (this._initiatingDwellTimeoutId !== null) {
+      window.clearTimeout(this._initiatingDwellTimeoutId);
+      this._initiatingDwellTimeoutId = null;
+    }
+    this._awaitingInitiatingRoll = false;
+  }
+
+  private _scheduleInitiatingDwell(toLabel: string): void {
+    if (this._initiatingDwellTimeoutId !== null) {
+      return;
+    }
+
+    this._awaitingInitiatingRoll = true;
+    this._initiatingDwellTimeoutId = window.setTimeout(() => {
+      this._initiatingDwellTimeoutId = null;
+      this._awaitingInitiatingRoll = false;
+
+      if (this._effectivePhase !== 'processing' || this._rollFrom) {
+        return;
+      }
+
+      this._startHeaderRoll(this.initiatingLabel, toLabel);
+    }, this.initiatingDwellMs);
+  }
+
+  private _startHeaderRoll(fromLabel: string, toLabel: string): void {
+    this._clearRollTimeout();
+    this._rollFrom = fromLabel;
+    this._rollTo = toLabel;
+    this._rolling = false;
+
+    if (this._prefersReducedMotion) {
+      this._headerActiveTitle = this._getActiveStepTitle(this._steps);
+      this._rollFrom = '';
+      this._rollTo = '';
+      return;
+    }
+
+    this._rollTimeoutId = window.setTimeout(() => {
+      this._rollTimeoutId = null;
+      if (this._rollFrom) {
+        this._rolling = false;
+        this._finishHeaderRoll();
+      }
+    }, 750);
+  }
+
+  private _finishHeaderRoll(): void {
+    this._clearRollTimeout();
+    this._rolling = false;
+
+    const nextActiveTitle = this._getActiveStepTitle(this._steps);
+    const nextLabel = this._getAgenticHeaderLabel();
+
+    if (
+      this._effectivePhase === 'processing' &&
+      nextActiveTitle &&
+      nextActiveTitle !== this._headerActiveTitle &&
+      !this._prefersReducedMotion
+    ) {
+      this._startHeaderRoll(
+        this._headerActiveTitle || this.initiatingLabel,
+        nextLabel
+      );
+      return;
+    }
+
+    this._headerActiveTitle = nextActiveTitle;
+    this._rollFrom = '';
+    this._rollTo = '';
+  }
+
+  private _onlyDisclosureChanged(changed: PropertyValues): boolean {
+    return changed.has('open') && changed.size === 1;
+  }
+
+  protected override willUpdate(_changed: PropertyValues): void {
+    this._syncSlotContent();
+
+    if (!this._isAgentic) {
+      return;
+    }
+
+    if (this._onlyDisclosureChanged(_changed)) {
+      return;
+    }
+
+    const phase = this._effectivePhase;
+    const nextLabel = this._getAgenticHeaderLabel();
+
+    if (phase === 'initiating') {
+      this._sawInitiatingPhase = true;
+      this._clearInitiatingDwell();
+      this._clearRollTimeout();
+      this._headerActiveTitle = '';
+      this._rollFrom = '';
+      this._rollTo = '';
+      this._rolling = false;
+      return;
+    }
+
+    if (phase !== 'processing') {
+      this._sawInitiatingPhase = false;
+      this._clearInitiatingDwell();
+      this._clearRollTimeout();
+      this._headerActiveTitle = '';
+      this._rollFrom = '';
+      this._rollTo = '';
+      this._rolling = false;
+      return;
+    }
+
+    if (this._rollFrom || this._initiatingDwellTimeoutId !== null) {
+      if (this._rollFrom && nextLabel !== this._rollTo) {
+        this._rollTo = nextLabel;
+      }
+      return;
+    }
+
+    const nextActiveTitle = this._getActiveStepTitle(this._steps);
+
+    if (nextActiveTitle && nextActiveTitle !== this._headerActiveTitle) {
+      const isFirstStepRoll = !this._headerActiveTitle;
+
+      if (
+        isFirstStepRoll &&
+        !this._sawInitiatingPhase &&
+        this.initiatingDwellMs > 0 &&
+        !this._prefersReducedMotion
+      ) {
+        this._scheduleInitiatingDwell(nextLabel);
+        return;
+      }
+
+      this._startHeaderRoll(
+        this._headerActiveTitle || this.initiatingLabel,
+        nextLabel
+      );
+    }
+  }
+
+  protected override updated(): void {
+    if (this._rollFrom && !this._rolling && !this._prefersReducedMotion) {
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          if (this._rollFrom && !this._rolling) {
+            this._rolling = true;
+          }
+        });
+      });
+    }
+  }
+
+  public override disconnectedCallback(): void {
+    this._clearRollTimeout();
+    this._clearInitiatingDwell();
+    this.removeEventListener(
+      'swc-response-status-step-change',
+      this._handleStepChildChange
+    );
+    super.disconnectedCallback();
+  }
+
+  private _handleHeaderLabelTransitionEnd(event: TransitionEvent): void {
+    if (event.target !== event.currentTarget || !this._rolling) {
+      return;
+    }
+    if (event.propertyName !== 'transform') {
+      return;
+    }
+    this._rolling = false;
+    this._finishHeaderRoll();
+  }
+
+  private _getVisibleAgenticLabel(): string {
+    if (
+      this._effectivePhase === 'processing' &&
+      this._awaitingInitiatingRoll &&
+      !this._rollFrom
+    ) {
+      return this.initiatingLabel;
+    }
+
+    return this._getAgenticHeaderLabel();
+  }
+
+  private _renderAgenticLabel(): TemplateResult {
+    const label = this._getVisibleAgenticLabel();
+
+    if (
+      this._effectivePhase === 'processing' &&
+      this._rollFrom &&
+      !this._prefersReducedMotion
+    ) {
+      const incoming = this._rollTo || label;
+      return html`
+        <span class="swc-ResponseStatus-labelViewport">
+          <span
+            class="swc-ResponseStatus-labelStrip ${this._rolling
+              ? 'swc-ResponseStatus-labelStrip--rolling'
+              : ''}"
+            @transitionend=${this._handleHeaderLabelTransitionEnd}
+          >
+            <span class="swc-ResponseStatus-labelLine swc-ResponseStatus-label"
+              >${this._rollFrom}</span
+            >
+            <span class="swc-ResponseStatus-labelLine swc-ResponseStatus-label"
+              >${incoming}</span
+            >
+          </span>
+        </span>
+      `;
+    }
+
+    return html`<span class="swc-ResponseStatus-label">${label}</span>`;
   }
 
   private get _isAgentic(): boolean {
@@ -156,11 +485,7 @@ export class ResponseStatus extends SpectrumElement {
   }
 
   private _getActiveStep(): ResponseStatusStepData | undefined {
-    const active = this._steps.filter((step) => step.status === 'active');
-    if (active.length > 0) {
-      return active[active.length - 1];
-    }
-    return this._steps.find((step) => step.status === 'pending');
+    return this._getActiveStepFrom(this._steps);
   }
 
   private _getAgenticHeaderLabel(): string {
@@ -186,7 +511,10 @@ export class ResponseStatus extends SpectrumElement {
       return false;
     }
     for (const node of slot.assignedNodes({ flatten: true })) {
-      if (node instanceof ResponseStatusStep) {
+      if (
+        node instanceof ResponseStatusStep ||
+        (node instanceof Element && node.localName === 'swc-response-status-step')
+      ) {
         continue;
       }
       if (node.nodeType === Node.TEXT_NODE && node.textContent?.trim()) {
@@ -206,16 +534,10 @@ export class ResponseStatus extends SpectrumElement {
     }
     return slot
       .assignedElements({ flatten: true })
-      .filter(
-        (element): element is ResponseStatusStep =>
-          element instanceof ResponseStatusStep
+      .filter((element): element is ResponseStatusStep =>
+        this._isStepElement(element)
       )
-      .map((step) => ({
-        title: step.title.trim(),
-        detail: step.detail.trim(),
-        kind: step.kind,
-        status: step.status,
-      }));
+      .map((element) => this._readStepElement(element));
   }
 
   private _syncSlotContent(slot?: HTMLSlotElement): void {
@@ -233,8 +555,13 @@ export class ResponseStatus extends SpectrumElement {
       this.open = false;
     }
 
-    this._steps = steps;
-    this._hasReasoningContent = hasReasoningContent;
+    if (!this._stepsEqual(steps, this._steps)) {
+      this._steps = steps;
+    }
+
+    if (this._hasReasoningContent !== hasReasoningContent) {
+      this._hasReasoningContent = hasReasoningContent;
+    }
   }
 
   private _handleSlotChange(event: Event): void {
@@ -295,7 +622,7 @@ export class ResponseStatus extends SpectrumElement {
 
     const rowContent = html`
       ${isComplete ? this._renderCheckmark() : this._renderThreeDots()}
-      <span class="swc-ResponseStatus-label">${label}</span>
+      ${this._renderAgenticLabel()}
       ${showDisclosure ? this._renderChevron(expanded) : ''}
     `;
 
@@ -357,12 +684,25 @@ export class ResponseStatus extends SpectrumElement {
     `;
   }
 
+  /**
+   * During processing, only steps that have started (active or complete) appear in
+   * the panel; pending steps stay in the slot but are not shown until they activate.
+   */
+  private _getTimelineSteps(): ResponseStatusStepData[] {
+    if (this._isAgentic && this._effectivePhase === 'processing') {
+      return this._steps.filter((step) => step.status !== 'pending');
+    }
+
+    return this._steps;
+  }
+
   private _renderStepTimeline(): TemplateResult {
-    const lastIndex = this._steps.length - 1;
+    const steps = this._getTimelineSteps();
+    const lastIndex = steps.length - 1;
 
     return html`
       <ol class="swc-ResponseStatus-steps" role="list">
-        ${this._steps.map(
+        ${steps.map(
           (step, index) => html`
             <li
               class="swc-ResponseStatus-step"
@@ -432,11 +772,14 @@ export class ResponseStatus extends SpectrumElement {
 
   private _renderPanel(showPanel: boolean): TemplateResult {
     const panelLabel = this.reasoningLabel;
+    const panelOpen = showPanel && this.open;
 
     return html`
       <div
         id=${this.panelId}
-        class="swc-ResponseStatus-panel"
+        class="swc-ResponseStatus-panel ${panelOpen
+          ? 'swc-ResponseStatus-panel--open'
+          : ''}"
         role=${ifDefined(showPanel ? 'group' : undefined)}
         aria-label=${ifDefined(showPanel ? panelLabel : undefined)}
       >
@@ -457,7 +800,7 @@ export class ResponseStatus extends SpectrumElement {
     const showDisclosure = showPanel;
 
     if (this._isAgentic) {
-      const headerLabel = this._getAgenticHeaderLabel();
+      const headerLabel = this._getVisibleAgenticLabel();
       return html`
         <div class="swc-ResponseStatus swc-ResponseStatus--agentic">
           ${this._renderAgenticHeader(headerLabel, showDisclosure)}
