@@ -12,6 +12,7 @@
 
 import { CSSResultArray, html, TemplateResult } from 'lit';
 import { ifDefined } from 'lit/directives/if-defined.js';
+import { when } from 'lit/directives/when.js';
 import { html as staticHtml, unsafeStatic } from 'lit/static-html.js';
 
 import { AccordionItemBase } from '@spectrum-web-components/core/components/accordion';
@@ -79,14 +80,6 @@ export class AccordionItem extends AccordionItemBase {
     }
   }
 
-  private syncActionsContainerVisibility(event: Event): void {
-    const slot = event.target as HTMLSlotElement;
-    const container = slot.parentElement as HTMLElement | null;
-    if (container) {
-      container.hidden = slot.assignedNodes({ flatten: true }).length === 0;
-    }
-  }
-
   private stopActionsContainerPropagation(event: Event): void {
     event.stopPropagation();
   }
@@ -132,17 +125,18 @@ export class AccordionItem extends AccordionItemBase {
     return html`
       <div class="swc-AccordionItem">
         ${this.renderHeadingWrapper(button)}
-        <div
-          class="swc-AccordionItem-actions"
-          hidden
-          @click=${this.stopActionsContainerPropagation}
-          @keydown=${this.stopActionsContainerPropagation}
-        >
-          <slot
-            name="actions"
-            @slotchange=${this.syncActionsContainerVisibility}
-          ></slot>
-        </div>
+        ${when(
+          this.slotContentIsPresent,
+          () => html`
+            <div
+              class="swc-AccordionItem-actions"
+              @click=${this.stopActionsContainerPropagation}
+              @keydown=${this.stopActionsContainerPropagation}
+            >
+              <slot name="actions"></slot>
+            </div>
+          `
+        )}
         <div
           id="content"
           class="swc-AccordionItem-content"

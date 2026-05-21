@@ -13,6 +13,7 @@
 import { property, state } from 'lit/decorators.js';
 
 import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
+import { ObserveSlotPresence } from '@spectrum-web-components/core/mixins/observe-slot-presence.js';
 
 import {
   type AccordionHeadingLevel,
@@ -34,7 +35,10 @@ import {
  *   the toggle button so they remain independently interactive.
  * @slot - The panel content revealed when the item is open.
  */
-export abstract class AccordionItemBase extends SpectrumElement {
+export abstract class AccordionItemBase extends ObserveSlotPresence(
+  SpectrumElement,
+  '[slot="actions"]'
+) {
   // ──────────────────
   //     PUBLIC API
   // ──────────────────
