@@ -245,9 +245,10 @@
     <p class="subtitle">
       Research artifact for ElementInternals and FACE patterns applied to a
       combobox-shaped control (text input + listbox). Not a migration of
-      <code>sp-combobox</code>; a standalone platform test exercising
-      <code>aria-activedescendant</code>, popup ownership, and keyboard patterns
-      inside shadow DOM.
+      <code>sp-combobox</code>
+      ; a standalone platform test exercising
+      <code>aria-activedescendant</code>
+      , popup ownership, and keyboard patterns inside shadow DOM.
     </p>
 
     <!-- ================================================================== -->
@@ -280,7 +281,9 @@
 
     <div class="scenario">
       <h3>
-        1b. Constraint validation (<code>required</code>)
+        1b. Constraint validation (
+        <code>required</code>
+        )
       </h3>
       <form id="form-1b" novalidate>
         <div class="field-group">
@@ -305,7 +308,8 @@
 
     <div class="scenario">
       <h3>
-        1c. Disabled state via <code>fieldset</code>
+        1c. Disabled state via
+        <code>fieldset</code>
       </h3>
       <form id="form-1c">
         <fieldset disabled>
@@ -367,10 +371,11 @@
         href="https://www.w3.org/WAI/ARIA/apg/patterns/combobox/"
         target="_blank"
       >
-        APG combobox pattern</a
-      >. Test each key and verify that focus, selection, and
-      <code>aria-activedescendant</code> update correctly. The log below the
-      field shows real-time state changes.
+        APG combobox pattern
+      </a>
+      . Test each key and verify that focus, selection, and
+      <code>aria-activedescendant</code>
+      update correctly. The log below the field shows real-time state changes.
     </div>
 
     <div class="scenario">
@@ -399,20 +404,28 @@
 
     <div class="note">
       Each scenario tests whether
-      <code>aria-labelledby</code>,
-      <code>aria-describedby</code>, and combobox-specific attributes
-      (<code>aria-activedescendant</code>, <code>aria-owns</code>) resolve
-      correctly across shadow DOM boundaries. Inspect the accessibility tree in
-      DevTools for each.
+      <code>aria-labelledby</code>
+      ,
+      <code>aria-describedby</code>
+      , and combobox-specific attributes (
+      <code>aria-activedescendant</code>
+      ,
+      <code>aria-owns</code>
+      ) resolve correctly across shadow DOM boundaries. Inspect the
+      accessibility tree in DevTools for each.
     </div>
 
     <!-- Scenario A: light DOM siblings -->
     <div class="scenario">
       <h3>Scenario A: light DOM label and help as siblings</h3>
       <p>
-        IDs are on elements <em>outside</em> the component; referenced via
-        <code>aria-labelledby</code> and <code>aria-describedby</code> on the
-        host.
+        IDs are on elements
+        <em>outside</em>
+        the component; referenced via
+        <code>aria-labelledby</code>
+        and
+        <code>aria-describedby</code>
+        on the host.
       </p>
       <form id="form-3a">
         <div class="field-group">
@@ -459,8 +472,10 @@
     <div class="scenario">
       <h3>Scenario C: IDs inside shadow DOM (internal wiring)</h3>
       <p>
-        Label and help text rendered <em>inside</em> the shadow root. The
-        component uses shadow-scoped IDs on the internal input.
+        Label and help text rendered
+        <em>inside</em>
+        the shadow root. The component uses shadow-scoped IDs on the internal
+        input.
       </p>
       <form id="form-3c">
         <div class="field-group">
@@ -480,9 +495,13 @@
     <div class="scenario">
       <h3>Scenario D: cross-root; light DOM label + shadow input</h3>
       <p>
-        A <code>&lt;label for="..."&gt;</code> in light DOM targets the custom
-        element host. The component uses <code>delegatesFocus</code> and
-        <code>ElementInternals</code> to attempt forwarding.
+        A
+        <code>&lt;label for="..."&gt;</code>
+        in light DOM targets the custom element host. The component uses
+        <code>delegatesFocus</code>
+        and
+        <code>ElementInternals</code>
+        to attempt forwarding.
       </p>
       <form id="form-3d">
         <div class="field-group">
@@ -508,19 +527,24 @@
 
     <div class="note">
       These scenarios test the interaction between
-      <code>aria-activedescendant</code>, <code>aria-controls</code>, and owned
-      listbox elements when they live inside a shadow root. This is where
-      combobox behavior diverges most from a simple text input.
+      <code>aria-activedescendant</code>
+      ,
+      <code>aria-controls</code>
+      , and owned listbox elements when they live inside a shadow root. This is
+      where combobox behavior diverges most from a simple text input.
     </div>
 
     <div class="scenario">
       <h3>
-        4a. <code>aria-activedescendant</code> with shadow-scoped option IDs
+        4a.
+        <code>aria-activedescendant</code>
+        with shadow-scoped option IDs
       </h3>
       <p>
-        The shadow input uses <code>aria-activedescendant</code> pointing at
-        option IDs within the same shadow root. Verify the a11y tree shows the
-        active option.
+        The shadow input uses
+        <code>aria-activedescendant</code>
+        pointing at option IDs within the same shadow root. Verify the a11y tree
+        shows the active option.
       </p>
       <form id="form-4a">
         <div class="field-group">
@@ -540,13 +564,17 @@
 
     <div class="scenario">
       <h3>
-        4b. <code>aria-controls</code> / <code>aria-owns</code> and popup
-        relationship
+        4b.
+        <code>aria-controls</code>
+        /
+        <code>aria-owns</code>
+        and popup relationship
       </h3>
       <p>
         The input must declare ownership of the listbox via
-        <code>aria-controls</code>. Both live inside the shadow root. Verify the
-        relationship is exposed in the a11y tree.
+        <code>aria-controls</code>
+        . Both live inside the shadow root. Verify the relationship is exposed
+        in the a11y tree.
       </p>
       <form id="form-4b">
         <div class="field-group">
@@ -599,7 +627,9 @@
 
     <div class="scenario">
       <h3>
-        5a. <code>internals.ariaLabel</code> vs host
+        5a.
+        <code>internals.ariaLabel</code>
+        vs host
         <code>aria-label</code>
       </h3>
       <form id="form-5a">
@@ -625,7 +655,11 @@
     </div>
 
     <div class="scenario">
-      <h3>5b. <code>ariaExpanded</code> on internals vs host attribute</h3>
+      <h3>
+        5b.
+        <code>ariaExpanded</code>
+        on internals vs host attribute
+      </h3>
       <p>
         Open and close the listbox. Verify which layer (internals or host
         attribute) screen readers announce for expanded/collapsed state.
@@ -1171,7 +1205,9 @@
           this.#renderOptions();
           this.#syncValue();
           this.#validate();
-          this.#emitLog(`input: "${this.#input.value}" → ${this.#filteredOptions.length} matches`);
+          this.#emitLog(
+            `input: "${this.#input.value}" → ${this.#filteredOptions.length} matches`
+          );
         }
 
         #onKeydown(e) {
@@ -1200,7 +1236,9 @@
               if (this.#isOpen && this.#activeIndex >= 0) {
                 e.preventDefault();
                 this.#selectOption(this.#filteredOptions[this.#activeIndex]);
-                this.#emitLog(`Enter → selected: "${this.#filteredOptions[this.#activeIndex]}"`);
+                this.#emitLog(
+                  `Enter → selected: "${this.#filteredOptions[this.#activeIndex]}"`
+                );
               }
               break;
 
@@ -1242,7 +1280,8 @@
           if (this.#filteredOptions.length === 0) return;
 
           if (this.#activeIndex === -1) {
-            this.#activeIndex = delta > 0 ? 0 : this.#filteredOptions.length - 1;
+            this.#activeIndex =
+              delta > 0 ? 0 : this.#filteredOptions.length - 1;
           } else {
             this.#activeIndex += delta;
             if (this.#activeIndex < 0)
@@ -1265,7 +1304,10 @@
             this.#input.setAttribute('aria-activedescendant', activeOpt.id);
             activeOpt.scrollIntoView({ block: 'nearest' });
 
-            this.#dispatchActivedescendantEvent(activeOpt.id, activeOpt.textContent);
+            this.#dispatchActivedescendantEvent(
+              activeOpt.id,
+              activeOpt.textContent
+            );
           } else {
             this.#input.removeAttribute('aria-activedescendant');
           }
@@ -1451,8 +1493,7 @@
           if (text) {
             this.#shadowHelp.textContent = text;
             this.#shadowHelp.hidden = false;
-            const existing =
-              this.#input.getAttribute('aria-describedby') ?? '';
+            const existing = this.#input.getAttribute('aria-describedby') ?? '';
             if (!existing.includes('shadow-help')) {
               this.#input.setAttribute(
                 'aria-describedby',
@@ -1527,8 +1568,7 @@
         }
 
         #handleSlotWiring() {
-          const labelSlot =
-            this.shadowRoot.querySelector('slot[name="label"]');
+          const labelSlot = this.shadowRoot.querySelector('slot[name="label"]');
           const helpSlot = this.shadowRoot.querySelector(
             'slot[name="help-text"]'
           );
@@ -1579,9 +1619,7 @@
         #resolveTextFromIds(idList) {
           return idList
             .split(/\s+/)
-            .map(
-              (id) => document.getElementById(id)?.textContent?.trim() ?? ''
-            )
+            .map((id) => document.getElementById(id)?.textContent?.trim() ?? '')
             .filter(Boolean)
             .join(' ');
         }

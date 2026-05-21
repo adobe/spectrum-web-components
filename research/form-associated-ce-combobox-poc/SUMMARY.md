@@ -14,29 +14,29 @@ axe-core loads from CDN on demand when you click the audit button.
 
 ## Automated test results (Chrome headless)
 
-| Test                         | Expected                         | Actual                                      | Status  |
-| ---------------------------- | -------------------------------- | ------------------------------------------- | ------- |
-| 1a Submit                    | FormData includes fruit          | fruit: "Apple"                              | Pass    |
-| 1a Reset                     | Restores to Apple                | formResetCallback: PASS                     | Pass    |
-| 1b Empty required            | valueMissing: true               | Correctly rejected                          | Pass    |
-| 1b Valid selection            | validity.valid: true             | Accepted                                    | Pass    |
-| 1c Disabled fieldset         | Field excluded from FormData     | FormData: NO (correct)                      | Pass    |
-| 1d Submit with open listbox  | Captures current input value     | Value matches regardless of open state      | Pass    |
-| 2a ArrowDown/Up navigation   | activeIndex updates              | activedescendant cycles through options     | Pass    |
-| 2a Enter selects             | Selected value in input          | Input populated, listbox closed             | Pass    |
-| 2a Escape closes             | Listbox closes                   | aria-expanded false, activedescendant reset | Pass    |
-| 2a Home/End                  | Jump to first/last               | Active index moves to boundary              | Pass    |
-| 3A Light DOM siblings        | Name = "Timezone"                | `aria-label` on shadow input                | Pass    |
-| 3B Slotted children          | Name = "Department"              | `aria-label` on shadow input via slotchange | Pass    |
-| 3C Shadow internal           | Name = "Search category"         | Shadow-scoped `aria-labelledby` on input    | Pass    |
-| 3D Cross-root label-for      | Click label focuses field + name | Focus: pass; name via implicit label        | Pass    |
-| 4a activedescendant in shadow| Points at shadow-scoped option   | Resolves within shadow root                 | Pass    |
-| 4b aria-controls relationship| Input controls listbox           | Both in same shadow root; resolves          | Pass    |
-| 4c Validation + errormessage | Required rejection + error shown | setValidity + aria-errormessage exposed     | Pass    |
-| 5a internals.ariaLabel       | Exposes name in a11y tree        | "Search via internals" on shadow input      | Pass    |
-| 5a host aria-label           | Exposes name in a11y tree        | "Search via host attribute" on shadow input | Pass    |
-| 5b ariaExpanded on internals | Expanded state announced         | Host attribute + internals both set         | Pass    |
-| 6 axe-core                   | Audit runs, results shown        | See axe findings section                    | Pass    |
+| Test                          | Expected                         | Actual                                      | Status |
+| ----------------------------- | -------------------------------- | ------------------------------------------- | ------ |
+| 1a Submit                     | FormData includes fruit          | fruit: "Apple"                              | Pass   |
+| 1a Reset                      | Restores to Apple                | formResetCallback: PASS                     | Pass   |
+| 1b Empty required             | valueMissing: true               | Correctly rejected                          | Pass   |
+| 1b Valid selection            | validity.valid: true             | Accepted                                    | Pass   |
+| 1c Disabled fieldset          | Field excluded from FormData     | FormData: NO (correct)                      | Pass   |
+| 1d Submit with open listbox   | Captures current input value     | Value matches regardless of open state      | Pass   |
+| 2a ArrowDown/Up navigation    | activeIndex updates              | activedescendant cycles through options     | Pass   |
+| 2a Enter selects              | Selected value in input          | Input populated, listbox closed             | Pass   |
+| 2a Escape closes              | Listbox closes                   | aria-expanded false, activedescendant reset | Pass   |
+| 2a Home/End                   | Jump to first/last               | Active index moves to boundary              | Pass   |
+| 3A Light DOM siblings         | Name = "Timezone"                | `aria-label` on shadow input                | Pass   |
+| 3B Slotted children           | Name = "Department"              | `aria-label` on shadow input via slotchange | Pass   |
+| 3C Shadow internal            | Name = "Search category"         | Shadow-scoped `aria-labelledby` on input    | Pass   |
+| 3D Cross-root label-for       | Click label focuses field + name | Focus: pass; name via implicit label        | Pass   |
+| 4a activedescendant in shadow | Points at shadow-scoped option   | Resolves within shadow root                 | Pass   |
+| 4b aria-controls relationship | Input controls listbox           | Both in same shadow root; resolves          | Pass   |
+| 4c Validation + errormessage  | Required rejection + error shown | setValidity + aria-errormessage exposed     | Pass   |
+| 5a internals.ariaLabel        | Exposes name in a11y tree        | "Search via internals" on shadow input      | Pass   |
+| 5a host aria-label            | Exposes name in a11y tree        | "Search via host attribute" on shadow input | Pass   |
+| 5b ariaExpanded on internals  | Expanded state announced         | Host attribute + internals both set         | Pass   |
+| 6 axe-core                    | Audit runs, results shown        | See axe findings section                    | Pass   |
 
 ---
 
@@ -68,28 +68,28 @@ When the listbox is open and the user presses Enter on an active option, the com
 
 ### FormData
 
-| Behavior                                           | Result                         | Notes                                                                    |
-| -------------------------------------------------- | ------------------------------ | ------------------------------------------------------------------------ |
+| Behavior                                           | Result                         | Notes                                                                     |
+| -------------------------------------------------- | ------------------------------ | ------------------------------------------------------------------------- |
 | `FormData` includes field name and value on submit | Pass (Chrome, Firefox, Safari) | `setFormValue()` called on every input change and option selection        |
-| Multiple FACE comboboxes in one form               | Pass                           | Each name appears as a separate entry                                    |
-| Disabled FACE comboboxes excluded from FormData    | Pass                           | `formDisabledCallback` fires; matches native `<select disabled>` behavior|
-| Submit with open vs closed listbox                 | Pass                           | `FormData` always reflects the current input value                       |
+| Multiple FACE comboboxes in one form               | Pass                           | Each name appears as a separate entry                                     |
+| Disabled FACE comboboxes excluded from FormData    | Pass                           | `formDisabledCallback` fires; matches native `<select disabled>` behavior |
+| Submit with open vs closed listbox                 | Pass                           | `FormData` always reflects the current input value                        |
 
 ### Reset
 
-| Behavior                                      | Result | Notes                                                                     |
-| --------------------------------------------- | ------ | ------------------------------------------------------------------------- |
-| `formResetCallback()` fires on `<form>` reset | Pass   | Restores to the `value` attribute (initial value), not empty              |
-| Internal input reflects reset value           | Pass   | Also closes the listbox and clears active descendant                      |
+| Behavior                                      | Result | Notes                                                        |
+| --------------------------------------------- | ------ | ------------------------------------------------------------ |
+| `formResetCallback()` fires on `<form>` reset | Pass   | Restores to the `value` attribute (initial value), not empty |
+| Internal input reflects reset value           | Pass   | Also closes the listbox and clears active descendant         |
 
 ### Constraint validation
 
-| Behavior                                                           | Result                 | Notes                                                                          |
-| ------------------------------------------------------------------ | ---------------------- | ------------------------------------------------------------------------------ |
-| `required` prevents empty submit (`valueMissing`)                  | Pass                   | `setValidity()` checks trimmed input value                                     |
-| Custom validity via `setValidity({ valueMissing }, msg, anchor)`   | Pass                   | Anchor positions the browser tooltip near the shadow input                     |
-| `reportValidity()` shows browser tooltip                           | Pass (Chrome, Firefox) | Safari shows tooltip inconsistently for custom elements                        |
-| `checkValidity()` returns boolean without UI                       | Pass                   | Matches native API                                                             |
+| Behavior                                                         | Result                 | Notes                                                      |
+| ---------------------------------------------------------------- | ---------------------- | ---------------------------------------------------------- |
+| `required` prevents empty submit (`valueMissing`)                | Pass                   | `setValidity()` checks trimmed input value                 |
+| Custom validity via `setValidity({ valueMissing }, msg, anchor)` | Pass                   | Anchor positions the browser tooltip near the shadow input |
+| `reportValidity()` shows browser tooltip                         | Pass (Chrome, Firefox) | Safari shows tooltip inconsistently for custom elements    |
+| `checkValidity()` returns boolean without UI                     | Pass                   | Matches native API                                         |
 
 ### State restoration
 
@@ -99,14 +99,14 @@ When the listbox is open and the user presses Enter on an active option, the com
 
 ### Comparison with a plain `<select>`
 
-| Behavior                     | `<select>` | FACE combobox | Notes                                                                         |
-| ---------------------------- | ---------- | ------------- | ----------------------------------------------------------------------------- |
-| FormData participation       | Native     | Pass          | Equivalent via `setFormValue()`                                               |
-| Reset                        | Native     | Pass          | `formResetCallback` restores initial value                                    |
-| Disabled via `<fieldset>`    | Native     | Pass          | `formDisabledCallback` fires automatically                                    |
-| Free-text entry              | No         | Yes           | Combobox allows typing values not in the list                                 |
-| Constraint validation UI     | Native     | Pass          | `reportValidity()` shows tooltip; Safari less consistent                      |
-| State restoration (bfcache)  | Native     | Pass (Chrome) | Browser support varies for custom element state restore                       |
+| Behavior                    | `<select>` | FACE combobox | Notes                                                    |
+| --------------------------- | ---------- | ------------- | -------------------------------------------------------- |
+| FormData participation      | Native     | Pass          | Equivalent via `setFormValue()`                          |
+| Reset                       | Native     | Pass          | `formResetCallback` restores initial value               |
+| Disabled via `<fieldset>`   | Native     | Pass          | `formDisabledCallback` fires automatically               |
+| Free-text entry             | No         | Yes           | Combobox allows typing values not in the list            |
+| Constraint validation UI    | Native     | Pass          | `reportValidity()` shows tooltip; Safari less consistent |
+| State restoration (bfcache) | Native     | Pass (Chrome) | Browser support varies for custom element state restore  |
 
 ### Summary
 
@@ -118,33 +118,33 @@ When the listbox is open and the user presses Enter on an active option, the com
 
 ### APG combobox pattern compliance
 
-| Key         | Expected behavior                                  | Result | Notes                                                           |
-| ----------- | -------------------------------------------------- | ------ | --------------------------------------------------------------- |
-| ArrowDown   | Open listbox (if closed); move active to next      | Pass   | Wraps from last to first                                        |
-| ArrowUp     | Open listbox (if closed); move active to previous  | Pass   | Wraps from first to last                                        |
-| Enter       | Select active option and close listbox             | Pass   | Does not submit form when listbox is open with active option    |
-| Escape      | Close listbox without selecting                    | Pass   | Clears `aria-activedescendant`                                  |
-| Home        | Move active to first option                        | Pass   | Only when listbox is open                                       |
-| End         | Move active to last option                         | Pass   | Only when listbox is open                                       |
-| Tab         | Close listbox and move focus to next element       | Pass   | Standard focus management                                       |
-| Typing      | Filter options; open listbox                       | Pass   | Case-insensitive substring match                                |
+| Key       | Expected behavior                                 | Result | Notes                                                        |
+| --------- | ------------------------------------------------- | ------ | ------------------------------------------------------------ |
+| ArrowDown | Open listbox (if closed); move active to next     | Pass   | Wraps from last to first                                     |
+| ArrowUp   | Open listbox (if closed); move active to previous | Pass   | Wraps from first to last                                     |
+| Enter     | Select active option and close listbox            | Pass   | Does not submit form when listbox is open with active option |
+| Escape    | Close listbox without selecting                   | Pass   | Clears `aria-activedescendant`                               |
+| Home      | Move active to first option                       | Pass   | Only when listbox is open                                    |
+| End       | Move active to last option                        | Pass   | Only when listbox is open                                    |
+| Tab       | Close listbox and move focus to next element      | Pass   | Standard focus management                                    |
+| Typing    | Filter options; open listbox                      | Pass   | Case-insensitive substring match                             |
 
 ### `aria-activedescendant` behavior
 
-| Aspect                                    | Result | Notes                                                                  |
-| ----------------------------------------- | ------ | ---------------------------------------------------------------------- |
-| Set on shadow input, points to shadow opt | Pass   | Same-scope IDREF; resolves in all browsers                             |
-| Removed when listbox closes               | Pass   | Prevents stale references in the a11y tree                             |
-| Updates on every arrow key press          | Pass   | Screen readers should announce the new active option                   |
-| Scroll into view for off-screen options   | Pass   | `scrollIntoView({ block: 'nearest' })` keeps active option visible    |
+| Aspect                                    | Result | Notes                                                              |
+| ----------------------------------------- | ------ | ------------------------------------------------------------------ |
+| Set on shadow input, points to shadow opt | Pass   | Same-scope IDREF; resolves in all browsers                         |
+| Removed when listbox closes               | Pass   | Prevents stale references in the a11y tree                         |
+| Updates on every arrow key press          | Pass   | Screen readers should announce the new active option               |
+| Scroll into view for off-screen options   | Pass   | `scrollIntoView({ block: 'nearest' })` keeps active option visible |
 
 ### Gaps vs native `<select>` keyboard behavior
 
-| Behavior                          | Native `<select>` | FACE combobox        | Notes                                                      |
-| --------------------------------- | ------------------ | -------------------- | ---------------------------------------------------------- |
-| Type-ahead (first-letter)         | Yes                | Via filtering        | Combobox filters instead of jumping; acceptable difference  |
-| Alt+ArrowDown opens               | Some browsers      | Not implemented      | Could be added; not required by APG                         |
-| Multiple selection                | With `multiple`    | Not in scope         | Single-select combobox pattern only                         |
+| Behavior                  | Native `<select>` | FACE combobox   | Notes                                                      |
+| ------------------------- | ----------------- | --------------- | ---------------------------------------------------------- |
+| Type-ahead (first-letter) | Yes               | Via filtering   | Combobox filters instead of jumping; acceptable difference |
+| Alt+ArrowDown opens       | Some browsers     | Not implemented | Could be added; not required by APG                        |
+| Multiple selection        | With `multiple`   | Not in scope    | Single-select combobox pattern only                        |
 
 ---
 
@@ -167,12 +167,12 @@ IDs on elements _outside_ the component, referenced via `aria-labelledby` / `ari
 
 Consumer projects content into the component via `<slot>`. IDs live on the slotted elements.
 
-| Aspect                                            | Chrome             | Firefox | Safari  | Notes                                                                                |
-| ------------------------------------------------- | ------------------ | ------- | ------- | ------------------------------------------------------------------------------------ |
-| Slotted label ID resolvable from light DOM        | Pass               | Pass    | Pass    | Slotted elements stay in the light DOM tree                                          |
-| `ariaLabelledByElements` (element ref API)        | Pass (Chrome 130+) | Partial | Not yet | Chrome-only element reference API                                                    |
-| Shadow input `aria-labelledby` → slotted ID       | Fail               | Fail    | Fail    | Shadow input cannot reference a light DOM ID                                         |
-| Workaround: `aria-label` on shadow input          | Pass               | Pass    | Pass    | String fallback from slotted label text                                              |
+| Aspect                                      | Chrome             | Firefox | Safari  | Notes                                        |
+| ------------------------------------------- | ------------------ | ------- | ------- | -------------------------------------------- |
+| Slotted label ID resolvable from light DOM  | Pass               | Pass    | Pass    | Slotted elements stay in the light DOM tree  |
+| `ariaLabelledByElements` (element ref API)  | Pass (Chrome 130+) | Partial | Not yet | Chrome-only element reference API            |
+| Shadow input `aria-labelledby` → slotted ID | Fail               | Fail    | Fail    | Shadow input cannot reference a light DOM ID |
+| Workaround: `aria-label` on shadow input    | Pass               | Pass    | Pass    | String fallback from slotted label text      |
 
 **Conclusion:** Same as text-field PoC. Use host-level ARIA or string fallback on the shadow input.
 
@@ -180,33 +180,33 @@ Consumer projects content into the component via `<slot>`. IDs live on the slott
 
 Label and help text rendered _inside_ the shadow root.
 
-| Aspect                                            | Chrome    | Firefox       | Safari    | Notes                                                  |
-| ------------------------------------------------- | --------- | ------------- | --------- | ------------------------------------------------------ |
-| Shadow input `aria-labelledby` → shadow-scoped ID | Pass      | Pass          | Pass      | Both elements share the same shadow root scope         |
-| Shadow input `aria-controls` → shadow listbox ID  | Pass      | Pass          | Pass      | **Combobox-specific:** controls relationship resolves  |
-| `aria-activedescendant` → shadow option ID        | Pass      | Pass          | Pass      | **Combobox-specific:** active option announced         |
-| Light DOM element referencing shadow ID            | Fail      | Fail          | Fail      | Expected: shadow IDs are encapsulated                  |
+| Aspect                                            | Chrome | Firefox | Safari | Notes                                                 |
+| ------------------------------------------------- | ------ | ------- | ------ | ----------------------------------------------------- |
+| Shadow input `aria-labelledby` → shadow-scoped ID | Pass   | Pass    | Pass   | Both elements share the same shadow root scope        |
+| Shadow input `aria-controls` → shadow listbox ID  | Pass   | Pass    | Pass   | **Combobox-specific:** controls relationship resolves |
+| `aria-activedescendant` → shadow option ID        | Pass   | Pass    | Pass   | **Combobox-specific:** active option announced        |
+| Light DOM element referencing shadow ID           | Fail   | Fail    | Fail   | Expected: shadow IDs are encapsulated                 |
 
 **Conclusion:** Shadow-internal wiring works for all combobox-specific relationships. `aria-controls`, `aria-activedescendant`, and `aria-labelledby` all resolve within the same shadow scope. **This is the key win for combobox patterns**: keeping the input and listbox in the same shadow root avoids the hardest cross-root problems.
 
 ### Scenario D: cross-root; light DOM `<label for>` targeting the host
 
-| Aspect                                          | Chrome        | Firefox       | Safari       | Notes                                                                     |
-| ----------------------------------------------- | ------------- | ------------- | ------------ | ------------------------------------------------------------------------- |
-| Clicking the label focuses the shadow input     | Pass          | Pass          | Pass         | `delegatesFocus` forwards focus                                           |
-| Label's `for` creates implicit accessible name  | Partial       | Partial       | Partial      | Same inconsistency as text-field PoC                                      |
-| Screen reader announces the label when focusing | Partial (VO)  | Verify (NVDA) | Partial (VO) | VoiceOver may or may not announce, depending on fallback                  |
+| Aspect                                          | Chrome       | Firefox       | Safari       | Notes                                                    |
+| ----------------------------------------------- | ------------ | ------------- | ------------ | -------------------------------------------------------- |
+| Clicking the label focuses the shadow input     | Pass         | Pass          | Pass         | `delegatesFocus` forwards focus                          |
+| Label's `for` creates implicit accessible name  | Partial      | Partial       | Partial      | Same inconsistency as text-field PoC                     |
+| Screen reader announces the label when focusing | Partial (VO) | Verify (NVDA) | Partial (VO) | VoiceOver may or may not announce, depending on fallback |
 
 **Conclusion:** Same as text-field PoC. Always pair with `ariaLabel` fallback.
 
 ### IDREF matrix summary table
 
-| Scenario                | Label resolves     | Description resolves   | activedescendant | controls/owns | Cross-browser | Recommended              |
-| ----------------------- | ------------------ | ---------------------- | ---------------- | ------------- | ------------- | ------------------------ |
-| A: Light DOM siblings   | Pass               | Pass                   | N/A (use input)  | N/A           | Yes           | Yes (primary pattern)    |
-| B: Slotted children     | Pass (host-level)  | Pass (host-level)      | N/A (use input)  | N/A           | Partial       | Yes, with string fallback|
-| C: Shadow internal      | Pass               | Pass                   | Pass             | Pass          | Yes           | Yes, for co-located DOM  |
-| D: Cross-root label-for | Partial            | N/A                    | N/A              | N/A           | No            | Pair with ARIA fallback  |
+| Scenario                | Label resolves    | Description resolves | activedescendant | controls/owns | Cross-browser | Recommended               |
+| ----------------------- | ----------------- | -------------------- | ---------------- | ------------- | ------------- | ------------------------- |
+| A: Light DOM siblings   | Pass              | Pass                 | N/A (use input)  | N/A           | Yes           | Yes (primary pattern)     |
+| B: Slotted children     | Pass (host-level) | Pass (host-level)    | N/A (use input)  | N/A           | Partial       | Yes, with string fallback |
+| C: Shadow internal      | Pass              | Pass                 | Pass             | Pass          | Yes           | Yes, for co-located DOM   |
+| D: Cross-root label-for | Partial           | N/A                  | N/A              | N/A           | No            | Pair with ARIA fallback   |
 
 ---
 
@@ -222,31 +222,31 @@ This was the primary concern for the combobox PoC, because `aria-activedescendan
 
 ### `aria-controls` / `aria-owns`
 
-| Attribute       | Same shadow root | Cross-root | Notes                                                             |
-| --------------- | ---------------- | ---------- | ----------------------------------------------------------------- |
-| `aria-controls` | Pass             | Fail       | Shadow input can reference shadow listbox ID, not a light DOM ID  |
-| `aria-owns`     | Pass             | Fail       | Same behavior; both are IDREF attributes subject to tree scoping  |
+| Attribute       | Same shadow root | Cross-root | Notes                                                            |
+| --------------- | ---------------- | ---------- | ---------------------------------------------------------------- |
+| `aria-controls` | Pass             | Fail       | Shadow input can reference shadow listbox ID, not a light DOM ID |
+| `aria-owns`     | Pass             | Fail       | Same behavior; both are IDREF attributes subject to tree scoping |
 
 **Recommendation:** Keep the input and listbox in the same shadow root. If a future design requires the popup to be in a different DOM scope (e.g., for z-index stacking in a portal pattern), `aria-owns` will not resolve cross-root and will need an element-reference workaround.
 
 ### Popup visibility and `aria-expanded`
 
-| Aspect                                          | Result | Notes                                                                      |
-| ----------------------------------------------- | ------ | -------------------------------------------------------------------------- |
-| `aria-expanded` on shadow input                 | Pass   | Screen readers announce "collapsed" / "expanded" on the combobox input     |
-| `internals.ariaExpanded` on host                | Pass   | Updates the host a11y node, but screen readers focus the shadow input      |
-| Both set simultaneously                         | Pass   | Dual-write keeps both layers in sync                                       |
-| `open` attribute on host (for CSS)              | Pass   | Used for styling; not read by screen readers                               |
+| Aspect                             | Result | Notes                                                                  |
+| ---------------------------------- | ------ | ---------------------------------------------------------------------- |
+| `aria-expanded` on shadow input    | Pass   | Screen readers announce "collapsed" / "expanded" on the combobox input |
+| `internals.ariaExpanded` on host   | Pass   | Updates the host a11y node, but screen readers focus the shadow input  |
+| Both set simultaneously            | Pass   | Dual-write keeps both layers in sync                                   |
+| `open` attribute on host (for CSS) | Pass   | Used for styling; not read by screen readers                           |
 
 ### Role structure
 
-| Element             | Role        | Location     | Notes                                            |
-| ------------------- | ----------- | ------------ | ------------------------------------------------ |
-| Host                | `group`     | Light DOM    | Groups the label, input, and listbox semantically |
-| Shadow input        | `combobox`  | Shadow root  | Primary interactive control                       |
-| Shadow listbox div  | `listbox`   | Shadow root  | Contains option elements                          |
-| Shadow option divs  | `option`    | Shadow root  | Individual selectable items                       |
-| Trigger button      | (implicit)  | Shadow root  | `tabindex="-1"`; not reachable via Tab            |
+| Element            | Role       | Location    | Notes                                             |
+| ------------------ | ---------- | ----------- | ------------------------------------------------- |
+| Host               | `group`    | Light DOM   | Groups the label, input, and listbox semantically |
+| Shadow input       | `combobox` | Shadow root | Primary interactive control                       |
+| Shadow listbox div | `listbox`  | Shadow root | Contains option elements                          |
+| Shadow option divs | `option`   | Shadow root | Individual selectable items                       |
+| Trigger button     | (implicit) | Shadow root | `tabindex="-1"`; not reachable via Tab            |
 
 ---
 
@@ -261,13 +261,13 @@ This was the primary concern for the combobox PoC, because `aria-activedescendan
 
 ### Combobox-specific additions
 
-| API                       | Combobox usage                                        | Scope requirement       | Notes                                                    |
-| ------------------------- | ----------------------------------------------------- | ----------------------- | -------------------------------------------------------- |
-| `aria-activedescendant`   | Points at the currently highlighted option             | Same shadow root        | Must be on the `combobox` role element (the input)        |
-| `aria-controls`           | Input declares ownership of the listbox                | Same shadow root        | Required by APG combobox pattern                          |
-| `aria-haspopup="listbox"` | Indicates the input has a popup                        | On the input itself     | Static attribute; set in template                         |
-| `aria-autocomplete="list"`| Indicates filtering behavior                           | On the input itself     | Tells AT that the listbox filters as the user types       |
-| `aria-expanded`           | Open/close state of the popup                          | On the input + trigger  | Dual-write to input attribute and `internals.ariaExpanded`|
+| API                        | Combobox usage                             | Scope requirement      | Notes                                                      |
+| -------------------------- | ------------------------------------------ | ---------------------- | ---------------------------------------------------------- |
+| `aria-activedescendant`    | Points at the currently highlighted option | Same shadow root       | Must be on the `combobox` role element (the input)         |
+| `aria-controls`            | Input declares ownership of the listbox    | Same shadow root       | Required by APG combobox pattern                           |
+| `aria-haspopup="listbox"`  | Indicates the input has a popup            | On the input itself    | Static attribute; set in template                          |
+| `aria-autocomplete="list"` | Indicates filtering behavior               | On the input itself    | Tells AT that the listbox filters as the user types        |
+| `aria-expanded`            | Open/close state of the popup              | On the input + trigger | Dual-write to input attribute and `internals.ariaExpanded` |
 
 ### `aria-errormessage` for combobox
 
@@ -279,13 +279,13 @@ Same as text-field PoC: works on the host referencing a light DOM error element.
 
 ### Expected violations and behavior
 
-| axe rule                 | Behavior                                               | Classification   | Notes                                                                      |
-| ------------------------ | ------------------------------------------------------ | ---------------- | -------------------------------------------------------------------------- |
-| `color-contrast`         | May flag help text / placeholder contrast              | True violation   | Not FACE-specific; fix with darker text colors                             |
-| `label`                  | Should not flag if `ariaLabel` fallback is set         | Expected pass    | axe reads host attributes; `ariaLabel` via internals may not be visible    |
-| `aria-input-field-name`  | May flag shadow combobox input                         | Possible FP      | axe may not traverse shadow DOM for combobox name resolution               |
-| `aria-valid-attr-value`  | Should pass when IDREFs resolve in same scope          | Expected pass    | `aria-controls` and `aria-activedescendant` point at same-scope IDs        |
-| `aria-required-attr`     | Should pass; combobox has required `aria-expanded`     | Expected pass    | The input always has `aria-expanded` set                                   |
+| axe rule                | Behavior                                           | Classification | Notes                                                                   |
+| ----------------------- | -------------------------------------------------- | -------------- | ----------------------------------------------------------------------- |
+| `color-contrast`        | May flag help text / placeholder contrast          | True violation | Not FACE-specific; fix with darker text colors                          |
+| `label`                 | Should not flag if `ariaLabel` fallback is set     | Expected pass  | axe reads host attributes; `ariaLabel` via internals may not be visible |
+| `aria-input-field-name` | May flag shadow combobox input                     | Possible FP    | axe may not traverse shadow DOM for combobox name resolution            |
+| `aria-valid-attr-value` | Should pass when IDREFs resolve in same scope      | Expected pass  | `aria-controls` and `aria-activedescendant` point at same-scope IDs     |
+| `aria-required-attr`    | Should pass; combobox has required `aria-expanded` | Expected pass  | The input always has `aria-expanded` set                                |
 
 ### axe-core and combobox-in-shadow compatibility
 
@@ -304,20 +304,20 @@ Same limitations as the text-field PoC apply:
 
 Verified via the accessibility tree snapshot of the live demo:
 
-| Element / field          | Role      | Accessible name               | Value (if set) | States                        | Status |
-| ------------------------ | --------- | ----------------------------- | -------------- | ----------------------------- | ------ |
-| Favorite fruit           | combobox  | Favorite fruit                | Apple          | collapsed                     | Pass   |
-| Country (required)       | combobox  | Country (required)            |                | required, collapsed           | Pass   |
-| Disabled combobox        | combobox  | Disabled combobox             | Cannot change  | disabled, readonly, collapsed | Pass   |
-| Color (after selecting)  | combobox  | Color                         | Blue           | collapsed                     | Pass   |
-| Timezone (scenario A)    | combobox  | Timezone                      |                | collapsed                     | Pass   |
-| Department (scenario B)  | combobox  | Department                    |                | collapsed                     | Pass   |
-| Search category (C)      | combobox  | Search category               |                | collapsed                     | Pass   |
-| Priority level (D)       | combobox  | Priority level                |                | collapsed                     | Pass   |
-| Search via internals     | combobox  | Search via internals          |                | collapsed                     | Pass   |
-| Search via host attr     | combobox  | Search via host attribute     |                | collapsed                     | Pass   |
-| Project status           | combobox  | Project status (required)     |                | required, collapsed           | Pass   |
-| Trigger buttons          | button    | Show options                  |                | collapsed / expanded          | Pass   |
+| Element / field         | Role     | Accessible name           | Value (if set) | States                        | Status |
+| ----------------------- | -------- | ------------------------- | -------------- | ----------------------------- | ------ |
+| Favorite fruit          | combobox | Favorite fruit            | Apple          | collapsed                     | Pass   |
+| Country (required)      | combobox | Country (required)        |                | required, collapsed           | Pass   |
+| Disabled combobox       | combobox | Disabled combobox         | Cannot change  | disabled, readonly, collapsed | Pass   |
+| Color (after selecting) | combobox | Color                     | Blue           | collapsed                     | Pass   |
+| Timezone (scenario A)   | combobox | Timezone                  |                | collapsed                     | Pass   |
+| Department (scenario B) | combobox | Department                |                | collapsed                     | Pass   |
+| Search category (C)     | combobox | Search category           |                | collapsed                     | Pass   |
+| Priority level (D)      | combobox | Priority level            |                | collapsed                     | Pass   |
+| Search via internals    | combobox | Search via internals      |                | collapsed                     | Pass   |
+| Search via host attr    | combobox | Search via host attribute |                | collapsed                     | Pass   |
+| Project status          | combobox | Project status (required) |                | required, collapsed           | Pass   |
+| Trigger buttons         | button   | Show options              |                | collapsed / expanded          | Pass   |
 
 **When the Color combobox was opened** (via trigger button click), the tree correctly showed:
 
@@ -330,11 +330,11 @@ After selecting "Blue": combobox value updated to `Blue`, listbox closed (`state
 
 ### Form submit tests
 
-| Test                         | Action                                 | Result                                                  | Status |
-| ---------------------------- | -------------------------------------- | ------------------------------------------------------- | ------ |
-| 1a Submit                    | Clicked Submit                         | FormData: `fruit: "Apple"`, form participation: PASS    | Pass   |
-| 1d Select then submit        | Opened listbox, clicked Blue, submitted| FormData: `color: "Blue"`, value captured correctly     | Pass   |
-| 1d Open state                | Opened via trigger, checked snapshot   | Combobox shows expanded, options rendered in a11y tree  | Pass   |
+| Test                  | Action                                  | Result                                                 | Status |
+| --------------------- | --------------------------------------- | ------------------------------------------------------ | ------ |
+| 1a Submit             | Clicked Submit                          | FormData: `fruit: "Apple"`, form participation: PASS   | Pass   |
+| 1d Select then submit | Opened listbox, clicked Blue, submitted | FormData: `color: "Blue"`, value captured correctly    | Pass   |
+| 1d Open state         | Opened via trigger, checked snapshot    | Combobox shows expanded, options rendered in a11y tree | Pass   |
 
 ### Screen reader testing notes
 
@@ -379,19 +379,19 @@ After selecting "Blue": combobox value updated to `Blue`, listbox closed (`state
 
 There is no native `<combobox>` element. The closest native equivalents are `<select>` and `<input list="...">` (datalist).
 
-| Concern                      | `<select>`           | `<input list>` (datalist) | FACE combobox (this PoC)          | Notes                                               |
-| ---------------------------- | -------------------- | ------------------------- | --------------------------------- | --------------------------------------------------- |
-| Free-text entry              | No                   | Yes                       | Yes                               | FACE combobox matches datalist                       |
-| Filtered suggestions         | No                   | Browser-dependent         | Yes (custom filtering)            | Full control over filter logic                       |
-| FormData participation       | Native               | Native                    | Pass via `setFormValue()`         | Equivalent                                           |
-| Reset                        | Native               | Native                    | Pass via `formResetCallback()`    | Also closes listbox                                  |
-| Disabled via `<fieldset>`    | Native               | Native                    | Pass via `formDisabledCallback()` | Equivalent                                           |
-| Keyboard navigation          | Native               | Minimal                   | Full APG pattern                  | Better than datalist keyboard support                |
-| Accessible name              | `<label for>`        | `<label for>`             | Layered (host ARIA + fallback)    | Extra work vs native                                 |
-| `aria-activedescendant`      | N/A                  | N/A                       | Full support (shadow-scoped)      | Not needed for native elements                       |
-| Styling                      | Very limited         | Very limited              | Full control via shadow CSS       | Major advantage of custom element                    |
-| Constraint validation UI     | Native tooltip       | Native tooltip            | `reportValidity()` tooltip        | Safari inconsistent for custom elements              |
-| Option grouping (`optgroup`) | Yes                  | No                        | Not in PoC (can be added)         | Would need custom `role="group"` inside listbox      |
+| Concern                      | `<select>`     | `<input list>` (datalist) | FACE combobox (this PoC)          | Notes                                           |
+| ---------------------------- | -------------- | ------------------------- | --------------------------------- | ----------------------------------------------- |
+| Free-text entry              | No             | Yes                       | Yes                               | FACE combobox matches datalist                  |
+| Filtered suggestions         | No             | Browser-dependent         | Yes (custom filtering)            | Full control over filter logic                  |
+| FormData participation       | Native         | Native                    | Pass via `setFormValue()`         | Equivalent                                      |
+| Reset                        | Native         | Native                    | Pass via `formResetCallback()`    | Also closes listbox                             |
+| Disabled via `<fieldset>`    | Native         | Native                    | Pass via `formDisabledCallback()` | Equivalent                                      |
+| Keyboard navigation          | Native         | Minimal                   | Full APG pattern                  | Better than datalist keyboard support           |
+| Accessible name              | `<label for>`  | `<label for>`             | Layered (host ARIA + fallback)    | Extra work vs native                            |
+| `aria-activedescendant`      | N/A            | N/A                       | Full support (shadow-scoped)      | Not needed for native elements                  |
+| Styling                      | Very limited   | Very limited              | Full control via shadow CSS       | Major advantage of custom element               |
+| Constraint validation UI     | Native tooltip | Native tooltip            | `reportValidity()` tooltip        | Safari inconsistent for custom elements         |
+| Option grouping (`optgroup`) | Yes            | No                        | Not in PoC (can be added)         | Would need custom `role="group"` inside listbox |
 
 ### Key takeaway
 
