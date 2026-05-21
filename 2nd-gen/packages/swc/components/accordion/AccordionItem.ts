@@ -80,10 +80,6 @@ export class AccordionItem extends AccordionItemBase {
     }
   }
 
-  private stopActionsContainerPropagation(event: Event): void {
-    event.stopPropagation();
-  }
-
   private handleHeaderKeydown(event: Event): void {
     if ((event as KeyboardEvent).key === ' ') {
       // Space requires preventDefault to suppress page scroll; toggle is then
@@ -128,11 +124,7 @@ export class AccordionItem extends AccordionItemBase {
         ${when(
           this.slotContentIsPresent,
           () => html`
-            <div
-              class="swc-AccordionItem-actions"
-              @click=${this.stopActionsContainerPropagation}
-              @keydown=${this.stopActionsContainerPropagation}
-            >
+            <div class="swc-AccordionItem-actions">
               <slot name="actions"></slot>
             </div>
           `
