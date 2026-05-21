@@ -24,7 +24,6 @@
 - [Migration sequencing and prerequisites](#migration-sequencing-and-prerequisites)
     - [Dependency-aware recommendation](#dependency-aware-recommendation)
     - [User confirmation needed](#user-confirmation-needed)
-    - [Relationship to other component migrations](#relationship-to-other-component-migrations)
 - [Changes overview](#changes-overview)
     - [Must ship — breaking or a11y-required](#must-ship--breaking-or-a11y-required)
     - [Additive — ships when ready, zero breakage for consumers already on 2nd-gen](#additive--ships-when-ready-zero-breakage-for-consumers-already-on-2nd-gen)
@@ -167,7 +166,7 @@ The `:host([dialog])` selector in `popover.css` applies dialog padding when the 
 | `@spectrum-web-components/base` | 1.12.0 | Lit base class, `html` template tag, decorators |
 | `@spectrum-web-components/overlay` | 1.12.0 | Type import only (`Placement` from `overlay-types.js`). **Dropped in 2nd-gen.** The `Placement` type moves to `2nd-gen/packages/core/controllers/placement-controller/`. |
 
-1st-gen consumers (action-bar, action-menu, card, coachmark, combobox, contextual-help, menu, picker, slider, tooltip) import `@spectrum-web-components/popover` and use `<sp-popover>` to host their dropdown / menu / listbox / help surfaces — but they orchestrate behavior through `<sp-overlay>`. In 2nd-gen, each first-party component brings popover behavior in itself by reusing `PlacementController`, `resolveTrigger()` (when applicable), and the shared `.swc-Popover` chrome — never by light-DOM wrapping `<swc-popover>`. See [Relationship to other component migrations](#relationship-to-other-component-migrations).
+1st-gen consumers (action-bar, action-menu, card, coachmark, combobox, contextual-help, menu, picker, slider, tooltip) import `@spectrum-web-components/popover` and use `<sp-popover>` to host their dropdown / menu / listbox / help surfaces — but they orchestrate behavior through `<sp-overlay>`. In 2nd-gen, that overlay + popover composition is replaced by self-contained components or by `<swc-popover>` with `for=` / `open`.
 
 ---
 
@@ -177,7 +176,7 @@ The `:host([dialog])` selector in `popover.css` applies dialog padding when the 
 
 This migration ships **four artifacts in one PR**: `PlacementController`, the `resolveTrigger()` helper, the `dismissibleStack` module, and the `<swc-popover>` component. Splitting them is possible but creates orphan deliverables — the controller, helper, and stack have no independent consumer until popover exists, and popover cannot ship without them. The `dismissibleStack` is the deliverable with the broadest cross-component value beyond popover; it's intentionally small and generic so that subsequent component migrations (tooltip, dialog, picker, menu, etc.) can adopt it without modification. No public `global-popover.css` is shipped — that's reserved as a possible additive if external authors request the `.swc-Popover` class distribution.
 
-This PR is a prerequisite for every subsequent migration that needs anchored modal popover behavior. See [Relationship to other component migrations](#relationship-to-other-component-migrations) for the consolidated downstream view.
+This migration also ships shared primitives — `PlacementController`, `resolveTrigger()`, and `dismissibleStack` — that other 2nd-gen migrations may adopt.
 
 ### User confirmation needed
 
@@ -185,54 +184,7 @@ The architectural decisions were resolved with the user during planning. The mos
 
 - Default mode (`popover="auto"`) preserves 1st-gen UX semantics. Modal mode (`modal` attribute opt-in) introduces `<dialog>`-based blocking semantics that the [existing accessibility analysis](./accessibility-migration-analysis.md) needs to be amended for. Q4 in [Blockers](#architecture-and-behavior) tracks the analysis amendment.
 - D5 (no first-party light-DOM composition) shifts the 1st-gen → 2nd-gen consumer migration story: 1st-gen consumers that compose `<sp-overlay>` + `<sp-popover>` cannot do a one-for-one swap to `<swc-popover>` — their migration is to bring popover behavior in directly. This must be reflected in the [Consumer migration guide ticket SWC-2003](https://jira.corp.adobe.com/browse/SWC-2003).
-- Backdrop-click-to-close policy resolved during planning as option (b): light-dismiss is wired by default. Downstream consumers (Picker, Menu, etc.) inherit this behavior without wiring anything themselves. No strict-modal opt-out — that pattern belongs to `<swc-dialog>`, a separate component for modal dialogs, not to `<swc-popover>` (which is anchored UI).
-
-### Relationship to other component migrations
-
-This migration delivers primitives that subsequent 2nd-gen migrations consume. **Consumers do not compose `<swc-popover>` in light DOM**, and first-party components do not wrap it in their shadow templates either. Each downstream component **builds the popover behavior into itself**: renders its own internal element with `popover="auto"` (or `<dialog>` for the rare modal case), instantiates its own `PlacementController`, registers with the shared `dismissibleStack`, and wires its own ARIA on its internal trigger button. `<swc-popover>` exists for external authors who want to build their own custom anchored popover patterns — not as a building block for first-party components.
-
-| Downstream component | Uses `PlacementController`? | Uses `resolveTrigger()`? | Uses `.swc-Popover` chrome? | Notes |
-| -------------------- | --------------------------- | ------------------------ | ---------------------------- | ----- |
-| `<swc-tooltip>` (existing) | Yes — its additive phase, unblocked by this PR | Refactor follow-up — Tooltip ships with inline resolution; can adopt the shared helper later | Own stylesheet | Tooltip stays on its own lifecycle (see its migration plan). Any change to whether Tooltip uses `popover="manual"` vs `popover="auto"` to avoid auto-stack pollution is out of scope for this migration; pending React Spectrum / Design alignment. |
-| `<swc-menu>` dropdown (next migration) | Yes | No — internal trigger (same-root ARIA wiring is inline, ~5 lines) | Yes — adopted on its internal dropdown surface | Renders its own internal `<div popover="auto">` in its shadow root. Same `popover="auto"` lifecycle as `<swc-popover>` default mode; the component owns the render and the lifecycle code. Registers with `dismissibleStack` on open. |
-| `<swc-menu-item>` submenu | Yes | No — internal trigger | Yes | Same authoring pattern as `<swc-menu>` dropdown; the submenu renders as a tree-nested popover so the auto-stack keeps the parent menu open. |
-| `<swc-picker>` | Yes | No — internal trigger | Yes | Same authoring pattern: internal `<div popover="auto">` + own lifecycle code. |
-| `<swc-action-menu>` | Yes | No — internal trigger | Yes | Same authoring pattern. |
-| `<swc-contextual-help>` | Yes | No — internal trigger | Yes | Same authoring pattern. |
-| `<swc-coachmark>` | Yes | TBD — depends on coachmark migration's authoring decision | Yes | Inheritance vs composition decision deferred to coachmark migration (Q6). If coachmark needs strict-modal semantics, it uses `<dialog>.showModal()` directly inside its shadow template. |
-| `<swc-combobox>` | Yes — direct use | No — internal trigger | Yes — class on its listbox surface | Renders its own `<div popover="auto">` for the listbox popup. Same lifecycle pattern as the other first-party components. |
-| `<swc-dialog>` (independent migration) | No | No | Optional — adopt the class on the dialog surface for Spectrum popover chrome | Provides the migration path for 1st-gen's `[dialog]` attribute. Renders its own `<dialog>` element; doesn't share lifecycle code with `<swc-popover>`. |
-| 1st-gen Overlay package | n/a | n/a | n/a | Separate workstream per the [Overlay strategy RFC](#references). Does not block this migration. |
-
-**The pattern downstream components implement (illustrative):**
-
-```html
-<!-- Inside <swc-picker>'s shadow root: -->
-<button id="picker-trigger" aria-controls="picker-surface" aria-expanded="false" ...>
-  Selected value
-</button>
-<div id="picker-surface"
-     class="swc-Popover swc-Popover--bottom-start"
-     popover="auto">
-  <slot></slot>  <!-- consumer's menu items -->
-</div>
-```
-
-The component's TS code:
-- Instantiates `PlacementController` with the trigger button and the popover surface
-- Listens to `beforetoggle` / `toggle` on the surface, dispatches `swc-open` / `swc-close`
-- Toggles `aria-expanded` on the trigger button on `open` change
-- Registers with `dismissibleStack` on open; unregisters on close
-- No `<swc-popover>` element in light DOM, no `<swc-popover>` element in the shadow
-
-**Recommended sequence after this PR ships:**
-
-1. Tooltip additive phase — integrate `PlacementController`; later refactor to `resolveTrigger()`
-2. `<swc-menu>` (user-confirmed next migration)
-3. `<swc-picker>`, `<swc-action-menu>`, `<swc-contextual-help>` — any order
-4. `<swc-combobox>` — can run in parallel with the above
-5. `<swc-coachmark>` — after the inheritance decision is made
-6. Submenu support in `<swc-menu>` — the `<swc-menu>` migration decides whether submenus use `popover="auto"` (and accept parent dismissal) or `popover="manual"` (and manage stacking themselves). Out of scope for this PR.
+- Backdrop-click-to-close policy resolved during planning as option (b): light-dismiss is wired by default in modal mode. No strict-modal opt-out — that pattern belongs to `<swc-dialog>`, a separate component for modal dialogs, not to `<swc-popover>` (which is anchored UI).
 
 ---
 
@@ -833,7 +785,7 @@ CSS targets the internal `.swc-Popover` element regardless of mode. `popover.css
 - [ ] PR created with description referencing Epic SWC-1993
 - [ ] Architecture-review sign-off on the inline dialog-lifecycle pattern and the `resolveTrigger()` helper contract (since `<swc-menu>` migration will reuse the same primitives immediately after)
 - [ ] Peer engineer sign-off
-- [ ] Follow-on tickets for the additive scope (A1–A8) created and linked to Epic SWC-1993. See [Relationship to other component migrations](#relationship-to-other-component-migrations) for the downstream-migration ticket map.
+- [ ] Follow-on tickets for the additive scope (A1–A8) created and linked to Epic SWC-1993.
 
 ---
 
