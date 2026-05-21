@@ -102,6 +102,7 @@
 - Popover
     - [Popover accessibility migration analysis](popover/accessibility-migration-analysis.md)
     - [Popover migration plan](popover/migration-plan.md)
+    - [Popover migration: research and thinking notes](popover/migration-research-notes.md)
     - [Popover migration roadmap](popover/rendering-and-styling-migration-analysis.md)
 - Progress Bar
     - [Progress bar accessibility migration analysis](progress-bar/accessibility-migration-analysis.md)
