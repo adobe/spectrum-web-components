@@ -748,7 +748,7 @@ CSS targets the internal `.swc-Popover` element regardless of mode. `popover.css
 ### Testing
 
 - [ ] `PlacementController` agnostic test suite (`placement-controller.test.ts`): anchor placement + flip + shift + size + arrow on synthetic trigger/target pairs; autoUpdate wiring; rapid-open guard; WebKit compensation in a mocked WebKit context
-- [ ] `resolveTrigger()` agnostic test suite (`resolve-trigger.test.ts`): all four resolution scenarios from the research notes summary table — same-root by ID, customer's shadow containing both, cross-root 2nd-gen with inner-button discovery, cross-root via trigger-element setter, closed-shadow fallback
+- [ ] `resolveTrigger()` agnostic test suite (`resolve-trigger.test.ts`): all four resolution scenarios — same-root by ID, customer's shadow containing both, cross-root 2nd-gen with inner-button discovery, cross-root via trigger-element setter, closed-shadow fallback
 - [ ] `Popover.test.ts`: component-level behavior — renders correctly, attribute reflection, slot content, both modes
 - [ ] Add Playwright `popover.a11y.spec.ts` with `toMatchAriaSnapshot` for both modes (auto: no host role; modal: `role="dialog"` announced)
 
