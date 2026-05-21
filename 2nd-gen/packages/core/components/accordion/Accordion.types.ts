@@ -27,3 +27,7 @@ export const ACCORDION_HEADING_LEVELS = [2, 3, 4, 5, 6] as const;
 export type AccordionHeadingLevel = (typeof ACCORDION_HEADING_LEVELS)[number];
 
 export const SWC_ACCORDION_ITEM_TOGGLE_EVENT = 'swc-accordion-item-toggle';
+export const SWC_ACCORDION_ITEM_OPEN_EVENT = 'swc-open';
+export const SWC_ACCORDION_ITEM_CLOSE_EVENT = 'swc-close';
+export const SWC_ACCORDION_ITEM_AFTER_OPEN_EVENT = 'swc-after-open';
+export const SWC_ACCORDION_ITEM_AFTER_CLOSE_EVENT = 'swc-after-close';

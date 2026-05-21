@@ -12,6 +12,7 @@
 
 import { CSSResultArray, html, TemplateResult } from 'lit';
 import { ifDefined } from 'lit/directives/if-defined.js';
+import { when } from 'lit/directives/when.js';
 import { html as staticHtml, unsafeStatic } from 'lit/static-html.js';
 
 import { AccordionItemBase } from '@spectrum-web-components/core/components/accordion';
@@ -33,6 +34,10 @@ import styles from './accordion-item.css';
  *
  * @fires swc-accordion-item-toggle - Dispatched when the item open state is
  *   toggled. Cancelable; `preventDefault()` reverts the change.
+ * @fires swc-open - Dispatched when the item begins opening.
+ * @fires swc-close - Dispatched when the item begins closing.
+ * @fires swc-after-open - Dispatched after the item has fully opened.
+ * @fires swc-after-close - Dispatched after the item has fully closed.
  *
  * @example
  * <swc-accordion-item>
@@ -79,18 +84,6 @@ export class AccordionItem extends AccordionItemBase {
     }
   }
 
-  private syncActionsContainerVisibility(event: Event): void {
-    const slot = event.target as HTMLSlotElement;
-    const container = slot.parentElement as HTMLElement | null;
-    if (container) {
-      container.hidden = slot.assignedNodes({ flatten: true }).length === 0;
-    }
-  }
-
-  private stopActionsContainerPropagation(event: Event): void {
-    event.stopPropagation();
-  }
-
   private handleHeaderKeydown(event: Event): void {
     if ((event as KeyboardEvent).key === ' ') {
       // Space requires preventDefault to suppress page scroll; toggle is then
@@ -131,20 +124,15 @@ export class AccordionItem extends AccordionItemBase {
     `;
     return html`
       <div class="swc-AccordionItem">
-        <div class="swc-AccordionItem-row">
-          ${this.renderHeadingWrapper(button)}
-          <div
-            class="swc-AccordionItem-actions"
-            hidden
-            @click=${this.stopActionsContainerPropagation}
-            @keydown=${this.stopActionsContainerPropagation}
-          >
-            <slot
-              name="actions"
-              @slotchange=${this.syncActionsContainerVisibility}
-            ></slot>
-          </div>
-        </div>
+        ${this.renderHeadingWrapper(button)}
+        ${when(
+          this.slotContentIsPresent,
+          () => html`
+            <div class="swc-AccordionItem-actions">
+              <slot name="actions"></slot>
+            </div>
+          `
+        )}
         <div
           id="content"
           class="swc-AccordionItem-content"
