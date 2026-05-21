@@ -18,6 +18,10 @@ import { ObserveSlotPresence } from '@spectrum-web-components/core/mixins/observ
 import {
   type AccordionHeadingLevel,
   type AccordionSize,
+  SWC_ACCORDION_ITEM_AFTER_CLOSE_EVENT,
+  SWC_ACCORDION_ITEM_AFTER_OPEN_EVENT,
+  SWC_ACCORDION_ITEM_CLOSE_EVENT,
+  SWC_ACCORDION_ITEM_OPEN_EVENT,
   SWC_ACCORDION_ITEM_TOGGLE_EVENT,
 } from './Accordion.types.js';
 
@@ -122,21 +126,43 @@ export abstract class AccordionItemBase extends ObserveSlotPresence(
   /**
    * @internal
    * Toggles the item open state. Guards for disabled, flips `open`, dispatches
-   * the toggle event, and reverts if the event is canceled.
+   * the toggle event, and reverts if the event is canceled. On success, dispatches
+   * `swc-after-open` or `swc-after-close` after the next render cycle.
    */
   protected toggle(): void {
     if (!this.mayExpand()) {
       return;
     }
     this.open = !this.open;
-    const event = new Event(SWC_ACCORDION_ITEM_TOGGLE_EVENT, {
+    const toggleEvent = new Event(SWC_ACCORDION_ITEM_TOGGLE_EVENT, {
       bubbles: true,
       composed: true,
       cancelable: true,
     });
-    if (!this.dispatchEvent(event)) {
+    if (!this.dispatchEvent(toggleEvent)) {
       this.open = !this.open;
+      return;
     }
+    const isOpen = this.open;
+    this.dispatchEvent(
+      new Event(
+        isOpen ? SWC_ACCORDION_ITEM_OPEN_EVENT : SWC_ACCORDION_ITEM_CLOSE_EVENT,
+        {
+          bubbles: true,
+          composed: true,
+        }
+      )
+    );
+    void this.updateComplete.then(() => {
+      this.dispatchEvent(
+        new Event(
+          isOpen
+            ? SWC_ACCORDION_ITEM_AFTER_OPEN_EVENT
+            : SWC_ACCORDION_ITEM_AFTER_CLOSE_EVENT,
+          { bubbles: true, composed: true }
+        )
+      );
+    });
   }
 
   /**

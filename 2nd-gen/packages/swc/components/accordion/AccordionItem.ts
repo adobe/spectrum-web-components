@@ -34,6 +34,10 @@ import styles from './accordion.css';
  *
  * @fires swc-accordion-item-toggle - Dispatched when the item open state is
  *   toggled. Cancelable; `preventDefault()` reverts the change.
+ * @fires swc-open - Dispatched when the item begins opening.
+ * @fires swc-close - Dispatched when the item begins closing.
+ * @fires swc-after-open - Dispatched after the item has fully opened.
+ * @fires swc-after-close - Dispatched after the item has fully closed.
  *
  * @example
  * <swc-accordion-item>
