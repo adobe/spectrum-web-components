@@ -20,6 +20,7 @@ export * from './Chevron50Icon.js';
 export * from './Chevron75Icon.js';
 export * from './Chevron100Icon.js';
 export * from './Chevron200Icon.js';
+export * from './Chevron300Icon.js';
 export * from './CornerTriangle300Icon.js';
 export * from './Cross75Icon.js';
 export * from './Cross100Icon.js';
