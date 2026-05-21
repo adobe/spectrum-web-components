@@ -66,4 +66,6 @@ Common case: confirming that subcomponent class names follow the single-hyphen s
 
 If a rename is needed, make the template change first, confirm the component still renders correctly in Storybook, then write the CSS.
 
+**Step 3b — Audit `:host` for visual styles.** After aligning class names, scan every declaration you plan to put on `:host` against Rule 1 of the tldr. Ask for each property: is this layout-participation (how the host fits into its parent's flow) or visual (how the component looks)? If a visual style has no internal wrapper to move it to, add one to `render()` before writing CSS.
+
 **Step 4 — Execute the phase.** Follow **[Phase 5: Styling](../../../CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md#phase-5-styling)** in the washing machine workflow doc — it covers what to do, what to check, common problems, and the quality gate for this phase.

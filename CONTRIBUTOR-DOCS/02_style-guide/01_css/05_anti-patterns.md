@@ -56,6 +56,11 @@
     - [Specificity escalation → `:where()`](#specificity-escalation--where)
     - [Size classes in render → `:host([size])`](#size-classes-in-render--hostsize)
     - [`--mod-*` chain → single property](#--mod--chain--single-property)
+- [9. Suppressing focus outlines with `:focus { outline: none }`](#9-suppressing-focus-outlines-with-focus--outline-none-)
+    - [❌ Anti-Pattern](#-anti-pattern)
+    - [Why This Happens](#why-this-happens)
+    - [Why This Is a Problem](#why-this-is-a-problem)
+    - [✅ Correct Approach](#-correct-approach)
 - [Final Reminder](#final-reminder)
 
 </details>
@@ -418,6 +423,29 @@ After migration, Badge relies solely on `.swc-Badge` and attributes.
 | Before                                                  | After                                                    |
 | ------------------------------------------------------- | -------------------------------------------------------- |
 | `var(--mod-badge-height, var(--spectrum-badge-height))` | `var(--swc-badge-height, token("component-height-100"))` |
+
+## 9. Suppressing focus outlines with `:focus { outline: none }`
+
+### ❌ Anti-Pattern
+
+```css
+.swc-Component-header:focus {
+  outline: none;
+}
+```
+
+### Why This Happens
+
+- Carried over from 1st-gen Spectrum CSS, which managed focus rings through its own system
+
+### Why This Is a Problem
+
+- Removes the focus indicator for keyboard users — an accessibility violation (WCAG 2.4.7)
+- The component already has a `:focus-visible` rule; the `:focus` suppression just interferes with it
+
+### ✅ Correct Approach
+
+- Remove the rule entirely. `:focus-visible` already handles when to show the ring; no explicit suppression is needed.
 
 ## Final Reminder
 

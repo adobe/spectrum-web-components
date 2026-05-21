@@ -89,8 +89,8 @@ const defaultItems = html`
  * be expanded or collapsed. Only one section is open at a time by default;
  * set `allow-multiple` to let any number of sections be open simultaneously.
  *
- * Items support an **`actions` slot** for placing interactive controls — such
- * as an edit button — directly in the header row, outside the toggle button so
+ * Items support an **`actions` slot** for placing interactive controls (such
+ * as an edit button) directly in the header row, outside the toggle button so
  * they remain independently clickable.
  */
 const meta: Meta = {
@@ -98,13 +98,9 @@ const meta: Meta = {
   component: 'swc-accordion',
   args,
   argTypes,
-  render: (args) => html`
-    <div style="inline-size: 720px; max-inline-size: 100%;">
-      ${template(args, defaultItems)}
-    </div>
-  `,
+  render: (args) => template(args, defaultItems),
   parameters: {
-    layout: 'centered',
+    layout: 'padded',
     actions: { handles: [SWC_ACCORDION_ITEM_TOGGLE_EVENT] },
     docs: {
       subtitle: 'Groups related content sections behind expandable headers.',
@@ -169,11 +165,7 @@ const anatomyItems = html`
  * - **Default slot**: The panel body revealed when the item expands
  */
 export const Anatomy: Story = {
-  render: (args) => html`
-    <div style="inline-size: 720px; max-inline-size: 100%;">
-      ${template(args, anatomyItems)}
-    </div>
-  `,
+  render: (args) => template(args, anatomyItems),
   tags: ['anatomy'],
 };
 
@@ -186,9 +178,7 @@ export const Anatomy: Story = {
  */
 export const Sizes: Story = {
   render: (args) => html`
-    <div
-      style="display: flex; flex-direction: column; gap: 16px; inline-size: 720px; max-inline-size: 100%;"
-    >
+    <div style="display: flex; flex-direction: column; gap: 16px;">
       ${ACCORDION_VALID_SIZES.map(
         (size) => html`
           ${template(
@@ -218,9 +208,7 @@ export const Sizes: Story = {
  */
 export const Density: Story = {
   render: (args) => html`
-    <div
-      style="display: flex; flex-direction: column; gap: 16px; inline-size: 720px; max-inline-size: 100%;"
-    >
+    <div style="display: flex; flex-direction: column; gap: 16px;">
       ${ACCORDION_DENSITIES.map(
         (density) => html`
           ${template(
@@ -248,11 +236,7 @@ export const Density: Story = {
  * and adds rounded corners on hover for a contained feel.
  */
 export const Quiet: Story = {
-  render: (args) => html`
-    <div style="inline-size: 720px; max-inline-size: 100%;">
-      ${template({ ...args, quiet: true }, defaultItems)}
-    </div>
-  `,
+  render: (args) => template({ ...args, quiet: true }, defaultItems),
   args: { density: 'regular' },
   tags: ['options'],
   parameters: { 'section-order': 3 },
@@ -264,11 +248,7 @@ export const Quiet: Story = {
  * hierarchy without changing the visual style.
  */
 export const HeadingLevel: Story = {
-  render: (args) => html`
-    <div style="inline-size: 720px; max-inline-size: 100%;">
-      ${template({ ...args, level: 2 }, defaultItems)}
-    </div>
-  `,
+  render: (args) => template({ ...args, level: 2 }, defaultItems),
   args: { density: 'regular' },
   tags: ['options'],
   parameters: { 'section-order': 4 },
@@ -298,11 +278,7 @@ const stateItems = html`
  * A disabled item remains in the tab order but its toggle is blocked.
  */
 export const ItemStates: Story = {
-  render: (args) => html`
-    <div style="inline-size: 720px; max-inline-size: 100%;">
-      ${template({ ...args, 'allow-multiple': true }, stateItems)}
-    </div>
-  `,
+  render: (args) => template({ ...args, 'allow-multiple': true }, stateItems),
   args: { density: 'regular' },
   tags: ['states'],
   parameters: { 'section-order': 1 },
@@ -314,11 +290,7 @@ export const ItemStates: Story = {
  * accordion restores each item's original state.
  */
 export const DisabledAccordion: Story = {
-  render: (args) => html`
-    <div style="inline-size: 720px; max-inline-size: 100%;">
-      ${template({ ...args, disabled: true }, defaultItems)}
-    </div>
-  `,
+  render: (args) => template({ ...args, disabled: true }, defaultItems),
   args: { density: 'regular' },
   tags: ['states'],
   parameters: { 'section-order': 2 },
@@ -335,27 +307,24 @@ export const DisabledAccordion: Story = {
  * is re-enabled.
  */
 export const MixedDisabledStates: Story = {
-  render: (args) => html`
-    <div style="inline-size: 720px; max-inline-size: 100%;">
-      ${template(
-        { ...args, disabled: true, 'allow-multiple': true },
-        html`
-          <swc-accordion-item open>
-            <span slot="label">Personal information</span>
-            ${content.personal}
-          </swc-accordion-item>
-          <swc-accordion-item>
-            <span slot="label">Billing address</span>
-            ${content.billing}
-          </swc-accordion-item>
-          <swc-accordion-item disabled>
-            <span slot="label">Payment method</span>
-            ${content.payment}
-          </swc-accordion-item>
-        `
-      )}
-    </div>
-  `,
+  render: (args) =>
+    template(
+      { ...args, disabled: true, 'allow-multiple': true },
+      html`
+        <swc-accordion-item open>
+          <span slot="label">Personal information</span>
+          ${content.personal}
+        </swc-accordion-item>
+        <swc-accordion-item>
+          <span slot="label">Billing address</span>
+          ${content.billing}
+        </swc-accordion-item>
+        <swc-accordion-item disabled>
+          <span slot="label">Payment method</span>
+          ${content.payment}
+        </swc-accordion-item>
+      `
+    ),
   args: { density: 'regular' },
   tags: ['states'],
   parameters: { 'section-order': 3 },
@@ -416,11 +385,7 @@ const directActionsItems = html`
  * actions container so action buttons never accidentally trigger the toggle.
  */
 export const DirectActions: Story = {
-  render: (args) => html`
-    <div style="inline-size: 720px; max-inline-size: 100%;">
-      ${template(args, directActionsItems)}
-    </div>
-  `,
+  render: (args) => template(args, directActionsItems),
   args: { density: 'regular' },
   tags: ['behaviors'],
   parameters: { 'section-order': 1 },
@@ -447,11 +412,8 @@ const allowMultipleItems = html`
  * to be open simultaneously.
  */
 export const AllowMultiple: Story = {
-  render: (args) => html`
-    <div style="inline-size: 720px; max-inline-size: 100%;">
-      ${template({ ...args, 'allow-multiple': true }, allowMultipleItems)}
-    </div>
-  `,
+  render: (args) =>
+    template({ ...args, 'allow-multiple': true }, allowMultipleItems),
   args: { density: 'regular' },
   tags: ['behaviors'],
   parameters: { 'section-order': 2 },
@@ -467,14 +429,50 @@ export const AllowMultiple: Story = {
  * with the accordion below.
  */
 export const ToggleEvent: Story = {
-  render: (args) => html`
-    <div style="inline-size: 720px; max-inline-size: 100%;">
-      ${template(args, defaultItems)}
-    </div>
-  `,
+  render: (args) => template(args, defaultItems),
   args: { density: 'regular' },
   tags: ['behaviors'],
   parameters: { 'section-order': 3 },
+};
+
+/**
+ * Set `--swc-accordion-content-padding-inline` on the accordion to remove the
+ * default inline padding from every panel body. This is useful when panel
+ * content (such as a data table or an image) should extend edge to edge
+ * inside the item.
+ *
+ * Setting the property to `0` removes all inline padding. Any valid CSS length
+ * value is accepted.
+ */
+export const ContentPaddingInline: Story = {
+  render: (args) =>
+    template(
+      { ...args, 'allow-multiple': true },
+      html`
+        <swc-accordion-item open>
+          <span slot="label">Personal information</span>
+          <div
+            style="background: var(--spectrum-gray-100); padding: 12px 16px;"
+          >
+            ${content.personal}
+          </div>
+        </swc-accordion-item>
+        <swc-accordion-item open>
+          <span slot="label">Billing address</span>
+          <div
+            style="background: var(--spectrum-gray-100); padding: 12px 16px;"
+          >
+            ${content.billing}
+          </div>
+        </swc-accordion-item>
+      `
+    ),
+  args: { density: 'regular' },
+  tags: ['behaviors'],
+  parameters: {
+    'section-order': 4,
+    styles: { '--swc-accordion-content-padding-inline': '0' },
+  },
 };
 
 // ────────────────────────────────
@@ -540,11 +538,7 @@ const a11yItems = html`
  * - Always set `density` explicitly; use `regular` when unsure
  */
 export const Accessibility: Story = {
-  render: (args) => html`
-    <div style="inline-size: 720px; max-inline-size: 100%;">
-      ${template(args, a11yItems)}
-    </div>
-  `,
+  render: (args) => template(args, a11yItems),
   args: { density: 'regular', level: 3 },
   tags: ['a11y'],
 };

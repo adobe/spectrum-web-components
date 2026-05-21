@@ -70,6 +70,7 @@ Reference: [Linting tools](../../CONTRIBUTOR-DOCS/02_style-guide/03_linting-tool
 - Forced-colors media query is present and correct (if applicable)
 - High-contrast and other media queries are sorted to the bottom of the file
 - No hard-coded values where design tokens are available
+- Every class selector in CSS files (`.swc-*`) has a matching `class="..."` in the component's `render()` method; orphaned selectors mean styles are silently dead. Cross-check both directions: CSS → template and template → CSS. Use `grep -oE '\.[a-z][a-zA-Z-]+'` on the CSS and `grep -oE 'class="[^"]*"'` on the TypeScript to produce lists to compare.
 
 ## Test files
 

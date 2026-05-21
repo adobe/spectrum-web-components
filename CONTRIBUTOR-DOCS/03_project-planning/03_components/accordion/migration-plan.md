@@ -30,6 +30,9 @@
     - [Selection sync — `RadioController` pattern (consider)](#selection-sync--radiocontroller-pattern-consider)
     - [Analysis inputs](#analysis-inputs)
 - [Architecture: core vs SWC split](#architecture-core-vs-swc-split)
+- [CSS custom property migration reference](#css-custom-property-migration-reference)
+    - [`--mod-*` to `--swc-*` mapping](#--mod--to---swc--mapping)
+    - [Density × size padding matrix](#density--size-padding-matrix)
 - [Migration checklist](#migration-checklist)
     - [Preparation (this ticket)](#preparation-this-ticket)
     - [Setup](#setup)
@@ -294,6 +297,45 @@ Follow the [washing machine — core vs SWC](../../02_workstreams/02_2nd-gen-com
 
 ---
 
+## CSS custom property migration reference
+
+### `--mod-*` to `--swc-*` mapping
+
+2nd-gen exposes a narrower customization surface than 1st-gen. Most visual values are driven by Spectrum 2 design tokens internally and are not overridable via custom properties.
+
+| 1st-gen property | 2nd-gen property | Notes |
+|---|---|---|
+| `--mod-accordion-item-width` | `--swc-accordion-min-inline-size` | Renamed; sets the minimum inline size of the accordion host |
+| `--mod-accordion-divider-color` | `--swc-accordion-item-divider-color` | Renamed; controls the border color of each item's top and bottom dividers |
+| `--mod-accordion-component-edge-to-text` | `--swc-accordion-content-padding-inline` | Renamed; controls the inline padding of the panel body. Set to `0` for edge-to-edge content |
+| `--mod-accordion-background-color-*` | Not exposed | Driven by internal tokens via `:has()` state selectors |
+| `--mod-accordion-corner-radius` | Not exposed | Driven by `--_swc-accordion-corner-radius` (private; size-scaled) |
+| `--mod-accordion-item-header-color-*` | Not exposed | Driven by internal tokens via `:has()` state selectors |
+| `--mod-accordion-focus-indicator-*` | Not exposed | Driven by global focus indicator tokens |
+| `--mod-accordion-item-content-*` (typography) | Not exposed | Driven by global typography tokens |
+| `--mod-accordion-item-header-*` (typography) | Not exposed | Driven by global typography tokens |
+| `--mod-accordion-disclosure-indicator-*` | Not exposed | Controlled internally by `--swc-icon-*` on the chevron element |
+| `--mod-accordion-divider-thickness` | Not exposed | Driven by `token("border-width-100")` |
+| `--mod-accordion-min-block-size` | Not exposed | Minimum height is set by block-padding tokens and content height |
+| `--mod-accordion-edge-to-*-space` | Not exposed | Padding is token-driven per size; use `--swc-accordion-content-padding-inline` for the panel content area only |
+| `--mod-accordion-item-content-area-*-to-content` | Not exposed | Driven by `token("accordion-content-area-top-to-content")` and `token("accordion-content-area-bottom-to-content")` |
+
+### Density × size padding matrix
+
+Header block padding is determined by `density` (on the accordion host) and `size` (set on the host and propagated to items). Density tokens override the default size tokens via CSS custom properties cascaded from the host.
+
+| Density | Size s | Size m (default) | Size l | Size xl |
+|---|---|---|---|---|
+| **regular** | `accordion-top/bottom-to-text-small` | `accordion-top/bottom-to-text-medium` | `accordion-top/bottom-to-text-large` | `accordion-top/bottom-to-text-extra-large` |
+| **compact** | `accordion-top/bottom-to-text-compact-small` | `accordion-top/bottom-to-text-compact-medium` | `accordion-top/bottom-to-text-compact-large` | `accordion-top/bottom-to-text-compact-extra-large` |
+| **spacious** | `accordion-top/bottom-to-text-spacious-small` | `accordion-top/bottom-to-text-spacious-medium` | `accordion-top/bottom-to-text-spacious-large` | `accordion-top/bottom-to-text-spacious-extra-large` |
+
+> `top/bottom` is shorthand; each cell represents two tokens: `accordion-top-to-text-*` and `accordion-bottom-to-text-*`.
+
+Regular density uses the base size tokens directly. Compact and spacious densities override the values by setting `--_swc-accordion-pad-top-{s|m|l|xl}` and `--_swc-accordion-pad-bottom-{s|m|l|xl}` on the `:host` of `swc-accordion`. These are internal private properties and are not part of the public API.
+
+---
+
 ## Migration checklist
 
 Gates align with [01_washing-machine-workflow.md](../../02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md).
@@ -319,8 +361,8 @@ Gates align with [01_washing-machine-workflow.md](../../02_workstreams/02_2nd-ge
 
 ### Styling
 
-- [ ] S2 CSS integrated; stylelint clean
-- [ ] Document token / `--mod-*` → S2 (or `--swc-*`) mapping for consumers; include **`density` × `size`** matrix
+- [x] S2 CSS integrated; stylelint clean
+- [x] Document token / `--mod-*` → S2 (or `--swc-*`) mapping for consumers; include **`density` × `size`** matrix
 
 ### Accessibility
 
@@ -336,9 +378,9 @@ Gates align with [01_washing-machine-workflow.md](../../02_workstreams/02_2nd-ge
 
 ### Documentation
 
-- [ ] JSDoc, usage docs, Storybook stories (include a spacing / **custom properties** story for “no inline padding” style parity; **no** `noInlinePadding`-style attribute)
-- [ ] Add a Storybook story demonstrating inline padding customization via `--swc-accordion-*` custom properties (no `noInlinePadding`-style attribute)
-- [ ] Do not document arrow-key navigation between headers for 2nd-gen (contrast with legacy README)
+- [x] JSDoc, usage docs, Storybook stories (include a spacing / **custom properties** story for “no inline padding” style parity; **no** `noInlinePadding`-style attribute)
+- [x] Add a Storybook story demonstrating inline padding customization via `--swc-accordion-*` custom properties (no `noInlinePadding`-style attribute)
+- [x] Do not document arrow-key navigation between headers for 2nd-gen (contrast with legacy README)
 
 ### Review
 
