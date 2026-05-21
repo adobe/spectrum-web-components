@@ -104,13 +104,14 @@ export class AccordionItem extends AccordionItemBase {
 
   private renderHeadingWrapper(content: TemplateResult): TemplateResult {
     const tag = unsafeStatic(`h${this.headingLevel}`);
-    return staticHtml`<${tag}>${content}</${tag}>`;
+    return staticHtml`<${tag} class="swc-AccordionItem-heading">${content}</${tag}>`;
   }
 
   protected override render(): TemplateResult {
     const button = html`
       <button
         id="header"
+        class="swc-AccordionItem-header"
         type="button"
         aria-expanded=${this.open ? 'true' : 'false'}
         aria-controls="content"
@@ -120,36 +121,38 @@ export class AccordionItem extends AccordionItemBase {
         @click=${this.toggle}
         @keydown=${this.handleHeaderKeydown}
       >
-        <swc-icon class="spectrum-Accordion-itemIndicator" aria-hidden="true">
+        <swc-icon class="swc-AccordionItem-indicator" aria-hidden="true">
           ${this.chevronForSize()}
         </swc-icon>
-        <span class="spectrum-Accordion-itemTitle">
+        <span class="swc-AccordionItem-label">
           <slot name="label"></slot>
         </span>
       </button>
     `;
     return html`
-      ${this.renderHeadingWrapper(button)}
-      <div
-        class="spectrum-Accordion-itemDirectActions"
-        hidden
-        @click=${this.stopActionsContainerPropagation}
-        @keydown=${this.stopActionsContainerPropagation}
-      >
-        <slot
-          name="actions"
-          @slotchange=${this.syncActionsContainerVisibility}
-        ></slot>
-      </div>
-      <div
-        id="content"
-        class="spectrum-Accordion-itemContent"
-        role="region"
-        aria-labelledby="header"
-        ?hidden=${!this.open}
-        .inert=${this.disabled || this.parentDisabled}
-      >
-        <slot></slot>
+      <div class="swc-AccordionItem">
+        ${this.renderHeadingWrapper(button)}
+        <div
+          class="swc-AccordionItem-actions"
+          hidden
+          @click=${this.stopActionsContainerPropagation}
+          @keydown=${this.stopActionsContainerPropagation}
+        >
+          <slot
+            name="actions"
+            @slotchange=${this.syncActionsContainerVisibility}
+          ></slot>
+        </div>
+        <div
+          id="content"
+          class="swc-AccordionItem-content"
+          role="region"
+          aria-labelledby="header"
+          ?hidden=${!this.open}
+          .inert=${this.disabled || this.parentDisabled}
+        >
+          <slot></slot>
+        </div>
       </div>
     `;
   }

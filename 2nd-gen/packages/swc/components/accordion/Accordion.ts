@@ -37,7 +37,9 @@ export class Accordion extends AccordionBase {
 
   protected override render(): TemplateResult {
     return html`
-      <slot @slotchange=${this.syncAccordionItems}></slot>
+      <div class="swc-Accordion">
+        <slot @slotchange=${this.syncAccordionItems}></slot>
+      </div>
     `;
   }
 }
