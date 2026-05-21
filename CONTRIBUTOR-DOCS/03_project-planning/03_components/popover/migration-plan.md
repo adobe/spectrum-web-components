@@ -75,7 +75,7 @@ The 1st-gen `<sp-popover>` is a 75-line, styles-only component. Open/close, posi
   - The component always renders an internal `<dialog popover="auto">`. The `modal` attribute determines which open method runs when `open` becomes true.
   - **Default mode (no `modal` attribute) — `dialog.showPopover()`:** uses the popover-API lifecycle. Browser provides native top-layer rendering, light-dismiss (click outside, Escape), and auto-stack participation (opening one auto popover dismisses other open auto popovers). Page behind stays interactive and scrollable. Matches 1st-gen consumer UX for menus, pickers, action-menus, contextual-help, and customer-facing popover surfaces.
   - **Opt-in via `modal` attribute — `dialog.showModal()`:** uses the modal dialog lifecycle. Browser provides `role="dialog"`, focus trap, background inert, native Escape via the `cancel` event. The `popover` attribute is ignored in modal mode (only the open method matters). Page behind is blocking and non-scrollable.
-  - **API additions (B-series):** new properties — `modal`, `offset`, `cross-offset`, `container-padding`, `should-flip`, `for`, `trigger-element` (setter); new ARIA wiring — durable `aria-controls` / `ariaControlsElements` and toggled `aria-expanded` on the trigger, managed automatically; new event contract — `swc-open`, `swc-after-open`, `swc-close`, `swc-after-close` with a `source` detail.
+  - **API additions (B-series):** new properties — `modal`, `offset`, `cross-offset`, `container-padding`, `should-flip`, `for`, `trigger-element` (setter); new ARIA wiring on the trigger — durable `aria-controls` / `ariaControlsElements` and `aria-expanded` in both modes, plus `aria-haspopup="dialog"` when `modal` is set; new event contract — `swc-open`, `swc-after-open`, `swc-close`, `swc-after-close` with a `source` detail.
 - **API removals (B-series):** `[dialog]` host attribute removed. **No direct migration path in v1** — no public `.swc-Popover` class is distributed in this migration, so consumers using `[dialog]` for dialog-padding chrome must either wait for `<swc-dialog>` to ship as a separate migration, or duplicate the visual styling in their own CSS. 1st-gen's `placement="undefined"` default changes — new default is `'bottom'` (React Spectrum-aligned).
 - **Stacking is browser-managed for the default (auto) mode.** `popover="auto"` provides sibling-dismissal between auto popovers and light-dismiss for free. We do **not** use the `anchor` HTML attribute (browser support is too uneven for v1) nor `popovertarget` (kept off the API per the "just `for=`/`id`" rule). Native auto-popover-stack handles "one popover at a time" UX; nested-popover scenarios that need a parent to stay open while a child opens are out of scope for v1 (e.g., submenus belong to the `<swc-menu>` migration's call).
 - **New `dismissibleStack` utility for cross-mechanism Escape coordination.** A small module in `core/utils/`. Components register themselves on open and check `isTopDismissible(this)` before processing any custom Escape handling. Generic across all 2nd-gen dismissible top-layer UI — popover, dialog, tooltip, picker, menu, action-menu, coachmark, etc. Each component adopts it in its own migration.
@@ -234,7 +234,7 @@ The architectural decisions were resolved with the user during planning. The mos
 | A4  | Trigger-side `aria-controls` / `aria-controlsElements` automatic and durable | Consumer wired manually | The popover writes `aria-controls="<popover-id>"` (same-root) or `ariaControlsElements = [popoverHost]` (cross-root) on the trigger / inner button **as soon as `for=` / `trigger-element` resolves**, not on `open` change. The relationship is durable — `aria-controls` represents a persistent control relationship per the ARIA spec; visibility is communicated by `aria-expanded`. Cleared only when the popover is disconnected, `for=` is removed, or `trigger-element` is set to null. | No consumer action when using `for=` / `trigger-element`. |
 | A5  | Trigger resolution and inner-button discovery | Implicit via `<sp-overlay>` traversal | `for="<id>"` resolves via `getRootNode().getElementById()` (same-root only); `trigger-element` setter accepts a JS reference (cross-root). For 2nd-gen component triggers with an open shadow root, the `resolveTrigger()` helper reaches into `host.shadowRoot.querySelector('button')` to find the AT-facing inner button. Closed-shadow triggers fall back to wiring on the host. | New API. See [Trigger resolution](#trigger-resolution). |
 | A6  | Modal-mode dialog semantics (opt-in) | Consumer (`<sp-overlay type="modal">`) or call site manually wired focus and inert | When the consumer sets `modal`: internal element is `<dialog>`, opens via `showModal()`. Browser provides `role="dialog"`, focus trap, background inert, native Escape. The accessibility analysis amendment (Q4) covers this branch. | Opt-in. Consumers who want true modal popover semantics set the `modal` attribute. |
-| A7  | No default `aria-haspopup` on the trigger | Consumer wired pattern-specific `aria-haspopup` | The popover host does not write `aria-haspopup` — that attribute is pattern-specific (`aria-haspopup="listbox"` for Picker, `aria-haspopup="menu"` for Action Menu, etc.). First-party components set it themselves on their inner trigger button. Customer-facing `<swc-popover>` does not set it; external authors wire `aria-haspopup` to match their pattern. | Customers wire `aria-haspopup` manually on their trigger; same as 1st-gen. |
+| A7  | Modal-mode `aria-haspopup="dialog"` on the trigger | Consumer wired pattern-specific `aria-haspopup` manually | When `modal` is set, the popover writes `aria-haspopup="dialog"` on the resolved trigger (or inner button) alongside `aria-controls` and `aria-expanded`. Cleared when `modal` is removed or the trigger relationship is torn down. **Auto mode (default):** the component does not set `aria-haspopup` — consumers set a pattern-specific value (`menu`, `listbox`, etc.) if their slotted content warrants it. | Modal mode: no consumer action when using `for=` / `trigger-element`. Auto mode: wire `aria-haspopup` manually when the pattern is known. |
 | A8  | High-contrast border preserved | Present in 1st-gen | Preserved in 2nd-gen forced-colors handling | No consumer action |
 | A9  | `dismissibleStack` registration for cross-mechanism Escape coordination | n/a | The component registers itself with the shared `dismissibleStack` on open and unregisters on close. Browser-managed Escape for `popover="auto"` and `<dialog>` already orders correctly within the same mechanism; the stack is needed when multiple mechanisms are open simultaneously (e.g., a modal `<swc-popover>` open while a tooltip is also visible — Escape should hit only the topmost). The stack is a shared 2nd-gen utility (deliverable #3 in this migration) consumed by every dismissible top-layer component. | No consumer action |
 
@@ -462,14 +462,20 @@ Four scenarios cover the resolution shape: (1) same-root by ID — popover and t
 
 ### Trigger-side ARIA wiring
 
-The component manages two ARIA surfaces on the resolved trigger (or its inner button), each with different durability semantics:
+On the resolved trigger (or its inner button), the component wires:
 
-- **`aria-controls` / `ariaControlsElements`: durable.** Set as soon as `for=` / `trigger-element` resolves to a trigger — *not* on `open` change. Per the ARIA spec, `aria-controls` represents a persistent control relationship: the trigger controls the popover whether or not it is currently visible. State (open or closed) is communicated by `aria-expanded`. Cleared only when the popover is disconnected from the DOM, `for=` is removed, or `trigger-element` is set to `null`. The component chooses `aria-controls` ID string (same-root) or `ariaControlsElements = [popoverHost]` IDL property (cross-root) automatically based on whether the inner button and the popover host share a root. Same Baseline Apr-2025 ARIA-IDL surface validated by the tooltip migration plan; no Safari-specific durability concern remains on modern Safari (16.4+).
-- **`aria-expanded`: state-toggled.** Set to `"true"` on `open = true` and `"false"` on `open = false`. Also durable — once a trigger is resolved, `aria-expanded` is always present (never absent), even when closed.
+| Attribute | Modes | When set | Cleared when |
+| --------- | ----- | -------- | ------------ |
+| `aria-controls` / `ariaControlsElements` | Both | On trigger resolve (durable) | Disconnect, `for` removed, or `trigger-element` cleared |
+| `aria-expanded` | Both | `"false"` on resolve; toggles on `open` | Same as above |
+| `aria-haspopup="dialog"` | Modal only (`modal` attribute set) | On trigger resolve while `modal` is true | `modal` removed, or trigger relationship torn down |
 
-This differs from the tooltip migration plan's `ariaDescribedByElements` wiring, which IS open-only because `aria-describedby` describes a tooltip's content only while the tooltip is visible. `aria-controls` represents a different relationship and stays in place across open/close cycles.
+**`aria-controls` / `ariaControlsElements`** — set as soon as `for=` / `trigger-element` resolves, not on `open` change. Same-root uses `aria-controls="<popover-id>"`; cross-root uses `ariaControlsElements = [popoverHost]`. Same Baseline Apr-2025 ARIA-IDL surface validated by the tooltip migration plan.
 
-The component does NOT write `aria-haspopup` — that attribute is pattern-specific and belongs to the consumer or first-party component.
+**`aria-expanded`** — always present once a trigger is resolved (`"false"` when closed, `"true"` when open). Visibility state; the control relationship stays via `aria-controls`.
+
+**`aria-haspopup="dialog"`** — only when `modal` is set, matching the native `role="dialog"` surface opened via `showModal()`. Auto mode does not set `aria-haspopup`; other components who know their pattern (e.g. menu, listbox) set it themselves (this may change in case we end up deciding menus and pickers need to be blocking too, then this needs to be configurable!). 
+This differs from the tooltip plan's `ariaDescribedByElements` wiring, which is open-only. Popover trigger relationships are durable across open/close cycles.
 
 ### Event lifecycle
 
@@ -633,7 +639,7 @@ CSS targets the internal `.swc-Popover` element regardless of mode. `popover.css
 - [ ] **Modal-mode backdrop-click-to-close** wired via `pointerdown` listener on the internal `<dialog>` checking `event.target === dialog`. Routes through `close()`; `swc-close.detail.source === 'outside'`.
 - [ ] Setter-listener loop guard via private `_open` backing field — applies in both modes
 - [ ] 0-duration transition guard for `swc-after-*` — applies in both modes
-- [ ] In `updated()`: call `resolveTrigger()` whenever `for` or `triggerElement` changes (Lit reactivity), update the durable `aria-controls` / `ariaControlsElements` wiring on the resolved interactive element, and set initial `aria-expanded="false"`. Clean up on disconnect / trigger removal.
+- [ ] In `updated()`: call `resolveTrigger()` whenever `for`, `triggerElement`, or `modal` changes (Lit reactivity), update the durable `aria-controls` / `ariaControlsElements` wiring on the resolved interactive element, set `aria-haspopup="dialog"` when `modal` is true, and set initial `aria-expanded="false"`. Clean up on disconnect / trigger removal.
 - [ ] On `open` change: toggle `aria-expanded` value on the resolved interactive element — applies in both modes
 - [ ] Register with `dismissibleStack` on open (`registerDismissible(this)`); unregister on close and in `disconnectedCallback` (`unregisterDismissible(this)`). Applies in both modes.
 - [ ] `PlacementController` instantiated lazily — only when `for=` or `trigger-element` resolves to a non-null trigger — applies in both modes
@@ -676,13 +682,14 @@ CSS targets the internal `.swc-Popover` element regardless of mode. `popover.css
 
 - [ ] Modal mode: `<dialog>` provides `role="dialog"` natively; verify no JS sets `role` on the host
 - [ ] Auto mode (default): no `role` is set on the internal element; consumer-supplied content owns its own semantics
-- [ ] `aria-haspopup` is NOT set by the host; documented in the migration guide that consumers (and first-party components) wire pattern-specific `aria-haspopup` themselves
+- [ ] `aria-haspopup="dialog"` is set on the resolved interactive element when `modal` is set; removed when `modal` is cleared or the trigger relationship is torn down. Auto mode: component does not set `aria-haspopup`.
 - [ ] Stable `id` per `<swc-popover>` instance: `if (!this.id) this.id = \`swc-popover-${++PopoverIdCounter}\``  — needed for `aria-controls` ID-string wiring
 
 #### Trigger-side ARIA wiring
 
 - [ ] When `for=` / `trigger-element` resolves: durably set `aria-controls="<popover-id>"` (same-root) OR `ariaControlsElements = [popoverHost]` (cross-root) on the resolved interactive element (inner button for SWC components with open shadow root; host element otherwise). Stays set across open/close cycles per the ARIA spec.
 - [ ] When `for=` / `trigger-element` is cleared, the popover is disconnected, or the trigger reference changes: remove the prior `aria-controls` / `ariaControlsElements` wiring.
+- [ ] When `modal` is set and `for=` / `trigger-element` resolves: durably set `aria-haspopup="dialog"` on the resolved interactive element. Remove when `modal` is cleared or the trigger relationship is torn down.
 - [ ] When `for=` / `trigger-element` resolves: durably set `aria-expanded="false"` initially.
 - [ ] On `open = true`: set `aria-expanded="true"` on the resolved interactive element.
 - [ ] On `open = false`: set `aria-expanded="false"` (not removed).
@@ -728,13 +735,15 @@ CSS targets the internal `.swc-Popover` element regardless of mode. `popover.css
 - [ ] Focus is trapped inside the dialog while open; Tab cycles inside
 - [ ] Page behind is inert (not clickable, not focusable, not scrollable)
 - [ ] On close: focus returns to the element that was focused at open time (native `<dialog>` behavior)
+- [ ] Trigger has `aria-haspopup="dialog"`, `aria-controls`, and toggling `aria-expanded` while `modal` is set
 
 #### Behavior — cross-mode invariants
 
 - [ ] `swc-open`, `swc-after-open`, `swc-close`, `swc-after-close` dispatch in the expected order in both modes
 - [ ] `for=` resolves trigger and durably wires `aria-controls` (same-root) or `ariaControlsElements` (cross-root) from the moment the relationship resolves — not on open change. Works in both modes.
 - [ ] `aria-expanded` toggles on `open` change; remains present and false when closed (not removed). Both modes.
-- [ ] Removing `for=` or setting `trigger-element = null` clears both `aria-controls` / `ariaControlsElements` and `aria-expanded`. Both modes.
+- [ ] Removing `for=` or setting `trigger-element = null` clears `aria-controls` / `ariaControlsElements`, `aria-expanded`, and `aria-haspopup` (if set). Both modes.
+- [ ] Removing `modal` clears `aria-haspopup="dialog"` from the trigger; `aria-controls` and `aria-expanded` remain. Both modes.
 - [ ] `for=` pointing to a non-existent ID: no error, no wiring. Both modes.
 - [ ] `trigger-element` setter overrides `for=`. Both modes.
 - [ ] `trigger-element` accepts an element from a different shadow root and wires `ariaControlsElements` correctly. Both modes.
@@ -766,15 +775,15 @@ CSS targets the internal `.swc-Popover` element regardless of mode. `popover.css
 - [ ] Consumer migration guide: **distinguish the two modes**. Default mode (`popover="auto"`) preserves 1st-gen UX — light-dismiss, page-behind interactive, scrollable; the only change is the `for=` authoring pattern replacing `<sp-overlay>` wrapping. Modal mode (`modal` attribute opt-in) introduces blocking page-behind, focus trap, and the `<dialog>` semantics from the [differences table](#differences-from-1st-gen-popovers) — opt-in for the rare cases that need it.
 - [ ] Consumer migration guide: document the `[dialog]` attribute removal and that there is **no v1 migration path** for dialog-padding chrome — consumers wait for `<swc-dialog>` or duplicate the visual styling themselves
 - [ ] Consumer migration guide: document the new event contract (`swc-open` / `swc-after-open` / `swc-close` / `swc-after-close`) and timing differences vs `<sp-overlay>`'s `sp-opened` / `sp-closed`
-- [ ] Consumer migration guide: document the durable-vs-state ARIA wiring split — `aria-controls` is permanent on the trigger once `for=` resolves; `aria-expanded` toggles on open/close
+- [ ] Consumer migration guide: document trigger ARIA — `aria-controls` and `aria-expanded` in both modes; `aria-haspopup="dialog"` when `modal` is set; auto-mode `aria-haspopup` remains consumer-owned when the pattern is known
 - [ ] Consumer migration guide: note that `<swc-popover>` is non-modal by default (auto mode); the `modal` attribute opts in to `<dialog>.showModal()`-based blocking behavior for the rare cases that need it
 - [ ] Behaviors story: demonstrate the modal-dialog blocking behavior with a representative trigger, and call out the differences from 1st-gen for testers
 
 #### Accessibility
 
-- [ ] Storybook Accessibility story: document `role="dialog"` in modal mode (native, via `<dialog>`); focus trap and Escape behavior (native); trigger-side ARIA wiring (`aria-expanded`, `aria-controls` / `ariaControlsElements`) including the inner-button resolution for SWC component triggers
-- [ ] Document accessible-name expectations: consumers must supply `aria-labelledby` or `aria-label` to give the dialog a name; nameless dialogs are an authoring bug
-- [ ] Document `aria-haspopup` as the consumer's responsibility — the popover does not assume the pattern
+- [ ] Storybook Accessibility story: document `role="dialog"` in modal mode (native, via `<dialog>`); focus trap and Escape behavior (native); trigger-side ARIA wiring (`aria-expanded`, `aria-controls` / `ariaControlsElements`, and `aria-haspopup="dialog"` when `modal`) including inner-button resolution for SWC component triggers
+- [ ] Document accessible-name expectations: consumers must supply `aria-labelledby` or `aria-label` to give the dialog a name; nameless dialogs are an authoring bug in modal mode
+- [ ] Document auto-mode `aria-haspopup`: not set by the component — consumers wire a pattern-specific value when appropriate
 - [ ] Document the closed-shadow-root fallback (ARIA goes on the trigger host)
 
 ### Review
