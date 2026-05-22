@@ -25,15 +25,28 @@ import {
   fromFloatingPlacement,
   toFloatingPlacement,
 } from './placement-conversion.js';
-import type { Placement, PlacementOptions, VirtualTrigger } from './types.js';
+import type {
+  Placement,
+  PlacementHostConfig,
+  PlacementOptions,
+  VirtualTrigger,
+} from './types.js';
 
 /** Minimum height for the floating content when `constrainSize` is enabled. */
 const MIN_FLOATING_HEIGHT = 100;
 
 const DEFAULT_PLACEMENT: Placement = 'bottom';
-const DEFAULT_OFFSET = 8;
+// Neutral by design — controller does not impose a trigger gap. Each
+// consuming component (popover, picker, menu, …) sets its own default per the
+// popover migration plan: "we default to 0 to make the controller-host
+// contract neutral. Each downstream first-party component sets the
+// pattern-specific default in its own migration."
+const DEFAULT_OFFSET = 0;
 const DEFAULT_CROSS_OFFSET = 0;
-const DEFAULT_CONTAINER_PADDING = 12;
+// Matches 1st-gen `REQUIRED_DISTANCE_TO_EDGE` and Spectrum guidance for
+// minimum distance from the overflow boundary. Used by `flip`, `shift`, and
+// (when enabled) `size` middleware.
+const DEFAULT_CONTAINER_PADDING = 8;
 const DEFAULT_SHOULD_FLIP = true;
 
 /**
@@ -66,6 +79,12 @@ type ActiveSession = {
   trigger: HTMLElement | VirtualTrigger;
   floating: HTMLElement;
   options: PlacementOptions;
+
+  /**
+   * Cached `isWebKit()` result so {@link computePlacement} doesn't run a UA
+   * regex per `autoUpdate` tick.
+   */
+  isWebKit: boolean;
 };
 
 /**
@@ -81,7 +100,7 @@ type ActiveSession = {
  * ```typescript
  * this.placement.start(this.trigger, this.dialog, {
  *   placement: 'bottom-start',
- *   offset: 8,
+ *   offset: 0,
  *   crossOffset: 0,
  *   shouldFlip: true,
  *   onPlacementChange: (p) => {
@@ -97,6 +116,14 @@ export class PlacementController implements ReactiveController {
   /**
    * The computed placement after `flip` reorients (hyphenated). `null` when
    * {@link stop} has been called.
+   *
+   * Set synchronously to the requested {@link PlacementOptions.placement}
+   * (or {@link DEFAULT_PLACEMENT}) when {@link start} is called, then
+   * updated to the value returned by `computePosition` once measurement
+   * resolves. {@link PlacementOptions.onPlacementChange} fires only when the
+   * computed value differs from the synchronous initial value — consumers
+   * that need a "first compute resolved" signal should read this property
+   * after their own open transition completes.
    */
   public actualPlacement: Placement | null = null;
 
@@ -107,11 +134,22 @@ export class PlacementController implements ReactiveController {
   public isConstrained = false;
 
   /**
+   * Reserved configuration object. Currently unused; declared for forward
+   * compatibility so consuming components can pass host-level integration
+   * hooks (e.g. a tip-element resolver for future `arrow` middleware
+   * integration) without a constructor signature change.
+   */
+  private readonly config: PlacementHostConfig;
+
+  /**
    * Registers this controller on `host` via `addController`.
    *
    * @param host - Reactive element that owns the floating surface lifecycle.
+   * @param config - Optional host configuration. Reserved for forward
+   *   compatibility (currently has no required fields).
    */
-  constructor(host: ReactiveControllerHost) {
+  constructor(host: ReactiveControllerHost, config: PlacementHostConfig = {}) {
+    this.config = config;
     host.addController(this);
   }
 
@@ -131,12 +169,74 @@ export class PlacementController implements ReactiveController {
     options: PlacementOptions = {}
   ): void {
     this.stop();
-    this.session = { trigger, floating, options };
+    const session: ActiveSession = {
+      trigger,
+      floating,
+      options,
+      isWebKit: isWebKit(),
+    };
+    this.session = session;
     this.actualPlacement = options.placement ?? DEFAULT_PLACEMENT;
 
-    this.cleanup = autoUpdate(trigger, floating, () => {
+    // Single `autoUpdate` channel — receives `ancestorScroll`,
+    // `ancestorResize`, `elementResize`, and `layoutShift` by default. This
+    // is a deliberate change from 1st-gen, which used a second channel with
+    // `ancestorScroll: false` purely to detect ancestor scroll for the
+    // "close overlay on ancestor update" behavior baked into the 1st-gen
+    // overlay model. The 2nd-gen controller owns geometry only — the
+    // caller decides whether ancestor scroll should close the surface —
+    // so we just reposition like any other event.
+    const autoUpdateCleanup = autoUpdate(trigger, floating, () => {
       void this.computePlacement();
     });
+
+    // iOS WebKit `visualViewport` recompute channel. Floating UI's
+    // `autoUpdate` doesn't observe `window.visualViewport`, so without this
+    // an open floating element can drift away from its trigger on WebKit
+    // (iOS Safari, WKWebView, desktop Safari while pinch-zoomed) when the
+    // URL bar shows/hides, the virtual keyboard opens, etc. — until the
+    // next event `autoUpdate` does observe. Listeners are passive and
+    // rAF-coalesced so a burst of resize/scroll events compresses to one
+    // compute per frame. The matching `visualViewport.offset*` correction
+    // lives in `computePlacement`.
+    let visualViewportCleanup: (() => void) | undefined;
+    const visualViewport = window.visualViewport;
+    if (session.isWebKit && visualViewport) {
+      let rafId = 0;
+      let cancelled = false;
+      const onViewportChange = (): void => {
+        if (cancelled || rafId) {
+          return;
+        }
+        rafId = requestAnimationFrame(() => {
+          rafId = 0;
+          if (cancelled) {
+            return;
+          }
+          void this.computePlacement();
+        });
+      };
+      visualViewport.addEventListener('resize', onViewportChange, {
+        passive: true,
+      });
+      visualViewport.addEventListener('scroll', onViewportChange, {
+        passive: true,
+      });
+      visualViewportCleanup = () => {
+        cancelled = true;
+        if (rafId) {
+          cancelAnimationFrame(rafId);
+          rafId = 0;
+        }
+        visualViewport.removeEventListener('resize', onViewportChange);
+        visualViewport.removeEventListener('scroll', onViewportChange);
+      };
+    }
+
+    this.cleanup = () => {
+      visualViewportCleanup?.();
+      autoUpdateCleanup();
+    };
   }
 
   /**
@@ -194,7 +294,7 @@ export class PlacementController implements ReactiveController {
       return;
     }
 
-    if (isWebKit()) {
+    if (session.isWebKit) {
       await new Promise<void>((resolve) =>
         requestAnimationFrame(() => resolve())
       );
@@ -268,7 +368,7 @@ export class PlacementController implements ReactiveController {
     let translateX = x;
     let translateY = y;
     const visualViewport = window.visualViewport;
-    if (visualViewport && isWebKit()) {
+    if (visualViewport && session.isWebKit) {
       translateX -= visualViewport.offsetLeft;
       translateY -= visualViewport.offsetTop;
     }
@@ -287,7 +387,12 @@ export class PlacementController implements ReactiveController {
   }
 }
 
-export type { Placement, PlacementOptions, VirtualTrigger } from './types.js';
+export type {
+  Placement,
+  PlacementHostConfig,
+  PlacementOptions,
+  VirtualTrigger,
+} from './types.js';
 export { ALL_PLACEMENTS } from './types.js';
 export {
   fromFloatingPlacement,

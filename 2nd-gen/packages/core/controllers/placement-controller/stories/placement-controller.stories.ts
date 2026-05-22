@@ -25,9 +25,9 @@ const placements = ALL_PLACEMENTS;
 
 const args = {
   placement: 'bottom' as Placement,
-  offset: 8,
+  offset: 0,
   crossOffset: 0,
-  containerPadding: 12,
+  containerPadding: 8,
   shouldFlip: true,
   constrainSize: false,
 };
@@ -47,11 +47,11 @@ const argTypes = {
   offset: {
     control: 'number',
     description:
-      'Gap along the **placement direction** between trigger and floating element (px). For example, space below the trigger when placement is `bottom`. Not trigger padding.',
+      'Gap along the **placement direction** between trigger and floating element (px). For example, space below the trigger when placement is `bottom`. Not trigger padding. Defaults to `0` so the controller stays neutral — each consuming component sets its own pattern-specific default.',
     table: {
       category: 'Options',
       type: { summary: 'number' },
-      defaultValue: { summary: '8' },
+      defaultValue: { summary: '0' },
     },
   },
   crossOffset: {
@@ -71,7 +71,7 @@ const argTypes = {
     table: {
       category: 'Options',
       type: { summary: 'number' },
-      defaultValue: { summary: '12' },
+      defaultValue: { summary: '8' },
     },
   },
   shouldFlip: {

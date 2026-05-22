@@ -17,7 +17,10 @@ export {
   toFloatingPlacement,
   toPlacementClassSuffix,
   type Placement,
+  type PlacementHostConfig,
   type PlacementOptions,
   type VirtualTrigger,
 } from './placement-controller.js';
-export { getFallbackPlacements } from './fallback-placements.js';
+// Note: `getFallbackPlacements` is intentionally not re-exported. It is an
+// implementation detail of the `flip` middleware composition and is not part
+// of the public surface.

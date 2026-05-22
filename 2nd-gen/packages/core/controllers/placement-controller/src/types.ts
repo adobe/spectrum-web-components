@@ -69,6 +69,22 @@ export interface VirtualTrigger {
 }
 
 // ─────────────────────────
+//     HOST CONFIG
+// ─────────────────────────
+
+/**
+ * Host-level configuration passed once to the {@link PlacementController}
+ * constructor. Reserved for forward compatibility — currently has no
+ * required fields. Future hooks (for example a `tipElement` resolver for
+ * `arrow` middleware) will be added here so existing call sites do not need
+ * to change.
+ */
+export interface PlacementHostConfig {
+  /** Reserved for future use. */
+  readonly _reserved?: never;
+}
+
+// ─────────────────────────
 //     OPTIONS
 // ─────────────────────────
 
@@ -99,7 +115,12 @@ export interface PlacementOptions {
    * viewport padding — see {@link containerPadding} for edge inset when
    * `flip` / `shift` run.
    *
-   * @default 8
+   * Defaults to `0` so the controller-host contract stays neutral; each
+   * consuming component sets its own pattern-specific default (for example,
+   * `<swc-popover>` defaults `offset` to `0`, downstream patterns like
+   * `<swc-picker>` may raise it).
+   *
+   * @default 0
    */
   offset?: number;
 
@@ -130,7 +151,7 @@ export interface PlacementOptions {
    * Matches `<swc-popover>`'s `container-padding` attribute; consumer
    * components expose this publicly and pass it through to the controller.
    *
-   * @default 12
+   * @default 8
    */
   containerPadding?: number;
 

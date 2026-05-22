@@ -81,9 +81,9 @@ function bindController(
 
 const PLAYGROUND_DEFAULTS = {
   placement: 'bottom' as Placement,
-  offset: 8,
+  offset: 0,
   crossOffset: 0,
-  containerPadding: 12,
+  containerPadding: 8,
   shouldFlip: true,
   constrainSize: false,
 };

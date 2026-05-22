@@ -21,7 +21,12 @@ const LOGICAL_TO_PHYSICAL: Record<string, string> = {
   end: 'right',
 };
 
-/** Physical cross-axis labels mapped to Floating UI start/end on each primary side. */
+/**
+ * Physical cross-axis labels mapped to Floating UI's start/end alignment on
+ * each primary side. Floating UI only supports `start` / `end` alignment
+ * suffixes; SWC exposes physical (`top`/`bottom`/`left`/`right`) cross-axis
+ * names that this table translates.
+ */
 const PHYSICAL_ALIGNMENT_TO_FLOATING: Record<
   string,
   Record<string, FloatingPlacement>
@@ -33,12 +38,28 @@ const PHYSICAL_ALIGNMENT_TO_FLOATING: Record<
 };
 
 /**
+ * Reverse lookup for Floating UI placements that aren't valid SWC Placement
+ * values. Used by {@link fromFloatingPlacement} to map the four Floating UI
+ * outputs that have no direct SWC equivalent (`left-start`, `left-end`,
+ * `right-start`, `right-end`) back into the SWC union. Other Floating UI
+ * placements are already valid Placement values and pass through unchanged.
+ */
+const FLOATING_TO_SWC_PLACEMENT: Partial<Record<FloatingPlacement, Placement>> =
+  {
+    'left-start': 'left-top',
+    'left-end': 'left-bottom',
+    'right-start': 'right-top',
+    'right-end': 'right-bottom',
+  };
+
+/**
  * Normalize a hyphenated {@link Placement} for Floating UI's `computePosition`.
  *
  * - Logical **sides** (`start`, `end`) map to `left` / `right`.
  * - Logical **alignments** (`bottom-start`, `top-end`) pass through unchanged.
- * - Physical alignments (`bottom-left`, `left-top`) map to the nearest Floating
- *   UI placement (LTR positioning math; RTL styling stays in CSS).
+ * - Physical alignments (`bottom-left`, `left-top`, `start-top`, etc.) map to
+ *   the nearest Floating UI placement (LTR positioning math; RTL styling
+ *   stays in CSS).
  *
  * @param placement - Customer-facing hyphenated placement.
  * @returns Placement value understood by Floating UI.
@@ -50,6 +71,14 @@ export function toFloatingPlacement(placement: Placement): FloatingPlacement {
     const physicalPrimary = LOGICAL_TO_PHYSICAL[primary] ?? primary;
     if (!alignment) {
       return physicalPrimary as FloatingPlacement;
+    }
+    // For logical sides combined with a physical sub-alignment
+    // (e.g. `start-top`, `end-bottom`), use the physical-alignment table on
+    // the resolved physical side. Without this, the function returns
+    // strings like `left-top` that aren't valid Floating UI placements.
+    const mapped = PHYSICAL_ALIGNMENT_TO_FLOATING[physicalPrimary]?.[alignment];
+    if (mapped) {
+      return mapped;
     }
     const physicalAlignment = LOGICAL_TO_PHYSICAL[alignment] ?? alignment;
     return `${physicalPrimary}-${physicalAlignment}` as FloatingPlacement;
@@ -75,16 +104,24 @@ export function toFloatingPlacement(placement: Placement): FloatingPlacement {
  * Surface a Floating UI placement as the public hyphenated {@link Placement}
  * form for `actualPlacement` and `onPlacementChange`.
  *
+ * Floating UI emits four placements that don't appear in the SWC `Placement`
+ * union (`left-start`, `left-end`, `right-start`, `right-end`) — those map
+ * back to their physical equivalents (`left-top`, `left-bottom`, `right-top`,
+ * `right-bottom`). The remaining eight Floating UI placements are already
+ * valid SWC `Placement` values.
+ *
  * @param placement - Placement returned by Floating UI after `flip`.
- * @returns Customer-facing hyphenated placement.
+ * @returns Customer-facing hyphenated placement in the SWC `Placement` union.
  */
 export function fromFloatingPlacement(placement: FloatingPlacement): Placement {
-  return placement as Placement;
+  return FLOATING_TO_SWC_PLACEMENT[placement] ?? (placement as Placement);
 }
 
 /**
  * Derive a CSS modifier suffix from a hyphenated placement (for example
- * `.swc-Popover--bottom-start`).
+ * `.swc-Popover--bottom-start`). Currently a pass-through — kept as an
+ * indirection so consuming components can adopt a single helper instead of
+ * inlining the placement-to-class conversion.
  *
  * @param placement - Customer-facing hyphenated placement.
  * @returns Class suffix safe to append after `--` in a BEM modifier.
