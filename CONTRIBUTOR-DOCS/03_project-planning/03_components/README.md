@@ -67,6 +67,9 @@
     - [Field Group migration roadmap](field-group/rendering-and-styling-migration-analysis.md)
 - Field Label
     - [Field label migration roadmap](field-label/rendering-and-styling-migration-analysis.md)
+- Grid
+    - [Grid accessibility migration analysis](grid/accessibility-migration-analysis.md)
+    - [Grid migration roadmap](grid/rendering-and-styling-migration-analysis.md)
 - Help Text
     - [Help text migration roadmap](help-text/rendering-and-styling-migration-analysis.md)
 - Illustrated Message
@@ -74,6 +77,7 @@
     - [`sp-illustrated-message` Migration Plan](illustrated-message/migration-plan.md)
     - [Illustrated message migration roadmap](illustrated-message/rendering-and-styling-migration-analysis.md)
 - Infield Button
+    - [Infield button accessibility migration analysis](infield-button/accessibility-migration-analysis.md)
     - [In-field button migration roadmap](infield-button/rendering-and-styling-migration-analysis.md)
 - Infield Progress Circle
     - [In-field progress circle migration roadmap](infield-progress-circle/rendering-and-styling-migration-analysis.md)

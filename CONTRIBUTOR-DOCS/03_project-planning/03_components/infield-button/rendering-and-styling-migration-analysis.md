@@ -322,5 +322,6 @@ These new tokens support the inline variant and stepper (number field) use cases
 
 ## Resources
 
+- [Infield button accessibility migration analysis](./accessibility-migration-analysis.md)
 - [CSS migration](https://github.com/adobe/spectrum-css/pull/3642)
 - [Spectrum 2 preview](https://spectrumcss.z13.web.core.windows.net/pr-2352/index.html?path=/docs/components-in-field-button--docs)
