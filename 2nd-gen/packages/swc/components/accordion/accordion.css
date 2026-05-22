@@ -49,13 +49,13 @@
   --_swc-accordion-pad-top-s: token("component-padding-vertical-100");
   --_swc-accordion-pad-top-m: token("component-padding-vertical-200");
 
-  /* +3px offset because component-padding-vertical-300 (13px) is the highest available scale; replace with a higher-scale token once one is added to the token set */
-  --_swc-accordion-pad-top-l: calc(token("component-padding-vertical-300") + 3px);
-  --_swc-accordion-pad-top-xl: calc(token("component-padding-vertical-300") + 3px);
+  /* spacing-300 (16px) used here as component-padding-vertical tops out at 300 (13px); switch to a component-padding-vertical token once a higher scale is added */
+  --_swc-accordion-pad-top-l: token("spacing-300");
+  --_swc-accordion-pad-top-xl: token("spacing-300");
   --_swc-accordion-pad-bottom-s: token("component-padding-vertical-100");
   --_swc-accordion-pad-bottom-m: token("component-padding-vertical-200");
-  --_swc-accordion-pad-bottom-l: calc(token("component-padding-vertical-300") + 3px);
-  --_swc-accordion-pad-bottom-xl: calc(token("component-padding-vertical-300") + 3px);
+  --_swc-accordion-pad-bottom-l: token("spacing-300");
+  --_swc-accordion-pad-bottom-xl: token("spacing-300");
 }
 
 /* Quiet: removes dividers and rounds header corners (visible on hover and focus) */
