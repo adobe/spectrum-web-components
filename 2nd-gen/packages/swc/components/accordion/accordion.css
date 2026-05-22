@@ -34,28 +34,26 @@
 
 /* Compact density: overrides cascade to child items */
 :host([density="compact"]) .swc-Accordion {
-  --_swc-accordion-pad-top-s: token("component-padding-vertical-50");
-  --_swc-accordion-pad-top-m: token("component-padding-vertical-75");
-  --_swc-accordion-pad-top-l: token("component-padding-vertical-100");
-  --_swc-accordion-pad-top-xl: token("component-padding-vertical-200");
-  --_swc-accordion-pad-bottom-s: token("component-padding-vertical-50");
-  --_swc-accordion-pad-bottom-m: token("component-padding-vertical-75");
-  --_swc-accordion-pad-bottom-l: token("component-padding-vertical-100");
-  --_swc-accordion-pad-bottom-xl: token("component-padding-vertical-200");
+  --_swc-accordion-pad-top-s: token("accordion-top-to-text-compact-small");
+  --_swc-accordion-pad-top-m: token("accordion-top-to-text-compact-medium");
+  --_swc-accordion-pad-top-l: token("accordion-top-to-text-compact-large");
+  --_swc-accordion-pad-top-xl: token("accordion-top-to-text-compact-extra-large");
+  --_swc-accordion-pad-bottom-s: token("accordion-bottom-to-text-compact-small");
+  --_swc-accordion-pad-bottom-m: token("accordion-bottom-to-text-compact-medium");
+  --_swc-accordion-pad-bottom-l: token("accordion-bottom-to-text-compact-large");
+  --_swc-accordion-pad-bottom-xl: token("accordion-bottom-to-text-compact-extra-large");
 }
 
 /* Spacious density: overrides cascade to child items */
 :host([density="spacious"]) .swc-Accordion {
-  --_swc-accordion-pad-top-s: token("component-padding-vertical-100");
-  --_swc-accordion-pad-top-m: token("component-padding-vertical-200");
-
-  /* spacing-300 (16px) used here as component-padding-vertical tops out at 300 (13px); switch to a component-padding-vertical token once a higher scale is added */
-  --_swc-accordion-pad-top-l: token("spacing-300");
-  --_swc-accordion-pad-top-xl: token("spacing-300");
-  --_swc-accordion-pad-bottom-s: token("component-padding-vertical-100");
-  --_swc-accordion-pad-bottom-m: token("component-padding-vertical-200");
-  --_swc-accordion-pad-bottom-l: token("spacing-300");
-  --_swc-accordion-pad-bottom-xl: token("spacing-300");
+  --_swc-accordion-pad-top-s: token("accordion-top-to-text-spacious-small");
+  --_swc-accordion-pad-top-m: token("accordion-top-to-text-spacious-medium");
+  --_swc-accordion-pad-top-l: token("accordion-top-to-text-spacious-large");
+  --_swc-accordion-pad-top-xl: token("accordion-top-to-text-spacious-extra-large");
+  --_swc-accordion-pad-bottom-s: token("accordion-bottom-to-text-spacious-small");
+  --_swc-accordion-pad-bottom-m: token("accordion-bottom-to-text-spacious-medium");
+  --_swc-accordion-pad-bottom-l: token("accordion-bottom-to-text-spacious-large");
+  --_swc-accordion-pad-bottom-xl: token("accordion-bottom-to-text-spacious-extra-large");
 }
 
 /* Quiet: removes dividers and rounds header corners (visible on hover and focus) */

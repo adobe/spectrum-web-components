@@ -58,7 +58,7 @@
   gap: token("accordion-disclosure-indicator-to-text-medium");
   align-items: center;
   inline-size: 100%;
-  padding-block: var(--_swc-accordion-pad-top-m, token("component-padding-vertical-100")) var(--_swc-accordion-pad-bottom-m, token("component-padding-vertical-100"));
+  padding-block: var(--_swc-accordion-pad-top-m, token("accordion-top-to-text-medium")) var(--_swc-accordion-pad-bottom-m, token("accordion-bottom-to-text-medium"));
   padding-inline: token("accordion-edge-to-content-area-medium") token("accordion-edge-to-text");
   font-family: inherit;
   font-size: token("font-size-200");
@@ -180,7 +180,7 @@
 .swc-AccordionItem-content {
   display: none;
   padding-block: token("accordion-content-area-top-to-content") token("accordion-content-area-bottom-to-content");
-  padding-inline: var(--swc-accordion-content-padding-inline, token("accordion-edge-to-content-area-medium"));
+  padding-inline: var(--swc-accordion-content-padding-inline, token("accordion-content-area-edge-to-content-medium"));
   font-size: token("font-size-100");
   font-weight: token("regular-font-weight");
   line-height: token("line-height-100");
@@ -199,13 +199,13 @@
 
 :host([size="s"]) .swc-AccordionItem-header {
   gap: token("accordion-disclosure-indicator-to-text-small");
-  padding-block: var(--_swc-accordion-pad-top-s, token("component-padding-vertical-75")) var(--_swc-accordion-pad-bottom-s, token("component-padding-vertical-75"));
+  padding-block: var(--_swc-accordion-pad-top-s, token("accordion-top-to-text-small")) var(--_swc-accordion-pad-bottom-s, token("accordion-bottom-to-text-small"));
   padding-inline-start: token("accordion-edge-to-content-area-small");
   font-size: token("font-size-100");
 }
 
 :host([size="s"]) .swc-AccordionItem-content {
-  padding-inline: var(--swc-accordion-content-padding-inline, token("accordion-edge-to-content-area-small"));
+  padding-inline: var(--swc-accordion-content-padding-inline, token("accordion-content-area-edge-to-content-small"));
 }
 
 /* ── Size: large ────────────────────────────────────────────────────── */
@@ -216,13 +216,13 @@
 
 :host([size="l"]) .swc-AccordionItem-header {
   gap: token("accordion-disclosure-indicator-to-text-large");
-  padding-block: var(--_swc-accordion-pad-top-l, token("component-padding-vertical-200")) var(--_swc-accordion-pad-bottom-l, token("component-padding-vertical-200"));
+  padding-block: var(--_swc-accordion-pad-top-l, token("accordion-top-to-text-large")) var(--_swc-accordion-pad-bottom-l, token("accordion-bottom-to-text-large"));
   padding-inline-start: token("accordion-edge-to-content-area-large");
   font-size: token("font-size-300");
 }
 
 :host([size="l"]) .swc-AccordionItem-content {
-  padding-inline: var(--swc-accordion-content-padding-inline, token("accordion-edge-to-content-area-large"));
+  padding-inline: var(--swc-accordion-content-padding-inline, token("accordion-content-area-edge-to-content-large"));
 }
 
 /* ── Size: extra-large ──────────────────────────────────────────────── */
@@ -233,12 +233,11 @@
 
 :host([size="xl"]) .swc-AccordionItem-header {
   gap: token("accordion-disclosure-indicator-to-text-extra-large");
-  padding-block: var(--_swc-accordion-pad-top-xl, token("component-padding-vertical-300")) var(--_swc-accordion-pad-bottom-xl, token("component-padding-vertical-300"));
+  padding-block: var(--_swc-accordion-pad-top-xl, token("accordion-top-to-text-extra-large")) var(--_swc-accordion-pad-bottom-xl, token("accordion-bottom-to-text-extra-large"));
   padding-inline-start: token("accordion-edge-to-content-area-extra-large");
   font-size: token("font-size-400");
 }
 
 :host([size="xl"]) .swc-AccordionItem-content {
-  padding-inline: var(--swc-accordion-content-padding-inline, token("accordion-edge-to-content-area-extra-large"));
+  padding-inline: var(--swc-accordion-content-padding-inline, token("accordion-content-area-edge-to-content-extra-large"));
 }
-
