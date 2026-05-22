@@ -279,6 +279,8 @@ const demoStyles = html`
       flex: 1 1 auto;
       min-inline-size: 0;
       overflow: hidden;
+      padding-block-start: 6px;
+      margin-block-start: -6px;
     }
 
     .MultiArtifactDemo-scroll-track {
@@ -288,6 +290,7 @@ const demoStyles = html`
       overflow-x: auto;
       scroll-behavior: smooth;
       scrollbar-width: none;
+      padding-inline-end: 2px;
     }
 
     .MultiArtifactDemo-scroll-track > swc-upload-artifact,
@@ -307,16 +310,28 @@ const demoStyles = html`
     .MultiArtifactDemo-scroll-fade {
       position: absolute;
       inset-block: 0;
-      inset-inline-end: 0;
       inline-size: var(--swc-spacing-300, 16px);
       pointer-events: none;
+      opacity: 1;
+      transition: opacity var(--swc-animation-duration-100, 130ms) ease;
+    }
+
+    .MultiArtifactDemo-scroll-fade--start {
+      inset-inline-start: 0;
+      background: linear-gradient(
+        to right,
+        rgb(255 255 255 / 80%) 0%,
+        rgb(255 255 255 / 0%) 50%
+      );
+    }
+
+    .MultiArtifactDemo-scroll-fade--end {
+      inset-inline-end: 0;
       background: linear-gradient(
         to left,
         rgb(255 255 255 / 80%) 0%,
         rgb(255 255 255 / 0%) 50%
       );
-      opacity: 1;
-      transition: opacity var(--swc-animation-duration-100, 130ms) ease;
     }
 
     .MultiArtifactDemo-scroll-fade.is-hidden {
@@ -671,7 +686,14 @@ class MultiArtifactScrollDemo extends LitElement {
                           ${this.hasOverflow
                             ? html`
                                 <div
-                                  class="MultiArtifactDemo-scroll-fade ${this
+                                  class="MultiArtifactDemo-scroll-fade MultiArtifactDemo-scroll-fade--start ${this
+                                    .canScrollBack
+                                    ? ''
+                                    : 'is-hidden'}"
+                                  aria-hidden="true"
+                                ></div>
+                                <div
+                                  class="MultiArtifactDemo-scroll-fade MultiArtifactDemo-scroll-fade--end ${this
                                     .canScrollForward
                                     ? ''
                                     : 'is-hidden'}"

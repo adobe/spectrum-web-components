@@ -60,7 +60,7 @@
 }
 
 /* Figma thread mock uses 128x128 media tiles in user-message rows. */
-.swc-UserMessage-media-row > slot::slotted([type='media']) {
+.swc-UserMessage-media-row > slot::slotted([type="media"]) {
   inline-size: 128px;
   min-inline-size: 128px;
   block-size: 128px;
@@ -70,7 +70,7 @@
 }
 
 /* Figma thread mock uses ~304px card artifacts in post-submit user messages. */
-.swc-UserMessage-file-row > slot::slotted([type='card']) {
+.swc-UserMessage-file-row > slot::slotted([type="card"]) {
   inline-size: 304px;
   max-inline-size: 304px;
   border-radius: token("spacing-200");
@@ -88,7 +88,8 @@
   z-index: 1;
   align-items: center;
   justify-content: center;
-  min-inline-size: 72px;
+  min-inline-size: 88px;
+  min-block-size: 44px;
   padding-block: 7px;
   padding-inline: token("spacing-300");
   font-family: token("sans-serif-font");

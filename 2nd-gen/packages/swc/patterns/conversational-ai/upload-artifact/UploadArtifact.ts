@@ -15,8 +15,6 @@ import { property, queryAssignedElements } from 'lit/decorators.js';
 
 import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
 
-import '@adobe/spectrum-wc/components/icon/swc-icon.js';
-
 import { CrossIcon } from '../utils/icons/index.js';
 
 import styles from './upload-artifact.css';
@@ -79,7 +77,10 @@ export class UploadArtifact extends SpectrumElement {
         ?hidden=${!this.dismissible}
         @click=${this._handleDismissClick}
       >
-        <swc-icon aria-hidden="true">${CrossIcon()}</swc-icon>
+        <span class="swc-UploadArtifact-dismiss-visual" aria-hidden="true"></span>
+        <span class="swc-UploadArtifact-dismiss-icon" aria-hidden="true"
+          >${CrossIcon()}</span
+        >
       </button>
     `;
   }
@@ -103,12 +104,13 @@ export class UploadArtifact extends SpectrumElement {
 
     if (isMedia) {
       return html`
+        ${this._renderDismissButton()}
         <div class="swc-UploadArtifact">
           <div class="swc-UploadArtifact-surface">
             <div class="swc-UploadArtifact-thumbnail">
               <slot name="thumbnail"></slot>
             </div>
-            ${this._renderBadge()} ${this._renderDismissButton()}
+            ${this._renderBadge()}
             <div class="swc-UploadArtifact-actions">
               <slot name="actions"></slot>
             </div>
@@ -118,8 +120,8 @@ export class UploadArtifact extends SpectrumElement {
     }
 
     return html`
+      ${this._renderDismissButton()}
       <div class="swc-UploadArtifact">
-        ${this._renderDismissButton()}
         <div class="swc-UploadArtifact-surface">
           <div class="swc-UploadArtifact-thumbnail">
             <slot name="thumbnail"></slot>

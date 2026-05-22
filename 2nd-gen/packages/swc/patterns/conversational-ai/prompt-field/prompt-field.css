@@ -185,8 +185,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  inline-size: var(--swc-prompt-field-upload-inline-size, 32px);
-  block-size: var(--swc-prompt-field-upload-block-size, 32px);
+  inline-size: var(--swc-prompt-field-upload-inline-size, 44px);
+  block-size: var(--swc-prompt-field-upload-block-size, 44px);
   padding: 0;
   color: token("gray-800");
   background: transparent;
@@ -215,8 +215,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  inline-size: var(--swc-prompt-field-send-inline-size, 32px);
-  block-size: var(--swc-prompt-field-send-block-size, 32px);
+  inline-size: var(--swc-prompt-field-send-inline-size, 44px);
+  block-size: var(--swc-prompt-field-send-block-size, 44px);
   padding: 0;
   color: token("gray-25");
   background: token("neutral-background-color-default");
@@ -229,8 +229,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  inline-size: var(--swc-prompt-field-stop-inline-size, 32px);
-  block-size: var(--swc-prompt-field-stop-block-size, 32px);
+  inline-size: var(--swc-prompt-field-stop-inline-size, 44px);
+  block-size: var(--swc-prompt-field-stop-block-size, 44px);
   padding: 0;
   color: token("gray-25");
   background: token("gray-900");

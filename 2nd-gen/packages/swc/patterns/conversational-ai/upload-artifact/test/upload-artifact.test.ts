@@ -48,7 +48,9 @@ export const OverviewTest: Story = {
         const dismissButton = el.shadowRoot?.querySelector<HTMLButtonElement>(
           '.swc-UploadArtifact-dismiss'
         );
-        const icon = dismissButton?.querySelector('swc-icon');
+        const icon = dismissButton?.querySelector(
+          '.swc-UploadArtifact-dismiss-icon'
+        );
         expect(dismissButton?.getAttribute('aria-label')).toBe(
           'Remove attachment'
         );
@@ -176,14 +178,12 @@ export const MediaBadgeTest: Story = {
     });
 
     await step(
-      'media dismiss button renders inside the preview surface',
+      'media dismiss button renders as a sibling of the preview surface',
       async () => {
-        const surface = el.shadowRoot?.querySelector(
-          '.swc-UploadArtifact-surface'
-        );
-        const dismissButton = surface?.querySelector(
-          '.swc-UploadArtifact-dismiss'
-        );
+        const root = el.shadowRoot;
+        const surface = root?.querySelector('.swc-UploadArtifact-surface');
+        const dismissButton = root?.querySelector('.swc-UploadArtifact-dismiss');
+        expect(surface).toBeTruthy();
         expect(dismissButton).toBeTruthy();
       }
     );
