@@ -52,9 +52,9 @@
 }
 
 :host([type="media"]) .swc-UploadArtifact-dismiss {
-  /* 32px hit target centered on the 20px visual at 4px inset. */
-  inset-block-start: calc(token("spacing-100") - 6px);
-  inset-inline-end: calc(token("spacing-100") - 6px);
+  /* 32px hit target centered on the 20px visual at spacing-75 (4px) inset. */
+  inset-block-start: calc(token("spacing-75") - 6px);
+  inset-inline-end: calc(token("spacing-75") - 6px);
   inline-size: 32px;
   block-size: 32px;
 }
