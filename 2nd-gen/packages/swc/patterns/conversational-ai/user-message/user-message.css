@@ -10,30 +10,9 @@
  * governing permissions and limitations under the License.
  */
 
-/* Sizing per explicit user-message type sourced from Figma spec (node 5-2281), full-screen modality.
- *
- * copy  — fills available column width, capped at 536px (text reflows naturally)
- * card  — fixed 324px (content 292px = 324px − 2×16px padding), capped at 440px
- * media — shrinks to the fixed 180×180px inner card + 2×8px padding ≈ 196px square
- *
- * The host IS the visible bubble so focus rings rendered by the parent
- * `swc-conversation-turn` hug its border box exactly.
- */
-
 :host {
   display: block;
-  inline-size: fit-content;
-  max-inline-size: 536px;
-  padding-block: var(--swc-user-message-padding-block, token("spacing-100"));
-  padding-inline: var(--swc-user-message-padding-inline, token("spacing-300"));
-  font-family: token("sans-serif-font");
-  font-size: token("font-size-200");
-  font-weight: token("regular-font-weight");
-  line-height: token("line-height-200");
-  color: token("gray-800");
-  background: token("gray-50");
-  border: 1px solid transparent;
-  border-radius: token("corner-radius-large-default");
+  inline-size: 100%;
 }
 
 *,
@@ -42,135 +21,103 @@
   box-sizing: border-box;
 }
 
-/* Card: fixed 324px per Figma spec (content 292px = 324px − 2×16px padding). */
-:host([type="card"]) {
-  inline-size: 324px;
-  min-inline-size: 212px;
-  max-inline-size: 440px;
-  padding: var(--swc-user-message-card-padding, token("spacing-300"));
-}
-
-/* Image: shrinks to the fixed 180px inner card + 2×8px padding. */
-:host([type="media"]) {
-  inline-size: fit-content;
-  padding: var(--swc-user-message-media-padding, token("spacing-100"));
-}
-
-.swc-UserMessage-attachment {
+.swc-UserMessage {
   display: flex;
-  min-inline-size: 0;
-}
-
-.swc-UserMessage-attachment--card {
-  gap: var(--swc-user-message-attachment-card-gap, token("spacing-300"));
-  align-items: center;
-}
-
-/* Media inner card is fixed 180 × 180px, constrained by min/max (Figma spec). */
-.swc-UserMessage-attachment--media {
   flex-direction: column;
-  gap: var(--swc-user-message-attachment-media-gap, token("spacing-100"));
-  inline-size: 180px;
-  min-inline-size: 150px;
-  max-inline-size: 210px;
-  block-size: 180px;
-  min-block-size: 135px;
-}
-
-.swc-UserMessage-thumbnail {
-  min-inline-size: 0;
-}
-
-.swc-UserMessage-thumbnail ::slotted(*) {
-  display: block;
-}
-
-:host([type="card"]) .swc-UserMessage-thumbnail {
-  display: flex;
-  flex-shrink: 0;
-  align-items: center;
-  justify-content: center;
-}
-
-:host([type="card"]) .swc-UserMessage-thumbnail ::slotted(*) {
-  flex-shrink: 0;
-  inline-size: 32px;
-  block-size: 32px;
-  border: 1px solid transparent;
-  border-radius: token("corner-radius-75");
-  object-fit: cover;
-}
-
-/* Thumbnail fills the available vertical space, image covers it fully. */
-:host([type="media"]) .swc-UserMessage-thumbnail {
-  position: relative;
-  flex: 1 0 0;
+  gap: token("spacing-300");
+  align-items: flex-end;
   inline-size: 100%;
-  min-block-size: 0;
-  background: token("gray-100");
-  border: 1px solid transparent;
-  border-radius: token("corner-radius-200");
+}
+
+.swc-UserMessage-media-row,
+.swc-UserMessage-file-row,
+.swc-UserMessage-text-row {
+  display: flex;
+  gap: token("spacing-100");
+  align-items: flex-start;
+  justify-content: flex-end;
+  inline-size: fit-content;
+  max-inline-size: 100%;
+}
+
+.swc-UserMessage-media-row > slot,
+.swc-UserMessage-file-row > slot {
+  display: contents;
+}
+
+.swc-UserMessage-media-row > slot::slotted(*) {
+  flex: 0 0 auto;
+}
+
+.swc-UserMessage-media-row {
+  position: relative;
+  flex-wrap: wrap;
+  max-inline-size: 536px;
+}
+
+.swc-UserMessage-file-row > slot::slotted(*) {
+  flex: 0 1 auto;
+}
+
+/* Figma thread mock uses 128x128 media tiles in user-message rows. */
+.swc-UserMessage-media-row > slot::slotted([type='media']) {
+  inline-size: 128px;
+  min-inline-size: 128px;
+  block-size: 128px;
+  min-block-size: 128px;
+  border-radius: token("corner-radius-700");
   overflow: hidden;
 }
 
-:host([type="media"]) .swc-UserMessage-thumbnail ::slotted(*) {
+/* Figma thread mock uses ~304px card artifacts in post-submit user messages. */
+.swc-UserMessage-file-row > slot::slotted([type='card']) {
+  inline-size: 304px;
+  max-inline-size: 304px;
+  border-radius: token("spacing-200");
+}
+
+.swc-UserMessage-file-row {
+  max-inline-size: 616px;
+}
+
+.swc-UserMessage-media-row > slot::slotted(.swc-UserMessage-overflow-indicator) {
+  display: inline-flex;
   position: absolute;
-  inset: 0;
-  inline-size: 100%;
-  block-size: 100%;
-  object-fit: cover;
-}
-
-.swc-UserMessage-meta {
-  display: flex;
-  flex-direction: column;
-  gap: var(--swc-user-message-meta-gap, token("spacing-50"));
-  min-inline-size: 0;
-}
-
-:host([type="card"]) .swc-UserMessage-meta {
-  flex: 1;
-  align-items: flex-start;
-}
-
-:host([type="media"]) .swc-UserMessage-meta {
-  inline-size: 100%;
-}
-
-.swc-UserMessage-title {
+  inset-block-end: token("spacing-100");
+  inset-inline-end: 0;
+  z-index: 1;
+  align-items: center;
+  justify-content: center;
+  min-inline-size: 72px;
+  padding-block: 7px;
+  padding-inline: token("spacing-300");
   font-family: token("sans-serif-font");
   font-size: token("font-size-100");
   font-weight: token("bold-font-weight");
   line-height: token("line-height-font-size-100");
-  color: token("gray-900");
-}
-
-.swc-UserMessage-subtitle {
-  font-family: token("sans-serif-font");
-  font-size: token("font-size-75");
-  font-weight: token("regular-font-weight");
-  line-height: token("line-height-font-size-75");
   color: token("gray-800");
-  text-overflow: ellipsis;
+  background: token("gray-100");
+  border: none;
+  border-radius: token("corner-radius-800");
+  cursor: pointer;
 }
 
-:host([type="card"]) .swc-UserMessage-title,
-:host([type="card"]) .swc-UserMessage-subtitle,
-:host([type="media"]) .swc-UserMessage-title {
-  inline-size: 100%;
-  min-inline-size: 0;
-  text-align: start;
+.swc-UserMessage-text-row {
+  max-inline-size: 536px;
 }
 
-/* Long, unbroken tokens (e.g. filenames without spaces) break at any character
- * so the title wraps inside the meta column instead of overflowing the bubble. */
-:host([type="card"]) .swc-UserMessage-title ::slotted(*),
-:host([type="media"]) .swc-UserMessage-title ::slotted(*),
-:host([type="card"]) .swc-UserMessage-subtitle ::slotted(*),
-:host([type="media"]) .swc-UserMessage-subtitle ::slotted(*) {
+.swc-UserMessage-text-bubble {
   display: block;
-  min-inline-size: 0;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  inline-size: fit-content;
+  max-inline-size: 536px;
+  padding-block: token("spacing-100");
+  padding-inline: token("spacing-300");
+  font-family: token("sans-serif-font");
+  font-size: token("font-size-200");
+  font-weight: token("regular-font-weight");
+  line-height: token("line-height-200");
+  color: token("gray-800");
+  background: token("gray-50");
+  border: 1px solid transparent;
+  border-radius: token("spacing-200");
 }

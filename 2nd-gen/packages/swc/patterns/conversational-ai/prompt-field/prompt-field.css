@@ -106,10 +106,10 @@
 
 /* Prompt-field media artifact uses 68×68 preview tile. */
 .swc-PromptField-artifacts > slot::slotted([type="media"]) {
-  inline-size: var(--swc-prompt-field-artifact-media-inline-size, 68px);
-  min-inline-size: var(--swc-prompt-field-artifact-media-min-inline-size, 68px);
-  block-size: var(--swc-prompt-field-artifact-media-block-size, 68px);
-  min-block-size: var(--swc-prompt-field-artifact-media-min-block-size, 68px);
+  inline-size: var(--swc-prompt-field-artifact-media-inline-size, 64px);
+  min-inline-size: var(--swc-prompt-field-artifact-media-min-inline-size, 64px);
+  block-size: var(--swc-prompt-field-artifact-media-block-size, 64px);
+  min-block-size: var(--swc-prompt-field-artifact-media-min-block-size, 64px);
   aspect-ratio: 1 / 1;
 }
 

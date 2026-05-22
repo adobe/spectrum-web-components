@@ -25,9 +25,7 @@
 .swc-UploadArtifact-dismiss {
   display: flex;
   position: absolute;
-  inset-block-start: -12px;
-  inset-inline-end: -12px;
-  z-index: 1;
+  z-index: 2;
   align-items: center;
   justify-content: center;
   inline-size: var(--swc-upload-artifact-dismiss-inline-size, 24px);
@@ -50,6 +48,11 @@
 .swc-UploadArtifact-dismiss swc-icon {
   --swc-icon-inline-size: var(--swc-upload-artifact-dismiss-icon-inline-size, 10px);
   --swc-icon-block-size: var(--swc-upload-artifact-dismiss-icon-block-size, 10px);
+}
+
+:host([type="card"]) .swc-UploadArtifact-dismiss {
+  inset-block-start: -12px;
+  inset-inline-end: -12px;
 }
 
 .swc-UploadArtifact-surface {
@@ -149,8 +152,11 @@
 }
 
 :host([type="media"]) {
-  inline-size: var(--swc-upload-artifact-preview-size, 68px);
-  block-size: var(--swc-upload-artifact-preview-size, 68px);
+  flex: 0 0 auto;
+  inline-size: var(--swc-upload-artifact-preview-size, 64px);
+  min-inline-size: var(--swc-upload-artifact-preview-size, 64px);
+  block-size: var(--swc-upload-artifact-preview-size, 64px);
+  min-block-size: var(--swc-upload-artifact-preview-size, 64px);
 }
 
 :host([type="media"]) .swc-UploadArtifact {
@@ -159,15 +165,18 @@
 }
 
 :host([type="media"]) .swc-UploadArtifact-surface {
+  position: relative;
   flex-direction: column;
-  gap: token("spacing-100");
+  block-size: 100%;
+  border-radius: token("spacing-200");
   overflow: hidden;
 }
 
 :host([type="media"]) .swc-UploadArtifact-thumbnail {
+  block-size: 100%;
   background: token("gray-100");
   border: 1px solid transparent;
-  border-radius: token("corner-radius-200");
+  border-radius: token("spacing-200");
   overflow: hidden;
 }
 
@@ -184,36 +193,49 @@
   block-size: 100%;
 }
 
-:host([type="media"]) .swc-UploadArtifact-meta {
-  inline-size: 100%;
+:host([type="media"]) .swc-UploadArtifact-badge {
+  display: inline-flex;
+  position: absolute;
+  inset-block-end: token("corner-radius-75");
+  inset-inline-start: token("corner-radius-75");
+  z-index: 1;
+  align-items: center;
+  max-inline-size: calc(100% - (2 * token("corner-radius-75")));
+  min-block-size: 24px;
+  padding-block: token("spacing-50");
+  padding-inline: token("spacing-100");
+  font-family: token("sans-serif-font");
+  font-size: token("font-size-75");
+  font-weight: token("medium-font-weight");
+  line-height: token("line-height-font-size-75");
+  color: token("gray-25");
+  background: token("transparent-black-700");
+  border-radius: token("corner-radius-400");
 }
 
-:host([type="media"]) .swc-UploadArtifact-header {
-  display: flex;
-  gap: token("spacing-100");
-  align-items: flex-start;
-  justify-content: space-between;
-}
-
-:host([type="media"]) .swc-UploadArtifact-header > div {
-  min-inline-size: 0;
-}
-
-:host([type="media"]) .swc-UploadArtifact-title {
-  flex: 1 1 0;
-  min-inline-size: 0;
-  line-height: token("line-height-font-size-100");
-  overflow: hidden;
-}
-
-:host([type="media"]) .swc-UploadArtifact-title ::slotted(*) {
+:host([type="media"]) .swc-UploadArtifact-badge ::slotted(*) {
   display: block;
   min-inline-size: 0;
+  max-inline-size: 152px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-:host([type="media"]) .swc-UploadArtifact-subtitle {
-  line-height: token("line-height-font-size-75");
+:host([type="media"]) .swc-UploadArtifact-dismiss {
+  inset-block-start: token("spacing-75");
+  inset-inline-end: token("spacing-75");
+  inline-size: var(--swc-upload-artifact-media-dismiss-inline-size, 20px);
+  block-size: var(--swc-upload-artifact-media-dismiss-block-size, 20px);
+  color: token("gray-25");
+  background: token("transparent-black-700");
+  border: none;
+}
+
+:host([type="media"]) .swc-UploadArtifact-dismiss:hover {
+  background: token("transparent-black-800");
+}
+
+:host([type="media"]) .swc-UploadArtifact-actions {
+  display: none;
 }

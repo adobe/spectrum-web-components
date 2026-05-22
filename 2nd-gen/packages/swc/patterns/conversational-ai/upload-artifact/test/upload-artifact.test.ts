@@ -152,3 +152,40 @@ export const MediaPreviewOnlyTest: Story = {
     });
   },
 };
+
+export const MediaBadgeTest: Story = {
+  render: () => html`
+    <swc-upload-artifact type="media" dismissible>
+      <div slot="thumbnail" role="img" aria-label="PDF preview"></div>
+      <span slot="badge">PDF</span>
+    </swc-upload-artifact>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const el = await getComponent<UploadArtifact>(
+      canvasElement,
+      'swc-upload-artifact'
+    );
+
+    await step('media artifact renders badge overlay', async () => {
+      expect(
+        el.shadowRoot?.querySelector('.swc-UploadArtifact-badge')
+      ).toBeTruthy();
+      expect(el.querySelector('[slot="badge"]')?.textContent?.trim()).toBe(
+        'PDF'
+      );
+    });
+
+    await step(
+      'media dismiss button renders inside the preview surface',
+      async () => {
+        const surface = el.shadowRoot?.querySelector(
+          '.swc-UploadArtifact-surface'
+        );
+        const dismissButton = surface?.querySelector(
+          '.swc-UploadArtifact-dismiss'
+        );
+        expect(dismissButton).toBeTruthy();
+      }
+    );
+  },
+};

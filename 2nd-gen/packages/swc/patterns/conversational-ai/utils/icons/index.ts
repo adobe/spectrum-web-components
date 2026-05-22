@@ -51,6 +51,34 @@ export const ChevronUpIcon = (): TemplateResult => html`
   </svg>
 `;
 
+/** Chevron-left icon — used for scroll-back controls. */
+export const ChevronLeftIcon = (): TemplateResult => html`
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 20 20"
+    style="transform: rotate(-90deg);"
+  >
+    <path
+      fill="currentColor"
+      d="M14.5273 7.4668L10.5244 3.46973C10.2305 3.17578 9.75587 3.17774 9.46387 3.46973L5.4668 7.4668C5.17383 7.75977 5.17383 8.23438 5.4668 8.52735C5.61328 8.67383 5.80469 8.74708 5.99707 8.74708C6.18945 8.74708 6.38086 8.67384 6.52734 8.52735L9.25097 5.80372V15.75C9.25097 16.1641 9.58691 16.5 10.001 16.5C10.415 16.5 10.751 16.1641 10.751 15.75V5.81616L13.4668 8.52734C13.7607 8.82129 14.2353 8.81933 14.5273 8.52734C14.8203 8.23437 14.8203 7.7588 14.5273 7.4668Z"
+    />
+  </svg>
+`;
+
+/** Chevron-right icon — used for scroll-forward controls. */
+export const ChevronRightIcon = (): TemplateResult => html`
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 20 20"
+    style="transform: rotate(90deg);"
+  >
+    <path
+      fill="currentColor"
+      d="M14.5273 7.4668L10.5244 3.46973C10.2305 3.17578 9.75587 3.17774 9.46387 3.46973L5.4668 7.4668C5.17383 7.75977 5.17383 8.23438 5.4668 8.52735C5.61328 8.67383 5.80469 8.74708 5.99707 8.74708C6.18945 8.74708 6.38086 8.67384 6.52734 8.52735L9.25097 5.80372V15.75C9.25097 16.1641 9.58691 16.5 10.001 16.5C10.415 16.5 10.751 16.1641 10.751 15.75V5.81616L13.4668 8.52734C13.7607 8.82129 14.2353 8.81933 14.5273 8.52734C14.8203 8.23437 14.8203 7.7588 14.5273 7.4668Z"
+    />
+  </svg>
+`;
+
 /** Three-dots icon — used for the loading / AI-thinking state. */
 export const ThreeDotsIcon = (): TemplateResult => html`
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">

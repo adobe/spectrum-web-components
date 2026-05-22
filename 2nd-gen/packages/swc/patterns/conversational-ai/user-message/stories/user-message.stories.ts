@@ -10,53 +10,25 @@
  * governing permissions and limitations under the License.
  */
 
-import { html } from 'lit';
+import { html, LitElement } from 'lit';
+import { customElement, state } from 'lit/decorators.js';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
-import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
 import '../../conversation-turn/index.js';
+import '../../upload-artifact/index.js';
 import '../index.js';
 
-// ────────────────
-//    METADATA
-// ────────────────
-
-const { args, argTypes, template } = getStorybookHelpers('swc-user-message');
-delete (args as Record<string, unknown>).content;
-delete (argTypes as Record<string, unknown>).content;
-
-argTypes.type = {
-  ...argTypes.type,
-  control: { type: 'select' },
-  options: ['copy', 'card', 'media'],
-  table: {
-    category: 'attributes',
-    defaultValue: { summary: 'copy' },
-  },
-};
-
-// Wraps a single swc-user-message in a conversation turn for proper alignment.
 const withUserTurn = (story: () => unknown) => html`
   <swc-conversation-turn type="user">${story()}</swc-conversation-turn>
 `;
 
-/**
- * User-authored message bubble. Use inside `<swc-conversation-turn type="user">` for thread alignment.
- *
- *
- * Note: This component does not sanitize slotted content. When rendering user-provided
- * or AI-generated markup, consumers must sanitize input to prevent XSS and
- * validate link targets. This is the consumer's responsibility.
- */
 const meta: Meta = {
   title: 'Conversational AI/User message',
   component: 'swc-user-message',
-  args,
-  argTypes,
-  render: (args) => template(args),
   parameters: {
     docs: {
-      subtitle: 'User-submitted message rendered in the thread.',
+      subtitle:
+        'User-submitted message rendered in the thread with optional media artifacts, file artifacts, and text.',
     },
     layout: 'padded',
   },
@@ -66,147 +38,338 @@ const meta: Meta = {
 export { meta };
 export default meta;
 
-// ────────────────────
-//    AUTODOCS STORY
-// ────────────────────
-
 export const Playground: Story = {
-  args: {
-    type: 'copy',
-    'default-slot':
-      'Can you help me create a 45-minute presentation, with animations, for an executive update?',
-    'thumbnail-slot':
-      '<img src="https://placehold.co/180x180" alt="Placeholder" />',
-    'title-slot': 'Hilton commercial assets',
-    'subtitle-slot': '2026',
-  },
+  render: () => html`
+    <swc-user-message>
+      Can you help me create a 45-minute presentation, with animations, for an
+      executive update?
+    </swc-user-message>
+  `,
   decorators: [withUserTurn],
   tags: ['autodocs', 'dev'],
 };
 
-// ──────────────────────────────
-//    OVERVIEW STORY
-// ──────────────────────────────
-
 export const Overview: Story = {
-  args: {
-    type: 'copy',
-    'default-slot':
-      'Can you help me create a 45-minute presentation, with animations, for an executive update?',
-    'thumbnail-slot':
-      '<img src="https://placehold.co/180x180" alt="Placeholder" />',
-    'title-slot': 'Hilton commercial assets',
-    'subtitle-slot': '2026',
-  },
+  render: () => html`
+    <swc-user-message>
+      Can you help me create a 45-minute presentation, with animations, for an
+      executive update?
+    </swc-user-message>
+  `,
   decorators: [withUserTurn],
   tags: ['overview'],
 };
 
-// ──────────────────────────
-//    ANATOMY STORY
-// ──────────────────────────
-
-/**
- * A user message consists of:
- *
- * 1. **Bubble** — Rounded container with a neutral gray background (`gray-50`)
- * 2. **Default slot** — The message content: plain text, a card attachment, or image-first content
- */
-export const Anatomy: Story = {
-  args: {
-    'default-slot': 'Can you help me create a 45-minute presentation?',
-  },
-  decorators: [withUserTurn],
-  tags: ['anatomy'],
-};
-
-// ──────────────────────────
-//    OPTIONS STORIES
-// ──────────────────────────
-
-/**
- * Bubble sizing and padding are inferred from slotted content:
- *
- * - **Copy** — default text-only content with the bubble's default width and padding
- * - **Card** — compact attachment layout with thumbnail, title, and subtitle
- * - **Media** — larger preview-first attachment layout with metadata beneath the preview
- */
 export const Content: Story = {
   render: () => html`
     <div
-      style="display:flex;flex-direction:column;gap:32px;max-inline-size:640px;"
+      style="display:flex;flex-direction:column;gap:32px;max-inline-size:800px;"
     >
-      <div style="display:flex;flex-direction:column;gap:8px;">
-        <swc-conversation-turn type="user">
-          <swc-user-message>
-            Can you help me create a 45-minute presentation, with animations,
-            for an executive update?
-          </swc-user-message>
-        </swc-conversation-turn>
-        <span class="swc-Detail swc-Detail--sizeS">Copy</span>
-      </div>
-      <div style="display:flex;flex-direction:column;gap:8px;">
-        <swc-conversation-turn type="user">
-          <swc-user-message type="card">
+      <swc-conversation-turn type="user">
+        <swc-user-message>
+          <swc-upload-artifact slot="artifacts-media" type="media">
             <div
               slot="thumbnail"
-              style="inline-size:32px;block-size:32px;border-radius:3px;background:var(--swc-gray-200);flex-shrink:0;"
+              style="background:linear-gradient(135deg,#a78bfa,#f43f5e);"
               role="img"
-              aria-label="File"
+              aria-label="Campaign still"
             ></div>
-            <span slot="title">Hilton commercial assets</span>
-            <span slot="subtitle">2026</span>
-          </swc-user-message>
-        </swc-conversation-turn>
-        <span class="swc-Detail swc-Detail--sizeS">Card</span>
-      </div>
-      <div style="display:flex;flex-direction:column;gap:8px;">
-        <swc-conversation-turn type="user">
-          <swc-user-message type="media">
+          </swc-upload-artifact>
+          <swc-upload-artifact slot="artifacts-media" type="media">
             <div
               slot="thumbnail"
-              style="background:linear-gradient(135deg,#a78bfa,#f472b6);"
+              style="background:linear-gradient(135deg,#7c3aed,#ef4444);"
               role="img"
-              aria-label="Campaign preview"
+              aria-label="Storyboard frame"
             ></div>
-            <span slot="title">Hilton commercial assets</span>
-            <span slot="subtitle">2026</span>
-          </swc-user-message>
-        </swc-conversation-turn>
-        <span class="swc-Detail swc-Detail--sizeS">Media</span>
-      </div>
+          </swc-upload-artifact>
+          <swc-upload-artifact slot="artifacts-media" type="media">
+            <div
+              slot="thumbnail"
+              style="background:linear-gradient(135deg,#818cf8,#ec4899);"
+              role="img"
+              aria-label="Moodboard"
+            ></div>
+          </swc-upload-artifact>
+          <swc-upload-artifact slot="artifacts-media" type="media">
+            <div
+              slot="thumbnail"
+              style="background:linear-gradient(135deg,#c084fc,#f43f5e);"
+              role="img"
+              aria-label="Title slide"
+            ></div>
+          </swc-upload-artifact>
+
+          <swc-upload-artifact slot="artifacts-file" type="card">
+            <div slot="thumbnail" role="img" aria-label="Excel"></div>
+            <span slot="title">Launch brief budget</span>
+            <span slot="subtitle">Excel</span>
+          </swc-upload-artifact>
+          <swc-upload-artifact slot="artifacts-file" type="card">
+            <div slot="thumbnail" role="img" aria-label="PDF"></div>
+            <span slot="title">FY26Q1 Competitor analysis</span>
+            <span slot="subtitle">PDF</span>
+          </swc-upload-artifact>
+
+          Can you help me create a 45-minute presentation, with animations, for
+          an executive update?
+        </swc-user-message>
+      </swc-conversation-turn>
     </div>
   `,
   parameters: { 'section-order': 1 },
   tags: ['options'],
 };
 
-// ────────────────────────────────
-//    ACCESSIBILITY STORY
-// ────────────────────────────────
+export const OverflowIndicator: Story = {
+  render: () => html`
+    <swc-user-message>
+      <swc-upload-artifact slot="artifacts-media" type="media">
+        <div
+          slot="thumbnail"
+          style="background:linear-gradient(135deg,#a78bfa,#f43f5e);"
+          role="img"
+          aria-label="Campaign still"
+        ></div>
+      </swc-upload-artifact>
+      <swc-upload-artifact slot="artifacts-media" type="media">
+        <div
+          slot="thumbnail"
+          style="background:linear-gradient(135deg,#7c3aed,#ef4444);"
+          role="img"
+          aria-label="Storyboard frame"
+        ></div>
+      </swc-upload-artifact>
+      <swc-upload-artifact slot="artifacts-media" type="media">
+        <div
+          slot="thumbnail"
+          style="background:linear-gradient(135deg,#818cf8,#ec4899);"
+          role="img"
+          aria-label="Moodboard"
+        ></div>
+      </swc-upload-artifact>
+      <button
+        slot="artifacts-media"
+        class="swc-UserMessage-overflow-indicator"
+        type="button"
+      >
+        View all (8)
+      </button>
 
-/**
- * ### Features
- *
- * The `<swc-user-message>` element implements the following accessibility features:
- *
- * #### Semantic structure
- *
- * - The bubble is rendered as a `<div>` acting as a visual container
- * - `type="copy"` uses the default slot for message text
- * - `type="card"` and `type="media"` use named slots for thumbnail, title, and subtitle
- *
- * ### Best practices
- *
- * - Ensure message text is descriptive and self-contained
- * - For card and media attachments, ensure titles/subtitles and `aria-label`/`alt` text are present for previews
- */
-export const Accessibility: Story = {
-  args: {
-    type: 'copy',
-    'default-slot':
-      'Can you help me create a 45-minute presentation, with animations, for an executive update?',
-  },
+      <swc-upload-artifact slot="artifacts-file" type="card">
+        <div slot="thumbnail" role="img" aria-label="Excel"></div>
+        <span slot="title">Launch brief budget</span>
+        <span slot="subtitle">Excel</span>
+      </swc-upload-artifact>
+      <swc-upload-artifact slot="artifacts-file" type="card">
+        <div slot="thumbnail" role="img" aria-label="PDF"></div>
+        <span slot="title">FY26Q1 Competitor analysis</span>
+        <span slot="subtitle">PDF</span>
+      </swc-upload-artifact>
+
+      Can you help me create a 45-minute presentation, with animations, for an
+      executive update?
+    </swc-user-message>
+  `,
   decorators: [withUserTurn],
-  tags: ['a11y'],
+  tags: ['states'],
+};
+
+@customElement('swc-user-message-overflow-demo')
+class UserMessageOverflowDemo extends LitElement {
+  @state()
+  private open = false;
+
+  protected override createRenderRoot(): this {
+    return this;
+  }
+
+  private _openOverlay(): void {
+    this.open = true;
+  }
+
+  private _closeOverlay(): void {
+    this.open = false;
+  }
+
+  public override render() {
+    return html`
+      <div style="position:relative;inline-size:800px;min-block-size:520px;">
+        <swc-conversation-turn type="user">
+          <swc-user-message
+            @swc-user-message-view-all-click=${this._openOverlay}
+          >
+            <swc-upload-artifact slot="artifacts-media" type="media">
+              <div
+                slot="thumbnail"
+                style="background:linear-gradient(135deg,#a78bfa,#f43f5e);"
+                role="img"
+                aria-label="Campaign still"
+              ></div>
+            </swc-upload-artifact>
+            <swc-upload-artifact slot="artifacts-media" type="media">
+              <div
+                slot="thumbnail"
+                style="background:linear-gradient(135deg,#7c3aed,#ef4444);"
+                role="img"
+                aria-label="Storyboard frame"
+              ></div>
+            </swc-upload-artifact>
+            <swc-upload-artifact slot="artifacts-media" type="media">
+              <div
+                slot="thumbnail"
+                style="background:linear-gradient(135deg,#818cf8,#ec4899);"
+                role="img"
+                aria-label="Moodboard"
+              ></div>
+            </swc-upload-artifact>
+            <button
+              slot="artifacts-media"
+              class="swc-UserMessage-overflow-indicator"
+              type="button"
+            >
+              View all (8)
+            </button>
+            <swc-upload-artifact slot="artifacts-file" type="card">
+              <div slot="thumbnail" role="img" aria-label="Excel"></div>
+              <span slot="title">Launch brief budget</span>
+              <span slot="subtitle">Excel</span>
+            </swc-upload-artifact>
+            <swc-upload-artifact slot="artifacts-file" type="card">
+              <div slot="thumbnail" role="img" aria-label="PDF"></div>
+              <span slot="title">FY26Q1 Competitor analysis</span>
+              <span slot="subtitle">PDF</span>
+            </swc-upload-artifact>
+            Can you help me create a 45-minute presentation, with animations,
+            for an executive update?
+          </swc-user-message>
+        </swc-conversation-turn>
+
+        ${this.open
+          ? html`
+              <div
+                style="position:absolute;inset:0;background:rgb(0 0 0 / 52%);display:flex;align-items:center;justify-content:center;"
+              >
+                <div
+                  style="display:grid;grid-template-columns:repeat(4,128px);gap:8px;padding:20px;background:token('gray-25');border-radius:token('corner-radius-200');"
+                >
+                  ${Array.from({ length: 8 }).map(
+                    (_, i) => html`
+                      <div
+                        style="inline-size:128px;block-size:128px;border-radius:token('corner-radius-200');background:linear-gradient(135deg,#a78bfa,#f43f5e);"
+                        role="img"
+                        aria-label=${`Full artifact ${i + 1}`}
+                      ></div>
+                    `
+                  )}
+                </div>
+                <button
+                  type="button"
+                  @click=${this._closeOverlay}
+                  style="position:absolute;inset-block-start:16px;inset-inline-end:16px;"
+                >
+                  Close
+                </button>
+              </div>
+            `
+          : null}
+      </div>
+    `;
+  }
+}
+
+void UserMessageOverflowDemo;
+
+export const ViewAllOverlay: Story = {
+  render: () => html`
+    <swc-user-message-overflow-demo></swc-user-message-overflow-demo>
+  `,
+  tags: ['states'],
+};
+
+export const MediaGrid: Story = {
+  render: () => html`
+    <swc-user-message>
+      <swc-upload-artifact slot="artifacts-media" type="media">
+        <div
+          slot="thumbnail"
+          style="background:linear-gradient(135deg,#a78bfa,#f43f5e);"
+          role="img"
+          aria-label="Campaign still 1"
+        ></div>
+      </swc-upload-artifact>
+      <swc-upload-artifact slot="artifacts-media" type="media">
+        <div
+          slot="thumbnail"
+          style="background:linear-gradient(135deg,#7c3aed,#ef4444);"
+          role="img"
+          aria-label="Campaign still 2"
+        ></div>
+      </swc-upload-artifact>
+      <swc-upload-artifact slot="artifacts-media" type="media">
+        <div
+          slot="thumbnail"
+          style="background:linear-gradient(135deg,#818cf8,#ec4899);"
+          role="img"
+          aria-label="Campaign still 3"
+        ></div>
+      </swc-upload-artifact>
+      <swc-upload-artifact slot="artifacts-media" type="media">
+        <div
+          slot="thumbnail"
+          style="background:linear-gradient(135deg,#c084fc,#f43f5e);"
+          role="img"
+          aria-label="Campaign still 4"
+        ></div>
+      </swc-upload-artifact>
+      <swc-upload-artifact slot="artifacts-media" type="media">
+        <div
+          slot="thumbnail"
+          style="background:linear-gradient(135deg,#6366f1,#f97316);"
+          role="img"
+          aria-label="Campaign still 5"
+        ></div>
+      </swc-upload-artifact>
+      <swc-upload-artifact slot="artifacts-media" type="media">
+        <div
+          slot="thumbnail"
+          style="background:linear-gradient(135deg,#8b5cf6,#ef4444);"
+          role="img"
+          aria-label="Campaign still 6"
+        ></div>
+      </swc-upload-artifact>
+      <swc-upload-artifact slot="artifacts-media" type="media">
+        <div
+          slot="thumbnail"
+          style="background:linear-gradient(135deg,#a855f7,#ec4899);"
+          role="img"
+          aria-label="Campaign still 7"
+        ></div>
+      </swc-upload-artifact>
+      <swc-upload-artifact slot="artifacts-media" type="media">
+        <div
+          slot="thumbnail"
+          style="background:linear-gradient(135deg,#9333ea,#f43f5e);"
+          role="img"
+          aria-label="Campaign still 8"
+        ></div>
+      </swc-upload-artifact>
+
+      <swc-upload-artifact slot="artifacts-file" type="card">
+        <div slot="thumbnail" role="img" aria-label="Excel"></div>
+        <span slot="title">Launch brief budget</span>
+        <span slot="subtitle">Excel</span>
+      </swc-upload-artifact>
+      <swc-upload-artifact slot="artifacts-file" type="card">
+        <div slot="thumbnail" role="img" aria-label="PDF"></div>
+        <span slot="title">FY26Q1 Competitor analysis</span>
+        <span slot="subtitle">PDF</span>
+      </swc-upload-artifact>
+
+      Can you help me create a 45-minute presentation, with animations, for an
+      executive update?
+    </swc-user-message>
+  `,
+  decorators: [withUserTurn],
+  tags: ['states'],
 };
