@@ -529,6 +529,8 @@ export abstract class TabsBase extends SpectrumElement {
   // ───────────────────────────────────
 
   /**
+   * @internal
+   *
    * Recalculates the selection indicator's position and size based
    * on the currently selected tab element. Uses CSS transforms for
    * smooth animation between tab positions.
