@@ -6656,6 +6656,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/core@workspace:2nd-gen/packages/core"
   dependencies:
+    "@floating-ui/dom": "npm:1.7.4"
     "@lit-labs/observers": "npm:2.0.2"
     glob: "npm:11.0.3"
     lit: "npm:^2.5.0 || ^3.1.3"

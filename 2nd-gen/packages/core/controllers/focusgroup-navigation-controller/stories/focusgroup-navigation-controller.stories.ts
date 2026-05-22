@@ -60,6 +60,54 @@ const argTypes = {
   },
 };
 
+const controllerApi = {
+  methods: [
+    {
+      member: 'setOptions(partial)',
+      description: 'Merge new options and reapply roving tabindex.',
+    },
+    {
+      member: 'refresh()',
+      description: 'Re-query items and sync tabindex (call after DOM changes).',
+    },
+    {
+      member: 'setActiveItem(element)',
+      description:
+        'Set roving `tabindex` to the given eligible item (does **not** call `focus()`). Returns `false` if ineligible.',
+    },
+    {
+      member: 'focusFirstItemByTextPrefix(prefix)',
+      description:
+        'Set roving `tabindex` to the first eligible item matching prefix (case-insensitive). Does **not** call `focus()`. Returns `false` if no match.',
+    },
+    {
+      member: 'getActiveItem()',
+      description: 'Returns the eligible item with `tabindex="0"`, if any.',
+    },
+  ],
+  additionalOptions: [
+    {
+      name: 'getItems',
+      type: '() => HTMLElement[]',
+      default: '(required)',
+      description: 'Current navigable items.',
+    },
+    {
+      name: 'onActiveItemChange',
+      type: '(el) => void',
+      default: '—',
+      description: 'Callback when active item changes.',
+    },
+  ],
+  events: [
+    {
+      name: 'swc-focusgroup-navigation-active-change',
+      description:
+        'Dispatched on the host as `focusgroupNavigationActiveChange` with `detail: { activeElement }` when the active item changes. The event bubbles and is composed.',
+    },
+  ],
+};
+
 /**
  * `FocusgroupNavigationController` implements the
  * [roving `tabindex` pattern](https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#managingfocuswithincomponentsusingarovingtabindex)
@@ -84,6 +132,7 @@ const meta: Meta = {
     ></demo-focusgroup-playground>
   `,
   parameters: {
+    controllerApi,
     docs: {
       subtitle:
         'Roving tabindex and directional keys for composite widgets (APG-aligned, focusgroup-like).',
@@ -403,49 +452,6 @@ export const TextPrefixFocus: Story = {
   parameters: {
     'section-order': 7,
   },
-};
-
-/**
- * ### Methods
- *
- * | Member | Description |
- * |---|---|
- * | `setOptions(partial)` | Merge new options and reapply roving tabindex. |
- * | `refresh()` | Re-query items and sync tabindex (call after DOM changes). |
- * | `setActiveItem(element)` | Set roving `tabindex` to the given eligible item (does **not** call `focus()`). Returns `false` if ineligible. |
- * | `focusFirstItemByTextPrefix(prefix)` | Set roving `tabindex` to the first eligible item matching prefix (case-insensitive). Does **not** call `focus()`. Returns `false` if no match. |
- * | `getActiveItem()` | Returns the eligible item with `tabindex="0"`, if any. |
- * ### Events
- *
- * The controller dispatches **`swc-focusgroup-navigation-active-change`**
- * (`focusgroupNavigationActiveChange`) on the host with `detail: { activeElement }` when the
- * active item changes. The event bubbles and is composed.
- *
- * ```typescript
- * import { focusgroupNavigationActiveChange } from
- *   '@spectrum-web-components/core/controllers/focusgroup-navigation-controller.js';
- *
- * host.addEventListener(focusgroupNavigationActiveChange, (event) => {
- *   console.log('Active item:', event.detail.activeElement);
- * });
- * ```
- *
- * ### Options
- *
- * | Option | Type | Default | Description |
- * |---|---|---|---|
- * | `getItems` | `() => HTMLElement[]` | (required) | Current navigable items. |
- * | `direction` | `'horizontal'` \| `'vertical'` \| `'both'` \| `'grid'` | (required) | Arrow-key mode. **`both`**: Left/Right and Up/Down on the same `getItems()` sequence. |
- * | `wrap` | `boolean` | `false` | Wrap at ends. |
- * | `memory` | `boolean` | `true` | Remember last focused for re-entry via Tab. |
- * | `skipDisabled` | `boolean` | `false` | Skip `disabled` / `aria-disabled="true"` items. |
- * | `pageStep` | `number` | — | Non-zero: **Page Up** / **Page Down** move this many items (linear) or rows (**grid**). `0` / omitted / non-finite: disabled. |
- * | `onActiveItemChange` | `(el) => void` | — | Callback when active item changes. |
- *
- * See the Controls table above for interactive demos of the configurable options.
- */
-export const API: Story = {
-  tags: ['api', 'description-only'],
 };
 
 // ────────────────────────────────
