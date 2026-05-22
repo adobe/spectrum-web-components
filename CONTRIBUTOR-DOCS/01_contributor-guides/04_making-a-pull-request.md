@@ -119,6 +119,8 @@ When writing changesets:
 
 For detailed examples and best practices, see the [Writing Changesets guide](https://opensource.adobe.com/spectrum-web-components/guides/writing-changesets/#writing-changesets).
 
+For the 2nd-gen changelog format and changeset template, see the [Changelog strategy](15_changelog-strategy.md).
+
 
 ### Conventional commits
 
