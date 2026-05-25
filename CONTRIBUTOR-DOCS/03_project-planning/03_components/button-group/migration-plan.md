@@ -428,7 +428,6 @@ Planned rendering shape:
 - [Spectrum CSS — `spectrum-two` branch — `components/buttongroup/index.css`](https://github.com/adobe/spectrum-css/blob/spectrum-two/components/buttongroup/index.css)
 - [Spectrum CSS migration PR #2457](https://github.com/adobe/spectrum-css/pull/2457)
 - [Figma S2 / Web (Desktop scale) — Button group](https://www.figma.com/design/Mngz9H7WZLbrCvGQf3GnsY/S2---Web--Desktop-scale-?node-id=13663-6530)
-- [Figma PNG reference](./figma-button-group-s2-desktop.png)
 - [WAI-ARIA APG: Toolbar pattern](https://www.w3.org/WAI/ARIA/apg/patterns/toolbar/)
 - [WAI-ARIA APG: Keyboard navigation inside components](https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#keyboardnavigationinsidecomponents)
 - [Badge migration reference](../../02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md#reference-badge-migration)
