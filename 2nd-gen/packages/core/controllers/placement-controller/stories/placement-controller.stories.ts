@@ -302,11 +302,6 @@ export const ContainerPadding: Story = {
  * overflows. Disabling flip does **not** disable **`shift`**; the panel may still slide
  * along an axis to reduce clipping.
  *
- * Use the **shouldFlip** toggle below to compare both modes against the same trigger and
- * surface — the trigger sits at the bottom of a constrained container so the requested
- * `'bottom'` placement does not fit; you'll see the computed placement reorient when flip is
- * enabled and stay put when it is disabled.
- *
  * ```typescript
  * this.placement.start(this.trigger, this.panel, {
  *   shouldFlip: true,
@@ -318,10 +313,7 @@ export const ContainerPadding: Story = {
  * ```
  */
 export const ShouldFlip: Story = {
-  tags: ['behaviors'],
-  render: () => html`
-    <demo-placement-should-flip></demo-placement-should-flip>
-  `,
+  tags: ['behaviors', 'description-only'],
   parameters: { 'section-order': 4 },
 };
 

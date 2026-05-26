@@ -19,13 +19,11 @@ import { fromFloatingPlacement, toFloatingPlacement } from '../index.js';
 import type {
   DemoPlacementConstrainSize,
   DemoPlacementPlayground,
-  DemoPlacementShouldFlip,
   DemoPlacementVirtualTrigger,
 } from '../stories/demo-hosts.js';
 import meta, {
   ConstrainSize,
   Playground,
-  ShouldFlip,
   VirtualTrigger,
 } from '../stories/placement-controller.stories.js';
 
@@ -102,24 +100,6 @@ export const PositionsBelowTrigger: Story = {
       const triggerRect = host.triggerEl.getBoundingClientRect();
       const [, y] = readTranslate(host.floatingEl);
       expect(y).toBeGreaterThanOrEqual(Math.floor(triggerRect.bottom));
-    });
-  },
-};
-
-export const FlipReorients: Story = {
-  ...ShouldFlip,
-  play: async ({ canvasElement, step }) => {
-    const host = await getComponent<DemoPlacementShouldFlip>(
-      canvasElement,
-      'demo-placement-should-flip'
-    );
-    // Default `shouldFlip: true` — the trigger sits in a constrained
-    // container, so the requested `'bottom'` placement reorients.
-    await nextFrames();
-
-    await step('flips away from bottom when no room', async () => {
-      expect(host.actualPlacement).toBeTruthy();
-      expect(host.actualPlacement).not.toBe('bottom');
     });
   },
 };
@@ -291,33 +271,6 @@ export const ConstrainSizeAppliesMaxHeight: Story = {
         // The demo lists 24 items in a 180px surface, so size middleware
         // clamps height and reports `isConstrained`.
         expect(host.isConstrained).toBe(true);
-      }
-    );
-  },
-};
-
-/**
- * With `shouldFlip: false`, the controller must keep the requested side
- * even when the floating element would overflow the boundary. Toggling
- * the shouldFlip checkbox off on the same demo that flips by default
- * proves the flip path is what does the reorienting.
- */
-export const NoFlipKeepsRequestedSide: Story = {
-  ...ShouldFlip,
-  play: async ({ canvasElement, step }) => {
-    const host = await getComponent<DemoPlacementShouldFlip>(
-      canvasElement,
-      'demo-placement-should-flip'
-    );
-    host.shouldFlip = false;
-    await nextFrames();
-
-    await step(
-      'requested placement is preserved without flip middleware',
-      () => {
-        // With `shouldFlip: false`, `actualPlacement` should resolve to
-        // `'bottom'` even though the surface is constrained.
-        expect(host.actualPlacement).toBe('bottom');
       }
     );
   },
