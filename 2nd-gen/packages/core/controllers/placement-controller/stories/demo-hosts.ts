@@ -891,7 +891,6 @@ export class DemoPlacementConstrainSize extends LitElement {
         block-size: 180px;
         display: grid;
         place-items: center;
-        outline: 1px dashed currentcolor;
         overflow: hidden;
       }
 
@@ -964,7 +963,10 @@ export class DemoPlacementVirtualTrigger extends LitElement {
     css`
       .surface {
         position: relative;
-        block-size: 280px;
+        inline-size: 100%;
+        max-inline-size: 320px;
+        aspect-ratio: 1;
+        margin-inline: auto;
         display: grid;
         place-items: center;
         outline: 1px dashed currentcolor;
@@ -1021,7 +1023,9 @@ export class DemoPlacementVirtualTrigger extends LitElement {
 
   protected override firstUpdated(): void {
     this.virtualTrigger.contextElement = this.surfaceEl;
-    bindController(this.controller, this.virtualTrigger, this.floatingEl, {});
+    bindController(this.controller, this.virtualTrigger, this.floatingEl, {
+      offset: 12,
+    });
   }
 
   override disconnectedCallback(): void {
@@ -1058,7 +1062,11 @@ export class DemoPlacementVirtualTrigger extends LitElement {
         @click=${this.onClick}
         @keydown=${this.onKeydown}
       >
-        <span class=${classMap(demoClasses(BODY_XS))}>
+        <span
+          class=${classMap(
+            demoClasses('swc-Body swc-Body--sizeL swc-Typography--emphasized')
+          )}
+        >
           Click to move anchor
         </span>
         <div

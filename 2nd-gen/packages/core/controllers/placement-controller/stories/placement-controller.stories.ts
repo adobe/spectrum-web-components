@@ -98,9 +98,7 @@ const argTypes = {
 
 /**
  * `PlacementController` positions a floating element relative to a trigger using
- * [Floating UI](https://floating-ui.com/) (`computePosition` + `autoUpdate`). Use it inside
- * Lit-based custom elements for popover, picker, menu, tooltip, and other anchored
- * floating UI patterns.
+ * [Floating UI](https://floating-ui.com/) (`computePosition` + `autoUpdate`).
  *
  * The controller owns **geometry only** — open/close lifecycle, ARIA, focus, and dismissal
  * remain the caller's responsibility.
@@ -123,7 +121,7 @@ const meta: Meta = {
   parameters: {
     docs: {
       subtitle:
-        'Floating UI-backed positioning for popover, picker, menu, and other anchored patterns.',
+        'Floating UI-backed positioning for anchored floating elements.',
       canvas: { sourceState: 'none' },
     },
   },
@@ -297,13 +295,12 @@ export const ContainerPadding: Story = {
 /**
  * With **`shouldFlip: true`** (default), Floating UI **`flip`** middleware may move the floating
  * element to the **opposite side** when the requested **`placement`** does not fit within the
- * overflow boundary. Typical for popovers, menus, and pickers that must stay fully visible.
- * **`actualPlacement`** and **`onPlacementChange`** reflect the computed side after flip.
+ * overflow boundary. **`actualPlacement`** and **`onPlacementChange`** reflect the computed
+ * side after flip.
  *
  * With **`shouldFlip: false`**, the floating element stays on the requested side even if it
- * overflows — useful for tooltips that must never jump above the trigger, or when a pointer /
- * design asset is tied to a specific side. Disabling flip does **not** disable **`shift`**;
- * the panel may still slide along an axis to reduce clipping.
+ * overflows. Disabling flip does **not** disable **`shift`**; the panel may still slide
+ * along an axis to reduce clipping.
  *
  * Use the **shouldFlip** toggle below to compare both modes against the same trigger and
  * surface — the trigger sits at the bottom of a constrained container so the requested
@@ -311,13 +308,11 @@ export const ContainerPadding: Story = {
  * enabled and stay put when it is disabled.
  *
  * ```typescript
- * // Popover / menu — flip when needed
  * this.placement.start(this.trigger, this.panel, {
  *   shouldFlip: true,
  * });
  *
- * // Tooltip — stay on requested side
- * this.placement.start(this.trigger, this.tip, {
+ * this.placement.start(this.trigger, this.panel, {
  *   shouldFlip: false,
  * });
  * ```
@@ -332,12 +327,11 @@ export const ShouldFlip: Story = {
 
 /**
  * With **`constrainSize: true`**, Floating UI **`size`** middleware sets inline
- * **`maxHeight`** and **`maxWidth`** on the floating element so long list content scrolls
+ * **`maxHeight`** and **`maxWidth`** on the floating element so long content scrolls
  * inside the viewport instead of overflowing off-screen. Readonly **`isConstrained`** is
  * `true` when height was clamped on the last compute.
  *
- * Use for picker, menu, and combobox list surfaces. Leave disabled for compact popovers and
- * tooltips. Opt-in — hosts enable it only when their content can overflow.
+ * Opt-in — leave disabled when content is guaranteed to fit.
  *
  * ```typescript
  * this.placement.start(this.trigger, this.listbox, {
