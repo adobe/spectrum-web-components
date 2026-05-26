@@ -1,7 +1,10 @@
 import {
   Meta,
   Title,
+  Primary,
+  Controls,
   Stories,
+  ArgTypes,
   Description,
   Subtitle,
   HeaderMdx,
@@ -62,15 +65,36 @@ export const ConditionalSection = ({ tag, title, hideTitle = false }) => {
     );
 
 };
-export const ConditionalAPIReference = () => (
-
-<>
-  <HeaderMdx as="h2" id="api">
-    API
-  </HeaderMdx>
-  <ApiTable />
-</>
+export const ConditionalAPISection = () => {
+const resolvedOf = useOf('meta', ['meta']);
+const tags = resolvedOf?.csfFile?.meta?.tags ?? [];
+const hasCustomAPIDocs = tags.includes('api') || Object.values(resolvedOf.csfFile.stories).some(
+(story) => story.tags?.includes('api')
 );
+
+    if (!hasCustomAPIDocs) {
+        return (
+          <>
+            <HeaderMdx as="h2" id="api">API</HeaderMdx>
+
+            <Primary />
+            <Controls />
+          </>
+        );
+    }
+
+    return (
+        <>
+            <HeaderMdx as="h2" id="api">API</HeaderMdx>
+            <Primary />
+            <Controls />
+
+            <hr />
+            <SpectrumStories tag="api" hideTitle={true} />
+        </>
+    );
+
+};
 
 export const ConditionalGettingStarted = () => {
     const resolvedOf = useOf('meta', ['meta']);
@@ -100,7 +124,9 @@ export const ConditionalGettingStarted = () => {
 <ConditionalSection tag="a11y" title="Accessibility" hideTitle={true} />
 <ConditionalSection tag="full-pattern" title="Full pattern" />
 
-<ConditionalAPIReference />
+## API
+
+<ApiTable />
 <AdvancedExamplesStories />
 <ConditionalSection tag="appendix" title="Appendix" hideTitle={true} />
 

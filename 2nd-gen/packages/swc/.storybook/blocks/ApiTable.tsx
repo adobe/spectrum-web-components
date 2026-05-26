@@ -10,7 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
-import { HeaderMdx, Markdown, useOf } from '@storybook/addon-docs/blocks';
+import { HeaderMdx, useOf } from '@storybook/addon-docs/blocks';
 import type {
   Attribute,
   ClassField,
@@ -78,311 +78,9 @@ const tableStyle: React.CSSProperties = {
 /** Storybook argType shape (subset we care about). */
 interface ArgType {
   options?: string[];
-  description?: string;
-  control?: string | { type?: string };
   table?: {
-    category?: string;
     type?: { summary?: string };
-    defaultValue?: { summary?: string };
   };
-}
-
-interface ControllerApiMethod {
-  member: string;
-  description: string;
-}
-
-interface ControllerApiOption {
-  name: string;
-  type?: string;
-  default?: string;
-  description: string;
-}
-
-interface ControllerApiType {
-  name: string;
-  description: string;
-}
-
-interface ControllerApiEvent {
-  name: string;
-  description: string;
-}
-
-export interface ControllerApiReference {
-  methods?: ControllerApiMethod[];
-  readonlyProperties?: ControllerApiOption[];
-  additionalOptions?: ControllerApiOption[];
-  types?: ControllerApiType[];
-  events?: ControllerApiEvent[];
-}
-
-function inferArgTypeSummary(name: string, argType: ArgType): string {
-  if (argType.table?.type?.summary) {
-    return argType.table.type.summary;
-  }
-
-  if (argType.options?.length) {
-    return argType.options.map((option) => `'${option}'`).join(' | ');
-  }
-
-  const control = argType.control;
-  const controlType = typeof control === 'string' ? control : control?.type;
-
-  if (controlType === 'boolean') {
-    return 'boolean';
-  }
-
-  if (controlType === 'number') {
-    return 'number';
-  }
-
-  return name;
-}
-
-function DescriptionCell({ children }: { children?: string }) {
-  if (!children) {
-    return null;
-  }
-
-  return <Markdown>{children}</Markdown>;
-}
-
-function ControllerMethodsTable({
-  methods,
-}: {
-  methods: ControllerApiMethod[];
-}) {
-  if (methods.length === 0) {
-    return null;
-  }
-
-  return (
-    <>
-      <HeaderMdx as="h3" id="methods">
-        Methods
-      </HeaderMdx>
-      <div style={scrollStyle}>
-        <table style={tableStyle}>
-          <thead>
-            <tr>
-              <th>Member</th>
-              <th style={{ minWidth: 300 }}>Description</th>
-            </tr>
-          </thead>
-          <tbody>
-            {methods.map((method) => (
-              <tr key={method.member}>
-                <td>
-                  <code>{method.member}</code>
-                </td>
-                <td>
-                  <DescriptionCell>{method.description}</DescriptionCell>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </>
-  );
-}
-
-function ControllerReadonlyPropertiesTable({
-  properties,
-}: {
-  properties: ControllerApiOption[];
-}) {
-  if (properties.length === 0) {
-    return null;
-  }
-
-  return (
-    <>
-      <HeaderMdx as="h3" id="readonly-properties">
-        Readonly properties
-      </HeaderMdx>
-      <div style={scrollStyle}>
-        <table style={tableStyle}>
-          <thead>
-            <tr>
-              <th>Property</th>
-              <th>Type</th>
-              <th style={{ minWidth: 300 }}>Description</th>
-            </tr>
-          </thead>
-          <tbody>
-            {properties.map((property) => (
-              <tr key={property.name}>
-                <td>
-                  <code>{property.name}</code>
-                </td>
-                <td>{property.type ? <code>{property.type}</code> : '-'}</td>
-                <td>
-                  <DescriptionCell>{property.description}</DescriptionCell>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </>
-  );
-}
-
-function ControllerOptionsTable({
-  argTypes,
-  additionalOptions = [],
-}: {
-  argTypes: Record<string, ArgType>;
-  additionalOptions?: ControllerApiOption[];
-}) {
-  const rows: ControllerApiOption[] = [
-    ...Object.entries(argTypes)
-      .filter(([, argType]) => argType.table?.category === 'Options')
-      .map(([name, argType]) => ({
-        name,
-        type: inferArgTypeSummary(name, argType),
-        default: argType.table?.defaultValue?.summary ?? '—',
-        description: argType.description ?? '',
-      })),
-    ...additionalOptions,
-  ];
-
-  if (rows.length === 0) {
-    return null;
-  }
-
-  return (
-    <>
-      <HeaderMdx as="h3" id="options">
-        Options
-      </HeaderMdx>
-      <div style={scrollStyle}>
-        <table style={tableStyle}>
-          <thead>
-            <tr>
-              <th>Option</th>
-              <th>Type</th>
-              <th>Default</th>
-              <th style={{ minWidth: 300 }}>Description</th>
-            </tr>
-          </thead>
-          <tbody>
-            {rows.map((option) => (
-              <tr key={option.name}>
-                <td>
-                  <code>{option.name}</code>
-                </td>
-                <td>{option.type ? <code>{option.type}</code> : '-'}</td>
-                <td>
-                  {option.default != null ? <code>{option.default}</code> : '-'}
-                </td>
-                <td>
-                  <DescriptionCell>{option.description}</DescriptionCell>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </>
-  );
-}
-
-function ControllerTypesTable({ types }: { types: ControllerApiType[] }) {
-  if (types.length === 0) {
-    return null;
-  }
-
-  return (
-    <>
-      <HeaderMdx as="h3" id="types">
-        Types
-      </HeaderMdx>
-      <div style={scrollStyle}>
-        <table style={tableStyle}>
-          <thead>
-            <tr>
-              <th>Type</th>
-              <th style={{ minWidth: 300 }}>Description</th>
-            </tr>
-          </thead>
-          <tbody>
-            {types.map((type) => (
-              <tr key={type.name}>
-                <td>
-                  <code>{type.name}</code>
-                </td>
-                <td>
-                  <DescriptionCell>{type.description}</DescriptionCell>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </>
-  );
-}
-
-function ControllerEventsTable({ events }: { events: ControllerApiEvent[] }) {
-  if (events.length === 0) {
-    return null;
-  }
-
-  return (
-    <>
-      <HeaderMdx as="h3" id="events">
-        Events
-      </HeaderMdx>
-      <div style={scrollStyle}>
-        <table style={tableStyle}>
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th style={{ minWidth: 300 }}>Description</th>
-            </tr>
-          </thead>
-          <tbody>
-            {events.map((event) => (
-              <tr key={event.name}>
-                <td>
-                  <code>{event.name}</code>
-                </td>
-                <td>
-                  <DescriptionCell>{event.description}</DescriptionCell>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </>
-  );
-}
-
-function ControllerApiTables({
-  controllerApi,
-  argTypes,
-}: {
-  controllerApi: ControllerApiReference;
-  argTypes: Record<string, ArgType>;
-}) {
-  return (
-    <>
-      <ControllerMethodsTable methods={controllerApi.methods ?? []} />
-      <ControllerReadonlyPropertiesTable
-        properties={controllerApi.readonlyProperties ?? []}
-      />
-      <ControllerOptionsTable
-        argTypes={argTypes}
-        additionalOptions={controllerApi.additionalOptions}
-      />
-      <ControllerTypesTable types={controllerApi.types ?? []} />
-      <ControllerEventsTable events={controllerApi.events ?? []} />
-    </>
-  );
 }
 
 function PropertiesTable({
@@ -605,40 +303,19 @@ function CssPartsTable({ cssParts }: { cssParts: CssPart[] }) {
 // ────────────────────────────
 
 /**
- * Custom API reference tables sourced from the Custom Elements Manifest for
- * components, or from `parameters.controllerApi` plus playground `argTypes` for
- * controllers.
+ * Custom API reference tables sourced directly from the Custom Elements
+ * Manifest. Renders categorized, read-only tables for Properties, Slots,
+ * Events, CSS Custom Properties, and CSS Parts.
  */
 export function ApiTable() {
   const resolvedOf = useOf('meta', ['meta']);
   const meta = resolvedOf.csfFile?.meta as {
     component?: string;
     argTypes?: Record<string, ArgType>;
-    tags?: string[];
-    parameters?: {
-      controllerApi?: ControllerApiReference;
-    };
   };
-  const tags = resolvedOf.preparedMeta?.tags ?? meta?.tags ?? [];
-  const argTypes = resolvedOf.preparedMeta?.argTypes ?? meta?.argTypes ?? {};
-  const controllerApi =
-    resolvedOf.preparedMeta?.parameters?.controllerApi ??
-    meta?.parameters?.controllerApi;
-
-  if (tags.includes('controller')) {
-    if (!controllerApi) {
-      return <p>No controller API data available.</p>;
-    }
-
-    return (
-      <ControllerApiTables
-        controllerApi={controllerApi}
-        argTypes={argTypes as Record<string, ArgType>}
-      />
-    );
-  }
-
   const tagName = meta?.component;
+  const argTypes = resolvedOf.preparedMeta?.argTypes ?? meta?.argTypes ?? {};
+
   const cem = window.__STORYBOOK_CUSTOM_ELEMENTS_MANIFEST__;
   if (!cem || !tagName) {
     return <p>No API data available.</p>;

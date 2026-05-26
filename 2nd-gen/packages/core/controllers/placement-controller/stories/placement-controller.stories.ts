@@ -96,60 +96,6 @@ const argTypes = {
   },
 } satisfies Meta['argTypes'];
 
-const controllerApi = {
-  methods: [
-    {
-      member: 'start(trigger, floating, options?)',
-      description:
-        'Begin positioning; tear down any prior session and subscribe to Floating UI `autoUpdate`. Skips compute when the floating element has zero dimensions until size is available.',
-    },
-    {
-      member: 'stop()',
-      description:
-        'Tear down positioning, unsubscribe from `autoUpdate`, and clear `actualPlacement` and `isConstrained`. Called from `hostDisconnected` when the Lit host disconnects.',
-    },
-    {
-      member: 'recompute()',
-      description:
-        'Force one `computePosition` pass outside `autoUpdate` — for example after floating content reflows or a virtual trigger moves without layout events. No-op if not started.',
-    },
-  ],
-  readonlyProperties: [
-    {
-      name: 'actualPlacement',
-      type: 'Placement or null',
-      description:
-        'Computed placement after `flip` (hyphenated). `null` when stopped.',
-    },
-    {
-      name: 'isConstrained',
-      type: 'boolean',
-      description:
-        'Whether `constrainSize` clamped height on the last compute.',
-    },
-  ],
-  additionalOptions: [
-    {
-      name: 'onPlacementChange',
-      type: 'callback',
-      default: '—',
-      description:
-        'Called when computed placement changes. Receives the hyphenated `Placement`.',
-    },
-  ],
-  types: [
-    {
-      name: 'Placement',
-      description: 'Hyphenated placement union (22 values).',
-    },
-    {
-      name: 'VirtualTrigger',
-      description:
-        '{ getBoundingClientRect(): DOMRect; contextElement?: Element }',
-    },
-  ],
-};
-
 /**
  * `PlacementController` positions a floating element relative to a trigger using
  * [Floating UI](https://floating-ui.com/) (`computePosition` + `autoUpdate`). Use it inside
@@ -175,7 +121,6 @@ const meta: Meta = {
     ></demo-placement-playground>
   `,
   parameters: {
-    controllerApi,
     docs: {
       subtitle:
         'Floating UI-backed positioning for popover, picker, menu, and other anchored patterns.',
@@ -449,6 +394,51 @@ export const VirtualTrigger: Story = {
     <demo-placement-virtual-trigger></demo-placement-virtual-trigger>
   `,
   parameters: { 'section-order': 7 },
+};
+
+// ──────────────────────────
+//    API STORY
+// ──────────────────────────
+
+/**
+ * ### Methods
+ *
+ * | Member | Description |
+ * |---|---|
+ * | `start(trigger, floating, options?)` | Begin positioning; tear down any prior session and subscribe to Floating UI `autoUpdate`. Skips compute when the floating element has zero dimensions until size is available. |
+ * | `stop()` | Tear down positioning, unsubscribe from `autoUpdate`, and clear `actualPlacement` and `isConstrained`. Called from `hostDisconnected` when the Lit host disconnects. |
+ * | `recompute()` | Force one `computePosition` pass outside `autoUpdate` — for example after floating content reflows or a virtual trigger moves without layout events. No-op if not started. |
+ *
+ * ### Readonly properties
+ *
+ * | Property | Type | Description |
+ * |---|---|---|
+ * | `actualPlacement` | `Placement \| null` | Computed placement after `flip` (hyphenated). `null` when stopped. |
+ * | `isConstrained` | `boolean` | Whether `constrainSize` clamped height on the last compute. |
+ *
+ * ### Options
+ *
+ * | Option | Type | Default | Description |
+ * |---|---|---|---|
+ * | `placement` | `Placement` | `'bottom'` | Preferred side and alignment relative to the trigger (hyphenated; 22 values). |
+ * | `offset` | `number` | `0` | Gap along the placement direction between trigger and floating element (px). |
+ * | `crossOffset` | `number` | `0` | Slide along the trigger edge (px), perpendicular to the placement direction. |
+ * | `containerPadding` | `number` | `8` | Minimum inset from the overflow boundary used by `flip`, `shift`, and `size`. |
+ * | `shouldFlip` | `boolean` | `true` | Whether `flip` may reorient when the requested placement does not fit. |
+ * | `constrainSize` | `boolean` | `false` | When `true`, applies `size` middleware (max-height/max-width). |
+ * | `onPlacementChange` | `(placement: Placement) => void` | — | Called when the computed placement changes. |
+ *
+ * ### Types
+ *
+ * | Type | Description |
+ * |---|---|
+ * | `Placement` | Hyphenated placement union (22 values). |
+ * | `VirtualTrigger` | `{ getBoundingClientRect(): DOMRect; contextElement?: Element }` |
+ *
+ * See the Controls table above for interactive demos of the configurable options.
+ */
+export const API: Story = {
+  tags: ['api', 'description-only'],
 };
 
 // ────────────────────────────────
