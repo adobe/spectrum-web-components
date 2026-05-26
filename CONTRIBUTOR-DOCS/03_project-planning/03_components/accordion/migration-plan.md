@@ -309,7 +309,7 @@ Follow the [washing machine — core vs SWC](../../02_workstreams/02_2nd-gen-com
 | `--mod-accordion-divider-color` | `--swc-accordion-item-divider-color` | Renamed; controls the border color of each item's top and bottom dividers |
 | `--mod-accordion-component-edge-to-text` | `--swc-accordion-content-padding-inline` | Renamed; controls the inline padding of the panel body. Set to `0` for edge-to-edge content |
 | `--mod-accordion-background-color-*` | Not exposed | Driven by internal tokens via `:has()` state selectors |
-| `--mod-accordion-corner-radius` | Not exposed | Driven by `--_swc-accordion-corner-radius` (private; size-scaled) |
+| `--mod-accordion-corner-radius` | `--swc-accordion-item-corner-radius` | Exposed; controls the border-radius of the header button in `:focus-visible`. Defaults to the size-scaled corner-radius token; overridden per `size` attribute on the item host |
 | `--mod-accordion-item-header-color-*` | Not exposed | Driven by internal tokens via `:has()` state selectors |
 | `--mod-accordion-focus-indicator-*` | Not exposed | Driven by global focus indicator tokens |
 | `--mod-accordion-item-content-*` (typography) | Not exposed | Driven by global typography tokens |

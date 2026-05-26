@@ -11,10 +11,6 @@
  */
 
 :host {
-  --_swc-accordion-corner-radius: token("corner-radius-medium-size-medium");
-  --_swc-accordion-header-bg: transparent;
-  --_swc-accordion-header-text-color: token("neutral-content-color-default");
-
   display: block;
   inline-size: 100%;
 }
@@ -26,6 +22,9 @@
 /* ── Item wrapper ───────────────────────────────────────────────────── */
 
 .swc-AccordionItem {
+  --_swc-accordion-header-background: transparent;
+  --_swc-accordion-header-text-color: token("neutral-content-color-default");
+
   inline-size: 100%;
   border-block-end: token("border-width-100") solid var(--swc-accordion-item-divider-color, var(--_swc-accordion-item-border-color, token("gray-200")));
 }
@@ -66,7 +65,7 @@
   line-height: token("line-height-100");
   color: var(--_swc-accordion-header-text-color);
   text-align: start;
-  background-color: var(--_swc-accordion-header-bg);
+  background-color: var(--_swc-accordion-header-background);
   border: 0;
   border-radius: var(--_swc-accordion-header-corner-radius, 0);
   appearance: none;
@@ -76,31 +75,31 @@
    outline and border-radius stay on the button so the focus ring matches
    the hover footprint (toggle area only, independent of the actions slot). */
 .swc-AccordionItem:has(.swc-AccordionItem-header:focus-visible) {
-  --_swc-accordion-header-bg: token("transparent-black-100");
+  --_swc-accordion-header-background: token("transparent-black-100");
   --_swc-accordion-header-text-color: token("neutral-content-color-key-focus");
 }
 
 .swc-AccordionItem-header:focus-visible {
-  border-radius: var(--_swc-accordion-corner-radius, token("corner-radius-medium-size-medium"));
+  border-radius: var(--swc-accordion-item-corner-radius, token("corner-radius-medium-size-medium"));
   outline: token("focus-indicator-thickness") solid token("focus-indicator-color");
   outline-offset: calc(token("accordion-focus-indicator-gap") * -1);
 }
 
 @media (hover: hover) {
   .swc-AccordionItem:has(.swc-AccordionItem-header:hover) {
-    --_swc-accordion-header-bg: token("transparent-black-100");
+    --_swc-accordion-header-background: token("transparent-black-100");
     --_swc-accordion-header-text-color: token("neutral-content-color-hover");
   }
 }
 
 .swc-AccordionItem:has(.swc-AccordionItem-header:active) {
-  --_swc-accordion-header-bg: token("transparent-black-300");
+  --_swc-accordion-header-background: token("transparent-black-300");
   --_swc-accordion-header-text-color: token("neutral-content-color-down");
 }
 
 .swc-AccordionItem:has(.swc-AccordionItem-header[aria-disabled="true"]),
 .swc-AccordionItem:has(.swc-AccordionItem-header[aria-disabled="true"]:hover) {
-  --_swc-accordion-header-bg: transparent;
+  --_swc-accordion-header-background: transparent;
   --_swc-accordion-header-text-color: token("disabled-content-color");
 }
 
@@ -194,7 +193,7 @@
 /* ── Size: small ────────────────────────────────────────────────────── */
 
 :host([size="s"]) {
-  --_swc-accordion-corner-radius: token("corner-radius-medium-size-small");
+  --swc-accordion-item-corner-radius: token("corner-radius-medium-size-small");
 }
 
 :host([size="s"]) .swc-AccordionItem-header {
@@ -211,7 +210,7 @@
 /* ── Size: large ────────────────────────────────────────────────────── */
 
 :host([size="l"]) {
-  --_swc-accordion-corner-radius: token("corner-radius-medium-size-large");
+  --swc-accordion-item-corner-radius: token("corner-radius-medium-size-large");
 }
 
 :host([size="l"]) .swc-AccordionItem-header {
@@ -228,7 +227,7 @@
 /* ── Size: extra-large ──────────────────────────────────────────────── */
 
 :host([size="xl"]) {
-  --_swc-accordion-corner-radius: token("corner-radius-medium-size-extra-large");
+  --swc-accordion-item-corner-radius: token("corner-radius-medium-size-extra-large");
 }
 
 :host([size="xl"]) .swc-AccordionItem-header {
