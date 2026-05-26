@@ -24,6 +24,7 @@
     - [Accordion migration roadmap](accordion/rendering-and-styling-migration-analysis.md)
 - Action Button
     - [Action button accessibility migration analysis](action-button/accessibility-migration-analysis.md)
+    - [Action button migration plan](action-button/migration-plan.md)
     - [Action button migration roadmap](action-button/rendering-and-styling-migration-analysis.md)
 - Action Group
     - [Action group migration roadmap](action-group/rendering-and-styling-migration-analysis.md)
