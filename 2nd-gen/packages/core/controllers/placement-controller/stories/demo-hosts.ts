@@ -963,9 +963,8 @@ export class DemoPlacementVirtualTrigger extends LitElement {
     css`
       .surface {
         position: relative;
-        inline-size: 100%;
-        max-inline-size: 320px;
-        aspect-ratio: 1;
+        inline-size: 320px;
+        block-size: 320px;
         margin-inline: auto;
         display: grid;
         place-items: center;
