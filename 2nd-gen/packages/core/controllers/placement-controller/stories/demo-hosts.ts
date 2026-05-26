@@ -528,13 +528,17 @@ const flipDemoStyles = css`
   .surface {
     inline-size: 100%;
     max-inline-size: 14rem;
-    block-size: 200px;
+    block-size: 220px;
+    min-block-size: 120px;
+    max-block-size: 80vh;
     display: grid;
     align-items: end;
     justify-items: center;
-    outline: 1px dashed color-mix(in srgb, currentcolor 35%, transparent);
     padding: 16px;
     overflow: hidden;
+    resize: vertical;
+    background: color-mix(in srgb, CanvasText 4%, Canvas);
+    border-radius: 4px;
   }
 
   .floating {
@@ -550,6 +554,12 @@ const flipDemoStyles = css`
 
   .caption {
     margin: 0;
+    text-align: center;
+  }
+
+  .hint {
+    margin: 0;
+    max-inline-size: 28rem;
     text-align: center;
   }
 `;
@@ -628,6 +638,12 @@ export class DemoPlacementShouldFlip extends LitElement {
             shouldFlip: ${String(this.shouldFlip)}
           </span>
         </label>
+        <p class=${classMap(demoClasses({ hint: true }, FIELD_HINT))}>
+          Drag the bottom edge of the box to resize it. As the trigger moves
+          toward the bottom of the viewport, the floating panel runs out of room
+          below it — flip kicks in when enabled, otherwise the panel stays on
+          the requested side.
+        </p>
         <div class="surface">
           <button type="button" class=${classMap(demoClasses(DETAIL_XS))}>
             Trigger
