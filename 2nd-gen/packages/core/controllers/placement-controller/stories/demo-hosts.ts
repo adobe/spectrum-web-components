@@ -30,8 +30,7 @@ import {
 declare global {
   interface HTMLElementTagNameMap {
     'demo-placement-playground': DemoPlacementPlayground;
-    'demo-placement-flip': DemoPlacementFlip;
-    'demo-placement-no-flip': DemoPlacementNoFlip;
+    'demo-placement-should-flip': DemoPlacementShouldFlip;
     'demo-placement-offset': DemoPlacementOffset;
     'demo-placement-constrain-size': DemoPlacementConstrainSize;
     'demo-placement-virtual-trigger': DemoPlacementVirtualTrigger;
@@ -555,75 +554,23 @@ const flipDemoStyles = css`
   }
 `;
 
-@customElement('demo-placement-flip')
-export class DemoPlacementFlip extends LitElement {
-  static override styles = [sharedStyles, flipDemoStyles];
-
-  @property({ type: String, attribute: 'actual-placement', reflect: true })
-  actualPlacement: Placement | null = null;
-
-  @query('button') triggerEl!: HTMLButtonElement;
-  @query('.floating') floatingEl!: HTMLDivElement;
-
-  private controller = new PlacementController(this);
-
-  protected override firstUpdated(): void {
-    bindController(
-      this.controller,
-      this.triggerEl,
-      this.floatingEl,
-      { shouldFlip: true },
-      (next) => {
-        this.actualPlacement = next;
-      }
-    );
-  }
-
-  override disconnectedCallback(): void {
-    super.disconnectedCallback?.();
-    this.controller.stop();
-  }
-
-  protected override render(): TemplateResult {
-    return html`
-      <div class="demo">
-        <p class=${classMap(demoClasses({ caption: true }, FIELD_HINT))}>
-          shouldFlip: true
-        </p>
-        <div class="surface">
-          <button type="button" class=${classMap(demoClasses(DETAIL_XS))}>
-            Trigger
-          </button>
-          <div class="floating">
-            <div class=${classMap(demoClasses(DETAIL_XS))}>
-              computed: ${this.actualPlacement}
-            </div>
-            ${FLIP_DEMO_ITEMS.map(
-              (label) => html`
-                <div class=${classMap(demoClasses({ item: true }, BODY_XS))}>
-                  ${label}
-                </div>
-              `
-            )}
-          </div>
-        </div>
-      </div>
-    `;
-  }
-}
-
-@customElement('demo-placement-no-flip')
-export class DemoPlacementNoFlip extends LitElement {
+@customElement('demo-placement-should-flip')
+export class DemoPlacementShouldFlip extends LitElement {
   static override styles = [
     sharedStyles,
     flipDemoStyles,
     css`
-      :host {
-        display: block;
-        margin-block-start: 32px;
+      .toggle {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        margin-block-end: 12px;
       }
     `,
   ];
+
+  @property({ type: Boolean, attribute: 'should-flip', reflect: true })
+  shouldFlip = true;
 
   @property({ type: String, attribute: 'actual-placement', reflect: true })
   actualPlacement: Placement | null = null;
@@ -634,15 +581,13 @@ export class DemoPlacementNoFlip extends LitElement {
   private controller = new PlacementController(this);
 
   protected override firstUpdated(): void {
-    bindController(
-      this.controller,
-      this.triggerEl,
-      this.floatingEl,
-      { shouldFlip: false },
-      (next) => {
-        this.actualPlacement = next;
-      }
-    );
+    this.bind();
+  }
+
+  protected override updated(changed: PropertyValues): void {
+    if (changed.has('shouldFlip')) {
+      this.bind();
+    }
   }
 
   override disconnectedCallback(): void {
@@ -650,12 +595,39 @@ export class DemoPlacementNoFlip extends LitElement {
     this.controller.stop();
   }
 
+  private bind(): void {
+    if (!this.triggerEl || !this.floatingEl) {
+      return;
+    }
+    bindController(
+      this.controller,
+      this.triggerEl,
+      this.floatingEl,
+      { shouldFlip: this.shouldFlip },
+      (next) => {
+        this.actualPlacement = next;
+      }
+    );
+  }
+
+  private onShouldFlipChange(event: Event): void {
+    this.shouldFlip = (event.target as HTMLInputElement).checked;
+  }
+
   protected override render(): TemplateResult {
     return html`
       <div class="demo">
-        <p class=${classMap(demoClasses({ caption: true }, FIELD_HINT))}>
-          shouldFlip: false
-        </p>
+        <label class="toggle">
+          <input
+            type="checkbox"
+            aria-label="Should flip"
+            .checked=${this.shouldFlip}
+            @change=${this.onShouldFlipChange}
+          />
+          <span class=${classMap(demoClasses(DETAIL_XS))}>
+            shouldFlip: ${String(this.shouldFlip)}
+          </span>
+        </label>
         <div class="surface">
           <button type="button" class=${classMap(demoClasses(DETAIL_XS))}>
             Trigger
