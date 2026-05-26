@@ -16,6 +16,7 @@
     - [Why This Happens](#why-this-happens)
     - [Why This Is a Problem](#why-this-is-a-problem)
     - [✅ Correct Approach](#-correct-approach)
+    - [Exception: styles that must target the host element directly](#exception-styles-that-must-target-the-host-element-directly)
 - [2. Preserving `--mod-*` as an Extra Indirection Layer](#2-preserving---mod--as-an-extra-indirection-layer)
     - [❌ Anti-Pattern](#-anti-pattern)
     - [Why This Happens](#why-this-happens)
@@ -114,6 +115,16 @@ Each anti-pattern is grounded in real Spectrum source patterns. **Badge** and **
 See the migrated Badge where `:host` is limited to layout (`display`, `place-self`, `vertical-align`) and all visual styling lives on `.swc-Badge`.
 
 📖 See: *Component CSS Style Guide → [Rule order](01_component-css.md#rule-order)*
+
+### Exception: styles that must target the host element directly
+
+Three categories of styles may legitimately live on `:host`, each for a distinct reason:
+
+1. **UA style resets** — the browser applies default styles directly to the host element (for example, the native popover stylesheet). Those cannot be overridden from an inner class and must be reset on `:host`.
+2. **Entry/exit transitions** — `opacity`, `transition-*`, and `transition-behavior: allow-discrete` must be on `:host` when the host element is itself the transition target (for instance, when `@starting-style` or `overlay` applies to the host rather than a descendant).
+3. **Positioning surface** — `position: absolute`, `inset: auto`, and dimension constraints belong on `:host` when an external controller (such as a placement controller) writes coordinates directly to the host element.
+
+📖 See: *Component CSS Style Guide → [When to use `:host`](01_component-css.md#when-to-use-host)*
 
 
 ## 2. Preserving `--mod-*` as an Extra Indirection Layer

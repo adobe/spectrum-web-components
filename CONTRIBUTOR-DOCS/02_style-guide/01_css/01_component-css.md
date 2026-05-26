@@ -232,6 +232,40 @@ Use `:host` only for layout participation. Do not put visual styles here.
 
 **Why**: `:host` is part of the public styling API. Visual styles here are harder to override. See [anti-pattern #1](05_anti-patterns.md#1-leaving-visual-styles-on-host).
 
+#### Exception: styles that must target the host element directly
+
+Three categories of styles may legitimately live on `:host`, each for a distinct reason:
+
+1. **UA style resets** — the browser applies default styles directly to the host element (for example, the native popover stylesheet sets `padding`, `margin`, `background`, `border`, and `color` on any `[popover]` element). Those defaults cannot be overridden from an inner class and must be reset on `:host`.
+2. **Entry/exit transitions** — `opacity`, `transition-*`, and `transition-behavior: allow-discrete` must be on `:host` when the host element is itself the transition target — for instance, when `@starting-style` or `overlay` applies to the host rather than a descendant.
+3. **Positioning surface** — `position: absolute`, `inset: auto`, and dimension constraints belong on `:host` when an external controller (such as a placement controller) writes coordinates directly to the host element.
+
+```css
+:host {
+  /* UA reset */
+  padding: 0;
+  margin: 0;
+  color: unset;
+  background: transparent;
+  border: none;
+  overflow: visible;
+
+  /* Positioning surface for placement controller */
+  position: absolute;
+  inset: auto;
+  max-inline-size: min(100%, token("component-maximum-width"));
+
+  /* Entry/exit transition — must be on :host for @starting-style */
+  opacity: 0;
+  transition-property: transform, opacity, overlay, display;
+  transition-timing-function: ease-in-out;
+  transition-duration: token("animation-duration-100");
+  transition-behavior: allow-discrete;
+}
+```
+
+All other visual styles still belong on the inner wrapper class (`.swc-ComponentName`).
+
 ### When to use `:host([attribute])`
 
 Use `:host([attribute])` when the variant or state should expose custom properties for consumer overrides. See [variant implementation patterns](#variant-implementation-patterns) and [size variant patterns](#size-variant-patterns) for detailed examples.

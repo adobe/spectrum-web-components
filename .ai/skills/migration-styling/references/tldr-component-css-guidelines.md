@@ -72,8 +72,11 @@
 
 ### 1. `:host` vs Component Class
 
-Put only layout-participation styles on `:host`. Put actual visuals on `.swcComponentName` or internal parts.
-→ See [01_component-css](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/01_component-css.md)
+Put only layout-participation styles on `:host`. Put actual visuals on `.swc-ComponentName` or internal parts.
+
+**Exception**: three categories of styles may legitimately live on `:host` — each for a distinct reason: UA resets when the browser applies default styles directly to the host element (for example, the native popover stylesheet); transition properties (`opacity`, `transition-*`, `transition-behavior: allow-discrete`) when the host is itself the transition target (for example, when `@starting-style` applies to the host); and positioning surface (`position: absolute`, `inset: auto`, dimension constraints) when an external controller such as a placement controller writes coordinates directly to the host element.
+
+→ See [01_component-css#when-to-use-host](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/01_component-css.md#when-to-use-host)
 
 ### 2. Stylesheet Order
 
