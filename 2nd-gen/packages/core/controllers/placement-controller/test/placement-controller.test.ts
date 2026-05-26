@@ -9,6 +9,7 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
+import { html } from 'lit';
 import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
@@ -19,6 +20,7 @@ import { fromFloatingPlacement, toFloatingPlacement } from '../index.js';
 import type {
   DemoPlacementConstrainSize,
   DemoPlacementPlayground,
+  DemoPlacementTestFixture,
   DemoPlacementVirtualTrigger,
 } from '../stories/demo-hosts.js';
 import meta, {
@@ -26,6 +28,12 @@ import meta, {
   Playground,
   VirtualTrigger,
 } from '../stories/placement-controller.stories.js';
+
+const testFixtureStory: Story = {
+  render: () => html`
+    <demo-placement-test-fixture></demo-placement-test-fixture>
+  `,
+};
 
 function readTranslate(el: HTMLElement): [number, number] {
   const match = el.style.translate.match(/^(-?\d*\.?\d+)px\s+(-?\d*\.?\d+)px$/);
@@ -300,6 +308,182 @@ export const RapidStartReplacesPriorSession: Story = {
       host.placement = 'bottom-end';
       await nextFrames();
       expect(host.actualPlacement).toBe('bottom-end');
+    });
+  },
+};
+
+/**
+ * With `shouldFlip: true` and a floating panel that can't fit below a
+ * trigger pinned to the viewport bottom, `flip` middleware reorients to
+ * the opposite side.
+ */
+export const FlipReorients: Story = {
+  ...testFixtureStory,
+  play: async ({ canvasElement, step }) => {
+    const host = await getComponent<DemoPlacementTestFixture>(
+      canvasElement,
+      'demo-placement-test-fixture'
+    );
+    host.placement = 'bottom';
+    host.triggerPosition = 'bottom-center';
+    host.tallFloating = true;
+    host.shouldFlip = true;
+    await nextFrames();
+
+    await step('actualPlacement reorients away from bottom', () => {
+      expect(host.actualPlacement).toBeTruthy();
+      expect(host.actualPlacement).not.toBe('bottom');
+    });
+  },
+};
+
+/**
+ * With `shouldFlip: false`, the controller keeps the requested side even
+ * when the floating panel overflows the boundary.
+ */
+export const NoFlipKeepsRequestedSide: Story = {
+  ...testFixtureStory,
+  play: async ({ canvasElement, step }) => {
+    const host = await getComponent<DemoPlacementTestFixture>(
+      canvasElement,
+      'demo-placement-test-fixture'
+    );
+    host.placement = 'bottom';
+    host.triggerPosition = 'bottom-center';
+    host.tallFloating = true;
+    host.shouldFlip = false;
+    await nextFrames();
+
+    await step('actualPlacement stays at the requested side', () => {
+      expect(host.actualPlacement).toBe('bottom');
+    });
+  },
+};
+
+/**
+ * The `offset` option adds pixels along the placement direction. With
+ * placement `'bottom'`, increasing `offset` should push the floating
+ * element further down (larger `translateY`).
+ */
+export const OffsetMovesAlongPlacementAxis: Story = {
+  ...testFixtureStory,
+  play: async ({ canvasElement, step }) => {
+    const host = await getComponent<DemoPlacementTestFixture>(
+      canvasElement,
+      'demo-placement-test-fixture'
+    );
+    host.placement = 'bottom';
+    host.triggerPosition = 'top-center';
+    host.offset = 0;
+    await nextFrames();
+    const [, y0] = readTranslate(host.floatingEl);
+
+    await step('offset: 40 shifts translateY by ~40px', async () => {
+      host.offset = 40;
+      await nextFrames();
+      const [, y40] = readTranslate(host.floatingEl);
+      expect(y40 - y0).toBeGreaterThanOrEqual(30);
+      expect(y40 - y0).toBeLessThanOrEqual(50);
+    });
+  },
+};
+
+/**
+ * The `crossOffset` option slides along the trigger edge. With placement
+ * `'bottom'`, increasing `crossOffset` should shift the floating element
+ * sideways (`translateX`) without changing `translateY` materially.
+ */
+export const CrossOffsetMovesAlongTriggerEdge: Story = {
+  ...testFixtureStory,
+  play: async ({ canvasElement, step }) => {
+    const host = await getComponent<DemoPlacementTestFixture>(
+      canvasElement,
+      'demo-placement-test-fixture'
+    );
+    host.placement = 'bottom';
+    host.triggerPosition = 'center';
+    host.crossOffset = 0;
+    await nextFrames();
+    const [x0, y0] = readTranslate(host.floatingEl);
+
+    await step(
+      'crossOffset: 40 shifts translateX, not translateY',
+      async () => {
+        host.crossOffset = 40;
+        await nextFrames();
+        const [x40, y40] = readTranslate(host.floatingEl);
+        expect(Math.abs(x40 - x0)).toBeGreaterThan(20);
+        expect(Math.abs(y40 - y0)).toBeLessThan(5);
+      }
+    );
+  },
+};
+
+/**
+ * The `containerPadding` option controls the inset enforced by `shift`
+ * when the floating element would overflow the boundary. With the
+ * trigger near the right edge, raising `containerPadding` should push
+ * the floating element further inward (smaller `translateX`).
+ */
+export const ContainerPaddingMovesPanelInward: Story = {
+  ...testFixtureStory,
+  play: async ({ canvasElement, step }) => {
+    const host = await getComponent<DemoPlacementTestFixture>(
+      canvasElement,
+      'demo-placement-test-fixture'
+    );
+    host.placement = 'bottom';
+    host.triggerPosition = 'top-right';
+    host.containerPadding = 8;
+    await nextFrames();
+    const [xSmall] = readTranslate(host.floatingEl);
+
+    await step(
+      'larger containerPadding pulls the panel further inside the boundary',
+      async () => {
+        host.containerPadding = 64;
+        await nextFrames();
+        const [xLarge] = readTranslate(host.floatingEl);
+        // With trigger near the right edge, shift keeps the panel inside
+        // the viewport. A larger padding means the panel sits further
+        // from the right edge — i.e. a smaller translateX.
+        expect(xLarge).toBeLessThan(xSmall);
+      }
+    );
+  },
+};
+
+/**
+ * `onPlacementChange` is documented to fire only when the computed
+ * placement differs from the synchronous initial value. When the panel
+ * fits on the requested side, the callback must not fire. When `flip`
+ * reorients, it fires once with the new placement.
+ */
+export const OnPlacementChangeFiresOnChangeOnly: Story = {
+  ...testFixtureStory,
+  play: async ({ canvasElement, step }) => {
+    const host = await getComponent<DemoPlacementTestFixture>(
+      canvasElement,
+      'demo-placement-test-fixture'
+    );
+    host.placement = 'bottom';
+    host.triggerPosition = 'top-center';
+    host.tallFloating = false;
+    host.shouldFlip = true;
+    await nextFrames();
+
+    await step('no callback when computed placement matches requested', () => {
+      expect(host.placementChanges).toEqual([]);
+    });
+
+    await step('callback fires when flip reorients', async () => {
+      host.triggerPosition = 'bottom-center';
+      host.tallFloating = true;
+      await nextFrames();
+      expect(host.placementChanges.length).toBeGreaterThan(0);
+      expect(host.placementChanges[host.placementChanges.length - 1]).not.toBe(
+        'bottom'
+      );
     });
   },
 };

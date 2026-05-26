@@ -35,6 +35,7 @@ declare global {
     'demo-placement-virtual-trigger': DemoPlacementVirtualTrigger;
     'demo-placement-placements': DemoPlacementPlacements;
     'demo-placement-cell': DemoPlacementCell;
+    'demo-placement-test-fixture': DemoPlacementTestFixture;
   }
 }
 
@@ -1045,6 +1046,198 @@ class DemoPlacementCell extends LitElement {
           <span class=${classMap(demoClasses(DETAIL_XS))}>
             ${this.placement}
           </span>
+        </div>
+      </div>
+    `;
+  }
+}
+
+/**
+ * Test-only fixture. Renders a configurable trigger + floating element so
+ * test play functions can drive the controller through real DOM at a known
+ * geometry. Not surfaced from any docs story — only the tests reference it.
+ *
+ * Geometry controls:
+ *  - `triggerPosition` pins the trigger to a corner / edge / center of the
+ *    surface (which fills the viewport), so flip and shift behaviour can be
+ *    set up deterministically.
+ *  - `tallFloating` swaps in a 600px-tall floating panel, useful for forcing
+ *    the bottom placement to overflow.
+ *
+ * Observables:
+ *  - `actualPlacement` reflects the controller's computed placement.
+ *  - `placementChanges` records each `onPlacementChange` invocation (reset
+ *    on every rebind), so tests can assert firing semantics.
+ *  - `controller` is exposed so tests can call `recompute()` directly.
+ */
+type TriggerPosition =
+  | 'center'
+  | 'top-left'
+  | 'top-center'
+  | 'top-right'
+  | 'bottom-center'
+  | 'bottom-right';
+
+@customElement('demo-placement-test-fixture')
+export class DemoPlacementTestFixture extends LitElement {
+  static override styles = css`
+    :host {
+      display: block;
+      position: relative;
+      inline-size: 100%;
+      block-size: 100vh;
+    }
+
+    .surface {
+      position: relative;
+      inline-size: 100%;
+      block-size: 100%;
+    }
+
+    button.trigger {
+      position: absolute;
+      inline-size: 40px;
+      block-size: 40px;
+      margin: 0;
+      padding: 0;
+    }
+
+    button.trigger[data-position='center'] {
+      inset-block-start: 50%;
+      inset-inline-start: 50%;
+      translate: -50% -50%;
+    }
+
+    button.trigger[data-position='top-left'] {
+      inset-block-start: 8px;
+      inset-inline-start: 8px;
+    }
+
+    button.trigger[data-position='top-center'] {
+      inset-block-start: 8px;
+      inset-inline-start: 50%;
+      translate: -50% 0;
+    }
+
+    button.trigger[data-position='top-right'] {
+      inset-block-start: 8px;
+      inset-inline-end: 8px;
+    }
+
+    button.trigger[data-position='bottom-center'] {
+      inset-block-end: 8px;
+      inset-inline-start: 50%;
+      translate: -50% 0;
+    }
+
+    button.trigger[data-position='bottom-right'] {
+      inset-block-end: 8px;
+      inset-inline-end: 8px;
+    }
+
+    .floating {
+      position: fixed;
+      inset: 0 auto auto 0;
+      inline-size: 80px;
+      block-size: 40px;
+      padding: 4px;
+      background: Canvas;
+      color: CanvasText;
+      border: 1px solid currentcolor;
+      pointer-events: none;
+    }
+
+    .floating.tall {
+      block-size: 600px;
+    }
+  `;
+
+  @property({ type: String, reflect: true })
+  placement: Placement = 'bottom';
+
+  @property({ type: Number, reflect: true })
+  offset = 0;
+
+  @property({ type: Number, attribute: 'cross-offset', reflect: true })
+  crossOffset = 0;
+
+  @property({ type: Number, attribute: 'container-padding', reflect: true })
+  containerPadding = 8;
+
+  @property({ type: Boolean, attribute: 'should-flip', reflect: true })
+  shouldFlip = true;
+
+  @property({ type: Boolean, attribute: 'tall-floating', reflect: true })
+  tallFloating = false;
+
+  @property({ type: String, attribute: 'trigger-position', reflect: true })
+  triggerPosition: TriggerPosition = 'center';
+
+  @property({ type: String, attribute: 'actual-placement', reflect: true })
+  actualPlacement: Placement | null = null;
+
+  /** Records every `onPlacementChange` invocation since the last rebind. */
+  placementChanges: Placement[] = [];
+
+  @query('button.trigger') triggerEl!: HTMLButtonElement;
+
+  @query('.floating') floatingEl!: HTMLDivElement;
+
+  /** Exposed so tests can call `recompute()` and similar directly. */
+  controller = new PlacementController(this);
+
+  protected override firstUpdated(): void {
+    this.bind();
+  }
+
+  protected override updated(changed: PropertyValues): void {
+    if (
+      changed.has('placement') ||
+      changed.has('offset') ||
+      changed.has('crossOffset') ||
+      changed.has('containerPadding') ||
+      changed.has('shouldFlip') ||
+      changed.has('triggerPosition')
+    ) {
+      this.bind();
+    }
+  }
+
+  override disconnectedCallback(): void {
+    super.disconnectedCallback?.();
+    this.controller.stop();
+  }
+
+  private bind(): void {
+    if (!this.triggerEl || !this.floatingEl) {
+      return;
+    }
+    this.placementChanges = [];
+    this.controller.start(this.triggerEl, this.floatingEl, {
+      placement: this.placement,
+      offset: this.offset,
+      crossOffset: this.crossOffset,
+      containerPadding: this.containerPadding,
+      shouldFlip: this.shouldFlip,
+      onPlacementChange: (next) => {
+        this.actualPlacement = next;
+        this.placementChanges.push(next);
+      },
+    });
+  }
+
+  protected override render(): TemplateResult {
+    return html`
+      <div class="surface">
+        <button
+          type="button"
+          class="trigger"
+          data-position=${this.triggerPosition}
+        >
+          T
+        </button>
+        <div class=${classMap({ floating: true, tall: this.tallFloating })}>
+          ${this.placement}
         </div>
       </div>
     `;
