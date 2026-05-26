@@ -237,7 +237,7 @@ Phase 5 (styling) requires `spectrum-css` checked out at the `spectrum-two` bran
 | **A4** | `hold-affordance` / `longpress` (future) | When eventually implemented, use `longpress-enabled` / `longpress-help-text` per [Action button accessibility migration analysis](./accessibility-migration-analysis.md). |
 | **A5** | `staticColor="auto"` from React Spectrum S2 | Not part of initial scope. |
 | **A6** | Badge slot — corner badge lockup | Matches React Spectrum S2 support for `swc-badge` slotted inside an action button. Icon+Badge and Avatar+Badge produce a distinct corner-overlay lockup vs. inline content. Badge content (e.g. a count) may contribute to the button's accessible name; requires a11y review before shipping. Tracked in SWC-2042 follow-up. |
-| **A7** | Avatar slot — avatar lockup | Matches React Spectrum S2 support for `swc-avatar` slotted inside an action button (in place of or alongside an icon). Avatar+Badge is a specific compound lockup. The avatar's accessible name and its relationship to the button's accessible name must be reviewed before shipping. Tracked in SWC-2042 follow-up. |
+| **A7** | Avatar slot — avatar lockup | Matches React Spectrum S2 support for `swc-avatar` slotted inside an action button. Avatar is mutually exclusive with the `icon` slot; it replaces the icon. Avatar+Badge is a specific compound lockup. The avatar's accessible name and its relationship to the button's accessible name must be reviewed before shipping. Tracked in SWC-2042 follow-up. |
 
 ---
 
@@ -280,8 +280,8 @@ These decisions are derived from the 1st-gen implementation, the current depreca
 |---|---|---|
 | default | Visible text label | **Confirmed.** Required for accessible name unless `accessible-label` is set. |
 | `icon` | Leading icon element | **Confirmed.** Keep the existing named slot. Presence is detected for `hasIcon` / icon-only layout. |
-| `badge` | `swc-badge` element | **Additive (A6).** Corner-overlay lockup; distinct visual treatment from inline content. Badge text may need to contribute to the button's accessible name. Requires a11y review (@nikkimk) before shipping. |
-| `avatar` | `swc-avatar` element | **Additive (A7).** Avatar lockup in place of or alongside the icon. Avatar+Badge is a specific compound lockup. Accessible name composition between avatar and button requires a11y review (@nikkimk) before shipping. |
+| `badge` | `swc-badge` element | **Additive (A6).** Corner-overlay lockup; distinct visual treatment from inline content. Icon+Badge and Avatar+Badge are each a distinct compound lockup (matching React Spectrum S2). Badge text may need to contribute to the button's accessible name. Requires a11y review (@nikkimk) before shipping. |
+| `avatar` | `swc-avatar` element | **Additive (A7).** Avatar lockup; mutually exclusive with the `icon` slot — avatar replaces the icon. Avatar+Badge is a specific compound lockup. Accessible name composition between avatar and button requires a11y review (@nikkimk) before shipping. |
 
 #### CSS custom properties (2nd-gen)
 
