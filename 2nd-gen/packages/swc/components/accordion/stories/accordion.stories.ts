@@ -435,46 +435,6 @@ export const ToggleEvent: Story = {
   parameters: { 'section-order': 3 },
 };
 
-/**
- * Set `--swc-accordion-content-padding-inline` on the accordion to remove the
- * default inline padding from every panel body. This is useful when panel
- * content (such as a data table or an image) should extend edge to edge
- * inside the item.
- *
- * Setting the property to `0` removes all inline padding. Any valid CSS length
- * value is accepted.
- */
-export const ContentPaddingInline: Story = {
-  render: (args) =>
-    template(
-      { ...args, 'allow-multiple': true },
-      html`
-        <swc-accordion-item open>
-          <span slot="label">Personal information</span>
-          <div
-            style="background: var(--spectrum-gray-100); padding: 12px 16px;"
-          >
-            ${content.personal}
-          </div>
-        </swc-accordion-item>
-        <swc-accordion-item open>
-          <span slot="label">Billing address</span>
-          <div
-            style="background: var(--spectrum-gray-100); padding: 12px 16px;"
-          >
-            ${content.billing}
-          </div>
-        </swc-accordion-item>
-      `
-    ),
-  args: { density: 'regular' },
-  tags: ['behaviors'],
-  parameters: {
-    'section-order': 4,
-    styles: { '--swc-accordion-content-padding-inline': '0' },
-  },
-};
-
 // ────────────────────────────────
 //    ACCESSIBILITY STORIES
 // ────────────────────────────────
