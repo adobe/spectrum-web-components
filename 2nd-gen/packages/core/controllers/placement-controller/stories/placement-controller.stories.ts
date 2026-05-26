@@ -168,7 +168,7 @@ export const Overview: Story = {
  *
  * 1. **`offset`** — trigger-relative gap along the placement direction (`offset` option) and along the trigger edge (`crossOffset` option).
  * 2. **`flip`** (when `shouldFlip: true`) — reorients when there is not enough room, respecting `containerPadding` inset from the overflow boundary.
- * 3. **`shift`** — slides the floating element along the axis to stay inside the boundary, using `containerPadding` as inset.
+ * 3. **`shift`** — **always installed**; slides the floating element along the placement axis to keep it inside the boundary using `containerPadding` as inset. There's no opt-out — disabling it would let the panel clip off the viewport edge.
  * 4. **`size`** (when `constrainSize: true`) — clamps `maxHeight` / `maxWidth` for scrollable lists.
  *
  * ### What the caller owns
