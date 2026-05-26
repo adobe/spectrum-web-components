@@ -20,7 +20,6 @@
     - [Slots](#slots)
     - [CSS custom properties](#css-custom-properties)
     - [Shadow DOM output (rendered HTML)](#shadow-dom-output-rendered-html)
-- [React Spectrum S2 API surface](#react-spectrum-s2-api-surface)
 - [Dependencies](#dependencies)
 - [Migration sequencing and prerequisites](#migration-sequencing-and-prerequisites)
     - [Prerequisites](#prerequisites)
@@ -71,11 +70,11 @@
 - `emphasized` is removed because it only applies to the selected state, which is removed
 - `hold-affordance` / `longpress` are deferred until a later date; Storybook and migration copy must say so explicitly
 - `href` / link API is removed entirely; navigation uses native `<a>` elements
-- `pending` is an **additive new feature** (not in 1st-gen); it follows the exact same contract as `swc-button`
+- `pending` ships with the initial release; `ButtonBase` provides the logic and the visual implementation can be copied from `swc-button`
 - `accessible-label` replaces `label` (inherited from `ButtonBase`)
 - `size` includes `xs` (not available on `swc-button`), requiring `ACTION_BUTTON_VALID_SIZES` in `ActionButton.types.ts`
 - `quiet` and `static-color` are retained as the primary visual differentiators for this component
-- `value` is retained for identification within action groups
+- `value` is **confirmed**; retained for identification within action groups (JS property defaults to `''`; falls back to `textContent` when empty)
 
 ### Most blocking open questions
 
@@ -139,42 +138,7 @@
 
 ### CSS custom properties
 
-The 1st-gen implementation uses `--spectrum-actionbutton-*` and `--mod-actionbutton-*` token chains via imported `action-button.css`, `spectrum-action-button.css`, and `action-button-overrides.css`. The full modifier surface includes:
-
-**Sizing and spacing:**
-
-- `--mod-actionbutton-height`
-- `--mod-actionbutton-min-width`
-- `--mod-actionbutton-edge-to-visual`
-- `--mod-actionbutton-edge-to-visual-only`
-- `--mod-actionbutton-edge-to-text`
-- `--mod-actionbutton-edge-to-hold-icon`
-- `--mod-actionbutton-text-to-visual`
-- `--mod-actionbutton-icon-size`
-- `--mod-actionbutton-border-radius`
-- `--mod-actionbutton-focus-indicator-border-radius`
-- `--mod-actionbutton-focus-indicator-gap`
-- `--mod-actionbutton-focus-indicator-thickness`
-- `--mod-actionbutton-focus-indicator-color`
-
-**Typography:**
-
-- `--mod-actionbutton-font-size`
-- `--mod-actionbutton-font-weight`
-- `--mod-actionbutton-font-style`
-- `--mod-actionbutton-line-height`
-- `--mod-actionbutton-label-color`
-
-**Color (state × variant matrix):**
-
-- `--mod-actionbutton-background-color-default` (and `-hover`, `-focus`, `-down`, `-disabled`)
-- `--mod-actionbutton-content-color-default` (and `-hover`, `-focus`, `-down`, `-disabled`)
-- `--mod-actionbutton-background-color-default-selected` (and `-hover`, `-focus`, `-down`)
-- `--mod-actionbutton-content-color-default-selected` (and `-hover`, `-focus`, `-down`)
-- `--mod-actionbutton-background-color-default-selected-emphasized` (and `-hover`, `-focus`, `-down`)
-- `--mod-actionbutton-content-color-default-selected-emphasized` (and `-hover`, `-focus`, `-down`)
-
-This full modifier surface will **not** be carried forward to 2nd-gen. A small reviewed set of `--swc-action-button-*` properties will be exposed instead.
+The 1st-gen implementation uses `--spectrum-actionbutton-*` and `--mod-actionbutton-*` token chains via imported `action-button.css`, `spectrum-action-button.css`, and `action-button-overrides.css`. The modifier surface covers sizing and spacing, typography, and a full color/state/variant matrix. This full modifier surface will **not** be carried forward to 2nd-gen. A small reviewed set of `--swc-action-button-*` properties will be exposed instead.
 
 ### Shadow DOM output (rendered HTML)
 
@@ -194,39 +158,6 @@ This full modifier surface will **not** be carried forward to 2nd-gen. A small r
 ```
 
 The host element itself carries `role="button"` and is the primary focus target. There is no inner native `<button>`.
-
----
-
-## React Spectrum S2 API surface
-
-**Source:** [`@react-spectrum/s2` — ActionButton](https://react-spectrum.adobe.com/ActionButton)
-
-| Prop | Type | Notes |
-|---|---|---|
-| `children` | `ReactNode` | Visible label. |
-| `isDisabled` | `boolean` | Disables interaction. |
-| `isQuiet` | `boolean` | Quiet styling (no background at rest). |
-| `size` | `'XS' \| 'S' \| 'M' \| 'L' \| 'XL'` | Five sizes, matching 1st-gen scale. |
-| `staticColor` | `'white' \| 'black' \| 'auto'` | Static color. S2 adds `auto` for automatic contrast selection. SWC 2nd-gen will not ship `auto` in initial scope. |
-| `onPress` | `(e: PressEvent) => void` | Primary activation handler (React Aria `usePress`). |
-| `onPressStart` | `(e: PressEvent) => void` | Fired on press start. |
-| `onPressEnd` | `(e: PressEvent) => void` | Fired on press end. |
-| `onPressChange` | `(isPressed: boolean) => void` | Tracks pressed state. |
-| `onPressUp` | `(e: PressEvent) => void` | Fired on pointer-up within the target. |
-| `onFocus` | `(e: FocusEvent) => void` | Focus handler. |
-| `onBlur` | `(e: FocusEvent) => void` | Blur handler. |
-| `aria-label` | `string` | Accessible label. Required for icon-only usage. |
-| `aria-haspopup` | `boolean \| AriaHaspopupValue` | Set when triggering a menu or overlay. |
-| `aria-expanded` | `boolean` | Set in sync with the open overlay. |
-| `id` | `string` | HTML id. |
-
-**Key divergences from 1st-gen:**
-
-- No `href` / link mode in React Spectrum S2 ActionButton.
-- No `toggles` / `selected` / `aria-pressed` on ActionButton; toggle behavior belongs on `ToggleButton` / `ToggleButtonGroup`.
-- No `hold-affordance` / `longpress` in React Spectrum S2 ActionButton (uses MenuTrigger for that pattern).
-- `staticColor="auto"` is S2-specific; defer for SWC 2nd-gen.
-- React Aria `usePress` handles pointer and keyboard activation; SWC 2nd-gen uses the internal native `<button>` for equivalent browser-native behavior.
 
 ---
 
@@ -279,7 +210,7 @@ Phase 5 (styling) requires `spectrum-css` checked out at the `spectrum-two` bran
 
 | # | What changes | 1st-gen behavior | 2nd-gen behavior | Consumer migration path |
 |---|---|---|---|---|
-| **B1** | Remove `href` / link API | `href` and related attributes cause `sp-action-button` to proxy a hidden anchor. A dev warning was added in 1st-gen. | `swc-action-button` is button-only. Navigation uses native `<a>` elements. | Replace `<sp-action-button href="...">` with a styled native `<a>` element. |
+| **B1** | Remove `href` / link API | `href` and related attributes cause `sp-action-button` to proxy a hidden anchor. A dev warning was added in 1st-gen. | `swc-action-button` is button-only. Navigation uses native `<a>` elements. | Replace `<sp-action-button href="...">` with a native `<a>` element styled with the generated `global-action-button.css` stylesheet. See Phase 5 styling task for global elements setup. |
 | **B2** | Remove `toggles`, `selected`, and `aria-pressed` | 1st-gen `sp-action-button` supports toggle semantics (`toggles`, `selected`, `change` event, `aria-pressed`). | 2nd-gen `swc-action-button` is a commit control only. Toggle / selection UX moves to `swc-toggle-button` / `swc-toggle-button-group`. | Replace toolbar toggle usage with `swc-toggle-button` or `swc-toggle-button-group`. |
 | **B3** | Remove `emphasized` | `emphasized` added visual emphasis to the selected state. | With `selected` removed from `swc-action-button`, `emphasized` has no target and is also removed. | No equivalent needed; emphasize via `swc-toggle-button` if a selected-emphasized style is required. |
 | **B4** | Defer `hold-affordance` / `longpress` | 1st-gen wires a 300 ms pointer timer and `Space` / `Alt+ArrowDown` keyboard path. | `swc-action-button` defers hold affordance until a later date. The consumer options are: (1) continue using 1st-gen `sp-action-button`; (2) extend `swc-button` for custom hold; (3) use separate `swc-action-button` instances in `swc-action-group`. | Migrate to action-group layout (separate button + menu) where possible. |
@@ -294,17 +225,19 @@ Phase 5 (styling) requires `spectrum-css` checked out at the `spectrum-two` bran
 |---|---|---|---|---|
 | **B9** | Icon-only warning for missing accessible name | No dedicated dev-mode warning; authors could silently ship inaccessible icon-only buttons. | Dev-mode warning (`__swc.warn()`) when an icon is slotted, no visible label exists, and `accessible-label` is absent — same warning pattern as `swc-button`. | Always provide `accessible-label` for icon-only usage. |
 | **B10** | Focus delegation to inner `<button>` | Host is the primary tab stop. | `delegatesFocus: true`; inner `<button>` receives focus. Host `tabIndex` is still meaningful as the activation delegate. | `shadowRoot.activeElement` assertions must change to the inner `<button>`. |
+| **B11** | `pending` / `pending-label` support | Not in 1st-gen. | Ships with the initial release. `ButtonBase` provides the logic; visual implementation (animated SVG spinner, 1-second delay, width locking) is copied from `swc-button`. `aria-disabled="true"` on the inner `<button>` while pending; accessible name updated with busy suffix. | No migration required; purely additive to consumers. |
 
 ### Additive — ships when ready, zero breakage for consumers already on 2nd-gen
 
 | # | What is added | Notes |
 |---|---|---|
-| **A1** | `pending` / `pending-label` support | Not in 1st-gen; present in Figma S2 spec. Follows the exact same contract as `swc-button`: `aria-disabled="true"` on inner `<button>`, focusable while busy, 1-second delayed animated SVG spinner, accessible-name updated with busy suffix. |
-| **A2** | Explicit `--swc-action-button-*` custom properties | Only expose properties justified by the CSS custom-property guide; do not recreate the old modifier matrix. |
-| **A3** | Playwright accessibility snapshots | Strengthen regression coverage without changing the public API. |
-| **A4** | Future cross-root ARIA mapping | Deferred until the cross-root semantics approach is settled. |
-| **A5** | `hold-affordance` / `longpress` (future) | When eventually implemented, use `longpress-enabled` / `longpress-help-text` per [Action button accessibility migration analysis](./accessibility-migration-analysis.md). |
-| **A6** | `staticColor="auto"` from React Spectrum S2 | Not part of initial scope. |
+| **A1** | Explicit `--swc-action-button-*` custom properties | Only expose properties justified by the CSS custom-property guide; do not recreate the old modifier matrix. |
+| **A2** | Playwright accessibility snapshots | Strengthen regression coverage without changing the public API. |
+| **A3** | Future cross-root ARIA mapping | Deferred until the cross-root semantics approach is settled. |
+| **A4** | `hold-affordance` / `longpress` (future) | When eventually implemented, use `longpress-enabled` / `longpress-help-text` per [Action button accessibility migration analysis](./accessibility-migration-analysis.md). |
+| **A5** | `staticColor="auto"` from React Spectrum S2 | Not part of initial scope. |
+| **A6** | Badge slot — corner badge lockup | Matches React Spectrum S2 support for `swc-badge` slotted inside an action button. Icon+Badge and Avatar+Badge produce a distinct corner-overlay lockup vs. inline content. Badge content (e.g. a count) may contribute to the button's accessible name; requires a11y review before shipping. Tracked in SWC-2042 follow-up. |
+| **A7** | Avatar slot — avatar lockup | Matches React Spectrum S2 support for `swc-avatar` slotted inside an action button (in place of or alongside an icon). Avatar+Badge is a specific compound lockup. The avatar's accessible name and its relationship to the button's accessible name must be reviewed before shipping. Tracked in SWC-2042 follow-up. |
 
 ---
 
@@ -323,23 +256,21 @@ These decisions are derived from the 1st-gen implementation, the current depreca
 | `size` | `'xs' \| 's' \| 'm' \| 'l' \| 'xl'` | `'m'` | `size` | **Confirmed.** Includes `xs` — differs from `swc-button` which starts at `s`. Requires `ACTION_BUTTON_VALID_SIZES` in `ActionButton.types.ts`. No default attribute (`noDefaultSize: true`): `getAttribute('size')` returns `null` until a consumer sets it explicitly; the JS property defaults to `'m'` but is not reflected to the DOM automatically. |
 | `quiet` | `boolean` | `false` | `quiet` | **Confirmed.** Retained as a primary visual differentiator (no background/border at rest). Unlike Button's deprecated `quiet`, this is a first-class visual treatment for action-button. |
 | `staticColor` | `'white' \| 'black' \| undefined` | `undefined` | `static-color` | **Confirmed.** Static color for use over images or colored backgrounds. Supported with both default and `quiet` treatments. |
-| `value` | `string` | `''` | `value` | **Confirmed.** Retained for identification within action groups. JS property defaults to `''`; when the stored value is empty (`''`), the component reads `textContent` as the effective value for action-group identification. Consumers who rely on the fallback must not also set `value=""` and expect textContent to win. |
+| `value` | `string` | `''` | `value` | **Confirmed.** Retained for identification within action groups. JS property defaults to `''`; when the stored value is empty (`''`), the component reads `textContent` as the effective value for action-group identification. Consumers who rely on the fallback must not also set `value=""` and expect `textContent` to win. |
 | `disabled` | `boolean` | `false` | `disabled` | **Confirmed.** Inherited from `ButtonBase`. Maps to native `disabled` on the internal `<button>`. |
-| `pending` | `boolean` | `false` | `pending` | **Additive (A1).** New in 2nd-gen. Follows the exact same contract as `swc-button`. Button remains focusable; activation is suppressed. |
+| `pending` | `boolean` | `false` | `pending` | **Confirmed (B11).** Ships with the initial release. `ButtonBase` provides the logic; visual implementation is copied from `swc-button`. Button remains focusable; activation is suppressed. |
 | `accessibleLabel` | `string \| undefined` | `undefined` | `accessible-label` | **Confirmed.** Replaces 1st-gen `label`. Forwarded as `aria-label` on the internal `<button>`. Required for icon-only usage. Inherited from `ButtonBase`. |
-| `pendingLabel` | `string \| undefined` | `undefined` | `pending-label` | **Additive (A1).** New in 2nd-gen. Custom accessible label during pending state. When omitted, derived from resolved name + `", busy"` suffix. Inherited from `ButtonBase`. |
+| `pendingLabel` | `string \| undefined` | `undefined` | `pending-label` | **Confirmed (B11).** Ships with the initial release alongside `pending`. Custom accessible label during pending state. When omitted, derived from resolved name + `", busy"` suffix. Inherited from `ButtonBase`. |
 | `label` | removed | n/a | removed | **Planned removal.** Replaced by `accessible-label` / `accessibleLabel`. |
 | `toggles` | removed | n/a | removed | **Confirmed removal.** Toggle UX moves to `swc-toggle-button` / `swc-toggle-button-group`. |
 | `selected` | removed | n/a | removed | **Confirmed removal.** Selection state belongs on `swc-toggle-button` / `swc-toggle-button-group`. |
 | `emphasized` | removed | n/a | removed | **Confirmed removal.** Only applied to the selected state, which is removed. |
-| `holdAffordance` | deferred | n/a | deferred | **Deferred (A5).** See [Hold affordance and alternatives to synthesized longpress](./accessibility-migration-analysis.md#hold-affordance-and-alternatives-to-synthesized-longpress) in the a11y analysis. |
+| `holdAffordance` | deferred | n/a | deferred | **Deferred (A4).** See [Hold affordance and alternatives to synthesized longpress](./accessibility-migration-analysis.md#hold-affordance-and-alternatives-to-synthesized-longpress) in the a11y analysis. |
 | `role` | removed | n/a | removed | **Confirmed removal.** `swc-action-button` is always `role="button"`. No consumer-controlled role override. |
 | `href`, `target`, `download`, `referrerpolicy`, `rel` | removed | n/a | removed | **Confirmed removal.** Navigation uses native anchors. |
-| `type` | deferred beyond initial scope | `'button'` | deferred | **Deferred.** Initial 2nd-gen scope defaults to `button` only; `submit` / `reset` are future work matching `swc-button`. |
+| `type` | removed | n/a | removed | **Confirmed removal.** `swc-action-button` is not form-associated; the internal `<button type="button">` is hardcoded. `submit` / `reset` are not applicable to an action button. |
 | `active` | internal | n/a | internal | **Confirmed internal.** Retained as an internal property inherited from `ButtonBase`. With hold-affordance deferred, no consumer-triggered mechanism sets this in initial scope. CSS `:active` on the inner `<button>` handles pressed-state styling without requiring a JS property. |
-| `autofocus` | `boolean` | `false` | `autofocus` | **Confirmed — inherited.** With `delegatesFocus: true`, `autofocus` on the host routes initial focus to the inner `<button>` automatically. This differs from 1st-gen where the host itself was the focus target; consumers who check `document.activeElement` after autofocus must expect the inner `<button>`. |
-| `tabIndex` | `number` | managed | `tabindex` | **Confirmed — inherited.** Setting `tabIndex=-1` on the host removes the component from the tab order; used by `swc-action-group` for roving tabindex management. With `delegatesFocus: true`, positive `tabIndex` routes tab focus through the host to the inner `<button>`. |
-| `name` | deferred | n/a | deferred | **Deferred** alongside `type`. `swc-action-button` is not form-associated in initial scope. Defer until form-associated button patterns are resolved for `swc-button` via the `ElementInternals` path. |
+| `name` | removed | n/a | removed | **Confirmed removal** alongside `type`. `swc-action-button` is not form-associated; `name` has no applicable semantics. |
 
 **Passthrough host attributes:** `aria-haspopup` and `aria-expanded` set on the host element are forwarded to the internal `<button>` via `getForwardedButtonAttributes()` — **Confirmed.** This supports menu trigger patterns (`<swc-action-button aria-haspopup="true" aria-expanded="false">`). No dedicated component property is needed; `ButtonBase` owns the forwarding logic. The forwarding list must be verified and tested in Phase 3 (API).
 
@@ -349,6 +280,8 @@ These decisions are derived from the 1st-gen implementation, the current depreca
 |---|---|---|
 | default | Visible text label | **Confirmed.** Required for accessible name unless `accessible-label` is set. |
 | `icon` | Leading icon element | **Confirmed.** Keep the existing named slot. Presence is detected for `hasIcon` / icon-only layout. |
+| `badge` | `swc-badge` element | **Additive (A6).** Corner-overlay lockup; distinct visual treatment from inline content. Badge text may need to contribute to the button's accessible name. Requires a11y review (@nikkimk) before shipping. |
+| `avatar` | `swc-avatar` element | **Additive (A7).** Avatar lockup in place of or alongside the icon. Avatar+Badge is a specific compound lockup. Accessible name composition between avatar and button requires a11y review (@nikkimk) before shipping. |
 
 #### CSS custom properties (2nd-gen)
 
@@ -437,6 +370,7 @@ Planned rendering shape:
 - Internal DOM: `<button>` containing optional icon slot wrapper, label slot wrapper, and pending SVG spinner
 - No anchor render path (link API is removed)
 - The component stylesheet uses `--swc-action-button-*` tokens and S2 Spectrum CSS token sources
+- Global element styles are also emitted from adding `action-button` to the `vite-global-elements-css` config
 
 ### Shared semantics reuse
 
@@ -452,7 +386,6 @@ Planned rendering shape:
 What `swc-action-button` adds on top of `ButtonBase`:
 
 - `quiet`, `staticColor` visual API
-- `value` for action-group identification
 - `ACTION_BUTTON_VALID_SIZES` size scale (adds `xs`)
 - Pending indicator sizing / visual pattern (shared mechanism, adapted for action-button dimensions)
 - Action-button-specific `aria-haspopup` / `aria-expanded` forwarding for menu triggers
@@ -487,13 +420,13 @@ What `swc-action-button` adds on top of `ButtonBase`:
 #### Naming and public surface
 
 - [ ] `ActionButton.types.ts` (core): define `ACTION_BUTTON_VALID_SIZES = ['xs', 's', 'm', 'l', 'xl']` and `ActionButtonSize` type
-- [ ] `ActionButton.ts` (SWC): extend `ButtonBase` with `quiet`, `staticColor`, `value`, and size override
+- [ ] `ActionButton.ts` (SWC): extend `ButtonBase` with `quiet`, `staticColor`, and size override
 - [ ] Set `noDefaultSize: true` in `SizedMixin` call so size attribute is not reflected by default (matches 1st-gen behavior)
 - [ ] Remove `toggles`, `selected`, `emphasized` from the 2nd-gen public surface
 - [ ] Remove `role` as a consumer property; internal `<button>` provides semantics
 - [ ] Remove deprecated link API (`href`, `target`, `download`, `referrerpolicy`, `rel`)
 - [ ] Replace `label` with `accessible-label` / `accessibleLabel` (inherited from `ButtonBase`)
-- [ ] Retain `value` property with fallback to `textContent` (same as 1st-gen)
+
 - [ ] Add `@deprecated` JSDoc to 1st-gen `toggles`, `selected`, `emphasized`, `holdAffordance`, and `href` properties
 - [ ] Add dev-mode runtime warnings (`window.__swc.warn()`) to 1st-gen for `toggles` / `selected` pointing to `swc-toggle-button`
 - [ ] Document migration from `label` to `accessible-label`
@@ -506,7 +439,7 @@ What `swc-action-button` adds on top of `ButtonBase`:
 - [ ] When `pending`: set `aria-disabled="true"` on the inner `<button>` while keeping it focusable (inherited from `ButtonBase.getForwardedButtonAttributes()`)
 - [ ] When `disabled`: set `disabled` attribute on the inner `<button>` (inherited from `ButtonBase`)
 - [ ] Emit `__swc.warn()` when icon-only and `accessible-label` is absent (from `ButtonBase.update()`)
-- [ ] Document `submit` / `reset` type and cross-root ARIA as deferred
+- [ ] Document cross-root ARIA as deferred
 
 ### Styling
 
@@ -525,6 +458,9 @@ What `swc-action-button` adds on top of `ButtonBase`:
 - [ ] Implement forced-colors (Windows High Contrast) media query at the bottom of the file
 - [ ] Implement reduced-motion treatment for pending spinner animation
 - [ ] Expose a small reviewed set of `--swc-action-button-*` custom properties
+- [ ] Add `@global-exclude` fences around JS-only blocks (pending spinner keyframes and pending state rules) so the generated global stylesheet stays static-only
+- [ ] Register `{ component: 'action-button' }` in the `vite-global-elements-css` plugin config (see `2nd-gen/packages/tools/vite-global-elements-css/README.md`) to auto-generate `stylesheets/global/global-action-button.css` from the component CSS
+- [ ] Add `swc-action-button` examples to the global elements docs page (alongside `swc-button`), showing native `<a>` and `<button>` usage with the generated stylesheet
 - [ ] Verify RTL support (icon / label ordering)
 - [ ] Pass `yarn lint:css` (property order, `no-descending-specificity`, token validation)
 
@@ -561,7 +497,7 @@ What `swc-action-button` adds on top of `ButtonBase`:
 - [ ] Disabled state: not focusable, activation suppressed
 - [ ] Pending state: focusable, `aria-disabled="true"`, click suppressed, spinner after delay, name includes "busy"
 - [ ] Pending + `pending-label` override: custom busy label used instead of derived name
-- [ ] `value` property: fallback to `textContent` when not set, reflects to attribute when set, removes attribute when cleared
+
 - [ ] Dev-mode warning: icon-only without `accessible-label`
 - [ ] Dev-mode warning: `pending` + `disabled` simultaneously
 - [ ] Menu trigger: `aria-haspopup` and `aria-expanded` forwarded to inner `<button>`
@@ -684,10 +620,12 @@ What `swc-action-button` adds on top of `ButtonBase`:
 | Ticket | Deferred item | Why deferred | Plan section |
 |---|---|---|---|
 | TBD (under SWC-2039) | `hold-affordance` / `longpress` implementation | Architectural complexity, WCAG pointer gesture requirements, and AT testing depth; out of initial scope per a11y analysis and roadmap docs. | [B4](#must-ship--breaking-or-a11y-required), [A5](#additive--ships-when-ready-zero-breakage-for-consumers-already-on-2nd-gen) |
-| TBD (under SWC-2039) | `longpress-enabled` / `longpress-help-text` accessibility wiring | Depends on hold implementation. | [A5](#additive--ships-when-ready-zero-breakage-for-consumers-already-on-2nd-gen) |
-| TBD (under SWC-2039) | `staticColor="auto"` from React Spectrum S2 | Not in approved baseline scope; requires design decision on automatic contrast selection. | [A6](#additive--ships-when-ready-zero-breakage-for-consumers-already-on-2nd-gen) |
+| TBD (under SWC-2039) | `longpress-enabled` / `longpress-help-text` accessibility wiring | Depends on hold implementation. | [A4](#additive--ships-when-ready-zero-breakage-for-consumers-already-on-2nd-gen) |
+| TBD (under SWC-2039) | `staticColor="auto"` from React Spectrum S2 | Not in approved baseline scope; requires design decision on automatic contrast selection. | [A5](#additive--ships-when-ready-zero-breakage-for-consumers-already-on-2nd-gen) |
+| SWC-2042 | `value` / group-identification attribute | Confirmed. `value` attribute retained with `textContent` fallback for action-group identification. Scoped to SWC-2042. | [2nd-gen API decisions](#2nd-gen-api-decisions) |
+| TBD | Badge slot and corner-overlay lockup (A6) | Icon+Badge and Avatar+Badge produce a distinct visual lockup. Badge text accessible name composition requires a11y review (@nikkimk) before shipping. | [A6](#additive--ships-when-ready-zero-breakage-for-consumers-already-on-2nd-gen) |
+| TBD | Avatar slot and accessible name composition (A7) | Avatar accessible name and its relationship to the button's composite accessible name requires a11y review (@nikkimk) before shipping. | [A7](#additive--ships-when-ready-zero-breakage-for-consumers-already-on-2nd-gen) |
 | TBD (under SWC-2039) | Cross-root ARIA mapping | Shared with `swc-button` dependency on `ElementInternals` / tooling path. | [Deferred semantics note](#deferred-semantics-note-2nd-gen) |
-| TBD (under SWC-2039) | Form-associated `type="submit"` / `type="reset"` | Shared with `swc-button` dependency on `ElementInternals` path. | [Deferred semantics note](#deferred-semantics-note-2nd-gen) |
 
 ---
 
@@ -707,6 +645,7 @@ Manual verification steps for each breaking change. Run against the component's 
 | **B8** — `--mod-*` removed | Any story | Apply `--mod-actionbutton-height: 100px` via DevTools | No visual change; `--swc-action-button-min-block-size` works instead |
 | **B9** — Icon-only warning | Default story | Render icon-only button without `accessible-label` | `__swc.warn()` fires in dev mode; no warning when `accessible-label` is present |
 | **B10** — `delegatesFocus` | Any story | Tab to button; read `document.activeElement` and `shadowRoot.activeElement` | `document.activeElement` is the host; `shadowRoot.activeElement` is the inner `<button>` |
+| **B11** — `pending` ships | Pending story | Set `pending` attribute; wait 1 second | Spinner appears; button is focusable; activation is suppressed; accessible name includes busy suffix |
 
 ---
 
