@@ -243,7 +243,7 @@ No 2nd-gen package yet — this section records **planned** decisions from analy
 | Heading text | Slotted (see [Shadow DOM output](#shadow-dom-output-rendered-html)) | **Rationale:** a string **`label`** cannot mirror phrasing content (`<strong>`, `<code>`) into the header’s accessible name the way slotted light DOM can; matches [accessibility migration analysis](./accessibility-migration-analysis.md). **Breaking** vs 1st-gen **`label`**: **clean break** — 2nd-gen does **not** expose **`label`**; authors migrate markup to the heading slot only. |
 | Events | Renamed toggle event | Exact string TBD. |
 | Direct actions (item header affordances) | `slot="actions"` on `swc-accordion-item` (working name — not frozen); open-ended, any content may be slotted | (spectrum-css container class `.spectrum-Accordion-itemDirectActions`) rendered as a **sibling to the `<h*>` element** (not inside it); placing it inside `<h*>` would bleed its text content into the heading's accessible name. `slotchange` observer hides the container when empty. `stopPropagation` on the container prevents slot clicks from toggling the accordion. Specific supported content (`swc-action-button`, `swc-switch`) are open questions; see [Open — API and scope](#open--api-and-scope). |
-| `noInlinePadding` modifier | Not a public attribute | The spectrum-css modifier class `.spectrum-Accordion--noInlinePadding` controls inline padding removal (new in S2). **Not** exposed as an API attribute — expose the relevant padding via `--swc-accordion-*` custom properties so consumers can remove or adjust inline padding directly. |
+| `noInlinePadding` modifier | Not a public attribute | S2 modifier `.spectrum-Accordion--noInlinePadding` removes **header** inline padding. **Not** exposed as an API attribute. Parity is via **`--swc-accordion-item-edge-to-content-area`** on `swc-accordion-item` (symmetric `padding-inline` on the header button); set to `0` for edge-to-edge alignment. Storybook demo and `@cssprop` documentation **TBD**. |
 
 ### React Spectrum alignment considerations
 
@@ -307,22 +307,26 @@ Follow the [washing machine — core vs SWC](../../02_workstreams/02_2nd-gen-com
 |---|---|---|
 | `--mod-accordion-item-width` | `--swc-accordion-min-inline-size` | Renamed; sets the minimum inline size of the accordion host |
 | `--mod-accordion-divider-color` | `--swc-accordion-item-divider-color` | Renamed; controls the border color of each item's top and bottom dividers |
-| `--mod-accordion-component-edge-to-text` | `--swc-accordion-content-padding-inline` | Renamed; controls the inline padding of the panel body. Set to `0` for edge-to-edge content |
+| `--mod-accordion-component-edge-to-text` | `--swc-accordion-item-content-padding-inline` | Exposed; controls the content panel's inline padding. Overridden per `size` on the item host |
 | `--mod-accordion-background-color-*` | Not exposed | Driven by internal tokens via `:has()` state selectors |
 | `--mod-accordion-corner-radius` | `--swc-accordion-item-corner-radius` | Exposed; controls the border-radius of the header button in `:focus-visible`. Defaults to the size-scaled corner-radius token; overridden per `size` attribute on the item host |
 | `--mod-accordion-item-header-color-*` | Not exposed | Driven by internal tokens via `:has()` state selectors |
 | `--mod-accordion-focus-indicator-*` | Not exposed | Driven by global focus indicator tokens |
 | `--mod-accordion-item-content-*` (typography) | Not exposed | Driven by global typography tokens |
-| `--mod-accordion-item-header-*` (typography) | Not exposed | Driven by global typography tokens |
-| `--mod-accordion-disclosure-indicator-*` | Not exposed | Controlled internally by `--swc-icon-*` on the chevron element |
+| `--mod-accordion-item-header-font-size` | `--swc-accordion-item-header-font-size` | Exposed; overridden per `size` on the item host. Other header typography (weight, line-height) remains token-driven |
+| `--mod-accordion-item-header-*` (other typography) | Not exposed | Driven by global typography tokens |
+| `--mod-accordion-disclosure-indicator-*` (dimensions) | Not exposed | Chevron icon dimensions controlled internally via `--swc-icon-*` on the chevron element |
 | `--mod-accordion-divider-thickness` | Not exposed | Driven by `token("border-width-100")` |
 | `--mod-accordion-min-block-size` | Not exposed | Minimum height is set by block-padding tokens and content height |
-| `--mod-accordion-edge-to-*-space` | Not exposed | Padding is token-driven per size; use `--swc-accordion-content-padding-inline` for the panel content area only |
-| `--mod-accordion-item-content-area-*-to-content` | Not exposed | Driven by `token("accordion-content-area-top-to-content")` and `token("accordion-content-area-bottom-to-content")` |
+| `--mod-accordion-item-header-top/bottom-to-text-space` | `--swc-accordion-item-padding-top` / `--swc-accordion-item-padding-bottom` | Exposed; header block padding. Overridden per `size` on the item host; compact/spacious `density` overrides from `swc-accordion` via `::slotted(swc-accordion-item)` |
+| `--mod-accordion-edge-to-content-area-*` | `--swc-accordion-item-edge-to-content-area` | Exposed; symmetric inline padding on the header button. Overridden per `size`; set to `0` for no-inline-padding parity |
+| `--mod-accordion-disclosure-indicator-to-text-*` | `--swc-accordion-item-disclosure-indicator-gap` | Exposed; gap between chevron and label. Overridden per `size` |
+| `--mod-accordion-edge-to-*-space` (other) | Not exposed | Legacy 1st-gen spacing mods without a 1:1 2nd-gen override |
+| `--mod-accordion-item-content-area-*-to-content` | Not exposed | Block padding only (`accordion-content-area-top-to-content`, `accordion-content-area-bottom-to-content`); driven by fixed tokens, not overridable |
 
 ### Density × size padding matrix
 
-Header block padding is determined by `density` (on the accordion host) and `size` (set on the host and propagated to items). Density tokens override the default size tokens via CSS custom properties cascaded from the host.
+Header block padding is determined by `density` (on the accordion host) and `size` (set on the host and propagated to items).
 
 | Density | Size s | Size m (default) | Size l | Size xl |
 |---|---|---|---|---|
@@ -332,7 +336,9 @@ Header block padding is determined by `density` (on the accordion host) and `siz
 
 > `top/bottom` is shorthand; each cell represents two tokens: `accordion-top-to-text-*` and `accordion-bottom-to-text-*`.
 
-Regular density uses the base size tokens directly. Compact and spacious densities override the values by setting `--_swc-accordion-pad-top-{s|m|l|xl}` and `--_swc-accordion-pad-bottom-{s|m|l|xl}` on the `:host` of `swc-accordion`. These are internal private properties and are not part of the public API.
+**Regular** density: `swc-accordion-item` sets `--swc-accordion-item-padding-top` and `--swc-accordion-item-padding-bottom` on `:host([size])` (medium uses the private-wrapper fallback on `.swc-AccordionItem-header`).
+
+**Compact** and **spacious** density: `swc-accordion` overrides the same exposed properties on slotted items via `:host([density="…"]) ::slotted(swc-accordion-item)` and `:host([density="…"][size="…"]) ::slotted(swc-accordion-item)` (medium uses the base `:host([density="…"])` rule; s/l/xl use compound density + size selectors).
 
 ---
 
@@ -378,8 +384,9 @@ Gates align with [01_washing-machine-workflow.md](../../02_workstreams/02_2nd-ge
 
 ### Documentation
 
-- [x] JSDoc, usage docs, Storybook stories (include a spacing / **custom properties** story for “no inline padding” style parity; **no** `noInlinePadding`-style attribute)
-- [x] Add a Storybook story demonstrating inline padding customization via `--swc-accordion-*` custom properties (no `noInlinePadding`-style attribute)
+- [x] JSDoc, usage docs, Storybook stories (**no** `noInlinePadding`-style attribute)
+- [ ] Storybook story and `@cssprop` docs for no-inline-padding parity via `--swc-accordion-item-edge-to-content-area`
+- [ ] Document remaining exposed `--swc-accordion-item-*` custom properties in `@cssprop` (Storybook API panel)
 - [x] Do not document arrow-key navigation between headers for 2nd-gen (contrast with legacy README)
 
 ### Review
