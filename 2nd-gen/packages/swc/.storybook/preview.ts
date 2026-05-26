@@ -249,6 +249,7 @@ const preview = {
               'Tools vs packages',
               'Writing migration guides',
               'Focus management',
+              'Changelog strategy',
             ],
             'Style guide',
             [
@@ -391,6 +392,11 @@ const preview = {
                 ['Rendering and styling migration analysis'],
                 'Field label',
                 ['Rendering and styling migration analysis'],
+                'Grid',
+                [
+                  'Accessibility migration analysis',
+                  'Rendering and styling migration analysis',
+                ],
                 'Help text',
                 ['Rendering and styling migration analysis'],
                 'Illustrated message',
@@ -437,6 +443,7 @@ const preview = {
                 'Popover',
                 [
                   'Accessibility migration analysis',
+                  'Migration plan',
                   'Rendering and styling migration analysis',
                 ],
                 'Progress bar',

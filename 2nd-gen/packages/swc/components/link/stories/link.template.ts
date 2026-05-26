@@ -11,8 +11,8 @@
  */
 
 import { html, type TemplateResult } from 'lit';
+import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
-import { styleMap } from 'lit/directives/style-map.js';
 
 export const VARIANTS = [
   'default',
@@ -21,45 +21,30 @@ export const VARIANTS = [
   'staticBlack',
 ] as const;
 
-export const CONTEXTS = ['standalone', 'prose', 'links'] as const;
+/** Static color variants for stories using `parameters.staticColorsDemo`. */
+export const LINK_STATIC_VARIANTS = ['staticWhite', 'staticBlack'] as const;
 
-export const SIZES = ['XS', 'S', 'M', 'L', 'XL'] as const;
+/** Color variants for side-by-side option stories (static colors are separate). */
+export const LINK_COLOR_VARIANTS = ['default', 'secondary'] as const;
+
+export const CONTEXTS = ['explicit', 'prose', 'links'] as const;
 
 export const LANGS = ['en', 'zh', 'ja', 'ko'] as const;
 
 export type LinkVariant = (typeof VARIANTS)[number];
 export type LinkContext = (typeof CONTEXTS)[number];
-export type LinkSize = (typeof SIZES)[number];
 export type LinkLang = (typeof LANGS)[number] | undefined;
 
 export type LinkTemplateProps = {
   prefix?: string;
   variant?: LinkVariant;
   context?: LinkContext;
-  size?: LinkSize;
+  /** Adds `.swc-Link--standalone` (quiet requires this). */
+  standalone?: boolean;
   quiet?: boolean;
-  inline?: boolean;
   lang?: LinkLang;
   href?: string;
   sampleText?: string;
-  showAllVariants?: boolean;
-};
-
-/** Standalone `.swc-Link` sets its own font-size; prose/links inherit from `swc-Body`. */
-const STANDALONE_SIZE_FONT_VARS: Record<LinkSize, string | undefined> = {
-  XS: 'var(--swc-font-size-75)',
-  S: 'var(--swc-font-size-100)',
-  M: undefined,
-  L: 'var(--swc-font-size-200)',
-  XL: 'var(--swc-font-size-300)',
-};
-
-const BODY_SIZE_CLASS: Record<LinkSize, string | undefined> = {
-  XS: 'swc-Body--sizeXS',
-  S: 'swc-Body--sizeS',
-  M: undefined,
-  L: 'swc-Body--sizeL',
-  XL: 'swc-Body--sizeXL',
 };
 
 export const LINK_LIST_ITEMS = [
@@ -68,63 +53,39 @@ export const LINK_LIST_ITEMS = [
   { label: 'Contact support', href: '#' },
 ] as const;
 
-const STATIC_BACKGROUNDS: Record<
-  'staticWhite' | 'staticBlack',
-  { background: string; color: string }
-> = {
-  staticWhite: {
-    background: 'rgb(15, 121, 125)',
-    color: 'rgb(240, 240, 240)',
-  },
-  staticBlack: {
-    background: 'rgb(181, 209, 211)',
-    color: 'rgb(15, 15, 15)',
-  },
-};
-
-function cls(...parts: Array<string | false | null | undefined>): string {
-  return parts.filter(Boolean).join(' ');
-}
-
-function variantModifier(prefix: string, variant: LinkVariant): string | false {
+function variantModifier(
+  prefix: string,
+  variant: LinkVariant
+): string | undefined {
   if (variant === 'default') {
-    return false;
+    return undefined;
   }
   return `${prefix}-Link--${variant}`;
 }
 
-function buildLinkClasses({
+function buildLinkClassMap({
   prefix,
   variant,
   context,
+  standalone,
   quiet,
-  inline,
 }: {
   prefix: string;
   variant: LinkVariant;
   context: LinkContext;
+  standalone: boolean;
   quiet: boolean;
-  inline: boolean;
-}): string {
+}): Record<string, boolean> {
   const modifier = variantModifier(prefix, variant);
-  const needsBase = context === 'standalone' || modifier !== false;
+  const isExplicit = context === 'explicit';
+  const useModifier = isExplicit && modifier !== undefined;
 
-  return cls(
-    needsBase && `${prefix}-Link`,
-    context === 'standalone' && `${prefix}-Link--standalone`,
-    modifier,
-    inline && `${prefix}-Link--inline`,
-    quiet && context === 'standalone' && `${prefix}-Link--quiet`
-  );
-}
-
-function standaloneLinkStyle(size: LinkSize): Record<string, string> {
-  const fontSize = STANDALONE_SIZE_FONT_VARS[size];
-  return fontSize ? { '--swc-link-font-size': fontSize } : {};
-}
-
-function bodySizeClass(size: LinkSize): string {
-  return cls('swc-Body', BODY_SIZE_CLASS[size]);
+  return {
+    [`${prefix}-Link`]: isExplicit || standalone || useModifier,
+    [`${prefix}-Link--standalone`]: standalone,
+    ...(useModifier ? { [modifier]: true } : {}),
+    [`${prefix}-Link--quiet`]: quiet && standalone,
+  };
 }
 
 function defaultSample(context: LinkContext): string {
@@ -133,71 +94,41 @@ function defaultSample(context: LinkContext): string {
       return LINK_LIST_ITEMS[0].label;
     case 'prose':
       return 'inline link';
-    case 'standalone':
+    case 'explicit':
     default:
       return 'Account settings';
   }
-}
-
-function wrapStaticDemo(
-  variant: LinkVariant,
-  content: TemplateResult
-): TemplateResult {
-  const palette = STATIC_BACKGROUNDS[variant as 'staticWhite' | 'staticBlack'];
-  if (!palette) {
-    return content;
-  }
-
-  return html`
-    <div
-      style=${styleMap({
-        backgroundColor: palette.background,
-        color: palette.color,
-        padding: '15px 20px',
-        display: 'inline-block',
-      })}
-    >
-      ${content}
-    </div>
-  `;
 }
 
 function renderAnchor({
   prefix,
   variant,
   context,
-  size,
+  standalone,
   quiet,
-  inline,
   lang,
   href,
   text,
-  showAllVariants = false,
 }: {
   prefix: string;
   variant: LinkVariant;
   context: LinkContext;
-  size: LinkSize;
+  standalone: boolean;
   quiet: boolean;
-  inline: boolean;
   lang: LinkLang;
   href: string;
   text: string;
-  showAllVariants?: boolean;
 }): TemplateResult {
-  const className = buildLinkClasses({
+  const linkClassMap = buildLinkClassMap({
     prefix,
     variant,
     context,
+    standalone,
     quiet,
-    inline,
   });
   const anchor = html`
     <a
-      class=${ifDefined(className ? className : undefined)}
-      style=${styleMap(
-        context === 'standalone' ? standaloneLinkStyle(size) : {}
-      )}
+      class=${classMap(linkClassMap)}
       href=${href}
       lang=${ifDefined(lang && lang !== 'en' ? lang : undefined)}
     >
@@ -207,9 +138,7 @@ function renderAnchor({
 
   if (context === 'prose') {
     return html`
-      <p class=${bodySizeClass(size)}>
-        Sample sentence with an ${anchor} in running text.
-      </p>
+      <p>Sample sentence with an ${anchor} in running text.</p>
     `;
   }
 
@@ -217,23 +146,19 @@ function renderAnchor({
     const items = LINK_LIST_ITEMS.map((item, index) => ({
       href: item.href,
       label:
-        index === 0 && text !== LINK_LIST_ITEMS[0].label
-          ? text
-          : showAllVariants
-            ? `${item.label} (${variant})`
-            : item.label,
+        index === 0 && text !== LINK_LIST_ITEMS[0].label ? text : item.label,
     }));
 
     return html`
       <ul
-        class=${cls('swc-Typography--links', bodySizeClass(size))}
+        class="swc-Typography--links"
         style="list-style: none; padding: 0; margin: 0;"
       >
         ${items.map(
           (item) => html`
             <li>
               <a
-                class=${ifDefined(className ? className : undefined)}
+                class=${classMap(linkClassMap)}
                 href=${item.href}
                 lang=${ifDefined(lang && lang !== 'en' ? lang : undefined)}
               >
@@ -253,73 +178,37 @@ export function template(args: LinkTemplateProps = {}): TemplateResult {
   const {
     prefix = 'swc',
     variant = 'default',
-    context = 'standalone',
-    size = 'M',
+    context = 'explicit',
+    standalone = false,
     quiet = false,
-    inline = false,
     lang = undefined,
     href = '#',
     sampleText,
-    showAllVariants = false,
   } = args;
 
-  const variants: LinkVariant[] = showAllVariants ? [...VARIANTS] : [variant];
   const text =
     sampleText != null && sampleText !== ''
       ? sampleText
       : defaultSample(context);
 
-  const wrapperClass = cls(
-    'link-samples',
-    showAllVariants && 'link-samples--grid'
-  );
+  const row = renderAnchor({
+    prefix,
+    variant,
+    context,
+    standalone,
+    quiet,
+    lang,
+    href,
+    text,
+  });
 
-  return html`
-    <div class=${wrapperClass}>
-      ${variants.map((linkVariant) => {
-        const row = renderAnchor({
-          prefix,
-          variant: linkVariant,
-          context,
-          size,
-          quiet,
-          inline,
-          lang,
-          href,
-          text: showAllVariants ? `${text} (${linkVariant})` : text,
-          showAllVariants,
-        });
+  if (context === 'prose') {
+    return html`
+      <div class=${classMap({ [`${prefix}-Typography--prose`]: true })}>
+        ${row}
+      </div>
+    `;
+  }
 
-        const content =
-          context === 'prose'
-            ? html`
-                <div class=${`${prefix}-Typography--prose`}>${row}</div>
-              `
-            : row;
-
-        return html`
-          <div class="link-row">
-            ${showAllVariants
-              ? html`
-                  <div class="link-meta">
-                    <div
-                      class="swc-Typography--emphasized swc-Detail swc-Detail--sizeS"
-                    >
-                      ${linkVariant}
-                    </div>
-                    <div class="swc-Detail swc-Detail--sizeS">
-                      ${context} · size
-                      ${size}${quiet ? ' · quiet' : ''}${inline
-                        ? ' · inline'
-                        : ''}${lang && lang !== 'en' ? ` · lang:${lang}` : ''}
-                    </div>
-                  </div>
-                `
-              : null}
-            ${wrapStaticDemo(linkVariant, content)}
-          </div>
-        `;
-      })}
-    </div>
-  `;
+  return row;
 }

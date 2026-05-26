@@ -21,89 +21,49 @@
  * file alongside this one when anchors need explicit presentation control.
  */
 
+
 @import url("../link.css");
 
-@media (forced-colors: active) {
-  a:where(:not([class])) {
-    --_swc-link-high-contrast-text-color: LinkText;
-    --_swc-link-high-contrast-focus-indicator-color: LinkText;
-  }
-}
-
 a:where(:not([class])) {
-  --_swc-link-focus-indicator-thickness: token("focus-indicator-thickness");
-  --_swc-link-focus-indicator-gap: token("focus-indicator-gap");
-  --_swc-link-corner-radius: token("corner-radius-100");
-  --_swc-link-font-family: token("sans-serif-font");
-  --_swc-link-line-height: token("line-height-100");
-  --_swc-link-line-height-cjk: token("cjk-line-height-100");
-  --_swc-link-font-size: token("font-size-100");
-  --_swc-link-font-style: token("default-font-style");
-  --_swc-link-font-weight: token("medium-font-weight");
-  --_swc-link-inline-font-weight: token("regular-font-weight");
-  --_swc-link-text-underline-thickness: token("text-underline-thickness");
-  --_swc-link-text-underline-gap: token("text-underline-gap");
-  --_swc-link-text-color: var(
-    --swc-link-text-color,
-    token("accent-content-color-default")
-  );
-
-  text-decoration-skip: objects;
-  font-family: var(--swc-link-font-family, var(--_swc-link-font-family));
-  font-size: var(--swc-link-font-size, var(--_swc-link-font-size));
-  font-style: var(--swc-link-font-style, var(--_swc-link-font-style));
-  font-weight: var(--swc-link-font-weight, var(--_swc-link-font-weight));
-  line-height: var(--swc-link-line-height, var(--_swc-link-line-height));
-  color: var(--_swc-link-high-contrast-text-color, var(--_swc-link-text-color));
+  font-family: token("sans-serif-font");
+  font-size: token("font-size-100");
+  font-style: token("default-font-style");
+  font-weight: token("medium-font-weight");
+  line-height: token("line-height-100");
+  color: var(--swc-link-text-color, token("accent-content-color-default"));
   text-decoration: underline;
-  text-decoration-thickness: var(
-    --swc-link-text-underline-thickness,
-    var(--_swc-link-text-underline-thickness)
-  );
-  text-underline-offset: var(
-    --swc-link-text-underline-gap,
-    var(--_swc-link-text-underline-gap)
-  );
+  text-decoration-thickness: token("text-underline-thickness");
+  text-underline-offset: token("text-underline-gap");
   background-color: transparent;
   cursor: pointer;
   outline: none;
   transition: color token("animation-duration-100") ease-in-out;
 
   &:hover {
-    --_swc-link-text-color: var(
-      --swc-link-text-color-hover,
-      token("accent-content-color-hover")
-    );
+    color: var(--swc-link-text-color-hover, token("accent-content-color-hover"));
   }
 
   &:active {
-    --_swc-link-text-color: var(
-      --swc-link-text-color-down,
-      token("accent-content-color-down")
-    );
+    color: var(--swc-link-text-color-down, token("accent-content-color-down"));
   }
 
   &:focus-visible {
-    --_swc-link-text-color: var(
-      --swc-link-text-color-focus,
-      token("accent-content-color-key-focus")
-    );
-    
-    border-radius: var(--swc-link-corner-radius, var(--_swc-link-corner-radius));
-    outline: var(--_swc-link-focus-indicator-thickness) solid
-      var(
-        --_swc-link-high-contrast-focus-indicator-color,
-        var(--swc-link-focus-indicator-color, token("focus-indicator-color"))
-      );
-    outline-offset: var(--_swc-link-focus-indicator-gap);
+    color: var(--swc-link-text-color-focus, token("accent-content-color-key-focus"));
+    border-radius: token("corner-radius-100");
+    outline: token("focus-indicator-thickness") solid
+      var(--swc-link-focus-indicator-color, token("focus-indicator-color"));
+    outline-offset: token("focus-indicator-gap");
   }
 
   &:lang(ja),
   &:lang(zh),
   &:lang(ko) {
-    line-height: var(
-      --swc-link-line-height-cjk,
-      var(--_swc-link-line-height-cjk)
-    );
+    line-height: token("cjk-line-height-100");
+  }
+}
+
+@media (forced-colors: active) {
+  a:where(:not([class])) {
+    color: LinkText;
   }
 }
