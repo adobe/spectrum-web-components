@@ -172,15 +172,15 @@ Use comments to explain non-obvious choices. Keep them short and use sentence ca
 
 **When to comment**:
 
-- Section headers for long stylesheets (e.g. `/* Size variants */`)
+- Section banners for long stylesheets (see format below)
 - Non-obvious design decisions (e.g. why a token was chosen)
-- Notes about spec or migration (e.g. `/* NOTE: accent is the default color */`)
+- Notes about spec or behavior (e.g. `/* NOTE: accent is the default color */`)
 
 **Style**:
 
-- Use sentence case: `/* Adjust padding when icon is present */` not `/* Adjust Padding When Icon Is Present */`
+- Use sentence case for inline and `/* NOTE: */` comments
 - Use `/* NOTE: */` for important caveats
-- Avoid comments that repeat what the code does
+- Do not comment what the selector or property value already communicates
 
 **Example from [Badge](../../../2nd-gen/packages/swc/components/badge/badge.css)**:
 
@@ -190,6 +190,28 @@ Use comments to explain non-obvious choices. Keep them short and use sentence ca
 :host([variant="neutral"]) {
   --swc-badge-background-color: token("neutral-subdued-background-color-default");
 }
+```
+
+**Section banner format**:
+
+Use banner comments to label distinct sections in longer stylesheets. The label is ALL CAPS. Add a rationale line only when the section's purpose or constraints are non-obvious — omit it when the label is self-explanatory.
+
+```css
+/* ─────────────────────────────────────────────────────────────────────────────
+   SECTION LABEL
+   Optional rationale for non-obvious constraints or decisions in this section.
+   ───────────────────────────────────────────────────────────────────────────── */
+```
+
+```css
+/* ─────────────────────────────────────────────────────────────────────────────
+   VARIANTS
+   ───────────────────────────────────────────────────────────────────────────── */
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   BASE TOOLTIP
+   Defaulted to "top" placement (tooltip appears above trigger, tip points down ▽).
+   ───────────────────────────────────────────────────────────────────────────── */
 ```
 
 ## Selector patterns
