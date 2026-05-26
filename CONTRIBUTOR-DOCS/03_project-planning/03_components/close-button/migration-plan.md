@@ -63,7 +63,7 @@
 
 ### Most blocking open questions
 
-- [Q2](#architecture-and-behavior): Confirm whether `icon-size` should be a public API in SWC or kept internal.
+- [Q1](#architecture-and-behavior): Confirm whether `icon-size` should be a public API in SWC or kept internal.
 
 ---
 
@@ -149,7 +149,7 @@ Prerequisite dependency:
 | --- | --- | --- | --- | --- |
 | B1 | Tag rename | `<sp-close-button>` | `<swc-close-button>` | Rename markup and import path. |
 | B2 | Accessible name channel rename | `label` | `accessible-label` | Rename attribute/property and keep semantics identical. |
-| B3 | Static color API cleanup | `variant="white|black"` and `static-color` both allowed | `static-color` is canonical; `variant` deprecated/removed | Replace `variant` with `static-color`. |
+| B3 | Static color API cleanup and deprecation | `variant="white|black"` and `static-color` both allowed | `static-color` is canonical; `variant` is deprecated in this migration and scheduled for removal after deprecation window | Replace `variant` with `static-color`; treat `variant` usage as migration debt. |
 
 #### Styling and visuals
 
@@ -184,6 +184,7 @@ Prerequisite dependency:
 | `staticColor` | `'white' \| 'black' \| undefined` | `undefined` | `static-color` | Confirmed |
 | `accessibleLabel` | `string \| undefined` | `undefined` | `accessible-label` | Confirmed |
 | `disabled` | `boolean` | `false` | `disabled` | Confirmed |
+| `variant` (deprecated alias) | `'white' \| 'black' \| ''` | `''` | `variant` | Deprecated in 2nd-gen close-button migration; map to `static-color` with deprecation warning during transition, then remove. |
 
 ### Behavioral semantics
 
@@ -253,18 +254,21 @@ Prerequisite dependency:
 
 ### Design
 
-- **Resolved:** Visual sign-off sources are confirmed:
-  - [S2 Web Desktop scale (Figma)](https://www.figma.com/design/Mngz9H7WZLbrCvGQf3GnsY/S2---Web--Desktop-scale-?node-id=125265-577&t=99qlf018hYjRXRft-4)
-  - [S2 close-button anatomy](https://s2.spectrum.corp.adobe.com/page/close-button/#anatomy)
-  - `spectrum-css` `spectrum-two` `components/closebutton/index.css`
+| # | Item | Blocking? | Status | Owner |
+| --- | --- | --- | --- | --- |
+| Q0 | Visual sign-off sources are confirmed: [S2 Web Desktop scale (Figma)](https://www.figma.com/design/Mngz9H7WZLbrCvGQf3GnsY/S2---Web--Desktop-scale-?node-id=125265-577&t=99qlf018hYjRXRft-4), [S2 close-button anatomy](https://s2.spectrum.corp.adobe.com/page/close-button/#anatomy), and `spectrum-css` `spectrum-two` `components/closebutton/index.css` | No | Resolved | Design + implementation |
 
 ### Architecture and behavior
 
-- **Q2:** Should `icon-size` be exposed in public API, or remain internal visual implementation detail?
+| # | Item | Blocking? | Status | Owner |
+| --- | --- | --- | --- | --- |
+| Q1 | Should `icon-size` be exposed in public API, or remain internal visual implementation detail? | Yes | Open | Design + implementation |
 
 ### Scope and prerequisites
 
-- No additional blockers currently.
+| # | Item | Blocking? | Status | Owner |
+| --- | --- | --- | --- | --- |
+| Q2 | No additional scope or prerequisite blockers identified at this time. | No | Resolved | Ticket owner |
 
 ---
 
