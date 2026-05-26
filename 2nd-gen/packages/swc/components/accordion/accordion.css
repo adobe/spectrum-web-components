@@ -32,28 +32,45 @@
   --_swc-accordion-corner-radius: token("corner-radius-medium-size-extra-large");
 }
 
-/* Compact density: overrides cascade to child items */
-:host([density="compact"]) .swc-Accordion {
-  --_swc-accordion-pad-top-s: token("accordion-top-to-text-compact-small");
-  --_swc-accordion-pad-top-m: token("accordion-top-to-text-compact-medium");
-  --_swc-accordion-pad-top-l: token("accordion-top-to-text-compact-large");
-  --_swc-accordion-pad-top-xl: token("accordion-top-to-text-compact-extra-large");
-  --_swc-accordion-pad-bottom-s: token("accordion-bottom-to-text-compact-small");
-  --_swc-accordion-pad-bottom-m: token("accordion-bottom-to-text-compact-medium");
-  --_swc-accordion-pad-bottom-l: token("accordion-bottom-to-text-compact-large");
-  --_swc-accordion-pad-bottom-xl: token("accordion-bottom-to-text-compact-extra-large");
+/* Compact & spacious density: overrides cascade to slotted items */
+:host([density="compact"]) ::slotted(swc-accordion-item) {
+  --swc-accordion-item-padding-top: token("accordion-top-to-text-compact-medium");
+  --swc-accordion-item-padding-bottom: token("accordion-bottom-to-text-compact-medium");
 }
 
-/* Spacious density: overrides cascade to child items */
-:host([density="spacious"]) .swc-Accordion {
-  --_swc-accordion-pad-top-s: token("accordion-top-to-text-spacious-small");
-  --_swc-accordion-pad-top-m: token("accordion-top-to-text-spacious-medium");
-  --_swc-accordion-pad-top-l: token("accordion-top-to-text-spacious-large");
-  --_swc-accordion-pad-top-xl: token("accordion-top-to-text-spacious-extra-large");
-  --_swc-accordion-pad-bottom-s: token("accordion-bottom-to-text-spacious-small");
-  --_swc-accordion-pad-bottom-m: token("accordion-bottom-to-text-spacious-medium");
-  --_swc-accordion-pad-bottom-l: token("accordion-bottom-to-text-spacious-large");
-  --_swc-accordion-pad-bottom-xl: token("accordion-bottom-to-text-spacious-extra-large");
+:host([density="spacious"]) ::slotted(swc-accordion-item) {
+  --swc-accordion-item-padding-top: token("accordion-top-to-text-spacious-medium");
+  --swc-accordion-item-padding-bottom: token("accordion-bottom-to-text-spacious-medium");
+}
+
+:host([density="compact"][size="s"]) ::slotted(swc-accordion-item) {
+  --swc-accordion-item-padding-top: token("accordion-top-to-text-compact-small");
+  --swc-accordion-item-padding-bottom: token("accordion-bottom-to-text-compact-small");
+}
+
+:host([density="compact"][size="l"]) ::slotted(swc-accordion-item) {
+  --swc-accordion-item-padding-top: token("accordion-top-to-text-compact-large");
+  --swc-accordion-item-padding-bottom: token("accordion-bottom-to-text-compact-large");
+}
+
+:host([density="compact"][size="xl"]) ::slotted(swc-accordion-item) {
+  --swc-accordion-item-padding-top: token("accordion-top-to-text-compact-extra-large");
+  --swc-accordion-item-padding-bottom: token("accordion-bottom-to-text-compact-extra-large");
+}
+
+:host([density="spacious"][size="s"]) ::slotted(swc-accordion-item) {
+  --swc-accordion-item-padding-top: token("accordion-top-to-text-spacious-small");
+  --swc-accordion-item-padding-bottom: token("accordion-bottom-to-text-spacious-small");
+}
+
+:host([density="spacious"][size="l"]) ::slotted(swc-accordion-item) {
+  --swc-accordion-item-padding-top: token("accordion-top-to-text-spacious-large");
+  --swc-accordion-item-padding-bottom: token("accordion-bottom-to-text-spacious-large");
+}
+
+:host([density="spacious"][size="xl"]) ::slotted(swc-accordion-item) {
+  --swc-accordion-item-padding-top: token("accordion-top-to-text-spacious-extra-large");
+  --swc-accordion-item-padding-bottom: token("accordion-bottom-to-text-spacious-extra-large");
 }
 
 /* Quiet: removes dividers and rounds header corners (visible on hover and focus) */

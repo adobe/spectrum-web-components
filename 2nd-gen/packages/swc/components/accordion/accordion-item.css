@@ -53,14 +53,20 @@
 /* ── Header button ──────────────────────────────────────────────────── */
 
 .swc-AccordionItem-header {
+  --_swc-accordion-item-padding-top: var(--swc-accordion-item-padding-top, token("accordion-top-to-text-medium"));
+  --_swc-accordion-item-padding-bottom: var(--swc-accordion-item-padding-bottom, token("accordion-bottom-to-text-medium"));
+  --_swc-accordion-item-disclosure-indicator-gap: var(--swc-accordion-item-disclosure-indicator-gap, token("accordion-disclosure-indicator-to-text-medium"));
+  --_swc-accordion-item-edge-to-content-area: var(--swc-accordion-item-edge-to-content-area, token("accordion-edge-to-content-area-medium"));
+  --_swc-accordion-item-header-font-size: var(--swc-accordion-item-header-font-size, token("font-size-200"));
+
   display: flex;
-  gap: token("accordion-disclosure-indicator-to-text-medium");
+  gap: var(--_swc-accordion-item-disclosure-indicator-gap);
   align-items: center;
   inline-size: 100%;
-  padding-block: var(--_swc-accordion-pad-top-m, token("accordion-top-to-text-medium")) var(--_swc-accordion-pad-bottom-m, token("accordion-bottom-to-text-medium"));
-  padding-inline: token("accordion-edge-to-content-area-medium") token("accordion-edge-to-text");
+  padding-block: var(--_swc-accordion-item-padding-top) var(--_swc-accordion-item-padding-bottom);
+  padding-inline: var(--_swc-accordion-item-edge-to-content-area);
   font-family: inherit;
-  font-size: token("font-size-200");
+  font-size: var(--_swc-accordion-item-header-font-size);
   font-weight: token("bold-font-weight");
   line-height: token("line-height-100");
   color: var(--_swc-accordion-header-text-color);
@@ -194,13 +200,11 @@
 
 :host([size="s"]) {
   --swc-accordion-item-corner-radius: token("corner-radius-medium-size-small");
-}
-
-:host([size="s"]) .swc-AccordionItem-header {
-  gap: token("accordion-disclosure-indicator-to-text-small");
-  padding-block: var(--_swc-accordion-pad-top-s, token("accordion-top-to-text-small")) var(--_swc-accordion-pad-bottom-s, token("accordion-bottom-to-text-small"));
-  padding-inline-start: token("accordion-edge-to-content-area-small");
-  font-size: token("font-size-100");
+  --swc-accordion-item-padding-top: token("accordion-top-to-text-small");
+  --swc-accordion-item-padding-bottom: token("accordion-bottom-to-text-small");
+  --swc-accordion-item-disclosure-indicator-gap: token("accordion-disclosure-indicator-to-text-small");
+  --swc-accordion-item-edge-to-content-area: token("accordion-edge-to-content-area-small");
+  --swc-accordion-item-header-font-size: token("font-size-100");
 }
 
 :host([size="s"]) .swc-AccordionItem-content {
@@ -211,13 +215,11 @@
 
 :host([size="l"]) {
   --swc-accordion-item-corner-radius: token("corner-radius-medium-size-large");
-}
-
-:host([size="l"]) .swc-AccordionItem-header {
-  gap: token("accordion-disclosure-indicator-to-text-large");
-  padding-block: var(--_swc-accordion-pad-top-l, token("accordion-top-to-text-large")) var(--_swc-accordion-pad-bottom-l, token("accordion-bottom-to-text-large"));
-  padding-inline-start: token("accordion-edge-to-content-area-large");
-  font-size: token("font-size-300");
+  --swc-accordion-item-padding-top: token("accordion-top-to-text-large");
+  --swc-accordion-item-padding-bottom: token("accordion-bottom-to-text-large");
+  --swc-accordion-item-disclosure-indicator-gap: token("accordion-disclosure-indicator-to-text-large");
+  --swc-accordion-item-edge-to-content-area: token("accordion-edge-to-content-area-large");
+  --swc-accordion-item-header-font-size: token("font-size-300");
 }
 
 :host([size="l"]) .swc-AccordionItem-content {
@@ -228,13 +230,11 @@
 
 :host([size="xl"]) {
   --swc-accordion-item-corner-radius: token("corner-radius-medium-size-extra-large");
-}
-
-:host([size="xl"]) .swc-AccordionItem-header {
-  gap: token("accordion-disclosure-indicator-to-text-extra-large");
-  padding-block: var(--_swc-accordion-pad-top-xl, token("accordion-top-to-text-extra-large")) var(--_swc-accordion-pad-bottom-xl, token("accordion-bottom-to-text-extra-large"));
-  padding-inline-start: token("accordion-edge-to-content-area-extra-large");
-  font-size: token("font-size-400");
+  --swc-accordion-item-padding-top: token("accordion-top-to-text-extra-large");
+  --swc-accordion-item-padding-bottom: token("accordion-bottom-to-text-extra-large");
+  --swc-accordion-item-disclosure-indicator-gap: token("accordion-disclosure-indicator-to-text-extra-large");
+  --swc-accordion-item-edge-to-content-area: token("accordion-edge-to-content-area-extra-large");
+  --swc-accordion-item-header-font-size: token("font-size-400");
 }
 
 :host([size="xl"]) .swc-AccordionItem-content {
