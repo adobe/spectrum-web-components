@@ -107,8 +107,8 @@ export interface PlacementOptions {
    * element, in pixels (Floating UI `offset` main axis).
    *
    * For `'bottom'`, this is the space below the trigger. This is **not**
-   * viewport padding — see `containerPadding` for edge inset when
-   * `flip` / `shift` run.
+   * viewport padding — see `containerPadding` for inset from the overflow
+   * boundary.
    *
    * Defaults to `0` so the controller-host contract stays neutral; each
    * consuming component sets its own pattern-specific default.
@@ -129,14 +129,14 @@ export interface PlacementOptions {
   crossOffset?: number;
 
   /**
-   * Minimum inset from the **overflow boundary**, in pixels, used by Floating UI
-   * `flip`, `shift`, and (when enabled) `size` middleware.
+   * Minimum inset from the **overflow boundary**, in pixels, used for
+   * collision detection.
    *
-   * Floating UI applies this as padding around the boundary it uses for collision
-   * detection. By default that is the floating element's clipping ancestors, capped
-   * by the visual viewport — so fixed or top-layer popovers usually behave like
-   * screen-edge inset, while surfaces inside a scrollable clipping parent use that
-   * container's edges instead.
+   * Floating UI applies this as padding around the boundary it uses for
+   * collision detection. By default that is the floating element's clipping
+   * ancestors, capped by the visual viewport — so fixed or top-layer popovers
+   * usually behave like screen-edge inset, while surfaces inside a scrollable
+   * clipping parent use that container's edges instead.
    *
    * This is **not** the gap from the trigger — use `offset` and
    * `crossOffset` for trigger-relative spacing.

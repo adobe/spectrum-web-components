@@ -67,7 +67,7 @@ const argTypes = {
   containerPadding: {
     control: 'number',
     description:
-      'Minimum inset (px) from the overflow boundary for `flip`, `shift`, and `size`. Defaults to clipping ancestors capped by the visual viewport; not trigger gap.',
+      'Minimum inset (px) from the overflow boundary used for collision detection. Defaults to clipping ancestors capped by the visual viewport; not trigger gap.',
     table: {
       category: 'Options',
       type: { summary: 'number' },
@@ -254,7 +254,7 @@ export const RequestedPlacement: Story = {
  * (for example nudge a `'bottom-start'` panel further toward the trigger's start edge).
  *
  * Neither option sets boundary inset — use **`containerPadding`** for inset from the
- * overflow boundary when **`flip`** or **`shift`** runs.
+ * overflow boundary.
  *
  * ```typescript
  * this.placement.start(this.trigger, this.panel, {
@@ -275,11 +275,11 @@ export const Offset: Story = {
 };
 
 /**
- * Use **`containerPadding`** for minimum inset from the **overflow boundary** (px) — **not** the gap from the trigger. Passed as `padding` to Floating UI **`flip`**, **`shift`**, and (when **`constrainSize`** is enabled) **`size`** middleware.
+ * Use **`containerPadding`** for minimum inset from the **overflow boundary** (px) — **not** the gap from the trigger. Used internally for collision detection.
  *
  * By default, Floating UI uses clipping ancestors capped by the **visual viewport** as that boundary. For typical fixed or top-layer surfaces, this behaves like screen-edge inset. Inside a scrollable clipping parent, inset is measured from that container's edges instead.
  *
- * Use the playground **Container padding** control with the trigger near an edge to see **`flip`** and **`shift`** keep the panel further inside the boundary.
+ * Use the playground **Container padding** control with the trigger near an edge to see the panel kept further inside the boundary.
  *
  * ```typescript
  * this.placement.start(this.trigger, this.panel, {
@@ -299,8 +299,7 @@ export const ContainerPadding: Story = {
  * side after flip.
  *
  * With **`shouldFlip: false`**, the floating element stays on the requested side even if it
- * overflows. Disabling flip does **not** disable **`shift`**; the panel may still slide
- * along an axis to reduce clipping.
+ * overflows.
  *
  * ```typescript
  * this.placement.start(this.trigger, this.panel, {
@@ -413,7 +412,7 @@ export const VirtualTrigger: Story = {
  * | `placement` | `Placement` | `'bottom'` | Preferred side and alignment relative to the trigger (hyphenated; 22 values). |
  * | `offset` | `number` | `0` | Gap along the placement direction between trigger and floating element (px). |
  * | `crossOffset` | `number` | `0` | Slide along the trigger edge (px), perpendicular to the placement direction. |
- * | `containerPadding` | `number` | `8` | Minimum inset from the overflow boundary used by `flip`, `shift`, and `size`. |
+ * | `containerPadding` | `number` | `8` | Minimum inset from the overflow boundary used for collision detection. |
  * | `shouldFlip` | `boolean` | `true` | Whether `flip` may reorient when the requested placement does not fit. |
  * | `constrainSize` | `boolean` | `false` | When `true`, applies `size` middleware (max-height/max-width). |
  * | `onPlacementChange` | `(placement: Placement) => void` | — | Called when the computed placement changes. |
