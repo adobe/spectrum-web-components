@@ -30,7 +30,6 @@ export {
   fromFloatingPlacement,
   PlacementController,
   toFloatingPlacement,
-  toPlacementClassSuffix,
   type Placement,
   type PlacementHostConfig,
   type PlacementOptions,

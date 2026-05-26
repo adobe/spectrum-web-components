@@ -29,7 +29,7 @@ const FALLBACKS: Record<FloatingPlacement, FloatingPlacement[]> = {
 
 /**
  * Look up the fallback placement order for Floating UI's `flip` middleware
- * when the anchor is a {@link VirtualTrigger}.
+ * when the anchor is a `VirtualTrigger`.
  *
  * @param placement - Normalized Floating UI placement for the current side.
  * @returns Ordered list of placements to try when the primary side does not fit.

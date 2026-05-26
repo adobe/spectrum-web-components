@@ -39,7 +39,7 @@ const PHYSICAL_ALIGNMENT_TO_FLOATING: Record<
 
 /**
  * Reverse lookup for Floating UI placements that aren't valid SWC Placement
- * values. Used by {@link fromFloatingPlacement} to map the four Floating UI
+ * values. Used by `fromFloatingPlacement` to map the four Floating UI
  * outputs that have no direct SWC equivalent (`left-start`, `left-end`,
  * `right-start`, `right-end`) back into the SWC union. Other Floating UI
  * placements are already valid Placement values and pass through unchanged.
@@ -53,7 +53,7 @@ const FLOATING_TO_SWC_PLACEMENT: Partial<Record<FloatingPlacement, Placement>> =
   };
 
 /**
- * Normalize a hyphenated {@link Placement} for Floating UI's `computePosition`.
+ * Normalize a hyphenated `Placement` for Floating UI's `computePosition`.
  *
  * - Logical **sides** (`start`, `end`) map to `left` / `right`.
  * - Logical **alignments** (`bottom-start`, `top-end`) pass through unchanged.
@@ -101,7 +101,7 @@ export function toFloatingPlacement(placement: Placement): FloatingPlacement {
 }
 
 /**
- * Surface a Floating UI placement as the public hyphenated {@link Placement}
+ * Surface a Floating UI placement as the public hyphenated `Placement`
  * form for `actualPlacement` and `onPlacementChange`.
  *
  * Floating UI emits four placements that don't appear in the SWC `Placement`
@@ -115,17 +115,4 @@ export function toFloatingPlacement(placement: Placement): FloatingPlacement {
  */
 export function fromFloatingPlacement(placement: FloatingPlacement): Placement {
   return FLOATING_TO_SWC_PLACEMENT[placement] ?? (placement as Placement);
-}
-
-/**
- * Derive a CSS modifier suffix from a hyphenated placement (for example
- * `.swc-Popover--bottom-start`). Currently a pass-through — kept as an
- * indirection so consuming components can adopt a single helper instead of
- * inlining the placement-to-class conversion.
- *
- * @param placement - Customer-facing hyphenated placement.
- * @returns Class suffix safe to append after `--` in a BEM modifier.
- */
-export function toPlacementClassSuffix(placement: Placement): string {
-  return placement;
 }

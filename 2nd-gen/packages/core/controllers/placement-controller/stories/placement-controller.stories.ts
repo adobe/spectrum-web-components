@@ -67,7 +67,7 @@ const argTypes = {
   containerPadding: {
     control: 'number',
     description:
-      'Minimum inset (px) from the overflow boundary for `flip`, `shift`, and `size`. Defaults to clipping ancestors capped by the visual viewport; not trigger gap. `swc-popover` exposes this as `container-padding`.',
+      'Minimum inset (px) from the overflow boundary for `flip`, `shift`, and `size`. Defaults to clipping ancestors capped by the visual viewport; not trigger gap.',
     table: {
       category: 'Options',
       type: { summary: 'number' },
@@ -140,8 +140,7 @@ const controllerApi = {
   types: [
     {
       name: 'Placement',
-      description:
-        'Hyphenated placement union (22 values, `swc-popover` / Floating UI).',
+      description: 'Hyphenated placement union (22 values).',
     },
     {
       name: 'VirtualTrigger',
@@ -218,7 +217,7 @@ export const Overview: Story = {
  * - Computes `top`, `left`, and `translate` on the **floating element** using
  *   `strategy: 'fixed'` (suitable for native popover top-layer surfaces).
  * - Subscribes to scroll, resize, and layout shift via Floating UI's `autoUpdate` while
- *   {@link PlacementController.start} is active.
+ *   `PlacementController.start` is active.
  * - Waits for `document.fonts.ready` and applies iOS WebKit `visualViewport` correction
  *   before measuring.
  *
@@ -285,10 +284,10 @@ export const Usage: Story = {
 
 /**
  * Pass **`placement`** to choose the preferred side and alignment **relative to the trigger**
- * in hyphenated form (`'bottom'`, `'bottom-start'`, `'top-end'`, etc.). Values align with
- * `<swc-popover>` and Floating UI (22 total). This is the **requested** placement — when
- * **`shouldFlip`** is enabled, Floating UI may compute a different side; read
- * **`actualPlacement`** or use **`onPlacementChange`** for the result after **`flip`**.
+ * in hyphenated form (`'bottom'`, `'bottom-start'`, `'top-end'`, etc.; 22 values total).
+ * This is the **requested** placement — when **`shouldFlip`** is enabled, Floating UI may
+ * compute a different side; read **`actualPlacement`** or use **`onPlacementChange`** for the
+ * result after **`flip`**.
  *
  * Logical alignments (`bottom-start`, `top-end`) reverse in RTL via CSS at the consumer layer;
  * physical alignments (`bottom-left`, `left-top`) stay fixed. Logical sides (`start`, `end`,
@@ -335,9 +334,9 @@ export const Offset: Story = {
 /**
  * Use **`containerPadding`** for minimum inset from the **overflow boundary** (px) — **not** the gap from the trigger. Passed as `padding` to Floating UI **`flip`**, **`shift`**, and (when **`constrainSize`** is enabled) **`size`** middleware.
  *
- * By default, Floating UI uses clipping ancestors capped by the **visual viewport** as that boundary. For typical fixed or top-layer popovers, this behaves like screen-edge inset. Inside a scrollable clipping parent, inset is measured from that container's edges instead.
+ * By default, Floating UI uses clipping ancestors capped by the **visual viewport** as that boundary. For typical fixed or top-layer surfaces, this behaves like screen-edge inset. Inside a scrollable clipping parent, inset is measured from that container's edges instead.
  *
- * `<swc-popover>` exposes this as the **`container-padding`** attribute. Use the playground **Container padding** control with the trigger near an edge to see **`flip`** and **`shift`** keep the panel further inside the boundary.
+ * Use the playground **Container padding** control with the trigger near an edge to see **`flip`** and **`shift`** keep the panel further inside the boundary.
  *
  * ```typescript
  * this.placement.start(this.trigger, this.panel, {
@@ -389,8 +388,7 @@ export const ShouldFlip: Story = {
  * `true` when height was clamped on the last compute.
  *
  * Use for picker, menu, and combobox list surfaces. Leave disabled for compact popovers and
- * tooltips. Not part of the `<swc-popover>` public API — enable only on hosts that compose
- * the controller directly.
+ * tooltips. Opt-in — hosts enable it only when their content can overflow.
  *
  * ```typescript
  * this.placement.start(this.trigger, this.listbox, {
@@ -428,7 +426,7 @@ export const OnPlacementChange: Story = {
 /**
  * Pass a **`VirtualTrigger`** instead of a DOM element when the anchor is a **virtual point**
  * — for example a click coordinate, text selection rect, or canvas hit-test. Implement
- * {@link VirtualTrigger} with **`getBoundingClientRect()`** returning viewport coordinates;
+ * `VirtualTrigger` with **`getBoundingClientRect()`** returning viewport coordinates;
  * optionally set **`contextElement`** as the clipping root inside scrollable regions.
  *
  * Virtual triggers use a curated fallback list for **`flip`** (see `getFallbackPlacements()`)
@@ -504,14 +502,15 @@ export const Accessibility: Story = {
  * ### Relationship to 1st-gen `PlacementController`
  *
  * The 2nd-gen controller is a **focused subset** of the 1st-gen
- * `PlacementController`: single `autoUpdate` channel, hyphenated placements aligned
- * with `<swc-popover>`, callback-based placement surfacing, and opt-in `constrainSize`.
+ * `PlacementController`: single `autoUpdate` channel, hyphenated placements,
+ * callback-based placement surfacing, and opt-in `constrainSize`. It owns
+ * geometry only — open/close lifecycle, ARIA, focus, and dismissal remain
+ * the caller's responsibility.
  *
  * ### See also
  *
  * - [Floating UI documentation](https://floating-ui.com/docs/computePosition)
  * - [Floating UI middleware](https://floating-ui.com/docs/middleware)
- * - [Popover migration plan](https://github.com/adobe/spectrum-web-components/blob/main/CONTRIBUTOR-DOCS/03_project-planning/03_components/popover/migration-plan.md)
  */
 export const Appendix: Story = {
   tags: ['description-only', 'appendix'],

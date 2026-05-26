@@ -36,16 +36,10 @@ import type {
 const MIN_FLOATING_HEIGHT = 100;
 
 const DEFAULT_PLACEMENT: Placement = 'bottom';
-// Neutral by design — controller does not impose a trigger gap. Each
-// consuming component (popover, picker, menu, …) sets its own default per the
-// popover migration plan: "we default to 0 to make the controller-host
-// contract neutral. Each downstream first-party component sets the
-// pattern-specific default in its own migration."
+// Neutral default — controller does not impose a trigger gap. Consuming
+// components set their own pattern-specific default.
 const DEFAULT_OFFSET = 0;
 const DEFAULT_CROSS_OFFSET = 0;
-// Matches 1st-gen `REQUIRED_DISTANCE_TO_EDGE` and Spectrum guidance for
-// minimum distance from the overflow boundary. Used by `flip`, `shift`, and
-// (when enabled) `size` middleware.
 const DEFAULT_CONTAINER_PADDING = 8;
 const DEFAULT_SHOULD_FLIP = true;
 
@@ -81,7 +75,7 @@ type ActiveSession = {
   options: PlacementOptions;
 
   /**
-   * Cached `isWebKit()` result so {@link computePlacement} doesn't run a UA
+   * Cached `isWebKit()` result so `computePlacement` doesn't run a UA
    * regex per `autoUpdate` tick.
    */
   isWebKit: boolean;
@@ -92,9 +86,9 @@ type ActiveSession = {
  * element relative to a trigger using [Floating UI](https://floating-ui.com/)
  * (`computePosition` + `autoUpdate`).
  *
- * The public API uses hyphenated placements aligned with `<swc-popover>` and
- * Floating UI. Logical sides (`start`, `end`) normalize to physical sides for
- * positioning math; RTL is handled in CSS at the consumer layer.
+ * Hyphenated placements are accepted on the public API. Logical sides
+ * (`start`, `end`) normalize to physical sides for positioning math; RTL is
+ * handled in CSS at the consumer layer.
  *
  * @example
  * ```typescript
@@ -115,12 +109,12 @@ export class PlacementController implements ReactiveController {
 
   /**
    * The computed placement after `flip` reorients (hyphenated). `null` when
-   * {@link stop} has been called.
+   * `stop` has been called.
    *
-   * Set synchronously to the requested {@link PlacementOptions.placement}
-   * (or {@link DEFAULT_PLACEMENT}) when {@link start} is called, then
+   * Set synchronously to the requested `PlacementOptions.placement`
+   * (or `DEFAULT_PLACEMENT`) when `start` is called, then
    * updated to the value returned by `computePosition` once measurement
-   * resolves. {@link PlacementOptions.onPlacementChange} fires only when the
+   * resolves. `PlacementOptions.onPlacementChange` fires only when the
    * computed value differs from the synchronous initial value — consumers
    * that need a "first compute resolved" signal should read this property
    * after their own open transition completes.
@@ -128,7 +122,7 @@ export class PlacementController implements ReactiveController {
   public actualPlacement: Placement | null = null;
 
   /**
-   * Whether {@link PlacementOptions.constrainSize} clamped the floating
+   * Whether `PlacementOptions.constrainSize` clamped the floating
    * element's height on the last compute.
    */
   public isConstrained = false;
@@ -159,9 +153,9 @@ export class PlacementController implements ReactiveController {
    * Tears down any prior session, stores the new options, and subscribes to
    * Floating UI `autoUpdate` so placement stays correct on scroll and resize.
    *
-   * @param trigger - Anchor element or {@link VirtualTrigger}.
+   * @param trigger - Anchor element or `VirtualTrigger`.
    * @param floating - Element to position (`position: fixed` or top-layer).
-   * @param options - {@link PlacementOptions}; omitted properties use defaults.
+   * @param options - `PlacementOptions`; omitted properties use defaults.
    */
   public start(
     trigger: HTMLElement | VirtualTrigger,
@@ -179,13 +173,9 @@ export class PlacementController implements ReactiveController {
     this.actualPlacement = options.placement ?? DEFAULT_PLACEMENT;
 
     // Single `autoUpdate` channel — receives `ancestorScroll`,
-    // `ancestorResize`, `elementResize`, and `layoutShift` by default. This
-    // is a deliberate change from 1st-gen, which used a second channel with
-    // `ancestorScroll: false` purely to detect ancestor scroll for the
-    // "close overlay on ancestor update" behavior baked into the 1st-gen
-    // overlay model. The 2nd-gen controller owns geometry only — the
-    // caller decides whether ancestor scroll should close the surface —
-    // so we just reposition like any other event.
+    // `ancestorResize`, `elementResize`, and `layoutShift` by default. The
+    // controller owns geometry only and just repositions on every event;
+    // the caller decides whether ancestor scroll should close the surface.
     const autoUpdateCleanup = autoUpdate(trigger, floating, () => {
       void this.computePlacement();
     });
@@ -240,8 +230,8 @@ export class PlacementController implements ReactiveController {
   }
 
   /**
-   * Stop positioning: tear down `autoUpdate`, clear {@link actualPlacement},
-   * and reset {@link isConstrained}. Safe to call multiple times.
+   * Stop positioning: tear down `autoUpdate`, clear `actualPlacement`,
+   * and reset `isConstrained`. Safe to call multiple times.
    */
   public stop(): void {
     this.cleanup?.();
@@ -255,8 +245,8 @@ export class PlacementController implements ReactiveController {
    * Force one recomputation outside the `autoUpdate` callback.
    *
    * Use when floating content reflows internally or when a
-   * {@link VirtualTrigger} moves without a DOM mutation. No-op if
-   * {@link start} has not been called.
+   * `VirtualTrigger` moves without a DOM mutation. No-op if
+   * `start` has not been called.
    */
   public recompute(): void {
     void this.computePlacement();
@@ -273,11 +263,11 @@ export class PlacementController implements ReactiveController {
 
   /**
    * Run Floating UI `computePosition`, apply the result to the floating element,
-   * and update {@link actualPlacement} when `flip` reorients.
+   * and update `actualPlacement` when `flip` reorients.
    *
    * Waits for web fonts and a WebKit animation frame before measuring. Skips
-   * when the floating element has zero dimensions. Aborts if {@link stop} or a
-   * new {@link start} call replaces the active session while awaiting async work.
+   * when the floating element has zero dimensions. Aborts if `stop` or a
+   * new `start` call replaces the active session while awaiting async work.
    */
   private async computePlacement(): Promise<void> {
     const session = this.session;
@@ -397,5 +387,4 @@ export { ALL_PLACEMENTS } from './types.js';
 export {
   fromFloatingPlacement,
   toFloatingPlacement,
-  toPlacementClassSuffix,
 } from './placement-conversion.js';

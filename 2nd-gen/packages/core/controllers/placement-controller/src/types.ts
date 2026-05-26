@@ -16,8 +16,7 @@
 
 /**
  * The full set of hyphenated placement values accepted by the public API
- * (`'bottom'`, `'bottom-start'`, `'start-top'`, etc.), aligned with
- * `<swc-popover>` and Floating UI.
+ * (`'bottom'`, `'bottom-start'`, `'start-top'`, etc.).
  *
  * Physical-alignment variants (`top-left`, `bottom-right`) are distinct from
  * logical-alignment variants (`top-start`, `bottom-end`) — physical stays fixed
@@ -59,7 +58,7 @@ export type Placement = (typeof ALL_PLACEMENTS)[number];
 // ─────────────────────────
 
 /**
- * A virtual trigger reference accepted by {@link PlacementController}. Mirrors
+ * A virtual trigger reference accepted by `PlacementController`. Mirrors
  * the Floating UI virtual-element shape: anything that can report its bounding
  * rect and (optionally) its context element is a valid anchor.
  */
@@ -73,11 +72,9 @@ export interface VirtualTrigger {
 // ─────────────────────────
 
 /**
- * Host-level configuration passed once to the {@link PlacementController}
+ * Host-level configuration passed once to the `PlacementController`
  * constructor. Reserved for forward compatibility — currently has no
- * required fields. Future hooks (for example a `tipElement` resolver for
- * `arrow` middleware) will be added here so existing call sites do not need
- * to change.
+ * required fields.
  */
 export interface PlacementHostConfig {
   /** Reserved for future use. */
@@ -89,19 +86,17 @@ export interface PlacementHostConfig {
 // ─────────────────────────
 
 /**
- * Options passed to {@link PlacementController.start}. Matches the positioning
- * surface of `<swc-popover>` (`placement`, `offset`, `crossOffset`,
- * `containerPadding`, `shouldFlip`).
+ * Options passed to `PlacementController.start`.
  */
 export interface PlacementOptions {
   /**
    * Preferred side and alignment of the floating element relative to the
    * **trigger** (hyphenated, for example `'bottom'`, `'bottom-start'`).
    *
-   * This is the requested placement. When {@link shouldFlip} is enabled,
+   * This is the requested placement. When `shouldFlip` is enabled,
    * Floating UI may compute a different side if the requested one does not fit.
-   * The result is surfaced on {@link PlacementController.actualPlacement} and
-   * via {@link onPlacementChange}.
+   * The result is surfaced on `PlacementController.actualPlacement` and
+   * via `onPlacementChange`.
    *
    * @default 'bottom'
    */
@@ -112,13 +107,11 @@ export interface PlacementOptions {
    * element, in pixels (Floating UI `offset` main axis).
    *
    * For `'bottom'`, this is the space below the trigger. This is **not**
-   * viewport padding — see {@link containerPadding} for edge inset when
+   * viewport padding — see `containerPadding` for edge inset when
    * `flip` / `shift` run.
    *
    * Defaults to `0` so the controller-host contract stays neutral; each
-   * consuming component sets its own pattern-specific default (for example,
-   * `<swc-popover>` defaults `offset` to `0`, downstream patterns like
-   * `<swc-picker>` may raise it).
+   * consuming component sets its own pattern-specific default.
    *
    * @default 0
    */
@@ -129,7 +122,7 @@ export interface PlacementOptions {
    * direction, in pixels (Floating UI `offset` cross axis).
    *
    * Adjusts alignment such as `'bottom-start'` vs `'bottom-end'` without
-   * changing viewport inset. This is **not** {@link containerPadding}.
+   * changing viewport inset. This is **not** `containerPadding`.
    *
    * @default 0
    */
@@ -145,11 +138,8 @@ export interface PlacementOptions {
    * screen-edge inset, while surfaces inside a scrollable clipping parent use that
    * container's edges instead.
    *
-   * This is **not** the gap from the trigger — use {@link offset} and
-   * {@link crossOffset} for trigger-relative spacing.
-   *
-   * Matches `<swc-popover>`'s `container-padding` attribute; consumer
-   * components expose this publicly and pass it through to the controller.
+   * This is **not** the gap from the trigger — use `offset` and
+   * `crossOffset` for trigger-relative spacing.
    *
    * @default 8
    */
@@ -157,7 +147,7 @@ export interface PlacementOptions {
 
   /**
    * Whether Floating UI may **flip** the floating element to the opposite side when the
-   * requested {@link placement} does not fit within the overflow boundary.
+   * requested `placement` does not fit within the overflow boundary.
    *
    * When `false`, the floating element stays on the requested side even if it
    * overflows — useful for tooltips that must not jump above the trigger.
@@ -168,8 +158,8 @@ export interface PlacementOptions {
 
   /**
    * When `true`, applies Floating UI's `size` middleware so long content
-   * scrolls inside the viewport. Not part of the `<swc-popover>` public API;
-   * used by picker / menu patterns that compose the controller directly.
+   * scrolls inside the viewport. Opt-in — consumers that need it (list
+   * surfaces such as menus, pickers, comboboxes) enable it explicitly.
    *
    * @default false
    */
