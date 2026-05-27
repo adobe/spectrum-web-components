@@ -149,10 +149,12 @@ export class AccordionItem extends AccordionItemBase {
           class="swc-AccordionItem-content"
           role="region"
           aria-labelledby="header"
-          ?hidden=${!this.open}
+          aria-hidden=${ifDefined(this.open ? undefined : 'true')}
           .inert=${this.disabled || this.parentDisabled}
         >
-          <slot></slot>
+          <div class="swc-AccordionItem-contentBody">
+            <slot></slot>
+          </div>
         </div>
       </div>
     `;

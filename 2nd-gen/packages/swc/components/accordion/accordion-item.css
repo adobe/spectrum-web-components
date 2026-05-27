@@ -186,9 +186,18 @@
 /* ── Content panel ──────────────────────────────────────────────────── */
 
 .swc-AccordionItem-content {
+  display: none;
+}
+
+:host([open]) .swc-AccordionItem-content {
+  display: block;
+}
+
+/* Inner wrapper holds padding and typography. The outer container (.swc-AccordionItem-content)
+   is padding-free so height: 0 collapses it cleanly in the @supports animation block. */
+.swc-AccordionItem-contentBody {
   --_swc-accordion-item-content-padding-inline: var(--swc-accordion-item-content-padding-inline, token("accordion-content-area-edge-to-content-medium"));
 
-  display: none;
   padding-block: token("accordion-content-area-top-to-content") token("accordion-content-area-bottom-to-content");
   padding-inline: var(--_swc-accordion-item-content-padding-inline);
   font-size: token("font-size-100");
@@ -197,19 +206,15 @@
   color: token("neutral-subdued-content-color-default");
 }
 
-:host([open]) .swc-AccordionItem-content {
-  display: block;
-}
-
 /* Zero out default browser paragraph margins at the panel edges.
    :first-child cannot be used here — named-slot siblings (span[slot="label"],
    etc.) precede the default-slot content in the light DOM, so the first <p>
    is never :first-child. :first-of-type finds it by element type instead. */
-.swc-AccordionItem-content ::slotted(p:first-of-type) {
+.swc-AccordionItem-contentBody ::slotted(p:first-of-type) {
   margin-block-start: 0;
 }
 
-.swc-AccordionItem-content ::slotted(:last-child) {
+.swc-AccordionItem-contentBody ::slotted(:last-child) {
   margin-block-end: 0;
 }
 
@@ -247,4 +252,28 @@
   --swc-accordion-item-edge-to-content-area: token("accordion-edge-to-content-area-extra-large");
   --swc-accordion-item-header-font-size: token("font-size-400");
   --swc-accordion-item-content-padding-inline: token("accordion-content-area-edge-to-content-extra-large");
+}
+
+/* ── Progressive enhancement: height animation ───────────────────────
+   calc-size() allows animating height: auto, which CSS transitions
+   could not previously target. Supported in Chrome/Edge 129+; all
+   other browsers keep the current instant show/hide behavior.       */
+
+@supports (height: calc-size(auto, size)) {
+  .swc-AccordionItem-content {
+    display: block;
+    height: 0;
+    overflow: hidden;
+    transition: height token("animation-duration-100") token("animation-ease-in-out");
+  }
+
+  :host([open]) .swc-AccordionItem-content {
+    height: calc-size(auto, size);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .swc-AccordionItem-content {
+      transition: none;
+    }
+  }
 }
