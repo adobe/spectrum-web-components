@@ -248,6 +248,13 @@ export abstract class TooltipBase extends SpectrumElement {
     this.dispatchAfterEvent(this.open);
   };
 
+  // Allows Escape behavior to be testable, does not interfere with native popover dismissal
+  private readonly handleKeyDown = (event: KeyboardEvent): void => {
+    if (event.key === 'Escape' && this.open) {
+      this.open = false;
+    }
+  };
+
   protected override updated(changedProperties: PropertyValues): void {
     super.updated(changedProperties);
     if (changedProperties.has('open')) {
@@ -269,6 +276,7 @@ export abstract class TooltipBase extends SpectrumElement {
     this.addEventListener('beforetoggle', this.handleBeforeToggle);
     this.addEventListener('toggle', this.handleToggle);
     this.addEventListener('transitionend', this.handleTransitionEnd);
+    document.addEventListener('keydown', this.handleKeyDown);
   }
 
   public override disconnectedCallback(): void {
@@ -276,5 +284,6 @@ export abstract class TooltipBase extends SpectrumElement {
     this.removeEventListener('beforetoggle', this.handleBeforeToggle);
     this.removeEventListener('toggle', this.handleToggle);
     this.removeEventListener('transitionend', this.handleTransitionEnd);
+    document.removeEventListener('keydown', this.handleKeyDown);
   }
 }
