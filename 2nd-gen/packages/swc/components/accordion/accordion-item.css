@@ -37,6 +37,7 @@
 
 .swc-AccordionItem-row {
   display: flex;
+  gap: token("spacing-100");
   align-items: center;
 }
 
@@ -177,7 +178,9 @@
 .swc-AccordionItem-actions {
   display: flex;
   flex: 0 0 auto;
+  gap: token("spacing-100");
   align-items: center;
+  margin-inline-end: var(--swc-accordion-item-edge-to-content-area, token("accordion-edge-to-content-area-medium"));
 }
 
 /* ── Content panel ──────────────────────────────────────────────────── */
