@@ -177,8 +177,16 @@ const triggered = (
 `;
 
 /**
- * Each story renders one or more buttons that trigger associated tooltips when clicked.
- * These stories use a temporary click-to-toggle implementation until `HoverController` is available in the additive phase.
+ * A `<swc-tooltip>` displays a brief, contextual message near a trigger element.
+ *
+ * Author `<swc-tooltip>` as a sibling of the trigger element. Reference the trigger by its `id`
+ * using the `for` attribute; the tooltip can be placed anywhere in the same document tree root.
+ *
+ * For cross-shadow-root triggers where `getElementById` cannot reach the trigger, set the
+ * `triggerElement` property directly with an element reference.
+ *
+ * Each story in this document uses a temporary click-to-toggle interaction.
+ * Automatic hover and focus wiring is available in a future release.
  */
 const meta: Meta = {
   title: 'Tooltip',
@@ -236,8 +244,6 @@ export const Overview: Story = {
  * 1. **Tooltip bubble**: Container with rounded corners and variant-specific background color
  * 2. **Tip indicator**: Triangular arrow pointing toward the trigger element (placement-aware)
  * 3. **Default slot**: Text content displayed inside the bubble
- *
- * Click each button below to toggle short and long text variants.
  */
 export const Anatomy: Story = {
   render: (args) => html`
@@ -263,6 +269,11 @@ export const Anatomy: Story = {
 // ──────────────────────────
 //    OPTIONS STORIES
 // ──────────────────────────
+
+/**
+ * Three semantic variants are available: `neutral` (default), `informative`, and `negative`.
+ * Each applies a distinct background color token.
+ */
 export const Variants: Story = {
   render: (args) => html`
     ${TOOLTIP_VARIANTS.map((variant) =>
@@ -279,7 +290,7 @@ export const Variants: Story = {
 
 /**
  * The `placement` attribute sets the preferred position of the tooltip relative to its trigger.
- * Pixel-accurate anchoring requires `PlacementController` (additive phase); these stories
+ * Pixel-accurate anchoring requires `PlacementController` (future release); these stories
  * temporarily use Floating UI directly to verify visual appearance across placements.
  */
 export const Placements: Story = {
@@ -342,10 +353,165 @@ export const Placements: Story = {
 //    STATES STORIES
 // ──────────────────────────
 
-// TODO: will complete in separate documentation pass of phase 7
+/**
+ * The tooltip has two states: closed (default) and open.
+ *
+ * When open, the bubble and directional tip are visible. The `open` property reflects whether the
+ * tooltip is currently shown. Click the button below to toggle the open state.
+ */
+export const Open: Story = {
+  render: (args) => html`
+    ${triggered({ ...args }, 'tooltip-state-open', 'Action')}
+  `,
+  args: {
+    variant: 'neutral',
+    placement: 'top',
+    'default-slot': 'Save your changes',
+  },
+  play: async ({ canvasElement }: { canvasElement: HTMLElement }) => {
+    const button = canvasElement.querySelector('swc-button') as HTMLElement;
+    button?.click();
+  },
+  tags: ['states'],
+};
+
+// ────────────────────────────────
+//    BEHAVIORS STORIES
+// ────────────────────────────────
+
+/**
+ * `<swc-tooltip>` dispatches four lifecycle events as the tooltip opens and closes:
+ *
+ * - **`swc-open`**: Dispatched when the tooltip begins to open, before the enter transition plays.
+ * - **`swc-after-open`**: Dispatched after the enter transition completes.
+ * - **`swc-close`**: Dispatched when the tooltip begins to close, before the exit transition plays.
+ * - **`swc-after-close`**: Dispatched after the exit transition completes.
+ *
+ * When no CSS transition is active (for example, when `prefers-reduced-motion` removes it),
+ * `swc-after-open` and `swc-after-close` are dispatched synchronously on the same tick as
+ * `swc-open` and `swc-close`.
+ *
+ * Events fire regardless of what caused the state change: setting `open` directly, calling
+ * `showPopover()`/`hidePopover()`, pressing `Escape`, or a light-dismiss click.
+ *
+ * Open this story's browser console and click the button to observe the events.
+ */
+export const Events: Story = {
+  render: (args) => html`
+    ${triggered({ ...args }, 'tooltip-behavior-events', 'Open')}
+  `,
+  args: {
+    variant: 'neutral',
+    placement: 'top',
+    'default-slot': 'Save your changes',
+  },
+  tags: ['behaviors'],
+};
+
+/**
+ * `<swc-tooltip>` uses `popover="auto"`, which participates in the browser's auto popover stack.
+ * Opening a tooltip dismisses any other open `auto` popover in the document: other tooltips,
+ * menus, pickers, and selects.
+ *
+ * Set `manual` on the tooltip and manage the `open` property directly to opt out of automatic
+ * open and close behavior. ARIA relationship wiring still fires on `open` change when `for` or
+ * `triggerElement` is set.
+ */
+export const AutoStack: Story = {
+  tags: ['behaviors', 'description-only'],
+};
 
 // ────────────────────────────────
 //    ACCESSIBILITY STORIES
 // ────────────────────────────────
 
-// TODO: will complete in separate documentation pass of phase 7
+/**
+ * ### Features
+ *
+ * The `<swc-tooltip>` element implements the following accessibility features:
+ *
+ * #### ARIA role and relationship
+ *
+ * 1. **`role="tooltip"`**: Set on the host element via `connectedCallback`.
+ * 2. **`ariaDescribedByElements`**: When the tooltip opens, the SWC layer resolves the trigger
+ *    via `for` or `triggerElement` and sets `Element.ariaDescribedByElements = [tooltipHost]`
+ *    on the trigger's interactive surface. For 2nd-gen SWC components with an open shadow root,
+ *    the inner `<button>` is targeted; for native elements, the trigger host is used directly.
+ *    The association is removed when the tooltip closes.
+ *
+ * #### Keyboard behavior
+ *
+ * - <kbd>Escape</kbd>: Closes the tooltip; focus remains on the trigger. Handled by native
+ *   `popover="auto"`.
+ * - Tooltip text is never in the tab order; focus always stays on the trigger.
+ *
+ * #### High contrast mode
+ *
+ * A `1px solid transparent` border is present in base styles. Forced-colors mode fills
+ * `transparent` with `CanvasText` automatically, ensuring the bubble is visible in Windows High
+ * Contrast mode.
+ *
+ * #### Variant colors
+ *
+ * Variant colors supplement the tooltip text but never serve as the sole conveyance of meaning
+ * (WCAG 1.4.1). Each variant pairs the color with legible text.
+ *
+ * ### Best practices
+ *
+ * - **Use focusable triggers only.** Place `<swc-tooltip>` only on elements that can receive
+ *   keyboard focus. Non-interactive elements (static text, decorative icons) require a focusable
+ *   wrapper or a different pattern such as contextual help.
+ * - **Use plain text.** Do not include interactive elements (links, buttons) or rich formatting
+ *   inside a tooltip. `role="tooltip"` is not focusable; use `<swc-popover>` or contextual help
+ *   for disclosures that require interactive content.
+ * - **Supplement, do not duplicate.** Tooltip text supplements the trigger's accessible name.
+ *   Do not use tooltip text to repeat what `aria-label` or `aria-labelledby` already conveys.
+ * - **Icon-only triggers.** When the tooltip text is the sole accessible name for an icon-only
+ *   trigger, prefer adding the name directly to the trigger: `aria-label` on native elements;
+ *   `accessible-label` on 2nd-gen SWC components. The `labeling` attribute (upcoming) is an
+ *   alternative when the trigger host cannot be modified.
+ * - **No auto-dismiss timer.** The tooltip must remain visible until the user dismisses it or the
+ *   triggering state ends (WCAG 1.4.13).
+ * - **Touch devices.** Hover-triggered tooltips are not accessible on touch-only devices. For
+ *   touch disclosure, use `<swc-popover>` or contextual help instead.
+ */
+export const Accessibility: Story = {
+  render: (args) => html`
+    ${triggered({ ...args }, 'tooltip-a11y', 'Action button')}
+  `,
+  args: {
+    variant: 'neutral',
+    placement: 'top',
+    'default-slot': 'Save your changes',
+  },
+  tags: ['a11y'],
+};
+
+// ──────────────────────────────────────
+//    UPCOMING FEATURES STORIES
+// ──────────────────────────────────────
+
+/**
+ * The following features are planned for an upcoming release:
+ *
+ * - **Automatic hover and focus interactions**: The tooltip opens on trigger hover after a
+ *   warm-up delay and on keyboard focus immediately; closes when the pointer leaves or focus
+ *   moves away.
+ * - **Configurable delay (`delay`)**: Controls the warm-up delay before the tooltip appears on
+ *   hover. Defaults to 1500ms; set to `0` to show immediately. Moving quickly between adjacent
+ *   triggers (for example, a toolbar) shows each subsequent tooltip immediately after the first
+ *   warm-up elapses.
+ * - **`disabled` attribute**: Prevents the tooltip from responding to hover and focus in
+ *   automatic mode. No-op when `manual` is set.
+ * - **Pointer hover bridge**: The pointer can move from the trigger into the tooltip bubble
+ *   without the tooltip closing (WCAG 1.4.13).
+ * - **Tip-less display (`no-tip`)**: Removes the directional tip arrow from the tooltip bubble.
+ * - **Label wiring (`labeling`)**: For icon-only triggers where the tooltip text is the sole
+ *   accessible name, switches ARIA wiring from `ariaDescribedByElements` to
+ *   `ariaLabelledByElements`.
+ * - **Tooltip directive**: A Lit directive for programmatic tooltip insertion and lifecycle
+ *   management.
+ */
+export const UpcomingFeatures: Story = {
+  tags: ['upcoming', 'description-only'],
+};

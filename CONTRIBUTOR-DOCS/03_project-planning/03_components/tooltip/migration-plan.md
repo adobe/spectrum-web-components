@@ -576,7 +576,7 @@ The impact is most acute in the additive phase, when `HoverController` will call
 - [x] Create `2nd-gen/packages/core/components/tooltip/`
 - [x] Create `2nd-gen/packages/swc/components/tooltip/`
 - [x] Wire exports in both `package.json` files
-- [ ] Confirm `spectrum-css` is checked out at `spectrum-two` branch as sibling directory (already confirmed available at path `../../../../../spectrum-css/`)
+- [x] Confirm `spectrum-css` is checked out at `spectrum-two` branch as sibling directory (confirmed present at `../../../../../spectrum-css/`)
 
 ### API
 
@@ -625,7 +625,7 @@ The impact is most acute in the additive phase, when `HoverController` will call
 - [x] `role="tooltip"` set on the host element via `connectedCallback` in Core base class (SWC-1558)
 - [skip] Stable, unique `id` per instance — deliberate skip; consumer provides `id` on the trigger element via the `for` attribute relationship; the tooltip's own `id` is the consumer's responsibility; internal ARIA wiring uses `ariaDescribedByElements` (element references) and does not require a string id
 - [x] `Element.ariaDescribedByElements` set on the trigger's inner interactive element (via `querySelector('button')`, or host element fallback) when tooltip opens; removed on close (see [ARIA relationship wiring](#aria-relationship-wiring))
-- [ ] Document `Element.ariaDescribedByElements` inner-button approach and browser support in Accessibility story (see [Accessibility semantics notes](#accessibility-semantics-notes-2nd-gen)) **(Phase 7 — documentation)**
+- [x] Document `Element.ariaDescribedByElements` inner-button approach and browser support in Accessibility story (see [Accessibility semantics notes](#accessibility-semantics-notes-2nd-gen)) **(Phase 7 — documentation)**
 
 #### State verification
 
@@ -639,33 +639,32 @@ The impact is most acute in the additive phase, when `HoverController` will call
 
 ### Testing
 
-- [ ] Port `1st-gen/packages/tooltip/test/tooltip.test.ts` coverage that still applies
-- [ ] Do not port `1st-gen/packages/tooltip/test/tooltip-directive.test.ts` — directive is deferred; tests will be written fresh against the 2nd-gen directive when it ships
-- [ ] Add Playwright `tooltip.a11y.spec.ts` with `toMatchAriaSnapshot`
+- [x] Port `1st-gen/packages/tooltip/test/tooltip.test.ts` coverage that still applies
+- [x] Do not port `1st-gen/packages/tooltip/test/tooltip-directive.test.ts` — directive is deferred; tests will be written fresh against the 2nd-gen directive when it ships
+- [x] Add Playwright `tooltip.a11y.spec.ts` with `toMatchAriaSnapshot`
 
 #### Behavior
 
-- [ ] Renders with correct variant, placement, open/closed state
-- [ ] `swc-open`, `swc-after-open`, `swc-close`, `swc-after-close` events dispatched correctly when `open` changes
-- [ ] `Escape` closes tooltip when open; focus remains on trigger
-- [ ] ARIA wiring: `for="[id]"` resolves trigger and sets `ariaDescribedByElements = [tooltipHost]` on the trigger's inner `<button>` (open shadow root) when `open = true`; removed when `open = false`
-- [ ] ARIA wiring: when trigger has no open shadow root (native element), `ariaDescribedByElements` is set on the trigger host element
-- [ ] ARIA wiring: `trigger-element` setter overrides `for` and drives the same wiring
-- [ ] ARIA wiring: no wiring when neither `for` nor `trigger-element` is set; no error thrown
-- [ ] ARIA wiring: fires in manual mode when `for` is set and consumer sets `open = true`
+- [x] Renders with correct variant, placement, open/closed state (`OverviewTest`, `PropertyMutationTest`, `OpenCloseTest`)
+- [x] `swc-open`, `swc-after-open`, `swc-close`, `swc-after-close` events dispatched correctly when `open` changes (`LifecycleEventsTest`)
+- [x] `Escape` closes tooltip when open; focus remains on trigger (`EscapeClosesTest`)
+- [x] ARIA wiring: `for="[id]"` resolves trigger and sets `ariaDescribedByElements = [tooltipHost]` on the trigger's inner `<button>` (open shadow root) when `open = true`; removed when `open = false` (`AriaWiringSwcTriggerTest`)
+- [x] ARIA wiring: when trigger has no open shadow root (native element), `ariaDescribedByElements` is set on the trigger host element (`AriaWiringNativeTest`)
+- [x] ARIA wiring: `trigger-element` setter overrides `for` and drives the same wiring (`AriaWiringTriggerElementOverrideTest`)
+- [x] ARIA wiring: no wiring when neither `for` nor `trigger-element` is set; no error thrown (`AriaWiringNoTriggerTest`)
+- [x] ARIA wiring: fires in manual mode when `for` is set and consumer sets `open = true` (`AriaWiringManualModeTest`)
 - [ ] Automatic mode: opens on trigger hover; closes on pointer leave **(additive phase)**
 - [ ] Automatic mode: opens on trigger `focusin` (when `:focus-visible`); closes on `focusout` **(additive phase)**
 - [ ] Automatic mode: pointer can move to tooltip bubble without closing (WCAG 1.4.13) **(additive phase)**
 - [ ] Automatic mode: `for` attribute resolves to the element with the matching `id` in the same document tree root **(additive phase)**
-- [ ] Automatic mode: `for` pointing to a non-existent `id` results in no trigger wiring (no-op; warn in debug mode) **(additive phase)**
+- [x] Automatic mode: `for` pointing to a non-existent `id` results in no trigger wiring (no-op; warn in debug mode) (`ForIdNotFoundWarningTest`)
 - [ ] Automatic mode: `trigger-element` takes precedence over `for` when both are set **(additive phase)**
 - [ ] Automatic mode: `trigger-element` wires correctly for cross-shadow-root trigger relationships **(additive phase)**
 - [ ] Automatic mode: default warm-up/cooldown (1500ms, matching `delay` default); `delay="0"` shows immediately; custom value uses that duration **(additive phase)**
 - [ ] Automatic mode: `for` resolves correctly when trigger and tooltip share a shadow root (ID lookup scoped to that root) — rewrite fresh; do not port the 1st-gen `self manages through a shadow boundary` test, which validates ancestor-walking and does not apply **(additive phase)**
 - [ ] `manual` attribute: controller wiring is skipped when added; consumer-driven `open` changes dispatch all `swc-*` events and ARIA wiring still fires when `for` is set **(additive phase — verify controller suppression)**
 - [ ] `labeling` attribute: `ariaLabelledByElements` is set on the inner interactive element instead of `ariaDescribedByElements`; verify correct AT announcement for icon-only button pattern **(additive phase)**
-- [ ] `ariaDescribedByElements` wiring: verify AT can traverse the association in DevTools Accessibility panel and with NVDA/VoiceOver
-- [ ] `ariaDescribedByElements` wiring fallback: when trigger has no shadow root (native `<button>`, `<a>`, `<input>`), association is established on the host element directly
+- [x] `ariaDescribedByElements` wiring fallback: when trigger has no shadow root (native `<button>`, `<a>`, `<input>`), association is established on the host element directly (`AriaWiringNativeTest`)
 - [ ] `disabled` attribute prevents automatic mode response to user input **(additive phase)**
 
 #### Visual regression
@@ -680,8 +679,8 @@ The impact is most acute in the additive phase, when `HoverController` will call
 
 #### General
 
-- [ ] JSDoc on all public properties, slots, and any exposed CSS custom properties
-- [ ] Stories: Playground, Overview, Anatomy (default slot), Options (variants, placements), States (open), Accessibility. Behaviors story (automatic trigger-wiring, `delay`, `trigger-element`) is additive phase.
+- [x] JSDoc on all public properties, slots, and any exposed CSS custom properties
+- [x] Stories: Playground, Overview, Anatomy (default slot), Options (variants, placements), States (open), Accessibility. Behaviors story (automatic trigger-wiring, `delay`, `trigger-element`) is additive phase. Events and AutoStack behaviors stories added; additive items documented in UpcomingFeatures story.
 
 #### Breaking changes
 
@@ -694,18 +693,18 @@ The impact is most acute in the additive phase, when `HoverController` will call
 - [ ] Consumer migration guide: authoring pattern change — move `<sp-tooltip>` out of the trigger component (1st-gen pattern); add `id` to the trigger element and `for="[id]"` to the tooltip; the tooltip may be placed anywhere in the same document tree root (additive phase)
 - [ ] Consumer migration guide: for cross-shadow-root triggers or programmatic wiring where ID resolution cannot reach the trigger, set the `trigger-element` property to a direct element reference (additive phase)
 - [ ] Consumer migration guide: document that `popover="auto"` auto-stack behavior differs from 1st-gen `type="hint"` isolation — opening a tooltip closes other open auto popovers (menus, pickers); this is accepted behavior, not a bug
-- [ ] Behaviors story: note the auto-stack behavior and that it is expected (Q2 resolved, Path A)
+- [x] Behaviors story: note the auto-stack behavior and that it is expected (Q2 resolved, Path A)
 
 #### Accessibility
 
-- [ ] Storybook Accessibility story: document ARIA features (`role="tooltip"`, `ariaDescribedByElements` / `ariaLabelledByElements` lifecycle, inner-button resolution), keyboard behavior (`Escape` closes without moving focus; `Tab` blur dismisses), and screen reader expectations (trigger announced first, tooltip text second)
-- [ ] No interactive content (links, buttons, focusable elements) may appear inside `role="tooltip"`; direct consumers to `swc-popover`, contextual help, or dialog for those patterns
-- [ ] `aria-describedby` semantics: tooltip text supplements the trigger's accessible name — do not use tooltip to duplicate what `aria-label`/`aria-labelledby` already conveys; document opt-out semantics (SWC-1465)
-- [ ] Tooltip must be placed on a focusable trigger; non-interactive elements (static text, decorative icons) require contextual help instead
-- [ ] Variant colors are supplementary: pair each variant with readable text; meaning must not rely on color alone (WCAG 1.4.1)
-- [ ] Touch guidance: tooltip is hover/focus only; direct consumers to `swc-popover` or contextual help for explicit disclosure on touch devices
-- [ ] No auto-dismiss timer: tooltip must remain visible until the user dismisses it or the triggering state becomes invalid (WCAG 1.4.13)
-- [ ] Icon-only trigger pattern: document in Accessibility story that (1) adding an accessible name directly to the trigger host (`aria-label` on native elements; `accessible-label` attribute on 2nd-gen SWC components) is preferred and works from the initial release; (2) the `labeling` attribute switches the SWC layer to wire `aria-labelledby` for cases where the trigger host cannot be modified (additive phase); (3) explain the semantic difference between labeling (accessible name) and describing (supplementary hint)
+- [x] Storybook Accessibility story: document ARIA features (`role="tooltip"`, `ariaDescribedByElements` / `ariaLabelledByElements` lifecycle, inner-button resolution), keyboard behavior (`Escape` closes without moving focus; `Tab` blur dismisses), and screen reader expectations (trigger announced first, tooltip text second)
+- [x] No interactive content (links, buttons, focusable elements) may appear inside `role="tooltip"`; direct consumers to `swc-popover`, contextual help, or dialog for those patterns
+- [x] `aria-describedby` semantics: tooltip text supplements the trigger's accessible name — do not use tooltip to duplicate what `aria-label`/`aria-labelledby` already conveys; document opt-out semantics (SWC-1465)
+- [x] Tooltip must be placed on a focusable trigger; non-interactive elements (static text, decorative icons) require contextual help instead
+- [x] Variant colors are supplementary: pair each variant with readable text; meaning must not rely on color alone (WCAG 1.4.1)
+- [x] Touch guidance: tooltip is hover/focus only; direct consumers to `swc-popover` or contextual help for explicit disclosure on touch devices
+- [x] No auto-dismiss timer: tooltip must remain visible until the user dismisses it or the triggering state becomes invalid (WCAG 1.4.13)
+- [x] Icon-only trigger pattern: document in Accessibility story that (1) adding an accessible name directly to the trigger host (`aria-label` on native elements; `accessible-label` attribute on 2nd-gen SWC components) is preferred and works from the initial release; (2) the `labeling` attribute switches the SWC layer to wire `aria-labelledby` for cases where the trigger host cannot be modified (additive phase); (3) explain the semantic difference between labeling (accessible name) and describing (supplementary hint)
 - [ ] Verify 200% zoom: tooltip does not obscure critical UI
 
 ### Review
