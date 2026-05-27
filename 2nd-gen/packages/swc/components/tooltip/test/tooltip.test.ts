@@ -106,7 +106,7 @@ export const PropertyMutationTest: Story = {
   play: async ({ canvasElement, step }) => {
     const tooltip = await getComponent<Tooltip>(canvasElement, 'swc-tooltip');
 
-    await step('variant reflects to attribute after mutation', async () => {
+    await step('reflects variant attribute after mutation', async () => {
       tooltip.variant = 'informative';
       await tooltip.updateComplete;
       expect(
@@ -129,7 +129,7 @@ export const PropertyMutationTest: Story = {
       ).toBe('neutral');
     });
 
-    await step('placement reflects to attribute after mutation', async () => {
+    await step('reflects placement attribute after mutation', async () => {
       tooltip.placement = 'bottom';
       await tooltip.updateComplete;
       expect(
@@ -147,10 +147,6 @@ export const PropertyMutationTest: Story = {
   },
 };
 
-// ──────────────────────────────────────────────────────────────
-// TEST: Open / close state
-// ──────────────────────────────────────────────────────────────
-
 export const OpenCloseTest: Story = {
   render: () => html`
     <swc-button id="tt-open-close-trigger">Toggle</swc-button>
@@ -161,29 +157,31 @@ export const OpenCloseTest: Story = {
   play: async ({ canvasElement, step }) => {
     const tooltip = await getComponent<Tooltip>(canvasElement, 'swc-tooltip');
 
-    await step('open=true reflects [open] attribute on host', async () => {
-      tooltip.open = true;
-      await tooltip.updateComplete;
-      expect(
-        tooltip.hasAttribute('open'),
-        'open attribute is present when open=true'
-      ).toBe(true);
-    });
+    await step(
+      'reflects [open] attribute when open is set to true',
+      async () => {
+        tooltip.open = true;
+        await tooltip.updateComplete;
+        expect(
+          tooltip.hasAttribute('open'),
+          'open attribute is present when open=true'
+        ).toBe(true);
+      }
+    );
 
-    await step('open=false removes [open] attribute from host', async () => {
-      tooltip.open = false;
-      await tooltip.updateComplete;
-      expect(
-        tooltip.hasAttribute('open'),
-        'open attribute is absent when open=false'
-      ).toBe(false);
-    });
+    await step(
+      'removes [open] attribute when open is set to false',
+      async () => {
+        tooltip.open = false;
+        await tooltip.updateComplete;
+        expect(
+          tooltip.hasAttribute('open'),
+          'open attribute is absent when open=false'
+        ).toBe(false);
+      }
+    );
   },
 };
-
-// ──────────────────────────────────────────────────────────────
-// TEST: Lifecycle events
-// ──────────────────────────────────────────────────────────────
 
 export const LifecycleEventsTest: Story = {
   render: () => html`
@@ -195,7 +193,7 @@ export const LifecycleEventsTest: Story = {
   play: async ({ canvasElement, step }) => {
     const tooltip = await getComponent<Tooltip>(canvasElement, 'swc-tooltip');
 
-    await step('swc-open fires when tooltip is opened', async () => {
+    await step('fires swc-open when tooltip is opened', async () => {
       const openPromise = waitForEvent(tooltip, 'swc-open');
       tooltip.open = true;
       await openPromise;
@@ -203,7 +201,7 @@ export const LifecycleEventsTest: Story = {
       await tooltip.updateComplete;
     });
 
-    await step('swc-close fires when tooltip is closed', async () => {
+    await step('fires swc-close when tooltip is closed', async () => {
       tooltip.open = true;
       await tooltip.updateComplete;
 
@@ -212,24 +210,30 @@ export const LifecycleEventsTest: Story = {
       await closePromise;
     });
 
-    await step('swc-after-open fires after tooltip fully opens', async () => {
-      const afterOpenPromise = waitForEvent(tooltip, 'swc-after-open');
-      tooltip.open = true;
-      await afterOpenPromise;
-      tooltip.open = false;
-      await tooltip.updateComplete;
-    });
+    await step(
+      'fires swc-after-open after the tooltip transition ends',
+      async () => {
+        const afterOpenPromise = waitForEvent(tooltip, 'swc-after-open');
+        tooltip.open = true;
+        await afterOpenPromise;
+        tooltip.open = false;
+        await tooltip.updateComplete;
+      }
+    );
 
-    await step('swc-after-close fires after tooltip fully closes', async () => {
-      tooltip.open = true;
-      await tooltip.updateComplete;
+    await step(
+      'fires swc-after-close after the tooltip transition ends',
+      async () => {
+        tooltip.open = true;
+        await tooltip.updateComplete;
 
-      const afterClosePromise = waitForEvent(tooltip, 'swc-after-close');
-      tooltip.open = false;
-      await afterClosePromise;
-    });
+        const afterClosePromise = waitForEvent(tooltip, 'swc-after-close');
+        tooltip.open = false;
+        await afterClosePromise;
+      }
+    );
 
-    await step('events bubble and are composed', async () => {
+    await step('dispatches events that bubble and are composed', async () => {
       let bubbled = false;
       const handler = () => {
         bubbled = true;
@@ -245,38 +249,6 @@ export const LifecycleEventsTest: Story = {
   },
 };
 
-// ──────────────────────────────────────────────────────────────
-// TEST: Escape closes tooltip
-// ──────────────────────────────────────────────────────────────
-
-export const EscapeClosesTest: Story = {
-  render: () => html`
-    <swc-button id="tt-escape-trigger">Open</swc-button>
-    <swc-tooltip for="tt-escape-trigger" placement="top">
-      Press Escape to close
-    </swc-tooltip>
-  `,
-  play: async ({ canvasElement, step }) => {
-    const tooltip = await getComponent<Tooltip>(canvasElement, 'swc-tooltip');
-
-    await step('Escape closes the open tooltip', async () => {
-      tooltip.open = true;
-      await waitForEvent(tooltip, 'swc-open');
-      expect(tooltip.open, 'tooltip is open before Escape').toBe(true);
-
-      const closePromise = waitForEvent(tooltip, 'swc-close');
-      await userEvent.keyboard('{Escape}');
-      await closePromise;
-
-      expect(tooltip.open, 'tooltip is closed after Escape').toBe(false);
-    });
-  },
-};
-
-// ──────────────────────────────────────────────────────────────
-// TEST: ARIA wiring — native trigger
-// ──────────────────────────────────────────────────────────────
-
 export const AriaWiringNativeTest: Story = {
   render: () => html`
     <button id="tt-native-trigger">Save</button>
@@ -291,7 +263,7 @@ export const AriaWiringNativeTest: Story = {
     ) as AriaRelatable;
 
     await step(
-      'sets ariaDescribedByElements on native trigger when open=true',
+      'sets ariaDescribedByElements on a native trigger when open is true',
       async () => {
         tooltip.open = true;
         await tooltip.updateComplete;
@@ -304,7 +276,7 @@ export const AriaWiringNativeTest: Story = {
     );
 
     await step(
-      'removes ariaDescribedByElements from native trigger when open=false',
+      'removes ariaDescribedByElements from a native trigger when open is false',
       async () => {
         tooltip.open = false;
         await tooltip.updateComplete;
@@ -318,10 +290,6 @@ export const AriaWiringNativeTest: Story = {
     );
   },
 };
-
-// ──────────────────────────────────────────────────────────────
-// TEST: ARIA wiring — SWC component trigger (shadow root with <button>)
-// ──────────────────────────────────────────────────────────────
 
 export const AriaWiringSwcTriggerTest: Story = {
   render: () => html`
@@ -343,7 +311,7 @@ export const AriaWiringSwcTriggerTest: Story = {
     ) as AriaRelatable | null;
 
     await step(
-      'inner shadow <button> has correct ARIA relationship when tooltip opens',
+      'wires ariaDescribedByElements on the shadow <button> when the tooltip opens',
       async () => {
         expect(
           innerButton,
@@ -362,7 +330,7 @@ export const AriaWiringSwcTriggerTest: Story = {
     );
 
     await step(
-      'inner shadow <button> ARIA relationship is removed when tooltip closes',
+      'removes ariaDescribedByElements from the shadow <button> when the tooltip closes',
       async () => {
         tooltip.open = false;
         await tooltip.updateComplete;
@@ -376,10 +344,6 @@ export const AriaWiringSwcTriggerTest: Story = {
     );
   },
 };
-
-// ──────────────────────────────────────────────────────────────
-// TEST: ARIA wiring — triggerElement setter overrides `for`
-// ──────────────────────────────────────────────────────────────
 
 export const AriaWiringTriggerElementOverrideTest: Story = {
   render: () => html`
@@ -407,7 +371,7 @@ export const AriaWiringTriggerElementOverrideTest: Story = {
     ) as AriaRelatable | null;
 
     await step(
-      'triggerElement setter routes ARIA wiring away from `for` target',
+      'routes ARIA wiring to the triggerElement target instead of the for target',
       async () => {
         tooltip.triggerElement = correctTarget as HTMLElement;
         tooltip.open = true;
@@ -427,10 +391,6 @@ export const AriaWiringTriggerElementOverrideTest: Story = {
   },
 };
 
-// ──────────────────────────────────────────────────────────────
-// TEST: ARIA wiring — no trigger set
-// ──────────────────────────────────────────────────────────────
-
 export const AriaWiringNoTriggerTest: Story = {
   render: () => html`
     <swc-tooltip placement="top">Standalone tooltip</swc-tooltip>
@@ -439,7 +399,7 @@ export const AriaWiringNoTriggerTest: Story = {
     const tooltip = await getComponent<Tooltip>(canvasElement, 'swc-tooltip');
 
     await step(
-      'opening tooltip with no for or triggerElement does not throw',
+      'opens without throwing when no for attribute or triggerElement is set',
       async () => {
         let threw = false;
         try {
@@ -457,10 +417,6 @@ export const AriaWiringNoTriggerTest: Story = {
     );
   },
 };
-
-// ──────────────────────────────────────────────────────────────
-// TEST: ARIA wiring — manual mode still wires ARIA
-// ──────────────────────────────────────────────────────────────
 
 export const AriaWiringManualModeTest: Story = {
   render: () => html`
@@ -482,7 +438,7 @@ export const AriaWiringManualModeTest: Story = {
     ) as AriaRelatable | null;
 
     await step(
-      'manual mode does not prevent ARIA wiring when for is set',
+      'wires ariaDescribedByElements even when manual mode is active',
       async () => {
         tooltip.open = true;
         await tooltip.updateComplete;
@@ -498,8 +454,32 @@ export const AriaWiringManualModeTest: Story = {
 };
 
 // ──────────────────────────────────────────────────────────────
-// TEST: Variants
+// TEST: Variants / States
 // ──────────────────────────────────────────────────────────────
+
+export const EscapeClosesTest: Story = {
+  render: () => html`
+    <swc-button id="tt-escape-trigger">Open</swc-button>
+    <swc-tooltip for="tt-escape-trigger" placement="top">
+      Press Escape to close
+    </swc-tooltip>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const tooltip = await getComponent<Tooltip>(canvasElement, 'swc-tooltip');
+
+    await step('closes the open tooltip when Escape is pressed', async () => {
+      tooltip.open = true;
+      await waitForEvent(tooltip, 'swc-open');
+      expect(tooltip.open, 'tooltip is open before Escape').toBe(true);
+
+      const closePromise = waitForEvent(tooltip, 'swc-close');
+      await userEvent.keyboard('{Escape}');
+      await closePromise;
+
+      expect(tooltip.open, 'tooltip is closed after Escape').toBe(false);
+    });
+  },
+};
 
 export const VariantsTest: Story = {
   ...Variants,
@@ -523,10 +503,6 @@ export const VariantsTest: Story = {
   },
 };
 
-// ──────────────────────────────────────────────────────────────
-// TEST: Placements
-// ──────────────────────────────────────────────────────────────
-
 export const PlacementsTest: Story = {
   ...Placements,
   play: async ({ canvasElement, step }) => {
@@ -547,7 +523,7 @@ export const PlacementsTest: Story = {
 };
 
 // ──────────────────────────────────────────────────────────────
-// TEST: Debug warnings
+// TEST: Dev mode warnings
 // ──────────────────────────────────────────────────────────────
 
 export const ForIdNotFoundWarningTest: Story = {
@@ -558,7 +534,7 @@ export const ForIdNotFoundWarningTest: Story = {
     const tooltip = await getComponent<Tooltip>(canvasElement, 'swc-tooltip');
 
     await step(
-      'warns in DEBUG mode when for attribute does not resolve to an element',
+      'warns in DEBUG mode when the for attribute does not resolve to an element',
       () =>
         withWarningSpy(async (warnCalls) => {
           tooltip.open = true;

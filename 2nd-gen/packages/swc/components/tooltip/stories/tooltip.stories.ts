@@ -27,9 +27,9 @@ import {
 import '@adobe/spectrum-wc/components/button/swc-button.js';
 import '@adobe/spectrum-wc/components/tooltip/swc-tooltip.js';
 
-// ────────────────────
-//    METADATA SETUP
-// ────────────────────
+// ────────────────
+//    METADATA
+// ────────────────
 
 const { args, argTypes, template } = getStorybookHelpers('swc-tooltip');
 

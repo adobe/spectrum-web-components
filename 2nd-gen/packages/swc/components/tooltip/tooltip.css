@@ -267,6 +267,7 @@
    LABEL
    ───────────────────────────────────────────────────────────────────────────── */
 
+/* NOTE: !important ensures these resets override consumer element styles on slotted content. */
 ::slotted(*:not([class])) {
   margin: 0 !important;
   font: inherit !important;
