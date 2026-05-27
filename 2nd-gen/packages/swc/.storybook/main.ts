@@ -138,7 +138,7 @@ if (storybookMode === 'dev') {
   });
   stories.push({
     ...CORE_STORY_ROOT,
-    files: '**/stories/**/*.test.ts',
+    files: '**/*.test.ts',
   });
 }
 
