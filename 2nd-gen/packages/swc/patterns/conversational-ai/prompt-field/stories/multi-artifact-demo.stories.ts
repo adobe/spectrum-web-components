@@ -30,6 +30,9 @@ const defaultPlaceholder =
 const demoPrompt =
   'Review all attached materials and generate a product launch strategy with timeline, risks, and budget allocation.';
 
+const artifactTileSizePx = 64;
+const artifactMaxVisibleRows = 2;
+
 const gradients = [
   'linear-gradient(135deg,#818cf8,#f43f5e)',
   'linear-gradient(135deg,#6366f1,#ec4899)',
@@ -257,11 +260,19 @@ const demoStyles = html`
       inline-size: 100%;
     }
 
-    .MultiArtifactDemo-artifacts-row {
+    .MultiArtifactDemo-artifacts-row--horizontal {
       display: flex;
       gap: var(--swc-spacing-100, 8px);
       align-items: center;
       justify-content: flex-start;
+      inline-size: 100%;
+    }
+
+    .MultiArtifactDemo-artifacts-row--vertical {
+      display: flex;
+      flex-direction: column;
+      gap: var(--swc-spacing-100, 8px);
+      align-items: stretch;
       inline-size: 100%;
     }
 
@@ -274,6 +285,13 @@ const demoStyles = html`
       border-radius: var(--swc-corner-radius-800, 16px);
     }
 
+    .MultiArtifactDemo-scroll-row {
+      display: flex;
+      gap: var(--swc-spacing-100, 8px);
+      align-items: stretch;
+      inline-size: 100%;
+    }
+
     .MultiArtifactDemo-scroll-viewport {
       position: relative;
       flex: 1 1 auto;
@@ -283,7 +301,7 @@ const demoStyles = html`
       margin-block-start: -6px;
     }
 
-    .MultiArtifactDemo-scroll-track {
+    .MultiArtifactDemo-scroll-track--horizontal {
       display: flex;
       gap: var(--swc-spacing-100, 8px);
       align-items: start;
@@ -293,7 +311,25 @@ const demoStyles = html`
       padding-inline-end: 2px;
     }
 
-    .MultiArtifactDemo-scroll-track > swc-upload-artifact,
+    .MultiArtifactDemo-scroll-track--vertical {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--swc-spacing-100, 8px);
+      align-items: start;
+      align-content: flex-start;
+      max-block-size: calc(
+        ${artifactMaxVisibleRows} * ${artifactTileSizePx}px +
+          (${artifactMaxVisibleRows} - 1) * var(--swc-spacing-100, 8px)
+      );
+      overflow-x: hidden;
+      overflow-y: auto;
+      scroll-behavior: smooth;
+      scrollbar-width: none;
+      padding-block-end: 2px;
+    }
+
+    .MultiArtifactDemo-scroll-track--horizontal > swc-upload-artifact,
+    .MultiArtifactDemo-scroll-track--vertical > swc-upload-artifact,
     .MultiArtifactDemo-inline-row > swc-upload-artifact,
     .MultiArtifactDemo-popover > swc-upload-artifact {
       flex: 0 0 auto;
@@ -303,21 +339,22 @@ const demoStyles = html`
       min-block-size: 64px;
     }
 
-    .MultiArtifactDemo-scroll-track::-webkit-scrollbar {
+    .MultiArtifactDemo-scroll-track--horizontal::-webkit-scrollbar,
+    .MultiArtifactDemo-scroll-track--vertical::-webkit-scrollbar {
       display: none;
     }
 
     .MultiArtifactDemo-scroll-fade {
       position: absolute;
-      inset-block: 0;
-      inline-size: var(--swc-spacing-300, 16px);
       pointer-events: none;
       opacity: 1;
       transition: opacity var(--swc-animation-duration-100, 130ms) ease;
     }
 
-    .MultiArtifactDemo-scroll-fade--start {
+    .MultiArtifactDemo-scroll-fade--horizontal-start {
+      inset-block: 0;
       inset-inline-start: 0;
+      inline-size: var(--swc-spacing-300, 16px);
       background: linear-gradient(
         to right,
         rgb(255 255 255 / 80%) 0%,
@@ -325,10 +362,34 @@ const demoStyles = html`
       );
     }
 
-    .MultiArtifactDemo-scroll-fade--end {
+    .MultiArtifactDemo-scroll-fade--horizontal-end {
+      inset-block: 0;
       inset-inline-end: 0;
+      inline-size: var(--swc-spacing-300, 16px);
       background: linear-gradient(
         to left,
+        rgb(255 255 255 / 80%) 0%,
+        rgb(255 255 255 / 0%) 50%
+      );
+    }
+
+    .MultiArtifactDemo-scroll-fade--vertical-start {
+      inset-inline: 0;
+      inset-block-start: 0;
+      block-size: var(--swc-spacing-300, 16px);
+      background: linear-gradient(
+        to bottom,
+        rgb(255 255 255 / 80%) 0%,
+        rgb(255 255 255 / 0%) 50%
+      );
+    }
+
+    .MultiArtifactDemo-scroll-fade--vertical-end {
+      inset-inline: 0;
+      inset-block-end: 0;
+      block-size: var(--swc-spacing-300, 16px);
+      background: linear-gradient(
+        to top,
         rgb(255 255 255 / 80%) 0%,
         rgb(255 255 255 / 0%) 50%
       );
@@ -338,18 +399,35 @@ const demoStyles = html`
       opacity: 0;
     }
 
-    .MultiArtifactDemo-scrollbar {
+    .MultiArtifactDemo-scrollbar--horizontal {
       position: relative;
       block-size: 15px;
       overflow: hidden;
     }
 
-    .MultiArtifactDemo-scrollbar-thumb {
+    .MultiArtifactDemo-scrollbar--vertical {
+      position: relative;
+      flex: 0 0 15px;
+      inline-size: 15px;
+      align-self: stretch;
+      overflow: hidden;
+    }
+
+    .MultiArtifactDemo-scrollbar-thumb--horizontal {
       position: absolute;
       inset-block-end: 3px;
       block-size: 8px;
       background: var(--swc-gray-600, #717171);
       /* Pill cap — do not use corner-radius-full (50%) on wide thumbs. */
+      border-radius: 9999px;
+    }
+
+    .MultiArtifactDemo-scrollbar-thumb--vertical {
+      position: absolute;
+      inset-inline-end: 3px;
+      inline-size: 8px;
+      background: var(--swc-gray-600, #717171);
+      /* Pill cap — do not use corner-radius-full (50%) on tall thumbs. */
       border-radius: 9999px;
     }
 
@@ -498,10 +576,10 @@ class MultiArtifactScrollDemo extends LitElement {
   @state()
   private thumbLeftPx = 3;
 
-  @query('.MultiArtifactDemo-scroll-track')
+  @query('.MultiArtifactDemo-scroll-track--horizontal')
   private _scrollTrack!: HTMLElement;
 
-  @query('.MultiArtifactDemo-scrollbar')
+  @query('.MultiArtifactDemo-scrollbar--horizontal')
   private _scrollbar!: HTMLElement;
 
   @query('[data-file-input]')
@@ -633,7 +711,7 @@ class MultiArtifactScrollDemo extends LitElement {
       return;
     }
 
-    const tileStep = 64 + 8;
+    const tileStep = artifactTileSizePx + 8;
     const visibleTiles = Math.max(1, Math.floor(track.clientWidth / tileStep));
     const delta = direction * visibleTiles * tileStep;
     const maxScroll = Math.max(0, track.scrollWidth - track.clientWidth);
@@ -659,7 +737,9 @@ class MultiArtifactScrollDemo extends LitElement {
               ${this.artifacts.length > 0
                 ? html`
                     <div class="MultiArtifactDemo-upload-zone">
-                      <div class="MultiArtifactDemo-artifacts-row">
+                      <div
+                        class="MultiArtifactDemo-artifacts-row MultiArtifactDemo-artifacts-row--horizontal"
+                      >
                         ${this.canScrollBack
                           ? html`
                               <button
@@ -676,7 +756,7 @@ class MultiArtifactScrollDemo extends LitElement {
                           : nothing}
                         <div class="MultiArtifactDemo-scroll-viewport">
                           <div
-                            class="MultiArtifactDemo-scroll-track"
+                            class="MultiArtifactDemo-scroll-track MultiArtifactDemo-scroll-track--horizontal"
                             @scroll=${() => this._syncScrollState()}
                           >
                             ${this.artifacts.map((artifact) =>
@@ -686,14 +766,14 @@ class MultiArtifactScrollDemo extends LitElement {
                           ${this.hasOverflow
                             ? html`
                                 <div
-                                  class="MultiArtifactDemo-scroll-fade MultiArtifactDemo-scroll-fade--start ${this
+                                  class="MultiArtifactDemo-scroll-fade MultiArtifactDemo-scroll-fade--horizontal-start ${this
                                     .canScrollBack
                                     ? ''
                                     : 'is-hidden'}"
                                   aria-hidden="true"
                                 ></div>
                                 <div
-                                  class="MultiArtifactDemo-scroll-fade MultiArtifactDemo-scroll-fade--end ${this
+                                  class="MultiArtifactDemo-scroll-fade MultiArtifactDemo-scroll-fade--horizontal-end ${this
                                     .canScrollForward
                                     ? ''
                                     : 'is-hidden'}"
@@ -718,19 +798,302 @@ class MultiArtifactScrollDemo extends LitElement {
                           : nothing}
                       </div>
                       <div
-                        class="MultiArtifactDemo-scrollbar"
+                        class="MultiArtifactDemo-scrollbar MultiArtifactDemo-scrollbar--horizontal"
                         aria-hidden="true"
                       >
                         ${this.hasOverflow
                           ? html`
                               <div
-                                class="MultiArtifactDemo-scrollbar-thumb"
+                                class="MultiArtifactDemo-scrollbar-thumb MultiArtifactDemo-scrollbar-thumb--horizontal"
                                 style="inline-size:${this
                                   .thumbWidthPx}px;inset-inline-start:${this
                                   .thumbLeftPx}px;"
                               ></div>
                             `
                           : nothing}
+                      </div>
+                    </div>
+                  `
+                : nothing}
+
+              <div class="MultiArtifactDemo-prompt-field">
+                <label class="MultiArtifactDemo-label">Prompt</label>
+                <textarea
+                  class="MultiArtifactDemo-textarea"
+                  .value=${this.value}
+                  placeholder=${defaultPlaceholder}
+                  @input=${(event: Event) => {
+                    this.value = (event.target as HTMLTextAreaElement).value;
+                  }}
+                ></textarea>
+              </div>
+            </div>
+
+            <div class="MultiArtifactDemo-actions">
+              <button
+                type="button"
+                class="MultiArtifactDemo-upload"
+                aria-label="Add attachment"
+                @click=${this._handleUploadClick}
+              >
+                <swc-icon aria-hidden="true">${PlusIcon()}</swc-icon>
+              </button>
+              <button
+                type="button"
+                class="MultiArtifactDemo-send"
+                aria-label="Send"
+                ?disabled=${!this.value.trim() && this.artifacts.length === 0}
+                @click=${this._handleSubmit}
+              >
+                <swc-icon aria-hidden="true">${ChevronUpIcon()}</swc-icon>
+              </button>
+            </div>
+          </div>
+
+          <p class="MultiArtifactDemo-legal">
+            Responses are generated using AI, and may be inaccurate. Check
+            before using.
+            <a
+              href="https://www.adobe.com/legal/licenses-terms/adobe-gen-ai-user-guidelines.html"
+            >
+              AI User Guidelines
+            </a>
+          </p>
+          <input
+            data-file-input
+            type="file"
+            multiple
+            hidden
+            @change=${this._handleFileChange}
+          />
+          <p class="MultiArtifactDemo-readout">${this.readout}</p>
+        </div>
+      </div>
+    `;
+  }
+}
+
+@customElement('swc-multi-artifact-vertical-scroll-demo')
+class MultiArtifactVerticalScrollDemo extends LitElement {
+  @state()
+  private artifacts: DemoArtifact[] = createSeedArtifacts(18);
+
+  @state()
+  private value = demoPrompt;
+
+  @state()
+  private readout =
+    'Tiles wrap to two rows, then scroll vertically. Use + to add files and dismiss tiles to remove them.';
+
+  @state()
+  private canScrollBack = false;
+
+  @state()
+  private canScrollForward = true;
+
+  @state()
+  private hasOverflow = false;
+
+  @state()
+  private thumbHeightPx = 0;
+
+  @state()
+  private thumbTopPx = 3;
+
+  @query('.MultiArtifactDemo-scroll-track--vertical')
+  private _scrollTrack!: HTMLElement;
+
+  @query('.MultiArtifactDemo-scrollbar--vertical')
+  private _scrollbar!: HTMLElement;
+
+  @query('[data-file-input]')
+  private _fileInput!: HTMLInputElement;
+
+  protected override createRenderRoot(): this {
+    return this;
+  }
+
+  public override disconnectedCallback(): void {
+    revokeArtifactUrls(this.artifacts);
+    super.disconnectedCallback?.();
+  }
+
+  public override firstUpdated(): void {
+    this._syncScrollState();
+
+    const track = this._scrollTrack;
+    if (!track || typeof ResizeObserver === 'undefined') {
+      return;
+    }
+
+    const observer = new ResizeObserver(() => this._syncScrollState());
+    observer.observe(track);
+  }
+
+  private _handleArtifactDismiss(event: Event): void {
+    const artifactId = getDismissedArtifactId(event);
+    if (!artifactId) {
+      return;
+    }
+
+    const removed = this.artifacts.find(
+      (artifact) => artifact.id === artifactId
+    );
+    if (removed?.thumbnailUrl) {
+      URL.revokeObjectURL(removed.thumbnailUrl);
+    }
+
+    this.artifacts = this.artifacts.filter(
+      (artifact) => artifact.id !== artifactId
+    );
+    this.readout = `Removed ${removed?.fileName ?? 'artifact'}. ${this.artifacts.length} attachment${this.artifacts.length === 1 ? '' : 's'} remaining.`;
+    this.updateComplete.then(() => {
+      this._clampScrollPosition();
+      this._syncScrollState();
+    });
+  }
+
+  private _clampScrollPosition(): void {
+    const track = this._scrollTrack;
+    if (!track) {
+      return;
+    }
+
+    const maxScroll = Math.max(0, track.scrollHeight - track.clientHeight);
+    if (track.scrollTop > maxScroll) {
+      track.scrollTop = maxScroll;
+    }
+  }
+
+  private _handleUploadClick(event: Event): void {
+    event.preventDefault();
+    this._fileInput?.click();
+  }
+
+  private _handleFileChange(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    const files = Array.from(input.files ?? []);
+    if (!files.length) {
+      return;
+    }
+
+    const nextArtifacts = createArtifactsFromFiles(
+      files,
+      this.artifacts.length
+    );
+    this.artifacts = [...this.artifacts, ...nextArtifacts];
+    this.readout = `Added ${files.length} file${files.length === 1 ? '' : 's'}. ${this.artifacts.length} attachment${this.artifacts.length === 1 ? '' : 's'} total.`;
+    input.value = '';
+    this.updateComplete.then(() => {
+      this._scrollTrack?.scrollTo({
+        top: this._scrollTrack.scrollHeight,
+        behavior: 'smooth',
+      });
+      this._syncScrollState();
+    });
+  }
+
+  private _syncScrollState(): void {
+    const track = this._scrollTrack;
+    const scrollbar = this._scrollbar;
+    if (!track || !scrollbar) {
+      return;
+    }
+
+    const maxScroll = Math.max(0, track.scrollHeight - track.clientHeight);
+    this.hasOverflow = maxScroll > 0;
+    this.canScrollBack = track.scrollTop > 1;
+    this.canScrollForward = track.scrollTop < maxScroll - 1;
+
+    if (!this.hasOverflow) {
+      this.thumbHeightPx = 0;
+      this.thumbTopPx = 3;
+      return;
+    }
+
+    const scrollbarHeight = scrollbar.clientHeight;
+    const inset = 3;
+    const minThumbHeight = 48;
+    this.thumbHeightPx = Math.max(
+      minThumbHeight,
+      (track.clientHeight / track.scrollHeight) * scrollbarHeight
+    );
+
+    const maxThumbTop = Math.max(
+      inset,
+      scrollbarHeight - this.thumbHeightPx - inset
+    );
+    this.thumbTopPx =
+      maxScroll === 0
+        ? inset
+        : inset + (track.scrollTop / maxScroll) * (maxThumbTop - inset);
+  }
+
+  private _handleSubmit(): void {
+    this.readout = `Submitted prompt with ${this.artifacts.length} attachment${this.artifacts.length === 1 ? '' : 's'}.`;
+  }
+
+  protected override render(): TemplateResult {
+    return html`
+      ${demoStyles}
+      <div class="MultiArtifactDemo-stage">
+        <div
+          class="MultiArtifactDemo"
+          @swc-upload-artifact-dismiss=${this._handleArtifactDismiss}
+        >
+          <div class="MultiArtifactDemo-box">
+            <div class="MultiArtifactDemo-input-area">
+              ${this.artifacts.length > 0
+                ? html`
+                    <div class="MultiArtifactDemo-upload-zone">
+                      <div
+                        class="MultiArtifactDemo-artifacts-row MultiArtifactDemo-artifacts-row--vertical"
+                      >
+                        <div class="MultiArtifactDemo-scroll-row">
+                          <div class="MultiArtifactDemo-scroll-viewport">
+                            <div
+                              class="MultiArtifactDemo-scroll-track MultiArtifactDemo-scroll-track--vertical"
+                              @scroll=${() => this._syncScrollState()}
+                            >
+                              ${this.artifacts.map((artifact) =>
+                                renderArtifactTile(artifact)
+                              )}
+                            </div>
+                            ${this.hasOverflow
+                              ? html`
+                                  <div
+                                    class="MultiArtifactDemo-scroll-fade MultiArtifactDemo-scroll-fade--vertical-start ${this
+                                      .canScrollBack
+                                      ? ''
+                                      : 'is-hidden'}"
+                                    aria-hidden="true"
+                                  ></div>
+                                  <div
+                                    class="MultiArtifactDemo-scroll-fade MultiArtifactDemo-scroll-fade--vertical-end ${this
+                                      .canScrollForward
+                                      ? ''
+                                      : 'is-hidden'}"
+                                    aria-hidden="true"
+                                  ></div>
+                                `
+                              : nothing}
+                          </div>
+                          <div
+                            class="MultiArtifactDemo-scrollbar MultiArtifactDemo-scrollbar--vertical"
+                            aria-hidden="true"
+                          >
+                            ${this.hasOverflow
+                              ? html`
+                                  <div
+                                    class="MultiArtifactDemo-scrollbar-thumb MultiArtifactDemo-scrollbar-thumb--vertical"
+                                    style="block-size:${this
+                                      .thumbHeightPx}px;inset-block-start:${this
+                                      .thumbTopPx}px;"
+                                  ></div>
+                                `
+                              : nothing}
+                          </div>
+                        </div>
                       </div>
                     </div>
                   `
@@ -1086,6 +1449,7 @@ class MultiArtifactViewMoreDemo extends LitElement {
 }
 
 void MultiArtifactScrollDemo;
+void MultiArtifactVerticalScrollDemo;
 void MultiArtifactViewMoreDemo;
 
 const meta: Meta = {
@@ -1109,6 +1473,16 @@ export default meta;
 export const ScrollGallery: Story = {
   render: () => html`
     <swc-multi-artifact-scroll-demo></swc-multi-artifact-scroll-demo>
+  `,
+};
+
+/**
+ * Wrapped artifact strip capped at two rows, with vertical scroll and a synced
+ * scrollbar. Starts with 18 seeded artifacts so overflow is immediate.
+ */
+export const ScrollGalleryVertical: Story = {
+  render: () => html`
+    <swc-multi-artifact-vertical-scroll-demo></swc-multi-artifact-vertical-scroll-demo>
   `,
 };
 
