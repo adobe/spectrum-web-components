@@ -13,9 +13,9 @@
 import { html } from 'lit';
 import type { Meta, StoryObj } from '@storybook/web-components';
 
-import './demo-hosts.js';
+import type { FocusgroupDirection } from '@spectrum-web-components/core/controllers/index.js';
 
-import type { FocusgroupDirection } from '../index.js';
+import './demo-hosts.js';
 
 // ────────────────
 //    METADATA

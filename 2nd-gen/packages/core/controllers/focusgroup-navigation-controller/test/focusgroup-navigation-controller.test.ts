@@ -13,13 +13,14 @@ import { html } from 'lit';
 import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
-import '../stories/demo-hosts.js';
-
-import { getComponent } from '../../../../swc/utils/test-utils.js';
 import {
   focusgroupNavigationActiveChange,
   type FocusgroupNavigationActiveChangeDetail,
-} from '../index.js';
+} from '@spectrum-web-components/core/controllers/index.js';
+
+import '../stories/demo-hosts.js';
+
+import { getComponent } from '../../../../swc/utils/test-utils.js';
 import type {
   DemoFocusgroupDisabledHost,
   DemoFocusgroupDynamic,
