@@ -40,7 +40,7 @@
   - Static white outline is demonstrated on approved background colors to maintain hover contrast (fixes SWC-1139)
   - `global-button.css` is now auto-generated from `button.css` by the new `@adobe/vite-global-elements-css` plugin, eliminating drift between the component and global-element styling
 
-  See the [consumer migration guide](https://spectrum-web-components.adobe.com/?path=/docs/components-button-consumer-migration-guide--readme) for upgrading from 1st-gen `sp-button`.
+  See the [migration guide](https://spectrum-web-components.adobe.com/?path=/docs/components-button-migration-guide--docs) for upgrading from 1st-gen `sp-button`.
 
 - [#6170](https://github.com/adobe/spectrum-web-components/pull/6170) [`668f357`](https://github.com/adobe/spectrum-web-components/commit/668f3573b881b6362fe5ccc60fc1080017c85cd7) Thanks [@TarunAdobe](https://github.com/TarunAdobe)! - Add the new Conversational AI pattern and component set to @adobe/spectrum-wc with docs, stories, and test coverage.
 
@@ -61,23 +61,21 @@
 
 ## 0.0.4
 
-### Patch Changes
+First public beta of `@adobe/spectrum-wc` — the 2nd-generation Spectrum Web Components library built on Spectrum 2 design tokens. This release ships 9 components, 1 pattern, and a shared core package. All components move from per-component `@spectrum-web-components/*` packages to a single `@adobe/spectrum-wc` package with subpath imports and are renamed from `sp-*` to `swc-*`.
 
-- [#5998](https://github.com/adobe/spectrum-web-components/pull/5998) [`6f5419a`](https://github.com/adobe/spectrum-web-components/commit/6f5419a4de29a1ee440a36c1a57d8c2e1476e2f6) Thanks [@rubencarvalho](https://github.com/rubencarvalho)! - **Fixed** missing export for `alert-banner` from `@spectrum-web-components/core`, which could cause build failures in certain environments.
+### Added
 
-- Updated dependencies [[`6f5419a`](https://github.com/adobe/spectrum-web-components/commit/6f5419a4de29a1ee440a36c1a57d8c2e1476e2f6)]:
-  - @spectrum-web-components/core@0.0.4
+- `Button` — Added `<swc-button>` with full Spectrum 2 visual fidelity. See the [component docs](https://spectrum-web-components.adobe.com/?path=/docs/components-button--docs) and [migration guide](https://spectrum-web-components.adobe.com/?path=/docs/components-button-migration-guide--docs). [#6254](https://github.com/adobe/spectrum-web-components/pull/6254)
+- `Avatar` — Added `<swc-avatar>` with Spectrum 2 tokens and updated size API. See the [component docs](https://spectrum-web-components.adobe.com/?path=/docs/components-avatar--docs) and [migration guide](https://spectrum-web-components.adobe.com/?path=/docs/components-avatar-migration-guide--docs). [#6113](https://github.com/adobe/spectrum-web-components/pull/6113)
+- `Badge` — Added `<swc-badge>` with Spectrum 2 tokens and icon support. See the [component docs](https://spectrum-web-components.adobe.com/?path=/docs/components-badge--docs) and [migration guide](https://spectrum-web-components.adobe.com/?path=/docs/components-badge-migration-guide--docs). [#5718](https://github.com/adobe/spectrum-web-components/pull/5718)
+- `Divider` — Added `<swc-divider>` with Spectrum 2 tokens and static color support. See the [component docs](https://spectrum-web-components.adobe.com/?path=/docs/components-divider--docs) and [migration guide](https://spectrum-web-components.adobe.com/?path=/docs/components-divider-migration-guide--docs). [#5798](https://github.com/adobe/spectrum-web-components/pull/5798)
+- `Illustrated Message` — Added `<swc-illustrated-message>` with slot-based heading API and size/orientation attributes. See the [component docs](https://spectrum-web-components.adobe.com/?path=/docs/components-illustrated-message--docs) and [migration guide](https://spectrum-web-components.adobe.com/?path=/docs/components-illustrated-message-migration-guide--docs). [#6207](https://github.com/adobe/spectrum-web-components/pull/6207)
+- `Progress Circle` — Added `<swc-progress-circle>` with ARIA attributes and Spectrum 2 tokens. See the [component docs](https://spectrum-web-components.adobe.com/?path=/docs/components-progress-circle--docs) and [migration guide](https://spectrum-web-components.adobe.com/?path=/docs/components-progress-circle-migration-guide--docs). [#5743](https://github.com/adobe/spectrum-web-components/pull/5743)
+- `Status Light` — Added `<swc-status-light>` with Spectrum 2 tokens and extended color variants. See the [component docs](https://spectrum-web-components.adobe.com/?path=/docs/components-status-light--docs) and [migration guide](https://spectrum-web-components.adobe.com/?path=/docs/components-status-light-migration-guide--docs). [#5800](https://github.com/adobe/spectrum-web-components/pull/5800)
+- `Tabs` — Added `<swc-tabs>`, `<swc-tab>`, and `<swc-tab-panel>` with keyboard navigation and overflow handling. See the [component docs](https://spectrum-web-components.adobe.com/?path=/docs/components-tabs--docs) and [migration guide](https://spectrum-web-components.adobe.com/?path=/docs/components-tabs-migration-guide--docs). [#6183](https://github.com/adobe/spectrum-web-components/pull/6183)
+- `Typography` — Added typography utility classes for Spectrum 2 type scales. See the [component docs](https://spectrum-web-components.adobe.com/?path=/docs/components-typography--docs). [#6031](https://github.com/adobe/spectrum-web-components/pull/6031)
+- `Conversational AI` — Added composable AI chat pattern with message, action bar, and scroll components (no Gen1 counterpart). See the [pattern docs](https://spectrum-web-components.adobe.com/?path=/docs/patterns-conversational-ai--docs). [#6170](https://github.com/adobe/spectrum-web-components/pull/6170)
 
-## 0.0.3
+### Dependencies
 
-### Patch Changes
-
-- Updated dependencies [[`95e1c25`](https://github.com/adobe/spectrum-web-components/commit/95e1c25672f62f3723dfa66129ae5ecdeabe578a)]:
-  - @spectrum-web-components/core@0.0.3
-
-## 0.0.2
-
-### Patch Changes
-
-- Updated dependencies [[`283f0fe`](https://github.com/adobe/spectrum-web-components/commit/283f0fe07533c464e9fe1a3e7edebecb9128e11f), [`1d76b70`](https://github.com/adobe/spectrum-web-components/commit/1d76b7093d8ff5f9b26f07a69086488341a02650), [`9cb816b`](https://github.com/adobe/spectrum-web-components/commit/9cb816b5ac80387fdc9bb87381f5149fecb1b595)]:
-  - @spectrum-web-components/core@0.0.2
+- `@spectrum-web-components/core@2.0.0-beta1`

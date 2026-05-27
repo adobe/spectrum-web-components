@@ -5,6 +5,7 @@
   "changelog": [
     "@changesets/changelog-github",
     {
+      "disableThanks": true,
       "repo": "adobe/spectrum-web-components"
     }
   ],
