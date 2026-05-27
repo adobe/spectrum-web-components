@@ -62,11 +62,10 @@ argTypes.level = {
 };
 
 const content = {
-  personal: 'Manage your name, email address, and contact details.',
-  billing:
-    'Your billing address is used to verify your payment method and calculate taxes.',
-  shipping: 'Physical products and documents are sent to this address.',
-  payment: 'Contact your administrator to update payment information.',
+  personal: html`<p>Manage your name, email address, and contact details.</p>`,
+  billing: html`<p>Your billing address is used to verify your payment method and calculate taxes.</p>`,
+  shipping: html`<p>Physical products and documents are sent to this address.</p>`,
+  payment: html`<p>Contact your administrator to update payment information.</p>`,
 };
 
 const defaultItems = html`

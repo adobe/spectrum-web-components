@@ -201,6 +201,18 @@
   display: block;
 }
 
+/* Zero out default browser paragraph margins at the panel edges.
+   :first-child cannot be used here — named-slot siblings (span[slot="label"],
+   etc.) precede the default-slot content in the light DOM, so the first <p>
+   is never :first-child. :first-of-type finds it by element type instead. */
+.swc-AccordionItem-content ::slotted(p:first-of-type) {
+  margin-block-start: 0;
+}
+
+.swc-AccordionItem-content ::slotted(:last-child) {
+  margin-block-end: 0;
+}
+
 /* ── Size: small ────────────────────────────────────────────────────── */
 
 :host([size="s"]) {
