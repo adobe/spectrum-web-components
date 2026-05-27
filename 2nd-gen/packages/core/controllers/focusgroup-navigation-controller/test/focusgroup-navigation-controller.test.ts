@@ -74,7 +74,7 @@ function shadowActiveButton(host: HTMLElement): HTMLButtonElement | null {
 
 export default {
   ...focusMeta,
-  title: 'Focus group navigation controller/Tests',
+  title: 'Controllers/Focus group navigation controller/Tests',
   parameters: {
     ...focusMeta.parameters,
     docs: { disable: true, page: null },
