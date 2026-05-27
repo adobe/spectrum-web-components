@@ -59,9 +59,18 @@ export class ActionButton extends SizedMixin(ButtonBase, {
     return [...super.styles, buttonStyles, cornerTriangleStyles];
   }
 
+  /**
+   * @deprecated The `emphasized` property is deprecated and will be removed
+   * in a future release.
+   */
   @property({ type: Boolean, reflect: true })
   public emphasized = false;
 
+  /**
+   * @deprecated Hold affordance support has been deferred. The
+   * `hold-affordance` attribute and `longpress` event will be removed in a
+   * future release.
+   */
   @property({ type: Boolean, reflect: true, attribute: 'hold-affordance' })
   public holdAffordance = false;
 
@@ -74,6 +83,9 @@ export class ActionButton extends SizedMixin(ButtonBase, {
   /**
    * Whether an Action Button with `role='button'`
    * should also be `aria-pressed='true'`
+   *
+   * @deprecated The `selected` property is deprecated and will be removed in
+   * a future release. Use `swc-toggle-button` for selectable button behavior.
    */
   @property({ type: Boolean, reflect: true })
   public selected = false;
@@ -82,6 +94,10 @@ export class ActionButton extends SizedMixin(ButtonBase, {
    * Whether to automatically manage the `selected`
    * attribute on interaction and whether `aria-pressed="false"`
    * should be used when `selected === false`
+   *
+   * @deprecated The `toggles` property is deprecated and will be removed in
+   * a future release. Use `swc-toggle-button` or `swc-toggle-button-group`
+   * for toggle button behavior.
    */
   @property({ type: Boolean, reflect: true })
   public toggles = false;
@@ -241,9 +257,41 @@ export class ActionButton extends SizedMixin(ButtonBase, {
           this.setAttribute('aria-expanded', this.selected ? 'true' : 'false');
         }
       }
+      if (changes.has('selected') && this.selected && window.__swc?.DEBUG) {
+        window.__swc.warn(
+          this,
+          `The "selected" attribute on <${this.localName}> is deprecated and will be removed in a future release.`,
+          'https://opensource.adobe.com/spectrum-web-components/components/action-button/',
+          { level: 'deprecation' }
+        );
+      }
+    }
+    if (changes.has('toggles') && this.toggles && window.__swc?.DEBUG) {
+      window.__swc.warn(
+        this,
+        `The "toggles" attribute on <${this.localName}> is deprecated and will be removed in a future release.`,
+        'https://opensource.adobe.com/spectrum-web-components/components/action-button/',
+        { level: 'deprecation' }
+      );
+    }
+    if (changes.has('emphasized') && this.emphasized && window.__swc?.DEBUG) {
+      window.__swc.warn(
+        this,
+        `The "emphasized" attribute on <${this.localName}> is deprecated and will be removed in a future release.`,
+        'https://opensource.adobe.com/spectrum-web-components/components/action-button/',
+        { level: 'deprecation' }
+      );
     }
     if (changes.has('holdAffordance')) {
       if (this.holdAffordance) {
+        if (window.__swc?.DEBUG) {
+          window.__swc.warn(
+            this,
+            `The "hold-affordance" attribute on <${this.localName}> is deprecated and will be removed in a future release.`,
+            'https://opensource.adobe.com/spectrum-web-components/components/action-button/',
+            { level: 'deprecation' }
+          );
+        }
         this.addEventListener(
           'pointerdown',
           this.handlePointerdownHoldAffordance

@@ -85,13 +85,16 @@ export class ActionButton extends ButtonBase {
   // ───────────────────
 
   /**
-   * Applies the quiet (low-emphasis) visual treatment.
+   * Applies the quiet (low-emphasis) visual treatment. The button renders
+   * without a visible background or border at rest, making it suitable for
+   * toolbars and chrome where visual weight should be minimal.
    */
   @property({ type: Boolean, reflect: true })
   public quiet: boolean = false;
 
   /**
    * Static color treatment for display over colored or image backgrounds.
+   * Supported with both the default and `quiet` visual treatments.
    */
   @property({ type: String, reflect: true, attribute: 'static-color' })
   public staticColor?: ActionButtonStaticColor;
@@ -99,6 +102,14 @@ export class ActionButton extends ButtonBase {
   // ──────────────────────────────
   //     RENDERING & STYLING
   // ──────────────────────────────
+
+  /** @internal */
+  @property({ type: String, attribute: 'aria-haspopup' })
+  private _ariaHasPopup?: string;
+
+  /** @internal */
+  @property({ type: String, attribute: 'aria-expanded' })
+  private _ariaExpanded?: string;
 
   public static override get styles(): CSSResultArray {
     return [styles];
@@ -122,6 +133,8 @@ export class ActionButton extends ButtonBase {
         aria-label=${ifDefined(
           this.pending ? this.getPendingAccessibleName() : this.accessibleLabel
         )}
+        aria-haspopup=${ifDefined(this._ariaHasPopup)}
+        aria-expanded=${ifDefined(this._ariaExpanded)}
       >
         <slot name="icon"></slot>
         <span class="swc-ActionButton-label">
