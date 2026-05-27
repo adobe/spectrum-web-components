@@ -22,8 +22,8 @@
 /* ── Item wrapper ───────────────────────────────────────────────────── */
 
 .swc-AccordionItem {
-  --_swc-accordion-header-background: transparent;
-  --_swc-accordion-header-text-color: token("neutral-content-color-default");
+  --_swc-accordion-item-header-background: transparent;
+  --_swc-accordion-item-header-text-color: token("neutral-content-color-default");
 
   inline-size: 100%;
   border-block-end: token("border-width-100") solid var(--swc-accordion-item-divider-color, var(--_swc-accordion-item-border-color, token("gray-200")));
@@ -70,11 +70,11 @@
   font-size: var(--_swc-accordion-item-header-font-size);
   font-weight: token("bold-font-weight");
   line-height: token("line-height-100");
-  color: var(--_swc-accordion-header-text-color);
+  color: var(--_swc-accordion-item-header-text-color);
   text-align: start;
-  background-color: var(--_swc-accordion-header-background);
+  background-color: var(--_swc-accordion-item-header-background);
   border: 0;
-  border-radius: var(--_swc-accordion-header-corner-radius, 0);
+  border-radius: var(--_swc-accordion-item-header-corner-radius, 0);
   appearance: none;
 }
 
@@ -82,8 +82,8 @@
    outline and border-radius stay on the button so the focus ring matches
    the hover footprint (toggle area only, independent of the actions slot). */
 .swc-AccordionItem:has(.swc-AccordionItem-header:focus-visible) {
-  --_swc-accordion-header-background: token("transparent-black-100");
-  --_swc-accordion-header-text-color: token("neutral-content-color-key-focus");
+  --_swc-accordion-item-header-background: token("transparent-black-100");
+  --_swc-accordion-item-header-text-color: token("neutral-content-color-key-focus");
 }
 
 .swc-AccordionItem-header:focus-visible {
@@ -94,20 +94,20 @@
 
 @media (hover: hover) {
   .swc-AccordionItem:has(.swc-AccordionItem-header:hover) {
-    --_swc-accordion-header-background: token("transparent-black-100");
-    --_swc-accordion-header-text-color: token("neutral-content-color-hover");
+    --_swc-accordion-item-header-background: token("transparent-black-100");
+    --_swc-accordion-item-header-text-color: token("neutral-content-color-hover");
   }
 }
 
 .swc-AccordionItem:has(.swc-AccordionItem-header:active) {
-  --_swc-accordion-header-background: token("transparent-black-300");
-  --_swc-accordion-header-text-color: token("neutral-content-color-down");
+  --_swc-accordion-item-header-background: token("transparent-black-300");
+  --_swc-accordion-item-header-text-color: token("neutral-content-color-down");
 }
 
 .swc-AccordionItem:has(.swc-AccordionItem-header[aria-disabled="true"]),
 .swc-AccordionItem:has(.swc-AccordionItem-header[aria-disabled="true"]:hover) {
-  --_swc-accordion-header-background: transparent;
-  --_swc-accordion-header-text-color: token("disabled-content-color");
+  --_swc-accordion-item-header-background: transparent;
+  --_swc-accordion-item-header-text-color: token("disabled-content-color");
 }
 
 /* ── Disclosure indicator (chevron) ─────────────────────────────────── */

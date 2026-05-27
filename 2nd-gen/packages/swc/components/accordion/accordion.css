@@ -76,5 +76,5 @@
 /* Quiet: removes dividers and rounds header corners (visible on hover and focus) */
 :host([quiet]) .swc-Accordion {
   --_swc-accordion-item-border-color: transparent;
-  --_swc-accordion-header-corner-radius: var(--_swc-accordion-corner-radius);
+  --_swc-accordion-item-header-corner-radius: var(--_swc-accordion-corner-radius);
 }
