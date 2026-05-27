@@ -74,7 +74,7 @@
 - `accessible-label` replaces `label` (inherited from `ButtonBase`)
 - `size` includes `xs` (not available on `swc-button`), requiring `ACTION_BUTTON_VALID_SIZES` in `ActionButton.types.ts`
 - `quiet` and `static-color` are retained as the primary visual differentiators for this component
-- `value` is **confirmed**; retained for identification within action groups (JS property defaults to `''`; falls back to `textContent` when empty)
+- `value` is **deferred**; removed from the initial release — `swc-action-group` does not support the same selection semantics as 1st-gen, form-association use cases are inconsistent with `swc-button`, and `value` via form association has known issues; tracked in SWC-2042
 
 ### Most blocking open questions
 
@@ -256,7 +256,7 @@ These decisions are derived from the 1st-gen implementation, the current depreca
 | `size` | `'xs' \| 's' \| 'm' \| 'l' \| 'xl'` | `'m'` | `size` | **Confirmed.** Includes `xs` — differs from `swc-button` which starts at `s`. Requires `ACTION_BUTTON_VALID_SIZES` in `ActionButton.types.ts`. No default attribute (`noDefaultSize: true`): `getAttribute('size')` returns `null` until a consumer sets it explicitly; the JS property defaults to `'m'` but is not reflected to the DOM automatically. |
 | `quiet` | `boolean` | `false` | `quiet` | **Confirmed.** Retained as a primary visual differentiator (no background/border at rest). Unlike Button's deprecated `quiet`, this is a first-class visual treatment for action-button. |
 | `staticColor` | `'white' \| 'black' \| undefined` | `undefined` | `static-color` | **Confirmed.** Static color for use over images or colored backgrounds. Supported with both default and `quiet` treatments. |
-| `value` | `string` | `''` | `value` | **Confirmed.** Retained for identification within action groups. JS property defaults to `''`; when the stored value is empty (`''`), the component reads `textContent` as the effective value for action-group identification. Consumers who rely on the fallback must not also set `value=""` and expect `textContent` to win. |
+| `value` | deferred | n/a | deferred | **Deferred (SWC-2042).** `swc-action-group` does not support the same selection semantics as 1st-gen, so the primary consumer use case does not exist yet. Form-association use cases are inconsistent with `swc-button` not having `value`, and `value` via form association has known issues. Removed from initial release; tracked in SWC-2042. |
 | `disabled` | `boolean` | `false` | `disabled` | **Confirmed.** Inherited from `ButtonBase`. Maps to native `disabled` on the internal `<button>`. |
 | `pending` | `boolean` | `false` | `pending` | **Confirmed (B11).** Ships with the initial release. `ButtonBase` provides the logic; visual implementation is copied from `swc-button`. Button remains focusable; activation is suppressed. |
 | `accessibleLabel` | `string \| undefined` | `undefined` | `accessible-label` | **Confirmed.** Replaces 1st-gen `label`. Forwarded as `aria-label` on the internal `<button>`. Required for icon-only usage. Inherited from `ButtonBase`. |
@@ -622,7 +622,7 @@ What `swc-action-button` adds on top of `ButtonBase`:
 | TBD (under SWC-2039) | `hold-affordance` / `longpress` implementation | Architectural complexity, WCAG pointer gesture requirements, and AT testing depth; out of initial scope per a11y analysis and roadmap docs. | [B4](#must-ship--breaking-or-a11y-required), [A5](#additive--ships-when-ready-zero-breakage-for-consumers-already-on-2nd-gen) |
 | TBD (under SWC-2039) | `longpress-enabled` / `longpress-help-text` accessibility wiring | Depends on hold implementation. | [A4](#additive--ships-when-ready-zero-breakage-for-consumers-already-on-2nd-gen) |
 | TBD (under SWC-2039) | `staticColor="auto"` from React Spectrum S2 | Not in approved baseline scope; requires design decision on automatic contrast selection. | [A5](#additive--ships-when-ready-zero-breakage-for-consumers-already-on-2nd-gen) |
-| SWC-2042 | `value` / group-identification attribute | Confirmed. `value` attribute retained with `textContent` fallback for action-group identification. Scoped to SWC-2042. | [2nd-gen API decisions](#2nd-gen-api-decisions) |
+| SWC-2042 | `value` / group-identification attribute | Deferred from initial release. `swc-action-group` does not yet support the selection semantics that make `value` meaningful; form-association use case is inconsistent with `swc-button` not having `value` and has known association issues. Implement alongside `swc-action-group` migration. | [2nd-gen API decisions](#2nd-gen-api-decisions) |
 | TBD | Badge slot and corner-overlay lockup (A6) | Icon+Badge and Avatar+Badge produce a distinct visual lockup. Badge text accessible name composition requires a11y review (@nikkimk) before shipping. | [A6](#additive--ships-when-ready-zero-breakage-for-consumers-already-on-2nd-gen) |
 | TBD | Avatar slot and accessible name composition (A7) | Avatar accessible name and its relationship to the button's composite accessible name requires a11y review (@nikkimk) before shipping. | [A7](#additive--ships-when-ready-zero-breakage-for-consumers-already-on-2nd-gen) |
 | TBD (under SWC-2039) | Cross-root ARIA mapping | Shared with `swc-button` dependency on `ElementInternals` / tooling path. | [Deferred semantics note](#deferred-semantics-note-2nd-gen) |

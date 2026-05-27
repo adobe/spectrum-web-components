@@ -33,13 +33,6 @@ import styles from './action-button.css';
  * @slot - Visible button label.
  * @slot icon - Optional leading icon displayed before the label.
  *
- * @cssprop --swc-action-button-height - Block size of the button.
- * @cssprop --swc-action-button-min-width - Minimum inline size.
- * @cssprop --swc-action-button-edge-to-text - Inline padding from edge to text.
- * @cssprop --swc-action-button-edge-to-visual - Inline padding from edge to icon when label is present.
- * @cssprop --swc-action-button-edge-to-visual-only - Inline padding when only an icon is shown.
- * @cssprop --swc-action-button-focus-indicator-color - Color of the focus ring.
- *
  * @example
  * <swc-action-button>Edit</swc-action-button>
  *
@@ -96,13 +89,6 @@ export class ActionButton extends ButtonBase {
    */
   @property({ type: Boolean, reflect: true })
   public quiet: boolean = false;
-
-  /**
-   * Submitted form value when the button is used inside a form. Mirrors the
-   * native `<button value>` attribute.
-   */
-  @property({ type: String, reflect: true })
-  public value: string = '';
 
   /**
    * Static color treatment for display over colored or image backgrounds.
