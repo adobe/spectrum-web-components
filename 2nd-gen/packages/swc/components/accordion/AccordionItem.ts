@@ -44,6 +44,15 @@ import styles from './accordion-item.css';
  *   <span slot="label">Section heading</span>
  *   Panel content goes here.
  * </swc-accordion-item>
+ *
+ * @cssprop --swc-accordion-item-corner-radius - Corner radius of the header button's focus ring and hover background.
+ * @cssprop --swc-accordion-item-padding-top - Block-start padding of the header button.
+ * @cssprop --swc-accordion-item-padding-bottom - Block-end padding of the header button.
+ * @cssprop --swc-accordion-item-disclosure-indicator-gap - Gap between the chevron indicator and the header label.
+ * @cssprop --swc-accordion-item-edge-to-content-area - Inline padding of the header button; also controls the trailing-edge offset of the actions area.
+ * @cssprop --swc-accordion-item-header-font-size - Font size of the header label.
+ * @cssprop --swc-accordion-item-content-padding-inline - Inline padding of the content panel.
+ * @cssprop --swc-accordion-item-divider-color - Color of the item's top and bottom divider borders.
  */
 export class AccordionItem extends AccordionItemBase {
   // ──────────────────────────────
