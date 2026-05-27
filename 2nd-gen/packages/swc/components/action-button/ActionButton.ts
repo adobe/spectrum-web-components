@@ -10,15 +10,17 @@
  * governing permissions and limitations under the License.
  */
 
-import { CSSResultArray, html, TemplateResult } from 'lit';
+import { CSSResultArray, html, PropertyValues, TemplateResult } from 'lit';
 import { property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
 import {
-  ActionButtonBase,
+  ACTION_BUTTON_VALID_SIZES,
+  type ActionButtonSize,
   type ActionButtonStaticColor,
 } from '@spectrum-web-components/core/components/action-button';
+import { ButtonBase } from '@spectrum-web-components/core/components/button';
 
 import styles from './action-button.css';
 
@@ -47,7 +49,44 @@ import styles from './action-button.css';
  *   Edit
  * </swc-action-button>
  */
-export class ActionButton extends ActionButtonBase {
+export class ActionButton extends ButtonBase {
+  // ──────────────────────
+  //     API OVERRIDES
+  // ──────────────────────
+
+  /** @internal */
+  static override readonly VALID_SIZES: readonly ActionButtonSize[] =
+    ACTION_BUTTON_VALID_SIZES;
+
+  /**
+   * Size of the button. Supports the full `xs`–`xl` range; `xs` is an
+   * action-button-specific addition not available on `swc-button`.
+   */
+  @property({ type: String })
+  public override get size(): ActionButtonSize {
+    return this._size ?? 'm';
+  }
+
+  public override set size(value: ActionButtonSize) {
+    const normalized = (
+      value ? (value as string).toLocaleLowerCase() : value
+    ) as ActionButtonSize;
+    const validSize: ActionButtonSize = ACTION_BUTTON_VALID_SIZES.includes(
+      normalized
+    )
+      ? normalized
+      : 'm';
+    const oldSize = this._size ?? 'm';
+    if (oldSize === validSize) {
+      return;
+    }
+    this._size = validSize;
+    this.setAttribute('size', validSize);
+    this.requestUpdate('size', oldSize);
+  }
+
+  private _size: ActionButtonSize | null = null;
+
   // ───────────────────
   //     API ADDITIONS
   // ───────────────────
@@ -104,5 +143,13 @@ export class ActionButton extends ActionButtonBase {
         </span>
       </button>
     `;
+  }
+
+  protected override update(changes: PropertyValues): void {
+    super.update(changes);
+    // Counteracts SizedMixin's auto-reflect of size="m" when no size was explicitly set.
+    if (this._size === null) {
+      this.removeAttribute('size');
+    }
   }
 }
