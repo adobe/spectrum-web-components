@@ -405,40 +405,40 @@ What `swc-action-button` adds on top of `ButtonBase`:
 
 ### Setup
 
-- [ ] Create `2nd-gen/packages/core/components/action-button/ActionButton.types.ts`
-- [ ] Create `2nd-gen/packages/core/components/action-button/index.ts`
-- [ ] Create `2nd-gen/packages/swc/components/action-button/` directory
-- [ ] Create `2nd-gen/packages/swc/components/action-button/ActionButton.ts`
-- [ ] Create `2nd-gen/packages/swc/components/action-button/action-button.css`
-- [ ] Create `2nd-gen/packages/swc/components/action-button/swc-action-button.ts` (element registration)
-- [ ] Create `2nd-gen/packages/swc/components/action-button/index.ts`
-- [ ] Wire exports in both `package.json` files
+- [x] Create `2nd-gen/packages/core/components/action-button/ActionButton.types.ts`
+- [x] Create `2nd-gen/packages/core/components/action-button/index.ts`
+- [x] Create `2nd-gen/packages/swc/components/action-button/` directory
+- [x] Create `2nd-gen/packages/swc/components/action-button/ActionButton.ts`
+- [x] Create `2nd-gen/packages/swc/components/action-button/action-button.css`
+- [x] Create `2nd-gen/packages/swc/components/action-button/swc-action-button.ts` (element registration)
+- [x] Create `2nd-gen/packages/swc/components/action-button/index.ts`
+- [x] Wire exports in both `package.json` files
 - [ ] Check out `spectrum-css` at `spectrum-two` branch as sibling directory for CSS token reference
 
 ### API
 
 #### Naming and public surface
 
-- [ ] `ActionButton.types.ts` (core): define `ACTION_BUTTON_VALID_SIZES = ['xs', 's', 'm', 'l', 'xl']` and `ActionButtonSize` type
-- [ ] `ActionButton.ts` (SWC): extend `ButtonBase` with `quiet`, `staticColor`, and size override
-- [ ] Set `noDefaultSize: true` in `SizedMixin` call so size attribute is not reflected by default (matches 1st-gen behavior)
-- [ ] Remove `toggles`, `selected`, `emphasized` from the 2nd-gen public surface
-- [ ] Remove `role` as a consumer property; internal `<button>` provides semantics
-- [ ] Remove deprecated link API (`href`, `target`, `download`, `referrerpolicy`, `rel`)
-- [ ] Replace `label` with `accessible-label` / `accessibleLabel` (inherited from `ButtonBase`)
+- [x] `ActionButton.types.ts` (core): define `ACTION_BUTTON_VALID_SIZES = ['xs', 's', 'm', 'l', 'xl']` and `ActionButtonSize` type
+- [x] `ActionButton.ts` (SWC): extend `ButtonBase` with `quiet`, `staticColor`, and size override
+- [x] Suppress default `size` attribute reflection — implemented via `_size` backing field and `update()` override rather than a `SizedMixin` `noDefaultSize` option; same observable behavior (`getAttribute('size')` returns `null` until explicitly set)
+- [x] Remove `toggles`, `selected`, `emphasized` from the 2nd-gen public surface
+- [x] Remove `role` as a consumer property; internal `<button>` provides semantics
+- [x] Remove deprecated link API (`href`, `target`, `download`, `referrerpolicy`, `rel`)
+- [x] Replace `label` with `accessible-label` / `accessibleLabel` (inherited from `ButtonBase`)
 
-- [ ] Add `@deprecated` JSDoc to 1st-gen `toggles`, `selected`, `emphasized`, `holdAffordance`, and `href` properties
-- [ ] Add dev-mode runtime warnings (`window.__swc.warn()`) to 1st-gen for `toggles` / `selected` pointing to `swc-toggle-button`
+- [x] Add `@deprecated` JSDoc to 1st-gen `toggles`, `selected`, `emphasized`, `holdAffordance`, and `href` properties
+- [x] Add dev-mode runtime warnings (`window.__swc.warn()`) to 1st-gen for deprecated properties (`emphasized`, `holdAffordance`, `selected`, `toggles`)
 - [ ] Document migration from `label` to `accessible-label`
 
 #### Semantics and forms
 
-- [ ] Internal `<button type="button">` is the semantic control and focus target; host carries no button role
-- [ ] Forward host `accessible-label` as `aria-label` on the internal `<button>` (from `ButtonBase`)
-- [ ] Forward `aria-haspopup` and `aria-expanded` from host to the internal `<button>` when present (for menu-trigger usage)
-- [ ] When `pending`: set `aria-disabled="true"` on the inner `<button>` while keeping it focusable (inherited from `ButtonBase.getForwardedButtonAttributes()`)
-- [ ] When `disabled`: set `disabled` attribute on the inner `<button>` (inherited from `ButtonBase`)
-- [ ] Emit `__swc.warn()` when icon-only and `accessible-label` is absent (from `ButtonBase.update()`)
+- [x] Internal `<button type="button">` is the semantic control and focus target; host carries no button role
+- [x] Forward host `accessible-label` as `aria-label` on the internal `<button>` (from `ButtonBase`)
+- [x] Forward `aria-haspopup` and `aria-expanded` from host to the internal `<button>` when present (for menu-trigger usage)
+- [x] When `pending`: set `aria-disabled="true"` on the inner `<button>` while keeping it focusable (inherited from `ButtonBase.getForwardedButtonAttributes()`)
+- [x] When `disabled`: set `disabled` attribute on the inner `<button>` (inherited from `ButtonBase`)
+- [x] Emit `__swc.warn()` when icon-only and `accessible-label` is absent (inherited from `ButtonBase.update()`)
 - [ ] Document cross-root ARIA as deferred
 
 ### Styling
@@ -583,8 +583,8 @@ What `swc-action-button` adds on top of `ButtonBase`:
 ### Review
 
 - [ ] `yarn lint:2nd-gen` passes (ESLint, Stylelint, Prettier)
-- [ ] Status table in [workstream doc](../../02_workstreams/02_2nd-gen-component-migration/01_status.md) updated
-- [ ] PR created with description referencing Epic SWC-2039
+- [x] Status table in [workstream doc](../../02_workstreams/02_2nd-gen-component-migration/01_status.md) updated
+- [x] PR created with description referencing Epic SWC-2039 (see #6339)
 - [ ] Peer engineer sign-off
 
 ---
