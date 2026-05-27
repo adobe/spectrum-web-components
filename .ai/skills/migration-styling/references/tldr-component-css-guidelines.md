@@ -72,8 +72,6 @@
 
 ### 1. `:host` vs Component Class
 
-Put only layout-participation styles on `:host`. Put actual visuals on `.swc-ComponentName` or internal parts.
-
 Put layout-participation styles on `:host` (`display`, `inline-size`, `min-*`/`max-*`, `position`, custom property definitions). Put visual styles on `.swc-ComponentName` or an internal part.
 
 Two non-obvious cases to flag explicitly:
