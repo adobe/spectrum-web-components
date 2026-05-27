@@ -468,13 +468,13 @@ What `swc-action-button` adds on top of `ButtonBase`:
 
 #### Naming and semantics
 
-- [ ] Align implementation with [Action button accessibility migration analysis](./accessibility-migration-analysis.md)
-- [ ] Icon-only usage requires `accessible-label`; emit `__swc.warn()` when absent
-- [ ] Pending state: `aria-disabled="true"` on inner `<button>`, focusable, busy-suffix accessible name (`SWC-459` parity)
+- [x] Align implementation with [Action button accessibility migration analysis](./accessibility-migration-analysis.md)
+- [x] Icon-only usage requires `accessible-label`; emit `__swc.warn()` when absent (inherited from `ButtonBase.update()`)
+- [x] Pending state: `aria-disabled="true"` on inner `<button>`, focusable, busy-suffix accessible name (inherited from `ButtonBase`)
 - [ ] Pending state: animated icon only, never `swc-progress-circle` for inline pending
 - [ ] Pending state: no `aria-live="assertive"`; consumers use `role="status"` externally if needed
-- [ ] Menu trigger: forward `aria-haspopup` / `aria-expanded` from host to the internal `<button>`
-- [ ] No `aria-pressed`, `role="radio"`, or `role="checkbox"` on `swc-action-button`
+- [x] Menu trigger: forward `aria-haspopup` / `aria-expanded` from host to the internal `<button>`
+- [x] No `aria-pressed`, `role="radio"`, or `role="checkbox"` on `swc-action-button`
 - [ ] Confirm host element is not separately announced by AT alongside the internal button
 
 #### State verification
