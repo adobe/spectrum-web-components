@@ -197,6 +197,7 @@
   position: absolute;
   top: calc(100% - (0.5 * var(--_swc-tooltip-tip-square-size)));
   left: calc(50% - (0.5 * var(--_swc-tooltip-tip-square-size)));
+  z-index: -1; /* Prevent WHCM visual overlap of the content area which can occur with subpixel rendering of the tip */
   inline-size: var(--_swc-tooltip-tip-square-size);
   block-size: var(--_swc-tooltip-tip-square-size);
   background-color: inherit;
