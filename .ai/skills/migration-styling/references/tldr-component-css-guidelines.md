@@ -72,8 +72,11 @@
 
 ### 1. `:host` vs Component Class
 
-Put only layout-participation styles on `:host`. Put actual visuals on `.swcComponentName` or internal parts.
-→ See [01_component-css](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/01_component-css.md)
+Put only layout-participation styles on `:host`. Put actual visuals on `.swc-ComponentName` or internal parts.
+
+**Exception**: three categories of styles may legitimately live on `:host` — each for a distinct reason: UA resets when the browser applies default styles directly to the host element (for example, the native popover stylesheet); transition properties (`opacity`, `transition-*`, `transition-behavior: allow-discrete`) when the host is itself the transition target (for example, when `@starting-style` applies to the host); and positioning surface (`position: absolute`, `inset: auto`, dimension constraints) when an external controller such as a placement controller writes coordinates directly to the host element.
+
+→ See [01_component-css#when-to-use-host](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/01_component-css.md#when-to-use-host)
 
 ### 2. Stylesheet Order
 
@@ -125,3 +128,36 @@ Keep selector specificity at or below `(0,1,0)`. If you need a compounded select
 
 Only add `@media (forced-colors: active)` if browser defaults are not conveying correct semantic intent, and always put it at the end of the component stylesheet.
 → See [01_component-css#forced-colors-requirements](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/01_component-css.md#forced-colors-requirements)
+
+### 8. Browser API selectors
+
+Prefer native CSS pseudo-classes over attribute selectors when one exists for the same state (`:host(:popover-open)` not `:host([open])`; `:host(:disabled)` not `:host([disabled])`). Use attribute selectors for custom attributes and ARIA states with no native pseudo-class.
+→ See [01_component-css#state-implementation-patterns](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/01_component-css.md#state-implementation-patterns)
+
+### 9. Sub-element inheritance
+
+When a sub-element must always match a variant-driven property on the parent, use `inherit` rather than repeating the `var()` reference in each variant rule.
+→ See [01_component-css#variant-implementation-patterns](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/01_component-css.md#variant-implementation-patterns)
+
+### 10. Compound pseudo-classes on `:host()` via CSS nesting
+
+CSS nesting inside a `:host([...])` rule — e.g. `&:dir(rtl)` — expands to `:host([...]):dir(rtl)`, which chains the pseudo-class **outside** the `:host()` argument. Browsers do not support this; the rule silently fails with no parse error.
+
+```css
+/* ❌ Silent failure: :dir(rtl) is outside :host() */
+:host([placement='start']:popover-open) {
+  &:dir(rtl) {
+    transform: translateX(1rem);
+  }
+}
+
+/* ✅ All conditions inside the :host() argument */
+:host(:dir(rtl)[placement='start']:popover-open) {
+  transform: translateX(1rem);
+}
+```
+
+**Exception**: when the parent selector targets a descendant (e.g. `:host([...]) .swc-Child`), nesting `&:dir(rtl)` correctly applies `:dir()` to the inner element — that is valid and fine.
+
+**Migration note**: `:dir()` is a common place this surfaces. Whenever you add `:dir()` to a `:host`-level rule, write a separate `:host(:dir(rtl)[...])` rule instead of nesting.
+→ See [05_anti-patterns#9](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/05_anti-patterns.md#9-nesting-compound-pseudo-classes-on-host-via-css-nesting)

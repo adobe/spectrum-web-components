@@ -97,14 +97,19 @@ export abstract class TooltipBase extends SpectrumElement {
   public triggerElement: HTMLElement | null = null;
 
   /**
-   * Whether to apply warm-up and cooldown timing (1500ms each) to hover and focus events.
+   * Duration in milliseconds of the warm-up delay before the tooltip shows on pointer hover.
+   * Set to `0` to show immediately on hover. Keyboard focus (`focusin` when `:focus-visible`)
+   * always shows the tooltip immediately regardless of this value. The cooldown duration (before the next hover must wait again)
+   * matches this value. Warm-up/cooldown state is shared across all tooltips in the same document,
+   * so moving quickly between adjacent triggers (e.g. a toolbar) shows each subsequent tooltip
+   * immediately after the first warm-up elapses.
    *
    * Additive/deferred: active when `HoverController` is integrated.
    *
-   * @default false
+   * @default 1500
    */
-  @property({ type: Boolean, reflect: true })
-  public delayed: boolean = false;
+  @property({ type: Number, reflect: true })
+  public delay: number = 1500;
 
   /**
    * When set, prevents automatic trigger wiring from responding to hover and focus events.
@@ -206,31 +211,40 @@ export abstract class TooltipBase extends SpectrumElement {
     );
   }
 
+  // Guards dispatchAfterEvent so only the first transitionend per open/close cycle fires,
+  // preventing one after event from firing for each CSS property that transitions.
+  private afterEventPending = false;
+
   private readonly handleBeforeToggle = (event: Event): void => {
     const { newState } = event as ToggleEvent;
     const eventName = newState === 'open' ? 'swc-open' : 'swc-close';
     this.dispatchEvent(
       new CustomEvent(eventName, { bubbles: true, composed: true })
     );
+    // Set here so the flag is set regardless of whether this.open already matches
+    // newState. handleToggle exits early when open was set externally, which would
+    // otherwise leave the flag unset and suppress swc-after-open / swc-after-close.
+    this.afterEventPending = true;
   };
 
   private readonly handleToggle = (event: Event): void => {
     const { newState } = event as ToggleEvent;
     const isOpen = newState === 'open';
-    if (isOpen === this.open) {
-      return;
+    if (isOpen !== this.open) {
+      this.open = isOpen;
     }
-    this.open = isOpen;
     // When no CSS transition is active, dispatch after-* immediately since transitionend will not fire.
     if (getComputedStyle(this).transitionDuration === '0s') {
+      this.afterEventPending = false;
       this.dispatchAfterEvent(isOpen);
     }
   };
 
   private readonly handleTransitionEnd = (event: TransitionEvent): void => {
-    if (event.target !== this) {
+    if (event.target !== this || !this.afterEventPending) {
       return;
     }
+    this.afterEventPending = false;
     this.dispatchAfterEvent(this.open);
   };
 

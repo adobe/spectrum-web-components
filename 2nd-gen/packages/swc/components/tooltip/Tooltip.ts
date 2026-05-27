@@ -26,6 +26,8 @@ import styles from './tooltip.css';
  * <swc-tooltip for="save-btn">Save your changes</swc-tooltip>
  *
  * @slot - Text label displayed in the tooltip.
+ *
+ * @cssprop --swc-tooltip-background-color - Background color of the tooltip bubble. Defaults to the neutral background color token.
  */
 export class Tooltip extends TooltipBase {
   // ──────────────────────────────
@@ -38,8 +40,10 @@ export class Tooltip extends TooltipBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Tooltip-tip"></span>
-      <span class="swc-Tooltip-label"><slot></slot></span>
+      <div class="swc-Tooltip">
+        <span class="swc-Tooltip-tip" aria-hidden="true"></span>
+        <slot></slot>
+      </div>
     `;
   }
 }
