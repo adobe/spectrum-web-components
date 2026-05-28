@@ -373,8 +373,6 @@ export const Open: Story = {
  *
  * Events fire regardless of what caused the state change: setting `open` directly, calling
  * `showPopover()`/`hidePopover()`, pressing `Escape`, or a light-dismiss click.
- *
- * Open this story's browser console and click the button to observe the events.
  */
 export const Events: Story = {
   render: (args) => html`
