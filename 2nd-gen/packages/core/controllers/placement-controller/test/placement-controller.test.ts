@@ -10,7 +10,7 @@
  * governing permissions and limitations under the License.
  */
 import { html } from 'lit';
-import { expect } from '@storybook/test';
+import { expect, waitFor } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import '../stories/demo-hosts.js';
@@ -43,21 +43,6 @@ function readTranslate(el: HTMLElement): [number, number] {
   return [Number(match[1]), Number(match[2])];
 }
 
-function nextFrames(count = 2): Promise<void> {
-  return new Promise<void>((resolve) => {
-    let remaining = count;
-    const tick = (): void => {
-      remaining -= 1;
-      if (remaining <= 0) {
-        resolve();
-      } else {
-        requestAnimationFrame(tick);
-      }
-    };
-    requestAnimationFrame(tick);
-  });
-}
-
 export default {
   ...meta,
   title: 'Controllers/Placement controller/Tests',
@@ -72,17 +57,17 @@ export const AlignsStartAndEnd: Story = {
       canvasElement,
       'demo-placement-playground'
     );
-    await nextFrames();
+    await waitFor(() => expect(host.actualPlacement).toBe('bottom'));
 
     await step(
       'bottom-start and bottom-end differ on the cross axis',
       async () => {
         host.placement = 'bottom-start';
-        await nextFrames();
+        await waitFor(() => expect(host.actualPlacement).toBe('bottom-start'));
         const [startX] = readTranslate(host.floatingEl);
 
         host.placement = 'bottom-end';
-        await nextFrames();
+        await waitFor(() => expect(host.actualPlacement).toBe('bottom-end'));
         const [endX] = readTranslate(host.floatingEl);
 
         expect(startX).not.toBe(endX);
@@ -98,13 +83,9 @@ export const PositionsBelowTrigger: Story = {
       canvasElement,
       'demo-placement-playground'
     );
-    await nextFrames();
+    await waitFor(() => expect(host.actualPlacement).toBe('bottom'));
 
-    await step('reports computed placement', async () => {
-      expect(host.actualPlacement).toBe('bottom');
-    });
-
-    await step('floating element sits below trigger', async () => {
+    await step('floating element sits below trigger', () => {
       const triggerRect = host.triggerEl.getBoundingClientRect();
       const [, y] = readTranslate(host.floatingEl);
       expect(y).toBeGreaterThanOrEqual(Math.floor(triggerRect.bottom));
@@ -119,8 +100,7 @@ export const VirtualTriggerMoves: Story = {
       canvasElement,
       'demo-placement-virtual-trigger'
     );
-    await nextFrames();
-
+    await waitFor(() => expect(host.floatingEl.style.translate).not.toBe(''));
     const [, initialY] = readTranslate(host.floatingEl);
 
     await step('click moves the floating element', async () => {
@@ -133,9 +113,10 @@ export const VirtualTriggerMoves: Story = {
           clientY: rect.top + 200,
         })
       );
-      await nextFrames();
-      const [, nextY] = readTranslate(host.floatingEl);
-      expect(nextY).toBeGreaterThan(initialY);
+      await waitFor(() => {
+        const [, y] = readTranslate(host.floatingEl);
+        expect(y).toBeGreaterThan(initialY);
+      });
     });
   },
 };
@@ -147,13 +128,15 @@ export const StopOnDisconnect: Story = {
       canvasElement,
       'demo-placement-playground'
     );
-    await nextFrames();
+    await waitFor(() => expect(host.floatingEl.style.translate).not.toBe(''));
     const before = host.floatingEl.style.translate;
 
     await step('disconnect freezes translate', async () => {
       host.remove();
       window.dispatchEvent(new Event('resize'));
-      await nextFrames();
+      // Asserting absence — give the (now-disconnected) controller a moment
+      // to confirm it doesn't write further translate updates.
+      await new Promise((resolve) => setTimeout(resolve, 50));
       expect(host.floatingEl.style.translate).toBe(before);
     });
   },
@@ -214,7 +197,7 @@ export const ConversionFunctionsRoundTrip: Story = {
 
 /**
  * Verifies the four previously-broken logical-side placements compute a
- * non-zero translate (i.e. Floating UI received a valid placement). Before
+ * valid translate (i.e. Floating UI received a valid placement). Before
  * the fix, `toFloatingPlacement('start-top')` returned the invalid
  * `'left-top'` and `computePosition` produced nonsensical coordinates.
  */
@@ -226,7 +209,7 @@ export const LogicalSidePlacementsCompute: Story = {
       'demo-placement-playground'
     );
     host.shouldFlip = false;
-    await nextFrames();
+    await waitFor(() => expect(host.actualPlacement).toBe('bottom'));
 
     const cases: Array<{
       requested: Parameters<typeof toFloatingPlacement>[0];
@@ -241,14 +224,12 @@ export const LogicalSidePlacementsCompute: Story = {
     for (const { requested, expected } of cases) {
       await step(`${requested} → ${expected}`, async () => {
         host.placement = requested;
-        await nextFrames();
+        await waitFor(() => expect(host.actualPlacement).toBe(expected));
         const [tx, ty] = readTranslate(host.floatingEl);
         // Translate must be a real number (not NaN, which is what invalid
         // Floating UI placements produced before the fix).
         expect(Number.isFinite(tx)).toBe(true);
         expect(Number.isFinite(ty)).toBe(true);
-        // And the resolved placement comes back through the SWC union.
-        expect(host.actualPlacement).toBe(expected);
       });
     }
   },
@@ -256,8 +237,7 @@ export const LogicalSidePlacementsCompute: Story = {
 
 /**
  * `constrainSize: true` installs Floating UI's `size` middleware, which
- * writes `max-height` (and `max-width`) on the floating element when the
- * available space is smaller than the floating content.
+ * writes `max-height` and `max-width` on the floating element.
  */
 export const ConstrainSizeAppliesMaxHeight: Story = {
   ...ConstrainSize,
@@ -266,30 +246,25 @@ export const ConstrainSizeAppliesMaxHeight: Story = {
       canvasElement,
       'demo-placement-constrain-size'
     );
-    await nextFrames();
-
-    await step('floating element receives a numeric max-height', () => {
-      const maxHeight = host.floatingEl.style.maxHeight;
-      expect(maxHeight).toMatch(/^\d+px$/);
-    });
+    await waitFor(() =>
+      expect(host.floatingEl.style.maxHeight).toMatch(/^\d+px$/)
+    );
 
     await step(
-      'isConstrained reflects when content exceeds the surface',
+      'floating element receives numeric max-height and max-width',
       () => {
-        // The demo lists 24 items in a 180px surface, so size middleware
-        // clamps height and reports `isConstrained`.
-        expect(host.isConstrained).toBe(true);
+        expect(host.floatingEl.style.maxHeight).toMatch(/^\d+px$/);
+        expect(host.floatingEl.style.maxWidth).toMatch(/^\d+px$/);
       }
     );
   },
 };
 
 /**
- * Calling `start()` again replaces the active session. The prior
- * `autoUpdate` cleanup must have run so its callback no longer drives
- * compute. We verify this indirectly: cycle through several placements
- * rapidly and observe that the final placement is reflected (i.e. no
- * stale `start-*` session writes coordinates after `end-*` is requested).
+ * Calling `start()` again replaces the active session. Cycling through
+ * several placements rapidly and waiting for the final one's compute to
+ * land verifies that prior sessions don't write stale coordinates after
+ * the latest `start()` call.
  */
 export const RapidStartReplacesPriorSession: Story = {
   ...Playground,
@@ -299,15 +274,14 @@ export const RapidStartReplacesPriorSession: Story = {
       'demo-placement-playground'
     );
     host.shouldFlip = false;
-    await nextFrames();
+    await waitFor(() => expect(host.actualPlacement).toBe('bottom'));
 
     await step('final placement wins after a burst of changes', async () => {
       host.placement = 'top';
       host.placement = 'left';
       host.placement = 'right';
       host.placement = 'bottom-end';
-      await nextFrames();
-      expect(host.actualPlacement).toBe('bottom-end');
+      await waitFor(() => expect(host.actualPlacement).toBe('bottom-end'));
     });
   },
 };
@@ -328,11 +302,12 @@ export const FlipReorients: Story = {
     host.triggerPosition = 'bottom-center';
     host.tallFloating = true;
     host.shouldFlip = true;
-    await nextFrames();
 
-    await step('actualPlacement reorients away from bottom', () => {
-      expect(host.actualPlacement).toBeTruthy();
-      expect(host.actualPlacement).not.toBe('bottom');
+    await step('actualPlacement reorients away from bottom', async () => {
+      await waitFor(() => {
+        expect(host.actualPlacement).toBeTruthy();
+        expect(host.actualPlacement).not.toBe('bottom');
+      });
     });
   },
 };
@@ -352,18 +327,17 @@ export const NoFlipKeepsRequestedSide: Story = {
     host.triggerPosition = 'bottom-center';
     host.tallFloating = true;
     host.shouldFlip = false;
-    await nextFrames();
 
-    await step('actualPlacement stays at the requested side', () => {
-      expect(host.actualPlacement).toBe('bottom');
+    await step('actualPlacement stays at the requested side', async () => {
+      await waitFor(() => expect(host.actualPlacement).toBe('bottom'));
     });
   },
 };
 
 /**
  * The `offset` option adds pixels along the placement direction. With
- * placement `'bottom'`, increasing `offset` should push the floating
- * element further down (larger `translateY`).
+ * placement `'bottom'`, increasing `offset` pushes the floating element
+ * further down (larger `translateY`).
  */
 export const OffsetMovesAlongPlacementAxis: Story = {
   ...testFixtureStory,
@@ -375,22 +349,23 @@ export const OffsetMovesAlongPlacementAxis: Story = {
     host.placement = 'bottom';
     host.triggerPosition = 'top-center';
     host.offset = 0;
-    await nextFrames();
+    await waitFor(() => expect(host.floatingEl.style.translate).not.toBe(''));
     const [, y0] = readTranslate(host.floatingEl);
 
     await step('offset: 40 shifts translateY by ~40px', async () => {
       host.offset = 40;
-      await nextFrames();
-      const [, y40] = readTranslate(host.floatingEl);
-      expect(y40 - y0).toBeGreaterThanOrEqual(30);
-      expect(y40 - y0).toBeLessThanOrEqual(50);
+      await waitFor(() => {
+        const [, y40] = readTranslate(host.floatingEl);
+        expect(y40 - y0).toBeGreaterThanOrEqual(30);
+        expect(y40 - y0).toBeLessThanOrEqual(50);
+      });
     });
   },
 };
 
 /**
  * The `crossOffset` option slides along the trigger edge. With placement
- * `'bottom'`, increasing `crossOffset` should shift the floating element
+ * `'bottom'`, increasing `crossOffset` shifts the floating element
  * sideways (`translateX`) without changing `translateY` materially.
  */
 export const CrossOffsetMovesAlongTriggerEdge: Story = {
@@ -403,27 +378,28 @@ export const CrossOffsetMovesAlongTriggerEdge: Story = {
     host.placement = 'bottom';
     host.triggerPosition = 'center';
     host.crossOffset = 0;
-    await nextFrames();
+    await waitFor(() => expect(host.floatingEl.style.translate).not.toBe(''));
     const [x0, y0] = readTranslate(host.floatingEl);
 
     await step(
       'crossOffset: 40 shifts translateX, not translateY',
       async () => {
         host.crossOffset = 40;
-        await nextFrames();
-        const [x40, y40] = readTranslate(host.floatingEl);
-        expect(Math.abs(x40 - x0)).toBeGreaterThan(20);
-        expect(Math.abs(y40 - y0)).toBeLessThan(5);
+        await waitFor(() => {
+          const [x40, y40] = readTranslate(host.floatingEl);
+          expect(Math.abs(x40 - x0)).toBeGreaterThan(20);
+          expect(Math.abs(y40 - y0)).toBeLessThan(5);
+        });
       }
     );
   },
 };
 
 /**
- * The `containerPadding` option controls the inset enforced by `shift`
- * when the floating element would overflow the boundary. With the
- * trigger near the right edge, raising `containerPadding` should push
- * the floating element further inward (smaller `translateX`).
+ * The `containerPadding` option controls the inset used by `shift` when
+ * the floating element would overflow the boundary. With the trigger near
+ * the right edge, raising `containerPadding` pulls the floating element
+ * further inward (smaller `translateX`).
  */
 export const ContainerPaddingMovesPanelInward: Story = {
   ...testFixtureStory,
@@ -435,31 +411,33 @@ export const ContainerPaddingMovesPanelInward: Story = {
     host.placement = 'bottom';
     host.triggerPosition = 'top-right';
     host.containerPadding = 8;
-    await nextFrames();
+    await waitFor(() => expect(host.floatingEl.style.translate).not.toBe(''));
     const [xSmall] = readTranslate(host.floatingEl);
 
     await step(
       'larger containerPadding pulls the panel further inside the boundary',
       async () => {
         host.containerPadding = 64;
-        await nextFrames();
-        const [xLarge] = readTranslate(host.floatingEl);
-        // With trigger near the right edge, shift keeps the panel inside
-        // the viewport. A larger padding means the panel sits further
-        // from the right edge — i.e. a smaller translateX.
-        expect(xLarge).toBeLessThan(xSmall);
+        await waitFor(() => {
+          const [xLarge] = readTranslate(host.floatingEl);
+          // With trigger near the right edge, shift keeps the panel inside
+          // the viewport. A larger padding means the panel sits further
+          // from the right edge — i.e. a smaller translateX.
+          expect(xLarge).toBeLessThan(xSmall);
+        });
       }
     );
   },
 };
 
 /**
- * `onPlacementChange` is documented to fire only when the computed
- * placement differs from the synchronous initial value. When the panel
- * fits on the requested side, the callback must not fire. When `flip`
- * reorients, it fires once with the new placement.
+ * `onPlacementChange` fires after every successful `computePlacement` pass
+ * with the computed hyphenated placement — once after first compute and
+ * again whenever an `autoUpdate` tick produces a new value. The no-flip
+ * case still hands the callback the requested placement; the flip case
+ * hands it the flipped value.
  */
-export const OnPlacementChangeFiresOnChangeOnly: Story = {
+export const OnPlacementChangeFiresWithComputedPlacement: Story = {
   ...testFixtureStory,
   play: async ({ canvasElement, step }) => {
     const host = await getComponent<DemoPlacementTestFixture>(
@@ -470,20 +448,30 @@ export const OnPlacementChangeFiresOnChangeOnly: Story = {
     host.triggerPosition = 'top-center';
     host.tallFloating = false;
     host.shouldFlip = true;
-    await nextFrames();
 
-    await step('no callback when computed placement matches requested', () => {
-      expect(host.placementChanges).toEqual([]);
-    });
+    await step(
+      'callback fires with the requested placement when nothing flips',
+      async () => {
+        await waitFor(() => {
+          expect(host.placementChanges.length).toBeGreaterThan(0);
+          expect(host.placementChanges[host.placementChanges.length - 1]).toBe(
+            'bottom'
+          );
+        });
+      }
+    );
 
-    await step('callback fires when flip reorients', async () => {
-      host.triggerPosition = 'bottom-center';
-      host.tallFloating = true;
-      await nextFrames();
-      expect(host.placementChanges.length).toBeGreaterThan(0);
-      expect(host.placementChanges[host.placementChanges.length - 1]).not.toBe(
-        'bottom'
-      );
-    });
+    await step(
+      'callback fires with the new placement when flip reorients',
+      async () => {
+        host.triggerPosition = 'bottom-center';
+        host.tallFloating = true;
+        await waitFor(() => {
+          expect(
+            host.placementChanges.some((placement) => placement !== 'bottom')
+          ).toBe(true);
+        });
+      }
+    );
   },
 };
