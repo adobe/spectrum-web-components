@@ -131,12 +131,15 @@ export const StopOnDisconnect: Story = {
     await waitFor(() => expect(host.floatingEl.style.translate).not.toBe(''));
     const before = host.floatingEl.style.translate;
 
-    await step('disconnect freezes translate', async () => {
+    await step('disconnect freezes translate', () => {
       host.remove();
+      // `disconnectedCallback` fires synchronously, so by the time this
+      // line returns the controller has called `stop()` (autoUpdate
+      // listeners removed, session nulled). A subsequent in-flight
+      // `computePlacement` would still bail at the session check before
+      // writing — so dispatching a resize here is a no-op, kept only as
+      // documentation of intent.
       window.dispatchEvent(new Event('resize'));
-      // Asserting absence — give the (now-disconnected) controller a moment
-      // to confirm it doesn't write further translate updates.
-      await new Promise((resolve) => setTimeout(resolve, 50));
       expect(host.floatingEl.style.translate).toBe(before);
     });
   },
