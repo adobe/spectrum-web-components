@@ -487,3 +487,36 @@ export const OnPlacementChangeFiresWithComputedPlacement: Story = {
     );
   },
 };
+
+/**
+ * When a `tipElement` is passed in options, the controller installs
+ * `arrow` middleware and writes inline `translate` on the tip after every
+ * compute. The test asserts the tip ends up with a numeric translate
+ * value (not empty, not `NaN`), which only happens when the middleware
+ * actually ran.
+ */
+export const ArrowMiddlewarePositionsTip: Story = {
+  render: () => html`
+    <demo-placement-arrow></demo-placement-arrow>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const host = await getComponent<
+      HTMLElement & {
+        tipEl: HTMLElement;
+        floatingEl: HTMLElement;
+      }
+    >(canvasElement, 'demo-placement-arrow');
+
+    await waitFor(() => expect(host.floatingEl.style.translate).not.toBe(''));
+
+    await step('tip element receives a numeric translate', async () => {
+      // CSS `translate` may normalize `Xpx 0px` to just `Xpx` when read
+      // back, so accept either form: a single value or two values.
+      await waitFor(() =>
+        expect(host.tipEl.style.translate).toMatch(
+          /^(-?\d*\.?\d+)px(\s+(-?\d*\.?\d+)px)?$/
+        )
+      );
+    });
+  },
+};

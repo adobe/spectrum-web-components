@@ -160,6 +160,7 @@ export const Overview: Story = {
  * 2. **`shift`** — slides the floating element along the placement axis to keep it inside the boundary using `containerPadding` as inset. Always installed.
  * 3. **`flip`** (when `shouldFlip: true`) — reorients to the opposite side when there is not enough room, respecting `containerPadding`.
  * 4. **`size`** — always installed. Writes `max-width` on every compute and `max-height` when content overflows the available space. Read `isConstrained` to detect when clamping is active.
+ * 5. **`arrow`** (when a `tipElement` is provided) — positions a tip element so it stays pointing at the trigger's center as the floating panel shifts.
  *
  * ### What the caller owns
  *
@@ -375,6 +376,34 @@ export const VirtualTrigger: Story = {
   parameters: { 'section-order': 7 },
 };
 
+/**
+ * Pass a **`tipElement`** when the floating surface has a small visual "arrow"
+ * (a triangular tip, notch, or speech-bubble pointer) that should keep pointing
+ * at the trigger. The controller installs Floating UI's **`arrow`** middleware
+ * and writes an inline **`translate`** on the tip element after every compute,
+ * so the tip stays aligned with the trigger even when **`shift`** slides the
+ * floating panel sideways to avoid clipping.
+ *
+ * CSS positions the tip element against the relevant edge of the floating
+ * panel (typically with a negative offset for the half-size of the arrow);
+ * the controller only slides it along that edge. **`tipPadding`** keeps the
+ * tip from getting too close to the floating element's corners.
+ *
+ * ```typescript
+ * this.placement.start(this.trigger, this.panel, {
+ *   tipElement: this.tip,
+ *   tipPadding: 8,
+ * });
+ * ```
+ */
+export const Arrow: Story = {
+  tags: ['behaviors'],
+  render: () => html`
+    <demo-placement-arrow></demo-placement-arrow>
+  `,
+  parameters: { 'section-order': 8 },
+};
+
 // ──────────────────────────
 //    API STORY
 // ──────────────────────────
@@ -404,6 +433,8 @@ export const VirtualTrigger: Story = {
  * | `crossOffset` | `number` | `0` | Slide along the trigger edge (px), perpendicular to the placement direction. |
  * | `containerPadding` | `number` | `8` | Minimum inset from the overflow boundary used for collision detection. |
  * | `shouldFlip` | `boolean` | `true` | Whether `flip` may reorient when the requested placement does not fit. |
+ * | `tipElement` | `HTMLElement` | — | Tip ("arrow") element to keep pointing at the trigger. When set, the controller installs `arrow` middleware and writes an inline `translate` on this element. |
+ * | `tipPadding` | `number` | `8` | Minimum inset of the tip element from the floating element's corners. Only meaningful when `tipElement` is set. |
  * | `onPlacementChange` | `(placement: Placement) => void` | — | Fires after every successful compute with the resolved hyphenated placement. |
  *
  * ### Types

@@ -143,6 +143,27 @@ export interface PlacementOptions {
   shouldFlip?: boolean;
 
   /**
+   * Optional tip element ("arrow") that should point at the trigger from
+   * the floating element's edge. When provided, the controller installs
+   * Floating UI's `arrow` middleware and writes an inline `translate` on
+   * this element after every compute so it stays aligned with the trigger
+   * even when `shift` slides the floating panel sideways. CSS positions
+   * the tip relative to the floating element's edge (typically with a
+   * negative offset for the half-size of the arrow); the controller only
+   * moves it along that edge.
+   */
+  tipElement?: HTMLElement;
+
+  /**
+   * Minimum inset of the tip element from the floating element's
+   * corners, in pixels. Passed straight to the `arrow` middleware as
+   * its `padding`. Only meaningful when `tipElement` is provided.
+   *
+   * @default 8
+   */
+  tipPadding?: number;
+
+  /**
    * Called after every successful `computePlacement` pass with the
    * computed hyphenated placement. Fires once after first compute and on
    * every subsequent `autoUpdate` tick — even if the value is unchanged —

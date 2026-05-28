@@ -12,6 +12,7 @@
 
 import type { ReactiveController, ReactiveControllerHost } from 'lit';
 import {
+  arrow,
   autoUpdate,
   computePosition,
   flip,
@@ -37,6 +38,7 @@ const DEFAULT_OFFSET = 0;
 const DEFAULT_CROSS_OFFSET = 0;
 const DEFAULT_CONTAINER_PADDING = 8;
 const DEFAULT_SHOULD_FLIP = true;
+const DEFAULT_TIP_PADDING = 8;
 
 /**
  * Round a pixel value to the nearest device-pixel boundary so translated
@@ -220,15 +222,22 @@ export class PlacementController implements ReactiveController {
 
   /**
    * Stop positioning: tear down `autoUpdate`, clear `actualPlacement`,
-   * reset `isConstrained`, and remove the `max-height` / `max-width`
-   * inline styles the `size` middleware wrote. Safe to call multiple
-   * times.
+   * reset `isConstrained`, and remove inline styles the controller wrote
+   * (the `size` middleware's `max-height` / `max-width` on the floating
+   * element, plus the `arrow` middleware's `translate` / `top` / `left`
+   * on the tip element). Safe to call multiple times.
    */
   public stop(): void {
     const floating = this.session?.floating;
     if (floating) {
       floating.style.removeProperty('max-height');
       floating.style.removeProperty('max-width');
+    }
+    const tipElement = this.session?.options.tipElement;
+    if (tipElement) {
+      tipElement.style.removeProperty('translate');
+      tipElement.style.removeProperty('top');
+      tipElement.style.removeProperty('left');
     }
     this.cleanup?.();
     this.cleanup = undefined;
@@ -316,10 +325,15 @@ export class PlacementController implements ReactiveController {
             fallbackStrategy: 'bestFit',
           }));
 
-    // Middleware order matches 1st-gen: offset → shift → flip → size.
+    // Middleware order matches 1st-gen: offset → shift → flip → size → arrow.
     // `shift` runs before `flip` so the panel slides along the current
-    // side before any decision to flip; `size` runs last so it sees the
-    // final placement when clamping max-height / max-width.
+    // side before any decision to flip; `size` runs after the final
+    // placement is known so it clamps max-height / max-width accurately;
+    // `arrow` (when a tip element is provided) runs last so it positions
+    // the tip relative to the trigger after every other middleware has
+    // settled.
+    const tipElement = options.tipElement;
+    const tipPadding = options.tipPadding ?? DEFAULT_TIP_PADDING;
     const middleware = [
       offset({ mainAxis, crossAxis }),
       shift({ padding: containerPadding }),
@@ -346,13 +360,18 @@ export class PlacementController implements ReactiveController {
           });
         },
       }),
+      tipElement ? arrow({ element: tipElement, padding: tipPadding }) : null,
     ];
 
-    const { x, y, placement } = await computePosition(trigger, floating, {
-      placement: floatingPlacement,
-      middleware,
-      strategy: 'fixed',
-    });
+    const { x, y, placement, middlewareData } = await computePosition(
+      trigger,
+      floating,
+      {
+        placement: floatingPlacement,
+        middleware,
+        strategy: 'fixed',
+      }
+    );
     if (this.session !== session) {
       return;
     }
@@ -370,6 +389,26 @@ export class PlacementController implements ReactiveController {
       left: '0px',
       translate: `${roundByDPR(translateX)}px ${roundByDPR(translateY)}px`,
     });
+
+    // Position the tip element (1st-gen pattern). Floating UI exposes
+    // either `arrow.x` (top/bottom placements — arrow on a horizontal
+    // edge) or `arrow.y` (left/right placements — arrow on a vertical
+    // edge). Reset whichever inline offset would conflict with the
+    // edge we're on, then write the computed translate.
+    if (tipElement && middlewareData.arrow) {
+      const { x: arrowX, y: arrowY } = middlewareData.arrow;
+      Object.assign(tipElement.style, {
+        top:
+          placement.startsWith('right') || placement.startsWith('left')
+            ? '0px'
+            : '',
+        left:
+          placement.startsWith('bottom') || placement.startsWith('top')
+            ? '0px'
+            : '',
+        translate: `${roundByDPR(arrowX ?? 0)}px ${roundByDPR(arrowY ?? 0)}px`,
+      });
+    }
 
     const nextPlacement = fromFloatingPlacement(placement);
     this.actualPlacement = nextPlacement;

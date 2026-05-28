@@ -36,6 +36,7 @@ declare global {
     'demo-placement-placements': DemoPlacementPlacements;
     'demo-placement-cell': DemoPlacementCell;
     'demo-placement-test-fixture': DemoPlacementTestFixture;
+    'demo-placement-arrow': DemoPlacementArrow;
   }
 }
 
@@ -1226,6 +1227,137 @@ export class DemoPlacementTestFixture extends LitElement {
         </button>
         <div class=${classMap({ floating: true, tall: this.tallFloating })}>
           ${this.placement}
+        </div>
+      </div>
+    `;
+  }
+}
+
+@customElement('demo-placement-arrow')
+export class DemoPlacementArrow extends LitElement {
+  static override styles = [
+    sharedStyles,
+    css`
+      .demo {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 16px;
+      }
+
+      .surface {
+        display: grid;
+        place-items: center;
+        block-size: 180px;
+      }
+
+      button.trigger {
+        inline-size: 48px;
+        block-size: 48px;
+      }
+
+      .floating {
+        inline-size: 200px;
+        block-size: auto;
+        padding: 12px 14px;
+        border-radius: 6px;
+      }
+
+      .tip {
+        position: absolute;
+        width: 12px;
+        height: 12px;
+        rotate: 45deg;
+        background: Canvas;
+        border-top: 1px solid currentcolor;
+        border-left: 1px solid currentcolor;
+        pointer-events: none;
+      }
+
+      /* CSS pins the tip to the relevant edge of the floating panel based
+         on the computed placement; the controller then writes inline
+         translate to slide it along that edge so it points at the
+         trigger's center. */
+      :host([actual-placement^='bottom']) .tip {
+        inset-block-start: -7px;
+      }
+
+      :host([actual-placement^='top']) .tip {
+        inset-block-end: -7px;
+        rotate: 225deg;
+      }
+
+      :host([actual-placement^='right']),
+      :host([actual-placement^='end']) {
+      }
+
+      :host([actual-placement^='right']) .tip,
+      :host([actual-placement^='end']) .tip {
+        inset-inline-start: -7px;
+        rotate: -45deg;
+      }
+
+      :host([actual-placement^='left']) .tip,
+      :host([actual-placement^='start']) .tip {
+        inset-inline-end: -7px;
+        rotate: 135deg;
+      }
+    `,
+  ];
+
+  @property({ type: String, reflect: true })
+  placement: Placement = 'bottom';
+
+  @property({ type: String, attribute: 'actual-placement', reflect: true })
+  actualPlacement: Placement | null = null;
+
+  @query('button.trigger') triggerEl!: HTMLButtonElement;
+
+  @query('.floating') floatingEl!: HTMLDivElement;
+
+  @query('.tip') tipEl!: HTMLDivElement;
+
+  private controller = new PlacementController(this);
+
+  protected override firstUpdated(): void {
+    this.controller.start(this.triggerEl, this.floatingEl, {
+      placement: this.placement,
+      offset: 10,
+      tipElement: this.tipEl,
+      tipPadding: 8,
+      onPlacementChange: (next) => {
+        this.actualPlacement = next;
+      },
+    });
+  }
+
+  override disconnectedCallback(): void {
+    super.disconnectedCallback?.();
+    this.controller.stop();
+  }
+
+  protected override render(): TemplateResult {
+    return html`
+      <div class="demo">
+        <p class=${classMap(demoClasses(FIELD_HINT))}>
+          The triangular tip is positioned by Floating UI's
+          <strong>arrow</strong>
+          middleware so it always points at the trigger's center — even when the
+          panel is shifted to stay inside the viewport.
+        </p>
+        <div class="surface">
+          <button
+            type="button"
+            class=${classMap(demoClasses({ trigger: true }, DETAIL_XS))}
+          >
+            Trigger
+          </button>
+        </div>
+        <div class="floating">
+          <div class="tip" aria-hidden="true"></div>
+          <span class=${classMap(demoClasses(BODY_XS_EMPHASIZED))}>
+            placement: ${this.actualPlacement ?? this.placement}
+          </span>
         </div>
       </div>
     `;
