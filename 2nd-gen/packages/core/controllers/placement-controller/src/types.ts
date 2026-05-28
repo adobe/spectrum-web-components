@@ -143,15 +143,6 @@ export interface PlacementOptions {
   shouldFlip?: boolean;
 
   /**
-   * When `true`, applies Floating UI's `size` middleware so long content
-   * scrolls inside the viewport. Opt-in — consumers that need it (list
-   * surfaces such as menus, pickers, comboboxes) enable it explicitly.
-   *
-   * @default false
-   */
-  constrainSize?: boolean;
-
-  /**
    * Called after every successful `computePlacement` pass with the
    * computed hyphenated placement. Fires once after first compute and on
    * every subsequent `autoUpdate` tick — even if the value is unchanged —

@@ -18,13 +18,11 @@ import '../stories/demo-hosts.js';
 import { getComponent } from '../../../../swc/utils/test-utils.js';
 import { fromFloatingPlacement, toFloatingPlacement } from '../index.js';
 import type {
-  DemoPlacementConstrainSize,
   DemoPlacementPlayground,
   DemoPlacementTestFixture,
   DemoPlacementVirtualTrigger,
 } from '../stories/demo-hosts.js';
 import meta, {
-  ConstrainSize,
   Playground,
   VirtualTrigger,
 } from '../stories/placement-controller.stories.js';
@@ -239,27 +237,38 @@ export const LogicalSidePlacementsCompute: Story = {
 };
 
 /**
- * `constrainSize: true` installs Floating UI's `size` middleware, which
- * writes `max-height` and `max-width` on the floating element.
+ * `size` middleware is always installed. It writes `max-width` on every
+ * compute, and `max-height` only when the floating content would otherwise
+ * overflow the available space.
+ *
+ * To assert max-height deterministically we set up the test fixture with a
+ * 600 px tall floating element and pin the trigger to the bottom of the
+ * viewport with `shouldFlip: false` — the panel can't fit below, so size
+ * clamps `max-height` and `isConstrained` flips on.
  */
-export const ConstrainSizeAppliesMaxHeight: Story = {
-  ...ConstrainSize,
+export const SizeMiddlewareWritesMaxDimensions: Story = {
+  ...testFixtureStory,
   play: async ({ canvasElement, step }) => {
-    const host = await getComponent<DemoPlacementConstrainSize>(
+    const host = await getComponent<DemoPlacementTestFixture>(
       canvasElement,
-      'demo-placement-constrain-size'
+      'demo-placement-test-fixture'
     );
-    await waitFor(() =>
-      expect(host.floatingEl.style.maxHeight).toMatch(/^\d+px$/)
-    );
+    host.triggerPosition = 'bottom-center';
+    host.tallFloating = true;
+    host.shouldFlip = false;
 
-    await step(
-      'floating element receives numeric max-height and max-width',
-      () => {
-        expect(host.floatingEl.style.maxHeight).toMatch(/^\d+px$/);
-        expect(host.floatingEl.style.maxWidth).toMatch(/^\d+px$/);
-      }
-    );
+    await waitFor(() => {
+      expect(host.floatingEl.style.maxWidth).toMatch(/^\d+px$/);
+      expect(host.floatingEl.style.maxHeight).toMatch(/^\d+px$/);
+    });
+
+    await step('max-width is set on every compute', () => {
+      expect(host.floatingEl.style.maxWidth).toMatch(/^\d+px$/);
+    });
+
+    await step('max-height is set when content overflows', () => {
+      expect(host.floatingEl.style.maxHeight).toMatch(/^\d+px$/);
+    });
   },
 };
 

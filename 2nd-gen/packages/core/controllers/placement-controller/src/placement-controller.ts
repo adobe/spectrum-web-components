@@ -27,7 +27,7 @@ import {
 } from './placement-conversion.js';
 import type { Placement, PlacementOptions, VirtualTrigger } from './types.js';
 
-/** Minimum height for the floating content when `constrainSize` is enabled. */
+/** Minimum height the `size` middleware will allow the floating content to clamp to. */
 const MIN_FLOATING_HEIGHT = 100;
 
 const DEFAULT_PLACEMENT: Placement = 'bottom';
@@ -90,8 +90,6 @@ type ActiveSession = {
  * this.placement.start(this.trigger, this.dialog, {
  *   placement: 'bottom-start',
  *   offset: 0,
- *   crossOffset: 0,
- *   shouldFlip: true,
  *   onPlacementChange: (p) => {
  *     this.actualPlacement = p;
  *   },
@@ -115,10 +113,19 @@ export class PlacementController implements ReactiveController {
   public actualPlacement: Placement | null = null;
 
   /**
-   * Whether `PlacementOptions.constrainSize` clamped the floating
-   * element's height on the last compute.
+   * Whether the `size` middleware clamped the floating element's height
+   * on the last compute. `true` when the content would otherwise overflow
+   * the available space below/above the trigger, in which case the
+   * controller writes a `max-height` style on the floating element.
    */
   public isConstrained = false;
+
+  /**
+   * Natural floating-element height from the first un-constrained compute,
+   * used as the baseline that determines whether subsequent computes are
+   * clamping content. Cleared on `stop()`.
+   */
+  private initialHeight?: number;
 
   /**
    * Registers this controller on `host` via `addController`.
@@ -213,14 +220,22 @@ export class PlacementController implements ReactiveController {
 
   /**
    * Stop positioning: tear down `autoUpdate`, clear `actualPlacement`,
-   * and reset `isConstrained`. Safe to call multiple times.
+   * reset `isConstrained`, and remove the `max-height` / `max-width`
+   * inline styles the `size` middleware wrote. Safe to call multiple
+   * times.
    */
   public stop(): void {
+    const floating = this.session?.floating;
+    if (floating) {
+      floating.style.removeProperty('max-height');
+      floating.style.removeProperty('max-width');
+    }
     this.cleanup?.();
     this.cleanup = undefined;
     this.session = null;
     this.actualPlacement = null;
     this.isConstrained = false;
+    this.initialHeight = undefined;
   }
 
   /**
@@ -301,31 +316,36 @@ export class PlacementController implements ReactiveController {
             fallbackStrategy: 'bestFit',
           }));
 
+    // Middleware order matches 1st-gen: offset → shift → flip → size.
+    // `shift` runs before `flip` so the panel slides along the current
+    // side before any decision to flip; `size` runs last so it sees the
+    // final placement when clamping max-height / max-width.
     const middleware = [
       offset({ mainAxis, crossAxis }),
-      ...(flipMiddleware ? [flipMiddleware] : []),
       shift({ padding: containerPadding }),
-      ...(options.constrainSize
-        ? [
-            size({
-              padding: containerPadding,
-              apply: ({ availableHeight, availableWidth, rects }) => {
-                const maxHeight = Math.max(
-                  MIN_FLOATING_HEIGHT,
-                  Math.floor(availableHeight)
-                );
-                const actualHeight = rects.floating.height;
-                this.isConstrained =
-                  actualHeight >= maxHeight ||
-                  Math.floor(availableHeight) <= MIN_FLOATING_HEIGHT;
-                Object.assign(floating.style, {
-                  maxHeight: `${maxHeight}px`,
-                  maxWidth: `${Math.floor(availableWidth)}px`,
-                });
-              },
-            }),
-          ]
-        : []),
+      flipMiddleware,
+      size({
+        padding: containerPadding,
+        apply: ({ availableHeight, availableWidth, rects }) => {
+          const maxHeight = Math.max(
+            MIN_FLOATING_HEIGHT,
+            Math.floor(availableHeight)
+          );
+          const actualHeight = rects.floating.height;
+          // Track the natural (un-constrained) height on the first compute
+          // so subsequent computes can detect whether content is currently
+          // being clamped.
+          this.initialHeight = !this.isConstrained
+            ? actualHeight
+            : (this.initialHeight ?? actualHeight);
+          this.isConstrained =
+            actualHeight < this.initialHeight || maxHeight <= actualHeight;
+          Object.assign(floating.style, {
+            maxWidth: `${Math.floor(availableWidth)}px`,
+            maxHeight: this.isConstrained ? `${maxHeight}px` : '',
+          });
+        },
+      }),
     ];
 
     const { x, y, placement } = await computePosition(trigger, floating, {

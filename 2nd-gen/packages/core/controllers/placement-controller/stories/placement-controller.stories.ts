@@ -29,7 +29,6 @@ const args = {
   crossOffset: 0,
   containerPadding: 8,
   shouldFlip: true,
-  constrainSize: false,
 };
 
 const argTypes = {
@@ -84,16 +83,6 @@ const argTypes = {
       defaultValue: { summary: 'true' },
     },
   },
-  constrainSize: {
-    control: 'boolean',
-    description:
-      'When `true`, sets `maxHeight` / `maxWidth` on the floating element so long content scrolls inside the viewport.',
-    table: {
-      category: 'Options',
-      type: { summary: 'boolean' },
-      defaultValue: { summary: 'false' },
-    },
-  },
 } satisfies Meta['argTypes'];
 
 /**
@@ -115,7 +104,6 @@ const meta: Meta = {
       cross-offset=${a.crossOffset}
       container-padding=${a.containerPadding}
       ?should-flip=${a.shouldFlip}
-      ?constrain-size=${a.constrainSize}
     ></demo-placement-playground>
   `,
   parameters: {
@@ -166,10 +154,12 @@ export const Overview: Story = {
  *
  * ### Middleware stack
  *
+ * Same order as 1st-gen: `offset → shift → flip → size`.
+ *
  * 1. **`offset`** — trigger-relative gap along the placement direction (`offset` option) and along the trigger edge (`crossOffset` option).
- * 2. **`flip`** (when `shouldFlip: true`) — reorients when there is not enough room, respecting `containerPadding` inset from the overflow boundary.
- * 3. **`shift`** — **always installed**; slides the floating element along the placement axis to keep it inside the boundary using `containerPadding` as inset. There's no opt-out — disabling it would let the panel clip off the viewport edge.
- * 4. **`size`** (when `constrainSize: true`) — clamps `maxHeight` / `maxWidth` for scrollable lists.
+ * 2. **`shift`** — slides the floating element along the placement axis to keep it inside the boundary using `containerPadding` as inset. Always installed.
+ * 3. **`flip`** (when `shouldFlip: true`) — reorients to the opposite side when there is not enough room, respecting `containerPadding`.
+ * 4. **`size`** — always installed. Writes `max-width` on every compute and `max-height` when content overflows the available space. Read `isConstrained` to detect when clamping is active.
  *
  * ### What the caller owns
  *
@@ -317,20 +307,15 @@ export const ShouldFlip: Story = {
 };
 
 /**
- * With **`constrainSize: true`**, Floating UI **`size`** middleware sets inline
- * **`maxHeight`** and **`maxWidth`** on the floating element so long content scrolls
- * inside the viewport instead of overflowing off-screen. Readonly **`isConstrained`** is
- * `true` when height was clamped on the last compute.
+ * Floating UI's **`size`** middleware is always installed. On every compute it writes
+ * **`max-width`** on the floating element and writes **`max-height`** when the natural
+ * content would otherwise overflow the available space below or above the trigger. The
+ * readonly **`isConstrained`** property is `true` while `max-height` is being applied,
+ * so consumers can react to "content is currently clamped" — e.g. show a scrollbar hint.
  *
- * Opt-in — leave disabled when content is guaranteed to fit.
- *
- * ```typescript
- * this.placement.start(this.trigger, this.listbox, {
- *   constrainSize: true,
- * });
- * ```
+ * No option to opt out. Matches 1st-gen behaviour.
  */
-export const ConstrainSize: Story = {
+export const SizeAlwaysClamps: Story = {
   tags: ['behaviors'],
   render: () => html`
     <demo-placement-constrain-size></demo-placement-constrain-size>
@@ -408,7 +393,7 @@ export const VirtualTrigger: Story = {
  * | Property | Type | Description |
  * |---|---|---|
  * | `actualPlacement` | `Placement \| null` | Computed placement after `flip` (hyphenated). `null` when stopped. |
- * | `isConstrained` | `boolean` | Whether `constrainSize` clamped height on the last compute. |
+ * | `isConstrained` | `boolean` | `true` while `size` middleware is applying `max-height` because content would otherwise overflow. |
  *
  * ### Options
  *
@@ -419,7 +404,6 @@ export const VirtualTrigger: Story = {
  * | `crossOffset` | `number` | `0` | Slide along the trigger edge (px), perpendicular to the placement direction. |
  * | `containerPadding` | `number` | `8` | Minimum inset from the overflow boundary used for collision detection. |
  * | `shouldFlip` | `boolean` | `true` | Whether `flip` may reorient when the requested placement does not fit. |
- * | `constrainSize` | `boolean` | `false` | When `true`, applies `size` middleware (max-height/max-width). |
  * | `onPlacementChange` | `(placement: Placement) => void` | — | Fires after every successful compute with the resolved hyphenated placement. |
  *
  * ### Types
@@ -487,9 +471,10 @@ export const Accessibility: Story = {
  *
  * The 2nd-gen controller is a **focused subset** of the 1st-gen
  * `PlacementController`: single `autoUpdate` channel, hyphenated placements,
- * callback-based placement surfacing, and opt-in `constrainSize`. It owns
- * geometry only — open/close lifecycle, ARIA, focus, and dismissal remain
- * the caller's responsibility.
+ * and callback-based placement surfacing. The middleware stack and the
+ * always-on `size` clamp behaviour match 1st-gen. It owns geometry only —
+ * open/close lifecycle, ARIA, focus, and dismissal remain the caller's
+ * responsibility.
  *
  * ### See also
  *

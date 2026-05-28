@@ -84,7 +84,6 @@ const PLAYGROUND_DEFAULTS = {
   crossOffset: 0,
   containerPadding: 8,
   shouldFlip: true,
-  constrainSize: false,
 };
 
 /** Spectrum typography utility classes (requires `typography.css` in Storybook). */
@@ -249,9 +248,6 @@ export class DemoPlacementPlayground extends LitElement {
   @property({ type: Boolean, attribute: 'should-flip', reflect: true })
   shouldFlip = PLAYGROUND_DEFAULTS.shouldFlip;
 
-  @property({ type: Boolean, attribute: 'constrain-size', reflect: true })
-  constrainSize = PLAYGROUND_DEFAULTS.constrainSize;
-
   @property({ type: String, attribute: 'actual-placement', reflect: true })
   actualPlacement: Placement | null = null;
 
@@ -270,8 +266,7 @@ export class DemoPlacementPlayground extends LitElement {
       changed.has('offset') ||
       changed.has('crossOffset') ||
       changed.has('containerPadding') ||
-      changed.has('shouldFlip') ||
-      changed.has('constrainSize')
+      changed.has('shouldFlip')
     ) {
       this.bind();
     }
@@ -296,7 +291,6 @@ export class DemoPlacementPlayground extends LitElement {
         crossOffset: this.crossOffset,
         containerPadding: this.containerPadding,
         shouldFlip: this.shouldFlip,
-        constrainSize: this.constrainSize,
       },
       (next) => {
         this.actualPlacement = next;
@@ -781,15 +775,9 @@ export class DemoPlacementConstrainSize extends LitElement {
   private controller = new PlacementController(this);
 
   protected override firstUpdated(): void {
-    bindController(
-      this.controller,
-      this.triggerEl,
-      this.floatingEl,
-      { constrainSize: true },
-      () => {
-        this.isConstrained = this.controller.isConstrained;
-      }
-    );
+    bindController(this.controller, this.triggerEl, this.floatingEl, {}, () => {
+      this.isConstrained = this.controller.isConstrained;
+    });
   }
 
   override disconnectedCallback(): void {
