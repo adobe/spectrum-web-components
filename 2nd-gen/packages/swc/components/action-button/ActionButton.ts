@@ -10,7 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
-import { CSSResultArray, html, PropertyValues, TemplateResult } from 'lit';
+import { CSSResultArray, html, TemplateResult } from 'lit';
 import { property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
@@ -26,6 +26,8 @@ import styles from './action-button.css';
 
 /**
  * A compact action button for toolbars, action groups, and icon-first chrome.
+ * Supports sizes `xs`–`xl`; `xs` is an action-button-specific addition not
+ * available on `swc-button`.
  *
  * @element swc-action-button
  * @since 0.0.1
@@ -51,68 +53,35 @@ export class ActionButton extends ButtonBase {
   static override readonly VALID_SIZES: readonly ActionButtonSize[] =
     ACTION_BUTTON_VALID_SIZES;
 
-  /**
-   * Size of the button. Supports the full `xs`–`xl` range; `xs` is an
-   * action-button-specific addition not available on `swc-button`.
-   */
-  @property({ type: String })
-  public override get size(): ActionButtonSize {
-    return this._size ?? 'm';
-  }
-
-  public override set size(value: ActionButtonSize) {
-    if (!value) {
-      if (this._size !== null) {
-        const oldSize = this._size;
-        this._size = null;
-        this.removeAttribute('size');
-        this.requestUpdate('size', oldSize);
-      }
-      return;
-    }
-    const normalized = (
-      value as string
-    ).toLocaleLowerCase() as ActionButtonSize;
-    const validSize: ActionButtonSize = ACTION_BUTTON_VALID_SIZES.includes(
-      normalized
-    )
-      ? normalized
-      : 'm';
-    const oldSize = this._size ?? 'm';
-    if (oldSize === validSize) {
-      return;
-    }
-    this._size = validSize;
-    this.setAttribute('size', validSize);
-    this.requestUpdate('size', oldSize);
-  }
-
-  private _size: ActionButtonSize | null = null;
-
   // ───────────────────
   //     API ADDITIONS
   // ───────────────────
 
-  /**
-   * Applies the quiet (low-emphasis) visual treatment. The button renders
-   * without a visible background or border at rest, making it suitable for
-   * toolbars and chrome where visual weight should be minimal.
-   */
+  /** Applies the quiet (low-emphasis) visual treatment. */
   @property({ type: Boolean, reflect: true })
   public quiet: boolean = false;
 
-  /**
-   * Static color treatment for display over colored or image backgrounds.
-   * Supported with both the default and `quiet` visual treatments.
-   */
+  /** Static color treatment for display over colored or image backgrounds. */
   @property({ type: String, reflect: true, attribute: 'static-color' })
   public staticColor?: ActionButtonStaticColor;
 
-  /** @internal Forwarded to the inner `<button>` for menu-trigger patterns. */
+  /**
+   * @internal
+   * Forwarded to the inner `<button>` for menu-trigger patterns. After the
+   * attribute is read, it is stripped from the host so assistive technologies
+   * in browse mode do not encounter duplicate ARIA state on both the host
+   * element and the inner button.
+   */
   @property({ type: String, attribute: 'aria-haspopup' })
   protected ariaHasPopup?: string;
 
-  /** @internal Forwarded to the inner `<button>` for menu-trigger patterns. */
+  /**
+   * @internal
+   * Forwarded to the inner `<button>` for menu-trigger patterns. After the
+   * attribute is read, it is stripped from the host so assistive technologies
+   * in browse mode do not encounter duplicate ARIA state on both the host
+   * element and the inner button.
+   */
   @property({ type: String, attribute: 'aria-expanded' })
   protected ariaExpanded?: string;
 
@@ -124,11 +93,27 @@ export class ActionButton extends ButtonBase {
     return [styles];
   }
 
-  protected override update(changes: PropertyValues): void {
-    super.update(changes);
-    // Counteracts SizedMixin's auto-reflect of size="m" when no size was explicitly set.
-    if (this._size === null) {
-      this.removeAttribute('size');
+  // Guard against re-entrant attributeChangedCallback during ARIA passthrough:
+  // removeAttribute fires a second callback with value=null; skipping super
+  // there prevents Lit from clearing the property we just read.
+  private _ariaForwardingInProgress = false;
+
+  /** @internal */
+  override attributeChangedCallback(
+    name: string,
+    old: string | null,
+    value: string | null
+  ): void {
+    const isAriaPassthrough =
+      name === 'aria-haspopup' || name === 'aria-expanded';
+    if (isAriaPassthrough && this._ariaForwardingInProgress) {
+      return;
+    }
+    super.attributeChangedCallback(name, old, value);
+    if (isAriaPassthrough && value !== null) {
+      this._ariaForwardingInProgress = true;
+      this.removeAttribute(name);
+      this._ariaForwardingInProgress = false;
     }
   }
 
