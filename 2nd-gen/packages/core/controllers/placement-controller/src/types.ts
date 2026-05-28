@@ -68,20 +68,6 @@ export interface VirtualTrigger {
 }
 
 // ─────────────────────────
-//     HOST CONFIG
-// ─────────────────────────
-
-/**
- * Host-level configuration passed once to the `PlacementController`
- * constructor. Reserved for forward compatibility — currently has no
- * required fields.
- */
-export interface PlacementHostConfig {
-  /** Reserved for future use. */
-  readonly _reserved?: never;
-}
-
-// ─────────────────────────
 //     OPTIONS
 // ─────────────────────────
 
@@ -166,8 +152,12 @@ export interface PlacementOptions {
   constrainSize?: boolean;
 
   /**
-   * Called whenever the computed placement changes. Receives the hyphenated
-   * placement value.
+   * Called after every successful `computePlacement` pass with the
+   * computed hyphenated placement. Fires once after first compute and on
+   * every subsequent `autoUpdate` tick — even if the value is unchanged —
+   * so callers can mirror `actualPlacement` in a single callback. If you
+   * only care about transitions, compare the incoming value against the
+   * previous one in the handler.
    */
   onPlacementChange?: (placement: Placement) => void;
 }

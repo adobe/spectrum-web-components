@@ -31,7 +31,6 @@ export {
   PlacementController,
   toFloatingPlacement,
   type Placement,
-  type PlacementHostConfig,
   type PlacementOptions,
   type VirtualTrigger,
 } from './placement-controller/index.js';

@@ -25,12 +25,7 @@ import {
   fromFloatingPlacement,
   toFloatingPlacement,
 } from './placement-conversion.js';
-import type {
-  Placement,
-  PlacementHostConfig,
-  PlacementOptions,
-  VirtualTrigger,
-} from './types.js';
+import type { Placement, PlacementOptions, VirtualTrigger } from './types.js';
 
 /** Minimum height for the floating content when `constrainSize` is enabled. */
 const MIN_FLOATING_HEIGHT = 100;
@@ -112,12 +107,10 @@ export class PlacementController implements ReactiveController {
    * `stop` has been called.
    *
    * Set synchronously to the requested `PlacementOptions.placement`
-   * (or `DEFAULT_PLACEMENT`) when `start` is called, then
-   * updated to the value returned by `computePosition` once measurement
-   * resolves. `PlacementOptions.onPlacementChange` fires only when the
-   * computed value differs from the synchronous initial value — consumers
-   * that need a "first compute resolved" signal should read this property
-   * after their own open transition completes.
+   * (or `DEFAULT_PLACEMENT`) when `start` is called, then refreshed on every
+   * successful `computePlacement` pass. `PlacementOptions.onPlacementChange`
+   * fires alongside each refresh, so consumers can mirror this property in
+   * a single callback without also reading it synchronously after `start()`.
    */
   public actualPlacement: Placement | null = null;
 
@@ -128,22 +121,11 @@ export class PlacementController implements ReactiveController {
   public isConstrained = false;
 
   /**
-   * Reserved configuration object. Currently unused; declared for forward
-   * compatibility so consuming components can pass host-level integration
-   * hooks (e.g. a tip-element resolver for future `arrow` middleware
-   * integration) without a constructor signature change.
-   */
-  private readonly config: PlacementHostConfig;
-
-  /**
    * Registers this controller on `host` via `addController`.
    *
    * @param host - Reactive element that owns the floating surface lifecycle.
-   * @param config - Optional host configuration. Reserved for forward
-   *   compatibility (currently has no required fields).
    */
-  constructor(host: ReactiveControllerHost, config: PlacementHostConfig = {}) {
-    this.config = config;
+  constructor(host: ReactiveControllerHost) {
     host.addController(this);
   }
 
@@ -370,19 +352,12 @@ export class PlacementController implements ReactiveController {
     });
 
     const nextPlacement = fromFloatingPlacement(placement);
-    if (nextPlacement !== this.actualPlacement) {
-      this.actualPlacement = nextPlacement;
-      options.onPlacementChange?.(nextPlacement);
-    }
+    this.actualPlacement = nextPlacement;
+    options.onPlacementChange?.(nextPlacement);
   }
 }
 
-export type {
-  Placement,
-  PlacementHostConfig,
-  PlacementOptions,
-  VirtualTrigger,
-} from './types.js';
+export type { Placement, PlacementOptions, VirtualTrigger } from './types.js';
 export { ALL_PLACEMENTS } from './types.js';
 export {
   fromFloatingPlacement,

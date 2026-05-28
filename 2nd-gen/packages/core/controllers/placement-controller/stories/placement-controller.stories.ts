@@ -339,10 +339,15 @@ export const ConstrainSize: Story = {
 };
 
 /**
- * Use **`onPlacementChange`** when styling or host state must track the **computed** placement
- * after middleware runs — on first open and whenever **`flip`** reorients after scroll or
- * resize. The callback receives the same hyphenated value as **`actualPlacement`**; the
- * controller does **not** write placement classes or attributes on the floating element.
+ * Use **`onPlacementChange`** when styling or host state must track the **computed**
+ * placement after middleware runs. The callback fires once after first compute and again
+ * on every subsequent `autoUpdate` tick — even when the value is unchanged — so a single
+ * handler is enough to mirror **`actualPlacement`** into your component's state. If you
+ * only care about transitions, compare the incoming value against the previous one in
+ * the handler.
+ *
+ * The callback receives the same hyphenated value as **`actualPlacement`**; the controller
+ * does **not** write placement classes or attributes on the floating element.
  *
  * ```typescript
  * this.placement.start(this.trigger, this.panel, {
@@ -415,7 +420,7 @@ export const VirtualTrigger: Story = {
  * | `containerPadding` | `number` | `8` | Minimum inset from the overflow boundary used for collision detection. |
  * | `shouldFlip` | `boolean` | `true` | Whether `flip` may reorient when the requested placement does not fit. |
  * | `constrainSize` | `boolean` | `false` | When `true`, applies `size` middleware (max-height/max-width). |
- * | `onPlacementChange` | `(placement: Placement) => void` | — | Called when the computed placement changes. |
+ * | `onPlacementChange` | `(placement: Placement) => void` | — | Fires after every successful compute with the resolved hyphenated placement. |
  *
  * ### Types
  *
