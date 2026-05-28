@@ -62,10 +62,21 @@ argTypes.level = {
 };
 
 const content = {
-  personal: html`<p>Manage your name, email address, and contact details.</p>`,
-  billing: html`<p>Your billing address is used to verify your payment method and calculate taxes.</p>`,
-  shipping: html`<p>Physical products and documents are sent to this address.</p>`,
-  payment: html`<p>Contact your administrator to update payment information.</p>`,
+  personal: html`
+    <p>Manage your name, email address, and contact details.</p>
+  `,
+  billing: html`
+    <p>
+      Your billing address is used to verify your payment method and calculate
+      taxes.
+    </p>
+  `,
+  shipping: html`
+    <p>Physical products and documents are sent to this address.</p>
+  `,
+  payment: html`
+    <p>Contact your administrator to update payment information.</p>
+  `,
 };
 
 const defaultItems = html`
@@ -377,11 +388,9 @@ const directActionsItems = html`
 
 /**
  * Place interactive controls in the **`actions` slot** to render them inline
- * with the heading, outside the toggle button. This keeps them independently
- * clickable without expanding or collapsing the item.
- *
- * The component automatically stops click and keydown propagation from the
- * actions container so action buttons never accidentally trigger the toggle.
+ * with the heading, outside the toggle button. Because the actions are siblings
+ * of the toggle button rather than children of it, interacting with them does
+ * not expand or collapse the item.
  */
 export const DirectActions: Story = {
   render: (args) => template(args, directActionsItems),
@@ -484,7 +493,7 @@ const a11yItems = html`
  *    header button, making it a labeled landmark
  * 5. **`aria-disabled`**: Set on the header button (not the native `disabled` attribute)
  *    so disabled items remain keyboard-reachable
- * 6. **`hidden`**: Added to closed panels to remove them from the accessibility tree
+ * 6. **`aria-hidden`**: Set to `"true"` on closed panels to remove them from the accessibility tree
  * 7. **`inert`**: Added to disabled-item panels to block interaction with their contents
  *
  * ### Best practices
