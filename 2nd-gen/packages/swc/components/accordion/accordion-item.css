@@ -43,7 +43,7 @@
 
 /* ── Heading reset (h2–h6 wrapping the button) ──────────────────────── */
 
-:is(h2, h3, h4, h5, h6) {
+.swc-AccordionItem-heading {
   flex: 1 1 auto;
   min-inline-size: 0;
   padding: 0;
@@ -206,11 +206,10 @@
   color: token("neutral-subdued-content-color-default");
 }
 
-/* Zero out default browser paragraph margins at the panel edges.
-   :first-child cannot be used here — named-slot siblings (span[slot="label"],
-   etc.) precede the default-slot content in the light DOM, so the first <p>
-   is never :first-child. :first-of-type finds it by element type instead. */
-.swc-AccordionItem-contentBody ::slotted(p:first-of-type) {
+/* Zero out default browser margins at the panel edges. :nth-child(1 of :not([slot]))
+   skips named-slot siblings (span[slot="label"], etc.) and targets the first
+   default-slot child regardless of element type. */
+.swc-AccordionItem-contentBody ::slotted(:nth-child(1 of :not([slot]))) {
   margin-block-start: 0;
 }
 
