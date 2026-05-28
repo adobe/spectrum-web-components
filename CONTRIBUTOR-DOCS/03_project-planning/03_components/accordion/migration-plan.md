@@ -386,7 +386,7 @@ Gates align with [01_washing-machine-workflow.md](../../02_workstreams/02_2nd-ge
 
 - [x] JSDoc, usage docs, Storybook stories (**no** `noInlinePadding`-style attribute)
 - [ ] Storybook story and `@cssprop` docs for no-inline-padding parity via `--swc-accordion-item-edge-to-content-area`
-- [ ] Document remaining exposed `--swc-accordion-item-*` custom properties in `@cssprop` (Storybook API panel)
+- [x] Document remaining exposed `--swc-accordion-item-*` custom properties in `@cssprop` (Storybook API panel)
 - [x] Do not document arrow-key navigation between headers for 2nd-gen (contrast with legacy README)
 
 ### Review
