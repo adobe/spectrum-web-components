@@ -26,11 +26,11 @@
   --_swc-accordion-item-header-text-color: token("neutral-content-color-default");
 
   inline-size: 100%;
-  border-block-end: token("border-width-100") solid var(--swc-accordion-item-divider-color, var(--_swc-accordion-item-border-color, token("gray-200")));
+  border-block-end: token("border-width-100") solid var(--swc-accordion-item-divider-color, var(--swc-accordion-item-border-color, token("gray-200")));
 }
 
 :host(:first-child) .swc-AccordionItem {
-  border-block-start: token("border-width-100") solid var(--swc-accordion-item-divider-color, var(--_swc-accordion-item-border-color, token("gray-200")));
+  border-block-start: token("border-width-100") solid var(--swc-accordion-item-divider-color, var(--swc-accordion-item-border-color, token("gray-200")));
 }
 
 /* ── Header row (heading + actions) ─────────────────────────────────── */
@@ -74,7 +74,7 @@
   text-align: start;
   background-color: var(--_swc-accordion-item-header-background);
   border: 0;
-  border-radius: var(--_swc-accordion-item-header-corner-radius, 0);
+  border-radius: var(--swc-accordion-item-header-corner-radius, 0);
   appearance: none;
 }
 
@@ -87,7 +87,7 @@
 }
 
 .swc-AccordionItem-header:focus-visible {
-  border-radius: var(--swc-accordion-item-corner-radius, token("corner-radius-medium-size-medium"));
+  border-radius: var(--swc-accordion-item-focus-indicator-corner-radius, token("corner-radius-medium-size-medium"));
   outline: token("focus-indicator-thickness") solid token("focus-indicator-color");
   outline-offset: calc(token("accordion-focus-indicator-gap") * -1);
 }
@@ -220,7 +220,7 @@
 /* ── Size: small ────────────────────────────────────────────────────── */
 
 :host([size="s"]) {
-  --swc-accordion-item-corner-radius: token("corner-radius-medium-size-small");
+  --swc-accordion-item-focus-indicator-corner-radius: token("corner-radius-medium-size-small");
   --swc-accordion-item-padding-top: token("accordion-top-to-text-small");
   --swc-accordion-item-padding-bottom: token("accordion-bottom-to-text-small");
   --swc-accordion-item-disclosure-indicator-gap: token("accordion-disclosure-indicator-to-text-small");
@@ -232,7 +232,7 @@
 /* ── Size: large ────────────────────────────────────────────────────── */
 
 :host([size="l"]) {
-  --swc-accordion-item-corner-radius: token("corner-radius-medium-size-large");
+  --swc-accordion-item-focus-indicator-corner-radius: token("corner-radius-medium-size-large");
   --swc-accordion-item-padding-top: token("accordion-top-to-text-large");
   --swc-accordion-item-padding-bottom: token("accordion-bottom-to-text-large");
   --swc-accordion-item-disclosure-indicator-gap: token("accordion-disclosure-indicator-to-text-large");
@@ -244,7 +244,7 @@
 /* ── Size: extra-large ──────────────────────────────────────────────── */
 
 :host([size="xl"]) {
-  --swc-accordion-item-corner-radius: token("corner-radius-medium-size-extra-large");
+  --swc-accordion-item-focus-indicator-corner-radius: token("corner-radius-medium-size-extra-large");
   --swc-accordion-item-padding-top: token("accordion-top-to-text-extra-large");
   --swc-accordion-item-padding-bottom: token("accordion-bottom-to-text-extra-large");
   --swc-accordion-item-disclosure-indicator-gap: token("accordion-disclosure-indicator-to-text-extra-large");

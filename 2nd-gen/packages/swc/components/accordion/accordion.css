@@ -32,6 +32,12 @@
   --_swc-accordion-corner-radius: token("corner-radius-medium-size-extra-large");
 }
 
+/* Quiet: removes dividers and rounds header corners (visible on hover and focus) */
+:host([quiet]) ::slotted(swc-accordion-item) {
+  --swc-accordion-item-border-color: transparent;
+  --swc-accordion-item-header-corner-radius: var(--_swc-accordion-corner-radius);
+}
+
 /* Compact & spacious density: overrides cascade to slotted items */
 :host([density="compact"]) ::slotted(swc-accordion-item) {
   --swc-accordion-item-padding-top: token("accordion-top-to-text-compact-medium");
@@ -71,10 +77,4 @@
 :host([density="spacious"][size="xl"]) ::slotted(swc-accordion-item) {
   --swc-accordion-item-padding-top: token("accordion-top-to-text-spacious-extra-large");
   --swc-accordion-item-padding-bottom: token("accordion-bottom-to-text-spacious-extra-large");
-}
-
-/* Quiet: removes dividers and rounds header corners (visible on hover and focus) */
-:host([quiet]) .swc-Accordion {
-  --_swc-accordion-item-border-color: transparent;
-  --_swc-accordion-item-header-corner-radius: var(--_swc-accordion-corner-radius);
 }

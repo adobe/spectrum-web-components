@@ -45,7 +45,9 @@ import styles from './accordion-item.css';
  *   Panel content goes here.
  * </swc-accordion-item>
  *
- * @cssprop --swc-accordion-item-corner-radius - Corner radius of the header button's focus ring and hover background.
+ * @cssprop --swc-accordion-item-focus-indicator-corner-radius - Corner radius of the focus ring drawn around the header button.
+ * @cssprop --swc-accordion-item-header-corner-radius - Corner radius of the header button background; set to a non-zero value by the parent accordion in quiet mode.
+ * @cssprop --swc-accordion-item-border-color - Color of the top and bottom divider borders in quiet mode; falls back to `--swc-accordion-item-divider-color` then the default gray token.
  * @cssprop --swc-accordion-item-padding-top - Block-start padding of the header button.
  * @cssprop --swc-accordion-item-padding-bottom - Block-end padding of the header button.
  * @cssprop --swc-accordion-item-disclosure-indicator-gap - Gap between the chevron indicator and the header label.
