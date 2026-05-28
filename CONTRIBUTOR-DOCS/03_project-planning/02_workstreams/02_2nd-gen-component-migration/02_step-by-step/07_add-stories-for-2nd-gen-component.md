@@ -36,10 +36,10 @@ Use the `migration-styling` skill's [`assets/stories-template.md`](../../../../.
 
 **Phase 4 scope:**
 
-- Playground (`tags: ['autodocs', 'dev']`)
+- Playground (`tags: ['dev']`; omit `'autodocs'` when the component has a per-component MDX file)
 - Overview (`tags: ['overview']`)
 - Anatomy — shows all meaningful slot combinations (`tags: ['anatomy']`)
-- Options — one story per constant array in the types file (`tags: ['options']`), with `section-order`, `storyName` where needed, and `staticColorsDemo: true` + `'!test'` for static colors
+- Options — one story per constant array in the types file (`tags: ['options']`), with `storyName` where needed, and `staticColorsDemo: true` + `'!test'` for static colors. Section ordering is hand-authored in the per-component MDX, not via story parameters.
 - States — all interactive states (`tags: ['states']`)
 - Behaviors — properties that produce CSS-visible differences (`tags: ['behaviors']`)
 - Accessibility section — `// TODO` comment only
