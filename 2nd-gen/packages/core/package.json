@@ -15,6 +15,10 @@
   },
   "type": "module",
   "exports": {
+    "./components/action-button": {
+      "types": "./dist/components/action-button/index.d.ts",
+      "import": "./dist/components/action-button/index.js"
+    },
     "./components/alert-banner": {
       "types": "./dist/components/alert-banner/index.d.ts",
       "import": "./dist/components/alert-banner/index.js"
@@ -181,6 +185,9 @@
   },
   "typesVersions": {
     "*": {
+      "components/action-button": [
+        "dist/components/action-button/index.d.ts"
+      ],
       "components/alert-banner": [
         "dist/components/alert-banner/index.d.ts"
       ],
