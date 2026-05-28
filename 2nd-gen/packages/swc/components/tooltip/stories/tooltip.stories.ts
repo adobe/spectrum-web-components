@@ -126,7 +126,6 @@ const makeToggle = (id: string) => (event: MouseEvent) => {
     return;
   }
 
-  setupEventLogger(tooltip);
   tooltip.open = !tooltip.open;
 
   if (tooltip.open) {
@@ -140,28 +139,6 @@ const makeToggle = (id: string) => (event: MouseEvent) => {
       },
       { once: true }
     );
-  }
-};
-
-// Temporary: logs tooltip lifecycle events to the console to verify event wiring.
-// Replace with proper assertions in migration-testing (Phase 6).
-// Storybook's Actions addon doesn't work well for this since the events are re-dispatched
-// from the popover in the top layer, so we log directly from the component instance instead.
-const loggedTooltips = new WeakSet<Element>();
-const setupEventLogger = (tooltip: Element): void => {
-  if (loggedTooltips.has(tooltip)) {
-    return;
-  }
-  loggedTooltips.add(tooltip);
-  for (const name of [
-    'swc-open',
-    'swc-close',
-    'swc-after-open',
-    'swc-after-close',
-  ]) {
-    tooltip.addEventListener(name, () => {
-      console.log(`[swc-tooltip] ${name}`);
-    });
   }
 };
 
@@ -184,6 +161,9 @@ const meta: Meta = {
   title: 'Tooltip',
   component: 'swc-tooltip',
   parameters: {
+    actions: {
+      handles: ['swc-open', 'swc-close', 'swc-after-open', 'swc-after-close'],
+    },
     docs: {
       subtitle: `Brief contextual message that appears near a trigger element.`,
     },

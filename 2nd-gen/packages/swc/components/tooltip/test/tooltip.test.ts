@@ -234,17 +234,33 @@ export const LifecycleEventsTest: Story = {
     );
 
     await step('dispatches events that bubble and are composed', async () => {
-      let bubbled = false;
-      const handler = () => {
-        bubbled = true;
+      const received: string[] = [];
+      const handler = (event: Event) => {
+        received.push(event.type);
       };
-      canvasElement.addEventListener('swc-open', handler, { once: true });
+      for (const name of [
+        'swc-open',
+        'swc-close',
+        'swc-after-open',
+        'swc-after-close',
+      ]) {
+        canvasElement.addEventListener(name, handler);
+      }
+
       tooltip.open = true;
-      await waitForEvent(tooltip, 'swc-open');
-      expect(bubbled, 'swc-open bubbled to canvas').toBe(true);
-      canvasElement.removeEventListener('swc-open', handler);
+      await waitForEvent(tooltip, 'swc-after-open');
       tooltip.open = false;
-      await tooltip.updateComplete;
+      await waitForEvent(tooltip, 'swc-after-close');
+
+      for (const name of [
+        'swc-open',
+        'swc-close',
+        'swc-after-open',
+        'swc-after-close',
+      ]) {
+        canvasElement.removeEventListener(name, handler);
+        expect(received, `${name} bubbled to canvas`).toContain(name);
+      }
     });
   },
 };
