@@ -1,33 +1,153 @@
 ---
-description: Comprehensive guide for what to document in 2nd-gen Storybook stories — overview, anatomy, options, states, behaviors, and accessibility sections — with patterns for JSDoc, args, accessible examples, and 1st-gen comparison notes.
-globs: 2nd-gen/packages/swc/components/*/stories/**
+description: Authoring guide for the per-unit MDX docs page for 2nd-gen components, internal components, patterns, and controllers. Covers section content, accessible examples, and 1st-gen comparison notes. Story prose lives in MDX, not in JSDoc above story exports.
+globs: 2nd-gen/packages/swc/components/*/*.mdx, 2nd-gen/packages/swc/patterns/*/*/*.mdx, 2nd-gen/packages/core/controllers/*/*.mdx
 alwaysApply: false
 ---
 
-# Component stories documentation standards
+# Per-unit MDX authoring standards
 
-Comprehensive guide for creating consistent, accurate, and accessible component documentation in Storybook stories.
+Authoring guide for the per-unit MDX file that powers each Storybook Docs page. Applies to all four 2nd-gen genres: components, internal components, patterns, and controllers.
 
-This guide integrates Shoelace's documentation patterns with Spectrum Web Components' structure, providing both visual and technical breakdowns while using TOC anchor linking.
+**See also**: `.ai/rules/stories-format.md` for the stories file (`.stories.ts`) structure and conventions.
 
 ## Scope
 
-Apply to all component stories in:
+Apply to per-unit MDX files in:
 
-- `2nd-gen/packages/swc/components/*/stories/*.stories.ts`
+- `2nd-gen/packages/swc/components/<name>/<name>.mdx` (components)
+- `2nd-gen/packages/swc/components/<name>/<name>.internal.mdx` (internal components — production builds exclude these)
+- `2nd-gen/packages/swc/patterns/<group>/<unit>/<unit>.mdx` (patterns)
+- `2nd-gen/packages/core/controllers/<name>/<name>.mdx` (controllers)
+
+## Authoring surface: per-unit MDX
+
+Long-form documentation lives in the per-unit MDX file at the unit's root, not in JSDoc above story exports. The MDX file is the source of truth for the Docs page layout and prose.
+
+### File template
+
+```mdx
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import { DocsFooter, DocsHeader } from '../../.storybook/blocks'; // components
+// or '../../../.storybook/blocks' for patterns
+// or '../../../swc/.storybook/blocks' for controllers
+
+import * as Stories from './stories/<unit>.stories';
+
+<Meta of={Stories} />
+
+<DocsHeader />
+
+## Anatomy
+
+...prose...
+
+<Canvas of={Stories.Anatomy} />
+
+## Options
+
+### Sizes
+
+...prose...
+
+<Canvas of={Stories.Sizes} />
+
+## States
+
+### States
+
+...prose...
+
+<Canvas of={Stories.States} />
+
+## Behaviors
+
+### Text wrapping
+
+...prose...
+
+<Canvas of={Stories.TextWrapping} />
+
+## Upcoming features
+
+...prose only, no Canvas...
+
+## Accessibility
+
+...prose with `### Features` and `### Best practices` subheadings...
+
+<Canvas of={Stories.Accessibility} />
+
+<DocsFooter />
+```
+
+### Canonical section order
+
+Matches `DocumentTemplate.mdx` so production and per-unit MDX render identically:
+
+1. **Anatomy** — `hideTitle` semantics: no per-story `###` heading
+2. **Upcoming features** — `hideTitle` semantics; prose-only sections allowed (no `<Canvas>`)
+3. **Usage** — `hideTitle` semantics (controllers; describes how to instantiate)
+4. **Options** — per-story `### Title` headings appear
+5. **States** — per-story `### Title` headings appear
+6. **Behaviors** — per-story `### Title` headings appear
+7. **Accessibility** — `hideTitle` semantics
+8. **Full pattern** — per-story `### Title` headings appear (patterns only)
+9. **API** — rendered by `<DocsFooter />`. Controllers ship a hand-authored `## API` ahead of `<DocsFooter />` with a Methods/Events/Options table; `<DocsFooter />` omits `<ApiTable />` when `meta.tags` contains `'controller'`.
+10. **Appendix** — `hideTitle` semantics; prose-only.
+11. **Feedback** — rendered by `<DocsFooter />`.
+
+### Genre-specific notes
+
+| Topic                                | Component                   | Internal                          | Pattern                        | Controller                                           |
+| ------------------------------------ | --------------------------- | --------------------------------- | ------------------------------ | ---------------------------------------------------- |
+| MDX path                             | `components/<n>/<n>.mdx`    | `components/<n>/<n>.internal.mdx` | `patterns/<g>/<n>/<n>.mdx`     | `controllers/<n>/<n>.mdx`                            |
+| Blocks import path                   | `'../../.storybook/blocks'` | `'../../.storybook/blocks'`       | `'../../../.storybook/blocks'` | `'../../../swc/.storybook/blocks'`                   |
+| Meta tag for `DocsFooter` API branch | `'migrated'`                | n/a                               | n/a                            | `'controller'` (omits `<ApiTable />`)                |
+| Anatomy section                      | required (DOM-bearing)      | required if applicable            | required (DOM-bearing)         | omitted (controllers have no DOM)                    |
+| Production build inclusion           | yes                         | no (`.internal.mdx` excluded)     | yes                            | yes (dev) — core docs excluded from production build |
+
+### Per-story title rules
+
+Per-story `### Title` headings (in sections with `hideTitle=false`: Options, States, Behaviors, Full pattern) must match the story's rendered name exactly:
+
+- If the story has an explicit `<Story>.storyName = '...'` override, use that exact string.
+- Otherwise, use Storybook's PascalCase → Title Case conversion of the export name (each word capitalized).
+
+Examples:
+
+| Export name                                                       | Rendered title          |
+| ----------------------------------------------------------------- | ----------------------- |
+| `Sizes`                                                           | `Sizes`                 |
+| `TextWrapping`                                                    | `Text Wrapping`         |
+| `InActionButton`                                                  | `In Action Button`      |
+| `ActivationModes`                                                 | `Activation Modes`      |
+| `SemanticVariants` with `.storyName = 'Semantic variants'`        | `Semantic variants`     |
+| `NonSemanticVariants` with `.storyName = 'Non-semantic variants'` | `Non-semantic variants` |
+
+### Single-story sections
+
+Even when a section has only one story (e.g. a single `States` story called `States`), the `### Title` subheading appears under the `## Section` heading. This matches the `SpectrumStories` block's behavior when `hideTitle=false`.
+
+### Untagged stories do not appear
+
+Stories without any section tag (`anatomy`, `options`, `states`, `behaviors`, `a11y`, `upcoming`, `usage`, `appendix`, `full-pattern`, `api`) are not surfaced on the Docs page (subject to the global `'!autodocs'` / `'!dev'` exclusion in `preview.ts`). Do not author a `<Canvas of={...}>` for an untagged story in MDX; that would surface content production does not render.
 
 ## Documentation structure
 
-Organize documentation into these sections (skip sections that don't apply):
+Organize MDX into these sections (skip sections that don't apply):
 
-1. **Overview** - Introduction and primary use case
-2. **Anatomy** - Both visual and technical structure
-3. **Options** - Configuration, variants, sizes, styles
-4. **States** - Different component states
-5. **Behaviors** - Methods, events, automatic behaviors
-6. **Accessibility** - Features and best practices
+1. **Overview** - rendered automatically by `<DocsHeader />` from the meta JSDoc, subtitle, and Overview story
+2. **Anatomy** - Both visual and technical structure (components and patterns)
+3. **Usage** - How to instantiate and configure (controllers)
+4. **Options** - Configuration, variants, sizes, styles
+5. **States** - Different component states
+6. **Behaviors** - Methods, events, automatic behaviors
+7. **Accessibility** - Features and best practices
+8. **Upcoming features** - Roadmap intent (prose only, no Canvas)
+9. **API** - Rendered automatically by `<DocsFooter />`. Controllers hand-author a `## API` section first.
+10. **Feedback** - Rendered automatically by `<DocsFooter />`.
 
-**Note**: Installation instructions and standard documentation sections (Anatomy, Options, States, Behaviors, Accessibility) are programmatically generated by `DocumentTemplate.mdx` and should not be manually added.
+The remaining sections of this rule describe the **prose content** for each section. Author that prose inside the per-unit MDX, not as JSDoc above stories.
 
 ## Helpers section
 
@@ -83,6 +203,8 @@ const allLabels = { ...semanticLabels, ...colorLabels };
 - Stories don't share any common code
 
 ## Section patterns
+
+> **Where the prose lives.** Each pattern below shows a "prose" block that previously sat in a JSDoc above a story. In the per-unit MDX model, that prose is authored as Markdown inside the corresponding `## Section` / `### Story Title` in the `<unit>.mdx` file, immediately above the `<Canvas of={Stories.MyStory} />` reference. The accompanying story definition has no JSDoc above it.
 
 ### Overview
 
@@ -149,37 +271,40 @@ export const Overview: Story = {
 
 **Consolidation rule**: Combine all slotted content combinations into a **single Anatomy story**.
 
-**Pattern**:
+**MDX prose** (`## Anatomy` section uses `hideTitle` semantics — no per-story `###`):
+
+```mdx
+## Anatomy
+
+A component-name consists of:
+
+1. **Primary element** — main visual component
+2. **Secondary element** — additional visual content
+3. **Optional indicator** — shown conditionally
+
+### Content
+
+#### Slots
+
+- **Default slot**: primary content (text or HTML)
+- **icon slot**: optional icon element
+- **description slot**: additional descriptive content
+
+#### Properties
+
+Properties that render visual content:
+
+- **label**: text label displayed by the component
+- **icon**: icon identifier to display
+- **src**: image source URL
+- **value**: displayed value content
+
+<Canvas of={Stories.Anatomy} />
+```
+
+**Story definition** (no JSDoc above it):
 
 ```typescript
-/**
- * ### Visual structure
- *
- * A component-name consists of:
- *
- * 1. **Primary element** - Main visual component
- * 2. **Secondary element** - Additional visual content
- * 3. **Optional indicator** - Shown conditionally
- *
- * ### Technical structure
- *
- * #### Slots
- *
- * - **Default slot**: Primary content (text or HTML)
- * - **icon slot**: Optional icon element
- * - **description slot**: Additional descriptive content
- *
- * #### Properties
- *
- * Properties that render visual content:
- *
- * - **label**: Text label displayed by the component
- * - **icon**: Icon identifier to display
- * - **src**: Image source URL
- * - **value**: Displayed value content
- *
- * All variations shown below for comparison.
- */
 export const Anatomy: Story = {
   render: (args) => html`
     ${template({ ...args /* minimal */ })}
@@ -237,7 +362,6 @@ export const Sizes: Story = {
   tags: ['options'],
   parameters: {
     flexLayout: 'row-wrap',
-    'section-order': 1,
   },
 };
 ```
@@ -268,7 +392,6 @@ export const SemanticVariants: Story = {
   tags: ['options'],
   parameters: {
     flexLayout: 'row-wrap',
-    'section-order': 2,
   },
 };
 ```
@@ -299,7 +422,6 @@ export const StaticColors: Story = {
   parameters: {
     flexLayout: false,
     staticColorsDemo: true,
-    'section-order': 5,
   },
 };
 ```
@@ -748,7 +870,7 @@ After verifying accuracy:
 
 1. Document what was checked in commit message or PR
 2. Note any inaccuracies found and fixed
-3. Include code references for major claims (in JSDoc comments if helpful)
+3. Include code references for major claims (in the per-unit MDX where helpful)
 4. Consider creating a verification checklist for complex components
 
 ## General guidelines
@@ -763,25 +885,31 @@ After verifying accuracy:
 
 ### Component linking
 
-When referencing other components in the JSDoc description above meta:
+When referencing other components — whether in the meta-level JSDoc, the meta `parameters.docs.subtitle`, or anywhere in the per-unit MDX:
 
-- **Use Storybook paths**: Link to the component's overview story using relative paths
-- **Format**: `[ComponentName](../?path=/docs/component-name--readme)`
+- **Use Storybook paths**: Link to the component's docs page using relative paths
+- **Format**: `[ComponentName](../?path=/docs/components-component-name--docs)` (or `--readme` if that's the convention in your area)
 - **Component name format**: Use kebab-case in the path (e.g., `action-button`, `progress-circle`)
-- **Always link to readme**: Use `--readme` as the story anchor
+- **Subtitle exception**: `parameters.docs.subtitle` is plain text and cannot include links.
 
-**Examples**:
+**Examples (meta-level JSDoc)**:
 
 ```typescript
 /**
  * A `<swc-badge>` is a non-interactive visual label. For interactive labels,
- * see [Action Button](../?path=/docs/action-button--readme).
+ * see [Action Button](../?path=/docs/components-action-button--docs).
  */
 
 /**
- * Progress circles are commonly used with [Button](../?path=/docs/button--readme)
- * and [Card](../?path=/docs/card--readme) components to show loading states.
+ * Progress circles are commonly used with [Button](../?path=/docs/components-button--docs)
+ * and [Card](../?path=/docs/components-card--docs) components to show loading states.
  */
+```
+
+**Examples (in MDX prose)**:
+
+```mdx
+For interactive labels, see [Action Button](../?path=/docs/components-action-button--docs).
 ```
 
 ### Code examples
@@ -794,38 +922,56 @@ When referencing other components in the JSDoc description above meta:
 ### Story organization
 
 - **Use flexLayout** for multi-item comparisons
-- **Set section-order** to control display order within sections
-- **Tag appropriately** - Use correct tags for each section
-- **Add JSDoc comments** - Explain what each story demonstrates (except Playground and Overview)
+- **Tag appropriately** — use correct tags for each section
+- **Order sections in MDX** — section ordering is hand-authored in the per-unit MDX, not via a story parameter
+- **Author prose in MDX** — for each tagged story, add a `### Title` heading and prose to the per-unit MDX above the corresponding `<Canvas of={Stories.MyStory} />`. Do not add JSDoc above story exports.
 
 ### No filler closing sentences
 
-Do not end JSDoc comments with sentences that restate what the reader can already see rendered in Storybook, such as:
+Do not end MDX prose blocks with sentences that restate what the reader can already see rendered in the Canvas below, such as:
 
 - "All sizes shown below for comparison."
 - "Both variants shown below for comparison."
 - "Label-only and icon-with-label wrapping shown below for comparison."
 
-These add no information. End the comment when the substantive content ends.
+These add no information. End the prose when the substantive content ends.
 
-### JSDoc heading levels
+### MDX heading levels
 
-All headings in JSDoc comments must start at level 3 (`###`) or deeper:
+All headings inside MDX section prose must start at level 3 (`###`) or deeper:
 
-- **Level 3 (`###`)**: Top-level sections within a story (e.g., "Visual structure", "Features", "Methods")
-- **Level 4 (`####`)**: Sub-sections within those sections (e.g., "Slots", "ARIA implementation", "Keyboard navigation")
+- **Level 2 (`##`)**: Reserved for top-level sections (`## Anatomy`, `## Options`, etc.) — author these as the section roots in MDX
+- **Level 3 (`###`)**: Per-story title in sections with `hideTitle=false` (Options, States, Behaviors, Full pattern)
+- **Level 4 (`####`)**: Sub-sections inside per-story prose (e.g., "Slots", "ARIA implementation", "Keyboard navigation")
 
-This ensures proper hierarchy since JSDoc content is rendered within the story context, subordinate to the main section headings in the DocumentTemplate (which use `##`).
+This preserves the hierarchy expected by the docs page layout (the unit title is `h1`, section headings are `h2`, story titles are `h3`).
 
 ## Checklist
 
 When creating or updating documentation:
 
-- [ ] Overview story with common use case
-- [ ] JSDoc description above meta (explains component purpose, links to related components)
+### Stories file (`<unit>.stories.ts`)
+
+- [ ] Overview story with common use case (tag: `'overview'`)
+- [ ] Meta-level JSDoc above `const meta` (explains unit purpose, links to related units)
 - [ ] `parameters.docs.subtitle` is concise and non-repetitive (plain text, no links)
 - [ ] Helpers section for shared label mappings and utilities (if applicable)
-- [ ] Anatomy with both visual and technical structure
+- [ ] Proper story tags for all sections (`anatomy`, `options`, `states`, `behaviors`, `a11y`, `upcoming` as applicable; `controller` on meta for controllers)
+- [ ] Playground uses `tags: ['dev']` (not `['autodocs', 'dev']`) when a per-unit MDX exists
+- [ ] No story-level JSDoc comments above any `export const`
+- [ ] No `section-order` parameter; no `description-only` tag
+
+### Per-unit MDX (`<unit>.mdx`)
+
+- [ ] File exists at the unit root with the correct relative import path for `DocsHeader` / `DocsFooter`
+- [ ] `<Meta of={Stories} />` declared exactly once
+- [ ] `<DocsHeader />` at the top, `<DocsFooter />` at the bottom
+- [ ] Sections appear in the canonical order (Anatomy → Upcoming features → Usage → Options → States → Behaviors → Accessibility → Full pattern → API → Appendix → Feedback) — skip sections that do not apply
+- [ ] Every section-tagged story is referenced via `<Canvas of={Stories.StoryName} />`
+- [ ] Per-story `### Title` headings match Storybook's rendered story names (PascalCase → Title Case, or explicit `storyName`)
+- [ ] No `<Canvas>` references to untagged stories
+- [ ] Controllers: hand-authored `## API` section ahead of `<DocsFooter />`; `meta.tags` contains `'controller'` so `<ApiTable />` is omitted
+- [ ] Anatomy: visual and technical structure documented (components and patterns)
 - [ ] All slots documented with descriptions
 - [ ] All content-rendering properties listed
 - [ ] All configuration options documented
@@ -835,10 +981,9 @@ When creating or updating documentation:
 - [ ] Automatic behaviors explained
 - [ ] Comprehensive accessibility section with features and best practices
 - [ ] All examples use accessible, meaningful content
-- [ ] Consistent flexLayout usage for comparisons
-- [ ] Proper story tags for all sections
-- [ ] JSDoc comments for all stories (except Playground and Overview)
-- [ ] JSDoc headings start at level 3 (`###`) or deeper
+
+### Cross-checks
+
 - [ ] **Checked 1st-gen README.md for missing content or differences**
 - [ ] **Documented 1st-gen differences where apparent (new/changed/removed features)**
 - [ ] **Verified against component implementation** (no hallucinations)
@@ -846,3 +991,4 @@ When creating or updating documentation:
 - [ ] All properties verified with `@property` decorators
 - [ ] ARIA attributes verified in component code
 - [ ] Methods and events verified in implementation
+- [ ] Visual parity confirmed against production rendering for converted units
