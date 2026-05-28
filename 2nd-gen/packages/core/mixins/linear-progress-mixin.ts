@@ -16,6 +16,10 @@ import {
   LanguageResolutionController,
   languageResolverUpdatedSymbol,
 } from '../controllers/language-resolution.js';
+import {
+  ObserveSlotPresence,
+  type SlotPresenceObservingInterface,
+} from './observe-slot-presence.js';
 import type { ElementSize } from './sized-mixin.js';
 
 type Constructor<T = Record<string, unknown>> = {
@@ -42,7 +46,10 @@ export type LinearProgressLabelPosition =
 
 const DEFAULT_FORMAT_OPTIONS: Intl.NumberFormatOptions = { style: 'percent' };
 
-export interface LinearProgressInterface {
+const LABEL_SLOT_SELECTOR = '[slot="label"]';
+const DESCRIPTION_SLOT_SELECTOR = '[slot="description"]';
+
+export interface LinearProgressInterface extends SlotPresenceObservingInterface {
   value: number;
   minValue: number;
   maxValue: number;
@@ -51,6 +58,8 @@ export interface LinearProgressInterface {
   formatOptions?: Intl.NumberFormatOptions;
   labelPosition: LinearProgressLabelPosition;
   staticColor?: LinearProgressStaticColor;
+  readonly sanitizedMin: number;
+  readonly sanitizedMax: number;
   readonly clampedValue: number;
   readonly fillPercent: number;
   readonly formattedValue: string;
@@ -58,49 +67,33 @@ export interface LinearProgressInterface {
   readonly hasDescriptionSlotContent: boolean;
   readonly labelContainerId: string;
   readonly descriptionContainerId: string;
-  onLabelSlotChange(event: Event): void;
-  onDescriptionSlotChange(event: Event): void;
 }
 
 let nextLinearProgressId = 0;
 
-function isSlotted(slot: HTMLSlotElement): boolean {
-  return slot.assignedNodes({ flatten: true }).some((node) => {
-    if (node.nodeType === Node.ELEMENT_NODE) {
-      return true;
-    }
-    if (node.nodeType === Node.TEXT_NODE) {
-      return Boolean(node.textContent?.trim());
-    }
-    return false;
-  });
-}
-
 /**
  * Thin mixin shared by linear progress components (`<swc-meter>`, future
- * `<swc-progress-bar>`). Owns the typed property declarations, value
- * clamping, locale formatting, slot tracking, and DEBUG accessible-name
- * warning that both components need.
+ * `<swc-progress-bar>`). Owns the typed property declarations, sanitized
+ * range + value, locale formatting, light-DOM slot presence tracking
+ * (so the shadow-DOM containers and slots can be fully conditional),
+ * and the DEBUG accessible-name warning.
  *
  * Intentionally silent on `role` and animation — those stay in each
  * component's own base class.
- *
- * Consumers wire the exposed `onLabelSlotChange` / `onDescriptionSlotChange`
- * handlers to the `@slotchange` event on the corresponding slots in their
- * render template, and read `clampedValue`, `fillPercent`, `formattedValue`,
- * `labelContainerId`, `descriptionContainerId`, and the boolean slot flags
- * from the same render template.
  */
 export function LinearProgressMixin<T extends Constructor<ReactiveElement>>(
   constructor: T
 ): T & Constructor<LinearProgressInterface> {
   class LinearProgressElement
-    extends constructor
+    extends ObserveSlotPresence(constructor, [
+      LABEL_SLOT_SELECTOR,
+      DESCRIPTION_SLOT_SELECTOR,
+    ])
     implements LinearProgressInterface
   {
     /**
-     * Current value. Clamped into `[minValue, maxValue]` before being
-     * exposed via `clampedValue` and `fillPercent`.
+     * Current value. Sanitized via `clampedValue` for rendering and
+     * `aria-valuenow`.
      */
     @property({ type: Number, reflect: true })
     public value = 0;
@@ -156,9 +149,6 @@ export function LinearProgressMixin<T extends Constructor<ReactiveElement>>(
 
     private readonly _instanceId = ++nextLinearProgressId;
 
-    private _hasLabelSlotContent = false;
-    private _hasDescriptionSlotContent = false;
-
     public get labelContainerId(): string {
       return `swc-linear-progress-label-${this._instanceId}`;
     }
@@ -168,25 +158,43 @@ export function LinearProgressMixin<T extends Constructor<ReactiveElement>>(
     }
 
     public get hasLabelSlotContent(): boolean {
-      return this._hasLabelSlotContent;
+      return this.getSlotContentPresence(LABEL_SLOT_SELECTOR);
     }
 
     public get hasDescriptionSlotContent(): boolean {
-      return this._hasDescriptionSlotContent;
+      return this.getSlotContentPresence(DESCRIPTION_SLOT_SELECTOR);
+    }
+
+    /**
+     * Sanitized lower bound: falls back to 0 when `minValue` is non-finite,
+     * and to the smaller of (min, max) when the two are reversed. ARIA
+     * `aria-valuemin`, `aria-valuenow`, `aria-valuetext`, and the rendered
+     * fill all read from the same sanitized range so screen-reader output
+     * stays internally consistent.
+     */
+    public get sanitizedMin(): number {
+      const min = Number.isFinite(this.minValue) ? this.minValue : 0;
+      const max = Number.isFinite(this.maxValue) ? this.maxValue : 100;
+      return Math.min(min, max);
+    }
+
+    /**
+     * Sanitized upper bound. See {@link sanitizedMin}.
+     */
+    public get sanitizedMax(): number {
+      const min = Number.isFinite(this.minValue) ? this.minValue : 0;
+      const max = Number.isFinite(this.maxValue) ? this.maxValue : 100;
+      return Math.max(min, max);
     }
 
     public get clampedValue(): number {
       const value = Number.isFinite(this.value) ? this.value : 0;
-      const min = Number.isFinite(this.minValue) ? this.minValue : 0;
-      const max = Number.isFinite(this.maxValue) ? this.maxValue : 100;
-      const lo = Math.min(min, max);
-      const hi = Math.max(min, max);
-      return Math.min(hi, Math.max(lo, value));
+      return Math.min(this.sanitizedMax, Math.max(this.sanitizedMin, value));
     }
 
     public get fillPercent(): number {
-      const min = Number.isFinite(this.minValue) ? this.minValue : 0;
-      const max = Number.isFinite(this.maxValue) ? this.maxValue : 100;
+      const min = this.sanitizedMin;
+      const max = this.sanitizedMax;
       if (max === min) {
         return 0;
       }
@@ -198,8 +206,8 @@ export function LinearProgressMixin<T extends Constructor<ReactiveElement>>(
       if (this.valueLabel) {
         return this.valueLabel;
       }
-      const min = Number.isFinite(this.minValue) ? this.minValue : 0;
-      const max = Number.isFinite(this.maxValue) ? this.maxValue : 100;
+      const min = this.sanitizedMin;
+      const max = this.sanitizedMax;
       const options = this.formatOptions ?? DEFAULT_FORMAT_OPTIONS;
       const formatter = new Intl.NumberFormat(
         this.languageResolver.language,
@@ -213,31 +221,6 @@ export function LinearProgressMixin<T extends Constructor<ReactiveElement>>(
         return formatter.format(fraction);
       }
       return formatter.format(this.clampedValue);
-    }
-
-    public onLabelSlotChange(event: Event): void {
-      const slot = event.target as HTMLSlotElement;
-      const next = isSlotted(slot);
-      if (next !== this._hasLabelSlotContent) {
-        this._hasLabelSlotContent = next;
-        this.requestUpdate();
-      }
-    }
-
-    public onDescriptionSlotChange(event: Event): void {
-      const slot = event.target as HTMLSlotElement;
-      const next = isSlotted(slot);
-      if (next !== this._hasDescriptionSlotContent) {
-        this._hasDescriptionSlotContent = next;
-        this.requestUpdate();
-      }
-    }
-
-    protected override willUpdate(changes: PropertyValues): void {
-      // Surfacing relevant property changes is enough — formatted output
-      // is derived from getters, so no internal state to recompute here.
-      // Hook is left for subclasses that need pre-render work.
-      super.willUpdate(changes);
     }
 
     protected override updated(changes: PropertyValues): void {
@@ -254,7 +237,7 @@ export function LinearProgressMixin<T extends Constructor<ReactiveElement>>(
     }
 
     private warnMissingAccessibleName(): void {
-      if (this._hasLabelSlotContent || this.accessibleLabel) {
+      if (this.hasLabelSlotContent || this.accessibleLabel) {
         return;
       }
       window.__swc?.warn(

@@ -10,7 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
-import { CSSResultArray, html, TemplateResult } from 'lit';
+import { CSSResultArray, html, nothing, TemplateResult } from 'lit';
 import { property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
@@ -21,6 +21,7 @@ import {
   type MeterVariant,
 } from '@spectrum-web-components/core/components/meter';
 
+import sharedStyles from '../../shared/linear-progress-base.css';
 import styles from './meter.css';
 
 /**
@@ -71,7 +72,7 @@ export class Meter extends MeterBase {
   // ──────────────────────────────
 
   public static override get styles(): CSSResultArray {
-    return [styles];
+    return [sharedStyles, styles];
   }
 
   protected override render(): TemplateResult {
@@ -85,15 +86,6 @@ export class Meter extends MeterBase {
       : undefined;
 
     return html`
-      <span
-        id=${this.labelContainerId}
-        class=${classMap({
-          ['swc-Meter-label']: true,
-          ['is-empty']: !hasLabel,
-        })}
-      >
-        <slot name="label" @slotchange=${this.onLabelSlotChange}></slot>
-      </span>
       <div
         class=${classMap({
           ['swc-Meter']: true,
@@ -103,14 +95,21 @@ export class Meter extends MeterBase {
           [`swc-Meter--staticBlack`]: this.staticColor === 'black',
         })}
         role="meter"
-        aria-valuemin=${this.minValue}
-        aria-valuemax=${this.maxValue}
+        aria-valuemin=${this.sanitizedMin}
+        aria-valuemax=${this.sanitizedMax}
         aria-valuenow=${this.clampedValue}
         aria-valuetext=${this.formattedValue}
         aria-labelledby=${ifDefined(ariaLabelledBy)}
         aria-label=${ifDefined(ariaLabel)}
         aria-describedby=${ifDefined(ariaDescribedBy)}
       >
+        ${hasLabel
+          ? html`
+              <span id=${this.labelContainerId} class="swc-Meter-label">
+                <slot name="label"></slot>
+              </span>
+            `
+          : nothing}
         <span class="swc-Meter-value">${this.formattedValue}</span>
         <div class="swc-Meter-track">
           <div
@@ -118,19 +117,17 @@ export class Meter extends MeterBase {
             style="inline-size: ${this.fillPercent}%;"
           ></div>
         </div>
+        ${hasDescription
+          ? html`
+              <span
+                id=${this.descriptionContainerId}
+                class="swc-Meter-description"
+              >
+                <slot name="description"></slot>
+              </span>
+            `
+          : nothing}
       </div>
-      <span
-        id=${this.descriptionContainerId}
-        class=${classMap({
-          ['swc-Meter-description']: true,
-          ['is-empty']: !hasDescription,
-        })}
-      >
-        <slot
-          name="description"
-          @slotchange=${this.onDescriptionSlotChange}
-        ></slot>
-      </span>
     `;
   }
 }
