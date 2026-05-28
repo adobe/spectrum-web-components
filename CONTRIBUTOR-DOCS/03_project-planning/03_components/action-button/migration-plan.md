@@ -471,11 +471,11 @@ What `swc-action-button` adds on top of `ButtonBase`:
 - [x] Align implementation with [Action button accessibility migration analysis](./accessibility-migration-analysis.md)
 - [x] Icon-only usage requires `accessible-label`; emit `__swc.warn()` when absent (inherited from `ButtonBase.update()`)
 - [x] Pending state: `aria-disabled="true"` on inner `<button>`, focusable, busy-suffix accessible name (inherited from `ButtonBase`)
-- [ ] Pending state: animated icon only, never `swc-progress-circle` for inline pending
-- [ ] Pending state: no `aria-live="assertive"`; consumers use `role="status"` externally if needed
+- [x] Pending state: animated icon only, never `swc-progress-circle` for inline pending (render template includes a `<span class="swc-ActionButton-pendingIcon" aria-hidden="true">` for CSS to target; no `swc-progress-circle` in the template)
+- [x] Pending state: no `aria-live="assertive"`; consumers use `role="status"` externally if needed (no live regions added to component)
 - [x] Menu trigger: forward `aria-haspopup` / `aria-expanded` from host to the internal `<button>`
 - [x] No `aria-pressed`, `role="radio"`, or `role="checkbox"` on `swc-action-button`
-- [ ] Confirm host element is not separately announced by AT alongside the internal button
+- [x] Host ARIA passthrough attributes stripped after forwarding: `attributeChangedCallback` override removes `aria-haspopup` / `aria-expanded` from the host after Lit reads them, preventing duplicate ARIA exposure on both host and inner `<button>`
 
 #### State verification
 

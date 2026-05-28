@@ -144,6 +144,7 @@ export class ActionButton extends ButtonBase {
         <span class="swc-ActionButton-label">
           <slot></slot>
         </span>
+        <span class="swc-ActionButton-pendingIcon" aria-hidden="true"></span>
       </button>
     `;
   }
