@@ -24,7 +24,7 @@ import { Chevron100Icon } from '../icon/elements/Chevron100Icon.js';
 import { Chevron200Icon } from '../icon/elements/Chevron200Icon.js';
 import { Chevron300Icon } from '../icon/elements/Chevron300Icon.js';
 
-import styles from './accordion.css';
+import styles from './accordion-item.css';
 
 /**
  * An accordion item component that wraps a single expandable content section.
@@ -44,6 +44,17 @@ import styles from './accordion.css';
  *   <span slot="label">Section heading</span>
  *   Panel content goes here.
  * </swc-accordion-item>
+ *
+ * @cssprop --swc-accordion-item-focus-indicator-corner-radius - Corner radius of the focus ring drawn around the header button.
+ * @cssprop --swc-accordion-item-header-corner-radius - Corner radius of the header button background.
+ * @cssprop --swc-accordion-item-border-color - Color of the top and bottom divider borders.
+ * @cssprop --swc-accordion-item-padding-top - Block-start padding of the header button.
+ * @cssprop --swc-accordion-item-padding-bottom - Block-end padding of the header button.
+ * @cssprop --swc-accordion-item-disclosure-indicator-gap - Gap between the chevron indicator and the header label.
+ * @cssprop --swc-accordion-item-edge-to-content-area - Inline padding of the header button.
+ * @cssprop --swc-accordion-item-header-font-size - Font size of the header label.
+ * @cssprop --swc-accordion-item-content-padding-inline - Inline padding of the content panel.
+ * @cssprop --swc-accordion-item-divider-color - Color of the item's top and bottom divider borders.
  */
 export class AccordionItem extends AccordionItemBase {
   // ──────────────────────────────
@@ -124,24 +135,28 @@ export class AccordionItem extends AccordionItemBase {
     `;
     return html`
       <div class="swc-AccordionItem">
-        ${this.renderHeadingWrapper(button)}
-        ${when(
-          this.slotContentIsPresent,
-          () => html`
-            <div class="swc-AccordionItem-actions">
-              <slot name="actions"></slot>
-            </div>
-          `
-        )}
+        <div class="swc-AccordionItem-row">
+          ${this.renderHeadingWrapper(button)}
+          ${when(
+            this.slotContentIsPresent,
+            () => html`
+              <div class="swc-AccordionItem-actions">
+                <slot name="actions"></slot>
+              </div>
+            `
+          )}
+        </div>
         <div
           id="content"
           class="swc-AccordionItem-content"
           role="region"
           aria-labelledby="header"
-          ?hidden=${!this.open}
+          aria-hidden=${ifDefined(this.open ? undefined : 'true')}
           .inert=${this.disabled || this.parentDisabled}
         >
-          <slot></slot>
+          <div class="swc-AccordionItem-contentBody">
+            <slot></slot>
+          </div>
         </div>
       </div>
     `;
