@@ -29,6 +29,8 @@ import styles from './accordion.css';
  *     Panel content goes here.
  *   </swc-accordion-item>
  * </swc-accordion>
+ *
+ * @cssprop --swc-accordion-min-inline-size - Minimum inline size of the accordion.
  */
 export class Accordion extends AccordionBase {
   public static override get styles(): CSSResultArray {
