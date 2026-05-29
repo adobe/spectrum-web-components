@@ -12,7 +12,7 @@
 <summary><strong>In this doc</strong></summary>
 
 - [TL;DR](#tldr)
-    - [Most blocking open questions](#most-blocking-open-questions)
+    - [Resolved questions](#resolved-questions)
 - [1st-gen API surface](#1st-gen-api-surface)
     - [Properties / attributes](#properties--attributes)
     - [Methods](#methods)
@@ -61,16 +61,16 @@
 Button group is a simple layout and semantics wrapper for related button actions. The 1st-gen implementation is minimal (flexbox container with size propagation), making the migration straightforward. The core changes are:
 
 - **Rename `vertical` boolean to `orientation` property** (aligns with React Spectrum S2 and Figma); this is the only consumer-facing breaking change.
-- **Add `role="group"` and `aria-orientation`** on the host for WCAG compliance (1st-gen is missing this).
+- **Add `role="group"`** on the host for WCAG compliance (1st-gen is missing this).
 - **Add `align` property** for button alignment (start/center/end); matches React S2.
 - **Propagate disabled state** from group to children via an optional `disabled` attribute.
-- **Overflow behavior (auto-switch to vertical)** is documented in React S2 but is not in the Figma design spec; flagged as an open question and out of scope for MVP unless decided otherwise.
+- **Overflow behavior (flex wrapping or auto-switch to vertical)** is documented in React S2 but is not in the Figma design spec; deferred from MVP. Regular flex wrapping may be an acceptable starting point since arrow-key navigation is not managed by button-group.
 - Button group depends on `swc-button` being available in 2nd-gen (already migrated).
 
-### Most blocking open questions
+### Resolved questions
 
-- Q1 in [Design](#design): Should XL size be supported in 2nd-gen? Figma shows it but React S2 limits to S/M/L.
-- Q2 in [Architecture and behavior](#architecture-and-behavior): Should overflow behavior (auto-switch horizontal → vertical) be in-scope for MVP or deferred as additive?
+- ~~Q1~~: XL size **is supported**. React S2 also includes XL. Size S uses an 8px gap; M/L/XL all use the same 12px gap token.
+- Q2 in [Architecture and behavior](#architecture-and-behavior): Overflow behavior deferred from MVP. Regular flex wrapping may be an acceptable starting point.
 
 ---
 
@@ -176,7 +176,7 @@ None. Button group can proceed independently because `swc-button` is already com
 | #   | What changes | 1st-gen behavior | 2nd-gen behavior | Consumer migration path |
 | --- | ------------ | ---------------- | ---------------- | ----------------------- |
 | **B1** | `vertical` boolean → `orientation` property | `vertical` boolean attribute switches to column layout | `orientation="horizontal"` (default) or `orientation="vertical"`; explicit API aligned with React S2 and Figma | Replace `vertical` attribute with `orientation="vertical"`. Source: React S2 `orientation` prop. |
-| **B2** | Size type narrowing (provisional) | Accepts `'s'` \| `'m'` \| `'l'` \| `'xl'` | Accept `'s'` \| `'m'` \| `'l'` minimum; XL pending Q1 | If XL is dropped, consumers using `size="xl"` must switch to `size="l"`. |
+| **B2** | Default size introduced | Accepts `'s'` \| `'m'` \| `'l'` \| `'xl'` (no default) | Accepts `'s'` \| `'m'` \| `'l'` \| `'xl'` with default `'m'` | Consumers without explicit `size` will now get `'m'` behavior. XL is supported; same 12px gap token as M/L. |
 
 #### Styling and visuals
 
@@ -189,8 +189,7 @@ None. Button group can proceed independently because `swc-button` is already com
 | #   | What changes | 1st-gen behavior | 2nd-gen behavior | Consumer migration path |
 | --- | ------------ | ---------------- | ---------------- | ----------------------- |
 | **B4** | Add `role="group"` on host | No role set on host | Host exposes `role="group"` via ElementInternals or explicit attribute | No consumer action; improvement is transparent. |
-| **B5** | Add `aria-orientation` | Not set | `aria-orientation="horizontal"` or `"vertical"` matching `orientation` prop | No consumer action; transparent addition. |
-| **B6** | Disabled propagation to children | Not supported | `disabled` attribute on host propagates `disabled` to each slotted `swc-button` | Consumers gain group-level disable; no breaking change. |
+| **B5** | Disabled propagation to children | Not supported | `disabled` attribute on host propagates `disabled` to each slotted `swc-button` | Consumers gain group-level disable; no breaking change. |
 
 ### Additive — ships when ready, zero breakage for consumers already on 2nd-gen
 
@@ -212,8 +211,8 @@ These are derived from the 1st-gen implementation, current deprecations, the Fig
 
 | Property | Type | Default | Attribute | Notes |
 | -------- | ---- | ------- | --------- | ----- |
-| `orientation` | `'horizontal'` \| `'vertical'` | `'horizontal'` | `orientation` | **Confirmed.** Replaces `vertical` boolean. Aligns with React S2 and aria-orientation. |
-| `size` | `'s'` \| `'m'` \| `'l'` (provisional; XL pending Q1) | `'m'` | `size` | **Inferred.** React S2 uses S/M/L with M default. Figma shows XL. 1st-gen had no default. 2nd-gen should have a default of `'m'`. |
+| `orientation` | `'horizontal'` \| `'vertical'` | `'horizontal'` | `orientation` | **Confirmed.** Replaces `vertical` boolean. Aligns with React S2. |
+| `size` | `'s'` \| `'m'` \| `'l'` \| `'xl'` | `'m'` | `size` | **Confirmed.** React S2 includes XL. Size S uses 8px gap; M/L/XL share the same 12px gap token. 1st-gen had no default; 2nd-gen defaults to `'m'`. |
 | `disabled` | `boolean` | `false` | `disabled` | **Confirmed.** Aligns with React S2 `isDisabled`. Propagates to child buttons. |
 
 #### Visual matrix (2nd-gen)
@@ -224,7 +223,7 @@ Figma-confirmed presentation modes:
 
 - Horizontal orientation (default)
 - Vertical orientation
-- Size S, M, L (XL pending Q1)
+- Size S, M, L, XL
 - 2+ buttons in group
 
 #### Slots (2nd-gen)
@@ -258,14 +257,14 @@ When `disabled` is set on the group host, all slotted `swc-button` elements rece
 
 #### Orientation
 
-The `orientation` property controls CSS flex-direction (row vs column) and sets `aria-orientation` on the host accordingly. The default is `"horizontal"`.
+The `orientation` property controls CSS flex-direction (row vs column). The default is `"horizontal"`. Note: `aria-orientation` is **not** set on the host because it is only valid for roles that manage arrow-key navigation (e.g. `toolbar`, `listbox`), which button-group does not implement.
 
 ### Accessibility semantics notes (2nd-gen)
 
 Sourced from the [accessibility migration analysis](./accessibility-migration-analysis.md):
 
 - **Host role:** `role="group"` (never `radiogroup` or `toolbar`)
-- **aria-orientation:** Matches `orientation` property
+- **No `aria-orientation`:** This attribute is only valid for roles that manage arrow-key navigation direction (e.g. `toolbar`, `listbox`). Since button-group does not implement focus group behavior, `aria-orientation` is not set.
 - **Group name:** Optional `aria-label` / `aria-labelledby` when the group carries distinct meaning
 - **No roving tabindex:** Each button is a separate Tab stop; arrow-key navigation belongs on a parent toolbar/composite, not on button-group
 - **Focus:** Standard Tab/Shift+Tab through children in DOM order
@@ -281,7 +280,7 @@ Follow the [Badge migration reference](../../02_workstreams/02_2nd-gen-component
 
 | Layer    | Path                                            | Contains                                                                                                                                                                                                                                          |
 | -------- | ----------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Core** | `2nd-gen/packages/core/components/button-group/` | `ButtonGroup.base.ts`, `ButtonGroup.types.ts`, validation (size/orientation normalization), disabled-propagation logic, ARIA attribute management (`role="group"`, `aria-orientation`). No rendering. |
+| **Core** | `2nd-gen/packages/core/components/button-group/` | `ButtonGroup.base.ts`, `ButtonGroup.types.ts`, validation (size/orientation normalization), disabled-propagation logic, ARIA attribute management (`role="group"`). No rendering. |
 | **SWC**  | `2nd-gen/packages/swc/components/button-group/`  | `ButtonGroup.ts`, `button-group.css`, element registration (`sp-button-group`), stories, tests, and the specific S2 rendering/styling. |
 
 Planned rendering shape:
@@ -313,11 +312,11 @@ Planned rendering shape:
 #### Naming and public surface
 
 - [ ] `ButtonGroup.types.ts`: define `ButtonGroupOrientation`, `ButtonGroupSize`, public property interfaces
-- [ ] `ButtonGroup.base.ts`: `orientation`, `size`, `disabled` properties with validation; size/disabled propagation to slotted children; `role="group"` and `aria-orientation` management
+- [ ] `ButtonGroup.base.ts`: `orientation`, `size`, `disabled` properties with validation; size/disabled propagation to slotted children; `role="group"` management
 
 #### Alignment checks
 
-- [ ] Confirm XL size decision (Q1) before finalizing size type
+- [x] ~~Confirm XL size decision (Q1)~~ — **Resolved:** XL is supported. Same 12px gap token as M/L.
 - [ ] Confirm overflow behavior scope (Q2) before finalizing behavioral API
 
 ### Styling
@@ -339,7 +338,7 @@ Planned rendering shape:
 #### Naming and semantics
 
 - [ ] Host exposes `role="group"` (ElementInternals or explicit attribute)
-- [ ] `aria-orientation` reflects `orientation` property
+- [ ] No `aria-orientation` on host (only valid for roles managing arrow-key navigation)
 - [ ] `aria-label` / `aria-labelledby` passthrough supported
 - [ ] No `role="radiogroup"` or `role="toolbar"` on host
 - [ ] No `FocusgroupNavigationController` on button-group
@@ -359,14 +358,14 @@ Planned rendering shape:
 
 - [ ] Size propagation: changing `size` on group updates all slotted buttons
 - [ ] Disabled propagation: setting `disabled` on group disables all children
-- [ ] Orientation: switching orientation changes flex-direction and aria-orientation
+- [ ] Orientation: switching orientation changes flex-direction
 - [ ] Slotchange: newly slotted buttons receive current size and disabled state
 - [ ] Default size: group defaults to `size="m"` when no attribute set
 
 #### Visual regression
 
 - [ ] Add VRT coverage for horizontal and vertical orientations
-- [ ] Add VRT coverage for all size variants (S, M, L; XL if confirmed)
+- [ ] Add VRT coverage for all size variants (S, M, L, XL)
 - [ ] Add VRT coverage for disabled group state
 
 ### Documentation
@@ -397,13 +396,13 @@ Planned rendering shape:
 
 | #   | Item | Blocking? | Status | Owner |
 | --- | ---- | --------- | ------ | ----- |
-| **Q1** | Should `size="xl"` be supported in 2nd-gen? Figma S2 Desktop shows XL but React S2 limits to S/M/L. The spectrum-css `spectrum-two` branch only defines spacing for default and sizeS; no dedicated XL token. **Recommendation:** Align with React S2 (S/M/L only) and treat XL as additive/deferred. | Yes — affects type definition and test matrix | Open | Design + implementation |
+| **Q1** | ~~Should `size="xl"` be supported in 2nd-gen?~~ **Resolved:** Yes — React S2 also includes XL. Size S uses an 8px gap; M/L/XL all use the same 12px gap token. XL is included in the type definition and test matrix. | ~~Yes~~ Resolved | **Resolved** | @5t3ph |
 
 ### Architecture and behavior
 
 | #   | Item | Blocking? | Status | Owner |
 | --- | ---- | --------- | ------ | ----- |
-| **Q2** | Should overflow behavior (auto-switch from horizontal to vertical when space is limited) be in MVP scope? React S2 implements this with a `ResizeObserver`. The Figma design spec does not mention it. The ticket notes flag this as "needs decision". **Recommendation:** Defer to additive. The core layout component should ship without resize detection complexity; consumers can set `orientation="vertical"` explicitly. | No — can be additive | Open | Architecture reviewer |
+| **Q2** | Should overflow behavior (auto-switch from horizontal to vertical when space is limited) be in MVP scope? React S2 implements this with a `ResizeObserver`. The Figma design spec does not mention it. **Reviewer feedback (@5t3ph):** Regular flex wrapping may be an acceptable starting point since button-group does not control arrow-key navigation. A container query or `ResizeObserver` could be added later for the all-at-once orientation switch. **Decision:** Defer from MVP; flex wrapping is a potential additive path. | No — additive | Deferred | Architecture reviewer |
 
 ### Scope and prerequisites
 
