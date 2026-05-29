@@ -92,11 +92,9 @@
   outline-offset: calc(token("accordion-focus-indicator-gap") * -1);
 }
 
-@media (hover: hover) {
-  .swc-AccordionItem:has(.swc-AccordionItem-header:hover) {
-    --_swc-accordion-item-header-background: token("transparent-black-100");
-    --_swc-accordion-item-header-text-color: token("neutral-content-color-hover");
-  }
+.swc-AccordionItem:has(.swc-AccordionItem-header:hover) {
+  --_swc-accordion-item-header-background: token("transparent-black-100");
+  --_swc-accordion-item-header-text-color: token("neutral-content-color-hover");
 }
 
 .swc-AccordionItem:has(.swc-AccordionItem-header:active) {

@@ -46,12 +46,12 @@ import styles from './accordion-item.css';
  * </swc-accordion-item>
  *
  * @cssprop --swc-accordion-item-focus-indicator-corner-radius - Corner radius of the focus ring drawn around the header button.
- * @cssprop --swc-accordion-item-header-corner-radius - Corner radius of the header button background; set to a non-zero value by the parent accordion in quiet mode.
- * @cssprop --swc-accordion-item-border-color - Color of the top and bottom divider borders in quiet mode; falls back to `--swc-accordion-item-divider-color` then the default gray token.
+ * @cssprop --swc-accordion-item-header-corner-radius - Corner radius of the header button background.
+ * @cssprop --swc-accordion-item-border-color - Color of the top and bottom divider borders.
  * @cssprop --swc-accordion-item-padding-top - Block-start padding of the header button.
  * @cssprop --swc-accordion-item-padding-bottom - Block-end padding of the header button.
  * @cssprop --swc-accordion-item-disclosure-indicator-gap - Gap between the chevron indicator and the header label.
- * @cssprop --swc-accordion-item-edge-to-content-area - Inline padding of the header button; also controls the trailing-edge offset of the actions area.
+ * @cssprop --swc-accordion-item-edge-to-content-area - Inline padding of the header button.
  * @cssprop --swc-accordion-item-header-font-size - Font size of the header label.
  * @cssprop --swc-accordion-item-content-padding-inline - Inline padding of the content panel.
  * @cssprop --swc-accordion-item-divider-color - Color of the item's top and bottom divider borders.
