@@ -172,15 +172,15 @@ Use comments to explain non-obvious choices. Keep them short and use sentence ca
 
 **When to comment**:
 
-- Section headers for long stylesheets (e.g. `/* Size variants */`)
+- Section banners for long stylesheets (see format below)
 - Non-obvious design decisions (e.g. why a token was chosen)
-- Notes about spec or migration (e.g. `/* NOTE: accent is the default color */`)
+- Notes about spec or behavior (e.g. `/* NOTE: accent is the default color */`)
 
 **Style**:
 
-- Use sentence case: `/* Adjust padding when icon is present */` not `/* Adjust Padding When Icon Is Present */`
+- Use sentence case for inline and `/* NOTE: */` comments
 - Use `/* NOTE: */` for important caveats
-- Avoid comments that repeat what the code does
+- Do not comment what the selector or property value already communicates
 
 **Example from [Badge](../../../2nd-gen/packages/swc/components/badge/badge.css)**:
 
@@ -190,6 +190,28 @@ Use comments to explain non-obvious choices. Keep them short and use sentence ca
 :host([variant="neutral"]) {
   --swc-badge-background-color: token("neutral-subdued-background-color-default");
 }
+```
+
+**Section banner format**:
+
+Use banner comments to label distinct sections in longer stylesheets. The label is ALL CAPS. Add a rationale line only when the section's purpose or constraints are non-obvious — omit it when the label is self-explanatory.
+
+```css
+/* ─────────────────────────────────────────────────────────────────────────────
+   SECTION LABEL
+   Optional rationale for non-obvious constraints or decisions in this section.
+   ───────────────────────────────────────────────────────────────────────────── */
+```
+
+```css
+/* ─────────────────────────────────────────────────────────────────────────────
+   VARIANTS
+   ───────────────────────────────────────────────────────────────────────────── */
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   BASE TOOLTIP
+   Defaulted to "top" placement (tooltip appears above trigger, tip points down ▽).
+   ───────────────────────────────────────────────────────────────────────────── */
 ```
 
 ## Selector patterns
@@ -209,6 +231,40 @@ Use `:host` only for layout participation. Do not put visual styles here.
 ```
 
 **Why**: `:host` is part of the public styling API. Visual styles here are harder to override. See [anti-pattern #1](05_anti-patterns.md#1-leaving-visual-styles-on-host).
+
+#### Exception: styles that must target the host element directly
+
+Three categories of styles may legitimately live on `:host`, each for a distinct reason:
+
+1. **UA style resets** — the browser applies default styles directly to the host element (for example, the native popover stylesheet sets `padding`, `margin`, `background`, `border`, and `color` on any `[popover]` element). Those defaults cannot be overridden from an inner class and must be reset on `:host`.
+2. **Entry/exit transitions** — `opacity`, `transition-*`, and `transition-behavior: allow-discrete` must be on `:host` when the host element is itself the transition target — for instance, when `@starting-style` or `overlay` applies to the host rather than a descendant.
+3. **Positioning surface** — `position: absolute`, `inset: auto`, and dimension constraints belong on `:host` when an external controller (such as a placement controller) writes coordinates directly to the host element.
+
+```css
+:host {
+  /* UA reset */
+  padding: 0;
+  margin: 0;
+  color: unset;
+  background: transparent;
+  border: none;
+  overflow: visible;
+
+  /* Positioning surface for placement controller */
+  position: absolute;
+  inset: auto;
+  max-inline-size: min(100%, token("component-maximum-width"));
+
+  /* Entry/exit transition — must be on :host for @starting-style */
+  opacity: 0;
+  transition-property: transform, opacity, overlay, display;
+  transition-timing-function: ease-in-out;
+  transition-duration: token("animation-duration-100");
+  transition-behavior: allow-discrete;
+}
+```
+
+All other visual styles still belong on the inner wrapper class (`.swc-ComponentName`).
 
 ### When to use `:host([attribute])`
 
@@ -262,6 +318,14 @@ Variants change how the component looks. Use the right selector based on customi
 }
 ```
 
+**Sub-elements that track a variant value**: use `inherit` on the sub-element rather than repeating the override in every variant rule. Since the sub-element is a descendant, `inherit` copies the computed value from the parent.
+
+```css
+.swc-Tooltip-tip {
+  background-color: inherit; /* always matches .swc-Tooltip's variant color */
+}
+```
+
 ## State implementation patterns
 
 States reflect user interaction or component condition. Attach them to `:host` when the host element carries the state.
@@ -274,6 +338,8 @@ States reflect user interaction or component condition. Attach them to `:host` w
 | Invalid  | `:host([invalid])`                        | Form validation     |
 
 **Why**: States on `:host` let consumers style `swc-badge[disabled]` or `swc-badge:focus-visible`. If the state lives on an internal element, target that element directly.
+
+**Prefer native pseudo-classes**: when the browser exposes a pseudo-class that maps to the same state, use it instead of the attribute selector. `:host(:popover-open)` is correct for a component using `popover="auto"`; `:host(:disabled)` is correct where the host element carries the disabled state natively. The pseudo-class reflects actual browser state rather than a synced property.
 
 **Note**: Badge and Status Light are non-interactive, so they do not define focus or disabled states. See interactive components (e.g. Button) for examples.
 

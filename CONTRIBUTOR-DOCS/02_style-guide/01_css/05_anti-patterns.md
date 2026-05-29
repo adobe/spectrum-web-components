@@ -16,6 +16,7 @@
     - [Why This Happens](#why-this-happens)
     - [Why This Is a Problem](#why-this-is-a-problem)
     - [✅ Correct Approach](#-correct-approach)
+    - [Exception: styles that must target the host element directly](#exception-styles-that-must-target-the-host-element-directly)
 - [2. Preserving `--mod-*` as an Extra Indirection Layer](#2-preserving---mod--as-an-extra-indirection-layer)
     - [❌ Anti-Pattern](#-anti-pattern)
     - [Why This Happens](#why-this-happens)
@@ -56,7 +57,17 @@
     - [Specificity escalation → `:where()`](#specificity-escalation--where)
     - [Size classes in render → `:host([size])`](#size-classes-in-render--hostsize)
     - [`--mod-*` chain → single property](#--mod--chain--single-property)
-- [9. Suppressing focus outlines with `:focus { outline: none }`](#9-suppressing-focus-outlines-with-focus--outline-none-)
+- [9. Nesting compound pseudo-classes on `:host()` via CSS nesting](#9-nesting-compound-pseudo-classes-on-host-via-css-nesting)
+    - [❌ Anti-Pattern](#-anti-pattern)
+    - [Why This Happens](#why-this-happens)
+    - [Why This Is a Problem](#why-this-is-a-problem)
+    - [✅ Correct Approach](#-correct-approach)
+- [10. Size-Specific Custom Properties](#10-size-specific-custom-properties)
+    - [❌ Anti-Pattern](#-anti-pattern)
+    - [Why This Happens](#why-this-happens)
+    - [Why This Is a Problem](#why-this-is-a-problem)
+    - [✅ Correct Approach](#-correct-approach)
+- [11. Suppressing focus outlines with `:focus { outline: none }`](#11-suppressing-focus-outlines-with-focus--outline-none-)
     - [❌ Anti-Pattern](#-anti-pattern)
     - [Why This Happens](#why-this-happens)
     - [Why This Is a Problem](#why-this-is-a-problem)
@@ -114,6 +125,16 @@ Each anti-pattern is grounded in real Spectrum source patterns. **Badge** and **
 See the migrated Badge where `:host` is limited to layout (`display`, `place-self`, `vertical-align`) and all visual styling lives on `.swc-Badge`.
 
 📖 See: *Component CSS Style Guide → [Rule order](01_component-css.md#rule-order)*
+
+### Exception: styles that must target the host element directly
+
+Three categories of styles may legitimately live on `:host`, each for a distinct reason:
+
+1. **UA style resets** — the browser applies default styles directly to the host element (for example, the native popover stylesheet). Those cannot be overridden from an inner class and must be reset on `:host`.
+2. **Entry/exit transitions** — `opacity`, `transition-*`, and `transition-behavior: allow-discrete` must be on `:host` when the host element is itself the transition target (for instance, when `@starting-style` or `overlay` applies to the host rather than a descendant).
+3. **Positioning surface** — `position: absolute`, `inset: auto`, and dimension constraints belong on `:host` when an external controller (such as a placement controller) writes coordinates directly to the host element.
+
+📖 See: *Component CSS Style Guide → [When to use `:host`](01_component-css.md#when-to-use-host)*
 
 
 ## 2. Preserving `--mod-*` as an Extra Indirection Layer
@@ -321,8 +342,9 @@ Badge safely compounds attributes within `:host()` when updating custom properti
 
 ### ✅ Correct Approach
 
-- Expose only what the component itself needs
+- Expose only what the component itself needs based on its own variant, state, or size requirements
 - Keep mechanical and derived values private
+- Exception: expose properties required for nested component relationships or shared utility styling
 
 🔎 **Badge reference:**  
 Badge exposes a minimal, intentional surface and uses `_swc-*` properties for derived calculations.
@@ -424,7 +446,114 @@ After migration, Badge relies solely on `.swc-Badge` and attributes.
 | ------------------------------------------------------- | -------------------------------------------------------- |
 | `var(--mod-badge-height, var(--spectrum-badge-height))` | `var(--swc-badge-height, token("component-height-100"))` |
 
-## 9. Suppressing focus outlines with `:focus { outline: none }`
+## 9. Nesting compound pseudo-classes on `:host()` via CSS nesting
+
+### ❌ Anti-Pattern
+
+```css
+/* Intends to target the host in RTL when placement="start" is open */
+:host([placement="start"]:popover-open) {
+  transform: translateX(calc(-1 * var(--_swc-component-animation-distance)));
+
+  &:dir(rtl) {
+    transform: translateX(var(--_swc-component-animation-distance));
+  }
+}
+```
+
+### Why This Happens
+
+CSS nesting with `&` replaces `&` with the parent selector. Inside a `:host([...])` rule, `&:dir(rtl)` expands to `:host([...]):dir(rtl)` — a pseudo-class chained after the `:host()` function. This looks syntactically correct, but browsers do not support compound selectors appended outside of the `:host()` argument.
+
+### Why This Is a Problem
+
+- The rule silently fails: the `:dir()` override never applies
+- No lint or parse error is produced, making it hard to detect
+- Properties meant for RTL layout apply in all directions
+
+### ✅ Correct Approach
+
+Move all conditions inside the `:host()` argument as a compound selector:
+
+```css
+:host([placement="start"]:popover-open) {
+  transform: translateX(calc(-1 * var(--_swc-component-animation-distance)));
+}
+
+:host(:dir(rtl)[placement="start"]:popover-open) {
+  transform: translateX(var(--_swc-component-animation-distance));
+}
+```
+
+#### Exception: descendants are fine
+
+This restriction only applies when `:host()` is the outermost element being targeted. When nesting targets a **descendant** of the host, expanding `&:dir(rtl)` applies `:dir()` to the inner element — which is valid:
+
+```css
+/* ✅ Fine: :dir(rtl) targets .swc-Component-tip, not :host() */
+:host([placement="end"]) .swc-Component-tip {
+  transform: rotate(45deg);
+
+  &:dir(rtl) {
+    transform: rotate(-135deg);
+  }
+}
+```
+
+#### Migration note: `:dir()` in RTL-aware components
+
+`:dir()` is the most common pseudo-class where this issue surfaces during migrations because RTL overrides are nearly always added after a component's base styles are written. When adding `:dir()` to any `:host`-level rule during migration, always write it as a separate `:host(:dir(rtl)[...])` rule rather than a nested `&:dir(rtl)`.
+
+## 10. Size-Specific Custom Properties
+
+### ❌ Anti-Pattern
+
+```css
+:host([size="compact"]) {
+  --_swc-accordion-compact-padding-top: token("spacing-100");
+}
+```
+
+### Why This Happens
+
+- Attempting to keep size-specific values "private" while still referencing them in variant rules
+- Mapping one custom property per size variant for clarity
+
+### Why This Is a Problem
+
+- A custom property defined on `:host([size="compact"])` is part of the component's external style surface — the `--_swc-*` prefix does not make it inaccessible from outside the shadow root
+- Every size requires its own named property, bloating the API surface
+- Consumers cannot override a single "padding-top" concept; they must know and target every size-specific property name
+
+### ✅ Correct Approach
+
+Expose a single property on the base and override it per size selector:
+
+```css
+.swc-Accordion {
+  padding-block-start: var(--swc-accordion-padding-top, token("spacing-200"));
+}
+
+:host([size="compact"]) {
+  --swc-accordion-padding-top: token("spacing-100");
+}
+
+:host([size="spacious"]) {
+  --swc-accordion-padding-top: token("spacing-300");
+}
+```
+
+Consumers targeting a specific size can still override via attribute selectors on the host:
+
+```css
+swc-accordion[size="compact"] {
+  --swc-accordion-padding-top: var(--my-compact-spacing);
+}
+```
+
+📖 See: *Custom Properties Style Guide → [Component custom property exposure](02_custom-properties.md#component-custom-property-exposure)*
+
+## 11. Suppressing focus outlines with `:focus { outline: none }`
 
 ### ❌ Anti-Pattern
 

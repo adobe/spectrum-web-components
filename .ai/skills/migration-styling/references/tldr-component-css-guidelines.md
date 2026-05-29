@@ -74,6 +74,8 @@
 
 Put layout-participation styles on `:host` (`display`, `inline-size`, `min-*`/`max-*`, `position`, custom property definitions). Put visual styles on `.swc-ComponentName` or an internal part.
 
+**Exception**: three categories of styles may legitimately live on `:host`, each for a distinct reason: UA resets when the browser applies default styles directly to the host element (for example, the native popover stylesheet); transition properties (`opacity`, `transition-*`, `transition-behavior: allow-discrete`) when the host is itself the transition target (for example, when `@starting-style` applies to the host); and positioning surface (`position: absolute`, `inset: auto`, dimension constraints) when an external controller such as a placement controller writes coordinates directly to the host element.
+
 Two non-obvious cases to flag explicitly:
 
 - **`padding` on `:host`** — feels like layout but is visual spacing; move it to the internal class.
@@ -83,7 +85,7 @@ Also check that `display: flex` or `display: grid` on `:host` is actually laying
 
 **`:host:has()` is unreliable across browsers.** Safari and Firefox do not consistently support `:has()` relative to a shadow host boundary. Move all `:has()` selectors to the internal wrapper: `.swc-Component:has(...)` instead of `:host:has(...)`. Custom properties cascade identically either way. See [01_component-css#state-implementation-patterns](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/01_component-css.md#state-implementation-patterns).
 
-→ See [01_component-css](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/01_component-css.md)
+→ See [01_component-css#when-to-use-host](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/01_component-css.md#when-to-use-host)
 
 ### 2. Stylesheet Order
 
@@ -93,6 +95,15 @@ Follow the prescribed stylesheet order to manage specificity and reduce selector
 ### 3. Custom Properties
 
 Use `token()` for design token values. Use `--swc-*` only for intentionally exposed override points, and `--_swc-*` for internal/private properties. Do not keep old `--mod-*` chains.
+
+Key rules:
+
+- **`--_swc-*` on `:host`/`:host()` is not private.** Properties on the host element are part of the external style surface — consumers can set them regardless of the prefix. Declare truly private properties on the internal wrapper (`.swc-ComponentName`), not on `:host`.
+- **Expose only when the component itself overrides the property** based on its own variant, state, or size needs. Do not expose for consumer convenience. Exceptions: nested component relationships and shared utility properties.
+- **No size-specific custom properties.** When a property changes per size, expose a single property (e.g. `--swc-button-padding-vertical`) and override it per size selector (`:host([size="s"])`). Do not create size-specific properties — they become publicly addressable API.
+- **Prefer variant overrides over per-variant redefinition.** For component API attributes (size, variant, fill-style), set a CSS property once on the base using a custom property and override it per `:host([variant])`. Never create variant-specific custom property names.
+- **Native browser states on internal elements need state-specific custom properties.** For properties that change across `:hover`, `:focus-visible`, `:active` on an internal wrapper (e.g. `.swc-Button`), expose one property per state (`--swc-button-background-color-default`, `-hover`, `-focus`, `-down`). Override the full set from `:host([variant])` and `:host([static-color])`. This is the mechanism that makes static-color compound overrides possible. Exception: properties that never vary by variant (e.g. `outline` on `:focus-visible`) — define those directly on the state selector.
+- **Use full property names** in custom property names: `padding` not `pad`, `background` not `bg`, `color` not `clr`.
 
 Every exposed `--swc-*` property must be documented with a `@cssprop` JSDoc tag on the primary component class export (the SWC layer class, not the core base). Storybook picks these up automatically and surfaces them in the API docs panel.
 
@@ -138,3 +149,36 @@ Only add `@media (forced-colors: active)` if browser defaults are not conveying 
 Semantic HTML elements (`<button>`, `<input>`, `<a>`) get correct forced-colors treatment automatically — `ButtonText`, focus `Highlight`, disabled `GrayText` — without any CSS override. Only non-semantic elements (a decorative `<div>` or a `<span>` using `background-color` as a visual indicator) need explicit overrides. Do not carry over forced-colors rules from 1st-gen Spectrum CSS without first verifying the 2nd-gen component uses non-semantic markup that requires them.
 
 → See [01_component-css#forced-colors-requirements](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/01_component-css.md#forced-colors-requirements)
+
+### 8. Browser API selectors
+
+Prefer native CSS pseudo-classes over attribute selectors when one exists for the same state (`:host(:popover-open)` not `:host([open])`; `:host(:disabled)` not `:host([disabled])`). Use attribute selectors for custom attributes and ARIA states with no native pseudo-class.
+→ See [01_component-css#state-implementation-patterns](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/01_component-css.md#state-implementation-patterns)
+
+### 9. Sub-element inheritance
+
+When a sub-element must always match a variant-driven property on the parent, use `inherit` rather than repeating the `var()` reference in each variant rule.
+→ See [01_component-css#variant-implementation-patterns](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/01_component-css.md#variant-implementation-patterns)
+
+### 10. Compound pseudo-classes on `:host()` via CSS nesting
+
+CSS nesting inside a `:host([...])` rule — e.g. `&:dir(rtl)` — expands to `:host([...]):dir(rtl)`, which chains the pseudo-class **outside** the `:host()` argument. Browsers do not support this; the rule silently fails with no parse error.
+
+```css
+/* ❌ Silent failure: :dir(rtl) is outside :host() */
+:host([placement='start']:popover-open) {
+  &:dir(rtl) {
+    transform: translateX(1rem);
+  }
+}
+
+/* ✅ All conditions inside the :host() argument */
+:host(:dir(rtl)[placement='start']:popover-open) {
+  transform: translateX(1rem);
+}
+```
+
+**Exception**: when the parent selector targets a descendant (e.g. `:host([...]) .swc-Child`), nesting `&:dir(rtl)` correctly applies `:dir()` to the inner element — that is valid and fine.
+
+**Migration note**: `:dir()` is a common place this surfaces. Whenever you add `:dir()` to a `:host`-level rule, write a separate `:host(:dir(rtl)[...])` rule instead of nesting.
+→ See [05_anti-patterns#9](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/05_anti-patterns.md#9-nesting-compound-pseudo-classes-on-host-via-css-nesting)

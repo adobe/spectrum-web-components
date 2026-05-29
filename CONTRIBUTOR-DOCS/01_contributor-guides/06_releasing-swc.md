@@ -49,6 +49,8 @@ The workflow publishes four package groups:
 
 ### Make sure changesets are in place
 
+> For the 2nd-gen changeset format and how entries flow into the CHANGELOG, see the [Changelog strategy](15_changelog-strategy.md).
+
 The workflow only publishes if there are pending changesets in `.changeset/*.md`. If no changesets exist, the publish job is skipped automatically.
 
 To check what's pending, look at the `.changeset/` directory (exclude `README.md`). Each changeset file lists the packages it affects and the bump type (`patch`, `minor`, or `major`).

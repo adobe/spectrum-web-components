@@ -64,6 +64,7 @@ Reference: [Linting tools](../../CONTRIBUTOR-DOCS/02_style-guide/03_linting-tool
 
 **What to check:**
 
+- Every item in the Component CSS PR checklist passes — work through it explicitly, do not skim
 - CSS property ordering matches the documented order
 - Custom property naming follows the convention
 - No patterns from the anti-patterns guide are present

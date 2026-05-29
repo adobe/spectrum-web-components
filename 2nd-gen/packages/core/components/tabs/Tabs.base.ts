@@ -106,6 +106,7 @@ export abstract class TabsBase extends SpectrumElement {
     this.requestUpdate('keyboardActivation', old);
   }
 
+  /** @internal */
   private _keyboardActivation: KeyboardActivation = KEYBOARD_ACTIVATION_DEFAULT;
 
   /**
@@ -139,6 +140,7 @@ export abstract class TabsBase extends SpectrumElement {
     this.requestUpdate('density', old);
   }
 
+  /** @internal */
   private _density: TabDensity = TAB_DENSITY_DEFAULT;
 
   /**
@@ -181,6 +183,7 @@ export abstract class TabsBase extends SpectrumElement {
     this.requestUpdate('direction', oldDirection);
   }
 
+  /** @internal */
   private _direction: TabsDirection = TABS_DEFAULT_DIRECTION;
 
   /**
@@ -209,9 +212,12 @@ export abstract class TabsBase extends SpectrumElement {
   //     IMPLEMENTATION
   // ──────────────────────
 
+  /** @internal */
   private static readonly INDICATOR_BASE_SIZE = 100;
 
   /**
+   * @internal
+   *
    * Inline style applied to the selection indicator element.
    * Computed from the selected tab's position and dimensions.
    */
@@ -219,6 +225,8 @@ export abstract class TabsBase extends SpectrumElement {
   protected selectionIndicatorStyle = '';
 
   /**
+   * @internal
+   *
    * Suppresses the transition on the very first indicator placement
    * so it doesn't animate from the origin.
    */
@@ -226,6 +234,8 @@ export abstract class TabsBase extends SpectrumElement {
   protected shouldAnimate = false;
 
   /**
+   * @internal
+   *
    * Cached list of tab elements managed by this container. Updated
    * via `handleTabSlotChange`.
    */
@@ -519,6 +529,8 @@ export abstract class TabsBase extends SpectrumElement {
   // ───────────────────────────────────
 
   /**
+   * @internal
+   *
    * Recalculates the selection indicator's position and size based
    * on the currently selected tab element. Uses CSS transforms for
    * smooth animation between tab positions.
@@ -565,6 +577,7 @@ export abstract class TabsBase extends SpectrumElement {
     }
   };
 
+  /** @internal */
   private _resizeObserver?: ResizeObserver;
 
   // ───────────────────────────────────
