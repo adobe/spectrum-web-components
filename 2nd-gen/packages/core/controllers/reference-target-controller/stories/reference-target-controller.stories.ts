@@ -135,7 +135,118 @@ export const LabelClickFocus: Story = {
 };
 
 // ──────────────────────────────────────────────────────────────────────────────
-// Scenario E: dynamic label update
+// Scenario E: custom label element + custom input element (sp-field-label pattern)
+// ──────────────────────────────────────────────────────────────────────────────
+
+export const CustomLabelToCustomInput: Story = {
+  name: 'Custom label to custom input (sp-field-label pattern)',
+  render: () => html`
+    <div
+      style="display: flex; flex-direction: column; gap: 12px; max-width: 400px;"
+    >
+      <p style="margin: 0; font-size: 14px; color: #555;">
+        This mirrors the real SWC pattern where
+        <strong>both the label and the input are custom elements</strong>
+        with their own shadow roots. The
+        <code>&lt;demo-field-label&gt;</code>
+        renders a
+        <code>&lt;label&gt;</code>
+        inside its shadow DOM, and the
+        <code>&lt;demo-labeled-input&gt;</code>
+        renders an
+        <code>&lt;input&gt;</code>
+        inside its shadow DOM.
+      </p>
+      <p style="margin: 0; font-size: 14px; color: #c00;">
+        <strong>Gap:</strong>
+        The native
+        <code>&lt;label&gt;</code>
+        inside the custom label element cannot set
+        <code>for</code>
+        to reach outside its shadow root. The controller's
+        <code>syncLabelFor()</code>
+        only queries
+        <code>label[for]</code>
+        , so it misses custom label elements. Click-to-focus works via
+        JavaScript, but the accessible name is
+        <strong>not forwarded</strong>
+        to the shadow-internal input.
+      </p>
+      <demo-field-label for="custom-label-input">Name</demo-field-label>
+      <demo-labeled-input id="custom-label-input"></demo-labeled-input>
+    </div>
+  `,
+};
+
+// ──────────────────────────────────────────────────────────────────────────────
+// Scenario F: native label (baseline comparison)
+// ──────────────────────────────────────────────────────────────────────────────
+
+export const NativeLabelBaseline: Story = {
+  name: 'Native label baseline (works)',
+  render: () => html`
+    <div
+      style="display: flex; flex-direction: column; gap: 12px; max-width: 400px;"
+    >
+      <p style="margin: 0; font-size: 14px; color: #555;">
+        Baseline comparison: a native
+        <code>&lt;label&gt;</code>
+        in light DOM targeting the same custom input element. The controller's
+        <code>syncLabelFor()</code>
+        finds the native label and materializes
+        <code>aria-label</code>
+        on the shadow-internal input. Click-to-focus also works.
+      </p>
+      <label for="native-label-input" style="font-weight: 600;">Name</label>
+      <demo-labeled-input id="native-label-input"></demo-labeled-input>
+    </div>
+  `,
+};
+
+// ──────────────────────────────────────────────────────────────────────────────
+// Scenario G: side-by-side comparison
+// ──────────────────────────────────────────────────────────────────────────────
+
+export const SideBySideComparison: Story = {
+  name: 'Side-by-side: native label vs custom label',
+  render: () => html`
+    <div style="display: flex; gap: 48px; align-items: start;">
+      <div
+        style="display: flex; flex-direction: column; gap: 8px; max-width: 250px;"
+      >
+        <h3 style="margin: 0; font-size: 14px; color: #080;">
+          Native label (works)
+        </h3>
+        <label for="side-native" style="font-weight: 600;">Email</label>
+        <demo-labeled-input id="side-native"></demo-labeled-input>
+        <p style="margin: 0; font-size: 12px; color: #555;">
+          Inspect the shadow
+          <code>&lt;input&gt;</code>
+          : has
+          <code>aria-label="Email"</code>
+        </p>
+      </div>
+      <div
+        style="display: flex; flex-direction: column; gap: 8px; max-width: 250px;"
+      >
+        <h3 style="margin: 0; font-size: 14px; color: #c00;">
+          Custom label (gap)
+        </h3>
+        <demo-field-label for="side-custom">Email</demo-field-label>
+        <demo-labeled-input id="side-custom"></demo-labeled-input>
+        <p style="margin: 0; font-size: 12px; color: #555;">
+          Inspect the shadow
+          <code>&lt;input&gt;</code>
+          : no
+          <code>aria-label</code>
+        </p>
+      </div>
+    </div>
+  `,
+};
+
+// ──────────────────────────────────────────────────────────────────────────────
+// Scenario H: dynamic label update
 // ──────────────────────────────────────────────────────────────────────────────
 
 export const DynamicLabelUpdate: Story = {

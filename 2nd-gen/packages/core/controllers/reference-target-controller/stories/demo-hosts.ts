@@ -131,5 +131,73 @@ export class DemoDescribedInput extends LitElement {
   }
 }
 
+/**
+ * A demo custom label element that mirrors the sp-field-label pattern:
+ * a custom element with a `for` attribute that renders a native `<label>`
+ * inside its shadow DOM. The native label cannot use `for` because its
+ * target lives outside the shadow root.
+ *
+ * This demonstrates the gap where both the label and the input are custom
+ * elements with their own shadow roots, and neither native `<label for>`
+ * nor the `ReferenceTargetController` shim can bridge the relationship.
+ *
+ * Usage:
+ * ```html
+ * <demo-field-label for="my-input">Name</demo-field-label>
+ * <demo-labeled-input id="my-input"></demo-labeled-input>
+ * ```
+ */
+export class DemoFieldLabel extends LitElement {
+  static override styles = css`
+    :host {
+      display: block;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+    }
+    label {
+      cursor: inherit;
+    }
+  `;
+
+  @property({ type: String, reflect: true })
+  for = '';
+
+  private focusTarget(): void {
+    if (!this.for) {
+      return;
+    }
+    const root = this.getRootNode() as Document | ShadowRoot;
+    const target = root.getElementById(this.for) as
+      | (HTMLElement & { shadowRoot: ShadowRoot | null })
+      | null;
+    if (!target) {
+      return;
+    }
+
+    const focusable =
+      target.shadowRoot?.querySelector<HTMLElement>(
+        'input, button, textarea, select, [tabindex]'
+      ) ?? target;
+    focusable.focus();
+  }
+
+  private handleKeydown(event: KeyboardEvent): void {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      this.focusTarget();
+    }
+  }
+
+  protected override render(): TemplateResult {
+    return html`
+      <label @click=${this.focusTarget} @keydown=${this.handleKeydown}>
+        <slot></slot>
+      </label>
+    `;
+  }
+}
+
+customElements.define('demo-field-label', DemoFieldLabel);
 customElements.define('demo-labeled-input', DemoLabeledInput);
 customElements.define('demo-described-input', DemoDescribedInput);
