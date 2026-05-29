@@ -419,18 +419,20 @@ export class ResponseStatus extends SpectrumElement {
               : ''}"
             @transitionend=${this._handleHeaderLabelTransitionEnd}
           >
-            <span class="swc-ResponseStatus-labelLine swc-ResponseStatus-label"
-              >${this._rollFrom}</span
-            >
-            <span class="swc-ResponseStatus-labelLine swc-ResponseStatus-label"
-              >${incoming}</span
-            >
+            <span class="swc-ResponseStatus-labelLine swc-ResponseStatus-label">
+              ${this._rollFrom}
+            </span>
+            <span class="swc-ResponseStatus-labelLine swc-ResponseStatus-label">
+              ${incoming}
+            </span>
           </span>
         </span>
       `;
     }
 
-    return html`<span class="swc-ResponseStatus-label">${label}</span>`;
+    return html`
+      <span class="swc-ResponseStatus-label">${label}</span>
+    `;
   }
 
   private get _isAgentic(): boolean {
@@ -513,7 +515,8 @@ export class ResponseStatus extends SpectrumElement {
     for (const node of slot.assignedNodes({ flatten: true })) {
       if (
         node instanceof ResponseStatusStep ||
-        (node instanceof Element && node.localName === 'swc-response-status-step')
+        (node instanceof Element &&
+          node.localName === 'swc-response-status-step')
       ) {
         continue;
       }

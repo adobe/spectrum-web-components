@@ -54,6 +54,12 @@ export const OverviewTest: Story = {
 
 export const BooleanMutationTest: Story = {
   ...Overview,
+  args: {
+    ...Overview.args,
+    loading: true,
+    open: false,
+    'default-slot': 'Reasoning content for open-state reflection.',
+  },
   play: async ({ canvasElement, step }) => {
     const el = await getComponent<ResponseStatus>(
       canvasElement,
@@ -71,6 +77,10 @@ export const BooleanMutationTest: Story = {
     });
 
     await step('open reflects to attribute after mutation', async () => {
+      // Legacy disclosure only stays open when slot has reasoning content.
+      el.loading = false;
+      await el.updateComplete;
+
       el.open = true;
       await el.updateComplete;
       expect(el.hasAttribute('open')).toBe(true);

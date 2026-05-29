@@ -447,7 +447,9 @@ if (!customElements.get('swc-agentic-conversation-flow-demo')) {
 
 const meta: Meta = {
   title: 'Conversational AI/Conversation thread/Agentic flow (demo)',
+  component: 'swc-agentic-conversation-flow-demo',
   tags: ['dev'],
+  excludeStories: ['meta'],
   parameters: {
     layout: 'fullscreen',
     docs: {
@@ -457,8 +459,8 @@ const meta: Meta = {
   },
 };
 
-export default meta;
 export { meta };
+export default meta;
 
 export const LiveFlow: Story = {
   render: () => html`

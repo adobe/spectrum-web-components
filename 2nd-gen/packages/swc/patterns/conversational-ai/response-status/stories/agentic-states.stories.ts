@@ -99,7 +99,9 @@ const variantBlock = (label: string, story: unknown) => html`
  */
 const meta: Meta = {
   title: 'Conversational AI/Response status/Agentic states (spike)',
+  component: 'swc-response-status',
   tags: ['dev'],
+  excludeStories: ['meta'],
   parameters: {
     docs: {
       subtitle:
@@ -109,6 +111,7 @@ const meta: Meta = {
   },
 };
 
+export { meta };
 export default meta;
 
 /** Initiation — prompt received, process started. */
