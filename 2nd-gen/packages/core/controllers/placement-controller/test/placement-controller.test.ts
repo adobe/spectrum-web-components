@@ -503,10 +503,10 @@ export const OnPlacementChangeFiresWithComputedPlacement: Story = {
 
 /**
  * When a `tipElement` is passed in options, the controller installs
- * `arrow` middleware and writes inline `translate` on the tip after every
- * compute. The test asserts the tip ends up with a numeric translate
- * value (not empty, not `NaN`), which only happens when the middleware
- * actually ran.
+ * `arrow` middleware. For a bottom/top placement it pins the tip to the
+ * floating's horizontal edge (`left: 0`) and slides it along that edge with
+ * inline `translate` so the tip points at the trigger's center. The test
+ * reads the tip's style and geometry directly to assert that contract.
  */
 export const ArrowMiddlewarePositionsTip: Story = {
   render: () => html`
@@ -516,20 +516,29 @@ export const ArrowMiddlewarePositionsTip: Story = {
     const host = await getComponent<
       HTMLElement & {
         tipEl: HTMLElement;
+        triggerEl: HTMLElement;
         floatingEl: HTMLElement;
       }
     >(canvasElement, 'demo-placement-arrow');
 
     await waitFor(() => expect(host.floatingEl.style.translate).not.toBe(''));
 
-    await step('tip element receives a numeric translate', async () => {
-      // CSS `translate` may normalize `Xpx 0px` to just `Xpx` when read
-      // back, so accept either form: a single value or two values.
-      await waitFor(() =>
-        expect(host.tipEl.style.translate).toMatch(
-          /^(-?\d*\.?\d+)px(\s+(-?\d*\.?\d+)px)?$/
-        )
-      );
+    await step('controller pins the tip to the floating edge', async () => {
+      // Default demo placement is `bottom-end`, so the tip rides the top
+      // edge of the floating panel: the controller writes `left: 0` and
+      // leaves `top` cleared.
+      await waitFor(() => {
+        expect(host.tipEl.style.left).toBe('0px');
+        expect(host.tipEl.style.translate).not.toBe('');
+      });
+    });
+
+    await step('tip points at the trigger center', () => {
+      const triggerRect = host.triggerEl.getBoundingClientRect();
+      const tipRect = host.tipEl.getBoundingClientRect();
+      const triggerCenterX = triggerRect.left + triggerRect.width / 2;
+      const tipCenterX = tipRect.left + tipRect.width / 2;
+      expect(Math.abs(tipCenterX - triggerCenterX)).toBeLessThanOrEqual(2);
     });
   },
 };
