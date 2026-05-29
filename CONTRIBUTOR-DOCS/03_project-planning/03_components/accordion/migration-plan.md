@@ -33,6 +33,8 @@
 - [CSS custom property migration reference](#css-custom-property-migration-reference)
     - [`--mod-*` to `--swc-*` mapping](#--mod--to---swc--mapping)
     - [Density × size padding matrix](#density--size-padding-matrix)
+    - [Closed panel hiding (B5)](#closed-panel-hiding-b5)
+    - [Direct actions — interaction](#direct-actions--interaction)
 - [Migration checklist](#migration-checklist)
     - [Preparation (this ticket)](#preparation-this-ticket)
     - [Setup](#setup)
@@ -58,13 +60,13 @@
 ## TL;DR
 
 - **No 2nd-gen accordion** package exists yet under `2nd-gen/packages/`; Setup phase creates core + SWC scaffolds.
-- **Accessibility migration analysis** is the behavioral contract for WCAG 2.2 AA; 2nd-gen diverges from 1st-gen on keyboard (no `FocusGroupController` arrow/Home/End on the host, no roving `tabindex` between item hosts), disabled header semantics (`aria-disabled` + panel `inert`), closed-panel hiding (`hidden` vs `display: none` only), heading **API** (**slotted** heading text **only** — **no** string **`label`**, clean break vs 1st-gen), and **Space** handling (**SWC-1487**).
+- **Accessibility migration analysis** is the behavioral contract for WCAG 2.2 AA; 2nd-gen diverges from 1st-gen on keyboard (no `FocusGroupController` arrow/Home/End on the host, no roving `tabindex` between item hosts), disabled header semantics (`aria-disabled` + panel `inert`), closed-panel hiding (**`aria-hidden`** + CSS collapse, not HTML **`hidden`**; see [Closed panel hiding (B5)](#closed-panel-hiding-b5)), heading **API** (**slotted** heading text **only** — **no** string **`label`**, clean break vs 1st-gen), and **Space** handling (**SWC-1487**).
 - **React Spectrum S2 parity (planning):** Align public surface where authors expect cross-product parity — **`quiet`** on the accordion (from RS **`isQuiet`**) and **`disabled`** on the accordion host (**accordion-wide** disable, from RS **`isDisabled`** on **`Accordion`**), in addition to per-item **`disabled`**. Details: [React Spectrum alignment considerations](#react-spectrum-alignment-considerations).
 - **Severity:** **Normal** for migration planning. Escalate to **Major** only if Spectrum 2 accordion CSS is missing or core infrastructure blocks a core/SWC split (not observed today).
 
 ### Most blocking open questions
 
-None for **starting** implementation. **`label` vs slot** is **decided:** slotted heading only — **no** 2nd-gen **`label`** (see [accessibility migration analysis](./accessibility-migration-analysis.md)). Still resolve **final slot names** (heading vs panel), and **toggle event naming** before API freeze (see [Open — API and scope](#open--api-and-scope)).
+None for **starting** implementation. **`label` vs slot** is **decided:** slotted heading only — **no** 2nd-gen **`label`** (see [accessibility migration analysis](./accessibility-migration-analysis.md)). **`swc-accordion-item-toggle`** is the 2nd-gen toggle event name. Still resolve **final slot names** (heading vs panel) before API freeze (see [Open — API and scope](#open--api-and-scope)).
 
 ---
 
@@ -210,9 +212,9 @@ Inherited: `SizedMixin(Focusable)` — `tabIndex` / `focus` / `blur` / `click` d
 | **B2** | Heading label API | String `label` only; default slot = **panel** | Slotted **header** label only — **no** 2nd-gen **`label`** attribute (clean break; see [accessibility migration analysis](./accessibility-migration-analysis.md)) | Migrate **`label="…"`** to slotted heading text; separate **panel** slot if the default slot becomes heading-only. |
 | **B3** | Keyboard — headers | `FocusGroupController`: ArrowUp/Down, Home, End with `preventDefault`; roving `tabindex` on item hosts | Tab / Shift+Tab through all focusables; no default header-only arrows; see [Why we omit roving tabindex…](./accessibility-migration-analysis.md#why-we-omit-roving-tabindex-and-optional-header-only-arrows) | Remove reliance on arrow keys between headers. |
 | **B4** | Disabled item | Native `disabled` on shadow `<button>` + host `aria-disabled` | Prefer `aria-disabled` on header, `inert` on panel; do not fake disabled with `tabindex="-1"` on header | Tests and SR workflows that assumed native disabled-only behavior. |
-| **B5** | Closed panel | `display: none` on `#content` | `hidden` (or equivalent) per a11y analysis | Usually none if markup unchanged; a11y tree may differ slightly. |
+| **B5** | Closed panel | `display: none` on `#content` | **`aria-hidden="true"`** on `#content` when closed, plus CSS collapse (`display: none` by default; **`height: 0`** + **`overflow: hidden`** where **`calc-size()`** height animation is supported). **Not** the HTML **`hidden`** attribute: **`hidden`** removes the panel from layout and **breaks** open/close height transitions. **`aria-hidden`** hides the closed panel from the accessibility tree while the animated path keeps **`display: block`** for **`calc-size()`**. See [Closed panel hiding (B5)](#closed-panel-hiding-b5). | Usually none; AT exposure matches APG intent when closed. |
 | **B6** | Space / scroll | Scroll quirks in overflow (**SWC-1487**) | `preventDefault` on Space for activation on header | Verify nested scroll layouts after upgrade. |
-| **B7** | Toggle event name | `sp-accordion-item-toggle` | `swc-*` event per 2nd-gen naming | Update listeners. |
+| **B7** | Toggle event name | `sp-accordion-item-toggle` | **`swc-accordion-item-toggle`** (cancelable; **`preventDefault()`** reverts **`open`**) | Update listeners and event name. |
 | **B8** | CSS customization | Broad `--spectrum-accordion-*` / `--mod-*` | S2 tokens; narrow reviewed `--swc-*` if any | Replace theme overrides per Phase 4 mapping doc. |
 | **B9** | Heading level API surface | Public reflected **`level`** on **`sp-accordion-item`** (overridden by parent) | **`level`** public **only** on **`swc-accordion`**; item uses **`protected` `heading`** set by parent | Consumers set **`level`** on the accordion for slotted sets; **`swc-accordion-item`** without a parent keeps a **default** **`heading`** of **`3`** ([Open — API and scope](#open--api-and-scope)). |
 
@@ -241,9 +243,9 @@ No 2nd-gen package yet — this section records **planned** decisions from analy
 | Item | `open`, `disabled` | Same semantics as today unless renamed for consistency. **No** public **`quiet`** on the item. |
 | Item (implementation) | **`protected` `heading`** (`2`–`6`) | **Not** public API—not reflected, not set by consumers. Parent **`level`** assigns **`heading`** on each slotted item (core/SWC lifecycle). |
 | Heading text | Slotted (see [Shadow DOM output](#shadow-dom-output-rendered-html)) | **Rationale:** a string **`label`** cannot mirror phrasing content (`<strong>`, `<code>`) into the header’s accessible name the way slotted light DOM can; matches [accessibility migration analysis](./accessibility-migration-analysis.md). **Breaking** vs 1st-gen **`label`**: **clean break** — 2nd-gen does **not** expose **`label`**; authors migrate markup to the heading slot only. |
-| Events | Renamed toggle event | Exact string TBD. |
-| Direct actions (item header affordances) | `slot="actions"` on `swc-accordion-item` (working name — not frozen); open-ended, any content may be slotted | (spectrum-css container class `.spectrum-Accordion-itemDirectActions`) rendered as a **sibling to the `<h*>` element** (not inside it); placing it inside `<h*>` would bleed its text content into the heading's accessible name. `slotchange` observer hides the container when empty. `stopPropagation` on the container prevents slot clicks from toggling the accordion. Specific supported content (`swc-action-button`, `swc-switch`) are open questions; see [Open — API and scope](#open--api-and-scope). |
-| `noInlinePadding` modifier | Not a public attribute | S2 modifier `.spectrum-Accordion--noInlinePadding` removes **header** inline padding. **Not** exposed as an API attribute. Parity is via **`--swc-accordion-item-edge-to-content-area`** on `swc-accordion-item` (symmetric `padding-inline` on the header button); set to `0` for edge-to-edge alignment. Storybook demo and `@cssprop` documentation **TBD**. |
+| Events | Renamed toggle event | **`swc-accordion-item-toggle`**; also **`swc-open`**, **`swc-close`**, **`swc-after-open`**, **`swc-after-close`**. |
+| Direct actions (item header affordances) | `slot="actions"` on `swc-accordion-item`; open-ended, any content may be slotted | Rendered as a **sibling to the `<h*>` element** (not inside it). **`ObserveSlotPresence`** hides the actions container when the slot is empty. Toggle is bound **only** to the header **`<button>`**, not the row; action clicks **do not** reach the toggle handler, so **`stopPropagation`** on the actions container is **not required** with the current DOM (see [Direct actions — interaction](#direct-actions--interaction)). |
+| `noInlinePadding` modifier | Not a public attribute | S2 modifier `.spectrum-Accordion--noInlinePadding` removes **header** inline padding. **Not** exposed as an API attribute. Parity is via **`--swc-accordion-item-edge-to-content-area: 0`** on `swc-accordion-item`. Documented in **`@cssprop`** JSDoc only; **no** dedicated Storybook story (intentional; edge-to-edge is a token override, not a product variant). |
 
 ### React Spectrum alignment considerations
 
@@ -340,6 +342,25 @@ Header block padding is determined by `density` (on the accordion host) and `siz
 
 **Compact** and **spacious** density: `swc-accordion` overrides the same exposed properties on slotted items via `:host([density="…"]) ::slotted(swc-accordion-item)` and `:host([density="…"][size="…"]) ::slotted(swc-accordion-item)` (medium uses the base `:host([density="…"])` rule; s/l/xl use compound density + size selectors).
 
+### Closed panel hiding (B5)
+
+2nd-gen **does not** use the HTML **`hidden`** attribute on the content panel.
+
+| Concern | Approach |
+|---|---|
+| **Accessibility tree when closed** | **`aria-hidden="true"`** on `#content` when **`open`** is false. |
+| **Instant show/hide (default)** | CSS **`display: none`** on `.swc-AccordionItem-content`; **`display: block`** when **`:host([open])`**. |
+| **Height animation (progressive enhancement)** | Where **`calc-size()`** is supported, the panel stays **`display: block`** with **`height: 0`** / **`overflow: hidden`** when closed and animates to **`calc-size(auto, size)`** when open. The HTML **`hidden`** attribute would remove the node from layout and **prevent** that transition. |
+| **Why not both `hidden` and `aria-hidden`?** | Redundant for AT when closed, and **`hidden`** conflicts with the animated collapse path. **`aria-hidden`** plus CSS collapse is the supported contract. |
+
+Implementation: [`AccordionItem.ts`](../../../../2nd-gen/packages/swc/components/accordion/AccordionItem.ts), [`accordion-item.css`](../../../../2nd-gen/packages/swc/components/accordion/accordion-item.css) (`@supports (height: calc-size(auto, size))` block).
+
+### Direct actions — interaction
+
+The disclosure **`<button>`** is the **only** toggle target (`@click=${this.toggle}` on `#header`). The **`actions`** slot lives in a **sibling** `.swc-AccordionItem-actions` container, **outside** the button. Clicks on slotted action controls therefore **do not** bubble through the button and **do not** toggle the item.
+
+**`stopPropagation`** on the actions container was considered in early planning (when a larger click target was possible) but is **not implemented** and **not required** for the shipped DOM. If the header row ever becomes a single shared click target, revisit this section.
+
 ---
 
 ## Migration checklist
@@ -356,14 +377,14 @@ Gates align with [01_washing-machine-workflow.md](../../02_workstreams/02_2nd-ge
 
 ### Setup
 
-- [ ] Create `2nd-gen/packages/core/.../accordion` and `2nd-gen/packages/swc/.../accordion`
-- [ ] Wire exports; build passes with placeholder implementation
+- [x] Create `2nd-gen/packages/core/.../accordion` and `2nd-gen/packages/swc/.../accordion`
+- [x] Wire exports; build passes with placeholder implementation
 
 ### API
 
-- [ ] Public properties, attributes, and events match agreed 2nd-gen surface (including renames; **no** string **`label`** on item — heading via slot only); include reflected **`density`** (`compact` \| `regular` \| `spacious`), **`quiet`** (host only), and host **`disabled`** per [React Spectrum alignment considerations](#react-spectrum-alignment-considerations)
-- [ ] Dev-mode warning when **`density`** is omitted (if adopted)
-- [ ] Exclusive open (`allow-multiple` false): decide **`RadioController`** vs inline sibling-close logic; if controller is shared, document API and add tests
+- [x] Public properties, attributes, and events match agreed 2nd-gen surface (including renames; **no** string **`label`** on item — heading via slot only); include reflected **`density`** (`compact` \| `regular` \| `spacious`), **`quiet`** (host only), and host **`disabled`** per [React Spectrum alignment considerations](#react-spectrum-alignment-considerations)
+- [x] Dev-mode warning when **`density`** is omitted (if adopted)
+- [x] Exclusive open (`allow-multiple` false): decide **`RadioController`** vs inline sibling-close logic; if controller is shared, document API and add tests — **decision:** inline **`closeSiblingsOnOpen`** in **`AccordionBase`** for this migration; **`RadioController`** deferred ([A3](#additive--ships-when-ready-zero-breakage-for-consumers-already-on-2nd-gen))
 
 ### Styling
 
@@ -372,7 +393,7 @@ Gates align with [01_washing-machine-workflow.md](../../02_workstreams/02_2nd-ge
 
 ### Accessibility
 
-- [ ] Region + `aria-labelledby`, `aria-controls`, closed panel semantics, disabled + `inert`, Space **`preventDefault`**, no arrow-key header trap
+- [x] Region + `aria-labelledby`, `aria-controls`, closed panel semantics (**`aria-hidden`** + CSS collapse; see [Closed panel hiding (B5)](#closed-panel-hiding-b5)), disabled + `inert`, Space **`preventDefault`**, no arrow-key header trap
 - [ ] Manual SR spot-check (VoiceOver + NVDA or team minimum)
 
 ### Testing
@@ -380,12 +401,12 @@ Gates align with [01_washing-machine-workflow.md](../../02_workstreams/02_2nd-ge
 - [ ] [`keyboard.test.ts`](../../../../1st-gen/packages/accordion/test/keyboard.test.ts) expectations updated (Tab order, no `FocusGroup` arrows)
 - [ ] Port / extend: [`a11y-tree.test.ts`](../../../../1st-gen/packages/accordion/test/a11y-tree.test.ts), [`controlled.test.ts`](../../../../1st-gen/packages/accordion/test/controlled.test.ts), [`declarative.test.ts`](../../../../1st-gen/packages/accordion/test/declarative.test.ts), [`imperative.test.ts`](../../../../1st-gen/packages/accordion/test/imperative.test.ts), [`dev-mode.test.ts`](../../../../1st-gen/packages/accordion/test/dev-mode.test.ts), [`memory.test.ts`](../../../../1st-gen/packages/accordion/test/memory.test.ts), [`accordion-memory.test.ts`](../../../../1st-gen/packages/accordion/test/accordion-memory.test.ts)
 - [ ] New unit coverage per [accessibility migration analysis — automated tests](./accessibility-migration-analysis.md#automated-tests)
-- [ ] Storybook a11y + play functions: single open, multiple open, disabled item, **accordion host `disabled`**, **`quiet`**
+- [ ] Storybook a11y + play functions: single open, multiple open, disabled item, **accordion host `disabled`**, **`quiet`** — **partial:** play tests exist in [`accordion.test.ts`](../../../../2nd-gen/packages/swc/components/accordion/test/accordion.test.ts); update assertions for **`aria-hidden`** (not **`hidden`**) and fix stale Overview defaults; **`quiet`** and Playwright snapshots still open
 
 ### Documentation
 
-- [ ] Public-API JSDoc on `Component.ts`, per-component MDX docs page (`accordion.mdx`) with a spacing / **custom properties** section for “no inline padding” style parity—**no** **`show paddings`**-style attribute; see [rendering roadmap — Figma](./rendering-and-styling-migration-analysis.md#figma--s2-web-desktop-scale)
-- [ ] Storybook story and `@cssprop` docs for no-inline-padding parity via `--swc-accordion-item-edge-to-content-area`
+- [x] JSDoc, usage docs, Storybook stories (**no** `noInlinePadding`-style attribute)
+- [x] **`noInlinePadding` parity:** **`@cssprop`** documents **`--swc-accordion-item-edge-to-content-area`**; **no** dedicated Storybook story (intentional; see [Public API](#public-api))
 - [x] Document remaining exposed `--swc-accordion-item-*` custom properties in `@cssprop` (Storybook API panel)
 - [x] Do not document arrow-key navigation between headers for 2nd-gen (contrast with legacy README)
 
@@ -404,7 +425,6 @@ Gates align with [01_washing-machine-workflow.md](../../02_workstreams/02_2nd-ge
 |---|---|
 | **Standalone item** | **Direction:** **`swc-accordion-item`** without a parent stays **supported** with reasonable defaults (**`protected` `heading`** defaults to **`3`**, same as today’s accordion default)—matches existing tests and story patterns. Ticket any change if product requires parent-only usage. |
 | Heading slot content | Text-only vs inline phrasing (`<strong>`, `<code>`) in heading slot. |
-| Toggle event | Exact `swc-*` event name. |
 | Chevron / disclosure icon | Prefer **`swc-icon`** internally; finalize icon asset/name against S2. |
 | Accordion host **`disabled`** | Confirm **controlled** **`open`** cannot expand while host **`disabled`**; prefer **container-query** / host styling for descendant disabled visuals ([Public API](#public-api) **`disabled`** note). |
 | **`density`** dev warning | Confirm **omit-attribute** warning ships with accordion (recommended; same spirit as Badge **`variant`**). |

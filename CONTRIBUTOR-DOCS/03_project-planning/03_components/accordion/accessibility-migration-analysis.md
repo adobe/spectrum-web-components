@@ -178,7 +178,7 @@ Pick one mechanism per state. **Do not** mix `tabindex="-1"` sweeps with the val
 | Item state | Mechanism on the panel | Why |
 |---|---|---|
 | Open + enabled | Visible; in flow; in tab and AT order. | Normal interaction. |
-| **Closed** + enabled | **`hidden`** attribute (or equivalent). | Removes the panel from layout, focus, and the accessibility tree in one step. |
+| **Closed** + enabled | **`aria-hidden="true"`** on `#content`, plus CSS collapse (`display: none` by default; **`height: 0`** + **`overflow: hidden`** where **`calc-size()`** animation is supported). **Not** HTML **`hidden`**: **`hidden`** breaks height transitions. See [migration plan — Closed panel hiding (B5)](./migration-plan.md#closed-panel-hiding-b5). | Hides from AT; removes from layout/focus via CSS (and **`display: none`** in non-animated browsers). |
 | Open or closed + **disabled** | **`inert`** on the panel node. | `inert` applies to the element and its flat-tree descendants—no focus, no AT activation—without removing it from layout if the design needs it visible. |
 
 **Disabled item**
@@ -188,7 +188,7 @@ Pick one mechanism per state. **Do not** mix `tabindex="-1"` sweeps with the val
 
 **Collapsed panels**
 
-- Content **hidden** from **both** sight and accessibility where appropriate (**`hidden`** attribute or equivalent), consistent with implementation.
+- Content **hidden** from **both** sight and accessibility when closed: **`aria-hidden="true"`** plus CSS collapse (see [migration plan — Closed panel hiding (B5)](./migration-plan.md#closed-panel-hiding-b5)).
 
 ### Keyboard and focus
 
