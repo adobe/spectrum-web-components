@@ -10,4 +10,71 @@
  * governing permissions and limitations under the License.
  */
 
-/* S2 token imports and selector definitions land here in Phase 4. */
+:host {
+  display: block;
+  min-inline-size: var(--swc-accordion-min-inline-size, token("accordion-minimum-width"));
+}
+
+.swc-Accordion {
+  --_swc-accordion-corner-radius: token("corner-radius-medium-size-medium");
+}
+
+/* Corner radius per size: cascades to child items so quiet mode resolves correctly */
+:host([size="s"]) .swc-Accordion {
+  --_swc-accordion-corner-radius: token("corner-radius-medium-size-small");
+}
+
+:host([size="l"]) .swc-Accordion {
+  --_swc-accordion-corner-radius: token("corner-radius-medium-size-large");
+}
+
+:host([size="xl"]) .swc-Accordion {
+  --_swc-accordion-corner-radius: token("corner-radius-medium-size-extra-large");
+}
+
+/* Quiet: removes dividers and rounds header corners (visible on hover and focus) */
+:host([quiet]) ::slotted(swc-accordion-item) {
+  --swc-accordion-item-border-color: transparent;
+  --swc-accordion-item-header-corner-radius: var(--_swc-accordion-corner-radius);
+}
+
+/* Compact & spacious density: overrides cascade to slotted items */
+:host([density="compact"]) ::slotted(swc-accordion-item) {
+  --swc-accordion-item-padding-top: token("accordion-top-to-text-compact-medium");
+  --swc-accordion-item-padding-bottom: token("accordion-bottom-to-text-compact-medium");
+}
+
+:host([density="spacious"]) ::slotted(swc-accordion-item) {
+  --swc-accordion-item-padding-top: token("accordion-top-to-text-spacious-medium");
+  --swc-accordion-item-padding-bottom: token("accordion-bottom-to-text-spacious-medium");
+}
+
+:host([density="compact"][size="s"]) ::slotted(swc-accordion-item) {
+  --swc-accordion-item-padding-top: token("accordion-top-to-text-compact-small");
+  --swc-accordion-item-padding-bottom: token("accordion-bottom-to-text-compact-small");
+}
+
+:host([density="compact"][size="l"]) ::slotted(swc-accordion-item) {
+  --swc-accordion-item-padding-top: token("accordion-top-to-text-compact-large");
+  --swc-accordion-item-padding-bottom: token("accordion-bottom-to-text-compact-large");
+}
+
+:host([density="compact"][size="xl"]) ::slotted(swc-accordion-item) {
+  --swc-accordion-item-padding-top: token("accordion-top-to-text-compact-extra-large");
+  --swc-accordion-item-padding-bottom: token("accordion-bottom-to-text-compact-extra-large");
+}
+
+:host([density="spacious"][size="s"]) ::slotted(swc-accordion-item) {
+  --swc-accordion-item-padding-top: token("accordion-top-to-text-spacious-small");
+  --swc-accordion-item-padding-bottom: token("accordion-bottom-to-text-spacious-small");
+}
+
+:host([density="spacious"][size="l"]) ::slotted(swc-accordion-item) {
+  --swc-accordion-item-padding-top: token("accordion-top-to-text-spacious-large");
+  --swc-accordion-item-padding-bottom: token("accordion-bottom-to-text-spacious-large");
+}
+
+:host([density="spacious"][size="xl"]) ::slotted(swc-accordion-item) {
+  --swc-accordion-item-padding-top: token("accordion-top-to-text-spacious-extra-large");
+  --swc-accordion-item-padding-bottom: token("accordion-bottom-to-text-spacious-extra-large");
+}
