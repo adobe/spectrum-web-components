@@ -10,6 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
+import { PropertyValues } from 'lit';
 import { property, state } from 'lit/decorators.js';
 
 import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
@@ -123,11 +124,57 @@ export abstract class AccordionItemBase extends ObserveSlotPresence(
     return !this.disabled && !this.parentDisabled;
   }
 
+  private get contentPanel(): HTMLElement | null {
+    return this.shadowRoot?.getElementById('content') ?? null;
+  }
+
+  private dispatchAfterEvent(isOpen: boolean): void {
+    this.dispatchEvent(
+      new Event(
+        isOpen
+          ? SWC_ACCORDION_ITEM_AFTER_OPEN_EVENT
+          : SWC_ACCORDION_ITEM_AFTER_CLOSE_EVENT,
+        { bubbles: true, composed: true }
+      )
+    );
+  }
+
+  // Guards dispatchAfterEvent so only one after-event fires per open/close
+  // cycle. transitionend fires once per CSS property; height is the only match.
+  private afterEventPending = false;
+
+  private readonly handleTransitionEnd = (event: TransitionEvent): void => {
+    if (
+      event.target !== this.contentPanel ||
+      event.propertyName !== 'height' ||
+      !this.afterEventPending
+    ) {
+      return;
+    }
+    this.afterEventPending = false;
+    this.dispatchAfterEvent(this.open);
+  };
+
+  // Reused for transitioncancel: an externally interrupted transition must still
+  // resolve afterEventPending so the after-event is not silently lost.
+  private readonly handleTransitionCancel = (event: TransitionEvent): void => {
+    if (
+      event.target !== this.contentPanel ||
+      event.propertyName !== 'height' ||
+      !this.afterEventPending
+    ) {
+      return;
+    }
+    this.afterEventPending = false;
+    this.dispatchAfterEvent(this.open);
+  };
+
   /**
    * @internal
    * Toggles the item open state. Guards for disabled, flips `open`, dispatches
    * the toggle event, and reverts if the event is canceled. On success, dispatches
-   * `swc-after-open` or `swc-after-close` after the next render cycle.
+   * `swc-after-open` or `swc-after-close` after the panel height transition ends,
+   * or immediately if no transition is active.
    */
   protected toggle(): void {
     if (!this.mayExpand()) {
@@ -153,16 +200,12 @@ export abstract class AccordionItemBase extends ObserveSlotPresence(
         }
       )
     );
-    void this.updateComplete.then(() => {
-      this.dispatchEvent(
-        new Event(
-          isOpen
-            ? SWC_ACCORDION_ITEM_AFTER_OPEN_EVENT
-            : SWC_ACCORDION_ITEM_AFTER_CLOSE_EVENT,
-          { bubbles: true, composed: true }
-        )
-      );
-    });
+    const panel = this.contentPanel;
+    if (!panel || getComputedStyle(panel).transitionDuration === '0s') {
+      this.dispatchAfterEvent(isOpen);
+    } else {
+      this.afterEventPending = true;
+    }
   }
 
   /**
@@ -179,5 +222,25 @@ export abstract class AccordionItemBase extends ObserveSlotPresence(
    */
   public setManagedParentDisabled(disabled: boolean): void {
     this.parentDisabled = disabled;
+  }
+
+  protected override firstUpdated(changedProperties: PropertyValues): void {
+    super.firstUpdated(changedProperties);
+    this.contentPanel?.addEventListener('transitionend', this.handleTransitionEnd);
+    this.contentPanel?.addEventListener('transitioncancel', this.handleTransitionCancel);
+  }
+
+  public override connectedCallback(): void {
+    super.connectedCallback();
+    if (this.hasUpdated) {
+      this.contentPanel?.addEventListener('transitionend', this.handleTransitionEnd);
+      this.contentPanel?.addEventListener('transitioncancel', this.handleTransitionCancel);
+    }
+  }
+
+  public override disconnectedCallback(): void {
+    super.disconnectedCallback();
+    this.contentPanel?.removeEventListener('transitionend', this.handleTransitionEnd);
+    this.contentPanel?.removeEventListener('transitioncancel', this.handleTransitionCancel);
   }
 }
