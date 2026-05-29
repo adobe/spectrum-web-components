@@ -15,10 +15,6 @@ import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
 import { Badge } from '@adobe/spectrum-wc/badge';
-
-import '@adobe/spectrum-wc/components/badge/swc-badge.js';
-import '@adobe/spectrum-wc/components/icon/swc-icon.js';
-
 import {
   BADGE_VALID_SIZES,
   BADGE_VARIANTS,
@@ -29,7 +25,11 @@ import {
   type BadgeSize,
   FIXED_VALUES,
   type FixedValues,
-} from '../../../../core/components/badge/Badge.types.js';
+} from '@spectrum-web-components/core/components/badge/index.js';
+
+import '@adobe/spectrum-wc/components/badge/swc-badge.js';
+import '@adobe/spectrum-wc/components/icon/swc-icon.js';
+
 import { iconForSize } from '../../../.storybook/helpers/index.js';
 import * as Icons from '../../icon/elements/index.js';
 
