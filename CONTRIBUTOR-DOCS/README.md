@@ -43,7 +43,6 @@
     - [Components](03_project-planning/03_components/README.md)
     - [Milestones](03_project-planning/04_milestones/README.md)
     - Strategies
-    - Initiatives
 
 </details>
 

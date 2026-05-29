@@ -48,6 +48,8 @@ Create per-component migration guidance for application developers upgrading app
 
 Before writing anything, read `CONTRIBUTOR-DOCS/03_project-planning/03_components/[component]/migration-plan.md`. Locate every item in the documentation checklist that is flagged as "deferred to consumer migration guide" — these are the breaking changes Phase 7 has already identified as needing coverage here. They are the primary input for this guide's `## What changed` and `## Update your code` sections. If the migration plan is absent, derive the breaking changes from the 1st-gen and 2nd-gen source comparison and note the risk.
 
+**Scope the guide to what actually shipped.** The migration plan categories (Must-ship, Additive, Deferred) reflect planning intent, not final state — by the time the guide is written, some Additive items may have been implemented and some Must-ship items may have slipped. The 2nd-gen source is the only authority. For every feature you consider including: verify it exists in the shipped source. If it is there, include it regardless of how the plan categorized it. If it is not in the source, exclude it regardless of how the plan categorized it.
+
 ### Consistent import and tag patterns
 
 All guides follow the same import and tag name conventions. Do not grep for these — derive them from the component name:
