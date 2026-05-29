@@ -13,10 +13,6 @@
 import { html, type TemplateResult } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
-import '@adobe/spectrum-wc/components/tabs/swc-tabs.js';
-import '@adobe/spectrum-wc/components/tabs/swc-tab.js';
-import '@adobe/spectrum-wc/components/tabs/swc-tab-panel.js';
-
 import {
   KEYBOARD_ACTIVATIONS,
   type KeyboardActivation,
@@ -24,7 +20,11 @@ import {
   type TabDensity,
   TABS_DIRECTIONS,
   type TabsDirection,
-} from '../../../../core/components/tabs/Tabs.types.js';
+} from '@spectrum-web-components/core/components/tabs/index.js';
+
+import '@adobe/spectrum-wc/components/tabs/swc-tabs.js';
+import '@adobe/spectrum-wc/components/tabs/swc-tab.js';
+import '@adobe/spectrum-wc/components/tabs/swc-tab-panel.js';
 
 const events = ['change'];
 
