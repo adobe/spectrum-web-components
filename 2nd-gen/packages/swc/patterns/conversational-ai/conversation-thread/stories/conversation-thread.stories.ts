@@ -866,6 +866,7 @@ export const Accessibility: Story = {
 // ──────────────────────────────
 
 export const FullPattern: Story = {
+  tags: ['!test'],
   render: renderFullPattern,
   parameters: {
     layout: 'fullscreen',

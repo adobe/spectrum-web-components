@@ -100,7 +100,8 @@ const variantBlock = (label: string, story: unknown) => html`
 const meta: Meta = {
   title: 'Conversational AI/Response status/Agentic states (spike)',
   component: 'swc-response-status',
-  tags: ['dev'],
+  // Visual spike only — test-runner axe on Response status → Agentic accessibility.
+  tags: ['dev', '!test'],
   excludeStories: ['meta'],
   parameters: {
     docs: {
@@ -403,7 +404,7 @@ if (!customElements.get('swc-agentic-status-simulation-demo')) {
  * Steps appear one at a time in the panel as each becomes active.
  */
 export const LiveSimulation: Story = {
-  tags: ['dev'],
+  tags: ['dev', '!test'],
   render: () => html`
     <div style="max-width:580px;">
       <swc-agentic-status-simulation-demo></swc-agentic-status-simulation-demo>

@@ -462,7 +462,57 @@ const meta: Meta = {
 export { meta };
 export default meta;
 
+/** Frozen agentic thread for CI accessibility. {@link LiveFlow} is timed (`!test`). */
+export const AgenticFlowAccessibility: Story = {
+  tags: ['a11y'],
+  render: () => {
+    const completeSteps = AGENTIC_VIDEO_FLOW_STEPS.map(
+      (step) => html`
+        <swc-response-status-step
+          title=${step.title}
+          detail=${step.detail}
+          kind=${step.kind}
+          status="complete"
+        ></swc-response-status-step>
+      `
+    );
+
+    return html`
+      <div
+        style="max-width:960px;margin:auto;padding:24px;box-sizing:border-box;"
+      >
+        <swc-conversation-thread>
+          <swc-conversation-turn type="user">
+            <swc-user-message>
+              Can you help me create a 45-minute presentation?
+            </swc-user-message>
+          </swc-conversation-turn>
+          <swc-conversation-turn type="system">
+            <swc-system-message>
+              <swc-response-status
+                slot="status"
+                phase="complete"
+                duration="12"
+                reasoning-label="Execution steps"
+              >
+                ${completeSteps}
+              </swc-response-status>
+              <div class="swc-Typography--prose">
+                <p>
+                  I grouped your request into a presentation outline with three
+                  supporting proof points and a concise close.
+                </p>
+              </div>
+            </swc-system-message>
+          </swc-conversation-turn>
+        </swc-conversation-thread>
+      </div>
+    `;
+  },
+};
+
 export const LiveFlow: Story = {
+  tags: ['dev', '!test'],
   render: () => html`
     <swc-agentic-conversation-flow-demo></swc-agentic-conversation-flow-demo>
   `,

@@ -16,6 +16,8 @@ import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
 import '../index.js';
 
+import { AGENTIC_VIDEO_FLOW_STEPS } from '../../agentic-video-flow-script.js';
+
 // ────────────────
 //    METADATA
 // ────────────────
@@ -238,5 +240,34 @@ export const Accessibility: Story = {
     'default-slot':
       'I grouped your request into a presentation outline and prioritized key business messages.',
   },
+  tags: ['a11y'],
+};
+
+/**
+ * Frozen agentic processing state for test-runner axe and Playwright.
+ * Timed demos live under Agentic states (spike) and are tagged `!test`.
+ */
+export const AgenticAccessibility: Story = {
+  render: () => html`
+    <swc-response-status
+      phase="processing"
+      open
+      initiating-label="Processing request"
+      reasoning-label="Execution steps"
+    >
+      ${AGENTIC_VIDEO_FLOW_STEPS.map((step, index) => {
+        const status =
+          index < 2 ? 'complete' : index === 2 ? 'active' : 'pending';
+        return html`
+          <swc-response-status-step
+            title=${step.title}
+            detail=${step.detail}
+            kind=${step.kind}
+            status=${status}
+          ></swc-response-status-step>
+        `;
+      })}
+    </swc-response-status>
+  `,
   tags: ['a11y'],
 };
