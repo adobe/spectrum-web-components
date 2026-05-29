@@ -1252,8 +1252,8 @@ export class DemoPlacementArrow extends LitElement {
       }
 
       button.trigger {
-        inline-size: 48px;
-        block-size: 48px;
+        min-block-size: 32px;
+        padding-inline: 14px;
       }
 
       .floating {
@@ -1306,7 +1306,7 @@ export class DemoPlacementArrow extends LitElement {
   ];
 
   @property({ type: String, reflect: true })
-  placement: Placement = 'bottom';
+  placement: Placement = 'bottom-end';
 
   @property({ type: String, attribute: 'actual-placement', reflect: true })
   actualPlacement: Placement | null = null;
