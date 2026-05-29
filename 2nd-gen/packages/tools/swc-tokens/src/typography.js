@@ -138,17 +138,19 @@ function linksSelector(prefix) {
   return `.${prefix}-${LINKS_CLASS}`;
 }
 
+function typographyLinksWrapperSelector(prefix) {
+  return `:is(${proseSelector(prefix)}, ${linksSelector(prefix)})`;
+}
+
 /**
  * Default native anchor appearance inside typography wrappers.
  * Uses :where(a) so BEM modifiers from link.css can override.
  */
 function generateTypographyAnchorRules(prefix) {
-  const prose = proseSelector(prefix);
-  const links = linksSelector(prefix);
+  const wrapper = typographyLinksWrapperSelector(prefix);
   const anchor = ':where(a)';
-  const wrapperSelectors = `${prose} ${anchor},\n${links} ${anchor}`;
-  const stateSelectors = (pseudo) =>
-    `${prose} ${anchor}${pseudo},\n${links} ${anchor}${pseudo}`;
+  const wrapperSelectors = `${wrapper} ${anchor}`;
+  const stateSelectors = (pseudo) => `${wrapper} ${anchor}${pseudo}`;
 
   const baseDecls = pickValidDecls({
     'background-color': 'transparent',

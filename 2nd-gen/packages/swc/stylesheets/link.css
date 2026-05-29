@@ -30,9 +30,6 @@
   text-decoration: underline;
   text-decoration-thickness: token("text-underline-thickness");
   text-underline-offset: token("text-underline-gap");
-  background-color: transparent;
-  cursor: pointer;
-  outline: none;
   transition: color token("animation-duration-100") ease-in-out;
 
   &:hover {
@@ -69,35 +66,25 @@
 }
 
 .swc-Link--staticWhite {
-  &,
-  &:hover,
-  &:active,
-  &:focus-visible {
-    color: token("static-white-text-color");
-  }
-
-  &:focus-visible {
-    outline-color: token("static-white-focus-indicator-color");
-  }
+  --swc-link-text-color: token("static-white-text-color");
+  --swc-link-text-color-hover: token("static-white-text-color");
+  --swc-link-text-color-down: token("static-white-text-color");
+  --swc-link-text-color-focus: token("static-white-text-color");
+  --swc-link-focus-indicator-color: token("static-white-focus-indicator-color");
 }
 
 .swc-Link--staticBlack {
-  &,
-  &:hover,
-  &:active,
-  &:focus-visible {
-    color: token("static-black-text-color");
-  }
-
-  &:focus-visible {
-    outline-color: token("static-black-focus-indicator-color");
-  }
+  --swc-link-text-color: token("static-black-text-color");
+  --swc-link-text-color-hover: token("static-black-text-color");
+  --swc-link-text-color-down: token("static-black-text-color");
+  --swc-link-text-color-focus: token("static-black-text-color");
+  --swc-link-focus-indicator-color: token("static-black-focus-indicator-color");
 }
 
 .swc-Link--quiet.swc-Link--standalone {
   text-decoration: none;
+}
 
-  &:hover {
-    text-decoration: underline;
-  }
+.swc-Link--quiet.swc-Link--standalone:hover {
+  text-decoration: underline;
 }

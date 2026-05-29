@@ -88,6 +88,16 @@ function buildLinkClassMap({
   };
 }
 
+function linkClassName(
+  classMapRecord: Record<string, boolean>
+): string | undefined {
+  const name = Object.entries(classMapRecord)
+    .filter(([, active]) => active)
+    .map(([className]) => className)
+    .join(' ');
+  return name || undefined;
+}
+
 function defaultSample(context: LinkContext): string {
   switch (context) {
     case 'links':
@@ -128,7 +138,7 @@ function renderAnchor({
   });
   const anchor = html`
     <a
-      class=${classMap(linkClassMap)}
+      class=${ifDefined(linkClassName(linkClassMap))}
       href=${href}
       lang=${ifDefined(lang && lang !== 'en' ? lang : undefined)}
     >
@@ -158,7 +168,7 @@ function renderAnchor({
           (item) => html`
             <li>
               <a
-                class=${classMap(linkClassMap)}
+                class=${ifDefined(linkClassName(linkClassMap))}
                 href=${item.href}
                 lang=${ifDefined(lang && lang !== 'en' ? lang : undefined)}
               >
@@ -179,12 +189,14 @@ export function template(args: LinkTemplateProps = {}): TemplateResult {
     prefix = 'swc',
     variant = 'default',
     context = 'explicit',
-    standalone = false,
+    standalone: standaloneArg = false,
     quiet = false,
     lang = undefined,
     href = '#',
     sampleText,
   } = args;
+
+  const standalone = quiet ? true : standaloneArg;
 
   const text =
     sampleText != null && sampleText !== ''

@@ -25,6 +25,7 @@
 @import url("../link.css");
 
 a:where(:not([class])) {
+  inline-size: fit-content;
   font-family: token("sans-serif-font");
   font-size: token("font-size-100");
   font-style: token("default-font-style");
@@ -34,9 +35,6 @@ a:where(:not([class])) {
   text-decoration: underline;
   text-decoration-thickness: token("text-underline-thickness");
   text-underline-offset: token("text-underline-gap");
-  background-color: transparent;
-  cursor: pointer;
-  outline: none;
   transition: color token("animation-duration-100") ease-in-out;
 
   &:hover {

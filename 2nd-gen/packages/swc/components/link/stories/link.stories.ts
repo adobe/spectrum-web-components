@@ -61,7 +61,7 @@ const meta: Meta<LinkTemplateProps> = {
     quiet: {
       control: 'boolean',
       description:
-        'Removes underline until hover. Requires `standalone` (pairs with `swc-Link--standalone`).',
+        'Removes underline until hover. Implies `standalone` (pairs with `swc-Link--standalone`).',
       if: { arg: 'context', eq: 'explicit' },
     },
     lang: { control: 'select', options: LANGS },
@@ -109,6 +109,9 @@ function isStaticLinkVariant(
 }
 
 export const Playground: Story = {
+  argTypes: {
+    lang: { control: false, table: { disable: true } },
+  },
   render: (args) => {
     const variant = args.variant ?? 'default';
     const content = template(
@@ -130,7 +133,6 @@ export const Playground: Story = {
     context: 'explicit',
     standalone: false,
     quiet: false,
-    lang: undefined,
     href: '#',
     sampleText: '',
   },

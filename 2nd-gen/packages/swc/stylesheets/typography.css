@@ -538,8 +538,7 @@
 /* =========================
   Links (prose and link lists)
   ========================= */
-:is(.swc-Typography--prose, .swc-Typography--links) :where(a)
-.swc-Typography--links :where(a) {
+:is(.swc-Typography--prose, .swc-Typography--links) :where(a) {
   font: inherit;
   color: var(--swc-link-text-color, token("accent-content-color-default"));
   text-decoration: underline;
@@ -548,18 +547,15 @@
   transition: color token("animation-duration-100") ease-in-out;
 }
 
-.swc-Typography--prose :where(a):hover,
-.swc-Typography--links :where(a):hover {
+:is(.swc-Typography--prose, .swc-Typography--links) :where(a):hover {
   color: var(--swc-link-text-color-hover, token("accent-content-color-hover"));
 }
 
-.swc-Typography--prose :where(a):active,
-.swc-Typography--links :where(a):active {
+:is(.swc-Typography--prose, .swc-Typography--links) :where(a):active {
   color: var(--swc-link-text-color-down, token("accent-content-color-down"));
 }
 
-.swc-Typography--prose :where(a):focus-visible,
-.swc-Typography--links :where(a):focus-visible {
+:is(.swc-Typography--prose, .swc-Typography--links) :where(a):focus-visible {
   color: var(--swc-link-text-color-focus, token("accent-content-color-key-focus"));
   border-radius: token("corner-radius-100");
   outline: token("focus-indicator-thickness") solid var(--swc-link-focus-indicator-color, token("focus-indicator-color"));
