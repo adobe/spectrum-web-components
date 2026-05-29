@@ -12,6 +12,7 @@
 
 import { html, LitElement } from 'lit';
 import { state } from 'lit/decorators.js';
+import { ifDefined } from 'lit/directives/if-defined.js';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import '../index.js';
@@ -27,6 +28,15 @@ import '../../prompt-field/index.js';
 import '../../upload-artifact/index.js';
 
 import { uniqueId } from '../../../../utils/id.js';
+import {
+  AGENTIC_VIDEO_FLOW_STEPS,
+  AGENTIC_VIDEO_FLOW_TIMING,
+} from '../../agentic-video-flow-script.js';
+import type {
+  ResponseStatusStepKind,
+  ResponseStatusStepStatus,
+} from '../../response-status/response-status-step/ResponseStatusStep.js';
+import type { ResponseStatusPhase } from '../../response-status/ResponseStatus.js';
 
 // ────────────────
 //    METADATA
@@ -133,16 +143,29 @@ type DemoArtifact = {
   objectUrl?: string;
 };
 
+type AgenticStep = {
+  title: string;
+  detail: string;
+  kind: ResponseStatusStepKind;
+  status: ResponseStatusStepStatus;
+};
+
 type DemoTurn = {
   id: string;
   role: 'user' | 'system';
   text: string;
   artifacts?: DemoArtifact[];
   loading?: boolean;
+  agenticPhase?: ResponseStatusPhase | '';
+  agenticSteps?: AgenticStep[];
+  agenticDuration?: number;
   statusOpen?: boolean;
   sourcesOpen?: boolean;
   feedbackStatus?: 'positive' | 'negative' | undefined;
 };
+
+const AGENTIC_STEP_SCRIPT: Omit<AgenticStep, 'status'>[] =
+  AGENTIC_VIDEO_FLOW_STEPS;
 
 const DEMO_SUGGESTIONS = [
   'Create year-over-year growth chart',
@@ -167,6 +190,12 @@ class ConversationFullPatternDemo extends LitElement {
       id: 'system-1',
       role: 'system',
       text: 'I interpreted your request as an executive narrative task and prioritized a concise, audience-ready structure.',
+      agenticPhase: 'complete',
+      agenticDuration: 16,
+      agenticSteps: AGENTIC_STEP_SCRIPT.map((step) => ({
+        ...step,
+        status: 'complete',
+      })),
       statusOpen: false,
       sourcesOpen: false,
     },
@@ -182,15 +211,13 @@ class ConversationFullPatternDemo extends LitElement {
   private isGenerating = false;
 
   private readonly fileInputId = `conv-demo-upload-${crypto.randomUUID()}`;
-  private responseTimer: number | null = null;
+  private generationTimers: number[] = [];
+  private generationStartedAt = 0;
   private responseTargetId: string | null = null;
   private lastPrompt = '';
 
   public override disconnectedCallback(): void {
-    if (this.responseTimer !== null) {
-      window.clearTimeout(this.responseTimer);
-      this.responseTimer = null;
-    }
+    this._clearGenerationTimers();
     super.disconnectedCallback();
   }
 
@@ -245,49 +272,137 @@ class ConversationFullPatternDemo extends LitElement {
     }
     this.artifacts = [];
 
-    this.responseTimer = window.setTimeout(() => {
-      this.completeGeneration();
-    }, 1200);
+    this._startAgenticGeneration(systemTurn.id);
   }
 
-  private completeGeneration(): void {
-    if (!this.responseTargetId) {
-      return;
+  private _clearGenerationTimers(): void {
+    for (const timerId of this.generationTimers) {
+      window.clearTimeout(timerId);
     }
+    this.generationTimers = [];
+  }
 
-    const targetId = this.responseTargetId;
-    const reply = buildAssistantReply(this.lastPrompt);
+  private _schedule(delayMs: number, run: () => void): void {
+    const timerId = window.setTimeout(run, delayMs);
+    this.generationTimers.push(timerId);
+  }
+
+  private _patchTurn(targetId: string, patch: Partial<DemoTurn>): void {
     this.turns = this.turns.map((turn) =>
-      turn.id === targetId ? { ...turn, loading: false, text: reply } : turn
+      turn.id === targetId ? { ...turn, ...patch } : turn
     );
-    this.responseTargetId = null;
-    this.responseTimer = null;
-    this.isGenerating = false;
+  }
+
+  private _stepsThroughActive(activeIndex: number): AgenticStep[] {
+    return AGENTIC_STEP_SCRIPT.map((step, index) => {
+      let status: ResponseStatusStepStatus = 'pending';
+      if (index < activeIndex) {
+        status = 'complete';
+      } else if (index === activeIndex) {
+        status = 'active';
+      }
+      return { ...step, status };
+    });
+  }
+
+  private _startAgenticGeneration(targetId: string): void {
+    this._clearGenerationTimers();
+    this.generationStartedAt = Date.now();
+
+    this._patchTurn(targetId, {
+      loading: true,
+      agenticPhase: 'initiating',
+      agenticSteps: [],
+      agenticDuration: 0,
+      statusOpen: false,
+      sourcesOpen: false,
+      feedbackStatus: undefined,
+    });
+
+    const { processing, step1, step2, step3, step4, collapse, complete } =
+      AGENTIC_VIDEO_FLOW_TIMING;
+
+    this._schedule(processing, () => {
+      this._patchTurn(targetId, {
+        agenticPhase: 'processing',
+        agenticSteps: this._stepsThroughActive(0),
+      });
+    });
+
+    this._schedule(step1, () => {
+      this._patchTurn(targetId, {
+        agenticSteps: this._stepsThroughActive(1),
+      });
+    });
+
+    this._schedule(step2, () => {
+      this._patchTurn(targetId, {
+        agenticSteps: this._stepsThroughActive(2),
+      });
+    });
+
+    this._schedule(step3, () => {
+      this._patchTurn(targetId, {
+        statusOpen: true,
+      });
+    });
+
+    this._schedule(step4, () => {
+      this._patchTurn(targetId, {
+        agenticSteps: this._stepsThroughActive(3),
+      });
+    });
+
+    this._schedule(collapse, () => {
+      this._patchTurn(targetId, {
+        statusOpen: false,
+      });
+    });
+
+    this._schedule(complete, () => {
+      const duration = Math.max(
+        1,
+        Math.round((Date.now() - this.generationStartedAt) / 1000)
+      );
+      const reply = buildAssistantReply(this.lastPrompt);
+      this._patchTurn(targetId, {
+        loading: false,
+        agenticPhase: 'complete',
+        agenticDuration: duration,
+        agenticSteps: AGENTIC_STEP_SCRIPT.map((step) => ({
+          ...step,
+          status: 'complete',
+        })),
+        text: reply,
+        statusOpen: false,
+      });
+      this.isGenerating = false;
+      this.responseTargetId = null;
+      this._clearGenerationTimers();
+    });
   }
 
   private stopGeneration = (): void => {
-    if (!this.isGenerating) {
+    if (!this.isGenerating || !this.responseTargetId) {
       return;
     }
 
-    if (this.responseTimer !== null) {
-      window.clearTimeout(this.responseTimer);
-      this.responseTimer = null;
-    }
-
-    if (this.responseTargetId) {
-      const targetId = this.responseTargetId;
-      this.turns = this.turns.map((turn) =>
-        turn.id === targetId
-          ? {
-              ...turn,
-              loading: false,
-              text: 'Generation stopped. Update the prompt to continue.',
-            }
-          : turn
-      );
-    }
-
+    this._clearGenerationTimers();
+    const targetId = this.responseTargetId;
+    this._patchTurn(targetId, {
+      loading: false,
+      agenticPhase: 'complete',
+      agenticDuration: Math.max(
+        1,
+        Math.round((Date.now() - this.generationStartedAt) / 1000)
+      ),
+      text: 'Generation stopped. Update the prompt to continue.',
+      agenticSteps: (
+        this.turns.find((t) => t.id === targetId)?.agenticSteps ?? []
+      ).map((step) =>
+        step.status === 'active' ? { ...step, status: 'complete' } : step
+      ),
+    });
     this.responseTargetId = null;
     this.isGenerating = false;
   };
@@ -396,6 +511,33 @@ class ConversationFullPatternDemo extends LitElement {
     );
   };
 
+  private renderAgenticStatus(turn: DemoTurn) {
+    const phase =
+      turn.agenticPhase ?? (turn.loading ? 'processing' : 'complete');
+    return html`
+      <swc-response-status
+        slot="status"
+        phase=${phase}
+        duration=${turn.agenticDuration ?? 0}
+        data-status-id=${turn.id}
+        ?open=${!!turn.statusOpen}
+        initiating-label="Processing request"
+        reasoning-label="Execution steps"
+      >
+        ${(turn.agenticSteps ?? []).map(
+          (step) => html`
+            <swc-response-status-step
+              title=${step.title}
+              detail=${step.detail}
+              kind=${step.kind}
+              status=${step.status}
+            ></swc-response-status-step>
+          `
+        )}
+      </swc-response-status>
+    `;
+  }
+
   private handleSourcesToggle = (event: Event): void => {
     const toggleEvent = event as CustomEvent<{ open?: boolean }>;
     const sourcesHost = event.target as HTMLElement | null;
@@ -449,40 +591,29 @@ class ConversationFullPatternDemo extends LitElement {
         `;
       }
 
+      const showAgentic =
+        turn.loading ||
+        turn.agenticPhase === 'initiating' ||
+        (turn.agenticSteps && turn.agenticSteps.length > 0);
+
       return html`
         <swc-conversation-turn type="system">
           <swc-system-message>
-            ${turn.loading
+            ${showAgentic ? this.renderAgenticStatus(turn) : ''}
+            ${turn.text
               ? html`
-                  <swc-response-status
-                    slot="status"
-                    loading
-                  ></swc-response-status>
-                `
-              : html`
-                  <swc-response-status
-                    slot="status"
-                    data-status-id=${turn.id}
-                    ?open=${!!turn.statusOpen}
-                  >
-                    Draft complete. I used your latest prompt to generate this
-                    response.
-                  </swc-response-status>
-                `}
-            ${turn.loading
-              ? ''
-              : html`
                   <div class="swc-Typography--prose">
                     <p>${turn.text}</p>
                   </div>
-                `}
+                `
+              : ''}
             ${turn.loading
               ? ''
               : html`
                   <swc-message-feedback
                     slot="feedback"
                     data-feedback-id=${turn.id}
-                    status=${turn.feedbackStatus ?? ''}
+                    status=${ifDefined(turn.feedbackStatus)}
                   ></swc-message-feedback>
                 `}
             ${turn.loading
@@ -644,7 +775,9 @@ const fullPatternSource = `<div style="max-width:800px; margin:auto; padding:24p
     </swc-conversation-turn>
     <swc-conversation-turn type="system">
       <swc-system-message>
-        <swc-response-status slot="status">I interpreted your request as an executive narrative task and prioritized a concise, audience-ready structure.</swc-response-status>
+        <swc-response-status slot="status" phase="complete" duration="16" initiating-label="Processing request" reasoning-label="Execution steps">
+          <swc-response-status-step status="complete" kind="thinking" title="Looked through documentation" detail="Scanned internal knowledge base articles."></swc-response-status-step>
+        </swc-response-status>
         <div class="swc-Typography--prose">
           <p>Great direction. I suggest a 12-slide structure...</p>
         </div>
