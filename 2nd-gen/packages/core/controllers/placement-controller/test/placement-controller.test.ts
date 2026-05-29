@@ -18,12 +18,10 @@ import '../stories/demo-hosts.js';
 import { getComponent } from '../../../../swc/utils/test-utils.js';
 import { fromFloatingPlacement, toFloatingPlacement } from '../index.js';
 import type {
-  DemoPlacementPlayground,
   DemoPlacementTestFixture,
   DemoPlacementVirtualTrigger,
 } from '../stories/demo-hosts.js';
 import meta, {
-  Playground,
   VirtualTrigger,
 } from '../stories/placement-controller.stories.js';
 
@@ -49,12 +47,13 @@ export default {
 } as Meta;
 
 export const AlignsStartAndEnd: Story = {
-  ...Playground,
+  ...testFixtureStory,
   play: async ({ canvasElement, step }) => {
-    const host = await getComponent<DemoPlacementPlayground>(
+    const host = await getComponent<DemoPlacementTestFixture>(
       canvasElement,
-      'demo-placement-playground'
+      'demo-placement-test-fixture'
     );
+    host.triggerPosition = 'top-center';
     await waitFor(() => expect(host.actualPlacement).toBe('bottom'));
 
     await step(
@@ -68,25 +67,35 @@ export const AlignsStartAndEnd: Story = {
         await waitFor(() => expect(host.actualPlacement).toBe('bottom-end'));
         const [endX] = readTranslate(host.floatingEl);
 
-        expect(startX).not.toBe(endX);
+        // `bottom-start` pins the floating start edge to the trigger start
+        // edge; `bottom-end` pins the end edges. The gap between the two
+        // positions is exactly the width difference between the two boxes.
+        const triggerWidth = host.triggerEl.getBoundingClientRect().width;
+        const floatingWidth = host.floatingEl.getBoundingClientRect().width;
+        const expectedGap = Math.abs(floatingWidth - triggerWidth);
+        expect(Math.abs(startX - endX)).toBeGreaterThanOrEqual(expectedGap - 2);
+        expect(Math.abs(startX - endX)).toBeLessThanOrEqual(expectedGap + 2);
       }
     );
   },
 };
 
 export const PositionsBelowTrigger: Story = {
-  ...Playground,
+  ...testFixtureStory,
   play: async ({ canvasElement, step }) => {
-    const host = await getComponent<DemoPlacementPlayground>(
+    const host = await getComponent<DemoPlacementTestFixture>(
       canvasElement,
-      'demo-placement-playground'
+      'demo-placement-test-fixture'
     );
+    host.triggerPosition = 'top-center';
     await waitFor(() => expect(host.actualPlacement).toBe('bottom'));
 
-    await step('floating element sits below trigger', () => {
+    await step('floating element sits directly below the trigger', () => {
       const triggerRect = host.triggerEl.getBoundingClientRect();
       const [, y] = readTranslate(host.floatingEl);
-      expect(y).toBeGreaterThanOrEqual(Math.floor(triggerRect.bottom));
+      // With placement `bottom` and `offset: 0`, the floating top edge sits
+      // flush against the trigger bottom edge.
+      expect(Math.abs(y - triggerRect.bottom)).toBeLessThanOrEqual(2);
     });
   },
 };
@@ -120,11 +129,11 @@ export const VirtualTriggerMoves: Story = {
 };
 
 export const StopOnDisconnect: Story = {
-  ...Playground,
+  ...testFixtureStory,
   play: async ({ canvasElement, step }) => {
-    const host = await getComponent<DemoPlacementPlayground>(
+    const host = await getComponent<DemoPlacementTestFixture>(
       canvasElement,
-      'demo-placement-playground'
+      'demo-placement-test-fixture'
     );
     await waitFor(() => expect(host.floatingEl.style.translate).not.toBe(''));
     const before = host.floatingEl.style.translate;
@@ -151,7 +160,7 @@ export const StopOnDisconnect: Story = {
  * `left-start`/`left-end`/`right-start`/`right-end` back into the SWC union.
  */
 export const ConversionFunctionsRoundTrip: Story = {
-  ...Playground,
+  ...testFixtureStory,
   play: async ({ step }) => {
     await step(
       'logical-side placements produce valid Floating UI placements',
@@ -203,11 +212,11 @@ export const ConversionFunctionsRoundTrip: Story = {
  * `'left-top'` and `computePosition` produced nonsensical coordinates.
  */
 export const LogicalSidePlacementsCompute: Story = {
-  ...Playground,
+  ...testFixtureStory,
   play: async ({ canvasElement, step }) => {
-    const host = await getComponent<DemoPlacementPlayground>(
+    const host = await getComponent<DemoPlacementTestFixture>(
       canvasElement,
-      'demo-placement-playground'
+      'demo-placement-test-fixture'
     );
     host.shouldFlip = false;
     await waitFor(() => expect(host.actualPlacement).toBe('bottom'));
@@ -279,11 +288,11 @@ export const SizeMiddlewareWritesMaxDimensions: Story = {
  * the latest `start()` call.
  */
 export const RapidStartReplacesPriorSession: Story = {
-  ...Playground,
+  ...testFixtureStory,
   play: async ({ canvasElement, step }) => {
-    const host = await getComponent<DemoPlacementPlayground>(
+    const host = await getComponent<DemoPlacementTestFixture>(
       canvasElement,
-      'demo-placement-playground'
+      'demo-placement-test-fixture'
     );
     host.shouldFlip = false;
     await waitFor(() => expect(host.actualPlacement).toBe('bottom'));
@@ -315,12 +324,14 @@ export const FlipReorients: Story = {
     host.tallFloating = true;
     host.shouldFlip = true;
 
-    await step('actualPlacement reorients away from bottom', async () => {
-      await waitFor(() => {
-        expect(host.actualPlacement).toBeTruthy();
-        expect(host.actualPlacement).not.toBe('bottom');
-      });
-    });
+    await step(
+      'actualPlacement reorients away from bottom (flips to top)',
+      async () => {
+        await waitFor(() => {
+          expect(host.actualPlacement).toBe('top');
+        });
+      }
+    );
   },
 };
 
@@ -364,12 +375,12 @@ export const OffsetMovesAlongPlacementAxis: Story = {
     await waitFor(() => expect(host.floatingEl.style.translate).not.toBe(''));
     const [, y0] = readTranslate(host.floatingEl);
 
-    await step('offset: 40 shifts translateY by ~40px', async () => {
+    await step('offset: 40 shifts translateY down by 40px', async () => {
       host.offset = 40;
       await waitFor(() => {
         const [, y40] = readTranslate(host.floatingEl);
-        expect(y40 - y0).toBeGreaterThanOrEqual(30);
-        expect(y40 - y0).toBeLessThanOrEqual(50);
+        expect(y40 - y0).toBeGreaterThanOrEqual(38);
+        expect(y40 - y0).toBeLessThanOrEqual(42);
       });
     });
   },
@@ -399,8 +410,11 @@ export const CrossOffsetMovesAlongTriggerEdge: Story = {
         host.crossOffset = 40;
         await waitFor(() => {
           const [x40, y40] = readTranslate(host.floatingEl);
-          expect(Math.abs(x40 - x0)).toBeGreaterThan(20);
-          expect(Math.abs(y40 - y0)).toBeLessThan(5);
+          // crossOffset: 40 slides the panel 40px along the trigger edge…
+          expect(Math.abs(x40 - x0)).toBeGreaterThanOrEqual(38);
+          expect(Math.abs(x40 - x0)).toBeLessThanOrEqual(42);
+          // …without moving it along the placement axis.
+          expect(Math.abs(y40 - y0)).toBeLessThanOrEqual(2);
         });
       }
     );
@@ -432,10 +446,11 @@ export const ContainerPaddingMovesPanelInward: Story = {
         host.containerPadding = 64;
         await waitFor(() => {
           const [xLarge] = readTranslate(host.floatingEl);
-          // With trigger near the right edge, shift keeps the panel inside
-          // the viewport. A larger padding means the panel sits further
-          // from the right edge — i.e. a smaller translateX.
-          expect(xLarge).toBeLessThan(xSmall);
+          // With the trigger near the right edge, shift clamps the panel a
+          // fixed inset from the boundary in both cases, so raising padding
+          // from 8 to 64 moves it inward by exactly the 56px delta.
+          expect(xSmall - xLarge).toBeGreaterThanOrEqual(54);
+          expect(xSmall - xLarge).toBeLessThanOrEqual(58);
         });
       }
     );
@@ -479,9 +494,7 @@ export const OnPlacementChangeFiresWithComputedPlacement: Story = {
         host.triggerPosition = 'bottom-center';
         host.tallFloating = true;
         await waitFor(() => {
-          expect(
-            host.placementChanges.some((placement) => placement !== 'bottom')
-          ).toBe(true);
+          expect(host.placementChanges.at(-1)).toBe('top');
         });
       }
     );
