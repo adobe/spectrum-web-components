@@ -18,14 +18,14 @@ import type {
 } from '@storybook/web-components';
 
 import { StatusLight } from '@adobe/spectrum-wc/status-light';
-
-import '@adobe/spectrum-wc/components/status-light/swc-status-light.js';
-
 import {
   STATUS_LIGHT_VALID_SIZES,
   STATUS_LIGHT_VARIANTS_COLOR,
   STATUS_LIGHT_VARIANTS_SEMANTIC,
-} from '../../../../core/components/status-light/StatusLight.types.js';
+} from '@spectrum-web-components/core/components/status-light/index.js';
+
+import '@adobe/spectrum-wc/components/status-light/swc-status-light.js';
+
 import { getComponent, withWarningSpy } from '../../../utils/test-utils.js';
 import meta, {
   Anatomy,
