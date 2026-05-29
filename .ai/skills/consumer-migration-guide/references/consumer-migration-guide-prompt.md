@@ -31,6 +31,7 @@ Keep the guide **short, direct, and scannable**. A consumer should be able to co
 - `::part()` shadow parts unless a part is explicitly public API
 - Maintainer-facing migration rationale or sequencing
 - **Links to `CONTRIBUTOR-DOCS/` project-planning docs.** Those are maintainer-facing. Do not include them in the guide.
+- **Unshipped features** — do not include any feature that is not present in the 2nd-gen source, regardless of how it is categorized in the migration plan. Migration plan categories (Must-ship, Additive, Deferred) reflect planning intent; the source is the final authority on what shipped.
 
 ### Structure steps logically
 
@@ -110,7 +111,7 @@ Replace `<sp-badge>` with `<swc-badge>` and update the import. The public API is
 Use up to three `###` sub-section tables — **only include a sub-section if it has entries**. Each sub-section is a table focused on one kind of change:
 
 - **`### Renamed`** — tag, import path, property prefixes, or other 1:1 renames. Columns: `Area | Spectrum 1 | Spectrum 2`.
-- **`### Added in Spectrum 2`** — new attributes, variants, slots, or custom properties the consumer may adopt. Columns: `Addition | Notes`.
+- **`### Added in Spectrum 2`** — new attributes, variants, slots, or custom properties confirmed present in the shipped 2nd-gen source that the consumer may adopt. Columns: `Addition | Notes`. Verify each entry against the source — migration plan categories (Additive, Deferred) reflect planning intent and may not match final state.
 - **`### Removed in Spectrum 2`** — removed public API with replacement guidance. Columns: `Removed | Replacement`.
 
 Do **not** include an `### Unchanged` sub-section. Unchanged API requires no consumer action and adds noise.
