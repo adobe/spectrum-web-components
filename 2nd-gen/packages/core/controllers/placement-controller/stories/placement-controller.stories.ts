@@ -154,7 +154,7 @@ export const Overview: Story = {
  *
  * ### Middleware stack
  *
- * Same order as 1st-gen: `offset → shift → flip → size`.
+ * Same order as gen1: `offset → shift → flip → size`.
  *
  * 1. **`offset`** — trigger-relative gap along the placement direction (`offset` option) and along the trigger edge (`crossOffset` option).
  * 2. **`shift`** — slides the floating element along the placement axis to keep it inside the boundary using `containerPadding` as inset. Always installed.
@@ -314,7 +314,7 @@ export const ShouldFlip: Story = {
  * readonly **`isConstrained`** property is `true` while `max-height` is being applied,
  * so consumers can react to "content is currently clamped" — e.g. show a scrollbar hint.
  *
- * No option to opt out. Matches 1st-gen behaviour.
+ * No option to opt out. Matches gen1 behaviour.
  */
 export const SizeAlwaysClamps: Story = {
   tags: ['behaviors'],
@@ -498,12 +498,12 @@ export const Accessibility: Story = {
 // ──────────────────────────
 
 /**
- * ### Relationship to 1st-gen `PlacementController`
+ * ### Relationship to gen1 `PlacementController`
  *
- * The 2nd-gen controller is a **focused subset** of the 1st-gen
+ * The gen2 controller is a **focused subset** of the gen1
  * `PlacementController`: single `autoUpdate` channel, hyphenated placements,
  * and callback-based placement surfacing. The middleware stack and the
- * always-on `size` clamp behaviour match 1st-gen. It owns geometry only —
+ * always-on `size` clamp behaviour match gen1. It owns geometry only —
  * open/close lifecycle, ARIA, focus, and dismissal remain the caller's
  * responsibility.
  *

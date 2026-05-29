@@ -325,7 +325,7 @@ export class PlacementController implements ReactiveController {
             fallbackStrategy: 'bestFit',
           }));
 
-    // Middleware order matches 1st-gen: offset → shift → flip → size → arrow.
+    // Middleware order matches gen1: offset → shift → flip → size → arrow.
     // `shift` runs before `flip` so the panel slides along the current
     // side before any decision to flip; `size` runs after the final
     // placement is known so it clamps max-height / max-width accurately;
@@ -390,7 +390,7 @@ export class PlacementController implements ReactiveController {
       translate: `${roundByDPR(translateX)}px ${roundByDPR(translateY)}px`,
     });
 
-    // Position the tip element (1st-gen pattern). Floating UI exposes
+    // Position the tip element (gen1 pattern). Floating UI exposes
     // either `arrow.x` (top/bottom placements — arrow on a horizontal
     // edge) or `arrow.y` (left/right placements — arrow on a vertical
     // edge). Reset whichever inline offset would conflict with the
