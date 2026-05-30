@@ -341,6 +341,12 @@ export class PlacementController implements ReactiveController {
       size({
         padding: containerPadding,
         apply: ({ availableHeight, availableWidth, rects }) => {
+          // Ignore a superseded compute: a new `start()` (or `stop()`) may
+          // have replaced the session while this `computePosition` was in
+          // flight, and writing baseline state here would bleed into it.
+          if (this.session !== session) {
+            return;
+          }
           const maxHeight = Math.max(
             MIN_FLOATING_HEIGHT,
             Math.floor(availableHeight)
