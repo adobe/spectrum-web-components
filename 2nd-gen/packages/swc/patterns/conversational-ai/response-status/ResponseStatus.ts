@@ -553,8 +553,20 @@ export class ResponseStatus extends SpectrumElement {
 
     const steps = this._readSteps(contentSlot);
     const hasReasoningContent = this._slotHasReasoningContent(contentSlot);
+    const isAgenticContext =
+      this.phase === 'initiating' ||
+      this.phase === 'processing' ||
+      this.phase === 'complete' ||
+      steps.length > 0;
 
-    if (!steps.length && !hasReasoningContent && this.open) {
+    // Legacy mode only: collapse when there is nothing to show. Agentic stories often
+    // set `open` before step children finish assigning; do not clear in that case.
+    if (
+      !isAgenticContext &&
+      !steps.length &&
+      !hasReasoningContent &&
+      this.open
+    ) {
       this.open = false;
     }
 

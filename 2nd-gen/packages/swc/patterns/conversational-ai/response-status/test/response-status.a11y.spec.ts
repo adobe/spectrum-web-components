@@ -12,7 +12,10 @@
 
 import { expect, test } from '@playwright/test';
 
-import { gotoStory } from '../../../../utils/a11y-helpers.js';
+import {
+  gotoStory,
+  waitForCustomElement,
+} from '../../../../utils/a11y-helpers.js';
 
 /**
  * ARIA snapshot tests for legacy and agentic response status.
@@ -49,11 +52,12 @@ test.describe('ResponseStatus - ARIA Snapshots', () => {
   }) => {
     const root = await gotoStory(
       page,
-      'patterns-conversational-ai-response-status--agentic-accessibility',
+      'patterns-conversational-ai-response-status-agentic-states-spike--processing-expanded',
       'swc-response-status'
     );
+    await waitForCustomElement(page, 'swc-response-status-step');
     const toggle = root.locator('button[aria-expanded="true"]');
-    await expect(toggle).toHaveCount(1);
+    await expect(toggle).toHaveCount(1, { timeout: 10000 });
     await expect(toggle).toHaveAttribute(
       'aria-label',
       'Searching repositories for Europe trips'
