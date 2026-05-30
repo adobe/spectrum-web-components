@@ -15,10 +15,9 @@ import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
 import { Avatar } from '@adobe/spectrum-wc/avatar';
+import { AVATAR_VALID_SIZES } from '@spectrum-web-components/core/components/avatar/index.js';
 
 import '@adobe/spectrum-wc/components/avatar/swc-avatar.js';
-
-import { AVATAR_VALID_SIZES } from '../../../../core/components/avatar/Avatar.types.js';
 
 // ────────────────
 //    METADATA

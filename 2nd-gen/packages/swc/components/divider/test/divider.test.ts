@@ -14,13 +14,13 @@ import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import { Divider } from '@adobe/spectrum-wc/divider';
-
-import '@adobe/spectrum-wc/components/divider/swc-divider.js';
-
 import {
   DIVIDER_STATIC_COLORS,
   DIVIDER_VALID_SIZES,
-} from '../../../../core/components/divider/Divider.types.js';
+} from '@spectrum-web-components/core/components/divider/index.js';
+
+import '@adobe/spectrum-wc/components/divider/swc-divider.js';
+
 import {
   getComponent,
   getComponents,
