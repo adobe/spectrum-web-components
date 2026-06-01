@@ -122,7 +122,7 @@ Use this doc for **what order** to do things and **what to check**; use the link
 | **4. Accessibility** | Use the **accessibility migration analysis** (`03_components/<component>/accessibility-migration-analysis.md`). |
 | **5. Styling** | **Step 6: Migrate rendering & styles from Spectrum CSS**. |
 | **6. Testing** | (Mentioned in steps as "confirm tests pass" — this guide makes it a full phase.) |
-| **7. Documentation** | **Step 7: Add stories for 2nd-gen component** + JSDoc and usage docs. |
+| **7. Documentation** | **Step 7: Add stories for 2nd-gen component** + per-component MDX docs page + public-API JSDoc on `Component.ts`. |
 | **8. Review** | (No dedicated step — this guide adds checklist and PR.) |
 
 Reference to guide to [understand the 1st-gen component structure](../02_step-by-step/02_factor-rendering-out-of-1st-gen-component.md) and the linked step-by-step docs for Steps 2–3. If those steps are **already** done, start **Phase 2** at SWC package setup and the Phase 2 “What to do” list.
@@ -440,7 +440,7 @@ Prefer native events when they give the right semantics (e.g. `click`). Add cust
 
 ### What to do
 
-1. **Verify or create the stories file** — Visual verification requires a stories file. If `stories/[component].stories.ts` does not exist, create it before writing CSS using the `migration-styling` skill’s Phase 5 stories template. The stories file at this phase should have Playground, Overview, Anatomy, Options, States, and CSS-visible Behaviors — no JSDoc prose, and the Accessibility story left as a `// TODO` comment. Confirm the component renders in Storybook with no console errors before touching CSS.
+1. **Verify or create the stories file** — Visual verification requires a stories file. If `stories/[component].stories.ts` does not exist, create it before writing CSS using the `migration-styling` skill’s Phase 5 stories template. The stories file at this phase should have Playground, Overview, Anatomy, Options, States, and CSS-visible Behaviors — no story-level JSDoc (story prose lives in the per-component MDX authored in Phase 7), and the Accessibility story left as a `// TODO` comment. Confirm the component renders in Storybook with no console errors before touching CSS.
 2. **Align render template class names with CSS selectors** — Read the component’s `render()` method and note every class name emitted. The CSS you write must use those exact names; mismatches cause styles to silently not apply. When migrating from 1st-gen single-hyphen naming (e.g. `.swc-Button-label`) to 2nd-gen BEM double-underscore notation (e.g. `.swc-Button__label`), update `render()` first, confirm the component still renders, then write the CSS.
 3. **Follow the migration steps** — [Step 6](06_migrate-rendering-and-styles.md) and the [full migration steps](../../../../02_style-guide/01_css/04_spectrum-swc-migration.md). Use [03_components/](../../../03_components/) for spectrum-two alignment. Copy S2 styles from your **spectrum-css** clone, **`spectrum-two`** branch, component `index.css` (not `dist`).
 4. **Use tokens** — Replace hard-coded values with `token(...)`. Follow [component CSS](../../../../02_style-guide/01_css/01_component-css.md) and [custom properties](../../../../02_style-guide/01_css/02_custom-properties.md).
@@ -517,14 +517,16 @@ Follow the two-file layout (`test/<component>.test.ts`, `test/<component>.a11y.s
 
 ## Phase 7: Documentation
 
-**Goal:** JSDoc, Storybook stories, and usage docs so others can use and migrate. Align with [Step 7: Add stories for 2nd-gen component](07_add-stories-for-2nd-gen-component.md).
+**Goal:** the per-component MDX docs page, finalized stories, and public-API JSDoc on `Component.ts`, so others can use and migrate. Align with [Step 7: Add stories for 2nd-gen component](07_add-stories-for-2nd-gen-component.md).
 
 ### What to do
 
-1. **JSDoc:** Every public prop, slot, event, and the element itself. Use `@element`, `@example`, `@internal` for non-public.
-2. **Storybook stories:** If Phase 5 was completed, `stories/[component].stories.ts` may already exist with Playground, Overview, Anatomy, Options, States, and Behaviors stories — all correctly structured but without JSDoc prose. Phase 7 augments that file: add JSDoc comments to every story (except Playground and Overview, which have none by convention), complete the Accessibility story body (left as `// TODO` in Phase 5), and add any stories deferred from earlier phases. Do not recreate the file from scratch. If no Phase 5 scaffold exists, create it from the `migration-styling` skill's stories template and then fill in the Phase 7 content. Reference `badge/stories/badge.stories.ts` and `divider/stories/divider.stories.ts` for complete examples.
-3. **Size/variant controls:** Ensure controls drive the component. If the attribute comes from a mixin (e.g. `SizedMixin`), declare it on the SWC class with `@property({ reflect: true })` so the CEM includes it; run `yarn analyze` to regenerate the manifest.
-4. **Review, usage docs, migration notes:** Confirm stories; add usage docs; document API changes from 1st-gen.
+1. **Public-API JSDoc on `Component.ts`:** every public prop, slot, event, and the element itself. Use `@element`, `@example`, `@internal` for non-public. This is read by the Custom Elements Manifest and rendered into Storybook's API table.
+2. **Per-component MDX docs page (`<component>.mdx`):** authored at the component root. This is the docs surface: it composes `<DocsHeader />`, prose for each section (`## Anatomy`, `## Options`, `## States`, `## Behaviors`, `## Accessibility`), `<Canvas of={Stories.MyStory} />` references for each tagged story, and `<DocsFooter />`. See `.ai/rules/stories-documentation.md` for the full template.
+3. **Finalize the stories file:** If Phase 5 was completed, `stories/[component].stories.ts` already exists with Playground, Overview, Anatomy, Options, States, and Behaviors stories — all correctly structured with no story-level JSDoc and the Accessibility story body left as `// TODO`. Phase 7 augments that file: complete the Accessibility story body, drop `'autodocs'` from the Playground story (keep `'dev'`) so the per-component MDX is the unit's Docs page, and add any stories deferred from earlier phases. Do **not** add JSDoc above story exports — prose lives in the MDX. Do not recreate the file from scratch. Reference `badge/stories/badge.stories.ts` + `badge/badge.mdx` and `divider/stories/divider.stories.ts` + `divider/divider.mdx` for complete examples.
+4. **Meta-level JSDoc:** above `const meta: Meta = { ... }` in the stories file. This is the only retained JSDoc on the stories side; it renders in the docs-page header via `<Description />`. Should describe the component's purpose and link to related components.
+5. **Size/variant controls:** Ensure controls drive the component. If the attribute comes from a mixin (e.g. `SizedMixin`), declare it on the SWC class with `@property({ reflect: true })` so the CEM includes it; run `yarn analyze` to regenerate the manifest.
+6. **Review, usage docs, migration notes:** Confirm the MDX renders correctly; document API changes from 1st-gen via the `consumer-migration-guide` skill (separate from the docs page).
 
 See [Step 7](07_add-stories-for-2nd-gen-component.md) for structure and examples.
 

@@ -82,7 +82,7 @@ import * as Stories from './stories/<unit>.stories';
 
 ### Canonical section order
 
-Matches `DocumentTemplate.mdx` so production and per-unit MDX render identically:
+`DocumentTemplate.mdx` (the fallback template for units without a per-unit MDX) renders sections in this same order, so converted units and unconverted units sit side-by-side without surprises:
 
 1. **Anatomy** — `hideTitle` semantics: no per-story `###` heading
 2. **Upcoming features** — `hideTitle` semantics; prose-only sections allowed (no `<Canvas>`)
@@ -204,7 +204,7 @@ const allLabels = { ...semanticLabels, ...colorLabels };
 
 ## Section patterns
 
-> **Where the prose lives.** Each pattern below shows a "prose" block that previously sat in a JSDoc above a story. In the per-unit MDX model, that prose is authored as Markdown inside the corresponding `## Section` / `### Story Title` in the `<unit>.mdx` file, immediately above the `<Canvas of={Stories.MyStory} />` reference. The accompanying story definition has no JSDoc above it.
+> **Where the prose lives.** Each pattern below shows a "prose" block. Author that prose as Markdown inside the corresponding `## Section` / `### Story Title` in the `<unit>.mdx` file, immediately above the `<Canvas of={Stories.MyStory} />` reference. The accompanying story definition has no JSDoc above it.
 
 ### Overview
 
@@ -257,7 +257,7 @@ export const Overview: Story = {
 };
 ```
 
-**Note**: No JSDoc comment needed on the Overview story itself - the meta JSDoc and subtitle provide the documentation.
+**Note**: the Overview story renders into the docs page header via `<OverviewStory />` inside `<DocsHeader />`. The meta-level JSDoc (above `const meta`) and the `parameters.docs.subtitle` provide the surrounding prose; the Overview story itself just supplies the canvas.
 
 ### Anatomy
 
@@ -650,37 +650,30 @@ When creating 2nd-gen documentation, check 1st-gen (`1st-gen/packages/*/README.m
 
 ### Where to document differences
 
-Document 1st-gen vs 2nd-gen differences directly in the relevant story's JSDoc comment where that difference is apparent.
+Document 1st-gen vs 2nd-gen differences as inline notes in the relevant per-unit MDX section, immediately under the section heading and above the `<Canvas>` reference. Keep notes concise — link to the consumer migration guide for full upgrade instructions.
 
-**Pattern for documenting differences**:
+**Pattern for new options or variants**:
 
-```typescript
-/**
- * Component-names come in [X] sizes...
- *
- * **Note**: The `xl` size is new in 2nd-gen and not available in 1st-gen.
- *
- * All sizes shown below for comparison.
- */
-export const Sizes: Story = {
-  // ...
-};
+```mdx
+### Sizes
+
+Component-names come in [X] sizes...
+
+> **Note**: the `xl` size is new in 2nd-gen and not available in 1st-gen.
+
+<Canvas of={Stories.Sizes} />
 ```
 
-Or for removed features:
+**Pattern for removed features**:
 
-```typescript
-/**
- * ### Methods
- *
- * The component exposes the following public methods...
- *
- * **Migration note**: The `validate()` method from 1st-gen has been removed in 2nd-gen.
- * Use the `invalid` property instead for validation state.
- */
-export const Methods: Story = {
-  // ...
-};
+```mdx
+### Methods
+
+The component exposes the following public methods...
+
+> **Migration note**: the `validate()` method from 1st-gen has been removed in 2nd-gen. Use the `invalid` property instead. See the [consumer migration guide](?path=/docs/components-<name>-migration-guide--docs) for full upgrade steps.
+
+<Canvas of={Stories.Methods} />
 ```
 
 ### Content to check from 1st-gen
@@ -991,4 +984,4 @@ When creating or updating documentation:
 - [ ] All properties verified with `@property` decorators
 - [ ] ARIA attributes verified in component code
 - [ ] Methods and events verified in implementation
-- [ ] Visual parity confirmed against production rendering for converted units
+- [ ] Docs page renders cleanly in Storybook with no console errors and all sections in the canonical order
