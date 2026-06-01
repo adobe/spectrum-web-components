@@ -226,21 +226,39 @@ export abstract class AccordionItemBase extends ObserveSlotPresence(
 
   protected override firstUpdated(changedProperties: PropertyValues): void {
     super.firstUpdated(changedProperties);
-    this.contentPanel?.addEventListener('transitionend', this.handleTransitionEnd);
-    this.contentPanel?.addEventListener('transitioncancel', this.handleTransitionCancel);
+    this.contentPanel?.addEventListener(
+      'transitionend',
+      this.handleTransitionEnd
+    );
+    this.contentPanel?.addEventListener(
+      'transitioncancel',
+      this.handleTransitionCancel
+    );
   }
 
   public override connectedCallback(): void {
     super.connectedCallback();
     if (this.hasUpdated) {
-      this.contentPanel?.addEventListener('transitionend', this.handleTransitionEnd);
-      this.contentPanel?.addEventListener('transitioncancel', this.handleTransitionCancel);
+      this.contentPanel?.addEventListener(
+        'transitionend',
+        this.handleTransitionEnd
+      );
+      this.contentPanel?.addEventListener(
+        'transitioncancel',
+        this.handleTransitionCancel
+      );
     }
   }
 
   public override disconnectedCallback(): void {
     super.disconnectedCallback();
-    this.contentPanel?.removeEventListener('transitionend', this.handleTransitionEnd);
-    this.contentPanel?.removeEventListener('transitioncancel', this.handleTransitionCancel);
+    this.contentPanel?.removeEventListener(
+      'transitionend',
+      this.handleTransitionEnd
+    );
+    this.contentPanel?.removeEventListener(
+      'transitioncancel',
+      this.handleTransitionCancel
+    );
   }
 }
