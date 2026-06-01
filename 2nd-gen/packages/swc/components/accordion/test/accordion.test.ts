@@ -242,6 +242,149 @@ export const ToggleEventTest: Story = {
 };
 
 // ──────────────────────────────────────────────────────────────
+// TEST: Tab order (header → actions → open panel content)
+// ──────────────────────────────────────────────────────────────
+
+function assertFollowingDocumentOrder(
+  earlier: Element,
+  later: Element,
+  label: string
+): void {
+  const position = earlier.compareDocumentPosition(later);
+  expect(
+    position & Node.DOCUMENT_POSITION_FOLLOWING,
+    `${label} follows earlier element in document order`
+  ).toBeTruthy();
+}
+
+function isDisplayed(element: Element): boolean {
+  if (!(element instanceof HTMLElement)) {
+    return false;
+  }
+
+  return element.checkVisibility({
+    checkOpacity: true,
+    checkVisibilityCSS: true,
+  });
+}
+
+export const TabOrderTest: Story = {
+  render: () => html`
+    <swc-accordion density="regular">
+      <swc-accordion-item>
+        <span slot="label">Personal information</span>
+        <swc-button
+          slot="actions"
+          variant="secondary"
+          fill-style="outline"
+          size="s"
+        >
+          Edit personal
+        </swc-button>
+        Personal content
+      </swc-accordion-item>
+      <swc-accordion-item open>
+        <span slot="label">Billing address</span>
+        <swc-button
+          slot="actions"
+          variant="secondary"
+          fill-style="outline"
+          size="s"
+        >
+          Edit billing
+        </swc-button>
+        <p>
+          Billing content
+          <a href="#billing-details">Billing details</a>
+        </p>
+      </swc-accordion-item>
+      <swc-accordion-item>
+        <span slot="label">Shipping address</span>
+        Shipping content
+      </swc-accordion-item>
+    </swc-accordion>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const items = await getComponents<AccordionItem>(
+      canvasElement,
+      'swc-accordion-item'
+    );
+    const item0 = items[0] as AccordionItem;
+    const item1 = items[1] as AccordionItem;
+    const item2 = items[2] as AccordionItem;
+
+    const panelLink = item1.querySelector(
+      'a[href="#billing-details"]'
+    ) as HTMLAnchorElement | null;
+    const closedPanel = item0.shadowRoot?.getElementById(
+      'content'
+    ) as HTMLElement;
+
+    await step(
+      'each item places header before actions and panel in the flat tree',
+      async () => {
+        for (const item of [item0, item1]) {
+          const row = item.shadowRoot?.querySelector(
+            '.swc-AccordionItem-row'
+          ) as HTMLElement;
+          const heading = row.querySelector(
+            '.swc-AccordionItem-heading'
+          ) as HTMLElement;
+          const actions = row.querySelector(
+            '.swc-AccordionItem-actions'
+          ) as HTMLElement;
+          const content = item.shadowRoot?.getElementById(
+            'content'
+          ) as HTMLElement;
+
+          assertFollowingDocumentOrder(
+            heading,
+            actions,
+            'actions follow heading in header row'
+          );
+          assertFollowingDocumentOrder(
+            row,
+            content,
+            'panel follows header row'
+          );
+        }
+      }
+    );
+
+    await step('accordion items are ordered sequentially', async () => {
+      assertFollowingDocumentOrder(item0, item1, 'second item follows first');
+      assertFollowingDocumentOrder(item1, item2, 'third item follows second');
+    });
+
+    await step(
+      'closed panel content is hidden from layout and AT',
+      async () => {
+        expect(
+          closedPanel.getAttribute('aria-hidden'),
+          'closed panel is aria-hidden'
+        ).toBe('true');
+        expect(
+          closedPanel.getBoundingClientRect().height,
+          'closed panel has zero height'
+        ).toBe(0);
+      }
+    );
+
+    await step('open panel link is displayed and tabbable', async () => {
+      expect(panelLink, 'panel link is rendered').toBeTruthy();
+      expect(
+        isDisplayed(panelLink as Element),
+        'open panel link is visible'
+      ).toBe(true);
+      expect(
+        (panelLink as HTMLAnchorElement).tabIndex,
+        'open panel link stays in tab order'
+      ).toBe(0);
+    });
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
 // TEST: Direct actions (slot="actions")
 // ──────────────────────────────────────────────────────────────
 
