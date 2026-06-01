@@ -49,13 +49,13 @@ export const OverviewTest: Story = {
       expect(items.length, 'three accordion items are rendered').toBe(3);
     });
 
-    await step('second item is open by default', async () => {
-      expect(items[1]?.open, 'second item open property is true').toBe(true);
+    await step('third item is open by default', async () => {
+      expect(items[2]?.open, 'third item open property is true').toBe(true);
     });
 
-    await step('first and third items are closed by default', async () => {
+    await step('first two items are closed by default', async () => {
       expect(items[0]?.open, 'first item open property is false').toBe(false);
-      expect(items[2]?.open, 'third item open property is false').toBe(false);
+      expect(items[1]?.open, 'second item open property is false').toBe(false);
     });
   },
 };
@@ -72,7 +72,7 @@ export const AriaContractTest: Story = {
       'swc-accordion-item'
     );
     const closedItem = items[0] as AccordionItem;
-    const openItem = items[1] as AccordionItem;
+    const openItem = items[2] as AccordionItem;
 
     const closedButton = closedItem.shadowRoot?.getElementById(
       'header'
@@ -120,16 +120,16 @@ export const AriaContractTest: Story = {
     );
 
     await step(
-      'closed panel has aria-hidden="true"; open panel does not',
+      'closed panel has hidden attribute; open panel does not',
       async () => {
         expect(
-          closedPanel.getAttribute('aria-hidden'),
-          'closed panel has aria-hidden="true"'
-        ).toBe('true');
+          closedPanel.hasAttribute('hidden'),
+          'closed panel has hidden attribute'
+        ).toBe(true);
         expect(
-          openPanel.getAttribute('aria-hidden'),
-          'open panel does not have aria-hidden'
-        ).toBeNull();
+          openPanel.hasAttribute('hidden'),
+          'open panel does not have hidden attribute'
+        ).toBe(false);
       }
     );
   },
@@ -165,9 +165,9 @@ export const ToggleTest: Story = {
         'aria-expanded is "true" after open'
       ).toBe('true');
       expect(
-        panel.getAttribute('aria-hidden'),
-        'aria-hidden is removed when panel is open'
-      ).toBeNull();
+        panel.hasAttribute('hidden'),
+        'hidden attribute is removed when panel is open'
+      ).toBe(false);
     });
 
     await step('clicking the header button again closes the item', async () => {
@@ -181,9 +181,9 @@ export const ToggleTest: Story = {
         'aria-expanded is "false" after close'
       ).toBe('false');
       expect(
-        panel.getAttribute('aria-hidden'),
-        'aria-hidden is restored when panel is closed'
-      ).toBe('true');
+        panel.hasAttribute('hidden'),
+        'hidden attribute is restored when panel is closed'
+      ).toBe(true);
     });
   },
 };
@@ -303,9 +303,9 @@ export const DisabledItemTest: Story = {
 
         expect(item.open, 'open property stays false').toBe(false);
         expect(
-          panel.getAttribute('aria-hidden'),
-          'panel stays aria-hidden after imperative open'
-        ).toBe('true');
+          panel.hasAttribute('hidden'),
+          'panel stays hidden after imperative open'
+        ).toBe(true);
       }
     );
   },
@@ -342,9 +342,9 @@ export const DisabledOpenItemTest: Story = {
 
         expect(item.open, 'open property stays true').toBe(true);
         expect(
-          panel.getAttribute('aria-hidden'),
-          'panel stays exposed after imperative close'
-        ).toBeNull();
+          panel.hasAttribute('hidden'),
+          'panel stays visible after imperative close'
+        ).toBe(false);
         expect(
           button.getAttribute('aria-expanded'),
           'aria-expanded stays true'
@@ -426,9 +426,9 @@ export const HostDisabledTest: Story = {
 
         expect(item.open, 'open property stays false').toBe(false);
         expect(
-          panel.getAttribute('aria-hidden'),
-          'panel stays aria-hidden after imperative open'
-        ).toBe('true');
+          panel.hasAttribute('hidden'),
+          'panel stays hidden after imperative open'
+        ).toBe(true);
         expect(
           button.getAttribute('aria-expanded'),
           'aria-expanded stays false'
@@ -486,9 +486,9 @@ export const HostDisabledOpenItemTest: Story = {
 
         expect(item.open, 'open property stays true').toBe(true);
         expect(
-          panel.getAttribute('aria-hidden'),
-          'panel stays exposed after imperative close'
-        ).toBeNull();
+          panel.hasAttribute('hidden'),
+          'panel stays visible after imperative close'
+        ).toBe(false);
         expect(
           button.getAttribute('aria-expanded'),
           'aria-expanded stays true'
@@ -578,22 +578,22 @@ export const ExclusiveOpenTest: Story = {
       'swc-accordion-item'
     );
     const item1 = items[0] as AccordionItem;
-    const item2 = items[1] as AccordionItem;
+    const item3 = items[2] as AccordionItem;
     const button1 = item1.shadowRoot?.getElementById(
       'header'
     ) as HTMLButtonElement;
 
     await step('opening one item closes the previously open item', async () => {
-      expect(item2.open, 'second item starts open').toBe(true);
+      expect(item3.open, 'third item starts open').toBe(true);
 
       button1.click();
       // closeSiblingsOnOpen defers via queueMicrotask; wait for it to run.
       await new Promise<void>((resolve) => queueMicrotask(resolve));
       await item1.updateComplete;
-      await item2.updateComplete;
+      await item3.updateComplete;
 
       expect(item1.open, 'first item is now open').toBe(true);
-      expect(item2.open, 'second item is now closed').toBe(false);
+      expect(item3.open, 'third item is now closed').toBe(false);
     });
   },
 };
