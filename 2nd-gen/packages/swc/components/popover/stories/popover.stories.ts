@@ -56,14 +56,14 @@ export default meta;
 export const Playground: Story = {
   tags: ['autodocs', 'dev'],
   args: {
-    open: true,
+    open: false,
     placement: 'bottom',
     tip: true,
     for: 'playground-trigger',
     'default-slot': 'This popover is anchored to the button above.',
   },
   render: (args) => html`
-    <button id="playground-trigger">Trigger</button>
+    <button id="playground-trigger">Toggle popover</button>
     ${template(args)}
   `,
 };

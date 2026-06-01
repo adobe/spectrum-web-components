@@ -9,7 +9,8 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-import { expect } from '@storybook/test';
+import { html } from 'lit';
+import { expect, userEvent } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import { Popover } from '@adobe/spectrum-wc/popover';
@@ -48,6 +49,43 @@ export const OverviewTest: Story = {
 
     await step('the element is an instance of Popover', () => {
       expect(popover, 'swc-popover renders').toBeInstanceOf(Popover);
+    });
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Click-to-toggle (default mode)
+// ──────────────────────────────────────────────────────────────
+
+export const ClickToggleTest: Story = {
+  render: () => html`
+    <button id="click-toggle-trigger">Trigger</button>
+    <swc-popover for="click-toggle-trigger">Popover content</swc-popover>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const popover = await getComponent<Popover>(canvasElement, 'swc-popover');
+    const trigger = canvasElement.querySelector(
+      '#click-toggle-trigger'
+    ) as HTMLButtonElement;
+    await popover.updateComplete;
+
+    await step('starts closed with aria-expanded="false"', () => {
+      expect(popover.open, 'closed initially').toBe(false);
+      expect(trigger.getAttribute('aria-expanded')).toBe('false');
+    });
+
+    await step('clicking the trigger opens the popover', async () => {
+      await userEvent.click(trigger);
+      await popover.updateComplete;
+      expect(popover.open, 'open after first click').toBe(true);
+      expect(trigger.getAttribute('aria-expanded')).toBe('true');
+    });
+
+    await step('clicking the trigger again closes the popover', async () => {
+      await userEvent.click(trigger);
+      await popover.updateComplete;
+      expect(popover.open, 'closed after second click').toBe(false);
+      expect(trigger.getAttribute('aria-expanded')).toBe('false');
     });
   },
 };

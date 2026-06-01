@@ -146,6 +146,17 @@ export abstract class PopoverBase extends SpectrumElement {
   @property({ attribute: false })
   public triggerElement: HTMLElement | VirtualTrigger | null = null;
 
+  /**
+   * Suppress the automatic click-to-toggle wiring on the resolved trigger. When
+   * set, the consumer manages visibility via the `open` property (or the popover
+   * API directly) — used by first-party components like Picker and Menu that own
+   * their own open/close logic. ARIA relationship wiring still applies.
+   *
+   * @default false
+   */
+  @property({ type: Boolean, reflect: true })
+  public manual = false;
+
   protected override update(changedProperties: PropertyValues): void {
     if (window.__swc?.DEBUG) {
       // Validate against the static so subclasses that narrow the placement set

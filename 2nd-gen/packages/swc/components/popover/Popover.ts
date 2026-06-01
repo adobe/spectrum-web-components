@@ -74,6 +74,12 @@ export class Popover extends PopoverBase {
   /** The positioning anchor (an element or a `VirtualTrigger`). */
   #anchor: HTMLElement | VirtualTrigger | null = null;
 
+  /** The element the click-to-toggle listener is currently attached to. */
+  #clickTrigger: HTMLElement | null = null;
+
+  /** Timestamp of the last native dismissal, to suppress click-reopen. */
+  #lastDismissAt = 0;
+
   /** Cause of the in-progress close, read when dispatching `swc-close`. */
   #closeSource: PopoverCloseSource | null = null;
 
@@ -96,6 +102,7 @@ export class Popover extends PopoverBase {
     this.#placementController.stop();
     unregisterDismissible(this);
     this.#removeEscapeListener();
+    this.#removeTriggerClick();
     this.#clearTriggerAria();
     this.#interactiveElement = null;
     this.#anchor = null;
@@ -107,7 +114,8 @@ export class Popover extends PopoverBase {
     if (
       changedProperties.has('for') ||
       changedProperties.has('triggerElement') ||
-      changedProperties.has('modal')
+      changedProperties.has('modal') ||
+      changedProperties.has('manual')
     ) {
       this.#wireTrigger();
     }
@@ -166,10 +174,38 @@ export class Popover extends PopoverBase {
       }
     }
 
+    // Click-to-toggle on the trigger host, unless the consumer drives `open`
+    // themselves (`manual`). Listens on the host so clicks bubbling from an
+    // inner button are caught.
+    const clickTrigger = this.manual ? null : trigger;
+    if (clickTrigger !== this.#clickTrigger) {
+      this.#removeTriggerClick();
+      if (clickTrigger) {
+        clickTrigger.addEventListener('click', this.#onTriggerClick);
+        this.#clickTrigger = clickTrigger;
+      }
+    }
+
     if (this.open) {
       this.#startPositioning();
     }
   }
+
+  #removeTriggerClick(): void {
+    this.#clickTrigger?.removeEventListener('click', this.#onTriggerClick);
+    this.#clickTrigger = null;
+  }
+
+  // Toggle on trigger click. In the default (auto) mode, clicking the trigger
+  // while open first triggers the browser's light-dismiss (which closes the
+  // popover before this fires); the `#lastDismissAt` guard prevents an
+  // immediate reopen so the click reads as a close.
+  #onTriggerClick = (): void => {
+    if (!this.open && performance.now() - this.#lastDismissAt < 200) {
+      return;
+    }
+    this.open = !this.open;
+  };
 
   #clearTriggerAria(): void {
     const element = this.#interactiveElement;
@@ -257,6 +293,9 @@ export class Popover extends PopoverBase {
   }
 
   #closeTeardown(): void {
+    // Stamp the dismissal so a trigger click that caused a light-dismiss does
+    // not immediately reopen the popover.
+    this.#lastDismissAt = performance.now();
     this.#placementController.stop();
     this.actualPlacement = null;
     unregisterDismissible(this);
