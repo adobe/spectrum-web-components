@@ -14,12 +14,12 @@ import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import { Tab, TabPanel, Tabs } from '@adobe/spectrum-wc/tabs';
+import { TABS_DIRECTIONS } from '@spectrum-web-components/core/components/tabs/index.js';
 
 import '@adobe/spectrum-wc/components/tabs/swc-tabs.js';
 import '@adobe/spectrum-wc/components/tabs/swc-tab.js';
 import '@adobe/spectrum-wc/components/tabs/swc-tab-panel.js';
 
-import { TABS_DIRECTIONS } from '../../../../core/components/tabs/Tabs.types.js';
 import {
   fixture,
   getComponent,

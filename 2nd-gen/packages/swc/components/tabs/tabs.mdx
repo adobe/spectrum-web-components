@@ -63,7 +63,7 @@ Tabs support horizontal (default) and vertical layout directions.
 - **Horizontal**: tabs are laid out in a row across the top. Arrow Left and Arrow Right navigate between tabs.
 - **Vertical**: tabs are stacked vertically along the side. Arrow Up and Arrow Down navigate between tabs. Sets `aria-orientation="vertical"` on the tablist element.
 
-`direction="vertical-right"` from 1st-gen is not supported; use `direction="vertical"`. See the [migration guide](../migration.md).
+`direction="vertical-right"` from 1st-gen is not supported; use `direction="vertical"`. See the [migration guide](?path=/docs/components-tabs-migration-guide--docs).
 
 <Canvas of={TabsStories.Directions} />
 
@@ -78,7 +78,7 @@ Tabs can exist in various states:
 - **Disabled (individual)**: tab exists but cannot be activated. In 2nd-gen, disabled tabs remain focusable via arrow keys per the [ARIA Authoring Practices Guide](https://www.w3.org/WAI/ARIA/apg/patterns/tabs/) and use `aria-disabled="true"` instead of the native `disabled` attribute.
 - **Disabled (container)**: the entire tab list is disabled. All interaction is suppressed and `aria-disabled="true"` is set on the tablist element.
 
-Disabled tabs remain focusable via arrow keys but cannot be activated; see the [migration guide](../migration.md).
+Disabled tabs remain focusable via arrow keys but cannot be activated; see the [migration guide](?path=/docs/components-tabs-migration-guide--docs).
 
 <Canvas of={TabsStories.States} />
 
