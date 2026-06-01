@@ -76,8 +76,15 @@ export class Meter extends MeterBase {
   }
 
   protected override render(): TemplateResult {
+    // Cache derived values so each getter is only evaluated once per render
+    // (each one re-allocates an `Intl.NumberFormat` or rescans the slot map).
     const hasLabel = this.hasLabelSlotContent;
     const hasDescription = this.hasDescriptionSlotContent;
+    const sanitizedMin = this.sanitizedMin;
+    const sanitizedMax = this.sanitizedMax;
+    const clampedValue = this.clampedValue;
+    const fillPercent = this.fillPercent;
+    const formattedValue = this.formattedValue;
     const ariaLabelledBy = hasLabel ? this.labelContainerId : undefined;
     const ariaLabel =
       !hasLabel && this.accessibleLabel ? this.accessibleLabel : undefined;
@@ -89,16 +96,16 @@ export class Meter extends MeterBase {
       <div
         class=${classMap({
           ['swc-Meter']: true,
-          [`swc-Meter--${this.variant}`]: typeof this.variant !== 'undefined',
+          [`swc-Meter--${this.variant}`]: true,
           [`swc-Meter--sideLabel`]: this.labelPosition === 'side',
           [`swc-Meter--staticWhite`]: this.staticColor === 'white',
           [`swc-Meter--staticBlack`]: this.staticColor === 'black',
         })}
         role="meter"
-        aria-valuemin=${this.sanitizedMin}
-        aria-valuemax=${this.sanitizedMax}
-        aria-valuenow=${this.clampedValue}
-        aria-valuetext=${this.formattedValue}
+        aria-valuemin=${sanitizedMin}
+        aria-valuemax=${sanitizedMax}
+        aria-valuenow=${clampedValue}
+        aria-valuetext=${formattedValue}
         aria-labelledby=${ifDefined(ariaLabelledBy)}
         aria-label=${ifDefined(ariaLabel)}
         aria-describedby=${ifDefined(ariaDescribedBy)}
@@ -110,11 +117,11 @@ export class Meter extends MeterBase {
               </span>
             `
           : nothing}
-        <span class="swc-Meter-value">${this.formattedValue}</span>
+        <span class="swc-Meter-value">${formattedValue}</span>
         <div class="swc-Meter-track">
           <div
             class="swc-Meter-fill"
-            style="inline-size: ${this.fillPercent}%;"
+            style="inline-size: ${fillPercent}%;"
           ></div>
         </div>
         ${hasDescription

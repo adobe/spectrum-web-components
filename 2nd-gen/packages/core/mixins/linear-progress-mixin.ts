@@ -12,10 +12,7 @@
 import { PropertyValues, ReactiveElement } from 'lit';
 import { property } from 'lit/decorators.js';
 
-import {
-  LanguageResolutionController,
-  languageResolverUpdatedSymbol,
-} from '../controllers/language-resolution.js';
+import { LanguageResolutionController } from '../controllers/language-resolution.js';
 import {
   ObserveSlotPresence,
   type SlotPresenceObservingInterface,
@@ -72,11 +69,10 @@ export interface LinearProgressInterface extends SlotPresenceObservingInterface 
 let nextLinearProgressId = 0;
 
 /**
- * Thin mixin shared by linear progress components (`<swc-meter>`, future
- * `<swc-progress-bar>`). Owns the typed property declarations, sanitized
- * range + value, locale formatting, light-DOM slot presence tracking
- * (so the shadow-DOM containers and slots can be fully conditional),
- * and the DEBUG accessible-name warning.
+ * Mixin for linear progress components. Owns the typed property
+ * declarations, sanitized range + value, locale formatting, light-DOM
+ * slot presence tracking (so the shadow-DOM containers and slots can
+ * be fully conditional), and the DEBUG accessible-name warning.
  *
  * Intentionally silent on `role` and animation — those stay in each
  * component's own base class.
@@ -149,23 +145,37 @@ export function LinearProgressMixin<T extends Constructor<ReactiveElement>>(
 
     private readonly _instanceId = ++nextLinearProgressId;
 
+    /**
+     * @internal
+     */
     public get labelContainerId(): string {
       return `swc-linear-progress-label-${this._instanceId}`;
     }
 
+    /**
+     * @internal
+     */
     public get descriptionContainerId(): string {
       return `swc-linear-progress-description-${this._instanceId}`;
     }
 
+    /**
+     * @internal
+     */
     public get hasLabelSlotContent(): boolean {
       return this.getSlotContentPresence(LABEL_SLOT_SELECTOR);
     }
 
+    /**
+     * @internal
+     */
     public get hasDescriptionSlotContent(): boolean {
       return this.getSlotContentPresence(DESCRIPTION_SLOT_SELECTOR);
     }
 
     /**
+     * @internal
+     *
      * Sanitized lower bound: falls back to 0 when `minValue` is non-finite,
      * and to the smaller of (min, max) when the two are reversed. ARIA
      * `aria-valuemin`, `aria-valuenow`, `aria-valuetext`, and the rendered
@@ -179,7 +189,9 @@ export function LinearProgressMixin<T extends Constructor<ReactiveElement>>(
     }
 
     /**
-     * Sanitized upper bound. See {@link sanitizedMin}.
+     * @internal
+     *
+     * Sanitized upper bound. See `sanitizedMin`.
      */
     public get sanitizedMax(): number {
       const min = Number.isFinite(this.minValue) ? this.minValue : 0;
@@ -187,11 +199,17 @@ export function LinearProgressMixin<T extends Constructor<ReactiveElement>>(
       return Math.max(min, max);
     }
 
+    /**
+     * @internal
+     */
     public get clampedValue(): number {
       const value = Number.isFinite(this.value) ? this.value : 0;
       return Math.min(this.sanitizedMax, Math.max(this.sanitizedMin, value));
     }
 
+    /**
+     * @internal
+     */
     public get fillPercent(): number {
       const min = this.sanitizedMin;
       const max = this.sanitizedMax;
@@ -202,6 +220,9 @@ export function LinearProgressMixin<T extends Constructor<ReactiveElement>>(
       return Math.min(100, Math.max(0, fraction * 100));
     }
 
+    /**
+     * @internal
+     */
     public get formattedValue(): string {
       if (this.valueLabel) {
         return this.valueLabel;
@@ -226,20 +247,33 @@ export function LinearProgressMixin<T extends Constructor<ReactiveElement>>(
     protected override updated(changes: PropertyValues): void {
       super.updated(changes);
 
-      if (changes.has(languageResolverUpdatedSymbol)) {
-        // Locale shifted; re-render so formatted value + aria-valuetext refresh.
-        this.requestUpdate();
-      }
+      // Locale changes are picked up automatically: the
+      // `LanguageResolutionController` requests an update with
+      // `languageResolverUpdatedSymbol`, which re-runs `render()`. The
+      // render template reads `formattedValue` (which reads
+      // `languageResolver.language` lazily), so the new locale is already
+      // reflected in this render cycle. No second `requestUpdate()`
+      // needed here.
 
-      if (window.__swc?.DEBUG) {
+      // Only re-evaluate the accessible-name fallback when the inputs
+      // that determine it actually change, so the warning does not fire
+      // on every property update during development.
+      if (
+        window.__swc?.DEBUG &&
+        (changes.has('accessibleLabel') || !this._hasWarnedNoAccessibleName)
+      ) {
         this.warnMissingAccessibleName();
       }
     }
 
+    private _hasWarnedNoAccessibleName = false;
+
     private warnMissingAccessibleName(): void {
       if (this.hasLabelSlotContent || this.accessibleLabel) {
+        this._hasWarnedNoAccessibleName = false;
         return;
       }
+      this._hasWarnedNoAccessibleName = true;
       window.__swc?.warn(
         this,
         `<${this.localName}> requires an accessible name.`,
