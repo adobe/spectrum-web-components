@@ -28,7 +28,9 @@
   position: fixed;
   inset: auto;
   inline-size: max-content;
-  max-inline-size: none;
+
+  /* Never exceed the viewport minus 2 × container padding. */
+  max-inline-size: calc(100vw - 24px);
   max-block-size: none;
   padding: 0;
   margin: 0;
@@ -38,7 +40,42 @@
   border-radius: token("corner-radius-100");
   overflow: visible;
   outline: none;
+
+  /* Fade on open/close. The slide axis (translate) is owned by the
+   * PlacementController for anchoring, so only opacity animates here. */
+  opacity: 0;
   filter: drop-shadow(token("drop-shadow-elevated-x") token("drop-shadow-elevated-y") token("drop-shadow-elevated-blur") token("drop-shadow-elevated-color"));
+  transition:
+    opacity token("animation-duration-200") token("animation-ease-out"),
+    overlay token("animation-duration-200") allow-discrete,
+    display token("animation-duration-200") allow-discrete;
+}
+
+/* Shown state — `:popover-open` for the default `<div>`, `[open]` for the modal `<dialog>`. */
+.swc-Popover:popover-open,
+.swc-Popover[open] {
+  opacity: 1;
+}
+
+/* Entry animation start (top-layer elements need @starting-style). */
+@starting-style {
+  .swc-Popover:popover-open,
+  .swc-Popover[open] {
+    opacity: 0;
+  }
+}
+
+/* Fixed sizes; when `size` is unset the popover fits its contents. */
+:host([size="s"]) .swc-Popover {
+  inline-size: 336px;
+}
+
+:host([size="m"]) .swc-Popover {
+  inline-size: 416px;
+}
+
+:host([size="l"]) .swc-Popover {
+  inline-size: 576px;
 }
 
 /* The padded content wrapper. Padding lives here (not on `.swc-Popover`) so a
@@ -120,8 +157,14 @@
 }
 
 /* ──────────────────────────
- *    FORCED COLORS
+ *    MEDIA QUERIES
  * ────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  .swc-Popover {
+    transition: none;
+  }
+}
 
 @media (forced-colors: active) {
   .swc-Popover {

@@ -45,6 +45,9 @@ interface ARIAControlsElements {
   ariaControlsElements?: readonly Element[] | null;
 }
 
+/** Extra main-axis offset reserved for the arrow when it is shown. */
+const ARROW_SPACE = 8;
+
 /**
  * An anchored popover surface that renders an internal top-layer element. The
  * default lifecycle uses a `<div popover="auto">` with native light-dismiss;
@@ -66,46 +69,47 @@ export class Popover extends PopoverBase {
   //     LIFECYCLE
   // ──────────────────
 
-  #placementController = new PlacementController(this);
+  private _placementController = new PlacementController(this);
 
   /** The trigger's AT-facing element that receives ARIA wiring. */
-  #interactiveElement: (HTMLElement & ARIAControlsElements) | null = null;
+  private _interactiveElement: (HTMLElement & ARIAControlsElements) | null =
+    null;
 
   /** The positioning anchor (an element or a `VirtualTrigger`). */
-  #anchor: HTMLElement | VirtualTrigger | null = null;
+  private _anchor: HTMLElement | VirtualTrigger | null = null;
 
   /** The element the click-to-toggle listener is currently attached to. */
-  #clickTrigger: HTMLElement | null = null;
+  private _clickTrigger: HTMLElement | null = null;
 
   /** Timestamp of the last native dismissal, to suppress click-reopen. */
-  #lastDismissAt = 0;
+  private _lastDismissAt = 0;
 
   /** Cause of the in-progress close, read when dispatching `swc-close`. */
-  #closeSource: PopoverCloseSource | null = null;
+  private _closeSource: PopoverCloseSource | null = null;
 
   /** Suppresses the open/close effect when `open` is synced from a native event. */
-  #syncingOpen = false;
+  private _syncingOpen = false;
 
   /** Document Escape listener (default mode) used to label the close source. */
-  #escapeListener?: (event: KeyboardEvent) => void;
+  private _escapeListener?: (event: KeyboardEvent) => void;
 
-  get #internalElement(): HTMLElement | null {
+  private get _internalElement(): HTMLElement | null {
     return this.shadowRoot?.querySelector('.swc-Popover') ?? null;
   }
 
-  get #tipElement(): HTMLElement | null {
+  private get _tipElement(): HTMLElement | null {
     return this.shadowRoot?.querySelector('.swc-Popover-tip') ?? null;
   }
 
   public override disconnectedCallback(): void {
     super.disconnectedCallback();
-    this.#placementController.stop();
+    this._placementController.stop();
     unregisterDismissible(this);
-    this.#removeEscapeListener();
-    this.#removeTriggerClick();
-    this.#clearTriggerAria();
-    this.#interactiveElement = null;
-    this.#anchor = null;
+    this._removeEscapeListener();
+    this._removeTriggerClick();
+    this._clearTriggerAria();
+    this._interactiveElement = null;
+    this._anchor = null;
   }
 
   protected override updated(changedProperties: PropertyValues): void {
@@ -117,31 +121,47 @@ export class Popover extends PopoverBase {
       changedProperties.has('modal') ||
       changedProperties.has('manual')
     ) {
-      this.#wireTrigger();
+      this._wireTrigger();
     }
 
     if (changedProperties.has('open')) {
-      if (this.#syncingOpen) {
+      if (this._syncingOpen) {
         // The change came from a native event; the element is already in the
         // right state. Just consume the guard.
-        this.#syncingOpen = false;
+        this._syncingOpen = false;
       } else if (this.open) {
-        this.#show();
+        this._show();
       } else {
-        this.#hide();
+        this._hide();
       }
-      this.#interactiveElement?.setAttribute(
+      this._interactiveElement?.setAttribute(
         'aria-expanded',
         String(this.open)
       );
+    } else if (this.open && this._positioningChanged(changedProperties)) {
+      // Re-anchor while open when a positioning input changes.
+      this._startPositioning();
     }
+  }
+
+  private _positioningChanged(changedProperties: PropertyValues): boolean {
+    return (
+      changedProperties.has('placement') ||
+      changedProperties.has('offset') ||
+      changedProperties.has('crossOffset') ||
+      changedProperties.has('containerPadding') ||
+      changedProperties.has('shouldFlip') ||
+      changedProperties.has('hideArrow') ||
+      changedProperties.has('tipPadding') ||
+      changedProperties.has('size')
+    );
   }
 
   // ──────────────────────────
   //     TRIGGER + ARIA
   // ──────────────────────────
 
-  #wireTrigger(): void {
+  private _wireTrigger(): void {
     const { trigger, interactiveElement } = resolveTrigger(this, {
       for: this.for,
       triggerElement:
@@ -149,16 +169,16 @@ export class Popover extends PopoverBase {
     });
 
     if (
-      this.#interactiveElement &&
-      this.#interactiveElement !== interactiveElement
+      this._interactiveElement &&
+      this._interactiveElement !== interactiveElement
     ) {
-      this.#clearTriggerAria();
+      this._clearTriggerAria();
     }
 
-    this.#interactiveElement = interactiveElement;
+    this._interactiveElement = interactiveElement;
     // A `VirtualTrigger` (non-element) anchors positioning only; an element
     // trigger anchors positioning and carries ARIA.
-    this.#anchor =
+    this._anchor =
       this.triggerElement && !(this.triggerElement instanceof HTMLElement)
         ? this.triggerElement
         : trigger;
@@ -178,37 +198,37 @@ export class Popover extends PopoverBase {
     // themselves (`manual`). Listens on the host so clicks bubbling from an
     // inner button are caught.
     const clickTrigger = this.manual ? null : trigger;
-    if (clickTrigger !== this.#clickTrigger) {
-      this.#removeTriggerClick();
+    if (clickTrigger !== this._clickTrigger) {
+      this._removeTriggerClick();
       if (clickTrigger) {
-        clickTrigger.addEventListener('click', this.#onTriggerClick);
-        this.#clickTrigger = clickTrigger;
+        clickTrigger.addEventListener('click', this._onTriggerClick);
+        this._clickTrigger = clickTrigger;
       }
     }
 
     if (this.open) {
-      this.#startPositioning();
+      this._startPositioning();
     }
   }
 
-  #removeTriggerClick(): void {
-    this.#clickTrigger?.removeEventListener('click', this.#onTriggerClick);
-    this.#clickTrigger = null;
+  private _removeTriggerClick(): void {
+    this._clickTrigger?.removeEventListener('click', this._onTriggerClick);
+    this._clickTrigger = null;
   }
 
   // Toggle on trigger click. In the default (auto) mode, clicking the trigger
   // while open first triggers the browser's light-dismiss (which closes the
-  // popover before this fires); the `#lastDismissAt` guard prevents an
+  // popover before this fires); the `_lastDismissAt` guard prevents an
   // immediate reopen so the click reads as a close.
-  #onTriggerClick = (): void => {
-    if (!this.open && performance.now() - this.#lastDismissAt < 200) {
+  private _onTriggerClick = (): void => {
+    if (!this.open && performance.now() - this._lastDismissAt < 200) {
       return;
     }
     this.open = !this.open;
   };
 
-  #clearTriggerAria(): void {
-    const element = this.#interactiveElement;
+  private _clearTriggerAria(): void {
+    const element = this._interactiveElement;
     if (!element) {
       return;
     }
@@ -221,18 +241,20 @@ export class Popover extends PopoverBase {
   //     POSITIONING
   // ──────────────────────────
 
-  #startPositioning(): void {
-    const floating = this.#internalElement;
-    if (!floating || !this.#anchor) {
+  private _startPositioning(): void {
+    const floating = this._internalElement;
+    if (!floating || !this._anchor) {
       return;
     }
-    this.#placementController.start(this.#anchor, floating, {
+    const showArrow = !this.hideArrow;
+    this._placementController.start(this._anchor, floating, {
       placement: this.placement,
-      offset: this.offset,
+      // Add room for the arrow when it is shown.
+      offset: this.offset + (showArrow ? ARROW_SPACE : 0),
       crossOffset: this.crossOffset,
       containerPadding: this.containerPadding,
       shouldFlip: this.shouldFlip,
-      tipElement: this.tip ? (this.#tipElement ?? undefined) : undefined,
+      tipElement: showArrow ? (this._tipElement ?? undefined) : undefined,
       tipPadding: this.tipPadding,
       onPlacementChange: (next) => {
         this.actualPlacement = next;
@@ -244,8 +266,8 @@ export class Popover extends PopoverBase {
   //     OPEN/CLOSE
   // ──────────────────
 
-  #show(): void {
-    const element = this.#internalElement;
+  private _show(): void {
+    const element = this._internalElement;
     if (!element) {
       return;
     }
@@ -256,9 +278,9 @@ export class Popover extends PopoverBase {
         dialog.showModal();
       }
       // `<dialog>` modal-mode has no native open event, so dispatch here.
-      this.#dispatchOpen();
+      this._dispatchOpen();
     } else {
-      this.#addEscapeListener();
+      this._addEscapeListener();
       if (!element.matches(':popover-open')) {
         try {
           element.showPopover();
@@ -268,16 +290,16 @@ export class Popover extends PopoverBase {
       }
       // `swc-open` is dispatched from the `beforetoggle` listener.
     }
-    this.#startPositioning();
-    this.#interactiveElement?.setAttribute('aria-expanded', 'true');
+    this._startPositioning();
+    this._interactiveElement?.setAttribute('aria-expanded', 'true');
   }
 
-  #hide(): void {
-    const element = this.#internalElement;
+  private _hide(): void {
+    const element = this._internalElement;
     if (!element) {
       return;
     }
-    this.#closeSource ??= 'programmatic';
+    this._closeSource ??= 'programmatic';
     if (this.modal) {
       const dialog = element as HTMLDialogElement;
       if (dialog.open) {
@@ -292,23 +314,34 @@ export class Popover extends PopoverBase {
     }
   }
 
-  #closeTeardown(): void {
+  private _closeTeardown(): void {
     // Stamp the dismissal so a trigger click that caused a light-dismiss does
     // not immediately reopen the popover.
-    this.#lastDismissAt = performance.now();
-    this.#placementController.stop();
-    this.actualPlacement = null;
+    this._lastDismissAt = performance.now();
     unregisterDismissible(this);
-    this.#removeEscapeListener();
-    this.#interactiveElement?.setAttribute('aria-expanded', 'false');
+    this._removeEscapeListener();
+    this._interactiveElement?.setAttribute('aria-expanded', 'false');
+    // Positioning is torn down only after the close transition finishes
+    // (see `_stopPositioningWhenClosed`), so the arrow keeps its computed
+    // offset during the fade instead of snapping back to the edge.
+  }
+
+  // Tear down positioning once the close animation has completed. Guarded by
+  // `!this.open` so a rapid re-open during the fade keeps its positioning.
+  private _stopPositioningWhenClosed(): void {
+    if (this.open) {
+      return;
+    }
+    this._placementController.stop();
+    this.actualPlacement = null;
   }
 
   /** Set `open` without re-triggering the show/hide effect. */
-  #syncOpen(value: boolean): void {
+  private _syncOpen(value: boolean): void {
     if (this.open === value) {
       return;
     }
-    this.#syncingOpen = true;
+    this._syncingOpen = true;
     this.open = value;
   }
 
@@ -317,73 +350,73 @@ export class Popover extends PopoverBase {
   // ──────────────────────────────
 
   // Default mode: the popover-API lifecycle on the internal `<div>`.
-  #onBeforeToggle = (event: ToggleEvent): void => {
+  private _onBeforeToggle = (event: ToggleEvent): void => {
     if (event.newState === 'open') {
-      this.#dispatchOpen();
+      this._dispatchOpen();
     } else {
-      this.#syncOpen(false);
-      this.#dispatchClose(this.#closeSource ?? 'outside');
-      this.#closeTeardown();
+      this._syncOpen(false);
+      this._dispatchClose(this._closeSource ?? 'outside');
+      this._closeTeardown();
     }
   };
 
   // Modal mode: Escape routes through the native `cancel` event.
-  #onCancel = (): void => {
-    this.#closeSource = 'escape';
+  private _onCancel = (): void => {
+    this._closeSource = 'escape';
   };
 
   // Modal mode: `close` fires for Escape, backdrop-click, and programmatic close.
-  #onClose = (): void => {
-    this.#syncOpen(false);
-    this.#dispatchClose(this.#closeSource ?? 'programmatic');
-    this.#closeTeardown();
+  private _onClose = (): void => {
+    this._syncOpen(false);
+    this._dispatchClose(this._closeSource ?? 'programmatic');
+    this._closeTeardown();
   };
 
   // Modal mode: a pointerdown landing on the dialog itself (not its padded
   // content) is a backdrop click.
-  #onPointerDown = (event: PointerEvent): void => {
-    if (event.target === this.#internalElement) {
-      this.#closeSource = 'outside';
-      (this.#internalElement as HTMLDialogElement).close();
+  private _onPointerDown = (event: PointerEvent): void => {
+    if (event.target === this._internalElement) {
+      this._closeSource = 'outside';
+      (this._internalElement as HTMLDialogElement).close();
     }
   };
 
-  #addEscapeListener(): void {
-    if (this.#escapeListener) {
+  private _addEscapeListener(): void {
+    if (this._escapeListener) {
       return;
     }
-    this.#escapeListener = (event: KeyboardEvent): void => {
+    this._escapeListener = (event: KeyboardEvent): void => {
       if (event.key === 'Escape' && isTopDismissible(this)) {
-        this.#closeSource = 'escape';
+        this._closeSource = 'escape';
       }
     };
-    document.addEventListener('keydown', this.#escapeListener, {
+    document.addEventListener('keydown', this._escapeListener, {
       capture: true,
     });
   }
 
-  #removeEscapeListener(): void {
-    if (!this.#escapeListener) {
+  private _removeEscapeListener(): void {
+    if (!this._escapeListener) {
       return;
     }
-    document.removeEventListener('keydown', this.#escapeListener, {
+    document.removeEventListener('keydown', this._escapeListener, {
       capture: true,
     });
-    this.#escapeListener = undefined;
+    this._escapeListener = undefined;
   }
 
   // ──────────────────
   //     EVENTS
   // ──────────────────
 
-  #dispatchOpen(): void {
+  private _dispatchOpen(): void {
     this.dispatchEvent(
       new CustomEvent('swc-open', { bubbles: true, composed: true })
     );
-    this.#dispatchAfter('swc-after-open');
+    this._dispatchAfter('swc-after-open');
   }
 
-  #dispatchClose(source: PopoverCloseSource): void {
+  private _dispatchClose(source: PopoverCloseSource): void {
     this.dispatchEvent(
       new CustomEvent('swc-close', {
         detail: { source },
@@ -391,20 +424,24 @@ export class Popover extends PopoverBase {
         composed: true,
       })
     );
-    this.#dispatchAfter('swc-after-close');
-    this.#closeSource = null;
+    this._dispatchAfter('swc-after-close');
+    this._closeSource = null;
   }
 
   /** Fire an after-event on `transitionend`, or immediately if no transition. */
-  #dispatchAfter(type: 'swc-after-open' | 'swc-after-close'): void {
-    const element = this.#internalElement;
+  private _dispatchAfter(type: 'swc-after-open' | 'swc-after-close'): void {
+    const element = this._internalElement;
     const duration = element
       ? getComputedStyle(element).transitionDuration
       : '0s';
-    const fire = (): void =>
-      void this.dispatchEvent(
+    const fire = (): void => {
+      this.dispatchEvent(
         new CustomEvent(type, { bubbles: true, composed: true })
       );
+      if (type === 'swc-after-close') {
+        this._stopPositioningWhenClosed();
+      }
+    };
     if (!element || parseFloat(duration) === 0) {
       fire();
       return;
@@ -430,11 +467,11 @@ export class Popover extends PopoverBase {
       <div class="swc-Popover-content">
         <slot></slot>
       </div>
-      ${this.tip
-        ? html`
+      ${this.hideArrow
+        ? nothing
+        : html`
             <span class="swc-Popover-tip"></span>
-          `
-        : nothing}
+          `}
     `;
 
     // The render shape branches on `modal`: a `<div popover="auto">` in the
@@ -443,9 +480,9 @@ export class Popover extends PopoverBase {
       ? html`
           <dialog
             class=${classes}
-            @cancel=${this.#onCancel}
-            @close=${this.#onClose}
-            @pointerdown=${this.#onPointerDown}
+            @cancel=${this._onCancel}
+            @close=${this._onClose}
+            @pointerdown=${this._onPointerDown}
           >
             ${content}
           </dialog>
@@ -454,7 +491,7 @@ export class Popover extends PopoverBase {
           <div
             class=${classes}
             popover="auto"
-            @beforetoggle=${this.#onBeforeToggle}
+            @beforetoggle=${this._onBeforeToggle}
           >
             ${content}
           </div>

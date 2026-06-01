@@ -58,7 +58,7 @@ export const Playground: Story = {
   args: {
     open: false,
     placement: 'bottom',
-    tip: true,
+    'hide-arrow': false,
     for: 'playground-trigger',
     'default-slot': 'This popover is anchored to the button above.',
   },
@@ -76,7 +76,7 @@ export const Overview: Story = {
   args: {
     open: true,
     placement: 'bottom',
-    tip: true,
+    'hide-arrow': false,
     for: 'overview-trigger',
     'default-slot': 'This popover is anchored to the button above.',
   },
