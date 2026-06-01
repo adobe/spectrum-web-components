@@ -121,6 +121,72 @@ export const Overview: Story = {
   tags: ['overview'],
 };
 
+// ──────────────────────────
+//    BASIC USAGE STORY
+// ──────────────────────────
+
+/**
+ * ## What it does
+ *
+ * - **Warm-up / cooldown timing**: The popover opens only after the pointer has
+ *   rested on the trigger for `delay` ms. Leaving starts a matching cooldown before
+ *   close. Set `delay="0"` for immediate open and close.
+ * - **Warm-state acceleration**: Once any instance of a component type has opened,
+ *   subsequent hovers on the same type open immediately without re-timing. Warm state
+ *   resets after the cooldown elapses.
+ * - **WCAG 1.4.13 pointer bridge**: Moving the pointer from the trigger into the
+ *   popover cancels the cooldown, keeping the popover open so users can interact with
+ *   its content.
+ * - **Keyboard focus priority**: `Tab` focus opens immediately and suppresses all
+ *   pointer-driven timers until `focusout`.
+ * - **Pointer-click exclusion**: A pointer click on the trigger does not open the
+ *   popover. `popover="auto"` fires a light dismiss on `pointerdown` (the trigger is
+ *   outside the popover surface); opening on the subsequent `focusin` would cause a
+ *   visible flash. The controller detects this sequence and skips the open.
+ *
+ * ## Basic usage
+ *
+ * 1. Implement `HoverControllerHost` on your element (`delay`, `manual`, `disabled`,
+ *    `showPopover`, `hidePopover`). The host must have `popover` set so it participates
+ *    in the native Popover API.
+ * 2. Construct the controller in the host's `constructor`.
+ * 3. Resolve the trigger element and call `setTarget()` from `updated()` whenever it
+ *    changes. The controller does not resolve trigger elements itself.
+ * 4. Wire ARIA relationships (`aria-describedby` / `aria-labelledby`) in the host on
+ *    `open` change — the controller does not set ARIA attributes.
+ *
+ * ```typescript
+ * import { LitElement, type PropertyValues } from 'lit';
+ * import { property } from 'lit/decorators.js';
+ * import {
+ *   HoverController,
+ *   type HoverControllerHost,
+ * } from '@spectrum-web-components/core/controllers/hover-controller.js';
+ *
+ * class SwcTooltip extends LitElement implements HoverControllerHost {
+ *   @property({ type: Number }) delay = 1500;
+ *   @property({ type: Boolean }) manual = false;
+ *   @property({ type: Boolean }) disabled = false;
+ *
+ *   private triggerElement: HTMLElement | null = null;
+ *
+ *   private readonly hoverController = new HoverController(this, {
+ *     warmStateKey: 'swc-tooltip',
+ *   });
+ *
+ *   protected override updated(changes: PropertyValues): void {
+ *     super.updated(changes);
+ *     if (changes.has('triggerElement')) {
+ *       this.hoverController.setTarget(this.triggerElement ?? null);
+ *     }
+ *   }
+ * }
+ * ```
+ */
+export const Usage: Story = {
+  tags: ['usage', 'description-only'],
+};
+
 // ──────────────────────────────
 //    OPTIONS STORIES
 // ──────────────────────────────
@@ -334,6 +400,43 @@ export const KeyboardFocus: Story = {
   tags: ['behaviors'],
 };
 KeyboardFocus.storyName = 'Keyboard focus opens immediately';
+
+// ──────────────────────────
+//    API STORY
+// ──────────────────────────
+
+/**
+ * ### Methods
+ *
+ * | Member | Description |
+ * |---|---|
+ * | `setTarget(trigger)` | Sets the element that receives pointer and focus listeners. Call from `updated()` whenever the resolved trigger changes. Passing `null` detaches all listeners from the previous target. |
+ *
+ * ### Constructor options (`HoverControllerOptions`)
+ *
+ * | Option | Type | Description |
+ * |---|---|---|
+ * | `warmStateKey` | `string` | Per-component-type key for shared warm state on `document`. Use the element tag name (e.g. `'swc-tooltip'`). Must be static; must not vary per instance. |
+ *
+ * ### Host interface (`HoverControllerHost`)
+ *
+ * The host element must implement this interface. All members are read by the
+ * controller; none are written.
+ *
+ * | Member | Type | Description |
+ * |---|---|---|
+ * | `delay` | `number` | Warm-up and cooldown duration in ms. `0` opens and closes immediately. |
+ * | `manual` | `boolean` | When `true`, the controller skips all event wiring. |
+ * | `disabled` | `boolean` | When `true`, the controller skips all event wiring. |
+ * | `showPopover()` | method | Called by the controller to open the popover. |
+ * | `hidePopover()` | method | Called by the controller to close the popover. |
+ *
+ * See the Controls table above for interactive demos of `delay`, `manual`, and
+ * `disabled`.
+ */
+export const API: Story = {
+  tags: ['api', 'description-only'],
+};
 
 // ────────────────────────────────
 //    ACCESSIBILITY STORIES
