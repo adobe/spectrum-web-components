@@ -10,6 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
+import { PropertyValues } from 'lit';
 import { property } from 'lit/decorators.js';
 
 import type { VirtualTrigger } from '@spectrum-web-components/core/controllers/index.js';
@@ -22,7 +23,8 @@ import { type Placement, POPOVER_VALID_PLACEMENTS } from './Popover.types.js';
  * shared by all popover implementations; the concrete SWC subclass owns
  * rendering, the dialog lifecycle, event dispatch, and ARIA wiring.
  *
- * @todo Phase 3 (API): runtime validation of `placement`, lifecycle behavior.
+ * @todo Phase 4/5: dialog lifecycle (`showPopover()` / `showModal()`), event
+ * dispatch, trigger and ARIA wiring, and `PlacementController` integration.
  *
  * @slot - Popover content. Free-form; consumers slot whatever pattern they build.
  */
@@ -96,8 +98,10 @@ export abstract class PopoverBase extends SpectrumElement {
   /**
    * Distance from the viewport edge for the `flip` and `shift` middleware.
    *
-   * @internal Positioning implementation detail. Set by first-party components;
-   * excluded from the public API. Users are not expected to set it.
+   * Positioning implementation detail. Set by first-party components; excluded
+   * from the public API. Users are not expected to set it.
+   *
+   * @internal
    * @default 8
    */
   @property({ type: Number, attribute: 'container-padding' })
@@ -107,8 +111,10 @@ export abstract class PopoverBase extends SpectrumElement {
    * Allow the popover to flip to the opposite side when constrained. When
    * `false`, the popover stays in the requested placement.
    *
-   * @internal Positioning implementation detail. Set by first-party components;
-   * excluded from the public API. Users are not expected to set it.
+   * Positioning implementation detail. Set by first-party components; excluded
+   * from the public API. Users are not expected to set it.
+   *
+   * @internal
    * @default true
    */
   @property({ type: Boolean, reflect: true, attribute: 'should-flip' })
@@ -118,8 +124,10 @@ export abstract class PopoverBase extends SpectrumElement {
    * Minimum inset of the tip from the popover's corners, passed to the
    * `PlacementController`'s `arrow` middleware as its `padding`.
    *
-   * @internal Positioning implementation detail. Set by first-party components;
-   * excluded from the public API. Users are not expected to set it.
+   * Positioning implementation detail. Set by first-party components; excluded
+   * from the public API. Users are not expected to set it.
+   *
+   * @internal
    * @default 8
    */
   @property({ type: Number, attribute: 'tip-padding' })
@@ -137,4 +145,23 @@ export abstract class PopoverBase extends SpectrumElement {
    */
   @property({ attribute: false })
   public triggerElement: HTMLElement | VirtualTrigger | null = null;
+
+  protected override update(changedProperties: PropertyValues): void {
+    if (window.__swc?.DEBUG) {
+      // Validate against the static so subclasses that narrow the placement set
+      // (the proxy pattern) get their own valid values checked at runtime.
+      const constructor = this.constructor as typeof PopoverBase;
+      if (!constructor.VALID_PLACEMENTS.includes(this.placement)) {
+        window.__swc.warn(
+          this,
+          `<${this.localName}> element expects the "placement" attribute to be one of the following:`,
+          'https://spectrum-web-components.adobe.com/?path=/docs/components-popover--docs',
+          {
+            issues: [...constructor.VALID_PLACEMENTS],
+          }
+        );
+      }
+    }
+    super.update(changedProperties);
+  }
 }

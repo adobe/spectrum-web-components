@@ -40,5 +40,18 @@ export const POPOVER_VALID_PLACEMENTS =
 
 /**
  * The cause of a popover close, carried on `swc-close.detail.source`.
+ *
+ * - `'escape'`: the Escape key dismissed the popover.
+ * - `'outside'`: a click outside the popover (light-dismiss in default mode,
+ *   wired backdrop-click in modal mode) dismissed it.
+ * - `'programmatic'`: `open` was set to `false` in code.
  */
 export type PopoverCloseSource = 'escape' | 'outside' | 'programmatic';
+
+/**
+ * Detail payload carried on the `swc-close` event.
+ */
+export interface PopoverCloseEventDetail {
+  /** What triggered the close. */
+  source: PopoverCloseSource;
+}

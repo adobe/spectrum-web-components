@@ -28,9 +28,15 @@ import styles from './popover.css';
  *
  * @slot - Popover content.
  *
- * @todo Phase 3 (API): popover/dialog lifecycle, event dispatch (`swc-open`,
- * `swc-after-open`, `swc-close`, `swc-after-close`), trigger and ARIA wiring.
- * @todo Phase 5 (styling): reactive `.swc-Popover--<placement>` modifier classes.
+ * @fires swc-open - Dispatched when the popover begins opening.
+ * @fires swc-after-open - Dispatched after the open transition completes.
+ * @fires swc-close - Dispatched when the popover begins closing. `detail.source` reports `'escape'`, `'outside'`, or `'programmatic'`.
+ * @fires swc-after-close - Dispatched after the close transition completes.
+ *
+ * @todo Phase 4/5: implement the dialog lifecycle (`showPopover()` /
+ * `showModal()`), `swc-*` event dispatch, trigger and ARIA wiring,
+ * `PlacementController` integration, and reactive `.swc-Popover--<placement>`
+ * modifier classes.
  */
 export class Popover extends PopoverBase {
   // ──────────────────────────────
