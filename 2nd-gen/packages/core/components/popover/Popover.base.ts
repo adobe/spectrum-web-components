@@ -148,9 +148,8 @@ export abstract class PopoverBase extends SpectrumElement {
 
   /**
    * Suppress the automatic click-to-toggle wiring on the resolved trigger. When
-   * set, the consumer manages visibility via the `open` property (or the popover
-   * API directly) — used by first-party components like Picker and Menu that own
-   * their own open/close logic. ARIA relationship wiring still applies.
+   * set, control visibility through the `open` property instead. ARIA
+   * relationship wiring still applies.
    *
    * @default false
    */
