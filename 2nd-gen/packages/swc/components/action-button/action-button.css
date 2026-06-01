@@ -38,6 +38,7 @@
   margin: 0;
   font-family: token("sans-serif-font");
   font-size: var(--swc-action-button-font-size, token("font-size-100"));
+<<<<<<< HEAD
   font-weight: token("medium-font-weight");
   line-height: round(down, calc(token("line-height-100") * 1em), 1px);
   color: var(--swc-action-button-content-color-default, token("neutral-content-color-default"));
@@ -54,6 +55,23 @@
   transition-timing-function: token("animation-ease-in-out");
   transition-duration: token("animation-duration-100");
   transition-property: outline-color, border-color, color, background-color, transform;
+||||||| parent of 3fa27a3e79 (chore(action-button): styling implementation)
+=======
+  font-weight: token("bold-font-weight");
+  line-height: round(down, calc(token("line-height-100") * 1em), 1px);
+  color: var(--swc-action-button-content-color-default, token("neutral-content-color-default"));
+  text-transform: none;
+  text-decoration: none;
+  background-color: var(--swc-action-button-background-color-default, token("gray-100"));
+  border: var(--_swc-action-button-border-width) solid var(--swc-action-button-border-color-default, transparent);
+  border-radius: var(--swc-action-button-border-radius, token("corner-radius-medium-size-medium"));
+  overflow: visible;
+  cursor: pointer;
+  user-select: none;
+  transition-timing-function: token("animation-ease-in-out");
+  transition-duration: token("animation-duration-100");
+  transition-property: outline, border-color, color, background-color;
+>>>>>>> 3fa27a3e79 (chore(action-button): styling implementation)
 }
 
 /* ── States ───────────────────────────────────────── */
@@ -68,6 +86,7 @@
   color: var(--swc-action-button-content-color-focus, token("neutral-content-color-key-focus"));
   background-color: var(--swc-action-button-background-color-focus, token("gray-200"));
   border-color: var(--swc-action-button-border-color-focus, transparent);
+<<<<<<< HEAD
   outline-width: token("focus-indicator-thickness");
   outline-color: var(--swc-action-button-focus-indicator-color, token("focus-indicator-color"));
 }
@@ -288,6 +307,327 @@ slot[name="icon"]::slotted(*) {
     --swc-action-button-content-color-hover: GrayText;
     --swc-action-button-content-color-down: GrayText;
     --swc-action-button-content-color-focus: GrayText;
+||||||| parent of 3fa27a3e79 (chore(action-button): styling implementation)
+=======
+  outline: token("focus-indicator-thickness") solid var(--swc-action-button-focus-indicator-color, token("focus-indicator-color"));
+  outline-offset: token("focus-indicator-gap");
+}
+
+.swc-ActionButton:active {
+  color: var(--swc-action-button-content-color-down, token("neutral-content-color-down"));
+  background-color: var(--swc-action-button-background-color-down, token("gray-200"));
+  border-color: var(--swc-action-button-border-color-down, transparent);
+}
+
+/* Inflated specificity to prevent variant override when disabled */
+.swc-ActionButton:disabled:is(*, :hover) {
+  color: var(--swc-action-button-content-color-disabled, token("disabled-content-color"));
+  background-color: var(--swc-action-button-background-color-disabled, token("disabled-background-color"));
+  border-color: var(--swc-action-button-border-color-disabled, transparent);
+  cursor: default;
+}
+
+/* ── Sub-elements ─────────────────────────────────── */
+
+.swc-ActionButton-label {
+  text-align: center;
+  pointer-events: none;
+}
+
+.swc-ActionButton--hasIcon .swc-ActionButton-label {
+  text-align: start;
+}
+
+slot[name="icon"]::slotted(*),
+.swc-ActionButton-pendingSpinner {
+  --_swc-action-button-icon-size: var(--swc-action-button-icon-size, token("workflow-icon-size-100"));
+  --_swc-action-button-icon-block-size: var(--swc-action-button-icon-block-size, var(--_swc-action-button-icon-size));
+
+  flex-shrink: 0;
+  align-self: flex-start;
+  inline-size: var(--swc-action-button-icon-inline-size, var(--_swc-action-button-icon-size));
+  block-size: var(--_swc-action-button-icon-block-size);
+  margin-block: calc((var(--_swc-action-button-icon-block-size) - 1lh) / 2 * -1);
+  margin-inline-start: calc(var(--swc-action-button-edge-to-visual, token("component-edge-to-visual-100")) - var(--swc-action-button-edge-to-text, token("component-edge-to-text-100")));
+}
+
+slot[name="icon"]::slotted(*) {
+  color: inherit;
+  fill: currentcolor;
+}
+
+/* ── Sizes ────────────────────────────────────────── */
+
+:host([size="xs"]) {
+  --swc-action-button-min-block-size: token("component-height-50");
+  --swc-action-button-font-size: token("font-size-50");
+  --swc-action-button-gap: token("text-to-visual-50");
+  --swc-action-button-edge-to-text: token("component-edge-to-text-50");
+  --swc-action-button-edge-to-visual: token("component-edge-to-visual-50");
+  --swc-action-button-edge-to-visual-only: token("component-edge-to-visual-only-50");
+  --swc-action-button-icon-size: token("workflow-icon-size-50");
+  --swc-action-button-border-radius: token("corner-radius-medium-size-extra-small");
+}
+
+:host([size="s"]) {
+  --swc-action-button-min-block-size: token("component-height-75");
+  --swc-action-button-font-size: token("font-size-75");
+  --swc-action-button-gap: token("text-to-visual-75");
+  --swc-action-button-edge-to-text: token("component-edge-to-text-75");
+  --swc-action-button-edge-to-visual: token("component-edge-to-visual-75");
+  --swc-action-button-edge-to-visual-only: token("component-edge-to-visual-only-75");
+  --swc-action-button-icon-size: token("workflow-icon-size-75");
+  --swc-action-button-border-radius: token("corner-radius-medium-size-small");
+}
+
+:host([size="l"]) {
+  --swc-action-button-min-block-size: token("component-height-200");
+  --swc-action-button-font-size: token("font-size-200");
+  --swc-action-button-gap: token("text-to-visual-200");
+  --swc-action-button-edge-to-text: token("component-edge-to-text-200");
+  --swc-action-button-edge-to-visual: token("component-edge-to-visual-200");
+  --swc-action-button-edge-to-visual-only: token("component-edge-to-visual-only-200");
+  --swc-action-button-icon-size: token("workflow-icon-size-200");
+  --swc-action-button-border-radius: token("corner-radius-medium-size-large");
+}
+
+:host([size="xl"]) {
+  --swc-action-button-min-block-size: token("component-height-300");
+  --swc-action-button-font-size: token("font-size-300");
+  --swc-action-button-gap: token("text-to-visual-300");
+  --swc-action-button-edge-to-text: token("component-edge-to-text-300");
+  --swc-action-button-edge-to-visual: token("component-edge-to-visual-300");
+  --swc-action-button-edge-to-visual-only: token("component-edge-to-visual-only-300");
+  --swc-action-button-icon-size: token("workflow-icon-size-300");
+  --swc-action-button-border-radius: token("corner-radius-medium-size-extra-large");
+}
+
+/* ── Quiet ────────────────────────────────────────── */
+
+:host([quiet]) {
+  --swc-action-button-background-color-default: transparent;
+  --swc-action-button-background-color-disabled: transparent;
+}
+
+/* ── Static white ─────────────────────────────────── */
+
+:host([static-color="white"]) {
+  --swc-action-button-focus-indicator-color: token("static-white-focus-indicator-color");
+  --swc-action-button-background-color-default: token("transparent-white-100");
+  --swc-action-button-background-color-hover: token("transparent-white-200");
+  --swc-action-button-background-color-down: token("transparent-white-200");
+  --swc-action-button-background-color-focus: token("transparent-white-200");
+  --swc-action-button-background-color-disabled: token("disabled-static-white-background-color");
+  --swc-action-button-content-color-default: token("white");
+  --swc-action-button-content-color-hover: token("white");
+  --swc-action-button-content-color-down: token("white");
+  --swc-action-button-content-color-focus: token("white");
+  --swc-action-button-content-color-disabled: token("disabled-static-white-content-color");
+}
+
+:host([static-color="white"][quiet]) {
+  --swc-action-button-background-color-default: transparent;
+  --swc-action-button-background-color-disabled: transparent;
+}
+
+/* ── Static black ─────────────────────────────────── */
+
+:host([static-color="black"]) {
+  --swc-action-button-focus-indicator-color: token("static-black-focus-indicator-color");
+  --swc-action-button-background-color-default: token("transparent-black-100");
+  --swc-action-button-background-color-hover: token("transparent-black-200");
+  --swc-action-button-background-color-down: token("transparent-black-200");
+  --swc-action-button-background-color-focus: token("transparent-black-200");
+  --swc-action-button-background-color-disabled: token("disabled-static-black-background-color");
+  --swc-action-button-content-color-default: token("black");
+  --swc-action-button-content-color-hover: token("black");
+  --swc-action-button-content-color-down: token("black");
+  --swc-action-button-content-color-focus: token("black");
+  --swc-action-button-content-color-disabled: token("disabled-static-black-content-color");
+}
+
+:host([static-color="black"][quiet]) {
+  --swc-action-button-background-color-default: transparent;
+  --swc-action-button-background-color-disabled: transparent;
+}
+
+/* ── Icon only ────────────────────────────────────── */
+
+.swc-ActionButton--iconOnly {
+  --swc-action-button-gap: 0;
+
+  padding-inline: calc(var(--swc-action-button-edge-to-visual-only, token("component-edge-to-visual-only-100")) - var(--_swc-action-button-border-width));
+}
+
+.swc-ActionButton--iconOnly slot[name="icon"]::slotted(*) {
+  --swc-action-button-edge-to-visual: 0;
+
+  align-self: center;
+}
+
+/* ── Pending ──────────────────────────────────────── */
+
+/* @global-exclude: pending spinner animations require JS runtime */
+@keyframes swc-pending-spinner-rotate {
+  0% {
+    transform: rotate(var(--swc-pending-spinner-rotate-start, -90deg));
+  }
+
+  100% {
+    transform: rotate(var(--swc-pending-spinner-rotate-end, 270deg));
+  }
+}
+
+@keyframes swc-pending-spinner-dashoffset {
+  0%,
+  100% {
+    stroke-dashoffset: 75px;
+  }
+
+  30% {
+    stroke-dashoffset: var(--swc-pending-spinner-dashoffset-30, 20px);
+  }
+}
+
+/* @global-exclude-end */
+
+/* @global-exclude: pending state requires JS runtime (ButtonBase.pendingActive) */
+
+/* Cursor changes immediately on [pending]. Disabled colors, label/icon fade,
+   and spinner appearance are deferred to .swc-ActionButton--pendingActive, which is
+   added by ButtonBase after a 1-second delay so the button does not flash to
+   its unavailable appearance for operations that complete quickly. */
+:host([pending]) .swc-ActionButton {
+  cursor: default;
+}
+
+.swc-ActionButton--pendingActive {
+  justify-content: center;
+  inline-size: var(--_swc-button-pending-inline-size);
+
+  /* Disabled colors reference the already-resolved disabled vars so static-color
+     variants automatically get their correct unavailable appearance. */
+  --swc-action-button-background-color-default: var(--swc-action-button-background-color-disabled, token("disabled-background-color"));
+  --swc-action-button-background-color-hover: var(--swc-action-button-background-color-disabled, token("disabled-background-color"));
+  --swc-action-button-background-color-down: var(--swc-action-button-background-color-disabled, token("disabled-background-color"));
+  --swc-action-button-background-color-focus: var(--swc-action-button-background-color-disabled, token("disabled-background-color"));
+  --swc-action-button-border-color-default: var(--swc-action-button-border-color-disabled, transparent);
+  --swc-action-button-border-color-hover: var(--swc-action-button-border-color-disabled, transparent);
+  --swc-action-button-border-color-down: var(--swc-action-button-border-color-disabled, transparent);
+  --swc-action-button-border-color-focus: var(--swc-action-button-border-color-disabled, transparent);
+  --swc-action-button-content-color-default: var(--swc-action-button-content-color-disabled, token("disabled-content-color"));
+  --swc-action-button-content-color-hover: var(--swc-action-button-content-color-disabled, token("disabled-content-color"));
+  --swc-action-button-content-color-down: var(--swc-action-button-content-color-disabled, token("disabled-content-color"));
+  --swc-action-button-content-color-focus: var(--swc-action-button-content-color-disabled, token("disabled-content-color"));
+}
+
+.swc-ActionButton--pendingActive .swc-ActionButton-label,
+.swc-ActionButton--pendingActive slot[name="icon"]::slotted(*) {
+  display: none;
+}
+
+.swc-ActionButton-pendingSpinner {
+  --_swc-pending-spinner-track-border-color: token("track-color");
+  --_swc-pending-spinner-fill-border-color: token("accent-content-color-default");
+  --_swc-pending-spinner-thickness: 2px;
+
+  display: none;
+}
+
+.swc-ActionButton--pendingActive .swc-ActionButton-pendingSpinner {
+  display: inline-block;
+}
+
+:host([static-color="white"]) .swc-ActionButton-pendingSpinner {
+  --_swc-pending-spinner-track-border-color: token("static-white-track-color");
+  --_swc-pending-spinner-fill-border-color: token("static-white-track-indicator-color");
+}
+
+:host([static-color="black"]) .swc-ActionButton-pendingSpinner {
+  --_swc-pending-spinner-track-border-color: token("static-black-track-color");
+  --_swc-pending-spinner-fill-border-color: token("static-black-track-indicator-color");
+}
+
+.swc-ActionButton-pendingSpinner-track,
+.swc-ActionButton-pendingSpinner-fill {
+  inline-size: var(--_swc-action-button-icon-size);
+  block-size: var(--_swc-action-button-icon-size);
+}
+
+.swc-ActionButton-pendingSpinner-track {
+  stroke: var(--_swc-pending-spinner-track-border-color);
+  stroke-width: var(--_swc-pending-spinner-thickness);
+}
+
+.swc-ActionButton-pendingSpinner-fill {
+  stroke: var(--_swc-pending-spinner-fill-border-color);
+  stroke-width: var(--_swc-pending-spinner-thickness);
+  transform: rotate(-90deg);
+  transform-origin: center;
+}
+
+.swc-ActionButton--pendingActive .swc-ActionButton-pendingSpinner-fill {
+  animation:
+    swc-pending-spinner-rotate 1s cubic-bezier(0.6, 0.1, 0.3, 0.9) infinite,
+    swc-pending-spinner-dashoffset 1s cubic-bezier(0.25, 0.1, 0.25, 1.3) infinite;
+  will-change: transform;
+}
+
+/* @global-exclude-end */
+
+/* ── Reduced motion ───────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  .swc-ActionButton {
+    transition-duration: 0ms;
+  }
+
+  /* @global-exclude: pending spinner reduced-motion override requires JS runtime */
+  .swc-ActionButton--pendingActive .swc-ActionButton-pendingSpinner-fill {
+    --swc-pending-spinner-dashoffset-30: 0;
+    --swc-pending-spinner-rotate-start: 0deg;
+    --swc-pending-spinner-rotate-end: 360deg;
+
+    animation-duration: 15s;
+    animation-timing-function: linear, linear;
+  }
+
+  /* @global-exclude-end */
+}
+
+/* ── Forced colors ────────────────────────────────── */
+
+/* @global-exclude: pending state requires JS runtime (ButtonBase.pendingActive) */
+@media (forced-colors: active) {
+  .swc-ActionButton--pendingActive {
+    --swc-action-button-background-color-default: ButtonFace;
+    --swc-action-button-background-color-hover: ButtonFace;
+    --swc-action-button-background-color-down: ButtonFace;
+    --swc-action-button-background-color-focus: ButtonFace;
+    --swc-action-button-border-color-default: GrayText;
+    --swc-action-button-border-color-hover: GrayText;
+    --swc-action-button-border-color-down: GrayText;
+    --swc-action-button-border-color-focus: GrayText;
+    --swc-action-button-content-color-default: GrayText;
+    --swc-action-button-content-color-hover: GrayText;
+    --swc-action-button-content-color-down: GrayText;
+    --swc-action-button-content-color-focus: GrayText;
+  }
+
+  /* SVG stroke values are not auto-remapped by forced-colors. */
+  .swc-ActionButton-pendingSpinner-track {
+    @media (prefers-color-scheme: dark) {
+      --_swc-pending-spinner-track-border-color: token("static-white-track-color");
+    }
+
+    @media (prefers-color-scheme: light) {
+      --_swc-pending-spinner-track-border-color: token("static-black-track-color");
+    }
+  }
+
+  .swc-ActionButton-pendingSpinner-fill {
+    --_swc-pending-spinner-fill-border-color: Highlight;
+>>>>>>> 3fa27a3e79 (chore(action-button): styling implementation)
   }
 }
 

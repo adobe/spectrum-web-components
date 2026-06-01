@@ -177,10 +177,7 @@ export class ActionButton extends ButtonBase {
         ${this.pending
           ? html`
               <svg
-                class=${classMap({
-                  'swc-PendingSpinner': true,
-                  'swc-PendingSpinner--active': this.pendingActive,
-                })}
+                class="swc-ActionButton-pendingSpinner"
                 width="100%"
                 height="100%"
                 fill="none"
@@ -188,13 +185,13 @@ export class ActionButton extends ButtonBase {
                 focusable="false"
               >
                 <circle
-                  class="swc-PendingSpinner-track"
+                  class="swc-ActionButton-pendingSpinner-track"
                   cx="50%"
                   cy="50%"
                   r="calc(50% - 1px)"
                 />
                 <circle
-                  class="swc-PendingSpinner-fill"
+                  class="swc-ActionButton-pendingSpinner-fill"
                   cx="50%"
                   cy="50%"
                   r="calc(50% - 1px)"
