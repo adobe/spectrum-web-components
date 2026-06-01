@@ -19,7 +19,13 @@
 
 :host {
   --swc-meter-thickness: token("progress-bar-thickness-medium");
-  --swc-meter-corner-radius: token("corner-radius-full");
+
+  /* The token `corner-radius-full` resolves to `50%`, which on a
+   * non-square `block-size × inline-size` track renders as an ellipse
+   * instead of a pill. Pin the radius to half the thickness so the
+   * track and fill always render as a perfect stadium pill regardless
+   * of width. */
+  --swc-meter-corner-radius: calc(var(--swc-meter-thickness) / 2);
   --swc-meter-min-width: token("progress-bar-minimum-width");
   --swc-meter-max-width: token("progress-bar-maximum-width");
   --swc-meter-track-color: token("track-color");

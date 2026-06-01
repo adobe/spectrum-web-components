@@ -229,14 +229,22 @@ export function LinearProgressMixin<T extends Constructor<ReactiveElement>>(
       }
       const min = this.sanitizedMin;
       const max = this.sanitizedMax;
-      const options = this.formatOptions ?? DEFAULT_FORMAT_OPTIONS;
+      // Treat anything that is not a plain options object (null, undefined,
+      // empty string from Storybook helpers, etc.) as "no override" and
+      // fall back to the percent default.
+      const providedOptions =
+        this.formatOptions &&
+        typeof this.formatOptions === 'object' &&
+        Object.keys(this.formatOptions).length > 0
+          ? this.formatOptions
+          : DEFAULT_FORMAT_OPTIONS;
       const formatter = new Intl.NumberFormat(
         this.languageResolver.language,
-        options
+        providedOptions
       );
       // Percent style consumes a fraction; every other style consumes the
       // raw value.
-      if (options.style === 'percent') {
+      if (providedOptions.style === 'percent') {
         const fraction =
           max === min ? 0 : (this.clampedValue - min) / (max - min);
         return formatter.format(fraction);
