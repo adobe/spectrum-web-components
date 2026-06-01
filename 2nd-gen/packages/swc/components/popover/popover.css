@@ -44,7 +44,11 @@
   /* Fade on open/close. The slide axis (translate) is owned by the
    * PlacementController for anchoring, so only opacity animates here. */
   opacity: 0;
-  filter: drop-shadow(token("drop-shadow-elevated-x") token("drop-shadow-elevated-y") token("drop-shadow-elevated-blur") token("drop-shadow-elevated-color"));
+
+  /* Elevated drop shadow. With the arrow shown (default), `filter: drop-shadow`
+   * is used so the arrow casts a matching shadow; the three layers mirror the
+   * `--swc-drop-shadow-elevated` token (ambient, transition, key). */
+  filter: drop-shadow(0 4px 12px token("drop-shadow-ambient-color")) drop-shadow(0 2px 6px token("drop-shadow-transition-color")) drop-shadow(0 0 2px token("drop-shadow-elevated-key-color"));
   transition:
     opacity token("animation-duration-200") token("animation-ease-out"),
     overlay token("animation-duration-200") allow-discrete,
@@ -63,6 +67,13 @@
   .swc-Popover[open] {
     opacity: 0;
   }
+}
+
+/* No arrow: use the rectangular `box-shadow` form of the elevated token, which
+ * composites cleanly with nested popovers (e.g. submenus). */
+:host([hide-arrow]) .swc-Popover {
+  box-shadow: token("drop-shadow-elevated");
+  filter: none;
 }
 
 /* Fixed sizes; when `size` is unset the popover fits its contents. */
