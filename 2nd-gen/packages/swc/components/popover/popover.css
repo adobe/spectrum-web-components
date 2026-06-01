@@ -96,15 +96,20 @@
  *    TIP
  * ────────────────────────── */
 
-/* The tip is a square rotated 45° to read as a triangle. Its along-edge
- * position is set by the PlacementController's `arrow` middleware (inline
- * `translate`); these rules only orient it onto the correct edge per the
- * computed placement modifier class.
+/* The tip is a square rotated 45° to read as a triangle. A rotated square's
+ * visible width equals its side × √2, so the side is the tip width ÷ √2 to
+ * yield a triangle that is `popover-tip-width` wide and `popover-tip-height`
+ * tall. Its along-edge position is set by the PlacementController's `arrow`
+ * middleware (inline `translate`); these rules only orient it onto the correct
+ * edge per the computed placement modifier class.
  * @todo RTL logical-placement (`start` / `end`) tip parity — see SWC-917. */
 .swc-Popover-tip {
+  /* tip width ÷ √2 */
+  --_swc-popover-tip-size: calc(token("popover-tip-width") / 1.4142);
+
   position: absolute;
-  inline-size: token("popover-tip-width");
-  block-size: token("popover-tip-width");
+  inline-size: var(--_swc-popover-tip-size);
+  block-size: var(--_swc-popover-tip-size);
   background-color: token("background-layer-2-color");
   border: token("border-width-100") solid token("popover-border-color");
   rotate: 45deg;
@@ -116,7 +121,7 @@
 .swc-Popover--bottom-end .swc-Popover-tip,
 .swc-Popover--bottom-left .swc-Popover-tip,
 .swc-Popover--bottom-right .swc-Popover-tip {
-  inset-block-start: calc(token("popover-tip-width") / -2);
+  inset-block-start: calc(var(--_swc-popover-tip-size) / -2);
   border-block-end: none;
   border-inline-end: none;
 }
@@ -127,7 +132,7 @@
 .swc-Popover--top-end .swc-Popover-tip,
 .swc-Popover--top-left .swc-Popover-tip,
 .swc-Popover--top-right .swc-Popover-tip {
-  inset-block-end: calc(token("popover-tip-width") / -2);
+  inset-block-end: calc(var(--_swc-popover-tip-size) / -2);
   border-block-start: none;
   border-inline-start: none;
 }
@@ -139,7 +144,7 @@
 .swc-Popover--end .swc-Popover-tip,
 .swc-Popover--end-top .swc-Popover-tip,
 .swc-Popover--end-bottom .swc-Popover-tip {
-  inset-inline-start: calc(token("popover-tip-width") / -2);
+  inset-inline-start: calc(var(--_swc-popover-tip-size) / -2);
   border-block-end: none;
   border-inline-start: none;
 }
@@ -151,7 +156,7 @@
 .swc-Popover--start .swc-Popover-tip,
 .swc-Popover--start-top .swc-Popover-tip,
 .swc-Popover--start-bottom .swc-Popover-tip {
-  inset-inline-end: calc(token("popover-tip-width") / -2);
+  inset-inline-end: calc(var(--_swc-popover-tip-size) / -2);
   border-block-start: none;
   border-inline-end: none;
 }
