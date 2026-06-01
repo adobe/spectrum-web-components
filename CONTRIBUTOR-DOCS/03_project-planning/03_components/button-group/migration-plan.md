@@ -281,7 +281,7 @@ Follow the [Badge migration reference](../../02_workstreams/02_2nd-gen-component
 | Layer    | Path                                            | Contains                                                                                                                                                                                                                                          |
 | -------- | ----------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Core** | `2nd-gen/packages/core/components/button-group/` | `ButtonGroup.base.ts`, `ButtonGroup.types.ts`, validation (size/orientation normalization), disabled-propagation logic, ARIA attribute management (`role="group"`). No rendering. |
-| **SWC**  | `2nd-gen/packages/swc/components/button-group/`  | `ButtonGroup.ts`, `button-group.css`, element registration (`sp-button-group`), stories, tests, and the specific S2 rendering/styling. |
+| **SWC**  | `2nd-gen/packages/swc/components/button-group/`  | `ButtonGroup.ts`, `button-group.css`, element registration (`swc-button-group`), stories, tests, and the specific S2 rendering/styling. |
 
 Planned rendering shape:
 
