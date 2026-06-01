@@ -77,7 +77,7 @@ export default meta;
 const PLACEHOLDER_SRC = 'https://picsum.photos/id/64/500/500';
 
 // ────────────────────
-//    AUTODOCS STORY
+//    PLAYGROUND STORY
 // ────────────────────
 
 // alt ?? '' guards against undefined produced by Storybook controls when
@@ -98,7 +98,7 @@ export const Playground: Story = {
       ></swc-avatar>
     </div>
   `,
-  tags: ['autodocs', 'dev'],
+  tags: ['dev'],
   args: {
     src: PLACEHOLDER_SRC,
     alt: 'Jane Doe',
@@ -126,17 +126,6 @@ export const Overview: Story = {
 //    ANATOMY STORIES
 // ──────────────────────────
 
-/**
- * An avatar consists of:
- *
- * 1. **Image** — A circular clipped profile photo
- *
- * ### Content
- *
- * - `src`: URL of the profile image
- * - `alt`: Text description for assistive technology. Pass `alt=""` to mark as decorative.
- * - `size`: Numeric size token (50–1500). Defaults to `500` (40 px).
- */
 export const Anatomy: Story = {
   render: (args) => html`
     <swc-avatar src=${args.src} alt=${args.alt} size=${args.size}></swc-avatar>
@@ -153,12 +142,6 @@ export const Anatomy: Story = {
 //    OPTIONS STORIES
 // ──────────────────────────
 
-/**
- * Avatars come in 17 sizes from 50 to 1500, ranging from 16 px to 104 px.
- * Sizes 50–700 match 1st-gen; sizes 800–1500 are new in Spectrum 2.
- *
- * The default size is `500` (40 px).
- */
 export const Sizes: Story = {
   render: (args) => html`
     ${AVATAR_VALID_SIZES.map(
@@ -176,18 +159,10 @@ export const Sizes: Story = {
   },
   parameters: {
     flexLayout: 'row-wrap',
-    'section-order': 1,
   },
   tags: ['options'],
 };
 
-/**
- * Use the `decorative` attribute and `alt=""` to treat the avatar as decorative —
- * the image is hidden from assistive technology.
- *
- * Use this **only when the surrounding context already identifies the person**
- * (e.g., their name appears next to the avatar).
- */
 export const Decorative: Story = {
   render: (args) => html`
     <swc-avatar
@@ -202,49 +177,9 @@ export const Decorative: Story = {
     src: PLACEHOLDER_SRC,
     size: '500',
   },
-  parameters: { 'section-order': 2 },
   tags: ['options'],
 };
 
-// ──────────────────────────────
-//    BEHAVIORS STORIES
-// ──────────────────────────────
-
-/**
- * An avatar can be placed inside an action button to create a user-triggered
- * action tied to a specific person or entity.
- */
-export const InActionButton: Story = {
-  // TODO: Replace <button> with <swc-action-button> once that component is migrated to 2nd-gen.
-  render: (args) => html`
-    <button
-      type="button"
-      style="display:inline-flex;align-items:center;gap:8px;padding:4px 12px;cursor:pointer;"
-    >
-      <swc-avatar
-        src=${args.src}
-        alt=${args.alt}
-        size=${args.size}
-      ></swc-avatar>
-      Jane Doe
-    </button>
-  `,
-  args: {
-    src: PLACEHOLDER_SRC,
-    alt: 'Jane Doe',
-    size: '100',
-  },
-  tags: ['behaviors'],
-};
-
-/**
- * Use the `outline` attribute to render a solid outline around the avatar
- * image. This is useful when the avatar's image border color matches the
- * surrounding background. The outline uses `--swc-avatar-outline-width`
- * (currently 1 px) for sizes 50–900 and a hardcoded 2 px for sizes 1000–1500,
- * matching the Spectrum 2 specification. Within an Avatar Group, `outline`
- * defaults to `true` to visually separate stacked avatars.
- */
 export const Outline: Story = {
   render: (args) => html`
     <div
@@ -268,16 +203,9 @@ export const Outline: Story = {
     src: PLACEHOLDER_SRC,
     alt: 'Jane Doe',
   },
-  parameters: { 'section-order': 3 },
   tags: ['options'],
 };
 
-/**
- * A disabled avatar indicates that the entity is not currently active or
- * available. The avatar remains visible in the layout at reduced opacity,
- * communicating that it may become active later. It remains in the
- * accessibility tree — `disabled` is purely visual.
- */
 export const Disabled: Story = {
   render: (args) => html`
     <swc-avatar
@@ -292,57 +220,40 @@ export const Disabled: Story = {
     alt: 'Jane Doe',
     size: '500',
   },
-  parameters: { 'section-order': 4 },
   tags: ['options'],
 };
 
-// ──────────────────────────────────
-//    UPCOMING FEATURES STORIES
-// ──────────────────────────────────
+// ──────────────────────────────
+//    BEHAVIORS STORIES
+// ──────────────────────────────
 
-/**
- * ### Additional avatar types
- *
- * - **Gradient image**: Shows a generated colorful gradient when no photo is available
- * - **Initials**: Shows the user's initials inside the avatar circle as a photo fallback
- * - **Guest**: Shows a default guest icon when no user identity is known
- *
- * ### Avatar Group
- *
- * - Display a collection of avatars in a stacked layout with configurable overlap and overflow
- */
-export const UpcomingFeatures: Story = {
-  tags: ['upcoming', 'description-only'],
+export const InActionButton: Story = {
+  // TODO: Replace <button> with <swc-action-button> once that component is migrated to 2nd-gen.
+  render: (args) => html`
+    <button
+      type="button"
+      style="display:inline-flex;align-items:center;gap:8px;padding:4px 12px;cursor:pointer;"
+    >
+      <swc-avatar
+        src=${args.src}
+        alt=${args.alt}
+        size=${args.size}
+      ></swc-avatar>
+      Jane Doe
+    </button>
+  `,
+  args: {
+    src: PLACEHOLDER_SRC,
+    alt: 'Jane Doe',
+    size: '100',
+  },
+  tags: ['behaviors'],
 };
-UpcomingFeatures.storyName = 'Upcoming features';
 
 // ────────────────────────────────
 //    ACCESSIBILITY STORIES
 // ────────────────────────────────
 
-/**
- * ### Features
- *
- * The `<swc-avatar>` element implements several accessibility features:
- *
- * #### Alt text
- *
- * - Provide a descriptive `alt` value identifying the person or entity depicted
- * - Pass `alt=""` and set the `decorative` attribute when the name already appears in context
- *
- * #### Non-interactive element
- *
- * - Avatars have no interactive behavior and are not focusable
- * - Screen readers announce the image using the `alt` attribute value
- * - No keyboard interaction is required or expected
- * - To make an avatar a link, wrap it in a standard `<a>` element and set `aria-label` on the anchor when the destination is not clear from surrounding context
- *
- * ### Best practices
- *
- * - Always set `alt` — omitting it causes some screen readers to announce the image URL
- * - Use `alt=""` and `decorative` attribute only when the person is identified by adjacent text
- * - Keep alt text short and descriptive: prefer `"Jane Doe"` over `"Profile photo of Jane Doe"`
- */
 export const Accessibility: Story = {
   render: (args) => html`
     <swc-avatar src=${args.src} alt="Jane Doe" size=${args.size}></swc-avatar>
