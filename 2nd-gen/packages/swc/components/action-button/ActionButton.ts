@@ -11,7 +11,7 @@
  */
 
 import { CSSResultArray, html, TemplateResult } from 'lit';
-import { property } from 'lit/decorators.js';
+import { property, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
@@ -65,26 +65,6 @@ export class ActionButton extends ButtonBase {
   @property({ type: String, reflect: true, attribute: 'static-color' })
   public staticColor?: ActionButtonStaticColor;
 
-  /**
-   * @internal
-   * Forwarded to the inner `<button>` for menu-trigger patterns. After the
-   * attribute is read, it is stripped from the host so assistive technologies
-   * in browse mode do not encounter duplicate ARIA state on both the host
-   * element and the inner button.
-   */
-  @property({ type: String, attribute: 'aria-haspopup' })
-  protected ariaHasPopup?: string;
-
-  /**
-   * @internal
-   * Forwarded to the inner `<button>` for menu-trigger patterns. After the
-   * attribute is read, it is stripped from the host so assistive technologies
-   * in browse mode do not encounter duplicate ARIA state on both the host
-   * element and the inner button.
-   */
-  @property({ type: String, attribute: 'aria-expanded' })
-  protected ariaExpanded?: string;
-
   // ──────────────────────────────
   //     RENDERING & STYLING
   // ──────────────────────────────
@@ -93,9 +73,23 @@ export class ActionButton extends ButtonBase {
     return [styles];
   }
 
-  // Guard against re-entrant attributeChangedCallback during ARIA passthrough:
-  // removeAttribute fires a second callback with value=null; skipping super
-  // there prevents Lit from clearing the property we just read.
+  // Observe aria-haspopup / aria-expanded without @property so they don't
+  // conflict with ARIAMixin types on HTMLElement or appear in the public CEM.
+  static override get observedAttributes(): string[] {
+    return [...super.observedAttributes, 'aria-haspopup', 'aria-expanded'];
+  }
+
+  // Forwarded to the inner <button> for menu-trigger patterns; stripped from
+  // the host after reading to avoid duplicate ARIA state on both elements.
+  @state()
+  private _ariaHasPopup?: string;
+
+  @state()
+  private _ariaExpanded?: string;
+
+  // Guard against re-entrant attributeChangedCallback: removeAttribute fires a
+  // second callback with value=null; the guard prevents that from clearing the
+  // state we just set.
   private _ariaForwardingInProgress = false;
 
   /** @internal */
@@ -109,12 +103,20 @@ export class ActionButton extends ButtonBase {
     if (isAriaPassthrough && this._ariaForwardingInProgress) {
       return;
     }
-    super.attributeChangedCallback(name, old, value);
-    if (isAriaPassthrough && value !== null) {
-      this._ariaForwardingInProgress = true;
-      this.removeAttribute(name);
-      this._ariaForwardingInProgress = false;
+    if (isAriaPassthrough) {
+      if (name === 'aria-haspopup') {
+        this._ariaHasPopup = value ?? undefined;
+      } else {
+        this._ariaExpanded = value ?? undefined;
+      }
+      if (value !== null) {
+        this._ariaForwardingInProgress = true;
+        this.removeAttribute(name);
+        this._ariaForwardingInProgress = false;
+      }
+      return;
     }
+    super.attributeChangedCallback(name, old, value);
   }
 
   protected override render(): TemplateResult {
@@ -135,8 +137,8 @@ export class ActionButton extends ButtonBase {
         aria-label=${ifDefined(
           this.pending ? this.getPendingAccessibleName() : this.accessibleLabel
         )}
-        aria-haspopup=${ifDefined(this.ariaHasPopup)}
-        aria-expanded=${ifDefined(this.ariaExpanded)}
+        aria-haspopup=${ifDefined(this._ariaHasPopup)}
+        aria-expanded=${ifDefined(this._ariaExpanded)}
       >
         <slot name="icon"></slot>
         <span class="swc-ActionButton-label">
