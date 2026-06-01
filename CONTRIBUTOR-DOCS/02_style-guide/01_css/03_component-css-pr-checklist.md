@@ -16,6 +16,7 @@
 - [Specificity](#specificity)
 - [Variants & States](#variants--states)
 - [Cascade Layers (if used)](#cascade-layers-if-used)
+- [Custom properties](#custom-properties)
 - [High-Contrast](#high-contrast)
 
 </details>
@@ -33,7 +34,7 @@ Use this checklist when opening or reviewing a PR.
 
 ## Layout & Tokens
 
-- [ ]  Visual values come from design tokens and are applied via `token()` 
+- [ ]  Visual values come from design tokens and are applied via `token()`
 - [ ]  Non-tokenized values are limited to allowed properties (layout, alignment)
 - [ ]  Layout primitives (`gap`, alignment, min/max sizes) are preferred over margins/padding hacks
 - [ ]  Padding values are defensive, not layout-driven, where possible
@@ -57,6 +58,15 @@ Use this checklist when opening or reviewing a PR.
 - [ ]  Standard layer order is used exactly
 - [ ]  Unused layers are still declared
 - [ ]  Nested layers are rare and justified
+
+## Custom properties
+
+- [ ]  Private `--_swc-*` properties are declared on the internal wrapper (`.swc-ComponentName`), not on `:host` or `:host()`
+- [ ]  Exposed `--swc-*` properties are only those the component itself overrides per variant, state, or size — not added for consumer convenience (exceptions: nested component relationships and shared utility properties)
+- [ ]  Size variants use a single exposed property overridden per size selector — no size-specific custom properties
+- [ ]  Component API attribute rules (size, variant, fill-style) override a custom property rather than redefining the CSS property directly
+- [ ]  Properties that change across native browser states (`:hover`, `:focus-visible`, `:active`) on internal elements use state-specific custom properties (`-default`, `-hover`, `-focus`, `-down`), overridden as a set from `:host([variant])` and `:host([static-color])`
+- [ ]  Custom property names use full property words: `padding` not `pad`, `background` not `bg`
 
 ## High-Contrast
 
