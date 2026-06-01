@@ -59,7 +59,7 @@
 
 ## TL;DR
 
-- **No 2nd-gen accordion** package exists yet under `2nd-gen/packages/`; Setup phase creates core + SWC scaffolds.
+- **2nd-gen accordion** ships under `2nd-gen/packages/core/.../accordion` and `2nd-gen/packages/swc/.../accordion` (Setup complete on the migration branch).
 - **Accessibility migration analysis** is the behavioral contract for WCAG 2.2 AA; 2nd-gen diverges from 1st-gen on keyboard (no `FocusGroupController` arrow/Home/End on the host, no roving `tabindex` between item hosts), disabled header semantics (`aria-disabled` + panel `inert`), closed-panel hiding (**`aria-hidden`** + CSS collapse, not HTML **`hidden`**; see [Closed panel hiding (B5)](#closed-panel-hiding-b5)), heading **API** (**slotted** heading text **only** — **no** string **`label`**, clean break vs 1st-gen), and **Space** handling (**SWC-1487**).
 - **React Spectrum S2 parity (planning):** Align public surface where authors expect cross-product parity — **`quiet`** on the accordion (from RS **`isQuiet`**) and **`disabled`** on the accordion host (**accordion-wide** disable, from RS **`isDisabled`** on **`Accordion`**), in addition to per-item **`disabled`**. Details: [React Spectrum alignment considerations](#react-spectrum-alignment-considerations).
 - **Severity:** **Normal** for migration planning. Escalate to **Major** only if Spectrum 2 accordion CSS is missing or core infrastructure blocks a core/SWC split (not observed today).
@@ -400,8 +400,8 @@ Gates align with [01_washing-machine-workflow.md](../../02_workstreams/02_2nd-ge
 
 - [ ] [`keyboard.test.ts`](../../../../1st-gen/packages/accordion/test/keyboard.test.ts) expectations updated (Tab order, no `FocusGroup` arrows)
 - [ ] Port / extend: [`a11y-tree.test.ts`](../../../../1st-gen/packages/accordion/test/a11y-tree.test.ts), [`controlled.test.ts`](../../../../1st-gen/packages/accordion/test/controlled.test.ts), [`declarative.test.ts`](../../../../1st-gen/packages/accordion/test/declarative.test.ts), [`imperative.test.ts`](../../../../1st-gen/packages/accordion/test/imperative.test.ts), [`dev-mode.test.ts`](../../../../1st-gen/packages/accordion/test/dev-mode.test.ts), [`memory.test.ts`](../../../../1st-gen/packages/accordion/test/memory.test.ts), [`accordion-memory.test.ts`](../../../../1st-gen/packages/accordion/test/accordion-memory.test.ts)
-- [ ] New unit coverage per [accessibility migration analysis — automated tests](./accessibility-migration-analysis.md#automated-tests)
-- [ ] Storybook a11y + play functions: single open, multiple open, disabled item, **accordion host `disabled`**, **`quiet`** — **partial:** play tests exist in [`accordion.test.ts`](../../../../2nd-gen/packages/swc/components/accordion/test/accordion.test.ts); update assertions for **`aria-hidden`** (not **`hidden`**) and fix stale Overview defaults; **`quiet`** and Playwright snapshots still open
+- [x] Playwright ARIA snapshots — [`accordion.a11y.spec.ts`](../../../../2nd-gen/packages/swc/components/accordion/test/accordion.a11y.spec.ts) (Overview, Item states, Disabled accordion, Allow multiple, Quiet, Heading level, Direct actions, Accessibility)
+- [ ] Storybook play functions ([`accordion.test.ts`](../../../../2nd-gen/packages/swc/components/accordion/test/accordion.test.ts)) — **deferred** Phase 6 (toggle, exclusive open, keyboard, disabled behavior, direct actions click, etc.)
 
 ### Documentation
 
@@ -423,7 +423,7 @@ Gates align with [01_washing-machine-workflow.md](../../02_workstreams/02_2nd-ge
 
 | Topic | Question |
 |---|---|
-| **Standalone item** | **Direction:** **`swc-accordion-item`** without a parent stays **supported** with reasonable defaults (**`protected` `heading`** defaults to **`3`**, same as today’s accordion default)—matches existing tests and story patterns. Ticket any change if product requires parent-only usage. |
+| **Standalone item** | **Direction:** **`swc-accordion-item`** without a parent stays **supported** with reasonable defaults (**`protected` `heading`** defaults to **`3`**, same as today’s accordion default)—matches existing story patterns. Ticket any change if product requires parent-only usage. |
 | Heading slot content | Text-only vs inline phrasing (`<strong>`, `<code>`) in heading slot. |
 | Chevron / disclosure icon | Prefer **`swc-icon`** internally; finalize icon asset/name against S2. |
 | Accordion host **`disabled`** | Confirm **controlled** **`open`** cannot expand while host **`disabled`**; prefer **container-query** / host styling for descendant disabled visuals ([Public API](#public-api) **`disabled`** note). |
@@ -432,7 +432,6 @@ Gates align with [01_washing-machine-workflow.md](../../02_workstreams/02_2nd-ge
 | **Direct actions — content constraints** | Slot is open-ended by design. Confirm whether to add a dev-mode warning for unsupported content types when `swc-action-button` and `swc-switch` are available, or leave fully unrestricted. |
 | **`RadioController`** scope | Ship **inside** `AccordionBase` first vs extract to **core** for **radio group**, **`role=”menuitemradio”`** menus, **tabs**, and/or coordinate with a **refactor** of **`FocusgroupNavigationController`** (split “selection flags” vs “focus roving”)? **Depends on** menu / radio / tabs migration timing and whether teams want one shared **selection-sync** API vs local loops per component. |
 
-**Not a blocker:** Missing 2nd-gen package before implementation starts is expected.
 
 ### Tracked bugs
 
