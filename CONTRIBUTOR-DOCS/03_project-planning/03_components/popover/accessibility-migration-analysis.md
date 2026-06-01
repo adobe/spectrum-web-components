@@ -17,6 +17,9 @@
     - [When to use something else](#when-to-use-something-else)
     - [What it is not](#what-it-is-not)
     - [Related](#related)
+- [2nd-gen design update (amends this analysis) — Q4](#2nd-gen-design-update-amends-this-analysis--q4)
+    - [Trigger-side ARIA the popover now owns](#trigger-side-aria-the-popover-now-owns)
+    - [Keyboard, focus, and dismissal (by mode)](#keyboard-focus-and-dismissal-by-mode)
 - [ARIA and WCAG context](#aria-and-wcag-context)
     - [Pattern in the APG](#pattern-in-the-apg)
     - [Guidelines that apply](#guidelines-that-apply)
@@ -69,6 +72,37 @@ This document sets accessibility expectations for 2nd-gen **Popover** in Spectru
 
 - 1st-gen [`sp-popover`](../../../../1st-gen/packages/popover/README.md) is primarily styling. Many call sites (for example Picker) set `role="presentation"` on the host and place ARIA on child content.
 - 2nd-gen (planned, [roadmap — Planned consumers](./rendering-and-styling-migration-analysis.md#planned-consumers-2nd-gen)): **action menu** (dropdown), **combobox** (listbox), **tooltip** (replacing overlay-based positioning for that pattern). **Modal** / **dialog**: **shared** **popover** **styles** on the surface, **not** the **`swc-popover` host** (see [roadmap — Overview](./rendering-and-styling-migration-analysis.md#overview)).
+
+---
+
+## 2nd-gen design update (amends this analysis) — Q4
+
+> This section supersedes the original "role-free, no-behavior shell" framing and the "modals do not use the host" statements below, per the agreed [migration plan](./migration-plan.md). The original sections remain accurate for **default-mode surface semantics** (the popover surface carries no inherent role; slotted content owns its pattern's ARIA), but the popover is no longer behavior-free, and it now has a modal mode. Where the older text conflicts with the items here, this section wins.
+
+The 2nd-gen `<swc-popover>` is a **self-contained, opinionated** component, not a styles-only positioning shell. Two behavior modes, selected by the `modal` attribute:
+
+- **Default (non-modal):** renders an internal `<div popover="auto">`, opened via `showPopover()`. The browser provides native top-layer rendering and light-dismiss (Escape, click-outside). The surface carries **no inherent role** — consumer/slotted content owns its pattern's semantics, as the original analysis describes.
+- **Modal (`modal` attribute):** renders an internal `<dialog>`, opened via `showModal()`. The browser provides **`role="dialog"`, a focus trap, background inert, and Escape via the `cancel` event** natively; the component wires backdrop-click-to-close. **This replaces the original "modals do not use the host" guidance** — anchored modal popovers are now in scope for `<swc-popover>`.
+
+### Trigger-side ARIA the popover now owns
+
+When a trigger is resolved (via `for="<id>"` or the `trigger-element` setter), the popover wires ARIA **on the trigger** (or its inner focusable element discovered across an open shadow boundary), rather than leaving it entirely to consumers:
+
+| Attribute | When | Justification |
+| --- | --- | --- |
+| `ariaControlsElements = [popover]` | Durably, as soon as the trigger resolves (not gated on open) | Communicates the controls relationship across shadow roots without string-ID fragility (element-reference IDL; mirrors the tooltip plan). WCAG 4.1.2. |
+| `aria-expanded` | `"false"` on resolve; `"true"`/`"false"` on open/close | Disclosure-style state on the trigger so AT announces expanded/collapsed. WCAG 4.1.2; APG button-with-popup / disclosure. |
+| `aria-haspopup="dialog"` | While `modal` is set and a trigger is resolved | Signals that activating the trigger opens a dialog. Removed when `modal` is cleared or the trigger relationship is torn down. Default (non-modal) mode does **not** set `aria-haspopup` — consumers set a pattern-specific value (`menu`, `listbox`) when their content warrants it. |
+
+The surface itself still gets no `role` in default mode; this trigger-side wiring is about the **control**, not the surface, so it does not turn the box into a "semantic widget".
+
+### Keyboard, focus, and dismissal (by mode)
+
+- **Default mode:** Escape and click-outside dismiss natively via `popover="auto"`. **No focus trap** — focus is consumer/pattern-managed. Focus returns to the previously focused element on close.
+- **Modal mode:** native `<dialog>` focus trap and Escape (`cancel`); backdrop-click is wired by the component. Consumers must provide an accessible name for the dialog (e.g. `aria-labelledby` referencing a heading inside, or `aria-label` on the host) — a nameless modal dialog is an authoring bug.
+- **Cross-mechanism Escape coordination:** the component registers with a shared `dismissibleStack` on open and unregisters on close, so when multiple dismissibles of different mechanisms are open (e.g. a modal popover plus a tooltip), Escape resolves to the topmost.
+
+`prefers-reduced-motion` still governs any open/close transitions (see [Guidelines that apply](#guidelines-that-apply)).
 
 ---
 

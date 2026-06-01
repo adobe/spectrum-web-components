@@ -57,9 +57,15 @@ export const Playground: Story = {
   tags: ['autodocs', 'dev'],
   args: {
     open: true,
-    'default-slot': 'Popover content',
+    placement: 'bottom',
+    tip: true,
+    for: 'playground-trigger',
+    'default-slot': 'This popover is anchored to the button above.',
   },
-  render: (args) => template(args),
+  render: (args) => html`
+    <button id="playground-trigger">Trigger</button>
+    ${template(args)}
+  `,
 };
 
 // ──────────────────────────
@@ -69,9 +75,13 @@ export const Playground: Story = {
 export const Overview: Story = {
   args: {
     open: true,
-    'default-slot': 'Popover content',
+    placement: 'bottom',
+    tip: true,
+    for: 'overview-trigger',
+    'default-slot': 'This popover is anchored to the button above.',
   },
   render: (args) => html`
+    <button id="overview-trigger">Trigger</button>
     ${template(args)}
   `,
   tags: ['overview'],

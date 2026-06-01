@@ -10,18 +10,125 @@
  * governing permissions and limitations under the License.
  */
 
-/* @todo Phase 5 (styling): port S2 source from spectrum-css and add placement modifiers. */
-
 * {
   box-sizing: border-box;
 }
 
-.swc-Popover {
-  padding: 0;
-  margin: 0;
-  border: none;
+/* The host stays in the light DOM and owns no layout; the internal element
+ * (a `<div popover="auto">` or a `<dialog>`) enters the top layer when opened. */
+:host {
+  display: contents;
 }
 
+/* The internal surface — a `<div popover>` in default mode, a `<dialog>` in
+ * modal mode. Both are `position: fixed` in the top layer; the
+ * PlacementController writes `top: 0; left: 0; translate: …`, so reset the UA
+ * centering (`margin: auto`, `inset: 0`) and let the controller anchor it. */
+.swc-Popover {
+  position: fixed;
+  inset: auto;
+  inline-size: max-content;
+  max-inline-size: none;
+  max-block-size: none;
+  padding: 0;
+  margin: 0;
+  color: inherit;
+  background-color: token("background-layer-2-color");
+  border: token("border-width-100") solid token("popover-border-color");
+  border-radius: token("corner-radius-100");
+  overflow: visible;
+  outline: none;
+  filter: drop-shadow(token("drop-shadow-elevated-x") token("drop-shadow-elevated-y") token("drop-shadow-elevated-blur") token("drop-shadow-elevated-color"));
+}
+
+/* The padded content wrapper. Padding lives here (not on `.swc-Popover`) so a
+ * backdrop-click on the dialog's surface is not absorbed by padding in modal
+ * mode. */
 .swc-Popover-content {
-  display: block;
+  display: flex;
+  flex-direction: column;
+  padding: token("popover-edge-to-content-area");
+}
+
+/* Modal-mode backdrop. */
+.swc-Popover::backdrop {
+  background-color: token("overlay-color", rgb(0 0 0 / 40%));
+}
+
+/* ──────────────────────────
+ *    TIP
+ * ────────────────────────── */
+
+/* The tip is a square rotated 45° to read as a triangle. Its along-edge
+ * position is set by the PlacementController's `arrow` middleware (inline
+ * `translate`); these rules only orient it onto the correct edge per the
+ * computed placement modifier class.
+ * @todo RTL logical-placement (`start` / `end`) tip parity — see SWC-917. */
+.swc-Popover-tip {
+  position: absolute;
+  inline-size: token("popover-tip-width");
+  block-size: token("popover-tip-width");
+  background-color: token("background-layer-2-color");
+  border: token("border-width-100") solid token("popover-border-color");
+  rotate: 45deg;
+}
+
+/* Tip on the block-start edge — popover sits below the trigger. */
+.swc-Popover--bottom .swc-Popover-tip,
+.swc-Popover--bottom-start .swc-Popover-tip,
+.swc-Popover--bottom-end .swc-Popover-tip,
+.swc-Popover--bottom-left .swc-Popover-tip,
+.swc-Popover--bottom-right .swc-Popover-tip {
+  inset-block-start: calc(token("popover-tip-width") / -2);
+  border-block-end: none;
+  border-inline-end: none;
+}
+
+/* Tip on the block-end edge — popover sits above the trigger. */
+.swc-Popover--top .swc-Popover-tip,
+.swc-Popover--top-start .swc-Popover-tip,
+.swc-Popover--top-end .swc-Popover-tip,
+.swc-Popover--top-left .swc-Popover-tip,
+.swc-Popover--top-right .swc-Popover-tip {
+  inset-block-end: calc(token("popover-tip-width") / -2);
+  border-block-start: none;
+  border-inline-start: none;
+}
+
+/* Tip on the inline-start edge — popover sits to the end side of the trigger. */
+.swc-Popover--right .swc-Popover-tip,
+.swc-Popover--right-top .swc-Popover-tip,
+.swc-Popover--right-bottom .swc-Popover-tip,
+.swc-Popover--end .swc-Popover-tip,
+.swc-Popover--end-top .swc-Popover-tip,
+.swc-Popover--end-bottom .swc-Popover-tip {
+  inset-inline-start: calc(token("popover-tip-width") / -2);
+  border-block-end: none;
+  border-inline-start: none;
+}
+
+/* Tip on the inline-end edge — popover sits to the start side of the trigger. */
+.swc-Popover--left .swc-Popover-tip,
+.swc-Popover--left-top .swc-Popover-tip,
+.swc-Popover--left-bottom .swc-Popover-tip,
+.swc-Popover--start .swc-Popover-tip,
+.swc-Popover--start-top .swc-Popover-tip,
+.swc-Popover--start-bottom .swc-Popover-tip {
+  inset-inline-end: calc(token("popover-tip-width") / -2);
+  border-block-start: none;
+  border-inline-end: none;
+}
+
+/* ──────────────────────────
+ *    FORCED COLORS
+ * ────────────────────────── */
+
+@media (forced-colors: active) {
+  .swc-Popover {
+    border-color: CanvasText;
+  }
+
+  .swc-Popover-tip {
+    border-color: CanvasText;
+  }
 }

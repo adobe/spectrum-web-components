@@ -25,27 +25,33 @@
  * State is module-level and in-memory only; it resets on page reload, which is
  * correct for this coordination use case.
  *
- * @todo Phase 3 (API): implement the stack operations.
  */
 const dismissibleStack: object[] = [];
 
 /**
- * Push a dismissible onto the stack when it opens.
+ * Register a dismissible as the topmost entry when it opens. Any existing entry
+ * for the same key is removed first, so re-registering moves the key to the top
+ * and the stack never holds duplicates.
  */
-export function registerDismissible(_key: object): void {
-  /* @todo Phase 3 (API) */
+export function registerDismissible(key: object): void {
+  unregisterDismissible(key);
+  dismissibleStack.push(key);
 }
 
 /**
- * Remove the most-recent entry matching the key when it closes. Idempotent.
+ * Remove the most-recent entry matching the key when it closes. Idempotent — a
+ * key that is not present is a no-op (safe to call from `disconnectedCallback`).
  */
-export function unregisterDismissible(_key: object): void {
-  /* @todo Phase 3 (API) */
+export function unregisterDismissible(key: object): void {
+  const index = dismissibleStack.lastIndexOf(key);
+  if (index !== -1) {
+    dismissibleStack.splice(index, 1);
+  }
 }
 
 /**
  * Whether the key is the topmost (most-recently-registered) dismissible.
  */
-export function isTopDismissible(_key: object): boolean {
-  return dismissibleStack.at(-1) === _key;
+export function isTopDismissible(key: object): boolean {
+  return dismissibleStack.at(-1) === key;
 }
