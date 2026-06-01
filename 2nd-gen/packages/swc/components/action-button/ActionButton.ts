@@ -10,7 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
-import { CSSResultArray, html, TemplateResult } from 'lit';
+import { CSSResultArray, html, nothing, TemplateResult } from 'lit';
 import { property, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
@@ -32,6 +32,33 @@ import styles from './action-button.css';
  *
  * @slot - Visible button label.
  * @slot icon - Optional leading icon displayed before the label.
+ *
+ * @cssprop --swc-action-button-min-block-size - Minimum block size. Defaults to the medium component height token.
+ * @cssprop --swc-action-button-border-radius - Corner radius. Defaults to `corner-radius-medium-size-medium`.
+ * @cssprop --swc-action-button-font-size - Font size of the label. Defaults to the medium font-size token.
+ * @cssprop --swc-action-button-gap - Gap between icon and label.
+ * @cssprop --swc-action-button-edge-to-text - Inline padding from edge to label text.
+ * @cssprop --swc-action-button-edge-to-visual - Inline padding from edge to icon when a label is also present.
+ * @cssprop --swc-action-button-edge-to-visual-only - Inline padding from edge to icon when no label is present.
+ * @cssprop --swc-action-button-icon-size - Size (inline and block) of the slotted icon.
+ * @cssprop --swc-action-button-icon-inline-size - Inline size override for the slotted icon.
+ * @cssprop --swc-action-button-icon-block-size - Block size override for the slotted icon.
+ * @cssprop --swc-action-button-focus-indicator-color - Color of the focus ring outline.
+ * @cssprop --swc-action-button-background-color-default - Background color in the default state.
+ * @cssprop --swc-action-button-border-color-default - Border color in the default state.
+ * @cssprop --swc-action-button-content-color-default - Text and icon color in the default state.
+ * @cssprop --swc-action-button-background-color-hover - Background color on hover.
+ * @cssprop --swc-action-button-border-color-hover - Border color on hover.
+ * @cssprop --swc-action-button-content-color-hover - Text and icon color on hover.
+ * @cssprop --swc-action-button-background-color-focus - Background color when focused.
+ * @cssprop --swc-action-button-border-color-focus - Border color when focused.
+ * @cssprop --swc-action-button-content-color-focus - Text and icon color when focused.
+ * @cssprop --swc-action-button-background-color-down - Background color when pressed.
+ * @cssprop --swc-action-button-border-color-down - Border color when pressed.
+ * @cssprop --swc-action-button-content-color-down - Text and icon color when pressed.
+ * @cssprop --swc-action-button-background-color-disabled - Background color when disabled or pending.
+ * @cssprop --swc-action-button-border-color-disabled - Border color when disabled or pending.
+ * @cssprop --swc-action-button-content-color-disabled - Text and icon color when disabled or pending.
  *
  * @example
  * <swc-action-button>Edit</swc-action-button>
@@ -142,7 +169,35 @@ export class ActionButton extends ButtonBase {
         <span class="swc-ActionButton-label">
           <slot></slot>
         </span>
-        <span class="swc-ActionButton-pendingIcon" aria-hidden="true"></span>
+        ${this.pending
+          ? html`
+              <svg
+                class="swc-ActionButton-pendingSpinner"
+                width="100%"
+                height="100%"
+                fill="none"
+                aria-hidden="true"
+                focusable="false"
+              >
+                <circle
+                  class="swc-ActionButton-pendingSpinner-track"
+                  cx="50%"
+                  cy="50%"
+                  r="calc(50% - 1px)"
+                />
+                <circle
+                  class="swc-ActionButton-pendingSpinner-fill"
+                  cx="50%"
+                  cy="50%"
+                  r="calc(50% - 1px)"
+                  pathLength="100"
+                  stroke-dasharray="100 200"
+                  stroke-dashoffset="75"
+                  stroke-linecap="round"
+                />
+              </svg>
+            `
+          : nothing}
       </button>
     `;
   }

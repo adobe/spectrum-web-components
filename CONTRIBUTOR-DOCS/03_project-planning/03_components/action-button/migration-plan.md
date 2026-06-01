@@ -445,24 +445,24 @@ What `swc-action-button` adds on top of `ButtonBase`:
 
 > Follow the [CSS style guide](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/) as the source of truth for all styling work.
 
-- [ ] Add `.swc-ActionButton` to the internal semantic `<button>` in `render()`; keep styling off `:host`
-- [ ] Copy S2 source from `spectrum-css` `spectrum-two` branch `index.css` (not `/dist`) into `action-button.css` as baseline
-- [ ] Update class and custom property prefixes from `.spectrum-ActionButton` to `.swc-ActionButton`; remove all `--mod-*` and `--spectrum-actionbutton-*` fallback chains
-- [ ] Implement `quiet` styling via `.swc-ActionButton--quiet` on the internal `<button>` (or `:host([quiet])` with CSS custom property overrides)
-- [ ] Implement `static-color` styling for `white` and `black` variants including `quiet` combinations
-- [ ] Implement five sizes (`xs`, `s`, `m`, `l`, `xl`) with correct Spectrum 2 tokens for each
-- [ ] Implement icon-only layout detection via `swc-ActionButton--iconOnly` derived class (same pattern as `swc-button`)
-- [ ] Implement pending visual: animated inline SVG spinner, 1-second delay, width locking via `--_swc-action-button-pending-inline-size` (same pattern as `swc-button`)
-- [ ] Implement disabled state colors (native `disabled` on inner `<button>`)
-- [ ] Implement focus-visible ring using `outline` / `outline-offset` (not `box-shadow`) on the inner `<button>`
-- [ ] Implement forced-colors (Windows High Contrast) media query at the bottom of the file
-- [ ] Implement reduced-motion treatment for pending spinner animation
-- [ ] Expose a small reviewed set of `--swc-action-button-*` custom properties
-- [ ] Add `@global-exclude` fences around JS-only blocks (pending spinner keyframes and pending state rules) so the generated global stylesheet stays static-only
+- [x] Add `.swc-ActionButton` to the internal semantic `<button>` in `render()`; keep styling off `:host`
+- [x] Copy S2 source from `spectrum-css` `spectrum-two` branch `index.css` (not `/dist`) into `action-button.css` as baseline
+- [x] Update class and custom property prefixes from `.spectrum-ActionButton` to `.swc-ActionButton`; remove all `--mod-*` and `--spectrum-actionbutton-*` fallback chains
+- [x] Implement `quiet` styling via `:host([quiet])` with CSS custom property overrides
+- [x] Implement `static-color` styling for `white` and `black` variants including `quiet` combinations
+- [x] Implement five sizes (`xs`, `s`, `m`, `l`, `xl`) with correct Spectrum 2 tokens for each
+- [x] Implement icon-only layout detection via `swc-ActionButton--iconOnly` derived class (same pattern as `swc-button`)
+- [x] Implement pending visual: animated inline SVG spinner, 1-second delay, width locking via `--_swc-button-pending-inline-size` (ButtonBase writes this property name; render template updated from `<span>` to conditional SVG matching `swc-button`)
+- [x] Implement disabled state colors (native `disabled` on inner `<button>`)
+- [x] Implement focus-visible ring using `outline` / `outline-offset` (not `box-shadow`) on the inner `<button>`
+- [x] Implement forced-colors (Windows High Contrast) media query at the bottom of the file
+- [x] Implement reduced-motion treatment for pending spinner animation
+- [x] Expose a small reviewed set of `--swc-action-button-*` custom properties; documented with `@cssprop` JSDoc tags on `ActionButton`
+- [x] Add `@global-exclude` fences around JS-only blocks (pending spinner keyframes and pending state rules) so the generated global stylesheet stays static-only
 - [ ] Register `{ component: 'action-button' }` in the `vite-global-elements-css` plugin config (see `2nd-gen/packages/tools/vite-global-elements-css/README.md`) to auto-generate `stylesheets/global/global-action-button.css` from the component CSS
 - [ ] Add `swc-action-button` examples to the global elements docs page (alongside `swc-button`), showing native `<a>` and `<button>` usage with the generated stylesheet
 - [ ] Verify RTL support (icon / label ordering)
-- [ ] Pass `yarn lint:css` (property order, `no-descending-specificity`, token validation)
+- [x] Pass `yarn lint:css` (property order, `no-descending-specificity`, token validation)
 
 ### Accessibility
 
@@ -471,7 +471,7 @@ What `swc-action-button` adds on top of `ButtonBase`:
 - [x] Align implementation with [Action button accessibility migration analysis](./accessibility-migration-analysis.md)
 - [x] Icon-only usage requires `accessible-label`; emit `__swc.warn()` when absent (inherited from `ButtonBase.update()`)
 - [x] Pending state: `aria-disabled="true"` on inner `<button>`, focusable, busy-suffix accessible name (inherited from `ButtonBase`)
-- [x] Pending state: animated icon only, never `swc-progress-circle` for inline pending (render template includes a `<span class="swc-ActionButton-pendingIcon" aria-hidden="true">` for CSS to target; no `swc-progress-circle` in the template)
+- [x] Pending state: animated icon only, never `swc-progress-circle` for inline pending (Phase 5 replaced the placeholder `<span>` with a conditional inline SVG spinner matching `swc-button`; no `swc-progress-circle` in the template)
 - [x] Pending state: no `aria-live="assertive"`; consumers use `role="status"` externally if needed (no live regions added to component)
 - [x] Menu trigger: forward `aria-haspopup` / `aria-expanded` from host to the internal `<button>`
 - [x] No `aria-pressed`, `role="radio"`, or `role="checkbox"` on `swc-action-button`
