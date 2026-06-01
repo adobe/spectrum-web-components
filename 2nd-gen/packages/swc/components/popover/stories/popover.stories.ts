@@ -14,6 +14,8 @@ import { html } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
+import { Popover } from '@adobe/spectrum-wc/popover';
+
 import '@adobe/spectrum-wc/components/popover/swc-popover.js';
 
 // ────────────────
@@ -21,6 +23,20 @@ import '@adobe/spectrum-wc/components/popover/swc-popover.js';
 // ────────────────
 
 const { events, args, argTypes, template } = getStorybookHelpers('swc-popover');
+
+argTypes.placement = {
+  ...argTypes.placement,
+  control: { type: 'select' },
+  options: Popover.VALID_PLACEMENTS,
+  table: { category: 'attributes', defaultValue: { summary: 'bottom' } },
+};
+
+argTypes.size = {
+  ...argTypes.size,
+  control: { type: 'select' },
+  options: [undefined, ...Popover.VALID_SIZES],
+  table: { category: 'attributes' },
+};
 
 /**
  * A popover is an anchored top-layer surface. In its default (non-modal) mode it
