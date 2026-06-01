@@ -10,17 +10,18 @@
  * governing permissions and limitations under the License.
  */
 
-export { capitalize } from './capitalize.js';
-export {
-  isTopDismissible,
-  registerDismissible,
-  unregisterDismissible,
-} from './dismissible-stack.js';
-export { getActiveElement } from './get-active-element.js';
-export { focusableSelector, tabbableSelector } from './focusable-selectors.js';
-export { getLabelFromSlot } from './get-label-from-slot.js';
-export {
-  resolveTrigger,
-  type ResolvedTrigger,
-  type ResolveTriggerOptions,
-} from './resolve-trigger.js';
+/* @todo Phase 5 (styling): port S2 source from spectrum-css and add placement modifiers. */
+
+* {
+  box-sizing: border-box;
+}
+
+.swc-Popover {
+  padding: 0;
+  margin: 0;
+  border: none;
+}
+
+.swc-Popover-content {
+  display: block;
+}

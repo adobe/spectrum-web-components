@@ -9,18 +9,14 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
+import { defineElement } from '@spectrum-web-components/core/element/index.js';
 
-export { capitalize } from './capitalize.js';
-export {
-  isTopDismissible,
-  registerDismissible,
-  unregisterDismissible,
-} from './dismissible-stack.js';
-export { getActiveElement } from './get-active-element.js';
-export { focusableSelector, tabbableSelector } from './focusable-selectors.js';
-export { getLabelFromSlot } from './get-label-from-slot.js';
-export {
-  resolveTrigger,
-  type ResolvedTrigger,
-  type ResolveTriggerOptions,
-} from './resolve-trigger.js';
+import { Popover } from './Popover.js';
+
+declare global {
+  interface HTMLElementTagNameMap {
+    'swc-popover': Popover;
+  }
+}
+
+defineElement('swc-popover', Popover);

@@ -59,6 +59,14 @@
       "types": "./dist/components/illustrated-message/index.d.ts",
       "import": "./dist/components/illustrated-message/index.js"
     },
+    "./components/popover": {
+      "types": "./dist/components/popover/index.d.ts",
+      "import": "./dist/components/popover/index.js"
+    },
+    "./components/popover/index.js": {
+      "types": "./dist/components/popover/index.d.ts",
+      "import": "./dist/components/popover/index.js"
+    },
     "./components/progress-circle": {
       "types": "./dist/components/progress-circle/index.d.ts",
       "import": "./dist/components/progress-circle/index.js"
@@ -151,6 +159,10 @@
       "types": "./dist/utils/capitalize.d.ts",
       "import": "./dist/utils/capitalize.js"
     },
+    "./utils/dismissible-stack.js": {
+      "types": "./dist/utils/dismissible-stack.d.ts",
+      "import": "./dist/utils/dismissible-stack.js"
+    },
     "./utils/get-label-from-slot.js": {
       "types": "./dist/utils/get-label-from-slot.d.ts",
       "import": "./dist/utils/get-label-from-slot.js"
@@ -158,6 +170,10 @@
     "./utils/index.js": {
       "types": "./dist/utils/index.d.ts",
       "import": "./dist/utils/index.js"
+    },
+    "./utils/resolve-trigger.js": {
+      "types": "./dist/utils/resolve-trigger.d.ts",
+      "import": "./dist/utils/resolve-trigger.js"
     }
   },
   "main": "./dist/index.js",
