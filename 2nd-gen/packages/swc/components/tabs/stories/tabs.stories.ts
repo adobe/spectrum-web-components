@@ -13,10 +13,6 @@
 import { html, type TemplateResult } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
-import '@adobe/spectrum-wc/components/tabs/swc-tabs.js';
-import '@adobe/spectrum-wc/components/tabs/swc-tab.js';
-import '@adobe/spectrum-wc/components/tabs/swc-tab-panel.js';
-
 import {
   KEYBOARD_ACTIVATIONS,
   type KeyboardActivation,
@@ -24,7 +20,11 @@ import {
   type TabDensity,
   TABS_DIRECTIONS,
   type TabsDirection,
-} from '../../../../core/components/tabs/Tabs.types.js';
+} from '@spectrum-web-components/core/components/tabs/index.js';
+
+import '@adobe/spectrum-wc/components/tabs/swc-tabs.js';
+import '@adobe/spectrum-wc/components/tabs/swc-tab.js';
+import '@adobe/spectrum-wc/components/tabs/swc-tab-panel.js';
 
 const events = ['change'];
 
@@ -37,7 +37,7 @@ const events = ['change'];
  * Tabs and panels are matched by their `tab-id` attributes.
  *
  * Breaking changes and migration steps from `sp-tabs` live in the
- * [migration guide](../migration.md), not in Storybook copy.
+ * [migration guide](?path=/docs/components-tabs-migration-guide--docs), not in Storybook copy.
  */
 export const meta: Meta = {
   title: 'Tabs',

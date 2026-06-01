@@ -12,6 +12,7 @@
 import { readCsf } from '@storybook/core/csf-tools';
 import type { Indexer } from '@storybook/types';
 import type { StorybookConfig } from '@storybook/web-components-vite';
+import { existsSync } from 'fs';
 import { dirname, resolve } from 'path';
 import remarkGfm from 'remark-gfm';
 import { fileURLToPath } from 'url';
@@ -136,10 +137,6 @@ if (storybookMode === 'dev') {
     ...PATTERN_STORY_ROOT,
     files: '**/*.test.ts',
   });
-  stories.push({
-    ...CORE_STORY_ROOT,
-    files: '**/stories/**/*.test.ts',
-  });
 }
 
 /**
@@ -190,7 +187,12 @@ const config: StorybookConfig = {
       disabledAddons: [],
     },
   },
-  staticDirs: ['../public'],
+  staticDirs: [
+    '../public',
+    ...(existsSync(resolve(__dirname, '../coverage'))
+      ? [{ from: '../coverage', to: '/coverage' }]
+      : []),
+  ],
   addons,
   experimental_indexers: storybookMode === 'dev' ? [testStoryIndexer] : [],
   viteFinal: async (config) => {

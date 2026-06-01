@@ -67,3 +67,15 @@ Common case: confirming that subcomponent class names follow the single-hyphen s
 If a rename is needed, make the template change first, confirm the component still renders correctly in Storybook, then write the CSS.
 
 **Step 4 — Execute the phase.** Follow **[Phase 5: Styling](../../../CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md#phase-5-styling)** in the washing machine workflow doc — it covers what to do, what to check, common problems, and the quality gate for this phase.
+
+**Step 5 — Document exposed custom properties.** After writing the CSS, add a `@cssprop` JSDoc tag to the SWC component class (`2nd-gen/packages/swc/components/[component]/[Component].ts`) for every exposed `--swc-*` property. Place all `@cssprop` tags on the primary SWC class export (not the core base class). Each tag should name the property and give a one-line description of what it controls, including its default token where relevant.
+
+```ts
+/**
+ * @cssprop --swc-badge-height - Block size of the badge. Defaults to the medium component height token.
+ * @cssprop --swc-badge-background-color - Background fill. Defaults to the neutral subdued background token.
+ */
+export class Badge extends BadgeBase { … }
+```
+
+Storybook picks these up automatically and surfaces them in the API docs panel. Do not add `@cssprop` tags for private `--_swc-*` properties — those are internal only.
