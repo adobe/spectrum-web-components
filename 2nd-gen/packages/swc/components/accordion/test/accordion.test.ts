@@ -18,6 +18,7 @@ import { Accordion, AccordionItem } from '@adobe/spectrum-wc/accordion';
 
 import '@adobe/spectrum-wc/components/accordion/swc-accordion.js';
 import '@adobe/spectrum-wc/components/accordion/swc-accordion-item.js';
+import '@adobe/spectrum-wc/components/button/swc-button.js';
 
 import { SWC_ACCORDION_ITEM_TOGGLE_EVENT } from '../../../../core/components/accordion/Accordion.types.js';
 import { getComponent, getComponents } from '../../../utils/test-utils.js';
@@ -235,6 +236,60 @@ export const ToggleEventTest: Story = {
         expect(item.open, 'open state is reverted when event is canceled').toBe(
           wasOpen
         );
+      }
+    );
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Direct actions (slot="actions")
+// ──────────────────────────────────────────────────────────────
+
+export const DirectActionsClickTest: Story = {
+  render: () => html`
+    <swc-accordion density="regular">
+      <swc-accordion-item>
+        <span slot="label">Billing address</span>
+        <swc-button
+          slot="actions"
+          variant="secondary"
+          fill-style="outline"
+          size="s"
+        >
+          Edit
+        </swc-button>
+        Billing content
+      </swc-accordion-item>
+    </swc-accordion>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const item = await getComponent<AccordionItem>(
+      canvasElement,
+      'swc-accordion-item'
+    );
+    const actionButton = item.querySelector(
+      'swc-button[slot="actions"]'
+    ) as HTMLElement;
+
+    await step('item starts closed', async () => {
+      expect(item.open, 'item open property is false').toBe(false);
+    });
+
+    await step(
+      'clicking a slotted actions control does not toggle the item',
+      async () => {
+        let toggleFired = false;
+        item.addEventListener(SWC_ACCORDION_ITEM_TOGGLE_EVENT, () => {
+          toggleFired = true;
+        });
+
+        actionButton.click();
+        await item.updateComplete;
+
+        expect(item.open, 'open state unchanged after action click').toBe(
+          false
+        );
+        expect(toggleFired, 'toggle event not dispatched').toBe(false);
       }
     );
   },
