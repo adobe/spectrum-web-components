@@ -1,22 +1,11 @@
 import {
-  Meta,
-  Title,
-  Primary,
-  Controls,
-  Stories,
-  ArgTypes,
   Description,
-  Subtitle,
   HeaderMdx,
+  Meta,
+  Stories,
   useOf,
 } from '@storybook/addon-docs/blocks';
-import {
-  ApiTable,
-  GettingStarted,
-  OverviewStory,
-  SpectrumStories,
-  StatusBadge,
-} from './blocks';
+import { DocsFooter, DocsHeader, SpectrumStories } from './blocks';
 
 export const checkIsSingleStory = () => {
   const resolvedOf = useOf('meta', ['meta']);
@@ -101,13 +90,8 @@ export const ConditionalGettingStarted = () => {
 
 <Meta isTemplate />
 
-<Title />
-<StatusBadge />
-<Subtitle />
-<Description />
+<DocsHeader />
 <SingleStoryDescription />
-<OverviewStory />
-<ConditionalGettingStarted />
 
 <ConditionalSection tag="anatomy" title="Anatomy" hideTitle={true} />
 <ConditionalSection tag="upcoming" title="Upcoming features" hideTitle={true} />
@@ -122,6 +106,4 @@ export const ConditionalGettingStarted = () => {
 <AdvancedExamplesStories />
 <ConditionalSection tag="appendix" title="Appendix" hideTitle={true} />
 
-## Feedback
-
-Have feedback or questions? [Open an issue](https://github.com/adobe/spectrum-web-components/issues/new/choose).
+<DocsFooter />

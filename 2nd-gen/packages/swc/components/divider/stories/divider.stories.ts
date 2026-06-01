@@ -86,11 +86,11 @@ const meta: Meta = {
 export default meta;
 
 // ────────────────────
-//    AUTODOCS STORY
+//    PLAYGROUND STORY
 // ────────────────────
 
 export const Playground: Story = {
-  tags: ['autodocs', 'dev'],
+  tags: ['dev'],
   args: {
     size: 'm',
     vertical: false,
@@ -127,11 +127,6 @@ export const Overview: Story = {
 //    ANATOMY STORIES
 // ──────────────────────────
 
-/**
- * A divider consists of:
- *
- * 1. **Line** - The visual separator element that creates visual separation between content
- */
 export const Anatomy: Story = {
   render: (args) => html`
     <h4>Account settings</h4>
@@ -150,13 +145,6 @@ export const Anatomy: Story = {
 //    OPTIONS STORIES
 // ──────────────────────────
 
-/**
- * Dividers come in three sizes to fit various contexts:
- *
- * - **Small (`s`)**: Used to divide similar components such as table rows, action button groups, and components within a panel
- * - **Medium (`m`)**: Used for dividing subsections on a page, or to separate different groupings of components such as panels, rails, etc.
- * - **Large (`l`)**: Should only be used for page titles or section titles
- */
 export const Sizes: Story = {
   render: (args) => html`
     <div>
@@ -181,16 +169,9 @@ export const Sizes: Story = {
       <p>Monitor activity and analytics.</p>
     </div>
   `,
-  parameters: {
-    'section-order': 1,
-  },
   tags: ['options'],
 };
 
-/**
- * The default horizontal divider is used to separate content stacked vertically. To separate
- * horizontal content, use the `vertical` attribute.
- */
 export const Vertical: Story = {
   render: (args) => html`
     <div
@@ -223,7 +204,6 @@ export const Vertical: Story = {
   `,
   parameters: {
     flexLayout: 'column-center',
-    'section-order': 2,
   },
   tags: ['options'],
   args: {
@@ -248,15 +228,6 @@ const STATIC_COLORS_VERTICAL_SAMPLES = [
   { size: 'l' as const, blockSize: 32 },
 ];
 
-/**
- * Use the `static-color` attribute when displaying over images or colored backgrounds:
- *
- * - **white**: Use on dark or colored backgrounds for better contrast
- * - **black**: Use on light backgrounds for better contrast
- *
- * Each static color panel shows **horizontal** dividers at sizes `s`, `m`, and `l`, and **vertical**
- * dividers at the same sizes (vertical rows use an explicit `block-size` so the line is visible).
- */
 export const StaticColors: Story = {
   render: (args) => html`
     ${['white', 'black'].map(
@@ -312,7 +283,6 @@ export const StaticColors: Story = {
   `,
   parameters: {
     staticColorsDemo: true,
-    'section-order': 3,
     styles: {
       'align-items': 'flex-start',
     },
@@ -325,16 +295,6 @@ StaticColors.storyName = 'Static colors';
 //    BEHAVIORS STORIES
 // ──────────────────────────────
 
-/**
- * Dividers can be oriented **horizontally** (default) or **vertically** to match
- * the layout they serve:
- *
- * - **Horizontal dividers** separate stacked content, such as sections beneath headings
- * - **Vertical dividers** separate side-by-side items in a flex row (e.g., navigation breadcrumbs, toolbars)
- *
- * Vertical dividers require the parent to have an **explicit height** (`block-size`) —
- * without it, `block-size: 100%` resolves to zero and the divider is invisible.
- */
 export const LayoutOrientation: Story = {
   render: (args) => html`
     <nav
@@ -367,31 +327,6 @@ LayoutOrientation.storyName = 'Layout orientation';
 //    ACCESSIBILITY STORIES
 // ────────────────────────────────
 
-/**
- * ### Features
- *
- * The `<swc-divider>` element implements several accessibility features:
- *
- * #### ARIA implementation
- *
- * 1. **ARIA role**: Automatically sets `role="separator"` to ensure proper semantic meaning for assistive technologies
- * 2. **Orientation support**: When `vertical` is true, automatically sets `aria-orientation="vertical"` to indicate the divider's orientation
- * 3. **Not focusable**: A `separator` is not focusable and receives no keyboard interaction. Only separators that double as interactive resize handles are focusable (and require `aria-valuenow`, `aria-valuemin`, and `aria-valuemax`). `<swc-divider>` is a static separator and should never be made focusable.
- *
- * #### Visual accessibility
- *
- * - Dividers use sufficient thickness and color contrast to be perceivable
- * - Static color variants ensure contrast on different backgrounds
- * - High contrast mode is supported with appropriate color overrides
- *
- * ### Best practices
- *
- * - Place dividers between complete content sections, not between a heading and its associated body text
- * - Use dividers purposefully — they should reinforce existing content groupings, not substitute for clear heading structure
- * - Use dividers sparingly; excessive use can diminish their visual impact
- * - Ensure sufficient color contrast when using `static-color` variants on colored backgrounds
- * - Do not rely on dividers alone to communicate section boundaries to screen reader users; heading structure and landmark regions carry that responsibility
- */
 export const Accessibility: Story = {
   render: (args) => html`
     <h4>Project overview</h4>

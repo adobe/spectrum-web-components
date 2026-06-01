@@ -85,11 +85,11 @@ const sizeLabels = {
 } as const satisfies Record<ProgressCircleSize, string>;
 
 // ────────────────────
-//    AUTODOCS STORY
+//    PLAYGROUND STORY
 // ────────────────────
 
 export const Playground: Story = {
-  tags: ['autodocs', 'dev'],
+  tags: ['dev'],
   args: {
     size: 'm',
     label: 'Processing request',
@@ -111,15 +111,6 @@ export const Overview: Story = {
 //    ANATOMY STORIES
 // ──────────────────────────
 
-/**
- * A progress circle consists of:
- *
- * 1. **Track** - Background ring showing the full progress range
- * 2. **Fill** - Colored ring segment showing current progress
- * 3. **Label** - Accessible text describing the operation (not visually rendered).
- *
- * > **A11y Note:** Light DOM children are not projected into the shadow tree, so content between the opening and closing tags does not supply an accessible name. Use the `label` attribute or property, or `aria-label` / `aria-labelledby` on the host.
- */
 export const Anatomy: Story = {
   render: () => html`
     <swc-progress-circle
@@ -145,13 +136,6 @@ export const Anatomy: Story = {
 //    OPTIONS STORIES
 // ──────────────────────────
 
-/**
- * Progress circles come in three sizes to fit various contexts:
- *
- * - **Small (`s`)**: Used for inline indicators or space-constrained areas, such as in tables or alongside small text
- * - **Medium (`m`)**: Default size, used for typical loading states in cards, forms, or content areas
- * - **Large (`l`)**: Used for prominent loading states, primary content areas, or full-page loading indicators
- */
 export const Sizes: Story = {
   render: (args) => html`
     ${PROGRESS_CIRCLE_VALID_SIZES.map(
@@ -167,15 +151,6 @@ export const Sizes: Story = {
   tags: ['options'],
 };
 
-/**
- * Use the `static-color` attribute when displaying over images or colored backgrounds:
- *
- * - **white**: Use on dark or colored backgrounds for better contrast
- * - **black**: Use on light backgrounds for better contrast
- *
- * Each panel lists **small**, **medium**, and **large** in order so Chromatic can snapshot every
- * static-color and size pairing with the same label text (stroke weight is what changes).
- */
 export const StaticColors: Story = {
   render: (args) => html`
     ${PROGRESS_CIRCLE_STATIC_COLORS.map(
@@ -198,7 +173,6 @@ export const StaticColors: Story = {
   tags: ['options'],
   parameters: {
     staticColorsDemo: true,
-    'section-order': 2,
     styles: {
       'align-items': 'flex-start',
     },
@@ -209,11 +183,6 @@ export const StaticColors: Story = {
 //    STATES STORIES
 // ──────────────────────────
 
-/**
- * Progress circles can show specific progress values from 0% to 100%.
- * Set the `progress` attribute to a value between 0 and 100 to represent determinate progress.
- * This automatically sets `aria-valuenow` to the provided value for screen readers.
- */
 export const ProgressValues: Story = {
   render: (args) => html`
     ${template({ ...args, progress: 0, label: 'Starting download' })}
@@ -226,22 +195,9 @@ export const ProgressValues: Story = {
   args: {
     size: 'm',
   },
-  parameters: {
-    'section-order': 2,
-  },
 };
 ProgressValues.storyName = 'Progress values';
 
-/**
- * The default state — when `progress` is not set, the component displays an animated
- * loading indicator. The `aria-valuenow` attribute is omitted, signaling to assistive
- * technologies that the operation duration is unknown.
- *
- * Use the default (no `progress`) when:
- * - The operation duration is unknown
- * - Progress cannot be accurately measured
- * - Multiple sub-operations are running in parallel
- */
 export const Indeterminate: Story = {
   tags: ['states'],
   args: {
@@ -253,52 +209,6 @@ export const Indeterminate: Story = {
 //    ACCESSIBILITY STORIES
 // ────────────────────────────────
 
-/**
- * ### Features
- *
- * The `<swc-progress-circle>` element implements several accessibility features:
- *
- * #### ARIA implementation
- *
- * 1. **ARIA role**: Automatically sets `role="progressbar"` for proper semantic meaning
- * 2. **Labeling**: Uses the `label` attribute value as `aria-label`, or rely on `aria-label` / `aria-labelledby` you set on the host
- * 3. **Progress state** (determinate):
- *     - Sets `aria-valuenow` with the current `progress` value
- * 4. **Loading state** (indeterminate — default when `progress` is unset):
- *     - When no `progress` value is set, `aria-valuenow` is omitted
- *     - Screen readers understand this as an ongoing operation with unknown duration
- * 5. **Status communication**: Screen readers announce progress updates as values change
- *
- * #### Visual accessibility
- *
- * - Progress is shown visually through the fill amount, not relying solely on color
- * - High contrast mode is supported with appropriate color overrides
- * - Static color variants ensure sufficient contrast on different backgrounds
- * - At `progress="0"`, a small amount of fill is still rendered intentionally. A fully empty circle
- *   would fail WCAG 1.4.11 (non-text contrast) because the track alone may not meet the required
- *   3:1 contrast ratio against the background. The `aria-valuenow` attribute still reflects 0
- *
- * #### Non-interactive element
- *
- * - Progress circles have no interactive behavior and are not focusable
- * - Screen readers will announce the progress circle content as static text
- * - No keyboard interaction is required or expected
- *
- * > Important: In focus mode, only interactive elements and their associated labels/descriptions are announced. If content is not a label or description for a focusable element, it will not be read. For non-interactive content, screen reader users must [switch to Browse mode](https://swcpreviews.z13.web.core.windows.net/pr-6122/docs/second-gen-storybook/?path=/docs/guides-accessibility-guides-screen-reader-testing--readme#screen-reader-modes). This is expected behavior, not a bug — ensure you test both modes when evaluating component accessibility.
- * ### Best practices
- *
- * - Always provide a descriptive `label` that explains what the progress represents
- * - Use specific, meaningful labels (e.g., "Uploading profile photo" instead of "Loading")
- * - Use determinate progress (`progress="50"`) when possible to give users a clear sense of completion
- * - For determinate progress, ensure the `progress` value accurately reflects the actual progress
- * - Use indeterminate progress only when duration is truly unknown or when the wait is less than 3 seconds.
- * - Consider using `size="l"` for primary loading states to improve visibility
- * - Ensure sufficient color contrast between the progress circle and its background
- * - Use `static-color="white"` on dark backgrounds or `static-color="black"` on light backgrounds
- * - Test with screen readers to verify progress announcements are clear and timely
- * - Avoid updating progress values more frequently than every 1-2 seconds to prevent announcement overload
- * - Do not force live region announcements for progress durations that are 3 seconds or less.  Instead, consider status messages when progress is complete or there is an error
- */
 export const Accessibility: Story = {
   tags: ['a11y'],
   args: {
