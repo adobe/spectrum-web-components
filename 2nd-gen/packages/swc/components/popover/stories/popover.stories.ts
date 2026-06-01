@@ -16,6 +16,7 @@ import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
 import { Popover } from '@adobe/spectrum-wc/popover';
 
+import '@adobe/spectrum-wc/components/button/swc-button.js';
 import '@adobe/spectrum-wc/components/popover/swc-popover.js';
 
 // ────────────────
@@ -79,7 +80,7 @@ export const Playground: Story = {
     'default-slot': 'This popover is anchored to the button above.',
   },
   render: (args) => html`
-    <button id="playground-trigger">Toggle popover</button>
+    <swc-button id="playground-trigger">Toggle popover</swc-button>
     ${template(args)}
   `,
 };
@@ -97,7 +98,7 @@ export const Overview: Story = {
     'default-slot': 'This popover is anchored to the button above.',
   },
   render: (args) => html`
-    <button id="overview-trigger">Trigger</button>
+    <swc-button id="overview-trigger">Trigger</swc-button>
     ${template(args)}
   `,
   tags: ['overview'],
