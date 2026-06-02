@@ -542,12 +542,12 @@ See [Step 7](07_add-stories-for-2nd-gen-component.md) for structure and examples
 | Problem | Solution |
 |--------|----------|
 | Too many story variants | Use `argTypes.options` from the component (e.g. `Badge.VARIANTS`); one story can cover many variants. |
-| Missing examples | Add at least one `@example` in JSDoc and one default Storybook story. |
+| Missing examples | Add at least one `@example` to the public-API JSDoc in `Component.ts` and at least one `<Canvas>` reference per section in the per-component MDX. |
 | Size or variant control doesn't change the component | The Storybook template only applies attributes that are in the Custom Elements Manifest. If the attribute comes from a mixin on the base (e.g. `SizedMixin`), the CEM may not list it for the SWC element. Declare the property on the SWC class with `@property({ reflect: true })` so the CEM includes it, then run `yarn analyze` to regenerate the manifest. See Radio (SWC) for an example. |
 
 ### Quality gate
 
-- [ ] JSDoc complete for public API; Storybook stories and usage docs in place; migration notes added if needed.
+- [ ] Public-API JSDoc complete on `Component.ts`; per-component MDX docs page in place; stories file finalized (Playground tagged `'dev'` only, Accessibility story complete); consumer migration guide added if needed.
 
 ---
 
