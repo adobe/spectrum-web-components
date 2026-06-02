@@ -272,7 +272,7 @@ These decisions are derived from the 1st-gen implementation, the current depreca
 | `active` | internal | n/a | internal | **Confirmed internal.** Retained as an internal property inherited from `ButtonBase`. With hold-affordance deferred, no consumer-triggered mechanism sets this in initial scope. CSS `:active` on the inner `<button>` handles pressed-state styling without requiring a JS property. |
 | `name` | removed | n/a | removed | **Confirmed removal** alongside `type`. `swc-action-button` is not form-associated; `name` has no applicable semantics. |
 
-**Passthrough host attributes:** `aria-haspopup` and `aria-expanded` set on the host element are forwarded to the internal `<button>` via `getForwardedButtonAttributes()` — **Confirmed.** This supports menu trigger patterns (`<swc-action-button aria-haspopup="true" aria-expanded="false">`). No dedicated component property is needed; `ButtonBase` owns the forwarding logic. The forwarding list must be verified and tested in Phase 3 (API).
+**Passthrough host attributes:** `aria-haspopup` and `aria-expanded` set on the host element are forwarded to the internal `<button>` and stripped from the host — **Implemented in Phase 3.** `ActionButton` observes both attributes via `@property`, renders them onto the inner `<button>` via `ifDefined`, and overrides `attributeChangedCallback` to remove them from the host after Lit reads them. A `_ariaForwardingInProgress` guard prevents the re-entrant `removeAttribute` callback from clearing the properties. See resolved decisions table.
 
 #### Slots (2nd-gen)
 
@@ -468,13 +468,13 @@ What `swc-action-button` adds on top of `ButtonBase`:
 
 #### Naming and semantics
 
-- [ ] Align implementation with [Action button accessibility migration analysis](./accessibility-migration-analysis.md)
-- [ ] Icon-only usage requires `accessible-label`; emit `__swc.warn()` when absent
-- [ ] Pending state: `aria-disabled="true"` on inner `<button>`, focusable, busy-suffix accessible name (`SWC-459` parity)
+- [x] Align implementation with [Action button accessibility migration analysis](./accessibility-migration-analysis.md)
+- [x] Icon-only usage requires `accessible-label`; emit `__swc.warn()` when absent (inherited from `ButtonBase.update()`)
+- [x] Pending state: `aria-disabled="true"` on inner `<button>`, focusable, busy-suffix accessible name (inherited from `ButtonBase`)
 - [ ] Pending state: animated icon only, never `swc-progress-circle` for inline pending
 - [ ] Pending state: no `aria-live="assertive"`; consumers use `role="status"` externally if needed
-- [ ] Menu trigger: forward `aria-haspopup` / `aria-expanded` from host to the internal `<button>`
-- [ ] No `aria-pressed`, `role="radio"`, or `role="checkbox"` on `swc-action-button`
+- [x] Menu trigger: forward `aria-haspopup` / `aria-expanded` from host to the internal `<button>`
+- [x] No `aria-pressed`, `role="radio"`, or `role="checkbox"` on `swc-action-button`
 - [ ] Confirm host element is not separately announced by AT alongside the internal button
 
 #### State verification
@@ -613,7 +613,7 @@ What `swc-action-button` adds on top of `ButtonBase`:
 
 | # | Decision | Resolution |
 |---|---|---|
-| — | None resolved yet | — |
+| Phase 3 | `aria-haspopup` / `aria-expanded` host-attribute retention | Resolved in Phase 3 (PR feedback). `ActionButton.attributeChangedCallback` override strips both attributes from the host after Lit reads them, forwarding values to the inner `<button>` via `ariaHasPopup` / `ariaExpanded` properties. Guard flag `_ariaForwardingInProgress` prevents re-entrant clearing on the `removeAttribute` callback. |
 
 ### Deferred follow-up tickets
 
@@ -626,6 +626,9 @@ What `swc-action-button` adds on top of `ButtonBase`:
 | TBD | Badge slot and corner-overlay lockup (A6) | Icon+Badge and Avatar+Badge produce a distinct visual lockup. Badge text accessible name composition requires a11y review (@nikkimk) before shipping. | [A6](#additive--ships-when-ready-zero-breakage-for-consumers-already-on-2nd-gen) |
 | TBD | Avatar slot and accessible name composition (A7) | Avatar accessible name and its relationship to the button's composite accessible name requires a11y review (@nikkimk) before shipping. | [A7](#additive--ships-when-ready-zero-breakage-for-consumers-already-on-2nd-gen) |
 | TBD (under SWC-2039) | Cross-root ARIA mapping | Shared with `swc-button` dependency on `ElementInternals` / tooling path. | [Deferred semantics note](#deferred-semantics-note-2nd-gen) |
+| ~~Phase 4~~ | ~~`aria-haspopup` / `aria-expanded` host-attribute retention~~ | Resolved in Phase 3. See resolved decisions table. | [2nd-gen API decisions — passthrough host attributes](#properties--attributes) |
+| Phase 5 | Pending width-lock CSS property name | `ButtonBase.update()` sets `--_swc-button-pending-inline-size` on the inner `<button>` when the pending delay fires. Phase 5 action-button CSS must reference this same property name for the width-lock to activate, not `--_swc-action-button-pending-inline-size`. If a component-scoped name is preferred, `ActionButton` must override the pending timer logic to write under the action-button name instead. | [Pending state](#pending-state-new-in-2nd-gen) |
+| Phase 5 | Shared pending stylesheet (`button-pending.css`) | Consider extracting pending-state styles into a standalone `button-pending.css` alongside the existing `button-base.css` shareable stylesheet. `swc-action-button` and `swc-button` both implement the pending visual; shared styles (spinner keyframes, width-lock, reduced-motion, WHCM) should not be duplicated. Evaluate during Phase 5 when both stylesheets are being authored. | [Pending state](#pending-state-new-in-2nd-gen) |
 
 ---
 

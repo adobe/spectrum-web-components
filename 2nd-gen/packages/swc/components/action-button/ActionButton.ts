@@ -10,8 +10,8 @@
  * governing permissions and limitations under the License.
  */
 
-import { CSSResultArray, html, PropertyValues, TemplateResult } from 'lit';
-import { property } from 'lit/decorators.js';
+import { CSSResultArray, html, TemplateResult } from 'lit';
+import { property, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
@@ -26,6 +26,8 @@ import styles from './action-button.css';
 
 /**
  * A compact action button for toolbars, action groups, and icon-first chrome.
+ * Supports sizes `xs`–`xl`; `xs` is an action-button-specific addition not
+ * available on `swc-button`.
  *
  * @element swc-action-button
  * @since 0.0.1
@@ -51,48 +53,15 @@ export class ActionButton extends ButtonBase {
   static override readonly VALID_SIZES: readonly ActionButtonSize[] =
     ACTION_BUTTON_VALID_SIZES;
 
-  /**
-   * Size of the button. Supports the full `xs`–`xl` range; `xs` is an
-   * action-button-specific addition not available on `swc-button`.
-   */
-  @property({ type: String })
-  public override get size(): ActionButtonSize {
-    return this._size ?? 'm';
-  }
-
-  public override set size(value: ActionButtonSize) {
-    const normalized = (
-      value ? (value as string).toLocaleLowerCase() : value
-    ) as ActionButtonSize;
-    const validSize: ActionButtonSize = ACTION_BUTTON_VALID_SIZES.includes(
-      normalized
-    )
-      ? normalized
-      : 'm';
-    const oldSize = this._size ?? 'm';
-    if (oldSize === validSize) {
-      return;
-    }
-    this._size = validSize;
-    this.setAttribute('size', validSize);
-    this.requestUpdate('size', oldSize);
-  }
-
-  private _size: ActionButtonSize | null = null;
-
   // ───────────────────
   //     API ADDITIONS
   // ───────────────────
 
-  /**
-   * Applies the quiet (low-emphasis) visual treatment.
-   */
+  /** Applies the quiet (low-emphasis) visual treatment. */
   @property({ type: Boolean, reflect: true })
   public quiet: boolean = false;
 
-  /**
-   * Static color treatment for display over colored or image backgrounds.
-   */
+  /** Static color treatment for display over colored or image backgrounds. */
   @property({ type: String, reflect: true, attribute: 'static-color' })
   public staticColor?: ActionButtonStaticColor;
 
@@ -102,6 +71,52 @@ export class ActionButton extends ButtonBase {
 
   public static override get styles(): CSSResultArray {
     return [styles];
+  }
+
+  // Observe aria-haspopup / aria-expanded without @property so they don't
+  // conflict with ARIAMixin types on HTMLElement or appear in the public CEM.
+  static override get observedAttributes(): string[] {
+    return [...super.observedAttributes, 'aria-haspopup', 'aria-expanded'];
+  }
+
+  // Forwarded to the inner <button> for menu-trigger patterns; stripped from
+  // the host after reading to avoid duplicate ARIA state on both elements.
+  @state()
+  private _ariaHasPopup?: string;
+
+  @state()
+  private _ariaExpanded?: string;
+
+  // Guard against re-entrant attributeChangedCallback: removeAttribute fires a
+  // second callback with value=null; the guard prevents that from clearing the
+  // state we just set.
+  private _ariaForwardingInProgress = false;
+
+  /** @internal */
+  override attributeChangedCallback(
+    name: string,
+    old: string | null,
+    value: string | null
+  ): void {
+    const isAriaPassthrough =
+      name === 'aria-haspopup' || name === 'aria-expanded';
+    if (isAriaPassthrough && this._ariaForwardingInProgress) {
+      return;
+    }
+    if (isAriaPassthrough) {
+      if (name === 'aria-haspopup') {
+        this._ariaHasPopup = value ?? undefined;
+      } else {
+        this._ariaExpanded = value ?? undefined;
+      }
+      if (value !== null) {
+        this._ariaForwardingInProgress = true;
+        this.removeAttribute(name);
+        this._ariaForwardingInProgress = false;
+      }
+      return;
+    }
+    super.attributeChangedCallback(name, old, value);
   }
 
   protected override render(): TemplateResult {
@@ -122,6 +137,8 @@ export class ActionButton extends ButtonBase {
         aria-label=${ifDefined(
           this.pending ? this.getPendingAccessibleName() : this.accessibleLabel
         )}
+        aria-haspopup=${ifDefined(this._ariaHasPopup)}
+        aria-expanded=${ifDefined(this._ariaExpanded)}
       >
         <slot name="icon"></slot>
         <span class="swc-ActionButton-label">
@@ -129,13 +146,5 @@ export class ActionButton extends ButtonBase {
         </span>
       </button>
     `;
-  }
-
-  protected override update(changes: PropertyValues): void {
-    super.update(changes);
-    // Counteracts SizedMixin's auto-reflect of size="m" when no size was explicitly set.
-    if (this._size === null) {
-      this.removeAttribute('size');
-    }
   }
 }
