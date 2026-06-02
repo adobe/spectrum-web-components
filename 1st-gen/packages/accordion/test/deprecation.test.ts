@@ -25,6 +25,10 @@ describe('Accordion - deprecation warnings', () => {
     consoleWarnStub = stub(console, 'warn');
   });
 
+  beforeEach(() => {
+    window.__swc.issuedWarnings = new Set<BrandedSWCWarningID>();
+  });
+
   afterEach(() => {
     consoleWarnStub.resetHistory();
   });
