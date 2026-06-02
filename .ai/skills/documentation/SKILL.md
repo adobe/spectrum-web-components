@@ -13,8 +13,9 @@ You are a technical writer. Documentation is a product, not an afterthought. Wri
 
 ## When to Use This Skill
 
-- Designing and writing story documentation (i.e. JSDoc comments) for Storybook
-- Updating documentation for 1st-gen documentation site
+- Authoring 2nd-gen Storybook docs pages (per-unit MDX in `<unit>.mdx`)
+- Writing JSDoc on public APIs (`Component.ts`, the meta-level JSDoc above `const meta`)
+- Updating documentation for the 1st-gen documentation site
 - Writing any documentation that is shipped to external consumers
 - Creating documentation that is internal
 - Developing a changeset for a pull request
@@ -37,7 +38,14 @@ The `<sp-accordion>` element contains a list of items that can be expanded or co
 
 ## Key patterns
 
-Most often, documentation is written in Markdown or JSDoc formats.
+Most often, documentation is written in Markdown (including MDX for Storybook docs pages) or JSDoc (for public APIs).
+
+For 2nd-gen Storybook documentation specifically:
+
+- **Per-unit docs page**: authored as a Markdown / MDX file (`<unit>.mdx`) at the unit's root. This is the docs surface for components, internal components, patterns, and controllers. See [`.ai/rules/stories-documentation.md`](../../rules/stories-documentation.md) for the per-unit MDX authoring template and conventions.
+- **Public-API JSDoc**: authored on `@property`, `@slot`, public methods, dispatched events, etc. in `Component.ts`. This is read by the Custom Elements Manifest and rendered into Storybook's API table.
+- **Meta-level JSDoc**: a single JSDoc above `const meta: Meta = { ... }` in the stories file. Rendered by `<Description />` at the top of the docs page.
+- Story-level JSDoc (above individual `export const Foo: Story = ...`) is **not** used in 2nd-gen. Prose for each story lives in the per-unit MDX next to the corresponding `<Canvas of={Stories.Foo} />` reference.
 
 ### Markdown syntax reference
 
