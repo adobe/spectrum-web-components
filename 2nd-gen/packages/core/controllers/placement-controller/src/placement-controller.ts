@@ -84,8 +84,39 @@ type ActiveSession = {
  * (`computePosition` + `autoUpdate`).
  *
  * Hyphenated placements are accepted on the public API. Logical sides
- * (`start`, `end`) normalize to physical sides for positioning math; RTL is
- * handled in CSS at the consumer layer.
+ * (`start`, `end`) resolve to physical sides against the trigger's computed
+ * writing direction (`start` is the left in LTR, the right in RTL), so the
+ * panel lands on the correct side. Logical alignment suffixes (`bottom-start`)
+ * are left for Floating UI's own RTL handling; the consumer's CSS still owns
+ * direction-aware styling such as tip orientation.
+ *
+ * ### Available-space custom properties
+ *
+ * The `size` middleware does **not** write `max-width` / `max-height` on the
+ * floating element — an inline max-size would override the consuming
+ * component's intended CSS max-size. Instead it exposes the space available to
+ * the trigger as two custom properties on the floating element, refreshed on
+ * every compute and removed on `stop`:
+ *
+ * - `--swc-placement-available-width` — usable inline space, in px.
+ * - `--swc-placement-available-height` — usable block space, in px (floored to
+ *   a minimum so a cramped trigger still yields a usable panel).
+ *
+ * Only components positioned by this controller receive these properties.
+ * Such a component opts into viewport-bounded sizing by combining them with
+ * its own intended size via `min()`, with a fallback for when the controller
+ * is not active:
+ *
+ * ```css
+ * .floating {
+ *   max-inline-size: min(var(--intended-width), var(--swc-placement-available-width, 100vw));
+ *   max-block-size: min(var(--intended-height), var(--swc-placement-available-height, 100vh));
+ *   overflow: auto;
+ * }
+ * ```
+ *
+ * Pair `max-block-size` with `overflow: auto` so the panel scrolls when the
+ * block space is constrained (read `isConstrained` to detect that state).
  *
  * @example
  * ```typescript
@@ -115,10 +146,12 @@ export class PlacementController implements ReactiveController {
   public actualPlacement: Placement | null = null;
 
   /**
-   * Whether the `size` middleware clamped the floating element's height
-   * on the last compute. `true` when the content would otherwise overflow
-   * the available space below/above the trigger, in which case the
-   * controller writes a `max-height` style on the floating element.
+   * Whether the floating content would overflow the available space
+   * below/above the trigger on the last compute. `true` when the content is
+   * taller than the available height, so a consumer applying
+   * `max-block-size: min(…, var(--swc-placement-available-height))` will be
+   * clamping (and should enable scrolling). Informational only — the
+   * controller no longer writes `max-height` itself.
    */
   public isConstrained = false;
 
@@ -223,15 +256,16 @@ export class PlacementController implements ReactiveController {
   /**
    * Stop positioning: tear down `autoUpdate`, clear `actualPlacement`,
    * reset `isConstrained`, and remove inline styles the controller wrote
-   * (the `size` middleware's `max-height` / `max-width` on the floating
+   * (the `size` middleware's `--swc-placement-available-width` /
+   * `--swc-placement-available-height` custom properties on the floating
    * element, plus the `arrow` middleware's `translate` / `top` / `left`
    * on the tip element). Safe to call multiple times.
    */
   public stop(): void {
     const floating = this.session?.floating;
     if (floating) {
-      floating.style.removeProperty('max-height');
-      floating.style.removeProperty('max-width');
+      floating.style.removeProperty('--swc-placement-available-width');
+      floating.style.removeProperty('--swc-placement-available-height');
     }
     const tipElement = this.session?.options.tipElement;
     if (tipElement) {
@@ -305,7 +339,17 @@ export class PlacementController implements ReactiveController {
     }
 
     const requestedPlacement = options.placement ?? DEFAULT_PLACEMENT;
-    const floatingPlacement = toFloatingPlacement(requestedPlacement);
+    // Resolve logical sides (`start` / `end`) against the trigger's writing
+    // direction so RTL positions the panel on the correct physical side. Read
+    // from the trigger (it lives in the consumer's possibly scoped-RTL subtree);
+    // fall back to the floating element for a `VirtualTrigger`.
+    const directionSource = trigger instanceof HTMLElement ? trigger : floating;
+    const direction =
+      getComputedStyle(directionSource).direction === 'rtl' ? 'rtl' : 'ltr';
+    const floatingPlacement = toFloatingPlacement(
+      requestedPlacement,
+      direction
+    );
     const containerPadding =
       options.containerPadding ?? DEFAULT_CONTAINER_PADDING;
     const shouldFlip = options.shouldFlip ?? DEFAULT_SHOULD_FLIP;
@@ -328,7 +372,7 @@ export class PlacementController implements ReactiveController {
     // Middleware order matches gen1: offset → shift → flip → size → arrow.
     // `shift` runs before `flip` so the panel slides along the current
     // side before any decision to flip; `size` runs after the final
-    // placement is known so it clamps max-height / max-width accurately;
+    // placement is known so it measures the available space accurately;
     // `arrow` (when a tip element is provided) runs last so it positions
     // the tip relative to the trigger after every other middleware has
     // settled.
@@ -360,10 +404,19 @@ export class PlacementController implements ReactiveController {
             : (this.initialHeight ?? actualHeight);
           this.isConstrained =
             actualHeight < this.initialHeight || maxHeight <= actualHeight;
-          Object.assign(floating.style, {
-            maxWidth: `${Math.floor(availableWidth)}px`,
-            maxHeight: this.isConstrained ? `${maxHeight}px` : '',
-          });
+          // Expose the available space as custom properties rather than writing
+          // `max-width` / `max-height` directly: an inline max-size would
+          // override a component's intended CSS max-size, so instead each
+          // component opts in by combining these with its own value, e.g.
+          // `max-inline-size: min(<intended>, var(--swc-placement-available-width))`.
+          floating.style.setProperty(
+            '--swc-placement-available-width',
+            `${Math.floor(availableWidth)}px`
+          );
+          floating.style.setProperty(
+            '--swc-placement-available-height',
+            `${maxHeight}px`
+          );
         },
       }),
       tipElement ? arrow({ element: tipElement, padding: tipPadding }) : null,

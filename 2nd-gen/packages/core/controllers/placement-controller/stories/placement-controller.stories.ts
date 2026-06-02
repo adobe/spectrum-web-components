@@ -159,7 +159,7 @@ export const Overview: Story = {
  * 1. **`offset`** — trigger-relative gap along the placement direction (`offset` option) and along the trigger edge (`crossOffset` option).
  * 2. **`shift`** — slides the floating element along the placement axis to keep it inside the boundary using `containerPadding` as inset. Always installed.
  * 3. **`flip`** (when `shouldFlip: true`) — reorients to the opposite side when there is not enough room, respecting `containerPadding`.
- * 4. **`size`** — always installed. Writes `max-width` on every compute and `max-height` when content overflows the available space. Read `isConstrained` to detect when clamping is active.
+ * 4. **`size`** — always installed. Exposes the available space as the `--swc-placement-available-width` / `--swc-placement-available-height` custom properties (components opt in via `min()`). Read `isConstrained` to detect when content overflows the available space.
  * 5. **`arrow`** (when a `tipElement` is provided) — positions a tip element so it stays pointing at the trigger's center as the floating panel shifts.
  *
  * ### What the caller owns
@@ -308,15 +308,21 @@ export const ShouldFlip: Story = {
 };
 
 /**
- * Floating UI's **`size`** middleware is always installed. On every compute it writes
- * **`max-width`** on the floating element and writes **`max-height`** when the natural
- * content would otherwise overflow the available space below or above the trigger. The
- * readonly **`isConstrained`** property is `true` while `max-height` is being applied,
- * so consumers can react to "content is currently clamped" — e.g. show a scrollbar hint.
+ * Floating UI's **`size`** middleware is always installed. On every compute it
+ * exposes the available space as the custom properties
+ * **`--swc-placement-available-width`** and **`--swc-placement-available-height`**
+ * on the floating element, rather than writing `max-width` / `max-height`
+ * directly — an inline max-size would override the consuming component's
+ * intended CSS max-size. Components opt in with `min()`, e.g.
+ * `max-inline-size: min(<intended>, var(--swc-placement-available-width))`. The
+ * readonly **`isConstrained`** property is `true` when the content would
+ * overflow the available block space, so consumers can react to "content is
+ * currently clamped" — e.g. enable scrolling or show a scrollbar hint.
  *
- * No option to opt out. Matches gen1 behaviour.
+ * No option to opt out of the measurement. Only components positioned by the
+ * controller receive these properties.
  */
-export const SizeAlwaysClamps: Story = {
+export const SizeExposesAvailableSpace: Story = {
   tags: ['behaviors'],
   render: () => html`
     <demo-placement-constrain-size></demo-placement-constrain-size>
@@ -422,7 +428,7 @@ export const Arrow: Story = {
  * | Property | Type | Description |
  * |---|---|---|
  * | `actualPlacement` | `Placement \| null` | Computed placement after `flip` (hyphenated). `null` when stopped. |
- * | `isConstrained` | `boolean` | `true` while `size` middleware is applying `max-height` because content would otherwise overflow. |
+ * | `isConstrained` | `boolean` | `true` when content would overflow the available block space — i.e. a component clamping with `var(--swc-placement-available-height)` is scrolling. |
  *
  * ### Options
  *
