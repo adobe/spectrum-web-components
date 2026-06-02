@@ -1,0 +1,103 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import { DocsFooter, DocsHeader } from '../../.storybook/blocks';
+
+import * as StatusLightStories from './stories/status-light.stories';
+
+<Meta of={StatusLightStories} />
+
+<DocsHeader />
+
+## Anatomy
+
+A status light consists of:
+
+1. **Colored dot indicator**: visual representation of status or category
+2. **Text label**: descriptive text providing context
+
+### Content
+
+- **Default slot**: text content describing the status or category (required for accessibility)
+
+<Canvas of={StatusLightStories.Anatomy} />
+
+## Options
+
+### Sizes
+
+Status lights come in four sizes to fit various contexts:
+
+- **Small (`s`)**: used for inline indicators or space-constrained areas
+- **Medium (`m`)**: default size, used for typical use cases
+- **Large (`l`)**: used for prominent displays or primary content areas
+- **Extra-large (`xl`)**: maximum visibility for high-priority statuses
+
+<Canvas of={StatusLightStories.Sizes} />
+
+### Semantic Variants
+
+Semantic variants provide meaning through color:
+
+- **`neutral`**: default variant — archived, deleted, paused, draft, not started, ended
+- **`info`**: active, in use, live, published
+- **`positive`**: approved, complete, success, new, purchased, licensed
+- **`notice`**: needs approval, pending, scheduled, syncing, indexing, processing
+- **`negative`**: error, alert, rejected, failed
+
+Semantic status lights should never be used for color coding categories or labels, and vice versa.
+
+<Canvas of={StatusLightStories.SemanticVariants} />
+
+### Non-semantic variants
+
+Non-semantic variants use color-coded categories, ideal for data visualization and labeling. Best used when there are **8 or fewer** categories being color coded.
+
+> **Note**: The `pink`, `turquoise`, `brown`, `cinnamon`, and `silver` variants are new in 2nd-gen and not available in 1st-gen.
+
+<Canvas of={StatusLightStories.NonSemanticVariants} />
+
+## Behaviors
+
+### Text Wrapping
+
+When the text is too long for the horizontal space available, it wraps to form another line. You can control the wrapping behavior by setting a `max-inline-size` style on the component.
+
+<Canvas of={StatusLightStories.TextWrapping} />
+
+## Accessibility
+
+### Features
+
+The `<swc-status-light>` element implements several accessibility features:
+
+#### Visual accessibility
+
+- Status information is conveyed through both color and text labels, not relying on color alone
+- High contrast mode is supported with appropriate color overrides
+- Sufficient color contrast is maintained between the status dot and background
+
+#### Semantic meaning
+
+- Semantic variants provide consistent color associations for common statuses
+- Text labels provide clear context for all users
+- Disabled status lights are deprecated for Spectrum 2. Content like "Unavailable" may be used to communicate that concept instead.
+
+#### Non-interactive element
+
+- Status lights have no interactive behavior and are not focusable
+- Screen readers will announce the status light content as static text
+- No keyboard interaction is required or expected
+
+> **Important**: In focus mode, only interactive elements and their associated labels/descriptions are announced. If content is not a label or description for a focusable element, it will not be read. For non-interactive content, screen reader users must [switch to Browse mode](https://swcpreviews.z13.web.core.windows.net/pr-6122/docs/second-gen-storybook/?path=/docs/guides-accessibility-guides-screen-reader-testing--readme#screen-reader-modes). This is expected behavior, not a bug: ensure you test both modes when evaluating component accessibility.
+
+### Best practices
+
+- Always provide a descriptive text label that explains the status
+- Use semantic variants (`neutral` (default), `info`, `positive`, `negative`, `notice`) when the status has specific meaning
+- Status lights are not interactive elements: for interactive status indicators, consider using buttons, tags, or links instead
+- Use meaningful, specific labels (e.g., "Approved" instead of "Green")
+- Ensure sufficient color contrast between the status light and its background
+- For non-semantic variants, ensure the text label provides complete context
+
+<Canvas of={StatusLightStories.Accessibility} />
+
+<DocsFooter />
