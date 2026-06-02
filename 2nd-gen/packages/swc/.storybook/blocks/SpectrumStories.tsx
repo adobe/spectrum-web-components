@@ -11,7 +11,7 @@ import React, { Fragment } from 'react';
  * Stories are rendered in definition order.
  *
  * @param of - The Storybook meta or story to resolve the component from
- * @param tag - The story tag to filter by (e.g., "usage", "a11y", "examples")
+ * @param tag - The story tag to filter by (e.g., "anatomy", "options", "a11y")
  * @param hideTitle - Whether to hide the story title heading
  */
 export const SpectrumStories = ({
