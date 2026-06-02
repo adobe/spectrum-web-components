@@ -54,30 +54,6 @@ export const ConditionalSection = ({ tag, title, hideTitle = false }) => {
     );
 
 };
-export const ConditionalApi = () => {
-const resolvedOf = useOf('meta', ['meta']);
-const tags = resolvedOf?.preparedMeta?.tags ?? resolvedOf?.csfFile?.meta?.tags ?? [];
-
-    // Controllers document their API via inline JSDoc tables in description-only
-    // stories tagged `api`. They have no custom-element manifest entry, so the
-    // CEM-driven ApiTable is not applicable.
-    if (tags.includes('controller')) {
-        return (
-            <>
-                <HeaderMdx as="h2" id="api">API</HeaderMdx>
-                <SpectrumStories tag="api" hideTitle={true} />
-            </>
-        );
-    }
-
-    return (
-        <>
-            <HeaderMdx as="h2" id="api">API</HeaderMdx>
-            <ApiTable />
-        </>
-    );
-
-};
 
 <Meta isTemplate />
 
@@ -93,7 +69,6 @@ const tags = resolvedOf?.preparedMeta?.tags ?? resolvedOf?.csfFile?.meta?.tags ?
 <ConditionalSection tag="a11y" title="Accessibility" hideTitle={true} />
 <ConditionalSection tag="full-pattern" title="Full pattern" />
 
-<ConditionalApi />
 <AdvancedExamplesStories />
 <ConditionalSection tag="appendix" title="Appendix" hideTitle={true} />
 
