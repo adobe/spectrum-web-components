@@ -177,6 +177,32 @@ export const ConversionFunctionsRoundTrip: Story = {
       expect(toFloatingPlacement('end')).toBe('right');
     });
 
+    await step(
+      'logical sides flip to the opposite physical side in RTL',
+      () => {
+        // Default and explicit LTR are equivalent.
+        expect(toFloatingPlacement('start', 'ltr')).toBe('left');
+        expect(toFloatingPlacement('end', 'ltr')).toBe('right');
+        // RTL: inline-start is the right, inline-end is the left.
+        expect(toFloatingPlacement('start', 'rtl')).toBe('right');
+        expect(toFloatingPlacement('end', 'rtl')).toBe('left');
+        // The vertical sub-alignment is preserved across the flip.
+        expect(toFloatingPlacement('start-top', 'rtl')).toBe('right-start');
+        expect(toFloatingPlacement('start-bottom', 'rtl')).toBe('right-end');
+        expect(toFloatingPlacement('end-top', 'rtl')).toBe('left-start');
+        expect(toFloatingPlacement('end-bottom', 'rtl')).toBe('left-end');
+      }
+    );
+
+    await step('physical sides and logical alignments are not flipped', () => {
+      // Physical sides ignore direction.
+      expect(toFloatingPlacement('left', 'rtl')).toBe('left');
+      expect(toFloatingPlacement('right', 'rtl')).toBe('right');
+      // Logical alignment suffixes pass through for Floating UI to RTL-flip.
+      expect(toFloatingPlacement('bottom-start', 'rtl')).toBe('bottom-start');
+      expect(toFloatingPlacement('top-end', 'rtl')).toBe('top-end');
+    });
+
     await step('physical alignments map to Floating UI start/end', () => {
       expect(toFloatingPlacement('bottom-left')).toBe('bottom-start');
       expect(toFloatingPlacement('bottom-right')).toBe('bottom-end');

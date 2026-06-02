@@ -84,8 +84,11 @@ type ActiveSession = {
  * (`computePosition` + `autoUpdate`).
  *
  * Hyphenated placements are accepted on the public API. Logical sides
- * (`start`, `end`) normalize to physical sides for positioning math; RTL is
- * handled in CSS at the consumer layer.
+ * (`start`, `end`) resolve to physical sides against the trigger's computed
+ * writing direction (`start` is the left in LTR, the right in RTL), so the
+ * panel lands on the correct side. Logical alignment suffixes (`bottom-start`)
+ * are left for Floating UI's own RTL handling; the consumer's CSS still owns
+ * direction-aware styling such as tip orientation.
  *
  * ### Available-space custom properties
  *
@@ -336,7 +339,17 @@ export class PlacementController implements ReactiveController {
     }
 
     const requestedPlacement = options.placement ?? DEFAULT_PLACEMENT;
-    const floatingPlacement = toFloatingPlacement(requestedPlacement);
+    // Resolve logical sides (`start` / `end`) against the trigger's writing
+    // direction so RTL positions the panel on the correct physical side. Read
+    // from the trigger (it lives in the consumer's possibly scoped-RTL subtree);
+    // fall back to the floating element for a `VirtualTrigger`.
+    const directionSource = trigger instanceof HTMLElement ? trigger : floating;
+    const direction =
+      getComputedStyle(directionSource).direction === 'rtl' ? 'rtl' : 'ltr';
+    const floatingPlacement = toFloatingPlacement(
+      requestedPlacement,
+      direction
+    );
     const containerPadding =
       options.containerPadding ?? DEFAULT_CONTAINER_PADDING;
     const shouldFlip = options.shouldFlip ?? DEFAULT_SHOULD_FLIP;
