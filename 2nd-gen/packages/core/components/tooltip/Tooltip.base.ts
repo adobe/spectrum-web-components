@@ -251,7 +251,10 @@ export abstract class TooltipBase extends SpectrumElement {
       this.open = isOpen;
     }
     // When no CSS transition is active, dispatch after-* immediately since transitionend will not fire.
-    if (getComputedStyle(this).transitionDuration === '0s') {
+    // transitionDuration is comma-separated when multiple properties transition ("0s, 0s, …"),
+    // so check that every value in the list is zero rather than comparing the full string.
+    const durations = getComputedStyle(this).transitionDuration.split(',');
+    if (durations.every((d) => d.trim() === '0s')) {
       this.afterEventPending = false;
       this.dispatchAfterEvent(isOpen);
     }
