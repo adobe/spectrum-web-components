@@ -321,10 +321,6 @@ function parseStoryTags(storiesPath) {
   let match;
   while ((match = exportRe.exec(content)) !== null) {
     const name = match[1];
-    // Skip the meta object — it uses `const meta: Meta = { ... }` (lowercase).
-    if (name === 'meta') {
-      continue;
-    }
 
     // Find the matching closing brace by counting depth from match.index.
     const openIdx = content.indexOf('{', match.index);
