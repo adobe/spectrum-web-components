@@ -162,13 +162,27 @@ export const Card: Story = {
 };
 
 /**
- * Media type uses a larger preview region without title and subtitle text.
+ * Media type uses a square preview region. Optional badge text identifies document types such as PDF.
  */
 export const Media: Story = {
   render: () => html`
-    <div style="inline-size:240px;">
+    <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:flex-start;">
       <swc-upload-artifact type="media" dismissible>
-        <div slot="thumbnail" role="img" aria-label="Campaign preview"></div>
+        <div
+          slot="thumbnail"
+          style="inline-size:100%;block-size:100%;background:linear-gradient(135deg,#818cf8,#f43f5e);"
+          role="img"
+          aria-label="Campaign preview"
+        ></div>
+      </swc-upload-artifact>
+      <swc-upload-artifact type="media" dismissible>
+        <div
+          slot="thumbnail"
+          style="inline-size:100%;block-size:100%;background:#f3f3f3 linear-gradient(180deg,rgb(255 255 255 / 70%),rgb(255 255 255 / 70%));"
+          role="img"
+          aria-label="Launch brief budget PDF preview"
+        ></div>
+        <span slot="badge">PDF</span>
       </swc-upload-artifact>
     </div>
   `,

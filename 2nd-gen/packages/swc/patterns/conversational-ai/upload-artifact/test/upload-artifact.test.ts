@@ -48,7 +48,9 @@ export const OverviewTest: Story = {
         const dismissButton = el.shadowRoot?.querySelector<HTMLButtonElement>(
           '.swc-UploadArtifact-dismiss'
         );
-        const icon = dismissButton?.querySelector('swc-icon');
+        const icon = dismissButton?.querySelector(
+          '.swc-UploadArtifact-dismiss-icon'
+        );
         expect(dismissButton?.getAttribute('aria-label')).toBe(
           'Remove attachment'
         );
@@ -150,5 +152,40 @@ export const MediaPreviewOnlyTest: Story = {
     await step('media artifact has type="media"', async () => {
       expect(el.type).toBe('media');
     });
+  },
+};
+
+export const MediaBadgeTest: Story = {
+  render: () => html`
+    <swc-upload-artifact type="media" dismissible>
+      <div slot="thumbnail" role="img" aria-label="PDF preview"></div>
+      <span slot="badge">PDF</span>
+    </swc-upload-artifact>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const el = await getComponent<UploadArtifact>(
+      canvasElement,
+      'swc-upload-artifact'
+    );
+
+    await step('media artifact renders badge overlay', async () => {
+      expect(
+        el.shadowRoot?.querySelector('.swc-UploadArtifact-badge')
+      ).toBeTruthy();
+      expect(el.querySelector('[slot="badge"]')?.textContent?.trim()).toBe(
+        'PDF'
+      );
+    });
+
+    await step(
+      'media dismiss button renders as a sibling of the preview surface',
+      async () => {
+        const root = el.shadowRoot;
+        const surface = root?.querySelector('.swc-UploadArtifact-surface');
+        const dismissButton = root?.querySelector('.swc-UploadArtifact-dismiss');
+        expect(surface).toBeTruthy();
+        expect(dismissButton).toBeTruthy();
+      }
+    );
   },
 };

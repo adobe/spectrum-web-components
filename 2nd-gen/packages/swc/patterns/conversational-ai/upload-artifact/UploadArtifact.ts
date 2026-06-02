@@ -11,11 +11,9 @@
  */
 
 import { CSSResultArray, html, TemplateResult } from 'lit';
-import { property } from 'lit/decorators.js';
+import { property, queryAssignedElements } from 'lit/decorators.js';
 
 import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
-
-import '@adobe/spectrum-wc/components/icon/swc-icon.js';
 
 import { CrossIcon } from '../utils/icons/index.js';
 
@@ -27,11 +25,11 @@ import styles from './upload-artifact.css';
  * @element swc-upload-artifact
  *
  * @slot thumbnail - Shared visual slot for icon/thumbnail/preview image.
+ * @slot badge - Optional file-type badge rendered over media previews (for example, "PDF").
  * @slot title - Primary text label.
  * @slot subtitle - Secondary text label.
  * @slot actions - Optional trailing actions.
- * @fires swc-upload-artifact-dismiss - Dispatched when the dismiss button is pressed.
- * Detail: `{ artifact: this }`
+ * @fires swc-upload-artifact-dismiss - Dispatched when the dismiss button is pressed. Detail includes the artifact element.
  */
 export class UploadArtifact extends SpectrumElement {
   /** Visual treatment type for this artifact. */
@@ -46,8 +44,19 @@ export class UploadArtifact extends SpectrumElement {
   @property({ type: String, attribute: 'dismiss-label' })
   public dismissLabel = 'Remove attachment';
 
+  @queryAssignedElements({ slot: 'badge', flatten: true })
+  private _assignedBadge!: HTMLElement[];
+
   public static override get styles(): CSSResultArray {
     return [styles];
+  }
+
+  private _handleSlotChange(): void {
+    this.requestUpdate();
+  }
+
+  private _hasBadgeContent(): boolean {
+    return (this._assignedBadge?.length ?? 0) > 0;
   }
 
   private _handleDismissClick(): void {
@@ -60,45 +69,74 @@ export class UploadArtifact extends SpectrumElement {
     );
   }
 
+  private _renderDismissButton(): TemplateResult {
+    return html`
+      <button
+        class="swc-UploadArtifact-dismiss"
+        aria-label=${this.dismissLabel}
+        ?hidden=${!this.dismissible}
+        @click=${this._handleDismissClick}
+      >
+        <span class="swc-UploadArtifact-dismiss-visual" aria-hidden="true"></span>
+        <span class="swc-UploadArtifact-dismiss-icon" aria-hidden="true"
+          >${CrossIcon()}</span
+        >
+      </button>
+    `;
+  }
+
+  private _renderBadge(): TemplateResult {
+    if (!this._hasBadgeContent()) {
+      return html`
+        <slot name="badge" hidden @slotchange=${this._handleSlotChange}></slot>
+      `;
+    }
+
+    return html`
+      <div class="swc-UploadArtifact-badge">
+        <slot name="badge" @slotchange=${this._handleSlotChange}></slot>
+      </div>
+    `;
+  }
+
   protected override render(): TemplateResult {
     const isMedia = this.type === 'media';
 
-    return html`
-      <div class="swc-UploadArtifact">
-        <button
-          class="swc-UploadArtifact-dismiss"
-          aria-label=${this.dismissLabel}
-          ?hidden=${!this.dismissible}
-          @click=${this._handleDismissClick}
-        >
-          <swc-icon aria-hidden="true">${CrossIcon()}</swc-icon>
-        </button>
+    if (isMedia) {
+      return html`
+        ${this._renderDismissButton()}
+        <div class="swc-UploadArtifact">
+          <div class="swc-UploadArtifact-surface">
+            <div class="swc-UploadArtifact-thumbnail">
+              <slot name="thumbnail"></slot>
+            </div>
+            ${this._renderBadge()}
+            <div class="swc-UploadArtifact-actions">
+              <slot name="actions"></slot>
+            </div>
+          </div>
+        </div>
+      `;
+    }
 
+    return html`
+      ${this._renderDismissButton()}
+      <div class="swc-UploadArtifact">
         <div class="swc-UploadArtifact-surface">
           <div class="swc-UploadArtifact-thumbnail">
             <slot name="thumbnail"></slot>
           </div>
-
-          ${isMedia
-            ? html`
-                <div class="swc-UploadArtifact-actions">
-                  <slot name="actions"></slot>
-                </div>
-              `
-            : html`
-                <div class="swc-UploadArtifact-meta">
-                  <div class="swc-UploadArtifact-title">
-                    <slot name="title"></slot>
-                  </div>
-                  <div class="swc-UploadArtifact-subtitle">
-                    <slot name="subtitle"></slot>
-                  </div>
-                </div>
-
-                <div class="swc-UploadArtifact-actions">
-                  <slot name="actions"></slot>
-                </div>
-              `}
+          <div class="swc-UploadArtifact-meta">
+            <div class="swc-UploadArtifact-title">
+              <slot name="title"></slot>
+            </div>
+            <div class="swc-UploadArtifact-subtitle">
+              <slot name="subtitle"></slot>
+            </div>
+          </div>
+          <div class="swc-UploadArtifact-actions">
+            <slot name="actions"></slot>
+          </div>
         </div>
       </div>
     `;
