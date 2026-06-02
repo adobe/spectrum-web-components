@@ -244,7 +244,7 @@ Neither controller is available yet. The automatic trigger integration additive 
 | A8 | `cross-offset` | Offset along the cross axis (perpendicular to `offset`). React default: 0. Blocked on `PlacementController` API. |
 | A9 | `should-flip` | Whether to reposition to the opposite side when space runs out. Floating UI `flip` middleware. React default: `true`. Default should also be `true` in `PlacementController`; expose as a consumer attribute if override need is confirmed. |
 | A10 | `--swc-*` CSS custom properties | No `--swc-*` custom properties initially. A small reviewed set may be added if consumer override needs emerge. |
-| A11 | `labeling` attribute — `aria-labelledby` wiring | The base ARIA wiring (A4 in must-ship) always uses `ariaDescribedByElements`. When `labeling` is set, the SWC layer uses `ariaLabelledByElements` instead — for icon-only triggers where the tooltip text is the sole accessible name and adding `accessible-label` directly to the trigger is not possible. `role="tooltip"` is retained. Works in automatic and manual modes. |
+| ~~A11~~ | ~~`labeling` attribute — `aria-labelledby` wiring~~ | **Shipped.** Implemented in the initial release alongside the base ARIA wiring. `syncAriaRelationship()` branches on `this.labeling`: when set, uses `ariaLabelledByElements` instead of `ariaDescribedByElements` on the trigger's inner interactive element. Stale references in the opposite property are cleaned up on each sync. Re-syncs when `labeling` changes while the tooltip is open. |
 | A12 | Inner interactive element selector expansion | Initial implementation uses `querySelector('button')` as the convention for resolving the inner interactive element within a trigger's shadow root. Expand to support additional interactive elements (`<a>`, `<input>`, `<select>`, components using a different inner element) when confirmed by consumer needs. `button` covers the large majority of 2nd-gen button-like component cases; any expansion should be gated on confirmed need. |
 
 Full behavioral requirements for this feature are in the [HoverController interface requirements](#addendum-hovercontroller-interface-requirements) addendum.
@@ -274,7 +274,7 @@ Derived from the 1st-gen implementation, the rendering analysis, the accessibili
 | `disabled` | `boolean` | `false` | `disabled` | **Additive/deferred.** Automatic mode only; no-op when `manual` is set. Ships inactive until the additive phase. |
 | `manual` | `boolean` | `false` | `manual` | **Additive/deferred.** Suppresses `HoverController` and `PlacementController` wiring only. `for` and `trigger-element` are still resolved; ARIA wiring still fires on `open` change. Consumer manages open/close via the `open` property or the popover API directly. Ships in the API shape; effective in the additive phase. |
 | `offset` | `number` | `0` | `offset` | **Additive/deferred.** Passed to `PlacementController` offset middleware. Ships in API shape; effective in the additive phase. Note: React Spectrum defaults to `7`; the `PlacementController` default should align with React — confirm in the controller design before shipping. |
-| `labeling` | `boolean` | `false` | `labeling` | **Additive/deferred.** Changes ARIA wiring from `ariaDescribedByElements` to `ariaLabelledByElements` (see additive A11). For icon-only triggers where the tooltip text is the sole accessible name. Works in automatic and manual modes. Ships inactive until the additive phase. |
+| `labeling` | `boolean` | `false` | `labeling` | **Confirmed.** When set, `syncAriaRelationship()` wires `ariaLabelledByElements` on the trigger's inner interactive element instead of `ariaDescribedByElements`. For icon-only triggers where the tooltip text is the sole accessible name and adding an accessible label to the trigger host is not possible. Re-syncs when changed while the tooltip is open. |
 
 #### Visual matrix (2nd-gen)
 
@@ -379,7 +379,7 @@ Modes 1 and 2 use automatic hover/focus trigger wiring and require `HoverControl
 <swc-tooltip for="save-btn" placement="top">Save changes</swc-tooltip>
 
 
-<!-- ── Mode 1: Automatic — icon-only trigger, labeling attribute (additive)
+<!-- ── Mode 1: Automatic — icon-only trigger, labeling attribute
      When the trigger host cannot have an accessible name added: the labeling
      attribute switches the SWC layer to set ariaLabelledByElements on the
      inner button instead of ariaDescribedByElements.                         -->
@@ -459,7 +459,7 @@ Both paths apply whether the trigger was resolved via `for` or an explicit `trig
 Two resolution paths, in order of preference:
 
 1. **Add an accessible name to the trigger host.** On native elements, use `aria-label`. On 2nd-gen SWC components, use the `accessible-label` attribute — it propagates to the inner button's accessible name computation. This works before controllers land and does not require the `labeling` attribute on the tooltip.
-2. **Set `labeling` on the tooltip** when the trigger host cannot be modified. The SWC layer then sets `ariaLabelledByElements = [tooltipHost]` on the inner button instead of `ariaDescribedByElements` (additive phase, A11).
+2. **Set `labeling` on the tooltip** when the trigger host cannot be modified. The SWC layer sets `ariaLabelledByElements = [tooltipHost]` on the inner button instead of `ariaDescribedByElements`. Active from the initial release.
 
 `role="tooltip"` is retained when `labeling` is set. Suppressing it conditionally adds complexity for marginal semantic gain. Document both paths in the Accessibility story.
 
@@ -663,8 +663,9 @@ The impact is most acute in the additive phase, when `HoverController` will call
 - [ ] Automatic mode: default warm-up/cooldown (1500ms, matching `delay` default); `delay="0"` shows immediately; custom value uses that duration **(additive phase)**
 - [ ] Automatic mode: `for` resolves correctly when trigger and tooltip share a shadow root (ID lookup scoped to that root) — rewrite fresh; do not port the 1st-gen `self manages through a shadow boundary` test, which validates ancestor-walking and does not apply **(additive phase)**
 - [ ] `manual` attribute: controller wiring is skipped when added; consumer-driven `open` changes dispatch all `swc-*` events and ARIA wiring still fires when `for` is set **(additive phase — verify controller suppression)**
-- [ ] `labeling` attribute: `ariaLabelledByElements` is set on the inner interactive element instead of `ariaDescribedByElements`; verify correct AT announcement for icon-only button pattern **(additive phase)**
-- [x] `ariaDescribedByElements` wiring fallback: when trigger has no shadow root (native `<button>`, `<a>`, `<input>`), association is established on the host element directly (`AriaWiringNativeTest`)
+- [x] `labeling` attribute: `ariaLabelledByElements` is set on the inner interactive element instead of `ariaDescribedByElements`; stale references in the opposite property are cleaned up; re-syncs when `labeling` changes while open
+- [ ] `ariaDescribedByElements` wiring: verify AT can traverse the association in DevTools Accessibility panel and with NVDA/VoiceOver
+- [x] `ariaDescribedByElements` wiring fallback: when trigger has no shadow root (native `<button>`, `<a>`, `<input>`), association is established on the host element directly  (`AriaWiringNativeTest`)
 - [ ] `disabled` attribute prevents automatic mode response to user input **(additive phase)**
 
 #### Visual regression
@@ -704,8 +705,8 @@ The impact is most acute in the additive phase, when `HoverController` will call
 - [x] Variant colors are supplementary: pair each variant with readable text; meaning must not rely on color alone (WCAG 1.4.1)
 - [x] Touch guidance: tooltip is hover/focus only; direct consumers to `swc-popover` or contextual help for explicit disclosure on touch devices
 - [x] No auto-dismiss timer: tooltip must remain visible until the user dismisses it or the triggering state becomes invalid (WCAG 1.4.13)
-- [x] Icon-only trigger pattern: document in Accessibility story that (1) adding an accessible name directly to the trigger host (`aria-label` on native elements; `accessible-label` attribute on 2nd-gen SWC components) is preferred and works from the initial release; (2) the `labeling` attribute switches the SWC layer to wire `aria-labelledby` for cases where the trigger host cannot be modified (additive phase); (3) explain the semantic difference between labeling (accessible name) and describing (supplementary hint)
-- [ ] Verify 200% zoom: tooltip does not obscure critical UI
+- [x] Icon-only trigger pattern: document in Accessibility story that (1) adding an accessible name directly to the trigger host (`aria-label` on native elements; `accessible-label` attribute on 2nd-gen SWC components) is preferred and works from the initial release; (2) the `labeling` attribute switches the SWC layer to wire `aria-labelledby` for cases where the trigger host cannot be modified — active from the initial release; (3) explain the semantic difference between labeling (accessible name) and describing (supplementary hint)
+- [x] Verify 200% zoom: tooltip does not obscure critical UI
 
 ### Review
 

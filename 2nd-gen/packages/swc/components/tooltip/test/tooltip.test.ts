@@ -14,6 +14,7 @@ import { html } from 'lit';
 import { expect, userEvent } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
+import type { Button } from '@adobe/spectrum-wc/button';
 import { Tooltip } from '@adobe/spectrum-wc/tooltip';
 
 import '@adobe/spectrum-wc/components/button/swc-button.js';
@@ -44,9 +45,6 @@ export default {
   },
   tags: ['!autodocs', 'dev'],
 } as Meta;
-
-// Type alias for elements with ariaDescribedByElements (available in Chrome 135+, Firefox 136+, Safari 16.4+).
-type AriaRelatable = Element & { ariaDescribedByElements: Element[] | null };
 
 // Awaits a DOM event dispatched on the given element, resolving with the event object.
 const waitForEvent = <T extends Event>(
@@ -236,8 +234,20 @@ export const LifecycleEventsTest: Story = {
     await step('dispatches events that bubble and are composed', async () => {
       let openBubbled = false;
       let closeBubbled = false;
-      canvasElement.addEventListener('swc-open', () => { openBubbled = true; }, { once: true });
-      canvasElement.addEventListener('swc-close', () => { closeBubbled = true; }, { once: true });
+      canvasElement.addEventListener(
+        'swc-open',
+        () => {
+          openBubbled = true;
+        },
+        { once: true }
+      );
+      canvasElement.addEventListener(
+        'swc-close',
+        () => {
+          closeBubbled = true;
+        },
+        { once: true }
+      );
 
       tooltip.open = true;
       await waitForEvent(tooltip, 'swc-open');
@@ -261,9 +271,7 @@ export const AriaWiringNativeTest: Story = {
   `,
   play: async ({ canvasElement, step }) => {
     const tooltip = await getComponent<Tooltip>(canvasElement, 'swc-tooltip');
-    const trigger = canvasElement.querySelector(
-      '#tt-native-trigger'
-    ) as AriaRelatable;
+    const trigger = canvasElement.querySelector('#tt-native-trigger')!;
 
     await step(
       'sets ariaDescribedByElements on a native trigger when open is true',
@@ -302,16 +310,11 @@ export const AriaWiringSwcTriggerTest: Story = {
     </swc-tooltip>
   `,
   play: async ({ canvasElement, step }) => {
-    const swcButton = canvasElement.querySelector(
-      '#tt-swc-trigger'
-    ) as HTMLElement;
-    await (swcButton as HTMLElement & { updateComplete: Promise<boolean> })
-      .updateComplete;
+    const swcButton = canvasElement.querySelector('#tt-swc-trigger') as Button;
+    await swcButton.updateComplete;
 
     const tooltip = await getComponent<Tooltip>(canvasElement, 'swc-tooltip');
-    const innerButton = swcButton.shadowRoot?.querySelector(
-      'button'
-    ) as AriaRelatable | null;
+    const innerButton = swcButton.shadowRoot?.querySelector('button') ?? null;
 
     await step(
       'wires ariaDescribedByElements on the shadow <button> when the tooltip opens',
@@ -360,18 +363,15 @@ export const AriaWiringTriggerElementOverrideTest: Story = {
     const tooltip = await getComponent<Tooltip>(canvasElement, 'swc-tooltip');
     const wrongTarget = canvasElement.querySelector(
       '#tt-wrong-target'
-    ) as HTMLElement & { updateComplete: Promise<boolean> };
+    ) as Button;
     const correctTarget = canvasElement.querySelector(
       '#tt-correct-target'
-    ) as HTMLElement & { updateComplete: Promise<boolean> };
+    ) as Button;
     await wrongTarget.updateComplete;
     await correctTarget.updateComplete;
-    const wrongInner = wrongTarget.shadowRoot?.querySelector(
-      'button'
-    ) as AriaRelatable | null;
-    const correctInner = correctTarget.shadowRoot?.querySelector(
-      'button'
-    ) as AriaRelatable | null;
+    const wrongInner = wrongTarget.shadowRoot?.querySelector('button') ?? null;
+    const correctInner =
+      correctTarget.shadowRoot?.querySelector('button') ?? null;
 
     await step(
       'routes ARIA wiring to the triggerElement target instead of the for target',
@@ -430,15 +430,9 @@ export const AriaWiringManualModeTest: Story = {
   `,
   play: async ({ canvasElement, step }) => {
     const tooltip = await getComponent<Tooltip>(canvasElement, 'swc-tooltip');
-    const trigger = canvasElement.querySelector(
-      '#tt-manual-trigger'
-    ) as HTMLElement & {
-      updateComplete: Promise<boolean>;
-    };
+    const trigger = canvasElement.querySelector('#tt-manual-trigger') as Button;
     await trigger.updateComplete;
-    const innerButton = trigger.shadowRoot?.querySelector(
-      'button'
-    ) as AriaRelatable | null;
+    const innerButton = trigger.shadowRoot?.querySelector('button') ?? null;
 
     await step(
       'wires ariaDescribedByElements even when manual mode is active',
@@ -451,6 +445,84 @@ export const AriaWiringManualModeTest: Story = {
           elements,
           'ariaDescribedByElements is set on inner button even in manual mode'
         ).toContain(tooltip);
+      }
+    );
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
+// TEST: ARIA wiring — labeling attribute
+// ──────────────────────────────────────────────────────────────
+
+export const AriaWiringLabelingTest: Story = {
+  render: () => html`
+    <swc-button id="tt-labeling-trigger" accessible-label="Favorite">
+      ★
+    </swc-button>
+    <swc-tooltip for="tt-labeling-trigger" labeling placement="top">
+      Favorite
+    </swc-tooltip>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const tooltip = await getComponent<Tooltip>(canvasElement, 'swc-tooltip');
+    const trigger = canvasElement.querySelector(
+      '#tt-labeling-trigger'
+    ) as Button;
+    await trigger.updateComplete;
+    const innerButton = trigger.shadowRoot?.querySelector('button') ?? null;
+
+    await step(
+      'sets ariaLabelledByElements (not ariaDescribedByElements) on inner button when labeling is set',
+      async () => {
+        tooltip.open = true;
+        await tooltip.updateComplete;
+
+        expect(
+          innerButton?.ariaLabelledByElements ?? [],
+          'inner button ariaLabelledByElements contains tooltip when labeling is set'
+        ).toContain(tooltip);
+
+        expect(
+          innerButton?.ariaDescribedByElements ?? [],
+          'inner button ariaDescribedByElements does not contain tooltip when labeling is set'
+        ).not.toContain(tooltip);
+      }
+    );
+
+    await step(
+      'clears ariaLabelledByElements from inner button when closed',
+      async () => {
+        tooltip.open = false;
+        await tooltip.updateComplete;
+
+        expect(
+          innerButton?.ariaLabelledByElements ?? [],
+          'inner button ariaLabelledByElements no longer contains tooltip after close'
+        ).not.toContain(tooltip);
+      }
+    );
+
+    await step(
+      'switches to ariaDescribedByElements on inner button when labeling is removed while open',
+      async () => {
+        tooltip.open = true;
+        await tooltip.updateComplete;
+
+        tooltip.labeling = false;
+        await tooltip.updateComplete;
+
+        expect(
+          innerButton?.ariaDescribedByElements ?? [],
+          'inner button ariaDescribedByElements contains tooltip after labeling removed'
+        ).toContain(tooltip);
+
+        expect(
+          innerButton?.ariaLabelledByElements ?? [],
+          'inner button ariaLabelledByElements does not contain tooltip after labeling removed'
+        ).not.toContain(tooltip);
+
+        tooltip.open = false;
+        await tooltip.updateComplete;
       }
     );
   },
