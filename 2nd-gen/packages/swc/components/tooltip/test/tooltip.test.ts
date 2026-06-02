@@ -456,48 +456,54 @@ export const AriaWiringManualModeTest: Story = {
 
 export const AriaWiringLabelingTest: Story = {
   render: () => html`
-    <button id="tt-labeling-trigger">★</button>
+    <swc-button id="tt-labeling-trigger" accessible-label="Favorite">
+      ★
+    </swc-button>
     <swc-tooltip for="tt-labeling-trigger" labeling placement="top">
       Favorite
     </swc-tooltip>
   `,
   play: async ({ canvasElement, step }) => {
     const tooltip = await getComponent<Tooltip>(canvasElement, 'swc-tooltip');
-    const trigger = canvasElement.querySelector('#tt-labeling-trigger')!;
+    const trigger = canvasElement.querySelector(
+      '#tt-labeling-trigger'
+    ) as Button;
+    await trigger.updateComplete;
+    const innerButton = trigger.shadowRoot?.querySelector('button') ?? null;
 
     await step(
-      'sets ariaLabelledByElements (not ariaDescribedByElements) when labeling is set',
+      'sets ariaLabelledByElements (not ariaDescribedByElements) on inner button when labeling is set',
       async () => {
         tooltip.open = true;
         await tooltip.updateComplete;
 
         expect(
-          trigger.ariaLabelledByElements ?? [],
-          'ariaLabelledByElements contains tooltip when labeling is set'
+          innerButton?.ariaLabelledByElements ?? [],
+          'inner button ariaLabelledByElements contains tooltip when labeling is set'
         ).toContain(tooltip);
 
         expect(
-          trigger.ariaDescribedByElements ?? [],
-          'ariaDescribedByElements does not contain tooltip when labeling is set'
+          innerButton?.ariaDescribedByElements ?? [],
+          'inner button ariaDescribedByElements does not contain tooltip when labeling is set'
         ).not.toContain(tooltip);
       }
     );
 
     await step(
-      'clears ariaLabelledByElements from trigger when closed',
+      'clears ariaLabelledByElements from inner button when closed',
       async () => {
         tooltip.open = false;
         await tooltip.updateComplete;
 
         expect(
-          trigger.ariaLabelledByElements ?? [],
-          'ariaLabelledByElements no longer contains tooltip after close'
+          innerButton?.ariaLabelledByElements ?? [],
+          'inner button ariaLabelledByElements no longer contains tooltip after close'
         ).not.toContain(tooltip);
       }
     );
 
     await step(
-      'switches to ariaDescribedByElements when labeling is removed while open',
+      'switches to ariaDescribedByElements on inner button when labeling is removed while open',
       async () => {
         tooltip.open = true;
         await tooltip.updateComplete;
@@ -506,13 +512,13 @@ export const AriaWiringLabelingTest: Story = {
         await tooltip.updateComplete;
 
         expect(
-          trigger.ariaDescribedByElements ?? [],
-          'ariaDescribedByElements contains tooltip after labeling removed'
+          innerButton?.ariaDescribedByElements ?? [],
+          'inner button ariaDescribedByElements contains tooltip after labeling removed'
         ).toContain(tooltip);
 
         expect(
-          trigger.ariaLabelledByElements ?? [],
-          'ariaLabelledByElements does not contain tooltip after labeling removed'
+          innerButton?.ariaLabelledByElements ?? [],
+          'inner button ariaLabelledByElements does not contain tooltip after labeling removed'
         ).not.toContain(tooltip);
 
         tooltip.open = false;
