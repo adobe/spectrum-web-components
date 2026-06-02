@@ -59,9 +59,3 @@ a:where(:not([class])) {
     line-height: token("cjk-line-height-100");
   }
 }
-
-@media (forced-colors: active) {
-  a:where(:not([class])) {
-    color: LinkText;
-  }
-}

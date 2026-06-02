@@ -153,35 +153,27 @@ function generateTypographyAnchorRules(prefix) {
   const stateSelectors = (pseudo) => `${wrapper} ${anchor}${pseudo}`;
 
   const baseDecls = pickValidDecls({
-    'background-color': 'transparent',
-    'text-decoration-skip': 'objects',
+    font: 'inherit',
+    color: `var(--${prefix}-link-text-color, token("accent-content-color-default"))`,
     'text-decoration': 'underline',
-    'text-decoration-thickness': `var(--${prefix}-typography-link-text-underline-thickness, token("text-underline-thickness"))`,
-    'text-underline-offset': `var(--${prefix}-typography-link-text-underline-gap, token("text-underline-gap"))`,
+    'text-decoration-thickness': `var(--${prefix}-link-text-underline-thickness, token("text-underline-thickness"))`,
+    'text-underline-offset': `var(--${prefix}-link-text-underline-gap, token("text-underline-gap"))`,
     transition: `color token("animation-duration-100") ease-in-out`,
-    outline: 'none',
-    cursor: 'pointer',
-    color: `var(--${prefix}-typography-link-text-color, token("accent-content-color-default"))`,
-    'font-family': 'inherit',
-    'font-size': 'inherit',
-    'font-style': 'inherit',
-    'font-weight': 'inherit',
-    'line-height': 'inherit',
   });
 
   const hoverDecls = pickValidDecls({
-    color: `var(--${prefix}-typography-link-text-color-hover, token("accent-content-color-hover"))`,
+    color: `var(--${prefix}-link-text-color-hover, token("accent-content-color-hover"))`,
   });
 
   const activeDecls = pickValidDecls({
-    color: `var(--${prefix}-typography-link-text-color-down, token("accent-content-color-down"))`,
+    color: `var(--${prefix}-link-text-color-down, token("accent-content-color-down"))`,
   });
 
   const focusDecls = pickValidDecls({
-    color: `var(--${prefix}-typography-link-text-color-focus, token("accent-content-color-key-focus"))`,
-    outline: `token("focus-indicator-thickness") solid var(--${prefix}-typography-link-focus-indicator-color, token("focus-indicator-color"))`,
-    'outline-offset': 'token("focus-indicator-gap")',
+    color: `var(--${prefix}-link-text-color-focus, token("accent-content-color-key-focus"))`,
     'border-radius': 'token("corner-radius-100")',
+    outline: `token("focus-indicator-thickness") solid var(--${prefix}-link-focus-indicator-color, token("focus-indicator-color"))`,
+    'outline-offset': 'token("focus-indicator-gap")',
   });
 
   return `/* =========================
