@@ -71,9 +71,9 @@ import styles from './action-button.css';
  * </swc-action-button>
  */
 export class ActionButton extends ButtonBase {
-  // ──────────────────────
+  // ────────────────────
   //     API OVERRIDES
-  // ──────────────────────
+  // ────────────────────
 
   /** @internal */
   static override readonly VALID_SIZES: readonly ActionButtonSize[] =
@@ -83,11 +83,15 @@ export class ActionButton extends ButtonBase {
   //     API ADDITIONS
   // ───────────────────
 
-  /** Applies the quiet (low-emphasis) visual treatment. */
+  /**
+   * Applies the quiet (low-emphasis) visual treatment.
+   */
   @property({ type: Boolean, reflect: true })
   public quiet: boolean = false;
 
-  /** Static color treatment for display over colored or image backgrounds. */
+  /**
+   * Static color treatment for display over colored or image backgrounds.
+   */
   @property({ type: String, reflect: true, attribute: 'static-color' })
   public staticColor?: ActionButtonStaticColor;
 
@@ -104,19 +108,6 @@ export class ActionButton extends ButtonBase {
   static override get observedAttributes(): string[] {
     return [...super.observedAttributes, 'aria-haspopup', 'aria-expanded'];
   }
-
-  // Forwarded to the inner <button> for menu-trigger patterns; stripped from
-  // the host after reading to avoid duplicate ARIA state on both elements.
-  @state()
-  private _ariaHasPopup?: string;
-
-  @state()
-  private _ariaExpanded?: string;
-
-  // Guard against re-entrant attributeChangedCallback: removeAttribute fires a
-  // second callback with value=null; the guard prevents that from clearing the
-  // state we just set.
-  private _ariaForwardingInProgress = false;
 
   /** @internal */
   override attributeChangedCallback(
@@ -144,6 +135,19 @@ export class ActionButton extends ButtonBase {
     }
     super.attributeChangedCallback(name, old, value);
   }
+
+  // Forwarded to the inner <button> for menu-trigger patterns; stripped from
+  // the host after reading to avoid duplicate ARIA state on both elements.
+  @state()
+  private _ariaHasPopup?: string;
+
+  @state()
+  private _ariaExpanded?: string;
+
+  // Guard against re-entrant attributeChangedCallback: removeAttribute fires a
+  // second callback with value=null; the guard prevents that from clearing the
+  // state we just set.
+  private _ariaForwardingInProgress = false;
 
   protected override render(): TemplateResult {
     return html`
