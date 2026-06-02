@@ -15,11 +15,14 @@
 /**
  * Entry point for AI tooling CI validation.
  *
- * Runs four checks:
+ * Runs five checks:
  *   1. Story tags — valid tags in 2nd-gen *.stories.ts files
  *   2. AGENTS.md paths — relative links in AGENTS.md files resolve to real files
  *   3. Config schema — .ai/config.json structure and regex validity
  *   4. Symlinks — .cursor/ and .claude/ adapter symlinks point to .ai/ sources
+ *   5. Docs pages — per-unit MDX docs pages for 2nd-gen components, internal
+ *      components, patterns, and controllers conform to the per-unit MDX
+ *      authoring standards in `.ai/rules/stories-documentation.md`
  *
  * Exits with code 1 if any check has errors; warnings are printed but do not fail.
  *
@@ -29,6 +32,7 @@
 
 import { validateAgentsPaths } from './validate-agents-paths.js';
 import { validateConfigSchema } from './validate-config-schema.js';
+import { validateDocsPages } from './validate-docs-pages.js';
 import { validateStoryTags } from './validate-story-tags.js';
 import { validateSymlinks } from './validate-symlinks.js';
 
@@ -87,6 +91,16 @@ printSection(
   symlinks.errors,
   [],
   symlinks.fileCount
+);
+
+// 5. Docs pages
+const docsPages = validateDocsPages();
+totalErrors += docsPages.errors.length;
+printSection(
+  'Per-unit MDX docs pages',
+  docsPages.errors,
+  [],
+  docsPages.fileCount
 );
 
 // Summary

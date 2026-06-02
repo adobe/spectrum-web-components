@@ -132,6 +132,17 @@ Even when a section has only one story (e.g. a single `States` story called `Sta
 
 Stories without any section tag (`anatomy`, `options`, `states`, `behaviors`, `a11y`, `upcoming`, `usage`, `appendix`, `full-pattern`, `api`) are not surfaced on the Docs page (subject to the global `'!autodocs'` / `'!dev'` exclusion in `preview.ts`). Do not author a `<Canvas of={...}>` for an untagged story in MDX; that would surface content production does not render.
 
+### Self-check with `yarn lint:docs-pages`
+
+Run `yarn lint:docs-pages` during authoring to confirm a per-unit MDX file satisfies the structural rules above. The check walks every in-scope MDX file and reports:
+
+- Missing or duplicate `<Meta of={...} />` declarations
+- Unknown or out-of-order `##` section headings
+- Section-tagged stories that have no `<Canvas of={Stories.X} />` reference in the MDX
+- `<Canvas>` references that point to a story export that does not exist
+
+The same checks run inside `yarn lint:ai` and in CI, so a green run locally means the docs page conforms to the published rules.
+
 ## Documentation structure
 
 Organize MDX into these sections (skip sections that don't apply):
