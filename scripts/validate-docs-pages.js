@@ -31,9 +31,9 @@
  *    points to an export that exists in the stories module.
  *
  * Usage (standalone):
- *   node .ai/scripts/validate-docs-pages.js
+ *   yarn lint:docs-pages
  *
- * Or as part of the AI lint suite:
+ * Or as part of the umbrella lint suite (runs in CI and the pre-commit hook):
  *   yarn lint:ai
  *
  * See `.ai/rules/stories-documentation.md` for the per-unit MDX authoring
@@ -45,7 +45,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const repoRoot = path.resolve(__dirname, '../..');
+const repoRoot = path.resolve(__dirname, '..');
 
 // ────────────────────────────────────────────────────────────────────────────
 //   Genre rules

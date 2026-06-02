@@ -30,9 +30,9 @@
  *   node .ai/scripts/validate.js
  */
 
+import { validateDocsPages } from '../../scripts/validate-docs-pages.js';
 import { validateAgentsPaths } from './validate-agents-paths.js';
 import { validateConfigSchema } from './validate-config-schema.js';
-import { validateDocsPages } from './validate-docs-pages.js';
 import { validateStoryTags } from './validate-story-tags.js';
 import { validateSymlinks } from './validate-symlinks.js';
 

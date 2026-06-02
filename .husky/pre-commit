@@ -10,5 +10,5 @@ fi
 # directories, run the structural lint that enforces the per-unit MDX
 # authoring standards (matches yarn lint:docs-pages / yarn lint:ai in CI).
 if git diff --cached --name-only | grep -qE "^2nd-gen/packages/(swc/components|swc/patterns|core/controllers)/.*\.(mdx|stories\.ts)$"; then
-  node .ai/scripts/validate-docs-pages.js || exit 1
+  node scripts/validate-docs-pages.js || exit 1
 fi
