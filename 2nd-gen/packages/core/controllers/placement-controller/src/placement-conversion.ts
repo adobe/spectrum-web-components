@@ -14,8 +14,28 @@ import type { Placement as FloatingPlacement } from '@floating-ui/dom';
 
 import type { Placement } from './types.js';
 
+/** Writing direction used to resolve logical sides to physical sides. */
+export type Direction = 'ltr' | 'rtl';
+
 const LOGICAL_SIDES = new Set(['start', 'end']);
 
+/**
+ * Logical inline **sides** resolve to physical sides per the writing direction:
+ * `start` is the left in LTR and the right in RTL (and vice versa for `end`).
+ * Floating UI has no logical primary side, so this resolution must happen here
+ * — the physical side it receives is what determines which side it positions on.
+ */
+const LOGICAL_SIDE_TO_PHYSICAL: Record<Direction, Record<string, string>> = {
+  ltr: { start: 'left', end: 'right' },
+  rtl: { start: 'right', end: 'left' },
+};
+
+/**
+ * Logical **alignment** fallback for a logical side paired with a logical
+ * alignment. Cross-axis alignment for left/right sides is vertical, so it is
+ * direction-independent; this is only a guard for inputs outside the standard
+ * placement set.
+ */
 const LOGICAL_TO_PHYSICAL: Record<string, string> = {
   start: 'left',
   end: 'right',
@@ -55,20 +75,28 @@ const FLOATING_TO_SWC_PLACEMENT: Partial<Record<FloatingPlacement, Placement>> =
 /**
  * Normalize a hyphenated `Placement` for Floating UI's `computePosition`.
  *
- * - Logical **sides** (`start`, `end`) map to `left` / `right`.
- * - Logical **alignments** (`bottom-start`, `top-end`) pass through unchanged.
+ * - Logical **sides** (`start`, `end`) resolve to `left` / `right` per the
+ *   `direction` argument (`start` is left in LTR, right in RTL). Floating UI
+ *   has no logical primary side, so this must be resolved here for the panel
+ *   to land on the correct side.
+ * - Logical **alignments** (`bottom-start`, `top-end`) pass through unchanged —
+ *   Floating UI's own RTL handling flips those, so they must not be flipped here.
  * - Physical alignments (`bottom-left`, `left-top`, `start-top`, etc.) map to
- *   the nearest Floating UI placement (LTR positioning math; RTL styling
- *   stays in CSS).
+ *   the nearest Floating UI placement.
  *
  * @param placement - Customer-facing hyphenated placement.
+ * @param direction - Writing direction of the trigger; defaults to `'ltr'`.
  * @returns Placement value understood by Floating UI.
  */
-export function toFloatingPlacement(placement: Placement): FloatingPlacement {
+export function toFloatingPlacement(
+  placement: Placement,
+  direction: Direction = 'ltr'
+): FloatingPlacement {
   const [primary, alignment] = placement.split('-') as [string, string?];
 
   if (LOGICAL_SIDES.has(primary)) {
-    const physicalPrimary = LOGICAL_TO_PHYSICAL[primary] ?? primary;
+    const physicalPrimary =
+      LOGICAL_SIDE_TO_PHYSICAL[direction][primary] ?? primary;
     if (!alignment) {
       return physicalPrimary as FloatingPlacement;
     }

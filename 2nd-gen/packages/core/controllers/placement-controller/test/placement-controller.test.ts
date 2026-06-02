@@ -177,6 +177,32 @@ export const ConversionFunctionsRoundTrip: Story = {
       expect(toFloatingPlacement('end')).toBe('right');
     });
 
+    await step(
+      'logical sides flip to the opposite physical side in RTL',
+      () => {
+        // Default and explicit LTR are equivalent.
+        expect(toFloatingPlacement('start', 'ltr')).toBe('left');
+        expect(toFloatingPlacement('end', 'ltr')).toBe('right');
+        // RTL: inline-start is the right, inline-end is the left.
+        expect(toFloatingPlacement('start', 'rtl')).toBe('right');
+        expect(toFloatingPlacement('end', 'rtl')).toBe('left');
+        // The vertical sub-alignment is preserved across the flip.
+        expect(toFloatingPlacement('start-top', 'rtl')).toBe('right-start');
+        expect(toFloatingPlacement('start-bottom', 'rtl')).toBe('right-end');
+        expect(toFloatingPlacement('end-top', 'rtl')).toBe('left-start');
+        expect(toFloatingPlacement('end-bottom', 'rtl')).toBe('left-end');
+      }
+    );
+
+    await step('physical sides and logical alignments are not flipped', () => {
+      // Physical sides ignore direction.
+      expect(toFloatingPlacement('left', 'rtl')).toBe('left');
+      expect(toFloatingPlacement('right', 'rtl')).toBe('right');
+      // Logical alignment suffixes pass through for Floating UI to RTL-flip.
+      expect(toFloatingPlacement('bottom-start', 'rtl')).toBe('bottom-start');
+      expect(toFloatingPlacement('top-end', 'rtl')).toBe('top-end');
+    });
+
     await step('physical alignments map to Floating UI start/end', () => {
       expect(toFloatingPlacement('bottom-left')).toBe('bottom-start');
       expect(toFloatingPlacement('bottom-right')).toBe('bottom-end');
@@ -246,16 +272,17 @@ export const LogicalSidePlacementsCompute: Story = {
 };
 
 /**
- * `size` middleware is always installed. It writes `max-width` on every
- * compute, and `max-height` only when the floating content would otherwise
- * overflow the available space.
+ * `size` middleware is always installed. Rather than writing `max-width` /
+ * `max-height` directly (which would override a component's intended CSS
+ * max-size), it exposes the available space as the custom properties
+ * `--swc-placement-available-width` and `--swc-placement-available-height`
+ * on the floating element; components opt in via `min()`.
  *
- * To assert max-height deterministically we set up the test fixture with a
- * 600 px tall floating element and pin the trigger to the bottom of the
- * viewport with `shouldFlip: false` — the panel can't fit below, so size
- * clamps `max-height` and `isConstrained` flips on.
+ * We pin the trigger to the bottom of the viewport with a 600 px tall floating
+ * element and `shouldFlip: false` so the available height is meaningfully
+ * constrained.
  */
-export const SizeMiddlewareWritesMaxDimensions: Story = {
+export const SizeMiddlewareExposesAvailableSpace: Story = {
   ...testFixtureStory,
   play: async ({ canvasElement, step }) => {
     const host = await getComponent<DemoPlacementTestFixture>(
@@ -266,17 +293,34 @@ export const SizeMiddlewareWritesMaxDimensions: Story = {
     host.tallFloating = true;
     host.shouldFlip = false;
 
+    const availableWidth = (): string =>
+      host.floatingEl.style.getPropertyValue('--swc-placement-available-width');
+    const availableHeight = (): string =>
+      host.floatingEl.style.getPropertyValue(
+        '--swc-placement-available-height'
+      );
+
     await waitFor(() => {
-      expect(host.floatingEl.style.maxWidth).toMatch(/^\d+px$/);
-      expect(host.floatingEl.style.maxHeight).toMatch(/^\d+px$/);
+      expect(availableWidth()).toMatch(/^\d+px$/);
+      expect(availableHeight()).toMatch(/^\d+px$/);
     });
 
-    await step('max-width is set on every compute', () => {
-      expect(host.floatingEl.style.maxWidth).toMatch(/^\d+px$/);
+    await step('available space is exposed as concrete px values', () => {
+      const width = parseFloat(availableWidth());
+      const height = parseFloat(availableHeight());
+      // A real, positive width bounded by the viewport.
+      expect(width).toBeGreaterThan(0);
+      expect(width).toBeLessThanOrEqual(window.innerWidth);
+      // Trigger pinned to the viewport bottom with `shouldFlip: false` leaves
+      // little room below, so the height is floored to MIN_FLOATING_HEIGHT
+      // (100) and stays well under the 600px natural content height.
+      expect(height).toBeGreaterThanOrEqual(100);
+      expect(height).toBeLessThan(600);
     });
 
-    await step('max-height is set when content overflows', () => {
-      expect(host.floatingEl.style.maxHeight).toMatch(/^\d+px$/);
+    await step('no inline max-width / max-height is written', () => {
+      expect(host.floatingEl.style.maxWidth).toBe('');
+      expect(host.floatingEl.style.maxHeight).toBe('');
     });
   },
 };

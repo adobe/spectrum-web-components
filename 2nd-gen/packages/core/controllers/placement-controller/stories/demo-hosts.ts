@@ -755,6 +755,10 @@ export class DemoPlacementConstrainSize extends LitElement {
       }
 
       .floating {
+        /* Consume the controller's available-space props so the list clamps
+         * and scrolls instead of overflowing. */
+        max-inline-size: var(--swc-placement-available-width);
+        max-block-size: var(--swc-placement-available-height);
         overflow: auto;
         pointer-events: auto;
       }
