@@ -6,7 +6,7 @@
   "author": "Adobe",
   "homepage": "https://opensource.adobe.com/spectrum-web-components/",
   "repository": {
-    "directory": "linters/eslint-plugin-spectrum-wc",
+    "directory": "2nd-gen/packages/tools/eslint-plugin-spectrum-wc",
     "type": "git",
     "url": "https://github.com/adobe/spectrum-web-components.git"
   },
@@ -44,7 +44,7 @@
     "@typescript-eslint/utils": "^8.24.0",
     "eslint": "9.39.2",
     "typescript": "5.9.2",
-    "vitest": "^3.0.5"
+    "vitest": "4.1.7"
   },
   "keywords": [
     "eslint",

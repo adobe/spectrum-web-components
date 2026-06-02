@@ -69,7 +69,7 @@ export function createAccessibleComponentRule(
       docs: {
         description:
           'Require accessible attributes on Spectrum Web Components based on component descriptors.',
-        url: 'https://github.com/adobe/spectrum-web-components/tree/main/linters/eslint-plugin-spectrum-wc#accessible-component',
+        url: 'https://github.com/adobe/spectrum-web-components/tree/main/2nd-gen/packages/tools/eslint-plugin-spectrum-wc#accessible-component',
       },
       messages: {
         missingOneOf:
@@ -180,7 +180,7 @@ export function createNoDeprecatedRule(
       docs: {
         description:
           'Disallow deprecated attributes and attribute values on Spectrum Web Components.',
-        url: 'https://github.com/adobe/spectrum-web-components/tree/main/linters/eslint-plugin-spectrum-wc#no-deprecated',
+        url: 'https://github.com/adobe/spectrum-web-components/tree/main/2nd-gen/packages/tools/eslint-plugin-spectrum-wc#no-deprecated',
       },
       messages: {
         deprecatedValue: '{{message}}',
@@ -265,7 +265,7 @@ export function createRequiredAttributesRule(
       docs: {
         description:
           'Require specific attributes on Spectrum Web Components for correct behavior.',
-        url: 'https://github.com/adobe/spectrum-web-components/tree/main/linters/eslint-plugin-spectrum-wc#required-attributes',
+        url: 'https://github.com/adobe/spectrum-web-components/tree/main/2nd-gen/packages/tools/eslint-plugin-spectrum-wc#required-attributes',
       },
       messages: {
         missingRequired:
@@ -317,7 +317,7 @@ export function createValidAttributeValuesRule(
       docs: {
         description:
           'Disallow invalid attribute values on Spectrum Web Components.',
-        url: 'https://github.com/adobe/spectrum-web-components/tree/main/linters/eslint-plugin-spectrum-wc#valid-attribute-values',
+        url: 'https://github.com/adobe/spectrum-web-components/tree/main/2nd-gen/packages/tools/eslint-plugin-spectrum-wc#valid-attribute-values',
       },
       messages: {
         invalidValue:
@@ -386,7 +386,7 @@ export function createValidSlotNamesRule(
       docs: {
         description:
           'Disallow placing children into slots that a Spectrum Web Component does not define.',
-        url: 'https://github.com/adobe/spectrum-web-components/tree/main/linters/eslint-plugin-spectrum-wc#valid-slot-names',
+        url: 'https://github.com/adobe/spectrum-web-components/tree/main/2nd-gen/packages/tools/eslint-plugin-spectrum-wc#valid-slot-names',
       },
       messages: {
         invalidSlot:
@@ -452,7 +452,7 @@ export function createValidSlotChildrenRule(
       docs: {
         description:
           'Disallow placing elements into slots that do not accept their tag name.',
-        url: 'https://github.com/adobe/spectrum-web-components/tree/main/linters/eslint-plugin-spectrum-wc#valid-slot-children',
+        url: 'https://github.com/adobe/spectrum-web-components/tree/main/2nd-gen/packages/tools/eslint-plugin-spectrum-wc#valid-slot-children',
       },
       messages: {
         invalidChild:
