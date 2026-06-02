@@ -79,15 +79,6 @@ const tags = resolvedOf?.preparedMeta?.tags ?? resolvedOf?.csfFile?.meta?.tags ?
 
 };
 
-export const ConditionalGettingStarted = () => {
-    const resolvedOf = useOf('meta', ['meta']);
-
-    const tags = resolvedOf?.csfFile?.meta?.tags ?? [];
-
-    return <GettingStarted tags={tags} />;
-
-};
-
 <Meta isTemplate />
 
 <DocsHeader />
