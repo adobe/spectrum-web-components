@@ -147,11 +147,33 @@ const makeToggle = (id: string) => (event: MouseEvent) => {
 const triggered = (
   tooltipArgs: Record<string, unknown>,
   id: string,
-  buttonLabel: string
-) => html`
-  <swc-button id=${id} @click=${makeToggle(id)}>${buttonLabel}</swc-button>
-  ${template({ ...tooltipArgs, for: id })}
-`;
+  buttonLabel?: string,
+  iconOnly: boolean = false
+) => {
+  if (!iconOnly) {
+    return html`
+      <swc-button id=${id} @click=${makeToggle(id)}>${buttonLabel}</swc-button>
+      ${template({ ...tooltipArgs, for: id })}
+    `;
+  } else {
+    return html`
+      <swc-button id=${id} @click=${makeToggle(id)}>
+        <svg
+          slot="icon"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 36 36"
+          aria-hidden="true"
+          focusable="false"
+        >
+          <path
+            d="M31.5 17H19V4.5a1 1 0 0 0-2 0V17H4.5a1 1 0 0 0 0 2H17v12.5a1 1 0 0 0 2 0V19h12.5a1 1 0 0 0 0-2z"
+          />
+        </svg>
+      </swc-button>
+      ${template({ ...tooltipArgs, for: id })}
+    `;
+  }
+};
 
 /**
  * Each story renders one or more buttons that trigger associated tooltips when clicked.
@@ -323,6 +345,37 @@ export const Placements: Story = {
 // ──────────────────────────
 
 // TODO: will complete in separate documentation pass of phase 7
+
+// ──────────────────────────────
+//    BEHAVIORS STORIES
+// ──────────────────────────────
+
+/**
+ * When a trigger has no visible text label and the tooltip text is its sole accessible name,
+ * set the `labeling` attribute on the tooltip. This switches the ARIA wiring from
+ * `ariaDescribedByElements` (supplementary description) to `ariaLabelledByElements` (accessible name)
+ * on the trigger's inner interactive element.
+ */
+export const Labeling: Story = {
+  render: (args) => html`
+    ${triggered(
+      {
+        ...args,
+        labeling: true,
+        'default-slot': 'Save changes',
+      },
+      'tooltip-labeling-trigger',
+      undefined,
+      true
+    )}
+  `,
+  args: {
+    placement: 'top',
+    variant: 'neutral',
+  },
+  tags: ['behaviors'],
+  parameters: { 'section-order': 1 },
+};
 
 // ────────────────────────────────
 //    ACCESSIBILITY STORIES

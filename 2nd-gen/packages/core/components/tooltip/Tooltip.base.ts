@@ -147,9 +147,9 @@ export abstract class TooltipBase extends SpectrumElement {
 
   /**
    * When set, wires `ariaLabelledByElements` instead of `ariaDescribedByElements` on the trigger's
-   * inner interactive element. For icon-only triggers where the tooltip text is the sole accessible name.
-   *
-   * Additive/deferred: active in the additive phase.
+   * inner interactive element. Use for icon-only triggers where the tooltip text is the sole accessible
+   * name and adding an accessible label directly to the trigger host is not possible.
+   * Prefer `accessible-label` on the trigger when feasible — it works without this attribute.
    *
    * @default false
    */
@@ -195,11 +195,28 @@ export abstract class TooltipBase extends SpectrumElement {
     const target = (trigger.shadowRoot?.querySelector('button') ??
       trigger) as Element & {
       ariaDescribedByElements: Element[] | null;
+      ariaLabelledByElements: Element[] | null;
     };
-    const current = target.ariaDescribedByElements ?? [];
-    target.ariaDescribedByElements = this.open
-      ? [...current.filter((el) => el !== this), this]
-      : current.filter((el) => el !== this);
+
+    if (this.labeling) {
+      // Remove any stale describedby reference (e.g. if labeling changed while open).
+      const described = target.ariaDescribedByElements ?? [];
+      target.ariaDescribedByElements = described.filter((el) => el !== this);
+
+      const labelled = target.ariaLabelledByElements ?? [];
+      target.ariaLabelledByElements = this.open
+        ? [...labelled.filter((el) => el !== this), this]
+        : labelled.filter((el) => el !== this);
+    } else {
+      // Remove any stale labelledby reference (e.g. if labeling changed while open).
+      const labelled = target.ariaLabelledByElements ?? [];
+      target.ariaLabelledByElements = labelled.filter((el) => el !== this);
+
+      const described = target.ariaDescribedByElements ?? [];
+      target.ariaDescribedByElements = this.open
+        ? [...described.filter((el) => el !== this), this]
+        : described.filter((el) => el !== this);
+    }
   }
 
   private dispatchAfterEvent(isOpen: boolean): void {
@@ -265,6 +282,8 @@ export abstract class TooltipBase extends SpectrumElement {
           this.hidePopover();
         }
       }
+    }
+    if (changedProperties.has('open') || changedProperties.has('labeling')) {
       this.syncAriaRelationship();
     }
   }
