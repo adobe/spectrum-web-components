@@ -35,6 +35,19 @@ export const POPOVER_VALID_PLACEMENTS =
   ALL_PLACEMENTS satisfies readonly Placement[];
 
 // ─────────────────────────
+//     SIZE
+// ─────────────────────────
+
+/**
+ * Optional fixed sizes for the popover. When unset, the popover fits its
+ * contents. Each size pins a fixed inline size (`s` → 336px, `m` → 416px,
+ * `l` → 576px).
+ */
+export const POPOVER_VALID_SIZES = ['s', 'm', 'l'] as const;
+
+export type PopoverSize = (typeof POPOVER_VALID_SIZES)[number];
+
+// ─────────────────────────
 //     EVENTS
 // ─────────────────────────
 

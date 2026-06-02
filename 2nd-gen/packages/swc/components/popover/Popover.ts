@@ -10,8 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
-import { CSSResultArray, html, TemplateResult } from 'lit';
-import { when } from 'lit/directives/when.js';
+import { CSSResultArray, html, nothing, TemplateResult } from 'lit';
 
 import { PopoverBase } from '@spectrum-web-components/core/components/popover';
 
@@ -52,12 +51,11 @@ export class Popover extends PopoverBase {
       <div class="swc-Popover-content">
         <slot></slot>
       </div>
-      ${when(
-        this.tip,
-        () => html`
-          <span class="swc-Popover-tip"></span>
-        `
-      )}
+      ${this.hideArrow
+        ? nothing
+        : html`
+            <span class="swc-Popover-tip"></span>
+          `}
     `;
 
     // The render shape branches on `modal`: a `<div popover="auto">` in the
