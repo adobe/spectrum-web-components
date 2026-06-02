@@ -34,7 +34,7 @@
     "yargs": "18.0.0"
   },
   "devDependencies": {
-    "vitest": "4.0.15"
+    "vitest": "4.1.7"
   },
   "keywords": [
     "design-system",

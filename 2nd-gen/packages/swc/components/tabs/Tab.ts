@@ -21,7 +21,7 @@ import styles from './tab.css';
  * The `<label>` wrapper from 1st-gen shadow DOM has been removed. Default
  * and icon slot content render without an extra wrapper so implicit label
  * semantics do not conflict with `role="tab"` on the host. See the
- * [migration guide](../migration.md).
+ * [migration guide](?path=/docs/components-tabs-migration-guide--docs).
  *
  * @element swc-tab
  * @since 2.0.0
