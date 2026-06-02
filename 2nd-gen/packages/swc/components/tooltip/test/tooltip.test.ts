@@ -14,6 +14,7 @@ import { html } from 'lit';
 import { expect, userEvent } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
+import type { Button } from '@adobe/spectrum-wc/button';
 import { Tooltip } from '@adobe/spectrum-wc/tooltip';
 
 import '@adobe/spectrum-wc/components/button/swc-button.js';
@@ -309,11 +310,8 @@ export const AriaWiringSwcTriggerTest: Story = {
     </swc-tooltip>
   `,
   play: async ({ canvasElement, step }) => {
-    const swcButton = canvasElement.querySelector(
-      '#tt-swc-trigger'
-    ) as HTMLElement;
-    await (swcButton as HTMLElement & { updateComplete: Promise<boolean> })
-      .updateComplete;
+    const swcButton = canvasElement.querySelector('#tt-swc-trigger') as Button;
+    await swcButton.updateComplete;
 
     const tooltip = await getComponent<Tooltip>(canvasElement, 'swc-tooltip');
     const innerButton = swcButton.shadowRoot?.querySelector('button') ?? null;
@@ -365,10 +363,10 @@ export const AriaWiringTriggerElementOverrideTest: Story = {
     const tooltip = await getComponent<Tooltip>(canvasElement, 'swc-tooltip');
     const wrongTarget = canvasElement.querySelector(
       '#tt-wrong-target'
-    ) as HTMLElement & { updateComplete: Promise<boolean> };
+    ) as Button;
     const correctTarget = canvasElement.querySelector(
       '#tt-correct-target'
-    ) as HTMLElement & { updateComplete: Promise<boolean> };
+    ) as Button;
     await wrongTarget.updateComplete;
     await correctTarget.updateComplete;
     const wrongInner = wrongTarget.shadowRoot?.querySelector('button') ?? null;
@@ -432,11 +430,7 @@ export const AriaWiringManualModeTest: Story = {
   `,
   play: async ({ canvasElement, step }) => {
     const tooltip = await getComponent<Tooltip>(canvasElement, 'swc-tooltip');
-    const trigger = canvasElement.querySelector(
-      '#tt-manual-trigger'
-    ) as HTMLElement & {
-      updateComplete: Promise<boolean>;
-    };
+    const trigger = canvasElement.querySelector('#tt-manual-trigger') as Button;
     await trigger.updateComplete;
     const innerButton = trigger.shadowRoot?.querySelector('button') ?? null;
 
