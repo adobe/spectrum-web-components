@@ -131,4 +131,43 @@ describe('Accordion - deprecation warnings', () => {
     );
     expect(focusWarnings.length).to.equal(0);
   });
+
+  it('warns when item level attribute differs from parent accordion level', async () => {
+    const accordion = await fixture<Accordion>(html`
+      <sp-accordion>
+        <sp-accordion-item level="2">Panel</sp-accordion-item>
+      </sp-accordion>
+    `);
+
+    await elementUpdated(accordion);
+
+    const levelCall = deprecationCalls().find((call) =>
+      String(call.args[0]).includes('"level"')
+    );
+    expect(levelCall, 'level deprecation warn fired').to.exist;
+    expect(
+      String(levelCall!.args[0]).includes('deprecated'),
+      'confirm deprecation message'
+    ).to.be.true;
+    expect(
+      String(levelCall!.args[0]).includes('Spectrum 2'),
+      'confirm Spectrum 2 timeline'
+    ).to.be.true;
+    expectDeprecationData(levelCall!, 'sp-accordion-item');
+  });
+
+  it('does not warn when item level matches parent accordion level', async () => {
+    const accordion = await fixture<Accordion>(html`
+      <sp-accordion>
+        <sp-accordion-item level="3">Panel</sp-accordion-item>
+      </sp-accordion>
+    `);
+
+    await elementUpdated(accordion);
+
+    const levelWarnings = deprecationCalls().filter((call) =>
+      String(call.args[0]).includes('"level"')
+    );
+    expect(levelWarnings.length).to.equal(0);
+  });
 });
