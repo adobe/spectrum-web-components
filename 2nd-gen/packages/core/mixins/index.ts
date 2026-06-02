@@ -22,6 +22,7 @@ export {
 export {
   DEFAULT_ELEMENT_SIZES,
   ELEMENT_SIZES,
+  ElementSizes,
   SizedMixin,
 } from './sized-mixin.js';
 export type {

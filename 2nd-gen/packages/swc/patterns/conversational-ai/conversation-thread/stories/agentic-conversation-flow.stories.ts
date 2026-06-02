@@ -267,16 +267,13 @@ class AgenticConversationFlowDemo extends LitElement {
     const targetId = this.responseTargetId;
     this._patchTurn(targetId, {
       loading: false,
-      agenticPhase: 'complete',
-      agenticDuration: Math.max(
-        1,
-        Math.round((Date.now() - this.generationStartedAt) / 1000)
-      ),
-      text: 'Generation stopped. Update the prompt to continue.',
+      agenticPhase: 'stopped',
+      statusOpen: true,
+      text: '',
       agenticSteps: (
         this.turns.find((t) => t.id === targetId)?.agenticSteps ?? []
       ).map((step) =>
-        step.status === 'active' ? { ...step, status: 'complete' } : step
+        step.status === 'active' ? { ...step, status: 'stopped' } : step
       ),
     });
     this.responseTargetId = null;

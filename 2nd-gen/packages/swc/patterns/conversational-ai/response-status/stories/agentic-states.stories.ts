@@ -53,6 +53,28 @@ const figmaSteps = html`
   ></swc-response-status-step>
 `;
 
+/** Figma stopped state — completed steps plus one interrupted step (circle X). */
+const figmaStepsStopped = html`
+  <swc-response-status-step
+    status="complete"
+    kind="thinking"
+    title="Looked through documentation"
+    detail="Prioritizing data from your documents like the ‘2023 Annual Report’ and press releases related to Hilton. Basing the analysis primarily on this content, while only pulling in web searches if necessary."
+  ></swc-response-status-step>
+  <swc-response-status-step
+    status="complete"
+    kind="acting"
+    title="Searching web for: Carnival cruise trip packages Europe Asia"
+    detail="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+  ></swc-response-status-step>
+  <swc-response-status-step
+    status="stopped"
+    kind="acting"
+    title="Gathering information from the web"
+    detail="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+  ></swc-response-status-step>
+`;
+
 const figmaStepsAllComplete = html`
   <swc-response-status-step
     status="complete"
@@ -177,6 +199,25 @@ export const CompletedCollapsed: Story = {
     ),
 };
 
+/** Stopped expanded — user interrupted generation; interrupted step shows circle X. */
+export const StoppedExpanded: Story = {
+  render: () =>
+    variantStack(
+      variantBlock(
+        'Stopped (expanded)',
+        html`
+          <swc-response-status
+            phase="stopped"
+            open
+            reasoning-label="Execution steps"
+          >
+            ${figmaStepsStopped}
+          </swc-response-status>
+        `
+      )
+    ),
+};
+
 /** Completed expanded — post-hoc step review. */
 export const CompletedExpanded: Story = {
   render: () =>
@@ -245,6 +286,18 @@ export const AllStates: Story = {
             reasoning-label="Execution steps"
           >
             ${figmaStepsAllComplete}
+          </swc-response-status>
+        `
+      )}
+      ${variantBlock(
+        '6. Stopped (expanded)',
+        html`
+          <swc-response-status
+            phase="stopped"
+            open
+            reasoning-label="Execution steps"
+          >
+            ${figmaStepsStopped}
           </swc-response-status>
         `
       )}

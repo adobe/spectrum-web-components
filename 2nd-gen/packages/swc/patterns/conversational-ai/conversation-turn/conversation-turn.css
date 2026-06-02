@@ -13,6 +13,7 @@
 :host {
   display: block;
   inline-size: 100%;
+  margin-block-start: token("spacing-300");
 }
 
 :host(:focus-visible) {

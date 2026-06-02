@@ -88,3 +88,16 @@ export function SizedMixin<T extends Constructor<ReactiveElement>>(
   }
   return SizedElement;
 }
+
+/**
+ * @deprecated Use `ELEMENT_SIZES` instead. This record will be removed in a future release.
+ */
+export const ElementSizes: Record<string, ElementSize> = {
+  xxs: 'xxs',
+  xs: 'xs',
+  s: 's',
+  m: 'm',
+  l: 'l',
+  xl: 'xl',
+  xxl: 'xxl',
+};

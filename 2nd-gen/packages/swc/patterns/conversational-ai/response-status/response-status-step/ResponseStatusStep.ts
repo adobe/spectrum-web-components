@@ -18,7 +18,11 @@ import { SpectrumElement } from '@spectrum-web-components/core/element/index.js'
 import styles from './response-status-step.css';
 
 export type ResponseStatusStepKind = 'thinking' | 'acting';
-export type ResponseStatusStepStatus = 'pending' | 'active' | 'complete';
+export type ResponseStatusStepStatus =
+  | 'pending'
+  | 'active'
+  | 'complete'
+  | 'stopped';
 
 /**
  * One agentic execution step inside `<swc-response-status>`.

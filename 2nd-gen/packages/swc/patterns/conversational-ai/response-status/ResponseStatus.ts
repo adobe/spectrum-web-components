@@ -20,7 +20,11 @@ import { SpectrumElement } from '@spectrum-web-components/core/element/index.js'
 import '@adobe/spectrum-wc/components/icon/swc-icon.js';
 
 import { uniqueId } from '../../../utils/id.js';
-import { CheckCircleIcon, CircleOutlineIcon } from '../utils/icons/index.js';
+import {
+  CheckCircleIcon,
+  CircleOutlineIcon,
+  StepStoppedCircleIcon,
+} from '../utils/icons/index.js';
 import {
   ResponseStatusStep,
   type ResponseStatusStepKind,
@@ -29,7 +33,11 @@ import {
 
 import styles from './response-status.css';
 
-export type ResponseStatusPhase = 'initiating' | 'processing' | 'complete';
+export type ResponseStatusPhase =
+  | 'initiating'
+  | 'processing'
+  | 'stopped'
+  | 'complete';
 
 export type ResponseStatusStepData = {
   title: string;
@@ -126,6 +134,10 @@ export class ResponseStatus extends SpectrumElement {
   /** Accessible label for the step list / reasoning group. */
   @property({ type: String, attribute: 'reasoning-label' })
   public reasoningLabel = 'Reasoning';
+
+  /** Header label when the user stops generation (`phase="stopped"`). */
+  @property({ type: String, attribute: 'stopped-label', reflect: true })
+  public stoppedLabel = 'You stopped the response';
 
   /** `true`: step timeline or reasoning expanded. */
   @property({ type: Boolean, reflect: true })
@@ -402,8 +414,22 @@ export class ResponseStatus extends SpectrumElement {
     return this._getAgenticHeaderLabel();
   }
 
-  private _renderAgenticLabel(): TemplateResult {
+  private _renderAgenticLabelText(text: string): TemplateResult {
+    return html`
+      <span class="swc-ResponseStatus-label">${text}</span>
+    `;
+  }
+
+  /**
+   * Label and disclosure chevron share one animated trail so title transitions
+   * fade/slide them together instead of moving the label alone.
+   */
+  private _renderAgenticHeaderTrail(
+    expanded: boolean,
+    showDisclosure: boolean
+  ): TemplateResult {
     const label = this._getVisibleAgenticLabel();
+    const chevron = showDisclosure ? this._renderChevron(expanded) : null;
 
     if (
       this._effectivePhase === 'processing' &&
@@ -412,27 +438,36 @@ export class ResponseStatus extends SpectrumElement {
     ) {
       const incoming = this._rollTo || label;
       return html`
-        <span class="swc-ResponseStatus-labelViewport">
+        <span class="swc-ResponseStatus-headerTrailViewport">
           <span
-            class="swc-ResponseStatus-labelStrip ${this._rolling
-              ? 'swc-ResponseStatus-labelStrip--rolling'
+            class="swc-ResponseStatus-headerTrailStrip ${this._rolling
+              ? 'swc-ResponseStatus-headerTrailStrip--rolling'
               : ''}"
             @transitionend=${this._handleHeaderLabelTransitionEnd}
           >
-            <span class="swc-ResponseStatus-labelLine swc-ResponseStatus-label">
-              ${this._rollFrom}
+            <span class="swc-ResponseStatus-headerTrailLine">
+              ${this._renderAgenticLabelText(this._rollFrom)}
+              ${chevron}
             </span>
-            <span class="swc-ResponseStatus-labelLine swc-ResponseStatus-label">
-              ${incoming}
+            <span class="swc-ResponseStatus-headerTrailLine">
+              ${this._renderAgenticLabelText(incoming)}
+              ${chevron}
             </span>
           </span>
         </span>
       `;
     }
 
-    return html`
-      <span class="swc-ResponseStatus-label">${label}</span>
-    `;
+    if (showDisclosure) {
+      return html`
+        <span class="swc-ResponseStatus-headerTrail">
+          ${this._renderAgenticLabelText(label)}
+          ${chevron}
+        </span>
+      `;
+    }
+
+    return this._renderAgenticLabelText(label);
   }
 
   private get _isAgentic(): boolean {
@@ -440,6 +475,7 @@ export class ResponseStatus extends SpectrumElement {
       this._steps.length > 0 ||
       this.phase === 'initiating' ||
       this.phase === 'processing' ||
+      this.phase === 'stopped' ||
       this.phase === 'complete'
     );
   }
@@ -448,6 +484,7 @@ export class ResponseStatus extends SpectrumElement {
     if (
       this.phase === 'initiating' ||
       this.phase === 'processing' ||
+      this.phase === 'stopped' ||
       this.phase === 'complete'
     ) {
       return this.phase;
@@ -499,6 +536,10 @@ export class ResponseStatus extends SpectrumElement {
 
     if (phase === 'processing') {
       return this._getActiveStep()?.title?.trim() || this.loadingLabel;
+    }
+
+    if (phase === 'stopped') {
+      return this.stoppedLabel;
     }
 
     if (this.duration > 0) {
@@ -556,6 +597,7 @@ export class ResponseStatus extends SpectrumElement {
     const isAgenticContext =
       this.phase === 'initiating' ||
       this.phase === 'processing' ||
+      this.phase === 'stopped' ||
       this.phase === 'complete' ||
       steps.length > 0;
 
@@ -626,19 +668,24 @@ export class ResponseStatus extends SpectrumElement {
     const phase = this._effectivePhase;
     const expanded = this.open;
     const isComplete = phase === 'complete';
+    const isStopped = phase === 'stopped';
     const rowClass = [
       'swc-ResponseStatus-row',
       showDisclosure ? 'swc-ResponseStatus-row--button' : '',
       phase === 'processing' ? 'swc-ResponseStatus-row--processing' : '',
+      isStopped ? 'swc-ResponseStatus-row--stopped' : '',
       isComplete ? 'swc-ResponseStatus-row--complete' : '',
     ]
       .filter(Boolean)
       .join(' ');
 
+    const leadingIcon = isComplete
+      ? this._renderCheckmark()
+      : this._renderThreeDots();
+
     const rowContent = html`
-      ${isComplete ? this._renderCheckmark() : this._renderThreeDots()}
-      ${this._renderAgenticLabel()}
-      ${showDisclosure ? this._renderChevron(expanded) : ''}
+      ${leadingIcon}
+      ${this._renderAgenticHeaderTrail(expanded, showDisclosure)}
     `;
 
     if (showDisclosure) {
@@ -676,6 +723,17 @@ export class ResponseStatus extends SpectrumElement {
       `;
     }
 
+    if (status === 'stopped') {
+      return html`
+        <swc-icon
+          class="swc-ResponseStatus-step-icon swc-ResponseStatus-step-icon--stopped"
+          aria-hidden="true"
+        >
+          ${StepStoppedCircleIcon()}
+        </swc-icon>
+      `;
+    }
+
     return html`
       <swc-icon
         class="swc-ResponseStatus-step-icon swc-ResponseStatus-step-icon--${status}"
@@ -688,10 +746,16 @@ export class ResponseStatus extends SpectrumElement {
 
   private _renderStepDetail(
     kind: ResponseStatusStepKind,
+    status: ResponseStatusStepStatus,
     detail: string
   ): TemplateResult | string {
     if (!detail) {
       return '';
+    }
+    if (status === 'stopped') {
+      return html`
+        <p class="swc-ResponseStatus-step-detail">${detail}</p>
+      `;
     }
     const prefix = kind === 'acting' ? 'Acting' : 'Thinking';
     return html`
@@ -700,11 +764,15 @@ export class ResponseStatus extends SpectrumElement {
   }
 
   /**
-   * During processing, only steps that have started (active or complete) appear in
-   * the panel; pending steps stay in the slot but are not shown until they activate.
+   * During processing or after stop, only steps that have started appear in the panel;
+   * pending steps stay in the slot but are not shown until they activate.
    */
   private _getTimelineSteps(): ResponseStatusStepData[] {
-    if (this._isAgentic && this._effectivePhase === 'processing') {
+    const phase = this._effectivePhase;
+    if (
+      this._isAgentic &&
+      (phase === 'processing' || phase === 'stopped')
+    ) {
       return this._steps.filter((step) => step.status !== 'pending');
     }
 
@@ -737,7 +805,7 @@ export class ResponseStatus extends SpectrumElement {
               </div>
               <div class="swc-ResponseStatus-step-body">
                 <p class="swc-ResponseStatus-step-title">${step.title}</p>
-                ${this._renderStepDetail(step.kind, step.detail)}
+                ${this._renderStepDetail(step.kind, step.status, step.detail)}
               </div>
             </li>
           `
