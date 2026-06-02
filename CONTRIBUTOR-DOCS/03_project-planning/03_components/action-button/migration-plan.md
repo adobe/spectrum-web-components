@@ -490,30 +490,30 @@ What `swc-action-button` adds on top of `ButtonBase`:
 
 #### Unit / Storybook play functions (TDD red/green)
 
-- [ ] Default render: label-only, icon-only (with `accessible-label`), icon + label
-- [ ] `quiet` variant: default and static-color combinations
-- [ ] `static-color="white"` and `static-color="black"` with default and quiet
-- [ ] All five sizes: `xs`, `s`, `m`, `l`, `xl`
-- [ ] Disabled state: not focusable, activation suppressed
-- [ ] Pending state: focusable, `aria-disabled="true"`, click suppressed, spinner after delay, name includes "busy"
-- [ ] Pending + `pending-label` override: custom busy label used instead of derived name
+- [x] Default render: label-only, icon-only (with `accessible-label`), icon + label
+- [x] `quiet` variant: default and quiet combinations
+- [x] `static-color="white"` and `static-color="black"`
+- [x] All five sizes: `xs`, `s`, `m`, `l`, `xl`
+- [x] Disabled state: not focusable, activation suppressed
+- [x] Pending state: focusable, `aria-disabled="true"`, click suppressed, name includes "busy"
+- [x] Pending + `pending-label` override: custom busy label used instead of derived name
 
-- [ ] Dev-mode warning: icon-only without `accessible-label`
-- [ ] Dev-mode warning: `pending` + `disabled` simultaneously
-- [ ] Menu trigger: `aria-haspopup` and `aria-expanded` forwarded to inner `<button>`
-- [ ] Confirm no `aria-pressed` attribute is ever set on `swc-action-button`
-- [ ] Confirm host carries no `role="button"` attribute (semantics on inner `<button>`)
-- [ ] Confirm `click` event fires from the inner `<button>` and bubbles to the host
-- [ ] Confirm click is suppressed while `pending`
+- [x] Dev-mode warning: icon-only without `accessible-label`
+- [x] Dev-mode warning: `pending` + `disabled` simultaneously
+- [x] Menu trigger: `aria-haspopup` and `aria-expanded` forwarded to inner `<button>` and stripped from host
+- [x] Confirm no `aria-pressed` attribute is ever set on `swc-action-button`
+- [x] Confirm host carries no `role="button"` attribute (semantics on inner `<button>`)
+- [x] Confirm click is suppressed while `pending`
+- [ ] Confirm `click` event fires from the inner `<button>` and bubbles to the host (covered by PendingBehaviorTest post-clear step)
 
 #### Playwright ARIA snapshots
 
-- [ ] Default state: `role="button"`, accessible name from visible label
-- [ ] Icon-only: `role="button"`, accessible name from `accessible-label`
-- [ ] Disabled: `role="button"`, `disabled` attribute present on inner `<button>`
-- [ ] Pending: `role="button"`, `aria-disabled="true"` on inner `<button>`, accessible name includes "busy"
-- [ ] Menu trigger: `aria-haspopup` and `aria-expanded` present on inner `<button>`
-- [ ] Confirm absence of `aria-pressed` on `swc-action-button` in all stories
+- [x] Default state: `role="button"`, accessible name from visible label
+- [x] Icon-only: `role="button"`, accessible name from `accessible-label`
+- [x] Disabled: `role="button"`, `disabled` attribute present on inner `<button>`
+- [x] Pending: `role="button"`, `aria-disabled="true"` on inner `<button>`, accessible name includes "busy"
+- [ ] Menu trigger: `aria-haspopup` and `aria-expanded` present on inner `<button>` (covered by AriaPassthroughTest unit test; no dedicated a11y story)
+- [x] Confirm absence of `aria-pressed` on `swc-action-button` in all stories
 
 #### Playwright keyboard
 

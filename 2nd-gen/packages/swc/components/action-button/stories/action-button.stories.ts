@@ -253,4 +253,29 @@ IconOnly.storyName = 'Icon only';
 //    ACCESSIBILITY STORIES
 // ────────────────────────────────
 
-// TODO: will complete in separate documentation pass of phase 7
+export const Accessibility: Story = {
+  render: (args) => html`
+    ${template({ ...args, 'default-slot': 'Format' })}
+    <swc-action-button size=${args.size ?? 'm'} accessible-label="Bold">
+      <svg
+        slot="icon"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 36 36"
+        aria-hidden="true"
+        focusable="false"
+      >
+        <path
+          d="M33.567 8.2L27.8 2.432a1.215 1.215 0 0 0-1.717 0L23 5.516 30.485 13l3.082-3.083a1.215 1.215 0 0 0 0-1.717zM21.586 7l-3.805 3.805 7.414 7.415 3.805-3.805zM3 29.788V37h7.212L23.414 23.8l-7.414-7.415zM6 32v-1.591l9.914-9.914 1.591 1.591L7.591 32z"
+        />
+      </svg>
+    </swc-action-button>
+    ${template({
+      ...args,
+      'default-slot': 'Upload',
+      pending: true,
+      'pending-label': 'Upload in-progress',
+    })}
+  `,
+  tags: ['a11y'],
+  parameters: { flexLayout: 'row-wrap' },
+};
