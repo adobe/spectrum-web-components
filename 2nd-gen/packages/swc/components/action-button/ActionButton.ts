@@ -26,8 +26,6 @@ import styles from './action-button.css';
 
 /**
  * A compact action button for toolbars, action groups, and icon-first chrome.
- * Supports sizes `xs`–`xl`; `xs` is an action-button-specific addition not
- * available on `swc-button`.
  *
  * @element swc-action-button
  * @since 0.0.1
