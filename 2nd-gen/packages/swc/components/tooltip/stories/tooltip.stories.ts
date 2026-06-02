@@ -421,10 +421,6 @@ export const AutoStack: Story = {
   tags: ['behaviors', 'description-only'],
 };
 
-// ──────────────────────────────
-//    BEHAVIORS STORIES
-// ──────────────────────────────
-
 /**
  * When a trigger has no visible text label and the tooltip text is its sole accessible name,
  * set the `labeling` attribute on the tooltip. This switches the ARIA wiring from
@@ -469,6 +465,10 @@ export const Labeling: Story = {
  *    on the trigger's interactive surface. For 2nd-gen SWC components with an open shadow root,
  *    the inner `<button>` is targeted; for native elements, the trigger host is used directly.
  *    The association is removed when the tooltip closes.
+ * 3. **`labeling` attribute**: When set, the SWC layer wires `ariaLabelledByElements` instead of
+ *    `ariaDescribedByElements` on the trigger's inner interactive element. Use for icon-only
+ *    triggers where the tooltip text is the sole accessible name and adding a visible or
+ *    programmatic name directly to the trigger is not possible.
  *
  * #### Keyboard behavior
  *
@@ -499,8 +499,9 @@ export const Labeling: Story = {
  *   Do not use tooltip text to repeat what `aria-label` or `aria-labelledby` already conveys.
  * - **Icon-only triggers.** When the tooltip text is the sole accessible name for an icon-only
  *   trigger, prefer adding the name directly to the trigger: `aria-label` on native elements;
- *   `accessible-label` on 2nd-gen SWC components. The `labeling` attribute (upcoming) is an
- *   alternative when the trigger host cannot be modified.
+ *   `accessible-label` on 2nd-gen SWC components. Use `labeling` when the trigger host cannot be
+ *   modified; it switches ARIA wiring from description to labeling so the inner interactive element
+ *   receives an accessible name from the tooltip text.
  * - **No auto-dismiss timer.** The tooltip must remain visible until the user dismisses it or the
  *   triggering state ends (WCAG 1.4.13).
  * - **Touch devices.** Hover-triggered tooltips are not accessible on touch-only devices. For
@@ -537,9 +538,6 @@ export const Accessibility: Story = {
  * - **Pointer hover bridge**: The pointer can move from the trigger into the tooltip bubble
  *   without the tooltip closing (WCAG 1.4.13).
  * - **Tip-less display (`no-tip`)**: Removes the directional tip arrow from the tooltip bubble.
- * - **Label wiring (`labeling`)**: For icon-only triggers where the tooltip text is the sole
- *   accessible name, switches ARIA wiring from `ariaDescribedByElements` to
- *   `ariaLabelledByElements`.
  * - **Tooltip directive**: A Lit directive for programmatic tooltip insertion and lifecycle
  *   management.
  */
