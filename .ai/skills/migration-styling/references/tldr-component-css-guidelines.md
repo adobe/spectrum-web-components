@@ -87,6 +87,15 @@ Follow the prescribed stylesheet order to manage specificity and reduce selector
 
 Use `token()` for design token values. Use `--swc-*` only for intentionally exposed override points, and `--_swc-*` for internal/private properties. Do not keep old `--mod-*` chains.
 
+Key rules:
+
+- **`--_swc-*` on `:host`/`:host()` is not private.** Properties on the host element are part of the external style surface — consumers can set them regardless of the prefix. Declare truly private properties on the internal wrapper (`.swc-ComponentName`), not on `:host`.
+- **Expose only when the component itself overrides the property** based on its own variant, state, or size needs. Do not expose for consumer convenience. Exceptions: nested component relationships and shared utility properties.
+- **No size-specific custom properties.** When a property changes per size, expose a single property (e.g. `--swc-button-padding-vertical`) and override it per size selector (`:host([size="s"])`). Do not create size-specific properties — they become publicly addressable API.
+- **Prefer variant overrides over per-variant redefinition.** For component API attributes (size, variant, fill-style), set a CSS property once on the base using a custom property and override it per `:host([variant])`. Never create variant-specific custom property names.
+- **Native browser states on internal elements need state-specific custom properties.** For properties that change across `:hover`, `:focus-visible`, `:active` on an internal wrapper (e.g. `.swc-Button`), expose one property per state (`--swc-button-background-color-default`, `-hover`, `-focus`, `-down`). Override the full set from `:host([variant])` and `:host([static-color])`. This is the mechanism that makes static-color compound overrides possible. Exception: properties that never vary by variant (e.g. `outline` on `:focus-visible`) — define those directly on the state selector.
+- **Use full property names** in custom property names: `padding` not `pad`, `background` not `bg`, `color` not `clr`.
+
 Every exposed `--swc-*` property must be documented with a `@cssprop` JSDoc tag on the primary component class export (the SWC layer class, not the core base). Storybook picks these up automatically and surfaces them in the API docs panel.
 
 ```ts

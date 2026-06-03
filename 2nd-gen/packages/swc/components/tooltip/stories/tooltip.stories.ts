@@ -157,7 +157,11 @@ const triggered = (
     `;
   } else {
     return html`
-      <swc-button id=${id} @click=${makeToggle(id)}>
+      <swc-button
+        id=${id}
+        @click=${makeToggle(id)}
+        accessible-label=${String(tooltipArgs['default-slot'] ?? '')}
+      >
         <svg
           slot="icon"
           xmlns="http://www.w3.org/2000/svg"
