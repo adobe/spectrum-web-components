@@ -63,7 +63,7 @@ export abstract class TooltipBase extends SpectrumElement {
 
   /**
    * The preferred placement of the tooltip relative to its trigger.
-   * Applies a CSS class for tip direction; pixel positioning requires `PlacementController` (additive phase).
+   * Controls the tip direction via the reflected `placement` attribute; pixel positioning requires `PlacementController` (additive phase).
    *
    * @default 'top'
    */
@@ -81,7 +81,7 @@ export abstract class TooltipBase extends SpectrumElement {
   /**
    * The `id` of the trigger element in the same document tree root.
    * Resolved via `getRootNode().getElementById(this.for)`.
-   * Active from the initial release; drives ARIA relationship wiring on `open` change.
+   * Drives ARIA relationship wiring on `open` change.
    */
   @property({ attribute: 'for', type: String })
   public for: string | undefined;
@@ -89,7 +89,7 @@ export abstract class TooltipBase extends SpectrumElement {
   /**
    * Explicit trigger element reference. Overrides `for` when set.
    * Use for cross-shadow-root triggers or programmatic insertion where `getElementById` is scoped to the wrong root.
-   * Setter only — no HTML attribute.
+   * Setter only; no HTML attribute.
    *
    * @default null
    */
@@ -99,8 +99,8 @@ export abstract class TooltipBase extends SpectrumElement {
   /**
    * Duration in milliseconds of the warm-up delay before the tooltip shows on pointer hover.
    * Set to `0` to show immediately on hover. Keyboard focus (`focusin` when `:focus-visible`)
-   * always shows the tooltip immediately regardless of this value. The cooldown duration (before the next hover must wait again)
-   * matches this value. Warm-up/cooldown state is shared across all tooltips in the same document,
+   * always shows the tooltip immediately regardless of this value. The cooldown duration after the
+   * pointer leaves the trigger matches this value. Warm-up/cooldown state is shared across all tooltips in the same document,
    * so moving quickly between adjacent triggers (e.g. a toolbar) shows each subsequent tooltip
    * immediately after the first warm-up elapses.
    *
