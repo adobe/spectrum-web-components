@@ -109,14 +109,19 @@ type ActiveSession = {
  *
  * ```css
  * .floating {
- *   max-inline-size: min(var(--intended-width), var(--swc-placement-available-width, 100vw));
- *   max-block-size: min(var(--intended-height), var(--swc-placement-available-height, 100vh));
+ *   box-sizing: border-box;
+ *   max-inline-size: min(var(--intended-width), var(--swc-placement-available-width, 100vi));
+ *   max-block-size: min(var(--intended-height), var(--swc-placement-available-height, 90vb));
  *   overflow: auto;
  * }
  * ```
  *
- * Pair `max-block-size` with `overflow: auto` so the panel scrolls when the
- * block space is constrained (read `isConstrained` to detect that state).
+ * The fallbacks use logical viewport units (`vi` / `vb`); `90vb` leaves a small
+ * buffer so the trigger isn't scrolled out of view. `box-sizing: border-box` is
+ * required so the available-space values account for the element's own padding
+ * and border rather than overflowing past them. Pair `max-block-size` with
+ * `overflow: auto` so the panel scrolls when the block space is constrained
+ * (read `isConstrained` to detect that state).
  *
  * @example
  * ```typescript

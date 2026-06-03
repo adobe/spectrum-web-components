@@ -48,6 +48,7 @@ const sharedStyles = css`
   }
 
   .floating {
+    box-sizing: border-box;
     position: fixed;
     inset: 0 auto auto 0;
     min-width: 120px;
