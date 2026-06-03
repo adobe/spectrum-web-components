@@ -11,11 +11,7 @@
  */
 
 import { html } from 'lit';
-<<<<<<< HEAD
 import { html as staticHtml, unsafeStatic } from 'lit/static-html.js';
-||||||| parent of 3fa27a3e79 (chore(action-button): styling implementation)
-=======
->>>>>>> 3fa27a3e79 (chore(action-button): styling implementation)
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
@@ -23,11 +19,6 @@ import {
   ACTION_BUTTON_STATIC_COLORS,
   ACTION_BUTTON_VALID_SIZES,
   type ActionButtonSize,
-<<<<<<< HEAD
-||||||| parent of 3fa27a3e79 (chore(action-button): styling implementation)
-=======
-  type ActionButtonStaticColor,
->>>>>>> 3fa27a3e79 (chore(action-button): styling implementation)
 } from '@spectrum-web-components/core/components/action-button';
 
 import '@adobe/spectrum-wc/components/action-button/swc-action-button.js';
@@ -53,13 +44,8 @@ argTypes['static-color'] = {
 /**
  * A compact action button for toolbars, action groups, and icon-first chrome.
  * Supports sizes `xs`–`xl`; `xs` is an action-button-specific addition not
-<<<<<<< HEAD
  * available on `swc-button`. For navigation, [use a link with global action
  * button styles](/docs/guides-customization-global-element-styling--readme) instead.
-||||||| parent of 3fa27a3e79 (chore(action-button): styling implementation)
-=======
- * available on `swc-button`.
->>>>>>> 3fa27a3e79 (chore(action-button): styling implementation)
  */
 const meta: Meta = {
   title: 'Action Button',
@@ -79,30 +65,6 @@ export default meta;
 
 // ────────────────────
 //    HELPERS
-<<<<<<< HEAD
-||||||| parent of 3fa27a3e79 (chore(action-button): styling implementation)
-//    AUTODOCS STORY
-=======
-// ────────────────────
-
-const sizeLabels = {
-  xs: 'Extra-small',
-  s: 'Small',
-  m: 'Medium',
-  l: 'Large',
-  xl: 'Extra-large',
-} as const satisfies Record<ActionButtonSize, string>;
-
-const staticColorLabels = {
-  white: 'Static white',
-  black: 'Static black',
-} as const satisfies Record<ActionButtonStaticColor, string>;
-
-const editIconSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36" aria-hidden="true" focusable="false"><path d="M33.567 8.2L27.8 2.432a1.215 1.215 0 0 0-1.717 0L23 5.516 30.485 13l3.082-3.083a1.215 1.215 0 0 0 0-1.717zM21.586 7l-3.805 3.805 7.414 7.415 3.805-3.805zM3 29.788V37h7.212L23.414 23.8l-7.414-7.415zM6 32v-1.591l9.914-9.914 1.591 1.591L7.591 32z"/></svg>`;
-
-// ────────────────────
-//    AUTODOCS STORY
->>>>>>> 3fa27a3e79 (chore(action-button): styling implementation)
 // ────────────────────
 
 const sizeLabels = {
@@ -165,7 +127,6 @@ export const Anatomy: Story = {
 export const Sizes: Story = {
   render: (args) => html`
     ${ACTION_BUTTON_VALID_SIZES.map((size) =>
-<<<<<<< HEAD
       template({
         ...args,
         size,
@@ -306,84 +267,3 @@ export const Accessibility: Story = {
   tags: ['a11y'],
   parameters: { flexLayout: 'row-wrap' },
 };
-||||||| parent of 3fa27a3e79 (chore(action-button): styling implementation)
-=======
-      template({ ...args, size, 'default-slot': sizeLabels[size] })
-    )}
-  `,
-  tags: ['options'],
-  parameters: { flexLayout: 'row-wrap', 'section-order': 1 },
-};
-
-export const Quiet: Story = {
-  render: (args) => html`
-    ${template({ ...args, quiet: false, 'default-slot': 'Default' })}
-    ${template({ ...args, quiet: true, 'default-slot': 'Quiet' })}
-  `,
-  tags: ['options'],
-  parameters: { flexLayout: 'row-wrap', 'section-order': 2 },
-};
-
-export const StaticColors: Story = {
-  render: (args) => html`
-    ${ACTION_BUTTON_STATIC_COLORS.map((color) =>
-      template({
-        ...args,
-        'static-color': color,
-        'default-slot': staticColorLabels[color],
-      })
-    )}
-  `,
-  tags: ['options', '!test'],
-  parameters: {
-    flexLayout: 'row-wrap',
-    staticColorsDemo: true,
-    'section-order': 3,
-  },
-};
-StaticColors.storyName = 'Static colors';
-
-// ──────────────────────────
-//    STATES STORIES
-// ──────────────────────────
-
-export const States: Story = {
-  render: (args) => html`
-    ${template({ ...args, 'default-slot': 'Default' })}
-    ${template({ ...args, disabled: true, 'default-slot': 'Disabled' })}
-    ${template({ ...args, pending: true, 'default-slot': 'Pending' })}
-  `,
-  tags: ['states'],
-  parameters: { flexLayout: 'row-wrap' },
-};
-
-// ──────────────────────────────
-//    BEHAVIORS STORIES
-// ──────────────────────────────
-
-export const IconOnly: Story = {
-  render: (args) => html`
-    <swc-action-button accessible-label="Edit" size=${args.size ?? 'm'}>
-      <svg
-        slot="icon"
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 36 36"
-        aria-hidden="true"
-        focusable="false"
-      >
-        <path
-          d="M33.567 8.2L27.8 2.432a1.215 1.215 0 0 0-1.717 0L23 5.516 30.485 13l3.082-3.083a1.215 1.215 0 0 0 0-1.717zM21.586 7l-3.805 3.805 7.414 7.415 3.805-3.805zM3 29.788V37h7.212L23.414 23.8l-7.414-7.415zM6 32v-1.591l9.914-9.914 1.591 1.591L7.591 32z"
-        />
-      </svg>
-    </swc-action-button>
-  `,
-  tags: ['behaviors'],
-};
-IconOnly.storyName = 'Icon only';
-
-// ────────────────────────────────
-//    ACCESSIBILITY STORIES
-// ────────────────────────────────
-
-// TODO: will complete in separate documentation pass of phase 7
->>>>>>> 3fa27a3e79 (chore(action-button): styling implementation)
