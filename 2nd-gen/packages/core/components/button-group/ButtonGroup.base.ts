@@ -11,8 +11,9 @@
  */
 
 import { PropertyValues } from 'lit';
-import { property } from 'lit/decorators.js';
+import { property, queryAssignedElements } from 'lit/decorators.js';
 
+import type { ButtonBase } from '@spectrum-web-components/core/components/button';
 import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
 import { SizedMixin } from '@spectrum-web-components/core/mixins/index.js';
 
@@ -88,6 +89,9 @@ export abstract class ButtonGroupBase extends SizedMixin(SpectrumElement, {
   //     IMPLEMENTATION
   // ──────────────────────
 
+  @queryAssignedElements({ flatten: true })
+  private buttons!: ButtonBase[];
+
   protected override firstUpdated(changed: PropertyValues<this>): void {
     super.firstUpdated(changed);
     this.setAttribute('role', 'group');
@@ -133,17 +137,9 @@ export abstract class ButtonGroupBase extends SizedMixin(SpectrumElement, {
   }
 
   private propagateToChildren(): void {
-    const slot = this.renderRoot?.querySelector('slot');
-    if (!slot) {return;}
-
-    const buttons = slot.assignedElements() as HTMLElement[];
-    for (const button of buttons) {
-      if ('size' in button) {
-        (button as HTMLElement & { size: string }).size = this.size;
-      }
-      if ('disabled' in button) {
-        (button as HTMLElement & { disabled: boolean }).disabled = this.disabled;
-      }
+    for (const button of this.buttons) {
+      button.size = this.size;
+      button.disabled = this.disabled;
     }
   }
 }
