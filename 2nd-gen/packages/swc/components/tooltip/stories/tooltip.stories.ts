@@ -27,9 +27,9 @@ import {
 import '@adobe/spectrum-wc/components/button/swc-button.js';
 import '@adobe/spectrum-wc/components/tooltip/swc-tooltip.js';
 
-// ────────────────────
-//    METADATA SETUP
-// ────────────────────
+// ────────────────
+//    METADATA
+// ────────────────
 
 const { args, argTypes, template } = getStorybookHelpers('swc-tooltip');
 
@@ -126,7 +126,6 @@ const makeToggle = (id: string) => (event: MouseEvent) => {
     return;
   }
 
-  setupEventLogger(tooltip);
   tooltip.open = !tooltip.open;
 
   if (tooltip.open) {
@@ -143,38 +142,42 @@ const makeToggle = (id: string) => (event: MouseEvent) => {
   }
 };
 
-// Temporary: logs tooltip lifecycle events to the console to verify event wiring.
-// Replace with proper assertions in migration-testing (Phase 6).
-// Storybook's Actions addon doesn't work well for this since the events are re-dispatched
-// from the popover in the top layer, so we log directly from the component instance instead.
-const loggedTooltips = new WeakSet<Element>();
-const setupEventLogger = (tooltip: Element): void => {
-  if (loggedTooltips.has(tooltip)) {
-    return;
-  }
-  loggedTooltips.add(tooltip);
-  for (const name of [
-    'swc-open',
-    'swc-close',
-    'swc-after-open',
-    'swc-after-close',
-  ]) {
-    tooltip.addEventListener(name, () => {
-      console.log(`[swc-tooltip] ${name}`);
-    });
-  }
-};
-
 // Renders a button+tooltip pair linked via the `for` attribute.
 // Each pair needs a unique `id` so multiple instances can coexist in the same story.
 const triggered = (
   tooltipArgs: Record<string, unknown>,
   id: string,
-  buttonLabel: string
-) => html`
-  <swc-button id=${id} @click=${makeToggle(id)}>${buttonLabel}</swc-button>
-  ${template({ ...tooltipArgs, for: id })}
-`;
+  buttonLabel?: string,
+  iconOnly: boolean = false
+) => {
+  if (!iconOnly) {
+    return html`
+      <swc-button id=${id} @click=${makeToggle(id)}>${buttonLabel}</swc-button>
+      ${template({ ...tooltipArgs, for: id })}
+    `;
+  } else {
+    return html`
+      <swc-button
+        id=${id}
+        @click=${makeToggle(id)}
+        accessible-label=${String(tooltipArgs['default-slot'] ?? '')}
+      >
+        <svg
+          slot="icon"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 36 36"
+          aria-hidden="true"
+          focusable="false"
+        >
+          <path
+            d="M31.5 17H19V4.5a1 1 0 0 0-2 0V17H4.5a1 1 0 0 0 0 2H17v12.5a1 1 0 0 0 2 0V19h12.5a1 1 0 0 0 0-2z"
+          />
+        </svg>
+      </swc-button>
+      ${template({ ...tooltipArgs, for: id })}
+    `;
+  }
+};
 
 /**
  * Each story renders one or more buttons that trigger associated tooltips when clicked.
@@ -184,6 +187,9 @@ const meta: Meta = {
   title: 'Tooltip',
   component: 'swc-tooltip',
   parameters: {
+    actions: {
+      handles: ['swc-open', 'swc-close', 'swc-after-open', 'swc-after-close'],
+    },
     docs: {
       subtitle: `Brief contextual message that appears near a trigger element.`,
     },
@@ -343,6 +349,37 @@ export const Placements: Story = {
 // ──────────────────────────
 
 // TODO: will complete in separate documentation pass of phase 7
+
+// ──────────────────────────────
+//    BEHAVIORS STORIES
+// ──────────────────────────────
+
+/**
+ * When a trigger has no visible text label and the tooltip text is its sole accessible name,
+ * set the `labeling` attribute on the tooltip. This switches the ARIA wiring from
+ * `ariaDescribedByElements` (supplementary description) to `ariaLabelledByElements` (accessible name)
+ * on the trigger's inner interactive element.
+ */
+export const Labeling: Story = {
+  render: (args) => html`
+    ${triggered(
+      {
+        ...args,
+        labeling: true,
+        'default-slot': 'Save changes',
+      },
+      'tooltip-labeling-trigger',
+      undefined,
+      true
+    )}
+  `,
+  args: {
+    placement: 'top',
+    variant: 'neutral',
+  },
+  tags: ['behaviors'],
+  parameters: { 'section-order': 1 },
+};
 
 // ────────────────────────────────
 //    ACCESSIBILITY STORIES
