@@ -58,7 +58,7 @@ export { meta };
 export default meta;
 
 // ────────────────────
-//    AUTODOCS STORY
+//    PLAYGROUND STORY
 // ────────────────────
 
 export const Playground: Story = {
@@ -70,7 +70,7 @@ export const Playground: Story = {
       <swc-suggestion-item>Translate to Spanish</swc-suggestion-item>
     </swc-suggestion-group>
   `,
-  tags: ['autodocs', 'dev'],
+  tags: ['dev'],
 };
 
 // ──────────────────────────────
@@ -93,12 +93,6 @@ export const Overview: Story = {
 //    ANATOMY STORY
 // ──────────────────────────
 
-/**
- * A suggestion group consists of:
- *
- * 1. **Heading** — Required slotted heading content (consumer controls semantics)
- * 2. **Items** — One or more slotted `<swc-suggestion-item>` actions
- */
 export const Anatomy: Story = {
   args: {
     'heading-slot': '<h3 slot="heading">What would you like to do next?</h3>',
@@ -111,9 +105,6 @@ export const Anatomy: Story = {
 //    OPTIONS STORIES
 // ──────────────────────────
 
-/**
- * Suggestion count follows the number of `<swc-suggestion-item>` elements.
- */
 export const SuggestionCount: Story = {
   render: () => html`
     <div style="display:flex;flex-direction:column;gap:32px;">
@@ -158,16 +149,9 @@ export const SuggestionCount: Story = {
       </div>
     </div>
   `,
-  parameters: { 'section-order': 1 },
   tags: ['options'],
 };
 
-/**
- * Consumers provide required heading semantics via `slot="heading"` based on page outline.
- *
- * Note: Any element can be used as the heading given the semantics are correct but the visual styling (i.e. font size)
- * is always controlled by the `swc-suggestion-group` component itself.
- */
 export const Heading: Story = {
   render: () => html`
     <div style="display:flex;flex-direction:column;gap:32px;">
@@ -201,7 +185,6 @@ export const Heading: Story = {
       </div>
     </div>
   `,
-  parameters: { 'section-order': 2 },
   tags: ['options'],
 };
 
@@ -209,19 +192,6 @@ export const Heading: Story = {
 //    ACCESSIBILITY STORY
 // ────────────────────────────────
 
-/**
- * ### Features
- *
- * The `<swc-suggestion-group>` container and `<swc-suggestion-item>` controls
- * implement:
- *
- * - Native `<button>` semantics per suggestion item
- * - Required `heading` slot for the visible group title; the host uses
- *   **`role="group"`** with **`aria-labelledby`** referencing that heading.
- *   **`accessible-label`** can override the accessible name (`aria-label`) while
- *   the heading remains in the document outline
- * - Item click event bubbling from each `<swc-suggestion-item>`
- */
 export const Accessibility: Story = {
   args: {
     'heading-slot': '<h3 slot="heading">What would you like to do next?</h3>',
