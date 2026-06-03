@@ -543,11 +543,11 @@ export const ContainerPaddingMovesPanelInward: Story = {
 };
 
 /**
- * `onPlacementChange` fires after every successful `computePlacement` pass
- * with the computed hyphenated placement — once after first compute and
- * again whenever an `autoUpdate` tick produces a new value. The no-flip
- * case still hands the callback the requested placement; the flip case
- * hands it the flipped value.
+ * `onPlacementChange` fires with the computed hyphenated placement, but on
+ * change only: once after the first compute, then again whenever an
+ * `autoUpdate` tick (or `recompute()`) produces a *different* value. A compute
+ * that yields the same placement does not re-notify. The no-flip case hands the
+ * callback the requested placement; the flip case hands it the flipped value.
  */
 export const OnPlacementChangeFiresWithComputedPlacement: Story = {
   ...testFixtureStory,
@@ -566,10 +566,22 @@ export const OnPlacementChangeFiresWithComputedPlacement: Story = {
       async () => {
         await waitFor(() => {
           expect(host.placementChanges.length).toBeGreaterThan(0);
-          expect(host.placementChanges[host.placementChanges.length - 1]).toBe(
-            'bottom'
-          );
+          expect(host.placementChanges.at(-1)).toBe('bottom');
         });
+      }
+    );
+
+    await step(
+      'a recompute with no placement change does not fire again',
+      async () => {
+        const count = host.placementChanges.length;
+        host.controller.recompute();
+        // Let the (async) compute run; it resolves to the same placement.
+        await new Promise<void>((resolve) =>
+          requestAnimationFrame(() => requestAnimationFrame(() => resolve()))
+        );
+        expect(host.placementChanges.length).toBe(count);
+        expect(host.actualPlacement).toBe('bottom');
       }
     );
 
@@ -583,6 +595,12 @@ export const OnPlacementChangeFiresWithComputedPlacement: Story = {
         });
       }
     );
+
+    await step('no consecutive duplicate placements were emitted', () => {
+      for (let i = 1; i < host.placementChanges.length; i += 1) {
+        expect(host.placementChanges[i]).not.toBe(host.placementChanges[i - 1]);
+      }
+    });
   },
 };
 

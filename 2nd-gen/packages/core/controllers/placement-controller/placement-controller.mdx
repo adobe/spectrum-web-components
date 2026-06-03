@@ -194,11 +194,11 @@ controller receive these properties.
 ### Placement changes
 
 Use **`onPlacementChange`** when styling or host state must track the **computed**
-placement after middleware runs. The callback fires once after first compute and
-again on every subsequent `autoUpdate` tick — even when the value is unchanged — so
-a single handler is enough to mirror **`actualPlacement`** into your component's
-state. If you only care about transitions, compare the incoming value against the
-previous one in the handler.
+placement after middleware runs. The callback fires on change only: once after the
+first compute, then again whenever an `autoUpdate` tick produces a _different_
+value. Ticks that recompute the same placement do not re-notify, so wiring the
+callback to reactive state will not re-render your component on every scroll or
+resize.
 
 The callback receives the same hyphenated value as **`actualPlacement`**; the
 controller does **not** write placement classes or attributes on the floating
@@ -324,7 +324,7 @@ responsible for accessible open/close behavior.
 | `shouldFlip`        | `boolean`                        | `true`     | Whether `flip` may reorient when the requested placement does not fit.                                                                                        |
 | `tipElement`        | `HTMLElement`                    | —          | Tip ("arrow") element to keep pointing at the trigger. When set, the controller installs `arrow` middleware and writes an inline `translate` on this element. |
 | `tipPadding`        | `number`                         | `8`        | Minimum inset of the tip element from the floating element's corners. Only meaningful when `tipElement` is set.                                               |
-| `onPlacementChange` | `(placement: Placement) => void` | —          | Fires after every successful compute with the resolved hyphenated placement.                                                                                  |
+| `onPlacementChange` | `(placement: Placement) => void` | —          | Fires with the resolved hyphenated placement on change only (first compute, then when it changes).                                                            |
 
 ### Types
 

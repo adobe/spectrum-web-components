@@ -147,8 +147,9 @@ export class PlacementController implements ReactiveController {
    * Set synchronously to the requested `PlacementOptions.placement`
    * (or `DEFAULT_PLACEMENT`) when `start` is called, then refreshed on every
    * successful `computePlacement` pass. `PlacementOptions.onPlacementChange`
-   * fires alongside each refresh, so consumers can mirror this property in
-   * a single callback without also reading it synchronously after `start()`.
+   * fires when this value changes (and once after the first compute), so
+   * consumers can mirror it in a single callback without also reading it
+   * synchronously after `start()`.
    */
   public actualPlacement: Placement | null = null;
 
@@ -168,6 +169,15 @@ export class PlacementController implements ReactiveController {
    * clamping content. Cleared on `stop()`.
    */
   private initialHeight?: number;
+
+  /**
+   * Last placement handed to `onPlacementChange`. `actualPlacement` is refreshed
+   * on every compute, but the callback fires only when the computed placement
+   * actually changes — `autoUpdate` ticks that recompute the same placement do
+   * not re-notify consumers. `undefined` until the first compute (and after
+   * `stop`), so the first compute of a session always notifies.
+   */
+  private lastEmittedPlacement?: Placement;
 
   /**
    * Registers this controller on `host` via `addController`.
@@ -307,6 +317,7 @@ export class PlacementController implements ReactiveController {
     this.actualPlacement = null;
     this.isConstrained = false;
     this.initialHeight = undefined;
+    this.lastEmittedPlacement = undefined;
   }
 
   /**
@@ -499,7 +510,14 @@ export class PlacementController implements ReactiveController {
 
     const nextPlacement = fromFloatingPlacement(placement);
     this.actualPlacement = nextPlacement;
-    options.onPlacementChange?.(nextPlacement);
+    // Notify on change only: `autoUpdate` recomputes on every scroll/resize
+    // tick, but a consumer wiring `onPlacementChange` to reactive state should
+    // not re-render when the placement is unchanged. The first compute always
+    // fires (`lastEmittedPlacement` starts `undefined`).
+    if (nextPlacement !== this.lastEmittedPlacement) {
+      this.lastEmittedPlacement = nextPlacement;
+      options.onPlacementChange?.(nextPlacement);
+    }
   }
 }
 

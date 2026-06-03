@@ -164,12 +164,11 @@ export interface PlacementOptions {
   tipPadding?: number;
 
   /**
-   * Called after every successful `computePlacement` pass with the
-   * computed hyphenated placement. Fires once after first compute and on
-   * every subsequent `autoUpdate` tick — even if the value is unchanged —
-   * so callers can mirror `actualPlacement` in a single callback. If you
-   * only care about transitions, compare the incoming value against the
-   * previous one in the handler.
+   * Called with the computed hyphenated placement, on change only: once after
+   * the first compute, then again whenever an `autoUpdate` tick produces a
+   * different value. Computes that resolve to the same placement do not
+   * re-notify, so wiring this to reactive state will not re-render on every
+   * scroll or resize.
    */
   onPlacementChange?: (placement: Placement) => void;
 }
