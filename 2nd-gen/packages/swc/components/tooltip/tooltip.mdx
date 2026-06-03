@@ -1,0 +1,119 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import { DocsFooter, DocsHeader } from '../../.storybook/blocks';
+
+import * as TooltipStories from './stories/tooltip.stories';
+
+<Meta of={TooltipStories} />
+
+<DocsHeader />
+
+## Anatomy
+
+A `<swc-tooltip>` consists of three parts:
+
+- **Tooltip bubble**: a rounded container styled with the `variant` background color.
+- **Tip indicator**: a triangular arrow pointing toward the trigger element. Direction is set by the `placement` attribute.
+- **Default slot**: text content displayed inside the bubble.
+
+<Canvas of={TooltipStories.Anatomy} />
+
+## Upcoming features
+
+The following features are planned for future releases:
+
+- **Automatic hover and focus interactions**: the tooltip opens on trigger hover after a warm-up delay and on keyboard focus immediately; closes when the pointer leaves or focus moves away.
+- **Configurable delay (`delay`)**: controls the warm-up delay before the tooltip appears on hover. Defaults to 1500ms; set to `0` to show immediately. Moving quickly between adjacent triggers shows each subsequent tooltip immediately after the first warm-up elapses.
+- **`disabled` attribute**: prevents the tooltip from responding to hover and focus in automatic mode.
+- **Pointer hover bridge**: the pointer can move from the trigger into the tooltip bubble without the tooltip closing (WCAG 1.4.13).
+- **Tip-less display (`no-tip`)**: removes the directional tip arrow from the tooltip bubble.
+- **Tooltip directive**: a Lit directive for programmatic tooltip insertion and lifecycle management.
+
+## Options
+
+### Variants
+
+Three variants are available: `neutral` (default), `informative`, and `negative`. Each applies a distinct background color token.
+
+<Canvas of={TooltipStories.Variants} />
+
+### Placements
+
+The `placement` attribute sets the preferred position of the tooltip relative to its trigger. Six values are available: `top` (default), `bottom`, `left`, `right`, `start`, and `end`.
+
+The `start` and `end` values are RTL-aware: `start` maps to the left side in LTR and to the right in RTL; `end` maps to the right in LTR and to the left in RTL.
+
+Pixel-accurate positioning requires `PlacementController`, which is in a future release. The `placement` attribute currently applies only the tip direction.
+
+<Canvas of={TooltipStories.Placements} />
+
+## States
+
+### Open
+
+The tooltip is closed by default. Setting `open` to `true` calls `showPopover()`, placing the bubble in the browser's top layer via the Popover API. The `open` attribute reflects the current visibility state.
+
+Because the component uses `popover="auto"`, opening a tooltip dismisses any other open auto popover in the document, including other tooltips, menus, pickers, and selects. Set `manual` and manage `open` directly to opt out of automatic open and close while retaining ARIA relationship wiring.
+
+<Canvas of={TooltipStories.Open} />
+
+## Behaviors
+
+### Events
+
+`<swc-tooltip>` dispatches four lifecycle events as visibility changes:
+
+- **`swc-open`**: Dispatched when the tooltip begins to open, before the enter transition plays.
+- **`swc-after-open`**: Dispatched after the enter transition completes.
+- **`swc-close`**: Dispatched when the tooltip begins to close, before the exit transition plays.
+- **`swc-after-close`**: Dispatched after the exit transition completes.
+
+When no CSS transition is active (for example, when `prefers-reduced-motion` removes it), `swc-after-open` and `swc-after-close` dispatch synchronously on the same tick as `swc-open` and `swc-close`.
+
+Events fire regardless of what triggered the state change: setting `open` directly, calling the popover API, pressing Escape, or a light-dismiss click.
+
+<Canvas of={TooltipStories.Events} />
+
+### Labeling
+
+When a trigger has no visible text label and the tooltip text is its sole accessible name, set the `labeling` attribute on the tooltip. This switches the ARIA wiring from `ariaDescribedByElements` (supplementary description) to `ariaLabelledByElements` (accessible name) on the trigger's inner interactive element.
+
+Prefer adding an accessible name directly to the trigger when possible: `aria-label` on native elements, or the `accessible-label` attribute on 2nd-gen SWC components. Use `labeling` only when the trigger host cannot be modified.
+
+<Canvas of={TooltipStories.Labeling} />
+
+## Accessibility
+
+### Features
+
+#### ARIA role and relationship
+
+1. **`role="tooltip"`**: set on the host element via `connectedCallback`.
+2. **`ariaDescribedByElements`**: when the tooltip opens, the SWC layer resolves the trigger via `for` or `triggerElement` and sets `Element.ariaDescribedByElements = [tooltipHost]` on the trigger's interactive surface. For 2nd-gen SWC components with an open shadow root, the inner `<button>` is targeted; for native elements, the trigger host is used directly. The association is removed when the tooltip closes.
+3. **`labeling` attribute**: when set, the SWC layer wires `ariaLabelledByElements` instead of `ariaDescribedByElements` on the trigger's inner interactive element. For icon-only triggers where the tooltip text is the sole accessible name and a name cannot be added to the trigger directly.
+
+#### Keyboard behavior
+
+- <kbd>Escape</kbd>: closes the tooltip; focus remains on the trigger. Handled
+  by native `popover="auto"`.
+- Tooltip text is never in the tab order; focus always stays on the trigger.
+
+#### High contrast mode
+
+A `1px solid transparent` border in base styles is automatically filled with `CanvasText` in forced-colors mode, ensuring the tooltip bubble remains visible in Windows High Contrast.
+
+#### Variant colors
+
+Variant colors supplement the tooltip text and are never the sole conveyance of meaning (WCAG 1.4.1).
+
+### Best practices
+
+- **Use focusable triggers only.** Place `<swc-tooltip>` only on elements that can receive keyboard focus. Non-interactive elements require a focusable wrapper or a different pattern such as contextual help.
+- **Use plain text.** Do not include interactive elements or rich formatting inside a tooltip. `role="tooltip"` is not focusable; use `<swc-popover>` or contextual help for disclosures that require interactive content.
+- **Supplement, do not duplicate.** Tooltip text supplements the trigger's accessible name. Do not repeat what `aria-label` or `aria-labelledby` already conveys.
+- **Icon-only triggers.** Prefer adding an accessible name directly to the trigger: `aria-label` on native elements; `accessible-label` on 2nd-gen SWC components. Use the `labeling` attribute when the trigger host cannot be modified.
+- **No auto-dismiss timer.** The tooltip must remain visible until the user dismisses it or the triggering state ends (WCAG 1.4.13).
+- **Touch devices.** Hover-triggered tooltips are not accessible on touch-only devices. Use `<swc-popover>` or contextual help for touch disclosure.
+
+<Canvas of={TooltipStories.Accessibility} />
+
+<DocsFooter />
