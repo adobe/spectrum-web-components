@@ -27,7 +27,7 @@ import styles from './tooltip.css';
  *
  * @slot - Text label displayed in the tooltip.
  *
- * @cssprop --swc-tooltip-background-color - Background color of the tooltip bubble. Defaults to the neutral background color token.
+ * @cssprop --swc-tooltip-background-color - Background color of the tooltip bubble. Overrides the variant-specific background color.
  *
  * @fires swc-open - Dispatched when the tooltip begins to open, before the transition plays.
  * @fires swc-close - Dispatched when the tooltip begins to close, before the transition plays.

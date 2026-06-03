@@ -665,7 +665,7 @@ The impact is most acute in the additive phase, when `HoverController` will call
 - [ ] `manual` attribute: controller wiring is skipped when added; consumer-driven `open` changes dispatch all `swc-*` events and ARIA wiring still fires when `for` is set **(additive phase — verify controller suppression)**
 - [x] `labeling` attribute: `ariaLabelledByElements` is set on the inner interactive element instead of `ariaDescribedByElements`; stale references in the opposite property are cleaned up; re-syncs when `labeling` changes while open (`LabelingAriaWiringTest`)
 - [ ] `ariaDescribedByElements` wiring: verify AT can traverse the association in DevTools Accessibility panel and with NVDA/VoiceOver
-- [x] `ariaDescribedByElements` wiring fallback: when trigger has no shadow root (native `<button>`, `<a>`, `<input>`), association is established on the host element directly (`AriaWiringNativeTest`)
+- [x] `ariaDescribedByElements` wiring fallback: when trigger has no shadow root (native `<button>`, `<a>`, `<input>`), association is established on the host element directly  (`AriaWiringNativeTest`)
 - [ ] `disabled` attribute prevents automatic mode response to user input **(additive phase)**
 
 #### Visual regression
