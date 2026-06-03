@@ -217,6 +217,9 @@ export const Playground: Story = {
     placement: 'top',
     'default-slot': variantLabels.neutral,
   },
+  render: (args) => html`
+    ${triggered({ ...args }, 'tooltip-playground', 'Open')}
+  `,
 };
 
 // ──────────────────────────────
@@ -230,6 +233,9 @@ export const Overview: Story = {
     placement: 'top',
     'default-slot': 'Save your changes',
   },
+  render: (args) => html`
+    ${triggered({ ...args }, 'tooltip-overview', 'Open')}
+  `,
 };
 
 // ──────────────────────────
