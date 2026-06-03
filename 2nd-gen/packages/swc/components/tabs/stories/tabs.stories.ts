@@ -13,10 +13,6 @@
 import { html, type TemplateResult } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
-import '@adobe/spectrum-wc/components/tabs/swc-tabs.js';
-import '@adobe/spectrum-wc/components/tabs/swc-tab.js';
-import '@adobe/spectrum-wc/components/tabs/swc-tab-panel.js';
-
 import {
   KEYBOARD_ACTIVATIONS,
   type KeyboardActivation,
@@ -24,7 +20,11 @@ import {
   type TabDensity,
   TABS_DIRECTIONS,
   type TabsDirection,
-} from '../../../../core/components/tabs/Tabs.types.js';
+} from '@spectrum-web-components/core/components/tabs/index.js';
+
+import '@adobe/spectrum-wc/components/tabs/swc-tabs.js';
+import '@adobe/spectrum-wc/components/tabs/swc-tab.js';
+import '@adobe/spectrum-wc/components/tabs/swc-tab-panel.js';
 
 const events = ['change'];
 
@@ -37,7 +37,7 @@ const events = ['change'];
  * Tabs and panels are matched by their `tab-id` attributes.
  *
  * Breaking changes and migration steps from `sp-tabs` live in the
- * [migration guide](../migration.md), not in Storybook copy.
+ * [migration guide](?path=/docs/components-tabs-migration-guide--docs), not in Storybook copy.
  */
 export const meta: Meta = {
   title: 'Tabs',
@@ -164,11 +164,11 @@ const renderTabGroup = ({
 `;
 
 // ────────────────────
-//    AUTODOCS STORY
+//    PLAYGROUND STORY
 // ────────────────────
 
 export const Playground: Story = {
-  tags: ['autodocs', 'dev'],
+  tags: ['dev'],
 };
 
 // ──────────────────────────
@@ -184,40 +184,6 @@ export const Overview: Story = {
 //    ANATOMY STORIES
 // ──────────────────────────
 
-/**
- * ### Visual structure
- *
- * A tabs component consists of:
- *
- * 1. **Tab list** — A horizontal or vertical row of tab items
- * 2. **Tab items** — Clickable labels representing each section
- * 3. **Selection indicator** — A visual line highlighting the active tab
- * 4. **Tab panels** — Content areas associated with each tab
- *
- * ### Technical structure
- *
- * #### Slots
- *
- * - **Default slot** (on `swc-tabs`): Accepts `swc-tab` elements
- * - **tab-panel slot** (on `swc-tabs`): Accepts `swc-tab-panel` elements
- * - **Default slot** (on `swc-tab`): Text label content
- * - **icon slot** (on `swc-tab`): Optional icon displayed before the label
- * - **Default slot** (on `swc-tab-panel`): Panel content (any HTML)
- *
- * #### Properties
- *
- * Properties that render visual content:
- *
- * - **selected** (on `swc-tabs`): Value of the currently active tab
- * - **tab-id** (on `swc-tab` and `swc-tab-panel`): Unique identifier linking tab to panel
- * - **accessible-label** (on `swc-tabs`): Accessible name for the tablist
- * - **aria-label** (on `swc-tab`): Accessible name for icon-only tabs
- * - **direction**: Layout direction (`horizontal` or `vertical`)
- * - **keyboard-activation**: `manual` (default) or `automatic` (selection follows focus)
- * - **density**: `regular` (default) or `compact` spacing
- *
- * Examples below: text-only, icon + text, and icon-only tabs.
- */
 export const Anatomy: Story = {
   render: () => html`
     <p><strong>Text-only tabs</strong></p>
@@ -277,9 +243,6 @@ export const Anatomy: Story = {
 //    OPTIONS STORIES
 // ──────────────────────────
 
-/**
- * `density="compact"` reduces spacing between tabs. Default is `regular`.
- */
 export const DensityVariants: Story = {
   render: () => html`
     <p><strong>Regular (default)</strong></p>
@@ -292,25 +255,8 @@ export const DensityVariants: Story = {
     })}
   `,
   tags: ['options'],
-  parameters: {
-    'section-order': 1,
-  },
 };
 
-/**
- * Tabs support horizontal (default) and vertical layout directions.
- *
- * - **Horizontal**: Tabs are laid out in a row across the top. Arrow Left
- *   and Arrow Right navigate between tabs.
- * - **Vertical**: Tabs are stacked vertically along the side. Arrow Up
- *   and Arrow Down navigate between tabs. Sets `aria-orientation="vertical"`
- *   on the tablist element.
- *
- * `direction="vertical-right"` from 1st-gen is not supported; use
- * `direction="vertical"`. See the [migration guide](../migration.md).
- *
- * Both directions shown below for comparison.
- */
 export const Directions: Story = {
   render: () => html`
     ${TABS_DIRECTIONS.map(
@@ -325,30 +271,12 @@ export const Directions: Story = {
     )}
   `,
   tags: ['options'],
-  parameters: {
-    'section-order': 2,
-  },
 };
 
 // ──────────────────────────
 //    STATES STORIES
 // ──────────────────────────
 
-/**
- * Tabs can exist in various states:
- *
- * - **Default**: Normal, interactive state
- * - **Selected**: The currently active tab (shown with selection indicator)
- * - **Disabled (individual)**: Tab exists but cannot be activated. In 2nd-gen,
- *   disabled tabs remain focusable via arrow keys per the
- *   [ARIA Authoring Practices Guide](https://www.w3.org/WAI/ARIA/apg/patterns/tabs/)
- *   and use `aria-disabled="true"` instead of the native `disabled` attribute.
- * - **Disabled (container)**: The entire tab list is disabled. All interaction
- *   is suppressed and `aria-disabled="true"` is set on the tablist element.
- *
- * Disabled tabs remain focusable via arrow keys but cannot be activated; see
- * the [migration guide](../migration.md).
- */
 export const States: Story = {
   render: () => html`
     <p><strong>Individual disabled tab</strong></p>
@@ -386,24 +314,6 @@ export const States: Story = {
 //    BEHAVIORS STORIES
 // ──────────────────────────────
 
-/**
- *
- * `keyboard-activation="manual"` (default): Arrow keys move focus between
- * tabs without changing the selected tab until Enter or Space.
- *
- * `keyboard-activation="automatic"`: Selection follows focus when arrowing.
- *
- * ### Events
- *
- * - **change**: Fired when the selected tab changes. Cancelable via
- *   `preventDefault()` to revert selection.
- *
- * ```javascript
- * tabs.addEventListener('change', (event) => {
- *   console.log('Selected:', event.target.selected);
- * });
- * ```
- */
 export const ActivationModes: Story = {
   render: () => html`
     <p><strong>Manual activation (default)</strong></p>
@@ -434,88 +344,10 @@ export const ActivationModes: Story = {
   tags: ['behaviors'],
 };
 
-// ──────────────────────────────────
-//    UPCOMING FEATURES STORIES
-// ──────────────────────────────────
-
-/**
- * ### Overflow
- *
- * - When tabs exceed the container width, overflowing tabs will collapse into a `<swc-picker>` dropdown
- */
-export const UpcomingFeatures: Story = {
-  tags: ['upcoming', 'description-only'],
-};
-UpcomingFeatures.storyName = 'Upcoming features';
-
 // ────────────────────────────────
 //    ACCESSIBILITY STORIES
 // ────────────────────────────────
 
-/**
- * ### Features
- *
- * The `<swc-tabs>` component implements several accessibility features:
- *
- * #### Keyboard navigation
- *
- * - <kbd>Tab</kbd>: Moves focus into the tab list (to the selected or
- *   last-focused tab) and then out to the active panel
- * - <kbd>Shift+Tab</kbd>: Returns focus from panel to tab list
- * - <kbd>Arrow Left</kbd> / <kbd>Arrow Right</kbd>: Navigates between
- *   tabs in horizontal mode (swaps in RTL)
- * - <kbd>Arrow Up</kbd> / <kbd>Arrow Down</kbd>: Navigates between
- *   tabs in vertical mode
- * - <kbd>Home</kbd>: Moves focus to the first tab
- * - <kbd>End</kbd>: Moves focus to the last tab
- * - <kbd>Space</kbd> / <kbd>Enter</kbd>: Activates the focused tab
- *   (manual mode). In automatic activation, tabs activate when focused via arrows.
- *
- * #### ARIA implementation
- *
- * 1. **Roles**: `tablist` on the inner container, `tab` on each tab
- *    item, `tabpanel` on each panel
- * 2. **Labeling**: `aria-label` on the tablist from the `accessible-label` property
- * 3. **States**: `aria-selected` on tabs, `aria-disabled` on disabled
- *    tabs and on the tablist when the container is disabled
- * 4. **Orientation**: `aria-orientation="vertical"` on the same node as
- *    `role="tablist"` when `direction="vertical"`.
- * 5. **Relationships**: `aria-controls` on tabs and `aria-labelledby`
- *    on panels link each tab to its associated panel
- *
- * #### Roving tabindex
- *
- * The tablist uses a roving tabindex strategy: exactly one tab has
- * `tabindex="0"` at all times (the selected or last-focused tab),
- * while all other tabs have `tabindex="-1"`. This ensures a single
- * Tab stop for the tab list, with arrow keys for internal navigation.
- *
- * #### Disabled tabs
- *
- * Disabled tabs use `aria-disabled="true"` (not the native `disabled`
- * attribute) so they remain discoverable by assistive technology. They
- * are focusable via arrow keys but cannot be activated (Enter, Space,
- * and click are guarded).
- *
- * #### Tab panel focus management
- *
- * Active panels have `tabindex="0"` so they receive focus when the user
- * presses Tab from the tablist. When focus enters panel content, the
- * panel removes its own `tabindex` to avoid trapping Tab presses inside
- * the panel. On `focusout`, `tabindex` is restored.
- *
- * ### Best practices
- *
- * - Always provide an `accessible-label` attribute on `swc-tabs` for the
- *   tablist accessible name
- * - Use meaningful, concise text labels for each tab
- * - For icon-only tabs, provide an `aria-label` attribute on `swc-tab` as
- *   the accessible name (since there is no visible text content)
- * - Use the `tab-id` attribute to link tabs to their panels
- * - Avoid disabling all tabs — at least one should be interactive
- * - Test with screen readers (VoiceOver, NVDA, JAWS) to verify tab
- *   names, selection announcements, and panel content are accessible
- */
 export const Accessibility: Story = {
   render: () => html`
     ${renderTabGroup({

@@ -47,11 +47,14 @@
     - [Button migration roadmap](button/rendering-and-styling-migration-analysis.md)
 - Button Group
     - [Button group accessibility migration analysis](button-group/accessibility-migration-analysis.md)
+    - [Button group migration plan](button-group/migration-plan.md)
     - [Button Group migration roadmap](button-group/rendering-and-styling-migration-analysis.md)
 - Checkbox
     - [Checkbox migration roadmap](checkbox/rendering-and-styling-migration-analysis.md)
 - Close Button
     - [Close button accessibility migration analysis](close-button/accessibility-migration-analysis.md)
+    - [Close button migration plan](close-button/migration-plan.md)
+    - [Close button migration roadmap](close-button/rendering-and-styling-migration-analysis.md)
 - Color Field
     - [Color field migration roadmap](color-field/rendering-and-styling-migration-analysis.md)
 - Color Loupe

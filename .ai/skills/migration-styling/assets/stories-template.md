@@ -1,6 +1,6 @@
 # Phase 5 stories template
 
-A minimal `[component].stories.ts` file for visual verification of 2nd-gen CSS during Phase 5. Full JSDoc and the Accessibility story are deferred — JSDoc belongs to Phase 7 (Documentation); the Accessibility story belongs to the accessibility phase.
+A minimal `[component].stories.ts` file for visual verification of 2nd-gen CSS during Phase 5. The per-component MDX file (`[component].mdx`) and the Accessibility story body are deferred to Phase 7 (Documentation). No story-level JSDoc is authored in 2nd-gen — prose lives in the per-component MDX.
 
 ## What to replace
 
@@ -183,7 +183,8 @@ export const Anatomy: Story = {
 // ──────────────────────────
 
 // One story per distinct constant array in the types file (sizes, variants,
-// fill styles, static colors, etc.). Add section-order to control display order.
+// fill styles, static colors, etc.). Section ordering is hand-authored in the
+// per-component MDX file, not via story parameters.
 
 export const Sizes: Story = {
   render: (args) => html`
@@ -191,7 +192,6 @@ export const Sizes: Story = {
       template({ ...args, size, 'default-slot': sizeLabels[size] })
     )}
   `,
-  parameters: { 'section-order': 1 },
   tags: ['options'],
 };
 
@@ -201,7 +201,6 @@ export const Variants: Story = {
       template({ ...args, variant, 'default-slot': variantLabels[variant] })
     )}
   `,
-  parameters: { 'section-order': 2 },
   tags: ['options'],
 };
 Variants.storyName = 'Variants'; // rename if PascalCase doesn't read as sentence case (e.g. 'Semantic variants', 'Non-semantic variants')

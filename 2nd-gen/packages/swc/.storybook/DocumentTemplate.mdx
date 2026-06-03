@@ -1,22 +1,11 @@
 import {
-  Meta,
-  Title,
-  Primary,
-  Controls,
-  Stories,
-  ArgTypes,
   Description,
-  Subtitle,
   HeaderMdx,
+  Meta,
+  Stories,
   useOf,
 } from '@storybook/addon-docs/blocks';
-import {
-  ApiTable,
-  GettingStarted,
-  OverviewStory,
-  SpectrumStories,
-  StatusBadge,
-} from './blocks';
+import { DocsFooter, DocsHeader, SpectrumStories } from './blocks';
 
 export const checkIsSingleStory = () => {
   const resolvedOf = useOf('meta', ['meta']);
@@ -65,55 +54,11 @@ export const ConditionalSection = ({ tag, title, hideTitle = false }) => {
     );
 
 };
-export const ConditionalAPISection = () => {
-const resolvedOf = useOf('meta', ['meta']);
-const tags = resolvedOf?.csfFile?.meta?.tags ?? [];
-const hasCustomAPIDocs = tags.includes('api') || Object.values(resolvedOf.csfFile.stories).some(
-(story) => story.tags?.includes('api')
-);
-
-    if (!hasCustomAPIDocs) {
-        return (
-          <>
-            <HeaderMdx as="h2" id="api">API</HeaderMdx>
-
-            <Primary />
-            <Controls />
-          </>
-        );
-    }
-
-    return (
-        <>
-            <HeaderMdx as="h2" id="api">API</HeaderMdx>
-            <Primary />
-            <Controls />
-
-            <hr />
-            <SpectrumStories tag="api" hideTitle={true} />
-        </>
-    );
-
-};
-
-export const ConditionalGettingStarted = () => {
-    const resolvedOf = useOf('meta', ['meta']);
-
-    const tags = resolvedOf?.csfFile?.meta?.tags ?? [];
-
-    return <GettingStarted tags={tags} />;
-
-};
 
 <Meta isTemplate />
 
-<Title />
-<StatusBadge />
-<Subtitle />
-<Description />
+<DocsHeader />
 <SingleStoryDescription />
-<OverviewStory />
-<ConditionalGettingStarted />
 
 <ConditionalSection tag="anatomy" title="Anatomy" hideTitle={true} />
 <ConditionalSection tag="upcoming" title="Upcoming features" hideTitle={true} />
@@ -124,12 +69,7 @@ export const ConditionalGettingStarted = () => {
 <ConditionalSection tag="a11y" title="Accessibility" hideTitle={true} />
 <ConditionalSection tag="full-pattern" title="Full pattern" />
 
-## API
-
-<ApiTable />
 <AdvancedExamplesStories />
 <ConditionalSection tag="appendix" title="Appendix" hideTitle={true} />
 
-## Feedback
-
-Have feedback or questions? [Open an issue](https://github.com/adobe/spectrum-web-components/issues/new/choose).
+<DocsFooter />

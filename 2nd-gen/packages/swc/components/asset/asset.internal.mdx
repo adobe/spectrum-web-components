@@ -1,0 +1,66 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import { DocsFooter, DocsHeader } from '../../.storybook/blocks';
+
+import * as AssetStories from './stories/asset.internal.stories';
+
+<Meta of={AssetStories} />
+
+<DocsHeader />
+
+## Anatomy
+
+An asset consists of:
+
+1. **Icon or image content**: either a file/folder icon or custom slotted content
+2. **Accessible label**: provides context for assistive technologies
+
+The asset automatically centers its content both horizontally and vertically within the available space.
+
+### Content
+
+- **Default slot**: custom content to display (typically an image) when variant is not set
+- **Label**: accessible label for screen readers (used as `aria-label` on the icon SVGs)
+
+<Canvas of={AssetStories.Anatomy} />
+
+## Options
+
+### Variants
+
+Assets support two built-in icon variants for representing files and folders:
+
+- **`file`**: displays a file icon, useful for representing documents, files, or file types
+- **`folder`**: displays a folder icon, useful for representing directories or collections
+
+When no variant is specified, the asset displays custom content provided via the default slot (typically an image).
+
+<Canvas of={AssetStories.Variants} />
+
+## Accessibility
+
+### Features
+
+The `<swc-asset>` element implements several accessibility features:
+
+#### ARIA implementation
+
+- **Icon labeling**: file and folder SVG icons automatically use the `label` property as `aria-label`
+- **Non-interactive**: assets have no interactive behavior and are not focusable
+
+#### Visual accessibility
+
+- Icons use sufficient color contrast in both light and dark modes
+- High contrast mode is supported with appropriate color overrides
+- Content automatically centers for consistent layout and visual balance
+
+### Best practices
+
+- Always provide a descriptive `label` attribute for file and folder variants
+- Use specific, meaningful labels or alt text (e.g., "Project proposal PDF", "projects/2025/proposal.pdf", or not just "File")
+- The `label` on the asset itself should describe the asset's purpose or context
+- For decorative images, use an empty `alt=""` attribute on the img tag
+- Test with screen readers to verify assets are announced appropriately in context
+
+<Canvas of={AssetStories.Accessibility} />
+
+<DocsFooter />
