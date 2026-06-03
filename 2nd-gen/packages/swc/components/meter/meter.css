@@ -11,44 +11,20 @@
  */
 
 /*
- * Meter-specific styles. Shared bar/track/fill structure, sizes,
- * static-color rules, and forced-colors live in
- * `swc/shared/linear-progress-base.css`. This file owns the default
- * `--swc-meter-*` token defaults and the variant fill-color overrides.
+ * Meter-specific styles. Shared structural rules (bar/track/fill,
+ * sizes, side-label layout, static colors, forced-colors) live in
+ * `swc/stylesheets/shared/linear-progress-base.css`. This file only
+ * adds the variant fill-color overrides that are unique to meter.
  */
 
-:host {
-  --swc-meter-thickness: token("progress-bar-thickness-medium");
-
-  /* The token `corner-radius-full` resolves to `50%`, which on a
-   * non-square `block-size × inline-size` track renders as an ellipse
-   * instead of a pill. Pin the radius to half the thickness so the
-   * track and fill always render as a perfect stadium pill regardless
-   * of width. */
-  --swc-meter-corner-radius: calc(var(--swc-meter-thickness) / 2);
-  --swc-meter-min-width: token("progress-bar-minimum-width");
-  --swc-meter-max-width: token("progress-bar-maximum-width");
-  --swc-meter-track-color: token("track-color");
-  --swc-meter-fill-color: token("accent-content-color-default");
-  --swc-meter-text-color: token("neutral-subdued-content-color-default");
-  --swc-meter-font-size: token("font-size-100");
-  --swc-meter-line-height: token("line-height-100");
-  --swc-meter-line-height-cjk: token("cjk-line-height-100");
-  --swc-meter-top-to-text: token("component-top-to-text-100");
-  --swc-meter-label-to-track: token("spacing-75");
-  --swc-meter-label-to-value-spacing: token("spacing-200");
-  --swc-meter-description-spacing: token("spacing-75");
+:host([variant="positive"]) .swc-LinearProgress-fill {
+  background: token("positive-visual-color");
 }
 
-/* Variants */
-.swc-Meter--positive {
-  --swc-meter-fill-color: token("positive-visual-color");
+:host([variant="notice"]) .swc-LinearProgress-fill {
+  background: token("notice-visual-color");
 }
 
-.swc-Meter--notice {
-  --swc-meter-fill-color: token("notice-visual-color");
-}
-
-.swc-Meter--negative {
-  --swc-meter-fill-color: token("negative-visual-color");
+:host([variant="negative"]) .swc-LinearProgress-fill {
+  background: token("negative-visual-color");
 }

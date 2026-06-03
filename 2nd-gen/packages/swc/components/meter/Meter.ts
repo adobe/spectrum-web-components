@@ -12,7 +12,6 @@
 
 import { CSSResultArray, html, nothing, TemplateResult } from 'lit';
 import { property } from 'lit/decorators.js';
-import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
 import {
@@ -21,13 +20,13 @@ import {
   type MeterVariant,
 } from '@spectrum-web-components/core/components/meter';
 
-import sharedStyles from '../../shared/linear-progress-base.css';
+import sharedStyles from '../../stylesheets/shared/linear-progress-base.css';
 import styles from './meter.css';
 
 /**
  * A meter is a non-focusable, read-only bar that displays a value inside a
- * fixed range. The WAI-ARIA `meter` role lives on the shadow `.swc-Meter`
- * wrapper — the host carries no ARIA role.
+ * fixed range. The WAI-ARIA `meter` role lives on the shadow
+ * `.swc-LinearProgress` wrapper — the host carries no ARIA role.
  *
  * @element swc-meter
  * @since 2.0.0
@@ -43,14 +42,6 @@ import styles from './meter.css';
  * @slot description - Additional description text below the meter. Referenced
  *                     via `aria-describedby` on the shadow `meter` role element
  *                     when assigned nodes are present.
- *
- * @cssprop --swc-meter-fill-color - Bar fill color. Overrides the variant default.
- * @cssprop --swc-meter-track-color - Bar track color.
- * @cssprop --swc-meter-thickness - Bar thickness (block-size of the track and fill).
- * @cssprop --swc-meter-min-width - Minimum inline-size of the meter.
- * @cssprop --swc-meter-max-width - Maximum inline-size of the meter.
- * @cssprop --swc-meter-description-spacing - Block-start spacing between the bar and the description slot.
- * @cssprop --swc-meter-label-to-value-spacing - Inline spacing between label and value text in `label-position="side"`.
  */
 export class Meter extends MeterBase {
   // ────────────────────
@@ -94,13 +85,7 @@ export class Meter extends MeterBase {
 
     return html`
       <div
-        class=${classMap({
-          ['swc-Meter']: true,
-          [`swc-Meter--${this.variant}`]: true,
-          [`swc-Meter--sideLabel`]: this.labelPosition === 'side',
-          [`swc-Meter--staticWhite`]: this.staticColor === 'white',
-          [`swc-Meter--staticBlack`]: this.staticColor === 'black',
-        })}
+        class="swc-LinearProgress"
         role="meter"
         aria-valuemin=${sanitizedMin}
         aria-valuemax=${sanitizedMax}
@@ -112,15 +97,18 @@ export class Meter extends MeterBase {
       >
         ${hasLabel
           ? html`
-              <span id=${this.labelContainerId} class="swc-Meter-label">
+              <span
+                id=${this.labelContainerId}
+                class="swc-LinearProgress-label"
+              >
                 <slot name="label"></slot>
               </span>
             `
           : nothing}
-        <span class="swc-Meter-value">${formattedValue}</span>
-        <div class="swc-Meter-track">
+        <span class="swc-LinearProgress-value">${formattedValue}</span>
+        <div class="swc-LinearProgress-track">
           <div
-            class="swc-Meter-fill"
+            class="swc-LinearProgress-fill"
             style="inline-size: ${fillPercent}%;"
           ></div>
         </div>
@@ -128,7 +116,7 @@ export class Meter extends MeterBase {
           ? html`
               <span
                 id=${this.descriptionContainerId}
-                class="swc-Meter-description"
+                class="swc-LinearProgress-description"
               >
                 <slot name="description"></slot>
               </span>

@@ -284,7 +284,7 @@ export const CustomRange: Story = {
       'min-value': 0,
       'max-value': 10,
       value: 3,
-      'label-slot': '3 of 10 inputs filled',
+      'label-slot': 'Inputs filled',
       'value-label': '3 of 10',
     })}
   `,
@@ -299,9 +299,10 @@ export const ValueLabel: Story = {
   render: (args) => html`
     ${template({
       ...args,
-      value: 40,
+      value: 2.4,
+      'max-value': 5,
       'label-slot': 'Storage used',
-      'value-label': '2 GB / 5 GB',
+      'value-label': '2.4 GB / 5 GB',
     })}
   `,
   tags: ['behaviors'],

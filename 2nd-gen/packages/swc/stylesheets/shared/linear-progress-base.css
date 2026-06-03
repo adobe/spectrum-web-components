@@ -1,0 +1,208 @@
+/*!
+ * Copyright 2026 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+/*
+ * Shared base styles for linear progress components (`<swc-meter>`,
+ * future `<swc-progress-bar>`). Selectors use the `.swc-LinearProgress`
+ * namespace so each component's own stylesheet can layer component-
+ * specific rules on top via `.swc-Meter`, `.swc-ProgressBar`, etc.
+ *
+ * Tokens are read directly via `token("…")`; the component stylesheet
+ * only needs to expose a custom property when consumers genuinely need
+ * to override it. Size, variant, label-position, and static-color
+ * modifiers are driven by attribute selectors on `:host()`.
+ */
+
+:host {
+  display: inline-block;
+  inline-size: 100%;
+  min-inline-size: token("progress-bar-minimum-width");
+  max-inline-size: token("progress-bar-maximum-width");
+  vertical-align: top;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.swc-LinearProgress {
+  display: grid;
+  position: relative;
+  grid-template-areas:
+    "label value"
+    "track track"
+    "description description";
+  grid-template-columns: 1fr auto;
+  inline-size: 100%;
+}
+
+.swc-LinearProgress-label,
+.swc-LinearProgress-value {
+  margin-block-start: token("component-top-to-text-100");
+  margin-block-end: token("spacing-75");
+  font-size: token("font-size-100");
+  line-height: token("line-height-100");
+  color: token("neutral-subdued-content-color-default");
+  text-align: start;
+  overflow-wrap: break-word;
+
+  &:lang(ja),
+  &:lang(zh),
+  &:lang(ko) {
+    line-height: token("cjk-line-height-100");
+  }
+}
+
+.swc-LinearProgress-label {
+  grid-area: label;
+}
+
+.swc-LinearProgress-value {
+  grid-area: value;
+  justify-self: end;
+  margin-inline-start: token("spacing-200");
+  word-break: normal;
+}
+
+.swc-LinearProgress-track {
+  grid-area: track;
+  inline-size: 100%;
+
+  /* Use thickness divided by two so the corners always render as a
+   * perfect stadium pill. The `corner-radius-full` design token resolves
+   * to `50%`, which produces an ellipse on the non-square track. */
+  block-size: token("progress-bar-thickness-medium");
+  background: token("track-color");
+  border-radius: calc(token("progress-bar-thickness-medium") / 2);
+  overflow: hidden;
+}
+
+.swc-LinearProgress-fill {
+  block-size: token("progress-bar-thickness-medium");
+  background: token("accent-content-color-default");
+  border: none;
+  border-radius: calc(token("progress-bar-thickness-medium") / 2);
+  transition: inline-size 1s;
+}
+
+.swc-LinearProgress-description {
+  grid-area: description;
+  margin-block-start: token("spacing-75");
+  font-size: token("font-size-100");
+  line-height: token("line-height-100");
+  color: token("neutral-subdued-content-color-default");
+}
+
+/* Side label */
+:host([label-position="side"]) .swc-LinearProgress {
+  /* `minmax(30%, 1fr)` keeps the track from shrinking out of existence
+   * when the label or value content is wide. */
+  grid-template-areas:
+    "label track value"
+    "description description description";
+  grid-template-columns: auto minmax(30%, 1fr) auto;
+  align-items: center;
+}
+
+:host([label-position="side"]) .swc-LinearProgress-label {
+  grid-area: label;
+  margin-block: 0;
+  margin-inline-end: token("spacing-200");
+}
+
+:host([label-position="side"]) .swc-LinearProgress-value {
+  grid-area: value;
+  margin-block: 0;
+  margin-inline-start: token("spacing-200");
+  text-align: end;
+}
+
+/* Static colors */
+:host([static-color="white"]) .swc-LinearProgress-track {
+  background: token("static-white-track-color");
+}
+
+:host([static-color="white"]) .swc-LinearProgress-fill {
+  background: token("static-white-track-indicator-color");
+}
+
+:host([static-color="white"]) .swc-LinearProgress-label,
+:host([static-color="white"]) .swc-LinearProgress-value,
+:host([static-color="white"]) .swc-LinearProgress-description {
+  color: token("static-white-text-color");
+}
+
+:host([static-color="black"]) .swc-LinearProgress-track {
+  background: token("static-black-track-color");
+}
+
+:host([static-color="black"]) .swc-LinearProgress-fill {
+  background: token("static-black-track-indicator-color");
+}
+
+:host([static-color="black"]) .swc-LinearProgress-label,
+:host([static-color="black"]) .swc-LinearProgress-value,
+:host([static-color="black"]) .swc-LinearProgress-description {
+  color: token("static-black-text-color");
+}
+
+/* Sizes */
+:host([size="s"]) .swc-LinearProgress-track,
+:host([size="s"]) .swc-LinearProgress-fill {
+  block-size: token("progress-bar-thickness-small");
+  border-radius: calc(token("progress-bar-thickness-small") / 2);
+}
+
+:host([size="s"]) .swc-LinearProgress-label,
+:host([size="s"]) .swc-LinearProgress-value,
+:host([size="s"]) .swc-LinearProgress-description {
+  margin-block-start: token("component-top-to-text-75");
+  font-size: token("font-size-75");
+}
+
+:host([size="l"]) .swc-LinearProgress-track,
+:host([size="l"]) .swc-LinearProgress-fill {
+  block-size: token("progress-bar-thickness-large");
+  border-radius: calc(token("progress-bar-thickness-large") / 2);
+}
+
+:host([size="l"]) .swc-LinearProgress-label,
+:host([size="l"]) .swc-LinearProgress-value,
+:host([size="l"]) .swc-LinearProgress-description {
+  margin-block-start: token("component-top-to-text-200");
+  font-size: token("font-size-200");
+}
+
+:host([size="xl"]) .swc-LinearProgress-track,
+:host([size="xl"]) .swc-LinearProgress-fill {
+  block-size: token("progress-bar-thickness-extra-large");
+  border-radius: calc(token("progress-bar-thickness-extra-large") / 2);
+}
+
+:host([size="xl"]) .swc-LinearProgress-label,
+:host([size="xl"]) .swc-LinearProgress-value,
+:host([size="xl"]) .swc-LinearProgress-description {
+  margin-block-start: token("component-top-to-text-300");
+  font-size: token("font-size-300");
+}
+
+@media (forced-colors: active) {
+  .swc-LinearProgress-track {
+    background: ButtonFace;
+    border: 1px solid ButtonText;
+    forced-color-adjust: none;
+  }
+
+  .swc-LinearProgress-fill {
+    background: ButtonText;
+  }
+}
