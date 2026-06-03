@@ -14,14 +14,14 @@ import { html } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
-import '@adobe/spectrum-wc/components/button-group/swc-button-group.js';
-import '@adobe/spectrum-wc/components/button/swc-button.js';
-
 import {
   BUTTON_GROUP_ALIGNMENTS,
   BUTTON_GROUP_ORIENTATIONS,
   BUTTON_GROUP_SIZES,
-} from '../../../../core/components/button-group/ButtonGroup.types.js';
+} from '@spectrum-web-components/core/components/button-group';
+
+import '@adobe/spectrum-wc/components/button-group/swc-button-group.js';
+import '@adobe/spectrum-wc/components/button/swc-button.js';
 
 // ────────────────
 //    METADATA

@@ -14,15 +14,15 @@ import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import { ButtonGroup } from '@adobe/spectrum-wc/button-group';
-
-import '@adobe/spectrum-wc/components/button-group/swc-button-group.js';
-import '@adobe/spectrum-wc/components/button/swc-button.js';
-
 import {
   BUTTON_GROUP_ALIGNMENTS,
   BUTTON_GROUP_ORIENTATIONS,
   BUTTON_GROUP_SIZES,
-} from '../../../../core/components/button-group/ButtonGroup.types.js';
+} from '@spectrum-web-components/core/components/button-group';
+
+import '@adobe/spectrum-wc/components/button-group/swc-button-group.js';
+import '@adobe/spectrum-wc/components/button/swc-button.js';
+
 import { getComponent, withWarningSpy } from '../../../utils/test-utils.js';
 import meta, {
   Alignment,
@@ -226,17 +226,13 @@ export const AlignReflectionTest: Story = {
     await step('reflects align attribute after mutation', async () => {
       group.align = 'center';
       await group.updateComplete;
-      expect(
-        group.getAttribute('align'),
-        'align attribute is center'
-      ).toBe('center');
+      expect(group.getAttribute('align'), 'align attribute is center').toBe(
+        'center'
+      );
 
       group.align = 'end';
       await group.updateComplete;
-      expect(
-        group.getAttribute('align'),
-        'align attribute is end'
-      ).toBe('end');
+      expect(group.getAttribute('align'), 'align attribute is end').toBe('end');
     });
   },
 };
@@ -355,10 +351,7 @@ export const AlignmentTest: Story = {
         const group = canvasElement.querySelector(
           `swc-button-group[align="${align}"]`
         ) as ButtonGroup | null;
-        expect(
-          group,
-          `group with align="${align}" is rendered`
-        ).toBeTruthy();
+        expect(group, `group with align="${align}" is rendered`).toBeTruthy();
         await group?.updateComplete;
         expect(group?.align, `group align property is "${align}"`).toBe(align);
       }
@@ -382,23 +375,20 @@ export const InvalidOrientationWarningTest: Story = {
       'swc-button-group'
     );
 
-    await step(
-      'warns when an invalid orientation is set in DEBUG mode',
-      () =>
-        withWarningSpy(async (warnCalls) => {
-          group.orientation =
-            'diagonal' as unknown as ButtonGroup['orientation'];
-          await group.updateComplete;
+    await step('warns when an invalid orientation is set in DEBUG mode', () =>
+      withWarningSpy(async (warnCalls) => {
+        group.orientation = 'diagonal' as unknown as ButtonGroup['orientation'];
+        await group.updateComplete;
 
-          expect(
-            warnCalls.length,
-            'at least one warning for invalid orientation'
-          ).toBeGreaterThan(0);
-          expect(
-            String(warnCalls[0]?.[1] || ''),
-            'warning references orientation'
-          ).toContain('orientation');
-        })
+        expect(
+          warnCalls.length,
+          'at least one warning for invalid orientation'
+        ).toBeGreaterThan(0);
+        expect(
+          String(warnCalls[0]?.[1] || ''),
+          'warning references orientation'
+        ).toContain('orientation');
+      })
     );
   },
 };
@@ -415,20 +405,15 @@ export const ValidOrientationNoWarningTest: Story = {
       'swc-button-group'
     );
 
-    await step(
-      'does not warn for valid orientation values in DEBUG mode',
-      () =>
-        withWarningSpy(async (warnCalls) => {
-          for (const orientation of BUTTON_GROUP_ORIENTATIONS) {
-            group.orientation = orientation;
-            await group.updateComplete;
-          }
+    await step('does not warn for valid orientation values in DEBUG mode', () =>
+      withWarningSpy(async (warnCalls) => {
+        for (const orientation of BUTTON_GROUP_ORIENTATIONS) {
+          group.orientation = orientation;
+          await group.updateComplete;
+        }
 
-          expect(
-            warnCalls.length,
-            'no warnings for valid orientations'
-          ).toBe(0);
-        })
+        expect(warnCalls.length, 'no warnings for valid orientations').toBe(0);
+      })
     );
   },
 };
