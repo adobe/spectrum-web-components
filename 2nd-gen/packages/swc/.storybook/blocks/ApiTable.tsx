@@ -169,8 +169,13 @@ function PropertiesTable({
   );
 }
 
-function SlotsTable({ slots }: { slots: Slot[] }) {
+type SlotWithConstraints = Slot & { allowedElements?: string[] };
+
+function SlotsTable({ slots }: { slots: SlotWithConstraints[] }) {
   if (slots.length === 0) return null;
+
+  const hasConstraints = slots.some((s) => s.allowedElements?.length);
+
   return (
     <>
       <HeaderMdx as="h3" id="slots">
@@ -182,6 +187,7 @@ function SlotsTable({ slots }: { slots: Slot[] }) {
             <tr>
               <th>Name</th>
               <th>Description</th>
+              {hasConstraints && <th>Allowed elements</th>}
             </tr>
           </thead>
           <tbody>
@@ -191,6 +197,18 @@ function SlotsTable({ slots }: { slots: Slot[] }) {
                   <code>{slot.name || '(default)'}</code>
                 </td>
                 <td>{slot.description ?? ''}</td>
+                {hasConstraints && (
+                  <td>
+                    {slot.allowedElements?.length
+                      ? slot.allowedElements.map((el, i) => (
+                          <React.Fragment key={el}>
+                            {i > 0 && ', '}
+                            <code>{el}</code>
+                          </React.Fragment>
+                        ))
+                      : '-'}
+                  </td>
+                )}
               </tr>
             ))}
           </tbody>
@@ -340,7 +358,7 @@ export function ApiTable() {
         attributes={attributes}
         argTypes={argTypes as Record<string, ArgType>}
       />
-      <SlotsTable slots={slots} />
+      <SlotsTable slots={slots as SlotWithConstraints[]} />
       <EventsTable events={events} />
       <CssPropsTable cssProps={cssProps} />
       <CssPartsTable cssParts={cssParts} />
