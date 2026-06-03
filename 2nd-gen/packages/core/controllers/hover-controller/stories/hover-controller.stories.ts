@@ -58,25 +58,8 @@ const argTypes = {
  *
  * It encapsulates warm-up and cooldown timing, the
  * [WCAG 1.4.13](https://www.w3.org/WAI/WCAG21/Understanding/content-on-hover-or-focus.html)
- * pointer-to-bubble bridge, and focus-priority logic that suppresses
- * pointer-driven timers whenever the trigger holds keyboard focus.
- *
- * **Focus priority (keyboard only)**: When the trigger receives keyboard focus
- * (Tab / Shift+Tab), the popover opens immediately and the controller enters
- * focus-priority mode: all pointer events on the trigger and popover are ignored
- * until `focusout` fires. Pointer-click focus is excluded; see Limitation below.
- *
- * **Pointer-click focus**: A pointer click on the trigger does not open the
- * popover. `pointerdown` on the trigger is outside the popover's surface, so
- * `popover="auto"` fires a light dismiss synchronously; opening on the
- * subsequent `focusin` would cause an immediate visible flash. Components that
- * need click-to-toggle should use `manual` mode.
- *
- * The controller does **not** resolve trigger elements, wire ARIA relationships,
- * or dispatch lifecycle events. Those responsibilities stay with the consuming
- * component. For pixel-accurate placement relative to the trigger (flipping
- * sides when near viewport edges, overflow detection, and arrow positioning)
- * pair with `PlacementController`.
+ * pointer-to-bubble bridge, and focus-priority logic. Pair with
+ * `PlacementController` for pixel-accurate positioning.
  */
 const meta: Meta = {
   title: 'Controllers/Hover controller',
@@ -113,12 +96,12 @@ export default meta;
 
 type Story = StoryObj;
 
-// ──────────────────────────
-//    AUTODOCS STORY
-// ──────────────────────────
+// ────────────────────
+//    PLAYGROUND STORY
+// ────────────────────
 
 export const Playground: Story = {
-  tags: ['autodocs', 'dev'],
+  tags: ['dev'],
 };
 
 // ──────────────────────────
@@ -129,84 +112,10 @@ export const Overview: Story = {
   tags: ['overview'],
 };
 
-// ──────────────────────────
-//    BASIC USAGE STORY
-// ──────────────────────────
-
-/**
- * ## What it does
- *
- * - **Warm-up / cooldown timing**: The popover opens only after the pointer has
- *   rested on the trigger for `delay` ms. Leaving starts a matching cooldown before
- *   close. Set `delay="0"` for immediate open and close.
- * - **Warm-state acceleration**: Once any instance of a component type has opened,
- *   subsequent hovers on the same type open immediately without re-timing. Warm state
- *   resets after the cooldown elapses.
- * - **WCAG 1.4.13 pointer bridge**: Moving the pointer from the trigger into the
- *   popover cancels the cooldown, keeping the popover open so users can interact with
- *   its content.
- * - **Keyboard focus priority**: `Tab` focus opens immediately and suppresses all
- *   pointer-driven timers until `focusout`.
- * - **Pointer-click exclusion**: A pointer click on the trigger does not open the
- *   popover. `popover="auto"` fires a light dismiss on `pointerdown` (the trigger is
- *   outside the popover surface); opening on the subsequent `focusin` would cause a
- *   visible flash. The controller detects this sequence and skips the open.
- *
- * ## Basic usage
- *
- * 1. Implement `HoverControllerHost` on your element (`delay`, `manual`, `disabled`,
- *    `showPopover`, `hidePopover`). The host must have `popover` set so it participates
- *    in the native Popover API.
- * 2. Construct the controller in the host's `constructor`.
- * 3. Resolve the trigger element and call `setTarget()` from `updated()` whenever it
- *    changes. The controller does not resolve trigger elements itself.
- * 4. Wire ARIA relationships (`aria-describedby` / `aria-labelledby`) in the host on
- *    `open` change — the controller does not set ARIA attributes.
- *
- * ```typescript
- * import { LitElement, type PropertyValues } from 'lit';
- * import { property } from 'lit/decorators.js';
- * import {
- *   HoverController,
- *   type HoverControllerHost,
- * } from '@spectrum-web-components/core/controllers/hover-controller.js';
- *
- * class SwcTooltip extends LitElement implements HoverControllerHost {
- *   @property({ type: Number }) delay = 1500;
- *   @property({ type: Boolean }) manual = false;
- *   @property({ type: Boolean }) disabled = false;
- *
- *   private triggerElement: HTMLElement | null = null;
- *
- *   private readonly hoverController = new HoverController(this, {
- *     warmStateKey: 'swc-tooltip',
- *   });
- *
- *   protected override updated(changes: PropertyValues): void {
- *     super.updated(changes);
- *     if (changes.has('triggerElement')) {
- *       this.hoverController.setTarget(this.triggerElement ?? null);
- *     }
- *   }
- * }
- * ```
- */
-export const Usage: Story = {
-  tags: ['usage', 'description-only'],
-};
-
 // ──────────────────────────────
 //    OPTIONS STORIES
 // ──────────────────────────────
 
-/**
- * Warm state is stored per component type using the `warmStateKey` option.
- * Two controllers with different keys are completely independent: warming one
- * type does not accelerate warm-up for the other.
- *
- * Hover trigger A until the tooltip opens (250 ms). Then hover trigger B; it
- * still waits the full 250 ms because its warm state is independent.
- */
 export const MultiTypeIsolation: Story = {
   render: () => html`
     <p>Warming type A does not accelerate type B.</p>
@@ -233,11 +142,6 @@ MultiTypeIsolation.storyName = 'Multi-type warm-state isolation';
 //    STATES STORIES
 // ──────────────────────────
 
-/**
- * When `disabled` is set on the host, the controller skips all event wiring. Pointer
- * and focus events on the trigger have no effect. Setting `disabled = false` at runtime
- * re-enables wiring without a page reload.
- */
 export const Disabled: Story = {
   render: () => html`
     <div style="padding: 8px 0;">
@@ -273,11 +177,6 @@ function manualHide(): void {
   )?.hidePopover();
 }
 
-/**
- * When `manual` is set on the host, the controller skips all event wiring. The
- * consuming component is responsible for calling `showPopover()` / `hidePopover()`
- * programmatically. Hover and focus events on the trigger have no effect.
- */
 export const Manual: Story = {
   render: () => html`
     <div style="padding: 8px 0;">
@@ -305,19 +204,6 @@ export const Manual: Story = {
 //    BEHAVIORS STORIES
 // ──────────────────────────────
 
-/**
- * When `delay > 0`, the popover opens only after the pointer has rested on the
- * trigger for the full warm-up duration.
- *
- * Once the popover has opened, warm state is set to `true` and shared across all
- * instances of the same component type on the page. A second hover on any other
- * trigger of the same type opens immediately without re-timing.
- *
- * Warm state resets after the pointer leaves and the `closeDelay` cooldown timer
- * elapses without the pointer re-entering a trigger or the popover bubble.
- * `closeDelay` is independent of `delay` — the cooldown gives the pointer time to
- * reach the bubble regardless of how quickly the popover opened.
- */
 export const WarmUpAndCooldown: Story = {
   render: () => html`
     <p>
@@ -341,11 +227,6 @@ export const WarmUpAndCooldown: Story = {
 };
 WarmUpAndCooldown.storyName = 'Warm-up and cooldown timing';
 
-/**
- * When the pointer moves from the trigger into the popover bubble, the popover stays
- * open. This satisfies the "hoverable" requirement of
- * [WCAG 1.4.13 Content on Hover or Focus](https://www.w3.org/WAI/WCAG21/Understanding/content-on-hover-or-focus.html).
- */
 export const PointerBridge: Story = {
   render: () => html`
     <p>
@@ -365,12 +246,6 @@ export const PointerBridge: Story = {
 };
 PointerBridge.storyName = 'WCAG 1.4.13 pointer bridge';
 
-/**
- * When `delay` is `0`, the popover opens synchronously on `pointerenter`.
- * The cooldown on `pointerleave` uses `closeDelay` (default 300 ms),
- * independent of `delay`, so the WCAG 1.4.13 pointer bridge still applies
- * regardless of how quickly the popover opens.
- */
 export const ImmediateDelay: Story = {
   render: () => html`
     <div style="padding: 8px 0;">
@@ -387,18 +262,6 @@ export const ImmediateDelay: Story = {
 };
 ImmediateDelay.storyName = 'Immediate open with delay="0"';
 
-/**
- * When the trigger receives keyboard focus (Tab / Shift+Tab), the popover opens
- * immediately without waiting for the warm-up timer. The controller enters
- * focus-priority mode: `pointerenter` and `pointerleave` events on both the trigger
- * and the popover bubble are ignored until `focusout` fires. `focusout` closes
- * immediately and restores normal pointer behaviour.
- *
- * **Pointer-click focus is excluded**: A pointer click on the trigger does not open
- * the popover. `pointerdown` on the trigger fires a `popover="auto"` light dismiss
- * synchronously; opening on the subsequent `focusin` would immediately be reversed,
- * producing a visible flash.
- */
 export const KeyboardFocus: Story = {
   render: () => html`
     <p>Tab to the button to open immediately; Tab away to close.</p>
@@ -413,75 +276,10 @@ export const KeyboardFocus: Story = {
 };
 KeyboardFocus.storyName = 'Keyboard focus opens immediately';
 
-// ──────────────────────────
-//    API STORY
-// ──────────────────────────
-
-/**
- * ### Methods
- *
- * | Member | Description |
- * |---|---|
- * | `setTarget(trigger)` | Sets the element that receives pointer and focus listeners. Call from `updated()` whenever the resolved trigger changes. Passing `null` detaches all listeners from the previous target. |
- *
- * ### Constructor options (`HoverControllerOptions`)
- *
- * | Option | Type | Description |
- * |---|---|---|
- * | `warmStateKey` | `string` | Per-component-type key for shared warm state on `document`. Use the element tag name (e.g. `'swc-tooltip'`). Must be static; must not vary per instance. |
- *
- * ### Host interface (`HoverControllerHost`)
- *
- * The host element must implement this interface. All members are read by the
- * controller; none are written.
- *
- * | Member | Type | Default | Description |
- * |---|---|---|---|
- * | `delay` | `number` | — | Warm-up duration in ms before the popover opens on hover. `0` opens immediately. |
- * | `closeDelay` | `number` | `300` | Cooldown duration in ms after the pointer leaves the trigger or popover. Independent of `delay` so the WCAG 1.4.13 bridge always has time to cancel. |
- * | `manual` | `boolean` | — | When `true`, the controller skips all event wiring. |
- * | `disabled` | `boolean` | — | When `true`, the controller skips all event wiring. |
- * | `showPopover()` | method | — | Called by the controller to open the popover. |
- * | `hidePopover()` | method | — | Called by the controller to close the popover. |
- *
- * See the Controls table above for interactive demos of `delay`, `closeDelay`,
- * `manual`, and `disabled`.
- */
-export const API: Story = {
-  tags: ['api', 'description-only'],
-};
-
 // ────────────────────────────────
 //    ACCESSIBILITY STORIES
 // ────────────────────────────────
 
-/**
- * ### Features
- *
- * `HoverController` implements two built-in accessibility behaviours:
- *
- * 1. **WCAG 1.4.13 pointer bridge**: The popover remains open when the pointer
- *    moves from the trigger into the popover bubble, satisfying the "hoverable"
- *    requirement of
- *    [WCAG 1.4.13 Content on Hover or Focus](https://www.w3.org/WAI/WCAG21/Understanding/content-on-hover-or-focus.html).
- *    Users who need to interact with the popover content (e.g. to copy text or
- *    follow a link) can do so without the popover closing.
- *
- * 2. **Keyboard focus opens immediately**: Tab focus bypasses the warm-up timer
- *    and opens the popover at once. While the trigger is focused, pointer events
- *    on both the trigger and the popover are suppressed, preventing them from
- *    inadvertently starting cooldown timers.
- *
- * ### Best practices
- *
- * - Pair with a `PlacementController` so the popover is always visible and
- *   positioned relative to the trigger, even near viewport edges.
- * - Set `warmStateKey` to the consuming element's tag name (e.g. `'swc-tooltip'`)
- *   to isolate warm state per component type.
- * - Use `manual` mode for programmatic control; the consuming component is then
- *   responsible for ARIA relationships and calling `showPopover()` /
- *   `hidePopover()` at the right times.
- */
 export const Accessibility: Story = {
   tags: ['a11y'],
 };
