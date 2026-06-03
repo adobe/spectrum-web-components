@@ -23,16 +23,9 @@ export const BUTTON_GROUP_SIZES = [
   'xl',
 ] as const satisfies readonly ElementSize[];
 
-export const BUTTON_GROUP_ORIENTATIONS = [
-  'horizontal',
-  'vertical',
-] as const;
+export const BUTTON_GROUP_ORIENTATIONS = ['horizontal', 'vertical'] as const;
 
-export const BUTTON_GROUP_ALIGNMENTS = [
-  'start',
-  'center',
-  'end',
-] as const;
+export const BUTTON_GROUP_ALIGNMENTS = ['start', 'center', 'end'] as const;
 
 // ──────────────────
 // TYPES
