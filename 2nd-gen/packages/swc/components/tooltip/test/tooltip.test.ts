@@ -575,6 +575,16 @@ export const VariantsTest: Story = {
         ).toBe(variant);
       }
     });
+
+    for (const variant of TOOLTIP_VARIANTS) {
+      await step(`opens ${variant} variant tooltip for VRT`, async () => {
+        const tooltip = canvasElement.querySelector(
+          `swc-tooltip[variant="${variant}"]`
+        ) as Tooltip;
+        tooltip.open = true;
+        await waitForEvent(tooltip, 'swc-open');
+      });
+    }
   },
 };
 
@@ -594,6 +604,69 @@ export const PlacementsTest: Story = {
         ).toBeTruthy();
       }
     });
+
+    for (const placement of TOOLTIP_PLACEMENTS) {
+      await step(`opens ${placement} placement tooltip for VRT`, async () => {
+        const tooltip = canvasElement.querySelector(
+          `swc-tooltip[placement="${placement}"]`
+        ) as Tooltip;
+        tooltip.open = true;
+        await waitForEvent(tooltip, 'swc-open');
+      });
+    }
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Dev mode warnings
+// ──────────────────────────────────────────────────────────────
+
+// ──────────────────────────────────────────────────────────────
+// VRT: Visual regression tests
+// ──────────────────────────────────────────────────────────────
+
+export const ForcedColorsOpenTest: Story = {
+  render: () => html`
+    <swc-button id="tt-forced-colors-trigger">Action</swc-button>
+    <swc-tooltip for="tt-forced-colors-trigger" placement="top">
+      Save your changes
+    </swc-tooltip>
+  `,
+  parameters: {
+    chromatic: { forcedColors: 'active' },
+  },
+  play: async ({ canvasElement }) => {
+    const tooltip = await getComponent<Tooltip>(canvasElement, 'swc-tooltip');
+    tooltip.open = true;
+    await waitForEvent(tooltip, 'swc-open');
+  },
+};
+
+export const CJKLineHeightTest: Story = {
+  render: () => html`
+    <swc-button id="tt-cjk-trigger">Action</swc-button>
+    <swc-tooltip for="tt-cjk-trigger" placement="top" lang="ja">
+      変更内容を保存する
+    </swc-tooltip>
+  `,
+  play: async ({ canvasElement }) => {
+    const tooltip = await getComponent<Tooltip>(canvasElement, 'swc-tooltip');
+    tooltip.open = true;
+    await waitForEvent(tooltip, 'swc-open');
+  },
+};
+
+export const LogicalPlacementRTLTest: Story = {
+  render: () => html`
+    <swc-button id="tt-rtl-trigger">Action</swc-button>
+    <swc-tooltip for="tt-rtl-trigger" placement="start" dir="rtl">
+      Appears at start (right in RTL)
+    </swc-tooltip>
+  `,
+  play: async ({ canvasElement }) => {
+    const tooltip = await getComponent<Tooltip>(canvasElement, 'swc-tooltip');
+    tooltip.open = true;
+    await waitForEvent(tooltip, 'swc-open');
   },
 };
 

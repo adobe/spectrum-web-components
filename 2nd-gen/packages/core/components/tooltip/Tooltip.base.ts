@@ -28,8 +28,9 @@ import {
  * the host element, wires the popover lifecycle (`beforetoggle`, `toggle`,
  * `transitionend`), dispatches `swc-open`, `swc-close`, `swc-after-open`, and
  * `swc-after-close` events, resolves the trigger element via `for` or
- * `triggerElement`, and maintains the `ariaDescribedByElements` relationship on
- * `open` change. No rendering logic, including placement.
+ * `triggerElement`, and syncs the ARIA relationship (`ariaDescribedByElements`
+ * or `ariaLabelledByElements` when `labeling` is set) on `open` and `labeling`
+ * changes. No rendering logic, including placement.
  *
  * @slot - Text label displayed in the tooltip.
  */
