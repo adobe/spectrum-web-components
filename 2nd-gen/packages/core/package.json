@@ -79,6 +79,18 @@
       "types": "./dist/components/tabs/index.d.ts",
       "import": "./dist/components/tabs/index.js"
     },
+    "./decorators": {
+      "types": "./dist/decorators/index.d.ts",
+      "import": "./dist/decorators/index.js"
+    },
+    "./decorators/constrained-slot.js": {
+      "types": "./dist/decorators/constrained-slot.d.ts",
+      "import": "./dist/decorators/constrained-slot.js"
+    },
+    "./decorators/index.js": {
+      "types": "./dist/decorators/index.d.ts",
+      "import": "./dist/decorators/index.js"
+    },
     "./controllers": {
       "types": "./dist/controllers/index.d.ts",
       "import": "./dist/controllers/index.js"
@@ -212,6 +224,15 @@
       ],
       "components/tabs/index.js": [
         "dist/components/tabs/index.d.ts"
+      ],
+      "decorators": [
+        "dist/decorators/index.d.ts"
+      ],
+      "decorators/constrained-slot.js": [
+        "dist/decorators/constrained-slot.d.ts"
+      ],
+      "decorators/index.js": [
+        "dist/decorators/index.d.ts"
       ],
       "controllers": [
         "dist/controllers/index.d.ts"

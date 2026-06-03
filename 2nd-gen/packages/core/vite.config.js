@@ -83,6 +83,12 @@ function getEntries() {
   // Find all utils/*.ts files
   Object.assign(entries, scanTsFiles(resolve(__dirname, 'utils'), 'utils'));
 
+  // Find all decorators/*.ts files
+  Object.assign(
+    entries,
+    scanTsFiles(resolve(__dirname, 'decorators'), 'decorators')
+  );
+
   return entries;
 }
 

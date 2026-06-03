@@ -11,6 +11,96 @@
  */
 
 /**
+ * CEM plugin that reads `@constrainedSlot` decorator usage on class properties
+ * and annotates the corresponding slot entry in the manifest with an
+ * `allowedElements` array.
+ *
+ * Given a component class with:
+ * ```ts
+ * @constrainedSlot({ allowed: ['swc-button'], slot: '' })
+ * private _buttons!: Element[];
+ * ```
+ *
+ * The plugin finds the `@slot` CEM entry for that slot and adds:
+ * ```json
+ * { "name": "", "allowedElements": ["swc-button"] }
+ * ```
+ *
+ * If no `@slot` entry exists for the given slot name it creates one, so the
+ * constraint is still captured even when the `@slot` JSDoc tag is on a base
+ * class that was analyzed separately.
+ */
+function constrainedSlotPlugin() {
+  return {
+    name: 'cem-plugin-constrained-slot',
+    analyzePhase({ ts, node, moduleDoc }) {
+      if (!ts.isPropertyDeclaration(node)) return;
+
+      const decorators = ts.getDecorators?.(node) ?? node.decorators;
+      if (!decorators?.length) return;
+
+      const csDecorator = [...decorators].find((dec) => {
+        if (!ts.isCallExpression(dec.expression)) return false;
+        return (
+          ts.isIdentifier(dec.expression.expression) &&
+          dec.expression.expression.text === 'constrainedSlot'
+        );
+      });
+      if (!csDecorator || !ts.isCallExpression(csDecorator.expression)) return;
+
+      const optionsArg = csDecorator.expression.arguments[0];
+      if (!optionsArg || !ts.isObjectLiteralExpression(optionsArg)) return;
+
+      let allowed = [];
+      let slotName = '';
+
+      for (const prop of optionsArg.properties) {
+        if (!ts.isPropertyAssignment(prop)) continue;
+        const key = ts.isIdentifier(prop.name) ? prop.name.text : null;
+
+        if (
+          key === 'allowed' &&
+          ts.isArrayLiteralExpression(prop.initializer)
+        ) {
+          allowed = [...prop.initializer.elements]
+            .filter((el) => ts.isStringLiteral(el))
+            .map((el) => el.text);
+        }
+
+        if (key === 'slot' && ts.isStringLiteral(prop.initializer)) {
+          slotName = prop.initializer.text;
+        }
+      }
+
+      if (!allowed.length) return;
+
+      const classNode = node.parent;
+      if (!ts.isClassDeclaration(classNode)) return;
+
+      const className = classNode.name?.getText();
+      if (!className) return;
+
+      const declaration = moduleDoc.declarations?.find(
+        (d) => d.name === className
+      );
+      if (!declaration) return;
+
+      if (!declaration.slots) declaration.slots = [];
+
+      const existingSlot = declaration.slots.find(
+        (s) => (s.name ?? '') === slotName
+      );
+
+      if (existingSlot) {
+        existingSlot.allowedElements = allowed;
+      } else {
+        declaration.slots.push({ name: slotName, allowedElements: allowed });
+      }
+    },
+  };
+}
+
+/**
  * CEM plugin that extracts `@status` and `@since` JSDoc tags from class
  * declarations and attaches them to the corresponding CEM declaration.
  *
@@ -76,6 +166,7 @@ export default {
     '../core/element/**/*.ts',
     '../core/mixins/**/*.ts',
     '../core/utils/**/*.ts',
+    '../core/decorators/**/*.ts',
   ],
   exclude: [
     '**/*.stories.ts',
@@ -89,5 +180,5 @@ export default {
   outdir: '.storybook',
   litelement: true,
   dev: false,
-  plugins: [statusPlugin()],
+  plugins: [constrainedSlotPlugin(), statusPlugin()],
 };
