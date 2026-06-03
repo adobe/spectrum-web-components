@@ -221,7 +221,7 @@ export const CooldownResetsWarmState: Story = {
 
     await step('leave trigger A; wait for cooldown to elapse', async () => {
       pointerLeave(triggerA);
-      // Cooldown fires after delay (250 ms); wait well beyond that.
+      // Cooldown fires after closeDelay (300 ms default); wait well beyond that.
       await wait(400);
       expect(hostA.matches(':popover-open')).toBe(false);
     });
@@ -490,7 +490,7 @@ export const PointerBridgeKeepsOpen: Story = {
       'enter popover host before cooldown fires — cancels cooldown',
       async () => {
         pointerEnter(host);
-        // Wait longer than the cooldown delay (200 ms) to confirm timer was cancelled.
+        // Wait longer than closeDelay (300 ms default) to confirm timer was cancelled.
         await wait(350);
         expect(host.matches(':popover-open')).toBe(true);
       }
@@ -579,13 +579,19 @@ export const GuardReEvaluation: Story = {
       pointerEnter(trigger);
       await wait(150);
       expect(host.matches(':popover-open')).toBe(true);
-      pointerLeave(trigger);
-      await wait(150);
     });
 
-    await step('set disabled=true; hover no longer opens', async () => {
-      host.disabled = true;
-      await host.updateComplete;
+    await step(
+      'disabled=true while popover is open closes it immediately',
+      async () => {
+        host.disabled = true;
+        await host.updateComplete;
+        // hostUpdated() detects the guard activated and calls callHidePopover().
+        expect(host.matches(':popover-open')).toBe(false);
+      }
+    );
+
+    await step('hover has no effect while disabled', async () => {
       pointerEnter(trigger);
       await wait(150);
       expect(host.matches(':popover-open')).toBe(false);
@@ -598,7 +604,7 @@ export const GuardReEvaluation: Story = {
       await wait(150);
       expect(host.matches(':popover-open')).toBe(true);
       pointerLeave(trigger);
-      await wait(150);
+      await wait(400);
     });
   },
 };
@@ -647,7 +653,9 @@ export const SetTargetNull: Story = {
       await wait(150);
       expect(host.matches(':popover-open')).toBe(true);
       pointerLeave(trigger);
-      await wait(150);
+      // Wait for closeDelay (300 ms) to elapse so the popover is closed
+      // before the next step detaches the trigger.
+      await wait(400);
     });
 
     await step(
@@ -686,10 +694,15 @@ export const DelayZeroOpensSync: Story = {
       expect(host.matches(':popover-open')).toBe(true);
     });
 
-    await step('pointerleave closes immediately when delay=0', async () => {
-      pointerLeave(trigger);
-      expect(host.matches(':popover-open')).toBe(false);
-    });
+    await step(
+      'pointerleave starts closeDelay cooldown (default 300 ms)',
+      async () => {
+        pointerLeave(trigger);
+        // closeDelay (300 ms default) is independent of delay=0; wait for it.
+        await wait(400);
+        expect(host.matches(':popover-open')).toBe(false);
+      }
+    );
   },
 };
 

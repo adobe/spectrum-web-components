@@ -65,12 +65,14 @@ class DemoHoverHostBase extends LitElement {
 
   static override properties = {
     delay: { type: Number },
+    closeDelay: { type: Number, attribute: 'close-delay' },
     manual: { type: Boolean },
     disabled: { type: Boolean },
     triggerId: { type: String, attribute: 'trigger-id' },
   };
 
   declare delay: number;
+  declare closeDelay: number;
   declare manual: boolean;
   declare disabled: boolean;
   declare triggerId: string;
@@ -80,6 +82,7 @@ class DemoHoverHostBase extends LitElement {
   constructor(warmStateKey: string) {
     super();
     this.delay = 100;
+    this.closeDelay = 300;
     this.manual = false;
     this.disabled = false;
     this.triggerId = '';

@@ -21,6 +21,7 @@ import './demo-hosts.js';
 
 const args = {
   delay: 1500,
+  closeDelay: 300,
   manual: false,
   disabled: false,
 };
@@ -29,8 +30,14 @@ const argTypes = {
   delay: {
     control: 'number',
     description:
-      'Warm-up and cooldown duration in milliseconds. `0` opens and closes immediately.',
+      'Warm-up duration in milliseconds before the popover opens on hover. `0` opens immediately.',
     table: { category: 'Options', defaultValue: { summary: '1500' } },
+  },
+  closeDelay: {
+    control: 'number',
+    description:
+      'Cooldown duration in milliseconds after the pointer leaves the trigger or popover. Independent of `delay` so the WCAG 1.4.13 pointer bridge always has time to cancel the close.',
+    table: { category: 'Options', defaultValue: { summary: '300' } },
   },
   manual: {
     control: 'boolean',
@@ -85,6 +92,7 @@ const meta: Meta = {
     <demo-hover-host
       trigger-id="hover-playground-trigger"
       delay=${args.delay}
+      close-delay=${args.closeDelay}
       ?manual=${args.manual}
       ?disabled=${args.disabled}
     >
@@ -305,8 +313,10 @@ export const Manual: Story = {
  * instances of the same component type on the page. A second hover on any other
  * trigger of the same type opens immediately without re-timing.
  *
- * Warm state resets after the pointer leaves and the cooldown timer (same duration)
+ * Warm state resets after the pointer leaves and the `closeDelay` cooldown timer
  * elapses without the pointer re-entering a trigger or the popover bubble.
+ * `closeDelay` is independent of `delay` — the cooldown gives the pointer time to
+ * reach the bubble regardless of how quickly the popover opened.
  */
 export const WarmUpAndCooldown: Story = {
   render: () => html`
@@ -356,8 +366,10 @@ export const PointerBridge: Story = {
 PointerBridge.storyName = 'WCAG 1.4.13 pointer bridge';
 
 /**
- * When `delay` is `0`, the popover opens and closes synchronously on
- * `pointerenter` / `pointerleave` without starting any timer.
+ * When `delay` is `0`, the popover opens synchronously on `pointerenter`.
+ * The cooldown on `pointerleave` uses `closeDelay` (default 300 ms),
+ * independent of `delay`, so the WCAG 1.4.13 pointer bridge still applies
+ * regardless of how quickly the popover opens.
  */
 export const ImmediateDelay: Story = {
   render: () => html`
@@ -423,16 +435,17 @@ KeyboardFocus.storyName = 'Keyboard focus opens immediately';
  * The host element must implement this interface. All members are read by the
  * controller; none are written.
  *
- * | Member | Type | Description |
- * |---|---|---|
- * | `delay` | `number` | Warm-up and cooldown duration in ms. `0` opens and closes immediately. |
- * | `manual` | `boolean` | When `true`, the controller skips all event wiring. |
- * | `disabled` | `boolean` | When `true`, the controller skips all event wiring. |
- * | `showPopover()` | method | Called by the controller to open the popover. |
- * | `hidePopover()` | method | Called by the controller to close the popover. |
+ * | Member | Type | Default | Description |
+ * |---|---|---|---|
+ * | `delay` | `number` | — | Warm-up duration in ms before the popover opens on hover. `0` opens immediately. |
+ * | `closeDelay` | `number` | `300` | Cooldown duration in ms after the pointer leaves the trigger or popover. Independent of `delay` so the WCAG 1.4.13 bridge always has time to cancel. |
+ * | `manual` | `boolean` | — | When `true`, the controller skips all event wiring. |
+ * | `disabled` | `boolean` | — | When `true`, the controller skips all event wiring. |
+ * | `showPopover()` | method | — | Called by the controller to open the popover. |
+ * | `hidePopover()` | method | — | Called by the controller to close the popover. |
  *
- * See the Controls table above for interactive demos of `delay`, `manual`, and
- * `disabled`.
+ * See the Controls table above for interactive demos of `delay`, `closeDelay`,
+ * `manual`, and `disabled`.
  */
 export const API: Story = {
   tags: ['api', 'description-only'],

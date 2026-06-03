@@ -18,8 +18,18 @@ import type { ReactiveController, ReactiveElement } from 'lit';
 
 /** Minimum interface required from any element that hosts a {@link HoverController}. */
 export interface HoverControllerHost extends ReactiveElement {
-  /** Warm-up and cooldown duration in milliseconds. `0` means immediate open and close. */
+  /** Warm-up duration in milliseconds before the popover opens on hover. `0` opens immediately. */
   readonly delay: number;
+
+  /**
+   * Cooldown duration in milliseconds after the pointer leaves the trigger or
+   * popover before the popover closes. Independent of `delay` so that the
+   * WCAG 1.4.13 pointer bridge always has enough time to cancel the close,
+   * regardless of how quickly the popover opened.
+   *
+   * Defaults to `300` when omitted.
+   */
+  readonly closeDelay?: number;
   /** When `true`, the controller skips all event wiring. */
   readonly manual: boolean;
   /** When `true`, the controller skips all event wiring. */
@@ -38,6 +48,11 @@ export interface HoverControllerOptions {
    */
   warmStateKey: string;
 }
+
+// Minimum time the pointer has to reach the popover bubble after leaving the
+// trigger before the popover closes. Independent of `delay` so WCAG 1.4.13
+// bridge always has enough time regardless of the open delay.
+const DEFAULT_CLOSE_DELAY = 300;
 
 /** @internal */
 type WarmState = {
@@ -93,6 +108,13 @@ export class HoverController implements ReactiveController {
   private target: HTMLElement | null = null;
   private warmupTimer: ReturnType<typeof setTimeout> | null = null;
   private isBridgeWired = false;
+
+  /**
+   * Tracks whether the `disabled`/`manual` guard is currently active. Used by
+   * `hostUpdated()` to skip the rewire on every Lit update when the guard state
+   * hasn't changed.
+   */
+  private isGuardActive = false;
 
   /** True while the trigger has keyboard focus; pointer-driven timers are suppressed. */
   private hasFocusOpen = false;
@@ -150,17 +172,28 @@ export class HoverController implements ReactiveController {
     this.clearCooldownTimer();
     this.hasFocusOpen = false;
     this.hadPointerdown = false;
+    this.isGuardActive = false;
   }
 
   /** Re-evaluates `disabled` and `manual` guards whenever the host updates. */
   public hostUpdated(): void {
-    if (this.host.disabled || this.host.manual) {
+    const guardNowActive = this.host.disabled || this.host.manual;
+    if (guardNowActive === this.isGuardActive) {
+      return;
+    }
+    this.isGuardActive = guardNowActive;
+
+    if (guardNowActive) {
+      this.unwireTarget();
       this.clearWarmupTimer();
+      this.clearCooldownTimer();
       this.hasFocusOpen = false;
       this.hadPointerdown = false;
+      this.unwireBridge();
+      this.callHidePopover();
+    } else {
+      this.wireTarget();
     }
-    this.unwireTarget();
-    this.wireTarget();
   }
 
   // ─────────────────────────────────────────────────
@@ -257,17 +290,18 @@ export class HoverController implements ReactiveController {
 
   private startCooldown(): void {
     const warmState = getWarmState(this.host.ownerDocument, this.warmStateKey);
-
-    if (this.host.delay > 0) {
-      warmState.cooldownTimer = setTimeout(() => {
-        warmState.cooldownTimer = null;
-        warmState.isWarm = false;
-        this.callHidePopover();
-      }, this.host.delay);
-    } else {
+    // closeDelay is independent of the open delay so the WCAG 1.4.13 bridge
+    // always has enough time to cancel, even when delay=0. The bridge calls
+    // clearCooldownTimer() when the pointer enters the popover bubble;
+    // pointerleave (trigger) and pointerenter (host) for a single mouse
+    // gesture fire synchronously in the same task, so the bridge always runs
+    // before this queued callback.
+    const closeDelay = this.host.closeDelay ?? DEFAULT_CLOSE_DELAY;
+    warmState.cooldownTimer = setTimeout(() => {
+      warmState.cooldownTimer = null;
       warmState.isWarm = false;
       this.callHidePopover();
-    }
+    }, closeDelay);
   }
 
   // ─────────────────────────────────────────────────
@@ -297,6 +331,12 @@ export class HoverController implements ReactiveController {
     } else {
       this.warmupTimer = setTimeout(() => {
         this.warmupTimer = null;
+        // Guard against the race where disabled/manual became true after the
+        // timer fired but before this callback ran (clearTimeout is a no-op
+        // once the timer entry has been removed from the active-timer map).
+        if (this.host.disabled || this.host.manual) {
+          return;
+        }
         warmState.isWarm = true;
         this.showWithBridge();
       }, this.host.delay);
