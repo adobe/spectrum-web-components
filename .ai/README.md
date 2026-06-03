@@ -84,7 +84,7 @@ These two rules share the same glob (`2nd-gen/**/stories/**`) and work as a pair
   - Verification process to prevent hallucinated attributes, slots, or ARIA claims
 - **stories-format**: File structure and technical conventions
   - Visual separators, meta configuration, required tags, layout parameters
-  - `render` vs `args` patterns, `flexLayout` usage, `section-order` parameter
+  - `render` vs `args` patterns, `flexLayout` usage
   - Static color three-story pattern, image asset conventions
 
 #### Component README
@@ -295,10 +295,10 @@ Skills are used on-demand. When a task matches a skill’s purpose, the agent re
 
 #### Migration — phase 7: documentation (`migration-documentation`)
 
-- **purpose**: Write JSDoc, Storybook stories, and usage docs so the component is usable and understandable by others
+- **purpose**: Author the per-component MDX docs page and finalize Storybook stories + public-API JSDoc so the component is usable and understandable by others
 - **How to invoke**: Say "write docs for [component] migration", "document [component] for 2nd-gen", or "phase 7 migration for [component]"
 - Use when: Tests pass and the approved `migration-plan.md` can be used as the source of truth for migration notes and rationale
-- Provides: JSDoc guidelines, stories scaffolding, README/usage doc structure, documentation checklist, and plan-aligned migration-note guidance
+- Provides: per-component MDX authoring (`<component>.mdx`), public-API JSDoc guidelines on `Component.ts`, stories file finalization (drop `'autodocs'` from Playground, complete Accessibility story), documentation checklist, and plan-aligned migration-note guidance
 
 #### Migration — phase 8: review (`migration-review`)
 
@@ -324,8 +324,8 @@ Skills are used on-demand. When a task matches a skill’s purpose, the agent re
 #### Documentation
 
 - **purpose**: Follow Adobe content writing standards when writing documentation
-- **How to invoke**: Use when writing or editing docs — e.g. story JSDoc (`.stories.ts`), README/changeset/Jira/PR (`.md`, `.mdx`), or when you say “write the PR description”, “draft the Jira ticket”, “add JSDoc to this story”.
-- Use when: Writing story JSDoc, 1st-gen docs, changesets, Jira tickets, or PR descriptions
+- **How to invoke**: Use when writing or editing docs — e.g. per-unit MDX docs pages (`<unit>.mdx`), public-API JSDoc in `Component.ts`, the meta-level JSDoc in `.stories.ts`, README/changeset/Jira/PR (`.md`, `.mdx`), or when you say “write the PR description”, “draft the Jira ticket”, “write the docs for this component”.
+- Use when: Authoring 2nd-gen docs pages, writing 1st-gen docs, changesets, Jira tickets, or PR descriptions
 - Provides: Voice and tone, grammar and mechanics, markdown/JSDoc reference, links to Spectrum design system content guidelines
 
 #### Explain code

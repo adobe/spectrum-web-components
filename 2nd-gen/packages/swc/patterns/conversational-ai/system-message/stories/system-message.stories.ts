@@ -78,12 +78,12 @@ export { meta };
 export default meta;
 
 // ────────────────────
-//    AUTODOCS STORY
+//    PLAYGROUND STORY
 // ────────────────────
 
 export const Playground: Story = {
   decorators: [withSystemTurn],
-  tags: ['autodocs', 'dev'],
+  tags: ['dev'],
 };
 
 // ──────────────────────────────
@@ -99,37 +99,6 @@ export const Overview: Story = {
 //    ANATOMY STORY
 // ──────────────────────────
 
-/**
- * ### Fixed layout order
- *
- * The shell **always** paints **status -> default content -> feedback -> sources -> suggestions**, no matter how you order
- * children under `<swc-system-message>`, as long as each uses the right **`slot`** name.
- *
- * ### Slots
- *
- * - **Default slot** — System reply body as semantic HTML and optional app components
- * - **`status`** — `<swc-response-status>`
- * - **`feedback`** — `<swc-message-feedback>`
- * - **`sources`** — `<swc-message-sources>`
- * - **`suggestions`** — `<swc-suggestion-group>`
- *
- * ### Default slot guidance
- *
- * Put the AI reply in the **default slot** as semantic HTML styled with Spectrum
- * token variables.
- *
- * ### Typography in the default slot
- *
- * Rich AI body copy should use Spectrum typography **utility classes** on semantic HTML. Applications must load **`typography.css`** from
- * `@adobe/spectrum-wc` after design tokens. See **Typography** and the typography [consumer migration guide](/docs/components-typography-consumer-migration-guide--readme).
- *
- * - **Wrapper** — Root container: `class="swc-Typography--prose"`.
- *   `swc-Typography--prose` applies consistent vertical spacing between block-level children.
- * - **Body** — Use semantic paragraphs and lists for body styling.
- * - **Headings** — Use semantic `<h2>`–`<h4>`.
- * - **Lists / links** — Keep lists and `<a href>` inside the prose wrapper so margins and link treatments stay
- *   consistent with Spectrum prose styles.
- */
 export const Anatomy: Story = {
   args: {
     'status-slot': `<swc-response-status slot="status">I used the prompt and source context to draft a concise, presentation-ready response structure.</swc-response-status>`,
@@ -146,10 +115,6 @@ export const Anatomy: Story = {
 //    OPTIONS STORIES
 // ──────────────────────────
 
-/**
- * While the AI is generating a response, slot `<swc-response-status loading>`
- * into the `status` slot. Once generation is complete, remove `loading`.
- */
 export const Loading: Story = {
   render: () => html`
     <div style="display:flex;flex-direction:column;gap:48px;">
@@ -184,7 +149,6 @@ export const Loading: Story = {
       </div>
     </div>
   `,
-  parameters: { 'section-order': 1 },
   tags: ['options'],
 };
 
@@ -192,23 +156,6 @@ export const Loading: Story = {
 //    ACCESSIBILITY STORY
 // ────────────────────────────────
 
-/**
- * ### Features
- *
- * The `<swc-system-message>` element provides a layout container.
- * Accessibility is delegated to the slotted sub-components:
- *
- * - `<swc-response-status>` announces generation state via `role="status"`
- * - `<swc-message-feedback>` exposes a labelled toggle button group via `role="group"` and `aria-pressed`
- * - `<swc-message-sources>` uses `aria-expanded` on its disclosure toggle
- * - `<swc-suggestion-item>` is a native focusable `<button>` element
- *
- * ### Best practices
- *
- * - Use semantic HTML in the **default slot** (paragraphs, lists, headings) for screen reader clarity
- * - Style default-slot content with **`swc-Typography--prose`** after loading **`typography.css`** (see Anatomy / component docs above)
- * - Ensure source links have descriptive text
- */
 export const Accessibility: Story = {
   args: {
     'status-slot': `<swc-response-status slot="status">I used the prompt and source context to draft a concise, presentation-ready response structure.</swc-response-status>`,
@@ -221,13 +168,6 @@ export const Accessibility: Story = {
   tags: ['a11y'],
 };
 
-/**
- * Isolated accessibility baseline for `<swc-system-message>`.
- *
- * This story intentionally avoids dependent conversational AI subcomponents and
- * `swc-conversation-turn` so ARIA snapshots only fail when `swc-system-message`
- * itself changes.
- */
 export const AccessibilityIsolated: Story = {
   render: () => html`
     <swc-system-message>
