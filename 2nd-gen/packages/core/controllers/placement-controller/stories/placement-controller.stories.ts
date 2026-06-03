@@ -137,6 +137,18 @@ export const Overview: Story = {
 };
 
 // ──────────────────────────
+//    INTERACTIVE STORY
+// ──────────────────────────
+
+export const Interactive: Story = {
+  tags: ['behaviors'],
+  render: () => html`
+    <demo-placement-interactive></demo-placement-interactive>
+  `,
+  parameters: { 'section-order': 0 },
+};
+
+// ──────────────────────────
 //    BASIC USAGE STORY
 // ──────────────────────────
 
@@ -154,7 +166,7 @@ export const Overview: Story = {
  *
  * ### Middleware stack
  *
- * Same order as gen1: `offset → shift → flip → size`.
+ * Same order as Gen1: `offset → shift → flip → size`.
  *
  * 1. **`offset`** — trigger-relative gap along the placement direction (`offset` option) and along the trigger edge (`crossOffset` option).
  * 2. **`shift`** — slides the floating element along the placement axis to keep it inside the boundary using `containerPadding` as inset. Always installed.
@@ -504,12 +516,12 @@ export const Accessibility: Story = {
 // ──────────────────────────
 
 /**
- * ### Relationship to gen1 `PlacementController`
+ * ### Relationship to Gen1 `PlacementController`
  *
- * The gen2 controller is a **focused subset** of the gen1
+ * The Gen2 controller is a **focused subset** of the Gen1
  * `PlacementController`: single `autoUpdate` channel, hyphenated placements,
  * and callback-based placement surfacing. The middleware stack and the
- * always-on `size` clamp behaviour match gen1. It owns geometry only —
+ * always-on `size` clamp behaviour match Gen1. It owns geometry only —
  * open/close lifecycle, ARIA, focus, and dismissal remain the caller's
  * responsibility.
  *

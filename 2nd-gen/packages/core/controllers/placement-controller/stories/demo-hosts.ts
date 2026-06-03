@@ -17,7 +17,7 @@ import {
   type PropertyValues,
   type TemplateResult,
 } from 'lit';
-import { customElement, property, query } from 'lit/decorators.js';
+import { customElement, property, query, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 
 import {
@@ -30,6 +30,7 @@ import {
 declare global {
   interface HTMLElementTagNameMap {
     'demo-placement-playground': DemoPlacementPlayground;
+    'demo-placement-interactive': DemoPlacementInteractive;
     'demo-placement-offset': DemoPlacementOffset;
     'demo-placement-constrain-size': DemoPlacementConstrainSize;
     'demo-placement-virtual-trigger': DemoPlacementVirtualTrigger;
@@ -124,8 +125,132 @@ function demoClasses(
   return classes;
 }
 
+/**
+ * Bare playground surface: a single trigger + floating element positioned by
+ * the controller. Driven entirely by reflected attributes so the Storybook
+ * Controls panel is the single source of truth. The richer in-canvas control
+ * panel lives in `demo-placement-interactive`.
+ */
 @customElement('demo-placement-playground')
 export class DemoPlacementPlayground extends LitElement {
+  static override styles = [
+    sharedStyles,
+    css`
+      .demo-surface {
+        block-size: 220px;
+        display: grid;
+        place-items: center;
+      }
+
+      .demo-surface button.trigger {
+        box-sizing: border-box;
+        inline-size: 48px;
+        block-size: 48px;
+        min-inline-size: 48px;
+        min-block-size: 48px;
+        padding: 0;
+      }
+
+      .floating {
+        min-width: 72px;
+        padding: 6px;
+      }
+    `,
+  ];
+
+  @property({ type: String, reflect: true })
+  placement: Placement = PLAYGROUND_DEFAULTS.placement;
+
+  @property({ type: Number, reflect: true })
+  offset = PLAYGROUND_DEFAULTS.offset;
+
+  @property({ type: Number, attribute: 'cross-offset', reflect: true })
+  crossOffset = PLAYGROUND_DEFAULTS.crossOffset;
+
+  @property({ type: Number, attribute: 'container-padding', reflect: true })
+  containerPadding = PLAYGROUND_DEFAULTS.containerPadding;
+
+  @property({ type: Boolean, attribute: 'should-flip', reflect: true })
+  shouldFlip = PLAYGROUND_DEFAULTS.shouldFlip;
+
+  @property({ type: String, attribute: 'actual-placement', reflect: true })
+  actualPlacement: Placement | null = null;
+
+  @query('button.trigger') triggerEl!: HTMLButtonElement;
+  @query('.floating') floatingEl!: HTMLDivElement;
+
+  private controller = new PlacementController(this);
+
+  protected override firstUpdated(): void {
+    this.bind();
+  }
+
+  protected override updated(changed: PropertyValues): void {
+    if (
+      changed.has('placement') ||
+      changed.has('offset') ||
+      changed.has('crossOffset') ||
+      changed.has('containerPadding') ||
+      changed.has('shouldFlip')
+    ) {
+      this.bind();
+    }
+  }
+
+  override disconnectedCallback(): void {
+    super.disconnectedCallback?.();
+    this.controller.stop();
+  }
+
+  private bind(): void {
+    if (!this.triggerEl || !this.floatingEl) {
+      return;
+    }
+    bindController(
+      this.controller,
+      this.triggerEl,
+      this.floatingEl,
+      {
+        placement: this.placement,
+        offset: this.offset,
+        crossOffset: this.crossOffset,
+        containerPadding: this.containerPadding,
+        shouldFlip: this.shouldFlip,
+      },
+      (next) => {
+        this.actualPlacement = next;
+      }
+    );
+  }
+
+  protected override render(): TemplateResult {
+    return html`
+      <div class="demo-surface">
+        <button
+          class=${classMap(demoClasses({ trigger: true }, DETAIL_XS))}
+          type="button"
+        >
+          Trigger
+        </button>
+        <div class="floating">
+          <span class=${classMap(demoClasses(BODY_XS_EMPHASIZED))}>
+            ${this.placement}
+          </span>
+        </div>
+      </div>
+    `;
+  }
+}
+
+/**
+ * Self-contained interactive sandbox: an in-canvas control panel (placement
+ * picker grid, offset / cross-offset / container-padding inputs, and a
+ * should-flip toggle) wired to its own internal state. Independent of the
+ * Storybook Controls panel — useful for exploring placement behaviour directly
+ * in the canvas.
+ */
+@customElement('demo-placement-interactive')
+export class DemoPlacementInteractive extends LitElement {
   static override styles = [
     sharedStyles,
     css`
@@ -235,23 +360,12 @@ export class DemoPlacementPlayground extends LitElement {
     `,
   ];
 
-  @property({ type: String, reflect: true })
-  placement: Placement = PLAYGROUND_DEFAULTS.placement;
-
-  @property({ type: Number, reflect: true })
-  offset = PLAYGROUND_DEFAULTS.offset;
-
-  @property({ type: Number, attribute: 'cross-offset', reflect: true })
-  crossOffset = PLAYGROUND_DEFAULTS.crossOffset;
-
-  @property({ type: Number, attribute: 'container-padding', reflect: true })
-  containerPadding = PLAYGROUND_DEFAULTS.containerPadding;
-
-  @property({ type: Boolean, attribute: 'should-flip', reflect: true })
-  shouldFlip = PLAYGROUND_DEFAULTS.shouldFlip;
-
-  @property({ type: String, attribute: 'actual-placement', reflect: true })
-  actualPlacement: Placement | null = null;
+  @state() placement: Placement = PLAYGROUND_DEFAULTS.placement;
+  @state() offset = PLAYGROUND_DEFAULTS.offset;
+  @state() crossOffset = PLAYGROUND_DEFAULTS.crossOffset;
+  @state() containerPadding = PLAYGROUND_DEFAULTS.containerPadding;
+  @state() shouldFlip = PLAYGROUND_DEFAULTS.shouldFlip;
+  @state() actualPlacement: Placement | null = null;
 
   @query('button.trigger') triggerEl!: HTMLButtonElement;
   @query('.floating') floatingEl!: HTMLDivElement;
@@ -300,15 +414,18 @@ export class DemoPlacementPlayground extends LitElement {
     );
   }
 
-  private onPlacementCellClick(placement: Placement): void {
-    this.placement = placement;
+  private onPlacementCellClick(event: Event): void {
+    this.placement = (event.currentTarget as HTMLElement).dataset
+      .placement as Placement;
   }
 
-  private onNumberInput(
-    property: 'offset' | 'crossOffset' | 'containerPadding',
-    event: Event
-  ): void {
-    const value = Number((event.target as HTMLInputElement).value);
+  private onNumberInput(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    const property = input.dataset.control as
+      | 'offset'
+      | 'crossOffset'
+      | 'containerPadding';
+    const value = Number(input.value);
     if (Number.isFinite(value)) {
       this[property] = value;
     }
@@ -328,10 +445,11 @@ export class DemoPlacementPlayground extends LitElement {
         type="button"
         class="placement-cell"
         style=${style}
+        data-placement=${placement}
         aria-pressed=${selected ? 'true' : 'false'}
         aria-label=${placement}
         title=${placement}
-        @click=${() => this.onPlacementCellClick(placement)}
+        @click=${this.onPlacementCellClick}
       ></button>
     `;
   }
@@ -429,10 +547,10 @@ export class DemoPlacementPlayground extends LitElement {
                   type="number"
                   class=${classMap(demoClasses(DETAIL_XS))}
                   aria-label="Offset in pixels"
+                  data-control="offset"
                   .value=${String(this.offset)}
                   title="Main-axis gap from the trigger to the floating element."
-                  @input=${(event: Event) =>
-                    this.onNumberInput('offset', event)}
+                  @input=${this.onNumberInput}
                 />
                 <span class=${classMap(demoClasses(DETAIL_XS))}>px</span>
               </label>
@@ -459,10 +577,10 @@ export class DemoPlacementPlayground extends LitElement {
                   type="number"
                   class=${classMap(demoClasses(DETAIL_XS))}
                   aria-label="Cross offset in pixels"
+                  data-control="crossOffset"
                   .value=${String(this.crossOffset)}
                   title="Cross-axis slide along the trigger edge."
-                  @input=${(event: Event) =>
-                    this.onNumberInput('crossOffset', event)}
+                  @input=${this.onNumberInput}
                 />
                 <span class=${classMap(demoClasses(DETAIL_XS))}>px</span>
               </label>
@@ -483,10 +601,10 @@ export class DemoPlacementPlayground extends LitElement {
                   type="number"
                   class=${classMap(demoClasses(DETAIL_XS))}
                   aria-label="Container padding in pixels"
+                  data-control="containerPadding"
                   .value=${String(this.containerPadding)}
                   title="Overflow-boundary inset for flip and shift middleware."
-                  @input=${(event: Event) =>
-                    this.onNumberInput('containerPadding', event)}
+                  @input=${this.onNumberInput}
                 />
                 <span class=${classMap(demoClasses(DETAIL_XS))}>px</span>
               </label>
@@ -772,18 +890,13 @@ export class DemoPlacementConstrainSize extends LitElement {
     `,
   ];
 
-  @property({ type: Boolean, attribute: 'is-constrained', reflect: true })
-  isConstrained = false;
-
   @query('button') triggerEl!: HTMLButtonElement;
   @query('.floating') floatingEl!: HTMLDivElement;
 
   private controller = new PlacementController(this);
 
   protected override firstUpdated(): void {
-    bindController(this.controller, this.triggerEl, this.floatingEl, {}, () => {
-      this.isConstrained = this.controller.isConstrained;
-    });
+    bindController(this.controller, this.triggerEl, this.floatingEl, {});
   }
 
   override disconnectedCallback(): void {
@@ -808,9 +921,6 @@ export class DemoPlacementConstrainSize extends LitElement {
           )}
         </div>
       </div>
-      <p class=${classMap(demoClasses({ meta: true }, DETAIL_XS))}>
-        isConstrained: ${this.isConstrained}
-      </p>
     `;
   }
 }
