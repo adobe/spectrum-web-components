@@ -59,14 +59,14 @@
 }
 
 .swc-Link--secondary {
-  --swc-link-text-color: token("neutral-content-color-default");
+  --swc-link-text-color-default: token("neutral-content-color-default");
   --swc-link-text-color-hover: token("neutral-content-color-hover");
   --swc-link-text-color-down: token("neutral-content-color-down");
   --swc-link-text-color-focus: token("neutral-content-color-key-focus");
 }
 
 .swc-Link--staticWhite {
-  --swc-link-text-color: token("static-white-text-color");
+  --swc-link-text-color-default: token("static-white-text-color");
   --swc-link-text-color-hover: token("static-white-text-color");
   --swc-link-text-color-down: token("static-white-text-color");
   --swc-link-text-color-focus: token("static-white-text-color");
@@ -74,7 +74,7 @@
 }
 
 .swc-Link--staticBlack {
-  --swc-link-text-color: token("static-black-text-color");
+  --swc-link-text-color-default: token("static-black-text-color");
   --swc-link-text-color-hover: token("static-black-text-color");
   --swc-link-text-color-down: token("static-black-text-color");
   --swc-link-text-color-focus: token("static-black-text-color");

@@ -31,7 +31,7 @@ a:where(:not([class])) {
   font-style: token("default-font-style");
   font-weight: token("medium-font-weight");
   line-height: token("line-height-100");
-  color: var(--swc-link-text-color, token("accent-content-color-default"));
+  color: var(--swc-link-text-color-default, token("accent-content-color-default"));
   text-decoration: underline;
   text-decoration-thickness: token("text-underline-thickness");
   text-underline-offset: token("text-underline-gap");
