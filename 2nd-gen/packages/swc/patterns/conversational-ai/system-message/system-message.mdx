@@ -1,0 +1,70 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import { DocsFooter, DocsHeader } from '../../../.storybook/blocks';
+
+import * as SystemMessageStories from './stories/system-message.stories';
+
+<Meta of={SystemMessageStories} />
+
+<DocsHeader />
+
+## Anatomy
+
+### Fixed layout order
+
+The shell **always** paints **status → default content → feedback → sources → suggestions**, no matter how you order children under `<swc-system-message>`, as long as each uses the right **`slot`** name.
+
+### Slots
+
+- **Default slot**: system reply body as semantic HTML and optional app components
+- **`status`**: `<swc-response-status>`
+- **`feedback`**: `<swc-message-feedback>`
+- **`sources`**: `<swc-message-sources>`
+- **`suggestions`**: `<swc-suggestion-group>`
+
+### Default slot guidance
+
+Put the AI reply in the **default slot** as semantic HTML styled with Spectrum token variables.
+
+### Typography in the default slot
+
+Rich AI body copy should use Spectrum typography **utility classes** on semantic HTML. Applications must load **`typography.css`** from `@adobe/spectrum-wc` after design tokens. See **Typography** and the typography [consumer migration guide](/docs/components-typography-consumer-migration-guide--readme).
+
+- **Wrapper**: root container `class="swc-Typography--prose"`. `swc-Typography--prose` applies consistent vertical spacing between block-level children.
+- **Body**: use semantic paragraphs and lists for body styling.
+- **Headings**: use semantic `<h2>`–`<h4>`.
+- **Lists / links**: keep lists and `<a href>` inside the prose wrapper so margins and link treatments stay consistent with Spectrum prose styles.
+
+<Canvas of={SystemMessageStories.Anatomy} />
+
+## Options
+
+### Loading
+
+While the AI is generating a response, slot `<swc-response-status loading>` into the `status` slot. Once generation is complete, remove `loading`.
+
+<Canvas of={SystemMessageStories.Loading} />
+
+## Accessibility
+
+### Features
+
+The `<swc-system-message>` element provides a layout container. Accessibility is delegated to the slotted sub-components:
+
+- `<swc-response-status>` announces generation state via `role="status"`
+- `<swc-message-feedback>` exposes a labelled toggle button group via `role="group"` and `aria-pressed`
+- `<swc-message-sources>` uses `aria-expanded` on its disclosure toggle
+- `<swc-suggestion-item>` is a native focusable `<button>` element
+
+### Best practices
+
+- Use semantic HTML in the **default slot** (paragraphs, lists, headings) for screen reader clarity
+- Style default-slot content with **`swc-Typography--prose`** after loading **`typography.css`** (see Anatomy / component docs above)
+- Ensure source links have descriptive text
+
+<Canvas of={SystemMessageStories.Accessibility} />
+
+Isolated accessibility baseline for `<swc-system-message>`. This story intentionally avoids dependent conversational AI subcomponents and `swc-conversation-turn` so ARIA snapshots only fail when `swc-system-message` itself changes.
+
+<Canvas of={SystemMessageStories.AccessibilityIsolated} />
+
+<DocsFooter />

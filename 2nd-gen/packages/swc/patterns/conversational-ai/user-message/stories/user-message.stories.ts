@@ -67,7 +67,7 @@ export { meta };
 export default meta;
 
 // ────────────────────
-//    AUTODOCS STORY
+//    PLAYGROUND STORY
 // ────────────────────
 
 export const Playground: Story = {
@@ -81,7 +81,7 @@ export const Playground: Story = {
     'subtitle-slot': '2026',
   },
   decorators: [withUserTurn],
-  tags: ['autodocs', 'dev'],
+  tags: ['dev'],
 };
 
 // ──────────────────────────────
@@ -106,12 +106,6 @@ export const Overview: Story = {
 //    ANATOMY STORY
 // ──────────────────────────
 
-/**
- * A user message consists of:
- *
- * 1. **Bubble** — Rounded container with a neutral gray background (`gray-50`)
- * 2. **Default slot** — The message content: plain text, a card attachment, or image-first content
- */
 export const Anatomy: Story = {
   args: {
     'default-slot': 'Can you help me create a 45-minute presentation?',
@@ -124,13 +118,6 @@ export const Anatomy: Story = {
 //    OPTIONS STORIES
 // ──────────────────────────
 
-/**
- * Bubble sizing and padding are inferred from slotted content:
- *
- * - **Copy** — default text-only content with the bubble's default width and padding
- * - **Card** — compact attachment layout with thumbnail, title, and subtitle
- * - **Media** — larger preview-first attachment layout with metadata beneath the preview
- */
 export const Content: Story = {
   render: () => html`
     <div
@@ -177,7 +164,6 @@ export const Content: Story = {
       </div>
     </div>
   `,
-  parameters: { 'section-order': 1 },
   tags: ['options'],
 };
 
@@ -185,22 +171,6 @@ export const Content: Story = {
 //    ACCESSIBILITY STORY
 // ────────────────────────────────
 
-/**
- * ### Features
- *
- * The `<swc-user-message>` element implements the following accessibility features:
- *
- * #### Semantic structure
- *
- * - The bubble is rendered as a `<div>` acting as a visual container
- * - `type="copy"` uses the default slot for message text
- * - `type="card"` and `type="media"` use named slots for thumbnail, title, and subtitle
- *
- * ### Best practices
- *
- * - Ensure message text is descriptive and self-contained
- * - For card and media attachments, ensure titles/subtitles and `aria-label`/`alt` text are present for previews
- */
 export const Accessibility: Story = {
   args: {
     type: 'copy',

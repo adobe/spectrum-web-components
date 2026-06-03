@@ -43,7 +43,6 @@ const ALLOWED_TAGS = new Set([
   'dev',
   'utility',
   'upcoming',
-  'description-only',
   '!test',
   '!dev',
   '!autodocs',

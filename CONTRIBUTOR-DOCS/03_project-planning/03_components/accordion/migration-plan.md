@@ -329,7 +329,7 @@ Gates align with [01_washing-machine-workflow.md](../../02_workstreams/02_2nd-ge
 
 ### Documentation
 
-- [ ] JSDoc, usage docs, Storybook stories (include a spacing / **custom properties** story for “no inline padding” style parity—**no** **`show paddings`**-style attribute; see [rendering roadmap — Figma](./rendering-and-styling-migration-analysis.md#figma--s2-web-desktop-scale))
+- [ ] Public-API JSDoc on `Component.ts`, per-component MDX docs page (`accordion.mdx`) with a spacing / **custom properties** section for “no inline padding” style parity—**no** **`show paddings`**-style attribute; see [rendering roadmap — Figma](./rendering-and-styling-migration-analysis.md#figma--s2-web-desktop-scale)
 - [ ] Do not document arrow-key navigation between headers for 2nd-gen (contrast with legacy README)
 
 ### Review
