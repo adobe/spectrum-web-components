@@ -18,6 +18,7 @@ import '../stories/demo-hosts.js';
 import { getComponent } from '../../../../swc/utils/test-utils.js';
 import { fromFloatingPlacement, toFloatingPlacement } from '../index.js';
 import type {
+  DemoPlacementMultiController,
   DemoPlacementTestFixture,
   DemoPlacementVirtualTrigger,
 } from '../stories/demo-hosts.js';
@@ -123,6 +124,46 @@ export const VirtualTriggerMoves: Story = {
       await waitFor(() => {
         const [, y] = readTranslate(host.floatingEl);
         expect(y).toBeGreaterThan(initialY);
+      });
+    });
+  },
+};
+
+/**
+ * `recompute()` forces a fresh `computePosition` pass outside `autoUpdate`.
+ * A `VirtualTrigger` reports its anchor from JS coordinates, so moving the
+ * anchor produces no layout event for `autoUpdate` to observe — the position
+ * only updates when `recompute()` is called. This isolates `recompute()`: the
+ * translate stays put after the coordinates change, and moves only once
+ * `recompute()` runs.
+ */
+export const RecomputeUpdatesPositionInIsolation: Story = {
+  ...VirtualTrigger,
+  play: async ({ canvasElement, step }) => {
+    const host = await getComponent<DemoPlacementVirtualTrigger>(
+      canvasElement,
+      'demo-placement-virtual-trigger'
+    );
+    await waitFor(() => expect(host.floatingEl.style.translate).not.toBe(''));
+    const [x0, y0] = readTranslate(host.floatingEl);
+
+    await step('moving the virtual anchor alone does not reposition', () => {
+      host.x += 120;
+      host.y += 120;
+      // The anchor rect is computed in JS, so no resize/scroll/layout-shift
+      // event fires for `autoUpdate`. Without `recompute()` the controller has
+      // no reason to run, so the translate is still the pre-move value.
+      const [x1, y1] = readTranslate(host.floatingEl);
+      expect(x1).toBe(x0);
+      expect(y1).toBe(y0);
+    });
+
+    await step('recompute() picks up the new anchor position', async () => {
+      host.controller.recompute();
+      await waitFor(() => {
+        const [x2, y2] = readTranslate(host.floatingEl);
+        expect(x2).toBeGreaterThan(x0);
+        expect(y2).toBeGreaterThan(y0);
       });
     });
   },
@@ -583,6 +624,64 @@ export const ArrowMiddlewarePositionsTip: Story = {
       const triggerCenterX = triggerRect.left + triggerRect.width / 2;
       const tipCenterX = tipRect.left + tipRect.width / 2;
       expect(Math.abs(tipCenterX - triggerCenterX)).toBeLessThanOrEqual(2);
+    });
+  },
+};
+
+/**
+ * Two `PlacementController` instances on a single host keep separate state and
+ * do not interfere: each positions its own floating element at its own trigger,
+ * each exposes its own `--swc-placement-available-*` custom properties, and
+ * calling `stop()` on one leaves the other's position, properties, and
+ * `actualPlacement` untouched. All controller state lives on the instance (no
+ * module-level or static sharing), so this guards that property against future
+ * refactors.
+ */
+export const TwoControllersDoNotInterfere: Story = {
+  render: () => html`
+    <demo-placement-multi-controller></demo-placement-multi-controller>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const host = await getComponent<DemoPlacementMultiController>(
+      canvasElement,
+      'demo-placement-multi-controller'
+    );
+    const availableWidth = (el: HTMLElement): string =>
+      el.style.getPropertyValue('--swc-placement-available-width');
+
+    await waitFor(() => {
+      expect(host.actualPlacementA).toBe('bottom-start');
+      expect(host.actualPlacementB).toBe('top-end');
+    });
+
+    await step('each floating element is positioned at its own trigger', () => {
+      const aRect = host.floatingA.getBoundingClientRect();
+      const bRect = host.floatingB.getBoundingClientRect();
+      const aTrigger = host.triggerA.getBoundingClientRect();
+      const bTrigger = host.triggerB.getBoundingClientRect();
+      // A (`bottom-start`) sits below its top-left trigger; B (`top-end`) sits
+      // above its bottom-right trigger. Distinct triggers, distinct positions.
+      expect(Math.abs(aRect.top - aTrigger.bottom)).toBeLessThanOrEqual(2);
+      expect(Math.abs(bRect.bottom - bTrigger.top)).toBeLessThanOrEqual(2);
+    });
+
+    await step('each floating element gets its own available space', () => {
+      expect(availableWidth(host.floatingA)).toMatch(/^\d+px$/);
+      expect(availableWidth(host.floatingB)).toMatch(/^\d+px$/);
+    });
+
+    await step('stopping one controller leaves the other intact', () => {
+      const bTranslateBefore = host.floatingB.style.translate;
+      host.controllerA.stop();
+
+      // A is torn down: custom props removed, placement cleared.
+      expect(availableWidth(host.floatingA)).toBe('');
+      expect(host.controllerA.actualPlacement).toBeNull();
+
+      // B is untouched: same position, props, and placement.
+      expect(host.floatingB.style.translate).toBe(bTranslateBefore);
+      expect(availableWidth(host.floatingB)).toMatch(/^\d+px$/);
+      expect(host.actualPlacementB).toBe('top-end');
     });
   },
 };

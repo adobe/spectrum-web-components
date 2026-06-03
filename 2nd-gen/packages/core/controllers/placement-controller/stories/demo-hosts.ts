@@ -37,6 +37,7 @@ declare global {
     'demo-placement-placements': DemoPlacementPlacements;
     'demo-placement-cell': DemoPlacementCell;
     'demo-placement-test-fixture': DemoPlacementTestFixture;
+    'demo-placement-multi-controller': DemoPlacementMultiController;
     'demo-placement-arrow': DemoPlacementArrow;
   }
 }
@@ -980,7 +981,8 @@ export class DemoPlacementVirtualTrigger extends LitElement {
   @query('.surface') surfaceEl!: HTMLDivElement;
   @query('.floating') floatingEl!: HTMLDivElement;
 
-  private controller = new PlacementController(this);
+  /** Exposed so tests can call `recompute()` directly. */
+  controller = new PlacementController(this);
 
   private virtualTrigger: VirtualTrigger = {
     getBoundingClientRect: () => {
@@ -1344,6 +1346,104 @@ export class DemoPlacementTestFixture extends LitElement {
           ${this.placement}
         </div>
       </div>
+    `;
+  }
+}
+
+/**
+ * Test-only fixture. Two independent `PlacementController` instances on a
+ * single host, each positioning its own trigger + floating pair. Used to
+ * verify the two controllers keep separate state and do not interfere — and
+ * that `stop()` on one leaves the other's position and custom properties
+ * intact. Not surfaced from any docs story.
+ *
+ * Trigger A pins to the top-left with placement `bottom-start`; trigger B pins
+ * to the bottom-right with placement `top-end`. Both fit without flipping, so
+ * the computed placements are deterministic.
+ */
+@customElement('demo-placement-multi-controller')
+export class DemoPlacementMultiController extends LitElement {
+  static override styles = css`
+    :host {
+      display: block;
+      position: relative;
+      inline-size: 100%;
+      block-size: 100vh;
+    }
+
+    button.trigger {
+      position: absolute;
+      inline-size: 40px;
+      block-size: 40px;
+      margin: 0;
+      padding: 0;
+    }
+
+    button.trigger-a {
+      inset-block-start: 8px;
+      inset-inline-start: 8px;
+    }
+
+    button.trigger-b {
+      inset-block-end: 8px;
+      inset-inline-end: 8px;
+    }
+
+    .floating {
+      position: fixed;
+      inset: 0 auto auto 0;
+      inline-size: 80px;
+      block-size: 40px;
+      padding: 4px;
+      background: Canvas;
+      color: CanvasText;
+      border: 1px solid currentcolor;
+      pointer-events: none;
+    }
+  `;
+
+  @query('button.trigger-a') triggerA!: HTMLButtonElement;
+  @query('button.trigger-b') triggerB!: HTMLButtonElement;
+  @query('.floating-a') floatingA!: HTMLDivElement;
+  @query('.floating-b') floatingB!: HTMLDivElement;
+
+  @property({ type: String, attribute: 'actual-placement-a', reflect: true })
+  actualPlacementA: Placement | null = null;
+
+  @property({ type: String, attribute: 'actual-placement-b', reflect: true })
+  actualPlacementB: Placement | null = null;
+
+  /** Both controllers are exposed so tests can call `stop()` independently. */
+  controllerA = new PlacementController(this);
+  controllerB = new PlacementController(this);
+
+  protected override firstUpdated(): void {
+    this.controllerA.start(this.triggerA, this.floatingA, {
+      placement: 'bottom-start',
+      onPlacementChange: (next) => {
+        this.actualPlacementA = next;
+      },
+    });
+    this.controllerB.start(this.triggerB, this.floatingB, {
+      placement: 'top-end',
+      onPlacementChange: (next) => {
+        this.actualPlacementB = next;
+      },
+    });
+  }
+
+  override disconnectedCallback(): void {
+    super.disconnectedCallback?.();
+    this.controllerA.stop();
+    this.controllerB.stop();
+  }
+
+  protected override render(): TemplateResult {
+    return html`
+      <button type="button" class="trigger trigger-a">A</button>
+      <div class="floating floating-a">A</div>
+      <button type="button" class="trigger trigger-b">B</button>
+      <div class="floating floating-b">B</div>
     `;
   }
 }
