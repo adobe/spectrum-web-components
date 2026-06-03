@@ -1,0 +1,101 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import { DocsFooter, DocsHeader } from '../../.storybook/blocks';
+
+import * as AvatarStories from './stories/avatar.stories';
+
+<Meta of={AvatarStories} />
+
+<DocsHeader />
+
+## Anatomy
+
+An avatar consists of:
+
+1. **Image** — a circular clipped profile photo
+
+### Content
+
+- `src`: URL of the profile image
+- `alt`: text description for assistive technology. Pass `alt=""` to mark as decorative.
+- `size`: numeric size token (50–1500). Defaults to `500` (40 px).
+
+<Canvas of={AvatarStories.Anatomy} />
+
+## Upcoming features
+
+### Additional avatar types
+
+- **Gradient image**: shows a generated colorful gradient when no photo is available
+- **Initials**: shows the user's initials inside the avatar circle as a photo fallback
+- **Guest**: shows a default guest icon when no user identity is known
+
+### Avatar Group
+
+- Display a collection of avatars in a stacked layout with configurable overlap and overflow
+
+## Options
+
+### Sizes
+
+Avatars come in 17 sizes from 50 to 1500, ranging from 16 px to 104 px.
+Sizes 50–700 match 1st-gen; sizes 800–1500 are new in Spectrum 2.
+
+The default size is `500` (40 px).
+
+<Canvas of={AvatarStories.Sizes} />
+
+### Decorative
+
+Use the `decorative` attribute and `alt=""` to treat the avatar as decorative: the image is hidden from assistive technology.
+
+Use this **only when the surrounding context already identifies the person** (e.g., their name appears next to the avatar).
+
+<Canvas of={AvatarStories.Decorative} />
+
+### Outline
+
+Use the `outline` attribute to render a solid outline around the avatar image. This is useful when the avatar's image border color matches the surrounding background. The outline uses `--swc-avatar-outline-width` (currently 1 px) for sizes 50–900 and a hardcoded 2 px for sizes 1000–1500, matching the Spectrum 2 specification. Within an Avatar Group, `outline` defaults to `true` to visually separate stacked avatars.
+
+<Canvas of={AvatarStories.Outline} />
+
+### Disabled
+
+A disabled avatar indicates that the entity is not currently active or available. The avatar remains visible in the layout at reduced opacity, communicating that it may become active later. It remains in the accessibility tree: `disabled` is purely visual.
+
+<Canvas of={AvatarStories.Disabled} />
+
+## Behaviors
+
+### In Action Button
+
+An avatar can be placed inside an action button to create a user-triggered action tied to a specific person or entity.
+
+<Canvas of={AvatarStories.InActionButton} />
+
+## Accessibility
+
+### Features
+
+The `<swc-avatar>` element implements several accessibility features:
+
+#### Alt text
+
+- Provide a descriptive `alt` value identifying the person or entity depicted
+- Pass `alt=""` and set the `decorative` attribute when the name already appears in context
+
+#### Non-interactive element
+
+- Avatars have no interactive behavior and are not focusable
+- Screen readers announce the image using the `alt` attribute value
+- No keyboard interaction is required or expected
+- To make an avatar a link, wrap it in a standard `<a>` element and set `aria-label` on the anchor when the destination is not clear from surrounding context
+
+### Best practices
+
+- Always set `alt`: omitting it causes some screen readers to announce the image URL
+- Use `alt=""` and the `decorative` attribute only when the person is identified by adjacent text
+- Keep alt text short and descriptive: prefer `"Jane Doe"` over `"Profile photo of Jane Doe"`
+
+<Canvas of={AvatarStories.Accessibility} />
+
+<DocsFooter />

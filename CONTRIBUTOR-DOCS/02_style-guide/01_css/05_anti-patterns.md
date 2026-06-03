@@ -62,6 +62,11 @@
     - [Why This Happens](#why-this-happens)
     - [Why This Is a Problem](#why-this-is-a-problem)
     - [✅ Correct Approach](#-correct-approach)
+- [10. Size-Specific Custom Properties](#10-size-specific-custom-properties)
+    - [❌ Anti-Pattern](#-anti-pattern)
+    - [Why This Happens](#why-this-happens)
+    - [Why This Is a Problem](#why-this-is-a-problem)
+    - [✅ Correct Approach](#-correct-approach)
 - [Final Reminder](#final-reminder)
 
 </details>
@@ -332,8 +337,9 @@ Badge safely compounds attributes within `:host()` when updating custom properti
 
 ### ✅ Correct Approach
 
-- Expose only what the component itself needs
+- Expose only what the component itself needs based on its own variant, state, or size requirements
 - Keep mechanical and derived values private
+- Exception: expose properties required for nested component relationships or shared utility styling
 
 🔎 **Badge reference:**  
 Badge exposes a minimal, intentional surface and uses `_swc-*` properties for derived calculations.
@@ -492,6 +498,55 @@ This restriction only applies when `:host()` is the outermost element being targ
 #### Migration note: `:dir()` in RTL-aware components
 
 `:dir()` is the most common pseudo-class where this issue surfaces during migrations because RTL overrides are nearly always added after a component's base styles are written. When adding `:dir()` to any `:host`-level rule during migration, always write it as a separate `:host(:dir(rtl)[...])` rule rather than a nested `&:dir(rtl)`.
+
+## 10. Size-Specific Custom Properties
+
+### ❌ Anti-Pattern
+
+```css
+:host([size="compact"]) {
+  --_swc-accordion-compact-padding-top: token("spacing-100");
+}
+```
+
+### Why This Happens
+
+- Attempting to keep size-specific values "private" while still referencing them in variant rules
+- Mapping one custom property per size variant for clarity
+
+### Why This Is a Problem
+
+- A custom property defined on `:host([size="compact"])` is part of the component's external style surface — the `--_swc-*` prefix does not make it inaccessible from outside the shadow root
+- Every size requires its own named property, bloating the API surface
+- Consumers cannot override a single "padding-top" concept; they must know and target every size-specific property name
+
+### ✅ Correct Approach
+
+Expose a single property on the base and override it per size selector:
+
+```css
+.swc-Accordion {
+  padding-block-start: var(--swc-accordion-padding-top, token("spacing-200"));
+}
+
+:host([size="compact"]) {
+  --swc-accordion-padding-top: token("spacing-100");
+}
+
+:host([size="spacious"]) {
+  --swc-accordion-padding-top: token("spacing-300");
+}
+```
+
+Consumers targeting a specific size can still override via attribute selectors on the host:
+
+```css
+swc-accordion[size="compact"] {
+  --swc-accordion-padding-top: var(--my-compact-spacing);
+}
+```
+
+📖 See: *Custom Properties Style Guide → [Component custom property exposure](02_custom-properties.md#component-custom-property-exposure)*
 
 ## Final Reminder
 

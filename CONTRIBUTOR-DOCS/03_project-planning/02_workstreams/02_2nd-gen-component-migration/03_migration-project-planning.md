@@ -75,7 +75,7 @@ Note that as of 8 May 2026, tickets correspond to multiple phases.
 | File structure, API, Typescript, and accessibility | 4 | APG pattern applied; ARIA and keyboard; a11y tests. |
 | Full visual fidelity | 5 | CSS migrated; tokens and variants; render() with classMap. |
 | Code style conformance and testing | 6 | Unit and a11y tests pass; coverage in place. |
-| Documentation and consumer migration guide | 7 | JSDoc; Storybook stories; migration notes if needed. |
+| Documentation and consumer migration guide | 7 | Per-component MDX docs page; finalized stories file (drop `'autodocs'`, complete Accessibility story); public-API JSDoc on `Component.ts`; consumer migration guide if needed. |
 | Review & PR | 8 | Final Q&A on feature branch with phases 1–7 merged; checklist and status table done; **feature branch merged to `main`**. |
 
 Copy the corresponding phase’s “What to do,” “What to check,” and “Quality gate” from the [washing machine workflow](02_step-by-step/01_washing-machine-workflow.md) into each ticket’s description or acceptance criteria.
@@ -90,7 +90,7 @@ Copy the corresponding phase’s “What to do,” “What to check,” and “Q
 | Accessibility | 4 | APG pattern applied; ARIA and keyboard; a11y tests. |
 | Styling | 5 | CSS migrated; tokens and variants; render() with classMap. |
 | Testing | 6 | Unit and a11y tests pass; coverage in place. |
-| Documentation | 7 | JSDoc; Storybook stories; migration notes if needed. |
+| Documentation | 7 | Per-component MDX docs page; finalized stories file (drop `'autodocs'`, complete Accessibility story); public-API JSDoc on `Component.ts`; consumer migration guide if needed. |
 | Review & PR | 8 | Final Q&A on feature branch with phases 1–7 merged; checklist and status table done; **feature branch merged to `main`**. |
 
 ### Badge example

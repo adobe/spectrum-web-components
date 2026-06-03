@@ -547,7 +547,7 @@ The tip element is always CSS-centered on the placement edge and does not requir
 
 ### Positioning before `PlacementController`
 
-In the initial release, `placement` applies only the CSS class (tip direction). The host has no pixel positioning from the component. Stories must supply inline styles or a CSS override to position the tooltip visibly near a trigger for demo purposes. This is intentional and should be noted in the relevant story's JSDoc.
+In the initial release, `placement` applies only the CSS class (tip direction). The host has no pixel positioning from the component. Stories must supply inline styles or a CSS override to position the tooltip visibly near a trigger for demo purposes. This is intentional and should be noted in the relevant section of the per-component MDX docs page (`tooltip.mdx`).
 
 ### Auto-stack behavior
 
