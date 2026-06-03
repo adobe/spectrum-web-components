@@ -121,6 +121,7 @@ export const Anatomy: Story = {
 
 export const Sizes: Story = {
   render: (args) => html`
+    ${ACTION_BUTTON_VALID_SIZES.map((size) =>
       template({
         ...args,
         size,
