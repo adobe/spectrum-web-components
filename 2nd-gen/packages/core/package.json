@@ -95,6 +95,10 @@
       "types": "./dist/controllers/language-resolution.d.ts",
       "import": "./dist/controllers/language-resolution.js"
     },
+    "./controllers/reference-target-controller": {
+      "types": "./dist/controllers/reference-target-controller/index.d.ts",
+      "import": "./dist/controllers/reference-target-controller/index.js"
+    },
     "./element": {
       "types": "./dist/element/index.d.ts",
       "import": "./dist/element/index.js"
@@ -224,6 +228,9 @@
       ],
       "controllers/language-resolution.js": [
         "dist/controllers/language-resolution.d.ts"
+      ],
+      "controllers/reference-target-controller": [
+        "dist/controllers/reference-target-controller/index.d.ts"
       ],
       "element": [
         "dist/element/index.d.ts"
