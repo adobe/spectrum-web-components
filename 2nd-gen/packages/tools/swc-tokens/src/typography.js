@@ -154,10 +154,10 @@ function generateTypographyAnchorRules(prefix) {
 
   const baseDecls = pickValidDecls({
     font: 'inherit',
-    color: `var(--${prefix}-link-text-color, token("accent-content-color-default"))`,
+    color: `var(--${prefix}-link-text-color-default, token("accent-content-color-default"))`,
     'text-decoration': 'underline',
-    'text-decoration-thickness': `var(--${prefix}-link-text-underline-thickness, token("text-underline-thickness"))`,
-    'text-underline-offset': `var(--${prefix}-link-text-underline-gap, token("text-underline-gap"))`,
+    'text-decoration-thickness': `token("text-underline-thickness")`,
+    'text-underline-offset': `token("text-underline-gap")`,
     transition: `color token("animation-duration-100") ease-in-out`,
   });
 
