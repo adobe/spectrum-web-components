@@ -74,11 +74,11 @@ export { meta };
 export default meta;
 
 // ────────────────────
-//    AUTODOCS STORY
+//    PLAYGROUND STORY
 // ────────────────────
 
 export const Playground: Story = {
-  tags: ['autodocs', 'dev'],
+  tags: ['dev'],
 };
 
 // ──────────────────────────────
@@ -96,12 +96,6 @@ export const Overview: Story = {
 //    ANATOMY STORY
 // ──────────────────────────
 
-/**
- * A message sources component consists of:
- *
- * 1. **Toggle button** — Chevron + configurable label, acts as a disclosure button
- * 2. **Sources list** — Numbered list of linked source items (visible when expanded)
- */
 export const Anatomy: Story = {
   args: {
     open: true,
@@ -115,14 +109,6 @@ export const Anatomy: Story = {
 //    OPTIONS STORIES
 // ──────────────────────────
 
-/**
- * The `open` attribute controls whether the sources list is visible, and
- * the `label` attribute customizes the button/list label:
- *
- * - **`open=false`** — Only the toggle button is shown (default)
- * - **`open=true`** — The numbered source list is revealed below the toggle
- * - **`label="References"`** — Replaces "Sources" in visible UI and ARIA labels
- */
 export const Open: Story = {
   render: () => html`
     <div style="display:flex;flex-direction:column;gap:32px;">
@@ -152,7 +138,6 @@ export const Open: Story = {
       </div>
     </div>
   `,
-  parameters: { 'section-order': 1 },
   tags: ['options'],
 };
 
@@ -160,17 +145,6 @@ export const Open: Story = {
 //    ACCESSIBILITY STORY
 // ────────────────────────────────
 
-/**
- * ### Features
- *
- * The `<swc-message-sources>` element implements the following accessibility features:
- *
- * #### Disclosure pattern
- *
- * - The toggle button uses `aria-expanded` to communicate open/closed state
- * - The toggle button uses `aria-controls` pointing to the panel `id`
- * - The sources panel uses `role="list"` with `aria-label` set from `label`
- */
 export const Accessibility: Story = {
   args: {
     open: true,
