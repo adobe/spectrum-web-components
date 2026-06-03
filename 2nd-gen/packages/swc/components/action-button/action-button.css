@@ -47,11 +47,11 @@
   border: var(--_swc-action-button-border-width) solid var(--swc-action-button-border-color-default, transparent);
   border-radius: var(--swc-action-button-border-radius, token("corner-radius-medium-size-medium"));
   overflow: visible;
-  cursor: pointer;
+  cursor: default;
   user-select: none;
   transition-timing-function: token("animation-ease-in-out");
   transition-duration: token("animation-duration-100");
-  transition-property: outline, border-color, color, background-color;
+  transition-property: outline, border-color, color, background-color, transform;
 }
 
 /* ── States ───────────────────────────────────────── */
@@ -74,6 +74,8 @@
   color: var(--swc-action-button-content-color-down, token("neutral-content-color-down"));
   background-color: var(--swc-action-button-background-color-down, token("gray-200"));
   border-color: var(--swc-action-button-border-color-down, transparent);
+  transform: var(--swc-action-button-down-state-transform, perspective(var(--_swc-action-button-min-block-size)) translate3d(0, 0, token("component-size-difference-down")));
+  will-change: transform;
 }
 
 /* Inflated specificity to prevent variant override when disabled */
@@ -256,6 +258,9 @@ slot[name="icon"]::slotted(*) {
 }
 
 .swc-ActionButton--pendingActive {
+  --swc-action-button-down-state-transform: none;
+
+  align-items: center;
   justify-content: center;
   inline-size: var(--_swc-button-pending-inline-size);
 
