@@ -148,3 +148,107 @@ test.describe('Action Button - ARIA Snapshots', () => {
     await expect(host).not.toHaveAttribute('role');
   });
 });
+
+test.describe('Action Button - Keyboard Interactions', () => {
+  test('should receive focus via Tab', async ({ page }) => {
+    const root = await gotoStory(
+      page,
+      'components-action-button--overview',
+      'swc-action-button'
+    );
+    const button = root.locator('swc-action-button').first();
+    await expect(button).not.toBeFocused();
+    await page.keyboard.press('Tab');
+    await expect(button).toBeFocused();
+  });
+
+  test('should activate on Enter', async ({ page }) => {
+    await gotoStory(
+      page,
+      'components-action-button--overview',
+      'swc-action-button'
+    );
+    await page.evaluate(() => {
+      const el = document.querySelector('swc-action-button')!;
+      (el as any).__clickCount = 0;
+      el.addEventListener('click', () => {
+        (el as any).__clickCount++;
+      });
+    });
+    await page.keyboard.press('Tab');
+    await page.keyboard.press('Enter');
+    const count = await page.evaluate(
+      () => (document.querySelector('swc-action-button') as any).__clickCount
+    );
+    expect(count, 'Enter fires click event').toBe(1);
+  });
+
+  test('should activate on Space', async ({ page }) => {
+    await gotoStory(
+      page,
+      'components-action-button--overview',
+      'swc-action-button'
+    );
+    await page.evaluate(() => {
+      const el = document.querySelector('swc-action-button')!;
+      (el as any).__clickCount = 0;
+      el.addEventListener('click', () => {
+        (el as any).__clickCount++;
+      });
+    });
+    await page.keyboard.press('Tab');
+    await page.keyboard.press('Space');
+    const count = await page.evaluate(
+      () => (document.querySelector('swc-action-button') as any).__clickCount
+    );
+    expect(count, 'Space fires click event').toBe(1);
+  });
+
+  test('should exclude native-disabled button from tab order', async ({
+    page,
+  }) => {
+    const root = await gotoStory(
+      page,
+      'components-action-button--states',
+      'swc-action-button'
+    );
+    const defaultButton = root.locator('swc-action-button').nth(0);
+    const disabledButton = root.locator('swc-action-button').nth(1);
+    const pendingButton = root.locator('swc-action-button').nth(2);
+
+    // First Tab: lands on the default button
+    await page.keyboard.press('Tab');
+    await expect(defaultButton).toBeFocused();
+
+    // Second Tab: native-disabled button is skipped, pending button gets focus
+    await page.keyboard.press('Tab');
+    await expect(disabledButton).not.toBeFocused();
+    await expect(pendingButton).toBeFocused();
+  });
+
+  test('should not activate when pending', async ({ page }) => {
+    await gotoStory(
+      page,
+      'components-action-button--states',
+      'swc-action-button'
+    );
+    await page.evaluate(() => {
+      const pending = document.querySelectorAll('swc-action-button')[2] as any;
+      pending.__clickCount = 0;
+      pending.addEventListener('click', () => {
+        pending.__clickCount++;
+      });
+    });
+
+    // Tab twice: default → pending (native-disabled is skipped)
+    await page.keyboard.press('Tab');
+    await page.keyboard.press('Tab');
+    await page.keyboard.press('Enter');
+
+    const count = await page.evaluate(
+      () =>
+        (document.querySelectorAll('swc-action-button')[2] as any).__clickCount
+    );
+    expect(count, 'Enter does not activate a pending button').toBe(0);
+  });
+});
