@@ -11,8 +11,7 @@
  */
 
 import { html } from 'lit';
-// Temporary: floating-ui used only in stories for basic positioning until
-// PlacementController and HoverController land in the additive phase.
+// Temporary: floating-ui used only in stories for basic positioning until PlacementController lands.
 import { computePosition, type Placement } from '@floating-ui/dom';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
@@ -96,8 +95,7 @@ const toFloatingPlacement = (placement: string): Placement => {
   return placement as Placement;
 };
 
-// Temporary: positions the tooltip via Floating UI once the popover appears in the
-// top layer.
+// Temporary: positions the tooltip via Floating UI when it opens, until PlacementController is available.
 const positionTooltip = (button: HTMLElement, tooltip: HTMLElement): void => {
   const placement = tooltip.getAttribute('placement') ?? 'top';
   void computePosition(button, tooltip, {
@@ -110,71 +108,53 @@ const positionTooltip = (button: HTMLElement, tooltip: HTMLElement): void => {
   });
 };
 
-// Temporary: toggles `open` on the linked tooltip on click until HoverController is
-// available. Waits for the `toggle` event before measuring so Floating UI sees the
-// element after showPopover() places it in the top layer.
-const makeToggle = (id: string) => (event: MouseEvent) => {
-  const root = (event.currentTarget as HTMLElement).getRootNode() as
-    | Document
-    | ShadowRoot;
-  const button = event.currentTarget as HTMLElement;
-  const tooltip = root.querySelector(
-    `swc-tooltip[for="${id}"]`
-  ) as HTMLElement & { open: boolean };
-
-  if (!tooltip) {
-    return;
-  }
-
-  tooltip.open = !tooltip.open;
-
-  if (tooltip.open) {
-    tooltip.addEventListener(
-      'toggle',
-      (toggleEvent) => {
-        if ((toggleEvent as ToggleEvent).newState !== 'open') {
-          return;
-        }
-        positionTooltip(button, tooltip);
-      },
-      { once: true }
-    );
-  }
-};
-
 // Renders a button+tooltip pair linked via the `for` attribute.
 // Each pair needs a unique `id` so multiple instances can coexist in the same story.
+// A `display: contents` wrapper catches the bubbling `swc-open` event and positions
+// the tooltip via Floating UI until PlacementController is available.
 const triggered = (
   tooltipArgs: Record<string, unknown>,
   id: string,
   buttonLabel?: string,
   iconOnly: boolean = false
 ) => {
+  const positionOnOpen = (event: Event) => {
+    const tooltip = event.target as HTMLElement;
+    const root = tooltip.getRootNode() as Document | ShadowRoot;
+    const button = root.getElementById(id);
+    if (button) {
+      positionTooltip(button, tooltip);
+    }
+  };
+
   if (!iconOnly) {
     return html`
-      <swc-button id=${id} @click=${makeToggle(id)}>${buttonLabel}</swc-button>
-      ${template({ ...tooltipArgs, for: id })}
+      <span @swc-open=${positionOnOpen} style="display: contents">
+        <swc-button id=${id}>${buttonLabel}</swc-button>
+        ${template({ ...tooltipArgs, for: id })}
+      </span>
     `;
   } else {
     return html`
-      <swc-button
-        id=${id}
-        @click=${makeToggle(id)}
-        accessible-label=${String(tooltipArgs['default-slot'] ?? '')}
-      >
-        <svg
-          slot="icon"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 36 36"
-          aria-hidden="true"
-          focusable="false"
+      <span @swc-open=${positionOnOpen} style="display: contents">
+        <swc-button
+          id=${id}
+          accessible-label=${String(tooltipArgs['default-slot'] ?? '')}
         >
-          <path
-            d="M31.5 17H19V4.5a1 1 0 0 0-2 0V17H4.5a1 1 0 0 0 0 2H17v12.5a1 1 0 0 0 2 0V19h12.5a1 1 0 0 0 0-2z"
-          />
-        </svg>
-      </swc-button>
-      ${template({ ...tooltipArgs, for: id })}
+          <svg
+            slot="icon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 36 36"
+            aria-hidden="true"
+            focusable="false"
+          >
+            <path
+              d="M31.5 17H19V4.5a1 1 0 0 0-2 0V17H4.5a1 1 0 0 0 0 2H17v12.5a1 1 0 0 0 2 0V19h12.5a1 1 0 0 0 0-2z"
+            />
+          </svg>
+        </swc-button>
+        ${template({ ...tooltipArgs, for: id })}
+      </span>
     `;
   }
 };
@@ -187,9 +167,6 @@ const triggered = (
  *
  * For cross-shadow-root triggers where `getElementById` cannot reach the trigger, set the
  * `triggerElement` property directly with an element reference.
- *
- * Each story in this document uses a temporary click-to-toggle interaction.
- * Automatic hover and focus wiring is available in a future release.
  */
 const meta: Meta = {
   title: 'Tooltip',
@@ -358,10 +335,64 @@ export const Open: Story = {
     'default-slot': 'Save your changes',
   },
   play: async ({ canvasElement }: { canvasElement: HTMLElement }) => {
-    const button = canvasElement.querySelector('swc-button') as HTMLElement;
-    button?.click();
+    const tooltip = canvasElement.querySelector(
+      'swc-tooltip'
+    ) as HTMLElement & {
+      open: boolean;
+    };
+    if (tooltip) {
+      tooltip.open = true;
+    }
   },
   tags: ['states'],
+};
+
+export const Disabled: Story = {
+  render: (args) => html`
+    ${triggered({ ...args }, 'tooltip-disabled', 'Action')}
+  `,
+  args: {
+    variant: 'neutral',
+    placement: 'top',
+    disabled: true,
+    'default-slot': 'Hover and focus are disabled',
+  },
+  tags: ['states'],
+};
+
+export const Manual: Story = {
+  render: (args) => {
+    const onShowTooltip = (event: MouseEvent) => {
+      const root = (event.currentTarget as HTMLElement).getRootNode() as
+        | Document
+        | ShadowRoot;
+      const tooltip = root.querySelector(
+        'swc-tooltip[for="tooltip-manual-trigger"]'
+      ) as HTMLElement & { open: boolean };
+      if (tooltip) {
+        tooltip.open = !tooltip.open;
+      }
+    };
+
+    return html`
+      ${triggered({ ...args }, 'tooltip-manual-trigger', 'Action')}
+      <swc-button variant="secondary" @click=${onShowTooltip}>
+        Show tooltip
+      </swc-button>
+    `;
+  },
+  args: {
+    variant: 'neutral',
+    placement: 'top',
+    manual: true,
+    'default-slot': 'Consumer-controlled tooltip',
+  },
+  play: async ({ canvasElement }: { canvasElement: HTMLElement }) => {
+    const buttons = canvasElement.querySelectorAll('swc-button');
+    (buttons[1] as HTMLElement)?.click();
+  },
+  tags: ['states'],
+  parameters: { flexLayout: 'row-wrap' },
 };
 
 // ────────────────────────────────
@@ -370,7 +401,7 @@ export const Open: Story = {
 
 export const Events: Story = {
   render: (args) => html`
-    ${triggered({ ...args }, 'tooltip-behavior-events', 'Open')}
+    ${triggered({ ...args }, 'tooltip-behavior-events', 'Action')}
   `,
   args: {
     variant: 'neutral',

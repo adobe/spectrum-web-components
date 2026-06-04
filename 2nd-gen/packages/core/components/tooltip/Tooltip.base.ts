@@ -15,6 +15,10 @@ import { property } from 'lit/decorators.js';
 import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
 
 import {
+  HoverController,
+  type HoverControllerHost,
+} from '../../controllers/hover-controller/index.js';
+import {
   TOOLTIP_PLACEMENTS,
   TOOLTIP_VARIANTS,
   type TooltipPlacement,
@@ -23,18 +27,15 @@ import {
 
 /**
  * Abstract base class for the Tooltip component.
- *
- * Declares all public properties, sets `role="tooltip"` and `popover="auto"` on
- * the host element, wires the popover lifecycle (`beforetoggle`, `toggle`,
- * `transitionend`), dispatches `swc-open`, `swc-close`, `swc-after-open`, and
- * `swc-after-close` events, resolves the trigger element via `for` or
- * `triggerElement`, and syncs the ARIA relationship (`ariaDescribedByElements`
- * or `ariaLabelledByElements` when `labeling` is set) on `open` and `labeling`
- * changes. No rendering logic, including placement.
+ * Handles all non-rendering logic: property declarations, popover lifecycle,
+ * event dispatch, trigger resolution, ARIA wiring, and `HoverController` integration.
  *
  * @slot - Text label displayed in the tooltip.
  */
-export abstract class TooltipBase extends SpectrumElement {
+export abstract class TooltipBase
+  extends SpectrumElement
+  implements HoverControllerHost
+{
   // ──────────────────
   //     SHARED API
   // ──────────────────
@@ -64,7 +65,7 @@ export abstract class TooltipBase extends SpectrumElement {
 
   /**
    * The preferred placement of the tooltip relative to its trigger.
-   * Controls the tip direction via the reflected `placement` attribute; pixel positioning requires `PlacementController` (additive phase).
+   * Determines the tip arrow direction. Pixel positioning requires `PlacementController`.
    *
    * @default 'top'
    */
@@ -81,16 +82,13 @@ export abstract class TooltipBase extends SpectrumElement {
 
   /**
    * The `id` of the trigger element in the same document tree root.
-   * Resolved via `getRootNode().getElementById(this.for)`.
-   * Drives ARIA relationship wiring on `open` change.
    */
   @property({ attribute: 'for', type: String })
   public for: string | undefined;
 
   /**
-   * Explicit trigger element reference. Overrides `for` when set.
-   * Use for cross-shadow-root triggers or programmatic insertion where `getElementById` is scoped to the wrong root.
-   * Setter only; no HTML attribute.
+   * Explicit trigger element reference; overrides `for` when set.
+   * Use when `getElementById` cannot reach the trigger, such as across a shadow boundary.
    *
    * @default null
    */
@@ -98,14 +96,8 @@ export abstract class TooltipBase extends SpectrumElement {
   public triggerElement: HTMLElement | null = null;
 
   /**
-   * Duration in milliseconds of the warm-up delay before the tooltip shows on pointer hover.
-   * Set to `0` to show immediately on hover. Keyboard focus (`focusin` when `:focus-visible`)
-   * always shows the tooltip immediately regardless of this value. The cooldown duration after the
-   * pointer leaves the trigger matches this value. Warm-up/cooldown state is shared across all tooltips in the same document,
-   * so moving quickly between adjacent triggers (e.g. a toolbar) shows each subsequent tooltip
-   * immediately after the first warm-up elapses.
-   *
-   * Additive/deferred: active when `HoverController` is integrated.
+   * Warm-up delay in milliseconds before the tooltip opens on pointer hover.
+   * Set to `0` to open immediately. Keyboard focus always opens immediately.
    *
    * @default 1500
    */
@@ -113,10 +105,7 @@ export abstract class TooltipBase extends SpectrumElement {
   public delay: number = 1500;
 
   /**
-   * When set, prevents automatic trigger wiring from responding to hover and focus events.
-   * No-op when `manual` is also set.
-   *
-   * Additive/deferred: active when `HoverController` is integrated.
+   * When set, the tooltip does not respond to hover or focus events.
    *
    * @default false
    */
@@ -124,11 +113,8 @@ export abstract class TooltipBase extends SpectrumElement {
   public disabled: boolean = false;
 
   /**
-   * Suppresses controller wiring for automatic hover and focus open/close.
-   * The consumer manages visibility via the `open` property or the popover API directly.
-   * ARIA relationship wiring still fires on `open` change when `for` or `triggerElement` is set.
-   *
-   * Additive/deferred: effective when controllers are integrated.
+   * Suppresses automatic hover and focus wiring.
+   * The consumer manages visibility via the `open` property or the popover API.
    *
    * @default false
    */
@@ -137,9 +123,7 @@ export abstract class TooltipBase extends SpectrumElement {
 
   /**
    * Pixel offset between the tooltip and its trigger.
-   * Passed to `PlacementController` offset middleware.
-   *
-   * Additive/deferred: active when `PlacementController` is integrated.
+   * Requires `PlacementController`; currently inactive.
    *
    * @default 0
    */
@@ -147,10 +131,8 @@ export abstract class TooltipBase extends SpectrumElement {
   public offset: number = 0;
 
   /**
-   * When set, wires `ariaLabelledByElements` instead of `ariaDescribedByElements` on the trigger's
-   * inner interactive element. Use for icon-only triggers where the tooltip text is the sole accessible
-   * name and adding an accessible label directly to the trigger host is not possible.
-   * Prefer `accessible-label` on the trigger when feasible — it works without this attribute.
+   * When set, the tooltip acts as the trigger's accessible name rather than its description.
+   * Use for icon-only triggers where the tooltip text is the sole accessible name.
    *
    * @default false
    */
@@ -160,6 +142,10 @@ export abstract class TooltipBase extends SpectrumElement {
   // ──────────────────────
   //     IMPLEMENTATION
   // ──────────────────────
+
+  private readonly hoverController = new HoverController(this, {
+    warmStateKey: 'swc-tooltip',
+  });
 
   // Reflects the browser's actual popover state. Used to guard showPopover/hidePopover
   // calls in updated() so the toggle listener can sync this.open without re-triggering
@@ -289,6 +275,12 @@ export abstract class TooltipBase extends SpectrumElement {
     }
     if (changedProperties.has('open') || changedProperties.has('labeling')) {
       this.syncAriaRelationship();
+    }
+    if (
+      changedProperties.has('for') ||
+      changedProperties.has('triggerElement')
+    ) {
+      this.hoverController.setTarget(this.resolveTrigger());
     }
   }
 

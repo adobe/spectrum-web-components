@@ -21,11 +21,7 @@ A `<swc-tooltip>` consists of three parts:
 
 The following features are planned for future releases:
 
-- **Automatic hover and focus interactions**: the tooltip opens on trigger hover after a warm-up delay and on keyboard focus immediately; closes when the pointer leaves or focus moves away.
-- **Configurable delay (`delay`)**: controls the warm-up delay before the tooltip appears on hover. Defaults to 1500ms; set to `0` to show immediately. Moving quickly between adjacent triggers shows each subsequent tooltip immediately after the first warm-up elapses.
-- **`disabled` attribute**: prevents the tooltip from responding to hover and focus in automatic mode.
-- **Pointer hover bridge**: the pointer can move from the trigger into the tooltip bubble without the tooltip closing (WCAG 1.4.13).
-- **Tip-less display (`no-tip`)**: removes the directional tip arrow from the tooltip bubble.
+- **Tip-less display**: removes the directional tip arrow from the tooltip bubble.
 - **Tooltip directive**: a Lit directive for programmatic tooltip insertion and lifecycle management.
 
 ## Options
@@ -52,11 +48,33 @@ Pixel-accurate positioning requires `PlacementController`, which is in a future 
 
 The tooltip is closed by default. Setting `open` to `true` calls `showPopover()`, placing the bubble in the browser's top layer via the Popover API. The `open` attribute reflects the current visibility state.
 
-Because the component uses `popover="auto"`, opening a tooltip dismisses any other open auto popover in the document, including other tooltips, menus, pickers, and selects. Set `manual` and manage `open` directly to opt out of automatic open and close while retaining ARIA relationship wiring.
+Because the component uses `popover="auto"`, opening a tooltip dismisses any other open auto popover in the document, including other tooltips, menus, pickers, and selects. Set `manual` to opt out of automatic hover and focus wiring and manage `open` directly, while retaining ARIA relationship wiring.
 
 <Canvas of={TooltipStories.Open} />
 
+### Disabled
+
+When `disabled` is set, the tooltip does not respond to hover or focus events. The trigger remains interactive; only the automatic wiring is suppressed. ARIA relationship wiring still fires when `open` is set directly.
+
+<Canvas of={TooltipStories.Disabled} />
+
+### Manual
+
+When `manual` is set, `HoverController` wiring is suppressed entirely and the consumer manages visibility by setting the `open` property or calling the popover API directly. ARIA relationship wiring still fires on `open` change when `for` or `triggerElement` is set.
+
+<Canvas of={TooltipStories.Manual} />
+
 ## Behaviors
+
+### Hover and focus
+
+The tooltip opens automatically when the trigger receives pointer hover or keyboard focus:
+
+- **Pointer hover**: after a warm-up delay (default `1500ms`), the tooltip opens. Set `delay="0"` to open immediately. Once any tooltip of the same type has warmed up, subsequent hovers on other triggers open immediately without waiting for the full delay.
+- **Keyboard focus**: the tooltip opens immediately, bypassing the warm-up delay entirely.
+- **Close**: the tooltip closes `300ms` after the pointer leaves the trigger. If the pointer enters the tooltip bubble before that cooldown expires, the tooltip stays open (WCAG 1.4.13 pointer bridge). The tooltip closes immediately when focus leaves the trigger.
+
+Set `disabled` to prevent the tooltip from responding to hover and focus. Set `manual` to suppress automatic wiring entirely and manage visibility via the `open` property or the popover API directly.
 
 ### Events
 

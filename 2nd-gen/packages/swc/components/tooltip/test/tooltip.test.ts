@@ -674,6 +674,141 @@ export const LogicalPlacementRTLTest: Story = {
 // TEST: Dev mode warnings
 // ──────────────────────────────────────────────────────────────
 
+// ──────────────────────────────────────────────────────────────
+// TEST: HoverController integration
+// ──────────────────────────────────────────────────────────────
+
+export const HoverOpensTest: Story = {
+  render: () => html`
+    <button id="tt-hover-trigger">Hover me</button>
+    <swc-tooltip for="tt-hover-trigger" delay="0" placement="top">
+      Appears on hover
+    </swc-tooltip>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const trigger = canvasElement.querySelector(
+      '#tt-hover-trigger'
+    ) as HTMLElement;
+    const tooltip = await getComponent<Tooltip>(canvasElement, 'swc-tooltip');
+
+    await step('opens the tooltip when the trigger is hovered', async () => {
+      const openPromise = waitForEvent(tooltip, 'swc-open');
+      await userEvent.pointer({ target: trigger });
+      await openPromise;
+      expect(tooltip.open, 'tooltip is open after hover').toBe(true);
+    });
+
+    await step(
+      'closes the tooltip when the pointer leaves the trigger',
+      async () => {
+        const closePromise = waitForEvent(tooltip, 'swc-close');
+        await userEvent.pointer({ target: document.body });
+        await closePromise;
+        expect(tooltip.open, 'tooltip is closed after pointer leaves').toBe(
+          false
+        );
+      }
+    );
+  },
+};
+
+export const FocusOpensTest: Story = {
+  render: () => html`
+    <button id="tt-focus-trigger">Focus me</button>
+    <swc-tooltip for="tt-focus-trigger" placement="top">
+      Appears on focus
+    </swc-tooltip>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const trigger = canvasElement.querySelector(
+      '#tt-focus-trigger'
+    ) as HTMLElement;
+    const tooltip = await getComponent<Tooltip>(canvasElement, 'swc-tooltip');
+
+    await step(
+      'opens the tooltip immediately when the trigger receives keyboard focus',
+      async () => {
+        const openPromise = waitForEvent(tooltip, 'swc-open');
+        trigger.focus();
+        await openPromise;
+        expect(tooltip.open, 'tooltip is open after focus').toBe(true);
+      }
+    );
+
+    await step('closes the tooltip when focus leaves the trigger', async () => {
+      const closePromise = waitForEvent(tooltip, 'swc-close');
+      trigger.blur();
+      await closePromise;
+      expect(tooltip.open, 'tooltip is closed after blur').toBe(false);
+    });
+  },
+};
+
+export const DisabledPreventsHoverTest: Story = {
+  render: () => html`
+    <button id="tt-disabled-trigger">Hover me</button>
+    <swc-tooltip for="tt-disabled-trigger" delay="0" disabled placement="top">
+      Should not appear
+    </swc-tooltip>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const trigger = canvasElement.querySelector(
+      '#tt-disabled-trigger'
+    ) as HTMLElement;
+    const tooltip = await getComponent<Tooltip>(canvasElement, 'swc-tooltip');
+
+    await step(
+      'does not open the tooltip when disabled and trigger is hovered',
+      async () => {
+        await userEvent.pointer({ target: trigger });
+        await tooltip.updateComplete;
+        expect(tooltip.open, 'tooltip remains closed when disabled').toBe(
+          false
+        );
+      }
+    );
+  },
+};
+
+export const ManualPreventsHoverTest: Story = {
+  render: () => html`
+    <button id="tt-manual-hover-trigger">Hover me</button>
+    <swc-tooltip for="tt-manual-hover-trigger" delay="0" manual placement="top">
+      Manual tooltip
+    </swc-tooltip>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const trigger = canvasElement.querySelector(
+      '#tt-manual-hover-trigger'
+    ) as HTMLElement;
+    const tooltip = await getComponent<Tooltip>(canvasElement, 'swc-tooltip');
+
+    await step(
+      'does not open the tooltip on hover when manual mode is active',
+      async () => {
+        await userEvent.pointer({ target: trigger });
+        await tooltip.updateComplete;
+        expect(tooltip.open, 'tooltip remains closed in manual mode').toBe(
+          false
+        );
+      }
+    );
+
+    await step(
+      'opens when open is set directly even in manual mode',
+      async () => {
+        tooltip.open = true;
+        await tooltip.updateComplete;
+        expect(tooltip.open, 'tooltip opens via property in manual mode').toBe(
+          true
+        );
+        tooltip.open = false;
+        await tooltip.updateComplete;
+      }
+    );
+  },
+};
+
 export const ForIdNotFoundWarningTest: Story = {
   render: () => html`
     <swc-tooltip for="does-not-exist" placement="top">Tooltip</swc-tooltip>
