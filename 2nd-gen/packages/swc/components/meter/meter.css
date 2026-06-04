@@ -13,18 +13,19 @@
 /*
  * Meter-specific styles. Shared structural rules (bar/track/fill,
  * sizes, side-label layout, static colors, forced-colors) live in
- * `swc/stylesheets/shared/linear-progress-base.css`. This file only
- * adds the variant fill-color overrides that are unique to meter.
+ * `swc/stylesheets/shared/linear-progress-base.css` and consume
+ * `--swc-linear-progress-*` custom properties. This file assigns
+ * the variant fill colors via the same exposed surface.
  */
 
-:host([variant="positive"]) .swc-LinearProgress-fill {
-  background: token("positive-visual-color");
+:host([variant="positive"]) {
+  --swc-linear-progress-fill-color: token("positive-visual-color");
 }
 
-:host([variant="notice"]) .swc-LinearProgress-fill {
-  background: token("notice-visual-color");
+:host([variant="notice"]) {
+  --swc-linear-progress-fill-color: token("notice-visual-color");
 }
 
-:host([variant="negative"]) .swc-LinearProgress-fill {
-  background: token("negative-visual-color");
+:host([variant="negative"]) {
+  --swc-linear-progress-fill-color: token("negative-visual-color");
 }
