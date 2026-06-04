@@ -26,25 +26,21 @@
   flex-wrap: wrap;
   gap: var(--_swc-button-group-gap);
   justify-content: var(--swc-button-group-justify-content, normal);
+  inline-size: 100%;
 }
 
 :host([size="s"]) {
   --swc-button-group-gap: token("spacing-200");
 }
 
-.swc-ButtonGroup--vertical {
-  display: inline-flex;
+:host([orientation="vertical"]) .swc-ButtonGroup {
   flex-direction: column;
 }
 
-.swc-ButtonGroup--alignCenter {
-  justify-content: center;
+:host([align="center"]) {
+  --swc-button-group-justify-content: center;
 }
 
-.swc-ButtonGroup--alignEnd {
-  justify-content: flex-end;
-}
-
-::slotted(*) {
-  flex-shrink: 0;
+:host([align="end"]) {
+  --swc-button-group-justify-content: flex-end;
 }

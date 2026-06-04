@@ -11,10 +11,8 @@
  */
 
 import { CSSResultArray, html, TemplateResult } from 'lit';
-import { classMap } from 'lit/directives/class-map.js';
 
 import { ButtonGroupBase } from '@spectrum-web-components/core/components/button-group';
-import { capitalize } from '@spectrum-web-components/core/utils/index.js';
 
 import styles from './button-group.css';
 
@@ -41,16 +39,7 @@ export class ButtonGroup extends ButtonGroupBase {
 
   protected override render(): TemplateResult {
     return html`
-      <div
-        class=${classMap({
-          ['swc-ButtonGroup']: true,
-          ['swc-ButtonGroup--vertical']: this.orientation === 'vertical',
-          [`swc-ButtonGroup--size${this.size?.toUpperCase()}`]:
-            this.size != null,
-          [`swc-ButtonGroup--align${capitalize(this.align)}`]:
-            this.align !== 'start',
-        })}
-      >
+      <div class="swc-ButtonGroup">
         <slot @slotchange=${this.handleSlotchange}></slot>
       </div>
     `;

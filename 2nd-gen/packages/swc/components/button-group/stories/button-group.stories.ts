@@ -76,21 +76,6 @@ argTypes.disabled = {
  * Use button group when you have two or more related button actions that belong
  * together visually and semantically (for example dialog or form footers, toolbars,
  * or contextual action sets).
- *
- * ### Usage note — breaking changes from 1st-gen
- *
- * This component replaces `<sp-button-group>` from 1st-gen. Key differences:
- *
- * - **Tag name**: `sp-button-group` → `swc-button-group`
- * - **Orientation API**: The `vertical` boolean attribute is replaced by
- *   `orientation="horizontal|vertical"` (default: `horizontal`)
- * - **ARIA role**: 2nd-gen adds `role="group"` automatically (was missing in 1st-gen)
- * - **New `align` property**: Controls main-axis alignment (`start`, `center`, `end`)
- * - **New `disabled` property**: Group-level disable that propagates to all children
- * - **CSS custom properties**: `--mod-buttongroup-*` → `--swc-button-group-*`
- *
- * See the [migration guide](../?path=/docs/button-group-migration-guide--docs)
- * for full details.
  */
 const meta: Meta = {
   title: 'Button Group',
@@ -192,31 +177,6 @@ export const Anatomy: Story = {
 };
 
 // ──────────────────────────
-//    UPCOMING FEATURES
-// ──────────────────────────
-
-/**
- * The following features are planned for future releases but are not yet available
- * in this MVP. They are documented in the migration analysis as additive changes.
- *
- * | Feature | Description |
- * |---------|-------------|
- * | Overflow behavior | Buttons that exceed available space collapse into a menu or wrap to a second row |
- * | Toolbar composition | Documentation and patterns for using button-group within `role="toolbar"` with `FocusgroupNavigationController` for arrow-key navigation |
- * | Form-associated actions | Group-level `submit` / `reset` coordination with form elements |
- */
-export const UpcomingFeatures: Story = {
-  render: () => html`
-    <swc-button-group aria-label="Planned features preview">
-      <swc-button>Overflow (planned)</swc-button>
-      <swc-button>Toolbar (planned)</swc-button>
-    </swc-button-group>
-  `,
-  tags: ['upcoming'],
-};
-UpcomingFeatures.storyName = 'Upcoming features';
-
-// ──────────────────────────
 //    OPTIONS STORIES
 // ──────────────────────────
 
@@ -309,30 +269,6 @@ export const Disabled: Story = {
   tags: ['states'],
 };
 
-// ──────────────────────────────
-//    BEHAVIORS STORIES
-// ──────────────────────────────
-
-/**
- * When `size` is changed on the group, all slotted buttons update to the new size
- * automatically. Similarly, dynamically added buttons receive the current group size
- * and disabled state via the `slotchange` handler.
- */
-export const SizePropagation: Story = {
-  render: () => html`
-    ${(['s', 'm', 'l', 'xl'] as const).map(
-      (size) => html`
-        <swc-button-group size=${size}>
-          <swc-button>Propagated ${size.toUpperCase()}</swc-button>
-          <swc-button>Propagated ${size.toUpperCase()}</swc-button>
-        </swc-button-group>
-      `
-    )}
-  `,
-  tags: ['behaviors'],
-};
-SizePropagation.storyName = 'Size propagation';
-
 // ────────────────────────────────
 //    ACCESSIBILITY STORIES
 // ────────────────────────────────
@@ -345,8 +281,7 @@ SizePropagation.storyName = 'Size propagation';
  * #### ARIA implementation
  *
  * 1. **ARIA role**: Automatically sets `role="group"` on the host element
- * 2. **Orientation**: Reflects the `orientation` attribute on the host for CSS styling
- * 3. **Group naming**: Supports `aria-label` or `aria-labelledby` for screen readers.
+ * 2. **Group naming**: Supports `aria-label` or `aria-labelledby` for screen readers.
  *    Provide a name when the group's purpose is not obvious from context.
  *
  * #### Keyboard navigation
