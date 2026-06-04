@@ -40,6 +40,8 @@ This guide explains how to manage **private, internal, and exposed custom proper
 
 > Private properties are “pseudo-private”: defined on nested shadow elements rather than `:host` to prevent accidental overrides.
 
+**Use full property names** when naming custom properties: write `padding` not `pad`, `background` not `bg`, `color` not `clr`. Abbreviations obscure intent and make property names inconsistent across components.
+
 ## Private Properties
 
 - Used for **repeated**, **multi-value**, or **contextually updated** properties (themes, states, passthroughs)
@@ -53,6 +55,8 @@ This guide explains how to manage **private, internal, and exposed custom proper
 ```
 
 CSS custom properties *normally* can't actually be "private". However, due to shadow DOM encapsulation, we can (partially*) enforce them as private by defining them on a nested wrapper within the component instead of on :host.
+
+> **Declaring `--_swc-*` properties on `:host` or `:host()` does not protect them.** Properties set on the host element are part of the component's external style surface — consumers can set them from outside the shadow root. The `--_swc-*` prefix signals internal intent only. For genuine encapsulation, declare private properties on the internal wrapper (`.swc-ComponentName`), not on `:host`.
 
 **Example from [Badge](../../../2nd-gen/packages/swc/components/badge/badge.css)** — private properties for internal calculations, with exposed properties consumed inline via `var()`:
 
@@ -109,7 +113,8 @@ This keeps all overrides and derived calculations linked to the private property
 
 **Selector choice encodes API intent**: exposed properties are modified via `:host()`, while internal-only behavior is implemented with internal class selectors.
 
-- Only expose component properties when needed by the component itself or for passthrough (nested) styling
+- Expose only when the component itself overrides the property based on its own variant, state, or size needs. Do not expose properties for consumer convenience alone. Exceptions: properties required for nested component relationships (e.g. a Picker passing a property down to its Menu) and shared utility properties.
+- When a property changes across size variants, expose a **single** property (e.g. `--swc-button-padding-vertical`) and override it per size selector (`:host([size="s"])`). Do not create size-specific custom properties (e.g. `--_swc-button-padding-vertical-s`) — they become part of the external style surface and cannot be made genuinely private.
 - Exposed singularly based on CSS *property type*, and no longer based on states or variants
     - This distinction directly affects which selector type is used (`:host()` vs internal class selectors). See [Variant Selectors and Inheritance](01_component-css.md#shadow-dom-specificity-and-custom-property-inheritance).
 - May be exposed via inclusion in private property, or inline with CSS property
@@ -195,6 +200,14 @@ Use internal selectors (ex. `.swc-Badge--magenta` ) to pass library overrides fo
 
 ## Selector Conventions
 
+**Prefer overriding a custom property per variant rather than redefining the CSS property.** When a CSS property changes across component API attributes (size, variant, fill-style, etc.), define it once on the base using a custom property and override that custom property in `:host([variant])` selectors. Redefining the underlying CSS property in each variant rule creates duplication and obscures which values are intentionally exposed.
+
+**Native browser states on internal elements require state-specific custom properties.** When a property changes across native states (`:hover`, `:focus-visible`, `:active`) on an internal element such as `.swc-ComponentName`, expose a separate custom property for each state — for example, `--swc-button-background-color-default`, `--swc-button-background-color-hover`, `--swc-button-background-color-focus`, `--swc-button-background-color-down`. Apply each on the internal element's state selector, then override the complete set from `:host([variant])` and `:host([static-color])`. This is the only way to support compound overrides from `:host`, since consumers cannot reach `.swc-ComponentName:hover` from outside the shadow root.
+
+This pattern does not apply to component API attributes — those use a single property overridden per selector, never variant-specific properties.
+
+Exception: properties that change in a native state but never need per-variant variation (e.g. `outline` and `outline-offset` on `:focus-visible`). Define these directly on the state selector without a custom property.
+
 Exposed properties **require** `:host()` to maintain override capability:
 
 ```css
@@ -207,8 +220,6 @@ Consumers can then override exposed properties based on attributes and states:
 
 ```css
 swc-button[size="s"]
-swc-button[aria-expanded]
-swc-button:focus-visible
 ```
 
 ### Variant Selectors and Inheritance

@@ -1,0 +1,50 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import { DocsFooter, DocsHeader } from '../../../.storybook/blocks';
+
+import * as UserMessageStories from './stories/user-message.stories';
+
+<Meta of={UserMessageStories} />
+
+<DocsHeader />
+
+## Anatomy
+
+A user message consists of:
+
+1. **Bubble**: rounded container with a neutral gray background (`gray-50`)
+2. **Default slot**: the message content: plain text, a card attachment, or image-first content
+
+<Canvas of={UserMessageStories.Anatomy} />
+
+## Options
+
+### Content
+
+Bubble sizing and padding are inferred from slotted content:
+
+- **Copy**: default text-only content with the bubble's default width and padding
+- **Card**: compact attachment layout with thumbnail, title, and subtitle
+- **Media**: larger preview-first attachment layout with metadata beneath the preview
+
+<Canvas of={UserMessageStories.Content} />
+
+## Accessibility
+
+### Features
+
+The `<swc-user-message>` element implements the following accessibility features:
+
+#### Semantic structure
+
+- The bubble is rendered as a `<div>` acting as a visual container
+- `type="copy"` uses the default slot for message text
+- `type="card"` and `type="media"` use named slots for thumbnail, title, and subtitle
+
+### Best practices
+
+- Ensure message text is descriptive and self-contained
+- For card and media attachments, ensure titles/subtitles and `aria-label`/`alt` text are present for previews
+
+<Canvas of={UserMessageStories.Accessibility} />
+
+<DocsFooter />

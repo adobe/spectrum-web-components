@@ -1,0 +1,47 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import { DocsFooter, DocsHeader } from '../../../.storybook/blocks';
+
+import * as SuggestionGroupStories from './stories/suggestion-group.stories';
+
+<Meta of={SuggestionGroupStories} />
+
+<DocsHeader />
+
+## Anatomy
+
+A suggestion group consists of:
+
+1. **Heading**: required slotted heading content (consumer controls semantics)
+2. **Items**: one or more slotted `<swc-suggestion-item>` actions
+
+<Canvas of={SuggestionGroupStories.Anatomy} />
+
+## Options
+
+### Suggestion Count
+
+Suggestion count follows the number of `<swc-suggestion-item>` elements.
+
+<Canvas of={SuggestionGroupStories.SuggestionCount} />
+
+### Heading
+
+Consumers provide required heading semantics via `slot="heading"` based on page outline.
+
+Note: Any element can be used as the heading given the semantics are correct but the visual styling (i.e. font size) is always controlled by the `swc-suggestion-group` component itself.
+
+<Canvas of={SuggestionGroupStories.Heading} />
+
+## Accessibility
+
+### Features
+
+The `<swc-suggestion-group>` container and `<swc-suggestion-item>` controls implement:
+
+- Native `<button>` semantics per suggestion item
+- Required `heading` slot for the visible group title; the host uses **`role="group"`** with **`aria-labelledby`** referencing that heading. **`accessible-label`** can override the accessible name (`aria-label`) while the heading remains in the document outline
+- Item click event bubbling from each `<swc-suggestion-item>`
+
+<Canvas of={SuggestionGroupStories.Accessibility} />
+
+<DocsFooter />

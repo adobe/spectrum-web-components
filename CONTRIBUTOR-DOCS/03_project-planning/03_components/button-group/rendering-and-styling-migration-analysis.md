@@ -155,6 +155,7 @@ The component structure remains stable across both versions of Spectrum.
 
 ## Resources
 
+- [Button group accessibility migration analysis](./accessibility-migration-analysis.md)
 - [CSS migration](https://github.com/adobe/spectrum-css/pull/2457)
 - [Spectrum 2 preview](https://spectrumcss.z13.web.core.windows.net/pr-2352/index.html?path=/docs/components-button-group--docs)
 - [React](https://react-spectrum.adobe.com/ButtonGroup)

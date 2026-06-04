@@ -61,7 +61,7 @@ export { meta };
 export default meta;
 
 // ────────────────────
-//    AUTODOCS STORY
+//    PLAYGROUND STORY
 // ────────────────────
 
 export const Playground: Story = {
@@ -71,7 +71,7 @@ export const Playground: Story = {
     value: '',
     mode: 'default',
   },
-  tags: ['autodocs', 'dev'],
+  tags: ['dev'],
 };
 
 // ──────────────────────────────
@@ -92,14 +92,6 @@ export const Overview: Story = {
 //    ANATOMY STORY
 // ──────────────────────────
 
-/**
- * A prompt field consists of:
- *
- * 1. **Box** — White card container with shadow and 16px border radius.
- * 2. **Input area** — Visible label + textarea.
- * 3. **Action bar** — Upload trigger (left) and send/stop action (right).
- * 4. **Footer** — Optional legal content rendered below the prompt surface.
- */
 export const Anatomy: Story = {
   render: () => html`
     <div style="display:flex;flex-direction:column;gap:24px;">
@@ -127,15 +119,6 @@ export const Anatomy: Story = {
 //    OPTIONS STORIES
 // ──────────────────────────
 
-/**
- * The `mode` attribute controls interaction and action state:
- *
- * - **`default`** — Send button shown, normal interactivity
- * - **`loading`** — Stop button shown while generation is in progress
- * - **`disabled`** — Input/upload/send are disabled
- *
- * The send button enablement is derived internally from prompt content (value or artifact).
- */
 export const Modes: Story = {
   render: () => html`
     <div style="display:flex;flex-direction:column;gap:32px;">
@@ -179,29 +162,9 @@ export const Modes: Story = {
       </div>
     </div>
   `,
-  parameters: { 'section-order': 1 },
   tags: ['options'],
 };
 
-/**
- * Artifact layout is inferred from the **`artifact`** slot content and supports multiple mixed items:
- *
- * - No slot content: no artifact region
- * - **`swc-upload-artifact type="card"`** — file-style card artifact
- * - **`swc-upload-artifact type="media"`** — media tile artifact
- *
- * **Populate the attachment strip** by slotting **one `<swc-upload-artifact>` per file**, each with
- * **`slot="artifact"`** (same slot name repeated). Mixed card + media entries wrap inside the composer like this story’s first example.
- *
- * For additional combinations (narrow widths, ellipsis, more tiles), see **[Multi-artifact](/docs/patterns-conversational-ai-upload-artifact--readme#multi-artifact)**.
- *
- * Upload button behavior:
- *
- * - Emits cancelable **`swc-prompt-field-upload-click`**; consumers own picker behavior
- * - Consumers provide artifacts by slotting; file selection stays in app code
- *
- * Artifacts own dismiss behavior via **`dismissible`** and emit **`swc-upload-artifact-dismiss`**.
- */
 export const Artifact: Story = {
   render: () => html`
     <div style="display:flex;flex-direction:column;gap:32px;">
@@ -279,7 +242,6 @@ export const Artifact: Story = {
       </div>
     </div>
   `,
-  parameters: { 'section-order': 2 },
   tags: ['options'],
 };
 
@@ -459,21 +421,11 @@ class PromptFieldBehaviorDemo extends LitElement {
 }
 void PromptFieldBehaviorDemo;
 
-/**
- * Prompt field uses an uncontrolled-with-mirror event model:
- *
- * - **`swc-prompt-field-input`** fires after the internal textarea value updates
- * - **`swc-prompt-field-submit`** carries the current `detail.value`
- * - **`swc-prompt-field-upload-click`** is a cancelable trigger for external picker flows
- *
- * Consumers are responsible for handling upload flows and can mirror `value` from events when needed.
- */
 export const HandlingEvents: Story = {
   render: () => html`
     <swc-prompt-field-behavior-demo></swc-prompt-field-behavior-demo>
   `,
   parameters: {
-    'section-order': 1,
     docs: {
       source: {
         code: false,
@@ -487,25 +439,6 @@ export const HandlingEvents: Story = {
 //    ACCESSIBILITY STORY
 // ────────────────────────────────
 
-/**
- * ### Features
- *
- * The `<swc-prompt-field>` element implements the following accessibility features:
- *
- * #### Label association
- *
- * - The `<textarea>` uses `aria-labelledby` when label text is visible
- * - `accessible-label` can override the accessible name when needed
- * - All icon buttons carry descriptive `aria-label` attributes
- * - The send button uses `disabled` natively when the prompt has no content
- *
- * ### Best practices
- *
- * - Always provide a meaningful `label` value
- * - Use `accessible-label` only when a distinct non-visual name is required
- * - Use `placeholder` as a hint, not a replacement for the label
- * - Ensure artifact content slotted into `artifact` slot includes descriptive text
- */
 export const Accessibility: Story = {
   args: {
     label: 'Prompt',

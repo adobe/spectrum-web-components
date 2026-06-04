@@ -10,8 +10,8 @@
  * governing permissions and limitations under the License.
  */
 
-import { CSSResultArray, html, PropertyValues, TemplateResult } from 'lit';
-import { property, queryAssignedElements } from 'lit/decorators.js';
+import { CSSResultArray, html, TemplateResult } from 'lit';
+import { queryAssignedElements } from 'lit/decorators.js';
 
 import { FocusgroupNavigationController } from '@spectrum-web-components/core/controllers/index.js';
 import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
@@ -32,12 +32,6 @@ import styles from './conversation-thread.css';
  * @slot - Conversation turns, typically `<swc-conversation-turn>` elements.
  */
 export class ConversationThread extends SpectrumElement {
-  /**
-   * Active turn index used by roving focus.
-   */
-  @property({ type: Number, attribute: 'active-index' })
-  public activeIndex = 0;
-
   @queryAssignedElements({ flatten: true, selector: 'swc-conversation-turn' })
   private _assignedTurns!: HTMLElement[];
 
@@ -46,7 +40,6 @@ export class ConversationThread extends SpectrumElement {
     {
       direction: 'vertical',
       getItems: () => this._getItemsFromSlot(),
-      onActiveItemChange: (active) => this._syncActiveIndex(active),
     }
   );
 
@@ -62,52 +55,30 @@ export class ConversationThread extends SpectrumElement {
    */
   public override focus(options?: FocusOptions): void {
     this._syncRovingFocusTarget();
-    const turns = this._getItemsFromSlot();
     const active = this.focusgroupNavigationController.getActiveItem();
     active?.focus(options);
-    if (!active && turns.length) {
-      turns[this._clampIndex(this.activeIndex, turns)]?.focus(options);
-    }
   }
 
   /**
    * Sets the active roving turn to the last slotted turn.
    * This aligns focus re-entry with the latest message in the thread.
    */
-  public setActiveIndexToLast(): void {
+  private _setActiveToLast(): void {
     const turns = this._getItemsFromSlot();
     if (!turns.length) {
       return;
     }
-    this._setActiveTurn(turns[turns.length - 1]);
-  }
-
-  protected override updated(changedProperties: PropertyValues<this>): void {
-    super.updated(changedProperties);
-    if (changedProperties.has('activeIndex')) {
-      this._syncActiveItemFromProperty();
-    }
+    this.focusgroupNavigationController.setActiveItem(turns[turns.length - 1]);
   }
 
   private _getItemsFromSlot(): HTMLElement[] {
     return Array.from(this._assignedTurns ?? []);
   }
 
-  private _clampIndex(index: number, turns: HTMLElement[]): number {
-    if (!turns.length) {
-      return 0;
-    }
-
-    return Math.min(Math.max(index, 0), turns.length - 1);
-  }
-
   private _syncRovingFocusTarget(setLatestAsTabStop = false): void {
     this.focusgroupNavigationController.refresh();
     const turns = this._getItemsFromSlot();
     if (!turns.length) {
-      if (this.activeIndex !== 0) {
-        this.activeIndex = 0;
-      }
       return;
     }
 
@@ -116,16 +87,6 @@ export class ConversationThread extends SpectrumElement {
         turns[turns.length - 1]
       );
     }
-    this._syncActiveIndex(this.focusgroupNavigationController.getActiveItem());
-  }
-
-  private _syncActiveItemFromProperty(): void {
-    const turns = this._getItemsFromSlot();
-    if (!turns.length) {
-      return;
-    }
-
-    this._setActiveTurn(turns[this._clampIndex(this.activeIndex, turns)]);
   }
 
   private _handleSlotChange(): void {
@@ -141,7 +102,7 @@ export class ConversationThread extends SpectrumElement {
       return;
     }
 
-    this.setActiveIndexToLast();
+    this._setActiveToLast();
   }
 
   private _hasFocusWithin(): boolean {
@@ -150,29 +111,6 @@ export class ConversationThread extends SpectrumElement {
     );
 
     return active instanceof Node && this.contains(active);
-  }
-
-  private _setActiveTurn(turn: HTMLElement | undefined): void {
-    if (!turn) {
-      return;
-    }
-
-    this.focusgroupNavigationController.setActiveItem(turn);
-    this._syncActiveIndex(this.focusgroupNavigationController.getActiveItem());
-  }
-
-  private _syncActiveIndex(active: HTMLElement | null): void {
-    if (!active) {
-      if (this.activeIndex !== 0) {
-        this.activeIndex = 0;
-      }
-      return;
-    }
-
-    const index = this._getItemsFromSlot().indexOf(active);
-    if (index !== -1 && index !== this.activeIndex) {
-      this.activeIndex = index;
-    }
   }
 
   protected override render(): TemplateResult {

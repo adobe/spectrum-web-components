@@ -10,63 +10,112 @@
  * governing permissions and limitations under the License.
  */
 
-import { CSSResultArray, html, TemplateResult } from 'lit';
-import { property } from 'lit/decorators.js';
-import { ifDefined } from 'lit/directives/if-defined.js';
+import { CSSResultArray, html, PropertyValues, TemplateResult } from 'lit';
+import { property, queryAssignedElements } from 'lit/decorators.js';
 
 import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
+
+import { uniqueId } from '../../../utils/id.js';
 
 import styles from './suggestion-group.css';
 
 /**
  * Groups follow-up suggestions shown below a system response.
  *
+ * Provide heading content in `slot="heading"` and control semantics
+ * (for example `h2`, `h3`, or `p`) from the consuming context. The heading
+ * slot is required. The host exposes **`role="group"`** with **`aria-labelledby`**
+ * pointing at the slotted heading so the accessible name resolves (labeling
+ * is not applied to an inner shadow node, which cannot reference light DOM ids).
+ *
  * Add one or more `<swc-suggestion-item>` elements to the default slot.
  *
  * @element swc-suggestion-group
+ * @slot heading - Required heading content; consumer controls semantic element.
  * @slot - Suggestion items (recommended: `<swc-suggestion-item>`)
  */
 export class SuggestionGroup extends SpectrumElement {
-  /** Optional heading shown above suggestion items. */
-  @property({ type: String })
-  public heading = '';
-
-  /** Accessible label used when no visible heading is provided. */
+  /**
+   * Accessible name override for the host `role="group"`. When set, it takes
+   * precedence over `aria-labelledby` from the heading slot.
+   */
   @property({ type: String, attribute: 'accessible-label' })
   public accessibleLabel = '';
+
+  @queryAssignedElements({ slot: 'heading', flatten: true })
+  private _assignedHeadings!: HTMLElement[];
+
+  private readonly _headingId = uniqueId('swc-suggestion-group-heading');
 
   public static override get styles(): CSSResultArray {
     return [styles];
   }
 
-  private _renderHeading(text: string): TemplateResult {
-    return html`
-      <h3 id="swc-suggestion-group-heading" class="swc-SuggestionGroup-title">
-        ${text}
-      </h3>
-    `;
+  /**
+   * Assigns a stable id to the slotted heading (when it lacks one) and
+   * synchronises host ARIA attributes. Called on every `slotchange` so
+   * the accessible name is always current after light-DOM mutations.
+   */
+  private _handleHeadingSlotChange(): void {
+    const heading = this._assignedHeadings[0];
+    if (heading && !heading.id) {
+      heading.id = this._headingId;
+    }
+    this._syncHostGroupSemantics();
+  }
+
+  /**
+   * `aria-labelledby` on nodes inside the shadow root cannot reliably
+   * reference slotted light-DOM headings. Expose `role="group"` and
+   * labeling on the host so the heading id resolves and assistive tech
+   * gets a proper group name.
+   */
+  private _syncHostGroupSemantics(): void {
+    const heading = this._assignedHeadings[0];
+    const accessibleLabel = this.accessibleLabel.trim();
+
+    if (!heading && !accessibleLabel) {
+      this.removeAttribute('role');
+      this.removeAttribute('aria-label');
+      this.removeAttribute('aria-labelledby');
+      return;
+    }
+
+    this.setAttribute('role', 'group');
+
+    if (accessibleLabel) {
+      this.setAttribute('aria-label', accessibleLabel);
+      this.removeAttribute('aria-labelledby');
+      return;
+    }
+
+    if (heading?.id) {
+      this.setAttribute('aria-labelledby', heading.id);
+      this.removeAttribute('aria-label');
+      return;
+    }
+
+    this.removeAttribute('aria-label');
+    this.removeAttribute('aria-labelledby');
+  }
+
+  protected override updated(changed: PropertyValues<this>): void {
+    super.updated(changed);
+    if (changed.has('accessibleLabel')) {
+      this._syncHostGroupSemantics();
+    }
   }
 
   protected override render(): TemplateResult {
-    const heading = this.heading.trim();
-    const hasHeading = heading.length > 0;
-
-    const fallbackLabel =
-      this.accessibleLabel.trim().length > 0
-        ? this.accessibleLabel.trim()
-        : 'Follow-up suggestions';
-
     return html`
       <div class="swc-SuggestionGroup">
-        ${hasHeading ? this._renderHeading(heading) : ''}
-        <div
-          class="swc-SuggestionGroup-items"
-          role="group"
-          aria-label=${ifDefined(hasHeading ? undefined : fallbackLabel)}
-          aria-labelledby=${ifDefined(
-            hasHeading ? 'swc-suggestion-group-heading' : undefined
-          )}
-        >
+        <div class="swc-SuggestionGroup-title">
+          <slot
+            name="heading"
+            @slotchange=${this._handleHeadingSlotChange}
+          ></slot>
+        </div>
+        <div class="swc-SuggestionGroup-items">
           <slot></slot>
         </div>
       </div>

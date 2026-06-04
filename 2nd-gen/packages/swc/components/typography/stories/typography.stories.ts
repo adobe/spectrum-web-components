@@ -80,65 +80,40 @@ export const Playground: Story = {
       },
     },
   },
-  tags: ['autodocs', 'dev'],
+  tags: ['dev'],
 };
 
-/**
- * Type variants are applied using a base class in the format `.swc-[Variant]`, such as `.swc-Heading`.
- *
- * Each type variant defaults to sans-serif and size medium.
- */
 export const Defaults: Story = {
   args: {
     showAllVariants: true,
   },
-  parameters: { 'section-order': 1 },
   tags: ['options'],
 };
 
-/**
- * The following variants include a serif sub-variant, which can be used by adding the `--serif` modifier class alongside the base class.
- */
 export const SerifModifier: Story = {
   args: {
     showAllVariants: true,
     serif: true,
   },
-  parameters: { 'section-order': 2 },
   tags: ['options'],
 };
 
-/**
- * The following variants may use the emphasized modifier by adding `.swc-Typography--emphasized` alongside the base class.
- * It may also be applied to the serif sub-variants.
- */
 export const EmphasizedModifier: Story = {
   args: {
     showAllVariants: true,
     emphasized: true,
   },
-  parameters: { 'section-order': 3 },
   tags: ['options'],
 };
 
-/**
- * Heading text represents the biggest and boldest text on a page, and it draws the most attention. Only the broadest idea, such as the main page title, should use this style.
- */
 export const HeadingVariant: Story = {
   args: {
     variant: 'heading',
     includeMultipleSizes: true,
   },
-  parameters: {
-    'section-order': 4,
-  },
   tags: ['options'],
 };
 
-/**
- * Heading is also available in a `--heavy` style that sets the font weight to the heaviest of `black`.
- * Black weight text should only be used in heading type styles, and never below `18px` font-size, to ensure the text remains legible.
- */
 export const HeadingHeavy: Story = {
   args: {
     variant: 'heading',
@@ -146,50 +121,30 @@ export const HeadingHeavy: Story = {
     size: 'L',
     sampleText: 'Adobe Express Uses Heavy Headings',
   },
-  parameters: {
-    'section-order': 5,
-  },
   tags: ['options'],
 };
 
-/**
- * Title is used for essential text items on the page, such as wayfinding or context-setting.
- * While the Heading style is for the loudest, most broad message, there are still going to be other important items in an information hierarchy.
- */
 export const TitleVariant: Story = {
   args: {
     variant: 'title',
     includeMultipleSizes: true,
   },
-  parameters: {
-    'section-order': 6,
-  },
   tags: ['options'],
 };
 
-/**
- * Body is the type style that’s primarily used for longer-form text that may extend to multiple lines.
- * It's used for the text that creates the main content on a page.
- */
 export const BodyVariant: Story = {
   args: {
     variant: 'body',
     includeMultipleSizes: true,
   },
-  parameters: { 'section-order': 7 },
   tags: ['options'],
 };
 
-/**
- * "Detail text" is a broad term for any kind of text that communicates ideas that are even more specific than body text.
- * Text using the Detail style acts as supporting context to any other information presented, such as metadata, helper copy, or captions.
- */
 export const DetailVariant: Story = {
   args: {
     variant: 'detail',
     includeMultipleSizes: true,
   },
-  parameters: { 'section-order': 8 },
   tags: ['options'],
 };
 
@@ -198,13 +153,9 @@ export const CodeVariant: Story = {
     variant: 'code',
     includeMultipleSizes: true,
   },
-  parameters: { 'section-order': 9 },
   tags: ['options'],
 };
 
-/**
- * Applies block-direction margins via the `--margins` modifier.
- */
 export const MarginsModifier: Story = {
   args: {
     variant: 'body',
@@ -215,16 +166,6 @@ export const MarginsModifier: Story = {
   tags: ['options'],
 };
 
-/**
- * Applies block-direction margins to all type variants within a container with the `.swc-Typography--prose` class applied.
- *
- * This also applies foundational type properties based on heading, title and body styles to common semantic typography elements including:
- * - `h1` - Heading, size M
- * - `h2` - Title, size XL
- * - `h3` - Title, size L
- * - `h4` - Title, size M
- * - `p, li` - Body, size M
- */
 export const ProseContainer: Story = {
   args: {
     variant: 'body',

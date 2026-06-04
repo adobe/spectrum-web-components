@@ -37,12 +37,14 @@
     - Button
     - Button Group
     - Checkbox
+    - Close Button
     - Color Field
     - Color Loupe
     - Divider
     - Dropzone
     - Field Group
     - Field Label
+    - Grid
     - Help Text
     - Illustrated Message
     - Infield Button
