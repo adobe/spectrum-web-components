@@ -394,7 +394,7 @@ Gates align with [01_washing-machine-workflow.md](../../02_workstreams/02_2nd-ge
 ### Accessibility
 
 - [x] Region + `aria-labelledby`, `aria-controls`, closed panel semantics (**`aria-hidden`** + CSS collapse; see [Closed panel hiding (B5)](#closed-panel-hiding-b5)), disabled + `inert`, Space **`preventDefault`**, no arrow-key header trap
-- [ ] Manual SR spot-check (VoiceOver + NVDA or team minimum)
+- [x] Manual SR spot-check (VoiceOver + NVDA or team minimum)
 
 ### Testing
 
