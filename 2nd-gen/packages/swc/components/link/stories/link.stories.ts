@@ -38,6 +38,10 @@ const meta: Meta<LinkTemplateProps> = {
       subtitle:
         'Native anchors with `.swc-Link` modifier classes. Import `@adobe/spectrum-wc/link.css`.',
     },
+    design: {
+      type: 'figma',
+      url: 'https://www.figma.com/design/Mngz9H7WZLbrCvGQf3GnsY/S2---Web--Desktop-scale-?node-id=18850-110',
+    },
   },
   argTypes: {
     variant: {
@@ -143,7 +147,27 @@ export const Playground: Story = {
       },
     },
   },
-  tags: ['autodocs', 'dev'],
+  tags: ['dev'],
+};
+
+// ──────────────────────────
+//    OVERVIEW STORY
+// ──────────────────────────
+
+export const Overview: Story = {
+  render: (args) => html`
+    ${template({ ...args, context: 'prose', variant: 'default' })}
+    ${template({
+      ...args,
+      context: 'explicit',
+      standalone: true,
+      sampleText: 'Account settings',
+    })}
+  `,
+  parameters: {
+    flexLayout: 'column-stretch',
+  },
+  tags: ['overview'],
 };
 
 /**
@@ -160,7 +184,8 @@ export const Standalone: Story = {
 };
 
 /**
- * Secondary color treatment (replaces `sp-link variant="secondary"`).
+ * Secondary color treatment for links that need reduced visual weight relative to
+ * the default accent color.
  */
 export const Secondary: Story = {
   args: {
@@ -186,6 +211,13 @@ export const QuietStandalone: Story = {
   tags: ['options'],
 };
 
+/**
+ * Inline links inside running text inherit default link styling from
+ * `.swc-Typography--prose` — no per-link BEM classes are required.
+ *
+ * See [Typography / Prose container](../typography/stories/typography.stories.ts)
+ * for the full prose pattern.
+ */
 export const InProse: Story = {
   args: {
     context: 'prose',
@@ -194,6 +226,12 @@ export const InProse: Story = {
   tags: ['options'],
 };
 
+/**
+ * Footer and sidebar link lists use `.swc-Typography--links` so child anchors
+ * receive default link styling without individual modifier classes.
+ *
+ * See [Typography / Link list](../typography/stories/typography.stories.ts).
+ */
 export const LinkList: Story = {
   args: {
     context: 'links',
@@ -257,4 +295,39 @@ export const ColorVariants: Story = {
     flexLayout: 'column-stretch',
   },
   tags: ['options'],
+};
+
+// ────────────────────────────────
+//    ACCESSIBILITY STORIES
+// ────────────────────────────────
+
+/**
+ * Native `<a href>` elements expose the implicit link role. Use descriptive link
+ * text in prose, and reserve quiet styling for section-scoped patterns such as
+ * footers where the surrounding region provides navigation context.
+ */
+export const Accessibility: Story = {
+  render: (args) => html`
+    <div class="swc-Typography--prose">
+      <p>
+        Review the project timeline and
+        <a href="/timeline">view the full schedule</a>
+        before the sprint review.
+      </p>
+    </div>
+    <footer style="margin-block-start: 24px;">
+      ${template({
+        ...args,
+        context: 'links',
+        variant: 'default',
+      })}
+    </footer>
+  `,
+  args: {
+    href: '#',
+  },
+  parameters: {
+    flexLayout: 'column-stretch',
+  },
+  tags: ['a11y'],
 };

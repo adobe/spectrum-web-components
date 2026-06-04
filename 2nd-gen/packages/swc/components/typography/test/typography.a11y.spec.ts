@@ -28,7 +28,8 @@ import { expect, test } from '@playwright/test';
  */
 async function gotoTypographyStory(
   page: Page,
-  storyId: string
+  storyId: string,
+  readySelector = '.typography-samples'
 ): Promise<Locator> {
   await page.goto(`/iframe.html?id=${storyId}&viewMode=story`, {
     waitUntil: 'domcontentloaded',
@@ -40,11 +41,8 @@ async function gotoTypographyStory(
     return root && root.children.length > 0;
   });
 
-  // Wait for the typography wrapper to be visible (CSS-only component)
-  await page
-    .locator('.typography-samples')
-    .first()
-    .waitFor({ state: 'visible' });
+  // Wait for story-specific content (CSS-only component)
+  await page.locator(readySelector).first().waitFor({ state: 'visible' });
 
   return page.locator('#storybook-root');
 }
@@ -87,6 +85,31 @@ test.describe('Typography - ARIA Snapshots', () => {
       - heading "Semantic H2" [level=2]
       - heading "Semantic H3" [level=3]
       - heading "Semantic H4" [level=4]
+    `);
+  });
+
+  test('prose container includes an inline link with accessible name', async ({
+    page,
+  }) => {
+    const root = await gotoTypographyStory(
+      page,
+      'components-typography--prose-container'
+    );
+    await expect(root).toMatchAriaSnapshot(`
+      - link "inline link"
+    `);
+  });
+
+  test('link list renders named navigation links', async ({ page }) => {
+    const root = await gotoTypographyStory(
+      page,
+      'components-typography--link-list',
+      '.swc-Typography--links'
+    );
+    await expect(root).toMatchAriaSnapshot(`
+      - link "Privacy policy"
+      - link "Terms of use"
+      - link "Contact support"
     `);
   });
 });
