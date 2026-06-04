@@ -55,7 +55,7 @@ Then use the `rendering-and-styling-migration-analysis.md` file for the componen
 - **If it exists**, confirm it renders the component in Storybook with no console errors before touching CSS.
 - **If it does not exist**, create it now using [`assets/stories-template.md`](assets/stories-template.md) before starting CSS work. Follow the template's "Decisions to make" section and its checklist.
 
-**Phase 5 stories scope** — the stories file at this phase should contain: Playground, Overview, Anatomy, Options (one story per constant array in the types file), States, and any Behaviors that exercise CSS-visible properties. Do **not** add JSDoc prose to stories and do **not** write the Accessibility story body — these are deferred to Phase 7. Leave a `// TODO` comment referencing that phase.
+**Phase 5 stories scope** — the stories file at this phase should contain: Playground, Overview, Anatomy, Options (one story per constant array in the types file), States, and any Behaviors that exercise CSS-visible properties. Do **not** add story-level JSDoc and do **not** write the Accessibility story body — these are deferred to Phase 7, which authors the per-component MDX file (`<component>.mdx`) as the docs surface. Leave a `// TODO` comment referencing Phase 7.
 
 **Step 3 — Align render template class names with CSS selectors.** Before writing CSS, read the component's `render()` method and note every class name emitted. The CSS you write must use those exact names. Mismatches cause styles to silently not apply — there is no error.
 
@@ -67,3 +67,15 @@ Common case: confirming that subcomponent class names follow the single-hyphen s
 If a rename is needed, make the template change first, confirm the component still renders correctly in Storybook, then write the CSS.
 
 **Step 4 — Execute the phase.** Follow **[Phase 5: Styling](../../../CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md#phase-5-styling)** in the washing machine workflow doc — it covers what to do, what to check, common problems, and the quality gate for this phase.
+
+**Step 5 — Document exposed custom properties.** After writing the CSS, add a `@cssprop` JSDoc tag to the SWC component class (`2nd-gen/packages/swc/components/[component]/[Component].ts`) for every exposed `--swc-*` property. Place all `@cssprop` tags on the primary SWC class export (not the core base class). Each tag should name the property and give a one-line description of what it controls, including its default token where relevant.
+
+```ts
+/**
+ * @cssprop --swc-badge-height - Block size of the badge. Defaults to the medium component height token.
+ * @cssprop --swc-badge-background-color - Background fill. Defaults to the neutral subdued background token.
+ */
+export class Badge extends BadgeBase { … }
+```
+
+Storybook picks these up automatically and surfaces them in the API docs panel. Do not add `@cssprop` tags for private `--_swc-*` properties — those are internal only.

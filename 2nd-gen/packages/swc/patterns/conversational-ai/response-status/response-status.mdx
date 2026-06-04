@@ -1,0 +1,56 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import { DocsFooter, DocsHeader } from '../../../.storybook/blocks';
+
+import * as ResponseStatusStories from './stories/response-status.stories';
+
+<Meta of={ResponseStatusStories} />
+
+<DocsHeader />
+
+## Anatomy
+
+A response status indicator consists of:
+
+1. **Status row**: an indeterminate progress circle (loading) or checkmark (complete) with a label
+2. **Reasoning toggle**: optional expandable disclosure for chain-of-thought content
+
+<Canvas of={ResponseStatusStories.Anatomy} />
+
+## Options
+
+### Loading
+
+The `loading` attribute controls which indicator is shown:
+
+- **`loading=true`**: indeterminate progress circle + "Thinking…" label
+- **`loading=false`**: checkmark + "Response generated" label
+- Set `loading-label` or `complete-label` to customize row text per state
+
+<Canvas of={ResponseStatusStories.Loading} />
+
+### Reasoning
+
+Set **`open`** to control reasoning disclosure:
+
+- **`open=false`**: reasoning collapsed
+- **`open=true`**: reasoning expanded
+
+The disclosure chevron only appears when default-slot reasoning content exists. While **`loading=true`**, reasoning UI is not shown. If reasoning slot content is later removed, the component automatically resets `open` to `false`. This internal collapse does not emit `swc-response-status-toggle`.
+
+<Canvas of={ResponseStatusStories.Reasoning} />
+
+## Accessibility
+
+### Features
+
+The `<swc-response-status>` element implements the following accessibility features:
+
+#### Status announcement
+
+- The loading row carries `role="status"`, so the status label is announced for screen readers
+- When reasoning content exists, the reasoning toggle uses `aria-expanded` and `aria-controls` to communicate panel state
+- The reasoning panel uses `role="group"` with `aria-label="Reasoning"`
+
+<Canvas of={ResponseStatusStories.Accessibility} />
+
+<DocsFooter />

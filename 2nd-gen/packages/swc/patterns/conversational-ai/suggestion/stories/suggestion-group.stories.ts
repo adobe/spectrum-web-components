@@ -41,7 +41,7 @@ const meta: Meta = {
   args: {
     ...args,
     'default-slot': threeSuggestionItems,
-    heading: 'What would you like to do next?',
+    'heading-slot': '<h3 slot="heading">What would you like to do next?</h3>',
   },
   argTypes,
   render: (args) => template(args),
@@ -58,11 +58,19 @@ export { meta };
 export default meta;
 
 // ────────────────────
-//    AUTODOCS STORY
+//    PLAYGROUND STORY
 // ────────────────────
 
 export const Playground: Story = {
-  tags: ['autodocs', 'dev'],
+  render: () => html`
+    <swc-suggestion-group>
+      <h3 slot="heading">What would you like to do next?</h3>
+      <swc-suggestion-item>Create a slide deck from this</swc-suggestion-item>
+      <swc-suggestion-item>Summarize in 3 bullet points</swc-suggestion-item>
+      <swc-suggestion-item>Translate to Spanish</swc-suggestion-item>
+    </swc-suggestion-group>
+  `,
+  tags: ['dev'],
 };
 
 // ──────────────────────────────
@@ -70,6 +78,14 @@ export const Playground: Story = {
 // ──────────────────────────────
 
 export const Overview: Story = {
+  render: () => html`
+    <swc-suggestion-group>
+      <h3 slot="heading">What would you like to do next?</h3>
+      <swc-suggestion-item>Create a slide deck from this</swc-suggestion-item>
+      <swc-suggestion-item>Summarize in 3 bullet points</swc-suggestion-item>
+      <swc-suggestion-item>Translate to Spanish</swc-suggestion-item>
+    </swc-suggestion-group>
+  `,
   tags: ['overview'],
 };
 
@@ -77,15 +93,9 @@ export const Overview: Story = {
 //    ANATOMY STORY
 // ──────────────────────────
 
-/**
- * A suggestion group consists of:
- *
- * 1. **Heading** — Optional heading text (configured via the `heading` property)
- * 2. **Items** — One or more slotted `<swc-suggestion-item>` actions
- */
 export const Anatomy: Story = {
   args: {
-    heading: 'What would you like to do next?',
+    'heading-slot': '<h3 slot="heading">What would you like to do next?</h3>',
     'default-slot': threeSuggestionItems,
   },
   tags: ['anatomy'],
@@ -95,14 +105,12 @@ export const Anatomy: Story = {
 //    OPTIONS STORIES
 // ──────────────────────────
 
-/**
- * Suggestion count follows the number of `<swc-suggestion-item>` elements.
- */
 export const SuggestionCount: Story = {
   render: () => html`
     <div style="display:flex;flex-direction:column;gap:32px;">
       <div style="display:flex;flex-direction:column;gap:8px;">
-        <swc-suggestion-group heading="What would you like to do next?">
+        <swc-suggestion-group>
+          <h3 slot="heading">What would you like to do next?</h3>
           <swc-suggestion-item>
             Create a slide deck from this
           </swc-suggestion-item>
@@ -110,7 +118,8 @@ export const SuggestionCount: Story = {
         <span class="swc-Detail swc-Detail--sizeS">One suggestion</span>
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;">
-        <swc-suggestion-group heading="What would you like to do next?">
+        <swc-suggestion-group>
+          <h3 slot="heading">What would you like to do next?</h3>
           <swc-suggestion-item>
             Create a slide deck from this
           </swc-suggestion-item>
@@ -124,7 +133,8 @@ export const SuggestionCount: Story = {
         </span>
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;">
-        <swc-suggestion-group heading="What would you like to do next?">
+        <swc-suggestion-group>
+          <h3 slot="heading">What would you like to do next?</h3>
           <swc-suggestion-item>
             Refine the executive summary
           </swc-suggestion-item>
@@ -139,18 +149,15 @@ export const SuggestionCount: Story = {
       </div>
     </div>
   `,
-  parameters: { 'section-order': 1 },
   tags: ['options'],
 };
 
-/**
- * The heading text sits above the suggestion row and can be customized per context.
- */
 export const Heading: Story = {
   render: () => html`
     <div style="display:flex;flex-direction:column;gap:32px;">
       <div style="display:flex;flex-direction:column;gap:8px;">
-        <swc-suggestion-group heading="What would you like to do next?">
+        <swc-suggestion-group>
+          <h3 slot="heading">What would you like to do next?</h3>
           <swc-suggestion-item>
             Create a slide deck from this
           </swc-suggestion-item>
@@ -162,7 +169,8 @@ export const Heading: Story = {
         <span class="swc-Detail swc-Detail--sizeS">Default heading</span>
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;">
-        <swc-suggestion-group heading="Suggested next actions">
+        <swc-suggestion-group>
+          <h2 slot="heading">Suggested next actions</h2>
           <swc-suggestion-item>
             Create a slide deck from this
           </swc-suggestion-item>
@@ -171,11 +179,12 @@ export const Heading: Story = {
           </swc-suggestion-item>
           <swc-suggestion-item>Translate to Spanish</swc-suggestion-item>
         </swc-suggestion-group>
-        <span class="swc-Detail swc-Detail--sizeS">Custom heading</span>
+        <span class="swc-Detail swc-Detail--sizeS">
+          Custom semantics (h2 heading slot)
+        </span>
       </div>
     </div>
   `,
-  parameters: { 'section-order': 2 },
   tags: ['options'],
 };
 
@@ -183,20 +192,9 @@ export const Heading: Story = {
 //    ACCESSIBILITY STORY
 // ────────────────────────────────
 
-/**
- * ### Features
- *
- * The `<swc-suggestion-group>` container and `<swc-suggestion-item>` controls
- * implement:
- *
- * - Native `<button>` semantics per suggestion item
- * - Group labeling via `aria-labelledby` when `heading` is set, otherwise via
- *   configurable `accessible-label`
- * - Item click event bubbling from each `<swc-suggestion-item>`
- */
 export const Accessibility: Story = {
   args: {
-    heading: 'What would you like to do next?',
+    'heading-slot': '<h3 slot="heading">What would you like to do next?</h3>',
     'default-slot': threeSuggestionItems,
   },
   tags: ['a11y'],

@@ -1,5 +1,20 @@
 # Change Log
 
+## 1.12.1
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @spectrum-web-components/action-bar@1.12.1
+  - @spectrum-web-components/action-button@1.12.1
+  - @spectrum-web-components/action-group@1.12.1
+  - @spectrum-web-components/icons-workflow@1.12.1
+  - @spectrum-web-components/split-view@1.12.1
+  - @spectrum-web-components/base@1.12.1
+  - @spectrum-web-components/shared@1.12.1
+  - @spectrum-web-components/styles@1.12.1
+  - @spectrum-web-components/theme@1.12.1
+
 ## 1.12.0
 
 ### Patch Changes

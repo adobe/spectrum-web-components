@@ -27,7 +27,15 @@
       "types": "./dist/components/avatar/index.d.ts",
       "import": "./dist/components/avatar/index.js"
     },
+    "./components/avatar/index.js": {
+      "types": "./dist/components/avatar/index.d.ts",
+      "import": "./dist/components/avatar/index.js"
+    },
     "./components/badge": {
+      "types": "./dist/components/badge/index.d.ts",
+      "import": "./dist/components/badge/index.js"
+    },
+    "./components/badge/index.js": {
       "types": "./dist/components/badge/index.d.ts",
       "import": "./dist/components/badge/index.js"
     },
@@ -36,6 +44,10 @@
       "import": "./dist/components/button/index.js"
     },
     "./components/divider": {
+      "types": "./dist/components/divider/index.d.ts",
+      "import": "./dist/components/divider/index.js"
+    },
+    "./components/divider/index.js": {
       "types": "./dist/components/divider/index.d.ts",
       "import": "./dist/components/divider/index.js"
     },
@@ -59,7 +71,15 @@
       "types": "./dist/components/status-light/index.d.ts",
       "import": "./dist/components/status-light/index.js"
     },
+    "./components/status-light/index.js": {
+      "types": "./dist/components/status-light/index.d.ts",
+      "import": "./dist/components/status-light/index.js"
+    },
     "./components/tabs": {
+      "types": "./dist/components/tabs/index.d.ts",
+      "import": "./dist/components/tabs/index.js"
+    },
+    "./components/tabs/index.js": {
       "types": "./dist/components/tabs/index.d.ts",
       "import": "./dist/components/tabs/index.js"
     },
@@ -158,13 +178,22 @@
       "components/avatar": [
         "dist/components/avatar/index.d.ts"
       ],
+      "components/avatar/index.js": [
+        "dist/components/avatar/index.d.ts"
+      ],
       "components/badge": [
+        "dist/components/badge/index.d.ts"
+      ],
+      "components/badge/index.js": [
         "dist/components/badge/index.d.ts"
       ],
       "components/button": [
         "dist/components/button/index.d.ts"
       ],
       "components/divider": [
+        "dist/components/divider/index.d.ts"
+      ],
+      "components/divider/index.js": [
         "dist/components/divider/index.d.ts"
       ],
       "components/icon": [
@@ -182,7 +211,13 @@
       "components/status-light": [
         "dist/components/status-light/index.d.ts"
       ],
+      "components/status-light/index.js": [
+        "dist/components/status-light/index.d.ts"
+      ],
       "components/tabs": [
+        "dist/components/tabs/index.d.ts"
+      ],
+      "components/tabs/index.js": [
         "dist/components/tabs/index.d.ts"
       ],
       "controllers": [
