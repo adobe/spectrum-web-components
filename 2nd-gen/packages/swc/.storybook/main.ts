@@ -137,6 +137,10 @@ if (storybookMode === 'dev') {
     ...PATTERN_STORY_ROOT,
     files: '**/*.test.ts',
   });
+  stories.push({
+    ...CORE_STORY_ROOT,
+    files: '**/test/**/*.test.ts',
+  });
 }
 
 /**

@@ -99,6 +99,14 @@
       "types": "./dist/controllers/language-resolution.d.ts",
       "import": "./dist/controllers/language-resolution.js"
     },
+    "./controllers/placement-controller": {
+      "types": "./dist/controllers/placement-controller/index.d.ts",
+      "import": "./dist/controllers/placement-controller/index.js"
+    },
+    "./controllers/placement-controller/index.js": {
+      "types": "./dist/controllers/placement-controller/index.d.ts",
+      "import": "./dist/controllers/placement-controller/index.js"
+    },
     "./element": {
       "types": "./dist/element/index.d.ts",
       "import": "./dist/element/index.js"
@@ -232,6 +240,12 @@
       "controllers/language-resolution.js": [
         "dist/controllers/language-resolution.d.ts"
       ],
+      "controllers/placement-controller": [
+        "dist/controllers/placement-controller/index.d.ts"
+      ],
+      "controllers/placement-controller/index.js": [
+        "dist/controllers/placement-controller/index.d.ts"
+      ],
       "element": [
         "dist/element/index.d.ts"
       ],
@@ -277,6 +291,7 @@
     }
   },
   "dependencies": {
+    "@floating-ui/dom": "1.7.6",
     "@lit-labs/observers": "2.0.2",
     "lit": "^2.5.0 || ^3.1.3"
   },
