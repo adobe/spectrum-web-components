@@ -367,12 +367,17 @@ const preview = {
                 'Button group',
                 [
                   'Accessibility migration analysis',
+                  'Migration plan',
                   'Rendering and styling migration analysis',
                 ],
                 'Checkbox',
                 ['Rendering and styling migration analysis'],
                 'Close button',
-                ['Accessibility migration analysis'],
+                [
+                  'Accessibility migration analysis',
+                  'Migration plan',
+                  'Rendering and styling migration analysis',
+                ],
                 'Color field',
                 ['Rendering and styling migration analysis'],
                 'Color loupe',

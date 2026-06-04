@@ -46,15 +46,18 @@ export const DocsFooter = () => {
 
   return (
     <>
-      <HeaderMdx as="h2" id="api">
-        API
-      </HeaderMdx>
-      {!isController && <ApiTable />}
+      {!isController && (
+        <>
+          <HeaderMdx as="h2" id="api">
+            API
+          </HeaderMdx>
+          <ApiTable />
+        </>
+      )}
       <Primary />
       <Controls />
       {hasCustomApiStories && (
         <>
-          <hr />
           <SpectrumStories tag="api" hideTitle={true} />
         </>
       )}

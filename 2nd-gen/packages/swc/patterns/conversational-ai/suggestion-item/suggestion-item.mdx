@@ -1,0 +1,39 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import { DocsFooter, DocsHeader } from '../../../.storybook/blocks';
+
+import * as SuggestionItemStories from './stories/suggestion-item.stories';
+
+<Meta of={SuggestionItemStories} />
+
+<DocsHeader />
+
+## Anatomy
+
+A suggestion item consists of:
+
+1. **Leading icon**: curved-arrow glyph
+2. **Label**: consumer-provided default-slot content
+
+<Canvas of={SuggestionItemStories.Anatomy} />
+
+## Options
+
+### Labels
+
+Suggestion item labels come from default-slot content and can vary in length.
+
+<Canvas of={SuggestionItemStories.Labels} />
+
+## Accessibility
+
+### Features
+
+The `<swc-suggestion-item>` element implements:
+
+- Native `<button>` interaction semantics
+- Keyboard activation via <kbd>Enter</kbd> and <kbd>Space</kbd>
+- Bubbled `swc-suggestion` custom event on activation
+
+<Canvas of={SuggestionItemStories.Accessibility} />
+
+<DocsFooter />
