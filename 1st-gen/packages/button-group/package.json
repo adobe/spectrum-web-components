@@ -72,6 +72,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "customElements": "custom-elements.json",
-  "deprecationNotice": "@spectrum-web-components/button-group is deprecated and will be removed in a future major release. Use <swc-button-group> from @spectrum-web-components/swc instead."
+  "customElements": "custom-elements.json"
 }
