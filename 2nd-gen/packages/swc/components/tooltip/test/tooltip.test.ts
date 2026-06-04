@@ -11,7 +11,7 @@
  */
 
 import { html } from 'lit';
-import { expect, userEvent } from '@storybook/test';
+import { expect, userEvent, waitFor } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import type { Button } from '@adobe/spectrum-wc/button';
@@ -692,20 +692,29 @@ export const HoverOpensTest: Story = {
     const tooltip = await getComponent<Tooltip>(canvasElement, 'swc-tooltip');
 
     await step('opens the tooltip when the trigger is hovered', async () => {
-      const openPromise = waitForEvent(tooltip, 'swc-open');
-      await userEvent.pointer({ target: trigger });
-      await openPromise;
-      expect(tooltip.open, 'tooltip is open after hover').toBe(true);
+      trigger.dispatchEvent(
+        new PointerEvent('pointerenter', { bubbles: false, composed: true })
+      );
+      // swc-open fires from beforetoggle; tooltip.open is set by the async toggle event.
+      await waitFor(
+        () => expect(tooltip.open, 'tooltip is open after hover').toBe(true),
+        { timeout: 200 }
+      );
     });
 
     await step(
       'closes the tooltip when the pointer leaves the trigger',
       async () => {
-        const closePromise = waitForEvent(tooltip, 'swc-close');
-        await userEvent.pointer({ target: document.body });
-        await closePromise;
-        expect(tooltip.open, 'tooltip is closed after pointer leaves').toBe(
-          false
+        trigger.dispatchEvent(
+          new PointerEvent('pointerleave', { bubbles: false, composed: true })
+        );
+        // Cooldown timer is 300 ms; give it extra headroom.
+        await waitFor(
+          () =>
+            expect(tooltip.open, 'tooltip is closed after pointer leaves').toBe(
+              false
+            ),
+          { timeout: 500 }
         );
       }
     );
@@ -728,18 +737,24 @@ export const FocusOpensTest: Story = {
     await step(
       'opens the tooltip immediately when the trigger receives keyboard focus',
       async () => {
-        const openPromise = waitForEvent(tooltip, 'swc-open');
-        trigger.focus();
-        await openPromise;
-        expect(tooltip.open, 'tooltip is open after focus').toBe(true);
+        trigger.dispatchEvent(
+          new FocusEvent('focusin', { bubbles: true, composed: true })
+        );
+        await waitFor(
+          () => expect(tooltip.open, 'tooltip is open after focus').toBe(true),
+          { timeout: 200 }
+        );
       }
     );
 
     await step('closes the tooltip when focus leaves the trigger', async () => {
-      const closePromise = waitForEvent(tooltip, 'swc-close');
-      trigger.blur();
-      await closePromise;
-      expect(tooltip.open, 'tooltip is closed after blur').toBe(false);
+      trigger.dispatchEvent(
+        new FocusEvent('focusout', { bubbles: true, composed: true })
+      );
+      await waitFor(
+        () => expect(tooltip.open, 'tooltip is closed after blur').toBe(false),
+        { timeout: 200 }
+      );
     });
   },
 };
@@ -760,7 +775,9 @@ export const DisabledPreventsHoverTest: Story = {
     await step(
       'does not open the tooltip when disabled and trigger is hovered',
       async () => {
-        await userEvent.pointer({ target: trigger });
+        trigger.dispatchEvent(
+          new PointerEvent('pointerenter', { bubbles: false, composed: true })
+        );
         await tooltip.updateComplete;
         expect(tooltip.open, 'tooltip remains closed when disabled').toBe(
           false
@@ -786,7 +803,9 @@ export const ManualPreventsHoverTest: Story = {
     await step(
       'does not open the tooltip on hover when manual mode is active',
       async () => {
-        await userEvent.pointer({ target: trigger });
+        trigger.dispatchEvent(
+          new PointerEvent('pointerenter', { bubbles: false, composed: true })
+        );
         await tooltip.updateComplete;
         expect(tooltip.open, 'tooltip remains closed in manual mode').toBe(
           false

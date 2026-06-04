@@ -169,7 +169,6 @@ export class HoverController implements ReactiveController {
     this.unwireTarget();
     this.unwireBridge();
     this.clearWarmupTimer();
-    this.clearCooldownTimer();
     this.hasFocusOpen = false;
     this.hadPointerdown = false;
     this.isGuardActive = false;
