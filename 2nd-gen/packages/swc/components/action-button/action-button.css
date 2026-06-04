@@ -176,16 +176,16 @@ slot[name="icon"]::slotted(*) {
   --swc-action-button-background-color-down: token("transparent-white-200");
   --swc-action-button-background-color-focus: token("transparent-white-200");
   --swc-action-button-background-color-disabled: token("disabled-static-white-background-color");
-  --swc-action-button-content-color-default: token("white");
-  --swc-action-button-content-color-hover: token("white");
-  --swc-action-button-content-color-down: token("white");
-  --swc-action-button-content-color-focus: token("white");
+  --swc-action-button-content-color-default: token("transparent-white-800");
+  --swc-action-button-content-color-hover: token("transparent-white-900");
+  --swc-action-button-content-color-down: token("transparent-white-900");
+  --swc-action-button-content-color-focus: token("transparent-white-900");
   --swc-action-button-content-color-disabled: token("disabled-static-white-content-color");
 }
 
 :host([static-color="white"][quiet]) {
   --swc-action-button-background-color-default: transparent;
-  --swc-action-button-background-color-disabled: transparent;
+  --swc-action-button-background-color-disabled: token("transparent-white-25");
 }
 
 /* ── Static black ─────────────────────────────────── */
@@ -197,16 +197,16 @@ slot[name="icon"]::slotted(*) {
   --swc-action-button-background-color-down: token("transparent-black-200");
   --swc-action-button-background-color-focus: token("transparent-black-200");
   --swc-action-button-background-color-disabled: token("disabled-static-black-background-color");
-  --swc-action-button-content-color-default: token("black");
-  --swc-action-button-content-color-hover: token("black");
-  --swc-action-button-content-color-down: token("black");
-  --swc-action-button-content-color-focus: token("black");
+  --swc-action-button-content-color-default: token("transparent-black-800");
+  --swc-action-button-content-color-hover: token("transparent-black-900");
+  --swc-action-button-content-color-down: token("transparent-black-900");
+  --swc-action-button-content-color-focus: token("transparent-black-900");
   --swc-action-button-content-color-disabled: token("disabled-static-black-content-color");
 }
 
 :host([static-color="black"][quiet]) {
   --swc-action-button-background-color-default: transparent;
-  --swc-action-button-background-color-disabled: transparent;
+  --swc-action-button-background-color-disabled: token("transparent-black-25");
 }
 
 /* ── Icon only ────────────────────────────────────── */
