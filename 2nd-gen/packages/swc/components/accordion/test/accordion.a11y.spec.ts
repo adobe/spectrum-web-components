@@ -156,15 +156,15 @@ test.describe('Accordion - ARIA Snapshots', () => {
     await expect(root).toMatchAriaSnapshot(`
       - heading "Personal information" [level=3]:
         - button "Personal information" [expanded]
-      - button "Edit"
+      - button "Edit personal information"
       - region "Personal information":
         - paragraph: Manage your name, email address, and contact details.
       - heading "Billing address" [level=3]:
         - button "Billing address"
-      - button "Edit"
+      - button "Edit billing address"
       - heading "Shipping address" [level=3]:
         - button "Shipping address"
-      - button "Edit"
+      - button "Edit shipping address"
     `);
   });
 
@@ -179,7 +179,7 @@ test.describe('Accordion - ARIA Snapshots', () => {
     await expect(root).toMatchAriaSnapshot(`
       - heading "Personal information" [level=3]:
         - button "Personal information" [expanded]
-      - button "Edit"
+      - button "Edit personal information"
       - region "Personal information":
         - paragraph: Manage your name, email address, and contact details.
       - heading "Billing address" [level=3]:
