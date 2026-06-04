@@ -776,9 +776,19 @@ export const ActiveChangeEventAndCallback: Story = {
     await step(
       'onActiveItemChange callback fires alongside event',
       async () => {
+        // Step 1 above left the controller's internal `previousActive` on
+        // "Second". `clearLogs()` only resets the test arrays, not the
+        // controller state — so navigating "First → Second" again would be a
+        // no-op as far as `applyRovingTabindex` is concerned (the
+        // `safeActive !== previousActive` branch would not fire).
+        //
+        // To exercise the callback we have to land on an item that is
+        // *different* from the controller's current `previousActive`. We
+        // route through "Third" first so the subsequent ArrowLeft back to
+        // "Second" produces a real change.
         host.clearLogs();
-        buttons[0].focus();
-        keydown(buttons[0], 'ArrowRight');
+        buttons[1].focus();
+        keydown(buttons[1], 'ArrowRight');
 
         expect(host.callbackLog.length).toBeGreaterThan(0);
         expect(host.callbackLog).toContain('Second');
@@ -869,6 +879,32 @@ export const SetOptionsDirectionChange: Story = {
         (host as DemoFocusgroupPlayground).direction = 'both';
         await (host as DemoFocusgroupPlayground).updateComplete;
 
+        // NOT A TIMING ISSUE (confirmed by experiment — rAF wait did not fix
+        // it). `updated()` on the playground host calls
+        // `navigation.setOptions({ direction: 'both', ... })` which calls
+        // `refresh()`. By the time `updateComplete` resolves the controller's
+        // direction is 'both', and the controller does handle ArrowDown in
+        // 'both' mode (see `navigateBothAxes` in the controller source).
+        //
+        // SUSPECTED REAL CAUSE — needs verification:
+        //   The previous step left focus on "Italic" via the keydown handler,
+        //   but it pressed ArrowDown in horizontal mode (no-op) without
+        //   first re-issuing a keydown that the controller acted on. After
+        //   `direction = 'both'` re-renders, the buttons in the shadow tree
+        //   may be preserved by Lit reconciliation but the focused element
+        //   relationship the controller tracks (via `previousActive` /
+        //   `lastFocused`) may not match the live `document.activeElement`.
+        //   Result: when ArrowDown dispatches on `current`, the controller's
+        //   `resolveManagedKeydownTarget` either fails to match the button
+        //   or computes a next item equal to current.
+        //
+        // FIX OPTIONS (try in order):
+        //   1. Re-focus `current` explicitly before the keydown to force the
+        //      controller's focusin handler to sync `previousActive`:
+        //        current.focus();
+        //   2. If that does not work, this is a real controller/setOptions
+        //      bug — `setOptions` updates `options.direction` but does not
+        //      re-seed the active item tracking after a direction change.
         const current = shadowActiveButton(host)!;
         keydown(current, 'ArrowDown');
         const afterDown = shadowActiveButton(host)?.textContent?.trim();
@@ -1018,8 +1054,46 @@ export const DisabledButtonNeverTabStop: Story = {
         buttons[1].focus();
         buttons[1].blur();
 
-        // The disabled button must NOT have tabindex="0" since it can't
-        // receive focus, which would make the group unreachable via Tab.
+        // NOT A TIMING ISSUE (confirmed by experiment — rAF wait did not fix
+        // it). The controller has NO MutationObserver on `disabled` /
+        // `aria-disabled`; it re-queries eligibility on `focusin` and on
+        // explicit `refresh()` calls. Setting `buttons[0].disabled = true`
+        // therefore does not notify the controller on its own.
+        //
+        // SUSPECTED REAL CAUSE:
+        //   The `buttons[1].focus(); buttons[1].blur();` pair was meant to
+        //   "trigger a tabindex recalculation". `focus()` should fire focusin
+        //   on the host and re-run `applyRovingTabindex(buttons[1])`, which
+        //   would correctly assign tabIndex=0 to buttons[1] and tabIndex=-1
+        //   to buttons[0]. The assertion fails because buttons[0].tabIndex
+        //   is observed as 0 — meaning either focusin was not received by
+        //   the controller, or `blur()` ran a subsequent path that reset
+        //   tabIndex=0 onto buttons[0].
+        //
+        //   Looking at `handleFocusout` in the controller: when memory is
+        //   off, focusout resets the tab stop to `items[0]` (the first
+        //   eligible item). In `HorizontalToolbar` memory is not set
+        //   explicitly, so it depends on the controller's default. If
+        //   `items[0]` is `buttons[0]` (which is now disabled but still
+        //   appears in items when `skipDisabled` is false), `safeActive`
+        //   falls through to the first non-disabled item. But the earlier
+        //   raw-items loop that strips tabIndex from non-eligible nodes
+        //   only runs when items were filtered — if disabled items are
+        //   still eligible, buttons[0] keeps tabIndex=0 from the original
+        //   refresh.
+        //
+        // FIX OPTIONS (try in order):
+        //   1. Replace focus/blur with an explicit controller refresh:
+        //        (host as any).callRefresh?.() ?? host.requestUpdate();
+        //      and verify the host exposes a refresh-trigger helper.
+        //   2. If no helper is exposed, set `aria-disabled` instead of
+        //      `.disabled` (the controller likely observes that path
+        //      differently), or assert against a host that constructs the
+        //      controller with `skipDisabled: true`.
+        //   3. If neither works, this is a real controller bug —
+        //      `applyRovingTabindex` is not stripping tabIndex from the
+        //      previously-active item when that item becomes natively
+        //      disabled between calls.
         expect(buttons[0].tabIndex).not.toBe(0);
 
         // Another eligible button must be the tab stop.
@@ -1108,7 +1182,11 @@ export const SkipDisabledFalseFirstItemDisabled: Story = {
         buttons[1].focus();
         buttons[1].blur();
 
-        // The first button is natively disabled and cannot hold tabindex="0".
+        // SAME ROOT CAUSE as `DisabledButtonNeverTabStop` above (confirmed by
+        // experiment — rAF wait did not fix it). The controller does not
+        // observe `disabled` mutations; the focus/blur pair does not reliably
+        // strip tabIndex=0 from the now-disabled `buttons[0]`. See the
+        // detailed comment above that test for fix options.
         expect(buttons[0].tabIndex).not.toBe(0);
 
         // The tab stop should fall through to the next non-disabled eligible item.
