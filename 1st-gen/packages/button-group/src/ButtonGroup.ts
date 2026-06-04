@@ -29,12 +29,27 @@ import styles from './button-group.css.js';
 /**
  * @element sp-button-group
  * @slot - the sp-button elements that make up the group
+ *
+ * @deprecated Use `<swc-button-group>` from `@spectrum-web-components/swc` instead.
+ * This component will be removed in a future major release.
  */
 export class ButtonGroup extends SizedMixin(SpectrumElement, {
   noDefaultSize: true,
 }) {
   public static override get styles(): CSSResultArray {
     return [styles];
+  }
+
+  public override connectedCallback(): void {
+    super.connectedCallback();
+    if (window.__swc?.DEBUG) {
+      window.__swc.warn(
+        this,
+        `<${this.localName}> is deprecated and will be removed in a future major release. Use <swc-button-group> from @spectrum-web-components/swc instead. See the migration guide for details.`,
+        'https://opensource.adobe.com/spectrum-web-components/components/button-group/',
+        { level: 'deprecation' }
+      );
+    }
   }
 
   @property({ type: Boolean, reflect: true })
