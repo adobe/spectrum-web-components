@@ -272,7 +272,7 @@ These decisions are derived from the 1st-gen implementation, the current depreca
 | `active` | internal | n/a | internal | **Confirmed internal.** Retained as an internal property inherited from `ButtonBase`. With hold-affordance deferred, no consumer-triggered mechanism sets this in initial scope. CSS `:active` on the inner `<button>` handles pressed-state styling without requiring a JS property. |
 | `name` | removed | n/a | removed | **Confirmed removal** alongside `type`. `swc-action-button` is not form-associated; `name` has no applicable semantics. |
 
-**Passthrough host attributes:** `aria-haspopup` and `aria-expanded` set on the host element are forwarded to the internal `<button>` and stripped from the host — **Implemented in Phase 3.** `ActionButton` observes both attributes via `@property`, renders them onto the inner `<button>` via `ifDefined`, and overrides `attributeChangedCallback` to remove them from the host after Lit reads them. A `_ariaForwardingInProgress` guard prevents the re-entrant `removeAttribute` callback from clearing the properties. See resolved decisions table.
+**Passthrough host attributes:** `aria-haspopup` and `aria-expanded` set on the host element are forwarded to the internal `<button>` and stripped from the host — **Implemented in Phase 3 (intentional drift from original plan).** Rather than using `@property`, `ActionButton` overrides the static `observedAttributes` getter to add both attribute names to the super list, and stores their values in `@state()` private fields (`_ariaHasPopup`, `_ariaExpanded`). This avoids a type conflict: `@property` on hyphenated ARIA attributes would collide with `ARIAMixin`'s `ariaHasPopup` / `ariaExpanded` getters on `HTMLElement`, causing editor warnings. `attributeChangedCallback` reads incoming values into private state, strips the attribute from the host, and the render template forwards the values to the inner `<button>` via `ifDefined`. A `_ariaForwardingInProgress` guard prevents the re-entrant `removeAttribute` callback from clearing the state. See resolved decisions table.
 
 #### Slots (2nd-gen)
 
@@ -613,7 +613,7 @@ What `swc-action-button` adds on top of `ButtonBase`:
 
 | # | Decision | Resolution |
 |---|---|---|
-| Phase 3 | `aria-haspopup` / `aria-expanded` host-attribute retention | Resolved in Phase 3 (PR feedback). `ActionButton.attributeChangedCallback` override strips both attributes from the host after Lit reads them, forwarding values to the inner `<button>` via `ariaHasPopup` / `ariaExpanded` properties. Guard flag `_ariaForwardingInProgress` prevents re-entrant clearing on the `removeAttribute` callback. |
+| Phase 3 | `aria-haspopup` / `aria-expanded` host-attribute retention | Resolved in Phase 3 (PR feedback). Implementation intentionally drifted from the original plan to avoid editor warnings: `@property` was not used because it collides with `ARIAMixin`'s `ariaHasPopup` / `ariaExpanded` getters on `HTMLElement`. Instead, `ActionButton` overrides `static observedAttributes` to add both attribute names and stores their values in `@state()` private fields (`_ariaHasPopup`, `_ariaExpanded`). `attributeChangedCallback` reads each value into private state, strips the attribute from the host, and the render template forwards the values via `ifDefined`. Guard flag `_ariaForwardingInProgress` prevents re-entrant clearing on the `removeAttribute` callback. |
 
 ### Deferred follow-up tickets
 
