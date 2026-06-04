@@ -47,7 +47,11 @@ function processStylesheets(): Plugin {
     async closeBundle() {
       const processor = postcss(postcssPlugins);
       for (const file of glob.sync(
-        resolve(__dirname, 'stylesheets/**/*.css')
+        resolve(__dirname, 'stylesheets/**/*.css'),
+        // `shared/` holds importable lit `css` fragments (transformed by
+        // vite-plugin-lit-css), not global stylesheets — keep them out of the
+        // flat dist/ emission so they stay importable into component `styles`.
+        { ignore: [resolve(__dirname, 'stylesheets/shared/**/*.css')] }
       )) {
         const dest = resolve(__dirname, 'dist', basename(file));
         const result = await processor.process(await readFile(file, 'utf-8'), {
@@ -66,7 +70,11 @@ export default defineConfig({
     globalElementCSS({
       elements: [{ component: 'button' }],
     }),
-    litCss({ exclude: ['./stylesheets/**/*.css'] }),
+    // Exclude global stylesheets (emitted to dist/ by processStylesheets), but
+    // let `stylesheets/shared/**` be transformed into importable lit `css`.
+    litCss({
+      exclude: ['./stylesheets/*.css', './stylesheets/global/**/*.css'],
+    }),
     processStylesheets(),
     dts({
       include: ['**/*.ts'],
@@ -96,6 +104,7 @@ export default defineConfig({
         ...glob.sync(resolve(__dirname, 'components/*/index.ts')),
         ...glob.sync(resolve(__dirname, 'components/*/swc-*.ts')),
         ...glob.sync(resolve(__dirname, 'patterns/*/*/index.ts')),
+        ...glob.sync(resolve(__dirname, 'stylesheets/shared/index.ts')),
       ].reduce(
         (entries, file) => {
           const name = file
@@ -143,6 +152,12 @@ export default defineConfig({
       {
         find: '@adobe/spectrum-wc/components',
         replacement: resolve(__dirname, 'components'),
+      },
+      // Shared importable CSS fragments (e.g.
+      // `@adobe/spectrum-wc/stylesheets/shared`).
+      {
+        find: '@adobe/spectrum-wc/stylesheets',
+        replacement: resolve(__dirname, 'stylesheets'),
       },
       // Short-form imports (e.g. `@adobe/spectrum-wc/badge`) point at the source
       // package layout under `./components`, mirroring the published package's
