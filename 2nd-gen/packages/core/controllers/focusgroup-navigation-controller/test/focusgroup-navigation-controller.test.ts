@@ -784,14 +784,14 @@ export const ActiveChangeEventAndCallback: Story = {
         //
         // To exercise the callback we have to land on an item that is
         // *different* from the controller's current `previousActive`. We
-        // route through "Third" first so the subsequent ArrowLeft back to
-        // "Second" produces a real change.
+        // route to "Third" so there is a real change.
         host.clearLogs();
-        buttons[1].focus();
-        keydown(buttons[1], 'ArrowRight');
+        const current = shadowActiveButton(host)!;
+        current.focus();
+        keydown(current, 'ArrowRight');
 
         expect(host.callbackLog.length).toBeGreaterThan(0);
-        expect(host.callbackLog).toContain('Second');
+        expect(host.callbackLog).toContain('Third');
       }
     );
 
@@ -818,17 +818,18 @@ export const ActiveChangeEventAndCallback: Story = {
     await step('event bubbles and is composed', async () => {
       let captured = false;
       const handler = ((event: CustomEvent) => {
-        expect(event.bubbles).toBe(true);
-        expect(event.composed).toBe(true);
+        expect(event.bubbles, 'event.bubbles should be true').toBe(true);
+        expect(event.composed, 'event.composed should be true').toBe(true);
         captured = true;
       }) as EventListener;
 
       canvasElement.addEventListener(focusgroupNavigationActiveChange, handler);
 
-      buttons[0].focus();
-      keydown(buttons[0], 'ArrowRight');
+      const current = shadowActiveButton(host)!;
+      current.focus();
+      keydown(current, 'ArrowRight');
 
-      expect(captured).toBe(true);
+      expect(captured, 'event should be captured').toBe(true);
 
       canvasElement.removeEventListener(
         focusgroupNavigationActiveChange,
@@ -879,36 +880,14 @@ export const SetOptionsDirectionChange: Story = {
         (host as DemoFocusgroupPlayground).direction = 'both';
         await (host as DemoFocusgroupPlayground).updateComplete;
 
-        // NOT A TIMING ISSUE (confirmed by experiment — rAF wait did not fix
-        // it). `updated()` on the playground host calls
-        // `navigation.setOptions({ direction: 'both', ... })` which calls
-        // `refresh()`. By the time `updateComplete` resolves the controller's
-        // direction is 'both', and the controller does handle ArrowDown in
-        // 'both' mode (see `navigateBothAxes` in the controller source).
-        //
-        // SUSPECTED REAL CAUSE — needs verification:
-        //   The previous step left focus on "Italic" via the keydown handler,
-        //   but it pressed ArrowDown in horizontal mode (no-op) without
-        //   first re-issuing a keydown that the controller acted on. After
-        //   `direction = 'both'` re-renders, the buttons in the shadow tree
-        //   may be preserved by Lit reconciliation but the focused element
-        //   relationship the controller tracks (via `previousActive` /
-        //   `lastFocused`) may not match the live `document.activeElement`.
-        //   Result: when ArrowDown dispatches on `current`, the controller's
-        //   `resolveManagedKeydownTarget` either fails to match the button
-        //   or computes a next item equal to current.
-        //
-        // FIX OPTIONS (try in order):
-        //   1. Re-focus `current` explicitly before the keydown to force the
-        //      controller's focusin handler to sync `previousActive`:
-        //        current.focus();
-        //   2. If that does not work, this is a real controller/setOptions
-        //      bug — `setOptions` updates `options.direction` but does not
-        //      re-seed the active item tracking after a direction change.
-        const current = shadowActiveButton(host)!;
-        keydown(current, 'ArrowDown');
+        const firstButton = root.querySelector<HTMLButtonElement>('button')!;
+        firstButton.focus();
+        expect(shadowActiveButton(host)?.textContent?.trim()).toBe('Bold');
+
+        keydown(firstButton, 'ArrowDown');
         const afterDown = shadowActiveButton(host)?.textContent?.trim();
-        expect(afterDown).not.toBe(current.textContent?.trim());
+        expect(afterDown).not.toBe('Bold');
+        expect(afterDown).toBe('Italic');
       }
     );
   },
