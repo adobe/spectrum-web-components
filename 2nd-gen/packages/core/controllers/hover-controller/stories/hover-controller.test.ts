@@ -553,12 +553,7 @@ export const ManualGuard: Story = {
 export const GuardReEvaluation: Story = {
   render: () => html`
     <div style="padding: 8px 0 48px;">
-      <button
-        id="guard-eval-trigger"
-        style="font: inherit; padding: 8px 16px; border-radius: 4px; border: 1px solid currentColor; background: transparent; cursor: pointer;"
-      >
-        Hover me
-      </button>
+      <button id="guard-eval-trigger">Hover me</button>
     </div>
     <demo-hover-host
       id="guard-eval-host"
@@ -616,12 +611,7 @@ export const GuardReEvaluation: Story = {
 export const SetTargetNull: Story = {
   render: () => html`
     <div style="padding: 8px 0 48px;">
-      <button
-        id="null-target-trigger"
-        style="font: inherit; padding: 8px 16px; border-radius: 4px; border: 1px solid currentColor; background: transparent; cursor: pointer;"
-      >
-        Hover me
-      </button>
+      <button id="null-target-trigger">Hover me</button>
     </div>
     <demo-hover-host
       id="null-target-host"
@@ -630,12 +620,7 @@ export const SetTargetNull: Story = {
     >
       Popover
     </demo-hover-host>
-    <button
-      id="clear-target-btn"
-      style="margin-top: 12px; font: inherit; padding: 6px 12px; border-radius: 4px; border: 1px solid currentColor; background: transparent; cursor: pointer;"
-    >
-      Clear trigger-id
-    </button>
+    <button id="clear-target-btn">Clear trigger-id</button>
   `,
   play: async ({ canvasElement, step }) => {
     const trigger = getTrigger(canvasElement, 'null-target-trigger');
@@ -705,6 +690,51 @@ export const DelayZeroOpensSync: Story = {
     );
   },
 };
+
+// ──────────────────────────────────────────────────────────────────────────
+//     closeDelay: custom value is used instead of default
+// ──────────────────────────────────────────────────────────────────────────
+
+export const CustomCloseDelay: Story = {
+  render: () => html`
+    <div style="padding: 8px 0 48px;">
+      <button id="close-delay-trigger">Hover me</button>
+    </div>
+    <demo-hover-host
+      id="close-delay-host"
+      trigger-id="close-delay-trigger"
+      delay="100"
+      close-delay="100"
+    >
+      Popover
+    </demo-hover-host>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const trigger = getTrigger(canvasElement, 'close-delay-trigger');
+    const host =
+      canvasElement.ownerDocument.querySelector<DemoHoverHost>(
+        '#close-delay-host'
+      )!;
+
+    await step('hover opens popover after warmup', async () => {
+      pointerEnter(trigger);
+      await wait(150);
+      expect(host.matches(':popover-open')).toBe(true);
+    });
+
+    await step(
+      'pointerleave closes after custom closeDelay=100 ms, not the default 300 ms',
+      async () => {
+        pointerLeave(trigger);
+        // If the default 300 ms were used, the popover would still be open
+        // at 200 ms. With closeDelay=100, it should already be closed.
+        await wait(200);
+        expect(host.matches(':popover-open')).toBe(false);
+      }
+    );
+  },
+};
+CustomCloseDelay.storyName = 'Custom closeDelay value';
 
 // ──────────────────────────────────────────────────────────────────────────
 //     Multi-type isolation: different warmStateKey values are independent
