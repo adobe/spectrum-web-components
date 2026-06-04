@@ -21,6 +21,10 @@ import '@adobe/spectrum-wc/components/button/swc-button.js';
 import {
   ACCORDION_DENSITIES,
   ACCORDION_VALID_SIZES,
+  SWC_ACCORDION_ITEM_AFTER_CLOSE_EVENT,
+  SWC_ACCORDION_ITEM_AFTER_OPEN_EVENT,
+  SWC_ACCORDION_ITEM_CLOSE_EVENT,
+  SWC_ACCORDION_ITEM_OPEN_EVENT,
   SWC_ACCORDION_ITEM_TOGGLE_EVENT,
 } from '../../../../core/components/accordion/Accordion.types.js';
 
@@ -111,7 +115,15 @@ const meta: Meta = {
   render: (args) => template(args, defaultItems),
   parameters: {
     layout: 'padded',
-    actions: { handles: [SWC_ACCORDION_ITEM_TOGGLE_EVENT] },
+    actions: {
+      handles: [
+        SWC_ACCORDION_ITEM_TOGGLE_EVENT,
+        SWC_ACCORDION_ITEM_OPEN_EVENT,
+        SWC_ACCORDION_ITEM_CLOSE_EVENT,
+        SWC_ACCORDION_ITEM_AFTER_OPEN_EVENT,
+        SWC_ACCORDION_ITEM_AFTER_CLOSE_EVENT,
+      ],
+    },
     docs: {
       subtitle: 'Groups related content sections behind expandable headers.',
     },
