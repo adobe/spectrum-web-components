@@ -1082,8 +1082,8 @@ export const MemoryOffTabReentry: Story = {
         keydown(buttons[0], 'ArrowRight');
         expect(shadowActiveButton(host)?.textContent?.trim()).toBe('Italic');
 
-        // Blur to simulate tabbing away from the group.
-        (document.activeElement as HTMLElement)?.blur();
+        // Blur the actual shadow-internal button to reliably fire focusout on the host.
+        shadowActiveButton(host)?.blur();
 
         // With memory off, tabindex="0" should reset to the first eligible item.
         const tabbable = buttons.filter((b) => b.tabIndex === 0);
