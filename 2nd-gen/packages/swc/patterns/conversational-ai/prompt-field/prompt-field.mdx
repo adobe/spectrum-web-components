@@ -1,0 +1,92 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import { DocsFooter, DocsHeader } from '../../../.storybook/blocks';
+
+import * as PromptFieldStories from './stories/prompt-field.stories';
+
+<Meta of={PromptFieldStories} />
+
+<DocsHeader />
+
+## Anatomy
+
+A prompt field consists of:
+
+1. **Box**: white card container with shadow and 16px border radius.
+2. **Input area**: visible label + textarea.
+3. **Action bar**: upload trigger (left) and send/stop action (right).
+4. **Footer**: optional legal content rendered below the prompt surface.
+
+<Canvas of={PromptFieldStories.Anatomy} />
+
+## Options
+
+### Modes
+
+The `mode` attribute controls interaction and action state:
+
+- **`default`**: send button shown, normal interactivity
+- **`loading`**: stop button shown while generation is in progress
+- **`disabled`**: input/upload/send are disabled
+
+The send button enablement is derived internally from prompt content (value or artifact).
+
+<Canvas of={PromptFieldStories.Modes} />
+
+### Artifact
+
+Artifact layout is inferred from the **`artifact`** slot content and supports multiple mixed items:
+
+- No slot content: no artifact region
+- **`swc-upload-artifact type="card"`**: file-style card artifact
+- **`swc-upload-artifact type="media"`**: media tile artifact
+
+**Populate the attachment strip** by slotting **one `<swc-upload-artifact>` per file**, each with **`slot="artifact"`** (same slot name repeated). Mixed card + media entries wrap inside the composer like this story's first example.
+
+For additional combinations (narrow widths, ellipsis, more tiles), see **[Multi-artifact](/docs/patterns-conversational-ai-upload-artifact--readme#multi-artifact)**.
+
+Upload button behavior:
+
+- Emits cancelable **`swc-prompt-field-upload-click`**; consumers own picker behavior
+- Consumers provide artifacts by slotting; file selection stays in app code
+
+Artifacts own dismiss behavior via **`dismissible`** and emit **`swc-upload-artifact-dismiss`**.
+
+<Canvas of={PromptFieldStories.Artifact} />
+
+## Behaviors
+
+### Handling Events
+
+Prompt field uses an uncontrolled-with-mirror event model:
+
+- **`swc-prompt-field-input`** fires after the internal textarea value updates
+- **`swc-prompt-field-submit`** carries the current `detail.value`
+- **`swc-prompt-field-upload-click`** is a cancelable trigger for external picker flows
+
+Consumers are responsible for handling upload flows and can mirror `value` from events when needed.
+
+<Canvas of={PromptFieldStories.HandlingEvents} />
+
+## Accessibility
+
+### Features
+
+The `<swc-prompt-field>` element implements the following accessibility features:
+
+#### Label association
+
+- The `<textarea>` uses `aria-labelledby` when label text is visible
+- `accessible-label` can override the accessible name when needed
+- All icon buttons carry descriptive `aria-label` attributes
+- The send button uses `disabled` natively when the prompt has no content
+
+### Best practices
+
+- Always provide a meaningful `label` value
+- Use `accessible-label` only when a distinct non-visual name is required
+- Use `placeholder` as a hint, not a replacement for the label
+- Ensure artifact content slotted into `artifact` slot includes descriptive text
+
+<Canvas of={PromptFieldStories.Accessibility} />
+
+<DocsFooter />
