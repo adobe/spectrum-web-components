@@ -58,7 +58,6 @@ export const DocsFooter = () => {
       <Controls />
       {hasCustomApiStories && (
         <>
-          <hr />
           <SpectrumStories tag="api" hideTitle={true} />
         </>
       )}

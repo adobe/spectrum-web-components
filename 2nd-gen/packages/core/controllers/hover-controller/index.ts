@@ -10,32 +10,8 @@
  * governing permissions and limitations under the License.
  */
 
-/**
- * Public exports for Lit reactive controllers shared across 2nd-gen packages.
- */
-
-export {
-  focusgroupNavigationActiveChange,
-  FocusgroupNavigationController,
-  type FocusgroupDirection,
-  type FocusgroupNavigationActiveChangeDetail,
-  type FocusgroupNavigationOptions,
-} from './focusgroup-navigation-controller/index.js';
 export {
   HoverController,
   type HoverControllerHost,
   type HoverControllerOptions,
-} from './hover-controller/index.js';
-export {
-  LanguageResolutionController,
-  languageResolverUpdatedSymbol,
-} from './language-resolution.js';
-export {
-  ALL_PLACEMENTS,
-  fromFloatingPlacement,
-  PlacementController,
-  toFloatingPlacement,
-  type Placement,
-  type PlacementOptions,
-  type VirtualTrigger,
-} from './placement-controller/index.js';
+} from './src/hover-controller.js';
