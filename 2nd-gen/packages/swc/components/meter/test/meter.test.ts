@@ -18,6 +18,7 @@ import { Meter } from '@adobe/spectrum-wc/meter';
 import '@adobe/spectrum-wc/components/meter/swc-meter.js';
 
 import {
+  fixture,
   getComponent,
   getComponents,
   withWarningSpy,
@@ -320,27 +321,36 @@ export const DescriptionAbsentTest: Story = {
 // ──────────────────────────────────────────────────────────────
 
 export const MissingAccessibleNameTest: Story = {
+  // The no-accessible-name warning is one-shot per instance (guarded by an
+  // internal flag in the mixin) and fires on the first render when DEBUG is
+  // enabled. Mount a fresh element *inside* the warning spy so the spy
+  // captures that first render, rather than mutating an element that may have
+  // already warned before the spy was installed.
   render: () => html`
-    <swc-meter value="50"></swc-meter>
+    <span></span>
   `,
-  play: async ({ canvasElement, step }) => {
-    const meter = await getComponent<Meter>(canvasElement, 'swc-meter');
-
+  play: async ({ step }) => {
     await step('warns when no label slot and no accessible-label', () =>
       withWarningSpy(async (warnCalls) => {
-        meter.value = 51;
+        const meter = await fixture<Meter>(html`
+          <swc-meter value="50"></swc-meter>
+        `);
         await meter.updateComplete;
         const messages = warnCalls.map((c) => String(c?.[1] ?? ''));
         expect(messages.some((m) => m.includes('accessible name'))).toBe(true);
+        meter.remove();
       })
     );
 
-    await step('stops warning once accessible-label is set', () =>
+    await step('does not warn when accessible-label is set', () =>
       withWarningSpy(async (warnCalls) => {
-        meter.accessibleLabel = 'Now named';
+        const meter = await fixture<Meter>(html`
+          <swc-meter value="50" accessible-label="Now named"></swc-meter>
+        `);
         await meter.updateComplete;
         const messages = warnCalls.map((c) => String(c?.[1] ?? ''));
         expect(messages.some((m) => m.includes('accessible name'))).toBe(false);
+        meter.remove();
       })
     );
   },
