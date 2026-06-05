@@ -446,12 +446,10 @@ export class ResponseStatus extends SpectrumElement {
             @transitionend=${this._handleHeaderLabelTransitionEnd}
           >
             <span class="swc-ResponseStatus-headerTrailLine">
-              ${this._renderAgenticLabelText(this._rollFrom)}
-              ${chevron}
+              ${this._renderAgenticLabelText(this._rollFrom)} ${chevron}
             </span>
             <span class="swc-ResponseStatus-headerTrailLine">
-              ${this._renderAgenticLabelText(incoming)}
-              ${chevron}
+              ${this._renderAgenticLabelText(incoming)} ${chevron}
             </span>
           </span>
         </span>
@@ -461,8 +459,7 @@ export class ResponseStatus extends SpectrumElement {
     if (showDisclosure) {
       return html`
         <span class="swc-ResponseStatus-headerTrail">
-          ${this._renderAgenticLabelText(label)}
-          ${chevron}
+          ${this._renderAgenticLabelText(label)} ${chevron}
         </span>
       `;
     }
@@ -684,8 +681,7 @@ export class ResponseStatus extends SpectrumElement {
       : this._renderThreeDots();
 
     const rowContent = html`
-      ${leadingIcon}
-      ${this._renderAgenticHeaderTrail(expanded, showDisclosure)}
+      ${leadingIcon} ${this._renderAgenticHeaderTrail(expanded, showDisclosure)}
     `;
 
     if (showDisclosure) {
@@ -769,10 +765,7 @@ export class ResponseStatus extends SpectrumElement {
    */
   private _getTimelineSteps(): ResponseStatusStepData[] {
     const phase = this._effectivePhase;
-    if (
-      this._isAgentic &&
-      (phase === 'processing' || phase === 'stopped')
-    ) {
+    if (this._isAgentic && (phase === 'processing' || phase === 'stopped')) {
       return this._steps.filter((step) => step.status !== 'pending');
     }
 
