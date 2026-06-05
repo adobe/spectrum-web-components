@@ -68,6 +68,14 @@ export abstract class ButtonGroupBase extends SizedMixin(SpectrumElement, {
 
   /**
    * The layout direction of the button group.
+   *
+   * Note: this property does NOT set `aria-orientation` on the host because
+   * `aria-orientation` is only meaningful for roles that manage arrow-key
+   * navigation (e.g. `toolbar`, `listbox`). Since button-group does not use
+   * roving tabindex, the attribute would be invalid. If your use case requires
+   * arrow-key navigation among many buttons, consider adding a
+   * {@link https://opensource.adobe.com/spectrum-web-components/controllers/focusgroup-navigation-controller/ FocusgroupNavigationController}
+   * to the parent composite instead.
    */
   @property({ type: String, reflect: true })
   public orientation: ButtonGroupOrientation = 'horizontal';

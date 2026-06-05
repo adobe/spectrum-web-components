@@ -291,6 +291,18 @@ export const Disabled: Story = {
  * - Each button is a **separate Tab stop** — the group does NOT use roving tabindex
  * - The group host is **NOT focusable**
  *
+ * #### Why `aria-orientation` is not set
+ *
+ * The `orientation` property controls only the visual layout direction. Because
+ * button-group does not use roving tabindex or arrow-key navigation,
+ * `aria-orientation` is not applicable (it is only valid for roles that manage
+ * directional key navigation, such as `toolbar` or `listbox`).
+ *
+ * If your use case has many buttons and would benefit from arrow-key navigation,
+ * consider using a
+ * [FocusgroupNavigationController](../?path=/docs/focusgroup-navigation-controller--overview)
+ * on a parent composite with `role="toolbar"` instead.
+ *
  * #### What button-group is NOT
  *
  * - **Not a radio group**: Do not use for exclusive selection —
