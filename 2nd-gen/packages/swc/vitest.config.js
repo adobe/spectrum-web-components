@@ -34,6 +34,12 @@ export default mergeConfig(
       exclude: ['playwright', 'playwright-core', '@playwright/test'],
     },
     test: {
+      // Automatic mock hygiene between tests, per Vitest's official AI-authoring
+      // guidance — prevents a class of agent-authored regressions where mocks
+      // leak across tests in the same file.
+      // https://vitest.dev/guide/learn/writing-tests-with-ai.html
+      clearMocks: true,
+      restoreMocks: true,
       // JUnit reporter for CI test results
       reporters: process.env.CI
         ? ['default', ['junit', { outputFile: './test-results/junit.xml' }]]
@@ -153,6 +159,33 @@ export default mergeConfig(
             globals: true,
           },
         },
+        // Below is what AI recommended but I noticed all of our tools also use
+        // a node environment for their tests. So I wanted to leave this here to
+        // modify so all our tools and utils can use a node environment for their tests.
+        //
+        // Slot for pure-logic Node tests in `@spectrum-web-components/core`
+        // (controllers, mixins, utils) that do not need a browser. These are
+        // ~100x cheaper to run than the storybook project and are the right
+        // home for any test that does not render Lit elements or dispatch DOM
+        // events. The `include` glob is intentionally narrow so the project
+        // is inert until a `__unit__/` directory exists alongside the source
+        // being tested.
+        //
+        // Run a subset with: `vitest --project core-unit`
+        //
+        // To activate, drop a test at e.g.
+        //   2nd-gen/packages/core/utils/test/__unit__/language-resolution.test.ts
+        // and uncomment this block.
+        //
+        // {
+        //   extends: true,
+        //   test: {
+        //     name: 'core-unit',
+        //     environment: 'node',
+        //     include: ['../core/**/test/__unit__/*.test.ts'],
+        //     browser: { enabled: false },
+        //   },
+        // },
       ],
     },
     compilerOptions: {

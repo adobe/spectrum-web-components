@@ -74,6 +74,8 @@ Reference: [Linting tools](../../CONTRIBUTOR-DOCS/02_style-guide/03_linting-tool
 
 ## Test files
 
+**Vitest reference:** see [.ai/references/vitest.md](../references/vitest.md) for the canonical AI-friendly Vitest docs (index + per-page fetch pattern) and project-specific config notes.
+
 **Style guide:**
 
 - [Testing overview](../../CONTRIBUTOR-DOCS/02_style-guide/04_testing/01_testing-overview.md)
