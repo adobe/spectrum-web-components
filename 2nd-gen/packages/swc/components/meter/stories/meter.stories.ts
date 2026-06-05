@@ -15,13 +15,10 @@ import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
 import { Meter } from '@adobe/spectrum-wc/meter';
-
-import '@adobe/spectrum-wc/components/meter/swc-meter.js';
-
 import {
   METER_VARIANTS,
   type MeterVariant,
-} from '../../../../core/components/meter/Meter.types.js';
+} from '@spectrum-web-components/core/components/meter';
 import {
   LINEAR_PROGRESS_LABEL_POSITIONS,
   LINEAR_PROGRESS_STATIC_COLORS,
@@ -29,7 +26,9 @@ import {
   type LinearProgressLabelPosition,
   type LinearProgressSize,
   type LinearProgressStaticColor,
-} from '../../../../core/mixins/linear-progress-mixin.js';
+} from '@spectrum-web-components/core/mixins/index.js';
+
+import '@adobe/spectrum-wc/components/meter/swc-meter.js';
 
 // ────────────────
 //    METADATA
@@ -279,8 +278,8 @@ export const Values: Story = {
 //    BEHAVIORS STORIES
 // ──────────────────────────────
 
-// Custom min / max range. Plan B3 surfaces arbitrary numeric ranges; the
-// rendered fill + aria-valuetext use the sanitized range.
+// Custom min / max range. Arbitrary numeric ranges are supported; the
+// rendered fill and aria-valuetext use the sanitized range.
 export const CustomRange: Story = {
   render: (args) => html`
     ${template({

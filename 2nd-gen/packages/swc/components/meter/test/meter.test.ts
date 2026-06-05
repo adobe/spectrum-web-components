@@ -39,8 +39,8 @@ export default {
 
 /**
  * The WAI-ARIA `meter` role lives on the shadow `.swc-LinearProgress`
- * wrapper, not on the host (regression guard for B9). Every `aria-value*`
- * and naming attribute is read from this element.
+ * wrapper, not on the host. Every `aria-value*` and naming attribute is
+ * read from this element.
  */
 const getRoleEl = (host: Meter): HTMLElement => {
   const roleEl = host.shadowRoot?.querySelector<HTMLElement>('[role="meter"]');
@@ -426,6 +426,32 @@ export const VariantsTest: Story = {
           variant
         );
       });
+    });
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Static-color reflection (restores coverage for the
+// `!test` StaticColors story, which axe cannot evaluate against
+// the decorator gradient).
+// ──────────────────────────────────────────────────────────────
+
+export const StaticColorsTest: Story = {
+  render: () => html`
+    <swc-meter static-color="white" value="50">
+      <span slot="label">Static white</span>
+    </swc-meter>
+    <swc-meter static-color="black" value="50">
+      <span slot="label">Static black</span>
+    </swc-meter>
+  `,
+  parameters: { staticColorsDemo: true },
+  play: async ({ canvasElement, step }) => {
+    const meters = await getComponents<Meter>(canvasElement, 'swc-meter');
+
+    await step('each meter reflects its static-color attribute', () => {
+      const colors = meters.map((meter) => meter.getAttribute('static-color'));
+      expect(colors).toEqual(['white', 'black']);
     });
   },
 };
