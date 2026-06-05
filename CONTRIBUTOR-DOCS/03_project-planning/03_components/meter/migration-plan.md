@@ -449,20 +449,20 @@ Notes:
 
 ### Testing
 
-- [ ] Port `1st-gen/packages/meter/test/meter.test.ts` coverage that still applies, adapted to the new API (variant validation, label-from-slot, `value`→`aria-valuenow`, locale resolution `en-US` and `ar-sa`)
-- [ ] Add Playwright `meter.a11y.spec.ts` with `toMatchAriaSnapshot` covering size × variant × `label-position` × static-color × key `value` values (0%, 50%, 100%) × `label` slot vs `accessibleLabel` × `description` slot present/absent
+- [x] Port `1st-gen/packages/meter/test/meter.test.ts` coverage that still applies, adapted to the new API (variant validation, label-from-slot, `value`→`aria-valuenow`, locale resolution `en-US` and `ar-sa`) — `2nd-gen/packages/swc/components/meter/test/meter.test.ts`
+- [x] Add Playwright `meter.a11y.spec.ts` with `toMatchAriaSnapshot` covering size × variant × `label-position` × key `value` values (0%, 25%, 50%, 75%, 100%) × `label` slot vs `accessibleLabel` × `description` slot present/absent. Static-color stories carry `!test`, so they are excluded from a11y snapshots (contrast is evaluated against a decorator gradient); their coverage stays in VRT.
 
 #### Behavior
 
-- [ ] Single `role="meter"` set on the shadow `.swc-Meter` element; host has no `role` attribute (regression for B9)
-- [ ] `aria-valuemin`/`aria-valuemax`/`aria-valuenow`/`aria-valuetext` correctness across `value = minValue / midpoint / maxValue`
-- [ ] Custom `minValue`/`maxValue` clamps `value` correctly and feeds ARIA accordingly
-- [ ] `aria-valuetext` matches default percent format in `en-US` (e.g. `50%`) and `ar-sa` (Arabic-Indic digits + `٪`)
-- [ ] `value-label` (attribute) overrides auto-formatted text
-- [ ] `formatOptions` drives auto-formatted text (e.g. `{ style: 'currency', currency: 'USD' }`, `{ style: 'unit', unit: 'inch' }`, `{ style: 'decimal' }`; default `{ style: 'percent' }`)
-- [ ] `label-position="side"` lays out label inline with value and bar
-- [ ] DEBUG warning fires when no accessible name is provable; does not fire when either the `label` slot has assigned nodes or `accessibleLabel` is set
-- [ ] Host is not focusable (`document.activeElement` skips it on `Tab`)
+- [x] Single `role="meter"` set on the shadow `.swc-LinearProgress` element; host has no `role` attribute (regression for B9)
+- [x] `aria-valuemin`/`aria-valuemax`/`aria-valuenow`/`aria-valuetext` correctness across `value = minValue / midpoint / maxValue`
+- [x] Custom `minValue`/`maxValue` clamps `value` correctly and feeds ARIA accordingly
+- [x] `aria-valuetext` matches default percent format in `en-US` (e.g. `50%`) and `ar-sa` (Arabic-Indic digits + `٪`)
+- [x] `value-label` (attribute) overrides auto-formatted text
+- [x] `formatOptions` drives auto-formatted text (currency case covered; `unit`/`decimal` exercise the same code path)
+- [ ] `label-position="side"` lays out label inline with value and bar — layout is asserted via VRT, not unit tests; a11y spec covers `label-position` naming only
+- [x] DEBUG warning fires when no accessible name is provable; does not fire when either the `label` slot has assigned nodes or `accessibleLabel` is set
+- [x] Host is not focusable (`document.activeElement` skips it on `Tab`)
 
 #### Visual regression
 
