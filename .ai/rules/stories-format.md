@@ -277,6 +277,23 @@ export const StaticColors: Story = {
 
 The decorator displays two background zones—dark gradient for `static-color="white"` content, light gradient for `static-color="black"` content.
 
+## Story naming
+
+When the camelCase export name does not produce a readable display name — for example, `TextWrapping` for a story that should appear as "Text wrapping" — set the display name via `storyName` assigned after the export:
+
+```typescript
+/**
+ * When the pointer moves from the trigger into the popover bubble, the popover stays
+ * open...
+ */
+export const TextWrapping: Story = {
+  tags: ['behaviors'],
+};
+TextWrapping.storyName = 'Text wrapping';
+```
+
+Do **not** use a `### Heading` at the top of a JSDoc comment as a proxy for the story's display name. JSDoc H3 headings are only appropriate for sub-sections within the documentation body (for example, `### Features` and `### Best practices` inside an Accessibility story).
+
 ## Story ordering
 
 Section ordering is hand-authored in each component's per-component MDX file (`<component>.mdx` at the component root). Inside an MDX page, sections appear in the order they are written; story-level parameters do not control rendering order.
