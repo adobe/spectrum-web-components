@@ -178,6 +178,17 @@
 }
 
 /*
+ * Honor `prefers-reduced-motion` (WCAG 2.3.3): drop the fill transition
+ * so the bar snaps to its new value instead of sweeping over 1s when
+ * the user has opted out of animation.
+ */
+@media (prefers-reduced-motion: reduce) {
+  .swc-LinearProgress-fill {
+    transition: none;
+  }
+}
+
+/*
  * Forced-colors overrides are also on the exclusions list — applied at
  * the end of the file so they take precedence over consumer overrides.
  */
