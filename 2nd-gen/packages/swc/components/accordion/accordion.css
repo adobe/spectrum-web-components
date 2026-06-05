@@ -34,7 +34,7 @@
 
 /* Quiet: removes dividers and rounds header corners (visible on hover and focus) */
 :host([quiet]) ::slotted(swc-accordion-item) {
-  --swc-accordion-item-border-color: transparent;
+  --swc-accordion-item-divider-color: transparent;
   --swc-accordion-item-header-corner-radius: var(--_swc-accordion-corner-radius);
 }
 

@@ -26,11 +26,11 @@
   --_swc-accordion-item-header-text-color: token("neutral-content-color-default");
 
   inline-size: 100%;
-  border-block-end: token("border-width-100") solid var(--swc-accordion-item-divider-color, var(--swc-accordion-item-border-color, token("gray-200")));
+  border-block-end: token("border-width-100") solid var(--swc-accordion-item-divider-color, token("gray-200"));
 }
 
 :host(:first-child) .swc-AccordionItem {
-  border-block-start: token("border-width-100") solid var(--swc-accordion-item-divider-color, var(--swc-accordion-item-border-color, token("gray-200")));
+  border-block-start: token("border-width-100") solid var(--swc-accordion-item-divider-color, token("gray-200"));
 }
 
 /* ── Header row (heading + actions) ─────────────────────────────────── */
