@@ -32,15 +32,15 @@ import '@adobe/spectrum-wc/components/meter/swc-meter.js';
 
 ### Renamed
 
-| Area             | Spectrum 1 (`sp-meter`)                 | Spectrum 2 (`swc-meter`)                                                                        |
-| ---------------- | --------------------------------------- | ----------------------------------------------------------------------------------------------- |
-| Tag              | `sp-meter`                              | `swc-meter`                                                                                     |
-| Import path      | `@spectrum-web-components/meter`        | `@adobe/spectrum-wc/components/meter/swc-meter.js`                                              |
-| Value            | `progress` (number, 0–100)              | `value` (number, default 0) — see [step 3](#3-rename-progress-to-value)                         |
-| Label position   | `side-label` (boolean)                  | `label-position` (`'top'` default, `'side'`) — see [step 4](#4-replace-side-label)              |
-| Label            | `label` attribute or default slot       | `label` named slot, or `accessible-label` — see [step 5](#5-move-the-label-into-the-label-slot) |
-| Default variant  | `''` (rendered informative by behavior) | `'informative'` (named default)                                                                 |
-| CSS custom props | `--mod-progressbar-*` / `--mod-meter-*` | `--swc-linear-progress-*` (see [Styling](#styling))                                             |
+| Area             | Spectrum 1 (`sp-meter`)                 | Spectrum 2 (`swc-meter`)                                                              |
+| ---------------- | --------------------------------------- | ------------------------------------------------------------------------------------- |
+| Tag              | `sp-meter`                              | `swc-meter`                                                                           |
+| Import path      | `@spectrum-web-components/meter`        | `@adobe/spectrum-wc/components/meter/swc-meter.js`                                    |
+| Value            | `progress` (number, 0–100)              | `value` (number, default 0) — see [step 3](#3-rename-progress-to-value)               |
+| Label position   | `side-label` (boolean)                  | `label-position` (`'top'` default, `'side'`) — see [step 4](#4-replace-side-label)    |
+| Label            | `label` attribute or default slot       | `label` named slot, or `accessible-label` — see [step 5](#5-drop-the-label-attribute) |
+| Default variant  | `''` (rendered informative by behavior) | `'informative'` (named default)                                                       |
+| CSS custom props | `--mod-progressbar-*` / `--mod-meter-*` | `--swc-linear-progress-*` (see [Styling](#styling))                                   |
 
 ### Added in Spectrum 2
 
@@ -81,7 +81,7 @@ import '@adobe/spectrum-wc/components/meter/swc-meter.js';
 <!-- Before -->
 <sp-meter progress="50">Storage used</sp-meter>
 <!-- After -->
-<swc-meter value="50">Storage used</swc-meter>
+<swc-meter value="50"><span slot="label">Storage used</span></swc-meter>
 ```
 
 ### 3. Rename `progress` to `value`
@@ -90,14 +90,18 @@ import '@adobe/spectrum-wc/components/meter/swc-meter.js';
 <!-- Before -->
 <sp-meter progress="71" variant="notice">Storage used</sp-meter>
 <!-- After -->
-<swc-meter value="71" variant="notice">Storage used</swc-meter>
+<swc-meter value="71" variant="notice">
+  <span slot="label">Storage used</span>
+</swc-meter>
 ```
 
 To measure against a range other than 0 to 100, set `min-value` and `max-value`:
 
 ```html
 <!-- After -->
-<swc-meter min-value="0" max-value="10" value="3">Inputs filled</swc-meter>
+<swc-meter min-value="0" max-value="10" value="3">
+  <span slot="label">Inputs filled</span>
+</swc-meter>
 ```
 
 ### 4. Replace `side-label`
@@ -106,12 +110,14 @@ To measure against a range other than 0 to 100, set `min-value` and `max-value`:
 <!-- Before -->
 <sp-meter side-label progress="68">Side label</sp-meter>
 <!-- After -->
-<swc-meter label-position="side" value="68">Side label</swc-meter>
+<swc-meter label-position="side" value="68">
+  <span slot="label">Side label</span>
+</swc-meter>
 ```
 
-### 5. Move the label into the `label` slot
+### 5. Drop the `label` attribute
 
-The `label` attribute and default slot are removed. Put the visible label in the `label` named slot. When the meter has no visible label, set `accessible-label` instead.
+Spectrum 1's `label` attribute and default-slot text are both removed. The steps above already place the visible label in the `label` slot. When the meter has no visible label, set `accessible-label` instead so the `meter` role still gets an accessible name.
 
 ```html
 <!-- Before -->
@@ -141,7 +147,7 @@ The `label` attribute and default slot are removed. Put the visible label in the
 
 ## Accessibility
 
-- Provide an accessible name through visible `label` slot content or the `accessible-label` attribute. See [step 5](#5-move-the-label-into-the-label-slot). A meter with neither emits a dev-mode warning.
+- Provide an accessible name through visible `label` slot content or the `accessible-label` attribute. See [step 5](#5-drop-the-label-attribute). A meter with neither emits a dev-mode warning.
 - The `meter` role and all `aria-value*` attributes now live on the internal element, not the host. Do not assert host-level ARIA.
 - Meters are non-interactive and not focusable. No keyboard interaction is required or expected.
 
