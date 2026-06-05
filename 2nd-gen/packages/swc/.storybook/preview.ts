@@ -366,7 +366,6 @@ const preview = {
                 'Button group',
                 [
                   'Accessibility migration analysis',
-                  'Migration plan',
                   'Rendering and styling migration analysis',
                 ],
                 'Checkbox',
