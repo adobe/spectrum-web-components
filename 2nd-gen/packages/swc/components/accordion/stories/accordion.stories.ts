@@ -34,6 +34,33 @@ import {
 
 const { args, argTypes, template } = getStorybookHelpers('swc-accordion');
 
+// swc-accordion-item exposes its styling hooks as CSS custom properties. They
+// inherit, so setting them on an ancestor of the items cascades to every item.
+// Pull just the item's CSS custom property controls (auto-derived from the
+// manifest, so they stay in sync) and relabel them under their own category.
+// They are attached to the Playground story and applied via an inheriting
+// wrapper in its render, so they affect all items uniformly.
+const itemHelpers = getStorybookHelpers('swc-accordion-item');
+const itemCssArgTypes = Object.fromEntries(
+  Object.entries(itemHelpers.argTypes ?? {})
+    .filter(([, argType]) => argType?.table?.category === 'css properties')
+    .map(([name, argType]) => [
+      name,
+      {
+        ...argType,
+        table: { ...argType.table, category: 'css properties (item)' },
+      },
+    ])
+);
+
+// Seed each item CSS custom property with an empty string so Storybook renders
+// an editable field immediately instead of a "Set string" placeholder button.
+// Empty values are filtered out before they reach the DOM (see the Playground
+// render).
+const itemCssArgs = Object.fromEntries(
+  Object.keys(itemCssArgTypes).map((name) => [name, ''])
+);
+
 argTypes.density = {
   ...argTypes.density,
   control: { type: 'select' },
@@ -151,6 +178,23 @@ export default meta;
 export const Playground: Story = {
   args: {
     density: 'regular',
+    ...itemCssArgs,
+  },
+  argTypes: itemCssArgTypes,
+  render: (args) => {
+    // Item-level CSS custom properties (the `--*` args) are applied on a
+    // wrapper so they inherit into every slotted item; the remaining args drive
+    // the accordion element itself.
+    const itemStyle = Object.entries(args)
+      .filter(([key, value]) => key.startsWith('--') && value)
+      .map(([key, value]) => `${key}: ${value}`)
+      .join('; ');
+    const elementArgs = Object.fromEntries(
+      Object.entries(args).filter(([key]) => !key.startsWith('--'))
+    );
+    return html`
+      <div style=${itemStyle}>${template(elementArgs, defaultItems)}</div>
+    `;
   },
   tags: ['dev'],
 };
