@@ -30,3 +30,12 @@ export {
   LanguageResolutionController,
   languageResolverUpdatedSymbol,
 } from './language-resolution.js';
+export {
+  ALL_PLACEMENTS,
+  fromFloatingPlacement,
+  PlacementController,
+  toFloatingPlacement,
+  type Placement,
+  type PlacementOptions,
+  type VirtualTrigger,
+} from './placement-controller/index.js';
