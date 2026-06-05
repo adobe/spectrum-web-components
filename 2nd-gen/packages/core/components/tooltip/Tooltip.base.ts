@@ -19,6 +19,10 @@ import {
   type HoverControllerHost,
 } from '../../controllers/hover-controller/index.js';
 import {
+  type Placement as ControllerPlacement,
+  PlacementController,
+} from '../../controllers/placement-controller/index.js';
+import {
   TOOLTIP_PLACEMENTS,
   TOOLTIP_VARIANTS,
   type TooltipPlacement,
@@ -28,7 +32,8 @@ import {
 /**
  * Abstract base class for the Tooltip component.
  * Handles all non-rendering logic: property declarations, popover lifecycle,
- * event dispatch, trigger resolution, ARIA wiring, and `HoverController` integration.
+ * event dispatch, trigger resolution, ARIA wiring, `HoverController` integration
+ * (hover/focus open/close), and `PlacementController` integration (pixel positioning).
  *
  * @slot - Text label displayed in the tooltip.
  */
@@ -64,13 +69,25 @@ export abstract class TooltipBase
   public variant: TooltipVariant = 'neutral';
 
   /**
-   * The preferred placement of the tooltip relative to its trigger.
-   * Determines the tip arrow direction. Pixel positioning requires `PlacementController`.
+   * Preferred placement of the tooltip relative to its trigger. Reflects the
+   * actual computed side when `PlacementController` is active (which may differ
+   * from the requested value after a viewport-driven flip).
    *
    * @default 'top'
    */
   @property({ type: String, reflect: true })
-  public placement: TooltipPlacement = 'top';
+  get placement(): TooltipPlacement {
+    return this._placement;
+  }
+
+  set placement(value: TooltipPlacement) {
+    const old = this._placement;
+    this._placement = value;
+    if (!this._placementFromController) {
+      this._requestedPlacement = value;
+    }
+    this.requestUpdate('placement', old);
+  }
 
   /**
    * Whether the tooltip is visible.
@@ -122,13 +139,37 @@ export abstract class TooltipBase
   public manual: boolean = false;
 
   /**
-   * Pixel offset between the tooltip and its trigger.
-   * Requires `PlacementController`; currently inactive.
+   * Pixel gap along the placement axis between the trigger and the tooltip bubble.
+   *
+   * @default 4
+   */
+  @property({ type: Number })
+  public offset: number = 4;
+
+  /**
+   * Slide along the trigger edge perpendicular to the placement direction, in pixels.
    *
    * @default 0
    */
-  @property({ type: Number })
-  public offset: number = 0;
+  @property({ type: Number, attribute: 'cross-offset' })
+  public crossOffset: number = 0;
+
+  /**
+   * Minimum inset from the viewport edge, in pixels, for collision detection.
+   *
+   * @default 12
+   */
+  @property({ type: Number, attribute: 'container-padding' })
+  public containerPadding: number = 12;
+
+  /**
+   * Whether the tooltip may reposition to the opposite side when the requested
+   * placement does not fit within the viewport.
+   *
+   * @default true
+   */
+  @property({ type: Boolean, attribute: 'should-flip' })
+  public shouldFlip: boolean = true;
 
   /**
    * When set, the tooltip acts as the trigger's accessible name rather than its description.
@@ -147,11 +188,65 @@ export abstract class TooltipBase
     warmStateKey: 'swc-tooltip',
   });
 
+  private readonly placementController = new PlacementController(this);
+
+  // Backing fields for the custom placement getter/setter.
+  private _placement: TooltipPlacement = 'top';
+  // The placement originally requested by the consumer. PlacementController
+  // always starts from this value so a viewport-driven flip can revert when
+  // space opens up again.
+  private _requestedPlacement: TooltipPlacement = 'top';
+  // Set while onPlacementChange is writing the computed placement back into
+  // the property, so the setter knows not to overwrite _requestedPlacement.
+  private _placementFromController = false;
+  // Guards dispatchAfterEvent so only the first transitionend per open/close cycle fires,
+  // preventing one after event from firing for each CSS property that transitions.
+  private afterEventPending = false;
+
+  /**
+   * Returns the tip arrow element to pass to `PlacementController` so the
+   * `arrow` middleware keeps the tip aligned with the trigger when the bubble
+   * is shifted (e.g. via `crossOffset` or viewport `shift`).
+   *
+   * Returns `null` in the base class; the SWC rendering layer overrides this
+   * to return the actual `.swc-Tooltip-tip` element from the shadow DOM.
+   */
+  protected get tipElement(): HTMLElement | null {
+    return null;
+  }
+
   // Reflects the browser's actual popover state. Used to guard showPopover/hidePopover
   // calls in updated() so the toggle listener can sync this.open without re-triggering
   // the API (preventing a setter → showPopover → toggle → setter cycle).
   private get isPopoverOpen(): boolean {
     return this.matches(':popover-open');
+  }
+
+  private startPlacement(): void {
+    const trigger = this.resolveTrigger();
+    if (!trigger) {
+      return;
+    }
+    this.placementController.start(trigger, this, {
+      // Always use the consumer's original requested placement, not the last
+      // computed value, so a viewport-driven flip can revert when space opens up.
+      placement: this._requestedPlacement as ControllerPlacement,
+      offset: this.offset,
+      crossOffset: this.crossOffset,
+      containerPadding: this.containerPadding,
+      shouldFlip: this.shouldFlip,
+      tipElement: this.tipElement ?? undefined,
+      onPlacementChange: (actualPlacement: ControllerPlacement) => {
+        const mainSide = actualPlacement.split('-')[0] as TooltipPlacement;
+        if (this._placement !== mainSide) {
+          // Flag prevents the setter from treating this as a consumer change
+          // and overwriting _requestedPlacement.
+          this._placementFromController = true;
+          this.placement = mainSide;
+          this._placementFromController = false;
+        }
+      },
+    });
   }
 
   private resolveTrigger(): HTMLElement | null {
@@ -213,11 +308,16 @@ export abstract class TooltipBase
         composed: true,
       })
     );
+    if (!isOpen) {
+      // Clear PlacementController's inline positioning only after the exit
+      // transition completes. Removing translate/top/left earlier (e.g. in
+      // updated()) displaces the tooltip to 0,0 while it is still visible
+      // and fading out, causing a flash.
+      this.style.removeProperty('translate');
+      this.style.removeProperty('top');
+      this.style.removeProperty('left');
+    }
   }
-
-  // Guards dispatchAfterEvent so only the first transitionend per open/close cycle fires,
-  // preventing one after event from firing for each CSS property that transitions.
-  private afterEventPending = false;
 
   private readonly handleBeforeToggle = (event: Event): void => {
     const { newState } = event as ToggleEvent;
@@ -262,8 +362,24 @@ export abstract class TooltipBase
     }
   };
 
+  protected override firstUpdated(changedProperties: PropertyValues): void {
+    super.firstUpdated(changedProperties);
+    // Sync the animation distance to the current offset value on first render
+    // so the open/close animation slides by the same distance as the gap.
+    this.style.setProperty(
+      '--_swc-tooltip-animation-distance',
+      `${this.offset}px`
+    );
+  }
+
   protected override updated(changedProperties: PropertyValues): void {
     super.updated(changedProperties);
+    if (changedProperties.has('offset')) {
+      this.style.setProperty(
+        '--_swc-tooltip-animation-distance',
+        `${this.offset}px`
+      );
+    }
     if (changedProperties.has('open')) {
       if (this.open !== this.isPopoverOpen) {
         if (this.open) {
@@ -281,6 +397,32 @@ export abstract class TooltipBase
       changedProperties.has('triggerElement')
     ) {
       this.hoverController.setTarget(this.resolveTrigger());
+    }
+
+    // Placement controller: start when opening, stop when closing, restart
+    // when positioning options or the trigger change while already open.
+    const openChanged = changedProperties.has('open');
+    if (openChanged) {
+      if (this.open) {
+        this.startPlacement();
+      } else {
+        // Stop autoUpdate immediately so the position stops tracking the trigger
+        // during the exit transition. The translate/top/left are cleared by
+        // dispatchAfterEvent once the exit transition completes.
+        this.placementController.stop();
+      }
+    } else if (this.open) {
+      const placementOptsChanged =
+        changedProperties.has('placement') ||
+        changedProperties.has('offset') ||
+        changedProperties.has('crossOffset') ||
+        changedProperties.has('containerPadding') ||
+        changedProperties.has('shouldFlip') ||
+        changedProperties.has('for') ||
+        changedProperties.has('triggerElement');
+      if (placementOptsChanged) {
+        this.startPlacement();
+      }
     }
   }
 

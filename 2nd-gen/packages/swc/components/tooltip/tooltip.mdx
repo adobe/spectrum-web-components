@@ -38,7 +38,9 @@ The `placement` attribute sets the preferred position of the tooltip relative to
 
 The `start` and `end` values are RTL-aware: `start` maps to the left side in LTR and to the right in RTL; `end` maps to the right in LTR and to the left in RTL.
 
-Pixel-accurate positioning requires `PlacementController`, which is in a future release. The `placement` attribute currently applies only the tip direction.
+`PlacementController` handles pixel positioning automatically. When viewport space is insufficient on the requested side, the tooltip flips to the opposite side and the `placement` attribute reflects the computed side. The original requested value is preserved internally, so if the viewport changes the tooltip can return to the originally requested position.
+
+Additional attributes control positioning behavior: `offset` sets the pixel gap between the trigger and the bubble; `cross-offset` slides the bubble along the trigger edge; `container-padding` sets the minimum inset from the viewport edge (default `12`); `should-flip` (default `true`) enables or disables the flip behavior.
 
 <Canvas of={TooltipStories.Placements} />
 
@@ -48,7 +50,7 @@ Pixel-accurate positioning requires `PlacementController`, which is in a future 
 
 The tooltip is closed by default. Setting `open` to `true` calls `showPopover()`, placing the bubble in the browser's top layer via the Popover API. The `open` attribute reflects the current visibility state.
 
-Because the component uses `popover="auto"`, opening a tooltip dismisses any other open auto popover in the document, including other tooltips, menus, pickers, and selects. Set `manual` to opt out of automatic hover and focus wiring and manage `open` directly, while retaining ARIA relationship wiring.
+Because the component uses `popover="auto"`, opening a tooltip dismisses any other open auto popover in the document, including other tooltips, menus, pickers, and selects. Set `manual` to opt out of automatic hover and focus wiring and manage `open` directly while retaining ARIA relationship wiring.
 
 <Canvas of={TooltipStories.Open} />
 
@@ -74,7 +76,7 @@ The tooltip opens automatically when the trigger receives pointer hover or keybo
 - **Keyboard focus**: the tooltip opens immediately, bypassing the warm-up delay entirely.
 - **Close**: the tooltip closes `300ms` after the pointer leaves the trigger. If the pointer enters the tooltip bubble before that cooldown expires, the tooltip stays open (WCAG 1.4.13 pointer bridge). The tooltip closes immediately when focus leaves the trigger.
 
-Set `disabled` to prevent the tooltip from responding to hover and focus. Set `manual` to suppress automatic wiring entirely and manage visibility via the `open` property or the popover API directly.
+Set `disabled` to prevent the tooltip from responding to hover and focus while leaving the trigger interactive. Set `manual` to suppress automatic wiring entirely and manage visibility via the `open` property or the popover API directly. `disabled` has no effect when `manual` is also set.
 
 ### Events
 
@@ -90,6 +92,24 @@ When no CSS transition is active (for example, when `prefers-reduced-motion` rem
 Events fire regardless of what triggered the state change: setting `open` directly, calling the popover API, pressing Escape, or a light-dismiss click.
 
 <Canvas of={TooltipStories.Events} />
+
+### Trigger element
+
+The `triggerElement` property wires the tooltip to a trigger element directly, bypassing the `for` attribute ID lookup. Use it when:
+
+- The trigger and tooltip are in **different shadow roots** and `getElementById` cannot cross the boundary.
+- The tooltip is **inserted programmatically** and a stable HTML `id` is not available.
+
+Set `triggerElement` to the element reference in JavaScript. ARIA relationship wiring and hover/focus event wiring both activate as soon as the property is set.
+
+```js
+const tooltip = document.querySelector('swc-tooltip');
+tooltip.triggerElement = someElement; // replaces any 'for' wiring
+```
+
+Setting `triggerElement` to `null` reverts to `for`-based resolution.
+
+<Canvas of={TooltipStories.TriggerElement} />
 
 ### Labeling
 

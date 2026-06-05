@@ -11,8 +11,7 @@
  */
 
 import { html } from 'lit';
-// Temporary: floating-ui used only in stories for basic positioning until PlacementController lands.
-import { computePosition, type Placement } from '@floating-ui/dom';
+import { ref } from 'lit/directives/ref.js';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
@@ -78,83 +77,38 @@ const TABULAR_PLACEMENTS: TooltipPlacement[] = [
   'start',
 ];
 
-// SWC uses logical 'start'/'end'; map to physical values for Floating UI.
-const toFloatingPlacement = (placement: string): Placement => {
-  if (placement === 'start') {
-    if (document.dir === 'rtl') {
-      return 'right';
-    }
-    return 'left';
-  }
-  if (placement === 'end') {
-    if (document.dir === 'rtl') {
-      return 'left';
-    }
-    return 'right';
-  }
-  return placement as Placement;
-};
-
-// Temporary: positions the tooltip via Floating UI when it opens, until PlacementController is available.
-const positionTooltip = (button: HTMLElement, tooltip: HTMLElement): void => {
-  const placement = tooltip.getAttribute('placement') ?? 'top';
-  void computePosition(button, tooltip, {
-    placement: toFloatingPlacement(placement),
-  }).then(({ x, y }) => {
-    Object.assign(tooltip.style, {
-      left: `${x}px`,
-      top: `${y}px`,
-    });
-  });
-};
-
 // Renders a button+tooltip pair linked via the `for` attribute.
 // Each pair needs a unique `id` so multiple instances can coexist in the same story.
-// A `display: contents` wrapper catches the bubbling `swc-open` event and positions
-// the tooltip via Floating UI until PlacementController is available.
 const triggered = (
   tooltipArgs: Record<string, unknown>,
   id: string,
   buttonLabel?: string,
   iconOnly: boolean = false
 ) => {
-  const positionOnOpen = (event: Event) => {
-    const tooltip = event.target as HTMLElement;
-    const root = tooltip.getRootNode() as Document | ShadowRoot;
-    const button = root.getElementById(id);
-    if (button) {
-      positionTooltip(button, tooltip);
-    }
-  };
-
   if (!iconOnly) {
     return html`
-      <span @swc-open=${positionOnOpen} style="display: contents">
-        <swc-button id=${id}>${buttonLabel}</swc-button>
-        ${template({ ...tooltipArgs, for: id })}
-      </span>
+      <swc-button id=${id}>${buttonLabel}</swc-button>
+      ${template({ ...tooltipArgs, for: id })}
     `;
   } else {
     return html`
-      <span @swc-open=${positionOnOpen} style="display: contents">
-        <swc-button
-          id=${id}
-          accessible-label=${String(tooltipArgs['default-slot'] ?? '')}
+      <swc-button
+        id=${id}
+        accessible-label=${String(tooltipArgs['default-slot'] ?? '')}
+      >
+        <svg
+          slot="icon"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 36 36"
+          aria-hidden="true"
+          focusable="false"
         >
-          <svg
-            slot="icon"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 36 36"
-            aria-hidden="true"
-            focusable="false"
-          >
-            <path
-              d="M31.5 17H19V4.5a1 1 0 0 0-2 0V17H4.5a1 1 0 0 0 0 2H17v12.5a1 1 0 0 0 2 0V19h12.5a1 1 0 0 0 0-2z"
-            />
-          </svg>
-        </swc-button>
-        ${template({ ...tooltipArgs, for: id })}
-      </span>
+          <path
+            d="M31.5 17H19V4.5a1 1 0 0 0-2 0V17H4.5a1 1 0 0 0 0 2H17v12.5a1 1 0 0 0 2 0V19h12.5a1 1 0 0 0 0-2z"
+          />
+        </svg>
+      </swc-button>
+      ${template({ ...tooltipArgs, for: id })}
     `;
   }
 };
@@ -407,6 +361,49 @@ export const Events: Story = {
     variant: 'neutral',
     placement: 'top',
     'default-slot': 'Save your changes',
+  },
+  tags: ['behaviors'],
+};
+
+export const TriggerElement: Story = {
+  // The ref directive wires triggerElement during rendering so the story is
+  // functional in the Docs page canvas — not just when the play function runs.
+  render: () => {
+    let triggerEl: HTMLElement | null = null;
+
+    return html`
+      <swc-button
+        id="te-trigger"
+        ${ref((el) => {
+          triggerEl = (el as HTMLElement) ?? null;
+        })}
+      >
+        Action
+      </swc-button>
+      <swc-tooltip
+        placement="top"
+        ${ref((el) => {
+          if (el && triggerEl) {
+            (
+              el as HTMLElement & { triggerElement: HTMLElement | null }
+            ).triggerElement = triggerEl;
+          }
+        })}
+      >
+        Wired via the triggerElement property
+      </swc-tooltip>
+    `;
+  },
+  // Play function opens the tooltip for sidebar view and VRT.
+  play: async ({ canvasElement }: { canvasElement: HTMLElement }) => {
+    const tooltip = canvasElement.querySelector(
+      'swc-tooltip'
+    ) as HTMLElement & {
+      open: boolean;
+    };
+    if (tooltip) {
+      tooltip.open = true;
+    }
   },
   tags: ['behaviors'],
 };

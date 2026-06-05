@@ -467,7 +467,7 @@ export class PlacementController implements ReactiveController {
       {
         placement: floatingPlacement,
         middleware,
-        strategy: 'fixed',
+        strategy: 'absolute', // Required for correct top-layer element placement
       }
     );
     if (this.session !== session) {

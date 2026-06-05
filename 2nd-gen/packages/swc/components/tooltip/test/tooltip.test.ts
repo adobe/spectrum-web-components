@@ -394,6 +394,109 @@ export const AriaWiringTriggerElementOverrideTest: Story = {
   },
 };
 
+export const TriggerElementHoverTest: Story = {
+  render: () => html`
+    <button id="tt-te-hover">Hover me</button>
+    <swc-tooltip placement="top" delay="0">
+      Wired via triggerElement, no for attribute
+    </swc-tooltip>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const trigger = canvasElement.querySelector(
+      '#tt-te-hover'
+    ) as HTMLElement;
+    const tooltip = await getComponent<Tooltip>(canvasElement, 'swc-tooltip');
+
+    await step(
+      'wires HoverController when triggerElement is set without a for attribute',
+      async () => {
+        tooltip.triggerElement = trigger;
+        await tooltip.updateComplete;
+
+        trigger.dispatchEvent(
+          new PointerEvent('pointerenter', { bubbles: false, composed: true })
+        );
+        await waitFor(
+          () => expect(tooltip.open, 'tooltip opens on hover via triggerElement').toBe(true),
+          { timeout: 200 }
+        );
+      }
+    );
+
+    await step(
+      'closes when pointer leaves and sets ARIA on the native trigger',
+      async () => {
+        expect(
+          trigger.ariaDescribedByElements ?? [],
+          'native trigger receives ariaDescribedByElements via triggerElement wiring'
+        ).toContain(tooltip);
+
+        trigger.dispatchEvent(
+          new PointerEvent('pointerleave', { bubbles: false, composed: true })
+        );
+        await waitFor(
+          () => expect(tooltip.open, 'tooltip closes after pointer leaves').toBe(false),
+          { timeout: 500 }
+        );
+      }
+    );
+  },
+};
+
+export const TriggerElementOverridesForHoverTest: Story = {
+  render: () => html`
+    <button id="tt-te-wrong">Wrong target</button>
+    <button id="tt-te-correct">Correct target</button>
+    <swc-tooltip for="tt-te-wrong" delay="0" placement="top">
+      Should open on correct trigger
+    </swc-tooltip>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const wrongTrigger = canvasElement.querySelector(
+      '#tt-te-wrong'
+    ) as HTMLElement;
+    const correctTrigger = canvasElement.querySelector(
+      '#tt-te-correct'
+    ) as HTMLElement;
+    const tooltip = await getComponent<Tooltip>(canvasElement, 'swc-tooltip');
+
+    await step(
+      'triggerElement overrides for when set — hover wires to the override target',
+      async () => {
+        tooltip.triggerElement = correctTrigger;
+        await tooltip.updateComplete;
+
+        // Hovering the for-target (wrong) should NOT open the tooltip.
+        wrongTrigger.dispatchEvent(
+          new PointerEvent('pointerenter', { bubbles: false, composed: true })
+        );
+        await tooltip.updateComplete;
+        expect(
+          tooltip.open,
+          'for target does not open tooltip when triggerElement overrides it'
+        ).toBe(false);
+
+        // Hovering the triggerElement target should open it.
+        correctTrigger.dispatchEvent(
+          new PointerEvent('pointerenter', { bubbles: false, composed: true })
+        );
+        await waitFor(
+          () => expect(tooltip.open, 'triggerElement target opens the tooltip').toBe(true),
+          { timeout: 200 }
+        );
+
+        correctTrigger.dispatchEvent(
+          new PointerEvent('pointerleave', { bubbles: false, composed: true })
+        );
+        await waitFor(
+          () => expect(tooltip.open).toBe(false),
+          { timeout: 500 }
+        );
+      }
+    );
+  },
+};
+
 export const AriaWiringNoTriggerTest: Story = {
   render: () => html`
     <swc-tooltip placement="top">Standalone tooltip</swc-tooltip>
@@ -821,6 +924,166 @@ export const ManualPreventsHoverTest: Story = {
         expect(tooltip.open, 'tooltip opens via property in manual mode').toBe(
           true
         );
+        tooltip.open = false;
+        await tooltip.updateComplete;
+      }
+    );
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
+// TEST: PlacementController integration
+// ──────────────────────────────────────────────────────────────
+
+export const PlacementControllerTest: Story = {
+  render: () => html`
+    <div style="display: flex; justify-content: center; padding: 120px;">
+      <button id="tt-placement-trigger">Trigger</button>
+    </div>
+    <swc-tooltip for="tt-placement-trigger" placement="top">
+      Positioned by PlacementController
+    </swc-tooltip>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const tooltip = await getComponent<Tooltip>(canvasElement, 'swc-tooltip');
+
+    await step(
+      'applies translate positioning via PlacementController when opened',
+      async () => {
+        tooltip.open = true;
+        await waitForEvent(tooltip, 'swc-open');
+
+        // PlacementController is async; poll until it has applied positioning.
+        await waitFor(
+          () =>
+            expect(
+              tooltip.style.translate,
+              'PlacementController applied a translate value'
+            ).toBeTruthy(),
+          { timeout: 500 }
+        );
+      }
+    );
+
+    await step(
+      'reflects the actual computed placement back into the placement property',
+      async () => {
+        await waitFor(
+          () =>
+            expect(
+              ['top', 'bottom', 'left', 'right', 'start', 'end'],
+              'placement reflects a valid computed side'
+            ).toContain(tooltip.placement),
+          { timeout: 500 }
+        );
+      }
+    );
+
+    await step('positions the tip element via arrow middleware', async () => {
+      // The arrow middleware writes translate on the tip span so the tip
+      // tracks the trigger center independently of any cross-axis shift.
+      const tip = tooltip.shadowRoot?.querySelector(
+        '.swc-Tooltip-tip'
+      ) as HTMLElement | null;
+      await waitFor(
+        () =>
+          expect(
+            tip?.style.translate,
+            'arrow middleware set translate on .swc-Tooltip-tip'
+          ).toBeTruthy(),
+        { timeout: 500 }
+      );
+    });
+
+    await step('clears translate when closed', async () => {
+      // Bubble translate is removed in dispatchAfterEvent, which fires after
+      // the exit transition completes. Wait for swc-after-close to ensure the
+      // transition has finished before asserting.
+      const afterClosePromise = waitForEvent(tooltip, 'swc-after-close');
+      tooltip.open = false;
+      await afterClosePromise;
+
+      const tip = tooltip.shadowRoot?.querySelector(
+        '.swc-Tooltip-tip'
+      ) as HTMLElement | null;
+      expect(
+        tooltip.style.translate,
+        'bubble translate is cleared after close'
+      ).toBeFalsy();
+      // Tip translate is cleared synchronously by placementController.stop().
+      expect(
+        tip?.style.translate,
+        'tip translate is cleared after close'
+      ).toBeFalsy();
+    });
+
+    await step(
+      'uses the updated requested placement when consumer changes placement before reopening',
+      async () => {
+        // Consumer explicitly requests a different side.
+        tooltip.placement = 'bottom';
+        await tooltip.updateComplete;
+
+        tooltip.open = true;
+        await waitForEvent(tooltip, 'swc-open');
+
+        // PlacementController should rerun with the new requested placement.
+        await waitFor(
+          () =>
+            expect(
+              tooltip.style.translate,
+              'PlacementController positioned tooltip for the new placement'
+            ).toBeTruthy(),
+          { timeout: 500 }
+        );
+
+        tooltip.open = false;
+        await tooltip.updateComplete;
+      }
+    );
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Shadow root scoping
+// ──────────────────────────────────────────────────────────────
+
+export const ShadowRootScopeTest: Story = {
+  // Render an empty host; the shadow root and its contents are built in the
+  // play function so getRootNode() on the tooltip returns the shadow root.
+  render: () => html`<div id="shadow-root-host"></div>`,
+  play: async ({ canvasElement, step }) => {
+    const host = canvasElement.querySelector(
+      '#shadow-root-host'
+    ) as HTMLDivElement;
+    const shadow = host.attachShadow({ mode: 'open' });
+
+    const trigger = document.createElement('button');
+    trigger.id = 'sr-trigger';
+    trigger.textContent = 'Trigger';
+
+    const tooltip = document.createElement('swc-tooltip') as Tooltip;
+    tooltip.setAttribute('placement', 'top');
+    tooltip.textContent = 'Shadow-scoped tooltip';
+
+    shadow.append(trigger, tooltip);
+
+    // Set 'for' after connecting so getRootNode() returns the shadow root when
+    // the first updated() resolves the trigger via getRootNode().getElementById.
+    tooltip.for = 'sr-trigger';
+    await tooltip.updateComplete;
+
+    await step(
+      'resolves the trigger via getRootNode() scoped to the shadow root',
+      async () => {
+        tooltip.open = true;
+        await tooltip.updateComplete;
+
+        expect(
+          trigger.ariaDescribedByElements ?? [],
+          'native trigger inside shadow root receives ariaDescribedByElements wiring'
+        ).toContain(tooltip);
+
         tooltip.open = false;
         await tooltip.updateComplete;
       }
