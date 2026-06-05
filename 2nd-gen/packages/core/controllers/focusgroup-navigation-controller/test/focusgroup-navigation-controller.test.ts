@@ -25,9 +25,11 @@ import type {
   DemoFocusgroupDisabledHost,
   DemoFocusgroupDynamic,
   DemoFocusgroupEventTracker,
+  DemoFocusgroupHorizontal,
   DemoFocusgroupPlayground,
   DemoFocusgroupProgrammatic,
   DemoFocusgroupTextPrefix,
+  DemoFocusgroupVertical,
 } from '../stories/demo-hosts.js';
 import focusMeta, {
   BothAxesLinear,
@@ -1014,7 +1016,7 @@ export const DisconnectReconnect: Story = {
 export const DisabledButtonNeverTabStop: Story = {
   ...HorizontalToolbar,
   play: async ({ canvasElement, step }) => {
-    const host = await getComponent<HTMLElement>(
+    const host = await getComponent<DemoFocusgroupHorizontal>(
       canvasElement,
       'demo-focusgroup-horizontal'
     );
@@ -1026,56 +1028,11 @@ export const DisabledButtonNeverTabStop: Story = {
     await step(
       'tabindex="0" skips natively disabled first item and lands on next',
       async () => {
-        // Natively disable the first button.
         buttons[0].disabled = true;
+        host.callRefresh();
 
-        // Trigger a tabindex recalculation by focusing and blurring.
-        buttons[1].focus();
-        buttons[1].blur();
-
-        // NOT A TIMING ISSUE (confirmed by experiment — rAF wait did not fix
-        // it). The controller has NO MutationObserver on `disabled` /
-        // `aria-disabled`; it re-queries eligibility on `focusin` and on
-        // explicit `refresh()` calls. Setting `buttons[0].disabled = true`
-        // therefore does not notify the controller on its own.
-        //
-        // SUSPECTED REAL CAUSE:
-        //   The `buttons[1].focus(); buttons[1].blur();` pair was meant to
-        //   "trigger a tabindex recalculation". `focus()` should fire focusin
-        //   on the host and re-run `applyRovingTabindex(buttons[1])`, which
-        //   would correctly assign tabIndex=0 to buttons[1] and tabIndex=-1
-        //   to buttons[0]. The assertion fails because buttons[0].tabIndex
-        //   is observed as 0 — meaning either focusin was not received by
-        //   the controller, or `blur()` ran a subsequent path that reset
-        //   tabIndex=0 onto buttons[0].
-        //
-        //   Looking at `handleFocusout` in the controller: when memory is
-        //   off, focusout resets the tab stop to `items[0]` (the first
-        //   eligible item). In `HorizontalToolbar` memory is not set
-        //   explicitly, so it depends on the controller's default. If
-        //   `items[0]` is `buttons[0]` (which is now disabled but still
-        //   appears in items when `skipDisabled` is false), `safeActive`
-        //   falls through to the first non-disabled item. But the earlier
-        //   raw-items loop that strips tabIndex from non-eligible nodes
-        //   only runs when items were filtered — if disabled items are
-        //   still eligible, buttons[0] keeps tabIndex=0 from the original
-        //   refresh.
-        //
-        // FIX OPTIONS (try in order):
-        //   1. Replace focus/blur with an explicit controller refresh:
-        //        (host as any).callRefresh?.() ?? host.requestUpdate();
-        //      and verify the host exposes a refresh-trigger helper.
-        //   2. If no helper is exposed, set `aria-disabled` instead of
-        //      `.disabled` (the controller likely observes that path
-        //      differently), or assert against a host that constructs the
-        //      controller with `skipDisabled: true`.
-        //   3. If neither works, this is a real controller bug —
-        //      `applyRovingTabindex` is not stripping tabIndex from the
-        //      previously-active item when that item becomes natively
-        //      disabled between calls.
         expect(buttons[0].tabIndex).not.toBe(0);
 
-        // Another eligible button must be the tab stop.
         const tabStop = buttons.find((b) => b.tabIndex === 0 && !b.disabled);
         expect(tabStop).toBeTruthy();
       }
@@ -1085,8 +1042,10 @@ export const DisabledButtonNeverTabStop: Story = {
       're-enabling the button allows it to become the tab stop again',
       async () => {
         buttons[0].disabled = false;
-        buttons[0].focus();
+        host.callRefresh();
 
+        // refresh() preserves the current active (buttons[1]); navigate left to reach buttons[0]
+        keydown(buttons[1], 'ArrowLeft');
         expect(buttons[0].tabIndex).toBe(0);
       }
     );
@@ -1142,7 +1101,7 @@ export const MemoryOffTabReentry: Story = {
 export const SkipDisabledFalseFirstItemDisabled: Story = {
   ...VerticalMenu,
   play: async ({ canvasElement, step }) => {
-    const host = await getComponent<HTMLElement>(
+    const host = await getComponent<DemoFocusgroupVertical>(
       canvasElement,
       'demo-focusgroup-vertical'
     );
@@ -1154,21 +1113,11 @@ export const SkipDisabledFalseFirstItemDisabled: Story = {
     await step(
       'when skipDisabled is false and first item is natively disabled, tab stop falls through',
       async () => {
-        // Natively disable the first button (Copy).
         buttons[0].disabled = true;
+        host.callRefresh();
 
-        // Trigger a tabindex refresh by focusing and blurring another item.
-        buttons[1].focus();
-        buttons[1].blur();
-
-        // SAME ROOT CAUSE as `DisabledButtonNeverTabStop` above (confirmed by
-        // experiment — rAF wait did not fix it). The controller does not
-        // observe `disabled` mutations; the focus/blur pair does not reliably
-        // strip tabIndex=0 from the now-disabled `buttons[0]`. See the
-        // detailed comment above that test for fix options.
         expect(buttons[0].tabIndex).not.toBe(0);
 
-        // The tab stop should fall through to the next non-disabled eligible item.
         const tabStop = buttons.find((b) => b.tabIndex === 0 && !b.disabled);
         expect(tabStop).toBeTruthy();
         expect(tabStop!.textContent?.trim()).toBe('Paste');
@@ -1180,9 +1129,6 @@ export const SkipDisabledFalseFirstItemDisabled: Story = {
       async () => {
         const tabStop = buttons.find((b) => b.tabIndex === 0 && !b.disabled)!;
         tabStop.focus();
-        expect(shadowActiveButton(host)?.textContent?.trim()).toBe('Paste');
-
-        // Arrow down should reach the aria-disabled item (Cut (unavailable)).
         keydown(shadowActiveButton(host)!, 'ArrowDown');
         expect(shadowActiveButton(host)?.textContent?.trim()).toBe(
           'Cut (unavailable)'
@@ -1195,7 +1141,10 @@ export const SkipDisabledFalseFirstItemDisabled: Story = {
 
     await step('cleanup: re-enable first button', async () => {
       buttons[0].disabled = false;
-      buttons[0].focus();
+      host.callRefresh();
+
+      // refresh() preserves the current active; navigate up to reach buttons[0]
+      keydown(buttons[1], 'ArrowUp');
       expect(buttons[0].tabIndex).toBe(0);
     });
   },

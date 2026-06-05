@@ -329,6 +329,10 @@ export class DemoFocusgroupHorizontal extends LitElement {
     this.navigation.refresh();
   }
 
+  public callRefresh(): void {
+    this.navigation.refresh();
+  }
+
   /**
    * Renders formatting action buttons managed by the focus navigation controller.
    */
@@ -488,6 +492,10 @@ export class DemoFocusgroupVertical extends LitElement {
    */
   protected override firstUpdated(changedProperties: PropertyValues): void {
     super.firstUpdated(changedProperties);
+    this.navigation.refresh();
+  }
+
+  public callRefresh(): void {
     this.navigation.refresh();
   }
 
