@@ -83,6 +83,13 @@ argTypes.value = {
   },
 };
 
+/**
+ * A `<swc-meter>` is a non-focusable, read-only bar that shows a value inside a
+ * fixed range, such as storage used or tasks completed. Its value is driven by
+ * user actions rather than system progress. The accessible `meter` role and its
+ * `aria-value*` attributes live on the internal bar wrapper; the host carries no
+ * ARIA role.
+ */
 const meta: Meta = {
   title: 'Meter',
   component: 'swc-meter',
@@ -128,11 +135,11 @@ const staticColorLabels = {
 } as const satisfies Record<LinearProgressStaticColor, string>;
 
 // ────────────────────
-//    AUTODOCS STORY
+//    PLAYGROUND STORY
 // ────────────────────
 
 export const Playground: Story = {
-  tags: ['autodocs', 'dev'],
+  tags: ['dev'],
   args: {
     variant: 'informative',
     size: 'm',
@@ -200,7 +207,6 @@ export const Sizes: Story = {
       })
     )}
   `,
-  parameters: { 'section-order': 1 },
   tags: ['options'],
   args: { value: 50 },
 };
@@ -215,7 +221,6 @@ export const Variants: Story = {
       })
     )}
   `,
-  parameters: { 'section-order': 2 },
   tags: ['options'],
   args: { value: 50 },
 };
@@ -230,7 +235,6 @@ export const LabelPosition: Story = {
       })
     )}
   `,
-  parameters: { 'section-order': 3 },
   tags: ['options'],
   args: { value: 50 },
 };
@@ -246,7 +250,7 @@ export const StaticColors: Story = {
       })
     )}
   `,
-  parameters: { 'section-order': 4, staticColorsDemo: true },
+  parameters: { staticColorsDemo: true },
   tags: ['options', '!test'],
   args: { value: 50 },
 };
@@ -310,8 +314,34 @@ export const ValueLabel: Story = {
 };
 ValueLabel.storyName = 'Value label';
 
+// `formatOptions` is a JS-only property (no attribute). It accepts any
+// `Intl.NumberFormatOptions`; the default style is percent.
+export const FormatOptions: Story = {
+  render: (args) => html`
+    ${template({
+      ...args,
+      value: 42,
+      'max-value': 100,
+      'label-slot': 'Amount due',
+      formatOptions: { style: 'currency', currency: 'USD' },
+    })}
+  `,
+  tags: ['behaviors'],
+  args: { variant: 'informative', size: 'm' },
+};
+FormatOptions.storyName = 'Format options';
+
 // ────────────────────────────────
 //    ACCESSIBILITY STORIES
 // ────────────────────────────────
 
-// TODO: will complete in separate documentation pass of phase 7
+export const Accessibility: Story = {
+  tags: ['a11y'],
+  args: {
+    variant: 'informative',
+    size: 'm',
+    value: 40,
+    'label-slot': 'Storage used',
+    'description-slot': '2 GB of 5 GB used',
+  },
+};

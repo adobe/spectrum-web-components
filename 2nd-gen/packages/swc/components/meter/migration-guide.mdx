@@ -1,0 +1,221 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Meter/Migration guide" />
+
+# Meter migration guide
+
+Replace `<sp-meter>` with `<swc-meter>`, update the import, rename `progress` to `value`, replace `side-label` with `label-position="side"`, and move the label into the `label` slot.
+
+## Installation
+
+```bash
+# Remove
+yarn remove @spectrum-web-components/meter
+
+# Add
+yarn add @adobe/spectrum-wc
+```
+
+Update your import:
+
+```js
+// Before
+import '@spectrum-web-components/meter/sp-meter.js';
+
+// After
+import '@adobe/spectrum-wc/components/meter/swc-meter.js';
+```
+
+> `@adobe/spectrum-wc` is a monolithic package. Importing via subpath (e.g. `@adobe/spectrum-wc/components/meter/swc-meter.js`) registers and loads only that component's bundle.
+
+## What changed
+
+### Renamed
+
+| Area             | Spectrum 1 (`sp-meter`)                 | Spectrum 2 (`swc-meter`)                                                                        |
+| ---------------- | --------------------------------------- | ----------------------------------------------------------------------------------------------- |
+| Tag              | `sp-meter`                              | `swc-meter`                                                                                     |
+| Import path      | `@spectrum-web-components/meter`        | `@adobe/spectrum-wc/components/meter/swc-meter.js`                                              |
+| Value            | `progress` (number, 0–100)              | `value` (number, default 0) — see [step 3](#3-rename-progress-to-value)                         |
+| Label position   | `side-label` (boolean)                  | `label-position` (`'top'` default, `'side'`) — see [step 4](#4-replace-side-label)              |
+| Label            | `label` attribute or default slot       | `label` named slot, or `accessible-label` — see [step 5](#5-move-the-label-into-the-label-slot) |
+| Default variant  | `''` (rendered informative by behavior) | `'informative'` (named default)                                                                 |
+| CSS custom props | `--mod-progressbar-*` / `--mod-meter-*` | `--swc-linear-progress-*` (see [Styling](#styling))                                             |
+
+### Added in Spectrum 2
+
+| Addition                                             | Notes                                                                                   |
+| ---------------------------------------------------- | --------------------------------------------------------------------------------------- |
+| `min-value` / `max-value`                            | Default 0 / 100. Define an arbitrary range; `value` is clamped to it                    |
+| `description` named slot                             | Additional text below the bar, referenced via `aria-describedby`                        |
+| `value-label` attribute                              | Replaces the auto-formatted value in the rendered text and `aria-valuetext`             |
+| `formatOptions` property (JS only)                   | `Intl.NumberFormatOptions`; default style is percent. Ignored when `value-label` is set |
+| `static-color="black"`                               | Spectrum 1 supported `white` only                                                       |
+| `aria-valuemin` / `aria-valuemax` / `aria-valuetext` | Now set on the internal role element. No consumer action                                |
+
+### Removed in Spectrum 2
+
+| Removed                                                                                 | Replacement                                                              |
+| --------------------------------------------------------------------------------------- | ------------------------------------------------------------------------ |
+| `progress` attribute                                                                    | `value`                                                                  |
+| `side-label` boolean                                                                    | `label-position="side"`                                                  |
+| `label` attribute                                                                       | `label` named slot, or `accessible-label` when there is no visible label |
+| Raw `aria-label` / `aria-labelledby` / `aria-describedby` / `aria-details` passthroughs | `label` slot, `accessible-label`, or `description` slot                  |
+| `--mod-progressbar-*` / `--mod-meter-*` custom properties                               | `--swc-linear-progress-*` (see [Styling](#styling))                      |
+| `role="meter progressbar"` on the host                                                  | `role="meter"` on the internal element. No consumer action               |
+
+## Update your code
+
+### 1. Update the import
+
+```js
+// Before
+import '@spectrum-web-components/meter/sp-meter.js';
+// After
+import '@adobe/spectrum-wc/components/meter/swc-meter.js';
+```
+
+### 2. Rename the tag
+
+```html
+<!-- Before -->
+<sp-meter progress="50">Storage used</sp-meter>
+<!-- After -->
+<swc-meter value="50">Storage used</swc-meter>
+```
+
+### 3. Rename `progress` to `value`
+
+```html
+<!-- Before -->
+<sp-meter progress="71" variant="notice">Storage used</sp-meter>
+<!-- After -->
+<swc-meter value="71" variant="notice">Storage used</swc-meter>
+```
+
+To measure against a range other than 0 to 100, set `min-value` and `max-value`:
+
+```html
+<!-- After -->
+<swc-meter min-value="0" max-value="10" value="3">Inputs filled</swc-meter>
+```
+
+### 4. Replace `side-label`
+
+```html
+<!-- Before -->
+<sp-meter side-label progress="68">Side label</sp-meter>
+<!-- After -->
+<swc-meter label-position="side" value="68">Side label</swc-meter>
+```
+
+### 5. Move the label into the `label` slot
+
+The `label` attribute and default slot are removed. Put the visible label in the `label` named slot. When the meter has no visible label, set `accessible-label` instead.
+
+```html
+<!-- Before -->
+<sp-meter progress="40" label="Storage used"></sp-meter>
+<sp-meter progress="40">Storage used</sp-meter>
+<!-- After -->
+<swc-meter value="40">
+  <span slot="label">Storage used</span>
+</swc-meter>
+<!-- After: no visible label -->
+<swc-meter value="40" accessible-label="Storage used"></swc-meter>
+```
+
+### 6. (Optional) Adopt new attributes
+
+```html
+<!-- Before -->
+<swc-meter value="40">
+  <span slot="label">Storage used</span>
+</swc-meter>
+<!-- After: custom value text and a description -->
+<swc-meter value="2.4" max-value="5" value-label="2.4 GB / 5 GB">
+  <span slot="label">Storage used</span>
+  <span slot="description">Upgrade for more space</span>
+</swc-meter>
+```
+
+## Accessibility
+
+- Provide an accessible name through visible `label` slot content or the `accessible-label` attribute. See [step 5](#5-move-the-label-into-the-label-slot). A meter with neither emits a dev-mode warning.
+- The `meter` role and all `aria-value*` attributes now live on the internal element, not the host. Do not assert host-level ARIA.
+- Meters are non-interactive and not focusable. No keyboard interaction is required or expected.
+
+## Styling
+
+Spectrum 2 exposes a small set of public custom properties on `<swc-meter>` through the shared linear-progress surface.
+
+{/* @todo Replace the inline-styled callouts in this section with `<swc-inline-alert>` once it is migrated to Spectrum 2. */}
+
+<div
+  style={{
+    borderLeft: '4px solid #dba842',
+    background: 'rgba(219, 168, 66, 0.12)',
+    padding: '12px 16px',
+    margin: '16px 0',
+    borderRadius: '4px',
+  }}
+>
+  <strong>⚠️ Breaking change.</strong> Spectrum 1{' '}
+  <code>{'--mod-progressbar-*'}</code> and <code>{'--mod-meter-*'}</code>{' '}
+  properties <strong>do not apply</strong> to <code>{'<swc-meter>'}</code>.
+  Remove or replace each override with the{' '}
+  <code>{'--swc-linear-progress-*'}</code> equivalents below. Not every Spectrum
+  1 property has a 1:1 replacement, so read the list below carefully.
+</div>
+
+### Removed `--mod-*` properties
+
+| Removed (Spectrum 1)                                            | Replacement (Spectrum 2)                                                                                                                              |
+| --------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `--mod-progressbar-fill-color`                                  | `--swc-linear-progress-fill-color`                                                                                                                    |
+| `--mod-meter-fill-color-positive` / `-notice` / `-negative`     | `--swc-linear-progress-fill-color` — the matching `variant` sets this token, so a global override is overridden per variant; retoken globally instead |
+| `--mod-progressbar-track-color`                                 | `--swc-linear-progress-track-color`                                                                                                                   |
+| `--mod-progressbar-text-color`                                  | `--swc-linear-progress-text-color`                                                                                                                    |
+| `--mod-progressbar-thickness`                                   | `--swc-linear-progress-thickness`                                                                                                                     |
+| `--mod-progressbar-font-size`                                   | `--swc-linear-progress-font-size`                                                                                                                     |
+| `--mod-progressbar-spacing-top-to-text`                         | `--swc-linear-progress-top-to-text`                                                                                                                   |
+| `--mod-meter-min-width` / `-max-width` / `-inline-size`         | No replacement                                                                                                                                        |
+| `--mod-progressbar-fill-color-white` / `-label-and-value-white` | No replacement — handled by `static-color`                                                                                                            |
+| `--mod-progressbar-line-height` / `-line-height-cjk`            | No replacement                                                                                                                                        |
+
+### Public custom properties
+
+{/* @todo Replace the Description column with the `@cssproperty` JSDoc descriptions from `<swc-meter>`'s CEM entry once they are added in a follow-up PR. */}
+
+| Custom property                     | Description                            | Notes                                                                                    |
+| ----------------------------------- | -------------------------------------- | ---------------------------------------------------------------------------------------- |
+| `--swc-linear-progress-fill-color`  | Color of the bar fill.                 | Each semantic `variant` sets this token, so a global override is superseded per variant. |
+| `--swc-linear-progress-track-color` | Color of the bar track.                |                                                                                          |
+| `--swc-linear-progress-text-color`  | Color of the label and value text.     |                                                                                          |
+| `--swc-linear-progress-thickness`   | Block size of the track and fill.      | Set by the `size` attribute; override for custom sizing.                                 |
+| `--swc-linear-progress-font-size`   | Font size of the label and value text. | Set by the `size` attribute; override for custom sizing.                                 |
+| `--swc-linear-progress-top-to-text` | Spacing between the bar and the text.  | Set by the `size` attribute; override for custom spacing.                                |
+
+<div
+  style={{
+    borderLeft: '4px solid #e34850',
+    background: 'rgba(227, 72, 80, 0.10)',
+    padding: '12px 16px',
+    margin: '16px 0',
+    borderRadius: '4px',
+  }}
+>
+  <strong>🚫 Do not target internals.</strong> Internal classes,{' '}
+  <code>{'--_swc-linear-progress-*'}</code> private properties, and shadow DOM
+  are <strong>not public API</strong>. Styling applied to them will break
+  without warning on minor releases.
+</div>
+
+## Checklist
+
+- [ ] Update imports
+- [ ] Rename all `<sp-meter>` to `<swc-meter>`
+- [ ] Rename `progress` to `value`
+- [ ] Replace `side-label` with `label-position="side"`
+- [ ] Move `label` attribute and default slot text into the `label` slot, or set `accessible-label`
+- [ ] Replace `--mod-progressbar-*` / `--mod-meter-*` overrides with `--swc-linear-progress-*`

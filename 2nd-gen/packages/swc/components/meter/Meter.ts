@@ -26,7 +26,7 @@ import styles from './meter.css';
 /**
  * A meter is a non-focusable, read-only bar that displays a value inside a
  * fixed range. The WAI-ARIA `meter` role lives on the shadow
- * `.swc-LinearProgress` wrapper — the host carries no ARIA role.
+ * `.swc-LinearProgress` wrapper; the host carries no ARIA role.
  *
  * @element swc-meter
  * @since 2.0.0
@@ -42,6 +42,13 @@ import styles from './meter.css';
  * @slot description - Additional description text below the meter. Referenced
  *                     via `aria-describedby` on the shadow `meter` role element
  *                     when assigned nodes are present.
+ *
+ * @cssprop --swc-linear-progress-fill-color - Color of the bar fill. Defaults to the accent content color token; each semantic variant overrides it with its own visual color token.
+ * @cssprop --swc-linear-progress-track-color - Color of the bar track. Defaults to the track color token.
+ * @cssprop --swc-linear-progress-text-color - Color of the label and value text. Defaults to the neutral subdued content color token.
+ * @cssprop --swc-linear-progress-thickness - Block size of the track and fill. Defaults to the size-specific progress bar thickness token.
+ * @cssprop --swc-linear-progress-font-size - Font size of the label and value text. Defaults to the size-specific font size token.
+ * @cssprop --swc-linear-progress-top-to-text - Spacing between the bar and the text. Defaults to the size-specific component top-to-text token.
  */
 export class Meter extends MeterBase {
   // ────────────────────
