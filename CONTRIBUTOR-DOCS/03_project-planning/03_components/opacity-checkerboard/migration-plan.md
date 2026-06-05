@@ -67,6 +67,9 @@ Must-ship work is small and almost entirely structural:
 - **Ship a 2nd-gen shared CSS utility** for the checkerboard pattern at `2nd-gen/packages/swc/stylesheets/shared/` — an importable `css` style fragment. The pattern itself already works in 2nd-gen: gen-2 tokens (`--swc-opacity-checkerboard-square-*`) exist in `tokens.css`, and `color-loupe` already renders the pattern by **inlining** the rule into its own component CSS (it does not import any shared artifact). The shared fragment de-duplicates that rule for shadow-DOM consumers.
 - **Deprecate the 1st-gen `@spectrum-web-components/opacity-checkerboard` package** with a notice and a pointer to the 2nd-gen replacement (timeline-gated).
 - **Drop the `--mod-*` surface** (`--mod-opacity-checkerboard-{dark,light,size,position}`) — consistent with all 2nd-gen migrations, which do not expose `--mod-*`.
+- **Contributor docs stay internal-only for now**, outside the Components section, since the utility is Lit-consumption-only and not a public standalone API.
+
+The utility is exported **only** as a Lit `CSSResult` (`opacityCheckerboardStyles`) for import into a component's `styles` array. No global `.css` artifact is emitted, so there is no light-DOM or document-level usage path.
 
 Why a shared `css` fragment and not a global class: **a global stylesheet class cannot pierce shadow DOM.** Every real 1st-gen consumer (color-handle, color-loupe, color-slider, swatch, thumbnail) uses the pattern *inside* its own shadow root, and `color-loupe` already set the precedent of inlining. A fragment importable into a component's `styles` array reaches those consumers; a global class would not.
 
@@ -213,7 +216,7 @@ Once the shared fragment exists, `color-loupe` (and future color components) sho
 | #   | What is added | Notes |
 | --- | ------------- | ----- |
 | **A1** | Refactor `color-loupe` (and future color components) to import the shared fragment instead of inlining `.swc-ColorLoupe-checkerboard`. | Pure cleanup; track as a follow-up ticket. |
-| **A2** | Storybook docs page demonstrating the utility on a light-DOM element. | Tools/Utilities docs category. |
+| **A2** | Internal Storybook page demonstrating the fragment imported into a Lit host's `styles`. | Internal-only, outside Components. Not a light-DOM demo — the fragment is exported only for Lit consumption. |
 
 ---
 
@@ -282,6 +285,7 @@ Decided form:
 
 - Ship an importable `css` style fragment under `swc/stylesheets/shared/` (new `shared/` directory). Shadow-DOM consumers (every known consumer) include it in their `styles` array, mirroring how `color-loupe` works today but de-duplicating the rule.
 - No global utility class — a global class cannot pierce shadow DOM and would not serve a single existing consumer.
+- Exported only as a Lit `CSSResult` (`opacityCheckerboardStyles`); no global `.css` artifact is emitted, so there is no light-DOM/document-level usage path.
 
 ---
 
@@ -332,9 +336,11 @@ N/A — no public component API (no properties, methods, events, slots). The onl
 
 ### Documentation
 
-- [ ] Storybook (Tools/Utilities category) page showing the utility applied to a light-DOM element, with usage guidance for shadow-DOM consumers
+> Internal-only for now. The utility is consumed by SWC components via Lit `styles`, not by application authors directly, so it does not belong in the public Components docs. Any Storybook entry goes under an internal/Tools section (e.g. an `.internal.mdx`-style page excluded from production docs builds), not under Components.
+
+- [ ] Internal Storybook page (outside Components) demonstrating the fragment imported into a small Lit host's `styles` array, with `.swc-opacity-checkerboard` applied to a decorative element in its shadow root — no light-DOM/global-stylesheet usage, since the fragment is exported only for Lit consumption
 - [ ] Document the deprecation + replacement in the 1st-gen `opacity-checkerboard` README and `package.json` deprecation field
-- [ ] Update public docs to point at the 2nd-gen abstraction
+- [ ] Keep contributor docs internal for now; no public-facing Components docs entry
 
 #### Breaking changes
 
