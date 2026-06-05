@@ -111,7 +111,7 @@ export function LinearProgressMixin<T extends Constructor<ReactiveElement>>(
      * `label` slot content (for example, a data grid of meters).
      * Renders into `aria-label` on the role element when set.
      */
-    @property({ type: String, reflect: true, attribute: 'accessible-label' })
+    @property({ type: String, attribute: 'accessible-label' })
     public accessibleLabel = '';
 
     /**
