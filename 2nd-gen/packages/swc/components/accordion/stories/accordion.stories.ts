@@ -135,6 +135,9 @@ const meta: Meta = {
     stackblitz: {
       url: '',
     },
+    // swc-accordion-item is a second element of this component; surface its API
+    // table alongside swc-accordion's on the docs page.
+    additionalApiTables: ['swc-accordion-item'],
   },
   tags: ['migrated'],
 };

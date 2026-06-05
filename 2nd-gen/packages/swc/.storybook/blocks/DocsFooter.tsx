@@ -44,6 +44,18 @@ export const DocsFooter = () => {
     resolvedOf?.csfFile?.stories ?? {}
   ).some((story: any) => story.tags?.includes('api'));
 
+  // Multi-element components (e.g. accordion, tabs) declare sibling element tags
+  // via `parameters.additionalApiTables`. When present, each element gets its
+  // own labeled API table under the shared "API" heading, the root element
+  // first.
+  const mainComponent = (resolvedOf?.csfFile?.meta as { component?: string })
+    ?.component;
+  const additionalApiTables: string[] =
+    (resolvedOf?.preparedMeta?.parameters?.additionalApiTables as
+      | string[]
+      | undefined) ?? [];
+  const hasAdditionalApiTables = additionalApiTables.length > 0;
+
   return (
     <>
       {!isController && (
@@ -51,7 +63,26 @@ export const DocsFooter = () => {
           <HeaderMdx as="h2" id="api">
             API
           </HeaderMdx>
-          <ApiTable />
+          {hasAdditionalApiTables ? (
+            <>
+              {mainComponent && (
+                <HeaderMdx as="h3" id={`api-${mainComponent}`}>
+                  {mainComponent}
+                </HeaderMdx>
+              )}
+              <ApiTable />
+              {additionalApiTables.map((tag) => (
+                <React.Fragment key={tag}>
+                  <HeaderMdx as="h3" id={`api-${tag}`}>
+                    {tag}
+                  </HeaderMdx>
+                  <ApiTable component={tag} />
+                </React.Fragment>
+              ))}
+            </>
+          ) : (
+            <ApiTable />
+          )}
         </>
       )}
       <Primary />

@@ -307,14 +307,21 @@ function CssPartsTable({ cssParts }: { cssParts: CssPart[] }) {
  * Manifest. Renders categorized, read-only tables for Properties, Slots,
  * Events, CSS Custom Properties, and CSS Parts.
  */
-export function ApiTable() {
+export function ApiTable({
+  component: componentOverride,
+}: { component?: string } = {}) {
   const resolvedOf = useOf('meta', ['meta']);
   const meta = resolvedOf.csfFile?.meta as {
     component?: string;
     argTypes?: Record<string, ArgType>;
   };
-  const tagName = meta?.component;
-  const argTypes = resolvedOf.preparedMeta?.argTypes ?? meta?.argTypes ?? {};
+  const tagName = componentOverride ?? meta?.component;
+  // An explicit `component` override targets a different element than the page
+  // meta (e.g. a sub-element of a multi-element component), so the meta argTypes
+  // do not apply; pass none in that case.
+  const argTypes = componentOverride
+    ? {}
+    : (resolvedOf.preparedMeta?.argTypes ?? meta?.argTypes ?? {});
 
   const cem = window.__STORYBOOK_CUSTOM_ELEMENTS_MANIFEST__;
   if (!cem || !tagName) {
