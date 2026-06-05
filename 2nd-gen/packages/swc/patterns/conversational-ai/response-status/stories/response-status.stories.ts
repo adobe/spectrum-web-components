@@ -87,7 +87,7 @@ export { meta };
 export default meta;
 
 // ────────────────────
-//    AUTODOCS STORY
+//    PLAYGROUND STORY
 // ────────────────────
 
 export const Playground: Story = {
@@ -97,7 +97,7 @@ export const Playground: Story = {
     loadingLabel: 'Generating response',
     completeLabel: 'Response generated',
   },
-  tags: ['autodocs', 'dev'],
+  tags: ['dev'],
 };
 
 // ──────────────────────────────
@@ -172,21 +172,9 @@ export const Loading: Story = {
       </div>
     </div>
   `,
-  parameters: { 'section-order': 1 },
   tags: ['options'],
 };
 
-/**
- * Set **`open`** to control reasoning disclosure:
- *
- * - **`open=false`** — reasoning collapsed
- * - **`open=true`** — reasoning expanded
- *
- * The disclosure chevron only appears when default-slot reasoning content exists.
- * While **`loading=true`**, reasoning UI is not shown.
- * If reasoning slot content is later removed, the component automatically resets
- * `open` to `false`. This internal collapse does not emit `swc-response-status-toggle`.
- */
 export const Reasoning: Story = {
   render: () => html`
     <div style="display:flex;flex-direction:column;gap:24px;">
@@ -212,7 +200,6 @@ export const Reasoning: Story = {
       </div>
     </div>
   `,
-  parameters: { 'section-order': 2 },
   tags: ['options'],
 };
 
@@ -220,17 +207,6 @@ export const Reasoning: Story = {
 //    ACCESSIBILITY STORY
 // ────────────────────────────────
 
-/**
- * ### Features
- *
- * The `<swc-response-status>` element implements the following accessibility features:
- *
- * #### Status announcement
- *
- * - The loading row carries `role="status"`, so the status label is announced for screen readers
- * - When reasoning content exists, the reasoning toggle uses `aria-expanded` and `aria-controls` to communicate panel state
- * - The reasoning panel uses `role="group"` with `aria-label="Reasoning"`
- */
 export const Accessibility: Story = {
   args: {
     loading: false,

@@ -53,6 +53,8 @@
     - [Checkbox migration roadmap](checkbox/rendering-and-styling-migration-analysis.md)
 - Close Button
     - [Close button accessibility migration analysis](close-button/accessibility-migration-analysis.md)
+    - [Close button migration plan](close-button/migration-plan.md)
+    - [Close button migration roadmap](close-button/rendering-and-styling-migration-analysis.md)
 - Color Field
     - [Color field migration roadmap](color-field/rendering-and-styling-migration-analysis.md)
 - Color Loupe
@@ -101,6 +103,7 @@
 - Number Field
     - [Number field migration roadmap](number-field/rendering-and-styling-migration-analysis.md)
 - Opacity Checkerboard
+    - [Opacity Checkerboard migration plan](opacity-checkerboard/migration-plan.md)
     - [Opacity Checkerboard migration roadmap](opacity-checkerboard/rendering-and-styling-migration-analysis.md)
 - Picker Button
     - [Picker button migration roadmap](picker-button/rendering-and-styling-migration-analysis.md)
