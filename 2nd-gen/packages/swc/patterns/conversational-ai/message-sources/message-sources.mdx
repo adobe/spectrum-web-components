@@ -1,0 +1,45 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import { DocsFooter, DocsHeader } from '../../../.storybook/blocks';
+
+import * as MessageSourcesStories from './stories/message-sources.stories';
+
+<Meta of={MessageSourcesStories} />
+
+<DocsHeader />
+
+## Anatomy
+
+A message sources component consists of:
+
+1. **Toggle button**: chevron + configurable label, acts as a disclosure button
+2. **Sources list**: numbered list of linked source items (visible when expanded)
+
+<Canvas of={MessageSourcesStories.Anatomy} />
+
+## Options
+
+### Open
+
+The `open` attribute controls whether the sources list is visible, and the `label` attribute customizes the button/list label:
+
+- **`open=false`**: only the toggle button is shown (default)
+- **`open=true`**: the numbered source list is revealed below the toggle
+- **`label="References"`**: replaces "Sources" in visible UI and ARIA labels
+
+<Canvas of={MessageSourcesStories.Open} />
+
+## Accessibility
+
+### Features
+
+The `<swc-message-sources>` element implements the following accessibility features:
+
+#### Disclosure pattern
+
+- The toggle button uses `aria-expanded` to communicate open/closed state
+- The toggle button uses `aria-controls` pointing to the panel `id`
+- The sources panel uses `role="list"` with `aria-label` set from `label`
+
+<Canvas of={MessageSourcesStories.Accessibility} />
+
+<DocsFooter />

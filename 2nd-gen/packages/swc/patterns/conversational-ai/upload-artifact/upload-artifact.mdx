@@ -1,0 +1,38 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import { DocsFooter, DocsHeader } from '../../../.storybook/blocks';
+
+import * as UploadArtifactStories from './stories/upload-artifact.stories';
+
+<Meta of={UploadArtifactStories} />
+
+<DocsHeader />
+
+## Options
+
+### Multi Artifact
+
+Multiple **`swc-upload-artifact`** nodes in a wrapping flex row, similar width to the prompt-field composer attachment strip, so card vs media spacing and wraps are easy to compare in isolation.
+
+To see the same tiles inside **`swc-prompt-field`**, open **[Artifact](/docs/paatterns-conversational-ai-prompt-field--readme#artifact)**.
+
+<Canvas of={UploadArtifactStories.MultiArtifact} />
+
+### Card
+
+Card type uses a compact thumbnail with horizontal text layout.
+
+<Canvas of={UploadArtifactStories.Card} />
+
+### Media
+
+Media type uses a larger preview region without title and subtitle text.
+
+<Canvas of={UploadArtifactStories.Media} />
+
+### Text Overflow
+
+Title and subtitle truncate with an ellipsis when the artifact is narrower than the text. **Card** uses a compact row; **media** keeps the actions region visible while the title shrinks.
+
+<Canvas of={UploadArtifactStories.TextOverflow} />
+
+<DocsFooter />

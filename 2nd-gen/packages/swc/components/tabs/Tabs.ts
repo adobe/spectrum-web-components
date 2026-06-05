@@ -42,6 +42,8 @@ import styles from './tabs.css';
  */
 export class Tabs extends TabsBase {
   /**
+   * @internal
+   *
    * Shadow `delegatesFocus: true` keeps native focus-delegation where supported;
    * `TabsBase.focus()` focuses the selected slotted tab explicitly so
    * programmatic `focus()` matches 1st-gen expectations regardless of engine.

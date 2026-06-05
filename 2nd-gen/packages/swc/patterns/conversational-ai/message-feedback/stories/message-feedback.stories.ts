@@ -64,12 +64,12 @@ export { meta };
 export default meta;
 
 // ────────────────────
-//    AUTODOCS STORY
+//    PLAYGROUND STORY
 // ────────────────────
 
 export const Playground: Story = {
   args: {},
-  tags: ['autodocs', 'dev'],
+  tags: ['dev'],
 };
 
 // ──────────────────────────────
@@ -85,14 +85,6 @@ export const Overview: Story = {
 //    ANATOMY STORY
 // ──────────────────────────
 
-/**
- * A message feedback control consists of two quiet toggle buttons:
- *
- * 1. **Positive** — "Positive response"
- * 2. **Negative** — "Negative response"
- *
- * The selected button renders with a dark filled background.
- */
 export const Anatomy: Story = {
   args: {},
   tags: ['anatomy'],
@@ -102,13 +94,6 @@ export const Anatomy: Story = {
 //    OPTIONS STORIES
 // ──────────────────────────
 
-/**
- * The `status` attribute controls which button appears selected:
- *
- * - **Unset** — Neither option selected (default)
- * - **`positive`** — Positive feedback selected
- * - **`negative`** — Negative feedback selected
- */
 export const Status: Story = {
   render: () => html`
     <div style="display:flex;flex-direction:column;gap:24px;">
@@ -126,7 +111,6 @@ export const Status: Story = {
       </div>
     </div>
   `,
-  parameters: { 'section-order': 1 },
   tags: ['options'],
 };
 
@@ -136,23 +120,6 @@ export const Status: Story = {
 
 const wiredSwcFeedbackDemos = new WeakSet<Element>();
 
-/**
- * Event handlers can be registered on `<swc-message-feedback>` (or on an
- * ancestor, because **`swc-message-feedback-change`** **bubbles** and is **`composed`**).
- *
- * Each click dispatches **`swc-message-feedback-change`** with **`event.detail.status`**
- * set to **`'positive'`**, **`'negative'`**, or **`undefined`** when the
- * active option is toggled off. The host does not apply that value by itself:
- * keep **`status`** controlled from your layer—set **`feedback.status`** (or
- * the `status` attribute) when you handle the event.
- *
- * ```js
- * feedback.addEventListener('swc-message-feedback-change', (event) => {
- *   const { status } = event.detail;
- *   feedback.status = status;
- * });
- * ```
- */
 export const HandlingEvents: Story = {
   render: () => {
     const wireDemo = ref((readout: Element | undefined) => {
@@ -203,7 +170,6 @@ export const HandlingEvents: Story = {
       </div>
     `;
   },
-  parameters: { 'section-order': 1 },
   tags: ['behaviors'],
   name: 'Handling events',
 };
@@ -212,24 +178,6 @@ export const HandlingEvents: Story = {
 //    ACCESSIBILITY STORY
 // ────────────────────────────────
 
-/**
- * ### Features
- *
- * The `<swc-message-feedback>` element implements the following accessibility features:
- *
- * #### Toggle buttons
- *
- * - The group uses `role="group"` with `aria-label="Response feedback"`
- * - Each option is a native `<button>` with `aria-pressed` to communicate state
- * - Each option carries a descriptive label: "Positive response" / "Negative response"
- *
- * #### Keyboard
- *
- * - **Tab** moves focus into the group on a single tab stop (**roving `tabindex`** on the two controls)
- * - **Arrow Left** / **Arrow Right** move focus between options
- * - **Home** / **End** move focus to the first or last option
- * - **Space** or **Enter** on a focused option dispatches **`swc-message-feedback-change`**
- */
 export const Accessibility: Story = {
   args: {},
   tags: ['a11y'],

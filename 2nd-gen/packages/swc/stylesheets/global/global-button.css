@@ -43,7 +43,6 @@
   border-width: var(--_swc-button-border-width);
   border-radius: var(--swc-button-border-radius, calc(var(--_swc-button-min-block-size) / 2));
   overflow: visible;
-  cursor: pointer;
   user-select: none;
   transition-timing-function: token("animation-ease-in-out");
   transition-duration: token("animation-duration-100");
@@ -65,7 +64,6 @@
   color: var(--swc-button-content-color-disabled, token("disabled-content-color"));
   background-color: var(--swc-button-background-color-disabled, token("disabled-background-color"));
   border-color: var(--swc-button-border-color-disabled, transparent);
-  cursor: default;
   transform: none;
 }
 

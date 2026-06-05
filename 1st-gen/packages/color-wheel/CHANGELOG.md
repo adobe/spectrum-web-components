@@ -1,5 +1,17 @@
 # Change Log
 
+## 1.12.1
+
+### Patch Changes
+
+- [#6292](https://github.com/adobe/spectrum-web-components/pull/6292) [`57610ac`](https://github.com/adobe/spectrum-web-components/commit/57610ace19bda974eb526cf73b0efb71c5a47cb9) Thanks [@rubencarvalho](https://github.com/rubencarvalho)! - - **Fixed**: Clicks on the `<sp-color-wheel>` ring no longer intermittently fail after scrolling or layout shifts. The cached bounding rect used for the ring hit-test is now refreshed on every gradient `pointerdown`, so viewport-relative coordinates stay in sync with the wheel's current on-screen position.
+
+- Updated dependencies []:
+  - @spectrum-web-components/color-handle@1.12.1
+  - @spectrum-web-components/base@1.12.1
+  - @spectrum-web-components/reactive-controllers@1.12.1
+  - @spectrum-web-components/shared@1.12.1
+
 ## 1.12.0
 
 ### Patch Changes
