@@ -25,11 +25,9 @@ import type {
   DemoFocusgroupDisabledHost,
   DemoFocusgroupDynamic,
   DemoFocusgroupEventTracker,
-  DemoFocusgroupHorizontal,
   DemoFocusgroupPlayground,
   DemoFocusgroupProgrammatic,
   DemoFocusgroupTextPrefix,
-  DemoFocusgroupVertical,
 } from '../stories/demo-hosts.js';
 import focusMeta, {
   BothAxesLinear,
@@ -1016,7 +1014,7 @@ export const DisconnectReconnect: Story = {
 export const DisabledButtonNeverTabStop: Story = {
   ...HorizontalToolbar,
   play: async ({ canvasElement, step }) => {
-    const host = await getComponent<DemoFocusgroupHorizontal>(
+    const host = await getComponent<HTMLElement>(
       canvasElement,
       'demo-focusgroup-horizontal'
     );
@@ -1029,7 +1027,9 @@ export const DisabledButtonNeverTabStop: Story = {
       'tabindex="0" skips natively disabled first item and lands on next',
       async () => {
         buttons[0].disabled = true;
-        host.callRefresh();
+
+        // Focus another item so the controller recalculates via handleFocusin.
+        buttons[1].focus();
 
         expect(buttons[0].tabIndex).not.toBe(0);
 
@@ -1042,9 +1042,8 @@ export const DisabledButtonNeverTabStop: Story = {
       're-enabling the button allows it to become the tab stop again',
       async () => {
         buttons[0].disabled = false;
-        host.callRefresh();
 
-        // refresh() preserves the current active (buttons[1]); navigate left to reach buttons[0]
+        // Navigate left from buttons[1] (current active) to reach buttons[0].
         keydown(buttons[1], 'ArrowLeft');
         expect(buttons[0].tabIndex).toBe(0);
       }
@@ -1101,7 +1100,7 @@ export const MemoryOffTabReentry: Story = {
 export const SkipDisabledFalseFirstItemDisabled: Story = {
   ...VerticalMenu,
   play: async ({ canvasElement, step }) => {
-    const host = await getComponent<DemoFocusgroupVertical>(
+    const host = await getComponent<HTMLElement>(
       canvasElement,
       'demo-focusgroup-vertical'
     );
@@ -1114,7 +1113,9 @@ export const SkipDisabledFalseFirstItemDisabled: Story = {
       'when skipDisabled is false and first item is natively disabled, tab stop falls through',
       async () => {
         buttons[0].disabled = true;
-        host.callRefresh();
+
+        // Focus another item so the controller recalculates via handleFocusin.
+        buttons[1].focus();
 
         expect(buttons[0].tabIndex).not.toBe(0);
 
@@ -1141,9 +1142,8 @@ export const SkipDisabledFalseFirstItemDisabled: Story = {
 
     await step('cleanup: re-enable first button', async () => {
       buttons[0].disabled = false;
-      host.callRefresh();
 
-      // refresh() preserves the current active; navigate up to reach buttons[0]
+      // Navigate up from the current active to reach buttons[0].
       keydown(buttons[1], 'ArrowUp');
       expect(buttons[0].tabIndex).toBe(0);
     });
