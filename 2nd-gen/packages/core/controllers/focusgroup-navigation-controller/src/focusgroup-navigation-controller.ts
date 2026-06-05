@@ -676,6 +676,45 @@ export class FocusgroupNavigationController implements ReactiveController {
   }
 
   /**
+   * Resolves the managed item that actually received focus inside the shadow tree.
+   *
+   * Same retargeting problem as {@link resolveManagedKeydownTarget}: listeners on
+   * the shadow host see `event.target` retargeted to the host when focus lands on a
+   * descendant inside the shadow root. Walk `composedPath()` and fall back to
+   * `shadowRoot.activeElement` to find the real focused managed item.
+   *
+   * @param event - Focus event dispatched while focus moves into the composite.
+   * @param items - Current eligible items from {@link getEligibleItems}.
+   * @returns The managed element that received focus, or null.
+   */
+  private resolveManagedFocusTarget(
+    event: FocusEvent,
+    items: HTMLElement[]
+  ): HTMLElement | null {
+    if (items.length === 0) {
+      return null;
+    }
+    const set = new Set(items);
+    for (const node of event.composedPath()) {
+      if (!(node instanceof HTMLElement)) {
+        continue;
+      }
+      if (set.has(node)) {
+        return node;
+      }
+      if (node === this.host) {
+        break;
+      }
+    }
+    const root = this.host.shadowRoot;
+    const active = root?.activeElement;
+    if (active instanceof HTMLElement && set.has(active)) {
+      return active;
+    }
+    return null;
+  }
+
+  /**
    * Capture-phase `focusin` handler: syncs roving `tabindex` when focus moves to a managed item
    * (for example via pointer), and updates memory when enabled.
    *
@@ -687,12 +726,9 @@ export class FocusgroupNavigationController implements ReactiveController {
     }
     this.cachedEligibleItems = null;
     this.cachedRows = null;
-    const target = event.target;
-    if (!(target instanceof HTMLElement)) {
-      return;
-    }
     const items = this.getEligibleItems();
-    if (!items.includes(target)) {
+    const target = this.resolveManagedFocusTarget(event, items);
+    if (!target) {
       return;
     }
     this.applyRovingTabindex(target);
