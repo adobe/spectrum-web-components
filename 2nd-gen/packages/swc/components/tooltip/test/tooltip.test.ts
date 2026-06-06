@@ -396,15 +396,15 @@ export const AriaWiringTriggerElementOverrideTest: Story = {
 
 export const TriggerElementHoverTest: Story = {
   render: () => html`
-    <button id="tt-te-hover">Hover me</button>
+    <swc-button id="tt-te-hover">Hover me</swc-button>
     <swc-tooltip placement="top" delay="0">
       Wired via triggerElement, no for attribute
     </swc-tooltip>
   `,
   play: async ({ canvasElement, step }) => {
-    const trigger = canvasElement.querySelector(
-      '#tt-te-hover'
-    ) as HTMLElement;
+    const trigger = canvasElement.querySelector('#tt-te-hover') as Button;
+    await trigger.updateComplete;
+    const innerButton = trigger.shadowRoot?.querySelector('button') ?? null;
     const tooltip = await getComponent<Tooltip>(canvasElement, 'swc-tooltip');
 
     await step(
@@ -417,25 +417,32 @@ export const TriggerElementHoverTest: Story = {
           new PointerEvent('pointerenter', { bubbles: false, composed: true })
         );
         await waitFor(
-          () => expect(tooltip.open, 'tooltip opens on hover via triggerElement').toBe(true),
+          () =>
+            expect(
+              tooltip.open,
+              'tooltip opens on hover via triggerElement'
+            ).toBe(true),
           { timeout: 200 }
         );
       }
     );
 
     await step(
-      'closes when pointer leaves and sets ARIA on the native trigger',
+      'closes when pointer leaves and sets ARIA on the inner shadow button',
       async () => {
         expect(
-          trigger.ariaDescribedByElements ?? [],
-          'native trigger receives ariaDescribedByElements via triggerElement wiring'
+          innerButton?.ariaDescribedByElements ?? [],
+          'inner shadow button receives ariaDescribedByElements via triggerElement wiring'
         ).toContain(tooltip);
 
         trigger.dispatchEvent(
           new PointerEvent('pointerleave', { bubbles: false, composed: true })
         );
         await waitFor(
-          () => expect(tooltip.open, 'tooltip closes after pointer leaves').toBe(false),
+          () =>
+            expect(tooltip.open, 'tooltip closes after pointer leaves').toBe(
+              false
+            ),
           { timeout: 500 }
         );
       }
@@ -445,19 +452,17 @@ export const TriggerElementHoverTest: Story = {
 
 export const TriggerElementOverridesForHoverTest: Story = {
   render: () => html`
-    <button id="tt-te-wrong">Wrong target</button>
-    <button id="tt-te-correct">Correct target</button>
+    <swc-button id="tt-te-wrong">Wrong target</swc-button>
+    <swc-button id="tt-te-correct">Correct target</swc-button>
     <swc-tooltip for="tt-te-wrong" delay="0" placement="top">
       Should open on correct trigger
     </swc-tooltip>
   `,
   play: async ({ canvasElement, step }) => {
-    const wrongTrigger = canvasElement.querySelector(
-      '#tt-te-wrong'
-    ) as HTMLElement;
+    const wrongTrigger = canvasElement.querySelector('#tt-te-wrong') as Button;
     const correctTrigger = canvasElement.querySelector(
       '#tt-te-correct'
-    ) as HTMLElement;
+    ) as Button;
     const tooltip = await getComponent<Tooltip>(canvasElement, 'swc-tooltip');
 
     await step(
@@ -481,17 +486,18 @@ export const TriggerElementOverridesForHoverTest: Story = {
           new PointerEvent('pointerenter', { bubbles: false, composed: true })
         );
         await waitFor(
-          () => expect(tooltip.open, 'triggerElement target opens the tooltip').toBe(true),
+          () =>
+            expect(
+              tooltip.open,
+              'triggerElement target opens the tooltip'
+            ).toBe(true),
           { timeout: 200 }
         );
 
         correctTrigger.dispatchEvent(
           new PointerEvent('pointerleave', { bubbles: false, composed: true })
         );
-        await waitFor(
-          () => expect(tooltip.open).toBe(false),
-          { timeout: 500 }
-        );
+        await waitFor(() => expect(tooltip.open).toBe(false), { timeout: 500 });
       }
     );
   },
@@ -783,15 +789,13 @@ export const LogicalPlacementRTLTest: Story = {
 
 export const HoverOpensTest: Story = {
   render: () => html`
-    <button id="tt-hover-trigger">Hover me</button>
+    <swc-button id="tt-hover-trigger">Hover me</swc-button>
     <swc-tooltip for="tt-hover-trigger" delay="0" placement="top">
       Appears on hover
     </swc-tooltip>
   `,
   play: async ({ canvasElement, step }) => {
-    const trigger = canvasElement.querySelector(
-      '#tt-hover-trigger'
-    ) as HTMLElement;
+    const trigger = canvasElement.querySelector('#tt-hover-trigger') as Button;
     const tooltip = await getComponent<Tooltip>(canvasElement, 'swc-tooltip');
 
     await step('opens the tooltip when the trigger is hovered', async () => {
@@ -826,15 +830,13 @@ export const HoverOpensTest: Story = {
 
 export const FocusOpensTest: Story = {
   render: () => html`
-    <button id="tt-focus-trigger">Focus me</button>
+    <swc-button id="tt-focus-trigger">Focus me</swc-button>
     <swc-tooltip for="tt-focus-trigger" placement="top">
       Appears on focus
     </swc-tooltip>
   `,
   play: async ({ canvasElement, step }) => {
-    const trigger = canvasElement.querySelector(
-      '#tt-focus-trigger'
-    ) as HTMLElement;
+    const trigger = canvasElement.querySelector('#tt-focus-trigger') as Button;
     const tooltip = await getComponent<Tooltip>(canvasElement, 'swc-tooltip');
 
     await step(
@@ -864,7 +866,7 @@ export const FocusOpensTest: Story = {
 
 export const DisabledPreventsHoverTest: Story = {
   render: () => html`
-    <button id="tt-disabled-trigger">Hover me</button>
+    <swc-button id="tt-disabled-trigger">Hover me</swc-button>
     <swc-tooltip for="tt-disabled-trigger" delay="0" disabled placement="top">
       Should not appear
     </swc-tooltip>
@@ -872,7 +874,7 @@ export const DisabledPreventsHoverTest: Story = {
   play: async ({ canvasElement, step }) => {
     const trigger = canvasElement.querySelector(
       '#tt-disabled-trigger'
-    ) as HTMLElement;
+    ) as Button;
     const tooltip = await getComponent<Tooltip>(canvasElement, 'swc-tooltip');
 
     await step(
@@ -892,7 +894,7 @@ export const DisabledPreventsHoverTest: Story = {
 
 export const ManualPreventsHoverTest: Story = {
   render: () => html`
-    <button id="tt-manual-hover-trigger">Hover me</button>
+    <swc-button id="tt-manual-hover-trigger">Hover me</swc-button>
     <swc-tooltip for="tt-manual-hover-trigger" delay="0" manual placement="top">
       Manual tooltip
     </swc-tooltip>
@@ -900,7 +902,7 @@ export const ManualPreventsHoverTest: Story = {
   play: async ({ canvasElement, step }) => {
     const trigger = canvasElement.querySelector(
       '#tt-manual-hover-trigger'
-    ) as HTMLElement;
+    ) as Button;
     const tooltip = await getComponent<Tooltip>(canvasElement, 'swc-tooltip');
 
     await step(
@@ -938,7 +940,7 @@ export const ManualPreventsHoverTest: Story = {
 export const PlacementControllerTest: Story = {
   render: () => html`
     <div style="display: flex; justify-content: center; padding: 120px;">
-      <button id="tt-placement-trigger">Trigger</button>
+      <swc-button id="tt-placement-trigger">Trigger</swc-button>
     </div>
     <swc-tooltip for="tt-placement-trigger" placement="top">
       Positioned by PlacementController
@@ -1051,7 +1053,9 @@ export const PlacementControllerTest: Story = {
 export const ShadowRootScopeTest: Story = {
   // Render an empty host; the shadow root and its contents are built in the
   // play function so getRootNode() on the tooltip returns the shadow root.
-  render: () => html`<div id="shadow-root-host"></div>`,
+  render: () => html`
+    <div id="shadow-root-host"></div>
+  `,
   play: async ({ canvasElement, step }) => {
     const host = canvasElement.querySelector(
       '#shadow-root-host'
