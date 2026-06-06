@@ -367,7 +367,7 @@ export const Events: Story = {
 
 export const TriggerElement: Story = {
   // The ref directive wires triggerElement during rendering so the story is
-  // functional in the Docs page canvas — not just when the play function runs.
+  // functional in the Docs page canvas, not just when the play function runs.
   render: () => {
     let triggerEl: HTMLElement | null = null;
 

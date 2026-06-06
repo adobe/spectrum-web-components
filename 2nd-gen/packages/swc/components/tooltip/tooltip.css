@@ -140,7 +140,7 @@
   opacity: 1;
 }
 
-/* Top (default): bubble is above — start shifted down toward trigger, slide up */
+/* Top (default): bubble is above; start shifted down toward trigger, slide up */
 @starting-style {
   :host(:popover-open) {
     opacity: 0;
@@ -148,14 +148,14 @@
   }
 }
 
-/* Bottom: bubble is below — start shifted up toward trigger, slide down */
+/* Bottom: bubble is below; start shifted up toward trigger, slide down */
 @starting-style {
   :host([placement="bottom"]:popover-open) {
     transform: translateY(calc(-1 * var(--_swc-tooltip-animation-distance)));
   }
 }
 
-/* Right / end-LTR / start-RTL: bubble is to the right — start shifted left toward trigger, slide right */
+/* Right / end-LTR / start-RTL: bubble is to the right; start shifted left toward trigger, slide right */
 @starting-style {
   :host([placement="right"]:popover-open),
   :host([placement="end"]:popover-open),
@@ -164,7 +164,7 @@
   }
 }
 
-/* Left / start-LTR / end-RTL: bubble is to the left — start shifted right toward trigger, slide left */
+/* Left / start-LTR / end-RTL: bubble is to the left; start shifted right toward trigger, slide left */
 @starting-style {
   :host([placement="left"]:popover-open),
   :host([placement="start"]:popover-open),
@@ -216,7 +216,7 @@
 
 /* End placement (logical): tip at logical inline-end edge, flips naturally in RTL.
    inset-inline: auto X resets the base `left` (via inset-inline-start: auto) and
-   sets the correct edge via inset-inline-end — no position override needed in RTL. */
+   sets the correct edge via inset-inline-end; no position override needed in RTL. */
 :host([placement="end"]) .swc-Tooltip-tip {
   inset-block-start: calc(50% - (0.5 * var(--_swc-tooltip-tip-square-size)));
   inset-inline: auto calc(100% - (0.5 * var(--_swc-tooltip-tip-square-size)));
