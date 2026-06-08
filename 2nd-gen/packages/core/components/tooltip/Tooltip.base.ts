@@ -203,6 +203,11 @@ export abstract class TooltipBase
   // preventing one after event from firing for each CSS property that transitions.
   private afterEventPending = false;
 
+  // Fallback timer for browsers that do not fire transitionend for
+  // transition-behavior:allow-discrete discrete properties (e.g. Firefox in CI).
+  // Cleared when transitionend fires or a new toggle starts.
+  private afterEventFallbackTimer: ReturnType<typeof setTimeout> | null = null;
+
   /**
    * Returns the tip arrow element to pass to `PlacementController` so the
    * `arrow` middleware keeps the tip aligned with the trigger when the bubble
@@ -332,6 +337,11 @@ export abstract class TooltipBase
   };
 
   private readonly handleToggle = (event: Event): void => {
+    // Cancel any in-flight close fallback; a new toggle resets the cycle.
+    if (this.afterEventFallbackTimer !== null) {
+      clearTimeout(this.afterEventFallbackTimer);
+      this.afterEventFallbackTimer = null;
+    }
     const { newState } = event as ToggleEvent;
     const isOpen = newState === 'open';
     if (isOpen !== this.open) {
@@ -344,12 +354,35 @@ export abstract class TooltipBase
     if (durations.every((d) => d.trim() === '0s')) {
       this.afterEventPending = false;
       this.dispatchAfterEvent(isOpen);
+    } else if (!isOpen) {
+      // Some browsers (e.g. Firefox in CI) do not fire transitionend for
+      // transition-behavior:allow-discrete discrete properties. Start a fallback
+      // so positioning is always cleared after the exit transition window.
+      const maxMs = Math.max(
+        0,
+        ...durations.map((d) => {
+          const trimmed = d.trim();
+          const value = parseFloat(trimmed);
+          return trimmed.endsWith('ms') ? value : value * 1000;
+        })
+      );
+      this.afterEventFallbackTimer = setTimeout(() => {
+        this.afterEventFallbackTimer = null;
+        if (this.afterEventPending) {
+          this.afterEventPending = false;
+          this.dispatchAfterEvent(false);
+        }
+      }, maxMs + 100);
     }
   };
 
   private readonly handleTransitionEnd = (event: TransitionEvent): void => {
     if (event.target !== this || !this.afterEventPending) {
       return;
+    }
+    if (this.afterEventFallbackTimer !== null) {
+      clearTimeout(this.afterEventFallbackTimer);
+      this.afterEventFallbackTimer = null;
     }
     this.afterEventPending = false;
     this.dispatchAfterEvent(this.open);
@@ -442,5 +475,9 @@ export abstract class TooltipBase
     this.removeEventListener('toggle', this.handleToggle);
     this.removeEventListener('transitionend', this.handleTransitionEnd);
     document.removeEventListener('keydown', this.handleKeyDown);
+    if (this.afterEventFallbackTimer !== null) {
+      clearTimeout(this.afterEventFallbackTimer);
+      this.afterEventFallbackTimer = null;
+    }
   }
 }

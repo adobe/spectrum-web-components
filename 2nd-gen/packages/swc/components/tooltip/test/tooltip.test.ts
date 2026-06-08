@@ -80,7 +80,8 @@ const hoverOpen = async (
 };
 
 /** Dispatches pointerleave on the trigger and waits for the tooltip to close
- * (includes the 300 ms HoverController cooldown). */
+ * (includes the 300 ms HoverController cooldown plus generous CI headroom —
+ * headless Chromium can throttle setTimeout callbacks in background pages). */
 const hoverClose = async (
   trigger: HTMLElement,
   tooltip: Tooltip
@@ -88,7 +89,7 @@ const hoverClose = async (
   trigger.dispatchEvent(
     new PointerEvent('pointerleave', { bubbles: false, composed: true })
   );
-  await waitFor(() => expect(tooltip.open).toBe(false), { timeout: 1500 });
+  await waitFor(() => expect(tooltip.open).toBe(false), { timeout: 5000 });
 };
 
 /** Dispatches focusin on the trigger and waits for the tooltip to open. */
