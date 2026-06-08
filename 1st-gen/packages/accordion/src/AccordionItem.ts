@@ -61,10 +61,13 @@ const chevronIcon: Record<string, () => TemplateResult> = {
   `,
 };
 
+const ACCORDION_MIGRATION_DOC_URL =
+  'https://opensource.adobe.com/spectrum-web-components/components/accordion/';
+
 /**
  * @element sp-accordion-item
  * @slot - The content of the item that is hidden when the item is not open
- * @fires sp-accordion-item-toggle - Announce that an accordion item has been toggled while allowing the event to be cancelled.
+ * @fires sp-accordion-item-toggle - Announce that an accordion item has been toggled while allowing the event to be cancelled. In Spectrum 2, this event is renamed to `swc-accordion-item-toggle`.
  */
 export class AccordionItem extends SizedMixin(Focusable, {
   noDefaultSize: true,
@@ -76,6 +79,10 @@ export class AccordionItem extends SizedMixin(Focusable, {
   @property({ type: Boolean, reflect: true })
   public open = false;
 
+  /**
+   * @deprecated The `label` attribute is deprecated and will be removed in
+   * Spectrum 2.
+   */
   @property({ type: String, reflect: true })
   public label = '';
 
@@ -86,6 +93,9 @@ export class AccordionItem extends SizedMixin(Focusable, {
    * The heading level (2-6) to use for the accordion item title.
    * This property is set by the parent sp-accordion element.
    * Defaults to 3.
+   *
+   * @deprecated The `level` attribute on accordion items is deprecated and will
+   * be removed in Spectrum 2. Use `level` on `<sp-accordion>` instead.
    */
   @property({ type: Number, reflect: true })
   public level: number = 3;
@@ -104,6 +114,14 @@ export class AccordionItem extends SizedMixin(Focusable, {
 
   private toggle(): void {
     this.open = !this.open;
+    if (window.__swc?.DEBUG) {
+      window.__swc.warn(
+        this,
+        `<${this.localName}> the "sp-accordion-item-toggle" event is deprecated and will be renamed to "swc-accordion-item-toggle" in Spectrum 2.`,
+        ACCORDION_MIGRATION_DOC_URL,
+        { level: 'deprecation' }
+      );
+    }
     const applyDefault = this.dispatchEvent(
       new CustomEvent('sp-accordion-item-toggle', {
         bubbles: true,
@@ -181,6 +199,14 @@ export class AccordionItem extends SizedMixin(Focusable, {
       } else {
         this.removeAttribute('aria-disabled');
       }
+    }
+    if (window.__swc?.DEBUG && changes.has('label') && this.label) {
+      window.__swc.warn(
+        this,
+        `<${this.localName}> the "label" attribute is deprecated and will be removed in Spectrum 2.`,
+        ACCORDION_MIGRATION_DOC_URL,
+        { level: 'deprecation' }
+      );
     }
   }
 }
