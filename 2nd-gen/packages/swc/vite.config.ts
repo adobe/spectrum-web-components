@@ -69,12 +69,8 @@ function processStylesheets(): Plugin {
 export default defineConfig({
   plugins: [
     globalElementCSS({
-      elements: [{ component: 'button' }],
+      elements: [{ component: 'button' }, { component: 'action-button' }],
     }),
-    // Standalone stylesheets under `stylesheets/` ship as their own CSS
-    // files via `processStylesheets`; the `shared/` subdirectory holds
-    // CSS that is composed into component `static styles` arrays via
-    // `vite-plugin-lit-css`, so we leave that path for `litCss` to pick up.
     litCss({
       exclude: [
         './stylesheets/*.css',

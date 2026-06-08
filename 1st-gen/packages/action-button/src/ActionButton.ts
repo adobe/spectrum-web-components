@@ -257,7 +257,7 @@ export class ActionButton extends SizedMixin(ButtonBase, {
           this.setAttribute('aria-expanded', this.selected ? 'true' : 'false');
         }
       }
-      if (changes.has('selected') && this.selected && window.__swc?.DEBUG) {
+      if (changes.has('selected') && window.__swc?.DEBUG) {
         window.__swc.warn(
           this,
           `The "selected" attribute on <${this.localName}> is deprecated and will be removed in a future release.`,
@@ -284,14 +284,6 @@ export class ActionButton extends SizedMixin(ButtonBase, {
     }
     if (changes.has('holdAffordance')) {
       if (this.holdAffordance) {
-        if (window.__swc?.DEBUG) {
-          window.__swc.warn(
-            this,
-            `The "hold-affordance" attribute on <${this.localName}> is not included in the initial 2nd-gen release and will be addressed in a future phase.`,
-            'https://opensource.adobe.com/spectrum-web-components/components/action-button/',
-            { level: 'deprecation' }
-          );
-        }
         this.addEventListener(
           'pointerdown',
           this.handlePointerdownHoldAffordance

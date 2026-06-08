@@ -44,7 +44,8 @@ argTypes['static-color'] = {
 /**
  * A compact action button for toolbars, action groups, and icon-first chrome.
  * Supports sizes `xs`–`xl`; `xs` is an action-button-specific addition not
- * available on `swc-button`.
+ * available on `swc-button`. For navigation, [use a link with global action
+ * button styles](/docs/guides-customization-global-element-styling--readme) instead.
  */
 const meta: Meta = {
   title: 'Action Button',

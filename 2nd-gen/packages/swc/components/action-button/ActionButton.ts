@@ -22,6 +22,7 @@ import {
 } from '@spectrum-web-components/core/components/action-button';
 import { ButtonBase } from '@spectrum-web-components/core/components/button';
 
+import pendingSpinnerStyles from '../../stylesheets/shared/pending-spinner.css';
 import styles from './action-button.css';
 
 /**
@@ -95,7 +96,7 @@ export class ActionButton extends ButtonBase {
   // ──────────────────────────────
 
   public static override get styles(): CSSResultArray {
-    return [styles];
+    return [pendingSpinnerStyles, styles];
   }
 
   // Observe aria-haspopup / aria-expanded without @property so they don't
@@ -172,7 +173,10 @@ export class ActionButton extends ButtonBase {
         ${this.pending
           ? html`
               <svg
-                class="swc-ActionButton-pendingSpinner"
+                class=${classMap({
+                  'swc-PendingSpinner': true,
+                  'swc-PendingSpinner--active': this.pendingActive,
+                })}
                 width="100%"
                 height="100%"
                 fill="none"
@@ -180,13 +184,13 @@ export class ActionButton extends ButtonBase {
                 focusable="false"
               >
                 <circle
-                  class="swc-ActionButton-pendingSpinner-track"
+                  class="swc-PendingSpinner-track"
                   cx="50%"
                   cy="50%"
                   r="calc(50% - 1px)"
                 />
                 <circle
-                  class="swc-ActionButton-pendingSpinner-fill"
+                  class="swc-PendingSpinner-fill"
                   cx="50%"
                   cy="50%"
                   r="calc(50% - 1px)"
