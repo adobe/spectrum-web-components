@@ -84,6 +84,7 @@
   background-color: var(--swc-action-button-background-color-disabled, token("disabled-background-color"));
   border-color: var(--swc-action-button-border-color-disabled, transparent);
   cursor: default;
+  transform: none;
 }
 
 /* ── Sub-elements ─────────────────────────────────── */
