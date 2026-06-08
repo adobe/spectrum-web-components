@@ -91,7 +91,7 @@ const labeledLoupe = (
 `;
 
 // ────────────────────
-//    AUTODOCS STORY
+//    PLAYGROUND STORY
 // ────────────────────
 
 export const Playground: Story = {
@@ -99,7 +99,7 @@ export const Playground: Story = {
     open: true,
     color: 'rgba(0, 128, 255, 0.7)',
   },
-  tags: ['autodocs', 'dev'],
+  tags: ['dev'],
 };
 
 // ────────────────────
@@ -118,12 +118,6 @@ export const Overview: Story = {
 //    ANATOMY STORIES
 // ──────────────────────────
 
-/**
- * A color loupe consists of:
- *
- * 1. **Floating loupe element** - A teardrop-shaped container positioned above the interaction point, with an inner and outer border
- * 2. **Color preview** - Displays the currently picked color over an opacity checkerboard so transparency is visible
- */
 export const Anatomy: Story = {
   render: (args) => html`
     ${template({ ...args, open: true, color: 'rgba(255, 0, 0, 0.5)' })}
@@ -135,19 +129,6 @@ export const Anatomy: Story = {
 //    OPTIONS STORIES
 // ──────────────────────────
 
-/**
- * The `color` property accepts any valid CSS color string:
- *
- * - **Named colors**: `yellow`, `red`, `blue`, etc.
- * - **Hex**: `#ff0000`
- * - **RGB/RGBA**: `rgba(44, 62, 224, 0.81)` — alpha transparency reveals the checkerboard
- * - **HSL**: `hsl(111, 82%, 56%)`
- *
- * When using transparent colors, the opacity checkerboard pattern shows through,
- * giving a clear visual indication of the transparency level.
- *
- * All color formats shown below for comparison.
- */
 export const Colors: Story = {
   render: (args) => html`
     ${COLOR_FORMATS.map(({ label, color }) =>
@@ -157,7 +138,6 @@ export const Colors: Story = {
   tags: ['options'],
   parameters: {
     flexLayout: 'row-wrap',
-    'section-order': 1,
   },
 };
 
@@ -165,15 +145,6 @@ export const Colors: Story = {
 //    STATES STORIES
 // ──────────────────────────
 
-/**
- * The color loupe has two visibility states:
- *
- * - **Open**: Fully visible with `opacity: 1` and no vertical offset
- * - **Closed** (default): Hidden via `opacity: 0` and a downward transform
- *
- * The transition between states is animated with CSS transitions on
- * `opacity` (125 ms) and `transform` (100 ms).
- */
 export const OpenAndClosedStates: Story = {
   render: (args) => html`
     ${labeledLoupe('Open', {
@@ -198,23 +169,6 @@ OpenAndClosedStates.storyName = 'Open and closed states';
 //    BEHAVIORS STORIES
 // ──────────────────────────────
 
-/**
- * The color loupe's `open` state is entirely managed by its parent color
- * component; the loupe does not manage its own visibility. A parent such as
- * `<swc-color-handle>` controls when it appears:
- *
- * - **Touch input**: The loupe automatically appears during touch interactions
- *   with any color component (`<swc-color-area>`, `<swc-color-slider>`,
- *   `<swc-color-wheel>`) to prevent the finger from obscuring the selected color
- * - **Mouse/stylus input**: The loupe remains hidden by default for precision
- *   pointing devices
- * - **Parent control**: The parent sets `open` to `true` when the user is actively
- *   selecting a color and back to `false` when the interaction ends
- *
- * The loupe animates its visibility with CSS transitions: `opacity` over
- * 125 ms and `transform` (vertical offset) over 100 ms. The button below
- * simulates that trigger relationship.
- */
 export const ParentDrivenVisibility: Story = {
   loaders: [() => import('@adobe/spectrum-wc/components/button/swc-button.js')],
   render: (args) => {
@@ -267,37 +221,6 @@ ParentDrivenVisibility.storyName = 'Parent-driven visibility';
 //    ACCESSIBILITY STORIES
 // ────────────────────────────────
 
-/**
- * ### Features
- *
- * The `<swc-color-loupe>` element is a **visual-only** component:
- *
- * #### ARIA implementation
- *
- * - **SVG is `aria-hidden="true"`**: The loupe graphic is decorative and
- *   hidden from the accessibility tree
- * - **Not focusable**: The component has no tab stop and no keyboard interaction
- *
- * #### Accessibility model
- *
- * The loupe does not represent a standalone accessible control.
- * Accessibility semantics (name, value, role) are provided by the
- * **parent** color selection component — for example, `<swc-color-area>`,
- * `<swc-color-slider>`, or `<swc-color-wheel>`. The loupe simply reflects
- * the currently picked color as a visual aid during touch interactions.
- *
- * ### Best practices
- *
- * - Never use the color loupe as the sole means of communicating a color
- *   value — always pair it with labeled controls that expose the value
- *   to assistive technology
- * - Ensure the parent color component provides appropriate labeling via
- *   visible text or ARIA (for example, `aria-label` on `<swc-color-area>`)
- * - Do not add `role`, `aria-label`, or focus management to the loupe
- *   itself — it is intentionally inert
- * - Avoid conveying meaning through the loupe color alone; pair color
- *   selection with text labels or other indicators as appropriate
- */
 export const Accessibility: Story = {
   args: {
     open: true,

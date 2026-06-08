@@ -114,6 +114,14 @@ export class AccordionItem extends SizedMixin(Focusable, {
 
   private toggle(): void {
     this.open = !this.open;
+    if (window.__swc?.DEBUG) {
+      window.__swc.warn(
+        this,
+        `<${this.localName}> the "sp-accordion-item-toggle" event is deprecated and will be renamed to "swc-accordion-item-toggle" in Spectrum 2.`,
+        ACCORDION_MIGRATION_DOC_URL,
+        { level: 'deprecation' }
+      );
+    }
     const applyDefault = this.dispatchEvent(
       new CustomEvent('sp-accordion-item-toggle', {
         bubbles: true,

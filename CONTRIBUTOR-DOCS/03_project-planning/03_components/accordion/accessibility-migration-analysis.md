@@ -140,21 +140,20 @@ It is also **risky** to handle **ArrowUp** / **ArrowDown** (or **Home** / **End*
   Any content inside `<h*>` — including a sibling div to the button — can bleed into the heading's accessible name, so the actions container must live outside the heading element entirely. **Tab** order stays **disclosure** → **slotted actions** → **panel** when expanded, matching intent from the design thread.
 - **Slots:** one for the **section label** (projected into the disclosure **`<button>`**—**no** **focusable** descendants in that slot) and a **second** slot for **optional** chrome beside the title. **Working slot name `actions`**; final name is not frozen ([migration plan](./migration-plan.md#open--api-and-scope)).
 
-**`aria-describedby` in consumer docs (Storybook) — required**
+**Naming actions beside the section title — interim pattern**
 
-- **Consumer-facing** Storybook (and usage docs) **must** include an example where the **label** region exposes a stable **`id`** and the **optional** slot’s **wrapper** uses **`aria-describedby`** pointing at that **`id`**, so screen reader users hear how **“Edit”** (or a **switch**) relates to **“Bellows”** / the section title. Keep **`id`** values **unique** in the document. **`slot="actions"`** below is **illustrative** until the slot name is frozen:
+- **`aria-describedby`** from light DOM label **`id`** values to slotted **`swc-button`** (or other shadow-DOM controls) **does not work today**: the accessible **`button`** lives inside the component shadow root, so cross-root **IDREF** wiring cannot reach it. The same constraint applies to [Button cross-root ARIA](../button/accessibility-migration-analysis.md#shadow-dom-and-cross-root-aria-issues), which is **deferred** until **`ElementInternals`** and tooling align.
+- **Until then**, give each action an explicit accessible name that includes the section subject, for example **`accessible-label="Edit personal information"`** on **`<swc-button>`** (visible text can stay short, e.g. **Edit**). Consumer Storybook **must** demonstrate this pattern on at least one **actions** slot example:
 
 ```html
 <swc-accordion-item>
-  <div id="bellows-heading" slot="label">Bellows</div>
-  <div slot="actions" aria-describedby="bellows-heading">
-    <button type="button">Edit</button>
-  </div>
+  <span slot="label">Bellows</span>
+  <swc-button slot="actions" accessible-label="Edit bellows">Edit</swc-button>
   <div>The bellows is the expandable section in the middle of the accordion.</div>
 </swc-accordion-item>
 ```
 
-- If **`aria-describedby`** targets live in **light DOM** and the disclosure **`<button>`** stays in **shadow DOM**, the same **cross-root** **IDREF** caveats as other components apply—prefer wiring **descriptions** where **id** and **referrer** share a **root**, or document supported patterns explicitly.
+- Revisit **`aria-describedby`** / **`aria-labelledby`** wiring for slotted shadow-DOM widgets when form-associated **`ElementInternals`** work lands; do not document host **`aria-describedby`** on **`<swc-button>`** as supported.
 
 ### Shadow DOM and cross-root ARIA Issues
 
@@ -206,7 +205,7 @@ Pick one mechanism per state. **Do not** mix `tabindex="-1"` sweeps with the val
 | Kind of test | What to check |
 |--------------|----------------|
 | **Unit** | **`aria-expanded`** toggles with open state; **`aria-controls`** id matches panel; panel **`role`** and **`aria-labelledby`**; **disabled** items: **`aria-disabled`** on **header** **`button`**, **`inert`** on **panel** (assert **no** **`tabindex="-1"`** **substitute** for that **pair**); **activation** blocked; **Space** on enabled header calls **`preventDefault()`** and toggles without unintended scroll. |
-| **aXe + Storybook** | **WCAG 2.x** rules on accordion stories (single vs multiple open, disabled item, **`quiet`**, host **`disabled`**). Include at least one story with **optional header actions** (e.g. **Edit** **button**, **switch**) and verify **Tab** order + **`aria-describedby`** example from [Header label, optional actions, and Figma vs React Spectrum](#header-label-optional-actions-and-figma-vs-react-spectrum). |
+| **aXe + Storybook** | **WCAG 2.x** rules on accordion stories (single vs multiple open, disabled item, **`quiet`**, host **`disabled`**). Include at least one story with **optional header actions** (e.g. **Edit** **button**, **switch**) and verify **Tab** order + **`accessible-label`** on action controls from [Header label, optional actions, and Figma vs React Spectrum](#header-label-optional-actions-and-figma-vs-react-spectrum). |
 | **Playwright ARIA snapshots** | Snapshot **tree** for open/closed items; **`heading`** role **level** changes when **`heading-level`** / **`level`** changes; when header actions exist, disclosure **`button`** name is **separate** from slotted **action** controls. |
 | **Keyboard** | **Tab** / **Shift+Tab** through all focusables including slotted header **actions** before panel content when DOM order places them there; **no** roving `tabindex` on headers; **no** default **arrow**-key “header-only” **navigation** that could **interfere** with **scroll**; **Space** on header **`preventDefault`** + **toggle** per [SWC-1487](https://jira.corp.adobe.com/browse/SWC-1487); **Enter** per APG. |
 
@@ -220,7 +219,7 @@ Pick one mechanism per state. **Do not** mix `tabindex="-1"` sweeps with the val
 - [ ] No **`role="button"`** on the heading element; shadow DOM uses **`<button>`** inside **`<h2>`–`<h6>`**.
 - [ ] **Keyboard** and **disabled** behavior covered by tests and docs; **Space** on the header **`preventDefault()`** + **toggle** (no spurious scroll in overflow layouts). **No** roving `tabindex` on headers; **no** default arrow-key / Home / End “next header” behavior that blocks scroll; **Tab** is the main way to move between headers and in-panel focusables, matching the [APG accordion example](https://www.w3.org/WAI/ARIA/apg/patterns/accordion/examples/accordion/).
 - [ ] **Disabled** **items:** **header** uses **`aria-disabled="true"`** (focusable, no toggle); **panel** **container** uses **`inert`** so **subtree** is inert; **no** **`tabindex="-1"`** **instead** of that **pair**; verify with **screen** **reader** **focus** **mode** and **unit** / **aXe** where **applicable**.
-- [ ] **Optional header actions** (second slot—**working name `actions`**, **final name not frozen**): disclosure **`button`** stays **separate** from slotted widgets; **consumer** Storybook **must** include the **`aria-describedby`** pattern tying the affordance wrapper to the **label** **`id`** ([Header label, optional actions, and Figma vs React Spectrum](#header-label-optional-actions-and-figma-vs-react-spectrum)); **Tab** / snapshots cover **switch** + **button** cases.
+- [ ] **Optional header actions** (second slot—**working name `actions`**, **final name not frozen**): disclosure **`button`** stays **separate** from slotted widgets; **consumer** Storybook **must** include **`accessible-label`** (or equivalent explicit naming) on action controls so each is unambiguous out of context ([Header label, optional actions, and Figma vs React Spectrum](#header-label-optional-actions-and-figma-vs-react-spectrum)); **Tab** / snapshots cover **switch** + **button** cases.
 - [ ] **References** below include APG, Deque, and Inclusive Components links used in this doc.
 
 ---

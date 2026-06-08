@@ -174,4 +174,31 @@ describe('Accordion - deprecation warnings', () => {
     );
     expect(levelWarnings.length).to.equal(0);
   });
+
+  it('warns when sp-accordion-item-toggle is dispatched', async () => {
+    const item = await fixture<AccordionItem>(html`
+      <sp-accordion-item>Panel</sp-accordion-item>
+    `);
+
+    await elementUpdated(item);
+    consoleWarnStub.resetHistory();
+    window.__swc.issuedWarnings = new Set<BrandedSWCWarningID>();
+
+    (item.shadowRoot!.querySelector('#header') as HTMLButtonElement).click();
+    await elementUpdated(item);
+
+    const toggleCall = deprecationCalls().find((call) =>
+      String(call.args[0]).includes('sp-accordion-item-toggle')
+    );
+    expect(toggleCall, 'toggle event deprecation warn fired').to.exist;
+    expect(
+      String(toggleCall!.args[0]).includes('swc-accordion-item-toggle'),
+      'confirm renamed event name'
+    ).to.be.true;
+    expect(
+      String(toggleCall!.args[0]).includes('deprecated'),
+      'confirm deprecation message'
+    ).to.be.true;
+    expectDeprecationData(toggleCall!, 'sp-accordion-item');
+  });
 });

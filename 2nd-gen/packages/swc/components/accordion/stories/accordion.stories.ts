@@ -346,39 +346,39 @@ export const MixedDisabledStates: Story = {
 
 const directActionsItems = html`
   <swc-accordion-item open>
-    <span id="label-personal" slot="label">Personal information</span>
+    <span slot="label">Personal information</span>
     <swc-button
       slot="actions"
       variant="secondary"
       fill-style="outline"
       size="s"
-      aria-describedby="label-personal"
+      accessible-label="Edit personal information"
     >
       Edit
     </swc-button>
     ${content.personal}
   </swc-accordion-item>
   <swc-accordion-item>
-    <span id="label-billing" slot="label">Billing address</span>
+    <span slot="label">Billing address</span>
     <swc-button
       slot="actions"
       variant="secondary"
       fill-style="outline"
       size="s"
-      aria-describedby="label-billing"
+      accessible-label="Edit billing address"
     >
       Edit
     </swc-button>
     ${content.billing}
   </swc-accordion-item>
   <swc-accordion-item>
-    <span id="label-shipping" slot="label">Shipping address</span>
+    <span slot="label">Shipping address</span>
     <swc-button
       slot="actions"
       variant="secondary"
       fill-style="outline"
       size="s"
-      aria-describedby="label-shipping"
+      accessible-label="Edit shipping address"
     >
       Edit
     </swc-button>
@@ -390,7 +390,9 @@ const directActionsItems = html`
  * Place interactive controls in the **`actions` slot** to render them inline
  * with the heading, outside the toggle button. Because the actions are siblings
  * of the toggle button rather than children of it, interacting with them does
- * not expand or collapse the item.
+ * not expand or collapse the item. Each action must have a unique accessible
+ * name that includes the item subject (e.g., "Edit personal information" not
+ * "Edit"); see the Accessibility story for details and an example.
  */
 export const DirectActions: Story = {
   render: (args) => template(args, directActionsItems),
@@ -449,13 +451,13 @@ export const ToggleEvent: Story = {
 
 const a11yItems = html`
   <swc-accordion-item open>
-    <span id="a11y-label-personal" slot="label">Personal information</span>
+    <span slot="label">Personal information</span>
     <swc-button
       slot="actions"
       variant="secondary"
       fill-style="outline"
       size="s"
-      aria-describedby="a11y-label-personal"
+      accessible-label="Edit personal information"
     >
       Edit
     </swc-button>
@@ -501,8 +503,20 @@ const a11yItems = html`
  * - Set a `level` that continues the existing page heading hierarchy without skipping levels
  * - Provide meaningful, unique label text for each item so screen reader users can
  *   navigate the heading list
- * - When using the `actions` slot, include the item subject in the action's accessible
- *   name (e.g., "Edit personal information" rather than "Edit") so it is unambiguous out of context
+ * - When using the `actions` slot, each action must have a unique accessible
+ *   name that includes the item subject. Screen readers announce interactive elements
+ *   by their accessible name out of context, so repeated labels like "Edit" across
+ *   multiple items are indistinguishable. Use the `accessible-label` attribute to
+ *   provide a descriptive name while keeping visible text short:
+ *   ```html
+ *   <!-- ❌ Ambiguous: screen readers announce two identical "Edit" actions -->
+ *   <swc-button slot="actions">Edit</swc-button>
+ *
+ *   <!-- ✅ Unique: announces as "Edit personal information" -->
+ *   <swc-button slot="actions" accessible-label="Edit personal information">
+ *     Edit
+ *   </swc-button>
+ *   ```
  * - Always set `density` explicitly; use `regular` when unsure
  */
 export const Accessibility: Story = {

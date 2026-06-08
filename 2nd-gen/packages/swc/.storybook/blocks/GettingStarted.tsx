@@ -11,7 +11,7 @@ import { formatTitle } from '../helpers/index.js';
  * @param componentName - Optional override for the component class name (defaults to derived PascalCase from title)
  * @param tagName - Optional override for the custom element tag name (defaults to swc-{packageName})
  */
-export const GettingStarted = ({ of, tags }: { of?: any; tags?: string }) => {
+export const GettingStarted = ({ of, tags }: { of?: any; tags?: string[] }) => {
   const resolvedOf = useOf(of || 'meta', ['meta']);
 
   if (tags?.includes('utility')) return null;
