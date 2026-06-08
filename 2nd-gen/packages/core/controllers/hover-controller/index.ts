@@ -9,11 +9,9 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-/**
- * The version of the 1st-gen Spectrum Web Components library.
- */
-export declare const version = "1.12.1";
-/**
- * The version of the core base package.
- */
-export declare const coreVersion = "0.1.0";
+
+export {
+  HoverController,
+  type HoverControllerHost,
+  type HoverControllerOptions,
+} from './src/hover-controller.js';

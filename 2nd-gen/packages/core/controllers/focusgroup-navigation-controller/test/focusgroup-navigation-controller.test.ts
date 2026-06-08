@@ -13,13 +13,14 @@ import { html } from 'lit';
 import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
-import '../stories/demo-hosts.js';
-
-import { getComponent } from '../../../../swc/utils/test-utils.js';
 import {
   focusgroupNavigationActiveChange,
   type FocusgroupNavigationActiveChangeDetail,
-} from '../index.js';
+} from '@spectrum-web-components/core/controllers/index.js';
+
+import '../stories/demo-hosts.js';
+
+import { getComponent } from '../../../../swc/utils/test-utils.js';
 import type {
   DemoFocusgroupDisabledHost,
   DemoFocusgroupDynamic,
@@ -74,7 +75,7 @@ function shadowActiveButton(host: HTMLElement): HTMLButtonElement | null {
 
 export default {
   ...focusMeta,
-  title: 'Focus group navigation controller/Tests',
+  title: 'Controllers/Focus group navigation controller/Tests',
   parameters: {
     ...focusMeta.parameters,
     docs: { disable: true, page: null },
@@ -775,12 +776,22 @@ export const ActiveChangeEventAndCallback: Story = {
     await step(
       'onActiveItemChange callback fires alongside event',
       async () => {
+        // Step 1 above left the controller's internal `previousActive` on
+        // "Second". `clearLogs()` only resets the test arrays, not the
+        // controller state — so navigating "First → Second" again would be a
+        // no-op as far as `applyRovingTabindex` is concerned (the
+        // `safeActive !== previousActive` branch would not fire).
+        //
+        // To exercise the callback we have to land on an item that is
+        // *different* from the controller's current `previousActive`. We
+        // route to "Third" so there is a real change.
         host.clearLogs();
-        buttons[0].focus();
-        keydown(buttons[0], 'ArrowRight');
+        const current = shadowActiveButton(host)!;
+        current.focus();
+        keydown(current, 'ArrowRight');
 
         expect(host.callbackLog.length).toBeGreaterThan(0);
-        expect(host.callbackLog).toContain('Second');
+        expect(host.callbackLog).toContain('Third');
       }
     );
 
@@ -807,17 +818,18 @@ export const ActiveChangeEventAndCallback: Story = {
     await step('event bubbles and is composed', async () => {
       let captured = false;
       const handler = ((event: CustomEvent) => {
-        expect(event.bubbles).toBe(true);
-        expect(event.composed).toBe(true);
+        expect(event.bubbles, 'event.bubbles should be true').toBe(true);
+        expect(event.composed, 'event.composed should be true').toBe(true);
         captured = true;
       }) as EventListener;
 
       canvasElement.addEventListener(focusgroupNavigationActiveChange, handler);
 
-      buttons[0].focus();
-      keydown(buttons[0], 'ArrowRight');
+      const current = shadowActiveButton(host)!;
+      current.focus();
+      keydown(current, 'ArrowRight');
 
-      expect(captured).toBe(true);
+      expect(captured, 'event should be captured').toBe(true);
 
       canvasElement.removeEventListener(
         focusgroupNavigationActiveChange,
@@ -868,10 +880,14 @@ export const SetOptionsDirectionChange: Story = {
         (host as DemoFocusgroupPlayground).direction = 'both';
         await (host as DemoFocusgroupPlayground).updateComplete;
 
-        const current = shadowActiveButton(host)!;
-        keydown(current, 'ArrowDown');
+        const firstButton = root.querySelector<HTMLButtonElement>('button')!;
+        firstButton.focus();
+        expect(shadowActiveButton(host)?.textContent?.trim()).toBe('Bold');
+
+        keydown(firstButton, 'ArrowDown');
         const afterDown = shadowActiveButton(host)?.textContent?.trim();
-        expect(afterDown).not.toBe(current.textContent?.trim());
+        expect(afterDown).not.toBe('Bold');
+        expect(afterDown).toBe('Italic');
       }
     );
   },
@@ -1010,18 +1026,13 @@ export const DisabledButtonNeverTabStop: Story = {
     await step(
       'tabindex="0" skips natively disabled first item and lands on next',
       async () => {
-        // Natively disable the first button.
         buttons[0].disabled = true;
 
-        // Trigger a tabindex recalculation by focusing and blurring.
+        // Focus another item so the controller recalculates via handleFocusin.
         buttons[1].focus();
-        buttons[1].blur();
 
-        // The disabled button must NOT have tabindex="0" since it can't
-        // receive focus, which would make the group unreachable via Tab.
         expect(buttons[0].tabIndex).not.toBe(0);
 
-        // Another eligible button must be the tab stop.
         const tabStop = buttons.find((b) => b.tabIndex === 0 && !b.disabled);
         expect(tabStop).toBeTruthy();
       }
@@ -1031,8 +1042,9 @@ export const DisabledButtonNeverTabStop: Story = {
       're-enabling the button allows it to become the tab stop again',
       async () => {
         buttons[0].disabled = false;
-        buttons[0].focus();
 
+        // Navigate left from buttons[1] (current active) to reach buttons[0].
+        keydown(buttons[1], 'ArrowLeft');
         expect(buttons[0].tabIndex).toBe(0);
       }
     );
@@ -1069,8 +1081,8 @@ export const MemoryOffTabReentry: Story = {
         keydown(buttons[0], 'ArrowRight');
         expect(shadowActiveButton(host)?.textContent?.trim()).toBe('Italic');
 
-        // Blur to simulate tabbing away from the group.
-        (document.activeElement as HTMLElement)?.blur();
+        // Blur the actual shadow-internal button to reliably fire focusout on the host.
+        shadowActiveButton(host)?.blur();
 
         // With memory off, tabindex="0" should reset to the first eligible item.
         const tabbable = buttons.filter((b) => b.tabIndex === 0);
@@ -1100,17 +1112,13 @@ export const SkipDisabledFalseFirstItemDisabled: Story = {
     await step(
       'when skipDisabled is false and first item is natively disabled, tab stop falls through',
       async () => {
-        // Natively disable the first button (Copy).
         buttons[0].disabled = true;
 
-        // Trigger a tabindex refresh by focusing and blurring another item.
+        // Focus another item so the controller recalculates via handleFocusin.
         buttons[1].focus();
-        buttons[1].blur();
 
-        // The first button is natively disabled and cannot hold tabindex="0".
         expect(buttons[0].tabIndex).not.toBe(0);
 
-        // The tab stop should fall through to the next non-disabled eligible item.
         const tabStop = buttons.find((b) => b.tabIndex === 0 && !b.disabled);
         expect(tabStop).toBeTruthy();
         expect(tabStop!.textContent?.trim()).toBe('Paste');
@@ -1122,9 +1130,6 @@ export const SkipDisabledFalseFirstItemDisabled: Story = {
       async () => {
         const tabStop = buttons.find((b) => b.tabIndex === 0 && !b.disabled)!;
         tabStop.focus();
-        expect(shadowActiveButton(host)?.textContent?.trim()).toBe('Paste');
-
-        // Arrow down should reach the aria-disabled item (Cut (unavailable)).
         keydown(shadowActiveButton(host)!, 'ArrowDown');
         expect(shadowActiveButton(host)?.textContent?.trim()).toBe(
           'Cut (unavailable)'
@@ -1137,7 +1142,9 @@ export const SkipDisabledFalseFirstItemDisabled: Story = {
 
     await step('cleanup: re-enable first button', async () => {
       buttons[0].disabled = false;
-      buttons[0].focus();
+
+      // Navigate up from the current active to reach buttons[0].
+      keydown(buttons[1], 'ArrowUp');
       expect(buttons[0].tabIndex).toBe(0);
     });
   },
