@@ -149,11 +149,13 @@ export abstract class ButtonBase extends SizedMixin(
 
   public override connectedCallback(): void {
     super.connectedCallback();
-    this.addEventListener('click', this.handleClick);
+    // Capture phase so slotted light-DOM clicks are suppressed before host
+    // listeners (e.g. Storybook actions) run.
+    this.addEventListener('click', this.handleClick, true);
   }
 
   public override disconnectedCallback(): void {
-    this.removeEventListener('click', this.handleClick);
+    this.removeEventListener('click', this.handleClick, true);
     if (this._pendingTimer !== null) {
       clearTimeout(this._pendingTimer);
       this._pendingTimer = null;
@@ -163,11 +165,15 @@ export abstract class ButtonBase extends SizedMixin(
   }
 
   /**
-   * Suppresses click activation while the button is in a `pending` state.
-   * Subclasses' templates wire this onto the rendered `<button>` via `@click`.
+   * Suppresses click activation while the button is `disabled` or `pending`.
+   *
+   * Slotted icon content lives in the light DOM, so pointer clicks on icons
+   * bypass the disabled inner `<button>` and bubble on the host. The host
+   * listener (capture) and inner `@click` binding both call this handler.
    */
   protected readonly handleClick = (event: Event): void => {
-    if (this.pending) {
+    if (this.disabled || this.pending) {
+      event.preventDefault();
       event.stopImmediatePropagation();
     }
   };
