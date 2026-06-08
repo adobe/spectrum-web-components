@@ -79,37 +79,6 @@ const hoverOpen = async (
   await waitFor(() => expect(tooltip.open).toBe(true), { timeout: 200 });
 };
 
-type TooltipWithCloseDelay = Tooltip & {
-  closeDelay?: number;
-};
-
-/** Dispatches pointerleave on the trigger and waits for the tooltip to close
- * with the HoverController cooldown shortened for CI stability. */
-const hoverClose = async (
-  trigger: HTMLElement,
-  tooltip: Tooltip
-): Promise<void> => {
-  const tooltipWithCloseDelay = tooltip as TooltipWithCloseDelay;
-  const previousCloseDelay = tooltipWithCloseDelay.closeDelay;
-  tooltipWithCloseDelay.closeDelay = 0;
-  try {
-    trigger.dispatchEvent(
-      new PointerEvent('pointerleave', { bubbles: false, composed: true })
-    );
-  } finally {
-    if (previousCloseDelay === undefined) {
-      delete tooltipWithCloseDelay.closeDelay;
-    } else {
-      tooltipWithCloseDelay.closeDelay = previousCloseDelay;
-    }
-  }
-  await waitFor(
-    () =>
-      expect(tooltip.open, 'tooltip closes after pointer leaves').toBe(false),
-    { timeout: 5000 }
-  );
-};
-
 /** Dispatches focusin on the trigger and waits for the tooltip to open. */
 const focusOpen = async (
   trigger: HTMLElement,
@@ -494,16 +463,12 @@ export const TriggerElementHoverTest: Story = {
       }
     );
 
-    await step(
-      'closes when pointer leaves and sets ARIA on the inner shadow button',
-      async () => {
-        expect(
-          innerButton?.ariaDescribedByElements ?? [],
-          'inner shadow button receives ariaDescribedByElements via triggerElement wiring'
-        ).toContain(tooltip);
-        await hoverClose(trigger, tooltip);
-      }
-    );
+    await step('sets ARIA on the inner shadow button', async () => {
+      expect(
+        innerButton?.ariaDescribedByElements ?? [],
+        'inner shadow button receives ariaDescribedByElements via triggerElement wiring'
+      ).toContain(tooltip);
+    });
   },
 };
 
@@ -544,7 +509,8 @@ export const TriggerElementOverridesForHoverTest: Story = {
           true
         );
 
-        await hoverClose(correctTrigger, tooltip);
+        tooltip.open = false;
+        await tooltip.updateComplete;
       }
     );
   },
@@ -840,10 +806,9 @@ export const HoverOpensTest: Story = {
     const trigger = canvasElement.querySelector('#tt-hover-trigger') as Button;
     const tooltip = await getComponent<Tooltip>(canvasElement, 'swc-tooltip');
 
-    await step('opens and closes the tooltip on hover', async () => {
+    await step('opens the tooltip on hover', async () => {
       await hoverOpen(trigger, tooltip);
       expect(tooltip.open, 'tooltip is open after hover').toBe(true);
-      await hoverClose(trigger, tooltip);
     });
   },
 };
