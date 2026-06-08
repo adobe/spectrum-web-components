@@ -823,20 +823,14 @@ export const HoverOpensTest: Story = {
     const trigger = canvasElement.querySelector('#tt-hover-trigger') as Button;
     const tooltip = await getComponent<Tooltip>(canvasElement, 'swc-tooltip');
 
-    await step('opens the tooltip when the trigger is hovered', async () => {
+    await step('opens and closes the tooltip on hover', async () => {
       await hoverOpen(trigger, tooltip);
       expect(tooltip.open, 'tooltip is open after hover').toBe(true);
+      await hoverClose(trigger, tooltip);
+      expect(tooltip.open, 'tooltip is closed after pointer leaves').toBe(
+        false
+      );
     });
-
-    await step(
-      'closes the tooltip when the pointer leaves the trigger',
-      async () => {
-        await hoverClose(trigger, tooltip);
-        expect(tooltip.open, 'tooltip is closed after pointer leaves').toBe(
-          false
-        );
-      }
-    );
   },
 };
 
