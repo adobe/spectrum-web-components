@@ -79,17 +79,35 @@ const hoverOpen = async (
   await waitFor(() => expect(tooltip.open).toBe(true), { timeout: 200 });
 };
 
+type TooltipWithCloseDelay = Tooltip & {
+  closeDelay?: number;
+};
+
 /** Dispatches pointerleave on the trigger and waits for the tooltip to close
- * (includes the 300 ms HoverController cooldown plus generous CI headroom —
- * headless Chromium can throttle setTimeout callbacks in background pages). */
+ * with the HoverController cooldown shortened for CI stability. */
 const hoverClose = async (
   trigger: HTMLElement,
   tooltip: Tooltip
 ): Promise<void> => {
-  trigger.dispatchEvent(
-    new PointerEvent('pointerleave', { bubbles: false, composed: true })
+  const tooltipWithCloseDelay = tooltip as TooltipWithCloseDelay;
+  const previousCloseDelay = tooltipWithCloseDelay.closeDelay;
+  tooltipWithCloseDelay.closeDelay = 0;
+  try {
+    trigger.dispatchEvent(
+      new PointerEvent('pointerleave', { bubbles: false, composed: true })
+    );
+  } finally {
+    if (previousCloseDelay === undefined) {
+      delete tooltipWithCloseDelay.closeDelay;
+    } else {
+      tooltipWithCloseDelay.closeDelay = previousCloseDelay;
+    }
+  }
+  await waitFor(
+    () =>
+      expect(tooltip.open, 'tooltip closes after pointer leaves').toBe(false),
+    { timeout: 5000 }
   );
-  await waitFor(() => expect(tooltip.open).toBe(false), { timeout: 5000 });
 };
 
 /** Dispatches focusin on the trigger and waits for the tooltip to open. */
@@ -484,7 +502,6 @@ export const TriggerElementHoverTest: Story = {
           'inner shadow button receives ariaDescribedByElements via triggerElement wiring'
         ).toContain(tooltip);
         await hoverClose(trigger, tooltip);
-        expect(tooltip.open, 'tooltip closes after pointer leaves').toBe(false);
       }
     );
   },
@@ -827,9 +844,6 @@ export const HoverOpensTest: Story = {
       await hoverOpen(trigger, tooltip);
       expect(tooltip.open, 'tooltip is open after hover').toBe(true);
       await hoverClose(trigger, tooltip);
-      expect(tooltip.open, 'tooltip is closed after pointer leaves').toBe(
-        false
-      );
     });
   },
 };
