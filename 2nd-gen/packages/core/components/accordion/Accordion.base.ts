@@ -193,16 +193,4 @@ export abstract class AccordionBase extends SizedMixin(SpectrumElement, {
     }
     super.update(changedProperties);
   }
-
-  protected override firstUpdated(changedProperties: PropertyValues): void {
-    super.firstUpdated(changedProperties);
-    if (window.__swc?.DEBUG && !this.hasAttribute('density')) {
-      window.__swc.warn(
-        this,
-        `<${this.localName}> should have an explicit "density" attribute set. Defaulting to "regular".`,
-        'https://opensource.adobe.com/spectrum-web-components/components/accordion/',
-        { type: 'api', level: 'low' }
-      );
-    }
-  }
 }
