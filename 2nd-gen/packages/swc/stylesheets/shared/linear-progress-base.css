@@ -92,7 +92,7 @@
    * thickness), so any width below one thickness is clipped by its own
    * radius; one thickness is the smallest width that still renders. ARIA is
    * unaffected — aria-valuenow stays at the real value. */
-  min-inline-size: var(--swc-linear-progress-thickness, token("progress-bar-thickness-medium"));
+  min-inline-size: 3%;
   block-size: var(--swc-linear-progress-thickness, token("progress-bar-thickness-medium"));
   background: var(--swc-linear-progress-fill-color, token("accent-content-color-default"));
   border: none;
