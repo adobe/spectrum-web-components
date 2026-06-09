@@ -28,7 +28,7 @@ import { styleMap } from 'lit/directives/style-map.js';
 import { when } from 'lit/directives/when.js';
 import type { StoryContext } from '@storybook/web-components';
 
-/** Standard storyName for VRT grids (`**--Default` in chromatic.config.json). */
+/** Standard storyName for VRT grids (onlyStoryNames glob in chromatic.config.json). */
 export const TESTING_GRID_STORY_NAME = 'Default';
 
 /** Opt a testing-grid story into Chromatic (preview disables snapshots globally). */
