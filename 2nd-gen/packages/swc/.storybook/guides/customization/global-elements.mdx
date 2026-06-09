@@ -38,7 +38,7 @@ If you need to modify properties not exposed through custom properties, you can 
 }
 ```
 
-## Button Styles
+## Button styles
 
 You may use button styling for either native links or button elements. Classes use BEM-style naming, and require the `swc-Button` class in addition to any variant classes.
 
@@ -132,6 +132,67 @@ Icon-only should include the class `swc-Button--iconOnly` on the base element, a
   aria-label="icon-only"
 >
   <svg class="swc-Button-icon" aria-hidden="true" focusable="false">
+    <!-- ... -->
+  </svg>
+</button>
+```
+
+## Action button styles
+
+You may use action button styling for either native links or button elements. Classes use BEM-style naming, and require the `swc-ActionButton` class.
+
+**Note**: action-button-styled native links do not support disabled or pending states.
+
+{/* prettier-ignore */}
+<a href="#" class="swc-ActionButton">As Link</a>
+{/* prettier-ignore */}
+<button type="button" class="swc-ActionButton">As Button</button>
+
+```html
+<a href="#" class="swc-ActionButton">As Link</a>
+<button type="button" class="swc-ActionButton">As Button</button>
+```
+
+The quiet variant removes the default background.
+
+{/* prettier-ignore */}
+<a href="#" class="swc-ActionButton swc-ActionButton--quiet">As Link (Quiet)</a>
+{/* prettier-ignore */}
+<button type="button" class="swc-ActionButton swc-ActionButton--quiet">As Button (Quiet)</button>
+
+```html
+<a href="#" class="swc-ActionButton swc-ActionButton--quiet">As Link (Quiet)</a>
+<button type="button" class="swc-ActionButton swc-ActionButton--quiet">
+  As Button (Quiet)
+</button>
+```
+
+Icons are supported with the class `swc-ActionButton-icon`. Add `swc-ActionButton--hasIcon` when combining an icon with a label, or `swc-ActionButton--iconOnly` with `aria-label` for icon-only variants.
+
+{/* prettier-ignore */}
+<button type="button" class="swc-ActionButton swc-ActionButton--hasIcon">
+  <svg class="swc-ActionButton-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36" aria-hidden="true" focusable="false"><path d="M33.567 8.2 27.8 2.432a1.215 1.215 0 0 0-.866-.353H26.9a1.371 1.371 0 0 0-.927.406L5.084 23.372a.99.99 0 0 0-.251.422L2.055 33.1c-.114.377.459.851.783.851a.251.251 0 0 0 .062-.007c.276-.063 7.866-2.344 9.311-2.778a.972.972 0 0 0 .414-.249l20.888-20.889a1.372 1.372 0 0 0 .4-.883 1.221 1.221 0 0 0-.346-.945ZM11.4 29.316c-2.161.649-4.862 1.465-6.729 2.022l2.009-6.73Z"/></svg>
+  Edit
+</button>
+{/* prettier-ignore */}
+<button type="button" class="swc-ActionButton swc-ActionButton--iconOnly" aria-label="Edit">
+  <svg class="swc-ActionButton-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36" aria-hidden="true" focusable="false"><path d="M33.567 8.2 27.8 2.432a1.215 1.215 0 0 0-.866-.353H26.9a1.371 1.371 0 0 0-.927.406L5.084 23.372a.99.99 0 0 0-.251.422L2.055 33.1c-.114.377.459.851.783.851a.251.251 0 0 0 .062-.007c.276-.063 7.866-2.344 9.311-2.778a.972.972 0 0 0 .414-.249l20.888-20.889a1.372 1.372 0 0 0 .4-.883 1.221 1.221 0 0 0-.346-.945ZM11.4 29.316c-2.161.649-4.862 1.465-6.729 2.022l2.009-6.73Z"/></svg>
+</button>
+
+```html
+<button type="button" class="swc-ActionButton swc-ActionButton--hasIcon">
+  <svg class="swc-ActionButton-icon" aria-hidden="true" focusable="false">
+    <!-- ... -->
+  </svg>
+  Edit
+</button>
+
+<button
+  type="button"
+  class="swc-ActionButton swc-ActionButton--iconOnly"
+  aria-label="Edit"
+>
+  <svg class="swc-ActionButton-icon" aria-hidden="true" focusable="false">
     <!-- ... -->
   </svg>
 </button>

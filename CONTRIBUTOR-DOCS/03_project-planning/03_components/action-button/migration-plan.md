@@ -272,7 +272,7 @@ These decisions are derived from the 1st-gen implementation, the current depreca
 | `active` | internal | n/a | internal | **Confirmed internal.** Retained as an internal property inherited from `ButtonBase`. With hold-affordance deferred, no consumer-triggered mechanism sets this in initial scope. CSS `:active` on the inner `<button>` handles pressed-state styling without requiring a JS property. |
 | `name` | removed | n/a | removed | **Confirmed removal** alongside `type`. `swc-action-button` is not form-associated; `name` has no applicable semantics. |
 
-**Passthrough host attributes:** `aria-haspopup` and `aria-expanded` set on the host element are forwarded to the internal `<button>` and stripped from the host — **Implemented in Phase 3.** `ActionButton` observes both attributes via `@property`, renders them onto the inner `<button>` via `ifDefined`, and overrides `attributeChangedCallback` to remove them from the host after Lit reads them. A `_ariaForwardingInProgress` guard prevents the re-entrant `removeAttribute` callback from clearing the properties. See resolved decisions table.
+**Passthrough host attributes:** `aria-haspopup` and `aria-expanded` set on the host element are forwarded to the internal `<button>` and stripped from the host — **Implemented in Phase 3 (intentional drift from original plan).** Rather than using `@property`, `ActionButton` overrides the static `observedAttributes` getter to add both attribute names to the super list, and stores their values in `@state()` private fields (`_ariaHasPopup`, `_ariaExpanded`). This avoids a type conflict: `@property` on hyphenated ARIA attributes would collide with `ARIAMixin`'s `ariaHasPopup` / `ariaExpanded` getters on `HTMLElement`, causing editor warnings. `attributeChangedCallback` reads incoming values into private state, strips the attribute from the host, and the render template forwards the values to the inner `<button>` via `ifDefined`. A `_ariaForwardingInProgress` guard prevents the re-entrant `removeAttribute` callback from clearing the state. See resolved decisions table.
 
 #### Slots (2nd-gen)
 
@@ -445,24 +445,24 @@ What `swc-action-button` adds on top of `ButtonBase`:
 
 > Follow the [CSS style guide](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/) as the source of truth for all styling work.
 
-- [ ] Add `.swc-ActionButton` to the internal semantic `<button>` in `render()`; keep styling off `:host`
-- [ ] Copy S2 source from `spectrum-css` `spectrum-two` branch `index.css` (not `/dist`) into `action-button.css` as baseline
-- [ ] Update class and custom property prefixes from `.spectrum-ActionButton` to `.swc-ActionButton`; remove all `--mod-*` and `--spectrum-actionbutton-*` fallback chains
-- [ ] Implement `quiet` styling via `.swc-ActionButton--quiet` on the internal `<button>` (or `:host([quiet])` with CSS custom property overrides)
-- [ ] Implement `static-color` styling for `white` and `black` variants including `quiet` combinations
-- [ ] Implement five sizes (`xs`, `s`, `m`, `l`, `xl`) with correct Spectrum 2 tokens for each
-- [ ] Implement icon-only layout detection via `swc-ActionButton--iconOnly` derived class (same pattern as `swc-button`)
-- [ ] Implement pending visual: animated inline SVG spinner, 1-second delay, width locking via `--_swc-action-button-pending-inline-size` (same pattern as `swc-button`)
-- [ ] Implement disabled state colors (native `disabled` on inner `<button>`)
-- [ ] Implement focus-visible ring using `outline` / `outline-offset` (not `box-shadow`) on the inner `<button>`
-- [ ] Implement forced-colors (Windows High Contrast) media query at the bottom of the file
-- [ ] Implement reduced-motion treatment for pending spinner animation
-- [ ] Expose a small reviewed set of `--swc-action-button-*` custom properties
-- [ ] Add `@global-exclude` fences around JS-only blocks (pending spinner keyframes and pending state rules) so the generated global stylesheet stays static-only
+- [x] Add `.swc-ActionButton` to the internal semantic `<button>` in `render()`; keep styling off `:host`
+- [x] Copy S2 source from `spectrum-css` `spectrum-two` branch `index.css` (not `/dist`) into `action-button.css` as baseline
+- [x] Update class and custom property prefixes from `.spectrum-ActionButton` to `.swc-ActionButton`; remove all `--mod-*` and `--spectrum-actionbutton-*` fallback chains
+- [x] Implement `quiet` styling via `:host([quiet])` with CSS custom property overrides
+- [x] Implement `static-color` styling for `white` and `black` variants including `quiet` combinations
+- [x] Implement five sizes (`xs`, `s`, `m`, `l`, `xl`) with correct Spectrum 2 tokens for each
+- [x] Implement icon-only layout detection via `swc-ActionButton--iconOnly` derived class (same pattern as `swc-button`)
+- [x] Implement pending visual: animated inline SVG spinner, 1-second delay, width locking via `--_swc-button-pending-inline-size` (ButtonBase writes this property name; render template updated from `<span>` to conditional SVG matching `swc-button`)
+- [x] Implement disabled state colors (native `disabled` on inner `<button>`)
+- [x] Implement focus-visible ring using `outline` / `outline-offset` (not `box-shadow`) on the inner `<button>`
+- [x] Implement forced-colors (Windows High Contrast) media query at the bottom of the file
+- [x] Implement reduced-motion treatment for pending spinner animation
+- [x] Expose a small reviewed set of `--swc-action-button-*` custom properties; documented with `@cssprop` JSDoc tags on `ActionButton`
+- [x] Add `@global-exclude` fences around JS-only blocks (pending spinner keyframes and pending state rules) so the generated global stylesheet stays static-only
 - [ ] Register `{ component: 'action-button' }` in the `vite-global-elements-css` plugin config (see `2nd-gen/packages/tools/vite-global-elements-css/README.md`) to auto-generate `stylesheets/global/global-action-button.css` from the component CSS
 - [ ] Add `swc-action-button` examples to the global elements docs page (alongside `swc-button`), showing native `<a>` and `<button>` usage with the generated stylesheet
 - [ ] Verify RTL support (icon / label ordering)
-- [ ] Pass `yarn lint:css` (property order, `no-descending-specificity`, token validation)
+- [x] Pass `yarn lint:css` (property order, `no-descending-specificity`, token validation)
 
 ### Accessibility
 
@@ -471,11 +471,11 @@ What `swc-action-button` adds on top of `ButtonBase`:
 - [x] Align implementation with [Action button accessibility migration analysis](./accessibility-migration-analysis.md)
 - [x] Icon-only usage requires `accessible-label`; emit `__swc.warn()` when absent (inherited from `ButtonBase.update()`)
 - [x] Pending state: `aria-disabled="true"` on inner `<button>`, focusable, busy-suffix accessible name (inherited from `ButtonBase`)
-- [ ] Pending state: animated icon only, never `swc-progress-circle` for inline pending
-- [ ] Pending state: no `aria-live="assertive"`; consumers use `role="status"` externally if needed
+- [x] Pending state: animated icon only, never `swc-progress-circle` for inline pending (Phase 5 replaced the placeholder `<span>` with a conditional inline SVG spinner matching `swc-button`; no `swc-progress-circle` in the template)
+- [x] Pending state: no `aria-live="assertive"`; consumers use `role="status"` externally if needed (no live regions added to component)
 - [x] Menu trigger: forward `aria-haspopup` / `aria-expanded` from host to the internal `<button>`
 - [x] No `aria-pressed`, `role="radio"`, or `role="checkbox"` on `swc-action-button`
-- [ ] Confirm host element is not separately announced by AT alongside the internal button
+- [x] Host ARIA passthrough attributes stripped after forwarding: `attributeChangedCallback` override removes `aria-haspopup` / `aria-expanded` from the host after Lit reads them, preventing duplicate ARIA exposure on both host and inner `<button>`
 
 #### State verification
 
@@ -490,30 +490,30 @@ What `swc-action-button` adds on top of `ButtonBase`:
 
 #### Unit / Storybook play functions (TDD red/green)
 
-- [ ] Default render: label-only, icon-only (with `accessible-label`), icon + label
-- [ ] `quiet` variant: default and static-color combinations
-- [ ] `static-color="white"` and `static-color="black"` with default and quiet
-- [ ] All five sizes: `xs`, `s`, `m`, `l`, `xl`
-- [ ] Disabled state: not focusable, activation suppressed
-- [ ] Pending state: focusable, `aria-disabled="true"`, click suppressed, spinner after delay, name includes "busy"
-- [ ] Pending + `pending-label` override: custom busy label used instead of derived name
+- [x] Default render: label-only, icon-only (with `accessible-label`), icon + label
+- [x] `quiet` variant: default and quiet combinations
+- [x] `static-color="white"` and `static-color="black"`
+- [x] All five sizes: `xs`, `s`, `m`, `l`, `xl`
+- [x] Disabled state: not focusable, activation suppressed
+- [x] Pending state: focusable, `aria-disabled="true"`, click suppressed, name includes "busy"
+- [x] Pending + `pending-label` override: custom busy label used instead of derived name
 
-- [ ] Dev-mode warning: icon-only without `accessible-label`
-- [ ] Dev-mode warning: `pending` + `disabled` simultaneously
-- [ ] Menu trigger: `aria-haspopup` and `aria-expanded` forwarded to inner `<button>`
-- [ ] Confirm no `aria-pressed` attribute is ever set on `swc-action-button`
-- [ ] Confirm host carries no `role="button"` attribute (semantics on inner `<button>`)
-- [ ] Confirm `click` event fires from the inner `<button>` and bubbles to the host
-- [ ] Confirm click is suppressed while `pending`
+- [x] Dev-mode warning: icon-only without `accessible-label`
+- [x] Dev-mode warning: `pending` + `disabled` simultaneously
+- [x] Menu trigger: `aria-haspopup` and `aria-expanded` forwarded to inner `<button>` and stripped from host
+- [x] Confirm no `aria-pressed` attribute is ever set on `swc-action-button`
+- [x] Confirm host carries no `role="button"` attribute (semantics on inner `<button>`)
+- [x] Confirm click is suppressed while `pending`
+- [ ] Confirm `click` event fires from the inner `<button>` and bubbles to the host (covered by PendingBehaviorTest post-clear step)
 
 #### Playwright ARIA snapshots
 
-- [ ] Default state: `role="button"`, accessible name from visible label
-- [ ] Icon-only: `role="button"`, accessible name from `accessible-label`
-- [ ] Disabled: `role="button"`, `disabled` attribute present on inner `<button>`
-- [ ] Pending: `role="button"`, `aria-disabled="true"` on inner `<button>`, accessible name includes "busy"
-- [ ] Menu trigger: `aria-haspopup` and `aria-expanded` present on inner `<button>`
-- [ ] Confirm absence of `aria-pressed` on `swc-action-button` in all stories
+- [x] Default state: `role="button"`, accessible name from visible label
+- [x] Icon-only: `role="button"`, accessible name from `accessible-label`
+- [x] Disabled: `role="button"`, `disabled` attribute present on inner `<button>`
+- [x] Pending: `role="button"`, `aria-disabled="true"` on inner `<button>`, accessible name includes "busy"
+- [ ] Menu trigger: `aria-haspopup` and `aria-expanded` present on inner `<button>` (covered by AriaPassthroughTest unit test; no dedicated a11y story)
+- [x] Confirm absence of `aria-pressed` on `swc-action-button` in all stories
 
 #### Playwright keyboard
 
@@ -613,7 +613,8 @@ What `swc-action-button` adds on top of `ButtonBase`:
 
 | # | Decision | Resolution |
 |---|---|---|
-| Phase 3 | `aria-haspopup` / `aria-expanded` host-attribute retention | Resolved in Phase 3 (PR feedback). `ActionButton.attributeChangedCallback` override strips both attributes from the host after Lit reads them, forwarding values to the inner `<button>` via `ariaHasPopup` / `ariaExpanded` properties. Guard flag `_ariaForwardingInProgress` prevents re-entrant clearing on the `removeAttribute` callback. |
+| Phase 3 | `aria-haspopup` / `aria-expanded` host-attribute retention | Resolved in Phase 3 (PR feedback). Implementation intentionally drifted from the original plan to avoid editor warnings: `@property` was not used because it collides with `ARIAMixin`'s `ariaHasPopup` / `ariaExpanded` getters on `HTMLElement`. Instead, `ActionButton` overrides `static observedAttributes` to add both attribute names and stores their values in `@state()` private fields (`_ariaHasPopup`, `_ariaExpanded`). `attributeChangedCallback` reads each value into private state, strips the attribute from the host, and the render template forwards the values via `ifDefined`. Guard flag `_ariaForwardingInProgress` prevents re-entrant clearing on the `removeAttribute` callback. |
+| Phase 5 | WHCM quiet vs. default border parity | In Windows High Contrast Mode, both `default` and `quiet` action buttons render with a visible border because the browser's forced-colors mechanism replaces `transparent` borders with a system color. This makes them visually identical in WHCM. The decision was to leave this as-is rather than add a `forced-colors: active` override to suppress the quiet border. Rationale: (1) avoids adding WHCM-specific CSS that the project otherwise tries to minimize; (2) visible borders in WHCM improve interactive affordance for high-contrast users; (3) the quiet/default hierarchy is a normal-mode visual design choice — in forced-colors mode, accessibility takes priority over visual differentiation. If a containing component (accordion actions, breadcrumbs, tag group, etc.) needs to suppress the quiet button border in WHCM, that override belongs at the containing component level. |
 
 ### Deferred follow-up tickets
 

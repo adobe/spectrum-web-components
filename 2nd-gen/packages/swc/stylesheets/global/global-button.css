@@ -44,9 +44,11 @@
   border-radius: var(--swc-button-border-radius, calc(var(--_swc-button-min-block-size) / 2));
   overflow: visible;
   user-select: none;
+  outline: token("focus-indicator-thickness") solid transparent;
+  outline-offset: token("focus-indicator-gap");
   transition-timing-function: token("animation-ease-in-out");
   transition-duration: token("animation-duration-100");
-  transition-property: outline, border-color, color, background-color, transform;
+  transition-property: outline-color, border-color, color, background-color, transform;
 
   --_swc-button-border-width: token("border-width-200");
   --_swc-button-min-block-size: var(--swc-button-min-block-size, token("component-height-100"));
@@ -56,8 +58,18 @@
   color: var(--swc-button-content-color-focus, token("gray-25"));
   background-color: var(--swc-button-background-color-focus, token("neutral-background-color-key-focus"));
   border-color: var(--swc-button-border-color-focus, transparent);
-  outline: token("focus-indicator-thickness") solid var(--swc-button-focus-indicator-color, token("focus-indicator-color"));
-  outline-offset: token("focus-indicator-gap");
+  outline-color: var(--swc-button-focus-indicator-color, token("focus-indicator-color"));
+}
+
+.swc-Button:disabled:is(*, :hover) {
+  color: var(--swc-button-content-color-disabled, token("disabled-content-color"));
+  background-color: var(--swc-button-background-color-disabled, token("disabled-background-color"));
+  border-color: var(--swc-button-border-color-disabled, transparent);
+  transform: none;
+}
+
+.swc-Button--disabled .swc-Button-icon {
+  pointer-events: none;
 }
 
 .swc-Button:disabled:is(*, :hover) {
@@ -94,9 +106,10 @@
 }
 
 .swc-Button-icon,
-.swc-Button-pendingSpinner {
+.swc-PendingSpinner {
   --_swc-button-icon-size: var(--swc-button-icon-size, token("workflow-icon-size-100"));
   --_swc-button-icon-block-size: var(--swc-button-icon-block-size, var(--_swc-button-icon-size));
+  --_swc-pending-spinner-size: var(--_swc-button-icon-size);
 
   flex-shrink: 0;
   align-self: flex-start;

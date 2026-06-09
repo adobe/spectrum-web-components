@@ -94,6 +94,81 @@ describe('ActionButton', () => {
 
       expect(hrefWarnings.length).to.equal(0);
     });
+    it('warns when selected attribute is used', async () => {
+      const el = await fixture<ActionButton>(html`
+        <sp-action-button selected>Button</sp-action-button>
+      `);
+
+      await elementUpdated(el);
+      const selectedWarnings = Array.from(
+        { length: consoleWarnStub.callCount },
+        (_, i) => consoleWarnStub.getCall(i)
+      ).filter((call) => (call.args[0] as string).includes('"selected"'));
+
+      expect(selectedWarnings.length).to.be.greaterThan(0);
+    });
+    it('warns when toggles attribute is used', async () => {
+      const el = await fixture<ActionButton>(html`
+        <sp-action-button toggles>Button</sp-action-button>
+      `);
+
+      await elementUpdated(el);
+      const togglesWarnings = Array.from(
+        { length: consoleWarnStub.callCount },
+        (_, i) => consoleWarnStub.getCall(i)
+      ).filter((call) => (call.args[0] as string).includes('"toggles"'));
+
+      expect(togglesWarnings.length).to.be.greaterThan(0);
+    });
+    it('warns when emphasized attribute is used', async () => {
+      const el = await fixture<ActionButton>(html`
+        <sp-action-button emphasized>Button</sp-action-button>
+      `);
+
+      await elementUpdated(el);
+      const emphasizedWarnings = Array.from(
+        { length: consoleWarnStub.callCount },
+        (_, i) => consoleWarnStub.getCall(i)
+      ).filter((call) => (call.args[0] as string).includes('"emphasized"'));
+
+      expect(emphasizedWarnings.length).to.be.greaterThan(0);
+    });
+    it('warns when selected is toggled from false to true', async () => {
+      const el = await fixture<ActionButton>(html`
+        <sp-action-button>Button</sp-action-button>
+      `);
+
+      await elementUpdated(el);
+      consoleWarnStub.resetHistory();
+
+      el.selected = true;
+      await elementUpdated(el);
+
+      const selectedWarnings = Array.from(
+        { length: consoleWarnStub.callCount },
+        (_, i) => consoleWarnStub.getCall(i)
+      ).filter((call) => (call.args[0] as string).includes('"selected"'));
+
+      expect(selectedWarnings.length).to.be.greaterThan(0);
+    });
+    it('warns when selected is toggled from true to false', async () => {
+      const el = await fixture<ActionButton>(html`
+        <sp-action-button selected>Button</sp-action-button>
+      `);
+
+      await elementUpdated(el);
+      consoleWarnStub.resetHistory();
+
+      el.selected = false;
+      await elementUpdated(el);
+
+      const selectedWarnings = Array.from(
+        { length: consoleWarnStub.callCount },
+        (_, i) => consoleWarnStub.getCall(i)
+      ).filter((call) => (call.args[0] as string).includes('"selected"'));
+
+      expect(selectedWarnings.length).to.be.greaterThan(0);
+    });
   });
   it('loads default', async () => {
     const el = await fixture<ActionButton>(html`

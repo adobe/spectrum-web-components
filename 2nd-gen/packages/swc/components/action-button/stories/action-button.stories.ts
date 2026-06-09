@@ -10,8 +10,15 @@
  * governing permissions and limitations under the License.
  */
 
+import { html } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
+
+import {
+  ACTION_BUTTON_STATIC_COLORS,
+  ACTION_BUTTON_VALID_SIZES,
+  type ActionButtonSize,
+} from '@spectrum-web-components/core/components/action-button';
 
 import '@adobe/spectrum-wc/components/action-button/swc-action-button.js';
 
@@ -21,8 +28,23 @@ import '@adobe/spectrum-wc/components/action-button/swc-action-button.js';
 
 const { args, argTypes, template } = getStorybookHelpers('swc-action-button');
 
+argTypes.size = {
+  ...argTypes.size,
+  control: { type: 'select' },
+  options: ACTION_BUTTON_VALID_SIZES,
+};
+
+argTypes['static-color'] = {
+  ...argTypes['static-color'],
+  control: { type: 'select' },
+  options: ACTION_BUTTON_STATIC_COLORS,
+};
+
 /**
  * A compact action button for toolbars, action groups, and icon-first chrome.
+ * Supports sizes `xs`–`xl`; `xs` is an action-button-specific addition not
+ * available on `swc-button`. For navigation, [use a link with global action
+ * button styles](/docs/guides-customization-global-element-styling--readme) instead.
  */
 const meta: Meta = {
   title: 'Action Button',
@@ -41,8 +63,22 @@ const meta: Meta = {
 export default meta;
 
 // ────────────────────
-//    AUTODOCS STORY
+//    HELPERS
 // ────────────────────
+
+const sizeLabels = {
+  xs: 'Extra-small',
+  s: 'Small',
+  m: 'Medium',
+  l: 'Large',
+  xl: 'Extra-large',
+} as const satisfies Record<ActionButtonSize, string>;
+
+const editIconSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36" aria-hidden="true" focusable="false"><path d="M33.567 8.2 27.8 2.432a1.215 1.215 0 0 0-.866-.353H26.9a1.371 1.371 0 0 0-.927.406L5.084 23.372a.99.99 0 0 0-.251.422L2.055 33.1c-.114.377.459.851.783.851a.251.251 0 0 0 .062-.007c.276-.063 7.866-2.344 9.311-2.778a.972.972 0 0 0 .414-.249l20.888-20.889a1.372 1.372 0 0 0 .4-.883 1.221 1.221 0 0 0-.346-.945ZM11.4 29.316c-2.161.649-4.862 1.465-6.729 2.022l2.009-6.73Z"/></svg>`;
+
+// ──────────────────────────
+//    PLAYGROUND STORY
+// ──────────────────────────
 
 export const Playground: Story = {
   args: {
@@ -60,4 +96,169 @@ export const Overview: Story = {
     'default-slot': 'Edit',
   },
   tags: ['overview'],
+};
+
+// ──────────────────────────
+//    ANATOMY STORIES
+// ──────────────────────────
+
+export const Anatomy: Story = {
+  render: (args) => html`
+    ${template({ ...args, 'default-slot': 'Label only' })}
+    ${template({
+      ...args,
+      'default-slot': 'Icon and label',
+      'icon-slot': editIconSvg,
+    })}
+  `,
+  tags: ['anatomy'],
+  parameters: { flexLayout: 'row-wrap' },
+};
+
+// ──────────────────────────
+//    OPTIONS STORIES
+// ──────────────────────────
+
+export const Sizes: Story = {
+  render: (args) => html`
+    ${ACTION_BUTTON_VALID_SIZES.map((size) =>
+      template({
+        ...args,
+        size,
+        'default-slot': sizeLabels[size],
+        'icon-slot': editIconSvg,
+      })
+    )}
+  `,
+  tags: ['options'],
+  parameters: { flexLayout: 'row-wrap' },
+};
+
+export const Quiet: Story = {
+  render: (args) => html`
+    ${template({
+      ...args,
+      quiet: false,
+      'default-slot': 'Default',
+      'icon-slot': editIconSvg,
+    })}
+    ${template({
+      ...args,
+      quiet: true,
+      'default-slot': 'Quiet',
+      'icon-slot': editIconSvg,
+    })}
+  `,
+  tags: ['options'],
+  parameters: { flexLayout: 'row-wrap' },
+};
+
+export const StaticColors: Story = {
+  render: (args) => html`
+    <div style="display: flex; gap: 16px; flex-wrap: wrap;">
+      ${template({
+        ...args,
+        'static-color': 'white',
+        'default-slot': 'Default',
+        'icon-slot': editIconSvg,
+      })}
+      ${template({
+        ...args,
+        'static-color': 'white',
+        quiet: true,
+        'default-slot': 'Quiet',
+        'icon-slot': editIconSvg,
+      })}
+    </div>
+    <div style="display: flex; gap: 16px; flex-wrap: wrap;">
+      ${template({
+        ...args,
+        'static-color': 'black',
+        'default-slot': 'Default',
+        'icon-slot': editIconSvg,
+      })}
+      ${template({
+        ...args,
+        'static-color': 'black',
+        quiet: true,
+        'default-slot': 'Quiet',
+        'icon-slot': editIconSvg,
+      })}
+    </div>
+  `,
+  tags: ['options', '!test'],
+  parameters: {
+    staticColorsDemo: true,
+  },
+};
+StaticColors.storyName = 'Static colors';
+
+// ──────────────────────────
+//    STATES STORIES
+// ──────────────────────────
+
+export const States: Story = {
+  render: (args) => html`
+    ${template({
+      ...args,
+      'default-slot': 'Default',
+      'icon-slot': editIconSvg,
+    })}
+    ${template({
+      ...args,
+      disabled: true,
+      'default-slot': 'Disabled',
+      'icon-slot': editIconSvg,
+    })}
+    ${template({
+      ...args,
+      pending: true,
+      'default-slot': 'Pending',
+      'icon-slot': editIconSvg,
+    })}
+  `,
+  tags: ['states'],
+  parameters: { flexLayout: 'row-wrap' },
+};
+
+// ──────────────────────────────
+//    BEHAVIORS STORIES
+// ──────────────────────────────
+
+export const IconOnly: Story = {
+  render: (args) =>
+    template({ ...args, 'accessible-label': 'Edit', 'icon-slot': editIconSvg }),
+  tags: ['behaviors'],
+};
+IconOnly.storyName = 'Icon only';
+
+// ────────────────────────────────
+//    ACCESSIBILITY STORIES
+// ────────────────────────────────
+
+export const Accessibility: Story = {
+  render: (args) => html`
+    ${template({ ...args, 'default-slot': 'Format' })}
+    <swc-action-button size=${args.size ?? 'm'} accessible-label="Bold">
+      <svg
+        slot="icon"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 36 36"
+        aria-hidden="true"
+        focusable="false"
+      >
+        <path
+          d="M33.567 8.2L27.8 2.432a1.215 1.215 0 0 0-1.717 0L23 5.516 30.485 13l3.082-3.083a1.215 1.215 0 0 0 0-1.717zM21.586 7l-3.805 3.805 7.414 7.415 3.805-3.805zM3 29.788V37h7.212L23.414 23.8l-7.414-7.415zM6 32v-1.591l9.914-9.914 1.591 1.591L7.591 32z"
+        />
+      </svg>
+    </swc-action-button>
+    ${template({
+      ...args,
+      'default-slot': 'Upload',
+      pending: true,
+      'pending-label': 'Upload in-progress',
+    })}
+  `,
+  tags: ['a11y'],
+  parameters: { flexLayout: 'row-wrap' },
 };
