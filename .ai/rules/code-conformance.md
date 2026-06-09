@@ -115,7 +115,7 @@ Reference: [Linting tools](../../CONTRIBUTOR-DOCS/02_style-guide/03_linting-tool
 - Per-unit MDX file exists at the unit root with the correct relative import path for `DocsHeader` / `DocsFooter`
 - `<Meta of={Stories} />` declared exactly once
 - `<DocsHeader />` at the top, `<DocsFooter />` at the bottom
-- Sections appear in canonical order (Anatomy → Upcoming features → Usage → Options → States → Behaviors → Accessibility → Full pattern → API → Appendix → Feedback)
+- Sections appear in canonical order (Anatomy → Usage → Options → States → Behaviors → Accessibility → Full pattern → Upcoming features → API → Appendix → Feedback)
 - Every section-tagged story is referenced via `<Canvas of={Stories.StoryName} />`
 - Per-story `### Title` headings match Storybook's rendered story names
 - No `<Canvas>` references to untagged stories

@@ -155,7 +155,7 @@ The per-unit MDX file (`<unit>.mdx`) is the source of truth for the docs page la
 - **States** — same pattern as Options
 - **Behaviors** — same pattern as Options
 - **Accessibility** — `## Accessibility` prose + `<Canvas of={Stories.Accessibility} />`
-- **Upcoming features** — `## Upcoming features` + prose only (no `<Canvas>`)
+- **Upcoming features** — `## Upcoming features` + prose only (no `<Canvas>`); placed before the footer so it reads as forward-looking notes after the current API/behavior
 - **API** — handled by `<DocsFooter />` (rendered automatically with `<ApiTable />` for components and patterns; omitted for controllers)
 
 See `.ai/rules/stories-documentation.md` for full per-section authoring patterns including genre-specific notes (component vs pattern vs controller vs internal).

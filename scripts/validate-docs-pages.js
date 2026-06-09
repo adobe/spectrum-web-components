@@ -56,36 +56,37 @@ const repoRoot = path.resolve(__dirname, '..');
  * may include any subset of these in this relative order; unknown `##`
  * headings are flagged as errors.
  *
- * The component / pattern / internal sets are identical. The controller
- * set replaces `Anatomy` with `What it does` and `Basic usage` because
- * controllers have no DOM and document their conceptual model instead.
+ * The component / pattern / internal sets share the same middle and footer.
+ * The controller set replaces `Anatomy` with `What it does` and `Basic
+ * usage` because controllers have no DOM and document their conceptual
+ * model instead.
+ *
+ * `Upcoming features` is positioned immediately before the API/Appendix/
+ * Feedback footer block so it reads as a forward-looking note after the
+ * current API/behavior, not as a preamble before Options.
  */
-const COMPONENT_LIKE_SECTIONS = [
-  'Anatomy',
-  'Upcoming features',
+const SHARED_SECTIONS = [
   'Usage',
   'Options',
   'States',
   'Behaviors',
   'Accessibility',
+];
+
+const SHARED_FOOTER = ['Upcoming features', 'API', 'Appendix', 'Feedback'];
+
+const COMPONENT_LIKE_SECTIONS = [
+  'Anatomy',
+  ...SHARED_SECTIONS,
   'Full pattern',
-  'API',
-  'Appendix',
-  'Feedback',
+  ...SHARED_FOOTER,
 ];
 
 const CONTROLLER_SECTIONS = [
   'What it does',
   'Basic usage',
-  'Usage',
-  'Upcoming features',
-  'Options',
-  'States',
-  'Behaviors',
-  'Accessibility',
-  'API',
-  'Appendix',
-  'Feedback',
+  ...SHARED_SECTIONS,
+  ...SHARED_FOOTER,
 ];
 
 const SECTION_TAGS = ['anatomy', 'options', 'states', 'behaviors', 'a11y'];
@@ -114,6 +115,7 @@ function classify(relPath) {
       genre: 'internal',
       requireMeta: true,
       requireCanvasForTaggedStories: true,
+      requireDocsFooter: false,
       canonicalSections: COMPONENT_LIKE_SECTIONS,
     };
   }
@@ -127,6 +129,7 @@ function classify(relPath) {
       genre: 'component',
       requireMeta: true,
       requireCanvasForTaggedStories: true,
+      requireDocsFooter: true,
       canonicalSections: COMPONENT_LIKE_SECTIONS,
     };
   }
@@ -143,6 +146,7 @@ function classify(relPath) {
       genre: 'pattern',
       requireMeta: true,
       requireCanvasForTaggedStories: true,
+      requireDocsFooter: true,
       canonicalSections: COMPONENT_LIKE_SECTIONS,
     };
   }
@@ -155,6 +159,7 @@ function classify(relPath) {
       genre: 'controller',
       requireMeta: true,
       requireCanvasForTaggedStories: true,
+      requireDocsFooter: true,
       canonicalSections: CONTROLLER_SECTIONS,
     };
   }
@@ -163,6 +168,7 @@ function classify(relPath) {
     genre: null,
     requireMeta: false,
     requireCanvasForTaggedStories: false,
+    requireDocsFooter: false,
     canonicalSections: null,
   };
 }
@@ -258,8 +264,13 @@ function extractH2Headings(content) {
 }
 
 /**
- * Extract all `<Canvas of={Stories.ExportName} />` references and return the
- * referenced story export names.
+ * Extract all `<Canvas of={Stories.ExportName} ... />` references and return
+ * the referenced story export names.
+ *
+ * The regex tolerates additional attributes (e.g. `sourceState="shown"`)
+ * and multi-line `<Canvas ...>` forms — it only requires `<Canvas` followed
+ * eventually by `of={<binding>.<ExportName>}`, then any other content, then
+ * a self-closing or closing tag.
  */
 function extractCanvasReferences(content, binding) {
   if (!binding) {
@@ -267,8 +278,8 @@ function extractCanvasReferences(content, binding) {
   }
   const refs = [];
   const re = new RegExp(
-    `<Canvas\\s+of=\\{${binding}\\.([A-Za-z0-9_]+)\\}\\s*/?>`,
-    'g'
+    `<Canvas\\b[^>]*?\\bof=\\{${binding}\\.([A-Za-z_][A-Za-z0-9_]*)\\}[^>]*?/?>`,
+    'gs'
   );
   let match;
   while ((match = re.exec(content)) !== null) {
@@ -409,6 +420,18 @@ function checkMdx(absPath) {
       );
     }
     lastIndex = Math.max(lastIndex, idx);
+  }
+
+  // Check 2a: <DocsFooter /> presence
+  //
+  // <DocsFooter /> is the shared block that renders the API table (for
+  // components/patterns), Primary, Controls, and the Feedback link. A docs
+  // page that omits it loses those surfaces. The check is a proxy for the
+  // ticket's "<ApiTable /> and <Controls /> expected" requirement.
+  if (rules.requireDocsFooter && !/<DocsFooter\s*\/?>/.test(content)) {
+    errors.push(
+      `${relPath}: missing <DocsFooter /> reference (renders ApiTable, Primary, Controls, and the Feedback link)`
+    );
   }
 
   // Checks 3 & 4 require resolving the stories module

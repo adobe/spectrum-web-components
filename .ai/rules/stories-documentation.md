@@ -67,15 +67,15 @@ import * as Stories from './stories/<unit>.stories';
 
 <Canvas of={Stories.TextWrapping} />
 
-## Upcoming features
-
-...prose only, no Canvas...
-
 ## Accessibility
 
 ...prose with `### Features` and `### Best practices` subheadings...
 
 <Canvas of={Stories.Accessibility} />
+
+## Upcoming features
+
+...prose only, no Canvas...
 
 <DocsFooter />
 ```
@@ -85,13 +85,13 @@ import * as Stories from './stories/<unit>.stories';
 `DocumentTemplate.mdx` (the fallback template for units without a per-unit MDX) renders sections in this same order, so converted units and unconverted units sit side-by-side without surprises:
 
 1. **Anatomy** — `hideTitle` semantics: no per-story `###` heading
-2. **Upcoming features** — `hideTitle` semantics; prose-only sections allowed (no `<Canvas>`)
-3. **Usage** — `hideTitle` semantics (controllers; describes how to instantiate)
-4. **Options** — per-story `### Title` headings appear
-5. **States** — per-story `### Title` headings appear
-6. **Behaviors** — per-story `### Title` headings appear
-7. **Accessibility** — `hideTitle` semantics
-8. **Full pattern** — per-story `### Title` headings appear (patterns only)
+2. **Usage** — `hideTitle` semantics (controllers; describes how to instantiate)
+3. **Options** — per-story `### Title` headings appear
+4. **States** — per-story `### Title` headings appear
+5. **Behaviors** — per-story `### Title` headings appear
+6. **Accessibility** — `hideTitle` semantics
+7. **Full pattern** — per-story `### Title` headings appear (patterns only)
+8. **Upcoming features** — `hideTitle` semantics; prose-only sections allowed (no `<Canvas>`). Positioned before the footer so it reads as forward-looking notes after the current API/behavior, not as a preamble before Options.
 9. **API** — rendered by `<DocsFooter />`. Controllers ship a hand-authored `## API` ahead of `<DocsFooter />` with a Methods/Events/Options table; `<DocsFooter />` omits `<ApiTable />` when `meta.tags` contains `'controller'`.
 10. **Appendix** — `hideTitle` semantics; prose-only.
 11. **Feedback** — rendered by `<DocsFooter />`.
@@ -970,7 +970,7 @@ When creating or updating documentation:
 - [ ] File exists at the unit root with the correct relative import path for `DocsHeader` / `DocsFooter`
 - [ ] `<Meta of={Stories} />` declared exactly once
 - [ ] `<DocsHeader />` at the top, `<DocsFooter />` at the bottom
-- [ ] Sections appear in the canonical order (Anatomy → Upcoming features → Usage → Options → States → Behaviors → Accessibility → Full pattern → API → Appendix → Feedback) — skip sections that do not apply
+- [ ] Sections appear in the canonical order (Anatomy → Usage → Options → States → Behaviors → Accessibility → Full pattern → Upcoming features → API → Appendix → Feedback) — skip sections that do not apply
 - [ ] Every section-tagged story is referenced via `<Canvas of={Stories.StoryName} />`
 - [ ] Per-story `### Title` headings match Storybook's rendered story names (PascalCase → Title Case, or explicit `storyName`)
 - [ ] No `<Canvas>` references to untagged stories
