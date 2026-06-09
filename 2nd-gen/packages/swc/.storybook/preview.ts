@@ -334,6 +334,7 @@ const preview = {
                 'Action button',
                 [
                   'Accessibility migration analysis',
+                  'Migration plan',
                   'Rendering and styling migration analysis',
                 ],
                 'Action group',

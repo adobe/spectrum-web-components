@@ -30,6 +30,7 @@ import {
   type ButtonVariant,
 } from '@spectrum-web-components/core/components/button';
 
+import pendingSpinnerStyles from '../../stylesheets/_lit-styles/pending-spinner.css';
 import styles from './button.css';
 import baseStyles from './button-base.css';
 
@@ -124,7 +125,7 @@ export class Button extends ButtonBase {
   // ──────────────────────────────
 
   public static override get styles(): CSSResultArray {
-    return [baseStyles, styles];
+    return [baseStyles, pendingSpinnerStyles, styles];
   }
 
   // @todo SWC-2034: handle form-associated types reset / submit
@@ -154,7 +155,10 @@ export class Button extends ButtonBase {
         ${this.pending
           ? html`
               <svg
-                class="swc-Button-pendingSpinner"
+                class=${classMap({
+                  'swc-PendingSpinner': true,
+                  'swc-PendingSpinner--active': this.pendingActive,
+                })}
                 width="100%"
                 height="100%"
                 fill="none"
@@ -162,13 +166,13 @@ export class Button extends ButtonBase {
                 focusable="false"
               >
                 <circle
-                  class="swc-Button-pendingSpinner-track"
+                  class="swc-PendingSpinner-track"
                   cx="50%"
                   cy="50%"
                   r="calc(50% - 1px)"
                 />
                 <circle
-                  class="swc-Button-pendingSpinner-fill"
+                  class="swc-PendingSpinner-fill"
                   cx="50%"
                   cy="50%"
                   r="calc(50% - 1px)"
