@@ -65,7 +65,7 @@ export abstract class MeterBase extends LinearProgressMixin(
   //     IMPLEMENTATION
   // ──────────────────────
 
-  protected override update(changes: PropertyValues): void {
+  protected override willUpdate(changes: PropertyValues): void {
     const constructor = this.constructor as typeof MeterBase;
     if (!constructor.VARIANTS.includes(this.variant)) {
       if (window.__swc?.DEBUG) {
@@ -80,8 +80,11 @@ export abstract class MeterBase extends LinearProgressMixin(
       }
       // Unknown variant: fall back to the default so the reflected
       // attribute and fill color always resolve to a valid variant.
+      // Normalizing in `willUpdate` (Lit's input-normalization hook) folds
+      // the change into the current cycle instead of scheduling a second
+      // reactive update.
       this.variant = 'informative';
     }
-    super.update(changes);
+    super.willUpdate(changes);
   }
 }

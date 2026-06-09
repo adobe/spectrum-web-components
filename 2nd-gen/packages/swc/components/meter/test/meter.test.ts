@@ -342,7 +342,9 @@ export const MissingAccessibleNameTest: Story = {
         await meter.updateComplete;
         const messages = warnCalls.map((c) => String(c?.[1] ?? ''));
         expect(messages.some((m) => m.includes('accessible name'))).toBe(true);
-        meter.remove();
+        // Remove the `fixture()` container, not just the meter, so the
+        // wrapper div is not left orphaned in <body> across test runs.
+        meter.parentElement?.remove();
       })
     );
 
@@ -354,7 +356,7 @@ export const MissingAccessibleNameTest: Story = {
         await meter.updateComplete;
         const messages = warnCalls.map((c) => String(c?.[1] ?? ''));
         expect(messages.some((m) => m.includes('accessible name'))).toBe(false);
-        meter.remove();
+        meter.parentElement?.remove();
       })
     );
   },
