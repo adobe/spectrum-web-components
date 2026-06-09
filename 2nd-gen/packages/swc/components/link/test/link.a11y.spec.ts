@@ -76,10 +76,14 @@ test.describe('Link - ARIA Snapshots', () => {
 
   test('link list renders multiple named links', async ({ page }) => {
     const root = await gotoLinkStory(page, 'components-link--link-list');
-    await expect(root).toMatchAriaSnapshot(`
-      - link "Privacy policy"
-      - link "Terms of use"
-      - link "Contact support"
+    await expect(root.locator('.swc-Typography--links')).toMatchAriaSnapshot(`
+      - list:
+        - listitem:
+          - link "Privacy policy"
+        - listitem:
+          - link "Terms of use"
+        - listitem:
+          - link "Contact support"
     `);
   });
 
@@ -88,10 +92,16 @@ test.describe('Link - ARIA Snapshots', () => {
   }) => {
     const root = await gotoLinkStory(page, 'components-link--accessibility');
     await expect(root).toMatchAriaSnapshot(`
-      - link "view the full schedule"
-      - link "Privacy policy"
-      - link "Terms of use"
-      - link "Contact support"
+      - paragraph:
+        - link "view the full schedule"
+      - contentinfo:
+        - list:
+          - listitem:
+            - link "Privacy policy"
+          - listitem:
+            - link "Terms of use"
+          - listitem:
+            - link "Contact support"
     `);
   });
 

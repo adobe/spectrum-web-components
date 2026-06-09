@@ -106,10 +106,14 @@ test.describe('Typography - ARIA Snapshots', () => {
       'components-typography--link-list',
       '.swc-Typography--links'
     );
-    await expect(root).toMatchAriaSnapshot(`
-      - link "Privacy policy"
-      - link "Terms of use"
-      - link "Contact support"
+    await expect(root.locator('.swc-Typography--links')).toMatchAriaSnapshot(`
+      - list:
+        - listitem:
+          - link "Privacy policy"
+        - listitem:
+          - link "Terms of use"
+        - listitem:
+          - link "Contact support"
     `);
   });
 });
