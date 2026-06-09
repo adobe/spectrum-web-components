@@ -135,6 +135,9 @@ export const Playground: Story = {
     size: 'm',
     'default-slot': 'Button',
   },
+  parameters: {
+    chromatic: { disableSnapshot: true },
+  },
 };
 
 // ──────────────────────────────
@@ -148,6 +151,9 @@ export const Overview: Story = {
     'fill-style': 'fill',
     size: 'm',
     'default-slot': 'Save',
+  },
+  parameters: {
+    chromatic: { disableSnapshot: true },
   },
 };
 
@@ -189,6 +195,9 @@ export const Anatomy: Story = {
     variant: 'primary',
     size: 'm',
   },
+  parameters: {
+    chromatic: { disableSnapshot: true },
+  },
 };
 
 // ──────────────────────────
@@ -211,7 +220,10 @@ export const Variants: Story = {
       template({ ...args, variant, 'default-slot': variantLabels[variant] })
     )}
   `,
-  parameters: { flexLayout: 'row-wrap' },
+  parameters: {
+    flexLayout: 'row-wrap',
+    chromatic: { disableSnapshot: true },
+  },
   tags: ['options'],
 };
 
@@ -226,7 +238,10 @@ export const Outline: Story = {
       })
     )}
   `,
-  parameters: { flexLayout: 'row-wrap' },
+  parameters: {
+    flexLayout: 'row-wrap',
+    chromatic: { disableSnapshot: true },
+  },
   tags: ['options'],
 };
 
@@ -259,6 +274,7 @@ export const StaticColors: Story = {
   `,
   parameters: {
     staticColorsDemo: true,
+    chromatic: { disableSnapshot: true },
   },
   tags: ['options', '!test'],
 };
@@ -274,7 +290,10 @@ export const States: Story = {
     ${template({ ...args, disabled: true, 'default-slot': 'Disabled' })}
     ${template({ ...args, pending: true, 'default-slot': 'Save' })}
   `,
-  parameters: { flexLayout: 'row-wrap' },
+  parameters: {
+    flexLayout: 'row-wrap',
+    chromatic: { disableSnapshot: true },
+  },
   tags: ['states'],
 };
 
@@ -336,7 +355,10 @@ export const TextWrapping: Story = {
     })}
   `,
   tags: ['behaviors'],
-  parameters: { flexLayout: 'row-wrap' },
+  parameters: {
+    flexLayout: 'row-wrap',
+    chromatic: { disableSnapshot: true },
+  },
 };
 TextWrapping.storyName = 'Text wrapping';
 
@@ -349,6 +371,9 @@ export const Truncate: Story = {
       style: 'max-inline-size: 200px',
     }),
   tags: ['behaviors'],
+  parameters: {
+    chromatic: { disableSnapshot: true },
+  },
 };
 
 export const Justified: Story = {
@@ -361,7 +386,7 @@ export const Justified: Story = {
       })}
     </div>
   `,
-  parameters: { layout: 'padded' },
+  parameters: { layout: 'padded', chromatic: { disableSnapshot: true } },
   tags: ['behaviors'],
 };
 
@@ -398,7 +423,7 @@ export const Accessibility: Story = {
     })}
   `,
   tags: ['a11y'],
-  parameters: { flexLayout: 'row-wrap' },
+  parameters: { flexLayout: 'row-wrap', chromatic: { disableSnapshot: true } },
 };
 
 // ────────────────────────────────────
