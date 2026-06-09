@@ -84,6 +84,13 @@
   will-change: transform;
 }
 
+.swc-Button:disabled:is(*, :hover) {
+  color: var(--swc-button-content-color-disabled, token("disabled-content-color"));
+  background-color: var(--swc-button-background-color-disabled, token("disabled-background-color"));
+  border-color: var(--swc-button-border-color-disabled, transparent);
+  transform: none;
+}
+
 .swc-Button-label {
   text-align: center;
 }

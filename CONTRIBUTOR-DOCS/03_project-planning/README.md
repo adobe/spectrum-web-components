@@ -44,6 +44,7 @@
     - Dropzone
     - Field Group
     - Field Label
+    - Grid
     - Help Text
     - Illustrated Message
     - Infield Button

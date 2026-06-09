@@ -27,7 +27,15 @@
       "types": "./dist/components/avatar/index.d.ts",
       "import": "./dist/components/avatar/index.js"
     },
+    "./components/avatar/index.js": {
+      "types": "./dist/components/avatar/index.d.ts",
+      "import": "./dist/components/avatar/index.js"
+    },
     "./components/badge": {
+      "types": "./dist/components/badge/index.d.ts",
+      "import": "./dist/components/badge/index.js"
+    },
+    "./components/badge/index.js": {
       "types": "./dist/components/badge/index.d.ts",
       "import": "./dist/components/badge/index.js"
     },
@@ -36,6 +44,10 @@
       "import": "./dist/components/button/index.js"
     },
     "./components/divider": {
+      "types": "./dist/components/divider/index.d.ts",
+      "import": "./dist/components/divider/index.js"
+    },
+    "./components/divider/index.js": {
       "types": "./dist/components/divider/index.d.ts",
       "import": "./dist/components/divider/index.js"
     },
@@ -55,7 +67,15 @@
       "types": "./dist/components/status-light/index.d.ts",
       "import": "./dist/components/status-light/index.js"
     },
+    "./components/status-light/index.js": {
+      "types": "./dist/components/status-light/index.d.ts",
+      "import": "./dist/components/status-light/index.js"
+    },
     "./components/tabs": {
+      "types": "./dist/components/tabs/index.d.ts",
+      "import": "./dist/components/tabs/index.js"
+    },
+    "./components/tabs/index.js": {
       "types": "./dist/components/tabs/index.d.ts",
       "import": "./dist/components/tabs/index.js"
     },
@@ -67,6 +87,10 @@
       "types": "./dist/controllers/focus-group-navigation-controller/focus-group-navigation-controller.d.ts",
       "import": "./dist/controllers/focus-group-navigation-controller/focus-group-navigation-controller.js"
     },
+    "./controllers/hover-controller.js": {
+      "types": "./dist/controllers/hover-controller/index.d.ts",
+      "import": "./dist/controllers/hover-controller/index.js"
+    },
     "./controllers/index.js": {
       "types": "./dist/controllers/index.d.ts",
       "import": "./dist/controllers/index.js"
@@ -74,6 +98,14 @@
     "./controllers/language-resolution.js": {
       "types": "./dist/controllers/language-resolution.d.ts",
       "import": "./dist/controllers/language-resolution.js"
+    },
+    "./controllers/placement-controller": {
+      "types": "./dist/controllers/placement-controller/index.d.ts",
+      "import": "./dist/controllers/placement-controller/index.js"
+    },
+    "./controllers/placement-controller/index.js": {
+      "types": "./dist/controllers/placement-controller/index.d.ts",
+      "import": "./dist/controllers/placement-controller/index.js"
     },
     "./element": {
       "types": "./dist/element/index.d.ts",
@@ -154,13 +186,22 @@
       "components/avatar": [
         "dist/components/avatar/index.d.ts"
       ],
+      "components/avatar/index.js": [
+        "dist/components/avatar/index.d.ts"
+      ],
       "components/badge": [
+        "dist/components/badge/index.d.ts"
+      ],
+      "components/badge/index.js": [
         "dist/components/badge/index.d.ts"
       ],
       "components/button": [
         "dist/components/button/index.d.ts"
       ],
       "components/divider": [
+        "dist/components/divider/index.d.ts"
+      ],
+      "components/divider/index.js": [
         "dist/components/divider/index.d.ts"
       ],
       "components/icon": [
@@ -175,20 +216,35 @@
       "components/status-light": [
         "dist/components/status-light/index.d.ts"
       ],
+      "components/status-light/index.js": [
+        "dist/components/status-light/index.d.ts"
+      ],
       "components/tabs": [
+        "dist/components/tabs/index.d.ts"
+      ],
+      "components/tabs/index.js": [
         "dist/components/tabs/index.d.ts"
       ],
       "controllers": [
         "dist/controllers/index.d.ts"
       ],
       "controllers/focus-group-navigation-controller/focus-group-navigation-controller.js": [
-        "dist/controllers/ocus-group-navigation-controller/focus-group-navigation-controller.d.ts"
+        "dist/controllers/focus-group-navigation-controller/focus-group-navigation-controller.d.ts"
+      ],
+      "controllers/hover-controller.js": [
+        "dist/controllers/hover-controller/index.d.ts"
       ],
       "controllers/index.js": [
         "dist/controllers/index.d.ts"
       ],
       "controllers/language-resolution.js": [
         "dist/controllers/language-resolution.d.ts"
+      ],
+      "controllers/placement-controller": [
+        "dist/controllers/placement-controller/index.d.ts"
+      ],
+      "controllers/placement-controller/index.js": [
+        "dist/controllers/placement-controller/index.d.ts"
       ],
       "element": [
         "dist/element/index.d.ts"
@@ -235,6 +291,7 @@
     }
   },
   "dependencies": {
+    "@floating-ui/dom": "1.7.6",
     "@lit-labs/observers": "2.0.2",
     "lit": "^2.5.0 || ^3.1.3"
   },

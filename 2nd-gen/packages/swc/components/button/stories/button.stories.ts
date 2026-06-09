@@ -120,11 +120,11 @@ const staticColorLabels = {
 const addIconSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36" aria-hidden="true" focusable="false"><path d="M31.5 17H19V4.5a1 1 0 0 0-2 0V17H4.5a1 1 0 0 0 0 2H17v12.5a1 1 0 0 0 2 0V19h12.5a1 1 0 0 0 0-2z"/></svg>`;
 
 // ────────────────────
-//    AUTODOCS STORY
+//    PLAYGROUND STORY
 // ────────────────────
 
 export const Playground: Story = {
-  tags: ['autodocs', 'dev'],
+  tags: ['dev'],
   args: {
     variant: 'primary',
     'fill-style': 'fill',
@@ -151,16 +151,6 @@ export const Overview: Story = {
 //    ANATOMY STORIES
 // ──────────────────────────
 
-/**
- * A button consists of:
- *
- * - **Default slot**: Visible text label
- * - **icon slot**: Optional leading icon
- *
- * When only an icon is provided (no label), the button renders as a circular
- * icon-only button. Icon-only buttons must include an `accessible-label` attribute
- * so the action is announced to screen reader users.
- */
 export const Anatomy: Story = {
   render: (args) => html`
     ${template({ ...args, 'default-slot': 'Label only' })}
@@ -201,43 +191,26 @@ export const Anatomy: Story = {
 //    OPTIONS STORIES
 // ──────────────────────────
 
-/**
- * Buttons come in four sizes: small (`s`), medium (`m`), large (`l`), and
- * extra-large (`xl`). Medium is the default.
- */
 export const Sizes: Story = {
   render: (args) => html`
     ${BUTTON_VALID_SIZES.map((size) =>
       template({ ...args, size, 'default-slot': sizeLabels[size] })
     )}
   `,
-  parameters: { flexLayout: 'row-wrap', 'section-order': 1 },
+  parameters: { flexLayout: 'row-wrap' },
   tags: ['options'],
 };
 
-/**
- * Four variants are available: `primary` (default), `secondary`, `accent`,
- * and `negative`.
- *
- * `accent` and `negative` are fill-only; `fill-style="outline"` is not
- * supported for these variants.
- */
 export const Variants: Story = {
   render: (args) => html`
     ${BUTTON_VARIANTS.map((variant: ButtonVariant) =>
       template({ ...args, variant, 'default-slot': variantLabels[variant] })
     )}
   `,
-  parameters: { flexLayout: 'row-wrap', 'section-order': 2 },
+  parameters: { flexLayout: 'row-wrap' },
   tags: ['options'],
 };
 
-/**
- * The `outline` fill style renders a transparent background with a visible
- * border. `fill-style="outline"` is only supported with `primary` and
- * `secondary` variants. Combining it with `accent` or `negative` emits a
- * development warning and falls back to the fill appearance.
- */
 export const Outline: Story = {
   render: (args) => html`
     ${['primary', 'secondary'].map((variant) =>
@@ -249,18 +222,10 @@ export const Outline: Story = {
       })
     )}
   `,
-  parameters: { flexLayout: 'row-wrap', 'section-order': 3 },
+  parameters: { flexLayout: 'row-wrap' },
   tags: ['options'],
 };
 
-/**
- * The `static-color` attribute pins the button's color to either `"white"` or
- * `"black"` regardless of the active theme. `static-color` is only supported
- * with `primary` and `secondary` variants. Both fill styles are supported.
- *
- * When combining a `static-color` with `fill-style="outline"`, verify that the
- * background color maintains sufficient contrast on hover.
- */
 export const StaticColors: Story = {
   render: (args) => html`
     <div
@@ -290,7 +255,6 @@ export const StaticColors: Story = {
   `,
   parameters: {
     staticColorsDemo: true,
-    'section-order': 4,
   },
   tags: ['options', '!test'],
 };
@@ -300,18 +264,6 @@ StaticColors.storyName = 'Static colors';
 //    STATES STORIES
 // ──────────────────────────
 
-/**
- * Buttons support three interaction states:
- *
- * - **Default**: The button is active and can be interacted with.
- * - **Disabled**: The button is removed from the tab order and cannot be
- *   activated.
- * - **Pending**: The button remains focusable but activation is suppressed
- *   while an asynchronous operation is in progress. See the [Pending story
- *   in Behaviors](#pending) for the full behavioral details.
- *
- * Do not set both `disabled` and `pending` simultaneously.
- */
 export const States: Story = {
   render: (args) => html`
     ${template({ ...args, 'default-slot': 'Default' })}
@@ -326,23 +278,6 @@ export const States: Story = {
 //    BEHAVIORS STORIES
 // ──────────────────────────────
 
-/**
- * When `pending` is set, the button remains focusable but click events are
- * suppressed. After a 1-second delay, the button enters its active pending
- * appearance: disabled colors and an animated inline spinner. The delay
- * prevents the pending appearance from flashing for operations that resolve
- * quickly.
- *
- * The accessible name during pending defaults to the visible label plus
- * `", busy"`. For example, a button labeled "Saving" announces as
- * `"Saving, busy"`. Provide `pending-label` to override this with a more
- * specific description of the in-progress operation. When pending clears, the
- * accessible name reverts to the original label.
- *
- * Use the **Pending** checkbox above the buttons to trigger and clear the
- * state interactively. This lets you observe the 1-second activation delay
- * and verify the accessible name switch in browser DevTools.
- */
 export const Pending: Story = {
   render: (args) => {
     let pending = false;
@@ -380,18 +315,8 @@ export const Pending: Story = {
     `;
   },
   tags: ['behaviors', '!test'],
-  parameters: { 'section-order': 1 },
 };
 
-/**
- * When a button's label is too long to fit on one line, text wraps to
- * multiple lines by default. When a leading icon is present, the label
- * aligns to the start edge so wrapped lines stay visually anchored to the
- * icon rather than centering under it.
- *
- * Text wrapping is the default behavior; no attribute is needed. To
- * suppress it, use the `truncate` attribute instead.
- */
 export const TextWrapping: Story = {
   render: (args) => html`
     ${template({
@@ -407,21 +332,10 @@ export const TextWrapping: Story = {
     })}
   `,
   tags: ['behaviors'],
-  parameters: { flexLayout: 'row-wrap', 'section-order': 2 },
+  parameters: { flexLayout: 'row-wrap' },
 };
 TextWrapping.storyName = 'Text wrapping';
 
-/**
- * When `truncate` is set, overflowing label text is clipped to a single line
- * and an ellipsis (`...`) is shown rather than wrapping. The focus ring uses
- * `outline` rather than `box-shadow` so it remains fully visible even though
- * `overflow: hidden` is required for truncation.
- *
- * Because the full text is not visible, consider pairing a truncated button
- * with a tooltip or accessible description so users can discover the complete
- * label when needed. This is not built into the component; it is a
- * consumer responsibility.
- */
 export const Truncate: Story = {
   render: (args) =>
     template({
@@ -431,19 +345,8 @@ export const Truncate: Story = {
       style: 'max-inline-size: 200px',
     }),
   tags: ['behaviors'],
-  parameters: { 'section-order': 3 },
 };
 
-/**
- * The `justified` attribute makes the button stretch to fill the available
- * inline space of its container. This is useful for full-width actions in
- * constrained layouts such as a form footer or a narrow sidebar.
- *
- * The container must permit the button to grow. If the container uses
- * `justify-content: center` (on a flex or grid layout), that may override
- * the stretch and force the button to its intrinsic size. In that case,
- * remove the centering constraint or wrap the button in a full-width block.
- */
 export const Justified: Story = {
   render: (args) => html`
     <div style="inline-size: min(40ch, 100%); margin-inline: auto;">
@@ -454,7 +357,7 @@ export const Justified: Story = {
       })}
     </div>
   `,
-  parameters: { layout: 'padded', 'section-order': 4 },
+  parameters: { layout: 'padded' },
   tags: ['behaviors'],
 };
 
@@ -462,57 +365,6 @@ export const Justified: Story = {
 //    ACCESSIBILITY STORIES
 // ────────────────────────────────
 
-/**
- * ### Features
- *
- * The `<swc-button>` element implements several accessibility features:
- *
- * 1. **Native button semantics**: A real `<button>` inside shadow DOM provides the role, so
- *    assistive technologies see a genuine button, not a host with `role="button"`.
- * 2. **Focus delegation**: `delegatesFocus: true` routes Tab focus and programmatic focus to
- *    the internal `<button>`, keeping the host out of the tab order.
- * 3. **Keyboard activation**: Enter and Space both activate the button via native browser
- *    behavior; no custom keyboard handling is needed or added.
- * 4. **Pending state**: When `pending` is true, `aria-disabled="true"` is set on the internal
- *    `<button>` and the accessible name becomes `"[label], busy"` (e.g., `"Save, busy"`).
- *    The button remains focusable so users can discover it is unavailable rather than losing
- *    track of it entirely. A custom `pending-label` overrides the derived busy name.
- * 5. **Icon-only labeling**: When there is no visible text, the `accessible-label` attribute
- *    is forwarded as `aria-label` on the internal `<button>`. A debug warning is emitted in
- *    development when an icon-only button is missing `accessible-label`.
- *
- * ### Best practices
- *
- * - Always provide an `accessible-label` for icon-only buttons so screen readers can
- *   announce the button's purpose.
- * - Prefer `accessible-label` over placing `aria-label` directly on the `<swc-button>` host,
- *   as it is intentionally forwarded to the internal native control.
- * - Do not set both `pending` and `disabled` at the same time. Use `pending` to keep the
- *   button focusable while unavailable, or `disabled` to remove it from the tab order entirely.
- * - For navigation, use a native `<a>` element and leverage [global element styles](/docs/guides-customization-global-element-styling--readme), not `<swc-button>`. The
- *   button element activates on both Enter and Space; links activate on Enter only.
- *
- * ### Host event contract
- *
- * The `<swc-button>` host dispatches or forwards the following events:
- *
- * - **`click`**: Bubbles from the internal `<button>`. Suppressed while `pending`.
- * - **`focusin` / `focusout`**: Bubble naturally from the internal `<button>` through
- *   the shadow boundary. Attach listeners to the host to observe focus changes.
- *
- * Host-level `focus` and `blur` compatibility events are not part of the initial
- * 2nd-gen Button scope.
- *
- * ### Deferred support
- *
- * The following features are outside the initial 2nd-gen Button scope:
- *
- * - **Cross-root ARIA** (`aria-labelledby` / `aria-describedby` from outside the
- *   shadow root).
- * - **Form-associated `submit` / `reset` types**: the button currently behaves as
- *   `type="button"` only. Use native `<button type="submit">` or [global button styles](/docs/guides-customization-global-element-styling--readme)
- *   for form submission until this lands.
- */
 export const Accessibility: Story = {
   render: (args) => html`
     ${template({ ...args, 'default-slot': 'Save document' })}

@@ -82,7 +82,7 @@ export const Playground: Story = {
       </div>
     `;
   },
-  tags: ['autodocs', 'dev'],
+  tags: ['dev'],
 };
 
 export const Overview: Story = {
@@ -97,11 +97,6 @@ export const Overview: Story = {
   tags: ['overview'],
 };
 
-/**
- * Multiple **`swc-upload-artifact`** nodes in a wrapping flex row—similar width to the prompt-field composer attachment strip—so card vs media spacing and wraps are easy to compare in isolation.
- *
- * To see the same tiles inside **`swc-prompt-field`**, open **[Artifact](/docs/paatterns-conversational-ai-prompt-field--readme#artifact)**.
- */
 export const MultiArtifact: Story = {
   render: () => html`
     <div
@@ -141,13 +136,9 @@ export const MultiArtifact: Story = {
       </div>
     </div>
   `,
-  parameters: { 'section-order': 1 },
   tags: ['options'],
 };
 
-/**
- * Card type uses a compact thumbnail with horizontal text layout.
- */
 export const Card: Story = {
   render: () => html`
     <div style="max-inline-size:360px;">
@@ -161,9 +152,6 @@ export const Card: Story = {
   tags: ['options'],
 };
 
-/**
- * Media type uses a larger preview region without title and subtitle text.
- */
 export const Media: Story = {
   render: () => html`
     <div style="inline-size:240px;">
@@ -175,10 +163,6 @@ export const Media: Story = {
   tags: ['options'],
 };
 
-/**
- * Title and subtitle truncate with an ellipsis when the artifact is narrower than the text.
- * **Card** uses a compact row; **media** keeps the actions region visible while the title shrinks.
- */
 export const TextOverflow: Story = {
   render: () => html`
     <div

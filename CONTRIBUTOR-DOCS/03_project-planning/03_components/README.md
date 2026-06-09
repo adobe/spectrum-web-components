@@ -47,11 +47,14 @@
     - [Button migration roadmap](button/rendering-and-styling-migration-analysis.md)
 - Button Group
     - [Button group accessibility migration analysis](button-group/accessibility-migration-analysis.md)
+    - [Button group migration plan](button-group/migration-plan.md)
     - [Button Group migration roadmap](button-group/rendering-and-styling-migration-analysis.md)
 - Checkbox
     - [Checkbox migration roadmap](checkbox/rendering-and-styling-migration-analysis.md)
 - Close Button
     - [Close button accessibility migration analysis](close-button/accessibility-migration-analysis.md)
+    - [Close button migration plan](close-button/migration-plan.md)
+    - [Close button migration roadmap](close-button/rendering-and-styling-migration-analysis.md)
 - Color Field
     - [Color field migration roadmap](color-field/rendering-and-styling-migration-analysis.md)
 - Color Loupe
@@ -67,6 +70,9 @@
     - [Field Group migration roadmap](field-group/rendering-and-styling-migration-analysis.md)
 - Field Label
     - [Field label migration roadmap](field-label/rendering-and-styling-migration-analysis.md)
+- Grid
+    - [Grid accessibility migration analysis](grid/accessibility-migration-analysis.md)
+    - [Grid migration roadmap](grid/rendering-and-styling-migration-analysis.md)
 - Help Text
     - [Help text migration roadmap](help-text/rendering-and-styling-migration-analysis.md)
 - Illustrated Message
@@ -97,11 +103,13 @@
 - Number Field
     - [Number field migration roadmap](number-field/rendering-and-styling-migration-analysis.md)
 - Opacity Checkerboard
+    - [Opacity Checkerboard migration plan](opacity-checkerboard/migration-plan.md)
     - [Opacity Checkerboard migration roadmap](opacity-checkerboard/rendering-and-styling-migration-analysis.md)
 - Picker Button
     - [Picker button migration roadmap](picker-button/rendering-and-styling-migration-analysis.md)
 - Popover
     - [Popover accessibility migration analysis](popover/accessibility-migration-analysis.md)
+    - [Popover migration plan](popover/migration-plan.md)
     - [Popover migration roadmap](popover/rendering-and-styling-migration-analysis.md)
 - Progress Bar
     - [Progress bar accessibility migration analysis](progress-bar/accessibility-migration-analysis.md)

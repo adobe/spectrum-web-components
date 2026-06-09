@@ -47,11 +47,11 @@ const meta: Meta = {
 export default meta;
 
 // ────────────────────
-//    AUTODOCS STORY
+//    PLAYGROUND STORY
 // ────────────────────
 
 export const Playground: Story = {
-  tags: ['autodocs', 'dev'],
+  tags: ['dev'],
 };
 
 // ──────────────────────────────
@@ -66,12 +66,6 @@ export const Overview: Story = {
 //    ANATOMY STORY
 // ──────────────────────────
 
-/**
- * A suggestion item consists of:
- *
- * 1. **Leading icon** — Curved-arrow glyph
- * 2. **Label** — Consumer-provided default-slot content
- */
 export const Anatomy: Story = {
   args: {
     'default-slot': 'Create a slide deck from this',
@@ -83,9 +77,6 @@ export const Anatomy: Story = {
 //    OPTIONS STORIES
 // ──────────────────────────
 
-/**
- * Suggestion item labels come from default-slot content and can vary in length.
- */
 export const Labels: Story = {
   render: () => html`
     <div style="display:flex;flex-direction:column;gap:24px;">
@@ -101,7 +92,6 @@ export const Labels: Story = {
       </div>
     </div>
   `,
-  parameters: { 'section-order': 1 },
   tags: ['options'],
 };
 
@@ -109,15 +99,6 @@ export const Labels: Story = {
 //    ACCESSIBILITY STORY
 // ────────────────────────────────
 
-/**
- * ### Features
- *
- * The `<swc-suggestion-item>` element implements:
- *
- * - Native `<button>` interaction semantics
- * - Keyboard activation via <kbd>Enter</kbd> and <kbd>Space</kbd>
- * - Bubbled `swc-suggestion` custom event on activation
- */
 export const Accessibility: Story = {
   args: {
     'default-slot': 'Create a slide deck from this',

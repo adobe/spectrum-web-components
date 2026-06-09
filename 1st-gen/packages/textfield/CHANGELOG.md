@@ -1,5 +1,19 @@
 # Change Log
 
+## 1.12.1
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @spectrum-web-components/help-text@1.12.1
+  - @spectrum-web-components/icon@1.12.1
+  - @spectrum-web-components/icons-ui@1.12.1
+  - @spectrum-web-components/icons-workflow@1.12.1
+  - @spectrum-web-components/overlay@1.12.1
+  - @spectrum-web-components/tooltip@1.12.1
+  - @spectrum-web-components/base@1.12.1
+  - @spectrum-web-components/shared@1.12.1
+
 ## 1.12.0
 
 ### Patch Changes

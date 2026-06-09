@@ -64,6 +64,7 @@ Reference: [Linting tools](../../CONTRIBUTOR-DOCS/02_style-guide/03_linting-tool
 
 **What to check:**
 
+- Every item in the Component CSS PR checklist passes — work through it explicitly, do not skim
 - CSS property ordering matches the documented order
 - Custom property naming follows the convention
 - No patterns from the anti-patterns guide are present
@@ -72,6 +73,8 @@ Reference: [Linting tools](../../CONTRIBUTOR-DOCS/02_style-guide/03_linting-tool
 - No hard-coded values where design tokens are available
 
 ## Test files
+
+**Vitest reference:** see [.ai/references/vitest.md](../references/vitest.md) for the canonical AI-friendly Vitest docs (index + per-page fetch pattern) and project-specific config notes.
 
 **Style guide:**
 
@@ -95,18 +98,31 @@ Reference: [Linting tools](../../CONTRIBUTOR-DOCS/02_style-guide/03_linting-tool
 **Authoring guidelines:**
 
 - Stories format: `.ai/rules/stories-format.md` — file structure, meta, tags, layout, visual separators
-- Stories documentation: `.ai/rules/stories-documentation.md` — section content, anatomy, options, states, behaviors, accessibility
+- Stories documentation: `.ai/rules/stories-documentation.md` — per-unit MDX authoring (section content, anatomy, options, states, behaviors, accessibility)
 
-**What to check:**
+**What to check (`<unit>.stories.ts`):**
 
 - File has the correct section order and visual separators
-- Meta has all required fields: `title`, `component`, `args`, `argTypes`, `render`, `parameters.docs.subtitle`, `tags: ['migrated']`
-- All stories have correct tags: `anatomy`, `options`, `states`, `behaviors`, `a11y`, etc.
-- JSDoc comments are present on all stories except Playground and Overview
-- JSDoc headings start at level 3 (`###`) or deeper
+- Meta has all required fields: `title`, `component`, `args`, `argTypes`, `render`, `parameters.docs.subtitle`, `tags: ['migrated']` (or `'controller'`)
+- All stories have correct section tags: `anatomy`, `options`, `states`, `behaviors`, `a11y`, etc.
+- Playground uses `tags: ['dev']` when the unit has a per-unit MDX file (no `'autodocs'` to avoid a duplicate Docs entry)
+- No story-level JSDoc comments above any `export const` — only the meta-level JSDoc remains
+- No `section-order` parameter; no `description-only` tag
 - `flexLayout: 'row-wrap'` is used for multi-item stories
 - All examples use accessible, meaningful content: no placeholder text, no missing labels
 - Image assets use `picsum.photos` with static IDs
+
+**What to check (`<unit>.mdx`):**
+
+- Per-unit MDX file exists at the unit root with the correct relative import path for `DocsHeader` / `DocsFooter`
+- `<Meta of={Stories} />` declared exactly once
+- `<DocsHeader />` at the top, `<DocsFooter />` at the bottom
+- Sections appear in canonical order (Anatomy → Upcoming features → Usage → Options → States → Behaviors → Accessibility → Full pattern → API → Appendix → Feedback)
+- Every section-tagged story is referenced via `<Canvas of={Stories.StoryName} />`
+- Per-story `### Title` headings match Storybook's rendered story names
+- No `<Canvas>` references to untagged stories
+- Controllers: hand-authored `## API` section is present and `meta.tags` includes `'controller'` so `<ApiTable />` is omitted by `<DocsFooter />`
+- MDX heading levels start at `###` inside section prose (top-level sections use `##`)
 
 ## Guideline gaps
 
