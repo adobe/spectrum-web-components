@@ -56,6 +56,13 @@ const meta: Meta = {
     docs: {
       subtitle: 'Compact button for toolbars and action groups',
     },
+    design: {
+      type: 'figma',
+      url: 'https://www.figma.com/design/Mngz9H7WZLbrCvGQf3GnsY/S2---Web--Desktop-scale-?node-id=702-2877',
+    },
+    stackblitz: {
+      url: 'https://stackblitz.com/edit/vitejs-vite-alf1ticu',
+    },
   },
   tags: ['migrated'],
 };
@@ -84,7 +91,7 @@ export const Playground: Story = {
   args: {
     'default-slot': 'Edit',
   },
-  tags: ['autodocs', 'dev'],
+  tags: ['dev'],
 };
 
 // ──────────────────────────
@@ -108,6 +115,11 @@ export const Anatomy: Story = {
     ${template({
       ...args,
       'default-slot': 'Icon and label',
+      'icon-slot': editIconSvg,
+    })}
+    ${template({
+      ...args,
+      'accessible-label': 'Edit',
       'icon-slot': editIconSvg,
     })}
   `,
@@ -231,6 +243,55 @@ export const IconOnly: Story = {
   tags: ['behaviors'],
 };
 IconOnly.storyName = 'Icon only';
+
+export const Pending: Story = {
+  render: (args) => {
+    let pending = false;
+
+    function handleTogglePending(event: Event) {
+      pending = (event.target as HTMLInputElement).checked;
+      const host = (event.target as HTMLElement).closest('div')!;
+      host.querySelectorAll('swc-action-button').forEach((btn) => {
+        btn.toggleAttribute('pending', pending);
+      });
+    }
+
+    return html`
+      <div
+        style="display: flex; flex-direction: column; gap: 16px; align-items: flex-start;"
+      >
+        <label
+          style="display: flex; gap: 8px; align-items: center; cursor: pointer;"
+        >
+          <input type="checkbox" @change=${handleTogglePending} />
+          Toggle pending
+        </label>
+        <div
+          style="display: flex; gap: 8px; flex-wrap: wrap; align-items: center;"
+        >
+          ${template({
+            ...args,
+            'default-slot': 'Upload',
+            'icon-slot': editIconSvg,
+          })}
+          ${template({
+            ...args,
+            'default-slot': 'Upload',
+            'pending-label': 'Upload in-progress',
+            'icon-slot': editIconSvg,
+          })}
+          ${template({
+            ...args,
+            quiet: true,
+            'default-slot': 'Upload',
+            'icon-slot': editIconSvg,
+          })}
+        </div>
+      </div>
+    `;
+  },
+  tags: ['behaviors', '!test'],
+};
 
 // ────────────────────────────────
 //    ACCESSIBILITY STORIES
