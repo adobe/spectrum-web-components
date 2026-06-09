@@ -70,13 +70,13 @@ export const DocsFooter = () => {
                   {mainComponent}
                 </HeaderMdx>
               )}
-              <ApiTable />
+              <ApiTable sectionHeadingAs="h4" />
               {additionalApiTables.map((tag) => (
                 <React.Fragment key={tag}>
                   <HeaderMdx as="h3" id={`api-${tag}`}>
                     {tag}
                   </HeaderMdx>
-                  <ApiTable component={tag} />
+                  <ApiTable component={tag} sectionHeadingAs="h4" />
                 </React.Fragment>
               ))}
             </>

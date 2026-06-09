@@ -83,14 +83,24 @@ interface ArgType {
   };
 }
 
+type SectionHeading = 'h3' | 'h4';
+
+function sectionId(baseId: string, tagName?: string): string {
+  return tagName ? `${baseId}-${tagName}` : baseId;
+}
+
 function PropertiesTable({
   members,
   attributes,
   argTypes,
+  sectionHeadingAs,
+  tagName,
 }: {
   members: ClassMember[];
   attributes: Attribute[];
   argTypes: Record<string, ArgType>;
+  sectionHeadingAs: SectionHeading;
+  tagName?: string;
 }) {
   const attrByField = new Map<string, Attribute>();
   for (const attr of attributes) {
@@ -111,7 +121,7 @@ function PropertiesTable({
 
   return (
     <>
-      <HeaderMdx as="h3" id="properties">
+      <HeaderMdx as={sectionHeadingAs} id={sectionId('properties', tagName)}>
         Properties
       </HeaderMdx>
       <div style={scrollStyle}>
@@ -169,11 +179,19 @@ function PropertiesTable({
   );
 }
 
-function SlotsTable({ slots }: { slots: Slot[] }) {
+function SlotsTable({
+  slots,
+  sectionHeadingAs,
+  tagName,
+}: {
+  slots: Slot[];
+  sectionHeadingAs: SectionHeading;
+  tagName?: string;
+}) {
   if (slots.length === 0) return null;
   return (
     <>
-      <HeaderMdx as="h3" id="slots">
+      <HeaderMdx as={sectionHeadingAs} id={sectionId('slots', tagName)}>
         Slots
       </HeaderMdx>
       <div style={scrollStyle}>
@@ -200,12 +218,20 @@ function SlotsTable({ slots }: { slots: Slot[] }) {
   );
 }
 
-function EventsTable({ events }: { events: CemEvent[] }) {
+function EventsTable({
+  events,
+  sectionHeadingAs,
+  tagName,
+}: {
+  events: CemEvent[];
+  sectionHeadingAs: SectionHeading;
+  tagName?: string;
+}) {
   if (events.length === 0) return null;
 
   return (
     <>
-      <HeaderMdx as="h3" id="events">
+      <HeaderMdx as={sectionHeadingAs} id={sectionId('events', tagName)}>
         Events
       </HeaderMdx>
       <div style={scrollStyle}>
@@ -232,11 +258,22 @@ function EventsTable({ events }: { events: CemEvent[] }) {
   );
 }
 
-function CssPropsTable({ cssProps }: { cssProps: CssCustomProperty[] }) {
+function CssPropsTable({
+  cssProps,
+  sectionHeadingAs,
+  tagName,
+}: {
+  cssProps: CssCustomProperty[];
+  sectionHeadingAs: SectionHeading;
+  tagName?: string;
+}) {
   if (cssProps.length === 0) return null;
   return (
     <>
-      <HeaderMdx as="h3" id="css-custom-properties">
+      <HeaderMdx
+        as={sectionHeadingAs}
+        id={sectionId('css-custom-properties', tagName)}
+      >
         CSS Custom Properties
       </HeaderMdx>
       <div style={scrollStyle}>
@@ -267,11 +304,19 @@ function CssPropsTable({ cssProps }: { cssProps: CssCustomProperty[] }) {
   );
 }
 
-function CssPartsTable({ cssParts }: { cssParts: CssPart[] }) {
+function CssPartsTable({
+  cssParts,
+  sectionHeadingAs,
+  tagName,
+}: {
+  cssParts: CssPart[];
+  sectionHeadingAs: SectionHeading;
+  tagName?: string;
+}) {
   if (cssParts.length === 0) return null;
   return (
     <>
-      <HeaderMdx as="h3" id="css-parts">
+      <HeaderMdx as={sectionHeadingAs} id={sectionId('css-parts', tagName)}>
         CSS Parts
       </HeaderMdx>
       <div style={scrollStyle}>
@@ -309,7 +354,8 @@ function CssPartsTable({ cssParts }: { cssParts: CssPart[] }) {
  */
 export function ApiTable({
   component: componentOverride,
-}: { component?: string } = {}) {
+  sectionHeadingAs = 'h3',
+}: { component?: string; sectionHeadingAs?: SectionHeading } = {}) {
   const resolvedOf = useOf('meta', ['meta']);
   const meta = resolvedOf.csfFile?.meta as {
     component?: string;
@@ -340,17 +386,37 @@ export function ApiTable({
   const cssProps = component.cssProperties ?? [];
   const cssParts = component.cssParts ?? [];
 
+  const sectionTagName = sectionHeadingAs === 'h4' ? tagName : undefined;
+
   return (
     <>
       <PropertiesTable
         members={members}
         attributes={attributes}
         argTypes={argTypes as Record<string, ArgType>}
+        sectionHeadingAs={sectionHeadingAs}
+        tagName={sectionTagName}
       />
-      <SlotsTable slots={slots} />
-      <EventsTable events={events} />
-      <CssPropsTable cssProps={cssProps} />
-      <CssPartsTable cssParts={cssParts} />
+      <SlotsTable
+        slots={slots}
+        sectionHeadingAs={sectionHeadingAs}
+        tagName={sectionTagName}
+      />
+      <EventsTable
+        events={events}
+        sectionHeadingAs={sectionHeadingAs}
+        tagName={sectionTagName}
+      />
+      <CssPropsTable
+        cssProps={cssProps}
+        sectionHeadingAs={sectionHeadingAs}
+        tagName={sectionTagName}
+      />
+      <CssPartsTable
+        cssParts={cssParts}
+        sectionHeadingAs={sectionHeadingAs}
+        tagName={sectionTagName}
+      />
     </>
   );
 }
