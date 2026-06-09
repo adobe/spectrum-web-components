@@ -10,7 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
-import { CSSResultArray, html, TemplateResult } from 'lit';
+import { CSSResultArray, html, nothing, TemplateResult } from 'lit';
 import { property, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
@@ -22,18 +22,44 @@ import {
 } from '@spectrum-web-components/core/components/action-button';
 import { ButtonBase } from '@spectrum-web-components/core/components/button';
 
+import pendingSpinnerStyles from '../../stylesheets/shared/pending-spinner.css';
 import styles from './action-button.css';
 
 /**
  * A compact action button for toolbars, action groups, and icon-first chrome.
- * Supports sizes `xs`–`xl`; `xs` is an action-button-specific addition not
- * available on `swc-button`.
  *
  * @element swc-action-button
  * @since 0.0.1
  *
  * @slot - Visible button label.
  * @slot icon - Optional leading icon displayed before the label.
+ *
+ * @cssprop --swc-action-button-min-block-size - Minimum block size. Defaults to the medium component height token.
+ * @cssprop --swc-action-button-border-radius - Corner radius. Defaults to `corner-radius-medium-size-medium`.
+ * @cssprop --swc-action-button-font-size - Font size of the label. Defaults to the medium font-size token.
+ * @cssprop --swc-action-button-gap - Gap between icon and label.
+ * @cssprop --swc-action-button-edge-to-text - Inline padding from edge to label text.
+ * @cssprop --swc-action-button-edge-to-visual - Inline padding from edge to icon when a label is also present.
+ * @cssprop --swc-action-button-edge-to-visual-only - Inline padding from edge to icon when no label is present.
+ * @cssprop --swc-action-button-icon-size - Size (inline and block) of the slotted icon.
+ * @cssprop --swc-action-button-icon-inline-size - Inline size override for the slotted icon.
+ * @cssprop --swc-action-button-icon-block-size - Block size override for the slotted icon.
+ * @cssprop --swc-action-button-focus-indicator-color - Color of the focus ring outline.
+ * @cssprop --swc-action-button-background-color-default - Background color in the default state.
+ * @cssprop --swc-action-button-border-color-default - Border color in the default state.
+ * @cssprop --swc-action-button-content-color-default - Text and icon color in the default state.
+ * @cssprop --swc-action-button-background-color-hover - Background color on hover.
+ * @cssprop --swc-action-button-border-color-hover - Border color on hover.
+ * @cssprop --swc-action-button-content-color-hover - Text and icon color on hover.
+ * @cssprop --swc-action-button-background-color-focus - Background color when focused.
+ * @cssprop --swc-action-button-border-color-focus - Border color when focused.
+ * @cssprop --swc-action-button-content-color-focus - Text and icon color when focused.
+ * @cssprop --swc-action-button-background-color-down - Background color when pressed.
+ * @cssprop --swc-action-button-border-color-down - Border color when pressed.
+ * @cssprop --swc-action-button-content-color-down - Text and icon color when pressed.
+ * @cssprop --swc-action-button-background-color-disabled - Background color when disabled or pending.
+ * @cssprop --swc-action-button-border-color-disabled - Border color when disabled or pending.
+ * @cssprop --swc-action-button-content-color-disabled - Text and icon color when disabled or pending.
  *
  * @example
  * <swc-action-button>Edit</swc-action-button>
@@ -45,9 +71,9 @@ import styles from './action-button.css';
  * </swc-action-button>
  */
 export class ActionButton extends ButtonBase {
-  // ──────────────────────
+  // ────────────────────
   //     API OVERRIDES
-  // ──────────────────────
+  // ────────────────────
 
   /** @internal */
   static override readonly VALID_SIZES: readonly ActionButtonSize[] =
@@ -57,11 +83,15 @@ export class ActionButton extends ButtonBase {
   //     API ADDITIONS
   // ───────────────────
 
-  /** Applies the quiet (low-emphasis) visual treatment. */
+  /**
+   * Applies the quiet (low-emphasis) visual treatment.
+   */
   @property({ type: Boolean, reflect: true })
   public quiet: boolean = false;
 
-  /** Static color treatment for display over colored or image backgrounds. */
+  /**
+   * Static color treatment for display over colored or image backgrounds.
+   */
   @property({ type: String, reflect: true, attribute: 'static-color' })
   public staticColor?: ActionButtonStaticColor;
 
@@ -70,7 +100,7 @@ export class ActionButton extends ButtonBase {
   // ──────────────────────────────
 
   public static override get styles(): CSSResultArray {
-    return [styles];
+    return [pendingSpinnerStyles, styles];
   }
 
   // Observe aria-haspopup / aria-expanded without @property so they don't
@@ -78,19 +108,6 @@ export class ActionButton extends ButtonBase {
   static override get observedAttributes(): string[] {
     return [...super.observedAttributes, 'aria-haspopup', 'aria-expanded'];
   }
-
-  // Forwarded to the inner <button> for menu-trigger patterns; stripped from
-  // the host after reading to avoid duplicate ARIA state on both elements.
-  @state()
-  private _ariaHasPopup?: string;
-
-  @state()
-  private _ariaExpanded?: string;
-
-  // Guard against re-entrant attributeChangedCallback: removeAttribute fires a
-  // second callback with value=null; the guard prevents that from clearing the
-  // state we just set.
-  private _ariaForwardingInProgress = false;
 
   /** @internal */
   override attributeChangedCallback(
@@ -119,6 +136,19 @@ export class ActionButton extends ButtonBase {
     super.attributeChangedCallback(name, old, value);
   }
 
+  // Forwarded to the inner <button> for menu-trigger patterns; stripped from
+  // the host after reading to avoid duplicate ARIA state on both elements.
+  @state()
+  private _ariaHasPopup?: string;
+
+  @state()
+  private _ariaExpanded?: string;
+
+  // Guard against re-entrant attributeChangedCallback: removeAttribute fires a
+  // second callback with value=null; the guard prevents that from clearing the
+  // state we just set.
+  private _ariaForwardingInProgress = false;
+
   protected override render(): TemplateResult {
     return html`
       <button
@@ -144,6 +174,38 @@ export class ActionButton extends ButtonBase {
         <span class="swc-ActionButton-label">
           <slot></slot>
         </span>
+        ${this.pending
+          ? html`
+              <svg
+                class=${classMap({
+                  'swc-PendingSpinner': true,
+                  'swc-PendingSpinner--active': this.pendingActive,
+                })}
+                width="100%"
+                height="100%"
+                fill="none"
+                aria-hidden="true"
+                focusable="false"
+              >
+                <circle
+                  class="swc-PendingSpinner-track"
+                  cx="50%"
+                  cy="50%"
+                  r="calc(50% - 1px)"
+                />
+                <circle
+                  class="swc-PendingSpinner-fill"
+                  cx="50%"
+                  cy="50%"
+                  r="calc(50% - 1px)"
+                  pathLength="100"
+                  stroke-dasharray="100 200"
+                  stroke-dashoffset="75"
+                  stroke-linecap="round"
+                />
+              </svg>
+            `
+          : nothing}
       </button>
     `;
   }

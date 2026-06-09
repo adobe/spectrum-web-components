@@ -134,9 +134,9 @@ const variantLabels = {
 //
 // const allVariantLabels = { ...semanticLabels, ...nonSemanticLabels };
 
-// ────────────────────
-//    AUTODOCS STORY
-// ────────────────────
+// ────────────────────────
+//    PLAYGROUND STORY
+// ────────────────────────
 
 export const Playground: Story = {
   tags: ['autodocs', 'dev'],
@@ -148,9 +148,9 @@ export const Playground: Story = {
   },
 };
 
-// ──────────────────────────────
-//    OVERVIEW STORIES
-// ──────────────────────────────
+// ──────────────────────────
+//    OVERVIEW STORY
+// ──────────────────────────
 
 export const Overview: Story = {
   tags: ['overview'],
