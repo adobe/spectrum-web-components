@@ -78,7 +78,7 @@ export const OverviewTest: Story = {
     await step('default range and value bind to the role element', () => {
       expect(roleEl.getAttribute('aria-valuemin')).toBe('0');
       expect(roleEl.getAttribute('aria-valuemax')).toBe('100');
-      expect(roleEl.getAttribute('aria-valuenow')).toBe('40');
+      expect(roleEl.getAttribute('aria-valuenow')).toBe('80');
       expect(roleEl.getAttribute('aria-valuetext')).toBeTruthy();
     });
 

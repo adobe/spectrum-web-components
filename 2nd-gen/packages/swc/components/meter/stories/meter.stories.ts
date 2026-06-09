@@ -342,6 +342,6 @@ export const Accessibility: Story = {
     value: 2,
     'max-value': 5,
     'label-slot': 'Storage used',
-    'description-slot': 'Upgrade for more space',
+    'description-slot': 'Backed up 2 hours ago',
   },
 };
