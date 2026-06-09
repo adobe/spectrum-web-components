@@ -86,6 +86,13 @@
 }
 
 .swc-LinearProgress-fill {
+  /* Visual nudge at 0%: keep a small contrasting sliver of fill visible at
+   * every value, including the starting state, so the indicator is always
+   * perceivable (WCAG 1.4.11). The fill is a pill (corner radius is half the
+   * thickness), so any width below one thickness is clipped by its own
+   * radius; one thickness is the smallest width that still renders. ARIA is
+   * unaffected — aria-valuenow stays at the real value. */
+  min-inline-size: var(--swc-linear-progress-thickness, token("progress-bar-thickness-medium"));
   block-size: var(--swc-linear-progress-thickness, token("progress-bar-thickness-medium"));
   background: var(--swc-linear-progress-fill-color, token("accent-content-color-default"));
   border: none;
