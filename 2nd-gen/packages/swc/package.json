@@ -45,14 +45,6 @@
       "types": "./dist/patterns/*/index.d.ts",
       "import": "./dist/patterns/*/index.js"
     },
-    "./stylesheets/shared": {
-      "types": "./dist/stylesheets/shared/index.d.ts",
-      "import": "./dist/stylesheets/shared/index.js"
-    },
-    "./stylesheets/shared/*": {
-      "types": "./dist/stylesheets/shared/*.d.ts",
-      "import": "./dist/stylesheets/shared/*.js"
-    },
     "./utils/*": {
       "types": "./dist/utils/*.d.ts",
       "import": "./dist/utils/*.js"

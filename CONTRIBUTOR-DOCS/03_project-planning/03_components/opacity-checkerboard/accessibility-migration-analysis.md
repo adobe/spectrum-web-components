@@ -36,7 +36,7 @@
 
 ## Overview
 
-This doc explains how the **`.swc-opacity-checkerboard`** utility should behave for **accessibility**. It supports **WCAG 2.2 Level AA**. The utility is not a custom element: it is an importable lit `css` fragment (`opacityCheckerboardStyles`) that consuming components add to their `styles` array and apply as a class to a **decorative** element inside their own shadow root.
+This doc explains how the **`.swc-opacity-checkerboard`** utility should behave for **accessibility**. It supports **WCAG 2.2 Level AA**. The utility is not a custom element: it is an importable lit `css` fragment at `stylesheets/shared/opacity-checkerboard.css`. Consuming components import it directly (`import opacityCheckerboardStyles from '../../stylesheets/shared/opacity-checkerboard.css'`; `vite-plugin-lit-css` yields a `CSSResult`), add it to their `styles` array, and apply the class to a **decorative** element inside their own shadow root.
 
 ### Also read
 
@@ -87,7 +87,7 @@ This doc explains how the **`.swc-opacity-checkerboard`** utility should behave 
 | Topic | What to do |
 |-------|------------|
 | **No host role** | The utility is a **CSS class on a decorative element**, not a custom element. Do **not** add a `role` to the checkerboard element; it must contribute **no** semantics. |
-| **`aria-hidden`** | The **consuming** component is responsible for marking the decorative element `aria-hidden="true"` (or otherwise keeping it out of the accessibility tree) so the pattern is never announced. Documented in `opacityCheckerboardStyles` JSDoc and the shared `index.ts` comment. |
+| **`aria-hidden`** | The **consuming** component is responsible for marking the decorative element `aria-hidden="true"` (or otherwise keeping it out of the accessibility tree) so the pattern is never announced. Documented in the `opacity-checkerboard.css` fragment comment. |
 | **Name / value** | The utility exposes **no** name or value. Any accessible name, color value, or state belongs to the **consuming** control (swatch, color-slider, etc.), not the checkerboard element. |
 | **States** | **None.** The `--size-small` modifier is a visual size only; it carries no semantic state and must not map to ARIA. |
 | **Docs** | Tell consumers: apply the class to a **purely decorative** element, hide it from AT, and keep the real semantics on the surrounding control. |
@@ -133,7 +133,7 @@ The checkerboard is **not focusable** and must be **hidden** from assistive tech
 - [ ] Pattern stays visible under **`forced-colors: active`** (`forced-color-adjust: none`).
 - [ ] Transparency is conveyed by **pattern**, with the consuming control supplying any name/value (WCAG 1.4.1, 1.3.1).
 - [ ] Manual SR testing of consuming components uses **browse mode** per the Storybook screen reader guide.
-- [ ] JSDoc on `opacityCheckerboardStyles` states the consumer owns `aria-hidden`.
+- [ ] The `opacity-checkerboard.css` fragment comment states the consumer owns `aria-hidden`.
 
 ---
 

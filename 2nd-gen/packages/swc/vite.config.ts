@@ -104,7 +104,6 @@ export default defineConfig({
         ...glob.sync(resolve(__dirname, 'components/*/index.ts')),
         ...glob.sync(resolve(__dirname, 'components/*/swc-*.ts')),
         ...glob.sync(resolve(__dirname, 'patterns/*/*/index.ts')),
-        ...glob.sync(resolve(__dirname, 'stylesheets/shared/index.ts')),
       ].reduce(
         (entries, file) => {
           const name = file
@@ -152,12 +151,6 @@ export default defineConfig({
       {
         find: '@adobe/spectrum-wc/components',
         replacement: resolve(__dirname, 'components'),
-      },
-      // Shared importable CSS fragments (e.g.
-      // `@adobe/spectrum-wc/stylesheets/shared`).
-      {
-        find: '@adobe/spectrum-wc/stylesheets',
-        replacement: resolve(__dirname, 'stylesheets'),
       },
       // Short-form imports (e.g. `@adobe/spectrum-wc/badge`) point at the source
       // package layout under `./components`, mirroring the published package's
