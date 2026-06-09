@@ -54,20 +54,11 @@
   color: var(--swc-button-content-color-focus, token("gray-25"));
   background-color: var(--swc-button-background-color-focus, token("neutral-background-color-key-focus"));
   border-color: var(--swc-button-border-color-focus, transparent);
-<<<<<<< HEAD
-}.swc-Button:disabled:is(*, :hover) {
-  color: var(--swc-button-content-color-disabled, token("disabled-content-color"));
-  background-color: var(--swc-button-background-color-disabled, token("disabled-background-color"));
-  border-color: var(--swc-button-border-color-disabled, transparent);
-  transform: none;
-}.swc-Button:hover {
-=======
   outline: token("focus-indicator-thickness") solid var(--swc-button-focus-indicator-color, token("focus-indicator-color"));
   outline-offset: token("focus-indicator-gap");
 }
 
 .swc-Button:hover {
->>>>>>> aziz/link-migration
   color: var(--swc-button-content-color-hover, token("gray-25"));
   background-color: var(--swc-button-background-color-hover, token("neutral-background-color-hover"));
   border-color: var(--swc-button-border-color-hover, transparent);
@@ -77,9 +68,6 @@
   border-color: var(--swc-button-border-color-down, transparent);
   transform: var(--swc-button-down-state-transform, perspective(var(--_swc-button-min-block-size)) translate3d(0, 0, token("component-size-difference-down")));
   will-change: transform;
-<<<<<<< HEAD
-}.swc-Button-label {
-=======
 }
 
 .swc-Button:disabled:is(*, :hover) {
@@ -90,7 +78,6 @@
 }
 
 .swc-Button-label {
->>>>>>> aziz/link-migration
   text-align: center;
 }.swc-Button--hasIcon .swc-Button-label {
   text-align: start;
