@@ -417,7 +417,7 @@ export const ButtonGroups: Story = {
     flexLayout: false,
     ...TESTING_GRID_STORY_PARAMETERS,
   },
-  tags: ['!autodocs', 'dev', 'vrt'],
+  tags: ['!autodocs', 'dev'],
 };
 ButtonGroups.storyName = TESTING_GRID_STORY_NAME;
 
@@ -435,6 +435,6 @@ ButtonGroups.storyName = TESTING_GRID_STORY_NAME;
  * - **`premium` variant**: For premium or upgrade flows.
  */
 export const UpcomingFeatures: Story = {
-  tags: ['upcoming', 'description-only'],
+  tags: ['upcoming'],
 };
 UpcomingFeatures.storyName = 'Upcoming features';
