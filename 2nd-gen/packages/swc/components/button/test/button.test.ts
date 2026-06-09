@@ -511,7 +511,20 @@ export const StatesTest: Story = {
 
 export const DisabledBehaviorTest: Story = {
   render: () => html`
-    <swc-button disabled>Save</swc-button>
+    <swc-button disabled>
+      <svg
+        slot="icon"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 36 36"
+        aria-hidden="true"
+        focusable="false"
+      >
+        <path
+          d="M31.5 17H19V4.5a1 1 0 0 0-2 0V17H4.5a1 1 0 0 0 0 2H17v12.5a1 1 0 0 0 2 0V19h12.5a1 1 0 0 0 0-2z"
+        />
+      </svg>
+      Save
+    </swc-button>
   `,
   play: async ({ canvasElement, step }) => {
     const button = await getComponent<Button>(canvasElement, 'swc-button');
@@ -525,6 +538,28 @@ export const DisabledBehaviorTest: Story = {
           activeElement,
           'focus not delegated to internal <button disabled>'
         ).toBeNull();
+      }
+    );
+
+    await step(
+      'suppresses host click when slotted icon is clicked while disabled',
+      async () => {
+        const icon = button.querySelector('[slot="icon"]');
+        expect(icon, 'slotted icon is present').toBeTruthy();
+
+        let clickCount = 0;
+        const listener = () => {
+          clickCount++;
+        };
+        button.addEventListener('click', listener);
+        icon?.dispatchEvent(
+          new MouseEvent('click', { bubbles: true, composed: true })
+        );
+        button.removeEventListener('click', listener);
+        expect(
+          clickCount,
+          'click is suppressed when slotted icon is clicked while disabled'
+        ).toBe(0);
       }
     );
   },
