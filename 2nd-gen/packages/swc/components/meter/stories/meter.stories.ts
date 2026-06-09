@@ -234,6 +234,12 @@ export const LabelPosition: Story = {
       })
     )}
   `,
+  parameters: {
+    flexLayout: 'column-stretch',
+    styles: {
+      gap: 'var(--swc-spacing-300)',
+    },
+  },
   tags: ['options'],
   args: { value: 50 },
 };
