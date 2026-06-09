@@ -465,10 +465,7 @@ const preview = {
                 'Number field',
                 ['Rendering and styling migration analysis'],
                 'Opacity checkerboard',
-                [
-                  'Migration plan',
-                  'Rendering and styling migration analysis',
-                ],
+                ['Migration plan', 'Rendering and styling migration analysis'],
                 'Picker button',
                 ['Rendering and styling migration analysis'],
                 'Popover',

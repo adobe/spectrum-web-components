@@ -57,10 +57,8 @@ For SWC:
 1. Add `components/<name>/stories/<name>.template.ts` — a **pure Lit** `Template()` (no `getStorybookHelpers().template`, which calls `useArgs()` per cell and breaks React hooks in large grids).
 2. Add `components/<name>/stories/<name>.test.ts` with `Variants()`, `ArgGrid`, `Container`, and `testData` / `stateData` using that template.
 3. Export the render function (e.g. `ButtonGroups`) from the test file.
-4. In `<name>.stories.ts`, wire a story: `render: ButtonGroups`, set `storyName` to `TESTING_GRID_STORY_NAME`, and spread `TESTING_GRID_STORY_PARAMETERS` into `parameters` (Chromatic snapshots are disabled globally; only testing-grid stories opt in).
+4. In `<name>.stories.ts`, wire a story: `render: ButtonGroups`, set `storyName` to `TESTING_GRID_STORY_NAME`, and spread `TESTING_GRID_STORY_PARAMETERS` into `parameters` (Chromatic snapshots are disabled globally; only testing-grid stories opt in via `chromatic: { disableSnapshot: false }`).
 5. Toggle **Testing preview** in the Storybook toolbar (beaker) to view the grid locally.
-
-Chromatic (`chromatic.config.json`) also limits captures to story ids matching `**/*--testing-grid`.
 
 Play-function tests stay in `components/<name>/test/<name>.test.ts` (indexed under **Component/Tests** in dev Storybook only).
 
