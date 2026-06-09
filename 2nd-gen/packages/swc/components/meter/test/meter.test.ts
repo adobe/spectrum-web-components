@@ -363,6 +363,41 @@ export const MissingAccessibleNameTest: Story = {
 };
 
 // ──────────────────────────────────────────────────────────────
+// TEST: Out-of-range value DEBUG warning
+// ──────────────────────────────────────────────────────────────
+
+export const ValueOutOfRangeWarningTest: Story = {
+  render: () => html`
+    <span></span>
+  `,
+  play: async ({ step }) => {
+    await step('warns when value is outside the range', () =>
+      withWarningSpy(async (warnCalls) => {
+        const meter = await fixture<Meter>(html`
+          <swc-meter value="150" accessible-label="Storage used"></swc-meter>
+        `);
+        await meter.updateComplete;
+        const messages = warnCalls.map((c) => String(c?.[1] ?? ''));
+        expect(messages.some((m) => m.includes('range'))).toBe(true);
+        meter.parentElement?.remove();
+      })
+    );
+
+    await step('does not warn when value is within the range', () =>
+      withWarningSpy(async (warnCalls) => {
+        const meter = await fixture<Meter>(html`
+          <swc-meter value="50" accessible-label="Storage used"></swc-meter>
+        `);
+        await meter.updateComplete;
+        const messages = warnCalls.map((c) => String(c?.[1] ?? ''));
+        expect(messages.some((m) => m.includes('range'))).toBe(false);
+        meter.parentElement?.remove();
+      })
+    );
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
 // TEST: Locale-aware percent formatting
 // ──────────────────────────────────────────────────────────────
 

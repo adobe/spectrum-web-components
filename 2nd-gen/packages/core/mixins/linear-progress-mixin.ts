@@ -272,9 +272,48 @@ export function LinearProgressMixin<T extends Constructor<ReactiveElement>>(
       ) {
         this.warnMissingAccessibleName();
       }
+
+      // Surface a dev warning when `value` falls outside the resolved
+      // range. The value is still clamped for rendering and ARIA, but the
+      // clamp is otherwise silent, so flag it as a likely authoring error.
+      if (
+        window.__swc?.DEBUG &&
+        (changes.has('value') ||
+          changes.has('minValue') ||
+          changes.has('maxValue'))
+      ) {
+        this.warnValueOutOfRange();
+      }
     }
 
     private _hasWarnedNoAccessibleName = false;
+
+    private _hasWarnedValueOutOfRange = false;
+
+    private warnValueOutOfRange(): void {
+      const value = this.value;
+      const min = this.sanitizedMin;
+      const max = this.sanitizedMax;
+      if (!Number.isFinite(value) || (value >= min && value <= max)) {
+        this._hasWarnedValueOutOfRange = false;
+        return;
+      }
+      if (this._hasWarnedValueOutOfRange) {
+        return;
+      }
+      this._hasWarnedValueOutOfRange = true;
+      window.__swc?.warn(
+        this,
+        `<${this.localName}> "value" (${value}) is outside the [${min}, ${max}] range and was clamped to ${this.clampedValue}.`,
+        'https://opensource.adobe.com/spectrum-web-components/components/meter/',
+        {
+          issues: [
+            'set "value" within the "min-value" and "max-value" range, or',
+            'adjust "min-value"/"max-value" so the range includes the value.',
+          ],
+        }
+      );
+    }
 
     private warnMissingAccessibleName(): void {
       if (this.hasLabelSlotContent || this.accessibleLabel) {

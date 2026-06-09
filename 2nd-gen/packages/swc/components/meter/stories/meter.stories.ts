@@ -158,7 +158,7 @@ export const Overview: Story = {
     size: 'm',
     value: 40,
     'label-slot': 'Storage used',
-    'description-slot': '2 GB of 5 GB used',
+    'description-slot': 'Backed up 2 hours ago',
   },
 };
 
@@ -339,8 +339,9 @@ export const Accessibility: Story = {
   args: {
     variant: 'informative',
     size: 'm',
-    value: 40,
+    value: 2,
+    'max-value': 5,
     'label-slot': 'Storage used',
-    'description-slot': '2 GB of 5 GB used',
+    'description-slot': 'Upgrade for more space',
   },
 };

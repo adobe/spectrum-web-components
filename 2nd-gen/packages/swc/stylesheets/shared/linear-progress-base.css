@@ -72,6 +72,7 @@
   grid-area: value;
   justify-self: end;
   margin-inline-start: token("spacing-200");
+  font-variant-numeric: tabular-nums;
   word-break: normal;
 }
 
