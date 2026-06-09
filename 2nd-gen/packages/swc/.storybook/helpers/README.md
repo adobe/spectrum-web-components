@@ -60,7 +60,7 @@ For SWC:
 4. In `<name>.stories.ts`, wire a story: `render: ButtonGroups`, set `storyName` to `TESTING_GRID_STORY_NAME`, and spread `TESTING_GRID_STORY_PARAMETERS` into `parameters` (Chromatic snapshots are disabled globally; only testing-grid stories opt in via `chromatic: { disableSnapshot: false }`, with `delay: 1100` for pending cells).
 5. Toggle **Testing preview** in the Storybook toolbar (beaker) to view the grid locally.
 
-Chromatic (`chromatic.config.json`) limits the build to `**/Default` stories (one testing grid per component; Storybook path format, e.g. `Button/Default`). Do not combine `onlyStoryNames` with `onlyChanged` in the same config.
+Chromatic (`chromatic.config.json`) limits the build to `**/Default` stories (one testing grid per component; Storybook path format, e.g. `Button/Default`). TurboSnap options (`onlyChanged`, `traceChanged`, `untraced`) are incompatible with `onlyStoryNames`.
 
 Play-function tests stay in `components/<name>/test/<name>.test.ts` (indexed under **Component/Tests** in dev Storybook only).
 
