@@ -15,13 +15,10 @@ import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
 import { Meter } from '@adobe/spectrum-wc/meter';
-
-import '@adobe/spectrum-wc/components/meter/swc-meter.js';
-
 import {
   METER_VARIANTS,
   type MeterVariant,
-} from '../../../../core/components/meter/Meter.types.js';
+} from '@spectrum-web-components/core/components/meter';
 import {
   LINEAR_PROGRESS_LABEL_POSITIONS,
   LINEAR_PROGRESS_STATIC_COLORS,
@@ -29,7 +26,9 @@ import {
   type LinearProgressLabelPosition,
   type LinearProgressSize,
   type LinearProgressStaticColor,
-} from '../../../../core/mixins/linear-progress-mixin.js';
+} from '@spectrum-web-components/core/mixins/index.js';
+
+import '@adobe/spectrum-wc/components/meter/swc-meter.js';
 
 // ────────────────
 //    METADATA
@@ -83,6 +82,13 @@ argTypes.value = {
   },
 };
 
+/**
+ * A `<swc-meter>` is a non-focusable, read-only bar that shows a value inside a
+ * fixed range, such as storage used or tasks completed. Its value is driven by
+ * user actions rather than system progress. The accessible `meter` role and its
+ * `aria-value*` attributes live on the internal bar wrapper; the host carries no
+ * ARIA role.
+ */
 const meta: Meta = {
   title: 'Meter',
   component: 'swc-meter',
@@ -128,11 +134,11 @@ const staticColorLabels = {
 } as const satisfies Record<LinearProgressStaticColor, string>;
 
 // ────────────────────
-//    AUTODOCS STORY
+//    PLAYGROUND STORY
 // ────────────────────
 
 export const Playground: Story = {
-  tags: ['autodocs', 'dev'],
+  tags: ['dev'],
   args: {
     variant: 'informative',
     size: 'm',
@@ -200,7 +206,6 @@ export const Sizes: Story = {
       })
     )}
   `,
-  parameters: { 'section-order': 1 },
   tags: ['options'],
   args: { value: 50 },
 };
@@ -215,7 +220,6 @@ export const Variants: Story = {
       })
     )}
   `,
-  parameters: { 'section-order': 2 },
   tags: ['options'],
   args: { value: 50 },
 };
@@ -230,7 +234,6 @@ export const LabelPosition: Story = {
       })
     )}
   `,
-  parameters: { 'section-order': 3 },
   tags: ['options'],
   args: { value: 50 },
 };
@@ -246,7 +249,7 @@ export const StaticColors: Story = {
       })
     )}
   `,
-  parameters: { 'section-order': 4, staticColorsDemo: true },
+  parameters: { staticColorsDemo: true },
   tags: ['options', '!test'],
   args: { value: 50 },
 };
@@ -275,8 +278,8 @@ export const Values: Story = {
 //    BEHAVIORS STORIES
 // ──────────────────────────────
 
-// Custom min / max range. Plan B3 surfaces arbitrary numeric ranges; the
-// rendered fill + aria-valuetext use the sanitized range.
+// Custom min / max range. Arbitrary numeric ranges are supported; the
+// rendered fill and aria-valuetext use the sanitized range.
 export const CustomRange: Story = {
   render: (args) => html`
     ${template({
@@ -310,8 +313,34 @@ export const ValueLabel: Story = {
 };
 ValueLabel.storyName = 'Value label';
 
+// `formatOptions` is a JS-only property (no attribute). It accepts any
+// `Intl.NumberFormatOptions`; the default style is percent.
+export const FormatOptions: Story = {
+  render: (args) => html`
+    ${template({
+      ...args,
+      value: 42,
+      'max-value': 100,
+      'label-slot': 'Amount due',
+      formatOptions: { style: 'currency', currency: 'USD' },
+    })}
+  `,
+  tags: ['behaviors'],
+  args: { variant: 'informative', size: 'm' },
+};
+FormatOptions.storyName = 'Format options';
+
 // ────────────────────────────────
 //    ACCESSIBILITY STORIES
 // ────────────────────────────────
 
-// TODO: will complete in separate documentation pass of phase 7
+export const Accessibility: Story = {
+  tags: ['a11y'],
+  args: {
+    variant: 'informative',
+    size: 'm',
+    value: 40,
+    'label-slot': 'Storage used',
+    'description-slot': '2 GB of 5 GB used',
+  },
+};

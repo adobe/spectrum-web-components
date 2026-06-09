@@ -62,7 +62,7 @@
 - **What this is**: a non-focusable, read-only bar that shows a value (`value`, default range 0–100) inside a fixed range. ARIA pattern is **`role="meter"`**, distinct from `progressbar` task progress (separate component).
 - **Architecture**: `<swc-meter>` shares a **thin `LinearProgressMixin`** in `core` with the future `<swc-progress-bar>`. The mixin holds every property, computed value, and behavior that both components share (value clamping, fill-fraction, locale formatting, slot tracking, DEBUG warning) but is intentionally silent on ARIA role and animation — those are left to each component's own base class. `MeterBase` extends `LinearProgressMixin` and adds `variant` + meter-specific ARIA resolution. The SWC layer renders S2 markup against the `swc-Meter` wrapper class. Shared bar/track/fill/label-layout CSS lives in a `linear-progress-base.css` file that both `meter.css` and future `progress-bar.css` import.
 - **API alignment**: 2nd-gen aligns with [React Spectrum S2 Meter](https://react-spectrum.adobe.com/Meter.html) and the Figma `S2 / Web (Desktop scale)` Meter frame supplied with this plan. Net effect: rename `progress` → `value`, add `minValue`/`maxValue`, replace `side-label` boolean with `label-position` enum, expose `value-label`, expose `formatOptions` (`Intl.NumberFormatOptions`) as a JS property, align `variant` set to `{informative (default), positive, notice, negative}`, expose `static-color` as `{white, black}`, and add `label` + `description` named slots.
-- **Must-ship breaking/a11y**: tag rename `<sp-meter>` → `<swc-meter>`; replace 1st-gen's invalid combined `role="meter progressbar"` with `role="meter"` only, placed on the shadow `.swc-Meter` element (not the host); add `aria-valuemin`, `aria-valuemax`, and `aria-valuetext` (localized formatted value) on the role element; drop `--mod-*` passthroughs in favor of a reviewed `--swc-meter-*` set; render inside a `<div class="swc-Meter">` wrapper instead of styling the host.
+- **Must-ship breaking/a11y**: tag rename `<sp-meter>` → `<swc-meter>`; replace 1st-gen's invalid combined `role="meter progressbar"` with `role="meter"` only, placed on the shadow `.swc-LinearProgress` element (not the host); add `aria-valuemin`, `aria-valuemax`, and `aria-valuetext` (localized formatted value) on the role element; drop `--mod-*` passthroughs in favor of the shared `--swc-linear-progress-*` set; render inside a `<div class="swc-LinearProgress">` wrapper instead of styling the host.
 - **Net-new from S2/React**: arbitrary numeric range (`minValue`/`maxValue`); custom `value-label` (e.g. `"1 of 4"`); custom `formatOptions` (`Intl.NumberFormatOptions`, JS property only — full pass-through to `Intl.NumberFormat`); `static-color="black"`; **`description` named slot** for additional text below the meter (not a "help-text" attribute — meter is not a form field).
 - **Field-label rendering**: 1st-gen renders internal `<sp-field-label>` for label and percent. 2nd-gen renders plain `<span>` elements inside the shadow root (SWC-prefixed selectors per the [contributor docs selector patterns](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/01_component-css.md#selector-patterns)). `<label>` is not used because `role="meter"` is not pair-able with native `<label>` semantics.
 - **Accessible-name model**: visible label via the **`label`** named slot; the `meter` role element in shadow DOM `aria-labelledby`-references the label slot's container id. `accessibleLabel` JS property (attr `accessible-label`) is reserved for **rare cases without a visible label** (e.g. a data grid of meters) — when provided, the role element sets it as `aria-label`. Description via the **`description`** named slot; the role element `aria-describedby`-references its container id.
@@ -113,7 +113,7 @@ None custom. (No `dispatchEvent` calls in `Meter.ts`.)
 1st-gen exposes the following `--mod-*` properties via inheritance from progress-bar styles (`@import url("./spectrum-progress-bar.css"); @import url("./progress-bar-overrides.css");` in [`meter.css`](../../../../1st-gen/packages/meter/src/meter.css)) and the meter-specific overrides:
 
 - Passthroughs (progress-bar): `--mod-progressbar-fill-color`, `--mod-progressbar-max-size`, `--mod-progressbar-min-size`, `--mod-progressbar-thickness`
-- Meter modifiers: `--mod-meter-help-text-to-progress-bar`, `--mod-meter-max-width`, `--mod-meter-min-width` _(1st-gen names retained for historical accuracy; the corresponding 2nd-gen exposure is `--swc-meter-description-spacing` etc. — the term "help text" is dropped per the new naming)_
+- Meter modifiers: `--mod-meter-help-text-to-progress-bar`, `--mod-meter-max-width`, `--mod-meter-min-width` _(1st-gen names retained for historical accuracy; these dimensions have no public 2nd-gen custom property and are handled internally. The shared `--swc-linear-progress-*` set covers fill, track, text, thickness, font-size, and top-to-text spacing.)_
 
 This full modifier surface will not be carried forward to 2nd-gen.
 
@@ -205,7 +205,7 @@ None outstanding. All architecture and dependency decisions are settled per dire
 | **B3** | Add `minValue` and `maxValue`. _(Source: React Spectrum S2 Meter API.)_ | No range customization; `progress` is implicitly 0–100. | `minValue` (number, default 0) and `maxValue` (number, default 100) define the range. `value` is clamped to this range. | None for consumers using the implicit 0–100 range. New API for consumers needing arbitrary ranges. |
 | **B4** | `side-label` boolean → `label-position` enum. _(Source: React Spectrum S2 Meter API; matches React's `labelPosition`.)_ | `<sp-meter side-label>` boolean attribute. | `<swc-meter label-position="side">`. Values: `'top'` (default) and `'side'`. | Replace `side-label` with `label-position="side"`. Default behavior (top) unchanged. |
 | **B5** | Variant set normalized. _(Source: React Spectrum S2 Meter API; Figma `S2 / Web (Desktop scale)` Meter frame.)_ | `{positive, notice, negative, ''}` — empty string is "informative" by behavior, not name. | `{informative, positive, notice, negative}` — `informative` is the named default. | Consumers relying on the empty-string default set `variant="informative"` explicitly or omit the attribute. Consumers passing `positive`/`notice`/`negative` are unchanged. |
-| **B6** | `--mod-*` passthroughs removed (`--mod-progressbar-*`, `--mod-meter-*`). _(Source: [CSS style guide — custom properties](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#component-custom-property-exposure).)_ | Consumers customize via `--mod-*`. | Customize via a small reviewed set of `--swc-meter-*` tokens. | Replace `--mod-progressbar-fill-color`, `--mod-progressbar-thickness`, `--mod-meter-min-width`, `--mod-meter-max-width`, `--mod-meter-help-text-to-progress-bar` with the corresponding `--swc-meter-*` properties (final list locked in implementation; the spacing token is renamed to `--swc-meter-description-spacing` to match the `description` slot terminology). |
+| **B6** | `--mod-*` passthroughs removed (`--mod-progressbar-*`, `--mod-meter-*`). _(Source: [CSS style guide — custom properties](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#component-custom-property-exposure).)_ | Consumers customize via `--mod-*`. | Customize via the shared `--swc-linear-progress-*` set (`fill-color`, `track-color`, `text-color`, `thickness`, `font-size`, `top-to-text`), defined in `linear-progress-base.css` and consumed by `meter.css`. | Replace `--mod-progressbar-fill-color` → `--swc-linear-progress-fill-color`, `--mod-progressbar-thickness` → `--swc-linear-progress-thickness`, `--mod-progressbar-track-color` → `--swc-linear-progress-track-color`, `--mod-progressbar-text-color` → `--swc-linear-progress-text-color`, `--mod-progressbar-font-size` → `--swc-linear-progress-font-size`, `--mod-progressbar-spacing-top-to-text` → `--swc-linear-progress-top-to-text`. `--mod-meter-min-width`, `--mod-meter-max-width`, and `--mod-meter-help-text-to-progress-bar` have no 2nd-gen replacement. |
 
 #### Styling and visuals
 
@@ -276,15 +276,16 @@ All variants (`informative` default, `positive`, `notice`, `negative`) support a
 
 No `--mod-*` properties will be exposed. New `--swc-*` component-level properties may be introduced where needed — these are additive and not breaking. See [Component Custom Property Exposure](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#component-custom-property-exposure) for what to expose and how.
 
-Initial expected set for `<swc-meter>` (final list locked in implementation):
+Shipped set for `<swc-meter>`: rather than a `--swc-meter-*` set, the component exposes the shared linear-progress surface (defined in `swc/stylesheets/shared/linear-progress-base.css` and consumed by `meter.css`). These are the public custom properties:
 
-- `--swc-meter-fill-color` — overrides the variant-derived bar fill color.
-- `--swc-meter-track-color` — overrides the bar track color.
-- `--swc-meter-thickness` — overrides the bar thickness.
-- `--swc-meter-min-width` — overrides the meter inline-size minimum.
-- `--swc-meter-max-width` — overrides the meter inline-size maximum.
-- `--swc-meter-description-spacing` — overrides spacing between bar and the description slot.
-- `--swc-meter-label-to-value-spacing` — overrides spacing between label and value text in `label-position="side"`.
+- `--swc-linear-progress-fill-color` — overrides the variant-derived bar fill color.
+- `--swc-linear-progress-track-color` — overrides the bar track color.
+- `--swc-linear-progress-text-color` — overrides the label and value text color.
+- `--swc-linear-progress-thickness` — overrides the bar thickness.
+- `--swc-linear-progress-font-size` — overrides the label and value font size.
+- `--swc-linear-progress-top-to-text` — overrides the spacing between the bar and the text.
+
+The earlier `--swc-meter-min-width`, `--swc-meter-max-width`, `--swc-meter-description-spacing`, and `--swc-meter-label-to-value-spacing` proposals did not ship; those dimensions are handled internally and have no public custom property.
 
 ### Behavioral semantics
 
@@ -416,11 +417,11 @@ Notes:
 
 - [ ] Render the internal wrapper as `<div class="swc-Meter">`; do not target `:host` for component visuals
 - [ ] Copy S2 source from `spectrum-css` `spectrum-two` branch — `components/meter/index.css` plus the relevant rules from `components/progressbar/index.css` — and split into: (a) shared bar/track/fill structure, size tokens, label/value text layout, static-color treatment, and i18n modifiers → `linear-progress-base.css` (rewrite selectors to the `swc-` namespace); (b) meter-specific rules (variant fill colors, description spacing) → `meter.css`, which `@import`s `linear-progress-base.css`
-- [ ] Strip all `--mod-*` properties; replace with the reviewed `--swc-meter-*` set defined in [2nd-gen API decisions](#2nd-gen-api-decisions)
+- [ ] Strip all `--mod-*` properties; replace with the shared `--swc-linear-progress-*` set defined in [2nd-gen API decisions](#2nd-gen-api-decisions)
 - [ ] Variant fill colors via tokens (`positive-visual-color`, `notice-visual-color`, `negative-visual-color`; `accent-content-color-default` for the `informative` default)
 - [ ] Static-color rules for both `staticWhite` and `staticBlack` modifiers
 - [ ] `label-position="side"` layout rule (`.swc-Meter--sideLabel`) mirroring `spectrum-css` `spectrum-two` `.spectrum-ProgressBar--sideLabel`
-- [ ] Description spacing rule (`--swc-meter-description-spacing`). The description container is conditionally rendered (not present in the DOM when the `description` slot has no assigned nodes); no `hidden` attribute is used.
+- [ ] Description spacing rule (handled internally; no public custom property is exposed for it). The description container is conditionally rendered (not present in the DOM when the `description` slot has no assigned nodes); no `hidden` attribute is used.
 
 #### Visual model and regressions
 
@@ -449,20 +450,20 @@ Notes:
 
 ### Testing
 
-- [ ] Port `1st-gen/packages/meter/test/meter.test.ts` coverage that still applies, adapted to the new API (variant validation, label-from-slot, `value`→`aria-valuenow`, locale resolution `en-US` and `ar-sa`)
-- [ ] Add Playwright `meter.a11y.spec.ts` with `toMatchAriaSnapshot` covering size × variant × `label-position` × static-color × key `value` values (0%, 50%, 100%) × `label` slot vs `accessibleLabel` × `description` slot present/absent
+- [x] Port `1st-gen/packages/meter/test/meter.test.ts` coverage that still applies, adapted to the new API (variant validation, label-from-slot, `value`→`aria-valuenow`, locale resolution `en-US` and `ar-sa`) — `2nd-gen/packages/swc/components/meter/test/meter.test.ts`
+- [x] Add Playwright `meter.a11y.spec.ts` with `toMatchAriaSnapshot` covering size × variant × `label-position` × key `value` values (0%, 25%, 50%, 75%, 100%) × `label` slot vs `accessibleLabel` × `description` slot present/absent. Static-color stories carry `!test`, so they are excluded from a11y snapshots (contrast is evaluated against a decorator gradient); their coverage stays in VRT.
 
 #### Behavior
 
-- [ ] Single `role="meter"` set on the shadow `.swc-Meter` element; host has no `role` attribute (regression for B9)
-- [ ] `aria-valuemin`/`aria-valuemax`/`aria-valuenow`/`aria-valuetext` correctness across `value = minValue / midpoint / maxValue`
-- [ ] Custom `minValue`/`maxValue` clamps `value` correctly and feeds ARIA accordingly
-- [ ] `aria-valuetext` matches default percent format in `en-US` (e.g. `50%`) and `ar-sa` (Arabic-Indic digits + `٪`)
-- [ ] `value-label` (attribute) overrides auto-formatted text
-- [ ] `formatOptions` drives auto-formatted text (e.g. `{ style: 'currency', currency: 'USD' }`, `{ style: 'unit', unit: 'inch' }`, `{ style: 'decimal' }`; default `{ style: 'percent' }`)
-- [ ] `label-position="side"` lays out label inline with value and bar
-- [ ] DEBUG warning fires when no accessible name is provable; does not fire when either the `label` slot has assigned nodes or `accessibleLabel` is set
-- [ ] Host is not focusable (`document.activeElement` skips it on `Tab`)
+- [x] Single `role="meter"` set on the shadow `.swc-LinearProgress` element; host has no `role` attribute (regression for B9)
+- [x] `aria-valuemin`/`aria-valuemax`/`aria-valuenow`/`aria-valuetext` correctness across `value = minValue / midpoint / maxValue`
+- [x] Custom `minValue`/`maxValue` clamps `value` correctly and feeds ARIA accordingly
+- [x] `aria-valuetext` matches default percent format in `en-US` (e.g. `50%`) and `ar-sa` (Arabic-Indic digits + `٪`)
+- [x] `value-label` (attribute) overrides auto-formatted text
+- [x] `formatOptions` drives auto-formatted text (currency case covered; `unit`/`decimal` exercise the same code path)
+- [ ] `label-position="side"` lays out label inline with value and bar — layout is asserted via VRT, not unit tests; a11y spec covers `label-position` naming only
+- [x] DEBUG warning fires when no accessible name is provable; does not fire when either the `label` slot has assigned nodes or `accessibleLabel` is set
+- [x] Host is not focusable (`document.activeElement` skips it on `Tab`)
 
 #### Visual regression
 
@@ -476,15 +477,15 @@ Notes:
 
 #### General
 
-- [ ] JSDoc on `LinearProgressMixin` in `linear-progress.mixin.ts` — document all shared properties, getters, and behavior
-- [ ] JSDoc on all public props, slots, and CSS custom properties in `Meter.base.ts` and `Meter.ts`
-- [ ] Storybook stories: Playground, Overview, Anatomy, Sizes, Variants, LabelPosition (top vs side), Values (0/25/50/75/100%), CustomRange (`min-value`/`max-value`), ValueLabel, FormatOptions, Description (`description` slot present vs absent), StaticWhite, StaticBlack, StaticColors (combined), Accessibility (per [stories-format](../../../../.ai/rules/stories-format.md) and [stories-documentation](../../../../.ai/rules/stories-documentation.md))
-- [ ] Storybook `subtitle` plain text; JSDoc above meta carries the longer description
-- [ ] Tag stories: `migrated` on meta; `overview`, `anatomy`, `options`, `behaviors`, `a11y` on the matching stories
+- [x] JSDoc on `LinearProgressMixin` in `linear-progress-mixin.ts` — shared properties, getters, and behavior are documented
+- [x] JSDoc on all public props, slots, and CSS custom properties in `Meter.base.ts` and `Meter.ts` — `Meter.ts` now carries `@slot` and six `@cssprop` tags for the exposed `--swc-linear-progress-*` surface
+- [x] Storybook stories: Playground, Overview, Anatomy, Sizes, Variants, LabelPosition (top vs side), Values (0/25/50/75/100%), CustomRange (`min-value`/`max-value`), ValueLabel, FormatOptions, StaticColors (combined), Accessibility (per [stories-format](../../../../.ai/rules/stories-format.md) and [stories-documentation](../../../../.ai/rules/stories-documentation.md)). Authored per-component MDX at `meter.mdx`. Divergences from this list: `StaticWhite`/`StaticBlack` are not split out — the combined `StaticColors` story is rule-permitted because meter has a single fill style; the `description` slot present-vs-absent case is demonstrated within the `Anatomy` story rather than a standalone `Description` story.
+- [x] Storybook `subtitle` plain text; JSDoc above meta carries the longer description
+- [x] Tag stories: `migrated` on meta; `overview`, `anatomy`, `options`, `behaviors`, `a11y` on the matching stories
 
 #### Breaking changes
 
-- [ ] Consumer migration guide at `2nd-gen/packages/swc/components/meter/consumer-migration-guide.mdx` covering B1–B6, B8–B11 and additive A1–A4 (per [`consumer-migration-guide` rule](../../../../.ai/skills/consumer-migration-guide/SKILL.md))
+- [x] Consumer migration guide at `2nd-gen/packages/swc/components/meter/migration-guide.mdx` covering B1–B6, B8–B11 and additive A1–A4 (per [`consumer-migration-guide` rule](../../../../.ai/skills/consumer-migration-guide/SKILL.md)). Filename is `migration-guide.mdx` (not `consumer-migration-guide.mdx`) per the skill's output convention. Styling section documents the shipped `--swc-linear-progress-*` surface; see the B6 note below.
 
 ### Review
 
