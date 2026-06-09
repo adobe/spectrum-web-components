@@ -1,0 +1,40 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import { DocsFooter, DocsHeader } from '../../.storybook/blocks';
+
+import * as Stories from './stories/opacity-checkerboard.internal.stories';
+
+<Meta of={Stories} />
+
+<DocsHeader />
+
+## Anatomy
+
+The opacity checkerboard is a shared CSS utility, not a custom element. It lives at `stylesheets/shared/opacity-checkerboard.css` as an importable lit `css` fragment. A consuming component imports it directly and adds it to its `styles` array:
+
+```ts
+import opacityCheckerboardStyles from '../../stylesheets/shared/opacity-checkerboard.css';
+
+static styles = [opacityCheckerboardStyles /* , ...component styles */];
+```
+
+Apply `.swc-opacity-checkerboard` to a decorative element rendered behind transparent or semi-transparent content. The consuming component is responsible for keeping that element out of the accessibility tree (for example `aria-hidden="true"`).
+
+> These demos inject the fragment's CSS through an inline `<style>` so the class takes effect in the light DOM. In real use the fragment is adopted into a component's shadow root instead.
+
+## Options
+
+### Sizes
+
+The default square size uses the medium token. The `.swc-opacity-checkerboard--size-small` modifier switches to the small token, halving the square size.
+
+<Canvas of={Stories.Sizes} />
+
+## Behaviors
+
+### Transparent Content
+
+The checkerboard is meant to sit behind transparent or semi-transparent content so the level of transparency reads against a neutral pattern. Fully opaque content covers it entirely.
+
+<Canvas of={Stories.TransparentContent} />
+
+<DocsFooter />
