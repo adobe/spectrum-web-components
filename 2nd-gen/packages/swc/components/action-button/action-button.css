@@ -49,7 +49,7 @@
   overflow: visible;
   cursor: default;
   user-select: none;
-  outline: token("focus-indicator-thickness") solid transparent;
+  outline: 0 solid transparent;
   outline-offset: token("focus-indicator-gap");
   transition-timing-function: token("animation-ease-in-out");
   transition-duration: token("animation-duration-100");
@@ -68,6 +68,7 @@
   color: var(--swc-action-button-content-color-focus, token("neutral-content-color-key-focus"));
   background-color: var(--swc-action-button-background-color-focus, token("gray-200"));
   border-color: var(--swc-action-button-border-color-focus, transparent);
+  outline-width: token("focus-indicator-thickness");
   outline-color: var(--swc-action-button-focus-indicator-color, token("focus-indicator-color"));
 }
 
@@ -228,15 +229,10 @@ slot[name="icon"]::slotted(*) {
 
 /* @global-exclude: pending state requires JS runtime (ButtonBase.pendingActive) */
 
-/* Cursor changes immediately on [pending]. Disabled colors, label/icon fade,
-   and spinner appearance are deferred to .swc-ActionButton--pendingActive, which is
-   added by ButtonBase after a 1-second delay so the button does not flash to
-   its unavailable appearance for operations that complete quickly. */
-:host([pending]) .swc-ActionButton {
-  cursor: default;
-}
-
-
+/* Disabled colors, label/icon fade, and spinner appearance are deferred to
+   .swc-ActionButton--pendingActive, which is added by ButtonBase after a 1-second
+   delay so the button does not flash to its unavailable appearance for operations
+   that complete quickly. */
 .swc-ActionButton--pendingActive {
   --swc-action-button-down-state-transform: none;
 
@@ -276,12 +272,6 @@ slot[name="icon"]::slotted(*) {
 }
 
 /* ── Forced colors ────────────────────────────────── */
-
-@media (forced-colors: active) {
-  .swc-ActionButton:focus-visible {
-    outline-color: ButtonText;
-  }
-}
 
 /* @global-exclude: pending state requires JS runtime (ButtonBase.pendingActive) */
 @media (forced-colors: active) {
