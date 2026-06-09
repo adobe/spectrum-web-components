@@ -28,12 +28,16 @@ import { styleMap } from 'lit/directives/style-map.js';
 import { when } from 'lit/directives/when.js';
 import type { StoryContext } from '@storybook/web-components';
 
-/** Standard storyName for VRT grids (Chromatic default story per component). */
+/** Standard storyName for VRT grids (`**--Default` in chromatic.config.json). */
 export const TESTING_GRID_STORY_NAME = 'Default';
 
 /** Opt a testing-grid story into Chromatic (preview disables snapshots globally). */
 export const TESTING_GRID_STORY_PARAMETERS = {
-  chromatic: { disableSnapshot: false },
+  chromatic: {
+    disableSnapshot: false,
+    // Pending cells use `pending: true` without `vrt-pending-active`; wait for activation.
+    delay: 1100,
+  },
 } as const;
 
 /** Same detection logic as `chromatic/isChromatic` (browser Storybook + CI). */
