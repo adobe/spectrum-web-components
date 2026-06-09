@@ -103,7 +103,7 @@
 - Number Field
     - [Number field migration roadmap](number-field/rendering-and-styling-migration-analysis.md)
 - Opacity Checkerboard
-    - [Opacity Checkerboard accessibility migration analysis](opacity-checkerboard/accessibility-migration-analysis.md)
+    - [Opacity checkerboard accessibility migration analysis](opacity-checkerboard/accessibility-migration-analysis.md)
     - [Opacity Checkerboard migration plan](opacity-checkerboard/migration-plan.md)
     - [Opacity Checkerboard migration roadmap](opacity-checkerboard/rendering-and-styling-migration-analysis.md)
 - Picker Button
