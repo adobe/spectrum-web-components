@@ -308,6 +308,14 @@ export class ActionButton extends SizedMixin(ButtonBase, {
     }
     if (changes.has('holdAffordance')) {
       if (this.holdAffordance) {
+        if (window.__swc?.DEBUG) {
+          window.__swc.warn(
+            this,
+            `The "hold-affordance" attribute on <${this.localName}> is not included in the initial 2nd-gen release and will be addressed in a future phase.`,
+            'https://opensource.adobe.com/spectrum-web-components/components/action-button/',
+            { level: 'deprecation' }
+          );
+        }
         this.addEventListener(
           'pointerdown',
           this.handlePointerdownHoldAffordance
