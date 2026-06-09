@@ -60,13 +60,6 @@
   outline-offset: token("focus-indicator-gap");
 }
 
-.swc-Button:disabled:is(*, :hover) {
-  color: var(--swc-button-content-color-disabled, token("disabled-content-color"));
-  background-color: var(--swc-button-background-color-disabled, token("disabled-background-color"));
-  border-color: var(--swc-button-border-color-disabled, transparent);
-  transform: none;
-}
-
 .swc-Button:hover {
   color: var(--swc-button-content-color-hover, token("gray-25"));
   background-color: var(--swc-button-background-color-hover, token("neutral-background-color-hover"));
@@ -79,6 +72,13 @@
   border-color: var(--swc-button-border-color-down, transparent);
   transform: var(--swc-button-down-state-transform, perspective(var(--_swc-button-min-block-size)) translate3d(0, 0, token("component-size-difference-down")));
   will-change: transform;
+}
+
+.swc-Button:disabled:is(*, :hover) {
+  color: var(--swc-button-content-color-disabled, token("disabled-content-color"));
+  background-color: var(--swc-button-background-color-disabled, token("disabled-background-color"));
+  border-color: var(--swc-button-border-color-disabled, transparent);
+  transform: none;
 }
 
 .swc-Button-label {
