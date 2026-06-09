@@ -136,6 +136,13 @@ export class Button extends ButtonBase {
   @property({ type: Boolean, reflect: true, attribute: 'vrt-pending-active' })
   public vrtPendingActive: boolean = false;
 
+  /**
+   * Forces icon-only visuals in VRT grids when light-DOM slot detection lags.
+   * Not supported for production use.
+   */
+  @property({ type: Boolean, reflect: true, attribute: 'vrt-icon-only' })
+  public vrtIconOnly: boolean = false;
+
   // ──────────────────────────────
   //     RENDERING & STYLING
   // ──────────────────────────────
@@ -150,8 +157,9 @@ export class Button extends ButtonBase {
       <button
         class=${classMap({
           'swc-Button': true,
-          'swc-Button--hasIcon': this.hasIcon,
-          'swc-Button--iconOnly': this.hasIcon && !this.hasLabel,
+          'swc-Button--hasIcon': this.hasIcon || this.vrtIconOnly,
+          'swc-Button--iconOnly':
+            this.vrtIconOnly || (this.hasIcon && !this.hasLabel),
           'swc-Button--pendingActive':
             this.pendingActive || (this.pending && this.vrtPendingActive),
           'is-hover': this.vrtState === 'hover',

@@ -28,6 +28,14 @@ import { styleMap } from 'lit/directives/style-map.js';
 import { when } from 'lit/directives/when.js';
 import type { StoryContext } from '@storybook/web-components';
 
+/** Standard storyName for VRT grids (see chromatic.config.json onlyStoryNames). */
+export const TESTING_GRID_STORY_NAME = 'Default';
+
+/** Opt a testing-grid story into Chromatic (preview disables snapshots globally). */
+export const TESTING_GRID_STORY_PARAMETERS = {
+  chromatic: { disableSnapshot: false },
+} as const;
+
 /** Same detection logic as `chromatic/isChromatic` (browser Storybook + CI). */
 export function isChromatic(windowArgument?: Window): boolean {
   const w =

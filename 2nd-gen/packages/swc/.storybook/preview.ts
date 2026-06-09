@@ -154,6 +154,11 @@ const preview = {
   ],
   parameters: {
     layout: 'centered',
+    // Chromatic captures testing-grid stories only; each grid opts in with
+    // `chromatic: { disableSnapshot: false }` (see testing-grid helpers).
+    chromatic: {
+      disableSnapshot: true,
+    },
     backgrounds: { disable: true }, // Use custom context switches
     controls: {
       expanded: true,
@@ -460,7 +465,10 @@ const preview = {
                 'Number field',
                 ['Rendering and styling migration analysis'],
                 'Opacity checkerboard',
-                ['Rendering and styling migration analysis'],
+                [
+                  'Migration plan',
+                  'Rendering and styling migration analysis',
+                ],
                 'Picker button',
                 ['Rendering and styling migration analysis'],
                 'Popover',

@@ -45,6 +45,8 @@ export type ButtonTemplateArgs = {
   'default-slot'?: string;
   /** HTML for the icon slot (must include `slot="icon"` on the root node). */
   'icon-slot'?: string;
+  /** Icon-only cell — omits label and sets `vrt-icon-only` for `swc-Button--iconOnly`. */
+  iconOnly?: boolean;
   style?: string;
   /** Storybook / VRT only — see `Button.vrtState`. */
   'vrt-state'?: ButtonVrtState;
@@ -65,10 +67,13 @@ export function Template({
   'accessible-label': accessibleLabel,
   'default-slot': defaultSlot = 'Button',
   'icon-slot': iconSlot,
+  iconOnly = false,
   style,
   'vrt-state': vrtState,
   'vrt-pending-active': vrtPendingActive = false,
 }: ButtonTemplateArgs = {}): TemplateResult {
+  const labelContent = iconOnly || !defaultSlot ? nothing : defaultSlot;
+
   return html`
     <swc-button
       variant=${variant}
@@ -83,10 +88,10 @@ export function Template({
       accessible-label=${ifDefined(accessibleLabel)}
       vrt-state=${ifDefined(vrtState)}
       ?vrt-pending-active=${vrtPendingActive}
+      ?vrt-icon-only=${iconOnly}
       style=${ifDefined(style)}
     >
-      ${iconSlot ? unsafeHTML(iconSlot) : nothing}
-      ${defaultSlot ? defaultSlot : nothing}
+      ${iconSlot ? unsafeHTML(iconSlot) : nothing}${labelContent}
     </swc-button>
   `;
 }

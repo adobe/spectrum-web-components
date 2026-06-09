@@ -27,6 +27,10 @@ import {
 
 import '@adobe/spectrum-wc/components/button/swc-button.js';
 
+import {
+  TESTING_GRID_STORY_NAME,
+  TESTING_GRID_STORY_PARAMETERS,
+} from '../../../.storybook/helpers/index.js';
 import { ButtonGroups as buttonGroupsRender } from './button.test.js';
 
 // ────────────────
@@ -411,10 +415,11 @@ export const ButtonGroups: Story = {
   parameters: {
     layout: 'centered',
     flexLayout: false,
+    ...TESTING_GRID_STORY_PARAMETERS,
   },
-  tags: ['!autodocs', 'dev'],
+  tags: ['!autodocs', 'dev', 'vrt'],
 };
-ButtonGroups.storyName = 'Testing grid';
+ButtonGroups.storyName = TESTING_GRID_STORY_NAME;
 
 // ────────────────────────────────────
 //    UPCOMING FEATURES STORIES

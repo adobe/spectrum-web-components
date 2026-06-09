@@ -50,6 +50,12 @@ const STATIC_COLOR_VARIANTS = [
   'secondary',
 ] as const satisfies readonly ButtonVariant[];
 
+/** Pending treatment is shown for primary and secondary only. */
+const PENDING_VARIANTS = [
+  'primary',
+  'secondary',
+] as const satisfies readonly ButtonVariant[];
+
 const addIconSvg = `<svg slot="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36" aria-hidden="true" focusable="false"><path d="M31.5 17H19V4.5a1 1 0 0 0-2 0V17H4.5a1 1 0 0 0 0 2H17v12.5a1 1 0 0 0 2 0V19h12.5a1 1 0 0 0 0-2z"/></svg>`;
 
 const longLabel =
@@ -80,7 +86,7 @@ const ButtonContentGroup: GridTemplateFn = (args, context) =>
         }),
         Template({
           ...args,
-          'default-slot': '',
+          iconOnly: true,
           'icon-slot': addIconSvg,
           'accessible-label': 'Add',
         }),
@@ -140,25 +146,14 @@ const buttonInteractionStates = [
   { testHeading: 'Focused', 'vrt-state': 'focus' as const },
   { testHeading: 'Active', 'vrt-state': 'active' as const },
   { testHeading: 'Disabled', disabled: true },
-  {
-    testHeading: 'Pending',
-    pending: true,
-    'default-slot': 'Save',
-    'vrt-pending-active': true,
-    ignore: ['Static black', 'Static white'],
-  },
 ];
 
 /**
  * One variant: fill-style × content, with a column per interaction state.
  */
 const ButtonVariantStatesSection: GridTemplateFn = (args, context) => {
-  const variant = args.variant as ButtonVariant;
-
   return Container(
     {
-      heading: variantLabels[variant],
-      level: 2,
       withBorder: true,
       direction: 'column',
       content: States(
@@ -192,6 +187,72 @@ const ButtonVariantsByStateGrid: GridTemplateFn = (args, context) =>
     context
   );
 
+const pendingGridArgs = {
+  pending: true,
+} as const;
+
+const ButtonPendingContentGroup: GridTemplateFn = (args, context) =>
+  Container(
+    {
+      level: 3,
+      withBorder: false,
+      content: [
+        Template({
+          ...args,
+          ...pendingGridArgs,
+          'default-slot': 'Save',
+        }),
+        Template({
+          ...args,
+          ...pendingGridArgs,
+          'default-slot': 'Save',
+          'icon-slot': addIconSvg,
+        }),
+        Template({
+          ...args,
+          ...pendingGridArgs,
+          iconOnly: true,
+          'icon-slot': addIconSvg,
+          'accessible-label': 'Add',
+        }),
+      ],
+    },
+    context
+  );
+
+const ButtonPendingFillStyleGroup: GridTemplateFn = (args, context) =>
+  ArgGrid(
+    {
+      Template: ButtonPendingContentGroup,
+      withBorder: false,
+      withWrapperBorder: false,
+      argKey: 'fill-style',
+      labels: {
+        fill: '',
+        outline: '',
+      },
+      ...args,
+    },
+    context
+  );
+
+/** Pending as its own grid section — primary and secondary only. */
+const ButtonPendingGrid: GridTemplateFn = (args, context) =>
+  ArgGrid(
+    {
+      Template: ButtonPendingFillStyleGroup,
+      argKey: 'variant',
+      options: [...PENDING_VARIANTS],
+      labels: variantLabels,
+      withBorder: false,
+      withWrapperBorder: false,
+      direction: 'column',
+      level: 1,
+      ...args,
+    },
+    context
+  );
+
 /**
  * Full variant × treatment × content × state matrix for Chromatic / VRT.
  */
@@ -200,6 +261,11 @@ export const ButtonGroups = withVariantsGrid({
   testData: [
     {
       Template: ButtonVariantsByStateGrid,
+    },
+    {
+      Template: ButtonPendingGrid,
+      testHeading: 'Pending',
+      withStates: false,
     },
     {
       Template: (args, context) => html`

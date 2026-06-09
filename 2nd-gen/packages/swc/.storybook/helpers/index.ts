@@ -21,6 +21,8 @@ export {
   renderContent,
   Sizes,
   States,
+  TESTING_GRID_STORY_NAME,
+  TESTING_GRID_STORY_PARAMETERS,
   Variants,
 } from './testing-grid.js';
 export type {
