@@ -22,8 +22,7 @@ import meta, {
   Secondary,
   Standalone,
 } from '../stories/link.stories.js';
-import { LINK_LIST_ITEMS } from '../stories/link.template.js';
-import { template } from '../stories/link.template.js';
+import { LINK_LIST_ITEMS, template } from '../stories/link.template.js';
 
 export default {
   ...meta,

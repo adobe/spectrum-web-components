@@ -212,8 +212,6 @@ export const QuietStandalone: Story = {
 };
 
 /**
- * Inline links inside running text inherit default link styling from
- * `.swc-Typography--prose` — no per-link BEM classes are required.
  *
  * See [Typography / Prose container](../typography/stories/typography.stories.ts)
  * for the full prose pattern.
@@ -227,8 +225,6 @@ export const InProse: Story = {
 };
 
 /**
- * Footer and sidebar link lists use `.swc-Typography--links` so child anchors
- * receive default link styling without individual modifier classes.
  *
  * See [Typography / Link list](../typography/stories/typography.stories.ts).
  */
@@ -301,11 +297,6 @@ export const ColorVariants: Story = {
 //    ACCESSIBILITY STORIES
 // ────────────────────────────────
 
-/**
- * Native `<a href>` elements expose the implicit link role. Use descriptive link
- * text in prose, and reserve quiet styling for section-scoped patterns such as
- * footers where the surrounding region provides navigation context.
- */
 export const Accessibility: Story = {
   render: (args) => html`
     <div class="swc-Typography--prose">
