@@ -34,7 +34,7 @@ test.describe('Meter - ARIA Snapshots', () => {
       'swc-meter'
     );
     await expect(root).toMatchAriaSnapshot(`
-      - meter "Storage used"
+      - meter "Profile completeness"
     `);
   });
 

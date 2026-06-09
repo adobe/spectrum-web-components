@@ -156,9 +156,9 @@ export const Overview: Story = {
   args: {
     variant: 'informative',
     size: 'm',
-    value: 40,
-    'label-slot': 'Storage used',
-    'description-slot': 'Backed up 2 hours ago',
+    value: 80,
+    'label-slot': 'Profile completeness',
+    'description-slot': 'Add a photo to reach 100%',
   },
 };
 
