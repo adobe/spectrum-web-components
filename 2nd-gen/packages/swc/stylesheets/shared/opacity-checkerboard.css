@@ -13,20 +13,20 @@
 /* Shared opacity-checkerboard utility.
    Importable `css` fragment (not a global stylesheet) so it can be added to a
    component's `styles` array and reach content inside the shadow root. Apply
-   `.swc-opacity-checkerboard` to a decorative element behind transparent
+   `.swc-OpacityCheckerboard` to a decorative element behind transparent
    content; the consuming element is responsible for `aria-hidden`. */
-.swc-opacity-checkerboard {
+.swc-OpacityCheckerboard {
   --_swc-opacity-checkerboard-square-size: token("opacity-checkerboard-square-size-medium");
 
   background: repeating-conic-gradient(light-dark(var(--swc-opacity-checkerboard-square-dark-light), var(--swc-opacity-checkerboard-square-dark-dark)) 0% 25%, token("opacity-checkerboard-square-light") 0% 50%) 0 0 / calc(var(--_swc-opacity-checkerboard-square-size) * 2) calc(var(--_swc-opacity-checkerboard-square-size) * 2);
 }
 
-.swc-opacity-checkerboard--size-small {
+.swc-OpacityCheckerboard--sizeS {
   --_swc-opacity-checkerboard-square-size: token("opacity-checkerboard-square-size-small");
 }
 
 @media (forced-colors: active) {
-  .swc-opacity-checkerboard {
+  .swc-OpacityCheckerboard {
     /* keep the checkerboard pattern visible in high-contrast mode */
     forced-color-adjust: none;
   }

@@ -17,7 +17,7 @@ import opacityCheckerboardStyles from '../../stylesheets/shared/opacity-checkerb
 static styles = [opacityCheckerboardStyles /* , ...component styles */];
 ```
 
-Apply `.swc-opacity-checkerboard` to a decorative element rendered behind transparent or semi-transparent content. The consuming component is responsible for keeping that element out of the accessibility tree (for example `aria-hidden="true"`).
+Apply `.swc-OpacityCheckerboard` to a decorative element rendered behind transparent or semi-transparent content. The consuming component is responsible for keeping that element out of the accessibility tree (for example `aria-hidden="true"`).
 
 > These demos inject the fragment's CSS through an inline `<style>` so the class takes effect in the light DOM. In real use the fragment is adopted into a component's shadow root instead.
 
@@ -25,7 +25,7 @@ Apply `.swc-opacity-checkerboard` to a decorative element rendered behind transp
 
 ### Sizes
 
-The default square size uses the medium token. The `.swc-opacity-checkerboard--size-small` modifier switches to the small token, halving the square size.
+The default square size uses the medium token. The `.swc-OpacityCheckerboard--sizeS` modifier switches to the small token, halving the square size.
 
 <Canvas of={Stories.Sizes} />
 

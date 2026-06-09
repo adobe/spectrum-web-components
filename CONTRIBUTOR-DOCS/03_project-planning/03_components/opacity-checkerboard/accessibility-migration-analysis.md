@@ -19,7 +19,7 @@
     - [Pattern in the APG](#pattern-in-the-apg)
     - [Guidelines that apply](#guidelines-that-apply)
 - [Related 1st-gen accessibility (Jira)](#related-1st-gen-accessibility-jira)
-- [Recommendations: `.swc-opacity-checkerboard`](#recommendations-swc-opacity-checkerboard)
+- [Recommendations: `.swc-OpacityCheckerboard`](#recommendations-swc-opacitycheckerboard)
     - [ARIA roles, states, and properties](#aria-roles-states-and-properties)
     - [Shadow DOM and cross-root ARIA Issues](#shadow-dom-and-cross-root-aria-issues)
     - [Accessibility tree expectations](#accessibility-tree-expectations)
@@ -36,7 +36,7 @@
 
 ## Overview
 
-This doc explains how the **`.swc-opacity-checkerboard`** utility should behave for **accessibility**. It supports **WCAG 2.2 Level AA**. The utility is not a custom element: it is an importable lit `css` fragment at `stylesheets/shared/opacity-checkerboard.css`. Consuming components import it directly (`import opacityCheckerboardStyles from '../../stylesheets/shared/opacity-checkerboard.css'`; `vite-plugin-lit-css` yields a `CSSResult`), add it to their `styles` array, and apply the class to a **decorative** element inside their own shadow root.
+This doc explains how the **`.swc-OpacityCheckerboard`** utility should behave for **accessibility**. It supports **WCAG 2.2 Level AA**. The utility is not a custom element: it is an importable lit `css` fragment at `stylesheets/shared/opacity-checkerboard.css`. Consuming components import it directly (`import opacityCheckerboardStyles from '../../stylesheets/shared/opacity-checkerboard.css'`; `vite-plugin-lit-css` yields a `CSSResult`), add it to their `styles` array, and apply the class to a **decorative** element inside their own shadow root.
 
 ### Also read
 
@@ -80,7 +80,7 @@ This doc explains how the **`.swc-opacity-checkerboard`** utility should behave 
 
 ---
 
-## Recommendations: `.swc-opacity-checkerboard`
+## Recommendations: `.swc-OpacityCheckerboard`
 
 ### ARIA roles, states, and properties
 
@@ -89,7 +89,7 @@ This doc explains how the **`.swc-opacity-checkerboard`** utility should behave 
 | **No host role** | The utility is a **CSS class on a decorative element**, not a custom element. Do **not** add a `role` to the checkerboard element; it must contribute **no** semantics. |
 | **`aria-hidden`** | The **consuming** component is responsible for marking the decorative element `aria-hidden="true"` (or otherwise keeping it out of the accessibility tree) so the pattern is never announced. Documented in the `opacity-checkerboard.css` fragment comment. |
 | **Name / value** | The utility exposes **no** name or value. Any accessible name, color value, or state belongs to the **consuming** control (swatch, color-slider, etc.), not the checkerboard element. |
-| **States** | **None.** The `--size-small` modifier is a visual size only; it carries no semantic state and must not map to ARIA. |
+| **States** | **None.** The `--sizeS` modifier is a visual size only; it carries no semantic state and must not map to ARIA. |
 | **Docs** | Tell consumers: apply the class to a **purely decorative** element, hide it from AT, and keep the real semantics on the surrounding control. |
 
 ### Shadow DOM and cross-root ARIA Issues
@@ -98,7 +98,7 @@ None. The utility relies on **no** ID references and is **not** a form-associate
 
 ### Accessibility tree expectations
 
-- The decorative element using `.swc-opacity-checkerboard` should be **absent** from the accessibility tree (hidden by the consuming component via `aria-hidden="true"` or equivalent).
+- The decorative element using `.swc-OpacityCheckerboard` should be **absent** from the accessibility tree (hidden by the consuming component via `aria-hidden="true"` or equivalent).
 - The utility contributes **no** role, **no** name, and **no** state. Assistive tech should perceive only the **consuming** control (e.g. the swatch with its color/label), never the checkerboard itself.
 
 ### Keyboard and focus
@@ -116,7 +116,7 @@ None. The utility relies on **no** ID references and is **not** a form-associate
 | **Unit** | No unit tests target the utility directly (no custom element). Consuming components test that their decorative checkerboard element is **hidden** (`aria-hidden="true"`) and carries **no** role. |
 | **aXe + Storybook** | **WCAG 2.x** rules run on consuming-component stories. The checkerboard must not introduce stray roles or unnamed elements in the tree. |
 | **Forced colors** | Verify the pattern stays visible under `forced-colors: active` (the fragment's `forced-color-adjust: none`); confirm consuming controls remain legible. |
-| **Visual regression** | VRT on consuming components covers the rendered pattern, including the `--size-small` modifier and forced-colors rendering. |
+| **Visual regression** | VRT on consuming components covers the rendered pattern, including the `--sizeS` modifier and forced-colors rendering. |
 
 ### Manual screen reader testing
 
@@ -129,7 +129,7 @@ The checkerboard is **not focusable** and must be **hidden** from assistive tech
 - [ ] Utility adds **no** `role` and **no** `aria-*` to any element.
 - [ ] Consuming components mark the decorative checkerboard element **`aria-hidden="true"`** (or otherwise hide it from AT).
 - [ ] The checkerboard contributes **nothing** to the accessibility tree; only the consuming control is announced.
-- [ ] `--size-small` is treated as **visual only**, never mapped to ARIA state.
+- [ ] `--sizeS` is treated as **visual only**, never mapped to ARIA state.
 - [ ] Pattern stays visible under **`forced-colors: active`** (`forced-color-adjust: none`).
 - [ ] Transparency is conveyed by **pattern**, with the consuming control supplying any name/value (WCAG 1.4.1, 1.3.1).
 - [ ] Manual SR testing of consuming components uses **browse mode** per the Storybook screen reader guide.

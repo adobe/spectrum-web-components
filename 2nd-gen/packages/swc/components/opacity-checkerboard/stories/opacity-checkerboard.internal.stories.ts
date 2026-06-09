@@ -20,11 +20,11 @@ import opacityCheckerboardStyles from '../../../stylesheets/shared/opacity-check
 // ────────────────
 
 interface OpacityCheckerboardProps {
-  size: 'medium' | 'small';
+  size: 'm' | 's';
   overlay: string;
 }
 
-const SIZES = ['medium', 'small'] as const;
+const SIZES = ['m', 's'] as const;
 
 export default {
   title: 'Opacity Checkerboard',
@@ -64,7 +64,7 @@ const box = (modifier = '', overlay = 'transparent', label = '') => html`
     style="margin: 0; display: inline-flex; flex-direction: column; gap: 4px; align-items: center;"
   >
     <div
-      class="swc-opacity-checkerboard ${modifier}"
+      class="swc-OpacityCheckerboard ${modifier}"
       style="inline-size: 120px; block-size: 120px; border-radius: 4px; border: 1px solid var(--swc-gray-300, #ccc);"
     >
       <div
@@ -83,7 +83,7 @@ const box = (modifier = '', overlay = 'transparent', label = '') => html`
 const swatch = (args: OpacityCheckerboardProps) => html`
   ${styles}
   ${box(
-    args.size === 'small' ? 'swc-opacity-checkerboard--size-small' : '',
+    args.size === 's' ? 'swc-OpacityCheckerboard--sizeS' : '',
     args.overlay ?? 'transparent'
   )}
 `;
@@ -93,7 +93,7 @@ const swatch = (args: OpacityCheckerboardProps) => html`
 // ────────────────────
 
 export const Playground: Story = {
-  args: { size: 'medium', overlay: 'transparent' },
+  args: { size: 'm', overlay: 'transparent' },
   parameters: { docs: { canvas: { sourceState: 'shown' } } },
   tags: ['dev'],
 };
@@ -104,12 +104,8 @@ export const Playground: Story = {
 
 export const Sizes: Story = {
   render: () => html`
-    ${styles} ${box('', 'transparent', 'medium (default)')}
-    ${box(
-      'swc-opacity-checkerboard--size-small',
-      'transparent',
-      '--size-small'
-    )}
+    ${styles} ${box('', 'transparent', 'm (default)')}
+    ${box('swc-OpacityCheckerboard--sizeS', 'transparent', 'sizeS')}
   `,
   parameters: { flexLayout: 'row-wrap' },
   tags: ['options'],
