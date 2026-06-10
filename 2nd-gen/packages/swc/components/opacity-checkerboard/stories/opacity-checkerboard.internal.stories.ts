@@ -10,82 +10,159 @@
  * governing permissions and limitations under the License.
  */
 
-import { html } from 'lit';
+import { css, html, LitElement, type TemplateResult } from 'lit';
+import { customElement, property } from 'lit/decorators.js';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import opacityCheckerboardStyles from '../../../stylesheets/shared/opacity-checkerboard.css';
 
-// ────────────────
-//    METADATA
-// ────────────────
+// ─────────────────────────
+//     DEMO HOST
+// ─────────────────────────
+
+/**
+ * @internal
+ *
+ * Storybook-only host showing how a consuming component adopts the shared
+ * opacity-checkerboard utility into its own shadow root.
+ *
+ * The fragment is a lit `css` result, so it is added to `static styles` (not
+ * injected as a global stylesheet); its rules then apply to `.swc-OpacityCheckerboard`
+ * elements rendered inside this element's `renderRoot`. The checkerboard is purely
+ * decorative: it sits behind the color fill, is marked `aria-hidden`, and is never a
+ * tab stop. The accessible name and opacity are carried by the host (`role="img"` +
+ * `aria-label`), mirroring the guidance in the accessibility migration analysis.
+ */
+@customElement('demo-opacity-checkerboard-swatch')
+export class DemoOpacityCheckerboardSwatch extends LitElement {
+  /**
+   * Adopt the shared fragment into this element's shadow root, then layer the
+   * component-local styles on top.
+   */
+  static override styles = [
+    opacityCheckerboardStyles,
+    css`
+      :host {
+        display: inline-block;
+      }
+      .swatch {
+        position: relative;
+        inline-size: 120px;
+        block-size: 120px;
+        border: 1px solid var(--swc-gray-300, #ccc);
+        border-radius: 4px;
+        overflow: hidden;
+      }
+      /* Decorative checkerboard and the color fill share the swatch box. */
+      .swc-OpacityCheckerboard,
+      .fill {
+        position: absolute;
+        inset: 0;
+      }
+      .fill {
+        background: var(--demo-fill, transparent);
+      }
+    `,
+  ];
+
+  /** Human-readable name including opacity; lives on the control, not the pattern. */
+  @property()
+  public label = '';
+
+  /** CSS color for the fill layer, e.g. `rgba(255, 0, 0, 0.4)` or `transparent`. */
+  @property()
+  public color = 'transparent';
+
+  /** Checkerboard square size: medium (default, no modifier) or small. */
+  @property({ reflect: true })
+  public size: 'm' | 's' = 'm';
+
+  protected override render(): TemplateResult {
+    const sizeClass = this.size === 's' ? 'swc-OpacityCheckerboard--sizeS' : '';
+    return html`
+      <div
+        class="swatch"
+        role="img"
+        aria-label=${this.label || 'Color preview'}
+        style="--demo-fill: ${this.color}"
+      >
+        <!-- Decoration only: hidden from assistive technologies, never focusable. -->
+        <span
+          class="swc-OpacityCheckerboard ${sizeClass}"
+          aria-hidden="true"
+        ></span>
+        <span class="fill" aria-hidden="true"></span>
+      </div>
+    `;
+  }
+}
+
+// ─────────────────────────
+//     METADATA
+// ─────────────────────────
 
 interface OpacityCheckerboardProps {
   size: 'm' | 's';
-  overlay: string;
+  color: string;
+  label: string;
 }
 
 const SIZES = ['m', 's'] as const;
 
-export default {
+const meta: Meta<OpacityCheckerboardProps> = {
   title: 'Opacity Checkerboard',
+  component: 'demo-opacity-checkerboard-swatch',
   parameters: {
     docs: {
       subtitle: `Decorative checkerboard background utility used to indicate transparency.`,
       canvas: { sourceState: 'hidden' },
     },
   },
+  args: {
+    size: 'm',
+    color: 'transparent',
+    label: 'Color preview, fully transparent',
+  },
   argTypes: {
     size: { control: 'select', options: SIZES },
-    overlay: { control: 'color' },
+    color: { control: 'color' },
+    label: { control: 'text' },
   },
-  render: (args) => swatch(args),
+  render: ({ size, color, label }) => html`
+    <demo-opacity-checkerboard-swatch
+      size=${size}
+      color=${color}
+      label=${label}
+    ></demo-opacity-checkerboard-swatch>
+  `,
   // Internal-only: the `.internal` filename excludes this from production
   // Storybook. `utility` marks it as a classless CSS utility, not an element.
   tags: ['utility'],
-} satisfies Meta<OpacityCheckerboardProps>;
-
-// ────────────────────
-//    HELPERS
-// ────────────────────
+};
 
 /**
- * The fragment is a lit `css` result, not a global stylesheet, so its rules
- * only apply where it is adopted into a root. For visual validation in the
- * light DOM, inject its `cssText` via an inline `<style>` once per render.
+ * The Lit demo host is exported for unit tests; exclude it from CSF so it is
+ * not collected as a story.
  */
-const styles = html`
-  <style>
-    ${opacityCheckerboardStyles.cssText}
-  </style>
-`;
+export default {
+  ...meta,
+  excludeStories: ['DemoOpacityCheckerboardSwatch'],
+} as Meta<OpacityCheckerboardProps>;
 
-const box = (modifier = '', overlay = 'transparent', label = '') => html`
-  <figure
-    style="margin: 0; display: inline-flex; flex-direction: column; gap: 4px; align-items: center;"
-  >
-    <div
-      class="swc-OpacityCheckerboard ${modifier}"
-      style="inline-size: 120px; block-size: 120px; border-radius: 4px; border: 1px solid var(--swc-gray-300, #ccc);"
-    >
-      <div
-        style="inline-size: 100%; block-size: 100%; background: ${overlay}; border-radius: inherit;"
-        aria-hidden="true"
-      ></div>
-    </div>
-    ${label
-      ? html`
-          <figcaption style="font: 12px/1.4 sans-serif;">${label}</figcaption>
-        `
-      : ''}
-  </figure>
-`;
+// ─────────────────────────
+//     HELPERS
+// ─────────────────────────
 
-const swatch = (args: OpacityCheckerboardProps) => html`
-  ${styles}
-  ${box(
-    args.size === 's' ? 'swc-OpacityCheckerboard--sizeS' : '',
-    args.overlay ?? 'transparent'
-  )}
+const swatch = ({
+  size = 'm',
+  color = 'transparent',
+  label,
+}: Partial<OpacityCheckerboardProps>): TemplateResult => html`
+  <demo-opacity-checkerboard-swatch
+    size=${size}
+    color=${color}
+    label=${label ?? ''}
+  ></demo-opacity-checkerboard-swatch>
 `;
 
 // ────────────────────
@@ -93,7 +170,6 @@ const swatch = (args: OpacityCheckerboardProps) => html`
 // ────────────────────
 
 export const Playground: Story = {
-  args: { size: 'm', overlay: 'transparent' },
   parameters: { docs: { canvas: { sourceState: 'shown' } } },
   tags: ['dev'],
 };
@@ -104,8 +180,8 @@ export const Playground: Story = {
 
 export const Sizes: Story = {
   render: () => html`
-    ${styles} ${box('', 'transparent', 'm (default)')}
-    ${box('swc-OpacityCheckerboard--sizeS', 'transparent', 'sizeS')}
+    ${swatch({ size: 'm', label: 'Medium squares (default)' })}
+    ${swatch({ size: 's', label: 'Small squares' })}
   `,
   parameters: { flexLayout: 'row-wrap' },
   tags: ['options'],
@@ -117,11 +193,24 @@ export const Sizes: Story = {
 
 export const TransparentContent: Story = {
   render: () => html`
-    ${styles} ${box('', 'rgba(255, 0, 0, 0.4)', '40% red')}
-    ${box('', 'rgba(0, 128, 255, 0.25)', '25% blue')}
-    ${box('', 'rgba(0, 0, 0, 0.6)', '60% black')}
-    ${box('', 'rgb(0, 200, 120)', 'opaque (no checker shows)')}
+    ${swatch({ color: 'rgba(255, 0, 0, 0.4)', label: 'Red, 40% opacity' })}
+    ${swatch({ color: 'rgba(0, 128, 255, 0.25)', label: 'Blue, 25% opacity' })}
+    ${swatch({ color: 'rgba(0, 0, 0, 0.6)', label: 'Black, 60% opacity' })}
+    ${swatch({ color: 'rgb(0, 200, 120)', label: 'Green, fully opaque' })}
   `,
   parameters: { flexLayout: 'row-wrap' },
   tags: ['behaviors'],
+};
+
+// ────────────────────────────────
+//    ACCESSIBILITY STORIES
+// ────────────────────────────────
+
+export const Accessibility: Story = {
+  render: () =>
+    swatch({
+      color: 'rgba(255, 0, 0, 0.4)',
+      label: 'Selected color: red, 40% opacity',
+    }),
+  tags: ['a11y'],
 };

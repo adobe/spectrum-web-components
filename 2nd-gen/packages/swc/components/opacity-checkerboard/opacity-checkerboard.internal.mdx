@@ -19,7 +19,7 @@ static styles = [opacityCheckerboardStyles /* , ...component styles */];
 
 Apply `.swc-OpacityCheckerboard` to a decorative element rendered behind transparent or semi-transparent content. The consuming component is responsible for keeping that element out of the accessibility tree (for example `aria-hidden="true"`).
 
-> These demos inject the fragment's CSS through an inline `<style>` so the class takes effect in the light DOM. In real use the fragment is adopted into a component's shadow root instead.
+> These demos render through `demo-opacity-checkerboard-swatch`, an internal Lit host that adopts the fragment into its own shadow root exactly as a real consuming component would. The accessible name and opacity live on the host (`role="img"` + `aria-label`); the checkerboard layer is decorative and `aria-hidden`.
 
 ## Options
 
@@ -36,5 +36,23 @@ The default square size uses the medium token. The `.swc-OpacityCheckerboard--si
 The checkerboard is meant to sit behind transparent or semi-transparent content so the level of transparency reads against a neutral pattern. Fully opaque content covers it entirely.
 
 <Canvas of={Stories.TransparentContent} />
+
+## Accessibility
+
+The checkerboard is **visual-only**. It carries no role, name, or value, is never a tab stop, and must not be the only cue for transparency. Accessibility is owned by the consuming component, not by this utility. For the full rationale and consumer patterns (swatch, color slider, color loupe, thumbnail, color handle), see the opacity checkerboard accessibility migration analysis under Contributor docs → Project planning → Components.
+
+### Features
+
+The shared `css` fragment sets no ARIA. It only keeps `forced-color-adjust: none` under `@media (forced-colors: active)` so the pattern stays visible in high-contrast mode. That visibility is intentional for color tools and does not make the pattern semantic for assistive technologies.
+
+### Best practices
+
+- **Hide the decoration.** Mark the `.swc-OpacityCheckerboard` element `aria-hidden="true"` when it is only a background. Never put `aria-hidden` on a wrapper that also contains slotted or interactive content; it suppresses every descendant.
+- **Name and value on the real control.** Expose color and opacity in human-readable text on the focusable or semantic element (`aria-label`, a visible label, or `aria-valuetext`), as the demo host does with `role="img"` and an `aria-label` such as "Selected color: red, 40% opacity". Avoid raw `rgba(...)` strings as the only name.
+- **Not focusable.** Do not add `tabindex` to a node that only shows the pattern. Tab order and activation stay on the parent widget (swatch button, color slider, color field).
+- **Convey opacity textually.** Transparency must not rely on the checkerboard alone (WCAG 1.4.1). Pair it with a label, value, or instruction that states the opacity.
+- **Live regions are rarely needed.** When opacity changes, update the control's value or visible text first. Use `aria-live="polite"` only when nothing else announces the change; never `assertive` for routine opacity updates.
+
+<Canvas of={Stories.Accessibility} />
 
 <DocsFooter />
