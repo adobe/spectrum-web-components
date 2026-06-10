@@ -60,6 +60,17 @@
   outline-offset: token("focus-indicator-gap");
 }
 
+.swc-Button:disabled:is(*, :hover) {
+  color: var(--swc-button-content-color-disabled, token("disabled-content-color"));
+  background-color: var(--swc-button-background-color-disabled, token("disabled-background-color"));
+  border-color: var(--swc-button-border-color-disabled, transparent);
+  transform: none;
+}
+
+.swc-Button--disabled .swc-Button-icon {
+  pointer-events: none;
+}
+
 .swc-Button:hover {
   color: var(--swc-button-content-color-hover, token("gray-25"));
   background-color: var(--swc-button-background-color-hover, token("neutral-background-color-hover"));
@@ -74,13 +85,6 @@
   will-change: transform;
 }
 
-.swc-Button:disabled:is(*, :hover) {
-  color: var(--swc-button-content-color-disabled, token("disabled-content-color"));
-  background-color: var(--swc-button-background-color-disabled, token("disabled-background-color"));
-  border-color: var(--swc-button-border-color-disabled, transparent);
-  transform: none;
-}
-
 .swc-Button-label {
   text-align: center;
 }
@@ -89,8 +93,7 @@
   text-align: start;
 }
 
-.swc-Button-icon,
-.swc-Button-pendingSpinner {
+.swc-Button-icon {
   --_swc-button-icon-size: var(--swc-button-icon-size, token("workflow-icon-size-100"));
   --_swc-button-icon-block-size: var(--swc-button-icon-block-size, var(--_swc-button-icon-size));
 
@@ -100,9 +103,6 @@
   block-size: var(--_swc-button-icon-block-size);
   margin-block: calc((var(--_swc-button-icon-block-size) - 1lh) / 2 * -1);
   margin-inline-start: calc(var(--swc-button-edge-to-visual, token("component-pill-edge-to-visual-100")) - var(--swc-button-edge-to-text, token("component-pill-edge-to-text-100")));
-}
-
-.swc-Button-icon {
   color: inherit;
   fill: currentcolor;
 }

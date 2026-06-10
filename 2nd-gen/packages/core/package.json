@@ -103,6 +103,14 @@
       "types": "./dist/controllers/language-resolution.d.ts",
       "import": "./dist/controllers/language-resolution.js"
     },
+    "./controllers/pending-controller": {
+      "types": "./dist/controllers/pending-controller/index.d.ts",
+      "import": "./dist/controllers/pending-controller/index.js"
+    },
+    "./controllers/pending-controller/index.js": {
+      "types": "./dist/controllers/pending-controller/index.d.ts",
+      "import": "./dist/controllers/pending-controller/index.js"
+    },
     "./controllers/placement-controller": {
       "types": "./dist/controllers/placement-controller/index.d.ts",
       "import": "./dist/controllers/placement-controller/index.js"
@@ -246,6 +254,12 @@
       ],
       "controllers/language-resolution.js": [
         "dist/controllers/language-resolution.d.ts"
+      ],
+      "controllers/pending-controller": [
+        "dist/controllers/pending-controller/index.d.ts"
+      ],
+      "controllers/pending-controller/index.js": [
+        "dist/controllers/pending-controller/index.d.ts"
       ],
       "controllers/placement-controller": [
         "dist/controllers/placement-controller/index.d.ts"

@@ -31,6 +31,12 @@ export {
   languageResolverUpdatedSymbol,
 } from './language-resolution.js';
 export {
+  PendingController,
+  pendingControllerStyles,
+  type PendingControllerHost,
+  type PendingControllerOptions,
+} from './pending-controller/index.js';
+export {
   ALL_PLACEMENTS,
   fromFloatingPlacement,
   PlacementController,
