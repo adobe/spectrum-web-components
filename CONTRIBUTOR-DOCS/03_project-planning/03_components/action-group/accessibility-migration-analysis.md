@@ -204,13 +204,6 @@ Slotted **`swc-action-button`** / **`swc-action-menu`** live in **light DOM**; *
 - **Name:** **required** when the cluster has distinct purpose (**Text style**, **List style**, **Edit actions**, etc.).
 - **Parent** **`div`** (or app landmark) owns **`role="toolbar"`** and the **toolbar-level** name (**Text formatting**, etc.).
 
-#### `selects="single"` or `selects="multiple"` (if API retained)
-
-- **Host role:** **group** (never **radiogroup**).
-- **Children:** **button** roles on **`swc-action-button`**; selection via **`aria-pressed`** or **`aria-checked`** on the **focus target**, plus **non-color** selected visuals ([SWC-1123](https://jira.corp.adobe.com/browse/SWC-1123)).
-- **Group name:** **required** ([SWC-1121](https://jira.corp.adobe.com/browse/SWC-1121)).
-- **Preferred migration:** **`swc-segmented-control`** (**single**) or **`swc-toggle-button-group`** (**multiple**) for new product work.
-
 ### Live regions, loading, and announcements
 
 **Does not apply** to the **`swc-action-group`** host. **Pending**, **menu**, and **tooltip** announcements belong on **child** components ([Action button](../action-button/accessibility-migration-analysis.md), [Action menu](../action-menu/accessibility-migration-analysis.md), [Tooltip](../tooltip/accessibility-migration-analysis.md)). **Never** **`aria-live="assertive"`** on the group for routine **selection** changes; prefer **native **`aria-checked`** / **`aria-pressed`** on the focused control**.
