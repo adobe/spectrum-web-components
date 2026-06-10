@@ -11,7 +11,7 @@
  */
 
 import { html } from 'lit';
-import { expect, userEvent } from '@storybook/test';
+import { expect, userEvent, waitFor } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import type { Button } from '@adobe/spectrum-wc/button';
@@ -57,6 +57,50 @@ const waitForEvent = <T extends Event>(
     });
   });
 
+// ─── Test helpers ─────────────────────────────────────────────────────────────
+
+/** Opens the tooltip and polls until it enters the top layer. Safer than
+ * waitForEvent('swc-open'): beforetoggle timing varies in headless CI. */
+const openTooltip = async (tooltip: Tooltip): Promise<void> => {
+  tooltip.open = true;
+  await waitFor(() => expect(tooltip.matches(':popover-open')).toBe(true), {
+    timeout: 1000,
+  });
+};
+
+/** Dispatches pointerenter on the trigger and waits for the tooltip to open. */
+const hoverOpen = async (
+  trigger: HTMLElement,
+  tooltip: Tooltip
+): Promise<void> => {
+  trigger.dispatchEvent(
+    new PointerEvent('pointerenter', { bubbles: false, composed: true })
+  );
+  await waitFor(() => expect(tooltip.open).toBe(true), { timeout: 200 });
+};
+
+/** Dispatches focusin on the trigger and waits for the tooltip to open. */
+const focusOpen = async (
+  trigger: HTMLElement,
+  tooltip: Tooltip
+): Promise<void> => {
+  trigger.dispatchEvent(
+    new FocusEvent('focusin', { bubbles: true, composed: true })
+  );
+  await waitFor(() => expect(tooltip.open).toBe(true), { timeout: 200 });
+};
+
+/** Dispatches focusout on the trigger and waits for the tooltip to close. */
+const focusClose = async (
+  trigger: HTMLElement,
+  tooltip: Tooltip
+): Promise<void> => {
+  trigger.dispatchEvent(
+    new FocusEvent('focusout', { bubbles: true, composed: true })
+  );
+  await waitFor(() => expect(tooltip.open).toBe(false), { timeout: 200 });
+};
+
 // ──────────────────────────────────────────────────────────────
 // TEST: Defaults
 // ──────────────────────────────────────────────────────────────
@@ -72,7 +116,21 @@ export const OverviewTest: Story = {
       expect(tooltip.open, 'default open is false').toBe(false);
       expect(tooltip.manual, 'default manual is false').toBe(false);
       expect(tooltip.delay, 'default delay is 1500').toBe(1500);
+      expect(tooltip.offset, 'default offset is 4').toBe(4);
+      expect(tooltip.containerPadding, 'default containerPadding is 12').toBe(
+        12
+      );
     });
+
+    await step(
+      'sets --_swc-tooltip-animation-distance to offset px on first render',
+      async () => {
+        expect(
+          tooltip.style.getPropertyValue('--_swc-tooltip-animation-distance'),
+          '--_swc-tooltip-animation-distance is set to the default offset value'
+        ).toBe('4px');
+      }
+    );
 
     await step('sets role="tooltip" on the host element', async () => {
       expect(tooltip.getAttribute('role'), 'host has role="tooltip"').toBe(
@@ -142,6 +200,25 @@ export const PropertyMutationTest: Story = {
         'placement attribute is start after mutation'
       ).toBe('start');
     });
+
+    await step(
+      'updates --_swc-tooltip-animation-distance when offset changes',
+      async () => {
+        tooltip.offset = 8;
+        await tooltip.updateComplete;
+        expect(
+          tooltip.style.getPropertyValue('--_swc-tooltip-animation-distance'),
+          '--_swc-tooltip-animation-distance tracks offset after mutation'
+        ).toBe('8px');
+
+        tooltip.offset = 4;
+        await tooltip.updateComplete;
+        expect(
+          tooltip.style.getPropertyValue('--_swc-tooltip-animation-distance'),
+          '--_swc-tooltip-animation-distance reverts to 4px after reset'
+        ).toBe('4px');
+      }
+    );
   },
 };
 
@@ -394,6 +471,84 @@ export const AriaWiringTriggerElementOverrideTest: Story = {
   },
 };
 
+export const TriggerElementHoverTest: Story = {
+  render: () => html`
+    <swc-button id="tt-te-hover">Hover me</swc-button>
+    <swc-tooltip placement="top" delay="0">
+      Wired via triggerElement, no for attribute
+    </swc-tooltip>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const trigger = canvasElement.querySelector('#tt-te-hover') as Button;
+    await trigger.updateComplete;
+    const innerButton = trigger.shadowRoot?.querySelector('button') ?? null;
+    const tooltip = await getComponent<Tooltip>(canvasElement, 'swc-tooltip');
+
+    await step(
+      'wires HoverController when triggerElement is set without a for attribute',
+      async () => {
+        tooltip.triggerElement = trigger;
+        await tooltip.updateComplete;
+        await hoverOpen(trigger, tooltip);
+        expect(tooltip.open, 'tooltip opens on hover via triggerElement').toBe(
+          true
+        );
+      }
+    );
+
+    await step('sets ARIA on the inner shadow button', async () => {
+      expect(
+        innerButton?.ariaDescribedByElements ?? [],
+        'inner shadow button receives ariaDescribedByElements via triggerElement wiring'
+      ).toContain(tooltip);
+    });
+  },
+};
+
+export const TriggerElementOverridesForHoverTest: Story = {
+  render: () => html`
+    <swc-button id="tt-te-wrong">Wrong target</swc-button>
+    <swc-button id="tt-te-correct">Correct target</swc-button>
+    <swc-tooltip for="tt-te-wrong" delay="0" placement="top">
+      Should open on correct trigger
+    </swc-tooltip>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const wrongTrigger = canvasElement.querySelector('#tt-te-wrong') as Button;
+    const correctTrigger = canvasElement.querySelector(
+      '#tt-te-correct'
+    ) as Button;
+    const tooltip = await getComponent<Tooltip>(canvasElement, 'swc-tooltip');
+
+    await step(
+      'triggerElement overrides for when set — hover wires to the override target',
+      async () => {
+        tooltip.triggerElement = correctTrigger;
+        await tooltip.updateComplete;
+
+        // Hovering the for-target (wrong) should NOT open the tooltip.
+        wrongTrigger.dispatchEvent(
+          new PointerEvent('pointerenter', { bubbles: false, composed: true })
+        );
+        await tooltip.updateComplete;
+        expect(
+          tooltip.open,
+          'for target does not open tooltip when triggerElement overrides it'
+        ).toBe(false);
+
+        // Hovering the triggerElement target should open it.
+        await hoverOpen(correctTrigger, tooltip);
+        expect(tooltip.open, 'triggerElement target opens the tooltip').toBe(
+          true
+        );
+
+        tooltip.open = false;
+        await tooltip.updateComplete;
+      }
+    );
+  },
+};
+
 export const AriaWiringNoTriggerTest: Story = {
   render: () => html`
     <swc-tooltip placement="top">Standalone tooltip</swc-tooltip>
@@ -543,14 +698,14 @@ export const EscapeClosesTest: Story = {
     const tooltip = await getComponent<Tooltip>(canvasElement, 'swc-tooltip');
 
     await step('closes the open tooltip when Escape is pressed', async () => {
-      tooltip.open = true;
-      await waitForEvent(tooltip, 'swc-open');
+      await openTooltip(tooltip);
       expect(tooltip.open, 'tooltip is open before Escape').toBe(true);
 
-      const closePromise = waitForEvent(tooltip, 'swc-close');
       await userEvent.keyboard('{Escape}');
-      await closePromise;
-
+      await waitFor(
+        () => expect(tooltip.matches(':popover-open')).toBe(false),
+        { timeout: 1000 }
+      );
       expect(tooltip.open, 'tooltip is closed after Escape').toBe(false);
     });
   },
@@ -581,8 +736,7 @@ export const VariantsTest: Story = {
         const tooltip = canvasElement.querySelector(
           `swc-tooltip[variant="${variant}"]`
         ) as Tooltip;
-        tooltip.open = true;
-        await waitForEvent(tooltip, 'swc-open');
+        await openTooltip(tooltip);
       });
     }
   },
@@ -610,8 +764,7 @@ export const PlacementsTest: Story = {
         const tooltip = canvasElement.querySelector(
           `swc-tooltip[placement="${placement}"]`
         ) as Tooltip;
-        tooltip.open = true;
-        await waitForEvent(tooltip, 'swc-open');
+        await openTooltip(tooltip);
       });
     }
   },
@@ -637,8 +790,7 @@ export const ForcedColorsOpenTest: Story = {
   },
   play: async ({ canvasElement }) => {
     const tooltip = await getComponent<Tooltip>(canvasElement, 'swc-tooltip');
-    tooltip.open = true;
-    await waitForEvent(tooltip, 'swc-open');
+    await openTooltip(tooltip);
   },
 };
 
@@ -651,8 +803,7 @@ export const CJKLineHeightTest: Story = {
   `,
   play: async ({ canvasElement }) => {
     const tooltip = await getComponent<Tooltip>(canvasElement, 'swc-tooltip');
-    tooltip.open = true;
-    await waitForEvent(tooltip, 'swc-open');
+    await openTooltip(tooltip);
   },
 };
 
@@ -665,14 +816,304 @@ export const LogicalPlacementRTLTest: Story = {
   `,
   play: async ({ canvasElement }) => {
     const tooltip = await getComponent<Tooltip>(canvasElement, 'swc-tooltip');
-    tooltip.open = true;
-    await waitForEvent(tooltip, 'swc-open');
+    await openTooltip(tooltip);
   },
 };
 
 // ──────────────────────────────────────────────────────────────
 // TEST: Dev mode warnings
 // ──────────────────────────────────────────────────────────────
+
+// ──────────────────────────────────────────────────────────────
+// TEST: HoverController integration
+// ──────────────────────────────────────────────────────────────
+
+export const HoverOpensTest: Story = {
+  render: () => html`
+    <swc-button id="tt-hover-trigger">Hover me</swc-button>
+    <swc-tooltip for="tt-hover-trigger" delay="0" placement="top">
+      Appears on hover
+    </swc-tooltip>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const trigger = canvasElement.querySelector('#tt-hover-trigger') as Button;
+    const tooltip = await getComponent<Tooltip>(canvasElement, 'swc-tooltip');
+
+    await step('opens the tooltip on hover', async () => {
+      await hoverOpen(trigger, tooltip);
+      expect(tooltip.open, 'tooltip is open after hover').toBe(true);
+    });
+  },
+};
+
+export const FocusOpensTest: Story = {
+  render: () => html`
+    <swc-button id="tt-focus-trigger">Focus me</swc-button>
+    <swc-tooltip for="tt-focus-trigger" placement="top">
+      Appears on focus
+    </swc-tooltip>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const trigger = canvasElement.querySelector('#tt-focus-trigger') as Button;
+    const tooltip = await getComponent<Tooltip>(canvasElement, 'swc-tooltip');
+
+    await step(
+      'opens the tooltip immediately when the trigger receives keyboard focus',
+      async () => {
+        await focusOpen(trigger, tooltip);
+        expect(tooltip.open, 'tooltip is open after focus').toBe(true);
+      }
+    );
+
+    await step('closes the tooltip when focus leaves the trigger', async () => {
+      await focusClose(trigger, tooltip);
+      expect(tooltip.open, 'tooltip is closed after blur').toBe(false);
+    });
+  },
+};
+
+export const DisabledPreventsHoverTest: Story = {
+  render: () => html`
+    <swc-button id="tt-disabled-trigger">Hover me</swc-button>
+    <swc-tooltip for="tt-disabled-trigger" delay="0" disabled placement="top">
+      Should not appear
+    </swc-tooltip>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const trigger = canvasElement.querySelector(
+      '#tt-disabled-trigger'
+    ) as Button;
+    const tooltip = await getComponent<Tooltip>(canvasElement, 'swc-tooltip');
+
+    await step(
+      'does not open the tooltip when disabled and trigger is hovered',
+      async () => {
+        trigger.dispatchEvent(
+          new PointerEvent('pointerenter', { bubbles: false, composed: true })
+        );
+        await tooltip.updateComplete;
+        expect(tooltip.open, 'tooltip remains closed when disabled').toBe(
+          false
+        );
+      }
+    );
+  },
+};
+
+export const ManualPreventsHoverTest: Story = {
+  render: () => html`
+    <swc-button id="tt-manual-hover-trigger">Hover me</swc-button>
+    <swc-tooltip for="tt-manual-hover-trigger" delay="0" manual placement="top">
+      Manual tooltip
+    </swc-tooltip>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const trigger = canvasElement.querySelector(
+      '#tt-manual-hover-trigger'
+    ) as Button;
+    const tooltip = await getComponent<Tooltip>(canvasElement, 'swc-tooltip');
+
+    await step(
+      'does not open the tooltip on hover when manual mode is active',
+      async () => {
+        trigger.dispatchEvent(
+          new PointerEvent('pointerenter', { bubbles: false, composed: true })
+        );
+        await tooltip.updateComplete;
+        expect(tooltip.open, 'tooltip remains closed in manual mode').toBe(
+          false
+        );
+      }
+    );
+
+    await step(
+      'opens when open is set directly even in manual mode',
+      async () => {
+        tooltip.open = true;
+        await tooltip.updateComplete;
+        expect(tooltip.open, 'tooltip opens via property in manual mode').toBe(
+          true
+        );
+        tooltip.open = false;
+        await tooltip.updateComplete;
+      }
+    );
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
+// TEST: PlacementController integration
+// ──────────────────────────────────────────────────────────────
+
+export const PlacementControllerTest: Story = {
+  render: () => html`
+    <div style="display: flex; justify-content: center; padding: 120px;">
+      <swc-button id="tt-placement-trigger">Trigger</swc-button>
+    </div>
+    <swc-tooltip for="tt-placement-trigger" placement="top">
+      Positioned by PlacementController
+    </swc-tooltip>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const tooltip = await getComponent<Tooltip>(canvasElement, 'swc-tooltip');
+
+    await step(
+      'applies translate positioning via PlacementController when opened',
+      async () => {
+        tooltip.open = true;
+        // Poll for the popover-open state rather than waiting for swc-open:
+        // beforetoggle timing varies across browsers in headless CI.
+        await waitFor(
+          () =>
+            expect(
+              tooltip.matches(':popover-open'),
+              'tooltip entered the top layer'
+            ).toBe(true),
+          { timeout: 1000 }
+        );
+
+        // PlacementController is async; poll until it has applied positioning.
+        await waitFor(
+          () =>
+            expect(
+              tooltip.style.translate,
+              'PlacementController applied a translate value'
+            ).toBeTruthy(),
+          { timeout: 1000 }
+        );
+      }
+    );
+
+    await step(
+      'reflects the actual computed placement back into the placement property',
+      async () => {
+        await waitFor(
+          () =>
+            expect(
+              ['top', 'bottom', 'left', 'right', 'start', 'end'],
+              'placement reflects a valid computed side'
+            ).toContain(tooltip.placement),
+          { timeout: 1000 }
+        );
+      }
+    );
+
+    await step('positions the tip element via arrow middleware', async () => {
+      // The arrow middleware writes translate on the tip span so the tip
+      // tracks the trigger center independently of any cross-axis shift.
+      const tip = tooltip.shadowRoot?.querySelector(
+        '.swc-Tooltip-tip'
+      ) as HTMLElement | null;
+      await waitFor(
+        () =>
+          expect(
+            tip?.style.translate,
+            'arrow middleware set translate on .swc-Tooltip-tip'
+          ).toBeTruthy(),
+        { timeout: 1000 }
+      );
+    });
+
+    await step('clears translate when closed', async () => {
+      const tip = tooltip.shadowRoot?.querySelector(
+        '.swc-Tooltip-tip'
+      ) as HTMLElement | null;
+
+      tooltip.open = false;
+
+      // Poll for the bubble translate to clear rather than waiting for
+      // swc-after-close: Firefox specifically in CI may not fire transitionend for
+      // transition-behavior:allow-discrete discrete properties, which would
+      // cause an unbounded hang if we waitForEvent('swc-after-close').
+      await waitFor(
+        () =>
+          expect(
+            tooltip.style.translate,
+            'bubble translate is cleared after close'
+          ).toBeFalsy(),
+        { timeout: 2000 }
+      );
+      // Tip translate is cleared synchronously by placementController.stop().
+      expect(
+        tip?.style.translate,
+        'tip translate is cleared after close'
+      ).toBeFalsy();
+    });
+
+    await step(
+      'uses the updated requested placement when consumer changes placement before reopening',
+      async () => {
+        // Consumer explicitly requests a different side.
+        tooltip.placement = 'bottom';
+        await tooltip.updateComplete;
+
+        await openTooltip(tooltip);
+
+        // PlacementController should rerun with the new requested placement.
+        await waitFor(
+          () =>
+            expect(
+              tooltip.style.translate,
+              'PlacementController positioned tooltip for the new placement'
+            ).toBeTruthy(),
+          { timeout: 1000 }
+        );
+
+        tooltip.open = false;
+        await tooltip.updateComplete;
+      }
+    );
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Shadow root scoping
+// ──────────────────────────────────────────────────────────────
+
+export const ShadowRootScopeTest: Story = {
+  // Render an empty host; the shadow root and its contents are built in the
+  // play function so getRootNode() on the tooltip returns the shadow root.
+  render: () => html`
+    <div id="shadow-root-host"></div>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const host = canvasElement.querySelector(
+      '#shadow-root-host'
+    ) as HTMLDivElement;
+    const shadow = host.attachShadow({ mode: 'open' });
+
+    const trigger = document.createElement('button');
+    trigger.id = 'sr-trigger';
+    trigger.textContent = 'Trigger';
+
+    const tooltip = document.createElement('swc-tooltip') as Tooltip;
+    tooltip.setAttribute('placement', 'top');
+    tooltip.textContent = 'Shadow-scoped tooltip';
+
+    shadow.append(trigger, tooltip);
+
+    // Set 'for' after connecting so getRootNode() returns the shadow root when
+    // the first updated() resolves the trigger via getRootNode().getElementById.
+    tooltip.for = 'sr-trigger';
+    await tooltip.updateComplete;
+
+    await step(
+      'resolves the trigger via getRootNode() scoped to the shadow root',
+      async () => {
+        tooltip.open = true;
+        await tooltip.updateComplete;
+
+        expect(
+          trigger.ariaDescribedByElements ?? [],
+          'native trigger inside shadow root receives ariaDescribedByElements wiring'
+        ).toContain(tooltip);
+
+        tooltip.open = false;
+        await tooltip.updateComplete;
+      }
+    );
+  },
+};
 
 export const ForIdNotFoundWarningTest: Story = {
   render: () => html`

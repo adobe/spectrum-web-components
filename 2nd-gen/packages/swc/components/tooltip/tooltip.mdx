@@ -21,11 +21,7 @@ A `<swc-tooltip>` consists of three parts:
 
 The following features are planned for future releases:
 
-- **Automatic hover and focus interactions**: the tooltip opens on trigger hover after a warm-up delay and on keyboard focus immediately; closes when the pointer leaves or focus moves away.
-- **Configurable delay (`delay`)**: controls the warm-up delay before the tooltip appears on hover. Defaults to 1500ms; set to `0` to show immediately. Moving quickly between adjacent triggers shows each subsequent tooltip immediately after the first warm-up elapses.
-- **`disabled` attribute**: prevents the tooltip from responding to hover and focus in automatic mode.
-- **Pointer hover bridge**: the pointer can move from the trigger into the tooltip bubble without the tooltip closing (WCAG 1.4.13).
-- **Tip-less display (`no-tip`)**: removes the directional tip arrow from the tooltip bubble.
+- **Tip-less display**: removes the directional tip arrow from the tooltip bubble.
 - **Tooltip directive**: a Lit directive for programmatic tooltip insertion and lifecycle management.
 
 ## Options
@@ -42,7 +38,11 @@ The `placement` attribute sets the preferred position of the tooltip relative to
 
 The `start` and `end` values are RTL-aware: `start` maps to the left side in LTR and to the right in RTL; `end` maps to the right in LTR and to the left in RTL.
 
-Pixel-accurate positioning requires `PlacementController`, which is in a future release. The `placement` attribute currently applies only the tip direction.
+`PlacementController` handles pixel positioning automatically. When there is insufficient space on the requested side, the tooltip flips to the opposite side and the `placement` attribute reflects the computed side. The original requested value is preserved internally, so if space opens up the tooltip returns to the originally requested position.
+
+Because `<swc-tooltip>` uses `popover="auto"`, the tooltip renders in the browser's top layer, outside the normal document flow. The flip boundary is therefore the **viewport**, not the tooltip's scroll container ancestor. Flip is triggered by proximity to the viewport edge, not to any overflow container boundary.
+
+Additional attributes control positioning behavior: `offset` sets the pixel gap between the trigger and the bubble; `cross-offset` slides the bubble along the trigger edge; `container-padding` sets the minimum inset from the viewport edge before flipping (default `12px`); `should-flip` (default `true`) enables or disables the flip behavior.
 
 <Canvas of={TooltipStories.Placements} />
 
@@ -52,11 +52,33 @@ Pixel-accurate positioning requires `PlacementController`, which is in a future 
 
 The tooltip is closed by default. Setting `open` to `true` calls `showPopover()`, placing the bubble in the browser's top layer via the Popover API. The `open` attribute reflects the current visibility state.
 
-Because the component uses `popover="auto"`, opening a tooltip dismisses any other open auto popover in the document, including other tooltips, menus, pickers, and selects. Set `manual` and manage `open` directly to opt out of automatic open and close while retaining ARIA relationship wiring.
+Because the component uses `popover="auto"`, opening a tooltip dismisses any other open auto popover in the document, including other tooltips, menus, pickers, and selects. Set `manual` to opt out of automatic hover and focus wiring and manage `open` directly while retaining ARIA relationship wiring.
 
 <Canvas of={TooltipStories.Open} />
 
+### Disabled
+
+When `disabled` is set, the tooltip does not respond to hover or focus events. The trigger remains interactive; only the automatic wiring is suppressed. ARIA relationship wiring still fires when `open` is set directly.
+
+<Canvas of={TooltipStories.Disabled} />
+
+### Manual
+
+When `manual` is set, `HoverController` wiring is suppressed entirely and the consumer manages visibility by setting the `open` property or calling the popover API directly. ARIA relationship wiring still fires on `open` change when `for` or `triggerElement` is set.
+
+<Canvas of={TooltipStories.Manual} />
+
 ## Behaviors
+
+### Hover and focus
+
+The tooltip opens automatically when the trigger receives pointer hover or keyboard focus:
+
+- **Pointer hover**: after a warm-up delay (default `1500ms`), the tooltip opens. Set `delay="0"` to open immediately. Once any tooltip of the same type has warmed up, subsequent hovers on other triggers open immediately without waiting for the full delay.
+- **Keyboard focus**: the tooltip opens immediately, bypassing the warm-up delay entirely.
+- **Close**: the tooltip closes `300ms` after the pointer leaves the trigger. If the pointer enters the tooltip bubble before that cooldown expires, the tooltip stays open (WCAG 1.4.13 pointer bridge). The tooltip closes immediately when focus leaves the trigger.
+
+Set `disabled` to prevent the tooltip from responding to hover and focus while leaving the trigger interactive. Set `manual` to suppress automatic wiring entirely and manage visibility via the `open` property or the popover API directly. `disabled` has no effect when `manual` is also set.
 
 ### Events
 
@@ -72,6 +94,24 @@ When no CSS transition is active (for example, when `prefers-reduced-motion` rem
 Events fire regardless of what triggered the state change: setting `open` directly, calling the popover API, pressing Escape, or a light-dismiss click.
 
 <Canvas of={TooltipStories.Events} />
+
+### Trigger element
+
+The `triggerElement` property wires the tooltip to a trigger element directly, bypassing the `for` attribute ID lookup. Use it when:
+
+- The trigger and tooltip are in **different shadow roots** and `getElementById` cannot cross the boundary.
+- The tooltip is **inserted programmatically** and a stable HTML `id` is not available.
+
+Set `triggerElement` to the element reference in JavaScript. ARIA relationship wiring and hover/focus event wiring both activate as soon as the property is set.
+
+```js
+const tooltip = document.querySelector('swc-tooltip');
+tooltip.triggerElement = someElement; // replaces any 'for' wiring
+```
+
+Setting `triggerElement` to `null` reverts to `for`-based resolution.
+
+<Canvas of={TooltipStories.TriggerElement} />
 
 ### Labeling
 

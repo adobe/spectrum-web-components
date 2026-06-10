@@ -6,29 +6,6 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
 Replace `<sp-tooltip>` with `<swc-tooltip>`, update the import, rename the tag, update event listeners, and change the authoring pattern so the tooltip is a sibling of the trigger rather than nested inside it.
 
-<div
-  style={{
-    borderLeft: '4px solid #2680eb',
-    background: 'rgba(38, 128, 235, 0.10)',
-    padding: '12px 16px',
-    margin: '16px 0',
-    borderRadius: '4px',
-  }}
->
-  <strong>ℹ️ Initial release scope.</strong> This release delivers the tag
-  rename, variant and event API changes, ARIA relationship wiring via{' '}
-  <code>for</code>, and native <code>{'popover="auto"'}</code> open/close
-  behavior.{' '}
-  <strong>
-    Automatic hover/focus trigger wiring and viewport-aware pixel positioning
-    are not yet available.
-  </strong>{' '}
-  They require <code>HoverController</code> and <code>PlacementController</code>
-  , which ship in a future release. Until then, control visibility via the{' '}
-  <code>open</code> property and position the tooltip with a helper library like
-  Floating UI.
-</div>
-
 ## Installation
 
 ```bash
@@ -55,35 +32,53 @@ import '@adobe/spectrum-wc/components/tooltip/swc-tooltip.js';
 
 ### Renamed
 
-| Area                            | Spectrum 1 (`sp-tooltip`)                        | Spectrum 2 (`swc-tooltip`)                                                                                                     |
-| ------------------------------- | ------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------ |
-| Tag                             | `sp-tooltip`                                     | `swc-tooltip`                                                                                                                  |
-| Import path                     | `@spectrum-web-components/tooltip/sp-tooltip.js` | `@adobe/spectrum-wc/components/tooltip/swc-tooltip.js`                                                                         |
-| `variant`                       | `'info'`                                         | `'informative'`                                                                                                                |
-| `swc-open` / `swc-close` events | `sp-opened` / `sp-closed`                        | `swc-open`, `swc-after-open`, `swc-close`, `swc-after-close`                                                                   |
-| Trigger wiring attribute        | `self-managed`                                   | `for="[id]"` declares the trigger relationship and wires ARIA now. Automatic hover/focus open/close ships in a future release. |
+| Area                            | Spectrum 1 (`sp-tooltip`)                        | Spectrum 2 (`swc-tooltip`)                                                            |
+| ------------------------------- | ------------------------------------------------ | ------------------------------------------------------------------------------------- |
+| Tag                             | `sp-tooltip`                                     | `swc-tooltip`                                                                         |
+| Import path                     | `@spectrum-web-components/tooltip/sp-tooltip.js` | `@adobe/spectrum-wc/components/tooltip/swc-tooltip.js`                                |
+| `variant`                       | `'info'`                                         | `'informative'`                                                                       |
+| `swc-open` / `swc-close` events | `sp-opened` / `sp-closed`                        | `swc-open`, `swc-after-open`, `swc-close`, `swc-after-close`                          |
+| Trigger wiring attribute        | `self-managed`                                   | `for="[id]"` wires the ARIA relationship and drives automatic hover/focus open/close. |
 
 ### Added in Spectrum 2
 
-| Addition                                    | Notes                                                                                                                                   |
-| ------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
-| `for` attribute                             | Declares the trigger relationship by ID. Required for ARIA wiring and (in the additive phase) automatic hover/focus open/close.         |
-| `manual` boolean attribute                  | Opt out of automatic controller wiring; consumer manages open/close via the `open` property. ARIA wiring still fires on `open` change.  |
-| Logical placements: `start`, `end`          | RTL-aware inline placement values; physical values (`top`, `bottom`, `left`, `right`) are unchanged.                                    |
-| `delay` attribute                           | Warm-up/cooldown duration in ms (default 1500). `delay="0"` shows immediately. **Additive phase:** active when `HoverController` ships. |
-| `labeling` boolean attribute                | Switches ARIA wiring to `ariaLabelledByElements` for icon-only triggers. **Additive phase.**                                            |
-| `swc-after-open` / `swc-after-close` events | Fire after the open/close transition completes.                                                                                         |
+| Addition                                    | Notes                                                                                                                                        |
+| ------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
+| `for` attribute                             | Declares the trigger relationship by ID. Required for ARIA wiring and automatic hover/focus open/close.                                      |
+| `manual` boolean attribute                  | Opt out of automatic hover/focus wiring. Consumer manages open/close via `open`. ARIA wiring still fires.                                    |
+| `disabled` boolean attribute                | Suppresses automatic hover/focus response. Trigger remains interactive; `open` still works directly.                                         |
+| Logical placements: `start`, `end`          | RTL-aware inline placement values; physical values (`top`, `bottom`, `left`, `right`) are unchanged.                                         |
+| `delay` attribute                           | Warm-up delay in ms before the tooltip opens on hover (default `1500`). `delay="0"` shows immediately.                                       |
+| `offset` attribute (expanded)               | Existed in Spectrum 1 (`self-managed` only, default `0`). Now always active with default `4`. See [behavioral changes](#behavioral-changes). |
+| `cross-offset` attribute                    | Slide in pixels perpendicular to the placement direction (default `0`).                                                                      |
+| `container-padding` attribute               | Minimum inset from the viewport edge for collision detection (default `12`).                                                                 |
+| `should-flip` boolean attribute             | Whether the tooltip may reposition to the opposite side when the requested placement does not fit (default `true`).                          |
+| `labeling` boolean attribute                | Switches ARIA wiring to `ariaLabelledByElements` for icon-only triggers.                                                                     |
+| `swc-after-open` / `swc-after-close` events | Fire after the open/close transition completes.                                                                                              |
 
 ### Removed in Spectrum 2
 
-| Removed                                 | Replacement                                                                                                       |
-| --------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
-| `slot="icon"`                           | No replacement. Remove all icon content from tooltips; Spectrum 2 tooltip is text-only.                           |
-| `variant="positive"`                    | Use `variant="informative"`, `variant="neutral"`, or `variant="negative"` as content warrants.                    |
-| `variant="info"`                        | Renamed to `variant="informative"`.                                                                               |
-| `self-managed` attribute                | Removed. Automatic trigger wiring is the default. Add `for="[id]"` to the tooltip pointing to the trigger's `id`. |
-| `sp-opened` / `sp-closed` events        | Replace with `swc-open` and `swc-close`. The timing also changes; see [step 4](#4-update-event-listeners).        |
-| `--mod-tooltip-*` CSS custom properties | No `--mod-*` pass-through in Spectrum 2. See [Styling](#styling).                                                 |
+| Removed                                 | Replacement                                                                                                                                                            |
+| --------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `slot="icon"`                           | No replacement. Remove all icon content from tooltips; Spectrum 2 tooltip is text-only.                                                                                |
+| `variant="positive"`                    | Use `variant="informative"`, `variant="neutral"`, or `variant="negative"` as content warrants.                                                                         |
+| `variant="info"`                        | Renamed to `variant="informative"`.                                                                                                                                    |
+| `self-managed` attribute                | Removed. Automatic trigger wiring is the default. Add `for="[id]"` to the tooltip pointing to the trigger's `id`.                                                      |
+| `delayed` boolean attribute             | Replaced by `delay` (number, in ms). Warm-up is now always active; set `delay="0"` to restore immediate-hover behavior. See [behavioral changes](#behavioral-changes). |
+| `tip-padding` attribute                 | No replacement. Was already `@deprecated` in Spectrum 1 and is not exposed in Spectrum 2.                                                                              |
+| `sp-opened` / `sp-closed` events        | Replace with `swc-open` and `swc-close`. The timing also changes; see [step 4](#4-update-event-listeners).                                                             |
+| `--mod-tooltip-*` CSS custom properties | No `--mod-*` pass-through in Spectrum 2. See [Styling](#styling).                                                                                                      |
+
+### Behavioral changes
+
+These are not rename changes; the attribute names are the same (or similar) but the default values or opt-in semantics differ. Review each one to confirm your usage is unaffected.
+
+| Property / attribute | Spectrum 1 behavior                                                                                                  | Spectrum 2 behavior                                                                                              | Action required                                                                                                                                   |
+| -------------------- | -------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `variant` default    | Empty string; neutral state had no `variant` attribute on the host. `:not([variant])` CSS matched the neutral state. | Defaults to `"neutral"` and is reflected as an attribute. `:not([variant])` no longer matches the neutral state. | Update `:not([variant])` CSS selectors and any `getAttribute('variant') === null` checks to `[variant="neutral"]`.                                |
+| `placement` default  | `undefined`; the tooltip had no `placement` attribute or placement CSS class in non-self-managed usage.              | Defaults to `"top"` and is reflected. The tooltip always has a `placement` attribute and CSS class.              | If you relied on an unplaced tooltip, explicitly set `placement="top"` or accept the visual change; the behavior is now top-placement by default. |
+| `delayed` → `delay`  | `delayed` was a boolean opt-in (default `false`); no delay without the attribute.                                    | `delay` is a number in ms (default `1500`); warm-up is always active.                                            | Remove `delayed`; add `delay="0"` if you relied on immediate hover.                                                                               |
+| `offset` default     | `0`; applied only in `self-managed` mode.                                                                            | `4`; always active.                                                                                              | If the 4 px gap is undesired, set `offset="0"` explicitly.                                                                                        |
 
 ## Update your code
 
@@ -180,24 +175,20 @@ tooltip.triggerElement = shadowRoot.querySelector('#the-trigger');
   }}
 >
   <strong>
-    ℹ️ What <code>for</code> does in this release.
+    ℹ️ What <code>for</code> does.
   </strong>{' '}
   Setting <code>{'for="[id]"'}</code> establishes the ARIA relationship between
-  the trigger and tooltip. It does <strong>not</strong> yet open or close the
-  tooltip automatically on hover or focus. Until automatic trigger wiring ships,
-  you must control visibility manually (see step 6 below).
+  the trigger and tooltip, and wires automatic hover/focus open/close. No
+  additional event listeners are required.
 </div>
 
-### 6. Manage open/close until automatic wiring ships
+### 6. Optional `manual` event handling
 
-In this release, automatic hover/focus open/close is not active. Implement `mouseenter`/`mouseleave` and `focusin`/`focusout` listeners yourself. Keep `for` set so the ARIA relationship is always established when the tooltip opens.
-
-When automatic wiring ships in a future release, remove these manual listeners; `for` will drive open/close automatically. Add `manual` to the tooltip only when you need to permanently opt out of automatic wiring at that point.
+The tooltip opens after a warm-up delay (default `1500 ms`; set `delay="0"` to open immediately) and closes when the pointer leaves or focus moves away. To permanently opt out of automatic wiring and retain full programmatic control, add the `manual` attribute:
 
 ```html
-<!-- After (current release: manual event wiring required) -->
 <button id="save-btn">Save</button>
-<swc-tooltip for="save-btn" placement="top" id="save-tip">
+<swc-tooltip for="save-btn" placement="top" manual id="save-tip">
   Save your changes
 </swc-tooltip>
 <script>
@@ -209,14 +200,10 @@ When automatic wiring ships in a future release, remove these manual listeners; 
   btn.addEventListener('mouseleave', () => {
     tip.open = false;
   });
-  btn.addEventListener('focusin', () => {
-    tip.open = true;
-  });
-  btn.addEventListener('focusout', () => {
-    tip.open = false;
-  });
 </script>
 ```
+
+With `manual`, ARIA relationship wiring via `for` still fires on every `open` change; only the automatic hover/focus events are suppressed.
 
 ## Accessibility
 
@@ -279,5 +266,8 @@ Spectrum 1 `--mod-tooltip-*` CSS custom properties are **not** supported in Spec
 - [ ] Replace `sp-opened`/`sp-closed` event listeners with `swc-open`/`swc-close` (and `swc-after-open`/`swc-after-close` where needed)
 - [ ] Remove `self-managed` from all tooltips; add `id` to the trigger and `for="[id]"` to the tooltip
 - [ ] Confirm no tooltip is nested inside its trigger element
-- [ ] Add `mouseenter`/`mouseleave` and `focusin`/`focusout` listeners to control `open` until automatic wiring ships
+- [ ] Remove `delayed` attribute; add `delay="0"` if you relied on immediate hover behavior
+- [ ] Remove `tip-padding` attribute (no replacement)
+- [ ] Update `:not([variant])` CSS selectors and `getAttribute('variant') === null` checks to `[variant="neutral"]`
+- [ ] Add `manual` only to tooltips that require permanently consumer-controlled visibility
 - [ ] Remove all `--mod-tooltip-*` CSS overrides

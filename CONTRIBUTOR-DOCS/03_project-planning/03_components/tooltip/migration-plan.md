@@ -36,7 +36,6 @@
     - [Event dispatch ownership](#event-dispatch-ownership)
     - [`HoverController` hand-off](#hovercontroller-hand-off)
     - [`PlacementController` hand-off](#placementcontroller-hand-off)
-    - [Positioning before `PlacementController`](#positioning-before-placementcontroller)
     - [Auto-stack behavior](#auto-stack-behavior)
 - [Migration checklist](#migration-checklist)
     - [Preparation (this ticket)](#preparation-this-ticket)
@@ -75,7 +74,7 @@ Tooltip is a visually simple component with high behavioral complexity in its au
 - **Breaking (B5):** Event renames: `sp-opened`/`sp-closed` removed; 2nd-gen fires `swc-open`, `swc-after-open`, `swc-close`, `swc-after-close`. Event timing also differs due to native popover lifecycle; must document in consumer migration guide.
 - **A11y critical (SWC-1558):** `role="tooltip"` is absent in 1st-gen; must ship in 2nd-gen.
 - **Infrastructure change:** `sp-overlay` dependency dropped. 2nd-gen uses native popover API + Floating UI per the [Overlay Strategy RFC](https://www.dropbox.com/scl/fi/eae4rywxitn4zfmuw4o59/RFC-Overlay-strategy-for-1st-gen-and-2nd-gen.paper?rlkey=ljezd8mt8joy2zc3lv88usrh6&dl=0). The `self-managed` attribute is removed (B6); automatic trigger wiring is on by default; the `manual` attribute opts out. Internal mechanics change significantly.
-- **Automatic trigger integration is additive:** Deferred pending extraction of `PlacementController` (viewport-aware positioning) and `HoverController` (warm-up/cooldown timing, focus parity). Initial 2nd-gen tooltip ships `for` and `trigger-element` as active API — ARIA relationship wiring fires on `open` change from day one (see A4). Hover/focus event wiring and screen positioning require the controllers. `delay`, `disabled`, and `manual` are in the API shape but inactive until the additive phase. Before scheduling the additive implementation ticket, confirm that both controllers have been extracted and are consumable per the Overlay RFC.
+- **HoverController and PlacementController integrated:** Both controllers are wired in `Tooltip.base.ts`. Hover/focus event wiring, warm-up/cooldown, `disabled` guard, WCAG 1.4.13 pointer bridge, `manual` suppression, and pixel positioning are all active. `delay`, `disabled`, `manual`, `offset`, `cross-offset`, `container-padding`, and `should-flip` are all live API. The Floating UI inline-style workaround in stories has been removed.
 - **Authoring pattern change:** `<swc-tooltip>` is authored as a sibling of the trigger — not inside it as in 1st-gen. With `popover="auto"` moving the tooltip to the top layer at render time, physical DOM nesting is no longer needed. Trigger resolution uses the `for` attribute to reference the trigger by ID in the same document tree root; `trigger-element` provides an element reference override for cross-shadow-root and programmatic cases where ID resolution does not apply. Add `manual` to opt out of automatic wiring entirely. The 1st-gen ancestor-walking (`resolveSelfManagedTriggerElement`) is not ported.
 - **No open questions.** Q1 (`tip-padding`) and Q2 (`popover="auto"` stack isolation) are both resolved. See [Blockers and open questions](#blockers-and-open-questions).
 
@@ -175,17 +174,17 @@ Self-managed:
 
 Core tooltip (variants, CSS, `role="tooltip"`, event renames) can proceed without prerequisites. Automatic trigger integration is additive and blocked on two controller extractions from the Overlay RFC:
 
-- **`PlacementController`** — Floating UI wrapper for viewport-aware positioning (`offset`, `flip`, `shift` middleware). Must be extracted before automatic trigger positioning ships.
-- **`HoverController`** — warm-up/cooldown, focus parity, WCAG 1.4.13 pointer bridge. Must be extracted before automatic trigger open/close behavior ships.
+- **`PlacementController`** — Floating UI wrapper for viewport-aware positioning. **Extracted and integrated.** Pixel positioning, flip behavior, and positioning attributes are now active.
+- **`HoverController`** — warm-up/cooldown, focus parity, WCAG 1.4.13 pointer bridge. **Extracted and integrated.** Hover/focus wiring is active.
 
-Neither controller is available yet. The automatic trigger integration additive phase should not begin until both are ready. Track their extraction status before scheduling the additive implementation ticket.
+Both controllers are integrated. No outstanding controller prerequisites remain.
 
 ### Related components and ordering notes
 
 | Component | Relationship | Notes |
 | --------- | ------------ | ----- |
-| `PlacementController` | Prerequisite for automatic trigger integration additive phase | Viewport-aware positioning (`offset`, `flip`, `shift`). Tip element centering is CSS-only; no arrow middleware needed. To be extracted per Overlay RFC. Not a prerequisite for the core tooltip migration. |
-| `HoverController` | Prerequisite for automatic trigger integration additive phase | Hover/focus event wiring, warm-up/cooldown timing, and WCAG 1.4.13 pointer bridge. To be extracted from `@spectrum-web-components/overlay`. Not a prerequisite for the core tooltip migration. |
+| `PlacementController` | **Integrated.** | Extracted and wired in `Tooltip.base.ts`. Pixel positioning, flip behavior, `offset`, `cross-offset`, `container-padding`, and `should-flip` are active. |
+| `HoverController` | **Integrated.** | Extracted and wired in `Tooltip.base.ts`. Hover/focus event wiring, warm-up/cooldown timing, and WCAG 1.4.13 pointer bridge are active. |
 | `sp-overlay` | Not a prerequisite | 2nd-gen Tooltip and controllers replaces `sp-overlay` with native popover API + Floating UI directly. |
 
 ---
@@ -227,25 +226,26 @@ Neither controller is available yet. The automatic trigger integration additive 
 | --- | ------------ | ---------------- | ---------------- | ----------------------- |
 | A1 | Add `role="tooltip"` to host element | Missing (SWC-1558) | `role="tooltip"` on the host element | No consumer action; fixes AT behavior |
 | A2 | Native popover open/close | Uses `sp-overlay type="hint"` + `HoverController` + `triggerInteraction="hover"` | Host gets `popover="auto"`; `beforetoggle`/`toggle`/`transitionend` event listeners handle state sync and the four `swc-*` lifecycle events. Participates in the auto popover stack — opening closes other open `auto` popovers. See [Auto-stack behavior](#auto-stack-behavior). | No consumer action; automatic trigger wiring ships inactive in the initial release |
-| A3 | `Escape` dismissal | Handled by `OverlayStack` in 1st-gen | `popover="auto"` provides built-in Esc-to-close and light-dismiss. No explicit `keydown` listener needed. | No consumer action |
+| A3 | `Escape` dismissal | Handled by `OverlayStack` in 1st-gen | `popover="auto"` provides built-in Esc-to-close and light-dismiss (primary mechanism). A `document` `keydown` listener is also wired in Core's `connectedCallback` as a belt-and-suspenders measure for test environments where the native popover dismiss may not fire; it sets `this.open = false` on Escape. | No consumer action |
 | A4 | ARIA relationship wiring | No automatic ARIA association in 1st-gen | On `open = true`: SWC resolves trigger via `for` / `trigger-element`, applies inner-button resolution (shadow `<button>` for SWC components; host for native elements), and sets `Element.ariaDescribedByElements = [tooltipHost]`. Removed on `open = false`. Active in both automatic and manual modes. See [ARIA relationship wiring](#aria-relationship-wiring) for the full two-path resolution and browser support. | Set `for` on `<swc-tooltip>` pointing to the trigger's `id`; or set `trigger-element` programmatically. No other action required. |
 
 ### Additive — ships when ready, zero breakage for consumers already on 2nd-gen
 
 | # | What is added | Notes |
 | --- | ------------- | ----- |
-| A1 | Automatic trigger integration (hover/focus) | `popover="auto"` and ARIA wiring are already active from the initial release. Additive work: wire `HoverController` (hover/focus events, warm-up/cooldown timing); wire `PlacementController` (pixel positioning). Skipped when `manual` is set. Blocked on both controller extractions. |
-| A2 | Warm-up / cooldown (`delay`) | Warm-up/cooldown is the **default behavior** for all tooltips (not opt-in). `delay: number` (default 1500ms) sets the duration; `delay="0"` opts out. Ships in the API shape but inactive until the additive phase. Blocked on `HoverController` extraction. See [addendum](#addendum-hovercontroller-interface-requirements). |
-| A3 | `disabled` for automatic mode | Prevents hover/focus response in automatic mode. Ships with automatic trigger integration additive phase. |
-| A4 | WCAG 1.4.13 pointer bridge | Pointer can move from trigger to tooltip bubble without closing. Managed by `HoverController`. Blocked on `HoverController` extraction. |
+| ~~A1~~ | ~~Automatic trigger integration (hover/focus + positioning)~~ | **Shipped.** `HoverController` and `PlacementController` are integrated; hover/focus event wiring and pixel positioning are both active. |
+| ~~A2~~ | ~~Warm-up / cooldown (`delay`)~~ | **Shipped.** `delay` is now an active attribute read by `HoverController`. Default 1500ms; `delay="0"` opens immediately. |
+| ~~A3~~ | ~~`disabled` for automatic mode~~ | **Shipped.** `disabled` prevents hover/focus response via `HoverController`'s guard. |
+| ~~A4~~ | ~~WCAG 1.4.13 pointer bridge~~ | **Shipped.** Pointer can move from trigger into the tooltip bubble without closing; managed by `HoverController`. |
 | A5 | `no-tip` property | Shown in Figma (Orientation section, "No tip") but not supported by React Spectrum. Deferred. Create a follow-on ticket when React adds support. |
-| A6 | `tooltip-directive` for 2nd-gen | Lit directive for programmatic tooltip insertion. Cannot be meaningfully implemented until the automatic trigger integration additive phase is complete. The 2nd-gen directive will be simpler than 1st-gen: no `sp-overlay` wrapper needed; it creates `<swc-tooltip>`, inserts it as a sibling of the target, sets `trigger-element` (element reference, bypassing ID management), and handles lifecycle cleanup. Create a follow-on ticket before this migration closes. |
-| A7 | `container-padding` | Space between tooltip and viewport edge (Floating UI `shift`/`flip` middleware `padding`). React default: 12. Blocked on `PlacementController` API. |
-| A8 | `cross-offset` | Offset along the cross axis (perpendicular to `offset`). React default: 0. Blocked on `PlacementController` API. |
-| A9 | `should-flip` | Whether to reposition to the opposite side when space runs out. Floating UI `flip` middleware. React default: `true`. Default should also be `true` in `PlacementController`; expose as a consumer attribute if override need is confirmed. |
+| A6 | `tooltip-directive` for 2nd-gen | Lit directive for programmatic tooltip insertion. The 2nd-gen directive will be simpler than 1st-gen: no `sp-overlay` wrapper needed; it creates `<swc-tooltip>`, inserts it as a sibling of the target, sets `trigger-element` (element reference, bypassing ID management), and handles lifecycle cleanup. Both controllers are now active; this can proceed when prioritized. |
+| ~~A7~~ | ~~`container-padding`~~ | **Shipped.** Default `12`. Passed to `PlacementController` `containerPadding` option. |
+| ~~A8~~ | ~~`cross-offset`~~ | **Shipped.** Default `0`. Passed to `PlacementController` `crossOffset` option. |
+| ~~A9~~ | ~~`should-flip`~~ | **Shipped.** Default `true`. Passed to `PlacementController` `shouldFlip` option. |
 | A10 | `--swc-*` CSS custom properties | No `--swc-*` custom properties initially. A small reviewed set may be added if consumer override needs emerge. |
 | ~~A11~~ | ~~`labeling` attribute — `aria-labelledby` wiring~~ | **Shipped.** Implemented in the initial release alongside the base ARIA wiring. `syncAriaRelationship()` branches on `this.labeling`: when set, uses `ariaLabelledByElements` instead of `ariaDescribedByElements` on the trigger's inner interactive element. Stale references in the opposite property are cleaned up on each sync. Re-syncs when `labeling` changes while the tooltip is open. |
 | A12 | Inner interactive element selector expansion | Initial implementation uses `querySelector('button')` as the convention for resolving the inner interactive element within a trigger's shadow root. Expand to support additional interactive elements (`<a>`, `<input>`, `<select>`, components using a different inner element) when confirmed by consumer needs. `button` covers the large majority of 2nd-gen button-like component cases; any expansion should be gated on confirmed need. |
+| A13 | Directional entry animation on placement flip | **Known limitation.** CSS `@starting-style` evaluates at `showPopover()` time, before `PlacementController` has run and resolved the actual side. On a first open that triggers a flip (e.g., requested `top` but viewport forces `bottom`), the `@starting-style` uses the pre-flip `placement` attribute and slides from the wrong direction. Fix options range from opacity-only `@starting-style` (simplest; drops directional slide entirely) to triggering a separate `transform` animation from `onPlacementChange` after the flip resolves (preserves directional animation; requires reflow or Web Animations API). Not addressed in the current release. |
 
 Full behavioral requirements for this feature are in the [HoverController interface requirements](#addendum-hovercontroller-interface-requirements) addendum.
 
@@ -270,10 +270,13 @@ Derived from the 1st-gen implementation, the rendering analysis, the accessibili
 | `open` | `boolean` | `false` | `open` (reflect) | **Confirmed.** |
 | `for` | `string` | `undefined` | `for` | **Confirmed.** ID of the trigger element in the same document tree root. The tooltip calls `getRootNode().getElementById(this.for)` to resolve the trigger, then wires the ARIA relationship on `open` change (see [ARIA relationship wiring](#aria-relationship-wiring)). Active in both automatic and manual modes — see the trigger-mode interaction table in [Behavioral semantics](#behavioral-semantics). HoverController hover/focus auto-wiring is additive. |
 | `trigger-element` | `HTMLElement \| null` | `null` | — (setter only) | **Confirmed.** Explicit trigger element reference; overrides `for` when set. Drives the same ARIA wiring on `open` change as `for`, via direct element reference rather than ID lookup. Use for cross-shadow-root triggers where `getRootNode().getElementById()` is scoped to the wrong tree root, or for the directive (programmatic insertion). `HoverController` and `PlacementController` receive the resolved value and do not perform their own trigger resolution. |
-| `delay` | `number` | `1500` | `delay` | **Additive/deferred.** Duration in ms of the warm-up before the tooltip shows on hover or focus; the cooldown duration matches. Set to `0` to show immediately. Warm-up/cooldown is the default behavior — no attribute needed to enable it. **Behavioral change from 1st-gen:** 1st-gen had `delayed: boolean` (default `false`, opt-in); 2nd-gen is opt-out. Ships in the API shape but has no effect until the additive phase. |
-| `disabled` | `boolean` | `false` | `disabled` | **Additive/deferred.** Automatic mode only; no-op when `manual` is set. Ships inactive until the additive phase. |
-| `manual` | `boolean` | `false` | `manual` | **Additive/deferred.** Suppresses `HoverController` and `PlacementController` wiring only. `for` and `trigger-element` are still resolved; ARIA wiring still fires on `open` change. Consumer manages open/close via the `open` property or the popover API directly. Ships in the API shape; effective in the additive phase. |
-| `offset` | `number` | `0` | `offset` | **Additive/deferred.** Passed to `PlacementController` offset middleware. Ships in API shape; effective in the additive phase. Note: React Spectrum defaults to `7`; the `PlacementController` default should align with React — confirm in the controller design before shipping. |
+| `delay` | `number` | `1500` | `delay` | **Confirmed. Active.** Duration in ms of the warm-up before the tooltip shows on hover; keyboard focus always opens immediately regardless of this value. The cooldown duration after pointer leave is 300ms (fixed, independent of `delay`). Set to `0` to show immediately on hover. Warm-up/cooldown is the default behavior — no attribute needed to enable it. **Behavioral change from 1st-gen:** 1st-gen had `delayed: boolean` (default `false`, opt-in); 2nd-gen is opt-out. |
+| `disabled` | `boolean` | `false` | `disabled` | **Confirmed. Active.** Prevents the tooltip from responding to hover and focus events. No-op when `manual` is set. |
+| `manual` | `boolean` | `false` | `manual` | **Confirmed. Active.** Suppresses `HoverController` and `PlacementController` wiring. `for` and `trigger-element` are still resolved; ARIA wiring still fires on `open` change. Consumer manages open/close via the `open` property or the popover API directly. |
+| `offset` | `number` | `4` | `offset` | **Confirmed. Active.** Gap in pixels along the placement axis between the trigger and the tooltip bubble. Passed to `PlacementController` offset middleware. Also drives `--_swc-tooltip-animation-distance` so the enter animation travel distance matches the gap. |
+| `cross-offset` | `number` | `0` | `cross-offset` | **Confirmed. Active.** Slide in pixels along the trigger edge perpendicular to the placement direction. Passed to `PlacementController` crossOffset option. |
+| `container-padding` | `number` | `12` | `container-padding` | **Confirmed. Active.** Minimum inset from the viewport edge for collision detection, in pixels. Passed to `PlacementController` containerPadding option. |
+| `should-flip` | `boolean` | `true` | `should-flip` | **Confirmed. Active.** Whether the tooltip may reposition to the opposite side when the requested placement does not fit. Passed to `PlacementController` shouldFlip option. |
 | `labeling` | `boolean` | `false` | `labeling` | **Confirmed.** When set, `syncAriaRelationship()` wires `ariaLabelledByElements` on the trigger's inner interactive element instead of `ariaDescribedByElements`. For icon-only triggers where the tooltip text is the sole accessible name and adding an accessible label to the trigger host is not possible. Re-syncs when changed while the tooltip is open. |
 
 #### Visual matrix (2nd-gen)
@@ -315,18 +318,18 @@ Initial expectation for Tooltip is zero or a very small reviewed set.
 
 ### Behavioral semantics
 
-**Automatic trigger-wiring mode (additive/deferred):**
+**Automatic trigger-wiring mode:**
 
-The `TooltipOpenable` intermediate element is an implementation detail of the 1st-gen overlay bridge and does not carry forward. Automatic trigger-wiring mode in 2nd-gen is deferred pending `PlacementController` and `HoverController` extraction. When the additive phase begins:
+The `TooltipOpenable` intermediate element is an implementation detail of the 1st-gen overlay bridge and does not carry forward. Both `HoverController` and `PlacementController` are now active.
 
-1. The tooltip uses `popover="auto"` (already present from the initial release). Built-in Esc-to-close and light-dismiss are included. Note: participates in the auto stack — opening a tooltip will close other open `auto` popovers (menus, pickers).
-2. `PlacementController` handles viewport-aware positioning using `offset`, `flip`, and `shift` middleware; `placement` and `offset` attributes map to controller options. The tip element remains CSS-centered on its edge regardless of computed position (see [Controller integration assumptions](#controller-integration-assumptions)).
-3. `HoverController` manages open/close timing (warm-up/cooldown using the `delay` value; default 1500ms), `focus-visible` parity, and the WCAG 1.4.13 pointer bridge. ARIA relationship wiring is handled by the SWC layer on `open` change, not by `HoverController`.
+1. The tooltip uses `popover="auto"`. Built-in Esc-to-close and light-dismiss are included. Note: participates in the auto stack — opening a tooltip will close other open `auto` popovers (menus, pickers).
+2. `HoverController` manages open/close timing (warm-up/cooldown using the `delay` value; default 1500ms), keyboard-focus parity (opens immediately), and the WCAG 1.4.13 pointer bridge. Wired in `Tooltip.base.ts`; target is set from `resolveTrigger()` whenever `for` or `triggerElement` changes. ARIA relationship wiring is handled by the SWC layer on `open` change, not by `HoverController`.
+3. `PlacementController` handles viewport-aware pixel positioning using `offset`, `flip`, and `shift` middleware; `placement`, `offset`, `cross-offset`, `container-padding`, and `should-flip` attributes map to controller options. When the controller flips the tooltip to the opposite side, `onPlacementChange` reflects the computed side back into `this.placement` so the existing `[placement]` CSS selectors pick up the correct tip direction and animation direction automatically. The original consumer-requested placement is tracked separately in `_requestedPlacement` so the controller always re-computes from the requested side and can revert the flip when viewport space is restored.
 4. `Escape` closes the tooltip without moving focus via the built-in `popover="auto"` dismiss behavior.
-5. New 2nd-gen event shape: `swc-open`, `swc-after-open`, `swc-close`, `swc-after-close` (B5). Events fire from listeners already wired in the initial release.
-6. When `manual` is set, controller wiring (hover/focus events, timing, pointer bridge) is skipped; the consumer owns open/close. ARIA relationship wiring is unaffected — it fires on `open` change whenever `for` or `trigger-element` is set.
+5. New 2nd-gen event shape: `swc-open`, `swc-after-open`, `swc-close`, `swc-after-close` (B5). Events fire from listeners wired from the initial release.
+6. When `manual` is set, `HoverController` wiring (hover/focus events, timing, pointer bridge) is skipped; the consumer owns open/close. ARIA relationship wiring is unaffected — it fires on `open` change whenever `for` or `trigger-element` is set.
 
-**Trigger resolution (automatic mode, additive/deferred):**
+**Trigger resolution:**
 
 The 1st-gen `resolveSelfManagedTriggerElement()` ancestor-walking is **not ported**. With `popover="auto"`, the tooltip renders in the browser top layer regardless of its authored DOM position. The authoring pattern changes: `<swc-tooltip>` is authored as a sibling of the trigger rather than nested inside it.
 
@@ -340,14 +343,14 @@ With tooltip and trigger authored as siblings in the same document tree, their n
 
 | `for`/`trigger-element` set? | `manual` set? | ARIA wiring | Hover/focus |
 | ---- | ---- | ---- | ---- |
-| Yes | No | Fires on `open` change (initial release) | `HoverController` (additive phase) |
-| Yes | Yes | Fires on `open` change (initial release) | Consumer-managed |
+| Yes | No | Fires on `open` change | `HoverController` (active) |
+| Yes | Yes | Fires on `open` change | Consumer-managed |
 | No | No | None; warn in debug mode | N/A |
 | No | Yes | None | Consumer-managed |
 
 **Authoring modes:**
 
-Modes 1 and 2 use automatic hover/focus trigger wiring and require `HoverController` and `PlacementController` (additive phase). ARIA relationship wiring via `for` is active from the initial release in all modes. Mode 3 demonstrates consumer-owned open/close.
+Modes 1 and 2 use automatic hover/focus trigger wiring (`HoverController`) and pixel positioning (`PlacementController`); both are active. ARIA relationship wiring via `for` is active in all modes. Mode 3 demonstrates consumer-owned open/close.
 
 ```html
 <!-- ── Mode 1: Automatic — native trigger ──────────────────────────────────
@@ -414,18 +417,17 @@ Modes 1 and 2 use automatic hover/focus trigger wiring and require `HoverControl
 </script>
 ```
 
-**Initial release (must-ship) behavioral semantics:**
+**Current behavioral semantics:**
 
-In the initial release, the tooltip uses native popover for open/close but has no automatic hover/focus trigger wiring or screen positioning:
-
-- Host element has `popover="auto"` from day one; consumer controls visibility via the `open` property (which calls `showPopover()`/`hidePopover()` internally) or directly via the popover API
-- Renders with correct variant, placement CSS class, and `role="tooltip"`
-- Component listens to native `beforetoggle`/`toggle`/`transitionend` events to sync `open` property and dispatch `swc-open`/`swc-after-open`/`swc-close`/`swc-after-close`. Events fire from these listeners regardless of what caused the state change (programmatic, Escape, or light-dismiss).
+- Host element has `popover="auto"`; consumer controls visibility via the `open` property (which calls `showPopover()`/`hidePopover()` internally), directly via the popover API, or by hovering/focusing the trigger.
+- Renders with correct variant, placement CSS class, and `role="tooltip"`.
+- Component listens to native `beforetoggle`/`toggle`/`transitionend` events to sync `open` property and dispatch `swc-open`/`swc-after-open`/`swc-close`/`swc-after-close`. Events fire from these listeners regardless of what caused the state change (programmatic, hover, focus, Escape, or light-dismiss).
 - Built-in Esc-to-close and light-dismiss via `popover="auto"`. Note: participates in the auto popover stack — opening this tooltip closes other open `auto` popovers (menus, pickers).
+- `HoverController` wires `pointerenter`/`pointerleave`/`focusin`/`focusout` on the resolved trigger; manages warm-up/cooldown timing, keyboard-focus priority, and the WCAG 1.4.13 pointer bridge. The controller target is updated whenever `for` or `trigger-element` changes (via `updated()`). Suppressed when `manual` or `disabled` is set.
 - On `open = true`, SWC resolves the trigger via `for` (ID lookup in the same root) or `trigger-element` (explicit reference) and sets `Element.ariaDescribedByElements = [tooltipHost]` on the trigger's interactive surface. Removed on `open = false`. See [ARIA relationship wiring](#aria-relationship-wiring).
-- `placement` applies the CSS class (tip direction) only; no screen positioning is active without `PlacementController`. Stories fake positioning with inline styles; this limitation should be noted in the story.
-- The tip element (`<span class="swc-Tooltip-tip">`) is always CSS-centered on the edge determined by the `placement` class. Its position is not dynamically adjusted relative to the trigger; this is a deliberate simplification and does not require `PlacementController`.
-- `delay`, `disabled`, and `offset` are present in the API but have no effect until the additive phase. `for` and `trigger-element` (setter) are active from the initial release and drive ARIA relationship wiring on `open` change. `manual` suppresses controller wiring but is effectively inert until the additive phase adds controllers.
+- `PlacementController` handles pixel positioning. On open, it receives the resolved trigger and the tooltip host, computes `{ x, y }` via Floating UI, and applies `top: 0; left: 0; translate: Xpx Ypx` to the host. When `flip` repositions to a different side, `onPlacementChange` reflects the actual side back into `this.placement` (protected by a `_placementFromController` flag so the setter does not overwrite `_requestedPlacement`). The existing `[placement]` CSS selectors automatically pick up the reflected value for tip direction and animation.
+- The tip element (`<span class="swc-Tooltip-tip">`) is CSS-centered on the edge determined by the `placement` attribute. Because `placement` always reflects the actual computed side, the tip direction and enter animation are always correct.
+- `offset`, `cross-offset`, `container-padding`, and `should-flip` are all active API that feed directly into `PlacementController` options.
 
 ### Accessibility semantics notes (2nd-gen)
 
@@ -473,8 +475,8 @@ Follow the [Badge migration reference](../../02_workstreams/02_2nd-gen-component
 
 | Layer | Path | Contains |
 | ----- | ---- | -------- |
-| **Core** | `2nd-gen/packages/core/components/tooltip/` | `Tooltip.base.ts`, `Tooltip.types.ts`: property definitions (including `triggerElement` declaration), type validation, state management, accessible-name rules. Sets `role="tooltip"` and `popover="auto"` on the host element via `connectedCallback`. Wires `beforetoggle`/`toggle`/`transitionend` listeners for state sync and `swc-open`/`swc-after-open`/`swc-close`/`swc-after-close` dispatch. Resolves trigger via `for` attribute or `triggerElement` property. Maintains `Element.ariaDescribedByElements` on the trigger's inner interactive element on `open` change. No rendering. No Floating UI. |
-| **SWC** | `2nd-gen/packages/swc/components/tooltip/` | `Tooltip.ts`, `tooltip.css`: rendering only (tip element, label slot). Element registration, stories, tests. **Additive phase only:** `PlacementController` + `HoverController` integration; hover and focus-visible event wiring; warm-up/cooldown timing. |
+| **Core** | `2nd-gen/packages/core/components/tooltip/` | `Tooltip.base.ts`, `Tooltip.types.ts`: property declarations (including `triggerElement`), type validation, state management, accessible-name rules. Sets `role="tooltip"` and `popover="auto"` in `connectedCallback`. Wires `beforetoggle`/`toggle`/`transitionend` event listeners for state sync and `swc-open`/`swc-after-open`/`swc-close`/`swc-after-close` dispatch. Wires a `keydown` listener on `document` for Escape testability (belt-and-suspenders; native `popover="auto"` dismiss is the primary mechanism). Resolves trigger via `for` (ID lookup) or `triggerElement` (explicit reference). Maintains `ariaDescribedByElements` (or `ariaLabelledByElements` when `labeling` is set) on the trigger's inner interactive element on `open` and `labeling` changes. Instantiates and manages `HoverController` (hover/focus wiring, warm-up/cooldown, pointer bridge, `disabled`/`manual` guards) and `PlacementController` (pixel positioning, flip, `offset`/`cross-offset`/`container-padding`/`should-flip` options). No rendering. |
+| **SWC** | `2nd-gen/packages/swc/components/tooltip/` | `Tooltip.ts`, `tooltip.css`: rendering only (tip element, default slot). Overrides `tipElement` getter to return `.swc-Tooltip-tip` from the shadow DOM for `PlacementController`'s `arrow` middleware. Element registration (`swc-tooltip`). Stories, tests, consumer migration guide. |
 
 Planned rendering shape (initial release):
 
@@ -492,7 +494,7 @@ This section records the design contract between the initial release and the two
 
 ### Event dispatch ownership
 
-`swc-open`, `swc-after-open`, `swc-close`, and `swc-after-close` fire from the native `beforetoggle`/`transitionend` event listeners in the SWC layer — not from property setters or controllers. This means:
+`swc-open`, `swc-after-open`, `swc-close`, and `swc-after-close` fire from the native `beforetoggle`/`transitionend` event listeners in the Core base class (`Tooltip.base.ts`) — not from property setters or controllers. This means:
 
 - Events fire regardless of what caused the state change: consumer code, `HoverController` calling `showPopover()`, Escape, or light-dismiss.
 - `HoverController` can drive open/close without risking double-dispatch or missed events.
@@ -513,41 +515,41 @@ This section records the design contract between the initial release and the two
 
 **`open` property ↔ popover API cycle prevention:**
 
-The `open` property setter calls `showPopover()`/`hidePopover()`. The `toggle` listener syncs the `open` property. To prevent a setter → showPopover → toggle → setter loop: the setter must check the current popover state before calling the API, and the `toggle` listener must update the property without re-triggering the setter (e.g., write to the private backing field directly, not through the setter). Example guard in the `open` setter:
+`open` is a plain Lit `@property`. `showPopover()`/`hidePopover()` are called from `updated()`, not from a custom setter. The cycle is prevented by comparing `this.open` against the live `:popover-open` CSS state (`isPopoverOpen`) before calling the API:
 
 ```ts
-set open(value: boolean) {
-  if (value === this._open) return; // already in this state
-  this._open = value;
-  value ? this.showPopover() : this.hidePopover();
+// In updated():
+if (changedProperties.has('open')) {
+  if (this.open !== this.isPopoverOpen) {
+    if (this.open) {
+      this.showPopover();
+    } else {
+      this.hidePopover();
+    }
+  }
 }
 ```
 
-And in the `toggle` listener:
+The `toggle` listener assigns through the normal property setter (`this.open = isOpen`), guarded by a `if (isOpen !== this.open)` check to skip no-op assignments. After the browser fires `toggle`, `isPopoverOpen` already matches the new state, so the `updated()` guard blocks the redundant API call — no backing-field bypass needed.
 
 ```ts
-this._open = event.newState === 'open'; // bypass setter; do not call showPopover/hidePopover again
+// In the toggle listener:
+if (isOpen !== this.open) {
+  this.open = isOpen; // triggers updated(); isPopoverOpen guard prevents re-calling showPopover/hidePopover
+}
 ```
 
 ### `HoverController` hand-off
 
-See [Addendum: HoverController interface requirements](#addendum-hovercontroller-interface-requirements).
+**Implemented.** `TooltipBase` now `implements HoverControllerHost` and instantiates `HoverController` with `warmStateKey: 'swc-tooltip'`. The controller target is set via `updated()` whenever `for` or `triggerElement` changes. See `Tooltip.base.ts` and the [addendum](#addendum-hovercontroller-interface-requirements) for the interface contract that was used.
 
 ### `PlacementController` hand-off
 
-When `PlacementController` is integrated in the additive phase, it:
+**Implemented.** `Tooltip.base.ts` instantiates `PlacementController`, calls `start(trigger, this, options)` when the tooltip opens (in `updated()` when `open` becomes `true`), and calls `stop()` when it closes. `start()` is also called on options changes (`placement`, `offset`, `crossOffset`, `containerPadding`, `shouldFlip`, `for`, `triggerElement`) while open.
 
-- Computes `{ x, y }` coordinates using Floating UI after `showPopover()` fires (i.e., on `toggle` with `newState === 'open'`)
-- Applies computed position to the host (already a `popover="auto"` element) via `position: fixed; left: ${x}px; top: ${y}px` or equivalent
-- Maps `placement`, `offset`, `container-padding`, `cross-offset`, and `should-flip` attributes to Floating UI middleware options (`offset`, `flip`, `shift`)
+`onPlacementChange` reflects the computed main side back into `this.placement` via the custom setter, guarded by a `_placementFromController` flag that prevents the setter from overwriting `_requestedPlacement`. The existing `[placement]` CSS selectors automatically pick up the reflected value — no additional CSS attributes or rules are needed. `_requestedPlacement` tracks the consumer's original requested side, so the controller always starts from the requested placement and can revert a flip when viewport space is restored.
 
-The tip element is always CSS-centered on the placement edge and does not require any input from the controller (see [initial release behavioral semantics](#behavioral-semantics)). No arrow middleware is needed.
-
-`PlacementController` does not change the popover mechanism; the host is already `popover="auto"`. It only layers pixel positioning on top.
-
-### Positioning before `PlacementController`
-
-In the initial release, `placement` applies only the CSS class (tip direction). The host has no pixel positioning from the component. Stories must supply inline styles or a CSS override to position the tooltip visibly near a trigger for demo purposes. This is intentional and should be noted in the relevant section of the per-component MDX docs page (`tooltip.mdx`).
+No arrow middleware is used — the tip is CSS-centered on the computed side. `PlacementController` only layers pixel positioning on top of the existing `popover="auto"` mechanism.
 
 ### Auto-stack behavior
 
@@ -584,7 +586,8 @@ The impact is most acute in the additive phase, when `HoverController` will call
 
 - [x] `Tooltip.types.ts`: define `TooltipVariant` (`'neutral' | 'informative' | 'negative'`); define `TooltipPlacement` (all physical + logical values)
 - [x] `Tooltip.base.ts`: define all properties with decorators (including `for` and `triggerElement` declarations); assign `role="tooltip"`; no rendering. No DOM traversal logic.
-- [x] `Tooltip.ts` (SWC): rendering, `popover="auto"` on host, `beforetoggle`/`toggle`/`transitionend` listeners for state sync and `swc-open`/`swc-after-open`/`swc-close`/`swc-after-close` dispatch, trigger resolution via `for`/`trigger-element`, ARIA relationship wiring (`ariaDescribedByElements`, or `ariaLabelledByElements` when `labeling` is set) on `open` and `labeling` changes. (`PlacementController`/`HoverController` integration is additive phase.)
+- [x] `Tooltip.base.ts` (Core): `popover="auto"` and `role="tooltip"` set via `connectedCallback`; `beforetoggle`/`toggle`/`transitionend` and `document` `keydown` listeners wired; trigger resolution via `for`/`triggerElement`; ARIA relationship wiring (`ariaDescribedByElements` / `ariaLabelledByElements`) on `open` and `labeling` changes; `HoverController` and `PlacementController` instantiated and managed in `updated()` and `connectedCallback`/`disconnectedCallback`.
+- [x] `Tooltip.ts` (SWC): rendering only — `render()` returns tip element and default slot; `tipElement` getter override returns `.swc-Tooltip-tip` for arrow middleware; CSS via `tooltip.css`.
 
 #### 1st-gen deprecation notices
 
@@ -616,7 +619,7 @@ The impact is most acute in the additive phase, when `HoverController` will call
 
 - [X] Confirm neutral, informative, negative backgrounds match Figma **(requires Storybook visual review)**
 - [X] Verify tip geometry across all placement values, including RTL for logical placements (`start`, `end`) **(logic fixed; requires Storybook visual review)**
-- [X] Verify open/close animation (`translateY`/`translateX` per placement direction; S2 animation tokens) **(requires Storybook visual review)**
+- [X] Verify open/close animation **(requires Storybook visual review).** Final open state has no CSS transform (PlacementController owns geometry via `translate`). `@starting-style` shifts the bubble toward the trigger by `--_swc-tooltip-animation-distance` (driven by `offset`, not a static token) so the animation travels from the trigger outward to the resting position.
 
 ### Accessibility
 
@@ -630,10 +633,10 @@ The impact is most acute in the additive phase, when `HoverController` will call
 #### State verification
 
 - [x] `[open]` reflects on host when tooltip is visible
-- [ ] `[disabled]` prevents automatic mode from responding to hover/focus events **(additive phase)**
+- [x] `[disabled]` prevents automatic mode from responding to hover/focus events
 - [x] Closed tooltip is hidden from AT (`popover` attribute or explicit `aria-hidden`/`inert`)
 - [x] `Escape` closes tooltip; focus stays on trigger; no focus trap — handled by native `popover="auto"`
-- [ ] Pointer can move from trigger to tooltip bubble without tooltip closing (WCAG 1.4.13) **(additive phase — HoverController)**
+- [x] Pointer can move from trigger to tooltip bubble without tooltip closing (WCAG 1.4.13) — `HoverController` pointer bridge
 - [x] High-contrast border present in forced-colors mode
 - [x] Variant colors paired with readable text (not relying on color alone)
 
@@ -653,20 +656,21 @@ The impact is most acute in the additive phase, when `HoverController` will call
 - [x] ARIA wiring: `trigger-element` setter overrides `for` and drives the same wiring (`AriaWiringTriggerElementOverrideTest`)
 - [x] ARIA wiring: no wiring when neither `for` nor `trigger-element` is set; no error thrown (`AriaWiringNoTriggerTest`)
 - [x] ARIA wiring: fires in manual mode when `for` is set and consumer sets `open = true` (`AriaWiringManualModeTest`)
-- [ ] Automatic mode: opens on trigger hover; closes on pointer leave **(additive phase)**
-- [ ] Automatic mode: opens on trigger `focusin` (when `:focus-visible`); closes on `focusout` **(additive phase)**
-- [ ] Automatic mode: pointer can move to tooltip bubble without closing (WCAG 1.4.13) **(additive phase)**
-- [ ] Automatic mode: `for` attribute resolves to the element with the matching `id` in the same document tree root **(additive phase)**
+- [x] Automatic mode: opens on trigger hover; closes on pointer leave (`HoverOpensTest`)
+- [x] Automatic mode: opens on trigger `focusin`; closes on `focusout` (`FocusOpensTest`)
+- [x] Automatic mode: pointer can move to tooltip bubble without closing (WCAG 1.4.13) — `HoverController` pointer bridge; covered by hover-controller test suite
+- [x] Automatic mode: `for` attribute resolves to the element with the matching `id` in the same document tree root — covered implicitly by `HoverOpensTest` (uses `for="tt-hover-trigger"`) and `AriaWiringNativeTest`/`AriaWiringSwcTriggerTest`
 - [x] `for` pointing to a non-existent `id` results in no trigger wiring (no-op); warns in debug mode (`ForIdNotFoundWarningTest`)
-- [ ] Automatic mode: `trigger-element` takes precedence over `for` when both are set **(additive phase)**
-- [ ] Automatic mode: `trigger-element` wires correctly for cross-shadow-root trigger relationships **(additive phase)**
-- [ ] Automatic mode: default warm-up/cooldown (1500ms, matching `delay` default); `delay="0"` shows immediately; custom value uses that duration **(additive phase)**
-- [ ] Automatic mode: `for` resolves correctly when trigger and tooltip share a shadow root (ID lookup scoped to that root) — rewrite fresh; do not port the 1st-gen `self manages through a shadow boundary` test, which validates ancestor-walking and does not apply **(additive phase)**
-- [ ] `manual` attribute: controller wiring is skipped when added; consumer-driven `open` changes dispatch all `swc-*` events and ARIA wiring still fires when `for` is set **(additive phase — verify controller suppression)**
+- [x] Automatic mode: `trigger-element` takes precedence over `for` when both are set — ARIA path tested by `AriaWiringTriggerElementOverrideTest`; hover routing tested by `TriggerElementOverridesForHoverTest`
+- [x] Automatic mode: `trigger-element` wires HoverController when `for` is absent — `TriggerElementHoverTest` (hover opens, ARIA wires to native trigger, closes on pointer leave)
+- [x] Automatic mode: `trigger-element` wires correctly for cross-shadow-root trigger relationships — implementation complete (`triggerElement` bypasses `getElementById` scoping); not explicitly tested with a cross-root fixture
+- [x] Automatic mode: `delay="0"` shows immediately on hover (`HoverOpensTest`); full 1500ms warm-up/cooldown timing covered by hover-controller test suite
+- [x] Automatic mode: `for` resolves correctly when trigger and tooltip share a shadow root (`ShadowRootScopeTest` — creates trigger + tooltip inside `attachShadow({ mode: 'open' })`; verifies `getRootNode().getElementById` scopes to the shadow root and ARIA wiring reaches the native trigger)
+- [x] `manual` attribute: controller wiring is skipped; consumer-driven `open` changes still work; ARIA wiring still fires (`ManualPreventsHoverTest`, `AriaWiringManualModeTest`)
 - [x] `labeling` attribute: `ariaLabelledByElements` is set on the inner interactive element instead of `ariaDescribedByElements`; stale references in the opposite property are cleaned up; re-syncs when `labeling` changes while open (`LabelingAriaWiringTest`)
-- [ ] `ariaDescribedByElements` wiring: verify AT can traverse the association in DevTools Accessibility panel and with NVDA/VoiceOver
-- [x] `ariaDescribedByElements` wiring fallback: when trigger has no shadow root (native `<button>`, `<a>`, `<input>`), association is established on the host element directly  (`AriaWiringNativeTest`)
-- [ ] `disabled` attribute prevents automatic mode response to user input **(additive phase)**
+- [ ] `ariaDescribedByElements` wiring: verify AT can traverse the association in DevTools Accessibility panel and with NVDA/VoiceOver — **manual verification required; cannot be automated**
+- [x] `ariaDescribedByElements` wiring fallback: when trigger has no shadow root (native `<button>`, `<a>`, `<input>`), association is established on the host element directly (`AriaWiringNativeTest`)
+- [x] `disabled` attribute prevents automatic mode response to user input (`DisabledPreventsHoverTest`)
 
 #### Visual regression
 
@@ -681,7 +685,7 @@ The impact is most acute in the additive phase, when `HoverController` will call
 #### General
 
 - [x] JSDoc on all public properties, slots, and any exposed CSS custom properties
-- [x] Stories: Playground, Overview, Anatomy (default slot), Options (variants, placements), States (open), Accessibility, Behaviors (Events, AutoStack, Labeling). Behaviors story for automatic trigger-wiring is additive phase; additive items documented in UpcomingFeatures story.
+- [x] Stories: Playground, Overview, Anatomy (default slot), Options (variants, placements), States (open, disabled, manual), Accessibility, Behaviors (Events, TriggerElement, Labeling). Hover/focus/delay/disabled/pointer-bridge items documented in `Behaviors → Hover and focus` prose section of `tooltip.mdx` (no dedicated canvas story). `TriggerElement` story demonstrates programmatic wiring via the property.
 
 #### Breaking changes
 
@@ -696,7 +700,7 @@ The impact is most acute in the additive phase, when `HoverController` will call
 - [x] Consumer migration guide: document that `popover="auto"` auto-stack behavior differs from 1st-gen `type="hint"` isolation — opening a tooltip closes other open auto popovers (menus, pickers); this is accepted behavior, not a bug
 - [x] Behaviors story: note the auto-stack behavior and that it is expected (Q2 resolved, Path A)
 
-#### Accessibility
+#### Accessibility documentation
 
 - [x] Storybook Accessibility story: document ARIA features (`role="tooltip"`, `ariaDescribedByElements` / `ariaLabelledByElements` lifecycle, inner-button resolution), keyboard behavior (`Escape` closes without moving focus; `Tab` blur dismisses), and screen reader expectations (trigger announced first, tooltip text second)
 - [x] No interactive content (links, buttons, focusable elements) may appear inside `role="tooltip"`; direct consumers to `swc-popover`, contextual help, or dialog for those patterns
@@ -725,7 +729,7 @@ The impact is most acute in the additive phase, when `HoverController` will call
 
 | # | Item | Blocking? | Status | Owner |
 | --- | ---- | --------- | ------ | ----- |
-| Q1 | **`tip-padding` semantics.** In 1st-gen, `tipPadding` was passed to `sp-overlay` for tip position calculation. **Resolved: dropped from Tooltip.** The tip is CSS-centered; no arrow middleware applies. For components with dynamic tips (Popover, CoachMark), `arrowPadding` is a PlacementController-level concern and will be addressed in that controller's design. | N/A | Resolved | Team |
+| Q1 | **`tip-padding` semantics.** In 1st-gen, `tipPadding` was passed to `sp-overlay` for tip position calculation. **Resolved.** The 1st-gen `tip-padding` attribute is not exposed. The `arrow` middleware IS used (via `Tooltip.ts` overriding `tipElement` to return the shadow-DOM `.swc-Tooltip-tip` element), which keeps the tip aligned with the trigger center when the bubble shifts from `crossOffset` or viewport `shift` middleware. The `tipPadding` option on `PlacementOptions` uses the controller's default of 8px; no consumer-facing attribute is exposed unless override needs emerge. | N/A | Resolved | Team |
 | Q2 | **`popover="auto"` stack isolation regression.** In 1st-gen, `type="hint"` overlays were isolated — opening a tooltip did not dismiss open menus or pickers. `popover="auto"` has no isolation tier; any auto popover opening dismisses all others. **Resolved: Path A accepted.** The behavior is documented as a known difference from 1st-gen. No workaround; document in consumer migration guide and Behaviors story. | N/A | Resolved | Team |
 
 ### Deferred implementation tickets
@@ -734,14 +738,16 @@ Create these tickets before this migration PR closes. Link each to Epic SWC-2017
 
 | Ticket | Summary | Why deferred | Plan sections |
 | ------ | ------- | ------------ | ------------- |
-| SWC-2210 | **Integrate PlacementController into Tooltip.** Pass resolved trigger element to controller (from SWC's `for`/`trigger-element` resolution — no internal resolution in the controller); wire viewport-aware pixel positioning: apply `placement`, `offset`, `container-padding`, `cross-offset`, `should-flip` as Floating UI middleware options. No `arrowPadding` needed — tooltip tip is CSS-centered. | Blocked on `PlacementController` extraction per Overlay RFC. | Additive A1 (positioning), A7, A8, A9 |
-| SWC-2210 | **Integrate HoverController into Tooltip.** Pass resolved trigger element to controller; wire hover and focus-visible events, warm-up/cooldown timing (reads `delay` value from host; 0 = immediate), `disabled` guard, and WCAG 1.4.13 pointer bridge. Controller receives trigger element from SWC — no internal trigger resolution. Hover and focus-visible wiring skipped when `manual` is set. ARIA relationship wiring is handled by the SWC layer separately (see [ARIA relationship wiring](#aria-relationship-wiring)). | Blocked on `HoverController` extraction per Overlay RFC. `HoverController` and `PlacementController` can be integrated in separate tickets; full automatic trigger integration requires both. | Additive A1 (hover/focus), A2, A3, A4 |
-| TBD | **2nd-gen tooltip-directive.** Lit directive for programmatic tooltip insertion. Creates `<swc-tooltip>` as a sibling of the target and handles lifecycle cleanup. Simpler than 1st-gen: no `sp-overlay` wrapper needed; automatic trigger wiring activates because `manual` is not set. | Requires full automatic trigger integration (both controllers). | Additive A6 |
+| ~~SWC-2210~~ | ~~**Integrate PlacementController into Tooltip.**~~ | **Shipped.** `PlacementController` wired in `Tooltip.base.ts`; `start()`/`stop()` called on `open` changes; `onPlacementChange` reflects the computed side into `this.placement` (guarded by `_placementFromController` flag); `_requestedPlacement` preserves the consumer's original value. `offset`, `cross-offset`, `container-padding`, and `should-flip` feed directly into controller options. No additional CSS needed — existing `[placement]` selectors handle tip direction. | ~~Additive A1 (positioning), A7, A8, A9~~ |
+| ~~SWC-2210~~ | ~~**Integrate HoverController into Tooltip.**~~ | **Shipped.** `TooltipBase` implements `HoverControllerHost`; `HoverController` wired with `warmStateKey: 'swc-tooltip'`; target set from `resolveTrigger()` in `updated()`. Hover/focus wiring, warm-up/cooldown, `disabled` guard, and WCAG 1.4.13 pointer bridge are all active. | ~~Additive A1 (hover/focus), A2, A3, A4~~ |
+| TBD | **2nd-gen tooltip-directive.** Lit directive for programmatic tooltip insertion. Creates `<swc-tooltip>` as a sibling of the target and handles lifecycle cleanup. Simpler than 1st-gen: no `sp-overlay` wrapper needed; automatic trigger wiring activates because `manual` is not set. | Both controllers are now active; this can proceed. | Additive A6 |
 | TBD | **`no-tip` attribute.** Remove the directional tip arrow. Figma-confirmed. Can proceed independently of controller integration; no controller dependency. Create when React Spectrum adds support as a confirming signal. | No cross-framework confirmation yet; Figma-only signal is not sufficient to ship. | Additive A5 |
 
 ---
 
 ## Addendum: HoverController interface requirements
+
+> **Implemented.** `HoverController` has been extracted to `@spectrum-web-components/core/controllers/hover-controller` and integrated into `Tooltip.base.ts`. This section is retained as a historical record of the interface contract that drove the controller's design.
 
 This section captures what Tooltip requires from `HoverController`. It is a separate body of work — not part of the core Tooltip migration — but is recorded here so the controller's design is informed by a concrete consumer.
 

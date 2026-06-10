@@ -13,8 +13,8 @@
 /* ─────────────────────────────────────────────────────────────────────────────
    HOST
    Reset browser UA popover styles. All visual styles live on .swc-Tooltip.
-   PlacementController (additive phase) will apply inset/left/top for
-   positioning.
+   PlacementController applies top: 0 / left: 0 / translate: Xpx Ypx for
+   pixel positioning. inset: auto stays to suppress the UA popover default.
    ───────────────────────────────────────────────────────────────────────────── */
 
 :host {
@@ -22,7 +22,8 @@
 
   position: absolute;
   inset: auto;
-  max-inline-size: min(100%, token("tooltip-maximum-width"));
+  max-inline-size: min(100%, var(--swc-placement-available-width), token("tooltip-maximum-width"));
+  max-block-size: min(var(--swc-placement-available-height), 90vb);
   padding: 0;
   margin: 0;
   color: unset;
@@ -130,60 +131,45 @@
 
 /* ─────────────────────────────────────────────────────────────────────────────
    OPEN STATE
+   PlacementController's `translate` owns the final resting position through the
+   `offset` gap.
    ───────────────────────────────────────────────────────────────────────────── */
 
-/* Default / top placement: tooltip appears above trigger, animates upward */
+/* Final open state: opacity only */
 :host(:popover-open) {
   opacity: 1;
-  transform: translateY(calc(-1 * var(--_swc-tooltip-animation-distance)));
 }
 
+/* Top (default): bubble is above; start shifted down toward trigger, slide up */
 @starting-style {
   :host(:popover-open) {
     opacity: 0;
-    transform: translateY(0);
+    transform: translateY(var(--_swc-tooltip-animation-distance));
   }
 }
 
-/* Bottom placement: tooltip appears below trigger, animates downward */
-:host([placement="bottom"]:popover-open) {
-  transform: translateY(var(--_swc-tooltip-animation-distance));
+/* Bottom: bubble is below; start shifted up toward trigger, slide down */
+@starting-style {
+  :host([placement="bottom"]:popover-open) {
+    transform: translateY(calc(-1 * var(--_swc-tooltip-animation-distance)));
+  }
 }
 
-/* Right placement: tooltip appears to the right, animates rightward */
-:host([placement="right"]:popover-open) {
-  transform: translateX(var(--_swc-tooltip-animation-distance));
-}
-
-/* Left placement: tooltip appears to the left, animates leftward */
-:host([placement="left"]:popover-open) {
-  transform: translateX(calc(-1 * var(--_swc-tooltip-animation-distance)));
-}
-
-/* Start placement: LTR = leftward, RTL = rightward */
-:host([placement="start"]:popover-open) {
-  transform: translateX(calc(-1 * var(--_swc-tooltip-animation-distance)));
-}
-
-:host(:dir(rtl)[placement="start"]:popover-open) {
-  transform: translateX(var(--_swc-tooltip-animation-distance));
-}
-
-/* End placement: LTR = rightward, RTL = leftward */
-:host([placement="end"]:popover-open) {
-  transform: translateX(var(--_swc-tooltip-animation-distance));
-}
-
-:host(:dir(rtl)[placement="end"]:popover-open) {
-  transform: translateX(calc(-1 * var(--_swc-tooltip-animation-distance)));
-}
-
+/* Right / end-LTR / start-RTL: bubble is to the right; start shifted left toward trigger, slide right */
 @starting-style {
   :host([placement="right"]:popover-open),
+  :host([placement="end"]:popover-open),
+  :host(:dir(rtl)[placement="start"]:popover-open) {
+    transform: translateX(calc(-1 * var(--_swc-tooltip-animation-distance)));
+  }
+}
+
+/* Left / start-LTR / end-RTL: bubble is to the left; start shifted right toward trigger, slide left */
+@starting-style {
   :host([placement="left"]:popover-open),
   :host([placement="start"]:popover-open),
-  :host([placement="end"]:popover-open) {
-    transform: translateX(0);
+  :host(:dir(rtl)[placement="end"]:popover-open) {
+    transform: translateX(var(--_swc-tooltip-animation-distance));
   }
 }
 
@@ -230,7 +216,7 @@
 
 /* End placement (logical): tip at logical inline-end edge, flips naturally in RTL.
    inset-inline: auto X resets the base `left` (via inset-inline-start: auto) and
-   sets the correct edge via inset-inline-end — no position override needed in RTL. */
+   sets the correct edge via inset-inline-end; no position override needed in RTL. */
 :host([placement="end"]) .swc-Tooltip-tip {
   inset-block-start: calc(50% - (0.5 * var(--_swc-tooltip-tip-square-size)));
   inset-inline: auto calc(100% - (0.5 * var(--_swc-tooltip-tip-square-size)));

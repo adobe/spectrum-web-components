@@ -43,6 +43,13 @@ export class Tooltip extends TooltipBase {
     return [styles];
   }
 
+  protected override get tipElement(): HTMLElement | null {
+    return (
+      (this.renderRoot?.querySelector('.swc-Tooltip-tip') as HTMLElement) ??
+      null
+    );
+  }
+
   protected override render(): TemplateResult {
     return html`
       <div class="swc-Tooltip">
