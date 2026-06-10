@@ -296,20 +296,14 @@ export class PlacementController implements ReactiveController {
    * reset `isConstrained`, and remove inline styles the controller wrote
    * (the `size` middleware's `--swc-placement-available-width` /
    * `--swc-placement-available-height` custom properties on the floating
-   * element, plus the `arrow` middleware's `translate` / `top` / `left`
-   * on the tip element). Safe to call multiple times.
+   * element. Tip placement cleanup is left to render to account for exit transitions.
+   * Safe to call multiple times.
    */
   public stop() {
     const floating = this.session?.floating;
     if (floating) {
       floating.style.removeProperty('--swc-placement-available-width');
       floating.style.removeProperty('--swc-placement-available-height');
-    }
-    const tipElement = this.session?.options.tipElement;
-    if (tipElement) {
-      tipElement.style.removeProperty('translate');
-      tipElement.style.removeProperty('top');
-      tipElement.style.removeProperty('left');
     }
     this.cleanup?.();
     this.cleanup = undefined;

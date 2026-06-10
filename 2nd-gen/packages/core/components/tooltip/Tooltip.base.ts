@@ -321,6 +321,12 @@ export abstract class TooltipBase
       this.style.removeProperty('translate');
       this.style.removeProperty('top');
       this.style.removeProperty('left');
+
+      if (this.tipElement) {
+        this.tipElement.style.removeProperty('translate');
+        this.tipElement.style.removeProperty('top');
+        this.tipElement.style.removeProperty('left');
+      }
     }
   }
 
