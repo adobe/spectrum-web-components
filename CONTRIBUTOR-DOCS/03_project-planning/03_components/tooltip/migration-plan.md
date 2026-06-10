@@ -226,7 +226,7 @@ Both controllers are integrated. No outstanding controller prerequisites remain.
 | --- | ------------ | ---------------- | ---------------- | ----------------------- |
 | A1 | Add `role="tooltip"` to host element | Missing (SWC-1558) | `role="tooltip"` on the host element | No consumer action; fixes AT behavior |
 | A2 | Native popover open/close | Uses `sp-overlay type="hint"` + `HoverController` + `triggerInteraction="hover"` | Host gets `popover="auto"`; `beforetoggle`/`toggle`/`transitionend` event listeners handle state sync and the four `swc-*` lifecycle events. Participates in the auto popover stack — opening closes other open `auto` popovers. See [Auto-stack behavior](#auto-stack-behavior). | No consumer action; automatic trigger wiring ships inactive in the initial release |
-| A3 | `Escape` dismissal | Handled by `OverlayStack` in 1st-gen | `popover="auto"` provides built-in Esc-to-close and light-dismiss. No explicit `keydown` listener needed. | No consumer action |
+| A3 | `Escape` dismissal | Handled by `OverlayStack` in 1st-gen | `popover="auto"` provides built-in Esc-to-close and light-dismiss (primary mechanism). A `document` `keydown` listener is also wired in Core's `connectedCallback` as a belt-and-suspenders measure for test environments where the native popover dismiss may not fire; it sets `this.open = false` on Escape. | No consumer action |
 | A4 | ARIA relationship wiring | No automatic ARIA association in 1st-gen | On `open = true`: SWC resolves trigger via `for` / `trigger-element`, applies inner-button resolution (shadow `<button>` for SWC components; host for native elements), and sets `Element.ariaDescribedByElements = [tooltipHost]`. Removed on `open = false`. Active in both automatic and manual modes. See [ARIA relationship wiring](#aria-relationship-wiring) for the full two-path resolution and browser support. | Set `for` on `<swc-tooltip>` pointing to the trigger's `id`; or set `trigger-element` programmatically. No other action required. |
 
 ### Additive — ships when ready, zero breakage for consumers already on 2nd-gen
@@ -475,8 +475,8 @@ Follow the [Badge migration reference](../../02_workstreams/02_2nd-gen-component
 
 | Layer | Path | Contains |
 | ----- | ---- | -------- |
-| **Core** | `2nd-gen/packages/core/components/tooltip/` | `Tooltip.base.ts`, `Tooltip.types.ts`: property definitions (including `triggerElement` declaration), type validation, state management, accessible-name rules. Sets `role="tooltip"` and `popover="auto"` on the host element via `connectedCallback`. Wires `beforetoggle`/`toggle`/`transitionend` listeners for state sync and `swc-open`/`swc-after-open`/`swc-close`/`swc-after-close` dispatch. Resolves trigger via `for` attribute or `triggerElement` property. Maintains `Element.ariaDescribedByElements` on the trigger's inner interactive element on `open` change. No rendering. No Floating UI. |
-| **SWC** | `2nd-gen/packages/swc/components/tooltip/` | `Tooltip.ts`, `tooltip.css`: rendering only (tip element, label slot). Element registration, stories, tests. **Additive (shipped):** `HoverController` integrated; hover/focus wiring, warm-up/cooldown, WCAG 1.4.13 pointer bridge active. `PlacementController` integrated; pixel positioning and flip active; actual computed side reflected back into `placement` so existing CSS selectors handle tip direction. |
+| **Core** | `2nd-gen/packages/core/components/tooltip/` | `Tooltip.base.ts`, `Tooltip.types.ts`: property declarations (including `triggerElement`), type validation, state management, accessible-name rules. Sets `role="tooltip"` and `popover="auto"` in `connectedCallback`. Wires `beforetoggle`/`toggle`/`transitionend` event listeners for state sync and `swc-open`/`swc-after-open`/`swc-close`/`swc-after-close` dispatch. Wires a `keydown` listener on `document` for Escape testability (belt-and-suspenders; native `popover="auto"` dismiss is the primary mechanism). Resolves trigger via `for` (ID lookup) or `triggerElement` (explicit reference). Maintains `ariaDescribedByElements` (or `ariaLabelledByElements` when `labeling` is set) on the trigger's inner interactive element on `open` and `labeling` changes. Instantiates and manages `HoverController` (hover/focus wiring, warm-up/cooldown, pointer bridge, `disabled`/`manual` guards) and `PlacementController` (pixel positioning, flip, `offset`/`cross-offset`/`container-padding`/`should-flip` options). No rendering. |
+| **SWC** | `2nd-gen/packages/swc/components/tooltip/` | `Tooltip.ts`, `tooltip.css`: rendering only (tip element, default slot). Overrides `tipElement` getter to return `.swc-Tooltip-tip` from the shadow DOM for `PlacementController`'s `arrow` middleware. Element registration (`swc-tooltip`). Stories, tests, consumer migration guide. |
 
 Planned rendering shape (initial release):
 
@@ -494,7 +494,7 @@ This section records the design contract between the initial release and the two
 
 ### Event dispatch ownership
 
-`swc-open`, `swc-after-open`, `swc-close`, and `swc-after-close` fire from the native `beforetoggle`/`transitionend` event listeners in the SWC layer — not from property setters or controllers. This means:
+`swc-open`, `swc-after-open`, `swc-close`, and `swc-after-close` fire from the native `beforetoggle`/`transitionend` event listeners in the Core base class (`Tooltip.base.ts`) — not from property setters or controllers. This means:
 
 - Events fire regardless of what caused the state change: consumer code, `HoverController` calling `showPopover()`, Escape, or light-dismiss.
 - `HoverController` can drive open/close without risking double-dispatch or missed events.
@@ -515,20 +515,28 @@ This section records the design contract between the initial release and the two
 
 **`open` property ↔ popover API cycle prevention:**
 
-The `open` property setter calls `showPopover()`/`hidePopover()`. The `toggle` listener syncs the `open` property. To prevent a setter → showPopover → toggle → setter loop: the setter must check the current popover state before calling the API, and the `toggle` listener must update the property without re-triggering the setter (e.g., write to the private backing field directly, not through the setter). Example guard in the `open` setter:
+`open` is a plain Lit `@property`. `showPopover()`/`hidePopover()` are called from `updated()`, not from a custom setter. The cycle is prevented by comparing `this.open` against the live `:popover-open` CSS state (`isPopoverOpen`) before calling the API:
 
 ```ts
-set open(value: boolean) {
-  if (value === this._open) return; // already in this state
-  this._open = value;
-  value ? this.showPopover() : this.hidePopover();
+// In updated():
+if (changedProperties.has('open')) {
+  if (this.open !== this.isPopoverOpen) {
+    if (this.open) {
+      this.showPopover();
+    } else {
+      this.hidePopover();
+    }
+  }
 }
 ```
 
-And in the `toggle` listener:
+The `toggle` listener assigns through the normal property setter (`this.open = isOpen`), guarded by a `if (isOpen !== this.open)` check to skip no-op assignments. After the browser fires `toggle`, `isPopoverOpen` already matches the new state, so the `updated()` guard blocks the redundant API call — no backing-field bypass needed.
 
 ```ts
-this._open = event.newState === 'open'; // bypass setter; do not call showPopover/hidePopover again
+// In the toggle listener:
+if (isOpen !== this.open) {
+  this.open = isOpen; // triggers updated(); isPopoverOpen guard prevents re-calling showPopover/hidePopover
+}
 ```
 
 ### `HoverController` hand-off
@@ -578,7 +586,8 @@ The impact is most acute in the additive phase, when `HoverController` will call
 
 - [x] `Tooltip.types.ts`: define `TooltipVariant` (`'neutral' | 'informative' | 'negative'`); define `TooltipPlacement` (all physical + logical values)
 - [x] `Tooltip.base.ts`: define all properties with decorators (including `for` and `triggerElement` declarations); assign `role="tooltip"`; no rendering. No DOM traversal logic.
-- [x] `Tooltip.ts` (SWC): rendering, `popover="auto"` on host, `beforetoggle`/`toggle`/`transitionend` listeners for state sync and `swc-open`/`swc-after-open`/`swc-close`/`swc-after-close` dispatch, trigger resolution via `for`/`trigger-element`, ARIA relationship wiring (`ariaDescribedByElements`, or `ariaLabelledByElements` when `labeling` is set) on `open` and `labeling` changes. (`PlacementController`/`HoverController` integration is additive phase.)
+- [x] `Tooltip.base.ts` (Core): `popover="auto"` and `role="tooltip"` set via `connectedCallback`; `beforetoggle`/`toggle`/`transitionend` and `document` `keydown` listeners wired; trigger resolution via `for`/`triggerElement`; ARIA relationship wiring (`ariaDescribedByElements` / `ariaLabelledByElements`) on `open` and `labeling` changes; `HoverController` and `PlacementController` instantiated and managed in `updated()` and `connectedCallback`/`disconnectedCallback`.
+- [x] `Tooltip.ts` (SWC): rendering only — `render()` returns tip element and default slot; `tipElement` getter override returns `.swc-Tooltip-tip` for arrow middleware; CSS via `tooltip.css`.
 
 #### 1st-gen deprecation notices
 
