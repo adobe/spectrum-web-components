@@ -38,9 +38,11 @@ The `placement` attribute sets the preferred position of the tooltip relative to
 
 The `start` and `end` values are RTL-aware: `start` maps to the left side in LTR and to the right in RTL; `end` maps to the right in LTR and to the left in RTL.
 
-`PlacementController` handles pixel positioning automatically. When viewport space is insufficient on the requested side, the tooltip flips to the opposite side and the `placement` attribute reflects the computed side. The original requested value is preserved internally, so if the viewport changes the tooltip can return to the originally requested position.
+`PlacementController` handles pixel positioning automatically. When there is insufficient space on the requested side, the tooltip flips to the opposite side and the `placement` attribute reflects the computed side. The original requested value is preserved internally, so if space opens up the tooltip returns to the originally requested position.
 
-Additional attributes control positioning behavior: `offset` sets the pixel gap between the trigger and the bubble; `cross-offset` slides the bubble along the trigger edge; `container-padding` sets the minimum inset from the viewport edge (default `12`); `should-flip` (default `true`) enables or disables the flip behavior.
+Because `<swc-tooltip>` uses `popover="auto"`, the tooltip renders in the browser's top layer, outside the normal document flow. The flip boundary is therefore the **viewport**, not the tooltip's scroll container ancestor. Flip is triggered by proximity to the viewport edge, not to any overflow container boundary.
+
+Additional attributes control positioning behavior: `offset` sets the pixel gap between the trigger and the bubble; `cross-offset` slides the bubble along the trigger edge; `container-padding` sets the minimum inset from the viewport edge before flipping (default `12px`); `should-flip` (default `true`) enables or disables the flip behavior.
 
 <Canvas of={TooltipStories.Placements} />
 

@@ -321,6 +321,8 @@ export abstract class TooltipBase
       this.style.removeProperty('translate');
       this.style.removeProperty('top');
       this.style.removeProperty('left');
+      this.style.removeProperty('--swc-placement-available-width');
+      this.style.removeProperty('--swc-placement-available-height');
 
       if (this.tipElement) {
         this.tipElement.style.removeProperty('translate');

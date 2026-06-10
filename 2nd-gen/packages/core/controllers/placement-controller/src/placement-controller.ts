@@ -293,18 +293,10 @@ export class PlacementController implements ReactiveController {
 
   /**
    * Stop positioning: tear down `autoUpdate`, clear `actualPlacement`,
-   * reset `isConstrained`, and remove inline styles the controller wrote
-   * (the `size` middleware's `--swc-placement-available-width` /
-   * `--swc-placement-available-height` custom properties on the floating
-   * element. Tip placement cleanup is left to render to account for exit transitions.
-   * Safe to call multiple times.
+   * reset `isConstrained`. Inline style cleanup is left to render to
+   * account for exit transitions. Safe to call multiple times.
    */
   public stop() {
-    const floating = this.session?.floating;
-    if (floating) {
-      floating.style.removeProperty('--swc-placement-available-width');
-      floating.style.removeProperty('--swc-placement-available-height');
-    }
     this.cleanup?.();
     this.cleanup = undefined;
     this.session = null;
