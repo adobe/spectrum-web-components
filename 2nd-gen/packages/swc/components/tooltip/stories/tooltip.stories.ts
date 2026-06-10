@@ -12,6 +12,7 @@
 
 import { html } from 'lit';
 import { ref } from 'lit/directives/ref.js';
+import { expect, userEvent, waitFor } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
@@ -182,6 +183,13 @@ export const Overview: Story = {
 // ──────────────────────────
 
 export const Anatomy: Story = {
+  play: async ({ canvasElement }: { canvasElement: HTMLElement }) => {
+    await userEvent.tab();
+    const tooltip = canvasElement.querySelector('swc-tooltip') as HTMLElement;
+    await waitFor(() => {
+      expect(tooltip.matches(':popover-open')).toBe(true);
+    });
+  },
   render: (args) => html`
     ${triggered({ ...args }, 'tooltip-anatomy-short', 'Action')}
     ${triggered(
@@ -216,11 +224,30 @@ export const Variants: Story = {
       )
     )}
   `,
+  play: async ({ canvasElement }: { canvasElement: HTMLElement }) => {
+    await userEvent.tab(); // neutral (default)
+    await userEvent.tab(); // informative
+    const tooltips = canvasElement.querySelectorAll('swc-tooltip');
+    await waitFor(() => {
+      expect((tooltips[1] as HTMLElement).matches(':popover-open')).toBe(true);
+    });
+  },
   tags: ['options'],
   parameters: { flexLayout: 'row-wrap' },
 };
 
 export const Placements: Story = {
+  play: async ({ canvasElement }: { canvasElement: HTMLElement }) => {
+    // DOM order: top(1) → right(2) → end(3) → bottom(4); tab to bottom for VRT contrast with default
+    await userEvent.tab(); // top
+    await userEvent.tab(); // right
+    await userEvent.tab(); // end
+    await userEvent.tab(); // bottom
+    const tooltips = canvasElement.querySelectorAll('swc-tooltip');
+    await waitFor(() => {
+      expect((tooltips[3] as HTMLElement).matches(':popover-open')).toBe(true);
+    });
+  },
   render: (args) => html`
     <style>
       .tooltip-placements {
@@ -289,14 +316,11 @@ export const Open: Story = {
     'default-slot': 'Save your changes',
   },
   play: async ({ canvasElement }: { canvasElement: HTMLElement }) => {
-    const tooltip = canvasElement.querySelector(
-      'swc-tooltip'
-    ) as HTMLElement & {
-      open: boolean;
-    };
-    if (tooltip) {
-      tooltip.open = true;
-    }
+    await userEvent.tab();
+    const tooltip = canvasElement.querySelector('swc-tooltip') as HTMLElement;
+    await waitFor(() => {
+      expect(tooltip.matches(':popover-open')).toBe(true);
+    });
   },
   tags: ['states'],
 };
@@ -343,7 +367,11 @@ export const Manual: Story = {
   },
   play: async ({ canvasElement }: { canvasElement: HTMLElement }) => {
     const buttons = canvasElement.querySelectorAll('swc-button');
-    (buttons[1] as HTMLElement)?.click();
+    await userEvent.click(buttons[1] as HTMLElement);
+    const tooltip = canvasElement.querySelector('swc-tooltip') as HTMLElement;
+    await waitFor(() => {
+      expect(tooltip.matches(':popover-open')).toBe(true);
+    });
   },
   tags: ['states'],
   parameters: { flexLayout: 'row-wrap' },
@@ -396,19 +424,23 @@ export const TriggerElement: Story = {
   },
   // Play function opens the tooltip for sidebar view and VRT.
   play: async ({ canvasElement }: { canvasElement: HTMLElement }) => {
-    const tooltip = canvasElement.querySelector(
-      'swc-tooltip'
-    ) as HTMLElement & {
-      open: boolean;
-    };
-    if (tooltip) {
-      tooltip.open = true;
-    }
+    await userEvent.tab();
+    const tooltip = canvasElement.querySelector('swc-tooltip') as HTMLElement;
+    await waitFor(() => {
+      expect(tooltip.matches(':popover-open')).toBe(true);
+    });
   },
   tags: ['behaviors'],
 };
 
 export const Labeling: Story = {
+  play: async ({ canvasElement }: { canvasElement: HTMLElement }) => {
+    await userEvent.tab();
+    const tooltip = canvasElement.querySelector('swc-tooltip') as HTMLElement;
+    await waitFor(() => {
+      expect(tooltip.matches(':popover-open')).toBe(true);
+    });
+  },
   render: (args) => html`
     ${triggered(
       {
@@ -440,6 +472,13 @@ export const Accessibility: Story = {
     variant: 'neutral',
     placement: 'top',
     'default-slot': 'Save your changes',
+  },
+  play: async ({ canvasElement }: { canvasElement: HTMLElement }) => {
+    await userEvent.tab();
+    const tooltip = canvasElement.querySelector('swc-tooltip') as HTMLElement;
+    await waitFor(() => {
+      expect(tooltip.matches(':popover-open')).toBe(true);
+    });
   },
   tags: ['a11y'],
 };
