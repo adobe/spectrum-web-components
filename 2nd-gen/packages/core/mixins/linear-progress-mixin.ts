@@ -305,7 +305,7 @@ export function LinearProgressMixin<T extends Constructor<ReactiveElement>>(
       window.__swc?.warn(
         this,
         `<${this.localName}> "value" (${value}) is outside the [${min}, ${max}] range and was clamped to ${this.clampedValue}.`,
-        'https://opensource.adobe.com/spectrum-web-components/components/meter/',
+        'https://spectrum-web-components.adobe.com/?path=/docs/components-meter--docs',
         {
           issues: [
             'set "value" within the "min-value" and "max-value" range, or',
@@ -324,7 +324,7 @@ export function LinearProgressMixin<T extends Constructor<ReactiveElement>>(
       window.__swc?.warn(
         this,
         `<${this.localName}> requires an accessible name.`,
-        'https://opensource.adobe.com/spectrum-web-components/components/meter/',
+        'https://spectrum-web-components.adobe.com/?path=/docs/components-meter--docs',
         {
           type: 'accessibility',
           issues: [

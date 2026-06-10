@@ -72,7 +72,7 @@ export abstract class MeterBase extends LinearProgressMixin(
         window.__swc.warn(
           this,
           `<${this.localName}> element expects the "variant" attribute to be one of the following:`,
-          'https://opensource.adobe.com/spectrum-web-components/components/meter/#variants',
+          'https://spectrum-web-components.adobe.com/?path=/docs/components-meter--docs',
           {
             issues: [...constructor.VARIANTS],
           }
