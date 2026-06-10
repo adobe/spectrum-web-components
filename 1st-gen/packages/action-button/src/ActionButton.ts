@@ -64,13 +64,24 @@ export class ActionButton extends SizedMixin(ButtonBase, {
    * in a future release.
    */
   @property({ type: Boolean, reflect: true })
-  public emphasized = false;
+  public get emphasized(): boolean {
+    return this._emphasized;
+  }
+  public set emphasized(value: boolean) {
+    const oldValue = this._emphasized;
+    this._emphasized = value;
+    this.requestUpdate('emphasized', oldValue);
+    if (value && window.__swc?.DEBUG) {
+      window.__swc.warn(
+        this,
+        `The "emphasized" attribute on <${this.localName}> is deprecated and will be removed in a future release.`,
+        'https://opensource.adobe.com/spectrum-web-components/components/action-button/',
+        { level: 'deprecation' }
+      );
+    }
+  }
+  private _emphasized = false;
 
-  /**
-   * Hold affordance is not included in the initial 2nd-gen `swc-action-button`
-   * release. It is planned for a future phase. See the action-button migration
-   * plan for consumer options in the interim.
-   */
   @property({ type: Boolean, reflect: true, attribute: 'hold-affordance' })
   public holdAffordance = false;
 
@@ -88,7 +99,23 @@ export class ActionButton extends SizedMixin(ButtonBase, {
    * a future release. Use `swc-toggle-button` for selectable button behavior.
    */
   @property({ type: Boolean, reflect: true })
-  public selected = false;
+  public get selected(): boolean {
+    return this._selected;
+  }
+  public set selected(value: boolean) {
+    const oldValue = this._selected;
+    this._selected = value;
+    this.requestUpdate('selected', oldValue);
+    if (window.__swc?.DEBUG) {
+      window.__swc.warn(
+        this,
+        `The "selected" attribute on <${this.localName}> is deprecated and will be removed in a future release.`,
+        'https://opensource.adobe.com/spectrum-web-components/components/action-button/',
+        { level: 'deprecation' }
+      );
+    }
+  }
+  private _selected = false;
 
   /**
    * Whether to automatically manage the `selected`
@@ -100,7 +127,23 @@ export class ActionButton extends SizedMixin(ButtonBase, {
    * for toggle button behavior.
    */
   @property({ type: Boolean, reflect: true })
-  public toggles = false;
+  public get toggles(): boolean {
+    return this._toggles;
+  }
+  public set toggles(value: boolean) {
+    const oldValue = this._toggles;
+    this._toggles = value;
+    this.requestUpdate('toggles', oldValue);
+    if (value && window.__swc?.DEBUG) {
+      window.__swc.warn(
+        this,
+        `The "toggles" attribute on <${this.localName}> is deprecated and will be removed in a future release.`,
+        'https://opensource.adobe.com/spectrum-web-components/components/action-button/',
+        { level: 'deprecation' }
+      );
+    }
+  }
+  private _toggles = false;
 
   /**
    * The static color variant to use for the action button.
@@ -257,30 +300,6 @@ export class ActionButton extends SizedMixin(ButtonBase, {
           this.setAttribute('aria-expanded', this.selected ? 'true' : 'false');
         }
       }
-      if (changes.has('selected') && window.__swc?.DEBUG) {
-        window.__swc.warn(
-          this,
-          `The "selected" attribute on <${this.localName}> is deprecated and will be removed in a future release.`,
-          'https://opensource.adobe.com/spectrum-web-components/components/action-button/',
-          { level: 'deprecation' }
-        );
-      }
-    }
-    if (changes.has('toggles') && this.toggles && window.__swc?.DEBUG) {
-      window.__swc.warn(
-        this,
-        `The "toggles" attribute on <${this.localName}> is deprecated and will be removed in a future release.`,
-        'https://opensource.adobe.com/spectrum-web-components/components/action-button/',
-        { level: 'deprecation' }
-      );
-    }
-    if (changes.has('emphasized') && this.emphasized && window.__swc?.DEBUG) {
-      window.__swc.warn(
-        this,
-        `The "emphasized" attribute on <${this.localName}> is deprecated and will be removed in a future release.`,
-        'https://opensource.adobe.com/spectrum-web-components/components/action-button/',
-        { level: 'deprecation' }
-      );
     }
     if (changes.has('holdAffordance')) {
       if (this.holdAffordance) {
