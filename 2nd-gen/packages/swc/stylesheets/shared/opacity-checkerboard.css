@@ -1,0 +1,33 @@
+/**
+ * Copyright 2026 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+/* Shared opacity-checkerboard utility.
+   Importable `css` fragment (not a global stylesheet) so it can be added to a
+   component's `styles` array and reach content inside the shadow root. Apply
+   `.swc-OpacityCheckerboard` to a decorative element behind transparent
+   content; the consuming element is responsible for `aria-hidden`. */
+.swc-OpacityCheckerboard {
+  --_swc-opacity-checkerboard-square-size: token("opacity-checkerboard-square-size-medium");
+
+  background: repeating-conic-gradient(light-dark(var(--swc-opacity-checkerboard-square-dark-light), var(--swc-opacity-checkerboard-square-dark-dark)) 0% 25%, token("opacity-checkerboard-square-light") 0% 50%) 0 0 / calc(var(--_swc-opacity-checkerboard-square-size) * 2) calc(var(--_swc-opacity-checkerboard-square-size) * 2);
+}
+
+.swc-OpacityCheckerboard--sizeS {
+  --_swc-opacity-checkerboard-square-size: token("opacity-checkerboard-square-size-small");
+}
+
+@media (forced-colors: active) {
+  .swc-OpacityCheckerboard {
+    /* keep the checkerboard pattern visible in high-contrast mode */
+    forced-color-adjust: none;
+  }
+}
