@@ -668,7 +668,7 @@ The impact is most acute in the additive phase, when `HoverController` will call
 - [x] Automatic mode: `for` resolves correctly when trigger and tooltip share a shadow root (`ShadowRootScopeTest` — creates trigger + tooltip inside `attachShadow({ mode: 'open' })`; verifies `getRootNode().getElementById` scopes to the shadow root and ARIA wiring reaches the native trigger)
 - [x] `manual` attribute: controller wiring is skipped; consumer-driven `open` changes still work; ARIA wiring still fires (`ManualPreventsHoverTest`, `AriaWiringManualModeTest`)
 - [x] `labeling` attribute: `ariaLabelledByElements` is set on the inner interactive element instead of `ariaDescribedByElements`; stale references in the opposite property are cleaned up; re-syncs when `labeling` changes while open (`LabelingAriaWiringTest`)
-- [ ] `ariaDescribedByElements` wiring: verify AT can traverse the association in DevTools Accessibility panel and with NVDA/VoiceOver — **manual verification required; cannot be automated**
+- [x] `ariaDescribedByElements` wiring: verify AT can traverse the association in DevTools Accessibility panel and with NVDA/VoiceOver — **manual verification required; cannot be automated**
 - [x] `ariaDescribedByElements` wiring fallback: when trigger has no shadow root (native `<button>`, `<a>`, `<input>`), association is established on the host element directly (`AriaWiringNativeTest`)
 - [x] `disabled` attribute prevents automatic mode response to user input (`DisabledPreventsHoverTest`)
 
@@ -716,12 +716,12 @@ The impact is most acute in the additive phase, when `HoverController` will call
 
 - [x] `yarn lint:2nd-gen` passes (ESLint, Stylelint, Prettier) — no errors in tooltip files; pre-existing `jsdoc/valid-types` warnings on `@fires` tags are project-wide and not tooltip-specific
 - [x] Status table in workstream doc updated (Tooltip row shows ✓ in all columns)
-- [ ] PR created with description referencing Epic SWC-2017
+- [x] PR created with description referencing Epic SWC-2017
 - [x] Follow-on ticket created: PlacementController integration (link from this PR)
 - [x] Follow-on ticket created: HoverController integration (link from this PR)
-- [ ] Follow-on ticket created: `tooltip-directive` 2nd-gen (link from this PR)
-- [ ] Follow-on ticket created: `no-tip` attribute, gated on React Spectrum signal (link from this PR)
-- [ ] Peer engineer sign-off
+- [x] Follow-on ticket created: `tooltip-directive` 2nd-gen — SWC-2279
+- [x] Follow-on ticket created: `no-tip` attribute, gated on React Spectrum signal — SWC-2278
+- [x] Peer engineer sign-off
 
 ---
 
@@ -740,8 +740,8 @@ Create these tickets before this migration PR closes. Link each to Epic SWC-2017
 | ------ | ------- | ------------ | ------------- |
 | ~~SWC-2210~~ | ~~**Integrate PlacementController into Tooltip.**~~ | **Shipped.** `PlacementController` wired in `Tooltip.base.ts`; `start()`/`stop()` called on `open` changes; `onPlacementChange` reflects the computed side into `this.placement` (guarded by `_placementFromController` flag); `_requestedPlacement` preserves the consumer's original value. `offset`, `cross-offset`, `container-padding`, and `should-flip` feed directly into controller options. No additional CSS needed — existing `[placement]` selectors handle tip direction. | ~~Additive A1 (positioning), A7, A8, A9~~ |
 | ~~SWC-2210~~ | ~~**Integrate HoverController into Tooltip.**~~ | **Shipped.** `TooltipBase` implements `HoverControllerHost`; `HoverController` wired with `warmStateKey: 'swc-tooltip'`; target set from `resolveTrigger()` in `updated()`. Hover/focus wiring, warm-up/cooldown, `disabled` guard, and WCAG 1.4.13 pointer bridge are all active. | ~~Additive A1 (hover/focus), A2, A3, A4~~ |
-| TBD | **2nd-gen tooltip-directive.** Lit directive for programmatic tooltip insertion. Creates `<swc-tooltip>` as a sibling of the target and handles lifecycle cleanup. Simpler than 1st-gen: no `sp-overlay` wrapper needed; automatic trigger wiring activates because `manual` is not set. | Both controllers are now active; this can proceed. | Additive A6 |
-| TBD | **`no-tip` attribute.** Remove the directional tip arrow. Figma-confirmed. Can proceed independently of controller integration; no controller dependency. Create when React Spectrum adds support as a confirming signal. | No cross-framework confirmation yet; Figma-only signal is not sufficient to ship. | Additive A5 |
+| SWC-2279 | **2nd-gen tooltip-directive.** Lit directive for programmatic tooltip insertion. Creates `<swc-tooltip>` as a sibling of the target and handles lifecycle cleanup. Simpler than 1st-gen: no `sp-overlay` wrapper needed; automatic trigger wiring activates because `manual` is not set. | Both controllers are now active; this can proceed. | Additive A6 |
+| SWC-2278 | **`no-tip` attribute.** Remove the directional tip arrow. Figma-confirmed. Can proceed independently of controller integration; no controller dependency. Create when React Spectrum adds support as a confirming signal. | No cross-framework confirmation yet; Figma-only signal is not sufficient to ship. | Additive A5 |
 
 ---
 
