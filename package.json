@@ -26,6 +26,7 @@
     "lint:1st-gen": "LINT_PATH=1st-gen yarn lint",
     "lint:2nd-gen": "LINT_PATH=2nd-gen yarn lint",
     "lint:ai": "node .ai/scripts/validate.js",
+    "lint:docs-pages": "node scripts/validate-docs-pages.js",
     "lint:eslint": "echo 'Linting with ESLint...' && eslint ${LINT_PATH:-.} --cache",
     "lint:prettier": "echo 'Linting with Prettier...' && prettier ${LINT_PATH:-.} --cache --check",
     "lint:styles": "echo 'Linting with Stylelint...' && stylelint '${LINT_PATH:+$LINT_PATH/**/*.css}${LINT_PATH:-**/*.css}' --cache --allow-empty-input",
