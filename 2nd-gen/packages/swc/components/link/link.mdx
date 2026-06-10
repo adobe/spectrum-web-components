@@ -7,7 +7,9 @@ import * as LinkStories from './stories/link.stories';
 
 <DocsHeader />
 
-Link styling in Spectrum 2 uses **native `<a href>` elements**. Default appearance inside running text and link lists ships with [Typography](/docs/components-typography--readme). Import `@adobe/spectrum-wc/link.css` when you need BEM modifier classes on individual anchors.
+Link presentation uses **native `<a href>` elements** with BEM classes from `@adobe/spectrum-wc/link.css`. Default anchor appearance inside prose and link lists ships with `@adobe/spectrum-wc/typography.css`; see [Typography](/docs/components-typography--readme) for [Prose container](/docs/components-typography--readme#prose-container) and [Link list](/docs/components-typography--readme#link-list) patterns.
+
+For bare, classless `<a href>` elements outside typography wrappers, import `@adobe/spectrum-wc/global-link.css` to opt in to application-wide baseline link styling. This stylesheet is not included in `swc.css`; add it explicitly when your app needs Spectrum defaults on unclassed anchors.
 
 ## Options
 
@@ -25,7 +27,7 @@ The `.swc-Link--secondary` modifier applies a secondary color treatment.
 
 ### Quiet standalone
 
-The `.swc-Link--quiet` modifier removes the default underline until hover. It requires `.swc-Link--standalone` and is intended for section-scoped patterns such as footers — not undifferentiated body copy.
+The `.swc-Link--quiet` modifier removes the default underline until hover. It requires `.swc-Link--standalone` and is intended for section-scoped patterns such as footers, not undifferentiated body copy.
 
 <Canvas of={LinkStories.QuietStandalone} />
 
@@ -33,8 +35,8 @@ The `.swc-Link--quiet` modifier removes the default underline until hover. It re
 
 Use `.swc-Link--staticWhite` and `.swc-Link--staticBlack` when displaying links over images or colored backgrounds:
 
-- **static white**: use on dark or colored backgrounds for better contrast
-- **static black**: use on light backgrounds for better contrast
+- **Static white**: Use on dark or colored backgrounds for better contrast
+- **Static black**: Use on light backgrounds for better contrast
 
 <Canvas of={LinkStories.StaticColors} />
 
@@ -44,14 +46,15 @@ Default and secondary treatments from `link.css`.
 
 <Canvas of={LinkStories.ColorVariants} />
 
-### Prose and link lists
+### In prose
 
-Default link styling for in-body copy and navigation lists is provided by Typography wrappers — not by per-link BEM classes:
-
-- **Prose**: wrap content in `.swc-Typography--prose` and use unclassed `<a href>` inside running text. See [Typography / Prose container](/docs/components-typography--readme#prose-container).
-- **Link lists**: use `<ul class="swc-Typography--links">` with unclassed `<a href>` in each item. See [Typography / Link list](/docs/components-typography--readme#link-list).
+Wrap content in `.swc-Typography--prose` and use unclassed `<a href>` inside running text. Default link styling comes from the typography wrapper, not per-link BEM classes. See [Typography / Prose container](/docs/components-typography--readme#prose-container).
 
 <Canvas of={LinkStories.InProse} />
+
+### Link list
+
+Use `<ul class="swc-Typography--links">` with unclassed `<a href>` in each item. Link lists in footers, sidebars, and navigation regions receive default styling from the wrapper. See [Typography / Link list](/docs/components-typography--readme#link-list).
 
 <Canvas of={LinkStories.LinkList} />
 
@@ -74,7 +77,7 @@ Native links provide accessible behavior without a custom element wrapper:
 #### Keyboard and focus
 
 - Links participate in the tab order and activate with Enter (platform conventions apply)
-- Focus-visible styles must remain perceivable — do not remove focus treatment without a deliberate replacement
+- Focus-visible styles must remain perceivable; do not remove focus treatment without a deliberate replacement
 
 #### Quiet styling
 
@@ -92,7 +95,7 @@ Native links provide accessible behavior without a custom element wrapper:
 - Do not rely on color alone to identify links (WCAG 1.4.1)
 - Ensure sufficient contrast between link text and surrounding content (WCAG 1.4.3)
 - Use real semantic structure (`p`, `ul`, `nav`, headings) around links
-- Import `@adobe/spectrum-wc/typography.css` for prose and link-list defaults; add `@adobe/spectrum-wc/link.css` only when explicit modifiers are needed
+- Import `@adobe/spectrum-wc/typography.css` for prose and link-list defaults; add `@adobe/spectrum-wc/link.css` when explicit modifiers are needed; add `@adobe/spectrum-wc/global-link.css` for application-wide styling of bare, classless anchors
 
 <Canvas of={LinkStories.Accessibility} />
 

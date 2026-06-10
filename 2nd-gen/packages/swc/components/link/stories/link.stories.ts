@@ -24,19 +24,11 @@ import {
   VARIANTS,
 } from './link.template.js';
 
-/**
- * Link presentation uses native `<a href>` with BEM classes from `link.css`.
- *
- * Default anchor appearance inside prose and link lists ships with
- * `typography.css` — see [Typography / Prose container](../typography/stories/typography.stories.ts)
- * and [Typography / Link list](../typography/stories/typography.stories.ts).
- */
 const meta: Meta<LinkTemplateProps> = {
   title: 'Link',
   parameters: {
     docs: {
-      subtitle:
-        'Native link variant styles are available via CSS classes.',
+      subtitle: 'Native link variant styles are available via CSS classes.',
     },
     design: {
       type: 'figma',
@@ -48,7 +40,7 @@ const meta: Meta<LinkTemplateProps> = {
       control: 'select',
       options: VARIANTS,
       description:
-        'BEM color modifiers (`secondary`, static white/black). Apply in **explicit** context — prose and link lists use typography defaults.',
+        'BEM color modifiers (`secondary`, static white/black). Apply in **explicit** context; prose and link lists use typography defaults.',
     },
     context: {
       control: 'select',
@@ -85,9 +77,8 @@ export default meta;
 // ────────────────────
 
 const staticColorLabels = {
-  staticWhite: 'White link',
-staticWhite: 'Static white',
-staticBlack: 'Static black',
+  staticWhite: 'Static white',
+  staticBlack: 'Static black',
 } as const satisfies Record<(typeof LINK_STATIC_VARIANTS)[number], string>;
 
 /** Panel styles aligned with `static-colors-demo` decorator gradients. */
@@ -198,7 +189,7 @@ export const Secondary: Story = {
 };
 
 /**
- * Quiet + standalone removes the default underline until hover — use in footers
+ * Quiet + standalone removes the default underline until hover. Use in footers
  * and other section-scoped patterns, not undifferentiated body copy.
  */
 export const QuietStandalone: Story = {
@@ -299,7 +290,7 @@ export const ColorVariants: Story = {
 // ────────────────────────────────
 
 export const Accessibility: Story = {
-  render: (args) => html`
+  render: () => html`
     <div class="swc-Typography--prose">
       <p>
         Review the project timeline and
@@ -307,17 +298,7 @@ export const Accessibility: Story = {
         before the sprint review.
       </p>
     </div>
-    <footer style="margin-block-start: 24px;">
-      ${template({
-        ...args,
-        context: 'links',
-        variant: 'default',
-      })}
-    </footer>
   `,
-  args: {
-    href: '#',
-  },
   parameters: {
     flexLayout: 'column-stretch',
   },

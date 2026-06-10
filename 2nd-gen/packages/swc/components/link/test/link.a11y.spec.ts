@@ -16,7 +16,7 @@ import { expect, test } from '@playwright/test';
 /**
  * Accessibility tests for Link styles (2nd Generation)
  *
- * Link is a CSS-only utility — there is no `<swc-link>` custom element.
+ * Link is a CSS-only utility; there is no `<swc-link>` custom element.
  * Stories render native `<a href>` elements with optional BEM classes from
  * `link.css` or typography wrappers from `typography.css`.
  *
