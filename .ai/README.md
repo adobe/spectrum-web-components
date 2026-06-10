@@ -14,7 +14,8 @@ All rules and skills now live in **`.ai/`** — a tool-agnostic, plain-markdown 
 
 ## CI integration
 
-- `yarn lint:ai` runs `.ai/scripts/validate.js`, which checks story tags, AGENTS.md paths, and config schema. Catches broken internal links, symlinks, and misconfigured rules before merge
+- `yarn lint:ai` runs `.ai/scripts/validate.js`, which checks story tags, AGENTS.md paths, config schema, symlinks, and per-unit MDX docs pages. Catches broken internal links, symlinks, misconfigured rules, and structural drift in `<unit>.mdx` files before merge
+- `yarn lint:docs-pages` runs the per-unit MDX docs-page check in isolation. Use during authoring to catch missing `<Canvas>` references, unknown `##` section headings, or out-of-order sections in a single component / pattern / controller MDX
 - Pre-commit hook runs the contributor docs nav script to keep breadcrumbs and TOCs in sync automatically
 
 ## Rules

@@ -292,7 +292,7 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
       `);
       const opened = oneEvent(el, 'sp-opened');
       el.focus();
-      sendKeys({ press: 'Enter' });
+      await sendKeys({ press: 'Enter' });
       await opened;
       await nextFrame();
 

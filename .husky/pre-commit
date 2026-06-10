@@ -5,3 +5,10 @@ if git diff --cached --name-only | grep -q "^CONTRIBUTOR-DOCS/"; then
   node CONTRIBUTOR-DOCS/01_contributor-guides/07_authoring-contributor-docs/update-nav.js "$(pwd)/CONTRIBUTOR-DOCS"
   git add CONTRIBUTOR-DOCS/
 fi
+
+# If any per-unit MDX or stories file changed under the in-scope 2nd-gen
+# directories, run the structural lint that enforces the per-unit MDX
+# authoring standards (matches yarn lint:docs-pages / yarn lint:ai in CI).
+if git diff --cached --name-only | grep -qE "^2nd-gen/packages/(swc/components|swc/patterns|core/controllers)/.*\.(mdx|stories\.ts)$"; then
+  node scripts/validate-docs-pages.js || exit 1
+fi
