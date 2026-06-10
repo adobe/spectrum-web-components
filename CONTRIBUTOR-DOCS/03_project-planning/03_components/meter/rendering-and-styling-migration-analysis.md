@@ -83,7 +83,7 @@
 
 - `progress` (Number) - Progress value
 - `variant` (String) - Meter variant: 'positive', 'notice', or 'negative'
-- `label` (String) - Label text
+- `accessibleLabel` (String) - Screen-reader-only label for contexts where no visible label slot is used (for example a data grid). Sets `aria-label` on the inner `role="meter"` element instead of `aria-labelledby`.
 - `sideLabel` (Boolean) - Whether to display label on the side
 - `staticColor` (String) - Static color: 'white'
 
@@ -96,7 +96,8 @@
 <details>
 <summary>Slots</summary>
 
-- Default slot - Text labeling the Meter
+- `label` slot - Visible label for the meter. The slot content is wrapped in a shadow DOM container with a stable ID; the inner `role="meter"` element references it via `aria-labelledby`.
+- `description` slot - Additional text rendered below the meter (for example "2 GB of 10 GB used"). The slot content is wrapped in a shadow DOM container with a stable ID; the inner `role="meter"` element references it via `aria-describedby`. This is not "help text": meter is not a form field.
 
 </details>
 
@@ -105,17 +106,33 @@
 ### DOM Structure changes
 
 <details>
-<summary>Spectrum Web Components:</summary>
+<summary>Spectrum Web Components (2nd-gen target):</summary>
 
 ```html
-<sp-field-label size="[size]" class="label">
-    <slot>[label]</slot>
-</sp-field-label>
-<sp-field-label size="[size]" class="percentage">[progress]</sp-field-label>
-<div class="track">
-    <div class="fill" style="transform: scaleX(calc([progress] / 100));"></div>
+<!-- shadow root -->
+<div id="label" class="label">
+    <slot name="label"></slot>
+</div>
+<div
+    role="meter"
+    aria-labelledby="label"
+    aria-describedby="description"
+    aria-valuemin="0"
+    aria-valuemax="100"
+    aria-valuenow="[progress]"
+    aria-valuetext="[localized percent]"
+>
+    <sp-field-label size="[size]" class="percentage">[progress]%</sp-field-label>
+    <div class="track">
+        <div class="fill" style="transform: scaleX(calc([progress] / 100));"></div>
+    </div>
+</div>
+<div id="description" class="description">
+    <slot name="description"></slot>
 </div>
 ```
+
+When `accessibleLabel` is set and no label slot content is present, `aria-label="[accessibleLabel]"` is used on the meter element instead of `aria-labelledby`.
 
 </details>
 
@@ -209,7 +226,7 @@
 
 1. **Size class adjustment**: Changed default size class from `spectrum-Meter--sizeL` to `spectrum-Meter--sizeM`. In S2, size options were expanded (although SWC already supported S/M/L/XL). In Spectrum 1, the meter component extended the default medium-sized progress bar with `.spectrum-ProgressBar--sizeM`, as well as set the default meter size to `.spectrum-Meter--sizeL`. In Spectrum 2, you'll notice the `.spectrum-ProgressBar--sizeM` modifier is removed since that t-shirt size is not needed for default progress bars and/or meters.
 
-2. **Help text integration**: Added optional `.spectrum-ProgressBar-helptext` container with `.spectrum-HelpText-text` wrapper for displaying contextual help information below the meter.
+2. **Description slot integration**: Added optional `.spectrum-ProgressBar-helptext` container with `.spectrum-HelpText-text` wrapper for displaying additional text below the meter. In SWC 2nd-gen this maps to a `description` slot — not a "help text" slot, since meter is not a form field.
 
 </details>
 
@@ -227,25 +244,31 @@
 | `.spectrum-Meter.is-negative`      | `variant="negative"`                  | Implemented                  |
 | `.spectrum-Meter.is-notice`        | `variant="notice"`                    | Implemented                  |
 | `.spectrum-Meter--staticWhite`     | `staticColor="white"`                 | Implemented                  |
-| `.spectrum-ProgressBar-label`      | `label` attribute; default slot       | Implemented                  |
+| `.spectrum-ProgressBar-label`      | `label` slot                          | Needs update (named slot)    |
 | `.spectrum-ProgressBar-percentage` | `<sp-field-label class="percentage">` | Implemented                  |
 | `.spectrum-ProgressBar-track`      | `.track` container                    | Implemented                  |
 | `.spectrum-ProgressBar-fill`       | `fill` element                        | Implemented                  |
 | `.spectrum-ProgressBar--sideLabel` | `side-label` attribute                | Implemented                  |
 | `.spectrum-Meter--staticBlack`     | `staticColor="black"`                 | Missing from WC (new for S2) |
-| `.spectrum-ProgressBar-helptext`   | Help text                             | Missing from WC (new for S2) |
+| `.spectrum-ProgressBar-helptext`   | `description` slot                    | Missing from WC (new for S2) |
 
 ## Summary of changes
 
 ### CSS => SWC implementation gaps
 
-- **Help text support**: The web component lacks support for conditional help text, which would display help text below the meter.
+- **Description slot**: The web component lacks support for a `description` slot, which renders additional text below the meter. This replaces the Spectrum CSS `.spectrum-ProgressBar-helptext` pattern. The slot is named **description**, not **help text**, because meter is not a form field.
+
+- **Label slot**: The `label` attribute should become a named `label` slot with a shadow DOM container that has a stable ID, so the inner `role="meter"` element can reference it via `aria-labelledby`.
+
+- **`accessibleLabel` property**: New property that sets `aria-label` on the inner `role="meter"` element for contexts where no visible label is present.
+
+- **`role="meter"` placement**: The role should move from the host element to an inner shadow DOM element, with `aria-labelledby` and `aria-describedby` referencing shadow-DOM-internal IDs.
 
 - **Static black**: The web component lacks support for the new static black styles for the meter.
 
 ### CSS Spectrum 2 changes
 
-The CSS Spectrum 2 meter DOM includes the addition of optional help text, but otherwise remains the same. The meter component essentially extends the progress bar with semantic color variants (positive, negative, notice) and uses the same underlying structure and styling.
+The CSS Spectrum 2 meter DOM includes the addition of an optional `.spectrum-ProgressBar-helptext` container below the bar. In the SWC 2nd-gen implementation this maps to a `description` slot (not "help text", since meter is not a form field). Otherwise the structure remains the same: the meter extends the progress bar with semantic color variants (positive, negative, notice) and uses the same underlying bar and track styling.
 
 ## Resources
 
