@@ -32,9 +32,14 @@ import opacityCheckerboardStyles from '../../../stylesheets/shared/opacity-check
  * decorative: it sits behind the color fill, is marked `aria-hidden`, and is never a
  * tab stop. The accessible name and opacity are carried by the host (`role="img"` +
  * `aria-label`), mirroring the guidance in the accessibility migration analysis.
+ *
+ * Intentionally not exported: CSF treats every export as a story, and exporting
+ * the class would require `excludeStories`, whose spread into the default export
+ * breaks Storybook's static title resolution (the sidebar falls back to the
+ * file-path autotitle).
  */
 @customElement('demo-opacity-checkerboard-swatch')
-export class DemoOpacityCheckerboardSwatch extends LitElement {
+class DemoOpacityCheckerboardSwatch extends LitElement {
   /**
    * Adopt the shared fragment into this element's shadow root, then layer the
    * component-local styles on top.
@@ -97,9 +102,15 @@ export class DemoOpacityCheckerboardSwatch extends LitElement {
   }
 }
 
-// ─────────────────────────
-//     METADATA
-// ─────────────────────────
+declare global {
+  interface HTMLElementTagNameMap {
+    'demo-opacity-checkerboard-swatch': DemoOpacityCheckerboardSwatch;
+  }
+}
+
+// ────────────────
+//    METADATA
+// ────────────────
 
 interface OpacityCheckerboardProps {
   size: 'm' | 's';
@@ -140,14 +151,7 @@ const meta: Meta<OpacityCheckerboardProps> = {
   tags: ['utility'],
 };
 
-/**
- * The Lit demo host is exported for unit tests; exclude it from CSF so it is
- * not collected as a story.
- */
-export default {
-  ...meta,
-  excludeStories: ['DemoOpacityCheckerboardSwatch'],
-} as Meta<OpacityCheckerboardProps>;
+export default meta;
 
 // ─────────────────────────
 //     HELPERS

@@ -11,17 +11,15 @@ import * as Stories from './stories/opacity-checkerboard.internal.stories';
 
 The opacity checkerboard is a shared CSS utility, not a custom element. It lives at `stylesheets/shared/opacity-checkerboard.css` as an importable lit `css` fragment. A consuming component imports it directly and adds it to its `styles` array:
 
-
 Apply `.swc-OpacityCheckerboard` to a decorative element rendered behind transparent or semi-transparent content. The consuming component is responsible for keeping that element out of the accessibility tree (for example `aria-hidden="true"`).
 
 > These demos render through `demo-opacity-checkerboard-swatch`, an internal Lit host that adopts the fragment into its own shadow root exactly as a real consuming component would. The accessible name and opacity live on the host (`role="img"` + `aria-label`); the checkerboard layer is decorative and `aria-hidden`.
 
-## Basic Usage
+## Usage
 
 1. Import the CSS file from `@spectrum-web-components//stylesheets/shared/opacity-checkerboard.css`.
 2. Add the styles to your styles array.
 3. Add the `swc-OpacityCheckerboard` class to the `span` or `div` element where you want the checkerboard to appear, and make sure the element is `aria-hidden="true"`.
-
 
 ### Sizes
 
