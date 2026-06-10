@@ -36,7 +36,7 @@ export interface ResolvedTrigger {
  * Resolve the trigger for a popover-like host and discover the AT-facing inner
  * button across shadow boundaries.
  *
- * @todo Phase 3 (API): implement `for=` resolution via
+ * @todo Phase 4/5: implement `for=` resolution via
  * `host.getRootNode().getElementById()`, the `triggerElement` override, and
  * inner-button discovery (`trigger.shadowRoot?.querySelector('button')`).
  */
