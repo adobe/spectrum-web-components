@@ -72,7 +72,7 @@
 ### Most blocking open questions
 
 - **Q1** (resolved — see [Architecture and behavior](#architecture-and-behavior)): the shared `LinearProgressMixin` hard-codes the meter docs URL in its two DEBUG warnings. **Decision:** de-hardcode the URL in the mixin via an overridable member that each concrete base class supplies, and give progress bar accurate issue text — fixing the 1st-gen copy-paste bug that references `<sp-progress-circle>` inside the `<sp-progress-bar>` warning. Carried into the API + Accessibility phases as a known task, not a blocker.
-- **Q2** (see [Design](#design)): confirm the **indeterminate animation** treatment (keyframes, duration token, reduced-motion fallback) — the one visual item not inherited from the Meter-validated surface. **No Figma reference will be provided**; the animation will be lifted from `spectrum-css` `spectrum-two` `progressbar/index.css` and validated visually during the Styling phase. Soft blocker on Styling sign-off only.
+- **Q2** (see [Design](#design)): confirm the **indeterminate animation** treatment (keyframes, duration token, reduced-motion fallback). This is the one visual item not inherited from the Meter-validated surface. Source it from the [Figma S2 progress bar frame](https://www.figma.com/design/Mngz9H7WZLbrCvGQf3GnsY/S2---Web--Desktop-scale-?node-id=13059-181) and `spectrum-css` `spectrum-two` `progressbar/index.css`, then validate visually during the Styling phase. Soft blocker on Styling sign-off only.
 
 ---
 
@@ -527,7 +527,7 @@ Exact keyframe geometry, duration token, and fallback width are **Q2** — to be
 
 | #   | Item                                                                                                                                                                              | Blocking? | Status | Owner                         |
 | --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------- | ------ | ----------------------------- |
-| Q2  | Confirm the indeterminate animation treatment (keyframes, duration token, easing, reduced-motion fallback) against Figma `S2 / Web (Desktop scale)`. Next action: lift from `spectrum-css` `spectrum-two` `progressbar/index.css` and validate in the Styling phase. | Yes (Styling sign-off) | Open | Design + CSS reviewer |
+| Q2  | Confirm the indeterminate animation treatment (keyframes, duration token, easing, reduced-motion fallback) against the [Figma S2 progress bar frame](https://www.figma.com/design/Mngz9H7WZLbrCvGQf3GnsY/S2---Web--Desktop-scale-?node-id=13059-181) (`S2 / Web (Desktop scale)`). Next action: cross-reference the Figma frame with `spectrum-css` `spectrum-two` `progressbar/index.css` and validate in the Styling phase. | Yes (Styling sign-off) | Open | Design + CSS reviewer |
 
 ### Architecture and behavior
 
@@ -561,6 +561,7 @@ Exact keyframe geometry, duration token, and fallback width are **Q2** — to be
 - [2nd-gen shared CSS — `linear-progress-base.css`](../../../../2nd-gen/packages/swc/stylesheets/shared/linear-progress-base.css)
 - [2nd-gen sibling — `Meter.ts`](../../../../2nd-gen/packages/swc/components/meter/Meter.ts)
 - [2nd-gen reference — `ProgressCircle.base.ts`](../../../../2nd-gen/packages/core/components/progress-circle/ProgressCircle.base.ts) — `progressbar` determinate/indeterminate ARIA + DEBUG warning pattern
+- [Figma — S2 / Web (Desktop scale), progress bar frame](https://www.figma.com/design/Mngz9H7WZLbrCvGQf3GnsY/S2---Web--Desktop-scale-?node-id=13059-181) — visual reference, including the indeterminate animation (Q2)
 - [React Spectrum S2 ProgressBar](https://react-spectrum.adobe.com/ProgressBar)
 - [Spectrum CSS — `spectrum-two` branch, `components/progressbar/index.css`](https://github.com/adobe/spectrum-css/blob/spectrum-two/components/progressbar/index.css) — S2 styling source of truth; lift the indeterminate animation from here
 - [Badge migration reference](../../02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md#reference-badge-migration)
