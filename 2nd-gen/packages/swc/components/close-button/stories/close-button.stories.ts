@@ -95,6 +95,23 @@ export const Overview: Story = {
 };
 
 // ──────────────────────────
+//    ANATOMY STORY
+// ──────────────────────────
+
+export const Anatomy: Story = {
+  render: (args) => html`
+    <swc-close-button
+      size=${args.size}
+      static-color=${args['static-color'] ?? ''}
+      accessible-label="Close"
+    >
+      Close
+    </swc-close-button>
+  `,
+  tags: ['anatomy'],
+};
+
+// ──────────────────────────
 //    OPTIONS STORIES
 // ──────────────────────────
 

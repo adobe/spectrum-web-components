@@ -12,48 +12,122 @@
 
 :host {
   display: inline-flex;
+  vertical-align: top;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+:host([size="s"]) {
+  --swc-close-button-icon-size: token("cross-icon-size-200");
+  --swc-close-button-size: token("component-height-75");
+}
+
+:host([size="l"]) {
+  --swc-close-button-icon-size: token("cross-icon-size-400");
+  --swc-close-button-size: token("component-height-200");
+}
+
+:host([size="xl"]) {
+  --swc-close-button-icon-size: token("cross-icon-size-500");
+  --swc-close-button-size: token("component-height-300");
+}
+
+:host([static-color="white"]) {
+  --swc-close-button-background-color-default: transparent;
+  --swc-close-button-background-color-down: token("transparent-white-100");
+  --swc-close-button-background-color-focus: token("transparent-white-100");
+  --swc-close-button-background-color-hover: token("transparent-white-100");
+  --swc-close-button-focus-indicator-color: token("static-white-focus-indicator-color");
+  --swc-close-button-icon-color-default: token("transparent-white-800");
+  --swc-close-button-icon-color-disabled: token("disabled-static-white-background-color");
+  --swc-close-button-icon-color-down: token("transparent-white-900");
+  --swc-close-button-icon-color-focus: token("transparent-white-900");
+  --swc-close-button-icon-color-hover: token("transparent-white-900");
+}
+
+:host([static-color="black"]) {
+  --swc-close-button-background-color-default: transparent;
+  --swc-close-button-background-color-down: token("transparent-black-100");
+  --swc-close-button-background-color-focus: token("transparent-black-100");
+  --swc-close-button-background-color-hover: token("transparent-black-100");
+  --swc-close-button-focus-indicator-color: token("static-black-focus-indicator-color");
+  --swc-close-button-icon-color-default: token("transparent-black-800");
+  --swc-close-button-icon-color-disabled: token("disabled-static-black-background-color");
+  --swc-close-button-icon-color-down: token("transparent-black-900");
+  --swc-close-button-icon-color-focus: token("transparent-black-900");
+  --swc-close-button-icon-color-hover: token("transparent-black-900");
 }
 
 .swc-CloseButton {
-  --_swc-close-button-block-size: token("component-height-100");
-  --_swc-close-button-icon-size: token("cross-icon-size-300");
+  --_swc-close-button-focus-indicator-gap: token("focus-indicator-gap");
+  --_swc-close-button-focus-indicator-thickness: token("focus-indicator-thickness");
 
+  -webkit-tap-highlight-color: transparent;
   display: inline-flex;
+  position: relative;
   align-items: center;
   justify-content: center;
-  inline-size: var(--_swc-close-button-block-size);
-  block-size: var(--_swc-close-button-block-size);
+  inline-size: var(--swc-close-button-size, token("component-height-100"));
+  block-size: var(--swc-close-button-size, token("component-height-100"));
   padding: 0;
-  color: token("neutral-content-color-default");
-  background: transparent;
-  border: none;
+  margin: 0;
+  color: var(--swc-close-button-icon-color-default, token("neutral-content-color-default"));
+  background-color: var(--swc-close-button-background-color-default, transparent);
+  border: 0;
+  border-radius: var(--swc-close-button-border-radius, token("corner-radius-full"));
+  overflow: visible;
   cursor: pointer;
+  user-select: none;
+  transition: background-color token("animation-duration-100") ease-in-out;
+}
+
+.swc-CloseButton:focus {
+  outline: none;
+}
+
+.swc-CloseButton::after {
+  position: absolute;
+  inset-block: 0;
+  inset-inline: 0;
+  margin: calc(var(--_swc-close-button-focus-indicator-gap) * -1);
+  border-radius: calc(var(--swc-close-button-border-radius, token("corner-radius-full")) + var(--_swc-close-button-focus-indicator-gap));
+  pointer-events: none;
+  content: "";
+  transition: box-shadow token("animation-duration-100") ease-in-out;
 }
 
 .swc-CloseButton:disabled {
+  color: var(--swc-close-button-icon-color-disabled, token("disabled-content-color"));
+  background-color: var(--swc-close-button-background-color-default, transparent);
   cursor: default;
 }
 
-:host([size="s"]) .swc-CloseButton {
-  --_swc-close-button-block-size: token("component-height-75");
-  --_swc-close-button-icon-size: token("cross-icon-size-200");
+.swc-CloseButton:focus-visible {
+  color: var(--swc-close-button-icon-color-focus, token("neutral-content-color-key-focus"));
+  background-color: var(--swc-close-button-background-color-focus, token("gray-100"));
 }
 
-:host([size="l"]) .swc-CloseButton {
-  --_swc-close-button-block-size: token("component-height-200");
-  --_swc-close-button-icon-size: token("cross-icon-size-400");
+.swc-CloseButton:focus-visible::after {
+  box-shadow: 0 0 0 var(--_swc-close-button-focus-indicator-thickness) var(--swc-close-button-focus-indicator-color, token("focus-indicator-color"));
 }
 
-:host([size="xl"]) .swc-CloseButton {
-  --_swc-close-button-block-size: token("component-height-300");
-  --_swc-close-button-icon-size: token("cross-icon-size-500");
+.swc-CloseButton:hover:not(:disabled) {
+  color: var(--swc-close-button-icon-color-hover, token("neutral-content-color-hover"));
+  background-color: var(--swc-close-button-background-color-hover, token("gray-100"));
+}
+
+.swc-CloseButton:active:not(:disabled) {
+  color: var(--swc-close-button-icon-color-down, token("neutral-content-color-down"));
+  background-color: var(--swc-close-button-background-color-down, token("gray-100"));
 }
 
 .swc-CloseButton-icon {
   display: block;
   flex-shrink: 0;
-  inline-size: var(--_swc-close-button-icon-size);
-  block-size: var(--_swc-close-button-icon-size);
+  inline-size: var(--swc-close-button-icon-size, token("cross-icon-size-300"));
+  block-size: var(--swc-close-button-icon-size, token("cross-icon-size-300"));
 }
 
 .swc-CloseButton-icon svg {
@@ -76,4 +150,46 @@
   border: 0;
   overflow: hidden;
   clip-path: inset(50%);
+}
+
+@media (forced-colors: active) {
+  .swc-CloseButton {
+    --_swc-close-button-background-color-default: ButtonFace;
+    --_swc-close-button-focus-indicator-color: ButtonText;
+    --_swc-close-button-icon-color-disabled: GrayText;
+    --_swc-close-button-icon-color-down: Highlight;
+    --_swc-close-button-icon-color-focus: Highlight;
+    --_swc-close-button-icon-color-hover: Highlight;
+  }
+
+  .swc-CloseButton:disabled {
+    color: var(--_swc-close-button-icon-color-disabled);
+    background-color: var(--_swc-close-button-background-color-default);
+  }
+
+  .swc-CloseButton:focus-visible {
+    color: var(--_swc-close-button-icon-color-focus);
+    background-color: var(--_swc-close-button-background-color-default);
+  }
+
+  .swc-CloseButton:focus-visible::after {
+    margin: calc(var(--_swc-close-button-focus-indicator-gap) * -1);
+    box-shadow: 0 0 0 var(--_swc-close-button-focus-indicator-thickness) var(--_swc-close-button-focus-indicator-color);
+    forced-color-adjust: none;
+    transition:
+      opacity token("animation-duration-100") ease-out,
+      margin token("animation-duration-100") ease-out;
+  }
+
+  .swc-CloseButton:hover:not(:disabled) {
+    color: var(--_swc-close-button-icon-color-hover);
+  }
+
+  .swc-CloseButton:active:not(:disabled) {
+    color: var(--_swc-close-button-icon-color-down);
+  }
+
+  :host([static-color="white"]) .swc-CloseButton:disabled {
+    --_swc-close-button-icon-color-disabled: Highlight;
+  }
 }
