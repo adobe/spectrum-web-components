@@ -189,15 +189,10 @@ export const Anatomy: Story = {
     ) as HTMLElement & {
       open: boolean;
     };
-    const afterOpen = new Promise<void>((resolve) => {
-      tooltip.addEventListener('swc-after-open', () => resolve(), {
-        once: true,
-      });
-    });
     tooltip.open = true;
-    await afterOpen;
     await waitFor(() => {
       expect(tooltip.matches(':popover-open')).toBe(true);
+      expect(getComputedStyle(tooltip).opacity).toBe('1');
     });
   },
   render: (args) => html`
@@ -237,15 +232,10 @@ export const Variants: Story = {
   play: async ({ canvasElement }: { canvasElement: HTMLElement }) => {
     const tooltips = canvasElement.querySelectorAll('swc-tooltip');
     const tooltip = tooltips[1] as HTMLElement & { open: boolean }; // informative
-    const afterOpen = new Promise<void>((resolve) => {
-      tooltip.addEventListener('swc-after-open', () => resolve(), {
-        once: true,
-      });
-    });
     tooltip.open = true;
-    await afterOpen;
     await waitFor(() => {
       expect(tooltip.matches(':popover-open')).toBe(true);
+      expect(getComputedStyle(tooltip).opacity).toBe('1');
     });
   },
   tags: ['options'],
@@ -256,15 +246,10 @@ export const Placements: Story = {
   play: async ({ canvasElement }: { canvasElement: HTMLElement }) => {
     const tooltips = canvasElement.querySelectorAll('swc-tooltip');
     const tooltip = tooltips[3] as HTMLElement & { open: boolean }; // bottom
-    const afterOpen = new Promise<void>((resolve) => {
-      tooltip.addEventListener('swc-after-open', () => resolve(), {
-        once: true,
-      });
-    });
     tooltip.open = true;
-    await afterOpen;
     await waitFor(() => {
       expect(tooltip.matches(':popover-open')).toBe(true);
+      expect(getComputedStyle(tooltip).opacity).toBe('1');
     });
   },
   render: (args) => html`
@@ -340,15 +325,10 @@ export const Open: Story = {
     ) as HTMLElement & {
       open: boolean;
     };
-    const afterOpen = new Promise<void>((resolve) => {
-      tooltip.addEventListener('swc-after-open', () => resolve(), {
-        once: true,
-      });
-    });
     tooltip.open = true;
-    await afterOpen;
     await waitFor(() => {
       expect(tooltip.matches(':popover-open')).toBe(true);
+      expect(getComputedStyle(tooltip).opacity).toBe('1');
     });
   },
   tags: ['states'],
@@ -397,15 +377,10 @@ export const Manual: Story = {
   play: async ({ canvasElement }: { canvasElement: HTMLElement }) => {
     const buttons = canvasElement.querySelectorAll('swc-button');
     const tooltip = canvasElement.querySelector('swc-tooltip') as HTMLElement;
-    const afterOpen = new Promise<void>((resolve) => {
-      tooltip.addEventListener('swc-after-open', () => resolve(), {
-        once: true,
-      });
-    });
     await userEvent.click(buttons[1] as HTMLElement);
-    await afterOpen;
     await waitFor(() => {
       expect(tooltip.matches(':popover-open')).toBe(true);
+      expect(getComputedStyle(tooltip).opacity).toBe('1');
     });
   },
   tags: ['states'],
@@ -464,15 +439,10 @@ export const TriggerElement: Story = {
     ) as HTMLElement & {
       open: boolean;
     };
-    const afterOpen = new Promise<void>((resolve) => {
-      tooltip.addEventListener('swc-after-open', () => resolve(), {
-        once: true,
-      });
-    });
     tooltip.open = true;
-    await afterOpen;
     await waitFor(() => {
       expect(tooltip.matches(':popover-open')).toBe(true);
+      expect(getComputedStyle(tooltip).opacity).toBe('1');
     });
   },
   tags: ['behaviors'],
@@ -485,15 +455,10 @@ export const Labeling: Story = {
     ) as HTMLElement & {
       open: boolean;
     };
-    const afterOpen = new Promise<void>((resolve) => {
-      tooltip.addEventListener('swc-after-open', () => resolve(), {
-        once: true,
-      });
-    });
     tooltip.open = true;
-    await afterOpen;
     await waitFor(() => {
       expect(tooltip.matches(':popover-open')).toBe(true);
+      expect(getComputedStyle(tooltip).opacity).toBe('1');
     });
   },
   render: (args) => html`
@@ -534,15 +499,10 @@ export const Accessibility: Story = {
     ) as HTMLElement & {
       open: boolean;
     };
-    const afterOpen = new Promise<void>((resolve) => {
-      tooltip.addEventListener('swc-after-open', () => resolve(), {
-        once: true,
-      });
-    });
     tooltip.open = true;
-    await afterOpen;
     await waitFor(() => {
       expect(tooltip.matches(':popover-open')).toBe(true);
+      expect(getComputedStyle(tooltip).opacity).toBe('1');
     });
   },
   tags: ['a11y'],
