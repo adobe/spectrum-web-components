@@ -731,12 +731,18 @@ export const VariantsTest: Story = {
       }
     });
 
-    for (const variant of TOOLTIP_VARIANTS) {
-      await step(`opens ${variant} variant tooltip for VRT`, async () => {
-        const tooltip = canvasElement.querySelector(
-          `swc-tooltip[variant="${variant}"]`
-        ) as Tooltip;
-        await openTooltip(tooltip);
+    // Open each variant in turn via focus. popover="auto" auto-dismisses the previous
+    // tooltip when the next one opens, so only one is ever open at a time.
+    const variants = [...TOOLTIP_VARIANTS];
+    const buttons = [
+      ...canvasElement.querySelectorAll('swc-button'),
+    ] as HTMLElement[];
+    const tooltips = [
+      ...canvasElement.querySelectorAll('swc-tooltip'),
+    ] as Tooltip[];
+    for (let i = 0; i < variants.length; i++) {
+      await step(`opens ${variants[i]} variant tooltip via focus`, async () => {
+        await focusOpen(buttons[i], tooltips[i]);
       });
     }
   },
@@ -759,13 +765,23 @@ export const PlacementsTest: Story = {
       }
     });
 
-    for (const placement of TOOLTIP_PLACEMENTS) {
-      await step(`opens ${placement} placement tooltip for VRT`, async () => {
-        const tooltip = canvasElement.querySelector(
-          `swc-tooltip[placement="${placement}"]`
-        ) as Tooltip;
-        await openTooltip(tooltip);
-      });
+    // Open each placement in turn via focus. DOM render order: top → right → end → bottom → left → start.
+    // popover="auto" auto-dismisses the previous tooltip when the next one opens,
+    // so only one is ever open at a time.
+    const placementOrder = ['top', 'right', 'end', 'bottom', 'left', 'start'];
+    const buttons = [
+      ...canvasElement.querySelectorAll('swc-button'),
+    ] as HTMLElement[];
+    const tooltips = [
+      ...canvasElement.querySelectorAll('swc-tooltip'),
+    ] as Tooltip[];
+    for (let i = 0; i < placementOrder.length; i++) {
+      await step(
+        `opens ${placementOrder[i]} placement tooltip via focus`,
+        async () => {
+          await focusOpen(buttons[i], tooltips[i]);
+        }
+      );
     }
   },
 };
