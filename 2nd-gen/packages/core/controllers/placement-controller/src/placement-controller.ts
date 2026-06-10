@@ -98,7 +98,9 @@ type ActiveSession = {
  * floating element — an inline max-size would override the consuming
  * component's intended CSS max-size. Instead it exposes the space available to
  * the trigger as two custom properties on the floating element, refreshed on
- * every compute and removed on `stop`:
+ * every compute. The caller removes them after any exit transition completes
+ * (clearing them in `stop()` would snap the floating element's size
+ * mid-animation):
  *
  * - `--swc-placement-available-width` — usable inline space, in px.
  * - `--swc-placement-available-height` — usable block space, in px (floored to
@@ -292,9 +294,11 @@ export class PlacementController implements ReactiveController {
   }
 
   /**
-   * Stop positioning: tear down `autoUpdate`, clear `actualPlacement`,
-   * reset `isConstrained`. Inline style cleanup is left to render to
-   * account for exit transitions. Safe to call multiple times.
+   * Stop positioning: tear down `autoUpdate`, clear `actualPlacement` and
+   * `isConstrained`. Inline style cleanup — including `translate`, `top`,
+   * `left`, and `--swc-placement-available-*` — is left to the caller so
+   * exit transitions can complete before those properties are removed.
+   * Safe to call multiple times.
    */
   public stop() {
     this.cleanup?.();

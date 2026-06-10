@@ -116,7 +116,21 @@ export const OverviewTest: Story = {
       expect(tooltip.open, 'default open is false').toBe(false);
       expect(tooltip.manual, 'default manual is false').toBe(false);
       expect(tooltip.delay, 'default delay is 1500').toBe(1500);
+      expect(tooltip.offset, 'default offset is 4').toBe(4);
+      expect(tooltip.containerPadding, 'default containerPadding is 12').toBe(
+        12
+      );
     });
+
+    await step(
+      'sets --_swc-tooltip-animation-distance to offset px on first render',
+      async () => {
+        expect(
+          tooltip.style.getPropertyValue('--_swc-tooltip-animation-distance'),
+          '--_swc-tooltip-animation-distance is set to the default offset value'
+        ).toBe('4px');
+      }
+    );
 
     await step('sets role="tooltip" on the host element', async () => {
       expect(tooltip.getAttribute('role'), 'host has role="tooltip"').toBe(
@@ -186,6 +200,25 @@ export const PropertyMutationTest: Story = {
         'placement attribute is start after mutation'
       ).toBe('start');
     });
+
+    await step(
+      'updates --_swc-tooltip-animation-distance when offset changes',
+      async () => {
+        tooltip.offset = 8;
+        await tooltip.updateComplete;
+        expect(
+          tooltip.style.getPropertyValue('--_swc-tooltip-animation-distance'),
+          '--_swc-tooltip-animation-distance tracks offset after mutation'
+        ).toBe('8px');
+
+        tooltip.offset = 4;
+        await tooltip.updateComplete;
+        expect(
+          tooltip.style.getPropertyValue('--_swc-tooltip-animation-distance'),
+          '--_swc-tooltip-animation-distance reverts to 4px after reset'
+        ).toBe('4px');
+      }
+    );
   },
 };
 
