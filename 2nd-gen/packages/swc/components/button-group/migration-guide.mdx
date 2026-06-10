@@ -20,12 +20,12 @@ Replace `<sp-button-group>` with `<swc-button-group>`, update the import, and re
 
 ### Added in Spectrum 2
 
-| Addition               | Notes                                                        |
-| ---------------------- | ------------------------------------------------------------ |
-| `align` attribute      | `start` (default), `center`, `end` — main-axis alignment     |
-| `disabled` attribute   | Disables all slotted buttons at once; propagated to children |
-| `role="group"` on host | Set automatically; no consumer action required               |
-| `xl` size              | Supports `s`, `m`, `l`, `xl`                                 |
+| Addition               | Notes                                                                                        |
+| ---------------------- | -------------------------------------------------------------------------------------------- |
+| `align` attribute      | `start` (default), `center`, `end` — main-axis alignment                                     |
+| `disabled` attribute   | Disables all slotted buttons at once; propagated to children                                 |
+| `role="group"` on host | Set automatically; provide `aria-label` on every group (see [Accessibility](#accessibility)) |
+| `xl` size              | Supports `s`, `m`, `l`, `xl`                                                                 |
 
 ### Removed in Spectrum 2
 
@@ -106,7 +106,7 @@ Both `--mod-buttongroup-spacing-horizontal` and `--mod-buttongroup-spacing-verti
 
 ### 5. Check default size behavior
 
-`swc-button-group` defaults to `size="m"` and always propagates its size to slotted children. If you previously relied on buttons managing their own individual sizes, set an explicit size on the group.
+`swc-button-group` defaults to `size="m"` and always propagates its size to slotted children, overriding any `size` attribute set directly on individual buttons. If you previously relied on buttons managing their own individual sizes, set the desired size on the group instead.
 
 ```html
 <!-- Before (no default size; buttons kept their own sizes) -->
@@ -122,7 +122,7 @@ Both `--mod-buttongroup-spacing-horizontal` and `--mod-buttongroup-spacing-verti
 
 ### 6. (Optional) Adopt new features
 
-Use group-level `disabled` instead of disabling each button individually:
+Use group-level `disabled` to disable all buttons at once. Individual buttons can still be disabled independently when the group itself is not disabled:
 
 ```html
 <!-- Before -->
@@ -182,12 +182,10 @@ Use `align` for main-axis alignment (dialog footers, toolbars):
   property has a 1:1 replacement, so read the list below carefully.
 </div>
 
-{/* @todo Replace the Description column with the `@cssproperty` JSDoc descriptions from `<swc-button-group>`'s CEM entry once they are added in a follow-up PR. */}
-
-| Custom property                      | Description                               |
-| ------------------------------------ | ----------------------------------------- |
-| `--swc-button-group-gap`             | Space between buttons in the group.       |
-| `--swc-button-group-justify-content` | Alignment of buttons along the main axis. |
+| Custom property                      | Description                                                                                           |
+| ------------------------------------ | ----------------------------------------------------------------------------------------------------- |
+| `--swc-button-group-gap`             | Space between buttons in the group.                                                                   |
+| `--swc-button-group-justify-content` | Alignment of buttons along the main axis. Prefer use of the `align` property to adjust the alignment. |
 
 <div
   style={{
