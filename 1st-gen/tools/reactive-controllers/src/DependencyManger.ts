@@ -38,7 +38,13 @@ export class DependencyManagerController {
       return;
     }
     this._loaded = loaded;
-    this.host.requestUpdate(dependencyManagerLoadedSymbol, !this.loaded);
+    // Defer requestUpdate to a microtask so it is never called synchronously
+    // during a host render cycle (which causes Lit dev-mode warnings and can
+    // interfere with overlay open timing in Chromium when using sync imports).
+    const oldValue = !loaded;
+    Promise.resolve().then(() => {
+      this.host.requestUpdate(dependencyManagerLoadedSymbol, oldValue);
+    });
   }
 
   private _loaded = false;
