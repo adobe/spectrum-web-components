@@ -101,6 +101,7 @@ Gen2 program work is tracked separately from the **1st-gen** table below (omit *
 - [ARIA17: Using grouping roles to identify related form controls](https://www.w3.org/WAI/WCAG22/Techniques/aria/ARIA17) — **`role="group"`** for **related** controls; name the group when it clarifies purpose.
 - [Radio group pattern](https://www.w3.org/WAI/ARIA/apg/patterns/radio/) — **mutually exclusive** choice belongs on **`swc-segmented-control`**, **not** **`role="radiogroup"`** on **`swc-action-group`**. 1st-gen **`selects="single"`** used **radiogroup** on the host ([SWC-1121](https://jira.corp.adobe.com/browse/SWC-1121)); 2nd-gen fixes label association on **`role="group"`** instead.
 - [Keyboard navigation inside components](https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#keyboardnavigationinsidecomponents) and [Roving tabindex](https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#kbd_roving_tabindex) — **`swc-action-group`** **owns** this behavior via **`FocusgroupNavigationController`** (direction follows **`vertical`** / horizontal layout). **`swc-button-group`** does **not**.
+- [Focusability of disabled controls](https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#focusabilityofdisabledcontrols) — when the group or its items are disabled, use **`aria-disabled`** (not the HTML **`disabled`** attribute) so items remain keyboard-reachable and discoverable.
 
 ### Guidelines that apply
 
@@ -125,7 +126,7 @@ Adobe Jira is authoritative for current status and resolution; refresh cells whe
 | --- | --- | --- | --- | --- | --- |
 | [SWC-1121](https://jira.corp.adobe.com/browse/SWC-1121) | Bug | To Do | Unresolved | Group of radio buttons not associated with group label — **`sp-action-group`** (Selected) | **WCAG 1.3.1** audit; 1st-gen **`radiogroup`**; 2nd-gen fixes via **`role="group"`** + name |
 | [SWC-1123](https://jira.corp.adobe.com/browse/SWC-1123) | Bug | To Do | Unresolved | Color alone used to convey control state — **`sp-action-group`** (Multiple) | **WCAG 1.4.1** audit; **`selects="multiple"`** |
-| [SWC-1612](https://jira.corp.adobe.com/browse/SWC-1612) | Story | To Do | Unresolved | Migrate **`sp-action-group`** to use **`FormFieldMixin`** | Label / field association |
+| [SWC-1612](https://jira.corp.adobe.com/browse/SWC-1612) | Story | To Do | Unresolved | Migrate **`sp-action-group`** to use **`FormFieldMixin`** | **Does not apply to 2nd-gen** — **`swc-action-group`** is a composite keyboard widget, not a form field; see [Form-associated custom properties](#form-associated-custom-properties-labels-elementinternals) |
 | [SWC-621](https://jira.corp.adobe.com/browse/SWC-621) | Story | To Do | Unresolved | **`disabled`** attribute should disable all **`sp-action-button`** children | Group-level disable |
 | [SWC-889](https://jira.corp.adobe.com/browse/SWC-889) | Bug | To Do | Unresolved | **`change`** event fires before selection change | Event ordering |
 | [SWC-1342](https://jira.corp.adobe.com/browse/SWC-1342) | Bug | To Do | Unresolved | **`sp-action-group`** sets **z-index** on focused button | Focus stacking / visibility |
@@ -173,7 +174,7 @@ Verified in **`ActionGroup.ts`**:
 | **Group name** | When the cluster is **meaningfully distinct** (**`selects`**, named tool strip, formatting cluster), **`label`** (or **`aria-labelledby`**) is **required** in docs; use **dev warnings** in debug builds when **`selects`** is set without a name. Fix [SWC-1121](https://jira.corp.adobe.com/browse/SWC-1121) with a **discernible **`group`** name**, not **radiogroup** retargeting. |
 | **`aria-orientation`** | When **`vertical`** is **true**, set **`aria-orientation="vertical"`** on the host; when horizontal, **`horizontal`** or omit per AT defaults. Wire **`FocusgroupNavigationController`** **`direction`** to match. |
 | **Selection state (non-color)** | For any retained **`selects`** / **`selected`** API, expose **`aria-checked`** or **`aria-pressed`** on the **correct** element (prefer **native** button state on inner **`<button>`** via delegation) and ensure **visible** **selected** styling includes a **non-color** cue ([SWC-1123](https://jira.corp.adobe.com/browse/SWC-1123)). |
-| **Group **`disabled`** | Implement group-level **disable** that propagates to **all** slotted **`swc-action-button`** / **`swc-action-menu`** children ([SWC-621](https://jira.corp.adobe.com/browse/SWC-621)); use **`disabled`** / **`aria-disabled`** per child component rules, not **gray styling** alone. |
+| **Group `disabled`** | Use **`aria-disabled="true"`** on the **`swc-action-group`** host — **do not** use the HTML **`disabled`** attribute on the host. Per [APG: Focusability of disabled controls](https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#focusabilityofdisabledcontrols), keeping the host and its children **keyboard-reachable** when disabled lets users **discover** that a strip of actions exists and understand why it is unavailable. Propagate **`aria-disabled="true"`** to each slotted **`swc-action-button`** / **`swc-action-menu`** child; children remain in the **Tab** / **Arrow** sequence but **must not activate** ([SWC-621](https://jira.corp.adobe.com/browse/SWC-621)). Do not rely on gray styling alone. |
 | **`change` event** | Fire **`change`** **after** **`selected`** state commits ([SWC-889](https://jira.corp.adobe.com/browse/SWC-889)); keep **`preventDefault()`** rollback behavior documented. |
 | **Toolbar composition** | Storybook and migration guides **must** show an **outer **`role="toolbar"`** wrapper** plus inner **`swc-action-group`** (**`role="group"`**) clusters (adapt 1st-gen README rich-text example: **`role="toolbar"`** moves to the **wrapper** only). **Never** nest **`role="toolbar"`** landmarks. |
 | **Docs vs RSP** | Consumer docs should name [**ActionButtonGroup**](https://react-spectrum.adobe.com/ActionButtonGroup) for React Spectrum parity and **`swc-action-group`** for SWC; explain **`swc-button-group`** vs **`swc-action-group`** (overflow vs **focusgroup** navigation). |
@@ -186,7 +187,7 @@ Slotted **`swc-action-button`** / **`swc-action-menu`** live in **light DOM**; *
 
 ### Form-associated custom properties (labels, `ElementInternals`)
 
-**Does not apply** to **`swc-action-group`** as a **form field** host today. If [SWC-1612](https://jira.corp.adobe.com/browse/SWC-1612) lands **`FormFieldMixin`**, re-evaluate **`label`** / **`aria-labelledby`** delegation against field-label patterns; until then, treat **`label`** as **`aria-label`** reflection only (1st-gen behavior).
+**Does not apply.** **`swc-action-group`** is a **composite keyboard widget** (a named **`role="group"`** of action controls), **not a form field**. [SWC-1612](https://jira.corp.adobe.com/browse/SWC-1612) (`FormFieldMixin`) must **not** be applied to this component in 2nd-gen. **`swc-action-group`** does not submit values, does not participate in form validation, and has no semantic relationship to form elements that would warrant `ElementInternals`. The **`label`** attribute reflects to **`aria-label`** on the host only (1st-gen behavior); it does not constitute field-label association and should not be redesigned as one.
 
 ### Accessibility tree expectations
 
@@ -220,7 +221,7 @@ Slotted **`swc-action-button`** / **`swc-action-menu`** live in **light DOM**; *
 - **Arrow keys:** Move focus among **`swc-action-button`** and **`swc-action-menu`** items per **`FocusgroupNavigationController`** **`direction`** (**horizontal**, **vertical**, or **both** when **`vertical`** layout still expects **Left** / **Right** in LTR). Honor **`wrap`** policy consistent with [APG Toolbar example](https://www.w3.org/WAI/ARIA/apg/patterns/toolbar/examples/toolbar/).
 - **Home / End:** Support when the controller and product spec include them (1st-gen **`selects="single"`** tests dispatch **Home** / **End** on the host).
 - **Activation:** **Enter** / **Space** on **`swc-action-button`**; **Enter** / **Space** / **ArrowDown** (menu pattern) on **`swc-action-menu`** per [Action menu accessibility migration analysis](../action-menu/accessibility-migration-analysis.md). Opening a **menu** must **not** trap focus in the **group** after close; focus returns to the **trigger**.
-- **Disabled items:** Skip **natively disabled** items for the **roving **`tabindex="0"`** stop** (1st-gen **`isFocusableElement`**); align **`skipDisabled`** with [Focus management strategy RFC](../../05_strategies/focus-management-strategy-rfc.md).
+- **Disabled items:** When the group or individual items carry **`aria-disabled="true"`**, items **remain in the roving sequence** so keyboard users can discover them — do **not** skip **`aria-disabled`** items. Only skip items with the **HTML `disabled` attribute** (natively inert). Per [APG: Focusability of disabled controls](https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#focusabilityofdisabledcontrols), items that are disabled but still focusable give users context about what actions exist. Align **`skipDisabled`** behavior in **`FocusgroupNavigationController`** accordingly with [Focus management strategy RFC](../../05_strategies/focus-management-strategy-rfc.md).
 - **Mouse focus:** Preserve **roving **`tabindex="0"`** on the item clicked** ([SWC-250](https://jira.corp.adobe.com/browse/SWC-250)); finish skipped mouse test in 1st-gen (**`action-group.test.ts`** **`it.skip`**) in 2nd-gen.
 - **Focus visibility / stacking:** Resolve focused-child **z-index** stacking without hiding focus indicators ([SWC-1342](https://jira.corp.adobe.com/browse/SWC-1342)).
 - **Controller migration:** Replace **`RovingTabindexController`** with **`FocusgroupNavigationController`** from **`2nd-gen/packages/core/controllers/focusgroup-navigation-controller/`**; keep **`delegatesFocus`** (or equivalent) on the host.
@@ -256,7 +257,8 @@ Exercise **Tab**, **Shift+Tab**, **Arrow** keys, **Home** / **End**, and **Enter
 - [ ] **`swc-action-button`** children stay **`role="button"`** only; selection uses **`aria-pressed`** / **`aria-checked`** on the **button** or migrates to **segmented** / **toggle** components.
 - [ ] **Group name** required when **`selects`** or context demands it; [SWC-1121](https://jira.corp.adobe.com/browse/SWC-1121) closed in tests.
 - [ ] **Selected** state meets **non-color** requirement ([SWC-1123](https://jira.corp.adobe.com/browse/SWC-1123)).
-- [ ] **Group `disabled`** propagates to all children ([SWC-621](https://jira.corp.adobe.com/browse/SWC-621)).
+- [ ] Group **`disabled`** uses **`aria-disabled="true"`** on the host and propagates to all children — children remain keyboard-reachable but do not activate ([SWC-621](https://jira.corp.adobe.com/browse/SWC-621)); per [APG: Focusability of disabled controls](https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#focusabilityofdisabledcontrols).
+- [ ] [SWC-1612](https://jira.corp.adobe.com/browse/SWC-1612) (`FormFieldMixin`) is **not** applied — **`swc-action-group`** is a composite keyboard widget, not a form field.
 - [ ] **`change`** fires after **`selected`** updates ([SWC-889](https://jira.corp.adobe.com/browse/SWC-889)).
 - [ ] Storybook shows **outer **`role="toolbar"`** wrapper** + **`swc-action-group`** (**`role="group"`**) per [APG Toolbar example](https://www.w3.org/WAI/ARIA/apg/patterns/toolbar/examples/toolbar/).
 - [ ] **`aria-orientation`** matches **`vertical`**.
@@ -272,6 +274,7 @@ Exercise **Tab**, **Shift+Tab**, **Arrow** keys, **Home** / **End**, and **Enter
 - [ARIA17: Using grouping roles to identify related form controls](https://www.w3.org/WAI/WCAG22/Techniques/aria/ARIA17)
 - [WAI-ARIA APG: Keyboard navigation inside components](https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#keyboardnavigationinsidecomponents)
 - [WAI-ARIA APG: Roving tabindex](https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#kbd_roving_tabindex)
+- [WAI-ARIA APG: Focusability of disabled controls](https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#focusabilityofdisabledcontrols)
 - [WAI-ARIA APG: Radio group](https://www.w3.org/WAI/ARIA/apg/patterns/radio/)
 - [WAI-ARIA APG: Read me first](https://www.w3.org/WAI/ARIA/apg/practices/read-me-first/)
 - [WCAG 2.2](https://www.w3.org/TR/WCAG22/)
