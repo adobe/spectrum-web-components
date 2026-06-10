@@ -36,7 +36,7 @@ const meta: Meta<LinkTemplateProps> = {
   parameters: {
     docs: {
       subtitle:
-        'Native anchors with `.swc-Link` modifier classes. Import `@adobe/spectrum-wc/link.css`.',
+        'Native link variant styles are available via CSS classes.',
     },
     design: {
       type: 'figma',
@@ -86,7 +86,8 @@ export default meta;
 
 const staticColorLabels = {
   staticWhite: 'White link',
-  staticBlack: 'Black link',
+staticWhite: 'Static white',
+staticBlack: 'Static black',
 } as const satisfies Record<(typeof LINK_STATIC_VARIANTS)[number], string>;
 
 /** Panel styles aligned with `static-colors-demo` decorator gradients. */
