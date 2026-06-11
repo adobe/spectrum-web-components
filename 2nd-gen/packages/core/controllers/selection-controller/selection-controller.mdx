@@ -1,0 +1,305 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import { DocsFooter, DocsHeader } from '../../../swc/.storybook/blocks';
+
+import * as SelectionControllerStories from './stories/selection-controller.stories';
+
+<Meta of={SelectionControllerStories} />
+
+<DocsHeader />
+
+## What it does
+
+### Modes
+
+`SelectionController` supports three selection modes that can be set in the constructor and changed at runtime via `setOptions`:
+
+- **`single`**: at most one item is selected at a time. Clicking the active item has no effect. Use for tab lists, mandatory radio groups, and exclusive category filters.
+- **`single-toggle`**: at most one item is selected at a time. Clicking the active item deselects it (clears the selection). Use for optional ratings, toggleable accordion headers, and filters where clearing is valid.
+- **`multiple`**: any number of items may be selected; each click toggles one item independently. Use for multiselect listboxes, checkboxes, and tag filters.
+
+### Events and callbacks
+
+- **`swc-selection-controller-change`** (`selectionControllerChange`): dispatched on the host (bubbles, composed) with `{ selectedItems, addedItems, removedItems }` whenever the selection changes.
+- **`onSelectionChange`**: optional callback with the same payload.
+- **`confirmSelectionChange`**: optional gate; return `false` to abort a pending transition before any DOM mutators run.
+
+### Programmatic API
+
+- **`setSelectedItem(item | null)`**: assert one item (single/single-toggle) or add to a multiple selection; pass `null` to clear (single-toggle and multiple only).
+- **`toggleItem(item)`**: toggle using the current mode rules.
+- **`selectAll()`**: select all eligible items (multiple mode only).
+- **`clearAll()`**: deselect all items (single-toggle and multiple modes).
+- **`getSelectedItems()`**: returns the current selection as an ordered array.
+- **`isSelected(item)`**: check whether a specific item is selected.
+
+## Basic usage
+
+1. Construct the controller in your element's `constructor`, passing `getItems`, `selectItem`, `deselectItem`, and `mode`.
+2. Ensure `getItems` returns live `HTMLElement` references from `this.renderRoot` or slotted content.
+3. After the first render, call **`refresh()`** from `firstUpdated` so the initial selection state is applied.
+4. Provide appropriate **roles**, **ARIA attributes**, and **labels** on the host and items — the controller does not set them.
+5. Pair with **`FocusgroupNavigationController`** when the composite also needs roving `tabindex`, arrow keys, Home/End, or focus memory.
+
+```typescript
+import { LitElement, html } from 'lit';
+import { customElement } from 'lit/decorators.js';
+import {
+  FocusgroupNavigationController,
+  SelectionController,
+} from '@spectrum-web-components/core/controllers';
+
+@customElement('my-listbox')
+export class MyListbox extends LitElement {
+  private items: HTMLElement[] = [];
+
+  private readonly navigation = new FocusgroupNavigationController(this, {
+    direction: 'vertical',
+    wrap: false,
+    getItems: () => this.items,
+  });
+
+  private readonly selection = new SelectionController(this, {
+    getItems: () => this.items,
+    selectItem: (el) => el.setAttribute('aria-selected', 'true'),
+    deselectItem: (el) => el.setAttribute('aria-selected', 'false'),
+    mode: 'multiple',
+    keydownActivation: true,
+  });
+
+  protected override firstUpdated(): void {
+    this.items = Array.from(
+      this.renderRoot.querySelectorAll<HTMLElement>('[role="option"]')
+    );
+    this.navigation.refresh();
+    this.selection.refresh();
+  }
+
+  protected override render() {
+    return html`
+      <div role="listbox" aria-multiselectable="true" aria-label="Select items">
+        <div role="option" tabindex="-1" aria-selected="false">Item A</div>
+        <div role="option" tabindex="-1" aria-selected="false">Item B</div>
+        <div role="option" tabindex="-1" aria-selected="false">Item C</div>
+      </div>
+    `;
+  }
+}
+```
+
+## Behaviors
+
+### `single` mode
+
+In `single` mode, at most one item is selected at a time. Clicking the active item has no effect. Arrow keys (via `FocusgroupNavigationController`) move focus without changing selection; press **Enter** or **Space** to select the focused item when `keydownActivation` is `true`.
+
+```typescript
+private readonly selection = new SelectionController(this, {
+  getItems: () =>
+    Array.from(this.renderRoot.querySelectorAll('[data-star]')),
+  selectItem: (star) => star.setAttribute('aria-checked', 'true'),
+  deselectItem: (star) => star.setAttribute('aria-checked', 'false'),
+  mode: 'single',
+  keydownActivation: true,
+});
+```
+
+<Canvas of={SelectionControllerStories.SingleModeRating} />
+
+### `single-toggle` mode
+
+In `single-toggle` mode, clicking the active item deselects it (clears the selection). Clicking a different item replaces the selection. This is useful for optional ratings and accordion headers where all panels may legitimately be closed.
+
+```typescript
+private readonly selection = new SelectionController(this, {
+  getItems: () =>
+    Array.from(this.renderRoot.querySelectorAll('[data-star]')),
+  selectItem: (star) => star.setAttribute('aria-checked', 'true'),
+  deselectItem: (star) => star.setAttribute('aria-checked', 'false'),
+  mode: 'single-toggle',
+  keydownActivation: true,
+});
+```
+
+<Canvas of={SelectionControllerStories.SingleToggleModeRating} />
+
+### `multiple` mode: listbox with `selectAll` and `clearAll`
+
+In `multiple` mode, each click independently toggles one item. Call `selectAll()` to select all eligible items and `clearAll()` to deselect all of them. Pair with `FocusgroupNavigationController` for keyboard navigation; set `keydownActivation: true` so **Enter** / **Space** toggle items.
+
+```typescript
+private readonly navigation = new FocusgroupNavigationController(this, {
+  direction: 'vertical',
+  wrap: false,
+  getItems: () => this.options,
+});
+
+private readonly selection = new SelectionController(this, {
+  getItems: () => this.options,
+  selectItem: (el) => el.setAttribute('aria-selected', 'true'),
+  deselectItem: (el) => el.setAttribute('aria-selected', 'false'),
+  mode: 'multiple',
+  keydownActivation: true,
+});
+
+// "Select all" button:
+this.selection.selectAll();
+
+// "Clear" button:
+this.selection.clearAll();
+```
+
+<Canvas of={SelectionControllerStories.MultipleListbox} />
+
+### Accordion: runtime mode switch via `setOptions`
+
+Call `setOptions({ mode })` to switch modes at runtime without reconstructing the controller. This accordion starts in `single` mode; the buttons switch it to `single-toggle` or `multiple` on the fly. When switching from `multiple` back to a single-item mode while more than one panel is open, all but the first are closed automatically and a change event is dispatched for the deselected items.
+
+```typescript
+// Initial setup:
+private readonly accordionSelection = new SelectionController(this, {
+  getItems: () =>
+    Array.from(this.renderRoot.querySelectorAll('[data-accordion]')),
+  selectItem: (header) => {
+    header.setAttribute('aria-expanded', 'true');
+    this.togglePanel(header.dataset.accordion, true);
+  },
+  deselectItem: (header) => {
+    header.setAttribute('aria-expanded', 'false');
+    this.togglePanel(header.dataset.accordion, false);
+  },
+  mode: 'single',
+});
+
+// Switching modes later (e.g. from a user action):
+this.accordionSelection.setOptions({ mode: 'multiple' });
+```
+
+<Canvas of={SelectionControllerStories.AccordionModeSwitch} />
+
+### Tablist: `FocusgroupNavigationController` + `SelectionController`
+
+For a manual-activation tab list, pair `FocusgroupNavigationController` (arrow keys, roving `tabindex`, Home/End) with `SelectionController` (`mode: 'single'`, `keydownActivation: true`). Arrow keys only move focus; **Enter** or **Space** selects and activates the focused tab.
+
+```typescript
+import {
+  FocusgroupNavigationController,
+  SelectionController,
+} from '@spectrum-web-components/core/controllers';
+
+private tabButtons: HTMLButtonElement[] = [];
+
+private readonly tabNavigation = new FocusgroupNavigationController(this, {
+  direction: 'horizontal',
+  wrap: true,
+  getItems: () => this.tabButtons,
+});
+
+private readonly tabSelection = new SelectionController(this, {
+  getItems: () => this.tabButtons,
+  selectItem: (tab) => {
+    tab.setAttribute('aria-selected', 'true');
+    this.showPanelForTab(tab);
+  },
+  deselectItem: (tab) => {
+    tab.setAttribute('aria-selected', 'false');
+    this.hidePanelForTab(tab);
+  },
+  mode: 'single',
+  keydownActivation: true,
+  defaultToFirstSelectable: true,
+});
+```
+
+<Canvas of={SelectionControllerStories.TablistWithFocusgroup} />
+
+## Accessibility
+
+### Features
+
+The `SelectionController` implements several accessibility features:
+
+#### Pointer interaction
+
+Capture-phase `click` listener resolves the deepest eligible item in the composed event path. Primary clicks only (button 0, no modifier keys). Disabled and `aria-disabled="true"` items are never toggled.
+
+#### Keyboard interaction
+
+With `keydownActivation: true`, capture-phase `keydown` for **Enter** / **Space** applies the current mode rules to the deepest eligible item on the event path. Modifier keys (Ctrl, Meta, Shift, Alt) and `event.repeat` are ignored.
+
+The controller does **not** implement roving `tabindex`, arrow keys, Home/End, or programmatic `focus()`. Add `FocusgroupNavigationController` when the composite needs those behaviors.
+
+#### ARIA management
+
+The controller does not read or set ARIA attributes itself — it calls your `selectItem` / `deselectItem` callbacks and leaves ARIA management to you. Keep `aria-selected`, `aria-checked`, `aria-expanded`, and related attributes in sync inside those two callbacks.
+
+For a multiselect `listbox`, also set `aria-multiselectable="true"` on the host element so screen readers announce the correct interaction model.
+
+### Best practices
+
+- Always provide `role` and `aria-label` or `aria-labelledby` on the host and items; the controller does not set these.
+- Use `aria-selected` for `option` and `tab` roles; `aria-checked` for `radio` and `menuitemradio` roles; `aria-expanded` for accordion headers.
+- For multiselect listboxes, set `aria-multiselectable="true"` on the host.
+- Use `aria-disabled="true"` instead of native `disabled` when items should remain focusable but not selectable.
+- Call `refresh()` after any DOM change that adds, removes, or hides items.
+- Pair with `FocusgroupNavigationController` for composites that also need arrow-key focus movement.
+
+## API
+
+### Methods
+
+| Member                          | Description                                                                                                                                                               |
+| ------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `setOptions(partial)`           | Merge option updates; normalizes selection when mode changes and calls `refresh()`.                                                                                       |
+| `refresh()`                     | Remove stale selections and optionally select the first item (`defaultToFirstSelectable`).                                                                                |
+| `getSelectedItems()`            | Returns the current selection as an ordered array.                                                                                                                        |
+| `isSelected(item)`              | Returns `true` when `item` is currently selected.                                                                                                                         |
+| `getMode()`                     | Returns the current `SelectionMode`.                                                                                                                                      |
+| `setSelectedItem(item \| null)` | Select one item or add to multiple selection; pass `null` to clear (single-toggle and multiple modes).                                                                    |
+| `toggleItem(item)`              | Toggle an item using the current mode rules. Returns `false` when the item is ineligible or the operation is not allowed (e.g. re-clicking active item in `single` mode). |
+| `selectAll()`                   | Select all eligible items. Multiple mode only; returns `false` otherwise.                                                                                                 |
+| `clearAll()`                    | Deselect all items. Single-toggle and multiple modes; returns `false` in `single` mode.                                                                                   |
+| `hostConnected()`               | Lit `ReactiveController`: registers capture-phase `click` (and `keydown` when `keydownActivation` is `true`) and calls `refresh()`.                                       |
+| `hostDisconnected()`            | Lit `ReactiveController`: removes event listeners.                                                                                                                        |
+
+### Events
+
+The controller dispatches **`swc-selection-controller-change`** (`selectionControllerChange`) on the host. The event bubbles and is composed.
+
+```typescript
+import { selectionControllerChange } from '@spectrum-web-components/core/controllers';
+
+host.addEventListener(selectionControllerChange, (event) => {
+  const { selectedItems, addedItems, removedItems } = event.detail;
+  console.log('Selected:', selectedItems);
+});
+```
+
+### Options
+
+| Option                     | Type                                                    | Default    | Description                                                                                                                      |
+| -------------------------- | ------------------------------------------------------- | ---------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| `getItems`                 | `() => HTMLElement[]`                                   | (required) | Current selection participants.                                                                                                  |
+| `selectItem`               | `(item: HTMLElement) => void`                           | (required) | Called on each item entering the selection.                                                                                      |
+| `deselectItem`             | `(item: HTMLElement) => void`                           | (required) | Called on each item leaving the selection.                                                                                       |
+| `mode`                     | `'single' \| 'single-toggle' \| 'multiple'`             | `'single'` | Selection behavior.                                                                                                              |
+| `defaultToFirstSelectable` | `boolean`                                               | `false`    | When `true`, `refresh` selects the first eligible item if nothing is selected (single-item modes only).                          |
+| `keydownActivation`        | `boolean`                                               | `false`    | When `true`, Enter/Space toggles the eligible item on the event path. Pair with `FocusgroupNavigationController` for arrow keys. |
+| `onSelectionChange`        | `(detail: SelectionControllerChangeDetail) => void`     | —          | Callback with the same payload as the change event.                                                                              |
+| `confirmSelectionChange`   | `(detail: SelectionControllerConfirmDetail) => boolean` | —          | Return `false` to abort the transition before mutators run.                                                                      |
+
+## Appendix
+
+### Choosing between `RadioController` and `SelectionController`
+
+`RadioController` is designed for strict single-selection patterns and provides a `selectionBinding` feature for pairing with a string key (as used by `swc-tabs`). Use it when you need those advanced key-binding features.
+
+`SelectionController` covers all three modes (`single`, `single-toggle`, `multiple`) in one controller and lets you switch modes at runtime via `setOptions`. Use it when you need runtime mode switching or multiple selection.
+
+### See also
+
+- [Focusgroup navigation controller](../?path=/docs/controllers-focus-group-navigation-controller--docs)
+- [APG listbox pattern](https://www.w3.org/WAI/ARIA/apg/patterns/listbox/)
+- [APG accordion pattern](https://www.w3.org/WAI/ARIA/apg/patterns/accordion/)
+- [APG tab pattern](https://www.w3.org/WAI/ARIA/apg/patterns/tabs/)
+
+<DocsFooter />
