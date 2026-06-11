@@ -176,42 +176,6 @@ this.accordionSelection.setOptions({ mode: 'multiple' });
 
 <Canvas of={SelectionControllerStories.AccordionModeSwitch} />
 
-### Tablist: `FocusgroupNavigationController` + `SelectionController`
-
-For a manual-activation tab list, pair `FocusgroupNavigationController` (arrow keys, roving `tabindex`, Home/End) with `SelectionController` (`mode: 'single'`, `keydownActivation: true`). Arrow keys only move focus; **Enter** or **Space** selects and activates the focused tab.
-
-```typescript
-import {
-  FocusgroupNavigationController,
-  SelectionController,
-} from '@spectrum-web-components/core/controllers';
-
-private tabButtons: HTMLButtonElement[] = [];
-
-private readonly tabNavigation = new FocusgroupNavigationController(this, {
-  direction: 'horizontal',
-  wrap: true,
-  getItems: () => this.tabButtons,
-});
-
-private readonly tabSelection = new SelectionController(this, {
-  getItems: () => this.tabButtons,
-  selectItem: (tab) => {
-    tab.setAttribute('aria-selected', 'true');
-    this.showPanelForTab(tab);
-  },
-  deselectItem: (tab) => {
-    tab.setAttribute('aria-selected', 'false');
-    this.hidePanelForTab(tab);
-  },
-  mode: 'single',
-  keydownActivation: true,
-  defaultToFirstSelectable: true,
-});
-```
-
-<Canvas of={SelectionControllerStories.TablistWithFocusgroup} />
-
 ## Accessibility
 
 ### Features
@@ -289,11 +253,41 @@ host.addEventListener(selectionControllerChange, (event) => {
 
 ## Appendix
 
-### Choosing between `RadioController` and `SelectionController`
+### Pairing with `FocusgroupNavigationController`
 
-`RadioController` is designed for strict single-selection patterns and provides a `selectionBinding` feature for pairing with a string key (as used by `swc-tabs`). Use it when you need those advanced key-binding features.
+`SelectionController` handles what is selected; it does not manage keyboard focus movement. For composites that need roving `tabindex`, arrow keys, Home/End, or focus memory, pair it with `FocusgroupNavigationController`. A common pattern is a manual-activation tab list: `FocusgroupNavigationController` moves focus with arrow keys while `SelectionController` (`mode: 'single'`, `keydownActivation: true`) activates the focused tab on **Enter** or **Space**.
 
-`SelectionController` covers all three modes (`single`, `single-toggle`, `multiple`) in one controller and lets you switch modes at runtime via `setOptions`. Use it when you need runtime mode switching or multiple selection.
+```typescript
+import {
+  FocusgroupNavigationController,
+  SelectionController,
+} from '@spectrum-web-components/core/controllers';
+
+private tabButtons: HTMLButtonElement[] = [];
+
+private readonly tabNavigation = new FocusgroupNavigationController(this, {
+  direction: 'horizontal',
+  wrap: true,
+  getItems: () => this.tabButtons,
+});
+
+private readonly tabSelection = new SelectionController(this, {
+  getItems: () => this.tabButtons,
+  selectItem: (tab) => {
+    tab.setAttribute('aria-selected', 'true');
+    this.showPanelForTab(tab);
+  },
+  deselectItem: (tab) => {
+    tab.setAttribute('aria-selected', 'false');
+    this.hidePanelForTab(tab);
+  },
+  mode: 'single',
+  keydownActivation: true,
+  defaultToFirstSelectable: true,
+});
+```
+
+<Canvas of={SelectionControllerStories.TablistWithFocusgroup} />
 
 ### See also
 

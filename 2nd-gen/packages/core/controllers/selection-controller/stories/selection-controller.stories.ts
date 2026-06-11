@@ -57,7 +57,7 @@ type Story = StoryObj;
 // ──────────────────────────
 
 export const Playground: Story = {
-  tags: ['autodocs', 'dev'],
+  tags: ['dev'],
 };
 
 // ──────────────────────────
@@ -320,7 +320,6 @@ export const SingleModeRating: Story = {
     <demo-selection-star-single></demo-selection-star-single>
   `,
   tags: ['behaviors'],
-  parameters: { docs: { disable: true } },
 };
 
 export const SingleToggleModeRating: Story = {
@@ -329,7 +328,6 @@ export const SingleToggleModeRating: Story = {
     <demo-selection-star-toggle></demo-selection-star-toggle>
   `,
   tags: ['behaviors'],
-  parameters: { docs: { disable: true } },
 };
 
 export const MultipleListbox: Story = {
@@ -338,7 +336,6 @@ export const MultipleListbox: Story = {
     <demo-selection-listbox></demo-selection-listbox>
   `,
   tags: ['behaviors'],
-  parameters: { docs: { disable: true } },
 };
 
 export const AccordionModeSwitch: Story = {
@@ -347,7 +344,6 @@ export const AccordionModeSwitch: Story = {
     <demo-selection-accordion></demo-selection-accordion>
   `,
   tags: ['behaviors'],
-  parameters: { docs: { disable: true } },
 };
 
 export const TablistWithFocusgroup: Story = {
@@ -355,107 +351,6 @@ export const TablistWithFocusgroup: Story = {
   render: () => html`
     <demo-selection-tabs></demo-selection-tabs>
   `,
-  tags: ['behaviors'],
-  parameters: { docs: { disable: true } },
+  tags: ['appendix'],
 };
 
-// ──────────────────────────────
-//    API STORY
-// ──────────────────────────────
-
-/**
- * ### Methods
- *
- * | Member | Description |
- * |---|---|
- * | `setOptions(partial)` | Merge new options, normalize selection for mode changes, and reapply. |
- * | `refresh()` | Remove stale selections and optionally select the first item (`defaultToFirstSelectable`). |
- * | `getSelectedItems()` | Returns the current selection as an ordered array. |
- * | `isSelected(item)` | Returns `true` when `item` is currently selected. |
- * | `getMode()` | Returns the current `SelectionMode`. |
- * | `setSelectedItem(item \| null)` | Select one item (single/single-toggle) or add to multiple selection; pass `null` to clear (single-toggle and multiple only). |
- * | `toggleItem(item)` | Toggle an item using the current mode rules. |
- * | `selectAll()` | Select all eligible items (multiple mode only; returns `false` otherwise). |
- * | `clearAll()` | Deselect all items (single-toggle and multiple modes; returns `false` in single mode). |
- *
- * ### Events
- *
- * The controller dispatches **`swc-selection-controller-change`** (`selectionControllerChange`)
- * on the host with `detail: { selectedItems, addedItems, removedItems }`. The event bubbles and
- * is composed.
- *
- * ```typescript
- * import { selectionControllerChange } from
- *   '@spectrum-web-components/core/controllers';
- *
- * host.addEventListener(selectionControllerChange, (event) => {
- *   const { selectedItems, addedItems, removedItems } = event.detail;
- *   console.log('Selected:', selectedItems);
- * });
- * ```
- *
- * ### Options
- *
- * | Option | Type | Default | Description |
- * |---|---|---|---|
- * | `getItems` | `() => HTMLElement[]` | (required) | Current selection participants. |
- * | `selectItem` | `(item: HTMLElement) => void` | (required) | Called on each item entering the selection. |
- * | `deselectItem` | `(item: HTMLElement) => void` | (required) | Called on each item leaving the selection. |
- * | `mode` | `'single' \| 'single-toggle' \| 'multiple'` | `'single'` | Selection behavior. |
- * | `defaultToFirstSelectable` | `boolean` | `false` | When `true`, `refresh` selects the first eligible item if nothing is selected (single-item modes only). |
- * | `keydownActivation` | `boolean` | `false` | When `true`, Enter/Space toggles the focused eligible item. Pair with `FocusgroupNavigationController` for arrow keys. |
- * | `onSelectionChange` | `(detail) => void` | — | Callback on selection change. |
- * | `confirmSelectionChange` | `(detail) => boolean` | — | Return `false` to abort the transition before mutators run. |
- */
-export const API: Story = {
-  tags: ['api', 'description-only'],
-};
-
-// ────────────────────────────────
-//    ACCESSIBILITY STORIES
-// ────────────────────────────────
-
-/**
- * ### Pointer and eligibility
- *
- * **`SelectionController`** resolves primary clicks with **`deepestSelectionItemContaining`**.
- * Disabled and **`aria-disabled="true"`** items are never toggled and do not receive selection
- * changes from pointer interaction.
- *
- * ### Keyboard and focus
- *
- * **`SelectionController`** does not implement roving **`tabindex`**, arrow keys, Home/End, or
- * programmatic **`focus()`**. Add **`FocusgroupNavigationController`** when the composite needs
- * those behaviors.
- *
- * With **`keydownActivation: true`**, the controller listens for **Enter** and **Space** on the
- * host (capture phase) and applies the current mode rules to the deepest eligible item on the
- * event path.
- *
- * ### ARIA
- *
- * Keep `aria-selected`, `aria-checked`, `aria-expanded`, and related attributes in sync inside
- * your **`selectItem`** / **`deselectItem`** callbacks; the controller does not infer state from
- * the DOM. For a multiselect listbox, also set **`aria-multiselectable="true"`** on the host.
- *
- * ### `confirmSelectionChange`
- *
- * When you need to run a cancelable host event **before** DOM mutators run, use
- * **`confirmSelectionChange`**. Return **`false`** to abort the transition; the selection stays
- * unchanged and no change event is dispatched.
- */
-export const Accessibility: Story = {
-  tags: ['a11y', 'description-only'],
-};
-
-/**
- * ### See also
- *
- * - [Focusgroup navigation controller](../?path=/docs/controllers-focus-group-navigation-controller--docs)
- * - [APG listbox pattern](https://www.w3.org/WAI/ARIA/apg/patterns/listbox/)
- * - [APG accordion pattern](https://www.w3.org/WAI/ARIA/apg/patterns/accordion/)
- * - [APG tab pattern](https://www.w3.org/WAI/ARIA/apg/patterns/tabs/)
- */
-export const Appendix: Story = {
-  tags: ['description-only', 'appendix'],
-};

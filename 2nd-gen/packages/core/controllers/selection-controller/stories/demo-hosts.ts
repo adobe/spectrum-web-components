@@ -554,6 +554,10 @@ const listboxStyles = css`
   .checkbox svg {
     inline-size: 0.75rem;
     block-size: 0.75rem;
+    visibility: hidden;
+  }
+  [aria-selected='true'] .checkbox svg {
+    visibility: visible;
   }
   .actions {
     display: flex;
