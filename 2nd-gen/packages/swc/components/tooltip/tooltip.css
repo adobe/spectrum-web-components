@@ -273,3 +273,12 @@
     background-color: CanvasText;
   }
 }
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   PREFERS-REDUCED-MOTION
+   ───────────────────────────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  :host {
+    transition-duration: 0ms;
+  }
+}
