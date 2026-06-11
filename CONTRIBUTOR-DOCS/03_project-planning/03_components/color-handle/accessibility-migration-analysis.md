@@ -86,11 +86,11 @@ This doc explains how **`swc-color-handle`** should work for **accessibility**. 
 | [Name, role, value (WCAG 4.1.2)](https://www.w3.org/WAI/WCAG22/#name-role-value) | The **parent** picker must expose a **name** and **value**. The handle **must not** pretend to be the sole **slider**; **1st-gen** sets **no** **`role`** or **`aria-*`** on **`<sp-color-handle>`**. |
 | [Labels or instructions (WCAG 3.3.2)](https://www.w3.org/WAI/WCAG22/Understanding/labels-or-instructions) | **Visible** or programmatic **labels** belong on the **parent** widget (for example **`label`** on **`sp-color-slider`**, **`label-x`** / **`label-y`** on **`sp-color-area`**). The handle does **not** supply its own label. |
 | [Use of color (WCAG 1.4.1)](https://www.w3.org/TR/WCAG22/#use-of-color) | The **fill** shows **color**; meaning must **not** rely on the handle **alone**. **Text**, **hex** inputs, or **slider** **value** announcements must state what is selected. |
-| [Non-text contrast (WCAG 1.4.11)](https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast) | **Borders** and **focus** **chrome** needed to **perceive** the thumb against **variable** track colors should meet **at least 3:1** where **feasible**. **1st-gen** **focused** styling is **Working As Designed** per audit when **3:1** is **not** achievable on all backgrounds; see **Known 1st-gen issues**. |
+| [Non-text contrast (WCAG 1.4.11)](https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast) | **Borders** and **focus** **chrome** needed to **perceive** the thumb against **variable** track colors should meet **at least 3:1** where **feasible**. On **color area**, **slider**, and **wheel** tracks, a handle that **must** remain legible across the **full spectrum** may qualify as an [**essential presentation**](https://accessibility.corp.adobe.com/docs/visual_design/color/#essential-presentations) under Adobe Accessibility guidance; see **Known 1st-gen issues**. |
 | [Non-text content (WCAG 1.1.1)](https://www.w3.org/WAI/WCAG22/Understanding/non-text-content) | The handle **fill** and **borders** are **graphical** relative to assistive tech when the **parent** already exposes **value** and **purpose**. Do **not** add a conflicting **`role="img"`** on the host unless product and a11y agree on a **redundant** name strategy. |
 | [Focus appearance (WCAG 2.4.11)](https://www.w3.org/WAI/WCAG22/Understanding/focus-appearance) / [Focus visible (WCAG 2.4.7)](https://www.w3.org/WAI/WCAG22/Understanding/focus-visible) | Keyboard users must see **which** picker has focus. **1st-gen** reflects focus with **`[focused]`** / **`:focus-visible`** **size** expansion and **border** treatment on the handle while **`outline: none`** is set on **`:host(:focus)`**; verify **2nd-gen** keeps a **visible** focus indicator aligned with parent behavior. |
 
-**Bottom line:** **`swc-color-handle`** stays **role-less** on the host, carries **no** default **accessible name**, and relies on **parent** color widgets for **slider** semantics. Preserve the **touch** loupe behavior and document **1.4.11** limits on **focus** **chrome** where design requires.
+**Bottom line:** **`swc-color-handle`** stays **role-less** on the host, carries **no** default **accessible name**, and relies on **parent** color widgets for **slider** semantics. Preserve the **touch** loupe behavior. Where **3:1** **focus** **chrome** is **not** achievable on every track color, align audit language with Adobe Accessibility [**essential presentations**](https://accessibility.corp.adobe.com/docs/visual_design/color/#essential-presentations) and **Known 1st-gen issues**.
 
 ---
 
@@ -120,7 +120,8 @@ This doc explains how **`swc-color-handle`** should work for **accessibility**. 
 | **`open` property** | Controls embedded **`swc-color-loupe`** visibility (**touch** opens in **1st-gen** via **`pointerType === 'touch'`**). **Loupe** remains **decorative**; see [Color loupe accessibility migration analysis](../color-loupe/accessibility-migration-analysis.md). |
 | **S2 `showHandleFill` / `showColorLoupe`** | Map to **visual** toggles only. **Do not** map to **ARIA** **states** unless product defines a **documented** exception. |
 | **Opacity checkerboard** | Applied on **`:host`** via shared **opacity checkerboard** CSS (**matches 1st-gen**). Follow [Opacity checkerboard accessibility migration analysis](../opacity-checkerboard/accessibility-migration-analysis.md): pattern is **decorative** when **parent** announces **opacity** / **color** in text. |
-| **Docs** | State that **`swc-color-handle`** is a **primitive** used **inside** color pickers, **not** a **labeled** **form control** by itself. Point authors to **parent** docs for **labels**, **keyboard**, and **values**. |
+| **Non-text contrast (1.4.11)** | Aim for **3:1** on **handle** **borders** and **focus** **chrome** vs **adjacent** UI where **feasible**. Where the thumb moves over a **full color spectrum** (for example a **color wheel** track), a **fixed** or **dynamically shifting** ring that **always** meets **3:1** may be **impossible** without breaking the control's purpose. Treat that case as an [**essential presentation**](https://accessibility.corp.adobe.com/docs/visual_design/color/#essential-presentations) per Adobe Accessibility guidance and **[SWC-1134](https://jira.corp.adobe.com/browse/SWC-1134)**; **keyboard** **value** and **label** semantics still come from the **parent**. |
+| **Docs** | State that **`swc-color-handle`** is a **primitive** used **inside** color pickers, **not** a **labeled** **form control** by itself. Point authors to **parent** docs for **labels**, **keyboard**, and **values**. Cite [**essential presentations**](https://accessibility.corp.adobe.com/docs/visual_design/color/#essential-presentations) when explaining **1.4.11** limits on **focus** **chrome**. |
 
 ### Shadow DOM and cross-root ARIA Issues
 
@@ -171,8 +172,10 @@ Does not apply. The handle does **not** own **value** announcements. **Parents**
 ### Non-text contrast on focused handle chrome (WCAG 1.4.11)
 
 - **1st-gen** **`<sp-color-handle>`** **focused** styling (**white** border, **outer** ring, **enlarged** hit area) often **does not** achieve **3:1** **contrast** against **adjacent** **track** / **gradient** colors required by [**WCAG 2.2 Success Criterion 1.4.11**](https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast).
+- Adobe Accessibility [**Color — Essential presentations**](https://accessibility.corp.adobe.com/docs/visual_design/color/#essential-presentations) records a **natural exemption** for interface elements that are **essential**: if removed, they would **fundamentally change** the **information** or **functionality**, and that **information** or **functionality** **cannot** be achieved in another **conforming** way. A **color wheel** is a canonical example: its track spans the **full visible spectrum**, so a handle that **contrasts** with **every** track color, **even** if the handle **dynamically** changed while moving, is **not** realistically achievable.
+- The same rationale applies to **`swc-color-handle`** on **color area** and **color slider** tracks, where the thumb sits on **continuous** **gradient** backgrounds rather than a **neutral** track.
 - **[SWC-1134](https://jira.corp.adobe.com/browse/SWC-1134)** (Adobe **internal** Jira): audit finding for **`sp-color-area`** anatomy and **`sp-color-handle`** was closed **Working As Designed** because the thumb sits on **arbitrary** **color** **backgrounds** and **Spectrum** **visual** intent prioritizes **legibility** of the **picked** **fill** over a **fixed** **focus** **ring** **contrast** on every background.
-- **2nd-gen** should **re-measure** against [S2 Figma](https://www.figma.com/design/Mngz9H7WZLbrCvGQf3GnsY/S2---Web--Desktop-scale-?node-id=13065-162) tokens (**inner** / **outer** border opacities, **`color-handle-size-key-focus`**) and either **improve** contrast where **design** allows or **document** the same **constraint** explicitly in **release** / **audit** notes.
+- **2nd-gen** should **re-measure** against [S2 Figma](https://www.figma.com/design/Mngz9H7WZLbrCvGQf3GnsY/S2---Web--Desktop-scale-?node-id=13065-162) tokens (**inner** / **outer** border opacities, **`color-handle-size-key-focus`**) and either **improve** contrast where **design** allows or **document** the **essential presentation** **constraint** explicitly in **release** / **audit** notes.
 
 ---
 
@@ -197,7 +200,7 @@ Does not apply. The handle does **not** own **value** announcements. **Parents**
 - [ ] **Touch** **`open`** still drives **`swc-color-loupe`**; **loupe** doc **decisions** (**1.4.11**, **decorative** **SVG**) remain **aligned**.
 - [ ] **Opacity checkerboard** on **`:host`** follows [Opacity checkerboard accessibility migration analysis](../opacity-checkerboard/accessibility-migration-analysis.md).
 - [ ] **Stories** and **tests** use **labeled** **parent** pickers, not **standalone** handles, for **a11y** **gates**.
-- [ ] **Focused** **handle** **contrast** is **measured** on **key** themes; **SWC-1134** **position** is **reflected** if **3:1** remains **impractical**.
+- [ ] **Focused** **handle** **contrast** is **measured** on **key** themes; **SWC-1134** and [**essential presentations**](https://accessibility.corp.adobe.com/docs/visual_design/color/#essential-presentations) **position** is **reflected** if **3:1** remains **impractical** on **spectrum** tracks.
 - [ ] **Docs** state the handle is a **primitive**; **authors** must not ship it **without** a **labeled** **parent** color widget.
 
 ---
@@ -209,6 +212,7 @@ Does not apply. The handle does **not** own **value** announcements. **Parents**
 - [WAI-ARIA slider pattern](https://www.w3.org/WAI/ARIA/apg/patterns/slider/)
 - [WCAG 2.2 Success Criterion 1.4.11: Non-text contrast (understanding)](https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast)
 - [WCAG 2.2 Success Criterion 1.4.1: Use of color](https://www.w3.org/TR/WCAG22/#use-of-color)
+- [Adobe Accessibility — Color: Essential presentations](https://accessibility.corp.adobe.com/docs/visual_design/color/#essential-presentations) (Adobe internal)
 - [Color handle migration roadmap](./rendering-and-styling-migration-analysis.md)
 - [Color loupe accessibility migration analysis](../color-loupe/accessibility-migration-analysis.md)
 - [Opacity checkerboard accessibility migration analysis](../opacity-checkerboard/accessibility-migration-analysis.md)
