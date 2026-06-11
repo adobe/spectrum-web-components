@@ -47,7 +47,6 @@ import styles from './accordion-item.css';
  *
  * @cssprop --swc-accordion-item-focus-indicator-corner-radius - Corner radius of the focus ring drawn around the header button.
  * @cssprop --swc-accordion-item-header-corner-radius - Corner radius of the header button background.
- * @cssprop --swc-accordion-item-border-color - Color of the top and bottom divider borders.
  * @cssprop --swc-accordion-item-padding-top - Block-start padding of the header button.
  * @cssprop --swc-accordion-item-padding-bottom - Block-end padding of the header button.
  * @cssprop --swc-accordion-item-disclosure-indicator-gap - Gap between the chevron indicator and the header label.

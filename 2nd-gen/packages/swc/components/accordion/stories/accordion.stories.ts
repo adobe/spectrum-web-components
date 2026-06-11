@@ -21,6 +21,10 @@ import '@adobe/spectrum-wc/components/button/swc-button.js';
 import {
   ACCORDION_DENSITIES,
   ACCORDION_VALID_SIZES,
+  SWC_ACCORDION_ITEM_AFTER_CLOSE_EVENT,
+  SWC_ACCORDION_ITEM_AFTER_OPEN_EVENT,
+  SWC_ACCORDION_ITEM_CLOSE_EVENT,
+  SWC_ACCORDION_ITEM_OPEN_EVENT,
   SWC_ACCORDION_ITEM_TOGGLE_EVENT,
 } from '../../../../core/components/accordion/Accordion.types.js';
 
@@ -29,6 +33,33 @@ import {
 // ────────────────
 
 const { args, argTypes, template } = getStorybookHelpers('swc-accordion');
+
+// swc-accordion-item exposes its styling hooks as CSS custom properties. They
+// inherit, so setting them on an ancestor of the items cascades to every item.
+// Pull just the item's CSS custom property controls (auto-derived from the
+// manifest, so they stay in sync) and relabel them under their own category.
+// They are attached to the Playground story and applied via an inheriting
+// wrapper in its render, so they affect all items uniformly.
+const itemHelpers = getStorybookHelpers('swc-accordion-item');
+const itemCssArgTypes = Object.fromEntries(
+  Object.entries(itemHelpers.argTypes ?? {})
+    .filter(([, argType]) => argType?.table?.category === 'css properties')
+    .map(([name, argType]) => [
+      name,
+      {
+        ...argType,
+        table: { ...argType.table, category: 'css properties (item)' },
+      },
+    ])
+);
+
+// Seed each item CSS custom property with an empty string so Storybook renders
+// an editable field immediately instead of a "Set string" placeholder button.
+// Empty values are filtered out before they reach the DOM (see the Playground
+// render).
+const itemCssArgs = Object.fromEntries(
+  Object.keys(itemCssArgTypes).map((name) => [name, ''])
+);
 
 argTypes.density = {
   ...argTypes.density,
@@ -111,10 +142,29 @@ const meta: Meta = {
   render: (args) => template(args, defaultItems),
   parameters: {
     layout: 'padded',
-    actions: { handles: [SWC_ACCORDION_ITEM_TOGGLE_EVENT] },
+    actions: {
+      handles: [
+        SWC_ACCORDION_ITEM_TOGGLE_EVENT,
+        SWC_ACCORDION_ITEM_OPEN_EVENT,
+        SWC_ACCORDION_ITEM_CLOSE_EVENT,
+        SWC_ACCORDION_ITEM_AFTER_OPEN_EVENT,
+        SWC_ACCORDION_ITEM_AFTER_CLOSE_EVENT,
+      ],
+    },
     docs: {
       subtitle: 'Groups related content sections behind expandable headers.',
     },
+    design: {
+      type: 'figma',
+      url: 'https://www.figma.com/design/Mngz9H7WZLbrCvGQf3GnsY/S2---Web--Desktop-scale-?node-id=124732-6479&m=dev',
+    },
+    // TODO: replace with the accordion Stackblitz project URL (resolved in PR).
+    stackblitz: {
+      url: '',
+    },
+    // swc-accordion-item is a second element of this component; surface its API
+    // table alongside swc-accordion's on the docs page.
+    additionalApiTables: ['swc-accordion-item'],
   },
   tags: ['migrated'],
 };
@@ -128,8 +178,25 @@ export default meta;
 export const Playground: Story = {
   args: {
     density: 'regular',
+    ...itemCssArgs,
   },
-  tags: ['autodocs', 'dev'],
+  argTypes: itemCssArgTypes,
+  render: (args) => {
+    // Item-level CSS custom properties (the `--*` args) are applied on a
+    // wrapper so they inherit into every slotted item; the remaining args drive
+    // the accordion element itself.
+    const itemStyle = Object.entries(args)
+      .filter(([key, value]) => key.startsWith('--') && value)
+      .map(([key, value]) => `${key}: ${value}`)
+      .join('; ');
+    const elementArgs = Object.fromEntries(
+      Object.entries(args).filter(([key]) => !key.startsWith('--'))
+    );
+    return html`
+      <div style=${itemStyle}>${template(elementArgs, defaultItems)}</div>
+    `;
+  },
+  tags: ['dev'],
 };
 
 // ──────────────────────────
@@ -166,14 +233,6 @@ const anatomyItems = html`
   </swc-accordion-item>
 `;
 
-/**
- * A `<swc-accordion>` item exposes three content surfaces:
- *
- * - **`label` slot**: The heading text shown in the collapsed and expanded header
- * - **`actions` slot**: Optional interactive controls placed outside the toggle
- *   button so they remain independently clickable (see the second item below)
- * - **Default slot**: The panel body revealed when the item expands
- */
 export const Anatomy: Story = {
   render: (args) => template(args, anatomyItems),
   tags: ['anatomy'],
@@ -183,9 +242,6 @@ export const Anatomy: Story = {
 //    OPTIONS STORIES
 // ──────────────────────────
 
-/**
- * Accordions come in four sizes to fit different layout contexts.
- */
 export const Sizes: Story = {
   render: (args) => html`
     <div style="display: flex; flex-direction: column; gap: 16px;">
@@ -209,13 +265,6 @@ export const Sizes: Story = {
   parameters: { 'section-order': 1 },
 };
 
-/**
- * Density controls the vertical spacing between items and within each header.
- *
- * - **Compact**: Tighter spacing for data-dense interfaces
- * - **Regular**: The default, suitable for most contexts
- * - **Spacious**: More breathing room for content-focused layouts
- */
 export const Density: Story = {
   render: (args) => html`
     <div style="display: flex; flex-direction: column; gap: 16px;">
@@ -241,10 +290,6 @@ export const Density: Story = {
   parameters: { 'section-order': 2 },
 };
 
-/**
- * The `quiet` variant removes the divider borders for a lighter visual style,
- * and adds rounded corners on hover for a contained feel.
- */
 export const Quiet: Story = {
   render: (args) => template({ ...args, quiet: true }, defaultItems),
   args: { density: 'regular' },
@@ -252,11 +297,6 @@ export const Quiet: Story = {
   parameters: { 'section-order': 3 },
 };
 
-/**
- * The `level` attribute sets the heading level (h2–h6) applied to every item
- * header. Use it to fit the accordion into the surrounding page heading
- * hierarchy without changing the visual style.
- */
 export const HeadingLevel: Story = {
   render: (args) => template({ ...args, level: 2 }, defaultItems),
   args: { density: 'regular' },
@@ -283,10 +323,6 @@ const stateItems = html`
   </swc-accordion-item>
 `;
 
-/**
- * Items can be in a default (collapsed), open (expanded), or disabled state.
- * A disabled item remains in the tab order but its toggle is blocked.
- */
 export const ItemStates: Story = {
   render: (args) => template({ ...args, 'allow-multiple': true }, stateItems),
   args: { density: 'regular' },
@@ -294,11 +330,6 @@ export const ItemStates: Story = {
   parameters: { 'section-order': 1 },
 };
 
-/**
- * Setting `disabled` on the `<swc-accordion>` parent disables all items at
- * once without overwriting individual item disabled state. Re-enabling the
- * accordion restores each item's original state.
- */
 export const DisabledAccordion: Story = {
   render: (args) => template({ ...args, disabled: true }, defaultItems),
   args: { density: 'regular' },
@@ -306,16 +337,6 @@ export const DisabledAccordion: Story = {
   parameters: { 'section-order': 2 },
 };
 
-/**
- * When the accordion host is `disabled`, all items become non-interactive
- * regardless of their individual `disabled` state. Per-item `disabled` is
- * preserved underneath: toggle the **disabled** control off and the third
- * item remains disabled while the first two become interactive again.
- *
- * This separation means an item that was already disabled before the
- * host was disabled does not silently become enabled when the host
- * is re-enabled.
- */
 export const MixedDisabledStates: Story = {
   render: (args) =>
     template(
@@ -386,14 +407,6 @@ const directActionsItems = html`
   </swc-accordion-item>
 `;
 
-/**
- * Place interactive controls in the **`actions` slot** to render them inline
- * with the heading, outside the toggle button. Because the actions are siblings
- * of the toggle button rather than children of it, interacting with them does
- * not expand or collapse the item. Each action must have a unique accessible
- * name that includes the item subject (e.g., "Edit personal information" not
- * "Edit"); see the Accessibility story for details and an example.
- */
 export const DirectActions: Story = {
   render: (args) => template(args, directActionsItems),
   args: { density: 'regular' },
@@ -416,11 +429,6 @@ const allowMultipleItems = html`
   </swc-accordion-item>
 `;
 
-/**
- * By default only one item may be open at a time; opening a new item closes
- * the previously open one. Set `allow-multiple` to allow any number of items
- * to be open simultaneously.
- */
 export const AllowMultiple: Story = {
   render: (args) =>
     template({ ...args, 'allow-multiple': true }, allowMultipleItems),
@@ -429,15 +437,6 @@ export const AllowMultiple: Story = {
   parameters: { 'section-order': 2 },
 };
 
-/**
- * Every expand or collapse dispatches a `swc-accordion-item-toggle` event from
- * the item. The event bubbles and is composed, so a single listener on the
- * `<swc-accordion>` can observe all items. It is cancelable; calling
- * `preventDefault()` reverts the open state.
- *
- * Open the **Actions** panel in Storybook to observe events as you interact
- * with the accordion below.
- */
 export const ToggleEvent: Story = {
   render: (args) => template(args, defaultItems),
   args: { density: 'regular' },
@@ -473,52 +472,6 @@ const a11yItems = html`
   </swc-accordion-item>
 `;
 
-/**
- * ### Features
- *
- * The `<swc-accordion>` and `<swc-accordion-item>` elements implement the
- * [WAI-ARIA Accordion pattern](https://www.w3.org/WAI/ARIA/apg/patterns/accordion/):
- *
- * #### Keyboard navigation
- *
- * - <kbd>Tab</kbd>: Moves focus into and between item header buttons
- * - <kbd>Enter</kbd>: Activates the focused header button (browser-native click behavior)
- * - <kbd>Space</kbd>: Toggles the focused item and prevents page scroll
- *
- * #### ARIA implementation
- *
- * 1. **Heading wrapper**: Each header button is wrapped in an `h2`–`h6` element matching
- *    the accordion's `level` attribute
- * 2. **`aria-expanded`**: Set to `"true"` on open items, `"false"` on closed items
- * 3. **`aria-controls`**: Points from the header button to the panel (`id="content"`)
- * 4. **Panel role**: The panel has `role="region"` and `aria-labelledby` pointing to the
- *    header button, making it a labeled landmark
- * 5. **`aria-disabled`**: Set on the header button (not the native `disabled` attribute)
- *    so disabled items remain keyboard-reachable
- * 6. **`aria-hidden`**: Set to `"true"` on closed panels to remove them from the accessibility tree
- * 7. **`inert`**: Added to disabled-item panels to block interaction with their contents
- *
- * ### Best practices
- *
- * - Set a `level` that continues the existing page heading hierarchy without skipping levels
- * - Provide meaningful, unique label text for each item so screen reader users can
- *   navigate the heading list
- * - When using the `actions` slot, each action must have a unique accessible
- *   name that includes the item subject. Screen readers announce interactive elements
- *   by their accessible name out of context, so repeated labels like "Edit" across
- *   multiple items are indistinguishable. Use the `accessible-label` attribute to
- *   provide a descriptive name while keeping visible text short:
- *   ```html
- *   <!-- ❌ Ambiguous: screen readers announce two identical "Edit" actions -->
- *   <swc-button slot="actions">Edit</swc-button>
- *
- *   <!-- ✅ Unique: announces as "Edit personal information" -->
- *   <swc-button slot="actions" accessible-label="Edit personal information">
- *     Edit
- *   </swc-button>
- *   ```
- * - Always set `density` explicitly; use `regular` when unsure
- */
 export const Accessibility: Story = {
   render: (args) => template(args, a11yItems),
   args: { density: 'regular', level: 3 },

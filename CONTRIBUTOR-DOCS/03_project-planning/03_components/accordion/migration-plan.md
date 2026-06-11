@@ -409,6 +409,9 @@ Gates align with [01_washing-machine-workflow.md](../../02_workstreams/02_2nd-ge
 - [x] **`noInlinePadding` parity:** **`@cssprop`** documents **`--swc-accordion-item-edge-to-content-area`**; **no** dedicated Storybook story (intentional; see [Public API](#public-api))
 - [x] Document remaining exposed `--swc-accordion-item-*` custom properties in `@cssprop` (Storybook API panel)
 - [x] Do not document arrow-key navigation between headers for 2nd-gen (contrast with legacy README)
+- [x] Surface `swc-accordion-item` API in the Storybook docs page via `parameters.additionalApiTables` (shared `ApiTable` / `DocsFooter` enhancement; also benefits other multi-element components)
+- [x] Expose `swc-accordion-item` CSS custom properties as Playground controls under a `css properties (item)` category
+- [x] Consumer migration guide authored (`migration-guide.mdx`)
 
 ### Review
 
