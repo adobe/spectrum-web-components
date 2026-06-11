@@ -52,10 +52,11 @@ export type RadioControllerOptions = {
   defaultToFirstSelectable?: boolean;
 
   /**
-   * When **`true`**, **Enter** or **Space** on an eligible focused item (resolved like pointer
-   * hits via {@link deepestRadioItemContaining}) asserts that item, mirroring manual keyboard
-   * activation in the tabs pattern. When **`false`** (default), only capture-phase **click**
-   * changes selection (plus **`setSelectedItem`** / **`toggleItem`**).
+   * When **`true`**, **Enter** or **Space** on an eligible item (resolved like pointer hits via
+   * {@link deepestRadioItemContaining}) asserts that item for manual keyboard activation (for
+   * example a tablist paired with **`FocusgroupNavigationController`** for arrow keys). When
+   * **`false`** (default), only capture-phase **click** changes selection (plus
+   * **`setSelectedItem`** / **`toggleItem`**).
    */
   keydownActivation?: boolean;
 
@@ -117,9 +118,7 @@ export type RadioControllerSelectionKeyBinding = {
    * with **`silent: true`**). Return **`false`** to abort. During this call, {@link RadioController.getSelectedKey}
    * temporarily reflects **`candidateKey`** so cancelable host **`change`** listeners see the pending value.
    */
-  hostCommit?: (
-    detail: RadioControllerHostCommitDetail
-  ) => boolean;
+  hostCommit?: (detail: RadioControllerHostCommitDetail) => boolean;
 };
 
 /** Payload for {@link RadioControllerSelectionKeyBinding.hostCommit}. */
@@ -151,12 +150,14 @@ export function deepestRadioItemContaining(
  * Maintains mutually exclusive asserted state across sibling elements using supplied mutators.
  * Scoping follows the reactive host subtree (light DOM and shadow descendants). Items that are
  * disconnected, inert, not visible, native **`disabled`**, or **`aria-disabled="true"`** are never
- * eligible and primary clicks on them do not change selection. This controller handles
- * capture-phase **`click`**, optional capture-phase **`keydown`** for **Enter** / **Space** when
- * **`keydownActivation`** is **`true`**, **`setSelectedItem`**, and **`toggleItem`**. Optional
- * **`confirmSelectionChange`** runs **before** mutators and may veto a transition so DOM stays on
- * **`prior`**. It does not implement arrow keys, roving **`tabindex`**, programmatic **`focus()`**,
- * or an active-item/focus sync callback.
+ * selectable and primary clicks on them do not change selection.
+ *
+ * This controller handles capture-phase **`click`**, optional capture-phase **`keydown`** for
+ * **Enter** / **Space** when **`keydownActivation`** is **`true`**, **`setSelectedItem`**, and
+ * **`toggleItem`**. Optional **`confirmSelectionChange`** runs **before** mutators and may veto a
+ * transition so DOM stays on **`prior`**. Pair with **`FocusgroupNavigationController`** when the
+ * composite also needs roving **`tabindex`**, arrow keys, Home/End, or focus memory; this controller
+ * does not implement those behaviors.
  *
  * @see https://www.w3.org/WAI/ARIA/apg/patterns/radio/examples/radio-rating/
  * @see https://www.w3.org/WAI/ARIA/apg/patterns/menubar/
@@ -180,9 +181,7 @@ export class RadioController implements ReactiveController {
   > &
     Pick<
       RadioControllerOptions,
-      | 'onSelectionChange'
-      | 'confirmSelectionChange'
-      | 'selectionBinding'
+      'onSelectionChange' | 'confirmSelectionChange' | 'selectionBinding'
     >;
 
   private selectedItem: HTMLElement | null = null;
@@ -661,9 +660,9 @@ export class RadioController implements ReactiveController {
   }
 
   /**
-   * Eligibility filter: connected, visible, not inert, not disabled.
+   * Whether {@link participant} may be asserted as the exclusive selection.
    */
-  private isRadioNavigableItem(participant: HTMLElement): boolean {
+  private isSelectableItem(participant: HTMLElement): boolean {
     if (!participant.isConnected) {
       return false;
     }
@@ -684,10 +683,10 @@ export class RadioController implements ReactiveController {
     return true;
   }
 
-  /** Eligible selectable siblings respecting visibility and disabled state. */
+  /** Scoped roster members that may be selected. */
   private getEligibleItems(): HTMLElement[] {
     return this.getScopedRawItems().filter((participant) =>
-      this.isRadioNavigableItem(participant)
+      this.isSelectableItem(participant)
     );
   }
 

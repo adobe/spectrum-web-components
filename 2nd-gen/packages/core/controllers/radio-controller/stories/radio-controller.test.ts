@@ -293,11 +293,9 @@ export class TestRadioKeydownActivationFixture extends LitElement {
       Array.from(this.renderRoot.querySelectorAll<HTMLElement>('[data-item]')),
     selectItem: (item) => {
       item.setAttribute('aria-checked', 'true');
-      item.tabIndex = 0;
     },
     deselectItem: (item) => {
       item.setAttribute('aria-checked', 'false');
-      item.tabIndex = -1;
     },
     keydownActivation: true,
     defaultToFirstSelectable: true,
@@ -345,11 +343,9 @@ export class TestRadioKeydownOffDivFixture extends LitElement {
       Array.from(this.renderRoot.querySelectorAll<HTMLElement>('[data-item]')),
     selectItem: (item) => {
       item.setAttribute('aria-checked', 'true');
-      item.tabIndex = 0;
     },
     deselectItem: (item) => {
       item.setAttribute('aria-checked', 'false');
-      item.tabIndex = -1;
     },
     keydownActivation: false,
     defaultToFirstSelectable: true,

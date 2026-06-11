@@ -13,6 +13,7 @@
 import { css, html, LitElement, type TemplateResult } from 'lit';
 import { customElement } from 'lit/decorators.js';
 
+import { FocusgroupNavigationController } from '../../focusgroup-navigation-controller/index.js';
 import {
   RadioController,
   type RadioControllerSelectionChangeDetail,
@@ -26,7 +27,7 @@ declare global {
     'demo-radio-menu-item-radio': DemoRadioMenuItemRadio;
     'demo-radio-accordion-exclusive': DemoRadioAccordionExclusive;
     'demo-radio-accordion-multiple': DemoRadioAccordionMultiple;
-    'demo-radio-tabs-keydown': DemoRadioTabsKeydown;
+    'demo-radio-tabs-focusgroup': DemoRadioTabsFocusgroup;
   }
 }
 
@@ -824,23 +825,28 @@ const demoTabsKeydownStyles = css`
 `;
 
 /**
- * Minimal `role="tablist"` demo: **`RadioController`** with **`keydownActivation: true`** so
- * **Enter** / **Space** assert the focused tab; left/right arrows move focus (roving tabindex).
- * Pointer clicks still select via the same controller.
+ * Minimal `role="tablist"` demo pairing **`FocusgroupNavigationController`** (arrow keys, roving
+ * **`tabindex`**) with **`RadioController`** (**`keydownActivation: true`** for **Enter** /
+ * **Space** selection; pointer still works).
  *
  * @internal
  */
-@customElement('demo-radio-tabs-keydown')
-export class DemoRadioTabsKeydown extends LitElement {
+@customElement('demo-radio-tabs-focusgroup')
+export class DemoRadioTabsFocusgroup extends LitElement {
   static override styles = demoTabsKeydownStyles;
 
   private tabButtons: HTMLButtonElement[] = [];
+
+  private readonly tabNavigation = new FocusgroupNavigationController(this, {
+    direction: 'horizontal',
+    wrap: true,
+    getItems: () => this.tabButtons,
+  });
 
   private readonly tabRadio = new RadioController(this, {
     getItems: () => this.tabButtons,
     selectItem: (tab) => {
       tab.setAttribute('aria-selected', 'true');
-      tab.tabIndex = 0;
       const key = tab.dataset.tab!;
       const panel = this.renderRoot.querySelector<HTMLElement>(
         `[data-tab-panel="${key}"]`
@@ -849,7 +855,6 @@ export class DemoRadioTabsKeydown extends LitElement {
     },
     deselectItem: (tab) => {
       tab.setAttribute('aria-selected', 'false');
-      tab.tabIndex = -1;
       const key = tab.dataset.tab!;
       const panel = this.renderRoot.querySelector<HTMLElement>(
         `[data-tab-panel="${key}"]`
@@ -864,42 +869,24 @@ export class DemoRadioTabsKeydown extends LitElement {
     this.tabButtons = Array.from(
       this.renderRoot.querySelectorAll<HTMLButtonElement>('[data-tab]')
     );
+    this.tabNavigation.refresh();
     this.tabRadio.refresh();
-  }
-
-  private handleTabListKeydown(event: KeyboardEvent): void {
-    if (event.code !== 'ArrowLeft' && event.code !== 'ArrowRight') {
-      return;
-    }
-    const tabs = this.tabButtons;
-    const root = this.renderRoot as ShadowRoot | HTMLElement;
-    const active = root instanceof ShadowRoot ? root.activeElement : null;
-    const index = tabs.indexOf(active as HTMLButtonElement);
-    if (index === -1) {
-      return;
-    }
-    event.preventDefault();
-    const delta = event.code === 'ArrowRight' ? 1 : -1;
-    const next = (index + delta + tabs.length) % tabs.length;
-    tabs[next]?.focus();
   }
 
   protected override render(): TemplateResult {
     return html`
       <p class="hint">
-        Use arrow keys to move focus, then
+        Arrow keys move focus via
+        <code>FocusgroupNavigationController</code>
+        ; press
         <kbd>Enter</kbd>
         or
         <kbd>Space</kbd>
-        to select (via
-        <code>keydownActivation: true</code>
-        ). Pointer still works.
+        to select with
+        <code>RadioController</code>
+        . Pointer still works.
       </p>
-      <div
-        role="tablist"
-        aria-label="Sample tabs"
-        @keydown=${this.handleTabListKeydown}
-      >
+      <div role="tablist" aria-label="Sample tabs">
         <button
           type="button"
           role="tab"
@@ -907,7 +894,6 @@ export class DemoRadioTabsKeydown extends LitElement {
           id="demo-kd-tab-1"
           aria-controls="demo-kd-panel-1"
           aria-selected="false"
-          tabindex="-1"
         >
           Files
         </button>
@@ -918,7 +904,6 @@ export class DemoRadioTabsKeydown extends LitElement {
           id="demo-kd-tab-2"
           aria-controls="demo-kd-panel-2"
           aria-selected="false"
-          tabindex="-1"
         >
           Search
         </button>
@@ -929,7 +914,6 @@ export class DemoRadioTabsKeydown extends LitElement {
           id="demo-kd-tab-3"
           aria-controls="demo-kd-panel-3"
           aria-selected="false"
-          tabindex="-1"
         >
           Publish
         </button>

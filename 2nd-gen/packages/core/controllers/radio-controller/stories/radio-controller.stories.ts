@@ -62,7 +62,7 @@ const RADIO_CONTROLLER_API = {
       type: 'boolean | undefined',
       defaultValue: 'false',
       description:
-        'When true, capture-phase Enter or Space on a focused eligible item asserts it (tabs-style manual activation). Clicks still apply when false or true.',
+        'When true, Enter or Space on an eligible item asserts it (manual keyboard activation). Pair with FocusgroupNavigationController for arrow keys and roving tabindex.',
     },
     {
       name: 'onSelectionChange',
@@ -221,7 +221,9 @@ const RADIO_CONTROLLER_API = {
  * `RadioController` enforces **one asserted sibling at a time** inside your reactive host. You
  * supply **`getItems`** (who participates) and **`selectItem` / `deselectItem`** (how DOM or ARIA
  * reflects the winner and the losers). Optional **`confirmSelectionChange`** and **`selectionBinding`**
- * gate transitions or mirror a string **key** (see **`swc-tabs`**). It does **not** wire native
+ * gate transitions or mirror a string **key** (see **`swc-tabs`**). Use
+ * **`FocusgroupNavigationController`** separately when the composite also needs arrow keys, roving
+ * **`tabindex`**, or focus memory. It does **not** wire native
  * `<input type="radio">`; use it for custom roles (`radio`, `menuitemradio`, accordion headers, and similar).
  *
  * @see {@link https://www.w3.org/WAI/ARIA/apg/patterns/radio/examples/radio-rating/ | APG rating radio group}
@@ -234,7 +236,7 @@ const meta: Meta = {
   parameters: {
     docs: {
       subtitle:
-        'Exclusive selection; pointer, optional Enter/Space (keydownActivation), confirmSelectionChange, selectionBinding, toggleItem.',
+        'Exclusive selection via pointer, optional Enter/Space (keydownActivation), confirmSelectionChange, and selectionBinding.',
       canvas: { sourceState: 'none' },
     },
     controllerApi: RADIO_CONTROLLER_API,
@@ -280,7 +282,7 @@ export const Overview: Story = {
  *   - `deselectItem: (item: HTMLElement) => void` - the function that is called when the item is deselected
  *   - `toggles: boolean` - optional: whether the controller allows toggling the item
  *   - `defaultToFirstSelectable: boolean` - optional: whether the controller should select the first item if no item is selected
- *   - `keydownActivation: boolean` - optional: when true, **Enter** / **Space** on a focused eligible item asserts it (tabs-style manual activation); default is click-only
+ *   - `keydownActivation: boolean` - optional: when true, **Enter** / **Space** on an eligible item asserts it (manual keyboard activation); pair with **FocusgroupNavigationController** for arrow keys
  *   - `onSelectionChange: (detail: RadioControllerSelectionChangeDetail) => void` - optional: the function that is called when the selection changes
  *   - `confirmSelectionChange: (detail: RadioControllerConfirmSelectionChangeDetail) => boolean` - optional: called **before** mutators; return **false** to abort (DOM unchanged)
  *   - `selectionBinding: RadioControllerSelectionKeyBinding` - optional: **`getKey`**, **`resolveKey`**, optional **`hostCommit`** for a host-facing string key (for example **`tab-id`** on **`swc-tabs`**)
@@ -461,23 +463,35 @@ export const UsageExampleTogglingToDeselect: Story = {
 };
 
 /**
- * ### `keydownActivation` (tabs-style Enter / Space)
+ * ### Tablist with `FocusgroupNavigationController`
  *
- * Set **`keydownActivation: true`** so **Enter** or **Space** on a focused participant asserts
- * it, in addition to primary **click**. Combine with your own arrow-key / roving tabindex logic
- * for a full tablist, or use the demo below.
+ * For a manual-activation tablist, pair **`FocusgroupNavigationController`** (arrow keys, roving
+ * **`tabindex`**, Home/End) with **`RadioController`** (**`keydownActivation: true`** for **Enter**
+ * / **Space** selection). Keep selection state (`aria-selected`, panels) in **`selectItem`** /
+ * **`deselectItem`**; do not manage **`tabindex`** there.
  *
  * ```typescript
- * this.tabRadio = new RadioController(this, {
+ * import {
+ *   FocusgroupNavigationController,
+ *   RadioController,
+ * } from '@spectrum-web-components/core/controllers';
+ *
+ * private tabButtons: HTMLButtonElement[] = [];
+ *
+ * private readonly tabNavigation = new FocusgroupNavigationController(this, {
+ *   direction: 'horizontal',
+ *   wrap: true,
+ *   getItems: () => this.tabButtons,
+ * });
+ *
+ * private readonly tabRadio = new RadioController(this, {
  *   getItems: () => this.tabButtons,
  *   selectItem: (tab) => {
  *     tab.setAttribute('aria-selected', 'true');
- *     tab.tabIndex = 0;
  *     this.showPanelForTab(tab);
  *   },
  *   deselectItem: (tab) => {
  *     tab.setAttribute('aria-selected', 'false');
- *     tab.tabIndex = -1;
  *     this.hidePanelForTab(tab);
  *   },
  *   keydownActivation: true,
@@ -485,12 +499,12 @@ export const UsageExampleTogglingToDeselect: Story = {
  * });
  * ```
  */
-export const UsageExampleKeydownActivationTabs: Story = {
-  name: 'Example: keydownActivation (tablist)',
+export const UsageExampleTablistWithFocusgroup: Story = {
+  name: 'Example: tablist with FocusgroupNavigationController',
   tags: ['usage'],
   parameters: { 'section-order': 4 },
   render: () => html`
-    <demo-radio-tabs-keydown></demo-radio-tabs-keydown>
+    <demo-radio-tabs-focusgroup></demo-radio-tabs-focusgroup>
   `,
 };
 
@@ -524,13 +538,14 @@ export const AccordionMultipleSectionsAriaExpandedHidden: Story = {
 };
 
 /**
- * Tablist-style demo: arrow keys move focus; **Enter** / **Space** select via
- * **`keydownActivation: true`**; pointer still works.
+ * Tablist demo: **`FocusgroupNavigationController`** handles arrow keys and roving **`tabindex`**;
+ * **`RadioController`** with **`keydownActivation: true`** handles **Enter** / **Space** selection;
+ * pointer still works.
  */
-export const KeydownActivationTabsDemo: Story = {
-  name: 'keydownActivation: tablist demo',
+export const TablistWithFocusgroupDemo: Story = {
+  name: 'Tablist: FocusgroupNavigationController + RadioController',
   render: () => html`
-    <demo-radio-tabs-keydown></demo-radio-tabs-keydown>
+    <demo-radio-tabs-focusgroup></demo-radio-tabs-focusgroup>
   `,
   tags: ['behaviors'],
   parameters: {
@@ -639,7 +654,7 @@ export const RatingOnSelectionChangeAlert: Story = {
  * | `deselectItem` | `(item: HTMLElement) => void` | (required) | Called on every other scoped item. |
  * | `toggles` | `boolean` | `false` | When true, allow clearing to no asserted item (`setSelectedItem(null)`, click or `toggleItem` on the active item). |
  * | `defaultToFirstSelectable` | `boolean` | `false` | When true, `refresh` may select the first eligible item if none asserted. |
- * | `keydownActivation` | `boolean` | `false` | When true, Enter/Space on a focused eligible item asserts it (manual tabs-style activation). |
+ * | `keydownActivation` | `boolean` | `false` | When true, Enter/Space on an eligible item asserts it. Use with FocusgroupNavigationController for arrow keys. |
  * | `onSelectionChange` | `(detail) => void` | — | Callback when selection changes. |
  * | `confirmSelectionChange` | `(detail) => boolean` | — | Before mutators; return false to abort. |
  * | `selectionBinding` | see type | — | String key + resolveKey + optional hostCommit. |
@@ -663,11 +678,14 @@ export const API: Story = {
  *
  * ### Keyboard and focus
  *
+ * **`RadioController`** does not implement roving **`tabindex`**, arrow keys, Home/End, or
+ * programmatic **`focus()`**. Add **`FocusgroupNavigationController`** when the composite needs
+ * those behaviors.
+ *
  * With **`keydownActivation: true`**, the controller listens for **Enter** and **Space** on the
- * host (capture phase) and asserts the deepest eligible item on the event path, similar to manual
- * keyboard activation in **`swc-tabs`**. It still does **not** implement roving **`tabindex`** or
- * arrow-key navigation; pair it with **`FocusgroupNavigationController`** or your own tablist
- * handlers when you need those behaviors.
+ * host (capture phase) and asserts the deepest eligible item on the event path (manual keyboard
+ * activation). **`swc-tabs`** uses the same option for manual activation while the tab list handles
+ * its own arrow-key focus moves.
  *
  * ### ARIA
  *
@@ -688,6 +706,7 @@ export const Accessibility: Story = {
 /**
  * ### See also
  *
+ * - [Focusgroup navigation controller](../?path=/docs/controllers-focusgroup-navigation-controller--overview)
  * - [APG rating radio group](https://www.w3.org/WAI/ARIA/apg/patterns/radio/examples/radio-rating/)
  * - [APG menu / menubar](https://www.w3.org/WAI/ARIA/apg/patterns/menubar/)
  * - [Spectrum accordion](https://opensource.adobe.com/spectrum-web-components/components/accordion/#sizes)
