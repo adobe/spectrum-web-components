@@ -667,7 +667,7 @@ The impact is most acute in the additive phase, when `HoverController` will call
 - [x] Automatic mode: `delay="0"` shows immediately on hover (`HoverOpensTest`); full 1500ms warm-up/cooldown timing covered by hover-controller test suite
 - [x] Automatic mode: `for` resolves correctly when trigger and tooltip share a shadow root (`ShadowRootScopeTest` — creates trigger + tooltip inside `attachShadow({ mode: 'open' })`; verifies `getRootNode().getElementById` scopes to the shadow root and ARIA wiring reaches the native trigger)
 - [x] `manual` attribute: controller wiring is skipped; consumer-driven `open` changes still work; ARIA wiring still fires (`ManualPreventsHoverTest`, `AriaWiringManualModeTest`)
-- [x] `labeling` attribute: `ariaLabelledByElements` is set on the inner interactive element instead of `ariaDescribedByElements`; stale references in the opposite property are cleaned up; re-syncs when `labeling` changes while open (`LabelingAriaWiringTest`)
+- [x] `labeling` attribute: `ariaLabelledByElements` is set on the inner interactive element instead of `ariaDescribedByElements`; stale references in the opposite property are cleaned up; re-syncs when `labeling` changes while open (`AriaWiringLabelingTest`)
 - [x] `ariaDescribedByElements` wiring: verify AT can traverse the association in DevTools Accessibility panel and with NVDA/VoiceOver — **manual verification required; cannot be automated**
 - [x] `ariaDescribedByElements` wiring fallback: when trigger has no shadow root (native `<button>`, `<a>`, `<input>`), association is established on the host element directly (`AriaWiringNativeTest`)
 - [x] `disabled` attribute prevents automatic mode response to user input (`DisabledPreventsHoverTest`)
