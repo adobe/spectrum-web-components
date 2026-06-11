@@ -208,6 +208,15 @@ export abstract class TooltipBase
   // Cleared when transitionend fires or a new toggle starts.
   private afterEventFallbackTimer: ReturnType<typeof setTimeout> | null = null;
 
+  // Tracks the most recently ARIA-wired target so syncAriaRelationship can
+  // remove stale references when for or triggerElement changes while open.
+  private _lastWiredTrigger:
+    | (Element & {
+        ariaDescribedByElements: Element[] | null;
+        ariaLabelledByElements: Element[] | null;
+      })
+    | null = null;
+
   /**
    * Returns the tip arrow element to pass to `PlacementController` so the
    * `arrow` middleware keeps the tip aligned with the trigger when the bubble
@@ -275,6 +284,19 @@ export abstract class TooltipBase
   }
 
   private syncAriaRelationship(): void {
+    // Remove stale references from the previously wired target before resolving
+    // the new one. Handles for/triggerElement changes while the tooltip is open.
+    if (this._lastWiredTrigger) {
+      const stale = this._lastWiredTrigger;
+      stale.ariaDescribedByElements = (
+        stale.ariaDescribedByElements ?? []
+      ).filter((el) => el !== this);
+      stale.ariaLabelledByElements = (
+        stale.ariaLabelledByElements ?? []
+      ).filter((el) => el !== this);
+      this._lastWiredTrigger = null;
+    }
+
     const trigger = this.resolveTrigger();
     if (!trigger) {
       return;
@@ -303,6 +325,10 @@ export abstract class TooltipBase
       target.ariaDescribedByElements = this.open
         ? [...described.filter((el) => el !== this), this]
         : described.filter((el) => el !== this);
+    }
+
+    if (this.open) {
+      this._lastWiredTrigger = target;
     }
   }
 
@@ -430,7 +456,12 @@ export abstract class TooltipBase
         }
       }
     }
-    if (changedProperties.has('open') || changedProperties.has('labeling')) {
+    if (
+      changedProperties.has('open') ||
+      changedProperties.has('labeling') ||
+      changedProperties.has('for') ||
+      changedProperties.has('triggerElement')
+    ) {
       this.syncAriaRelationship();
     }
     if (
