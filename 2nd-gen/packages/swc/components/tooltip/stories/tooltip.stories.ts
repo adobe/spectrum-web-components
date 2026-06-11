@@ -133,6 +133,10 @@ const meta: Meta = {
     docs: {
       subtitle: `Brief contextual message that appears near a trigger element.`,
     },
+    chromatic: {
+      // Wait for tooltip to be fully rendered before taking a snapshot
+      delay: 500,
+    },
   },
   args,
   argTypes,
