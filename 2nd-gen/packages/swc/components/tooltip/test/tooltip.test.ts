@@ -787,10 +787,6 @@ export const PlacementsTest: Story = {
 };
 
 // ──────────────────────────────────────────────────────────────
-// TEST: Dev mode warnings
-// ──────────────────────────────────────────────────────────────
-
-// ──────────────────────────────────────────────────────────────
 // VRT: Visual regression tests
 // ──────────────────────────────────────────────────────────────
 
@@ -1049,7 +1045,8 @@ export const PlacementControllerTest: Story = {
           ).toBeFalsy(),
         { timeout: 2000 }
       );
-      // Tip translate is cleared synchronously by placementController.stop().
+      // Tip translate is also cleared by dispatchAfterEvent — both are cleared
+      // in the same call, so no additional polling is needed here.
       expect(
         tip?.style.translate,
         'tip translate is cleared after close'

@@ -41,7 +41,8 @@ test.describe('Tooltip - ARIA Snapshots', () => {
   }) => {
     await gotoStory(page, 'components-tooltip--overview', 'swc-button');
 
-    // Open the tooltip programmatically (HoverController not yet wired).
+    // Set open directly via the property API. HoverController handles hover/focus
+    // in production; direct property access is the correct approach for a11y tests.
     await page.evaluate(() => {
       const tooltip = document.querySelector('swc-tooltip') as HTMLElement & {
         open: boolean;
