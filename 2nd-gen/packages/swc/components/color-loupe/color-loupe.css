@@ -39,26 +39,21 @@
     opacity 125ms ease-in-out;
 }
 
-/* Opacity checkerboard shown behind transparent picked colors.
-   The dark-square token has separate light/dark theme values, so
-   we use light-dark() with the explicit theme variants. */
-.swc-ColorLoupe-checkerboard {
+/* Shared positioning for the stacked loupe layers (the transparency
+   checkerboard and the color fill). Both sit inset by the loupe border. The
+   checkerboard pattern itself comes from the shared `.swc-OpacityCheckerboard`
+   fragment added to the styles array. */
+.swc-ColorLoupe-layer {
   position: absolute;
   inset-block-start: 2px;
   inset-inline-start: 2px;
   inline-size: 100%;
   block-size: 100%;
-  background: repeating-conic-gradient(light-dark(var(--swc-opacity-checkerboard-square-dark-light), var(--swc-opacity-checkerboard-square-dark-dark)) 0% 25%, token("opacity-checkerboard-square-light") 0% 50%) 0 0 / token("opacity-checkerboard-square-size-medium") token("opacity-checkerboard-square-size-medium");
 }
 
 /* Color fill layer — displays the picked color set by the component via
    the --swc-color-loupe-picked-color custom property. */
 .swc-ColorLoupe-colorFill {
-  position: absolute;
-  inset-block-start: 2px;
-  inset-inline-start: 2px;
-  inline-size: 100%;
-  block-size: 100%;
   background: var(--swc-color-loupe-picked-color);
 }
 
@@ -103,8 +98,9 @@
 }
 
 @media (forced-colors: active) {
-  .swc-ColorLoupe-colorFill,
-  .swc-ColorLoupe-checkerboard {
+  /* The checkerboard layer keeps `forced-color-adjust: none` via the shared
+     `.swc-OpacityCheckerboard` fragment; only the color fill needs it here. */
+  .swc-ColorLoupe-colorFill {
     forced-color-adjust: none;
   }
 
