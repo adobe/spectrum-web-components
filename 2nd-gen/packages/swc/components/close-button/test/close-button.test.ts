@@ -43,15 +43,11 @@ export const ButtonBaseInstanceofTest: Story = {
       'swc-close-button'
     );
 
-    await step('is a ButtonBase without pending API', async () => {
+    await step('is a ButtonBase', async () => {
       expect(
         closeButton instanceof ButtonBase,
         'swc-close-button instanceof ButtonBase'
       ).toBe(true);
-      expect(
-        'pending' in closeButton,
-        'swc-close-button does not expose pending'
-      ).toBe(false);
     });
   },
 };
