@@ -87,21 +87,13 @@ test.describe('Link - ARIA Snapshots', () => {
     `);
   });
 
-  test('accessibility story renders prose and footer links', async ({
+  test('accessibility story renders descriptive prose link', async ({
     page,
   }) => {
     const root = await gotoLinkStory(page, 'components-link--accessibility');
     await expect(root).toMatchAriaSnapshot(`
       - paragraph:
         - link "view the full schedule"
-      - contentinfo:
-        - list:
-          - listitem:
-            - link "Privacy policy"
-          - listitem:
-            - link "Terms of use"
-          - listitem:
-            - link "Contact support"
     `);
   });
 

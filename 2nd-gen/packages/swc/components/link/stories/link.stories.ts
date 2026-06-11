@@ -148,7 +148,6 @@ export const Playground: Story = {
 
 export const Overview: Story = {
   render: (args) => html`
-    ${template({ ...args, context: 'prose', variant: 'default' })}
     ${template({
       ...args,
       context: 'explicit',
@@ -162,9 +161,6 @@ export const Overview: Story = {
   tags: ['overview'],
 };
 
-/**
- * Standalone link with explicit Spectrum typography (not inheriting a prose wrapper).
- */
 export const Standalone: Story = {
   args: {
     context: 'explicit',
@@ -175,10 +171,6 @@ export const Standalone: Story = {
   tags: ['options'],
 };
 
-/**
- * Secondary color treatment for links that need reduced visual weight relative to
- * the default accent color.
- */
 export const Secondary: Story = {
   args: {
     context: 'explicit',
@@ -188,10 +180,6 @@ export const Secondary: Story = {
   tags: ['options'],
 };
 
-/**
- * Quiet + standalone removes the default underline until hover. Use in footers
- * and other section-scoped patterns, not undifferentiated body copy.
- */
 export const QuietStandalone: Story = {
   args: {
     context: 'explicit',
@@ -203,11 +191,6 @@ export const QuietStandalone: Story = {
   tags: ['options'],
 };
 
-/**
- *
- * See [Typography / Prose container](../typography/stories/typography.stories.ts)
- * for the full prose pattern.
- */
 export const InProse: Story = {
   args: {
     context: 'prose',
@@ -216,10 +199,6 @@ export const InProse: Story = {
   tags: ['options'],
 };
 
-/**
- *
- * See [Typography / Link list](../typography/stories/typography.stories.ts).
- */
 export const LinkList: Story = {
   args: {
     context: 'links',
@@ -228,13 +207,6 @@ export const LinkList: Story = {
   tags: ['options'],
 };
 
-/**
- * Use `.swc-Link--staticWhite` and `.swc-Link--staticBlack` when displaying over
- * images or colored backgrounds:
- *
- * - **static white**: Use on dark or colored backgrounds for better contrast
- * - **static black**: Use on light backgrounds for better contrast
- */
 export const StaticColors: Story = {
   render: (args) => html`
     ${LINK_STATIC_VARIANTS.map(
@@ -262,9 +234,6 @@ export const StaticColors: Story = {
 };
 StaticColors.storyName = 'Static colors';
 
-/**
- * Default and secondary color treatments from `link.css` (static colors are in Static colors).
- */
 export const ColorVariants: Story = {
   render: (args) => html`
     ${LINK_COLOR_VARIANTS.map((variant) =>
