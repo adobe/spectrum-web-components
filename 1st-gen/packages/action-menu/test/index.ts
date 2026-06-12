@@ -292,6 +292,7 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
       `);
       const opened = oneEvent(el, 'sp-opened');
       el.focus();
+      await elementUpdated(el);
       await sendKeys({ press: 'Enter' });
       await opened;
       await nextFrame();
@@ -636,6 +637,7 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
       expect(el.value).to.not.equal(thirdItem.value);
       const opened = oneEvent(el, 'sp-opened');
       el.focus();
+      await elementUpdated(el);
       await sendKeys({ press: 'Enter' });
       await opened;
 
@@ -654,6 +656,7 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
       expect(el.value).to.not.equal(thirdItem.value);
       const opened = oneEvent(el, 'sp-opened');
       el.focus();
+      await elementUpdated(el);
       await sendKeys({ press: 'Enter' });
       await opened;
 
