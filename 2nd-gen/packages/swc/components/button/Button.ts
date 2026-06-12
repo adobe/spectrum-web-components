@@ -20,7 +20,6 @@ import {
   BUTTON_VARIANTS,
   ButtonBase,
   type ButtonFillStyle,
-  type ButtonStaticColor,
   type ButtonVariant,
 } from '@spectrum-web-components/core/components/button';
 
@@ -94,13 +93,6 @@ export class Button extends ButtonBase {
    */
   @property({ type: String, reflect: true, attribute: 'fill-style' })
   public fillStyle: ButtonFillStyle = 'fill';
-
-  /**
-   * Static color treatment for display over colored or image backgrounds.
-   * Only supported with `primary` and `secondary` variants.
-   */
-  @property({ type: String, reflect: true, attribute: 'static-color' })
-  public staticColor?: ButtonStaticColor;
 
   /**
    * Whether overflowing text is truncated with an ellipsis rather than
