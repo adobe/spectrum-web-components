@@ -39,7 +39,7 @@
 
 ## Overview
 
-This doc explains how the **opacity checkerboard shared style** should work for **accessibility** in 2nd-gen. It supports **WCAG 2.2 Level AA** as the team target. The checkerboard is **not** implemented as a custom element; it ships as an importable Lit **`css`** fragment (class **`.swc-opacity-checkerboard`**) under `2nd-gen/packages/swc/stylesheets/shared/`. **Consumer documentation** for components that use the pattern must carry the guidance in this doc; the utility itself has **no** ARIA surface.
+This doc explains how the **opacity checkerboard shared style** should work for **accessibility** in 2nd-gen. It supports **WCAG 2.2 Level AA** as the team target. The checkerboard is **not** implemented as a custom element; it ships as an importable Lit **`css`** fragment (class **`.swc-opacity-checkerboard`**) under `2nd-gen/packages/swc/stylesheets/_lit-styles/`. **Consumer documentation** for components that use the pattern must carry the guidance in this doc; the utility itself has **no** ARIA surface.
 
 ### Also read
 

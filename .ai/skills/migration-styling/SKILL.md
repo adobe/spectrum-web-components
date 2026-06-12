@@ -66,6 +66,19 @@ Common case: confirming that subcomponent class names follow the single-hyphen s
 
 If a rename is needed, make the template change first, confirm the component still renders correctly in Storybook, then write the CSS.
 
+**Step 3.5 — Check for shared CSS.** If the component shares structural CSS with one or more other components (for example, a shared bar/track layout), check `2nd-gen/packages/swc/stylesheets/_lit-styles/` for an existing shared fragment before duplicating rules. Files in `_lit-styles/` are Lit CSS fragments composed into component `static styles` arrays; they reach inside shadow roots and are never emitted as standalone CSS. To use one, import it as a JS module in the component's TypeScript file — do **not** use a CSS `@import` statement:
+
+```ts
+import sharedStyles from '../../stylesheets/_lit-styles/[name].css';
+import styles from './[component].css';
+
+public static override get styles(): CSSResultArray {
+  return [sharedStyles, styles];
+}
+```
+
+If no fragment exists yet but the shared pattern is real, create a new file in `_lit-styles/` and wire it up in all consuming components. Do not put `_lit-styles/` files in `core/` — they depend on `--swc-*` design tokens, which live in the `swc/` layer. See [Non-component stylesheets](../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/07_stylesheets.md#adding-a-shared-lit-css-fragment) for full guidance.
+
 **Step 4 — Execute the phase.** Follow **[Phase 5: Styling](../../../CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md#phase-5-styling)** in the washing machine workflow doc — it covers what to do, what to check, common problems, and the quality gate for this phase.
 
 **Step 5 — Document exposed custom properties.** After writing the CSS, add a `@cssprop` JSDoc tag to the SWC component class (`2nd-gen/packages/swc/components/[component]/[Component].ts`) for every exposed `--swc-*` property. Place all `@cssprop` tags on the primary SWC class export (not the core base class). Each tag should name the property and give a one-line description of what it controls, including its default token where relevant.
