@@ -127,6 +127,9 @@ const meta: Meta = {
   title: 'Tooltip',
   component: 'swc-tooltip',
   parameters: {
+    controls: {
+      exclude: ['for'],
+    },
     actions: {
       handles: ['swc-open', 'swc-close', 'swc-after-open', 'swc-after-close'],
     },
