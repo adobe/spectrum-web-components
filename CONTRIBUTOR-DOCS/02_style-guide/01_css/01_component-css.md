@@ -42,6 +42,8 @@
 
 The following are high-level guidelines for the CSS creation for components.
 
+> **Scope:** This guide covers CSS authored inside web component packages — styles composed into `static styles` arrays and rendered inside shadow DOM. For CSS that lives outside components (app-level setup, global element styles, component replacements such as `typography.css`, and shared Lit CSS fragments) see [Non-component stylesheets](07_stylesheets.md).
+
 ## Contributor TL;DR
 
 > For examples of all of these rules in practice, review [Badge](../../../2nd-gen/packages/swc/components/badge/badge.css) and [Status Light](../../../2nd-gen/packages/swc/components/status-light/status-light.css) as reference implementations, the [reference migration for Badge](04_spectrum-swc-migration.md#reference-migration-badge), and the [anti-patterns guide](05_anti-patterns.md).
