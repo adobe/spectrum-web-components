@@ -136,7 +136,6 @@ export const Playground: Story = {
     size: 'm',
     'default-slot': 'Button',
   },
-  
 };
 
 // ──────────────────────────────
@@ -151,7 +150,6 @@ export const Overview: Story = {
     size: 'm',
     'default-slot': 'Save',
   },
-  
 };
 
 // ──────────────────────────
@@ -192,7 +190,6 @@ export const Anatomy: Story = {
     variant: 'primary',
     size: 'm',
   },
-  
 };
 
 // ──────────────────────────
@@ -361,7 +358,6 @@ export const Truncate: Story = {
       style: 'max-inline-size: 200px',
     }),
   tags: ['behaviors'],
-  
 };
 
 export const Justified: Story = {
@@ -374,7 +370,7 @@ export const Justified: Story = {
       })}
     </div>
   `,
-  parameters: { layout: 'padded',  },
+  parameters: { layout: 'padded' },
   tags: ['behaviors'],
 };
 
@@ -411,7 +407,7 @@ export const Accessibility: Story = {
     })}
   `,
   tags: ['a11y'],
-  parameters: { flexLayout: 'row-wrap',  },
+  parameters: { flexLayout: 'row-wrap' },
 };
 
 // ────────────────────────────────────
@@ -436,21 +432,3 @@ export const VRTGrid: Story = {
   tags: ['!autodocs', 'dev'],
 };
 VRTGrid.storyName = TESTING_GRID_STORY_NAME;
-
-// ────────────────────────────────────
-//    UPCOMING FEATURES STORIES
-// ────────────────────────────────────
-
-/**
- * The following features are planned for future releases:
- *
- * - **Form submission** (`type="submit"` / `type="reset"`): Native form participation.
- *   Until then, use a native `<button type="submit">` with
- *   [global button styles](/docs/guides-customization-global-element-styling--readme).
- * - **`genai` variant**: For generative AI actions.
- * - **`premium` variant**: For premium or upgrade flows.
- */
-export const UpcomingFeatures: Story = {
-  tags: ['upcoming'],
-};
-UpcomingFeatures.storyName = 'Upcoming features';
