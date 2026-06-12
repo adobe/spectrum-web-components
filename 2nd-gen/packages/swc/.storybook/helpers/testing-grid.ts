@@ -40,8 +40,10 @@ export const TESTING_GRID_STORY_NAME = 'VRT Grid';
 export const TESTING_GRID_STORY_PARAMETERS = {
   chromatic: {
     disableSnapshot: false,
-    // Pending cells use `pending: true`; wait for the activation delay before capture.
+    // Pending cells use `pending: true`; wait for pendingActive (1s) before capture.
     delay: 1100,
+    prefersReducedMotion: 'no-preference',
+    pauseAnimationAtEnd: true,
   },
 } as const;
 

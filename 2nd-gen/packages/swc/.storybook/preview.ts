@@ -160,6 +160,10 @@ const preview = {
     // `chromatic: { disableSnapshot: false }` (see testing-grid helpers).
     chromatic: {
       disableSnapshot: true,
+      forcedColors: 'none',
+      // Pending spinner uses CSS animations; avoid reduced-motion static frame.
+      prefersReducedMotion: 'no-preference',
+      pauseAnimationAtEnd: true,
     },
     backgrounds: { disable: true }, // Use custom context switches
     controls: {
