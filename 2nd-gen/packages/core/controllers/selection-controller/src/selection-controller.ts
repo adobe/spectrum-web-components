@@ -401,8 +401,12 @@ export class SelectionController implements ReactiveController {
    */
   public refresh(): void {
     const eligible = this.getEligibleItems();
+    // An item is stale when it is disconnected, or when the eligible list is
+    // non-empty and does not include it. When eligible is empty (e.g. the host
+    // signals it is disabled via getItems()→[]), only disconnected items are
+    // removed — connected selections are preserved so aria-selected stays true.
     const stale = Array.from(this.selectedItems).filter(
-      (el) => !el.isConnected || !eligible.includes(el)
+      (el) => !el.isConnected || (eligible.length > 0 && !eligible.includes(el))
     );
 
     if (stale.length > 0) {
