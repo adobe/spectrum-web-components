@@ -166,38 +166,14 @@ export default meta;
 // ────────────────────
 
 export const Playground: Story = {
-  tags: ['dev'],
+  render: (args) => html`
+    ${triggered({ ...args }, 'tooltip-playground', 'Open')}
+  `,
   args: {
     variant: 'neutral',
     placement: 'top',
     'default-slot': variantLabels.neutral,
   },
-  render: (args) => html`
-    ${triggered({ ...args }, 'tooltip-playground', 'Open')}
-  `,
-};
-
-// ──────────────────────────
-//    OVERVIEW STORY
-// ──────────────────────────
-
-export const Overview: Story = {
-  tags: ['overview'],
-  args: {
-    variant: 'neutral',
-    placement: 'top',
-    'default-slot': 'Save your changes',
-  },
-  render: (args) => html`
-    ${triggered({ ...args }, 'tooltip-overview', 'Open')}
-  `,
-};
-
-// ──────────────────────────
-//    ANATOMY STORIES
-// ──────────────────────────
-
-export const Anatomy: Story = {
   play: async ({ canvasElement }: { canvasElement: HTMLElement }) => {
     const tooltip = canvasElement.querySelector(
       'swc-tooltip'
@@ -210,6 +186,42 @@ export const Anatomy: Story = {
       expect(getComputedStyle(tooltip).opacity).toBe('1');
     });
   },
+  tags: ['dev'],
+};
+
+// ──────────────────────────
+//    OVERVIEW STORY
+// ──────────────────────────
+
+export const Overview: Story = {
+  render: (args) => html`
+    ${triggered({ ...args }, 'tooltip-overview', 'Open')}
+  `,
+  args: {
+    variant: 'neutral',
+    placement: 'top',
+    'default-slot': 'Save your changes',
+  },
+  play: async ({ canvasElement }: { canvasElement: HTMLElement }) => {
+    const tooltip = canvasElement.querySelector(
+      'swc-tooltip'
+    ) as HTMLElement & {
+      open: boolean;
+    };
+    tooltip.open = true;
+    await waitFor(() => {
+      expect(tooltip.matches(':popover-open')).toBe(true);
+      expect(getComputedStyle(tooltip).opacity).toBe('1');
+    });
+  },
+  tags: ['overview'],
+};
+
+// ──────────────────────────
+//    ANATOMY STORIES
+// ──────────────────────────
+
+export const Anatomy: Story = {
   render: (args) => html`
     ${triggered({ ...args }, 'tooltip-anatomy-short', 'Action')}
     ${triggered(
@@ -225,6 +237,18 @@ export const Anatomy: Story = {
   args: {
     placement: 'top',
     'default-slot': 'Short label',
+  },
+  play: async ({ canvasElement }: { canvasElement: HTMLElement }) => {
+    const tooltip = canvasElement.querySelector(
+      'swc-tooltip'
+    ) as HTMLElement & {
+      open: boolean;
+    };
+    tooltip.open = true;
+    await waitFor(() => {
+      expect(tooltip.matches(':popover-open')).toBe(true);
+      expect(getComputedStyle(tooltip).opacity).toBe('1');
+    });
   },
   tags: ['anatomy'],
   parameters: { flexLayout: 'row-wrap' },
@@ -258,15 +282,6 @@ export const Variants: Story = {
 };
 
 export const Placements: Story = {
-  play: async ({ canvasElement }: { canvasElement: HTMLElement }) => {
-    const tooltips = canvasElement.querySelectorAll('swc-tooltip');
-    const tooltip = tooltips[3] as HTMLElement & { open: boolean }; // bottom
-    tooltip.open = true;
-    await waitFor(() => {
-      expect(tooltip.matches(':popover-open')).toBe(true);
-      expect(getComputedStyle(tooltip).opacity).toBe('1');
-    });
-  },
   render: (args) => html`
     <style>
       .tooltip-placements {
@@ -310,6 +325,15 @@ export const Placements: Story = {
       )}
     </div>
   `,
+  play: async ({ canvasElement }: { canvasElement: HTMLElement }) => {
+    const tooltips = canvasElement.querySelectorAll('swc-tooltip');
+    const tooltip = tooltips[3] as HTMLElement & { open: boolean }; // bottom
+    tooltip.open = true;
+    await waitFor(() => {
+      expect(tooltip.matches(':popover-open')).toBe(true);
+      expect(getComputedStyle(tooltip).opacity).toBe('1');
+    });
+  },
   tags: ['options'],
   parameters: {
     layout: 'padded',
@@ -415,6 +439,18 @@ export const Events: Story = {
     placement: 'top',
     'default-slot': 'Save your changes',
   },
+  play: async ({ canvasElement }: { canvasElement: HTMLElement }) => {
+    const tooltip = canvasElement.querySelector(
+      'swc-tooltip'
+    ) as HTMLElement & {
+      open: boolean;
+    };
+    tooltip.open = true;
+    await waitFor(() => {
+      expect(tooltip.matches(':popover-open')).toBe(true);
+      expect(getComputedStyle(tooltip).opacity).toBe('1');
+    });
+  },
   tags: ['behaviors'],
 };
 
@@ -464,18 +500,6 @@ export const TriggerElement: Story = {
 };
 
 export const Labeling: Story = {
-  play: async ({ canvasElement }: { canvasElement: HTMLElement }) => {
-    const tooltip = canvasElement.querySelector(
-      'swc-tooltip'
-    ) as HTMLElement & {
-      open: boolean;
-    };
-    tooltip.open = true;
-    await waitFor(() => {
-      expect(tooltip.matches(':popover-open')).toBe(true);
-      expect(getComputedStyle(tooltip).opacity).toBe('1');
-    });
-  },
   render: (args) => html`
     ${triggered(
       {
@@ -491,6 +515,18 @@ export const Labeling: Story = {
   args: {
     placement: 'top',
     variant: 'neutral',
+  },
+  play: async ({ canvasElement }: { canvasElement: HTMLElement }) => {
+    const tooltip = canvasElement.querySelector(
+      'swc-tooltip'
+    ) as HTMLElement & {
+      open: boolean;
+    };
+    tooltip.open = true;
+    await waitFor(() => {
+      expect(tooltip.matches(':popover-open')).toBe(true);
+      expect(getComputedStyle(tooltip).opacity).toBe('1');
+    });
   },
   tags: ['behaviors'],
 };
