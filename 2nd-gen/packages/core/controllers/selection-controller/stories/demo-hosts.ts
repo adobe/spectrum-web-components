@@ -426,8 +426,18 @@ export class DemoSelectionAccordion extends LitElement {
     }
   }
 
-  protected override firstUpdated(): void {
-    this.accordionSelection.refresh();
+  protected override updated(): void {
+    for (const { key } of ACCORDION_ITEMS) {
+      const btn = this.renderRoot.querySelector<HTMLButtonElement>(
+        `[data-accordion="${key}"]`
+      );
+      if (!btn) {
+        continue;
+      }
+      const isOpen = this.accordionSelection.isSelected(btn);
+      btn.setAttribute('aria-expanded', String(isOpen));
+      this.togglePanel(key as AccordionKey, isOpen);
+    }
   }
 
   private setMode(newMode: SelectionMode): void {
@@ -455,7 +465,7 @@ export class DemoSelectionAccordion extends LitElement {
       </div>
       <div class="accordion">
         ${ACCORDION_ITEMS.map(
-          ({ key, heading, copy }, ordinal) => html`
+          ({ key, heading, copy }) => html`
             <article>
               <h3 class="accordion-heading">
                 <button
@@ -476,7 +486,7 @@ export class DemoSelectionAccordion extends LitElement {
                 role="region"
                 aria-labelledby="accordion-heading-${key}"
                 data-panel=${key}
-                ?hidden=${ordinal !== 0}
+                hidden
               >
                 ${copy}
               </div>

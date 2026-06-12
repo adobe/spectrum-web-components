@@ -280,6 +280,13 @@ export class FocusgroupNavigationController implements ReactiveController {
    */
   private cachedRows: HTMLElement[][] | null = null;
 
+  /**
+   * Snapshot of the last non-empty raw item list. Used to reset `tabIndex`
+   * when `getItems()` returns `[]` (e.g. the host signals it is disabled),
+   * since `getRawItems()` would also return `[]` in that state.
+   */
+  private lastKnownItems: HTMLElement[] = [];
+
   // ─────────────────────────
   //     PUBLIC API
   // ─────────────────────────
@@ -334,9 +341,14 @@ export class FocusgroupNavigationController implements ReactiveController {
     this.cachedRows = null;
     const items = this.getEligibleItems();
     if (items.length === 0) {
-      for (const el of this.getRawItems()) {
+      // getRawItems() calls getItems() which may return [] when the host
+      // signals it is disabled. Fall back to the last known item list so
+      // all managed items get tabIndex=-1 even when getItems() is empty.
+      const rawItems = this.getRawItems();
+      for (const el of rawItems.length > 0 ? rawItems : this.lastKnownItems) {
         el.tabIndex = -1;
       }
+      this.lastKnownItems = [];
       this.lastFocused = null;
       if (this.previousActive !== null) {
         this.previousActive = null;
@@ -346,6 +358,7 @@ export class FocusgroupNavigationController implements ReactiveController {
       return;
     }
 
+    this.lastKnownItems = this.getRawItems();
     const preferred =
       (this.options.memory &&
       this.lastFocused &&
