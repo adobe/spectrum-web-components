@@ -142,11 +142,6 @@ if (storybookMode === 'dev') {
     ...CORE_STORY_ROOT,
     files: '**/*.test.ts',
   });
-  stories.push({
-    directory: '.',
-    files: 'helpers/test/*.test.ts',
-    titlePrefix: 'Storybook infrastructure',
-  });
 }
 
 /**
