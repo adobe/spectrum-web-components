@@ -42,3 +42,5 @@ export const TOOLTIP_PLACEMENTS = [
 
 export type TooltipVariant = (typeof TOOLTIP_VARIANTS)[number];
 export type TooltipPlacement = (typeof TOOLTIP_PLACEMENTS)[number];
+export type TooltipActualPlacement =
+  (typeof TOOLTIP_PHYSICAL_PLACEMENTS)[number];

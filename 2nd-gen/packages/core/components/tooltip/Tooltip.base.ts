@@ -69,25 +69,14 @@ export abstract class TooltipBase
   public variant: TooltipVariant = 'neutral';
 
   /**
-   * Preferred placement of the tooltip relative to its trigger. Reflects the
-   * actual computed side when `PlacementController` is active (which may differ
-   * from the requested value after a viewport-driven flip).
+   * Preferred placement of the tooltip relative to its trigger. This is always
+   * the consumer's requested side; the resolved physical side (after any
+   * viewport-driven flip) is reflected as `actual-placement`.
    *
    * @default 'top'
    */
   @property({ type: String, reflect: true })
-  get placement(): TooltipPlacement {
-    return this._placement;
-  }
-
-  set placement(value: TooltipPlacement) {
-    const old = this._placement;
-    this._placement = value;
-    if (!this._placementFromController) {
-      this._requestedPlacement = value;
-    }
-    this.requestUpdate('placement', old);
-  }
+  public placement: TooltipPlacement = 'top';
 
   /**
    * Whether the tooltip is visible.
@@ -190,15 +179,6 @@ export abstract class TooltipBase
 
   private readonly placementController = new PlacementController(this);
 
-  // Backing fields for the custom placement getter/setter.
-  private _placement: TooltipPlacement = 'top';
-  // The placement originally requested by the consumer. PlacementController
-  // always starts from this value so a viewport-driven flip can revert when
-  // space opens up again.
-  private _requestedPlacement: TooltipPlacement = 'top';
-  // Set while onPlacementChange is writing the computed placement back into
-  // the property, so the setter knows not to overwrite _requestedPlacement.
-  private _placementFromController = false;
   // Guards dispatchAfterEvent so only the first transitionend per open/close cycle fires,
   // preventing one after event from firing for each CSS property that transitions.
   private afterEventPending = false;
@@ -242,23 +222,14 @@ export abstract class TooltipBase
       return;
     }
     this.placementController.start(trigger, this, {
-      // Always use the consumer's original requested placement, not the last
-      // computed value, so a viewport-driven flip can revert when space opens up.
-      placement: this._requestedPlacement as ControllerPlacement,
+      placement: this.placement as ControllerPlacement,
       offset: this.offset,
       crossOffset: this.crossOffset,
       containerPadding: this.containerPadding,
       shouldFlip: this.shouldFlip,
       tipElement: this.tipElement ?? undefined,
-      onPlacementChange: (actualPlacement: ControllerPlacement) => {
-        const mainSide = actualPlacement.split('-')[0] as TooltipPlacement;
-        if (this._placement !== mainSide) {
-          // Flag prevents the setter from treating this as a consumer change
-          // and overwriting _requestedPlacement.
-          this._placementFromController = true;
-          this.placement = mainSide;
-          this._placementFromController = false;
-        }
+      onPlacementChange: (resolvedPlacement: ControllerPlacement) => {
+        this.setAttribute('actual-placement', resolvedPlacement.split('-')[0]);
       },
     });
   }
@@ -332,6 +303,22 @@ export abstract class TooltipBase
     }
   }
 
+  private clearPositioningState(): void {
+    // Called after the exit transition. Clearing earlier would displace the
+    // tooltip to 0,0 while still visible and fading out.
+    this.removeAttribute('actual-placement');
+    this.style.removeProperty('translate');
+    this.style.removeProperty('top');
+    this.style.removeProperty('left');
+    this.style.removeProperty('--swc-placement-available-width');
+    this.style.removeProperty('--swc-placement-available-height');
+    if (this.tipElement) {
+      this.tipElement.style.removeProperty('translate');
+      this.tipElement.style.removeProperty('top');
+      this.tipElement.style.removeProperty('left');
+    }
+  }
+
   private dispatchAfterEvent(isOpen: boolean): void {
     this.dispatchEvent(
       new CustomEvent(isOpen ? 'swc-after-open' : 'swc-after-close', {
@@ -340,21 +327,7 @@ export abstract class TooltipBase
       })
     );
     if (!isOpen) {
-      // Clear PlacementController's inline positioning only after the exit
-      // transition completes. Removing translate/top/left earlier (e.g. in
-      // updated()) displaces the tooltip to 0,0 while it is still visible
-      // and fading out, causing a flash.
-      this.style.removeProperty('translate');
-      this.style.removeProperty('top');
-      this.style.removeProperty('left');
-      this.style.removeProperty('--swc-placement-available-width');
-      this.style.removeProperty('--swc-placement-available-height');
-
-      if (this.tipElement) {
-        this.tipElement.style.removeProperty('translate');
-        this.tipElement.style.removeProperty('top');
-        this.tipElement.style.removeProperty('left');
-      }
+      this.clearPositioningState();
     }
   }
 
@@ -429,16 +402,6 @@ export abstract class TooltipBase
     }
   };
 
-  protected override firstUpdated(changedProperties: PropertyValues): void {
-    super.firstUpdated(changedProperties);
-    // Sync the animation distance to the current offset value on first render
-    // so the open/close animation slides by the same distance as the gap.
-    this.style.setProperty(
-      '--_swc-tooltip-animation-distance',
-      `${this.offset}px`
-    );
-  }
-
   protected override updated(changedProperties: PropertyValues): void {
     super.updated(changedProperties);
     if (changedProperties.has('offset')) {
@@ -446,15 +409,6 @@ export abstract class TooltipBase
         '--_swc-tooltip-animation-distance',
         `${this.offset}px`
       );
-    }
-    if (changedProperties.has('open')) {
-      if (this.open !== this.isPopoverOpen) {
-        if (this.open) {
-          this.showPopover();
-        } else {
-          this.hidePopover();
-        }
-      }
     }
     if (
       changedProperties.has('open') ||
@@ -477,10 +431,16 @@ export abstract class TooltipBase
     if (openChanged) {
       if (this.open) {
         this.startPlacement();
+        if (this.open !== this.isPopoverOpen) {
+          this.showPopover();
+        }
       } else {
-        // Stop autoUpdate immediately so the position stops tracking the trigger
-        // during the exit transition. The translate/top/left are cleared by
-        // dispatchAfterEvent once the exit transition completes.
+        if (this.open !== this.isPopoverOpen) {
+          this.hidePopover();
+        }
+        // Stop autoUpdate immediately so positioning stops tracking the trigger
+        // during the exit transition. clearPositioningState() runs after the
+        // transition completes via dispatchAfterEvent.
         this.placementController.stop();
       }
     } else if (this.open) {

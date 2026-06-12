@@ -53,6 +53,9 @@
     - [Warm-up / cooldown state machine](#warm-up--cooldown-state-machine)
     - [Warm state storage](#warm-state-storage)
     - [Warm state scoping across component types](#warm-state-scoping-across-component-types)
+- [Decision log](#decision-log)
+    - [D1: `actual-placement` attribute — split consumer intent from resolved physical side](#d1-actual-placement-attribute--split-consumer-intent-from-resolved-physical-side)
+    - [D2: VRT play functions — `getComputedStyle(opacity)` poll instead of `swc-after-open`](#d2-vrt-play-functions--getcomputedstyleopacity-poll-instead-of-swc-after-open)
 - [References](#references)
 
 </details>
@@ -266,7 +269,8 @@ Derived from the 1st-gen implementation, the rendering analysis, the accessibili
 | Property | Type | Default | Attribute | Notes |
 | -------- | ---- | ------- | --------- | ----- |
 | `variant` | `'neutral' \| 'informative' \| 'negative'` | `'neutral'` | `variant` (reflect) | **Confirmed.** Positive removed. `informative` confirmed; CSS class stays `.spectrum-Tooltip--info` internally. **Behavioral change from 1st-gen:** default was `''` (empty string), which caused the setter to call `removeAttribute('variant')` — so the neutral state had no `variant` attribute on the host. In 2nd-gen, `variant="neutral"` is reflected. Consumers with `:not([variant])` selectors or `getAttribute('variant') === null` checks for neutral detection will need updating. |
-| `placement` | `TooltipPlacement` | `'top'` | `placement` (reflect) | **Confirmed.** React Spectrum default is `top`. S2 CSS adds `start`/`end` and sub-variants. **Behavioral change from 1st-gen:** 1st-gen defaulted to `undefined` (no placement attribute or CSS class). Consumers that relied on an unplaced tooltip will now receive `placement="top"` and the corresponding CSS class. |
+| `placement` | `TooltipPlacement` | `'top'` | `placement` (reflect) | **Confirmed.** React Spectrum default is `top`. S2 CSS adds `start`/`end` and sub-variants. **Behavioral change from 1st-gen:** 1st-gen defaulted to `undefined` (no placement attribute or CSS class). Consumers that relied on an unplaced tooltip will now receive `placement="top"` and the corresponding CSS class. This attribute always holds the consumer's declared value; `PlacementController` never mutates it. See `actual-placement` for the resolved physical side. |
+| — | — | — | `actual-placement` (internal) | Internal CSS-only state attribute. Not a Lit `@property`; not in the public API, TypeDoc, or CEM. Written by `Tooltip.base.ts` via direct `setAttribute` — once synchronously before `showPopover()` (initial declared side) and again by `onPlacementChange` after `computePlacement()` resolves (resolved physical side). Always a physical cardinal side: `'top' \| 'bottom' \| 'left' \| 'right'`. Cleared by `clearPositioningState()` after the exit transition completes (called from `dispatchAfterEvent(false)`) — it is not cleared at `hidePopover()` time to avoid a CSS selector change while the tooltip is still visible and fading. All CSS selectors for tip direction, margin spacing, and `@starting-style` animation target this attribute. |
 | `open` | `boolean` | `false` | `open` (reflect) | **Confirmed.** |
 | `for` | `string` | `undefined` | `for` | **Confirmed.** ID of the trigger element in the same document tree root. The tooltip calls `getRootNode().getElementById(this.for)` to resolve the trigger, then wires the ARIA relationship on `open` change (see [ARIA relationship wiring](#aria-relationship-wiring)). Active in both automatic and manual modes — see the trigger-mode interaction table in [Behavioral semantics](#behavioral-semantics). HoverController hover/focus auto-wiring is additive. |
 | `trigger-element` | `HTMLElement \| null` | `null` | — (setter only) | **Confirmed.** Explicit trigger element reference; overrides `for` when set. Drives the same ARIA wiring on `open` change as `for`, via direct element reference rather than ID lookup. Use for cross-shadow-root triggers where `getRootNode().getElementById()` is scoped to the wrong tree root, or for the directive (programmatic insertion). `HoverController` and `PlacementController` receive the resolved value and do not perform their own trigger resolution. |
@@ -324,7 +328,7 @@ The `TooltipOpenable` intermediate element is an implementation detail of the 1s
 
 1. The tooltip uses `popover="auto"`. Built-in Esc-to-close and light-dismiss are included. Note: participates in the auto stack — opening a tooltip will close other open `auto` popovers (menus, pickers).
 2. `HoverController` manages open/close timing (warm-up/cooldown using the `delay` value; default 1500ms), keyboard-focus parity (opens immediately), and the WCAG 1.4.13 pointer bridge. Wired in `Tooltip.base.ts`; target is set from `resolveTrigger()` whenever `for` or `triggerElement` changes. ARIA relationship wiring is handled by the SWC layer on `open` change, not by `HoverController`.
-3. `PlacementController` handles viewport-aware pixel positioning using `offset`, `flip`, and `shift` middleware; `placement`, `offset`, `cross-offset`, `container-padding`, and `should-flip` attributes map to controller options. When the controller flips the tooltip to the opposite side, `onPlacementChange` reflects the computed side back into `this.placement` so the existing `[placement]` CSS selectors pick up the correct tip direction and animation direction automatically. The original consumer-requested placement is tracked separately in `_requestedPlacement` so the controller always re-computes from the requested side and can revert the flip when viewport space is restored.
+3. `PlacementController` handles viewport-aware pixel positioning using `offset`, `flip`, and `shift` middleware; `placement`, `offset`, `cross-offset`, `container-padding`, and `should-flip` attributes map to controller options. When the controller resolves the physical placement (including any flip), `onPlacementChange` calls `this.setAttribute('actual-placement', resolvedSide)` directly. `placement` is never mutated; it always holds the consumer's declared value. All CSS selectors for tip direction, margin spacing, and `@starting-style` animation use `[actual-placement]`. See [Decision log: D1](#decision-log) for the reasoning behind this split.
 4. `Escape` closes the tooltip without moving focus via the built-in `popover="auto"` dismiss behavior.
 5. New 2nd-gen event shape: `swc-open`, `swc-after-open`, `swc-close`, `swc-after-close` (B5). Events fire from listeners wired from the initial release.
 6. When `manual` is set, `HoverController` wiring (hover/focus events, timing, pointer bridge) is skipped; the consumer owns open/close. ARIA relationship wiring is unaffected — it fires on `open` change whenever `for` or `trigger-element` is set.
@@ -425,8 +429,8 @@ Modes 1 and 2 use automatic hover/focus trigger wiring (`HoverController`) and p
 - Built-in Esc-to-close and light-dismiss via `popover="auto"`. Note: participates in the auto popover stack — opening this tooltip closes other open `auto` popovers (menus, pickers).
 - `HoverController` wires `pointerenter`/`pointerleave`/`focusin`/`focusout` on the resolved trigger; manages warm-up/cooldown timing, keyboard-focus priority, and the WCAG 1.4.13 pointer bridge. The controller target is updated whenever `for` or `trigger-element` changes (via `updated()`). Suppressed when `manual` or `disabled` is set.
 - On `open = true`, SWC resolves the trigger via `for` (ID lookup in the same root) or `trigger-element` (explicit reference) and sets `Element.ariaDescribedByElements = [tooltipHost]` on the trigger's interactive surface. Removed on `open = false`. See [ARIA relationship wiring](#aria-relationship-wiring).
-- `PlacementController` handles pixel positioning. On open, it receives the resolved trigger and the tooltip host, computes `{ x, y }` via Floating UI, and applies `top: 0; left: 0; translate: Xpx Ypx` to the host. When `flip` repositions to a different side, `onPlacementChange` reflects the actual side back into `this.placement` (protected by a `_placementFromController` flag so the setter does not overwrite `_requestedPlacement`). The existing `[placement]` CSS selectors automatically pick up the reflected value for tip direction and animation.
-- The tip element (`<span class="swc-Tooltip-tip">`) is CSS-centered on the edge determined by the `placement` attribute. Because `placement` always reflects the actual computed side, the tip direction and enter animation are always correct.
+- `PlacementController` handles pixel positioning. On open, it receives the resolved trigger and the tooltip host, computes `{ x, y }` via Floating UI, and applies `top: 0; left: 0; translate: Xpx Ypx` to the host. When `flip` repositions to a different side, `onPlacementChange` calls `this.setAttribute('actual-placement', resolvedSide)` directly. `placement` is never mutated — it always holds the consumer's declared value. All `[actual-placement]` CSS selectors pick up the resolved value for tip direction, margin spacing, and `@starting-style` animation.
+- The tip element (`<span class="swc-Tooltip-tip">`) is CSS-centered on the edge determined by the `actual-placement` attribute. Because `actual-placement` is always a resolved physical side, the tip direction and enter animation are always correct.
 - `offset`, `cross-offset`, `container-padding`, and `should-flip` are all active API that feed directly into `PlacementController` options.
 
 ### Accessibility semantics notes (2nd-gen)
@@ -547,7 +551,9 @@ if (isOpen !== this.open) {
 
 **Implemented.** `Tooltip.base.ts` instantiates `PlacementController`, calls `start(trigger, this, options)` when the tooltip opens (in `updated()` when `open` becomes `true`), and calls `stop()` when it closes. `start()` is also called on options changes (`placement`, `offset`, `crossOffset`, `containerPadding`, `shouldFlip`, `for`, `triggerElement`) while open.
 
-`onPlacementChange` reflects the computed main side back into `this.placement` via the custom setter, guarded by a `_placementFromController` flag that prevents the setter from overwriting `_requestedPlacement`. The existing `[placement]` CSS selectors automatically pick up the reflected value — no additional CSS attributes or rules are needed. `_requestedPlacement` tracks the consumer's original requested side, so the controller always starts from the requested placement and can revert a flip when viewport space is restored.
+`onPlacementChange` calls `this.setAttribute('actual-placement', resolvedSide)` directly — bypassing Lit's property system because `actual-placement` is internal CSS-only state, not a consumer-facing API. `placement` is never mutated — the consumer's declared value is always preserved. All CSS selectors for tip direction, margin spacing, and `@starting-style` entrance animation use `[actual-placement]`.
+
+`PlacementController.start()` fires `onPlacementChange` synchronously (direction-resolved, before the async `autoUpdate` loop starts), and `Tooltip.base.ts` calls `startPlacement()` before `showPopover()` in `updated()`. This ensures `actual-placement` is set before `showPopover()` and before `@starting-style` is evaluated, so the entrance animation always travels from the correct direction — even on a flip. This resolves the known limitation that was tracked as A13.
 
 No arrow middleware is used — the tip is CSS-centered on the computed side. `PlacementController` only layers pixel positioning on top of the existing `popover="auto"` mechanism.
 
@@ -612,8 +618,7 @@ The impact is most acute in the additive phase, when `HoverController` will call
 - [x] Verify visibility in WHCM — `1px solid transparent` border in base; `CanvasText` fill on tip in forced-colors
 - [x] Add `@cssprop` JSDoc tag for `--swc-tooltip-background-color` on the SWC `Tooltip` class — the only exposed `--swc-*` property; set by variant rules for informative and negative, overridable by consumers
 - [x] Pass stylelint (property order, `no-descending-specificity`, token validation)
-- [x] Separate physical placements (`right`, `left`) from logical placements (`end`, `start`) in tip-element CSS; physical placements use physical `left`/`right` properties that do not flip in RTL; logical placements use `inset-inline-*` for natural RTL behavior with rotation-only `:dir(rtl)` overrides
-- [x] Open-state RTL animations: `start`/`end` open-state transforms use separate `:host(:dir(rtl)[placement="..."])` rules, not `&:dir(rtl)` nesting, due to the `:host()` compound pseudo-class constraint (see [anti-pattern #9](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/05_anti-patterns.md#9-nesting-compound-pseudo-classes-on-host-via-css-nesting))
+- [x] Tip-element CSS, margin spacing, and `@starting-style` animation all use `[actual-placement]` attribute selectors (physical cardinal sides only: `top`, `bottom`, `left`, `right`). RTL is handled by `PlacementController` resolving logical `start`/`end` to physical sides before writing `actual-placement`; no `:dir(rtl)` CSS rules are needed in `tooltip.css`. Logical `start`/`end` CSS selectors and all `:dir(rtl)` overrides were removed when `actual-placement` was introduced (see [Decision log: D1](#decision-log)).
 
 #### Visual model and regressions
 
@@ -738,7 +743,7 @@ Create these tickets before this migration PR closes. Link each to Epic SWC-2017
 
 | Ticket | Summary | Why deferred | Plan sections |
 | ------ | ------- | ------------ | ------------- |
-| ~~SWC-2210~~ | ~~**Integrate PlacementController into Tooltip.**~~ | **Shipped.** `PlacementController` wired in `Tooltip.base.ts`; `start()`/`stop()` called on `open` changes; `onPlacementChange` reflects the computed side into `this.placement` (guarded by `_placementFromController` flag); `_requestedPlacement` preserves the consumer's original value. `offset`, `cross-offset`, `container-padding`, and `should-flip` feed directly into controller options. No additional CSS needed — existing `[placement]` selectors handle tip direction. | ~~Additive A1 (positioning), A7, A8, A9~~ |
+| ~~SWC-2210~~ | ~~**Integrate PlacementController into Tooltip.**~~ | **Shipped.** `PlacementController` wired in `Tooltip.base.ts`; `start()`/`stop()` called on `open` changes; `onPlacementChange` calls `setAttribute('actual-placement', resolvedSide)` directly; `placement` is never mutated and always holds the consumer's declared value. All `[actual-placement]` CSS selectors handle tip direction, margin spacing, and `@starting-style` animation. `offset`, `cross-offset`, `container-padding`, and `should-flip` feed directly into controller options. | ~~Additive A1 (positioning), A7, A8, A9~~ |
 | ~~SWC-2210~~ | ~~**Integrate HoverController into Tooltip.**~~ | **Shipped.** `TooltipBase` implements `HoverControllerHost`; `HoverController` wired with `warmStateKey: 'swc-tooltip'`; target set from `resolveTrigger()` in `updated()`. Hover/focus wiring, warm-up/cooldown, `disabled` guard, and WCAG 1.4.13 pointer bridge are all active. | ~~Additive A1 (hover/focus), A2, A3, A4~~ |
 | SWC-2279 | **2nd-gen tooltip-directive.** Lit directive for programmatic tooltip insertion. Creates `<swc-tooltip>` as a sibling of the target and handles lifecycle cleanup. Simpler than 1st-gen: no `sp-overlay` wrapper needed; automatic trigger wiring activates because `manual` is not set. | Both controllers are now active; this can proceed. | Additive A6 |
 | SWC-2278 | **`no-tip` attribute.** Remove the directional tip arrow. Figma-confirmed. Can proceed independently of controller integration; no controller dependency. Create when React Spectrum adds support as a confirming signal. | No cross-framework confirmation yet; Figma-only signal is not sufficient to ship. | Additive A5 |
@@ -816,6 +821,42 @@ const key = Symbol.for(`swc-hover-state:${options.warmStateKey}`);
 ```
 
 All `swc-tooltip` instances share one `Symbol.for('swc-hover-state:swc-tooltip')` state object on `document`. A future component using `HoverController` with a different `warmStateKey` gets its own independent state.
+
+---
+
+## Decision log
+
+Decisions made after the initial plan was approved and implementation had begun. Each entry records what changed, why, and how it affects the plan.
+
+### D1: `actual-placement` attribute — split consumer intent from resolved physical side
+
+**Phase:** Review (Phase 8)  
+**Trigger:** PR reviewer feedback.
+
+**Original design:** `PlacementController.onPlacementChange` mutated `this.placement` to hold the resolved physical side. A `_placementFromController` flag guarded the setter to prevent overwriting `_requestedPlacement` (the consumer's declared value). All CSS selectors used `[placement]`.
+
+**Problem:** The `placement` attribute changing under the consumer is surprising. A consumer who sets `placement="start"` and later reads the attribute back gets `"right"` (or `"left"` in LTR). This breaks the principle that a reflected attribute holds what the consumer declared.
+
+**Decision:** Keep `placement` as the consumer's declared intent; it is never mutated by the controller. Add a new DOM attribute `actual-placement` managed entirely via direct `setAttribute`/`removeAttribute` — not a Lit `@property`, not in the public API or CEM. `Tooltip.base.ts` sets it synchronously before `showPopover()` (initial declared side) and `onPlacementChange` overwrites it once `computePlacement()` resolves (resolved physical side). The value is always a physical cardinal side: `top | bottom | left | right`. All CSS selectors for tip direction, margin spacing, and `@starting-style` animation were moved to `[actual-placement]`. Logical `start`/`end` CSS rules and all `:dir(rtl)` overrides were removed — RTL resolution is handled entirely by `PlacementController.start()` calling `toFloatingPlacement()` before writing `actual-placement`.
+
+**Cleared after exit transition:** `actual-placement` is removed by `clearPositioningState()` (called from `dispatchAfterEvent(false)`) after the exit transition completes. It is not cleared at `hidePopover()` time — clearing there would cause a CSS selector change while the tooltip is still visible and fading out, potentially flipping the tip direction or margin during the animation. The attribute is set fresh on the next open.
+
+**Animation timing:** `PlacementController.start()` now fires `onPlacementChange` synchronously (direction-resolved) before the async `autoUpdate` loop begins. `Tooltip.base.ts` calls `startPlacement()` before `showPopover()` in `updated()`. This guarantees `actual-placement` is set before `showPopover()` — and therefore before `@starting-style` is evaluated by the browser — resolving the A13 known limitation from the original plan.
+
+**Files changed:** `Tooltip.types.ts`, `Tooltip.base.ts`, `tooltip.css`, `placement-controller.ts`, `tooltip.test.ts`.
+
+---
+
+### D2: VRT play functions — `getComputedStyle(opacity)` poll instead of `swc-after-open`
+
+**Phase:** Review (Phase 8)  
+**Trigger:** Chromatic VRT snapshots not showing the tooltip in its open state.
+
+**Root cause:** `swc-after-open` fires from a `transitionend` listener on the tooltip host. For `popover="auto"` top-layer elements in Chromatic's headless browser, `transitionend` is unreliable — it does not fire consistently. Three approaches were tried and failed: `userEvent.tab()`, `tooltip.open = true + waitFor(':popover-open')`, and `swc-after-open` event listener.
+
+**Decision:** Poll `getComputedStyle(tooltip).opacity === '1'` inside Vitest's `waitFor`. The `:host(:popover-open) { opacity: 1 }` rule in the shadow DOM CSS makes computed opacity a reliable indicator that the tooltip is fully visible and the entrance transition has completed. The poll also checks `tooltip.matches(':popover-open')` to confirm the popover is in the top layer.
+
+**Files changed:** `tooltip.stories.ts` (all 7 play functions), `.ai/rules/stories-format.md` (play function guidance section), `memory/feedback_play_functions_vrt_vitest.md`.
 
 ---
 

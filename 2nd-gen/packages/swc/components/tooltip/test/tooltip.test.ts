@@ -997,14 +997,14 @@ export const PlacementControllerTest: Story = {
     );
 
     await step(
-      'reflects the actual computed placement back into the placement property',
+      'sets the actual-placement attribute to a valid physical side',
       async () => {
         await waitFor(
           () =>
             expect(
-              ['top', 'bottom', 'left', 'right', 'start', 'end'],
-              'placement reflects a valid computed side'
-            ).toContain(tooltip.placement),
+              ['top', 'bottom', 'left', 'right'],
+              'actual-placement attribute reflects a valid physical side'
+            ).toContain(tooltip.getAttribute('actual-placement')),
           { timeout: 1000 }
         );
       }
@@ -1153,6 +1153,52 @@ export const ForIdNotFoundWarningTest: Story = {
             'warning message references the for attribute value'
           ).toContain('does-not-exist');
         })
+    );
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
+// TEST: actual-placement attribute — flip
+// ──────────────────────────────────────────────────────────────
+
+export const ActualPlacementFlipTest: Story = {
+  // The trigger is pinned to the top of the viewport with position:fixed so
+  // there is no room above for a placement="top" tooltip. Floating UI's flip
+  // middleware will resolve to "bottom" and onPlacementChange should write
+  // actual-placement="bottom" via setAttribute.
+  render: () => html`
+    <div
+      style="position: fixed; top: 0; left: 50%; transform: translateX(-50%); z-index: 100;"
+    >
+      <swc-button id="tt-flip-btn">Trigger</swc-button>
+      <swc-tooltip for="tt-flip-btn" placement="top">
+        Tooltip that flips to bottom
+      </swc-tooltip>
+    </div>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const tooltip = await getComponent<Tooltip>(canvasElement, 'swc-tooltip');
+
+    await step(
+      'sets actual-placement to the flipped side when placement="top" but there is no room above',
+      async () => {
+        tooltip.open = true;
+
+        // Poll until onPlacementChange has written the flipped side. The initial
+        // setAttribute in updated() sets "top"; computePlacement() is async and
+        // overwrites it once Floating UI resolves the flip.
+        await waitFor(
+          () =>
+            expect(
+              tooltip.getAttribute('actual-placement'),
+              'actual-placement reflects the flipped physical side'
+            ).toBe('bottom'),
+          { timeout: 2000 }
+        );
+
+        tooltip.open = false;
+        await tooltip.updateComplete;
+      }
     );
   },
 };

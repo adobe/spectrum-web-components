@@ -100,33 +100,21 @@
    ───────────────────────────────────────────────────────────────────────────── */
 
 /* Bottom: margin at block-start */
-:host([placement="bottom"]) .swc-Tooltip {
+:host([actual-placement="bottom"]) .swc-Tooltip {
   margin-block-start: var(--_swc-tooltip-tip-height);
   margin-block-end: 0;
 }
 
 /* Right: margin at inline-start */
-:host([placement="right"]) .swc-Tooltip {
+:host([actual-placement="right"]) .swc-Tooltip {
   margin-block-end: 0;
   margin-left: var(--_swc-tooltip-tip-height);
 }
 
 /* Left: margin at inline-end */
-:host([placement="left"]) .swc-Tooltip {
+:host([actual-placement="left"]) .swc-Tooltip {
   margin-block-end: 0;
   margin-right: var(--_swc-tooltip-tip-height);
-}
-
-/* Start: margin at inline-end (tooltip is before the trigger) */
-:host([placement="start"]) .swc-Tooltip {
-  margin-block-end: 0;
-  margin-inline-end: var(--_swc-tooltip-tip-height);
-}
-
-/* End: margin at inline-start (tooltip is after the trigger) */
-:host([placement="end"]) .swc-Tooltip {
-  margin-block-end: 0;
-  margin-inline-start: var(--_swc-tooltip-tip-height);
 }
 
 /* ─────────────────────────────────────────────────────────────────────────────
@@ -150,25 +138,21 @@
 
 /* Bottom: bubble is below; start shifted up toward trigger, slide down */
 @starting-style {
-  :host([placement="bottom"]:popover-open) {
+  :host([actual-placement="bottom"]:popover-open) {
     transform: translateY(calc(-1 * var(--_swc-tooltip-animation-distance)));
   }
 }
 
-/* Right / end-LTR / start-RTL: bubble is to the right; start shifted left toward trigger, slide right */
+/* Right: bubble is to the right; start shifted left toward trigger, slide right */
 @starting-style {
-  :host([placement="right"]:popover-open),
-  :host([placement="end"]:popover-open),
-  :host(:dir(rtl)[placement="start"]:popover-open) {
+  :host([actual-placement="right"]:popover-open) {
     transform: translateX(calc(-1 * var(--_swc-tooltip-animation-distance)));
   }
 }
 
-/* Left / start-LTR / end-RTL: bubble is to the left; start shifted right toward trigger, slide left */
+/* Left: bubble is to the left; start shifted right toward trigger, slide left */
 @starting-style {
-  :host([placement="left"]:popover-open),
-  :host([placement="start"]:popover-open),
-  :host(:dir(rtl)[placement="end"]:popover-open) {
+  :host([actual-placement="left"]:popover-open) {
     transform: translateX(var(--_swc-tooltip-animation-distance));
   }
 }
@@ -194,59 +178,31 @@
 
 /* ── Tip placement ── */
 
-/* Top placements: tip at bottom edge pointing down ▽ (same as default; listed for clarity) */
-:host([placement="top"]) .swc-Tooltip-tip {
+/* Top: tip at bottom edge pointing down ▽ (same as default; listed for clarity) */
+:host([actual-placement="top"]) .swc-Tooltip-tip {
   top: calc(100% - (0.5 * var(--_swc-tooltip-tip-square-size)));
   transform: rotate(-45deg);
 }
 
-/* Bottom placements: tip at top edge pointing up △ */
-:host([placement="bottom"]) .swc-Tooltip-tip {
+/* Bottom: tip at top edge pointing up △ */
+:host([actual-placement="bottom"]) .swc-Tooltip-tip {
   inset-block: auto calc(100% - (0.5 * var(--_swc-tooltip-tip-square-size)));
   transform: rotate(135deg);
 }
 
-/* Right placement (physical): tip at physical left edge pointing left ◁
-   Must use a physical property so the tip does not flip in RTL. */
-:host([placement="right"]) .swc-Tooltip-tip {
+/* Right: tip at physical left edge pointing left ◁ */
+:host([actual-placement="right"]) .swc-Tooltip-tip {
   top: calc(50% - (0.5 * var(--_swc-tooltip-tip-square-size)));
   left: calc(-0.5 * var(--_swc-tooltip-tip-square-size));
   transform: rotate(45deg);
 }
 
-/* End placement (logical): tip at logical inline-end edge, flips naturally in RTL.
-   inset-inline: auto X resets the base `left` (via inset-inline-start: auto) and
-   sets the correct edge via inset-inline-end; no position override needed in RTL. */
-:host([placement="end"]) .swc-Tooltip-tip {
-  inset-block-start: calc(50% - (0.5 * var(--_swc-tooltip-tip-square-size)));
-  inset-inline: auto calc(100% - (0.5 * var(--_swc-tooltip-tip-square-size)));
-  transform: rotate(45deg); /* LTR: points left ◁ */
-
-  &:dir(rtl) {
-    transform: rotate(-135deg); /* RTL: end = left side, tip points right ▷ */
-  }
-}
-
-/* Left placement (physical): tip at physical right edge pointing right ▷
-   Must use physical properties so the tip does not flip in RTL. */
-:host([placement="left"]) .swc-Tooltip-tip {
+/* Left: tip at physical right edge pointing right ▷ */
+:host([actual-placement="left"]) .swc-Tooltip-tip {
   top: calc(50% - (0.5 * var(--_swc-tooltip-tip-square-size)));
   right: calc(-0.5 * var(--_swc-tooltip-tip-square-size));
   left: auto;
   transform: rotate(-135deg);
-}
-
-/* Start placement (logical): tip at logical inline-start edge, flips naturally in RTL.
-   In RTL inset-inline-start maps to right; the base physical left is then overridden
-   by the browser (right wins over left for RTL absolutely-positioned elements). */
-:host([placement="start"]) .swc-Tooltip-tip {
-  inset-block-start: calc(50% - (0.5 * var(--_swc-tooltip-tip-square-size)));
-  inset-inline-start: calc(100% - (0.5 * var(--_swc-tooltip-tip-square-size)));
-  transform: rotate(-135deg); /* LTR: points right ▷ */
-
-  &:dir(rtl) {
-    transform: rotate(45deg); /* RTL: start = right side, tip points left ◁ */
-  }
 }
 
 /* ─────────────────────────────────────────────────────────────────────────────
