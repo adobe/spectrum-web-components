@@ -13,7 +13,7 @@
 /*
  * Meter-specific styles. Shared structural rules (bar/track/fill,
  * sizes, side-label layout, static colors, forced-colors) live in
- * `swc/stylesheets/shared/linear-progress-base.css` and consume
+ * `swc/stylesheets/_lit-styles/linear-progress-base.css` and consume
  * `--swc-linear-progress-*` custom properties. This file assigns
  * the variant fill colors via the same exposed surface.
  */
