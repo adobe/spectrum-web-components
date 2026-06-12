@@ -3,13 +3,13 @@ import { DocsFooter, DocsHeader } from '../../.storybook/blocks';
 
 import * as LinkStories from './stories/link.stories';
 
-<Meta of={LinkStories} />
-
 <DocsHeader />
 
-Link presentation uses **native `<a href>` elements** with BEM classes from `@adobe/spectrum-wc/link.css`. Default anchor appearance inside prose and link lists ships with `@adobe/spectrum-wc/typography.css`; see [Typography](/docs/components-typography--readme) for [Prose container](/docs/components-typography--readme#prose-container) and [Link list](/docs/components-typography--readme#link-list) patterns.
+Link presentation uses **native `<a href>` elements** with BEM classes from `@adobe/spectrum-wc/link.css`. Default anchor appearance inside prose and link lists ships with `@adobe/spectrum-wc/typography.css`; see [Typography](/docs/components-typography--docs) for [Prose container](/docs/components-typography--docs#prose-container) and [Link list](/docs/components-typography--docs#link-list) patterns.
 
-For bare, classless `<a href>` elements outside typography wrappers, import `@adobe/spectrum-wc/global-link.css` to opt in to application-wide baseline link styling. This stylesheet is not included in `swc.css`; add it explicitly when your app needs Spectrum defaults on unclassed anchors.
+For bare, classless `<a href>` elements outside typography wrappers, import `@adobe/spectrum-wc/global-link.css` to opt in to application-wide baseline link styling.
+
+<Meta of={LinkStories} />
 
 ## Options
 
@@ -40,21 +40,9 @@ Use `.swc-Link--staticWhite` and `.swc-Link--staticBlack` when displaying links 
 
 <Canvas of={LinkStories.StaticColors} />
 
-### Color variants
-
-Default and secondary treatments from `link.css`.
-
-<Canvas of={LinkStories.ColorVariants} />
-
-### In prose
-
-Wrap content in `.swc-Typography--prose` and use unclassed `<a href>` inside running text. Default link styling comes from the typography wrapper, not per-link BEM classes. See [Typography / Prose container](/docs/components-typography--readme#prose-container).
-
-<Canvas of={LinkStories.InProse} />
-
 ### Link list
 
-Use `<ul class="swc-Typography--links">` with unclassed `<a href>` in each item. Link lists in footers, sidebars, and navigation regions receive default styling from the wrapper. See [Typography / Link list](/docs/components-typography--readme#link-list).
+Use `<ul class="swc-Typography--links">` with unclassed `<a href>` in each item. Link lists in footers, sidebars, and navigation regions receive default styling from the wrapper. See [Typography / Link list](/docs/components-typography--docs#link-list).
 
 <Canvas of={LinkStories.LinkList} />
 

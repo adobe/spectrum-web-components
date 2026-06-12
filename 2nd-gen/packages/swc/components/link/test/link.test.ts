@@ -15,7 +15,6 @@ import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import meta, {
-  ColorVariants,
   InProse,
   LinkList,
   QuietStandalone,
@@ -129,25 +128,6 @@ export const QuietImpliesStandaloneTest: Story = {
       expect(
         anchor.classList.contains('swc-Link--quiet'),
         'has quiet modifier'
-      ).toBe(true);
-    });
-  },
-};
-
-export const ColorVariantsTest: Story = {
-  ...ColorVariants,
-  play: async ({ canvasElement, step }) => {
-    const anchors = getAnchors(canvasElement);
-
-    await step('renders default and secondary color variants', async () => {
-      expect(anchors.length, 'renders two anchors').toBe(2);
-      expect(
-        anchors[0]?.classList.contains('swc-Link--secondary'),
-        'default variant is not secondary'
-      ).toBe(false);
-      expect(
-        anchors[1]?.classList.contains('swc-Link--secondary'),
-        'secondary variant has modifier'
       ).toBe(true);
     });
   },

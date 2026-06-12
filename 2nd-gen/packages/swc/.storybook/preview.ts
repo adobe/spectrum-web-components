@@ -337,7 +337,10 @@ const preview = {
                   'Rendering and styling migration analysis',
                 ],
                 'Action group',
-                ['Rendering and styling migration analysis'],
+                [
+                  'Accessibility migration analysis',
+                  'Rendering and styling migration analysis',
+                ],
                 'Action menu',
                 [
                   'Accessibility migration analysis',

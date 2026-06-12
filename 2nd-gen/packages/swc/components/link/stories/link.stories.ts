@@ -17,7 +17,6 @@ import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import {
   CONTEXTS,
   LANGS,
-  LINK_COLOR_VARIANTS,
   LINK_STATIC_VARIANTS,
   type LinkTemplateProps,
   template,
@@ -196,7 +195,6 @@ export const InProse: Story = {
     context: 'prose',
     variant: 'default',
   },
-  tags: ['options'],
 };
 
 export const LinkList: Story = {
@@ -233,26 +231,6 @@ export const StaticColors: Story = {
   },
 };
 StaticColors.storyName = 'Static colors';
-
-export const ColorVariants: Story = {
-  render: (args) => html`
-    ${LINK_COLOR_VARIANTS.map((variant) =>
-      template({
-        ...args,
-        variant,
-        context: 'explicit',
-        sampleText: variant === 'secondary' ? 'Learn more' : 'Link label',
-      })
-    )}
-  `,
-  args: {
-    href: '#',
-  },
-  parameters: {
-    flexLayout: 'column-stretch',
-  },
-  tags: ['options'],
-};
 
 // ────────────────────────────────
 //    ACCESSIBILITY STORIES
