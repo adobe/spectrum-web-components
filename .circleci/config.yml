@@ -337,7 +337,7 @@ jobs:
       - run:
           name: Run chromium tests
           command: |
-            TEST=$(circleci tests glob "1st-gen/{packages,tools}/*/test/*.test.js" | grep -v ".*-memory\.test\.js$" | sed 's/1st-gen\///' | circleci tests split --split-by=timings)
+            TEST=$(circleci tests glob "1st-gen/{packages,tools}/*/test/*.test.js" | grep -v ".*-memory\.test\.js$" | circleci tests split --split-by=timings | sed 's/1st-gen\///')
             yarn workspace @spectrum-web-components/1st-gen test:start --files $TEST --config ./web-test-runner.config.ci-chromium.js --group unit-ci
       - store_test_results:
           path: /root/project/1st-gen/results/
@@ -368,7 +368,7 @@ jobs:
       - run:
           name: Run memory tests
           command: |
-            TEST=$(circleci tests glob "1st-gen/{packages,tools}/*/test/*-memory.test.js" | grep -v "packages/color-.*/test/.*-memory\.test\.js" | grep -v "tools/grid/test/.*-memory\.test\.js" | sed 's/1st-gen\///' | circleci tests split --split-by=timings)
+            TEST=$(circleci tests glob "1st-gen/{packages,tools}/*/test/*-memory.test.js" | grep -v "packages/color-.*/test/.*-memory\.test\.js" | grep -v "tools/grid/test/.*-memory\.test\.js" | circleci tests split --split-by=timings | sed 's/1st-gen\///')
             echo $TEST
             yarn workspace @spectrum-web-components/1st-gen test:start --files $TEST --config web-test-runner.config.ci-chromium-memory.js --group unit-ci
       - store_test_results:
@@ -385,7 +385,7 @@ jobs:
       - run:
           name: Run firefox tests
           command: |
-            TEST=$(circleci tests glob "1st-gen/{packages,tools}/*/test/*.test.js" | grep -v ".*-memory\.test\.js$" | sed 's/1st-gen\///' | circleci tests split --split-by=timings)
+            TEST=$(circleci tests glob "1st-gen/{packages,tools}/*/test/*.test.js" | grep -v ".*-memory\.test\.js$" | circleci tests split --split-by=timings | sed 's/1st-gen\///')
             yarn workspace @spectrum-web-components/1st-gen test:start --files $TEST --config web-test-runner.config.ci-firefox.js --group unit-ci
       - store_test_results:
           path: /root/project/results/
@@ -401,7 +401,7 @@ jobs:
       - run:
           name: Run webkit tests
           command: |
-            TEST=$(circleci tests glob "1st-gen/{packages,tools}/*/test/*.test.js" | grep -v ".*-memory\.test\.js$" | sed 's/1st-gen\///' | circleci tests split --split-by=timings)
+            TEST=$(circleci tests glob "1st-gen/{packages,tools}/*/test/*.test.js" | grep -v ".*-memory\.test\.js$" | circleci tests split --split-by=timings | sed 's/1st-gen\///')
             yarn workspace @spectrum-web-components/1st-gen test:start --files $TEST --config web-test-runner.config.ci-webkit.js --group unit-ci
       - store_test_results:
           path: /root/project/results/
