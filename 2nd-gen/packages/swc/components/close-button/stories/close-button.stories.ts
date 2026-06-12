@@ -10,13 +10,11 @@
  * governing permissions and limitations under the License.
  */
 
+import { html } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
-import {
-  BUTTON_STATIC_COLORS,
-  BUTTON_VALID_SIZES,
-} from '@spectrum-web-components/core/components/button';
+import { CloseButton } from '@adobe/spectrum-wc/components/close-button';
 
 import '@adobe/spectrum-wc/components/close-button/swc-close-button.js';
 
@@ -29,18 +27,32 @@ const { args, argTypes, template } = getStorybookHelpers('swc-close-button');
 argTypes.size = {
   ...argTypes.size,
   control: { type: 'select' },
-  options: BUTTON_VALID_SIZES,
+  options: CloseButton.VALID_SIZES,
+  table: {
+    category: 'attributes',
+    defaultValue: {
+      summary: 'm',
+    },
+  },
 };
 
 argTypes['static-color'] = {
   ...argTypes['static-color'],
   control: 'select',
-  options: ['', ...BUTTON_STATIC_COLORS],
+  options: ['', ...CloseButton.STATIC_COLORS],
   table: {
     ...argTypes['static-color']?.table,
     category: 'attributes',
   },
 };
+
+// Inherited from ButtonBase; not part of the close-button public API.
+for (const attribute of ['pending', 'pending-label'] as const) {
+  argTypes[attribute] = {
+    ...argTypes[attribute],
+    table: { disable: true },
+  };
+}
 
 args['accessible-label'] = 'Close';
 
@@ -85,4 +97,127 @@ export const Overview: Story = {
     'accessible-label': 'Close',
   },
   tags: ['overview'],
+};
+
+// ──────────────────────────
+//    OPTIONS STORIES
+// ──────────────────────────
+
+export const Sizes: Story = {
+  render: (args) => html`
+    <div style="display: flex; align-items: center; gap: 16px;">
+      ${CloseButton.VALID_SIZES.map(
+        (size) => html`
+          ${template({
+            ...args,
+            size,
+            'accessible-label': `Close (${size})`,
+          })}
+        `
+      )}
+    </div>
+  `,
+  tags: ['options'],
+};
+
+export const StaticColors: Story = {
+  render: (args) => html`
+    <div
+      style="display: flex; align-items: center; gap: 16px; padding: 16px; background: var(--spectrum-gray-800, #222);"
+    >
+      ${template({ ...args, 'accessible-label': 'Close (default)' })}
+      ${template({
+        ...args,
+        'static-color': 'white',
+        'accessible-label': 'Close (white)',
+      })}
+      ${template({
+        ...args,
+        'static-color': 'black',
+        'accessible-label': 'Close (black)',
+      })}
+    </div>
+  `,
+  tags: ['options'],
+};
+
+// ──────────────────────────
+//    STATES STORIES
+// ──────────────────────────
+
+export const States: Story = {
+  render: (args) => html`
+    <div style="display: flex; align-items: center; gap: 16px;">
+      ${template({ ...args, 'accessible-label': 'Close' })}
+      ${template({ ...args, disabled: true, 'accessible-label': 'Close' })}
+    </div>
+  `,
+  tags: ['states'],
+};
+
+// ────────────────────────────────
+//    ACCESSIBILITY STORIES
+// ────────────────────────────────
+
+export const Accessibility: Story = {
+  render: (args) => html`
+    <div
+      style="display: flex; flex-direction: column; gap: 24px; max-inline-size: 28rem;"
+    >
+      <section>
+        <h4 style="margin: 0 0 8px;">Icon-only with accessible-label</h4>
+        <p style="margin: 0 0 12px;">
+          The cross icon is decorative (
+          <code>aria-hidden</code>
+          ). The name comes from
+          <code>accessible-label</code>
+          on the host.
+        </p>
+        ${template({ ...args, 'accessible-label': 'Close' })}
+      </section>
+
+      <section>
+        <h4 style="margin: 0 0 8px;">Visible slot label</h4>
+        <p style="margin: 0 0 12px;">
+          Slotted text is visually hidden but exposed as the button name when
+          <code>accessible-label</code>
+          is omitted.
+        </p>
+        <swc-close-button size=${args.size}>Dismiss</swc-close-button>
+      </section>
+
+      <section
+        style="padding: 16px; border: 1px solid var(--spectrum-gray-300, #ccc); border-radius: 4px;"
+      >
+        <div
+          style="display: flex; align-items: flex-start; justify-content: space-between; gap: 16px;"
+        >
+          <div>
+            <h4 style="margin: 0 0 4px;">Dialog title</h4>
+            <p style="margin: 0;">
+              Use a dismiss name that matches the action (for example
+              &quot;Close&quot;), not a clear/reset verb.
+            </p>
+          </div>
+          ${template({
+            ...args,
+            'accessible-label': 'Close dialog',
+          })}
+        </div>
+      </section>
+
+      <section>
+        <h4 style="margin: 0 0 8px;">Disabled</h4>
+        ${template({
+          ...args,
+          disabled: true,
+          'accessible-label': 'Close',
+        })}
+      </section>
+    </div>
+  `,
+  parameters: {
+    flexLayout: 'column-stretch',
+  },
+  tags: ['a11y'],
 };

@@ -15,8 +15,11 @@ import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
 import {
+  BUTTON_STATIC_COLORS,
+  BUTTON_VALID_SIZES,
   ButtonBase,
   type ButtonSize,
+  type ButtonStaticColor,
 } from '@spectrum-web-components/core/components/button';
 
 import {
@@ -38,18 +41,56 @@ const crossIconBySize: Record<ButtonSize, () => TemplateResult> = {
 /**
  * A compact dismiss control for dialogs, banners, toasts, and similar chrome.
  *
+ * Renders a native `<button type="button">` with delegated focus. Every
+ * instance needs a discernible name via `accessible-label` or default slot text.
+ * The cross icon is decorative (`aria-hidden="true"`).
+ *
  * @element swc-close-button
  * @since 0.0.1
  *
  * @slot - Accessible text label rendered visually hidden next to the cross icon.
  *
  * @example
+ * ```html
  * <swc-close-button accessible-label="Close"></swc-close-button>
+ * ```
  *
  * @example
+ * ```html
  * <swc-close-button>Close</swc-close-button>
+ * ```
+ *
+ * @example
+ * ```html
+ * <swc-close-button static-color="white" accessible-label="Close"></swc-close-button>
+ * ```
  */
 export class CloseButton extends ButtonBase {
+  /**
+   * @internal
+   *
+   * A readonly array of the valid size values for the close button.
+   */
+  static readonly VALID_SIZES: readonly ButtonSize[] = BUTTON_VALID_SIZES;
+
+  /**
+   * @internal
+   *
+   * A readonly array of the valid static color values for the close button.
+   */
+  static readonly STATIC_COLORS: readonly ButtonStaticColor[] =
+    BUTTON_STATIC_COLORS;
+
+  /**
+   * Close buttons always render a cross icon; treat as icon-present for
+   * shared {@link ButtonBase} accessibility checks.
+   *
+   * @internal
+   */
+  protected override get hasIcon(): boolean {
+    return true;
+  }
+
   // ──────────────────────────────
   //     RENDERING & STYLING
   // ──────────────────────────────
