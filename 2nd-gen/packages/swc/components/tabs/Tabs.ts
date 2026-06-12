@@ -71,8 +71,6 @@ export class Tabs extends TabsBase {
           this.direction === 'vertical' ? 'vertical' : undefined
         )}
         aria-disabled=${ifDefined(this.disabled ? 'true' : undefined)}
-        @click=${this.handleClick}
-        @keydown=${this.handleKeyDown}
       >
         <slot @slotchange=${this.handleTabSlotChange}></slot>
         <div

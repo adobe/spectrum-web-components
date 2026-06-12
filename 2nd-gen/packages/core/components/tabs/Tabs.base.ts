@@ -12,6 +12,12 @@
 import { PropertyValues } from 'lit';
 import { property, state } from 'lit/decorators.js';
 
+import {
+  focusgroupNavigationActiveChange,
+  type FocusgroupNavigationActiveChangeDetail,
+  FocusgroupNavigationController,
+  SelectionController,
+} from '@spectrum-web-components/core/controllers/index.js';
 import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
 
 import {
@@ -242,6 +248,80 @@ export abstract class TabsBase extends SpectrumElement {
   private _tabs: TabLike[] = [];
 
   /**
+   * @internal
+   *
+   * When `true`, the next `confirmSelectionChange` call returns `true`
+   * without dispatching a `change` event. Used to sync the
+   * SelectionController's internal state from external property changes
+   * without raising a user-facing event.
+   */
+  private _suppressSelectionChangeEvent = false;
+
+  // ──────────────────────────────
+  //     REACTIVE CONTROLLERS
+  // ──────────────────────────────
+
+  /**
+   * @internal
+   *
+   * Manages roving tabindex and arrow-key / Home / End focus movement
+   * within the tab list. Direction is kept in sync with `this.direction`
+   * via `setOptions` in `willUpdate`. Disabled tabs remain in the
+   * navigation sequence (per APG) but are not activatable.
+   *
+   * `getItems` returns an empty array when the container is disabled so
+   * all tabs lose their tab stop, matching the `aria-disabled` tablist
+   * behavior.
+   */
+  private readonly _navigation = new FocusgroupNavigationController(this, {
+    direction: this._direction,
+    wrap: true,
+    getItems: () => (this.disabled ? [] : (this._tabs as HTMLElement[])),
+  });
+
+  /**
+   * @internal
+   *
+   * Manages click and Enter/Space selection within the tab list.
+   * `selectItem` / `deselectItem` update each tab element's `selected`
+   * property; `onSelectionChange` keeps the public `selected` (tab-id)
+   * string in sync; `confirmSelectionChange` dispatches the cancelable
+   * `change` event so consumers may veto a selection.
+   *
+   * `keydownActivation: true` handles manual-mode Enter/Space. In
+   * automatic mode, pressing Enter/Space on the focused tab is a no-op
+   * because the tab is already selected (`single` mode ignores
+   * re-clicks on the active item).
+   *
+   * `getItems` returns an empty array when the container is disabled,
+   * which prevents any selection interaction while disabled.
+   */
+  private readonly _selection = new SelectionController(this, {
+    getItems: () => (this.disabled ? [] : (this._tabs as HTMLElement[])),
+    selectItem: (item) => {
+      (item as TabLike).selected = true;
+    },
+    deselectItem: (item) => {
+      (item as TabLike).selected = false;
+    },
+    mode: 'single',
+    keydownActivation: true,
+    onSelectionChange: ({ selectedItems }) => {
+      const newTab = selectedItems[0] as TabLike | undefined;
+      const newId = newTab?.tabId ?? '';
+      if (this.selected !== newId) {
+        this.selected = newId;
+      }
+    },
+    confirmSelectionChange: () => {
+      if (this._suppressSelectionChangeEvent) {
+        return true;
+      }
+      return this.dispatchEvent(new Event('change', { cancelable: true }));
+    },
+  });
+
+  /**
    * Whether an assigned node is treated as a tab. `role="tab"` is set in
    * each tab's `firstUpdated`, so `slotchange` may run before that — accept
    * known tab host tag names so the tab list and selection indicator sync.
@@ -258,15 +338,19 @@ export abstract class TabsBase extends SpectrumElement {
 
   /**
    * Called by the concrete class when the default slot's content
-   * changes. Rebuilds the internal tab list and syncs selection
-   * state.
+   * changes. Rebuilds the internal tab list, syncs the SelectionController
+   * to the current `selected` value, and refreshes keyboard navigation.
    */
   protected handleTabSlotChange(event: Event): void {
     const slot = event.target as HTMLSlotElement;
     this._tabs = slot
       .assignedElements()
       .filter(TabsBase.isTabSlotNode) as TabLike[];
-    this.updateCheckedState();
+
+    // Refresh navigation first so its eligible-items cache is populated
+    // before _syncSelectionController calls setActiveItem.
+    this._navigation.refresh();
+    this._syncSelectionController();
     this.updateSelectionIndicator();
   }
 
@@ -282,227 +366,52 @@ export abstract class TabsBase extends SpectrumElement {
   }
 
   /**
-   * Click handler bound to the tablist wrapper in the concrete
-   * template. Activates the clicked tab.
+   * Syncs the SelectionController's internal `selectedItems` set and the
+   * navigation controller's roving tab stop to match `this.selected` without
+   * dispatching a `change` event. Called when `selected` changes externally
+   * and when the tab list is rebuilt.
    */
-  protected handleClick(event: Event): void {
-    if (this.disabled) {
-      return;
-    }
-
-    const target = event
-      .composedPath()
-      .find((el) => (el as TabLike).parentElement === this) as
-      | TabLike
-      | undefined;
-
-    if (!target || target.disabled) {
-      return;
-    }
-
-    this.selectTarget(target);
-  }
-
-  /**
-   * Full keyboard handler per WAI-ARIA APG Tabs pattern.
-   *
-   * **Horizontal:** Left/Right navigate; Up/Down ignored.
-   * **Vertical:** Up/Down navigate; Left/Right ignored.
-   * **RTL:** Left/Right swap in `dir="rtl"`.
-   * **Wrapping:** Navigation wraps from last to first and vice versa.
-   * **Disabled tabs:** Disabled tabs receive focus via arrows but
-   * are not activatable by Enter/Space.
-   * **Automatic activation:** When `keyboard-activation` is `automatic`,
-   * selection follows focus on arrow key navigation.
-   * **Home/End:** Jump to first/last tab.
-   */
-  protected handleKeyDown(event: KeyboardEvent): void {
-    if (this.disabled) {
-      return;
-    }
-
-    const { code } = event;
-
-    if (code === 'Enter' || code === 'Space') {
-      event.preventDefault();
-      const target = event.target as TabLike | null;
-      if (target && !target.disabled) {
-        this.selectTarget(target);
-      }
-      return;
-    }
-
-    const delta = this.getNavigationDelta(code);
-    if (delta !== null) {
-      event.preventDefault();
-      this.focusByDelta(delta);
-      return;
-    }
-
-    if (code === 'Home') {
-      event.preventDefault();
-      this.focusTabAtIndex(0);
-      return;
-    }
-
-    if (code === 'End') {
-      event.preventDefault();
-      this.focusTabAtIndex(this._tabs.length - 1);
-      return;
-    }
-  }
-
-  /**
-   * Maps a keyboard code to a navigation delta (+1 or -1) based
-   * on orientation and text direction. Returns `null` when the key
-   * does not apply to the current orientation.
-   */
-  private getNavigationDelta(code: string): number | null {
-    const isRtl = this.dir === 'rtl';
-
-    if (this._direction === 'horizontal') {
-      if (code === 'ArrowRight') {
-        return isRtl ? -1 : 1;
-      }
-      if (code === 'ArrowLeft') {
-        return isRtl ? 1 : -1;
-      }
-      return null;
-    }
-
-    // Vertical: Up/Down navigate; Left/Right have no effect.
-    if (code === 'ArrowDown') {
-      return 1;
-    }
-    if (code === 'ArrowUp') {
-      return -1;
-    }
-    return null;
-  }
-
-  /**
-   * Moves focus by `delta` positions from the currently focused tab,
-   * wrapping around the list. All tabs (including disabled) receive
-   * focus per APG. In automatic activation mode, the newly focused tab
-   * is also selected.
-   */
-  private focusByDelta(delta: number): void {
+  private _syncSelectionController(): void {
     if (!this._tabs.length) {
       return;
     }
 
-    const root = this.getRootNode() as Document | ShadowRoot;
-    const current = this._tabs.indexOf(root.activeElement as TabLike);
-    const start = current === -1 ? 0 : current;
-    const nextIndex = this.wrapIndex(start + delta);
+    const selectedTab = this._tabs.find((t) => t.tabId === this.selected);
 
-    this.focusTabAtIndex(nextIndex);
+    if (selectedTab) {
+      this._suppressSelectionChangeEvent = true;
+      this._selection.setSelectedItem(selectedTab as HTMLElement);
+      this._suppressSelectionChangeEvent = false;
+      // Also sync the roving tab stop so focus() and Tab re-entry target
+      // the selected tab rather than the first item in the list.
+      this._navigation.setActiveItem(selectedTab as HTMLElement);
+    } else if (this.selected) {
+      // No tab with this id — reset the public property.
+      this.selected = '';
+    }
   }
 
   /**
-   * Focuses the tab at the given index and, when in automatic
-   * activation mode, also selects it. Selection runs before `focus()`
-   * so `change` listeners observe the updated value before focus moves.
+   * Handles `focusgroupNavigationActiveChange` events dispatched by
+   * `_navigation`. In automatic activation mode, selects the newly
+   * focused tab (unless it is disabled) and dispatches `change`.
    */
-  private focusTabAtIndex(index: number): void {
-    if (!this._tabs.length) {
+  private readonly _handleNavigationActiveChange = (event: Event): void => {
+    if (this._keyboardActivation !== 'automatic') {
       return;
     }
-
-    const clamped = this.wrapIndex(index);
-    const tab = this._tabs[clamped];
-    if (!tab) {
+    const { activeElement } = (
+      event as CustomEvent<FocusgroupNavigationActiveChangeDetail>
+    ).detail;
+    if (!activeElement) {
       return;
     }
-
-    if (this._keyboardActivation === 'automatic' && !tab.disabled) {
-      this.selectTarget(tab);
-    }
-
-    this.setRovingTabindex(tab);
-    tab.focus();
-  }
-
-  /**
-   * Wraps an index into the valid range `[0, tabs.length)`.
-   */
-  private wrapIndex(index: number): number {
-    const len = this._tabs.length;
-    return ((index % len) + len) % len;
-  }
-
-  /**
-   * Updates roving tabindex so only the given tab has
-   * `tabindex="0"` and all others have `tabindex="-1"`.
-   */
-  private setRovingTabindex(activeTab: TabLike): void {
-    for (const tab of this._tabs) {
-      tab.tabIndex = tab === activeTab ? 0 : -1;
-    }
-  }
-
-  /**
-   * Attempts to select the given tab element. Dispatches a cancelable
-   * `change` event — if the consumer calls `preventDefault()`, the
-   * selection reverts to the previous value.
-   */
-  private selectTarget(target: TabLike): void {
-    const id = target.tabId;
-    if (!id) {
+    const tab = activeElement as TabLike;
+    if (tab.disabled) {
       return;
     }
-
-    const previous = this.selected;
-    this.selected = id;
-
-    const applyDefault = this.dispatchEvent(
-      new Event('change', {
-        cancelable: true,
-      })
-    );
-
-    if (!applyDefault) {
-      this.selected = previous;
-    }
-  }
-
-  /**
-   * Synchronizes the `selected` attribute and roving tabindex on
-   * each child tab to match the container's `selected` value.
-   * Ensures at least one tab has `tabindex="0"` for Tab-key entry
-   * when the container is not disabled. When the container is
-   * disabled, all tabs get `tabindex="-1"` to prevent Tab-key
-   * entry into the tab list.
-   */
-  private updateCheckedState(): void {
-    let hasTabStop = false;
-
-    for (const tab of this._tabs) {
-      tab.selected = false;
-    }
-
-    if (this.selected) {
-      const currentTab = this._tabs.find((el) => el.tabId === this.selected);
-
-      if (currentTab) {
-        currentTab.selected = true;
-        if (!this.disabled) {
-          this.setRovingTabindex(currentTab);
-          hasTabStop = true;
-        }
-      } else {
-        this.selected = '';
-      }
-    }
-
-    if (this.disabled) {
-      for (const tab of this._tabs) {
-        tab.tabIndex = -1;
-      }
-    } else if (!hasTabStop && this._tabs.length) {
-      this._tabs[0].tabIndex = 0;
-    }
-  }
+    this._selection.setSelectedItem(activeElement);
+  };
 
   /**
    * Wires up cross-element ARIA relationships between tabs and
@@ -591,7 +500,7 @@ export abstract class TabsBase extends SpectrumElement {
       ) as TabLike | null;
 
       if (selectedChild) {
-        this.selectTarget(selectedChild);
+        this.selected = selectedChild.tabId;
       }
     }
 
@@ -599,7 +508,7 @@ export abstract class TabsBase extends SpectrumElement {
 
     if (changes.has('selected')) {
       if (this._tabs.length) {
-        this.updateCheckedState();
+        this._syncSelectionController();
       }
 
       const previousValue = changes.get('selected') as string | undefined;
@@ -625,16 +534,29 @@ export abstract class TabsBase extends SpectrumElement {
     }
 
     if (changes.has('disabled') && this._tabs.length) {
-      this.updateCheckedState();
+      // getItems already returns [] when disabled; refreshing both
+      // controllers re-applies roving tabindex accordingly.
+      this._navigation.refresh();
+      this._selection.refresh();
+      // After re-enabling, restore the roving tab stop to the selected tab
+      // (refresh() defaults to items[0] when no item has tabindex=0).
+      if (!this.disabled) {
+        this._syncSelectionController();
+      }
     }
 
     if (changes.has('direction')) {
+      this._navigation.setOptions({ direction: this.direction });
       this.updateSelectionIndicator();
     }
   }
 
   public override connectedCallback(): void {
     super.connectedCallback();
+    this.addEventListener(
+      focusgroupNavigationActiveChange,
+      this._handleNavigationActiveChange
+    );
     window.addEventListener('resize', this.updateSelectionIndicator);
     if ('fonts' in document) {
       document.fonts.addEventListener(
@@ -649,6 +571,10 @@ export abstract class TabsBase extends SpectrumElement {
   }
 
   public override disconnectedCallback(): void {
+    this.removeEventListener(
+      focusgroupNavigationActiveChange,
+      this._handleNavigationActiveChange
+    );
     window.removeEventListener('resize', this.updateSelectionIndicator);
     if ('fonts' in document) {
       document.fonts.removeEventListener(
@@ -662,23 +588,17 @@ export abstract class TabsBase extends SpectrumElement {
   }
 
   /**
-   * Focuses the selected tab, or the first tab when none is selected yet.
-   * Slotted tabs live in the light DOM; this is more reliable than relying
-   * only on shadow `delegatesFocus` across browsers and test harnesses.
+   * Focuses the tab that currently has the roving tab stop (`tabindex="0"`),
+   * falling back to `super.focus()` when no tab is in the tab order.
    */
   public override focus(options?: FocusOptions): void {
     if (this.disabled) {
       return;
     }
 
-    const selectedTab = this._tabs.find((tab) => tab.selected);
-    if (selectedTab) {
-      (selectedTab as HTMLElement).focus(options);
-      return;
-    }
-
-    if (this._tabs.length) {
-      (this._tabs[0] as HTMLElement).focus(options);
+    const activeItem = this._navigation.getActiveItem();
+    if (activeItem) {
+      activeItem.focus(options);
       return;
     }
 
