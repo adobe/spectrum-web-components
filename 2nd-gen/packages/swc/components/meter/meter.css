@@ -1,0 +1,31 @@
+/*!
+ * Copyright 2026 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+/*
+ * Meter-specific styles. Shared structural rules (bar/track/fill,
+ * sizes, side-label layout, static colors, forced-colors) live in
+ * `swc/stylesheets/shared/linear-progress-base.css` and consume
+ * `--swc-linear-progress-*` custom properties. This file assigns
+ * the variant fill colors via the same exposed surface.
+ */
+
+:host([variant="positive"]) {
+  --swc-linear-progress-fill-color: token("positive-visual-color");
+}
+
+:host([variant="notice"]) {
+  --swc-linear-progress-fill-color: token("notice-visual-color");
+}
+
+:host([variant="negative"]) {
+  --swc-linear-progress-fill-color: token("negative-visual-color");
+}

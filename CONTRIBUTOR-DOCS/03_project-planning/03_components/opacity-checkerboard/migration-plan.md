@@ -75,7 +75,7 @@ Why a shared `css` fragment and not a global class: **a global stylesheet class 
 
 ### Most blocking open questions
 
-None block implementation. The deliverable form (importable `css` fragment under `swc/stylesheets/shared/`) and class name (`.swc-opacity-checkerboard`) are decided. One non-blocking open item remains — whether the a11y workstream needs to sign off — tracked in [Scope and prerequisites](#scope-and-prerequisites).
+None block implementation. The deliverable form (importable `css` fragment under `swc/stylesheets/shared/`) and class name (`.swc-OpacityCheckerboard`) are decided. One non-blocking open item remains — whether the a11y workstream needs to sign off — tracked in [Scope and prerequisites](#scope-and-prerequisites).
 
 ---
 
@@ -234,7 +234,7 @@ Confirmed items are marked; open items are tracked in [Blockers and open questio
 
 N/A — no custom element. **Confirmed** by [Tools vs packages](../../../../CONTRIBUTOR-DOCS/01_contributor-guides/12_tools-vs-packages.md#abstraction-targets-2nd-gen): Opacity-Checkerboard → "CSS utility class (utility class only; no custom element)."
 
-The public surface is a CSS class name (inside the shared fragment) + the `--swc-*` tokens it reads. Class name: `.swc-opacity-checkerboard` (with a `--size-small` modifier).
+The public surface is a CSS class name (inside the shared fragment) + the `--swc-*` tokens it reads. Class name: `.swc-OpacityCheckerboard` (with a `--sizeS` modifier).
 
 #### Visual matrix (2nd-gen)
 
@@ -311,7 +311,7 @@ Decided form:
 
 ### API
 
-N/A — no public component API (no properties, methods, events, slots). The only "API" decisions are the class name (`.swc-opacity-checkerboard`) and the consumed token set (confirmed).
+N/A — no public component API (no properties, methods, events, slots). The only "API" decisions are the class name (`.swc-OpacityCheckerboard`) and the consumed token set (confirmed).
 
 ### Styling
 
@@ -338,7 +338,7 @@ N/A — no public component API (no properties, methods, events, slots). The onl
 
 > Internal-only for now. The utility is consumed by SWC components via Lit `styles`, not by application authors directly, so it does not belong in the public Components docs. Any Storybook entry goes under an internal/Tools section (e.g. an `.internal.mdx`-style page excluded from production docs builds), not under Components.
 
-- [ ] Internal Storybook page (outside Components) demonstrating the fragment imported into a small Lit host's `styles` array, with `.swc-opacity-checkerboard` applied to a decorative element in its shadow root — no light-DOM/global-stylesheet usage, since the fragment is exported only for Lit consumption
+- [ ] Internal Storybook page (outside Components) demonstrating the fragment imported into a small Lit host's `styles` array, with `.swc-OpacityCheckerboard` applied to a decorative element in its shadow root — no light-DOM/global-stylesheet usage, since the fragment is exported only for Lit consumption
 - [ ] Document the deprecation + replacement in the 1st-gen `opacity-checkerboard` README and `package.json` deprecation field
 - [ ] Keep contributor docs internal for now; no public-facing Components docs entry
 
@@ -359,7 +359,7 @@ N/A — no public component API (no properties, methods, events, slots). The onl
 
 ### Design
 
-None — deliverable form (importable `css` fragment) and class name (`.swc-opacity-checkerboard`) are decided.
+None — deliverable form (importable `css` fragment) and class name (`.swc-OpacityCheckerboard`) are decided.
 
 ### Architecture and behavior
 
