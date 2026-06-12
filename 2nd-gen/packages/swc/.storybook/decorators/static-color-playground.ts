@@ -14,13 +14,7 @@ import { html } from 'lit';
 import { makeDecorator } from '@storybook/preview-api';
 import type { DecoratorFunction } from '@storybook/types';
 
-/**
- * Static color background settings - matching spectrum-css gradients
- */
-const staticColorSettings = {
-  black: 'linear-gradient(45deg, rgb(255 241 246), rgb(238 245 255))',
-  white: 'linear-gradient(45deg, rgb(64 0 22), rgb(14 24 67))',
-} as const;
+import { STATIC_COLOR_DEMO_BACKGROUNDS } from './static-colors-demo.js';
 
 /**
  * Decorator that applies background colors based on static-color arg.
@@ -31,13 +25,13 @@ export const withStaticColorPlayground: DecoratorFunction = makeDecorator({
   parameterName: 'staticColorPlayground',
   wrapper: (StoryFn, context) => {
     const { args } = context;
-    const staticColor = args?.[
-      'static-color'
-    ] as keyof typeof staticColorSettings;
+    const staticColor = args?.['static-color'] as
+      | keyof typeof STATIC_COLOR_DEMO_BACKGROUNDS
+      | undefined;
 
     const background =
-      staticColor && staticColorSettings[staticColor]
-        ? staticColorSettings[staticColor]
+      staticColor && STATIC_COLOR_DEMO_BACKGROUNDS[staticColor]
+        ? STATIC_COLOR_DEMO_BACKGROUNDS[staticColor]
         : '';
 
     // If no static color is set, just return the story as-is

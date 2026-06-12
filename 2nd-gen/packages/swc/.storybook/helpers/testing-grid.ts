@@ -28,14 +28,19 @@ import { styleMap } from 'lit/directives/style-map.js';
 import { when } from 'lit/directives/when.js';
 import type { StoryContext } from '@storybook/web-components';
 
-/** Standard storyName for VRT grids (onlyStoryNames glob in chromatic.config.json). */
-export const TESTING_GRID_STORY_NAME = 'Default';
+import {
+  STATIC_COLOR_DEMO_BACKGROUNDS,
+  STATIC_COLOR_DEMO_FOREGROUNDS,
+} from '../decorators/static-colors-demo.js';
+
+/** Standard storyName for VRT grids (Chromatic opt-in via TESTING_GRID_STORY_PARAMETERS). */
+export const TESTING_GRID_STORY_NAME = 'VRT Grid';
 
 /** Opt a testing-grid story into Chromatic (preview disables snapshots globally). */
 export const TESTING_GRID_STORY_PARAMETERS = {
   chromatic: {
     disableSnapshot: false,
-    // Pending cells use `pending: true` without `vrt-pending-active`; wait for activation.
+    // Pending cells use `pending: true`; wait for the activation delay before capture.
     delay: 1100,
   },
 } as const;
@@ -66,6 +71,37 @@ function readStaticColor(
   }
   const v = args['static-color'] ?? args.staticColor;
   return typeof v === 'string' ? v : undefined;
+}
+
+type StaticColorDemoKey = keyof typeof STATIC_COLOR_DEMO_BACKGROUNDS;
+
+function isStaticColorDemoKey(
+  value: string | undefined
+): value is StaticColorDemoKey {
+  return value === 'white' || value === 'black';
+}
+
+/** Gradient panel for VRT static-color sections (mirrors spectrum-css context backgrounds). */
+function wrapWithStaticColorDemo<TArgs extends Record<string, unknown>>(
+  Template: GridTemplateFn<TArgs>,
+  data: TArgs
+): GridTemplateFn<TArgs> {
+  const staticColor = readStaticColor(data);
+  if (!staticColor || !isStaticColorDemoKey(staticColor)) {
+    return Template;
+  }
+
+  return (args, context) => html`
+    <div
+      style=${styleMap({
+        padding: '24px',
+        color: STATIC_COLOR_DEMO_FOREGROUNDS[staticColor],
+        background: STATIC_COLOR_DEMO_BACKGROUNDS[staticColor],
+      })}
+    >
+      ${Template(args, context)}
+    </div>
+  `;
 }
 
 function isDarkTheme(context: StoryContext): boolean {
@@ -278,6 +314,7 @@ type StatesOwn<TArgs extends Record<string, unknown>> = {
   Template: GridTemplateFn<TArgs>;
   direction?: 'row' | 'column';
   stateData?: Array<StateItem & TArgs> | (StateItem & TArgs);
+  withStateBorder?: boolean;
   containerStyles?: Record<string, string>;
   wrapperStyles?: Record<string, string>;
   containerHeading?: string;
@@ -294,6 +331,7 @@ export function States<TArgs extends Record<string, unknown>>(
     Template,
     direction = 'row',
     stateData = [],
+    withStateBorder = false,
     containerStyles = {},
     wrapperStyles = {},
     containerHeading = '',
@@ -343,7 +381,7 @@ export function States<TArgs extends Record<string, unknown>>(
             {
               heading: showStateHeading ? testHeading : '',
               level: 3,
-              withBorder: false,
+              withBorder: withStateBorder,
               wrapperStyles: {
                 ...wrapperStyles,
                 ...stateWrapperStyles,
@@ -521,6 +559,7 @@ export interface VariantsConfig<TArgs extends Record<string, unknown>> {
   SizeTemplate?: GridTemplateFn<TArgs>;
   testData?: Array<TestCaseItem<TArgs> & TArgs>;
   stateData?: Array<StateItem & TArgs>;
+  withStateBorder?: boolean;
   withSizes?: boolean;
   sizeDirection?: 'row' | 'column';
   stateDirection?: 'row' | 'column';
@@ -538,6 +577,7 @@ export function Variants<TArgs extends Record<string, unknown>>({
   SizeTemplate,
   testData = [{}],
   stateData = [],
+  withStateBorder = false,
   withSizes = true,
   sizeDirection,
   stateDirection,
@@ -610,11 +650,13 @@ export function Variants<TArgs extends Record<string, unknown>>({
               withStates = paddedStateData.length > 0;
             }
 
-            const Alt = AltTemplate ?? resolvedTestTemplate;
-
             const withBorder = withStates || testData.length > 1;
 
             const data = { ...args, ...item } as TArgs;
+            const Alt = wrapWithStaticColorDemo(
+              AltTemplate ?? resolvedTestTemplate,
+              data
+            );
 
             let heading = testHeading;
             if (testData.some((t) => t.testHeading) && !heading) {
@@ -644,6 +686,7 @@ export function Variants<TArgs extends Record<string, unknown>>({
                           Template: Alt,
                           stateData: paddedStateData,
                           direction: stateDirection,
+                          withStateBorder,
                           wrapperStyles: combinedStyles,
                           containerHeading: heading ?? '',
                           ...data,

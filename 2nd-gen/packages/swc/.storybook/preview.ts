@@ -27,6 +27,7 @@ import { withLanguageWrapper } from './decorators/language.js';
 import { withStaticColorPlayground } from './decorators/static-color-playground.js';
 import DocumentTemplate from './DocumentTemplate.mdx';
 import { FontLoader } from './loaders/font-loader.js';
+import { pseudoStatesDecorator } from './pseudo-states-decorator.js';
 import { transformDocsSource } from './utils/docs-source-transform.js';
 
 import '../stylesheets/swc.css';
@@ -145,6 +146,7 @@ const preview = {
     testingPreview: false,
   },
   decorators: [
+    pseudoStatesDecorator,
     withContext,
     withLanguageWrapper,
     withStaticColorPlayground,
@@ -465,7 +467,11 @@ const preview = {
                 'Number field',
                 ['Rendering and styling migration analysis'],
                 'Opacity checkerboard',
-                ['Migration plan', 'Rendering and styling migration analysis'],
+                [
+                  'Accessibility migration analysis',
+                  'Migration plan',
+                  'Rendering and styling migration analysis',
+                ],
                 'Picker button',
                 ['Rendering and styling migration analysis'],
                 'Popover',

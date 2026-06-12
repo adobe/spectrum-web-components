@@ -33,9 +33,6 @@ import {
 import styles from './button.css';
 import baseStyles from './button-base.css';
 
-/** Storybook / Chromatic only — forces a pseudo-state appearance in VRT grids. */
-export type ButtonVrtState = 'hover' | 'focus' | 'active';
-
 /**
  * A button component that triggers an action when activated.
  *
@@ -122,27 +119,6 @@ export class Button extends ButtonBase {
   @property({ type: Boolean, reflect: true })
   public justified: boolean = false;
 
-  /**
-   * Forces hover, focus, or active visuals for visual-regression grids.
-   * Not supported for production use.
-   */
-  @property({ type: String, reflect: true, attribute: 'vrt-state' })
-  public vrtState?: ButtonVrtState;
-
-  /**
-   * Skips the pending-state delay so Chromatic captures the busy appearance.
-   * Use with `pending`. Not supported for production use.
-   */
-  @property({ type: Boolean, reflect: true, attribute: 'vrt-pending-active' })
-  public vrtPendingActive: boolean = false;
-
-  /**
-   * Forces icon-only visuals in VRT grids when light-DOM slot detection lags.
-   * Not supported for production use.
-   */
-  @property({ type: Boolean, reflect: true, attribute: 'vrt-icon-only' })
-  public vrtIconOnly: boolean = false;
-
   // ──────────────────────────────
   //     RENDERING & STYLING
   // ──────────────────────────────
@@ -157,14 +133,9 @@ export class Button extends ButtonBase {
       <button
         class=${classMap({
           'swc-Button': true,
-          'swc-Button--hasIcon': this.hasIcon || this.vrtIconOnly,
-          'swc-Button--iconOnly':
-            this.vrtIconOnly || (this.hasIcon && !this.hasLabel),
-          'swc-Button--pendingActive':
-            this.pendingActive || (this.pending && this.vrtPendingActive),
-          'is-hover': this.vrtState === 'hover',
-          'is-focus-visible': this.vrtState === 'focus',
-          'is-active': this.vrtState === 'active',
+          'swc-Button--hasIcon': this.hasIcon,
+          'swc-Button--iconOnly': this.hasIcon && !this.hasLabel,
+          'swc-Button--pendingActive': this.pendingActive,
         })}
         type="button"
         @click=${this.handleClick}

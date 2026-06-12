@@ -28,10 +28,11 @@ import {
 import '@adobe/spectrum-wc/components/button/swc-button.js';
 
 import {
+  applyTestingGridPseudoStates,
   TESTING_GRID_STORY_NAME,
   TESTING_GRID_STORY_PARAMETERS,
 } from '../../../.storybook/helpers/index.js';
-import { ButtonGroups as buttonGroupsRender } from './button.test.js';
+import { ButtonVRTRender } from '../test/button.vrt.js';
 
 // ────────────────
 //    METADATA
@@ -135,9 +136,7 @@ export const Playground: Story = {
     size: 'm',
     'default-slot': 'Button',
   },
-  parameters: {
-    chromatic: { disableSnapshot: true },
-  },
+  
 };
 
 // ──────────────────────────────
@@ -152,9 +151,7 @@ export const Overview: Story = {
     size: 'm',
     'default-slot': 'Save',
   },
-  parameters: {
-    chromatic: { disableSnapshot: true },
-  },
+  
 };
 
 // ──────────────────────────
@@ -195,9 +192,7 @@ export const Anatomy: Story = {
     variant: 'primary',
     size: 'm',
   },
-  parameters: {
-    chromatic: { disableSnapshot: true },
-  },
+  
 };
 
 // ──────────────────────────
@@ -222,7 +217,6 @@ export const Variants: Story = {
   `,
   parameters: {
     flexLayout: 'row-wrap',
-    chromatic: { disableSnapshot: true },
   },
   tags: ['options'],
 };
@@ -240,7 +234,6 @@ export const Outline: Story = {
   `,
   parameters: {
     flexLayout: 'row-wrap',
-    chromatic: { disableSnapshot: true },
   },
   tags: ['options'],
 };
@@ -274,7 +267,6 @@ export const StaticColors: Story = {
   `,
   parameters: {
     staticColorsDemo: true,
-    chromatic: { disableSnapshot: true },
   },
   tags: ['options', '!test'],
 };
@@ -292,7 +284,6 @@ export const States: Story = {
   `,
   parameters: {
     flexLayout: 'row-wrap',
-    chromatic: { disableSnapshot: true },
   },
   tags: ['states'],
 };
@@ -357,7 +348,6 @@ export const TextWrapping: Story = {
   tags: ['behaviors'],
   parameters: {
     flexLayout: 'row-wrap',
-    chromatic: { disableSnapshot: true },
   },
 };
 TextWrapping.storyName = 'Text wrapping';
@@ -371,9 +361,7 @@ export const Truncate: Story = {
       style: 'max-inline-size: 200px',
     }),
   tags: ['behaviors'],
-  parameters: {
-    chromatic: { disableSnapshot: true },
-  },
+  
 };
 
 export const Justified: Story = {
@@ -386,7 +374,7 @@ export const Justified: Story = {
       })}
     </div>
   `,
-  parameters: { layout: 'padded', chromatic: { disableSnapshot: true } },
+  parameters: { layout: 'padded',  },
   tags: ['behaviors'],
 };
 
@@ -423,20 +411,23 @@ export const Accessibility: Story = {
     })}
   `,
   tags: ['a11y'],
-  parameters: { flexLayout: 'row-wrap', chromatic: { disableSnapshot: true } },
+  parameters: { flexLayout: 'row-wrap',  },
 };
 
 // ────────────────────────────────────
-//    VRT / TESTING GRID (see button.test.ts)
+//    VRT / TESTING GRID (see test/button.vrt.ts)
 // ────────────────────────────────────
 
 /**
  * Full variant × treatment × content × state matrix for visual regression.
- * Case list lives in [`button.test.ts`](./button.test.ts). Turn on **Testing preview**
+ * Case list lives in [`button.vrt.ts`](../test/button.vrt.ts). Turn on **Testing preview**
  * in the Storybook toolbar (beaker icon) to view the grid locally.
  */
-export const ButtonGroups: Story = {
-  render: buttonGroupsRender as Story['render'],
+export const VRTGrid: Story = {
+  render: ButtonVRTRender as Story['render'],
+  play: async ({ canvasElement }) => {
+    await applyTestingGridPseudoStates(canvasElement);
+  },
   parameters: {
     layout: 'centered',
     flexLayout: false,
@@ -444,7 +435,7 @@ export const ButtonGroups: Story = {
   },
   tags: ['!autodocs', 'dev'],
 };
-ButtonGroups.storyName = TESTING_GRID_STORY_NAME;
+VRTGrid.storyName = TESTING_GRID_STORY_NAME;
 
 // ────────────────────────────────────
 //    UPCOMING FEATURES STORIES

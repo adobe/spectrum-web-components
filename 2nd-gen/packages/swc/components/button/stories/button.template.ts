@@ -19,8 +19,8 @@
  */
 
 import { html, nothing, type TemplateResult } from 'lit';
+import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
-import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 
 import type {
   ButtonFillStyle,
@@ -29,7 +29,22 @@ import type {
   ButtonVariant,
 } from '@spectrum-web-components/core/components/button';
 
-import type { ButtonVrtState } from '../Button.js';
+import type { ButtonVrtState } from '../../../.storybook/pseudo-states-helpers.js';
+
+/** Workflow "Add" icon for VRT grid cells. */
+export const addIconTemplate = html`
+  <svg
+    slot="icon"
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 36 36"
+    aria-hidden="true"
+    focusable="false"
+  >
+    <path
+      d="M31.5 17H19V4.5a1 1 0 0 0-2 0V17H4.5a1 1 0 0 0 0 2H17v12.5a1 1 0 0 0 2 0V19h12.5a1 1 0 0 0 0-2z"
+    />
+  </svg>
+`;
 
 export type ButtonTemplateArgs = {
   variant?: ButtonVariant;
@@ -43,15 +58,13 @@ export type ButtonTemplateArgs = {
   justified?: boolean;
   'accessible-label'?: string;
   'default-slot'?: string;
-  /** HTML for the icon slot (must include `slot="icon"` on the root node). */
-  'icon-slot'?: string;
-  /** Icon-only cell — omits label and sets `vrt-icon-only` for `swc-Button--iconOnly`. */
+  /** Pre-rendered icon slot content (must include `slot="icon"` on the root node). */
+  'icon-slot'?: TemplateResult;
+  /** Icon-only cell — omits label; `vrt-icon-only-cell` forces layout before slot detection. */
   iconOnly?: boolean;
   style?: string;
-  /** Storybook / VRT only — see `Button.vrtState`. */
+  /** Storybook / VRT only — applied via `applyTestingGridPseudoStates` play helper. */
   'vrt-state'?: ButtonVrtState;
-  /** Storybook / VRT only — see `Button.vrtPendingActive`. */
-  'vrt-pending-active'?: boolean;
 };
 
 export function Template({
@@ -70,28 +83,32 @@ export function Template({
   iconOnly = false,
   style,
   'vrt-state': vrtState,
-  'vrt-pending-active': vrtPendingActive = false,
 }: ButtonTemplateArgs = {}): TemplateResult {
   const labelContent = iconOnly || !defaultSlot ? nothing : defaultSlot;
 
   return html`
-    <swc-button
-      variant=${variant}
-      fill-style=${fillStyle}
-      size=${size}
-      static-color=${ifDefined(staticColor)}
-      ?disabled=${disabled}
-      ?pending=${pending}
-      pending-label=${ifDefined(pendingLabel)}
-      ?truncate=${truncate}
-      ?justified=${justified}
-      accessible-label=${ifDefined(accessibleLabel)}
-      vrt-state=${ifDefined(vrtState)}
-      ?vrt-pending-active=${vrtPendingActive}
-      ?vrt-icon-only=${iconOnly}
-      style=${ifDefined(style)}
+    <div
+      class=${classMap({
+        'vrt-button-cell': true,
+        'vrt-icon-only-cell': iconOnly,
+      })}
+      data-vrt-state=${ifDefined(vrtState)}
     >
-      ${iconSlot ? unsafeHTML(iconSlot) : nothing}${labelContent}
-    </swc-button>
+      <swc-button
+        variant=${variant}
+        fill-style=${fillStyle}
+        size=${size}
+        static-color=${ifDefined(staticColor)}
+        ?disabled=${disabled}
+        ?pending=${pending}
+        pending-label=${ifDefined(pendingLabel)}
+        ?truncate=${truncate}
+        ?justified=${justified}
+        accessible-label=${ifDefined(accessibleLabel)}
+        style=${ifDefined(style)}
+      >
+        ${iconSlot ?? nothing}${labelContent}
+      </swc-button>
+    </div>
   `;
 }

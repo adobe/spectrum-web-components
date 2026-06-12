@@ -16,26 +16,34 @@ import type { DecoratorFunction } from '@storybook/types';
 import { isChromatic } from '../helpers/testing-grid.js';
 
 /**
- * Maps the "Testing preview" toolbar global to `parameters.showTestingGrid`, matching
- * spectrum-css `.storybook/decorators/testing-preview.js`.
+ * Lets you preview the Chromatic testing view locally.
+ *
+ * Maps the **Testing preview** toolbar global to `parameters.showTestingGrid` so
+ * stories using the testing-grid helpers can switch between a compact docs-style
+ * preview and the full VRT matrix.
  */
 export const withTestingPreview: DecoratorFunction = makeDecorator({
   name: 'withTestingPreview',
   parameterName: 'testingPreview',
   wrapper: (StoryFn, context) => {
     const {
+      // Testing preview reflects the state of the user-selected global value.
       globals: { testingPreview = false } = {},
-      parameters: { showTestingGrid } = {},
       viewMode,
     } = context;
 
+    // Set `showTestingGrid` to reflect whether the testing grid should be visible.
+    // This ensures the grid is always shown in the Chromatic testing view while the
+    // user-selected toolbar global is respected in the Storybook canvas.
+
     if (isChromatic()) {
+      // Always show the testing grid under Chromatic.
       context.parameters.showTestingGrid = true;
     } else if (viewMode === 'docs') {
+      // Disable the testing grid in docs view.
       context.parameters.showTestingGrid = false;
-    } else if (typeof showTestingGrid === 'undefined') {
-      context.parameters.showTestingGrid = testingPreview;
-    } else if (showTestingGrid !== testingPreview) {
+    } else {
+      // In canvas view, follow the Testing preview toolbar toggle.
       context.parameters.showTestingGrid = testingPreview;
     }
 

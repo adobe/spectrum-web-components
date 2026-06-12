@@ -128,7 +128,7 @@ if (storybookMode !== 'ci-a11y') {
 }
 
 // Play-function test stories live under `**/test/*.test.ts` only.
-// VRT grid definitions use `stories/*.test.ts` (imported by `*.stories.ts`, not indexed here).
+// VRT grid definitions use `**/test/*.vrt.ts` (imported by `*.stories.ts`, not indexed here).
 if (storybookMode === 'dev') {
   stories.push({
     ...COMPONENT_STORY_ROOT,
