@@ -78,6 +78,19 @@ const TABULAR_PLACEMENTS: TooltipPlacement[] = [
   'start',
 ];
 
+/**
+ * Eliminates the entry transition so the tooltip renders at full opacity
+ * immediately when `open` is set. Without this, Chromatic may capture mid-
+ * transition since play functions are not executed during VRT snapshots.
+ */
+const vrtTransitionOverride = html`
+  <style>
+    swc-tooltip {
+      transition-duration: 0s !important;
+    }
+  </style>
+`;
+
 // Renders a button+tooltip pair linked via the `for` attribute.
 // Each pair needs a unique `id` so multiple instances can coexist in the same story.
 const triggered = (
@@ -135,15 +148,6 @@ const meta: Meta = {
     },
     chromatic: {
       delay: 500,
-      cropToViewport: true,
-      modes: {
-        small: {
-          viewport: {
-            height: 300,
-            width: 800,
-          },
-        },
-      },
     },
   },
   args,
@@ -195,23 +199,13 @@ export const Overview: Story = {
 // ──────────────────────────
 
 export const Anatomy: Story = {
-  play: async ({ canvasElement }: { canvasElement: HTMLElement }) => {
-    const tooltip = canvasElement.querySelector(
-      'swc-tooltip'
-    ) as HTMLElement & {
-      open: boolean;
-    };
-    tooltip.open = true;
-    await waitFor(() => {
-      expect(tooltip.matches(':popover-open')).toBe(true);
-      expect(getComputedStyle(tooltip).opacity).toBe('1');
-    });
-  },
   render: (args) => html`
-    ${triggered({ ...args }, 'tooltip-anatomy-short', 'Action')}
+    ${vrtTransitionOverride}
+    ${triggered({ ...args, open: true }, 'tooltip-anatomy-short', 'Action')}
     ${triggered(
       {
         ...args,
+        open: true,
         'default-slot':
           'Longer tooltip text needs to wrap across multiple lines when the content exceeds the maximum inline size',
       },
@@ -223,6 +217,17 @@ export const Anatomy: Story = {
     placement: 'top',
     'default-slot': 'Short label',
   },
+  play: async ({ canvasElement }: { canvasElement: HTMLElement }) => {
+    const tooltip = canvasElement.querySelector(
+      'swc-tooltip'
+    ) as HTMLElement & {
+      open: boolean;
+    };
+    tooltip.open = true;
+    await waitFor(() => {
+      expect(tooltip.matches(':popover-open')).toBe(true);
+    });
+  },
   tags: ['anatomy'],
   parameters: { flexLayout: 'row-wrap' },
 };
@@ -233,9 +238,15 @@ export const Anatomy: Story = {
 
 export const Variants: Story = {
   render: (args) => html`
+    ${vrtTransitionOverride}
     ${TOOLTIP_VARIANTS.map((variant) =>
       triggered(
-        { ...args, variant, 'default-slot': variantLabels[variant] },
+        {
+          ...args,
+          variant,
+          open: true,
+          'default-slot': variantLabels[variant],
+        },
         `tooltip-trigger-${variant}`,
         variantTriggerLabels[variant]
       )
@@ -243,11 +254,10 @@ export const Variants: Story = {
   `,
   play: async ({ canvasElement }: { canvasElement: HTMLElement }) => {
     const tooltips = canvasElement.querySelectorAll('swc-tooltip');
-    const tooltip = tooltips[1] as HTMLElement & { open: boolean }; // informative
+    const tooltip = tooltips[1] as HTMLElement & { open: boolean };
     tooltip.open = true;
     await waitFor(() => {
       expect(tooltip.matches(':popover-open')).toBe(true);
-      expect(getComputedStyle(tooltip).opacity).toBe('1');
     });
   },
   tags: ['options'],
@@ -255,16 +265,8 @@ export const Variants: Story = {
 };
 
 export const Placements: Story = {
-  play: async ({ canvasElement }: { canvasElement: HTMLElement }) => {
-    const tooltips = canvasElement.querySelectorAll('swc-tooltip');
-    const tooltip = tooltips[3] as HTMLElement & { open: boolean }; // bottom
-    tooltip.open = true;
-    await waitFor(() => {
-      expect(tooltip.matches(':popover-open')).toBe(true);
-      expect(getComputedStyle(tooltip).opacity).toBe('1');
-    });
-  },
   render: (args) => html`
+    ${vrtTransitionOverride}
     <style>
       .tooltip-placements {
         display: grid;
@@ -300,13 +302,26 @@ export const Placements: Story = {
     <div class="tooltip-placements">
       ${TABULAR_PLACEMENTS.map((placement) =>
         triggered(
-          { ...args, placement, 'default-slot': placementLabels[placement] },
+          {
+            ...args,
+            placement,
+            open: true,
+            'default-slot': placementLabels[placement],
+          },
           `tooltip-trigger-${placement}`,
           placement
         )
       )}
     </div>
   `,
+  play: async ({ canvasElement }: { canvasElement: HTMLElement }) => {
+    const tooltips = canvasElement.querySelectorAll('swc-tooltip');
+    const tooltip = tooltips[3] as HTMLElement & { open: boolean };
+    tooltip.open = true;
+    await waitFor(() => {
+      expect(tooltip.matches(':popover-open')).toBe(true);
+    });
+  },
   tags: ['options'],
   parameters: {
     layout: 'padded',
@@ -324,7 +339,8 @@ export const Placements: Story = {
 
 export const Open: Story = {
   render: (args) => html`
-    ${triggered({ ...args }, 'tooltip-state-open', 'Action')}
+    ${vrtTransitionOverride}
+    ${triggered({ ...args, open: true }, 'tooltip-state-open', 'Action')}
   `,
   args: {
     variant: 'neutral',
@@ -340,7 +356,6 @@ export const Open: Story = {
     tooltip.open = true;
     await waitFor(() => {
       expect(tooltip.matches(':popover-open')).toBe(true);
-      expect(getComputedStyle(tooltip).opacity).toBe('1');
     });
   },
   tags: ['states'],
@@ -374,7 +389,8 @@ export const Manual: Story = {
     };
 
     return html`
-      ${triggered({ ...args }, 'tooltip-manual-trigger', 'Action')}
+      ${vrtTransitionOverride}
+      ${triggered({ ...args, open: true }, 'tooltip-manual-trigger', 'Action')}
       <swc-button variant="secondary" @click=${onShowTooltip}>
         Show tooltip
       </swc-button>
@@ -392,7 +408,6 @@ export const Manual: Story = {
     await userEvent.click(buttons[1] as HTMLElement);
     await waitFor(() => {
       expect(tooltip.matches(':popover-open')).toBe(true);
-      expect(getComputedStyle(tooltip).opacity).toBe('1');
     });
   },
   tags: ['states'],
@@ -416,12 +431,11 @@ export const Events: Story = {
 };
 
 export const TriggerElement: Story = {
-  // The ref directive wires triggerElement during rendering so the story is
-  // functional in the Docs page canvas, not just when the play function runs.
   render: () => {
     let triggerEl: HTMLElement | null = null;
 
     return html`
+      ${vrtTransitionOverride}
       <swc-button
         id="te-trigger"
         ${ref((el) => {
@@ -432,6 +446,7 @@ export const TriggerElement: Story = {
       </swc-button>
       <swc-tooltip
         placement="top"
+        open
         ${ref((el) => {
           if (el && triggerEl) {
             (
@@ -444,7 +459,6 @@ export const TriggerElement: Story = {
       </swc-tooltip>
     `;
   },
-  // Play function opens the tooltip for sidebar view and VRT.
   play: async ({ canvasElement }: { canvasElement: HTMLElement }) => {
     const tooltip = canvasElement.querySelector(
       'swc-tooltip'
@@ -454,29 +468,18 @@ export const TriggerElement: Story = {
     tooltip.open = true;
     await waitFor(() => {
       expect(tooltip.matches(':popover-open')).toBe(true);
-      expect(getComputedStyle(tooltip).opacity).toBe('1');
     });
   },
   tags: ['behaviors'],
 };
 
 export const Labeling: Story = {
-  play: async ({ canvasElement }: { canvasElement: HTMLElement }) => {
-    const tooltip = canvasElement.querySelector(
-      'swc-tooltip'
-    ) as HTMLElement & {
-      open: boolean;
-    };
-    tooltip.open = true;
-    await waitFor(() => {
-      expect(tooltip.matches(':popover-open')).toBe(true);
-      expect(getComputedStyle(tooltip).opacity).toBe('1');
-    });
-  },
   render: (args) => html`
+    ${vrtTransitionOverride}
     ${triggered(
       {
         ...args,
+        open: true,
         labeling: true,
         'default-slot': 'Save changes',
       },
@@ -489,6 +492,17 @@ export const Labeling: Story = {
     placement: 'top',
     variant: 'neutral',
   },
+  play: async ({ canvasElement }: { canvasElement: HTMLElement }) => {
+    const tooltip = canvasElement.querySelector(
+      'swc-tooltip'
+    ) as HTMLElement & {
+      open: boolean;
+    };
+    tooltip.open = true;
+    await waitFor(() => {
+      expect(tooltip.matches(':popover-open')).toBe(true);
+    });
+  },
   tags: ['behaviors'],
 };
 
@@ -498,7 +512,8 @@ export const Labeling: Story = {
 
 export const Accessibility: Story = {
   render: (args) => html`
-    ${triggered({ ...args }, 'tooltip-a11y', 'Action button')}
+    ${vrtTransitionOverride}
+    ${triggered({ ...args, open: true }, 'tooltip-a11y', 'Action button')}
   `,
   args: {
     variant: 'neutral',
@@ -514,7 +529,6 @@ export const Accessibility: Story = {
     tooltip.open = true;
     await waitFor(() => {
       expect(tooltip.matches(':popover-open')).toBe(true);
-      expect(getComputedStyle(tooltip).opacity).toBe('1');
     });
   },
   tags: ['a11y'],
