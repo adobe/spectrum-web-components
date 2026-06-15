@@ -14,7 +14,7 @@ import { css, html, LitElement, type TemplateResult } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
-import opacityCheckerboardStyles from '../../../stylesheets/shared/opacity-checkerboard.css';
+import opacityCheckerboardStyles from '../../../stylesheets/_lit-styles/opacity-checkerboard.css';
 
 // ─────────────────────────
 //     DEMO HOST
