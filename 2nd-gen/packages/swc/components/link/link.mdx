@@ -1,0 +1,90 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import { DocsFooter, DocsHeader } from '../../.storybook/blocks';
+
+import * as LinkStories from './stories/link.stories';
+
+<DocsHeader />
+
+Link presentation uses **native `<a href>` elements** with BEM classes from `@adobe/spectrum-wc/link.css`. Default anchor appearance inside prose and link lists ships with `@adobe/spectrum-wc/typography.css`; see [Typography](/docs/components-typography--docs) for [Prose container](/docs/components-typography--docs#prose-container) and [Link list](/docs/components-typography--docs#link-list) patterns.
+
+For bare, classless `<a href>` elements outside typography wrappers, import `@adobe/spectrum-wc/global-link.css` to opt in to application-wide baseline link styling.
+
+<Meta of={LinkStories} />
+
+## Options
+
+### Standalone
+
+Explicit-context links use `.swc-Link` with `.swc-Link--standalone` for anchors outside prose wrappers.
+
+<Canvas of={LinkStories.Standalone} />
+
+### Secondary
+
+The `.swc-Link--secondary` modifier applies a secondary color treatment.
+
+<Canvas of={LinkStories.Secondary} />
+
+### Quiet standalone
+
+The `.swc-Link--quiet` modifier removes the default underline until hover. It requires `.swc-Link--standalone` and is intended for section-scoped patterns such as footers, not undifferentiated body copy.
+
+<Canvas of={LinkStories.QuietStandalone} />
+
+### Static colors
+
+Use `.swc-Link--staticWhite` and `.swc-Link--staticBlack` when displaying links over images or colored backgrounds:
+
+- **Static white**: Use on dark or colored backgrounds for better contrast
+- **Static black**: Use on light backgrounds for better contrast
+
+<Canvas of={LinkStories.StaticColors} />
+
+### Link list
+
+Use `<ul class="swc-Typography--links">` with unclassed `<a href>` in each item. Link lists in footers, sidebars, and navigation regions receive default styling from the wrapper. See [Typography / Link list](/docs/components-typography--docs#link-list).
+
+<Canvas of={LinkStories.LinkList} />
+
+## Accessibility
+
+### Features
+
+Native links provide accessible behavior without a custom element wrapper:
+
+#### Implicit link role
+
+- Valid `<a href>` elements expose the **link** role in the accessibility tree
+- Do not add `role="link"` on anchors or use non-anchor elements for navigation
+
+#### Accessible name
+
+- Visible link text provides the accessible name in most cases
+- For icon-only links, provide `aria-label` or equivalent text alternatives
+
+#### Keyboard and focus
+
+- Links participate in the tab order and activate with Enter (platform conventions apply)
+- Focus-visible styles must remain perceivable; do not remove focus treatment without a deliberate replacement
+
+#### Quiet styling
+
+- Use quiet (non-underline) link styles only in **sections** such as footers where the surrounding region makes navigation intent clear
+- In long body prose, use the default underlined link treatment from Typography
+
+#### No disabled state
+
+- Navigational links cannot be disabled like form controls
+- When an action is unavailable, use a disabled `<button>` with explanation or remove the link
+
+### Best practices
+
+- Write descriptive link text that makes sense out of context where possible
+- Do not rely on color alone to identify links (WCAG 1.4.1)
+- Ensure sufficient contrast between link text and surrounding content (WCAG 1.4.3)
+- Use real semantic structure (`p`, `ul`, `nav`, headings) around links
+- Import `@adobe/spectrum-wc/typography.css` for prose and link-list defaults; add `@adobe/spectrum-wc/link.css` when explicit modifiers are needed; add `@adobe/spectrum-wc/global-link.css` for application-wide styling of bare, classless anchors
+
+<Canvas of={LinkStories.Accessibility} />
+
+<DocsFooter />

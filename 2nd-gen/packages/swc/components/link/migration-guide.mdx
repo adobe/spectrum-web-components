@@ -4,7 +4,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
 # Link migration guide
 
-Spectrum 2 delivers links as **native `<a href>` elements** with CSS — there is no `swc-link` custom element. Replace `<sp-link>` with semantic anchors and the styles documented below.
+Spectrum 2 delivers links as **native `<a href>` elements** with CSS; there is no `swc-link` custom element. Replace `<sp-link>` with semantic anchors and the styles documented below.
 
 ## Installation
 
@@ -24,7 +24,7 @@ yarn add @adobe/spectrum-wc
 | `link.css`                   | `@adobe/spectrum-wc/link.css`        | BEM modifier classes for standalone / secondary / quiet / static-color anchors               |
 | `global-link.css` (optional) | `@adobe/spectrum-wc/global-link.css` | Opt-in baseline for **bare** `<a>` without classes                                           |
 
-> Default in-body and link-list styling ships with **Typography** — see the [Typography migration guide](../typography/migration-guide.mdx) for prose and wrapper patterns. This guide covers explicit link modifiers and migrating from `sp-link`.
+> Default in-body and link-list styling ships with **Typography**; see the [Typography migration guide](../typography/migration-guide.mdx) for prose and wrapper patterns. This guide covers explicit link modifiers and migrating from `sp-link`.
 
 ```js
 // Prose / link lists (typography wrappers style unclassed anchors)
@@ -54,7 +54,7 @@ import '@adobe/spectrum-wc/link.css';
 | `quiet`                | `class="swc-Link swc-Link--quiet swc-Link--standalone"` (section / footer contexts only)                                |
 | `static-color="white"` | `class="swc-Link swc-Link--staticWhite"`                                                                                |
 | `static-color="black"` | `class="swc-Link swc-Link--staticBlack"`                                                                                |
-| `disabled`             | **Not supported** on navigational links — use a disabled `<button>` or remove the control                               |
+| `disabled`             | **Not supported** on navigational links; use a disabled `<button>` or remove the control                                |
 
 Behavioral attributes (`href`, `target`, `rel`, `download`, `referrerpolicy`, `aria-label`) remain standard HTML on `<a>`.
 
@@ -122,7 +122,7 @@ Use quiet styling only where surrounding context makes links obvious (for exampl
 ## Accessibility
 
 - Use real `<a href>` for navigation; avoid JavaScript-only fake links.
-- Do not use `disabled` on anchors — it is not valid for navigational links.
+- Do not use `disabled` on anchors; it is not valid for navigational links.
 - Icon-only links need an accessible name (`aria-label` or visible text).
 - Restrict **quiet** styling to approved section patterns, not undifferentiated long-form body copy.
 

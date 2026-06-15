@@ -17,26 +17,21 @@ import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import {
   CONTEXTS,
   LANGS,
-  LINK_COLOR_VARIANTS,
   LINK_STATIC_VARIANTS,
   type LinkTemplateProps,
   template,
   VARIANTS,
 } from './link.template.js';
 
-/**
- * Link presentation uses native `<a href>` with BEM classes from `link.css`.
- *
- * Default anchor appearance inside prose and link lists ships with
- * `typography.css` — see [Typography / Prose container](../typography/stories/typography.stories.ts)
- * and [Typography / Link list](../typography/stories/typography.stories.ts).
- */
 const meta: Meta<LinkTemplateProps> = {
   title: 'Link',
   parameters: {
     docs: {
-      subtitle:
-        'Native anchors with `.swc-Link` modifier classes. Import `@adobe/spectrum-wc/link.css`.',
+      subtitle: 'Native link variant styles are available via CSS classes.',
+    },
+    design: {
+      type: 'figma',
+      url: 'https://www.figma.com/design/Mngz9H7WZLbrCvGQf3GnsY/S2---Web--Desktop-scale-?node-id=18850-110',
     },
   },
   argTypes: {
@@ -44,7 +39,7 @@ const meta: Meta<LinkTemplateProps> = {
       control: 'select',
       options: VARIANTS,
       description:
-        'BEM color modifiers (`secondary`, static white/black). Apply in **explicit** context — prose and link lists use typography defaults.',
+        'BEM color modifiers (`secondary`, static white/black). Apply in **explicit** context; prose and link lists use typography defaults.',
     },
     context: {
       control: 'select',
@@ -81,8 +76,8 @@ export default meta;
 // ────────────────────
 
 const staticColorLabels = {
-  staticWhite: 'White link',
-  staticBlack: 'Black link',
+  staticWhite: 'Static white',
+  staticBlack: 'Static black',
 } as const satisfies Record<(typeof LINK_STATIC_VARIANTS)[number], string>;
 
 /** Panel styles aligned with `static-colors-demo` decorator gradients. */
@@ -143,12 +138,28 @@ export const Playground: Story = {
       },
     },
   },
-  tags: ['autodocs', 'dev'],
+  tags: ['dev'],
 };
 
-/**
- * Standalone link with explicit Spectrum typography (not inheriting a prose wrapper).
- */
+// ──────────────────────────
+//    OVERVIEW STORY
+// ──────────────────────────
+
+export const Overview: Story = {
+  render: (args) => html`
+    ${template({
+      ...args,
+      context: 'explicit',
+      standalone: true,
+      sampleText: 'Account settings',
+    })}
+  `,
+  parameters: {
+    flexLayout: 'column-stretch',
+  },
+  tags: ['overview'],
+};
+
 export const Standalone: Story = {
   args: {
     context: 'explicit',
@@ -159,9 +170,6 @@ export const Standalone: Story = {
   tags: ['options'],
 };
 
-/**
- * Secondary color treatment (replaces `sp-link variant="secondary"`).
- */
 export const Secondary: Story = {
   args: {
     context: 'explicit',
@@ -171,10 +179,6 @@ export const Secondary: Story = {
   tags: ['options'],
 };
 
-/**
- * Quiet + standalone removes the default underline until hover — use in footers
- * and other section-scoped patterns, not undifferentiated body copy.
- */
 export const QuietStandalone: Story = {
   args: {
     context: 'explicit',
@@ -191,7 +195,6 @@ export const InProse: Story = {
     context: 'prose',
     variant: 'default',
   },
-  tags: ['options'],
 };
 
 export const LinkList: Story = {
@@ -202,13 +205,6 @@ export const LinkList: Story = {
   tags: ['options'],
 };
 
-/**
- * Use `.swc-Link--staticWhite` and `.swc-Link--staticBlack` when displaying over
- * images or colored backgrounds:
- *
- * - **static white**: Use on dark or colored backgrounds for better contrast
- * - **static black**: Use on light backgrounds for better contrast
- */
 export const StaticColors: Story = {
   render: (args) => html`
     ${LINK_STATIC_VARIANTS.map(
@@ -236,25 +232,22 @@ export const StaticColors: Story = {
 };
 StaticColors.storyName = 'Static colors';
 
-/**
- * Default and secondary color treatments from `link.css` (static colors are in Static colors).
- */
-export const ColorVariants: Story = {
-  render: (args) => html`
-    ${LINK_COLOR_VARIANTS.map((variant) =>
-      template({
-        ...args,
-        variant,
-        context: 'explicit',
-        sampleText: variant === 'secondary' ? 'Learn more' : 'Link label',
-      })
-    )}
+// ────────────────────────────────
+//    ACCESSIBILITY STORIES
+// ────────────────────────────────
+
+export const Accessibility: Story = {
+  render: () => html`
+    <div class="swc-Typography--prose">
+      <p>
+        Review the project timeline and
+        <a href="/timeline">view the full schedule</a>
+        before the sprint review.
+      </p>
+    </div>
   `,
-  args: {
-    href: '#',
-  },
   parameters: {
     flexLayout: 'column-stretch',
   },
-  tags: ['options'],
+  tags: ['a11y'],
 };

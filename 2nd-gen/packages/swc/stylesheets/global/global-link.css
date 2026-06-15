@@ -17,7 +17,7 @@
  * without a wrapper class or per-link BEM classes. Not included in `swc.css` and
  * intentionally outside cascade layers so it remains easy to override.
  *
- * Modifier classes (`.swc-Link--secondary`, etc.) live in `link.css` — import that
+ * Modifier classes (`.swc-Link--secondary`, etc.) live in `link.css`; import that
  * file alongside this one when anchors need explicit presentation control.
  */
 

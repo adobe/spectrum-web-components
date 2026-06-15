@@ -175,7 +175,7 @@ export const MarginsModifier: Story = {
  * - `h3` - Title, size L
  * - `h4` - Title, size M
  * - `p, li` - Body, size M
- * - `a` - Default link styling (inherits body typography in prose)
+ * - `a` - inherits font styles, such as Body, size M from paragraphs
  */
 export const ProseContainer: Story = {
   args: {
