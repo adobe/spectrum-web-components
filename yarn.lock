@@ -196,7 +196,7 @@ __metadata:
     "@adobe/postcss-token": "workspace:*"
     "@adobe/swc-tokens": "workspace:*"
     "@adobe/vite-global-elements-css": "workspace:*"
-    "@axe-core/playwright": "npm:4.11.2"
+    "@axe-core/playwright": "npm:4.11.3"
     "@chromatic-com/storybook": "npm:5.2.1"
     "@custom-elements-manifest/analyzer": "npm:0.10.8"
     "@github-ui/storybook-addon-performance-panel": "npm:1.1.4"
@@ -277,14 +277,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@axe-core/playwright@npm:4.11.2":
-  version: 4.11.2
-  resolution: "@axe-core/playwright@npm:4.11.2"
+"@axe-core/playwright@npm:4.11.3":
+  version: 4.11.3
+  resolution: "@axe-core/playwright@npm:4.11.3"
   dependencies:
-    axe-core: "npm:~4.11.3"
+    axe-core: "npm:~4.11.4"
   peerDependencies:
     playwright-core: ">= 1.0.0"
-  checksum: 10c0/cb6f259c969668ae41b1c56e9fbf8d380d4b9440ef76f3037faa615fdcd36a748f53451116bb53b101dae52c6adc9183ce8de7f62819beb3866989849a9834b6
+  checksum: 10c0/da1854726dbc461a71ac25e0435f5dd9b7d143dc9142f53b1aeb4a8d7edcb4533eddb59949e8a07c4f4e3dce85ae43b7f249b3801e8b255f605fc974b94616fe
   languageName: node
   linkType: hard
 
@@ -12274,10 +12274,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axe-core@npm:~4.11.3":
-  version: 4.11.3
-  resolution: "axe-core@npm:4.11.3"
-  checksum: 10c0/bc757775ef41396faf6470752a12e96f3972d0d97cae4ec28e99cec7bca2c5aaa6d040b97e7f0278e8d1ea354fa0b0bf7fcaa51775a725d7ed0a0834e7ea13d7
+"axe-core@npm:~4.11.4":
+  version: 4.11.4
+  resolution: "axe-core@npm:4.11.4"
+  checksum: 10c0/c4aa83fc3eac5f7a0d0cb1a28f9d073acf0c06ce8daacc38608faa278c57ce084c028c850746b98817ae4c101c30c1a32e95ea34748c4b4c7419b9b81221ef84
   languageName: node
   linkType: hard
 
@@ -29528,7 +29528,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "root-workspace-0b6124@workspace:."
   dependencies:
-    "@axe-core/playwright": "npm:4.11.2"
+    "@axe-core/playwright": "npm:4.11.3"
     "@changesets/cli": "npm:2.29.7"
     "@commitlint/cli": "npm:19.8.1"
     "@commitlint/config-conventional": "npm:19.8.1"
