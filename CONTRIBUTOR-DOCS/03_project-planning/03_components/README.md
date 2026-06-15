@@ -26,6 +26,7 @@
     - [Action button accessibility migration analysis](action-button/accessibility-migration-analysis.md)
     - [Action button migration roadmap](action-button/rendering-and-styling-migration-analysis.md)
 - Action Group
+    - [Action group accessibility migration analysis](action-group/accessibility-migration-analysis.md)
     - [Action group migration roadmap](action-group/rendering-and-styling-migration-analysis.md)
 - Action Menu
     - [Action menu accessibility migration analysis](action-menu/accessibility-migration-analysis.md)
@@ -47,13 +48,19 @@
     - [Button migration roadmap](button/rendering-and-styling-migration-analysis.md)
 - Button Group
     - [Button group accessibility migration analysis](button-group/accessibility-migration-analysis.md)
+    - [Button group migration plan](button-group/migration-plan.md)
     - [Button Group migration roadmap](button-group/rendering-and-styling-migration-analysis.md)
 - Checkbox
     - [Checkbox migration roadmap](checkbox/rendering-and-styling-migration-analysis.md)
 - Close Button
     - [Close button accessibility migration analysis](close-button/accessibility-migration-analysis.md)
+    - [Close button migration plan](close-button/migration-plan.md)
+    - [Close button migration roadmap](close-button/rendering-and-styling-migration-analysis.md)
 - Color Field
     - [Color field migration roadmap](color-field/rendering-and-styling-migration-analysis.md)
+- Color Handle
+    - [Color handle accessibility migration analysis](color-handle/accessibility-migration-analysis.md)
+    - [Color handle migration roadmap](color-handle/rendering-and-styling-migration-analysis.md)
 - Color Loupe
     - [Color loupe accessibility migration analysis](color-loupe/accessibility-migration-analysis.md)
     - [Color loupe migration checklist](color-loupe/migration-checklist.md)
@@ -96,10 +103,13 @@
     - [Menu separator accessibility migration analysis](menu-separator/accessibility-migration-analysis.md)
 - Meter
     - [Meter accessibility migration analysis](meter/accessibility-migration-analysis.md)
+    - [Meter migration plan](meter/migration-plan.md)
     - [Meter migration roadmap](meter/rendering-and-styling-migration-analysis.md)
 - Number Field
     - [Number field migration roadmap](number-field/rendering-and-styling-migration-analysis.md)
 - Opacity Checkerboard
+    - [Opacity checkerboard accessibility migration analysis](opacity-checkerboard/accessibility-migration-analysis.md)
+    - [Opacity Checkerboard migration plan](opacity-checkerboard/migration-plan.md)
     - [Opacity Checkerboard migration roadmap](opacity-checkerboard/rendering-and-styling-migration-analysis.md)
 - Picker Button
     - [Picker button migration roadmap](picker-button/rendering-and-styling-migration-analysis.md)

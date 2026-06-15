@@ -88,7 +88,9 @@ type ActiveSession = {
  * writing direction (`start` is the left in LTR, the right in RTL), so the
  * panel lands on the correct side. Logical alignment suffixes (`bottom-start`)
  * are left for Floating UI's own RTL handling; the consumer's CSS still owns
- * direction-aware styling such as tip orientation.
+ * direction-aware styling such as tip orientation. A `dir` change on the
+ * document root or the trigger's nearest `[dir]` ancestor recomputes
+ * placement, so runtime LTR/RTL flips re-resolve correctly.
  *
  * ### Available-space custom properties
  *
@@ -109,14 +111,19 @@ type ActiveSession = {
  *
  * ```css
  * .floating {
- *   max-inline-size: min(var(--intended-width), var(--swc-placement-available-width, 100vw));
- *   max-block-size: min(var(--intended-height), var(--swc-placement-available-height, 100vh));
+ *   box-sizing: border-box;
+ *   max-inline-size: min(var(--intended-width), var(--swc-placement-available-width, 100vi));
+ *   max-block-size: min(var(--intended-height), var(--swc-placement-available-height, 90vb));
  *   overflow: auto;
  * }
  * ```
  *
- * Pair `max-block-size` with `overflow: auto` so the panel scrolls when the
- * block space is constrained (read `isConstrained` to detect that state).
+ * The fallbacks use logical viewport units (`vi` / `vb`); `90vb` leaves a small
+ * buffer so the trigger isn't scrolled out of view. `box-sizing: border-box` is
+ * required so the available-space values account for the element's own padding
+ * and border rather than overflowing past them. Pair `max-block-size` with
+ * `overflow: auto` so the panel scrolls when the block space is constrained
+ * (read `isConstrained` to detect that state).
  *
  * @example
  * ```typescript
@@ -140,8 +147,9 @@ export class PlacementController implements ReactiveController {
    * Set synchronously to the requested `PlacementOptions.placement`
    * (or `DEFAULT_PLACEMENT`) when `start` is called, then refreshed on every
    * successful `computePlacement` pass. `PlacementOptions.onPlacementChange`
-   * fires alongside each refresh, so consumers can mirror this property in
-   * a single callback without also reading it synchronously after `start()`.
+   * fires when this value changes (and once after the first compute), so
+   * consumers can mirror it in a single callback without also reading it
+   * synchronously after `start()`.
    */
   public actualPlacement: Placement | null = null;
 
@@ -161,6 +169,15 @@ export class PlacementController implements ReactiveController {
    * clamping content. Cleared on `stop()`.
    */
   private initialHeight?: number;
+
+  /**
+   * Last placement handed to `onPlacementChange`. `actualPlacement` is refreshed
+   * on every compute, but the callback fires only when the computed placement
+   * actually changes — `autoUpdate` ticks that recompute the same placement do
+   * not re-notify consumers. `undefined` until the first compute (and after
+   * `stop`), so the first compute of a session always notifies.
+   */
+  private lastEmittedPlacement?: Placement;
 
   /**
    * Registers this controller on `host` via `addController`.
@@ -185,7 +202,7 @@ export class PlacementController implements ReactiveController {
     trigger: HTMLElement | VirtualTrigger,
     floating: HTMLElement,
     options: PlacementOptions = {}
-  ): void {
+  ) {
     this.stop();
     const session: ActiveSession = {
       trigger,
@@ -201,7 +218,7 @@ export class PlacementController implements ReactiveController {
     // controller owns geometry only and just repositions on every event;
     // the caller decides whether ancestor scroll should close the surface.
     const autoUpdateCleanup = autoUpdate(trigger, floating, () => {
-      void this.computePlacement();
+      this.computePlacement();
     });
 
     // iOS WebKit `visualViewport` recompute channel. Floating UI's
@@ -218,7 +235,7 @@ export class PlacementController implements ReactiveController {
     if (session.isWebKit && visualViewport) {
       let rafId = 0;
       let cancelled = false;
-      const onViewportChange = (): void => {
+      const onViewportChange = () => {
         if (cancelled || rafId) {
           return;
         }
@@ -227,7 +244,7 @@ export class PlacementController implements ReactiveController {
           if (cancelled) {
             return;
           }
-          void this.computePlacement();
+          this.computePlacement();
         });
       };
       visualViewport.addEventListener('resize', onViewportChange, {
@@ -247,7 +264,28 @@ export class PlacementController implements ReactiveController {
       };
     }
 
+    // Direction channel — `autoUpdate` watches layout, not the `dir` attribute,
+    // so a runtime LTR/RTL flip (or a `dir` applied after the first compute)
+    // wouldn't re-resolve logical `start` / `end` sides. Observe `dir` on the
+    // document root and on the trigger's nearest `[dir]` ancestor, and
+    // recompute when it changes.
+    const directionSource = trigger instanceof HTMLElement ? trigger : floating;
+    const directionObserver = new MutationObserver(() => {
+      this.computePlacement();
+    });
+    const observeDir = (node: Element | null | undefined) => {
+      if (node) {
+        directionObserver.observe(node, {
+          attributes: true,
+          attributeFilter: ['dir'],
+        });
+      }
+    };
+    observeDir(directionSource.ownerDocument.documentElement);
+    observeDir(directionSource.closest('[dir]'));
+
     this.cleanup = () => {
+      directionObserver.disconnect();
       visualViewportCleanup?.();
       autoUpdateCleanup();
     };
@@ -261,7 +299,7 @@ export class PlacementController implements ReactiveController {
    * element, plus the `arrow` middleware's `translate` / `top` / `left`
    * on the tip element). Safe to call multiple times.
    */
-  public stop(): void {
+  public stop() {
     const floating = this.session?.floating;
     if (floating) {
       floating.style.removeProperty('--swc-placement-available-width');
@@ -279,6 +317,7 @@ export class PlacementController implements ReactiveController {
     this.actualPlacement = null;
     this.isConstrained = false;
     this.initialHeight = undefined;
+    this.lastEmittedPlacement = undefined;
   }
 
   /**
@@ -288,8 +327,8 @@ export class PlacementController implements ReactiveController {
    * `VirtualTrigger` moves without a DOM mutation. No-op if
    * `start` has not been called.
    */
-  public recompute(): void {
-    void this.computePlacement();
+  public recompute() {
+    this.computePlacement();
   }
 
   /**
@@ -297,7 +336,7 @@ export class PlacementController implements ReactiveController {
    *
    * @internal
    */
-  public hostDisconnected(): void {
+  public hostDisconnected() {
     this.stop();
   }
 
@@ -369,7 +408,7 @@ export class PlacementController implements ReactiveController {
             fallbackStrategy: 'bestFit',
           }));
 
-    // Middleware order matches gen1: offset → shift → flip → size → arrow.
+    // Middleware order matches Gen1: offset → shift → flip → size → arrow.
     // `shift` runs before `flip` so the panel slides along the current
     // side before any decision to flip; `size` runs after the final
     // placement is known so it measures the available space accurately;
@@ -449,7 +488,7 @@ export class PlacementController implements ReactiveController {
       translate: `${roundByDPR(translateX)}px ${roundByDPR(translateY)}px`,
     });
 
-    // Position the tip element (gen1 pattern). Floating UI exposes
+    // Position the tip element (Gen1 pattern). Floating UI exposes
     // either `arrow.x` (top/bottom placements — arrow on a horizontal
     // edge) or `arrow.y` (left/right placements — arrow on a vertical
     // edge). Reset whichever inline offset would conflict with the
@@ -471,7 +510,14 @@ export class PlacementController implements ReactiveController {
 
     const nextPlacement = fromFloatingPlacement(placement);
     this.actualPlacement = nextPlacement;
-    options.onPlacementChange?.(nextPlacement);
+    // Notify on change only: `autoUpdate` recomputes on every scroll/resize
+    // tick, but a consumer wiring `onPlacementChange` to reactive state should
+    // not re-render when the placement is unchanged. The first compute always
+    // fires (`lastEmittedPlacement` starts `undefined`).
+    if (nextPlacement !== this.lastEmittedPlacement) {
+      this.lastEmittedPlacement = nextPlacement;
+      options.onPlacementChange?.(nextPlacement);
+    }
   }
 }
 

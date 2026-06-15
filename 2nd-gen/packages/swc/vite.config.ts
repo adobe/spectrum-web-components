@@ -39,16 +39,21 @@ const postcssPlugins = [
   }),
 ];
 
-/** Processes stylesheets/ CSS through PostCSS and writes them to dist/. */
+/**
+ * Processes stylesheets/ CSS through PostCSS and writes them to dist/.
+ * Skips `stylesheets/_lit-styles/**` — those files are imported into component
+ * `static styles` arrays via `vite-plugin-lit-css` and should not also
+ * ship as standalone CSS in `dist/`.
+ */
 function processStylesheets(): Plugin {
   return {
     name: 'process-stylesheets',
     apply: 'build',
     async closeBundle() {
       const processor = postcss(postcssPlugins);
-      for (const file of glob.sync(
-        resolve(__dirname, 'stylesheets/**/*.css')
-      )) {
+      for (const file of glob.sync(resolve(__dirname, 'stylesheets/**/*.css'), {
+        ignore: [resolve(__dirname, 'stylesheets/_lit-styles/**/*.css')],
+      })) {
         const dest = resolve(__dirname, 'dist', basename(file));
         const result = await processor.process(await readFile(file, 'utf-8'), {
           from: file,
@@ -66,7 +71,17 @@ export default defineConfig({
     globalElementCSS({
       elements: [{ component: 'button' }],
     }),
-    litCss({ exclude: ['./stylesheets/**/*.css'] }),
+    // Standalone stylesheets under `stylesheets/` ship as their own CSS
+    // files via `processStylesheets`; the `lit-styles/` subdirectory holds
+    // CSS that is composed into component `static styles` arrays via
+    // `vite-plugin-lit-css`, so we leave that path for `litCss` to pick up.
+    litCss({
+      exclude: [
+        './stylesheets/*.css',
+        './stylesheets/global/**/*.css',
+        './stylesheets/typography/**/*.css',
+      ],
+    }),
     processStylesheets(),
     dts({
       include: ['**/*.ts'],

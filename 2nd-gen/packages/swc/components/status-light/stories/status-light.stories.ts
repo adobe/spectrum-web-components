@@ -124,11 +124,11 @@ const sizeLabels = {
 } as const satisfies Record<StatusLightSize, string>;
 
 // ────────────────────
-//    AUTODOCS STORY
+//    PLAYGROUND STORY
 // ────────────────────
 
 export const Playground: Story = {
-  tags: ['autodocs', 'dev'],
+  tags: ['dev'],
   args: {
     'default-slot': semanticLabels.neutral,
   },
@@ -149,16 +149,6 @@ export const Overview: Story = {
 //    ANATOMY STORIES
 // ──────────────────────────
 
-/**
- * A status light consists of:
- *
- * 1. **Colored dot indicator** - Visual representation of status or category
- * 2. **Text label** - Descriptive text providing context
- *
- * ### Content
- *
- * - **Default slot**: Text content describing the status or category (required for accessibility)
- */
 export const Anatomy: Story = {
   render: (args) => html`
     ${template({
@@ -174,16 +164,6 @@ export const Anatomy: Story = {
 //    OPTIONS STORIES
 // ──────────────────────────
 
-/**
- * Status lights come in four sizes to fit various contexts:
- *
- * - **Small (`s`)**: Used for inline indicators or space-constrained areas
- * - **Medium (`m`)**: Default size, used for typical use cases
- * - **Large (`l`)**: Used for prominent displays or primary content areas
- * - **Extra-large (`xl`)**: Maximum visibility for high-priority statuses
- *
- * All sizes shown below for comparison.
- */
 export const Sizes: Story = {
   render: (args) => html`
     ${STATUS_LIGHT_VALID_SIZES.map((size) =>
@@ -194,21 +174,9 @@ export const Sizes: Story = {
       })
     )}
   `,
-  parameters: { 'section-order': 1 },
   tags: ['options'],
 };
 
-/**
- * Semantic variants provide meaning through color:
- *
- * - **`neutral`**: Default variant — archived, deleted, paused, draft, not started, ended
- * - **`info`**: Active, in use, live, published
- * - **`positive`**: Approved, complete, success, new, purchased, licensed
- * - **`notice`**: Needs approval, pending, scheduled, syncing, indexing, processing
- * - **`negative`**: Error, alert, rejected, failed
- *
- * Semantic status lights should never be used for color coding categories or labels, and vice versa.
- */
 export const SemanticVariants: Story = {
   render: (args) => html`
     ${STATUS_LIGHT_VARIANTS_SEMANTIC.map(
@@ -221,7 +189,6 @@ export const SemanticVariants: Story = {
     )}
   `,
   parameters: {
-    'section-order': 2,
     a11y: {
       // @todo Known issue: neutral variant has color contrast of 4.39:1 vs required 4.5:1
       // Exclude only the neutral variant from color-contrast checks
@@ -237,12 +204,6 @@ export const SemanticVariants: Story = {
   tags: ['options'],
 };
 
-/**
- * Non-semantic variants use color-coded categories, ideal for data visualization and labeling.
- * Best used when there are **8 or fewer** categories being color coded.
- *
- * **Note**: The `pink`, `turquoise`, `brown`, `cinnamon`, and `silver` variants are new in 2nd-gen and not available in 1st-gen.
- */
 export const NonSemanticVariants: Story = {
   render: (args) => html`
     ${STATUS_LIGHT_VARIANTS_COLOR.map((variant: StatusLightColorVariant) =>
@@ -253,7 +214,6 @@ export const NonSemanticVariants: Story = {
       })
     )}
   `,
-  parameters: { 'section-order': 3 },
   tags: ['options'],
 };
 NonSemanticVariants.storyName = 'Non-semantic variants';
@@ -262,10 +222,6 @@ NonSemanticVariants.storyName = 'Non-semantic variants';
 //    BEHAVIORS STORIES
 // ──────────────────────────────
 
-/**
- * When the text is too long for the horizontal space available, it wraps to form another line.
- * You can control the wrapping behavior by setting a `max-inline-size` style on the component.
- */
 export const TextWrapping: Story = {
   render: (args) => html`
     ${template({
@@ -283,39 +239,6 @@ export const TextWrapping: Story = {
 //    ACCESSIBILITY STORIES
 // ────────────────────────────────
 
-/**
- * ### Features
- *
- * The `<swc-status-light>` element implements several accessibility features:
- *
- * #### Visual accessibility
- *
- * - Status information is conveyed through both color and text labels, not relying on color alone
- * - High contrast mode is supported with appropriate color overrides
- * - Sufficient color contrast is maintained between the status dot and background
- *
- * #### Semantic meaning
- *
- * - Semantic variants provide consistent color associations for common statuses
- * - Text labels provide clear context for all users
- * - Disabled status lights are deprecated for Spectrum 2. Content like "Unavailable" may be used to communicate that concept instead.
- *
- * #### Non-interactive element
- *
- * - Status lights have no interactive behavior and are not focusable
- * - Screen readers will announce the status light content as static text
- * - No keyboard interaction is required or expected
- *
- * > Important: In focus mode, only interactive elements and their associated labels/descriptions are announced. If content is not a label or description for a focusable element, it will not be read. For non-interactive content, screen reader users must [switch to Browse mode](https://swcpreviews.z13.web.core.windows.net/pr-6122/docs/second-gen-storybook/?path=/docs/guides-accessibility-guides-screen-reader-testing--readme#screen-reader-modes). This is expected behavior, not a bug — ensure you test both modes when evaluating component accessibility.
- * ### Best practices
- *
- * - Always provide a descriptive text label that explains the status
- * - Use semantic variants (`neutral` (default), `info`, `positive`, `negative`, `notice`) when the status has specific meaning
- * - Status lights are not interactive elements - for interactive status indicators, consider using buttons, tags, or links instead
- * - Use meaningful, specific labels (e.g., "Approved" instead of "Green")
- * - Ensure sufficient color contrast between the status light and its background
- * - For non-semantic variants, ensure the text label provides complete context
- */
 export const Accessibility: Story = {
   render: (args) => html`
     ${template({

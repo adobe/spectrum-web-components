@@ -15,6 +15,7 @@ import { styleMap } from 'lit/directives/style-map.js';
 
 import { ColorLoupeBase } from '@spectrum-web-components/core/components/color-loupe';
 
+import opacityCheckerboardStyles from '../../stylesheets/_lit-styles/opacity-checkerboard.css';
 import styles from './color-loupe.css';
 
 /**
@@ -34,20 +35,18 @@ export class ColorLoupe extends ColorLoupeBase {
   //     RENDERING & STYLING
   // ──────────────────────────────
 
-  /**
-   * @todo SWC-2029 - Migrate opacity-checkerboard to 2nd gen and consume it
-   * here; checkerboard styling is currently hardcoded in color-loupe.css.
-   */
   public static override get styles(): CSSResultArray {
-    return [styles];
+    return [opacityCheckerboardStyles, styles];
   }
 
   protected override render(): TemplateResult {
     return html`
       <div class="swc-ColorLoupe">
-        <div class="swc-ColorLoupe-checkerboard swc-ColorLoupe--clipped"></div>
         <div
-          class="swc-ColorLoupe-colorFill swc-ColorLoupe--clipped"
+          class="swc-ColorLoupe-layer swc-OpacityCheckerboard swc-ColorLoupe--clipped"
+        ></div>
+        <div
+          class="swc-ColorLoupe-layer swc-ColorLoupe-colorFill swc-ColorLoupe--clipped"
           style=${styleMap({
             '--swc-color-loupe-picked-color': this.color,
           })}

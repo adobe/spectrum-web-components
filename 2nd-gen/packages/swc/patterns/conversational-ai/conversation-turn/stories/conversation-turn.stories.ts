@@ -45,7 +45,7 @@ export { meta };
 export default meta;
 
 // ────────────────────
-//    AUTODOCS STORY
+//    PLAYGROUND STORY
 // ────────────────────
 
 export const Playground: Story = {
@@ -70,7 +70,7 @@ export const Playground: Story = {
       </swc-conversation-turn>
     </div>
   `,
-  tags: ['autodocs', 'dev'],
+  tags: ['dev'],
 };
 
 // ──────────────────────────────
@@ -111,30 +111,6 @@ export const Overview: Story = {
 //    ACCESSIBILITY STORY
 // ────────────────────────────────
 
-/**
- * ### Features
- *
- * Each `<swc-conversation-turn>` exposes **`role="group"`** and an
- * **`aria-label`** on the host element. This ensures the element that receives
- * roving keyboard focus has an accessible role and name.
- *
- * Default labels are derived from **`type`**:
- *
- * - **`type="user"`** → **"User message"**
- * - **`type="system"`** → **"System message"**
- *
- * You can provide **`accessible-label`** for localization or custom phrasing.
- *
- * Sighted users infer the speaker from alignment; this label gives screen reader
- * users the same turn context before the slotted message content is read.
- *
- * When used inside `<swc-conversation-thread>`, ArrowUp and ArrowDown move
- * focus between turns. Tab leaves the thread for the next page control, and
- * Shift+Tab back into the thread returns to the current roving focus target.
- * When focus has left the thread, newly appended turns become the next tab
- * target so users can return from the prompt field to the latest response
- * without focus being moved while they type.
- */
 export const Accessibility: Story = {
   render: () => html`
     <div
