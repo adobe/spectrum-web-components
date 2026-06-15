@@ -194,6 +194,17 @@ export default defineConfig([
       },
       globals: globals.browser,
     },
+    settings: {
+      jsdoc: {
+        // CEM event tags name a custom event (e.g. `swc-open`), not a JS
+        // namepath. Treat the name as free text and forbid a bracketed type so
+        // `jsdoc/valid-types` stops flagging the hyphen as an invalid namepath.
+        structuredTags: {
+          fires: { name: 'text', type: false },
+          event: { name: 'text', type: false },
+        },
+      },
+    },
     rules: {
       // Copyright header (global for all .ts/.js files)
       'notice/notice': [
