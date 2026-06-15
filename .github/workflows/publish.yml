@@ -15,6 +15,11 @@ on:
         options:
           - all
           - 2nd-gen
+      dry_run:
+        description: 'Dry run: build, version, and pack but use npm publish --dry-run (no registry writes). Only applies to the 2nd-gen scope.'
+        required: false
+        type: boolean
+        default: false
   pull_request:
     types: [labeled, synchronize]
   push:
@@ -217,6 +222,7 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.ADOBE_BOT_NPM_TOKEN }}
           TAG: ${{ steps.extract-tag.outputs.tag }}
+          DRY_RUN: ${{ github.event.inputs.dry_run }}
         run: |
           set -euo pipefail
           # Publish ONLY the 2nd-gen packages, leaving 1st-gen untouched even if
@@ -228,10 +234,15 @@ jobs:
           # the correct auth automatically, matching how `changeset publish` behaves:
           # - @spectrum-web-components/core -> OIDC trusted publishing
           # - @adobe/spectrum-wc           -> npm token (from ~/.npmrc)
+          PUBLISH_FLAGS="--tag $TAG --access public"
+          if [ "$DRY_RUN" == "true" ]; then
+            PUBLISH_FLAGS="$PUBLISH_FLAGS --dry-run"
+            echo "::notice::DRY RUN - packing only, no packages will be published to npm"
+          fi
           yarn workspace @spectrum-web-components/core pack --out /tmp/swc-core.tgz
           yarn workspace @adobe/spectrum-wc pack --out /tmp/swc-wc.tgz
-          npm publish /tmp/swc-core.tgz --tag "$TAG" --access public
-          npm publish /tmp/swc-wc.tgz --tag "$TAG" --access public
+          npm publish /tmp/swc-core.tgz $PUBLISH_FLAGS
+          npm publish /tmp/swc-wc.tgz $PUBLISH_FLAGS
 
       - name: Build React wrappers
         if: needs.check-changesets.outputs.has_1st_gen_changesets == 'true' && steps.extract-tag.outputs.scope != '2nd-gen'
