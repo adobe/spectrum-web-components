@@ -191,7 +191,7 @@ Prerequisite dependency:
 - Component must be a dismiss control, not a clear/reset control.
 - Enter and Space activate like native button behavior.
 - Focus-visible ring behavior must match S2 closebutton semantics including forced-colors compatibility.
-- `pending` and `pending-label` are not part of the close-button public API (unlike `swc-button`). `swc-close-button` extends `ButtonBase` for shared accessible naming, disabled state, and sizing only; the SWC template does not implement pending visuals, and Storybook docs omit those attributes.
+- `pending` and `pending-label` are inherited from `ButtonBase` for now; the close-button SWC template does not implement pending visuals. When pending moves off `ButtonBase` (button pending-controller work), close-button should not need follow-up changes.
 
 ### Accessibility semantics notes (2nd-gen)
 
@@ -204,7 +204,7 @@ Prerequisite dependency:
 
 - `core`: reuse `ButtonBase` for shared button semantics; close-button-specific API lives on the SWC class.
 - `swc`: render template, CSS, element registration, stories, tests.
-- Reuse `ButtonBase` for shared button semantics (accessible naming, disabled, sizing), but keep close-button semantics distinct from `swc-button` and clear-button. Do not surface or implement `ButtonBase` pending APIs on close-button.
+- Reuse `ButtonBase` for shared button semantics (accessible naming, disabled, sizing). Do not implement pending visuals on close-button; inherited pending host attributes are acceptable until pending moves off `ButtonBase`.
 
 ---
 

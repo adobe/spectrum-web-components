@@ -49,14 +49,6 @@ argTypes['static-color'] = {
   },
 };
 
-// Inherited from ButtonBase; not part of the close-button public API.
-for (const attribute of ['pending', 'pending-label'] as const) {
-  argTypes[attribute] = {
-    ...argTypes[attribute],
-    table: { disable: true },
-  };
-}
-
 args['accessible-label'] = 'Close';
 
 /**
