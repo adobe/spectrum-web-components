@@ -58,8 +58,10 @@ export class Popover extends PopoverBase {
           `}
     `;
 
-    // The render shape branches on `modal`: a `<div popover="auto">` in the
-    // default (non-modal) mode, a `<dialog>`(.showModal()) in modal mode.
+    // @todo Phase 4/5: guard against runtime `modal` toggles while open.
+    // Changing `modal` while the popover is open swaps the internal element,
+    // destroying top-layer state and event listeners. The lifecycle
+    // implementation must close first, let Lit re-render, then re-open.
     return this.modal
       ? html`
           <dialog class="swc-Popover">${content}</dialog>

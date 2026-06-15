@@ -85,7 +85,11 @@ export abstract class PopoverBase extends SpectrumElement {
 
   /**
    * The computed placement after the `flip` middleware reorients the popover.
-   * Readonly; not reflected as an attribute.
+   * Updated by the `PlacementController` via its `onPlacementChange` callback.
+   * Not reflected as an attribute. Consumers should read this value but never
+   * set it; doing so will desync the component from the controller.
+   *
+   * @readonly
    */
   @property({ attribute: false })
   public actualPlacement: Placement | null = null;
