@@ -235,7 +235,7 @@ Prerequisite dependency:
 
 ### Testing
 - [x] Unit tests for API and DOM contract (Storybook interaction tests on integration branch).
-- [ ] Playwright a11y snapshots and keyboard tests.
+- [x] Playwright a11y snapshots and keyboard tests.
 - [x] Storybook interaction coverage for API and accessibility contract.
 
 ### Documentation
