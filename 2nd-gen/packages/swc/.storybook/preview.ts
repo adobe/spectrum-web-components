@@ -261,6 +261,7 @@ const preview = {
                 'Spectrum SWC migration',
                 'Anti patterns',
                 'Property order quick reference',
+                'Stylesheets',
               ],
               'TypeScript',
               [
@@ -383,6 +384,11 @@ const preview = {
                 ],
                 'Color field',
                 ['Rendering and styling migration analysis'],
+                'Color handle',
+                [
+                  'Accessibility migration analysis',
+                  'Rendering and styling migration analysis',
+                ],
                 'Color loupe',
                 [
                   'Accessibility migration analysis',
