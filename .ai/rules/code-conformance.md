@@ -61,6 +61,7 @@ Reference: [Linting tools](../../CONTRIBUTOR-DOCS/02_style-guide/03_linting-tool
 - [Spectrum CSS to SWC migration](../../CONTRIBUTOR-DOCS/02_style-guide/01_css/04_spectrum-swc-migration.md)
 - [Styling anti-patterns](../../CONTRIBUTOR-DOCS/02_style-guide/01_css/05_anti-patterns.md)
 - [Property order quick reference](../../CONTRIBUTOR-DOCS/02_style-guide/01_css/06_property-order-quick-reference.md)
+- [Non-component stylesheets](../../CONTRIBUTOR-DOCS/02_style-guide/01_css/07_stylesheets.md) — applies when the changed file is in `swc/stylesheets/` rather than a component package
 
 **What to check:**
 
@@ -71,6 +72,7 @@ Reference: [Linting tools](../../CONTRIBUTOR-DOCS/02_style-guide/03_linting-tool
 - Forced-colors media query is present and correct (if applicable)
 - High-contrast and other media queries are sorted to the bottom of the file
 - No hard-coded values where design tokens are available
+- For files in `swc/stylesheets/`: placement, index registration, generated file conventions, and `_lit-styles/` import patterns match [Non-component stylesheets](../../CONTRIBUTOR-DOCS/02_style-guide/01_css/07_stylesheets.md)
 
 ## Test files
 
@@ -117,7 +119,7 @@ Reference: [Linting tools](../../CONTRIBUTOR-DOCS/02_style-guide/03_linting-tool
 - Per-unit MDX file exists at the unit root with the correct relative import path for `DocsHeader` / `DocsFooter`
 - `<Meta of={Stories} />` declared exactly once
 - `<DocsHeader />` at the top, `<DocsFooter />` at the bottom
-- Sections appear in canonical order (Anatomy → Upcoming features → Usage → Options → States → Behaviors → Accessibility → Full pattern → API → Appendix → Feedback)
+- Sections appear in canonical order (Anatomy → Usage → Options → States → Behaviors → Accessibility → Full pattern → Upcoming features → API → Appendix → Feedback)
 - Every section-tagged story is referenced via `<Canvas of={Stories.StoryName} />`
 - Per-story `### Title` headings match Storybook's rendered story names
 - No `<Canvas>` references to untagged stories

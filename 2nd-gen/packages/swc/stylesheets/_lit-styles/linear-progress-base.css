@@ -1,0 +1,215 @@
+/*!
+ * Copyright 2026 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+/*
+ * Shared base styles for linear progress components (`<swc-meter>`,
+ * future `<swc-progress-bar>`). Selectors use the `.swc-LinearProgress`
+ * namespace so each component's own stylesheet can layer component-
+ * specific rules on top via `.swc-Meter`, `.swc-ProgressBar`, etc.
+ *
+ */
+
+:host {
+  display: inline-block;
+  inline-size: 100%;
+  min-inline-size: token("progress-bar-minimum-width");
+  max-inline-size: token("progress-bar-maximum-width");
+  vertical-align: top;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.swc-LinearProgress {
+  /* Internal — used twice, derived from the exposed thickness. The
+   * `corner-radius-full` design token resolves to `50 %`, which renders
+   * an ellipse on a non-square track; half-thickness gives a perfect
+   * stadium pill at every size. */
+  --_swc-linear-progress-corner-radius: calc(var(--swc-linear-progress-thickness, token("progress-bar-thickness-medium")) / 2);
+
+  display: grid;
+  position: relative;
+  grid-template-areas:
+    "label value"
+    "track track"
+    "description description";
+  grid-template-columns: 1fr auto;
+  inline-size: 100%;
+}
+
+.swc-LinearProgress-label,
+.swc-LinearProgress-value {
+  margin-block-start: var(--swc-linear-progress-top-to-text, token("component-top-to-text-100"));
+  margin-block-end: token("spacing-75");
+  font-size: var(--swc-linear-progress-font-size, token("font-size-100"));
+  line-height: token("line-height-100");
+  color: var(--swc-linear-progress-text-color, token("neutral-subdued-content-color-default"));
+  text-align: start;
+  overflow-wrap: break-word;
+
+  &:lang(ja),
+  &:lang(zh),
+  &:lang(ko) {
+    line-height: token("cjk-line-height-100");
+  }
+}
+
+.swc-LinearProgress-label {
+  grid-area: label;
+}
+
+.swc-LinearProgress-value {
+  grid-area: value;
+  justify-self: end;
+  margin-inline-start: token("spacing-200");
+  font-variant-numeric: tabular-nums;
+  word-break: normal;
+}
+
+.swc-LinearProgress-track {
+  grid-area: track;
+  inline-size: 100%;
+  block-size: var(--swc-linear-progress-thickness, token("progress-bar-thickness-medium"));
+  background: var(--swc-linear-progress-track-color, token("track-color"));
+  border-radius: var(--_swc-linear-progress-corner-radius);
+  overflow: hidden;
+}
+
+.swc-LinearProgress-fill {
+  /* Visual nudge at 0%: keep a small contrasting sliver of fill visible at
+   * every value, including the starting state, so the indicator is always
+   * perceivable (WCAG 1.4.11). The fill is a pill (corner radius is half the
+   * thickness), so any width below one thickness is clipped by its own
+   * radius; one thickness is the smallest width that still renders. ARIA is
+   * unaffected — aria-valuenow stays at the real value. */
+  min-inline-size: 3%;
+  block-size: var(--swc-linear-progress-thickness, token("progress-bar-thickness-medium"));
+  background: var(--swc-linear-progress-fill-color, token("accent-content-color-default"));
+  border: none;
+  border-radius: var(--_swc-linear-progress-corner-radius);
+  transition: inline-size 1s;
+}
+
+.swc-LinearProgress-description {
+  grid-area: description;
+  margin-block-start: token("spacing-75");
+  font-size: var(--swc-linear-progress-font-size, token("font-size-100"));
+  line-height: token("line-height-100");
+  color: var(--swc-linear-progress-text-color, token("neutral-subdued-content-color-default"));
+}
+
+/* Sizes — exposed via `:host()` so consumers can re-target. */
+:host([size="s"]) {
+  --swc-linear-progress-thickness: token("progress-bar-thickness-small");
+  --swc-linear-progress-font-size: token("font-size-75");
+  --swc-linear-progress-top-to-text: token("component-top-to-text-75");
+}
+
+:host([size="l"]) {
+  --swc-linear-progress-thickness: token("progress-bar-thickness-large");
+  --swc-linear-progress-font-size: token("font-size-200");
+  --swc-linear-progress-top-to-text: token("component-top-to-text-200");
+}
+
+:host([size="xl"]) {
+  --swc-linear-progress-thickness: token("progress-bar-thickness-extra-large");
+  --swc-linear-progress-font-size: token("font-size-300");
+  --swc-linear-progress-top-to-text: token("component-top-to-text-300");
+}
+
+/* Side label — geometric layout, no custom-property indirection needed. */
+:host([label-position="side"]) .swc-LinearProgress {
+  /* `minmax(30%, 1fr)` keeps the track from shrinking out of existence
+   * when the label or value content is wide. */
+  grid-template-areas:
+    "label track value"
+    "description description description";
+  grid-template-columns: auto minmax(30%, 1fr) auto;
+  align-items: center;
+}
+
+:host([label-position="side"]) .swc-LinearProgress-label {
+  grid-area: label;
+  margin-block: 0;
+  margin-inline-end: token("spacing-200");
+}
+
+:host([label-position="side"]) .swc-LinearProgress-value {
+  grid-area: value;
+  margin-block: 0;
+  margin-inline-start: token("spacing-200");
+  text-align: end;
+}
+
+/*
+ * Static colors are on the custom-property exposure exclusions list
+ * (see `02_custom-properties.md` § Exclusions for Custom Property
+ * Overrides). They are applied via internal selectors so consumers
+ * cannot override the contrast-critical color values.
+ */
+:host([static-color="white"]) .swc-LinearProgress-track {
+  background: token("static-white-track-color");
+}
+
+:host([static-color="white"]) .swc-LinearProgress-fill {
+  background: token("static-white-track-indicator-color");
+}
+
+:host([static-color="white"]) .swc-LinearProgress-label,
+:host([static-color="white"]) .swc-LinearProgress-value,
+:host([static-color="white"]) .swc-LinearProgress-description {
+  color: token("static-white-text-color");
+}
+
+:host([static-color="black"]) .swc-LinearProgress-track {
+  background: token("static-black-track-color");
+}
+
+:host([static-color="black"]) .swc-LinearProgress-fill {
+  background: token("static-black-track-indicator-color");
+}
+
+:host([static-color="black"]) .swc-LinearProgress-label,
+:host([static-color="black"]) .swc-LinearProgress-value,
+:host([static-color="black"]) .swc-LinearProgress-description {
+  color: token("static-black-text-color");
+}
+
+/*
+ * Honor `prefers-reduced-motion` (WCAG 2.3.3): collapse the fill
+ * transition so the bar snaps to its new value instead of sweeping over
+ * 1s when the user has opted out of animation. `transition-duration: 0ms`
+ * (rather than `transition: none`) keeps the `transitionend` event firing
+ * for any JS listening for it.
+ */
+@media (prefers-reduced-motion: reduce) {
+  .swc-LinearProgress-fill {
+    transition-duration: 0ms;
+  }
+}
+
+/*
+ * Forced-colors overrides are also on the exclusions list — applied at
+ * the end of the file so they take precedence over consumer overrides.
+ */
+@media (forced-colors: active) {
+  .swc-LinearProgress-track {
+    background: ButtonFace;
+    border: 1px solid ButtonText;
+    forced-color-adjust: none;
+  }
+
+  .swc-LinearProgress-fill {
+    background: ButtonText;
+  }
+}

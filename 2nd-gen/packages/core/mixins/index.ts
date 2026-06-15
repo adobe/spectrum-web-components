@@ -12,6 +12,16 @@
 
 export { DisabledMixin, type DisabledInterface } from './disabled-mixin.js';
 export {
+  LINEAR_PROGRESS_LABEL_POSITIONS,
+  LINEAR_PROGRESS_STATIC_COLORS,
+  LINEAR_PROGRESS_VALID_SIZES,
+  LinearProgressMixin,
+  type LinearProgressInterface,
+  type LinearProgressLabelPosition,
+  type LinearProgressSize,
+  type LinearProgressStaticColor,
+} from './linear-progress-mixin.js';
+export {
   ObserveSlotPresence,
   type SlotPresenceObservingInterface,
 } from './observe-slot-presence.js';

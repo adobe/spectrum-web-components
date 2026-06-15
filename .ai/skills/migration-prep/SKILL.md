@@ -83,6 +83,8 @@ During discovery, explicitly check whether the component should:
 - extend from another 2nd-gen component or shared base that is already planned or in progress
 - be migrated before another component that depends on it
 - wait on a prerequisite component or shared base to avoid duplicated work or conflicting APIs
+- share structural CSS patterns with existing or in-flight components — check `2nd-gen/packages/swc/stylesheets/_lit-styles/` for existing shared fragments and note any that this component should consume; if no fragment exists yet but the pattern is real, flag whether it should be extracted as part of this migration or a coordinated one. See [Non-component stylesheets](../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/07_stylesheets.md#shared-lit-css-fragments-_lit-styles) for what qualifies
+- need a global element stylesheet counterpart — check whether `stylesheets/global/global-[component].css` should be created as part of this migration. If yes, note whether the component CSS will need `@global-exclude` fences and whether the global stylesheet is in scope for this migration cycle. See [Non-component stylesheets](../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/07_stylesheets.md#global-element-styles-global) for the authoring options
 
 Use the status table, existing component analyses, and source relationships to make these dependency and ordering calls explicit in the plan.
 
@@ -221,6 +223,7 @@ Pause and actively discuss with the user when you find any of the following:
 - A 1st-gen behavior that appears confusing, inconsistent, or not worth carrying forward
 - Multiple plausible component boundaries, such as one component vs several
 - A component dependency or extension relationship changes the recommended migration order
+- This component shares structural CSS patterns with another component, suggesting a `_lit-styles/` fragment should be created or consumed — flag the opportunity, name the abstraction, and note whether extraction affects migration order or requires coordination
 - Breaking changes that may be justified now to avoid a worse migration later
 - Inconsistencies between source materials that change the recommended API or behavior
 - Missing information that prevents a confident recommendation
@@ -235,6 +238,7 @@ Do not treat the following as implicitly approved, even if you can make a strong
 - whether another component should extend from this one
 - whether migration order should change because of a dependency relationship
 - whether shared logic should be extracted before this migration proceeds
+- whether a shared `_lit-styles/` CSS fragment should be created or consumed, which fragment name to use, and whether that work needs to happen before or alongside this migration
 - whether a major dependency concern should remain separate rather than being unified
 
 For these cases:
