@@ -293,11 +293,13 @@ export abstract class TabsBase extends SpectrumElement {
    * because the tab is already selected (`single` mode ignores
    * re-clicks on the active item).
    *
-   * `getItems` returns an empty array when the container is disabled,
-   * which prevents any selection interaction while disabled.
+   * `getItems` always returns the full tab list so the controller can
+   * track selection and apply `defaultToFirstSelectable` even when the
+   * container is disabled. User interaction is blocked via
+   * `confirmSelectionChange` when `disabled` is `true`.
    */
   private readonly _selection = new SelectionController(this, {
-    getItems: () => (this.disabled ? [] : (this._tabs as HTMLElement[])),
+    getItems: () => this._tabs as HTMLElement[],
     selectItem: (item) => {
       (item as TabLike).selected = true;
     },
@@ -305,6 +307,7 @@ export abstract class TabsBase extends SpectrumElement {
       (item as TabLike).selected = false;
     },
     mode: 'single',
+    defaultToFirstSelectable: true,
     keydownActivation: true,
     onSelectionChange: ({ selectedItems }) => {
       const newTab = selectedItems[0] as TabLike | undefined;
@@ -316,6 +319,9 @@ export abstract class TabsBase extends SpectrumElement {
     confirmSelectionChange: () => {
       if (this._suppressSelectionChangeEvent) {
         return true;
+      }
+      if (this.disabled) {
+        return false;
       }
       return this.dispatchEvent(new Event('change', { cancelable: true }));
     },
@@ -350,7 +356,14 @@ export abstract class TabsBase extends SpectrumElement {
     // Refresh navigation first so its eligible-items cache is populated
     // before _syncSelectionController calls setActiveItem.
     this._navigation.refresh();
+    // Sync any externally-set selection before refresh so a pre-selected tab
+    // wins over the defaultToFirstSelectable default.
     this._syncSelectionController();
+    // Refresh without firing a change event: populates lastKnownRawItems and
+    // applies defaultToFirstSelectable when no tab was pre-selected.
+    this._suppressSelectionChangeEvent = true;
+    this._selection.refresh();
+    this._suppressSelectionChangeEvent = false;
     this.updateSelectionIndicator();
   }
 
@@ -534,10 +547,13 @@ export abstract class TabsBase extends SpectrumElement {
     }
 
     if (changes.has('disabled') && this._tabs.length) {
-      // getItems already returns [] when disabled; refreshing both
-      // controllers re-applies roving tabindex accordingly.
+      // Refreshing both controllers re-applies roving tabindex accordingly.
       this._navigation.refresh();
+      // Suppress change events: toggling disabled must not look like a
+      // user-initiated selection change to consumers.
+      this._suppressSelectionChangeEvent = true;
       this._selection.refresh();
+      this._suppressSelectionChangeEvent = false;
       // After re-enabling, restore the roving tab stop to the selected tab
       // (refresh() defaults to items[0] when no item has tabindex=0).
       if (!this.disabled) {

@@ -176,6 +176,13 @@ export class SelectionController implements ReactiveController {
 
   private selectedItems: Set<HTMLElement> = new Set();
 
+  /**
+   * Snapshot of the last non-empty raw item list. Used to support
+   * `defaultToFirstSelectable` and stale-item cleanup when `getItems()`
+   * returns `[]` (e.g. the host signals it is disabled).
+   */
+  private lastKnownRawItems: HTMLElement[] = [];
+
   private keydownListenerAttached = false;
 
   private readonly handleClickCapture = (event: MouseEvent): void => {
@@ -400,7 +407,14 @@ export class SelectionController implements ReactiveController {
    * (single-item modes only).
    */
   public refresh(): void {
-    const eligible = this.getEligibleItems();
+    // Call getScopedRawItems() once and derive eligible from it so we avoid a
+    // redundant getItems() call inside getEligibleItems().
+    const rawItems = this.getScopedRawItems();
+    if (rawItems.length > 0) {
+      this.lastKnownRawItems = rawItems;
+    }
+    const eligible = rawItems.filter((el) => this.isSelectableItem(el));
+
     // An item is stale when it is disconnected, or when the eligible list is
     // non-empty and does not include it. When eligible is empty (e.g. the host
     // signals it is disabled via getItems()→[]), only disconnected items are
@@ -421,10 +435,17 @@ export class SelectionController implements ReactiveController {
     if (
       isSingle &&
       this.options.defaultToFirstSelectable &&
-      this.selectedItems.size === 0 &&
-      eligible.length > 0
+      this.selectedItems.size === 0
     ) {
-      this.applySelectionTransition([eligible[0]], []);
+      // For radio types one item must be selected even when the host is disabled.
+      // Use the eligible list when available; fall back to the last known raw
+      // items when getItems() returns [] (host disabled) so the first item
+      // is still selected.
+      const candidates =
+        eligible.length > 0 ? eligible : this.lastKnownRawItems;
+      if (candidates.length > 0) {
+        this.applySelectionTransition([candidates[0]], []);
+      }
     }
   }
 
