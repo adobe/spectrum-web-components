@@ -1239,3 +1239,84 @@ export const ActualPlacementFlipTest: Story = {
     );
   },
 };
+
+// ──────────────────────────────────────────────────────────────
+// TEST: long, wrapping content is kept within the viewport edge
+// ──────────────────────────────────────────────────────────────
+
+// The trigger is pinned to the top-right corner with position:fixed. A bubble
+// centered on an edge-pinned trigger would overflow the right edge regardless of
+// viewport size, so the shift middleware always has a real collision to resolve
+// — unlike a centered trigger, where the assertion would pass trivially in a
+// large viewport. placement="bottom" leaves vertical room (trigger at the top),
+// keeping the test focused on the horizontal shift driven by the wide content.
+export const LongContentPlacementTest: Story = {
+  render: () => html`
+    <div style="position: fixed; top: 0; right: 0;">
+      <swc-button id="tt-long-trigger">Trigger</swc-button>
+    </div>
+    <swc-tooltip for="tt-long-trigger" placement="bottom">
+      This tooltip contains an unusually long descriptive message that wraps
+      across multiple lines; with the trigger pinned to the top-right corner the
+      shift middleware must pull the wide bubble back so it stays within the
+      right viewport edge.
+    </swc-tooltip>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const tooltip = await getComponent<Tooltip>(canvasElement, 'swc-tooltip');
+    const trigger = canvasElement.querySelector('#tt-long-trigger')!;
+
+    await step('size middleware runs against the wrapped content', async () => {
+      await openTooltip(tooltip);
+
+      await waitFor(
+        () =>
+          expect(
+            tooltip.style.translate,
+            'PlacementController applied a translate value'
+          ).toBeTruthy(),
+        { timeout: 1000 }
+      );
+      // Presence of the available-space custom property confirms autoUpdate
+      // ran the size middleware against the rendered (wrapped) content.
+      expect(
+        tooltip.style.getPropertyValue('--swc-placement-available-width'),
+        'size middleware set --swc-placement-available-width'
+      ).toBeTruthy();
+    });
+
+    await step(
+      'shift pulls a would-overflow bubble back within the right edge',
+      async () => {
+        const triggerRect = trigger.getBoundingClientRect();
+        const rect = tooltip.getBoundingClientRect();
+        const triggerCenterX = triggerRect.left + triggerRect.width / 2;
+
+        // Precondition: a bubble centered on this edge-pinned trigger WOULD
+        // overflow the right edge. This guards the test against silently
+        // becoming trivial — if there is no collision for shift to resolve
+        // (e.g. the trigger is no longer at the edge), fail loudly here rather
+        // than passing a meaningless in-bounds check below.
+        const unshiftedRight = triggerCenterX + rect.width / 2;
+        expect(
+          unshiftedRight,
+          'an un-shifted bubble would overflow the right edge (collision exists)'
+        ).toBeGreaterThan(window.innerWidth);
+
+        // The shift middleware must keep the actual bubble within the viewport.
+        // A 1px tolerance absorbs subpixel rounding from Floating UI.
+        expect(
+          rect.right,
+          'shift keeps the bubble within the right edge'
+        ).toBeLessThanOrEqual(window.innerWidth + 1);
+        expect(
+          rect.left,
+          'bubble does not overflow the left edge'
+        ).toBeGreaterThanOrEqual(-1);
+
+        tooltip.open = false;
+        await tooltip.updateComplete;
+      }
+    );
+  },
+};

@@ -686,6 +686,8 @@ The impact is most acute in the additive phase, when `HoverController` opens the
 - [x] `ariaDescribedByElements` wiring: verify AT can traverse the association in DevTools Accessibility panel and with NVDA/VoiceOver — **manual verification required; cannot be automated**
 - [x] `ariaDescribedByElements` wiring fallback: when trigger has no shadow root (native `<button>`, `<a>`, `<input>`), association is established on the host element directly (`AriaWiringNativeTest`)
 - [x] `disabled` attribute prevents automatic mode response to user input (`DisabledPreventsHoverTest`)
+- [x] `PlacementController` positioning: applies `translate` and a valid `actual-placement`, positions the tip via arrow middleware, and clears positioning on close (`PlacementControllerTest`); flips to the opposite side when the requested side does not fit (`ActualPlacementFlipTest`)
+- [x] `PlacementController` long content: with the trigger pinned to the top-right corner, a long wide tooltip that would overflow the right edge is pulled back by the shift middleware; the test asserts the collision exists (an un-shifted bubble would overflow) before asserting it is resolved, so it cannot pass trivially in a large viewport (`LongContentPlacementTest`)
 
 #### Visual regression
 
