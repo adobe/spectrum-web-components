@@ -244,6 +244,82 @@ In the **body**, point to the **Browse mode (document/scan mode)** section. Add 
 - **Bold:** You may use `**…**` sparingly when it helps scanning (constraints, out-of-scope callouts, critical negations)—not for whole paragraphs or decoration. When estimating load, count only body prose: exclude markdown heading title lines (`#`…`####`), text inside link labels (`[…](…)`), fenced code, inline code, paths, generated breadcrumbs/TOC, and obvious boilerplate. Non-header, non-link prose should not sit more than about 30% inside bold markup; trim if above that.
 - **Bold (runs):** When adjacent words share the same emphasis, use one bold span (`**migration wave**`), not separate pairs per word (`**migration** **wave**`). Do not merge across words that should stay unstyled, or around links or code where splitting is clearer.
 
+## Pull request
+
+When the analysis doc is complete and ready for review, generate a GitHub PR description using the template below.
+
+### Variable substitution rules
+
+| Placeholder                                | Value                                                                 | Example                          |
+| ------------------------------------------ | --------------------------------------------------------------------- | -------------------------------- |
+| `{{component-name}}`                       | Package name, kebab-case                                              | `dropzone`, `picker-button`      |
+| `{{branch-name}}`                          | GitHub branch, format `<username>/swc-<jira-number>-<component>-a11y` | `nikkimk/swc-2146-dropzone-a11y` |
+| `{{component-a11y-migration-JIRA-ticket}}` | Jira ID for this component's a11y migration analysis ticket           | `SWC-2146`                       |
+| `{{component-readable-name}}`              | Human-readable name, first letter capitalized                         | `Dropzone`, `Color handle`       |
+
+The description's first bullet ends "for the 2nd-gen color handle" in the source template — replace "color handle" with `{{component-readable-name}}` when filling in.
+
+The Manual review test cases section contains a fixed reference to the color handle PR (`nikkimk/swc-2138-color-handle-a11y`). Keep that reference as-is; it is an anchor PR that all reviewers in this migration wave are expected to read.
+
+### Template
+
+```markdown
+## Description
+
+In spectrum-web-components/CONTRIBUTOR-DOCS/03_project-planning/03_components/{{component-name}}/accessibility-migration-analysis.md:
+
+- Documented recommendations for ARIA roles, states, and properties for the 2nd-gen {{component-readable-name}}
+- Shadow DOM and cross-root ARIA considerations documented, including any limitations or required workarounds (e.g., ElementInternals, cross-root ARIA delegation)
+- Accessibility tree expectations documented, including expected node roles, names, states, and hierarchy
+- Keyboard interaction model fully specified, covering focus management, key bindings, roving tabindex or active-descendant patterns, and focus trapping where applicable
+- Testing requirements defined, including unit tests, integration tests, and manual screen reader testing matrix (JAWS, NVDA, VoiceOver)
+- Known 1st-gen accessibility issues cataloged with disposition (fix in 2nd-gen, defer, or won't fix) and linked to any open GitHub issues or bugs
+- Applicable WAI-ARIA design pattern identified with relevant ARIA roles documented
+- 1st-gen component analysis completed, covering current ARIA implementation, keyboard handling, existing test coverage, and known issues with dispositions
+
+## Motivation and context
+
+The 2nd-gen migration is an opportunity to address known accessibility gaps, align with the latest WAI-ARIA Authoring Practices, and ensure the component meets WCAG 2.2 AA compliance.
+
+## Related issue(s)
+
+- resolves {{component-a11y-migration-JIRA-ticket}}
+
+## Screenshots (if appropriate)
+
+---
+
+## Author's checklist
+
+- [ ] I have read the **[CONTRIBUTING](<(https://github.com/adobe/spectrum-web-components/blob/main/CONTRIBUTING.md)>)** and **[PULL_REQUESTS](<(https://github.com/adobe/spectrum-web-components/blob/main/PULL_REQUESTS.md)>)** documents.
+- [ ] I have reviewed at the Accessibility Practices for this feature, see: [Aria Practices](https://www.w3.org/TR/wai-aria-practices/)
+- [ ] I have added automated tests to cover my changes.
+- [ ] I have included a well-written changeset if my change needs to be published.
+- [ ] I have included updated documentation if my change required it.
+
+---
+
+## Reviewer's checklist
+
+- [ ] Includes a Github Issue with appropriate flag or Jira ticket number without a link
+- [ ] Includes thoughtfully written changeset if changes suggested include `patch`, `minor`, or `major` features
+- [ ] Automated tests cover all use cases and follow best practices for writing
+- [ ] Validated on all supported browsers
+- [ ] All VRTs are approved before the author can update Golden Hash
+
+### Manual review test cases
+
+Review the [{{component-readable-name}} accessibility migration analysis](https://github.com/adobe/spectrum-web-components/blob/{{branch-name}}/CONTRIBUTOR-DOCS/03_project-planning/03_components/{{component-name}}/accessibility-migration-analysis.md)
+
+- [ ] ARIA roles, states, and properties covered
+- [ ] Shadow DOM and cross-root ARIA considerations covered
+- [ ] Accessibility tree documented
+- [ ] Keyboard interaction fully specified
+- [ ] Testing requirements defined
+- [ ] Known 1st-gen issues cataloged with dispositions
+- [ ] Review the changes that include the adaptive dual-border guidance
+```
+
 ## Related rules and skills
 
 - `contributor-doc-update.mdc` — when to run `update-nav.js` after heading or structure changes.
