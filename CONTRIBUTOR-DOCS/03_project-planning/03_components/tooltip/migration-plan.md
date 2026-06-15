@@ -59,6 +59,8 @@
     - [D3: `HoverControllerHost` contract — `requestOpen()`/`requestClose()` instead of `showPopover()`/`hidePopover()`](#d3-hovercontrollerhost-contract--requestopenrequestclose-instead-of-showpopoverhidepopover)
     - [D4: Clear ARIA relationship on disconnect](#d4-clear-aria-relationship-on-disconnect)
     - [D5: Scope the Escape `keydown` listener to the open state](#d5-scope-the-escape-keydown-listener-to-the-open-state)
+    - [D6: Restore synchronous `actual-placement` write before `showPopover`](#d6-restore-synchronous-actual-placement-write-before-showpopover)
+    - [D7: Exclude `actual-placement` from the Storybook helper round-trip](#d7-exclude-actual-placement-from-the-storybook-helper-round-trip)
 - [References](#references)
 
 </details>
@@ -251,7 +253,7 @@ Both controllers are integrated. No outstanding controller prerequisites remain.
 | A10 | `--swc-*` CSS custom properties | No `--swc-*` custom properties initially. A small reviewed set may be added if consumer override needs emerge. |
 | ~~A11~~ | ~~`labeling` attribute — `aria-labelledby` wiring~~ | **Shipped.** Implemented in the initial release alongside the base ARIA wiring. `syncAriaRelationship()` branches on `this.labeling`: when set, uses `ariaLabelledByElements` instead of `ariaDescribedByElements` on the trigger's inner interactive element. Stale references in the opposite property are cleaned up on each sync. Re-syncs when `labeling` changes while the tooltip is open. |
 | A12 | Inner interactive element selector expansion | Initial implementation uses `querySelector('button')` as the convention for resolving the inner interactive element within a trigger's shadow root. Expand to support additional interactive elements (`<a>`, `<input>`, `<select>`, components using a different inner element) when confirmed by consumer needs. `button` covers the large majority of 2nd-gen button-like component cases; any expansion should be gated on confirmed need. |
-| A13 | Directional entry animation on placement flip | **Known limitation.** CSS `@starting-style` evaluates at `showPopover()` time, before `PlacementController` has run and resolved the actual side. On a first open that triggers a flip (e.g., requested `top` but viewport forces `bottom`), the `@starting-style` uses the pre-flip `placement` attribute and slides from the wrong direction. Fix options range from opacity-only `@starting-style` (simplest; drops directional slide entirely) to triggering a separate `transform` animation from `onPlacementChange` after the flip resolves (preserves directional animation; requires reflow or Web Animations API). Not addressed in the current release. |
+| A13 | Directional entry animation on placement flip | **Known limitation (flip-only).** CSS `@starting-style` is locked in at `showPopover()` time. The non-flip case is correct: `Tooltip.base.ts` writes the declared physical side to `actual-placement` synchronously before `showPopover()` (`setDeclaredActualPlacement()`; see [D6](#d6-restore-synchronous-actual-placement-write-before-showpopover)). A flip, however, cannot be resolved before show — a `popover` is `display:none` and unmeasurable until shown — so on an open that flips (e.g., requested `top` but viewport forces `bottom`) the entrance slides from the declared side until `onPlacementChange` corrects it. Fully resolving the flip case would require driving the entrance off `@starting-style`: opacity-only entrance (simplest; drops the directional slide) or a Web Animations API slide fired from `onPlacementChange` after the flip resolves. Flip case not addressed in the current release. |
 
 Full behavioral requirements for this feature are in the [HoverController interface requirements](#addendum-hovercontroller-interface-requirements) addendum.
 
@@ -562,7 +564,9 @@ The host contract is `requestOpen()` / `requestClose()`, not `showPopover()` / `
 
 `onPlacementChange` calls `this.setAttribute('actual-placement', resolvedSide)` directly — bypassing Lit's property system because `actual-placement` is internal CSS-only state, not a consumer-facing API. `placement` is never mutated — the consumer's declared value is always preserved. All CSS selectors for tip direction, margin spacing, and `@starting-style` entrance animation use `[actual-placement]`.
 
-`PlacementController.start()` fires `onPlacementChange` synchronously (direction-resolved, before the async `autoUpdate` loop starts), and `Tooltip.base.ts` calls `startPlacement()` before `showPopover()` in `updated()`. This ensures `actual-placement` is set before `showPopover()` and before `@starting-style` is evaluated, so the entrance animation always travels from the correct direction — even on a flip. This resolves the known limitation that was tracked as A13.
+`Tooltip.base.ts` writes `actual-placement` to the declared physical side synchronously via `setDeclaredActualPlacement()` in `updated()`, immediately before `showPopover()`. The browser locks in `@starting-style` at `showPopover()` time, so the direction-bearing attribute must already be present; `PlacementController`'s own write happens later through `onPlacementChange`, which is async (it `await`s `document.fonts.ready`) and would land after `showPopover()`. With the synchronous write, the entrance animation travels from the correct direction for the common, non-flip case on every open path (hover, focus, property).
+
+A viewport flip cannot be resolved before `showPopover()`: a `popover` element is `display: none` and therefore unmeasurable until shown, so `PlacementController` cannot run a collision check beforehand. On a flip, the declared side is used for `@starting-style` and the resolved side arrives from `onPlacementChange` after show; the slide direction is only corrected then. This is the residual A13 limitation, now scoped to flips only. See [Decision log: D6](#decision-log).
 
 No arrow middleware is used — the tip is CSS-centered on the computed side. `PlacementController` only layers pixel positioning on top of the existing `popover="auto"` mechanism.
 
@@ -688,6 +692,7 @@ The impact is most acute in the additive phase, when `HoverController` opens the
 - [x] `disabled` attribute prevents automatic mode response to user input (`DisabledPreventsHoverTest`)
 - [x] `PlacementController` positioning: applies `translate` and a valid `actual-placement`, positions the tip via arrow middleware, and clears positioning on close (`PlacementControllerTest`); flips to the opposite side when the requested side does not fit (`ActualPlacementFlipTest`)
 - [x] `PlacementController` long content: with the trigger pinned to the top-right corner, a long wide tooltip that would overflow the right edge is pulled back by the shift middleware; the test asserts the collision exists (an un-shifted bubble would overflow) before asserting it is resolved, so it cannot pass trivially in a large viewport (`LongContentPlacementTest`)
+- [x] `@starting-style` timing: `actual-placement` is written to the declared physical side synchronously before `showPopover()`, so the entrance animation has a direction on the non-flip case; verified by wrapping `showPopover()` and asserting the attribute is already set at that instant (`ActualPlacementBeforeShowTest`)
 
 #### Visual regression
 
@@ -853,7 +858,7 @@ Decisions made after the initial plan was approved and implementation had begun.
 
 **Cleared after exit transition:** `actual-placement` is removed by `clearPositioningState()` (called from `dispatchAfterEvent(false)`) after the exit transition completes. It is not cleared at `hidePopover()` time — clearing there would cause a CSS selector change while the tooltip is still visible and fading out, potentially flipping the tip direction or margin during the animation. The attribute is set fresh on the next open.
 
-**Animation timing:** `PlacementController.start()` now fires `onPlacementChange` synchronously (direction-resolved) before the async `autoUpdate` loop begins. `Tooltip.base.ts` calls `startPlacement()` before `showPopover()` in `updated()`. This guarantees `actual-placement` is set before `showPopover()` — and therefore before `@starting-style` is evaluated by the browser — resolving the A13 known limitation from the original plan.
+**Animation timing:** `Tooltip.base.ts` writes the declared physical side to `actual-placement` synchronously, immediately before `showPopover()` in `updated()` (`setDeclaredActualPlacement()`). This guarantees the attribute is present when the browser locks in `@starting-style` at show time, so the entrance animation has the correct direction for the non-flip case on every open path. `PlacementController`'s write via `onPlacementChange` is async and lands after `showPopover()`. A flip cannot be resolved before show (the `display:none` popover is unmeasurable), so flip animations still slide from the declared side until `onPlacementChange` corrects them — see [D6](#d6-restore-synchronous-actual-placement-write-before-showpopover) for the regression history and the residual flip limitation.
 
 **Files changed:** `Tooltip.types.ts`, `Tooltip.base.ts`, `tooltip.css`, `placement-controller.ts`, `tooltip.test.ts`.
 
@@ -910,6 +915,38 @@ Decisions made after the initial plan was approved and implementation had begun.
 **Decision:** Register the listener only while open — added in `updated()` when `open` becomes `true`, removed on close and (defensively) in `disconnectedCallback`. Because `popover="auto"` permits only one open tooltip at a time, at most one listener is ever active, which satisfies the reviewer's "single delegated listener" intent without introducing static shared state. A host-level listener was considered and rejected: the tooltip is non-interactive and never receives keyboard focus, so a host `keydown` would never fire (the listener must be on `document` to catch Escape regardless of focus location).
 
 **Files changed:** `Tooltip.base.ts` (`updated()` open/close branches, `connectedCallback`, `disconnectedCallback`, `handleKeyDown` comment), this plan.
+
+---
+
+### D6: Restore synchronous `actual-placement` write before `showPopover`
+
+**Phase:** Review (Phase 8)  
+**Trigger:** PR reviewer / QA — entrance animation slid from the wrong direction even on a non-flipped first open.
+
+**Root cause:** `actual-placement` was being written to the host only by `PlacementController` via the `onPlacementChange` callback, which fires from the `async` `computePlacement()` (it `await`s `document.fonts.ready`). That lands *after* `updated()` has already called `showPopover()`. The browser locks in `@starting-style` at `showPopover()` time, so the direction-bearing attribute was absent at that moment and the entrance animation had no direction to animate from — on every open, not just flips. The earlier A13 resolution had relied on a synchronous declared-side `setAttribute` before `showPopover()`, but that write was dropped in a later refactor (the assumption that `start()` emits `onPlacementChange` synchronously is incorrect — it does not).
+
+**Decision:** Restore the synchronous write. `Tooltip.base.ts` now calls `setDeclaredActualPlacement()` in `updated()` immediately before `showPopover()`, setting `actual-placement` to the physical side of the declared `placement` (resolving logical `start`/`end` against the trigger's writing direction via `toFloatingPlacement`/`fromFloatingPlacement`). `PlacementController` still overwrites it with the flip-resolved side via `onPlacementChange` afterwards. This fixes the entrance direction for the common non-flip case on all open paths (hover, focus, property).
+
+**Residual limitation:** A flip cannot be known before `showPopover()` — a `popover` element is `display:none` and unmeasurable until shown, so the collision check cannot run beforehand. On a flip, the animation slides from the declared side until `onPlacementChange` corrects it. This is the narrowed A13 limitation (flip-only); fully resolving it would require driving the entrance animation off `@starting-style` (e.g. a Web Animations API slide fired from `onPlacementChange`, or an opacity-only entrance).
+
+**Regression guard:** `ActualPlacementBeforeShowTest` wraps `showPopover()` and asserts `actual-placement` already reflects the declared side at the instant it is called.
+
+**Files changed:** `Tooltip.base.ts` (`setDeclaredActualPlacement()`, `updated()` open branch, imports), `tooltip.test.ts` (`ActualPlacementBeforeShowTest`), this plan.
+
+---
+
+### D7: Exclude `actual-placement` from the Storybook helper round-trip
+
+**Phase:** Review (Phase 8)  
+**Trigger:** QA — on the first tooltip on a page, a flipped tooltip rendered with the wrong arrow direction; `actual-placement` read `top` in DevTools despite the tooltip being positioned below the trigger. Reproduced only inside Storybook infrastructure.
+
+**Root cause:** Not a component bug — a Storybook-tooling interaction. `@wc-toolkit/storybook-helpers` (`getStorybookHelpers` → `template`) installs an `argObserver` (`setArgObserver`) that watches **every** attribute on the element and writes each change back into Storybook `args` via `updateArgs`. The internal `actual-placement` attribute was swept into `args`; because it is not a declared `argType`, `getTemplateOperators` classified it as an "additional attribute" and the `spread` directive re-applied it on the next render — overwriting the controller-resolved side (`bottom`) with a stale value (`top`). This surfaced only after [D6](#d6-restore-synchronous-actual-placement-write-before-showpopover): before the synchronous declared-side write existed, the only value ever written (and therefore round-tripped) was the resolved side, so the re-application was harmless. A plain (non-Storybook) consumer does not round-trip attributes and is unaffected.
+
+**Decision:** Declare `actual-placement` in the stories `argTypes` with the control disabled (`{ table: { disable: true }, control: false }`). `getTemplateOperators` drops any `args` key that exists in `argTypes` from the spread, so the helper no longer re-applies the internal attribute. No component code changed.
+
+**General lesson:** any internal DOM attribute a 2nd-gen component manages directly (not a declared `@property`) will be round-tripped by the Storybook helper's attribute observer. Exclude such attributes in the unit's `argTypes` so the helper's `spread` does not clobber them.
+
+**Files changed:** `tooltip.stories.ts` (`argTypes['actual-placement']`), this plan.
 
 ---
 

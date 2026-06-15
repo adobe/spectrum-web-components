@@ -109,6 +109,7 @@ Reference: [Linting tools](../../CONTRIBUTOR-DOCS/02_style-guide/03_linting-tool
 - No story-level JSDoc comments above any `export const` — only the meta-level JSDoc remains
 - No `section-order` parameter; no `description-only` tag
 - `flexLayout: 'row-wrap'` is used for multi-item stories
+- Internal DOM attributes the component writes itself via `setAttribute` (not declared `@property`, e.g. Tooltip's `actual-placement`) are declared in `argTypes` with `{ table: { disable: true }, control: false }`; otherwise the Storybook helper's attribute observer round-trips them through `args` and re-applies stale values via its `spread` directive, clobbering the component's own state
 - All examples use accessible, meaningful content: no placeholder text, no missing labels
 - Image assets use `picsum.photos` with static IDs
 

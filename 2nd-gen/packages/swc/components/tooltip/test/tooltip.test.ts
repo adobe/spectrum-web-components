@@ -1320,3 +1320,51 @@ export const LongContentPlacementTest: Story = {
     );
   },
 };
+
+// ──────────────────────────────────────────────────────────────
+// TEST: actual-placement is set before showPopover (@starting-style)
+// ──────────────────────────────────────────────────────────────
+
+export const ActualPlacementBeforeShowTest: Story = {
+  render: () => html`
+    <div style="display: flex; justify-content: center; padding: 120px;">
+      <swc-button id="tt-sync-trigger">Trigger</swc-button>
+    </div>
+    <swc-tooltip for="tt-sync-trigger" placement="top">
+      Animates from the correct direction on first open
+    </swc-tooltip>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const tooltip = await getComponent<Tooltip>(canvasElement, 'swc-tooltip');
+
+    await step(
+      'sets actual-placement before showPopover so @starting-style has a direction',
+      async () => {
+        // Capture the attribute value at the exact moment the popover is shown.
+        // The browser locks in @starting-style at showPopover(), so the
+        // direction-bearing attribute must already be present. PlacementController
+        // also writes actual-placement, but asynchronously (after showPopover),
+        // so this guards that the synchronous declared-side write in updated()
+        // is not lost — without it, the entrance animation has no direction.
+        let placementAtShow: string | null = 'show-not-called';
+        const originalShowPopover = tooltip.showPopover;
+        tooltip.showPopover = function (this: Tooltip): void {
+          placementAtShow = this.getAttribute('actual-placement');
+          originalShowPopover.call(this);
+        };
+
+        tooltip.open = true;
+        await tooltip.updateComplete;
+
+        expect(
+          placementAtShow,
+          'actual-placement reflects the declared physical side at showPopover() time'
+        ).toBe('top');
+
+        tooltip.showPopover = originalShowPopover;
+        tooltip.open = false;
+        await tooltip.updateComplete;
+      }
+    );
+  },
+};

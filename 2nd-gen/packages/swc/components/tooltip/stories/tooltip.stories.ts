@@ -44,6 +44,18 @@ argTypes.placement = {
   options: TOOLTIP_PLACEMENTS,
 };
 
+// `actual-placement` is internal CSS-only state that `Tooltip` manages directly
+// via setAttribute (declared side before showPopover, then the flip-resolved
+// side from PlacementController). The Storybook helper otherwise observes every
+// attribute change, writes it back into `args`, and re-applies it through its
+// `spread` directive on the next render — clobbering the resolved side with a
+// stale value (e.g. a flipped tooltip reverting to its declared `top`). Declaring
+// it here (control disabled) makes the helper exclude it from the spread.
+argTypes['actual-placement'] = {
+  table: { disable: true },
+  control: false,
+};
+
 // ────────────────────
 //    HELPERS
 // ────────────────────

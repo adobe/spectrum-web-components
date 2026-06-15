@@ -19,8 +19,10 @@ import {
   type HoverControllerHost,
 } from '../../controllers/hover-controller/index.js';
 import {
+  fromFloatingPlacement,
   type Placement as ControllerPlacement,
   PlacementController,
+  toFloatingPlacement,
 } from '../../controllers/placement-controller/index.js';
 import {
   TOOLTIP_PLACEMENTS,
@@ -233,6 +235,20 @@ export abstract class TooltipBase
    */
   public requestClose(): void {
     this.open = false;
+  }
+
+  // Writes actual-placement to the physical side of the declared `placement`,
+  // resolving logical start/end against the trigger's writing direction. Used
+  // synchronously before showPopover() so @starting-style has a direction; the
+  // PlacementController overwrites it with the flip-resolved side afterwards.
+  private setDeclaredActualPlacement(): void {
+    const trigger = this.resolveTrigger();
+    const direction =
+      trigger && getComputedStyle(trigger).direction === 'rtl' ? 'rtl' : 'ltr';
+    const side = fromFloatingPlacement(
+      toFloatingPlacement(this.placement as ControllerPlacement, direction)
+    ).split('-')[0];
+    this.setAttribute('actual-placement', side);
   }
 
   private startPlacement(): void {
@@ -464,6 +480,17 @@ export abstract class TooltipBase
       if (this.open) {
         // Register Escape handling only while open; removed on close below.
         document.addEventListener('keydown', this.handleKeyDown);
+        // Set actual-placement to the declared side synchronously, before
+        // showPopover(). @starting-style is evaluated by the browser the moment
+        // the popover enters the top layer, so the direction-bearing attribute
+        // must already be present or the entrance animation has no direction to
+        // animate from. PlacementController writes actual-placement again from
+        // onPlacementChange, but that is async (it awaits document.fonts.ready),
+        // so it lands after showPopover() — too late for @starting-style. The
+        // popover is display:none until shown and therefore unmeasurable, so a
+        // viewport flip cannot be known here; on a flip the resolved side
+        // arrives from onPlacementChange and the slide direction corrects then.
+        this.setDeclaredActualPlacement();
         this.startPlacement();
         if (this.open !== this.isPopoverOpen) {
           this.showPopover();

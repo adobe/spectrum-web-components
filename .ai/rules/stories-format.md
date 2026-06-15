@@ -200,6 +200,22 @@ const meta: Meta = {
 - **Avoid repetition**: The subtitle and JSDoc description should complement each other, not duplicate content. The subtitle is a brief summary; the JSDoc provides fuller context.
 - **Component links**: When referencing other components in the JSDoc description, use relative Storybook paths: `[ComponentName](../?path=/docs/component-name--overview)`
 
+### Internal attributes: exclude from the Storybook helper round-trip
+
+If a component manages an **internal DOM attribute directly** via `setAttribute`/`removeAttribute` — i.e. a CSS-only state attribute that is **not** a declared `@property` and not part of the public API (for example Tooltip's `actual-placement`) — you must declare it in `argTypes` with the control disabled, even though it is not a real control.
+
+```typescript
+const { args, argTypes, template } = getStorybookHelpers('swc-component-name');
+
+// Internal CSS-only attribute the component writes itself; not a public control.
+argTypes['internal-attribute'] = {
+  table: { disable: true },
+  control: false,
+};
+```
+
+**Why this is required.** `@wc-toolkit/storybook-helpers` installs a `MutationObserver` that watches **every** attribute on the element and writes each change back into Storybook `args`. Any `args` key that is not a declared `argType` is then re-applied to the element through the helper's `spread` directive on the next render. For an attribute the component mutates at runtime, the helper re-applies a **stale** value and clobbers the component's own state — e.g. a flipped Tooltip whose `actual-placement` reverts from `bottom` to its declared `top`, breaking the arrow direction. Declaring the attribute in `argTypes` makes the helper exclude it from the `spread`. This only affects Storybook; plain consumers do not round-trip attributes.
+
 ### Title naming conventions
 
 These rules apply to every `title` field in meta objects and every `<Meta title="..." />` in MDX files.
@@ -685,6 +701,7 @@ See `asset.stories.ts` for complete examples.
 - [ ] Copyright header (current year)
 - [ ] Visual separators between sections
 - [ ] Meta: title, component, args, argTypes, render, `parameters.docs.subtitle`, `tags: ['migrated']` (or `'controller'`)
+- [ ] Internal attributes the component manages via `setAttribute` (not declared `@property`) are declared in `argTypes` with `{ table: { disable: true }, control: false }` so the Storybook helper does not round-trip and clobber them
 - [ ] `title` uses sentence case, no filename labels, group is not a single-component wrapper
 - [ ] Meta JSDoc description above meta object (with component links if applicable)
 - [ ] Subtitle is concise and non-repetitive (plain text only, no links)
