@@ -61,6 +61,7 @@
     - [D5: Scope the Escape `keydown` listener to the open state](#d5-scope-the-escape-keydown-listener-to-the-open-state)
     - [D6: Restore synchronous `actual-placement` write before `showPopover`](#d6-restore-synchronous-actual-placement-write-before-showpopover)
     - [D7: Exclude `actual-placement` from the Storybook helper round-trip](#d7-exclude-actual-placement-from-the-storybook-helper-round-trip)
+    - [D8: First-of-many trigger cycles open/closed in Storybook isolation — accepted (won't fix)](#d8-first-of-many-trigger-cycles-openclosed-in-storybook-isolation--accepted-wont-fix)
 - [References](#references)
 
 </details>
@@ -947,6 +948,19 @@ Decisions made after the initial plan was approved and implementation had begun.
 **General lesson:** any internal DOM attribute a 2nd-gen component manages directly (not a declared `@property`) will be round-tripped by the Storybook helper's attribute observer. Exclude such attributes in the unit's `argTypes` so the helper's `spread` does not clobber them.
 
 **Files changed:** `tooltip.stories.ts` (`argTypes['actual-placement']`), this plan.
+
+---
+
+### D8: First-of-many trigger cycles open/closed in Storybook isolation — accepted (won't fix)
+
+**Phase:** Review (Phase 8)  
+**Trigger:** QA — in a story with multiple tooltip triggers, hovering or focusing the **first** trigger cycled the tooltip open→closed before it became visible. Triggers 2..N behaved normally. Reproduced only in Storybook isolation mode.
+
+**Root cause:** Confirmed (via stack-trace instrumentation) **not** an implementation bug. Same Storybook-helper family as [D7](#d7-exclude-actual-placement-from-the-storybook-helper-round-trip): `open` is a reflected `@property`, so when `HoverController` opens the first tooltip, Lit reflects `open` to the attribute; the helper's `argObserver` (which watches only the **first** `<swc-tooltip>` in the DOM) writes `open: true` into the **shared** story `args`; the `spread` directive then applies `open` to **every** tooltip instance on re-render; and because `popover="auto"` permits only one open popover in the top layer, the instances dismiss one another, producing an oscillation. Every close in the logs was a native popover dismissal (`handleToggle newState=closed` while `this.open=true`) with no `HoverController` close call preceding it. Unlike `actual-placement`, `open` is a real CEM attribute (it flows through `attrOperators`, not `additionalAttrs`), so the D7 `argTypes` exclusion cannot suppress it.
+
+**Decision:** Accepted as a Storybook-only dev artifact; not fixed. Rationale: it surfaces only in isolation mode on the first of multiple triggers, never in the flow of the main docs page, so encounter likelihood is low. Automated tests and VRT are unaffected (their play functions open a non-first tooltip — `Variants` index 1, `Placements` index 3), and **production consumers are unaffected** because no framework round-trips reflected attributes the way the Storybook helper does. The candidate real fix — dropping `reflect` from `open` — was rejected as a disproportionate public-API change (it would remove the `[open]` attribute reflection that 1st-gen exposed and that `OpenCloseTest` asserts) for a dev-only glitch.
+
+**Files changed:** none (documentation only).
 
 ---
 
