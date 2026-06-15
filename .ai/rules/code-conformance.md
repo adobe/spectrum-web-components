@@ -61,6 +61,7 @@ Reference: [Linting tools](../../CONTRIBUTOR-DOCS/02_style-guide/03_linting-tool
 - [Spectrum CSS to SWC migration](../../CONTRIBUTOR-DOCS/02_style-guide/01_css/04_spectrum-swc-migration.md)
 - [Styling anti-patterns](../../CONTRIBUTOR-DOCS/02_style-guide/01_css/05_anti-patterns.md)
 - [Property order quick reference](../../CONTRIBUTOR-DOCS/02_style-guide/01_css/06_property-order-quick-reference.md)
+- [Non-component stylesheets](../../CONTRIBUTOR-DOCS/02_style-guide/01_css/07_stylesheets.md) — applies when the changed file is in `swc/stylesheets/` rather than a component package
 
 **What to check:**
 
@@ -71,8 +72,11 @@ Reference: [Linting tools](../../CONTRIBUTOR-DOCS/02_style-guide/03_linting-tool
 - Forced-colors media query is present and correct (if applicable)
 - High-contrast and other media queries are sorted to the bottom of the file
 - No hard-coded values where design tokens are available
+- For files in `swc/stylesheets/`: placement, index registration, generated file conventions, and `_lit-styles/` import patterns match [Non-component stylesheets](../../CONTRIBUTOR-DOCS/02_style-guide/01_css/07_stylesheets.md)
 
 ## Test files
+
+**Vitest reference:** see [.ai/references/vitest.md](../references/vitest.md) for the canonical AI-friendly Vitest docs (index + per-page fetch pattern) and project-specific config notes.
 
 **Style guide:**
 
@@ -96,18 +100,31 @@ Reference: [Linting tools](../../CONTRIBUTOR-DOCS/02_style-guide/03_linting-tool
 **Authoring guidelines:**
 
 - Stories format: `.ai/rules/stories-format.md` — file structure, meta, tags, layout, visual separators
-- Stories documentation: `.ai/rules/stories-documentation.md` — section content, anatomy, options, states, behaviors, accessibility
+- Stories documentation: `.ai/rules/stories-documentation.md` — per-unit MDX authoring (section content, anatomy, options, states, behaviors, accessibility)
 
-**What to check:**
+**What to check (`<unit>.stories.ts`):**
 
 - File has the correct section order and visual separators
-- Meta has all required fields: `title`, `component`, `args`, `argTypes`, `render`, `parameters.docs.subtitle`, `tags: ['migrated']`
-- All stories have correct tags: `anatomy`, `options`, `states`, `behaviors`, `a11y`, etc.
-- JSDoc comments are present on all stories except Playground and Overview
-- JSDoc headings start at level 3 (`###`) or deeper
+- Meta has all required fields: `title`, `component`, `args`, `argTypes`, `render`, `parameters.docs.subtitle`, `tags: ['migrated']` (or `'controller'`)
+- All stories have correct section tags: `anatomy`, `options`, `states`, `behaviors`, `a11y`, etc.
+- Playground uses `tags: ['dev']` when the unit has a per-unit MDX file (no `'autodocs'` to avoid a duplicate Docs entry)
+- No story-level JSDoc comments above any `export const` — only the meta-level JSDoc remains
+- No `section-order` parameter; no `description-only` tag
 - `flexLayout: 'row-wrap'` is used for multi-item stories
 - All examples use accessible, meaningful content: no placeholder text, no missing labels
 - Image assets use `picsum.photos` with static IDs
+
+**What to check (`<unit>.mdx`):**
+
+- Per-unit MDX file exists at the unit root with the correct relative import path for `DocsHeader` / `DocsFooter`
+- `<Meta of={Stories} />` declared exactly once
+- `<DocsHeader />` at the top, `<DocsFooter />` at the bottom
+- Sections appear in canonical order (Anatomy → Usage → Options → States → Behaviors → Accessibility → Full pattern → Upcoming features → API → Appendix → Feedback)
+- Every section-tagged story is referenced via `<Canvas of={Stories.StoryName} />`
+- Per-story `### Title` headings match Storybook's rendered story names
+- No `<Canvas>` references to untagged stories
+- Controllers: hand-authored `## API` section is present and `meta.tags` includes `'controller'` so `<ApiTable />` is omitted by `<DocsFooter />`
+- MDX heading levels start at `###` inside section prose (top-level sections use `##`)
 
 ## Guideline gaps
 

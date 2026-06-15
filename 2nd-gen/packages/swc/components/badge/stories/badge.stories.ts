@@ -179,7 +179,7 @@ const fixedLabels = {
 } as const satisfies Record<FixedValues, string>;
 
 // ────────────────────
-//    AUTODOCS STORY
+//    PLAYGROUND STORY
 // ────────────────────
 
 export const Playground: Story = {
@@ -212,7 +212,7 @@ export const Playground: Story = {
     'default-slot': 'Active',
     'icon-slot': undefined,
   },
-  tags: ['autodocs', 'dev'],
+  tags: ['dev'],
 };
 
 // ──────────────────────────────
@@ -233,18 +233,6 @@ export const Overview: Story = {
 //    ANATOMY STORIES
 // ──────────────────────────
 
-/**
- * A badge consists of:
- *
- * 1. **Container** - Colored background with rounded corners
- * 2. **Label** - Text content describing the status or category (required)
- * 3. **Icon** (optional) - Visual indicator positioned before the label
- *
- * ### Content
- *
- * - **Default slot**: Text content describing the status or category (required for accessibility)
- * - **icon slot**: (optional) - Visual indicator positioned before the label
- */
 export const Anatomy: Story = {
   render: (args) => {
     const size = args.size as BadgeSize;
@@ -278,16 +266,6 @@ export const Anatomy: Story = {
 //    OPTIONS STORIES
 // ──────────────────────────
 
-/**
- * Badges come in four sizes to fit various contexts:
- *
- * - **Small (`s`)**: Default size; compact spaces, inline with text, or in tables
- * - **Medium (`m`)**: Common usage when slightly more emphasis is needed
- * - **Large (`l`)**: Increased emphasis in cards or content areas
- * - **Extra-large (`xl`)**: Maximum visibility for primary status indicators
- *
- * The `s` size is the default. Use larger sizes sparingly to create a hierarchy of importance on a page.
- */
 export const Sizes: Story = {
   render: (args) => html`
     <div
@@ -334,26 +312,13 @@ export const Sizes: Story = {
       )}
     </div>
   `,
-  parameters: { 'section-order': 1, flexLayout: 'column-stretch' },
+  parameters: { flexLayout: 'column-stretch' },
   tags: ['options'],
   args: {
     variant: 'neutral',
   },
 };
 
-/**
- * Semantic variants provide meaning through color and should be used when status has specific significance.
- * These variants align consistently with other design system components that use the same semantic meanings.
- *
- * Use these variants for the following statuses:
- *
- * - **accent**: New, beta, prototype, draft
- * - **informative**: Active, in use, live, published
- * - **neutral**: Archived, deleted, paused, not started, ended
- * - **positive**: Approved, complete, success, purchased, licensed
- * - **notice**: Pending, expiring soon, limited, deprecated
- * - **negative**: Rejected, error, alert, failed
- */
 export const SemanticVariants: Story = {
   render: (args) => html`
     ${BADGE_VARIANTS_SEMANTIC.map((variant) =>
@@ -364,22 +329,10 @@ export const SemanticVariants: Story = {
       })
     )}
   `,
-  parameters: { 'section-order': 2 },
   tags: ['options'],
 };
 SemanticVariants.storyName = 'Semantic variants';
 
-/**
- * Non-semantic variants use distinctive colors for visual categorization without inherent meaning.
- * These are ideal for color-coding categories, teams, or projects - especially when there are 8 categories or fewer.
- *
- * Use non-semantic variants when:
- * - Categories don't have universal status meanings
- * - Visual distinction matters more than semantic meaning
- * - Creating department, team, or project color schemes
- *
- * > **Note**: 2nd-gen adds `pink`, `turquoise`, `brown`, `cinnamon`, and `silver` variants.
- */
 export const NonSemanticVariants: Story = {
   render: (args) => html`
     ${BADGE_VARIANTS_COLOR.map((variant) =>
@@ -390,18 +343,10 @@ export const NonSemanticVariants: Story = {
       })
     )}
   `,
-  parameters: { 'section-order': 3 },
   tags: ['options'],
 };
 NonSemanticVariants.storyName = 'Non-semantic variants';
 
-/**
- * The `outline` style provides a bordered appearance with a transparent background.
- * This style reduces visual weight while maintaining semantic meaning.
- *
- * **Important**: The outline style is only valid for semantic variants (`accent`, `informative`, `neutral`, `positive`, `notice`, `negative`).
- * Attempting to use `outline` with non-semantic color variants will not apply the style.
- */
 export const Outline: Story = {
   render: (args) => html`
     ${BADGE_VARIANTS_SEMANTIC.map((variant) =>
@@ -413,19 +358,9 @@ export const Outline: Story = {
       })
     )}
   `,
-  parameters: { 'section-order': 4 },
   tags: ['options'],
 };
 
-/**
- * The `subtle` style reduces visual prominence with a softer background fill.
- * Unlike outline, subtle is available for **all** variants (semantic and non-semantic).
- *
- * Use subtle style when:
- * - Multiple badges appear together and need less visual competition
- * - Status is secondary to main content
- * - Maintaining design system color palette while reducing emphasis
- */
 export const Subtle: Story = {
   render: (args) => html`
     ${BADGE_VARIANTS.map((variant) =>
@@ -437,24 +372,9 @@ export const Subtle: Story = {
       })
     )}
   `,
-  parameters: { 'section-order': 5 },
   tags: ['options'],
 };
 
-/**
- * The `fixed` attribute adjusts border radius based on edge positioning, creating the appearance that the badge is "fixed" to a UI edge.
- *
- * Fixed positioning options:
- *
- * - **block-start**: Top edge (removes top-left and top-right border radius)
- * - **block-end**: Bottom edge (removes bottom-left and bottom-right border radius)
- * - **inline-start**: Left edge (removes top-left and bottom-left border radius)
- * - **inline-end**: Right edge (removes top-right and bottom-right border radius)
- *
- * This is purely visual styling - actual positioning must be handled separately with CSS.
- *
- * All fixed positions shown below for comparison.
- */
 export const Fixed: Story = {
   render: (args) => html`
     ${FIXED_VALUES.map((fixed) =>
@@ -466,7 +386,6 @@ export const Fixed: Story = {
       })
     )}
   `,
-  parameters: { 'section-order': 6 },
   tags: ['options'],
 };
 
@@ -474,12 +393,6 @@ export const Fixed: Story = {
 //    BEHAVIORS STORIES
 // ──────────────────────────────
 
-/**
- * When a badge's label is too long for the available horizontal space, it wraps to form multiple lines.
- * Text wrapping can be controlled by applying a `max-inline-size` constraint to the badge.
- *
- * This ensures badges remain readable even with longer status messages or category names.
- */
 export const TextWrapping: Story = {
   render: (args) => html`
     ${template({
@@ -492,14 +405,6 @@ export const TextWrapping: Story = {
   tags: ['behaviors'],
 };
 
-/**
- * Badges flow naturally within prose text to annotate inline content such as headings,
- * labels, list items, or table cells.
- *
- * Because `<swc-badge>` renders as `inline-flex`, it participates in the normal
- * text flow without any extra wrapper styling required. Use small (`s`) badges in
- * most inline contexts to avoid disrupting line height.
- */
 export const Inline: Story = {
   render: (args) => html`
     <p>
@@ -536,72 +441,10 @@ export const Inline: Story = {
   tags: ['behaviors'],
 };
 
-// ──────────────────────────────────
-//    UPCOMING FEATURES STORIES
-// ──────────────────────────────────
-
-/**
- * ### Notification and indicator badge types
- *
- * - **Notification**: Displays a numeric count to signal unread or pending items, such as a message counter on an icon
- * - **Indicator**: A dot-only badge that signals activity or updated content without showing a count
- */
-export const UpcomingFeatures: Story = {
-  tags: ['upcoming', 'description-only'],
-};
-UpcomingFeatures.storyName = 'Upcoming features';
-
 // ────────────────────────────────
 //    ACCESSIBILITY STORIES
 // ────────────────────────────────
 
-/**
- * ### Features
- *
- * The `<swc-badge>` element implements several accessibility features:
- *
- * #### Color meaning
- *
- * - Colors are used in combination with text labels and/or icons to ensure that status information is not conveyed through color alone
- * - Users with color vision deficiencies can understand badge meaning through text content
- * - High contrast mode is supported with appropriate color overrides
- *
- * #### Non-interactive element
- *
- * - Badges have no interactive behavior and are not focusable
- * - Screen readers will announce the badge content as static text
- * - No keyboard interaction is required or expected
- * > Important: In focus mode, only interactive elements and their associated labels/descriptions are announced. If content is not a label or description for a focusable element, it will not be read. For non-interactive content, screen reader users must [switch to Browse mode](https://swcpreviews.z13.web.core.windows.net/pr-6122/docs/second-gen-storybook/?path=/docs/guides-accessibility-guides-screen-reader-testing--readme#screen-reader-modes). This is expected behavior, not a bug — ensure you test both modes when evaluating component accessibility.
- 
- * ### Text label
- *
- * Badges with visible text are announced directly by screen readers. The text in the default slot is the accessible name.
- *
- * ### Icon + text
- *
- * When an icon accompanies a text label, the icon is decorative and should be hidden from assistive technology.
- * Apply `aria-hidden="true"` to the `<swc-icon>` so screen readers only announce the label text.
- *
- * ### Icon only
- *
- * When space is limited and no visible label is shown, the badge **must** have an accessible name.
- * Set `role="img"` and `aria-label` directly on the `<swc-badge>` element to describe the badge's meaning.
- * `role="img"` is required because custom elements have no implicit ARIA role — without it, `aria-label` is not
- * permitted by the ARIA specification and will fail automated accessibility checks.
- * Without both attributes, the badge has no accessible name and fails WCAG 1.1.1.
- *
- * ### Best practices
- *
- * - Use semantic variants (`positive`, `negative`, `notice`, `informative`, `neutral`, `accent`) when the status has specific meaning
- * - Include clear, descriptive labels that explain the status without relying on color alone
- * - For icon-only badges, always set `role="img"` and `aria-label` on `swc-badge`
- * - Ensure sufficient color contrast between the badge and its background
- * - Badges are not interactive elements - for interactive status indicators, consider using buttons, tags, or links instead
- * - When using multiple badges together, ensure they're clearly associated with their related content
- * - Use consistent badge variants across your application for the same statuses
- * - Test with screen readers to verify badge content is announced in context
- * - Consider placement carefully - badges should be close to the content they describe
- */
 export const Accessibility: Story = {
   render: (args) => html`
     ${template({

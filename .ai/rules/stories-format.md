@@ -1,20 +1,42 @@
 ---
-description: Enforces consistent file structure, section separators, meta configuration, story tags, layout parameters, and JSDoc conventions for 2nd-gen Storybook stories files.
-globs: 2nd-gen/packages/swc/components/*/stories/**
+description: Enforces consistent file structure, section separators, meta configuration, story tags, and layout parameters for 2nd-gen Storybook stories files. Story prose lives in per-unit MDX; the stories file is definitions-only.
+globs: 2nd-gen/packages/swc/components/*/stories/**, 2nd-gen/packages/swc/patterns/*/*/stories/**, 2nd-gen/packages/core/controllers/*/stories/**
 alwaysApply: false
 ---
 
 # Storybook stories format standards
 
-Enforce consistent formatting and technical structure for Storybook stories files in 2nd-gen components.
+Enforce consistent formatting and technical structure for Storybook stories files in 2nd-gen components, patterns, and controllers.
 
-**See also**: `.ai/rules/stories-documentation.md` for comprehensive guidance on WHAT to document (content, patterns, examples).
+**See also**: `.ai/rules/stories-documentation.md` for guidance on WHAT to author in the per-unit MDX (content, patterns, examples).
 
 ## Scope
 
-Apply to all `.stories.ts` files in `2nd-gen/packages/swc/components/*/stories/`.
+Apply to all `.stories.ts` files in:
 
-**Note**: Component-specific `.usage.mdx` files are no longer needed. The `DocumentTemplate.mdx` automatically renders all documentation sections based on story tags.
+- `2nd-gen/packages/swc/components/*/stories/` (components)
+- `2nd-gen/packages/swc/patterns/*/*/stories/` (patterns)
+- `2nd-gen/packages/core/controllers/*/stories/` (controllers)
+
+## Source of truth: per-unit MDX, not JSDoc
+
+Long-form documentation lives in a **per-unit MDX file** at the unit's root, not in JSDoc comments above story exports.
+
+| Genre      | MDX location                                |
+| ---------- | ------------------------------------------- |
+| Component  | `swc/components/<name>/<name>.mdx`          |
+| Internal   | `swc/components/<name>/<name>.internal.mdx` |
+| Pattern    | `swc/patterns/<group>/<unit>/<unit>.mdx`    |
+| Controller | `core/controllers/<name>/<name>.mdx`        |
+
+The stories file contains story **definitions** (render, args, tags, parameters). It does **not** carry prose:
+
+- **Meta-level JSDoc** (above `const meta: Meta = { ... }`) is the only retained JSDoc — it is rendered by the `<Description />` block at the top of the docs page.
+- **Story-level JSDoc** (above each `export const Foo: Story = ...`) is **not** authored. Prose for each section and story lives in the per-unit MDX alongside an explicit `<Canvas of={Stories.Foo} />` reference.
+
+Stories without a corresponding `<Canvas>` reference in the MDX do not appear on the docs page (subject to the `'!autodocs'` / `'!dev'` global tag exclusion in `preview.ts`).
+
+Component-specific `.usage.mdx` files are no longer used. Units without a per-unit MDX fall back to `DocumentTemplate.mdx`, which renders sections from story tags via the `SpectrumStories` block.
 
 ## File structure
 
@@ -26,7 +48,7 @@ Required structure with visual separators between sections:
 2. **Imports**
 3. **METADATA** - Meta object with component configuration
 4. **HELPERS** - Shared label mappings and utilities (if needed)
-5. **AUTODOCS STORY** - Playground story
+5. **PLAYGROUND STORY** - Playground story
 6. **OVERVIEW STORY** - Emblematic default use case shown on the docs page
 7. **ANATOMY STORIES** - Component structure (if applicable)
 8. **OPTIONS STORIES** - Variants, sizes, styles
@@ -46,7 +68,7 @@ Required structure with visual separators between sections:
 // ────────────────────
 
 // ────────────────────
-//    AUTODOCS STORY
+//    PLAYGROUND STORY
 // ────────────────────
 
 // ──────────────────────────
@@ -124,23 +146,21 @@ export const Sizes: Story = {
 };
 ```
 
-### Documentation sections (auto-generated)
+### Documentation sections (authored in MDX)
 
-**Component-specific `.usage.mdx` files are no longer needed.** The `DocumentTemplate.mdx` automatically renders all standard documentation sections based on story tags:
+The per-unit MDX file (`<unit>.mdx`) is the source of truth for the docs page layout. Each section is authored as Markdown with an explicit `<Canvas of={Stories.MyStory} />` reference where a story should render:
 
-- **Anatomy** (tag: `anatomy`) - Rendered with `hideTitle`
-- **Options** (tag: `options`)
-- **States** (tag: `states`)
-- **Behaviors** (tag: `behaviors`)
-- **Accessibility** (tag: `a11y`) - Rendered with `hideTitle`
+- **Anatomy** — `## Anatomy` prose + `<Canvas of={Stories.Anatomy} />`
+- **Options** — `## Options` heading; for each option story, `### <Story title>` + prose + `<Canvas of={Stories.Sizes} />`
+- **States** — same pattern as Options
+- **Behaviors** — same pattern as Options
+- **Accessibility** — `## Accessibility` prose + `<Canvas of={Stories.Accessibility} />`
+- **Upcoming features** — `## Upcoming features` + prose only (no `<Canvas>`); placed before the footer so it reads as forward-looking notes after the current API/behavior
+- **API** — handled by `<DocsFooter />` (rendered automatically with `<ApiTable />` for components and patterns; omitted for controllers)
 
-Each section only renders if stories with the corresponding tag exist. The template handles:
+See `.ai/rules/stories-documentation.md` for full per-section authoring patterns including genre-specific notes (component vs pattern vs controller vs internal).
 
-- Installation instructions (auto-generated)
-- Section headers and ordering
-- Conditional rendering based on story availability
-
-**What you need to do**: Just tag your stories appropriately. The documentation structure is handled automatically.
+**What you need to do**: tag each story by section (`anatomy`, `options`, `states`, `behaviors`, `a11y`), then reference it from the per-unit MDX via `<Canvas of={Stories.StoryName} />`.
 
 ## Meta configuration
 
@@ -257,41 +277,50 @@ export const StaticColors: Story = {
 
 The decorator displays two background zones—dark gradient for `static-color="white"` content, light gradient for `static-color="black"` content.
 
-## Story ordering
+## Story naming
 
-Control display order within sections using `section-order`. Stories sort by lowest value first, then alphabetically for ties or missing values.
+When the camelCase export name does not produce a readable display name — for example, `TextWrapping` for a story that should appear as "Text wrapping" — set the display name via `storyName` assigned after the export:
 
 ```typescript
-export const Sizes: Story = {
-  tags: ['options'],
-  parameters: { 'section-order': 1 },
+/**
+ * When the pointer moves from the trigger into the popover bubble, the popover stays
+ * open...
+ */
+export const TextWrapping: Story = {
+  tags: ['behaviors'],
 };
-
-export const StaticColors: Story = {
-  tags: ['options'],
-  parameters: { 'section-order': 10 },
-};
+TextWrapping.storyName = 'Text wrapping';
 ```
+
+Do **not** use a `### Heading` at the top of a JSDoc comment as a proxy for the story's display name. JSDoc H3 headings are only appropriate for sub-sections within the documentation body (for example, `### Features` and `### Best practices` inside an Accessibility story).
+
+## Story ordering
+
+Section ordering is hand-authored in each component's per-component MDX file (`<component>.mdx` at the component root). Inside an MDX page, sections appear in the order they are written; story-level parameters do not control rendering order.
+
+Do not use a `section-order` parameter on stories. The previous `section-order` workaround is retired now that MDX is the source of truth for documentation layout.
 
 ## Tags
 
 ### Required tags
 
-| Tag                   | Usage                                         |
-| --------------------- | --------------------------------------------- |
-| `'autodocs'`, `'dev'` | Playground story only                         |
-| `'overview'`          | Overview story                                |
-| `'anatomy'`           | Anatomy stories                               |
-| `'options'`           | Variant, size, and style stories              |
-| `'states'`            | State demonstration stories                   |
-| `'behaviors'`         | Method, event, and automatic behavior stories |
-| `'a11y'`              | Accessibility story                           |
-| `'migrated'`          | On meta object                                |
+| Tag            | Usage                                                                                                                                                                         |
+| -------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `'dev'`        | Playground story only. Drop `'autodocs'` when the unit has a per-unit MDX file (`<unit>.mdx`); the MDX is the docs page and `'autodocs'` would create a duplicate Docs entry. |
+| `'overview'`   | Overview story                                                                                                                                                                |
+| `'anatomy'`    | Anatomy stories                                                                                                                                                               |
+| `'options'`    | Variant, size, and style stories                                                                                                                                              |
+| `'states'`     | State demonstration stories                                                                                                                                                   |
+| `'behaviors'`  | Method, event, and automatic behavior stories                                                                                                                                 |
+| `'a11y'`       | Accessibility story                                                                                                                                                           |
+| `'migrated'`   | On meta object (components and patterns)                                                                                                                                      |
+| `'controller'` | On meta object (controllers; `DocsFooter` reads this to omit `<ApiTable />`)                                                                                                  |
 
 ### Optional tags
 
-- `'description-only'` - Story contains only descriptive content (no interactive component rendered)
 - `'upcoming'` - Story demonstrates a feature or variant that is not yet available
+
+> The previous `'description-only'` tag is retired. Prose-only sections live in the per-component MDX (`<component>.mdx`) as Markdown without a `<Canvas>` reference, not as story exports.
 
 ### Exclusion tags
 
@@ -300,52 +329,30 @@ export const StaticColors: Story = {
 
 ## Story types
 
+> Story-level JSDoc comments are **not** authored above story exports. Long-form prose lives in the per-unit MDX file. The only JSDoc that remains is the **meta-level JSDoc** above the `const meta: Meta = { ... }` declaration — that prose is read by the `<Description />` block at the top of the docs page (rendered via `<DocsHeader />`).
+
 ### Playground
 
-First story after meta. No JSDoc comment. Set args to the most common use case—this appears as the docs page preview.
+First story after meta. No story-level JSDoc. Set args to the most common use case — this appears as the Playground/Controls preview.
 
 ```typescript
 export const Playground: Story = {
   args: {
     /* most common use case */
   },
-  tags: ['autodocs', 'dev'],
+  tags: ['dev'],
 };
 ```
 
-**Note**: Use `args` directly (not `render`) when the default render is sufficient. Only use `render: (args) => html` when you need custom rendering.
+**Notes:**
 
-Include comprehensive JSDoc comment above the meta object explaining what the component does.
-
-Every story export must have a JSDoc comment explaining:
-
-- What it demonstrates
-- Any important context or usage notes
-- Best practices if relevant
-
-**Exceptions**: Do NOT add JSDoc comments above the Playground or Overview stories.
-
-Use markdown formatting within JSDoc:
-
-- `**Bold**` for emphasis
-- Bullet lists for multiple points
-- Code formatting with backticks
-
-```typescript
-/**
- * A `<swc-component-name>` is a UI element that displays a **status** or **message**.
- */
-export const Playground: Story = {
-  args: {
-    /* most common use case */
-  },
-  tags: ['autodocs', 'dev'],
-};
-```
+- Use `args` directly (not `render`) when the default render is sufficient. Only use `render: (args) => html` when you need custom rendering.
+- Use `tags: ['dev']` (without `'autodocs'`) when the unit has a per-unit MDX file. The MDX is the Docs page; `'autodocs'` would error with "duplicate docs entry".
+- For units without an MDX (still rendering through `DocumentTemplate.mdx`), keep `tags: ['autodocs', 'dev']`.
 
 ### Overview
 
-Quick introduction showing the component in its most common use case. No JSDoc comment needed.
+Quick introduction showing the component in its most common use case. No story-level JSDoc. Rendered into the docs page header by `<OverviewStory />` inside `<DocsHeader />`.
 
 ```typescript
 export const Overview: Story = {
@@ -385,7 +392,7 @@ export const Anatomy: Story = {
 
 ### Options
 
-Document every attribute/property not covered in Anatomy, States, or Behaviors. Consolidate related options into single stories. Use this order for story section-order:
+Document every attribute/property not covered in Anatomy, States, or Behaviors. Consolidate related options into single stories. The recommended canonical order, mirrored in the per-component MDX, is:
 
 | Story                     | Content                                           |
 | ------------------------- | ------------------------------------------------- |
@@ -398,9 +405,6 @@ Document every attribute/property not covered in Anatomy, States, or Behaviors. 
 | `Positioning`             | Positioning modifiers (fixed, absolute, relative) |
 
 ```typescript
-/**
- * Components come in multiple sizes to fit various contexts.
- */
 export const Sizes: Story = {
   render: (args) => html`
     ${template({ ...args, size: 's', label: 'Small' })}
@@ -411,18 +415,6 @@ export const Sizes: Story = {
   parameters: { flexLayout: 'row-wrap' },
 };
 
-/**
- * Semantic variants provide meaning through color.
- *
- * Use these variants for the following statuses:
- *
- * - **Informative**: active, in use, live, published
- * - **Neutral**: archived, deleted, paused, draft, not started, ended
- * - **Positive**: approved, complete, success, new, purchased, licensed
- * - **Notice**: needs approval, pending, scheduled, syncing, indexing, processing
- * - **Negative**: error, alert, rejected, failed
- *
- */
 export const SemanticVariants: Story = {
   render: (args) => html`
     ${template({ ...args, variant: 'positive' })}
@@ -434,9 +426,6 @@ export const SemanticVariants: Story = {
   tags: ['options'],
 };
 
-/**
- * Non-semantic variants use color-coded categories.
- */
 export const NonSemanticVariants: Story = {
   render: (args) => html`
     ${template({ ...args, variant: 'seafoam' })}
@@ -445,6 +434,8 @@ export const NonSemanticVariants: Story = {
   tags: ['options'],
 };
 ```
+
+Prose for each story (e.g. the description of size choices, semantic variant meanings) lives in the per-unit MDX under `### Sizes`, `### Semantic variants`, etc.
 
 #### Static color pattern
 
@@ -457,9 +448,6 @@ For components with a `static-color` attribute, use whichever of these two patte
 3. **`StaticColors`** - Both variants side-by-side
 
 ```typescript
-/**
- * Use `static-color` for display over images or colored backgrounds.
- */
 export const StaticBlack: Story = {
   args: { 'static-color': 'black' },
   parameters: { styles: { color: 'black' } },
@@ -488,10 +476,6 @@ export const StaticColors: Story = {
 **Combined-story pattern** — use when the component has additional dimensions (e.g., fill styles) that are most clearly shown together in a single story. Use structural `<div>` wrappers instead of `flexLayout` here: the `staticColorsDemo` decorator targets `:first-child` and `:last-child` to apply the dark/light background zones, so the two color groups must be direct children of the render output.
 
 ```typescript
-/**
- * Use `static-color` for display over images or colored backgrounds.
- * Both fill styles are shown for each color.
- */
 export const StaticColors: Story = {
   render: (args) => html`
     <div
@@ -521,9 +505,6 @@ In the three-story pattern, `staticColorsDemo: true` enables the background zone
 Combine all states into one story when possible.
 
 ```typescript
-/**
- * Components can exist in various states.
- */
 export const States: Story = {
   render: (args) => html`
     ${template({ ...args })} ${template({ ...args, selected: true })}
@@ -537,9 +518,6 @@ export const States: Story = {
 Complex states (e.g., animated indeterminate) may warrant separate stories.
 
 ```typescript
-/**
- * Indeterminate state shows unknown progress.
- */
 export const Indeterminate: Story = {
   tags: ['states'],
   args: {
@@ -553,9 +531,6 @@ export const Indeterminate: Story = {
 Document automatic (built-in) behaviors, like text-wrapping, as well as, all methods, and all events.
 
 ```typescript
-/**
- * Long text automatically wraps to multiple lines.
- */
 export const TextWrapping: Story = {
   render: (args) => html`
     ${template({ 'default-slot': 'Long text that wraps to multiple lines' })}
@@ -566,44 +541,32 @@ export const TextWrapping: Story = {
 
 ### Accessibility
 
-Required for every component. Document features and best practices.
+Required for every component. Document features and best practices in the per-unit MDX (`## Accessibility` section).
 
 ```typescript
-/**
- * ### Features
- * The `<sp-component-name>` element implements several accessibility features:
- *
- * 1. **Feature name**: Description (e.g., keyboard navigation, ARIA states, roles, properties)
- * 2. **Feature name**: Description
- *
- * ### Best practices
- *
- * - Best practice, such as, "Always provide a descriptive label"
- * - Best practice, such as, "Ensure sufficient color contrast"
- */
 export const Accessibility: Story = {
   tags: ['a11y'],
 };
 ```
 
+The Accessibility features list and best practices for the unit live in `## Accessibility` in the per-unit MDX, not above this story export.
+
 ## JSDoc requirements
 
-Every story export requires a JSDoc comment explaining what it demonstrates, **except Playground**.
+Only the **meta-level JSDoc** above the `const meta: Meta = { ... }` declaration is authored. It is rendered by the `<Description />` block at the top of the docs page (inside `<DocsHeader />`). It should describe the component's purpose, primary use case, and link to related components.
 
-Use markdown formatting:
-
-- `**Bold**` for emphasis
-- Bullet lists for multiple points
-- Backticks for code
+Do **not** add JSDoc comments above any individual `export const Foo: Story = ...` declaration. Story prose lives in the per-unit MDX file alongside the corresponding `<Canvas of={Stories.Foo} />` reference.
 
 ```typescript
 /**
- * Semantic variants provide meaning through color:
- * - **Positive**: approved, complete, success
- * - **Negative**: error, alert, rejected
+ * A `<swc-badge>` is a non-interactive visual label that displays a status,
+ * category, or attribute. For interactive labels, see
+ * [Button](../?path=/docs/button--docs).
  */
-export const SemanticVariants: Story = {
-  /* ... */
+const meta: Meta = {
+  title: 'Badge',
+  component: 'swc-badge',
+  // ...
 };
 ```
 
@@ -699,8 +662,11 @@ See `asset.stories.ts` for complete examples.
 
 ### ❌ Don't
 
-- Add JSDoc to Playground or Overview story
-- Use 'usage' tag (deprecated)
+- Add JSDoc above any individual story export (Playground, Overview, or any other)
+- Use the `'usage'` tag for new units (deprecated)
+- Use the `'description-only'` tag (retired — prose-only sections live in MDX)
+- Use the `'section-order'` parameter (retired — section order is hand-authored in MDX)
+- Use `tags: ['autodocs', 'dev']` on a unit that has a per-unit MDX file (creates a duplicate Docs entry — use `['dev']`)
 - Omit `subtitle` in meta parameters
 - Use placeholder text
 - Demonstrate inaccessible patterns
@@ -709,26 +675,30 @@ See `asset.stories.ts` for complete examples.
 
 - Tag stories correctly: `anatomy`, `options`, `states`, `behaviors`, `a11y`
 - Use `flexLayout: 'row-wrap'` for multi-item stories
-- Include comprehensive JSDoc (except Playground and Overview)
+- Author all story prose in the per-unit MDX file (`<unit>.mdx`)
+- Keep the meta-level JSDoc above `const meta` — it drives the `<Description />` block at the top of the docs page
 - Use meaningful, realistic content
-- Let the DocumentTemplate handle section rendering automatically
+- Reference each tagged story from MDX via `<Canvas of={Stories.StoryName} />`
 
 ## Checklist
 
-- [ ] Copyright header (2025)
+- [ ] Copyright header (current year)
 - [ ] Visual separators between sections
-- [ ] Meta: title, component, args, argTypes, render, `parameters.docs.subtitle`, `tags: ['migrated']`
+- [ ] Meta: title, component, args, argTypes, render, `parameters.docs.subtitle`, `tags: ['migrated']` (or `'controller'`)
 - [ ] `title` uses sentence case, no filename labels, group is not a single-component wrapper
 - [ ] Meta JSDoc description above meta object (with component links if applicable)
 - [ ] Subtitle is concise and non-repetitive (plain text only, no links)
-- [ ] Playground: `['autodocs', 'dev']` tags, no JSDoc, common use case args
+- [ ] Playground: `['dev']` tag when an MDX exists (or `['autodocs', 'dev']` for template-only fallback), no JSDoc, common use case args
 - [ ] Overview: `['overview']` tag, common use case args, no JSDoc on story itself
 - [ ] Anatomy: all slots + content properties, `['anatomy']` tag, `flexLayout: 'row-wrap'`
 - [ ] Options: all uncovered attributes, `['options']` tag, `flexLayout: 'row-wrap'`
 - [ ] States: consolidated states, `['states']` tag, `flexLayout: 'row-wrap'` (if applicable)
 - [ ] Behaviors: `['behaviors']` tag (if applicable)
-- [ ] Accessibility: features + best practices, `['a11y']` tag
+- [ ] Accessibility: `['a11y']` tag (prose lives in MDX)
 - [ ] Static colors: three-story or combined-story pattern with `staticColorsDemo` (if applicable)
-- [ ] Story order: `section-order` parameter where needed
+- [ ] No story-level JSDoc comments above any `export const`
+- [ ] No `section-order` parameter on any story
+- [ ] No `description-only` tag on any story
 - [ ] All stories accessible with meaningful content
 - [ ] Image assets: use `picsum.photos` with static IDs (if applicable)
+- [ ] Per-unit MDX file exists at the unit root and references each section-tagged story via `<Canvas of={Stories.StoryName} />` (see `.ai/rules/stories-documentation.md`)

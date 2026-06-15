@@ -98,7 +98,7 @@ const defaultSlots = html`
 `;
 
 // ────────────────────
-//    AUTODOCS STORY
+//    PLAYGROUND STORY
 // ────────────────────
 
 export const Playground: Story = {
@@ -106,7 +106,7 @@ export const Playground: Story = {
     orientation: 'vertical',
   },
   render: (args) => template(args, defaultSlots),
-  tags: ['autodocs', 'dev'],
+  tags: ['dev'],
 };
 
 // ──────────────────────────
@@ -122,20 +122,6 @@ export const Overview: Story = {
 //    ANATOMY STORIES
 // ──────────────────────────
 
-/**
- * An illustrated message consists of three slots:
- *
- * 1. **Default slot**: Decorative or informative SVG illustration displayed
- *    above (vertical) or beside (horizontal) the heading and description.
- *    Decorative SVGs must have `aria-hidden="true"`. Informative SVGs must have
- *    `role="img"` and `aria-label`.
- * 2. **`heading` slot**: Consumer-provided `<h2>`–`<h6>` element. The component
- *    does not own the heading tag; the consumer chooses the level to match the
- *    document outline. The component warns in development if a non-heading element
- *    is used.
- * 3. **`description` slot** (optional): Supporting text that elaborates on the
- *    heading. May contain phrasing content, links, or action elements.
- */
 export const Anatomy: Story = {
   render: (args) => html`
     ${template(
@@ -164,13 +150,6 @@ export const Anatomy: Story = {
 //    OPTIONS STORIES
 // ──────────────────────────
 
-/**
- * Illustrated messages come in three sizes to fit various contexts:
- *
- * - **Small (`s`)**: 96px illustration, compact spacing, for space-constrained contexts
- * - **Medium (`m`)**: 96px illustration, standard spacing, the default
- * - **Large (`l`)**: 160px illustration, reduced spacing, for prominent empty states
- */
 export const Sizes: Story = {
   render: (args) => html`
     ${template(
@@ -201,18 +180,9 @@ export const Sizes: Story = {
   tags: ['options'],
   parameters: {
     flexLayout: true,
-    'section-order': 1,
   },
 };
 
-/**
- * Illustrated messages support two layout orientations:
- *
- * - **Vertical** (default): illustration stacked above the heading and description,
- *   centered. Use for full-page or centered empty states.
- * - **Horizontal**: illustration beside the heading and description in a row,
- *   left-aligned. Use for inline or sidebar empty states.
- */
 export const Orientation: Story = {
   render: (args) => html`
     ${template(
@@ -235,21 +205,9 @@ export const Orientation: Story = {
   tags: ['options'],
   parameters: {
     styles: { display: 'flex', 'flex-direction': 'column', gap: '2rem' },
-    'section-order': 2,
   },
 };
 
-/**
- * The `heading` slot accepts any `<h2>`–`<h6>` element. Choose the level that
- * fits the surrounding document outline. The component validates but does not
- * restrict the heading level.
- *
- * Common patterns:
- *
- * - `<h2>` for page-level empty states with no other headings in scope
- * - `<h3>` for empty states nested inside a page section with its own `<h2>`
- * - `<h4>` or deeper for empty states inside nested panels or cards
- */
 export const HeadingLevels: Story = {
   render: (args) => html`
     ${template(
@@ -280,7 +238,6 @@ export const HeadingLevels: Story = {
   tags: ['options'],
   parameters: {
     styles: { display: 'flex', 'flex-direction': 'column', gap: '3rem' },
-    'section-order': 3,
   },
 };
 HeadingLevels.storyName = 'Heading levels';
@@ -289,10 +246,6 @@ HeadingLevels.storyName = 'Heading levels';
 //    BEHAVIORS STORIES
 // ──────────────────────────────
 
-/**
- * Place an `<a>` element inside the `description` slot to provide a
- * call-to-action link alongside the supporting text.
- */
 export const DescriptionWithLink: Story = {
   render: (args) => html`
     ${template(
@@ -312,47 +265,9 @@ export const DescriptionWithLink: Story = {
 DescriptionWithLink.storyName = 'Description with link';
 
 // ────────────────────────────────
-//    UPCOMING FEATURES STORIES
-// ────────────────────────────────
-
-/**
- * ### Button group slot
- *
- * - Add a group of action buttons alongside the heading and description using the `button-group` slot
- */
-export const UpcomingFeatures: Story = {
-  tags: ['upcoming', 'description-only'],
-};
-UpcomingFeatures.storyName = 'Upcoming features';
-
-// ────────────────────────────────
 //    ACCESSIBILITY STORIES
 // ────────────────────────────────
 
-/**
- * ### Features
- *
- * The `<swc-illustrated-message>` element implements the following
- * accessibility features:
- *
- * 1. **Heading ownership**: The consumer provides the `<h2>`–`<h6>` element
- *    directly in the `heading` slot, preserving full control over heading
- *    level and ensuring it participates in the document outline.
- * 2. **Illustration intent**: SVGs in the default slot must declare their
- *    accessibility intent explicitly via `aria-hidden` or `role="img"`.
- * 3. **No redundant ARIA**: The component adds no `role` or `aria-*`
- *    attributes of its own; semantics come entirely from slotted content.
- *
- * ### Best practices
- *
- * - Decorative illustrations (most common): add `aria-hidden="true"` so
- *   screen readers skip the graphic and move directly to the heading.
- * - Informative illustrations: add `role="img"` and `aria-label` (or an
- *   inline `<title>`) so screen readers announce the illustration's meaning
- *   before reading the heading and description.
- * - Choose the heading level (`h2`–`h6`) that fits the surrounding document
- *   outline, not based on visual size.
- */
 export const IllustrationAccessibility: Story = {
   render: (args) => html`
     ${template(
