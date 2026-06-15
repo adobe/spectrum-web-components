@@ -145,7 +145,7 @@ Variant colors supplement the tooltip text and are never the sole conveyance of 
 - **Supplement, do not duplicate.** Tooltip text supplements the trigger's accessible name. Do not repeat what `aria-label` or `aria-labelledby` already conveys.
 - **Icon-only triggers.** Prefer adding an accessible name directly to the trigger: `aria-label` on native elements; `accessible-label` on 2nd-gen SWC components. Use the `labeling` attribute when the trigger host cannot be modified.
 - **No auto-dismiss timer.** The tooltip must remain visible until the user dismisses it or the triggering state ends (WCAG 1.4.13).
-- **Touch devices.** Hover-triggered tooltips are not accessible on touch-only devices. Use `<swc-popover>` or contextual help for touch disclosure.
+- **Touch devices.** Hover-triggered tooltips are not accessible on touch-only devices, even with `delay="0"` since interacting with a trigger will activate the trigger's function rather than show the tooltip due to lack of hover support. Use `<swc-popover>` or contextual help for touch disclosure.
 
 <Canvas of={TooltipStories.Accessibility} />
 
