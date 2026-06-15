@@ -43,11 +43,21 @@ export class Tooltip extends TooltipBase {
     return [styles];
   }
 
+  // The tip is static in the template, so resolve it once and cache it. The
+  // getter is read multiple times per open/close cycle (startPlacement and
+  // clearPositioningState), and querySelector on every access is wasteful.
+  private _tipElement: HTMLElement | null = null;
+
   protected override get tipElement(): HTMLElement | null {
-    return (
-      (this.renderRoot?.querySelector('.swc-Tooltip-tip') as HTMLElement) ??
-      null
-    );
+    // Memoize lazily rather than in firstUpdated: if the getter is read before
+    // the first render, renderRoot is empty and this returns null without
+    // caching, so a later access still resolves the element.
+    if (!this._tipElement) {
+      this._tipElement =
+        (this.renderRoot?.querySelector('.swc-Tooltip-tip') as HTMLElement) ??
+        null;
+    }
+    return this._tipElement;
   }
 
   protected override render(): TemplateResult {
@@ -57,5 +67,12 @@ export class Tooltip extends TooltipBase {
         <slot></slot>
       </div>
     `;
+  }
+
+  public override disconnectedCallback(): void {
+    super.disconnectedCallback();
+    // Drop the cached reference so it is re-resolved against a fresh render
+    // root if the element is reconnected.
+    this._tipElement = null;
   }
 }
