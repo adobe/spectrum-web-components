@@ -17,6 +17,7 @@ import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { CloseButton } from '@adobe/spectrum-wc/components/close-button';
 import {
   BUTTON_STATIC_COLORS,
+  BUTTON_VALID_SIZES,
   ButtonBase,
 } from '@spectrum-web-components/core/components/button';
 
@@ -333,7 +334,7 @@ export const SizesStoryTest: Story = {
     await step('renders all size variants', async () => {
       const closeButtons = canvasElement.querySelectorAll('swc-close-button');
       expect(closeButtons.length, 'one close button per size variant').toBe(
-        CloseButton.VALID_SIZES.length
+        BUTTON_VALID_SIZES.length
       );
     });
   },

@@ -15,11 +15,8 @@ import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
 import {
-  BUTTON_STATIC_COLORS,
-  BUTTON_VALID_SIZES,
   ButtonBase,
   type ButtonSize,
-  type ButtonStaticColor,
 } from '@spectrum-web-components/core/components/button';
 
 import {
@@ -66,21 +63,6 @@ const crossIconBySize: Record<ButtonSize, () => TemplateResult> = {
  * ```
  */
 export class CloseButton extends ButtonBase {
-  /**
-   * @internal
-   *
-   * A readonly array of the valid size values for the close button.
-   */
-  static readonly VALID_SIZES: readonly ButtonSize[] = BUTTON_VALID_SIZES;
-
-  /**
-   * @internal
-   *
-   * A readonly array of the valid static color values for the close button.
-   */
-  static readonly STATIC_COLORS: readonly ButtonStaticColor[] =
-    BUTTON_STATIC_COLORS;
-
   /**
    * Close buttons always render a cross icon; treat as icon-present for
    * shared {@link ButtonBase} accessibility checks.

@@ -14,7 +14,10 @@ import { html } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
-import { CloseButton } from '@adobe/spectrum-wc/components/close-button';
+import {
+  BUTTON_STATIC_COLORS,
+  BUTTON_VALID_SIZES,
+} from '@spectrum-web-components/core/components/button';
 
 import '@adobe/spectrum-wc/components/close-button/swc-close-button.js';
 
@@ -27,7 +30,7 @@ const { args, argTypes, template } = getStorybookHelpers('swc-close-button');
 argTypes.size = {
   ...argTypes.size,
   control: { type: 'select' },
-  options: CloseButton.VALID_SIZES,
+  options: BUTTON_VALID_SIZES,
   table: {
     category: 'attributes',
     defaultValue: {
@@ -39,7 +42,7 @@ argTypes.size = {
 argTypes['static-color'] = {
   ...argTypes['static-color'],
   control: 'select',
-  options: ['', ...CloseButton.STATIC_COLORS],
+  options: ['', ...BUTTON_STATIC_COLORS],
   table: {
     ...argTypes['static-color']?.table,
     category: 'attributes',
@@ -106,7 +109,7 @@ export const Overview: Story = {
 export const Sizes: Story = {
   render: (args) => html`
     <div style="display: flex; align-items: center; gap: 16px;">
-      ${CloseButton.VALID_SIZES.map(
+      ${BUTTON_VALID_SIZES.map(
         (size) => html`
           ${template({
             ...args,
