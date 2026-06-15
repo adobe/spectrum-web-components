@@ -260,6 +260,7 @@ const preview = {
                 'Spectrum SWC migration',
                 'Anti patterns',
                 'Property order quick reference',
+                'Stylesheets',
               ],
               'TypeScript',
               [
@@ -337,7 +338,10 @@ const preview = {
                   'Rendering and styling migration analysis',
                 ],
                 'Action group',
-                ['Rendering and styling migration analysis'],
+                [
+                  'Accessibility migration analysis',
+                  'Rendering and styling migration analysis',
+                ],
                 'Action menu',
                 [
                   'Accessibility migration analysis',
