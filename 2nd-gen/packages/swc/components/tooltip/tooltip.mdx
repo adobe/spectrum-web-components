@@ -51,13 +51,15 @@ Because the component uses `popover="auto"`, opening a tooltip dismisses any oth
 
 ### Disabled
 
-When `disabled` is set, the tooltip does not respond to hover or focus events. The trigger remains interactive; only the automatic wiring is suppressed. ARIA relationship wiring still fires when `open` is set directly.
+When `disabled` is set, the tooltip does not respond to hover or focus events. The trigger remains interactive; only the automatic wiring is suppressed.
+
+`disabled` takes priority over `open`: while disabled, the tooltip cannot be shown, even by setting `open` to `true` programmatically (`open` reverts to `false`). Setting `disabled` to `true` while the tooltip is open closes it. This applies in [manual](#manual) mode as well. ARIA relationship wiring still fires when `open` is set directly.
 
 <Canvas of={TooltipStories.Disabled} />
 
 ### Manual
 
-When `manual` is set, `HoverController` wiring is suppressed entirely and the consumer manages visibility by setting the `open` property or calling the popover API directly. ARIA relationship wiring still fires on `open` change when `for` or `triggerElement` is set.
+When `manual` is set, `HoverController` wiring is suppressed entirely and the consumer manages visibility by setting the `open` property or calling the popover API directly. ARIA relationship wiring still fires on `open` change when `for` or `triggerElement` is set. [`disabled`](#disabled) still takes priority; a disabled tooltip will not open even when visibility is managed manually.
 
 <Canvas of={TooltipStories.Manual} />
 
@@ -71,7 +73,7 @@ The tooltip opens automatically when the trigger receives pointer hover or keybo
 - **Keyboard focus**: the tooltip opens immediately, bypassing the warm-up delay entirely.
 - **Close**: the tooltip closes `300ms` after the pointer leaves the trigger. If the pointer enters the tooltip bubble before that cooldown expires, the tooltip stays open (WCAG 1.4.13 pointer bridge). The tooltip closes immediately when focus leaves the trigger.
 
-Set `disabled` to prevent the tooltip from responding to hover and focus while leaving the trigger interactive. Set `manual` to suppress automatic wiring entirely and manage visibility via the `open` property or the popover API directly. `disabled` has no effect when `manual` is also set.
+Set `disabled` to prevent the tooltip from responding to hover and focus while leaving the trigger interactive. Set `manual` to suppress automatic wiring entirely and manage visibility via the `open` property or the popover API directly. `disabled` takes priority over both automatic and manual opening: a disabled tooltip cannot be shown regardless of `manual`.
 
 ### Events
 

@@ -62,6 +62,7 @@
     - [D6: Restore synchronous `actual-placement` write before `showPopover`](#d6-restore-synchronous-actual-placement-write-before-showpopover)
     - [D7: Exclude `actual-placement` from the Storybook helper round-trip](#d7-exclude-actual-placement-from-the-storybook-helper-round-trip)
     - [D8: First-of-many trigger cycles open/closed in Storybook isolation — accepted (won't fix)](#d8-first-of-many-trigger-cycles-openclosed-in-storybook-isolation--accepted-wont-fix)
+    - [D9: `disabled` takes priority over `open`](#d9-disabled-takes-priority-over-open)
 - [References](#references)
 
 </details>
@@ -281,7 +282,7 @@ Derived from the 1st-gen implementation, the rendering analysis, the accessibili
 | `for` | `string` | `undefined` | `for` | **Confirmed.** ID of the trigger element in the same document tree root. The tooltip calls `getRootNode().getElementById(this.for)` to resolve the trigger, then wires the ARIA relationship on `open` change (see [ARIA relationship wiring](#aria-relationship-wiring)). Active in both automatic and manual modes — see the trigger-mode interaction table in [Behavioral semantics](#behavioral-semantics). HoverController hover/focus auto-wiring is additive. |
 | `trigger-element` | `HTMLElement \| null` | `null` | — (setter only) | **Confirmed.** Explicit trigger element reference; overrides `for` when set. Drives the same ARIA wiring on `open` change as `for`, via direct element reference rather than ID lookup. Use for cross-shadow-root triggers where `getRootNode().getElementById()` is scoped to the wrong tree root, or for the directive (programmatic insertion). `HoverController` and `PlacementController` receive the resolved value and do not perform their own trigger resolution. |
 | `delay` | `number` | `1500` | `delay` | **Confirmed. Active.** Duration in ms of the warm-up before the tooltip shows on hover; keyboard focus always opens immediately regardless of this value. The cooldown duration after pointer leave is 300ms (fixed, independent of `delay`). Set to `0` to show immediately on hover. Warm-up/cooldown is the default behavior — no attribute needed to enable it. **Behavioral change from 1st-gen:** 1st-gen had `delayed: boolean` (default `false`, opt-in); 2nd-gen is opt-out. |
-| `disabled` | `boolean` | `false` | `disabled` | **Confirmed. Active.** Prevents the tooltip from responding to hover and focus events. No-op when `manual` is set. |
+| `disabled` | `boolean` | `false` | `disabled` | **Confirmed. Active.** Prevents the tooltip from opening — via hover, focus, or a programmatic `open = true` (enforced in `willUpdate`, see [D9](#d9-disabled-takes-priority-over-open)). Takes priority over `manual`. |
 | `manual` | `boolean` | `false` | `manual` | **Confirmed. Active.** Suppresses `HoverController` and `PlacementController` wiring. `for` and `trigger-element` are still resolved; ARIA wiring still fires on `open` change. Consumer manages open/close via the `open` property or the popover API directly. |
 | `offset` | `number` | `4` | `offset` | **Confirmed. Active.** Gap in pixels along the placement axis between the trigger and the tooltip bubble. Passed to `PlacementController` offset middleware. Also drives `--_swc-tooltip-animation-distance` so the enter animation travel distance matches the gap. |
 | `cross-offset` | `number` | `0` | `cross-offset` | **Confirmed. Active.** Slide in pixels along the trigger edge perpendicular to the placement direction. Passed to `PlacementController` crossOffset option. |
@@ -691,6 +692,7 @@ The impact is most acute in the additive phase, when `HoverController` opens the
 - [x] `ariaDescribedByElements` wiring: verify AT can traverse the association in DevTools Accessibility panel and with NVDA/VoiceOver — **manual verification required; cannot be automated**
 - [x] `ariaDescribedByElements` wiring fallback: when trigger has no shadow root (native `<button>`, `<a>`, `<input>`), association is established on the host element directly (`AriaWiringNativeTest`)
 - [x] `disabled` attribute prevents automatic mode response to user input (`DisabledPreventsHoverTest`)
+- [x] `disabled` takes priority over `open`: setting `open = true` while disabled is a no-op, disabling while open closes, re-enabling restores opening (`DisabledPreventsProgrammaticOpenTest`)
 - [x] `PlacementController` positioning: applies `translate` and a valid `actual-placement`, positions the tip via arrow middleware, and clears positioning on close (`PlacementControllerTest`); flips to the opposite side when the requested side does not fit (`ActualPlacementFlipTest`)
 - [x] `PlacementController` long content: with the trigger pinned to the top-right corner, a long wide tooltip that would overflow the right edge is pulled back by the shift middleware; the test asserts the collision exists (an un-shifted bubble would overflow) before asserting it is resolved, so it cannot pass trivially in a large viewport (`LongContentPlacementTest`)
 - [x] `@starting-style` timing: `actual-placement` is written to the declared physical side synchronously before `showPopover()`, so the entrance animation has a direction on the non-flip case; verified by wrapping `showPopover()` and asserting the attribute is already set at that instant (`ActualPlacementBeforeShowTest`)
@@ -961,6 +963,21 @@ Decisions made after the initial plan was approved and implementation had begun.
 **Decision:** Accepted as a Storybook-only dev artifact; not fixed. Rationale: it surfaces only in isolation mode on the first of multiple triggers, never in the flow of the main docs page, so encounter likelihood is low. Automated tests and VRT are unaffected (their play functions open a non-first tooltip — `Variants` index 1, `Placements` index 3), and **production consumers are unaffected** because no framework round-trips reflected attributes the way the Storybook helper does. The candidate real fix — dropping `reflect` from `open` — was rejected as a disproportionate public-API change (it would remove the `[open]` attribute reflection that 1st-gen exposed and that `OpenCloseTest` asserts) for a dev-only glitch.
 
 **Files changed:** none (documentation only).
+
+---
+
+### D9: `disabled` takes priority over `open`
+
+**Phase:** Review (Phase 8)  
+**Trigger:** PR reviewer — setting `open = true` on a disabled tooltip still opened it.
+
+**Root cause:** `disabled` was honored only by `HoverController` (it suppresses hover/focus wiring and closes on a `disabled` transition while the controller is wired). The programmatic visibility path in `updated()` had no `disabled` guard, so `open = true` showed the popover regardless. The gap also covered the already-disabled case, where `HoverController.hostUpdated` early-returns because the guard state hasn't changed.
+
+**Decision:** Enforce the invariant "a disabled tooltip cannot be open" in `willUpdate`: if `disabled && open`, reset `open` to `false` before render. This is mode-independent (covers automatic and `manual`), covers both setting `open` while disabled and toggling `disabled` on while open, and prevents the `open` attribute from briefly reflecting `true`. Regression test: `DisabledPreventsProgrammaticOpenTest` (also asserts re-enabling restores normal opening, and disabling while open closes).
+
+**Docs updated:** the `disabled` JSDoc, and the `tooltip.mdx` States → Disabled / Manual sections (with a cross-reference between them) and Behaviors summary; the API-table note that previously said "no-op when `manual` is set" was corrected.
+
+**Files changed:** `Tooltip.base.ts` (`willUpdate`, `disabled` JSDoc), `tooltip.test.ts` (`DisabledPreventsProgrammaticOpenTest`), `tooltip.mdx`, this plan.
 
 ---
 

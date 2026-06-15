@@ -949,6 +949,69 @@ export const DisabledPreventsHoverTest: Story = {
   },
 };
 
+export const DisabledPreventsProgrammaticOpenTest: Story = {
+  render: () => html`
+    <swc-button id="tt-disabled-open-trigger">Action</swc-button>
+    <swc-tooltip for="tt-disabled-open-trigger" disabled placement="top">
+      Should not appear
+    </swc-tooltip>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const tooltip = await getComponent<Tooltip>(canvasElement, 'swc-tooltip');
+
+    await step(
+      'setting open = true while disabled does not open the tooltip',
+      async () => {
+        tooltip.open = true;
+        await tooltip.updateComplete;
+        expect(
+          tooltip.open,
+          'disabled takes priority: open reverts to false'
+        ).toBe(false);
+        expect(
+          tooltip.matches(':popover-open'),
+          'tooltip does not enter the top layer when disabled'
+        ).toBe(false);
+        expect(
+          tooltip.hasAttribute('open'),
+          'open attribute does not reflect true when disabled'
+        ).toBe(false);
+      }
+    );
+
+    await step('enabling then setting open = true opens normally', async () => {
+      tooltip.disabled = false;
+      await tooltip.updateComplete;
+      tooltip.open = true;
+      await waitFor(
+        () =>
+          expect(
+            tooltip.matches(':popover-open'),
+            'tooltip opens once enabled'
+          ).toBe(true),
+        { timeout: 1000 }
+      );
+
+      tooltip.open = false;
+      await tooltip.updateComplete;
+    });
+
+    await step('disabling while open closes the tooltip', async () => {
+      tooltip.open = true;
+      await waitFor(() => expect(tooltip.matches(':popover-open')).toBe(true), {
+        timeout: 1000,
+      });
+
+      tooltip.disabled = true;
+      await tooltip.updateComplete;
+      expect(
+        tooltip.open,
+        'open reverts to false when disabled is set while open'
+      ).toBe(false);
+    });
+  },
+};
+
 export const ManualPreventsHoverTest: Story = {
   render: () => html`
     <swc-button id="tt-manual-hover-trigger">Hover me</swc-button>

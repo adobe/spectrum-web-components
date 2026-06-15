@@ -113,7 +113,10 @@ export abstract class TooltipBase
   public delay: number = 1500;
 
   /**
-   * When set, the tooltip does not respond to hover or focus events.
+   * When set, the tooltip does not respond to hover or focus events and cannot
+   * be opened. `disabled` takes priority over `open`: setting `open` to `true`
+   * while disabled is a no-op, and disabling an open tooltip closes it. Applies
+   * in `manual` mode as well.
    *
    * @default false
    */
@@ -449,6 +452,19 @@ export abstract class TooltipBase
       this.open = false;
     }
   };
+
+  protected override willUpdate(changedProperties: PropertyValues): void {
+    super.willUpdate(changedProperties);
+    // `disabled` takes priority over `open`: a disabled tooltip cannot be shown,
+    // regardless of how `open` became true (set programmatically, or `disabled`
+    // toggled on while already open). Normalizing here — before render and
+    // before updated() acts on `open` — keeps `open` and visibility consistent
+    // and prevents the `open` attribute from briefly reflecting `true`. Hover
+    // and focus opening are separately blocked by HoverController's guards.
+    if (this.disabled && this.open) {
+      this.open = false;
+    }
+  }
 
   protected override updated(changedProperties: PropertyValues): void {
     super.updated(changedProperties);
