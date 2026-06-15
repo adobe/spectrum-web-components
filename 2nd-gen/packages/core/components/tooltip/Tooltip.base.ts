@@ -209,11 +209,30 @@ export abstract class TooltipBase
     return null;
   }
 
-  // Reflects the browser's actual popover state. Used to guard showPopover/hidePopover
-  // calls in updated() so the toggle listener can sync this.open without re-triggering
-  // the API (preventing a setter → showPopover → toggle → setter cycle).
+  // Reflects the browser's actual popover state. Used in updated() to reconcile
+  // `open` against native light-dismiss: when the browser closes the popover
+  // (e.g. Escape or outside click), `open` is synced by the toggle listener
+  // without re-invoking the Popover API, and the guard prevents a redundant
+  // hidePopover() (which would throw on an already-closed popover).
   private get isPopoverOpen(): boolean {
     return this.matches(':popover-open');
+  }
+
+  /**
+   * {@link HoverControllerHost} contract. `open` is the single source of truth
+   * for visibility; the controller asks to open via this method rather than
+   * driving the Popover API directly. `updated()` then reconciles the popover.
+   */
+  public requestOpen(): void {
+    this.open = true;
+  }
+
+  /**
+   * {@link HoverControllerHost} contract. Asks the tooltip to close by setting
+   * `open`; `updated()` reconciles the popover.
+   */
+  public requestClose(): void {
+    this.open = false;
   }
 
   private startPlacement(): void {

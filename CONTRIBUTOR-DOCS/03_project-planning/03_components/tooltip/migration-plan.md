@@ -56,6 +56,7 @@
 - [Decision log](#decision-log)
     - [D1: `actual-placement` attribute — split consumer intent from resolved physical side](#d1-actual-placement-attribute--split-consumer-intent-from-resolved-physical-side)
     - [D2: VRT play functions — `getComputedStyle(opacity)` poll instead of `swc-after-open`](#d2-vrt-play-functions--getcomputedstyleopacity-poll-instead-of-swc-after-open)
+    - [D3: `HoverControllerHost` contract — `requestOpen()`/`requestClose()` instead of `showPopover()`/`hidePopover()`](#d3-hovercontrollerhost-contract--requestopenrequestclose-instead-of-showpopoverhidepopover)
 - [References](#references)
 
 </details>
@@ -500,7 +501,7 @@ This section records the design contract between the initial release and the two
 
 `swc-open`, `swc-after-open`, `swc-close`, and `swc-after-close` fire from the native `beforetoggle`/`transitionend` event listeners in the Core base class (`Tooltip.base.ts`) — not from property setters or controllers. This means:
 
-- Events fire regardless of what caused the state change: consumer code, `HoverController` calling `showPopover()`, Escape, or light-dismiss.
+- Events fire regardless of what caused the state change: consumer code, `HoverController` (via `requestOpen()`/`requestClose()`), Escape, or light-dismiss.
 - `HoverController` can drive open/close without risking double-dispatch or missed events.
 - This is a hard constraint for the implementation: deviating from it (e.g., dispatching from a property setter as well) will cause double-dispatch in the additive phase.
 
@@ -517,35 +518,41 @@ This section records the design contract between the initial release and the two
 
 `swc-after-open` and `swc-after-close` require a `transitionend` listener on the host. If no CSS transition is present (e.g., during testing or when `prefers-reduced-motion: reduce` removes it), the listener will never fire — guard this by also dispatching `swc-after-open`/`swc-after-close` from the `toggle` handler if no `transitionend` follows within a short frame, or by checking `getComputedStyle(this).transitionDuration === '0s'` before deciding whether to wait.
 
-**`open` property ↔ popover API cycle prevention:**
+**`open` is the single source of truth:**
 
-`open` is a plain Lit `@property`. `showPopover()`/`hidePopover()` are called from `updated()`, not from a custom setter. The cycle is prevented by comparing `this.open` against the live `:popover-open` CSS state (`isPopoverOpen`) before calling the API:
+`open` is a plain Lit `@property` and the single source of truth for visibility. **`updated()` is the only caller of the Popover API** (`showPopover()`/`hidePopover()`); nothing else drives it directly. Every other path — the consumer setting `open`, `HoverController` (via `requestOpen()`/`requestClose()`), Escape, and native light-dismiss — resolves to a change in `open`, and `updated()` reconciles the popover from there. The `:popover-open` CSS state (`isPopoverOpen`) is compared before calling the API so a redundant call is skipped (and so an already-closed popover is never sent `hidePopover()`, which would throw):
 
 ```ts
 // In updated():
 if (changedProperties.has('open')) {
-  if (this.open !== this.isPopoverOpen) {
-    if (this.open) {
+  if (this.open) {
+    this.startPlacement();
+    if (this.open !== this.isPopoverOpen) {
       this.showPopover();
-    } else {
+    }
+  } else {
+    if (this.open !== this.isPopoverOpen) {
       this.hidePopover();
     }
+    this.placementController.stop();
   }
 }
 ```
 
-The `toggle` listener assigns through the normal property setter (`this.open = isOpen`), guarded by a `if (isOpen !== this.open)` check to skip no-op assignments. After the browser fires `toggle`, `isPopoverOpen` already matches the new state, so the `updated()` guard blocks the redundant API call — no backing-field bypass needed.
+The `toggle` listener assigns through the normal property setter (`this.open = isOpen`), guarded by an `if (isOpen !== this.open)` check to skip no-op assignments. Because `updated()` is the only API caller, after a controller- or property-driven open/close the `toggle` event arrives with `this.open` already matching `isOpen`, so the listener is a no-op. Its only substantive job is to resync `open` on native light-dismiss (Escape or outside click), where the browser changes the popover state without going through `open`:
 
 ```ts
 // In the toggle listener:
 if (isOpen !== this.open) {
-  this.open = isOpen; // triggers updated(); isPopoverOpen guard prevents re-calling showPopover/hidePopover
+  this.open = isOpen; // only fires real work on native light-dismiss
 }
 ```
 
 ### `HoverController` hand-off
 
 **Implemented.** `TooltipBase` now `implements HoverControllerHost` and instantiates `HoverController` with `warmStateKey: 'swc-tooltip'`. The controller target is set via `updated()` whenever `for` or `triggerElement` changes. See `Tooltip.base.ts` and the [addendum](#addendum-hovercontroller-interface-requirements) for the interface contract that was used.
+
+The host contract is `requestOpen()` / `requestClose()`, not `showPopover()` / `hidePopover()`. `TooltipBase` implements them as `this.open = true` / `this.open = false`, so the controller never touches the Popover API directly — it asks the host to change `open`, and `updated()` reconciles the popover. This keeps `open` as the single source of truth (see D3).
 
 ### `PlacementController` hand-off
 
@@ -563,7 +570,7 @@ No arrow middleware is used — the tip is CSS-centered on the computed side. `P
 
 **This is a UX regression from 1st-gen.** In 1st-gen, `sp-overlay type="hint"` was intentionally isolated: opening a tooltip left menus and pickers open, and a tooltip was only closed by Escape or by another `hint`-type overlay opening on the same trigger. `popover="auto"` has no equivalent isolation tier.
 
-The impact is most acute in the additive phase, when `HoverController` will call `showPopover()` on hover — hovering a trigger next to an open picker will close the picker. The initial release is unaffected (no hover wiring).
+The impact is most acute in the additive phase, when `HoverController` opens the tooltip on hover — hovering a trigger next to an open picker will close the picker. The initial release is unaffected (no hover wiring).
 
 **Resolved (Path A):** The auto-stack behavior is accepted. This is a known difference from 1st-gen and must be documented in the consumer migration guide and the Behaviors story.
 
@@ -762,7 +769,7 @@ This section captures what Tooltip requires from `HoverController`. It is a sepa
 
 - Receiving the resolved trigger element from SWC (`for` lookup or `trigger-element` setter) — no internal trigger discovery
 - Attaching `pointerenter`/`pointerleave` and `focusin`/`focusout` listeners to the resolved trigger
-- Driving open/close by calling `showPopover()`/`hidePopover()` on the host — never toggling `open` directly
+- Driving open/close by calling `requestOpen()`/`requestClose()` on the host — the host owns visibility state and reconciles the Popover API itself (the controller never calls `showPopover()`/`hidePopover()` directly)
 - Warm-up/cooldown timing using `this.host.delay` (pointer events only; see state machine below)
 - `disabled` guard: skip hover/focus wiring when the host has `disabled` set
 - WCAG 1.4.13 pointer bridge: keep the tooltip open when the pointer moves from the trigger into the bubble
@@ -780,10 +787,10 @@ Warm-up/cooldown applies to **pointer events only**. `focusin` (when `trigger.ma
 
 | Event | Action |
 | ----- | ------ |
-| `pointerenter` | Cancel any cooldown timer. If `delay === 0` or `isWarm`: `showPopover()`. Otherwise start `delay`ms warmup timer; on fire: `isWarm = true`, `showPopover()`. |
-| `pointerleave` | Cancel any warmup timer. `hidePopover()` if open. If `delay > 0`: start `delay`ms cooldown timer; on fire: `isWarm = false`. |
-| `focusin` (`:focus-visible`) | `showPopover()` immediately. No timer state changes. |
-| `focusout` | `hidePopover()` immediately. No timer state changes. |
+| `pointerenter` | Cancel any cooldown timer. If `delay === 0` or `isWarm`: `requestOpen()`. Otherwise start `delay`ms warmup timer; on fire: `isWarm = true`, `requestOpen()`. |
+| `pointerleave` | Cancel any warmup timer. `requestClose()`. If `delay > 0`: start `delay`ms cooldown timer; on fire: `isWarm = false`. |
+| `focusin` (`:focus-visible`) | `requestOpen()` immediately. No timer state changes. |
+| `focusout` | `requestClose()` immediately. No timer state changes. |
 | Escape / light-dismiss | `toggle` listener sets `this.open = false`. Cooldown starts on `pointerleave`, not close — no interference. |
 
 The `:focus-visible` guard on `focusin` prevents a double-show when a pointer click both focuses and triggers `pointerenter`.
@@ -857,6 +864,21 @@ Decisions made after the initial plan was approved and implementation had begun.
 **Decision:** Poll `getComputedStyle(tooltip).opacity === '1'` inside Vitest's `waitFor`. The `:host(:popover-open) { opacity: 1 }` rule in the shadow DOM CSS makes computed opacity a reliable indicator that the tooltip is fully visible and the entrance transition has completed. The poll also checks `tooltip.matches(':popover-open')` to confirm the popover is in the top layer.
 
 **Files changed:** `tooltip.stories.ts` (all 7 play functions), `.ai/rules/stories-format.md` (play function guidance section), `memory/feedback_play_functions_vrt_vitest.md`.
+
+---
+
+### D3: `HoverControllerHost` contract — `requestOpen()`/`requestClose()` instead of `showPopover()`/`hidePopover()`
+
+**Phase:** Review (Phase 8)  
+**Trigger:** PR reviewer feedback.
+
+**Root cause:** The original `HoverControllerHost` contract had the controller call `showPopover()`/`hidePopover()` on the host directly, while `updated()` also drove the Popover API from the `open` property. The two callers were reconciled through the native `toggle` event plus the `isPopoverOpen` / `isOpen !== this.open` guards. This produced two sources of truth for visibility (the controller's direct API calls and the `open` property) and a non-obvious reconciliation path.
+
+**Decision:** Change the `HoverControllerHost` contract from `showPopover()`/`hidePopover()` to `requestOpen()`/`requestClose()`. The host owns its visibility state; `TooltipBase` implements the methods as `this.open = true` / `this.open = false`. `updated()` becomes the only caller of the Popover API. The `toggle` listener's only substantive job is to resync `open` on native light-dismiss. The `:popover-open` guards moved out of the controller (`requestOpen`/`requestClose` are required to be idempotent) — for Tooltip the `open` setter is naturally idempotent; the Storybook demo host guards the native API in its own `requestOpen`/`requestClose`.
+
+**Changeset impact:** None beyond what already ships. `HoverController` is introduced in this same unreleased batch (changeset `light-beers-roll.md`), so the `requestOpen()`/`requestClose()` contract is simply its initial public shape — there is no prior released version to break and no consumer outside Tooltip. No separate changeset is required.
+
+**Files changed:** `hover-controller.ts` (interface + `showWithBridge`/`callHidePopover` bodies), `hover-controller.mdx` (usage, manual mode, API table), `Tooltip.base.ts` (`requestOpen`/`requestClose` methods, `isPopoverOpen` comment), `demo-hosts.ts` (host implementation), this plan.
 
 ---
 

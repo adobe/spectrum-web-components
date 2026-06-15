@@ -34,9 +34,19 @@ export interface HoverControllerHost extends ReactiveElement {
   readonly manual: boolean;
   /** When `true`, the controller skips all event wiring. */
   readonly disabled: boolean;
-  // Re-declared from HTMLElement to support TS lib targets that predate the Popover API types.
-  showPopover(): void;
-  hidePopover(): void;
+
+  /**
+   * Asks the host to open. The host owns its visibility state and is the single
+   * source of truth; the controller never drives the Popover API directly. Must
+   * be idempotent — calling it while already open is a no-op.
+   */
+  requestOpen(): void;
+
+  /**
+   * Asks the host to close. Must be idempotent — calling it while already closed
+   * is a no-op.
+   */
+  requestClose(): void;
 }
 
 /** Configuration options for {@link HoverController}. */
@@ -253,18 +263,15 @@ export class HoverController implements ReactiveController {
   // ─────────────────────────────────────────────────
 
   private showWithBridge(): void {
-    // Guard: showPopover() throws a DOMException if the popover is already open.
-    if (!this.host.matches(':popover-open')) {
-      this.host.showPopover();
-    }
+    // The host owns visibility state and reconciles the Popover API itself, so
+    // requestOpen() is idempotent — no :popover-open guard needed here.
+    this.host.requestOpen();
     this.wireBridge();
   }
 
   private callHidePopover(): void {
-    // Guard: hidePopover() throws a DOMException if the popover is already closed.
-    if (this.host.matches(':popover-open')) {
-      this.host.hidePopover();
-    }
+    // requestClose() is idempotent, so no :popover-open guard is needed here.
+    this.host.requestClose();
     this.unwireBridge();
   }
 
