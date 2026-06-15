@@ -353,4 +353,3 @@ export const TablistWithFocusgroup: Story = {
   `,
   tags: ['appendix'],
 };
-
