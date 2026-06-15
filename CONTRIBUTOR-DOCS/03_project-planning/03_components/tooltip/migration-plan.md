@@ -57,6 +57,7 @@
     - [D1: `actual-placement` attribute — split consumer intent from resolved physical side](#d1-actual-placement-attribute--split-consumer-intent-from-resolved-physical-side)
     - [D2: VRT play functions — `getComputedStyle(opacity)` poll instead of `swc-after-open`](#d2-vrt-play-functions--getcomputedstyleopacity-poll-instead-of-swc-after-open)
     - [D3: `HoverControllerHost` contract — `requestOpen()`/`requestClose()` instead of `showPopover()`/`hidePopover()`](#d3-hovercontrollerhost-contract--requestopenrequestclose-instead-of-showpopoverhidepopover)
+    - [D4: Clear ARIA relationship on disconnect](#d4-clear-aria-relationship-on-disconnect)
 - [References](#references)
 
 </details>
@@ -455,7 +456,7 @@ The SWC layer resolves the interactive surface from the trigger via two paths:
 - **SWC components** (open shadow root): `trigger.shadowRoot.querySelector('button')` — the inner `<button>` is the AT-facing surface; the tooltip host is passed as the reference: `innerButton.ariaDescribedByElements = [tooltipHost]`
 - **Native elements** (`<button>`, `<a>`, `<input>`, etc.) and any element without an open shadow root: the trigger host element is used directly
 
-Both paths apply whether the trigger was resolved via `for` or an explicit `trigger-element`. The association is removed on close.
+Both paths apply whether the trigger was resolved via `for` or an explicit `trigger-element`. The association is removed on close. It is also removed in `disconnectedCallback` (via `clearAriaRelationship()`) so that a tooltip removed from the DOM while open does not leave the trigger holding a reference to the detached tooltip node.
 
 **Browser support:** Confirmed across all target browsers — Chrome/Edge 135+ (validated 140+), Firefox 136+ (validated 146+), Safari 16.4+ (validated 16.5+). Baseline: Newly Available April 2025. Validated with NVDA and VoiceOver. See [POC CodePen](https://codepen.io/spectrum-css/pen/pvNEVda?editors=0010).
 
@@ -667,6 +668,7 @@ The impact is most acute in the additive phase, when `HoverController` opens the
 - [x] ARIA wiring: when trigger has no open shadow root (native element), `ariaDescribedByElements` is set on the trigger host element (`AriaWiringNativeTest`)
 - [x] ARIA wiring: `trigger-element` setter overrides `for` and drives the same wiring (`AriaWiringTriggerElementOverrideTest`)
 - [x] ARIA wiring: no wiring when neither `for` nor `trigger-element` is set; no error thrown (`AriaWiringNoTriggerTest`)
+- [x] ARIA wiring: removing the tooltip from the DOM while open clears its reference from the trigger's `ariaDescribedByElements`, so the trigger never retains a detached node (`AriaCleanupOnDisconnectTest`)
 - [x] ARIA wiring: fires in manual mode when `for` is set and consumer sets `open = true` (`AriaWiringManualModeTest`)
 - [x] Automatic mode: opens on trigger hover; closes on pointer leave (`HoverOpensTest`)
 - [x] Automatic mode: opens on trigger `focusin`; closes on `focusout` (`FocusOpensTest`)
@@ -879,6 +881,19 @@ Decisions made after the initial plan was approved and implementation had begun.
 **Changeset impact:** None beyond what already ships. `HoverController` is introduced in this same unreleased batch (changeset `light-beers-roll.md`), so the `requestOpen()`/`requestClose()` contract is simply its initial public shape — there is no prior released version to break and no consumer outside Tooltip. No separate changeset is required.
 
 **Files changed:** `hover-controller.ts` (interface + `showWithBridge`/`callHidePopover` bodies), `hover-controller.mdx` (usage, manual mode, API table), `Tooltip.base.ts` (`requestOpen`/`requestClose` methods, `isPopoverOpen` comment), `demo-hosts.ts` (host implementation), this plan.
+
+---
+
+### D4: Clear ARIA relationship on disconnect
+
+**Phase:** Review (Phase 8)  
+**Trigger:** PR reviewer feedback.
+
+**Root cause:** The ARIA relationship (`ariaDescribedByElements` / `ariaLabelledByElements`) was removed from the trigger only on `open = false`, via `syncAriaRelationship()` running in `updated()`. If a tooltip was removed from the DOM while open, no cleanup ran, and the trigger retained a reference to the now-detached tooltip node in its ARIA element arrays.
+
+**Decision:** Extract the removal logic into `clearAriaRelationship()` and call it both at the top of `syncAriaRelationship()` (unchanged behavior) and in `disconnectedCallback()`. Direct cleanup is used rather than setting `open = false` during teardown, which would trigger a reactive update and a `hidePopover()` on a disconnecting element. Regression test: `AriaCleanupOnDisconnectTest`.
+
+**Files changed:** `Tooltip.base.ts` (`clearAriaRelationship()` helper, `disconnectedCallback`), `tooltip.test.ts` (`AriaCleanupOnDisconnectTest`), this plan.
 
 ---
 

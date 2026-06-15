@@ -379,6 +379,43 @@ export const AriaWiringNativeTest: Story = {
   },
 };
 
+export const AriaCleanupOnDisconnectTest: Story = {
+  render: () => html`
+    <button id="tt-disconnect-trigger">Save</button>
+    <swc-tooltip for="tt-disconnect-trigger" placement="top">
+      Changes will be saved
+    </swc-tooltip>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const tooltip = await getComponent<Tooltip>(canvasElement, 'swc-tooltip');
+    const trigger = canvasElement.querySelector('#tt-disconnect-trigger')!;
+
+    await step('wires ariaDescribedByElements while open', async () => {
+      tooltip.open = true;
+      await tooltip.updateComplete;
+
+      const elements = trigger.ariaDescribedByElements ?? [];
+      expect(elements, 'ariaDescribedByElements contains tooltip').toContain(
+        tooltip
+      );
+    });
+
+    await step(
+      'removes itself from the trigger when disconnected while open',
+      async () => {
+        tooltip.remove();
+        await tooltip.updateComplete;
+
+        const elements = trigger.ariaDescribedByElements ?? [];
+        expect(
+          elements,
+          'trigger no longer references the detached tooltip node'
+        ).not.toContain(tooltip);
+      }
+    );
+  },
+};
+
 export const AriaWiringSwcTriggerTest: Story = {
   render: () => html`
     <swc-button id="tt-swc-trigger">Save</swc-button>

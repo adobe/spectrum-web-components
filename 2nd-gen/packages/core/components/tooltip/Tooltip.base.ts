@@ -273,19 +273,27 @@ export abstract class TooltipBase
     return null;
   }
 
+  // Removes this tooltip from the previously wired target's ARIA element arrays
+  // and forgets the reference. Called before re-wiring and on disconnect so a
+  // trigger never retains a reference to a detached tooltip node.
+  private clearAriaRelationship(): void {
+    if (!this._lastWiredTrigger) {
+      return;
+    }
+    const stale = this._lastWiredTrigger;
+    stale.ariaDescribedByElements = (
+      stale.ariaDescribedByElements ?? []
+    ).filter((el) => el !== this);
+    stale.ariaLabelledByElements = (stale.ariaLabelledByElements ?? []).filter(
+      (el) => el !== this
+    );
+    this._lastWiredTrigger = null;
+  }
+
   private syncAriaRelationship(): void {
     // Remove stale references from the previously wired target before resolving
     // the new one. Handles for/triggerElement changes while the tooltip is open.
-    if (this._lastWiredTrigger) {
-      const stale = this._lastWiredTrigger;
-      stale.ariaDescribedByElements = (
-        stale.ariaDescribedByElements ?? []
-      ).filter((el) => el !== this);
-      stale.ariaLabelledByElements = (
-        stale.ariaLabelledByElements ?? []
-      ).filter((el) => el !== this);
-      this._lastWiredTrigger = null;
-    }
+    this.clearAriaRelationship();
 
     const trigger = this.resolveTrigger();
     if (!trigger) {
@@ -497,5 +505,8 @@ export abstract class TooltipBase
       clearTimeout(this.afterEventFallbackTimer);
       this.afterEventFallbackTimer = null;
     }
+    // If the tooltip is removed while open, the trigger would otherwise retain a
+    // reference to this now-detached node in its ARIA element arrays.
+    this.clearAriaRelationship();
   }
 }
