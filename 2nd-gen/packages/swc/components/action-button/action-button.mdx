@@ -30,8 +30,6 @@ Action buttons come in five sizes: extra-small (`xs`), small (`s`), medium (`m`)
 
 The `quiet` attribute applies a low-emphasis visual treatment with no background or border at rest. Quiet is a primary visual differentiator for action button; unlike `swc-button` where quiet is deprecated, it remains a first-class option here.
 
-> **Migration note**: the `emphasized` attribute from `sp-action-button` has been removed. It only applied to the selected state, which has also been removed from `swc-action-button`. Toggle patterns that previously used `emphasized selected` should move to `swc-toggle-button`, available in a future release.
-
 <Canvas of={ActionButtonStories.Quiet} />
 
 ### Static colors
@@ -60,8 +58,6 @@ Do not set both `disabled` and `pending` simultaneously.
 
 When an icon is slotted with no visible text, set `accessible-label` to provide an accessible name for the button. A development warning is emitted when an icon-only button is missing `accessible-label`.
 
-> **Migration note**: the `label` attribute from `sp-action-button` has been renamed to `accessible-label`. Replace all `label="..."` usage with `accessible-label="..."`.
-
 <Canvas of={ActionButtonStories.IconOnly} />
 
 ### Pending
@@ -74,9 +70,9 @@ The accessible name during pending defaults to the visible label plus `", busy"`
 
 ### Linking
 
-`swc-action-button` is a button-only element. The `href`, `target`, `download`, `referrerpolicy`, and `rel` attributes from `sp-action-button` have been removed. Mixing button and link semantics creates accessibility issues: screen reader users navigating by form controls will not encounter link-styled buttons, and vice versa.
+`swc-action-button` is a button-only element. Mixing button and link semantics creates accessibility issues: screen reader users navigating by form controls will not encounter link-styled buttons, and vice versa.
 
-For navigation, use a native `<a>` element styled with the generated global action button stylesheet. See [global element styling](/docs/guides-customization-global-element-styling--readme) for setup instructions and usage examples including quiet and icon-only variants.
+For navigation, use a native `<a>` element styled with the generated global action button stylesheet. See [global element styling](/docs/guides-customization-global-element-styling--docs) for setup instructions and usage examples including quiet and icon-only variants.
 
 ## Accessibility
 
@@ -96,15 +92,15 @@ The `<swc-action-button>` element implements several accessibility features:
 - Always provide `accessible-label` for icon-only buttons so screen readers can announce the button's purpose.
 - Prefer `accessible-label` over placing `aria-label` directly on the `<swc-action-button>` host; it is intentionally forwarded to the internal native control.
 - Do not set both `pending` and `disabled` simultaneously. Use `pending` to keep the button focusable while unavailable, or `disabled` to remove it from the tab order entirely.
-- For navigation, use a native `<a>` element with [global element styles](/docs/guides-customization-global-element-styling--readme) rather than `<swc-action-button>`. Buttons activate on both Enter and Space; links activate on Enter only.
+- For navigation, use a native `<a>` element with [global element styles](/docs/guides-customization-global-element-styling--docs) rather than `<swc-action-button>`. Buttons activate on both Enter and Space; links activate on Enter only.
 - Use `static-color="black"` on light backgrounds and `static-color="white"` on dark backgrounds to maintain sufficient contrast. Avoid placing static color buttons over busy images with high contrast variance.
 
-### Deferred support
+### Limitations
 
-The following features are outside the initial 2nd-gen scope:
+The following features are not currently supported:
 
 - **Cross-root ARIA** (`aria-labelledby` / `aria-describedby` from outside the shadow root).
-- **Hold affordance** (`hold-affordance` / `longpress`): deferred from the initial release. See [Upcoming features](#upcoming-features) for consumer alternatives.
+- **Hold affordance** (`hold-affordance` / `longpress`). See [Upcoming features](#upcoming-features) for alternatives.
 
 <Canvas of={ActionButtonStories.Accessibility} />
 
@@ -112,7 +108,7 @@ The following features are outside the initial 2nd-gen scope:
 
 The following features are planned for future releases:
 
-- **Hold affordance** (`hold-affordance` / `longpress`): deferred from the initial 2nd-gen release. Consumer alternatives in the interim: (1) continue using 1st-gen `sp-action-button`; (2) extend `swc-button` for custom hold logic; or (3) separate the secondary action into a distinct `swc-action-button` within an action group, which is more accessible than relying on a longpress interaction alone.
-- **Toggle button**: `toggles` and `selected` have been removed from `swc-action-button`. Selection and toggle UX moves to `swc-toggle-button` and `swc-toggle-button-group`, available in a future release.
+- **Hold affordance** (`hold-affordance` / `longpress`): not yet available. In the interim, separate the secondary action into a distinct `swc-action-button` within an action group, which is more accessible than relying on a longpress interaction alone.
+- **Toggle button**: selection and toggle UX is planned via `swc-toggle-button` and `swc-toggle-button-group`, available in a future release.
 
 <DocsFooter />

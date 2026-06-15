@@ -44,7 +44,7 @@ argTypes['static-color'] = {
  * A compact action button for toolbars, action groups, and icon-first chrome.
  * Supports sizes `xs`–`xl`; `xs` is an action-button-specific addition not
  * available on `swc-button`. For navigation, [use a link with global action
- * button styles](/docs/guides-customization-global-element-styling--readme) instead.
+ * button styles](/docs/guides-customization-global-element-styling--docs) instead.
  */
 const meta: Meta = {
   title: 'Action Button',
@@ -82,6 +82,8 @@ const sizeLabels = {
 } as const satisfies Record<ActionButtonSize, string>;
 
 const editIconSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36" aria-hidden="true" focusable="false"><path d="M33.567 8.2 27.8 2.432a1.215 1.215 0 0 0-.866-.353H26.9a1.371 1.371 0 0 0-.927.406L5.084 23.372a.99.99 0 0 0-.251.422L2.055 33.1c-.114.377.459.851.783.851a.251.251 0 0 0 .062-.007c.276-.063 7.866-2.344 9.311-2.778a.972.972 0 0 0 .414-.249l20.888-20.889a1.372 1.372 0 0 0 .4-.883 1.221 1.221 0 0 0-.346-.945ZM11.4 29.316c-2.161.649-4.862 1.465-6.729 2.022l2.009-6.73Z"/></svg>`;
+
+const boldIconSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36" aria-hidden="true" focusable="false"><path d="M33.567 8.2 27.8 2.432a1.215 1.215 0 0 0-1.717 0L23 5.516 30.485 13l3.082-3.083a1.215 1.215 0 0 0 0-1.717ZM21.586 7l-3.805 3.805 7.414 7.415 3.805-3.805ZM3 29.788V37h7.212L23.414 23.8l-7.414-7.415ZM6 32v-1.591l9.914-9.914 1.591 1.591L7.591 32Z"/></svg>`;
 
 // ──────────────────────────
 //    PLAYGROUND STORY
@@ -300,19 +302,11 @@ export const Pending: Story = {
 export const Accessibility: Story = {
   render: (args) => html`
     ${template({ ...args, 'default-slot': 'Format' })}
-    <swc-action-button size=${args.size ?? 'm'} accessible-label="Bold">
-      <svg
-        slot="icon"
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 36 36"
-        aria-hidden="true"
-        focusable="false"
-      >
-        <path
-          d="M33.567 8.2L27.8 2.432a1.215 1.215 0 0 0-1.717 0L23 5.516 30.485 13l3.082-3.083a1.215 1.215 0 0 0 0-1.717zM21.586 7l-3.805 3.805 7.414 7.415 3.805-3.805zM3 29.788V37h7.212L23.414 23.8l-7.414-7.415zM6 32v-1.591l9.914-9.914 1.591 1.591L7.591 32z"
-        />
-      </svg>
-    </swc-action-button>
+    ${template({
+      ...args,
+      'accessible-label': 'Bold',
+      'icon-slot': boldIconSvg,
+    })}
     ${template({
       ...args,
       'default-slot': 'Upload',
