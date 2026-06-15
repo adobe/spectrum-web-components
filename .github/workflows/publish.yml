@@ -62,8 +62,11 @@ jobs:
             HAS_1ST_GEN=false
             for file in .changeset/*.md; do
               if [ "$(basename "$file")" != "README.md" ]; then
-                PACKAGES=$(grep -oP "@spectrum-web-components/[a-z-]+" "$file")
-                NON_CORE=$(echo "$PACKAGES" | grep -v "^@spectrum-web-components/core$")
+                # `|| true` keeps `set -e` from aborting when grep finds no match
+                # (e.g. a changeset that references only @spectrum-web-components/core,
+                # or only @adobe/spectrum-wc with no @spectrum-web-components/* package).
+                PACKAGES=$(grep -oP "@spectrum-web-components/[a-z-]+" "$file" || true)
+                NON_CORE=$(echo "$PACKAGES" | grep -v "^@spectrum-web-components/core$" || true)
                 if [ -n "$NON_CORE" ]; then
                   HAS_1ST_GEN=true
                   break
