@@ -261,6 +261,20 @@ The description's first bullet ends "for the 2nd-gen color handle" in the source
 
 The Manual review test cases section contains a fixed reference to the color handle PR (`nikkimk/swc-2138-color-handle-a11y`). Keep that reference as-is; it is an anchor PR that all reviewers in this migration wave are expected to read.
 
+### PR settings
+
+Apply these settings when creating the PR:
+
+- **Draft:** Create as a draft PR.
+- **Label:** Add the `a11y` label.
+- **Project:** Add to the "Spectrum Web PR Status" project with status **In development**.
+
+When the user asks to mark the PR as ready for review, apply all of the following:
+
+- Convert draft to ready for review (`gh pr ready`).
+- Add the `Status: Ready for review` label.
+- Add the `High priority PR review` label.
+
 ### Template
 
 ```markdown
