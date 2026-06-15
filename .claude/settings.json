@@ -1,5 +1,0 @@
-{
-  "permissions": {
-    "allow": ["Bash(npx tsc *)", "Bash(echo \"Exit code: $?\")"]
-  }
-}
