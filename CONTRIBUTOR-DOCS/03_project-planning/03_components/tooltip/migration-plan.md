@@ -58,6 +58,7 @@
     - [D2: VRT play functions — `getComputedStyle(opacity)` poll instead of `swc-after-open`](#d2-vrt-play-functions--getcomputedstyleopacity-poll-instead-of-swc-after-open)
     - [D3: `HoverControllerHost` contract — `requestOpen()`/`requestClose()` instead of `showPopover()`/`hidePopover()`](#d3-hovercontrollerhost-contract--requestopenrequestclose-instead-of-showpopoverhidepopover)
     - [D4: Clear ARIA relationship on disconnect](#d4-clear-aria-relationship-on-disconnect)
+    - [D5: Scope the Escape `keydown` listener to the open state](#d5-scope-the-escape-keydown-listener-to-the-open-state)
 - [References](#references)
 
 </details>
@@ -231,7 +232,7 @@ Both controllers are integrated. No outstanding controller prerequisites remain.
 | --- | ------------ | ---------------- | ---------------- | ----------------------- |
 | A1 | Add `role="tooltip"` to host element | Missing (SWC-1558) | `role="tooltip"` on the host element | No consumer action; fixes AT behavior |
 | A2 | Native popover open/close | Uses `sp-overlay type="hint"` + `HoverController` + `triggerInteraction="hover"` | Host gets `popover="auto"`; `beforetoggle`/`toggle`/`transitionend` event listeners handle state sync and the four `swc-*` lifecycle events. Participates in the auto popover stack — opening closes other open `auto` popovers. See [Auto-stack behavior](#auto-stack-behavior). | No consumer action; automatic trigger wiring ships inactive in the initial release |
-| A3 | `Escape` dismissal | Handled by `OverlayStack` in 1st-gen | `popover="auto"` provides built-in Esc-to-close and light-dismiss (primary mechanism). A `document` `keydown` listener is also wired in Core's `connectedCallback` as a belt-and-suspenders measure for test environments where the native popover dismiss may not fire; it sets `this.open = false` on Escape. | No consumer action |
+| A3 | `Escape` dismissal | Handled by `OverlayStack` in 1st-gen | `popover="auto"` provides built-in Esc-to-close and light-dismiss (primary mechanism). A `document` `keydown` listener is also wired as a belt-and-suspenders measure for test environments where the native popover dismiss may not fire; it sets `this.open = false` on Escape. The listener is registered only while the tooltip is open (added in `updated()` when `open` becomes `true`, removed on close and on disconnect), so at most one listener is active at a time rather than one per connected instance. | No consumer action |
 | A4 | ARIA relationship wiring | No automatic ARIA association in 1st-gen | On `open = true`: SWC resolves trigger via `for` / `trigger-element`, applies inner-button resolution (shadow `<button>` for SWC components; host for native elements), and sets `Element.ariaDescribedByElements = [tooltipHost]`. Removed on `open = false`. Active in both automatic and manual modes. See [ARIA relationship wiring](#aria-relationship-wiring) for the full two-path resolution and browser support. | Set `for` on `<swc-tooltip>` pointing to the trigger's `id`; or set `trigger-element` programmatically. No other action required. |
 
 ### Additive — ships when ready, zero breakage for consumers already on 2nd-gen
@@ -481,7 +482,7 @@ Follow the [Badge migration reference](../../02_workstreams/02_2nd-gen-component
 
 | Layer | Path | Contains |
 | ----- | ---- | -------- |
-| **Core** | `2nd-gen/packages/core/components/tooltip/` | `Tooltip.base.ts`, `Tooltip.types.ts`: property declarations (including `triggerElement`), type validation, state management, accessible-name rules. Sets `role="tooltip"` and `popover="auto"` in `connectedCallback`. Wires `beforetoggle`/`toggle`/`transitionend` event listeners for state sync and `swc-open`/`swc-after-open`/`swc-close`/`swc-after-close` dispatch. Wires a `keydown` listener on `document` for Escape testability (belt-and-suspenders; native `popover="auto"` dismiss is the primary mechanism). Resolves trigger via `for` (ID lookup) or `triggerElement` (explicit reference). Maintains `ariaDescribedByElements` (or `ariaLabelledByElements` when `labeling` is set) on the trigger's inner interactive element on `open` and `labeling` changes. Instantiates and manages `HoverController` (hover/focus wiring, warm-up/cooldown, pointer bridge, `disabled`/`manual` guards) and `PlacementController` (pixel positioning, flip, `offset`/`cross-offset`/`container-padding`/`should-flip` options). No rendering. |
+| **Core** | `2nd-gen/packages/core/components/tooltip/` | `Tooltip.base.ts`, `Tooltip.types.ts`: property declarations (including `triggerElement`), type validation, state management, accessible-name rules. Sets `role="tooltip"` and `popover="auto"` in `connectedCallback`. Wires `beforetoggle`/`toggle`/`transitionend` event listeners for state sync and `swc-open`/`swc-after-open`/`swc-close`/`swc-after-close` dispatch. Wires a `keydown` listener on `document` for Escape testability (belt-and-suspenders; native `popover="auto"` dismiss is the primary mechanism), registered only while open so at most one listener is active at a time. Resolves trigger via `for` (ID lookup) or `triggerElement` (explicit reference). Maintains `ariaDescribedByElements` (or `ariaLabelledByElements` when `labeling` is set) on the trigger's inner interactive element on `open` and `labeling` changes. Instantiates and manages `HoverController` (hover/focus wiring, warm-up/cooldown, pointer bridge, `disabled`/`manual` guards) and `PlacementController` (pixel positioning, flip, `offset`/`cross-offset`/`container-padding`/`should-flip` options). No rendering. |
 | **SWC** | `2nd-gen/packages/swc/components/tooltip/` | `Tooltip.ts`, `tooltip.css`: rendering only (tip element, default slot). Overrides `tipElement` getter to return `.swc-Tooltip-tip` from the shadow DOM for `PlacementController`'s `arrow` middleware. Element registration (`swc-tooltip`). Stories, tests, consumer migration guide. |
 
 Planned rendering shape (initial release):
@@ -600,7 +601,7 @@ The impact is most acute in the additive phase, when `HoverController` opens the
 
 - [x] `Tooltip.types.ts`: define `TooltipVariant` (`'neutral' | 'informative' | 'negative'`); define `TooltipPlacement` (all physical + logical values)
 - [x] `Tooltip.base.ts`: define all properties with decorators (including `for` and `triggerElement` declarations); assign `role="tooltip"`; no rendering. No DOM traversal logic.
-- [x] `Tooltip.base.ts` (Core): `popover="auto"` and `role="tooltip"` set via `connectedCallback`; `beforetoggle`/`toggle`/`transitionend` and `document` `keydown` listeners wired; trigger resolution via `for`/`triggerElement`; ARIA relationship wiring (`ariaDescribedByElements` / `ariaLabelledByElements`) on `open` and `labeling` changes; `HoverController` and `PlacementController` instantiated and managed in `updated()` and `connectedCallback`/`disconnectedCallback`.
+- [x] `Tooltip.base.ts` (Core): `popover="auto"` and `role="tooltip"` set via `connectedCallback`; `beforetoggle`/`toggle`/`transitionend` listeners wired in `connectedCallback`, `document` `keydown` listener wired only while open; trigger resolution via `for`/`triggerElement`; ARIA relationship wiring (`ariaDescribedByElements` / `ariaLabelledByElements`) on `open` and `labeling` changes; `HoverController` and `PlacementController` instantiated and managed in `updated()` and `connectedCallback`/`disconnectedCallback`.
 - [x] `Tooltip.ts` (SWC): rendering only — `render()` returns tip element and default slot; `tipElement` getter override returns `.swc-Tooltip-tip` for arrow middleware; CSS via `tooltip.css`.
 
 #### 1st-gen deprecation notices
@@ -894,6 +895,19 @@ Decisions made after the initial plan was approved and implementation had begun.
 **Decision:** Extract the removal logic into `clearAriaRelationship()` and call it both at the top of `syncAriaRelationship()` (unchanged behavior) and in `disconnectedCallback()`. Direct cleanup is used rather than setting `open = false` during teardown, which would trigger a reactive update and a `hidePopover()` on a disconnecting element. Regression test: `AriaCleanupOnDisconnectTest`.
 
 **Files changed:** `Tooltip.base.ts` (`clearAriaRelationship()` helper, `disconnectedCallback`), `tooltip.test.ts` (`AriaCleanupOnDisconnectTest`), this plan.
+
+---
+
+### D5: Scope the Escape `keydown` listener to the open state
+
+**Phase:** Review (Phase 8)  
+**Trigger:** PR reviewer feedback.
+
+**Root cause:** The belt-and-suspenders Escape `keydown` listener was registered on `document` in `connectedCallback` for the whole connected lifetime. Every connected tooltip instance therefore added its own `document` listener that ran on every keystroke, even though the handler is a no-op unless the instance is open.
+
+**Decision:** Register the listener only while open — added in `updated()` when `open` becomes `true`, removed on close and (defensively) in `disconnectedCallback`. Because `popover="auto"` permits only one open tooltip at a time, at most one listener is ever active, which satisfies the reviewer's "single delegated listener" intent without introducing static shared state. A host-level listener was considered and rejected: the tooltip is non-interactive and never receives keyboard focus, so a host `keydown` would never fire (the listener must be on `document` to catch Escape regardless of focus location).
+
+**Files changed:** `Tooltip.base.ts` (`updated()` open/close branches, `connectedCallback`, `disconnectedCallback`, `handleKeyDown` comment), this plan.
 
 ---
 

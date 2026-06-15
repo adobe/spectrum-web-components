@@ -422,7 +422,12 @@ export abstract class TooltipBase
     this.dispatchAfterEvent(this.open);
   };
 
-  // Allows Escape behavior to be testable, does not interfere with native popover dismissal
+  // Escape-to-close. Registered on `document` only while open (see updated()),
+  // not for the whole connected lifetime: the tooltip is non-interactive and
+  // never receives focus, so a host-level keydown would not fire, and scoping to
+  // the open state keeps at most one listener active at a time (popover="auto"
+  // permits one open tooltip). This is a testability backstop; native
+  // popover="auto" Escape dismissal is the primary mechanism.
   private readonly handleKeyDown = (event: KeyboardEvent): void => {
     if (event.key === 'Escape' && this.open) {
       this.open = false;
@@ -457,11 +462,14 @@ export abstract class TooltipBase
     const openChanged = changedProperties.has('open');
     if (openChanged) {
       if (this.open) {
+        // Register Escape handling only while open; removed on close below.
+        document.addEventListener('keydown', this.handleKeyDown);
         this.startPlacement();
         if (this.open !== this.isPopoverOpen) {
           this.showPopover();
         }
       } else {
+        document.removeEventListener('keydown', this.handleKeyDown);
         if (this.open !== this.isPopoverOpen) {
           this.hidePopover();
         }
@@ -492,7 +500,6 @@ export abstract class TooltipBase
     this.addEventListener('beforetoggle', this.handleBeforeToggle);
     this.addEventListener('toggle', this.handleToggle);
     this.addEventListener('transitionend', this.handleTransitionEnd);
-    document.addEventListener('keydown', this.handleKeyDown);
   }
 
   public override disconnectedCallback(): void {
@@ -500,6 +507,8 @@ export abstract class TooltipBase
     this.removeEventListener('beforetoggle', this.handleBeforeToggle);
     this.removeEventListener('toggle', this.handleToggle);
     this.removeEventListener('transitionend', this.handleTransitionEnd);
+    // Defensive: the keydown listener is normally removed on close, but a
+    // tooltip disconnected while open would still have it registered.
     document.removeEventListener('keydown', this.handleKeyDown);
     if (this.afterEventFallbackTimer !== null) {
       clearTimeout(this.afterEventFallbackTimer);
