@@ -11,7 +11,6 @@
  */
 
 import { CSSResultArray, html, TemplateResult } from 'lit';
-import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
 import {
@@ -100,11 +99,7 @@ export class CloseButton extends ButtonBase {
 
     return html`
       <button
-        class=${classMap({
-          'swc-CloseButton': true,
-          'swc-CloseButton--staticWhite': this.staticColor === 'white',
-          'swc-CloseButton--staticBlack': this.staticColor === 'black',
-        })}
+        class="swc-CloseButton"
         type="button"
         @click=${this.handleActivationClick}
         ?disabled=${this.disabled}
