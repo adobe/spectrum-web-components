@@ -64,7 +64,7 @@
     "@spectrum-web-components/textfield": "1.12.1"
   },
   "devDependencies": {
-    "@formatjs/intl-numberformat": "8.15.4"
+    "@formatjs/intl-numberformat": "8.15.6"
   },
   "keywords": [
     "design-system",
