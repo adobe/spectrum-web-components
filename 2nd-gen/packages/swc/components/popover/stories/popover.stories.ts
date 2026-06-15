@@ -10,7 +10,6 @@
  * governing permissions and limitations under the License.
  */
 
-import { html } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
@@ -50,7 +49,7 @@ const meta: Meta = {
 export default meta;
 
 // ────────────────────
-//    AUTODOCS STORY
+//    PLAYGROUND STORY
 // ────────────────────
 
 export const Playground: Story = {
@@ -59,7 +58,6 @@ export const Playground: Story = {
     open: true,
     'default-slot': 'Popover content',
   },
-  render: (args) => template(args),
 };
 
 // ──────────────────────────
@@ -71,8 +69,5 @@ export const Overview: Story = {
     open: true,
     'default-slot': 'Popover content',
   },
-  render: (args) => html`
-    ${template(args)}
-  `,
   tags: ['overview'],
 };
