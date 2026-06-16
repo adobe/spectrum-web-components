@@ -78,9 +78,28 @@ const tableStyle: React.CSSProperties = {
 /** Storybook argType shape (subset we care about). */
 interface ArgType {
   options?: string[];
+  control?: unknown;
   table?: {
     type?: { summary?: string };
+    disable?: boolean;
   };
+}
+
+function getArgTypeForMember(
+  argTypes: Record<string, ArgType>,
+  propName: string,
+  attrName?: string
+): ArgType | undefined {
+  const candidates = [
+    attrName ? argTypes[attrName] : undefined,
+    argTypes[propName],
+  ].filter((candidate): candidate is ArgType => candidate != null);
+
+  return (
+    candidates.find((candidate) => candidate.options?.length) ??
+    candidates.find((candidate) => candidate.control) ??
+    candidates[0]
+  );
 }
 
 function PropertiesTable({
@@ -128,7 +147,11 @@ function PropertiesTable({
           <tbody>
             {props.map((prop) => {
               const attr = attrByField.get(prop.name);
-              const argType = argTypes[prop.name] ?? argTypes[attr?.name ?? ''];
+              const argType = getArgTypeForMember(
+                argTypes,
+                prop.name,
+                attr?.name
+              );
 
               // Prefer expanded options from argTypes, fall back to CEM type text.
               const typeName = argType?.options

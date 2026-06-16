@@ -64,7 +64,7 @@ Opacity Checkerboard is **not a component migration**. It is a **reclassificatio
 
 Must-ship work is small and almost entirely structural:
 
-- **Ship a 2nd-gen shared CSS utility** for the checkerboard pattern at `2nd-gen/packages/swc/stylesheets/shared/` — an importable `css` style fragment. The pattern itself already works in 2nd-gen: gen-2 tokens (`--swc-opacity-checkerboard-square-*`) exist in `tokens.css`, and `color-loupe` already renders the pattern by **inlining** the rule into its own component CSS (it does not import any shared artifact). The shared fragment de-duplicates that rule for shadow-DOM consumers.
+- **Ship a 2nd-gen shared CSS utility** for the checkerboard pattern at `2nd-gen/packages/swc/stylesheets/_lit-styles/` — an importable `css` style fragment. The pattern itself already works in 2nd-gen: gen-2 tokens (`--swc-opacity-checkerboard-square-*`) exist in `tokens.css`, and `color-loupe` already renders the pattern by **inlining** the rule into its own component CSS (it does not import any shared artifact). The shared fragment de-duplicates that rule for shadow-DOM consumers.
 - **Deprecate the 1st-gen `@spectrum-web-components/opacity-checkerboard` package** with a notice and a pointer to the 2nd-gen replacement (timeline-gated).
 - **Drop the `--mod-*` surface** (`--mod-opacity-checkerboard-{dark,light,size,position}`) — consistent with all 2nd-gen migrations, which do not expose `--mod-*`.
 - **Contributor docs stay internal-only for now**, outside the Components section, since the utility is Lit-consumption-only and not a public standalone API.
@@ -75,7 +75,7 @@ Why a shared `css` fragment and not a global class: **a global stylesheet class 
 
 ### Most blocking open questions
 
-None block implementation. The deliverable form (importable `css` fragment under `swc/stylesheets/shared/`) and class name (`.swc-opacity-checkerboard`) are decided. One non-blocking open item remains — whether the a11y workstream needs to sign off — tracked in [Scope and prerequisites](#scope-and-prerequisites).
+None block implementation. The deliverable form (importable `css` fragment under `swc/stylesheets/_lit-styles/`) and class name (`.swc-OpacityCheckerboard`) are decided. One non-blocking open item remains — whether the a11y workstream needs to sign off — tracked in [Scope and prerequisites](#scope-and-prerequisites).
 
 ---
 
@@ -177,7 +177,7 @@ Once the shared fragment exists, `color-loupe` (and future color components) sho
 
 ### User confirmation needed
 
-**Resolved in session:** the deliverable is a shared `css` style fragment under `swc/stylesheets/shared/`. The follow-up refactor of `color-loupe` off its inline copy (A1) remains a separate, optional ticket and does not gate this work.
+**Resolved in session:** the deliverable is a shared `css` style fragment under `swc/stylesheets/_lit-styles/`. The follow-up refactor of `color-loupe` off its inline copy (A1) remains a separate, optional ticket and does not gate this work.
 
 ---
 
@@ -197,7 +197,7 @@ Once the shared fragment exists, `color-loupe` (and future color components) sho
 | #   | What changes | 1st-gen behavior | 2nd-gen behavior | Consumer migration path |
 | --- | ------------ | ---------------- | ---------------- | ----------------------- |
 | **B1** | Drop the `--mod-*` override surface (source: 2nd-gen CSS policy — no `--mod-*` exposed). | `--mod-opacity-checkerboard-{light,dark,size,position}` override the pattern per instance. | No `--mod-*`. Pattern is driven by `--swc-*` tokens; size handled by token, not per-instance mod. | Consumers stop setting `--mod-*`; use token-driven size or component-scoped `--swc-*` where a knob is genuinely needed. |
-| **B2** | Reclassify package → shared CSS utility; deprecate `@spectrum-web-components/opacity-checkerboard` (source: [Tools vs packages](../../../../CONTRIBUTOR-DOCS/01_contributor-guides/12_tools-vs-packages.md#migration-and-deprecation-for-reclassified-items)). | Standalone npm package exporting CSS-as-JS artifacts. | No standalone 2nd-gen package. Pattern shipped as an importable `css` fragment in `swc/stylesheets/shared/`. | Consumers import the 2nd-gen fragment into their `styles` array instead of the 1st-gen package. |
+| **B2** | Reclassify package → shared CSS utility; deprecate `@spectrum-web-components/opacity-checkerboard` (source: [Tools vs packages](../../../../CONTRIBUTOR-DOCS/01_contributor-guides/12_tools-vs-packages.md#migration-and-deprecation-for-reclassified-items)). | Standalone npm package exporting CSS-as-JS artifacts. | No standalone 2nd-gen package. Pattern shipped as an importable `css` fragment in `swc/stylesheets/_lit-styles/`. | Consumers import the 2nd-gen fragment into their `styles` array instead of the 1st-gen package. |
 
 #### Styling and visuals
 
@@ -234,7 +234,7 @@ Confirmed items are marked; open items are tracked in [Blockers and open questio
 
 N/A — no custom element. **Confirmed** by [Tools vs packages](../../../../CONTRIBUTOR-DOCS/01_contributor-guides/12_tools-vs-packages.md#abstraction-targets-2nd-gen): Opacity-Checkerboard → "CSS utility class (utility class only; no custom element)."
 
-The public surface is a CSS class name (inside the shared fragment) + the `--swc-*` tokens it reads. Class name: `.swc-opacity-checkerboard` (with a `--size-small` modifier).
+The public surface is a CSS class name (inside the shared fragment) + the `--swc-*` tokens it reads. Class name: `.swc-OpacityCheckerboard` (with a `--sizeS` modifier).
 
 #### Visual matrix (2nd-gen)
 
@@ -279,11 +279,11 @@ The checkerboard is **decorative**. Responsibility stays with the *consuming* el
 | Layer | Path | Contains |
 | --- | --- | --- |
 | **Core** | N/A | No UI-less logic. The artifact depends on Spectrum styles/tokens, so nothing belongs in `core/`. |
-| **SWC** | `2nd-gen/packages/swc/stylesheets/shared/` | The checkerboard CSS as an importable `css` style fragment, consumed by adding it to a component's `styles` array (reaches shadow-DOM consumers). |
+| **SWC** | `2nd-gen/packages/swc/stylesheets/_lit-styles/` | The checkerboard CSS as an importable `css` style fragment, consumed by adding it to a component's `styles` array (reaches shadow-DOM consumers). |
 
 Decided form:
 
-- Ship an importable `css` style fragment under `swc/stylesheets/shared/` (new `shared/` directory). Shadow-DOM consumers (every known consumer) include it in their `styles` array, mirroring how `color-loupe` works today but de-duplicating the rule.
+- Ship an importable `css` style fragment under `swc/stylesheets/_lit-styles/` (new `_lit-styles/` directory). Shadow-DOM consumers (every known consumer) include it in their `styles` array, mirroring how `color-loupe` works today but de-duplicating the rule.
 - No global utility class — a global class cannot pierce shadow DOM and would not serve a single existing consumer.
 - Exported only as a Lit `CSSResult` (`opacityCheckerboardStyles`); no global `.css` artifact is emitted, so there is no light-DOM/document-level usage path.
 
@@ -301,17 +301,17 @@ Decided form:
 
 ### Setup
 
-- [x] Deliverable form decided — **shared `css` fragment in `swc/stylesheets/shared/`**
-- [x] Create `2nd-gen/packages/swc/stylesheets/shared/` with `opacity-checkerboard.css` (the `css` fragment) and `index.ts` (typed `opacityCheckerboardStyles` barrel)
-- [x] Wire exports in the `swc` `package.json` (`./stylesheets/shared` + `./stylesheets/shared/*`) and add the `@adobe/spectrum-wc/stylesheets` dev alias in `vite.config.ts`
-- [x] Adjust build: un-exclude `stylesheets/shared/**` from `litCss`, exclude it from `processStylesheets`, add it as a lib entry (so it is lit-transformed into an importable `css` result, not emitted as a global stylesheet)
+- [x] Deliverable form decided — **shared `css` fragment in `swc/stylesheets/_lit-styles/`**
+- [x] Create `2nd-gen/packages/swc/stylesheets/_lit-styles/` with `opacity-checkerboard.css` (the `css` fragment) and `index.ts` (typed `opacityCheckerboardStyles` barrel)
+- [x] Wire exports in the `swc` `package.json` (`./stylesheets/shared` + `./stylesheets/_lit-styles/*`) and add the `@adobe/spectrum-wc/stylesheets` dev alias in `vite.config.ts`
+- [x] Adjust build: un-exclude `stylesheets/_lit-styles/**` from `litCss`, exclude it from `processStylesheets`, add it as a lib entry (so it is lit-transformed into an importable `css` result, not emitted as a global stylesheet)
 - [x] Check out `spectrum-css` at `spectrum-two` branch as sibling directory
 - [ ] ~~Create `core/components/opacity-checkerboard/`~~ — N/A (no core split)
 - [ ] ~~Create `swc/components/opacity-checkerboard/`~~ — N/A (no custom element)
 
 ### API
 
-N/A — no public component API (no properties, methods, events, slots). The only "API" decisions are the class name (`.swc-opacity-checkerboard`) and the consumed token set (confirmed).
+N/A — no public component API (no properties, methods, events, slots). The only "API" decisions are the class name (`.swc-OpacityCheckerboard`) and the consumed token set (confirmed).
 
 ### Styling
 
@@ -338,7 +338,7 @@ N/A — no public component API (no properties, methods, events, slots). The onl
 
 > Internal-only for now. The utility is consumed by SWC components via Lit `styles`, not by application authors directly, so it does not belong in the public Components docs. Any Storybook entry goes under an internal/Tools section (e.g. an `.internal.mdx`-style page excluded from production docs builds), not under Components.
 
-- [ ] Internal Storybook page (outside Components) demonstrating the fragment imported into a small Lit host's `styles` array, with `.swc-opacity-checkerboard` applied to a decorative element in its shadow root — no light-DOM/global-stylesheet usage, since the fragment is exported only for Lit consumption
+- [ ] Internal Storybook page (outside Components) demonstrating the fragment imported into a small Lit host's `styles` array, with `.swc-OpacityCheckerboard` applied to a decorative element in its shadow root — no light-DOM/global-stylesheet usage, since the fragment is exported only for Lit consumption
 - [ ] Document the deprecation + replacement in the 1st-gen `opacity-checkerboard` README and `package.json` deprecation field
 - [ ] Keep contributor docs internal for now; no public-facing Components docs entry
 
@@ -359,7 +359,7 @@ N/A — no public component API (no properties, methods, events, slots). The onl
 
 ### Design
 
-None — deliverable form (importable `css` fragment) and class name (`.swc-opacity-checkerboard`) are decided.
+None — deliverable form (importable `css` fragment) and class name (`.swc-OpacityCheckerboard`) are decided.
 
 ### Architecture and behavior
 
