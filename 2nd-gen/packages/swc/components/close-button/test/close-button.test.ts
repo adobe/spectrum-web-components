@@ -199,6 +199,30 @@ export const SlotLabelAccessibleNameTest: Story = {
   },
 };
 
+export const AccessibleLabelPrecedenceTest: Story = {
+  render: () => html`
+    <swc-close-button accessible-label="Close dialog">Dismiss</swc-close-button>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const closeButton = await getComponent<CloseButton>(
+      canvasElement,
+      'swc-close-button'
+    );
+
+    await step(
+      'prefers accessible-label over slot text when both are set at render',
+      async () => {
+        await closeButton.updateComplete;
+        const button = closeButton.shadowRoot?.querySelector('button');
+        expect(
+          button?.getAttribute('aria-label'),
+          'accessible-label takes precedence over slot text at render'
+        ).toBe('Close dialog');
+      }
+    );
+  },
+};
+
 // ──────────────────────────────────────────────────────────────
 // TEST: Accessibility
 // ──────────────────────────────────────────────────────────────

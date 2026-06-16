@@ -178,7 +178,7 @@ export const Accessibility: Story = {
           <code>accessible-label</code>
           is omitted.
         </p>
-        <swc-close-button size=${args.size}>Dismiss</swc-close-button>
+        ${template({ ...args, 'accessible-label': undefined }, 'Dismiss')}
       </section>
 
       <section
