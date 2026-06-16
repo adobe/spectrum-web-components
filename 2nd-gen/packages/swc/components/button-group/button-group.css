@@ -44,3 +44,13 @@
 :host([align="end"]) {
   --swc-button-group-justify-content: flex-end;
 }
+
+:host([orientation="vertical"][align="center"]) .swc-ButtonGroup {
+  align-items: center;
+  justify-content: normal;
+}
+
+:host([orientation="vertical"][align="end"]) .swc-ButtonGroup {
+  align-items: flex-end;
+  justify-content: normal;
+}
