@@ -49,7 +49,7 @@ Use the `static-color` attribute when displaying over images or colored backgrou
 - **white** — use on dark or colored backgrounds for better contrast
 - **black** — use on light backgrounds for better contrast
 
-The canvas below uses the Storybook static-color demo layout: **white** on a dark gradient panel, then **default** and **black** on a light gradient panel.
+The canvas below uses the Storybook static-color demo layout: **white** on a dark gradient panel and **black** on a light gradient panel.
 
 > **Migration note:** replace legacy `variant="white"` or `variant="black"` with `static-color`. The `variant` attribute is not supported on `<swc-close-button>`.
 
@@ -84,7 +84,7 @@ The `<swc-close-button>` element implements several accessibility features:
 
 - Hit target size scales with the `size` attribute
 - Static color variants maintain contrast on colored backgrounds
-- High contrast mode overrides icon, background, and focus ring colors
+- Transparent border and outline focus treatment support high contrast mode without custom forced-color overrides
 
 ### Best practices
 

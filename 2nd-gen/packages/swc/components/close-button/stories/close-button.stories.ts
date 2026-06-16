@@ -144,7 +144,6 @@ export const StaticColors: Story = {
       })}
     </div>
     <div style="display: flex; align-items: center; gap: 16px;">
-      ${template({ ...args, 'accessible-label': 'Close (default)' })}
       ${template({
         ...args,
         'static-color': 'black',
