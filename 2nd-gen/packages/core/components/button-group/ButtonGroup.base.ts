@@ -145,7 +145,10 @@ export abstract class ButtonGroupBase extends SizedMixin(SpectrumElement, {
     }
 
     if (changed.has('disabled')) {
-      this.propagateDisabledToChildren();
+      const wasDisabled = changed.get('disabled');
+      if (this.disabled || wasDisabled) {
+        this.propagateDisabledToChildren();
+      }
     }
   }
 
