@@ -429,7 +429,7 @@ What `swc-action-button` adds on top of `ButtonBase`:
 
 - [x] Add `@deprecated` JSDoc to 1st-gen `toggles`, `selected`, `emphasized`, `holdAffordance`, and `href` properties
 - [x] Add dev-mode runtime warnings (`window.__swc.warn()`) to 1st-gen for deprecated properties (`emphasized`, `holdAffordance`, `selected`, `toggles`)
-- [ ] Document migration from `label` to `accessible-label`
+- [x] Document migration from `label` to `accessible-label`
 
 #### Semantics and forms
 
@@ -439,7 +439,7 @@ What `swc-action-button` adds on top of `ButtonBase`:
 - [x] When `pending`: set `aria-disabled="true"` on the inner `<button>` while keeping it focusable (inherited from `ButtonBase.getForwardedButtonAttributes()`)
 - [x] When `disabled`: set `disabled` attribute on the inner `<button>` (inherited from `ButtonBase`)
 - [x] Emit `__swc.warn()` when icon-only and `accessible-label` is absent (inherited from `ButtonBase.update()`)
-- [ ] Document cross-root ARIA as deferred
+- [x] Document cross-root ARIA as deferred
 
 ### Styling
 
@@ -560,25 +560,25 @@ What `swc-action-button` adds on top of `ButtonBase`:
 
 #### General
 
-- [ ] JSDoc on all public props, slots, and CSS custom properties
-- [ ] Storybook stories: label-only, icon-only, icon + label, quiet, static colors (white / black), all sizes, disabled, pending
-- [ ] Document that `toggles` / `selected` are not part of the 2nd-gen API; link to `swc-toggle-button` / `swc-toggle-button-group`
-- [ ] Document that `hold-affordance` is deferred; list consumer options (1st-gen `sp-action-button`, extend `swc-button`, action-group layout)
-- [ ] Document that action-group layout (separate `swc-action-button` instances) is much more accessible than relying on longpress-only for secondary actions
-- [ ] Document pending-state accessibility behavior: `aria-disabled`, busy-label pattern, WHCM disabled styling
-- [ ] Document accessible name requirements for icon-only usage
-- [ ] Document that focus and semantics land on the internal native `<button>`, not the host
-- [ ] Document `aria-haspopup` / `aria-expanded` forwarding for menu-trigger usage
-- [ ] Document `accessible-label` replaces 1st-gen `label`
-- [ ] Document that cross-root ARIA and form-associated `submit` / `reset` are deferred
+- [x] JSDoc on all public props, slots, and CSS custom properties
+- [x] Storybook stories: label-only, icon-only, icon + label, quiet, static colors (white / black), all sizes, disabled, pending
+- [x] Document that `toggles` / `selected` are not part of the 2nd-gen API; link to `swc-toggle-button` / `swc-toggle-button-group`
+- [x] Document that `hold-affordance` is deferred; list consumer options (1st-gen `sp-action-button`, extend `swc-button`, action-group layout)
+- [x] Document that action-group layout (separate `swc-action-button` instances) is much more accessible than relying on longpress-only for secondary actions
+- [x] Document pending-state accessibility behavior: `aria-disabled`, busy-label pattern, WHCM disabled styling
+- [x] Document accessible name requirements for icon-only usage
+- [x] Document that focus and semantics land on the internal native `<button>`, not the host
+- [x] Document `aria-haspopup` / `aria-expanded` forwarding for menu-trigger usage
+- [x] Document `accessible-label` replaces 1st-gen `label`
+- [x] Document that cross-root ARIA and form-associated `submit` / `reset` are deferred
 
 #### Breaking changes
 
-- [ ] Document removal of `href` and link mode
-- [ ] Document removal of `toggles`, `selected`, `aria-pressed` with migration path to `swc-toggle-button`
-- [ ] Document removal of `emphasized`
-- [ ] Document deferral of `hold-affordance` / `longpress` with consumer options
-- [ ] Document `label` → `accessible-label` rename
+- [x] Document removal of `href` and link mode
+- [x] Document removal of `toggles`, `selected`, `aria-pressed` with migration path to `swc-toggle-button`
+- [x] Document removal of `emphasized`
+- [x] Document deferral of `hold-affordance` / `longpress` with consumer options
+- [x] Document `label` → `accessible-label` rename
 
 ### Review
 
@@ -601,7 +601,7 @@ What `swc-action-button` adds on top of `ButtonBase`:
 
 | # | Item | Blocking? | Status | Owner |
 |---|---|---|---|---|
-| Q2 | Consumer migration copy references `swc-toggle-button` / `swc-toggle-button-group`, which are not yet available in 2nd-gen. Documentation must either hold this note or add a "coming soon" caveat. | Yes — for consumer migration docs | Open | Migration planning |
+| Q2 | Consumer migration copy references `swc-toggle-button` / `swc-toggle-button-group`, which are not yet available in 2nd-gen. Documentation must either hold this note or add a "coming soon" caveat. | Yes — for consumer migration docs | Resolved — migration guide and `action-button.mdx` both use explicit "coming soon" caveats | Migration planning |
 
 ### Scope and prerequisites
 
