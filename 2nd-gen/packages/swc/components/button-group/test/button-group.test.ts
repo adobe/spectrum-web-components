@@ -211,6 +211,61 @@ export const DisabledPropagationTest: Story = {
   },
 };
 
+export const IndividuallyDisabledTest: Story = {
+  render: () => html`
+    <swc-button-group>
+      <swc-button>Save</swc-button>
+      <swc-button disabled>Delete</swc-button>
+      <swc-button>Cancel</swc-button>
+    </swc-button-group>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const group = await getComponent<ButtonGroup>(
+      canvasElement,
+      'swc-button-group'
+    );
+    const buttons = canvasElement.querySelectorAll('swc-button');
+    const [save, del, cancel] = Array.from(buttons) as (HTMLElement & {
+      disabled: boolean;
+      updateComplete: Promise<boolean>;
+    })[];
+
+    await step(
+      'individually disabled button stays disabled on slotchange',
+      async () => {
+        expect(save.disabled, 'save is enabled').toBe(false);
+        expect(del.disabled, 'delete is individually disabled').toBe(true);
+        expect(cancel.disabled, 'cancel is enabled').toBe(false);
+      }
+    );
+
+    await step('group disabled forces all children disabled', async () => {
+      group.disabled = true;
+      await group.updateComplete;
+      for (const btn of [save, del, cancel]) {
+        await btn.updateComplete;
+      }
+      expect(save.disabled, 'save forced disabled').toBe(true);
+      expect(del.disabled, 'delete still disabled').toBe(true);
+      expect(cancel.disabled, 'cancel forced disabled').toBe(true);
+    });
+
+    await step(
+      'group re-enabled restores individual disabled state',
+      async () => {
+        group.disabled = false;
+        await group.updateComplete;
+        for (const btn of [save, del, cancel]) {
+          await btn.updateComplete;
+        }
+        expect(save.disabled, 'save restored to enabled').toBe(false);
+        expect(del.disabled, 'delete remains individually disabled').toBe(true);
+        expect(cancel.disabled, 'cancel restored to enabled').toBe(false);
+      }
+    );
+  },
+};
+
 export const AlignReflectionTest: Story = {
   render: () => html`
     <swc-button-group>

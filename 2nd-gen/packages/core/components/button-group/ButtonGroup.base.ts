@@ -81,8 +81,10 @@ export abstract class ButtonGroupBase extends SizedMixin(SpectrumElement, {
   public orientation: ButtonGroupOrientation = 'horizontal';
 
   /**
-   * Whether all buttons in the group are disabled. When set, propagates
-   * the disabled state to each slotted button child.
+   * Whether all buttons in the group are disabled. When `true`, forces
+   * every slotted button child to `disabled`. When `false`, children
+   * retain their individual disabled state — a button slotted with
+   * `disabled` remains disabled even when the group is enabled.
    */
   @property({ type: Boolean, reflect: true })
   public disabled = false;
@@ -99,6 +101,13 @@ export abstract class ButtonGroupBase extends SizedMixin(SpectrumElement, {
 
   @queryAssignedElements({ flatten: true })
   private buttons!: ButtonBase[];
+
+  /**
+   * Tracks buttons that were individually disabled before the group
+   * forced all children disabled. Used to restore their state when
+   * the group becomes enabled again.
+   */
+  private individuallyDisabled = new WeakSet<ButtonBase>();
 
   protected override firstUpdated(changed: PropertyValues<this>): void {
     super.firstUpdated(changed);
@@ -144,10 +153,31 @@ export abstract class ButtonGroupBase extends SizedMixin(SpectrumElement, {
     this.propagateToChildren();
   }
 
+  /**
+   * Propagates size and disabled state to slotted button children.
+   *
+   * Size is always authoritative — the group owns the size of its children.
+   * Disabled uses a one-directional model: when the group is disabled, all
+   * children are forced disabled. When the group is enabled, children retain
+   * their individual disabled state (a button slotted with `disabled` stays
+   * disabled).
+   */
   private propagateToChildren(): void {
     for (const button of this.buttons) {
       button.size = this.size;
-      button.disabled = this.disabled;
+
+      if (this.disabled) {
+        if (button.disabled) {
+          this.individuallyDisabled.add(button);
+        }
+        button.disabled = true;
+      } else {
+        button.disabled = this.individuallyDisabled.has(button);
+      }
+    }
+
+    if (!this.disabled) {
+      this.individuallyDisabled = new WeakSet();
     }
   }
 }
