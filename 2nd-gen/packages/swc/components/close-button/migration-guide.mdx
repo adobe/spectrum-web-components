@@ -1,0 +1,152 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Close Button/Migration guide" />
+
+# Close button migration guide
+
+Replace `<sp-close-button>` with `<swc-close-button>` and update imports, accessible naming, and styling overrides.
+
+## Installation
+
+```bash
+# Remove
+yarn remove @spectrum-web-components/button
+
+# Add
+yarn add @adobe/spectrum-wc
+```
+
+Update your import:
+
+```js
+// Before
+import '@spectrum-web-components/button/sp-close-button.js';
+
+// After
+import '@adobe/spectrum-wc/components/close-button/swc-close-button.js';
+```
+
+> `@adobe/spectrum-wc` is a monolithic package. Importing via subpath registers and loads only that component's bundle.
+
+## What changed
+
+### Renamed
+
+| Area             | Spectrum 1 (`sp-close-button`)        | Spectrum 2 (`swc-close-button`)                                  |
+| ---------------- | ------------------------------------- | ---------------------------------------------------------------- |
+| Tag              | `sp-close-button`                     | `swc-close-button`                                               |
+| Import path      | `@spectrum-web-components/button/...` | `@adobe/spectrum-wc/components/close-button/swc-close-button.js` |
+| Accessible name  | `label` attribute                     | `accessible-label` attribute                                     |
+| CSS custom props | `--mod-closebutton-*`                 | `--swc-close-button-*` (see [Styling](#styling))                 |
+
+### Removed in Spectrum 2
+
+| Removed                         | Replacement                                                                 |
+| ------------------------------- | --------------------------------------------------------------------------- |
+| `variant="white"` / `"black"`   | `static-color="white"` / `"black"`                                          |
+| `label` attribute               | `accessible-label` attribute                                                |
+| `--mod-closebutton-*` overrides | `--swc-close-button-*` equivalents (see [Styling](#styling))                |
+| Host-level button semantics     | Inner `<button type="button">` with delegated focus — update DOM assertions |
+
+## Update your code
+
+### 1. Rename the tag and accessible name
+
+```html
+<!-- Before -->
+<sp-close-button label="Close"></sp-close-button>
+
+<!-- After -->
+<swc-close-button accessible-label="Close"></swc-close-button>
+```
+
+Slotted text still works when `accessible-label` is omitted:
+
+```html
+<swc-close-button>Close</swc-close-button>
+```
+
+### 2. Replace `variant` with `static-color`
+
+```html
+<!-- Before -->
+<sp-close-button variant="white" label="Close"></sp-close-button>
+
+<!-- After -->
+<swc-close-button
+  static-color="white"
+  accessible-label="Close"
+></swc-close-button>
+```
+
+### 3. Default `size` reflection
+
+If you omit `size`, `<swc-close-button>` reflects **`size="m"`** on the host. Spectrum 1 did not reflect a default attribute, though the visual default was medium. Update DOM selectors or snapshots that assumed no `size` attribute.
+
+## Accessibility
+
+`<swc-close-button>` renders a native inner `<button>` with delegated focus. Keyboard and screen reader behavior matches a standard dismiss control when a discernible name is provided via `accessible-label` or default slot text.
+
+Update tests that asserted host-level button semantics or shadow DOM structure from Spectrum 1.
+
+## Styling
+
+Spectrum 2 exposes reviewed `--swc-close-button-*` custom properties on `<swc-close-button>`.
+
+<div
+  style={{
+    borderLeft: '4px solid #dba842',
+    background: 'rgba(219, 168, 66, 0.12)',
+    padding: '12px 16px',
+    margin: '16px 0',
+    borderRadius: '4px',
+  }}
+>
+  <strong>⚠️ Breaking change.</strong> Spectrum 1{' '}
+  <code>{'--mod-closebutton-*'}</code> properties <strong>do not apply</strong>{' '}
+  to <code>{'<swc-close-button>'}</code>. Remove or replace every{' '}
+  <code>{'--mod-closebutton-*'}</code> override with the{' '}
+  <code>{'--swc-close-button-*'}</code> equivalents below.
+</div>
+
+### Public custom properties
+
+| Custom property                               | Description                               |
+| --------------------------------------------- | ----------------------------------------- |
+| `--swc-close-button-size`                     | Inline and block size of the close button |
+| `--swc-close-button-icon-size`                | Size of the cross icon                    |
+| `--swc-close-button-border-radius`            | Corner radius                             |
+| `--swc-close-button-icon-color-default`       | Cross icon color in the default state     |
+| `--swc-close-button-icon-color-hover`         | Cross icon color when hovered             |
+| `--swc-close-button-icon-color-down`          | Cross icon color when pressed             |
+| `--swc-close-button-icon-color-focus`         | Cross icon color when keyboard focused    |
+| `--swc-close-button-icon-color-disabled`      | Cross icon color when disabled            |
+| `--swc-close-button-background-color-default` | Background color in the default state     |
+| `--swc-close-button-background-color-hover`   | Background color when hovered             |
+| `--swc-close-button-background-color-down`    | Background color when pressed             |
+| `--swc-close-button-background-color-focus`   | Background color when keyboard focused    |
+| `--swc-close-button-focus-indicator-color`    | Focus ring color                          |
+
+<div
+  style={{
+    borderLeft: '4px solid #e34850',
+    background: 'rgba(227, 72, 80, 0.10)',
+    padding: '12px 16px',
+    margin: '16px 0',
+    borderRadius: '4px',
+  }}
+>
+  <strong>🚫 Do not target internals.</strong> Internal classes,{' '}
+  <code>{'--_swc-close-button-*'}</code> private properties, and shadow DOM are{' '}
+  <strong>not public API</strong>. Styling applied to them will break without
+  warning on minor releases.
+</div>
+
+## Checklist
+
+- [ ] Update imports
+- [ ] Rename all `<sp-close-button>` to `<swc-close-button>`
+- [ ] Rename `label` to `accessible-label`
+- [ ] Replace `variant="white|black"` with `static-color="white|black"`
+- [ ] Replace `--mod-closebutton-*` overrides with `--swc-close-button-*` equivalents
+- [ ] Update tests for inner `<button>` semantics and default `size="m"` reflection

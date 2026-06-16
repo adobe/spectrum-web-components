@@ -11,7 +11,6 @@
  */
 
 import { CSSResultArray, html, TemplateResult } from 'lit';
-import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
 import {
@@ -61,6 +60,20 @@ const crossIconBySize: Record<ButtonSize, () => TemplateResult> = {
  * ```html
  * <swc-close-button static-color="white" accessible-label="Close"></swc-close-button>
  * ```
+ *
+ * @cssprop --swc-close-button-size - Inline and block size of the close button. Defaults to the medium component height token.
+ * @cssprop --swc-close-button-icon-size - Size of the cross icon. Defaults to the medium cross icon token.
+ * @cssprop --swc-close-button-border-radius - Corner radius. Defaults to the full corner radius token.
+ * @cssprop --swc-close-button-icon-color-default - Cross icon color in the default state.
+ * @cssprop --swc-close-button-icon-color-hover - Cross icon color when hovered.
+ * @cssprop --swc-close-button-icon-color-down - Cross icon color when pressed.
+ * @cssprop --swc-close-button-icon-color-focus - Cross icon color when keyboard focused.
+ * @cssprop --swc-close-button-icon-color-disabled - Cross icon color when disabled.
+ * @cssprop --swc-close-button-background-color-default - Background color in the default state.
+ * @cssprop --swc-close-button-background-color-hover - Background color when hovered.
+ * @cssprop --swc-close-button-background-color-down - Background color when pressed.
+ * @cssprop --swc-close-button-background-color-focus - Background color when keyboard focused.
+ * @cssprop --swc-close-button-focus-indicator-color - Focus ring color. Defaults to the focus indicator color token.
  */
 export class CloseButton extends ButtonBase {
   /**
@@ -86,11 +99,7 @@ export class CloseButton extends ButtonBase {
 
     return html`
       <button
-        class=${classMap({
-          'swc-CloseButton': true,
-          'swc-CloseButton--staticWhite': this.staticColor === 'white',
-          'swc-CloseButton--staticBlack': this.staticColor === 'black',
-        })}
+        class="swc-CloseButton"
         type="button"
         @click=${this.handleActivationClick}
         ?disabled=${this.disabled}
