@@ -37,7 +37,7 @@ test.describe('Action Button - ARIA Snapshots', () => {
     `);
   });
 
-  test('should handle anatomy — label-only and icon+label', async ({
+  test('should handle anatomy — label-only, icon+label, and icon-only', async ({
     page,
   }) => {
     const root = await gotoStory(
@@ -48,6 +48,7 @@ test.describe('Action Button - ARIA Snapshots', () => {
     await expect(root).toMatchAriaSnapshot(`
       - button "Label only"
       - button "Icon and label"
+      - button "Edit"
     `);
   });
 

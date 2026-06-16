@@ -105,9 +105,7 @@ export function ObserveSlotText<T extends Constructor<ReactiveElement>>(
                 : !node.hasAttribute('slot')
               : false;
           }
-          return node.nodeType === Node.TEXT_NODE && node.textContent
-            ? node.textContent.trim()
-            : false;
+          return node.textContent ? node.textContent.trim() : false;
         });
         this.slotHasContent = textNodes.length > 0;
       }

@@ -582,7 +582,7 @@ What `swc-action-button` adds on top of `ButtonBase`:
 
 ### Review
 
-- [ ] `yarn lint:2nd-gen` passes (ESLint, Stylelint, Prettier)
+- [x] `yarn lint:2nd-gen` passes (ESLint, Stylelint, Prettier)
 - [x] Status table in [workstream doc](../../02_workstreams/02_2nd-gen-component-migration/01_status.md) updated
 - [x] PR created with description referencing Epic SWC-2039 (see #6339)
 - [ ] Peer engineer sign-off

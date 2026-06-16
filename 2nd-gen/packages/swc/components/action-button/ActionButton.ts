@@ -10,7 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
-import { CSSResultArray, html, nothing, TemplateResult } from 'lit';
+import { CSSResultArray, html, TemplateResult } from 'lit';
 import { property, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
@@ -21,6 +21,8 @@ import {
   type ActionButtonStaticColor,
 } from '@spectrum-web-components/core/components/action-button';
 import { ButtonBase } from '@spectrum-web-components/core/components/button';
+
+import { renderPendingSpinner } from '../button/pending-spinner.js';
 
 import pendingSpinnerStyles from '../../stylesheets/_lit-styles/pending-spinner.css';
 import styles from './action-button.css';
@@ -79,32 +81,9 @@ export class ActionButton extends ButtonBase {
   static override readonly VALID_SIZES: readonly ActionButtonSize[] =
     ACTION_BUTTON_VALID_SIZES;
 
-  // ───────────────────
-  //     API ADDITIONS
-  // ───────────────────
-
-  /**
-   * Applies the quiet (low-emphasis) visual treatment.
-   */
-  @property({ type: Boolean, reflect: true })
-  public quiet: boolean = false;
-
-  /**
-   * Static color treatment for display over colored or image backgrounds.
-   */
-  @property({ type: String, reflect: true, attribute: 'static-color' })
-  public staticColor?: ActionButtonStaticColor;
-
-  // ──────────────────────────────
-  //     RENDERING & STYLING
-  // ──────────────────────────────
-
-  public static override get styles(): CSSResultArray {
-    return [pendingSpinnerStyles, styles];
-  }
-
-  // Observe aria-haspopup / aria-expanded without @property so they don't
-  // conflict with ARIAMixin types on HTMLElement or appear in the public CEM.
+  // aria-haspopup and aria-expanded are observed without @property to avoid
+  // conflicting with ARIAMixin types on HTMLElement and appearing in the CEM.
+  /** @internal */
   static override get observedAttributes(): string[] {
     return [...super.observedAttributes, 'aria-haspopup', 'aria-expanded'];
   }
@@ -136,6 +115,22 @@ export class ActionButton extends ButtonBase {
     super.attributeChangedCallback(name, old, value);
   }
 
+  // ───────────────────
+  //     API ADDITIONS
+  // ───────────────────
+
+  /**
+   * Applies the quiet (low-emphasis) visual treatment.
+   */
+  @property({ type: Boolean, reflect: true })
+  public quiet: boolean = false;
+
+  /**
+   * Static color treatment for display over colored or image backgrounds.
+   */
+  @property({ type: String, reflect: true, attribute: 'static-color' })
+  public staticColor?: ActionButtonStaticColor;
+
   // Forwarded to the inner <button> for menu-trigger patterns; stripped from
   // the host after reading to avoid duplicate ARIA state on both elements.
   @state()
@@ -148,6 +143,14 @@ export class ActionButton extends ButtonBase {
   // second callback with value=null; the guard prevents that from clearing the
   // state we just set.
   private _ariaForwardingInProgress = false;
+
+  // ──────────────────────────────
+  //     RENDERING & STYLING
+  // ──────────────────────────────
+
+  public static override get styles(): CSSResultArray {
+    return [pendingSpinnerStyles, styles];
+  }
 
   protected override render(): TemplateResult {
     return html`
@@ -174,38 +177,7 @@ export class ActionButton extends ButtonBase {
         <span class="swc-ActionButton-label">
           <slot></slot>
         </span>
-        ${this.pending
-          ? html`
-              <svg
-                class=${classMap({
-                  'swc-PendingSpinner': true,
-                  'swc-PendingSpinner--active': this.pendingActive,
-                })}
-                width="100%"
-                height="100%"
-                fill="none"
-                aria-hidden="true"
-                focusable="false"
-              >
-                <circle
-                  class="swc-PendingSpinner-track"
-                  cx="50%"
-                  cy="50%"
-                  r="calc(50% - 1px)"
-                />
-                <circle
-                  class="swc-PendingSpinner-fill"
-                  cx="50%"
-                  cy="50%"
-                  r="calc(50% - 1px)"
-                  pathLength="100"
-                  stroke-dasharray="100 200"
-                  stroke-dashoffset="75"
-                  stroke-linecap="round"
-                />
-              </svg>
-            `
-          : nothing}
+        ${renderPendingSpinner(this.pending, this.pendingActive)}
       </button>
     `;
   }
