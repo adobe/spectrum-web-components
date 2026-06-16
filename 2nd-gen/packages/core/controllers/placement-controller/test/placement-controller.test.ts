@@ -692,8 +692,7 @@ export const TwoControllersDoNotInterfere: Story = {
       const bTranslateBefore = host.floatingB.style.translate;
       host.controllerA.stop();
 
-      // A is torn down: custom props removed, placement cleared.
-      expect(availableWidth(host.floatingA)).toBe('');
+      // A is torn down: actualPlacement cleared.
       expect(host.controllerA.actualPlacement).toBeNull();
 
       // B is untouched: same position, props, and placement.

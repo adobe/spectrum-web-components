@@ -271,7 +271,7 @@ describe('Tooltip', () => {
       consoleWarnStub.restore();
     });
 
-    it('warns when incorrectly using `self-managed`', async () => {
+    it('warns when using the deprecated `self-managed` attribute', async () => {
       const el = await fixture<Tooltip>(html`
         <sp-tooltip variant="negative" self-managed>Help text.</sp-tooltip>
       `);
@@ -281,8 +281,8 @@ describe('Tooltip', () => {
       expect(consoleWarnStub.called).to.be.true;
       const spyCall = consoleWarnStub.getCall(0);
       expect(
-        (spyCall.args[0] as string).includes('Self-managed'),
-        'confirm dev warning message includes `Self-managed`'
+        (spyCall.args[0] as string).includes('self-managed'),
+        'confirm dev warning message includes `self-managed`'
       ).to.be.true;
       expect(
         spyCall.args[spyCall.args.length - 1],
@@ -291,7 +291,7 @@ describe('Tooltip', () => {
         data: {
           localName: 'sp-tooltip',
           type: 'api',
-          level: 'high',
+          level: 'deprecation',
         },
       });
     });
