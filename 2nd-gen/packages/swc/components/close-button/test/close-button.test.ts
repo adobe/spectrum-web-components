@@ -371,8 +371,8 @@ export const StaticColorsStoryTest: Story = {
       const closeButtons = canvasElement.querySelectorAll('swc-close-button');
       expect(
         closeButtons.length,
-        'default and static color examples render'
-      ).toBe(3);
+        'static color examples render'
+      ).toBe(2);
     });
   },
 };

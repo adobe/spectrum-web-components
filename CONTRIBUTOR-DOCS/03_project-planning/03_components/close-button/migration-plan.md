@@ -55,7 +55,7 @@
 
 ## TL;DR
 
-- `swc-close-button` should ship as a dedicated 2nd-gen component in both `core` and `swc` layers, not as an extension point buried inside `swc-button`.
+- `swc-close-button` should ship as a dedicated 2nd-gen SWC component extending `ButtonBase`, not as an extension point buried inside `swc-button`.
 - API should align with modern button conventions: `accessible-label` (consumer-facing), `static-color`, and `size` (`s|m|l|xl`).
 - 2nd-gen does not ship the 1st-gen `variant="white|black"` alias; use `static-color` only. Deprecation of `variant` is a 1st-gen (`sp-close-button`) concern.
 - Styling source of truth is Spectrum CSS `spectrum-two` `components/closebutton`; 2nd-gen should not re-expose the 1st-gen `--mod-closebutton-*` surface.
@@ -63,7 +63,7 @@
 
 ### Most blocking open questions
 
-- [Q1](#architecture-and-behavior): Confirm whether `icon-size` should be a public API in SWC or kept internal.
+None at this time. [Q1](#architecture-and-behavior) (icon scale) is resolved: no `icon-size` attribute; scale follows `size`, with optional `--swc-close-button-icon-size` CSS override only.
 
 ---
 
@@ -129,7 +129,7 @@ No close-button-specific custom events.
 `close-button` should follow this order:
 
 1. Finish this plan and rendering analysis.
-2. Scaffold 2nd-gen `core` and `swc` close-button files.
+2. Scaffold `swc-close-button` (reuse `ButtonBase` from core).
 3. Land API + accessibility behavior before visual parity.
 4. Land S2 styling and then tests/docs.
 
@@ -169,7 +169,7 @@ Prerequisite dependency:
 
 | # | What is added | Notes |
 | --- | --- | --- |
-| A1 | Optional icon-scale API (`icon-size`) | Add only if design and implementation both require it. |
+| A1 | Optional icon-scale API (`icon-size`) | Resolved: no attribute; icon scale follows `size`. Consumers may override via `--swc-close-button-icon-size` only. |
 | A2 | Expanded public custom property set | Keep minimal initially; expand only for proven consumer needs. |
 
 ---
@@ -263,7 +263,7 @@ Prerequisite dependency:
 
 | # | Item | Blocking? | Status | Owner |
 | --- | --- | --- | --- | --- |
-| Q1 | Should `icon-size` be exposed in public API, or remain internal visual implementation detail? | Yes | Open | Design + implementation |
+| Q1 | Should `icon-size` be exposed in public API, or remain internal visual implementation detail? | No | Resolved — no `icon-size` attribute; scale follows `size` with optional `--swc-close-button-icon-size` CSS override | Design + implementation |
 
 ### Scope and prerequisites
 

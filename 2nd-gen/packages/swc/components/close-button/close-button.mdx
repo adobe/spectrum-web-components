@@ -7,27 +7,91 @@ import * as CloseButtonStories from './stories/close-button.stories';
 
 <DocsHeader />
 
+## Anatomy
+
+A close button consists of:
+
+1. **Button** — native `<button type="button">` with delegated focus; handles pointer and keyboard activation
+2. **Icon** — cross icon (`aria-hidden="true"`); size follows the `size` attribute
+3. **Label** — visually hidden default slot text used for the accessible name when `accessible-label` is omitted
+
+#### Slots
+
+- **Default slot** — accessible text label rendered visually hidden next to the cross icon
+
+#### Properties
+
+- **`accessible-label`** — accessible name forwarded to the inner button as `aria-label` when set
+- **`size`** — visual size of the hit target and icon scale (`s`, `m`, `l`, `xl`)
+- **`static-color`** — static color treatment for display over colored or image backgrounds (`white`, `black`)
+
+<Canvas of={CloseButtonStories.Anatomy} />
+
 ## Options
 
 ### Sizes
 
-Close buttons use the same size scale as `swc-button`: `s`, `m`, `l`, and `xl`. Medium is the default.
+Close buttons come in four sizes to fit various contexts:
+
+- **Small (`s`)** — compact chrome such as dense toolbars or inline banners
+- **Medium (`m`)** — default size for dialogs, toasts, and most dismiss affordances
+- **Large (`l`)** — larger hit target when space allows
+- **Extra large (`xl`)** — maximum visibility for prominent dismiss controls
+
+> **Migration note:** `<swc-close-button>` reflects **`size="m"`** on the host when omitted. Spectrum 1 did not reflect a default `size` attribute, though the visual default was still medium.
 
 <Canvas of={CloseButtonStories.Sizes} />
 
 ### Static colors
 
-Use `static-color="white"` or `static-color="black"` when the dismiss control sits on a colored or image background.
+Use the `static-color` attribute when displaying over images or colored backgrounds:
+
+- **white** — use on dark or colored backgrounds for better contrast
+- **black** — use on light backgrounds for better contrast
+
+The canvas below uses the Storybook static-color demo layout: **white** on a dark gradient panel and **black** on a light gradient panel.
+
+> **Migration note:** replace legacy `variant="white"` or `variant="black"` with `static-color`. The `variant` attribute is not supported on `<swc-close-button>`.
 
 <Canvas of={CloseButtonStories.StaticColors} />
 
 ## States
 
+Close buttons support enabled and disabled states. Hover, active, and keyboard focus styles apply only when the control is not disabled.
+
 <Canvas of={CloseButtonStories.States} />
 
 ## Accessibility
 
-Every close button needs a discernible name via `accessible-label` or default slot text. The cross icon is decorative.
+### Features
+
+The `<swc-close-button>` element implements several accessibility features:
+
+#### Keyboard navigation
+
+- **Tab** — moves focus to the inner dismiss button via delegated focus
+- **Enter** or **Space** — activates the dismiss action
+- **Focus indicator** — visible `:focus-visible` ring on keyboard focus
+
+#### ARIA implementation
+
+1. **Native button** — renders a real `<button type="button">` inside the shadow root
+2. **Accessible name** — resolved from `accessible-label` or visually hidden default slot text, forwarded as `aria-label` on the inner button
+3. **Decorative icon** — cross icon is marked `aria-hidden="true"` so screen readers announce the button name only
+4. **Disabled state** — `disabled` removes activation and applies disabled visuals on the inner button
+
+#### Visual accessibility
+
+- Hit target size scales with the `size` attribute
+- Static color variants maintain contrast on colored backgrounds
+- Transparent border and outline focus treatment support high contrast mode without custom forced-color overrides
+
+### Best practices
+
+- Always provide a descriptive accessible name such as "Close" or "Close dialog" — not a clear/reset verb
+- Prefer `accessible-label` for icon-only dismiss controls in dialog chrome
+- Use `static-color="white"` or `static-color="black"` when the default neutral icon lacks contrast on the background
+- Test keyboard focus order when placing close buttons in dialog headers or banner corners
 
 <Canvas of={CloseButtonStories.Accessibility} />
 
