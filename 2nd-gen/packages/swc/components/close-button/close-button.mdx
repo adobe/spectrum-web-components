@@ -1,4 +1,4 @@
-import { Meta } from '@storybook/addon-docs/blocks';
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
 import { DocsFooter, DocsHeader } from '../../.storybook/blocks';
 
 import * as CloseButtonStories from './stories/close-button.stories';
@@ -6,5 +6,29 @@ import * as CloseButtonStories from './stories/close-button.stories';
 <Meta of={CloseButtonStories} />
 
 <DocsHeader />
+
+## Options
+
+### Sizes
+
+Close buttons use the same size scale as `swc-button`: `s`, `m`, `l`, and `xl`. Medium is the default.
+
+<Canvas of={CloseButtonStories.Sizes} />
+
+### Static colors
+
+Use `static-color="white"` or `static-color="black"` when the dismiss control sits on a colored or image background.
+
+<Canvas of={CloseButtonStories.StaticColors} />
+
+## States
+
+<Canvas of={CloseButtonStories.States} />
+
+## Accessibility
+
+Every close button needs a discernible name via `accessible-label` or default slot text. The cross icon is decorative.
+
+<Canvas of={CloseButtonStories.Accessibility} />
 
 <DocsFooter />
