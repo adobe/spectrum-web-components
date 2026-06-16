@@ -55,7 +55,7 @@ Then use the `rendering-and-styling-migration-analysis.md` file for the componen
 - **If it exists**, confirm it renders the component in Storybook with no console errors before touching CSS.
 - **If it does not exist**, create it now using [`assets/stories-template.md`](assets/stories-template.md) before starting CSS work. Follow the template's "Decisions to make" section and its checklist.
 
-**Phase 5 stories scope** — the stories file at this phase should contain: Playground, Overview, Anatomy, Options (one story per constant array in the types file), States, and any Behaviors that exercise CSS-visible properties. Do **not** add JSDoc prose to stories and do **not** write the Accessibility story body — these are deferred to Phase 7. Leave a `// TODO` comment referencing that phase.
+**Phase 5 stories scope** — the stories file at this phase should contain: Playground, Overview, Anatomy, Options (one story per constant array in the types file), States, and any Behaviors that exercise CSS-visible properties. Do **not** add story-level JSDoc and do **not** write the Accessibility story body — these are deferred to Phase 7, which authors the per-component MDX file (`<component>.mdx`) as the docs surface. Leave a `// TODO` comment referencing Phase 7.
 
 **Step 3 — Align render template class names with CSS selectors.** Before writing CSS, read the component's `render()` method and note every class name emitted. The CSS you write must use those exact names. Mismatches cause styles to silently not apply — there is no error.
 
@@ -65,6 +65,19 @@ Common case: confirming that subcomponent class names follow the single-hyphen s
 - `render()` class name → does the CSS have a matching selector?
 
 If a rename is needed, make the template change first, confirm the component still renders correctly in Storybook, then write the CSS.
+
+**Step 3.5 — Check for shared CSS.** If the component shares structural CSS with one or more other components (for example, a shared bar/track layout), check `2nd-gen/packages/swc/stylesheets/_lit-styles/` for an existing shared fragment before duplicating rules. Files in `_lit-styles/` are Lit CSS fragments composed into component `static styles` arrays; they reach inside shadow roots and are never emitted as standalone CSS. To use one, import it as a JS module in the component's TypeScript file — do **not** use a CSS `@import` statement:
+
+```ts
+import sharedStyles from '../../stylesheets/_lit-styles/[name].css';
+import styles from './[component].css';
+
+public static override get styles(): CSSResultArray {
+  return [sharedStyles, styles];
+}
+```
+
+If no fragment exists yet but the shared pattern is real, create a new file in `_lit-styles/` and wire it up in all consuming components. Do not put `_lit-styles/` files in `core/` — they depend on `--swc-*` design tokens, which live in the `swc/` layer. See [Non-component stylesheets](../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/07_stylesheets.md#adding-a-shared-lit-css-fragment) for full guidance.
 
 **Step 4 — Execute the phase.** Follow **[Phase 5: Styling](../../../CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md#phase-5-styling)** in the washing machine workflow doc — it covers what to do, what to check, common problems, and the quality gate for this phase.
 

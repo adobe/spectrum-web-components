@@ -1,0 +1,27 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import { DocsFooter, DocsHeader } from '../../../.storybook/blocks';
+
+import * as ConversationThreadStories from './stories/conversation-thread.stories';
+
+<Meta of={ConversationThreadStories} />
+
+<DocsHeader />
+
+## Accessibility
+
+### Keyboard behavior
+
+- Tab enters the thread on the active turn.
+- Shift+Tab from controls after the thread returns to the active turn.
+- ArrowUp and ArrowDown move between turns.
+- Home and End jump to first and last turn.
+
+### Focus behavior
+
+- The thread applies roving `tabindex` across slotted `<swc-conversation-turn>` children.
+- Exactly one turn is tabbable at a time.
+- A newly appended turn becomes the active roving target.
+
+<Canvas of={ConversationThreadStories.Accessibility} />
+
+<DocsFooter />

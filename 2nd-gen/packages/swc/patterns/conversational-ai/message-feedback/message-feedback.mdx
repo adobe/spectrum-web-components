@@ -1,0 +1,71 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import { DocsFooter, DocsHeader } from '../../../.storybook/blocks';
+
+import * as MessageFeedbackStories from './stories/message-feedback.stories';
+
+<Meta of={MessageFeedbackStories} />
+
+<DocsHeader />
+
+## Anatomy
+
+A message feedback control consists of two quiet toggle buttons:
+
+1. **Positive**: "Positive response"
+2. **Negative**: "Negative response"
+
+The selected button renders with a dark filled background.
+
+<Canvas of={MessageFeedbackStories.Anatomy} />
+
+## Options
+
+### Status
+
+The `status` attribute controls which button appears selected:
+
+- **Unset**: neither option selected (default)
+- **`positive`**: positive feedback selected
+- **`negative`**: negative feedback selected
+
+<Canvas of={MessageFeedbackStories.Status} />
+
+## Behaviors
+
+### Handling events
+
+Event handlers can be registered on `<swc-message-feedback>` (or on an ancestor, because **`swc-message-feedback-change`** **bubbles** and is **`composed`**).
+
+Each click dispatches **`swc-message-feedback-change`** with **`event.detail.status`** set to **`'positive'`**, **`'negative'`**, or **`undefined`** when the active option is toggled off. The host does not apply that value by itself: keep **`status`** controlled from your layer — set **`feedback.status`** (or the `status` attribute) when you handle the event.
+
+```js
+feedback.addEventListener('swc-message-feedback-change', (event) => {
+  const { status } = event.detail;
+  feedback.status = status;
+});
+```
+
+<Canvas of={MessageFeedbackStories.HandlingEvents} />
+
+## Accessibility
+
+### Features
+
+The `<swc-message-feedback>` element implements the following accessibility features:
+
+#### Toggle buttons
+
+- The group uses `role="group"` with `aria-label="Response feedback"`
+- Each option is a native `<button>` with `aria-pressed` to communicate state
+- Each option carries a descriptive label: "Positive response" / "Negative response"
+
+#### Keyboard
+
+- **Tab** moves focus into the group on a single tab stop (**roving `tabindex`** on the two controls)
+- **Arrow Left** / **Arrow Right** move focus between options
+- **Home** / **End** move focus to the first or last option
+- **Space** or **Enter** on a focused option dispatches **`swc-message-feedback-change`**
+
+<Canvas of={MessageFeedbackStories.Accessibility} />
+
+<DocsFooter />

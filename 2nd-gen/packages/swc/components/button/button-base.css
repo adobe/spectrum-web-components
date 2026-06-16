@@ -53,3 +53,9 @@
   border-color: var(--swc-button-border-color-disabled, transparent);
   transform: none;
 }
+
+/* Slotted icons stay in the light DOM; without this, clicks hit the slotted
+   node and bubble on the host instead of the disabled inner <button>. */
+:host([disabled]) slot[name="icon"]::slotted(*) {
+  pointer-events: none;
+}
