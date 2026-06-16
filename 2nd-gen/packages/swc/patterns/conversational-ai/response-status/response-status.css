@@ -276,9 +276,8 @@
   padding-inline: token("spacing-100");
 }
 
-.swc-ResponseStatus-row--stopped .swc-ResponseStatus-dot {
-  opacity: 1;
-  animation: none;
+.swc-ResponseStatus-row--stopped .swc-ResponseStatus-dots {
+  display: none;
 }
 
 .swc-ResponseStatus--agentic .swc-ResponseStatus-dots {
