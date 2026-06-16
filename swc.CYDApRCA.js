@@ -28,4 +28,4 @@ import{d as t}from"./swc.JlveB6nj.js";import{D as o}from"./swc.kLAuqcRl.js";impo
           ${t}
         </sp-overlay>
       `):t}connectedCallback(){super.connectedCallback(),this.updateComplete.then(()=>{if(!this.selfManaged)return;const t=this.overlayElement;if(t){const o=this.triggerElement;t.triggerElement=o}})}}u([n({type:Boolean})],g.prototype,"delayed",2),u([n({type:Boolean})],g.prototype,"disabled",2),u([n({type:Boolean,attribute:"self-managed"})],g.prototype,"selfManaged",2),u([n({type:Number})],g.prototype,"offset",2),u([n({type:Boolean,reflect:!0})],g.prototype,"open",2),u([l("sp-overlay")],g.prototype,"overlayElement",2),u([n({reflect:!0})],g.prototype,"placement",2),u([l("#tip")],g.prototype,"tipElement",2),u([n({type:Number})],g.prototype,"tipPadding",2),u([n({type:String})],g.prototype,"variant",1),t("sp-tooltip",g);
-//# sourceMappingURL=swc.DstPUyQ0.js.map
+//# sourceMappingURL=swc.CgXp8Yn5.js.map
