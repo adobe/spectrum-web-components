@@ -40,6 +40,9 @@ import {
  *
  * @attribute {ElementSize} size - The size of the button.
  * @attribute {'white' | 'black'} static-color - Static color treatment for display over colored or image backgrounds.
+ *
+ * @todo We currently have 3 levels of mixins on this class, but the mixin
+ * composition guide recommends a maximum of 2. Explore reducing after milestone 2.
  */
 export abstract class ButtonBase extends SizedMixin(
   ObserveSlotText(ObserveSlotPresence(SpectrumElement, '[slot="icon"]'), ''),
