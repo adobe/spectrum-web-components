@@ -88,13 +88,12 @@ The `<swc-action-button>` element implements several accessibility features:
 2. **Focus delegation**: `delegatesFocus: true` routes Tab focus and programmatic focus to the internal `<button>`, keeping the host out of the tab order.
 3. **Keyboard activation**: Enter and Space both activate the button via native browser behavior; no custom keyboard handling is added.
 4. **Pending state**: when `pending` is true, `aria-disabled="true"` is set on the internal `<button>` and the accessible name becomes `"[label], busy"`. The button remains focusable so users can discover it is unavailable. Provide `pending-label` to override the derived busy name.
-5. **Icon-only labeling**: when there is no visible text, the `accessible-label` attribute is forwarded as `aria-label` on the internal `<button>`. A development warning is emitted when an icon-only button is missing `accessible-label`.
+5. **Icon-only labeling**: when there is no visible text, the `accessible-label` attribute is forwarded as `aria-label` on the internal `<button>`. A development warning is emitted when an icon-only button is missing `accessible-label`. Setting `aria-label` directly on the host has no effect on the button's accessible name; the host element has no interactive role and is never focused by assistive technologies.
 6. **Menu trigger forwarding**: `aria-haspopup` and `aria-expanded` set on the host are automatically forwarded to the internal `<button>` and stripped from the host to prevent duplicate ARIA state on both elements.
 
 ### Best practices
 
 - Always provide `accessible-label` for icon-only buttons so screen readers can announce the button's purpose.
-- Prefer `accessible-label` over placing `aria-label` directly on the `<swc-action-button>` host; it is intentionally forwarded to the internal native control.
 - Do not set both `pending` and `disabled` simultaneously. Use `pending` to keep the button focusable while unavailable, or `disabled` to remove it from the tab order entirely.
 - For navigation, use a native `<a>` element with [global element styles](/docs/guides-customization-global-element-styling--docs) rather than `<swc-action-button>`. Buttons activate on both Enter and Space; links activate on Enter only.
 - Use `static-color="black"` on light backgrounds and `static-color="white"` on dark backgrounds to maintain sufficient contrast. Avoid placing static color buttons over busy images with high contrast variance.
