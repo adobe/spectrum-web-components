@@ -118,7 +118,7 @@ test.describe('Action Button - ARIA Snapshots', () => {
     );
     await expect(root).toMatchAriaSnapshot(`
       - button "Format"
-      - button "Bold"
+      - button "Edit"
       - button "Upload in-progress" [disabled]
     `);
   });
