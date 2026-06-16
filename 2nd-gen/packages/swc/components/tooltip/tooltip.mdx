@@ -31,7 +31,7 @@ The `placement` attribute sets the preferred position of the tooltip relative to
 
 The `start` and `end` values are RTL-aware: `start` maps to the left side in LTR and to the right in RTL; `end` maps to the right in LTR and to the left in RTL.
 
-`PlacementController` handles pixel positioning automatically. When there is insufficient space on the requested side, the tooltip flips to the opposite side and the `placement` attribute reflects the computed side. The original requested value is preserved internally, so if space opens up the tooltip returns to the originally requested position.
+`PlacementController` handles pixel positioning automatically. When there is insufficient space on the requested side, the tooltip flips to the opposite side. The `placement` attribute always holds your requested value — it is never rewritten by the flip — so if space opens up the tooltip returns to the originally requested position. The resolved physical side is tracked internally and is not part of the public API, but is reflected to the `actual-placement` attribute.
 
 Because `<swc-tooltip>` uses `popover="auto"`, the tooltip renders in the browser's top layer, outside the normal document flow. The flip boundary is therefore the **viewport**, not the tooltip's scroll container ancestor. Flip is triggered by proximity to the viewport edge, not to any overflow container boundary.
 
