@@ -15,13 +15,13 @@ For bare, classless `<a href>` elements outside typography wrappers, import `@ad
 
 ### Standalone
 
-Explicit-context links use `.swc-Link` with `.swc-Link--standalone` for anchors outside prose wrappers.
+Explicit-context links use `.swc-Link` with `.swc-Link--standalone` for anchors outside prose wrappers. `.swc-Link` is the modifier used to apply the primary variant (default link styling to anchors.
 
 <Canvas of={LinkStories.Standalone} />
 
 ### Secondary
 
-The `.swc-Link--secondary` modifier applies a secondary color treatment.
+The `.swc-Link--secondary` variant applies a secondary color treatment.
 
 <Canvas of={LinkStories.Secondary} />
 
@@ -86,5 +86,41 @@ Native links provide accessible behavior without a custom element wrapper:
 - Import `@adobe/spectrum-wc/typography.css` for prose and link-list defaults; add `@adobe/spectrum-wc/link.css` when explicit modifiers are needed; add `@adobe/spectrum-wc/global-link.css` for application-wide styling of bare, classless anchors
 
 <Canvas of={LinkStories.Accessibility} />
+
+## API
+
+Apply classes from `@adobe/spectrum-wc/link.css` on native `<a href>` elements. Default appearance inside prose and link lists does not require these classes; use [Typography](/docs/components-typography--docs) wrappers instead.
+
+### CSS classes (`link.css`)
+
+| Class                   | Description                                                                                                                    |
+| ----------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| `swc-Link`              | Base link presentation for explicit-context anchors. Pair with modifiers as needed.                                            |
+| `swc-Link--standalone`  | Standalone link typography (medium weight). Use on anchors outside prose wrappers.                                             |
+| `swc-Link--secondary`   | Secondary (neutral) color treatment.                                                                                           |
+| `swc-Link--quiet`       | Removes the default underline until hover. Must be used with `swc-Link--standalone` (section-scoped patterns such as footers). |
+| `swc-Link--staticWhite` | Static white link color for dark or colored backgrounds.                                                                       |
+| `swc-Link--staticBlack` | Static black link color for light backgrounds.                                                                                 |
+
+### Typography wrappers (default link styling)
+
+Import `@adobe/spectrum-wc/typography.css`. Child `<a href>` elements receive default link styles without `swc-Link` classes.
+
+| Class                   | Description                                                                        |
+| ----------------------- | ---------------------------------------------------------------------------------- |
+| `swc-Typography--prose` | Default link appearance inside running text and semantic prose elements.           |
+| `swc-Typography--links` | Default link appearance for anchors in link lists (footers, sidebars, navigation). |
+
+### CSS custom properties
+
+Modifiers set these `--swc-link-*` properties on the anchor. Override them for custom theming.
+
+| Property                           | Description                      |
+| ---------------------------------- | -------------------------------- |
+| `--swc-link-text-color-default`    | Default link text color          |
+| `--swc-link-text-color-hover`      | Link text color on hover         |
+| `--swc-link-text-color-down`       | Link text color when active      |
+| `--swc-link-text-color-focus`      | Link text color on focus-visible |
+| `--swc-link-focus-indicator-color` | Focus ring color                 |
 
 <DocsFooter />
