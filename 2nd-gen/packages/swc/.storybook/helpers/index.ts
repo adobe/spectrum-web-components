@@ -24,6 +24,7 @@ export {
   TESTING_GRID_STORY_NAME,
   TESTING_GRID_STORY_PARAMETERS,
   Variants,
+  vrtCase,
 } from './testing-grid.js';
 export type {
   ArgGridProps,

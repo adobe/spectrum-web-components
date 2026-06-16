@@ -18,8 +18,6 @@
 import {
   BUTTON_FILL_STYLES,
   BUTTON_VARIANTS,
-  type ButtonFillStyle,
-  type ButtonVariant,
 } from '@spectrum-web-components/core/components/button';
 
 import '@adobe/spectrum-wc/components/button/swc-button.js';
@@ -29,29 +27,12 @@ import {
   Container,
   type GridTemplateFn,
   Variants as withVariantsGrid,
+  vrtCase,
 } from '../../../.storybook/helpers/index.js';
 import { addIconTemplate, Template } from '../stories/button.template.js';
 
-const STATIC_COLOR_VARIANTS = [
-  'primary',
-  'secondary',
-] as const satisfies readonly ButtonVariant[];
-
-const NESTED_ARG_GRID = {
-  withBorder: false,
-  withWrapperBorder: false,
-} as const;
-
 const longLabel =
   'An example of text overflow behavior within the button component. When the button text is too long for the horizontal space available, it wraps to form another line.';
-
-/** `outline` is only supported on primary and secondary. */
-const fillStyleOptionsForVariant = (
-  variant?: ButtonVariant
-): ButtonFillStyle[] =>
-  variant === 'accent' || variant === 'negative'
-    ? ['fill']
-    : [...BUTTON_FILL_STYLES];
 
 const ButtonContentGroup: GridTemplateFn = (args, context) =>
   Container(
@@ -76,14 +57,18 @@ const ButtonContentGroup: GridTemplateFn = (args, context) =>
     context
   );
 
-const ButtonFillStyleGroup: GridTemplateFn = (args, context) =>
+const ButtonTreatmentGroup: GridTemplateFn = (args, context) =>
   ArgGrid(
     {
       Template: ButtonContentGroup,
       argKey: 'fill-style',
-      options: fillStyleOptionsForVariant(args.variant as ButtonVariant),
+      options:
+        args.variant === 'accent' || args.variant === 'negative'
+          ? ['fill']
+          : [...BUTTON_FILL_STYLES],
       labels: { fill: '', outline: '' },
-      ...NESTED_ARG_GRID,
+      withBorder: false,
+      withWrapperBorder: false,
       ...args,
     },
     context
@@ -92,12 +77,13 @@ const ButtonFillStyleGroup: GridTemplateFn = (args, context) =>
 const ButtonVariantGroup: GridTemplateFn = (args, context) =>
   ArgGrid(
     {
-      Template: ButtonFillStyleGroup,
+      Template: ButtonTreatmentGroup,
       argKey: 'variant',
       options: args['static-color']
-        ? [...STATIC_COLOR_VARIANTS]
+        ? ['primary', 'secondary']
         : [...BUTTON_VARIANTS],
-      ...NESTED_ARG_GRID,
+      withBorder: false,
+      withWrapperBorder: false,
       ...args,
     },
     context
@@ -117,29 +103,18 @@ export const ButtonVRTRender = withVariantsGrid({
       testHeading: 'Static black',
       'static-color': 'black',
     },
-    {
-      Template: (args) =>
-        Template({
-          ...args,
-          'default-slot': longLabel,
-          'icon-slot': addIconTemplate,
-        }),
-      testHeading: 'Line wrap',
-      wrapperStyles: { 'max-inline-size': '480px' },
-      withStates: false,
-    },
-    {
-      Template: (args) =>
-        Template({
-          ...args,
-          truncate: true,
-          'default-slot': 'Be a premium member',
-          'icon-slot': addIconTemplate,
-          style: 'max-inline-size: 120px',
-        }),
-      testHeading: 'Truncation',
-      withStates: false,
-    },
+    vrtCase(
+      Template,
+      'Line wrap',
+      { 'default-slot': longLabel, 'icon-slot': addIconTemplate },
+      { 'max-inline-size': '480px' }
+    ),
+    vrtCase(Template, 'Truncation', {
+      truncate: true,
+      'default-slot': 'Be a premium member',
+      'icon-slot': addIconTemplate,
+      style: 'max-inline-size: 120px',
+    }),
   ],
   withStateBorder: true,
   stateData: [

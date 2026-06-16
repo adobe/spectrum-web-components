@@ -555,6 +555,25 @@ export interface TestCaseItem<TArgs = Record<string, unknown>> {
   withStates?: boolean;
 }
 
+/**
+ * One-off `testData` row: fixed arg overrides, optional width constraint, no state matrix.
+ * Mirrors spectrum-css special cases such as line wrap and truncation (`withStates: false`).
+ */
+export function vrtCase<TArgs extends Record<string, unknown>>(
+  render: (args: TArgs) => TemplateResult | typeof nothing,
+  testHeading: string,
+  overrides: Partial<TArgs>,
+  wrapperStyles?: Record<string, string>
+): TestCaseItem<TArgs> & Partial<TArgs> {
+  return {
+    Template: (args, _context) => render({ ...args, ...overrides } as TArgs),
+    testHeading,
+    ...(wrapperStyles ? { wrapperStyles } : {}),
+    withStates: false,
+    ...overrides,
+  };
+}
+
 export interface VariantsConfig<TArgs extends Record<string, unknown>> {
   Template: GridTemplateFn<TArgs>;
   TestTemplate?: GridTemplateFn<TArgs>;
