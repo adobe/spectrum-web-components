@@ -18,6 +18,7 @@
     - [Spectrum CSS to SWC Migration](01_css/04_spectrum-swc-migration.md)
     - [Styling Anti-Patterns (What to Avoid)](01_css/05_anti-patterns.md)
     - [Property order quick reference](01_css/06_property-order-quick-reference.md)
+    - [Non-component stylesheets](01_css/07_stylesheets.md)
 - [2nd-gen TypeScript](02_typescript/README.md)
     - [File organization](02_typescript/01_file-organization.md)
     - [Class structure](02_typescript/02_class-structure.md)
