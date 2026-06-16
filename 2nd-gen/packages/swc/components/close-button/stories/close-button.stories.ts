@@ -54,7 +54,8 @@ args['accessible-label'] = 'Close';
 /**
  * Close buttons dismiss dialogs, banners, toasts, and similar surfaces. They
  * are compact, icon-forward controls that require an accessible name describing
- * the dismiss action.
+ * the dismiss action. For primary actions, see
+ * [Button](../?path=/docs/components-button--docs).
  */
 const meta: Meta = {
   title: 'Close Button',
@@ -65,6 +66,10 @@ const meta: Meta = {
   parameters: {
     docs: {
       subtitle: 'Compact dismiss control for overlays and chrome regions',
+    },
+    design: {
+      type: 'figma',
+      url: 'https://www.figma.com/design/Mngz9H7WZLbrCvGQf3GnsY/S2---Web--Desktop-scale-?node-id=125265-577',
     },
   },
   tags: ['migrated'],
@@ -95,6 +100,17 @@ export const Overview: Story = {
 };
 
 // ──────────────────────────
+//    ANATOMY STORY
+// ──────────────────────────
+
+export const Anatomy: Story = {
+  render: () => html`
+    <swc-close-button accessible-label="Close">Close</swc-close-button>
+  `,
+  tags: ['anatomy'],
+};
+
+// ──────────────────────────
 //    OPTIONS STORIES
 // ──────────────────────────
 
@@ -113,19 +129,21 @@ export const Sizes: Story = {
     </div>
   `,
   tags: ['options'],
+  parameters: {
+    flexLayout: 'row-wrap',
+  },
 };
 
 export const StaticColors: Story = {
   render: (args) => html`
-    <div
-      style="display: flex; align-items: center; gap: 16px; padding: 16px; background: var(--spectrum-gray-800, #222);"
-    >
-      ${template({ ...args, 'accessible-label': 'Close (default)' })}
+    <div style="display: flex; align-items: center; gap: 16px;">
       ${template({
         ...args,
         'static-color': 'white',
         'accessible-label': 'Close (white)',
       })}
+    </div>
+    <div style="display: flex; align-items: center; gap: 16px;">
       ${template({
         ...args,
         'static-color': 'black',
@@ -134,7 +152,12 @@ export const StaticColors: Story = {
     </div>
   `,
   tags: ['options'],
+  parameters: {
+    flexLayout: false,
+    staticColorsDemo: true,
+  },
 };
+StaticColors.storyName = 'Static colors';
 
 // ──────────────────────────
 //    STATES STORIES
@@ -148,6 +171,9 @@ export const States: Story = {
     </div>
   `,
   tags: ['states'],
+  parameters: {
+    flexLayout: 'row-wrap',
+  },
 };
 
 // ────────────────────────────────
