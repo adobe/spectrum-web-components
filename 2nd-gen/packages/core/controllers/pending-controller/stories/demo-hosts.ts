@@ -90,11 +90,13 @@ export class DemoPendingHost extends LitElement {
     pending: { type: Boolean, reflect: true },
     pendingLabel: { type: String, attribute: 'pending-label' },
     label: { type: String },
+    clickPending: { type: Boolean, attribute: 'click-pending' },
   };
 
   declare pending: boolean;
   declare pendingLabel?: string;
   declare label: string;
+  declare clickPending: boolean;
 
   private readonly pendingController = new PendingController(this, {
     delay: 250,
@@ -103,10 +105,32 @@ export class DemoPendingHost extends LitElement {
       this.label || (this.textContent?.trim() ?? null),
   });
 
+  private resetTimer: ReturnType<typeof setTimeout> | null = null;
+
+  private readonly onButtonClick = (): void => {
+    if (this.pending) {
+      return;
+    }
+    this.pending = true;
+    this.resetTimer = setTimeout(() => {
+      this.resetTimer = null;
+      this.pending = false;
+    }, 2000);
+  };
+
   constructor() {
     super();
     this.pending = false;
     this.label = 'Save';
+    this.clickPending = false;
+  }
+
+  override disconnectedCallback(): void {
+    super.disconnectedCallback?.();
+    if (this.resetTimer !== null) {
+      clearTimeout(this.resetTimer);
+      this.resetTimer = null;
+    }
   }
 
   protected override render(): TemplateResult {
@@ -123,6 +147,7 @@ export class DemoPendingHost extends LitElement {
             ? this.pendingController.getPendingAccessibleName()
             : undefined
         )}
+        @click=${this.clickPending ? this.onButtonClick : null}
       >
         <span class="demo-button-label">${this.label}</span>
         ${this.pendingController.renderPendingState()}
