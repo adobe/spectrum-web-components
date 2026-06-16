@@ -697,7 +697,7 @@ export const AccessibilityTest: Story = {
         expect(
           internal?.getAttribute('aria-label'),
           'icon-only button aria-label is forwarded'
-        ).toBe('Bold');
+        ).toBe('Edit');
       }
     );
 
