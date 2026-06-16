@@ -46,19 +46,15 @@ Action buttons support three states:
 
 - **Default**: the button is active and can be interacted with.
 - **Disabled**: the button is removed from the tab order and cannot be activated.
-- **Pending**: the button remains focusable but activation is suppressed while an asynchronous operation is in progress. See [Pending](#pending) for the full behavioral details.
+- **Pending**: the button remains focusable but activation is suppressed while an asynchronous operation is in progress.
 
 Do not set both `disabled` and `pending` simultaneously.
 
 <Canvas of={ActionButtonStories.States} />
 
-## Behaviors
+### Disabled
 
-### Icon only
-
-When an icon is slotted with no visible text, set `accessible-label` to provide an accessible name for the button. A development warning is emitted when an icon-only button is missing `accessible-label`.
-
-<Canvas of={ActionButtonStories.IconOnly} />
+The `disabled` attribute removes the button from the tab order and prevents activation entirely. Use `disabled` when the action is genuinely unavailable and there is no expectation that it will become available without a change in context. If the action is temporarily unavailable while an operation completes, use `pending` instead so keyboard users can still discover and focus the button.
 
 ### Pending
 
@@ -67,6 +63,14 @@ When `pending` is set, the button remains focusable but click events are suppres
 The accessible name during pending defaults to the visible label plus `", busy"`. For example, a button labeled "Upload" announces as `"Upload, busy"`. Provide `pending-label` to override this with a more specific description of the in-progress operation. When pending clears, the accessible name reverts to the original label.
 
 <Canvas of={ActionButtonStories.Pending} />
+
+## Behaviors
+
+### Icon only
+
+When an icon is slotted with no visible text, set `accessible-label` to provide an accessible name for the button. A development warning is emitted when an icon-only button is missing `accessible-label`.
+
+<Canvas of={ActionButtonStories.IconOnly} />
 
 ### Linking
 
