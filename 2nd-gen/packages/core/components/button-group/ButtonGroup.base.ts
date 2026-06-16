@@ -140,8 +140,12 @@ export abstract class ButtonGroupBase extends SizedMixin(SpectrumElement, {
   protected override updated(changed: PropertyValues<this>): void {
     super.updated(changed);
 
-    if (changed.has('size') || changed.has('disabled')) {
-      this.propagateToChildren();
+    if (changed.has('size')) {
+      this.propagateSizeToChildren();
+    }
+
+    if (changed.has('disabled')) {
+      this.propagateDisabledToChildren();
     }
   }
 
@@ -150,22 +154,32 @@ export abstract class ButtonGroupBase extends SizedMixin(SpectrumElement, {
    * children receive the current size and disabled state.
    */
   protected handleSlotchange(): void {
-    this.propagateToChildren();
+    this.propagateSizeToChildren();
+
+    if (this.disabled) {
+      this.propagateDisabledToChildren();
+    }
+  }
+
+  private propagateSizeToChildren(): void {
+    for (const button of this.buttons) {
+      button.size = this.size;
+    }
   }
 
   /**
-   * Propagates size and disabled state to slotted button children.
+   * Propagates disabled state to slotted button children.
    *
-   * Size is always authoritative — the group owns the size of its children.
-   * Disabled uses a one-directional model: when the group is disabled, all
-   * children are forced disabled. When the group is enabled, children retain
-   * their individual disabled state (a button slotted with `disabled` stays
-   * disabled).
+   * Uses a one-directional model: when the group is disabled, all children
+   * are forced disabled (tracking which were already individually disabled).
+   * When the group is enabled, children are restored to their individual
+   * disabled state — a button slotted with `disabled` remains disabled.
+   *
+   * On slotchange when the group is enabled, buttons are not touched so
+   * their declarative `disabled` attribute is preserved.
    */
-  private propagateToChildren(): void {
+  private propagateDisabledToChildren(): void {
     for (const button of this.buttons) {
-      button.size = this.size;
-
       if (this.disabled) {
         if (button.disabled) {
           this.individuallyDisabled.add(button);
