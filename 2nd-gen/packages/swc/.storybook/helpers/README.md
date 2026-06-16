@@ -66,6 +66,8 @@ Chromatic uses a dual approach: `preview.ts` sets `chromatic.disableSnapshot: tr
 
 Play-function tests stay in `components/<name>/test/<name>.test.ts` (indexed under **Component/Tests** in dev Storybook only).
 
+Unit tests for the testing-grid helpers live in `.storybook/helpers/test/testing-grid.unit.test.ts` (`vitest.unit.config.js`, project `swc-unit`). They cover `isChromatic()`, `Heading()`, `Container()`, `renderContent()`, and a `Variants()` smoke test. Run with `yarn test:unit`.
+
 ## Adding new helpers
 
 When adding new helpers to this directory:
