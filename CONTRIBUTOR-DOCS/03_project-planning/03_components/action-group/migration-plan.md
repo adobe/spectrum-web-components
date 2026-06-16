@@ -56,7 +56,7 @@
 - `swc-action-group` is a composite keyboard control: one Tab stop into the strip, arrow-key navigation among children via `FocusgroupNavigationController`, and optional managed selection (`selects="single|multiple"`). It is substantially more complex than `swc-button-group`, which has no roving tabindex.
 - Three ARIA-breaking changes ship in this migration: host is always `role="group"` (never `toolbar` or `radiogroup`); children are always `role="button"` (never `radio` or `checkbox`); selection state is exposed via `aria-pressed`/`aria-checked` on the button's focus target rather than through host or child role changes.
 - The `selects` API is retained. `swc-action-group` is the appropriate home for selection behavior until `swc-segmented-control` and `swc-toggle-button-group` exist in 2nd-gen. Consumer chooses the right component for their UX; action-group does not mandate a migration to those alternatives.
-- Compact mode uses `data-group-position` attributes propagated by action-group to each `swc-action-button` child; action-button applies border-radius overrides via `:host([data-group-position])` CSS. This requires a coordinated addition to action-button during its implementation phase.
+- Compact mode border-radius is handled entirely in CSS: action-group uses `::slotted(:first-child)` and `::slotted(:last-child)` to set `--swc-action-button-border-*-radius` custom properties, which cascade into action-button's shadow DOM. No JS attribute propagation needed; action-button must expose those properties as overridable fallbacks in its shadow CSS.
 - `swc-action-button` PR #6340 drops `selected`, `toggles`, and `emphasized`. Selection state is expressed by setting `aria-pressed`/`aria-checked` on child hosts, forwarded by ButtonBase to the inner `<button>`. No `selected` property needed on action-button.
 - `vertical` boolean → `orientation="horizontal|vertical"`; `FocusgroupNavigationController` confirmed available in this branch.
 
@@ -158,14 +158,14 @@ This full modifier surface will not be carried forward to 2nd-gen.
 **Proceed independently, after action-button.** Action group does not extend action-button and does not share a base class with button-group. Key dependency decisions are now confirmed:
 
 - Action-group does not rely on a `selected` property on action-button; selection state is expressed via `aria-pressed`/`aria-checked` on child hosts, forwarded by ButtonBase to the inner `<button>`.
-- Compact mode uses position attributes (`data-group-position`) propagated by action-group to each child; action-button applies border-radius overrides via `:host([data-group-position])` CSS — this requires a coordinated addition to action-button during its implementation phase.
+- Compact mode border-radius is handled entirely in CSS via `::slotted(:first-child)` / `::slotted(:last-child)` setting `--swc-action-button-border-*-radius` custom properties that cascade into action-button's shadow DOM — no JS attribute propagation needed.
 - `FocusgroupNavigationController` is available in this branch and will be used.
 
 ### Related components and ordering notes
 
 | Component | Relationship | Ordering note |
 | --------- | ------------ | ------------- |
-| `swc-action-button` | Runtime child dependency | Compact position mechanism (`data-group-position`) requires a coordinated addition to action-button during its implementation phase |
+| `swc-action-button` | Runtime child dependency | Compact mode requires action-button to expose border-radius as `--swc-action-button-border-*-radius` custom properties so action-group can override them via CSS cascade |
 | `swc-action-menu` | Slotted child | Participates in roving tabindex sequence; must be compatible with `FocusgroupNavigationController` |
 | `swc-button-group` | Sibling (same ARIA role, different keyboard model) | PR #6395 establishes the `orientation` rename convention that action-group follows |
 | `swc-segmented-control` | Future alternative for exclusive-selection UX | Not migrated yet; action-group retains `selects` until this exists |
@@ -196,7 +196,7 @@ This full modifier surface will not be carried forward to 2nd-gen.
 
 | # | What changes | 1st-gen behavior | 2nd-gen behavior | Consumer migration path |
 | --- | ------------ | ---------------- | ---------------- | ----------------------- |
-| **B4** | Compact mode border-radius mechanism | 1st-gen CSS targets `.spectrum-ActionGroup-item` class on direct DOM children (native `<button>`) | 2nd-gen must propagate position context to `swc-action-button` children because `::slotted()` cannot reach inner `<button>` shadow DOM | Consumers using `compact` see no API change; internal implementation requires coordinated addition to action-button (see deferred tickets) |
+| **B4** | Compact mode border-radius mechanism | 1st-gen CSS targets `.spectrum-ActionGroup-item` with `:first-child` / `:last-child` directly on native `<button>` children | 2nd-gen uses `::slotted(:first-child)` / `::slotted(:last-child)` to set `--swc-action-button-border-*-radius` custom properties that cascade into action-button's shadow DOM; action-button must expose those properties as overridable fallbacks | Consumers using `compact` see no API change |
 | **B5** | S2 design tokens replace Spectrum 1 tokens | Spectrum 1 color, spacing, and size tokens | S2 design tokens from `spectrum-css` `spectrum-two` branch | Visual update; no consumer API change |
 
 #### Accessibility and behavior
@@ -296,7 +296,9 @@ Compact mode (`compact` attribute) visually joins buttons by collapsing shared b
 
 In 1st-gen, the CSS targets `.spectrum-ActionGroup-item` class on native `<button>` children directly. In 2nd-gen, children are `swc-action-button` custom elements with their own shadow DOM. The action-group's `::slotted()` selector can style the host boundary of slotted children (margin collapse, border between adjacent children) but cannot reach the inner `<button>` element to adjust border-radius on interior edges.
 
-**Chosen approach: position attributes.** Action-group propagates `data-group-position="first"`, `"middle"`, or `"last"` to each `swc-action-button` child. Action-button applies border-radius overrides in its own shadow CSS using `:host([data-group-position="first"])`, etc. This approach is more explicit and testable than CSS custom property injection and keeps the contract surface small. Requires a coordinated addition to `swc-action-button` during its implementation phase.
+**Chosen approach: CSS custom property cascade.** Action-group sets `--swc-action-button-border-*-radius` custom properties on slotted children via `::slotted(:first-child)` and `::slotted(:last-child)`. CSS custom properties inherit through shadow DOM boundaries, so these values cascade into action-button's shadow CSS automatically. Action-button must expose the four logical border-radius properties as `var(--swc-action-button-border-*-radius, token("corner-radius-100"))` fallbacks — a small addition to its shadow CSS, not a behavioral change.
+
+This mirrors both spectrum-css's own `:first-child` / `:last-child` approach and the accordion migration's pattern of parent-to-child state via `::slotted()` custom property cascade. No JS attribute propagation is needed.
 
 #### Focus management
 
@@ -380,7 +382,7 @@ No `_lit-styles/` fragment needed — action-group renders only a slot; all layo
 - [ ] Wire exports in both `package.json` files
 - [ ] Check out `spectrum-css` at `spectrum-two` branch as sibling directory (required for Phase 5 styling)
 - [x] `FocusgroupNavigationController` confirmed available in this branch
-- [x] `swc-action-button` API confirmed: no `selected` property; compact uses `data-group-position` attributes (coordinated addition required)
+- [x] `swc-action-button` API confirmed: no `selected` property; compact uses CSS custom property cascade via `::slotted(:first-child)` / `::slotted(:last-child)` (action-button must expose `--swc-action-button-border-*-radius` fallbacks)
 
 ### API
 
@@ -400,7 +402,7 @@ No `_lit-styles/` fragment needed — action-group renders only a slot; all layo
 
 - [x] `orientation` rename confirmed — matches button-group PR #6395 convention
 - [x] `emphasized` dropped — action-button PR #6340 removes it; no group-level propagation
-- [x] Compact position mechanism confirmed — `data-group-position` attributes
+- [x] Compact position mechanism confirmed — CSS custom property cascade via `::slotted(:first-child)` / `::slotted(:last-child)`
 
 ### Styling
 
@@ -409,7 +411,7 @@ No `_lit-styles/` fragment needed — action-group renders only a slot; all layo
 - [ ] Add `.swc-ActionGroup` to the internal semantic element in `render()`; keep layout styling off `:host` where possible
 - [ ] Copy S2 source from `spectrum-css` `spectrum-two` branch `components/action-group/index.css` (not `/dist`) into `action-group.css` as baseline
 - [ ] Translate `.spectrum-ActionGroup-item` child selectors to `::slotted(*)` equivalents for gap, margin, and border-between adjustments
-- [ ] Implement compact mode via `data-group-position` attributes: propagate `"first"`, `"middle"`, `"last"` to each `swc-action-button` child; action-button applies inner border-radius overrides via `:host([data-group-position])` CSS
+- [ ] Implement compact mode via CSS custom property cascade: use `::slotted(:first-child)` and `::slotted(:last-child)` to set `--swc-action-button-border-start-start-radius`, `--swc-action-button-border-start-end-radius`, `--swc-action-button-border-end-start-radius`, `--swc-action-button-border-end-end-radius`; all four reset to `0` on `::slotted(*)`, then outer corners restored on first and last children
 - [ ] Verify compact mode disables correctly when `quiet` is also set (same as 1st-gen: compact has no visual effect in quiet mode)
 - [ ] Verify `justified` layout (children fill available width)
 - [ ] Verify `orientation="vertical"` layout and compact + vertical combined mode
@@ -510,7 +512,7 @@ Create these tickets before this migration PR closes. Link each to Epic SWC-2212
 
 | Ticket | Summary | Why deferred | Plan sections |
 | ------ | ------- | ------------ | ------------- |
-| TBD | **Add `data-group-position` support to `swc-action-button`.** Action-group sets `data-group-position="first|middle|last"` on each child in compact mode; action-button must apply border-radius overrides via `:host([data-group-position])` CSS. | Requires a coordinated addition to a separate component's implementation phase. Cannot land without action-button implementing the receiving side. | B4 (compact mode border-radius), Behavioral semantics: Compact mode, Styling checklist |
+| TBD | **Expose `--swc-action-button-border-*-radius` custom properties in `swc-action-button`.** Action-group's compact CSS sets these four logical border-radius properties on slotted children; action-button must consume them as `var(--swc-action-button-border-*-radius, token("corner-radius-100"))` fallbacks in its shadow CSS. | Small addition to action-button's shadow CSS; no behavioral change required. Should land during action-button's styling phase or as a follow-on. | B4 (compact mode border-radius), Behavioral semantics: Compact mode, Styling checklist |
 | TBD | **Group-level `emphasized` propagation.** If `swc-action-button` adds `emphasized` in a future release, action-group should propagate it as a group-level attribute. | Action-button PR #6340 explicitly removed `emphasized`; no action-button support exists yet. | A1 (additive) |
 | TBD | **Consumer guidance for `swc-segmented-control` / `swc-toggle-button-group`.** When those components ship in 2nd-gen, add a docs note pointing consumers toward the appropriate alternative for exclusive or toggle selection UX. | Components do not exist yet in 2nd-gen. | A2 (additive) |
 
