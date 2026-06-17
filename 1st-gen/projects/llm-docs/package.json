@@ -1,0 +1,40 @@
+{
+  "name": "@spectrum-web-components/llm-docs",
+  "version": "1.12.1",
+  "description": "LLM-consumable documentation for Spectrum Web Components, one markdown file per component.",
+  "license": "Apache-2.0",
+  "author": "Adobe",
+  "homepage": "https://opensource.adobe.com/spectrum-web-components/",
+  "repository": {
+    "directory": "1st-gen/projects/llm-docs",
+    "type": "git",
+    "url": "https://github.com/adobe/spectrum-web-components.git"
+  },
+  "bugs": {
+    "url": "https://github.com/adobe/spectrum-web-components/issues"
+  },
+  "type": "module",
+  "files": [
+    "*.llm.md",
+    "README.md"
+  ],
+  "scripts": {
+    "test": "echo \"Error: generate these files with 'yarn generate:llm-docs' from the mono-repo root.\" && exit 1"
+  },
+  "keywords": [
+    "design-system",
+    "spectrum",
+    "adobe",
+    "adobe-spectrum",
+    "web components",
+    "web-components",
+    "lit-element",
+    "lit-html",
+    "documentation",
+    "llm",
+    "ai"
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
+}

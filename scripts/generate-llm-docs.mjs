@@ -11,7 +11,7 @@
  */
 
 /**
- * MVP generator for `docs.llm.md`: the LLM-consumable component documentation
+ * Generator for `docs.llm.md`: the LLM-consumable component documentation
  * proposed in https://wiki.corp.adobe.com/spaces/AdobeDesign/pages/3854270520.
  *
  * Source of truth is the 1st-gen component README. The transform is fully
@@ -20,30 +20,77 @@
  * always produces the same output, so the file can be regenerated and diffed in
  * CI to detect drift from the README.
  *
- * Source:  1st-gen/packages/{name}/README.md
- * Target:  1st-gen/packages/{name}/docs.llm.md
+ * Two outputs per component, written from one generated string so they stay
+ * byte-identical:
+ *   1. 1st-gen/packages/{name}/docs.llm.md       per-component, lives beside the README
+ *   2. 1st-gen/projects/llm-docs/{name}.llm.md   aggregate, published as
+ *                                                @spectrum-web-components/llm-docs
+ *
+ * Component discovery is automatic: any 1st-gen package whose README registers
+ * a custom element (a `@spectrum-web-components/{name}/sp-*.js` side-effect
+ * import) is treated as a component. Icon-set and tooling packages are skipped.
  *
  * Usage:
- *   node scripts/generate-llm-docs.mjs              # write the 5 MVP components
- *   node scripts/generate-llm-docs.mjs button menu  # write specific components
+ *   node scripts/generate-llm-docs.mjs               # every gen1 component + aggregate package
+ *   node scripts/generate-llm-docs.mjs --mvp         # only the original 5 MVP components
+ *   node scripts/generate-llm-docs.mjs button menu   # only the named components
  *   node scripts/generate-llm-docs.mjs --check       # verify on-disk files are current (no writes)
  */
 
-import { existsSync, readFileSync, writeFileSync } from 'node:fs';
+import {
+  existsSync,
+  mkdirSync,
+  readdirSync,
+  readFileSync,
+  rmSync,
+  writeFileSync,
+} from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = resolve(__dirname, '..');
 const PACKAGES_DIR = join(REPO_ROOT, '1st-gen', 'packages');
+const AGGREGATE_PKG_DIR = join(REPO_ROOT, '1st-gen', 'projects', 'llm-docs');
 
-// The MVP slice. These five stress different generator edge cases: simple
-// (button), near-duplicate (action-button), slotted (menu), composition-heavy
-// (picker), and overlay + a11y-heavy (dialog).
+// The original MVP slice. Kept for `--mvp`. These five stress different
+// generator edge cases: simple (button), near-duplicate (action-button),
+// slotted (menu), composition-heavy (picker), overlay + a11y-heavy (dialog).
 const MVP_COMPONENTS = ['button', 'picker', 'menu', 'action-button', 'dialog'];
 
-const OUTPUT_FILENAME = 'docs.llm.md';
+const PER_COMPONENT_FILENAME = 'docs.llm.md';
+const AGGREGATE_SUFFIX = '.llm.md';
+const AGGREGATE_README = 'README.md';
 const GENERATED_LINE_PREFIX = 'generated:';
+
+/**
+ * A package is a component when its README registers a custom element via a
+ * `@spectrum-web-components/{name}/sp-*.js` side-effect import. This filters out
+ * icon-set packages (icons-ui, icons-workflow, iconset) and any tooling.
+ */
+function componentImportPattern(name) {
+  return new RegExp(
+    `@spectrum-web-components/${name}/(sp-[a-z0-9-]+)\\.js`,
+    'i'
+  );
+}
+
+function isComponentPackage(name) {
+  const readmePath = join(PACKAGES_DIR, name, 'README.md');
+  if (!existsSync(readmePath)) {
+    return false;
+  }
+  return componentImportPattern(name).test(readFileSync(readmePath, 'utf8'));
+}
+
+/** Discover every gen1 component package, sorted for stable output. */
+function discoverComponents() {
+  return readdirSync(PACKAGES_DIR, { withFileTypes: true })
+    .filter((entry) => entry.isDirectory())
+    .map((entry) => entry.name)
+    .filter(isComponentPackage)
+    .sort();
+}
 
 /**
  * Deterministic chrome-stripping rules applied to the raw README body.
@@ -94,26 +141,24 @@ function stripChrome(readme) {
  * Falls back to `sp-{name}` when the import line is absent.
  */
 function deriveTag(name, readme) {
-  const importMatch = readme.match(
-    new RegExp(`@spectrum-web-components/${name}/(sp-[a-z0-9-]+)\\.js`, 'i')
-  );
+  const importMatch = readme.match(componentImportPattern(name));
   return importMatch ? importMatch[1] : `sp-${name}`;
 }
 
-function buildFrontmatter(name, tag) {
+function buildFrontmatter(name, tag, timestamp) {
   return [
     '---',
     `component: ${name}`,
     `tag: ${tag}`,
     `package: '@spectrum-web-components/${name}'`,
     `source: 1st-gen/packages/${name}/README.md`,
-    `${GENERATED_LINE_PREFIX} ${new Date().toISOString()}`,
+    `${GENERATED_LINE_PREFIX} ${timestamp}`,
     'generator: scripts/generate-llm-docs.mjs',
     '---',
   ].join('\n');
 }
 
-function generate(name) {
+function generate(name, timestamp) {
   const readmePath = join(PACKAGES_DIR, name, 'README.md');
   if (!existsSync(readmePath)) {
     throw new Error(`README not found for "${name}" at ${readmePath}`);
@@ -121,7 +166,36 @@ function generate(name) {
   const readme = readFileSync(readmePath, 'utf8');
   const tag = deriveTag(name, readme);
   const body = stripChrome(readme);
-  return `${buildFrontmatter(name, tag)}\n\n${body}\n`;
+  return `${buildFrontmatter(name, tag, timestamp)}\n\n${body}\n`;
+}
+
+/** README index for the aggregate package, listing every bundled component. */
+function buildAggregateReadme(names) {
+  const list = names
+    .map(
+      (name) =>
+        `- [\`${name}.llm.md\`](./${name}.llm.md) (\`@spectrum-web-components/${name}\`)`
+    )
+    .join('\n');
+  return `<!-- Generated by scripts/generate-llm-docs.mjs. Do not edit by hand. -->
+
+# @spectrum-web-components/llm-docs
+
+LLM-consumable documentation for Spectrum Web Components, one \`{component}.llm.md\`
+file per component. Each file is derived deterministically from the component's
+README and is byte-identical to the \`docs.llm.md\` that lives beside that README.
+
+This package is optional. Install it when an AI assistant or build-time tool
+needs the component docs as plain markdown:
+
+\`\`\`bash
+yarn add @spectrum-web-components/llm-docs
+\`\`\`
+
+## Bundled components (${names.length})
+
+${list}
+`;
 }
 
 /** Drop the volatile `generated:` line so drift checks ignore the timestamp. */
@@ -132,40 +206,62 @@ function withoutTimestamp(content) {
     .join('\n');
 }
 
+function readIfExists(path) {
+  return existsSync(path) ? readFileSync(path, 'utf8') : '';
+}
+
 function main() {
   const args = process.argv.slice(2);
   const checkOnly = args.includes('--check');
+  const mvpOnly = args.includes('--mvp');
   const requested = args.filter((arg) => !arg.startsWith('--'));
-  const components = requested.length > 0 ? requested : MVP_COMPONENTS;
 
-  let drifted = 0;
-  let written = 0;
-
-  for (const name of components) {
-    const generated = generate(name);
-    const outputPath = join(PACKAGES_DIR, name, OUTPUT_FILENAME);
-
-    if (checkOnly) {
-      const current = existsSync(outputPath)
-        ? readFileSync(outputPath, 'utf8')
-        : '';
-      if (withoutTimestamp(current) !== withoutTimestamp(generated)) {
-        drifted += 1;
-        console.error(
-          `[generate-llm-docs] DRIFT: ${name}/${OUTPUT_FILENAME} is out of date`
-        );
-      }
-      continue;
-    }
-
-    writeFileSync(outputPath, generated, 'utf8');
-    written += 1;
-    console.log(
-      `[generate-llm-docs] wrote 1st-gen/packages/${name}/${OUTPUT_FILENAME}`
-    );
+  let components;
+  if (requested.length > 0) {
+    components = requested;
+  } else if (mvpOnly) {
+    components = MVP_COMPONENTS;
+  } else {
+    components = discoverComponents();
   }
 
+  // A single timestamp per run keeps the per-component and aggregate copies
+  // byte-identical.
+  const timestamp = new Date().toISOString();
+  const aggregateReadme = buildAggregateReadme(components);
+
   if (checkOnly) {
+    let drifted = 0;
+    for (const name of components) {
+      const expected = generate(name, timestamp);
+      const perComponent = readIfExists(
+        join(PACKAGES_DIR, name, PER_COMPONENT_FILENAME)
+      );
+      const aggregate = readIfExists(
+        join(AGGREGATE_PKG_DIR, `${name}${AGGREGATE_SUFFIX}`)
+      );
+      if (withoutTimestamp(perComponent) !== withoutTimestamp(expected)) {
+        drifted += 1;
+        console.error(
+          `[generate-llm-docs] DRIFT: packages/${name}/${PER_COMPONENT_FILENAME}`
+        );
+      }
+      if (withoutTimestamp(aggregate) !== withoutTimestamp(expected)) {
+        drifted += 1;
+        console.error(
+          `[generate-llm-docs] DRIFT: projects/llm-docs/${name}${AGGREGATE_SUFFIX}`
+        );
+      }
+    }
+    if (
+      readIfExists(join(AGGREGATE_PKG_DIR, AGGREGATE_README)) !==
+      aggregateReadme
+    ) {
+      drifted += 1;
+      console.error(
+        `[generate-llm-docs] DRIFT: projects/llm-docs/${AGGREGATE_README}`
+      );
+    }
     if (drifted > 0) {
       console.error(
         `[generate-llm-docs] ${drifted} file(s) out of date; run "yarn generate:llm-docs"`
@@ -173,12 +269,48 @@ function main() {
       process.exit(1);
     }
     console.log(
-      `[generate-llm-docs] all ${components.length} file(s) up to date`
+      `[generate-llm-docs] all files up to date for ${components.length} component(s)`
     );
     return;
   }
 
-  console.log(`[generate-llm-docs] generated ${written} file(s)`);
+  // Write mode. Only wipe stale aggregate files when regenerating the full set;
+  // a scoped run (explicit names or --mvp) must not delete the other files.
+  const fullRun = requested.length === 0 && !mvpOnly;
+  mkdirSync(AGGREGATE_PKG_DIR, { recursive: true });
+  if (fullRun) {
+    for (const file of readdirSync(AGGREGATE_PKG_DIR)) {
+      if (file.endsWith(AGGREGATE_SUFFIX)) {
+        rmSync(join(AGGREGATE_PKG_DIR, file));
+      }
+    }
+  }
+
+  for (const name of components) {
+    const content = generate(name, timestamp);
+    writeFileSync(
+      join(PACKAGES_DIR, name, PER_COMPONENT_FILENAME),
+      content,
+      'utf8'
+    );
+    writeFileSync(
+      join(AGGREGATE_PKG_DIR, `${name}${AGGREGATE_SUFFIX}`),
+      content,
+      'utf8'
+    );
+  }
+
+  if (fullRun) {
+    writeFileSync(
+      join(AGGREGATE_PKG_DIR, AGGREGATE_README),
+      aggregateReadme,
+      'utf8'
+    );
+  }
+
+  console.log(
+    `[generate-llm-docs] wrote ${components.length} component(s) to packages/*/${PER_COMPONENT_FILENAME} and projects/llm-docs/`
+  );
 }
 
 main();
