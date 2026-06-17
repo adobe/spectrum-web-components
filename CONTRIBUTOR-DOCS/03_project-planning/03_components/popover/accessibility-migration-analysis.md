@@ -99,7 +99,7 @@ The surface itself still gets no `role` in default mode; this trigger-side wirin
 ### Keyboard, focus, and dismissal (by mode)
 
 - **Default mode:** Escape and click-outside dismiss natively via `popover="auto"`. **No focus trap** — focus is consumer/pattern-managed. Focus returns to the previously focused element on close.
-- **Modal mode:** native `<dialog>` focus trap and Escape (`cancel`); backdrop-click is wired by the component. Consumers must provide an accessible name for the dialog (e.g. `aria-labelledby` referencing a heading inside, or `aria-label` on the host) — a nameless modal dialog is an authoring bug.
+- **Modal mode:** native `<dialog>` focus trap and Escape (`cancel`); backdrop-click is wired by the component. The internal `<dialog>` lives in the popover's shadow root, so a host `aria-label` or `aria-labelledby` does **not** reach it. The component therefore exposes an **`accessible-label`** attribute (the project's standard `accessibleLabel` pattern) and forwards it as `aria-label` onto the internal `<dialog>`; consumers set that to name the dialog. A modal popover opened with no `accessible-label` is an authoring bug and is dev-warned (`window.__swc.warn`).
 - **Cross-mechanism Escape coordination:** the component registers with a shared `dismissibleStack` on open and unregisters on close, so when multiple dismissibles of different mechanisms are open (e.g. a modal popover plus a tooltip), Escape resolves to the topmost.
 
 `prefers-reduced-motion` still governs any open/close transitions (see [Guidelines that apply](#guidelines-that-apply)).
@@ -153,7 +153,9 @@ Component tag may change until API freeze; this section describes the **position
 
 ### Shadow DOM and cross-root ARIA Issues
 
-None: target is a host that does not require `aria-labelledby` / `aria-describedby` targets to live in a different shadow root than the labelled content. If a small shadow exists for a tip, keep labels and ARIA in the **light** tree for composed patterns. Shared **style-only** CSS has no ID-ref concerns.
+**Default mode:** none — the surface is a roleless container, so slotted/light-DOM content keeps its own `aria-labelledby` / `aria-describedby` wiring and there is nothing to name across the boundary.
+
+**Modal mode:** the internal `<dialog>` is rendered in the popover's shadow root, so it _is_ separated from the consumer's light-DOM content. A host `aria-label`, or an `aria-labelledby` IDREF on the host, does not reach it. The component resolves this by owning the forwarding: the `accessible-label` attribute is reflected as `aria-label` onto the internal `<dialog>` (the standard `accessibleLabel` pattern). The trigger-side relationship (`ariaControlsElements`, `aria-expanded`, `aria-haspopup`) already uses the element-reference IDL to cross the boundary outward to the trigger.
 
 ### Accessibility tree expectations
 

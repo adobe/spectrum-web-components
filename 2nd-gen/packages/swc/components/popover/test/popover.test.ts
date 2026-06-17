@@ -240,6 +240,49 @@ export const ModalModeRenderTest: Story = {
 };
 
 // ──────────────────────────────────────────────────────────────
+// TEST: accessible-label forwarding (modal mode only)
+// ──────────────────────────────────────────────────────────────
+
+export const AccessibleLabelTest: Story = {
+  render: () => html`
+    <swc-popover modal accessible-label="Account settings">
+      Modal content
+    </swc-popover>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const popover = await getComponent<Popover>(canvasElement, 'swc-popover');
+    await popover.updateComplete;
+
+    await step('forwards accessible-label to the dialog aria-label', () => {
+      const dialog = popover.shadowRoot?.querySelector('.swc-Popover');
+      expect(dialog?.getAttribute('aria-label')).toBe('Account settings');
+    });
+  },
+};
+
+export const AccessibleLabelDefaultModeTest: Story = {
+  render: () => html`
+    <swc-popover accessible-label="ignored in default mode">Content</swc-popover>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const popover = await getComponent<Popover>(canvasElement, 'swc-popover');
+    await popover.updateComplete;
+
+    await step(
+      'does not set aria-label on the roleless default-mode surface',
+      () => {
+        const div = popover.shadowRoot?.querySelector('.swc-Popover');
+        expect(div?.tagName, 'default mode renders a DIV').toBe('DIV');
+        expect(
+          div?.hasAttribute('aria-label'),
+          'no aria-label on the generic container'
+        ).toBe(false);
+      }
+    );
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
 // TEST: hide-arrow attribute
 // ──────────────────────────────────────────────────────────────
 
