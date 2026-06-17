@@ -413,7 +413,9 @@ export class Popover extends PopoverBase {
     this.dispatchEvent(
       new CustomEvent('swc-open', { bubbles: true, composed: true })
     );
-    this._dispatchAfter('swc-after-open');
+    this._dispatchAfter(
+      new CustomEvent('swc-after-open', { bubbles: true, composed: true })
+    );
   }
 
   private _dispatchClose(source: PopoverCloseSource): void {
@@ -424,21 +426,24 @@ export class Popover extends PopoverBase {
         composed: true,
       })
     );
-    this._dispatchAfter('swc-after-close');
+    this._dispatchAfter(
+      new CustomEvent('swc-after-close', { bubbles: true, composed: true })
+    );
     this._closeSource = null;
   }
 
-  /** Fire an after-event on `transitionend`, or immediately if no transition. */
-  private _dispatchAfter(type: 'swc-after-open' | 'swc-after-close'): void {
+  // Fire a prebuilt after-event on `transitionend`, or immediately if there is
+  // no transition. The event is constructed by the caller with a string-literal
+  // type so the manifest analyzer records the real event names rather than this
+  // helper's parameter identifier.
+  private _dispatchAfter(event: CustomEvent): void {
     const element = this._internalElement;
     const duration = element
       ? getComputedStyle(element).transitionDuration
       : '0s';
     const fire = (): void => {
-      this.dispatchEvent(
-        new CustomEvent(type, { bubbles: true, composed: true })
-      );
-      if (type === 'swc-after-close') {
+      this.dispatchEvent(event);
+      if (event.type === 'swc-after-close') {
         this._stopPositioningWhenClosed();
       }
     };
