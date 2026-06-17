@@ -1,0 +1,49 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import { DocsFooter, DocsHeader } from '../../.storybook/blocks';
+
+import * as Stories from './stories/popover.stories';
+
+<Meta of={Stories} />
+
+<DocsHeader />
+
+> **Work in progress:** docs page moved to MDX in Phase 7. Sections below are
+> rough scaffolds; prose, examples, and the Anatomy / Options / States /
+> Accessibility stories still need to be authored and polished.
+
+## Anatomy
+
+A `<swc-popover>` renders an anchored top-layer surface that wraps slotted
+content and, by default, an arrow (tip) pointing at its trigger.
+
+_Anatomy story and full part breakdown to come._
+
+## Options
+
+`placement`, `size`, `hide-arrow`, `offset`, `cross-offset`, and `should-flip`
+tune positioning and appearance. `modal` opts into blocking `<dialog>` behavior
+(focus trap, background inert, `role="dialog"`).
+
+_Option stories to come._
+
+## Behaviors
+
+### Custom anchor
+
+The toggling control and the positioning anchor can be different elements: a
+button drives `open` while the popover anchors to another element via the
+`triggerElement` property (`manual` suppresses the anchor's own click-to-toggle).
+
+<Canvas of={Stories.CustomAnchor} />
+
+## Accessibility
+
+The resolved trigger receives `aria-expanded` and a durable `aria-controls`
+relationship wired through the element-reference IDL so it works across shadow
+boundaries. In modal mode the internal `<dialog>` provides `role="dialog"` and a
+focus trap, and the trigger gets `aria-haspopup="dialog"`. `Escape` and
+outside-click dismiss in the default (auto) mode.
+
+_Accessibility story and best-practices guidance to come._
+
+<DocsFooter />

@@ -118,7 +118,7 @@ const accountCard = `
 // ────────────────────
 
 export const Playground: Story = {
-  tags: ['autodocs', 'dev'],
+  tags: ['dev'],
   args: {
     open: false,
     placement: 'bottom',
