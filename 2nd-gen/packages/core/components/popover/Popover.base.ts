@@ -14,14 +14,14 @@ import { PropertyValues } from 'lit';
 import { property } from 'lit/decorators.js';
 
 import {
-  fromFloatingPlacement,
   PlacementController,
-  toFloatingPlacement,
   type VirtualTrigger,
 } from '@spectrum-web-components/core/controllers/index.js';
 import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
 import {
   isTopDismissible,
+  physicalSide,
+  reflectActualPlacement,
   registerDismissible,
   resolveTrigger,
   runAfterTransition,
@@ -475,25 +475,20 @@ export abstract class PopoverBase extends SpectrumElement {
       tipElement: showArrow ? (this.tipElement ?? undefined) : undefined,
       tipPadding: this.tipPadding,
       onPlacementChange: (next) => {
-        // Mirror Tooltip: expose the computed physical side as the
-        // `actual-placement` host attribute for CSS, not as a public property.
-        this.setAttribute('actual-placement', next.split('-')[0]);
+        // Expose the computed physical side as the `actual-placement` host
+        // attribute for CSS, not as a public property.
+        this.setAttribute('actual-placement', physicalSide(next));
       },
     });
   }
 
-  // Resolve the requested `placement` to its physical side (honoring the
-  // trigger's writing direction for logical `start` / `end`) and reflect it as
-  // the `actual-placement` host attribute.
+  // Reflect the requested placement's physical side onto the host before the
+  // controller's first (async) compute, honoring the anchor's writing direction
+  // for logical `start` / `end`.
   private _reflectDeclaredPlacement(): void {
     const directionSource =
       this._anchor instanceof HTMLElement ? this._anchor : this;
-    const direction =
-      getComputedStyle(directionSource).direction === 'rtl' ? 'rtl' : 'ltr';
-    const side = fromFloatingPlacement(
-      toFloatingPlacement(this.placement, direction)
-    ).split('-')[0];
-    this.setAttribute('actual-placement', side);
+    reflectActualPlacement(this, this.placement, directionSource);
   }
 
   // ──────────────────

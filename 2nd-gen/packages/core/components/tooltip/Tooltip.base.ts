@@ -19,12 +19,12 @@ import {
   type HoverControllerHost,
 } from '../../controllers/hover-controller/index.js';
 import {
-  fromFloatingPlacement,
   type Placement as ControllerPlacement,
   PlacementController,
-  toFloatingPlacement,
 } from '../../controllers/placement-controller/index.js';
 import {
+  physicalSide,
+  reflectActualPlacement,
   type ResolvedTrigger,
   resolveTrigger,
   runAfterTransition,
@@ -247,12 +247,11 @@ export abstract class TooltipBase
   // PlacementController overwrites it with the flip-resolved side afterwards.
   private setDeclaredActualPlacement(): void {
     const { trigger } = this.resolveTrigger();
-    const direction =
-      trigger && getComputedStyle(trigger).direction === 'rtl' ? 'rtl' : 'ltr';
-    const side = fromFloatingPlacement(
-      toFloatingPlacement(this.placement as ControllerPlacement, direction)
-    ).split('-')[0];
-    this.setAttribute('actual-placement', side);
+    reflectActualPlacement(
+      this,
+      this.placement as ControllerPlacement,
+      trigger ?? this
+    );
   }
 
   private startPlacement(): void {
@@ -268,7 +267,7 @@ export abstract class TooltipBase
       shouldFlip: this.shouldFlip,
       tipElement: this.tipElement ?? undefined,
       onPlacementChange: (resolvedPlacement: ControllerPlacement) => {
-        this.setAttribute('actual-placement', resolvedPlacement.split('-')[0]);
+        this.setAttribute('actual-placement', physicalSide(resolvedPlacement));
       },
     });
   }
