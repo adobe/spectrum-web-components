@@ -23,6 +23,7 @@ import { SpectrumElement } from '@spectrum-web-components/core/element/index.js'
 import {
   hasActiveTransition,
   isTopDismissible,
+  maxTransitionDurationMs,
   registerDismissible,
   resolveTrigger,
   unregisterDismissible,
@@ -261,6 +262,9 @@ export abstract class PopoverBase extends SpectrumElement {
   /** Document Escape listener (default mode) used to label the close source. */
   private _escapeListener?: (event: KeyboardEvent) => void;
 
+  /** Tears down the in-flight `_afterTransition` wiring (listener + fallback timer). */
+  private _cancelAfterTransition?: () => void;
+
   // ──────────────────
   //     LIFECYCLE
   // ──────────────────
@@ -268,6 +272,7 @@ export abstract class PopoverBase extends SpectrumElement {
   public override disconnectedCallback(): void {
     super.disconnectedCallback();
     this._placementController.stop();
+    this._cancelAfterTransition?.();
     unregisterDismissible(this);
     this._removeEscapeListener();
     this._removeTriggerClick();
@@ -681,15 +686,47 @@ export abstract class PopoverBase extends SpectrumElement {
     this._closeSource = null;
   }
 
-  // Run `callback` after the internal element's transition ends, or immediately
+  // Run `callback` once the internal element's transition ends, or immediately
   // when no transition will run (none declared, or reduced motion), since
   // `transitionend` will not fire in that case.
+  //
+  // Robustness, mirroring Tooltip:
+  // - **Cycle guard:** each call first supersedes any pending after-transition
+  //   from the previous open/close cycle, so a stale listener/timer can't fire
+  //   into the new state (e.g. a rapid close→reopen never dispatches a spurious
+  //   `swc-after-close` once it has reopened).
+  // - **Fallback timer:** some browsers (e.g. Firefox) don't fire `transitionend`
+  //   for `transition-behavior: allow-discrete` properties (`overlay` / `display`
+  //   here). A timer based on the longest declared duration guarantees the
+  //   callback still runs, so `swc-after-close` fires and `actual-placement`
+  //   clears even if `transitionend` is skipped.
   private _afterTransition(callback: () => void): void {
+    // Supersede any pending after-transition from a prior cycle (no callback).
+    this._cancelAfterTransition?.();
+
     const element = this.internalElement;
     if (!element || !hasActiveTransition(element)) {
       callback();
       return;
     }
-    element.addEventListener('transitionend', callback, { once: true });
+
+    const settle = (): void => {
+      // Clears the listener + timer and forgets the pending wiring; guards
+      // against the listener and the fallback timer both firing.
+      this._cancelAfterTransition?.();
+      callback();
+    };
+
+    const timer = window.setTimeout(
+      settle,
+      maxTransitionDurationMs(element) + 100
+    );
+    element.addEventListener('transitionend', settle);
+
+    this._cancelAfterTransition = (): void => {
+      this._cancelAfterTransition = undefined;
+      clearTimeout(timer);
+      element.removeEventListener('transitionend', settle);
+    };
   }
 }
