@@ -10,11 +10,17 @@
  * governing permissions and limitations under the License.
  */
 
+/**
+ * Shared types for testing-grid templates and VRT story configs.
+ */
+
 import { nothing, type TemplateResult } from 'lit';
 import type { StoryContext } from '@storybook/web-components';
 
+/** Storybook context passed into every grid template function. */
 export type GridStoryContext = StoryContext;
 
+/** Lit render function for a single grid cell or nested section. */
 export type GridTemplateFn<TArgs = Record<string, unknown>> = (
   args: TArgs,
   context: GridStoryContext
@@ -31,9 +37,12 @@ export interface HeadingProps {
 }
 
 export interface ContainerProps {
+  /** Section title; omitted when empty. */
   heading?: string;
+  /** Nested templates, containers, or `{ testHeading, content }` objects. */
   content?: unknown;
   type?: HeadingSemantics;
+  /** Nesting depth — affects heading scale, gap, and padding. */
   level?: number;
   direction?: 'row' | 'column';
   withBorder?: boolean;
@@ -41,10 +50,13 @@ export interface ContainerProps {
   wrapperStyles?: Record<string, string>;
 }
 
+/** One column/row in a `States()` matrix. Extra keys are merged into template args. */
 export interface StateItem {
   testHeading?: string;
   wrapperStyles?: Record<string, string>;
+  /** Skip this state when the parent section heading matches. */
   ignore?: string[];
+  /** Only render for parent sections whose heading is listed. */
   include?: string[];
 }
 
@@ -92,19 +104,28 @@ export type SizesProps<TArgs extends Record<string, unknown>> =
   SizesOwn<TArgs> & Omit<Partial<TArgs>, keyof SizesOwn<TArgs>>;
 
 export interface TestCaseItem<TArgs = Record<string, unknown>> {
+  /** Override the default template for this `testData` section. */
   Template?: GridTemplateFn<TArgs>;
   testHeading?: string;
   wrapperStyles?: Record<string, string>;
+  /** When false, skips `stateData` for this section. Default: true when `stateData` is set. */
   withStates?: boolean;
 }
 
+/** Config passed to `Variants()` from a component's `*.vrt.ts` file. */
 export interface VariantsConfig<TArgs extends Record<string, unknown>> {
+  /** Default cell template; also used for docs / single-instance preview. */
   Template: GridTemplateFn<TArgs>;
+  /** Template for cells inside state matrices; defaults to `Template`. */
   TestTemplate?: GridTemplateFn<TArgs>;
+  /** Template for the sizing row; defaults to `TestTemplate`. */
   SizeTemplate?: GridTemplateFn<TArgs>;
+  /** Top-level VRT sections (variant matrix, static colors, edge cases, …). */
   testData?: Array<TestCaseItem<TArgs> & TArgs>;
+  /** Interaction states applied within each section (disabled, hover, …). */
   stateData?: Array<StateItem & TArgs>;
   withStateBorder?: boolean;
+  /** Append a `Sizes()` row at the bottom of the grid. */
   withSizes?: boolean;
   sizeDirection?: 'row' | 'column';
   stateDirection?: 'row' | 'column';

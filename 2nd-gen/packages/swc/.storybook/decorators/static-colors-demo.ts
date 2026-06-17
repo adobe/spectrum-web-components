@@ -15,7 +15,7 @@ import { styleMap } from 'lit/directives/style-map.js';
 import { makeDecorator } from '@storybook/preview-api';
 import type { DecoratorFunction } from '@storybook/types';
 
-/** Gradient backgrounds for static-color demos — matching spectrum-css. */
+/** Gradient backgrounds for static-color Storybook demos. */
 export const STATIC_COLOR_DEMO_BACKGROUNDS = {
   white: 'linear-gradient(45deg, rgb(64 0 22), rgb(14 24 67))',
   black: 'linear-gradient(45deg, rgb(255 241 246), rgb(238 245 255))',

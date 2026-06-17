@@ -11,8 +11,8 @@
  */
 
 /**
- * Visual-regression testing grid for Button — mirrors spectrum-css
- * `components/button/stories/button.test.js`.
+ * Visual-regression testing grid for Button.
+ * Case list for the `VRT Grid` story in `button.stories.ts`.
  */
 
 import {

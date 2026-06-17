@@ -39,11 +39,13 @@ export type {
   VariantsConfig,
 } from './testing-grid.js';
 export {
-  applyPseudoState,
   applyTestingGridPseudoStates,
   applyVrtGridPseudoStates,
-  applyVrtIconOnlyLayout,
+  applyVrtLayoutClasses,
   scheduleTestingGridPseudoStates,
-} from '../pseudo-states-helpers.js';
-export type { ButtonVrtState, PseudoState } from '../pseudo-states-helpers.js';
+} from './pseudo-states-helpers.js';
+export type {
+  TestingGridPseudoStateOptions,
+  VrtInteractionState,
+} from './pseudo-states-helpers.js';
 export { augmentTree } from '../pseudo-states.js';

@@ -16,7 +16,7 @@
  * Implementation lives in `./testing-grid/`:
  * - `constants.ts` — story name, Chromatic params, borders, size labels
  * - `types.ts` — shared TypeScript types
- * - `internal.ts` — Chromatic detection, static-color wrapper, theme helpers
+ * - `internal.ts` — static-color wrapper, theme helpers, `getRandomId`
  * - `primitives.ts` — Heading, Container, renderContent
  * - `builders.ts` — States, ArgGrid, Sizes, vrtCase
  * - `variants.ts` — Variants (main VRT entry)
@@ -27,7 +27,8 @@ export {
   TESTING_GRID_STORY_PARAMETERS,
 } from './testing-grid/constants.js';
 export { ArgGrid, Sizes, States, vrtCase } from './testing-grid/builders.js';
-export { getRandomId, isChromatic } from './testing-grid/internal.js';
+export { default as isChromatic } from 'chromatic/isChromatic';
+export { getRandomId } from './testing-grid/internal.js';
 export {
   Container,
   Heading,

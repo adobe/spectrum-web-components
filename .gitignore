@@ -127,6 +127,7 @@ test/*
 
 # vitest browser test screenshots
 **/__screenshots__/
+**/.vitest-attachments/
 
 # second gen build artifacts
 2nd-gen/packages/*/dist/

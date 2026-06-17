@@ -10,12 +10,16 @@
  * governing permissions and limitations under the License.
  */
 
+/**
+ * Low-level layout primitives: section headings, nested content, and bordered containers.
+ */
+
 import { html, nothing, type TemplateResult } from 'lit';
+import { classMap } from 'lit/directives/class-map.js';
 import { styleMap } from 'lit/directives/style-map.js';
 import { when } from 'lit/directives/when.js';
 
 import { TEST_GRID_BORDER } from './constants.js';
-import { isDarkTheme, readStaticColor } from './internal.js';
 import type {
   ContainerProps,
   GridStoryContext,
@@ -24,8 +28,38 @@ import type {
   RenderContentOptions,
 } from './types.js';
 
+const HEADING_SIZE_CLASS = {
+  l: 'L',
+  s: 'S',
+  xxs: 'XS',
+} as const;
+
+function headingClasses({
+  semantics = 'heading',
+  size = 'l',
+  weight,
+  withMargin = false,
+}: Pick<HeadingProps, 'semantics' | 'size' | 'weight' | 'withMargin'>): Record<
+  string,
+  boolean
+> {
+  const isDetail = semantics === 'detail';
+  const variantBase = isDetail ? 'swc-Detail' : 'swc-Heading';
+  const sizeClass = `${variantBase}--size${HEADING_SIZE_CLASS[size]}`;
+  const marginsClass = `${variantBase}--margins`;
+
+  return {
+    'chromatic-ignore': true,
+    [variantBase]: true,
+    [sizeClass]: true,
+    [marginsClass]: withMargin,
+    'swc-Heading--heavy': !isDetail && weight !== 'light',
+  };
+}
+
 /**
- * Renders a label above grid cells; `chromatic-ignore` keeps VRT focused on components.
+ * Section label for a grid region. Uses SWC typography classes and is excluded
+ * from Chromatic snapshots via `chromatic-ignore`.
  */
 export function Heading(
   {
@@ -35,58 +69,24 @@ export function Heading(
     weight,
     withMargin = false,
   }: HeadingProps = {},
-  context: GridStoryContext = {} as GridStoryContext
+  _context: GridStoryContext = {} as GridStoryContext
 ): TemplateResult | typeof nothing {
   if (!content) {
     return nothing;
   }
 
-  const headingStyles: Record<string, string> = {
-    display: 'block',
-    color: 'inherit',
-    'font-family':
-      'adobe-clean, "adobe clean", "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu, "Trebuchet MS", "Lucida Grande", sans-serif',
-    'font-size': '11px',
-    'line-height': '1.3',
-    'font-weight': '700',
-    'margin-block-end': withMargin ? '8px' : '0',
-  };
-
-  if ((size === 'xxs' && semantics === 'heading') || size === 'l') {
-    headingStyles['font-size'] = '14px';
-  }
-
-  if (semantics === 'detail') {
-    headingStyles['letter-spacing'] = '.06em';
-    headingStyles['text-transform'] = 'uppercase';
-  }
-
-  if (weight === 'light') {
-    if (semantics === 'heading') {
-      headingStyles['font-weight'] = '300';
-    } else {
-      headingStyles['font-weight'] = '400';
-    }
-  }
-
-  if (isDarkTheme(context)) {
-    headingStyles['color'] = 'white';
-  } else if (typeof readStaticColor(context.args) === 'undefined') {
-    headingStyles['color'] = 'CanvasText';
-  }
-  // When static-color is set in light theme, keep inherit: section titles stay
-  // legible on the default canvas; nested headings inside wrapWithStaticColorDemo
-  // pick up STATIC_COLOR_DEMO_FOREGROUNDS from the gradient wrapper.
-
   return html`
-    <span class="chromatic-ignore" style=${styleMap(headingStyles)}>
+    <div
+      class=${classMap(headingClasses({ semantics, size, weight, withMargin }))}
+    >
       ${content}
-    </span>
+    </div>
   `;
 }
 
 /**
- * Walks nested content arrays / objects (same idea as Spectrum CSS `renderContent`).
+ * Recursively renders grid content: Lit templates, template functions, or nested
+ * `{ testHeading, content }` objects. Custom `callback` can override nesting behavior.
  */
 export function renderContent(
   content: unknown = [],
@@ -142,7 +142,9 @@ export function renderContent(
 }
 
 /**
- * Outer stack + inner flex region with optional border, mirroring Spectrum CSS `Container`.
+ * Bordered flex section with an optional heading. `level` controls heading size and
+ * spacing (1 = top-level section, 2+ = nested rows/columns). Nesting deeper grids
+ * is done by passing more `Container` calls inside `content`.
  */
 export function Container(
   {
@@ -196,7 +198,7 @@ export function Container(
 
   const headingGlobals = {
     ...context.globals,
-    // Level-1 headings stay legible on the default canvas (matches spectrum-css `color: light` override).
+    // Level-1 headings stay legible on the default canvas.
     theme: level === 1 && !isDocs ? 'light' : context.globals?.theme,
   };
 

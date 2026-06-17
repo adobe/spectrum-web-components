@@ -48,10 +48,12 @@
   transition-timing-function: token("animation-ease-in-out");
   transition-duration: token("animation-duration-100");
   transition-property: outline, border-color, color, background-color, transform;
-}.swc-Button:focus-visible,
-.swc-Button.is-focus-visible {
+}.swc-Button:focus-visible {
   outline: token("focus-indicator-thickness") solid var(--swc-button-focus-indicator-color, token("focus-indicator-color"));
   outline-offset: token("focus-indicator-gap");
+  color: var(--swc-button-content-color-focus, token("gray-25"));
+  background-color: var(--swc-button-background-color-focus, token("neutral-background-color-key-focus"));
+  border-color: var(--swc-button-border-color-focus, transparent);
 }.swc-Button:disabled:is(*, :hover) {
   color: var(--swc-button-content-color-disabled, token("disabled-content-color"));
   background-color: var(--swc-button-background-color-disabled, token("disabled-background-color"));
@@ -63,10 +65,6 @@
   color: var(--swc-button-content-color-hover, token("gray-25"));
   background-color: var(--swc-button-background-color-hover, token("neutral-background-color-hover"));
   border-color: var(--swc-button-border-color-hover, transparent);
-}.swc-Button:focus-visible {
-  color: var(--swc-button-content-color-focus, token("gray-25"));
-  background-color: var(--swc-button-background-color-focus, token("neutral-background-color-key-focus"));
-  border-color: var(--swc-button-border-color-focus, transparent);
 }.swc-Button:active {
   color: var(--swc-button-content-color-down, token("gray-25"));
   background-color: var(--swc-button-background-color-down, token("neutral-background-color-down"));

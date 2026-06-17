@@ -10,6 +10,10 @@
  * governing permissions and limitations under the License.
  */
 
+/**
+ * Internal helpers for static-color sections and shared utilities.
+ */
+
 import { html } from 'lit';
 import { styleMap } from 'lit/directives/style-map.js';
 import type { StoryContext } from '@storybook/web-components';
@@ -20,24 +24,7 @@ import {
 } from '../../decorators/static-colors-demo.js';
 import type { GridTemplateFn } from './types.js';
 
-/** Same detection logic as `chromatic/isChromatic` (browser Storybook + CI). */
-export function isChromatic(windowArgument?: Window): boolean {
-  const w =
-    windowArgument ?? (typeof window !== 'undefined' ? window : undefined);
-  return !!(
-    w &&
-    (/Chromatic/.test(w.navigator.userAgent) ||
-      /chromatic=true/.test(w.location.href))
-  );
-}
-
-export function capitalize(str: string): string {
-  if (!str) {
-    return str;
-  }
-  return str.charAt(0).toUpperCase() + str.slice(1);
-}
-
+/** Reads `static-color` / `staticColor` from story args when present. */
 export function readStaticColor(
   args: Record<string, unknown> | undefined
 ): string | undefined {
@@ -56,7 +43,10 @@ function isStaticColorDemoKey(
   return value === 'white' || value === 'black';
 }
 
-/** Gradient panel for VRT static-color sections (mirrors spectrum-css context backgrounds). */
+/**
+ * Wraps a grid cell template in the static white/black gradient panel when
+ * `static-color` is set on the cell args.
+ */
 export function wrapWithStaticColorDemo<TArgs extends Record<string, unknown>>(
   Template: GridTemplateFn<TArgs>,
   data: TArgs
@@ -79,11 +69,13 @@ export function wrapWithStaticColorDemo<TArgs extends Record<string, unknown>>(
   `;
 }
 
+/** True when the Storybook theme global is dark or adaptive. */
 export function isDarkTheme(context: StoryContext): boolean {
   const theme = context.globals?.theme as string | undefined;
   return theme === 'dark' || theme === 'adaptive';
 }
 
+/** Stable random id for controls that need unique `name` / `id` values across grid cells. */
 export function getRandomId(prefix = 'spectrum'): string {
   return `${prefix}-${Math.random().toString(36).substring(2, 7)}`;
 }

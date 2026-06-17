@@ -15,10 +15,12 @@ import {
   type Options,
   setStorybookHelpersConfig,
 } from '@wc-toolkit/storybook-helpers';
+import isChromatic from 'chromatic/isChromatic';
 
 import customElements from './custom-elements.json';
 import { withContext } from './decorators/contexts.js';
 import {
+  pseudoStatesDecorator,
   withFlexLayout,
   withStaticColorsDemo,
   withTestingPreview,
@@ -27,7 +29,6 @@ import { withLanguageWrapper } from './decorators/language.js';
 import { withStaticColorPlayground } from './decorators/static-color-playground.js';
 import DocumentTemplate from './DocumentTemplate.mdx';
 import { FontLoader } from './loaders/font-loader.js';
-import { pseudoStatesDecorator } from './pseudo-states-decorator.js';
 import { transformDocsSource } from './utils/docs-source-transform.js';
 
 import '../stylesheets/swc.css';
@@ -161,6 +162,10 @@ const preview = {
     chromatic: {
       disableSnapshot: true,
       forcedColors: 'none',
+      // Storybook does not run `play` automatically while browsing the dev UI.
+      // Chromatic renders each story via that same initial path, so without this
+      // it would snapshot the pre-play state. Enable autoplay only under Chromatic.
+      autoplay: isChromatic(),
       // Pending spinner uses CSS animations; avoid reduced-motion static frame.
       prefersReducedMotion: 'no-preference',
       pauseAnimationAtEnd: true,

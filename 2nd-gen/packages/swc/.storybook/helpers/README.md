@@ -50,17 +50,42 @@ const componentName = formatComponentName(meta.title);
 
 ## Testing grid (`test/*.vrt.ts`)
 
-Spectrum CSS keeps VRT case lists in a sibling module (e.g. `button.test.js`) that is **imported** by `button.stories.ts`, not indexed as its own Storybook file.
+SWC keeps VRT case lists in a sibling module (e.g. `components/button/test/button.vrt.ts`) that is **imported** by `<name>.stories.ts`, not indexed as its own Storybook file.
 
-For SWC:
+To add a testing grid for a component:
 
-1. Add `components/<name>/stories/<name>.template.ts` — a **pure Lit** `Template()` (no `getStorybookHelpers().template`, which calls `useArgs()` per cell and breaks React hooks in large grids).
+1. Add `components/<name>/stories/<name>.template.ts` — a **pure Lit** `Template()` (no `getStorybookHelpers().template`, which calls `useArgs()` per cell and breaks React hooks in large grids). Wrap each grid cell in a `div` with the `data-vrt-*` attributes below.
 2. Add `components/<name>/test/<name>.vrt.ts` with `Variants()`, `ArgGrid`, `Container`, and `testData` / `stateData` using that template.
 3. Export the render function (e.g. `ButtonVRTRender`) from the VRT file.
 4. In `<name>.stories.ts`, wire a story (e.g. `VRTGrid`): `render: ButtonVRTRender`, set `storyName` to `TESTING_GRID_STORY_NAME` (`'VRT Grid'`), and spread `TESTING_GRID_STORY_PARAMETERS` into `parameters` (Chromatic snapshots are disabled globally; only testing-grid stories opt in via `chromatic: { disableSnapshot: false }`, with `delay: 1100` for pending cells and `prefersReducedMotion: 'no-preference'` / `pauseAnimationAtEnd: true` so the pending spinner captures a mid-animation frame).
 5. Toggle **Testing preview** in the Storybook toolbar (beaker) to view the grid locally.
 
-Forced interaction states (hover, focus, active) use the global `pseudoStatesDecorator`, which augments each component's `adoptedStyleSheets` with class-based pseudo-state rules (`.is-hover`, `.is-focus-visible`, etc.). Testing-grid stories apply those classes in a `play` function via `applyTestingGridPseudoStates` — not reflected attributes on the component class. Icon-only cells use `vrt-icon-only-cell` wrappers patched in the same play helper.
+Forced interaction states (hover, focus, active) use the global `pseudoStatesDecorator`, which augments each component's `adoptedStyleSheets` with class-based pseudo-state rules (`.is-hover`, `.is-focus-visible`, etc.). `applyTestingGridPseudoStates` (VRT story `play` function) reads the cell wrapper attributes and patches the correct shadow-DOM node after render.
+
+### VRT cell wrapper attributes (`<name>.template.ts`)
+
+Each grid cell should wrap the component in a `div.vrt-cell` with these attributes. They are **Storybook/VRT only** — not part of the public component API.
+
+| Attribute                 | Required | Purpose                                                                                                                                                                                                                                            |
+| ------------------------- | -------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `data-vrt-host`           | Yes      | Custom-element tag inside the wrapper (e.g. `swc-button`). Used to `querySelector` the host and to `customElements.whenDefined` before patching.                                                                                                   |
+| `data-vrt-control`        | Yes      | CSS selector for the **internal** element that receives forced classes — typically the root class inside the host's shadow root (e.g. `.swc-Button`). Omit only if the host element itself is the control.                                         |
+| `data-vrt-state`          | No       | Interaction state to force: `hover`, `focus`, or `active`. Omit for default and disabled cells. Maps to `.is-hover`, `.is-focus-visible`, and `.is-active` on the control. Disabled state uses the component's `disabled` attribute instead.       |
+| `data-vrt-layout-classes` | No       | Space-separated classes applied to the control when layout depends on slot detection or other async work (e.g. `swc-Button--hasIcon swc-Button--iconOnly` for icon-only cells). Ensures the correct layout is captured before Chromatic snapshots. |
+
+Example (Button):
+
+```html
+<div
+  class="vrt-cell"
+  data-vrt-host="swc-button"
+  data-vrt-control=".swc-Button"
+  data-vrt-state="hover"
+  data-vrt-layout-classes="swc-Button--hasIcon swc-Button--iconOnly"
+>
+  <swc-button>...</swc-button>
+</div>
+```
 
 Chromatic uses a dual approach: `preview.ts` sets `chromatic.disableSnapshot: true` globally, and each testing-grid story opts in with `TESTING_GRID_STORY_PARAMETERS` (`disableSnapshot: false`). `chromatic.config.json` keeps `onlyChanged` / `traceChanged` so existing stories still snapshot when they opt in.
 
@@ -72,14 +97,14 @@ Unit tests for the testing-grid helpers live in `.storybook/helpers/test/testing
 
 `testing-grid.ts` is a thin barrel; implementation lives in `testing-grid/`:
 
-| File            | Responsibility                                                          |
-| --------------- | ----------------------------------------------------------------------- |
-| `constants.ts`  | `TESTING_GRID_STORY_NAME`, Chromatic params, borders, size labels       |
-| `types.ts`      | Shared TypeScript types                                                 |
-| `internal.ts`   | Chromatic detection, static-color wrapper, theme helpers, `getRandomId` |
-| `primitives.ts` | `Heading`, `Container`, `renderContent`                                 |
-| `builders.ts`   | `States`, `ArgGrid`, `Sizes`, `vrtCase`                                 |
-| `variants.ts`   | `Variants` (main VRT entry)                                             |
+| File            | Responsibility                                                    |
+| --------------- | ----------------------------------------------------------------- |
+| `constants.ts`  | `TESTING_GRID_STORY_NAME`, Chromatic params, borders, size labels |
+| `types.ts`      | Shared TypeScript types                                           |
+| `internal.ts`   | Static-color wrapper, theme helpers, `getRandomId`                |
+| `primitives.ts` | `Heading`, `Container`, `renderContent`                           |
+| `builders.ts`   | `States`, `ArgGrid`, `Sizes`, `vrtCase`                           |
+| `variants.ts`   | `Variants` (main VRT entry)                                       |
 
 Import from `helpers/index.js` or `helpers/testing-grid.js` as before — no call-site changes needed.
 

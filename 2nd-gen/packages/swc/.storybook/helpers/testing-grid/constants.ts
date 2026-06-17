@@ -10,10 +10,17 @@
  * governing permissions and limitations under the License.
  */
 
-/** Standard storyName for VRT grids (Chromatic opt-in via TESTING_GRID_STORY_PARAMETERS). */
+/**
+ * Shared constants for VRT grid stories and layout.
+ */
+
+/** Standard `storyName` for component VRT grid stories. */
 export const TESTING_GRID_STORY_NAME = 'VRT Grid';
 
-/** Opt a testing-grid story into Chromatic (preview disables snapshots globally). */
+/**
+ * Spread into a VRT grid story's `parameters`.
+ * Opts the story into Chromatic (`disableSnapshot: false`) while preview disables snapshots globally.
+ */
 export const TESTING_GRID_STORY_PARAMETERS = {
   chromatic: {
     disableSnapshot: false,
@@ -24,8 +31,10 @@ export const TESTING_GRID_STORY_PARAMETERS = {
   },
 } as const;
 
+/** Border applied to bordered grid sections (`Container` with `withBorder: true`). */
 export const TEST_GRID_BORDER = '1px solid var(--swc-gray-300)';
 
+/** Human-readable labels for the `size` arg in `Sizes()` / `ArgGrid`. */
 export const SIZE_LABELS: Record<string, string> = {
   xxs: 'Extra-extra-small',
   xs: 'Extra-small',

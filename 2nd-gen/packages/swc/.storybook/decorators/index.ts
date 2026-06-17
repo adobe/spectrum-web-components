@@ -10,6 +10,7 @@
  * governing permissions and limitations under the License.
  */
 export { withFlexLayout } from './flex-layout';
+export { pseudoStatesDecorator } from './pseudo-states.js';
 export { withStaticColorsDemo } from './static-colors-demo';
 export { withStaticColorPlayground } from './static-color-playground';
 export { withTestingPreview } from './testing-preview.js';

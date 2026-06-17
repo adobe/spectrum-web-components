@@ -75,7 +75,9 @@ describe('Heading()', () => {
 
     const heading = host.querySelector('.chromatic-ignore') as HTMLElement;
     expect(heading?.textContent?.trim()).toBe('Primary');
-    expect(heading?.style.fontWeight).toBe('700');
+    expect(heading?.classList.contains('swc-Heading')).toBe(true);
+    expect(heading?.classList.contains('swc-Heading--sizeL')).toBe(true);
+    expect(heading?.classList.contains('swc-Heading--heavy')).toBe(true);
     host.remove();
   });
 
@@ -87,11 +89,12 @@ describe('Heading()', () => {
     );
 
     const heading = host.querySelector('.chromatic-ignore') as HTMLElement;
-    expect(heading?.style.textTransform).toBe('uppercase');
+    expect(heading?.classList.contains('swc-Detail')).toBe(true);
+    expect(heading?.classList.contains('swc-Detail--sizeS')).toBe(true);
     host.remove();
   });
 
-  it('keeps inherit (not static-color token) for static white sections', () => {
+  it('uses typography color tokens outside static-color sections', () => {
     const host = mount();
     render(
       Heading({ content: 'Static white' }, {
@@ -101,7 +104,8 @@ describe('Heading()', () => {
     );
 
     const heading = host.querySelector('.chromatic-ignore') as HTMLElement;
-    expect(heading?.style.color).toBe('inherit');
+    expect(heading?.style.color).toBe('');
+    expect(getComputedStyle(heading).color).not.toBe('rgb(255, 255, 255)');
     host.remove();
   });
 
@@ -119,7 +123,7 @@ describe('Heading()', () => {
     );
 
     const heading = host.querySelector('.chromatic-ignore') as HTMLElement;
-    expect(heading?.style.color).toBe('inherit');
+    expect(heading?.style.color).toBe('');
     expect(getComputedStyle(heading).color).toBe('rgb(255, 255, 255)');
     host.remove();
   });

@@ -42,8 +42,7 @@
   user-select: none;
 }
 
-.swc-Button:focus-visible,
-.swc-Button.is-focus-visible {
+.swc-Button:focus-visible {
   outline: token("focus-indicator-thickness") solid var(--swc-button-focus-indicator-color, token("focus-indicator-color"));
   outline-offset: token("focus-indicator-gap");
 }

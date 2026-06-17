@@ -16,10 +16,12 @@
  * Do not use `getStorybookHelpers().template` in testing grids — that helper calls
  * `useArgs()` (via `syncControls`) once per instance and triggers React's
  * "Rendered more hooks than during the previous render" when many cells mount.
+ *
+ * Each cell is wrapped in a `div.vrt-cell` with `data-vrt-*` attributes for forced
+ * pseudo-states and layout patching. See `.storybook/helpers/README.md` (VRT cell wrapper attributes).
  */
 
 import { html, nothing, type TemplateResult } from 'lit';
-import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
 import type {
@@ -29,7 +31,7 @@ import type {
   ButtonVariant,
 } from '@spectrum-web-components/core/components/button';
 
-import type { ButtonVrtState } from '../../../.storybook/pseudo-states-helpers.js';
+import type { VrtInteractionState } from '../../../.storybook/helpers/index.js';
 
 /** Workflow "Add" icon for VRT grid cells. */
 export const addIconTemplate = html`
@@ -60,11 +62,11 @@ export type ButtonTemplateArgs = {
   'default-slot'?: string;
   /** Pre-rendered icon slot content (must include `slot="icon"` on the root node). */
   'icon-slot'?: TemplateResult;
-  /** Icon-only cell — omits label; `vrt-icon-only-cell` forces layout before slot detection. */
+  /** Icon-only cell — layout classes are forced before capture via `data-vrt-layout-classes`. */
   iconOnly?: boolean;
   style?: string;
   /** Storybook / VRT only — applied via `applyTestingGridPseudoStates` play helper. */
-  'vrt-state'?: ButtonVrtState;
+  'vrt-state'?: VrtInteractionState;
 };
 
 export function Template({
@@ -86,13 +88,20 @@ export function Template({
 }: ButtonTemplateArgs = {}): TemplateResult {
   const labelContent = iconOnly || !defaultSlot ? nothing : defaultSlot;
 
+  // VRT cell wrapper — read by `applyTestingGridPseudoStates` (see helpers/README.md).
+  // - data-vrt-host: custom-element tag inside this wrapper (swc-button).
+  // - data-vrt-control: shadow-DOM selector for the node that receives forced classes.
+  // - data-vrt-state: optional hover / focus / active → .is-hover, .is-focus-visible, .is-active.
+  // - data-vrt-layout-classes: optional classes when layout depends on slot detection (icon-only).
   return html`
     <div
-      class=${classMap({
-        'vrt-button-cell': true,
-        'vrt-icon-only-cell': iconOnly,
-      })}
+      class="vrt-cell"
+      data-vrt-host="swc-button"
+      data-vrt-control=".swc-Button"
       data-vrt-state=${ifDefined(vrtState)}
+      data-vrt-layout-classes=${ifDefined(
+        iconOnly ? 'swc-Button--hasIcon swc-Button--iconOnly' : undefined
+      )}
     >
       <swc-button
         variant=${variant}

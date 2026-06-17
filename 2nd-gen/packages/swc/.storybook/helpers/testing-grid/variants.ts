@@ -10,18 +10,30 @@
  * governing permissions and limitations under the License.
  */
 
+/**
+ * Main VRT entry point — returns a Storybook `render` function for a grid story.
+ */
+
 import { html } from 'lit';
 import { styleMap } from 'lit/directives/style-map.js';
 import { when } from 'lit/directives/when.js';
+import isChromatic from 'chromatic/isChromatic';
 
 import { Sizes, States } from './builders.js';
-import { isChromatic, wrapWithStaticColorDemo } from './internal.js';
+import { wrapWithStaticColorDemo } from './internal.js';
 import { Container } from './primitives.js';
 import type { GridTemplateFn, VariantsConfig } from './types.js';
 
 /**
- * Returns a Storybook `render` function: simple preview in Docs / dev, full grid for VRT
- * when `parameters.showTestingGrid` is true or under Chromatic.
+ * Builds the full VRT matrix for a component.
+ *
+ * - **Docs / dev:** renders a single `data-html-preview` instance (`Template` only).
+ * - **VRT:** renders `data-testing-preview` when the toolbar **Testing preview** is on,
+ *   or automatically under Chromatic.
+ *
+ * `testData` defines top-level sections (e.g. default matrix, static colors, edge cases).
+ * `stateData` drives the per-section state columns; a blank `{}` row is prepended as "Default"
+ * when states are present. Append `Sizes()` at the bottom when `withSizes` is true.
  */
 export function Variants<TArgs extends Record<string, unknown>>({
   Template,

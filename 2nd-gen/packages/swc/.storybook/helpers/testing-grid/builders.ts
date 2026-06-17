@@ -10,10 +10,15 @@
  * governing permissions and limitations under the License.
  */
 
+/**
+ * Composable grid builders: state matrices, arg sweeps, and one-off VRT rows.
+ */
+
 import { nothing, type TemplateResult } from 'lit';
 
+import { capitalize } from '@spectrum-web-components/core/utils/capitalize.js';
+
 import { SIZE_LABELS } from './constants.js';
-import { capitalize } from './internal.js';
 import { Container } from './primitives.js';
 import type {
   ArgGridProps,
@@ -24,7 +29,9 @@ import type {
 } from './types.js';
 
 /**
- * Renders `stateData` as labeled columns/rows (interaction states, themes, etc.).
+ * Repeats `Template` for each entry in `stateData` (e.g. disabled, hover, focus).
+ * Merges each state's args into the template call. Use `ignore` / `include` with
+ * `containerHeading` to limit states to specific `testData` sections.
  */
 export function States<TArgs extends Record<string, unknown>>(
   {
@@ -98,7 +105,8 @@ export function States<TArgs extends Record<string, unknown>>(
 }
 
 /**
- * Renders one cell per `options` value for a single arg (variant grid, semantic colors, etc.).
+ * Sweeps one story arg (`argKey`) across `options`, rendering `Template` once per value.
+ * Options default to the story `argTypes[argKey].options` when omitted.
  */
 export function ArgGrid<TArgs extends Record<string, unknown>>(
   {
@@ -182,7 +190,7 @@ export function ArgGrid<TArgs extends Record<string, unknown>>(
   );
 }
 
-/** Arg grid preset for the common `size` control. */
+/** Preset `ArgGrid` for the `size` control with standard size labels. */
 export function Sizes<TArgs extends Record<string, unknown>>(
   {
     withHeading = true,
@@ -206,8 +214,8 @@ export function Sizes<TArgs extends Record<string, unknown>>(
 }
 
 /**
- * One-off `testData` row: fixed arg overrides, optional width constraint, no state matrix.
- * Mirrors spectrum-css special cases such as line wrap and truncation (`withStates: false`).
+ * Helper for a single `testData` row with fixed arg overrides (e.g. line wrap, truncation).
+ * Sets `withStates: false` so the row skips the interaction-state matrix.
  */
 export function vrtCase<TArgs extends Record<string, unknown>>(
   render: (args: TArgs) => TemplateResult | typeof nothing,

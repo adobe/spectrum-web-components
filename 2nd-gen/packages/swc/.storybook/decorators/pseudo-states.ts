@@ -12,11 +12,11 @@
 
 import type { DecoratorFunction } from '@storybook/types';
 
-import { scheduleTestingGridPseudoStates } from './pseudo-states-helpers.js';
+import { scheduleTestingGridPseudoStates } from '../helpers/pseudo-states-helpers.js';
 
 /**
  * Injects class-based pseudo-state rules into open shadow roots after each story
- * renders, then patches testing-grid cells (`data-vrt-state`, icon-only). Runs on
+ * renders, then patches testing-grid cells (`data-vrt-state`, `data-vrt-layout-classes`). Runs on
  * every render so toggling **Testing preview** re-applies classes after the grid mounts.
  */
 export const pseudoStatesDecorator: DecoratorFunction = (storyFn, context) => {

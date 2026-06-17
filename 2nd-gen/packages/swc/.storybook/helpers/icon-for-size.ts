@@ -13,7 +13,6 @@
 import { nothing, TemplateResult } from 'lit';
 
 // Matches the Spectrum icon numeric suffix convention used in icon element file names.
-// Aligns with spectrum-css's appendUiIconDefaultSizing mapping.
 const sizeToSuffix: Record<string, string> = {
   xs: '50',
   s: '75',
