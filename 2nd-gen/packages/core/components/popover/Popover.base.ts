@@ -98,6 +98,18 @@ export abstract class PopoverBase extends SpectrumElement {
   public modal = false;
 
   /**
+   * Accessible name for the modal dialog, forwarded as `aria-label` to the
+   * internal `<dialog>`.
+   *
+   * Applies only in modal mode (`modal`). In the default mode the surface is a
+   * roleless container, so slotted content and the trigger own the semantics and
+   * this has no effect. A modal popover with no accessible name is an authoring
+   * bug (a nameless dialog).
+   */
+  @property({ type: String, attribute: 'accessible-label' })
+  public accessibleLabel = '';
+
+  /**
    * The placement of the popover relative to its trigger.
    *
    * @default 'bottom'
@@ -339,6 +351,15 @@ export abstract class PopoverBase extends SpectrumElement {
         this.triggerElement instanceof HTMLElement ? this.triggerElement : null,
     });
 
+    if (!trigger && this.for && window.__swc?.DEBUG) {
+      window.__swc.warn(
+        this,
+        `<${this.localName}> for="${this.for}" did not resolve to an element in the current tree root. Check that the referenced id exists in the same document tree root.`,
+        'https://spectrum-web-components.adobe.com/?path=/docs/components-popover--docs',
+        { level: 'high' }
+      );
+    }
+
     if (
       this._interactiveElement &&
       this._interactiveElement !== interactiveElement
@@ -480,6 +501,14 @@ export abstract class PopoverBase extends SpectrumElement {
     }
     registerDismissible(this);
     if (this.modal) {
+      if (window.__swc?.DEBUG && !this.accessibleLabel) {
+        window.__swc.warn(
+          this,
+          `<${this.localName}> in modal mode must have an "accessible-label" attribute to name the dialog for assistive technology.`,
+          'https://spectrum-web-components.adobe.com/?path=/docs/components-popover--docs',
+          { issues: ['accessible-label'] }
+        );
+      }
       const dialog = element as HTMLDialogElement;
       if (!dialog.open) {
         dialog.showModal();

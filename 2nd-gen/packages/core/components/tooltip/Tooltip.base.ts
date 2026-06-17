@@ -27,6 +27,8 @@ import {
 import {
   hasActiveTransition,
   maxTransitionDurationMs,
+  type ResolvedTrigger,
+  resolveTrigger,
 } from '../../utils/index.js';
 import {
   TOOLTIP_PLACEMENTS,
@@ -249,7 +251,7 @@ export abstract class TooltipBase
   // synchronously before showPopover() so @starting-style has a direction; the
   // PlacementController overwrites it with the flip-resolved side afterwards.
   private setDeclaredActualPlacement(): void {
-    const trigger = this.resolveTrigger();
+    const { trigger } = this.resolveTrigger();
     const direction =
       trigger && getComputedStyle(trigger).direction === 'rtl' ? 'rtl' : 'ltr';
     const side = fromFloatingPlacement(
@@ -259,7 +261,7 @@ export abstract class TooltipBase
   }
 
   private startPlacement(): void {
-    const trigger = this.resolveTrigger();
+    const { trigger } = this.resolveTrigger();
     if (!trigger) {
       return;
     }
@@ -276,24 +278,22 @@ export abstract class TooltipBase
     });
   }
 
-  private resolveTrigger(): HTMLElement | null {
-    if (this.triggerElement) {
-      return this.triggerElement;
+  // Resolve the trigger and its AT-facing inner button via the shared helper,
+  // adding the tooltip's dev-mode warning when `for` does not resolve.
+  private resolveTrigger(): ResolvedTrigger {
+    const resolved = resolveTrigger(this, {
+      for: this.for,
+      triggerElement: this.triggerElement,
+    });
+    if (!resolved.trigger && this.for && window.__swc?.DEBUG) {
+      window.__swc.warn(
+        this,
+        `<${this.localName}> for="${this.for}" did not resolve to an element in the current tree root. Check that the referenced id exists in the same document tree root.`,
+        'https://opensource.adobe.com/spectrum-web-components/components/tooltip/',
+        { level: 'high' }
+      );
     }
-    if (this.for) {
-      const root = this.getRootNode() as Document | ShadowRoot;
-      const trigger = root.getElementById(this.for);
-      if (!trigger && window.__swc?.DEBUG) {
-        window.__swc.warn(
-          this,
-          `<${this.localName}> for="${this.for}" did not resolve to an element in the current tree root. Check that the referenced id exists in the same document tree root.`,
-          'https://opensource.adobe.com/spectrum-web-components/components/tooltip/',
-          { level: 'high' }
-        );
-      }
-      return trigger;
-    }
-    return null;
+    return resolved;
   }
 
   // Removes this tooltip from the previously wired target's ARIA element arrays
@@ -318,12 +318,11 @@ export abstract class TooltipBase
     // the new one. Handles for/triggerElement changes while the tooltip is open.
     this.clearAriaRelationship();
 
-    const trigger = this.resolveTrigger();
-    if (!trigger) {
+    const { trigger, interactiveElement } = this.resolveTrigger();
+    if (!trigger || !interactiveElement) {
       return;
     }
-    const target = (trigger.shadowRoot?.querySelector('button') ??
-      trigger) as Element & {
+    const target = interactiveElement as Element & {
       ariaDescribedByElements: Element[] | null;
       ariaLabelledByElements: Element[] | null;
     };
@@ -482,7 +481,7 @@ export abstract class TooltipBase
       changedProperties.has('for') ||
       changedProperties.has('triggerElement')
     ) {
-      this.hoverController.setTarget(this.resolveTrigger());
+      this.hoverController.setTarget(this.resolveTrigger().trigger);
     }
 
     // Placement controller: start when opening, stop when closing, restart
