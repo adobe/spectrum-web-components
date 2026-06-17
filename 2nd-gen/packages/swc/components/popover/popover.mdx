@@ -22,7 +22,8 @@ _Anatomy story and full part breakdown to come._
 
 `placement`, `size`, `hide-arrow`, `offset`, `cross-offset`, and `should-flip`
 tune positioning and appearance. `modal` opts into blocking `<dialog>` behavior
-(focus trap, background inert, `role="dialog"`).
+(focus trap, background inert, `role="dialog"`); pair it with `accessible-label`
+to name the dialog (see [Accessibility](#accessibility)).
 
 _Option stories to come._
 
@@ -40,10 +41,26 @@ button drives `open` while the popover anchors to another element via the
 
 The resolved trigger receives `aria-expanded` and a durable `aria-controls`
 relationship wired through the element-reference IDL so it works across shadow
-boundaries. In modal mode the internal `<dialog>` provides `role="dialog"` and a
-focus trap, and the trigger gets `aria-haspopup="dialog"`. `Escape` and
-outside-click dismiss in the default (auto) mode.
+boundaries. `Escape` and outside-click dismiss in the default (auto) mode.
 
-_Accessibility story and best-practices guidance to come._
+### Naming a modal popover
+
+In modal mode the internal `<dialog>` provides `role="dialog"`, a focus trap, and
+`aria-haspopup="dialog"` on the trigger. A dialog must have an accessible name, so
+**set `accessible-label` whenever you set `modal`**: its value is forwarded as
+`aria-label` to the internal `<dialog>`. Omitting it leaves a nameless dialog (an
+authoring bug) — in development the component warns when `modal` is set without an
+`accessible-label`.
+
+```html
+<swc-popover modal accessible-label="Account settings" for="account-trigger">
+  <!-- dialog content -->
+</swc-popover>
+```
+
+`accessible-label` has **no effect in the default (auto) mode**: that surface is a
+roleless container, so the slotted content and the trigger own the semantics.
+
+_Accessibility story and further best-practices guidance to come._
 
 <DocsFooter />
