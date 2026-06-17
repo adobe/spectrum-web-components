@@ -52,7 +52,7 @@
 
 <!-- Document content (editable) -->
 
-> **Epic SWC-####** · Planning output. Must be reviewed before implementation begins.
+> **Epic SWC-2137** · Planning output. Must be reviewed before implementation begins.
 >
 > Driving a11y ticket: **[SWC-2295](https://jira.corp.adobe.com/browse/SWC-2295)** — _[Color Handle][Color Loupe] Adaptive (white-first) border contrast for WCAG 1.4.11_.
 >
@@ -66,8 +66,8 @@
 
 - **Must ship**
   - Rename element `sp-color-handle` → `swc-color-handle` (standard 2nd-gen tag change).
-  - Build with the **core/SWC split** (`ColorHandleBase` in core, `swc-color-handle` in SWC), mirroring the already-migrated `color-loupe`. _Confirmed with team._
-  - Keep the **color loupe built-in** (component renders its own `swc-color-loupe`), matching 1st-gen behavior. _Confirmed with team._
+  - Build with the **core/SWC split** (`ColorHandleBase` in core, `swc-color-handle` in SWC), mirroring the already-migrated `color-loupe`.
+  - Keep the **color loupe built-in** (component renders its own `swc-color-loupe`), matching 1st-gen behavior.
   - **New a11y requirement (SWC-2295):** adaptive **white-first dual-border** so handle chrome maintains **≥3:1 non-text contrast (WCAG 1.4.11)** across the full color spectrum, and **grow-on-focus/press as the focus indicator** (no separate focus ring). Keep property names unchanged.
   - Drop the entire 1st-gen `--mod-colorhandle-*` modifier surface (standard 2nd-gen policy; no `--mod-*` exposure).
 - **Largest risks**
