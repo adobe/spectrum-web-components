@@ -79,10 +79,6 @@ export const DefaultsTest: Story = {
       expect(popover.size, 'size is undefined').toBeUndefined();
     });
 
-    await step('actualPlacement defaults to null', () => {
-      expect(popover.actualPlacement, 'actualPlacement is null').toBeNull();
-    });
-
     await step('hideArrow defaults to false (arrow shown by default)', () => {
       expect(popover.hideArrow, 'hideArrow is false').toBe(false);
     });

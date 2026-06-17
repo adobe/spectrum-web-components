@@ -83,16 +83,14 @@ export abstract class PopoverBase extends SpectrumElement {
   @property({ type: String, reflect: true })
   public size?: PopoverSize;
 
-  /**
-   * The computed placement after the `flip` middleware reorients the popover.
-   * Updated by the `PlacementController` via its `onPlacementChange` callback.
-   * Not reflected as an attribute. Consumers should read this value but never
-   * set it; doing so will desync the component from the controller.
-   *
-   * @readonly
-   */
-  @property({ attribute: false })
-  public actualPlacement: Placement | null = null;
+  // The computed placement after the `flip` middleware reorients the popover is
+  // intentionally kept off the public property surface: a readonly property would
+  // still be writable at runtime and could desync the component from the
+  // controller. The concrete component applies the computed placement only for
+  // styling, via the `.swc-Popover--<placement>` modifier classes on the internal
+  // surface element. (Tooltip reaches the same "no writable property" result a
+  // different way, by reflecting an `actual-placement` host attribute.) Consumers
+  // read the requested side via `placement`.
 
   /**
    * Hide the popover's arrow (tip). The arrow is shown by default.
