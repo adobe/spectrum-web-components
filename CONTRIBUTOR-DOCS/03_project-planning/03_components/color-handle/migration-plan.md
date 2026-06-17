@@ -75,13 +75,12 @@
   - Drop the entire 1st-gen `--mod-colorhandle-*` modifier surface (standard 2nd-gen policy; no `--mod-*` exposure).
 - **Largest risks**
   - The adaptive-contrast algorithm uses the handle's **own selected color** as a stand-in for the surrounding gradient — accurate on smooth gradients, approximate at steep/saturated edges (documented limitation per SWC-2295). It supersedes the prior "working as designed" exception (SWC-1134).
-- **Major open decisions:** all resolved by team and source material. Remaining items are the attribute name for the new fill option and confirming the loupe half of SWC-2295 sequencing.
+- **Major open decisions:** all resolved by team and source material. The only remaining sub-decision is confirming the `fill` attribute name during the API phase. The color-loupe half of SWC-2295 is intentionally out of scope here and ships as a separate fast-follow PR.
 
 ### Most blocking open questions
 
 - **Q7** in [Design](#design): `Show handle fill` ships now (team decision); the only sub-decision left is the exact attribute name (recommended `fill`, boolean, default `true`).
 - **Q2** in [Design](#design): the `rendering-and-styling-migration-analysis.md` exists but is still a stub ("full analysis in progress"); CSS/token specifics are sourced directly from `spectrum-css@spectrum-two` + 1st-gen until it is expanded. Non-blocking for API planning; tighten before Phase 5 (Styling).
-- **Q6** in [Scope and prerequisites](#scope-and-prerequisites): confirm whether the matching color-loupe half of SWC-2295 (adaptive inner border) is tracked/sequenced separately from this color-handle migration.
 
 > **Resolved by team and source material:**
 > - Q1 (Figma reference) — Figma `S2 / Web (Desktop scale)` received.
@@ -90,6 +89,7 @@
 > - Q5 (Epic) — Epic is **SWC-2137**.
 > - `open` naming — **team decision: keep `open`** (not renamed to the Figma `Show color loupe` label).
 > - `Show handle fill` scope — **team decision: ship now** (no longer deferred/additive).
+> - Q6 (color-loupe half of SWC-2295) — **team decision: keep separate**; ships as a fast-follow PR for color-loupe, out of scope for this migration.
 
 ---
 
@@ -173,7 +173,7 @@ color-handle should **compose `swc-color-loupe` internally** and **import the sh
 
 - ✅ **Confirmed:** core/SWC split for color-handle.
 - ✅ **Confirmed:** keep the loupe built-in (composed internally), not slotted.
-- ⏳ Whether the matching color-loupe adaptive-border work (SWC-2295) is tracked/sequenced separately from this color-handle migration.
+- ✅ **Confirmed:** the matching color-loupe adaptive-border work (SWC-2295) is kept **separate** and ships as a **fast-follow PR** for color-loupe; it is out of scope for this color-handle migration.
 
 ---
 
@@ -228,7 +228,7 @@ color-handle should **compose `swc-color-loupe` internally** and **import the sh
 
 ## 2nd-gen API decisions
 
-These are derived from the 1st-gen implementation, SWC-2295, the migrated `color-loupe` pattern, `spectrum-css@spectrum-two`, and the Figma **`S2 / Web (Desktop scale)`** Color handle spec (Published; updated Jun 4 2025, Miruna S.). A color-handle accessibility analysis is not yet available; a11y items are marked accordingly.
+These are derived from the 1st-gen implementation, SWC-2295, the migrated `color-loupe` pattern, `spectrum-css@spectrum-two`, the Figma **`S2 / Web (Desktop scale)`** Color handle spec (Published; updated Jun 4 2025, Miruna S.), and the color-handle [accessibility migration analysis](./accessibility-migration-analysis.md).
 
 > **Figma vs. web-API mapping.** The Figma spec describes *design* variants, which do not map 1:1 to web-component attributes. Figma exposes `State` (Default / Disabled), `Show handle fill` (default True), and `Show color loupe` (default False); it does **not** show `color` (a runtime value) or the focus visual. The web API keeps the behavioral attribute names (`disabled`, `open`, `focused`) rather than the design labels; `Show handle fill` maps to a new `fill` boolean shipping in this migration (B8); the parent-set focus visual stays `focused` (unchanged from 1st-gen).
 
@@ -360,11 +360,11 @@ Planned rendering shape:
 
 ### Accessibility
 
-<!-- Provisional: no color-handle accessibility-migration-analysis.md exists yet (Q4). Finalize from that doc + SWC-2295 before Phase 4. -->
+<!-- Sourced from ./accessibility-migration-analysis.md (present) + SWC-2295. Finalize against the real 2nd-gen source in Phase 4. -->
 
 #### Naming and semantics
 
-- [ ] Confirm the handle exposes no ARIA role/name and is not independently focusable; a11y owned by parent color components.
+- [ ] Confirm the handle exposes no ARIA role/name and is not independently focusable; a11y owned by parent color components (per the accessibility migration analysis).
 - [ ] Keep any decorative graphics out of the accessibility tree (mirror color-loupe).
 
 #### State verification
@@ -435,9 +435,9 @@ During drafting, this section tracks active blockers and open questions. In the 
 
 | #   | Item | Blocking? | Status | Owner |
 | --- | ---- | --------- | ------ | ----- |
-| Q4  | No color-handle `accessibility-migration-analysis.md` though SWC-2295 references it. A11y checklist is provisional until it exists. **Next:** provide analysis or confirm proceeding provisionally. | Yes | Open | Accessibility reviewer |
+| Q4  | ~~No color-handle `accessibility-migration-analysis.md`.~~ **Resolved** — present and substantial; a11y checklist and the adaptive dual-border algorithm (RSP-2021 / SDS-16402) are sourced from it. | No | Resolved | Accessibility reviewer |
 | Q5  | ~~Epic number unknown.~~ **Resolved** — Epic is **SWC-2137**. | No | Resolved | Ticket owner |
-| Q6  | Is the matching color-loupe adaptive-border half of SWC-2295 tracked/sequenced separately from this color-handle migration? **Next:** confirm split. | No | Open | Ticket owner |
+| Q6  | ~~Is the color-loupe half of SWC-2295 sequenced separately?~~ **Resolved (team): kept separate**; ships as a **fast-follow PR** for color-loupe. Out of scope for this migration. | No | Resolved | Ticket owner |
 
 <!-- Final-state deferred-ticket table columns: `Ticket`, `Deferred item`, `Why deferred`, `Related plan section`. -->
 
@@ -447,8 +447,8 @@ During drafting, this section tracks active blockers and open questions. In the 
 
 - [Washing machine workflow](../../02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md)
 - [2nd-gen migration status table](../../02_workstreams/02_2nd-gen-component-migration/01_status.md)
-- Accessibility migration analysis — **TODO: does not exist for color-handle yet** (`./accessibility-migration-analysis.md`); SWC-2295 references it.
-- Rendering and styling migration analysis — **TODO: does not exist for color-handle yet** (`./rendering-and-styling-migration-analysis.md`).
+- [Accessibility migration analysis](./accessibility-migration-analysis.md) — present; includes the full adaptive dual-border algorithm (RSP-2021 / SDS-16402).
+- [Rendering and styling migration analysis](./rendering-and-styling-migration-analysis.md) — present but currently a stub ("full analysis in progress"); expand before Phase 5.
 - [Sibling reference — color-loupe accessibility migration analysis](../color-loupe/accessibility-migration-analysis.md)
 - [Sibling reference — color-loupe rendering and styling migration analysis](../color-loupe/rendering-and-styling-migration-analysis.md)
 - [CSS style guide — Component Custom Property Exposure](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#component-custom-property-exposure)
