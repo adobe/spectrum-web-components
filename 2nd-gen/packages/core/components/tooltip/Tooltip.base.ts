@@ -390,14 +390,20 @@ export abstract class TooltipBase
       this.open = isOpen;
     }
     // Dispatch the after-event once the transition settles. `runAfterTransition`
-    // supersedes the prior cycle (so a new toggle can't fire a stale after-event),
-    // dispatches immediately when no transition runs, and includes the
-    // allow-discrete fallback timer. Shared with Popover via `core/utils`.
+    // supersedes the prior cycle (so a new toggle can't fire a stale after-event)
+    // and dispatches immediately when no transition runs. The allow-discrete
+    // fallback timer is armed only on close (where positioning cleanup depends on
+    // it); on open a delayed `transitionend` must not be pre-empted by the timer.
+    // Shared with Popover via `core/utils`.
     this._cancelAfterTransition?.();
-    this._cancelAfterTransition = runAfterTransition(this, () => {
-      this._cancelAfterTransition = undefined;
-      this.dispatchAfterEvent(isOpen);
-    });
+    this._cancelAfterTransition = runAfterTransition(
+      this,
+      () => {
+        this._cancelAfterTransition = undefined;
+        this.dispatchAfterEvent(isOpen);
+      },
+      { fallback: !isOpen }
+    );
   };
 
   // Escape-to-close. Registered on `document` only while open (see updated()),

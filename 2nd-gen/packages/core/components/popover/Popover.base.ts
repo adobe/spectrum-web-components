@@ -659,11 +659,13 @@ export abstract class PopoverBase extends SpectrumElement {
     this.dispatchEvent(
       new CustomEvent('swc-open', { bubbles: true, composed: true })
     );
+    // No fallback timer on open: nothing is gated on `swc-after-open`, so a
+    // delayed (janky) `transitionend` must not be pre-empted by the timer.
     this._afterTransition(() => {
       this.dispatchEvent(
         new CustomEvent('swc-after-open', { bubbles: true, composed: true })
       );
-    });
+    }, false);
   }
 
   private _dispatchClose(source: PopoverCloseSource): void {
@@ -685,21 +687,26 @@ export abstract class PopoverBase extends SpectrumElement {
     this._closeSource = null;
   }
 
-  // Run `callback` once the internal element's transition ends (or immediately
-  // when none will run). Each call supersedes the previous open/close cycle's
-  // pending run, so a rapid close→reopen never dispatches a spurious
-  // `swc-after-close` after reopening; `runAfterTransition` also includes the
-  // allow-discrete fallback timer. Shared with Tooltip via `core/utils`.
-  private _afterTransition(callback: () => void): void {
+  // Run `callback` once the internal element's transition settles (or
+  // immediately when none will run). Each call supersedes the previous
+  // open/close cycle's pending run, so a rapid close-then-reopen never
+  // dispatches a spurious `swc-after-close` after reopening. `fallback` arms the
+  // allow-discrete safety timer (default true; the close path relies on it to
+  // always tear down positioning). Shared with Tooltip via `core/utils`.
+  private _afterTransition(callback: () => void, fallback = true): void {
     this._cancelAfterTransition?.();
     const element = this.internalElement;
     if (!element) {
       callback();
       return;
     }
-    this._cancelAfterTransition = runAfterTransition(element, () => {
-      this._cancelAfterTransition = undefined;
-      callback();
-    });
+    this._cancelAfterTransition = runAfterTransition(
+      element,
+      () => {
+        this._cancelAfterTransition = undefined;
+        callback();
+      },
+      { fallback }
+    );
   }
 }
