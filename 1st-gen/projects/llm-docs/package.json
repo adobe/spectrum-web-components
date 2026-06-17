@@ -15,7 +15,7 @@
   },
   "type": "module",
   "files": [
-    "*.llm.md",
+    "src/*.llm.md",
     "README.md"
   ],
   "scripts": {
