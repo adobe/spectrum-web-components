@@ -296,14 +296,9 @@ export const Pending: Story = {
           })}
           ${template({
             ...args,
-            'default-slot': 'Upload',
-            'pending-label': 'Upload in-progress',
-            'icon-slot': editIconSvg,
-          })}
-          ${template({
-            ...args,
             quiet: true,
-            'default-slot': 'Upload',
+            'default-slot': 'Edit',
+            'pending-label': 'Edit in-progress',
             'icon-slot': editIconSvg,
           })}
         </div>
