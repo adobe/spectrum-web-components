@@ -31,7 +31,7 @@ import styles from './action-button.css';
  * A compact action button for toolbars, action groups, and icon-first chrome.
  *
  * @element swc-action-button
- * @since 0.0.1
+ * @since 2.0.0
  *
  * @slot - Visible button label.
  * @slot icon - Optional leading icon displayed before the label.
