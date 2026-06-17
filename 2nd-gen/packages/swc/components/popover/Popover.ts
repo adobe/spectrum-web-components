@@ -69,7 +69,7 @@ export class Popover extends PopoverBase {
       ? html`
           <dialog
             class="swc-Popover"
-            aria-label=${this.accessibleLabel || nothing}
+            aria-label=${this.accessibleLabel.trim() || nothing}
             @cancel=${this._onCancel}
             @close=${this._onClose}
             @pointerdown=${this._onPointerDown}

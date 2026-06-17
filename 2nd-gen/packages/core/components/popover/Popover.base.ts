@@ -505,7 +505,7 @@ export abstract class PopoverBase extends SpectrumElement {
     }
     registerDismissible(this);
     if (this.modal) {
-      if (window.__swc?.DEBUG && !this.accessibleLabel) {
+      if (window.__swc?.DEBUG && !this.accessibleLabel.trim()) {
         window.__swc.warn(
           this,
           `<${this.localName}> in modal mode must have an "accessible-label" attribute to name the dialog for assistive technology.`,

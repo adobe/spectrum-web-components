@@ -260,9 +260,31 @@ export const AccessibleLabelTest: Story = {
   },
 };
 
+export const AccessibleLabelWhitespaceTest: Story = {
+  render: () => html`
+    <swc-popover modal accessible-label="   ">Modal content</swc-popover>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const popover = await getComponent<Popover>(canvasElement, 'swc-popover');
+    await popover.updateComplete;
+
+    // A whitespace-only label is effectively unnamed, so it is trimmed away and
+    // not forwarded (rather than leaving a blank aria-label on the dialog).
+    await step('does not forward a whitespace-only accessible-label', () => {
+      const dialog = popover.shadowRoot?.querySelector('.swc-Popover');
+      expect(
+        dialog?.hasAttribute('aria-label'),
+        'whitespace-only label is not forwarded'
+      ).toBe(false);
+    });
+  },
+};
+
 export const AccessibleLabelDefaultModeTest: Story = {
   render: () => html`
-    <swc-popover accessible-label="ignored in default mode">Content</swc-popover>
+    <swc-popover accessible-label="ignored in default mode">
+      Content
+    </swc-popover>
   `,
   play: async ({ canvasElement, step }) => {
     const popover = await getComponent<Popover>(canvasElement, 'swc-popover');
