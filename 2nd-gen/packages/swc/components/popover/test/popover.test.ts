@@ -382,3 +382,65 @@ export const ValidPlacementNoWarningTest: Story = {
     );
   },
 };
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Content click inside a focus region (SWC-1336 regression)
+// ──────────────────────────────────────────────────────────────
+
+// Gen1 bug (#5731 / SWC-1336): an auto overlay placed inside a focus region
+// (an ancestor with `tabindex="0"`) was dismissed when the user clicked into its
+// own content, because the overlay's focus-out dismissal treated content focus as
+// leaving the region. The Gen2 popover relies on the browser's native
+// `popover="auto"` light-dismiss, which excludes the popover's own (flat-tree,
+// including slotted) content from "outside", so clicking inside must keep it open.
+export const FocusRegionContentClickTest: Story = {
+  render: () => html`
+    <div tabindex="0" style="display: flex; flex-direction: column; gap: 24px;">
+      Focus region (tabindex="0")
+      <button id="focus-region-trigger">Open popover</button>
+      <swc-popover for="focus-region-trigger">
+        <button id="popover-inside">Action inside the popover</button>
+      </swc-popover>
+    </div>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const popover = await getComponent<Popover>(canvasElement, 'swc-popover');
+    const trigger = canvasElement.querySelector(
+      '#focus-region-trigger'
+    ) as HTMLButtonElement;
+    await popover.updateComplete;
+
+    await step('opens on trigger click', async () => {
+      await userEvent.click(trigger);
+      await popover.updateComplete;
+      expect(popover.open, 'open after trigger click').toBe(true);
+    });
+
+    await step(
+      'stays open when clicking content inside the popover',
+      async () => {
+        const inside = popover.querySelector(
+          '#popover-inside'
+        ) as HTMLButtonElement;
+        await userEvent.click(inside);
+        await popover.updateComplete;
+        expect(
+          popover.open,
+          'clicking the popover content does not dismiss it'
+        ).toBe(true);
+      }
+    );
+
+    await step('content inside the popover can take focus', async () => {
+      const inside = popover.querySelector(
+        '#popover-inside'
+      ) as HTMLButtonElement;
+      inside.focus();
+      await popover.updateComplete;
+      expect(
+        popover.open,
+        'focusing content inside the popover does not dismiss it'
+      ).toBe(true);
+    });
+  },
+};
