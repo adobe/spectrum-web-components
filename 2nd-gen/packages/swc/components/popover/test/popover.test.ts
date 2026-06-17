@@ -14,6 +14,11 @@ import { expect, userEvent, waitFor } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import { Popover } from '@adobe/spectrum-wc/popover';
+import {
+  isTopDismissible,
+  registerDismissible,
+  unregisterDismissible,
+} from '@spectrum-web-components/core/utils/index.js';
 
 import '@adobe/spectrum-wc/components/popover/swc-popover.js';
 
@@ -404,15 +409,16 @@ export const ActualPlacementTest: Story = {
       ).toBe(false);
     });
 
-    await step('reflects the resolved physical side while open', async () => {
+    await step('reflects the requested physical side while open', async () => {
       popover.open = true;
       await popover.updateComplete;
-      // Set synchronously from the declared side, then refreshed by the
-      // PlacementController; either way it is a physical side.
+      // placement="bottom" fits below the trigger (no flip), so the reflected
+      // physical side is exactly the requested one — a wrong-side resolution
+      // would surface here rather than passing as "some physical side".
       expect(
-        ['top', 'bottom', 'left', 'right'],
-        'actual-placement is a physical side'
-      ).toContain(popover.getAttribute('actual-placement'));
+        popover.getAttribute('actual-placement'),
+        'actual-placement matches the requested side'
+      ).toBe('bottom');
     });
 
     await step('removes the attribute after the close transition', async () => {
@@ -425,6 +431,108 @@ export const ActualPlacementTest: Story = {
           'actual-placement is removed once closed'
         ).toBe(false)
       );
+    });
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Modal lifecycle (showModal + backdrop close source)
+// ──────────────────────────────────────────────────────────────
+
+export const ModalLifecycleTest: Story = {
+  render: () => html`
+    <swc-popover modal accessible-label="Settings">Modal content</swc-popover>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const popover = await getComponent<Popover>(canvasElement, 'swc-popover');
+    await popover.updateComplete;
+    const dialog = popover.shadowRoot?.querySelector(
+      '.swc-Popover'
+    ) as HTMLDialogElement;
+
+    await step(
+      'opening enters the modal top layer and fires swc-open',
+      async () => {
+        let opened = false;
+        popover.addEventListener('swc-open', () => (opened = true), {
+          once: true,
+        });
+        popover.open = true;
+        await popover.updateComplete;
+        expect(dialog.tagName, 'internal element is a DIALOG').toBe('DIALOG');
+        expect(dialog.matches(':modal'), 'opened via showModal()').toBe(true);
+        expect(opened, 'swc-open dispatched').toBe(true);
+      }
+    );
+
+    await step(
+      'a backdrop pointerdown closes with source "outside"',
+      async () => {
+        let source: string | undefined;
+        popover.addEventListener(
+          'swc-close',
+          (event) => {
+            source = (event as CustomEvent<{ source: string }>).detail.source;
+          },
+          { once: true }
+        );
+        // A pointerdown whose target is the dialog itself (not its padded content)
+        // is a backdrop click. `<dialog>.close()` fires its `close` event
+        // asynchronously, so wait for the state to settle.
+        dialog.dispatchEvent(
+          new PointerEvent('pointerdown', { bubbles: true })
+        );
+        await waitFor(() =>
+          expect(popover.open, 'closed after backdrop click').toBe(false)
+        );
+        expect(source, 'swc-close.detail.source is outside').toBe('outside');
+      }
+    );
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
+// TEST: dismissible-stack ordering (LIFO + move-to-top)
+// ──────────────────────────────────────────────────────────────
+
+export const DismissibleStackTest: Story = {
+  render: () => html`
+    <div></div>
+  `,
+  play: async ({ step }) => {
+    const a = {};
+    const b = {};
+
+    await step('the most-recently registered key is topmost', () => {
+      registerDismissible(a);
+      registerDismissible(b);
+      expect(isTopDismissible(b), 'b is on top').toBe(true);
+      expect(isTopDismissible(a), 'a is not on top').toBe(false);
+    });
+
+    await step('unregistering the top exposes the next entry', () => {
+      unregisterDismissible(b);
+      expect(isTopDismissible(a), 'a is now on top').toBe(true);
+    });
+
+    await step(
+      're-registering moves a key to the top without duplicating',
+      () => {
+        registerDismissible(b);
+        registerDismissible(a); // a is mid-stack; move it to the top
+        expect(isTopDismissible(a), 'a moved to the top').toBe(true);
+        unregisterDismissible(a);
+        // Only one entry for `a` existed, so removing it exposes b.
+        expect(isTopDismissible(b), 'b is exposed after one unregister').toBe(
+          true
+        );
+      }
+    );
+
+    await step('an unregistered key is never topmost', () => {
+      unregisterDismissible(b);
+      expect(isTopDismissible(a), 'a is gone').toBe(false);
+      expect(isTopDismissible(b), 'b is gone').toBe(false);
     });
   },
 };
