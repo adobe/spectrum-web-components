@@ -46,6 +46,13 @@ interface ARIAControlsElements {
 }
 
 /**
+ * Span of a single click gesture (pointerdown through click). A trigger click
+ * within this window after a native light-dismiss is read as the close rather
+ * than a reopen. See `_onTriggerClick`.
+ */
+const LIGHT_DISMISS_REOPEN_WINDOW_MS = 200;
+
+/**
  * Abstract base for the popover component. Owns the popover's behavior — the
  * dual-mode dialog lifecycle (`showPopover()` / `showModal()`), trigger and ARIA
  * wiring, positioning through the `PlacementController`, dismissal coordination,
@@ -380,12 +387,16 @@ export abstract class PopoverBase extends SpectrumElement {
     this._clickTrigger = null;
   }
 
-  // Toggle on trigger click. In the default (auto) mode, clicking the trigger
-  // while open first triggers the browser's light-dismiss (which closes the
-  // popover before this fires); the `_lastDismissAt` guard prevents an
-  // immediate reopen so the click reads as a close.
+  // The trigger sits outside the popover, so in the default (auto) mode clicking
+  // it while open is a native light-dismiss: the browser closes the popover on
+  // pointerdown, before this click fires. The window guard reads that click as the
+  // close instead of letting it reopen. (`popovertarget`, which the browser would
+  // correlate automatically, can't reach the shadow-DOM surface across roots.)
   private _onTriggerClick = (): void => {
-    if (!this.open && performance.now() - this._lastDismissAt < 200) {
+    if (
+      !this.open &&
+      performance.now() - this._lastDismissAt < LIGHT_DISMISS_REOPEN_WINDOW_MS
+    ) {
       return;
     }
     this.open = !this.open;
