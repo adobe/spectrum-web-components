@@ -3,7 +3,6 @@ component: link
 tag: sp-link
 package: '@spectrum-web-components/link'
 source: 1st-gen/packages/link/README.md
-generated: 2026-06-17T11:01:22.157Z
 generator: scripts/generate-llm-docs.mjs
 ---
 

@@ -3,7 +3,6 @@ component: switch
 tag: sp-switch
 package: '@spectrum-web-components/switch'
 source: 1st-gen/packages/switch/README.md
-generated: 2026-06-17T11:01:22.157Z
 generator: scripts/generate-llm-docs.mjs
 ---
 

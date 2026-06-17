@@ -3,7 +3,6 @@ component: overlay
 tag: sp-overlay
 package: '@spectrum-web-components/overlay'
 source: 1st-gen/packages/overlay/README.md
-generated: 2026-06-17T11:01:22.157Z
 generator: scripts/generate-llm-docs.mjs
 ---
 

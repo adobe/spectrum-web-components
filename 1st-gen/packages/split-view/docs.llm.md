@@ -3,7 +3,6 @@ component: split-view
 tag: sp-split-view
 package: '@spectrum-web-components/split-view'
 source: 1st-gen/packages/split-view/README.md
-generated: 2026-06-17T11:01:22.157Z
 generator: scripts/generate-llm-docs.mjs
 ---
 

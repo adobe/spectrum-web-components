@@ -64,7 +64,6 @@ const MVP_COMPONENTS = ['button', 'picker', 'menu', 'action-button', 'dialog'];
 const PER_COMPONENT_FILENAME = 'docs.llm.md';
 const AGGREGATE_SUFFIX = '.llm.md';
 const AGGREGATE_README = 'README.md';
-const GENERATED_LINE_PREFIX = 'generated:';
 
 /**
  * A package is a component when its README registers a custom element via a
@@ -172,20 +171,22 @@ function deriveTag(name, readme) {
   return importMatch ? importMatch[1] : `sp-${name}`;
 }
 
-function buildFrontmatter(name, tag, timestamp) {
+function buildFrontmatter(name, tag) {
+  // No timestamp: generation is deterministic so the same README always yields
+  // byte-identical output, which keeps regenerations out of the git diff and
+  // makes the `--check` drift gate a simple equality test.
   return [
     '---',
     `component: ${name}`,
     `tag: ${tag}`,
     `package: '@spectrum-web-components/${name}'`,
     `source: 1st-gen/packages/${name}/README.md`,
-    `${GENERATED_LINE_PREFIX} ${timestamp}`,
     'generator: scripts/generate-llm-docs.mjs',
     '---',
   ].join('\n');
 }
 
-function generate(name, timestamp) {
+function generate(name) {
   const readmePath = join(PACKAGES_DIR, name, 'README.md');
   if (!existsSync(readmePath)) {
     throw new Error(`README not found for "${name}" at ${readmePath}`);
@@ -193,7 +194,7 @@ function generate(name, timestamp) {
   const readme = readFileSync(readmePath, 'utf8');
   const tag = deriveTag(name, readme);
   const body = stripChrome(readme);
-  return `${buildFrontmatter(name, tag, timestamp)}\n\n${body}\n`;
+  return `${buildFrontmatter(name, tag)}\n\n${body}\n`;
 }
 
 /** README index for the aggregate package, listing every bundled component. */
@@ -225,14 +226,6 @@ ${list}
 `;
 }
 
-/** Drop the volatile `generated:` line so drift checks ignore the timestamp. */
-function withoutTimestamp(content) {
-  return content
-    .split('\n')
-    .filter((line) => !line.startsWith(GENERATED_LINE_PREFIX))
-    .join('\n');
-}
-
 function readIfExists(path) {
   return existsSync(path) ? readFileSync(path, 'utf8') : '';
 }
@@ -252,28 +245,25 @@ function main() {
     components = discoverComponents();
   }
 
-  // A single timestamp per run keeps the per-component and aggregate copies
-  // byte-identical.
-  const timestamp = new Date().toISOString();
   const aggregateReadme = buildAggregateReadme(components);
 
   if (checkOnly) {
     let drifted = 0;
     for (const name of components) {
-      const expected = generate(name, timestamp);
+      const expected = generate(name);
       const perComponent = readIfExists(
         join(PACKAGES_DIR, name, PER_COMPONENT_FILENAME)
       );
       const aggregate = readIfExists(
         join(AGGREGATE_SRC_DIR, `${name}${AGGREGATE_SUFFIX}`)
       );
-      if (withoutTimestamp(perComponent) !== withoutTimestamp(expected)) {
+      if (perComponent !== expected) {
         drifted += 1;
         console.error(
           `[generate-llm-docs] DRIFT: packages/${name}/${PER_COMPONENT_FILENAME}`
         );
       }
-      if (withoutTimestamp(aggregate) !== withoutTimestamp(expected)) {
+      if (aggregate !== expected) {
         drifted += 1;
         console.error(
           `[generate-llm-docs] DRIFT: projects/llm-docs/src/${name}${AGGREGATE_SUFFIX}`
@@ -314,7 +304,7 @@ function main() {
   }
 
   for (const name of components) {
-    const content = generate(name, timestamp);
+    const content = generate(name);
     writeFileSync(
       join(PACKAGES_DIR, name, PER_COMPONENT_FILENAME),
       content,

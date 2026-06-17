@@ -3,7 +3,6 @@ component: color-loupe
 tag: sp-color-loupe
 package: '@spectrum-web-components/color-loupe'
 source: 1st-gen/packages/color-loupe/README.md
-generated: 2026-06-17T11:01:22.157Z
 generator: scripts/generate-llm-docs.mjs
 ---
 

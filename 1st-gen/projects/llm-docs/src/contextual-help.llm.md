@@ -3,7 +3,6 @@ component: contextual-help
 tag: sp-contextual-help
 package: '@spectrum-web-components/contextual-help'
 source: 1st-gen/packages/contextual-help/README.md
-generated: 2026-06-17T11:01:22.157Z
 generator: scripts/generate-llm-docs.mjs
 ---
 

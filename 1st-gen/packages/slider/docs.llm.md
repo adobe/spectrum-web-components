@@ -3,7 +3,6 @@ component: slider
 tag: sp-slider
 package: '@spectrum-web-components/slider'
 source: 1st-gen/packages/slider/README.md
-generated: 2026-06-17T11:01:22.157Z
 generator: scripts/generate-llm-docs.mjs
 ---
 

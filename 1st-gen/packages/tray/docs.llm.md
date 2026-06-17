@@ -3,7 +3,6 @@ component: tray
 tag: sp-tray
 package: '@spectrum-web-components/tray'
 source: 1st-gen/packages/tray/README.md
-generated: 2026-06-17T11:01:22.157Z
 generator: scripts/generate-llm-docs.mjs
 ---
 

@@ -3,7 +3,6 @@ component: color-handle
 tag: sp-color-handle
 package: '@spectrum-web-components/color-handle'
 source: 1st-gen/packages/color-handle/README.md
-generated: 2026-06-17T11:01:22.157Z
 generator: scripts/generate-llm-docs.mjs
 ---
 

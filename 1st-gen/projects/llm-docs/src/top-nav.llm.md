@@ -3,7 +3,6 @@ component: top-nav
 tag: sp-top-nav
 package: '@spectrum-web-components/top-nav'
 source: 1st-gen/packages/top-nav/README.md
-generated: 2026-06-17T11:01:22.157Z
 generator: scripts/generate-llm-docs.mjs
 ---
 

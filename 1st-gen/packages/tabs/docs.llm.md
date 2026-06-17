@@ -3,7 +3,6 @@ component: tabs
 tag: sp-tabs
 package: '@spectrum-web-components/tabs'
 source: 1st-gen/packages/tabs/README.md
-generated: 2026-06-17T11:01:22.157Z
 generator: scripts/generate-llm-docs.mjs
 ---
 

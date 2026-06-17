@@ -3,7 +3,6 @@ component: alert-banner
 tag: sp-alert-banner
 package: '@spectrum-web-components/alert-banner'
 source: 1st-gen/packages/alert-banner/README.md
-generated: 2026-06-17T11:01:22.157Z
 generator: scripts/generate-llm-docs.mjs
 ---
 

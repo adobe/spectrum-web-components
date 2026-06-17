@@ -3,7 +3,6 @@ component: button-group
 tag: sp-button-group
 package: '@spectrum-web-components/button-group'
 source: 1st-gen/packages/button-group/README.md
-generated: 2026-06-17T11:01:22.157Z
 generator: scripts/generate-llm-docs.mjs
 ---
 

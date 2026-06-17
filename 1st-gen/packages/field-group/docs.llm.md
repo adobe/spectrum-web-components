@@ -3,7 +3,6 @@ component: field-group
 tag: sp-field-group
 package: '@spectrum-web-components/field-group'
 source: 1st-gen/packages/field-group/README.md
-generated: 2026-06-17T11:01:22.157Z
 generator: scripts/generate-llm-docs.mjs
 ---
 

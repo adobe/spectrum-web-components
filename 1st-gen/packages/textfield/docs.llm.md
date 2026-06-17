@@ -3,7 +3,6 @@ component: textfield
 tag: sp-textfield
 package: '@spectrum-web-components/textfield'
 source: 1st-gen/packages/textfield/README.md
-generated: 2026-06-17T11:01:22.157Z
 generator: scripts/generate-llm-docs.mjs
 ---
 

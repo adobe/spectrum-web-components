@@ -3,7 +3,6 @@ component: color-field
 tag: sp-color-field
 package: '@spectrum-web-components/color-field'
 source: 1st-gen/packages/color-field/README.md
-generated: 2026-06-17T11:01:22.157Z
 generator: scripts/generate-llm-docs.mjs
 ---
 

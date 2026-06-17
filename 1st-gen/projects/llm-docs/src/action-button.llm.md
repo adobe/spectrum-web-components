@@ -3,7 +3,6 @@ component: action-button
 tag: sp-action-button
 package: '@spectrum-web-components/action-button'
 source: 1st-gen/packages/action-button/README.md
-generated: 2026-06-17T11:01:22.157Z
 generator: scripts/generate-llm-docs.mjs
 ---
 

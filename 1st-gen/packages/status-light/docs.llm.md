@@ -3,7 +3,6 @@ component: status-light
 tag: sp-status-light
 package: '@spectrum-web-components/status-light'
 source: 1st-gen/packages/status-light/README.md
-generated: 2026-06-17T11:01:22.157Z
 generator: scripts/generate-llm-docs.mjs
 ---
 

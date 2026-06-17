@@ -3,7 +3,6 @@ component: icons
 tag: sp-icons-medium
 package: '@spectrum-web-components/icons'
 source: 1st-gen/packages/icons/README.md
-generated: 2026-06-17T11:01:22.157Z
 generator: scripts/generate-llm-docs.mjs
 ---
 

@@ -3,7 +3,6 @@ component: field-label
 tag: sp-field-label
 package: '@spectrum-web-components/field-label'
 source: 1st-gen/packages/field-label/README.md
-generated: 2026-06-17T11:01:22.157Z
 generator: scripts/generate-llm-docs.mjs
 ---
 

@@ -3,7 +3,6 @@ component: button
 tag: sp-button
 package: '@spectrum-web-components/button'
 source: 1st-gen/packages/button/README.md
-generated: 2026-06-17T11:01:22.157Z
 generator: scripts/generate-llm-docs.mjs
 ---
 

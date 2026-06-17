@@ -3,7 +3,6 @@ component: card
 tag: sp-card
 package: '@spectrum-web-components/card'
 source: 1st-gen/packages/card/README.md
-generated: 2026-06-17T11:01:22.157Z
 generator: scripts/generate-llm-docs.mjs
 ---
 
