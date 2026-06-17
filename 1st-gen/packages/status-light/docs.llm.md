@@ -3,7 +3,7 @@ component: status-light
 tag: sp-status-light
 package: '@spectrum-web-components/status-light'
 source: 1st-gen/packages/status-light/README.md
-generated: 2026-06-17T10:46:50.651Z
+generated: 2026-06-17T10:49:38.838Z
 generator: scripts/generate-llm-docs.mjs
 ---
 
@@ -43,17 +43,11 @@ A status light consists of a colored dot indicator and a required text label. Th
 
 ```html
 <sp-status-light size="s" variant="positive">approved</sp-status-light>
-```
-
-```html
+html
 <sp-status-light size="m" variant="positive">approved</sp-status-light>
-```
-
-```html
+html
 <sp-status-light size="l" variant="positive">approved</sp-status-light>
-```
-
-```html
+html
 <sp-status-light size="xl" variant="positive">approved</sp-status-light>
 ```
 
@@ -73,9 +67,7 @@ Status lights come in various semantic and non-semantic variants to convey diffe
 <sp-status-light variant="info">
   use for information or neutral state
 </sp-status-light>
-```
-
-```html
+html
 <sp-status-light variant="yellow">yellow status</sp-status-light>
 <sp-status-light variant="fuchsia">fuchsia status</sp-status-light>
 <sp-status-light variant="indigo">indigo status</sp-status-light>

@@ -3,7 +3,7 @@ component: illustrated-message
 tag: sp-illustrated-message
 package: '@spectrum-web-components/illustrated-message'
 source: 1st-gen/packages/illustrated-message/README.md
-generated: 2026-06-17T10:46:50.651Z
+generated: 2026-06-17T10:49:38.838Z
 generator: scripts/generate-llm-docs.mjs
 ---
 
@@ -105,9 +105,7 @@ An illustrated message consists of the following parts:
     from your computer.
   </p>
 </sp-illustrated-message>
-```
-
-```html
+html
 <sp-illustrated-message heading="Error 404: Page not found">
   <div slot="description">
     <p>
@@ -129,9 +127,7 @@ An illustrated message consists of the following parts:
     ></path>
   </svg>
 </sp-illustrated-message>
-```
-
-```html
+html
 <sp-illustrated-message
   heading="Error 404: Page not found"
   description="This page isn't available. Try checking the URL or visit a different page."

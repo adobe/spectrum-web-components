@@ -3,7 +3,7 @@ component: action-button
 tag: sp-action-button
 package: '@spectrum-web-components/action-button'
 source: 1st-gen/packages/action-button/README.md
-generated: 2026-06-17T10:46:50.651Z
+generated: 2026-06-17T10:49:38.838Z
 generator: scripts/generate-llm-docs.mjs
 ---
 
@@ -49,16 +49,12 @@ fulfill the accessibility contract of the button.
 
 ```html
 <sp-action-button variant="primary">Label only</sp-action-button>
-```
-
-```html
+html
 <sp-action-button variant="primary">
   <sp-icon-help slot="icon"></sp-icon-help>
   Icon + Label
 </sp-action-button>
-```
-
-```html
+html
 <sp-action-button variant="primary">
   <svg
     slot="icon"
@@ -73,9 +69,7 @@ fulfill the accessibility contract of the button.
   </svg>
   SVG Icon + Label
 </sp-action-button>
-```
-
-```html
+html
 <sp-action-button variant="primary" label="Icon only">
   <sp-icon-help slot="icon"></sp-icon-help>
 </sp-action-button>
@@ -99,9 +93,7 @@ fulfill the accessibility contract of the button.
     <sp-icon-edit slot="icon"></sp-icon-edit>
   </sp-action-button>
 </sp-action-group>
-```
-
-```html
+html
 <sp-action-group size="s">
   <sp-action-button>Edit</sp-action-button>
   <sp-action-button>
@@ -115,9 +107,7 @@ fulfill the accessibility contract of the button.
     <sp-icon-edit slot="icon"></sp-icon-edit>
   </sp-action-button>
 </sp-action-group>
-```
-
-```html
+html
 <sp-action-group size="m">
   <sp-action-button>Edit</sp-action-button>
   <sp-action-button>
@@ -131,9 +121,7 @@ fulfill the accessibility contract of the button.
     <sp-icon-edit slot="icon"></sp-icon-edit>
   </sp-action-button>
 </sp-action-group>
-```
-
-```html
+html
 <sp-action-group size="l">
   <sp-action-button>Edit</sp-action-button>
   <sp-action-button>
@@ -147,9 +135,7 @@ fulfill the accessibility contract of the button.
     <sp-icon-edit slot="icon"></sp-icon-edit>
   </sp-action-button>
 </sp-action-group>
-```
-
-```html
+html
 <sp-action-group size="xl">
   <sp-action-button>Edit</sp-action-button>
   <sp-action-button>
@@ -243,9 +229,7 @@ The `<sp-action-button>` can be customized with either or both of the `emphasize
     </sp-action-group>
   </div>
 </div>
-```
-
-```html
+html
 <div
   style="display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 2em;"
 >
@@ -319,9 +303,7 @@ The `<sp-action-button>` can be customized with either or both of the `emphasize
     </sp-action-group>
   </div>
 </div>
-```
-
-```html
+html
 <div
   style="display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 2em;"
 >
@@ -401,9 +383,7 @@ The `<sp-action-button>` can be customized with either or both of the `emphasize
     </sp-action-group>
   </div>
 </div>
-```
-
-```html
+html
 <div
   style="display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 2em;"
 >
@@ -543,27 +523,21 @@ With the application of the `toggles` attribute, the button will self manage its
 <sp-action-button toggles selected id="toggles-default">
   Toggle button
 </sp-action-button>
-```
-
-```html
+html
 <sp-action-button toggles quiet id="toggles-quiet">
   Toggle button
 </sp-action-button>
 <sp-action-button toggles quiet selected id="toggles-quiet">
   Toggle button
 </sp-action-button>
-```
-
-```html
+html
 <sp-action-button toggles emphasized id="toggles-emphasized">
   Toggle button
 </sp-action-button>
 <sp-action-button toggles emphasized selected id="toggles-emphasized">
   Toggle button
 </sp-action-button>
-```
-
-```html
+html
 <sp-action-button toggles emphasized quiet id="toggles-emphasized-quiet">
   Toggle button
 </sp-action-button>
@@ -700,9 +674,7 @@ To ensure maximum contrast with the background, use static black for light backg
   <sp-action-button static="black">Click me</sp-action-button>
   <sp-action-button static="black" selected>Click me</sp-action-button>
 </div>
-```
-
-```html
+html
 <div style="background-color: #220033; padding: 20px">
   <sp-action-button static="white">Click me</sp-action-button>
   <sp-action-button static="white" selected>Click me</sp-action-button>

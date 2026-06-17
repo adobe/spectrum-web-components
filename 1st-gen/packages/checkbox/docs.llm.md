@@ -3,7 +3,7 @@ component: checkbox
 tag: sp-checkbox
 package: '@spectrum-web-components/checkbox'
 source: 1st-gen/packages/checkbox/README.md
-generated: 2026-06-17T10:46:50.651Z
+generated: 2026-06-17T10:49:38.838Z
 generator: scripts/generate-llm-docs.mjs
 ---
 
@@ -47,25 +47,19 @@ A checkbox consists of a box that can be checked or unchecked, and a label that 
   <sp-checkbox size="s" checked>Small Checked</sp-checkbox>
   <sp-checkbox size="s" indeterminate>Small Indeterminate</sp-checkbox>
 </sp-field-group>
-```
-
-```html
+html
 <sp-field-group horizontal label="Medium Checkboxes">
   <sp-checkbox size="m">Medium</sp-checkbox>
   <sp-checkbox size="m" checked>Medium Checked</sp-checkbox>
   <sp-checkbox size="m" indeterminate>Medium Indeterminate</sp-checkbox>
 </sp-field-group>
-```
-
-```html
+html
 <sp-field-group horizontal label="Large Checkboxes">
   <sp-checkbox size="l">Large</sp-checkbox>
   <sp-checkbox size="l" checked>Large Checked</sp-checkbox>
   <sp-checkbox size="l" indeterminate>Large Indeterminate</sp-checkbox>
 </sp-field-group>
-```
-
-```html
+html
 <sp-field-group horizontal label="Extra Large Checkboxes">
   <sp-checkbox size="xl">Extra Large</sp-checkbox>
   <sp-checkbox size="xl" checked>Extra Large Checked</sp-checkbox>
@@ -218,9 +212,7 @@ Read more about using [help text](../help-text).
     Select at least one notification method.
   </sp-help-text>
 </sp-field-group>
-```
-
-```html
+html
 <sp-field-label for="above">Notification preferences</sp-field-label>
 <sp-field-group
   vertical

@@ -3,7 +3,7 @@ component: switch
 tag: sp-switch
 package: '@spectrum-web-components/switch'
 source: 1st-gen/packages/switch/README.md
-generated: 2026-06-17T10:46:50.651Z
+generated: 2026-06-17T10:49:38.838Z
 generator: scripts/generate-llm-docs.mjs
 ---
 
@@ -54,17 +54,11 @@ A switch can be checked by setting the `checked` property/attribute.
 
 ```html
 <sp-switch size="s">Small</sp-switch>
-```
-
-```html
+html
 <sp-switch size="m">Medium</sp-switch>
-```
-
-```html
+html
 <sp-switch size="l">Large</sp-switch>
-```
-
-```html
+html
 <sp-switch size="xl">Extra Large</sp-switch>
 ```
 

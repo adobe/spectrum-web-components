@@ -3,7 +3,7 @@ component: action-group
 tag: sp-action-group
 package: '@spectrum-web-components/action-group'
 source: 1st-gen/packages/action-group/README.md
-generated: 2026-06-17T10:46:50.651Z
+generated: 2026-06-17T10:49:38.838Z
 generator: scripts/generate-llm-docs.mjs
 ---
 
@@ -36,30 +36,22 @@ import { ActionGroup } from '@spectrum-web-components/action-group';
   <sp-action-button>Extra Small 1</sp-action-button>
   <sp-action-button>Extra Small 2</sp-action-button>
 </sp-action-group>
-```
-
-```html
+html
 <sp-action-group size="s">
   <sp-action-button>Small 1</sp-action-button>
   <sp-action-button>Small 2</sp-action-button>
 </sp-action-group>
-```
-
-```html
+html
 <sp-action-group size="m">
   <sp-action-button>Medium 1</sp-action-button>
   <sp-action-button>Medium 2</sp-action-button>
 </sp-action-group>
-```
-
-```html
+html
 <sp-action-group size="l">
   <sp-action-button>Large 1</sp-action-button>
   <sp-action-button>Large 2</sp-action-button>
 </sp-action-group>
-```
-
-```html
+html
 <sp-action-group size="xl">
   <sp-action-button>Extra Large 1</sp-action-button>
   <sp-action-button>Extra Large 2</sp-action-button>

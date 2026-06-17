@@ -3,7 +3,7 @@ component: sidenav
 tag: sp-sidenav
 package: '@spectrum-web-components/sidenav'
 source: 1st-gen/packages/sidenav/README.md
-generated: 2026-06-17T10:46:50.651Z
+generated: 2026-06-17T10:49:38.838Z
 generator: scripts/generate-llm-docs.mjs
 ---
 

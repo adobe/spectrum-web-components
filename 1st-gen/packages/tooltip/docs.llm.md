@@ -3,7 +3,7 @@ component: tooltip
 tag: sp-tooltip
 package: '@spectrum-web-components/tooltip'
 source: 1st-gen/packages/tooltip/README.md
-generated: 2026-06-17T10:46:50.651Z
+generated: 2026-06-17T10:49:38.838Z
 generator: scripts/generate-llm-docs.mjs
 ---
 

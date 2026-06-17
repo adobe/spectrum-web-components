@@ -3,7 +3,7 @@ component: top-nav
 tag: sp-top-nav
 package: '@spectrum-web-components/top-nav'
 source: 1st-gen/packages/top-nav/README.md
-generated: 2026-06-17T10:46:50.651Z
+generated: 2026-06-17T10:49:38.838Z
 generator: scripts/generate-llm-docs.mjs
 ---
 
@@ -134,9 +134,7 @@ The `quiet` property renders the top navigation component without the bottom bor
   <sp-top-nav-item href="#page-3">Page 3</sp-top-nav-item>
   <sp-top-nav-item href="#page-4">Page with really long name</sp-top-nav-item>
 </sp-top-nav>
-```
-
-```html
+html
 <sp-top-nav size="m">
   <sp-top-nav-item href="#">Site Name</sp-top-nav-item>
   <sp-top-nav-item href="#page-1" style="margin-inline-start: auto;">
@@ -146,9 +144,7 @@ The `quiet` property renders the top navigation component without the bottom bor
   <sp-top-nav-item href="#page-3">Page 3</sp-top-nav-item>
   <sp-top-nav-item href="#page-4">Page with really long name</sp-top-nav-item>
 </sp-top-nav>
-```
-
-```html
+html
 <sp-top-nav size="l">
   <sp-top-nav-item href="#">Site Name</sp-top-nav-item>
   <sp-top-nav-item href="#page-1" style="margin-inline-start: auto;">
@@ -158,9 +154,7 @@ The `quiet` property renders the top navigation component without the bottom bor
   <sp-top-nav-item href="#page-3">Page 3</sp-top-nav-item>
   <sp-top-nav-item href="#page-4">Page with really long name</sp-top-nav-item>
 </sp-top-nav>
-```
-
-```html
+html
 <sp-top-nav size="xl">
   <sp-top-nav-item href="#">Site Name</sp-top-nav-item>
   <sp-top-nav-item href="#page-1" style="margin-inline-start: auto;">

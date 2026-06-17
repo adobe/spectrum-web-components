@@ -3,7 +3,7 @@ component: avatar
 tag: sp-avatar
 package: '@spectrum-web-components/avatar'
 source: 1st-gen/packages/avatar/README.md
-generated: 2026-06-17T10:46:50.651Z
+generated: 2026-06-17T10:49:38.838Z
 generator: scripts/generate-llm-docs.mjs
 ---
 
@@ -43,65 +43,49 @@ Avatar sizes scale exponentially, based on the Spectrum type scale. These range 
   label="Demo User"
   src="https://picsum.photos/500/500"
 ></sp-avatar>
-```
-
-```html
+html
 <sp-avatar
   size="75"
   label="Demo User"
   src="https://picsum.photos/500/500"
 ></sp-avatar>
-```
-
-```html
+html
 <sp-avatar
   size="100"
   label="Demo User"
   src="https://picsum.photos/500/500"
 ></sp-avatar>
-```
-
-```html
+html
 <sp-avatar
   size="200"
   label="Demo User"
   src="https://picsum.photos/500/500"
 ></sp-avatar>
-```
-
-```html
+html
 <sp-avatar
   size="300"
   label="Demo User"
   src="https://picsum.photos/500/500"
 ></sp-avatar>
-```
-
-```html
+html
 <sp-avatar
   size="400"
   label="Demo User"
   src="https://picsum.photos/500/500"
 ></sp-avatar>
-```
-
-```html
+html
 <sp-avatar
   size="500"
   label="Demo User"
   src="https://picsum.photos/500/500"
 ></sp-avatar>
-```
-
-```html
+html
 <sp-avatar
   size="600"
   label="Demo User"
   src="https://picsum.photos/500/500"
 ></sp-avatar>
-```
-
-```html
+html
 <sp-avatar
   size="700"
   label="Demo User"

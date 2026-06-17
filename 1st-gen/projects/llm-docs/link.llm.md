@@ -3,7 +3,7 @@ component: link
 tag: sp-link
 package: '@spectrum-web-components/link'
 source: 1st-gen/packages/link/README.md
-generated: 2026-06-17T10:46:50.651Z
+generated: 2026-06-17T10:49:38.838Z
 generator: scripts/generate-llm-docs.mjs
 ---
 
@@ -77,9 +77,7 @@ When a link needs to be placed on top of a colored background or a visual it may
     is over a background.
   </p>
 </div>
-```
-
-```html
+html
 <div
   style="background-color: var(--spectrum-docs-static-black-background-color); padding: 15px 20px; display: inline-block;"
 >

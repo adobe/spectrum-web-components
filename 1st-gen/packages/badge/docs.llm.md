@@ -3,7 +3,7 @@ component: badge
 tag: sp-badge
 package: '@spectrum-web-components/badge'
 source: 1st-gen/packages/badge/README.md
-generated: 2026-06-17T10:46:50.651Z
+generated: 2026-06-17T10:49:38.838Z
 generator: scripts/generate-llm-docs.mjs
 ---
 
@@ -72,9 +72,7 @@ It is not recommended to make badges interactive. Consider using a different com
     Icon and label
   </sp-badge>
 </div>
-```
-
-```html
+html
 <div style="display: flex; gap: var(--spectrum-spacing-75);">
   <sp-badge size="m">Label</sp-badge>
   <sp-badge size="m">
@@ -88,9 +86,7 @@ It is not recommended to make badges interactive. Consider using a different com
     Icon and label
   </sp-badge>
 </div>
-```
-
-```html
+html
 <div style="display: flex; gap: var(--spectrum-spacing-75);">
   <sp-badge size="l">Label</sp-badge>
   <sp-badge size="l">
@@ -104,9 +100,7 @@ It is not recommended to make badges interactive. Consider using a different com
     Icon and label
   </sp-badge>
 </div>
-```
-
-```html
+html
 <div style="display: flex; gap: var(--spectrum-spacing-75);">
   <sp-badge size="xl">Label</sp-badge>
   <sp-badge size="xl">

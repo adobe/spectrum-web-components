@@ -3,7 +3,7 @@ component: search
 tag: sp-search
 package: '@spectrum-web-components/search'
 source: 1st-gen/packages/search/README.md
-generated: 2026-06-17T10:46:50.651Z
+generated: 2026-06-17T10:49:38.838Z
 generator: scripts/generate-llm-docs.mjs
 ---
 
@@ -49,17 +49,11 @@ The default and most frequently used size is `medium`.
 
 ```html
 <sp-search size="s"></sp-search>
-```
-
-```html
+html
 <sp-search></sp-search>
-```
-
-```html
+html
 <sp-search size="l"></sp-search>
-```
-
-```html
+html
 <sp-search size="xl"></sp-search>
 ```
 

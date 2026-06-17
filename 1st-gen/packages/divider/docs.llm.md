@@ -3,7 +3,7 @@ component: divider
 tag: sp-divider
 package: '@spectrum-web-components/divider'
 source: 1st-gen/packages/divider/README.md
-generated: 2026-06-17T10:46:50.651Z
+generated: 2026-06-17T10:49:38.838Z
 generator: scripts/generate-llm-docs.mjs
 ---
 
@@ -42,18 +42,14 @@ Horizontal dividers are used to separate content stacked vertically.
   The small divider is used to divide similar components such as table rows,
   action button groups, and components within a panel.
 </p>
-```
-
-```html
+html
 <h2 class="spectrum-Heading spectrum-Heading--sizeS">Medium</h2>
 <sp-divider size="m"></sp-divider>
 <p class="spectrum-Body">
   The medium divider is used to divide subsections on a page, or to separate
   different groups of components such as panels, rails, etc.
 </p>
-```
-
-```html
+html
 <h2 class="spectrum-Heading spectrum-Heading--sizeM">Large</h2>
 <sp-divider size="l"></sp-divider>
 <p class="spectrum-Body">
@@ -81,9 +77,7 @@ When a vertical divider is used inside of a flex container, use `align-self: str
     <sp-icon-magnify slot="icon"></sp-icon-magnify>
   </sp-action-button>
 </div>
-```
-
-```html
+html
 <div style="height: 32px; display: flex;">
   <sp-action-button quiet label="Zoom in">
     <sp-icon-magnify slot="icon"></sp-icon-magnify>
@@ -97,9 +91,7 @@ When a vertical divider is used inside of a flex container, use `align-self: str
     <sp-icon-magnify slot="icon"></sp-icon-magnify>
   </sp-action-button>
 </div>
-```
-
-```html
+html
 <div style="height: 32px; display: flex;">
   <sp-action-button quiet label="Zoom in">
     <sp-icon-magnify slot="icon"></sp-icon-magnify>
@@ -131,9 +123,7 @@ Use the static color option when a divider needs to be placed on top of a color 
     Use static black on light color or image backgrounds.
   </p>
 </div>
-```
-
-```html
+html
 <div
   style="background-color: var(--spectrum-docs-static-white-background-color); color: var(--spectrum-white); padding: 20px;"
 >

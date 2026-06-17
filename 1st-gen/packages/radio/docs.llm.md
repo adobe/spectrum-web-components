@@ -3,7 +3,7 @@ component: radio
 tag: sp-radio
 package: '@spectrum-web-components/radio'
 source: 1st-gen/packages/radio/README.md
-generated: 2026-06-17T10:46:50.651Z
+generated: 2026-06-17T10:49:38.838Z
 generator: scripts/generate-llm-docs.mjs
 ---
 
@@ -67,27 +67,21 @@ The `<sp-radio>` elements are labelled with text in their default slot.
   <sp-radio value="third" size="s">Option 3</sp-radio>
   <sp-radio value="fourth" size="s">Option 4</sp-radio>
 </sp-radio-group>
-```
-
-```html
+html
 <sp-radio-group label="Medium" selected="first" name="medium">
   <sp-radio value="first" size="m">Option 1</sp-radio>
   <sp-radio value="second" size="m">Option 2</sp-radio>
   <sp-radio value="third" size="m">Option 3</sp-radio>
   <sp-radio value="fourth" size="m">Option 4</sp-radio>
 </sp-radio-group>
-```
-
-```html
+html
 <sp-radio-group label="Large" selected="first" name="large">
   <sp-radio value="first" size="l">Option 1</sp-radio>
   <sp-radio value="second" size="l">Option 2</sp-radio>
   <sp-radio value="third" size="l">Option 3</sp-radio>
   <sp-radio value="fourth" size="l">Option 4</sp-radio>
 </sp-radio-group>
-```
-
-```html
+html
 <sp-radio-group label="Extra large" selected="first" name="extra-large">
   <sp-radio value="first" size="xl">Option 1</sp-radio>
   <sp-radio value="second" size="xl">Option 2</sp-radio>
@@ -137,9 +131,7 @@ Standard radio buttons are the default style for radio buttons. They are optimal
         </sp-radio-group>
     </div>
 </div>
-```
-
-```html
+html
 <div style="display: flex; justify-content: space-between;">
     <div style="display: flex; flex-direction: column;">
         <sp-field-label for="example-a" size="l">

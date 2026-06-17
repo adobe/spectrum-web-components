@@ -3,7 +3,7 @@ component: menu
 tag: sp-menu
 package: '@spectrum-web-components/menu'
 source: 1st-gen/packages/menu/README.md
-generated: 2026-06-17T10:46:50.651Z
+generated: 2026-06-17T10:49:38.838Z
 generator: scripts/generate-llm-docs.mjs
 ---
 
@@ -94,9 +94,7 @@ To render accessibly, an `<sp-menu>` element or its parent `<sp-popover>` must h
   <sp-menu-item>Save selection</sp-menu-item>
   <sp-menu-item disabled>Make work path</sp-menu-item>
 </sp-menu>
-```
-
-```html
+html
 <sp-popover open style="position: relative" label="Selection type:">
   <sp-menu id="popover-label-attribute">
     <sp-menu-item>Deselect</sp-menu-item>
@@ -135,9 +133,7 @@ To render accessibly, an `<sp-menu>` element or its parent `<sp-popover>` must h
     <sp-menu-item disabled>Make work path</sp-menu-item>
   </sp-menu>
 </sp-popover>
-```
-
-```html
+html
 <sp-menu id="menu-m" size="m" label="Selection type">
   <sp-menu-item>Deselect</sp-menu-item>
   <sp-menu-item>Select inverse</sp-menu-item>
@@ -158,9 +154,7 @@ To render accessibly, an `<sp-menu>` element or its parent `<sp-popover>` must h
     <sp-menu-item disabled>Make work path</sp-menu-item>
   </sp-menu>
 </sp-popover>
-```
-
-```html
+html
 <sp-menu id="menu-l" size="l" label="Selection type">
   <sp-menu-item>Deselect</sp-menu-item>
   <sp-menu-item>Select inverse</sp-menu-item>
@@ -181,9 +175,7 @@ To render accessibly, an `<sp-menu>` element or its parent `<sp-popover>` must h
     <sp-menu-item disabled>Make work path</sp-menu-item>
   </sp-menu>
 </sp-popover>
-```
-
-```html
+html
 <sp-menu id="menu-xl" size="xl" label="Selection type">
   <sp-menu-item>Deselect</sp-menu-item>
   <sp-menu-item>Select inverse</sp-menu-item>
@@ -231,9 +223,7 @@ The `<sp-menu>` element can be instructed to maintain a selection via the `selec
   <sp-menu-item value="item-5">Hexagon</sp-menu-item>
   <sp-menu-item value="item-6" disabled>Circle</sp-menu-item>
 </sp-menu>
-```
-
-```html
+html
 <p>
   The value of the `&lt;sp-menu&gt;` element is:
   <span id="multiple-value">item-3,item-4</span>
@@ -250,9 +240,7 @@ The `<sp-menu>` element can be instructed to maintain a selection via the `selec
   <sp-menu-item value="item-5" disabled>Kumquat</sp-menu-item>
   <sp-menu-item value="item-6">Orange</sp-menu-item>
 </sp-menu>
-```
-
-```html
+html
 <p>
   The value of the `&lt;sp-menu&gt;` element is:
   <span id="inherit-value">item-3 || item-4 || item-8 || item-11</span>

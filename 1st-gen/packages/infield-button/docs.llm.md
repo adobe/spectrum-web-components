@@ -3,7 +3,7 @@ component: infield-button
 tag: sp-infield-button
 package: '@spectrum-web-components/infield-button'
 source: 1st-gen/packages/infield-button/README.md
-generated: 2026-06-17T10:46:50.651Z
+generated: 2026-06-17T10:49:38.838Z
 generator: scripts/generate-llm-docs.mjs
 ---
 
@@ -35,21 +35,15 @@ import { InfieldButton } from '@spectrum-web-components/infield-button';
 <sp-infield-button label="Add" size="s">
   <sp-icon-add></sp-icon-add>
 </sp-infield-button>
-```
-
-```html
+html
 <sp-infield-button label="Add" size="m">
   <sp-icon-add></sp-icon-add>
 </sp-infield-button>
-```
-
-```html
+html
 <sp-infield-button label="Add" size="l">
   <sp-icon-add></sp-icon-add>
 </sp-infield-button>
-```
-
-```html
+html
 <sp-infield-button label="Add" size="xl">
   <sp-icon-add></sp-icon-add>
 </sp-infield-button>

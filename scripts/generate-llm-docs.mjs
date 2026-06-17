@@ -96,43 +96,67 @@ function discoverComponents() {
  * Deterministic chrome-stripping rules applied to the raw README body.
  * Each rule is intentionally line- or fence-scoped so the transform stays
  * predictable and easy to diff.
+ *
+ * Chrome rules only run OUTSIDE fenced code blocks. The `<sp-tabs>` /
+ * `<sp-tab>` / `<sp-tab-panel>` elements are Storybook layout chrome when they
+ * organize a README's examples, but they are literal example content for the
+ * Tabs component itself. Inside a code fence the content is left untouched.
  */
 function stripChrome(readme) {
   const inputLines = readme.split('\n');
   const outputLines = [];
+  let inFence = false;
 
   for (const rawLine of inputLines) {
     const line = rawLine.replace(/\s+$/, '');
+    const trimmed = line.trim();
+
+    // Fence boundaries toggle the literal-content mode.
+    if (/^```/.test(trimmed)) {
+      if (!inFence) {
+        // Opening fence: normalize live-demo fences (```html demo,
+        // ```html demo ignore, ...) down to a plain language fence (```html).
+        const fenceMatch = line.match(/^(\s*```[a-z0-9]+)\s+demo\b.*$/i);
+        outputLines.push(fenceMatch ? fenceMatch[1] : line);
+        inFence = true;
+      } else {
+        outputLines.push(line);
+        inFence = false;
+      }
+      continue;
+    }
+
+    // Inside a fence: literal example code, never stripped.
+    if (inFence) {
+      outputLines.push(line);
+      continue;
+    }
 
     // Rule 1: drop NPM / Bundlephobia / Stackblitz shield badge lines.
-    if (/^\[!\[.*\]\(.*\)\]\(.*\)$/.test(line.trim())) {
+    if (/^\[!\[.*\]\(.*\)\]\(.*\)$/.test(trimmed)) {
       continue;
     }
 
     // Rule 2: drop Storybook tab chrome wrappers; keep their inner content.
-    if (/^<\/?sp-tabs?(\s|>|$)/.test(line.trim())) {
+    if (/^<\/?sp-tabs?(\s|>|$)/.test(trimmed)) {
       continue;
     }
-    if (/^<\/?sp-tab-panel(\s|>|$)/.test(line.trim())) {
-      continue;
-    }
-
-    // Rule 3: normalize live-demo fences (```html demo, ```html demo ignore,
-    // ```html demo open, ...) down to a plain language fence (```html).
-    const fenceMatch = line.match(/^(\s*```[a-z0-9]+)\s+demo\b.*$/i);
-    if (fenceMatch) {
-      outputLines.push(fenceMatch[1]);
+    if (/^<\/?sp-tab-panel(\s|>|$)/.test(trimmed)) {
       continue;
     }
 
     outputLines.push(line);
   }
 
-  // Rule 4: collapse 3+ blank lines into a single blank line and trim ends.
-  return outputLines
-    .join('\n')
-    .replace(/\n{3,}/g, '\n\n')
-    .trim();
+  return (
+    outputLines
+      .join('\n')
+      // Drop fenced blocks left empty after chrome stripping.
+      .replace(/```[a-z0-9]*\n(?:[ \t]*\n)*```/gi, '')
+      // Collapse 3+ blank lines into a single blank line and trim ends.
+      .replace(/\n{3,}/g, '\n\n')
+      .trim()
+  );
 }
 
 /**

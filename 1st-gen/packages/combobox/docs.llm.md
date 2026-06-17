@@ -3,7 +3,7 @@ component: combobox
 tag: sp-combobox
 package: '@spectrum-web-components/combobox'
 source: 1st-gen/packages/combobox/README.md
-generated: 2026-06-17T10:46:50.651Z
+generated: 2026-06-17T10:49:38.838Z
 generator: scripts/generate-llm-docs.mjs
 ---
 
@@ -78,25 +78,19 @@ mutate() {
   <sp-menu-item value="green">Green</sp-menu-item>
   <sp-menu-item value="blue">Blue</sp-menu-item>
 </sp-combobox>
-```
-
-```html
+html
 <sp-combobox size="m" label="Color">
   <sp-menu-item value="red">Red</sp-menu-item>
   <sp-menu-item value="green">Green</sp-menu-item>
   <sp-menu-item value="blue">Blue</sp-menu-item>
 </sp-combobox>
-```
-
-```html
+html
 <sp-combobox size="l" label="Color">
   <sp-menu-item value="red">Red</sp-menu-item>
   <sp-menu-item value="green">Green</sp-menu-item>
   <sp-menu-item value="blue">Blue</sp-menu-item>
 </sp-combobox>
-```
-
-```html
+html
 <sp-combobox size="xl" label="Color">
   <sp-menu-item value="red">Red</sp-menu-item>
   <sp-menu-item value="green">Green</sp-menu-item>
@@ -166,9 +160,7 @@ The popup menu items are filtered to only those completing the currently-input v
   <sp-menu-item value="green">Green</sp-menu-item>
   <sp-menu-item value="blue" disabled>Blue</sp-menu-item>
 </sp-combobox>
-```
-
-```html
+html
 <sp-field-label for="color-invalid">Color</sp-field-label>
 <sp-combobox id="color-invalid" invalid>
   <sp-menu-item value="red">Red</sp-menu-item>
@@ -178,9 +170,7 @@ The popup menu items are filtered to only those completing the currently-input v
     Choose or add at least one color.
   </sp-help-text>
 </sp-combobox>
-```
-
-```html
+html
 <sp-field-label for="color">Color</sp-field-label>
 <sp-combobox id="color" pending>
   <sp-menu-item value="red">Red</sp-menu-item>
@@ -220,9 +210,7 @@ See [help text](../help-text) and [tooltip](../tooltip) for more information.
   <sp-menu-item value="blue">Blue</sp-menu-item>
   <sp-help-text slot="help-text">Enter the name of a color.</sp-help-text>
 </sp-combobox>
-```
-
-```html
+html
 <sp-field-label for="color2">Color</sp-field-label>
 <sp-combobox id="color2" required>
   <sp-menu-item value="red">Red</sp-menu-item>
@@ -231,9 +219,7 @@ See [help text](../help-text) and [tooltip](../tooltip) for more information.
   <sp-help-text slot="help-text">Enter the name of a color.</sp-help-text>
   <sp-help-text slot="negative-help-text">A color is required.</sp-help-text>
 </sp-combobox>
-```
-
-```html
+html
 <sp-field-label for="color3">Color</sp-field-label>
 <sp-combobox id="color3">
   <sp-tooltip slot="tooltip">

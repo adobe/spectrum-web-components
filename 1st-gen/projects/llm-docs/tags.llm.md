@@ -3,7 +3,7 @@ component: tags
 tag: sp-tags
 package: '@spectrum-web-components/tags'
 source: 1st-gen/packages/tags/README.md
-generated: 2026-06-17T10:46:50.651Z
+generated: 2026-06-17T10:49:38.838Z
 generator: scripts/generate-llm-docs.mjs
 ---
 
@@ -47,9 +47,7 @@ Tags are created from the following parts:
   <sp-tag invalid>Tag 2</sp-tag>
   <sp-tag disabled>Tag 3</sp-tag>
 </sp-tags>
-```
-
-```html
+html
 <sp-tags>
     <sp-tag>
         Tag 1
@@ -76,9 +74,7 @@ Tags are created from the following parts:
         ></sp-avatar>
     </sp-tag>
 </sp-tags>
-```
-
-```html
+html
 <sp-tags>
   <sp-tag>
     Tag 1

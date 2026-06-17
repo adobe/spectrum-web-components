@@ -3,7 +3,7 @@ component: underlay
 tag: sp-underlay
 package: '@spectrum-web-components/underlay'
 source: 1st-gen/packages/underlay/README.md
-generated: 2026-06-17T10:46:50.651Z
+generated: 2026-06-17T10:49:38.838Z
 generator: scripts/generate-llm-docs.mjs
 ---
 

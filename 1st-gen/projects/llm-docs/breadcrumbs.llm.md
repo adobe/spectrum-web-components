@@ -3,7 +3,7 @@ component: breadcrumbs
 tag: sp-breadcrumbs
 package: '@spectrum-web-components/breadcrumbs'
 source: 1st-gen/packages/breadcrumbs/README.md
-generated: 2026-06-17T10:46:50.651Z
+generated: 2026-06-17T10:49:38.838Z
 generator: scripts/generate-llm-docs.mjs
 ---
 
@@ -82,9 +82,7 @@ By default, the maximum number of visible breadcrumbs is 4, as recommended by [S
   <sp-breadcrumb-item value="assets">Assets</sp-breadcrumb-item>
   <sp-breadcrumb-item value="18x24">18x24</sp-breadcrumb-item>
 </sp-breadcrumbs>
-```
-
-```html
+html
 <sp-breadcrumbs max-visible-items="1">
   <sp-breadcrumb-item value="your_stuff">Your stuff</sp-breadcrumb-item>
   <sp-breadcrumb-item value="team">Team</sp-breadcrumb-item>
@@ -95,9 +93,7 @@ By default, the maximum number of visible breadcrumbs is 4, as recommended by [S
   <sp-breadcrumb-item value="assets">Assets</sp-breadcrumb-item>
   <sp-breadcrumb-item value="18x24">18x24</sp-breadcrumb-item>
 </sp-breadcrumbs>
-```
-
-```html
+html
 <sp-breadcrumbs max-visible-items="3">
   <sp-breadcrumb-item value="your_stuff">Your stuff</sp-breadcrumb-item>
   <sp-breadcrumb-item value="team">Team</sp-breadcrumb-item>
@@ -142,9 +138,7 @@ Use the `root` slot on the first breadcrumb item to always render the first brea
   <sp-breadcrumb-item value="assets">Assets</sp-breadcrumb-item>
   <sp-breadcrumb-item value="18x24">18x24</sp-breadcrumb-item>
 </sp-breadcrumbs>
-```
-
-```html
+html
 <sp-breadcrumbs>
   <sp-breadcrumb-item slot="root" value="your_stuff">
     Your stuff

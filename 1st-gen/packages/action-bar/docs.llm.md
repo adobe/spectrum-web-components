@@ -3,7 +3,7 @@ component: action-bar
 tag: sp-action-bar
 package: '@spectrum-web-components/action-bar'
 source: 1st-gen/packages/action-bar/README.md
-generated: 2026-06-17T10:46:50.651Z
+generated: 2026-06-17T10:49:38.838Z
 generator: scripts/generate-llm-docs.mjs
 ---
 

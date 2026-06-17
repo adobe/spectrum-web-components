@@ -3,7 +3,7 @@ component: meter
 tag: sp-meter
 package: '@spectrum-web-components/meter'
 source: 1st-gen/packages/meter/README.md
-generated: 2026-06-17T10:46:50.651Z
+generated: 2026-06-17T10:49:38.838Z
 generator: scripts/generate-llm-docs.mjs
 ---
 
@@ -58,17 +58,11 @@ The label is the text that describes what is being measured. It can be provided 
 
 ```html
 <sp-meter size="s" progress="25">Tasks Completed</sp-meter>
-```
-
-```html
+html
 <sp-meter size="m" progress="25">Tasks Completed</sp-meter>
-```
-
-```html
+html
 <sp-meter size="l" progress="25">Tasks Completed</sp-meter>
-```
-
-```html
+html
 <sp-meter size="xl" progress="25">Tasks Completed</sp-meter>
 ```
 

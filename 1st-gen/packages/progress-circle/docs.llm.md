@@ -3,7 +3,7 @@ component: progress-circle
 tag: sp-progress-circle
 package: '@spectrum-web-components/progress-circle'
 source: 1st-gen/packages/progress-circle/README.md
-generated: 2026-06-17T10:46:50.651Z
+generated: 2026-06-17T10:49:38.838Z
 generator: scripts/generate-llm-docs.mjs
 ---
 
@@ -56,16 +56,12 @@ Progress circles come in three sizes to fit various contexts:
   label="Small progress indicator"
   progress="42"
 ></sp-progress-circle>
-```
-
-```html
+html
 <sp-progress-circle
   label="Medium progress indicator"
   progress="67"
 ></sp-progress-circle>
-```
-
-```html
+html
 <sp-progress-circle
   size="l"
   label="Large progress indicator"

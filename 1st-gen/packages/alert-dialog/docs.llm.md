@@ -3,7 +3,7 @@ component: alert-dialog
 tag: sp-alert-dialog
 package: '@spectrum-web-components/alert-dialog'
 source: 1st-gen/packages/alert-dialog/README.md
-generated: 2026-06-17T10:46:50.651Z
+generated: 2026-06-17T10:49:38.838Z
 generator: scripts/generate-llm-docs.mjs
 ---
 
@@ -312,9 +312,7 @@ An alert dialog should be placed inside a modal [overlay](../overlay/) or a [dia
     </sp-alert-dialog>
   </sp-popover>
 </sp-overlay>
-```
-
-```html
+html
 <overlay-trigger type="modal">
   <sp-dialog-base underlay slot="click-content">
     <sp-alert-dialog

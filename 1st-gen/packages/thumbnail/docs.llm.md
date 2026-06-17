@@ -3,7 +3,7 @@ component: thumbnail
 tag: sp-thumbnail
 package: '@spectrum-web-components/thumbnail'
 source: 1st-gen/packages/thumbnail/README.md
-generated: 2026-06-17T10:46:50.651Z
+generated: 2026-06-17T10:49:38.838Z
 generator: scripts/generate-llm-docs.mjs
 ---
 
@@ -37,69 +37,47 @@ import { Thumbnail } from '@spectrum-web-components/thumbnail';
 <sp-thumbnail size="50">
   <img src="https://picsum.photos/100/100" alt="Demo Image" />
 </sp-thumbnail>
-```
-
-```html
+html
 <sp-thumbnail size="75">
   <img src="https://picsum.photos/100/100" alt="Demo Image" />
 </sp-thumbnail>
-```
-
-```html
+html
 <sp-thumbnail size="100">
   <img src="https://picsum.photos/100/100" alt="Demo Image" />
 </sp-thumbnail>
-```
-
-```html
+html
 <sp-thumbnail size="200">
   <img src="https://picsum.photos/100/100" alt="Demo Image" />
 </sp-thumbnail>
-```
-
-```html
+html
 <sp-thumbnail size="300">
   <img src="https://picsum.photos/100/100" alt="Demo Image" />
 </sp-thumbnail>
-```
-
-```html
+html
 <sp-thumbnail size="400">
   <img src="https://picsum.photos/100/100" alt="Demo Image" />
 </sp-thumbnail>
-```
-
-```html
+html
 <sp-thumbnail size="500">
   <img src="https://picsum.photos/100/100" alt="Demo Image" />
 </sp-thumbnail>
-```
-
-```html
+html
 <sp-thumbnail size="600">
   <img src="https://picsum.photos/100/100" alt="Demo Image" />
 </sp-thumbnail>
-```
-
-```html
+html
 <sp-thumbnail size="700">
   <img src="https://picsum.photos/100/100" alt="Demo Image" />
 </sp-thumbnail>
-```
-
-```html
+html
 <sp-thumbnail size="800">
   <img src="https://picsum.photos/100/100" alt="Demo Image" />
 </sp-thumbnail>
-```
-
-```html
+html
 <sp-thumbnail size="900">
   <img src="https://picsum.photos/100/100" alt="Demo Image" />
 </sp-thumbnail>
-```
-
-```html
+html
 <sp-thumbnail size="1000">
   <img src="https://picsum.photos/100/100" alt="Demo Image" />
 </sp-thumbnail>

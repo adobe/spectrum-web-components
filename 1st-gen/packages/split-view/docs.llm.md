@@ -3,7 +3,7 @@ component: split-view
 tag: sp-split-view
 package: '@spectrum-web-components/split-view'
 source: 1st-gen/packages/split-view/README.md
-generated: 2026-06-17T10:46:50.651Z
+generated: 2026-06-17T10:49:38.838Z
 generator: scripts/generate-llm-docs.mjs
 ---
 
@@ -70,9 +70,7 @@ Horizontal is the default orientation for the split view and does not require an
   <div>Left panel</div>
   <div>Right panel</div>
 </sp-split-view>
-```
-
-```html
+html
 <sp-split-view
   resizable
   primary-min="50"
@@ -94,9 +92,7 @@ Horizontal is the default orientation for the split view and does not require an
     </p>
   </div>
 </sp-split-view>
-```
-
-```html
+html
 <sp-split-view
   resizable
   collapsible
@@ -127,9 +123,7 @@ Vertical split view requires the `vertical` attribute to be set.
   <div>Top panel</div>
   <div>Bottom panel</div>
 </sp-split-view>
-```
-
-```html
+html
 <sp-split-view
   vertical
   resizable
@@ -152,9 +146,7 @@ Vertical split view requires the `vertical` attribute to be set.
     </p>
   </div>
 </sp-split-view>
-```
-
-```html
+html
 <sp-split-view
   vertical
   resizable

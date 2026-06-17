@@ -3,7 +3,7 @@ component: card
 tag: sp-card
 package: '@spectrum-web-components/card'
 source: 1st-gen/packages/card/README.md
-generated: 2026-06-17T10:46:50.651Z
+generated: 2026-06-17T10:49:38.838Z
 generator: scripts/generate-llm-docs.mjs
 ---
 
@@ -57,9 +57,7 @@ By default, the heading for an `<sp-card>` is applied via the `heading` attribut
   <img alt="" slot="cover-photo" src="https://picsum.photos/250/300" />
   <div slot="footer">Footer</div>
 </sp-card>
-```
-
-```html
+html
 <sp-card
   subheading="JPG Photo"
   style="--spectrum-card-body-header-height: auto;"

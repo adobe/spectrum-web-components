@@ -3,7 +3,7 @@ component: field-label
 tag: sp-field-label
 package: '@spectrum-web-components/field-label'
 source: 1st-gen/packages/field-label/README.md
-generated: 2026-06-17T10:46:50.651Z
+generated: 2026-06-17T10:49:38.838Z
 generator: scripts/generate-llm-docs.mjs
 ---
 
@@ -60,27 +60,21 @@ Field labels can also be used to label a group of related inputs:
   id="lifestory-0"
   size="s"
 ></sp-textfield>
-```
-
-```html
+html
 <sp-field-label for="lifestory-1" size="m">Life Story (Medium)</sp-field-label>
 <sp-textfield
   placeholder="Enter your life story"
   id="lifestory-1"
   size="m"
 ></sp-textfield>
-```
-
-```html
+html
 <sp-field-label for="lifestory-2" size="l">Life Story (Large)</sp-field-label>
 <sp-textfield
   placeholder="Enter your life story"
   id="lifestory-2"
   size="l"
 ></sp-textfield>
-```
-
-```html
+html
 <sp-field-label for="lifestory-3" size="xl">
   Life Story (Extra Large)
 </sp-field-label>
@@ -179,9 +173,7 @@ Field labels can indicate whether an input is required or optional. By default, 
   id="name-required"
   required
 ></sp-textfield>
-```
-
-```html
+html
 <sp-field-label for="description-optional">
   Profile description (optional)
 </sp-field-label>

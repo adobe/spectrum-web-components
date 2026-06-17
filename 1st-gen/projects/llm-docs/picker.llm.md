@@ -3,7 +3,7 @@ component: picker
 tag: sp-picker
 package: '@spectrum-web-components/picker'
 source: 1st-gen/packages/picker/README.md
-generated: 2026-06-17T10:46:50.651Z
+generated: 2026-06-17T10:49:38.838Z
 generator: scripts/generate-llm-docs.mjs
 ---
 
@@ -56,9 +56,7 @@ For an accessible label that renders within the bounds of the picker itself, but
   <sp-menu-item>Save selection</sp-menu-item>
   <sp-menu-item disabled>Make work path</sp-menu-item>
 </sp-picker>
-```
-
-```html
+html
 <sp-picker label="Selection type" id="uses-label-attribute">
   <sp-menu-item>Deselect</sp-menu-item>
   <sp-menu-item>Select inverse</sp-menu-item>
@@ -68,9 +66,7 @@ For an accessible label that renders within the bounds of the picker itself, but
   <sp-menu-item>Save selection</sp-menu-item>
   <sp-menu-item disabled>Make work path</sp-menu-item>
 </sp-picker>
-```
-
-```html
+html
 <sp-picker id="uses-label-slot">
   <span slot="label">Selection type:</span>
   <sp-menu-item>Deselect</sp-menu-item>
@@ -179,9 +175,7 @@ When using `icons="only"` on `<sp-menu-item>` elements that have text content, t
     Review
   </sp-menu-item>
 </sp-picker>
-```
-
-```html
+html
 <sp-field-label for="picker-icons-none">Choose an action...</sp-field-label>
 <sp-picker
   label="What would you like to do?"
@@ -223,9 +217,7 @@ When the `value` of an `<sp-picker>` matches either the `value` attribute or the
   <sp-menu-item value="item-5">Save selection</sp-menu-item>
   <sp-menu-item disabled value="item-6">Make work path</sp-menu-item>
 </sp-picker>
-```
-
-```html
+html
 <sp-field-label for="picker-item-text">Selection type:</sp-field-label>
 <sp-picker
   label="Select a Country with a very long label, too long in fact"
@@ -269,9 +261,7 @@ When the `value` of an `<sp-picker>` matches either the `value` attribute or the
   <sp-menu-item>Save selection</sp-menu-item>
   <sp-menu-item disabled>Make work path</sp-menu-item>
 </sp-picker>
-```
-
-```html
+html
 <sp-field-label for="picker-m" size="m">Selection type:</sp-field-label>
 <sp-picker id="picker-m" size="m" label="Selection type">
   <sp-menu-item>Deselect</sp-menu-item>
@@ -294,9 +284,7 @@ When the `value` of an `<sp-picker>` matches either the `value` attribute or the
   <sp-menu-item>Save selection</sp-menu-item>
   <sp-menu-item disabled>Make work path</sp-menu-item>
 </sp-picker>
-```
-
-```html
+html
 <sp-picker id="picker-l" size="l" label="Selection type">
   <sp-menu-item>Deselect</sp-menu-item>
   <sp-menu-item>Select inverse</sp-menu-item>
@@ -318,9 +306,7 @@ When the `value` of an `<sp-picker>` matches either the `value` attribute or the
   <sp-menu-item>Save selection</sp-menu-item>
   <sp-menu-item disabled>Make work path</sp-menu-item>
 </sp-picker>
-```
-
-```html
+html
 <sp-field-label for="picker-xl" size="xl">Selection type:</sp-field-label>
 <sp-picker id="picker-xl" size="xl" label="Selection type">
   <sp-menu-item>Deselect</sp-menu-item>
@@ -363,9 +349,7 @@ When the `value` of an `<sp-picker>` matches either the `value` attribute or the
   <sp-menu-item>Save selection</sp-menu-item>
   <sp-menu-item disabled>Make work path</sp-menu-item>
 </sp-picker>
-```
-
-```html
+html
 <sp-field-label side-aligned="start" for="picker-sideLabel-quiet">
   Quiet:
 </sp-field-label>
@@ -403,9 +387,7 @@ When the `value` of an `<sp-picker>` matches either the `value` attribute or the
   <sp-menu-item>Save selection</sp-menu-item>
   <sp-menu-item disabled>Make work path</sp-menu-item>
 </sp-picker>
-```
-
-```html
+html
 <sp-field-label for="picker-invalid-quiet">Quiet:</sp-field-label>
 <sp-picker
   label="Select a Country with a very long label, too long in fact"
@@ -440,9 +422,7 @@ When the `value` of an `<sp-picker>` matches either the `value` attribute or the
   <sp-menu-item>Save selection</sp-menu-item>
   <sp-menu-item disabled>Make work path</sp-menu-item>
 </sp-picker>
-```
-
-```html
+html
 <sp-field-label for="picker-disabled-quiet">Quiet:</sp-field-label>
 <sp-picker
   label="Select a Country with a very long label, too long in fact"
@@ -477,9 +457,7 @@ While in pending state, `<sp-picker>` elements will not respond to click events 
   <sp-menu-item>Multiply</sp-menu-item>
   <sp-menu-item>Screen</sp-menu-item>
 </sp-picker>
-```
-
-```html
+html
 <sp-field-label for="picker-loading-quiet">Quiet:</sp-field-label>
 <sp-picker
   id="picker-loading-quiet"
@@ -557,9 +535,7 @@ Use [`<sp-help-text>`](../help-text/) to add help text and error text:
 <sp-help-text id="help-text">
   Choose the best way to contact you in case there's an issue with your account.
 </sp-help-text>
-```
-
-```html
+html
 <sp-field-label for="error-text" required invalid>
   Preferred contact method:
 </sp-field-label>

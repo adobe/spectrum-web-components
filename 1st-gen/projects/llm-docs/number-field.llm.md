@@ -3,7 +3,7 @@ component: number-field
 tag: sp-number-field
 package: '@spectrum-web-components/number-field'
 source: 1st-gen/packages/number-field/README.md
-generated: 2026-06-17T10:46:50.651Z
+generated: 2026-06-17T10:49:38.838Z
 generator: scripts/generate-llm-docs.mjs
 ---
 
@@ -53,17 +53,11 @@ A number field consists of an input field for numeric values and optional steppe
 
 ```html
 <sp-number-field label="Size" value="1024" size="s"></sp-number-field>
-```
-
-```html
+html
 <sp-number-field label="Size" value="1024" size="m"></sp-number-field>
-```
-
-```html
+html
 <sp-number-field label="Size" value="1024" size="l"></sp-number-field>
-```
-
-```html
+html
 <sp-number-field label="Size" value="1024" size="xl"></sp-number-field>
 ```
 

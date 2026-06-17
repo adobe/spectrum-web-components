@@ -3,7 +3,7 @@ component: field-group
 tag: sp-field-group
 package: '@spectrum-web-components/field-group'
 source: 1st-gen/packages/field-group/README.md
-generated: 2026-06-17T10:46:50.651Z
+generated: 2026-06-17T10:49:38.838Z
 generator: scripts/generate-llm-docs.mjs
 ---
 
@@ -77,9 +77,7 @@ Help text can be accessibly associated with an `<sp-field-group>` element by usi
     Choose actual fruit(s).
   </sp-help-text>
 </sp-field-group>
-```
-
-```html
+html
 <sp-field-label for="above">What are your favorite fruits?</sp-field-label>
 <sp-field-group horizontal id="above">
   <sp-checkbox value="apple">Apple</sp-checkbox>

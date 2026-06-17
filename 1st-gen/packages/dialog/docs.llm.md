@@ -3,7 +3,7 @@ component: dialog
 tag: sp-dialog
 package: '@spectrum-web-components/dialog'
 source: 1st-gen/packages/dialog/README.md
-generated: 2026-06-17T10:46:50.651Z
+generated: 2026-06-17T10:49:38.838Z
 generator: scripts/generate-llm-docs.mjs
 ---
 
@@ -74,9 +74,7 @@ The dialog consists of several key parts:
   egestas congue. Rhoncus est pellentesque elit ullamcorper dignissim cras
   lobortis.
 </sp-dialog>
-```
-
-```html
+html
 <sp-dialog size="m">
   <h2 slot="heading">Disclaimer</h2>
   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
@@ -90,9 +88,7 @@ The dialog consists of several key parts:
   egestas congue. Rhoncus est pellentesque elit ullamcorper dignissim cras
   lobortis.
 </sp-dialog>
-```
-
-```html
+html
 <sp-dialog size="l">
   <h2 slot="heading">Disclaimer</h2>
   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor

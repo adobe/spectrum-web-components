@@ -3,7 +3,7 @@ component: help-text
 tag: sp-help-text
 package: '@spectrum-web-components/help-text'
 source: 1st-gen/packages/help-text/README.md
-generated: 2026-06-17T10:46:50.651Z
+generated: 2026-06-17T10:49:38.838Z
 generator: scripts/generate-llm-docs.mjs
 ---
 
@@ -40,27 +40,21 @@ import { HelpText } from '@spectrum-web-components/help-text';
     Create a password with at least 8 characters.
   </sp-help-text>
 </sp-textfield>
-```
-
-```html
+html
 <sp-field-label size="m" for="size-m">Password</sp-field-label>
 <sp-textfield size="m" id="size-m" type="password">
   <sp-help-text size="m" slot="help-text">
     Create a password with at least 8 characters.
   </sp-help-text>
 </sp-textfield>
-```
-
-```html
+html
 <sp-field-label size="l" for="size-l">Password</sp-field-label>
 <sp-textfield size="l" id="size-l" type="password">
   <sp-help-text size="l" slot="help-text">
     Create a password with at least 8 characters.
   </sp-help-text>
 </sp-textfield>
-```
-
-```html
+html
 <sp-field-label size="xl" for="size-xl">Password</sp-field-label>
 <sp-textfield size="xl" id="size-xl" type="password">
   <sp-help-text size="xl" slot="help-text">

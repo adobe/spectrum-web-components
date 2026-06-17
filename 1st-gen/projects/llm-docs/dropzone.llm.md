@@ -3,7 +3,7 @@ component: dropzone
 tag: sp-dropzone
 package: '@spectrum-web-components/dropzone'
 source: 1st-gen/packages/dropzone/README.md
-generated: 2026-06-17T10:46:50.651Z
+generated: 2026-06-17T10:49:38.838Z
 generator: scripts/generate-llm-docs.mjs
 ---
 
@@ -74,9 +74,7 @@ The `<sp-dropzone>` element consists of several key parts:
     </sp-link>
   </div>
 </sp-dropzone>
-```
-
-```html
+html
 <sp-dropzone id="dropzone-1" style="width: 400px;">
   <sp-illustrated-message
     heading="Drag and drop your file"

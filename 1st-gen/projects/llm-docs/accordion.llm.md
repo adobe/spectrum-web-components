@@ -3,7 +3,7 @@ component: accordion
 tag: sp-accordion
 package: '@spectrum-web-components/accordion'
 source: 1st-gen/packages/accordion/README.md
-generated: 2026-06-17T10:46:50.651Z
+generated: 2026-06-17T10:49:38.838Z
 generator: scripts/generate-llm-docs.mjs
 ---
 
@@ -91,9 +91,7 @@ The accordion consists of several key parts:
     </div>
   </sp-accordion-item>
 </sp-accordion>
-```
-
-```html
+html
 <sp-accordion size="m">
   <sp-accordion-item label="Key Accordion">
     <div>
@@ -119,9 +117,7 @@ The accordion consists of several key parts:
     </div>
   </sp-accordion-item>
 </sp-accordion>
-```
-
-```html
+html
 <sp-accordion size="l">
   <sp-accordion-item label="Key Accordion">
     <div>
@@ -147,9 +143,7 @@ The accordion consists of several key parts:
     </div>
   </sp-accordion-item>
 </sp-accordion>
-```
-
-```html
+html
 <sp-accordion size="xl">
   <sp-accordion-item label="Key Accordion">
     <div>
@@ -221,9 +215,7 @@ The `density` property, when applied, accepts the values of `compact` or `spacio
     </sp-accordion-item>
   </sp-accordion>
 </div>
-```
-
-```html
+html
 <div
   style="
   display: grid;

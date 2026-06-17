@@ -3,7 +3,7 @@ component: color-slider
 tag: sp-color-slider
 package: '@spectrum-web-components/color-slider'
 source: 1st-gen/packages/color-slider/README.md
-generated: 2026-06-17T10:46:50.651Z
+generated: 2026-06-17T10:49:38.838Z
 generator: scripts/generate-llm-docs.mjs
 ---
 

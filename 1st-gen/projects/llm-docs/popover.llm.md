@@ -3,7 +3,7 @@ component: popover
 tag: sp-popover
 package: '@spectrum-web-components/popover'
 source: 1st-gen/packages/popover/README.md
-generated: 2026-06-17T10:46:50.651Z
+generated: 2026-06-17T10:49:38.838Z
 generator: scripts/generate-llm-docs.mjs
 ---
 
@@ -113,9 +113,7 @@ The `placement` attribute can be used to customize how the `<sp-popover>` points
     </sp-dialog>
   </sp-popover>
 </div>
-```
-
-```html
+html
 <div
   style="
         position: relative;
@@ -132,9 +130,7 @@ The `placement` attribute can be used to customize how the `<sp-popover>` points
     </sp-dialog>
   </sp-popover>
 </div>
-```
-
-```html
+html
 <div
   style="
         position: relative;
@@ -151,9 +147,7 @@ The `placement` attribute can be used to customize how the `<sp-popover>` points
     </sp-dialog>
   </sp-popover>
 </div>
-```
-
-```html
+html
 <div
   style="
         position: relative;

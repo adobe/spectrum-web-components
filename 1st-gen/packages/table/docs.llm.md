@@ -3,7 +3,7 @@ component: table
 tag: sp-table
 package: '@spectrum-web-components/table'
 source: 1st-gen/packages/table/README.md
-generated: 2026-06-17T10:46:50.651Z
+generated: 2026-06-17T10:49:38.838Z
 generator: scripts/generate-llm-docs.mjs
 ---
 
@@ -120,9 +120,7 @@ You can customize the header checkbox label using the `select-all-label` attribu
     </sp-table-row>
   </sp-table-body>
 </sp-table>
-```
-
-```html
+html
 <sp-table selects="multiple" selected='["row1", "row2"]'>
   <sp-table-head>
     <sp-table-head-cell>File name</sp-table-head-cell>
@@ -190,9 +188,7 @@ The `density` attribute controls the spacing around table cell content. Availabl
     </sp-table-row>
   </sp-table-body>
 </sp-table>
-```
-
-```html
+html
 <sp-table density="spacious">
   <sp-table-head>
     <sp-table-head-cell>File name</sp-table-head-cell>
@@ -236,9 +232,7 @@ The `size` attribute controls the overall size of the table. Available values ar
     </sp-table-row>
   </sp-table-body>
 </sp-table>
-```
-
-```html
+html
 <sp-table>
   <sp-table-head>
     <sp-table-head-cell>File name</sp-table-head-cell>
@@ -258,9 +252,7 @@ The `size` attribute controls the overall size of the table. Available values ar
     </sp-table-row>
   </sp-table-body>
 </sp-table>
-```
-
-```html
+html
 <sp-table size="l">
   <sp-table-head>
     <sp-table-head-cell>File name</sp-table-head-cell>
@@ -280,9 +272,7 @@ The `size` attribute controls the overall size of the table. Available values ar
     </sp-table-row>
   </sp-table-body>
 </sp-table>
-```
-
-```html
+html
 <sp-table size="xl">
   <sp-table-head>
     <sp-table-head-cell>File name</sp-table-head-cell>
@@ -460,9 +450,7 @@ For accessibility, each checkbox in a virtualized table needs an accessible labe
 
 ```javascript
 table.itemLabel = (item, index) => item.name || `Select row ${index + 1}`;
-```
-
-```html-live
+html-live
 <sp-table
     id="table-item-value-demo"
     style="height: 200px"
@@ -836,9 +824,7 @@ Example of customizing labels:
 <sp-table selects="multiple" select-all-label="Select all documents">
   ...
 </sp-table>
-```
-
-```javascript
+javascript
 // Custom labels for virtualized tables
 table.itemLabel = (item, index) => `Select ${item.fileName}`;
 ```

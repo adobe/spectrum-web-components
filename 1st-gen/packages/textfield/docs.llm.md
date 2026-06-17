@@ -3,7 +3,7 @@ component: textfield
 tag: sp-textfield
 package: '@spectrum-web-components/textfield'
 source: 1st-gen/packages/textfield/README.md
-generated: 2026-06-17T10:46:50.651Z
+generated: 2026-06-17T10:49:38.838Z
 generator: scripts/generate-llm-docs.mjs
 ---
 
@@ -67,9 +67,7 @@ See [help text](../help-text) for more information.
   </sp-help-text>
   <sp-help-text slot="negative-help-text">Please be "Positive".</sp-help-text>
 </sp-textfield>
-```
-
-```html
+html
 <sp-field-label for="managed">Stay "Positive"</sp-field-label>
 <sp-textfield
   id="managed"
@@ -99,23 +97,17 @@ See [help text](../help-text) for more information.
   id="name-0-s"
   placeholder="Enter your name"
 ></sp-textfield>
-```
-
-```html
+html
 <sp-field-label for="name-0-m">Name</sp-field-label>
 <sp-textfield id="name-0-m" placeholder="Enter your name"></sp-textfield>
-```
-
-```html
+html
 <sp-field-label size="l" for="name-0-l">Name</sp-field-label>
 <sp-textfield
   size="l"
   id="name-0-l"
   placeholder="Enter your name"
 ></sp-textfield>
-```
-
-```html
+html
 <sp-field-label size="xl" for="name-0-xl">Name</sp-field-label>
 <sp-textfield
   size="xl"

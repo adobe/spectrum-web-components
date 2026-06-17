@@ -3,7 +3,7 @@ component: picker-button
 tag: sp-picker-button
 package: '@spectrum-web-components/picker-button'
 source: 1st-gen/packages/picker-button/README.md
-generated: 2026-06-17T10:46:50.651Z
+generated: 2026-06-17T10:49:38.838Z
 generator: scripts/generate-llm-docs.mjs
 ---
 
@@ -63,21 +63,15 @@ You can customize the icon in an `<sp-picker-button>` by addressing a new icon t
 <sp-picker-button size="s"></sp-picker-button>
 <br />
 <sp-picker-button size="s"><span slot="label">All</span></sp-picker-button>
-```
-
-```html
+html
 <sp-picker-button size="m"></sp-picker-button>
 <br />
 <sp-picker-button size="m"><span slot="label">All</span></sp-picker-button>
-```
-
-```html
+html
 <sp-picker-button size="l"></sp-picker-button>
 <br />
 <sp-picker-button size="l"><span slot="label">All</span></sp-picker-button>
-```
-
-```html
+html
 <sp-picker-button size="xl"></sp-picker-button>
 <br />
 <sp-picker-button size="xl"><span slot="label">All</span></sp-picker-button>

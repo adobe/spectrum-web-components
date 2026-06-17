@@ -3,7 +3,7 @@ component: color-field
 tag: sp-color-field
 package: '@spectrum-web-components/color-field'
 source: 1st-gen/packages/color-field/README.md
-generated: 2026-06-17T10:46:50.651Z
+generated: 2026-06-17T10:49:38.838Z
 generator: scripts/generate-llm-docs.mjs
 ---
 
@@ -48,17 +48,11 @@ The color field consists of several key parts:
 
 ```html
 <sp-color-field size="s" value="#ffff00"></sp-color-field>
-```
-
-```html
+html
 <sp-color-field size="m" value="#ffff00"></sp-color-field>
-```
-
-```html
+html
 <sp-color-field size="l" value="#ffff00"></sp-color-field>
-```
-
-```html
+html
 <sp-color-field size="xl" value="#ffff00"></sp-color-field>
 ```
 

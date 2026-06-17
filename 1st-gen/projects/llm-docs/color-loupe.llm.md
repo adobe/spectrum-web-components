@@ -3,7 +3,7 @@ component: color-loupe
 tag: sp-color-loupe
 package: '@spectrum-web-components/color-loupe'
 source: 1st-gen/packages/color-loupe/README.md
-generated: 2026-06-17T10:46:50.651Z
+generated: 2026-06-17T10:49:38.838Z
 generator: scripts/generate-llm-docs.mjs
 ---
 
@@ -150,9 +150,7 @@ The `<sp-color-loupe>` is designed to work as part of accessible color selection
     aria-describedby="color-context"
   ></sp-color-area>
 </div>
-```
-
-```html
+html
 <div
   style="display: flex; flex-direction: row; justify-content: space-between; width: 100%;"
 >
@@ -161,9 +159,7 @@ The `<sp-color-loupe>` is designed to work as part of accessible color selection
     aria-describedby="color-context"
   ></sp-color-slider>
 </div>
-```
-
-```html
+html
 <div
   style="display: flex; flex-direction: row; justify-content: space-between; width: 100%;"
 >

@@ -3,7 +3,7 @@ component: swatch
 tag: sp-swatch
 package: '@spectrum-web-components/swatch'
 source: 1st-gen/packages/swatch/README.md
-generated: 2026-06-17T10:46:50.651Z
+generated: 2026-06-17T10:49:38.838Z
 generator: scripts/generate-llm-docs.mjs
 ---
 
@@ -55,9 +55,7 @@ import { Swatch } from '@spectrum-web-components/swatch';
     size="xs"
   ></sp-swatch>
 </sp-swatch-group>
-```
-
-```html
+html
 <sp-swatch-group selects="multiple">
   <sp-swatch color="rgb(255 0 0 / 0.7)" size="s"></sp-swatch>
   <sp-swatch rounding="none" color="rgb(255 0 0 / 0.7)" size="s"></sp-swatch>
@@ -74,9 +72,7 @@ import { Swatch } from '@spectrum-web-components/swatch';
   ></sp-swatch>
   <sp-swatch rounding="full" shape="rectangle" mixed-value size="s"></sp-swatch>
 </sp-swatch-group>
-```
-
-```html
+html
 <sp-swatch-group selects="multiple">
   <sp-swatch color="rgb(255 0 0 / 0.7)" size="m"></sp-swatch>
   <sp-swatch rounding="none" color="rgb(255 0 0 / 0.7)" size="m"></sp-swatch>
@@ -93,9 +89,7 @@ import { Swatch } from '@spectrum-web-components/swatch';
   ></sp-swatch>
   <sp-swatch rounding="full" shape="rectangle" mixed-value size="m"></sp-swatch>
 </sp-swatch-group>
-```
-
-```html
+html
 <sp-swatch-group selects="multiple">
   <sp-swatch color="rgb(255 0 0 / 0.7)" size="l"></sp-swatch>
   <sp-swatch rounding="none" color="rgb(255 0 0 / 0.7)" size="l"></sp-swatch>

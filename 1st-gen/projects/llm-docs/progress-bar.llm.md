@@ -3,7 +3,7 @@ component: progress-bar
 tag: sp-progress-bar
 package: '@spectrum-web-components/progress-bar'
 source: 1st-gen/packages/progress-bar/README.md
-generated: 2026-06-17T10:46:50.651Z
+generated: 2026-06-17T10:49:38.838Z
 generator: scripts/generate-llm-docs.mjs
 ---
 
@@ -54,9 +54,7 @@ Progress bars have the following parts:
     progress="22"
   ></sp-progress-bar>
 </div>
-```
-
-```html
+html
 <div
   style="width: 240px; height: 160px; display: flex; flex-direction: column; align-items: center; justify-content: space-around;"
 >
@@ -66,9 +64,7 @@ Progress bars have the following parts:
     progress="22"
   ></sp-progress-bar>
 </div>
-```
-
-```html
+html
 <div
   style="width: 240px; height: 160px; display: flex; flex-direction: column; align-items: center; justify-content: space-around;"
 >
@@ -78,9 +74,7 @@ Progress bars have the following parts:
     progress="22"
   ></sp-progress-bar>
 </div>
-```
-
-```html
+html
 <div
   style="width: 240px; height: 160px; display: flex; flex-direction: column; align-items: center; justify-content: space-around;"
 >

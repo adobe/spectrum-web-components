@@ -3,7 +3,7 @@ component: slider
 tag: sp-slider
 package: '@spectrum-web-components/slider'
 source: 1st-gen/packages/slider/README.md
-generated: 2026-06-17T10:46:50.651Z
+generated: 2026-06-17T10:49:38.838Z
 generator: scripts/generate-llm-docs.mjs
 ---
 
@@ -56,13 +56,9 @@ Use `label-visibility="text"` to suppress the "value" label, use `label-visibili
   label-visibility="text"
   value="50"
 ></sp-slider>
-```
-
-```html
+html
 <sp-slider label="No visible text label" label-visibility="value"></sp-slider>
-```
-
-```html
+html
 <sp-slider label="No visible labels" label-visibility="none"></sp-slider>
 ```
 
@@ -105,19 +101,13 @@ The slider also optionally accepts two or more `<sp-slider-handle>` elements wit
 ```html
 <sp-slider label="Slider Label" size="s"></sp-slider>
 <sp-slider label="Slider Label - Editable" editable size="s"></sp-slider>
-```
-
-```html
+html
 <sp-slider label="Slider Label"></sp-slider>
 <sp-slider label="Slider Label - Editable" editable></sp-slider>
-```
-
-```html
+html
 <sp-slider label="Slider Label" size="l"></sp-slider>
 <sp-slider label="Slider Label - Editable" editable size="l"></sp-slider>
-```
-
-```html
+html
 <sp-slider label="Slider Label" size="xl"></sp-slider>
 <sp-slider label="Slider Label - Editable" editable size="xl"></sp-slider>
 ```
@@ -142,9 +132,7 @@ The `quiet` attribute applies Quiet styling to the number field when a slider is
         "unit": "hour"
     }'
 ></sp-slider>
-```
-
-```html
+html
 <sp-slider
   label="Angle (editable)"
   editable
@@ -157,9 +145,7 @@ The `quiet` attribute applies Quiet styling to the number field when a slider is
         "unitDisplay": "narrow"
     }'
 ></sp-slider>
-```
-
-```html
+html
 <sp-slider quiet editable value="50"></sp-slider>
 <sp-slider quiet editable hide-stepper value="50"></sp-slider>
 ```
@@ -214,9 +200,7 @@ Any number (including `0`) can be used as a fill-start value. If a [custom norma
   step="0.01"
   disabled
 ></sp-slider>
-```
-
-```html
+html
 <sp-slider
   id="fill-start-slider"
   label="fill-start greater than value"
@@ -227,9 +211,7 @@ Any number (including `0`) can be used as a fill-start value. If a [custom norma
   fill-start="0.7"
   variant="filled"
 ></sp-slider>
-```
-
-```html
+html
 <sp-slider
   id="fill-start-slider"
   label="Fill Start less than Value"
@@ -240,9 +222,7 @@ Any number (including `0`) can be used as a fill-start value. If a [custom norma
   fill-start="0.25"
   variant="filled"
 ></sp-slider>
-```
-
-```html
+html
 <sp-slider
   label="fill-start set to 0"
   max="1"
@@ -266,9 +246,7 @@ With `variant="tick"`, ticks are applied at intervals defined with the `tick-ste
   tick-step="5"
   disabled
 ></sp-slider>
-```
-
-```html
+html
 <sp-slider
   label="Slider Label"
   variant="tick"
