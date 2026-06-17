@@ -53,5 +53,8 @@ export function unregisterDismissible(key: object): void {
  * Whether the key is the topmost (most-recently-registered) dismissible.
  */
 export function isTopDismissible(key: object): boolean {
-  return dismissibleStack.at(-1) === key;
+  // Index access rather than `Array.prototype.at()` — core's TS lib target does
+  // not include `at`. On an empty stack `length - 1` is `-1`, which reads as
+  // `undefined` and never equals a (non-null) key.
+  return dismissibleStack[dismissibleStack.length - 1] === key;
 }
