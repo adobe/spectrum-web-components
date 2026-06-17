@@ -113,8 +113,9 @@
  * yield a triangle that is `popover-tip-width` wide and `popover-tip-height`
  * tall. Its along-edge position is set by the PlacementController's `arrow`
  * middleware (inline `translate`); these rules only orient it onto the correct
- * edge per the computed placement modifier class.
- * @todo RTL logical-placement (`start` / `end`) tip parity — see SWC-917. */
+ * edge per the `actual-placement` host attribute (the flip-resolved physical
+ * side), mirroring the tooltip's host-attribute styling convention.
+ * @todo RTL physical-side tip parity — see SWC-917. */
 .swc-Popover-tip {
   /* tip width ÷ √2 */
   --_swc-popover-tip-size: calc(token("popover-tip-width") / 1.4142);
@@ -128,46 +129,28 @@
 }
 
 /* Tip on the block-start edge — popover sits below the trigger. */
-.swc-Popover--bottom .swc-Popover-tip,
-.swc-Popover--bottom-start .swc-Popover-tip,
-.swc-Popover--bottom-end .swc-Popover-tip,
-.swc-Popover--bottom-left .swc-Popover-tip,
-.swc-Popover--bottom-right .swc-Popover-tip {
+:host([actual-placement="bottom"]) .swc-Popover-tip {
   inset-block-start: calc(var(--_swc-popover-tip-size) / -2);
   border-block-end: none;
   border-inline-end: none;
 }
 
 /* Tip on the block-end edge — popover sits above the trigger. */
-.swc-Popover--top .swc-Popover-tip,
-.swc-Popover--top-start .swc-Popover-tip,
-.swc-Popover--top-end .swc-Popover-tip,
-.swc-Popover--top-left .swc-Popover-tip,
-.swc-Popover--top-right .swc-Popover-tip {
+:host([actual-placement="top"]) .swc-Popover-tip {
   inset-block-end: calc(var(--_swc-popover-tip-size) / -2);
   border-block-start: none;
   border-inline-start: none;
 }
 
-/* Tip on the inline-start edge — popover sits to the end side of the trigger. */
-.swc-Popover--right .swc-Popover-tip,
-.swc-Popover--right-top .swc-Popover-tip,
-.swc-Popover--right-bottom .swc-Popover-tip,
-.swc-Popover--end .swc-Popover-tip,
-.swc-Popover--end-top .swc-Popover-tip,
-.swc-Popover--end-bottom .swc-Popover-tip {
+/* Tip on the inline-start edge — popover sits to the right of the trigger. */
+:host([actual-placement="right"]) .swc-Popover-tip {
   inset-inline-start: calc(var(--_swc-popover-tip-size) / -2);
   border-block-end: none;
   border-inline-start: none;
 }
 
-/* Tip on the inline-end edge — popover sits to the start side of the trigger. */
-.swc-Popover--left .swc-Popover-tip,
-.swc-Popover--left-top .swc-Popover-tip,
-.swc-Popover--left-bottom .swc-Popover-tip,
-.swc-Popover--start .swc-Popover-tip,
-.swc-Popover--start-top .swc-Popover-tip,
-.swc-Popover--start-bottom .swc-Popover-tip {
+/* Tip on the inline-end edge — popover sits to the left of the trigger. */
+:host([actual-placement="left"]) .swc-Popover-tip {
   inset-inline-end: calc(var(--_swc-popover-tip-size) / -2);
   border-block-start: none;
   border-inline-end: none;

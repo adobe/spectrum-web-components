@@ -17,14 +17,15 @@ import {
   PropertyValues,
   TemplateResult,
 } from 'lit';
-import { classMap } from 'lit/directives/class-map.js';
 
 import {
   PopoverBase,
   type PopoverCloseSource,
 } from '@spectrum-web-components/core/components/popover';
 import {
+  fromFloatingPlacement,
   PlacementController,
+  toFloatingPlacement,
   type VirtualTrigger,
 } from '@spectrum-web-components/core/controllers/index.js';
 import {
@@ -247,6 +248,10 @@ export class Popover extends PopoverBase {
       return;
     }
     const showArrow = !this.hideArrow;
+    // Reflect the requested side synchronously so the tip is oriented before the
+    // controller's first (async) compute; the controller then overwrites it with
+    // the flip-resolved side via onPlacementChange.
+    this._reflectDeclaredPlacement();
     this._placementController.start(this._anchor, floating, {
       placement: this.placement,
       // Add room for the arrow when it is shown.
@@ -257,9 +262,25 @@ export class Popover extends PopoverBase {
       tipElement: showArrow ? (this._tipElement ?? undefined) : undefined,
       tipPadding: this.tipPadding,
       onPlacementChange: (next) => {
-        this.actualPlacement = next;
+        // Mirror Tooltip: expose the computed physical side as the
+        // `actual-placement` host attribute for CSS, not as a public property.
+        this.setAttribute('actual-placement', next.split('-')[0]);
       },
     });
+  }
+
+  // Resolve the requested `placement` to its physical side (honoring the
+  // trigger's writing direction for logical `start` / `end`) and reflect it as
+  // the `actual-placement` host attribute.
+  private _reflectDeclaredPlacement(): void {
+    const directionSource =
+      this._anchor instanceof HTMLElement ? this._anchor : this;
+    const direction =
+      getComputedStyle(directionSource).direction === 'rtl' ? 'rtl' : 'ltr';
+    const side = fromFloatingPlacement(
+      toFloatingPlacement(this.placement, direction)
+    ).split('-')[0];
+    this.setAttribute('actual-placement', side);
   }
 
   // ──────────────────
@@ -333,7 +354,7 @@ export class Popover extends PopoverBase {
       return;
     }
     this._placementController.stop();
-    this.actualPlacement = null;
+    this.removeAttribute('actual-placement');
   }
 
   /** Set `open` without re-triggering the show/hide effect. */
@@ -463,11 +484,6 @@ export class Popover extends PopoverBase {
   }
 
   protected override render(): TemplateResult {
-    const classes = classMap({
-      'swc-Popover': true,
-      [`swc-Popover--${this.actualPlacement ?? this.placement}`]: true,
-    });
-
     const content = html`
       <div class="swc-Popover-content">
         <slot></slot>
@@ -484,7 +500,7 @@ export class Popover extends PopoverBase {
     return this.modal
       ? html`
           <dialog
-            class=${classes}
+            class="swc-Popover"
             @cancel=${this._onCancel}
             @close=${this._onClose}
             @pointerdown=${this._onPointerDown}
@@ -494,7 +510,7 @@ export class Popover extends PopoverBase {
         `
       : html`
           <div
-            class=${classes}
+            class="swc-Popover"
             popover="auto"
             @beforetoggle=${this._onBeforeToggle}
           >

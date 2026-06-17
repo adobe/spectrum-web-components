@@ -10,7 +10,7 @@
  * governing permissions and limitations under the License.
  */
 import { html } from 'lit';
-import { expect, userEvent } from '@storybook/test';
+import { expect, userEvent, waitFor } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import { Popover } from '@adobe/spectrum-wc/popover';
@@ -113,10 +113,6 @@ export const DefaultsTest: Story = {
 
     await step('size defaults to undefined', () => {
       expect(popover.size, 'size is undefined').toBeUndefined();
-    });
-
-    await step('actualPlacement defaults to null', () => {
-      expect(popover.actualPlacement, 'actualPlacement is null').toBeNull();
     });
 
     await step('hideArrow defaults to false (arrow shown by default)', () => {
@@ -283,6 +279,56 @@ export const PropertyReflectionTest: Story = {
         popover.hasAttribute('should-flip'),
         'should-flip attribute is absent when false'
       ).toBe(false);
+    });
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Computed placement (actual-placement host attribute)
+// ──────────────────────────────────────────────────────────────
+
+export const ActualPlacementTest: Story = {
+  render: () => html`
+    <button id="actual-placement-trigger">Trigger</button>
+    <swc-popover for="actual-placement-trigger" placement="bottom">
+      Content
+    </swc-popover>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const popover = await getComponent<Popover>(canvasElement, 'swc-popover');
+    await popover.updateComplete;
+
+    await step('no actual-placement attribute while closed', () => {
+      expect(
+        popover.hasAttribute('actual-placement'),
+        'actual-placement is absent before opening'
+      ).toBe(false);
+    });
+
+    await step(
+      'reflects the resolved physical side while open',
+      async () => {
+        popover.open = true;
+        await popover.updateComplete;
+        // Set synchronously from the declared side, then refreshed by the
+        // PlacementController; either way it is a physical side.
+        expect(
+          ['top', 'bottom', 'left', 'right'],
+          'actual-placement is a physical side'
+        ).toContain(popover.getAttribute('actual-placement'));
+      }
+    );
+
+    await step('removes the attribute after the close transition', async () => {
+      // Positioning (and the attribute) is torn down only after the close
+      // transition completes, so poll rather than awaiting updateComplete.
+      popover.open = false;
+      await waitFor(() =>
+        expect(
+          popover.hasAttribute('actual-placement'),
+          'actual-placement is removed once closed'
+        ).toBe(false)
+      );
     });
   },
 };
