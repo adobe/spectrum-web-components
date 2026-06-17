@@ -1442,6 +1442,68 @@ export const SizePropagationDynamicTest: Story = {
 // TEST: Enforced exclusive open on host re-enable
 // ──────────────────────────────────────────────────────────────
 
+// ──────────────────────────────────────────────────────────────
+// TEST: Host-element focus/click delegation
+// ──────────────────────────────────────────────────────────────
+
+export const FocusDelegationTest: Story = {
+  render: () => html`
+    <swc-accordion density="regular">
+      <swc-accordion-item>
+        <span slot="label">Item 1</span>
+        <p>Panel 1</p>
+      </swc-accordion-item>
+    </swc-accordion>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const item = await getComponent<AccordionItem>(
+      canvasElement,
+      'swc-accordion-item'
+    );
+
+    await step(
+      'item.focus() moves focus to the inner header button',
+      async () => {
+        item.focus();
+        expect(
+          item.shadowRoot?.activeElement,
+          'inner header button holds focus after item.focus()'
+        ).toBe(item.shadowRoot?.getElementById('header'));
+      }
+    );
+  },
+};
+
+export const ClickDelegationTest: Story = {
+  render: () => html`
+    <swc-accordion density="regular">
+      <swc-accordion-item>
+        <span slot="label">Item 1</span>
+        <p>Panel 1</p>
+      </swc-accordion-item>
+    </swc-accordion>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const item = await getComponent<AccordionItem>(
+      canvasElement,
+      'swc-accordion-item'
+    );
+
+    await step('item.click() toggles the item open', async () => {
+      expect(item.open, 'item starts closed').toBe(false);
+      item.click();
+      await item.updateComplete;
+      expect(item.open, 'item is open after item.click()').toBe(true);
+    });
+
+    await step('item.click() toggles the item closed again', async () => {
+      item.click();
+      await item.updateComplete;
+      expect(item.open, 'item is closed after second item.click()').toBe(false);
+    });
+  },
+};
+
 export const EnforceExclusiveOpenOnReenableTest: Story = {
   render: () => html`
     <swc-accordion density="regular" disabled>
