@@ -3,7 +3,7 @@ component: illustrated-message
 tag: sp-illustrated-message
 package: '@spectrum-web-components/illustrated-message'
 source: 1st-gen/packages/illustrated-message/README.md
-generated: 2026-06-17T10:49:38.838Z
+generated: 2026-06-17T11:01:22.157Z
 generator: scripts/generate-llm-docs.mjs
 ---
 

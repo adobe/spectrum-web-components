@@ -3,7 +3,7 @@ component: asset
 tag: sp-asset
 package: '@spectrum-web-components/asset'
 source: 1st-gen/packages/asset/README.md
-generated: 2026-06-17T10:49:38.838Z
+generated: 2026-06-17T11:01:22.157Z
 generator: scripts/generate-llm-docs.mjs
 ---
 

@@ -3,7 +3,7 @@ component: color-area
 tag: sp-color-area
 package: '@spectrum-web-components/color-area'
 source: 1st-gen/packages/color-area/README.md
-generated: 2026-06-17T10:49:38.838Z
+generated: 2026-06-17T11:01:22.157Z
 generator: scripts/generate-llm-docs.mjs
 ---
 

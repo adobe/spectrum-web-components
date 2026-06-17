@@ -3,7 +3,7 @@ component: progress-circle
 tag: sp-progress-circle
 package: '@spectrum-web-components/progress-circle'
 source: 1st-gen/packages/progress-circle/README.md
-generated: 2026-06-17T10:49:38.838Z
+generated: 2026-06-17T11:01:22.157Z
 generator: scripts/generate-llm-docs.mjs
 ---
 

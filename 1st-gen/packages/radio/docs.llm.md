@@ -3,7 +3,7 @@ component: radio
 tag: sp-radio
 package: '@spectrum-web-components/radio'
 source: 1st-gen/packages/radio/README.md
-generated: 2026-06-17T10:49:38.838Z
+generated: 2026-06-17T11:01:22.157Z
 generator: scripts/generate-llm-docs.mjs
 ---
 
