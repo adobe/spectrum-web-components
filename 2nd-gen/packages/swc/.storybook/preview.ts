@@ -15,6 +15,7 @@ import {
   type Options,
   setStorybookHelpersConfig,
 } from '@wc-toolkit/storybook-helpers';
+import isChromatic from 'chromatic/isChromatic';
 
 import customElements from './custom-elements.json';
 import { withContext } from './decorators/contexts.js';
@@ -135,6 +136,12 @@ const preview = {
   ],
   parameters: {
     layout: 'centered',
+    // The Storybook patch (.yarn/patches/storybook-npm-10.4.1.patch) gates play
+    // functions on initial render behind `parameters.autoplay` so they do not run
+    // automatically while browsing the dev UI. Chromatic renders each story via that
+    // same initial path, so without this it would snapshot the pre-play state. Enable
+    // autoplay only under Chromatic to restore correct visual regression snapshots.
+    autoplay: isChromatic(),
     backgrounds: { disable: true }, // Use custom context switches
     controls: {
       expanded: true,
@@ -260,6 +267,7 @@ const preview = {
                 'Spectrum SWC migration',
                 'Anti patterns',
                 'Property order quick reference',
+                'Stylesheets',
               ],
               'TypeScript',
               [
@@ -336,7 +344,10 @@ const preview = {
                   'Rendering and styling migration analysis',
                 ],
                 'Action group',
-                ['Rendering and styling migration analysis'],
+                [
+                  'Accessibility migration analysis',
+                  'Rendering and styling migration analysis',
+                ],
                 'Action menu',
                 [
                   'Accessibility migration analysis',
@@ -379,6 +390,11 @@ const preview = {
                 ],
                 'Color field',
                 ['Rendering and styling migration analysis'],
+                'Color handle',
+                [
+                  'Accessibility migration analysis',
+                  'Rendering and styling migration analysis',
+                ],
                 'Color loupe',
                 [
                   'Accessibility migration analysis',

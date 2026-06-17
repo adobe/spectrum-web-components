@@ -20,6 +20,15 @@ type SWCWarningOptions = {
 };
 type BrandedSWCWarningID = `${ElementLocalName}:${WarningType}:${WarningLevel}`;
 
+/**
+ * ARIA element-reflection properties (IDRef-free associations). Not yet in the
+ * TypeScript DOM lib.
+ */
+interface ARIAMixin {
+  ariaDescribedByElements: readonly Element[] | null;
+  ariaLabelledByElements: readonly Element[] | null;
+}
+
 interface Window {
   __swc: {
     DEBUG: boolean;
