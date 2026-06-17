@@ -21,6 +21,7 @@ import {
 } from '@spectrum-web-components/core/controllers/index.js';
 import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
 import {
+  hasActiveTransition,
   isTopDismissible,
   registerDismissible,
   resolveTrigger,
@@ -599,9 +600,11 @@ export abstract class PopoverBase extends SpectrumElement {
     this.dispatchEvent(
       new CustomEvent('swc-open', { bubbles: true, composed: true })
     );
-    this._dispatchAfter(
-      new CustomEvent('swc-after-open', { bubbles: true, composed: true })
-    );
+    this._afterTransition(() => {
+      this.dispatchEvent(
+        new CustomEvent('swc-after-open', { bubbles: true, composed: true })
+      );
+    });
   }
 
   private _dispatchClose(source: PopoverCloseSource): void {
@@ -612,36 +615,30 @@ export abstract class PopoverBase extends SpectrumElement {
         composed: true,
       })
     );
-    this._dispatchAfter(
-      new CustomEvent('swc-after-close', { bubbles: true, composed: true })
-    );
+    this._afterTransition(() => {
+      this.dispatchEvent(
+        new CustomEvent('swc-after-close', { bubbles: true, composed: true })
+      );
+      // Tear down positioning once the exit transition has finished — a peer of
+      // the after-close dispatch, not gated by it. Doing it earlier would snap
+      // the surface to 0,0 mid-fade; doing it here keeps the computed position
+      // until the fade completes.
+      this._stopPositioningWhenClosed();
+    });
     this._closeSource = null;
   }
 
-  // Fire a prebuilt after-event on `transitionend`, or immediately if there is
-  // no transition. The event is constructed by the caller with a string-literal
-  // type so the manifest analyzer records the real event names rather than this
-  // helper's parameter identifier.
-  private _dispatchAfter(event: CustomEvent): void {
+  // Run `callback` after the internal element's transition ends, or immediately
+  // when no transition will run (none declared, or reduced motion) since
+  // `transitionend` will not fire in that case. The callers build their own
+  // `CustomEvent`s with string-literal types so the manifest analyzer records
+  // the real event names.
+  private _afterTransition(callback: () => void): void {
     const element = this.internalElement;
-    // `transitionDuration` is comma-separated when multiple properties transition
-    // ("0.2s, 0.2s, 0s"), so check that every value is zero rather than comparing
-    // the full string — `parseFloat` would only read the first entry. When every
-    // value is zero (no transition / reduced motion), dispatch immediately since
-    // `transitionend` will not fire.
-    const durations = element
-      ? getComputedStyle(element).transitionDuration.split(',')
-      : ['0s'];
-    const fire = (): void => {
-      this.dispatchEvent(event);
-      if (event.type === 'swc-after-close') {
-        this._stopPositioningWhenClosed();
-      }
-    };
-    if (!element || durations.every((duration) => duration.trim() === '0s')) {
-      fire();
+    if (!element || !hasActiveTransition(element)) {
+      callback();
       return;
     }
-    element.addEventListener('transitionend', () => fire(), { once: true });
+    element.addEventListener('transitionend', callback, { once: true });
   }
 }
