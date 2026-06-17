@@ -26,6 +26,7 @@
     - [Action button accessibility migration analysis](action-button/accessibility-migration-analysis.md)
     - [Action button migration roadmap](action-button/rendering-and-styling-migration-analysis.md)
 - Action Group
+    - [Action group accessibility migration analysis](action-group/accessibility-migration-analysis.md)
     - [Action group migration roadmap](action-group/rendering-and-styling-migration-analysis.md)
 - Action Menu
     - [Action menu accessibility migration analysis](action-menu/accessibility-migration-analysis.md)
@@ -57,6 +58,9 @@
     - [Close button migration roadmap](close-button/rendering-and-styling-migration-analysis.md)
 - Color Field
     - [Color field migration roadmap](color-field/rendering-and-styling-migration-analysis.md)
+- Color Handle
+    - [Color handle accessibility migration analysis](color-handle/accessibility-migration-analysis.md)
+    - [Color handle migration roadmap](color-handle/rendering-and-styling-migration-analysis.md)
 - Color Loupe
     - [Color loupe accessibility migration analysis](color-loupe/accessibility-migration-analysis.md)
     - [Color loupe migration checklist](color-loupe/migration-checklist.md)
@@ -65,6 +69,7 @@
     - [Divider accessibility migration analysis](divider/accessibility-migration-analysis.md)
     - [Divider migration roadmap](divider/rendering-and-styling-migration-analysis.md)
 - Dropzone
+    - [Dropzone accessibility migration analysis](dropzone/accessibility-migration-analysis.md)
     - [Dropzone migration roadmap](dropzone/rendering-and-styling-migration-analysis.md)
 - Field Group
     - [Field Group migration roadmap](field-group/rendering-and-styling-migration-analysis.md)

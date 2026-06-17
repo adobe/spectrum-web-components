@@ -35,13 +35,14 @@ const postcssPlugins = [
       'logical-properties-and-values': false,
       'is-pseudo-class': false,
       'cascade-layers': false,
+      'dir-pseudo-class': false,
     },
   }),
 ];
 
 /**
  * Processes stylesheets/ CSS through PostCSS and writes them to dist/.
- * Skips `stylesheets/shared/**` — those files are imported into component
+ * Skips `stylesheets/_lit-styles/**` — those files are imported into component
  * `static styles` arrays via `vite-plugin-lit-css` and should not also
  * ship as standalone CSS in `dist/`.
  */
@@ -52,7 +53,7 @@ function processStylesheets(): Plugin {
     async closeBundle() {
       const processor = postcss(postcssPlugins);
       for (const file of glob.sync(resolve(__dirname, 'stylesheets/**/*.css'), {
-        ignore: [resolve(__dirname, 'stylesheets/shared/**/*.css')],
+        ignore: [resolve(__dirname, 'stylesheets/_lit-styles/**/*.css')],
       })) {
         const dest = resolve(__dirname, 'dist', basename(file));
         const result = await processor.process(await readFile(file, 'utf-8'), {
@@ -72,7 +73,7 @@ export default defineConfig({
       elements: [{ component: 'button' }],
     }),
     // Standalone stylesheets under `stylesheets/` ship as their own CSS
-    // files via `processStylesheets`; the `shared/` subdirectory holds
+    // files via `processStylesheets`; the `lit-styles/` subdirectory holds
     // CSS that is composed into component `static styles` arrays via
     // `vite-plugin-lit-css`, so we leave that path for `litCss` to pick up.
     litCss({

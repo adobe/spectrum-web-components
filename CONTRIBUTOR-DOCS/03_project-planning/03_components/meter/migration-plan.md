@@ -276,7 +276,7 @@ All variants (`informative` default, `positive`, `notice`, `negative`) support a
 
 No `--mod-*` properties will be exposed. New `--swc-*` component-level properties may be introduced where needed — these are additive and not breaking. See [Component Custom Property Exposure](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#component-custom-property-exposure) for what to expose and how.
 
-Shipped set for `<swc-meter>`: rather than a `--swc-meter-*` set, the component exposes the shared linear-progress surface (defined in `swc/stylesheets/shared/linear-progress-base.css` and consumed by `meter.css`). These are the public custom properties:
+Shipped set for `<swc-meter>`: rather than a `--swc-meter-*` set, the component exposes the shared linear-progress surface (defined in `swc/stylesheets/_lit-styles/linear-progress-base.css` and consumed by `meter.css`). These are the public custom properties:
 
 - `--swc-linear-progress-fill-color` — overrides the variant-derived bar fill color.
 - `--swc-linear-progress-track-color` — overrides the bar track color.
@@ -322,7 +322,7 @@ Follow the [Badge migration reference](../../02_workstreams/02_2nd-gen-component
 | **Mixin** | `2nd-gen/packages/core/mixins/linear-progress.mixin.ts` | `LinearProgressMixin`. The thin shared layer. Owns: typed property declarations for all shared props (`value`, `minValue`, `maxValue`, `accessibleLabel`, `valueLabel`, `formatOptions`, `labelPosition`, `staticColor`, `size`); shared type constants (`LINEAR_PROGRESS_VALID_SIZES`, `LINEAR_PROGRESS_LABEL_POSITIONS`, `LINEAR_PROGRESS_STATIC_COLORS`); `value` clamping; fill-fraction computation; locale-aware formatting via `LanguageResolutionController`; internal id generation for the `label` and `description` slot containers; `label`-slot and `description`-slot `slotchange` tracking; resolution of `aria-labelledby` / `aria-describedby` / `aria-label` values exposed as getters for the SWC render template; DEBUG-mode accessible-name warning. **No ARIA role. No indeterminate state. No rendering.** |
 | **Core** | `2nd-gen/packages/core/components/meter/` | `Meter.base.ts` (extends `LinearProgressMixin`), `Meter.types.ts`, `index.ts`. Owns only what is meter-specific on top of the mixin: `variant` typed property (`METER_VARIANTS` constant); any meter-specific ARIA decisions not already resolved by the mixin. **No rendering. No JSX/Lit template.** |
 | **SWC** | `2nd-gen/packages/swc/components/meter/` | `Meter.ts` (extends `MeterBase`), `meter.css`, `index.ts`, element registration `swc-meter`, `stories/`, `test/`, `consumer-migration-guide.mdx`. Owns: S2 rendering with the `swc-Meter` wrapper, `role="meter"` + all `aria-value*` bindings on the role element, S2 token bindings, `static-color="white"`/`static-color="black"` classes, meter-specific visual styling. Imports `linear-progress-base.css` for shared bar/track/fill and label-layout rules. |
-| **Shared CSS** | `2nd-gen/packages/swc/shared/linear-progress-base.css` | Shared bar/track/fill structure, size tokens, label/value text layout (top vs side), static-color (white/black) treatment, i18n modifiers. Imported by `meter.css` and (in the future) `progress-bar.css`. Contains no variant fill colors, no indeterminate animation. |
+| **Shared CSS** | `2nd-gen/packages/swc/_lit-styles/linear-progress-base.css` | Shared bar/track/fill structure, size tokens, label/value text layout (top vs side), static-color (white/black) treatment, i18n modifiers. Imported by `meter.css` and (in the future) `progress-bar.css`. Contains no variant fill colors, no indeterminate animation. |
 
 Planned rendering shape for `Meter.ts.render()`:
 
@@ -382,7 +382,7 @@ Notes:
 ### Setup
 
 - [ ] Create `2nd-gen/packages/core/mixins/linear-progress.mixin.ts` with the `LinearProgressMixin` stub and its shared type constants (`LINEAR_PROGRESS_VALID_SIZES`, `LINEAR_PROGRESS_LABEL_POSITIONS`, `LINEAR_PROGRESS_STATIC_COLORS`)
-- [ ] Create `2nd-gen/packages/swc/shared/linear-progress-base.css` as an empty stub (content added in Styling phase)
+- [ ] Create `2nd-gen/packages/swc/_lit-styles/linear-progress-base.css` as an empty stub (content added in Styling phase)
 - [ ] Create `2nd-gen/packages/core/components/meter/` with `Meter.base.ts` (extends `LinearProgressMixin`), `Meter.types.ts` (`METER_VARIANTS` + `MeterVariant`), `index.ts`
 - [ ] Create `2nd-gen/packages/swc/components/meter/` with `Meter.ts`, `meter.css` (`@import`s `linear-progress-base.css`), `index.ts`, `stories/`, `test/`
 - [ ] Wire exports in `core` and `swc` `package.json` files; export `LinearProgressMixin` from core's mixins barrel

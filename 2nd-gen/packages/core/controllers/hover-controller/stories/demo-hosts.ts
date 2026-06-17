@@ -123,6 +123,21 @@ class DemoHoverHostBase extends LitElement {
     }
   }
 
+  // HoverControllerHost contract. This demo host has no reconciliation layer of
+  // its own, so it drives the native Popover API directly, guarding against the
+  // DOMException thrown when show/hidePopover is called in the wrong state.
+  public requestOpen(): void {
+    if (!this.matches(':popover-open')) {
+      this.showPopover();
+    }
+  }
+
+  public requestClose(): void {
+    if (this.matches(':popover-open')) {
+      this.hidePopover();
+    }
+  }
+
   protected override render(): TemplateResult {
     return html`
       <slot></slot>

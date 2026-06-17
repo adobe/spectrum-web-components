@@ -139,6 +139,8 @@ export class Tooltip extends SpectrumElement {
   disabled = false;
 
   /**
+   * @deprecated The `self-managed` attribute will be removed in a future release in favor of an updated binding method.
+   *
    * Automatically bind to the parent element of the assigned `slot` or the parent element of the `sp-tooltip`.
    * Without this, you must provide your own `overlay-trigger`.
    */
@@ -164,6 +166,9 @@ export class Tooltip extends SpectrumElement {
   @query('#tip')
   public tipElement!: HTMLSpanElement;
 
+  /**
+   * @deprecated The `tip-padding` attribute will be removed in a future release.
+   */
   @property({ type: Number })
   public tipPadding?: number;
 
@@ -199,6 +204,23 @@ export class Tooltip extends SpectrumElement {
       return;
     }
     if (['info', 'positive', 'negative'].includes(variant)) {
+      if (window.__swc?.DEBUG) {
+        if (variant === 'info') {
+          window.__swc.warn(
+            this,
+            `The "info" variant on <${this.localName}> is deprecated and will be removed in a future release. Use "informative" instead.`,
+            'https://opensource.adobe.com/spectrum-web-components/components/tooltip',
+            { level: 'deprecation' }
+          );
+        } else if (variant === 'positive') {
+          window.__swc.warn(
+            this,
+            `The "positive" variant on <${this.localName}> is deprecated and will be removed in a future release.`,
+            'https://opensource.adobe.com/spectrum-web-components/components/tooltip',
+            { level: 'deprecation' }
+          );
+        }
+      }
       this.setAttribute('variant', variant);
       this._variant = variant;
       return;
@@ -353,6 +375,14 @@ export class Tooltip extends SpectrumElement {
     this.updateComplete.then(() => {
       if (!this.selfManaged) {
         return;
+      }
+      if (window.__swc?.DEBUG) {
+        window.__swc.warn(
+          this,
+          `The "self-managed" attribute on <${this.localName}> is deprecated and will be removed in a future release in favor of an updated binding method.`,
+          'https://opensource.adobe.com/spectrum-web-components/components/tooltip',
+          { level: 'deprecation' }
+        );
       }
       const overlayElement = this.overlayElement;
       if (overlayElement) {
