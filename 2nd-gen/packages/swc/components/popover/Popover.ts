@@ -46,9 +46,6 @@ interface ARIAControlsElements {
   ariaControlsElements?: readonly Element[] | null;
 }
 
-/** Extra main-axis offset reserved for the arrow when it is shown. */
-const ARROW_SPACE = 8;
-
 /**
  * An anchored popover surface that renders an internal top-layer element. The
  * default lifecycle uses a `<div popover="auto">` with native light-dismiss;
@@ -254,8 +251,10 @@ export class Popover extends PopoverBase {
     this._reflectDeclaredPlacement();
     this._placementController.start(this._anchor, floating, {
       placement: this.placement,
-      // Add room for the arrow when it is shown.
-      offset: this.offset + (showArrow ? ARROW_SPACE : 0),
+      // The trigger gap is the consumer's `offset`; the arrow's own clearance is
+      // a token-based margin on the surface (see popover.css), so no arrow
+      // allowance is added here — keeping a single source of truth in CSS.
+      offset: this.offset,
       crossOffset: this.crossOffset,
       containerPadding: this.containerPadding,
       shouldFlip: this.shouldFlip,

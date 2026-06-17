@@ -305,19 +305,16 @@ export const ActualPlacementTest: Story = {
       ).toBe(false);
     });
 
-    await step(
-      'reflects the resolved physical side while open',
-      async () => {
-        popover.open = true;
-        await popover.updateComplete;
-        // Set synchronously from the declared side, then refreshed by the
-        // PlacementController; either way it is a physical side.
-        expect(
-          ['top', 'bottom', 'left', 'right'],
-          'actual-placement is a physical side'
-        ).toContain(popover.getAttribute('actual-placement'));
-      }
-    );
+    await step('reflects the resolved physical side while open', async () => {
+      popover.open = true;
+      await popover.updateComplete;
+      // Set synchronously from the declared side, then refreshed by the
+      // PlacementController; either way it is a physical side.
+      expect(
+        ['top', 'bottom', 'left', 'right'],
+        'actual-placement is a physical side'
+      ).toContain(popover.getAttribute('actual-placement'));
+    });
 
     await step('removes the attribute after the close transition', async () => {
       // Positioning (and the attribute) is torn down only after the close
