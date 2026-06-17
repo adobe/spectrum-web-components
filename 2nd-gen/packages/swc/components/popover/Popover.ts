@@ -49,6 +49,21 @@ export class Popover extends PopoverBase {
     return this.shadowRoot?.querySelector('.swc-Popover-tip') ?? null;
   }
 
+  // The arrow clearance lives in this layer's CSS (`--_swc-popover-tip-height`
+  // on `.swc-Popover`); read it here so the base never reaches into the surface
+  // styles. Falls back to 0 if the surface is not yet rendered/styled.
+  protected override get arrowHeight(): number {
+    const surface = this.internalElement;
+    if (!surface) {
+      return 0;
+    }
+    return (
+      parseFloat(
+        getComputedStyle(surface).getPropertyValue('--_swc-popover-tip-height')
+      ) || 0
+    );
+  }
+
   protected override render(): TemplateResult {
     const content = html`
       <div class="swc-Popover-content">

@@ -233,6 +233,16 @@ export abstract class PopoverBase extends SpectrumElement {
     return null;
   }
 
+  /**
+   * The arrow's height in pixels, added to the trigger gap when the arrow is
+   * shown. Returns `0` in the base class; the SWC rendering layer overrides it
+   * with the token-derived value so the gap stays in sync with the tip — keeping
+   * the base free of any coupling to the surface's CSS.
+   */
+  protected get arrowHeight(): number {
+    return 0;
+  }
+
   // ──────────────────
   //     STATE
   // ──────────────────
@@ -455,18 +465,10 @@ export abstract class PopoverBase extends SpectrumElement {
     // tip on every side. It is applied through the controller's main-axis offset
     // (which is direction-aware) rather than a CSS margin, since a margin only
     // shifts the absolutely-positioned surface on its block-start / inline-start
-    // sides. The value is read from the token-derived custom property so it stays
-    // in sync with the tip dimensions.
-    const arrowGap = showArrow
-      ? parseFloat(
-          getComputedStyle(floating).getPropertyValue(
-            '--_swc-popover-tip-height'
-          )
-        ) || 0
-      : 0;
+    // sides. `arrowHeight` is supplied by the rendering layer.
     this._placementController.start(this._anchor, floating, {
       placement: this.placement,
-      offset: this.offset + arrowGap,
+      offset: this.offset + (showArrow ? this.arrowHeight : 0),
       crossOffset: this.crossOffset,
       containerPadding: this.containerPadding,
       shouldFlip: this.shouldFlip,
