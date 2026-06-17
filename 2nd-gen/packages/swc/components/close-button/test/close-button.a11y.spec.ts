@@ -96,7 +96,6 @@ test.describe('Close Button - ARIA Snapshots', () => {
     );
     await expect(root).toMatchAriaSnapshot(`
       - button "Close"
-      - button "Dismiss"
       - button "Close dialog"
       - button "Close" [disabled]
     `);

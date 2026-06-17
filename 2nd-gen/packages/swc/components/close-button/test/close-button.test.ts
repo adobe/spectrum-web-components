@@ -121,7 +121,7 @@ export const PropertyMutationTest: Story = {
 
 export const AccessibleLabelMutationTest: Story = {
   render: () => html`
-    <swc-close-button>Close</swc-close-button>
+    <swc-close-button accessible-label="Close"></swc-close-button>
   `,
   play: async ({ canvasElement, step }) => {
     const closeButton = await getComponent<CloseButton>(
@@ -131,17 +131,17 @@ export const AccessibleLabelMutationTest: Story = {
     const internalButton = closeButton.shadowRoot?.querySelector('button');
 
     await step(
-      'uses slot text as aria-label when accessible-label is not set',
+      'forwards accessible-label as aria-label on internal button',
       async () => {
         expect(
           internalButton?.getAttribute('aria-label'),
-          'aria-label comes from slot text when accessible-label is unset'
+          'aria-label matches accessible-label'
         ).toBe('Close');
       }
     );
 
     await step(
-      'forwards accessible-label as aria-label on internal button after mutation',
+      'updates aria-label when accessible-label is mutated',
       async () => {
         closeButton.accessibleLabel = 'Close dialog';
         await closeButton.updateComplete;
@@ -153,32 +153,20 @@ export const AccessibleLabelMutationTest: Story = {
     );
 
     await step(
-      'prefers accessible-label over slot text when both are present',
-      async () => {
-        closeButton.accessibleLabel = 'Dismiss overlay';
-        await closeButton.updateComplete;
-        expect(
-          internalButton?.getAttribute('aria-label'),
-          'accessible-label takes precedence over slot text'
-        ).toBe('Dismiss overlay');
-      }
-    );
-
-    await step(
-      'falls back to slot text when accessible-label is cleared',
+      'removes aria-label when accessible-label is cleared',
       async () => {
         closeButton.accessibleLabel = undefined;
         await closeButton.updateComplete;
         expect(
-          internalButton?.getAttribute('aria-label'),
-          'aria-label matches slot text after clearing accessible-label'
-        ).toBe('Close');
+          internalButton?.hasAttribute('aria-label'),
+          'aria-label is removed when accessible-label is cleared'
+        ).toBe(false);
       }
     );
   },
 };
 
-export const SlotLabelAccessibleNameTest: Story = {
+export const LightDomTextIgnoredTest: Story = {
   render: () => html`
     <swc-close-button>Dismiss</swc-close-button>
   `,
@@ -188,36 +176,15 @@ export const SlotLabelAccessibleNameTest: Story = {
       'swc-close-button'
     );
 
-    await step('uses slot text for the accessible name', async () => {
-      await closeButton.updateComplete;
-      const button = closeButton.shadowRoot?.querySelector('button');
-      expect(
-        button?.getAttribute('aria-label'),
-        'inner button aria-label matches slot text'
-      ).toBe('Dismiss');
-    });
-  },
-};
-
-export const AccessibleLabelPrecedenceTest: Story = {
-  render: () => html`
-    <swc-close-button accessible-label="Close dialog">Dismiss</swc-close-button>
-  `,
-  play: async ({ canvasElement, step }) => {
-    const closeButton = await getComponent<CloseButton>(
-      canvasElement,
-      'swc-close-button'
-    );
-
     await step(
-      'prefers accessible-label over slot text when both are set at render',
+      'does not use light DOM text for the accessible name',
       async () => {
         await closeButton.updateComplete;
         const button = closeButton.shadowRoot?.querySelector('button');
         expect(
-          button?.getAttribute('aria-label'),
-          'accessible-label takes precedence over slot text at render'
-        ).toBe('Close dialog');
+          button?.hasAttribute('aria-label'),
+          'light DOM text is not forwarded as aria-label'
+        ).toBe(false);
       }
     );
   },
@@ -369,10 +336,7 @@ export const StaticColorsStoryTest: Story = {
   play: async ({ canvasElement, step }) => {
     await step('renders static color variants', async () => {
       const closeButtons = canvasElement.querySelectorAll('swc-close-button');
-      expect(
-        closeButtons.length,
-        'static color examples render'
-      ).toBe(2);
+      expect(closeButtons.length, 'static color examples render').toBe(2);
     });
   },
 };
@@ -384,8 +348,8 @@ export const AccessibilityStoryTest: Story = {
       const closeButtons = canvasElement.querySelectorAll('swc-close-button');
       expect(
         closeButtons.length,
-        'icon-only, slot label, dialog chrome, and disabled examples render'
-      ).toBe(4);
+        'icon-only, dialog chrome, and disabled examples render'
+      ).toBe(3);
     });
   },
 };
