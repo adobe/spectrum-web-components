@@ -2,8 +2,4 @@
 '@adobe/spectrum-wc': minor
 ---
 
-Add 2nd-gen Link styles for native `<a href>` elements (no `swc-link` custom element).
-
-- **CSS**: `link.css` BEM modifiers (standalone, secondary, quiet, static white/black); default prose and link-list appearance via `typography.css` (`.swc-Typography--prose`, `.swc-Typography--links`); optional `global-link.css` for application-wide bare-anchor baseline.
-- **Migration**: consumer migration guide and Storybook docs for explicit modifiers, Typography cross-links, and accessibility guidance (no `disabled` on navigational links; quiet styling scoped to section patterns).
-- **Tests**: Storybook play functions and Playwright ARIA snapshot coverage for link modifiers and typography wrapper contexts.
+`Link` — Added 2nd-gen link styles for native `<a href>` elements (no `swc-link` custom element). Default prose and link-list appearance ships with Typography; explicit modifiers live in `link.css`, with optional `global-link.css` for application-wide bare-anchor baseline. See the [component docs](https://spectrum-web-components.adobe.com/?path=/docs/components-link--docs) and [migration guide](https://spectrum-web-components.adobe.com/?path=/docs/components-link-migration-guide--docs). Consumer action: replace `<sp-link>` with native `<a href>` and the classes or Typography wrappers documented in the migration guide.
