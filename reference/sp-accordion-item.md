@@ -26,7 +26,7 @@ import '@spectrum-web-components/accordion/sp-accordion-item.js';
 
 ## Events
 
-| Name                       | Description                                                                                |
-| -------------------------- | ------------------------------------------------------------------------------------------ |
-| `sp-accordion-item-toggle` | Announce that an accordion item has been toggled while allowing the event to be cancelled. |
-| `keydown`                  | Trick :focus-visible polyfill into thinking keyboard based focus                           |
+| Name                       | Description                                                                                                                                                     |
+| -------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `sp-accordion-item-toggle` | Announce that an accordion item has been toggled while allowing the event to be cancelled. In Spectrum 2, this event is renamed to `swc-accordion-item-toggle`. |
+| `keydown`                  | Trick :focus-visible polyfill into thinking keyboard based focus                                                                                                |
