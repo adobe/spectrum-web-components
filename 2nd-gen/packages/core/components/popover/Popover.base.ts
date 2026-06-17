@@ -605,8 +605,15 @@ export abstract class PopoverBase extends SpectrumElement {
     }
   };
 
-  // Modal mode: Escape routes through the native `cancel` event.
-  protected _onCancel = (): void => {
+  // Modal mode: Escape routes through the native `cancel` event. Honor the
+  // dismissible stack so Escape dismisses the topmost layer first: if something
+  // opened on top of this dialog, cancel the close and let that layer handle the
+  // key. The next Escape, once this dialog is topmost, closes it.
+  protected _onCancel = (event: Event): void => {
+    if (!isTopDismissible(this)) {
+      event.preventDefault();
+      return;
+    }
     this._closeSource = 'escape';
   };
 
