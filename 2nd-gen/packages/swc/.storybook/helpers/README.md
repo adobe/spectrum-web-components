@@ -68,6 +68,21 @@ Play-function tests stay in `components/<name>/test/<name>.test.ts` (indexed und
 
 Unit tests for the testing-grid helpers live in `.storybook/helpers/test/testing-grid.unit.test.ts` (`vitest.unit.config.js`, project `swc-unit`). They cover `isChromatic()`, `Heading()`, `Container()`, `renderContent()`, and a `Variants()` smoke test. Run with `yarn test:unit`.
 
+### Module layout
+
+`testing-grid.ts` is a thin barrel; implementation lives in `testing-grid/`:
+
+| File            | Responsibility                                                          |
+| --------------- | ----------------------------------------------------------------------- |
+| `constants.ts`  | `TESTING_GRID_STORY_NAME`, Chromatic params, borders, size labels       |
+| `types.ts`      | Shared TypeScript types                                                 |
+| `internal.ts`   | Chromatic detection, static-color wrapper, theme helpers, `getRandomId` |
+| `primitives.ts` | `Heading`, `Container`, `renderContent`                                 |
+| `builders.ts`   | `States`, `ArgGrid`, `Sizes`, `vrtCase`                                 |
+| `variants.ts`   | `Variants` (main VRT entry)                                             |
+
+Import from `helpers/index.js` or `helpers/testing-grid.js` as before — no call-site changes needed.
+
 ## Adding new helpers
 
 When adding new helpers to this directory:

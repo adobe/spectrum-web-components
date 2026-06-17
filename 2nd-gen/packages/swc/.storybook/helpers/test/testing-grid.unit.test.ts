@@ -90,6 +90,39 @@ describe('Heading()', () => {
     expect(heading?.style.textTransform).toBe('uppercase');
     host.remove();
   });
+
+  it('keeps inherit (not static-color token) for static white sections', () => {
+    const host = mount();
+    render(
+      Heading({ content: 'Static white' }, {
+        args: { 'static-color': 'white' },
+      } as GridStoryContext),
+      host
+    );
+
+    const heading = host.querySelector('.chromatic-ignore') as HTMLElement;
+    expect(heading?.style.color).toBe('inherit');
+    host.remove();
+  });
+
+  it('inherits foreground from static-color demo wrapper', () => {
+    const host = mount();
+    render(
+      html`
+        <div style="color: white; background: black;">
+          ${Heading({ content: 'Primary' }, {
+            args: { 'static-color': 'white' },
+          } as GridStoryContext)}
+        </div>
+      `,
+      host
+    );
+
+    const heading = host.querySelector('.chromatic-ignore') as HTMLElement;
+    expect(heading?.style.color).toBe('inherit');
+    expect(getComputedStyle(heading).color).toBe('rgb(255, 255, 255)');
+    host.remove();
+  });
 });
 
 describe('Container()', () => {
