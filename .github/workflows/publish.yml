@@ -177,7 +177,12 @@ jobs:
         if: steps.extract-tag.outputs.scope != '2nd-gen'
         run: yarn workspace @spectrum-web-components/1st-gen build:confirm
 
+      # For scope=2nd-gen we publish the versions already committed on the
+      # pre-release branch (e.g. 2.0.0-beta.N from Changesets pre mode). Running
+      # `changeset version --snapshot` here would overwrite those with a
+      # timestamped snapshot, so the step is skipped for the 2nd-gen scope.
       - name: Version packages
+        if: steps.extract-tag.outputs.scope != '2nd-gen'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TAG: ${{ steps.extract-tag.outputs.tag }}
