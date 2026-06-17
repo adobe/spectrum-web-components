@@ -53,11 +53,10 @@
 
 ## TL;DR
 
-- `swc-action-group` is a composite keyboard control: one Tab stop into the strip, arrow-key navigation among children via `FocusgroupNavigationController`, and optional managed selection (`selects="single|multiple"`). It is substantially more complex than `swc-button-group`, which has no roving tabindex.
-- Three ARIA-breaking changes ship in this migration: host is always `role="group"` (never `toolbar` or `radiogroup`); children are always `role="button"` (never `radio` or `checkbox`); selection state is exposed via `aria-pressed`/`aria-checked` on the button's focus target rather than through host or child role changes.
-- The `selects` API is retained. `swc-action-group` is the appropriate home for selection behavior until `swc-segmented-control` and `swc-toggle-button-group` exist in 2nd-gen. Consumer chooses the right component for their UX; action-group does not mandate a migration to those alternatives.
+- `swc-action-group` is a composite keyboard control: one Tab stop into the strip, arrow-key navigation among children via `FocusgroupNavigationController`. It is substantially more complex than `swc-button-group`, which has no roving tabindex.
+- Two ARIA-breaking changes ship in this migration: host is always `role="group"` (never `toolbar` or `radiogroup`); children are always `role="button"` (never `radio` or `checkbox`).
+- `selects` and `selected` are dropped. There is no accessible path to set `aria-pressed`/`aria-checked` on `swc-action-button` children and have those attributes forwarded to the inner `<button>` — action-button's forwarding mechanism covers only `aria-haspopup`/`aria-expanded`, and the action-button plan explicitly removes `aria-pressed`. Selection UX belongs on `swc-toggle-button-group` (toggle/multi) and `swc-segmented-control` (exclusive choice). `swc-action-group` is a layout and keyboard navigation container only.
 - Compact mode border-radius is handled entirely in CSS: action-group uses `::slotted(:first-child)` and `::slotted(:last-child)` to set `--swc-action-button-border-*-radius` custom properties, which cascade into action-button's shadow DOM. No JS attribute propagation needed; action-button must expose those properties as overridable fallbacks in its shadow CSS.
-- `swc-action-button` PR #6340 drops `selected`, `toggles`, and `emphasized`. Selection state is expressed by setting `aria-pressed`/`aria-checked` on child hosts, forwarded by ButtonBase to the inner `<button>`. No `selected` property needed on action-button.
 - `vertical` boolean → `orientation="horizontal|vertical"`; `FocusgroupNavigationController` confirmed available in this branch.
 
 ---
@@ -157,7 +156,7 @@ This full modifier surface will not be carried forward to 2nd-gen.
 
 **Proceed independently, after action-button.** Action group does not extend action-button and does not share a base class with button-group. Key dependency decisions are now confirmed:
 
-- Action-group does not rely on a `selected` property on action-button; selection state is expressed via `aria-pressed`/`aria-checked` on child hosts, forwarded by ButtonBase to the inner `<button>`.
+- Action-group does not rely on a `selected` property on action-button; `selects` and `selected` are dropped from action-group entirely (see TL;DR).
 - Compact mode border-radius is handled entirely in CSS via `::slotted(:first-child)` / `::slotted(:last-child)` setting `--swc-action-button-border-*-radius` custom properties that cascade into action-button's shadow DOM — no JS attribute propagation needed.
 - `FocusgroupNavigationController` is available in this branch and will be used.
 
@@ -168,8 +167,8 @@ This full modifier surface will not be carried forward to 2nd-gen.
 | `swc-action-button` | Runtime child dependency | Compact mode requires action-button to expose border-radius as `--swc-action-button-border-*-radius` custom properties so action-group can override them via CSS cascade |
 | `swc-action-menu` | Slotted child | Participates in roving tabindex sequence; must be compatible with `FocusgroupNavigationController` |
 | `swc-button-group` | Sibling (same ARIA role, different keyboard model) | PR #6395 establishes the `orientation` rename convention that action-group follows |
-| `swc-segmented-control` | Future alternative for exclusive-selection UX | Not migrated yet; action-group retains `selects` until this exists |
-| `swc-toggle-button-group` | Future alternative for toggle-selection UX | Not migrated yet; same reasoning |
+| `swc-segmented-control` | Alternative for exclusive-selection UX | Not migrated yet in 2nd-gen; consumers needing exclusive-choice UX should use this when it ships |
+| `swc-toggle-button-group` | Alternative for toggle-selection UX | Not migrated yet in 2nd-gen; consumers needing toggle/multi-select UX should use this when it ships |
 | `FocusgroupNavigationController` | Core controller dependency | Available in this branch; confirmed for use |
 
 ---
@@ -204,18 +203,16 @@ This full modifier surface will not be carried forward to 2nd-gen.
 | # | What changes | 1st-gen behavior | 2nd-gen behavior | Consumer migration path |
 | --- | ------------ | ---------------- | ---------------- | ----------------------- |
 | **B6** | Host role fixed to `role="group"` | Default `role="toolbar"`; switches to `role="radiogroup"` when `selects="single"` | Always `role="group"`; not author-overridable | Remove any `role="toolbar"` or `role="radiogroup"` on `<sp-action-group>`. Move `role="toolbar"` to a parent wrapper element. Source: [accessibility migration analysis](./accessibility-migration-analysis.md). |
-| **B7** | Child roles fixed to `role="button"` | `selects="single"` assigns `role="radio"` + `aria-checked`; `selects="multiple"` assigns `role="checkbox"` + `aria-checked` | Children always `role="button"`; selection state via `aria-pressed` (no `selects`) or `aria-checked` (`selects` set) on the button focus target | Remove any consumer code that relied on child `role="radio"`/`role="checkbox"`. Source: [accessibility migration analysis](./accessibility-migration-analysis.md), [action button accessibility migration analysis](../action-button/accessibility-migration-analysis.md). |
+| **B7** | Child roles fixed to `role="button"` | `selects="single"` assigns `role="radio"` + `aria-checked`; `selects="multiple"` assigns `role="checkbox"` + `aria-checked` | Children always `role="button"`; `selects` and `selected` are dropped; selection UX moves to `swc-toggle-button-group` / `swc-segmented-control` | Remove any consumer code that relied on child `role="radio"`/`role="checkbox"` or on action-group's `selects`/`selected` API. Source: [accessibility migration analysis](./accessibility-migration-analysis.md), [action button accessibility migration analysis](../action-button/accessibility-migration-analysis.md). |
 | **B8** | `RovingTabindexController` → `FocusgroupNavigationController` | `RovingTabindexController` with `hostDelegatesFocus: true` | `FocusgroupNavigationController`; direction tied to `orientation`; `delegatesFocus` preserved | No consumer-visible change; keyboard behavior is equivalent |
-| **B9** | `change` fires after `selected` commits | Known bug: fires before selection in some paths (SWC-889) | `change` fires after `selected` state is committed | Consumers using `change` to read `selected` synchronously will now work correctly |
-| **B10** | `label` required when `selects` is set | No warning when `selects` is set without label | Dev-mode warning when `selects` is set without `label` or `aria-labelledby` | Add `label` attribute when using `selects`; matches WCAG 1.3.1 requirement (SWC-1121) |
-| **B11** | Focus stacking z-index fixed | Focused button's z-index may hide focus indicator (SWC-1342) | Focus indicator always visible | No consumer action required |
+| **B9** | Focus stacking z-index fixed | Focused button's z-index may hide focus indicator (SWC-1342) | Focus indicator always visible | No consumer action required |
 
 ### Additive — ships when ready, zero breakage for consumers already on 2nd-gen
 
 | # | What is added | Notes |
 | --- | ------------- | ----- |
 | **A1** | `emphasized` group-level propagation | Dropped from 2nd-gen action-button (PR #6340). If action-button adds it in a future release, action-group propagation follows as an additive change. |
-| **A2** | Consumer guidance for `swc-segmented-control` / `swc-toggle-button-group` | Documentation note only. When those components ship in 2nd-gen, a migration guide can point consumers to the appropriate alternative for exclusive or toggle selection UX. No code change to action-group. |
+| **A2** | Consumer migration guidance for `swc-segmented-control` / `swc-toggle-button-group` | `selects` and `selected` are dropped. When those components ship in 2nd-gen, the consumer migration guide can document the upgrade path. No code change to action-group. |
 | **A3** | `orientation="both"` (vertical and horizontal arrow keys) | Possible future extension of `FocusgroupNavigationController` direction. Not in current scope. |
 
 ---
@@ -242,8 +239,8 @@ These are derived from the 1st-gen implementation, the [accessibility migration 
 | `label` | `string` | `''` | `label` | **Confirmed** (a11y analysis). Reflects to `aria-label` on host. Required when `selects` is set; dev warning otherwise. |
 | `orientation` | `'horizontal' \| 'vertical'` | `'horizontal'` | `orientation` | **Inferred** (Figma "Orientation" property, React S2 `orientation` prop, button-group PR #6395). Breaking rename from `vertical` boolean. 1st-gen `vertical` gets `@deprecated` JSDoc + `window.__swc.warn()` runtime warning. |
 | `quiet` | `boolean` | `false` | `quiet` | **Confirmed** (1st-gen carryover). Propagates to children. Quiet disables compact border-join styling. |
-| `selected` | `string[]` | `[]` | `selected` (JSON serializable) | **Confirmed** (1st-gen carryover, a11y analysis). Retained; getter/setter pattern preserved; `change` event fires after commit. |
-| `selects` | `'single' \| 'multiple' \| undefined` | `undefined` | `selects` | **Confirmed** (1st-gen carryover, a11y analysis). Retained. ARIA expression fixed: host stays `role="group"`, children stay `role="button"`, state via `aria-pressed`/`aria-checked` on focus target. |
+| `selected` | removed | n/a | removed | **Dropped**. No accessible path to forward `aria-pressed`/`aria-checked` from `swc-action-button` host to its inner `<button>`; action-button's forwarding covers only `aria-haspopup`/`aria-expanded`. Selection UX moves to `swc-toggle-button-group` / `swc-segmented-control`. |
+| `selects` | removed | n/a | removed | **Dropped**. Same reason as `selected`. `swc-action-group` is a layout and keyboard navigation container; selection is not its responsibility. |
 | `size` | `'xs' \| 's' \| 'm' \| 'l' \| 'xl'` | none | `size` | **Confirmed** (Figma, 1st-gen carryover). `noDefaultSize: true` preserved; propagates to children. Figma shows xs–xl. |
 | `static-color` | `'white' \| 'black' \| undefined` | `undefined` | `static-color` | **Confirmed** (1st-gen carryover). Propagates to children. |
 | `emphasized` | `boolean` | `false` | `emphasized` | **Dropped** (action-button PR #6340). Action-button explicitly removes `emphasized`. Figma shows no group-level emphasized style. Not implemented in 2nd-gen action-group. |
@@ -276,20 +273,6 @@ Initial expectation for `swc-action-group` is a small reviewed set covering gap/
 
 ### Behavioral semantics
 
-#### Selection management
-
-When `selects` is set, `swc-action-group` manages the `selected` string array and fires a cancelable `change` event after each user interaction. `preventDefault()` rolls back the selection and restores the prior `selected` value.
-
-The `selected` setter accepts an array of child `value` attribute strings. On slot change, the group re-collects children and reconciles the `selected` array against the current DOM. The initial tab stop is the first selected enabled child, or the first enabled child if none are selected.
-
-In 2nd-gen, ARIA state moves from host/child role changes to attribute mutations on the button's focus target. Action-group sets `aria-pressed` or `aria-checked` directly on each `swc-action-button` host; ButtonBase's `getForwardedButtonAttributes` mechanism forwards those to the inner `<button>` (the same forwarding path already used for `aria-haspopup`/`aria-expanded` in menu-trigger patterns). Visual selected treatment is driven by `:host([aria-pressed="true"])` or `:host([aria-checked="true"])` CSS on action-button — no `selected` property on action-button needed.
-
-- No `selects`: action-group sets `aria-pressed="true"` on selected child hosts; unselected children have no `aria-pressed`
-- `selects="single"`: action-group sets `aria-checked="true"` on the selected child host, `aria-checked="false"` on others; host stays `role="group"`
-- `selects="multiple"`: action-group sets `aria-checked="true"` or `aria-checked="false"` on each child host; host stays `role="group"`
-
-Child `value` attributes are read by action-group as plain DOM attributes (`child.getAttribute('value')`) for selection tracking — independent of whether action-button formally exposes `value` as a reflected property.
-
 #### Compact mode
 
 Compact mode (`compact` attribute) visually joins buttons by collapsing shared borders and resetting interior border-radius values. The Figma spec calls this "Density: Compact".
@@ -304,7 +287,7 @@ This mirrors both spectrum-css's own `:first-child` / `:last-child` approach and
 
 `swc-action-group` owns composite keyboard navigation: one Tab stop into the strip, arrow keys move among enabled `swc-action-button` and `swc-action-menu` children. In 2nd-gen, `RovingTabindexController` is replaced by `FocusgroupNavigationController`, with `direction` set to match `orientation`.
 
-Initial focus target: first enabled child whose value is in `this.selected`, otherwise first enabled child.
+Initial focus target: first enabled child.
 
 When a child `swc-action-menu` is open, focus enters the menu; when the menu closes, focus returns to the menu trigger (the `swc-action-menu` host).
 
@@ -314,17 +297,7 @@ Mouse click updates the roving `tabindex="0"` to the clicked item (SWC-250 fix r
 
 #### Child propagation
 
-On each slot change and on changes to `quiet`, `size`, `staticColor`, `disabled`, `compact` (position mechanism), and `selects`, the group propagates the relevant state to each managed child. The managed child selector in 2nd-gen is `swc-action-button, swc-action-menu`.
-
-#### `change` event ordering
-
-The `change` event must fire after `_selected` is committed (SWC-889 fix). Consumers reading `event.target.selected` inside the handler should see the updated value.
-
-When `change` is canceled via `preventDefault()`, sibling state mutation (deselecting the previously selected child under `selects="single"`) must not have occurred yet. Use `queueMicrotask()` to defer sibling deselection until after the event dispatch returns; check whether the interaction was actually committed before applying sibling changes. See accordion migration (`AccordionBase.closeSiblingsOnOpen`) for the same pattern.
-
-#### Re-enable reconciliation
-
-When `disabled` transitions from `true` to `false` and `selects="single"` is set, the group must reconcile potentially inconsistent `selected` state that accumulated while disabled. If more than one child has a value in `selected`, truncate to the first. This mirrors `AccordionBase.enforceExclusiveOpen()`, which runs on re-enable when `allowMultiple` is false.
+On each slot change and on changes to `quiet`, `size`, `staticColor`, `disabled`, and `compact`, the group propagates the relevant state to each managed child. The managed child selector in 2nd-gen is `swc-action-button, swc-action-menu`.
 
 ### Accessibility semantics notes (2nd-gen)
 
@@ -334,8 +307,7 @@ Source: [accessibility migration analysis](./accessibility-migration-analysis.md
 - **Child roles:** `swc-action-button` stays `role="button"` only. No `role="radio"` or `role="checkbox"` on children.
 - **`aria-orientation`:** Set to `"vertical"` when `orientation="vertical"`; `"horizontal"` or omitted otherwise. Wired to `FocusgroupNavigationController` direction.
 - **`aria-disabled`:** When `disabled` is set on the group, the host receives `aria-disabled="true"` and each child receives `aria-disabled="true"`. Children remain in the Tab/Arrow sequence and are discoverable but must not activate.
-- **Group name:** `label` → `aria-label` on host. `aria-labelledby` remains valid. Dev warning when `selects` is set without a discernible group name.
-- **Selected state (non-color):** Selected styling must include a non-color visual cue in addition to the token-driven color change (WCAG 1.4.1, SWC-1123). ARIA state (`aria-pressed`/`aria-checked`) is the programmatic signal.
+- **Group name:** `label` → `aria-label` on host. `aria-labelledby` remains valid. Labeling the group is recommended whenever the strip has a distinct purpose.
 - **`FormFieldMixin`:** Must not be applied. `swc-action-group` is a composite keyboard widget, not a form field (SWC-1612 must not apply).
 - **Toolbar composition:** Storybook and docs must show `role="toolbar"` on an outer wrapper with named `swc-action-group` clusters as inner groups, per the APG toolbar example.
 
@@ -349,12 +321,12 @@ Follow the [Badge migration reference](../../02_workstreams/02_2nd-gen-component
 
 | Layer | Path | Contains |
 | -------- | ----------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
-| **Core** | `2nd-gen/packages/core/components/action-group/` | `ActionGroup.base.ts`, `ActionGroup.types.ts`. Selection state (`selects`, `selected`, `_selected`, `dispatchChange`), child collection logic, `label` → `aria-label`, dev warnings, `disabled` propagation contract. No rendering. |
+| **Core** | `2nd-gen/packages/core/components/action-group/` | `ActionGroup.base.ts`, `ActionGroup.types.ts`. Child collection logic, `label` → `aria-label`, `disabled` propagation contract, dev warnings. No rendering. |
 | **SWC** | `2nd-gen/packages/swc/components/action-group/` | `ActionGroup.ts`, `action-group.css`, element registration (`swc-action-group`), stories, tests. Renders `<slot role="presentation">`. Wires `FocusgroupNavigationController`. Propagates `compact` position mechanism, `quiet`, `size`, `staticColor` to slotted children. |
 
 Planned rendering shape:
 
-- Core owns: selection API, `change` event lifecycle, `label` / `aria-label` management, `selects`-without-label dev warning, `disabled` state contract
+- Core owns: `label` / `aria-label` management, `disabled` state contract, child collection logic
 - SWC renders: single slot (`<slot role="presentation">`), wires focus controller, propagates visual attributes to children, applies S2 CSS from `spectrum-css` `spectrum-two` branch
 
 No global element stylesheet (`global-action-group.css`) needed — action-group has no global HTML element equivalent.
@@ -382,15 +354,15 @@ No `_lit-styles/` fragment needed — action-group renders only a slot; all layo
 - [ ] Wire exports in both `package.json` files
 - [ ] Check out `spectrum-css` at `spectrum-two` branch as sibling directory (required for Phase 5 styling)
 - [x] `FocusgroupNavigationController` confirmed available in this branch
-- [x] `swc-action-button` API confirmed: no `selected` property; compact uses CSS custom property cascade via `::slotted(:first-child)` / `::slotted(:last-child)` (action-button must expose `--swc-action-button-border-*-radius` fallbacks)
+- [x] `swc-action-button` API confirmed: no `selected` property, no `aria-pressed`/`aria-checked` forwarding; compact uses CSS custom property cascade via `::slotted(:first-child)` / `::slotted(:last-child)` (action-button must expose `--swc-action-button-border-*-radius` fallbacks)
 
 ### API
 
 #### Naming and public surface
 
-- [ ] `ActionGroup.types.ts`: define `ActionGroupOrientation` (`'horizontal' | 'vertical'`), `ActionGroupSelectsMode` (`'single' | 'multiple'`)
+- [ ] `ActionGroup.types.ts`: define `ActionGroupOrientation` (`'horizontal' | 'vertical'`)
 - [ ] `ActionGroupSize` type: `(typeof ACTION_GROUP_VALID_SIZES)[number]` — same pattern as `BadgeSize`, `ButtonSize`, `StatusLightSize`
-- [ ] `ActionGroup.base.ts`: `selects`, `selected` (getter/setter), `label` → `aria-label`, `dispatchChange` with `cancelable: true` rollback, `disabled` propagation contract, dev warning for `selects` without group name
+- [ ] `ActionGroup.base.ts`: `label` → `aria-label`, `disabled` propagation contract, child collection logic
 - [ ] `ActionGroup.ts`: `compact`, `quiet`, `orientation`, `justified`, `size`, `staticColor`, child propagation, `FocusgroupNavigationController` wiring, `delegatesFocus: true`
 - [ ] Drop `--mod-*` CSS custom properties; introduce `--swc-*` set after Phase 5 review
 
@@ -433,9 +405,7 @@ No `_lit-styles/` fragment needed — action-group renders only a slot; all layo
 - [ ] Host always `role="group"`; never author-overridable; no `toolbar`, `radiogroup`, or other role
 - [ ] `aria-orientation` reflects `orientation` value; wired to `FocusgroupNavigationController` direction
 - [ ] `label` → `aria-label` on host; empty `label` removes `aria-label`
-- [ ] Dev warning in debug builds when `selects` is set without `label` or `aria-labelledby` (SWC-1121 fix)
 - [ ] `swc-action-button` children stay `role="button"` only; no `role="radio"` or `role="checkbox"` assigned by action-group
-- [ ] `aria-pressed` or `aria-checked` set on the button's focus target (inner `<button>`) per `selects` mode; not on action-group host
 - [ ] Group `disabled`: host `aria-disabled="true"`, children `aria-disabled="true"`; children remain keyboard-reachable (SWC-621)
 
 #### State verification
@@ -456,20 +426,13 @@ No `_lit-styles/` fragment needed — action-group renders only a slot; all layo
 
 #### Behavior
 
-- [ ] Host `role="group"` in all modes (no `selects`, `selects="single"`, `selects="multiple"`)
+- [ ] Host `role="group"` in all orientations and density combinations
 - [ ] `label` → `aria-label` on host; empty label removes it
 - [ ] `orientation="vertical"` → `aria-orientation="vertical"`; horizontal → `"horizontal"` or omitted
-- [ ] Roving tabindex: one `tabindex="0"`, rest `tabindex="-1"`; verified after slot change, after click, and after `selected` update
-- [ ] `selects="single"`: selecting one child deselects others; `aria-checked` set on focus target of each child; `change` fires once after commit
-- [ ] `selects="multiple"`: each child toggles independently; `aria-checked` correct on each; `change` fires after each commit
-- [ ] No `selects`, with `selected`: `aria-pressed="true"` on selected children's focus targets
-- [ ] `change` is cancelable: `preventDefault()` rolls back `selected` to prior value
-- [ ] `change` cancelation timing: canceling `change` under `selects="single"` does not deselect the previously selected sibling (sibling mutation deferred via `queueMicrotask` until after dispatch returns)
-- [ ] Re-enable reconciliation: removing `disabled` when `selects="single"` and multiple values are in `selected` truncates to the first; no stale multi-selection persists
+- [ ] Roving tabindex: one `tabindex="0"`, rest `tabindex="-1"`; verified after slot change and after click
 - [ ] Group `disabled`: host `aria-disabled="true"`; all children `aria-disabled="true"`; Tab reaches group; arrow moves within; activation suppressed
 - [ ] Mouse click moves `tabindex="0"` to clicked child (SWC-250)
 - [ ] `swc-action-menu` in group: keyboard opens menu; Escape closes; focus returns to trigger; roving sequence intact
-- [ ] `selects` without label triggers dev warning in debug builds
 - [ ] Compact + quiet: compact border-join is inactive
 
 #### Visual regression
@@ -478,7 +441,6 @@ No `_lit-styles/` fragment needed — action-group renders only a slot; all layo
 - [ ] VRT coverage for compact density, horizontal and vertical
 - [ ] VRT coverage for quiet style
 - [ ] VRT coverage for static-color white and black on correct backgrounds
-- [ ] VRT coverage for `selects="single"` and `selects="multiple"` selected state (non-color cue visible)
 - [ ] VRT coverage for focus-visible ring not clipped or hidden (SWC-1342)
 - [ ] VRT coverage for toolbar wrapper composition (outer `role="toolbar"`, named inner groups)
 
@@ -487,13 +449,14 @@ No `_lit-styles/` fragment needed — action-group renders only a slot; all layo
 #### General
 
 - [ ] JSDoc on all public props, slots, events, and CSS custom properties
-- [ ] Storybook stories: overview, anatomy (slot types), sizes, styles (default/quiet), density (default/compact), orientation (horizontal/vertical), justified, `selects="single"`, `selects="multiple"`, disabled, static-color, toolbar wrapper composition
+- [ ] Storybook stories: overview, anatomy (slot types), sizes, styles (default/quiet), density (default/compact), orientation (horizontal/vertical), justified, disabled, static-color, toolbar wrapper composition
 - [ ] Distinguish `swc-action-group` vs `swc-button-group` in docs: composite keyboard navigation vs independent Tab stops
 
 #### Breaking changes
 
 - [ ] Consumer migration guide: `vertical` → `orientation="vertical"`
 - [ ] Consumer migration guide: remove `role` overrides from `<sp-action-group>`; move `role="toolbar"` to a parent wrapper
+- [ ] Consumer migration guide: `selects` and `selected` removed; consumers using selection UX should migrate to `swc-toggle-button-group` (toggle/multi) or `swc-segmented-control` (exclusive choice) when those ship in 2nd-gen
 - [ ] Consumer migration guide: children no longer receive `role="radio"`/`role="checkbox"` from action-group; update any consumer code or tests that asserted those roles
 - [ ] Consumer migration guide: `--mod-actiongroup-*` properties removed; document any `--swc-*` replacements
 
@@ -514,7 +477,7 @@ Create these tickets before this migration PR closes. Link each to Epic SWC-2212
 | ------ | ------- | ------------ | ------------- |
 | TBD | **Expose `--swc-action-button-border-*-radius` custom properties in `swc-action-button`.** Action-group's compact CSS sets these four logical border-radius properties on slotted children; action-button must consume them as `var(--swc-action-button-border-*-radius, token("corner-radius-100"))` fallbacks in its shadow CSS. | Small addition to action-button's shadow CSS; no behavioral change required. Should land during action-button's styling phase or as a follow-on. | B4 (compact mode border-radius), Behavioral semantics: Compact mode, Styling checklist |
 | TBD | **Group-level `emphasized` propagation.** If `swc-action-button` adds `emphasized` in a future release, action-group should propagate it as a group-level attribute. | Action-button PR #6340 explicitly removed `emphasized`; no action-button support exists yet. | A1 (additive) |
-| TBD | **Consumer guidance for `swc-segmented-control` / `swc-toggle-button-group`.** When those components ship in 2nd-gen, add a docs note pointing consumers toward the appropriate alternative for exclusive or toggle selection UX. | Components do not exist yet in 2nd-gen. | A2 (additive) |
+| TBD | **Consumer migration guidance for `swc-segmented-control` / `swc-toggle-button-group`.** `selects` and `selected` are dropped from `swc-action-group`. Consumers using those APIs have no 2nd-gen alternative until `swc-toggle-button-group` (toggle/multi) and `swc-segmented-control` (exclusive choice) ship. Add migration guide copy when those components are available. | Components do not exist yet in 2nd-gen. | B7 (consumer migration path), A2 (additive) |
 
 ---
 
