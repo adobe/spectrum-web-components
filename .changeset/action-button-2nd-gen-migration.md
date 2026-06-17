@@ -1,6 +1,7 @@
 ---
 '@adobe/spectrum-wc': minor
 '@spectrum-web-components/core': minor
+'@spectrum-web-components/action-button': patch
 ---
 
 Add the 2nd-gen `<swc-action-button>`, migrated from the Spectrum 1 `<sp-action-button>`.
