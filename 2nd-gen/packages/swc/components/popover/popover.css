@@ -21,11 +21,12 @@
 }
 
 /* The internal surface — a `<div popover>` in default mode, a `<dialog>` in
- * modal mode. Both are `position: fixed` in the top layer; the
- * PlacementController writes `top: 0; left: 0; translate: …`, so reset the UA
- * centering (`margin: auto`, `inset: 0`) and let the controller anchor it. */
+ * modal mode. Both are `position: absolute` in the top layer to match the
+ * PlacementController's Floating UI `strategy: 'absolute'`; the controller
+ * writes `top: 0; left: 0; translate: …`, so reset the UA centering
+ * (`margin: auto`, `inset: 0`) and let the controller anchor it. */
 .swc-Popover {
-  position: fixed;
+  position: absolute;
   inset: auto;
   inline-size: max-content;
 
