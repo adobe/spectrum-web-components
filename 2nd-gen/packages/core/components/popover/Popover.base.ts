@@ -511,10 +511,13 @@ export abstract class PopoverBase extends SpectrumElement {
     }
   }
 
-  private _closeTeardown(): void {
-    // Stamp the dismissal so a trigger click that caused a light-dismiss does
-    // not immediately reopen the popover.
-    this._lastDismissAt = performance.now();
+  private _closeTeardown(source: PopoverCloseSource): void {
+    // Arm the reopen guard only for an outside light-dismiss — that is the close
+    // a trigger click can have caused. Escape and programmatic closes must not
+    // suppress a subsequent legitimate reopen click.
+    if (source === 'outside') {
+      this._lastDismissAt = performance.now();
+    }
     unregisterDismissible(this);
     this._removeEscapeListener();
     this._interactiveElement?.setAttribute('aria-expanded', 'false');
@@ -552,9 +555,10 @@ export abstract class PopoverBase extends SpectrumElement {
     if (event.newState === 'open') {
       this._dispatchOpen();
     } else {
+      const source = this._closeSource ?? 'outside';
       this._syncOpen(false);
-      this._dispatchClose(this._closeSource ?? 'outside');
-      this._closeTeardown();
+      this._dispatchClose(source);
+      this._closeTeardown(source);
     }
   };
 
@@ -565,9 +569,10 @@ export abstract class PopoverBase extends SpectrumElement {
 
   // Modal mode: `close` fires for Escape, backdrop-click, and programmatic close.
   protected _onClose = (): void => {
+    const source = this._closeSource ?? 'programmatic';
     this._syncOpen(false);
-    this._dispatchClose(this._closeSource ?? 'programmatic');
-    this._closeTeardown();
+    this._dispatchClose(source);
+    this._closeTeardown(source);
   };
 
   // Modal mode: a pointerdown landing on the dialog itself (not its padded

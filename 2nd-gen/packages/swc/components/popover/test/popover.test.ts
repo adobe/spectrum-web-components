@@ -88,6 +88,40 @@ export const ClickToggleTest: Story = {
     });
   },
 };
+
+// ──────────────────────────────────────────────────────────────
+// TEST: A programmatic close does not suppress a reopen click
+// ──────────────────────────────────────────────────────────────
+
+export const ProgrammaticCloseReopenTest: Story = {
+  render: () => html`
+    <button id="programmatic-close-trigger">Trigger</button>
+    <swc-popover for="programmatic-close-trigger">Popover content</swc-popover>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const popover = await getComponent<Popover>(canvasElement, 'swc-popover');
+    const trigger = canvasElement.querySelector(
+      '#programmatic-close-trigger'
+    ) as HTMLButtonElement;
+    await popover.updateComplete;
+
+    await step('open then close programmatically', async () => {
+      popover.open = true;
+      await popover.updateComplete;
+      popover.open = false;
+      await popover.updateComplete;
+      expect(popover.open, 'closed programmatically').toBe(false);
+    });
+
+    // The reopen guard only arms for an outside light-dismiss, so a programmatic
+    // close must not suppress an immediate trigger click.
+    await step('clicking the trigger immediately reopens it', async () => {
+      await userEvent.click(trigger);
+      await popover.updateComplete;
+      expect(popover.open, 'reopened after programmatic close').toBe(true);
+    });
+  },
+};
 // ──────────────────────────────────────────────────────────────
 // TEST: Property defaults (API contract)
 // ──────────────────────────────────────────────────────────────
