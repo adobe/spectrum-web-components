@@ -24,4 +24,8 @@ export {
   type ResolvedTrigger,
   type ResolveTriggerOptions,
 } from './resolve-trigger.js';
-export { hasActiveTransition, maxTransitionDurationMs } from './transition.js';
+export {
+  hasActiveTransition,
+  maxTransitionDurationMs,
+  runAfterTransition,
+} from './transition.js';

@@ -52,3 +52,50 @@ export function hasActiveTransition(element: Element): boolean {
 export function maxTransitionDurationMs(element: Element): number {
   return Math.max(0, ...transitionDurationsMs(element));
 }
+
+/**
+ * Run `callback` once `element`'s CSS transition completes, or synchronously when
+ * no transition will run (none declared, or reduced motion) since `transitionend`
+ * will not fire in that case.
+ *
+ * A fallback timer (the longest declared duration plus a small buffer) guarantees
+ * the callback still runs in browsers that skip `transitionend` for
+ * `transition-behavior: allow-discrete` properties (e.g. Firefox). The
+ * `transitionend` listener and the fallback timer are mutually cancelling, so the
+ * callback runs exactly once.
+ *
+ * @param element - The element whose transition completion is awaited.
+ * @param callback - Invoked once when the transition settles.
+ * @returns A cancel function that removes the listener and clears the timer
+ *   **without** running the callback. Call it to supersede a pending run (for
+ *   example a new open/close cycle) or to clean up on disconnect.
+ */
+export function runAfterTransition(
+  element: Element,
+  callback: () => void
+): () => void {
+  if (!hasActiveTransition(element)) {
+    callback();
+    return () => {};
+  }
+
+  // `event` is present for the `transitionend` path and absent for the fallback
+  // timer. Ignore transitions bubbling up from descendants (e.g. slotted
+  // content) so only the element's own transition settles the callback.
+  const settle = (event?: TransitionEvent): void => {
+    if (event && event.target !== element) {
+      return;
+    }
+    cancel();
+    callback();
+  };
+  const cancel = (): void => {
+    clearTimeout(timer);
+    element.removeEventListener('transitionend', settle as EventListener);
+  };
+
+  const timer = setTimeout(settle, maxTransitionDurationMs(element) + 100);
+  element.addEventListener('transitionend', settle as EventListener);
+
+  return cancel;
+}

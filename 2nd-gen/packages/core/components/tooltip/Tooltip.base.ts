@@ -25,10 +25,9 @@ import {
   toFloatingPlacement,
 } from '../../controllers/placement-controller/index.js';
 import {
-  hasActiveTransition,
-  maxTransitionDurationMs,
   type ResolvedTrigger,
   resolveTrigger,
+  runAfterTransition,
 } from '../../utils/index.js';
 import {
   TOOLTIP_PLACEMENTS,
@@ -190,14 +189,10 @@ export abstract class TooltipBase
 
   private readonly placementController = new PlacementController(this);
 
-  // Guards dispatchAfterEvent so only the first transitionend per open/close cycle fires,
-  // preventing one after event from firing for each CSS property that transitions.
-  private afterEventPending = false;
-
-  // Fallback timer for browsers that do not fire transitionend for
-  // transition-behavior:allow-discrete discrete properties (e.g. Firefox in CI).
-  // Cleared when transitionend fires or a new toggle starts.
-  private afterEventFallbackTimer: ReturnType<typeof setTimeout> | null = null;
+  // Tears down the in-flight `runAfterTransition` wiring (listener + fallback
+  // timer). Calling it supersedes a prior open/close cycle so a stale run can't
+  // dispatch an after-event into the new state.
+  private _cancelAfterTransition?: () => void;
 
   // Tracks the most recently ARIA-wired target so syncAriaRelationship can
   // remove stale references when for or triggerElement changes while open.
@@ -386,54 +381,23 @@ export abstract class TooltipBase
     this.dispatchEvent(
       new CustomEvent(eventName, { bubbles: true, composed: true })
     );
-    // Set here so the flag is set regardless of whether this.open already matches
-    // newState. handleToggle exits early when open was set externally, which would
-    // otherwise leave the flag unset and suppress swc-after-open / swc-after-close.
-    this.afterEventPending = true;
   };
 
   private readonly handleToggle = (event: Event): void => {
-    // Cancel any in-flight close fallback; a new toggle resets the cycle.
-    if (this.afterEventFallbackTimer !== null) {
-      clearTimeout(this.afterEventFallbackTimer);
-      this.afterEventFallbackTimer = null;
-    }
     const { newState } = event as ToggleEvent;
     const isOpen = newState === 'open';
     if (isOpen !== this.open) {
       this.open = isOpen;
     }
-    // When no CSS transition is active, dispatch after-* immediately since transitionend will not fire.
-    if (!hasActiveTransition(this)) {
-      this.afterEventPending = false;
+    // Dispatch the after-event once the transition settles. `runAfterTransition`
+    // supersedes the prior cycle (so a new toggle can't fire a stale after-event),
+    // dispatches immediately when no transition runs, and includes the
+    // allow-discrete fallback timer. Shared with Popover via `core/utils`.
+    this._cancelAfterTransition?.();
+    this._cancelAfterTransition = runAfterTransition(this, () => {
+      this._cancelAfterTransition = undefined;
       this.dispatchAfterEvent(isOpen);
-    } else if (!isOpen) {
-      // Some browsers (e.g. Firefox in CI) do not fire transitionend for
-      // transition-behavior:allow-discrete discrete properties. Start a fallback
-      // so positioning is always cleared after the exit transition window.
-      this.afterEventFallbackTimer = setTimeout(
-        () => {
-          this.afterEventFallbackTimer = null;
-          if (this.afterEventPending) {
-            this.afterEventPending = false;
-            this.dispatchAfterEvent(false);
-          }
-        },
-        maxTransitionDurationMs(this) + 100
-      );
-    }
-  };
-
-  private readonly handleTransitionEnd = (event: TransitionEvent): void => {
-    if (event.target !== this || !this.afterEventPending) {
-      return;
-    }
-    if (this.afterEventFallbackTimer !== null) {
-      clearTimeout(this.afterEventFallbackTimer);
-      this.afterEventFallbackTimer = null;
-    }
-    this.afterEventPending = false;
-    this.dispatchAfterEvent(this.open);
+    });
   };
 
   // Escape-to-close. Registered on `document` only while open (see updated()),
@@ -537,21 +501,16 @@ export abstract class TooltipBase
     this.setAttribute('popover', 'auto');
     this.addEventListener('beforetoggle', this.handleBeforeToggle);
     this.addEventListener('toggle', this.handleToggle);
-    this.addEventListener('transitionend', this.handleTransitionEnd);
   }
 
   public override disconnectedCallback(): void {
     super.disconnectedCallback();
     this.removeEventListener('beforetoggle', this.handleBeforeToggle);
     this.removeEventListener('toggle', this.handleToggle);
-    this.removeEventListener('transitionend', this.handleTransitionEnd);
     // Defensive: the keydown listener is normally removed on close, but a
     // tooltip disconnected while open would still have it registered.
     document.removeEventListener('keydown', this.handleKeyDown);
-    if (this.afterEventFallbackTimer !== null) {
-      clearTimeout(this.afterEventFallbackTimer);
-      this.afterEventFallbackTimer = null;
-    }
+    this._cancelAfterTransition?.();
     // If the tooltip is removed while open, the trigger would otherwise retain a
     // reference to this now-detached node in its ARIA element arrays.
     this.clearAriaRelationship();
