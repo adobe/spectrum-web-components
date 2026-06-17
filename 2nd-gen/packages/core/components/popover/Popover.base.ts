@@ -426,12 +426,22 @@ export abstract class PopoverBase extends SpectrumElement {
     // controller's first (async) compute; the controller then overwrites it with
     // the flip-resolved side via onPlacementChange.
     this._reflectDeclaredPlacement();
+    // The arrow's height is added to the trigger gap so the surface clears the
+    // tip on every side. It is applied through the controller's main-axis offset
+    // (which is direction-aware) rather than a CSS margin, since a margin only
+    // shifts the absolutely-positioned surface on its block-start / inline-start
+    // sides. The value is read from the token-derived custom property so it stays
+    // in sync with the tip dimensions.
+    const arrowGap = showArrow
+      ? parseFloat(
+          getComputedStyle(floating).getPropertyValue(
+            '--_swc-popover-tip-height'
+          )
+        ) || 0
+      : 0;
     this._placementController.start(this._anchor, floating, {
       placement: this.placement,
-      // The trigger gap is the consumer's `offset`; the arrow's own clearance is
-      // a token-based margin on the surface (see popover.css), so no arrow
-      // allowance is added here — keeping a single source of truth in CSS.
-      offset: this.offset,
+      offset: this.offset + arrowGap,
       crossOffset: this.crossOffset,
       containerPadding: this.containerPadding,
       shouldFlip: this.shouldFlip,

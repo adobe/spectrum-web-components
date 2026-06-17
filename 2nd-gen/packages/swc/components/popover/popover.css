@@ -26,9 +26,11 @@
  * writes `top: 0; left: 0; translate: …`, so reset the UA centering
  * (`margin: auto`, `inset: 0`) and let the controller anchor it. */
 .swc-Popover {
-  /* Arrow clearance: the gap between the surface and the trigger that the tip
-   * occupies. Token-derived so it stays in sync with the tip dimensions; the
-   * consumer's `offset` is applied separately by the PlacementController. */
+  /* Arrow clearance: the space the tip occupies between the surface and the
+   * trigger when the arrow is shown. The component reads this token-derived
+   * value and adds it to the PlacementController's main-axis offset (a CSS
+   * margin can't shift the absolutely-positioned surface on every side), so the
+   * gap stays in sync with the tip dimensions. */
   --_swc-popover-tip-height: token("popover-tip-height");
 
   position: absolute;
@@ -159,32 +161,6 @@
   inset-inline-end: calc(var(--_swc-popover-tip-size) / -2);
   border-block-start: none;
   border-inline-end: none;
-}
-
-/* ──────────────────────────
- *    ARROW GAP
- * ────────────────────────── */
-
-/* When the arrow is shown, reserve its height as a margin on the side facing the
- * trigger (per the resolved physical side). The PlacementController positions the
- * surface against the trigger using the consumer's `offset`; this token-derived
- * margin then adds the arrow's clearance on top, keeping the distance in sync
- * with the tip dimensions instead of a hard-coded JS constant. Uses physical
- * `margin-left` / `margin-right` because `actual-placement` is a physical side. */
-:host(:not([hide-arrow])[actual-placement="bottom"]) .swc-Popover {
-  margin-block-start: var(--_swc-popover-tip-height);
-}
-
-:host(:not([hide-arrow])[actual-placement="top"]) .swc-Popover {
-  margin-block-end: var(--_swc-popover-tip-height);
-}
-
-:host(:not([hide-arrow])[actual-placement="right"]) .swc-Popover {
-  margin-left: var(--_swc-popover-tip-height);
-}
-
-:host(:not([hide-arrow])[actual-placement="left"]) .swc-Popover {
-  margin-right: var(--_swc-popover-tip-height);
 }
 
 /* ──────────────────────────
