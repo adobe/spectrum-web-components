@@ -88,7 +88,16 @@ export class ActionButton extends ButtonBase {
     return [...super.observedAttributes, 'aria-haspopup', 'aria-expanded'];
   }
 
-  /** @internal */
+  /**
+   * Intercepts `aria-haspopup` and `aria-expanded` before Lit processes them.
+   * These attributes are stripped from the host and stored as internal state so
+   * they can be forwarded to the inner `<button>`, preventing duplicate ARIA
+   * state from appearing on both the host and the native element. The
+   * `_ariaForwardingInProgress` guard stops the re-entrant callback triggered
+   * by `removeAttribute` from re-entering this branch.
+   *
+   * @internal
+   */
   override attributeChangedCallback(
     name: string,
     old: string | null,
