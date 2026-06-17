@@ -619,20 +619,16 @@ export abstract class PopoverBase extends SpectrumElement {
       this.dispatchEvent(
         new CustomEvent('swc-after-close', { bubbles: true, composed: true })
       );
-      // Tear down positioning once the exit transition has finished — a peer of
-      // the after-close dispatch, not gated by it. Doing it earlier would snap
-      // the surface to 0,0 mid-fade; doing it here keeps the computed position
-      // until the fade completes.
+      // Positioning is torn down only after the exit transition; doing it earlier
+      // would snap the surface to 0,0 while it is still fading out.
       this._stopPositioningWhenClosed();
     });
     this._closeSource = null;
   }
 
   // Run `callback` after the internal element's transition ends, or immediately
-  // when no transition will run (none declared, or reduced motion) since
-  // `transitionend` will not fire in that case. The callers build their own
-  // `CustomEvent`s with string-literal types so the manifest analyzer records
-  // the real event names.
+  // when no transition will run (none declared, or reduced motion), since
+  // `transitionend` will not fire in that case.
   private _afterTransition(callback: () => void): void {
     const element = this.internalElement;
     if (!element || !hasActiveTransition(element)) {

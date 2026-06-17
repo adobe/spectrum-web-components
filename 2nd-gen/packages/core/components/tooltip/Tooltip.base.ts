@@ -25,6 +25,10 @@ import {
   toFloatingPlacement,
 } from '../../controllers/placement-controller/index.js';
 import {
+  hasActiveTransition,
+  maxTransitionDurationMs,
+} from '../../utils/index.js';
+import {
   TOOLTIP_PLACEMENTS,
   TOOLTIP_VARIANTS,
   type TooltipPlacement,
@@ -401,31 +405,23 @@ export abstract class TooltipBase
       this.open = isOpen;
     }
     // When no CSS transition is active, dispatch after-* immediately since transitionend will not fire.
-    // transitionDuration is comma-separated when multiple properties transition ("0s, 0s, …"),
-    // so check that every value in the list is zero rather than comparing the full string.
-    const durations = getComputedStyle(this).transitionDuration.split(',');
-    if (durations.every((d) => d.trim() === '0s')) {
+    if (!hasActiveTransition(this)) {
       this.afterEventPending = false;
       this.dispatchAfterEvent(isOpen);
     } else if (!isOpen) {
       // Some browsers (e.g. Firefox in CI) do not fire transitionend for
       // transition-behavior:allow-discrete discrete properties. Start a fallback
       // so positioning is always cleared after the exit transition window.
-      const maxMs = Math.max(
-        0,
-        ...durations.map((d) => {
-          const trimmed = d.trim();
-          const value = parseFloat(trimmed);
-          return trimmed.endsWith('ms') ? value : value * 1000;
-        })
+      this.afterEventFallbackTimer = setTimeout(
+        () => {
+          this.afterEventFallbackTimer = null;
+          if (this.afterEventPending) {
+            this.afterEventPending = false;
+            this.dispatchAfterEvent(false);
+          }
+        },
+        maxTransitionDurationMs(this) + 100
       );
-      this.afterEventFallbackTimer = setTimeout(() => {
-        this.afterEventFallbackTimer = null;
-        if (this.afterEventPending) {
-          this.afterEventPending = false;
-          this.dispatchAfterEvent(false);
-        }
-      }, maxMs + 100);
     }
   };
 

@@ -11,20 +11,44 @@
  */
 
 /**
- * Whether the element has an active CSS transition.
- *
- * `transition-duration` is comma-separated when multiple properties transition
- * (for example `"0.2s, 0.2s, 0s"`), so this checks that **at least one** entry is
- * non-zero rather than reading only the first value (which `parseFloat` would do).
- * Returns `false` when no transition will run — none declared, or reduced motion
- * has zeroed it out — in which case `transitionend` will not fire and callers
- * should run their completion logic immediately instead of waiting for it.
- *
- * @param element - The element whose computed `transition-duration` is read.
- * @returns `true` when any transition-duration entry is greater than zero.
+ * Parse an element's computed `transition-duration` into milliseconds per entry.
+ * The value is comma-separated when multiple properties transition (for example
+ * `"0.2s, 0.2s, 0s"`), so each entry is parsed independently rather than reading
+ * only the first (which `parseFloat` of the whole string would do).
  */
-export function hasActiveTransition(element: Element): boolean {
+function transitionDurationsMs(element: Element): number[] {
   return getComputedStyle(element)
     .transitionDuration.split(',')
-    .some((duration) => parseFloat(duration) > 0);
+    .map((entry) => {
+      const trimmed = entry.trim();
+      const value = parseFloat(trimmed);
+      if (Number.isNaN(value)) {
+        return 0;
+      }
+      return trimmed.endsWith('ms') ? value : value * 1000;
+    });
+}
+
+/**
+ * Whether the element has an active CSS transition — i.e. at least one
+ * `transition-duration` entry is non-zero. Returns `false` when no transition
+ * will run (none declared, or reduced motion has zeroed it out), in which case
+ * `transitionend` will not fire and callers should run their completion logic
+ * immediately instead of waiting for it.
+ *
+ * @param element - The element whose computed `transition-duration` is read.
+ */
+export function hasActiveTransition(element: Element): boolean {
+  return transitionDurationsMs(element).some((ms) => ms > 0);
+}
+
+/**
+ * The longest `transition-duration` on the element, in milliseconds. Useful as a
+ * fallback timeout for browsers that do not fire `transitionend` for
+ * `transition-behavior: allow-discrete` discrete properties.
+ *
+ * @param element - The element whose computed `transition-duration` is read.
+ */
+export function maxTransitionDurationMs(element: Element): number {
+  return Math.max(0, ...transitionDurationsMs(element));
 }
