@@ -624,16 +624,21 @@ export abstract class PopoverBase extends SpectrumElement {
   // helper's parameter identifier.
   private _dispatchAfter(event: CustomEvent): void {
     const element = this.internalElement;
-    const duration = element
-      ? getComputedStyle(element).transitionDuration
-      : '0s';
+    // `transitionDuration` is comma-separated when multiple properties transition
+    // ("0.2s, 0.2s, 0s"), so check that every value is zero rather than comparing
+    // the full string — `parseFloat` would only read the first entry. When every
+    // value is zero (no transition / reduced motion), dispatch immediately since
+    // `transitionend` will not fire.
+    const durations = element
+      ? getComputedStyle(element).transitionDuration.split(',')
+      : ['0s'];
     const fire = (): void => {
       this.dispatchEvent(event);
       if (event.type === 'swc-after-close') {
         this._stopPositioningWhenClosed();
       }
     };
-    if (!element || parseFloat(duration) === 0) {
+    if (!element || durations.every((duration) => duration.trim() === '0s')) {
       fire();
       return;
     }
