@@ -11,7 +11,7 @@ import '@spectrum-web-components/button-group/sp-button-group.js';
 
 | Name       | Type      | Default | Description |
 | ---------- | --------- | ------- | ----------- |
-| `vertical` | `boolean` | `false` |             |
+| `vertical` | `boolean` | -       |             |
 
 ## Slots
 
