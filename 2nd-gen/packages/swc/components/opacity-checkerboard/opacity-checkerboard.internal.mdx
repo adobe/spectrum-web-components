@@ -9,7 +9,7 @@ import * as Stories from './stories/opacity-checkerboard.internal.stories';
 
 ## Anatomy
 
-The opacity checkerboard is a shared CSS utility, not a custom element. It lives at `stylesheets/shared/opacity-checkerboard.css` as an importable lit `css` fragment. A consuming component imports it directly and adds it to its `styles` array:
+The opacity checkerboard is a shared CSS utility, not a custom element. It lives at `stylesheets/_lit-styles/opacity-checkerboard.css` as an importable lit `css` fragment. A consuming component imports it directly and adds it to its `styles` array:
 
 Apply `.swc-OpacityCheckerboard` to a decorative element rendered behind transparent or semi-transparent content. The consuming component is responsible for keeping that element out of the accessibility tree (for example `aria-hidden="true"`).
 
@@ -17,9 +17,75 @@ Apply `.swc-OpacityCheckerboard` to a decorative element rendered behind transpa
 
 ## Usage
 
-1. Import the CSS file from `@spectrum-web-components//stylesheets/shared/opacity-checkerboard.css`.
+1. Import the CSS file from `@spectrum-web-components//stylesheets/_lit-styles/opacity-checkerboard.css`.
 2. Add the styles to your styles array.
 3. Add the `swc-OpacityCheckerboard` class to the `span` or `div` element where you want the checkerboard to appear, and make sure the element is `aria-hidden="true"`.
+
+```typescript
+import { css, html, LitElement, type TemplateResult } from 'lit';
+import { customElement, property } from 'lit/decorators.js';
+import opacityCheckerboardStyles from '@spectrum-web-components//stylesheets/_lit-styles/opacity-checkerboard.css';
+export class DemoOpacityCheckerboardSwatch extends LitElement {
+  /**
+   * Adopt the shared fragment into this element's shadow root, then layer the
+   * component-local styles on top.
+   */
+  static override styles = [
+    opacityCheckerboardStyles,
+    css`
+      :host {
+        display: inline-block;
+      }
+      .swatch {
+        position: relative;
+        inline-size: 120px;
+        block-size: 120px;
+        border: 1px solid var(--swc-gray-300, #ccc);
+        border-radius: 4px;
+        overflow: hidden;
+      }
+      /* Decorative checkerboard and the color fill share the swatch box. */
+      .swc-OpacityCheckerboard,
+      .fill {
+        position: absolute;
+        inset: 0;
+      }
+      .fill {
+        background: var(--demo-fill, transparent);
+      }
+    `,
+  ];
+  /** Human-readable name including opacity; lives on the control, not the pattern. */
+  @property()
+  public label = '';
+  /** CSS color for the fill layer, e.g. `rgba(255, 0, 0, 0.4)` or `transparent`. */
+  @property()
+  public color = 'transparent';
+  /** Checkerboard square size: medium (default, no modifier) or small. */
+  @property({ reflect: true })
+  public size: 'm' | 's' = 'm';
+  protected override render(): TemplateResult {
+    const sizeClass = this.size === 's' ? 'swc-OpacityCheckerboard--sizeS' : '';
+    return html`
+      <div
+        class="swatch"
+        role="img"
+        aria-label=${this.label || 'Color preview'}
+        style="--demo-fill: ${this.color}"
+      >
+        <!-- Decoration only: hidden from assistive technologies, never focusable. -->
+        <span
+          class="swc-OpacityCheckerboard ${sizeClass}"
+          aria-hidden="true"
+        ></span>
+        <span class="fill" aria-hidden="true"></span>
+      </div>
+    `;
+  }
+}
+```
+
+## Options
 
 ### Sizes
 
@@ -54,3 +120,4 @@ The shared `css` fragment sets no ARIA. It only keeps `forced-color-adjust: none
 <Canvas of={Stories.Accessibility} />
 
 <DocsFooter />
+```

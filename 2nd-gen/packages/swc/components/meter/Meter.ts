@@ -20,7 +20,7 @@ import {
   type MeterVariant,
 } from '@spectrum-web-components/core/components/meter';
 
-import sharedStyles from '../../stylesheets/shared/linear-progress-base.css';
+import sharedStyles from '../../stylesheets/_lit-styles/linear-progress-base.css';
 import styles from './meter.css';
 
 /**

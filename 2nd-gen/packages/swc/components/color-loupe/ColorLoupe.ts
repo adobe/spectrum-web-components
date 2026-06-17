@@ -15,7 +15,7 @@ import { styleMap } from 'lit/directives/style-map.js';
 
 import { ColorLoupeBase } from '@spectrum-web-components/core/components/color-loupe';
 
-import opacityCheckerboardStyles from '../../stylesheets/shared/opacity-checkerboard.css';
+import opacityCheckerboardStyles from '../../stylesheets/_lit-styles/opacity-checkerboard.css';
 import styles from './color-loupe.css';
 
 /**
