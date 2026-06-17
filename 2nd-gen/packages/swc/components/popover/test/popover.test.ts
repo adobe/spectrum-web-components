@@ -413,7 +413,7 @@ export const ActualPlacementTest: Story = {
       popover.open = true;
       await popover.updateComplete;
       // placement="bottom" fits below the trigger (no flip), so the reflected
-      // physical side is exactly the requested one — a wrong-side resolution
+      // physical side is exactly the requested one; a wrong-side resolution
       // would surface here rather than passing as "some physical side".
       expect(
         popover.getAttribute('actual-placement'),

@@ -24,7 +24,7 @@ export interface ResolveTriggerOptions {
  * The resolved trigger and the element that should receive ARIA wiring.
  *
  * `trigger` is the element used for positioning. `interactiveElement` is the
- * AT-facing focusable element — the inner `<button>` of an open-shadow SWC
+ * AT-facing focusable element: the inner `<button>` of an open-shadow SWC
  * component when present, otherwise the trigger itself.
  */
 export interface ResolvedTrigger {

@@ -30,7 +30,7 @@ function transitionDurationsMs(element: Element): number[] {
 }
 
 /**
- * Whether the element has an active CSS transition — i.e. at least one
+ * Whether the element has an active CSS transition: at least one
  * `transition-duration` entry is non-zero. Returns `false` when no transition
  * will run (none declared, or reduced motion has zeroed it out), in which case
  * `transitionend` will not fire and callers should run their completion logic

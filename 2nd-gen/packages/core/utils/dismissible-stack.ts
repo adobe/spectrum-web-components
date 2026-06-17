@@ -39,7 +39,7 @@ export function registerDismissible(key: object): void {
 }
 
 /**
- * Remove the most-recent entry matching the key when it closes. Idempotent — a
+ * Remove the most-recent entry matching the key when it closes. Idempotent: a
  * key that is not present is a no-op (safe to call from `disconnectedCallback`).
  */
 export function unregisterDismissible(key: object): void {
@@ -53,7 +53,7 @@ export function unregisterDismissible(key: object): void {
  * Whether the key is the topmost (most-recently-registered) dismissible.
  */
 export function isTopDismissible(key: object): boolean {
-  // Index access rather than `Array.prototype.at()` — core's TS lib target does
+  // Index access rather than `Array.prototype.at()`: core's TS lib target does
   // not include `at`. On an empty stack `length - 1` is `-1`, which reads as
   // `undefined` and never equals a (non-null) key.
   return dismissibleStack[dismissibleStack.length - 1] === key;

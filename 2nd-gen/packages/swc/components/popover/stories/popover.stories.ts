@@ -46,7 +46,7 @@ argTypes.size = {
 // via setAttribute (the declared side before opening, then the flip-resolved side
 // from PlacementController). The Storybook helper otherwise observes the attribute
 // change, writes it back into `args`, and re-applies it through its `spread`
-// directive on the next render — clobbering the resolved side with a stale value.
+// directive on the next render, clobbering the resolved side with a stale value.
 // Declaring it here (control disabled) makes the helper exclude it from the spread.
 argTypes['actual-placement'] = {
   table: { disable: true },

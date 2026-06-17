@@ -49,7 +49,7 @@ In modal mode the internal `<dialog>` provides `role="dialog"`, a focus trap, an
 `aria-haspopup="dialog"` on the trigger. A dialog must have an accessible name, so
 **set `accessible-label` whenever you set `modal`**: its value is forwarded as
 `aria-label` to the internal `<dialog>`. Omitting it leaves a nameless dialog (an
-authoring bug) — in development the component warns when `modal` is set without an
+authoring bug); in development the component warns when `modal` is set without an
 `accessible-label`.
 
 ```html

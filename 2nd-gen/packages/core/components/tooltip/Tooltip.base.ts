@@ -421,8 +421,8 @@ export abstract class TooltipBase
     super.willUpdate(changedProperties);
     // `disabled` takes priority over `open`: a disabled tooltip cannot be shown,
     // regardless of how `open` became true (set programmatically, or `disabled`
-    // toggled on while already open). Normalizing here — before render and
-    // before updated() acts on `open` — keeps `open` and visibility consistent
+    // toggled on while already open). Normalizing here (before render and
+    // before updated() acts on `open`) keeps `open` and visibility consistent
     // and prevents the `open` attribute from briefly reflecting `true`. Hover
     // and focus opening are separately blocked by HoverController's guards.
     if (this.disabled && this.open) {
@@ -466,7 +466,7 @@ export abstract class TooltipBase
         // must already be present or the entrance animation has no direction to
         // animate from. PlacementController writes actual-placement again from
         // onPlacementChange, but that is async (it awaits document.fonts.ready),
-        // so it lands after showPopover() — too late for @starting-style. The
+        // so it lands after showPopover(), too late for @starting-style. The
         // popover is display:none until shown and therefore unmeasurable, so a
         // viewport flip cannot be known here; on a flip the resolved side
         // arrives from onPlacementChange and the slide direction corrects then.

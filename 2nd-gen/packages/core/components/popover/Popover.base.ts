@@ -53,7 +53,7 @@ interface ARIAControlsElements {
 const LIGHT_DISMISS_REOPEN_WINDOW_MS = 200;
 
 /**
- * Abstract base for the popover component. Owns the popover's behavior — the
+ * Abstract base for the popover component. Owns the popover's behavior: the
  * dual-mode dialog lifecycle (`showPopover()` / `showModal()`), trigger and ARIA
  * wiring, positioning through the `PlacementController`, dismissal coordination,
  * and `swc-*` event dispatch. The concrete SWC subclass adds only the styles, the
@@ -236,7 +236,7 @@ export abstract class PopoverBase extends SpectrumElement {
   /**
    * The arrow's height in pixels, added to the trigger gap when the arrow is
    * shown. Returns `0` in the base class; the SWC rendering layer overrides it
-   * with the token-derived value so the gap stays in sync with the tip — keeping
+   * with the token-derived value so the gap stays in sync with the tip, keeping
    * the base free of any coupling to the surface's CSS.
    */
   protected get arrowHeight(): number {
@@ -552,7 +552,7 @@ export abstract class PopoverBase extends SpectrumElement {
   }
 
   private _closeTeardown(source: PopoverCloseSource): void {
-    // Arm the reopen guard only for an outside light-dismiss — that is the close
+    // Arm the reopen guard only for an outside light-dismiss; that is the close
     // a trigger click can have caused. Escape and programmatic closes must not
     // suppress a subsequent legitimate reopen click.
     if (source === 'outside') {
