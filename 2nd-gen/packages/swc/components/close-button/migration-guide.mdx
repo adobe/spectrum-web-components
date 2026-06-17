@@ -60,12 +60,6 @@ import '@adobe/spectrum-wc/components/close-button/swc-close-button.js';
 <swc-close-button accessible-label="Close"></swc-close-button>
 ```
 
-Slotted text still works when `accessible-label` is omitted:
-
-```html
-<swc-close-button>Close</swc-close-button>
-```
-
 ### 2. Replace `variant` with `static-color`
 
 ```html
@@ -85,7 +79,7 @@ If you omit `size`, `<swc-close-button>` reflects **`size="m"`** on the host. Sp
 
 ## Accessibility
 
-`<swc-close-button>` renders a native inner `<button>` with delegated focus. Keyboard and screen reader behavior matches a standard dismiss control when a discernible name is provided via `accessible-label` or default slot text.
+`<swc-close-button>` renders a native inner `<button>` with delegated focus. Keyboard and screen reader behavior matches a standard dismiss control when `accessible-label` provides a discernible name.
 
 Update tests that asserted host-level button semantics or shadow DOM structure from Spectrum 1.
 

@@ -105,7 +105,7 @@ export const Overview: Story = {
 
 export const Anatomy: Story = {
   render: () => html`
-    <swc-close-button accessible-label="Close">Close</swc-close-button>
+    <swc-close-button accessible-label="Close"></swc-close-button>
   `,
   tags: ['anatomy'],
 };
@@ -195,16 +195,6 @@ export const Accessibility: Story = {
           on the host.
         </p>
         ${template({ ...args, 'accessible-label': 'Close' })}
-      </section>
-
-      <section>
-        <h4 style="margin: 0 0 8px;">Visible slot label</h4>
-        <p style="margin: 0 0 12px;">
-          Slotted text is visually hidden but exposed as the button name when
-          <code>accessible-label</code>
-          is omitted.
-        </p>
-        ${template({ ...args, 'accessible-label': undefined }, 'Dismiss')}
       </section>
 
       <section

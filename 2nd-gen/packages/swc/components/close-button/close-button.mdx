@@ -13,15 +13,10 @@ A close button consists of:
 
 1. **Button** — native `<button type="button">` with delegated focus; handles pointer and keyboard activation
 2. **Icon** — cross icon (`aria-hidden="true"`); size follows the `size` attribute
-3. **Label** — visually hidden default slot text used for the accessible name when `accessible-label` is omitted
-
-#### Slots
-
-- **Default slot** — accessible text label rendered visually hidden next to the cross icon
 
 #### Properties
 
-- **`accessible-label`** — accessible name forwarded to the inner button as `aria-label` when set
+- **`accessible-label`** — required accessible name forwarded to the inner button as `aria-label`
 - **`size`** — visual size of the hit target and icon scale (`s`, `m`, `l`, `xl`)
 - **`static-color`** — static color treatment for display over colored or image backgrounds (`white`, `black`)
 
@@ -76,7 +71,7 @@ The `<swc-close-button>` element implements several accessibility features:
 #### ARIA implementation
 
 1. **Native button** — renders a real `<button type="button">` inside the shadow root
-2. **Accessible name** — resolved from `accessible-label` or visually hidden default slot text, forwarded as `aria-label` on the inner button
+2. **Accessible name** — provided via `accessible-label` and forwarded as `aria-label` on the inner button
 3. **Decorative icon** — cross icon is marked `aria-hidden="true"` so screen readers announce the button name only
 4. **Disabled state** — `disabled` removes activation and applies disabled visuals on the inner button
 
@@ -88,8 +83,7 @@ The `<swc-close-button>` element implements several accessibility features:
 
 ### Best practices
 
-- Always provide a descriptive accessible name such as "Close" or "Close dialog" — not a clear/reset verb
-- Prefer `accessible-label` for icon-only dismiss controls in dialog chrome
+- Always provide a descriptive accessible name such as "Close" or "Close dialog" via `accessible-label` — not a clear/reset verb
 - Use `static-color="white"` or `static-color="black"` when the default neutral icon lacks contrast on the background
 - Test keyboard focus order when placing close buttons in dialog headers or banner corners
 

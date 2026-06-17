@@ -38,22 +38,15 @@ const crossIconBySize: Record<ButtonSize, () => TemplateResult> = {
  * A compact dismiss control for dialogs, banners, toasts, and similar chrome.
  *
  * Renders a native `<button type="button">` with delegated focus. Every
- * instance needs a discernible name via `accessible-label` or default slot text.
- * The cross icon is decorative (`aria-hidden="true"`).
+ * instance needs a discernible name via `accessible-label`. The cross icon is
+ * decorative (`aria-hidden="true"`).
  *
  * @element swc-close-button
  * @since 0.0.1
  *
- * @slot - Accessible text label rendered visually hidden next to the cross icon.
- *
  * @example
  * ```html
  * <swc-close-button accessible-label="Close"></swc-close-button>
- * ```
- *
- * @example
- * ```html
- * <swc-close-button>Close</swc-close-button>
  * ```
  *
  * @example
@@ -86,6 +79,14 @@ export class CloseButton extends ButtonBase {
     return true;
   }
 
+  protected override get hasLabel(): boolean {
+    return false;
+  }
+
+  public override getResolvedAccessibleName(): string | null {
+    return this.accessibleLabel ?? null;
+  }
+
   // ──────────────────────────────
   //     RENDERING & STYLING
   // ──────────────────────────────
@@ -107,9 +108,6 @@ export class CloseButton extends ButtonBase {
       >
         <span class="swc-CloseButton-icon" aria-hidden="true">
           ${crossIconBySize[this.size]()}
-        </span>
-        <span class="swc-CloseButton-label">
-          <slot></slot>
         </span>
       </button>
     `;
