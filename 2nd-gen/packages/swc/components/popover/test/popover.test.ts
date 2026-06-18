@@ -551,6 +551,41 @@ export const TipOrientationGateTest: Story = {
   },
 };
 
+export const UnresolvedTriggerWhileOpenTest: Story = {
+  render: () => html`
+    <button id="resolved-trigger">Trigger</button>
+    <swc-popover for="resolved-trigger" placement="bottom">Content</swc-popover>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const popover = await getComponent<Popover>(canvasElement, 'swc-popover');
+    await popover.updateComplete;
+
+    await step('opens and anchors against the resolved trigger', async () => {
+      popover.open = true;
+      await waitFor(() =>
+        expect(popover.hasAttribute('actual-placement')).toBe(true)
+      );
+    });
+
+    await step(
+      'changing to an unresolved trigger while open re-gates (no stale anchor)',
+      async () => {
+        // The trigger no longer resolves, so there is nothing to anchor to.
+        // Positioning is torn down and the surface re-gated (actual-placement
+        // removed) rather than left anchored to stale geometry.
+        popover.for = 'does-not-exist';
+        await popover.updateComplete;
+        await waitFor(() =>
+          expect(
+            popover.hasAttribute('actual-placement'),
+            'actual-placement cleared when no anchor resolves'
+          ).toBe(false)
+        );
+      }
+    );
+  },
+};
+
 // ──────────────────────────────────────────────────────────────
 // TEST: Modal lifecycle (showModal + backdrop close source)
 // ──────────────────────────────────────────────────────────────

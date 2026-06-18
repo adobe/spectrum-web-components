@@ -489,6 +489,12 @@ export abstract class PopoverBase extends SpectrumElement {
   private _startPositioning(): void {
     const floating = this.internalElement;
     if (!floating || !this._anchor) {
+      // No element or no anchor to position against (e.g. the trigger was
+      // changed to an unresolved id while open). Tear down any prior session so
+      // the surface is not left anchored to stale geometry; clearing
+      // `actual-placement` also re-gates it hidden until a valid anchor returns.
+      this._placementController.stop();
+      this.removeAttribute('actual-placement');
       return;
     }
     const showArrow = !this.hideArrow;
@@ -544,11 +550,11 @@ export abstract class PopoverBase extends SpectrumElement {
     if (!element) {
       return;
     }
-    registerDismissible(this);
+    // Enter the top layer first; only register listeners, the dismissible stack,
+    // and positioning once the native show actually succeeds, so a failed
+    // `showPopover()`/`showModal()` does not leave the component wired up for a
+    // popover that never opened.
     if (this.modal) {
-      // Modal mode uses the native `<dialog>` Escape (`cancel`); drop any
-      // default-mode document listener left over from a prior mode.
-      this._removeEscapeListener();
       if (window.__swc?.DEBUG && !this.accessibleLabel.trim()) {
         window.__swc.warn(
           this,
@@ -558,25 +564,46 @@ export abstract class PopoverBase extends SpectrumElement {
         );
       }
       const dialog = element as HTMLDialogElement;
-      if (!dialog.open) {
-        dialog.showModal();
+      let shown = dialog.open;
+      if (!shown) {
+        try {
+          dialog.showModal();
+          shown = true;
+        } catch {
+          shown = false;
+        }
       }
-      // `<dialog>` modal-mode has no native open event, so dispatch here.
+      if (!shown) {
+        return;
+      }
+      // Modal mode uses the native `<dialog>` Escape (`cancel`); drop any
+      // default-mode document listener left over from a prior mode.
+      this._removeEscapeListener();
+      registerDismissible(this);
+      // `<dialog>` modal-mode has no native open event, so dispatch here (unless
+      // this is a re-show of an already-open popover).
       if (!reShow) {
         this._dispatchOpen();
       }
     } else {
-      this._addEscapeListener();
-      if (!element.matches(':popover-open')) {
+      let shown = element.matches(':popover-open');
+      if (!shown) {
         // `showPopover()` fires `beforetoggle` synchronously, which dispatches
         // `swc-open`; suppress that one dispatch on a re-show.
         this._suppressOpenEvent = reShow;
         try {
           element.showPopover();
+          shown = true;
         } catch {
           this._suppressOpenEvent = false;
+          shown = false;
         }
       }
+      if (!shown) {
+        return;
+      }
+      registerDismissible(this);
+      this._addEscapeListener();
       // `swc-open` is dispatched from the `beforetoggle` listener.
     }
     this._startPositioning();
