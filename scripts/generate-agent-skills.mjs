@@ -16,12 +16,13 @@
  * Implements the Agent Skills Discovery RFC v0.2.0:
  * https://github.com/cloudflare/agent-skills-discovery-rfc
  *
- * Produces two skills:
- *   1. spectrum-web-components  — Spectrum 1 component docs (sp-* elements)
- *   2. migrate-swc-gen1-to-gen2 — per-component migration guides (sp-* → swc-*)
+ * Produces two skills whose prose is authored in dedicated source files:
+ *   2nd-gen/packages/ai/skills/swc-skill/SKILL.md
+ *   2nd-gen/packages/ai/skills/gen2-migration/SKILL.md
  *
- * Output: .well-known/agent-skills/ inside the 2nd-gen Storybook public dir,
- * which is served as static files at the docs website root.
+ * The script resolves {{TOKEN}} placeholders in those files with generated
+ * component and guide lists, then assembles each skill into a tar.gz archive
+ * under .well-known/agent-skills/ in the 2nd-gen Storybook public dir.
  *
  * Usage:
  *   node scripts/generate-agent-skills.mjs
@@ -52,22 +53,18 @@ const ROOT = join(__dirname, '..');
 // ---------------------------------------------------------------------------
 
 const FIRST_GEN_PACKAGES = join(ROOT, '1st-gen/packages');
-const FIRST_GEN_REF_DIR = join(
-  ROOT,
-  '1st-gen/projects/documentation/content/reference'
-);
+const FIRST_GEN_CONTENT = join(ROOT, '1st-gen/projects/documentation/content');
+const FIRST_GEN_REF_DIR = join(FIRST_GEN_CONTENT, 'reference');
 const SECOND_GEN_COMPONENTS = join(ROOT, '2nd-gen/packages/swc/components');
+const SKILL_SOURCE_DIR = join(ROOT, '2nd-gen/packages/ai/skills');
 
 /**
- * Storybook's staticDirs root — files here are served verbatim from the
- * website root (i.e. public/foo.json → https://…/foo.json).
+ * Storybook's staticDirs root — files here are served verbatim at the site root.
  *
- * SKILLS_BASE_URL can be overridden at build time to inject the correct
- * origin for each deployment (PR preview vs. production):
- *
+ * SKILLS_BASE_URL overrides the URL embedded in index.json at build time:
  *   SKILLS_BASE_URL=https://example.com node scripts/generate-agent-skills.mjs
  *
- * Update the fallback value once a canonical domain is confirmed.
+ * Update the fallback once the canonical domain is confirmed.
  */
 const OUTPUT_DIR = join(ROOT, '2nd-gen/packages/swc/public');
 const SITE_URL =
@@ -77,36 +74,235 @@ const SCHEMA_VERSION =
   'https://schemas.agentskills.io/discovery/0.2.0/schema.json';
 
 // ---------------------------------------------------------------------------
-// Skill definitions
+// Guide definitions
 // ---------------------------------------------------------------------------
 
-const SKILLS = [
+/**
+ * Guides bundled into the spectrum-web-components skill.
+ * sourcePath is relative to ROOT; refPath is the path inside references/.
+ */
+const GEN1_GUIDES = [
   {
-    name: 'spectrum-web-components',
+    sourcePath: '1st-gen/projects/documentation/content/getting-started.md',
+    refPath: 'guides/getting-started.md',
+    title: 'Getting started',
     description:
-      "Build UIs with Spectrum Web Components (SWC), Adobe's Spectrum 1 web component library. " +
-      'Use when developers are working with @spectrum-web-components/* packages or sp-* custom elements. ' +
-      'Includes component API references, usage examples, and accessibility guidance.',
-    license: 'Apache-2.0',
-    metadata: {
-      author: 'Adobe',
-      website: 'https://opensource.adobe.com/spectrum-web-components/',
-    },
+      'Set up a new project and start using Spectrum Web Components.',
+    stripFn: 'eleventy',
   },
   {
-    name: 'migrate-swc-gen1-to-gen2',
+    sourcePath: '1st-gen/projects/documentation/content/what-is-a-theme.md',
+    refPath: 'guides/what-is-a-theme.md',
+    title: 'What is a theme?',
     description:
-      'Upgrade Spectrum 1 (sp-* elements, @spectrum-web-components/*) to Spectrum 2 ' +
-      '(swc-* elements, @adobe/spectrum-wc). Use when developers need to migrate from ' +
-      'Spectrum 1 to Spectrum 2 web components.',
-    kind: 'migration',
-    license: 'Apache-2.0',
-    metadata: {
-      author: 'Adobe',
-      website: 'https://opensource.adobe.com/spectrum-web-components/',
-    },
+      'Understand sp-theme: system, color, scale, direction, and language.',
+    stripFn: 'eleventy',
+  },
+  {
+    sourcePath: '1st-gen/projects/documentation/content/using-swc-react.md',
+    refPath: 'guides/using-swc-react.md',
+    title: 'Using SWC with React',
+    description:
+      'Use @swc-react/* wrapper components to integrate sp-* elements into React apps.',
+    stripFn: 'eleventy',
+  },
+  {
+    sourcePath:
+      '1st-gen/projects/documentation/content/support-and-compatibility.md',
+    refPath: 'guides/support-and-compatibility.md',
+    title: 'Support and compatibility',
+    description:
+      'Browser support, versioning policy, and SLA for Spectrum Web Components.',
+    stripFn: 'eleventy',
+  },
+  {
+    sourcePath: '1st-gen/projects/documentation/content/registry-conflicts.md',
+    refPath: 'guides/registry-conflicts.md',
+    title: 'Registry conflicts',
+    description: 'Diagnose and resolve custom element registry conflicts.',
+    stripFn: 'eleventy',
+  },
+  {
+    sourcePath: '1st-gen/projects/documentation/content/dev-mode.md',
+    refPath: 'guides/dev-mode.md',
+    title: 'Dev mode',
+    description:
+      'Enable dev mode for additional warnings and debugging information.',
+    stripFn: 'eleventy',
+  },
+  {
+    sourcePath: '1st-gen/projects/documentation/content/deprecation.md',
+    refPath: 'guides/deprecation.md',
+    title: 'Deprecation',
+    description: 'What is deprecated in Spectrum 1 and what to use instead.',
+    stripFn: 'eleventy',
+  },
+  {
+    sourcePath:
+      '1st-gen/projects/documentation/content/migrating-to-spectrum2.md',
+    refPath: 'guides/migrating-to-spectrum2.md',
+    title: 'Migrating to Spectrum 2 (sp-theme bridge)',
+    description:
+      'Apply the spectrum-two theme to sp-* components as a visual bridge while migrating.',
+    stripFn: 'eleventy',
   },
 ];
+
+/**
+ * Guides bundled into the migrate-swc-gen1-to-gen2 skill.
+ */
+const GEN2_MIGRATION_GUIDES = [
+  {
+    sourcePath:
+      '2nd-gen/packages/swc/.storybook/resources/migrate-from-gen1.mdx',
+    refPath: 'guides/migrate-from-gen1.md',
+    title: 'Migrate from Gen1',
+    description:
+      'Complete step-by-step walkthrough: coexist sp-* and swc-*, swap themes and fonts, map --mod-* overrides to --swc-*, then decommission Gen1.',
+    stripFn: 'mdx',
+  },
+  {
+    sourcePath:
+      '2nd-gen/packages/swc/.storybook/learn-about-swc/gen1-vs-gen2.mdx',
+    refPath: 'guides/gen1-vs-gen2.md',
+    title: 'Gen1 vs Gen2',
+    description:
+      'Side-by-side comparison of package names, architecture, styling, and long-term support.',
+    stripFn: 'mdx',
+  },
+  {
+    sourcePath:
+      '2nd-gen/packages/swc/.storybook/learn-about-swc/get-started.mdx',
+    refPath: 'guides/get-started.md',
+    title: 'Get started (Gen2)',
+    description:
+      'Install @adobe/spectrum-wc, add the stylesheet, and use your first swc-* component.',
+    stripFn: 'mdx',
+  },
+  {
+    sourcePath:
+      '2nd-gen/packages/swc/.storybook/guides/customization/getting-started.mdx',
+    refPath: 'guides/customization-getting-started.md',
+    title: 'Customization: getting started',
+    description:
+      'Required stylesheet setup, PostCSS configuration, and application background color.',
+    stripFn: 'mdx',
+  },
+  {
+    sourcePath:
+      '2nd-gen/packages/swc/.storybook/guides/customization/theme-scales.mdx',
+    refPath: 'guides/customization-theme-scales.md',
+    title: 'Customization: theme and scales',
+    description:
+      'Apply light/dark/adaptive themes and medium/large scale via CSS classes.',
+    stripFn: 'mdx',
+  },
+  {
+    sourcePath:
+      '2nd-gen/packages/swc/.storybook/guides/customization/fonts.mdx',
+    refPath: 'guides/customization-fonts.md',
+    title: 'Customization: fonts',
+    description:
+      'Load Adobe Clean Spectrum VF via Adobe Fonts (Typekit), CDN, or self-hosted setup.',
+    stripFn: 'mdx',
+  },
+  {
+    sourcePath:
+      '2nd-gen/packages/swc/.storybook/guides/customization/component-styles.mdx',
+    refPath: 'guides/customization-component-styles.md',
+    title: 'Customization: component styles',
+    description:
+      'Customise swc-* components via --swc-* CSS custom properties.',
+    stripFn: 'mdx',
+  },
+  {
+    sourcePath:
+      '2nd-gen/packages/swc/.storybook/resources/support-and-compatibility.mdx',
+    refPath: 'guides/support-and-compatibility.md',
+    title: 'Support and compatibility (Gen2)',
+    description:
+      'Browser support, versioning, and semantic versioning policy for @adobe/spectrum-wc.',
+    stripFn: 'mdx',
+  },
+];
+
+// ---------------------------------------------------------------------------
+// Content strippers
+// ---------------------------------------------------------------------------
+
+/**
+ * Strip Eleventy-specific syntax from 1st-gen Markdown content files.
+ *
+ * Removes:
+ *   - YAML frontmatter (--- ... ---)
+ *   - <iframe> elements (live demo embeds, not useful as text)
+ *   - <style> blocks
+ *   - <sp-link> wrapper tags, keeping inner text
+ *   - Other custom element tags that are wrappers, keeping inner text
+ */
+function stripEleventy(content) {
+  return (
+    content
+      // Remove YAML frontmatter
+      .replace(/^---[\s\S]*?---\s*\n/, '')
+      // Remove <iframe> blocks
+      .replace(/<iframe[\s\S]*?<\/iframe>/gi, '')
+      // Remove <style> blocks
+      .replace(/<style[\s\S]*?<\/style>/gi, '')
+      // Unwrap <sp-link> and similar inline elements, keeping inner text
+      .replace(/<sp-link[^>]*>([\s\S]*?)<\/sp-link>/gi, '$1')
+      // Collapse runs of 3+ blank lines
+      .replace(/\n{3,}/g, '\n\n')
+      .replace(/^\n+/, '')
+      .trimEnd() + '\n'
+  );
+}
+
+/**
+ * Strip MDX-specific syntax leaving plain Markdown.
+ *
+ * Removes:
+ *   - import statements
+ *   - <Meta .../> single-line self-closing tags
+ *   - <img src={expr}> tags with JS expression sources
+ *   - JSX block comments
+ *   - Multi-line JSX elements whose opening tag contains a JS expression
+ *     (e.g. callout divs with inline style={{...}})
+ */
+function stripMdx(content) {
+  return (
+    content
+      // Remove import statements
+      .replace(/^import\s+.*?from\s+['"][^'"]+['"]\s*;?\s*\n/gm, '')
+      // Remove <Meta .../> (single-line self-closing)
+      .replace(/^<Meta\s[^>]*\/>\s*\n/gm, '')
+      // Remove <img> tags with a JS expression source (can't resolve at build time)
+      .replace(/<img\s[^>]*\{[^}]*\}[^>]*\/?>/gi, '')
+      // Remove JSX block comments
+      .replace(/\{\/\*[\s\S]*?\*\/\}/g, '')
+      // Remove JSX elements whose opening tag contains a JS expression {}
+      // (callout divs, inline-styled blocks, etc.)
+      .replace(
+        /<[A-Z][A-Za-z]*\s[^>]*\{[^>]*\}>[\s\S]*?<\/[A-Z][A-Za-z]*>\s*\n?/g,
+        ''
+      )
+      .replace(/<[a-z]+\s[^>]*\{[^>]*\}>[\s\S]*?<\/[a-z]+>\s*\n?/g, '')
+      // Collapse runs of 3+ blank lines introduced by removals
+      .replace(/\n{3,}/g, '\n\n')
+      .replace(/^\n+/, '')
+      .trimEnd() + '\n'
+  );
+}
+
+function stripContent(content, stripFn) {
+  if (stripFn === 'eleventy') {
+    return stripEleventy(content);
+  }
+  if (stripFn === 'mdx') {
+    return stripMdx(content);
+  }
+  return content;
+}
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -119,43 +315,22 @@ function sha256(filePath) {
 }
 
 /**
- * Strip MDX-specific syntax leaving plain Markdown.
- *
- * Handles:
- *   - import statements
- *   - <Meta .../> single-line tags
- *   - JSX block comments (single- and multi-line)
- *   - Multi-line JSX elements with JS props (e.g. <div style={{...}}>…</div>)
+ * Create a tar.gz archive from a source directory.
  */
-function stripMdx(content) {
-  return (
-    content
-      // Remove import statements
-      .replace(/^import\s+.*?from\s+['"][^'"]+['"]\s*;?\s*\n/gm, '')
-      // Remove <Meta .../> (single-line self-closing)
-      .replace(/^<Meta\s[^>]*\/>\s*\n/gm, '')
-      // Remove JSX block comments {/* ... */} (possibly multi-line)
-      .replace(/\{\/\*[\s\S]*?\*\/\}/g, '')
-      // Remove JSX elements whose opening tag contains a JS expression ({}),
-      // i.e. elements injected for callouts/alerts — matched greedily up to </Tag>
-      .replace(
-        /<[A-Z][A-Za-z]*\s[^>]*\{[^>]*\}>[\s\S]*?<\/[A-Z][A-Za-z]*>\s*\n?/g,
-        ''
-      )
-      .replace(/<[a-z]+\s[^>]*\{[^>]*\}>[\s\S]*?<\/[a-z]+>\s*\n?/g, '')
-      // Collapse runs of 3+ blank lines introduced by removals
-      .replace(/\n{3,}/g, '\n\n')
-      // Drop leading blank lines
-      .replace(/^\n+/, '')
-      .trimEnd() + '\n'
-  );
+function createArchive(sourceDir, outputPath) {
+  const dirName = basename(sourceDir);
+  const parentDir = join(sourceDir, '..');
+  execSync(`tar -czf "${outputPath}" -C "${parentDir}" "${dirName}"`, {
+    stdio: 'pipe',
+  });
 }
 
 /**
- * Extract the Overview section description from a 1st-gen README.
+ * Extract the first sentence of the Overview section from a 1st-gen README
+ * for use as an inline description in the component list.
  */
-function readmeDescription(packageName) {
-  const readmePath = join(FIRST_GEN_PACKAGES, packageName, 'README.md');
+function readmeDescription(packageDir) {
+  const readmePath = join(FIRST_GEN_PACKAGES, packageDir, 'README.md');
   if (!existsSync(readmePath)) {
     return '';
   }
@@ -164,38 +339,21 @@ function readmeDescription(packageName) {
   if (!match) {
     return '';
   }
-  return match[1]
+  const raw = match[1]
     .replace(/```[\s\S]*?```/g, '')
     .replace(/`([^`]*)`/g, '$1')
     .replace(/<\/[^>]+>/g, '')
     .replace(/<([a-z][a-z0-9-]*)(?:\s[^>]*)?\s*\/?>/gi, '$1 ')
     .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
     .replace(/\s+/g, ' ')
-    .trim()
-    .replace(/^(.*?[.!?])(?:\s|$).*/s, '$1')
     .trim();
+  return raw.match(/^(.*?[.!?])(?:\s|$).*/s)?.[1]?.trim() ?? raw.slice(0, 120);
 }
 
 /**
- * Create a tar.gz archive from a directory.
- * Returns the path to the created archive.
- */
-function createArchive(sourceDir, outputPath) {
-  const dirName = basename(sourceDir);
-  const parentDir = join(sourceDir, '..');
-  execSync(`tar -czf "${outputPath}" -C "${parentDir}" "${dirName}"`, {
-    stdio: 'pipe',
-  });
-  return outputPath;
-}
-
-// ---------------------------------------------------------------------------
-// Reference file generation
-// ---------------------------------------------------------------------------
-
-/**
- * Read and normalise the per-component reference markdown for a 1st-gen component.
- * Falls back to generating from the README if the pre-generated file is absent.
+ * Read the pre-generated CEM-based per-component reference for a 1st-gen tag.
+ * Falls back to a minimal reference built from the component's README when the
+ * pre-generated file is absent (e.g. when docs:analyze hasn't run yet).
  */
 function readGen1Reference(tagName, packageDir) {
   const pregenPath = join(FIRST_GEN_REF_DIR, `${tagName}.md`);
@@ -203,310 +361,250 @@ function readGen1Reference(tagName, packageDir) {
     return readFileSync(pregenPath, 'utf8');
   }
 
-  // Fallback: build a minimal reference from the README
   const readmePath = join(FIRST_GEN_PACKAGES, packageDir, 'README.md');
   if (!existsSync(readmePath)) {
     return null;
   }
 
   const readme = readFileSync(readmePath, 'utf8');
-  const lines = [
-    `# ${tagName}`,
-    '',
-    `**Package**: \`@spectrum-web-components/${packageDir}\``,
-    '',
-    `\`\`\`js`,
-    `import '@spectrum-web-components/${packageDir}/${tagName}.js';`,
-    `\`\`\``,
-    '',
-    '---',
-    '',
-    readme.trim(),
-  ];
-  return lines.join('\n') + '\n';
+  return (
+    [
+      `# ${tagName}`,
+      '',
+      `**Package**: \`@spectrum-web-components/${packageDir}\``,
+      '',
+      '```js',
+      `import '@spectrum-web-components/${packageDir}/${tagName}.js';`,
+      '```',
+      '',
+      '---',
+      '',
+      readme.trim(),
+    ].join('\n') + '\n'
+  );
 }
 
 /**
  * List all 1st-gen packages that have a README.
- * Returns array of { packageDir, tagName } objects.
- * tagName is inferred from the package.json `name` field if available,
- * otherwise falls back to the `sp-${packageDir}` convention.
+ * Returns [{ packageDir, tagName }] sorted by tagName.
  */
 function listGen1Components() {
   const components = [];
   for (const dir of readdirSync(FIRST_GEN_PACKAGES)) {
-    const pkgJsonPath = join(FIRST_GEN_PACKAGES, dir, 'package.json');
     const readmePath = join(FIRST_GEN_PACKAGES, dir, 'README.md');
     if (!existsSync(readmePath)) {
       continue;
     }
 
     let tagName = `sp-${dir}`;
+    const pkgJsonPath = join(FIRST_GEN_PACKAGES, dir, 'package.json');
     if (existsSync(pkgJsonPath)) {
       try {
         const pkg = JSON.parse(readFileSync(pkgJsonPath, 'utf8'));
-        // package.json name is @spectrum-web-components/[dir], tag is sp-[dir]
-        if (pkg.name) {
-          const inferred = pkg.name.replace('@spectrum-web-components/', 'sp-');
-          if (inferred.startsWith('sp-')) {
-            tagName = inferred;
-          }
+        const inferred = pkg.name?.replace('@spectrum-web-components/', 'sp-');
+        if (inferred?.startsWith('sp-')) {
+          tagName = inferred;
         }
       } catch {
-        // ignore parse errors
+        // ignore
       }
     }
-
     components.push({ packageDir: dir, tagName });
   }
   return components.sort((a, b) => a.tagName.localeCompare(b.tagName));
 }
 
 /**
- * List all 2nd-gen components that have a migration guide.
- * Returns array of { componentDir, name } objects.
+ * List all 2nd-gen components that have a migration-guide.mdx.
+ * Returns [{ componentDir, guidePath }] sorted by componentDir.
  */
 function listMigrationComponents() {
-  const components = [];
-  for (const dir of readdirSync(SECOND_GEN_COMPONENTS)) {
-    const guidePath = join(SECOND_GEN_COMPONENTS, dir, 'migration-guide.mdx');
-    if (existsSync(guidePath)) {
-      components.push({ componentDir: dir, guidePath });
-    }
+  return readdirSync(SECOND_GEN_COMPONENTS)
+    .map((dir) => ({
+      componentDir: dir,
+      guidePath: join(SECOND_GEN_COMPONENTS, dir, 'migration-guide.mdx'),
+    }))
+    .filter((c) => existsSync(c.guidePath))
+    .sort((a, b) => a.componentDir.localeCompare(b.componentDir));
+}
+
+// ---------------------------------------------------------------------------
+// Token resolution
+// ---------------------------------------------------------------------------
+
+/**
+ * Replace {{TOKEN}} placeholders in SKILL.md source content.
+ */
+function resolveTokens(template, tokens) {
+  let result = template;
+  for (const [token, value] of Object.entries(tokens)) {
+    result = result.replaceAll(`{{${token}}}`, value);
   }
-  return components.sort((a, b) =>
-    a.componentDir.localeCompare(b.componentDir)
-  );
+  return result;
 }
 
-// ---------------------------------------------------------------------------
-// SKILL.md generators
-// ---------------------------------------------------------------------------
-
-function frontmatter(skill) {
-  const lines = [
-    '---',
-    `name: "${skill.name}"`,
-    `description: "${skill.description}"`,
-    `license: "${skill.license}"`,
-    'metadata:',
-    `  author: "${skill.metadata.author}"`,
-    `  website: "${skill.metadata.website}"`,
-    '---',
-    '',
-  ];
-  return lines.join('\n');
-}
-
-function generateSwcSkillMd(skill, components) {
-  const componentNames = components.map((c) => `\`${c.tagName}\``).join(', ');
-  const componentList = components
+function buildGuideList(guides) {
+  return guides
     .map(
-      (c) =>
-        `- [${c.tagName}](references/components/${c.tagName}.md)` +
-        (readmeDescription(c.packageDir)
-          ? `: ${readmeDescription(c.packageDir)}`
-          : '')
+      (g) =>
+        `- [${g.title}](references/${g.refPath})` +
+        (g.description ? `: ${g.description}` : '')
     )
     .join('\n');
-
-  return (
-    frontmatter(skill) +
-    `# Spectrum Web Components (Spectrum 1)
-
-Spectrum Web Components (SWC) is Adobe's Spectrum 1 design system implemented as
-framework-agnostic web components. Each component is a standalone npm package
-under the \`@spectrum-web-components\` scope. Elements are prefixed with \`sp-\`.
-
-## Installation
-
-Install individual component packages:
-
-\`\`\`bash
-yarn add @spectrum-web-components/button
-yarn add @spectrum-web-components/badge
-# …one package per component
-\`\`\`
-
-## Usage
-
-Import the side-effectful registration, then use the custom element:
-
-\`\`\`html
-<script type="module">
-  import '@spectrum-web-components/button/sp-button.js';
-</script>
-
-<sp-button variant="accent">Save</sp-button>
-\`\`\`
-
-## Key principles
-
-- All \`sp-*\` elements are built with Lit and follow the Spectrum design language.
-- Use \`<sp-theme>\` to provide color, scale, and theme context to descendant components.
-- Accessibility is built-in: elements expose proper ARIA roles, labels, and keyboard
-  navigation without extra configuration.
-- For custom properties and CSS hooks, see each component's API reference.
-
-## Documentation structure
-
-The \`references/\` directory contains one Markdown file per component.
-Read the file for a component when you need its API, usage examples, or accessibility notes.
-
-Available components: ${componentNames}.
-
-### Component references
-
-${componentList}
-
-## Migrating to Spectrum 2
-
-If the project needs to upgrade from \`sp-*\` to \`swc-*\` elements,
-install the \`migrate-swc-gen1-to-gen2\` skill:
-
-\`\`\`bash
-npx skills add spectrum-web-components.adobe.com --skill migrate-swc-gen1-to-gen2
-\`\`\`
-`.trimEnd() +
-    '\n'
-  );
 }
 
-function generateMigrationSkillMd(skill, components) {
-  const migratedList = components
+function buildComponentList(components) {
+  return components
+    .map((c) => {
+      const desc = readmeDescription(c.packageDir);
+      return (
+        `- [${c.tagName}](references/components/${c.tagName}.md)` +
+        (desc ? `: ${desc}` : '')
+      );
+    })
+    .join('\n');
+}
+
+function buildMigrationComponentList(components) {
+  return components
     .map(
       (c) => `- [${c.componentDir}](references/components/${c.componentDir}.md)`
     )
     .join('\n');
-
-  return (
-    frontmatter(skill) +
-    `# Spectrum 1 to Spectrum 2 migration
-
-Upgrade \`sp-*\` Spectrum 1 components to \`swc-*\` Spectrum 2 components.
-Follow these steps for each component being migrated.
-
-## Scope
-
-This skill covers the Spectrum 1 (\`@spectrum-web-components/*\`) to
-Spectrum 2 (\`@adobe/spectrum-wc\`) migration. Do **not** perform major
-framework version upgrades as part of this migration; note them as follow-ups instead.
-
-## Step 1: Install @adobe/spectrum-wc
-
-\`\`\`bash
-npm install @adobe/spectrum-wc
-yarn add @adobe/spectrum-wc
-pnpm add @adobe/spectrum-wc
-\`\`\`
-
-## Step 2: Update imports
-
-For each migrated component, replace the per-package import with the monorepo import:
-
-\`\`\`js
-// Before (Spectrum 1)
-import '@spectrum-web-components/button/sp-button.js';
-
-// After (Spectrum 2)
-import '@adobe/spectrum-wc/components/button/swc-button.js';
-\`\`\`
-
-## Step 3: Rename elements and attributes
-
-Each component has a per-component migration guide listing renamed attributes,
-removed features, and new additions. Read the guide for each component being migrated.
-
-The element tag prefix changes from \`sp-\` to \`swc-\` for all components.
-
-## Step 4: Validate
-
-1. Run TypeScript / type-check: \`tsc --noEmit\`
-2. Run tests covering migrated components
-3. Run the build and verify output
-
-Fix any failures before declaring the migration complete.
-
-## Step 5: Generate a final report
-
-Summarise:
-- Components migrated (before/after element names)
-- Attributes renamed or removed
-- Any features not yet available in Spectrum 2 that need follow-up
-
-## Available migration guides
-
-The \`references/components/\` directory contains per-component migration guides.
-Read the guide for a specific component to see the exact changes required.
-
-${migratedList}
-
-## Components without a guide yet
-
-If a component you are migrating does not have a guide, check the
-[Spectrum Web Components documentation](https://opensource.adobe.com/spectrum-web-components/)
-for the latest migration notes, or refer to the component's CHANGELOG.
-`.trimEnd() +
-    '\n'
-  );
 }
 
 // ---------------------------------------------------------------------------
 // Skill builders
 // ---------------------------------------------------------------------------
 
-function buildSwcSkill(skill, tmpRoot) {
-  const skillDir = join(tmpRoot, skill.name);
-  const refsDir = join(skillDir, 'references', 'components');
-  mkdirSync(refsDir, { recursive: true });
+function buildSwcSkill(skillName, tmpRoot) {
+  const skillDir = join(tmpRoot, skillName);
+  const refsDir = join(skillDir, 'references');
+  mkdirSync(join(refsDir, 'guides'), { recursive: true });
+  mkdirSync(join(refsDir, 'components'), { recursive: true });
 
   const components = listGen1Components();
 
-  // Write SKILL.md
-  writeFileSync(
-    join(skillDir, 'SKILL.md'),
-    generateSwcSkillMd(skill, components)
+  // Resolve tokens in the handcrafted SKILL.md
+  const sourceMd = readFileSync(
+    join(SKILL_SOURCE_DIR, 'swc-skill', 'SKILL.md'),
+    'utf8'
   );
+  const skillMd = resolveTokens(sourceMd, {
+    GUIDE_LIST: buildGuideList(GEN1_GUIDES),
+    COMPONENT_NAMES: components.map((c) => `\`${c.tagName}\``).join(', '),
+    COMPONENT_LIST: buildComponentList(components),
+  });
+  writeFileSync(join(skillDir, 'SKILL.md'), skillMd);
 
-  // Copy / generate component references
-  let copied = 0;
+  // Copy guide references
+  let guideCount = 0;
+  for (const guide of GEN1_GUIDES) {
+    const src = join(ROOT, guide.sourcePath);
+    if (!existsSync(src)) {
+      console.warn(`  ⚠ guide not found: ${guide.sourcePath}`);
+      continue;
+    }
+    const raw = readFileSync(src, 'utf8');
+    writeFileSync(
+      join(refsDir, guide.refPath),
+      stripContent(raw, guide.stripFn)
+    );
+    guideCount++;
+  }
+
+  // Copy component references
+  let componentCount = 0;
   for (const comp of components) {
     const content = readGen1Reference(comp.tagName, comp.packageDir);
     if (content) {
-      writeFileSync(join(refsDir, `${comp.tagName}.md`), content);
-      copied++;
+      writeFileSync(join(refsDir, 'components', `${comp.tagName}.md`), content);
+      componentCount++;
     }
   }
 
-  console.log(`  ${skill.name}: SKILL.md + ${copied} component references`);
+  console.log(
+    `  ${skillName}: ${guideCount} guides + ${componentCount} component references`
+  );
   return skillDir;
 }
 
-function buildMigrationSkill(skill, tmpRoot) {
-  const skillDir = join(tmpRoot, skill.name);
-  const refsDir = join(skillDir, 'references', 'components');
-  mkdirSync(refsDir, { recursive: true });
+function buildMigrationSkill(skillName, tmpRoot) {
+  const skillDir = join(tmpRoot, skillName);
+  const refsDir = join(skillDir, 'references');
+  mkdirSync(join(refsDir, 'guides'), { recursive: true });
+  mkdirSync(join(refsDir, 'components'), { recursive: true });
 
   const components = listMigrationComponents();
 
-  // Write SKILL.md
-  writeFileSync(
-    join(skillDir, 'SKILL.md'),
-    generateMigrationSkillMd(skill, components)
+  // Resolve tokens in the handcrafted SKILL.md
+  const sourceMd = readFileSync(
+    join(SKILL_SOURCE_DIR, 'gen2-migration', 'SKILL.md'),
+    'utf8'
   );
+  const skillMd = resolveTokens(sourceMd, {
+    MIGRATION_GUIDE_LIST: buildGuideList(GEN2_MIGRATION_GUIDES),
+    MIGRATION_COMPONENT_NAMES: components
+      .map((c) => `\`${c.componentDir}\``)
+      .join(', '),
+    MIGRATION_COMPONENT_LIST: buildMigrationComponentList(components),
+  });
+  writeFileSync(join(skillDir, 'SKILL.md'), skillMd);
 
-  // Convert each migration-guide.mdx to plain Markdown
+  // Copy guide references
+  let guideCount = 0;
+  for (const guide of GEN2_MIGRATION_GUIDES) {
+    const src = join(ROOT, guide.sourcePath);
+    if (!existsSync(src)) {
+      console.warn(`  ⚠ guide not found: ${guide.sourcePath}`);
+      continue;
+    }
+    const raw = readFileSync(src, 'utf8');
+    writeFileSync(
+      join(refsDir, guide.refPath),
+      stripContent(raw, guide.stripFn)
+    );
+    guideCount++;
+  }
+
+  // Copy per-component migration guides (MDX → MD)
   for (const comp of components) {
     const raw = readFileSync(comp.guidePath, 'utf8');
-    const md = stripMdx(raw);
-    writeFileSync(join(refsDir, `${comp.componentDir}.md`), md);
+    writeFileSync(
+      join(refsDir, 'components', `${comp.componentDir}.md`),
+      stripMdx(raw)
+    );
   }
 
   console.log(
-    `  ${skill.name}: SKILL.md + ${components.length} migration guides`
+    `  ${skillName}: ${guideCount} guides + ${components.length} migration guides`
   );
   return skillDir;
 }
+
+// ---------------------------------------------------------------------------
+// Skill dispatch
+// ---------------------------------------------------------------------------
+
+const SKILL_CONFIGS = [
+  {
+    name: 'spectrum-web-components',
+    description:
+      "Build UIs with Spectrum Web Components (SWC), Adobe's Spectrum 1 web component library. " +
+      'Use when developers are working with @spectrum-web-components/* packages or sp-* custom elements. ' +
+      'Includes component API references, usage examples, accessibility guidance, and integration guides.',
+    buildFn: buildSwcSkill,
+  },
+  {
+    name: 'migrate-swc-gen1-to-gen2',
+    description:
+      'Upgrade Spectrum 1 (sp-* elements, @spectrum-web-components/*) to Spectrum 2 ' +
+      '(swc-* elements, @adobe/spectrum-wc). Use when developers need to migrate from ' +
+      'Spectrum 1 to Spectrum 2 web components.',
+    kind: 'migration',
+    buildFn: buildMigrationSkill,
+  },
+];
 
 // ---------------------------------------------------------------------------
 // Main
@@ -517,63 +615,57 @@ function main() {
 
   const wellKnownDir = join(OUTPUT_DIR, '.well-known', 'agent-skills');
 
-  // Clean previous output
   if (existsSync(wellKnownDir)) {
     rmSync(wellKnownDir, { recursive: true });
   }
   mkdirSync(wellKnownDir, { recursive: true });
 
-  // Use a temp directory to build skill trees before archiving
   const tmpRoot = join(tmpdir(), `swc-skills-${Date.now()}`);
   mkdirSync(tmpRoot, { recursive: true });
 
   try {
     const indexEntries = [];
 
-    for (const skill of SKILLS) {
-      console.log(`Building skill: ${skill.name}`);
+    for (const config of SKILL_CONFIGS) {
+      console.log(`Building skill: ${config.name}`);
 
-      const skillDir =
-        skill.kind === 'migration'
-          ? buildMigrationSkill(skill, tmpRoot)
-          : buildSwcSkill(skill, tmpRoot);
+      const skillDir = config.buildFn(config.name, tmpRoot);
 
-      // Create tar.gz archive
-      const archiveFile = `${skill.name}.tar.gz`;
+      const archiveFile = `${config.name}.tar.gz`;
       const archivePath = join(wellKnownDir, archiveFile);
       createArchive(skillDir, archivePath);
 
-      // Compute SHA-256 digest
       const digest = sha256(archivePath);
 
       indexEntries.push({
-        name: skill.name,
-        description: skill.description,
+        name: config.name,
+        description: config.description,
         type: 'archive',
         url: `${SITE_URL}/.well-known/agent-skills/${archiveFile}`,
         digest,
-        ...(skill.kind ? { kind: skill.kind } : {}),
+        ...(config.kind ? { kind: config.kind } : {}),
       });
 
       console.log(`  → ${archiveFile} (${digest.slice(0, 19)}…)\n`);
     }
 
-    // Write index.json
-    const index = {
-      $schema: SCHEMA_VERSION,
-      skills: indexEntries,
-    };
     const indexPath = join(wellKnownDir, 'index.json');
-    writeFileSync(indexPath, JSON.stringify(index, null, 2) + '\n');
+    writeFileSync(
+      indexPath,
+      JSON.stringify(
+        { $schema: SCHEMA_VERSION, skills: indexEntries },
+        null,
+        2
+      ) + '\n'
+    );
     console.log(`index.json → ${indexPath}`);
-
-    console.log('\nAgent Skills generation complete.');
     console.log(
       `\nDiscovery endpoint:\n  ${SITE_URL}/.well-known/agent-skills/index.json`
     );
+
     if (!process.env.SKILLS_BASE_URL) {
       console.log(
-        '(Set SKILLS_BASE_URL env var or update the fallback in this script once the canonical domain is confirmed.)'
+        '(Set SKILLS_BASE_URL or update the fallback in this script once the canonical domain is confirmed.)'
       );
     }
   } finally {
