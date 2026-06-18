@@ -582,7 +582,27 @@ export const ModalLifecycleTest: Story = {
     );
 
     await step(
-      'a backdrop pointerdown closes with source "outside"',
+      'a pointerdown on the dialog border (inside its box) does not close',
+      async () => {
+        // Target is the dialog itself, but the point is within the dialog box
+        // (its border/chrome), not the backdrop — it must not dismiss.
+        const rect = dialog.getBoundingClientRect();
+        dialog.dispatchEvent(
+          new PointerEvent('pointerdown', {
+            bubbles: true,
+            clientX: Math.round(rect.left + 1),
+            clientY: Math.round(rect.top + 1),
+          })
+        );
+        await popover.updateComplete;
+        expect(popover.open, 'still open after a border pointerdown').toBe(
+          true
+        );
+      }
+    );
+
+    await step(
+      'a backdrop pointerdown (outside the box) closes with source "outside"',
       async () => {
         let source: string | undefined;
         popover.addEventListener(
@@ -592,11 +612,15 @@ export const ModalLifecycleTest: Story = {
           },
           { once: true }
         );
-        // A pointerdown whose target is the dialog itself (not its padded content)
-        // is a backdrop click. `<dialog>.close()` fires its `close` event
-        // asynchronously, so wait for the state to settle.
+        // A backdrop click targets the dialog but lands outside its box.
+        // `<dialog>.close()` fires its `close` event asynchronously, so wait.
+        const rect = dialog.getBoundingClientRect();
         dialog.dispatchEvent(
-          new PointerEvent('pointerdown', { bubbles: true })
+          new PointerEvent('pointerdown', {
+            bubbles: true,
+            clientX: Math.round(rect.right + 40),
+            clientY: Math.round(rect.bottom + 40),
+          })
         );
         await waitFor(() =>
           expect(popover.open, 'closed after backdrop click').toBe(false)

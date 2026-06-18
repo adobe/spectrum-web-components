@@ -679,13 +679,26 @@ export abstract class PopoverBase extends SpectrumElement {
     this._closeTeardown(source);
   };
 
-  // Modal mode: a pointerdown landing on the dialog itself (not its padded
-  // content) is a backdrop click.
+  // Modal mode: a pointerdown on the dialog's backdrop is an outside dismiss.
+  // The backdrop targets the dialog element itself, but so does its own border,
+  // so confirm the point is actually outside the dialog box before closing —
+  // otherwise a press on the 1px border would dismiss like a backdrop click.
   protected _onPointerDown = (event: PointerEvent): void => {
-    if (event.target === this.internalElement) {
-      this._closeSource = 'outside';
-      (this.internalElement as HTMLDialogElement).close();
+    const dialog = this.internalElement;
+    if (!dialog || event.target !== dialog) {
+      return;
     }
+    const rect = dialog.getBoundingClientRect();
+    const outsideDialogBox =
+      event.clientX < rect.left ||
+      event.clientX > rect.right ||
+      event.clientY < rect.top ||
+      event.clientY > rect.bottom;
+    if (!outsideDialogBox) {
+      return;
+    }
+    this._closeSource = 'outside';
+    (dialog as HTMLDialogElement).close();
   };
 
   private _addEscapeListener(): void {
