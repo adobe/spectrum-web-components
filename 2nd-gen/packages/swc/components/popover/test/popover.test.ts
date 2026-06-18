@@ -666,6 +666,37 @@ export const ModalLifecycleTest: Story = {
   },
 };
 
+export const ModalScrollLockTest: Story = {
+  render: () => html`
+    <swc-popover modal accessible-label="Settings">Modal content</swc-popover>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const popover = await getComponent<Popover>(canvasElement, 'swc-popover');
+    await popover.updateComplete;
+    const html = document.documentElement;
+    const priorOverflow = html.style.overflow;
+
+    await step('opening a modal locks page scroll', async () => {
+      popover.open = true;
+      await waitFor(() =>
+        expect(
+          html.style.overflow,
+          'documentElement overflow is hidden while modal-open'
+        ).toBe('hidden')
+      );
+    });
+
+    await step('closing restores the prior overflow', async () => {
+      popover.open = false;
+      await waitFor(() =>
+        expect(html.style.overflow, 'overflow restored on close').toBe(
+          priorOverflow
+        )
+      );
+    });
+  },
+};
+
 export const ModalToggleWhileOpenTest: Story = {
   render: () => html`
     <button id="modal-toggle-trigger">Trigger</button>

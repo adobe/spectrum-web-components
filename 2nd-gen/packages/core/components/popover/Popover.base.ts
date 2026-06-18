@@ -282,6 +282,13 @@ export abstract class PopoverBase extends SpectrumElement {
   /** Tears down the in-flight `_afterTransition` wiring (listener + fallback timer). */
   private _cancelAfterTransition?: () => void;
 
+  /** Whether this popover is currently holding the modal page-scroll lock. */
+  private _pageScrollLocked = false;
+
+  /** Saved `documentElement` inline styles, restored when the scroll lock releases. */
+  private _prevDocumentOverflow = '';
+  private _prevDocumentPaddingRight = '';
+
   // ──────────────────
   //     LIFECYCLE
   // ──────────────────
@@ -292,6 +299,7 @@ export abstract class PopoverBase extends SpectrumElement {
     this._cancelAfterTransition?.();
     unregisterDismissible(this);
     this._removeEscapeListener();
+    this._unlockPageScroll();
     this._removeTriggerClick();
     this._clearTriggerAria();
     this._interactiveElement = null;
@@ -482,6 +490,35 @@ export abstract class PopoverBase extends SpectrumElement {
     return deepContains(this, getActiveElement());
   }
 
+  // Lock page scroll behind a modal popover. The component's shadow stylesheet
+  // cannot reach `html`, so this is done in JS: set `overflow: hidden` on the
+  // document element and compensate for the removed scrollbar with padding so the
+  // page does not shift. Prior inline values are saved and restored on unlock.
+  private _lockPageScroll(): void {
+    if (this._pageScrollLocked) {
+      return;
+    }
+    const html = document.documentElement;
+    const scrollbarWidth = window.innerWidth - html.clientWidth;
+    this._prevDocumentOverflow = html.style.overflow;
+    this._prevDocumentPaddingRight = html.style.paddingRight;
+    html.style.overflow = 'hidden';
+    if (scrollbarWidth > 0) {
+      html.style.paddingRight = `${scrollbarWidth}px`;
+    }
+    this._pageScrollLocked = true;
+  }
+
+  private _unlockPageScroll(): void {
+    if (!this._pageScrollLocked) {
+      return;
+    }
+    const html = document.documentElement;
+    html.style.overflow = this._prevDocumentOverflow;
+    html.style.paddingRight = this._prevDocumentPaddingRight;
+    this._pageScrollLocked = false;
+  }
+
   // ──────────────────────────
   //     POSITIONING
   // ──────────────────────────
@@ -579,6 +616,7 @@ export abstract class PopoverBase extends SpectrumElement {
       // Modal mode uses the native `<dialog>` Escape (`cancel`); drop any
       // default-mode document listener left over from a prior mode.
       this._removeEscapeListener();
+      this._lockPageScroll();
       registerDismissible(this);
       // `<dialog>` modal-mode has no native open event, so dispatch here (unless
       // this is a re-show of an already-open popover).
@@ -602,6 +640,9 @@ export abstract class PopoverBase extends SpectrumElement {
       if (!shown) {
         return;
       }
+      // Default mode never locks scroll; release a lock left from a prior modal
+      // mode (e.g. `modal` toggled false while open).
+      this._unlockPageScroll();
       registerDismissible(this);
       this._addEscapeListener();
       // `swc-open` is dispatched from the `beforetoggle` listener.
@@ -638,6 +679,7 @@ export abstract class PopoverBase extends SpectrumElement {
     }
     unregisterDismissible(this);
     this._removeEscapeListener();
+    this._unlockPageScroll();
     // `aria-expanded` is written by `updated()` on every `open` change (and by
     // `_wireTrigger` on initial wiring), so it is not set again here.
     // Positioning is torn down only after the close transition finishes
