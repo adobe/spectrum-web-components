@@ -30,7 +30,7 @@
   border-radius: var(--swc-button-border-radius, calc(var(--_swc-button-min-block-size) / 2));
   transition-timing-function: token("animation-ease-in-out");
   transition-duration: token("animation-duration-100");
-  transition-property: outline-color, border-color, color, background-color, transform;
+  transition-property: outline, border-color, color, background-color, transform;
 }
 
 .swc-Button:hover {

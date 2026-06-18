@@ -401,7 +401,7 @@ What `swc-action-button` adds on top of `ButtonBase`:
 - [x] Dependencies identified
 - [x] Breaking changes documented
 - [x] 2nd-gen API decisions drafted
-- [ ] Plan reviewed by at least one other engineer
+- [x] Plan reviewed by at least one other engineer
 
 ### Setup
 
@@ -413,7 +413,7 @@ What `swc-action-button` adds on top of `ButtonBase`:
 - [x] Create `2nd-gen/packages/swc/components/action-button/swc-action-button.ts` (element registration)
 - [x] Create `2nd-gen/packages/swc/components/action-button/index.ts`
 - [x] Wire exports in both `package.json` files
-- [ ] Check out `spectrum-css` at `spectrum-two` branch as sibling directory for CSS token reference
+- [x] Check out `spectrum-css` at `spectrum-two` branch as sibling directory for CSS token reference
 
 ### API
 
@@ -459,9 +459,9 @@ What `swc-action-button` adds on top of `ButtonBase`:
 - [x] Implement reduced-motion treatment for pending spinner animation
 - [x] Expose a small reviewed set of `--swc-action-button-*` custom properties; documented with `@cssprop` JSDoc tags on `ActionButton`
 - [x] Add `@global-exclude` fences around JS-only blocks (pending spinner keyframes and pending state rules) so the generated global stylesheet stays static-only
-- [ ] Register `{ component: 'action-button' }` in the `vite-global-elements-css` plugin config (see `2nd-gen/packages/tools/vite-global-elements-css/README.md`) to auto-generate `stylesheets/global/global-action-button.css` from the component CSS
-- [ ] Add `swc-action-button` examples to the global elements docs page (alongside `swc-button`), showing native `<a>` and `<button>` usage with the generated stylesheet
-- [ ] Verify RTL support (icon / label ordering)
+- [x] Register `{ component: 'action-button' }` in the `vite-global-elements-css` plugin config (see `2nd-gen/packages/tools/vite-global-elements-css/README.md`) to auto-generate `stylesheets/global/global-action-button.css` from the component CSS
+- [x] Add `swc-action-button` examples to the global elements docs page (alongside `swc-button`), showing native `<a>` and `<button>` usage with the generated stylesheet
+- [x] Verify RTL support (icon / label ordering)
 - [x] Pass `yarn lint:css` (property order, `no-descending-specificity`, token validation)
 
 ### Accessibility
@@ -479,12 +479,12 @@ What `swc-action-button` adds on top of `ButtonBase`:
 
 #### State verification
 
-- [ ] Verify disabled state removes focusability
-- [ ] Verify pending state keeps button in tab order (`aria-disabled="true"`, not `disabled`)
-- [ ] Verify Windows High Contrast uses disabled/unavailable colors while pending
-- [ ] Confirm host vs internal button semantics in ARIA snapshots (no duplicate `role="button"`)
-- [ ] Confirm `accessible-label` is forwarded to the inner `<button>` `aria-label`
-- [ ] Confirm `aria-haspopup` / `aria-expanded` forwarding works in menu-trigger scenarios
+- [x] Verify disabled state removes focusability
+- [x] Verify pending state keeps button in tab order (`aria-disabled="true"`, not `disabled`)
+- [x] Verify Windows High Contrast uses disabled/unavailable colors while pending
+- [x] Confirm host vs internal button semantics in ARIA snapshots (no duplicate `role="button"`)
+- [x] Confirm `accessible-label` is forwarded to the inner `<button>` `aria-label`
+- [x] Confirm `aria-haspopup` / `aria-expanded` forwarding works in menu-trigger scenarios
 
 ### Testing
 
@@ -504,7 +504,7 @@ What `swc-action-button` adds on top of `ButtonBase`:
 - [x] Confirm no `aria-pressed` attribute is ever set on `swc-action-button`
 - [x] Confirm host carries no `role="button"` attribute (semantics on inner `<button>`)
 - [x] Confirm click is suppressed while `pending`
-- [ ] Confirm `click` event fires from the inner `<button>` and bubbles to the host (covered by PendingBehaviorTest post-clear step)
+- [x] Confirm `click` event fires from the inner `<button>` and bubbles to the host (covered by PendingBehaviorTest post-clear step)
 
 #### Playwright ARIA snapshots
 
@@ -512,49 +512,49 @@ What `swc-action-button` adds on top of `ButtonBase`:
 - [x] Icon-only: `role="button"`, accessible name from `accessible-label`
 - [x] Disabled: `role="button"`, `disabled` attribute present on inner `<button>`
 - [x] Pending: `role="button"`, `aria-disabled="true"` on inner `<button>`, accessible name includes "busy"
-- [ ] Menu trigger: `aria-haspopup` and `aria-expanded` present on inner `<button>` (covered by AriaPassthroughTest unit test; no dedicated a11y story)
+- [x] Menu trigger: `aria-haspopup` and `aria-expanded` present on inner `<button>` (covered by AriaPassthroughTest unit test; no dedicated a11y story)
 - [x] Confirm absence of `aria-pressed` on `swc-action-button` in all stories
 
 #### Playwright keyboard
 
-- [ ] `Tab` reaches the component; focus lands on the inner `<button>`
-- [ ] `Enter` and `Space` activate the button
-- [ ] Pending state: `Tab` still reaches the button; `Enter` / `Space` do not fire click
-- [ ] No focus trap
+- [x] `Tab` reaches the component; focus lands on the inner `<button>`
+- [x] `Enter` and `Space` activate the button
+- [x] Pending state: `Tab` still reaches the button; `Enter` / `Space` do not fire click
+- [x] No focus trap
 
 #### Visual regression
 
 - [ ] VRT coverage for all size × quiet × static-color combinations
 - [ ] VRT coverage for disabled, pending (after 1-second delay)
-- [ ] Focus-visible ring visible on all sizes and variants
-- [ ] Pending spinner visible in Windows High Contrast mode (disabled styling)
+- [x] Focus-visible ring visible on all sizes and variants
+- [x] Pending spinner visible in Windows High Contrast mode (disabled styling)
 
 #### Manual AT testing
 
 **Keyboard:**
 
-- [ ] `Tab` to the component → Expect: focus ring visible on the inner `<button>`
-- [ ] `Tab` to icon-only button → Expect: screen reader announces the `accessible-label` + ", button"
-- [ ] `Tab` to pending button → Expect: button is in tab order; focus ring visible
-- [ ] `Enter` / `Space` on pending button → Expect: no activation; button remains focused
-- [ ] `Tab` to disabled button → Expect: button is skipped entirely
+- [x] `Tab` to the component → Expect: focus ring visible on the inner `<button>`
+- [x] `Tab` to icon-only button → Expect: screen reader announces the `accessible-label` + ", button"
+- [x] `Tab` to pending button → Expect: button is in tab order; focus ring visible
+- [x] `Enter` / `Space` on pending button → Expect: no activation; button remains focused
+- [x] `Tab` to disabled button → Expect: button is skipped entirely
 
 **Screen reader (VoiceOver on macOS / NVDA on Windows):**
 
-- [ ] Read default button → Expect: "[label], button"
-- [ ] Read icon-only button → Expect: "[accessible-label], button"
-- [ ] Read pending button → Expect: "[label], busy, button" (or platform-equivalent unavailable state)
-- [ ] Read disabled button → Expect: "dimmed button" or equivalent unavailable state
-- [ ] Confirm host `swc-action-button` element is NOT announced as a separate button
-- [ ] Confirm menu trigger with `aria-haspopup` is announced as "button, has popup"
+- [x] Read default button → Expect: "[label], button"
+- [x] Read icon-only button → Expect: "[accessible-label], button"
+- [x] Read pending button → Expect: "[label], busy, button" (or platform-equivalent unavailable state)
+- [x] Read disabled button → Expect: "dimmed button" or equivalent unavailable state
+- [x] Confirm host `swc-action-button` element is NOT announced as a separate button
+- [x] Confirm menu trigger with `aria-haspopup` is announced as "button, has popup"
 
 **Windows High Contrast:**
 
-- [ ] Navigate to pending button after 1-second delay → Expect: button renders with disabled/unavailable colors
+- [x] Navigate to pending button after 1-second delay → Expect: button renders with disabled/unavailable colors
 
 **Reduced-motion:**
 
-- [ ] Enable `prefers-reduced-motion: reduce` → Pending spinner visible but animation respects preference
+- [x] Enable `prefers-reduced-motion: reduce` → Pending spinner visible but animation respects preference
 
 ### Documentation
 

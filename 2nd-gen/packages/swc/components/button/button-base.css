@@ -40,12 +40,11 @@
   border-style: solid;
   overflow: visible;
   user-select: none;
-  outline: token("focus-indicator-thickness") solid transparent;
-  outline-offset: token("focus-indicator-gap");
 }
 
 .swc-Button:focus-visible {
-  outline-color: var(--swc-button-focus-indicator-color, token("focus-indicator-color"));
+  outline: token("focus-indicator-thickness") solid var(--swc-button-focus-indicator-color, token("focus-indicator-color"));
+  outline-offset: token("focus-indicator-gap");
 }
 
 /* Inflated specificity to prevent variant override */
