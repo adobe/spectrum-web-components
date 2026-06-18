@@ -67,6 +67,11 @@
     - [Why This Happens](#why-this-happens)
     - [Why This Is a Problem](#why-this-is-a-problem)
     - [✅ Correct Approach](#-correct-approach)
+- [11. Suppressing focus outlines with `:focus { outline: none }`](#11-suppressing-focus-outlines-with-focus--outline-none-)
+    - [❌ Anti-Pattern](#-anti-pattern)
+    - [Why This Happens](#why-this-happens)
+    - [Why This Is a Problem](#why-this-is-a-problem)
+    - [✅ Correct Approach](#-correct-approach)
 - [Final Reminder](#final-reminder)
 
 </details>
@@ -547,6 +552,29 @@ swc-accordion[size="compact"] {
 ```
 
 📖 See: *Custom Properties Style Guide → [Component custom property exposure](02_custom-properties.md#component-custom-property-exposure)*
+
+## 11. Suppressing focus outlines with `:focus { outline: none }`
+
+### ❌ Anti-Pattern
+
+```css
+.swc-Component-header:focus {
+  outline: none;
+}
+```
+
+### Why This Happens
+
+- Carried over from 1st-gen Spectrum CSS, which managed focus rings through its own system
+
+### Why This Is a Problem
+
+- Removes the focus indicator for keyboard users — an accessibility violation (WCAG 2.4.7)
+- The component already has a `:focus-visible` rule; the `:focus` suppression just interferes with it
+
+### ✅ Correct Approach
+
+- Remove the rule entirely. `:focus-visible` already handles when to show the ring; no explicit suppression is needed.
 
 ## Final Reminder
 

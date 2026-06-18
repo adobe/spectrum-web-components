@@ -42,6 +42,8 @@
 
 The following are high-level guidelines for the CSS creation for components.
 
+> **Scope:** This guide covers CSS authored inside web component packages — styles composed into `static styles` arrays and rendered inside shadow DOM. For CSS that lives outside components (app-level setup, global element styles, component replacements such as `typography.css`, and shared Lit CSS fragments) see [Non-component stylesheets](07_stylesheets.md).
+
 ## Contributor TL;DR
 
 > For examples of all of these rules in practice, review [Badge](../../../2nd-gen/packages/swc/components/badge/badge.css) and [Status Light](../../../2nd-gen/packages/swc/components/status-light/status-light.css) as reference implementations, the [reference migration for Badge](04_spectrum-swc-migration.md#reference-migration-badge), and the [anti-patterns guide](05_anti-patterns.md).
@@ -345,6 +347,22 @@ States reflect user interaction or component condition. Attach them to `:host` w
 
 **Derived states are not on `:host`**: If a state is computed from slot content (e.g. icon-only), it is not a consumer-settable attribute and must not appear in the state table above. Express it as a class modifier on the internal element via `classMap`. See [When to use classes vs attributes](#when-to-use-classes-vs-attributes).
 
+**`:host:has()` cross-browser compatibility**: Avoid `:host:has(.some-internal-selector)`. This selector pattern has inconsistent behavior in shadow DOM across Safari and Firefox — the browser must evaluate `:has()` relative to a shadow host boundary, which is not yet uniformly supported. Move the `:has()` to the internal wrapper instead:
+
+```css
+/* ❌ Avoid — :has() relative to :host is unreliable across browsers */
+:host:has(.swc-Component-header:hover) {
+  --_swc-component-bg: token("transparent-black-100");
+}
+
+/* ✅ Use — :has() on the internal wrapper works consistently */
+.swc-Component:has(.swc-Component-header:hover) {
+  --_swc-component-bg: token("transparent-black-100");
+}
+```
+
+Custom properties set on the internal wrapper still cascade correctly to its descendants, so the behavior is identical.
+
 ## Size variant patterns
 
 Size variants (s, m, l, xl) use `:host([size="..."])` and update custom properties. Do not add size classes to `render()`.
@@ -434,7 +452,7 @@ Forced colors mode (Windows High Contrast, etc.) replaces colors with system val
 
 **Rules**:
 
-1. **Check first**: Do not add forced-colors styles if the browser already makes the component visible.
+1. **Check first**: Do not add forced-colors styles if the browser already makes the component visible. Semantic HTML elements (`<button>`, `<input>`, `<a>`, etc.) receive correct system colors automatically in forced-colors mode — `ButtonText`, `Highlight` on focus, `GrayText` when disabled — without any CSS override. Only non-semantic elements (e.g. a decorative `<div>` or a `<span>` using `background-color` as a visual indicator) need explicit overrides because the browser cannot infer their role.
 2. **Place last**: Put `@media (forced-colors: active)` at the end of the stylesheet so it overrides other styles.
 3. **Use internal selectors**: Target `.swc-ComponentName` or internal elements, not `:host`. This prevents accidental consumer overrides from breaking accessibility.
 4. **Reuse custom properties**: Override component custom properties (e.g. `--swc-status-light-content-color`) so the rest of the stylesheet still works.

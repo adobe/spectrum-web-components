@@ -1,0 +1,240 @@
+/*
+ * Copyright 2026 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   HOST
+   Reset browser UA popover styles. All visual styles live on .swc-Tooltip.
+   PlacementController applies top: 0 / left: 0 / translate: Xpx Ypx for
+   pixel positioning. inset: auto stays to suppress the UA popover default.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+:host {
+  --_swc-tooltip-animation-distance: token("spacing-75");
+
+  position: absolute;
+  inset: auto;
+  max-inline-size: min(100%, var(--swc-placement-available-width), token("tooltip-maximum-width"));
+  max-block-size: min(var(--swc-placement-available-height), 90vb);
+  padding: 0;
+  margin: 0;
+  color: unset;
+  background: transparent;
+  border: none;
+  overflow: visible;
+  opacity: 0; /* EXIT animation state */
+  transition-timing-function: ease-in-out;
+  transition-duration: token("animation-duration-100");
+  transition-property: transform, opacity, overlay, display;
+  transition-behavior: allow-discrete;
+}
+
+/* Extra protection against accidental consumer style side effects */
+:host(:not(:popover-open)) {
+  display: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   BASE TOOLTIP
+   Defaulted to "top" placement (tooltip appears above trigger, tip points down ▽).
+   ───────────────────────────────────────────────────────────────────────────── */
+
+.swc-Tooltip {
+  --_swc-tooltip-tip-height: token("tooltip-tip-height");
+  --_swc-tooltip-background-color: token("neutral-background-color-default");
+  --_swc-tooltip-tip-square-size: 8px;
+  --_swc-tooltip-border-radius: token("corner-radius-400");
+
+  display: inline-flex;
+  position: relative;
+  min-block-size: token("component-height-75");
+  padding-block: token("component-padding-vertical-75");
+  padding-inline: token("component-edge-to-text-75");
+  margin-block-end: var(--_swc-tooltip-tip-height);
+  font-size: token("font-size-75");
+  font-weight: token("regular-font-weight");
+  line-height: token("line-height-font-size-75");
+  color: token("gray-25");
+  overflow-wrap: break-word;
+  background-color: var(--swc-tooltip-background-color, var(--_swc-tooltip-background-color));
+  border-radius: var(--_swc-tooltip-border-radius);
+
+  /* CJK line-height support */
+  &:lang(ja),
+  &:lang(zh),
+  &:lang(ko) {
+    line-height: token("cjk-line-height-100");
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   VARIANTS
+   ───────────────────────────────────────────────────────────────────────────── */
+
+:host([variant="informative"]) {
+  --swc-tooltip-background-color: token("informative-background-color-default");
+}
+
+:host([variant="negative"]) {
+  --swc-tooltip-background-color: token("negative-background-color-default");
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   PLACEMENT MARGINS
+   Space between the tip arrow and the trigger; based on tip-height token.
+   These margins create gap when PlacementController computes position.
+   NOTE: top / default margin lives in .swc-Tooltip above to avoid
+   re-declaring .swc-Tooltip after the nested lang rules.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+/* Bottom: margin at block-start */
+:host([actual-placement="bottom"]) .swc-Tooltip {
+  margin-block-start: var(--_swc-tooltip-tip-height);
+  margin-block-end: 0;
+}
+
+/* Right: margin at inline-start */
+:host([actual-placement="right"]) .swc-Tooltip {
+  margin-block-end: 0;
+  margin-left: var(--_swc-tooltip-tip-height);
+}
+
+/* Left: margin at inline-end */
+:host([actual-placement="left"]) .swc-Tooltip {
+  margin-block-end: 0;
+  margin-right: var(--_swc-tooltip-tip-height);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   OPEN STATE
+   PlacementController's `translate` owns the final resting position through the
+   `offset` gap.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+/* Final open state: opacity only */
+:host(:popover-open) {
+  opacity: 1;
+}
+
+/* Top (default): bubble is above; start shifted down toward trigger, slide up */
+@starting-style {
+  :host(:popover-open) {
+    opacity: 0;
+    transform: translateY(var(--_swc-tooltip-animation-distance));
+  }
+}
+
+/* Bottom: bubble is below; start shifted up toward trigger, slide down */
+@starting-style {
+  :host([actual-placement="bottom"]:popover-open) {
+    transform: translateY(calc(-1 * var(--_swc-tooltip-animation-distance)));
+  }
+}
+
+/* Right: bubble is to the right; start shifted left toward trigger, slide right */
+@starting-style {
+  :host([actual-placement="right"]:popover-open) {
+    transform: translateX(calc(-1 * var(--_swc-tooltip-animation-distance)));
+  }
+}
+
+/* Left: bubble is to the left; start shifted right toward trigger, slide left */
+@starting-style {
+  :host([actual-placement="left"]:popover-open) {
+    transform: translateX(var(--_swc-tooltip-animation-distance));
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   TIP ELEMENT
+   A rotated square with clip-path creates the directional arrow.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+/* Default: tip at bottom edge, pointing down ▽ (for top-placement tooltips) */
+.swc-Tooltip-tip {
+  position: absolute;
+  top: calc(100% - (0.5 * var(--_swc-tooltip-tip-square-size)));
+  left: calc(50% - (0.5 * var(--_swc-tooltip-tip-square-size)));
+  z-index: -1; /* Prevent WHCM visual overlap of the content area which can occur with subpixel rendering of the tip */
+  inline-size: var(--_swc-tooltip-tip-square-size);
+  block-size: var(--_swc-tooltip-tip-square-size);
+  background-color: inherit;
+  border-radius: 0 0 0 token("tooltip-tip-corner-radius");
+  clip-path: polygon(0 0, 100% 100%, 0 100%);
+  transform: rotate(-45deg);
+}
+
+/* ── Tip placement ── */
+
+/* Top: tip at bottom edge pointing down ▽ (same as default; listed for clarity) */
+:host([actual-placement="top"]) .swc-Tooltip-tip {
+  top: calc(100% - (0.5 * var(--_swc-tooltip-tip-square-size)));
+  transform: rotate(-45deg);
+}
+
+/* Bottom: tip at top edge pointing up △ */
+:host([actual-placement="bottom"]) .swc-Tooltip-tip {
+  inset-block: auto calc(100% - (0.5 * var(--_swc-tooltip-tip-square-size)));
+  transform: rotate(135deg);
+}
+
+/* Right: tip at physical left edge pointing left ◁ */
+:host([actual-placement="right"]) .swc-Tooltip-tip {
+  top: calc(50% - (0.5 * var(--_swc-tooltip-tip-square-size)));
+  left: calc(-0.5 * var(--_swc-tooltip-tip-square-size));
+  transform: rotate(45deg);
+}
+
+/* Left: tip at physical right edge pointing right ▷ */
+:host([actual-placement="left"]) .swc-Tooltip-tip {
+  top: calc(50% - (0.5 * var(--_swc-tooltip-tip-square-size)));
+  right: calc(-0.5 * var(--_swc-tooltip-tip-square-size));
+  left: auto;
+  transform: rotate(-135deg);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   LABEL
+   ───────────────────────────────────────────────────────────────────────────── */
+
+/* NOTE: !important ensures these resets override consumer element styles on slotted content. */
+::slotted(*:not([class])) {
+  margin: 0 !important;
+  font: inherit !important;
+  color: inherit !important;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   FORCED COLORS (HIGH CONTRAST MODE)
+   ───────────────────────────────────────────────────────────────────────────── */
+
+@media (forced-colors: active) {
+  .swc-Tooltip {
+    border: 1px solid CanvasText;
+  }
+
+  .swc-Tooltip-tip {
+    background-color: CanvasText;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   PREFERS-REDUCED-MOTION
+   ───────────────────────────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  :host {
+    transition-duration: 0ms;
+  }
+}

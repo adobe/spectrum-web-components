@@ -40,6 +40,7 @@
     - Checkbox
     - Close Button
     - Color Field
+    - Color Handle
     - Color Loupe
     - Divider
     - Dropzone

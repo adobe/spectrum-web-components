@@ -10,13 +10,46 @@
  * governing permissions and limitations under the License.
  */
 
-import { fixture } from '@open-wc/testing';
+import { elementUpdated, expect, fixture } from '@open-wc/testing';
+import { SinonStub, stub } from 'sinon';
 
 import { Accordion } from '@spectrum-web-components/accordion';
 
-import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 import { Default } from '../stories/accordion.stories.js';
 
 describe('Accordion - dev mode', () => {
-  testForLitDevWarnings(async () => await fixture<Accordion>(Default()));
+  describe('lit dev mode', () => {
+    let consoleWarnStub!: SinonStub;
+
+    before(() => {
+      consoleWarnStub = stub(console, 'warn');
+    });
+
+    afterEach(() => {
+      consoleWarnStub.resetHistory();
+    });
+
+    after(() => {
+      consoleWarnStub.restore();
+    });
+
+    it('does not emit non-deprecation warnings', async () => {
+      const el = await fixture<Accordion>(Default());
+
+      await elementUpdated(el);
+
+      const nonDeprecationCalls = consoleWarnStub
+        .getCalls()
+        .filter(
+          (call) =>
+            (call.args[call.args.length - 1] as { data?: { level?: string } })
+              ?.data?.level !== 'deprecation'
+        );
+
+      expect(
+        nonDeprecationCalls.length > 0,
+        nonDeprecationCalls[0]?.args.join(', ')
+      ).to.be.false;
+    });
+  });
 });
