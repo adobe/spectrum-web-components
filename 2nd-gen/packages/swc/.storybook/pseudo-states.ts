@@ -54,6 +54,9 @@ function getGroupingWrapper(rule: CSSRule): string | null {
   return null;
 }
 
+/** @internal Exported for unit tests. */
+export { getGroupingWrapper };
+
 function walkRules(list: CSSRuleList, out: string[]): void {
   for (const rule of list) {
     if (rule instanceof CSSStyleRule) {
@@ -76,7 +79,19 @@ function walkRules(list: CSSRuleList, out: string[]): void {
   }
 }
 
-function buildAugmentedSheet(source: CSSStyleSheet): CSSStyleSheet | null {
+/** Collects class-based pseudo-state rule strings from a stylesheet. */
+export function collectPseudoStateRules(source: CSSStyleSheet): string[] {
+  const rules: string[] = [];
+  try {
+    walkRules(source.cssRules, rules);
+  } catch {
+    return [];
+  }
+  return rules;
+}
+
+/** Builds an adoptable stylesheet with class-based pseudo-state mirrors. */
+export function buildAugmentedSheet(source: CSSStyleSheet): CSSStyleSheet | null {
   const rules: string[] = [];
   try {
     walkRules(source.cssRules, rules);
