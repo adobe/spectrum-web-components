@@ -4,7 +4,7 @@
 
 ### Major Changes
 
-- [`@adobe/spectrum-wc@2.0.0-beta.0`](https://www.npmjs.com/package/@adobe/spectrum-wc/v/2.0.0-beta.0) (and `.x`) is available at the `beta` npm tag for people willing to start consuming this.
+- [`@adobe/spectrum-wc@2.0.0-beta.0`](https://www.npmjs.com/package/@adobe/spectrum-wc/v/2.0.0-beta.0) is now available on npm under the `beta` tag. These releases are made available as release candidates for development and testing purposes — we encourage early adopters to try them out, but note that breaking changes are to be expected as the package matures toward a stable release.
 
 ### Minor Changes
 
