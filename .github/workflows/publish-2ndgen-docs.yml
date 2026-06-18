@@ -62,8 +62,6 @@ jobs:
         # Component references fall back to 1st-gen READMEs because docs:analyze
         # and generate:llms are not run in this workflow. Add those steps before
         # this one to get structured CEM-based API tables in the references.
-        env:
-          SKILLS_BASE_URL: https://swcpreviews.z13.web.core.windows.net/docs
         run: yarn generate:skills
 
       - name: Build 2nd-gen Storybook

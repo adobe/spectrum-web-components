@@ -13,16 +13,18 @@
 /**
  * Generates Agent Skills for Spectrum Web Components.
  *
- * Implements the Agent Skills Discovery RFC v0.2.0:
- * https://github.com/cloudflare/agent-skills-discovery-rfc
+ * Follows the same format used by React Aria / React Spectrum:
+ *   - Discovery endpoint: .well-known/skills/index.json
+ *   - Each skill is a directory of loose files: SKILL.md + references/
+ *   - index.json entry has { name, description, files: [...] } — no archives
  *
- * Produces two skills whose prose is authored in dedicated source files:
+ * Prose for each skill is authored in dedicated source files:
  *   2nd-gen/packages/ai/skills/swc-skill/SKILL.md
  *   2nd-gen/packages/ai/skills/gen2-migration/SKILL.md
  *
- * The script resolves {{TOKEN}} placeholders in those files with generated
- * component and guide lists, then assembles each skill into a tar.gz archive
- * under .well-known/agent-skills/ in the 2nd-gen Storybook public dir.
+ * The script resolves {{TOKEN}} placeholders with generated component and
+ * guide lists, then writes the skill directories under .well-known/skills/
+ * in the 2nd-gen Storybook public dir.
  *
  * Usage:
  *   node scripts/generate-agent-skills.mjs
@@ -31,8 +33,6 @@
  *   npx skills add spectrum-web-components.adobe.com
  */
 
-import { execSync } from 'child_process';
-import { createHash } from 'crypto';
 import {
   existsSync,
   mkdirSync,
@@ -41,8 +41,7 @@ import {
   rmSync,
   writeFileSync,
 } from 'fs';
-import { tmpdir } from 'os';
-import { basename, dirname, join } from 'path';
+import { dirname, join, relative } from 'path';
 import { fileURLToPath } from 'url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -60,18 +59,9 @@ const SKILL_SOURCE_DIR = join(ROOT, '2nd-gen/packages/ai/skills');
 
 /**
  * Storybook's staticDirs root — files here are served verbatim at the site root.
- *
- * SKILLS_BASE_URL overrides the URL embedded in index.json at build time:
- *   SKILLS_BASE_URL=https://example.com node scripts/generate-agent-skills.mjs
- *
- * Update the fallback once the canonical domain is confirmed.
+ * Skills are written under .well-known/skills/ so `npx skills add <domain>` works.
  */
 const OUTPUT_DIR = join(ROOT, '2nd-gen/packages/swc/public');
-const SITE_URL =
-  process.env.SKILLS_BASE_URL ??
-  'https://opensource.adobe.com/spectrum-web-components/second-gen';
-const SCHEMA_VERSION =
-  'https://schemas.agentskills.io/discovery/0.2.0/schema.json';
 
 // ---------------------------------------------------------------------------
 // Guide definitions
@@ -238,7 +228,6 @@ const GEN2_MIGRATION_GUIDES = [
  *   - <iframe> elements (live demo embeds, not useful as text)
  *   - <style> blocks
  *   - <sp-link> wrapper tags, keeping inner text
- *   - Other custom element tags that are wrappers, keeping inner text
  */
 function stripEleventy(content) {
   return (
@@ -308,21 +297,32 @@ function stripContent(content, stripFn) {
 // Helpers
 // ---------------------------------------------------------------------------
 
-function sha256(filePath) {
-  const hash = createHash('sha256');
-  hash.update(readFileSync(filePath));
-  return 'sha256:' + hash.digest('hex');
-}
-
 /**
- * Create a tar.gz archive from a source directory.
+ * Collect all file paths under a directory, relative to that directory.
+ * Returns paths with forward slashes, SKILL.md first.
  */
-function createArchive(sourceDir, outputPath) {
-  const dirName = basename(sourceDir);
-  const parentDir = join(sourceDir, '..');
-  execSync(`tar -czf "${outputPath}" -C "${parentDir}" "${dirName}"`, {
-    stdio: 'pipe',
+function collectFiles(dir, base = dir) {
+  const entries = readdirSync(dir, { withFileTypes: true });
+  const files = [];
+  for (const entry of entries) {
+    const full = join(dir, entry.name);
+    if (entry.isDirectory()) {
+      files.push(...collectFiles(full, base));
+    } else {
+      files.push(relative(base, full).replace(/\\/g, '/'));
+    }
+  }
+  // SKILL.md always first
+  files.sort((a, b) => {
+    if (a === 'SKILL.md') {
+      return -1;
+    }
+    if (b === 'SKILL.md') {
+      return 1;
+    }
+    return a.localeCompare(b);
   });
+  return files;
 }
 
 /**
@@ -432,9 +432,6 @@ function listMigrationComponents() {
 // Token resolution
 // ---------------------------------------------------------------------------
 
-/**
- * Replace {{TOKEN}} placeholders in SKILL.md source content.
- */
 function resolveTokens(template, tokens) {
   let result = template;
   for (const [token, value] of Object.entries(tokens)) {
@@ -477,27 +474,26 @@ function buildMigrationComponentList(components) {
 // Skill builders
 // ---------------------------------------------------------------------------
 
-function buildSwcSkill(skillName, tmpRoot) {
-  const skillDir = join(tmpRoot, skillName);
+function buildSwcSkill(skillDir) {
   const refsDir = join(skillDir, 'references');
   mkdirSync(join(refsDir, 'guides'), { recursive: true });
   mkdirSync(join(refsDir, 'components'), { recursive: true });
 
   const components = listGen1Components();
 
-  // Resolve tokens in the handcrafted SKILL.md
   const sourceMd = readFileSync(
     join(SKILL_SOURCE_DIR, 'swc-skill', 'SKILL.md'),
     'utf8'
   );
-  const skillMd = resolveTokens(sourceMd, {
-    GUIDE_LIST: buildGuideList(GEN1_GUIDES),
-    COMPONENT_NAMES: components.map((c) => `\`${c.tagName}\``).join(', '),
-    COMPONENT_LIST: buildComponentList(components),
-  });
-  writeFileSync(join(skillDir, 'SKILL.md'), skillMd);
+  writeFileSync(
+    join(skillDir, 'SKILL.md'),
+    resolveTokens(sourceMd, {
+      GUIDE_LIST: buildGuideList(GEN1_GUIDES),
+      COMPONENT_NAMES: components.map((c) => `\`${c.tagName}\``).join(', '),
+      COMPONENT_LIST: buildComponentList(components),
+    })
+  );
 
-  // Copy guide references
   let guideCount = 0;
   for (const guide of GEN1_GUIDES) {
     const src = join(ROOT, guide.sourcePath);
@@ -505,15 +501,13 @@ function buildSwcSkill(skillName, tmpRoot) {
       console.warn(`  ⚠ guide not found: ${guide.sourcePath}`);
       continue;
     }
-    const raw = readFileSync(src, 'utf8');
     writeFileSync(
       join(refsDir, guide.refPath),
-      stripContent(raw, guide.stripFn)
+      stripContent(readFileSync(src, 'utf8'), guide.stripFn)
     );
     guideCount++;
   }
 
-  // Copy component references
   let componentCount = 0;
   for (const comp of components) {
     const content = readGen1Reference(comp.tagName, comp.packageDir);
@@ -524,34 +518,32 @@ function buildSwcSkill(skillName, tmpRoot) {
   }
 
   console.log(
-    `  ${skillName}: ${guideCount} guides + ${componentCount} component references`
+    `  spectrum-web-components: ${guideCount} guides + ${componentCount} component references`
   );
-  return skillDir;
 }
 
-function buildMigrationSkill(skillName, tmpRoot) {
-  const skillDir = join(tmpRoot, skillName);
+function buildMigrationSkill(skillDir) {
   const refsDir = join(skillDir, 'references');
   mkdirSync(join(refsDir, 'guides'), { recursive: true });
   mkdirSync(join(refsDir, 'components'), { recursive: true });
 
   const components = listMigrationComponents();
 
-  // Resolve tokens in the handcrafted SKILL.md
   const sourceMd = readFileSync(
     join(SKILL_SOURCE_DIR, 'gen2-migration', 'SKILL.md'),
     'utf8'
   );
-  const skillMd = resolveTokens(sourceMd, {
-    MIGRATION_GUIDE_LIST: buildGuideList(GEN2_MIGRATION_GUIDES),
-    MIGRATION_COMPONENT_NAMES: components
-      .map((c) => `\`${c.componentDir}\``)
-      .join(', '),
-    MIGRATION_COMPONENT_LIST: buildMigrationComponentList(components),
-  });
-  writeFileSync(join(skillDir, 'SKILL.md'), skillMd);
+  writeFileSync(
+    join(skillDir, 'SKILL.md'),
+    resolveTokens(sourceMd, {
+      MIGRATION_GUIDE_LIST: buildGuideList(GEN2_MIGRATION_GUIDES),
+      MIGRATION_COMPONENT_NAMES: components
+        .map((c) => `\`${c.componentDir}\``)
+        .join(', '),
+      MIGRATION_COMPONENT_LIST: buildMigrationComponentList(components),
+    })
+  );
 
-  // Copy guide references
   let guideCount = 0;
   for (const guide of GEN2_MIGRATION_GUIDES) {
     const src = join(ROOT, guide.sourcePath);
@@ -559,27 +551,23 @@ function buildMigrationSkill(skillName, tmpRoot) {
       console.warn(`  ⚠ guide not found: ${guide.sourcePath}`);
       continue;
     }
-    const raw = readFileSync(src, 'utf8');
     writeFileSync(
       join(refsDir, guide.refPath),
-      stripContent(raw, guide.stripFn)
+      stripContent(readFileSync(src, 'utf8'), guide.stripFn)
     );
     guideCount++;
   }
 
-  // Copy per-component migration guides (MDX → MD)
   for (const comp of components) {
-    const raw = readFileSync(comp.guidePath, 'utf8');
     writeFileSync(
       join(refsDir, 'components', `${comp.componentDir}.md`),
-      stripMdx(raw)
+      stripMdx(readFileSync(comp.guidePath, 'utf8'))
     );
   }
 
   console.log(
-    `  ${skillName}: ${guideCount} guides + ${components.length} migration guides`
+    `  migrate-swc-gen1-to-gen2: ${guideCount} guides + ${components.length} migration guides`
   );
-  return skillDir;
 }
 
 // ---------------------------------------------------------------------------
@@ -613,64 +601,48 @@ const SKILL_CONFIGS = [
 function main() {
   console.log('Generating Agent Skills for Spectrum Web Components…\n');
 
-  const wellKnownDir = join(OUTPUT_DIR, '.well-known', 'agent-skills');
+  const skillsDir = join(OUTPUT_DIR, '.well-known', 'skills');
 
-  if (existsSync(wellKnownDir)) {
-    rmSync(wellKnownDir, { recursive: true });
+  if (existsSync(skillsDir)) {
+    rmSync(skillsDir, { recursive: true });
   }
-  mkdirSync(wellKnownDir, { recursive: true });
+  mkdirSync(skillsDir, { recursive: true });
 
-  const tmpRoot = join(tmpdir(), `swc-skills-${Date.now()}`);
-  mkdirSync(tmpRoot, { recursive: true });
+  const indexEntries = [];
 
-  try {
-    const indexEntries = [];
+  for (const config of SKILL_CONFIGS) {
+    console.log(`Building skill: ${config.name}`);
 
-    for (const config of SKILL_CONFIGS) {
-      console.log(`Building skill: ${config.name}`);
+    const skillDir = join(skillsDir, config.name);
+    mkdirSync(skillDir, { recursive: true });
 
-      const skillDir = config.buildFn(config.name, tmpRoot);
+    config.buildFn(skillDir);
 
-      const archiveFile = `${config.name}.tar.gz`;
-      const archivePath = join(wellKnownDir, archiveFile);
-      createArchive(skillDir, archivePath);
+    const files = collectFiles(skillDir);
 
-      const digest = sha256(archivePath);
+    indexEntries.push({
+      name: config.name,
+      description: config.description,
+      ...(config.kind ? { kind: config.kind } : {}),
+      files,
+    });
 
-      indexEntries.push({
-        name: config.name,
-        description: config.description,
-        type: 'archive',
-        url: `${SITE_URL}/.well-known/agent-skills/${archiveFile}`,
-        digest,
-        ...(config.kind ? { kind: config.kind } : {}),
-      });
-
-      console.log(`  → ${archiveFile} (${digest.slice(0, 19)}…)\n`);
-    }
-
-    const indexPath = join(wellKnownDir, 'index.json');
-    writeFileSync(
-      indexPath,
-      JSON.stringify(
-        { $schema: SCHEMA_VERSION, skills: indexEntries },
-        null,
-        2
-      ) + '\n'
-    );
-    console.log(`index.json → ${indexPath}`);
-    console.log(
-      `\nDiscovery endpoint:\n  ${SITE_URL}/.well-known/agent-skills/index.json`
-    );
-
-    if (!process.env.SKILLS_BASE_URL) {
-      console.log(
-        '(Set SKILLS_BASE_URL or update the fallback in this script once the canonical domain is confirmed.)'
-      );
-    }
-  } finally {
-    rmSync(tmpRoot, { recursive: true, force: true });
+    console.log(`  → ${files.length} files\n`);
   }
+
+  const indexPath = join(skillsDir, 'index.json');
+  writeFileSync(
+    indexPath,
+    JSON.stringify({ skills: indexEntries }, null, 2) + '\n'
+  );
+
+  console.log(`index.json → ${indexPath}`);
+  console.log(
+    '\nDiscovery endpoint:\n  <site-root>/.well-known/skills/index.json'
+  );
+  console.log('\nTest locally:');
+  console.log('  cd 2nd-gen/packages/swc/public && npx serve . --listen 3000');
+  console.log('  npx skills add http://localhost:3000');
 }
 
 main();
