@@ -4,7 +4,7 @@
 
 ### Major Changes
 
-- Gen2 2.0.0 milestone. Establishes the 2.0.0 major line for the 2nd-gen component set; beta releases are cut as `2.0.0-beta.N` via Changesets pre-release mode.
+- [`@adobe/spectrum-wc@2.0.0-beta.0`](https://www.npmjs.com/package/@adobe/spectrum-wc/v/2.0.0-beta.0) (and `.x`) is available at the `beta` npm tag for people willing to start consuming this.
 
 ### Minor Changes
 
