@@ -37,7 +37,9 @@ import styles from './badge.css';
  *
  * @example
  * <swc-badge variant="neutral" fixed="fill">
- *   <sp-icon-checkmark slot="icon"></sp-icon-checkmark>
+ *   <swc-icon slot="icon" aria-hidden="true">
+ *     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10">...</svg>
+ *   </swc-icon>
  *   Verified
  * </swc-badge>
  *

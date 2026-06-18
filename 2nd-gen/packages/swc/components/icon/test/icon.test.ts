@@ -18,8 +18,12 @@ import { Icon } from '@adobe/spectrum-wc/icon';
 import '@adobe/spectrum-wc/components/icon/swc-icon.js';
 
 import { getComponent } from '../../../utils/test-utils.js';
-import meta from '../stories/icon.internal.stories.js';
-import { Overview } from '../stories/icon.internal.stories.js';
+import meta from '../stories/icon.stories.js';
+import { Overview } from '../stories/icon.stories.js';
+
+// Copied from `elements/Chevron100Icon.ts`.
+const chevronPath =
+  'M2.83789 9.8252c-.19238 0-.38379-.07324-.53027-.21973-.29297-.29297-.29297-.76758 0-1.06055l3.54395-3.54492L2.30762 1.45508c-.29297-.29297-.29297-.76758 0-1.06055s.76758-.29297 1.06055 0l4.07422 4.0752c.29297.29297.29297.76758 0 1.06055l-4.07422 4.0752c-.14648.14648-.33789.21973-.53027.21973Z';
 
 // This file defines dev-only test stories that reuse the main story metadata.
 export default {
@@ -42,7 +46,7 @@ export const OverviewTest: Story = {
     const icon = await getComponent<Icon>(canvasElement, 'swc-icon');
 
     await step('renders with expected default properties', async () => {
-      expect(icon.label, 'label property is "Search"').toBe('Search');
+      expect(icon.label, 'label property is "Expand"').toBe('Expand');
       expect(icon.shadowRoot, 'shadow root is attached').toBeTruthy();
     });
   },
@@ -54,11 +58,9 @@ export const OverviewTest: Story = {
 
 export const SizeAttributeTest: Story = {
   render: () => html`
-    <swc-icon size="xl" label="Search">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
-        <path
-          d="M14.5 13.09 11.41 10a6 6 0 1 0-1.41 1.41l3.09 3.09a1 1 0 0 0 1.41-1.41zM3 7a4 4 0 1 1 8 0 4 4 0 0 1-8 0z"
-        />
+    <swc-icon size="xl" label="Expand">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10">
+        <path d=${chevronPath} />
       </svg>
     </swc-icon>
   `,
@@ -77,11 +79,9 @@ export const SizeAttributeTest: Story = {
 
 export const SlottedSvgAccessibilityTest: Story = {
   render: () => html`
-    <swc-icon label="Search">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
-        <path
-          d="M14.5 13.09 11.41 10a6 6 0 1 0-1.41 1.41l3.09 3.09a1 1 0 0 0 1.41-1.41zM3 7a4 4 0 1 1 8 0 4 4 0 0 1-8 0z"
-        />
+    <swc-icon label="Expand">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10">
+        <path d=${chevronPath} />
       </svg>
     </swc-icon>
   `,
@@ -96,7 +96,7 @@ export const SlottedSvgAccessibilityTest: Story = {
       expect(
         svg.getAttribute('aria-label'),
         'slotted SVG aria-label matches icon label'
-      ).toBe('Search');
+      ).toBe('Expand');
     });
   },
 };
@@ -104,10 +104,8 @@ export const SlottedSvgAccessibilityTest: Story = {
 export const NoLabelAriaHiddenTest: Story = {
   render: () => html`
     <swc-icon>
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
-        <path
-          d="M14.5 13.09 11.41 10a6 6 0 1 0-1.41 1.41l3.09 3.09a1 1 0 0 0 1.41-1.41zM3 7a4 4 0 1 1 8 0 4 4 0 0 1-8 0z"
-        />
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10">
+        <path d=${chevronPath} />
       </svg>
     </swc-icon>
   `,
@@ -135,10 +133,8 @@ export const NoLabelAriaHiddenTest: Story = {
 export const LabelTogglingTest: Story = {
   render: () => html`
     <swc-icon label="x">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
-        <path
-          d="M14.5 13.09 11.41 10a6 6 0 1 0-1.41 1.41l3.09 3.09a1 1 0 0 0 1.41-1.41zM3 7a4 4 0 1 1 8 0 4 4 0 0 1-8 0z"
-        />
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10">
+        <path d=${chevronPath} />
       </svg>
     </swc-icon>
   `,

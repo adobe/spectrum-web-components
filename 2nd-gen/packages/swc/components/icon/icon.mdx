@@ -1,0 +1,70 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import { DocsFooter, DocsHeader } from '../../.storybook/blocks';
+
+import * as IconStories from './stories/icon.stories';
+
+<Meta of={IconStories} />
+
+<DocsHeader />
+
+## Anatomy
+
+An icon consists of:
+
+1. **Rendered graphic**: SVG markup slotted into the default slot
+
+### Content
+
+- Default slot: provide inline `<svg>` markup (or a Lit template that renders SVG).
+
+<Canvas of={IconStories.Anatomy} />
+
+## Options
+
+### Sizes
+
+Icons come in five sizes to fit different layout contexts:
+
+- **Extra-small (`xs`)**: dense UIs and compact metadata rows
+- **Small (`s`)**: supporting iconography in constrained spaces
+- **Medium (`m`)**: default size for general component usage
+- **Large (`l`)**: prominent icon usage in larger controls
+- **Extra-large (`xl`)**: high-emphasis icon presentation
+
+<Canvas of={IconStories.Sizes} />
+
+### Inline SVG source
+
+Provide icon artwork as slotted SVG. Spectrum 2 does not include iconsets or a `name` attribute. Copy or import SVG from your design source and slot it directly:
+
+```html
+<swc-icon label="Expand">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10">
+    <path
+      d="M2.83789 9.8252c-.19238 0-.38379-.07324-.53027-.21973-.29297-.29297-.29297-.76758 0-1.06055l3.54395-3.54492L2.30762 1.45508c-.29297-.29297-.29297-.76758 0-1.06055s.76758-.29297 1.06055 0l4.07422 4.0752c.29297.29297.29297.76758 0 1.06055l-4.07422 4.0752c-.14648.14648-.33789.21973-.53027.21973Z"
+    />
+  </svg>
+</swc-icon>
+```
+
+## Accessibility
+
+### Features
+
+The `<swc-icon>` element implements several accessibility features:
+
+#### SVG labeling
+
+- Slotted SVGs receive `role="img"` and use `aria-label` when `label` is provided
+- When no label is provided, slotted SVGs are marked `aria-hidden="true"`
+
+### Best practices
+
+- Always provide a descriptive `label` for informative icons
+- Use empty labels only for purely decorative icons
+- Keep labels short and specific (e.g., "Expand" instead of "Icon")
+- When an icon accompanies visible text, omit `label` and set `aria-hidden="true"` on the icon so screen readers do not announce duplicate content
+
+<Canvas of={IconStories.Accessibility} />
+
+<DocsFooter />
