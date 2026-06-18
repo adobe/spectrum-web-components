@@ -53,6 +53,18 @@ interface ARIAControlsElements {
  */
 const LIGHT_DISMISS_REOPEN_WINDOW_MS = 200;
 
+/** Properties whose change re-anchors the surface while open. */
+const POSITIONING_PROPERTIES = [
+  'placement',
+  'offset',
+  'crossOffset',
+  'containerPadding',
+  'shouldFlip',
+  'hideArrow',
+  'tipPadding',
+  'size',
+] as const;
+
 /**
  * Abstract base for the popover component. Owns the popover's behavior: the
  * dual-mode dialog lifecycle (`showPopover()` / `showModal()`), trigger and ARIA
@@ -376,16 +388,7 @@ export abstract class PopoverBase extends SpectrumElement {
   }
 
   private _positioningChanged(changedProperties: PropertyValues): boolean {
-    return (
-      changedProperties.has('placement') ||
-      changedProperties.has('offset') ||
-      changedProperties.has('crossOffset') ||
-      changedProperties.has('containerPadding') ||
-      changedProperties.has('shouldFlip') ||
-      changedProperties.has('hideArrow') ||
-      changedProperties.has('tipPadding') ||
-      changedProperties.has('size')
-    );
+    return POSITIONING_PROPERTIES.some((prop) => changedProperties.has(prop));
   }
 
   // ──────────────────────────
