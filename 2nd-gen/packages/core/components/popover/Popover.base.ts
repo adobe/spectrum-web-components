@@ -296,6 +296,12 @@ export abstract class PopoverBase extends SpectrumElement {
     this._clearTriggerAria();
     this._interactiveElement = null;
     this._anchor = null;
+    // Focus restoration is handled by the close lifecycle: default mode in
+    // `_onBeforeToggle`, modal mode natively by `<dialog>`. Both close routes
+    // (Escape, outside click, programmatic `open=false`) pass through there.
+    // Removing an open popover from the DOM is not handled: the browser has
+    // already moved focus to `<body>` before this runs, so the trigger to
+    // restore to can no longer be inferred.
   }
 
   protected override update(changedProperties: PropertyValues): void {
@@ -515,6 +521,12 @@ export abstract class PopoverBase extends SpectrumElement {
         // its presence, reveals the surface and tip (gated off until now so the
         // entry fade runs from the anchored position, not the 0,0 origin). Not a
         // public property; removed in `_stopPositioningWhenClosed`.
+        //
+        // The reveal therefore depends on the controller completing a compute.
+        // The controller skips it when the floating element measures 0x0, but the
+        // surface always has a border plus padded `.swc-Popover-content`, so it is
+        // never zero-sized while open; a content-less popover would still have
+        // chrome. If that ever changes, gate the reveal independently of the side.
         this.setAttribute('actual-placement', physicalSide(next));
       },
     });
