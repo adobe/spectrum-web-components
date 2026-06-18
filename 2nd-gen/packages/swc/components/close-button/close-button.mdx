@@ -33,8 +33,6 @@ Close buttons come in four sizes to fit various contexts:
 - **Large (`l`)** — larger hit target when space allows
 - **Extra large (`xl`)** — maximum visibility for prominent dismiss controls
 
-> **Migration note:** `<swc-close-button>` reflects **`size="m"`** on the host when omitted. Spectrum 1 did not reflect a default `size` attribute, though the visual default was still medium.
-
 <Canvas of={CloseButtonStories.Sizes} />
 
 ### Static colors
@@ -45,8 +43,6 @@ Use the `static-color` attribute when displaying over images or colored backgrou
 - **black** — use on light backgrounds for better contrast
 
 The canvas below uses the Storybook static-color demo layout: **white** on a dark gradient panel and **black** on a light gradient panel.
-
-> **Migration note:** replace legacy `variant="white"` or `variant="black"` with `static-color`. The `variant` attribute is not supported on `<swc-close-button>`.
 
 <Canvas of={CloseButtonStories.StaticColors} />
 

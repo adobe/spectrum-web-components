@@ -35,9 +35,6 @@ import {
  * PickerButton, and InfieldButton can extend this base without inheriting
  * the full `swc-button` visual surface.
  *
- * @slot - Visible button label.
- * @slot icon - Optional leading icon.
- *
  * @attribute {ElementSize} size - The size of the button.
  * @attribute {'white' | 'black'} static-color - Static color treatment for display over colored or image backgrounds.
  *
