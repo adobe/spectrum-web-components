@@ -21,6 +21,8 @@ import {
 } from '@spectrum-web-components/core/utils/index.js';
 
 import '@adobe/spectrum-wc/components/popover/swc-popover.js';
+import '@adobe/spectrum-wc/components/tooltip/swc-tooltip.js';
+import '@adobe/spectrum-wc/components/button/swc-button.js';
 
 import { getComponent, withWarningSpy } from '../../../utils/test-utils.js';
 import meta, { Overview } from '../stories/popover.stories.js';
@@ -486,12 +488,15 @@ export const PositionedFadeGateTest: Story = {
       );
     });
 
-    await step('drops actual-placement after the close transition', async () => {
-      popover.open = false;
-      await waitFor(() =>
-        expect(popover.hasAttribute('actual-placement')).toBe(false)
-      );
-    });
+    await step(
+      'drops actual-placement after the close transition',
+      async () => {
+        popover.open = false;
+        await waitFor(() =>
+          expect(popover.hasAttribute('actual-placement')).toBe(false)
+        );
+      }
+    );
   },
 };
 
@@ -817,6 +822,74 @@ export const FocusRegionContentClickTest: Story = {
         popover.open,
         'focusing content inside the popover does not dismiss it'
       ).toBe(true);
+    });
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Nested popovers + tooltips (layering demo)
+// ──────────────────────────────────────────────────────────────
+
+// A popover-inside-a-popover, a tooltip on the inner trigger, and a standalone
+// button + tooltip outside the popovers. Nested `popover="auto"` elements form an
+// ancestor chain (resolved across the shadow/slot boundary), so opening the inner
+// popover keeps the outer open rather than light-dismissing it. Tooltips are
+// hover/focus driven and do NOT participate in the popover dismissible stack, so
+// they layer and dismiss independently. (Native Escape/click light-dismiss needs
+// trusted events, so the play function asserts the nesting invariant rather than
+// simulating dismissal.)
+export const NestedLayersTest: Story = {
+  render: () => html`
+    <div style="display: flex; gap: 24px; padding: 40px">
+      <swc-button id="nl-outside">Standalone button</swc-button>
+      <swc-tooltip for="nl-outside">
+        A standalone tooltip, independent of the popovers.
+      </swc-tooltip>
+
+      <swc-button id="nl-outer-trigger">Open outer popover</swc-button>
+      <swc-popover id="nl-outer" for="nl-outer-trigger">
+        <div
+          style="display: flex; flex-direction: column; gap: 12px; inline-size: 260px;"
+        >
+          <p class="swc-Body swc-Body--sizeS" style="margin: 0;">
+            Outer popover. It stays open while the inner popover is open.
+          </p>
+          <swc-button id="nl-inner-trigger" size="s">
+            Open inner popover
+          </swc-button>
+          <swc-tooltip for="nl-inner-trigger">
+            Opens a popover nested in this one.
+          </swc-tooltip>
+          <swc-popover id="nl-inner" for="nl-inner-trigger" placement="bottom">
+            Inner popover, stacked above the outer.
+          </swc-popover>
+        </div>
+      </swc-popover>
+    </div>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const outer = canvasElement.querySelector('#nl-outer') as Popover;
+    const inner = canvasElement.querySelector('#nl-inner') as Popover;
+    const outerTrigger = canvasElement.querySelector(
+      '#nl-outer-trigger'
+    ) as HTMLElement;
+    await outer.updateComplete;
+
+    await step('opening the outer popover', async () => {
+      await userEvent.click(outerTrigger);
+      await waitFor(() => expect(outer.open, 'outer is open').toBe(true));
+    });
+
+    await step('opening the inner popover keeps the outer open', async () => {
+      // The inner trigger lives in the outer popover's slotted content.
+      const innerTrigger = outer.querySelector(
+        '#nl-inner-trigger'
+      ) as HTMLElement;
+      await userEvent.click(innerTrigger);
+      await waitFor(() => expect(inner.open, 'inner is open').toBe(true));
+      // Nested auto popovers form an ancestor chain, so opening the inner one
+      // must not light-dismiss the outer.
+      expect(outer.open, 'outer stays open under the inner').toBe(true);
     });
   },
 };
