@@ -1,0 +1,214 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Accordion/Migration guide" />
+
+# Accordion migration guide
+
+Replace `<sp-accordion>` / `<sp-accordion-item>` with `<swc-accordion>` / `<swc-accordion-item>`, update the imports, move each item's `label` attribute into a `label` slot, and set `level` on the accordion instead of on each item.
+
+## What changed
+
+### Renamed
+
+| Area             | Spectrum 1                                           | Spectrum 2                                                 |
+| ---------------- | ---------------------------------------------------- | ---------------------------------------------------------- |
+| Tag (container)  | `sp-accordion`                                       | `swc-accordion`                                            |
+| Tag (item)       | `sp-accordion-item`                                  | `swc-accordion-item`                                       |
+| Import path      | `@spectrum-web-components/accordion/sp-accordion.js` | `@adobe/spectrum-wc/components/accordion/swc-accordion.js` |
+| Toggle event     | `sp-accordion-item-toggle`                           | `swc-accordion-item-toggle`                                |
+| CSS custom props | `--mod-accordion-*` / `--spectrum-accordion-*`       | `--swc-accordion-item-*` (see [Styling](#styling))         |
+| Default `size`   | No reflected default                                 | `m`; items render at medium unless `size` is set           |
+
+### Added in Spectrum 2
+
+| Addition                                 | Notes                                                                                                                      |
+| ---------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| `quiet` boolean (on `swc-accordion`)     | Borderless visual variant; rounds the header corners on hover and focus                                                    |
+| `disabled` boolean (on `swc-accordion`)  | Disables every item at once; each item's own `disabled` state is preserved when re-enabled                                 |
+| `density="regular"`                      | New explicit default density (alongside `compact` and `spacious`); set `density` explicitly to avoid a development warning |
+| `actions` slot (on `swc-accordion-item`) | Place interactive controls in the header row, outside the toggle button                                                    |
+| Lifecycle events                         | `swc-open`, `swc-close`, `swc-after-open`, `swc-after-close` dispatched from the item                                      |
+
+### Removed in Spectrum 2
+
+| Removed                                                     | Replacement                                                                                                           |
+| ----------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
+| `label` attribute (on `sp-accordion-item`)                  | Use the `label` slot: `<span slot="label">…</span>`; see [step 3](#3-move-the-heading-label-to-the-label-slot)        |
+| `level` attribute on the item                               | Set `level` on `<swc-accordion>`; it applies to every item. See [step 4](#4-move-level-to-the-accordion)              |
+| Arrow / Home / End navigation between headers               | `Tab` and `Shift+Tab` move between headers; there is no arrow-key roving                                              |
+| `--mod-accordion-*` / `--spectrum-accordion-*` custom props | `--swc-accordion-item-*` where a hook exists (see [Styling](#styling)); most are token-driven with no 1:1 replacement |
+
+## Update your code
+
+### 1. Update the import
+
+```js
+// Before
+import '@spectrum-web-components/accordion/sp-accordion.js';
+import '@spectrum-web-components/accordion/sp-accordion-item.js';
+// After
+import '@adobe/spectrum-wc/components/accordion/swc-accordion.js';
+import '@adobe/spectrum-wc/components/accordion/swc-accordion-item.js';
+```
+
+> `@adobe/spectrum-wc` is a monolithic package. Importing via subpath registers and loads only that component's bundle.
+
+### 2. Rename the tags
+
+```html
+<!-- Before -->
+<sp-accordion>
+  <sp-accordion-item>…</sp-accordion-item>
+</sp-accordion>
+<!-- After -->
+<swc-accordion>
+  <swc-accordion-item>…</swc-accordion-item>
+</swc-accordion>
+```
+
+### 3. Move the heading label to the `label` slot
+
+The string `label` attribute is removed. Put the header text in a `label` slot; panel content stays in the default slot.
+
+```html
+<!-- Before -->
+<sp-accordion-item label="Personal information">
+  <p>Manage your name and contact details.</p>
+</sp-accordion-item>
+<!-- After -->
+<swc-accordion-item>
+  <span slot="label">Personal information</span>
+  <p>Manage your name and contact details.</p>
+</swc-accordion-item>
+```
+
+### 4. Move `level` to the accordion
+
+Set the heading level once on `<swc-accordion>`; it applies to every item. The per-item `level` attribute is removed.
+
+```html
+<!-- Before -->
+<sp-accordion>
+  <sp-accordion-item level="2" label="Section">…</sp-accordion-item>
+</sp-accordion>
+<!-- After -->
+<swc-accordion level="2">
+  <swc-accordion-item>
+    <span slot="label">Section</span>
+    …
+  </swc-accordion-item>
+</swc-accordion>
+```
+
+### 5. Rename the toggle event listener
+
+```js
+// Before
+accordion.addEventListener('sp-accordion-item-toggle', handler);
+// After
+accordion.addEventListener('swc-accordion-item-toggle', handler);
+```
+
+### 6. Replace `--mod-accordion-*` overrides
+
+```css
+/* Before */
+sp-accordion {
+  --mod-accordion-divider-color: var(--my-border);
+}
+/* After */
+swc-accordion {
+  --swc-accordion-item-divider-color: var(--my-border);
+}
+```
+
+See [Styling](#styling) for the full property mapping.
+
+## Accessibility
+
+- Each item needs meaningful text in the `label` slot so screen reader users can navigate the heading list. See [step 3](#3-move-the-heading-label-to-the-label-slot).
+- When using the `actions` slot, include the item subject in each action's accessible name (for example "Edit personal information", not "Edit") so it is unambiguous out of context.
+- Disabled items now use `aria-disabled` and remain keyboard-focusable (Spectrum 1 used the native `disabled` attribute). No markup change is required.
+- `Tab` and `Shift+Tab` move between headers; arrow, `Home`, and `End` keys no longer move focus between headers. No markup change is required.
+
+## Styling
+
+Spectrum 2 exposes a narrow set of public CSS custom properties on `<swc-accordion-item>` (plus one on `<swc-accordion>`). The broad Spectrum 1 `--mod-accordion-*` surface is not carried forward.
+
+{/* @todo Replace the inline-styled callouts in this section with `<swc-inline-alert>` once it is migrated to Spectrum 2. */}
+
+<div
+  style={{
+    borderLeft: '4px solid #dba842',
+    background: 'rgba(219, 168, 66, 0.12)',
+    padding: '12px 16px',
+    margin: '16px 0',
+    borderRadius: '4px',
+  }}
+>
+  <strong>⚠️ Breaking change.</strong> Spectrum 1{' '}
+  <code>{'--mod-accordion-*'}</code> properties <strong>do not apply</strong> to{' '}
+  <code>{'<swc-accordion>'}</code>. Remove or replace every{' '}
+  <code>{'--mod-accordion-*'}</code> override with the{' '}
+  <code>{'--swc-accordion-item-*'}</code> equivalents below. Not every Spectrum
+  1 property has a 1:1 replacement, so read the list below carefully.
+</div>
+
+### Removed `--mod-accordion-*` properties
+
+| Removed (Spectrum 1)                                                                                           | Replacement (Spectrum 2)                                                                                                              |
+| -------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| `--mod-accordion-item-width`                                                                                   | `--swc-accordion-min-inline-size`                                                                                                     |
+| `--mod-accordion-divider-color`                                                                                | `--swc-accordion-item-divider-color`                                                                                                  |
+| `--mod-accordion-component-edge-to-text`                                                                       | `--swc-accordion-item-content-padding-inline`                                                                                         |
+| `--mod-accordion-edge-to-content-area`                                                                         | `--swc-accordion-item-edge-to-content-area`                                                                                           |
+| `--mod-accordion-disclosure-indicator-to-text`                                                                 | `--swc-accordion-item-disclosure-indicator-gap`                                                                                       |
+| `--mod-accordion-item-header-top-to-text-space`                                                                | `--swc-accordion-item-padding-top`                                                                                                    |
+| `--mod-accordion-item-header-bottom-to-text-space`                                                             | `--swc-accordion-item-padding-bottom`                                                                                                 |
+| `--mod-accordion-item-header-font-size`                                                                        | `--swc-accordion-item-header-font-size`                                                                                               |
+| `--mod-accordion-corner-radius`                                                                                | `--swc-accordion-item-focus-indicator-corner-radius` (focus ring) and `--swc-accordion-item-header-corner-radius` (header background) |
+| Other `--mod-accordion-*` (background, text, and focus colors; typography; icon dimensions; divider thickness) | No replacement; driven by Spectrum 2 tokens. Retoken globally instead.                                                                |
+
+### Public custom properties
+
+These properties are defined on `<swc-accordion-item>` (except `--swc-accordion-min-inline-size`, on `<swc-accordion>`). Because custom properties inherit, you can set an item property on a single `<swc-accordion-item>` or on the parent `<swc-accordion>` to apply it to every item.
+
+{/* @todo Replace the Description column with the `@cssproperty` JSDoc descriptions from the accordion CEM entries once they are added in a follow-up PR. */}
+
+| Custom property                                      | Description                                               |
+| ---------------------------------------------------- | --------------------------------------------------------- |
+| `--swc-accordion-min-inline-size`                    | Minimum inline size of the accordion.                     |
+| `--swc-accordion-item-divider-color`                 | Color of the item's top and bottom divider borders.       |
+| `--swc-accordion-item-header-corner-radius`          | Corner radius of the header button background.            |
+| `--swc-accordion-item-focus-indicator-corner-radius` | Corner radius of the focus ring around the header button. |
+| `--swc-accordion-item-padding-top`                   | Block-start padding of the header button.                 |
+| `--swc-accordion-item-padding-bottom`                | Block-end padding of the header button.                   |
+| `--swc-accordion-item-edge-to-content-area`          | Inline padding of the header button.                      |
+| `--swc-accordion-item-disclosure-indicator-gap`      | Gap between the chevron indicator and the header label.   |
+| `--swc-accordion-item-header-font-size`              | Font size of the header label.                            |
+| `--swc-accordion-item-content-padding-inline`        | Inline padding of the content panel.                      |
+
+<div
+  style={{
+    borderLeft: '4px solid #e34850',
+    background: 'rgba(227, 72, 80, 0.10)',
+    padding: '12px 16px',
+    margin: '16px 0',
+    borderRadius: '4px',
+  }}
+>
+  <strong>🚫 Do not target internals.</strong> Internal classes,{' '}
+  <code>{'--_swc-accordion-*'}</code> private properties, and shadow DOM are{' '}
+  <strong>not public API</strong>. Styling applied to them will break without
+  warning on minor releases.
+</div>
+
+## Checklist
+
+- [ ] Update imports to `@adobe/spectrum-wc/components/accordion/*`
+- [ ] Rename `<sp-accordion>` / `<sp-accordion-item>` to `<swc-accordion>` / `<swc-accordion-item>`
+- [ ] Move each item's `label` attribute into a `<span slot="label">`
+- [ ] Move `level` from items to the `<swc-accordion>`
+- [ ] Rename `sp-accordion-item-toggle` listeners to `swc-accordion-item-toggle`
+- [ ] Replace `--mod-accordion-*` overrides with `--swc-accordion-item-*`
+- [ ] Add meaningful accessible names to any `actions` slot content
