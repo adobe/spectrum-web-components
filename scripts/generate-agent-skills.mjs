@@ -637,12 +637,7 @@ function main() {
   );
 
   console.log(`index.json → ${indexPath}`);
-  console.log(
-    '\nDiscovery endpoint:\n  <site-root>/.well-known/skills/index.json'
-  );
-  console.log('\nTest locally:');
-  console.log('  cd 2nd-gen/packages/swc/public && npx serve . --listen 3000');
-  console.log('  npx skills add http://localhost:3000');
+  console.log('\nInstall:\n  npx skills add spectrum-web-components.adobe.com');
 }
 
 main();
