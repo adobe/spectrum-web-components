@@ -333,11 +333,7 @@ const preview = {
               'Components',
               [
                 'Accordion',
-                [
-                  'Accessibility migration analysis',
-                  'Migration plan',
-                  'Rendering and styling migration analysis',
-                ],
+                ['Accessibility migration analysis', 'Migration plan'],
                 'Action button',
                 [
                   'Accessibility migration analysis',

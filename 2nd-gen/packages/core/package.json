@@ -19,6 +19,10 @@
       "types": "./dist/components/alert-banner/index.d.ts",
       "import": "./dist/components/alert-banner/index.js"
     },
+    "./components/accordion": {
+      "types": "./dist/components/accordion/index.d.ts",
+      "import": "./dist/components/accordion/index.js"
+    },
     "./components/asset": {
       "types": "./dist/components/asset/index.d.ts",
       "import": "./dist/components/asset/index.js"
@@ -42,6 +46,10 @@
     "./components/button": {
       "types": "./dist/components/button/index.d.ts",
       "import": "./dist/components/button/index.js"
+    },
+    "./components/button-group": {
+      "types": "./dist/components/button-group/index.d.ts",
+      "import": "./dist/components/button-group/index.js"
     },
     "./components/divider": {
       "types": "./dist/components/divider/index.d.ts",
@@ -188,6 +196,9 @@
       "components/alert-banner": [
         "dist/components/alert-banner/index.d.ts"
       ],
+      "components/accordion": [
+        "dist/components/accordion/index.d.ts"
+      ],
       "components/asset": [
         "dist/components/asset/index.d.ts"
       ],
@@ -205,6 +216,9 @@
       ],
       "components/button": [
         "dist/components/button/index.d.ts"
+      ],
+      "components/button-group": [
+        "dist/components/button-group/index.d.ts"
       ],
       "components/divider": [
         "dist/components/divider/index.d.ts"
