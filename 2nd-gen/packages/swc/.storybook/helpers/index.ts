@@ -15,7 +15,7 @@ export { iconForSize } from './icon-for-size.js';
 export {
   ArgGrid,
   Container,
-  getRandomId,
+  generateUniqueId,
   Heading,
   isChromatic,
   renderContent,
@@ -40,6 +40,7 @@ export type {
 } from './testing-grid.js';
 export {
   applyTestingGridPseudoStates,
+  applyTestingGridPseudoStatesToRoot,
   applyVrtGridPseudoStates,
   applyVrtLayoutClasses,
   scheduleTestingGridPseudoStates,
@@ -48,4 +49,8 @@ export type {
   TestingGridPseudoStateOptions,
   VrtInteractionState,
 } from './pseudo-states-helpers.js';
-export { augmentTree } from '../pseudo-states.js';
+export {
+  augmentTree,
+  resetAugmentedShadowRoot,
+  resetAugmentedTree,
+} from '../pseudo-states.js';

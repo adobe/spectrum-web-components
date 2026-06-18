@@ -16,9 +16,8 @@
 
 import { nothing, type TemplateResult } from 'lit';
 
-import { capitalize } from '@spectrum-web-components/core/utils/capitalize.js';
-
 import { SIZE_LABELS } from './constants.js';
+import { capitalize } from './internal.js';
 import { Container } from './primitives.js';
 import type {
   ArgGridProps,

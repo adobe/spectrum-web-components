@@ -75,7 +75,15 @@ export function isDarkTheme(context: StoryContext): boolean {
   return theme === 'dark' || theme === 'adaptive';
 }
 
-/** Stable random id for controls that need unique `name` / `id` values across grid cells. */
-export function getRandomId(prefix = 'spectrum'): string {
+/** Capitalizes the first character of a string. */
+export function capitalize(str?: string): string {
+  if (typeof str !== 'string') {
+    return '';
+  }
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+/** Generates a unique id for controls that need distinct `name` / `id` values across grid cells. */
+export function generateUniqueId(prefix = 'spectrum'): string {
   return `${prefix}-${Math.random().toString(36).substring(2, 7)}`;
 }

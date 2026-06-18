@@ -15,6 +15,7 @@
  */
 
 import { html, nothing, type TemplateResult } from 'lit';
+import { isTemplateResult } from 'lit/directive-helpers.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { styleMap } from 'lit/directives/style-map.js';
 import { when } from 'lit/directives/when.js';
@@ -120,8 +121,7 @@ export function renderContent(
         return nothing;
       }
 
-      const isLit =
-        typeof c === 'object' && c !== null && '_$litType$' in (c as object);
+      const isLit = isTemplateResult(c);
 
       if (
         typeof c !== 'string' &&

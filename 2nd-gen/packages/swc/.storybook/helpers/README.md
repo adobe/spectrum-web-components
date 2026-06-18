@@ -62,6 +62,8 @@ To add a testing grid for a component:
 
 Forced interaction states (hover, focus, active) use the global `pseudoStatesDecorator`, which augments each component's `adoptedStyleSheets` with class-based pseudo-state rules (`.is-hover`, `.is-focus-visible`, etc.). `applyTestingGridPseudoStates` (VRT story `play` function) reads the cell wrapper attributes and patches the correct shadow-DOM node after render.
 
+**Pseudo-state augmentation constraint:** each shadow root is augmented at most once per session (`pseudo-states.ts`). Components that replace `adoptedStyleSheets` after attribute changes need `resetAugmentedShadowRoot` or `resetAugmentedTree` before the next `augmentTree` pass picks up new rules.
+
 ### VRT cell wrapper attributes (`<name>.template.ts`)
 
 Each grid cell should wrap the component in a `div.vrt-cell` with these attributes. They are **Storybook/VRT only** — not part of the public component API.
@@ -101,7 +103,7 @@ Unit tests for the testing-grid helpers live in `.storybook/helpers/test/testing
 | --------------- | ----------------------------------------------------------------- |
 | `constants.ts`  | `TESTING_GRID_STORY_NAME`, Chromatic params, borders, size labels |
 | `types.ts`      | Shared TypeScript types                                           |
-| `internal.ts`   | Static-color wrapper, theme helpers, `getRandomId`                |
+| `internal.ts`   | Static-color wrapper, theme helpers, `generateUniqueId`           |
 | `primitives.ts` | `Heading`, `Container`, `renderContent`                           |
 | `builders.ts`   | `States`, `ArgGrid`, `Sizes`, `vrtCase`                           |
 | `variants.ts`   | `Variants` (main VRT entry)                                       |

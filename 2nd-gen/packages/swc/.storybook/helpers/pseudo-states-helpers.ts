@@ -120,7 +120,62 @@ export function applyVrtLayoutClasses(root: ParentNode): void {
   });
 }
 
-function getStoryRoot(root: ParentNode): ParentNode {
+function collectVrtHostElements(root: ParentNode): Element[] {
+  const hosts: Element[] = [];
+
+  root.querySelectorAll('[data-vrt-host]').forEach((wrapper) => {
+    const host = getVrtHost(wrapper);
+    if (host) {
+      hosts.push(host);
+    }
+  });
+
+  return hosts;
+}
+
+type LitElementLike = HTMLElement & { updateComplete: Promise<boolean> };
+
+function isLitElement(element: Element): element is LitElementLike {
+  return 'updateComplete' in element;
+}
+
+async function waitForVrtHostsToUpdate(
+  root: ParentNode,
+  extraHosts: string[] = []
+): Promise<void> {
+  await Promise.all(
+    collectVrtHostTags(root, extraHosts).map((tag) =>
+      customElements.whenDefined(tag)
+    )
+  );
+
+  await Promise.all(
+    collectVrtHostElements(root).map((host) =>
+      isLitElement(host) ? host.updateComplete : Promise.resolve()
+    )
+  );
+}
+
+type AugmentRoot = Document | ShadowRoot | Element;
+
+function applyTestingGridPatches(root: ParentNode): void {
+  augmentTree(asAugmentRoot(root));
+  applyVrtGridPseudoStates(root);
+  applyVrtLayoutClasses(root);
+}
+
+function asAugmentRoot(root: ParentNode): AugmentRoot {
+  if (
+    root instanceof Document ||
+    root instanceof ShadowRoot ||
+    root instanceof Element
+  ) {
+    return root;
+  }
+  return root as AugmentRoot;
+}
+
+function getStoryRoot(root: ParentNode): AugmentRoot {
   if (root instanceof Document) {
     return (
       root.getElementById('storybook-root') ??
@@ -128,32 +183,30 @@ function getStoryRoot(root: ParentNode): ParentNode {
       root.body
     );
   }
-  return root;
+  return asAugmentRoot(root);
 }
 
 /**
- * Re-applies pseudo-state and layout classes after Lit renders and slot detection settle.
+ * Waits for VRT host elements to finish updating, then applies pseudo-state and layout classes.
+ */
+export async function applyTestingGridPseudoStatesToRoot(
+  root: ParentNode = document,
+  { hosts = [] }: TestingGridPseudoStateOptions = {}
+): Promise<void> {
+  const scope = getStoryRoot(root);
+  await waitForVrtHostsToUpdate(scope, hosts);
+  applyTestingGridPatches(scope);
+}
+
+/**
+ * Schedules pseudo-state patching after the current story's VRT hosts settle.
+ * Prefer `applyTestingGridPseudoStatesToRoot` when you can await the result.
  */
 export function scheduleTestingGridPseudoStates(
-  root: ParentNode = document
+  root: ParentNode = document,
+  options: TestingGridPseudoStateOptions = {}
 ): void {
-  const scope = getStoryRoot(root);
-
-  const run = (): void => {
-    augmentTree(scope);
-    applyVrtGridPseudoStates(scope);
-    applyVrtLayoutClasses(scope);
-  };
-
-  run();
-  requestAnimationFrame(() => {
-    run();
-    requestAnimationFrame(run);
-  });
-
-  for (const delay of [0, 50, 150, 500]) {
-    setTimeout(run, delay);
-  }
+  void applyTestingGridPseudoStatesToRoot(root, options);
 }
 
 /**
@@ -162,18 +215,10 @@ export function scheduleTestingGridPseudoStates(
  */
 export async function applyTestingGridPseudoStates(
   canvasElement: HTMLElement,
-  { hosts = [] }: TestingGridPseudoStateOptions = {}
+  options: TestingGridPseudoStateOptions = {}
 ): Promise<void> {
   const root =
     canvasElement.querySelector('[data-testing-preview]') ?? canvasElement;
 
-  await Promise.all(
-    collectVrtHostTags(root, hosts).map((tag) =>
-      customElements.whenDefined(tag)
-    )
-  );
-
-  scheduleTestingGridPseudoStates(root);
-  // Allow the final scheduled pass to run before Chromatic captures.
-  await new Promise((resolve) => setTimeout(resolve, 550));
+  await applyTestingGridPseudoStatesToRoot(root, options);
 }

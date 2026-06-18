@@ -10,6 +10,17 @@
  * governing permissions and limitations under the License.
  */
 
+/**
+ * Storybook-only pseudo-state augmentation for VRT grids.
+ *
+ * Injects class-based mirrors of `:hover`, `:focus-visible`, etc. into open shadow roots
+ * so forced classes (`.is-hover`, `.is-focus-visible`, …) produce the correct visuals.
+ *
+ * **Constraint:** each shadow root is augmented at most once per session. If a component
+ * replaces `adoptedStyleSheets` after an attribute change, call `resetAugmentedShadowRoot`
+ * (or `resetAugmentedTree`) before the next `augmentTree` pass so new styles are picked up.
+ */
+
 const PSEUDO_MAP: [string, string][] = [
   [':hover', '.is-hover'],
   [':focus-visible', '.is-focus-visible'],
@@ -18,8 +29,11 @@ const PSEUDO_MAP: [string, string][] = [
   [':disabled', '.is-disabled'],
 ];
 
-/** Tracks already-augmented shadow roots to prevent double-injection on re-renders. */
+/** Tracks shadow roots that have already received injected pseudo-state sheets. */
 const augmented = new WeakSet<ShadowRoot>();
+
+/** Injected sheets per shadow root — used by `resetAugmentedShadowRoot`. */
+const injectedSheets = new WeakMap<ShadowRoot, CSSStyleSheet[]>();
 
 function getGroupingWrapper(rule: CSSRule): string | null {
   if (rule instanceof CSSMediaRule) {
@@ -99,6 +113,52 @@ function augmentShadowRoot(root: ShadowRoot): void {
   }
   if (extras.length) {
     root.adoptedStyleSheets = [...root.adoptedStyleSheets, ...extras];
+    injectedSheets.set(root, extras);
+  }
+}
+
+/**
+ * Clears augmentation state for one shadow root and removes injected pseudo-state sheets.
+ * Use when a component replaces `adoptedStyleSheets` and needs a fresh `augmentTree` pass.
+ */
+export function resetAugmentedShadowRoot(root: ShadowRoot): void {
+  augmented.delete(root);
+
+  const extras = injectedSheets.get(root);
+  if (extras?.length) {
+    root.adoptedStyleSheets = root.adoptedStyleSheets.filter(
+      (sheet) => !extras.includes(sheet)
+    );
+    injectedSheets.delete(root);
+  }
+}
+
+/**
+ * Resets pseudo-state augmentation for every open shadow root under `root`.
+ */
+export function resetAugmentedTree(
+  root: Document | ShadowRoot | Element
+): void {
+  const searchRoot =
+    root instanceof Document
+      ? root.body
+      : root instanceof ShadowRoot
+        ? root
+        : root;
+
+  if (root instanceof ShadowRoot) {
+    resetAugmentedShadowRoot(root);
+  }
+
+  const walker = document.createTreeWalker(searchRoot, NodeFilter.SHOW_ELEMENT);
+  let node: Node | null = walker.currentNode;
+  while (node) {
+    const el = node as Element;
+    if (el.shadowRoot) {
+      resetAugmentedShadowRoot(el.shadowRoot);
+      resetAugmentedTree(el.shadowRoot);
+    }
+    node = walker.nextNode();
   }
 }
 

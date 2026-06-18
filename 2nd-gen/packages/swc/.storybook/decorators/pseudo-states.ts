@@ -20,7 +20,6 @@ import { scheduleTestingGridPseudoStates } from '../helpers/pseudo-states-helper
  * every render so toggling **Testing preview** re-applies classes after the grid mounts.
  */
 export const pseudoStatesDecorator: DecoratorFunction = (storyFn, context) => {
-  scheduleTestingGridPseudoStates();
   const result = storyFn(context);
   scheduleTestingGridPseudoStates();
   return result;
