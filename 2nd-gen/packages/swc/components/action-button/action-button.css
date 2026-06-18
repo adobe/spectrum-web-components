@@ -273,6 +273,15 @@ slot[name="icon"]::slotted(*) {
 /* ── Forced colors ────────────────────────────────── */
 
 @media (forced-colors: active) {
+  .swc-ActionButton {
+    /* ButtonBorder for the border matches S1 behavior and keeps the border visually
+       distinct from the ButtonText focus ring. Canvas hides the non-focus outline
+       that the browser forces visible when transparent is remapped to a system color. */
+    border-color: ButtonBorder;
+    outline-color: Canvas;
+    transition-property: border-color, color, background-color, transform;
+  }
+
   .swc-ActionButton:focus-visible {
     outline-color: ButtonText;
   }

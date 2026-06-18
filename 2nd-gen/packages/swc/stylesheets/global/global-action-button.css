@@ -212,6 +212,12 @@
 }
 
 @media (forced-colors: active) {
+  .swc-ActionButton {
+    border-color: ButtonBorder;
+    outline-color: Canvas;
+    transition-property: border-color, color, background-color, transform;
+  }
+
   .swc-ActionButton:focus-visible {
     outline-color: ButtonText;
   }
