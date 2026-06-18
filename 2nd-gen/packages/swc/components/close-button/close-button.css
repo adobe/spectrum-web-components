@@ -19,6 +19,75 @@
   box-sizing: border-box;
 }
 
+.swc-CloseButton {
+  --_swc-close-button-border-width: token("border-width-200");
+
+  -webkit-tap-highlight-color: transparent;
+  display: inline-flex;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  inline-size: var(--swc-close-button-size, token("component-height-100"));
+  block-size: var(--swc-close-button-size, token("component-height-100"));
+  padding: 0;
+  margin: 0;
+  color: var(--swc-close-button-icon-color-default, token("neutral-content-color-default"));
+  background-color: var(--swc-close-button-background-color-default, transparent);
+  border-color: transparent;
+  border-style: solid;
+  border-width: var(--_swc-close-button-border-width);
+  border-radius: var(--swc-close-button-border-radius, token("corner-radius-full"));
+  overflow: visible;
+  cursor: pointer;
+  user-select: none;
+  outline-width: var(--swc-close-button-focus-indicator-thickness, token("focus-indicator-thickness"));
+  outline-style: solid;
+  outline-color: transparent;
+  outline-offset: var(--swc-close-button-focus-indicator-gap, token("focus-indicator-gap"));
+  transition-timing-function: token("animation-ease-in-out");
+  transition-duration: token("animation-duration-100");
+  transition-property: outline-color, border-color, color, background-color, transform;
+}
+
+.swc-CloseButton:focus-visible {
+  color: var(--swc-close-button-icon-color-focus, token("neutral-content-color-key-focus"));
+  background-color: var(--swc-close-button-background-color-focus, token("gray-100"));
+  outline-color: var(--swc-close-button-focus-indicator-color, token("focus-indicator-color"));
+}
+
+.swc-CloseButton:hover {
+  color: var(--swc-close-button-icon-color-hover, token("neutral-content-color-hover"));
+  background-color: var(--swc-close-button-background-color-hover, token("gray-100"));
+}
+
+.swc-CloseButton:active {
+  color: var(--swc-close-button-icon-color-down, token("neutral-content-color-down"));
+  background-color: var(--swc-close-button-background-color-down, token("gray-100"));
+  transform: perspective(var(--swc-close-button-size, token("component-height-100"))) translate3d(0, 0, token("component-size-difference-down"));
+  will-change: transform;
+}
+
+.swc-CloseButton:disabled:is(*, :hover) {
+  color: var(--swc-close-button-icon-color-disabled, token("disabled-content-color"));
+  background-color: var(--swc-close-button-background-color-default, transparent);
+  cursor: default;
+  transform: none;
+}
+
+.swc-CloseButton-icon {
+  display: block;
+  flex-shrink: 0;
+  inline-size: var(--swc-close-button-icon-size, token("cross-icon-size-300"));
+  block-size: var(--swc-close-button-icon-size, token("cross-icon-size-300"));
+}
+
+.swc-CloseButton-icon svg {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+  fill: currentcolor;
+}
+
 :host([size="s"]) {
   --swc-close-button-icon-size: token("cross-icon-size-200");
   --swc-close-button-size: token("component-height-75");
@@ -58,77 +127,4 @@
   --swc-close-button-icon-color-down: token("transparent-black-900");
   --swc-close-button-icon-color-focus: token("transparent-black-900");
   --swc-close-button-icon-color-hover: token("transparent-black-900");
-}
-
-.swc-CloseButton {
-  --_swc-close-button-border-width: token("border-width-200");
-
-  -webkit-tap-highlight-color: transparent;
-  display: inline-flex;
-  position: relative;
-  align-items: center;
-  justify-content: center;
-  inline-size: var(--swc-close-button-size, token("component-height-100"));
-  block-size: var(--swc-close-button-size, token("component-height-100"));
-  padding: 0;
-  margin: 0;
-  color: var(--swc-close-button-icon-color-default, token("neutral-content-color-default"));
-  background-color: var(--swc-close-button-background-color-default, transparent);
-  border-color: transparent;
-  border-style: solid;
-  border-width: var(--_swc-close-button-border-width);
-  border-radius: var(--swc-close-button-border-radius, token("corner-radius-full"));
-  overflow: visible;
-  cursor: pointer;
-  user-select: none;
-  transition-timing-function: token("animation-ease-in-out");
-  transition-duration: token("animation-duration-100");
-  transition-property: outline, border-color, color, background-color, transform;
-}
-
-.swc-CloseButton:focus {
-  outline: transparent;
-}
-
-.swc-CloseButton:disabled {
-  color: var(--swc-close-button-icon-color-disabled, token("disabled-content-color"));
-  background-color: var(--swc-close-button-background-color-default, transparent);
-  cursor: default;
-  transform: none;
-}
-
-.swc-CloseButton:focus-visible {
-  color: var(--swc-close-button-icon-color-focus, token("neutral-content-color-key-focus"));
-  background-color: var(--swc-close-button-background-color-focus, token("gray-100"));
-  outline: var(--swc-close-button-focus-indicator-thickness, token("focus-indicator-thickness")) solid var(--swc-close-button-focus-indicator-color, token("focus-indicator-color"));
-  outline-offset: var(--swc-close-button-focus-indicator-gap, token("focus-indicator-gap"));
-}
-
-.swc-CloseButton:hover:not(:disabled) {
-  color: var(--swc-close-button-icon-color-hover, token("neutral-content-color-hover"));
-  background-color: var(--swc-close-button-background-color-hover, token("gray-100"));
-}
-
-.swc-CloseButton:active:not(:disabled) {
-  color: var(--swc-close-button-icon-color-down, token("neutral-content-color-down"));
-  background-color: var(--swc-close-button-background-color-down, token("gray-100"));
-  transform: perspective(var(--swc-close-button-size, token("component-height-100"))) translate3d(0, 0, token("component-size-difference-down"));
-  will-change: transform;
-}
-
-.swc-CloseButton-icon {
-  display: block;
-  flex-shrink: 0;
-  inline-size: var(--swc-close-button-icon-size, token("cross-icon-size-300"));
-  block-size: var(--swc-close-button-icon-size, token("cross-icon-size-300"));
-}
-
-.swc-CloseButton-icon svg {
-  display: block;
-  inline-size: 100%;
-  block-size: 100%;
-}
-
-.swc-CloseButton-icon svg path {
-  fill: currentcolor;
 }

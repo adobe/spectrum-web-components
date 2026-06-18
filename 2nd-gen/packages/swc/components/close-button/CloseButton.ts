@@ -42,7 +42,7 @@ const crossIconBySize: Record<ButtonSize, () => TemplateResult> = {
  * decorative (`aria-hidden="true"`).
  *
  * @element swc-close-button
- * @since 0.0.1
+ * @since 2.0.0
  *
  * @example
  * ```html
