@@ -298,94 +298,94 @@ Planned rendering shape:
 - [x] Dependencies identified
 - [x] Breaking changes documented
 - [x] 2nd-gen API decisions drafted
-- [ ] Plan reviewed by at least one other engineer
+- [x] Plan reviewed by at least one other engineer
 
 ### Setup
 
-- [ ] Create `2nd-gen/packages/core/components/button-group/`
-- [ ] Create `2nd-gen/packages/swc/components/button-group/`
-- [ ] Wire exports in both `package.json` files
-- [ ] Check out `spectrum-css` at `spectrum-two` branch as sibling directory
+- [x] Create `2nd-gen/packages/core/components/button-group/`
+- [x] Create `2nd-gen/packages/swc/components/button-group/`
+- [x] Wire exports in both `package.json` files
+- [x] Check out `spectrum-css` at `spectrum-two` branch as sibling directory
 
 ### API
 
 #### Naming and public surface
 
-- [ ] `ButtonGroup.types.ts`: define `ButtonGroupOrientation`, `ButtonGroupSize`, public property interfaces
-- [ ] `ButtonGroup.base.ts`: `orientation`, `size`, `disabled` properties with validation; size/disabled propagation to slotted children; `role="group"` management
+- [x] `ButtonGroup.types.ts`: define `ButtonGroupOrientation`, `ButtonGroupSize`, public property interfaces
+- [x] `ButtonGroup.base.ts`: `orientation`, `size`, `disabled` properties with validation; size/disabled propagation to slotted children; `role="group"` management
 
 #### Alignment checks
 
 - [x] ~~Confirm XL size decision (Q1)~~ — **Resolved:** XL is supported. Same 12px gap token as M/L.
-- [ ] Confirm overflow behavior scope (Q2) before finalizing behavioral API
+- [x] Confirm overflow behavior scope (Q2) before finalizing behavioral API — **Deferred from MVP; flex wrapping is default**
 
 ### Styling
 
 > Follow the [CSS style guide](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/) as the source of truth for all styling work. Key references: [migration steps](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/04_spectrum-swc-migration.md), [custom properties](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md), [anti-patterns](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/05_anti-patterns.md).
 
-- [ ] Add `.swc-ButtonGroup` to the internal semantic element in `render()`; keep styling off `:host`
-- [ ] Copy S2 source from `spectrum-css` `spectrum-two` branch `components/buttongroup/index.css` (not `/dist`) into `button-group.css` as baseline
-- [ ] Map `--spectrum-buttongroup-*` tokens to `:host` and orientation/size selectors
+- [x] Add `.swc-ButtonGroup` to the internal semantic element in `render()`; keep styling off `:host`
+- [x] Copy S2 source from `spectrum-css` `spectrum-two` branch `components/buttongroup/index.css` (not `/dist`) into `button-group.css` as baseline
+- [x] Map `--spectrum-buttongroup-*` tokens to `:host` and orientation/size selectors
 
 #### Visual model and regressions
 
-- [ ] Verify size S spacing token (`--spectrum-spacing-200`) vs default (`--spectrum-spacing-300`)
-- [ ] Add `@cssprop` JSDoc tag for any exposed `--swc-*` properties
-- [ ] Pass stylelint (property order, `no-descending-specificity`, token validation)
+- [x] Verify size S spacing token (`--spectrum-spacing-200`) vs default (`--spectrum-spacing-300`)
+- [x] Add `@cssprop` JSDoc tag for any exposed `--swc-*` properties
+- [x] Pass stylelint (property order, `no-descending-specificity`, token validation)
 
 ### Accessibility
 
 #### Naming and semantics
 
-- [ ] Host exposes `role="group"` (ElementInternals or explicit attribute)
-- [ ] No `aria-orientation` on host (only valid for roles managing arrow-key navigation)
-- [ ] `aria-label` / `aria-labelledby` passthrough supported
-- [ ] No `role="radiogroup"` or `role="toolbar"` on host
-- [ ] No `FocusgroupNavigationController` on button-group
+- [x] Host exposes `role="group"` (ElementInternals or explicit attribute)
+- [x] No `aria-orientation` on host (only valid for roles managing arrow-key navigation)
+- [x] `aria-label` / `aria-labelledby` passthrough supported
+- [x] No `role="radiogroup"` or `role="toolbar"` on host
+- [x] No `FocusgroupNavigationController` on button-group
 
 #### State verification
 
-- [ ] `disabled` propagation sets `disabled` on each slotted `swc-button`
-- [ ] Removing `disabled` from group re-enables children
-- [ ] Screen reader announces "group" landmark with name when provided
+- [x] `disabled` propagation sets `disabled` on each slotted `swc-button`
+- [x] Removing `disabled` from group re-enables children
+- [x] Screen reader announces "group" landmark with name when provided
 
 ### Testing
 
-- [ ] Port `1st-gen/packages/button-group/test/button-group.test.ts` coverage that still applies
-- [ ] Add Playwright `button-group.a11y.spec.ts` with `toMatchAriaSnapshot`
+- [x] Port `1st-gen/packages/button-group/test/button-group.test.ts` coverage that still applies
+- [x] Add Playwright `button-group.a11y.spec.ts` with `toMatchAriaSnapshot`
 
 #### Behavior
 
-- [ ] Size propagation: changing `size` on group updates all slotted buttons
-- [ ] Disabled propagation: setting `disabled` on group disables all children
-- [ ] Orientation: switching orientation changes flex-direction
-- [ ] Slotchange: newly slotted buttons receive current size and disabled state
-- [ ] Default size: group defaults to `size="m"` when no attribute set
+- [x] Size propagation: changing `size` on group updates all slotted buttons
+- [x] Disabled propagation: setting `disabled` on group disables all children
+- [x] Orientation: switching orientation changes flex-direction
+- [x] Slotchange: newly slotted buttons receive current size and disabled state
+- [x] Default size: group defaults to `size="m"` when no attribute set
 
 #### Visual regression
 
-- [ ] Add VRT coverage for horizontal and vertical orientations
-- [ ] Add VRT coverage for all size variants (S, M, L, XL)
-- [ ] Add VRT coverage for disabled group state
+- [x] Add VRT coverage for horizontal and vertical orientations
+- [x] Add VRT coverage for all size variants (S, M, L, XL)
+- [x] Add VRT coverage for disabled group state
 
 ### Documentation
 
 #### General
 
-- [ ] JSDoc on all public props, slots, and CSS custom properties
-- [ ] Storybook stories for: default, vertical, each size, disabled, alignment (if shipped)
-- [ ] Consumer migration guide documenting `vertical` → `orientation` change
+- [x] JSDoc on all public props, slots, and CSS custom properties
+- [x] Storybook stories for: default, vertical, each size, disabled, alignment (if shipped)
+- [x] Consumer migration guide documenting `vertical` → `orientation` change
 
 #### Breaking changes
 
-- [ ] Document `vertical` → `orientation="vertical"` migration path
-- [ ] Document default size change (1st-gen: none → 2nd-gen: `m`)
+- [x] Document `vertical` → `orientation="vertical"` migration path
+- [x] Document default size change (1st-gen: none → 2nd-gen: `m`)
 
 ### Review
 
-- [ ] `yarn lint:2nd-gen` passes (ESLint, Stylelint, Prettier)
-- [ ] Status table in workstream doc updated
-- [ ] PR created with description referencing Epic SWC-2071
+- [x] `yarn lint:2nd-gen` passes (ESLint, Stylelint, Prettier)
+- [x] Status table in workstream doc updated
+- [x] PR created with description referencing Epic SWC-2071
 - [ ] Peer engineer sign-off
 
 ---

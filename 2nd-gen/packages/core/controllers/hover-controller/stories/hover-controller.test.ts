@@ -278,6 +278,58 @@ export const CooldownCancelledByReenter: Story = {
 };
 
 // ──────────────────────────────────────────────────────────────────────────
+//     Disconnect does not cancel another instance's shared cooldown
+// ──────────────────────────────────────────────────────────────────────────
+
+export const DisconnectDoesNotCancelSharedCooldown: Story = {
+  ...WarmUpAndCooldown,
+  play: async ({ canvasElement, step }) => {
+    const triggerA = getTrigger(canvasElement, 'warm-trigger-a');
+    const hostA = getHost(canvasElement, 'warm-trigger-a');
+    const hostB = getHost(canvasElement, 'warm-trigger-b');
+
+    await step('warm up by hovering trigger A until it opens', async () => {
+      pointerEnter(triggerA);
+      await wait(350);
+      expect(hostA.matches(':popover-open')).toBe(true);
+    });
+
+    await step(
+      'leave trigger A to start the shared cooldown timer',
+      async () => {
+        pointerLeave(triggerA);
+      }
+    );
+
+    await step(
+      'disconnect host B before cooldown fires — must not cancel the shared timer',
+      async () => {
+        // Remove B well within the 300 ms cooldown window.
+        hostB.remove();
+        await wait(50);
+      }
+    );
+
+    await step(
+      'after cooldown elapses, warm state has reset — next hover re-warms',
+      async () => {
+        // Wait well past the 300 ms cooldown. If the bug were present, the timer
+        // would have been cancelled and isWarm would remain true, causing trigger A
+        // to open immediately on the next pointerenter.
+        await wait(350);
+        pointerEnter(triggerA);
+        expect(hostA.matches(':popover-open')).toBe(false);
+        await wait(350);
+        expect(hostA.matches(':popover-open')).toBe(true);
+      }
+    );
+
+    pointerLeave(triggerA);
+    await wait(350);
+  },
+};
+
+// ──────────────────────────────────────────────────────────────────────────
 //     Focus opens immediately regardless of warm state
 // ──────────────────────────────────────────────────────────────────────────
 
