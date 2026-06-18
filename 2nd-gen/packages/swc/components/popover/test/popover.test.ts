@@ -797,10 +797,10 @@ export const ValidPlacementNoWarningTest: Story = {
 };
 
 // ──────────────────────────────────────────────────────────────
-// TEST: Content click inside a focus region (SWC-1336 regression)
+// TEST: Content click inside a focus region (regression)
 // ──────────────────────────────────────────────────────────────
 
-// Gen1 bug (#5731 / SWC-1336): an auto overlay placed inside a focus region
+// Gen1 bug (#5731): an auto overlay placed inside a focus region
 // (an ancestor with `tabindex="0"`) was dismissed when the user clicked into its
 // own content, because the overlay's focus-out dismissal treated content focus as
 // leaving the region. The Gen2 popover relies on the browser's native
