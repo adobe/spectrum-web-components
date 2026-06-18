@@ -3,13 +3,13 @@ import { DocsFooter, DocsHeader } from '../../.storybook/blocks';
 
 import * as LinkStories from './stories/link.stories';
 
-<DocsHeader />
+<Meta of={LinkStories} />
 
 Link presentation uses **native `<a href>` elements** with BEM classes from `@adobe/spectrum-wc/link.css`. Default anchor appearance inside prose and link lists ships with `@adobe/spectrum-wc/typography.css`; see [Typography](/docs/components-typography--docs) for [Prose container](/docs/components-typography--docs#prose-container) and [Link list](/docs/components-typography--docs#link-list) patterns.
 
 For bare, classless `<a href>` elements outside typography wrappers, import `@adobe/spectrum-wc/global-link.css` to opt in to application-wide baseline link styling.
 
-<Meta of={LinkStories} />
+<DocsHeader />
 
 ## Options
 
