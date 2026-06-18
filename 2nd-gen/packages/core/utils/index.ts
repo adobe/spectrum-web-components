@@ -10,11 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
-export {
-  physicalSide,
-  reflectActualPlacement,
-  resolveDirection,
-} from './actual-placement.js';
+export { physicalSide } from './actual-placement.js';
 export { capitalize } from './capitalize.js';
 export {
   isTopDismissible,

@@ -21,7 +21,6 @@ import { SpectrumElement } from '@spectrum-web-components/core/element/index.js'
 import {
   isTopDismissible,
   physicalSide,
-  reflectActualPlacement,
   registerDismissible,
   resolveTrigger,
   runAfterTransition,
@@ -464,18 +463,14 @@ export abstract class PopoverBase extends SpectrumElement {
       return;
     }
     const showArrow = !this.hideArrow;
-    // Re-gate the fade for this positioning session. `_placementController.start`
-    // calls `stop()`, which clears the surface's inline `translate` back to the 0,0
-    // origin until the (async) first compute re-anchors it. A rapid reopen during
-    // the close fade still carries a stale `positioned` (its removal is deferred to
-    // the post-close transition, which the reopen cancels), so without this the
-    // surface would briefly paint at 0,0 and jump. Cleared here and re-set by
-    // onPlacementChange once the new session anchors.
-    this.removeAttribute('positioned');
-    // Reflect the requested side synchronously so the tip is oriented before the
-    // controller's first (async) compute; the controller then overwrites it with
-    // the flip-resolved side via onPlacementChange.
-    this._reflectDeclaredPlacement();
+    // Re-gate the surface and tip for this positioning session by clearing
+    // `actual-placement`. `_placementController.start` calls `stop()`, which clears
+    // the surface's inline `translate` back to the 0,0 origin until the (async)
+    // first compute re-anchors it; the stylesheet only reveals the surface and the
+    // tip once `actual-placement` is present, so they stay hidden through that
+    // window (including a rapid reopen during the close fade) instead of painting
+    // at 0,0. Re-set by onPlacementChange once the new session anchors.
+    this.removeAttribute('actual-placement');
     // The arrow's height is added to the trigger gap so the surface clears the
     // tip on every side. It is applied through the controller's main-axis offset
     // (which is direction-aware) rather than a CSS margin, since a margin only
@@ -490,26 +485,16 @@ export abstract class PopoverBase extends SpectrumElement {
       tipElement: showArrow ? (this.tipElement ?? undefined) : undefined,
       tipPadding: this.tipPadding,
       onPlacementChange: (next) => {
-        // Expose the computed physical side as the `actual-placement` host
-        // attribute for CSS, not as a public property.
+        // The first compute of a session anchors the surface (the controller
+        // resets its last-notified placement on `stop()`, so this always fires
+        // once positioning lands). Expose the computed physical side as the
+        // `actual-placement` host attribute for CSS: it orients the tip and, by
+        // its presence, reveals the surface and tip (gated off until now so the
+        // entry fade runs from the anchored position, not the 0,0 origin). Not a
+        // public property; removed in `_stopPositioningWhenClosed`.
         this.setAttribute('actual-placement', physicalSide(next));
-        // The first compute of a session is the moment the surface is anchored
-        // (the controller resets its last-notified placement on `stop()`, so this
-        // always fires once positioning lands). Mark the host `positioned` so the
-        // stylesheet can run the entry fade now instead of at the un-anchored 0,0
-        // origin. Removed in `_stopPositioningWhenClosed`.
-        this.setAttribute('positioned', '');
       },
     });
-  }
-
-  // Reflect the requested placement's physical side onto the host before the
-  // controller's first (async) compute, honoring the anchor's writing direction
-  // for logical `start` / `end`.
-  private _reflectDeclaredPlacement(): void {
-    const directionSource =
-      this._anchor instanceof HTMLElement ? this._anchor : this;
-    reflectActualPlacement(this, this.placement, directionSource);
   }
 
   // ──────────────────
@@ -595,7 +580,6 @@ export abstract class PopoverBase extends SpectrumElement {
     }
     this._placementController.stop();
     this.removeAttribute('actual-placement');
-    this.removeAttribute('positioned');
   }
 
   /** Set `open` without re-triggering the show/hide effect. */

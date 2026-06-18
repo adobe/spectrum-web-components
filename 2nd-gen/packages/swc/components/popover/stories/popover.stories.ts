@@ -42,22 +42,14 @@ argTypes.size = {
   table: { category: 'attributes' },
 };
 
-// `actual-placement` is internal CSS-only state that `Popover` manages directly
-// via setAttribute (the declared side before opening, then the flip-resolved side
-// from PlacementController). The Storybook helper otherwise observes the attribute
-// change, writes it back into `args`, and re-applies it through its `spread`
-// directive on the next render, clobbering the resolved side with a stale value.
-// Declaring it here (control disabled) makes the helper exclude it from the spread.
+// `actual-placement` is internal CSS-only state that `Popover` sets via
+// setAttribute once the PlacementController anchors the surface (the flip-resolved
+// physical side); the stylesheet keys tip orientation and the entry fade on it. The
+// Storybook helper otherwise observes the attribute change, writes it back into
+// `args`, and re-applies it through its `spread` directive on the next render,
+// clobbering the resolved side with a stale value. Declaring it here (control
+// disabled) makes the helper exclude it from the spread.
 argTypes['actual-placement'] = {
-  table: { disable: true },
-  control: false,
-};
-
-// `positioned` is internal state `Popover` sets via setAttribute once the
-// PlacementController anchors the surface; the stylesheet gates the entry fade on
-// it. Like `actual-placement`, exclude it from the helper's attribute round-trip so
-// a stale value is not re-applied through the `spread` directive.
-argTypes['positioned'] = {
   table: { disable: true },
   control: false,
 };

@@ -411,14 +411,16 @@ export const ActualPlacementTest: Story = {
 
     await step('reflects the requested physical side while open', async () => {
       popover.open = true;
-      await popover.updateComplete;
+      // The attribute is set by the controller's first (async) compute, so poll.
       // placement="bottom" fits below the trigger (no flip), so the reflected
       // physical side is exactly the requested one; a wrong-side resolution
       // would surface here rather than passing as "some physical side".
-      expect(
-        popover.getAttribute('actual-placement'),
-        'actual-placement matches the requested side'
-      ).toBe('bottom');
+      await waitFor(() =>
+        expect(
+          popover.getAttribute('actual-placement'),
+          'actual-placement matches the requested side'
+        ).toBe('bottom')
+      );
     });
 
     await step('removes the attribute after the close transition', async () => {
@@ -449,46 +451,45 @@ export const PositionedFadeGateTest: Story = {
       '.swc-Popover'
     ) as HTMLElement;
 
-    await step('unpositioned right after opening: hidden, no translate', () => {
+    await step('unanchored right after opening: hidden, no translate', () => {
       popover.open = true;
       // Positioning is async (the controller awaits `document.fonts.ready`), so
       // immediately after opening the surface has no translate and the fade is
-      // gated off: it must not paint at the reset 0,0 origin.
-      expect(popover.hasAttribute('positioned')).toBe(false);
+      // gated off (no `actual-placement` yet): it must not paint at the 0,0 origin.
+      expect(popover.hasAttribute('actual-placement')).toBe(false);
       expect(surface.style.translate).toBe('');
       expect(getComputedStyle(surface).opacity).toBe('0');
     });
 
-    await step('becomes positioned once the surface is anchored', async () => {
+    await step('reveals once the surface is anchored', async () => {
       await waitFor(() =>
-        expect(popover.hasAttribute('positioned')).toBe(true)
+        expect(popover.hasAttribute('actual-placement')).toBe(true)
       );
-      // The anchored translate is applied in the same compute that marks it
-      // positioned, so the fade only runs from the correct location.
+      // The anchored translate is applied in the same compute that sets
+      // `actual-placement`, so the fade only runs from the correct location.
       expect(surface.style.translate).not.toBe('');
     });
 
     await step('re-gates on a rapid reopen during the close fade', async () => {
-      // Close, then reopen before the close transition finishes. The deferred
-      // teardown that clears `positioned` is cancelled by the reopen, and
-      // restarting positioning clears the surface translate, so the fade must be
-      // re-gated; otherwise the surface would briefly paint at 0,0 and jump.
+      // Close, then reopen before the close transition finishes. Restarting
+      // positioning clears `actual-placement` (and the surface translate), so the
+      // fade is re-gated; otherwise the surface would briefly paint at 0,0 and jump.
       popover.open = false;
       await popover.updateComplete;
       popover.open = true;
       await popover.updateComplete;
-      expect(popover.hasAttribute('positioned')).toBe(false);
+      expect(popover.hasAttribute('actual-placement')).toBe(false);
       expect(getComputedStyle(surface).opacity).toBe('0');
-      // Re-anchors and re-marks positioned once the new session computes.
+      // Re-anchors once the new session computes.
       await waitFor(() =>
-        expect(popover.hasAttribute('positioned')).toBe(true)
+        expect(popover.hasAttribute('actual-placement')).toBe(true)
       );
     });
 
-    await step('drops positioned after the close transition', async () => {
+    await step('drops actual-placement after the close transition', async () => {
       popover.open = false;
       await waitFor(() =>
-        expect(popover.hasAttribute('positioned')).toBe(false)
+        expect(popover.hasAttribute('actual-placement')).toBe(false)
       );
     });
   },

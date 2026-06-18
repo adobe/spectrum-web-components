@@ -83,18 +83,16 @@
   inline-size: 576px;
 }
 
-/* Shown state: open AND positioned. The PlacementController anchors the surface
- * asynchronously (it awaits `document.fonts.ready` before the first compute), so
- * the fade is gated on the `positioned` host attribute the component sets once the
- * first placement lands. Without this gate the surface fades in at its reset 0,0
- * origin and then jumps to the trigger mid-transition. `:popover-open` is for the
- * default `<div>`, `[open]` for the modal `<dialog>`. Because `positioned` is added
- * after the element is already rendered, the entry is an ordinary attribute-driven
- * transition and needs no `@starting-style`. Ordered after the lower-specificity
- * `.swc-Popover` rules above to satisfy `no-descending-specificity`; it sets only
- * `opacity`, so the cascade is unaffected. */
-:host([positioned]) .swc-Popover:popover-open,
-:host([positioned]) .swc-Popover[open] {
+/* Shown state: open and anchored. Positioning is async (the controller awaits
+ * `document.fonts.ready`), so the fade is gated on `actual-placement`, which the
+ * component sets only once the first placement lands; otherwise the surface would
+ * fade in at its reset 0,0 origin and jump to the trigger mid-transition. The
+ * attribute is added after the element is rendered, so the entry is an ordinary
+ * attribute-driven transition (no `@starting-style`). `:popover-open` is for the
+ * default `<div>`, `[open]` for the modal `<dialog>`. Ordered after the
+ * lower-specificity `.swc-Popover` rules above for `no-descending-specificity`. */
+:host([actual-placement]) .swc-Popover:popover-open,
+:host([actual-placement]) .swc-Popover[open] {
   opacity: 1;
 }
 
@@ -131,12 +129,10 @@
   /* tip width ÷ √2 */
   --_swc-popover-tip-size: calc(token("popover-tip-width") / 1.4142);
 
-  /* Hidden until `actual-placement` orients it onto an edge below. Without a
-   * side, the tip has no edge inset or border removal and would render as a
-   * detached full diamond at the surface's block-end. That state is reachable
-   * while the surface is still visible: positioning (and `actual-placement`) is
-   * torn down on close, but the surface keeps painting through its fade-out, and
-   * a rapid toggle can cancel the transition so teardown lands mid-fade. */
+  /* Hidden until `actual-placement` orients it onto an edge below: without a
+   * side it has no edge inset or border removal and would render as a detached
+   * diamond at the surface's block-end (visible during the close fade-out, after
+   * positioning is torn down but before the surface finishes fading). */
   visibility: hidden;
   position: absolute;
   inline-size: var(--_swc-popover-tip-size);
