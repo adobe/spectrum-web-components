@@ -16,7 +16,7 @@ import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
 import '../index.js';
 
-import { AGENTIC_VIDEO_FLOW_STEPS } from '../../agentic-video-flow-script.js';
+import { AGENTIC_DEMO_FLOW_STEPS } from '../../agentic-demo-flow-script.js';
 
 // ────────────────
 //    METADATA
@@ -231,7 +231,7 @@ export const AgenticAccessibility: Story = {
       initiating-label="Processing request"
       reasoning-label="Execution steps"
     >
-      ${AGENTIC_VIDEO_FLOW_STEPS.map((step, index) => {
+      ${AGENTIC_DEMO_FLOW_STEPS.map((step, index) => {
         const status =
           index < 2 ? 'complete' : index === 2 ? 'active' : 'pending';
         return html`

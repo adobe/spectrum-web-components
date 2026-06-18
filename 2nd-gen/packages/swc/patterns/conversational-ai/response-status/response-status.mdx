@@ -53,4 +53,10 @@ The `<swc-response-status>` element implements the following accessibility featu
 
 <Canvas of={ResponseStatusStories.Accessibility} />
 
+#### Agentic processing
+
+In agentic mode (`phase` set and/or `swc-response-status-step` children), a visually hidden live region announces **Response processing** at generation start and **Response complete** when finished — not intermediate rolling titles. The disclosure button exposes a stable processing label while titles roll visually. The step timeline uses `role="list"` / `listitem`.
+
+<Canvas of={ResponseStatusStories.AgenticAccessibility} />
+
 <DocsFooter />

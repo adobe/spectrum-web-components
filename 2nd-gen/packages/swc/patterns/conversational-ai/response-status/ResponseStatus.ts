@@ -139,9 +139,32 @@ export class ResponseStatus extends SpectrumElement {
   @property({ type: String, attribute: 'stopped-label', reflect: true })
   public stoppedLabel = 'You stopped the response';
 
+  /**
+   * Screen reader announcement when generation starts (initiating / processing).
+   * Rolling header titles are not announced — only this message via `aria-live`.
+   */
+  @property({ type: String, attribute: 'processing-announcement' })
+  public processingAnnouncementLabel = 'Response processing';
+
+  /**
+   * Screen reader announcement when generation completes (`phase="complete"` or legacy
+   * `loading` becomes false after a load).
+   */
+  @property({ type: String, attribute: 'complete-announcement' })
+  public completeAnnouncementLabel = 'Response complete';
+
   /** `true`: step timeline or reasoning expanded. */
   @property({ type: Boolean, reflect: true })
   public open = false;
+
+  @state()
+  private _liveAnnouncement = '';
+
+  private _lifecycleKey:
+    | ResponseStatusPhase
+    | 'legacy-loading'
+    | 'legacy-idle'
+    | '' = '';
 
   public static override get styles(): CSSResultArray {
     return [styles];
@@ -369,7 +392,7 @@ export class ResponseStatus extends SpectrumElement {
     }
   }
 
-  protected override updated(): void {
+  protected override updated(_changed: PropertyValues): void {
     if (this._rollFrom && !this._rolling && !this._prefersReducedMotion) {
       requestAnimationFrame(() => {
         requestAnimationFrame(() => {
@@ -379,16 +402,103 @@ export class ResponseStatus extends SpectrumElement {
         });
       });
     }
+
+    this._syncGenerationAnnouncements();
   }
 
   public override disconnectedCallback(): void {
     this._clearRollTimeout();
     this._clearInitiatingDwell();
+    this._lifecycleKey = '';
     this.removeEventListener(
       'swc-response-status-step-change',
       this._handleStepChildChange
     );
     super.disconnectedCallback();
+  }
+
+  private _getLifecycleKey():
+    | ResponseStatusPhase
+    | 'legacy-loading'
+    | 'legacy-idle' {
+    if (this._isAgentic) {
+      return this._effectivePhase;
+    }
+    return this.loading ? 'legacy-loading' : 'legacy-idle';
+  }
+
+  private _isActiveGenerationKey(
+    key: ResponseStatusPhase | 'legacy-loading' | 'legacy-idle' | ''
+  ): boolean {
+    return (
+      key === 'initiating' ||
+      key === 'processing' ||
+      key === 'stopped' ||
+      key === 'legacy-loading'
+    );
+  }
+
+  private _syncGenerationAnnouncements(): void {
+    const key = this._getLifecycleKey();
+    const prev = this._lifecycleKey;
+
+    if (
+      this._isActiveGenerationKey(key) &&
+      !this._isActiveGenerationKey(prev)
+    ) {
+      this._queueLiveAnnouncement(this.processingAnnouncementLabel);
+    } else if (
+      (key === 'complete' && this._isActiveGenerationKey(prev)) ||
+      (key === 'legacy-idle' && prev === 'legacy-loading')
+    ) {
+      this._queueLiveAnnouncement(this.completeAnnouncementLabel);
+    }
+
+    this._lifecycleKey = key;
+  }
+
+  private _queueLiveAnnouncement(message: string): void {
+    this._liveAnnouncement = '';
+    requestAnimationFrame(() => {
+      this._liveAnnouncement = message;
+    });
+  }
+
+  private _getAgenticHeaderAriaLabel(phase: ResponseStatusPhase): string {
+    if (phase === 'complete') {
+      return this._getVisibleAgenticLabel();
+    }
+    if (phase === 'stopped') {
+      return this.stoppedLabel;
+    }
+    return this.processingAnnouncementLabel;
+  }
+
+  private _renderLiveAnnouncer(): TemplateResult {
+    return html`
+      <div
+        class="swc-ResponseStatus-liveAnnouncer"
+        aria-live="polite"
+        aria-atomic="true"
+      >
+        ${this._liveAnnouncement}
+      </div>
+    `;
+  }
+
+  private _renderAgenticLabelText(
+    text: string,
+    hideFromAccessibility = false
+  ): TemplateResult {
+    if (hideFromAccessibility) {
+      return html`
+        <span class="swc-ResponseStatus-label" aria-hidden="true">${text}</span>
+      `;
+    }
+
+    return html`
+      <span class="swc-ResponseStatus-label">${text}</span>
+    `;
   }
 
   private _handleHeaderLabelTransitionEnd(event: TransitionEvent): void {
@@ -414,12 +524,6 @@ export class ResponseStatus extends SpectrumElement {
     return this._getAgenticHeaderLabel();
   }
 
-  private _renderAgenticLabelText(text: string): TemplateResult {
-    return html`
-      <span class="swc-ResponseStatus-label">${text}</span>
-    `;
-  }
-
   /**
    * Label and disclosure chevron share one animated trail so title transitions
    * fade/slide them together instead of moving the label alone.
@@ -428,11 +532,14 @@ export class ResponseStatus extends SpectrumElement {
     expanded: boolean,
     showDisclosure: boolean
   ): TemplateResult {
+    const phase = this._effectivePhase;
     const label = this._getVisibleAgenticLabel();
     const chevron = showDisclosure ? this._renderChevron(expanded) : null;
+    const hideVisualLabel =
+      phase === 'initiating' || phase === 'processing' || phase === 'stopped';
 
     if (
-      this._effectivePhase === 'processing' &&
+      phase === 'processing' &&
       this._rollFrom &&
       !this._prefersReducedMotion
     ) {
@@ -446,10 +553,12 @@ export class ResponseStatus extends SpectrumElement {
             @transitionend=${this._handleHeaderLabelTransitionEnd}
           >
             <span class="swc-ResponseStatus-headerTrailLine">
-              ${this._renderAgenticLabelText(this._rollFrom)} ${chevron}
+              ${this._renderAgenticLabelText(this._rollFrom, hideVisualLabel)}
+              ${chevron}
             </span>
             <span class="swc-ResponseStatus-headerTrailLine">
-              ${this._renderAgenticLabelText(incoming)} ${chevron}
+              ${this._renderAgenticLabelText(incoming, hideVisualLabel)}
+              ${chevron}
             </span>
           </span>
         </span>
@@ -459,12 +568,12 @@ export class ResponseStatus extends SpectrumElement {
     if (showDisclosure) {
       return html`
         <span class="swc-ResponseStatus-headerTrail">
-          ${this._renderAgenticLabelText(label)} ${chevron}
+          ${this._renderAgenticLabelText(label, hideVisualLabel)} ${chevron}
         </span>
       `;
     }
 
-    return this._renderAgenticLabelText(label);
+    return this._renderAgenticLabelText(label, hideVisualLabel);
   }
 
   private get _isAgentic(): boolean {
@@ -658,14 +767,12 @@ export class ResponseStatus extends SpectrumElement {
     `;
   }
 
-  private _renderAgenticHeader(
-    label: string,
-    showDisclosure: boolean
-  ): TemplateResult {
+  private _renderAgenticHeader(showDisclosure: boolean): TemplateResult {
     const phase = this._effectivePhase;
     const expanded = this.open;
     const isComplete = phase === 'complete';
     const isStopped = phase === 'stopped';
+    const headerAriaLabel = this._getAgenticHeaderAriaLabel(phase);
     const rowClass = [
       'swc-ResponseStatus-row',
       showDisclosure ? 'swc-ResponseStatus-row--button' : '',
@@ -688,7 +795,7 @@ export class ResponseStatus extends SpectrumElement {
       return html`
         <button
           class=${rowClass}
-          aria-label=${label}
+          aria-label=${headerAriaLabel}
           aria-expanded=${expanded}
           aria-controls=${this.panelId}
           @click=${this._handleToggle}
@@ -699,14 +806,7 @@ export class ResponseStatus extends SpectrumElement {
     }
 
     return html`
-      <div
-        class=${rowClass}
-        role=${ifDefined(phase === 'complete' ? undefined : 'status')}
-        aria-label=${ifDefined(phase === 'complete' ? undefined : label)}
-        aria-live=${ifDefined(phase === 'processing' ? 'polite' : undefined)}
-      >
-        ${rowContent}
-      </div>
+      <div class=${rowClass}>${rowContent}</div>
     `;
   }
 
@@ -809,9 +909,11 @@ export class ResponseStatus extends SpectrumElement {
 
   private _renderLoadingRow(label: string): TemplateResult {
     return html`
-      <div class="swc-ResponseStatus-row" role="status" aria-label=${label}>
+      <div class="swc-ResponseStatus-row">
         ${this._renderThreeDots()}
-        <span class="swc-ResponseStatus-label">${label}</span>
+        <span class="swc-ResponseStatus-label" aria-hidden="true">
+          ${label}
+        </span>
       </div>
     `;
   }
@@ -876,10 +978,10 @@ export class ResponseStatus extends SpectrumElement {
     const showDisclosure = showPanel;
 
     if (this._isAgentic) {
-      const headerLabel = this._getVisibleAgenticLabel();
       return html`
         <div class="swc-ResponseStatus swc-ResponseStatus--agentic">
-          ${this._renderAgenticHeader(headerLabel, showDisclosure)}
+          ${this._renderLiveAnnouncer()}
+          ${this._renderAgenticHeader(showDisclosure)}
           ${this._renderPanel(showPanel)}
           <slot
             class="swc-ResponseStatus-content-slot"
@@ -896,6 +998,7 @@ export class ResponseStatus extends SpectrumElement {
 
     return html`
       <div class="swc-ResponseStatus">
+        ${this._renderLiveAnnouncer()}
         ${isLoading
           ? this._renderLoadingRow(statusLabel)
           : this._renderCompleteRow(statusLabel, legacyShowDisclosure)}

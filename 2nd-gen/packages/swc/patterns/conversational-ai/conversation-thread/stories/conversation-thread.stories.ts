@@ -29,9 +29,9 @@ import '../../upload-artifact/index.js';
 
 import { uniqueId } from '../../../../utils/id.js';
 import {
-  AGENTIC_VIDEO_FLOW_STEPS,
-  AGENTIC_VIDEO_FLOW_TIMING,
-} from '../../agentic-video-flow-script.js';
+  AGENTIC_DEMO_FLOW_STEPS,
+  AGENTIC_DEMO_FLOW_TIMING,
+} from '../../agentic-demo-flow-script.js';
 import type {
   ResponseStatusStepKind,
   ResponseStatusStepStatus,
@@ -165,7 +165,7 @@ type DemoTurn = {
 };
 
 const AGENTIC_STEP_SCRIPT: Omit<AgenticStep, 'status'>[] =
-  AGENTIC_VIDEO_FLOW_STEPS;
+  AGENTIC_DEMO_FLOW_STEPS;
 
 const DEMO_SUGGESTIONS = [
   'Create year-over-year growth chart',
@@ -320,7 +320,7 @@ class ConversationFullPatternDemo extends LitElement {
     });
 
     const { processing, step1, step2, step3, step4, collapse, complete } =
-      AGENTIC_VIDEO_FLOW_TIMING;
+      AGENTIC_DEMO_FLOW_TIMING;
 
     this._schedule(processing, () => {
       this._patchTurn(targetId, {

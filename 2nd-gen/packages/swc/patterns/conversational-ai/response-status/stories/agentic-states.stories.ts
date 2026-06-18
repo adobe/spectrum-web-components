@@ -20,9 +20,9 @@ import '../../conversation-turn/index.js';
 import '../../system-message/index.js';
 
 import {
-  AGENTIC_VIDEO_FLOW_STEPS,
-  AGENTIC_VIDEO_FLOW_TIMING,
-} from '../../agentic-video-flow-script.js';
+  AGENTIC_DEMO_FLOW_STEPS,
+  AGENTIC_DEMO_FLOW_TIMING,
+} from '../../agentic-demo-flow-script.js';
 import type { ResponseStatusStepStatus } from '../response-status-step/ResponseStatusStep.js';
 import type { ResponseStatusPhase } from '../ResponseStatus.js';
 
@@ -368,7 +368,7 @@ class AgenticStatusSimulationDemo extends LitElement {
       collapse,
       complete,
       loopRestart,
-    } = AGENTIC_VIDEO_FLOW_TIMING;
+    } = AGENTIC_DEMO_FLOW_TIMING;
 
     this.phase = 'initiating';
     this.activeIndex = 0;
@@ -400,7 +400,7 @@ class AgenticStatusSimulationDemo extends LitElement {
         16,
         Math.round((Date.now() - this.startedAt) / 1000)
       );
-      this.activeIndex = AGENTIC_VIDEO_FLOW_STEPS.length;
+      this.activeIndex = AGENTIC_DEMO_FLOW_STEPS.length;
     });
     this._schedule(loopRestart, () => this._restart());
   }
@@ -429,7 +429,7 @@ class AgenticStatusSimulationDemo extends LitElement {
           initiating-label="Processing request"
           reasoning-label="Execution steps"
         >
-          ${AGENTIC_VIDEO_FLOW_STEPS.map(
+          ${AGENTIC_DEMO_FLOW_STEPS.map(
             (step, index) => html`
               <swc-response-status-step
                 title=${step.title}
@@ -462,9 +462,9 @@ export const LiveSimulation: Story = {
     <div style="max-width:580px;">
       <swc-agentic-status-simulation-demo></swc-agentic-status-simulation-demo>
       <p class="swc-Detail swc-Detail--sizeS" style="margin-top:12px;">
-        Matches the reference video — “Processing request” (~2s), rolling titles
-        while collapsed, auto-expands at ~10s, completes as “Thought for N
-        seconds”. Loops every ~23s.
+        Matches the reference demo flow — “Processing request” (~1.5s), rolling
+        titles while collapsed, auto-expands at ~7s, completes as “Thought for N
+        seconds”. Loops every ~16s.
       </p>
     </div>
   `,

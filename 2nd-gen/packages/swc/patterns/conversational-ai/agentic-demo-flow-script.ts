@@ -12,14 +12,14 @@
 
 import type { ResponseStatusStepKind } from './response-status/response-status-step/ResponseStatusStep.js';
 
-export type AgenticVideoFlowStepData = {
+export type AgenticDemoFlowStepData = {
   title: string;
   detail: string;
   kind: ResponseStatusStepKind;
 };
 
-/** Step titles and details from the reference agentic flow recording. */
-export const AGENTIC_VIDEO_FLOW_STEPS: AgenticVideoFlowStepData[] = [
+/** Step titles and details for the canonical Storybook agentic flow demo. */
+export const AGENTIC_DEMO_FLOW_STEPS: AgenticDemoFlowStepData[] = [
   {
     title: 'Looked through documentation',
     detail:
@@ -46,19 +46,19 @@ export const AGENTIC_VIDEO_FLOW_STEPS: AgenticVideoFlowStepData[] = [
   },
 ];
 
-/** Milliseconds from generation start (initiating). */
-export const AGENTIC_VIDEO_FLOW_TIMING = {
-  processing: 2000,
-  streamText: 3500,
-  step1: 4500,
-  step2: 7500,
-  step3: 10000,
-  expand: 10000,
-  step4: 12000,
-  collapse: 17000,
-  complete: 18000,
-  loopRestart: 23000,
+/** Milliseconds from generation start (initiating). Tuned for Storybook demos. */
+export const AGENTIC_DEMO_FLOW_TIMING = {
+  processing: 1500,
+  streamText: 2500,
+  step1: 3500,
+  step2: 5500,
+  step3: 7000,
+  expand: 7000,
+  step4: 8500,
+  collapse: 12000,
+  complete: 13000,
+  loopRestart: 16000,
 } as const;
 
-export const agenticVideoGreeting = (_prompt: string): string =>
+export const agenticDemoGreeting = (_prompt: string): string =>
   'Hello! How can I help you today?';

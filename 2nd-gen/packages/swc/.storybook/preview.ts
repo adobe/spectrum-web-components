@@ -404,7 +404,10 @@ const preview = {
                   'Rendering and styling migration analysis',
                 ],
                 'Dropzone',
-                ['Rendering and styling migration analysis'],
+                [
+                  'Accessibility migration analysis',
+                  'Rendering and styling migration analysis',
+                ],
                 'Field group',
                 ['Rendering and styling migration analysis'],
                 'Field label',

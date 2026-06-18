@@ -34,7 +34,7 @@ test.describe('ResponseStatus - ARIA Snapshots', () => {
     `);
   });
 
-  test('should expose initiating phase as a live status region', async ({
+  test('should announce generation start via aria-live only', async ({
     page,
   }) => {
     const root = await gotoStory(
@@ -42,9 +42,10 @@ test.describe('ResponseStatus - ARIA Snapshots', () => {
       'patterns-conversational-ai-response-status-agentic-states-spike--initiating',
       'swc-response-status'
     );
-    const status = root.locator('[role="status"]');
-    await expect(status).toHaveCount(1);
-    await expect(status).toHaveAttribute('aria-label', 'Processing request');
+    await expect(root.locator('[role="status"]')).toHaveCount(0);
+    const announcer = root.locator('.swc-ResponseStatus-liveAnnouncer');
+    await expect(announcer).toHaveAttribute('aria-live', 'polite');
+    await expect(announcer).toHaveText('Response processing');
   });
 
   test('should expose processing disclosure with expanded step timeline', async ({
@@ -58,10 +59,7 @@ test.describe('ResponseStatus - ARIA Snapshots', () => {
     await waitForCustomElement(page, 'swc-response-status-step');
     const toggle = root.locator('button[aria-expanded="true"]');
     await expect(toggle).toHaveCount(1, { timeout: 10000 });
-    await expect(toggle).toHaveAttribute(
-      'aria-label',
-      'Searching repositories for Europe trips'
-    );
+    await expect(toggle).toHaveAttribute('aria-label', 'Response processing');
     await expect(root.locator('[role="group"]')).toHaveAttribute(
       'aria-label',
       'Execution steps'
