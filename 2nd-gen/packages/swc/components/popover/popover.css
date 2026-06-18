@@ -107,9 +107,11 @@
   padding: token("popover-edge-to-content-area");
 }
 
-/* Modal-mode backdrop. */
+/* Modal mode renders no dimming backdrop: keep the `<dialog>`'s backdrop
+ * transparent (overriding any UA default). The backdrop pseudo-element still
+ * exists, so backdrop-click light-dismiss continues to work. */
 .swc-Popover::backdrop {
-  background-color: token("overlay-color", rgb(0 0 0 / 40%));
+  background-color: transparent;
 }
 
 /* ──────────────────────────
