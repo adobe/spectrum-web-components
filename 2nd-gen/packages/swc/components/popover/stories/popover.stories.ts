@@ -53,6 +53,15 @@ argTypes['actual-placement'] = {
   control: false,
 };
 
+// `positioned` is internal state `Popover` sets via setAttribute once the
+// PlacementController anchors the surface; the stylesheet gates the entry fade on
+// it. Like `actual-placement`, exclude it from the helper's attribute round-trip so
+// a stale value is not re-applied through the `spread` directive.
+argTypes['positioned'] = {
+  table: { disable: true },
+  control: false,
+};
+
 /**
  * A popover is an anchored top-layer surface. In its default (non-modal) mode it
  * renders an internal `<div popover="auto">` with native light-dismiss; setting

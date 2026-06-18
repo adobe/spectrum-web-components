@@ -63,20 +63,6 @@
     display token("animation-duration-200") allow-discrete;
 }
 
-/* Shown state: `:popover-open` for the default `<div>`, `[open]` for the modal `<dialog>`. */
-.swc-Popover:popover-open,
-.swc-Popover[open] {
-  opacity: 1;
-}
-
-/* Entry animation start (top-layer elements need @starting-style). */
-@starting-style {
-  .swc-Popover:popover-open,
-  .swc-Popover[open] {
-    opacity: 0;
-  }
-}
-
 /* No arrow: use the rectangular `box-shadow` form of the elevated token, which
  * composites cleanly with nested popovers (e.g. submenus). */
 :host([hide-arrow]) .swc-Popover {
@@ -95,6 +81,21 @@
 
 :host([size="l"]) .swc-Popover {
   inline-size: 576px;
+}
+
+/* Shown state: open AND positioned. The PlacementController anchors the surface
+ * asynchronously (it awaits `document.fonts.ready` before the first compute), so
+ * the fade is gated on the `positioned` host attribute the component sets once the
+ * first placement lands. Without this gate the surface fades in at its reset 0,0
+ * origin and then jumps to the trigger mid-transition. `:popover-open` is for the
+ * default `<div>`, `[open]` for the modal `<dialog>`. Because `positioned` is added
+ * after the element is already rendered, the entry is an ordinary attribute-driven
+ * transition and needs no `@starting-style`. Ordered after the lower-specificity
+ * `.swc-Popover` rules above to satisfy `no-descending-specificity`; it sets only
+ * `opacity`, so the cascade is unaffected. */
+:host([positioned]) .swc-Popover:popover-open,
+:host([positioned]) .swc-Popover[open] {
+  opacity: 1;
 }
 
 /* The padded content wrapper. Padding lives here (not on `.swc-Popover`) so a

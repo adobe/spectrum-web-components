@@ -478,6 +478,12 @@ export abstract class PopoverBase extends SpectrumElement {
         // Expose the computed physical side as the `actual-placement` host
         // attribute for CSS, not as a public property.
         this.setAttribute('actual-placement', physicalSide(next));
+        // The first compute of a session is the moment the surface is anchored
+        // (the controller resets its last-notified placement on `stop()`, so this
+        // always fires once positioning lands). Mark the host `positioned` so the
+        // stylesheet can run the entry fade now instead of at the un-anchored 0,0
+        // origin. Removed in `_stopPositioningWhenClosed`.
+        this.setAttribute('positioned', '');
       },
     });
   }
@@ -574,6 +580,7 @@ export abstract class PopoverBase extends SpectrumElement {
     }
     this._placementController.stop();
     this.removeAttribute('actual-placement');
+    this.removeAttribute('positioned');
   }
 
   /** Set `open` without re-triggering the show/hide effect. */

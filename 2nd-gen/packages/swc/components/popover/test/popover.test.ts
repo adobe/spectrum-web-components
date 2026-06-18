@@ -435,6 +435,46 @@ export const ActualPlacementTest: Story = {
   },
 };
 
+export const PositionedFadeGateTest: Story = {
+  render: () => html`
+    <button id="positioned-trigger">Trigger</button>
+    <swc-popover for="positioned-trigger" placement="bottom">Content</swc-popover>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const popover = await getComponent<Popover>(canvasElement, 'swc-popover');
+    await popover.updateComplete;
+    const surface = popover.shadowRoot?.querySelector(
+      '.swc-Popover'
+    ) as HTMLElement;
+
+    await step('unpositioned right after opening: hidden, no translate', () => {
+      popover.open = true;
+      // Positioning is async (the controller awaits `document.fonts.ready`), so
+      // immediately after opening the surface has no translate and the fade is
+      // gated off: it must not paint at the reset 0,0 origin.
+      expect(popover.hasAttribute('positioned')).toBe(false);
+      expect(surface.style.translate).toBe('');
+      expect(getComputedStyle(surface).opacity).toBe('0');
+    });
+
+    await step('becomes positioned once the surface is anchored', async () => {
+      await waitFor(() =>
+        expect(popover.hasAttribute('positioned')).toBe(true)
+      );
+      // The anchored translate is applied in the same compute that marks it
+      // positioned, so the fade only runs from the correct location.
+      expect(surface.style.translate).not.toBe('');
+    });
+
+    await step('drops positioned after the close transition', async () => {
+      popover.open = false;
+      await waitFor(() =>
+        expect(popover.hasAttribute('positioned')).toBe(false)
+      );
+    });
+  },
+};
+
 // ──────────────────────────────────────────────────────────────
 // TEST: Modal lifecycle (showModal + backdrop close source)
 // ──────────────────────────────────────────────────────────────
