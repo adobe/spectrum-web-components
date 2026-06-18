@@ -49,11 +49,9 @@
   overflow: visible;
   cursor: default;
   user-select: none;
-  outline: token("focus-indicator-thickness") solid transparent;
-  outline-offset: token("focus-indicator-gap");
   transition-timing-function: token("animation-ease-in-out");
   transition-duration: token("animation-duration-100");
-  transition-property: outline-color, border-color, color, background-color, transform;
+  transition-property: border-color, color, background-color, transform;
 }
 
 /* ── States ───────────────────────────────────────── */
@@ -68,7 +66,8 @@
   color: var(--swc-action-button-content-color-focus, token("neutral-content-color-key-focus"));
   background-color: var(--swc-action-button-background-color-focus, token("gray-200"));
   border-color: var(--swc-action-button-border-color-focus, transparent);
-  outline-color: var(--swc-action-button-focus-indicator-color, token("focus-indicator-color"));
+  outline: token("focus-indicator-thickness") solid var(--swc-action-button-focus-indicator-color, token("focus-indicator-color"));
+  outline-offset: token("focus-indicator-gap");
 }
 
 .swc-ActionButton:active {
@@ -274,16 +273,7 @@ slot[name="icon"]::slotted(*) {
 
 @media (forced-colors: active) {
   .swc-ActionButton {
-    /* ButtonBorder for the border matches S1 behavior and keeps the border visually
-       distinct from the ButtonText focus ring. Canvas hides the non-focus outline
-       that the browser forces visible when transparent is remapped to a system color. */
     border-color: ButtonBorder;
-    outline-color: Canvas;
-    transition-property: border-color, color, background-color, transform;
-  }
-
-  .swc-ActionButton:focus-visible {
-    outline-color: ButtonText;
   }
 }
 

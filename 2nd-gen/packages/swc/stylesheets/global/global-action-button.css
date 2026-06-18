@@ -38,11 +38,9 @@
   overflow: visible;
   cursor: default;
   user-select: none;
-  outline: token("focus-indicator-thickness") solid transparent;
-  outline-offset: token("focus-indicator-gap");
   transition-timing-function: token("animation-ease-in-out");
   transition-duration: token("animation-duration-100");
-  transition-property: outline-color, border-color, color, background-color, transform;
+  transition-property: border-color, color, background-color, transform;
 
   --_swc-action-button-border-width: token("border-width-100");
   --_swc-action-button-min-block-size: var(--swc-action-button-min-block-size, token("component-height-100"));
@@ -62,7 +60,8 @@
   color: var(--swc-action-button-content-color-focus, token("neutral-content-color-key-focus"));
   background-color: var(--swc-action-button-background-color-focus, token("gray-200"));
   border-color: var(--swc-action-button-border-color-focus, transparent);
-  outline-color: var(--swc-action-button-focus-indicator-color, token("focus-indicator-color"));
+  outline: token("focus-indicator-thickness") solid var(--swc-action-button-focus-indicator-color, token("focus-indicator-color"));
+  outline-offset: token("focus-indicator-gap");
 }
 
 .swc-ActionButton:active {
@@ -214,12 +213,6 @@
 @media (forced-colors: active) {
   .swc-ActionButton {
     border-color: ButtonBorder;
-    outline-color: Canvas;
-    transition-property: border-color, color, background-color, transform;
-  }
-
-  .swc-ActionButton:focus-visible {
-    outline-color: ButtonText;
   }
 }
 }
