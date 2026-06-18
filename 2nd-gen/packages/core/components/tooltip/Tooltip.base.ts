@@ -19,16 +19,11 @@ import {
   type HoverControllerHost,
 } from '../../controllers/hover-controller/index.js';
 import {
+  fromFloatingPlacement,
   type Placement as ControllerPlacement,
   PlacementController,
+  toFloatingPlacement,
 } from '../../controllers/placement-controller/index.js';
-import {
-  physicalSide,
-  reflectActualPlacement,
-  type ResolvedTrigger,
-  resolveTrigger,
-  runAfterTransition,
-} from '../../utils/index.js';
 import {
   TOOLTIP_PLACEMENTS,
   TOOLTIP_VARIANTS,
@@ -189,10 +184,14 @@ export abstract class TooltipBase
 
   private readonly placementController = new PlacementController(this);
 
-  // Tears down the in-flight `runAfterTransition` wiring (listener + fallback
-  // timer). Calling it supersedes a prior open/close cycle so a stale run can't
-  // dispatch an after-event into the new state.
-  private _cancelAfterTransition?: () => void;
+  // Guards dispatchAfterEvent so only the first transitionend per open/close cycle fires,
+  // preventing one after event from firing for each CSS property that transitions.
+  private afterEventPending = false;
+
+  // Fallback timer for browsers that do not fire transitionend for
+  // transition-behavior:allow-discrete discrete properties (e.g. Firefox in CI).
+  // Cleared when transitionend fires or a new toggle starts.
+  private afterEventFallbackTimer: ReturnType<typeof setTimeout> | null = null;
 
   // Tracks the most recently ARIA-wired target so syncAriaRelationship can
   // remove stale references when for or triggerElement changes while open.
@@ -246,16 +245,17 @@ export abstract class TooltipBase
   // synchronously before showPopover() so @starting-style has a direction; the
   // PlacementController overwrites it with the flip-resolved side afterwards.
   private setDeclaredActualPlacement(): void {
-    const { trigger } = this.resolveTrigger();
-    reflectActualPlacement(
-      this,
-      this.placement as ControllerPlacement,
-      trigger ?? this
-    );
+    const trigger = this.resolveTrigger();
+    const direction =
+      trigger && getComputedStyle(trigger).direction === 'rtl' ? 'rtl' : 'ltr';
+    const side = fromFloatingPlacement(
+      toFloatingPlacement(this.placement as ControllerPlacement, direction)
+    ).split('-')[0];
+    this.setAttribute('actual-placement', side);
   }
 
   private startPlacement(): void {
-    const { trigger } = this.resolveTrigger();
+    const trigger = this.resolveTrigger();
     if (!trigger) {
       return;
     }
@@ -267,27 +267,29 @@ export abstract class TooltipBase
       shouldFlip: this.shouldFlip,
       tipElement: this.tipElement ?? undefined,
       onPlacementChange: (resolvedPlacement: ControllerPlacement) => {
-        this.setAttribute('actual-placement', physicalSide(resolvedPlacement));
+        this.setAttribute('actual-placement', resolvedPlacement.split('-')[0]);
       },
     });
   }
 
-  // Resolve the trigger and its AT-facing inner button via the shared helper,
-  // adding the tooltip's dev-mode warning when `for` does not resolve.
-  private resolveTrigger(): ResolvedTrigger {
-    const resolved = resolveTrigger(this, {
-      for: this.for,
-      triggerElement: this.triggerElement,
-    });
-    if (!resolved.trigger && this.for && window.__swc?.DEBUG) {
-      window.__swc.warn(
-        this,
-        `<${this.localName}> for="${this.for}" did not resolve to an element in the current tree root. Check that the referenced id exists in the same document tree root.`,
-        'https://opensource.adobe.com/spectrum-web-components/components/tooltip/',
-        { level: 'high' }
-      );
+  private resolveTrigger(): HTMLElement | null {
+    if (this.triggerElement) {
+      return this.triggerElement;
     }
-    return resolved;
+    if (this.for) {
+      const root = this.getRootNode() as Document | ShadowRoot;
+      const trigger = root.getElementById(this.for);
+      if (!trigger && window.__swc?.DEBUG) {
+        window.__swc.warn(
+          this,
+          `<${this.localName}> for="${this.for}" did not resolve to an element in the current tree root. Check that the referenced id exists in the same document tree root.`,
+          'https://opensource.adobe.com/spectrum-web-components/components/tooltip/',
+          { level: 'high' }
+        );
+      }
+      return trigger;
+    }
+    return null;
   }
 
   // Removes this tooltip from the previously wired target's ARIA element arrays
@@ -312,11 +314,12 @@ export abstract class TooltipBase
     // the new one. Handles for/triggerElement changes while the tooltip is open.
     this.clearAriaRelationship();
 
-    const { trigger, interactiveElement } = this.resolveTrigger();
-    if (!trigger || !interactiveElement) {
+    const trigger = this.resolveTrigger();
+    if (!trigger) {
       return;
     }
-    const target = interactiveElement as Element & {
+    const target = (trigger.shadowRoot?.querySelector('button') ??
+      trigger) as Element & {
       ariaDescribedByElements: Element[] | null;
       ariaLabelledByElements: Element[] | null;
     };
@@ -380,29 +383,62 @@ export abstract class TooltipBase
     this.dispatchEvent(
       new CustomEvent(eventName, { bubbles: true, composed: true })
     );
+    // Set here so the flag is set regardless of whether this.open already matches
+    // newState. handleToggle exits early when open was set externally, which would
+    // otherwise leave the flag unset and suppress swc-after-open / swc-after-close.
+    this.afterEventPending = true;
   };
 
   private readonly handleToggle = (event: Event): void => {
+    // Cancel any in-flight close fallback; a new toggle resets the cycle.
+    if (this.afterEventFallbackTimer !== null) {
+      clearTimeout(this.afterEventFallbackTimer);
+      this.afterEventFallbackTimer = null;
+    }
     const { newState } = event as ToggleEvent;
     const isOpen = newState === 'open';
     if (isOpen !== this.open) {
       this.open = isOpen;
     }
-    // Dispatch the after-event once the transition settles. `runAfterTransition`
-    // supersedes the prior cycle (so a new toggle can't fire a stale after-event)
-    // and dispatches immediately when no transition runs. The allow-discrete
-    // fallback timer is armed only on close (where positioning cleanup depends on
-    // it); on open a delayed `transitionend` must not be pre-empted by the timer.
-    // Shared with Popover via `core/utils`.
-    this._cancelAfterTransition?.();
-    this._cancelAfterTransition = runAfterTransition(
-      this,
-      () => {
-        this._cancelAfterTransition = undefined;
-        this.dispatchAfterEvent(isOpen);
-      },
-      { fallback: !isOpen }
-    );
+    // When no CSS transition is active, dispatch after-* immediately since transitionend will not fire.
+    // transitionDuration is comma-separated when multiple properties transition ("0s, 0s, …"),
+    // so check that every value in the list is zero rather than comparing the full string.
+    const durations = getComputedStyle(this).transitionDuration.split(',');
+    if (durations.every((d) => d.trim() === '0s')) {
+      this.afterEventPending = false;
+      this.dispatchAfterEvent(isOpen);
+    } else if (!isOpen) {
+      // Some browsers (e.g. Firefox in CI) do not fire transitionend for
+      // transition-behavior:allow-discrete discrete properties. Start a fallback
+      // so positioning is always cleared after the exit transition window.
+      const maxMs = Math.max(
+        0,
+        ...durations.map((d) => {
+          const trimmed = d.trim();
+          const value = parseFloat(trimmed);
+          return trimmed.endsWith('ms') ? value : value * 1000;
+        })
+      );
+      this.afterEventFallbackTimer = setTimeout(() => {
+        this.afterEventFallbackTimer = null;
+        if (this.afterEventPending) {
+          this.afterEventPending = false;
+          this.dispatchAfterEvent(false);
+        }
+      }, maxMs + 100);
+    }
+  };
+
+  private readonly handleTransitionEnd = (event: TransitionEvent): void => {
+    if (event.target !== this || !this.afterEventPending) {
+      return;
+    }
+    if (this.afterEventFallbackTimer !== null) {
+      clearTimeout(this.afterEventFallbackTimer);
+      this.afterEventFallbackTimer = null;
+    }
+    this.afterEventPending = false;
+    this.dispatchAfterEvent(this.open);
   };
 
   // Escape-to-close. Registered on `document` only while open (see updated()),
@@ -421,8 +457,8 @@ export abstract class TooltipBase
     super.willUpdate(changedProperties);
     // `disabled` takes priority over `open`: a disabled tooltip cannot be shown,
     // regardless of how `open` became true (set programmatically, or `disabled`
-    // toggled on while already open). Normalizing here (before render and
-    // before updated() acts on `open`) keeps `open` and visibility consistent
+    // toggled on while already open). Normalizing here — before render and
+    // before updated() acts on `open` — keeps `open` and visibility consistent
     // and prevents the `open` attribute from briefly reflecting `true`. Hover
     // and focus opening are separately blocked by HoverController's guards.
     if (this.disabled && this.open) {
@@ -450,7 +486,7 @@ export abstract class TooltipBase
       changedProperties.has('for') ||
       changedProperties.has('triggerElement')
     ) {
-      this.hoverController.setTarget(this.resolveTrigger().trigger);
+      this.hoverController.setTarget(this.resolveTrigger());
     }
 
     // Placement controller: start when opening, stop when closing, restart
@@ -466,7 +502,7 @@ export abstract class TooltipBase
         // must already be present or the entrance animation has no direction to
         // animate from. PlacementController writes actual-placement again from
         // onPlacementChange, but that is async (it awaits document.fonts.ready),
-        // so it lands after showPopover(), too late for @starting-style. The
+        // so it lands after showPopover() — too late for @starting-style. The
         // popover is display:none until shown and therefore unmeasurable, so a
         // viewport flip cannot be known here; on a flip the resolved side
         // arrives from onPlacementChange and the slide direction corrects then.
@@ -506,16 +542,21 @@ export abstract class TooltipBase
     this.setAttribute('popover', 'auto');
     this.addEventListener('beforetoggle', this.handleBeforeToggle);
     this.addEventListener('toggle', this.handleToggle);
+    this.addEventListener('transitionend', this.handleTransitionEnd);
   }
 
   public override disconnectedCallback(): void {
     super.disconnectedCallback();
     this.removeEventListener('beforetoggle', this.handleBeforeToggle);
     this.removeEventListener('toggle', this.handleToggle);
+    this.removeEventListener('transitionend', this.handleTransitionEnd);
     // Defensive: the keydown listener is normally removed on close, but a
     // tooltip disconnected while open would still have it registered.
     document.removeEventListener('keydown', this.handleKeyDown);
-    this._cancelAfterTransition?.();
+    if (this.afterEventFallbackTimer !== null) {
+      clearTimeout(this.afterEventFallbackTimer);
+      this.afterEventFallbackTimer = null;
+    }
     // If the tooltip is removed while open, the trigger would otherwise retain a
     // reference to this now-detached node in its ARIA element arrays.
     this.clearAriaRelationship();
