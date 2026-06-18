@@ -285,9 +285,8 @@ export abstract class PopoverBase extends SpectrumElement {
   /** Whether this popover is currently holding the modal page-scroll lock. */
   private _pageScrollLocked = false;
 
-  /** Saved `documentElement` inline styles, restored when the scroll lock releases. */
+  /** Saved `documentElement` inline overflow, restored when the scroll lock releases. */
   private _prevDocumentOverflow = '';
-  private _prevDocumentPaddingRight = '';
 
   // ──────────────────
   //     LIFECYCLE
@@ -492,20 +491,14 @@ export abstract class PopoverBase extends SpectrumElement {
 
   // Lock page scroll behind a modal popover. The component's shadow stylesheet
   // cannot reach `html`, so this is done in JS: set `overflow: hidden` on the
-  // document element and compensate for the removed scrollbar with padding so the
-  // page does not shift. Prior inline values are saved and restored on unlock.
+  // document element, saving the prior inline value to restore on unlock.
   private _lockPageScroll(): void {
     if (this._pageScrollLocked) {
       return;
     }
     const html = document.documentElement;
-    const scrollbarWidth = window.innerWidth - html.clientWidth;
     this._prevDocumentOverflow = html.style.overflow;
-    this._prevDocumentPaddingRight = html.style.paddingRight;
     html.style.overflow = 'hidden';
-    if (scrollbarWidth > 0) {
-      html.style.paddingRight = `${scrollbarWidth}px`;
-    }
     this._pageScrollLocked = true;
   }
 
@@ -513,9 +506,7 @@ export abstract class PopoverBase extends SpectrumElement {
     if (!this._pageScrollLocked) {
       return;
     }
-    const html = document.documentElement;
-    html.style.overflow = this._prevDocumentOverflow;
-    html.style.paddingRight = this._prevDocumentPaddingRight;
+    document.documentElement.style.overflow = this._prevDocumentOverflow;
     this._pageScrollLocked = false;
   }
 
