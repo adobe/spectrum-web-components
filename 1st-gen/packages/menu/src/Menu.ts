@@ -28,7 +28,8 @@ import type { Overlay } from '@spectrum-web-components/overlay';
 import { RovingTabindexController } from '@spectrum-web-components/reactive-controllers/src/RovingTabindex.js';
 
 import '@spectrum-web-components/icons-ui/icons/sp-icon-arrow500.js';
-import '../sp-menu-divider.js';
+// Leveraged in build systems that use aliasing to prevent multiple registrations: https://github.com/adobe/spectrum-web-components/pull/3225
+import '@spectrum-web-components/menu/sp-menu-divider.js';
 
 import menuStyles from './menu.css.js';
 import type {
