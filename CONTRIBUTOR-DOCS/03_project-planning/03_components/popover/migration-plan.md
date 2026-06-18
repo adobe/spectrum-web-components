@@ -709,7 +709,7 @@ CSS targets the internal `.swc-Popover` element regardless of mode. `popover.css
 - [ ] Modal mode: `<dialog>` provides `role="dialog"` natively; verify no JS sets `role` on the host
 - [ ] Auto mode (default): no `role` is set on the internal element; consumer-supplied content owns its own semantics
 - [ ] `aria-haspopup="dialog"` is set on the resolved interactive element when `modal` is set; removed when `modal` is cleared or the trigger relationship is torn down. Auto mode: component does not set `aria-haspopup`.
-- [ ] Stable `id` per `<swc-popover>` instance: `if (!this.id) this.id = \`swc-popover-${++PopoverIdCounter}\`` — for debugging, consumer manual wiring, and labelled-by references; not used for string `aria-controls` wiring
+- [ ] Stable `id` per `<swc-popover>` instance: when the consumer has not set one, assign `this.id` from a module-level incrementing counter (yielding `swc-popover-1`, `swc-popover-2`, and so on). For debugging, consumer manual wiring, and labelled-by references; not used for string `aria-controls` wiring
 
 #### Trigger-side ARIA wiring
 
