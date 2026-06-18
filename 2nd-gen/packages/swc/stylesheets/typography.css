@@ -534,3 +534,30 @@
 .swc-Typography--emphasized:not(:lang(zh), :lang(ja), :lang(ko)) {
   font-style: token("italic-font-style");
 }
+
+/* =========================
+  Links (prose and link lists)
+  ========================= */
+:is(.swc-Typography--prose, .swc-Typography--links) :where(a) {
+  font: inherit;
+  color: var(--swc-link-text-color-default, token("accent-content-color-default"));
+  text-decoration: underline;
+  text-decoration-thickness: token("text-underline-thickness");
+  text-underline-offset: token("text-underline-gap");
+  transition: color token("animation-duration-100") ease-in-out;
+}
+
+:is(.swc-Typography--prose, .swc-Typography--links) :where(a):hover {
+  color: var(--swc-link-text-color-hover, token("accent-content-color-hover"));
+}
+
+:is(.swc-Typography--prose, .swc-Typography--links) :where(a):active {
+  color: var(--swc-link-text-color-down, token("accent-content-color-down"));
+}
+
+:is(.swc-Typography--prose, .swc-Typography--links) :where(a):focus-visible {
+  color: var(--swc-link-text-color-focus, token("accent-content-color-key-focus"));
+  border-radius: token("corner-radius-100");
+  outline: token("focus-indicator-thickness") solid var(--swc-link-focus-indicator-color, token("focus-indicator-color"));
+  outline-offset: token("focus-indicator-gap");
+}

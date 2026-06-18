@@ -12,13 +12,17 @@
 import { readCsf } from '@storybook/core/csf-tools';
 import type { Indexer } from '@storybook/types';
 import type { StorybookConfig } from '@storybook/web-components-vite';
-import { existsSync } from 'fs';
+import { mkdirSync } from 'fs';
 import { dirname, resolve } from 'path';
 import remarkGfm from 'remark-gfm';
 import { fileURLToPath } from 'url';
 import { mergeConfig } from 'vite';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
+
+// Ensure the coverage directory exists so Storybook always serves /coverage.
+// The directory will be empty until `vitest --coverage` populates it.
+mkdirSync(resolve(__dirname, '../coverage'), { recursive: true });
 
 // Modes:
 // - dev: full local Storybook, including docs and test stories
@@ -192,12 +196,7 @@ const config: StorybookConfig = {
       disabledAddons: [],
     },
   },
-  staticDirs: [
-    '../public',
-    ...(existsSync(resolve(__dirname, '../coverage'))
-      ? [{ from: '../coverage', to: '/coverage' }]
-      : []),
-  ],
+  staticDirs: ['../public', { from: '../coverage', to: '/coverage' }],
   addons,
   experimental_indexers: storybookMode === 'dev' ? [testStoryIndexer] : [],
   viteFinal: async (config) => {
