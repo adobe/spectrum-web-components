@@ -494,6 +494,57 @@ export const PositionedFadeGateTest: Story = {
   },
 };
 
+export const TipOrientationGateTest: Story = {
+  render: () => html`
+    <a href="#x" id="tip-gate-anchor">Anchored link</a>
+    <swc-popover placement="bottom" manual>Anchored to the link.</swc-popover>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const popover = await getComponent<Popover>(canvasElement, 'swc-popover');
+    popover.triggerElement = canvasElement.querySelector(
+      '#tip-gate-anchor'
+    ) as HTMLElement;
+    const tip = () =>
+      popover.shadowRoot?.querySelector('.swc-Popover-tip') as HTMLElement;
+    const tipVisible = () => getComputedStyle(tip()).visibility === 'visible';
+
+    await step('tip is hidden while closed (no orientation)', () => {
+      expect(popover.hasAttribute('actual-placement')).toBe(false);
+      expect(tipVisible()).toBe(false);
+    });
+
+    await step('tip shows once oriented onto an edge', async () => {
+      popover.open = true;
+      await waitFor(() =>
+        expect(popover.hasAttribute('actual-placement')).toBe(true)
+      );
+      expect(tipVisible()).toBe(true);
+    });
+
+    await step(
+      'a visible tip is never unoriented across rapid toggles (no diamond)',
+      async () => {
+        // Hammer open/close at sub-transition spacing and assert the invariant
+        // every frame: a tip without `actual-placement` would render as a
+        // detached diamond at the surface bottom, the regression being fixed.
+        for (let cycle = 0; cycle < 6; cycle++) {
+          popover.open = !popover.open;
+          await popover.updateComplete;
+          for (let f = 0; f < 5; f++) {
+            if (tipVisible()) {
+              expect(
+                popover.hasAttribute('actual-placement'),
+                'visible tip is oriented'
+              ).toBe(true);
+            }
+            await new Promise((r) => requestAnimationFrame(() => r(null)));
+          }
+        }
+      }
+    );
+  },
+};
+
 // ──────────────────────────────────────────────────────────────
 // TEST: Modal lifecycle (showModal + backdrop close source)
 // ──────────────────────────────────────────────────────────────

@@ -129,12 +129,24 @@
   /* tip width ÷ √2 */
   --_swc-popover-tip-size: calc(token("popover-tip-width") / 1.4142);
 
+  /* Hidden until `actual-placement` orients it onto an edge below. Without a
+   * side, the tip has no edge inset or border removal and would render as a
+   * detached full diamond at the surface's block-end. That state is reachable
+   * while the surface is still visible: positioning (and `actual-placement`) is
+   * torn down on close, but the surface keeps painting through its fade-out, and
+   * a rapid toggle can cancel the transition so teardown lands mid-fade. */
+  visibility: hidden;
   position: absolute;
   inline-size: var(--_swc-popover-tip-size);
   block-size: var(--_swc-popover-tip-size);
   background-color: token("background-layer-2-color");
   border: token("border-width-100") solid token("popover-border-color");
   rotate: 45deg;
+}
+
+/* Oriented onto an edge (any side): safe to show. */
+:host([actual-placement]) .swc-Popover-tip {
+  visibility: visible;
 }
 
 /* Tip on the top edge: popover sits below the trigger. */
