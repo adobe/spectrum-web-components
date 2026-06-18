@@ -335,6 +335,13 @@ export abstract class PopoverBase extends SpectrumElement {
         'aria-expanded',
         String(this.open)
       );
+    } else if (this.open && changedProperties.has('modal')) {
+      // `modal` toggled while open: the render swapped the internal element
+      // between a `<div popover="auto">` and a `<dialog>`. Lit removed the old
+      // element (the browser closes a disconnected top-layer element), so the
+      // newly rendered element is present but never went through its show API.
+      // Re-show so the correct mode engages (e.g. `showModal()` traps focus).
+      this._show();
     } else if (this.open && this._positioningChanged(changedProperties)) {
       // Re-anchor while open when a positioning input changes.
       this._startPositioning();

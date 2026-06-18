@@ -601,6 +601,64 @@ export const ModalLifecycleTest: Story = {
   },
 };
 
+export const ModalToggleWhileOpenTest: Story = {
+  render: () => html`
+    <button id="modal-toggle-trigger">Trigger</button>
+    <swc-popover for="modal-toggle-trigger" accessible-label="Settings">
+      <button>Inside</button>
+    </swc-popover>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const popover = await getComponent<Popover>(canvasElement, 'swc-popover');
+    await popover.updateComplete;
+    const surface = () =>
+      popover.shadowRoot?.querySelector('.swc-Popover') as HTMLDialogElement;
+
+    await step('opens in default (non-modal) mode', async () => {
+      popover.open = true;
+      await popover.updateComplete;
+      await waitFor(() =>
+        expect(surface().matches(':popover-open'), 'div popover is open').toBe(
+          true
+        )
+      );
+    });
+
+    await step(
+      'toggling modal=true while open engages showModal()',
+      async () => {
+        // The render swaps the <div popover> for a <dialog>; the lifecycle must
+        // re-show through showModal() so the focus trap actually engages.
+        popover.modal = true;
+        await popover.updateComplete;
+        await waitFor(() => {
+          expect(surface().tagName, 'internal element is a DIALOG').toBe(
+            'DIALOG'
+          );
+          expect(surface().matches(':modal'), 'opened via showModal()').toBe(
+            true
+          );
+        });
+      }
+    );
+
+    await step(
+      'toggling modal=false while open returns to popover mode',
+      async () => {
+        popover.modal = false;
+        await popover.updateComplete;
+        await waitFor(() => {
+          expect(surface().tagName, 'internal element is a DIV').toBe('DIV');
+          expect(
+            surface().matches(':popover-open'),
+            'div popover is open'
+          ).toBe(true);
+        });
+      }
+    );
+  },
+};
+
 // ──────────────────────────────────────────────────────────────
 // TEST: dismissible-stack ordering (LIFO + move-to-top)
 // ──────────────────────────────────────────────────────────────
