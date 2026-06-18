@@ -268,6 +268,13 @@ export abstract class PopoverBase extends SpectrumElement {
   /** Suppresses the open/close effect when `open` is synced from a native event. */
   private _syncingOpen = false;
 
+  /**
+   * Suppresses the next `swc-open` dispatch. Set when re-showing an
+   * already-open popover (a `modal` toggle swaps the internal element), so the
+   * mode swap does not emit a second `swc-open` with no intervening close.
+   */
+  private _suppressOpenEvent = false;
+
   /** Document Escape listener (default mode) used to label the close source. */
   private _escapeListener?: (event: KeyboardEvent) => void;
 
@@ -340,10 +347,16 @@ export abstract class PopoverBase extends SpectrumElement {
       // between a `<div popover="auto">` and a `<dialog>`. Lit removed the old
       // element (the browser closes a disconnected top-layer element), so the
       // newly rendered element is present but never went through its show API.
-      // Re-show so the correct mode engages (e.g. `showModal()` traps focus).
-      this._show();
-    } else if (this.open && this._positioningChanged(changedProperties)) {
-      // Re-anchor while open when a positioning input changes.
+      // Re-show so the correct mode engages (e.g. `showModal()` traps focus),
+      // without re-emitting `swc-open` for a popover that never closed.
+      this._show(true);
+    } else if (
+      this.open &&
+      (this._positioningChanged(changedProperties) ||
+        changedProperties.has('for') ||
+        changedProperties.has('triggerElement'))
+    ) {
+      // Re-anchor while open when a positioning input or the trigger changes.
       this._startPositioning();
     }
   }
@@ -418,10 +431,10 @@ export abstract class PopoverBase extends SpectrumElement {
         this._clickTrigger = clickTrigger;
       }
     }
-
-    if (this.open) {
-      this._startPositioning();
-    }
+    // Re-anchoring while open (trigger or positioning input changed) is driven
+    // from `updated()`, so this method only wires the trigger and ARIA. Doing it
+    // here too would double-start the controller when `updated()` also re-shows
+    // or re-anchors in the same cycle (e.g. a `modal` toggle while open).
   }
 
   private _removeTriggerClick(): void {
@@ -519,13 +532,19 @@ export abstract class PopoverBase extends SpectrumElement {
   //     OPEN/CLOSE
   // ──────────────────
 
-  private _show(): void {
+  // `reShow` is true when re-engaging the show API for a popover that is already
+  // open (a `modal` toggle swaps the internal element). It suppresses a second
+  // `swc-open` for a popover that never closed.
+  private _show(reShow = false): void {
     const element = this.internalElement;
     if (!element) {
       return;
     }
     registerDismissible(this);
     if (this.modal) {
+      // Modal mode uses the native `<dialog>` Escape (`cancel`); drop any
+      // default-mode document listener left over from a prior mode.
+      this._removeEscapeListener();
       if (window.__swc?.DEBUG && !this.accessibleLabel.trim()) {
         window.__swc.warn(
           this,
@@ -539,20 +558,24 @@ export abstract class PopoverBase extends SpectrumElement {
         dialog.showModal();
       }
       // `<dialog>` modal-mode has no native open event, so dispatch here.
-      this._dispatchOpen();
+      if (!reShow) {
+        this._dispatchOpen();
+      }
     } else {
       this._addEscapeListener();
       if (!element.matches(':popover-open')) {
+        // `showPopover()` fires `beforetoggle` synchronously, which dispatches
+        // `swc-open`; suppress that one dispatch on a re-show.
+        this._suppressOpenEvent = reShow;
         try {
           element.showPopover();
         } catch {
-          /* already showing */
+          this._suppressOpenEvent = false;
         }
       }
       // `swc-open` is dispatched from the `beforetoggle` listener.
     }
     this._startPositioning();
-    this._interactiveElement?.setAttribute('aria-expanded', 'true');
   }
 
   private _hide(): void {
@@ -584,7 +607,8 @@ export abstract class PopoverBase extends SpectrumElement {
     }
     unregisterDismissible(this);
     this._removeEscapeListener();
-    this._interactiveElement?.setAttribute('aria-expanded', 'false');
+    // `aria-expanded` is written by `updated()` on every `open` change (and by
+    // `_wireTrigger` on initial wiring), so it is not set again here.
     // Positioning is torn down only after the close transition finishes
     // (see `_stopPositioningWhenClosed`), so the arrow keeps its computed
     // offset during the fade instead of snapping back to the edge.
@@ -693,6 +717,12 @@ export abstract class PopoverBase extends SpectrumElement {
   // ──────────────────
 
   private _dispatchOpen(): void {
+    // A re-show of an already-open popover (modal toggle) must not emit a second
+    // `swc-open`; consume the one-shot suppression set in `_show`.
+    if (this._suppressOpenEvent) {
+      this._suppressOpenEvent = false;
+      return;
+    }
     this.dispatchEvent(
       new CustomEvent('swc-open', { bubbles: true, composed: true })
     );

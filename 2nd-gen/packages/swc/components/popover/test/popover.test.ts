@@ -619,6 +619,8 @@ export const ModalToggleWhileOpenTest: Story = {
     await popover.updateComplete;
     const surface = () =>
       popover.shadowRoot?.querySelector('.swc-Popover') as HTMLDialogElement;
+    let openCount = 0;
+    popover.addEventListener('swc-open', () => (openCount += 1));
 
     await step('opens in default (non-modal) mode', async () => {
       popover.open = true;
@@ -662,6 +664,12 @@ export const ModalToggleWhileOpenTest: Story = {
         });
       }
     );
+
+    await step('the mode toggles did not re-emit swc-open', () => {
+      // The popover stayed open across both toggles, so only the initial open
+      // dispatched swc-open (the re-shows must be suppressed).
+      expect(openCount, 'swc-open fired exactly once').toBe(1);
+    });
   },
 };
 
