@@ -122,6 +122,25 @@ const accountCard = `
   </div>
 `;
 
+// Playground content with several focusable controls so the modal focus trap is
+// demonstrable: enable `modal` in the controls, open the popover, then press Tab
+// to see focus cycle within these buttons instead of escaping to the page.
+const playgroundContent = `
+  <div style="display: flex; flex-direction: column; gap: 12px; inline-size: 260px;">
+    <p class="swc-Body swc-Body--sizeS" style="margin: 0;">
+      Enable <code>modal</code> in the controls, then press Tab: focus stays
+      trapped within these controls.
+    </p>
+    <div style="display: flex; gap: 8px; justify-content: flex-end;">
+      <swc-button variant="secondary" fill-style="outline" size="s">
+        Back
+      </swc-button>
+      <swc-button variant="secondary" size="s">Skip</swc-button>
+      <swc-button variant="accent" size="s">Confirm</swc-button>
+    </div>
+  </div>
+`;
+
 // ────────────────────
 //    PLAYGROUND STORY
 // ────────────────────
@@ -133,7 +152,8 @@ export const Playground: Story = {
     placement: 'bottom',
     'hide-arrow': false,
     for: 'playground-trigger',
-    'default-slot': 'This popover is anchored to the button above.',
+    'accessible-label': 'Playground popover',
+    'default-slot': playgroundContent,
   },
   render: (args) => html`
     <swc-button id="playground-trigger">Toggle popover</swc-button>
