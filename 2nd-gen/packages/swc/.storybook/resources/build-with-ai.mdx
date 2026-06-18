@@ -1,0 +1,52 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Build with AI" />
+
+# Build with AI
+
+Resources to help AI coding tools understand and work with Spectrum Web Components.
+
+## Agent Skills
+
+[Agent Skills](https://agentskills.io) are bundles of instructions and reference files that
+your AI coding tool can load when they are relevant to a task.
+
+Two skills are available for Spectrum Web Components.
+
+### Spectrum Web Components (Spectrum 1)
+
+Use this skill when building with `sp-*` components from `@spectrum-web-components/*` packages.
+It includes guides, component API references, accessibility guidance, and integration examples.
+
+```bash
+npx skills add spectrum-web-components.adobe.com
+```
+
+### Migrate from Spectrum 1 to Spectrum 2
+
+Use this skill when upgrading `sp-*` components to `swc-*` components from `@adobe/spectrum-wc`.
+It includes the full coexistence walkthrough, per-component migration guides, and a CSS property
+mapping reference.
+
+```bash
+npx skills add spectrum-web-components.adobe.com
+```
+
+> Both skills are installed automatically when you run the command above. Agent Skills clients
+> select the right skill based on your task context.
+
+## llms.txt
+
+The [`llms.txt`](llms.txt) file lists every documentation page available in the Spectrum Web
+Components Storybook as a Markdown URL. AI tools that support the
+[llms.txt convention](https://llmstxt.org) can use this file to discover and load
+the right page for a given task.
+
+[`llms-full.txt`](llms-full.txt) includes the full content of every page in a single file for
+tools that prefer to load all documentation at once.
+
+## Per-page Markdown
+
+Every documentation page on this site is available as a standalone Markdown file. Append `.md`
+to any documentation URL to get the Markdown version of that page. This is useful for copying
+content into an AI prompt, or for tools that fetch documentation on demand.
