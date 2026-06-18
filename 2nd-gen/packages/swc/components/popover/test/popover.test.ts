@@ -827,6 +827,63 @@ export const FocusRegionContentClickTest: Story = {
 };
 
 // ──────────────────────────────────────────────────────────────
+// TEST: Focus restoration on close (default mode)
+// ──────────────────────────────────────────────────────────────
+
+export const FocusRestoreOnCloseTest: Story = {
+  render: () => html`
+    <div style="padding: 40px">
+      <button id="restore-trigger">Trigger</button>
+      <swc-popover for="restore-trigger">
+        <button id="restore-inside">Inside</button>
+      </swc-popover>
+      <button id="restore-other">Other</button>
+    </div>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const popover = await getComponent<Popover>(canvasElement, 'swc-popover');
+    const trigger = canvasElement.querySelector(
+      '#restore-trigger'
+    ) as HTMLElement;
+    const other = canvasElement.querySelector('#restore-other') as HTMLElement;
+    await popover.updateComplete;
+
+    await step(
+      'focus inside → close returns focus to the trigger',
+      async () => {
+        await userEvent.click(trigger);
+        await waitFor(() => expect(popover.open).toBe(true));
+        // Move focus into the popover's content, then close.
+        (popover.querySelector('#restore-inside') as HTMLElement).focus();
+        popover.open = false;
+        await waitFor(() =>
+          expect(document.activeElement, 'focus restored to the trigger').toBe(
+            trigger
+          )
+        );
+      }
+    );
+
+    await step(
+      'focus already moved elsewhere → close leaves it (no yank)',
+      async () => {
+        await userEvent.click(trigger);
+        await waitFor(() => expect(popover.open).toBe(true));
+        // Simulate focus moving to another control (e.g. an outside click).
+        other.focus();
+        popover.open = false;
+        await popover.updateComplete;
+        await new Promise((r) => requestAnimationFrame(() => r(null)));
+        expect(
+          document.activeElement,
+          'focus is left where the user moved it'
+        ).toBe(other);
+      }
+    );
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
 // TEST: Nested popovers + tooltips (layering demo)
 // ──────────────────────────────────────────────────────────────
 

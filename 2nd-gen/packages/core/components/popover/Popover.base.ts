@@ -19,6 +19,7 @@ import {
 } from '@spectrum-web-components/core/controllers/index.js';
 import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
 import {
+  getActiveElement,
   isTopDismissible,
   physicalSide,
   registerDismissible,
@@ -453,6 +454,23 @@ export abstract class PopoverBase extends SpectrumElement {
     element.removeAttribute('aria-haspopup');
   }
 
+  // Whether focus is currently within the popover's content. Walks the composed
+  // ancestor chain from the deepest focused element (crossing shadow boundaries
+  // via `host`) so focus inside a slotted custom element (e.g. a button's inner
+  // control) is detected. The content is slotted, so its DOM ancestors lead back
+  // to this host.
+  private _isFocusWithin(): boolean {
+    let node: Node | null = getActiveElement();
+    while (node) {
+      if (node === this) {
+        return true;
+      }
+      const parent: Node | null = node.parentNode;
+      node = parent instanceof ShadowRoot ? parent.host : parent;
+    }
+    return false;
+  }
+
   // ──────────────────────────
   //     POSITIONING
   // ──────────────────────────
@@ -602,9 +620,18 @@ export abstract class PopoverBase extends SpectrumElement {
       this._dispatchOpen();
     } else {
       const source = this._closeSource ?? 'outside';
+      // `beforetoggle` fires before the popover hides, so focus is still inside if
+      // it was there. Unlike modal `<dialog>` (which restores focus natively), the
+      // popover API drops focus to `<body>` when the focused content is hidden, so
+      // restore it to the trigger. Gated on focus actually being inside our content
+      // so an outside click that moved focus elsewhere is left alone.
+      const restoreFocusToTrigger = this._isFocusWithin();
       this._syncOpen(false);
       this._dispatchClose(source);
       this._closeTeardown(source);
+      if (restoreFocusToTrigger) {
+        this._interactiveElement?.focus();
+      }
     }
   };
 
