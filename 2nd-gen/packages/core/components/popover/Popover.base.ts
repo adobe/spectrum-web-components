@@ -19,6 +19,7 @@ import {
 } from '@spectrum-web-components/core/controllers/index.js';
 import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
 import {
+  deepContains,
   getActiveElement,
   isTopDismissible,
   physicalSide,
@@ -467,21 +468,12 @@ export abstract class PopoverBase extends SpectrumElement {
     element.removeAttribute('aria-haspopup');
   }
 
-  // Whether focus is currently within the popover's content. Walks the composed
-  // ancestor chain from the deepest focused element (crossing shadow boundaries
-  // via `host`) so focus inside a slotted custom element (e.g. a button's inner
-  // control) is detected. The content is slotted, so its DOM ancestors lead back
-  // to this host.
+  // Whether focus is currently within the popover's content. `deepContains`
+  // crosses shadow boundaries, so focus inside a slotted custom element (e.g. a
+  // button's inner control) is detected; the content is slotted, so its DOM
+  // ancestors lead back to this host.
   private _isFocusWithin(): boolean {
-    let node: Node | null = getActiveElement();
-    while (node) {
-      if (node === this) {
-        return true;
-      }
-      const parent: Node | null = node.parentNode;
-      node = parent instanceof ShadowRoot ? parent.host : parent;
-    }
-    return false;
+    return deepContains(this, getActiveElement());
   }
 
   // ──────────────────────────

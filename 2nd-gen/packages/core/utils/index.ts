@@ -12,6 +12,7 @@
 
 export { physicalSide } from './actual-placement.js';
 export { capitalize } from './capitalize.js';
+export { deepContains } from './deep-contains.js';
 export {
   isTopDismissible,
   registerDismissible,
