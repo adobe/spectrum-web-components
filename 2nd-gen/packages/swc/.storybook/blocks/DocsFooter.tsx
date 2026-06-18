@@ -38,6 +38,7 @@ export const DocsFooter = () => {
   const resolvedOf = useOf('meta', ['meta']);
   const tags: string[] = resolvedOf?.preparedMeta?.tags ?? [];
   const isController = tags.includes('controller');
+  const isUtility = tags.includes('utility');
 
   // Per-unit pages may flag custom API content by tagging stories with `api`.
   const hasCustomApiStories = Object.values(
@@ -58,7 +59,7 @@ export const DocsFooter = () => {
 
   return (
     <>
-      {!isController && (
+      {!isController && !isUtility && (
         <>
           <HeaderMdx as="h2" id="api">
             API

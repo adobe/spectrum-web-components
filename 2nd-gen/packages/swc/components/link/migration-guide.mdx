@@ -1,0 +1,137 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Link/Migration guide" />
+
+# Link migration guide
+
+Spectrum 2 delivers links as **native `<a href>` elements** with CSS; there is no `swc-link` custom element. Replace `<sp-link>` with semantic anchors and the styles documented below.
+
+## Installation
+
+```bash
+# Remove
+yarn remove @spectrum-web-components/link
+
+# Add
+yarn add @adobe/spectrum-wc
+```
+
+## Stylesheets
+
+| Stylesheet                   | Import                               | Purpose                                                                                      |
+| ---------------------------- | ------------------------------------ | -------------------------------------------------------------------------------------------- |
+| `typography.css`             | `@adobe/spectrum-wc/typography.css`  | Default link appearance inside **`.swc-Typography--prose`** and **`.swc-Typography--links`** |
+| `link.css`                   | `@adobe/spectrum-wc/link.css`        | BEM modifier classes for standalone / secondary / quiet / static-color anchors               |
+| `global-link.css` (optional) | `@adobe/spectrum-wc/global-link.css` | Opt-in baseline for **bare** `<a>` without classes                                           |
+
+> Default in-body and link-list styling ships with **Typography**; see the [Typography migration guide](../typography/migration-guide.mdx) for prose and wrapper patterns. This guide covers explicit link modifiers and migrating from `sp-link`.
+
+```js
+// Prose / link lists (typography wrappers style unclassed anchors)
+import '@adobe/spectrum-wc/typography.css';
+
+// Explicit modifiers on individual anchors
+import '@adobe/spectrum-wc/link.css';
+```
+
+## What changed
+
+### Architecture
+
+| Area                 | Spectrum 1 (`sp-link`)                        | Spectrum 2                                           |
+| -------------------- | --------------------------------------------- | ---------------------------------------------------- |
+| Element              | `<sp-link href="#">` shadow host              | Native `<a href="#">`                                |
+| Presentation         | `variant`, `quiet`, `static-color` attributes | BEM classes on `<a>` (and typography wrappers)       |
+| In-body copy         | Per-link custom element                       | `<a href>` inside `.swc-Typography--prose`           |
+| Link lists / footers | `sp-link` in lists                            | `<ul class="swc-Typography--links">` with `<a href>` |
+
+### Attribute → class mapping
+
+| `sp-link` attribute    | Spectrum 2                                                                                                              |
+| ---------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| (default)              | Unclassed `<a>` inside `.swc-Typography--prose` or `.swc-Typography--links`, or `class="swc-Link swc-Link--standalone"` |
+| `variant="secondary"`  | `class="swc-Link swc-Link--secondary"`                                                                                  |
+| `quiet`                | `class="swc-Link swc-Link--quiet swc-Link--standalone"` (section / footer contexts only)                                |
+| `static-color="white"` | `class="swc-Link swc-Link--staticWhite"`                                                                                |
+| `static-color="black"` | `class="swc-Link swc-Link--staticBlack"`                                                                                |
+| `disabled`             | **Not supported** on navigational links; use a disabled `<button>` or remove the control                                |
+
+Behavioral attributes (`href`, `target`, `rel`, `download`, `referrerpolicy`, `aria-label`) remain standard HTML on `<a>`.
+
+### Removed
+
+| Removed                      | Replacement                                       |
+| ---------------------------- | ------------------------------------------------- |
+| `<sp-link>`                  | `<a href>` + typography and/or `link.css` classes |
+| `disabled` on links          | Disabled button, or remove link                   |
+| `inline` as author attribute | Links in prose inherit typography automatically   |
+
+## Update your code
+
+### 1. Prose and running text
+
+```html
+<!-- Before -->
+<p class="spectrum-Body">
+  Read the
+  <sp-link href="/docs">documentation</sp-link>
+  for details.
+</p>
+
+<!-- After -->
+<div class="swc-Typography--prose">
+  <p>
+    Read the
+    <a href="/docs">documentation</a>
+    for details.
+  </p>
+</div>
+```
+
+### 2. Link lists (footers, sidebars)
+
+```html
+<ul class="swc-Typography--links">
+  <li><a href="/privacy">Privacy</a></li>
+  <li><a href="/terms">Terms</a></li>
+  <li><a href="/help">Help</a></li>
+</ul>
+```
+
+### 3. Standalone link with modifiers
+
+```html
+<a class="swc-Link swc-Link--standalone" href="/account">Account settings</a>
+<a class="swc-Link swc-Link--secondary swc-Link--standalone" href="/learn-more">
+  Learn more
+</a>
+```
+
+### 4. Quiet links in section context
+
+Use quiet styling only where surrounding context makes links obvious (for example footers). Pair **`swc-Link--quiet`** with **`swc-Link--standalone`**:
+
+```html
+<footer>
+  <a class="swc-Link swc-Link--quiet swc-Link--standalone" href="/privacy">
+    Privacy
+  </a>
+</footer>
+```
+
+## Accessibility
+
+- Use real `<a href>` for navigation; avoid JavaScript-only fake links.
+- Do not use `disabled` on anchors; it is not valid for navigational links.
+- Icon-only links need an accessible name (`aria-label` or visible text).
+- Restrict **quiet** styling to approved section patterns, not undifferentiated long-form body copy.
+
+See [Semantic HTML and ARIA](../../.storybook/guides/accessibility-guides/semantic_html_aria.mdx) and the contributor [accessibility migration analysis](https://github.com/adobe/spectrum-web-components/blob/main/CONTRIBUTOR-DOCS/03_project-planning/03_components/link/accessibility-migration-analysis.md).
+
+## Checklist
+
+- [ ] Replace `<sp-link>` with `<a href>` in prose (`swc-Typography--prose`) and link lists (`swc-Typography--links`)
+- [ ] Import `@adobe/spectrum-wc/typography.css` (and `link.css` when using BEM modifiers)
+- [ ] Map `variant`, `quiet`, and `static-color` to BEM classes
+- [ ] Remove `disabled` from links; use button + routing where needed
+- [ ] Retest contrast for links adjacent to body text
