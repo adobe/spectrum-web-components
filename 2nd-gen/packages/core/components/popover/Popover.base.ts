@@ -457,6 +457,14 @@ export abstract class PopoverBase extends SpectrumElement {
       return;
     }
     const showArrow = !this.hideArrow;
+    // Re-gate the fade for this positioning session. `_placementController.start`
+    // calls `stop()`, which clears the surface's inline `translate` back to the 0,0
+    // origin until the (async) first compute re-anchors it. A rapid reopen during
+    // the close fade still carries a stale `positioned` (its removal is deferred to
+    // the post-close transition, which the reopen cancels), so without this the
+    // surface would briefly paint at 0,0 and jump. Cleared here and re-set by
+    // onPlacementChange once the new session anchors.
+    this.removeAttribute('positioned');
     // Reflect the requested side synchronously so the tip is oriented before the
     // controller's first (async) compute; the controller then overwrites it with
     // the flip-resolved side via onPlacementChange.

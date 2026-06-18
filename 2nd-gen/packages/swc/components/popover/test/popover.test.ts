@@ -438,7 +438,9 @@ export const ActualPlacementTest: Story = {
 export const PositionedFadeGateTest: Story = {
   render: () => html`
     <button id="positioned-trigger">Trigger</button>
-    <swc-popover for="positioned-trigger" placement="bottom">Content</swc-popover>
+    <swc-popover for="positioned-trigger" placement="bottom">
+      Content
+    </swc-popover>
   `,
   play: async ({ canvasElement, step }) => {
     const popover = await getComponent<Popover>(canvasElement, 'swc-popover');
@@ -464,6 +466,23 @@ export const PositionedFadeGateTest: Story = {
       // The anchored translate is applied in the same compute that marks it
       // positioned, so the fade only runs from the correct location.
       expect(surface.style.translate).not.toBe('');
+    });
+
+    await step('re-gates on a rapid reopen during the close fade', async () => {
+      // Close, then reopen before the close transition finishes. The deferred
+      // teardown that clears `positioned` is cancelled by the reopen, and
+      // restarting positioning clears the surface translate, so the fade must be
+      // re-gated; otherwise the surface would briefly paint at 0,0 and jump.
+      popover.open = false;
+      await popover.updateComplete;
+      popover.open = true;
+      await popover.updateComplete;
+      expect(popover.hasAttribute('positioned')).toBe(false);
+      expect(getComputedStyle(surface).opacity).toBe('0');
+      // Re-anchors and re-marks positioned once the new session computes.
+      await waitFor(() =>
+        expect(popover.hasAttribute('positioned')).toBe(true)
+      );
     });
 
     await step('drops positioned after the close transition', async () => {
