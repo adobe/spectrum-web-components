@@ -80,6 +80,11 @@ jobs:
       - name: Generate LLM reference files
         run: yarn generate:llms
 
+      - name: Generate Agent Skills
+        env:
+          SKILLS_BASE_URL: https://swcpreviews.z13.web.core.windows.net/${{ steps.pr_hash.outputs.hash }}/docs/second-gen-storybook
+        run: yarn generate:skills
+
       - name: Move CEM to Storybook directory
         run: cp 1st-gen/projects/documentation/custom-elements.json 1st-gen/storybook/
 
