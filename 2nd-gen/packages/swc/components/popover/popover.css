@@ -47,6 +47,11 @@
   border: token("border-width-100") solid token("popover-border-color");
   border-radius: token("corner-radius-100");
   overflow: visible;
+
+  /* Keep scrolling inside an internal scroll region from chaining out to the
+   * page (most relevant in modal mode). The page-level scroll lock for modal
+   * mode needs JS (a shadow stylesheet cannot reach `html`) and is deferred. */
+  overscroll-behavior: contain;
   outline: none;
 
   /* Fade on open/close. The slide axis (translate) is owned by the
