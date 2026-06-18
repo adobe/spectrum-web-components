@@ -18,7 +18,7 @@ import type { DecoratorFunction } from '@storybook/types';
 /**
  * Static color background settings - matching spectrum-css gradients
  */
-export const staticColorSettings = {
+const staticColorSettings = {
   black: 'linear-gradient(45deg, rgb(255 241 246), rgb(238 245 255))',
   white: 'linear-gradient(45deg, rgb(64 0 22), rgb(14 24 67))',
 } as const;
