@@ -5,7 +5,7 @@ license: 'Apache-2.0'
 kind: 'migration'
 metadata:
   author: 'Adobe'
-  website: 'https://opensource.adobe.com/spectrum-web-components/'
+  website: 'https://spectrum-web-components.adobe.com'
 ---
 
 # Spectrum 1 → Spectrum 2 migration
