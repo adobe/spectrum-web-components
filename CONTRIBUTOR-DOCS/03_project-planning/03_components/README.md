@@ -21,7 +21,6 @@
 - Accordion
     - [Accordion accessibility migration analysis](accordion/accessibility-migration-analysis.md)
     - [Accordion migration plan](accordion/migration-plan.md)
-- Action Bar
 - Action Button
     - [Action button accessibility migration analysis](action-button/accessibility-migration-analysis.md)
     - [Action button migration roadmap](action-button/rendering-and-styling-migration-analysis.md)
@@ -128,6 +127,8 @@
     - [Radio migration roadmap](radio/rendering-and-styling-migration-analysis.md)
 - Search
     - [Search migration roadmap](search/rendering-and-styling-migration-analysis.md)
+- Sidenav
+    - [Side navigation accessibility migration analysis](sidenav/accessibility-migration-analysis.md)
 - Slider
     - [Slider migration roadmap](slider/rendering-and-styling-migration-analysis.md)
 - Status Light
