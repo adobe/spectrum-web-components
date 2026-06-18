@@ -51,7 +51,7 @@
   user-select: none;
   transition-timing-function: token("animation-ease-in-out");
   transition-duration: token("animation-duration-100");
-  transition-property: border-color, color, background-color, transform;
+  transition-property: outline, border-color, color, background-color, transform;
 }
 
 /* ── States ───────────────────────────────────────── */
