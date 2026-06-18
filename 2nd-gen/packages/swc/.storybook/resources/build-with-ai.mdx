@@ -11,29 +11,24 @@ Resources to help AI coding tools understand and work with Spectrum Web Componen
 [Agent Skills](https://agentskills.io) are bundles of instructions and reference files that
 your AI coding tool can load when they are relevant to a task.
 
-Two skills are available for Spectrum Web Components.
+Two skills are available for Spectrum Web Components:
 
-### Spectrum Web Components (Spectrum 1)
+### Gen1
 
 Use this skill when building with `sp-*` components from `@spectrum-web-components/*` packages.
 It includes guides, component API references, accessibility guidance, and integration examples.
 
-```bash
-npx skills add spectrum-web-components.adobe.com
-```
-
-### Migrate from Spectrum 1 to Spectrum 2
+### Migrate from Gen1 to Gen2
 
 Use this skill when upgrading `sp-*` components to `swc-*` components from `@adobe/spectrum-wc`.
 It includes the full coexistence walkthrough, per-component migration guides, and a CSS property
 mapping reference.
 
+Both skills are installed with a single command:
+
 ```bash
 npx skills add spectrum-web-components.adobe.com
 ```
-
-> Both skills are installed automatically when you run the command above. Agent Skills clients
-> select the right skill based on your task context.
 
 ## llms.txt
 
@@ -47,6 +42,4 @@ tools that prefer to load all documentation at once.
 
 ## Per-page Markdown
 
-Every documentation page on this site is available as a standalone Markdown file. Append `.md`
-to any documentation URL to get the Markdown version of that page. This is useful for copying
-content into an AI prompt, or for tools that fetch documentation on demand.
+We will provide links to the direct markdown files on the pages that support it.
