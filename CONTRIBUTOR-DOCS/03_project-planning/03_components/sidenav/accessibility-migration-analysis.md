@@ -52,7 +52,8 @@ This doc describes how **`swc-sidenav`**, **`swc-sidenav-item`**, and **`swc-sid
 
 ### When to use something else
 
-- **Top-level site-wide tabs or routes** that require the full `tablist` / `tabpanel` semantics: use `swc-tabs`.
+- **Horizontal top-level navigation** (site-wide or app-level links across the top of the page): use `swc-top-nav`. Top navigation uses the same disclosure navigation pattern as side navigation — links, `<nav>` landmark, `aria-current="page"` — but is oriented horizontally and lives at the top of the layout. It does **not** use `role="tablist"` or `tabpanel` semantics.
+- **In-page panel switching** (toggling content sections within the same page without navigating): use `swc-tabs`. Tabs use `role="tablist"`, `role="tab"`, `role="tabpanel"`, and `aria-selected`; they are not navigation and do not change the URL. Do not use `swc-tabs` for page-level navigation.
 - **In-page section navigation** (anchor links, TOC): use a plain `<nav>` with links, not side navigation.
 - **Command menus or action menus** (perform actions, not navigate to pages): use `swc-action-menu` or `swc-menu`.
 
