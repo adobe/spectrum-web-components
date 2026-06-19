@@ -121,6 +121,7 @@
     - [Popover migration roadmap](popover/rendering-and-styling-migration-analysis.md)
 - Progress Bar
     - [Progress bar accessibility migration analysis](progress-bar/accessibility-migration-analysis.md)
+    - [Progress bar migration plan](progress-bar/migration-plan.md)
     - [Progress bar migration roadmap](progress-bar/rendering-and-styling-migration-analysis.md)
 - Progress Circle
     - [Progress circle accessibility migration analysis](progress-circle/accessibility-migration-analysis.md)
