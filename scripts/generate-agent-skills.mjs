@@ -265,6 +265,8 @@ function stripMdx(content) {
       .replace(/^import\s+.*?from\s+['"][^'"]+['"]\s*;?\s*\n/gm, '')
       // Remove <Meta .../> (single-line self-closing)
       .replace(/^<Meta\s[^>]*\/>\s*\n/gm, '')
+      // Replace Storybook-only Canvas examples with a plain Markdown note
+      .replace(/^<Canvas\b[^>]*\/>\s*\n?/gm, '_Storybook example omitted._\n')
       // Remove <img> tags with a JS expression source (can't resolve at build time)
       .replace(/<img\s[^>]*\{[^}]*\}[^>]*\/?>/gi, '')
       // Remove JSX block comments
