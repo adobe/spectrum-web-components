@@ -432,12 +432,11 @@ jobs:
             - store_artifacts:
                 path: 2nd-gen/packages/swc/coverage
 
-  # 2nd-gen Storybook-based tests: ARIA snapshots (Playwright) + axe-core WCAG (test-runner)
-  # Both suites run against the same static Storybook build, so we build once and run both.
+  # 2nd-gen ARIA snapshot tests (Playwright)
   # NOTE: Uses full `downstream` because Storybook build has 1st-gen references
   # (contributor-docs generation, CEM analysis). The tests run against the
   # built static Storybook to avoid Vite dev-server cold-start flakiness.
-  test-2ndgen-storybook:
+  test-2ndgen-a11y:
     executor: node
 
     steps:
@@ -456,6 +455,20 @@ jobs:
           path: /root/project/2nd-gen/test/playwright-a11y/results
       - store_artifacts:
           path: 2nd-gen/test/playwright-a11y/report
+
+  # 2nd-gen axe-core WCAG tests (Storybook test-runner)
+  # NOTE: Uses full `downstream` because Storybook build has 1st-gen references
+  test-2ndgen-axe:
+    executor: node
+
+    steps:
+      - halt-if-not-affected:
+          gen: 2nd-gen
+      - downstream
+      - run:
+          name: Build 2nd-gen Storybook (production)
+          command: |
+            NODE_ENV=production SWC_STORYBOOK_MODE=ci-a11y yarn workspace @adobe/spectrum-wc storybook:build
       - run:
           name: Run axe-core WCAG tests
           command: |
@@ -673,7 +686,8 @@ workflows:
           matrix:
             parameters:
               browser: [chromium, firefox, webkit]
-      - test-2ndgen-storybook
+      - test-2ndgen-a11y
+      - test-2ndgen-axe
       # 1st-gen tests
       - test-chromium
       - test-chromium-memory
