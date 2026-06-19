@@ -168,11 +168,8 @@ commands:
   downstream:
     steps:
       - setup-node-dependencies
-      - run:
-          name: Build the project
-          command: |
-            yarn build
-      - save-node-dependencies-cache
+      - attach_workspace:
+          at: .
   downstream-2ndgen:
     description: 'Setup and build for 2nd-gen tests'
     steps:
@@ -321,6 +318,20 @@ commands:
           key: v2-golden-images-{{ .Branch }}-<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-{{ .Revision }}
 
 jobs:
+  build:
+    executor: node
+    steps:
+      - setup-node-dependencies
+      - run:
+          name: Build the project
+          command: yarn build
+      - save-node-dependencies-cache
+      - persist_to_workspace:
+          root: .
+          paths:
+            - 1st-gen/packages
+            - 1st-gen/tools
+
   test-chromium:
     executor: node
     parallelism: 5
@@ -680,32 +691,44 @@ workflows:
   # fast no-op, instead of being absent from the status check list.
   build:
     jobs:
-      # 2nd-gen tests
+      - build
+      # 2nd-gen tests (downstream-2ndgen — no dependency on build job)
       - test-2ndgen-browser:
           name: test-2ndgen-browser-<< matrix.browser >>
           matrix:
             parameters:
               browser: [chromium, firefox, webkit]
-      - test-2ndgen-a11y
-      - test-2ndgen-axe
+      # 2nd-gen Storybook tests use downstream (needs 1st-gen build)
+      - test-2ndgen-a11y:
+          requires: [build]
+      - test-2ndgen-axe:
+          requires: [build]
       # 1st-gen tests
-      - test-chromium
-      - test-chromium-memory
-      - test-firefox
-      - test-webkit
-      - test-chromium-coverage
+      - test-chromium:
+          requires: [build]
+      - test-chromium-memory:
+          requires: [build]
+      - test-firefox:
+          requires: [build]
+      - test-webkit:
+          requires: [build]
+      - test-chromium-coverage:
+          requires: [build]
       - hcm-visual:
+          requires: [build]
           filters:
             branches:
               # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
               ignore: /pull\/[0-9]+/
       - beta-docs:
+          requires: [build]
           filters:
             branches:
               # Beta docs are only published from main
               only: main
       - visual:
           name: << matrix.system >>-<< matrix.color >>-<< matrix.scale >>-<< matrix.dir >>
+          requires: [build]
           matrix:
             parameters:
               system: [spectrum, express, spectrum-two]
@@ -718,6 +741,7 @@ workflows:
               ignore: /pull\/[0-9]+/
       - visual:
           name: << matrix.system >>-<< matrix.color >>-<< matrix.scale >>-<< matrix.dir >>
+          requires: [build]
           matrix:
             parameters:
               system: [spectrum, express, spectrum-two]
