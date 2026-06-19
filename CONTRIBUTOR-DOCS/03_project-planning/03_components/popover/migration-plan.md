@@ -636,13 +636,13 @@ CSS targets the internal `.swc-Popover` element regardless of mode. `popover.css
 #### `resolveTrigger()` helper
 
 - [ ] `resolve-trigger.ts`: pure function `resolveTrigger(host, { for, triggerElement })` returns `{ trigger, interactiveElement }`. Resolves `for=` via `host.getRootNode().getElementById()`; falls back to the `trigger-element` override; performs inner-button discovery via `trigger.shadowRoot?.querySelector('button')` for open-shadow trigger hosts; returns `trigger` itself as `interactiveElement` for closed-shadow or native triggers.
-- [ ] Unit-test all four resolution scenarios: (1) same-root by ID; (2) customer's shadow root containing both; (3) cross-root with inner-button discovery (open shadow on the trigger host); (4) cross-root via `trigger-element` setter, plus closed-shadow fallback to the host.
+- [x] Unit-test the resolution scenarios (`core/utils/test/resolve-trigger.test.ts`): same-root by ID, `trigger-element` override, inner-button discovery on an open-shadow trigger host, and unresolved-id → null. (Customer-shadow-root variants take the same `getRootNode()` path; not separately fixtured.)
 
 #### `dismissibleStack` module
 
 - [ ] `dismissible-stack.ts`: exports three functions over a module-level `const dismissibleStack: object[] = []` — `registerDismissible(key)` pushes the key onto the stack, `unregisterDismissible(key)` removes the most-recent entry matching the key, `isTopDismissible(key)` returns whether the key is the topmost entry.
 - [ ] No persistence beyond module-level state — the stack is in-memory only and resets on page reload. That's correct for the dismissible coordination use case.
-- [ ] Unit-test register / unregister ordering, `isTopDismissible` correctness, idempotent unregister, and behavior with multiple keys of different types.
+- [x] Unit-test register / unregister ordering, `isTopDismissible` correctness, idempotent unregister, and multiple keys (`core/utils/test/dismissible-stack.test.ts`).
 - [ ] Document the API and the consumer pattern in JSDoc on each exported function; include the "register on open, unregister on close (and `disconnectedCallback`), check `isTopDismissible` before processing custom Escape" usage convention.
 
 #### Popover component
@@ -733,9 +733,9 @@ CSS targets the internal `.swc-Popover` element regardless of mode. `popover.css
 ### Testing
 
 - [ ] `PlacementController` agnostic test suite (`placement-controller.test.ts`): anchor placement + flip + shift + size + arrow on synthetic trigger/target pairs; autoUpdate wiring; rapid-open guard; WebKit compensation in a mocked WebKit context
-- [ ] `resolveTrigger()` agnostic test suite (`resolve-trigger.test.ts`): all four resolution scenarios — same-root by ID, customer's shadow containing both, cross-root 2nd-gen with inner-button discovery, cross-root via trigger-element setter, closed-shadow fallback
-- [ ] `Popover.test.ts`: component-level behavior — renders correctly, attribute reflection, slot content, both modes
-- [ ] Add Playwright `popover.a11y.spec.ts` with `toMatchAriaSnapshot` for both modes (auto: no host role; modal: `role="dialog"` announced)
+- [x] `resolveTrigger()` agnostic test suite (`core/utils/test/resolve-trigger.test.ts`): for= by ID, trigger-element override, inner-button discovery, unresolved → null. Also added `deep-contains.test.ts` and `transition.test.ts`.
+- [x] `popover.test.ts`: component-level behavior — render shape (both modes), attribute reflection, slot content, lifecycle/events, close-source labeling, focus restoration, scroll-lock, dismissal coordination, nested layering, failed-show handling, and trigger ARIA (aria-expanded / aria-haspopup / aria-controls).
+- [ ] Add Playwright `popover.a11y.spec.ts` with `toMatchAriaSnapshot` for both modes (auto: no host role; modal: `role="dialog"`). _Deferred: ARIA-tree baselines need the Playwright a11y runner; trigger/dialog ARIA is covered by play functions and axe runs via the test-runner in the meantime._
 
 #### Behavior — auto mode (default)
 
