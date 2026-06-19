@@ -164,18 +164,11 @@ commands:
   downstream:
     steps:
       - setup-node-dependencies
-      - restore_cache:
-          keys:
-            - cache-wireit-1st-gen-{{ arch }}-{{ checksum "1st-gen/package.json" }}-
       - run:
           name: Build the project
           command: |
             yarn build
       - save-node-dependencies-cache
-      - save_cache:
-          paths:
-            - 1st-gen/.wireit
-          key: cache-wireit-1st-gen-{{ arch }}-{{ checksum "1st-gen/package.json" }}-{{ .Revision }}
       - attach_workspace:
           at: /
   downstream-2ndgen:
