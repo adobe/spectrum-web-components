@@ -10,13 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
-import {
-  CSSResultArray,
-  html,
-  nothing,
-  PropertyValues,
-  TemplateResult,
-} from 'lit';
+import { CSSResultArray, html, PropertyValues, TemplateResult } from 'lit';
 import { property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
@@ -29,6 +23,10 @@ import {
   type ButtonStaticColor,
   type ButtonVariant,
 } from '@spectrum-web-components/core/components/button';
+import {
+  PendingController,
+  pendingControllerStyles,
+} from '@spectrum-web-components/core/controllers/pending-controller';
 
 import styles from './button.css';
 import baseStyles from './button-base.css';
@@ -119,12 +117,36 @@ export class Button extends ButtonBase {
   @property({ type: Boolean, reflect: true })
   public justified: boolean = false;
 
+  /**
+   * Whether the button is in a pending (busy) state. The button remains
+   * focusable but activation is suppressed.
+   */
+  @property({ type: Boolean, reflect: true })
+  public pending: boolean = false;
+
+  /**
+   * Custom accessible label used during the pending state. When omitted, the
+   * pending label is derived from the resolved non-busy accessible name plus a
+   * busy suffix (e.g. "Save, busy").
+   */
+  @property({ type: String, attribute: 'pending-label' })
+  public pendingLabel?: string;
+
   // ──────────────────────────────
   //     RENDERING & STYLING
   // ──────────────────────────────
 
+  /**
+   * Manages the pending (busy) state: the delayed visual activation, freezing
+   * the button's inline size while busy, the derived busy accessible name, and
+   * rendering the animated spinner.
+   */
+  private readonly pendingController = new PendingController(this, {
+    resolveAccessibleName: () => this.getResolvedAccessibleName(),
+  });
+
   public static override get styles(): CSSResultArray {
-    return [baseStyles, styles];
+    return [baseStyles, styles, pendingControllerStyles];
   }
 
   // @todo SWC-2034: handle form-associated types reset / submit
@@ -135,7 +157,7 @@ export class Button extends ButtonBase {
           'swc-Button': true,
           'swc-Button--hasIcon': this.hasIcon,
           'swc-Button--iconOnly': this.hasIcon && !this.hasLabel,
-          'swc-Button--pendingActive': this.pendingActive,
+          'swc-Button--pendingActive': this.pendingController.pendingActive,
         })}
         type="button"
         @click=${this.handleClick}
@@ -144,49 +166,36 @@ export class Button extends ButtonBase {
           this.pending && !this.disabled ? 'true' : undefined
         )}
         aria-label=${ifDefined(
-          this.pending ? this.getPendingAccessibleName() : this.accessibleLabel
+          this.pending
+            ? this.pendingController.getPendingAccessibleName()
+            : this.accessibleLabel
         )}
       >
         <slot name="icon"></slot>
         <span class="swc-Button-label">
           <slot></slot>
         </span>
-        ${this.pending
-          ? html`
-              <svg
-                class="swc-Button-pendingSpinner"
-                width="100%"
-                height="100%"
-                fill="none"
-                aria-hidden="true"
-                focusable="false"
-              >
-                <circle
-                  class="swc-Button-pendingSpinner-track"
-                  cx="50%"
-                  cy="50%"
-                  r="calc(50% - 1px)"
-                />
-                <circle
-                  class="swc-Button-pendingSpinner-fill"
-                  cx="50%"
-                  cy="50%"
-                  r="calc(50% - 1px)"
-                  pathLength="100"
-                  stroke-dasharray="100 200"
-                  stroke-dashoffset="75"
-                  stroke-linecap="round"
-                />
-              </svg>
-            `
-          : nothing}
+        ${this.pendingController.renderPendingState()}
       </button>
     `;
+  }
+
+  /** Also suppress activation while pending, on top of the base `disabled` rule. */
+  protected override isActivationSuppressed(): boolean {
+    return super.isActivationSuppressed() || this.pending;
   }
 
   protected override update(changedProperties: PropertyValues): void {
     super.update(changedProperties);
     if (window.__swc?.DEBUG) {
+      if (this.pending && this.disabled) {
+        window.__swc.warn(
+          this,
+          `<${this.localName}> should not set both "pending" and "disabled" simultaneously. Use "pending" to keep the button focusable while unavailable, or "disabled" to fully remove it from the tab order.`,
+          'https://opensource.adobe.com/spectrum-web-components/components/button/#pending',
+          { issues: ['pending + disabled'] }
+        );
+      }
       if (!BUTTON_VARIANTS.includes(this.variant)) {
         window.__swc.warn(
           this,

@@ -61,7 +61,7 @@
 - 2nd-gen `sp-button` should render an internal semantic `<button>` and move semantics off the host
 - Pending must remain focusable while unavailable, use `aria-disabled="true"`, and announce a descriptive busy state
 - The visual API should use React-aligned `fillStyle` terminology: `primary` / `secondary` support `fill` + `outline`; `accent` / `negative` are fill-only
-- Pending will use a 1-second delayed inline animated SVG spinner in the initial migration; reuse can be evaluated later
+- Pending will use a 1-second delayed inline animated SVG spinner in the initial migration; reuse can be evaluated later (realized post-migration — see the Post-migration update below)
 - Component Button styles and [`global-button.css`](../../../../2nd-gen/packages/swc/stylesheets/global/global-button.css) should share source/imports if possible
 - `core` should own reusable semantic rules and serve as the intended reuse base for later button-like migrations; `swc` should own `sp-button` rendering and S2 styling
 
@@ -330,9 +330,11 @@ Using an internal semantic `<button>` also means:
 
 Follow the [Badge migration reference](../../02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md#reference-badge-migration) as the concrete pattern for the core/SWC split.
 
+> **Post-migration update (2026-06-10): pending logic extracted into `PendingController`.** The reuse deferred during the initial migration has since been implemented. The pending behavior (1-second delayed `pendingActive`, inline-size freeze, derived busy accessible name, and the animated spinner with its own themeable styles) now lives in a reusable Lit reactive controller at `2nd-gen/packages/core/controllers/pending-controller/`, exported as `PendingController` / `pendingControllerStyles`. The `pending` and `pending-label` properties moved off `ButtonBase` onto `swc-button` (`Button.ts`), and `ButtonBase` is now pending-agnostic (click suppression generalized via `isActivationSuppressed()`). The sections below describe the original migration state; where they place pending logic in `ButtonBase`, read it as relocated to the controller + `swc-button`.
+
 | Layer | Path | Contains |
 |---|---|---|
-| **Core** | `2nd-gen/packages/core/components/button/` | `Button.base.ts`, `Button.types.ts`, validation, state, accessible-name logic, attribute forwarding, pending-label behavior, and other reusable semantic rules. No rendering. |
+| **Core** | `2nd-gen/packages/core/components/button/` | `Button.base.ts`, `Button.types.ts`, validation, state, accessible-name logic, attribute forwarding, and other reusable semantic rules. No rendering. (Pending behavior was later extracted to `core/controllers/pending-controller/`; see the post-migration update above.) |
 | **SWC** | `2nd-gen/packages/swc/components/button/` | `Button.ts`, `button.css`, element registration, stories, tests, and the specific S2 rendering/styling for `sp-button`. |
 
 Planned rendering shape:
