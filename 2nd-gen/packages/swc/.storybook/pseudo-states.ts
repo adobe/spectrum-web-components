@@ -91,7 +91,9 @@ export function collectPseudoStateRules(source: CSSStyleSheet): string[] {
 }
 
 /** Builds an adoptable stylesheet with class-based pseudo-state mirrors. */
-export function buildAugmentedSheet(source: CSSStyleSheet): CSSStyleSheet | null {
+export function buildAugmentedSheet(
+  source: CSSStyleSheet
+): CSSStyleSheet | null {
   const rules: string[] = [];
   try {
     walkRules(source.cssRules, rules);
