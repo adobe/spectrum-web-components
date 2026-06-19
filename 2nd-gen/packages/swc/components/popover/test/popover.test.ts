@@ -50,8 +50,8 @@ export const OverviewTest: Story = {
     await step('the custom element is registered', () => {
       expect(
         customElements.get('swc-popover'),
-        'swc-popover is defined'
-      ).toBeTruthy();
+        'swc-popover is registered to the Popover class'
+      ).toBe(Popover);
     });
 
     await step('the element is an instance of Popover', () => {
@@ -198,8 +198,9 @@ export const DefaultModeRenderTest: Story = {
       'default mode renders a div[popover=auto] inside shadow root',
       () => {
         const inner = popover.shadowRoot?.querySelector('.swc-Popover');
-        expect(inner, 'internal .swc-Popover element exists').toBeTruthy();
-        expect(inner?.tagName, 'internal element is a DIV').toBe('DIV');
+        expect(inner, 'internal element is a <div>').toBeInstanceOf(
+          HTMLDivElement
+        );
         expect(
           inner?.getAttribute('popover'),
           'internal element has popover=auto'
@@ -209,12 +210,16 @@ export const DefaultModeRenderTest: Story = {
 
     await step('content wrapper is present', () => {
       const content = popover.shadowRoot?.querySelector('.swc-Popover-content');
-      expect(content, '.swc-Popover-content wrapper exists').toBeTruthy();
+      expect(content, '.swc-Popover-content is a <div>').toBeInstanceOf(
+        HTMLDivElement
+      );
     });
 
     await step('arrow tip is rendered by default (hideArrow=false)', () => {
       const tip = popover.shadowRoot?.querySelector('.swc-Popover-tip');
-      expect(tip, '.swc-Popover-tip is rendered').toBeTruthy();
+      expect(tip, '.swc-Popover-tip is a <span>').toBeInstanceOf(
+        HTMLSpanElement
+      );
     });
   },
 };
@@ -232,8 +237,9 @@ export const ModalModeRenderTest: Story = {
 
     await step('modal mode renders a dialog inside shadow root', () => {
       const inner = popover.shadowRoot?.querySelector('.swc-Popover');
-      expect(inner, 'internal .swc-Popover element exists').toBeTruthy();
-      expect(inner?.tagName, 'internal element is a DIALOG').toBe('DIALOG');
+      expect(inner, 'internal element is a <dialog>').toBeInstanceOf(
+        HTMLDialogElement
+      );
       expect(
         inner?.hasAttribute('popover'),
         'dialog does not have popover attribute'
@@ -242,7 +248,9 @@ export const ModalModeRenderTest: Story = {
 
     await step('content wrapper is present in modal mode', () => {
       const content = popover.shadowRoot?.querySelector('.swc-Popover-content');
-      expect(content, '.swc-Popover-content wrapper exists').toBeTruthy();
+      expect(content, '.swc-Popover-content is a <div>').toBeInstanceOf(
+        HTMLDivElement
+      );
     });
   },
 };
@@ -471,7 +479,9 @@ export const PositionedFadeGateTest: Story = {
       );
       // The anchored translate is applied in the same compute that sets
       // `actual-placement`, so the fade only runs from the correct location.
-      expect(surface.style.translate).not.toBe('');
+      expect(surface.style.translate, 'a pixel translate is applied').toMatch(
+        /\dpx/
+      );
     });
 
     await step('re-gates on a rapid reopen during the close fade', async () => {
@@ -832,8 +842,8 @@ export const InvalidPlacementWarningTest: Story = {
 
         expect(
           warnCalls.length,
-          'at least one warning is emitted for invalid placement'
-        ).toBeGreaterThan(0);
+          'exactly one warning is emitted for invalid placement'
+        ).toBe(1);
         expect(
           String(warnCalls[0]?.[1] || ''),
           'warning message references placement'
@@ -1070,8 +1080,8 @@ export const UnresolvedForWarningTest: Story = {
       await popover.updateComplete;
       expect(
         warnCalls.length,
-        'warns when for= does not resolve'
-      ).toBeGreaterThan(0);
+        'exactly one warning when for= does not resolve'
+      ).toBe(1);
       expect(String(warnCalls[0]?.[1] || '')).toContain('did not resolve');
     });
   },
@@ -1304,7 +1314,9 @@ export const ModalNoLabelWarningTest: Story = {
     await withWarningSpy(async (warnCalls) => {
       popover.open = true;
       await popover.updateComplete;
-      expect(warnCalls.length, 'warns for a nameless modal').toBeGreaterThan(0);
+      expect(warnCalls.length, 'exactly one warning for a nameless modal').toBe(
+        1
+      );
       expect(String(warnCalls[0]?.[1] || '')).toContain('accessible-label');
     });
   },
@@ -1401,9 +1413,9 @@ export const TriggerAriaTest: Story = {
       'the trigger controls the popover (element-reference IDL)',
       () => {
         expect(
-          trigger.ariaControlsElements?.includes(popover),
-          'aria-controls relationship points at the popover'
-        ).toBe(true);
+          trigger.ariaControlsElements,
+          'aria-controls relationship is exactly the popover'
+        ).toEqual([popover]);
       }
     );
 
