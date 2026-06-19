@@ -225,8 +225,8 @@ Prerequisite dependency:
 - [x] Omit `variant` from 2nd-gen public API (breaking change; use `static-color` only).
 
 ### Styling
-- [ ] Implement S2 closebutton selectors/tokens in SWC CSS.
-- [ ] Define minimal public `--swc-close-button-*` properties.
+- [x] Implement S2 closebutton selectors/tokens in SWC CSS.
+- [x] Define minimal public `--swc-close-button-*` properties.
 
 ### Accessibility
 - [x] Real inner button with delegated focus.
@@ -239,14 +239,14 @@ Prerequisite dependency:
 - [x] Storybook interaction coverage for API and accessibility contract.
 
 ### Documentation
-- [ ] Storybook docs complete.
-- [ ] Consumer migration guide reconciled to shipped API/CSS.
-- [ ] `@cssprop` docs match migration guide tables.
+- [x] Storybook docs complete.
+- [x] Consumer migration guide reconciled to shipped API/CSS.
+- [x] `@cssprop` docs match migration guide tables.
 
 ### Review
 - [ ] Lint/tests/build pass.
-- [ ] Status doc updated.
-- [ ] Changeset included.
+- [x] Status doc updated.
+- [x] Changeset included.
 - [ ] Two reviewer sign-off.
 
 ---
