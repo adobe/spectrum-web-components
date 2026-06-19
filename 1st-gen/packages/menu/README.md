@@ -328,21 +328,24 @@ The `<sp-menu>` element can be instructed to maintain a selection via the `selec
 
 On small screens, flyout submenus are difficult to use because the overlay extends outside the tray. The `mobile-view` attribute switches an `<sp-menu>` to a drill-down navigation mode: activating a menu item that has a submenu slides the submenu's items in to replace the current content, with a back button to return to the previous level. This pattern works well inside an `<sp-tray>`.
 
-```html
-<sp-tray open>
-  <sp-menu mobile-view label="Options">
-    <sp-menu-item>Home</sp-menu-item>
-    <sp-menu-item>
-      File
-      <sp-menu slot="submenu">
-        <sp-menu-item>New</sp-menu-item>
-        <sp-menu-item>Open</sp-menu-item>
-        <sp-menu-item>Save</sp-menu-item>
-      </sp-menu>
-    </sp-menu-item>
-    <sp-menu-item>Settings</sp-menu-item>
-  </sp-menu>
-</sp-tray>
+```html demo
+<overlay-trigger type="modal">
+  <sp-button slot="trigger" variant="secondary">Open menu</sp-button>
+  <sp-tray slot="click-content">
+    <sp-menu mobile-view label="Options">
+      <sp-menu-item>Home</sp-menu-item>
+      <sp-menu-item>
+        File
+        <sp-menu slot="submenu">
+          <sp-menu-item>New</sp-menu-item>
+          <sp-menu-item>Open</sp-menu-item>
+          <sp-menu-item>Save</sp-menu-item>
+        </sp-menu>
+      </sp-menu-item>
+      <sp-menu-item>Settings</sp-menu-item>
+    </sp-menu>
+  </sp-tray>
+</overlay-trigger>
 ```
 
 The back button label defaults to "Back". Use the `mobile-back-label` attribute to provide a localized string:
