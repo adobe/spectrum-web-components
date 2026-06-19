@@ -331,6 +331,10 @@ jobs:
           paths:
             - 1st-gen/packages
             - 1st-gen/tools
+            - 1st-gen/test
+            - 1st-gen/scripts
+            - 1st-gen/storybook
+            - 1st-gen/projects
 
   test-chromium:
     executor: node
