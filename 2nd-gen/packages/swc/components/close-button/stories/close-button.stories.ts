@@ -116,17 +116,13 @@ export const Anatomy: Story = {
 
 export const Sizes: Story = {
   render: (args) => html`
-    <div style="display: flex; align-items: center; gap: 16px;">
-      ${BUTTON_VALID_SIZES.map(
-        (size) => html`
-          ${template({
-            ...args,
-            size,
-            'accessible-label': `Close (${size})`,
-          })}
-        `
-      )}
-    </div>
+    ${BUTTON_VALID_SIZES.map((size) =>
+      template({
+        ...args,
+        size,
+        'accessible-label': `Close (${size})`,
+      })
+    )}
   `,
   tags: ['options'],
   parameters: {
@@ -136,22 +132,18 @@ export const Sizes: Story = {
 
 export const StaticColors: Story = {
   render: (args) => html`
-    <div style="display: flex; align-items: center; gap: 16px;">
-      ${template({
-        ...args,
-        'static-color': 'white',
-        'accessible-label': 'Close (white)',
-      })}
-    </div>
-    <div style="display: flex; align-items: center; gap: 16px;">
-      ${template({
-        ...args,
-        'static-color': 'black',
-        'accessible-label': 'Close (black)',
-      })}
-    </div>
+    ${template({
+      ...args,
+      'static-color': 'white',
+      'accessible-label': 'Close (white)',
+    })}
+    ${template({
+      ...args,
+      'static-color': 'black',
+      'accessible-label': 'Close (black)',
+    })}
   `,
-  tags: ['options'],
+  tags: ['options', '!test'],
   parameters: {
     flexLayout: false,
     staticColorsDemo: true,
@@ -165,10 +157,8 @@ StaticColors.storyName = 'Static colors';
 
 export const States: Story = {
   render: (args) => html`
-    <div style="display: flex; align-items: center; gap: 16px;">
-      ${template({ ...args, 'accessible-label': 'Close' })}
-      ${template({ ...args, disabled: true, 'accessible-label': 'Close' })}
-    </div>
+    ${template({ ...args, 'accessible-label': 'Close' })}
+    ${template({ ...args, disabled: true, 'accessible-label': 'Close' })}
   `,
   tags: ['states'],
   parameters: {
