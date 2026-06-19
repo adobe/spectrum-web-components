@@ -7388,6 +7388,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@spectrum-web-components/llm-docs@workspace:1st-gen/projects/llm-docs":
+  version: 0.0.0-use.local
+  resolution: "@spectrum-web-components/llm-docs@workspace:1st-gen/projects/llm-docs"
+  languageName: unknown
+  linkType: soft
+
 "@spectrum-web-components/menu@npm:1.12.1, @spectrum-web-components/menu@workspace:1st-gen/packages/menu":
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/menu@workspace:1st-gen/packages/menu"

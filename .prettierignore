@@ -20,3 +20,8 @@
 # Documentation infrastructure scripts maintained by AI agents
 CONTRIBUTOR-DOCS/
 templates/
+
+# Generated LLM documentation (produced by scripts/generate-llm-docs.mjs)
+1st-gen/packages/*/docs.llm.md
+1st-gen/projects/llm-docs/src/*.llm.md
+1st-gen/projects/llm-docs/README.md
