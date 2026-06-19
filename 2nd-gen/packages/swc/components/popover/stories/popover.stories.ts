@@ -55,12 +55,19 @@ argTypes['actual-placement'] = {
 };
 
 /**
- * A popover is an anchored top-layer surface. In its default (non-modal) mode it
- * renders an internal `<div popover="auto">` with native light-dismiss; setting
- * `modal` renders a `<dialog>` opened via `showModal()` for blocking behavior.
+ * A `<swc-popover>` is an overlay element positioned relative to a trigger. It
+ * renders in the top layer, anchors itself to the trigger, and points at it with
+ * an arrow (tip) by default.
  *
- * Scaffolded in Phase 2 (Setup). Lifecycle, events, and full stories land in
- * later migration phases.
+ * In its default (non-modal) mode it renders an internal `<div popover="auto">`:
+ * the page behind stays interactive and scrollable, and the browser dismisses it
+ * on outside click or `Escape`. Setting `modal` renders a `<dialog>` opened via
+ * `showModal()` instead, which traps focus, makes the page behind inert, and
+ * exposes `role="dialog"`.
+ *
+ * Associate a trigger with `for` (an id in the same tree root) or the
+ * `triggerElement` property; `open` controls visibility and `manual` opts out of
+ * the built-in click-to-toggle.
  */
 const meta: Meta = {
   title: 'Popover',
@@ -73,7 +80,7 @@ const meta: Meta = {
       handles: events,
     },
     docs: {
-      subtitle: `Anchored top-layer surface for menus, dialogs, and contextual content`,
+      subtitle: `An overlay element positioned relative to a trigger`,
     },
   },
   tags: ['migrated'],
@@ -228,3 +235,138 @@ export const CustomAnchor: Story = {
   tags: ['behaviors'],
 };
 CustomAnchor.storyName = 'Custom anchor';
+
+// ──────────────────────────
+//    HELPERS (interactive)
+// ──────────────────────────
+
+// Renders a trigger button wired to a closed popover via `for=`. A top-layer
+// popover can't be shown open inline, and open auto popovers light-dismiss one
+// another, so each example is a trigger the reader clicks to open. Each pair
+// needs a unique id.
+const triggered = (
+  popoverArgs: Record<string, unknown>,
+  id: string,
+  buttonLabel: string
+) => html`
+  <swc-button id=${id}>${buttonLabel}</swc-button>
+  ${template({ ...popoverArgs, for: id })}
+`;
+
+// ──────────────────────────
+//    ANATOMY STORIES
+// ──────────────────────────
+
+export const Anatomy: Story = {
+  args: {
+    'default-slot': 'Anchored content, with an arrow pointing at the trigger.',
+  },
+  render: (args) => triggered({ ...args }, 'anatomy-trigger', 'Show popover'),
+  tags: ['anatomy'],
+};
+
+// ──────────────────────────
+//    OPTIONS STORIES
+// ──────────────────────────
+
+export const Placement: Story = {
+  render: (args) => html`
+    ${triggered(
+      { ...args, placement: 'top', 'default-slot': 'Above the trigger.' },
+      'placement-top',
+      'Top'
+    )}
+    ${triggered(
+      { ...args, placement: 'right', 'default-slot': 'Right of the trigger.' },
+      'placement-right',
+      'Right'
+    )}
+    ${triggered(
+      { ...args, placement: 'bottom', 'default-slot': 'Below the trigger.' },
+      'placement-bottom',
+      'Bottom'
+    )}
+    ${triggered(
+      { ...args, placement: 'left', 'default-slot': 'Left of the trigger.' },
+      'placement-left',
+      'Left'
+    )}
+  `,
+  parameters: { flexLayout: 'row-wrap' },
+  tags: ['options'],
+};
+
+export const Sizes: Story = {
+  render: (args) => html`
+    ${triggered(
+      { ...args, size: 's', 'default-slot': 'Small — fixed 336px width.' },
+      'size-s',
+      'Small'
+    )}
+    ${triggered(
+      { ...args, size: 'm', 'default-slot': 'Medium — fixed 416px width.' },
+      'size-m',
+      'Medium'
+    )}
+    ${triggered(
+      { ...args, size: 'l', 'default-slot': 'Large — fixed 576px width.' },
+      'size-l',
+      'Large'
+    )}
+    ${triggered(
+      { ...args, 'default-slot': 'Unset — fits its content.' },
+      'size-auto',
+      'Default'
+    )}
+  `,
+  parameters: { flexLayout: 'row-wrap' },
+  tags: ['options'],
+};
+
+export const HideArrow: Story = {
+  args: {
+    'hide-arrow': true,
+    'default-slot':
+      'No arrow tip; the surface composites a rectangular shadow.',
+  },
+  render: (args) =>
+    triggered({ ...args }, 'hide-arrow-trigger', 'Show popover'),
+  tags: ['options'],
+};
+HideArrow.storyName = 'Hide arrow';
+
+// ──────────────────────────
+//    STATES STORIES
+// ──────────────────────────
+
+export const States: Story = {
+  args: {
+    'default-slot': 'The popover is open; click the trigger to close it.',
+  },
+  render: (args) => triggered({ ...args }, 'states-trigger', 'Toggle open'),
+  tags: ['states'],
+};
+
+// ──────────────────────────────
+//    BEHAVIORS STORIES
+// ──────────────────────────────
+
+export const Modal: Story = {
+  args: {
+    modal: true,
+    'accessible-label': 'Account settings',
+    'default-slot': accountCard,
+  },
+  render: (args) => triggered({ ...args }, 'modal-trigger', 'Open modal'),
+  tags: ['behaviors'],
+};
+
+// ────────────────────────────────
+//    ACCESSIBILITY STORIES
+// ────────────────────────────────
+
+export const Accessibility: Story = {
+  args: { 'default-slot': accountCard },
+  render: (args) => triggered({ ...args }, 'a11y-trigger', 'Account'),
+  tags: ['a11y'],
+};
