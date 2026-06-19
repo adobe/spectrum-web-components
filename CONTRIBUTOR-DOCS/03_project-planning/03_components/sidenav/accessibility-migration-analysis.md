@@ -75,10 +75,12 @@ This doc describes how **`swc-sidenav`**, **`swc-sidenav-item`**, and **`swc-sid
 
 ### Pattern in the APG
 
-- The primary reference is the **[APG disclosure navigation example](https://www.w3.org/WAI/ARIA/apg/patterns/disclosure/examples/disclosure-navigation/)** — a `<nav>` element containing a list of links, where items with sub-navigation use `<button aria-expanded>` to disclose a nested list of links.
+Two APG examples cover the two item shapes `swc-sidenav-item` must support:
+
+- **[APG disclosure navigation example](https://www.w3.org/WAI/ARIA/apg/patterns/disclosure/examples/disclosure-navigation/)** — the base pattern. A `<nav>` element containing a list of links where items with sub-navigation use `<button aria-expanded>` (not a link) to disclose a nested list. Use this shape for parent items that have no `href` of their own.
+- **[APG disclosure navigation hybrid example](https://www.w3.org/WAI/ARIA/apg/patterns/disclosure/examples/disclosure-navigation-hybrid/)** — extends the base pattern for items that are **both** navigable links **and** parents of sub-navigation. The item renders an `<a>` for navigation alongside a **separate** `<button aria-expanded>` (typically a chevron icon button) for disclosure. Use this shape when `swc-sidenav-item` has both an `href` and child items.
 - The outer `<nav>` provides the landmark; an `aria-label` on that element distinguishes it from other navigation landmarks on the page.
 - Leaf items (no children) are plain `<a>` elements. The current page is indicated by `aria-current="page"` on the active link.
-- Parent items (with children) are `<button aria-expanded="true|false">` disclosure controls, not links. The sub-list they control is a `<ul>` that appears or disappears based on the `expanded` state.
 - **No `role="tree"`, `role="menu"`, or `role="tablist"`** is used. The navigation widget is a native `<nav>` + `<ul>` + links and buttons — semantic HTML handles the structure.
 
 The [UEC sidenav](https://git.corp.adobe.com/pages/Spectrum/unified-experience-components/main/labs/sidenav/) is a well-regarded accessible implementation of this pattern for Adobe products. It differs in that it adds a `create` slot for product-specific action buttons; that feature is out of scope for the base `swc-sidenav` analysis.
@@ -116,7 +118,7 @@ Category items map to the same concept as `swc-sidenav-heading` — they provide
 | [Use of color (WCAG 1.4.1)](https://www.w3.org/TR/WCAG22/#use-of-color) | The current page state must not rely on color alone; `aria-current="page"` (and potentially a visual indicator beyond color) carries the semantic. |
 | [Name, role, value (WCAG 4.1.2)](https://www.w3.org/TR/WCAG22/#name-role-value) | Each interactive item (link or disclosure button) must have an accessible name, role, and state. Disclosure buttons must reflect their `expanded` state via `aria-expanded`. |
 
-**Bottom line:** Use the [APG disclosure navigation example](https://www.w3.org/WAI/ARIA/apg/patterns/disclosure/examples/disclosure-navigation/) as the primary reference. `<nav aria-label="...">` provides the landmark; `<ul>/<li>` provides list structure; `<a>` elements with `aria-current="page"` handle navigation; `<button aria-expanded>` handles disclosure. Enhance the tab-order-only APG model with vertical arrow-key navigation via `FocusgroupNavigationController`.
+**Bottom line:** Use the [APG disclosure navigation example](https://www.w3.org/WAI/ARIA/apg/patterns/disclosure/examples/disclosure-navigation/) as the base reference and the [hybrid example](https://www.w3.org/WAI/ARIA/apg/patterns/disclosure/examples/disclosure-navigation-hybrid/) for items that are both links and parents. `<nav aria-label="...">` provides the landmark; `<ul>/<li>` provides list structure; `<a>` elements with `aria-current="page"` handle navigation; `<button aria-expanded>` handles disclosure. Enhance the tab-order-only APG model with vertical arrow-key navigation via `FocusgroupNavigationController`.
 
 ---
 
@@ -168,7 +170,7 @@ This constraint exists because:
 2. Keyboard shortcuts (for example Ctrl+click to open in new tab) and browser context menus (open in new tab, copy URL) work only on real `<a>` elements.
 3. The browser's visited-link state applies only to real `<a>` elements.
 
-For items that have both `href` and children, the expansion affordance (chevron / disclosure button) must be a **separate `<button>`** adjacent to the `<a>`, not merged into it.
+For items that have both `href` and children, follow the [APG hybrid disclosure navigation pattern](https://www.w3.org/WAI/ARIA/apg/patterns/disclosure/examples/disclosure-navigation-hybrid/): the expansion affordance (chevron / disclosure button) must be a **separate `<button>`** adjacent to the `<a>`, not merged into it.
 
 ### Shadow DOM and cross-root ARIA Issues
 
@@ -340,6 +342,7 @@ Items hidden by a collapsed parent must be **excluded** from `getItems()`. Re-ev
 ## References
 
 - [WAI-ARIA APG: Disclosure navigation example](https://www.w3.org/WAI/ARIA/apg/patterns/disclosure/examples/disclosure-navigation/)
+- [WAI-ARIA APG: Disclosure navigation hybrid example](https://www.w3.org/WAI/ARIA/apg/patterns/disclosure/examples/disclosure-navigation-hybrid/) (items that are both links and parents)
 - [WAI-ARIA APG: Disclosure button pattern](https://www.w3.org/WAI/ARIA/apg/patterns/disclosure/)
 - [WAI-ARIA APG: Landmark regions](https://www.w3.org/WAI/ARIA/apg/practices/landmark-regions/)
 - [WAI-ARIA APG: Using ARIA (read this first)](https://www.w3.org/WAI/ARIA/apg/practices/read-me-first/)
