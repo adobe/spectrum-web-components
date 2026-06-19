@@ -476,11 +476,18 @@ export const StaticColorsTest: Story = {
 export const StatesTest: Story = {
   ...States,
   play: async ({ canvasElement, step }) => {
-    const buttons = await getComponents<ActionButton>(
+    const defaultButton = await getComponent<ActionButton>(
       canvasElement,
-      'swc-action-button'
+      'swc-action-button:not([disabled]):not([pending])'
     );
-    const [defaultButton, disabledButton, pendingButton] = buttons;
+    const disabledButton = await getComponent<ActionButton>(
+      canvasElement,
+      'swc-action-button[disabled]'
+    );
+    const pendingButton = await getComponent<ActionButton>(
+      canvasElement,
+      'swc-action-button[pending]'
+    );
 
     await step(
       'verifies default button is neither disabled nor pending',
