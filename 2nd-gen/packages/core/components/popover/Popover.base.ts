@@ -47,13 +47,6 @@ interface ARIAControlsElements {
   ariaControlsElements?: readonly Element[] | null;
 }
 
-/**
- * Span of a single click gesture (pointerdown through click). A trigger click
- * within this window after a native light-dismiss is read as the close rather
- * than a reopen. See `_onTriggerClick`.
- */
-const LIGHT_DISMISS_REOPEN_WINDOW_MS = 200;
-
 /** Properties whose change re-anchors the surface while open. */
 const POSITIONING_PROPERTIES = [
   'placement',
@@ -277,11 +270,23 @@ export abstract class PopoverBase extends SpectrumElement {
   /** The positioning anchor (an element or a `VirtualTrigger`). */
   private _anchor: HTMLElement | VirtualTrigger | null = null;
 
-  /** The element the click-to-toggle listener is currently attached to. */
+  /** The element the click-to-toggle listeners are currently attached to. */
   private _clickTrigger: HTMLElement | null = null;
 
-  /** Timestamp of the last native dismissal, to suppress click-reopen. */
-  private _lastDismissAt = 0;
+  /**
+   * True between a trigger `pointerdown` and its `click`, so a light-dismiss that
+   * fires inside that window can be attributed to the trigger press.
+   */
+  private _triggerPointerActive = false;
+
+  /**
+   * Set when the trigger press light-dismissed an open popover (an `'outside'`
+   * close observed while `_triggerPointerActive`), so the trailing `click` of
+   * that same gesture is read as the close rather than a reopen. Keyed off the
+   * real close event, not a timer or an assumption about whether a dismiss will
+   * occur.
+   */
+  private _dismissedByTriggerPress = false;
 
   /** Cause of the in-progress close, read when dispatching `swc-close`. */
   private _closeSource: PopoverCloseSource | null = null;
@@ -313,7 +318,7 @@ export abstract class PopoverBase extends SpectrumElement {
     unregisterDismissible(this);
     this._removeEscapeListener();
     this._scrollLock.unlock();
-    this._removeTriggerClick();
+    this._removeTriggerListeners();
     this._clearTriggerAria();
     this._interactiveElement = null;
     this._anchor = null;
@@ -441,11 +446,21 @@ export abstract class PopoverBase extends SpectrumElement {
 
     // Click-to-toggle on the trigger host, unless the consumer drives `open`
     // themselves (`manual`). Listens on the host so clicks bubbling from an
-    // inner button are caught.
+    // inner button are caught. The `pointerdown` listener (capture, so it runs
+    // before the browser's light-dismiss) records whether the popover was open
+    // when the gesture started; `_onTriggerClick` uses that to tell a close
+    // gesture from a reopen.
     const clickTrigger = this.manual ? null : trigger;
     if (clickTrigger !== this._clickTrigger) {
-      this._removeTriggerClick();
+      this._removeTriggerListeners();
       if (clickTrigger) {
+        clickTrigger.addEventListener(
+          'pointerdown',
+          this._onTriggerPointerDown,
+          {
+            capture: true,
+          }
+        );
         clickTrigger.addEventListener('click', this._onTriggerClick);
         this._clickTrigger = clickTrigger;
       }
@@ -456,21 +471,38 @@ export abstract class PopoverBase extends SpectrumElement {
     // or re-anchors in the same cycle (e.g. a `modal` toggle while open).
   }
 
-  private _removeTriggerClick(): void {
+  private _removeTriggerListeners(): void {
+    this._clickTrigger?.removeEventListener(
+      'pointerdown',
+      this._onTriggerPointerDown,
+      { capture: true }
+    );
     this._clickTrigger?.removeEventListener('click', this._onTriggerClick);
     this._clickTrigger = null;
   }
 
-  // The trigger sits outside the popover, so in the default (auto) mode clicking
-  // it while open is a native light-dismiss: the browser closes the popover on
-  // pointerdown, before this click fires. The window guard reads that click as the
-  // close instead of letting it reopen. (`popovertarget`, which the browser would
-  // correlate automatically, can't reach the shadow-DOM surface across roots.)
+  // The trigger sits outside the popover, so in the default (auto) mode pressing
+  // it while open is a native light-dismiss: the browser hides the popover on
+  // pointerdown, before the click fires. Open the gesture window here (capture,
+  // so it runs before the dismiss) so `_onBeforeToggle` can attribute that close
+  // to this press.
+  private _onTriggerPointerDown = (): void => {
+    this._triggerPointerActive = true;
+    this._dismissedByTriggerPress = false;
+  };
+
+  // If the trigger press light-dismissed the popover (recorded in
+  // `_onBeforeToggle`), consume this click so it does not toggle back open;
+  // otherwise toggle from the live state. The decision keys off the real close
+  // event, so it is correct whether or not a dismiss fired (e.g. keyboard
+  // activation, or environments without native light-dismiss) with no timer.
+  // (`popovertarget`, which the browser would correlate automatically, can't
+  // reach the shadow-DOM surface across roots.)
   private _onTriggerClick = (): void => {
-    if (
-      !this.open &&
-      performance.now() - this._lastDismissAt < LIGHT_DISMISS_REOPEN_WINDOW_MS
-    ) {
+    const dismissedByThisGesture = this._dismissedByTriggerPress;
+    this._triggerPointerActive = false;
+    this._dismissedByTriggerPress = false;
+    if (dismissedByThisGesture) {
       return;
     }
     this.open = !this.open;
@@ -645,13 +677,10 @@ export abstract class PopoverBase extends SpectrumElement {
     }
   }
 
-  private _closeTeardown(source: PopoverCloseSource): void {
-    // Arm the reopen guard only for an outside light-dismiss; that is the close
-    // a trigger click can have caused. Escape and programmatic closes must not
-    // suppress a subsequent legitimate reopen click.
-    if (source === 'outside') {
-      this._lastDismissAt = performance.now();
-    }
+  private _closeTeardown(): void {
+    // The trigger-click reopen guard is gesture-based (see
+    // `_onTriggerPointerDown`), so the close needs no source-specific handling
+    // here.
     unregisterDismissible(this);
     this._removeEscapeListener();
     this._scrollLock.unlock();
@@ -692,6 +721,12 @@ export abstract class PopoverBase extends SpectrumElement {
       this._dispatchOpen();
     } else {
       const source = this._closeSource ?? 'outside';
+      // Attribute an outside light-dismiss that lands during a trigger press to
+      // that press, so `_onTriggerClick` reads the trailing click as the close
+      // rather than a reopen.
+      if (source === 'outside' && this._triggerPointerActive) {
+        this._dismissedByTriggerPress = true;
+      }
       // `beforetoggle` fires before the popover hides, so focus is still inside if
       // it was there. Unlike modal `<dialog>` (which restores focus natively), the
       // popover API drops focus to `<body>` when the focused content is hidden, so
@@ -700,7 +735,7 @@ export abstract class PopoverBase extends SpectrumElement {
       const restoreFocusToTrigger = this._isFocusWithin();
       this._syncOpen(false);
       this._dispatchClose(source);
-      this._closeTeardown(source);
+      this._closeTeardown();
       if (restoreFocusToTrigger) {
         this._interactiveElement?.focus();
       }
@@ -724,7 +759,7 @@ export abstract class PopoverBase extends SpectrumElement {
     const source = this._closeSource ?? 'programmatic';
     this._syncOpen(false);
     this._dispatchClose(source);
-    this._closeTeardown(source);
+    this._closeTeardown();
   };
 
   // Modal mode: a pointerdown on the dialog's backdrop is an outside dismiss.
