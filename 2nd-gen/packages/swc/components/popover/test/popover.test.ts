@@ -1373,3 +1373,44 @@ export const FailedShowModalTest: Story = {
     });
   },
 };
+
+export const TriggerAriaTest: Story = {
+  render: () => html`
+    <button id="ta-trigger">Trigger</button>
+    <swc-popover for="ta-trigger" modal accessible-label="Settings">
+      Content
+    </swc-popover>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const popover = await getComponent<Popover>(canvasElement, 'swc-popover');
+    const trigger = canvasElement.querySelector(
+      '#ta-trigger'
+    ) as HTMLElement & {
+      ariaControlsElements?: Element[] | null;
+    };
+    await popover.updateComplete;
+
+    await step('a modal trigger advertises aria-haspopup="dialog"', () => {
+      expect(trigger.getAttribute('aria-haspopup')).toBe('dialog');
+    });
+
+    await step(
+      'the trigger controls the popover (element-reference IDL)',
+      () => {
+        expect(
+          trigger.ariaControlsElements?.includes(popover),
+          'aria-controls relationship points at the popover'
+        ).toBe(true);
+      }
+    );
+
+    await step('clearing modal removes aria-haspopup', async () => {
+      popover.modal = false;
+      await popover.updateComplete;
+      expect(
+        trigger.hasAttribute('aria-haspopup'),
+        'aria-haspopup is removed in default mode'
+      ).toBe(false);
+    });
+  },
+};
