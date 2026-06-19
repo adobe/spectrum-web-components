@@ -7,50 +7,79 @@ import * as Stories from './stories/popover.stories';
 
 <DocsHeader />
 
-> **Work in progress:** docs page moved to MDX in Phase 7. Sections below are
-> rough scaffolds; prose, examples, and the Anatomy / Options / States /
-> Accessibility stories still need to be authored and polished.
-
 ## Anatomy
 
-A `<swc-popover>` renders an anchored top-layer surface that wraps slotted
-content and, by default, an arrow (tip) pointing at its trigger.
+A popover is made up of:
 
-_Anatomy story and full part breakdown to come._
+1. **Surface**: the anchored container that holds the content.
+2. **Default slot**: free-form slotted content: text, a menu, a form, an account card, and so on.
+3. **Arrow (tip)**: a triangle pointing back at the trigger, shown by default and removed with `hide-arrow`.
+
+The popover positions itself against a trigger you associate with `for` or `triggerElement`; it does not render the trigger itself.
+
+<Canvas of={Stories.Anatomy} />
 
 ## Options
 
-`placement`, `size`, `hide-arrow`, `offset`, `cross-offset`, and `should-flip`
-tune positioning and appearance. `modal` opts into blocking `<dialog>` behavior
-(focus trap, background inert, `role="dialog"`); pair it with `accessible-label`
-to name the dialog (see [Accessibility](#accessibility)).
+### Placement
 
-_Option stories to come._
+`placement` sets the preferred side relative to the trigger: the physical `top`, `right`, `bottom` (default), and `left`, plus the logical `start` / `end` (which resolve to left or right per the writing direction). When the preferred side lacks room the popover flips to the opposite side, unless `should-flip` is `false`. `offset` (main axis) and `cross-offset` (cross axis) nudge it in pixels from the trigger.
+
+<Canvas of={Stories.Placement} />
+
+### Sizes
+
+`size` fixes the inline size: `s` (336px), `m` (416px), or `l` (576px). When unset, the popover fits its content up to the viewport width minus the container padding.
+
+<Canvas of={Stories.Sizes} />
+
+### Hide arrow
+
+The arrow (tip) points at the trigger and is shown by default. Set `hide-arrow` to remove it; the surface then uses a rectangular box-shadow that composites cleanly when popovers are nested.
+
+<Canvas of={Stories.HideArrow} />
+
+## States
+
+### States
+
+`open` is the single source of truth for visibility: the popover is either open or closed. Toggling the trigger, pressing `Escape`, or clicking outside (default mode) all reconcile back to `open`. There are no disabled or selected states.
+
+<Canvas of={Stories.States} />
 
 ## Behaviors
 
 ### Custom anchor
 
-The toggling control and the positioning anchor can be different elements: a
-button drives `open` while the popover anchors to another element via the
-`triggerElement` property (`manual` suppresses the anchor's own click-to-toggle).
+The toggling control and the positioning anchor can be different elements: a button drives `open` while the popover anchors to another element via the `triggerElement` property (`manual` suppresses the anchor's own click-to-toggle).
 
 <Canvas of={Stories.CustomAnchor} />
 
+### Modal
+
+Setting `modal` switches the surface to a `<dialog>` opened with `showModal()`: focus is trapped inside, the page behind is inert and its scroll is locked, and the surface exposes `role="dialog"`. Dismiss with `Escape` or a click on the backdrop. Name the dialog with `accessible-label` (see [Accessibility](#accessibility)).
+
+<Canvas of={Stories.Modal} />
+
+#### Default-mode dismissal
+
+In the default (non-modal) mode the surface is a `<div popover="auto">`: the browser dismisses it on `Escape` or a click outside its own content, and the page behind stays interactive and scrollable. Clicking or focusing content inside the popover does not dismiss it.
+
+#### Focus and events
+
+When the popover closes, focus returns to the trigger if focus was inside (modal mode restores it natively; default mode restores it when content was focused). The popover dispatches `swc-open` / `swc-after-open` on open and `swc-close` / `swc-after-close` on close; `swc-close.detail.source` reports why it closed: `escape`, `outside`, or `programmatic`.
+
 ## Accessibility
 
-The resolved trigger receives `aria-expanded` and a durable `aria-controls`
-relationship wired through the element-reference IDL so it works across shadow
-boundaries. `Escape` and outside-click dismiss in the default (auto) mode.
+### Features
+
+- The resolved trigger receives `aria-expanded` and a durable `aria-controls` relationship wired through the element-reference IDL, so it works across shadow boundaries. For an SWC component trigger with an open shadow root, the inner `<button>` receives the ARIA.
+- Modal mode adds `aria-haspopup="dialog"` on the trigger and `role="dialog"` on the surface, with a native focus trap and `Escape` handling.
+- In the default mode the surface is a roleless container: the slotted content and the trigger own the semantics. The component does not set `aria-haspopup` here; wire a pattern-specific value on the trigger when appropriate.
 
 ### Naming a modal popover
 
-In modal mode the internal `<dialog>` provides `role="dialog"`, a focus trap, and
-`aria-haspopup="dialog"` on the trigger. A dialog must have an accessible name, so
-**set `accessible-label` whenever you set `modal`**: its value is forwarded as
-`aria-label` to the internal `<dialog>`. Omitting it leaves a nameless dialog (an
-authoring bug); in development the component warns when `modal` is set without an
-`accessible-label`.
+A dialog must have an accessible name, so **set `accessible-label` whenever you set `modal`**: its value is forwarded as `aria-label` to the internal `<dialog>`. Omitting it leaves a nameless dialog (an authoring bug); in development the component warns when `modal` is set without an `accessible-label`.
 
 ```html
 <swc-popover modal accessible-label="Account settings" for="account-trigger">
@@ -58,9 +87,18 @@ authoring bug); in development the component warns when `modal` is set without a
 </swc-popover>
 ```
 
-`accessible-label` has **no effect in the default (auto) mode**: that surface is a
-roleless container, so the slotted content and the trigger own the semantics.
+`accessible-label` has **no effect in the default (auto) mode**: that surface is a roleless container, so the slotted content and the trigger own the semantics.
 
-_Accessibility story and further best-practices guidance to come._
+### Best practices
+
+- Give the trigger a clear, visible label; the popover does not name its own trigger.
+- Use `modal` only when the task genuinely needs to block the page; prefer the default mode for menus and contextual content.
+- Ensure a modal popover contains focusable content so focus has somewhere to land.
+
+<Canvas of={Stories.Accessibility} />
+
+## Upcoming features
+
+- Managed content padding via a future `<swc-dialog>` wrapper, for popovers that need dialog-style chrome around their content.
 
 <DocsFooter />
