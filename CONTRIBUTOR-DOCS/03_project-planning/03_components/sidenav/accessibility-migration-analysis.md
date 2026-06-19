@@ -40,7 +40,7 @@
 
 ## Overview
 
-This doc describes how **`swc-sidenav`**, **`swc-sidenav-item`**, and **`swc-sidenav-heading`** should behave for accessibility in 2nd-gen, targeting **WCAG 2.2 Level AA**. It aligns with the [APG disclosure navigation example](https://www.w3.org/WAI/ARIA/apg/patterns/disclosure/examples/disclosure-navigation/) (vertical orientation) and prescribes use of `FocusgroupNavigationController` for arrow-key navigation and the selection controller ([PR #6402](https://github.com/adobe/spectrum-web-components/pull/6402)) for tracking the current page item.
+This doc describes how **`swc-sidenav`**, **`swc-sidenav-item`**, and **`swc-sidenav-heading`** should behave for accessibility in 2nd-gen, targeting **WCAG 2.2 Level AA**. It aligns with the [APG disclosure navigation example](https://www.w3.org/WAI/ARIA/apg/patterns/disclosure/examples/disclosure-navigation/) (vertical orientation) and prescribes use of `FocusgroupNavigationController` for arrow-key navigation.
 
 ### Also read
 
@@ -141,19 +141,18 @@ Category items map to the same concept as `swc-sidenav-heading` — they provide
 | **One semantic pattern** | The sidenav maps to the **disclosure navigation pattern** only. Do not implement `role="tree"`, `role="menu"`, `role="listbox"`, or `role="tablist"` on any part of the sidenav widget. The `<nav>` landmark, `<ul>/<li>` list structure, `<a>` links, and `<button aria-expanded>` disclosure buttons are the complete semantic set. |
 | **`<swc-sidenav>` host** | Renders a `<nav>` element with `aria-label` derived from the component's `label` property. The `aria-label` is **required** when more than one navigation landmark can appear on the same page (for example when both a side navigation and a breadcrumb `<nav>` are present). |
 | **Inner list structure** | The `<nav>` wraps a `<ul>`. Each `<swc-sidenav-item>` maps to an `<li>` (either the host sets `role="listitem"` or a native `<li>` is used in shadow DOM — see Shadow DOM below). Nested sub-lists are `<ul>` elements rendered inside their parent item's shadow DOM when expanded. |
-| **Leaf item with `href`** | Renders as an `<a href="...">` element. Sets `aria-current="page"` when the item represents the current page. **Do not** use a `<button>` with a proxy click to navigate — the link must be a real `<a>` element so it behaves correctly with screen readers, keyboard shortcuts, and context menus. |
+| **Leaf item with `href`** | Renders as an `<a href="...">` element. Reflects `aria-current="page"` on the internal `<a>` when the consumer marks the item as current. **Do not** use a `<button>` with a proxy click to navigate — the link must be a real `<a>` element so it behaves correctly with screen readers, keyboard shortcuts, and context menus. |
 | **Parent item (has children, no `href`)** | Renders as a `<button aria-expanded="true|false">` element. The button's accessible name comes from the visible label text. No `aria-current` applies. |
 | **Parent item (has children AND `href`)** | Renders as an `<a href="...">` for navigation AND a **separate adjacent `<button aria-expanded="true|false">`** (or icon button) for disclosure. Both must have accessible names. The button's accessible name should describe its purpose in context, for example `aria-label="Expand [Section name]"`. Do not combine link and button into a single element — that mangles role and activation semantics. |
-| **`aria-current="page"`** | Set on the leaf `<a>` element that matches the current page. When the current page is inside a collapsed parent, the parent button should remain collapsed by default (the user navigated here from elsewhere); the parent may show a visual "contains current" indicator via CSS, but **do not** set `aria-current` on the parent button — `aria-current` belongs on the actual current-page link. |
+| **`aria-current="page"`** | The component is **not responsible for routing** — it does not detect the current URL or page. The consumer must mark the current item based on their routing system, for example by setting a `current` (or `selected`) boolean property on the active `swc-sidenav-item`. When that property is set, the component reflects `aria-current="page"` onto its internal `<a>` element. When the current page is inside a collapsed parent, the parent button should remain collapsed by default; the parent may show a visual "contains current" indicator via CSS, but **do not** set `aria-current` on the parent button — `aria-current` belongs on the actual current-page link. |
 | **`aria-expanded`** | Set on the disclosure `<button>` element only: `"true"` when children are visible, `"false"` when hidden. **Do not** set `aria-expanded` on leaf links. |
 | **Category items** | Non-interactive group labels. They must not be focusable (no `tabindex`, not a link or button). Use a visible label element (or the same mechanism as `swc-sidenav-heading`) with an `id` that a sibling `<ul aria-labelledby="...">` references to provide an accessible group name for the items beneath it. |
 | **`swc-sidenav-heading`** | Renders a visible `<h*>` (heading level appropriate to context — expose via a `heading-level` property) whose `id` is referenced by `aria-labelledby` on the associated item group `<ul>`. Do not use a presentational `<h2>` with a fixed level; expose the heading level to consumers. |
 | **Disabled items** | Use `aria-disabled="true"` on the `<a>` or `<button>`. Do **not** use the HTML `disabled` attribute on `<a>` (invalid) or on the button if that would remove it from the tab order entirely (some browsers). Disabled items should remain visible in the focus sequence so users know the item exists but is unavailable; script must block activation. |
 | **Icons** | Icons are decorative when the label text carries the full meaning: set `aria-hidden="true"` on the icon element. For icon-only configurations (if supported), the item's `<a>` or `<button>` must carry an accessible name via `aria-label` or a visually hidden text element. |
 | **`label` property** | `swc-sidenav` needs a `label` property that maps to `aria-label` on the `<nav>` element, mirroring 1st-gen. Document this as required for products with multiple navigation landmarks. |
-| **Selection controller** | Use the selection controller ([PR #6402](https://github.com/adobe/spectrum-web-components/pull/6402)) to track which item is currently selected (current page). The controller coordinates `aria-current="page"` state across items, ensuring exactly one item reflects the current page at a time. Selection applies only to leaf `<a>` items that have `href`. |
-| **`value` property** | Preserve the `value` property on `swc-sidenav-item` for programmatic selection. The selection controller uses it to match the parent `swc-sidenav`'s `value` to the correct child item. |
-| **Docs** | Document `aria-label` on `swc-sidenav` as required when used alongside other nav landmarks. Document that `aria-current="page"` is set automatically by the component; authors must not set it manually. Document the required `label` property. |
+| **`value` property** | Preserve the `value` property on `swc-sidenav-item` for consumers to identify which item is current. The consumer is responsible for comparing this value against their routing state and setting the `current` (or `selected`) property on the matching item. |
+| **Docs** | Document `aria-label` on `swc-sidenav` as required when used alongside other nav landmarks. Document that the component does not manage routing — consumers must set the current item based on their URL or routing system. Document the required `label` property. |
 
 ### Links vs disclosure buttons: the proxy click constraint
 
@@ -324,7 +323,8 @@ Items hidden by a collapsed parent must be **excluded** from `getItems()`. Re-ev
 - [ ] Leaf items with `href` render real `<a>` elements — no proxy click pattern is used.
 - [ ] Parent items without `href` render `<button aria-expanded="true|false">` disclosure controls.
 - [ ] Parent items with both `href` and children render a separate `<a>` (for navigation) and `<button aria-expanded>` (for disclosure) as adjacent siblings.
-- [ ] `aria-current="page"` is set on the selected leaf link; all other items have `aria-current` absent or `"false"`.
+- [ ] The component does not manage routing; docs make clear that consumers must set the current item based on their URL or routing system.
+- [ ] When the consumer marks an item as current, `aria-current="page"` is reflected on the internal `<a>` element; all other items have `aria-current` absent.
 - [ ] `aria-current` is **not** set on parent disclosure buttons.
 - [ ] Category items are non-interactive (no focus stop, no link or button role); they provide accessible group labels via `aria-labelledby` on the child `<ul>`.
 - [ ] `swc-sidenav-heading` renders an appropriate heading element with a `heading-level` property; the associated item group `<ul>` uses `aria-labelledby` referencing the heading `id`.
@@ -334,7 +334,7 @@ Items hidden by a collapsed parent must be **excluded** from `getItems()`. Re-ev
 - [ ] `FocusgroupNavigationController` is configured with `direction: 'vertical'`, `skipDisabled: true`, and `getItems()` that excludes items hidden by a collapsed parent; `refresh()` is called on each expand/collapse.
 - [ ] Space key activates disclosure buttons and calls `preventDefault()` to prevent scroll (addresses SWC-1230).
 - [ ] Selected item indicator meets 3:1 non-text contrast ratio (addresses SWC-271).
-- [ ] Selection controller ([PR #6402](https://github.com/adobe/spectrum-web-components/pull/6402)) is used to coordinate `aria-current` across items when the `value` property changes.
+- [ ] Automated tests confirm `aria-current="page"` is reflected when the consumer sets the item as current, and is absent on all other items.
 - [ ] Automated tests cover: link rendering, `aria-current`, `aria-expanded`, `role="listitem"`, disabled behavior, Space key, and accessibility tree structure.
 - [ ] Playwright keyboard tests confirm arrow navigation skips hidden children, Space/Enter activate correctly, and disabled items are reachable but inactive.
 
@@ -354,5 +354,4 @@ Items hidden by a collapsed parent must be **excluded** from `getItems()`. Re-ev
 - [Spectrum 2 side navigation design (Figma)](https://www.figma.com/design/Mngz9H7WZLbrCvGQf3GnsY/S2---Web--Desktop-scale-?node-id=21993-665&p=f&m=dev)
 - [Spectrum 2 side navigation documentation](https://s2.spectrum.corp.adobe.com/page/side-navigation/)
 - [SWC Focusgroup navigation controller (PR #6129)](https://github.com/adobe/spectrum-web-components/pull/6129)
-- [SWC Selection controller (PR #6402)](https://github.com/adobe/spectrum-web-components/pull/6402)
 - [Side navigation migration roadmap](./rendering-and-styling-migration-analysis.md)
