@@ -1080,8 +1080,8 @@ export const UnresolvedForWarningTest: Story = {
       await popover.updateComplete;
       expect(
         warnCalls.length,
-        'warns when for= does not resolve'
-      ).toBeGreaterThan(0);
+        'exactly one warning when for= does not resolve'
+      ).toBe(1);
       expect(String(warnCalls[0]?.[1] || '')).toContain('did not resolve');
     });
   },
@@ -1314,7 +1314,9 @@ export const ModalNoLabelWarningTest: Story = {
     await withWarningSpy(async (warnCalls) => {
       popover.open = true;
       await popover.updateComplete;
-      expect(warnCalls.length, 'warns for a nameless modal').toBeGreaterThan(0);
+      expect(warnCalls.length, 'exactly one warning for a nameless modal').toBe(
+        1
+      );
       expect(String(warnCalls[0]?.[1] || '')).toContain('accessible-label');
     });
   },
@@ -1411,9 +1413,9 @@ export const TriggerAriaTest: Story = {
       'the trigger controls the popover (element-reference IDL)',
       () => {
         expect(
-          trigger.ariaControlsElements?.includes(popover),
-          'aria-controls relationship points at the popover'
-        ).toBe(true);
+          trigger.ariaControlsElements,
+          'aria-controls relationship is exactly the popover'
+        ).toEqual([popover]);
       }
     );
 
