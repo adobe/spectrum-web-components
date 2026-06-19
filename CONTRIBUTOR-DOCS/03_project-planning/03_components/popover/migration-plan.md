@@ -792,8 +792,8 @@ CSS targets the internal `.swc-Popover` element regardless of mode. `popover.css
 
 #### General
 
-- [ ] JSDoc on all public properties, slots, and exposed `--swc-*` CSS custom properties
-- [ ] Stories: Playground, Overview, Anatomy (default slot, tip), Options (placement, auto vs modal mode, offset/cross-offset), States (open), Behaviors (auto-mode light-dismiss, modal-mode focus trap, trigger-element, `for` cross-root example), Accessibility (auto vs modal semantics, trigger-side ARIA wiring)
+- [x] JSDoc on all public properties (base `@property`) and slots (`@slot`); the four events are documented with `@fires`. No public `--swc-*` custom properties are exposed, so no `@cssprop` tags are needed.
+- [x] Stories: Playground, Overview, Anatomy, Options (Placement, Sizes, Hide arrow; offsets / `should-flip` via the Playground controls), States (open), Behaviors (Custom anchor, Modal, default-mode dismissal, focus/events), Accessibility. Examples are trigger-based (a top-layer popover can't be shown open inline).
 
 #### Breaking changes
 
@@ -807,9 +807,9 @@ CSS targets the internal `.swc-Popover` element regardless of mode. `popover.css
 
 #### Accessibility
 
-- [ ] Storybook Accessibility story: document `role="dialog"` in modal mode (native, via `<dialog>`); focus trap and Escape behavior (native); trigger-side ARIA wiring (`aria-expanded`, `ariaControlsElements`, and `aria-haspopup="dialog"` when `modal`) including inner-button resolution for SWC component triggers
+- [x] Storybook Accessibility section (in `popover.mdx`): documents `role="dialog"` in modal mode, native focus trap + Escape, and trigger-side ARIA wiring (`aria-expanded`, `aria-controls`, and `aria-haspopup="dialog"` when `modal`) including inner-button resolution for SWC component triggers
 - [x] Document accessible-name expectations: consumers set `accessible-label` to name the modal dialog (forwarded as `aria-label` onto the internal `<dialog>`); nameless modal dialogs are an authoring bug and are dev-warned. Default mode needs no name (roleless surface).
-- [ ] Document auto-mode `aria-haspopup`: not set by the component — consumers wire a pattern-specific value when appropriate
+- [x] Document auto-mode `aria-haspopup`: not set by the component; consumers wire a pattern-specific value when appropriate (in the Accessibility section)
 - [ ] Document the closed-shadow-root fallback (ARIA goes on the trigger host)
 
 ### Review
