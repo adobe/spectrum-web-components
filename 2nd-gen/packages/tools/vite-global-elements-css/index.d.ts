@@ -42,6 +42,25 @@ export interface GlobalElementEntry {
    * @example 'swc-Button'
    */
   rootElementSelector?: string;
+
+  /**
+   * Child element suffixes whose classes should also receive `all: revert-layer !important`
+   * alongside the root block class.
+   *
+   * Use this for child elements rendered as real DOM nodes in the light-DOM context of a
+   * global element (e.g. label, icon) that would otherwise be vulnerable to inherited
+   * property overrides from unlayered application CSS.
+   *
+   * Each suffix is appended to the block class: `'label'` → `.swc-Button-label`.
+   *
+   * **Limitation:** the CSS `all` shorthand explicitly excludes custom properties (`--*`).
+   * If unlayered application CSS sets a custom property on a selector matching these child
+   * element classes, `all: revert-layer` will not clear it.
+   *
+   * @example ['label', 'icon']
+   * @example ['label', 'icon', 'description']
+   */
+  textElements?: string[];
 }
 
 export interface GlobalElementCSSOptions {
@@ -80,4 +99,8 @@ export declare function transformSelector(list: string, block: string): string;
  * rules, and wraps in the cascade layer. Token calls are left intact for the
  * PostCSS pipeline to resolve.
  */
-export declare function deriveCSS(sourceCss: string, block: string): string;
+export declare function deriveCSS(
+  sourceCss: string,
+  block: string,
+  textElements?: string[]
+): string;

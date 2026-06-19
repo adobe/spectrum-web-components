@@ -70,7 +70,10 @@ function processStylesheets(): Plugin {
 export default defineConfig({
   plugins: [
     globalElementCSS({
-      elements: [{ component: 'button' }, { component: 'action-button' }],
+      elements: [
+        { component: 'button', textElements: ['label', 'icon'] },
+        { component: 'action-button', textElements: ['label', 'icon'] },
+      ],
     }),
     litCss({
       exclude: [
