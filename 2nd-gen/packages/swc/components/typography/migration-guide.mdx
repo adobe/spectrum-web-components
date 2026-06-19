@@ -39,12 +39,13 @@ import '@adobe/spectrum-wc/typography.css';
 
 ### Added in Spectrum 2
 
-| Addition                                    | Notes                                                                  |
-| ------------------------------------------- | ---------------------------------------------------------------------- |
-| `.swc-Title` class                          | New class for section and card headings                                |
-| `.swc-Typography--prose` modifier           | Document wrapper that applies consistent margins to all child elements |
-| `.swc-Typography--emphasized` modifier      | Applies italic styling to the element                                  |
-| `--margins` modifier on individual elements | Apply margins to a single element without a wrapper                    |
+| Addition                                    | Notes                                                                   |
+| ------------------------------------------- | ----------------------------------------------------------------------- |
+| `.swc-Title` class                          | New class for section and card headings                                 |
+| `.swc-Typography--prose` modifier           | Document wrapper that applies consistent margins to all child elements  |
+| `.swc-Typography--links` modifier           | Link lists, footers, and sidebars — default styles for child `<a href>` |
+| `.swc-Typography--emphasized` modifier      | Applies italic styling to the element                                   |
+| `--margins` modifier on individual elements | Apply margins to a single element without a wrapper                     |
 
 ### Removed in Spectrum 2
 
@@ -103,7 +104,26 @@ The `.spectrum-Typography` wrapper class has been removed. Use the `--margins` m
 </div>
 ```
 
-### 3. Remove light variants
+### 3. Links in prose and link lists
+
+Native `<a href>` elements inside **`.swc-Typography--prose`** or **`.swc-Typography--links`** receive default Spectrum link styling when `typography.css` is loaded. Anchors inherit surrounding typography in prose; import `@adobe/spectrum-wc/link.css` and apply `.swc-Link` modifier classes when you need standalone or secondary / quiet / static-color treatments. See the [Link migration guide](../link/migration-guide.mdx).
+
+```html
+<div class="swc-Typography--prose">
+  <p>
+    Read the
+    <a href="/docs">documentation</a>
+    for details.
+  </p>
+</div>
+
+<ul class="swc-Typography--links">
+  <li><a href="/privacy">Privacy</a></li>
+  <li><a href="/terms">Terms</a></li>
+</ul>
+```
+
+### 4. Remove light variants
 
 The `--light` modifier has been removed from both Heading and Detail. Choose a size that produces the desired visual weight in your layout.
 
