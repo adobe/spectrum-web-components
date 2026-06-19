@@ -56,6 +56,7 @@ This doc describes how **`swc-sidenav`**, **`swc-sidenav-item`**, and **`swc-sid
 - **In-page panel switching** (toggling content sections within the same page without navigating): use `swc-tabs`. Tabs use `role="tablist"`, `role="tab"`, `role="tabpanel"`, and `aria-selected`; they are not navigation and do not change the URL. Do not use `swc-tabs` for page-level navigation.
 - **In-page section navigation** (anchor links, TOC): use a plain `<nav>` with links, not side navigation.
 - **Command menus or action menus** (perform actions, not navigate to pages): use `swc-action-menu` or `swc-menu`.
+- **App-frame side navigation with product-specific chrome** (a `create` slot for an action button above the nav list, or other app-frame affordances): use the [UEC sidenav](https://git.corp.adobe.com/pages/Spectrum/unified-experience-components/main/labs/sidenav/). The UEC sidenav builds on the same disclosure navigation pattern as `swc-sidenav` but adds slots and behaviors for app-frame shell integration that are outside the scope of the base component.
 
 ### What it is not
 
