@@ -38,3 +38,9 @@ npx skills add spectrum-web-components.adobe.com
 - Choose **Gen1** if you are building with `sp-*` components. When prompting your AI client, mentioning `sp-*`, `@spectrum-web-components`, or "Spectrum 1" will activate this skill.
 - Choose **Migrate from Gen1 to Gen2** if you are upgrading an existing app to `swc-*` components. Mentioning "migrate", "Gen2", or `@adobe/spectrum-wc` will activate this skill.
 - Choose both if you are mid-migration and working with both generations at the same time.
+
+## llms.txt
+
+An [`llms.txt`](/llms.txt) file is available for this documentation site. AI tools that support
+the [llms.txt convention](https://llmstxt.org) can use this file to discover and load the right
+documentation page for a given task.
