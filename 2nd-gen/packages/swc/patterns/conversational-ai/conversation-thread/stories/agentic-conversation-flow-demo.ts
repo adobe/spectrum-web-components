@@ -13,12 +13,12 @@
 import { html, LitElement } from 'lit';
 import { state } from 'lit/decorators.js';
 
-import '../index.js';
-import '../../conversation-turn/index.js';
-import '../../system-message/index.js';
-import '../../user-message/index.js';
-import '../../response-status/index.js';
-import '../../prompt-field/index.js';
+import '@adobe/spectrum-wc/patterns/conversational-ai/conversation-thread';
+import '@adobe/spectrum-wc/patterns/conversational-ai/conversation-turn';
+import '@adobe/spectrum-wc/patterns/conversational-ai/system-message';
+import '@adobe/spectrum-wc/patterns/conversational-ai/user-message';
+import '@adobe/spectrum-wc/patterns/conversational-ai/response-status';
+import '@adobe/spectrum-wc/patterns/conversational-ai/prompt-field';
 
 import {
   AGENTIC_DEMO_FLOW_STEPS,

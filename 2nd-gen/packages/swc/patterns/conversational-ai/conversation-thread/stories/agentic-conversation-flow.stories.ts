@@ -13,11 +13,11 @@
 import { html } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
-import '../index.js';
-import '../../conversation-turn/index.js';
-import '../../system-message/index.js';
-import '../../user-message/index.js';
-import '../../response-status/index.js';
+import '@adobe/spectrum-wc/patterns/conversational-ai/conversation-thread';
+import '@adobe/spectrum-wc/patterns/conversational-ai/conversation-turn';
+import '@adobe/spectrum-wc/patterns/conversational-ai/system-message';
+import '@adobe/spectrum-wc/patterns/conversational-ai/user-message';
+import '@adobe/spectrum-wc/patterns/conversational-ai/response-status';
 import './agentic-conversation-flow-demo.js';
 
 import { AGENTIC_DEMO_FLOW_STEPS } from '../../agentic-demo-flow-script.js';

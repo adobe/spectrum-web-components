@@ -15,9 +15,9 @@ import { state } from 'lit/decorators.js';
 import { keyed } from 'lit/directives/keyed.js';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
-import '../index.js';
-import '../../conversation-turn/index.js';
-import '../../system-message/index.js';
+import '@adobe/spectrum-wc/patterns/conversational-ai/response-status';
+import '@adobe/spectrum-wc/patterns/conversational-ai/conversation-turn';
+import '@adobe/spectrum-wc/patterns/conversational-ai/system-message';
 
 import {
   AGENTIC_DEMO_FLOW_STEPS,
