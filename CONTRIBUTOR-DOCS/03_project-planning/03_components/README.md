@@ -21,7 +21,7 @@
 - Accordion
     - [Accordion accessibility migration analysis](accordion/accessibility-migration-analysis.md)
     - [Accordion migration plan](accordion/migration-plan.md)
-    - [Accordion migration roadmap](accordion/rendering-and-styling-migration-analysis.md)
+- Action Bar
 - Action Button
     - [Action button accessibility migration analysis](action-button/accessibility-migration-analysis.md)
     - [Action button migration roadmap](action-button/rendering-and-styling-migration-analysis.md)

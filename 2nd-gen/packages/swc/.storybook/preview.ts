@@ -28,6 +28,7 @@ import { transformDocsSource } from './utils/docs-source-transform.js';
 
 import '../stylesheets/swc.css';
 import '../stylesheets/typography.css';
+import '../stylesheets/link.css';
 import '../stylesheets/global/global-elements.css';
 import './assets/preview.css';
 
@@ -333,11 +334,7 @@ const preview = {
               'Components',
               [
                 'Accordion',
-                [
-                  'Accessibility migration analysis',
-                  'Migration plan',
-                  'Rendering and styling migration analysis',
-                ],
+                ['Accessibility migration analysis', 'Migration plan'],
                 'Action button',
                 [
                   'Accessibility migration analysis',
