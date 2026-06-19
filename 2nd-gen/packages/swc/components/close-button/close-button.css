@@ -40,19 +40,16 @@
   overflow: visible;
   cursor: pointer;
   user-select: none;
-  outline-width: var(--swc-close-button-focus-indicator-thickness, token("focus-indicator-thickness"));
-  outline-style: solid;
-  outline-color: transparent;
-  outline-offset: var(--swc-close-button-focus-indicator-gap, token("focus-indicator-gap"));
   transition-timing-function: token("animation-ease-in-out");
   transition-duration: token("animation-duration-100");
-  transition-property: outline-color, border-color, color, background-color, transform;
+  transition-property: border-color, color, background-color, transform;
 }
 
 .swc-CloseButton:focus-visible {
   color: var(--swc-close-button-icon-color-focus, token("neutral-content-color-key-focus"));
   background-color: var(--swc-close-button-background-color-focus, token("gray-100"));
-  outline-color: var(--swc-close-button-focus-indicator-color, token("focus-indicator-color"));
+  outline: var(--swc-close-button-focus-indicator-thickness, token("focus-indicator-thickness")) solid var(--swc-close-button-focus-indicator-color, token("focus-indicator-color"));
+  outline-offset: var(--swc-close-button-focus-indicator-gap, token("focus-indicator-gap"));
 }
 
 .swc-CloseButton:hover {
