@@ -24,9 +24,6 @@ parameters:
     type: string
     default: 75b8c3cdc71a773889e3bdd1032f89ff73c12475
 
-  wireit_cache_name:
-    type: string
-    default: wireit
 commands:
   halt-if-not-affected:
     description: >
@@ -124,17 +121,20 @@ commands:
   install-azcopy:
     description: 'Install AzCopy and set up authentication'
     steps:
+      - restore_cache:
+          keys:
+            - azcopy-v10.29.1-{{ arch }}
       - run:
           when: always
           name: Install AzCopy
           command: |
-            # Create a bin directory in the home folder
             mkdir -p ~/bin
-            cd ~/bin
-            wget -O azcopy.tar.gz https://github.com/Azure/azure-storage-azcopy/releases/download/v10.29.1/azcopy_linux_amd64_10.29.1.tar.gz
-            tar -xf azcopy.tar.gz --strip-components=1
-            chmod +x azcopy
-            # Add to PATH and set environment variables
+            if [ ! -f ~/bin/azcopy ]; then
+              cd ~/bin
+              wget -O azcopy.tar.gz https://github.com/Azure/azure-storage-azcopy/releases/download/v10.29.1/azcopy_linux_amd64_10.29.1.tar.gz
+              tar -xf azcopy.tar.gz --strip-components=1
+              chmod +x azcopy
+            fi
             echo 'export PATH=~/bin:$PATH' >> $BASH_ENV
             echo 'export AZCOPY_AUTO_LOGIN_TYPE="SPN"' >> $BASH_ENV
             echo 'export AZCOPY_SPA_APPLICATION_ID="$AZURE_CLIENT_ID"' >> $BASH_ENV
@@ -142,6 +142,10 @@ commands:
             echo 'export AZCOPY_TENANT_ID="$AZURE_TENANT_ID"' >> $BASH_ENV
             source $BASH_ENV
             azcopy --version
+      - save_cache:
+          paths:
+            - ~/bin/azcopy
+          key: azcopy-v10.29.1-{{ arch }}
   setup-node-dependencies:
     description: 'Checkout code and install node dependencies'
     steps:
@@ -169,8 +173,6 @@ commands:
           command: |
             yarn build
       - save-node-dependencies-cache
-      - attach_workspace:
-          at: /
   downstream-2ndgen:
     description: 'Setup and build for 2nd-gen tests'
     steps:
@@ -430,11 +432,12 @@ jobs:
             - store_artifacts:
                 path: 2nd-gen/packages/swc/coverage
 
-  # 2nd-gen ARIA snapshot tests (Playwright)
+  # 2nd-gen Storybook-based tests: ARIA snapshots (Playwright) + axe-core WCAG (test-runner)
+  # Both suites run against the same static Storybook build, so we build once and run both.
   # NOTE: Uses full `downstream` because Storybook build has 1st-gen references
   # (contributor-docs generation, CEM analysis). The tests run against the
   # built static Storybook to avoid Vite dev-server cold-start flakiness.
-  test-2ndgen-a11y:
+  test-2ndgen-storybook:
     executor: node
 
     steps:
@@ -453,20 +456,6 @@ jobs:
           path: /root/project/2nd-gen/test/playwright-a11y/results
       - store_artifacts:
           path: 2nd-gen/test/playwright-a11y/report
-
-  # 2nd-gen axe-core WCAG tests (Storybook test-runner)
-  # NOTE: Uses full `downstream` because Storybook build has 1st-gen references
-  test-2ndgen-axe:
-    executor: node
-
-    steps:
-      - halt-if-not-affected:
-          gen: 2nd-gen
-      - downstream
-      - run:
-          name: Build 2nd-gen Storybook (production)
-          command: |
-            NODE_ENV=production SWC_STORYBOOK_MODE=ci-a11y yarn workspace @adobe/spectrum-wc storybook:build
       - run:
           name: Run axe-core WCAG tests
           command: |
@@ -684,8 +673,7 @@ workflows:
           matrix:
             parameters:
               browser: [chromium, firefox, webkit]
-      - test-2ndgen-a11y
-      - test-2ndgen-axe
+      - test-2ndgen-storybook
       # 1st-gen tests
       - test-chromium
       - test-chromium-memory
