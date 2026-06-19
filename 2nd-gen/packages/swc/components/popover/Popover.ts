@@ -49,19 +49,34 @@ export class Popover extends PopoverBase {
     return this.shadowRoot?.querySelector('.swc-Popover-tip') ?? null;
   }
 
+  // Memoized arrow clearance; see `arrowHeight`. Cleared on disconnect so a
+  // remount (potentially under a different platform scale) recomputes.
+  private _arrowHeight?: number;
+
   // The arrow clearance lives in this layer's CSS (`--_swc-popover-tip-height`
   // on `.swc-Popover`); read it here so the base never reaches into the surface
-  // styles. Falls back to 0 if the surface is not yet rendered/styled.
+  // styles. The token is stable for the element's lifetime, so the
+  // `getComputedStyle` reflow is memoized after the first read rather than run on
+  // every re-anchor. Falls back to 0 (uncached) if the surface is not yet
+  // rendered/styled, so a later read recomputes once it is.
   protected override get arrowHeight(): number {
+    if (this._arrowHeight !== undefined) {
+      return this._arrowHeight;
+    }
     const surface = this.internalElement;
     if (!surface) {
       return 0;
     }
-    return (
+    this._arrowHeight =
       parseFloat(
         getComputedStyle(surface).getPropertyValue('--_swc-popover-tip-height')
-      ) || 0
-    );
+      ) || 0;
+    return this._arrowHeight;
+  }
+
+  public override disconnectedCallback(): void {
+    super.disconnectedCallback();
+    this._arrowHeight = undefined;
   }
 
   protected override render(): TemplateResult {
