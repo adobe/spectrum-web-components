@@ -1,0 +1,119 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import { DocsFooter, DocsHeader } from '../../.storybook/blocks';
+
+import * as ActionButtonStories from './stories/action-button.stories';
+
+<Meta of={ActionButtonStories} />
+
+<DocsHeader />
+
+Migrating from `<sp-action-button>`? See the [Action Button migration guide](?path=/docs/action-button-migration-guide--docs).
+
+## Anatomy
+
+An action button consists of:
+
+- **Default slot**: visible text label
+- **icon slot**: optional leading icon displayed before the label
+
+Action buttons can render with a label only, an icon and label combined, or as icon-only. Icon-only usage requires an `accessible-label` attribute to provide an accessible name for screen reader users.
+
+<Canvas of={ActionButtonStories.Anatomy} />
+
+## Options
+
+### Sizes
+
+Action buttons come in five sizes: extra-small (`xs`), small (`s`), medium (`m`), large (`l`), and extra-large (`xl`). The `xs` size is unique to action button and is not available on `swc-button`. Medium is the default.
+
+<Canvas of={ActionButtonStories.Sizes} />
+
+### Quiet
+
+The `quiet` attribute applies a low-emphasis visual treatment with no background or border at rest. Quiet is a primary visual differentiator for action button; unlike `swc-button` where quiet is deprecated, it remains a first-class option here.
+
+<Canvas of={ActionButtonStories.Quiet} />
+
+### Static colors
+
+The `static-color` attribute pins the button's color to either `"white"` or `"black"` regardless of the active theme. Use `static-color="white"` on dark backgrounds and `static-color="black"` on light backgrounds. Both default and `quiet` treatments support static color.
+
+<Canvas of={ActionButtonStories.StaticColors} />
+
+## States
+
+Action buttons support three states:
+
+- **Default**: the button is active and can be interacted with.
+- **Disabled**: the button is removed from the tab order and cannot be activated.
+- **Pending**: the button remains focusable but activation is suppressed while an asynchronous operation is in progress.
+
+Do not set both `disabled` and `pending` simultaneously.
+
+<Canvas of={ActionButtonStories.States} />
+
+### Disabled
+
+The `disabled` attribute removes the button from the tab order and prevents activation entirely. Use `disabled` when the action is genuinely unavailable and there is no expectation that it will become available without a change in context. If the action is temporarily unavailable while an operation completes, use `pending` instead so keyboard users can still discover and focus the button.
+
+### Pending
+
+When `pending` is set, the button remains focusable but click events are suppressed. After a 1-second delay, the button enters its active pending appearance: disabled colors and an animated inline spinner. The delay prevents the pending appearance from flashing for operations that resolve quickly.
+
+The accessible name during pending defaults to the visible label plus `", busy"`. For example, a button labeled "Upload" announces as `"Upload, busy"`. Provide `pending-label` to override this with a more specific description of the in-progress operation. When pending clears, the accessible name reverts to the original label.
+
+## Behaviors
+
+### Pending
+
+<Canvas of={ActionButtonStories.Pending} />
+
+### Icon only
+
+When an icon is slotted with no visible text, set `accessible-label` to provide an accessible name for the button. A development warning is emitted when an icon-only button is missing `accessible-label`.
+
+<Canvas of={ActionButtonStories.IconOnly} />
+
+### Linking
+
+`swc-action-button` is a button-only element. Mixing button and link semantics creates accessibility issues: screen reader users navigating by form controls will not encounter link-styled buttons, and vice versa.
+
+For navigation, use a native `<a>` element styled with the generated global action button stylesheet. See [global element styling](/docs/guides-customization-global-element-styling--docs) for setup instructions and usage examples including quiet and icon-only variants.
+
+## Accessibility
+
+### Features
+
+The `<swc-action-button>` element implements several accessibility features:
+
+1. **Native button semantics**: a real `<button>` inside shadow DOM provides the role, so assistive technologies see a genuine button rather than a host with `role="button"`.
+2. **Focus delegation**: `delegatesFocus: true` routes Tab focus and programmatic focus to the internal `<button>`, keeping the host out of the tab order.
+3. **Keyboard activation**: Enter and Space both activate the button via native browser behavior; no custom keyboard handling is added.
+4. **Pending state**: when `pending` is true, `aria-disabled="true"` is set on the internal `<button>` and the accessible name becomes `"[label], busy"`. The button remains focusable so users can discover it is unavailable. Provide `pending-label` to override the derived busy name.
+5. **Icon-only labeling**: when there is no visible text, the `accessible-label` attribute is forwarded as `aria-label` on the internal `<button>`. A development warning is emitted when an icon-only button is missing `accessible-label`. Setting `aria-label` directly on the host has no effect on the button's accessible name; the host element has no interactive role and is never focused by assistive technologies.
+6. **Menu trigger forwarding**: `aria-haspopup` and `aria-expanded` set on the host are automatically forwarded to the internal `<button>` and stripped from the host to prevent duplicate ARIA state on both elements.
+
+### Best practices
+
+- Always provide `accessible-label` for icon-only buttons so screen readers can announce the button's purpose.
+- Do not set both `pending` and `disabled` simultaneously. Use `pending` to keep the button focusable while unavailable, or `disabled` to remove it from the tab order entirely.
+- For navigation, use a native `<a>` element with [global element styles](/docs/guides-customization-global-element-styling--docs) rather than `<swc-action-button>`. Buttons activate on both Enter and Space; links activate on Enter only.
+- Use `static-color="black"` on light backgrounds and `static-color="white"` on dark backgrounds to maintain sufficient contrast. Avoid placing static color buttons over busy images with high contrast variance.
+
+### Limitations
+
+The following features are not currently supported:
+
+- **Cross-root ARIA** (`aria-labelledby` / `aria-describedby` from outside the shadow root).
+- **Hold affordance** (`hold-affordance` / `longpress`). See [Upcoming features](#upcoming-features) for alternatives.
+
+<Canvas of={ActionButtonStories.Accessibility} />
+
+## Upcoming features
+
+The following features are planned for future releases:
+
+- **Hold affordance** (`hold-affordance` / `longpress`): not yet available. In the interim, separate the secondary action into a distinct `swc-action-button` within an action group, which is more accessible than relying on a longpress interaction alone.
+- **Toggle button**: selection and toggle UX is planned via `swc-toggle-button` and `swc-toggle-button-group`, available in a future release.
+
+<DocsFooter />
