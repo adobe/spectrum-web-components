@@ -2,7 +2,7 @@ name: Preview Documentation (Azure Blob Storage)
 
 on:
   pull_request:
-    types: [opened, synchronize, reopened, closed]
+    types: [opened, synchronize, reopened, closed, labeled, unlabeled]
 
 permissions:
   contents: read
@@ -11,12 +11,6 @@ permissions:
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number }}
   cancel-in-progress: true
-
-env:
-  AZCOPY_AUTO_LOGIN_TYPE: SPN
-  AZCOPY_SPA_APPLICATION_ID: ${{ secrets.AZURE_CLIENT_ID }}
-  AZCOPY_SPA_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
-  AZCOPY_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
 
 jobs:
   build_and_deploy_job:
@@ -28,12 +22,28 @@ jobs:
       first_gen_docs_url: ${{ steps.deploy.outputs.first_gen_docs_url }}
       first_gen_storybook_url: ${{ steps.deploy.outputs.first_gen_storybook_url }}
       second_gen_storybook_url: ${{ steps.deploy.outputs.second_gen_storybook_url }}
+      is_fork_mode: ${{ steps.fork_mode.outputs.is_fork_mode }}
     steps:
       ## --- SETUP --- ##
       - name: Check out code
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+
+      - name: Determine fork preview mode
+        id: fork_mode
+        run: |
+          is_fork_mode="false"
+          if [ "${{ github.event.pull_request.head.repo.full_name }}" != "${{ github.repository }}" ]; then
+            is_fork_mode="true"
+            echo "Fork preview mode: external contribution (fork PR)"
+          elif [ "${{ contains(github.event.pull_request.labels.*.name, 'test_fork_preview') }}" = "true" ]; then
+            is_fork_mode="true"
+            echo "Fork preview mode: test_fork_preview label (simulating fork PR on internal branch)"
+          else
+            echo "Standard preview mode: deploy to Azure"
+          fi
+          echo "is_fork_mode=${is_fork_mode}" >> "$GITHUB_OUTPUT"
 
       - name: Use Node version from .nvmrc
         uses: actions/setup-node@v4
@@ -96,11 +106,18 @@ jobs:
         run: yarn workspace @adobe/spectrum-wc storybook:build
 
       ## --- DEPLOY TO AZURE BLOB STORAGE --- ##
+      # Azure credentials are unavailable for pull requests from forked repositories.
       - name: Setup AzCopy
+        if: steps.fork_mode.outputs.is_fork_mode != 'true'
         uses: ./.github/actions/setup-azcopy
 
       - name: Deploy first-gen documentation to Azure Blob Storage
+        if: steps.fork_mode.outputs.is_fork_mode != 'true'
         env:
+          AZCOPY_AUTO_LOGIN_TYPE: SPN
+          AZCOPY_SPA_APPLICATION_ID: ${{ secrets.AZURE_CLIENT_ID }}
+          AZCOPY_SPA_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+          AZCOPY_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
           PR_HASH: ${{ steps.pr_hash.outputs.hash }}
         run: |
           echo "Uploading first-gen documentation to ${PR_HASH}/docs/first-gen-docs/"
@@ -111,7 +128,12 @@ jobs:
           echo "✅ First-gen documentation uploaded successfully"
 
       - name: Deploy first-gen Storybook to Azure Blob Storage
+        if: steps.fork_mode.outputs.is_fork_mode != 'true'
         env:
+          AZCOPY_AUTO_LOGIN_TYPE: SPN
+          AZCOPY_SPA_APPLICATION_ID: ${{ secrets.AZURE_CLIENT_ID }}
+          AZCOPY_SPA_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+          AZCOPY_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
           PR_HASH: ${{ steps.pr_hash.outputs.hash }}
         run: |
           echo "Uploading first-gen Storybook to ${PR_HASH}/docs/first-gen-storybook/"
@@ -122,7 +144,12 @@ jobs:
           echo "✅ First-gen Storybook uploaded successfully"
 
       - name: Deploy second-gen Storybook to Azure Blob Storage
+        if: steps.fork_mode.outputs.is_fork_mode != 'true'
         env:
+          AZCOPY_AUTO_LOGIN_TYPE: SPN
+          AZCOPY_SPA_APPLICATION_ID: ${{ secrets.AZURE_CLIENT_ID }}
+          AZCOPY_SPA_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+          AZCOPY_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
           PR_HASH: ${{ steps.pr_hash.outputs.hash }}
         run: |
           echo "Uploading second-gen Storybook to ${PR_HASH}/docs/second-gen-storybook/"
@@ -134,6 +161,7 @@ jobs:
 
       - name: Set deployment URLs
         id: deploy
+        if: steps.fork_mode.outputs.is_fork_mode != 'true'
         env:
           PR_HASH: ${{ steps.pr_hash.outputs.hash }}
         run: |
@@ -150,15 +178,26 @@ jobs:
           echo "  - First-gen Storybook: ${first_gen_storybook_url}"
           echo "  - Second-gen Storybook: ${second_gen_storybook_url}"
 
+      - name: Upload first-gen docs build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: first-gen-docs-dist
+          path: 1st-gen/projects/documentation/dist/
+          retention-days: 1
+
       - name: Post Previews Comment
         uses: actions/github-script@v7
         with:
           script: |
-            const { buildPreviewURLComment } = await import('${{ github.workspace }}/.github/scripts/build-preview-urls-comment.js');
+            const { buildPreviewURLComment, buildForkPRComment } = await import('${{ github.workspace }}/.github/scripts/build-preview-urls-comment.js');
             const { commentOrUpdate } = await import('${{ github.workspace }}/.github/scripts/comment-or-update.js');
 
             const prNumber = context.payload.pull_request.number;
-            const body = buildPreviewURLComment(prNumber);
+            const isForkMode = '${{ steps.fork_mode.outputs.is_fork_mode }}' === 'true';
+            const isSimulated = ${{ contains(github.event.pull_request.labels.*.name, 'test_fork_preview') }};
+            const body = isForkMode
+              ? buildForkPRComment(isSimulated)
+              : buildPreviewURLComment(prNumber);
 
             console.log(`Posting comment to PR #${prNumber}`);
             commentOrUpdate(github, context, '## 📚 Branch Preview Links', body);
@@ -173,7 +212,8 @@ jobs:
       - name: Checkout PR branch
         uses: actions/checkout@v4
 
-      - name: Wait for deployment
+      - name: Wait for Azure deployment
+        if: needs.build_and_deploy_job.outputs.is_fork_mode != 'true'
         env:
           DOC_URL: ${{ needs.build_and_deploy_job.outputs.first_gen_docs_url }}
         run: |
@@ -201,16 +241,67 @@ jobs:
             exit 1
           fi
 
+      - name: Download first-gen docs build artifact
+        if: needs.build_and_deploy_job.outputs.is_fork_mode == 'true'
+        uses: actions/download-artifact@v4
+        with:
+          name: first-gen-docs-dist
+          path: first-gen-docs-dist
+
       - name: Setup Job and Install Dependencies
+        if: needs.build_and_deploy_job.outputs.is_fork_mode != 'true'
         uses: ./.github/actions/setup-job
+
+      - name: Setup Node and install dependencies
+        if: needs.build_and_deploy_job.outputs.is_fork_mode == 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+          cache: yarn
+
+      - name: Install dependencies for fork pull requests
+        if: needs.build_and_deploy_job.outputs.is_fork_mode == 'true'
+        run: |
+          corepack enable
+          yarn install --immutable
 
       - name: Install Playwright Browsers
         run: cd 1st-gen && yarn playwright install --with-deps
 
+      - name: Serve docs locally for fork pull requests
+        if: needs.build_and_deploy_job.outputs.is_fork_mode == 'true'
+        id: local_docs
+        env:
+          PR_HASH: pr-${{ github.event.pull_request.number }}
+        run: |
+          doc_url="http://localhost:8000/${PR_HASH}/docs/first-gen-docs/"
+          echo "url=${doc_url}" >> "$GITHUB_OUTPUT"
+
+          mkdir -p "preview/${PR_HASH}/docs/first-gen-docs"
+          cp -r first-gen-docs-dist/* "preview/${PR_HASH}/docs/first-gen-docs/"
+
+          cd preview
+          python3 -m http.server 8000 > /dev/null 2>&1 &
+
+          max_attempts=30
+          attempt=1
+          while [ $attempt -le $max_attempts ]; do
+            if curl -f -s --max-time 5 "${doc_url}" > /dev/null; then
+              echo "✅ Local docs server is ready at ${doc_url}"
+              exit 0
+            fi
+            echo "Waiting for local docs server (${attempt}/${max_attempts})..."
+            sleep 2
+            attempt=$((attempt + 1))
+          done
+
+          echo "❌ Local docs server did not become available"
+          exit 1
+
       - name: Run Playwright tests
         run: cd 1st-gen && yarn playwright test projects/documentation/e2e/published.spec.ts
         env:
-          DOC_PREVIEW_URL: ${{ needs.build_and_deploy_job.outputs.first_gen_docs_url }}
+          DOC_PREVIEW_URL: ${{ needs.build_and_deploy_job.outputs.is_fork_mode != 'true' && needs.build_and_deploy_job.outputs.first_gen_docs_url || steps.local_docs.outputs.url }}
           SWC_DIR: pr-${{ github.event.pull_request.number }}
           NODE_ENV: CI
 
@@ -223,10 +314,19 @@ jobs:
           retention-days: 30
 
   close_pull_request_job:
-    if: github.event_name == 'pull_request' && github.event.action == 'closed'
+    if: >-
+      github.event_name == 'pull_request' &&
+      github.event.action == 'closed' &&
+      github.event.pull_request.head.repo.full_name == github.repository &&
+      !contains(github.event.pull_request.labels.*.name, 'test_fork_preview')
     runs-on: ubuntu-latest
     name: Clean up PR deployment
     timeout-minutes: 5
+    env:
+      AZCOPY_AUTO_LOGIN_TYPE: SPN
+      AZCOPY_SPA_APPLICATION_ID: ${{ secrets.AZURE_CLIENT_ID }}
+      AZCOPY_SPA_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+      AZCOPY_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
     steps:
       - name: Check out code
         uses: actions/checkout@v5

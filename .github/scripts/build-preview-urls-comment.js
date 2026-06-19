@@ -105,3 +105,16 @@ If the changes are unexpected, you can investigate the cause of the differences 
 `;
   return comment;
 };
+
+export const buildForkPRComment = (isSimulated = false) => {
+  const simulatedNote = isSimulated
+    ? '\n\n_This PR is using the `test_fork_preview` label to simulate fork PR behavior on an internal branch._'
+    : '';
+
+  return `## 📚 Branch Preview Links
+
+✅ Documentation and Storybook builds completed successfully.
+
+Preview deployment is not available for pull requests from forked repositories. GitHub does not expose repository secrets to workflows triggered by external contributions, so Azure Blob Storage uploads are skipped. Smoke tests still run against the built documentation served locally in CI.${simulatedNote}
+`;
+};

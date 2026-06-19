@@ -39,20 +39,30 @@ jobs:
       storybook-url: ${{ steps.chromatic.outputs.storybookUrl != 'undefined' && steps.chromatic.outputs.storybookUrl || '' }}
 
     steps:
+      - name: Skip Chromatic for fork pull requests
+        if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name != github.repository
+        run: |
+          echo "::notice::Chromatic skipped for fork pull requests. Repository secrets (CHROMATIC_TOKEN) are unavailable to workflows triggered by external contributions."
+          echo "Maintainers can run VRT locally or add the run_vrt label after pushing the branch to the upstream repository."
+
       - name: Check out code
+        if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
       - name: Setup Job and Install Dependencies
+        if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
         uses: ./.github/actions/setup-job
 
       - name: Generate Custom Elements Manifest
+        if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
         working-directory: 2nd-gen/packages/swc
         run: yarn analyze
 
       - name: Publish to Chromatic
         id: chromatic
+        if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
         uses: chromaui/action@v15
         with:
           projectToken: ${{ secrets.CHROMATIC_TOKEN }}
