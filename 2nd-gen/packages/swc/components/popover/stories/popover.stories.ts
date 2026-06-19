@@ -55,9 +55,9 @@ argTypes['actual-placement'] = {
 };
 
 /**
- * A `<swc-popover>` is an anchored top-layer surface for menus, dialogs, and
- * contextual content. It positions itself against a trigger element and points at
- * it with an arrow (tip) by default.
+ * A `<swc-popover>` is an overlay element positioned relative to a trigger. It
+ * renders in the top layer, anchors itself to the trigger, and points at it with
+ * an arrow (tip) by default.
  *
  * In its default (non-modal) mode it renders an internal `<div popover="auto">`:
  * the page behind stays interactive and scrollable, and the browser dismisses it
@@ -80,7 +80,7 @@ const meta: Meta = {
       handles: events,
     },
     docs: {
-      subtitle: `Anchored top-layer surface for menus, dialogs, and contextual content`,
+      subtitle: `An overlay element positioned relative to a trigger`,
     },
   },
   tags: ['migrated'],
