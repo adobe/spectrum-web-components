@@ -324,6 +324,39 @@ The `<sp-menu>` element can be instructed to maintain a selection via the `selec
 
 ### Behaviors
 
+#### Mobile view (drill-down navigation)
+
+On small screens, flyout submenus are difficult to use because the overlay extends outside the tray. The `mobile-view` attribute switches an `<sp-menu>` to a drill-down navigation mode: activating a menu item that has a submenu slides the submenu's items in to replace the current content, with a back button to return to the previous level. This pattern works well inside an `<sp-tray>`.
+
+```html
+<sp-tray open>
+  <sp-menu mobile-view label="Options">
+    <sp-menu-item>Home</sp-menu-item>
+    <sp-menu-item>
+      File
+      <sp-menu slot="submenu">
+        <sp-menu-item>New</sp-menu-item>
+        <sp-menu-item>Open</sp-menu-item>
+        <sp-menu-item>Save</sp-menu-item>
+      </sp-menu>
+    </sp-menu-item>
+    <sp-menu-item>Settings</sp-menu-item>
+  </sp-menu>
+</sp-tray>
+```
+
+The back button label defaults to "Back". Use the `mobile-back-label` attribute to provide a localized string:
+
+```html
+<sp-menu mobile-view mobile-back-label="Retour" label="Options">
+  <!-- ... -->
+</sp-menu>
+```
+
+The slide animation respects the user's `prefers-reduced-motion` setting, and the back-arrow icon mirrors automatically in RTL layouts.
+
+When using `<sp-action-menu>`, `mobile-view` is applied automatically on mobile devices. To always render a popover instead of a tray (and disable `mobile-view`), add the `force-popover` attribute to `<sp-action-menu>`.
+
 #### "change" event
 
 Regardless of whether or not `<sp-menu>` carries a selection, when one of the `<sp-menu-item>` children that it manages is activated, the `<sp-menu>` element will dispatch a `change` event. At dispatch time, even when a selection is not held due to the absence of the `selects` attribute, the `value` of the `<sp-menu>` will correspond to the `<sp-menu-item>` that was activated. When the `selects` attribute is present, this `value` will persist beyond the lifecycle of the `change` event. When `selects="multiple"`, the values of multiple items will be comma separated, unless otherwise set via the `value-separator` attribute.
