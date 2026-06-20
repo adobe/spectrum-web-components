@@ -381,6 +381,8 @@ export class HandleController {
     this.cancelDrag(model);
     this.requestUpdate();
     this.host.track.releasePointerCapture(event.pointerId);
+    // Haptic on pointerup: reliable on iOS/touch (often not on pointerdown)
+    this.host.triggerHapticFeedback?.();
     this.dispatchChangeEvent(input, model.handle);
   }
 
@@ -416,6 +418,7 @@ export class HandleController {
     const input = event.target as InputWithModel;
     input.model.handle.value = input.valueAsNumber;
 
+    this.host.triggerHapticFeedback?.();
     this.requestUpdate();
     this.dispatchChangeEvent(input, input.model.handle);
   };
