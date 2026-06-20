@@ -60,6 +60,7 @@
     - [Color field migration roadmap](color-field/rendering-and-styling-migration-analysis.md)
 - Color Handle
     - [Color handle accessibility migration analysis](color-handle/accessibility-migration-analysis.md)
+    - [Color Handle migration plan](color-handle/migration-plan.md)
     - [Color handle migration roadmap](color-handle/rendering-and-styling-migration-analysis.md)
 - Color Loupe
     - [Color loupe accessibility migration analysis](color-loupe/accessibility-migration-analysis.md)
