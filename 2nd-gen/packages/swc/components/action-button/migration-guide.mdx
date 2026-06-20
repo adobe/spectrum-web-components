@@ -1,0 +1,227 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Action Button/Migration guide" />
+
+# Action Button migration guide
+
+Replace `<sp-action-button>` with `<swc-action-button>`, update the import, rename `label` to `accessible-label`, and migrate any toggle or link usage to the appropriate replacement pattern.
+
+## Installation
+
+```bash
+# Remove
+yarn remove @spectrum-web-components/action-button
+
+# Add
+yarn add @adobe/spectrum-wc
+```
+
+Update your import:
+
+```js
+// Before
+import '@spectrum-web-components/action-button/sp-action-button.js';
+
+// After
+import '@adobe/spectrum-wc/components/action-button/swc-action-button.js';
+```
+
+> `@adobe/spectrum-wc` is a monolithic package. Importing via subpath (e.g. `@adobe/spectrum-wc/components/action-button/swc-action-button.js`) registers and loads only that component's bundle.
+
+## What changed
+
+### Renamed
+
+| Area                      | Spectrum 1 (`sp-action-button`)                      | Spectrum 2 (`swc-action-button`)                                   |
+| ------------------------- | ---------------------------------------------------- | ------------------------------------------------------------------ |
+| Tag                       | `sp-action-button`                                   | `swc-action-button`                                                |
+| Import path               | `@spectrum-web-components/action-button`             | `@adobe/spectrum-wc/components/action-button/swc-action-button.js` |
+| Accessible name attribute | `label`                                              | `accessible-label`                                                 |
+| CSS custom properties     | `--mod-actionbutton-*` / `--spectrum-actionbutton-*` | `--swc-action-button-*` (see [Styling](#styling))                  |
+
+### Added in Spectrum 2
+
+| Addition                         | Notes                                                                                         |
+| -------------------------------- | --------------------------------------------------------------------------------------------- |
+| `pending` boolean attribute      | Shows an animated spinner and suppresses activation; button stays focusable                   |
+| `pending-label` string attribute | Custom accessible name during the pending state; defaults to the resolved label plus ", busy" |
+| `xs` size                        | Extra-small size, not available in Spectrum 1                                                 |
+
+### Removed in Spectrum 2
+
+| Removed                                               | Replacement                                                                                                |
+| ----------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| `toggles`, `selected`                                 | Migrate to `swc-toggle-button` / `swc-toggle-button-group` (coming soon)                                   |
+| `emphasized`                                          | No replacement; it only applied to the `selected` state, which is removed                                  |
+| `hold-affordance`, `longpress` event                  | Deferred; use an action-group layout (separate button + menu trigger) as an accessible alternative         |
+| `href`, `target`, `download`, `referrerpolicy`, `rel` | Use a native `<a>` element (global action-button stylesheet coming soon)                                   |
+| `value`                                               | Deferred; not available in the initial Spectrum 2 release                                                  |
+| `role`                                                | Migrate exclusive-choice patterns that used `role="radio"` or `role="checkbox"` to `swc-segmented-control` |
+| `type`, `name`                                        | `swc-action-button` is not form-associated; use a native `<button>` element for form controls              |
+| `--mod-actionbutton-*` / `--spectrum-actionbutton-*`  | `--swc-action-button-*` equivalents (see [Styling](#styling))                                              |
+
+## Update your code
+
+### 1. Rename the tag
+
+```html
+<!-- Before -->
+<sp-action-button>Edit</sp-action-button>
+
+<!-- After -->
+<swc-action-button>Edit</swc-action-button>
+```
+
+### 2. Rename `label` to `accessible-label`
+
+Icon-only buttons required a `label` attribute in Spectrum 1. Rename it to `accessible-label`:
+
+```html
+<!-- Before -->
+<sp-action-button label="Edit">
+  <sp-icon-edit slot="icon"></sp-icon-edit>
+</sp-action-button>
+
+<!-- After -->
+<swc-action-button accessible-label="Edit">
+  <sp-icon-edit slot="icon"></sp-icon-edit>
+</swc-action-button>
+```
+
+### 3. Migrate toggle usage
+
+`toggles`, `selected`, and `aria-pressed` are removed from `<swc-action-button>`. The equivalent is `swc-toggle-button` or `swc-toggle-button-group`, which are coming in a future Spectrum 2 release.
+
+Until those components are available, continue using `<sp-action-button>` for toggle patterns, or use the fallback below:
+
+```html
+<!-- Before -->
+<sp-action-button toggles>Bold</sp-action-button>
+
+<!-- After: use swc-toggle-button when available (coming soon) -->
+<!-- For now: continue using sp-action-button for toggle patterns -->
+```
+
+If your action-button was used for **exclusive-choice** (radio-style), where `sp-action-group` reassigned `role="radio"` to child buttons, migrate to `swc-segmented-control` / `swc-segmented-control-button` instead.
+
+### 4. Replace link usage with native anchors
+
+The `href` and related link attributes are removed. Replace link-styled action buttons with a native `<a>` element:
+
+```html
+<!-- Before -->
+<sp-action-button href="https://example.com">Open</sp-action-button>
+
+<!-- After: use a native anchor element -->
+<a href="https://example.com">Open</a>
+```
+
+> A generated `global-action-button.css` stylesheet is planned to let you style native `<a>` and `<button>` elements with the Spectrum 2 action-button appearance. Check the Storybook docs page for availability.
+
+### 5. (Optional) Use the new `pending` state
+
+`pending` is new in Spectrum 2. If you previously used `disabled` to block activation during async operations, `pending` is the better replacement: the button stays focusable while activation is suppressed.
+
+```html
+<!-- Before (Spectrum 1: disabled was the only option to block activation) -->
+<sp-action-button disabled>Save</sp-action-button>
+
+<!-- After (Spectrum 2: use pending to keep the button focusable) -->
+<swc-action-button pending>Save</swc-action-button>
+
+<!-- With a custom busy label -->
+<swc-action-button pending pending-label="Saving…">Save</swc-action-button>
+```
+
+While `pending`, the button stays in the tab order and focusable, but activation is suppressed. The accessible name is updated to include a busy suffix (e.g., "Save, busy").
+
+## Accessibility
+
+- **Icon-only buttons** must have `accessible-label` set. See [step 2](#2-rename-label-to-accessible-label).
+- **Toggle semantics** (`aria-pressed`, `toggles`, `selected`) moved to `swc-toggle-button` / `swc-toggle-button-group`. See [step 3](#3-migrate-toggle-usage).
+- **Menu triggers:** set `aria-haspopup` and `aria-expanded` directly on `<swc-action-button>`; they are forwarded automatically to the internal `<button>` and stripped from the host to prevent duplicate ARIA state.
+- **Exclusive-choice patterns** that previously used `role="radio"` on action buttons must move to `swc-segmented-control`.
+- **Pending vs. disabled:** use `pending` to keep the button focusable while an operation runs; use `disabled` to remove it from the tab order entirely. Do not set both simultaneously.
+
+## Styling
+
+Spectrum 2 exposes a new set of public CSS custom properties on `<swc-action-button>`. The full Spectrum 1 modifier surface (`--mod-actionbutton-*`, `--spectrum-actionbutton-*`) is not carried forward.
+
+{/* @todo Replace the inline-styled callouts in this section with `<swc-inline-alert>` once it is migrated to Spectrum 2. */}
+
+<div
+  style={{
+    borderLeft: '4px solid #dba842',
+    background: 'rgba(219, 168, 66, 0.12)',
+    padding: '12px 16px',
+    margin: '16px 0',
+    borderRadius: '4px',
+  }}
+>
+  <strong>⚠️ Breaking change.</strong> Spectrum 1{' '}
+  <code>{'--mod-actionbutton-*'}</code> and{' '}
+  <code>{'--spectrum-actionbutton-*'}</code> properties{' '}
+  <strong>do not apply</strong> to <code>{'<swc-action-button>'}</code>. Remove
+  or replace every override with the <code>{'--swc-action-button-*'}</code>{' '}
+  equivalents below. Not every Spectrum 1 property has a 1:1 replacement, so
+  read the list below carefully.
+</div>
+
+### Public custom properties
+
+{/* @todo Replace the Description column with the `@cssproperty` JSDoc descriptions from `<swc-action-button>`'s CEM entry once they are added in a follow-up PR. */}
+
+| Custom property                                 | Description                                                            |
+| ----------------------------------------------- | ---------------------------------------------------------------------- |
+| `--swc-action-button-min-block-size`            | Minimum block size. Defaults to the medium component height token.     |
+| `--swc-action-button-border-radius`             | Corner radius.                                                         |
+| `--swc-action-button-font-size`                 | Font size of the label.                                                |
+| `--swc-action-button-gap`                       | Gap between the icon and label.                                        |
+| `--swc-action-button-edge-to-text`              | Inline padding from the edge to the label text.                        |
+| `--swc-action-button-edge-to-visual`            | Inline padding from the edge to the icon when a label is also present. |
+| `--swc-action-button-edge-to-visual-only`       | Inline padding from the edge to the icon when no label is present.     |
+| `--swc-action-button-icon-size`                 | Size (inline and block) of the slotted icon.                           |
+| `--swc-action-button-icon-inline-size`          | Inline size override for the slotted icon.                             |
+| `--swc-action-button-icon-block-size`           | Block size override for the slotted icon.                              |
+| `--swc-action-button-focus-indicator-color`     | Color of the focus ring outline.                                       |
+| `--swc-action-button-background-color-default`  | Background color in the default state.                                 |
+| `--swc-action-button-border-color-default`      | Border color in the default state.                                     |
+| `--swc-action-button-content-color-default`     | Text and icon color in the default state.                              |
+| `--swc-action-button-background-color-hover`    | Background color on hover.                                             |
+| `--swc-action-button-border-color-hover`        | Border color on hover.                                                 |
+| `--swc-action-button-content-color-hover`       | Text and icon color on hover.                                          |
+| `--swc-action-button-background-color-focus`    | Background color when focused.                                         |
+| `--swc-action-button-border-color-focus`        | Border color when focused.                                             |
+| `--swc-action-button-content-color-focus`       | Text and icon color when focused.                                      |
+| `--swc-action-button-background-color-down`     | Background color when pressed.                                         |
+| `--swc-action-button-border-color-down`         | Border color when pressed.                                             |
+| `--swc-action-button-content-color-down`        | Text and icon color when pressed.                                      |
+| `--swc-action-button-background-color-disabled` | Background color when disabled or pending.                             |
+| `--swc-action-button-border-color-disabled`     | Border color when disabled or pending.                                 |
+| `--swc-action-button-content-color-disabled`    | Text and icon color when disabled or pending.                          |
+
+<div
+  style={{
+    borderLeft: '4px solid #e34850',
+    background: 'rgba(227, 72, 80, 0.10)',
+    padding: '12px 16px',
+    margin: '16px 0',
+    borderRadius: '4px',
+  }}
+>
+  <strong>🚫 Do not target internals.</strong> Internal classes,{' '}
+  <code>{'--_swc-action-button-*'}</code> private properties, and shadow DOM are{' '}
+  <strong>not public API</strong>. Styling applied to them will break without
+  warning on minor releases.
+</div>
+
+## Checklist
+
+- [ ] Update imports from `@spectrum-web-components/action-button` to `@adobe/spectrum-wc`
+- [ ] Rename all `<sp-action-button>` to `<swc-action-button>`
+- [ ] Rename `label="..."` to `accessible-label="..."` on all icon-only buttons
+- [ ] Migrate toggle buttons (`toggles`, `selected`) to `swc-toggle-button` (or keep using `sp-action-button` until available)
+- [ ] Migrate exclusive-choice patterns to `swc-segmented-control`
+- [ ] Replace `<sp-action-button href="...">` with native `<a>` elements
+- [ ] Remove or replace `--mod-actionbutton-*` / `--spectrum-actionbutton-*` overrides with `--swc-action-button-*` equivalents
+- [ ] Set `aria-haspopup` / `aria-expanded` directly on `<swc-action-button>` for menu triggers (forwarded automatically)
