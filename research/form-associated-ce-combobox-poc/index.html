@@ -1,0 +1,373 @@
+<!doctype html>
+<!--
+  Copyright 2026 Adobe. All rights reserved.
+
+  Form-associated custom element (FACE) PoC: combobox with ElementInternals
+  Research artifact for combobox FACE spike; not production code.
+
+  Files:
+    - face-combobox.js : Component definition (no cross-root IDREF workarounds)
+    - demo.js          : Form handlers, logging, axe-core audit
+    - styles.css       : Page-level styles
+    - index.html       : This file (demo scenarios)
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>FACE combobox PoC: ElementInternals research</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <h1>Form-associated custom element PoC: combobox</h1>
+    <p class="subtitle">
+      Research artifact for ElementInternals and FACE patterns applied to a
+      combobox-shaped control (text input + listbox). This version has
+      <strong>no cross-root IDREF workarounds</strong> — it shows what
+      <code>ElementInternals</code> does out of the box.
+    </p>
+
+    <div class="config-banner">
+      <strong>Configuration:</strong> Open
+      <code>face-combobox.js</code> and toggle
+      <code>USE_INTERNALS_ROLE</code> (line 17) between
+      <code>true</code> / <code>false</code> to compare behavior with and
+      without <code>internals.role = 'combobox'</code> on the host element.
+    </div>
+
+    <!-- ================================================================== -->
+    <!-- SECTION 1: form participation                                      -->
+    <!-- ================================================================== -->
+
+    <h2>1. Native form participation</h2>
+
+    <div class="scenario">
+      <h3>1a. FormData and submit</h3>
+      <form id="form-1a" novalidate>
+        <div class="field-group">
+          <label for="field-1a">Favorite fruit</label>
+          <face-combobox
+            id="field-1a"
+            name="fruit"
+            value="Apple"
+            options='["Apple", "Apricot", "Avocado", "Banana", "Blueberry", "Cherry", "Grape", "Lemon", "Mango", "Orange", "Peach", "Pear", "Strawberry"]'
+          ></face-combobox>
+        </div>
+        <div class="form-actions">
+          <button type="submit">Submit</button>
+          <button type="reset">Reset</button>
+        </div>
+      </form>
+      <div class="output" id="output-1a">Submit or reset the form to see results.</div>
+    </div>
+
+    <div class="scenario">
+      <h3>1b. Constraint validation (<code>required</code>)</h3>
+      <form id="form-1b" novalidate>
+        <div class="field-group">
+          <label for="field-1b">Country (required)</label>
+          <face-combobox
+            id="field-1b"
+            name="country"
+            required
+            options='["Argentina", "Australia", "Brazil", "Canada", "France", "Germany", "India", "Japan", "Mexico", "United Kingdom", "United States"]'
+            placeholder="Start typing a country..."
+          ></face-combobox>
+          <span class="help-text">Choose from the list or type your own.</span>
+        </div>
+        <div class="form-actions">
+          <button type="submit">Submit</button>
+        </div>
+      </form>
+      <div class="output" id="output-1b">Submit with no selection to see constraint validation.</div>
+    </div>
+
+    <div class="scenario">
+      <h3>1c. Disabled state via <code>fieldset</code></h3>
+      <form id="form-1c">
+        <fieldset disabled>
+          <legend>Disabled fieldset</legend>
+          <div class="field-group">
+            <label for="field-1c">Disabled combobox</label>
+            <face-combobox
+              id="field-1c"
+              name="disabledcombo"
+              value="Cannot change"
+              options='["Option A", "Option B", "Option C"]'
+            ></face-combobox>
+          </div>
+        </fieldset>
+        <div class="form-actions">
+          <button type="submit">Submit</button>
+        </div>
+      </form>
+      <div class="output" id="output-1c">Field should be disabled via ancestor fieldset.</div>
+    </div>
+
+    <div class="scenario">
+      <h3>1d. Submit with listbox open vs closed</h3>
+      <form id="form-1d" novalidate>
+        <div class="field-group">
+          <label for="field-1d">Color</label>
+          <face-combobox
+            id="field-1d"
+            name="color"
+            options='["Red", "Green", "Blue", "Yellow", "Purple", "Orange", "Pink", "Brown", "Black", "White"]'
+            placeholder="Pick a color..."
+          ></face-combobox>
+          <span class="help-text">
+            Try submitting while the listbox is open vs closed.
+          </span>
+        </div>
+        <div class="form-actions">
+          <button type="submit">Submit</button>
+        </div>
+      </form>
+      <div class="output" id="output-1d">Submit to see which value is captured.</div>
+    </div>
+
+    <!-- ================================================================== -->
+    <!-- SECTION 2: keyboard interaction                                    -->
+    <!-- ================================================================== -->
+
+    <h2>2. Keyboard interaction</h2>
+
+    <div class="note">
+      Follows the
+      <a href="https://www.w3.org/WAI/ARIA/apg/patterns/combobox/" target="_blank">APG combobox pattern</a>.
+      ArrowDown/Up to navigate, Enter to select, Escape to close.
+    </div>
+
+    <div class="scenario">
+      <h3>2a. Keyboard nav and activedescendant</h3>
+      <form id="form-2a">
+        <div class="field-group">
+          <label for="field-2a">Programming language</label>
+          <face-combobox
+            id="field-2a"
+            name="lang"
+            options='["C", "C++", "C#", "Go", "Java", "JavaScript", "Kotlin", "Python", "Ruby", "Rust", "Swift", "TypeScript"]'
+            placeholder="Type or use arrow keys..."
+          ></face-combobox>
+        </div>
+      </form>
+      <div class="output" id="output-2a">Keyboard events will be logged here.</div>
+    </div>
+
+    <!-- ================================================================== -->
+    <!-- SECTION 3: labelling — what works out of the box?                  -->
+    <!-- ================================================================== -->
+
+    <h2>3. Labelling scenarios (no cross-root workarounds)</h2>
+
+    <div class="note">
+      These scenarios show what the browser resolves <strong>natively</strong>
+      via <code>ElementInternals</code> — no JS to bridge cross-root IDREFs.
+      Inspect the a11y tree in DevTools to see which names resolve.
+    </div>
+
+    <!-- Scenario A: <label for="host-id"> -->
+    <div class="scenario">
+      <h3>Scenario A: <code>&lt;label for&gt;</code> pointing at host</h3>
+      <p>
+        With <code>internals.role</code> set, the host IS the combobox.
+        Does <code>&lt;label for&gt;</code> label it directly?
+      </p>
+      <form id="form-3a">
+        <div class="field-group">
+          <label for="field-3a">Timezone</label>
+          <face-combobox
+            id="field-3a"
+            name="timezone"
+            options='["UTC-8 Pacific", "UTC-7 Mountain", "UTC-6 Central", "UTC-5 Eastern", "UTC+0 GMT", "UTC+1 CET", "UTC+5:30 IST", "UTC+9 JST"]'
+            placeholder="Search timezones..."
+          ></face-combobox>
+          <span class="help-text">Select your primary timezone.</span>
+        </div>
+      </form>
+    </div>
+
+    <!-- Scenario B: host aria-label attribute -->
+    <div class="scenario">
+      <h3>Scenario B: <code>aria-label</code> on host</h3>
+      <p>
+        Host has <code>aria-label="Department"</code>. Does the tree
+        show "Department" as the combobox name?
+      </p>
+      <form id="form-3b">
+        <div class="field-group">
+          <face-combobox
+            id="field-3b"
+            name="department"
+            aria-label="Department"
+            options='["Design", "Engineering", "Marketing", "Product", "Sales", "Support"]'
+          ></face-combobox>
+        </div>
+      </form>
+    </div>
+
+    <!-- Scenario C: internal-label (shadow DOM) -->
+    <div class="scenario">
+      <h3>Scenario C: <code>internal-label</code> (shadow-scoped IDs)</h3>
+      <p>
+        Label and help text rendered inside the shadow root. Same-scope
+        <code>aria-labelledby</code> resolves because both elements share the
+        shadow root.
+      </p>
+      <form id="form-3c">
+        <div class="field-group">
+          <face-combobox
+            id="field-3c"
+            name="search"
+            internal-label="Search category"
+            internal-help="Type to filter categories."
+            options='["Books", "Electronics", "Fashion", "Food", "Games", "Music", "Sports", "Travel"]'
+            placeholder="Search..."
+          ></face-combobox>
+        </div>
+      </form>
+    </div>
+
+    <!-- Scenario D: aria-labelledby pointing at light DOM ID (NO workaround) -->
+    <div class="scenario">
+      <h3>Scenario D: <code>aria-labelledby</code> on host (light DOM ID, no JS bridge)</h3>
+      <p>
+        Host has <code>aria-labelledby="label-3d"</code> pointing at a sibling
+        element. Without cross-root JS, does the host's internals pick it up?
+        <strong>Expected: name resolves on the host node but may not reach the shadow input.</strong>
+      </p>
+      <form id="form-3d">
+        <div class="field-group">
+          <span id="label-3d" style="font-weight: 600; font-size: 0.875rem">Priority level</span>
+          <face-combobox
+            id="field-3d"
+            name="priority"
+            aria-labelledby="label-3d"
+            options='["Critical", "High", "Medium", "Low", "None"]'
+            placeholder="e.g. High"
+          ></face-combobox>
+        </div>
+      </form>
+    </div>
+
+    <!-- ================================================================== -->
+    <!-- SECTION 4: combobox-specific patterns                              -->
+    <!-- ================================================================== -->
+
+    <h2>4. Combobox-specific shadow DOM patterns</h2>
+
+    <div class="note">
+      <code>aria-activedescendant</code> and <code>aria-controls</code> resolve
+      within the same shadow root (no cross-root issue for these).
+    </div>
+
+    <div class="scenario">
+      <h3>4a. <code>aria-activedescendant</code> with shadow-scoped option IDs</h3>
+      <form id="form-4a">
+        <div class="field-group">
+          <label for="field-4a">Font family</label>
+          <face-combobox
+            id="field-4a"
+            name="font"
+            options='["Arial", "Courier New", "Georgia", "Helvetica", "Monaco", "Segoe UI", "Times New Roman", "Verdana"]'
+            placeholder="Type to search fonts..."
+          ></face-combobox>
+        </div>
+      </form>
+      <div class="output" id="output-4a">Use arrow keys to navigate. Active descendant changes appear here.</div>
+    </div>
+
+    <div class="scenario">
+      <h3>4b. <code>aria-controls</code> and popup relationship</h3>
+      <p>
+        Input and listbox share the same shadow root.
+        <code>aria-controls</code> resolves correctly.
+      </p>
+      <form id="form-4b">
+        <div class="field-group">
+          <label for="field-4b">City</label>
+          <face-combobox
+            id="field-4b"
+            name="city"
+            options='["Amsterdam", "Berlin", "London", "New York", "Paris", "San Francisco", "Singapore", "Sydney", "Tokyo", "Toronto"]'
+            placeholder="Search cities..."
+          ></face-combobox>
+        </div>
+      </form>
+    </div>
+
+    <div class="scenario">
+      <h3>4c. Validation with error messaging</h3>
+      <form id="form-4c" novalidate>
+        <div class="field-group">
+          <label for="field-4c">Project status (required)</label>
+          <face-combobox
+            id="field-4c"
+            name="status"
+            required
+            options='["Planning", "In Progress", "Review", "Done", "Cancelled"]'
+            placeholder="Select a status..."
+          ></face-combobox>
+          <span class="help-text">Required for project tracking.</span>
+        </div>
+        <div class="form-actions">
+          <button type="submit">Submit</button>
+        </div>
+      </form>
+      <div class="output" id="output-4c">Submit empty to test error announcement.</div>
+    </div>
+
+    <!-- ================================================================== -->
+    <!-- SECTION 5: ElementInternals ARIA APIs                              -->
+    <!-- ================================================================== -->
+
+    <h2>5. ElementInternals ARIA property APIs</h2>
+
+    <div class="scenario">
+      <h3>5a. <code>internals.ariaLabel</code> vs host <code>aria-label</code></h3>
+      <p>Both set <code>aria-label</code>. Inspect which node exposes the name in the a11y tree.</p>
+      <form id="form-5a">
+        <face-combobox
+          id="field-5a-host"
+          name="host-label"
+          aria-label="Search via host attribute"
+          options='["Option A", "Option B", "Option C"]'
+          placeholder="host aria-label"
+        ></face-combobox>
+      </form>
+    </div>
+
+    <div class="scenario">
+      <h3>5b. <code>ariaExpanded</code> on internals vs host attribute</h3>
+      <p>Open and close the listbox. <code>internals.ariaExpanded</code> is set on open/close.</p>
+      <form id="form-5b">
+        <div class="field-group">
+          <label for="field-5b">Test expanded state</label>
+          <face-combobox
+            id="field-5b"
+            name="expanded-test"
+            options='["Alpha", "Beta", "Gamma", "Delta"]'
+            placeholder="Open to test..."
+          ></face-combobox>
+        </div>
+      </form>
+      <div class="output" id="output-5b">Open/close the listbox. State changes logged here.</div>
+    </div>
+
+    <!-- ================================================================== -->
+    <!-- SECTION 6: axe-core audit                                          -->
+    <!-- ================================================================== -->
+
+    <h2>6. axe-core automated audit</h2>
+
+    <button id="run-axe" type="button">Run axe-core audit</button>
+    <div id="axe-results" class="output">Click the button above to run axe-core.</div>
+
+    <!-- ================================================================== -->
+    <!-- Scripts (component + demo logic)                                   -->
+    <!-- ================================================================== -->
+
+    <script type="module" src="face-combobox.js"></script>
+    <script type="module" src="demo.js"></script>
+  </body>
+</html>
