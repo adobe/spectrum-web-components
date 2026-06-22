@@ -57,8 +57,8 @@ export interface GlobalElementEntry {
    * If unlayered application CSS sets a custom property on a selector matching these child
    * element classes, `all: revert-layer` will not clear it.
    *
-   * @example ['label', 'icon']
-   * @example ['label', 'icon', 'description']
+   * @example ['label']
+   * @example ['label', 'description']
    */
   textElements?: string[];
 }

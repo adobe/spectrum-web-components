@@ -117,8 +117,7 @@ The generated stylesheet wraps all rules inside `@layer swc-global-elements`:
 }
 
 .swc-Button,
-.swc-Button-label,
-.swc-Button-icon { all: revert-layer !important; }
+.swc-Button-label { all: revert-layer !important; }
 ```
 
 This provides encapsulation similar to shadow DOM to prevent application styles affecting these global element style utilities. The `all: revert-layer` escape-hatch rule is written outside the layer so page styles on those selectors revert to the layer-defined values rather than inheriting from unlayered application CSS.
@@ -168,8 +167,8 @@ export default defineConfig({
   plugins: [
     globalElementCSS({
       elements: [
-        { component: 'button', textElements: ['label', 'icon'] },
-        { component: 'action-button', textElements: ['label', 'icon'] },
+        { component: 'button', textElements: ['label'] },
+        { component: 'action-button', textElements: ['label'] },
       ],
     }),
     // ... other plugins
@@ -194,12 +193,12 @@ Wrap any block that should not appear in the global stylesheet:
 
 Array of component entries. Each entry:
 
-| Option                | Type       | Required | Description                                                                                                                                                                                                             |
-| --------------------- | ---------- | -------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `component`           | `string`   | yes      | Component name, e.g. `'button'`. Derives all paths and the block class.                                                                                                                                                 |
-| `source`              | `string`   | no       | Override source CSS filename when it differs from `component`.                                                                                                                                                          |
-| `rootElementSelector` | `string`   | no       | Override the derived BEM block class (e.g. `'swc-Button'`).                                                                                                                                                             |
-| `textElements`        | `string[]` | no       | Child element suffixes (e.g. `['label', 'icon']`) that receive `all: revert-layer !important` alongside the root block. Use this for light-DOM child elements vulnerable to inherited overrides from unlayered app CSS. |
+| Option                | Type       | Required | Description                                                                                                                                                                                                                  |
+| --------------------- | ---------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `component`           | `string`   | yes      | Component name, e.g. `'button'`. Derives all paths and the block class.                                                                                                                                                      |
+| `source`              | `string`   | no       | Override source CSS filename when it differs from `component`.                                                                                                                                                               |
+| `rootElementSelector` | `string`   | no       | Override the derived BEM block class (e.g. `'swc-Button'`).                                                                                                                                                                  |
+| `textElements`        | `string[]` | no       | Child element suffixes (e.g. `['label']`) that receive `all: revert-layer !important` alongside the root block. Use this for light-DOM text-bearing child elements vulnerable to inherited overrides from unlayered app CSS. |
 
 The `source` option is only needed for naming discrepancies:
 

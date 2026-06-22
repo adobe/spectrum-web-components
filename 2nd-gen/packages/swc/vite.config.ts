@@ -71,8 +71,8 @@ export default defineConfig({
   plugins: [
     globalElementCSS({
       elements: [
-        { component: 'button', textElements: ['label', 'icon'] },
-        { component: 'action-button', textElements: ['label', 'icon'] },
+        { component: 'button', textElements: ['label'] },
+        { component: 'action-button', textElements: ['label'] },
       ],
     }),
     litCss({
