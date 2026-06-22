@@ -125,6 +125,14 @@ export const DerivedAccessibleName: Story = {
 };
 DerivedAccessibleName.storyName = 'Derived accessible name';
 
+export const FocusRetained: Story = {
+  render: () => html`
+    <demo-pending-host click-pending label="Save"></demo-pending-host>
+  `,
+  tags: ['behaviors'],
+};
+FocusRetained.storyName = 'Focus retained on re-render';
+
 // ────────────────────────────────
 //    ACCESSIBILITY STORIES
 // ────────────────────────────────

@@ -22,42 +22,42 @@
   -webkit-tap-highlight-color: transparent;
   display: inline-flex;
   position: relative;
-  gap: var(--swc-button-gap, token("text-to-visual-100"));
   align-items: center;
   justify-content: center;
+  margin: 0;
+  text-transform: none;
+  text-decoration: none;
+  border-style: solid;
+  overflow: visible;
+  user-select: none;
+  --_swc-button-border-width: token("border-width-200");
+  --_swc-button-min-block-size: var(--swc-button-min-block-size, token("component-height-100"));
+
+  gap: var(--swc-button-gap, token("text-to-visual-100"));
   max-inline-size: var(--swc-button-max-inline-size, inherit);
   min-block-size: var(--_swc-button-min-block-size);
   padding-block: calc(var(--swc-button-padding-vertical, token("component-padding-vertical-100")) - var(--_swc-button-border-width));
   padding-inline: calc(var(--swc-button-edge-to-text, token("component-pill-edge-to-text-100")) - var(--_swc-button-border-width));
-  margin: 0;
   font-family: token("sans-serif-font");
   font-size: var(--swc-button-font-size, token("font-size-100"));
   font-weight: token("bold-font-weight");
   line-height: round(down, calc(token("line-height-100") * 1em), 1px);
   color: var(--swc-button-content-color-default, token("gray-25"));
-  text-transform: none;
-  text-decoration: none;
   background-color: var(--swc-button-background-color-default, token("neutral-background-color-default"));
   border-color: var(--swc-button-border-color-default, transparent);
-  border-style: solid;
   border-width: var(--_swc-button-border-width);
   border-radius: var(--swc-button-border-radius, calc(var(--_swc-button-min-block-size) / 2));
-  overflow: visible;
-  user-select: none;
   transition-timing-function: token("animation-ease-in-out");
   transition-duration: token("animation-duration-100");
   transition-property: outline, border-color, color, background-color, transform;
-
-  --_swc-button-border-width: token("border-width-200");
-  --_swc-button-min-block-size: var(--swc-button-min-block-size, token("component-height-100"));
 }
 
 .swc-Button:focus-visible {
+  outline: token("focus-indicator-thickness") solid var(--swc-button-focus-indicator-color, token("focus-indicator-color"));
+  outline-offset: token("focus-indicator-gap");
   color: var(--swc-button-content-color-focus, token("gray-25"));
   background-color: var(--swc-button-background-color-focus, token("neutral-background-color-key-focus"));
   border-color: var(--swc-button-border-color-focus, transparent);
-  outline: token("focus-indicator-thickness") solid var(--swc-button-focus-indicator-color, token("focus-indicator-color"));
-  outline-offset: token("focus-indicator-gap");
 }
 
 .swc-Button:disabled:is(*, :hover) {

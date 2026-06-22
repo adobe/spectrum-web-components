@@ -85,6 +85,14 @@ When `pending` becomes `true`, the controller waits `delay` ms before setting `p
 
 <Canvas of={Stories.DerivedAccessibleName} />
 
+### Focus retained on re-render
+
+When `pendingActive` transitions from `false` to `true`, the controller calls `host.requestUpdate()`, which triggers a Lit re-render. Because lit-html patches the DOM in place rather than replacing elements, the focused `<button>` element is not destroyed; its class and content are updated around it. Focus remains on the button throughout the re-render.
+
+Click the button below to start a pending operation. The button receives focus via the click and re-renders after the controller's delay. Focus is preserved.
+
+<Canvas of={Stories.FocusRetained} />
+
 ## Accessibility
 
 ### Features

@@ -141,10 +141,39 @@ export class DemoPendingHost
   @property({ type: String })
   public label = 'Save';
 
+  /**
+   * When set, clicking the button starts a pending operation (focusing the
+   * button via the click) and auto-clears it after 2s. Used to demonstrate that
+   * focus is retained across the controller-triggered re-render.
+   */
+  @property({ type: Boolean, attribute: 'click-pending' })
+  public clickPending = false;
+
   private readonly _pendingController = new PendingController(this, {
     delay: DEMO_DELAY,
     resolveAccessibleName: () => this.label || null,
   });
+
+  private _resetTimer: ReturnType<typeof setTimeout> | null = null;
+
+  private readonly _onButtonClick = (): void => {
+    if (this.pending) {
+      return;
+    }
+    this.pending = true;
+    this._resetTimer = setTimeout(() => {
+      this._resetTimer = null;
+      this.pending = false;
+    }, 2000);
+  };
+
+  public override disconnectedCallback(): void {
+    super.disconnectedCallback?.();
+    if (this._resetTimer !== null) {
+      clearTimeout(this._resetTimer);
+      this._resetTimer = null;
+    }
+  }
 
   protected override render(): TemplateResult {
     const active = this._pendingController.pendingActive;
@@ -158,6 +187,7 @@ export class DemoPendingHost
             ? this._pendingController.getPendingAccessibleName()
             : undefined
         )}
+        @click=${this.clickPending ? this._onButtonClick : null}
       >
         <span class="label">${this.label}</span>
         ${renderPendingSpinner(this.pending, active)}
