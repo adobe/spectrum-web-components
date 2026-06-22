@@ -23,8 +23,8 @@ import {
   type ButtonStaticColor,
   type ButtonVariant,
 } from '@spectrum-web-components/core/components/button';
-
-import { renderPendingSpinner } from './pending-spinner.js';
+import { renderPendingSpinner } from '@spectrum-web-components/core/directives/pending-spinner';
+import { PendingMixin } from '@spectrum-web-components/core/mixins';
 
 import pendingSpinnerStyles from '../../stylesheets/_lit-styles/pending-spinner.css';
 import styles from './button.css';
@@ -73,7 +73,7 @@ import baseStyles from './button-base.css';
  * @example
  * <swc-button variant="secondary" fill-style="outline">Cancel</swc-button>
  */
-export class Button extends ButtonBase {
+export class Button extends PendingMixin(ButtonBase) {
   // ───────────────────
   //     API ADDITIONS
   // ───────────────────
@@ -122,6 +122,11 @@ export class Button extends ButtonBase {
 
   public static override get styles(): CSSResultArray {
     return [baseStyles, pendingSpinnerStyles, styles];
+  }
+
+  /** The busy accessible name derives from the button's resolved name. */
+  protected override resolvePendingAccessibleName(): string | null {
+    return this.getResolvedAccessibleName();
   }
 
   // @todo SWC-2034: handle form-associated types reset / submit

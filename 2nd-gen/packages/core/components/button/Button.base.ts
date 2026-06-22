@@ -11,7 +11,7 @@
  */
 
 import { PropertyValues } from 'lit';
-import { property, state } from 'lit/decorators.js';
+import { property } from 'lit/decorators.js';
 
 import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
 import {
@@ -61,41 +61,15 @@ export abstract class ButtonBase extends SizedMixin(
   public disabled: boolean = false;
 
   /**
-   * Whether the button is in a pending (busy) state. The button remains
-   * focusable but activation is suppressed.
-   */
-  @property({ type: Boolean, reflect: true })
-  public pending: boolean = false;
-
-  /**
    * Accessible label forwarded to the internal `<button>` element as
    * `aria-label`. Required for icon-only buttons, which have no visible text.
    */
   @property({ type: String, attribute: 'accessible-label' })
   public accessibleLabel?: string;
 
-  /**
-   * Custom accessible label used during the pending state. When omitted,
-   * the pending label is derived from the resolved non-busy accessible name
-   * plus a busy suffix (e.g. "Save, busy").
-   */
-  @property({ type: String, attribute: 'pending-label' })
-  public pendingLabel?: string;
-
-  /**
-   * Tracks whether the pending visual (disabled colors + spinner) is currently
-   * active. Set to `true` after a 1-second delay once `pending` becomes true,
-   * so the button does not immediately flash to its unavailable appearance.
-   * Protected so subclasses can reference it in their `classMap` binding.
-   */
-  @state()
-  protected pendingActive: boolean = false;
-
   // ──────────────────────
   //     IMPLEMENTATION
   // ──────────────────────
-
-  private _pendingTimer: ReturnType<typeof setTimeout> | null = null;
 
   protected get hasIcon(): boolean {
     return this.slotContentIsPresent;
@@ -117,21 +91,6 @@ export abstract class ButtonBase extends SizedMixin(
   }
 
   /**
-   * Derives the pending-state accessible label. Prefers an explicit
-   * `pendingLabel`, then falls back to the resolved non-busy accessible
-   * name plus a ", busy" suffix, then a fixed "Busy" fallback.
-   *
-   * @internal
-   */
-  protected getPendingAccessibleName(): string {
-    if (this.pendingLabel) {
-      return this.pendingLabel;
-    }
-    const resolvedName = this.getResolvedAccessibleName();
-    return resolvedName ? `${resolvedName}, busy` : 'Busy';
-  }
-
-  /**
    * Returns the set of attributes that should be forwarded to the internal
    * semantic `<button>` element, if not otherwise directly managed.
    *
@@ -143,7 +102,6 @@ export abstract class ButtonBase extends SizedMixin(
   > {
     return {
       disabled: this.disabled,
-      'aria-disabled': this.pending && !this.disabled ? 'true' : undefined,
     };
   }
 
@@ -156,65 +114,26 @@ export abstract class ButtonBase extends SizedMixin(
 
   public override disconnectedCallback(): void {
     this.removeEventListener('click', this.handleClick, true);
-    if (this._pendingTimer !== null) {
-      clearTimeout(this._pendingTimer);
-      this._pendingTimer = null;
-    }
-    this.pendingActive = false;
     super.disconnectedCallback();
   }
 
   /**
-   * Suppresses click activation while the button is `disabled` or `pending`.
+   * Suppresses click activation while the button is `disabled`.
    *
    * Slotted icon content lives in the light DOM, so pointer clicks on icons
    * bypass the disabled inner `<button>` and bubble on the host. The host
    * listener (capture) and inner `@click` binding both call this handler.
    */
   protected readonly handleClick = (event: Event): void => {
-    if (this.disabled || this.pending) {
+    if (this.disabled) {
       event.preventDefault();
       event.stopImmediatePropagation();
     }
   };
 
   protected override update(changedProperties: PropertyValues): void {
-    if (changedProperties.has('pending')) {
-      if (this.pending) {
-        this._pendingTimer = setTimeout(() => {
-          if (this.pending) {
-            const internalButton = this.renderRoot.querySelector('button');
-            if (internalButton) {
-              internalButton.style.setProperty(
-                '--_swc-button-pending-inline-size',
-                `${internalButton.offsetWidth}px`
-              );
-            }
-            this.pendingActive = true;
-          }
-          this._pendingTimer = null;
-        }, 1000);
-      } else {
-        if (this._pendingTimer !== null) {
-          clearTimeout(this._pendingTimer);
-          this._pendingTimer = null;
-        }
-        this.renderRoot
-          .querySelector('button')
-          ?.style.removeProperty('--_swc-button-pending-inline-size');
-        this.pendingActive = false;
-      }
-    }
     super.update(changedProperties);
     if (window.__swc?.DEBUG) {
-      if (this.pending && this.disabled) {
-        window.__swc.warn(
-          this,
-          `<${this.localName}> should not set both "pending" and "disabled" simultaneously. Use "pending" to keep the button focusable while unavailable, or "disabled" to fully remove it from the tab order.`,
-          'https://opensource.adobe.com/spectrum-web-components/components/button/#pending',
-          { issues: ['pending + disabled'] }
-        );
-      }
       if (this.hasIcon && !this.hasLabel && !this.accessibleLabel) {
         window.__swc.warn(
           this,

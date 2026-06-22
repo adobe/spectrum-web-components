@@ -21,8 +21,8 @@ import {
   type ActionButtonStaticColor,
 } from '@spectrum-web-components/core/components/action-button';
 import { ButtonBase } from '@spectrum-web-components/core/components/button';
-
-import { renderPendingSpinner } from '../button/pending-spinner.js';
+import { renderPendingSpinner } from '@spectrum-web-components/core/directives/pending-spinner';
+import { PendingMixin } from '@spectrum-web-components/core/mixins';
 
 import pendingSpinnerStyles from '../../stylesheets/_lit-styles/pending-spinner.css';
 import styles from './action-button.css';
@@ -72,7 +72,7 @@ import styles from './action-button.css';
  *   Edit
  * </swc-action-button>
  */
-export class ActionButton extends ButtonBase {
+export class ActionButton extends PendingMixin(ButtonBase) {
   // ────────────────────
   //     API OVERRIDES
   // ────────────────────
@@ -159,6 +159,11 @@ export class ActionButton extends ButtonBase {
 
   public static override get styles(): CSSResultArray {
     return [pendingSpinnerStyles, styles];
+  }
+
+  /** The busy accessible name derives from the button's resolved name. */
+  protected override resolvePendingAccessibleName(): string | null {
+    return this.getResolvedAccessibleName();
   }
 
   protected override render(): TemplateResult {
