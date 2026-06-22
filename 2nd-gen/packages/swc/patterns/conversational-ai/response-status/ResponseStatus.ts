@@ -60,6 +60,9 @@ export type ResponseStatusStepData = {
  * Detail: `{ open: boolean }`
  */
 export class ResponseStatus extends SpectrumElement {
+  private static readonly STATUS_LABEL_CLASS =
+    'swc-ResponseStatus-label swc-Body swc-Body--sizeS';
+
   private readonly panelId = uniqueId('swc-response-status-panel');
 
   @state()
@@ -492,12 +495,14 @@ export class ResponseStatus extends SpectrumElement {
   ): TemplateResult {
     if (hideFromAccessibility) {
       return html`
-        <span class="swc-ResponseStatus-label" aria-hidden="true">${text}</span>
+        <span class=${ResponseStatus.STATUS_LABEL_CLASS} aria-hidden="true">
+          ${text}
+        </span>
       `;
     }
 
     return html`
-      <span class="swc-ResponseStatus-label">${text}</span>
+      <span class=${ResponseStatus.STATUS_LABEL_CLASS}>${text}</span>
     `;
   }
 
@@ -850,12 +855,16 @@ export class ResponseStatus extends SpectrumElement {
     }
     if (status === 'stopped') {
       return html`
-        <p class="swc-ResponseStatus-step-detail">${detail}</p>
+        <p class="swc-ResponseStatus-step-detail swc-Body swc-Body--sizeXXS">
+          ${detail}
+        </p>
       `;
     }
     const prefix = kind === 'acting' ? 'Acting' : 'Thinking';
     return html`
-      <p class="swc-ResponseStatus-step-detail">${prefix} ${detail}</p>
+      <p class="swc-ResponseStatus-step-detail swc-Body swc-Body--sizeXXS">
+        ${prefix} ${detail}
+      </p>
     `;
   }
 
@@ -897,7 +906,11 @@ export class ResponseStatus extends SpectrumElement {
                   : ''}
               </div>
               <div class="swc-ResponseStatus-step-body">
-                <p class="swc-ResponseStatus-step-title">${step.title}</p>
+                <p
+                  class="swc-ResponseStatus-step-title swc-Detail swc-Detail--sizeS"
+                >
+                  ${step.title}
+                </p>
                 ${this._renderStepDetail(step.kind, step.status, step.detail)}
               </div>
             </li>
@@ -911,7 +924,7 @@ export class ResponseStatus extends SpectrumElement {
     return html`
       <div class="swc-ResponseStatus-row">
         ${this._renderThreeDots()}
-        <span class="swc-ResponseStatus-label" aria-hidden="true">
+        <span class=${ResponseStatus.STATUS_LABEL_CLASS} aria-hidden="true">
           ${label}
         </span>
       </div>
@@ -934,7 +947,7 @@ export class ResponseStatus extends SpectrumElement {
           @click=${this._handleToggle}
         >
           ${this._renderChevron(expanded)}
-          <span class="swc-ResponseStatus-label">${label}</span>
+          <span class=${ResponseStatus.STATUS_LABEL_CLASS}>${label}</span>
           ${this._renderCheckmark()}
         </button>
       `;
@@ -943,7 +956,7 @@ export class ResponseStatus extends SpectrumElement {
     return html`
       <div class="swc-ResponseStatus-row">
         ${this._renderCheckmark()}
-        <span class="swc-ResponseStatus-label">${label}</span>
+        <span class=${ResponseStatus.STATUS_LABEL_CLASS}>${label}</span>
       </div>
     `;
   }

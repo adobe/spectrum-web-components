@@ -391,6 +391,7 @@ const preview = {
                 'Color handle',
                 [
                   'Accessibility migration analysis',
+                  'Migration plan',
                   'Rendering and styling migration analysis',
                 ],
                 'Color loupe',
@@ -475,6 +476,7 @@ const preview = {
                 'Progress bar',
                 [
                   'Accessibility migration analysis',
+                  'Migration plan',
                   'Rendering and styling migration analysis',
                 ],
                 'Progress circle',
