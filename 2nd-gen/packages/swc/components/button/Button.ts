@@ -10,13 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
-import {
-  CSSResultArray,
-  html,
-  nothing,
-  PropertyValues,
-  TemplateResult,
-} from 'lit';
+import { CSSResultArray, html, PropertyValues, TemplateResult } from 'lit';
 import { property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
@@ -30,6 +24,9 @@ import {
   type ButtonVariant,
 } from '@spectrum-web-components/core/components/button';
 
+import { renderPendingSpinner } from './pending-spinner.js';
+
+import pendingSpinnerStyles from '../../stylesheets/_lit-styles/pending-spinner.css';
 import styles from './button.css';
 import baseStyles from './button-base.css';
 
@@ -124,7 +121,7 @@ export class Button extends ButtonBase {
   // ──────────────────────────────
 
   public static override get styles(): CSSResultArray {
-    return [baseStyles, styles];
+    return [baseStyles, pendingSpinnerStyles, styles];
   }
 
   // @todo SWC-2034: handle form-associated types reset / submit
@@ -151,35 +148,7 @@ export class Button extends ButtonBase {
         <span class="swc-Button-label">
           <slot></slot>
         </span>
-        ${this.pending
-          ? html`
-              <svg
-                class="swc-Button-pendingSpinner"
-                width="100%"
-                height="100%"
-                fill="none"
-                aria-hidden="true"
-                focusable="false"
-              >
-                <circle
-                  class="swc-Button-pendingSpinner-track"
-                  cx="50%"
-                  cy="50%"
-                  r="calc(50% - 1px)"
-                />
-                <circle
-                  class="swc-Button-pendingSpinner-fill"
-                  cx="50%"
-                  cy="50%"
-                  r="calc(50% - 1px)"
-                  pathLength="100"
-                  stroke-dasharray="100 200"
-                  stroke-dashoffset="75"
-                  stroke-linecap="round"
-                />
-              </svg>
-            `
-          : nothing}
+        ${renderPendingSpinner(this.pending, this.pendingActive)}
       </button>
     `;
   }
