@@ -113,7 +113,12 @@ const accountCard = `
       Manage your profile, notification preferences, and connected apps.
     </p>
     <div style="display: flex; gap: 8px; justify-content: flex-end;">
-      <swc-button variant="secondary" fill-style="outline" size="s">
+      <swc-button
+        variant="secondary"
+        fill-style="outline"
+        size="s"
+        onclick="this.closest('swc-popover').open = false"
+      >
         Dismiss
       </swc-button>
       <swc-button variant="accent" size="s">Open settings</swc-button>
@@ -131,11 +136,22 @@ const playgroundContent = `
       trapped within these controls.
     </p>
     <div style="display: flex; gap: 8px; justify-content: flex-end;">
-      <swc-button variant="secondary" fill-style="outline" size="s">
+      <swc-button
+        variant="secondary"
+        fill-style="outline"
+        size="s"
+        onclick="this.closest('swc-popover').open = false"
+      >
         Back
       </swc-button>
       <swc-button variant="secondary" size="s">Skip</swc-button>
-      <swc-button variant="accent" size="s">Confirm</swc-button>
+      <swc-button
+        variant="accent"
+        size="s"
+        onclick="this.closest('swc-popover').open = false"
+      >
+        Confirm
+      </swc-button>
     </div>
   </div>
 `;
