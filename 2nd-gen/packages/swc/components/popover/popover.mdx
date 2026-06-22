@@ -67,33 +67,30 @@ In the default (non-modal) mode the surface is a `<div popover="auto">`: the bro
 
 #### Focus and events
 
-When the popover closes, focus returns to the trigger if focus was inside (modal mode restores it natively; default mode restores it when content was focused). The popover dispatches `swc-open` / `swc-after-open` on open and `swc-close` / `swc-after-close` on close; `swc-close.detail.source` reports why it closed: `escape`, `outside`, or `programmatic`.
+The popover is a dialog in both modes, so opening it moves focus into the surface and closing it returns focus to the trigger (modal mode does this natively via `showModal()`; the default mode does it in script). The popover dispatches `swc-open` / `swc-after-open` on open and `swc-close` / `swc-after-close` on close; `swc-close.detail.source` reports why it closed: `escape`, `outside`, or `programmatic`.
 
 ## Accessibility
 
 ### Features
 
-- The resolved trigger receives `aria-expanded` and a durable `aria-controls` relationship wired through the element-reference IDL, so it works across shadow boundaries. For an SWC component trigger with an open shadow root, the inner `<button>` receives the ARIA.
-- Modal mode adds `aria-haspopup="dialog"` on the trigger and `role="dialog"` on the surface, with a native focus trap and `Escape` handling.
-- In the default mode the surface is a roleless container: the slotted content and the trigger own the semantics. The component does not set `aria-haspopup` here; wire a pattern-specific value on the trigger when appropriate.
+- The popover surface is a dialog in **both** modes: it exposes `role="dialog"`, takes its accessible name from `accessible-label`, and moves focus into itself on open (restoring to the trigger on close). Modal mode adds a native focus trap and inert background; the default mode stays light-dismissable and leaves the page interactive.
+- The resolved trigger receives `aria-expanded`, a durable `aria-controls` relationship wired through the element-reference IDL (so it works across shadow boundaries), and `aria-haspopup="dialog"`. For an SWC component trigger with an open shadow root, the inner `<button>` receives the ARIA.
 
-### Naming a modal popover
+### Naming the dialog
 
-A dialog must have an accessible name, so **set `accessible-label` whenever you set `modal`**: its value is forwarded as `aria-label` to the internal `<dialog>`. Omitting it leaves a nameless dialog (an authoring bug); in development the component warns when `modal` is set without an `accessible-label`.
+A dialog must have an accessible name, so **set `accessible-label`**: its value is forwarded as `aria-label` to the internal surface in both modes. Omitting it leaves a nameless dialog (an authoring bug); in development the component warns when a popover opens without an `accessible-label`.
 
 ```html
-<swc-popover modal accessible-label="Account settings" for="account-trigger">
+<swc-popover accessible-label="Account settings" for="account-trigger">
   <!-- dialog content -->
 </swc-popover>
 ```
 
-`accessible-label` has **no effect in the default (auto) mode**: that surface is a roleless container, so the slotted content and the trigger own the semantics.
-
 ### Best practices
 
 - Give the trigger a clear, visible label; the popover does not name its own trigger.
-- Use `modal` only when the task genuinely needs to block the page; prefer the default mode for menus and contextual content.
-- Ensure a modal popover contains focusable content so focus has somewhere to land.
+- Always set `accessible-label` to name the dialog.
+- Use `modal` only when the task genuinely needs to block the page; prefer the default mode for non-blocking contextual content.
 
 <Canvas of={Stories.Accessibility} />
 
