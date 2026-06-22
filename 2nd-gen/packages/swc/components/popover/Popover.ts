@@ -111,6 +111,9 @@ export class Popover extends PopoverBase {
           <div
             class="swc-Popover"
             popover="auto"
+            role="dialog"
+            tabindex="-1"
+            aria-label=${this.accessibleLabel.trim() || nothing}
             @beforetoggle=${this._onBeforeToggle}
           >
             ${content}

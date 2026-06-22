@@ -105,13 +105,15 @@ export abstract class PopoverBase extends SpectrumElement {
   public modal = false;
 
   /**
-   * Accessible name for the modal dialog, forwarded as `aria-label` to the
-   * internal `<dialog>`.
+   * Accessible name for the popover's dialog surface, forwarded as `aria-label`
+   * to the internal element (the `<dialog>` in modal mode, the `role="dialog"`
+   * `<div popover>` in the default mode).
    *
-   * Applies only in modal mode (`modal`). In the default mode the surface is a
-   * roleless container, so slotted content and the trigger own the semantics and
-   * this has no effect. A modal popover with no accessible name is an authoring
-   * bug (a nameless dialog).
+   * The popover is a dialog in both modes, so a name is required in both: a
+   * dialog with no accessible name is an authoring bug, and the component
+   * dev-warns when opened without one. The internal surface lives in the
+   * popover's shadow root, so a host `aria-labelledby` cannot reach it;
+   * `accessible-label` is the supported naming path.
    */
   @property({ type: String, attribute: 'accessible-label' })
   public accessibleLabel = '';
@@ -307,6 +309,21 @@ export abstract class PopoverBase extends SpectrumElement {
   /** Tears down the in-flight `_afterTransition` wiring (listener + fallback timer). */
   private _cancelAfterTransition?: () => void;
 
+  /**
+   * Set after the first render. Auto-focus on open is suppressed until then so an
+   * initially-`open` popover (server-rendered or a static demo) does not steal
+   * focus on mount; only an open triggered after the element is live moves focus.
+   */
+  private _hasCompletedFirstUpdate = false;
+
+  /**
+   * Set when a default-mode open should move focus into the dialog surface;
+   * consumed by the first placement compute so focus lands after the surface is
+   * anchored on screen (focusing it at its 0,0 reset origin would shift layout).
+   * Modal mode moves focus natively via `showModal()`.
+   */
+  private _pendingFocusOnOpen = false;
+
   // ──────────────────
   //     LIFECYCLE
   // ──────────────────
@@ -392,6 +409,9 @@ export abstract class PopoverBase extends SpectrumElement {
       // Re-anchor while open when a positioning input or the trigger changes.
       this._startPositioning();
     }
+
+    // First render is done: subsequent opens may move focus into the surface.
+    this._hasCompletedFirstUpdate = true;
   }
 
   private _positioningChanged(changedProperties: PropertyValues): boolean {
@@ -437,11 +457,8 @@ export abstract class PopoverBase extends SpectrumElement {
       // Durable across open/close cycles; visibility is conveyed by aria-expanded.
       interactiveElement.ariaControlsElements = [this];
       interactiveElement.setAttribute('aria-expanded', String(this.open));
-      if (this.modal) {
-        interactiveElement.setAttribute('aria-haspopup', 'dialog');
-      } else {
-        interactiveElement.removeAttribute('aria-haspopup');
-      }
+      // The surface is a dialog in both modes, so the trigger always signals it.
+      interactiveElement.setAttribute('aria-haspopup', 'dialog');
     }
 
     // Click-to-toggle on the trigger host, unless the consumer drives `open`
@@ -578,6 +595,13 @@ export abstract class PopoverBase extends SpectrumElement {
         // never zero-sized while open; a content-less popover would still have
         // chrome. If that ever changes, gate the reveal independently of the side.
         this.setAttribute('actual-placement', physicalSide(next));
+        // The surface is now anchored and revealed; move focus into it (a pending
+        // default-mode open). Focusing earlier, at the 0,0 origin, would shift
+        // layout/scroll.
+        if (this._pendingFocusOnOpen) {
+          this._pendingFocusOnOpen = false;
+          this._focusSurface();
+        }
       },
     });
   }
@@ -594,19 +618,20 @@ export abstract class PopoverBase extends SpectrumElement {
     if (!element) {
       return;
     }
+    // The surface is a dialog in both modes, so it must have an accessible name.
+    if (window.__swc?.DEBUG && !this.accessibleLabel.trim()) {
+      window.__swc.warn(
+        this,
+        `<${this.localName}> must have an "accessible-label" attribute to name the dialog for assistive technology.`,
+        'https://spectrum-web-components.adobe.com/?path=/docs/components-popover--docs',
+        { issues: ['accessible-label'] }
+      );
+    }
     // Enter the top layer first; only register listeners, the dismissible stack,
     // and positioning once the native show actually succeeds, so a failed
     // `showPopover()`/`showModal()` does not leave the component wired up for a
     // popover that never opened.
     if (this.modal) {
-      if (window.__swc?.DEBUG && !this.accessibleLabel.trim()) {
-        window.__swc.warn(
-          this,
-          `<${this.localName}> in modal mode must have an "accessible-label" attribute to name the dialog for assistive technology.`,
-          'https://spectrum-web-components.adobe.com/?path=/docs/components-popover--docs',
-          { issues: ['accessible-label'] }
-        );
-      }
       const dialog = element as HTMLDialogElement;
       let shown = dialog.open;
       if (!shown) {
@@ -652,9 +677,23 @@ export abstract class PopoverBase extends SpectrumElement {
       this._scrollLock.unlock();
       registerDismissible(this);
       this._addEscapeListener();
+      // Move focus into the dialog surface so assistive technology lands inside
+      // it (modal mode does this natively via `showModal()`). Deferred to the
+      // first placement compute so focus lands once the surface is anchored on
+      // screen, not at its 0,0 reset origin. Suppressed on the initial render so
+      // an initially-`open` popover does not steal focus.
+      this._pendingFocusOnOpen = this._hasCompletedFirstUpdate;
       // `swc-open` is dispatched from the `beforetoggle` listener.
     }
     this._startPositioning();
+  }
+
+  // Move focus into the open default-mode dialog surface. The surface is a named
+  // `role="dialog"` element, so focusing it announces the dialog and seats the
+  // user inside it; `preventScroll` because it is already anchored in the top
+  // layer. Focus restoration on close is handled by `_onBeforeToggle`.
+  private _focusSurface(): void {
+    this.internalElement?.focus({ preventScroll: true });
   }
 
   private _hide(): void {
