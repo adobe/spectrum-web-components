@@ -370,6 +370,7 @@ const preview = {
                 [
                   'Accessibility migration analysis',
                   'Migration plan',
+                  'Pending reusable primitives plan',
                   'Rendering and styling migration analysis',
                 ],
                 'Button group',

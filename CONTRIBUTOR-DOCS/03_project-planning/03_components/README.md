@@ -45,6 +45,7 @@
 - Button
     - [Button accessibility migration analysis](button/accessibility-migration-analysis.md)
     - [Button Migration Plan](button/migration-plan.md)
+    - [Pending reusable primitives plan](button/pending-reusable-primitives-plan.md)
     - [Button migration roadmap](button/rendering-and-styling-migration-analysis.md)
 - Button Group
     - [Button group accessibility migration analysis](button-group/accessibility-migration-analysis.md)
