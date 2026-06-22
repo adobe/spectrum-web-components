@@ -1,0 +1,241 @@
+name: Preview Documentation — Deploy
+
+# Runs in the BASE REPO context with access to secrets.
+#
+# Two triggers:
+#   workflow_run  — fires when the build workflow completes; deploys the artifact
+#                   to Azure and posts a comment on the PR. Works for fork PRs
+#                   because workflow_run always runs in the base repo context.
+#   pull_request_target (closed) — cleans up the Azure deployment when a PR is
+#                   merged or closed. pull_request_target is safe here because no
+#                   contributor code is executed; we only run `azcopy remove`.
+on:
+  workflow_run:
+    workflows: ['Preview Documentation — Build']
+    types: [completed]
+  pull_request_target:
+    types: [closed]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+env:
+  AZCOPY_AUTO_LOGIN_TYPE: SPN
+  AZCOPY_SPA_APPLICATION_ID: ${{ secrets.AZURE_CLIENT_ID }}
+  AZCOPY_SPA_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+  AZCOPY_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+
+jobs:
+  # ── Deploy ──────────────────────────────────────────────────────────────────
+  # Runs when the build workflow finishes successfully.
+  deploy:
+    if: github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    name: Deploy to Azure
+    timeout-minutes: 15
+    outputs:
+      pr_number: ${{ steps.pr.outputs.number }}
+      first_gen_docs_url: ${{ steps.urls.outputs.first_gen_docs_url }}
+      first_gen_storybook_url: ${{ steps.urls.outputs.first_gen_storybook_url }}
+      second_gen_storybook_url: ${{ steps.urls.outputs.second_gen_storybook_url }}
+    steps:
+      # Check out the BASE branch only — never the contributor's code.
+      # We need this checkout for the composite setup-azcopy action and comment scripts.
+      - name: Check out base branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_repository.full_name == github.repository && github.event.workflow_run.head_sha || github.sha }}
+
+      # Download the artifact that the build workflow uploaded.
+      # actions/download-artifact@v4 supports cross-run downloads via run-id.
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: preview-docs
+          run-id: ${{ github.event.workflow_run.id }}
+          github-token: ${{ github.token }}
+          path: ./preview-build
+
+      # Read the PR number saved by the build workflow. For fork PRs,
+      # github.event.workflow_run.pull_requests is empty, so this file is
+      # the only reliable source of truth.
+      - name: Read PR number
+        id: pr
+        run: |
+          number=$(cat ./preview-build/pr_number.txt)
+          echo "number=${number}" >> "$GITHUB_OUTPUT"
+          echo "PR number: ${number}"
+
+      - name: Setup AzCopy
+        uses: ./.github/actions/setup-azcopy
+
+      - name: Deploy first-gen documentation
+        env:
+          PR_NUMBER: ${{ steps.pr.outputs.number }}
+        run: |
+          pr_hash="pr-${PR_NUMBER}"
+          echo "Uploading first-gen documentation to ${pr_hash}/docs/first-gen-docs/"
+          azcopy copy "./preview-build/first-gen-docs/*" \
+            "https://swcpreviews.blob.core.windows.net/\$web/${pr_hash}/docs/first-gen-docs/" \
+            --recursive \
+            --from-to LocalBlob
+          echo "✅ First-gen documentation uploaded"
+
+      - name: Deploy first-gen Storybook
+        env:
+          PR_NUMBER: ${{ steps.pr.outputs.number }}
+        run: |
+          pr_hash="pr-${PR_NUMBER}"
+          echo "Uploading first-gen Storybook to ${pr_hash}/docs/first-gen-storybook/"
+          azcopy copy "./preview-build/first-gen-storybook/*" \
+            "https://swcpreviews.blob.core.windows.net/\$web/${pr_hash}/docs/first-gen-storybook/" \
+            --recursive \
+            --from-to LocalBlob
+          echo "✅ First-gen Storybook uploaded"
+
+      - name: Deploy second-gen Storybook
+        env:
+          PR_NUMBER: ${{ steps.pr.outputs.number }}
+        run: |
+          pr_hash="pr-${PR_NUMBER}"
+          echo "Uploading second-gen Storybook to ${pr_hash}/docs/second-gen-storybook/"
+          azcopy copy "./preview-build/second-gen-storybook/*" \
+            "https://swcpreviews.blob.core.windows.net/\$web/${pr_hash}/docs/second-gen-storybook/" \
+            --recursive \
+            --from-to LocalBlob
+          echo "✅ Second-gen Storybook uploaded"
+
+      - name: Set deployment URLs
+        id: urls
+        env:
+          PR_NUMBER: ${{ steps.pr.outputs.number }}
+        run: |
+          pr_hash="pr-${PR_NUMBER}"
+          base="https://swcpreviews.z13.web.core.windows.net/${pr_hash}/docs"
+          echo "first_gen_docs_url=${base}/first-gen-docs/" >> "$GITHUB_OUTPUT"
+          echo "first_gen_storybook_url=${base}/first-gen-storybook/" >> "$GITHUB_OUTPUT"
+          echo "second_gen_storybook_url=${base}/second-gen-storybook/" >> "$GITHUB_OUTPUT"
+
+      - name: Post preview comment on PR
+        uses: actions/github-script@v7
+        env:
+          PR_NUMBER: ${{ steps.pr.outputs.number }}
+        with:
+          script: |
+            const { buildPreviewURLComment } = await import('${{ github.workspace }}/.github/scripts/build-preview-urls-comment.js');
+
+            const prNumber = parseInt(process.env.PR_NUMBER, 10);
+            const body = buildPreviewURLComment(prNumber);
+            const marker = '## 📚 Branch Preview Links';
+
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: prNumber,
+            });
+
+            const existing = comments.find(c => c.body.startsWith(marker));
+            if (existing) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: existing.id,
+                body,
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: prNumber,
+                body,
+              });
+            }
+
+  # ── Smoke tests ─────────────────────────────────────────────────────────────
+  smoke_tests:
+    if: github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success'
+    needs: deploy
+    runs-on: ubuntu-latest
+    name: Smoke Tests
+    timeout-minutes: 15
+    steps:
+      - name: Check out base branch
+        uses: actions/checkout@v4
+
+      - name: Wait for deployment
+        env:
+          DOC_URL: ${{ needs.deploy.outputs.first_gen_docs_url }}
+        run: |
+          echo "Waiting for deployment: ${DOC_URL}"
+          max_attempts=60
+          attempt=1
+          while [ $attempt -le $max_attempts ]; do
+            echo "Attempt $attempt/$max_attempts…"
+            if curl -f -s --max-time 10 "${DOC_URL}" > /dev/null; then
+              echo "✅ Available"
+              break
+            fi
+            sleep 10
+            attempt=$((attempt + 1))
+          done
+          if [ $attempt -gt $max_attempts ]; then
+            echo "❌ Timed out after 10 minutes"
+            exit 1
+          fi
+
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Setup Node from .nvmrc
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+          cache: yarn
+
+      - name: Install dependencies
+        run: yarn install --immutable
+
+      - name: Install Playwright Browsers
+        run: cd 1st-gen && yarn playwright install --with-deps
+
+      - name: Run Playwright tests
+        run: cd 1st-gen && yarn playwright test projects/documentation/e2e/published.spec.ts
+        env:
+          DOC_PREVIEW_URL: ${{ needs.deploy.outputs.first_gen_docs_url }}
+          SWC_DIR: pr-${{ needs.deploy.outputs.pr_number }}
+          NODE_ENV: CI
+
+      - name: Upload Playwright report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 30
+
+  # ── Cleanup ──────────────────────────────────────────────────────────────────
+  # Runs when a PR is merged or closed. pull_request_target is safe here because
+  # no contributor code is executed — only `azcopy remove` against a known path.
+  cleanup:
+    if: github.event_name == 'pull_request_target' && github.event.action == 'closed'
+    runs-on: ubuntu-latest
+    name: Clean up PR deployment
+    timeout-minutes: 5
+    steps:
+      # Checkout the base branch (pull_request_target default) for setup-azcopy.
+      - name: Check out base branch
+        uses: actions/checkout@v4
+
+      - name: Setup AzCopy
+        uses: ./.github/actions/setup-azcopy
+
+      - name: Remove PR deployment from Azure
+        env:
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          pr_hash="pr-${PR_NUMBER}"
+          echo "Removing deployment: ${pr_hash}/"
+          azcopy remove "https://swcpreviews.blob.core.windows.net/\$web/${pr_hash}/" \
+            --recursive || echo "Cleanup completed (some files may not have existed)"
+          echo "✅ Cleanup done for ${pr_hash}/"
