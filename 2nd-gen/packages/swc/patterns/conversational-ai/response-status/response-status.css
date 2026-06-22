@@ -421,5 +421,5 @@
   font-size: token("font-size-75");
   font-weight: token("regular-font-weight");
   line-height: token("line-height-font-size-100");
-  color: token("neutral-subdued-content-color-default");
+  color: token("gray-700");
 }
