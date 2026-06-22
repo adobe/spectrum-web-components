@@ -131,6 +131,14 @@ export const ExplicitPendingLabel: Story = {
 };
 ExplicitPendingLabel.storyName = 'Explicit pending label';
 
+export const FocusRetained: Story = {
+  render: () => html`
+    <demo-pending-host click-pending .label=${'Save'}></demo-pending-host>
+  `,
+  tags: ['behaviors'],
+};
+FocusRetained.storyName = 'Focus retained on re-render';
+
 // ────────────────────────────────
 //    ACCESSIBILITY STORIES
 // ────────────────────────────────

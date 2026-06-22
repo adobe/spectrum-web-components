@@ -361,6 +361,7 @@ const preview = {
                 [
                   'Accessibility migration analysis',
                   'Migration plan',
+                  'Pending controller extraction',
                   'Rendering and styling migration analysis',
                 ],
                 'Button group',
