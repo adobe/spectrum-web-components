@@ -135,15 +135,6 @@ jobs:
             --from-to LocalBlob
           echo "✅ Second-gen Storybook uploaded successfully"
 
-      - name: Deploy .well-known to Azure Blob Storage root
-        run: |
-          echo "Uploading .well-known to storage root"
-          azcopy copy "2nd-gen/packages/swc/public/.well-known/*" \
-            "https://swcpreviews.blob.core.windows.net/\$web/.well-known/" \
-            --recursive \
-            --from-to LocalBlob
-          echo "✅ .well-known uploaded successfully"
-
       - name: Set deployment URLs
         id: deploy
         env:

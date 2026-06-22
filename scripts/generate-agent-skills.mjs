@@ -14,7 +14,7 @@
  * Generates Agent Skills for Spectrum Web Components.
  *
  * Follows the same format used by React Aria / React Spectrum:
- *   - Discovery endpoint: .well-known/skills/index.json
+ *   - Discovery endpoint: .well-known/agent-skills/index.json
  *   - Each skill is a directory of loose files: SKILL.md + references/
  *   - index.json entry has { name, description, files: [...] } — no archives
  *
@@ -23,7 +23,7 @@
  *   2nd-gen/packages/ai/skills/gen2-migration/SKILL.md
  *
  * The script resolves {{TOKEN}} placeholders with generated component and
- * guide lists, then writes the skill directories under .well-known/skills/
+ * guide lists, then writes the skill directories under .well-known/agent-skills/
  * in the 2nd-gen Storybook public dir.
  *
  * Usage:
@@ -59,7 +59,7 @@ const SKILL_SOURCE_DIR = join(ROOT, '2nd-gen/packages/ai/skills');
 
 /**
  * Storybook's staticDirs root — files here are served verbatim at the site root.
- * Skills are written under .well-known/skills/ so `npx skills add <domain>` works.
+ * Skills are written under .well-known/agent-skills/ so `npx skills add <domain>` works.
  */
 const OUTPUT_DIR = join(ROOT, '2nd-gen/packages/swc/public');
 
@@ -257,6 +257,12 @@ function stripEleventy(content) {
  *   - JSX block comments
  *   - Multi-line JSX elements whose opening tag contains a JS expression
  *     (e.g. callout divs with inline style={{...}})
+ *   - JSX string/expression containers: {' '}, {'text'} etc.
+ *
+ * Note on the tag-stripping regexes: we use (?:\{[^}]*\}|[^}])* inside {}
+ * to handle one level of brace nesting (covers {{...}} double-brace JSX
+ * expressions). This avoids the greedy-match bug where [^>]* inside {} would
+ * stop at the first > in an expression such as style={{ padding: 4 > 0 }}.
  */
 function stripMdx(content) {
   return (
@@ -271,13 +277,20 @@ function stripMdx(content) {
       .replace(/<img\s[^>]*\{[^}]*\}[^>]*\/?>/gi, '')
       // Remove JSX block comments
       .replace(/\{\/\*[\s\S]*?\*\/\}/g, '')
-      // Remove JSX elements whose opening tag contains a JS expression {}
-      // (callout divs, inline-styled blocks, etc.)
+      // Convert <code>{'token'}</code> to inline code before tag stripping
+      .replace(/<code>\{['"`]([^'"`]*)['"`]\}<\/code>/g, '`$1`')
+      // Strip JSX string/expression containers used for spacing or inline text
+      .replace(/\{['"`][^'"`]*['"`]\}/g, '')
+      // Remove JSX elements whose opening tag contains a JS expression {}.
+      // (?:\{[^}]*\}|[^}])* handles one level of brace nesting inside {}.
       .replace(
-        /<[A-Z][A-Za-z]*\s[^>]*\{[^>]*\}>[\s\S]*?<\/[A-Z][A-Za-z]*>\s*\n?/g,
+        /<[A-Z][A-Za-z]*\s[^>]*\{(?:\{[^}]*\}|[^}])*\}>[\s\S]*?<\/[A-Z][A-Za-z]*>\s*\n?/g,
         ''
       )
-      .replace(/<[a-z]+\s[^>]*\{[^>]*\}>[\s\S]*?<\/[a-z]+>\s*\n?/g, '')
+      .replace(
+        /<[a-z]+\s[^>]*\{(?:\{[^}]*\}|[^}])*\}>[\s\S]*?<\/[a-z]+>\s*\n?/g,
+        ''
+      )
       // Collapse runs of 3+ blank lines introduced by removals
       .replace(/\n{3,}/g, '\n\n')
       .replace(/^\n+/, '')
@@ -603,12 +616,24 @@ const SKILL_CONFIGS = [
 function main() {
   console.log('Generating Agent Skills for Spectrum Web Components…\n');
 
-  const skillsDir = join(OUTPUT_DIR, '.well-known', 'skills');
+  const skillsDir = join(OUTPUT_DIR, '.well-known', 'agent-skills');
 
   if (existsSync(skillsDir)) {
-    rmSync(skillsDir, { recursive: true });
+    try {
+      rmSync(skillsDir, { recursive: true });
+    } catch (err) {
+      console.error(
+        `Failed to remove existing skills directory: ${err.message}`
+      );
+      process.exit(1);
+    }
   }
-  mkdirSync(skillsDir, { recursive: true });
+  try {
+    mkdirSync(skillsDir, { recursive: true });
+  } catch (err) {
+    console.error(`Failed to create skills directory: ${err.message}`);
+    process.exit(1);
+  }
 
   const indexEntries = [];
 

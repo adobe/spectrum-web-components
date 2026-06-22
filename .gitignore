@@ -136,7 +136,7 @@ test/*
 2nd-gen/packages/swc/public/llms.txt
 2nd-gen/packages/swc/public/llms-full.txt
 2nd-gen/packages/swc/public/sitemap.xml
-2nd-gen/packages/swc/public/.well-known/skills
+2nd-gen/packages/swc/public/.well-known/agent-skills
 2nd-gen/packages/swc/public/reference
 
 # npm assets

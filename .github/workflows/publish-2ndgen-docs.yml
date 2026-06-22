@@ -58,10 +58,13 @@ jobs:
       - name: Build all generations
         run: yarn build
 
+      - name: Generate Custom Elements Manifest
+        run: yarn workspace @spectrum-web-components/1st-gen docs:analyze
+
+      - name: Generate LLM reference files
+        run: yarn generate:llms
+
       - name: Generate Agent Skills
-        # Component references fall back to 1st-gen READMEs because docs:analyze
-        # and generate:llms are not run in this workflow. Add those steps before
-        # this one to get structured CEM-based API tables in the references.
         run: yarn generate:skills
 
       - name: Build 2nd-gen Storybook
@@ -71,6 +74,10 @@ jobs:
         uses: ./.github/actions/setup-azcopy
 
       - name: Deploy to Azure Blob Storage
+        # spectrum-web-components.adobe.com maps to the /docs path in the storage
+        # container, so deploying to $web/docs/ IS the domain root. The generated
+        # .well-known/agent-skills/ directory inside storybook-static/ is therefore
+        # served at the expected discovery URL without a separate upload step.
         run: |
           echo "Deploying 2nd-gen docs to docs/"
           azcopy sync "2nd-gen/packages/swc/storybook-static/" \
