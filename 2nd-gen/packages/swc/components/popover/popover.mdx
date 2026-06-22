@@ -12,7 +12,7 @@ import * as Stories from './stories/popover.stories';
 A popover is made up of:
 
 1. **Surface**: the anchored container that holds the content.
-2. **Default slot**: free-form slotted content: text, a menu, a form, an account card, and so on.
+2. **Default slot**: free-form slotted content such as text, a menu, a form, or an account card.
 3. **Arrow (tip)**: a triangle pointing back at the trigger, shown by default and removed with `hide-arrow`.
 
 The popover positions itself against a trigger you associate with `for` or `triggerElement`; it does not render the trigger itself.
@@ -35,7 +35,7 @@ The popover positions itself against a trigger you associate with `for` or `trig
 
 ### Hide arrow
 
-The arrow (tip) points at the trigger and is shown by default. Set `hide-arrow` to remove it; the surface then uses a rectangular box-shadow that composites cleanly when popovers are nested.
+The arrow (tip) points at the trigger and is shown by default. Set `hide-arrow` to remove it; the surface then uses a rectangular box-shadow, so nested popovers do not show overlapping arrows.
 
 <Canvas of={Stories.HideArrow} />
 
