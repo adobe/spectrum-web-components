@@ -111,7 +111,7 @@
 }
 
 .swc-ResponseStatus-headerTrailStrip--rolling .swc-ResponseStatus-headerTrailLine:first-child {
-  opacity: 0;
+  visibility: hidden;
 }
 
 /* Rolling header title (processing phase, no disclosure chevron) */

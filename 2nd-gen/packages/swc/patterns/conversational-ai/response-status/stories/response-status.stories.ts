@@ -220,29 +220,26 @@ export const Accessibility: Story = {
 };
 
 /**
- * Frozen agentic processing state for test-runner axe and Playwright.
+ * Frozen agentic complete state for test-runner axe and Playwright.
+ * Uses `phase="complete"` (no rolling header) so docs-view axe stays stable.
  * Timed demos live under Agentic states (spike) and are tagged `!test`.
  */
 export const AgenticAccessibility: Story = {
   render: () => html`
     <swc-response-status
-      phase="processing"
+      phase="complete"
+      duration="12"
       open
-      initiating-label="Processing request"
       reasoning-label="Execution steps"
     >
-      ${AGENTIC_DEMO_FLOW_STEPS.map((step, index) => {
-        const status =
-          index < 2 ? 'complete' : index === 2 ? 'active' : 'pending';
-        return html`
-          <swc-response-status-step
-            title=${step.title}
-            detail=${step.detail}
-            kind=${step.kind}
-            status=${status}
-          ></swc-response-status-step>
-        `;
-      })}
+      ${AGENTIC_DEMO_FLOW_STEPS.map((step) => html`
+        <swc-response-status-step
+          title=${step.title}
+          detail=${step.detail}
+          kind=${step.kind}
+          status="complete"
+        ></swc-response-status-step>
+      `)}
     </swc-response-status>
   `,
   tags: ['a11y'],
