@@ -851,6 +851,7 @@ export class ActionMenu extends ObserveSlotPresence(
           handleEvent: this.handleEnterKeydown,
           capture: true,
         }}
+        ?mobile-view=${this.isMobile.matches && !this.forcePopover}
         @scroll=${this.onScroll}
         role=${this.listRole}
         .selects=${this.selects}
