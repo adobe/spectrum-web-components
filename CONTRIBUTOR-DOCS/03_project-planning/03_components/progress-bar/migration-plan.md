@@ -558,7 +558,7 @@ Exact keyframe geometry, duration token, and fallback width are **Q2** — to be
 - [1st-gen tests — `progress-bar.test.ts`](../../../../1st-gen/packages/progress-bar/test/progress-bar.test.ts)
 - [1st-gen README](../../../../1st-gen/packages/progress-bar/README.md)
 - [2nd-gen shared mixin — `linear-progress-mixin.ts`](../../../../2nd-gen/packages/core/mixins/linear-progress-mixin.ts)
-- [2nd-gen shared CSS — `linear-progress-base.css`](../../../../2nd-gen/packages/swc/stylesheets/shared/linear-progress-base.css)
+- [2nd-gen shared CSS — `linear-progress-base.css`](../../../../2nd-gen/packages/swc/stylesheets/_lit-styles/linear-progress-base.css)
 - [2nd-gen sibling — `Meter.ts`](../../../../2nd-gen/packages/swc/components/meter/Meter.ts)
 - [2nd-gen reference — `ProgressCircle.base.ts`](../../../../2nd-gen/packages/core/components/progress-circle/ProgressCircle.base.ts) — `progressbar` determinate/indeterminate ARIA + DEBUG warning pattern
 - [Figma — S2 / Web (Desktop scale), progress bar frame](https://www.figma.com/design/Mngz9H7WZLbrCvGQf3GnsY/S2---Web--Desktop-scale-?node-id=13059-181) — visual reference, including the indeterminate animation (Q2)

@@ -247,7 +247,7 @@ No sequencing, shared-base, or inheritance decisions require explicit user confi
 | **B8** | SVG stroke border — **Figma confirmed; spectrum-css alignment pending (Q4)** | CSS `border-style: dashed` (pure CSS border; no SVG) | Inline SVG `<rect>` stroke for rounded corner dashes as shown in Figma. Spectrum-css currently uses CSS; team must align before styling phase. | No consumer migration if the visual result is functionally equivalent; SVG border adds a shadow DOM element. |
 | **B9** | CJK font size tokens | Applied via `--mod-illustrated-message-*` passthrough | Applied via direct token usage inside `swc-dropzone` (passthrough redesign per Q8) | No consumer migration needed; visual behavior preserved. |
 | **B10** | `:focus-visible` styling scoped to browse control | 1st-gen applied focus styles to host only when consumer added `tabindex`. | 2nd-gen has no `tabindex` on host. `:focus-visible` applies to the browse control in the slot; browse control accent ring matches the Figma Hover state border style. | See a11y changes below. |
-| **B16** | `size` attribute — **new, not in 1st-gen** | No size variants; fixed visual scale. | `size: 's' \| 'm' \| 'l'`; default `'m'`. Controls illustrated icon scale and container dimensions per Figma. | No breaking change for existing consumers (defaults to `'m'`). |
+| **B16** | `size` attribute — **new, not in 1st-gen** | No size variants; fixed visual scale. | `size: 's' \| 'm' \| 'l'`; default `'m'`. Controls illustrated icon scale and container dimensions per Figma. Use `SizedMixin` from `@spectrum-web-components/core/mixins` with `validSizes: ['s', 'm', 'l']` applied in `DropzoneBase`; the mixin provides the `size` `@property`, validation, and attribute reflection. | No breaking change for existing consumers (defaults to `'m'`). |
 
 #### Accessibility and behavior
 
@@ -318,7 +318,7 @@ Figma state labels and their component attribute equivalents:
 
 | Slot | Content | Notes |
 | ---- | ------- | ----- |
-| default | Drop zone content: `swc-illustrated-message`, browse button or link, instructive copy. When `filled`, the consumer should replace this content with the uploaded state. | **Confirmed.** The component renders no built-in content. A browse control is required in every usage. |
+| default | `swc-illustrated-message` with the browse control placed in its `button-group` slot. This is the canonical pattern and aligns with the React Spectrum `DropZone` + `FileTrigger` model. When `filled`, the consumer replaces this content with the uploaded state. | **Confirmed.** `swc-dropzone` renders no built-in content. A browse control is required in every usage for WCAG 2.1.1 compliance. Note: `swc-illustrated-message`'s `button-group` slot is additive (A3 in that component's migration plan) and not yet implemented; examples must use a temporary pattern (browse control alongside `swc-illustrated-message` in the dropzone slot) until it ships. |
 
 #### CSS custom properties (2nd-gen)
 
