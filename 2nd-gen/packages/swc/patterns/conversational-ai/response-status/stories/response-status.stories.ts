@@ -232,14 +232,16 @@ export const AgenticAccessibility: Story = {
       open
       reasoning-label="Execution steps"
     >
-      ${AGENTIC_DEMO_FLOW_STEPS.map((step) => html`
-        <swc-response-status-step
-          title=${step.title}
-          detail=${step.detail}
-          kind=${step.kind}
-          status="complete"
-        ></swc-response-status-step>
-      `)}
+      ${AGENTIC_DEMO_FLOW_STEPS.map(
+        (step) => html`
+          <swc-response-status-step
+            title=${step.title}
+            detail=${step.detail}
+            kind=${step.kind}
+            status="complete"
+          ></swc-response-status-step>
+        `
+      )}
     </swc-response-status>
   `,
   tags: ['a11y'],

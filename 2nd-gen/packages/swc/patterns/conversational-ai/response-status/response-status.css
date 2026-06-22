@@ -459,6 +459,9 @@
 
 .swc-ResponseStatus-step-title {
   margin: 0;
+
+  /* Detail default (gray-600) fails WCAG AA at detail-size-s (12px). */
+  --swc-detail-font-color: token("gray-700");
 }
 
 .swc-ResponseStatus-step-detail {
