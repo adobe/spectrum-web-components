@@ -99,13 +99,15 @@ export class ProgressBar extends ProgressBarBase {
           : nothing}
         ${indeterminate
           ? nothing
-          : html`<span class="swc-LinearProgress-value"
-                >${formattedValue}</span
-              >`}
+          : html`
+              <span class="swc-LinearProgress-value">${formattedValue}</span>
+            `}
         <div class="swc-LinearProgress-track">
           <div
             class="swc-LinearProgress-fill"
-            style=${ifDefined(indeterminate ? undefined : `inline-size: ${fillPercent}%;`)}
+            style=${ifDefined(
+              indeterminate ? undefined : `inline-size: ${fillPercent}%;`
+            )}
           ></div>
         </div>
         ${hasDescription
