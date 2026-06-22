@@ -396,7 +396,8 @@ function wrapInLayer(root, block) {
     params: LAYER,
     raws: { afterName: ' ', between: ' ', after: '\n' },
   });
-  for (const node of children) {
+  for (const [i, node] of children.entries()) {
+    node.raws.before = i === 0 ? '' : '\n\n';
     layer.append(node);
   }
   root.append(layer);
@@ -405,6 +406,7 @@ function wrapInLayer(root, block) {
   // revert any property to the layer-defined value rather than being
   // overridden by unlayered application CSS.
   const revert = postcss.rule({ selector: `.${block}` });
+  revert.raws.before = '\n\n';
   revert.append(
     postcss.decl({ prop: 'all', value: 'revert-layer !important' })
   );
