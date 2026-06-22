@@ -9,8 +9,4 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-
-@layer swc-global-elements, swc-global-element-overrides;
-
-@import url("./global-button.css");
-@import url("./global-action-button.css");
+export * from './ActionButton.js';

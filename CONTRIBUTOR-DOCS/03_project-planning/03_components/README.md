@@ -23,6 +23,7 @@
     - [Accordion migration plan](accordion/migration-plan.md)
 - Action Button
     - [Action button accessibility migration analysis](action-button/accessibility-migration-analysis.md)
+    - [Action button migration plan](action-button/migration-plan.md)
     - [Action button migration roadmap](action-button/rendering-and-styling-migration-analysis.md)
 - Action Group
     - [Action group accessibility migration analysis](action-group/accessibility-migration-analysis.md)
@@ -59,6 +60,7 @@
     - [Color field migration roadmap](color-field/rendering-and-styling-migration-analysis.md)
 - Color Handle
     - [Color handle accessibility migration analysis](color-handle/accessibility-migration-analysis.md)
+    - [Color Handle migration plan](color-handle/migration-plan.md)
     - [Color handle migration roadmap](color-handle/rendering-and-styling-migration-analysis.md)
 - Color Loupe
     - [Color loupe accessibility migration analysis](color-loupe/accessibility-migration-analysis.md)
@@ -119,6 +121,7 @@
     - [Popover migration roadmap](popover/rendering-and-styling-migration-analysis.md)
 - Progress Bar
     - [Progress bar accessibility migration analysis](progress-bar/accessibility-migration-analysis.md)
+    - [Progress bar migration plan](progress-bar/migration-plan.md)
     - [Progress bar migration roadmap](progress-bar/rendering-and-styling-migration-analysis.md)
 - Progress Circle
     - [Progress circle accessibility migration analysis](progress-circle/accessibility-migration-analysis.md)

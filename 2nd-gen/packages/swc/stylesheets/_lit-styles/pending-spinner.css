@@ -1,0 +1,122 @@
+/**
+ * Copyright 2026 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+/* ── Keyframes ────────────────────────────────────── */
+
+@keyframes swc-pending-spinner-rotate {
+  0% {
+    transform: rotate(var(--swc-pending-spinner-rotate-start, -90deg));
+  }
+
+  100% {
+    transform: rotate(var(--swc-pending-spinner-rotate-end, 270deg));
+  }
+}
+
+@keyframes swc-pending-spinner-dashoffset {
+  0%,
+  100% {
+    stroke-dashoffset: 75px;
+  }
+
+  30% {
+    stroke-dashoffset: var(--swc-pending-spinner-dashoffset-30, 20px);
+  }
+}
+
+/* ── Base ─────────────────────────────────────────── */
+
+/* Sized by the consuming component via --_swc-pending-spinner-size. */
+.swc-PendingSpinner {
+  --_swc-pending-spinner-track-border-color: token("track-color");
+  --_swc-pending-spinner-fill-border-color: token("accent-content-color-default");
+  --_swc-pending-spinner-thickness: 2px;
+
+  display: none;
+}
+
+.swc-PendingSpinner--active {
+  display: inline-block;
+}
+
+/* ── Track and fill ───────────────────────────────── */
+
+.swc-PendingSpinner-track,
+.swc-PendingSpinner-fill {
+  inline-size: var(--_swc-pending-spinner-size);
+  block-size: var(--_swc-pending-spinner-size);
+}
+
+.swc-PendingSpinner-track {
+  stroke: var(--_swc-pending-spinner-track-border-color);
+  stroke-width: var(--_swc-pending-spinner-thickness);
+}
+
+.swc-PendingSpinner-fill {
+  stroke: var(--_swc-pending-spinner-fill-border-color);
+  stroke-width: var(--_swc-pending-spinner-thickness);
+  transform: rotate(-90deg);
+  transform-origin: center;
+}
+
+.swc-PendingSpinner--active .swc-PendingSpinner-fill {
+  animation:
+    swc-pending-spinner-rotate 1s cubic-bezier(0.6, 0.1, 0.3, 0.9) infinite,
+    swc-pending-spinner-dashoffset 1s cubic-bezier(0.25, 0.1, 0.25, 1.3) infinite;
+  will-change: transform;
+}
+
+/* ── Static white ─────────────────────────────────── */
+
+:host([static-color="white"]) .swc-PendingSpinner {
+  --_swc-pending-spinner-track-border-color: token("static-white-track-color");
+  --_swc-pending-spinner-fill-border-color: token("static-white-track-indicator-color");
+}
+
+/* ── Static black ─────────────────────────────────── */
+
+:host([static-color="black"]) .swc-PendingSpinner {
+  --_swc-pending-spinner-track-border-color: token("static-black-track-color");
+  --_swc-pending-spinner-fill-border-color: token("static-black-track-indicator-color");
+}
+
+/* ── Reduced motion ───────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  .swc-PendingSpinner--active .swc-PendingSpinner-fill {
+    --swc-pending-spinner-dashoffset-30: 0;
+    --swc-pending-spinner-rotate-start: 0deg;
+    --swc-pending-spinner-rotate-end: 360deg;
+
+    animation-duration: 15s;
+    animation-timing-function: linear, linear;
+  }
+}
+
+/* ── Forced colors ────────────────────────────────── */
+
+@media (forced-colors: active) {
+  /* SVG stroke values are not auto-remapped by forced-colors. */
+  .swc-PendingSpinner-track {
+    @media (prefers-color-scheme: dark) {
+      --_swc-pending-spinner-track-border-color: token("static-white-track-color");
+    }
+
+    @media (prefers-color-scheme: light) {
+      --_swc-pending-spinner-track-border-color: token("static-black-track-color");
+    }
+  }
+
+  .swc-PendingSpinner-fill {
+    --_swc-pending-spinner-fill-border-color: Highlight;
+  }
+}

@@ -236,6 +236,53 @@ export const forcePopoverOnMobile = (): TemplateResult => html`
     </sp-action-menu>
   </div>
 `;
+export const submenuMobileView = (): TemplateResult => html`
+  <div style="padding: 40px">
+    <h1>Submenu in mobile tray</h1>
+    <p>
+      On mobile,
+      <code>sp-action-menu</code>
+      opens its menu in a tray. This story verifies that tapping a submenu item
+      drills into the submenu instead of dismissing the tray (regression for
+      GitHub issue #5110).
+    </p>
+    <ol>
+      <li>Open Chrome DevTools (or equivalent).</li>
+      <li>Toggle the Device Toolbar (the phone/tablet icon).</li>
+      <li>Select a device preset (e.g. iPhone 12).</li>
+      <li>Reload the page.</li>
+      <li>Tap the action menu button — a tray should appear.</li>
+      <li>
+        Tap
+        <strong>Select some items</strong>
+        — the submenu items should slide into view with a back button. The tray
+        must stay open.
+      </li>
+      <li>Tap the back button — the root menu items should slide back in.</li>
+    </ol>
+    <sp-action-menu label="More Actions">
+      <sp-menu-item>One</sp-menu-item>
+      <sp-menu-item>Two</sp-menu-item>
+      <sp-menu-item>
+        Select some items
+        <sp-menu slot="submenu" selects="multiple">
+          <sp-menu-item>A</sp-menu-item>
+          <sp-menu-item selected>B</sp-menu-item>
+          <sp-menu-item>C</sp-menu-item>
+        </sp-menu>
+      </sp-menu-item>
+    </sp-action-menu>
+  </div>
+`;
+
+submenuMobileView.swc_vrt = {
+  skip: true,
+};
+
+submenuMobileView.parameters = {
+  chromatic: { disableSnapshot: true },
+};
+
 export const labelOnly = ({
   align = 'start',
   changeHandler = (() => undefined) as (event: Event) => void,
@@ -308,6 +355,7 @@ export const submenu = ({ align = 'start' } = {}): TemplateResult => {
     <sp-action-menu
       label="More Actions"
       style=${ifDefined(align === 'end' ? 'float: inline-end;' : undefined)}
+      force-popover
     >
       <sp-menu-item>One</sp-menu-item>
       <sp-menu-item>Two</sp-menu-item>
