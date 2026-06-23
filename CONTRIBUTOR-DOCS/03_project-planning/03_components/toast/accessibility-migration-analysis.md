@@ -116,6 +116,7 @@ Not a dialog, alert dialog, or replacement for critical error messaging. Toasts 
 | **`variant` and color** | `variant` is visual-only. Do not auto-map `variant` to `aria-invalid`, `aria-relevant`, or other ARIA properties. The icon label and message text carry semantic meaning; color is supplementary and must not be the only differentiator. |
 | **No default `aria-label` on host** | Do not set `aria-label` on the host. The message content announced via the live region is the notification. Adding an `aria-label` would suppress the live region content from being announced in some AT combinations. |
 | **Docs** | State clearly that `role="status"` (polite) is the prescribed host role and that `role="alert"` is not used. Document the 6-second minimum, the hover-and-focus pause behavior, and that toasts with an action button should generally not auto-dismiss. Advise against `aria-live="assertive"` for toast content. Do not claim `variant` sets ARIA states. |
+| **Consumer docs (timing formula)** | The consumer migration guide must include the following timing guidance verbatim: "Auto-dismissing content must be visible long enough for users to read and interact with it. The minimum is 6 seconds; add 1 second per 120 words beyond the first 120. The timer must pause on focus and hover." This is a WCAG 2.2.1 requirement; it must not be omitted or paraphrased into vagueness. |
 
 ### Shadow DOM and cross-root ARIA Issues
 
