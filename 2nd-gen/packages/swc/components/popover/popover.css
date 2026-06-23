@@ -22,9 +22,13 @@
 
 /* The internal surface: a `<div popover>` in default mode, a `<dialog>` in
  * modal mode. Both are `position: absolute` in the top layer to match the
- * PlacementController's Floating UI `strategy: 'absolute'`; the controller
- * writes `top: 0; left: 0; translate: …`, so reset the UA centering
- * (`margin: auto`, `inset: 0`) and let the controller anchor it. */
+ * PlacementController's Floating UI `strategy: 'absolute'`. Until the controller
+ * anchors it (positioning is async), the surface keeps the browser's native
+ * top-layer centering (`inset: 0; margin: auto`) so it opens in the viewport
+ * rather than at the 0,0 origin; `:host([actual-placement])` below switches to
+ * the controller-anchored position (`inset: auto; margin: 0` + inline
+ * `top: 0; left: 0; translate: …`). Centering on open is what keeps modal
+ * `showModal()` focus from scrolling the page. */
 .swc-Popover {
   /* Arrow clearance: the space the tip occupies between the surface and the
    * trigger when the arrow is shown. The component reads this token-derived
@@ -37,7 +41,7 @@
   --_swc-popover-animation-distance: token("spacing-75");
 
   position: absolute;
-  inset: auto;
+  inset: 0;
   inline-size: max-content;
 
   /* Cap to the placement-aware usable width the PlacementController exposes
@@ -47,7 +51,7 @@
   max-inline-size: var(--swc-placement-available-width, calc(100vw - 24px));
   max-block-size: none;
   padding: 0;
-  margin: 0;
+  margin: auto;
   color: inherit;
   background-color: var(--swc-popover-background-color, token("background-layer-2-color"));
   border: token("border-width-100") solid var(--swc-popover-border-color, token("popover-border-color"));
@@ -129,6 +133,10 @@
  * lower-specificity `.swc-Popover` rules above for `no-descending-specificity`. */
 :host([actual-placement]) .swc-Popover:popover-open,
 :host([actual-placement]) .swc-Popover[open] {
+  /* Anchored: drop the native centering and let the controller's inline
+   * `top: 0; left: 0; translate` place the surface. */
+  inset: auto;
+  margin: 0;
   opacity: 1;
   transform: none;
 }
