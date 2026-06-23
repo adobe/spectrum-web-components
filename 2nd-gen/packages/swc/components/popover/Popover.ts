@@ -31,6 +31,8 @@ import styles from './popover.css';
  *
  * @slot - Popover content.
  *
+ * @cssprop --swc-popover-content-padding - Padding around the slotted content; defaults to the `popover-edge-to-content-area` token. Exposed because the popover is a blank-canvas container, for content that needs a different inset.
+ *
  * @fires swc-open - Dispatched when the popover begins opening.
  * @fires swc-after-open - Dispatched after the open transition completes.
  * @fires swc-close - Dispatched when the popover begins closing. `detail.source` reports `'escape'`, `'outside'`, or `'programmatic'`.

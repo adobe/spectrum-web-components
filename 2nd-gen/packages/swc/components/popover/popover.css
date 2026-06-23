@@ -108,9 +108,16 @@
  * backdrop-click on the dialog's surface is not absorbed by padding in modal
  * mode. */
 .swc-Popover-content {
-  /* Padding only; the popover is a blank-canvas container, so slotted content
-   * owns its own display/layout. */
-  padding: token("popover-edge-to-content-area");
+  /* Bound the content to the placement-aware usable height and scroll here (not
+   * on `.swc-Popover`, whose `overflow: visible` lets the arrow render outside
+   * the box). Unbounded until the first position is computed. */
+  max-block-size: var(--swc-placement-available-height);
+
+  /* The popover is a blank-canvas container, so slotted content owns its own
+   * display/layout; only padding is applied, exposed as a public custom property
+   * for content that needs a different inset. */
+  padding: var(--swc-popover-content-padding, token("popover-edge-to-content-area"));
+  overflow: auto;
 }
 
 /* Modal mode renders no dimming backdrop: keep the `<dialog>`'s backdrop
