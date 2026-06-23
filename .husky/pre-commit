@@ -1,9 +1,19 @@
 yarn lint-staged --allow-empty
 
-# If any CONTRIBUTOR-DOCS files are staged, regenerate navigation and verify links
+# If any CONTRIBUTOR-DOCS files are staged, regenerate navigation and verify links,
+# then regenerate the Storybook contributor-docs MDX and update preview.ts sort order.
 if git diff --cached --name-only | grep -q "^CONTRIBUTOR-DOCS/"; then
   node CONTRIBUTOR-DOCS/01_contributor-guides/07_authoring-contributor-docs/update-nav.js "$(pwd)/CONTRIBUTOR-DOCS"
   git add CONTRIBUTOR-DOCS/
+  (cd 2nd-gen/packages/swc && node .storybook/scripts/generate-contributor-docs.mjs)
+  git add 2nd-gen/packages/swc/.storybook/preview.ts
+fi
+
+# If any component CSS files are staged, run the build so the vite plugin
+# regenerates all global stylesheets, then stage the results.
+if git diff --cached --name-only | grep -qE "^2nd-gen/packages/swc/components/.*\.css$"; then
+  (cd 2nd-gen/packages/swc && yarn build)
+  git add 2nd-gen/packages/swc/stylesheets/global/
 fi
 
 # If any per-unit MDX or stories file changed under the in-scope 2nd-gen
