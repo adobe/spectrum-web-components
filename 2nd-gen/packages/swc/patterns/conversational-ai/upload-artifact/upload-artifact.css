@@ -159,27 +159,42 @@
 }
 
 :host([type="media"]) .swc-UploadArtifact-surface {
-  flex-direction: column;
-  gap: token("spacing-100");
+  display: block;
+  position: relative;
+  inline-size: 100%;
+  block-size: 100%;
+  border-radius: token("corner-radius-200");
   overflow: hidden;
 }
 
 :host([type="media"]) .swc-UploadArtifact-thumbnail {
+  display: block;
+  position: relative;
+  inline-size: 100%;
+  block-size: 100%;
   background: token("gray-100");
   border: 1px solid transparent;
   border-radius: token("corner-radius-200");
   overflow: hidden;
 }
 
+:host([type="media"]) .swc-UploadArtifact-actions {
+  display: none;
+}
+
 :host([type="media"]) .swc-UploadArtifact-thumbnail ::slotted(img) {
   display: block;
+  position: absolute;
+  inset: 0;
   inline-size: 100%;
-  block-size: auto;
+  block-size: 100%;
   object-fit: cover;
 }
 
 :host([type="media"]) .swc-UploadArtifact-thumbnail ::slotted(*) {
   display: block;
+  position: absolute;
+  inset: 0;
   inline-size: 100%;
   block-size: 100%;
 }
