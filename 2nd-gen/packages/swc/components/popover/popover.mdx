@@ -55,6 +55,12 @@ The toggling control and the positioning anchor can be different elements: a but
 
 <Canvas of={Stories.CustomAnchor} />
 
+### Virtual anchor
+
+`triggerElement` also accepts a virtual element: any object with a `getBoundingClientRect()` method, the same shape the `PlacementController` supports. The popover then anchors to an arbitrary point or rect with no backing DOM element, for cases like a context menu at the pointer or a popover anchored to a text selection. A virtual anchor positions only; drive `open` yourself and place ARIA and focus on the real control that invoked it (or pair it with `for` to keep `aria-expanded` / `aria-controls` and focus restoration on a button).
+
+<Canvas of={Stories.VirtualAnchor} />
+
 ### Modal
 
 Setting `modal` switches the surface to a `<dialog>` opened with `showModal()`: focus is trapped inside, the page behind is inert and its scroll is locked, and the surface exposes `role="dialog"`. Dismiss with `Escape` or a click on the backdrop. Name the dialog with `accessible-label` (see [Accessibility](#accessibility)).

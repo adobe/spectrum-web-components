@@ -252,6 +252,54 @@ export const CustomAnchor: Story = {
 };
 CustomAnchor.storyName = 'Custom anchor';
 
+export const VirtualAnchor: Story = {
+  args: {
+    manual: true,
+    'accessible-label': 'Point details',
+    'default-slot': 'Anchored to the point you activated, not an element.',
+  },
+  render: (args) => {
+    // The anchor is a `VirtualTrigger` (an object with `getBoundingClientRect`),
+    // not a DOM element, so the popover opens at an arbitrary point. The wrapper
+    // is captured lazily for the same reason as `Custom anchor`: the popover is
+    // rendered by the `${template()}` child binding after this ref runs.
+    let wrapper: Element | null = null;
+    const capture = (element?: Element): void => {
+      wrapper = element ?? null;
+    };
+    const openAtPoint = (event: MouseEvent): void => {
+      const popover = wrapper?.querySelector<Popover>('swc-popover');
+      if (!popover) {
+        return;
+      }
+      // Keyboard activation has no pointer position (clientX/Y are 0); fall back
+      // to the activated area's center so the example stays operable by keyboard.
+      const area = event.currentTarget as HTMLElement;
+      const rect = area.getBoundingClientRect();
+      const hasPoint = event.clientX !== 0 || event.clientY !== 0;
+      const x = hasPoint ? event.clientX : rect.left + rect.width / 2;
+      const y = hasPoint ? event.clientY : rect.top + rect.height / 2;
+      popover.triggerElement = {
+        getBoundingClientRect: () => new DOMRect(x, y, 0, 0),
+      };
+      popover.open = true;
+    };
+    return html`
+      <div ${ref(capture)}>
+        <button
+          @click=${openAtPoint}
+          style="inline-size: 320px; block-size: 120px; display: grid; place-items: center; border: 1px dashed currentColor; border-radius: 8px; background: transparent; color: inherit; cursor: crosshair;"
+        >
+          Click anywhere in this area
+        </button>
+        ${template({ ...args })}
+      </div>
+    `;
+  },
+  tags: ['behaviors'],
+};
+VirtualAnchor.storyName = 'Virtual anchor';
+
 // ──────────────────────────
 //    HELPERS (interactive)
 // ──────────────────────────
