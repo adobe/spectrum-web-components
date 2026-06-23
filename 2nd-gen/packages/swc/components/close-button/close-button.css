@@ -40,9 +40,10 @@
   overflow: visible;
   cursor: pointer;
   user-select: none;
+  outline: 0 solid transparent;
   transition-timing-function: token("animation-ease-in-out");
   transition-duration: token("animation-duration-100");
-  transition-property: border-color, color, background-color, transform;
+  transition-property: outline, border-color, color, background-color, transform;
 }
 
 .swc-CloseButton:focus-visible {
