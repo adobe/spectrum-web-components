@@ -10,6 +10,7 @@
  * governing permissions and limitations under the License.
  */
 import { html } from 'lit';
+import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
@@ -30,6 +31,16 @@ argTypes.size = {
   ...argTypes.size,
   control: { type: 'select' },
   options: ICON_VALID_SIZES,
+};
+
+argTypes.svg = {
+  name: 'svg',
+  control: { type: 'text' },
+  description: 'Inline SVG markup to render in the default slot.',
+  table: {
+    category: 'Story controls',
+    type: { summary: 'string' },
+  },
 };
 
 /**
@@ -58,13 +69,11 @@ export default meta;
 // ────────────────────
 
 // SVG copied from `elements/Chevron100Icon.ts` for docs examples (BYO slot content).
-const chevronIconSvg = html`
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10">
-    <path
-      d="M2.83789 9.8252c-.19238 0-.38379-.07324-.53027-.21973-.29297-.29297-.29297-.76758 0-1.06055l3.54395-3.54492L2.30762 1.45508c-.29297-.29297-.29297-.76758 0-1.06055s.76758-.29297 1.06055 0l4.07422 4.0752c.29297.29297.29297.76758 0 1.06055l-4.07422 4.0752c-.14648.14648-.33789.21973-.53027.21973Z"
-    />
-  </svg>
-`;
+const chevronIconSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10">
+  <path
+    d="M2.83789 9.8252c-.19238 0-.38379-.07324-.53027-.21973-.29297-.29297-.29297-.76758 0-1.06055l3.54395-3.54492L2.30762 1.45508c-.29297-.29297-.29297-.76758 0-1.06055s.76758-.29297 1.06055 0l4.07422 4.0752c.29297.29297.29297.76758 0 1.06055l-4.07422 4.0752c-.14648.14648-.33789.21973-.53027.21973Z"
+  />
+</svg>`;
 
 const sizeLabels = {
   xs: 'Extra-small',
@@ -74,16 +83,26 @@ const sizeLabels = {
   xl: 'Extra-large',
 } as const satisfies Record<IconSize, string>;
 
+type IconStoryArgs = Record<string, unknown> & {
+  svg?: string;
+};
+
+const renderStoryIcon = ({
+  svg = chevronIconSvg,
+  ...iconArgs
+}: IconStoryArgs) => template(iconArgs, unsafeHTML(svg));
+
 // ────────────────────
 //    PLAYGROUND STORY
 // ────────────────────
 
 export const Playground: Story = {
   tags: ['dev'],
-  render: (args) => template(args, chevronIconSvg),
+  render: (args) => renderStoryIcon(args),
   args: {
     label: 'Expand',
     size: 'm',
+    svg: chevronIconSvg,
   },
 };
 
@@ -93,7 +112,7 @@ export const Playground: Story = {
 
 export const Overview: Story = {
   tags: ['overview'],
-  render: (args) => template(args, chevronIconSvg),
+  render: (args) => renderStoryIcon(args),
   args: {
     label: 'Expand',
     size: 'm',
@@ -106,7 +125,7 @@ export const Overview: Story = {
 
 export const Anatomy: Story = {
   render: (args) =>
-    template({ ...args, label: args.label || 'Chevron icon' }, chevronIconSvg),
+    renderStoryIcon({ ...args, label: args.label || 'Chevron icon' }),
   tags: ['anatomy'],
 };
 
@@ -117,10 +136,7 @@ export const Anatomy: Story = {
 export const Sizes: Story = {
   render: (args) => html`
     ${ICON_VALID_SIZES.map((size) =>
-      template(
-        { ...args, label: args.label || sizeLabels[size], size },
-        chevronIconSvg
-      )
+      renderStoryIcon({ ...args, label: args.label || sizeLabels[size], size })
     )}
   `,
   tags: ['options'],
@@ -134,6 +150,6 @@ export const Sizes: Story = {
 // ────────────────────────────────
 
 export const Accessibility: Story = {
-  render: (args) => template(args, chevronIconSvg),
+  render: (args) => renderStoryIcon(args),
   tags: ['a11y'],
 };

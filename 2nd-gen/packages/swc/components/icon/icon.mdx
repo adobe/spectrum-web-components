@@ -63,7 +63,7 @@ The `<swc-icon>` element implements several accessibility features:
 - Always provide a descriptive `label` for informative icons
 - Use empty labels only for purely decorative icons
 - Keep labels short and specific (e.g., "Expand" instead of "Icon")
-- When an icon accompanies visible text, omit `label` and set `aria-hidden="true"` on the icon so screen readers do not announce duplicate content
+- When an icon accompanies visible text, omit `label` so `<swc-icon>` treats it as decorative and hides it from assistive technology
 
 <Canvas of={IconStories.Accessibility} />
 

@@ -64,6 +64,30 @@ export default meta;
 
 const iconSvg = Chevron100Icon();
 
+const iconCatalog = Object.entries(iconElements)
+  .filter(
+    ([name, iconFactory]) =>
+      name.endsWith('Icon') && typeof iconFactory === 'function'
+  )
+  .sort(([a], [b]) => a.localeCompare(b))
+  .map(([name, iconFactory]) => ({
+    name,
+    icon: iconFactory as () => TemplateResult,
+  }));
+
+const defaultIconName = 'Chevron100Icon';
+
+argTypes['icon-name'] = {
+  name: 'icon-name',
+  control: { type: 'select' },
+  options: iconCatalog.map(({ name }) => name),
+  description: 'Internal icon factory to render in the default slot.',
+  table: {
+    category: 'Story controls',
+    type: { summary: 'string' },
+  },
+};
+
 const sizeLabels = {
   xs: 'Extra-small',
   s: 'Small',
@@ -81,16 +105,32 @@ const iconCardStyles = {
   padding: '8px',
 } as const;
 
+type InternalIconStoryArgs = Record<string, unknown> & {
+  'icon-name'?: string;
+};
+
+const renderInternalIcon = ({
+  'icon-name': iconName = defaultIconName,
+  ...iconArgs
+}: InternalIconStoryArgs) =>
+  template(
+    iconArgs,
+    (
+      iconCatalog.find(({ name }) => name === iconName)?.icon ?? Chevron100Icon
+    )()
+  );
+
 // ────────────────────
 //    PLAYGROUND STORY
 // ────────────────────
 
 export const Playground: Story = {
   tags: ['dev'],
-  render: (args) => template(args, iconSvg),
+  render: (args) => renderInternalIcon(args),
   args: {
     label: 'Search',
     size: 'm',
+    'icon-name': defaultIconName,
   },
 };
 
@@ -150,23 +190,13 @@ export const SharedTemplates: Story = {
 
 export const AvailableIcons: Story = {
   render: (args) => {
-    const catalog = Object.entries(iconElements)
-      .filter(
-        ([name, iconFactory]) =>
-          name.endsWith('Icon') && typeof iconFactory === 'function'
-      )
-      .sort(([a], [b]) => a.localeCompare(b))
-      .map(([name, iconFactory]) => ({
-        name,
-        icon: (iconFactory as () => TemplateResult)(),
-      }));
     return html`
-      ${catalog.map(
+      ${iconCatalog.map(
         (entry) => html`
           <div style=${styleMap(iconCardStyles)}>
             ${template(
               { ...args, label: args.label || entry.name },
-              entry.icon
+              entry.icon()
             )}
             <code>${entry.name}</code>
           </div>
