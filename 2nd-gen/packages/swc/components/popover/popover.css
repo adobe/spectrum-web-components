@@ -33,6 +33,9 @@
    * gap stays in sync with the tip dimensions. */
   --_swc-popover-tip-height: token("popover-tip-height");
 
+  /* Distance the surface slides from the trigger on open/close. */
+  --_swc-popover-animation-distance: token("spacing-75");
+
   position: absolute;
   inset: auto;
   inline-size: max-content;
@@ -57,8 +60,11 @@
   overscroll-behavior: contain;
   outline: none;
 
-  /* Fade on open/close. The slide axis (translate) is owned by the
-   * PlacementController for anchoring, so only opacity animates here. */
+  /* Fade and slide on open/close. The PlacementController owns the resting
+   * position via the `translate` property; the entry/exit slide uses `transform`
+   * (a separate property that composes with `translate`), starting from an offset
+   * toward the trigger (set per requested `placement` below) and animating to
+   * none once anchored. */
   opacity: 0;
 
   /* Elevated drop shadow. With the arrow shown (default), `filter: drop-shadow`
@@ -67,8 +73,30 @@
   filter: drop-shadow(0 4px 12px token("drop-shadow-ambient-color")) drop-shadow(0 2px 6px token("drop-shadow-transition-color")) drop-shadow(0 0 2px token("drop-shadow-elevated-key-color"));
   transition:
     opacity token("animation-duration-200") token("animation-ease-out"),
+    transform token("animation-duration-200") token("animation-ease-out"),
     overlay token("animation-duration-200") allow-discrete,
     display token("animation-duration-200") allow-discrete;
+}
+
+/* Entry/exit slide offset by requested side (the reflected `placement`, known
+ * immediately, unlike `actual-placement` which the async positioning sets only
+ * once anchored). The surface starts shifted toward the trigger; the anchored
+ * open state below animates it to none. Prefix selectors cover the aligned
+ * variants (e.g. `top-left` starts with `top`). */
+:host([placement^="top"]) .swc-Popover {
+  transform: translateY(var(--_swc-popover-animation-distance));
+}
+
+:host([placement^="bottom"]) .swc-Popover {
+  transform: translateY(calc(-1 * var(--_swc-popover-animation-distance)));
+}
+
+:host([placement^="right"]) .swc-Popover {
+  transform: translateX(calc(-1 * var(--_swc-popover-animation-distance)));
+}
+
+:host([placement^="left"]) .swc-Popover {
+  transform: translateX(var(--_swc-popover-animation-distance));
 }
 
 /* No arrow: use the rectangular `box-shadow` form of the elevated token, which
@@ -102,6 +130,7 @@
 :host([actual-placement]) .swc-Popover:popover-open,
 :host([actual-placement]) .swc-Popover[open] {
   opacity: 1;
+  transform: none;
 }
 
 /* The padded content wrapper. Padding lives here (not on `.swc-Popover`) so a
