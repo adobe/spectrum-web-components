@@ -113,9 +113,8 @@
    * the box). Unbounded until the first position is computed. */
   max-block-size: var(--swc-placement-available-height);
 
-  /* The popover is a blank-canvas container, so slotted content owns its own
-   * display/layout; only padding is applied, exposed as a public custom property
-   * for content that needs a different inset. */
+  /* Padding only; slotted content owns its own display/layout. Exposed as a
+   * public custom property. */
   padding: var(--swc-popover-content-padding, token("popover-edge-to-content-area"));
   overflow: auto;
 }
