@@ -276,17 +276,18 @@ export abstract class PopoverBase extends SpectrumElement {
   private _clickTrigger: HTMLElement | null = null;
 
   /**
-   * True between a trigger `pointerdown` and its `click`, so a light-dismiss that
-   * fires inside that window can be attributed to the trigger press.
+   * True between a trigger press start (`pointerdown` or `touchstart`) and its
+   * `click`, so a light-dismiss that fires inside that window can be attributed to
+   * the trigger press. Both events open the window so it is set before the
+   * dismiss on mouse and touch alike (on touch the dismiss can fire off
+   * `touchstart`, before `pointerdown` would run).
    */
   private _triggerPointerActive = false;
 
   /**
    * Set when the trigger press light-dismissed an open popover (an `'outside'`
    * close observed while `_triggerPointerActive`), so the trailing `click` of
-   * that same gesture is read as the close rather than a reopen. Keyed off the
-   * real close event, not a timer or an assumption about whether a dismiss will
-   * occur.
+   * that same gesture is read as the close rather than a reopen.
    */
   private _dismissedByTriggerPress = false;
 
@@ -463,21 +464,26 @@ export abstract class PopoverBase extends SpectrumElement {
 
     // Click-to-toggle on the trigger host, unless the consumer drives `open`
     // themselves (`manual`). Listens on the host so clicks bubbling from an
-    // inner button are caught. The `pointerdown` listener (capture, so it runs
-    // before the browser's light-dismiss) records whether the popover was open
-    // when the gesture started; `_onTriggerClick` uses that to tell a close
-    // gesture from a reopen.
+    // inner button are caught. The `pointerdown` / `touchstart` listeners
+    // (capture, so they run before the browser's light-dismiss) open the gesture
+    // window; `_onBeforeToggle` then attributes the dismiss to the press and
+    // `_onTriggerClick` reads the trailing click as a close, not a reopen. Both
+    // press-start events are wired so the window opens before the dismiss on
+    // touch too (where it can fire off `touchstart`).
     const clickTrigger = this.manual ? null : trigger;
     if (clickTrigger !== this._clickTrigger) {
       this._removeTriggerListeners();
       if (clickTrigger) {
         clickTrigger.addEventListener(
           'pointerdown',
-          this._onTriggerPointerDown,
+          this._onTriggerPressStart,
           {
             capture: true,
           }
         );
+        clickTrigger.addEventListener('touchstart', this._onTriggerPressStart, {
+          capture: true,
+        });
         clickTrigger.addEventListener('click', this._onTriggerClick);
         this._clickTrigger = clickTrigger;
       }
@@ -491,7 +497,12 @@ export abstract class PopoverBase extends SpectrumElement {
   private _removeTriggerListeners(): void {
     this._clickTrigger?.removeEventListener(
       'pointerdown',
-      this._onTriggerPointerDown,
+      this._onTriggerPressStart,
+      { capture: true }
+    );
+    this._clickTrigger?.removeEventListener(
+      'touchstart',
+      this._onTriggerPressStart,
       { capture: true }
     );
     this._clickTrigger?.removeEventListener('click', this._onTriggerClick);
@@ -499,11 +510,12 @@ export abstract class PopoverBase extends SpectrumElement {
   }
 
   // The trigger sits outside the popover, so in the default (auto) mode pressing
-  // it while open is a native light-dismiss: the browser hides the popover on
-  // pointerdown, before the click fires. Open the gesture window here (capture,
-  // so it runs before the dismiss) so `_onBeforeToggle` can attribute that close
-  // to this press.
-  private _onTriggerPointerDown = (): void => {
+  // it while open is a native light-dismiss: the browser hides the popover before
+  // the click fires. Open the gesture window at press start (capture, so it runs
+  // before the dismiss) so `_onBeforeToggle` can attribute that close to this
+  // press. Bound to both `pointerdown` and `touchstart` because on touch the
+  // dismiss can fire off `touchstart`, before a `pointerdown` listener runs.
+  private _onTriggerPressStart = (): void => {
     this._triggerPointerActive = true;
     this._dismissedByTriggerPress = false;
   };
@@ -729,7 +741,7 @@ export abstract class PopoverBase extends SpectrumElement {
 
   private _closeTeardown(): void {
     // The trigger-click reopen guard is gesture-based (see
-    // `_onTriggerPointerDown`), so the close needs no source-specific handling
+    // `_onTriggerPressStart`), so the close needs no source-specific handling
     // here.
     unregisterDismissible(this);
     this._removeEscapeListener();
