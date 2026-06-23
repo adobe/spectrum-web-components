@@ -116,10 +116,15 @@ The generated stylesheet wraps all rules inside `@layer swc-global-elements`:
   .swc-Button--accent { … }
 }
 
-.swc-Button { all: revert-layer !important; }
+.swc-Button,
+.swc-Button-label { all: revert-layer !important; }
 ```
 
-This provides encapsulation similar to shadow DOM to prevent application styles affecting these global element style utilities.
+This provides encapsulation similar to shadow DOM to prevent application styles affecting these global element style utilities. The `all: revert-layer` escape-hatch rule is written outside the layer so page styles on those selectors revert to the layer-defined values rather than inheriting from unlayered application CSS.
+
+Child element classes (e.g. `.swc-Button-label`) receive the same escape hatch when listed in `textElements`. This protects light-DOM child nodes from broad typographic resets like `body * { font-family: sans-serif }`.
+
+**Limitation:** the CSS `all` shorthand explicitly excludes custom properties (`--*`). Unlayered application rules that set custom properties on these selectors will not be cleared by the escape hatch.
 
 ## Base file auto-detection
 
@@ -161,7 +166,10 @@ import { globalElementCSS } from '@adobe/vite-global-elements-css';
 export default defineConfig({
   plugins: [
     globalElementCSS({
-      elements: [{ component: 'button' }, { component: 'action-button' }],
+      elements: [
+        { component: 'button', textElements: ['label'] },
+        { component: 'action-button', textElements: ['label'] },
+      ],
     }),
     // ... other plugins
   ],
@@ -185,11 +193,12 @@ Wrap any block that should not appear in the global stylesheet:
 
 Array of component entries. Each entry:
 
-| Option                | Type     | Required | Description                                                             |
-| --------------------- | -------- | -------- | ----------------------------------------------------------------------- |
-| `component`           | `string` | yes      | Component name, e.g. `'button'`. Derives all paths and the block class. |
-| `source`              | `string` | no       | Override source CSS filename when it differs from `component`.          |
-| `rootElementSelector` | `string` | no       | Override the derived BEM block class (e.g. `'swc-Button'`).             |
+| Option                | Type       | Required | Description                                                                                                                                                                                                                  |
+| --------------------- | ---------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `component`           | `string`   | yes      | Component name, e.g. `'button'`. Derives all paths and the block class.                                                                                                                                                      |
+| `source`              | `string`   | no       | Override source CSS filename when it differs from `component`.                                                                                                                                                               |
+| `rootElementSelector` | `string`   | no       | Override the derived BEM block class (e.g. `'swc-Button'`).                                                                                                                                                                  |
+| `textElements`        | `string[]` | no       | Child element suffixes (e.g. `['label']`) that receive `all: revert-layer !important` alongside the root block. Use this for light-DOM text-bearing child elements vulnerable to inherited overrides from unlayered app CSS. |
 
 The `source` option is only needed for naming discrepancies:
 

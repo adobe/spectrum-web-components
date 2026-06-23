@@ -350,6 +350,7 @@
 }
 }
 
-.swc-Button {
+.swc-Button,
+.swc-Button-label {
 all: revert-layer !important;
 }

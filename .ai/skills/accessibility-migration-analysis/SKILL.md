@@ -265,6 +265,7 @@ The Manual review test cases section contains a fixed reference to the color han
 
 Apply these settings when creating the PR:
 
+- **Title:** `docs({{component-name}}): a11y migration analysis` — for example `docs(dropzone): a11y migration analysis`.
 - **Draft:** Create as a draft PR.
 - **Label:** Add the `a11y` label.
 - **Project:** Add to the "Spectrum Web PR Status" project with status **In development**.

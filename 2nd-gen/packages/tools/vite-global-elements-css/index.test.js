@@ -367,6 +367,57 @@ describe('deriveCSS — layer wrapping', () => {
     const result = deriveCSS(':host { color: red; }', 'swc-Button');
     expect(result).toContain('all: revert-layer !important');
   });
+
+  it('includes only the root block selector when textElements is omitted', () => {
+    const result = deriveCSS(':host { color: red; }', 'swc-Button');
+    expect(result).toContain('.swc-Button');
+    expect(result).not.toContain('.swc-Button-label');
+  });
+
+  it('includes only the root block selector when textElements is an empty array', () => {
+    const result = deriveCSS(':host { color: red; }', 'swc-Button', []);
+    expect(result).toContain('.swc-Button');
+    expect(result).not.toContain('.swc-Button-label');
+  });
+
+  it('adds a child element class to the revert-layer selector when one textElement is provided', () => {
+    const result = deriveCSS(':host { color: red; }', 'swc-Button', ['label']);
+    // Verify the child class appears in a rule carrying all: revert-layer.
+    // This input produces no .swc-Button-label rules inside the layer, so any
+    // occurrence must be in the revert selector outside the layer.
+    expect(result).toMatch(
+      /\.swc-Button,\n\.swc-Button-label \{[\s\S]*?all: revert-layer !important/
+    );
+  });
+
+  it('adds multiple child element classes when several textElements are provided', () => {
+    const result = deriveCSS(':host { color: red; }', 'swc-Button', [
+      'label',
+      'description',
+    ]);
+    // Each child class must appear before the revert-layer declaration, regardless
+    // of whether the implementation uses one combined rule or separate rules.
+    const revertIdx = result.lastIndexOf('all: revert-layer !important');
+    expect(result.slice(0, revertIdx)).toContain('.swc-Button-label');
+    expect(result.slice(0, revertIdx)).toContain('.swc-Button-description');
+  });
+
+  it('does not alter output for components that do not specify textElements', () => {
+    const without = deriveCSS(':host { color: red; }', 'swc-Button');
+    const withEmpty = deriveCSS(':host { color: red; }', 'swc-Button', []);
+    expect(without).toBe(withEmpty);
+  });
+});
+
+// ── deriveCSS — textElements input validation ────────────────────────────────
+
+describe('deriveCSS — textElements input validation', () => {
+  it('throws TypeError with a helpful message when textElements is not an array', () => {
+    expect(() =>
+      // @ts-expect-error intentional wrong type for test
+      deriveCSS(':host { color: red; }', 'swc-Button', 'label')
+    ).toThrow('[vite-global-elements-css] textElements must be a string array');
+  });
 });
 
 // ── deriveCSS — selector transformation ─────────────────────────────────────
