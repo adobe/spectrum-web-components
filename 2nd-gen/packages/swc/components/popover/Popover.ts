@@ -32,6 +32,9 @@ import styles from './popover.css';
  * @slot - Popover content.
  *
  * @cssprop --swc-popover-content-padding - Padding around the slotted content. Defaults to the `popover-edge-to-content-area` token.
+ * @cssprop --swc-popover-background-color - Background color of the surface and arrow. Defaults to the `background-layer-2-color` token.
+ * @cssprop --swc-popover-border-color - Border color of the surface and arrow. Defaults to the `popover-border-color` token.
+ * @cssprop --swc-popover-corner-radius - Corner radius of the surface. Defaults to the `corner-radius-700` token.
  *
  * @fires swc-open - Dispatched when the popover begins opening.
  * @fires swc-after-open - Dispatched after the open transition completes.

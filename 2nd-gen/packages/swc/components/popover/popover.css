@@ -46,9 +46,9 @@
   padding: 0;
   margin: 0;
   color: inherit;
-  background-color: token("background-layer-2-color");
-  border: token("border-width-100") solid token("popover-border-color");
-  border-radius: token("corner-radius-700");
+  background-color: var(--swc-popover-background-color, token("background-layer-2-color"));
+  border: token("border-width-100") solid var(--swc-popover-border-color, token("popover-border-color"));
+  border-radius: var(--swc-popover-corner-radius, token("corner-radius-700"));
   overflow: visible;
 
   /* Keep scrolling inside an internal scroll region from chaining out to the
@@ -151,8 +151,11 @@
   position: absolute;
   inline-size: var(--_swc-popover-tip-size);
   block-size: var(--_swc-popover-tip-size);
-  background-color: token("background-layer-2-color");
-  border: token("border-width-100") solid token("popover-border-color");
+
+  /* Reuse the surface custom properties so theming the surface also themes the
+   * arrow. */
+  background-color: var(--swc-popover-background-color, token("background-layer-2-color"));
+  border: token("border-width-100") solid var(--swc-popover-border-color, token("popover-border-color"));
   rotate: 45deg;
 }
 
