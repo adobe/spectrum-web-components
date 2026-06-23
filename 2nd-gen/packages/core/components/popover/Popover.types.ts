@@ -21,18 +21,31 @@ import {
 
 /**
  * The placement of the popover relative to its trigger, re-exported from the
- * `PlacementController` so the popover and the controller share a single source
- * of truth for the 22 supported values.
+ * `PlacementController` (the full union the controller can resolve).
  */
 export type { Placement };
 export { ALL_PLACEMENTS };
 
 /**
- * The full set of placement values accepted by `<swc-popover>`. Downstream
- * first-party components narrow this set per the proxy pattern.
+ * The placement values `<swc-popover>` supports: each physical side plus its two
+ * alignments, matching the Spectrum design API. The controller can resolve more
+ * (the logical `start`/`end` variants), but the popover narrows to this set per
+ * the proxy pattern.
  */
-export const POPOVER_VALID_PLACEMENTS =
-  ALL_PLACEMENTS satisfies readonly Placement[];
+export const POPOVER_VALID_PLACEMENTS = [
+  'top',
+  'top-left',
+  'top-right',
+  'bottom',
+  'bottom-left',
+  'bottom-right',
+  'left',
+  'left-top',
+  'left-bottom',
+  'right',
+  'right-top',
+  'right-bottom',
+] as const satisfies readonly Placement[];
 
 // ─────────────────────────
 //     SIZE
