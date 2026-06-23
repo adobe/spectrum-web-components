@@ -66,7 +66,7 @@
 
 ## Most blocking open questions
 
-- **Q1** in [Architecture and behavior](#architecture-and-behavior): `aria-disabled` forwarding — decision needed before Phase 3 on whether action-button's `attributeChangedCallback` intercept is extended or native `disabled` is used instead.
+- **Q1** in [Architecture and behavior](#architecture-and-behavior): `aria-disabled` forwarding — **resolved:** add `aria-disabled` to action-button's `attributeChangedCallback` intercept (same pattern as `aria-haspopup`/`aria-expanded`).
 
 ---
 
@@ -315,7 +315,7 @@ Source: [accessibility migration analysis](./accessibility-migration-analysis.md
 - **Host role:** `role="group"` is prescribed and fixed in all modes. Not author-overridable. A page-level `role="toolbar"` landmark goes on an outer wrapper, never on `swc-action-group`.
 - **Child roles:** `swc-action-button` stays `role="button"` only. No `role="radio"` or `role="checkbox"` on children.
 - **`aria-orientation`:** Set to `"vertical"` when `orientation="vertical"`; `"horizontal"` or omitted otherwise. Wired to `FocusgroupNavigationController` direction.
-- **`aria-disabled`:** When `disabled` is set on the group, the host receives `aria-disabled="true"` and each child receives `aria-disabled="true"`. Children remain in the Tab/Arrow sequence and are discoverable but must not activate. ⚠️ **Open question:** `ButtonBase.getForwardedButtonAttributes()` derives `aria-disabled` only from the component's own `pending` state — it does not forward a host-level `aria-disabled` attribute set by an external parent. A decision is needed before Phase 3: either add `aria-disabled` to action-button's `attributeChangedCallback` intercept (same pattern as `aria-haspopup`/`aria-expanded`), or propagate native `disabled` and accept that disabled children are not keyboard-reachable.
+- **`aria-disabled`:** When `disabled` is set on the group, the host receives `aria-disabled="true"` and each child receives `aria-disabled="true"`. Children remain in the Tab/Arrow sequence and are discoverable but must not activate. `ButtonBase.getForwardedButtonAttributes()` currently derives `aria-disabled` only from the component's own `pending` state — it does not forward a host-level `aria-disabled` attribute set by an external parent. **Decision (Phase 3):** add `aria-disabled` to action-button's `attributeChangedCallback` intercept, following the same pattern as `aria-haspopup`/`aria-expanded`.
 - **Group name:** `label` → `aria-label` on host. `aria-labelledby` remains valid. Labeling the group is recommended whenever the strip has a distinct purpose.
 - **`FormFieldMixin`:** Must not be applied. `swc-action-group` is a composite keyboard widget, not a form field. SWC-1612 is a ticket that uses `FormFieldMixin` for `sp-action-group`; that must not carry into the 2nd-gen migration. The `label` property could be mistaken for a field-label association, but it is used only to provide `aria-label` on the group — not for form association.
 - **Toolbar composition:** Storybook and docs must show `role="toolbar"` on an outer wrapper with named `swc-action-group` clusters as inner groups, per the APG toolbar example:
@@ -507,7 +507,7 @@ No deferred implementation tickets at this time.
 
 | # | Item | Blocking? | Status | Owner |
 | --- | ---- | --------- | ------ | ----- |
-| **Q1** | **`aria-disabled` forwarding on `swc-action-button`.** When action-group sets `aria-disabled="true"` on a child host, `ButtonBase.getForwardedButtonAttributes()` does not forward it to the inner `<button>` — it derives `aria-disabled` only from the component's own `pending` state. Decision needed before Phase 3: either add `aria-disabled` to action-button's `attributeChangedCallback` intercept (same pattern as `aria-haspopup`/`aria-expanded`), or propagate native `disabled` and accept that disabled children are not keyboard-reachable (contradicts APG guidance). | Yes — Phase 3 | Open | Architecture reviewer |
+| **Q1** | **`aria-disabled` forwarding on `swc-action-button`.** When action-group sets `aria-disabled="true"` on a child host, `ButtonBase.getForwardedButtonAttributes()` does not forward it to the inner `<button>` — it derives `aria-disabled` only from the component's own `pending` state. **Resolved:** add `aria-disabled` to action-button's `attributeChangedCallback` intercept, following the same pattern as `aria-haspopup`/`aria-expanded`. | Yes — Phase 3 | Resolved | Architecture reviewer |
 
 ---
 
