@@ -383,15 +383,15 @@ No `_lit-styles/` fragment needed — action-group renders only a slot; all layo
 
 #### Naming and public surface
 
-- [ ] `ActionGroup.types.ts`: define `ActionGroupOrientation` (`'horizontal' | 'vertical'`)
-- [ ] `ActionGroupSize` type: `(typeof ACTION_GROUP_VALID_SIZES)[number]` — same pattern as `BadgeSize`, `ButtonSize`, `StatusLightSize`
-- [ ] `ActionGroup.base.ts`: `label` → `aria-label`, `disabled` propagation contract, child collection logic
-- [ ] `ActionGroup.ts`: `compact`, `quiet`, `orientation`, `justified`, `size`, `staticColor`, child propagation, `FocusgroupNavigationController` wiring, `delegatesFocus: true`
+- [x] `ActionGroup.types.ts`: define `ActionGroupOrientation` (`'horizontal' | 'vertical'`)
+- [x] `ActionGroupSize` type: `(typeof ACTION_GROUP_VALID_SIZES)[number]` — same pattern as `BadgeSize`, `ButtonSize`, `StatusLightSize`
+- [x] `ActionGroup.base.ts`: `label` → `aria-label`, `disabled` propagation contract, child collection logic
+- [x] `ActionGroup.ts`: `compact`, `quiet`, `orientation`, `justified`, `size`, `staticColor`, child propagation, `delegatesFocus: true`; `FocusgroupNavigationController` wiring deferred to Phase 4
 - [ ] Drop `--mod-*` CSS custom properties; introduce `--swc-*` set after Phase 5 review
 
 #### 1st-gen deprecation notices
 
-- [ ] `@deprecated` JSDoc on `vertical` property in `sp-action-group`; runtime warn in existing `vertical` setter via `window.__swc.warn()`
+- [x] `@deprecated` JSDoc on `vertical`, `selects`, `selected`, `emphasized` in `sp-action-group`; `window.__swc.warn()` added to `selected` setter (existing setter); no runtime warn on `vertical`, `selects`, `emphasized` as no setter existed to add it without refactoring
 
 #### Alignment checks
 
