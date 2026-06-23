@@ -50,6 +50,10 @@ export class ProgressBar extends SizedMixin(
   @property({ type: Boolean, reflect: true })
   public indeterminate = false;
 
+  /**
+   * @deprecated The `label` string attribute will be replaced by a `label`
+   * named slot in a future release.
+   */
   @property({ type: String, reflect: true })
   public label = '';
 
@@ -82,9 +86,17 @@ export class ProgressBar extends SizedMixin(
   }
   private _overBackground: boolean = false;
 
+  /**
+   * @deprecated The `side-label` attribute will be replaced by
+   * `label-position="side"` in a future release.
+   */
   @property({ type: Boolean, reflect: true, attribute: 'side-label' })
   public sideLabel = false;
 
+  /**
+   * @deprecated The `progress` property will be replaced by `value` in a
+   * future release.
+   */
   @property({ type: Number })
   public progress = 0;
 

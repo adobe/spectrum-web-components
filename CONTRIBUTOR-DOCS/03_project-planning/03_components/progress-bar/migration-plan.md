@@ -412,28 +412,35 @@ Exact keyframe geometry, duration token, and fallback width are **Q2** — to be
 
 ### Setup
 
-- [ ] Create `2nd-gen/packages/core/components/progress-bar/` with `ProgressBar.base.ts` (extends `LinearProgressMixin(SizedMixin(SpectrumElement, …))`), `ProgressBar.types.ts`, `index.ts`
-- [ ] Create `2nd-gen/packages/swc/components/progress-bar/` with `ProgressBar.ts`, `progress-bar.css` (`@import`s `linear-progress-base.css`), `swc-progress-bar.ts`, `index.ts`, `stories/`, `test/`
-- [ ] Wire exports in `core` and `swc` `package.json` files
-- [ ] Confirm `LinearProgressMixin` and `linear-progress-base.css` are imported, not modified
-- [ ] Add to root workspace; confirm `yarn build:2nd-gen` passes with empty stubs
+- [x] Create `2nd-gen/packages/core/components/progress-bar/` with `ProgressBar.base.ts` (extends `LinearProgressMixin(SizedMixin(SpectrumElement, …))`), `ProgressBar.types.ts`, `index.ts`
+- [x] Create `2nd-gen/packages/swc/components/progress-bar/` with `ProgressBar.ts`, `progress-bar.css` (`@import`s `linear-progress-base.css`), `swc-progress-bar.ts`, `index.ts`, `stories/`, `test/`
+- [x] Wire exports in `core` and `swc` `package.json` files
+- [x] Confirm `LinearProgressMixin` and `linear-progress-base.css` are imported, not modified
+- [x] Add to root workspace; confirm `yarn build:2nd-gen` passes with empty stubs
 - [ ] Verify `spectrum-css` is checked out at `spectrum-two` branch as sibling directory (`../spectrum-css`)
 
 ### API
 
 #### Naming and public surface
 
-- [ ] `ProgressBar.types.ts`: define any progress-bar-only types (likely minimal — re-export shared `LinearProgress*` types as needed; no `VARIANTS`)
-- [ ] `LinearProgressMixin`: de-hardcode the meter docs URL in `warnMissingAccessibleName`/`warnValueOutOfRange` behind an overridable member (e.g. `docsHref`); `MeterBase` supplies the meter URL (no behavior change for meter), `ProgressBarBase` supplies the progress-bar URL (Q1)
-- [ ] `ProgressBar.base.ts`: extend `LinearProgressMixin`; declare `indeterminate` (boolean, default `false`, reflected); **no** `role`/`aria-*` on the host; supply the progress-bar `docsHref` and accessible-name warning copy (fixing the 1st-gen `<sp-progress-circle>` reference) per the Q1 decision
-- [ ] Confirm all shared props (`value`, `minValue`, `maxValue`, `accessibleLabel`, `valueLabel`, `formatOptions`, `labelPosition`, `staticColor`, `size`) come from the mixin with no re-declaration beyond reflect-on-concrete-class needs
+- [x] `ProgressBar.types.ts`: define any progress-bar-only types (likely minimal — re-export shared `LinearProgress*` types as needed; no `VARIANTS`)
+- [x] `LinearProgressMixin`: de-hardcode the meter docs URL in `warnMissingAccessibleName`/`warnValueOutOfRange` behind overridable `docsHref` and `accessibleNameContextExample` protected getters; `MeterBase` inherits the meter URL default (no behavior change), `ProgressBarBase` overrides both (Q1)
+- [x] `ProgressBar.base.ts`: extend `LinearProgressMixin`; declare `indeterminate` (boolean, default `false`, reflected); **no** `role`/`aria-*` on the host; supply the progress-bar `docsHref` (`...components-progress-bar--docs`) and `accessibleNameContextExample` (`'a full-page loading animation'`) per the Q1 decision
+- [x] Confirm all shared props (`value`, `minValue`, `maxValue`, `accessibleLabel`, `valueLabel`, `formatOptions`, `labelPosition`, `staticColor`, `size`) come from the mixin with no re-declaration beyond `size` reflect-on-concrete-class needs
+
+#### 1st-gen deprecation notices
+
+- [x] Add `@deprecated` JSDoc to `progress` property (will be replaced by `value`)
+- [x] Add `@deprecated` JSDoc to `sideLabel`/`side-label` (will be replaced by `label-position="side"`)
+- [x] Add `@deprecated` JSDoc to `label` string attribute (will be replaced by `label` named slot)
+- Note: `overBackground` deprecation JSDoc and `window.__swc.warn()` were already in place from prior work
 
 #### Alignment checks
 
-- [ ] `value`/`minValue`/`maxValue`/`label-position`/`static-color`/`value-label`/`formatOptions` match React Spectrum S2 ProgressBar and the shipped `<swc-meter>` surface
-- [ ] `indeterminate` boolean matches React Spectrum (`isIndeterminate`) and 1st-gen behavior
-- [ ] Confirm **no** `variant` property (single accent fill) against React + Figma
-- [ ] Confirm `over-background` removal (B5) is acceptable — already deprecated in 1st-gen
+- [x] `value`/`minValue`/`maxValue`/`label-position`/`static-color`/`value-label`/`formatOptions` match React Spectrum S2 ProgressBar and the shipped `<swc-meter>` surface
+- [x] `indeterminate` boolean matches React Spectrum (`isIndeterminate`) and 1st-gen behavior
+- [x] Confirm **no** `variant` property (single accent fill) against React + Figma
+- [x] Confirm `over-background` removal (B5) is acceptable — already deprecated in 1st-gen; not carried to 2nd-gen
 
 ### Styling
 
@@ -456,21 +463,22 @@ Exact keyframe geometry, duration token, and fallback width are **Q2** — to be
 
 #### Naming and semantics
 
-- [ ] Single `role="progressbar"` on the shadow `.swc-LinearProgress` element (not the host); not author-overridable
-- [ ] Determinate: `aria-valuemin`/`max`/`now`/`text` on the role element
-- [ ] Indeterminate: all four value attributes omitted (Lit `nothing`); visible value text omitted
-- [ ] Accessible name: `label` slot → `aria-labelledby`; else `accessibleLabel` → `aria-label`
-- [ ] `aria-describedby` when `description` slot has assigned nodes; absent otherwise
-- [ ] Host carries no `role`/`aria-*`
-- [ ] DEBUG warning fires when no accessible name is provable, with **progress-bar-correct copy and docs URL** (Q1; fixes the 1st-gen `<sp-progress-circle>` reference)
-- [ ] Non-focusable: no `tabindex`
+- [x] Single `role="progressbar"` on the shadow `.swc-LinearProgress` element (not the host); not author-overridable
+- [x] Determinate: `aria-valuemin`/`max`/`now`/`text` on the role element
+- [x] Indeterminate: all four value attributes omitted (Lit `nothing`); visible value text omitted
+- [x] Accessible name: `label` slot → `aria-labelledby`; else `accessibleLabel` → `aria-label`
+- [x] `aria-describedby` when `description` slot has assigned nodes; absent otherwise
+- [x] Host carries no `role`/`aria-*`
+- [x] DEBUG warning fires when no accessible name is provable, with progress-bar-correct copy and docs URL (Q1 resolved; `docsHref` derived from `this.localName`)
+- [x] Non-focusable: no `tabindex`
+- Note: the a11y analysis doc says `role` should be on the host; the migration plan (B9) and implementation put it on the shadow `.swc-LinearProgress` element, aligning with `<swc-meter>`. This is intentional and correct; the analysis doc was not updated when B9 was finalised.
 
 #### State verification
 
-- [ ] `aria-valuetext` re-formats on `language-resolver-updated` and on `value`/`minValue`/`maxValue`/`valueLabel`/`formatOptions` changes (determinate)
-- [ ] Toggling `indeterminate` adds/removes the four value attributes in lockstep
-- [ ] `value-label` overrides auto-formatted text when determinate; ignored when indeterminate
-- [ ] No `aria-live` regions added by default
+- [x] `aria-valuetext` re-formats on `language-resolver-updated` and on `value`/`minValue`/`maxValue`/`valueLabel`/`formatOptions` changes (determinate) — handled by mixin `updated()` triggering re-render
+- [x] Toggling `indeterminate` adds/removes the four value attributes in lockstep — handled by Lit `nothing` in render template
+- [x] `value-label` overrides auto-formatted text when determinate; ignored when indeterminate — handled by `formattedValue` getter in mixin
+- [x] No `aria-live` regions added by default
 
 ### Testing
 
@@ -558,7 +566,7 @@ Exact keyframe geometry, duration token, and fallback width are **Q2** — to be
 - [1st-gen tests — `progress-bar.test.ts`](../../../../1st-gen/packages/progress-bar/test/progress-bar.test.ts)
 - [1st-gen README](../../../../1st-gen/packages/progress-bar/README.md)
 - [2nd-gen shared mixin — `linear-progress-mixin.ts`](../../../../2nd-gen/packages/core/mixins/linear-progress-mixin.ts)
-- [2nd-gen shared CSS — `linear-progress-base.css`](../../../../2nd-gen/packages/swc/stylesheets/shared/linear-progress-base.css)
+- [2nd-gen shared CSS — `linear-progress-base.css`](../../../../2nd-gen/packages/swc/stylesheets/_lit-styles/linear-progress-base.css)
 - [2nd-gen sibling — `Meter.ts`](../../../../2nd-gen/packages/swc/components/meter/Meter.ts)
 - [2nd-gen reference — `ProgressCircle.base.ts`](../../../../2nd-gen/packages/core/components/progress-circle/ProgressCircle.base.ts) — `progressbar` determinate/indeterminate ARIA + DEBUG warning pattern
 - [Figma — S2 / Web (Desktop scale), progress bar frame](https://www.figma.com/design/Mngz9H7WZLbrCvGQf3GnsY/S2---Web--Desktop-scale-?node-id=13059-181) — visual reference, including the indeterminate animation (Q2)
