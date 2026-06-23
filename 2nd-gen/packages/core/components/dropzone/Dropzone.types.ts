@@ -11,6 +11,18 @@
  */
 
 // ──────────────────
+//     SIZES
+// ──────────────────
+
+export type DropzoneSize = 's' | 'm' | 'l';
+
+export const DROPZONE_VALID_SIZES = [
+  's',
+  'm',
+  'l',
+] as const satisfies readonly DropzoneSize[];
+
+// ──────────────────
 //     DROP EFFECT
 // ──────────────────
 
@@ -39,6 +51,9 @@ export const SWC_DROPZONE_DRAGLEAVE_EVENT = 'swc-dropzone-dragleave';
 
 /** Fired when files are dropped on the drop zone. */
 export const SWC_DROPZONE_DROP_EVENT = 'swc-dropzone-drop';
+
+/** Type alias retained for consumers who imported `DropzoneEventDetail` from the 1st-gen package. */
+export type DropzoneEventDetail = DragEvent;
 
 declare global {
   interface GlobalEventHandlersEventMap {

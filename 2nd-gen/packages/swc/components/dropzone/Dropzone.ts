@@ -37,12 +37,12 @@ import styles from './dropzone.css';
  * @fires swc-dropzone-drop - Fired when files are dropped on the zone. Set `filled` in
  *   your handler to transition the zone to its filled state.
  *
- * @cssprop --swc-dropzone-background-color - Background color of the drop zone.
- * @cssprop --swc-dropzone-border-color - Border color in the default state.
- * @cssprop --swc-dropzone-border-color-dragged - Border color when files are dragged over.
- * @cssprop --swc-dropzone-border-width - Border width.
- * @cssprop --swc-dropzone-corner-radius - Corner radius.
- * @cssprop --swc-dropzone-padding - Padding inside the drop zone.
+ * @cssprop --swc-dropzone-background-color - Background color of the drop zone. Transparent by default; overridden to a subtle accent tint in the dragged state.
+ * @cssprop --swc-dropzone-border-color - Dashed border color in the default state. Defaults to the gray-300 token.
+ * @cssprop --swc-dropzone-border-color-dragged - Solid border color when files are dragged over the zone. Defaults to the accent visual color token.
+ * @cssprop --swc-dropzone-border-width - Border width. Defaults to the border-width-200 token (2px).
+ * @cssprop --swc-dropzone-corner-radius - Corner radius. Defaults to the corner-radius-400 token.
+ * @cssprop --swc-dropzone-padding - Padding inside the drop zone. Defaults vary by size: spacing-300 (s), spacing-400 (m), spacing-600 (l).
  */
 export class Dropzone extends DropzoneBase {
   public static override get styles(): CSSResultArray {
@@ -96,16 +96,17 @@ export class Dropzone extends DropzoneBase {
   }
 
   /**
-   * Called synchronously when drag state changes so the status region is updated
-   * before the next Lit render cycle completes.
+   * Called synchronously on drag-enter and drag-leave so the status region is
+   * updated before the next Lit render cycle completes. The drop case is handled
+   * by `updated()` so that `filled` has been set by the consumer's handler first.
    *
-   * @param _isDragged - `true` when drag enters; `false` when it leaves or a drop occurs.
+   * @param isDragged - `true` when drag enters; `false` when it leaves.
    * @internal
    */
-  protected override _onDragStateChange(_isDragged: boolean): void {
+  protected override _onDragStateChange(isDragged: boolean): void {
     const el = this._statusEl;
     if (el) {
-      el.textContent = this._statusText(_isDragged, this.filled);
+      el.textContent = this._statusText(isDragged, this.filled);
     }
   }
 
@@ -157,8 +158,10 @@ export class Dropzone extends DropzoneBase {
 
   protected override render(): TemplateResult {
     return html`
-      <div role="status" aria-live="polite" class="visually-hidden"></div>
-      <slot></slot>
+      <div class="swc-Dropzone">
+        <div role="status" aria-live="polite" class="swc-Dropzone-status"></div>
+        <slot></slot>
+      </div>
     `;
   }
 }
