@@ -39,3 +39,12 @@ export const SWC_DROPZONE_DRAGLEAVE_EVENT = 'swc-dropzone-dragleave';
 
 /** Fired when files are dropped on the drop zone. */
 export const SWC_DROPZONE_DROP_EVENT = 'swc-dropzone-drop';
+
+declare global {
+  interface GlobalEventHandlersEventMap {
+    [SWC_DROPZONE_SHOULD_ACCEPT_EVENT]: CustomEvent<DragEvent>;
+    [SWC_DROPZONE_DRAGOVER_EVENT]: CustomEvent<DragEvent>;
+    [SWC_DROPZONE_DRAGLEAVE_EVENT]: CustomEvent<DragEvent>;
+    [SWC_DROPZONE_DROP_EVENT]: CustomEvent<DragEvent>;
+  }
+}
