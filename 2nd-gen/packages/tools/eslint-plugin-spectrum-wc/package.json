@@ -1,0 +1,65 @@
+{
+  "name": "eslint-plugin-spectrum-wc",
+  "version": "0.4.0",
+  "description": "ESLint plugin for Spectrum Web Components — catches accessibility gaps, deprecated APIs, and invalid attribute usage at lint time.",
+  "license": "Apache-2.0",
+  "author": "Adobe",
+  "homepage": "https://opensource.adobe.com/spectrum-web-components/",
+  "repository": {
+    "directory": "2nd-gen/packages/tools/eslint-plugin-spectrum-wc",
+    "type": "git",
+    "url": "https://github.com/adobe/spectrum-web-components.git"
+  },
+  "bugs": {
+    "url": "https://github.com/adobe/spectrum-web-components/issues"
+  },
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "clean": "rm -rf dist",
+    "prepublishOnly": "yarn build",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit"
+  },
+  "peerDependencies": {
+    "eslint": "9.39.2"
+  },
+  "dependencies": {
+    "parse5": "^7.2.1"
+  },
+  "devDependencies": {
+    "@typescript-eslint/rule-tester": "^8.24.0",
+    "@typescript-eslint/utils": "^8.24.0",
+    "eslint": "9.39.2",
+    "typescript": "5.9.2",
+    "vitest": "4.1.7"
+  },
+  "keywords": [
+    "eslint",
+    "eslintplugin",
+    "spectrum",
+    "adobe",
+    "web-components",
+    "accessibility",
+    "lit",
+    "jsx",
+    "react",
+    "a11y",
+    "spectrum-web-components"
+  ],
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}
