@@ -462,16 +462,16 @@ export type DropzoneEventDetail = DragEvent; // retained for consumers who impor
 
 > Follow the [CSS style guide](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/) as the source of truth. Key references: [migration steps](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/04_spectrum-swc-migration.md), [custom properties](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md), [anti-patterns](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/05_anti-patterns.md).
 
-- [ ] Resolve SVG stroke vs. CSS border question (Q4) before writing `dropzone.css`
-- [ ] Add `.swc-Dropzone` to the internal wrapper `<div>` in `render()`; keep `:host` styling minimal
-- [ ] Copy `spectrum-css/components/dropzone/index.css` from `spectrum-two` branch as baseline (not `/dist`)
-- [ ] Redesign `swc-illustrated-message` styling relationship (Q8) before porting passthrough tokens
-- [ ] Verify `[dragged]`, `[filled]`, and `[filled][dragged]` state selectors map to the 2nd-gen attribute names
-- [ ] Verify CJK font size modifier (`:lang(ja)`, `:lang(ko)`, `:lang(zh)`) is present in S2 source and ported
-- [ ] Add visually-hidden utility class for `.swc-Dropzone-status` (position absolute, `clip-path: inset(50%)` pattern)
-- [ ] Verify `@media (forced-colors: active)` high-contrast overrides are present and correct
-- [ ] Add `@cssprop` JSDoc tags on any exposed `--swc-*` properties
-- [ ] Pass `yarn lint:css`
+- [x] Resolve SVG stroke vs. CSS border question (Q4) — **Decided: CSS-only dashed border.** SVG stroke deferred; matches `spectrum-css` `main`; additive if needed later.
+- [x] Add `.swc-Dropzone` to the internal wrapper `<div>` in `render()`; keep `:host` styling minimal
+- [x] Copy `spectrum-css/components/dropzone/index.css` from `spectrum-two` branch as baseline (not `/dist`) — **Note:** sibling is on `main`; used S2 tokens from `spectrum-two.css` theme file + S2 token names.
+- [x] Redesign `swc-illustrated-message` styling relationship (Q8) — **Resolved:** CSS custom property `--swc-illustrated-message-illustration-color` cascades from `:host([dragged])` into the slotted element via normal CSS inheritance. No `--mod-*` passthrough needed.
+- [x] Verify `[dragged]`, `[filled]`, and `[filled][dragged]` state selectors map to the 2nd-gen attribute names
+- [ ] Verify CJK font size modifier (`:lang(ja)`, `:lang(ko)`, `:lang(zh)`) is present in S2 source and ported — **Deferred:** no CJK text tokens in dropzone container; only relevant if text inside illustrated message needs overrides. Tracked for Phase 7 review.
+- [x] Add visually-hidden utility class for `.swc-Dropzone-status` (position absolute, `clip-path: inset(50%)` pattern)
+- [x] Verify `@media (forced-colors: active)` high-contrast overrides are present and correct
+- [x] Add `@cssprop` JSDoc tags on any exposed `--swc-*` properties
+- [x] Pass `yarn lint:css`
 
 #### Visual model and regressions
 

@@ -412,6 +412,7 @@ const preview = {
                 'Dropzone',
                 [
                   'Accessibility migration analysis',
+                  'Migration plan',
                   'Rendering and styling migration analysis',
                 ],
                 'Field group',

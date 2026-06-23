@@ -10,17 +10,112 @@
  * governing permissions and limitations under the License.
  */
 
-/* Phase 5 (Styling): migrate Spectrum CSS tokens here. */
-
 :host {
   display: block;
 }
 
-.visually-hidden {
+* {
+  box-sizing: border-box;
+}
+
+/* ─────────────────────────────────────
+   Base wrapper — default (medium) size
+   ───────────────────────────────────── */
+
+.swc-Dropzone {
+  --_swc-dropzone-border-width: var(--swc-dropzone-border-width, token("border-width-200"));
+  --_swc-dropzone-corner-radius: var(--swc-dropzone-corner-radius, token("corner-radius-400"));
+  --_swc-dropzone-padding: var(--swc-dropzone-padding, token("spacing-400"));
+  --_swc-dropzone-border-color: var(--swc-dropzone-border-color, token("gray-300"));
+
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  gap: token("spacing-300");
+  align-items: center;
+  justify-content: center;
+  padding: var(--_swc-dropzone-padding);
+  background: var(--swc-dropzone-background-color, transparent);
+  border: var(--_swc-dropzone-border-width) dashed var(--_swc-dropzone-border-color);
+  border-radius: var(--_swc-dropzone-corner-radius);
+}
+
+/* ─────────────────────────────────────
+   Sizes
+   ───────────────────────────────────── */
+
+:host([size="s"]) .swc-Dropzone {
+  --_swc-dropzone-padding: var(--swc-dropzone-padding, token("spacing-300"));
+}
+
+:host([size="l"]) .swc-Dropzone {
+  --_swc-dropzone-padding: var(--swc-dropzone-padding, token("spacing-600"));
+}
+
+/* ─────────────────────────────────────
+   Dragged state
+   ───────────────────────────────────── */
+
+:host([dragged]) .swc-Dropzone {
+  --_swc-dropzone-border-color: var(--swc-dropzone-border-color-dragged, token("accent-visual-color"));
+
+  background: var(--swc-dropzone-background-color, token("accent-subtle-background-color-default"));
+  border-style: solid;
+}
+
+/* Cascade accent illustration color into any slotted swc-illustrated-message. */
+:host([dragged]) {
+  --swc-illustrated-message-illustration-color: token("accent-visual-color");
+}
+
+/* ─────────────────────────────────────
+   Focus-within (browse control focused)
+   ───────────────────────────────────── */
+
+/* Mirror the dragged border when the browse control receives keyboard focus. */
+:host(:focus-within) .swc-Dropzone {
+  --_swc-dropzone-border-color: var(--swc-dropzone-border-color-dragged, token("accent-visual-color"));
+
+  border-style: solid;
+}
+
+/* ─────────────────────────────────────
+   Filled state
+   ───────────────────────────────────── */
+
+:host([filled]) ::slotted(swc-illustrated-message) {
+  display: none;
+}
+
+/* ─────────────────────────────────────
+   Visually-hidden status region
+   ───────────────────────────────────── */
+
+.swc-Dropzone-status {
   position: absolute;
   inline-size: 1px;
   block-size: 1px;
   white-space: nowrap;
   overflow: hidden;
   clip-path: inset(50%);
+}
+
+/* ─────────────────────────────────────
+   Forced colors
+   ───────────────────────────────────── */
+
+@media (forced-colors: active) {
+  :host {
+    --swc-illustrated-message-illustration-color: CanvasText;
+  }
+
+  .swc-Dropzone {
+    border-color: ButtonText;
+  }
+
+  :host([dragged]) .swc-Dropzone,
+  :host(:focus-within) .swc-Dropzone {
+    background: Canvas;
+    border-color: Highlight;
+  }
 }

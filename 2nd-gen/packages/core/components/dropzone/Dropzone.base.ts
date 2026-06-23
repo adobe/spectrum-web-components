@@ -13,10 +13,13 @@
 import { property } from 'lit/decorators.js';
 
 import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
+import { SizedMixin } from '@spectrum-web-components/core/mixins/index.js';
 
 import {
   DROP_EFFECTS,
   type DropEffect,
+  DROPZONE_VALID_SIZES,
+  type DropzoneSize,
   SWC_DROPZONE_DRAGLEAVE_EVENT,
   SWC_DROPZONE_DRAGOVER_EVENT,
   SWC_DROPZONE_DROP_EVENT,
@@ -41,7 +44,11 @@ import {
  * @fires swc-dropzone-drop - Fired when files are dropped on the zone. `element.dragged`
  *   is still `true` when this event fires; it transitions to `false` after dispatch.
  */
-export abstract class DropzoneBase extends SpectrumElement {
+export abstract class DropzoneBase extends SizedMixin(SpectrumElement, {
+  validSizes: DROPZONE_VALID_SIZES,
+}) {
+  declare public size: DropzoneSize;
+
   // ──────────────────────────
   //     SHARED API
   // ──────────────────────────
@@ -191,9 +198,7 @@ export abstract class DropzoneBase extends SpectrumElement {
     }
 
     this._clearDragLeaveTimer();
-    // Update the status region synchronously before dispatch (matching _onDragLeave),
-    // and dispatch while `dragged` is still `true` so listeners read correct state.
-    this._onDragStateChange(false);
+    // Dispatch before clearing `dragged`; `updated()` handles the status region after `filled` settles.
     this.dispatchEvent(
       new CustomEvent<DragEvent>(SWC_DROPZONE_DROP_EVENT, {
         bubbles: true,
