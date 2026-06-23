@@ -24912,7 +24912,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"node-plop@npm:^0.32.2":
+"node-plop@npm:^0.32.3":
   version: 0.32.3
   resolution: "node-plop@npm:0.32.3"
   dependencies:
@@ -26433,21 +26433,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"plop@npm:4.0.3":
-  version: 4.0.3
-  resolution: "plop@npm:4.0.3"
+"plop@npm:4.0.5":
+  version: 4.0.5
+  resolution: "plop@npm:4.0.5"
   dependencies:
     "@types/liftoff": "npm:^4.0.3"
     interpret: "npm:^3.1.1"
     liftoff: "npm:^5.0.1"
-    minimist: "npm:^1.2.8"
     nanospinner: "npm:^1.2.2"
-    node-plop: "npm:^0.32.2"
+    node-plop: "npm:^0.32.3"
     picocolors: "npm:^1.1.1"
     v8flags: "npm:^4.0.1"
   bin:
     plop: bin/plop.js
-  checksum: 10c0/979357ab9d75239ce6c80e001f29f054791bae4fe0c2b7a3ee8daaccb6441aa3aef1222932ec69608c06c77e1a4422f3738471c433b7c4de1e6a1e0375670043
+  checksum: 10c0/9f06b37c9d55f9c03d7fcdb5e682933440c62fcb877e50bbd77a2adc3ee964bce66acb7885a8102933478dc49a4a1647cdadbf10d1176df077384d0b2b59f33a
   languageName: node
   linkType: hard
 
@@ -29575,6 +29574,7 @@ __metadata:
     jsonc-eslint-parser: "npm:2.4.2"
     lint-staged: "npm:16.2.6"
     npm-run-all2: "npm:8.0.4"
+    plop: "npm:4.0.5"
     prettier: "npm:3.8.1"
     prettier-plugin-package: "npm:1.4.0"
     replace-in-file: "npm:8.3.0"
@@ -31313,7 +31313,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "swc-templates@workspace:1st-gen/projects/templates"
   dependencies:
-    plop: "npm:4.0.3"
+    plop: "npm:4.0.5"
   languageName: unknown
   linkType: soft
 
