@@ -60,9 +60,7 @@ export class Dropzone extends DropzoneBase {
 
   public override connectedCallback(): void {
     super.connectedCallback();
-    if (!this.hasAttribute('role')) {
-      this.setAttribute('role', 'group');
-    }
+    this.setAttribute('role', 'group');
     if (window.__swc?.DEBUG) {
       this._warnMissingAccessibleName();
     }

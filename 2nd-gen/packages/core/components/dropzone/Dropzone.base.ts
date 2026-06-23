@@ -209,15 +209,13 @@ export abstract class DropzoneBase extends SpectrumElement {
   // ──────────────────────────────
 
   /**
-   * Called when the `dragged` state changes. Subclasses override this to
+   * Called when the `dragged` state changes. Subclasses implement this to
    * update the shadow DOM status region for accessibility announcements.
    *
-   * @param _isDragged - `true` when drag enters; `false` when it leaves.
+   * @param isDragged - `true` when drag enters; `false` when it leaves.
    * @internal
    */
-  protected _onDragStateChange(_isDragged: boolean): void {
-    // Implemented in the concrete SWC class.
-  }
+  protected abstract _onDragStateChange(isDragged: boolean): void;
 
   /** @internal */
   private _clearDragLeaveTimer(): void {
