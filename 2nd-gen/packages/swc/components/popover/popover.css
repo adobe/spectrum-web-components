@@ -207,16 +207,16 @@
   border-left: none;
 }
 
-/* Tip when the popover is placed to the left of the trigger. */
+/* Popover to the left of the trigger: tip on its right edge, pointing right. */
 :host([actual-placement="left"]) .swc-Popover-tip {
-  left: calc(var(--_swc-popover-tip-size) / -2);
+  right: calc(var(--_swc-popover-tip-size) / -2);
   border-bottom: none;
   border-left: none;
 }
 
-/* Tip when the popover is placed to the right of the trigger. */
+/* Popover to the right of the trigger: tip on its left edge, pointing left. */
 :host([actual-placement="right"]) .swc-Popover-tip {
-  right: calc(var(--_swc-popover-tip-size) / -2);
+  left: calc(var(--_swc-popover-tip-size) / -2);
   border-top: none;
   border-right: none;
 }
