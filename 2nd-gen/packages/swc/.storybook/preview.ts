@@ -515,6 +515,8 @@ const preview = {
                 ['Rendering and styling migration analysis'],
                 'Thumbnail',
                 ['Rendering and styling migration analysis'],
+                'Toast',
+                ['Accessibility migration analysis'],
                 'Tooltip',
                 [
                   'Accessibility migration analysis',

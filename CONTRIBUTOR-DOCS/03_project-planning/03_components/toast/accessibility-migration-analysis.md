@@ -97,7 +97,9 @@ Not a dialog, alert dialog, or replacement for critical error messaging. Toasts 
 
 | Jira | Type | Status (snapshot) | Resolution (snapshot) | Summary |
 |------|------|-------------------|-------------------------|---------|
-| — | — | — | — | *No 1st-gen `sp-toast`–specific items in this snapshot.* |
+| [SWC-281](https://jira.corp.adobe.com/browse/SWC-281) | Bug | Done | Fixed | A screen reader should announce a toast message when it is added to the DOM |
+| [SWC-280](https://jira.corp.adobe.com/browse/SWC-280) | Bug | Done | Fixed | Toast should have API for overriding the icon's alt text |
+| [SWC-610](https://jira.corp.adobe.com/browse/SWC-610) | Bug | To Do | Unresolved | [Bug/Research]: Toast timeout minimum differs from design docs |
 
 ---
 
