@@ -488,6 +488,8 @@ const preview = {
                 ['Rendering and styling migration analysis'],
                 'Search',
                 ['Rendering and styling migration analysis'],
+                'Sidenav',
+                ['Accessibility migration analysis'],
                 'Slider',
                 ['Rendering and styling migration analysis'],
                 'Status light',
@@ -514,7 +516,10 @@ const preview = {
                 'Textfield',
                 ['Rendering and styling migration analysis'],
                 'Thumbnail',
-                ['Rendering and styling migration analysis'],
+                [
+                  'Accessibility migration analysis',
+                  'Rendering and styling migration analysis',
+                ],
                 'Tooltip',
                 [
                   'Accessibility migration analysis',
