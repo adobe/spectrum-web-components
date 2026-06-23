@@ -193,20 +193,20 @@ export const Artifact: Story = {
             <span slot="subtitle">PDF</span>
           </swc-upload-artifact>
           <swc-upload-artifact slot="artifact" type="media" dismissible>
-            <div
+            <img
               slot="thumbnail"
-              style="background:linear-gradient(135deg,#6366f1,#ec4899);"
-              role="img"
-              aria-label="Campaign still"
-            ></div>
+              src="https://picsum.photos/id/64/68/68"
+              alt="Campaign still"
+              style="inline-size:100%;block-size:100%;object-fit:cover;"
+            />
           </swc-upload-artifact>
           <swc-upload-artifact slot="artifact" type="media" dismissible>
-            <div
+            <img
               slot="thumbnail"
-              style="background:linear-gradient(135deg,#0ea5e9,#22c55e);"
-              role="img"
-              aria-label="Storyboard frame"
-            ></div>
+              src="https://picsum.photos/id/56/68/68"
+              alt="Storyboard frame"
+              style="inline-size:100%;block-size:100%;object-fit:cover;"
+            />
           </swc-upload-artifact>
         </swc-prompt-field>
         <span class="swc-Detail swc-Detail--sizeS">
@@ -235,8 +235,9 @@ export const Artifact: Story = {
           <swc-upload-artifact slot="artifact" type="media" dismissible>
             <img
               slot="thumbnail"
-              src="https://placehold.co/160x120/png"
+              src="https://picsum.photos/id/823/68/68"
               alt="Attachment preview"
+              style="inline-size:100%;block-size:100%;object-fit:cover;"
             />
           </swc-upload-artifact>
         </swc-prompt-field>
