@@ -372,9 +372,9 @@ No `_lit-styles/` fragment needed — action-group renders only a slot; all layo
 
 ### Setup
 
-- [ ] Create `2nd-gen/packages/core/components/action-group/`
-- [ ] Create `2nd-gen/packages/swc/components/action-group/`
-- [ ] Wire exports in both `package.json` files
+- [x] Create `2nd-gen/packages/core/components/action-group/`
+- [x] Create `2nd-gen/packages/swc/components/action-group/`
+- [x] Wire exports in both `package.json` files
 - [ ] Check out `spectrum-css` at `spectrum-two` branch as sibling directory (required for Phase 5 styling)
 - [x] `FocusgroupNavigationController` confirmed available in this branch
 - [x] `swc-action-button` API confirmed: no `selected` property, no `aria-pressed`/`aria-checked` forwarding; compact uses CSS custom property cascade via `::slotted(:first-child)` / `::slotted(:last-child)` (action-button must expose `--swc-action-button-border-*-radius` fallbacks)

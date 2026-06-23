@@ -19,6 +19,10 @@
       "types": "./dist/components/action-button/index.d.ts",
       "import": "./dist/components/action-button/index.js"
     },
+    "./components/action-group": {
+      "types": "./dist/components/action-group/index.d.ts",
+      "import": "./dist/components/action-group/index.js"
+    },
     "./components/alert-banner": {
       "types": "./dist/components/alert-banner/index.d.ts",
       "import": "./dist/components/alert-banner/index.js"
