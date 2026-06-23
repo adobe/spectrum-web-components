@@ -635,10 +635,17 @@ export abstract class PopoverBase extends SpectrumElement {
       const dialog = element as HTMLDialogElement;
       let shown = dialog.open;
       if (!shown) {
-        // No scroll workaround needed: the surface keeps the browser's native
-        // centering until the PlacementController anchors it (see popover.css), so
-        // `showModal()`'s native focus lands on a surface that is already in the
-        // viewport rather than at a 0,0 origin.
+        // `showModal()` moves focus into the dialog synchronously, before
+        // positioning runs (it is async, awaiting `document.fonts.ready`, longest
+        // on the first open). Until then the surface sits at its absolute origin
+        // (the document's top-left), so the focus would scroll the page up to
+        // reveal it. Seed an in-viewport translate first so the focus lands on
+        // screen; the surface is still invisible (the opacity gate waits for
+        // `actual-placement`), and the PlacementController overrides this with the
+        // anchored position a tick later.
+        dialog.style.top = '0px';
+        dialog.style.left = '0px';
+        dialog.style.translate = `${window.scrollX}px ${window.scrollY}px`;
         try {
           dialog.showModal();
           shown = true;
