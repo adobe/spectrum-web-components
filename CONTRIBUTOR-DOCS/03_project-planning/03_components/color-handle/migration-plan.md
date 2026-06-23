@@ -322,10 +322,10 @@ Planned rendering shape:
 
 ### Setup
 
-- [ ] Create `2nd-gen/packages/core/components/color-handle/`
-- [ ] Create `2nd-gen/packages/swc/components/color-handle/`
-- [ ] Wire exports in both `package.json` files
-- [ ] Check out `spectrum-css` at `spectrum-two` branch as sibling directory _(already present at `../spectrum-css` on `spectrum-two`)_
+- [x] Create `2nd-gen/packages/core/components/color-handle/` (`ColorHandle.base.ts`, `ColorHandle.types.ts`, `index.ts`)
+- [x] Create `2nd-gen/packages/swc/components/color-handle/` (`ColorHandle.ts`, `color-handle.css`, `index.ts`, `swc-color-handle.ts`, `stories/`, `test/`)
+- [x] Wire exports in both `package.json` files — core: explicit `./components/color-handle` + `/index.js` entries added to `exports` and `typesVersions` (badge pattern); swc: covered by existing `./components/*.js` / `./components/*` wildcard exports, no edit needed
+- [x] Check out `spectrum-css` at `spectrum-two` branch as sibling directory _(already present at `../spectrum-css` on `spectrum-two`)_
 
 ### API
 
