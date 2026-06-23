@@ -19,6 +19,7 @@ import { Popover } from '@adobe/spectrum-wc/popover';
 
 import '@adobe/spectrum-wc/components/avatar/swc-avatar.js';
 import '@adobe/spectrum-wc/components/button/swc-button.js';
+import '@adobe/spectrum-wc/components/button-group/swc-button-group.js';
 import '@adobe/spectrum-wc/components/divider/swc-divider.js';
 import '@adobe/spectrum-wc/components/popover/swc-popover.js';
 
@@ -96,7 +97,7 @@ export default meta;
 // button) and the global typography classes. Passed as the popover's slotted
 // content to show a realistic, polished example rather than a bare sentence.
 const accountCard = `
-  <div style="display: flex; flex-direction: column; gap: 16px; inline-size: 240px;">
+  <div style="display: flex; flex-direction: column; gap: 16px;">
     <div style="display: flex; align-items: center; gap: 12px;">
       <swc-avatar
         src="https://picsum.photos/id/64/48/48"
@@ -109,10 +110,10 @@ const accountCard = `
       </div>
     </div>
     <swc-divider size="s"></swc-divider>
-    <p class="swc-Body swc-Body--sizeS" style="margin: 0;">
+    <p class="swc-Body swc-Body--sizeS">
       Manage your profile, notification preferences, and connected apps.
     </p>
-    <div style="display: flex; gap: 8px; justify-content: flex-end;">
+    <swc-button-group align="end" size="s">
       <swc-button
         variant="secondary"
         fill-style="outline"
@@ -122,7 +123,7 @@ const accountCard = `
         Dismiss
       </swc-button>
       <swc-button variant="accent" size="s">Open settings</swc-button>
-    </div>
+    </swc-button-group>
   </div>
 `;
 
@@ -130,12 +131,12 @@ const accountCard = `
 // demonstrable: enable `modal` in the controls, open the popover, then press Tab
 // to see focus cycle within these buttons instead of escaping to the page.
 const playgroundContent = `
-  <div style="display: flex; flex-direction: column; gap: 12px; inline-size: 260px;">
-    <p class="swc-Body swc-Body--sizeS" style="margin: 0;">
+  <div style="display: flex; flex-direction: column; gap: 12px;">
+    <p class="swc-Body swc-Body--sizeS">
       Enable <code>modal</code> in the controls, then press Tab: focus stays
       trapped within these controls.
     </p>
-    <div style="display: flex; gap: 8px; justify-content: flex-end;">
+    <swc-button-group align="end" size="s">
       <swc-button
         variant="secondary"
         fill-style="outline"
@@ -152,7 +153,7 @@ const playgroundContent = `
       >
         Confirm
       </swc-button>
-    </div>
+    </swc-button-group>
   </div>
 `;
 

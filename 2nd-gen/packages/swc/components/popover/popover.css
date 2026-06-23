@@ -37,15 +37,18 @@
   inset: auto;
   inline-size: max-content;
 
-  /* Never exceed the viewport minus 2 × container padding. */
-  max-inline-size: calc(100vw - 24px);
+  /* Cap to the placement-aware usable width the PlacementController exposes
+   * (matters for left/right placements, where the available inline space is the
+   * gap beside the trigger); falls back to the viewport minus container padding
+   * before the first position is computed. */
+  max-inline-size: var(--swc-placement-available-width, calc(100vw - 24px));
   max-block-size: none;
   padding: 0;
   margin: 0;
   color: inherit;
   background-color: token("background-layer-2-color");
   border: token("border-width-100") solid token("popover-border-color");
-  border-radius: token("corner-radius-100");
+  border-radius: token("corner-radius-700");
   overflow: visible;
 
   /* Keep scrolling inside an internal scroll region from chaining out to the
@@ -105,8 +108,8 @@
  * backdrop-click on the dialog's surface is not absorbed by padding in modal
  * mode. */
 .swc-Popover-content {
-  display: flex;
-  flex-direction: column;
+  /* Padding only; the popover is a blank-canvas container, so slotted content
+   * owns its own display/layout. */
   padding: token("popover-edge-to-content-area");
 }
 
@@ -166,15 +169,15 @@
   border-left: none;
 }
 
-/* Tip on the left edge: popover sits to the right of the trigger. */
-:host([actual-placement="right"]) .swc-Popover-tip {
+/* Tip when the popover is placed to the left of the trigger. */
+:host([actual-placement="left"]) .swc-Popover-tip {
   left: calc(var(--_swc-popover-tip-size) / -2);
   border-bottom: none;
   border-left: none;
 }
 
-/* Tip on the right edge: popover sits to the left of the trigger. */
-:host([actual-placement="left"]) .swc-Popover-tip {
+/* Tip when the popover is placed to the right of the trigger. */
+:host([actual-placement="right"]) .swc-Popover-tip {
   right: calc(var(--_swc-popover-tip-size) / -2);
   border-top: none;
   border-right: none;
