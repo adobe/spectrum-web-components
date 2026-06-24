@@ -27,6 +27,7 @@
     - [Action button migration roadmap](action-button/rendering-and-styling-migration-analysis.md)
 - Action Group
     - [Action group accessibility migration analysis](action-group/accessibility-migration-analysis.md)
+    - [Action group migration plan](action-group/migration-plan.md)
     - [Action group migration roadmap](action-group/rendering-and-styling-migration-analysis.md)
 - Action Menu
     - [Action menu accessibility migration analysis](action-menu/accessibility-migration-analysis.md)
