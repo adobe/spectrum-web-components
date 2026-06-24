@@ -80,6 +80,9 @@ jobs:
       - name: Generate LLM reference files
         run: yarn generate:llms
 
+      - name: Generate Agent Skills
+        run: yarn generate:skills
+
       - name: Move CEM to Storybook directory
         run: cp 1st-gen/projects/documentation/custom-elements.json 1st-gen/storybook/
 
