@@ -1,0 +1,92 @@
+name: Preview Documentation — Build
+
+# Runs in the fork's context with NO secrets. Builds all assets and saves them as an
+# artifact so the deploy workflow (which runs in the base repo context with secrets)
+# can upload them to Azure without ever executing contributor code.
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+concurrency:
+  group: preview-build-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: Build
+    timeout-minutes: 30
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Use Node version from .nvmrc
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+          cache: yarn
+
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Check for cached dependencies
+        continue-on-error: true
+        uses: actions/cache@v4
+        with:
+          path: |
+            .cache/yarn
+            node_modules
+          key: ubuntu-latest-${{ hashFiles('.nvmrc', 'package.json', 'yarn.lock') }}
+
+      - name: Install dependencies
+        shell: bash
+        run: yarn install --immutable
+
+      - name: Build all generations
+        run: yarn build
+
+      - name: Generate Custom Elements Manifest
+        run: yarn workspace @spectrum-web-components/1st-gen docs:analyze
+
+      - name: Analyze 2nd-gen components
+        run: yarn workspace @adobe/spectrum-wc analyze
+
+      - name: Generate LLM reference files
+        run: yarn generate:llms
+
+      - name: Move CEM to Storybook directory
+        run: cp 1st-gen/projects/documentation/custom-elements.json 1st-gen/storybook/
+
+      - name: Build documentation with path prefix
+        env:
+          SWC_DIR: pr-${{ github.event.pull_request.number }}/docs/first-gen-docs
+        run: yarn workspace @spectrum-web-components/1st-gen docs:build
+
+      - name: Build first-gen Storybook
+        run: yarn workspace @spectrum-web-components/1st-gen storybook:build
+
+      - name: Build second-gen Storybook
+        run: yarn workspace @adobe/spectrum-wc storybook:build
+
+      # Stage built outputs under a flat directory so the deploy workflow
+      # can reference predictable paths regardless of where things were built.
+      - name: Stage build outputs
+        run: |
+          mkdir -p preview-build/first-gen-docs
+          mkdir -p preview-build/first-gen-storybook
+          mkdir -p preview-build/second-gen-storybook
+          cp -r 1st-gen/projects/documentation/dist/. preview-build/first-gen-docs/
+          cp -r 1st-gen/projects/documentation/dist/storybook/. preview-build/first-gen-storybook/
+          cp -r 2nd-gen/packages/swc/storybook-static/. preview-build/second-gen-storybook/
+          # Save the PR number so the deploy workflow can post the comment on the right PR.
+          # workflow_run does not populate github.event.workflow_run.pull_requests for fork PRs.
+          echo "${{ github.event.pull_request.number }}" > preview-build/pr_number.txt
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: preview-docs
+          path: preview-build/
+          retention-days: 1
