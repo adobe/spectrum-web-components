@@ -519,6 +519,27 @@ function extractRenamedTokenValues(json, debug = false) {
   return out;
 }
 
+// Collect deprecated_comment for tokens that are deprecated without a rename.
+// These are the tokens that end up in deleted.json; their comments provide
+// removal guidance (e.g. "Zero values are removed; hardcode 0px").
+function extractDeprecatedComments(json, debug = false) {
+  const out = {};
+  const log = typeof debug === 'function' ? debug : () => {};
+
+  for (const [name, token] of Object.entries(json)) {
+    if (
+      token?.deprecated &&
+      !token?.renamed &&
+      typeof token?.deprecated_comment === 'string'
+    ) {
+      out[name] = token.deprecated_comment;
+      log(`[DEPRECATED-COMMENT] '${name}': ${token.deprecated_comment}`);
+    }
+  }
+
+  return out;
+}
+
 /* -----------------------------------------------------------------------------
  *  CSS Generation
  * -------------------------------------------------------------------------- */
@@ -606,6 +627,16 @@ ${scaling.join('\n')}
  *  Token loading
  * -------------------------------------------------------------------------- */
 
+// Load custom/deleted.json if present; returns a flat { tokenName: replacement | null } map.
+async function loadCustomDeleted() {
+  try {
+    const filePath = new URL('../custom/deleted.json', import.meta.url);
+    return JSON.parse(await readFile(filePath, 'utf8'));
+  } catch {
+    return {};
+  }
+}
+
 // Load individual token JSON files
 async function loadTokenJson(file, src) {
   const base = src === 'spectrum' ? '@adobe/spectrum-tokens/src' : '../custom';
@@ -659,7 +690,10 @@ async function loadAllTokens(prefix, debug = false) {
 }
 
 async function loadAllTokenData(prefix, debug = false) {
-  const rawFiles = await loadTokenSources();
+  const [rawFiles, deleted] = await Promise.all([
+    loadTokenSources(),
+    loadCustomDeleted(),
+  ]);
   const globalLookup = buildGlobalLookup(rawFiles);
 
   return {
@@ -667,6 +701,11 @@ async function loadAllTokenData(prefix, debug = false) {
     renamed: Object.assign(
       {},
       ...rawFiles.map((f) => extractRenamedTokenValues(f.raw, debug))
+    ),
+    deleted,
+    deprecatedComments: Object.assign(
+      {},
+      ...rawFiles.map((f) => extractDeprecatedComments(f.raw, debug))
     ),
   };
 }
@@ -729,5 +768,6 @@ export const __test__ = {
   extractAllTokenValues,
   extractTokenValues,
   extractRenamedTokenValues,
+  extractDeprecatedComments,
   lookupToken,
 };

@@ -60,6 +60,20 @@ The `skipResolution` flag indicates that an alias **should remain an alias** and
 
 If a new custom file is added, also include its name and whether to resolve aliases in the `CUSTOM_TOKENS` array in `tokens.js`.
 
+### `custom/deleted.json`
+
+A curated map of tokens that have been removed from `@adobe/spectrum-tokens` without a rename mapping. Each entry is:
+
+```json
+{
+  "removed-token-name": "suggested-replacement-token",
+  "zero-value-token": "0",
+  "no-known-replacement": null
+}
+```
+
+This file is the source for the `deleted` key in the generated `tokens.json`. It is seeded automatically by `scripts/diff-versions.js` when upgrading `@adobe/spectrum-tokens` (see [Upgrading @adobe/spectrum-tokens](#upgrading-adobespectrum-tokens)) and then curated by hand before committing.
+
 ## Token and Alias Resolution
 
 Tokens from `@adobe/spectrum-tokens` appear in different shapes. Some define a flat `value`, while others define a `sets` object (e.g. `light` / `dark`, `desktop` / `mobile`).
@@ -146,18 +160,95 @@ flowchart TD
 
 ## Renamed/Deprecated Tokens
 
-Deprecated tokens in the source data have an optional second parameter of `renamed` that when included points to the name of the replacement token.
+Deprecated tokens in the source data have an optional `renamed` field that points to the replacement token name.
 
 The token JSON created from `--outputType data` is in the following shape:
 
 ```json
 {
-  "tokens": { "...": "..." },
-  "renamed": { "old-token": "new-token" }
+  "tokens": { "token-name": "value" },
+  "renamed": { "old-token": "new-token" },
+  "deleted": { "removed-token": "suggested-replacement-or-null" },
+  "deprecatedComments": {
+    "removed-token": "guidance from the Spectrum tokens team"
+  }
 }
 ```
 
-The `swc-vscode-token` package uses the `renamed` data for hover diagnostics and suggestions.
+- **`tokens`**: all active tokens with resolved values
+- **`renamed`**: tokens deprecated with a known rename target; consumers should migrate to the replacement name
+- **`deleted`**: tokens removed from `@adobe/spectrum-tokens` with no rename mapping. Values are:
+  - A token name string: a suggested replacement (review before using)
+  - `"0"`: a zero-pixel spacing value that was removed; hardcode `0` in CSS, do not use `token()`
+  - `null`: no known replacement; requires manual review
+- **`deprecatedComments`**: the Spectrum tokens team's removal notes for deleted tokens, surfaced as hover guidance in the VS Code extension
+
+The `deleted` values are curated in `custom/deleted.json` (see [Custom Tokens and Overrides](#custom-tokens-and-overrides)). The `deprecatedComments` are extracted automatically from the source JSON.
+
+The `swc-vscode-token` package uses all four maps for autocomplete, diagnostics, and hover guidance.
+
+## Upgrading @adobe/spectrum-tokens
+
+When bumping the `@adobe/spectrum-tokens` version, some tokens may have been removed entirely (no rename mapping). The `diff:versions` script identifies these before you bump so you can curate `custom/deleted.json` before the new token data is generated.
+
+### Step 1: run the diff
+
+From the `swc-tokens` package directory, run:
+
+```bash
+node scripts/diff-versions.js --to <target-version>
+```
+
+For example:
+
+```bash
+node scripts/diff-versions.js --to 14.13.0
+```
+
+The script:
+
+- Compares the currently installed version against the target version
+- Identifies tokens that are **deleted** (active in the old version, absent from the new one and not captured by any rename mapping)
+- Seeds `custom/deleted.json` with its best guesses:
+  - Tokens with zero-value removal comments in the source data are seeded as `"0"` automatically
+  - Other deleted tokens get a fuzzy-matched candidate from the added token set, or `null` if no match is close enough
+  - Previously curated entries are preserved exactly as-is
+- Warns about any new source JSON files in the package that are not yet listed in `SPECTRUM_TOKENS` in `src/tokens.js`
+- Lists newly deprecated+renamed tokens (these are handled automatically after the bump via `extractRenamedTokenValues` — no curation needed)
+
+### Step 2: curate `custom/deleted.json`
+
+Review the seeded file and fill in replacement values where possible:
+
+- **`"0"` entries**: already correct for zero-pixel spacing tokens; no action needed
+- **Fuzzy-matched entries**: verify the suggestion is semantically correct; update or set to `null` if not
+- **`null` entries**: investigate whether a reasonable replacement exists in the new token set; if not, leave as `null` and the VS Code extension will prompt engineers to check Design specs or React
+
+Commit the curated `custom/deleted.json` before proceeding.
+
+### Step 3: bump the version
+
+Update `@adobe/spectrum-tokens` in `package.json`, then install:
+
+```bash
+yarn install
+```
+
+### Step 4: regenerate token data
+
+From the root of the repo:
+
+```bash
+yarn tokens:update
+```
+
+This runs tests, regenerates `tokens.json` for the VS Code extension (now including `renamed`, `deleted`, and `deprecatedComments`), and regenerates `tokens.css` and `typography.css` for `@adobe/spectrum-wc`.
+
+### Step 5: verify
+
+- Review the git diff on `tokens.json` to confirm the `deleted` and `deprecatedComments` maps are populated as expected
+- Open the VS Code extension and verify that deleted tokens surface the correct diagnostic messages
+- Check for any `token()` calls in existing CSS that reference deleted tokens; update them per the guidance in the extension hover or the `migration-styling` skill
 
 ## Token Stylesheet Generation
 
@@ -288,7 +379,7 @@ This outputs the stylesheet into the noted `--out` directory and filename, with 
 Valid `--outputType` values include:
 
 - `tokens` - token stylesheet
-- `data` - token JSON, split into `tokens` and `renamed`
+- `data` - token JSON with four keys: `tokens`, `renamed`, `deleted`, and `deprecatedComments`
 - `typography` - typography stylesheet
 
 ## Commands
@@ -308,6 +399,14 @@ yarn generate:data
 yarn generate:tokens
 yarn generate:typography
 ```
+
+Before upgrading `@adobe/spectrum-tokens`, run the diff script to identify deleted tokens and seed `custom/deleted.json`:
+
+```bash
+node scripts/diff-versions.js --to <target-version>
+```
+
+See [Upgrading @adobe/spectrum-tokens](#upgrading-adobespectrum-tokens) for the full workflow.
 
 ## Testing Changes
 

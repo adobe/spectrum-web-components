@@ -81,6 +81,14 @@ If no fragment exists yet but the shared pattern is real, create a new file in `
 
 **Step 4 — Execute the phase.** Follow **[Phase 5: Styling](../../../CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md#phase-5-styling)** in the washing machine workflow doc — it covers what to do, what to check, common problems, and the quality gate for this phase.
 
+When converting `--spectrum-*` properties to `token()` calls (by stripping the `--spectrum-` prefix), verify each resulting token name against the known-valid set. If a `token()` call produces an error in the VS Code extension, check `2nd-gen/packages/tools/swc-vscode-token/tokens.json` before guessing a replacement:
+
+- **`renamed` map**: if the token appears here, use the value as the replacement name inside `token()`.
+- **`deleted` map**: if the token appears here, the value determines how to handle it:
+  - **Value is a token name** (e.g. `"ui-icon-medium"`): use it as the replacement inside `token()`.
+  - **Value is `"0"`**: the token was a zero-pixel spacing value that Spectrum removed without a replacement. Replace the entire `token()` call with the literal value `0` (no unit needed for zero in CSS). Do not produce `token("0")` — that is not a valid token.
+  - **Value is `null`**: no known replacement. Flag with a `/* TODO */` comment and leave the property in place for human review rather than silently dropping it.
+
 **Step 5 — Document exposed custom properties.** After writing the CSS, add a `@cssprop` JSDoc tag to the SWC component class (`2nd-gen/packages/swc/components/[component]/[Component].ts`) for every exposed `--swc-*` property. Place all `@cssprop` tags on the primary SWC class export (not the core base class). Each tag should name the property and give a one-line description of what it controls, including its default token where relevant.
 
 ```ts
