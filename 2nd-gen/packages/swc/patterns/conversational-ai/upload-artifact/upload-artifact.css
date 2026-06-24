@@ -199,6 +199,35 @@
   block-size: 100%;
 }
 
+:host([type="media"]) .swc-UploadArtifact-badge {
+  display: inline-flex;
+  position: absolute;
+  inset-block-end: token("corner-radius-75");
+  inset-inline-start: token("corner-radius-75");
+  z-index: 1;
+  align-items: center;
+  max-inline-size: calc(100% - (2 * token("corner-radius-75")));
+  min-block-size: 24px;
+  padding-block: token("spacing-50");
+  padding-inline: token("spacing-100");
+  font-family: token("sans-serif-font");
+  font-size: token("font-size-75");
+  font-weight: token("medium-font-weight");
+  line-height: token("line-height-font-size-75");
+  color: token("gray-25");
+  background: token("transparent-black-700");
+  border-radius: token("corner-radius-400");
+}
+
+:host([type="media"]) .swc-UploadArtifact-badge ::slotted(*) {
+  display: block;
+  min-inline-size: 0;
+  max-inline-size: 152px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 :host([type="media"]) .swc-UploadArtifact-meta {
   inline-size: 100%;
 }
