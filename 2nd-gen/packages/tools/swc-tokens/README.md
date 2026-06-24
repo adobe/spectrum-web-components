@@ -244,11 +244,23 @@ yarn tokens:update
 
 This runs tests, regenerates `tokens.json` for the VS Code extension (now including `renamed`, `deleted`, and `deprecatedComments`), and regenerates `tokens.css` and `typography.css` for `@adobe/spectrum-wc`.
 
-### Step 5: verify
+### Step 5: fix broken token references in CSS
 
-- Review the git diff on `tokens.json` to confirm the `deleted` and `deprecatedComments` maps are populated as expected
-- Open the VS Code extension and verify that deleted tokens surface the correct diagnostic messages
-- Check for any `token()` calls in existing CSS that reference deleted tokens; update them per the guidance in the extension hover or the `migration-styling` skill
+Run the fix script to automatically replace all known broken `token()` references across migrated component CSS:
+
+```bash
+# From 2nd-gen/packages/tools/swc-tokens/:
+node scripts/fix-token-refs.js --dry-run   # preview first
+node scripts/fix-token-refs.js             # apply
+```
+
+This handles renamed tokens, zero-value tokens, and deleted tokens with curated replacements. Deleted tokens with no known replacement are flagged with an inline `/* TODO */` comment — review those manually.
+
+### Step 6: verify
+
+- Review the git diff on `tokens.json` to confirm `deleted` and `deprecatedComments` are populated as expected
+- Review the CSS diffs from the fix script and address any `/* TODO */` comments
+- Open the VS Code extension and verify that remaining deleted tokens surface the correct diagnostic messages
 
 ## Token Stylesheet Generation
 
@@ -400,10 +412,18 @@ yarn generate:tokens
 yarn generate:typography
 ```
 
-Before upgrading `@adobe/spectrum-tokens`, run the diff script to identify deleted tokens and seed `custom/deleted.json`:
+**Before upgrading** `@adobe/spectrum-tokens`, run the diff script to identify deleted tokens and seed `custom/deleted.json`:
 
 ```bash
 node scripts/diff-versions.js --to <target-version>
+```
+
+**After upgrading** `@adobe/spectrum-tokens`, fix broken `token()` references across all CSS files in `2nd-gen/`:
+
+```bash
+yarn fix:tokens             # apply all mechanical replacements
+yarn fix:tokens --dry-run   # preview without writing
+yarn fix:tokens --files path/to/component.css   # specific files only
 ```
 
 See [Upgrading @adobe/spectrum-tokens](#upgrading-adobespectrum-tokens) for the full workflow.

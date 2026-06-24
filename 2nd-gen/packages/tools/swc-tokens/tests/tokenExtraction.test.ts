@@ -250,6 +250,64 @@ describe('extractRenamedTokenValues', () => {
   });
 });
 
+describe('extractDeprecatedComments', () => {
+  const { extractDeprecatedComments } = __test__;
+
+  it('collects deprecated_comment for deprecated tokens without a rename', () => {
+    const json = {
+      removed: {
+        deprecated: true,
+        deprecated_comment: 'Use spacing-300 instead.',
+        value: '8px',
+      },
+    };
+    expect(extractDeprecatedComments(json)).toEqual({
+      removed: 'Use spacing-300 instead.',
+    });
+  });
+
+  it('skips tokens that have a rename mapping', () => {
+    const json = {
+      oldName: {
+        deprecated: true,
+        renamed: 'new-name',
+        deprecated_comment: 'Renamed to new-name.',
+        value: '8px',
+      },
+    };
+    expect(extractDeprecatedComments(json)).toEqual({});
+  });
+
+  it('skips non-deprecated tokens even if they have a comment', () => {
+    const json = {
+      active: {
+        deprecated_comment: 'Some stray comment',
+        value: '8px',
+      },
+    };
+    expect(extractDeprecatedComments(json)).toEqual({});
+  });
+
+  it('skips tokens whose comment is not a string', () => {
+    const json = {
+      badComment: {
+        deprecated: true,
+        deprecated_comment: null,
+        value: '4px',
+      },
+    };
+    expect(extractDeprecatedComments(json)).toEqual({});
+  });
+
+  it('returns an empty object when no deprecated comments exist', () => {
+    const json = {
+      active: { value: '8px' },
+      renamed: { deprecated: true, renamed: 'new-name', value: '4px' },
+    };
+    expect(extractDeprecatedComments(json)).toEqual({});
+  });
+});
+
 describe('generateCSS', () => {
   it('does not wrap comma-separated font-family stacks in extra quotes', async () => {
     const css = await generateCSS('swc');

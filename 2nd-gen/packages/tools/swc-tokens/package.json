@@ -23,6 +23,7 @@
   "scripts": {
     "debug:tokens": "node index.js --outputType data --out ./tokens.json --debug true",
     "diff:versions": "node scripts/diff-versions.js",
+    "fix:tokens": "node scripts/fix-token-refs.js",
     "generate:data": "node index.js --outputType data --out ./tokens.json",
     "generate:tokens": "node index.js --outputType tokens --out ./tokens.css --prefix swc",
     "generate:typography": "node index.js --outputType typography --out ./typography.css --prefix swc",
