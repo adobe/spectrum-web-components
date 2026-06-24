@@ -123,6 +123,15 @@ export const MultiArtifact: Story = {
           />
         </swc-upload-artifact>
         <swc-upload-artifact type="media" dismissible>
+          <div
+            slot="thumbnail"
+            role="img"
+            aria-label="Document preview"
+            style="inline-size:100%;block-size:100%;background:#f3f3f3;"
+          ></div>
+          <span slot="badge">PDF</span>
+        </swc-upload-artifact>
+        <swc-upload-artifact type="media" dismissible>
           <img
             slot="thumbnail"
             src="https://picsum.photos/id/56/68/68"
@@ -165,6 +174,23 @@ export const Media: Story = {
           alt="Campaign preview"
           style="inline-size:100%;block-size:100%;object-fit:cover;"
         />
+      </swc-upload-artifact>
+    </div>
+  `,
+  tags: ['options'],
+};
+
+export const MediaWithBadge: Story = {
+  render: () => html`
+    <div style="inline-size:240px;">
+      <swc-upload-artifact type="media" dismissible>
+        <img
+          slot="thumbnail"
+          src="https://picsum.photos/id/823/68/68"
+          alt="Mixed attachment preview"
+          style="inline-size:100%;block-size:100%;object-fit:cover;"
+        />
+        <span slot="badge">PDF</span>
       </swc-upload-artifact>
     </div>
   `,

@@ -152,3 +152,54 @@ export const MediaPreviewOnlyTest: Story = {
     });
   },
 };
+
+export const MediaBadgeTest: Story = {
+  render: () => html`
+    <div style="display:flex;gap:16px;">
+      <swc-upload-artifact type="media" dismissible>
+        <img
+          slot="thumbnail"
+          src="https://picsum.photos/id/823/68/68"
+          alt="Tagged preview"
+          style="inline-size:100%;block-size:100%;object-fit:cover;"
+        />
+        <span slot="badge">PDF</span>
+      </swc-upload-artifact>
+      <swc-upload-artifact type="media" dismissible>
+        <img
+          slot="thumbnail"
+          src="https://picsum.photos/id/64/68/68"
+          alt="Plain preview"
+          style="inline-size:100%;block-size:100%;object-fit:cover;"
+        />
+      </swc-upload-artifact>
+    </div>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const artifacts = canvasElement.querySelectorAll('swc-upload-artifact');
+
+    await step(
+      'badge slot renders a bottom-left overlay when content is provided',
+      async () => {
+        const withBadge = artifacts[0] as UploadArtifact;
+        await withBadge.updateComplete;
+
+        const badge = withBadge.shadowRoot?.querySelector(
+          '.swc-UploadArtifact-badge'
+        );
+        expect(badge).toBeTruthy();
+        expect(badge?.textContent?.trim()).toBe('PDF');
+      }
+    );
+
+    await step('badge overlay is omitted when the slot is empty', async () => {
+      const withoutBadge = artifacts[1] as UploadArtifact;
+      await withoutBadge.updateComplete;
+
+      const badge = withoutBadge.shadowRoot?.querySelector(
+        '.swc-UploadArtifact-badge'
+      );
+      expect(badge).toBeNull();
+    });
+  },
+};
