@@ -29,6 +29,12 @@ Media type uses a larger preview region without title and subtitle text.
 
 <Canvas of={UploadArtifactStories.Media} />
 
+### Media with badge
+
+Use `type="media"` with an optional `badge` slot for mixed file types (for example, a document preview with a bottom-left "PDF" tag).
+
+<Canvas of={UploadArtifactStories.MediaWithBadge} />
+
 ### Text Overflow
 
 Title and subtitle truncate with an ellipsis when the artifact is narrower than the text. **Card** uses a compact row; **media** keeps the actions region visible while the title shrinks.

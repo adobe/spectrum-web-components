@@ -11,7 +11,7 @@
  */
 
 import { CSSResultArray, html, TemplateResult } from 'lit';
-import { property } from 'lit/decorators.js';
+import { property, queryAssignedElements } from 'lit/decorators.js';
 
 import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
 
@@ -27,6 +27,7 @@ import styles from './upload-artifact.css';
  * @element swc-upload-artifact
  *
  * @slot thumbnail - Shared visual slot for icon/thumbnail/preview image.
+ * @slot badge - Optional file-type badge rendered over `type="media"` previews (for example, "PDF").
  * @slot title - Primary text label.
  * @slot subtitle - Secondary text label.
  * @slot actions - Optional trailing actions.
@@ -46,8 +47,19 @@ export class UploadArtifact extends SpectrumElement {
   @property({ type: String, attribute: 'dismiss-label' })
   public dismissLabel = 'Remove attachment';
 
+  @queryAssignedElements({ slot: 'badge', flatten: true })
+  private _assignedBadge!: HTMLElement[];
+
   public static override get styles(): CSSResultArray {
     return [styles];
+  }
+
+  private _handleBadgeSlotChange(): void {
+    this.requestUpdate();
+  }
+
+  private _hasBadgeContent(): boolean {
+    return (this._assignedBadge?.length ?? 0) > 0;
   }
 
   private _handleDismissClick(): void {
@@ -60,9 +72,60 @@ export class UploadArtifact extends SpectrumElement {
     );
   }
 
-  protected override render(): TemplateResult {
-    const isMedia = this.type === 'media';
+  private _renderBadge(): TemplateResult {
+    if (!this._hasBadgeContent()) {
+      return html`
+        <slot
+          name="badge"
+          hidden
+          @slotchange=${this._handleBadgeSlotChange}
+        ></slot>
+      `;
+    }
 
+    return html`
+      <div class="swc-UploadArtifact-badge">
+        <slot name="badge" @slotchange=${this._handleBadgeSlotChange}></slot>
+      </div>
+    `;
+  }
+
+  private _renderMediaSurface(): TemplateResult {
+    return html`
+      <div class="swc-UploadArtifact-surface">
+        <div class="swc-UploadArtifact-thumbnail">
+          <slot name="thumbnail"></slot>
+        </div>
+        ${this._renderBadge()}
+        <div class="swc-UploadArtifact-actions">
+          <slot name="actions"></slot>
+        </div>
+      </div>
+    `;
+  }
+
+  private _renderCardSurface(): TemplateResult {
+    return html`
+      <div class="swc-UploadArtifact-surface">
+        <div class="swc-UploadArtifact-thumbnail">
+          <slot name="thumbnail"></slot>
+        </div>
+        <div class="swc-UploadArtifact-meta">
+          <div class="swc-UploadArtifact-title">
+            <slot name="title"></slot>
+          </div>
+          <div class="swc-UploadArtifact-subtitle">
+            <slot name="subtitle"></slot>
+          </div>
+        </div>
+        <div class="swc-UploadArtifact-actions">
+          <slot name="actions"></slot>
+        </div>
+      </div>
+    `;
+  }
+
+  protected override render(): TemplateResult {
     return html`
       <div class="swc-UploadArtifact">
         <button
@@ -74,32 +137,9 @@ export class UploadArtifact extends SpectrumElement {
           <swc-icon aria-hidden="true">${CrossIcon()}</swc-icon>
         </button>
 
-        <div class="swc-UploadArtifact-surface">
-          <div class="swc-UploadArtifact-thumbnail">
-            <slot name="thumbnail"></slot>
-          </div>
-
-          ${isMedia
-            ? html`
-                <div class="swc-UploadArtifact-actions">
-                  <slot name="actions"></slot>
-                </div>
-              `
-            : html`
-                <div class="swc-UploadArtifact-meta">
-                  <div class="swc-UploadArtifact-title">
-                    <slot name="title"></slot>
-                  </div>
-                  <div class="swc-UploadArtifact-subtitle">
-                    <slot name="subtitle"></slot>
-                  </div>
-                </div>
-
-                <div class="swc-UploadArtifact-actions">
-                  <slot name="actions"></slot>
-                </div>
-              `}
-        </div>
+        ${this.type === 'media'
+          ? this._renderMediaSurface()
+          : this._renderCardSurface()}
       </div>
     `;
   }

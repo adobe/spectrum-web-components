@@ -205,6 +205,7 @@ export const Artifact: Story = {
               alt="Storyboard frame"
               style="inline-size:100%;block-size:100%;object-fit:cover;"
             />
+            <span slot="badge">PDF</span>
           </swc-upload-artifact>
         </swc-prompt-field>
         <span class="swc-Detail swc-Detail--sizeS">
