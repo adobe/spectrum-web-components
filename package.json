@@ -78,7 +78,7 @@
     "eslint-config-prettier": "10.1.8",
     "eslint-plugin-import": "2.32.0",
     "eslint-plugin-jsdoc": "62.5.0",
-    "eslint-plugin-jsonc": "2.21.0",
+    "eslint-plugin-jsonc": "2.21.1",
     "eslint-plugin-lit": "2.1.1",
     "eslint-plugin-lit-a11y": "4.1.4",
     "eslint-plugin-mdx": "3.6.2",
