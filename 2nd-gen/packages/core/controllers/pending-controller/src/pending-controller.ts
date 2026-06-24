@@ -12,6 +12,11 @@
 
 import type { ReactiveController, ReactiveElement } from 'lit';
 
+import {
+  type PendingSpinnerResult,
+  renderPendingSpinner,
+} from '../../../directives/pending-spinner/index.js';
+
 // ─────────────────────────
 //     TYPES
 // ─────────────────────────
@@ -135,6 +140,16 @@ export class PendingController implements ReactiveController {
     }
     const resolvedName = this._resolveAccessibleName();
     return resolvedName ? `${resolvedName}, busy` : 'Busy';
+  }
+
+  /**
+   * Renders the pending spinner for the controller's current state via the
+   * `renderPendingSpinner` directive. Exposed here so a host gets the indicator
+   * straight from the controller, without importing the directive separately.
+   * Returns `nothing` while the host is not pending.
+   */
+  public renderPendingState(): PendingSpinnerResult {
+    return renderPendingSpinner(this._host.pending, this._pendingActive);
   }
 
   // ─────────────────────────

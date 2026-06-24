@@ -23,7 +23,6 @@ import {
   type ButtonStaticColor,
   type ButtonVariant,
 } from '@spectrum-web-components/core/components/button';
-import { renderPendingSpinner } from '@spectrum-web-components/core/directives/pending-spinner';
 import { PendingMixin } from '@spectrum-web-components/core/mixins';
 
 import pendingSpinnerStyles from '../../stylesheets/_lit-styles/pending-spinner.css';
@@ -153,7 +152,7 @@ export class Button extends PendingMixin(ButtonBase) {
         <span class="swc-Button-label">
           <slot></slot>
         </span>
-        ${renderPendingSpinner(this.pending, this.pendingActive)}
+        ${this.renderPendingState()}
       </button>
     `;
   }

@@ -15,7 +15,6 @@ import { customElement, property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
-import { renderPendingSpinner } from '../../../directives/pending-spinner/index.js';
 import { PendingController, type PendingControllerHost } from '../index.js';
 
 declare global {
@@ -190,7 +189,7 @@ export class DemoPendingHost
         @click=${this.clickPending ? this._onButtonClick : null}
       >
         <span class="label">${this.label}</span>
-        ${renderPendingSpinner(this.pending, active)}
+        ${this._pendingController.renderPendingState()}
       </button>
     `;
   }

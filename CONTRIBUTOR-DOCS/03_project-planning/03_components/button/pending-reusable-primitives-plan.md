@@ -59,8 +59,8 @@ Consumers today: `swc-button` and `swc-action-button` both `extends ButtonBase` 
 
 ## Proposed primitives
 
-1. **`PendingController`** (`core/controllers/pending-controller`) — owns the reusable *state*: the delayed `pendingActive` flag, the timer, the inline-size freeze (writes `--swc-pending-inline-size` on a configurable target), and `getPendingAccessibleName()` (via a `resolveAccessibleName` option). Rendering-agnostic; no token/styles dependency.
-2. **`pendingSpinner` directive** (`core/directives/pending-spinner`) — move the render out of `swc/components/button/` into a render-only core directive (no token dependency) so any component can consume it without importing from the button package. The token-based spinner CSS stays as the `swc` `_lit-styles/pending-spinner.css` fragment.
+1. **`PendingController`** (`core/controllers/pending-controller`) — owns the reusable *state*: the delayed `pendingActive` flag, the timer, the inline-size freeze (writes `--swc-pending-inline-size` on a configurable target), and `getPendingAccessibleName()` (via a `resolveAccessibleName` option). It also **owns and exposes the spinner render** via `renderPendingState()` (delegating to the directive), so a host renders the indicator straight from the controller — one less import on the component.
+2. **`renderPendingSpinner` directive** (`core/directives/pending-spinner`) — the render out of `swc/components/button/` as a render-only core directive (no token dependency). It is the implementation behind `PendingController.renderPendingState()`; consume it directly only for a stateless spinner without a controller. The token-based spinner CSS stays as the `swc` `_lit-styles/pending-spinner.css` fragment.
 3. **`PendingMixin`** (`core/mixins`) — a thin mixin that declares the `pending` / `pending-label` reactive properties, instantiates the controller, and wires click suppression, so a host opts in with one mixin.
 4. **`ButtonBase` stays pending-agnostic** — it gains no pending logic. `swc-button` and `swc-action-button` each apply `PendingMixin` to opt in. Other `ButtonBase` subclasses that do not need pending (e.g. `CloseButton`) are unaffected.
 

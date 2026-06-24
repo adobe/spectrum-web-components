@@ -14,6 +14,7 @@ import type { PropertyValues, ReactiveElement } from 'lit';
 import { property } from 'lit/decorators.js';
 
 import { PendingController } from '../controllers/pending-controller/index.js';
+import type { PendingSpinnerResult } from '../directives/pending-spinner/index.js';
 
 type Constructor<T = Record<string, unknown>> = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -26,6 +27,7 @@ export interface PendingInterface {
   pendingLabel?: string;
   readonly pendingActive: boolean;
   getPendingAccessibleName(): string;
+  renderPendingState(): PendingSpinnerResult;
 }
 
 /**
@@ -92,6 +94,15 @@ export function PendingMixin<T extends Constructor<ReactiveElement>>(
     /** Derives the pending-state accessible label. */
     public getPendingAccessibleName(): string {
       return this._pendingController.getPendingAccessibleName();
+    }
+
+    /**
+     * Renders the pending spinner for the current state, via the controller.
+     * Lets hosts render the indicator with `${this.renderPendingState()}` and no
+     * separate directive import.
+     */
+    public renderPendingState(): PendingSpinnerResult {
+      return this._pendingController.renderPendingState();
     }
 
     /**

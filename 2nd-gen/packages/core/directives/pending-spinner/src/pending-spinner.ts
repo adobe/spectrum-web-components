@@ -13,14 +13,22 @@
 import { html, nothing, type TemplateResult } from 'lit';
 import { classMap } from 'lit/directives/class-map.js';
 
+/** Return type of {@link renderPendingSpinner}: the spinner template, or `nothing`. */
+export type PendingSpinnerResult = TemplateResult | typeof nothing;
+
 /**
  * Renders the shared pending-spinner SVG used by pending-capable components.
  * Returns `nothing` when `pending` is false so callers can interpolate
  * unconditionally: `${renderPendingSpinner(this.pending, this.pendingActive)}`.
  *
+ * Most consumers do not call this directly: `PendingController` (and
+ * `PendingMixin`) expose `renderPendingState()`, which calls this with the
+ * controller's own state. Use this directive directly only for a stateless
+ * spinner without a controller.
+ *
  * This is render-only and carries no design-token dependency. Pair it with the
- * `PendingController` (state) and the shared `pending-spinner.css` style
- * fragment, which themes the `swc-PendingSpinner*` classes this emits.
+ * shared `pending-spinner.css` style fragment, which themes the
+ * `swc-PendingSpinner*` classes this emits.
  *
  * @param pending - Whether the host is in the pending (busy) state.
  * @param pendingActive - Whether the delayed busy visual is active; toggles the
@@ -29,7 +37,7 @@ import { classMap } from 'lit/directives/class-map.js';
 export function renderPendingSpinner(
   pending: boolean,
   pendingActive: boolean
-): TemplateResult | typeof nothing {
+): PendingSpinnerResult {
   if (!pending) {
     return nothing;
   }

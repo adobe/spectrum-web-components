@@ -10,4 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
-export { renderPendingSpinner } from './src/pending-spinner.js';
+export {
+  renderPendingSpinner,
+  type PendingSpinnerResult,
+} from './src/pending-spinner.js';

@@ -14,4 +14,7 @@
  * Public exports for render-only Lit template directives shared across 2nd-gen packages.
  */
 
-export { renderPendingSpinner } from './pending-spinner/index.js';
+export {
+  renderPendingSpinner,
+  type PendingSpinnerResult,
+} from './pending-spinner/index.js';

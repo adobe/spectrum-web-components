@@ -11,9 +11,9 @@ import * as Stories from './stories/pending-controller.stories';
 
 `PendingController` manages a host element's pending (busy) _state_ so components do not reimplement the timing, layout, and accessibility-name concerns. It is one of three decoupled primitives:
 
-- **`PendingController`** (`@spectrum-web-components/core/controllers/pending-controller`) — state: delayed activation, inline-size freeze, derived accessible name.
-- **`renderPendingSpinner`** (`@spectrum-web-components/core/directives/pending-spinner`) — render-only directive for the animated indicator.
-- **`PendingMixin`** (`@spectrum-web-components/core/mixins`) — wires the controller, the `pending` / `pending-label` properties, and click suppression onto a host in one step.
+- **`PendingController`** (`@spectrum-web-components/core/controllers/pending-controller`) — state (delayed activation, inline-size freeze, derived accessible name) and `renderPendingState()`, which renders the spinner so the host needs no separate directive import.
+- **`renderPendingSpinner`** (`@spectrum-web-components/core/directives/pending-spinner`) — the underlying render-only directive. The controller owns and exposes it; use it directly only for a stateless spinner without a controller.
+- **`PendingMixin`** (`@spectrum-web-components/core/mixins`) — wires the controller, the `pending` / `pending-label` properties, and click suppression onto a host in one step, and re-exposes `renderPendingState()`.
 
 `swc-button` and `swc-action-button` opt in via `PendingMixin`. Components that cannot use the mixin can use the controller and directive directly.
 
@@ -27,7 +27,7 @@ import * as Stories from './stories/pending-controller.stories';
 
 1. Implement `PendingControllerHost` on your element (`pending`, optional `pendingLabel`).
 2. Construct the controller, passing `resolveAccessibleName` so it can derive the busy name.
-3. Read `pendingActive` in `render()` to apply busy styling, and render the spinner with `renderPendingSpinner`.
+3. Read `pendingActive` in `render()` to apply busy styling, and render the spinner with the controller's own `renderPendingState()` — no separate directive import.
 4. Apply the busy ARIA in the host's template, keyed off `pending` for an immediate response.
 
 ```typescript
@@ -38,7 +38,6 @@ import {
   PendingController,
   type PendingControllerHost,
 } from '@spectrum-web-components/core/controllers/pending-controller';
-import { renderPendingSpinner } from '@spectrum-web-components/core/directives/pending-spinner';
 
 class SwcThing extends LitElement implements PendingControllerHost {
   @property({ type: Boolean, reflect: true }) pending = false;
@@ -59,10 +58,7 @@ class SwcThing extends LitElement implements PendingControllerHost {
         )}
       >
         <slot></slot>
-        ${renderPendingSpinner(
-          this.pending,
-          this.pendingController.pendingActive
-        )}
+        ${this.pendingController.renderPendingState()}
       </button>
     `;
   }
@@ -121,6 +117,7 @@ Click the button below to start a pending operation. The button receives focus v
 | ---------------------------- | ------------------------------------------------------------------------------------------------------ |
 | `pendingActive`              | Read-only. `true` once the visual is active (after `delay`). Read this in `render()` to apply styling. |
 | `getPendingAccessibleName()` | Returns the busy label: `pendingLabel`, else `"<resolved name>, busy"`, else `"Busy"`.                 |
+| `renderPendingState()`       | Renders the spinner for the current state (via the `renderPendingSpinner` directive), else `nothing`.  |
 
 ### Options (`PendingControllerOptions`)
 
@@ -139,9 +136,9 @@ Click the button below to start a pending operation. The button receives focus v
 
 ### Related primitives
 
-| Export                 | Module                                                     | Purpose                                                   |
-| ---------------------- | ---------------------------------------------------------- | --------------------------------------------------------- |
-| `renderPendingSpinner` | `@spectrum-web-components/core/directives/pending-spinner` | Render the `aria-hidden` animated spinner from the state. |
-| `PendingMixin`         | `@spectrum-web-components/core/mixins`                     | Wire the controller + properties + click suppression.     |
+| Export                 | Module                                                     | Purpose                                                                         |
+| ---------------------- | ---------------------------------------------------------- | ------------------------------------------------------------------------------- |
+| `renderPendingSpinner` | `@spectrum-web-components/core/directives/pending-spinner` | Underlying spinner render; exposed via the controller's `renderPendingState()`. |
+| `PendingMixin`         | `@spectrum-web-components/core/mixins`                     | Wire the controller + properties + click suppression; re-exposes the render.    |
 
 <DocsFooter />
