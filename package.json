@@ -22,6 +22,7 @@
     "format:prettier": "prettier ${LINT_PATH:-.} --cache --write",
     "format:styles": "stylelint '${LINT_PATH:+$LINT_PATH/**/*.css}${LINT_PATH:-**/*.css}' --cache --fix --allow-empty-input",
     "generate:llms": "node scripts/generate-llms-txt.js",
+    "generate:skills": "node scripts/generate-agent-skills.mjs",
     "lint": "run-s --continue-on-error lint:eslint lint:styles lint:prettier lint:ai",
     "lint:1st-gen": "LINT_PATH=1st-gen yarn lint",
     "lint:2nd-gen": "LINT_PATH=2nd-gen yarn lint",
