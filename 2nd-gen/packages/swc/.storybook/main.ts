@@ -38,11 +38,8 @@ const storybookMode: StorybookMode =
       : 'dev';
 
 // Custom indexer to allow .test.ts files to be treated as story files.
-// Files under a `test/__unit__/` directory are pure-logic Node unit tests
-// (run by the `core-unit` Vitest project), not Storybook stories, so they are
-// excluded here to avoid being indexed as CSF.
 const testStoryIndexer: Indexer = {
-  test: /^(?!.*[\\/]__unit__[\\/]).*\.test\.ts$/,
+  test: /\.test\.ts$/,
   createIndex: async (fileName, options) => {
     const csfFile = await readCsf(fileName, options);
     return csfFile.parse().indexInputs;
@@ -146,12 +143,7 @@ if (storybookMode === 'dev') {
   });
   stories.push({
     ...CORE_STORY_ROOT,
-    // Exclude `test/__unit__/*.test.ts`: those are pure-logic Node unit tests
-    // run by the `core-unit` Vitest project, not Storybook stories. The
-    // extglob requires the file's immediate parent directory to be anything
-    // other than `__unit__`, which still matches the `test/` and `stories/`
-    // controller play tests.
-    files: '**/!(__unit__)/*.test.ts',
+    files: '**/*.test.ts',
   });
 }
 

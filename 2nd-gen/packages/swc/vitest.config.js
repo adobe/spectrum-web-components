@@ -176,15 +176,16 @@ export default mergeConfig(
         // To activate, drop a test at e.g.
         //   2nd-gen/packages/core/utils/test/__unit__/language-resolution.test.ts
         // and uncomment this block.
-        {
-          extends: true,
-          test: {
-            name: 'core-unit',
-            environment: 'node',
-            include: ['../core/**/test/__unit__/*.test.ts'],
-            browser: { enabled: false },
-          },
-        },
+        //
+        // {
+        //   extends: true,
+        //   test: {
+        //     name: 'core-unit',
+        //     environment: 'node',
+        //     include: ['../core/**/test/__unit__/*.test.ts'],
+        //     browser: { enabled: false },
+        //   },
+        // },
       ],
     },
     compilerOptions: {
