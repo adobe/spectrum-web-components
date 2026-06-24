@@ -38,10 +38,12 @@
   inset: auto;
   inline-size: max-content;
 
-  /* Cap to the placement-aware usable width the PlacementController exposes
-   * (matters for left/right placements); falls back to viewport minus container
-   * padding before the first position is computed. */
-  max-inline-size: var(--swc-placement-available-width, calc(100vw - 24px));
+  /* Cap to the smaller of the placement-aware usable width the
+   * PlacementController exposes (matters for the inline-start/-end placements,
+   * where it is the gap beside the trigger) and the viewport minus container
+   * padding, so both constraints apply. The var falls back to the full inline
+   * viewport before the first position is computed. */
+  max-inline-size: min(var(--swc-placement-available-width, 100vi), calc(100vi - 24px));
   max-block-size: none;
   padding: 0;
   margin: 0;
@@ -138,10 +140,11 @@
  * backdrop-click on the dialog's surface is not absorbed by padding in modal
  * mode. */
 .swc-Popover-content {
-  /* Bound the content to the placement-aware usable height and scroll here (not
-   * on `.swc-Popover`, whose `overflow: visible` lets the arrow render outside
-   * the box). Unbounded until the first position is computed. */
-  max-block-size: var(--swc-placement-available-height);
+  /* Bound the content to the smaller of the placement-aware usable height and
+   * 90% of the block viewport, and scroll here (not on `.swc-Popover`, whose
+   * `overflow: visible` lets the arrow render outside the box). The var falls
+   * back to 90vb before the first position is computed. */
+  max-block-size: min(var(--swc-placement-available-height, 90vb), 90vb);
 
   /* Padding only; slotted content owns its own display/layout. Exposed as a
    * public custom property. */
@@ -178,10 +181,11 @@
   inline-size: var(--_swc-popover-tip-size);
   block-size: var(--_swc-popover-tip-size);
 
-  /* Reuse the surface custom properties so theming the surface also themes the
-   * arrow. */
-  background-color: var(--swc-popover-background-color, token("background-layer-2-color"));
-  border: token("border-width-100") solid var(--swc-popover-border-color, token("popover-border-color"));
+  /* Inherit the surface's background and border (the surface resolves them from
+   * the `--swc-popover-*` props), so theming the surface also themes the arrow.
+   * The orientation rules below drop the two edges that face into the surface. */
+  background-color: inherit;
+  border: inherit;
   rotate: 45deg;
 }
 

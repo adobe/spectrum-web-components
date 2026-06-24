@@ -131,7 +131,7 @@ const accountCard = `
 // the modal focus trap demonstrable: toggle `modal` in the controls, open the
 // popover, and Tab cycles within these buttons instead of escaping to the page.
 const securityPanel = `
-  <div style="display: flex; flex-direction: column; gap: 16px; max-inline-size: 280px;">
+  <div style="display: flex; flex-direction: column; gap: 16px;">
     <div style="display: flex; flex-direction: column; gap: 4px;">
       <span class="swc-Title swc-Title--sizeS">Two-factor authentication</span>
       <p class="swc-Body swc-Body--sizeS">
@@ -168,6 +168,7 @@ export const Playground: Story = {
   args: {
     open: false,
     placement: 'bottom',
+    size: 's',
     'hide-arrow': false,
     for: 'playground-trigger',
     'accessible-label': 'Two-factor authentication',
