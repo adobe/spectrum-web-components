@@ -515,9 +515,11 @@ export abstract class PopoverBase extends SpectrumElement {
   // before the dismiss) so `_onBeforeToggle` can attribute that close to this
   // press. Bound to both `pointerdown` and `touchstart` because on touch the
   // dismiss can fire off `touchstart`, before a `pointerdown` listener runs.
+  // Only sets the active flag, never clears `_dismissedByTriggerPress`: on touch
+  // both events fire for one press, and the second must not reset a dismissal the
+  // light-dismiss already recorded. `_onTriggerClick` clears it per gesture.
   private _onTriggerPressStart = (): void => {
     this._triggerPointerActive = true;
-    this._dismissedByTriggerPress = false;
   };
 
   // If the trigger press light-dismissed the popover (recorded in
@@ -721,13 +723,20 @@ export abstract class PopoverBase extends SpectrumElement {
     if (!element) {
       return;
     }
-    this._closeSource ??= 'programmatic';
+    // Only attribute a close source when something is actually open to hide.
+    // Setting it unconditionally here would poison the next real close: the
+    // initial render calls `_hide()` for the default `open = false`, and a
+    // stale `'programmatic'` source would survive (no `beforetoggle` fires to
+    // clear it) and make the first genuine light-dismiss read as non-`outside`,
+    // defeating the trigger-click reopen guard.
     if (this.modal) {
       const dialog = element as HTMLDialogElement;
       if (dialog.open) {
+        this._closeSource ??= 'programmatic';
         dialog.close();
       }
     } else if (element.matches(':popover-open')) {
+      this._closeSource ??= 'programmatic';
       try {
         element.hidePopover();
       } catch {
