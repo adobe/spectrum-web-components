@@ -174,7 +174,7 @@ export const Playground: Story = {
     'default-slot': securityPanel,
   },
   render: (args) => html`
-    <swc-button id="playground-trigger">Security</swc-button>
+    <swc-button id="playground-trigger">Open popover</swc-button>
     ${template(args)}
   `,
 };
@@ -187,13 +187,19 @@ export const Overview: Story = {
   args: {
     open: true,
     placement: 'bottom',
+    size: 's',
     'hide-arrow': false,
     for: 'overview-trigger',
     'accessible-label': 'Account',
     'default-slot': accountCard,
   },
   render: (args) => html`
-    <swc-button id="overview-trigger">Account</swc-button>
+    <style>
+      swc-popover[for='overview-trigger'] {
+        --swc-popover-content-padding: 12px;
+      }
+    </style>
+    <swc-button id="overview-trigger">Open popover</swc-button>
     ${template(args)}
   `,
   tags: ['overview'],
@@ -247,7 +253,7 @@ export const CustomAnchor: Story = {
         <div
           style="display: flex; flex-direction: column; align-items: flex-start; gap: 24px;"
         >
-          <swc-button @click=${toggle}>Show definition</swc-button>
+          <swc-button @click=${toggle}>Open popover</swc-button>
           <a href="#anchor" id="custom-anchor">Spectrum Web Components</a>
         </div>
         ${template({ ...args, manual: true })}
@@ -345,7 +351,7 @@ export const Anatomy: Story = {
     'accessible-label': 'Autosave',
     'default-slot': 'Your changes are saved automatically as you edit.',
   },
-  render: (args) => triggered({ ...args }, 'anatomy-trigger', 'Autosave'),
+  render: (args) => triggered({ ...args }, 'anatomy-trigger', 'Open popover'),
   tags: ['anatomy'],
 };
 
@@ -391,7 +397,8 @@ export const HideArrow: Story = {
     'accessible-label': 'Sync status',
     'default-slot': 'Connected to Google Drive. Last synced a few moments ago.',
   },
-  render: (args) => triggered({ ...args }, 'hide-arrow-trigger', 'Sync status'),
+  render: (args) =>
+    triggered({ ...args }, 'hide-arrow-trigger', 'Open popover'),
   tags: ['options'],
 };
 HideArrow.storyName = 'Hide arrow';
@@ -405,7 +412,7 @@ export const States: Story = {
     'accessible-label': 'Messages',
     'default-slot': 'You have 3 unread messages in your inbox.',
   },
-  render: (args) => triggered({ ...args }, 'states-trigger', 'Messages'),
+  render: (args) => triggered({ ...args }, 'states-trigger', 'Open popover'),
   tags: ['states'],
 };
 
@@ -429,6 +436,6 @@ export const Modal: Story = {
 
 export const Accessibility: Story = {
   args: { 'accessible-label': 'Account', 'default-slot': accountCard },
-  render: (args) => triggered({ ...args }, 'a11y-trigger', 'Account'),
+  render: (args) => triggered({ ...args }, 'a11y-trigger', 'Open popover'),
   tags: ['a11y'],
 };
