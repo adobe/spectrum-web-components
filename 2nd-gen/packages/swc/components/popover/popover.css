@@ -75,26 +75,6 @@
     display token("animation-duration-200") allow-discrete;
 }
 
-/* Entry/exit slide offset by requested side (reflected `placement`, known
- * immediately, unlike the async `actual-placement`). The surface starts shifted
- * toward the trigger; the anchored open state below animates it to none. Prefix
- * selectors cover the aligned variants (e.g. `top-left` starts with `top`). */
-:host([placement^="top"]) .swc-Popover {
-  transform: translateY(var(--_swc-popover-animation-distance));
-}
-
-:host([placement^="bottom"]) .swc-Popover {
-  transform: translateY(calc(-1 * var(--_swc-popover-animation-distance)));
-}
-
-:host([placement^="right"]) .swc-Popover {
-  transform: translateX(calc(-1 * var(--_swc-popover-animation-distance)));
-}
-
-:host([placement^="left"]) .swc-Popover {
-  transform: translateX(var(--_swc-popover-animation-distance));
-}
-
 /* No arrow: use the rectangular `box-shadow` form of the elevated token, which
  * composites cleanly with nested popovers (e.g. submenus). */
 :host([hide-arrow]) .swc-Popover {
@@ -113,6 +93,32 @@
 
 :host([size="l"]) .swc-Popover {
   inline-size: 576px;
+}
+
+/* Entry/exit slide offset by requested side (reflected `placement`, known
+ * immediately, unlike the async `actual-placement`). The surface starts shifted
+ * toward the trigger; the anchored open state below animates it to none. Prefix
+ * selectors cover the aligned variants (e.g. `top-start` starts with `top`). The
+ * logical inline sides slide along the inline axis and resolve against the writing
+ * direction with `:dir()`: `start` is the left in LTR (slides from the right) and
+ * the right in RTL, and `end` is the mirror. Ordered after the `size`/`hide-arrow`
+ * rules so the `:dir()` selectors do not descend in specificity. */
+:host([placement^="top"]) .swc-Popover {
+  transform: translateY(var(--_swc-popover-animation-distance));
+}
+
+:host([placement^="bottom"]) .swc-Popover {
+  transform: translateY(calc(-1 * var(--_swc-popover-animation-distance)));
+}
+
+:host([placement^="start"]:dir(ltr)) .swc-Popover,
+:host([placement^="end"]:dir(rtl)) .swc-Popover {
+  transform: translateX(var(--_swc-popover-animation-distance));
+}
+
+:host([placement^="start"]:dir(rtl)) .swc-Popover,
+:host([placement^="end"]:dir(ltr)) .swc-Popover {
+  transform: translateX(calc(-1 * var(--_swc-popover-animation-distance)));
 }
 
 /* Shown state: open and anchored. Positioning is async, so the fade is gated on

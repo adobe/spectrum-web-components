@@ -23,7 +23,7 @@ The popover positions itself against a trigger you associate with `for` or `trig
 
 ### Placement
 
-`placement` sets the preferred side relative to the trigger: `top`, `right`, `bottom` (default), and `left`. Each side also accepts an alignment toward one end of that edge: `top-left` / `top-right`, `bottom-left` / `bottom-right`, `left-top` / `left-bottom`, and `right-top` / `right-bottom`. When the preferred side lacks room the popover flips to the opposite side, unless `should-flip` is `false`. `offset` (main axis) and `cross-offset` (cross axis) nudge it in pixels from the trigger.
+`placement` sets the preferred side relative to the trigger: `top`, `bottom` (default), and the logical inline sides `start` and `end`. Logical sides resolve against the writing direction, so `start` is the left in LTR and the right in RTL (and `end` is the mirror), keeping placements correct under right-to-left layouts. Each side also accepts an alignment toward one end of that edge: `top-start` / `top-end`, `bottom-start` / `bottom-end`, `start-top` / `start-bottom`, and `end-top` / `end-bottom`. When the preferred side lacks room the popover flips to the opposite side, unless `should-flip` is `false`. `offset` (main axis) and `cross-offset` (cross axis) nudge it in pixels from the trigger.
 
 <Canvas of={Stories.Placement} />
 

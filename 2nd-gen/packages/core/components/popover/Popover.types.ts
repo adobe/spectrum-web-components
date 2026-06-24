@@ -27,24 +27,26 @@ export type { Placement };
 export { ALL_PLACEMENTS };
 
 /**
- * The placement values `<swc-popover>` supports: each physical side plus its two
- * alignments, matching the Spectrum design API. The controller can resolve more
- * (the logical `start`/`end` variants), but the popover narrows to this set per
- * the proxy pattern.
+ * The placement values `<swc-popover>` supports: the block sides (`top`,
+ * `bottom`) and the logical inline sides (`start`, `end`), each with its two
+ * alignments. Logical sides resolve against the writing direction (`start` is the
+ * left in LTR, the right in RTL), matching the Spectrum design API. The controller
+ * can resolve physical `left`/`right` too, but the popover narrows to the logical
+ * set per the proxy pattern so placements stay correct under RTL.
  */
 export const POPOVER_VALID_PLACEMENTS = [
   'top',
-  'top-left',
-  'top-right',
+  'top-start',
+  'top-end',
   'bottom',
-  'bottom-left',
-  'bottom-right',
-  'left',
-  'left-top',
-  'left-bottom',
-  'right',
-  'right-top',
-  'right-bottom',
+  'bottom-start',
+  'bottom-end',
+  'start',
+  'start-top',
+  'start-bottom',
+  'end',
+  'end-top',
+  'end-bottom',
 ] as const satisfies readonly Placement[];
 
 // ─────────────────────────

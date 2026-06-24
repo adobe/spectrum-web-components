@@ -361,9 +361,9 @@ export const Placement: Story = {
   },
   render: (args) => html`
     ${triggered({ ...args, placement: 'top' }, 'placement-top', 'Top')}
-    ${triggered({ ...args, placement: 'right' }, 'placement-right', 'Right')}
+    ${triggered({ ...args, placement: 'end' }, 'placement-end', 'End')}
     ${triggered({ ...args, placement: 'bottom' }, 'placement-bottom', 'Bottom')}
-    ${triggered({ ...args, placement: 'left' }, 'placement-left', 'Left')}
+    ${triggered({ ...args, placement: 'start' }, 'placement-start', 'Start')}
   `,
   parameters: { flexLayout: 'row-wrap' },
   tags: ['options'],
