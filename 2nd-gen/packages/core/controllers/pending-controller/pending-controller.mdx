@@ -1,0 +1,144 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import { DocsFooter, DocsHeader } from '../../../swc/.storybook/blocks';
+
+import * as Stories from './stories/pending-controller.stories';
+
+<Meta of={Stories} />
+
+<DocsHeader />
+
+## Usage
+
+`PendingController` manages a host element's pending (busy) _state_ so components do not reimplement the timing, layout, and accessibility-name concerns. It is one of three decoupled primitives:
+
+- **`PendingController`** (`@spectrum-web-components/core/controllers/pending-controller`) — state (delayed activation, inline-size freeze, derived accessible name) and `renderPendingState()`, which renders the spinner so the host needs no separate directive import.
+- **`renderPendingSpinner`** (`@spectrum-web-components/core/directives/pending-spinner`) — the underlying render-only directive. The controller owns and exposes it; use it directly only for a stateless spinner without a controller.
+- **`PendingMixin`** (`@spectrum-web-components/core/mixins`) — wires the controller, the `pending` / `pending-label` properties, and click suppression onto a host in one step, and re-exposes `renderPendingState()`.
+
+`swc-button` and `swc-action-button` opt in via `PendingMixin`. Components that cannot use the mixin can use the controller and directive directly.
+
+### What it does
+
+- **Delayed activation** — `pendingActive` becomes `true` only after `delay` ms (default 1000). Operations that finish quickly never flash the busy appearance. ARIA, by contrast, is applied immediately by the host keyed off `pending`.
+- **Inline-size freeze** — when the visual activates, the controller records the freeze target's measured width into `--swc-pending-inline-size`, which the host applies via `inline-size` so hiding the label or icon does not resize the host.
+- **Derived accessible name** — `getPendingAccessibleName()` returns an explicit `pendingLabel`, else `"<resolved name>, busy"`, else `"Busy"`.
+
+### Basic usage
+
+1. Implement `PendingControllerHost` on your element (`pending`, optional `pendingLabel`).
+2. Construct the controller, passing `resolveAccessibleName` so it can derive the busy name.
+3. Read `pendingActive` in `render()` to apply busy styling, and render the spinner with the controller's own `renderPendingState()` — no separate directive import.
+4. Apply the busy ARIA in the host's template, keyed off `pending` for an immediate response.
+
+```typescript
+import { html, LitElement } from 'lit';
+import { property } from 'lit/decorators.js';
+import { ifDefined } from 'lit/directives/if-defined.js';
+import {
+  PendingController,
+  type PendingControllerHost,
+} from '@spectrum-web-components/core/controllers/pending-controller';
+
+class SwcThing extends LitElement implements PendingControllerHost {
+  @property({ type: Boolean, reflect: true }) pending = false;
+  @property({ attribute: 'pending-label' }) pendingLabel?: string;
+
+  private readonly pendingController = new PendingController(this, {
+    resolveAccessibleName: () => this.textContent?.trim() || null,
+  });
+
+  render() {
+    return html`
+      <button
+        aria-disabled=${ifDefined(this.pending ? 'true' : undefined)}
+        aria-label=${ifDefined(
+          this.pending
+            ? this.pendingController.getPendingAccessibleName()
+            : undefined
+        )}
+      >
+        <slot></slot>
+        ${this.pendingController.renderPendingState()}
+      </button>
+    `;
+  }
+}
+```
+
+Include the shared `pending-spinner.css` fragment (`swc/stylesheets/_lit-styles/pending-spinner.css`) in the host's styles so the rendered spinner is themed with Spectrum tokens.
+
+## Behaviors
+
+### Delayed activation
+
+When `pending` becomes `true`, the controller waits `delay` ms before setting `pendingActive`. If `pending` returns to `false` before the delay elapses, the visual never activates. This avoids a distracting flash for fast operations while still announcing the busy state to assistive technology right away. The demo below uses a shortened 250 ms delay.
+
+<Canvas of={Stories.DelayedActivation} />
+
+### Derived accessible name
+
+`getPendingAccessibleName()` prefers an explicit `pendingLabel`. When none is set, it appends `", busy"` to the name returned by `resolveAccessibleName` (for example, `"Save, busy"`), and falls back to `"Busy"` when no name is resolvable. The second host below overrides the derived name with an explicit `pending-label`.
+
+<Canvas of={Stories.DerivedAccessibleName} />
+
+### Focus retained on re-render
+
+When `pendingActive` transitions from `false` to `true`, the controller calls `host.requestUpdate()`, which triggers a Lit re-render. Because lit-html patches the DOM in place rather than replacing elements, the focused `<button>` element is not destroyed; its class and content are updated around it. Focus remains on the button throughout the re-render.
+
+Click the button below to start a pending operation. The button receives focus via the click and re-renders after the controller's delay. Focus is preserved.
+
+<Canvas of={Stories.FocusRetained} />
+
+## Accessibility
+
+### Features
+
+- **Immediate busy announcement** — the host applies `aria-disabled="true"` and the busy `aria-label` keyed off `pending`, not the delayed `pendingActive`, so screen readers learn the element is busy without waiting for the visual.
+- **Focus is retained** — pending differs from disabled: the element stays focusable so focus is not lost when it becomes busy. Activation is suppressed instead (by `PendingMixin`).
+- **Presentational indicator** — the spinner markup is `aria-hidden` and not focusable; the busy state is conveyed through ARIA, not the spinner.
+
+### Best practices
+
+- Provide a meaningful `resolveAccessibleName` (or an explicit `pendingLabel`) so the busy announcement is specific, e.g. "Save, busy" rather than "Busy".
+- Do not set both `pending` and `disabled` on the same element. Use `pending` to keep it focusable while unavailable, or `disabled` to remove it from the tab order.
+- Keep the host's busy styling on `pendingActive` (delayed), but its ARIA on `pending` (immediate).
+
+<Canvas of={Stories.Accessibility} />
+
+## API
+
+### Constructor
+
+`new PendingController(host, options?)` — registers the controller on the host.
+
+### Members
+
+| Member                       | Description                                                                                            |
+| ---------------------------- | ------------------------------------------------------------------------------------------------------ |
+| `pendingActive`              | Read-only. `true` once the visual is active (after `delay`). Read this in `render()` to apply styling. |
+| `getPendingAccessibleName()` | Returns the busy label: `pendingLabel`, else `"<resolved name>, busy"`, else `"Busy"`.                 |
+| `renderPendingState()`       | Renders the spinner for the current state (via the `renderPendingSpinner` directive), else `nothing`.  |
+
+### Options (`PendingControllerOptions`)
+
+| Option                  | Type                   | Default      | Description                                                                                          |
+| ----------------------- | ---------------------- | ------------ | ---------------------------------------------------------------------------------------------------- |
+| `delay`                 | `number`               | `1000`       | Milliseconds to wait after `pending` becomes true before activating the visual.                      |
+| `targetSelector`        | `string \| null`       | `'button'`   | Selector (within `renderRoot`) for the element whose inline size is frozen. `null` skips the freeze. |
+| `resolveAccessibleName` | `() => string \| null` | `() => null` | Returns the host's non-busy accessible name, used to derive the default busy label.                  |
+
+### Host interface (`PendingControllerHost`)
+
+| Member         | Type      | Description                                               |
+| -------------- | --------- | --------------------------------------------------------- |
+| `pending`      | `boolean` | Whether the host is in a pending (busy) state.            |
+| `pendingLabel` | `string`  | Optional explicit busy label; overrides the derived name. |
+
+### Related primitives
+
+| Export                 | Module                                                     | Purpose                                                                         |
+| ---------------------- | ---------------------------------------------------------- | ------------------------------------------------------------------------------- |
+| `renderPendingSpinner` | `@spectrum-web-components/core/directives/pending-spinner` | Underlying spinner render; exposed via the controller's `renderPendingState()`. |
+| `PendingMixin`         | `@spectrum-web-components/core/mixins`                     | Wire the controller + properties + click suppression; re-exposes the render.    |
+
+<DocsFooter />

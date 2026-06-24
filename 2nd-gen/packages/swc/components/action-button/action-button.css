@@ -225,7 +225,7 @@ slot[name="icon"]::slotted(*) {
 
 /* ── Pending ──────────────────────────────────────── */
 
-/* @global-exclude: pending state requires JS runtime (ButtonBase.pendingActive) */
+/* @global-exclude: pending state requires JS runtime (PendingMixin.pendingActive) */
 
 /* Cursor changes immediately on [pending]. Disabled colors, label/icon fade,
    and spinner appearance are deferred to .swc-ActionButton--pendingActive, which is
@@ -236,7 +236,7 @@ slot[name="icon"]::slotted(*) {
 
   align-items: center;
   justify-content: center;
-  inline-size: var(--_swc-button-pending-inline-size);
+  inline-size: var(--swc-pending-inline-size);
 
   /* Disabled colors reference the already-resolved disabled vars so static-color
      variants automatically get their correct unavailable appearance. */
@@ -277,7 +277,7 @@ slot[name="icon"]::slotted(*) {
   }
 }
 
-/* @global-exclude: pending state requires JS runtime (ButtonBase.pendingActive) */
+/* @global-exclude: pending state requires JS runtime (PendingMixin.pendingActive) */
 @media (forced-colors: active) {
   .swc-ActionButton--pendingActive {
     --swc-action-button-background-color-default: ButtonFace;

@@ -80,6 +80,12 @@ function getEntries() {
     scanTsFiles(resolve(__dirname, 'controllers'), 'controllers')
   );
 
+  // Find all directives/*.ts files
+  Object.assign(
+    entries,
+    scanTsFiles(resolve(__dirname, 'directives'), 'directives')
+  );
+
   // Find all utils/*.ts files
   Object.assign(entries, scanTsFiles(resolve(__dirname, 'utils'), 'utils'));
 
