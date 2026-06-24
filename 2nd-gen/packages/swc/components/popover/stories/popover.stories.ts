@@ -191,14 +191,9 @@ export const Overview: Story = {
     'hide-arrow': false,
     for: 'overview-trigger',
     'accessible-label': 'Account',
-    'default-slot': accountCard,
+    'default-slot': `<div style="padding: 12px;">${accountCard}</div>`,
   },
   render: (args) => html`
-    <style>
-      swc-popover[for='overview-trigger'] {
-        --swc-popover-content-padding: 12px;
-      }
-    </style>
     <swc-button id="overview-trigger">Open popover</swc-button>
     ${template(args)}
   `,
