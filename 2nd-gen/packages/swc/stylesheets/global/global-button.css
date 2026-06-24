@@ -94,9 +94,10 @@
 }
 
 .swc-Button-icon,
-.swc-Button-pendingSpinner {
+.swc-PendingSpinner {
   --_swc-button-icon-size: var(--swc-button-icon-size, token("workflow-icon-size-100"));
   --_swc-button-icon-block-size: var(--swc-button-icon-block-size, var(--_swc-button-icon-size));
+  --_swc-pending-spinner-size: var(--_swc-button-icon-size);
 
   flex-shrink: 0;
   align-self: flex-start;
@@ -349,6 +350,7 @@
 }
 }
 
-.swc-Button {
+.swc-Button,
+.swc-Button-label {
 all: revert-layer !important;
 }
