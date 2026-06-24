@@ -14,12 +14,6 @@ A close button consists of:
 1. **Button** — native `<button type="button">` with delegated focus; handles pointer and keyboard activation
 2. **Icon** — cross icon (`aria-hidden="true"`); size follows the `size` attribute
 
-### Properties
-
-- **`accessible-label`** — required accessible name forwarded to the inner button as `aria-label`
-- **`size`** — visual size of the hit target and icon scale (`s`, `m`, `l`, `xl`)
-- **`static-color`** — static color treatment for display over colored or image backgrounds (`white`, `black`)
-
 <Canvas of={CloseButtonStories.Anatomy} />
 
 ## Options
@@ -28,10 +22,10 @@ A close button consists of:
 
 Close buttons come in four sizes to fit various contexts:
 
-- **Small (`s`)** — compact chrome such as dense toolbars or inline banners
-- **Medium (`m`)** — default size for dialogs, toasts, and most dismiss affordances
-- **Large (`l`)** — larger hit target when space allows
-- **Extra large (`xl`)** — maximum visibility for prominent dismiss controls
+- Small (`s`)
+- Medium (`m`)
+- Large (`l`)
+- Extra large (`xl`)
 
 <Canvas of={CloseButtonStories.Sizes} />
 
@@ -41,8 +35,6 @@ Use the `static-color` attribute when displaying over images or colored backgrou
 
 - **white** — use on dark or colored backgrounds for better contrast
 - **black** — use on light backgrounds for better contrast
-
-The canvas below uses the Storybook static-color demo layout: **white** on a dark gradient panel and **black** on a light gradient panel.
 
 <Canvas of={CloseButtonStories.StaticColors} />
 
