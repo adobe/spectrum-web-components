@@ -127,15 +127,18 @@ const accountCard = `
   </div>
 `;
 
-// Playground content with several focusable controls so the modal focus trap is
-// demonstrable: enable `modal` in the controls, open the popover, then press Tab
-// to see focus cycle within these buttons instead of escaping to the page.
-const playgroundContent = `
-  <div style="display: flex; flex-direction: column; gap: 12px;">
-    <p class="swc-Body swc-Body--sizeS">
-      Enable <code>modal</code> in the controls, then press Tab: focus stays
-      trapped within these controls.
-    </p>
+// A short prompt with two focusable buttons. Realistic content that also keeps
+// the modal focus trap demonstrable: toggle `modal` in the controls, open the
+// popover, and Tab cycles within these buttons instead of escaping to the page.
+const securityPanel = `
+  <div style="display: flex; flex-direction: column; gap: 16px; max-inline-size: 280px;">
+    <div style="display: flex; flex-direction: column; gap: 4px;">
+      <span class="swc-Title swc-Title--sizeS">Two-factor authentication</span>
+      <p class="swc-Body swc-Body--sizeS">
+        Add a verification step at sign-in so your account stays protected even
+        if your password is exposed.
+      </p>
+    </div>
     <swc-button-group align="end" size="s">
       <swc-button
         variant="secondary"
@@ -143,15 +146,14 @@ const playgroundContent = `
         size="s"
         onclick="this.closest('swc-popover').open = false"
       >
-        Back
+        Not now
       </swc-button>
-      <swc-button variant="secondary" size="s">Skip</swc-button>
       <swc-button
         variant="accent"
         size="s"
         onclick="this.closest('swc-popover').open = false"
       >
-        Confirm
+        Turn on
       </swc-button>
     </swc-button-group>
   </div>
@@ -168,11 +170,11 @@ export const Playground: Story = {
     placement: 'bottom',
     'hide-arrow': false,
     for: 'playground-trigger',
-    'accessible-label': 'Playground popover',
-    'default-slot': playgroundContent,
+    'accessible-label': 'Two-factor authentication',
+    'default-slot': securityPanel,
   },
   render: (args) => html`
-    <swc-button id="playground-trigger">Toggle popover</swc-button>
+    <swc-button id="playground-trigger">Security</swc-button>
     ${template(args)}
   `,
 };
@@ -187,6 +189,7 @@ export const Overview: Story = {
     placement: 'bottom',
     'hide-arrow': false,
     for: 'overview-trigger',
+    'accessible-label': 'Account',
     'default-slot': accountCard,
   },
   render: (args) => html`
@@ -203,7 +206,9 @@ export const Overview: Story = {
 export const CustomAnchor: Story = {
   args: {
     placement: 'bottom',
-    'default-slot': 'Anchored to the link, not the button that opened it.',
+    'accessible-label': 'Definition',
+    'default-slot': `Spectrum Web Components is Adobe's open-source library of
+      Spectrum-styled UI components.`,
   },
   render: (args) => {
     // The toggle control and the positioning anchor are different elements: the
@@ -242,8 +247,8 @@ export const CustomAnchor: Story = {
         <div
           style="display: flex; flex-direction: column; align-items: flex-start; gap: 24px;"
         >
-          <swc-button @click=${toggle}>Toggle popover</swc-button>
-          <a href="#anchor" id="custom-anchor">Anchored link</a>
+          <swc-button @click=${toggle}>Show definition</swc-button>
+          <a href="#anchor" id="custom-anchor">Spectrum Web Components</a>
         </div>
         ${template({ ...args, manual: true })}
       </div>
@@ -256,8 +261,21 @@ CustomAnchor.storyName = 'Custom anchor';
 export const VirtualAnchor: Story = {
   args: {
     manual: true,
-    'accessible-label': 'Point details',
-    'default-slot': 'Anchored to the point you activated, not an element.',
+    'accessible-label': 'Add comment',
+    'default-slot': `
+      <div style="display: flex; flex-direction: column; gap: 12px; max-inline-size: 220px;">
+        <p class="swc-Body swc-Body--sizeS">Leave a comment at this point.</p>
+        <swc-button-group align="end" size="s">
+          <swc-button
+            variant="accent"
+            size="s"
+            onclick="this.closest('swc-popover').open = false"
+          >
+            Add comment
+          </swc-button>
+        </swc-button-group>
+      </div>
+    `,
   },
   render: (args) => {
     // The anchor is a `VirtualTrigger` (an object with `getBoundingClientRect`),
@@ -291,7 +309,7 @@ export const VirtualAnchor: Story = {
           @click=${openAtPoint}
           style="inline-size: 320px; block-size: 120px; display: grid; place-items: center; border: 1px dashed currentColor; border-radius: 8px; background: transparent; color: inherit; cursor: crosshair;"
         >
-          Click anywhere in this area
+          Click anywhere to add a comment
         </button>
         ${template({ ...args })}
       </div>
@@ -324,9 +342,10 @@ const triggered = (
 
 export const Anatomy: Story = {
   args: {
-    'default-slot': 'Anchored content, with an arrow pointing at the trigger.',
+    'accessible-label': 'Autosave',
+    'default-slot': 'Your changes are saved automatically as you edit.',
   },
-  render: (args) => triggered({ ...args }, 'anatomy-trigger', 'Show popover'),
+  render: (args) => triggered({ ...args }, 'anatomy-trigger', 'Autosave'),
   tags: ['anatomy'],
 };
 
@@ -335,54 +354,32 @@ export const Anatomy: Story = {
 // ──────────────────────────
 
 export const Placement: Story = {
+  args: {
+    'accessible-label': 'Draft visibility',
+    'default-slot': 'Drafts stay private until you publish them.',
+  },
   render: (args) => html`
-    ${triggered(
-      { ...args, placement: 'top', 'default-slot': 'Above the trigger.' },
-      'placement-top',
-      'Top'
-    )}
-    ${triggered(
-      { ...args, placement: 'right', 'default-slot': 'Right of the trigger.' },
-      'placement-right',
-      'Right'
-    )}
-    ${triggered(
-      { ...args, placement: 'bottom', 'default-slot': 'Below the trigger.' },
-      'placement-bottom',
-      'Bottom'
-    )}
-    ${triggered(
-      { ...args, placement: 'left', 'default-slot': 'Left of the trigger.' },
-      'placement-left',
-      'Left'
-    )}
+    ${triggered({ ...args, placement: 'top' }, 'placement-top', 'Top')}
+    ${triggered({ ...args, placement: 'right' }, 'placement-right', 'Right')}
+    ${triggered({ ...args, placement: 'bottom' }, 'placement-bottom', 'Bottom')}
+    ${triggered({ ...args, placement: 'left' }, 'placement-left', 'Left')}
   `,
   parameters: { flexLayout: 'row-wrap' },
   tags: ['options'],
 };
 
 export const Sizes: Story = {
+  args: {
+    'accessible-label': 'Notification settings',
+    'default-slot': `We send a monthly summary of your account activity. Change
+      how often you receive it, or turn it off entirely, in your notification
+      settings.`,
+  },
   render: (args) => html`
-    ${triggered(
-      { ...args, size: 's', 'default-slot': 'Small — fixed 336px width.' },
-      'size-s',
-      'Small'
-    )}
-    ${triggered(
-      { ...args, size: 'm', 'default-slot': 'Medium — fixed 416px width.' },
-      'size-m',
-      'Medium'
-    )}
-    ${triggered(
-      { ...args, size: 'l', 'default-slot': 'Large — fixed 576px width.' },
-      'size-l',
-      'Large'
-    )}
-    ${triggered(
-      { ...args, 'default-slot': 'Unset — fits its content.' },
-      'size-auto',
-      'Default'
-    )}
+    ${triggered({ ...args, size: 's' }, 'size-s', 'Small')}
+    ${triggered({ ...args, size: 'm' }, 'size-m', 'Medium')}
+    ${triggered({ ...args, size: 'l' }, 'size-l', 'Large')}
+    ${triggered({ ...args }, 'size-auto', 'Default')}
   `,
   parameters: { flexLayout: 'row-wrap' },
   tags: ['options'],
@@ -391,11 +388,10 @@ export const Sizes: Story = {
 export const HideArrow: Story = {
   args: {
     'hide-arrow': true,
-    'default-slot':
-      'No arrow tip; the surface composites a rectangular shadow.',
+    'accessible-label': 'Sync status',
+    'default-slot': 'Connected to Google Drive. Last synced a few moments ago.',
   },
-  render: (args) =>
-    triggered({ ...args }, 'hide-arrow-trigger', 'Show popover'),
+  render: (args) => triggered({ ...args }, 'hide-arrow-trigger', 'Sync status'),
   tags: ['options'],
 };
 HideArrow.storyName = 'Hide arrow';
@@ -406,9 +402,10 @@ HideArrow.storyName = 'Hide arrow';
 
 export const States: Story = {
   args: {
-    'default-slot': 'The popover is open; click the trigger to close it.',
+    'accessible-label': 'Messages',
+    'default-slot': 'You have 3 unread messages in your inbox.',
   },
-  render: (args) => triggered({ ...args }, 'states-trigger', 'Toggle open'),
+  render: (args) => triggered({ ...args }, 'states-trigger', 'Messages'),
   tags: ['states'],
 };
 
@@ -431,7 +428,7 @@ export const Modal: Story = {
 // ────────────────────────────────
 
 export const Accessibility: Story = {
-  args: { 'default-slot': accountCard },
+  args: { 'accessible-label': 'Account', 'default-slot': accountCard },
   render: (args) => triggered({ ...args }, 'a11y-trigger', 'Account'),
   tags: ['a11y'],
 };
