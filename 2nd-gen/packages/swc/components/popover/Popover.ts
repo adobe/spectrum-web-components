@@ -58,12 +58,11 @@ export class Popover extends PopoverBase {
   // remount (potentially under a different platform scale) recomputes.
   private _arrowHeight?: number;
 
-  // The arrow clearance lives in this layer's CSS (`--_swc-popover-tip-height`
-  // on `.swc-Popover`); read it here so the base never reaches into the surface
-  // styles. The token is stable for the element's lifetime, so the
-  // `getComputedStyle` reflow is memoized after the first read rather than run on
-  // every re-anchor. Falls back to 0 (uncached) if the surface is not yet
-  // rendered/styled, so a later read recomputes once it is.
+  // The arrow clearance lives in this layer's CSS (`--_swc-popover-tip-height`),
+  // read here so the base never reaches into the surface styles. The token is
+  // stable for the element's lifetime, so the `getComputedStyle` reflow is
+  // memoized after the first read. Falls back to 0 (uncached) before the surface
+  // is rendered, so a later read recomputes once it is.
   protected override get arrowHeight(): number {
     if (this._arrowHeight !== undefined) {
       return this._arrowHeight;
@@ -96,10 +95,9 @@ export class Popover extends PopoverBase {
           `}
     `;
 
-    // The render shape branches on `modal`: a `<div popover="auto">` in the
-    // default (non-modal) mode, a `<dialog>` (`.showModal()`) in modal mode. The
-    // event handlers are defined on the base and bound here so the base owns the
-    // behavior while this layer owns only the markup.
+    // Branch on `modal`: a `<div popover="auto">` in the default mode, a
+    // `<dialog>` in modal mode. Handlers are defined on the base and bound here,
+    // so the base owns behavior and this layer owns only markup.
     return this.modal
       ? html`
           <dialog

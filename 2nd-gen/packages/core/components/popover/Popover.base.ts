@@ -133,12 +133,10 @@ export abstract class PopoverBase extends SpectrumElement {
   @property({ type: String, reflect: true })
   public size?: PopoverSize;
 
-  // The computed placement after the `flip` middleware reorients the popover is
-  // intentionally kept off the public property surface: a readonly property would
-  // still be writable at runtime and could desync the component from the
-  // controller. It is reflected as the internal `actual-placement` host attribute
-  // (set via `setAttribute`, removed on close) for CSS only, mirroring Tooltip.
-  // Consumers read the requested side via `placement`.
+  // The flipped placement is kept off the public property surface (a readonly
+  // property is still writable at runtime and could desync from the controller).
+  // It is reflected as the internal `actual-placement` host attribute for CSS
+  // only, mirroring Tooltip; consumers read the requested side via `placement`.
 
   /**
    * Hide the popover's arrow (tip). The arrow is shown by default.
@@ -276,11 +274,10 @@ export abstract class PopoverBase extends SpectrumElement {
   private _clickTrigger: HTMLElement | null = null;
 
   /**
-   * True between a trigger press start (`pointerdown` or `touchstart`) and its
-   * `click`, so a light-dismiss that fires inside that window can be attributed to
-   * the trigger press. Both events open the window so it is set before the
-   * dismiss on mouse and touch alike (on touch the dismiss can fire off
-   * `touchstart`, before `pointerdown` would run).
+   * True between a trigger press start (`pointerdown`/`touchstart`) and its
+   * `click`, so a light-dismiss inside that window is attributed to the press.
+   * Both events open it, covering touch (where the dismiss can fire off
+   * `touchstart` before `pointerdown`).
    */
   private _triggerPointerActive = false;
 
@@ -340,12 +337,10 @@ export abstract class PopoverBase extends SpectrumElement {
     this._clearTriggerAria();
     this._interactiveElement = null;
     this._anchor = null;
-    // Focus restoration is handled by the close lifecycle: default mode in
-    // `_onBeforeToggle`, modal mode natively by `<dialog>`. Both close routes
-    // (Escape, outside click, programmatic `open=false`) pass through there.
-    // Removing an open popover from the DOM is not handled: the browser has
-    // already moved focus to `<body>` before this runs, so the trigger to
-    // restore to can no longer be inferred.
+    // Focus restoration on close is handled elsewhere (default mode in
+    // `_onBeforeToggle`, modal mode natively). Removing an open popover from the
+    // DOM is not: the browser has already moved focus to `<body>` before this
+    // runs, so there is no trigger to restore to.
   }
 
   protected override update(changedProperties: PropertyValues): void {
@@ -463,13 +458,9 @@ export abstract class PopoverBase extends SpectrumElement {
     }
 
     // Click-to-toggle on the trigger host, unless the consumer drives `open`
-    // themselves (`manual`). Listens on the host so clicks bubbling from an
-    // inner button are caught. The `pointerdown` / `touchstart` listeners
-    // (capture, so they run before the browser's light-dismiss) open the gesture
-    // window; `_onBeforeToggle` then attributes the dismiss to the press and
-    // `_onTriggerClick` reads the trailing click as a close, not a reopen. Both
-    // press-start events are wired so the window opens before the dismiss on
-    // touch too (where it can fire off `touchstart`).
+    // themselves (`manual`). Listens on the host so clicks bubbling from an inner
+    // button are caught. The capturing `pointerdown`/`touchstart` listeners open
+    // the reopen-guard gesture window (see `_onTriggerPressStart`).
     const clickTrigger = this.manual ? null : trigger;
     if (clickTrigger !== this._clickTrigger) {
       this._removeTriggerListeners();
@@ -509,26 +500,23 @@ export abstract class PopoverBase extends SpectrumElement {
     this._clickTrigger = null;
   }
 
-  // The trigger sits outside the popover, so in the default (auto) mode pressing
-  // it while open is a native light-dismiss: the browser hides the popover before
-  // the click fires. Open the gesture window at press start (capture, so it runs
-  // before the dismiss) so `_onBeforeToggle` can attribute that close to this
-  // press. Bound to both `pointerdown` and `touchstart` because on touch the
-  // dismiss can fire off `touchstart`, before a `pointerdown` listener runs.
-  // Only sets the active flag, never clears `_dismissedByTriggerPress`: on touch
-  // both events fire for one press, and the second must not reset a dismissal the
-  // light-dismiss already recorded. `_onTriggerClick` clears it per gesture.
+  // In the default mode, pressing the (outside) trigger while open is a native
+  // light-dismiss: the browser hides the popover before the click fires. Opening
+  // the gesture window at press start (capture, before the dismiss) lets
+  // `_onBeforeToggle` attribute that close to the press, so `_onTriggerClick`
+  // reads the trailing click as a close, not a reopen. Only sets the flag, never
+  // clears `_dismissedByTriggerPress`: on touch both `pointerdown` and
+  // `touchstart` fire for one press, and the second must not reset a dismissal
+  // already recorded (`_onTriggerClick` clears it per gesture).
   private _onTriggerPressStart = (): void => {
     this._triggerPointerActive = true;
   };
 
-  // If the trigger press light-dismissed the popover (recorded in
-  // `_onBeforeToggle`), consume this click so it does not toggle back open;
-  // otherwise toggle from the live state. The decision keys off the real close
-  // event, so it is correct whether or not a dismiss fired (e.g. keyboard
-  // activation, or environments without native light-dismiss) with no timer.
-  // (`popovertarget`, which the browser would correlate automatically, can't
-  // reach the shadow-DOM surface across roots.)
+  // If the press light-dismissed the popover (recorded in `_onBeforeToggle`),
+  // consume this click so it does not toggle back open; otherwise toggle from the
+  // live state. Keying off the real close event makes this correct with or without
+  // a native dismiss (e.g. keyboard activation) and needs no timer. (`popovertarget`
+  // can't reach the shadow-DOM surface across roots, so the correlation is manual.)
   private _onTriggerClick = (): void => {
     const dismissedByThisGesture = this._dismissedByTriggerPress;
     this._triggerPointerActive = false;
@@ -573,19 +561,18 @@ export abstract class PopoverBase extends SpectrumElement {
       return;
     }
     const showArrow = !this.hideArrow;
-    // Re-gate the surface and tip for this positioning session by clearing
-    // `actual-placement`. `_placementController.start` calls `stop()`, which clears
-    // the surface's inline `translate` back to the 0,0 origin until the (async)
-    // first compute re-anchors it; the stylesheet only reveals the surface and the
-    // tip once `actual-placement` is present, so they stay hidden through that
-    // window (including a rapid reopen during the close fade) instead of painting
-    // at 0,0. Re-set by onPlacementChange once the new session anchors.
+    // Clear `actual-placement` to re-gate the surface and tip for this session:
+    // `start()` calls `stop()`, which resets the inline `translate` to the 0,0
+    // origin until the async first compute re-anchors. The stylesheet reveals the
+    // surface and tip only once `actual-placement` is present, so they stay hidden
+    // through that window (and a rapid reopen during the close fade) instead of
+    // painting at 0,0. Re-set by `onPlacementChange` once the session anchors.
     this.removeAttribute('actual-placement');
-    // The arrow's height is added to the trigger gap so the surface clears the
-    // tip on every side. It is applied through the controller's main-axis offset
-    // (which is direction-aware) rather than a CSS margin, since a margin only
-    // shifts the absolutely-positioned surface on its block-start / inline-start
-    // sides. `arrowHeight` is supplied by the rendering layer.
+    // Add the arrow height to the trigger gap so the surface clears the tip on
+    // every side. Applied through the controller's direction-aware main-axis
+    // offset, not a CSS margin (a margin only shifts the absolutely-positioned
+    // surface on its block-/inline-start sides). `arrowHeight` comes from the
+    // rendering layer.
     this._placementController.start(this._anchor, floating, {
       placement: this.placement,
       offset: this.offset + (showArrow ? this.arrowHeight : 0),
@@ -595,23 +582,17 @@ export abstract class PopoverBase extends SpectrumElement {
       tipElement: showArrow ? (this.tipElement ?? undefined) : undefined,
       tipPadding: this.tipPadding,
       onPlacementChange: (next) => {
-        // The first compute of a session anchors the surface (the controller
-        // resets its last-notified placement on `stop()`, so this always fires
-        // once positioning lands). Expose the computed physical side as the
-        // `actual-placement` host attribute for CSS: it orients the tip and, by
-        // its presence, reveals the surface and tip (gated off until now so the
-        // entry fade runs from the anchored position, not the 0,0 origin). Not a
-        // public property; removed in `_stopPositioningWhenClosed`.
-        //
-        // The reveal therefore depends on the controller completing a compute.
-        // The controller skips it when the floating element measures 0x0, but the
-        // surface always has a border plus padded `.swc-Popover-content`, so it is
-        // never zero-sized while open; a content-less popover would still have
-        // chrome. If that ever changes, gate the reveal independently of the side.
+        // Expose the computed physical side as the `actual-placement` host
+        // attribute for CSS: it orients the tip and, by its presence, reveals the
+        // surface and tip (gated off until now so the entry fade runs from the
+        // anchored position, not the 0,0 origin). The first compute of a session
+        // always fires this (`stop()` resets the last-notified placement). The
+        // controller skips the compute only for a 0x0 element, but the surface
+        // always has border and padded chrome, so it is never zero-sized while
+        // open. Not a public property; removed in `_stopPositioningWhenClosed`.
         this.setAttribute('actual-placement', physicalSide(next));
-        // The surface is now anchored and revealed; move focus into it (a pending
-        // default-mode open). Focusing earlier, at the 0,0 origin, would shift
-        // layout/scroll.
+        // Now anchored and revealed: move focus in for a pending default-mode
+        // open. Focusing earlier, at the 0,0 origin, would shift layout/scroll.
         if (this._pendingFocusOnOpen) {
           this._pendingFocusOnOpen = false;
           this._focusSurface();
@@ -649,12 +630,11 @@ export abstract class PopoverBase extends SpectrumElement {
       const dialog = element as HTMLDialogElement;
       let shown = dialog.open;
       if (!shown) {
-        // `showModal()` moves focus into the dialog synchronously, which scrolls
-        // the page to reveal it: positioning is async (it awaits
-        // `document.fonts.ready`), so the surface is still at its 0,0 origin when
-        // focus lands, and `showModal()` has no `preventScroll` option. Capture
-        // the scroll position and restore it immediately after; the focus scroll
-        // happens within the call, so the restore is seamless (no paint between).
+        // `showModal()` synchronously moves focus into the dialog, scrolling the
+        // page to it, and has no `preventScroll` option. Positioning is async, so
+        // the surface is still at its 0,0 origin when focus lands. Capture and
+        // restore the scroll position around the call; it is synchronous, so the
+        // restore is seamless (no paint between).
         const { scrollX, scrollY } = window;
         try {
           dialog.showModal();
@@ -723,12 +703,11 @@ export abstract class PopoverBase extends SpectrumElement {
     if (!element) {
       return;
     }
-    // Only attribute a close source when something is actually open to hide.
-    // Setting it unconditionally here would poison the next real close: the
-    // initial render calls `_hide()` for the default `open = false`, and a
-    // stale `'programmatic'` source would survive (no `beforetoggle` fires to
-    // clear it) and make the first genuine light-dismiss read as non-`outside`,
-    // defeating the trigger-click reopen guard.
+    // Attribute a close source only when actually hiding an open element. Setting
+    // it unconditionally would poison the next real close: the initial render
+    // calls `_hide()` for the default `open = false`, and a stale `'programmatic'`
+    // source would survive (no `beforetoggle` clears it), making the first genuine
+    // light-dismiss read as non-`outside` and defeating the reopen guard.
     if (this.modal) {
       const dialog = element as HTMLDialogElement;
       if (dialog.open) {
@@ -746,17 +725,12 @@ export abstract class PopoverBase extends SpectrumElement {
   }
 
   private _closeTeardown(): void {
-    // The trigger-click reopen guard is gesture-based (see
-    // `_onTriggerPressStart`), so the close needs no source-specific handling
-    // here.
     unregisterDismissible(this);
     this._removeEscapeListener();
     this._scrollLock.unlock();
-    // `aria-expanded` is written by `updated()` on every `open` change (and by
-    // `_wireTrigger` on initial wiring), so it is not set again here.
-    // Positioning is torn down only after the close transition finishes
-    // (see `_stopPositioningWhenClosed`), so the arrow keeps its computed
-    // offset during the fade instead of snapping back to the edge.
+    // `aria-expanded` is written by `updated()` on every `open` change, so it is
+    // not set here. Positioning is torn down only after the close transition (see
+    // `_stopPositioningWhenClosed`) so the arrow keeps its offset during the fade.
   }
 
   // Tear down positioning once the close animation has completed. Guarded by
@@ -830,10 +804,10 @@ export abstract class PopoverBase extends SpectrumElement {
     this._closeTeardown();
   };
 
-  // Modal mode: a pointerdown on the dialog's backdrop is an outside dismiss.
-  // The backdrop targets the dialog element itself, but so does its own border,
-  // so confirm the point is actually outside the dialog box before closing —
-  // otherwise a press on the 1px border would dismiss like a backdrop click.
+  // Modal mode: a pointerdown on the dialog's backdrop is an outside dismiss. The
+  // backdrop targets the dialog element itself, as does its own border, so confirm
+  // the point is outside the dialog box before closing; otherwise a press on the
+  // 1px border would dismiss like a backdrop click.
   protected _onPointerDown = (event: PointerEvent): void => {
     const dialog = this.internalElement;
     if (!dialog || event.target !== dialog) {
