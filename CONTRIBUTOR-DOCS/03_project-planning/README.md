@@ -64,6 +64,7 @@
     - Progress Circle
     - Radio
     - Search
+    - Sidenav
     - Slider
     - Status Light
     - Swatch
