@@ -217,6 +217,7 @@
 }
 }
 
-.swc-ActionButton {
+.swc-ActionButton,
+.swc-ActionButton-label {
 all: revert-layer !important;
 }
