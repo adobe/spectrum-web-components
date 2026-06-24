@@ -81,6 +81,8 @@ If no fragment exists yet but the shared pattern is real, create a new file in `
 
 **Step 4 — Execute the phase.** Follow **[Phase 5: Styling](../../../CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md#phase-5-styling)** in the washing machine workflow doc — it covers what to do, what to check, common problems, and the quality gate for this phase.
 
+Before finalizing the CSS, check for a Spectrum 2 design guideline that is not visible from token diffs: **text-based components must have no block padding.** If the component has no visible bounding box (no background color, no border on its outer container — status light, checkbox, radio, and field label are the canonical cases), remove any `min-block-size` and `padding-block` rules. The block height must derive from `font-size` and `line-height` alone. Keeping those rules is a migration artifact, not a valid override. See [anti-pattern 12](../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/05_anti-patterns.md#12-block-padding-on-text-based-components) for the full rationale and correct approach.
+
 When converting `--spectrum-*` properties to `token()` calls (by stripping the `--spectrum-` prefix), verify each resulting token name against the known-valid set. If a `token()` call produces an error in the VS Code extension, run the `fix:tokens` script first before doing any manual correction:
 
 ```bash
