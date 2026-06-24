@@ -22,16 +22,12 @@
 }
 
 .swc-StatusLight {
-  --_swc-status-light-padding-block: var(--swc-status-light-padding-block, token("component-padding-vertical-100"));
-  --_swc-status-light-top-to-dot: var(--swc-status-light-top-to-dot, token("status-light-top-to-dot-medium"));
-  --_swc-status-light-text-to-visual: var(--swc-status-light-text-to-visual, token("status-light-text-to-visual-100"));
+  --_swc-status-light-text-to-visual: var(--swc-status-light-text-to-visual, token("base-gap-medium"));
   --_swc-status-light-line-height: var(--swc-status-light-line-height, token("line-height-font-size-100"));
 
   display: flex;
   gap: var(--_swc-status-light-text-to-visual);
   align-items: flex-start;
-  min-block-size: var(--swc-status-light-height, token("component-height-100"));
-  padding-block: var(--_swc-status-light-padding-block);
   font-size: var(--swc-status-light-font-size, token("font-size-100"));
   font-style: token("default-font-style");
   font-weight: token("regular-font-weight");
@@ -52,7 +48,7 @@
     flex-shrink: 0;
     inline-size: var(--_swc-status-light-dot-size);
     block-size: var(--_swc-status-light-dot-size);
-    margin-block-start: calc(var(--_swc-status-light-top-to-dot) - var(--_swc-status-light-padding-block));
+    margin-block-start: calc((1lh - var(--_swc-status-light-dot-size)) / 2);
     background-color: var(--swc-status-light-dot-color, token("neutral-visual-color"));
     border-radius: token("corner-radius-full");
     content: "";
@@ -60,9 +56,7 @@
 }
 
 :host([size="s"]) {
-  --swc-status-light-padding-block: token("component-padding-vertical-75");
-  --swc-status-light-top-to-dot: token("status-light-top-to-dot-small");
-  --swc-status-light-text-to-visual: token("status-light-text-to-visual-75");
+  --swc-status-light-text-to-visual: token("base-gap-small");
   --swc-status-light-height: token("component-height-75");
   --swc-status-light-dot-size: token("status-light-dot-size-small");
   --swc-status-light-font-size: token("font-size-75");
@@ -70,9 +64,7 @@
 }
 
 :host([size="l"]) {
-  --swc-status-light-padding-block: token("component-padding-vertical-200");
-  --swc-status-light-top-to-dot: token("status-light-top-to-dot-large");
-  --swc-status-light-text-to-visual: token("status-light-text-to-visual-200");
+  --swc-status-light-text-to-visual: token("base-gap-large");
   --swc-status-light-height: token("component-height-200");
   --swc-status-light-dot-size: token("status-light-dot-size-large");
   --swc-status-light-font-size: token("font-size-200");
@@ -80,9 +72,7 @@
 }
 
 :host([size="xl"]) {
-  --swc-status-light-padding-block: token("component-padding-vertical-300");
-  --swc-status-light-top-to-dot: token("status-light-top-to-dot-extra-large");
-  --swc-status-light-text-to-visual: token("status-light-text-to-visual-300");
+  --swc-status-light-text-to-visual: token("base-gap-extra-large");
   --swc-status-light-height: token("component-height-300");
   --swc-status-light-dot-size: token("status-light-dot-size-extra-large");
   --swc-status-light-font-size: token("font-size-300");

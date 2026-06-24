@@ -54,10 +54,10 @@
 /* ── Header button ──────────────────────────────────────────────────── */
 
 .swc-AccordionItem-header {
-  --_swc-accordion-item-padding-top: var(--swc-accordion-item-padding-top, token("accordion-top-to-text-medium"));
-  --_swc-accordion-item-padding-bottom: var(--swc-accordion-item-padding-bottom, token("accordion-bottom-to-text-medium"));
-  --_swc-accordion-item-disclosure-indicator-gap: var(--swc-accordion-item-disclosure-indicator-gap, token("accordion-disclosure-indicator-to-text-medium"));
-  --_swc-accordion-item-edge-to-content-area: var(--swc-accordion-item-edge-to-content-area, token("accordion-edge-to-content-area-medium"));
+  --_swc-accordion-item-padding-top: var(--swc-accordion-item-padding-top, token("base-padding-vertical-large"));
+  --_swc-accordion-item-padding-bottom: var(--swc-accordion-item-padding-bottom, token("base-padding-vertical-large"));
+  --_swc-accordion-item-disclosure-indicator-gap: var(--swc-accordion-item-disclosure-indicator-gap, token("base-gap-large"));
+  --_swc-accordion-item-edge-to-content-area: var(--swc-accordion-item-edge-to-content-area, token("container-padding-extra-small"));
   --_swc-accordion-item-header-font-size: var(--swc-accordion-item-header-font-size, token("font-size-200"));
 
   display: flex;
@@ -89,7 +89,7 @@
 .swc-AccordionItem-header:focus-visible {
   border-radius: var(--swc-accordion-item-focus-indicator-corner-radius, token("corner-radius-medium-size-medium"));
   outline: token("focus-indicator-thickness") solid token("focus-indicator-color");
-  outline-offset: calc(token("accordion-focus-indicator-gap") * -1);
+  outline-offset: calc(token("focus-ring-gap") * -1);
 }
 
 .swc-AccordionItem:has(.swc-AccordionItem-header:hover) {
@@ -112,8 +112,8 @@
 
 /* Default size (m): Chevron100 */
 .swc-AccordionItem-indicator {
-  --swc-icon-inline-size: token("chevron-icon-size-100");
-  --swc-icon-block-size: token("chevron-icon-size-100");
+  --swc-icon-inline-size: token("ui-icon-medium");
+  --swc-icon-block-size: token("ui-icon-medium");
 
   flex-shrink: 0;
   rotate: 0deg;
@@ -127,20 +127,20 @@
 
 /* Size: small, Chevron75 */
 :host([size="s"]) .swc-AccordionItem-indicator {
-  --swc-icon-inline-size: token("chevron-icon-size-75");
-  --swc-icon-block-size: token("chevron-icon-size-75");
+  --swc-icon-inline-size: token("ui-icon-small");
+  --swc-icon-block-size: token("ui-icon-small");
 }
 
 /* Size: large, Chevron200 */
 :host([size="l"]) .swc-AccordionItem-indicator {
-  --swc-icon-inline-size: token("chevron-icon-size-200");
-  --swc-icon-block-size: token("chevron-icon-size-200");
+  --swc-icon-inline-size: token("ui-icon-large");
+  --swc-icon-block-size: token("ui-icon-large");
 }
 
 /* Size: extra-large, Chevron300 */
 :host([size="xl"]) .swc-AccordionItem-indicator {
-  --swc-icon-inline-size: token("chevron-icon-size-300");
-  --swc-icon-block-size: token("chevron-icon-size-300");
+  --swc-icon-inline-size: token("ui-icon-extra-large");
+  --swc-icon-block-size: token("ui-icon-extra-large");
 }
 
 :host([open]) .swc-AccordionItem-indicator {
@@ -178,7 +178,7 @@
   flex: 0 0 auto;
   gap: token("spacing-100");
   align-items: center;
-  margin-inline-end: var(--swc-accordion-item-edge-to-content-area, token("accordion-edge-to-content-area-medium"));
+  margin-inline-end: var(--swc-accordion-item-edge-to-content-area, token("container-padding-extra-small"));
 }
 
 /* ── Content panel ──────────────────────────────────────────────────── */
@@ -194,9 +194,9 @@
 /* Inner wrapper holds padding and typography. The outer container (.swc-AccordionItem-content)
    is padding-free so height: 0 collapses it cleanly in the @supports animation block. */
 .swc-AccordionItem-contentBody {
-  --_swc-accordion-item-content-padding-inline: var(--swc-accordion-item-content-padding-inline, token("accordion-content-area-edge-to-content-medium"));
+  --_swc-accordion-item-content-padding-inline: var(--swc-accordion-item-content-padding-inline, token("container-padding-extra-small"));
 
-  padding-block: token("accordion-content-area-top-to-content") token("accordion-content-area-bottom-to-content");
+  padding-block: token("container-padding-extra-small") token("container-padding-medium");
   padding-inline: var(--_swc-accordion-item-content-padding-inline);
   font-size: token("font-size-100");
   font-weight: token("regular-font-weight");
@@ -219,36 +219,36 @@
 
 :host([size="s"]) {
   --swc-accordion-item-focus-indicator-corner-radius: token("corner-radius-medium-size-small");
-  --swc-accordion-item-padding-top: token("accordion-top-to-text-small");
-  --swc-accordion-item-padding-bottom: token("accordion-bottom-to-text-small");
-  --swc-accordion-item-disclosure-indicator-gap: token("accordion-disclosure-indicator-to-text-small");
-  --swc-accordion-item-edge-to-content-area: token("accordion-edge-to-content-area-small");
+  --swc-accordion-item-padding-top: token("base-padding-vertical-medium");
+  --swc-accordion-item-padding-bottom: token("base-padding-vertical-medium");
+  --swc-accordion-item-disclosure-indicator-gap: token("base-gap-medium");
+  --swc-accordion-item-edge-to-content-area: token("container-padding-extra-small");
   --swc-accordion-item-header-font-size: token("font-size-100");
-  --swc-accordion-item-content-padding-inline: token("accordion-content-area-edge-to-content-small");
+  --swc-accordion-item-content-padding-inline: token("container-padding-extra-small");
 }
 
 /* ── Size: large ────────────────────────────────────────────────────── */
 
 :host([size="l"]) {
   --swc-accordion-item-focus-indicator-corner-radius: token("corner-radius-medium-size-large");
-  --swc-accordion-item-padding-top: token("accordion-top-to-text-large");
-  --swc-accordion-item-padding-bottom: token("accordion-bottom-to-text-large");
-  --swc-accordion-item-disclosure-indicator-gap: token("accordion-disclosure-indicator-to-text-large");
-  --swc-accordion-item-edge-to-content-area: token("accordion-edge-to-content-area-large");
+  --swc-accordion-item-padding-top: token("base-padding-vertical-extra-large");
+  --swc-accordion-item-padding-bottom: token("base-padding-vertical-extra-large");
+  --swc-accordion-item-disclosure-indicator-gap: token("base-gap-extra-large");
+  --swc-accordion-item-edge-to-content-area: token("container-padding-small");
   --swc-accordion-item-header-font-size: token("font-size-300");
-  --swc-accordion-item-content-padding-inline: token("accordion-content-area-edge-to-content-large");
+  --swc-accordion-item-content-padding-inline: token("container-padding-small");
 }
 
 /* ── Size: extra-large ──────────────────────────────────────────────── */
 
 :host([size="xl"]) {
   --swc-accordion-item-focus-indicator-corner-radius: token("corner-radius-medium-size-extra-large");
-  --swc-accordion-item-padding-top: token("accordion-top-to-text-extra-large");
-  --swc-accordion-item-padding-bottom: token("accordion-bottom-to-text-extra-large");
-  --swc-accordion-item-disclosure-indicator-gap: token("accordion-disclosure-indicator-to-text-extra-large");
-  --swc-accordion-item-edge-to-content-area: token("accordion-edge-to-content-area-extra-large");
+  --swc-accordion-item-padding-top: token("base-padding-vertical-2x-large");
+  --swc-accordion-item-padding-bottom: token("base-padding-vertical-2x-large");
+  --swc-accordion-item-disclosure-indicator-gap: token("base-gap-2x-large");
+  --swc-accordion-item-edge-to-content-area: token("container-padding-medium");
   --swc-accordion-item-header-font-size: token("font-size-400");
-  --swc-accordion-item-content-padding-inline: token("accordion-content-area-edge-to-content-extra-large");
+  --swc-accordion-item-content-padding-inline: token("container-padding-medium");
 }
 
 /* ── Progressive enhancement: height animation ───────────────────────
