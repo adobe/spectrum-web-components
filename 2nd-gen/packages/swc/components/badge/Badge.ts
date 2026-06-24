@@ -37,7 +37,7 @@ import styles from './badge.css';
  *
  * @example
  * <swc-badge variant="neutral" fixed="fill">
- *   <swc-icon slot="icon" aria-hidden="true">
+ *   <swc-icon slot="icon">
  *     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10">...</svg>
  *   </swc-icon>
  *   Verified

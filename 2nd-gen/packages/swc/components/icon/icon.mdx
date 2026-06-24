@@ -23,19 +23,19 @@ An icon consists of:
 
 ### Sizes
 
-Icons come in five sizes to fit different layout contexts:
+Icons come in five sizes to fit with component sizes. Refer to specific components for recommended size pairings.
 
-- **Extra-small (`xs`)**: dense UIs and compact metadata rows
-- **Small (`s`)**: supporting iconography in constrained spaces
-- **Medium (`m`)**: default size for general component usage
-- **Large (`l`)**: prominent icon usage in larger controls
-- **Extra-large (`xl`)**: high-emphasis icon presentation
+- Extra-small (`xs`)
+- Small (`s`)
+- Medium (`m`)
+- Large (`l`)
+- Extra-large (`xl`)
 
 <Canvas of={IconStories.Sizes} />
 
 ### Inline SVG source
 
-Provide icon artwork as slotted SVG. Spectrum 2 does not include iconsets or a `name` attribute. Copy or import SVG from your design source and slot it directly:
+Provide icon artwork as slotted SVG. Spectrum 2 does not include iconsets or a `name` attribute. Copy or import SVG from your design source and slot it directly. Keep the `xmlns` and `viewBox` attributes, and remove `width` or `height` attributes so the icon can receive dimensions from the component `size` attribute.
 
 ```html
 <swc-icon label="Expand">
@@ -61,7 +61,7 @@ The `<swc-icon>` element implements several accessibility features:
 ### Best practices
 
 - Always provide a descriptive `label` for informative icons
-- Use empty labels only for purely decorative icons
+- Omit labels only for purely decorative icons
 - Keep labels short and specific (e.g., "Expand" instead of "Icon")
 - When an icon accompanies visible text, omit `label` so `<swc-icon>` treats it as decorative and hides it from assistive technology
 

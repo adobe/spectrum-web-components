@@ -69,7 +69,7 @@ The `name` attribute (iconset registry lookup) and `src` attribute (image URL) h
 
 **Migrating `name`-based icons:**
 
-Copy the SVG from your design source or icon library and slot it directly:
+Copy the SVG from your design source or icon library and slot it directly. Keep `xmlns` and `viewBox`, and remove any `width` or `height` attributes so `<swc-icon size="...">` controls dimensions consistently:
 
 ```html
 <!-- Before -->
@@ -85,7 +85,7 @@ Copy the SVG from your design source or icon library and slot it directly:
 </swc-icon>
 ```
 
-**With Lit:**
+**In templates (including Lit):**
 
 ```ts
 import { html } from 'lit';
@@ -154,7 +154,7 @@ Save
 ## Accessibility
 
 - The component always sets `role="img"` on the slotted SVG.
-- Without `label`, `aria-hidden="true"` is set on both the host and the slotted SVG, hiding the icon entirely from assistive technology. Use this for decorative icons that appear alongside visible text.
+- Without `label`, `aria-hidden="true"` is set on both the host and the slotted SVG, and `focusable="false"` is applied to the slotted SVG. This hides decorative icons from assistive technology and avoids SVG focus behavior in legacy screen reader/browser combinations.
 - When `label` is set, `aria-hidden` is removed from both the host and the SVG, and `aria-label` is applied to the SVG so screen readers announce the icon with a meaningful name.
 - `<swc-icon>` is not focusable. For interactive icons, wrap them in a `<button>` or `<a>` element and set the accessible name on the interactive wrapper rather than on the icon.
 

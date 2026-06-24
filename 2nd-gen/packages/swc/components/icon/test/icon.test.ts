@@ -123,6 +123,10 @@ export const NoLabelAriaHiddenTest: Story = {
         'slotted SVG has no aria-label when icon has no label'
       ).toBe(false);
       expect(
+        svg.getAttribute('focusable'),
+        'slotted SVG sets focusable="false" when icon has no label'
+      ).toBe('false');
+      expect(
         icon.getAttribute('aria-hidden'),
         'host element has aria-hidden="true" when no label'
       ).toBe('true');
@@ -151,6 +155,10 @@ export const LabelTogglingTest: Story = {
         svg().getAttribute('aria-hidden'),
         'SVG has no aria-hidden when label is set'
       ).toBeNull();
+      expect(
+        svg().getAttribute('focusable'),
+        'SVG has no focusable attribute when label is set'
+      ).toBeNull();
     });
 
     await step('clearing label sets aria-hidden on svg', async () => {
@@ -164,6 +172,10 @@ export const LabelTogglingTest: Story = {
         svg().hasAttribute('aria-label'),
         'SVG has no aria-label after label is cleared'
       ).toBe(false);
+      expect(
+        svg().getAttribute('focusable'),
+        'SVG sets focusable="false" after label is cleared'
+      ).toBe('false');
     });
 
     await step('setting label "y" restores aria-label on svg', async () => {
@@ -176,6 +188,10 @@ export const LabelTogglingTest: Story = {
       expect(
         svg().getAttribute('aria-hidden'),
         'SVG has no aria-hidden after label is restored'
+      ).toBeNull();
+      expect(
+        svg().getAttribute('focusable'),
+        'SVG has no focusable attribute after label is restored'
       ).toBeNull();
     });
   },
