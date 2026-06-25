@@ -10,7 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
-import { html, LitElement } from 'lit';
+import { html, LitElement, nothing } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
@@ -259,6 +259,51 @@ export const Artifact: Story = {
         </swc-prompt-field>
         <span class="swc-Detail swc-Detail--sizeS">Single media</span>
       </div>
+    </div>
+  `,
+  tags: ['options'],
+};
+
+const multiArtifactScrollMediaIds = [
+  64, 56, 823, 237, 429, 326, 180, 119, 366, 452, 15, 188,
+] as const;
+
+const multiArtifactScrollBadges: Record<number, string> = {
+  452: 'MP4',
+  15: 'MP4',
+  188: 'PDF',
+};
+
+export const MultiArtifactScroll: Story = {
+  render: () => html`
+    <div style="display:flex;flex-direction:column;gap:16px;inline-size:100%;">
+      <p class="swc-Detail swc-Detail--sizeS" style="margin:0;">
+        Full-width composer with twelve media tiles. Chevron controls flank the
+        strip when scrolling is possible; each click scrolls by one tile.
+        Trackpad scrolling works with no persistent scrollbar.
+      </p>
+      <swc-prompt-field
+        label="Prompt"
+        value="Review these storyboard frames."
+      >
+        ${multiArtifactScrollMediaIds.map(
+          (id) => html`
+            <swc-upload-artifact slot="artifact" type="media" dismissible>
+              <img
+                slot="thumbnail"
+                src="https://picsum.photos/id/${id}/68/68"
+                alt="Storyboard frame ${id}"
+                style="inline-size:100%;block-size:100%;object-fit:cover;"
+              />
+              ${multiArtifactScrollBadges[id]
+                ? html`
+                    <span slot="badge">${multiArtifactScrollBadges[id]}</span>
+                  `
+                : nothing}
+            </swc-upload-artifact>
+          `
+        )}
+      </swc-prompt-field>
     </div>
   `,
   tags: ['options'],

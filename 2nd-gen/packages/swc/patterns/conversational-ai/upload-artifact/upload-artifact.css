@@ -39,8 +39,9 @@
 
 .swc-UploadArtifact-dismiss-icon svg {
   display: block;
-  inline-size: var(--swc-upload-artifact-dismiss-icon-inline-size, 10px);
-  block-size: var(--swc-upload-artifact-dismiss-icon-block-size, 10px);
+  flex: 0 0 auto;
+  inline-size: var(--swc-upload-artifact-dismiss-icon-inline-size, 8px);
+  block-size: var(--swc-upload-artifact-dismiss-icon-block-size, 8px);
 }
 
 .swc-UploadArtifact-dismiss[hidden] {
@@ -51,29 +52,55 @@
   background: transparent;
 }
 
-:host([type="card"]) .swc-UploadArtifact-dismiss,
-:host([type="media"]) .swc-UploadArtifact-dismiss {
+:host([type="card"]) .swc-UploadArtifact-dismiss {
   inset-block-start: 0;
   inset-inline-end: 0;
   inline-size: 24px;
   block-size: 24px;
 }
 
-:host([type="card"]) .swc-UploadArtifact-dismiss-visual,
-:host([type="media"]) .swc-UploadArtifact-dismiss-visual {
+:host([type="card"]) .swc-UploadArtifact-dismiss-visual {
   position: absolute;
   inset: token("spacing-50");
   background: token("transparent-black-700");
   border-radius: token("corner-radius-full");
 }
 
-:host([type="card"]) .swc-UploadArtifact-dismiss-icon,
-:host([type="media"]) .swc-UploadArtifact-dismiss-icon {
+:host([type="card"]) .swc-UploadArtifact-dismiss-icon {
   display: flex;
   position: absolute;
   inset: token("spacing-50");
   align-items: center;
   justify-content: center;
+}
+
+:host([type="media"]) .swc-UploadArtifact-dismiss {
+  /* 32px hit target centered on the 20px visual at spacing-75 (4px) inset. */
+  inset-block-start: calc(token("spacing-75") - 6px);
+  inset-inline-end: calc(token("spacing-75") - 6px);
+  inline-size: 32px;
+  block-size: 32px;
+}
+
+:host([type="media"]) .swc-UploadArtifact-dismiss-visual {
+  position: absolute;
+  inset-block-start: 6px;
+  inset-inline-end: 6px;
+  inline-size: 20px;
+  block-size: 20px;
+  background: token("transparent-black-700");
+  border-radius: token("corner-radius-full");
+}
+
+:host([type="media"]) .swc-UploadArtifact-dismiss-icon {
+  display: flex;
+  position: absolute;
+  inset-block-start: 6px;
+  inset-inline-end: 6px;
+  align-items: center;
+  justify-content: center;
+  inline-size: 20px;
+  block-size: 20px;
 }
 
 :host([type="card"]) .swc-UploadArtifact-dismiss:hover .swc-UploadArtifact-dismiss-visual,

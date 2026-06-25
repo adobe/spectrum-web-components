@@ -55,6 +55,12 @@ Artifacts own dismiss behavior via **`dismissible`** and emit **`swc-upload-arti
 
 <Canvas of={PromptFieldStories.Artifact} />
 
+### Multi-artifact scroll
+
+When several attachments exceed the composer width, the strip scrolls horizontally at full width with hidden scrollbars. Chevron buttons flank the strip (32px gray circles) and render only when scrolling is possible in that direction. Each click advances by one tile. Trackpad or touch scrolling still works.
+
+<Canvas of={PromptFieldStories.MultiArtifactScroll} />
+
 ## Behaviors
 
 ### Handling Events
