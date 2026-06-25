@@ -17,6 +17,7 @@ import type { ButtonBase } from '@spectrum-web-components/core/components/button
 import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
 import { SizedMixin } from '@spectrum-web-components/core/mixins/index.js';
 
+import { SlotSizePropagationController } from '../../controllers/slot-size-propagation/index.js';
 import {
   BUTTON_GROUP_ALIGNMENTS,
   BUTTON_GROUP_ORIENTATIONS,
@@ -107,6 +108,10 @@ export abstract class ButtonGroupBase extends SizedMixin(SpectrumElement, {
    */
   private individuallyDisabled = new WeakSet<ButtonBase>();
 
+  private readonly sizePropagation = new SlotSizePropagationController(this, {
+    getSize: () => this.size,
+  });
+
   protected override firstUpdated(changed: PropertyValues<this>): void {
     super.firstUpdated(changed);
     this.setAttribute('role', 'group');
@@ -138,10 +143,6 @@ export abstract class ButtonGroupBase extends SizedMixin(SpectrumElement, {
   protected override updated(changed: PropertyValues<this>): void {
     super.updated(changed);
 
-    if (changed.has('size')) {
-      this.propagateSizeToChildren();
-    }
-
     if (changed.has('disabled')) {
       const wasDisabled = changed.get('disabled');
       if (this.disabled || wasDisabled) {
@@ -155,16 +156,10 @@ export abstract class ButtonGroupBase extends SizedMixin(SpectrumElement, {
    * children receive the current size and disabled state.
    */
   protected handleSlotchange(): void {
-    this.propagateSizeToChildren();
+    this.sizePropagation.propagate();
 
     if (this.disabled) {
       this.propagateDisabledToChildren();
-    }
-  }
-
-  private propagateSizeToChildren(): void {
-    for (const button of this.buttons) {
-      button.size = this.size;
     }
   }
 

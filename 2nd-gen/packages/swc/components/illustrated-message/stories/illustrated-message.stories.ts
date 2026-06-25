@@ -189,7 +189,7 @@ export const Sizes: Story = {
   `,
   tags: ['options'],
   parameters: {
-    flexLayout: true,
+    flexLayout: 'row-wrap',
   },
 };
 
