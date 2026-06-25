@@ -11,7 +11,7 @@
  */
 
 import { PropertyValues } from 'lit';
-import { property } from 'lit/decorators.js';
+import { property, queryAssignedElements } from 'lit/decorators.js';
 
 import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
 
@@ -31,6 +31,7 @@ import {
  *   @todo SWC-1943 Add slot constraints once the CEM slot constraints work is complete:
  *   `{required} {allowedChildren: h2, h3, h4, h5, h6} {maxChildren: 1}`
  * @slot description - Supporting description text
+ * @slot actions - Optional action controls displayed below the description, typically a button or button group. Receives `size` automatically from the illustrated message.
  */
 export abstract class IllustratedMessageBase extends SpectrumElement {
   // ─────────────────────────
@@ -71,8 +72,16 @@ export abstract class IllustratedMessageBase extends SpectrumElement {
   //     IMPLEMENTATION
   // ──────────────────────
 
+  @queryAssignedElements({ slot: 'actions', flatten: true })
+  private actionElements!: Element[];
+
   protected override updated(changedProperties: PropertyValues): void {
     super.updated(changedProperties);
+
+    if (changedProperties.has('size')) {
+      this.propagateSizeToActions();
+    }
+
     if (window.__swc?.DEBUG) {
       if (
         changedProperties.has('size') &&
@@ -97,6 +106,16 @@ export abstract class IllustratedMessageBase extends SpectrumElement {
           { issues: [`orientation="${this.orientation}"`] }
         );
       }
+    }
+  }
+
+  protected handleActionsSlotChange(): void {
+    this.propagateSizeToActions();
+  }
+
+  private propagateSizeToActions(): void {
+    for (const el of this.actionElements) {
+      el.setAttribute('size', this.size);
     }
   }
 
