@@ -76,11 +76,7 @@ const DROPZONE_SVG = `
   </svg>
 `;
 
-// swc-illustrated-message slots: default (slot="") for SVG, "heading" for h2-h6, "description" for text.
-// The browse button is a sibling of swc-illustrated-message inside swc-dropzone; the button-group
-// slot is planned but not yet implemented on swc-illustrated-message.
-// size is passed to swc-button to match the dropzone size; swc-illustrated-message receives
-// size automatically via swc-dropzone's slotchange propagation.
+// TODO: move swc-button inside swc-illustrated-message once it has a button-group slot.
 const makeDropzoneSlot = (
   headingText: string,
   size: DropzoneSize = 'm'
