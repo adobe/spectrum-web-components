@@ -10,7 +10,8 @@
  * governing permissions and limitations under the License.
  */
 
-import { property } from 'lit/decorators.js';
+import { PropertyValues } from 'lit';
+import { property, queryAssignedElements } from 'lit/decorators.js';
 
 import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
 import { SizedMixin } from '@spectrum-web-components/core/mixins/index.js';
@@ -104,6 +105,26 @@ export abstract class DropzoneBase extends SizedMixin(SpectrumElement, {
   // ──────────────────────────
   //     IMPLEMENTATION
   // ──────────────────────────
+
+  @queryAssignedElements({ flatten: true, selector: 'swc-illustrated-message' })
+  private illustratedMessages!: Element[];
+
+  protected override updated(changedProperties: PropertyValues): void {
+    super.updated(changedProperties);
+    if (changedProperties.has('size')) {
+      this.propagateSizeToIllustratedMessage();
+    }
+  }
+
+  protected handleSlotChange(): void {
+    this.propagateSizeToIllustratedMessage();
+  }
+
+  private propagateSizeToIllustratedMessage(): void {
+    for (const el of this.illustratedMessages) {
+      el.setAttribute('size', this.size);
+    }
+  }
 
   /** Timer ID for debounced dragleave — prevents flickering on child drag events. */
   private _dragLeaveTimer: ReturnType<typeof setTimeout> | null = null;
