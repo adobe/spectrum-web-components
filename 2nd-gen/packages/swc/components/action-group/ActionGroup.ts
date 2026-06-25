@@ -17,6 +17,7 @@ import {
   ActionGroupBase,
   type ActionGroupStaticColor,
 } from '@spectrum-web-components/core/components/action-group';
+import { FocusgroupNavigationController } from '@spectrum-web-components/core/controllers';
 
 import styles from './action-group.css';
 
@@ -87,12 +88,80 @@ export class ActionGroup extends ActionGroupBase {
   @property({ type: String, reflect: true, attribute: 'static-color' })
   public staticColor?: ActionGroupStaticColor;
 
+  // ────────────────────
+  //     API OVERRIDES
+  // ────────────────────
+
+  /**
+   * Focuses the roving tab stop within the group. When the
+   * `FocusgroupNavigationController` has memory, restores focus to the last
+   * active item; otherwise falls back to the first managed child.
+   */
+  public override focus(options?: FocusOptions): void {
+    const target =
+      this.navigation.getActiveItem() ??
+      this.managedChildren?.find(
+        (el) =>
+          !el.hasAttribute('disabled') &&
+          el.getAttribute('aria-disabled') !== 'true'
+      );
+    target?.focus(options);
+  }
+
   // ──────────────────────────────
   //     RENDERING & STYLING
   // ──────────────────────────────
 
+  /**
+   * @internal
+   *
+   * Composite keyboard navigation controller. Manages roving `tabindex` among
+   * slotted `swc-action-button` and `swc-action-menu` children. Direction is
+   * initialized to `horizontal` and updated via `setOptions` whenever
+   * `orientation` changes.
+   *
+   * `skipDisabled: true` excludes both natively `disabled` and
+   * `aria-disabled="true"` children from arrow navigation and the initial tab
+   * stop. Arrow keys step over disabled buttons intuitively. Group-level
+   * `disabled` propagates `aria-disabled` to all children uniformly, so the
+   * per-item skip does not conflict with the group disable pattern.
+   *
+   * `wrap: true` matches the APG Toolbar example: arrow keys wrap from the
+   * last item to the first and vice versa.
+   */
+  private readonly navigation = new FocusgroupNavigationController(this, {
+    direction: this.orientation,
+    wrap: true,
+    skipDisabled: true,
+    getItems: () => this.managedChildren ?? [],
+  });
+
+  /**
+   * @internal
+   *
+   * Watches for `disabled` and `aria-disabled` attribute changes on individual
+   * managed children. `slotchange` does not fire when an existing child's
+   * disabled state changes, so without this observer the navigation controller
+   * would hold a stale tab-stop assignment (e.g. btn1 retaining tabindex=0
+   * after becoming disabled) and Tab could no longer enter the group.
+   */
+  private childObserver?: MutationObserver;
+
   public static override get styles(): CSSResultArray {
     return [styles];
+  }
+
+  public override connectedCallback(): void {
+    super.connectedCallback();
+    this.childObserver = new MutationObserver(() => {
+      this.navigation.refresh();
+    });
+  }
+
+  public override disconnectedCallback(): void {
+    super.disconnectedCallback();
+    this.childObserver?.disconnect();
+    this.childObserver = undefined;
   }
 
   protected override render(): TemplateResult {
@@ -104,10 +173,24 @@ export class ActionGroup extends ActionGroupBase {
   protected override handleSlotchange(): void {
     super.handleSlotchange();
     this.propagateVisualStateToChildren();
+
+    this.childObserver?.disconnect();
+    for (const child of this.managedChildren ?? []) {
+      this.childObserver?.observe(child, {
+        attributes: true,
+        attributeFilter: ['disabled', 'aria-disabled'],
+      });
+    }
+
+    this.navigation.refresh();
   }
 
   protected override updated(changed: PropertyValues<this>): void {
     super.updated(changed);
+
+    if (changed.has('orientation')) {
+      this.navigation.setOptions({ direction: this.orientation });
+    }
 
     if (
       changed.has('quiet') ||
