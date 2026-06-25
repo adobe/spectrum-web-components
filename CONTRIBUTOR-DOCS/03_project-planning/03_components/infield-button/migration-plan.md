@@ -216,7 +216,7 @@ The ordering recommendation (infield-button before number-field) is derived from
 | --- | ------------ | ---------------- | ---------------- | ----------------------- |
 | **S1** | CSS custom properties (see B5 in API table above) | `--mod-infield-button-*` | `--swc-infield-button-*` (limited set; see A1) | Same as B5 in API table |
 | **S2** | Stacked-border tokens removed | `--mod-infield-button-stacked-*` tokens handled inner border radius resets for stacked pairs | Removed entirely; S2 uses a consistent corner radius on each button | No consumer action needed if `block`/`inline` are removed per B1/B2 |
-| **S3** | Focus state ownership shifts to parent | 1st-gen: each `sp-infield-button` manages its own `:focus-visible` ring | 2nd-gen: the inner `<button>` suppresses its own outline (`outline: none`, matching S2 source); the parent field shows the focus ring in composed contexts while the inner `<button>` stays keyboard-reachable | Verify with field-level stories that focus visibility is preserved and meets WCAG 2.4.7 |
+| **S3** | Focus state ownership shifts to parent in composed contexts | 1st-gen: each `sp-infield-button` manages its own `:focus-visible` ring | 2nd-gen: when composed inside a parent field, the inner `<button>` suppresses its own outline (`outline: none`, matching S2 source) and the parent field shows the focus ring. **When used standalone (outside a parent field), the button must retain its own `:focus-visible` ring to satisfy WCAG 2.4.7.** | Verify with field-level stories that focus visibility is preserved. Also verify standalone stories show a focus ring. |
 
 #### Accessibility and behavior
 
@@ -253,8 +253,10 @@ Use lightweight confidence labels: **Confirmed**, **Inferred**, **Open question*
 | `size` | `'s' \| 'm' \| 'l' \| 'xl'` | none | `size` | **Confirmed** | `noDefaultSize: true` preserved; parent field host must provide size. |
 | `disabled` | `boolean` | `false` | `disabled` | **Confirmed** | From `ButtonBase`. Both self-disabled and parent-driven `disabled` must work. |
 | `accessibleLabel` | `string \| undefined` | undefined | `accessible-label` | **Confirmed** | From 2nd-gen `ButtonBase`. Required for icon-only. Dev warning fires when `hasIcon && !hasLabel && !accessibleLabel`. |
-| `active` | `boolean` | `false` | `active` | **Inferred** | From `ButtonBase`. Preserves pressed visual state. |
-| `type` | `'button' \| 'submit' \| 'reset'` | `'button'` | `type` | **Confirmed** | From `ButtonBase`. Always `"button"` for in-field adornments in practice; `submit`/`reset` deferred (A3). |
+
+> **`active` (dropped):** Not in 2nd-gen `ButtonBase`. The visual pressed state is handled by the CSS `:active` pseudo-class on the inner `<button>`. There is no programmatic toggle use case for an in-field button; adding a custom `active` property would require `InfieldButton.base.ts` to own it independently. Dropped unless a concrete toggle use case surfaces during implementation.
+>
+> **`type` (dropped):** Not in 2nd-gen `ButtonBase`. The concrete template hardcodes `type="button"` on the inner `<button>`. The `submit`/`reset` values are already deferred as A3 (form-associated). Not part of the public API.
 
 **Removed from 2nd-gen (breaking):** `block`, `inline`, `href`, `target`, `download`, `rel`, `referrerpolicy`, `pending`, `label` (renamed).
 
@@ -285,14 +287,14 @@ Use lightweight confidence labels: **Confirmed**, **Inferred**, **Open question*
 Additional presentation modes **not supported in 2nd-gen:**
 - Stacked position variant (`block="start"/"end"`) — removed; consistent corner radius in S2
 - Inline position variant (`inline="start"/"end"`) — removed; the parent field host owns inline-group layout (it renders the `.swc-InfieldButton-inline` wrapper around the slotted buttons), not `swc-infield-button` itself
-- Static color (`static-color="white"/"black"`) — **not present** in Figma S2 spec; confirmed absent (not in 1st-gen; no field-chrome use case for static color)
+- Static color (`static-color="white"/"black"`) — **not present** in Figma S2 spec; confirmed absent (not in 1st-gen; no field-chrome use case for static color). **Note:** if `ButtonBase` gains a `staticColor` property (tracked in PR #6410), `swc-infield-button` must explicitly exclude or override it to prevent consumers from setting an unsupported value.
 
 #### Slots (2nd-gen)
 
 | Slot | Content | Notes |
 | ---- | ------- | ----- |
 | `icon` | Icon element | **Confirmed.** Named `icon` slot (from `ButtonBase`). `ObserveSlotPresence` in `ButtonBase` monitors `[slot="icon"]` for icon presence. The `swc-icon` component sets `aria-hidden="true"` on itself; no manual attribute needed on the slotted element. **Breaking change from 1st-gen default slot (B6).** |
-| (default) | Optional visible label text | **Inferred.** Unlikely to contain content in typical use — `swc-infield-button` is always icon-only in practice. Present because `ButtonBase` exposes it; `ObserveSlotText` monitors it for `hasLabel`. |
+| (default) | Optional visible label text | **Inferred.** Unlikely to contain content in typical use — `swc-infield-button` is always icon-only in practice. Defined in the concrete component's template (not by `ButtonBase`, which has no render method). `ObserveSlotText` in `ButtonBase` monitors the default slot text to set `hasLabel`. |
 
 #### CSS custom properties (2nd-gen)
 
@@ -353,28 +355,30 @@ Follow the [Badge migration reference](../../02_workstreams/02_2nd-gen-component
 Planned rendering shape:
 
 - Core owns: `quiet` property declaration, size validation (`['s', 'm', 'l', 'xl']` with `noDefaultSize: true`), `accessible-label` wiring inherited from `ButtonBase`, `disabled` forwarding
-- SWC renders the inner `<button>` with size and quiet modifier classes applied via `classMap` (matching the S2 selectors), the slotted icon styled with `slot[name="icon"]::slotted(*)`:
+- SWC renders the inner `<button>`. Since `quiet` and `size` are reflected properties, their CSS states are handled via `:host([quiet])` and `:host([size="s"])` attribute selectors — no class modifiers needed on the inner `<button>` for those. Only computed states not directly reflected to the host (e.g. `hasIcon && !hasLabel`) use `classMap`. The slotted icon is styled with `slot[name="icon"]::slotted(*)`:
 
 ```ts
 html`
   <button
     class=${classMap({
       'swc-InfieldButton': true,
-      [`swc-InfieldButton--size${size?.toUpperCase()}`]: !!size,
-      'swc-InfieldButton--quiet': this.quiet,
     })}
+    type="button"
+    @click=${this.handleClick}
+    ?disabled=${this.disabled}
+    aria-label=${ifDefined(this.accessibleLabel)}
   >
-    <div class="swc-InfieldButton-fill">
-      <slot name="icon"></slot>
-    </div>
+    <slot name="icon"></slot>
   </button>
 `;
 ```
 
-  The inner SVG/icon is consumer-supplied through the `icon` slot, so its color and padding are applied with `slot[name="icon"]::slotted(*)` (as `swc-button` does), not by putting a `.swc-InfieldButton-icon` class on the slotted node.
+> **Phase 5 verification:** The `fill` wrapper div (seen in S2 spectrum-css source) may not be needed — `::slotted()` styles on the named slot may be sufficient. Confirm during Phase 5 whether the wrapper is required by the S2 CSS selectors or can be dropped.
+
+  The inner SVG/icon is consumer-supplied through the `icon` slot, so its color and padding are applied with `slot[name="icon"]::slotted(*)` (as `swc-button` does), not by putting a class on the slotted node.
 - SWC extends core `InfieldButton.base.ts` which extends 2nd-gen `ButtonBase`
 
-**No `_lit-styles/` shared fragment needed at this time.** The infield-button fill/icon layout is specific enough that no fragment currently qualifies. If a fragment emerges during A4 (intersection with clear-button), it should be extracted in a coordinated migration. Flag during Phase 5 if shared structural CSS appears.
+**No `_lit-styles/` shared fragment needed at this time.** The infield-button icon slot layout is specific enough that no fragment currently qualifies. If a fragment emerges during A4 (intersection with clear-button), it should be extracted in a coordinated migration. Flag during Phase 5 if shared structural CSS appears.
 
 **No global element stylesheet counterpart.** `swc-infield-button` has no native HTML element equivalent; `stylesheets/global/global-infield-button.css` is not needed.
 
