@@ -23,21 +23,16 @@
    ───────────────────────────────────── */
 
 .swc-Dropzone {
-  --_swc-dropzone-border-width: var(--swc-dropzone-border-width, token("border-width-200"));
-  --_swc-dropzone-corner-radius: var(--swc-dropzone-corner-radius, token("corner-radius-400"));
-  --_swc-dropzone-padding: var(--swc-dropzone-padding, token("spacing-400"));
-  --_swc-dropzone-border-color: var(--swc-dropzone-border-color, token("gray-300"));
-
   display: flex;
   position: relative;
   flex-direction: column;
   gap: token("spacing-300");
   align-items: center;
   justify-content: center;
-  padding: var(--_swc-dropzone-padding);
+  padding: var(--swc-dropzone-padding, token("spacing-400"));
   background: var(--swc-dropzone-background-color, transparent);
-  border: var(--_swc-dropzone-border-width) dashed var(--_swc-dropzone-border-color);
-  border-radius: var(--_swc-dropzone-corner-radius);
+  border: var(--swc-dropzone-border-width, token("border-width-200")) dashed var(--swc-dropzone-border-color, token("gray-300"));
+  border-radius: var(--swc-dropzone-corner-radius, token("corner-radius-400"));
 }
 
 /* ─────────────────────────────────────
@@ -45,11 +40,11 @@
    ───────────────────────────────────── */
 
 :host([size="s"]) .swc-Dropzone {
-  --_swc-dropzone-padding: var(--swc-dropzone-padding, token("spacing-300"));
+  padding: var(--swc-dropzone-padding, token("spacing-300"));
 }
 
 :host([size="l"]) .swc-Dropzone {
-  --_swc-dropzone-padding: var(--swc-dropzone-padding, token("spacing-600"));
+  padding: var(--swc-dropzone-padding, token("spacing-600"));
 }
 
 /* ─────────────────────────────────────
@@ -57,9 +52,8 @@
    ───────────────────────────────────── */
 
 :host([dragged]) .swc-Dropzone {
-  --_swc-dropzone-border-color: var(--swc-dropzone-border-color-dragged, token("accent-visual-color"));
-
   background: var(--swc-dropzone-background-color, token("accent-subtle-background-color-default"));
+  border-color: var(--swc-dropzone-border-color-dragged, token("accent-visual-color"));
   border-style: solid;
 }
 
@@ -74,8 +68,7 @@
 
 /* Mirror the dragged border when the browse control receives keyboard focus. */
 :host(:focus-within) .swc-Dropzone {
-  --_swc-dropzone-border-color: var(--swc-dropzone-border-color-dragged, token("accent-visual-color"));
-
+  border-color: var(--swc-dropzone-border-color-dragged, token("accent-visual-color"));
   border-style: solid;
 }
 
