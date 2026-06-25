@@ -15,14 +15,13 @@ import { property, queryAssignedElements } from 'lit/decorators.js';
 
 import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
 
-import '@adobe/spectrum-wc/components/icon/swc-icon.js';
-
 import { CrossIcon } from '../utils/icons/index.js';
 
 import styles from './upload-artifact.css';
 
 /**
  * Shared upload artifact primitive with card and media types.
+ * Do not mix `type="card"` and `type="media"` in the same attachment strip; pick one mode per composer session.
  *
  * @element swc-upload-artifact
  *
@@ -70,6 +69,25 @@ export class UploadArtifact extends SpectrumElement {
         detail: { artifact: this },
       })
     );
+  }
+
+  private _renderDismissButton(): TemplateResult {
+    return html`
+      <button
+        class="swc-UploadArtifact-dismiss"
+        aria-label=${this.dismissLabel}
+        ?hidden=${!this.dismissible}
+        @click=${this._handleDismissClick}
+      >
+        <span
+          class="swc-UploadArtifact-dismiss-visual"
+          aria-hidden="true"
+        ></span>
+        <span class="swc-UploadArtifact-dismiss-icon" aria-hidden="true">
+          ${CrossIcon()}
+        </span>
+      </button>
+    `;
   }
 
   private _renderBadge(): TemplateResult {
@@ -127,16 +145,8 @@ export class UploadArtifact extends SpectrumElement {
 
   protected override render(): TemplateResult {
     return html`
+      ${this._renderDismissButton()}
       <div class="swc-UploadArtifact">
-        <button
-          class="swc-UploadArtifact-dismiss"
-          aria-label=${this.dismissLabel}
-          ?hidden=${!this.dismissible}
-          @click=${this._handleDismissClick}
-        >
-          <swc-icon aria-hidden="true">${CrossIcon()}</swc-icon>
-        </button>
-
         ${this.type === 'media'
           ? this._renderMediaSurface()
           : this._renderCardSurface()}
