@@ -189,7 +189,7 @@ export const States: Story = {
       aria-label="Filled drop zone"
       style="min-inline-size: 260px;"
     >
-      <p style="margin: 0; text-align: center;">report-q4.pdf uploaded</p>
+      <p>report-q4.pdf uploaded</p>
     </swc-dropzone>
 
     <swc-dropzone
@@ -198,7 +198,7 @@ export const States: Story = {
       aria-label="Filled and dragged drop zone"
       style="min-inline-size: 260px;"
     >
-      <p style="margin: 0; text-align: center;">Drop file to replace</p>
+      <p>Drop file to replace</p>
     </swc-dropzone>
   `,
   parameters: { flexLayout: 'row-wrap' },

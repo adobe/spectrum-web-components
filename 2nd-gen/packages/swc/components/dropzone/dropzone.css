@@ -80,6 +80,11 @@
   display: none;
 }
 
+::slotted(p) {
+  margin: 0;
+  text-align: center;
+}
+
 /* ─────────────────────────────────────
    Visually-hidden status region
    ───────────────────────────────────── */
