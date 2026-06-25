@@ -50,7 +50,7 @@
 
 .swc-MessageFeedback-button:focus-visible {
   outline: token("focus-indicator-thickness") solid token("focus-indicator-color");
-  outline-offset: token("focus-indicator-gap");
+  outline-offset: token("focus-ring-gap");
 }
 
 .swc-MessageFeedback-button[aria-pressed="true"] {
