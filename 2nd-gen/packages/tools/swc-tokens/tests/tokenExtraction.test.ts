@@ -313,24 +313,35 @@ describe('deriveZeroValueEntries', () => {
 
   it('returns "0" for tokens whose comment matches the zero-value pattern', () => {
     const comments = {
-      'some-spacing': 'Zero values are removed without token replacements; hardcode a zero-pixel value in implementation.',
+      'some-spacing':
+        'Zero values are removed without token replacements; hardcode a zero-pixel value in implementation.',
     };
-    expect(deriveZeroValueEntries(comments, {})).toEqual({ 'some-spacing': '0' });
+    expect(deriveZeroValueEntries(comments, {})).toEqual({
+      'some-spacing': '0',
+    });
   });
 
   it('handles the "should be zero" comment variant', () => {
-    const comments = { 'label-to-component': 'Should be zero; no token replacement exists.' };
-    expect(deriveZeroValueEntries(comments, {})).toEqual({ 'label-to-component': '0' });
+    const comments = {
+      'label-to-component': 'Should be zero; no token replacement exists.',
+    };
+    expect(deriveZeroValueEntries(comments, {})).toEqual({
+      'label-to-component': '0',
+    });
   });
 
   it('skips tokens already present in customDeleted', () => {
-    const comments = { 'some-spacing': 'Zero values are removed; hardcode a zero-pixel value.' };
+    const comments = {
+      'some-spacing': 'Zero values are removed; hardcode a zero-pixel value.',
+    };
     const customDeleted = { 'some-spacing': 'spacing-100' };
     expect(deriveZeroValueEntries(comments, customDeleted)).toEqual({});
   });
 
   it('skips tokens whose comment does not match the zero-value pattern', () => {
-    const comments = { 'accordion-gap': 'Use container-padding-small instead.' };
+    const comments = {
+      'accordion-gap': 'Use container-padding-small instead.',
+    };
     expect(deriveZeroValueEntries(comments, {})).toEqual({});
   });
 
