@@ -79,12 +79,17 @@ const DROPZONE_SVG = `
 // swc-illustrated-message slots: default (slot="") for SVG, "heading" for h2-h6, "description" for text.
 // The browse button is a sibling of swc-illustrated-message inside swc-dropzone; the button-group
 // slot is planned but not yet implemented on swc-illustrated-message.
-const makeDropzoneSlot = (headingText: string) => html`
+// size is passed to swc-button to match the dropzone size; swc-illustrated-message receives
+// size automatically via swc-dropzone's slotchange propagation.
+const makeDropzoneSlot = (
+  headingText: string,
+  size: DropzoneSize = 'm'
+) => html`
   <swc-illustrated-message>
     ${unsafeHTML(DROPZONE_SVG)}
     <h2 slot="heading">${headingText}</h2>
   </swc-illustrated-message>
-  <swc-button variant="accent">Browse files</swc-button>
+  <swc-button variant="accent" size=${size}>Browse files</swc-button>
 `;
 
 // HTML string version used by the Playground so template(args) can spread all args.
@@ -153,12 +158,12 @@ export const Sizes: Story = {
           aria-label="${sizeLabels[size]} drop zone"
           style="min-inline-size: 260px;"
         >
-          ${makeDropzoneSlot(sizeLabels[size])}
+          ${makeDropzoneSlot(sizeLabels[size], size)}
         </swc-dropzone>
       `
     )}
   `,
-  parameters: { flexLayout: 'row-wrap' },
+  parameters: { flexLayout: 'column-center' },
   tags: ['options'],
 };
 
