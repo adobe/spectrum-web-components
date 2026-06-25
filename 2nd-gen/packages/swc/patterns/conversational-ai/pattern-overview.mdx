@@ -91,10 +91,10 @@ Text input with built-in `default`, `loading`, and `generation-complete` modes. 
 
 #### `swc-upload-artifact`
 
-Renders a staged attachment inside `swc-prompt-field` before the message is sent. Supports `card` and `media` types and an optional `dismissible` affordance.
+Renders a staged attachment inside `swc-prompt-field` before the message is sent. Use one type per strip: media tiles only, with an optional `badge` for file-type labels.
 
 <Canvas
-  of={UploadArtifactStories.Overview}
+  of={UploadArtifactStories.MediaWithBadge}
   additionalActions={[
     {
       title: 'Component docs',

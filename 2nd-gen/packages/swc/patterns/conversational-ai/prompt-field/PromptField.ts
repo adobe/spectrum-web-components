@@ -38,7 +38,7 @@ export type PromptFieldMode = 'default' | 'loading' | 'disabled';
  *
  * @element swc-prompt-field
  *
- * @slot artifact - Optional attachment preview(s); supports multiple slotted artifacts.
+ * @slot artifact - Optional attachment preview(s). Use one `swc-upload-artifact` type per session (cards only, or media only).
  * @slot legal - Optional legal/footer content.
  * @fires swc-prompt-field-input - Dispatched after the textarea value is internally updated.
  * Detail: `{ value: string }`
@@ -189,7 +189,36 @@ export class PromptField extends SpectrumElement {
   }
 
   private _handleArtifactSlotChange(): void {
+    this._warnIfMixedArtifactTypes();
     this.requestUpdate();
+  }
+
+  private _warnedMixedArtifactTypes = false;
+
+  private _warnIfMixedArtifactTypes(): void {
+    const elements = this._assignedArtifactElements ?? [];
+    const types = new Set(
+      elements
+        .map((element) => element.getAttribute('type'))
+        .filter(
+          (type): type is 'card' | 'media' =>
+            type === 'card' || type === 'media'
+        )
+    );
+
+    if (types.size <= 1) {
+      this._warnedMixedArtifactTypes = false;
+      return;
+    }
+
+    if (this._warnedMixedArtifactTypes) {
+      return;
+    }
+
+    this._warnedMixedArtifactTypes = true;
+    console.warn(
+      '[swc-prompt-field] The artifact slot contains both card and media upload artifacts. Use one type per composer session: cards only, or media tiles only (with or without badge). See upload-artifact documentation.'
+    );
   }
 
   private get _isPopulated(): boolean {

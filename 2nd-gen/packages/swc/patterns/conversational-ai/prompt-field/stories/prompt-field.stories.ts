@@ -173,12 +173,14 @@ export const Artifact: Story = {
         style="margin:0;max-inline-size:720px;"
       >
         <strong>artifact</strong>
-        — Slot multiple
+        — Slot one or more
         <code>&lt;swc-upload-artifact slot="artifact"&gt;</code>
-        nodes; the field lays them out in a wrapping row above the textarea.
-        More variants:
-        <strong>Multi-artifacts</strong>
-        .
+        nodes above the textarea. Use one type per session: cards only, or media
+        tiles only (with or without badge). See
+        <strong>Multi-card</strong>
+        and
+        <strong>Multi-media</strong>
+        on the upload-artifact page.
       </p>
       <div style="display:flex;flex-direction:column;gap:8px;">
         <swc-prompt-field
@@ -190,6 +192,21 @@ export const Artifact: Story = {
             <span slot="title">Brand guidelines</span>
             <span slot="subtitle">PDF</span>
           </swc-upload-artifact>
+          <swc-upload-artifact slot="artifact" type="card" dismissible>
+            <div slot="thumbnail" role="img" aria-label="Spreadsheet"></div>
+            <span slot="title">Q2 metrics draft</span>
+            <span slot="subtitle">XLSX</span>
+          </swc-upload-artifact>
+        </swc-prompt-field>
+        <span class="swc-Detail swc-Detail--sizeS">
+          Multi-card strip (cards only)
+        </span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <swc-prompt-field
+          label="Prompt"
+          value="Review these storyboard frames."
+        >
           <swc-upload-artifact slot="artifact" type="media" dismissible>
             <img
               slot="thumbnail"
@@ -209,7 +226,7 @@ export const Artifact: Story = {
           </swc-upload-artifact>
         </swc-prompt-field>
         <span class="swc-Detail swc-Detail--sizeS">
-          Mixed multi-artifact (card + media, wrapping strip)
+          Multi-media strip (media only, with and without badge)
         </span>
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;">
