@@ -254,3 +254,4 @@ export const States: Story = {
 - [ ] `StaticColors` story (if applicable) has `staticColorsDemo: true` and `'!test'` tag
 - [ ] `storyName` added for any PascalCase export that doesn't read as sentence case
 - [ ] Component renders in Storybook with no console errors before touching CSS
+- [ ] **If the migration plan requires VRT:** `stories/[component].template.ts`, `test/[component].vrt.ts`, and `VRT Grid` story exist; enable **Testing preview** in Storybook to confirm the matrix renders

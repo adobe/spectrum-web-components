@@ -89,6 +89,18 @@ Example (Button):
 </div>
 ```
 
+### Composite components (multiple surfaces)
+
+Each `div.vrt-cell` patches **one** forced-state target: a single `data-vrt-host` plus one `data-vrt-control`. A cell cannot force hover on the input and the trigger at the same time.
+
+**Supported patterns:**
+
+- **Same instance, different internal controls** — add multiple cells in the grid, each with the same `data-vrt-host` but a different `data-vrt-control` (e.g. combobox input `.swc-ComboBox-input` in one column, trigger `.swc-ComboBox-button` in another). Each cell gets its own `data-vrt-state` as needed.
+- **Different presentation modes** — use separate `testData` sections, `vrtCase` rows, or (when necessary) separate VRT Grid stories. Example: closed combobox matrix in one section; open listbox with option hover/focus/selected in another, with the host pre-configured (`open`, selected value) in the template args for that section only.
+- **Child components in the tree** — a cell can target a nested custom element if it is the `data-vrt-host` for that wrapper (uncommon; prefer keeping the composite on the parent host and varying `data-vrt-control`).
+
+**Recommendation:** for components like combobox, picker, or menu, prefer **separate grid sections or stories per surface** (closed field, open overlay, list item states) rather than one cell trying to capture every interaction at once. The helpers impose no limit on how many sections or stories you define in `*.vrt.ts`.
+
 Chromatic uses a dual approach: `preview.ts` sets `chromatic.disableSnapshot: true` globally, and each testing-grid story opts in with `TESTING_GRID_STORY_PARAMETERS` (`disableSnapshot: false`). `chromatic.config.json` keeps `onlyChanged` / `traceChanged` so existing stories still snapshot when they opt in.
 
 Play-function tests stay in `components/<name>/test/<name>.test.ts` (indexed under **Component/Tests** in dev Storybook only).

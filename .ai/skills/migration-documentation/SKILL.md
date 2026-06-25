@@ -75,6 +75,14 @@ If Phase 5 (migration-styling) was completed, `2nd-gen/packages/swc/components/[
 
 If the stories file or the per-component MDX already exists, do **not** recreate them from scratch. Augment what is already there.
 
+**Step 2b — Verify or update the VRT testing grid.** When the migration plan's **Visual regression** section calls for a VRT grid, confirm Phase 5 scaffolded:
+
+- `stories/[component].template.ts` with correct `data-vrt-host`, `data-vrt-control`, and optional `data-vrt-state` / `data-vrt-layout-classes`
+- `test/[component].vrt.ts` covering the plan's variant × state × size matrix
+- `VRT Grid` story in `[component].stories.ts` with `TESTING_GRID_STORY_PARAMETERS` and `applyTestingGridPseudoStates`
+
+If Phase 7 adds or changes Options, States, or Behaviors stories (new variants, fill styles, static colors, icon-only layouts, pending, etc.), update the VRT case list and template so Chromatic still captures the full matrix. Reference [`.storybook/helpers/README.md`](../../../2nd-gen/packages/swc/.storybook/helpers/README.md) and `components/button/` when unsure. If the plan deferred VRT, skip this step.
+
 Follow
 **[Phase 7: Documentation](../../../CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md#phase-7-documentation)**
 in the washing machine workflow doc — it covers what to do, what to check,
@@ -97,6 +105,8 @@ Return to the list from Step 0. For each unchecked documentation item in the mig
 - If it is now covered by an MDX section, a Canvas reference, or a JSDoc comment on the public API in `Component.ts`, note it as done.
 - If it belongs in the consumer migration guide (breaking changes, migration paths from 1st-gen), note it as deferred to the `consumer-migration-guide` skill — do **not** add it to the per-component MDX or the stories file.
 - If it is genuinely missing from both the docs and the consumer guide, flag it to the user.
+
+**Verify VRT testing grid alignment (when in scope).** If the migration plan required a VRT grid, confirm `test/[component].vrt.ts` and `[component].template.ts` still reflect every variant, state, size, and behavior story finalized in Phase 7. Flag gaps (e.g. a new Options story with no matching `ArgGrid` row) before marking Phase 7 complete.
 
 **Verify `@cssprop` completeness and accuracy.** Read the component's CSS file (`2nd-gen/packages/swc/components/[component]/[component].css`) and list every exposed `--swc-*` property. Then read the SWC class (`2nd-gen/packages/swc/components/[component]/[Component].ts`) and confirm:
 
