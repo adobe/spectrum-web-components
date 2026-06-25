@@ -118,7 +118,7 @@ const staticColorLabels = {
 // ────────────────────
 
 export const Playground: Story = {
-  tags: ['dev'],
+  tags: ['autodocs', 'dev'],
   args: {
     size: 'm',
     value: 60,
