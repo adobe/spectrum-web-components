@@ -267,7 +267,9 @@ export const Actions: Story = {
             ${unsafeHTML(cloudSvg('aria-hidden="true"'))}
             <h2 slot="heading">Upload your files</h2>
             <span slot="description">Drag and drop or browse to upload.</span>
-            <swc-button slot="actions" variant="accent">Browse files</swc-button>
+            <swc-button slot="actions" variant="accent">
+              Browse files
+            </swc-button>
           `
         )}
       `

@@ -11,6 +11,6 @@
  */
 
 export {
-  SlotSizePropagationController,
-  type SlotSizePropagationControllerOptions,
-} from './src/slot-size-propagation-controller.js';
+  SlotAttributePropagationController,
+  type SlotAttributePropagationControllerOptions,
+} from './src/slot-attribute-propagation-controller.js';

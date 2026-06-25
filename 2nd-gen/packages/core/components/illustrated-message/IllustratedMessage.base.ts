@@ -15,7 +15,7 @@ import { property } from 'lit/decorators.js';
 
 import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
 
-import { SlotSizePropagationController } from '../../controllers/slot-size-propagation/index.js';
+import { SlotAttributePropagationController } from '../../controllers/slot-attribute-propagation/index.js';
 import {
   ILLUSTRATED_MESSAGE_VALID_ORIENTATIONS,
   ILLUSTRATED_MESSAGE_VALID_SIZES,
@@ -73,10 +73,14 @@ export abstract class IllustratedMessageBase extends SpectrumElement {
   //     IMPLEMENTATION
   // ──────────────────────
 
-  private readonly sizePropagation = new SlotSizePropagationController(this, {
-    slotName: 'actions',
-    getSize: () => this.size,
-  });
+  private readonly _sizePropagation = new SlotAttributePropagationController(
+    this,
+    {
+      attribute: 'size',
+      getValue: () => this.size,
+      slotName: 'actions',
+    }
+  );
 
   protected override updated(changedProperties: PropertyValues): void {
     super.updated(changedProperties);
@@ -109,7 +113,7 @@ export abstract class IllustratedMessageBase extends SpectrumElement {
   }
 
   protected handleActionsSlotChange(): void {
-    this.sizePropagation.propagate();
+    this._sizePropagation.propagate();
   }
 
   /**

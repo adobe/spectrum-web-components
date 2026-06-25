@@ -16,9 +16,11 @@ import type { ReactiveController, ReactiveElement } from 'lit';
 //     TYPES
 // ─────────────────────────
 
-export interface SlotSizePropagationControllerOptions {
-  /** Returns the current size value to propagate. */
-  getSize: () => string;
+export interface SlotAttributePropagationControllerOptions {
+  /** The attribute name to propagate to assigned elements. */
+  attribute: string;
+  /** Returns the current value to propagate. */
+  getValue: () => string;
   /** Named slot to target. Omit for the default (unnamed) slot. */
   slotName?: string;
 
@@ -34,13 +36,12 @@ export interface SlotSizePropagationControllerOptions {
 // ─────────────────────────────────────────────────────────────────
 
 /**
- * A Lit {@link ReactiveController} that propagates a `size` attribute from
- * the host element to elements assigned to one of its slots.
+ * A Lit {@link ReactiveController} that propagates an attribute from the host
+ * element to elements assigned to one of its slots.
  *
- * The controller automatically re-propagates in `hostUpdated()` whenever
- * the value returned by `getSize` changes. Call `propagate()` from the
- * host's `slotchange` handler to cover elements inserted after the first
- * render.
+ * The controller automatically re-propagates in `hostUpdated()` whenever the
+ * value returned by `getValue` changes. Call `propagate()` from the host's
+ * `slotchange` handler to cover elements inserted after the first render.
  *
  * @example
  * ```ts
@@ -48,25 +49,26 @@ export interface SlotSizePropagationControllerOptions {
  *   @property({ type: String, reflect: true })
  *   public size: MySize = 'm';
  *
- *   private readonly sizePropagation = new SlotSizePropagationController(this, {
+ *   private readonly _sizePropagation = new SlotAttributePropagationController(this, {
+ *     attribute: 'size',
+ *     getValue: () => this.size,
  *     slotName: 'actions',
- *     getSize: () => this.size,
  *   });
  *
  *   protected handleActionsSlotChange(): void {
- *     this.sizePropagation.propagate();
+ *     this._sizePropagation.propagate();
  *   }
  * }
  * ```
  */
-export class SlotSizePropagationController implements ReactiveController {
+export class SlotAttributePropagationController implements ReactiveController {
   private readonly _host: ReactiveElement;
-  private readonly _options: SlotSizePropagationControllerOptions;
-  private _previousSize?: string;
+  private readonly _options: SlotAttributePropagationControllerOptions;
+  private _previousValue?: string;
 
   constructor(
     host: ReactiveElement,
-    options: SlotSizePropagationControllerOptions
+    options: SlotAttributePropagationControllerOptions
   ) {
     this._host = host;
     this._options = options;
@@ -74,26 +76,26 @@ export class SlotSizePropagationController implements ReactiveController {
   }
 
   public hostDisconnected(): void {
-    this._previousSize = undefined;
+    this._previousValue = undefined;
   }
 
   public hostUpdated(): void {
-    const size = this._options.getSize();
-    if (size !== this._previousSize) {
-      this._previousSize = size;
-      this._propagateToSlot(size);
+    const value = this._options.getValue();
+    if (value !== this._previousValue) {
+      this._previousValue = value;
+      this._propagateToSlot(value);
     }
   }
 
   /**
-   * Propagates the current size to all matching assigned elements.
+   * Propagates the current value to all matching assigned elements.
    * Call this from the host's `slotchange` event handler.
    */
   public propagate(): void {
-    this._propagateToSlot(this._options.getSize());
+    this._propagateToSlot(this._options.getValue());
   }
 
-  private _propagateToSlot(size: string): void {
+  private _propagateToSlot(value: string): void {
     const slot = this._resolveSlot();
     if (!slot) {
       return;
@@ -103,7 +105,7 @@ export class SlotSizePropagationController implements ReactiveController {
       ? assigned.filter((el) => el.matches(this._options.selector!))
       : assigned;
     for (const el of targets) {
-      el.setAttribute('size', size);
+      el.setAttribute(this._options.attribute, value);
     }
   }
 
