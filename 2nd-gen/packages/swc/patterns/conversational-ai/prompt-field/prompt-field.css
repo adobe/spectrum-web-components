@@ -88,7 +88,7 @@
   display: contents;
 }
 
-/* Mixed card/media artifacts support horizontal flow with wrapping. */
+/* Artifact strip: one upload-artifact type per session (cards or media). */
 .swc-PromptField-artifacts > slot::slotted(*) {
   flex: 0 0 auto;
 }

@@ -48,11 +48,13 @@ export const OverviewTest: Story = {
         const dismissButton = el.shadowRoot?.querySelector<HTMLButtonElement>(
           '.swc-UploadArtifact-dismiss'
         );
-        const icon = dismissButton?.querySelector('swc-icon');
+        const dismissIcon = dismissButton?.querySelector(
+          '.swc-UploadArtifact-dismiss-icon'
+        );
         expect(dismissButton?.getAttribute('aria-label')).toBe(
           'Remove attachment'
         );
-        expect(icon?.getAttribute('aria-hidden')).toBe('true');
+        expect(dismissIcon?.getAttribute('aria-hidden')).toBe('true');
       }
     );
   },

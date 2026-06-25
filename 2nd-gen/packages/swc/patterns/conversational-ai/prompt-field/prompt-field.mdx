@@ -34,15 +34,17 @@ The send button enablement is derived internally from prompt content (value or a
 
 ### Artifact
 
-Artifact layout is inferred from the **`artifact`** slot content and supports multiple mixed items:
+Artifact layout is inferred from the **`artifact`** slot content:
 
 - No slot content: no artifact region
-- **`swc-upload-artifact type="card"`**: file-style card artifact
-- **`swc-upload-artifact type="media"`**: media tile artifact
+- **`swc-upload-artifact type="card"`**: file-style card artifacts (one or more)
+- **`swc-upload-artifact type="media"`**: media tile artifacts (one or more, with or without badge)
 
-**Populate the attachment strip** by slotting **one `<swc-upload-artifact>` per file**, each with **`slot="artifact"`** (same slot name repeated). Mixed card + media entries wrap inside the composer like this story's first example.
+**Use one type per composer session.** Slot multiple artifacts of the same type — for example, several cards or several media tiles — but do not mix card and media in the same strip. `swc-prompt-field` logs a development warning when both types are detected.
 
-For additional combinations, like narrow widths, ellipsis, or more tiles, see **[Multi-artifact](/docs/patterns-conversational-ai-upload-artifact--docs#multi-artifact)**.
+**Populate the attachment strip** by slotting **one `<swc-upload-artifact>` per file**, each with **`slot="artifact"`** (same slot name repeated).
+
+For additional card and media gallery examples, see **[Multi-card](/docs/patterns-conversational-ai-upload-artifact--docs#multi-card)** and **[Multi-media](/docs/patterns-conversational-ai-upload-artifact--docs#multi-media)**.
 
 Upload button behavior:
 

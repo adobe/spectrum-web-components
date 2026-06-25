@@ -10,6 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
+import { html } from 'lit';
 import { expect, userEvent } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
@@ -139,5 +140,45 @@ export const InteractionTest: Story = {
 
       expect(stopCount).toBe(2);
     });
+  },
+};
+
+export const MixedArtifactWarningTest: Story = {
+  render: () => html`
+    <swc-prompt-field label="Prompt" value="Mixed attachments">
+      <swc-upload-artifact slot="artifact" type="card">
+        <span slot="title">Brief</span>
+        <span slot="subtitle">PDF</span>
+      </swc-upload-artifact>
+      <swc-upload-artifact slot="artifact" type="media">
+        <div slot="thumbnail" role="img" aria-label="Preview"></div>
+      </swc-upload-artifact>
+    </swc-prompt-field>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const warnings: string[] = [];
+    const originalWarn = console.warn;
+    console.warn = (message?: unknown) => {
+      warnings.push(String(message));
+    };
+
+    try {
+      await getComponent<PromptField>(canvasElement, 'swc-prompt-field');
+
+      await step(
+        'logs a development warning when card and media artifacts are mixed',
+        async () => {
+          expect(
+            warnings.some(
+              (message) =>
+                message.includes('[swc-prompt-field]') &&
+                message.includes('card and media')
+            )
+          ).toBe(true);
+        }
+      );
+    } finally {
+      console.warn = originalWarn;
+    }
   },
 };
