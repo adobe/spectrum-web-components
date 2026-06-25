@@ -43,15 +43,11 @@ import { fileURLToPath } from 'node:url';
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
 
+import { ZERO_VALUE_COMMENT_PATTERN } from '../src/tokens.js';
+
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const PACKAGE_ROOT = join(__dirname, '..');
 const DELETED_PATH = join(PACKAGE_ROOT, 'custom', 'deleted.json');
-
-// The source files currently listed in src/tokens.js — used to detect new files.
-// Matches the Spectrum tokens team's standard phrasing for zero-value removals.
-// Covers: "Zero values are removed without token replacements; hardcode a zero-pixel value..."
-// and: "Should be zero. Zero values are removed..." and "Should be zero; no token"
-const ZERO_VALUE_COMMENT_PATTERN = /zero.{0,30}pixel|should be zero/i;
 
 const KNOWN_SOURCE_FILES = new Set([
   'color-aliases',

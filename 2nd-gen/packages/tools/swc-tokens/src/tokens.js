@@ -21,6 +21,10 @@ const require = createRequire(import.meta.url);
 
 const ALLOWED_SETS = new Set(['desktop', 'mobile', 'light', 'dark']);
 
+// Matches the Spectrum team's standard wording for zero-pixel removals in deprecated_comment.
+// Exported so diff-versions.js can reuse the same pattern when seeding custom/deleted.json.
+export const ZERO_VALUE_COMMENT_PATTERN = /zero.{0,30}pixel|should be zero/i;
+
 // Tokens from @adobe/spectrum-tokens/src
 const SPECTRUM_TOKENS = [
   {
@@ -689,12 +693,29 @@ async function loadAllTokens(prefix, debug = false) {
   return extractAllTokenValues(rawFiles, prefix, debug, globalLookup);
 }
 
+// Derive "0" sentinel entries from deprecated_comment for tokens not already in customDeleted.
+// This keeps zero-value tokens out of custom/deleted.json so they never need manual curation.
+export function deriveZeroValueEntries(deprecatedComments, customDeleted) {
+  const derived = {};
+  for (const [name, comment] of Object.entries(deprecatedComments)) {
+    if (!(name in customDeleted) && ZERO_VALUE_COMMENT_PATTERN.test(comment)) {
+      derived[name] = '0';
+    }
+  }
+  return derived;
+}
+
 async function loadAllTokenData(prefix, debug = false) {
-  const [rawFiles, deleted] = await Promise.all([
+  const [rawFiles, customDeleted] = await Promise.all([
     loadTokenSources(),
     loadCustomDeleted(),
   ]);
   const globalLookup = buildGlobalLookup(rawFiles);
+
+  const deprecatedComments = Object.assign(
+    {},
+    ...rawFiles.map((f) => extractDeprecatedComments(f.raw, debug))
+  );
 
   return {
     tokens: extractAllTokenValues(rawFiles, prefix, debug, globalLookup),
@@ -702,11 +723,11 @@ async function loadAllTokenData(prefix, debug = false) {
       {},
       ...rawFiles.map((f) => extractRenamedTokenValues(f.raw, debug))
     ),
-    deleted,
-    deprecatedComments: Object.assign(
-      {},
-      ...rawFiles.map((f) => extractDeprecatedComments(f.raw, debug))
-    ),
+    deleted: {
+      ...customDeleted,
+      ...deriveZeroValueEntries(deprecatedComments, customDeleted),
+    },
+    deprecatedComments,
   };
 }
 
@@ -769,5 +790,6 @@ export const __test__ = {
   extractTokenValues,
   extractRenamedTokenValues,
   extractDeprecatedComments,
+  deriveZeroValueEntries,
   lookupToken,
 };
