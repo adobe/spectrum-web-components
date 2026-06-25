@@ -18,6 +18,7 @@ import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 import { IllustratedMessage } from '@adobe/spectrum-wc/illustrated-message';
 
 import '@adobe/spectrum-wc/components/button/swc-button.js';
+import '@adobe/spectrum-wc/components/button-group/swc-button-group.js';
 import '@adobe/spectrum-wc/components/illustrated-message/swc-illustrated-message.js';
 
 // ────────────────
@@ -266,11 +267,21 @@ export const Actions: Story = {
             ${unsafeHTML(cloudSvg('aria-hidden="true"'))}
             <h2 slot="heading">Upload your files</h2>
             <span slot="description">Drag and drop or browse to upload.</span>
-            <swc-button slot="actions" variant="accent">
-              Browse files
-            </swc-button>
+            <swc-button slot="actions" variant="accent">Browse files</swc-button>
           `
         )}
+      `
+    )}
+    ${template(
+      { ...args, size: 'm' },
+      html`
+        ${unsafeHTML(cloudSvg('aria-hidden="true"'))}
+        <h2 slot="heading">No results found</h2>
+        <span slot="description">Try adjusting your search or filters.</span>
+        <swc-button-group slot="actions">
+          <swc-button variant="accent">Clear filters</swc-button>
+          <swc-button variant="secondary">Browse all</swc-button>
+        </swc-button-group>
       `
     )}
   `,
