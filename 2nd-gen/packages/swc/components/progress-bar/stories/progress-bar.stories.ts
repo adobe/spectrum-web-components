@@ -83,6 +83,7 @@ const meta: Meta = {
     docs: {
       subtitle: `Non-focusable, read-only bar that shows task progress or an indeterminate loading state.`,
     },
+    styles: { 'min-inline-size': '250px' },
   },
   args,
   argTypes,
@@ -164,7 +165,12 @@ export const Anatomy: Story = {
   `,
   tags: ['anatomy'],
   parameters: {
-    styles: { gap: 'var(--swc-spacing-300)', margin: '0 auto' },
+    styles: {
+      display: 'flex',
+      'flex-direction': 'column',
+      gap: 'var(--swc-spacing-200)',
+      margin: '0 auto',
+    },
   },
   args: {
     size: 'm',
@@ -188,7 +194,12 @@ export const Sizes: Story = {
   `,
   tags: ['options'],
   parameters: {
-    styles: { gap: 'var(--swc-spacing-300)', margin: '0 auto' },
+    styles: {
+      display: 'flex',
+      'flex-direction': 'column',
+      gap: 'var(--swc-spacing-200)',
+      margin: '0 auto',
+    },
   },
   args: { value: 50 },
 };
@@ -205,7 +216,9 @@ export const LabelPosition: Story = {
   `,
   parameters: {
     styles: {
-      gap: 'var(--swc-spacing-300)',
+      display: 'flex',
+      'flex-direction': 'column',
+      gap: '20px',
       margin: '0 auto',
     },
   },
@@ -246,7 +259,12 @@ export const Values: Story = {
   `,
   tags: ['states'],
   parameters: {
-    styles: { gap: 'var(--swc-spacing-300)', margin: '0 auto' },
+    styles: {
+      display: 'flex',
+      'flex-direction': 'column',
+      gap: 'var(--swc-spacing-200)',
+      margin: '0 auto',
+    },
   },
   args: { size: 'm' },
 };
