@@ -60,28 +60,28 @@ export interface SlotSizePropagationControllerOptions {
  * ```
  */
 export class SlotSizePropagationController implements ReactiveController {
-  private readonly host: ReactiveElement;
-  private readonly options: SlotSizePropagationControllerOptions;
-  private previousSize?: string;
+  private readonly _host: ReactiveElement;
+  private readonly _options: SlotSizePropagationControllerOptions;
+  private _previousSize?: string;
 
   constructor(
     host: ReactiveElement,
     options: SlotSizePropagationControllerOptions
   ) {
-    this.host = host;
-    this.options = options;
+    this._host = host;
+    this._options = options;
     host.addController(this);
   }
 
   public hostDisconnected(): void {
-    this.previousSize = undefined;
+    this._previousSize = undefined;
   }
 
   public hostUpdated(): void {
-    const size = this.options.getSize();
-    if (size !== this.previousSize) {
-      this.previousSize = size;
-      this.propagateToSlot(size);
+    const size = this._options.getSize();
+    if (size !== this._previousSize) {
+      this._previousSize = size;
+      this._propagateToSlot(size);
     }
   }
 
@@ -90,29 +90,29 @@ export class SlotSizePropagationController implements ReactiveController {
    * Call this from the host's `slotchange` event handler.
    */
   public propagate(): void {
-    this.propagateToSlot(this.options.getSize());
+    this._propagateToSlot(this._options.getSize());
   }
 
-  private propagateToSlot(size: string): void {
-    const slot = this.resolveSlot();
+  private _propagateToSlot(size: string): void {
+    const slot = this._resolveSlot();
     if (!slot) {
       return;
     }
     const assigned = slot.assignedElements({ flatten: true });
-    const targets = this.options.selector
-      ? assigned.filter((el) => el.matches(this.options.selector!))
+    const targets = this._options.selector
+      ? assigned.filter((el) => el.matches(this._options.selector!))
       : assigned;
     for (const el of targets) {
       el.setAttribute('size', size);
     }
   }
 
-  private resolveSlot(): HTMLSlotElement | null {
-    const root = this.host.shadowRoot;
+  private _resolveSlot(): HTMLSlotElement | null {
+    const root = this._host.shadowRoot;
     if (!root) {
       return null;
     }
-    const { slotName } = this.options;
+    const { slotName } = this._options;
     return slotName
       ? root.querySelector<HTMLSlotElement>(`slot[name="${slotName}"]`)
       : root.querySelector<HTMLSlotElement>('slot:not([name])');
