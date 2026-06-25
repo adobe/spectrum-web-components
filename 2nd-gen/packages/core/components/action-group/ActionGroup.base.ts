@@ -43,7 +43,6 @@ export abstract class ActionGroupBase extends SizedMixin(SpectrumElement, {
 }) {
   static override shadowRootOptions = {
     ...SpectrumElement.shadowRootOptions,
-    delegatesFocus: true,
   };
 
   /**
@@ -124,8 +123,9 @@ export abstract class ActionGroupBase extends SizedMixin(SpectrumElement, {
   /**
    * Focuses the first enabled child in the group.
    *
-   * Phase 4 replaces this stub with `FocusgroupNavigationController.focus()`
-   * so that focus restores to the last active item.
+   * The SWC concrete class overrides this with `FocusgroupNavigationController`,
+   * restoring focus to the last active item when memory is enabled. This
+   * implementation serves as a fallback for non-SWC subclasses.
    */
   public override focus(options?: FocusOptions): void {
     const firstEnabled = this.managedChildren?.find(

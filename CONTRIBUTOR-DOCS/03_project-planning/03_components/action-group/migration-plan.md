@@ -213,7 +213,7 @@ This full modifier surface will not be carried forward to 2nd-gen.
 | --- | ------------ | ---------------- | ---------------- | ----------------------- |
 | **B6** | Host role fixed to `role="group"` | Default `role="toolbar"`; switches to `role="radiogroup"` when `selects="single"` | Always `role="group"`; not author-overridable | Remove any `role="toolbar"` or `role="radiogroup"` on `<sp-action-group>`. Move `role="toolbar"` to a parent wrapper element. Source: [accessibility migration analysis](./accessibility-migration-analysis.md). |
 | **B7** | Child roles fixed to `role="button"` | `selects="single"` assigns `role="radio"` + `aria-checked`; `selects="multiple"` assigns `role="checkbox"` + `aria-checked` | Children always `role="button"`; `selects` and `selected` are dropped; selection UX moves to `swc-toggle-button-group` / `swc-segmented-control` | Remove any consumer code that relied on child `role="radio"`/`role="checkbox"` or on action-group's `selects`/`selected` API. Source: [accessibility migration analysis](./accessibility-migration-analysis.md), [action button accessibility migration analysis](../action-button/accessibility-migration-analysis.md). |
-| **B8** | `RovingTabindexController` → `FocusgroupNavigationController` | `RovingTabindexController` with `hostDelegatesFocus: true` | `FocusgroupNavigationController`; direction tied to `orientation`; `delegatesFocus` preserved | No consumer-visible change; keyboard behavior is equivalent |
+| **B8** | `RovingTabindexController` → `FocusgroupNavigationController` | `RovingTabindexController` with `hostDelegatesFocus: true` | `FocusgroupNavigationController`; direction tied to `orientation`; `delegatesFocus: true` removed (shadow host with only a `<slot>` claims Tab focus when delegation finds no shadow focusable target, blocking Tab entry) | No consumer-visible change; keyboard behavior is equivalent |
 | **B9** | Focus stacking z-index fixed | Focused button's z-index may hide focus indicator (SWC-1342) | Focus indicator always visible | No consumer action required |
 
 ### Additive — ships when ready, zero breakage for consumers already on 2nd-gen
@@ -300,7 +300,7 @@ Initial focus target: first enabled child.
 
 When a child `swc-action-menu` is open, focus enters the menu; when the menu closes, focus returns to the menu trigger (the `swc-action-menu` host).
 
-`delegatesFocus: true` on the shadow root is preserved: calling `focus()` on the host delegates to the current roving item.
+`delegatesFocus: true` was removed in Phase 4. Per the WHATWG spec, a shadow host with `delegatesFocus: true` is itself placed in the sequential Tab order even without a `tabindex` attribute. When the action group has only a `<slot>` in its shadow DOM and no focusable shadow children, focus delegation fails silently and the host claims focus — causing Tab to skip all slotted children. Programmatic `.focus()` on the host is handled by the explicit override in `ActionGroup.ts` (delegates to `FocusgroupNavigationController.getActiveItem()`), so `delegatesFocus` is not needed.
 
 Mouse click updates the roving `tabindex="0"` to the clicked item (SWC-250 fix required; the 1st-gen mouse test is `it.skip`).
 
@@ -386,7 +386,7 @@ No `_lit-styles/` fragment needed — action-group renders only a slot; all layo
 - [x] `ActionGroup.types.ts`: define `ActionGroupOrientation` (`'horizontal' | 'vertical'`)
 - [x] `ActionGroupSize` type: `(typeof ACTION_GROUP_VALID_SIZES)[number]` — same pattern as `BadgeSize`, `ButtonSize`, `StatusLightSize`
 - [x] `ActionGroup.base.ts`: `label` → `aria-label`, `disabled` propagation contract, child collection logic
-- [x] `ActionGroup.ts`: `compact`, `quiet`, `orientation`, `justified`, `size`, `staticColor`, child propagation, `delegatesFocus: true`; `FocusgroupNavigationController` wiring deferred to Phase 4
+- [x] `ActionGroup.ts`: `compact`, `quiet`, `orientation`, `justified`, `size`, `staticColor`, child propagation; `FocusgroupNavigationController` wiring deferred to Phase 4; `delegatesFocus: true` removed in Phase 4 (see B8)
 - [ ] Drop `--mod-*` CSS custom properties; introduce `--swc-*` set after Phase 5 review
 
 #### 1st-gen deprecation notices
@@ -426,22 +426,23 @@ No `_lit-styles/` fragment needed — action-group renders only a slot; all layo
 
 #### Naming and semantics
 
-- [ ] Host always `role="group"`; never author-overridable; no `toolbar`, `radiogroup`, or other role
-- [ ] `aria-orientation` reflects `orientation` value; wired to `FocusgroupNavigationController` direction
-- [ ] `label` → `aria-label` on host; empty `label` removes `aria-label`
-- [ ] `swc-action-button` children stay `role="button"` only; no `role="radio"` or `role="checkbox"` assigned by action-group
-- [ ] Group `disabled`: host `aria-disabled="true"`, children `aria-disabled="true"`; children remain keyboard-reachable (SWC-621)
+- [x] Host always `role="group"`; never author-overridable; no `toolbar`, `radiogroup`, or other role
+- [x] `aria-orientation` reflects `orientation` value; wired to `FocusgroupNavigationController` direction
+- [x] `label` → `aria-label` on host; empty `label` removes `aria-label`
+- [x] `swc-action-button` children stay `role="button"` only; no `role="radio"` or `role="checkbox"` assigned by action-group
+- [x] Group `disabled`: host `aria-disabled="true"`, children `aria-disabled="true"`; children remain keyboard-reachable (SWC-621)
 
 #### State verification
 
-- [ ] Roving tabindex: exactly one child has `tabindex="0"`, others `tabindex="-1"`
-- [ ] Initial focus target is first selected enabled child, or first enabled child
-- [ ] Mouse click updates `tabindex="0"` to clicked item (SWC-250 fix; port `it.skip` test)
-- [ ] Focus ring visible on focused child; no z-index stacking hides indicator (SWC-1342 fix)
-- [ ] `change` fires after `selected` state is committed (SWC-889 fix)
-- [ ] `selected` removal does not throw console error (SWC-282 fix)
-- [ ] `swc-action-menu` in group: open menu; arrow inside; Escape returns focus to menu trigger; roving continues from trigger
-- [ ] `FormFieldMixin` not applied (SWC-1612 not applied)
+- [x] Roving tabindex: exactly one child has `tabindex="0"`, others `tabindex="-1"`
+- [x] Initial focus target is first enabled child (no selection concept in 2nd-gen)
+- [x] Mouse click updates `tabindex="0"` to clicked item (SWC-250 fix; port `it.skip` test)
+- [ ] Focus ring visible on focused child; no z-index stacking hides indicator (SWC-1342 fix) — Phase 5
+- [skip] `change` fires after `selected` state is committed (SWC-889 fix) — `selects`/`selected` dropped
+- [skip] `selected` removal does not throw console error (SWC-282 fix) — `selected` dropped
+- [ ] `swc-action-menu` in group: open menu; arrow inside; Escape returns focus to menu trigger; roving continues from trigger — Phase 6
+- [x] `skipDisabled: true` — individually disabled children are skipped in arrow navigation; group-level `disabled` propagates `aria-disabled` uniformly so per-item skip does not conflict
+- [x] `FormFieldMixin` not applied (SWC-1612 not applied)
 
 ### Testing
 
