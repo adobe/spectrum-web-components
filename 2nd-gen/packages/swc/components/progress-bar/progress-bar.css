@@ -11,11 +11,68 @@
  */
 
 /*
- * Progress-bar-specific styles. Shared structural rules (bar/track/fill,
- * sizes, side-label layout, static colors, forced-colors) live in
- * `swc/stylesheets/_lit-styles/linear-progress-base.css` and consume
- * `--swc-linear-progress-*` custom properties. This file adds only the
- * indeterminate fill animation (keyframes, duration, reduced-motion
- * fallback) — see Q2 in the migration plan; exact values to be lifted
- * from spectrum-css spectrum-two progressbar/index.css during Styling phase.
+ * Shared structural rules (bar/track/fill, sizes, side-label layout, static
+ * colors, forced-colors) live in `linear-progress-base.css` and are composed
+ * into the component's `styles` array in `ProgressBar.ts`. This file adds only
+ * the indeterminate fill animation (keyframes, duration, reduced-motion
+ * fallback) and the necessary fill-state resets.
  */
+
+/*
+ * The fill size for the indeterminate animation (70%) is sourced from the
+ * Spectrum animation token `--system-progress-bar-fill-size-indeterminate`.
+ * There is no dedicated 2nd-gen token for this value, so it is hardcoded
+ * here. The translateX end-keyframe uses calc(100% / 0.7) ≈ 142.857% so
+ * the fill's left edge aligns with the track's right edge, ensuring the
+ * fill exits fully off-screen.
+ */
+:host([indeterminate]) .swc-LinearProgress-fill {
+  inline-size: 70%;
+  min-inline-size: 0; /* reset the 3% determinate visibility floor */
+  transition: none; /* drop the determinate inline-size sweep */
+  animation: indeterminate-loop-ltr token("animation-duration-2000") token("animation-ease-in-out") infinite;
+  will-change: transform;
+
+  &:dir(rtl) {
+    animation-name: indeterminate-loop-rtl;
+  }
+}
+
+@keyframes indeterminate-loop-ltr {
+  from {
+    /* matches React: translate(calc(fillWidth * -1)) — fill starts partially off screen left */
+    transform: translateX(-70%);
+  }
+
+  to {
+    /* fill left edge at track right edge — fully off screen right;
+     * fill is 70% of track, so trackWidth = fillWidth / 0.7 = calc(100% / 0.7) */
+    transform: translateX(calc(100% / 0.7));
+  }
+}
+
+@keyframes indeterminate-loop-rtl {
+  from {
+    /* matches React: translate(trackWidth) — fill starts fully off screen right */
+    transform: translateX(calc(100% / 0.7));
+  }
+
+  to {
+    /* matches React: translate(calc(trackWidth * -1)) — fill ends fully off screen left */
+    transform: translateX(calc(-100% / 0.7));
+  }
+}
+
+/* Media queries sorted to the bottom per style guide. */
+
+/*
+ * Honor `prefers-reduced-motion` (WCAG 2.3.3 / 2.2.2): suppress the looping
+ * animation and render a static partial fill so the indeterminate busy state
+ * remains visually perceivable without motion.
+ */
+@media (prefers-reduced-motion: reduce) {
+  :host([indeterminate]) .swc-LinearProgress-fill {
+    inline-size: 50%; /* static fallback fill — conveys partial/busy state */
+    animation: none;
+  }
+}
