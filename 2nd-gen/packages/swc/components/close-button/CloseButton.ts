@@ -10,12 +10,15 @@
  * governing permissions and limitations under the License.
  */
 
-import { CSSResultArray, html, TemplateResult } from 'lit';
+import { CSSResultArray, html, PropertyValues, TemplateResult } from 'lit';
+import { property } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
 import {
+  BUTTON_STATIC_COLORS,
   ButtonBase,
   type ButtonSize,
+  type ButtonStaticColor,
 } from '@spectrum-web-components/core/components/button';
 
 import {
@@ -70,6 +73,12 @@ const crossIconBySize: Record<ButtonSize, () => TemplateResult> = {
  */
 export class CloseButton extends ButtonBase {
   /**
+   * Static color treatment for display over colored or image backgrounds.
+   */
+  @property({ type: String, reflect: true, attribute: 'static-color' })
+  public staticColor?: ButtonStaticColor;
+
+  /**
    * Close buttons always render a cross icon; treat as icon-present for
    * shared {@link ButtonBase} accessibility checks.
    *
@@ -102,7 +111,7 @@ export class CloseButton extends ButtonBase {
       <button
         class="swc-CloseButton"
         type="button"
-        @click=${this.handleActivationClick}
+        @click=${this.handleClick}
         ?disabled=${this.disabled}
         aria-label=${ifDefined(resolvedName ?? undefined)}
       >
@@ -111,5 +120,21 @@ export class CloseButton extends ButtonBase {
         </span>
       </button>
     `;
+  }
+
+  protected override update(changedProperties: PropertyValues): void {
+    super.update(changedProperties);
+    if (
+      window.__swc?.DEBUG &&
+      typeof this.staticColor !== 'undefined' &&
+      !BUTTON_STATIC_COLORS.includes(this.staticColor)
+    ) {
+      window.__swc.warn(
+        this,
+        `<${this.localName}> element expects the "static-color" attribute to be one of the following:`,
+        'https://opensource.adobe.com/spectrum-web-components/components/close-button/#static-colors',
+        { issues: [...BUTTON_STATIC_COLORS] }
+      );
+    }
   }
 }

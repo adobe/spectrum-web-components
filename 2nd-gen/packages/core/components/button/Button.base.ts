@@ -20,23 +20,22 @@ import {
   SizedMixin,
 } from '@spectrum-web-components/core/mixins/index.js';
 
-import {
-  BUTTON_STATIC_COLORS,
-  BUTTON_VALID_SIZES,
-  type ButtonStaticColor,
-} from './Button.types.js';
+import { BUTTON_VALID_SIZES } from './Button.types.js';
 
 /**
- * Abstract base for button-like components that share sizing, slots, disabled
- * state, accessible-name resolution, pending state, and static-color treatment.
+ * Abstract base class for all button-like components. Owns shared semantic
+ * concerns: interaction state, sizing, slot-derived icon/label state,
+ * accessible-name resolution, and host-to-internal-button attribute forwarding.
  *
- * Visual API specific to `swc-button` (`variant`, `fill-style`) is
- * intentionally absent so that ActionButton, ClearButton, CloseButton,
+ * Visual API specific to `sp-button` (`variant`, `fill-style`, `static-color`)
+ * is intentionally absent so that ActionButton, ClearButton, CloseButton,
  * PickerButton, and InfieldButton can extend this base without inheriting
- * the full `swc-button` visual surface.
+ * the `swc-button` visual surface.
+ *
+ * @slot - Visible button label.
+ * @slot icon - Optional leading icon.
  *
  * @attribute {ElementSize} size - The size of the button.
- * @attribute {'white' | 'black'} static-color - Static color treatment for display over colored or image backgrounds.
  *
  * @todo We currently have 3 levels of mixins on this class, but the mixin
  * composition guide recommends a maximum of 2. Explore reducing after milestone 2.
@@ -84,12 +83,6 @@ export abstract class ButtonBase extends SizedMixin(
   public pendingLabel?: string;
 
   /**
-   * Static color treatment for display over colored or image backgrounds.
-   */
-  @property({ type: String, reflect: true, attribute: 'static-color' })
-  public staticColor?: ButtonStaticColor;
-
-  /**
    * Tracks whether the pending visual (disabled colors + spinner) is currently
    * active. Set to `true` after a 1-second delay once `pending` becomes true,
    * so the button does not immediately flash to its unavailable appearance.
@@ -119,7 +112,7 @@ export abstract class ButtonBase extends SizedMixin(
    *
    * @internal
    */
-  public getResolvedAccessibleName(): string | null {
+  protected getResolvedAccessibleName(): string | null {
     return this.accessibleLabel ?? (this.textContent?.trim() || null);
   }
 
@@ -158,11 +151,11 @@ export abstract class ButtonBase extends SizedMixin(
     super.connectedCallback();
     // Capture phase so slotted light-DOM clicks are suppressed before host
     // listeners (e.g. Storybook actions) run.
-    this.addEventListener('click', this.handleActivationClick, true);
+    this.addEventListener('click', this.handleClick, true);
   }
 
   public override disconnectedCallback(): void {
-    this.removeEventListener('click', this.handleActivationClick, true);
+    this.removeEventListener('click', this.handleClick, true);
     if (this._pendingTimer !== null) {
       clearTimeout(this._pendingTimer);
       this._pendingTimer = null;
@@ -172,27 +165,17 @@ export abstract class ButtonBase extends SizedMixin(
   }
 
   /**
-   * Suppresses click activation while the button is disabled or pending.
+   * Suppresses click activation while the button is `disabled` or `pending`.
    *
    * Slotted icon content lives in the light DOM, so pointer clicks on icons
    * bypass the disabled inner `<button>` and bubble on the host. The host
    * listener (capture) and inner `@click` binding both call this handler.
    */
-  protected handleActivationClick(event: Event): void {
-    if (this.disabled) {
+  protected readonly handleClick = (event: Event): void => {
+    if (this.disabled || this.pending) {
       event.preventDefault();
       event.stopImmediatePropagation();
-    } else if (this.pending) {
-      event.stopImmediatePropagation();
     }
-  }
-
-  /**
-   * Suppresses click activation while the button is disabled or pending.
-   * Subclasses' templates wire this onto the rendered `<button>` via `@click`.
-   */
-  protected readonly handleClick = (event: Event): void => {
-    this.handleActivationClick(event);
   };
 
   protected override update(changedProperties: PropertyValues): void {
@@ -230,17 +213,6 @@ export abstract class ButtonBase extends SizedMixin(
           `<${this.localName}> should not set both "pending" and "disabled" simultaneously. Use "pending" to keep the button focusable while unavailable, or "disabled" to fully remove it from the tab order.`,
           'https://opensource.adobe.com/spectrum-web-components/components/button/#pending',
           { issues: ['pending + disabled'] }
-        );
-      }
-      if (
-        typeof this.staticColor !== 'undefined' &&
-        !BUTTON_STATIC_COLORS.includes(this.staticColor)
-      ) {
-        window.__swc.warn(
-          this,
-          `<${this.localName}> element expects the "static-color" attribute to be one of the following:`,
-          'https://opensource.adobe.com/spectrum-web-components/components/button/#static-color',
-          { issues: [...BUTTON_STATIC_COLORS] }
         );
       }
       if (this.hasIcon && !this.hasLabel && !this.accessibleLabel) {
