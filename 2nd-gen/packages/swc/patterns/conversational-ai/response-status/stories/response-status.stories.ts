@@ -16,7 +16,11 @@ import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
 import '@adobe/spectrum-wc/patterns/conversational-ai/response-status';
 
-import { AGENTIC_DEMO_FLOW_STEPS } from '../../agentic-demo-flow-script.js';
+import {
+  AGENTIC_DEMO_FLOW_STEPS,
+  agenticDemoStep,
+  executionStepsLabelSlot,
+} from '../../agentic-demo-flow-script.js';
 
 // ────────────────
 //    METADATA
@@ -47,23 +51,18 @@ argTypes.open = {
   },
 };
 
-argTypes.loadingLabel = {
-  ...argTypes.loadingLabel,
-  control: { type: 'text' },
-  table: {
-    category: 'attributes',
-    defaultValue: { summary: 'Generating response' },
-  },
-};
-
-argTypes.completeLabel = {
-  ...argTypes.completeLabel,
-  control: { type: 'text' },
-  table: {
-    category: 'attributes',
-    defaultValue: { summary: 'Response generated' },
-  },
-};
+delete (args as Record<string, unknown>).loadingLabel;
+delete (args as Record<string, unknown>).completeLabel;
+delete (args as Record<string, unknown>).reasoningLabel;
+delete (args as Record<string, unknown>).stoppedLabel;
+delete (args as Record<string, unknown>).processingAnnouncementLabel;
+delete (args as Record<string, unknown>).completeAnnouncementLabel;
+delete (argTypes as Record<string, unknown>).loadingLabel;
+delete (argTypes as Record<string, unknown>).completeLabel;
+delete (argTypes as Record<string, unknown>).reasoningLabel;
+delete (argTypes as Record<string, unknown>).stoppedLabel;
+delete (argTypes as Record<string, unknown>).processingAnnouncementLabel;
+delete (argTypes as Record<string, unknown>).completeAnnouncementLabel;
 
 /**
  * Displays AI response progress with an animated three-dot indicator and optional reasoning disclosure.
@@ -94,8 +93,6 @@ export const Playground: Story = {
   args: {
     loading: true,
     open: false,
-    loadingLabel: 'Generating response',
-    completeLabel: 'Response generated',
   },
   tags: ['dev'],
 };
@@ -108,8 +105,6 @@ export const Overview: Story = {
   args: {
     loading: true,
     open: false,
-    loadingLabel: 'Generating response',
-    completeLabel: 'Response generated',
   },
   tags: ['overview'],
 };
@@ -128,8 +123,6 @@ export const Anatomy: Story = {
   args: {
     loading: true,
     open: false,
-    loadingLabel: 'Generating response',
-    completeLabel: 'Response generated',
   },
   tags: ['anatomy'],
 };
@@ -141,9 +134,9 @@ export const Anatomy: Story = {
 /**
  * The `loading` attribute controls which indicator is shown:
  *
- * - **`loading=true`** — Animated three dots + "Thinking…" label
- * - **`loading=false`** — Checkmark + "Response generated" label
- * - Set `loading-label` or `complete-label` to customize row text per state
+ * - **`loading=true`** — Animated three dots + default loading label
+ * - **`loading=false`** — Checkmark + default complete label
+ * - Use `slot="label"` to customize row text
  */
 export const Loading: Story = {
   render: () => html`
@@ -162,12 +155,13 @@ export const Loading: Story = {
         </span>
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;">
-        <swc-response-status complete-label="Ready">
+        <swc-response-status>
+          <span slot="label">Ready</span>
           I grouped your request into a presentation outline and prioritized key
           business messages.
         </swc-response-status>
         <span class="swc-Detail swc-Detail--sizeS">
-          Complete (custom label)
+          Complete (custom label via slot)
         </span>
       </div>
     </div>
@@ -211,8 +205,6 @@ export const Accessibility: Story = {
   args: {
     loading: false,
     open: false,
-    loadingLabel: 'Thinking…',
-    completeLabel: 'Response generated',
     'default-slot':
       'I grouped your request into a presentation outline and prioritized key business messages.',
   },
@@ -222,25 +214,14 @@ export const Accessibility: Story = {
 /**
  * Frozen agentic complete state for test-runner axe and Playwright.
  * Uses `phase="complete"` (no rolling header) so docs-view axe stays stable.
- * Timed demos live under Agentic states (spike) and are tagged `!test`.
+ * Timed demos live under Agentic states and are tagged `!test`.
  */
 export const AgenticAccessibility: Story = {
   render: () => html`
-    <swc-response-status
-      phase="complete"
-      duration="12"
-      open
-      reasoning-label="Execution steps"
-    >
-      ${AGENTIC_DEMO_FLOW_STEPS.map(
-        (step) => html`
-          <swc-response-status-step
-            title=${step.title}
-            detail=${step.detail}
-            kind=${step.kind}
-            status="complete"
-          ></swc-response-status-step>
-        `
+    <swc-response-status phase="complete" duration="12" open>
+      ${executionStepsLabelSlot}
+      ${AGENTIC_DEMO_FLOW_STEPS.map((step) =>
+        agenticDemoStep(step, 'complete')
       )}
     </swc-response-status>
   `,

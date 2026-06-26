@@ -39,7 +39,7 @@ test.describe('ResponseStatus - ARIA Snapshots', () => {
   }) => {
     const root = await gotoStory(
       page,
-      'patterns-conversational-ai-response-status-agentic-states-spike--initiating',
+      'patterns-conversational-ai-response-status-agentic-states--initiating',
       'swc-response-status'
     );
     await expect(root.locator('[role="status"]')).toHaveCount(0);
@@ -53,7 +53,7 @@ test.describe('ResponseStatus - ARIA Snapshots', () => {
   }) => {
     const root = await gotoStory(
       page,
-      'patterns-conversational-ai-response-status-agentic-states-spike--processing-expanded',
+      'patterns-conversational-ai-response-status-agentic-states--processing-expanded',
       'swc-response-status'
     );
     await waitForCustomElement(page, 'swc-response-status-step');
@@ -69,7 +69,7 @@ test.describe('ResponseStatus - ARIA Snapshots', () => {
   test('should summarize complete phase with duration', async ({ page }) => {
     const root = await gotoStory(
       page,
-      'patterns-conversational-ai-response-status-agentic-states-spike--completed-collapsed',
+      'patterns-conversational-ai-response-status-agentic-states--completed-collapsed',
       'swc-response-status'
     );
     const toggle = root.locator('button[aria-expanded="false"]');

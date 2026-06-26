@@ -10,39 +10,36 @@
  * governing permissions and limitations under the License.
  */
 
-import type { ResponseStatusStepKind } from './response-status/response-status-step/ResponseStatusStep.js';
+import { html, type TemplateResult } from 'lit';
+
+import type { ResponseStatusStepStatus } from './response-status/response-status-step/ResponseStatusStep.js';
 
 export type AgenticDemoFlowStepData = {
-  title: string;
+  label: string;
   detail: string;
-  kind: ResponseStatusStepKind;
 };
 
-/** Step titles and details for the canonical Storybook agentic flow demo. */
+/** Step labels and details for the canonical Storybook agentic flow demo. */
 export const AGENTIC_DEMO_FLOW_STEPS: AgenticDemoFlowStepData[] = [
   {
-    title: 'Looked through documentation',
+    label: 'Looked through documentation',
     detail:
       'Scanned 12 internal knowledge base articles matching the query context and extracted key sections.',
-    kind: 'thinking',
   },
   {
-    title: 'Searching web for: Carnival cruise trip packages Europe Asia',
+    label: 'Searching web for: Carnival cruise trip packages Europe Asia',
     detail:
       'Found 8 relevant results across travel aggregators and official cruise line sites.',
-    kind: 'acting',
   },
   {
-    title: 'Searching repositories for Europe trips',
+    label: 'Searching repositories for Europe trips',
     detail:
       'Checked 3 internal repositories for previously compiled trip package data and pricing templates.',
-    kind: 'acting',
   },
   {
-    title: 'Compose response',
+    label: 'Compose response',
     detail:
       'Synthesizing findings into a structured comparison of available packages with pricing and availability.',
-    kind: 'thinking',
   },
 ];
 
@@ -62,3 +59,17 @@ export const AGENTIC_DEMO_FLOW_TIMING = {
 
 export const agenticDemoGreeting = (_prompt: string): string =>
   'Hello! How can I help you today?';
+
+export const executionStepsLabelSlot = html`
+  <span slot="reasoning-label">Execution steps</span>
+`;
+
+export const agenticDemoStep = (
+  data: AgenticDemoFlowStepData,
+  status: ResponseStatusStepStatus
+): TemplateResult => html`
+  <swc-response-status-step status=${status}>
+    <span slot="label">${data.label}</span>
+    ${data.detail}
+  </swc-response-status-step>
+`;

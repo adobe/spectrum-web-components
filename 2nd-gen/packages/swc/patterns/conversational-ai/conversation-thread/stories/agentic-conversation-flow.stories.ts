@@ -20,7 +20,11 @@ import '@adobe/spectrum-wc/patterns/conversational-ai/user-message';
 import '@adobe/spectrum-wc/patterns/conversational-ai/response-status';
 import './agentic-conversation-flow-demo.js';
 
-import { AGENTIC_DEMO_FLOW_STEPS } from '../../agentic-demo-flow-script.js';
+import {
+  AGENTIC_DEMO_FLOW_STEPS,
+  agenticDemoStep,
+  executionStepsLabelSlot,
+} from '../../agentic-demo-flow-script.js';
 
 const meta: Meta = {
   title: 'Conversational AI/Conversation thread/Agentic flow (demo)',
@@ -43,15 +47,8 @@ export default meta;
 export const AgenticFlowAccessibility: Story = {
   tags: ['a11y'],
   render: () => {
-    const completeSteps = AGENTIC_DEMO_FLOW_STEPS.map(
-      (step) => html`
-        <swc-response-status-step
-          title=${step.title}
-          detail=${step.detail}
-          kind=${step.kind}
-          status="complete"
-        ></swc-response-status-step>
-      `
+    const completeSteps = AGENTIC_DEMO_FLOW_STEPS.map((step) =>
+      agenticDemoStep(step, 'complete')
     );
 
     return html`
@@ -66,13 +63,8 @@ export const AgenticFlowAccessibility: Story = {
           </swc-conversation-turn>
           <swc-conversation-turn type="system">
             <swc-system-message>
-              <swc-response-status
-                slot="status"
-                phase="complete"
-                duration="12"
-                reasoning-label="Execution steps"
-              >
-                ${completeSteps}
+              <swc-response-status slot="status" phase="complete" duration="12">
+                ${executionStepsLabelSlot} ${completeSteps}
               </swc-response-status>
               <div class="swc-Typography--prose">
                 <p>

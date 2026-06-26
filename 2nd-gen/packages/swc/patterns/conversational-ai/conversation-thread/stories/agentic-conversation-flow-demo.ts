@@ -24,17 +24,15 @@ import {
   AGENTIC_DEMO_FLOW_STEPS,
   AGENTIC_DEMO_FLOW_TIMING,
   agenticDemoGreeting,
+  agenticDemoStep,
+  executionStepsLabelSlot,
 } from '../../agentic-demo-flow-script.js';
-import type {
-  ResponseStatusStepKind,
-  ResponseStatusStepStatus,
-} from '../../response-status/response-status-step/ResponseStatusStep.js';
+import type { ResponseStatusStepStatus } from '../../response-status/response-status-step/ResponseStatusStep.js';
 import type { ResponseStatusPhase } from '../../response-status/ResponseStatus.js';
 
 type AgenticStep = {
-  title: string;
+  label: string;
   detail: string;
-  kind: ResponseStatusStepKind;
   status: ResponseStatusStepStatus;
 };
 
@@ -305,6 +303,9 @@ export class AgenticConversationFlowDemo extends LitElement {
   private renderAgenticStatus(turn: DemoTurn) {
     const phase =
       turn.agenticPhase ?? (turn.loading ? 'processing' : 'complete');
+    const activeStep = (turn.agenticSteps ?? []).find(
+      (step) => step.status === 'active'
+    );
     return html`
       <swc-response-status
         slot="status"
@@ -312,18 +313,19 @@ export class AgenticConversationFlowDemo extends LitElement {
         duration=${turn.agenticDuration ?? 0}
         data-status-id=${turn.id}
         ?open=${!!turn.statusOpen}
-        initiating-label="Processing request"
-        reasoning-label="Execution steps"
       >
-        ${(turn.agenticSteps ?? []).map(
-          (step) => html`
-            <swc-response-status-step
-              title=${step.title}
-              detail=${step.detail}
-              kind=${step.kind}
-              status=${step.status}
-            ></swc-response-status-step>
-          `
+        ${executionStepsLabelSlot}
+        ${activeStep
+          ? html`
+              <span slot="label">${activeStep.label}</span>
+            `
+          : ''}
+        <span slot="summary">Processing request</span>
+        ${(turn.agenticSteps ?? []).map((step) =>
+          agenticDemoStep(
+            { label: step.label, detail: step.detail },
+            step.status
+          )
         )}
       </swc-response-status>
     `;

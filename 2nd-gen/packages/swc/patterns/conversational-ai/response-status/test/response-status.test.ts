@@ -17,6 +17,20 @@ import { getComponent } from '../../../../utils/test-utils.js';
 import { ResponseStatus } from '../ResponseStatus.js';
 import { meta, Overview } from '../stories/response-status.stories.js';
 
+const setHostLabelSlot = async (
+  el: ResponseStatus,
+  text: string
+): Promise<void> => {
+  let label = el.querySelector('[slot="label"]');
+  if (!label) {
+    label = document.createElement('span');
+    label.setAttribute('slot', 'label');
+    el.appendChild(label);
+  }
+  label.textContent = text;
+  await el.updateComplete;
+};
+
 export default {
   ...meta,
   title: 'Conversational AI/Response status/Tests',
@@ -88,42 +102,39 @@ export const BooleanMutationTest: Story = {
       expect(el.hasAttribute('open')).toBe(false);
     });
 
-    await step(
-      'loadingLabel and completeLabel support custom status text',
-      async () => {
-        el.loading = true;
-        el.loadingLabel = 'Generating';
-        await el.updateComplete;
-        let statusLabel = el.shadowRoot?.querySelector(
-          '.swc-ResponseStatus-label'
-        );
-        expect(statusLabel?.textContent?.trim()).toBe('Generating');
-
-        el.loading = false;
-        el.completeLabel = 'Ready';
-        await el.updateComplete;
-        statusLabel = el.shadowRoot?.querySelector('.swc-ResponseStatus-label');
-        expect(statusLabel?.textContent?.trim()).toBe('Ready');
-      }
-    );
-
-    await step('label swaps when loading transitions to complete', async () => {
-      el.loadingLabel = 'Thinking...';
-      el.completeLabel = 'Done';
+    await step('label slot customizes legacy status text', async () => {
       el.loading = true;
-      await el.updateComplete;
-
+      await setHostLabelSlot(el, 'Generating');
       let statusLabel = el.shadowRoot?.querySelector(
         '.swc-ResponseStatus-label'
       );
-      expect(statusLabel?.textContent?.trim()).toBe('Thinking...');
+      expect(statusLabel?.textContent?.trim()).toBe('Generating');
 
       el.loading = false;
-      await el.updateComplete;
-
+      await setHostLabelSlot(el, 'Ready');
       statusLabel = el.shadowRoot?.querySelector('.swc-ResponseStatus-label');
-      expect(statusLabel?.textContent?.trim()).toBe('Done');
+      expect(statusLabel?.textContent?.trim()).toBe('Ready');
     });
+
+    await step(
+      'label slot swaps when loading transitions to complete',
+      async () => {
+        await setHostLabelSlot(el, 'Thinking...');
+        el.loading = true;
+        await el.updateComplete;
+
+        let statusLabel = el.shadowRoot?.querySelector(
+          '.swc-ResponseStatus-label'
+        );
+        expect(statusLabel?.textContent?.trim()).toBe('Thinking...');
+
+        el.loading = false;
+        await setHostLabelSlot(el, 'Done');
+
+        statusLabel = el.shadowRoot?.querySelector('.swc-ResponseStatus-label');
+        expect(statusLabel?.textContent?.trim()).toBe('Done');
+      }
+    );
   },
 };
 
@@ -203,7 +214,7 @@ export const InteractionTest: Story = {
         expect(row).toBeTruthy();
         expect(
           row?.querySelector('.swc-ResponseStatus-label')?.textContent?.trim()
-        ).toBe(el.completeLabel);
+        ).toBe('Response generated');
       }
     );
 

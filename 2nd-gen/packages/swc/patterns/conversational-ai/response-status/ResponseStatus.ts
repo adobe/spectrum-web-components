@@ -27,7 +27,6 @@ import {
 } from '../utils/icons/index.js';
 import {
   ResponseStatusStep,
-  type ResponseStatusStepKind,
   type ResponseStatusStepStatus,
 } from './response-status-step/ResponseStatusStep.js';
 
@@ -40,9 +39,8 @@ export type ResponseStatusPhase =
   | 'complete';
 
 export type ResponseStatusStepData = {
-  title: string;
+  label: string;
   detail: string;
-  kind: ResponseStatusStepKind;
   status: ResponseStatusStepStatus;
 };
 
@@ -52,9 +50,12 @@ export type ResponseStatusStepData = {
  * **Legacy mode** — default slot text + `loading` / `open` (progress circle + reasoning).
  *
  * **Agentic mode** — one or more `<swc-response-status-step>` children; uses `phase`, rolling
- * header title, and an expandable step timeline.
+ * header label, and an expandable step timeline.
  *
  * @element swc-response-status
+ * @slot label - Header row label (optional; during processing, falls back to the active step label)
+ * @slot summary - Initiating summary before the first step label roll (`Processing request` by default)
+ * @slot reasoning-label - Accessible name for the step list / reasoning panel (`Reasoning` by default)
  * @slot - Reasoning prose (legacy) or `<swc-response-status-step>` elements (agentic)
  * @fires swc-response-status-toggle - Dispatched when the user expands or collapses the panel.
  * Detail: `{ open: boolean }`
@@ -62,6 +63,22 @@ export type ResponseStatusStepData = {
 export class ResponseStatus extends SpectrumElement {
   private static readonly STATUS_LABEL_CLASS =
     'swc-ResponseStatus-label swc-Body swc-Body--sizeS';
+
+  private static readonly DEFAULT_SUMMARY = 'Processing request';
+
+  private static readonly DEFAULT_LOADING_LABEL = 'Generating response';
+
+  private static readonly DEFAULT_COMPLETE_LABEL = 'Response generated';
+
+  private static readonly DEFAULT_REASONING_LABEL = 'Reasoning';
+
+  private static readonly DEFAULT_STOPPED_LABEL = 'You stopped the response';
+
+  private static readonly PROCESSING_ANNOUNCEMENT = 'Response processing';
+
+  private static readonly COMPLETE_ANNOUNCEMENT = 'Response complete';
+
+  private static readonly INITIATING_DWELL_MS = 1000;
 
   private readonly panelId = uniqueId('swc-response-status-panel');
 
@@ -71,9 +88,18 @@ export class ResponseStatus extends SpectrumElement {
   @state()
   private _steps: ResponseStatusStepData[] = [];
 
-  /** Active step title last shown in the header (after roll completes). */
   @state()
-  private _headerActiveTitle = '';
+  private _labelSlotText = '';
+
+  @state()
+  private _summarySlotText = '';
+
+  @state()
+  private _reasoningLabelSlotText = '';
+
+  /** Active step label last shown in the header (after roll completes). */
+  @state()
+  private _headerActiveLabel = '';
 
   @state()
   private _rollFrom = '';
@@ -114,47 +140,6 @@ export class ResponseStatus extends SpectrumElement {
    */
   @property({ type: Number, reflect: true })
   public duration = 0;
-
-  /** Label when `phase="initiating"` (or processing with no steps yet). */
-  @property({ type: String, attribute: 'initiating-label', reflect: true })
-  public initiatingLabel = 'Processing request';
-
-  /**
-   * Milliseconds to show {@link initiatingLabel} before the first step title roll
-   * when entering processing without a prior initiating phase.
-   */
-  @property({ type: Number, attribute: 'initiating-dwell-ms' })
-  public initiatingDwellMs = 1000;
-
-  /** Status row label text shown while loading / processing without an active step. */
-  @property({ type: String, reflect: true })
-  public loadingLabel = 'Generating response';
-
-  /** Status row label text when complete (overrides duration summary when set explicitly). */
-  @property({ type: String, reflect: true })
-  public completeLabel = 'Response generated';
-
-  /** Accessible label for the step list / reasoning group. */
-  @property({ type: String, attribute: 'reasoning-label' })
-  public reasoningLabel = 'Reasoning';
-
-  /** Header label when the user stops generation (`phase="stopped"`). */
-  @property({ type: String, attribute: 'stopped-label', reflect: true })
-  public stoppedLabel = 'You stopped the response';
-
-  /**
-   * Screen reader announcement when generation starts (initiating / processing).
-   * Rolling header titles are not announced — only this message via `aria-live`.
-   */
-  @property({ type: String, attribute: 'processing-announcement' })
-  public processingAnnouncementLabel = 'Response processing';
-
-  /**
-   * Screen reader announcement when generation completes (`phase="complete"` or legacy
-   * `loading` becomes false after a load).
-   */
-  @property({ type: String, attribute: 'complete-announcement' })
-  public completeAnnouncementLabel = 'Response complete';
 
   /** `true`: step timeline or reasoning expanded. */
   @property({ type: Boolean, reflect: true })
@@ -199,9 +184,8 @@ export class ResponseStatus extends SpectrumElement {
 
     return left.every(
       (step, index) =>
-        step.title === right[index]?.title &&
+        step.label === right[index]?.label &&
         step.detail === right[index]?.detail &&
-        step.kind === right[index]?.kind &&
         step.status === right[index]?.status
     );
   }
@@ -216,8 +200,56 @@ export class ResponseStatus extends SpectrumElement {
     return steps.find((step) => step.status === 'pending');
   }
 
-  private _getActiveStepTitle(steps: ResponseStatusStepData[]): string {
-    return this._getActiveStepFrom(steps)?.title?.trim() ?? '';
+  private _getActiveStepLabel(steps: ResponseStatusStepData[]): string {
+    return this._getActiveStepFrom(steps)?.label?.trim() ?? '';
+  }
+
+  private _readLightDomNamedSlotText(host: Element, slotName: string): string {
+    return Array.from(host.querySelectorAll(`[slot="${slotName}"]`))
+      .map((element) => element.textContent?.trim() ?? '')
+      .filter(Boolean)
+      .join(' ');
+  }
+
+  private _readLightDomDefaultSlotText(host: Element): string {
+    const parts: string[] = [];
+    for (const child of host.childNodes) {
+      if (child.nodeType === Node.TEXT_NODE) {
+        const text = child.textContent?.trim();
+        if (text) {
+          parts.push(text);
+        }
+        continue;
+      }
+      if (child instanceof Element && !child.getAttribute('slot')) {
+        const text = child.textContent?.trim();
+        if (text) {
+          parts.push(text);
+        }
+      }
+    }
+    return parts.join(' ');
+  }
+
+  private _readShadowSlotText(slot: HTMLSlotElement | null): string {
+    if (!slot) {
+      return '';
+    }
+    return slot
+      .assignedNodes({ flatten: true })
+      .map((node) => node.textContent?.trim() ?? '')
+      .filter(Boolean)
+      .join(' ');
+  }
+
+  private _getInitiatingSummary(): string {
+    return this._summarySlotText || ResponseStatus.DEFAULT_SUMMARY;
+  }
+
+  private _getReasoningPanelLabel(): string {
+    return (
+      this._reasoningLabelSlotText || ResponseStatus.DEFAULT_REASONING_LABEL
+    );
   }
 
   private _isStepElement(element: Element): element is ResponseStatusStep {
@@ -229,19 +261,28 @@ export class ResponseStatus extends SpectrumElement {
 
   private _readStepElement(element: Element): ResponseStatusStepData {
     const step = element as ResponseStatusStep;
-    const kind =
-      step.kind ||
-      (element.getAttribute('kind') as ResponseStatusStepKind | null) ||
-      'thinking';
     const status =
       step.status ||
       (element.getAttribute('status') as ResponseStatusStepStatus | null) ||
       'pending';
 
+    const labelFromSlot = this._readLightDomNamedSlotText(element, 'label');
+    const detailFromSlot = this._readLightDomDefaultSlotText(element);
+
     return {
-      title: (step.title || element.getAttribute('title') || '').trim(),
-      detail: (step.detail || element.getAttribute('detail') || '').trim(),
-      kind,
+      label: (
+        labelFromSlot ||
+        step.title ||
+        element.getAttribute('title') ||
+        element.getAttribute('label') ||
+        ''
+      ).trim(),
+      detail: (
+        detailFromSlot ||
+        step.detail ||
+        element.getAttribute('detail') ||
+        ''
+      ).trim(),
       status,
     };
   }
@@ -275,8 +316,8 @@ export class ResponseStatus extends SpectrumElement {
         return;
       }
 
-      this._startHeaderRoll(this.initiatingLabel, toLabel);
-    }, this.initiatingDwellMs);
+      this._startHeaderRoll(this._getInitiatingSummary(), toLabel);
+    }, ResponseStatus.INITIATING_DWELL_MS);
   }
 
   private _startHeaderRoll(fromLabel: string, toLabel: string): void {
@@ -286,7 +327,7 @@ export class ResponseStatus extends SpectrumElement {
     this._rolling = false;
 
     if (this._prefersReducedMotion) {
-      this._headerActiveTitle = this._getActiveStepTitle(this._steps);
+      this._headerActiveLabel = this._getActiveStepLabel(this._steps);
       this._rollFrom = '';
       this._rollTo = '';
       return;
@@ -305,23 +346,23 @@ export class ResponseStatus extends SpectrumElement {
     this._clearRollTimeout();
     this._rolling = false;
 
-    const nextActiveTitle = this._getActiveStepTitle(this._steps);
+    const nextActiveLabel = this._getActiveStepLabel(this._steps);
     const nextLabel = this._getAgenticHeaderLabel();
 
     if (
       this._effectivePhase === 'processing' &&
-      nextActiveTitle &&
-      nextActiveTitle !== this._headerActiveTitle &&
+      nextActiveLabel &&
+      nextActiveLabel !== this._headerActiveLabel &&
       !this._prefersReducedMotion
     ) {
       this._startHeaderRoll(
-        this._headerActiveTitle || this.initiatingLabel,
+        this._headerActiveLabel || this._getInitiatingSummary(),
         nextLabel
       );
       return;
     }
 
-    this._headerActiveTitle = nextActiveTitle;
+    this._headerActiveLabel = nextActiveLabel;
     this._rollFrom = '';
     this._rollTo = '';
   }
@@ -348,7 +389,7 @@ export class ResponseStatus extends SpectrumElement {
       this._sawInitiatingPhase = true;
       this._clearInitiatingDwell();
       this._clearRollTimeout();
-      this._headerActiveTitle = '';
+      this._headerActiveLabel = '';
       this._rollFrom = '';
       this._rollTo = '';
       this._rolling = false;
@@ -359,7 +400,7 @@ export class ResponseStatus extends SpectrumElement {
       this._sawInitiatingPhase = false;
       this._clearInitiatingDwell();
       this._clearRollTimeout();
-      this._headerActiveTitle = '';
+      this._headerActiveLabel = '';
       this._rollFrom = '';
       this._rollTo = '';
       this._rolling = false;
@@ -373,15 +414,14 @@ export class ResponseStatus extends SpectrumElement {
       return;
     }
 
-    const nextActiveTitle = this._getActiveStepTitle(this._steps);
+    const nextActiveLabel = this._getActiveStepLabel(this._steps);
 
-    if (nextActiveTitle && nextActiveTitle !== this._headerActiveTitle) {
-      const isFirstStepRoll = !this._headerActiveTitle;
+    if (nextActiveLabel && nextActiveLabel !== this._headerActiveLabel) {
+      const isFirstStepRoll = !this._headerActiveLabel;
 
       if (
         isFirstStepRoll &&
         !this._sawInitiatingPhase &&
-        this.initiatingDwellMs > 0 &&
         !this._prefersReducedMotion
       ) {
         this._scheduleInitiatingDwell(nextLabel);
@@ -389,7 +429,7 @@ export class ResponseStatus extends SpectrumElement {
       }
 
       this._startHeaderRoll(
-        this._headerActiveTitle || this.initiatingLabel,
+        this._headerActiveLabel || this._getInitiatingSummary(),
         nextLabel
       );
     }
@@ -449,12 +489,12 @@ export class ResponseStatus extends SpectrumElement {
       this._isActiveGenerationKey(key) &&
       !this._isActiveGenerationKey(prev)
     ) {
-      this._queueLiveAnnouncement(this.processingAnnouncementLabel);
+      this._queueLiveAnnouncement(ResponseStatus.PROCESSING_ANNOUNCEMENT);
     } else if (
       (key === 'complete' && this._isActiveGenerationKey(prev)) ||
       (key === 'legacy-idle' && prev === 'legacy-loading')
     ) {
-      this._queueLiveAnnouncement(this.completeAnnouncementLabel);
+      this._queueLiveAnnouncement(ResponseStatus.COMPLETE_ANNOUNCEMENT);
     }
 
     this._lifecycleKey = key;
@@ -472,9 +512,9 @@ export class ResponseStatus extends SpectrumElement {
       return this._getVisibleAgenticLabel();
     }
     if (phase === 'stopped') {
-      return this.stoppedLabel;
+      return this._labelSlotText || ResponseStatus.DEFAULT_STOPPED_LABEL;
     }
-    return this.processingAnnouncementLabel;
+    return ResponseStatus.PROCESSING_ANNOUNCEMENT;
   }
 
   private _renderLiveAnnouncer(): TemplateResult {
@@ -523,7 +563,7 @@ export class ResponseStatus extends SpectrumElement {
       this._awaitingInitiatingRoll &&
       !this._rollFrom
     ) {
-      return this.initiatingLabel;
+      return this._getInitiatingSummary();
     }
 
     return this._getAgenticHeaderLabel();
@@ -631,7 +671,12 @@ export class ResponseStatus extends SpectrumElement {
   }
 
   private _getLegacyStatusLabel(): string {
-    return this.loading ? this.loadingLabel : this.completeLabel;
+    if (this._labelSlotText) {
+      return this._labelSlotText;
+    }
+    return this.loading
+      ? ResponseStatus.DEFAULT_LOADING_LABEL
+      : ResponseStatus.DEFAULT_COMPLETE_LABEL;
   }
 
   private _getActiveStep(): ResponseStatusStepData | undefined {
@@ -642,22 +687,30 @@ export class ResponseStatus extends SpectrumElement {
     const phase = this._effectivePhase;
 
     if (phase === 'initiating') {
-      return this.initiatingLabel;
+      return this._getInitiatingSummary();
     }
 
     if (phase === 'processing') {
-      return this._getActiveStep()?.title?.trim() || this.loadingLabel;
+      return (
+        this._labelSlotText ||
+        this._getActiveStep()?.label?.trim() ||
+        ResponseStatus.DEFAULT_LOADING_LABEL
+      );
     }
 
     if (phase === 'stopped') {
-      return this.stoppedLabel;
+      return this._labelSlotText || ResponseStatus.DEFAULT_STOPPED_LABEL;
+    }
+
+    if (this._labelSlotText) {
+      return this._labelSlotText;
     }
 
     if (this.duration > 0) {
       return `Thought for ${this.duration} seconds`;
     }
 
-    return this.completeLabel;
+    return ResponseStatus.DEFAULT_COMPLETE_LABEL;
   }
 
   private _slotHasReasoningContent(slot: HTMLSlotElement | null): boolean {
@@ -695,7 +748,37 @@ export class ResponseStatus extends SpectrumElement {
       .map((element) => this._readStepElement(element));
   }
 
+  private _readNamedSlotContent(slotName: string): string {
+    const fromLightDom = this._readLightDomNamedSlotText(this, slotName);
+    if (fromLightDom) {
+      return fromLightDom;
+    }
+    const slot =
+      this.shadowRoot?.querySelector<HTMLSlotElement>(
+        `slot[name="${slotName}"]`
+      ) ?? null;
+    return this._readShadowSlotText(slot);
+  }
+
+  private _syncNamedSlots(): void {
+    const labelText = this._readNamedSlotContent('label');
+    const summaryText = this._readNamedSlotContent('summary');
+    const reasoningLabelText = this._readNamedSlotContent('reasoning-label');
+
+    if (this._labelSlotText !== labelText) {
+      this._labelSlotText = labelText;
+    }
+    if (this._summarySlotText !== summaryText) {
+      this._summarySlotText = summaryText;
+    }
+    if (this._reasoningLabelSlotText !== reasoningLabelText) {
+      this._reasoningLabelSlotText = reasoningLabelText;
+    }
+  }
+
   private _syncSlotContent(slot?: HTMLSlotElement): void {
+    this._syncNamedSlots();
+
     const contentSlot =
       slot ??
       this.shadowRoot?.querySelector<HTMLSlotElement>(
@@ -734,6 +817,10 @@ export class ResponseStatus extends SpectrumElement {
 
   private _handleSlotChange(event: Event): void {
     this._syncSlotContent(event.target as HTMLSlotElement);
+  }
+
+  private _handleNamedSlotChange(): void {
+    this._syncNamedSlots();
   }
 
   private _renderThreeDots(): TemplateResult {
@@ -845,25 +932,13 @@ export class ResponseStatus extends SpectrumElement {
     `;
   }
 
-  private _renderStepDetail(
-    kind: ResponseStatusStepKind,
-    status: ResponseStatusStepStatus,
-    detail: string
-  ): TemplateResult | string {
+  private _renderStepDetail(detail: string): TemplateResult | string {
     if (!detail) {
       return '';
     }
-    if (status === 'stopped') {
-      return html`
-        <p class="swc-ResponseStatus-step-detail swc-Body swc-Body--sizeXXS">
-          ${detail}
-        </p>
-      `;
-    }
-    const prefix = kind === 'acting' ? 'Acting' : 'Thinking';
     return html`
       <p class="swc-ResponseStatus-step-detail swc-Body swc-Body--sizeXXS">
-        ${prefix} ${detail}
+        ${detail}
       </p>
     `;
   }
@@ -909,9 +984,9 @@ export class ResponseStatus extends SpectrumElement {
                 <p
                   class="swc-ResponseStatus-step-title swc-Detail swc-Detail--sizeS"
                 >
-                  ${step.title}
+                  ${step.label}
                 </p>
-                ${this._renderStepDetail(step.kind, step.status, step.detail)}
+                ${this._renderStepDetail(step.detail)}
               </div>
             </li>
           `
@@ -962,7 +1037,7 @@ export class ResponseStatus extends SpectrumElement {
   }
 
   private _renderPanel(showPanel: boolean): TemplateResult {
-    const panelLabel = this.reasoningLabel;
+    const panelLabel = this._getReasoningPanelLabel();
     const panelOpen = showPanel && this.open;
 
     return html`
@@ -997,6 +1072,21 @@ export class ResponseStatus extends SpectrumElement {
           ${this._renderAgenticHeader(showDisclosure)}
           ${this._renderPanel(showPanel)}
           <slot
+            name="label"
+            hidden
+            @slotchange=${this._handleNamedSlotChange}
+          ></slot>
+          <slot
+            name="summary"
+            hidden
+            @slotchange=${this._handleNamedSlotChange}
+          ></slot>
+          <slot
+            name="reasoning-label"
+            hidden
+            @slotchange=${this._handleNamedSlotChange}
+          ></slot>
+          <slot
             class="swc-ResponseStatus-content-slot"
             hidden
             @slotchange=${this._handleSlotChange}
@@ -1020,7 +1110,7 @@ export class ResponseStatus extends SpectrumElement {
           class="swc-ResponseStatus-reasoning-panel"
           role=${ifDefined(legacyShowDisclosure ? 'group' : undefined)}
           aria-label=${ifDefined(
-            legacyShowDisclosure ? this.reasoningLabel : undefined
+            legacyShowDisclosure ? this._getReasoningPanelLabel() : undefined
           )}
           ?hidden=${!legacyShowDisclosure || !this.open}
         >
@@ -1029,6 +1119,16 @@ export class ResponseStatus extends SpectrumElement {
             @slotchange=${this._handleSlotChange}
           ></slot>
         </div>
+        <slot
+          name="label"
+          hidden
+          @slotchange=${this._handleNamedSlotChange}
+        ></slot>
+        <slot
+          name="reasoning-label"
+          hidden
+          @slotchange=${this._handleNamedSlotChange}
+        ></slot>
       </div>
     `;
   }

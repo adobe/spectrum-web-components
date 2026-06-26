@@ -17,7 +17,6 @@ import { SpectrumElement } from '@spectrum-web-components/core/element/index.js'
 
 import styles from './response-status-step.css';
 
-export type ResponseStatusStepKind = 'thinking' | 'acting';
 export type ResponseStatusStepStatus =
   | 'pending'
   | 'active'
@@ -27,22 +26,20 @@ export type ResponseStatusStepStatus =
 /**
  * One agentic execution step inside `<swc-response-status>`.
  *
- * Light DOM marker only — the parent renders the visible timeline from these attributes.
+ * Light DOM marker only — the parent renders the visible timeline from slotted content.
  *
  * @element swc-response-status-step
+ * @slot label - Step title (shown in the header when `status="active"`)
+ * @slot - Step detail shown in the expanded timeline
  */
 export class ResponseStatusStep extends SpectrumElement {
-  /** Primary step title (shown in the header when `status="active"`). */
+  /** @deprecated Use the `label` slot. */
   @property({ type: String, reflect: true })
   public override title = '';
 
-  /** Secondary context shown in the expanded step list. */
+  /** @deprecated Use the default slot. */
   @property({ type: String, reflect: true })
   public detail = '';
-
-  /** Distinguishes thinking vs acting copy in the expanded list. */
-  @property({ type: String, reflect: true })
-  public kind: ResponseStatusStepKind = 'thinking';
 
   /** Timeline state for connector icons. */
   @property({ type: String, reflect: true })
@@ -52,24 +49,28 @@ export class ResponseStatusStep extends SpectrumElement {
     return [styles];
   }
 
+  private _handleSlotChange = (): void => {
+    this.dispatchEvent(
+      new CustomEvent('swc-response-status-step-change', {
+        bubbles: true,
+      })
+    );
+  };
+
   protected override updated(changed: PropertyValues): void {
     if (
       changed.has('title') ||
       changed.has('detail') ||
-      changed.has('kind') ||
       changed.has('status')
     ) {
-      this.dispatchEvent(
-        new CustomEvent('swc-response-status-step-change', {
-          bubbles: true,
-        })
-      );
+      this._handleSlotChange();
     }
   }
 
   protected override render(): TemplateResult {
     return html`
-      <slot hidden></slot>
+      <slot name="label" hidden @slotchange=${this._handleSlotChange}></slot>
+      <slot hidden @slotchange=${this._handleSlotChange}></slot>
     `;
   }
 }
