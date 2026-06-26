@@ -50,7 +50,7 @@
   color: var(--swc-close-button-icon-color-focus, token("neutral-content-color-key-focus"));
   background-color: var(--swc-close-button-background-color-focus, token("gray-100"));
   outline: var(--swc-close-button-focus-indicator-thickness, token("focus-indicator-thickness")) solid var(--swc-close-button-focus-indicator-color, token("focus-indicator-color"));
-  outline-offset: var(--swc-close-button-focus-indicator-gap, token("focus-indicator-gap"));
+  outline-offset: var(--swc-close-button-focus-indicator-gap, token("focus-ring-gap"));
 }
 
 .swc-CloseButton:hover {
@@ -75,8 +75,8 @@
 .swc-CloseButton-icon {
   display: block;
   flex-shrink: 0;
-  inline-size: var(--swc-close-button-icon-size, token("cross-icon-size-300"));
-  block-size: var(--swc-close-button-icon-size, token("cross-icon-size-300"));
+  inline-size: var(--swc-close-button-icon-size, token("ui-icon-extra-large"));
+  block-size: var(--swc-close-button-icon-size, token("ui-icon-extra-large"));
 }
 
 .swc-CloseButton-icon svg {
@@ -87,17 +87,17 @@
 }
 
 :host([size="s"]) {
-  --swc-close-button-icon-size: token("cross-icon-size-200");
+  --swc-close-button-icon-size: token("ui-icon-large");
   --swc-close-button-size: token("component-height-75");
 }
 
 :host([size="l"]) {
-  --swc-close-button-icon-size: token("cross-icon-size-400");
+  --swc-close-button-icon-size: token("ui-icon-2x-large");
   --swc-close-button-size: token("component-height-200");
 }
 
 :host([size="xl"]) {
-  --swc-close-button-icon-size: token("cross-icon-size-500");
+  --swc-close-button-icon-size: token("ui-icon-2x-large");
   --swc-close-button-size: token("component-height-300");
 }
 
