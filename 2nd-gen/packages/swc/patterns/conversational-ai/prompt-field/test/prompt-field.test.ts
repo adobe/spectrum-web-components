@@ -10,7 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
-import { html } from 'lit';
+import { html, render } from 'lit';
 import { expect, userEvent } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
@@ -144,17 +144,7 @@ export const InteractionTest: Story = {
 };
 
 export const MixedArtifactWarningTest: Story = {
-  render: () => html`
-    <swc-prompt-field label="Prompt" value="Mixed attachments">
-      <swc-upload-artifact slot="artifact" type="card">
-        <span slot="title">Brief</span>
-        <span slot="subtitle">PDF</span>
-      </swc-upload-artifact>
-      <swc-upload-artifact slot="artifact" type="media">
-        <div slot="thumbnail" role="img" aria-label="Preview"></div>
-      </swc-upload-artifact>
-    </swc-prompt-field>
-  `,
+  render: () => html``,
   play: async ({ canvasElement, step }) => {
     const warnings: string[] = [];
     const originalWarn = console.warn;
@@ -163,6 +153,21 @@ export const MixedArtifactWarningTest: Story = {
     };
 
     try {
+      render(
+        html`
+          <swc-prompt-field label="Prompt" value="Mixed attachments">
+            <swc-upload-artifact slot="artifact" type="card">
+              <span slot="title">Brief</span>
+              <span slot="subtitle">PDF</span>
+            </swc-upload-artifact>
+            <swc-upload-artifact slot="artifact" type="media">
+              <div slot="thumbnail" role="img" aria-label="Preview"></div>
+            </swc-upload-artifact>
+          </swc-prompt-field>
+        `,
+        canvasElement
+      );
+
       await getComponent<PromptField>(canvasElement, 'swc-prompt-field');
 
       await step(
