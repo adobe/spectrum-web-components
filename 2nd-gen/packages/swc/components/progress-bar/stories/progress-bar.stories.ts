@@ -67,15 +67,6 @@ argTypes.value = {
   },
 };
 
-/**
- * A `<swc-progress-bar>` is a non-focusable, read-only bar that shows task
- * progress (0–100, or a custom range). When completion time is unknown, set
- * `indeterminate` to show a looping fill animation instead of a value. The
- * WAI-ARIA `progressbar` role and all `aria-value*` attributes live on the
- * internal shadow wrapper; the host carries no ARIA role. For scalar
- * measurements (storage used, survey completion), prefer
- * [Meter](../?path=/docs/meter--overview).
- */
 const meta: Meta = {
   title: 'Progress Bar',
   component: 'swc-progress-bar',
