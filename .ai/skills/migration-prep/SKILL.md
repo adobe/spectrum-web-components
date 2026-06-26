@@ -214,7 +214,7 @@ During discovery, decide whether Phase 5 should scaffold a **Chromatic VRT testi
 
 Record the decision in the migration plan **Visual regression** checklist:
 
-- **Yes** — list the dimensions to cover (variants, states, sizes, static colors, edge cases like icon-only or truncation). Phase 5 (`migration-styling`) scaffolds `stories/<name>.template.ts`, `test/<name>.vrt.ts`, and a `VRT Grid` story; Phase 7 (`migration-documentation`) verifies the grid stays aligned with finalized Options/States stories.
+- **Yes** — list the dimensions to cover (variants, states, sizes, static colors, edge cases like icon-only or truncation). Phase 5 (`migration-styling`) scaffolds `stories/<name>.template.ts`, `test/<name>.vrt.ts`, and `stories/<name>.vrt.stories.ts`; Phase 7 (`migration-documentation`) verifies the grid stays aligned with finalized Options/States stories.
 - **No** — note why docs stories are sufficient.
 
 Use Button (`components/button/test/button.vrt.ts`) as the reference implementation when yes.

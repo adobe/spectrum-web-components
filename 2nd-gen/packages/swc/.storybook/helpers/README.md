@@ -50,14 +50,14 @@ const componentName = formatComponentName(meta.title);
 
 ## Testing grid (`test/*.vrt.ts`)
 
-SWC keeps VRT case lists in a sibling module (e.g. `components/button/test/button.vrt.ts`) that is **imported** by `<name>.stories.ts`, not indexed as its own Storybook file.
+SWC keeps VRT case lists in a sibling module (e.g. `components/button/test/button.vrt.ts`) that is **imported** by `<name>.vrt.stories.ts`, not indexed as its own Storybook file. VRT story files are excluded from production `storybook:build` (docs deploy) but included for local dev and Chromatic (`CHROMATIC=true`).
 
 To add a testing grid for a component:
 
 1. Add `components/<name>/stories/<name>.template.ts` — a **pure Lit** `Template()` (no `getStorybookHelpers().template`, which calls `useArgs()` per cell and breaks React hooks in large grids). Wrap each grid cell in a `div` with the `data-vrt-*` attributes below.
 2. Add `components/<name>/test/<name>.vrt.ts` with `Variants()`, `ArgGrid`, `Container`, and `testData` / `stateData` using that template.
 3. Export the render function (e.g. `ButtonVRTRender`) from the VRT file.
-4. In `<name>.stories.ts`, wire a story (e.g. `VRTGrid`): `render: ButtonVRTRender`, set `storyName` to `TESTING_GRID_STORY_NAME` (`'VRT Grid'`), and spread `TESTING_GRID_STORY_PARAMETERS` into `parameters` (Chromatic snapshots are disabled globally; only testing-grid stories opt in via `chromatic: { disableSnapshot: false }`, with `delay: 1100` for pending cells and `prefersReducedMotion: 'no-preference'` / `pauseAnimationAtEnd: true` so the pending spinner captures a mid-animation frame).
+4. Add `components/<name>/stories/<name>.vrt.stories.ts` with a `VRTGrid` story: import meta from `<name>.stories.ts`, set `render: ButtonVRTRender`, set `storyName` to `TESTING_GRID_STORY_NAME` (`'VRT Grid'`), and spread `TESTING_GRID_STORY_PARAMETERS` into `parameters` (Chromatic snapshots are disabled globally; only testing-grid stories opt in via `chromatic: { disableSnapshot: false }`, with `delay: 1100` for pending cells and `prefersReducedMotion: 'no-preference'` / `pauseAnimationAtEnd: true` so the pending spinner captures a mid-animation frame).
 5. Toggle **Testing preview** in the Storybook toolbar (beaker) to view the grid locally.
 
 Forced interaction states (hover, focus, active) use the global `pseudoStatesDecorator`, which augments each component's `adoptedStyleSheets` with class-based pseudo-state rules (`.is-hover`, `.is-focus-visible`, etc.). `applyTestingGridPseudoStates` (VRT story `play` function) reads the cell wrapper attributes and patches the correct shadow-DOM node after render.

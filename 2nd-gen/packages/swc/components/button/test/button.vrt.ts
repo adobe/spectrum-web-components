@@ -12,7 +12,7 @@
 
 /**
  * Visual-regression testing grid for Button.
- * Case list for the `VRT Grid` story in `button.stories.ts`.
+ * Case list for the `VRT Grid` story in `button.vrt.stories.ts`.
  */
 
 import {

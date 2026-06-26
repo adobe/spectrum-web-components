@@ -26,6 +26,8 @@
 
 - Keep docs stories in `2nd-gen/packages/swc/components/<component>/stories/<component>.stories.ts`.
 - Add test stories in `2nd-gen/packages/swc/components/<component>/test/<component>.test.ts`.
+- Add VRT grid stories in `2nd-gen/packages/swc/components/<component>/stories/<component>.vrt.stories.ts` (excluded from production `storybook:build`; included for Chromatic).
 - Add accessibility tests in `2nd-gen/packages/swc/components/<component>/test/<component>.a11y.spec.ts`.
 - Reuse the base stories and metadata from the main doc stories file.
 - Test stories run in development Storybook only and are excluded from `storybook:build`.
+- VRT grid stories (`*.vrt.stories.ts`) run in development Storybook and Chromatic; they are excluded from the production docs deploy.

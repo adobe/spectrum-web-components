@@ -79,7 +79,7 @@ If the stories file or the per-component MDX already exists, do **not** recreate
 
 - `stories/[component].template.ts` with correct `data-vrt-host`, `data-vrt-control`, and optional `data-vrt-state` / `data-vrt-layout-classes`
 - `test/[component].vrt.ts` covering the plan's variant × state × size matrix
-- `VRT Grid` story in `[component].stories.ts` with `TESTING_GRID_STORY_PARAMETERS` and `applyTestingGridPseudoStates`
+- `VRT Grid` story in `stories/[component].vrt.stories.ts` with `TESTING_GRID_STORY_PARAMETERS` and `applyTestingGridPseudoStates`
 
 If Phase 7 adds or changes Options, States, or Behaviors stories (new variants, fill styles, static colors, icon-only layouts, pending, etc.), update the VRT case list and template so Chromatic still captures the full matrix. Reference [`.storybook/helpers/README.md`](../../../2nd-gen/packages/swc/.storybook/helpers/README.md) and `components/button/` when unsure. If the plan deferred VRT, skip this step.
 

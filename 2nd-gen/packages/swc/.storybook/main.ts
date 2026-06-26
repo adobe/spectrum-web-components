@@ -26,7 +26,7 @@ mkdirSync(resolve(__dirname, '../coverage'), { recursive: true });
 
 // Modes:
 // - dev: full local Storybook, including docs and test stories
-// - build: production Storybook build, excluding internal and test stories
+// - build: production Storybook build, excluding internal, test, and VRT stories
 // - ci-a11y: minimal component-only Storybook used by CI accessibility checks
 type StorybookMode = 'dev' | 'build' | 'ci-a11y';
 
@@ -132,7 +132,11 @@ if (storybookMode !== 'ci-a11y') {
 }
 
 // Play-function test stories live under `**/test/*.test.ts` only.
-// VRT grid definitions use `**/test/*.vrt.ts` (imported by `*.stories.ts`, not indexed here).
+// VRT grid case lists use `**/test/*.vrt.ts` (imported by `*.vrt.stories.ts`, not indexed here).
+// VRT grid stories use `**/*.vrt.stories.ts`, indexed for local dev and Chromatic only.
+const includeVrtStories =
+  storybookMode === 'dev' || process.env.CHROMATIC === 'true';
+
 if (storybookMode === 'dev') {
   stories.push({
     ...COMPONENT_STORY_ROOT,
@@ -145,6 +149,17 @@ if (storybookMode === 'dev') {
   stories.push({
     ...CORE_STORY_ROOT,
     files: '**/*.test.ts',
+  });
+}
+
+if (includeVrtStories) {
+  stories.push({
+    ...COMPONENT_STORY_ROOT,
+    files: '**/*.vrt.stories.ts',
+  });
+  stories.push({
+    ...PATTERN_STORY_ROOT,
+    files: '**/*.vrt.stories.ts',
   });
 }
 
