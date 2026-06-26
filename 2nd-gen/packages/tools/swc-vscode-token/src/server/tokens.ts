@@ -15,6 +15,8 @@ import * as fs from 'fs';
 type TokenDataPayload = {
   tokens?: Record<string, unknown>;
   renamed?: Record<string, unknown>;
+  deleted?: Record<string, string | null>;
+  deprecatedComments?: Record<string, string>;
 };
 
 export type TokenSuggestionCandidate = {
@@ -27,6 +29,8 @@ export type TokenSuggestionCandidate = {
 export class TokenStore {
   private tokens: Record<string, unknown> = {};
   private renamed: Record<string, string> = {};
+  private deleted: Record<string, string | null> = {};
+  private deprecatedComments: Record<string, string> = {};
   private suggestionCandidates: TokenSuggestionCandidate[] = [];
 
   constructor(pathOrTokens: string | Record<string, unknown>) {
@@ -65,6 +69,25 @@ export class TokenStore {
     return this.renamed[k];
   }
 
+  isDeleted(k: string) {
+    return k in this.deleted;
+  }
+
+  /** Returns the suggested replacement (string) or null (no replacement) for a deleted
+   *  token, or undefined when the token is not in the deleted map at all.
+   *  A replacement of "0" means: hardcode a zero-pixel value in implementation. */
+  deletionReplacementFor(k: string): string | null | undefined {
+    if (!(k in this.deleted)) {
+      return undefined;
+    }
+    return this.deleted[k];
+  }
+
+  /** Returns the deprecated_comment for a deleted token, if available. */
+  commentFor(k: string): string | undefined {
+    return this.deprecatedComments[k];
+  }
+
   candidates() {
     return this.suggestionCandidates;
   }
@@ -74,12 +97,18 @@ export class TokenStore {
     if (payload.tokens && typeof payload.tokens === 'object') {
       this.tokens = payload.tokens;
       this.renamed = this.normalizeRenamed(payload.renamed);
+      this.deleted = this.normalizeDeleted(payload.deleted);
+      this.deprecatedComments = this.normalizeComments(
+        payload.deprecatedComments
+      );
       this.rebuildCandidates();
       return;
     }
 
     this.tokens = source;
     this.renamed = {};
+    this.deleted = {};
+    this.deprecatedComments = {};
     this.rebuildCandidates();
   }
 
@@ -90,7 +119,29 @@ export class TokenStore {
 
     return Object.fromEntries(
       Object.entries(source).filter(([, value]) => typeof value === 'string')
+    ) as Record<string, string>;
+  }
+
+  private normalizeDeleted(source?: Record<string, string | null>) {
+    if (!source || typeof source !== 'object') {
+      return {};
+    }
+
+    return Object.fromEntries(
+      Object.entries(source).filter(
+        ([, value]) => value === null || typeof value === 'string'
+      )
     );
+  }
+
+  private normalizeComments(source?: Record<string, string>) {
+    if (!source || typeof source !== 'object') {
+      return {};
+    }
+
+    return Object.fromEntries(
+      Object.entries(source).filter(([, value]) => typeof value === 'string')
+    ) as Record<string, string>;
   }
 
   private rebuildCandidates() {
