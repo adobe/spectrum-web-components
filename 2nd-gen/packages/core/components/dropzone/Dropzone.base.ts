@@ -116,7 +116,7 @@ export abstract class DropzoneBase extends SizedMixin(SpectrumElement, {
     }
   );
 
-  protected handleSlotChange(): void {
+  protected handleDefaultSlotChange(): void {
     this._sizePropagation.propagate();
   }
 
