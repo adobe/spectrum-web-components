@@ -56,7 +56,7 @@ A temporary, non-modal notification that appears briefly on screen to communicat
 
 ### What it is not
 
-Not a dialog, alert dialog, or replacement for critical error messaging. Toasts should not contain actions the user must take to complete a task. If a user must confirm, acknowledge, or act before continuing, use a dialog component instead.
+Not a replacement for critical error messaging or decisions requiring mandatory user response. `swc-toast` uses `role="alertdialog"` by design; this does not make it a general-purpose dialog. It may include one optional action button, but that action must never be required to complete a task or continue a flow. If a user must confirm, acknowledge, or act before continuing, use a dialog component instead.
 
 ### When to use something else
 
