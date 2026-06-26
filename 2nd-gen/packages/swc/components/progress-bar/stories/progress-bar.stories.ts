@@ -67,6 +67,15 @@ argTypes.value = {
   },
 };
 
+/**
+ * A `<swc-progress-bar>` shows the progression of a system operation such as
+ * downloading, uploading, or processing. Use a determinate bar when progress
+ * can be calculated against a known total; set `indeterminate` when the
+ * completion time cannot be determined.
+ *
+ * For circular progress indicators, see
+ * [Progress Circle](../?path=/docs/progress-circle--docs).
+ */
 const meta: Meta = {
   title: 'Progress Bar',
   component: 'swc-progress-bar',
@@ -110,7 +119,7 @@ const staticColorLabels = {
 // ────────────────────
 
 export const Playground: Story = {
-  tags: ['autodocs', 'dev'],
+  tags: ['dev'],
   args: {
     size: 'm',
     value: 60,
@@ -216,7 +225,6 @@ export const LabelPosition: Story = {
   tags: ['options'],
   args: { value: 50 },
 };
-LabelPosition.storyName = 'Label position';
 
 export const StaticColors: Story = {
   render: (args) => html`
@@ -232,7 +240,6 @@ export const StaticColors: Story = {
   tags: ['options', '!test'],
   args: { value: 50 },
 };
-StaticColors.storyName = 'Static colors';
 
 // ──────────────────────────
 //    STATES STORIES

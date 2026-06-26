@@ -17,7 +17,26 @@ The plan's architectural sections also govern **where each property and type lan
 
 **Deferred items are out of scope.** The plan may explicitly defer features to follow-up tickets (e.g. form-associated behavior, cross-root ARIA). Do not implement deferred items in Phase 3 even if they appear in the API section of the plan — mark them as skipped and note the tracking ticket.
 
-**1st-gen changes are limited to deprecation notices only.** When adding deprecation notices to 1st-gen, restrict changes to: (1) `@deprecated` JSDoc on exported types, consts, and properties; and (2) `window.__swc.warn()` calls added inside already-existing setters or other existing code paths. Do not refactor 1st-gen code structure — no new backing types, no converting simple properties to getter/setter patterns, no new private fields. TypeScript TS6385 hints that arise from deprecated types referencing each other internally are an accepted side effect and do not require structural fixes.
+**For each breaking change in the migration plan, you must add both `@deprecated` JSDoc and a `window.__swc.warn()` call to the 1st-gen file.** JSDoc alone is not enough — types and IDE tooling pick it up, but consumers building against compiled output won't see it. Restrict 1st-gen changes to these two things only: do not add new backing types, do not convert plain properties to getter/setter patterns, do not add new private fields.
+
+- For properties that already have a setter, add the warn inside the setter.
+- For plain `@property` fields without a setter, add the warn in the existing `updated()` lifecycle method using a `changes.has()` guard and a non-default value check to avoid false positives from property initialization:
+
+```typescript
+// In updated(changes: PropertyValues):
+if (changes.has('progress') && this.progress !== 0) {
+  if (window.__swc?.DEBUG) {
+    window.__swc.warn(
+      this,
+      `The "progress" property on <${this.localName}> has been deprecated. Use the "value" attribute instead.`,
+      'https://opensource.adobe.com/spectrum-web-components/components/progress-bar/',
+      { level: 'deprecation' }
+    );
+  }
+}
+```
+
+After writing the deprecation notices, scan every `@deprecated` tag in the 1st-gen file and confirm a `__swc.warn()` call exists for each one before closing Phase 3. TypeScript TS6385 hints that arise from deprecated types referencing each other internally are an accepted side effect and do not require structural fixes.
 
 **`@deprecated` JSDoc message format** — the washing machine workflow Phase 3 section on "Deprecating 1st-gen type and const exports" says to document migration to class-level inference (e.g. `typeof Badge.prototype.variant`, `typeof Badge.FIXED_VALUES`) when a class static already exists in 1st-gen. Apply this as follows:
 
