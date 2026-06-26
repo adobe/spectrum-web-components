@@ -76,17 +76,12 @@ const DROPZONE_SVG = `
   </svg>
 `;
 
-// TODO: move swc-button inside swc-illustrated-message once it has a button-group slot.
-const makeDropzoneSlot = (
-  headingText: string,
-  size: DropzoneSize = 'm'
-) => html`
+const makeDropzoneSlot = (headingText: string) => html`
   <swc-illustrated-message>
     ${unsafeHTML(DROPZONE_SVG)}
     <h2 slot="heading">${headingText}</h2>
-    <span slot="description">${descriptionText}</span>
+    <swc-button slot="actions" variant="accent">Browse files</swc-button>
   </swc-illustrated-message>
-  <swc-button variant="accent" size=${size}>Browse files</swc-button>
 `;
 
 // HTML string version used by the Playground so template(args) can spread all args.
@@ -97,8 +92,8 @@ const DROPZONE_SLOT_HTML = `
       <path d="M31.4,44.5c0,0.8,0.7,1.5,1.5,1.5h50c0.8,0,1.5-0.7,1.5-1.5s-0.7-1.5-1.5-1.5h-50C32.1,43,31.4,43.7,31.4,44.5z"/>
     </svg>
     <h2 slot="heading">Drag and drop your file</h2>
+    <swc-button slot="actions" variant="accent">Browse files</swc-button>
   </swc-illustrated-message>
-  <swc-button variant="accent">Browse files</swc-button>
 `;
 
 // ────────────────────────
@@ -155,7 +150,7 @@ export const Sizes: Story = {
           aria-label="${sizeLabels[size]} drop zone"
           style="min-inline-size: 260px;"
         >
-          ${makeDropzoneSlot(sizeLabels[size], size)}
+          ${makeDropzoneSlot(sizeLabels[size])}
         </swc-dropzone>
       `
     )}
