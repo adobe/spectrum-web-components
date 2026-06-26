@@ -48,28 +48,22 @@
 }
 
 /* ─────────────────────────────────────
-   Dragged state
+   Dragged state and focus-within
    ───────────────────────────────────── */
+
+:host([dragged]) .swc-Dropzone,
+:host(:focus-within) .swc-Dropzone {
+  border-color: var(--swc-dropzone-border-color-dragged, token("accent-visual-color"));
+  border-style: solid;
+}
 
 :host([dragged]) .swc-Dropzone {
   background: var(--swc-dropzone-background-color, token("accent-subtle-background-color-default"));
-  border-color: var(--swc-dropzone-border-color-dragged, token("accent-visual-color"));
-  border-style: solid;
 }
 
 /* Cascade accent illustration color into any slotted swc-illustrated-message. */
 :host([dragged]) {
   --swc-illustrated-message-illustration-color: token("accent-visual-color");
-}
-
-/* ─────────────────────────────────────
-   Focus-within (browse control focused)
-   ───────────────────────────────────── */
-
-/* Mirror the dragged border when the browse control receives keyboard focus. */
-:host(:focus-within) .swc-Dropzone {
-  border-color: var(--swc-dropzone-border-color-dragged, token("accent-visual-color"));
-  border-style: solid;
 }
 
 ::slotted(p) {
