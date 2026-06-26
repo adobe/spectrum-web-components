@@ -11,8 +11,8 @@
  */
 :host {
   /* Default to size m (workflow-icon-size-100) like 1st-gen */
-  --swc-icon-inline-size: token("workflow-icon-size-100");
-  --swc-icon-block-size: token("workflow-icon-size-100");
+  --swc-icon-inline-size: token("workflow-icon-medium");
+  --swc-icon-block-size: token("workflow-icon-medium");
 
   display: inline-flex;
   inline-size: var(--swc-icon-inline-size);
@@ -21,28 +21,28 @@
 }
 
 :host([size="xs"]) {
-  --swc-icon-inline-size: token("workflow-icon-size-50");
-  --swc-icon-block-size: token("workflow-icon-size-50");
+  --swc-icon-inline-size: token("workflow-icon-extra-small");
+  --swc-icon-block-size: token("workflow-icon-extra-small");
 }
 
 :host([size="s"]) {
-  --swc-icon-inline-size: token("workflow-icon-size-75");
-  --swc-icon-block-size: token("workflow-icon-size-75");
+  --swc-icon-inline-size: token("workflow-icon-small");
+  --swc-icon-block-size: token("workflow-icon-small");
 }
 
 :host([size="m"]) {
-  --swc-icon-inline-size: token("workflow-icon-size-100");
-  --swc-icon-block-size: token("workflow-icon-size-100");
+  --swc-icon-inline-size: token("workflow-icon-medium");
+  --swc-icon-block-size: token("workflow-icon-medium");
 }
 
 :host([size="l"]) {
-  --swc-icon-inline-size: token("workflow-icon-size-200");
-  --swc-icon-block-size: token("workflow-icon-size-200");
+  --swc-icon-inline-size: token("workflow-icon-large");
+  --swc-icon-block-size: token("workflow-icon-large");
 }
 
 :host([size="xl"]) {
-  --swc-icon-inline-size: token("workflow-icon-size-300");
-  --swc-icon-block-size: token("workflow-icon-size-300");
+  --swc-icon-inline-size: token("workflow-icon-extra-large");
+  --swc-icon-block-size: token("workflow-icon-extra-large");
 }
 
 .swc-Icon {

@@ -21,6 +21,10 @@ const require = createRequire(import.meta.url);
 
 const ALLOWED_SETS = new Set(['desktop', 'mobile', 'light', 'dark']);
 
+// Matches the Spectrum team's standard wording for zero-pixel removals in deprecated_comment.
+// Exported so diff-versions.js can reuse the same pattern when seeding custom/deleted.json.
+export const ZERO_VALUE_COMMENT_PATTERN = /zero.{0,30}pixel|should be zero/i;
+
 // Tokens from @adobe/spectrum-tokens/src
 const SPECTRUM_TOKENS = [
   {
@@ -519,6 +523,27 @@ function extractRenamedTokenValues(json, debug = false) {
   return out;
 }
 
+// Collect deprecated_comment for tokens that are deprecated without a rename.
+// These are the tokens that end up in deleted.json; their comments provide
+// removal guidance (e.g. "Zero values are removed; hardcode 0px").
+function extractDeprecatedComments(json, debug = false) {
+  const out = {};
+  const log = typeof debug === 'function' ? debug : () => {};
+
+  for (const [name, token] of Object.entries(json)) {
+    if (
+      token?.deprecated &&
+      !token?.renamed &&
+      typeof token?.deprecated_comment === 'string'
+    ) {
+      out[name] = token.deprecated_comment;
+      log(`[DEPRECATED-COMMENT] '${name}': ${token.deprecated_comment}`);
+    }
+  }
+
+  return out;
+}
+
 /* -----------------------------------------------------------------------------
  *  CSS Generation
  * -------------------------------------------------------------------------- */
@@ -606,6 +631,16 @@ ${scaling.join('\n')}
  *  Token loading
  * -------------------------------------------------------------------------- */
 
+// Load custom/deleted.json if present; returns a flat { tokenName: replacement | null } map.
+async function loadCustomDeleted() {
+  try {
+    const filePath = new URL('../custom/deleted.json', import.meta.url);
+    return JSON.parse(await readFile(filePath, 'utf8'));
+  } catch {
+    return {};
+  }
+}
+
 // Load individual token JSON files
 async function loadTokenJson(file, src) {
   const base = src === 'spectrum' ? '@adobe/spectrum-tokens/src' : '../custom';
@@ -658,9 +693,29 @@ async function loadAllTokens(prefix, debug = false) {
   return extractAllTokenValues(rawFiles, prefix, debug, globalLookup);
 }
 
+// Derive "0" sentinel entries from deprecated_comment for tokens not already in customDeleted.
+// This keeps zero-value tokens out of custom/deleted.json so they never need manual curation.
+export function deriveZeroValueEntries(deprecatedComments, customDeleted) {
+  const derived = {};
+  for (const [name, comment] of Object.entries(deprecatedComments)) {
+    if (!(name in customDeleted) && ZERO_VALUE_COMMENT_PATTERN.test(comment)) {
+      derived[name] = '0';
+    }
+  }
+  return derived;
+}
+
 async function loadAllTokenData(prefix, debug = false) {
-  const rawFiles = await loadTokenSources();
+  const [rawFiles, customDeleted] = await Promise.all([
+    loadTokenSources(),
+    loadCustomDeleted(),
+  ]);
   const globalLookup = buildGlobalLookup(rawFiles);
+
+  const deprecatedComments = Object.assign(
+    {},
+    ...rawFiles.map((f) => extractDeprecatedComments(f.raw, debug))
+  );
 
   return {
     tokens: extractAllTokenValues(rawFiles, prefix, debug, globalLookup),
@@ -668,6 +723,11 @@ async function loadAllTokenData(prefix, debug = false) {
       {},
       ...rawFiles.map((f) => extractRenamedTokenValues(f.raw, debug))
     ),
+    deleted: {
+      ...customDeleted,
+      ...deriveZeroValueEntries(deprecatedComments, customDeleted),
+    },
+    deprecatedComments,
   };
 }
 
@@ -729,5 +789,7 @@ export const __test__ = {
   extractAllTokenValues,
   extractTokenValues,
   extractRenamedTokenValues,
+  extractDeprecatedComments,
+  deriveZeroValueEntries,
   lookupToken,
 };

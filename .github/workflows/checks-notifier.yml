@@ -1,0 +1,101 @@
+name: Checks Notifier
+
+on:
+  workflow_run:
+    workflows:
+      - Lint
+      - Visual regression testing with Chromatic
+      - Coveralls Code Coverage
+      - Browser Performance Tests
+      - Publish Packages
+      - Publish 2nd-Gen Documentation
+      - Preview Documentation (Azure Blob Storage)
+      - Publish Documentation Site
+    types: [completed]
+    branches: [main]
+
+permissions: {}
+
+jobs:
+  notify-on-failure:
+    runs-on: ubuntu-latest
+    if: github.event.workflow_run.conclusion == 'failure'
+    steps:
+      - name: Send Slack DM
+        # sends a Slack DM from the SWC Checks Notifier bot to Patrick
+        # after we know this is successful and in our preferred format
+        # we can update it so that it posts to the team channel instead of a DM to Patrick
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+          SLACK_USER_ID: ${{ secrets.SLACK_USER_ID }}
+          WORKFLOW_NAME: ${{ github.event.workflow_run.name }}
+          HEAD_SHA: ${{ github.event.workflow_run.head_sha }}
+          COMMIT_MSG: ${{ github.event.workflow_run.head_commit.message }}
+          AUTHOR_NAME: ${{ github.event.workflow_run.head_commit.author.name }}
+          RUN_URL: ${{ github.event.workflow_run.html_url }}
+        run: |
+          SHORT_SHA="${HEAD_SHA:0:7}"
+          COMMIT_FIRST_LINE=$(echo "$COMMIT_MSG" | head -n 1)
+
+          PAYLOAD=$(jq -n \
+            --arg channel "$SLACK_USER_ID" \
+            --arg workflow "$WORKFLOW_NAME" \
+            --arg author "$AUTHOR_NAME" \
+            --arg sha "$SHORT_SHA" \
+            --arg msg "$COMMIT_FIRST_LINE" \
+            --arg url "$RUN_URL" \
+            '{
+              channel: $channel,
+              blocks: [
+                {
+                  type: "section",
+                  text: {
+                    type: "mrkdwn",
+                    text: ":x: *Workflow failed on `main`*"
+                  }
+                },
+                {
+                  type: "section",
+                  fields: [
+                    {
+                      type: "mrkdwn",
+                      text: ("*Workflow:*\n" + $workflow)
+                    },
+                    {
+                      type: "mrkdwn",
+                      text: ("*Merged by:*\n" + $author)
+                    },
+                    {
+                      type: "mrkdwn",
+                      text: ("*Commit:*\n`" + $sha + "` — " + $msg)
+                    }
+                  ]
+                },
+                {
+                  type: "actions",
+                  elements: [
+                    {
+                      type: "button",
+                      text: {
+                        type: "plain_text",
+                        text: "View failed run →"
+                      },
+                      url: $url
+                    }
+                  ]
+                }
+              ]
+            }')
+
+          RESPONSE=$(curl -s -X POST \
+            -H "Authorization: Bearer $SLACK_BOT_TOKEN" \
+            -H "Content-Type: application/json" \
+            -d "$PAYLOAD" \
+            https://slack.com/api/chat.postMessage)
+
+          echo "$RESPONSE" | jq .
+
+          if [ "$(echo "$RESPONSE" | jq -r '.ok')" != "true" ]; then
+            echo "Slack API error: $(echo "$RESPONSE" | jq -r '.error')"
+            exit 1
+          fi
