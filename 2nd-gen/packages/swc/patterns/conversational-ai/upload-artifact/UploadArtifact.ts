@@ -21,7 +21,8 @@ import styles from './upload-artifact.css';
 
 /**
  * Shared upload artifact primitive with card and media types.
- * Do not mix `type="card"` and `type="media"` in the same attachment strip; pick one mode per composer session.
+ * Do not mix `type="card"` and `type="media"` in the same attachment strip.
+ * When uploads mix images and documents, normalize to one layout (typically all `type="media"` with thumbnails and optional badges).
  *
  * @element swc-upload-artifact
  *

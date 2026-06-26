@@ -31,7 +31,8 @@ argTypes.type = {
 /**
  * Shared upload artifact primitive used across conversational AI surfaces such as prompt field and user message.
  * Supports **`card`** and **`media`** types with a unified slot model.
- * Use one type per attachment strip — cards only, or media tiles only (with or without badge).
+ * Use one layout type per attachment strip — cards only, or media tiles only (with or without badge).
+ * When uploads mix images and documents, normalize to all media tiles.
  * For several attachments at once, see **Multi-card**, **Multi-media**, and **[Prompt field → Artifact](/docs/patterns-conversational-ai-prompt-field--readme#artifact)**.
  */
 const meta: Meta = {
@@ -43,7 +44,7 @@ const meta: Meta = {
   parameters: {
     docs: {
       subtitle:
-        'Card and media tiles for attachments. Use one type per strip; slot multiple into the prompt field artifact region.',
+        'Card and media tiles for attachments. Use one layout type per strip; normalize mixed uploads to media with badges.',
     },
     layout: 'padded',
   },

@@ -45,7 +45,7 @@ export type PromptFieldMode = 'default' | 'loading' | 'disabled';
  * @element swc-prompt-field
  *
  * @slot artifact - Optional attachment preview(s). Use one `swc-upload-artifact` type per session (cards only, or media only).
- * @slot legal - Optional legal/footer content.
+ * @slot legal - Legal disclaimer content. Required in product implementations; provide Legal-approved copy.
  * @fires swc-prompt-field-input - Dispatched after the textarea value is internally updated.
  * Detail: `{ value: string }`
  * @fires swc-prompt-field-submit - Dispatched when send is triggered.
@@ -347,6 +347,8 @@ export class PromptField extends SpectrumElement {
 
   private _warnedMixedArtifactTypes = false;
 
+  private _warnedMissingLegalContent = false;
+
   private _warnIfMixedArtifactTypes(): void {
     const elements = this._assignedArtifactElements ?? [];
     const types = new Set(
@@ -369,7 +371,25 @@ export class PromptField extends SpectrumElement {
 
     this._warnedMixedArtifactTypes = true;
     console.warn(
-      '[swc-prompt-field] The artifact slot contains both card and media upload artifacts. Use one type per composer session: cards only, or media tiles only (with or without badge). See upload-artifact documentation.'
+      '[swc-prompt-field] The artifact slot contains both card and media upload artifacts. Use one layout type per composer session (all card or all media). When uploads mix images and documents, normalize to media tiles with thumbnails and optional badges. See upload-artifact documentation.'
+    );
+  }
+
+  private _warnIfMissingLegalContent(): void {
+    const elements = this._assignedLegalElements ?? [];
+
+    if (elements.length > 0) {
+      this._warnedMissingLegalContent = false;
+      return;
+    }
+
+    if (this._warnedMissingLegalContent) {
+      return;
+    }
+
+    this._warnedMissingLegalContent = true;
+    console.warn(
+      '[swc-prompt-field] The legal slot is empty. Product implementations must provide Legal-approved disclaimer content via the legal slot. See prompt-field documentation.'
     );
   }
 
@@ -400,6 +420,7 @@ export class PromptField extends SpectrumElement {
   }
 
   private _handleLegalSlotChange(): void {
+    this._warnIfMissingLegalContent();
     this.requestUpdate();
   }
 
