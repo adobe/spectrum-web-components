@@ -18,7 +18,7 @@
   box-sizing: border-box;
 }
 
-.swc-Asset {
+.spectrum-Asset {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -26,30 +26,55 @@
   block-size: 100%;
 }
 
-/* Slotted image */
+.spectrum-Asset--rounded {
+  border-radius: token("corner-radius-medium-default");
+  overflow: hidden;
+}
+
+/* Slotted media (e.g. swc-image, video, iframe) */
 ::slotted(*) {
+  inline-size: 100%;
   max-inline-size: 100%;
+  block-size: 100%;
   max-block-size: 100%;
-  object-fit: contain;
+  object-fit: cover;
   transition: opacity token("animation-duration-100");
 }
 
-.swc-Asset-folder,
-.swc-Asset-file {
+.spectrum-Asset-folder,
+.spectrum-Asset-file,
+.spectrum-Asset-error {
   inline-size: clamp(48px, 100%, 80px);
   block-size: 100%;
   margin: clamp(2px, 10%, 20px);
 }
 
-.swc-Asset-folderBackground {
+.spectrum-Asset-folderBackground {
   fill: token("gray-200");
 }
 
-.swc-Asset-fileBackground {
+.spectrum-Asset-fileBackground {
   fill: light-dark(token("gray-25"), token("gray-200"));
 }
 
-.swc-Asset-folderOutline,
-.swc-Asset-fileOutline {
+.spectrum-Asset-folderOutline,
+.spectrum-Asset-fileOutline {
   fill: token("gray-500");
+}
+
+.spectrum-Asset-errorIcon {
+  fill: token("gray-200");
+}
+
+.spectrum-Asset--error {
+  flex-direction: column;
+  gap: token("spacing-100");
+}
+
+.spectrum-Asset-errorLabel {
+  max-inline-size: 100%;
+  font-size: token("font-size-75");
+  color: token("gray-500");
+  text-align: center;
+  overflow-wrap: break-word;
 }

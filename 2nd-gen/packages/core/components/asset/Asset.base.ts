@@ -13,46 +13,66 @@
 import { PropertyValues } from 'lit';
 import { property } from 'lit/decorators.js';
 
-import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
+import { SpectrumElement } from '@spectrum-web-components/core/shared/base/index.js';
 
 import { ASSET_VARIANTS, type AssetVariant } from './Asset.types.js';
 
+/**
+ * Base class for the Asset component. Asset is a media wrapper: it displays
+ * either a built-in file/folder icon, an error state, or slotted content
+ * (e.g. swc-image, video, iframe). Use the default slot to wrap images, video,
+ * or other media.
+ */
 export abstract class AssetBase extends SpectrumElement {
-  // ─────────────────────────
-  //     API TO OVERRIDE
-  // ─────────────────────────
-
   /**
    * @internal
-   *
    * A readonly array of all valid variants for the asset.
-   *
-   * This is an actual internal property, intended not for customer use
    */
   static readonly VARIANTS: readonly AssetVariant[] = ASSET_VARIANTS;
 
-  // ─────────────────
-  //     SHARED API
-  // ─────────────────
-
   /**
-   * The variant of the asset. When not provided, slot content is rendered (e.g., an image).
+   * The variant of the asset. When set to `file` or `folder`, displays the
+   * built-in icon. When not set, slotted content is displayed (e.g. swc-image, video, iframe).
    */
   @property({ type: String, reflect: true })
   public variant: AssetVariant | undefined;
 
   /**
-   * Accessible label for the asset’s file or folder variant.
+   * Accessible label for the asset's file or folder variant, or for the error state.
    */
-  @property({ type: String })
+  @property()
   public label = '';
 
-  // ──────────────────────
-  //     IMPLEMENTATION
-  // ──────────────────────
+  /**
+   * Indicates an error state for the asset. When true, displays an error indicator.
+   */
+  @property({ type: Boolean, reflect: true })
+  public error = false;
+
+  /**
+   * Aspect ratio of the asset container. Any valid CSS aspect-ratio value
+   * (e.g. "1", "16/9", "4/3"). When set, the wrapper keeps this ratio regardless of slotted content.
+   */
+  @property({ type: String, attribute: 'aspect-ratio' })
+  public aspectRatio?: string;
+
+  /**
+   * When true, applies rounded corners to the asset container (and clips slotted content to that shape).
+   */
+  @property({ type: Boolean, reflect: true })
+  public rounded = false;
 
   protected override updated(changes: PropertyValues): void {
     super.updated(changes);
+
+    if (changes.has('aspectRatio')) {
+      if (this.aspectRatio) {
+        this.style.aspectRatio = this.aspectRatio;
+      } else {
+        this.style.removeProperty('aspect-ratio');
+      }
+    }
+
     if (window.__swc?.DEBUG) {
       const constructor = this.constructor as typeof AssetBase;
       if (

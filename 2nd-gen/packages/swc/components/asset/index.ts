@@ -9,4 +9,14 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
+import { defineElement } from '@spectrum-web-components/core/shared/base';
+
+import { Asset } from './Asset.js';
+
 export * from './Asset.js';
+declare global {
+  interface HTMLElementTagNameMap {
+    'swc-asset': Asset;
+  }
+}
+defineElement('swc-asset', Asset);

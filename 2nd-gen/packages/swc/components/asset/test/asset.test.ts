@@ -15,15 +15,16 @@ import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import { Asset } from '@adobe/spectrum-wc/asset';
 
-import '@adobe/spectrum-wc/components/asset/swc-asset.js';
+import '@adobe/spectrum-wc/asset';
+import '@adobe/spectrum-wc/image';
 
 import {
   getComponent,
   getComponents,
   withWarningSpy,
 } from '../../../utils/test-utils.js';
-import meta from '../stories/asset.internal.stories.js';
-import { Overview, Variants } from '../stories/asset.internal.stories.js';
+import meta from '../stories/asset.stories.js';
+import { Overview, Variants } from '../stories/asset.stories.js';
 
 // This file defines dev-only test stories that reuse the main story metadata.
 export default {
@@ -46,12 +47,12 @@ export const OverviewTest: Story = {
     const asset = await getComponent<Asset>(canvasElement, 'swc-asset');
 
     await step('renders slotted content when no variant is set', async () => {
-      const img = asset.querySelector('img');
+      const image = asset.querySelector('swc-image');
       expect(asset.variant, 'variant when not set').toBeUndefined();
-      expect(img, 'slotted img element is rendered').toBeTruthy();
+      expect(image, 'slotted swc-image element is rendered').toBeTruthy();
       expect(
-        img?.getAttribute('alt')?.length,
-        'slotted img has a non-empty alt attribute'
+        image?.getAttribute('alt')?.length,
+        'slotted swc-image has a non-empty alt attribute'
       ).toBeGreaterThan(0);
     });
   },

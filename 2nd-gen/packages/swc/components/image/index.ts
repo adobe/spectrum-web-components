@@ -9,7 +9,16 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
+import { defineElement } from '@spectrum-web-components/core/shared/base';
 
-export const ASSET_VARIANTS = ['file', 'folder'] as const;
+import { Image } from './Image.js';
 
-export type AssetVariant = (typeof ASSET_VARIANTS)[number];
+export * from './Image.js';
+
+declare global {
+  interface HTMLElementTagNameMap {
+    'swc-image': Image;
+  }
+}
+
+defineElement('swc-image', Image);

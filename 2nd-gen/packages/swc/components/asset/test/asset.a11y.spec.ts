@@ -10,65 +10,119 @@
  * governing permissions and limitations under the License.
  */
 
+import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from '@playwright/test';
 
 import { gotoStory } from '../../../utils/a11y-helpers.js';
 
 /**
- * Accessibility tests for Asset component (2nd Generation)
- *
- * ARIA snapshot tests validate the accessibility tree structure.
- * aXe WCAG compliance and color contrast validation are run via
- * test-storybook (see .storybook/test-runner.ts). Both are included
- * in the `test:a11y` command.
+ * Accessibility tests for Asset component (2nd generation).
+ * Asset is a media wrapper: file/folder icons, error state, or slotted content (e.g. swc-image, video).
  */
 
 test.describe('Asset - ARIA Snapshots', () => {
-  test('should have correct accessibility tree for overview', async ({
+  test('should have correct accessibility tree for file variant', async ({
     page,
   }) => {
-    const root = await gotoStory(
-      page,
-      'components-asset--overview',
-      'swc-asset'
-    );
-    await expect(root).toMatchAriaSnapshot(`
-      - img "preview of background"
-    `);
-  });
-
-  test('should handle anatomy story with different content types', async ({
-    page,
-  }) => {
-    const root = await gotoStory(
-      page,
-      'components-asset--anatomy',
-      'swc-asset'
-    );
-    await expect(root).toMatchAriaSnapshot(`
-      - img "README.md"
-    `);
-  });
-
-  test('should handle variants', async ({ page }) => {
-    const root = await gotoStory(
+    const asset = await gotoStory(
       page,
       'components-asset--variants',
       'swc-asset'
     );
-    await expect(root).toMatchAriaSnapshot(`
-      - img "README.md"
-    `);
+    const snapshot = await asset.ariaSnapshot();
+
+    expect(snapshot).toBeTruthy();
+    await expect(asset).toMatchAriaSnapshot();
   });
 
-  test('should handle accessibility story', async ({ page }) => {
-    const root = await gotoStory(
+  test('should have correct accessibility tree for media wrapper', async ({
+    page,
+  }) => {
+    const asset = await gotoStory(
       page,
-      'components-asset--accessibility',
+      'components-asset--media-wrapper',
       'swc-asset'
     );
-    await expect(root).toMatchAriaSnapshot(`
-      - img "Project proposal document"
-    `);
+    const snapshot = await asset.ariaSnapshot();
+
+    expect(snapshot).toBeTruthy();
+    await expect(asset).toMatchAriaSnapshot();
+  });
+
+  test('should handle anatomy variations', async ({ page }) => {
+    const asset = await gotoStory(
+      page,
+      'components-asset--anatomy',
+      'swc-asset'
+    );
+    const snapshot = await asset.ariaSnapshot();
+
+    expect(snapshot).toBeTruthy();
+    await expect(asset).toMatchAriaSnapshot();
+  });
+});
+
+test.describe('Asset - aXe Validation', () => {
+  test('should not have accessibility violations - file variant', async ({
+    page,
+  }) => {
+    await gotoStory(page, 'components-asset--variants', 'swc-asset');
+
+    const results = await new AxeBuilder({ page })
+      .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])
+      .analyze();
+
+    expect(results.violations).toEqual([]);
+  });
+
+  test('should not have violations - media wrapper', async ({ page }) => {
+    await gotoStory(page, 'components-asset--media-wrapper', 'swc-asset');
+
+    await page.waitForLoadState('networkidle');
+
+    const results = await new AxeBuilder({ page })
+      .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])
+      .analyze();
+
+    expect(results.violations).toEqual([]);
+  });
+
+  test('should not have violations - accessibility story', async ({ page }) => {
+    await gotoStory(page, 'components-asset--accessibility', 'swc-asset');
+
+    await page.waitForLoadState('networkidle');
+
+    const results = await new AxeBuilder({ page })
+      .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])
+      .analyze();
+
+    expect(results.violations).toEqual([]);
+  });
+});
+
+test.describe('Asset - Icon and slot accessibility', () => {
+  test('should have aria-label on file/folder variants', async ({ page }) => {
+    await gotoStory(page, 'components-asset--variants', 'swc-asset');
+
+    const svgs = await page.locator('swc-asset').evaluateAll((assets) =>
+      assets.flatMap((asset) => {
+        const shadowRoot = asset.shadowRoot;
+        if (!shadowRoot) {
+          return [];
+        }
+        const svgElements = Array.from(shadowRoot.querySelectorAll('svg'));
+        return svgElements.map((svg) => ({
+          role: svg.getAttribute('role'),
+          ariaLabel: svg.getAttribute('aria-label'),
+          hasAriaLabel: svg.hasAttribute('aria-label'),
+        }));
+      })
+    );
+
+    svgs.forEach((svg) => {
+      expect(svg.role).toBe('img');
+      expect(svg.hasAriaLabel).toBe(true);
+      expect(svg.ariaLabel).toBeTruthy();
+    });
   });
 });
