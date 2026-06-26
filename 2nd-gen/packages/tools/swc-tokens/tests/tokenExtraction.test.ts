@@ -250,6 +250,106 @@ describe('extractRenamedTokenValues', () => {
   });
 });
 
+describe('extractDeprecatedComments', () => {
+  const { extractDeprecatedComments } = __test__;
+
+  it('collects deprecated_comment for deprecated tokens without a rename', () => {
+    const json = {
+      removed: {
+        deprecated: true,
+        deprecated_comment: 'Use spacing-300 instead.',
+        value: '8px',
+      },
+    };
+    expect(extractDeprecatedComments(json)).toEqual({
+      removed: 'Use spacing-300 instead.',
+    });
+  });
+
+  it('skips tokens that have a rename mapping', () => {
+    const json = {
+      oldName: {
+        deprecated: true,
+        renamed: 'new-name',
+        deprecated_comment: 'Renamed to new-name.',
+        value: '8px',
+      },
+    };
+    expect(extractDeprecatedComments(json)).toEqual({});
+  });
+
+  it('skips non-deprecated tokens even if they have a comment', () => {
+    const json = {
+      active: {
+        deprecated_comment: 'Some stray comment',
+        value: '8px',
+      },
+    };
+    expect(extractDeprecatedComments(json)).toEqual({});
+  });
+
+  it('skips tokens whose comment is not a string', () => {
+    const json = {
+      badComment: {
+        deprecated: true,
+        deprecated_comment: null,
+        value: '4px',
+      },
+    };
+    expect(extractDeprecatedComments(json)).toEqual({});
+  });
+
+  it('returns an empty object when no deprecated comments exist', () => {
+    const json = {
+      active: { value: '8px' },
+      renamed: { deprecated: true, renamed: 'new-name', value: '4px' },
+    };
+    expect(extractDeprecatedComments(json)).toEqual({});
+  });
+});
+
+describe('deriveZeroValueEntries', () => {
+  const { deriveZeroValueEntries } = __test__;
+
+  it('returns "0" for tokens whose comment matches the zero-value pattern', () => {
+    const comments = {
+      'some-spacing':
+        'Zero values are removed without token replacements; hardcode a zero-pixel value in implementation.',
+    };
+    expect(deriveZeroValueEntries(comments, {})).toEqual({
+      'some-spacing': '0',
+    });
+  });
+
+  it('handles the "should be zero" comment variant', () => {
+    const comments = {
+      'label-to-component': 'Should be zero; no token replacement exists.',
+    };
+    expect(deriveZeroValueEntries(comments, {})).toEqual({
+      'label-to-component': '0',
+    });
+  });
+
+  it('skips tokens already present in customDeleted', () => {
+    const comments = {
+      'some-spacing': 'Zero values are removed; hardcode a zero-pixel value.',
+    };
+    const customDeleted = { 'some-spacing': 'spacing-100' };
+    expect(deriveZeroValueEntries(comments, customDeleted)).toEqual({});
+  });
+
+  it('skips tokens whose comment does not match the zero-value pattern', () => {
+    const comments = {
+      'accordion-gap': 'Use container-padding-small instead.',
+    };
+    expect(deriveZeroValueEntries(comments, {})).toEqual({});
+  });
+
+  it('returns an empty object when there are no deprecated comments', () => {
+    expect(deriveZeroValueEntries({}, {})).toEqual({});
+  });
+});
+
 describe('generateCSS', () => {
   it('does not wrap comma-separated font-family stacks in extra quotes', async () => {
     const css = await generateCSS('swc');

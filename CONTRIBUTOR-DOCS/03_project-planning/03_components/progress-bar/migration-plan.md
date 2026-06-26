@@ -279,7 +279,7 @@ No `--mod-*` properties will be exposed. New `--swc-*` component-level propertie
 
 Each exposed `--swc-*` property must be documented with a `@cssprop` JSDoc tag on the primary SWC component class.
 
-Progress bar exposes the **same shared linear-progress surface** as Meter (defined in `swc/stylesheets/shared/linear-progress-base.css`):
+Progress bar exposes the **same shared linear-progress surface** as Meter (defined in `swc/stylesheets/_lit-styles/linear-progress-base.css`):
 
 - `--swc-linear-progress-fill-color` — overrides the bar fill color (default accent for progress bar).
 - `--swc-linear-progress-track-color` — overrides the bar track color.
@@ -328,7 +328,7 @@ Follow the [Badge migration reference](../../02_workstreams/02_2nd-gen-component
 | **Mixin (existing)** | `2nd-gen/packages/core/mixins/linear-progress-mixin.ts` | `LinearProgressMixin`. **Already built and tested by the Meter migration.** Consumed unchanged. Owns all shared props, computed getters, locale formatting, slot tracking, and DEBUG warnings.                                                            |
 | **Core** | `2nd-gen/packages/core/components/progress-bar/`  | `ProgressBar.base.ts` (extends `LinearProgressMixin(SizedMixin(SpectrumElement, …))`), `ProgressBar.types.ts`, `index.ts`. Owns only what is progress-bar-specific: the `indeterminate` typed property; progress-bar-correct DEBUG warning copy/URL (Q1). **No rendering.** |
 | **SWC**  | `2nd-gen/packages/swc/components/progress-bar/`   | `ProgressBar.ts` (extends `ProgressBarBase`), `progress-bar.css`, `index.ts`, `swc-progress-bar.ts` registration, `stories/`, `test/`, `migration-guide.mdx`, `progress-bar.mdx`. Owns: S2 rendering with the `swc-LinearProgress` wrapper, `role="progressbar"` + conditional `aria-value*` bindings, indeterminate gating in the template. Imports `linear-progress-base.css` for shared rules. |
-| **Shared CSS (existing)** | `2nd-gen/packages/swc/stylesheets/shared/linear-progress-base.css` | **Already built by the Meter migration.** Consumed unchanged. Bar/track/fill structure, sizes, label/value layout, static colors, reduced-motion, forced-colors.                                                                                          |
+| **Shared CSS (existing)** | `2nd-gen/packages/swc/stylesheets/_lit-styles/linear-progress-base.css` | **Already built by the Meter migration.** Consumed unchanged. Bar/track/fill structure, sizes, label/value layout, static colors, reduced-motion, forced-colors.                                                                                          |
 
 Planned rendering shape for `ProgressBar.ts.render()`:
 
@@ -372,7 +372,7 @@ Notes:
 ### Indeterminate animation (progress-bar `progress-bar.css` only)
 
 ```css
-@import '../../../stylesheets/shared/linear-progress-base.css';
+@import '../../stylesheets/_lit-styles/linear-progress-base.css';
 
 :host([indeterminate]) .swc-LinearProgress-fill {
   min-inline-size: 0;            /* reset the determinate 0%-visibility floor */
