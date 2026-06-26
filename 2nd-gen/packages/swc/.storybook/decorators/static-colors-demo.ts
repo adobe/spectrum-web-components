@@ -15,12 +15,16 @@ import { styleMap } from 'lit/directives/style-map.js';
 import { makeDecorator } from '@storybook/preview-api';
 import type { DecoratorFunction } from '@storybook/types';
 
-/**
- * Static color background settings - matching spectrum-css gradients
- */
-const staticColorSettings = {
-  black: 'linear-gradient(45deg, rgb(255 241 246), rgb(238 245 255))',
+/** Gradient backgrounds for static-color Storybook demos. */
+export const STATIC_COLOR_DEMO_BACKGROUNDS = {
   white: 'linear-gradient(45deg, rgb(64 0 22), rgb(14 24 67))',
+  black: 'linear-gradient(45deg, rgb(255 241 246), rgb(238 245 255))',
+} as const;
+
+/** Foreground text color on each static-color demo background. */
+export const STATIC_COLOR_DEMO_FOREGROUNDS = {
+  white: 'white',
+  black: 'black',
 } as const;
 
 /**
@@ -54,13 +58,13 @@ export const withStaticColorsDemo: DecoratorFunction = makeDecorator({
         }
 
         .spectrum-examples-static-colors > *:first-child {
-          color: white;
-          background: ${staticColorSettings.white};
+          color: ${STATIC_COLOR_DEMO_FOREGROUNDS.white};
+          background: ${STATIC_COLOR_DEMO_BACKGROUNDS.white};
         }
 
         .spectrum-examples-static-colors > *:last-child {
-          color: black;
-          background: ${staticColorSettings.black};
+          color: ${STATIC_COLOR_DEMO_FOREGROUNDS.black};
+          background: ${STATIC_COLOR_DEMO_BACKGROUNDS.black};
         }
       </style>
       <div

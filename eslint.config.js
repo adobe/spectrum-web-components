@@ -511,6 +511,21 @@ export default defineConfig([
       'storybook/use-storybook-testing-library': 'error',
     },
   },
+  // Vitest unit tests under test/ dirs — not CSF stories (e.g. testing-grid.unit.test.ts)
+  {
+    files: ['2nd-gen/**/*.unit.test.ts'],
+    rules: {
+      'storybook/await-interactions': 'off',
+      'storybook/context-in-play-function': 'off',
+      'storybook/default-exports': 'off',
+      'storybook/hierarchy-separator': 'off',
+      'storybook/no-redundant-story-name': 'off',
+      'storybook/prefer-pascal-case': 'off',
+      'storybook/story-exports': 'off',
+      'storybook/use-storybook-expect': 'off',
+      'storybook/use-storybook-testing-library': 'off',
+    },
+  },
   {
     files: ['**/*.stories.ts', '**/*.stories.js', '2nd-gen/**/test/*.test.ts'],
     rules: {

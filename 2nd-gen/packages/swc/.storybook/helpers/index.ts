@@ -12,3 +12,45 @@
 
 export { formatTitle } from './format-title.js';
 export { iconForSize } from './icon-for-size.js';
+export {
+  ArgGrid,
+  Container,
+  generateUniqueId,
+  Heading,
+  isChromatic,
+  renderContent,
+  Sizes,
+  States,
+  TESTING_GRID_STORY_NAME,
+  TESTING_GRID_STORY_PARAMETERS,
+  Variants,
+  vrtCase,
+} from './testing-grid.js';
+export type {
+  ArgGridProps,
+  ContainerProps,
+  GridStoryContext,
+  GridTemplateFn,
+  HeadingProps,
+  SizesProps,
+  StateItem,
+  StatesProps,
+  TestCaseItem,
+  VariantsConfig,
+} from './testing-grid.js';
+export {
+  applyTestingGridPseudoStates,
+  applyTestingGridPseudoStatesToRoot,
+  applyVrtGridPseudoStates,
+  applyVrtLayoutClasses,
+  scheduleTestingGridPseudoStates,
+} from './pseudo-states-helpers.js';
+export type {
+  TestingGridPseudoStateOptions,
+  VrtInteractionState,
+} from './pseudo-states-helpers.js';
+export {
+  augmentTree,
+  resetAugmentedShadowRoot,
+  resetAugmentedTree,
+} from '../pseudo-states.js';

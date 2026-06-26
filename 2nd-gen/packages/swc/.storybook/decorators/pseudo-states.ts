@@ -9,8 +9,18 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-export { withFlexLayout } from './flex-layout';
-export { pseudoStatesDecorator } from './pseudo-states.js';
-export { withStaticColorsDemo } from './static-colors-demo';
-export { withStaticColorPlayground } from './static-color-playground';
-export { withTestingPreview } from './testing-preview.js';
+
+import type { DecoratorFunction } from '@storybook/types';
+
+import { scheduleTestingGridPseudoStates } from '../helpers/pseudo-states-helpers.js';
+
+/**
+ * Injects class-based pseudo-state rules into open shadow roots after each story
+ * renders, then patches testing-grid cells (`data-vrt-state`, `data-vrt-layout-classes`). Runs on
+ * every render so toggling **Testing preview** re-applies classes after the grid mounts.
+ */
+export const pseudoStatesDecorator: DecoratorFunction = (storyFn, context) => {
+  const result = storyFn(context);
+  scheduleTestingGridPseudoStates();
+  return result;
+};

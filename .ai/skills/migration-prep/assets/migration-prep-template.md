@@ -372,9 +372,13 @@ Planned rendering shape:
 #### Visual regression
 
 <!--
-Retain this section for any components with visual rendering, modifying as needed for the component's specs and variants.  Replace the example bullets below with VRT items that match this component, and reference real bug tickets only when they apply to this component.
+Record whether a Storybook VRT testing grid is in scope (see migration-prep → VRT testing grid scope).
+When yes, list the dimensions Phase 5 should cover and check items below. Button is the reference implementation.
+When no, explain why docs stories are sufficient.
 
-- [ ] Add VRT coverage for the component's size, variant, treatment, and state combinations
+- [ ] Add VRT testing grid (`stories/[component].template.ts`, `test/[component].vrt.ts`, `VRT Grid` story) — Phase 5 (`migration-styling`)
+- [ ] VRT matrix covers size, variant, treatment, and interaction-state combinations listed above
+- [ ] Update VRT case list when Options/States/Behaviors change — Phase 7 (`migration-documentation`)
 - [ ] Add visual regression coverage for any static color treatments on their approved backgrounds, including hover state (`SWC-####`)
 - [ ] Add visual/high-contrast coverage for any state that relies on shared styling (e.g. pending using disabled styling) (`SWC-####`)
 - [ ] Add focus-visible regression coverage where the focus ring may be clipped or obscured (`SWC-####`)

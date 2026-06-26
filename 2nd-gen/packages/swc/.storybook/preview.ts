@@ -19,7 +19,12 @@ import isChromatic from 'chromatic/isChromatic';
 
 import customElements from './custom-elements.json';
 import { withContext } from './decorators/contexts.js';
-import { withFlexLayout, withStaticColorsDemo } from './decorators/index.js';
+import {
+  pseudoStatesDecorator,
+  withFlexLayout,
+  withStaticColorsDemo,
+  withTestingPreview,
+} from './decorators/index.js';
 import { withLanguageWrapper } from './decorators/language.js';
 import { withStaticColorPlayground } from './decorators/static-color-playground.js';
 import DocumentTemplate from './DocumentTemplate.mdx';
@@ -122,27 +127,50 @@ const preview = {
         dynamicTitle: true,
       },
     },
+    testingPreview: {
+      name: 'Testing preview',
+      description: 'See how the story will look to Chromatic (testing grid)',
+      defaultValue: false,
+      toolbar: {
+        icon: 'beaker',
+        items: [
+          { value: true, title: 'Show testing preview' },
+          { value: false, title: 'Default mode' },
+        ],
+        dynamicTitle: true,
+      },
+    },
   },
   initialGlobals: {
     theme: 'light',
     lang: 'en-US',
     textDirection: 'auto',
+    testingPreview: false,
   },
   decorators: [
+    pseudoStatesDecorator,
     withContext,
     withLanguageWrapper,
     withStaticColorPlayground,
     withStaticColorsDemo,
+    withTestingPreview,
     withFlexLayout,
   ],
   parameters: {
     layout: 'centered',
-    // The Storybook patch (.yarn/patches/storybook-npm-10.4.1.patch) gates play
-    // functions on initial render behind `parameters.autoplay` so they do not run
-    // automatically while browsing the dev UI. Chromatic renders each story via that
-    // same initial path, so without this it would snapshot the pre-play state. Enable
-    // autoplay only under Chromatic to restore correct visual regression snapshots.
-    autoplay: isChromatic(),
+    // Chromatic captures testing-grid stories only; each grid opts in with
+    // `chromatic: { disableSnapshot: false }` (see testing-grid helpers).
+    chromatic: {
+      disableSnapshot: true,
+      forcedColors: 'none',
+      // Storybook does not run `play` automatically while browsing the dev UI.
+      // Chromatic renders each story via that same initial path, so without this
+      // it would snapshot the pre-play state. Enable autoplay only under Chromatic.
+      autoplay: isChromatic(),
+      // Pending spinner uses CSS animations; avoid reduced-motion static frame.
+      prefersReducedMotion: 'no-preference',
+      pauseAnimationAtEnd: true,
+    },
     backgrounds: { disable: true }, // Use custom context switches
     controls: {
       expanded: true,

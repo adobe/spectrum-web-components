@@ -131,15 +131,16 @@ if (storybookMode !== 'ci-a11y') {
   );
 }
 
-// Test stories are dev-only fixtures and should not ship in production Storybook.
+// Play-function test stories live under `**/test/*.test.ts` only.
+// VRT grid definitions use `**/test/*.vrt.ts` (imported by `*.stories.ts`, not indexed here).
 if (storybookMode === 'dev') {
   stories.push({
     ...COMPONENT_STORY_ROOT,
-    files: '**/*.test.ts',
+    files: '**/test/*.test.ts',
   });
   stories.push({
     ...PATTERN_STORY_ROOT,
-    files: '**/*.test.ts',
+    files: '**/test/*.test.ts',
   });
   stories.push({
     ...CORE_STORY_ROOT,

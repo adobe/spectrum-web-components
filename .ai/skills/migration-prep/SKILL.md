@@ -85,6 +85,7 @@ During discovery, explicitly check whether the component should:
 - wait on a prerequisite component or shared base to avoid duplicated work or conflicting APIs
 - share structural CSS patterns with existing or in-flight components — check `2nd-gen/packages/swc/stylesheets/_lit-styles/` for existing shared fragments and note any that this component should consume; if no fragment exists yet but the pattern is real, flag whether it should be extracted as part of this migration or a coordinated one. See [Non-component stylesheets](../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/07_stylesheets.md#shared-lit-css-fragments-_lit-styles) for what qualifies
 - need a global element stylesheet counterpart — check whether `stylesheets/global/global-[component].css` should be created as part of this migration. If yes, note whether the component CSS will need `@global-exclude` fences and whether the global stylesheet is in scope for this migration cycle. See [Non-component stylesheets](../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/07_stylesheets.md#global-element-styles-global) for the authoring options
+- need a **Storybook VRT testing grid** — see [VRT testing grid scope](#vrt-testing-grid-scope) below
 
 Use the status table, existing component analyses, and source relationships to make these dependency and ordering calls explicit in the plan.
 
@@ -195,6 +196,29 @@ For accessibility analysis specifically:
 
 Do not generate that analysis inside `migration-prep`.
 
+## VRT testing grid scope
+
+During discovery, decide whether Phase 5 should scaffold a **Chromatic VRT testing grid** for the component (see [`.storybook/helpers/README.md`](../../../2nd-gen/packages/swc/.storybook/helpers/README.md)).
+
+**Recommend a VRT grid when the component has visual rendering and any of the following:**
+
+- Multiple **variants**, **sizes**, **fill styles**, or **static-color** treatments that combine into a large matrix
+- **Interaction states** the CSS must capture in Chromatic (hover, focus-visible, active, disabled, pending, selected, etc.)
+- A Figma **variants** frame or Spectrum CSS testing-grid equivalent that sweeps args × states
+- Prior regressions or high-risk visual combinations (focus rings, static backgrounds, pending animation)
+
+**Usually skip the VRT grid when:**
+
+- The component is non-visual or has a single static presentation (e.g. one size, no variants, no interactive states)
+- Docs stories alone cover the full visual surface without a combinatorial matrix
+
+Record the decision in the migration plan **Visual regression** checklist:
+
+- **Yes** — list the dimensions to cover (variants, states, sizes, static colors, edge cases like icon-only or truncation). Phase 5 (`migration-styling`) scaffolds `stories/<name>.template.ts`, `test/<name>.vrt.ts`, and a `VRT Grid` story; Phase 7 (`migration-documentation`) verifies the grid stays aligned with finalized Options/States stories.
+- **No** — note why docs stories are sufficient.
+
+Use Button (`components/button/test/button.vrt.ts`) as the reference implementation when yes.
+
 ## Source priority
 
 If there are inconsistencies, use category-specific source priority and make explicit in the plan where the recommendation comes from if it introduces a rename, deprecation, or breaking change.
@@ -281,6 +305,7 @@ Instead:
 - Keep blocker numbering in the template's required `Q{#}` format. Number open questions sequentially across all blocker sections, and reuse those exact `Q{#}` IDs in `Most blocking open questions`. Do not invent a second numbering scheme there or deviate from the existing `Q{#}` format. Do not create empty links for questions.
 - Do not invent slots, events, CSS custom properties, or visual variants that are not supported by source material or guided by the user
 - Call out any dependency-aware sequencing decisions, such as whether the component extends from another migrated component, should become a shared base, or should wait on a prerequisite migration
+- Record whether a **VRT testing grid** is in scope and which visual dimensions it should cover (see [VRT testing grid scope](#vrt-testing-grid-scope))
 - Do not replace `Epic SWC-####` with `TBD` or another soft placeholder without explicitly prompting the user first
 - Make the feature/functionality inventory explicit enough to support `Must ship`, `Additive`, and open-question calls before treating the plan as review-ready
 

@@ -55,7 +55,15 @@ Then use the `rendering-and-styling-migration-analysis.md` file for the componen
 - **If it exists**, confirm it renders the component in Storybook with no console errors before touching CSS.
 - **If it does not exist**, create it now using [`assets/stories-template.md`](assets/stories-template.md) before starting CSS work. Follow the template's "Decisions to make" section and its checklist.
 
-**Phase 5 stories scope** — the stories file at this phase should contain: Playground, Overview, Anatomy, Options (one story per constant array in the types file), States, and any Behaviors that exercise CSS-visible properties. Do **not** add story-level JSDoc and do **not** write the Accessibility story body — these are deferred to Phase 7, which authors the per-component MDX file (`<component>.mdx`) as the docs surface. Leave a `// TODO` comment referencing Phase 7.
+**Step 2b — Scaffold the VRT testing grid when the migration plan calls for it.** Read the **Visual regression** section of the migration plan. When it specifies a VRT testing grid (see `migration-prep` → [VRT testing grid scope](../migration-prep/SKILL.md#vrt-testing-grid-scope)), add the Chromatic matrix alongside the Phase 5 stories scaffold:
+
+1. `stories/[component].template.ts` — pure Lit `Template()` for grid cells (not `getStorybookHelpers().template`, which breaks React hooks in large grids). Wrap each cell in `div.vrt-cell` with `data-vrt-*` attributes — see [`.storybook/helpers/README.md`](../../../2nd-gen/packages/swc/.storybook/helpers/README.md).
+2. `test/[component].vrt.ts` — `Variants()`, `ArgGrid`, `Container`, `States`, and `testData` / `stateData` for the dimensions listed in the plan. Export the render function (e.g. `ButtonVRTRender`).
+3. In `[component].stories.ts` — add a dev-only `VRTGrid` story: `render` from the VRT file, `storyName: TESTING_GRID_STORY_NAME`, spread `TESTING_GRID_STORY_PARAMETERS`, and `play: applyTestingGridPseudoStates` for forced hover/focus/active cells.
+
+Use `components/button/` as the reference (`button.template.ts`, `test/button.vrt.ts`, `VRT Grid` story). Skip this step when the plan explicitly defers VRT or says docs stories are sufficient.
+
+**Phase 5 stories scope** — the stories file at this phase should contain: Playground, Overview, Anatomy, Options (one story per constant array in the types file), States, and any Behaviors that exercise CSS-visible properties. Do **not** add story-level JSDoc and do **not** write the Accessibility story body — these are deferred to Phase 7, which authors the per-component MDX file (`<component>.mdx`) as the docs surface. Leave a `// TODO` comment referencing Phase 7. When a VRT grid is in scope, add the `VRT Grid` story as a separate dev/Chromatic entry (not a docs section).
 
 **Step 3 — Align render template class names with CSS selectors.** Before writing CSS, read the component's `render()` method and note every class name emitted. The CSS you write must use those exact names. Mismatches cause styles to silently not apply — there is no error.
 

@@ -27,6 +27,13 @@ import {
 
 import '@adobe/spectrum-wc/components/button/swc-button.js';
 
+import {
+  applyTestingGridPseudoStates,
+  TESTING_GRID_STORY_NAME,
+  TESTING_GRID_STORY_PARAMETERS,
+} from '../../../.storybook/helpers/index.js';
+import { ButtonVRTRender } from '../test/button.vrt.js';
+
 // ────────────────
 //    METADATA
 // ────────────────
@@ -205,7 +212,9 @@ export const Variants: Story = {
       template({ ...args, variant, 'default-slot': variantLabels[variant] })
     )}
   `,
-  parameters: { flexLayout: 'row-wrap' },
+  parameters: {
+    flexLayout: 'row-wrap',
+  },
   tags: ['options'],
 };
 
@@ -220,7 +229,9 @@ export const Outline: Story = {
       })
     )}
   `,
-  parameters: { flexLayout: 'row-wrap' },
+  parameters: {
+    flexLayout: 'row-wrap',
+  },
   tags: ['options'],
 };
 
@@ -268,7 +279,9 @@ export const States: Story = {
     ${template({ ...args, disabled: true, 'default-slot': 'Disabled' })}
     ${template({ ...args, pending: true, 'default-slot': 'Save' })}
   `,
-  parameters: { flexLayout: 'row-wrap' },
+  parameters: {
+    flexLayout: 'row-wrap',
+  },
   tags: ['states'],
 };
 
@@ -330,7 +343,9 @@ export const TextWrapping: Story = {
     })}
   `,
   tags: ['behaviors'],
-  parameters: { flexLayout: 'row-wrap' },
+  parameters: {
+    flexLayout: 'row-wrap',
+  },
 };
 TextWrapping.storyName = 'Text wrapping';
 
@@ -394,3 +409,26 @@ export const Accessibility: Story = {
   tags: ['a11y'],
   parameters: { flexLayout: 'row-wrap' },
 };
+
+// ────────────────────────────────────
+//    VRT / TESTING GRID (see test/button.vrt.ts)
+// ────────────────────────────────────
+
+/**
+ * Full variant × treatment × content × state matrix for visual regression.
+ * Case list lives in [`button.vrt.ts`](../test/button.vrt.ts). Turn on **Testing preview**
+ * in the Storybook toolbar (beaker icon) to view the grid locally.
+ */
+export const VRTGrid: Story = {
+  render: ButtonVRTRender as Story['render'],
+  play: async ({ canvasElement }) => {
+    await applyTestingGridPseudoStates(canvasElement);
+  },
+  parameters: {
+    layout: 'centered',
+    flexLayout: false,
+    ...TESTING_GRID_STORY_PARAMETERS,
+  },
+  tags: ['!autodocs', 'dev'],
+};
+VRTGrid.storyName = TESTING_GRID_STORY_NAME;
