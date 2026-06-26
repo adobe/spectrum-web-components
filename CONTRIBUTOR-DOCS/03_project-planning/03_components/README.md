@@ -72,6 +72,7 @@
     - [Divider migration roadmap](divider/rendering-and-styling-migration-analysis.md)
 - Dropzone
     - [Dropzone accessibility migration analysis](dropzone/accessibility-migration-analysis.md)
+    - [Dropzone migration plan](dropzone/migration-plan.md)
     - [Dropzone migration roadmap](dropzone/rendering-and-styling-migration-analysis.md)
 - Field Group
     - [Field Group migration roadmap](field-group/rendering-and-styling-migration-analysis.md)
