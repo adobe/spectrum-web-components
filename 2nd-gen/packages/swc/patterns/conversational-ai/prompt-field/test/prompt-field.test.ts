@@ -10,7 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
-import { html, render } from 'lit';
+import { html, nothing, render } from 'lit';
 import { expect, userEvent } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
@@ -143,8 +143,46 @@ export const InteractionTest: Story = {
   },
 };
 
+export const LegalMissingWarningTest: Story = {
+  render: () => nothing,
+  play: async ({ canvasElement, step }) => {
+    const warnings: string[] = [];
+    const originalWarn = console.warn;
+    console.warn = (message?: unknown) => {
+      warnings.push(String(message));
+    };
+
+    try {
+      render(
+        html`
+          <swc-prompt-field label="Prompt" value="No legal disclaimer">
+          </swc-prompt-field>
+        `,
+        canvasElement
+      );
+
+      await getComponent<PromptField>(canvasElement, 'swc-prompt-field');
+
+      await step(
+        'logs a development warning when the legal slot is empty',
+        async () => {
+          expect(
+            warnings.some(
+              (message) =>
+                message.includes('[swc-prompt-field]') &&
+                message.includes('legal slot is empty')
+            )
+          ).toBe(true);
+        }
+      );
+    } finally {
+      console.warn = originalWarn;
+    }
+  },
+};
+
 export const MixedArtifactWarningTest: Story = {
-  render: () => html``,
+  render: () => nothing,
   play: async ({ canvasElement, step }) => {
     const warnings: string[] = [];
     const originalWarn = console.warn;

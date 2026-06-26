@@ -9,12 +9,14 @@ import * as UploadArtifactStories from './stories/upload-artifact.stories';
 
 ## Usage
 
-Use **one artifact type per attachment strip**. Pick either:
+Use **one artifact layout type per attachment strip**. Pick either:
 
-- **`type="card"`** — metadata-first files (title, subtitle, small thumbnail)
-- **`type="media"`** — visual previews, with an optional **`badge`** slot for file-type labels (for example, "PDF")
+- **`type="card"`** — metadata-first files (title, subtitle, small thumbnail). Best when the strip is document-only and filenames or file types matter more than visual preview.
+- **`type="media"`** — square preview tiles, with an optional **`badge`** slot for file-type labels (for example, "PDF")
 
-Do not slot card and media artifacts together in the same prompt field or wrapping row.
+Do not slot `card` and `media` artifacts together in the same prompt field or wrapping row.
+
+When a single upload batch mixes **images and documents**, normalize the whole strip to **`type="media"`**: use image previews in `thumbnail` for photos, and thumbnail plus **`badge`** for documents. Do not render images as `media` and documents as `card` in the same session.
 
 ## Options
 

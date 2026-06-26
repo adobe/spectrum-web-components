@@ -22,9 +22,45 @@ import '../swc-prompt-field.js';
 //    METADATA
 // ────────────────
 
-const { args, argTypes, template } = getStorybookHelpers('swc-prompt-field');
+const { args, argTypes } = getStorybookHelpers('swc-prompt-field');
 const defaultPlaceholder =
   'Ready to get started? Ask a question, share an idea, or add a task.';
+const defaultLegalDisclaimer =
+  'AI output may be inaccurate. Verify before using.';
+
+const legalDisclaimerSlot = html`
+  <p slot="legal" class="swc-PromptField-legal-disclaimer">
+    ${defaultLegalDisclaimer}
+  </p>
+`;
+
+type PromptFieldStoryArgs = typeof args;
+
+function renderPromptField(
+  storyArgs: PromptFieldStoryArgs,
+  slots: unknown = legalDisclaimerSlot
+) {
+  return html`
+    <swc-prompt-field
+      label=${storyArgs.label ?? 'Prompt'}
+      placeholder=${storyArgs.placeholder ?? defaultPlaceholder}
+      .value=${storyArgs.value ?? ''}
+      mode=${storyArgs.mode ?? 'default'}
+      accessible-label=${storyArgs['accessible-label'] ?? ''}
+      send-label=${storyArgs['send-label'] ?? 'Send'}
+      stop-label=${storyArgs['stop-label'] ?? 'Stop generating'}
+      upload-label=${storyArgs['upload-label'] ?? 'Add attachment'}
+      artifact-scroll-prev-label=${storyArgs['artifact-scroll-prev-label'] ??
+      'Show previous attachments'}
+      artifact-scroll-next-label=${storyArgs['artifact-scroll-next-label'] ??
+      'Show more attachments'}
+      min-rows=${storyArgs['min-rows'] ?? 1}
+      max-rows=${storyArgs['max-rows'] ?? 4}
+    >
+      ${slots}
+    </swc-prompt-field>
+  `;
+}
 
 argTypes.mode = {
   ...argTypes.mode,
@@ -46,7 +82,7 @@ const meta: Meta = {
   component: 'swc-prompt-field',
   args,
   argTypes,
-  render: (args) => template(args),
+  render: (storyArgs) => renderPromptField(storyArgs),
   parameters: {
     docs: {
       packagePath: 'patterns/conversational-ai/prompt-field',
@@ -101,16 +137,10 @@ export const Anatomy: Story = {
         <swc-prompt-field
           label="Prompt"
           placeholder=${defaultPlaceholder}
-        ></swc-prompt-field>
-        <span class="swc-Detail swc-Detail--sizeS">Base structure</span>
-      </div>
-      <div style="display:flex;flex-direction:column;gap:8px;">
-        <swc-prompt-field label="Prompt" placeholder=${defaultPlaceholder}>
-          <div slot="legal">
-            AI output may be inaccurate. Verify before using.
-          </div>
+        >
+          ${legalDisclaimerSlot}
         </swc-prompt-field>
-        <span class="swc-Detail swc-Detail--sizeS">legal slot only</span>
+        <span class="swc-Detail swc-Detail--sizeS">Base structure</span>
       </div>
     </div>
   `,
@@ -128,7 +158,9 @@ export const Modes: Story = {
         <swc-prompt-field
           label="Prompt"
           placeholder=${defaultPlaceholder}
-        ></swc-prompt-field>
+        >
+          ${legalDisclaimerSlot}
+        </swc-prompt-field>
         <span class="swc-Detail swc-Detail--sizeS">
           mode="default" with empty value
         </span>
@@ -137,7 +169,9 @@ export const Modes: Story = {
         <swc-prompt-field
           label="Prompt"
           value="Summarize the API changes in this branch."
-        ></swc-prompt-field>
+        >
+          ${legalDisclaimerSlot}
+        </swc-prompt-field>
         <span class="swc-Detail swc-Detail--sizeS">
           mode="default" with entered value
         </span>
@@ -147,7 +181,9 @@ export const Modes: Story = {
           mode="loading"
           label="Prompt"
           value="Summarize the API changes in this branch."
-        ></swc-prompt-field>
+        >
+          ${legalDisclaimerSlot}
+        </swc-prompt-field>
         <span class="swc-Detail swc-Detail--sizeS">
           mode="loading" (input remains editable)
         </span>
@@ -157,7 +193,9 @@ export const Modes: Story = {
           mode="disabled"
           label="Prompt"
           value="This input is disabled."
-        ></swc-prompt-field>
+        >
+          ${legalDisclaimerSlot}
+        </swc-prompt-field>
         <span class="swc-Detail swc-Detail--sizeS">
           mode="disabled" (input and controls disabled)
         </span>
@@ -177,8 +215,8 @@ export const Artifact: Story = {
         <strong>artifact</strong>
         — Slot one or more
         <code>&lt;swc-upload-artifact slot="artifact"&gt;</code>
-        nodes above the textarea. Use one type per session: cards only, or media
-        tiles only (with or without badge). See
+        nodes above the textarea. Use one layout type per session (card or media).
+        When uploads mix images and documents, normalize to media tiles with badges. See
         <strong>Multi-card</strong>
         and
         <strong>Multi-media</strong>
@@ -199,6 +237,7 @@ export const Artifact: Story = {
             <span slot="title">Q2 metrics draft</span>
             <span slot="subtitle">XLSX</span>
           </swc-upload-artifact>
+          ${legalDisclaimerSlot}
         </swc-prompt-field>
         <span class="swc-Detail swc-Detail--sizeS">
           Multi-card strip (cards only)
@@ -226,6 +265,7 @@ export const Artifact: Story = {
             />
             <span slot="badge">PDF</span>
           </swc-upload-artifact>
+          ${legalDisclaimerSlot}
         </swc-prompt-field>
         <span class="swc-Detail swc-Detail--sizeS">
           Multi-media strip (media only, with and without badge)
@@ -235,7 +275,9 @@ export const Artifact: Story = {
         <swc-prompt-field
           label="Prompt"
           placeholder=${defaultPlaceholder}
-        ></swc-prompt-field>
+        >
+          ${legalDisclaimerSlot}
+        </swc-prompt-field>
         <span class="swc-Detail swc-Detail--sizeS">None</span>
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;">
@@ -245,6 +287,7 @@ export const Artifact: Story = {
             <span slot="title">Hilton commercial assets</span>
             <span slot="subtitle">2026</span>
           </swc-upload-artifact>
+          ${legalDisclaimerSlot}
         </swc-prompt-field>
         <span class="swc-Detail swc-Detail--sizeS">Single card</span>
       </div>
@@ -258,6 +301,7 @@ export const Artifact: Story = {
               style="inline-size:100%;block-size:100%;object-fit:cover;"
             />
           </swc-upload-artifact>
+          ${legalDisclaimerSlot}
         </swc-prompt-field>
         <span class="swc-Detail swc-Detail--sizeS">Single media</span>
       </div>
@@ -305,6 +349,7 @@ export const MultiArtifactScroll: Story = {
             </swc-upload-artifact>
           `
         )}
+        ${legalDisclaimerSlot}
       </swc-prompt-field>
     </div>
   `,
@@ -320,6 +365,12 @@ interface PromptFieldBehaviorArtifact {
   fileName: string;
   sizeLabel: string;
   thumbnailUrl?: string;
+  badgeLabel?: string;
+}
+
+function fileBadgeLabel(fileName: string): string | undefined {
+  const extension = fileName.match(/\.([a-z0-9]+)$/i)?.[1];
+  return extension ? extension.toUpperCase() : undefined;
 }
 
 @customElement('swc-prompt-field-behavior-demo')
@@ -389,11 +440,12 @@ class PromptFieldBehaviorDemo extends LitElement {
         fileName: file.name || 'Attachment',
         sizeLabel: `${Math.max(1, Math.round(file.size / 1024))} KB`,
         thumbnailUrl: isImage ? URL.createObjectURL(file) : undefined,
+        badgeLabel: isImage ? undefined : fileBadgeLabel(file.name),
       } satisfies PromptFieldBehaviorArtifact;
     });
 
     this.artifacts = [...this.artifacts, ...nextArtifacts];
-    this.readout = `External picker selected ${files.length} file${files.length === 1 ? '' : 's'} and the consumer slotted upload artifacts into the prompt.`;
+    this.readout = `External picker selected ${files.length} file${files.length === 1 ? '' : 's'} and the consumer slotted media upload artifacts into the prompt.`;
     input.value = '';
   }
 
@@ -428,44 +480,40 @@ class PromptFieldBehaviorDemo extends LitElement {
             @swc-prompt-field-upload-click=${this._handleUploadClick}
             @swc-upload-artifact-dismiss=${this._handleArtifactDismiss}
           >
-            ${this.artifacts.map((artifact) =>
-              artifact.thumbnailUrl
-                ? html`
-                    <swc-upload-artifact
-                      slot="artifact"
-                      type="media"
-                      dismissible
-                      data-artifact-id=${artifact.id}
-                    >
-                      <img
-                        slot="thumbnail"
-                        src=${artifact.thumbnailUrl}
-                        alt=${artifact.fileName}
-                        style="inline-size:100%;block-size:100%;object-fit:cover;"
-                      />
-                    </swc-upload-artifact>
-                  `
-                : html`
-                    <swc-upload-artifact
-                      slot="artifact"
-                      type="card"
-                      dismissible
-                      data-artifact-id=${artifact.id}
-                    >
-                      <div
-                        slot="thumbnail"
-                        role="img"
-                        aria-label="File thumbnail"
-                        style="inline-size:40px;block-size:40px;"
-                      ></div>
-                      <span slot="title">${artifact.fileName}</span>
-                      <span slot="subtitle">${artifact.sizeLabel}</span>
-                    </swc-upload-artifact>
-                  `
+            ${this.artifacts.map(
+              (artifact) => html`
+                <swc-upload-artifact
+                  slot="artifact"
+                  type="media"
+                  dismissible
+                  data-artifact-id=${artifact.id}
+                >
+                  ${artifact.thumbnailUrl
+                    ? html`
+                        <img
+                          slot="thumbnail"
+                          src=${artifact.thumbnailUrl}
+                          alt=${artifact.fileName}
+                          style="inline-size:100%;block-size:100%;object-fit:cover;"
+                        />
+                      `
+                    : html`
+                        <div
+                          slot="thumbnail"
+                          role="img"
+                          aria-label=${artifact.fileName}
+                          style="inline-size:100%;block-size:100%;background:#f3f3f3;"
+                        ></div>
+                      `}
+                  ${artifact.badgeLabel
+                    ? html`
+                        <span slot="badge">${artifact.badgeLabel}</span>
+                      `
+                    : nothing}
+                </swc-upload-artifact>
+              `
             )}
-            <div slot="legal">
-              AI output may be inaccurate. Verify before using.
-            </div>
+            ${legalDisclaimerSlot}
           </swc-prompt-field>
           <input
             data-file-input
