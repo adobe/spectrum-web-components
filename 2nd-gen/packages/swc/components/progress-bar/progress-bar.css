@@ -10,12 +10,46 @@
  * governing permissions and limitations under the License.
  */
 
-/*
- * Progress-bar-specific styles. Shared structural rules (bar/track/fill,
- * sizes, side-label layout, static colors, forced-colors) live in
- * `swc/stylesheets/_lit-styles/linear-progress-base.css` and consume
- * `--swc-linear-progress-*` custom properties. This file adds only the
- * indeterminate fill animation (keyframes, duration, reduced-motion
- * fallback) — see Q2 in the migration plan; exact values to be lifted
- * from spectrum-css spectrum-two progressbar/index.css during Styling phase.
- */
+/* Structural rules live in `linear-progress-base.css`; this file adds only the indeterminate animation.
+ * The fill spans the full track width and scaleX(0.7) gives it its visual size, matching React S2. */
+
+:host([indeterminate]) .swc-LinearProgress-fill {
+  inline-size: 100%;
+  min-inline-size: 0; /* reset the 3% determinate visibility floor */
+  transform-origin: left;
+  transition: none; /* drop the determinate inline-size sweep */
+  animation: indeterminate-loop-ltr token("animation-duration-2000") token("animation-ease-in-out") infinite;
+  will-change: transform;
+
+  &:dir(rtl) {
+    animation-name: indeterminate-loop-rtl;
+  }
+}
+
+@keyframes indeterminate-loop-ltr {
+  from {
+    transform: translateX(-70%) scaleX(0.7);
+  }
+
+  to {
+    transform: translateX(100%) scaleX(0.7);
+  }
+}
+
+@keyframes indeterminate-loop-rtl {
+  from {
+    transform: translateX(100%) scaleX(0.7);
+  }
+
+  to {
+    transform: translateX(-70%) scaleX(0.7);
+  }
+}
+
+/* Slow rather than stop (WCAG 2.3.3): a static fill loses the indeterminate meaning. */
+@media (prefers-reduced-motion: reduce) {
+  :host([indeterminate]) .swc-LinearProgress-fill {
+    animation-duration: 15s;
+    animation-timing-function: linear;
+  }
+}
