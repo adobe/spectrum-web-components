@@ -31,7 +31,7 @@
   justify-content: center;
   padding: var(--swc-dropzone-padding, token("spacing-400"));
   background: var(--swc-dropzone-background-color, transparent);
-  border: var(--swc-dropzone-border-width, token("border-width-200")) dashed var(--swc-dropzone-border-color, token("gray-300"));
+  border: var(--swc-dropzone-border-width, token("border-width-200")) var(--swc-dropzone-border-style, dashed) var(--swc-dropzone-border-color, token("gray-300"));
   border-radius: var(--swc-dropzone-corner-radius, token("corner-radius-400"));
 }
 
@@ -39,30 +39,26 @@
    Sizes
    ───────────────────────────────────── */
 
-:host([size="s"]) .swc-Dropzone {
-  padding: var(--swc-dropzone-padding, token("spacing-300"));
+:host([size="s"]) {
+  --swc-dropzone-padding: token("spacing-300");
 }
 
-:host([size="l"]) .swc-Dropzone {
-  padding: var(--swc-dropzone-padding, token("spacing-600"));
+:host([size="l"]) {
+  --swc-dropzone-padding: token("spacing-600");
 }
 
 /* ─────────────────────────────────────
    Dragged state and focus-within
    ───────────────────────────────────── */
 
-:host([dragged]) .swc-Dropzone,
-:host(:focus-within) .swc-Dropzone {
-  border-color: var(--swc-dropzone-border-color-dragged, token("accent-visual-color"));
-  border-style: solid;
+:host([dragged]),
+:host(:focus-within) {
+  --swc-dropzone-border-color: token("accent-visual-color");
+  --swc-dropzone-border-style: solid;
 }
 
-:host([dragged]) .swc-Dropzone {
-  background: var(--swc-dropzone-background-color, token("accent-subtle-background-color-default"));
-}
-
-/* Cascade accent illustration color into any slotted swc-illustrated-message. */
 :host([dragged]) {
+  --swc-dropzone-background-color: token("accent-subtle-background-color-default");
   --swc-illustrated-message-illustration-color: token("accent-visual-color");
 }
 

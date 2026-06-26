@@ -40,9 +40,9 @@ import styles from './dropzone.css';
  * @fires swc-dropzone-drop - Fired when files are dropped on the zone. Set `filled` in
  *   your handler to transition the zone to its filled state.
  *
- * @cssprop --swc-dropzone-background-color - Background color of the drop zone. Transparent by default; overridden to a subtle accent tint in the dragged state.
- * @cssprop --swc-dropzone-border-color - Dashed border color in the default state. Defaults to the gray-300 token.
- * @cssprop --swc-dropzone-border-color-dragged - Solid border color when files are dragged over the zone. Defaults to the accent visual color token.
+ * @cssprop --swc-dropzone-background-color - Background color of the drop zone. Defaults to transparent; overridden to a subtle accent tint in the dragged state.
+ * @cssprop --swc-dropzone-border-color - Border color. Defaults to the gray-300 token in the default state; overridden to the accent visual color in the dragged and focus-within states.
+ * @cssprop --swc-dropzone-border-style - Border style. Defaults to dashed; overridden to solid in the dragged and focus-within states.
  * @cssprop --swc-dropzone-border-width - Border width. Defaults to the border-width-200 token (2px).
  * @cssprop --swc-dropzone-corner-radius - Corner radius. Defaults to the corner-radius-400 token.
  * @cssprop --swc-dropzone-padding - Padding inside the drop zone. Defaults vary by size: spacing-300 (s), spacing-400 (m), spacing-600 (l).
