@@ -138,7 +138,9 @@ slot[name="heading"] {
   color: inherit !important;
 }
 
-:host(:has([slot="actions"])) slot[name="actions"] {
+:host(:has([slot="actions"])) .swc-IllustratedMessage-actions {
+  display: flex;
+  justify-content: center;
   margin-block-start: token("spacing-300");
 }
 
