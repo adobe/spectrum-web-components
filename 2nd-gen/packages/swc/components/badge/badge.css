@@ -23,13 +23,13 @@
 /* Size `s` is the default. tokens are set directly on .swc-Badge, so no :host([size="s"]) needed */
 .swc-Badge {
   --_swc-badge-border-width: token("border-width-200");
-  --_swc-badge-padding-block: var(--swc-badge-padding-block, token("component-padding-vertical-75"));
-  --_swc-badge-padding-inline-start: var(--swc-badge-padding-inline-start, var(--swc-badge-padding-inline, token("component-edge-to-text-75")));
-  --_swc-badge-padding-inline: var(--swc-badge-padding-inline, token("component-edge-to-text-75"));
+  --_swc-badge-padding-block: var(--swc-badge-padding-block, token("base-padding-vertical-small"));
+  --_swc-badge-padding-inline-start: var(--swc-badge-padding-inline-start, var(--swc-badge-padding-inline, token("base-padding-horizontal-small")));
+  --_swc-badge-padding-inline: var(--swc-badge-padding-inline, token("base-padding-horizontal-small"));
   --_swc-badge-line-height: var(--swc-badge-line-height, token("line-height-font-size-75"));
 
   display: inline-flex;
-  gap: var(--swc-badge-gap, token("text-to-visual-75"));
+  gap: var(--swc-badge-gap, token("base-gap-small"));
   align-items: center;
   min-block-size: var(--swc-badge-height, token("component-height-75"));
   padding-block: calc(var(--_swc-badge-padding-block) - var(--_swc-badge-border-width));
@@ -43,13 +43,13 @@
 }
 
 .swc-Badge:where(:has(.swc-Badge-icon):not(.swc-Badge--no-label)) {
-  --swc-badge-padding-inline-start: var(--swc-badge-with-icon-padding-inline, token("component-edge-to-visual-75"));
+  --swc-badge-padding-inline-start: var(--swc-badge-with-icon-padding-inline, token("base-padding-horizontal-small"));
 }
 
 .swc-Badge--no-label:where(:has(.swc-Badge-icon)) {
-  --swc-badge-padding-block: var(--swc-badge-with-icon-only-padding-block, token("component-edge-to-visual-only-75"));
-  --swc-badge-padding-inline-start: var(--swc-badge-with-icon-only-padding-inline, token("component-edge-to-visual-only-75"));
-  --swc-badge-padding-inline: var(--swc-badge-with-icon-only-padding-inline, token("component-edge-to-visual-only-75"));
+  --swc-badge-padding-block: var(--swc-badge-with-icon-only-padding-block, token("base-padding-vertical-small"));
+  --swc-badge-padding-inline-start: var(--swc-badge-with-icon-only-padding-inline, token("base-padding-vertical-small"));
+  --swc-badge-padding-inline: var(--swc-badge-with-icon-only-padding-inline, token("base-padding-vertical-small"));
   --swc-badge-gap: 0;
 }
 
@@ -66,7 +66,7 @@
 }
 
 .swc-Badge-icon {
-  --_swc-badge-icon-size: token("workflow-icon-size-75");
+  --_swc-badge-icon-size: token("workflow-icon-small");
 
   display: grid;
   flex-shrink: 0;
@@ -78,42 +78,42 @@
 :host([size="m"]) {
   --swc-badge-height: token("component-height-100");
   --swc-badge-corner-radius: token("corner-radius-medium-size-medium");
-  --swc-badge-gap: token("text-to-visual-100");
-  --swc-badge-padding-inline: token("component-edge-to-text-100");
-  --swc-badge-with-icon-padding-inline: token("component-edge-to-visual-100");
-  --swc-badge-with-icon-only-padding-inline: token("component-edge-to-visual-only-100");
-  --swc-badge-with-icon-only-padding-block: token("component-edge-to-visual-only-100");
-  --swc-badge-padding-block: token("component-padding-vertical-100");
+  --swc-badge-gap: token("base-gap-medium");
+  --swc-badge-padding-inline: token("base-padding-horizontal-medium");
+  --swc-badge-with-icon-padding-inline: token("base-padding-horizontal-medium");
+  --swc-badge-with-icon-only-padding-inline: token("base-padding-vertical-medium");
+  --swc-badge-with-icon-only-padding-block: token("base-padding-vertical-medium");
+  --swc-badge-padding-block: token("base-padding-vertical-medium");
   --swc-badge-font-size: token("font-size-100");
-  --swc-badge-icon-size: token("workflow-icon-size-100");
+  --swc-badge-icon-size: token("workflow-icon-medium");
   --swc-badge-line-height: token("line-height-font-size-100");
 }
 
 :host([size="l"]) {
   --swc-badge-height: token("component-height-200");
   --swc-badge-corner-radius: token("corner-radius-medium-size-large");
-  --swc-badge-gap: token("text-to-visual-200");
-  --swc-badge-padding-inline: token("component-edge-to-text-200");
-  --swc-badge-with-icon-padding-inline: token("component-edge-to-visual-200");
-  --swc-badge-with-icon-only-padding-inline: token("component-edge-to-visual-only-200");
-  --swc-badge-with-icon-only-padding-block: token("component-edge-to-visual-only-200");
-  --swc-badge-padding-block: token("component-padding-vertical-200");
+  --swc-badge-gap: token("base-gap-large");
+  --swc-badge-padding-inline: token("base-padding-horizontal-large");
+  --swc-badge-with-icon-padding-inline: token("base-padding-horizontal-large");
+  --swc-badge-with-icon-only-padding-inline: token("base-padding-vertical-large");
+  --swc-badge-with-icon-only-padding-block: token("base-padding-vertical-large");
+  --swc-badge-padding-block: token("base-padding-vertical-large");
   --swc-badge-font-size: token("font-size-200");
-  --swc-badge-icon-size: token("workflow-icon-size-200");
+  --swc-badge-icon-size: token("workflow-icon-large");
   --swc-badge-line-height: token("line-height-font-size-200");
 }
 
 :host([size="xl"]) {
   --swc-badge-height: token("component-height-300");
   --swc-badge-corner-radius: token("corner-radius-medium-size-extra-large");
-  --swc-badge-gap: token("text-to-visual-300");
-  --swc-badge-padding-inline: token("component-edge-to-text-300");
-  --swc-badge-with-icon-padding-inline: token("component-edge-to-visual-300");
-  --swc-badge-with-icon-only-padding-inline: token("component-edge-to-visual-only-300");
-  --swc-badge-with-icon-only-padding-block: token("component-edge-to-visual-only-300");
-  --swc-badge-padding-block: token("component-padding-vertical-300");
+  --swc-badge-gap: token("base-gap-extra-large");
+  --swc-badge-padding-inline: token("base-padding-horizontal-extra-large");
+  --swc-badge-with-icon-padding-inline: token("base-padding-horizontal-extra-large");
+  --swc-badge-with-icon-only-padding-inline: token("base-padding-vertical-extra-large");
+  --swc-badge-with-icon-only-padding-block: token("base-padding-vertical-extra-large");
+  --swc-badge-padding-block: token("base-padding-vertical-extra-large");
   --swc-badge-font-size: token("font-size-300");
-  --swc-badge-icon-size: token("workflow-icon-size-300");
+  --swc-badge-icon-size: token("workflow-icon-extra-large");
   --swc-badge-line-height: token("line-height-font-size-300");
 }
 

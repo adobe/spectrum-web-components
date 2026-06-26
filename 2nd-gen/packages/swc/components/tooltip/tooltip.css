@@ -60,8 +60,8 @@
   display: inline-flex;
   position: relative;
   min-block-size: token("component-height-75");
-  padding-block: token("component-padding-vertical-75");
-  padding-inline: token("component-edge-to-text-75");
+  padding-block: token("base-padding-vertical-small");
+  padding-inline: token("base-padding-horizontal-small");
   margin-block-end: var(--_swc-tooltip-tip-height);
   font-size: token("font-size-75");
   font-weight: token("regular-font-weight");
