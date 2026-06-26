@@ -641,6 +641,9 @@ class ConversationFullPatternDemo extends LitElement {
             @swc-prompt-field-upload-click=${this.handleUploadClick}
           >
             ${this.renderArtifacts()}
+            <p slot="legal" class="swc-PromptField-legal-disclaimer">
+              AI output may be inaccurate. Verify before using.
+            </p>
           </swc-prompt-field>
           <input
             id=${this.fileInputId}
@@ -701,6 +704,9 @@ const fullPatternSource = `<div style="max-width:800px; margin:auto; padding:24p
       ></div>
       <span slot="badge">PDF</span>
     </swc-upload-artifact>
+    <p slot="legal" class="swc-PromptField-legal-disclaimer">
+      AI output may be inaccurate. Verify before using.
+    </p>
   </swc-prompt-field>
 </div>`;
 

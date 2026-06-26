@@ -14,7 +14,7 @@ A prompt field consists of:
 1. **Box**: white card container with shadow and 16px border radius.
 2. **Input area**: visible label + textarea.
 3. **Action bar**: upload trigger (left) and send/stop action (right).
-4. **Footer**: optional legal content rendered below the prompt surface.
+4. **Footer**: legal disclaimer rendered below the prompt surface. Required in product implementations.
 
 <Canvas of={PromptFieldStories.Anatomy} />
 
@@ -32,6 +32,12 @@ The send button enablement is derived internally from prompt content (value or a
 
 <Canvas of={PromptFieldStories.Modes} />
 
+### Legal disclaimer
+
+Every prompt field in production must include Legal-approved disclaimer copy below the composer. Slot your product's approved text into **`legal`** — wording, links, and locale are consumer-owned, not baked into the component.
+
+Apply the `.swc-PromptField-legal-disclaimer` class for default footer typography. `swc-prompt-field` logs a development warning when the `legal` slot is empty.
+
 ### Artifact
 
 Artifact layout is inferred from the **`artifact`** slot content:
@@ -40,7 +46,13 @@ Artifact layout is inferred from the **`artifact`** slot content:
 - **`swc-upload-artifact type="card"`**: file-style card artifacts (one or more)
 - **`swc-upload-artifact type="media"`**: media tile artifacts (one or more, with or without badge)
 
-**Use one type per composer session.** Slot multiple artifacts of the same type — for example, several cards or several media tiles — but do not mix card and media in the same strip. `swc-prompt-field` logs a development warning when both types are detected.
+**Use one layout type per composer session** (`card` or `media`). Slot multiple artifacts of that same type — for example, several cards or several media tiles. Do not mix `card` and `media` in the same strip; `swc-prompt-field` logs a development warning when both are detected.
+
+This rule is about **component layout**, not file MIME type. You can attach many files in one session as long as they share the same layout:
+
+- **Document-only uploads** where title and subtitle carry meaning → all **`type="card"`**
+- **Visual previews** (photos, storyboard frames) → all **`type="media"`**
+- **Mixed images and documents in one batch** → normalize to all **`type="media"`**: image previews in `thumbnail`, and document tiles with a preview or icon in `thumbnail` plus an optional **`badge`** (for example, "PDF"). See **[Media with badge](/docs/patterns-conversational-ai-upload-artifact--readme#media-with-badge)**.
 
 **Populate the attachment strip** by slotting **one `<swc-upload-artifact>` per file**, each with **`slot="artifact"`** (same slot name repeated).
 
