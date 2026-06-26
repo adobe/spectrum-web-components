@@ -72,22 +72,6 @@
   border-style: solid;
 }
 
-/* ─────────────────────────────────────
-   Filled state
-   ───────────────────────────────────── */
-
-slot[name="filled-content"] {
-  display: none;
-}
-
-:host([filled]) slot:not([name]) {
-  display: none;
-}
-
-:host([filled]) slot[name="filled-content"] {
-  display: block;
-}
-
 ::slotted(p) {
   margin: 0;
   text-align: center;

@@ -84,6 +84,7 @@ const makeDropzoneSlot = (
   <swc-illustrated-message>
     ${unsafeHTML(DROPZONE_SVG)}
     <h2 slot="heading">${headingText}</h2>
+    <span slot="description">${descriptionText}</span>
   </swc-illustrated-message>
   <swc-button variant="accent" size=${size}>Browse files</swc-button>
 `;
@@ -189,6 +190,7 @@ export const States: Story = {
       aria-label="Filled drop zone"
       style="min-inline-size: 260px;"
     >
+      ${makeDropzoneSlot('Drag and drop your file')}
       <p slot="filled-content">report-q4.pdf uploaded</p>
     </swc-dropzone>
 
@@ -198,6 +200,7 @@ export const States: Story = {
       aria-label="Filled and dragged drop zone"
       style="min-inline-size: 260px;"
     >
+      ${makeDropzoneSlot('Drag and drop your file')}
       <p slot="filled-content">Drop file to replace</p>
     </swc-dropzone>
   `,
