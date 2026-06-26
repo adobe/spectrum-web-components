@@ -76,8 +76,16 @@
    Filled state
    ───────────────────────────────────── */
 
-:host([filled]) ::slotted(swc-illustrated-message) {
+slot[name="filled-content"] {
   display: none;
+}
+
+:host([filled]) slot:not([name]) {
+  display: none;
+}
+
+:host([filled]) slot[name="filled-content"] {
+  display: block;
 }
 
 ::slotted(p) {
