@@ -658,12 +658,12 @@ export class ColorController {
         if (
           this._colorOrigin &&
           typeof (this._colorOrigin as { r: string }).r === 'string' &&
-          (this._colorOrigin as { r: string }).r.search('%')
+          (this._colorOrigin as { r: string }).r.includes('%')
         ) {
           return {
-            r: `${Math.round(r * 255)}%`,
-            g: `${Math.round(g * 255)}%`,
-            b: `${Math.round(b * 255)}%`,
+            r: `${Math.round(r * 100)}%`,
+            g: `${Math.round(g * 100)}%`,
+            b: `${Math.round(b * 100)}%`,
             a: this._color.alpha,
           };
         }

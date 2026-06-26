@@ -188,9 +188,9 @@ export const ColorValueObjects: Story = {
     colorController.color = new Color('srgb', [0.5, 0.25, 0.75]);
     colorController.colorOrigin = { r: '50%', g: '25%', b: '75%' };
     expect(colorController.colorValue).toEqual({
-      r: '128%',
-      g: '64%',
-      b: '191%',
+      r: '50%',
+      g: '25%',
+      b: '75%',
       a: 1,
     });
   },
