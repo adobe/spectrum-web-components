@@ -57,6 +57,10 @@ export class IllustratedMessage extends IllustratedMessageBase {
           <div class="swc-IllustratedMessage-description">
             <slot name="description"></slot>
           </div>
+          <slot
+            name="actions"
+            @slotchange=${this.handleActionsSlotChange}
+          ></slot>
         </div>
       </div>
     `;

@@ -15,6 +15,7 @@ import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import { IllustratedMessage } from '@adobe/spectrum-wc/illustrated-message';
 
+import '@adobe/spectrum-wc/components/button/swc-button.js';
 import '@adobe/spectrum-wc/components/illustrated-message/swc-illustrated-message.js';
 
 import {
@@ -23,6 +24,7 @@ import {
   withWarningSpy,
 } from '../../../utils/test-utils.js';
 import meta, {
+  Actions,
   IllustrationAccessibility,
   Orientation,
   Overview,
@@ -250,6 +252,150 @@ export const HeadingSlotValidElementsTest: Story = {
         })
       );
     }
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Actions slot
+// ──────────────────────────────────────────────────────────────
+
+export const ActionsSlotTest: Story = {
+  render: () => html`
+    <swc-illustrated-message>
+      <h2 slot="heading">Heading</h2>
+      <swc-button slot="actions" variant="accent">Browse files</swc-button>
+    </swc-illustrated-message>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const illustratedMessage = await getComponent<IllustratedMessage>(
+      canvasElement,
+      'swc-illustrated-message'
+    );
+
+    await step('renders content in the actions slot', async () => {
+      const button = illustratedMessage.querySelector('[slot="actions"]');
+      expect(button, 'action element present in light DOM').not.toBeNull();
+    });
+  },
+};
+
+export const ActionsSizePropagationTest: Story = {
+  render: () => html`
+    <swc-illustrated-message size="l">
+      <h2 slot="heading">Heading</h2>
+      <swc-button slot="actions" variant="accent">Browse files</swc-button>
+    </swc-illustrated-message>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const illustratedMessage = await getComponent<IllustratedMessage>(
+      canvasElement,
+      'swc-illustrated-message'
+    );
+
+    await step(
+      'propagates initial size to slotted action element',
+      async () => {
+        const button = illustratedMessage.querySelector('[slot="actions"]');
+        expect(button?.getAttribute('size'), 'button size matches "l"').toBe(
+          'l'
+        );
+      }
+    );
+  },
+};
+
+export const ActionsSizeChangeTest: Story = {
+  ...Actions,
+  play: async ({ canvasElement, step }) => {
+    const elements = await getComponents<IllustratedMessage>(
+      canvasElement,
+      'swc-illustrated-message'
+    );
+
+    for (const el of elements) {
+      const expectedSize = el.getAttribute('size') as string;
+      await step(
+        `propagates size="${expectedSize}" to slotted action element`,
+        async () => {
+          const button = el.querySelector('[slot="actions"]');
+          expect(
+            button?.getAttribute('size'),
+            `button size reflects "${expectedSize}"`
+          ).toBe(expectedSize);
+        }
+      );
+    }
+
+    await step(
+      'updates slotted action element when size property changes',
+      async () => {
+        const [first] = elements;
+        if (!first) {
+          return;
+        }
+
+        const button = first.querySelector('[slot="actions"]');
+
+        for (const size of IllustratedMessage.VALID_SIZES) {
+          first.size = size;
+          await first.updateComplete;
+          expect(
+            button?.getAttribute('size'),
+            `button size updated to "${size}"`
+          ).toBe(size);
+        }
+      }
+    );
+  },
+};
+
+export const ActionsDynamicSlotTest: Story = {
+  render: () => html`
+    <swc-illustrated-message size="s">
+      <h2 slot="heading">Heading</h2>
+    </swc-illustrated-message>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const illustratedMessage = await getComponent<IllustratedMessage>(
+      canvasElement,
+      'swc-illustrated-message'
+    );
+
+    await step(
+      'propagates size to action element added after initial render',
+      async () => {
+        const actionsSlot =
+          illustratedMessage.shadowRoot?.querySelector<HTMLSlotElement>(
+            'slot[name="actions"]'
+          );
+        expect(
+          actionsSlot,
+          'actions slot must exist in shadow DOM'
+        ).not.toBeNull();
+        if (!actionsSlot) {
+          return;
+        }
+
+        const slotChanged = new Promise<void>((resolve) =>
+          actionsSlot.addEventListener('slotchange', () => resolve(), {
+            once: true,
+          })
+        );
+
+        const button = document.createElement('swc-button');
+        button.setAttribute('slot', 'actions');
+        button.setAttribute('variant', 'accent');
+        button.textContent = 'Browse files';
+        illustratedMessage.appendChild(button);
+
+        await slotChanged;
+
+        expect(
+          button.getAttribute('size'),
+          'dynamically added button receives current size "s"'
+        ).toBe('s');
+      }
+    );
   },
 };
 

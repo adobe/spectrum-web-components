@@ -40,41 +40,41 @@
 
 /* Compact & spacious density: overrides cascade to slotted items */
 :host([density="compact"]) ::slotted(swc-accordion-item) {
-  --swc-accordion-item-padding-top: token("accordion-top-to-text-compact-medium");
-  --swc-accordion-item-padding-bottom: token("accordion-bottom-to-text-compact-medium");
+  --swc-accordion-item-padding-top: token("base-padding-vertical-medium");
+  --swc-accordion-item-padding-bottom: token("base-padding-vertical-medium");
 }
 
 :host([density="spacious"]) ::slotted(swc-accordion-item) {
-  --swc-accordion-item-padding-top: token("accordion-top-to-text-spacious-medium");
-  --swc-accordion-item-padding-bottom: token("accordion-bottom-to-text-spacious-medium");
+  --swc-accordion-item-padding-top: token("base-padding-vertical-extra-large");
+  --swc-accordion-item-padding-bottom: token("base-padding-vertical-extra-large");
 }
 
 :host([density="compact"][size="s"]) ::slotted(swc-accordion-item) {
-  --swc-accordion-item-padding-top: token("accordion-top-to-text-compact-small");
-  --swc-accordion-item-padding-bottom: token("accordion-bottom-to-text-compact-small");
+  --swc-accordion-item-padding-top: token("base-padding-vertical-small");
+  --swc-accordion-item-padding-bottom: token("base-padding-vertical-small");
 }
 
 :host([density="compact"][size="l"]) ::slotted(swc-accordion-item) {
-  --swc-accordion-item-padding-top: token("accordion-top-to-text-compact-large");
-  --swc-accordion-item-padding-bottom: token("accordion-bottom-to-text-compact-large");
+  --swc-accordion-item-padding-top: token("base-padding-vertical-large");
+  --swc-accordion-item-padding-bottom: token("base-padding-vertical-large");
 }
 
 :host([density="compact"][size="xl"]) ::slotted(swc-accordion-item) {
-  --swc-accordion-item-padding-top: token("accordion-top-to-text-compact-extra-large");
-  --swc-accordion-item-padding-bottom: token("accordion-bottom-to-text-compact-extra-large");
+  --swc-accordion-item-padding-top: token("base-padding-vertical-extra-large");
+  --swc-accordion-item-padding-bottom: token("base-padding-vertical-extra-large");
 }
 
 :host([density="spacious"][size="s"]) ::slotted(swc-accordion-item) {
-  --swc-accordion-item-padding-top: token("accordion-top-to-text-spacious-small");
-  --swc-accordion-item-padding-bottom: token("accordion-bottom-to-text-spacious-small");
+  --swc-accordion-item-padding-top: token("base-padding-vertical-large");
+  --swc-accordion-item-padding-bottom: token("base-padding-vertical-large");
 }
 
 :host([density="spacious"][size="l"]) ::slotted(swc-accordion-item) {
-  --swc-accordion-item-padding-top: token("accordion-top-to-text-spacious-large");
-  --swc-accordion-item-padding-bottom: token("accordion-bottom-to-text-spacious-large");
+  --swc-accordion-item-padding-top: token("base-padding-vertical-2x-large");
+  --swc-accordion-item-padding-bottom: token("base-padding-vertical-2x-large");
 }
 
 :host([density="spacious"][size="xl"]) ::slotted(swc-accordion-item) {
-  --swc-accordion-item-padding-top: token("accordion-top-to-text-spacious-extra-large");
-  --swc-accordion-item-padding-bottom: token("accordion-bottom-to-text-spacious-extra-large");
+  --swc-accordion-item-padding-top: token("base-padding-vertical-3x-large");
+  --swc-accordion-item-padding-bottom: token("base-padding-vertical-3x-large");
 }
