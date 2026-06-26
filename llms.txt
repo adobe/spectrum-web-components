@@ -12,6 +12,7 @@
 
 ## Guides
 
+- [Build with AI](https://opensource.adobe.com/spectrum-web-components/build-with-ai/)
 - [Deprecation Guide](https://opensource.adobe.com/spectrum-web-components/deprecation-guide/)
 - [Dev mode](https://opensource.adobe.com/spectrum-web-components/dev-mode/)
 - [Getting started](https://opensource.adobe.com/spectrum-web-components/getting-started/)
