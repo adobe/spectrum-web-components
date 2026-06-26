@@ -190,7 +190,9 @@ export const MediaBadgeTest: Story = {
           '.swc-UploadArtifact-badge'
         );
         expect(badge).toBeTruthy();
-        expect(badge?.textContent?.trim()).toBe('PDF');
+        expect(
+          withBadge.querySelector('[slot="badge"]')?.textContent?.trim()
+        ).toBe('PDF');
       }
     );
 
