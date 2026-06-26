@@ -205,7 +205,12 @@ export class ResponseStatus extends SpectrumElement {
   }
 
   private _readLightDomNamedSlotText(host: Element, slotName: string): string {
-    return Array.from(host.querySelectorAll(`[slot="${slotName}"]`))
+    return Array.from(host.children)
+      .filter(
+        (child): child is HTMLElement =>
+          child instanceof HTMLElement &&
+          child.getAttribute('slot') === slotName
+      )
       .map((element) => element.textContent?.trim() ?? '')
       .filter(Boolean)
       .join(' ');
