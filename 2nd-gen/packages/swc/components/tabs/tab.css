@@ -29,11 +29,11 @@
 
   display: inline-flex;
   position: relative;
-  gap: token("text-to-visual-100");
+  gap: token("base-gap-medium");
   align-items: center;
   justify-content: center;
   block-size: var(--swc-tab-height, token("tab-item-height-medium"));
-  padding-block: var(--swc-tab-padding-block, token("tab-item-top-to-text-medium")) var(--swc-tab-padding-block-end, token("tab-item-bottom-to-text-medium"));
+  padding-block: var(--swc-tab-padding-block, token("base-padding-vertical-medium")) var(--swc-tab-padding-block-end, token("list-item-padding-vertical-spacious"));
   color: var(--_swc-tab-text-color);
   overflow: clip;
   user-select: none;
@@ -53,8 +53,8 @@
   display: grid;
   flex-shrink: 0;
   place-content: center;
-  inline-size: token("workflow-icon-size-100");
-  block-size: token("workflow-icon-size-100");
+  inline-size: token("workflow-icon-medium");
+  block-size: token("workflow-icon-medium");
 }
 
 /* ── Selected state ────────────────────────────────────── */
