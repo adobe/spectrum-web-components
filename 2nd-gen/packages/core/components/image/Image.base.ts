@@ -134,10 +134,30 @@ export abstract class ImageBase extends SpectrumElement {
   }
 
   /**
+   * Called when the inner image loads successfully.
+   */
+  protected handleImageLoad(event: Event): void {
+    this.dispatchEvent(
+      new CustomEvent('swc-image-load', {
+        bubbles: true,
+        composed: true,
+        detail: { src: this.src, originalEvent: event },
+      })
+    );
+  }
+
+  /**
    * Called when the inner image fails to load. Sets `error` to true so the
    * component (or parent e.g. swc-asset) can show an error state.
    */
-  protected handleImageError(): void {
+  protected handleImageError(event: Event): void {
     this.error = true;
+    this.dispatchEvent(
+      new CustomEvent('swc-image-error', {
+        bubbles: true,
+        composed: true,
+        detail: { src: this.src, originalEvent: event },
+      })
+    );
   }
 }

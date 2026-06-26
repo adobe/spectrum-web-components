@@ -10,8 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
-import { html, nothing } from 'lit';
-import { unsafeHTML } from 'lit/directives/unsafe-html.js';
+import { html } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
@@ -85,17 +84,6 @@ export const Playground: Story = {
     'aspect-ratio': '1',
     'default-slot': `<swc-image src="https://picsum.photos/id/1015/400/400" alt="Landscape"></swc-image>`,
   },
-  render: (args) => html`
-    <swc-asset
-      .aspectRatio=${args['aspect-ratio'] ?? undefined}
-      .label=${args.label ?? ''}
-      .variant=${args.variant}
-      .error=${args.error ?? false}
-      .rounded=${args.rounded ?? false}
-    >
-      ${args['default-slot'] ? unsafeHTML(args['default-slot']) : nothing}
-    </swc-asset>
-  `,
   tags: ['autodocs', 'dev'],
 };
 
@@ -269,13 +257,45 @@ export const Rounded: Story = {
 
 /**
  * When `error` is set, the asset shows an error icon and optional label text.
- * Use for failed or unavailable media.
+ * Error takes precedence over `variant` and slotted media. Use for failed or unavailable content.
  */
 export const Error: Story = {
-  args: {
-    error: true,
-    label: 'Failed to load',
-  },
+  render: (args) => html`
+    <div
+      style="display: flex; gap: 1rem; flex-wrap: wrap; align-items: flex-start;"
+    >
+      <div>
+        <p style="margin: 0 0 0.5rem; font-size: 0.875rem;">With label</p>
+        ${template({ ...args, error: true, label: 'Failed to load' })}
+      </div>
+      <div>
+        <p style="margin: 0 0 0.5rem; font-size: 0.875rem;">
+          With variant set (error wins)
+        </p>
+        ${template({
+          ...args,
+          error: true,
+          variant: 'file',
+          label: 'README.md failed to load',
+        })}
+      </div>
+      <div>
+        <p style="margin: 0 0 0.5rem; font-size: 0.875rem;">Without label</p>
+        ${template({ ...args, error: true, label: '' })}
+      </div>
+      <div>
+        <p style="margin: 0 0 0.5rem; font-size: 0.875rem;">Rounded</p>
+        ${template({
+          ...args,
+          error: true,
+          rounded: true,
+          'aspect-ratio': '1',
+          label: 'Failed to load',
+        })}
+      </div>
+    </div>
+  `,
+  parameters: { flexLayout: false },
   tags: ['states'],
 };
 

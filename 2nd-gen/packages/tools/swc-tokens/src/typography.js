@@ -157,7 +157,7 @@ function generateTypographyAnchorRules(prefix) {
     color: `var(--${prefix}-link-text-color-default, token("accent-content-color-default"))`,
     'text-decoration': 'underline',
     'text-decoration-thickness': `token("text-underline-thickness")`,
-    'text-underline-offset': `token("text-gap-medium")`,
+    'text-underline-offset': `token("text-underline-gap")`,
     transition: `color token("animation-duration-100") ease-in-out`,
   });
 
@@ -173,7 +173,7 @@ function generateTypographyAnchorRules(prefix) {
     color: `var(--${prefix}-link-text-color-focus, token("accent-content-color-key-focus"))`,
     'border-radius': 'token("corner-radius-100")',
     outline: `token("focus-indicator-thickness") solid var(--${prefix}-link-focus-indicator-color, token("focus-indicator-color"))`,
-    'outline-offset': 'token("focus-ring-gap")',
+    'outline-offset': 'token("focus-indicator-gap")',
   });
 
   return `/* =========================

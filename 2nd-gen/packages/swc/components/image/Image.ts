@@ -19,6 +19,24 @@ import { ImageBase } from '@spectrum-web-components/core/components/image';
 
 import styles from './image.css';
 
+const errorIcon = (label: string): TemplateResult => html`
+  <svg
+    class="spectrum-Image-error"
+    role="img"
+    viewBox="0 0 18 18"
+    aria-label=${label || 'Failed to load image'}
+  >
+    <path
+      class="spectrum-Image-errorBackground"
+      d="M9,0.5c4.7,0,8.5,3.8,8.5,8.5s-3.8,8.5-8.5,8.5S0.5,13.7,0.5,9S4.3,0.5,9,0.5z"
+    ></path>
+    <path
+      class="spectrum-Image-errorIcon"
+      d="M9,11c-0.6,0-1-0.4-1-1V5c0-0.6,0.4-1,1-1s1,0.4,1,1v5C10,10.6,9.6,11,9,11z M9,14c-0.6,0-1-0.4-1-1s0.4-1,1-1s1,0.4,1,1S9.6,14,9,14z"
+    ></path>
+  </svg>
+`;
+
 /**
  * @element swc-image
  *
@@ -30,6 +48,11 @@ import styles from './image.css';
  *
  * @example Styling the image
  * swc-image::part(image) { width: 80px; height: 80px; border-radius: 8px; }
+ *
+ * @fires swc-image-load - Dispatched when the image finishes loading.
+ * Detail: `{ src, originalEvent }`
+ * @fires swc-image-error - Dispatched when the image fails to load. Sets `error` to true.
+ * Detail: `{ src, originalEvent }`
  */
 export class Image extends ImageBase {
   public static override get styles(): CSSResultArray {
@@ -39,7 +62,14 @@ export class Image extends ImageBase {
   protected override render(): TemplateResult {
     if (!this.src) {
       return html`
-        <div class="spectrum-Image"></div>
+        <div
+          class=${classMap({
+            ['spectrum-Image']: true,
+            ['spectrum-Image--error']: this.error,
+          })}
+        >
+          ${this.error ? errorIcon('Failed to load image') : ''}
+        </div>
       `;
     }
 
@@ -58,6 +88,7 @@ export class Image extends ImageBase {
           ['spectrum-Image--error']: this.error,
         })}
       >
+        ${this.error ? errorIcon('Failed to load image') : ''}
         <img
           part="image"
           class="spectrum-Image-image"
@@ -72,6 +103,7 @@ export class Image extends ImageBase {
           width=${ifDefined(this.width)}
           height=${ifDefined(this.height)}
           style=${styleMap(imageStyles)}
+          @load=${this.handleImageLoad}
           @error=${this.handleImageError}
         />
       </div>

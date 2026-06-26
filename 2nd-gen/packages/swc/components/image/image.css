@@ -41,6 +41,26 @@
   object-fit: cover;
 }
 
+.spectrum-Image--error {
+  position: relative;
+}
+
 .spectrum-Image--error .spectrum-Image-image {
   visibility: hidden;
+}
+
+.spectrum-Image-error {
+  position: absolute;
+  inset: 0;
+  inline-size: clamp(18px, 35%, 32px);
+  block-size: clamp(18px, 35%, 32px);
+  margin: auto;
+}
+
+.spectrum-Image-errorBackground {
+  fill: token("gray-500");
+}
+
+.spectrum-Image-errorIcon {
+  fill: token("gray-200");
 }

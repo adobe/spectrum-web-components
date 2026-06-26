@@ -10,11 +10,85 @@
  * governing permissions and limitations under the License.
  */
 
-import { html } from 'lit';
+import { css, html, LitElement } from 'lit';
+import { customElement } from 'lit/decorators.js';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
 import '@adobe/spectrum-wc/image';
+
+// ─────────────────────────
+//     DEMO HOST
+// ─────────────────────────
+
+/**
+ * Storybook-only host that scopes `::part(image)` styles in its shadow root so
+ * they do not leak when Storybook reuses the DOM canvas between stories.
+ */
+@customElement('demo-image-styling')
+class DemoImageStyling extends LitElement {
+  static override styles = css`
+    .row {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      align-items: flex-end;
+    }
+
+    .label {
+      margin: 0 0 0.5rem;
+      font-size: 0.875rem;
+    }
+
+    .image-sized {
+      block-size: 80px;
+      inline-size: 80px;
+    }
+
+    .image-rounded::part(image) {
+      border-radius: 8px;
+    }
+
+    .image-circle::part(image) {
+      border-radius: 50%;
+    }
+  `;
+
+  protected override render() {
+    const src = 'https://picsum.photos/id/64/80/80';
+
+    return html`
+      <div class="row">
+        <div>
+          <p class="label">Default</p>
+          <swc-image class="image-sized" src=${src} alt="Avatar"></swc-image>
+        </div>
+        <div>
+          <p class="label">Rounded</p>
+          <swc-image
+            class="image-sized image-rounded"
+            src=${src}
+            alt="Avatar"
+          ></swc-image>
+        </div>
+        <div>
+          <p class="label">Circle</p>
+          <swc-image
+            class="image-sized image-circle"
+            src=${src}
+            alt="Avatar"
+          ></swc-image>
+        </div>
+      </div>
+    `;
+  }
+}
+
+declare global {
+  interface HTMLElementTagNameMap {
+    'demo-image-styling': DemoImageStyling;
+  }
+}
 
 // ────────────────
 //    METADATA
@@ -160,44 +234,7 @@ export const ObjectFit: Story = {
  */
 export const StylingTheImage: Story = {
   render: () => html`
-    <div
-      style="display: flex; gap: 1rem; flex-wrap: wrap; align-items: flex-end;"
-    >
-      <div>
-        <p style="margin: 0 0 0.5rem; font-size: 0.875rem;">Default</p>
-        <swc-image
-          style="block-size: 80px; inline-size: 80px;"
-          src="https://picsum.photos/id/64/80/80"
-          alt="Avatar"
-        ></swc-image>
-      </div>
-      <div>
-        <p style="margin: 0 0 0.5rem; font-size: 0.875rem;">Rounded</p>
-        <swc-image
-          style="block-size: 80px; inline-size: 80px;"
-          src="https://picsum.photos/id/64/80/80"
-          alt="Avatar"
-          class="image-rounded"
-        ></swc-image>
-      </div>
-      <div>
-        <p style="margin: 0 0 0.5rem; font-size: 0.875rem;">Circle</p>
-        <swc-image
-          style="block-size: 80px; inline-size: 80px;"
-          src="https://picsum.photos/id/64/80/80"
-          alt="Avatar"
-          class="image-circle"
-        ></swc-image>
-      </div>
-    </div>
-    <style>
-      .image-rounded::part(image) {
-        border-radius: 8px;
-      }
-      .image-circle::part(image) {
-        border-radius: 50%;
-      }
-    </style>
+    <demo-image-styling></demo-image-styling>
   `,
   parameters: { 'section-order': 3, flexLayout: false },
   tags: ['options'],
