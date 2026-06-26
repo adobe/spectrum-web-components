@@ -27,8 +27,11 @@ import styles from './dropzone.css';
  * @element swc-dropzone
  * @since 2.0.0
  *
- * @slot - Slot for the illustrated message, browse control, and any uploaded content.
- *   A browse button or link **must** always be provided so keyboard users can upload files.
+ * @slot - Slot for the illustrated message and browse control. Hidden automatically when
+ *   `filled` is `true`. A browse button or link **must** always be provided so keyboard
+ *   users can upload files.
+ * @slot filled-content - Slot for the uploaded-state content (e.g. an image preview).
+ *   Shown automatically when `filled` is `true`; hidden otherwise.
  *
  * @fires swc-dropzone-should-accept - Cancelable event fired on `dragover`. Cancel to
  *   reject the dragged payload and show a `none` cursor.
@@ -161,6 +164,7 @@ export class Dropzone extends DropzoneBase {
       <div class="swc-Dropzone">
         <div role="status" aria-live="polite" class="swc-Dropzone-status"></div>
         <slot @slotchange=${this.handleSlotChange}></slot>
+        <slot name="filled-content"></slot>
       </div>
     `;
   }

@@ -10,12 +10,12 @@
  * governing permissions and limitations under the License.
  */
 
-import { PropertyValues } from 'lit';
-import { property, queryAssignedElements } from 'lit/decorators.js';
+import { property } from 'lit/decorators.js';
 
 import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
 import { SizedMixin } from '@spectrum-web-components/core/mixins/index.js';
 
+import { SlotAttributePropagationController } from '../../controllers/slot-attribute-propagation/index.js';
 import {
   DROP_EFFECTS,
   type DropEffect,
@@ -34,7 +34,8 @@ import {
  * validation logic. Rendering, ARIA, and CSS are provided by the concrete
  * SWC subclass.
  *
- * @slot - Slot for the illustrated message, browse control, and any uploaded content.
+ * @slot - Slot for the illustrated message and browse control. Hidden automatically when `filled` is true.
+ * @slot filled-content - Slot for the uploaded-state content (e.g. an image preview). Shown automatically when `filled` is true; hidden otherwise.
  *
  * @fires swc-dropzone-should-accept - Cancelable event fired on `dragover`. Cancel to
  *   reject the dragged payload and set the cursor to `none`.
@@ -106,24 +107,17 @@ export abstract class DropzoneBase extends SizedMixin(SpectrumElement, {
   //     IMPLEMENTATION
   // ──────────────────────────
 
-  @queryAssignedElements({ flatten: true, selector: 'swc-illustrated-message' })
-  private illustratedMessages!: Element[];
-
-  protected override updated(changedProperties: PropertyValues): void {
-    super.updated(changedProperties);
-    if (changedProperties.has('size')) {
-      this.propagateSizeToIllustratedMessage();
+  private readonly _sizePropagation = new SlotAttributePropagationController(
+    this,
+    {
+      attribute: 'size',
+      getValue: () => this.size,
+      selector: 'swc-illustrated-message',
     }
-  }
+  );
 
   protected handleSlotChange(): void {
-    this.propagateSizeToIllustratedMessage();
-  }
-
-  private propagateSizeToIllustratedMessage(): void {
-    for (const el of this.illustratedMessages) {
-      el.setAttribute('size', this.size);
-    }
+    this._sizePropagation.propagate();
   }
 
   /** Timer ID for debounced dragleave — prevents flickering on child drag events. */
