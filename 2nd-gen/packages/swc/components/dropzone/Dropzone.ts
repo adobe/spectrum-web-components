@@ -163,7 +163,7 @@ export class Dropzone extends DropzoneBase {
     return html`
       <div class="swc-Dropzone">
         <div role="status" aria-live="polite" class="swc-Dropzone-status"></div>
-        <slot @slotchange=${this.handleSlotChange}></slot>
+        <slot @slotchange=${this.handleDefaultSlotChange}></slot>
         <slot name="filled-content"></slot>
       </div>
     `;
