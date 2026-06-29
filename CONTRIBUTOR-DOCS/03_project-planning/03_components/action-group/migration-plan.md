@@ -498,7 +498,7 @@ No `_lit-styles/` fragment needed — action-group renders only a slot; all layo
 
 Create these tickets before this migration PR closes. Link each to Epic SWC-2212.
 
-No deferred implementation tickets at this time.
+- **`swc-action-menu` `aria-disabled` forwarding (Phase 6).** When `swc-action-group` is disabled it propagates `aria-disabled="true"` to all slotted children. `swc-action-button` already forwards that host attribute to its inner `<button>` and applies disabled appearance via `:host([aria-disabled="true"])` CSS. `swc-action-menu` will need the same treatment: observe `aria-disabled` in its `attributeChangedCallback`, forward the value to its inner trigger element, and add matching CSS (including forced-colors system color overrides). See the comment in `ActionGroupBase.propagateDisabledToChildren()` and the `swc-action-button` implementation for the pattern to follow.
 
 ---
 
