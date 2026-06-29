@@ -11,6 +11,7 @@
  */
 
 import { html } from 'lit';
+import { ifDefined } from 'lit/directives/if-defined.js';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
@@ -95,6 +96,12 @@ const meta: Meta = {
     <swc-action-group
       label="Text formatting"
       orientation=${renderArgs.orientation ?? 'horizontal'}
+      ?disabled=${renderArgs.disabled}
+      ?compact=${renderArgs.compact}
+      ?quiet=${renderArgs.quiet}
+      ?justified=${renderArgs.justified}
+      size=${ifDefined(renderArgs.size)}
+      static-color=${ifDefined(renderArgs['static-color'])}
     >
       <swc-action-button label="Bold">Bold</swc-action-button>
       <swc-action-button label="Italic">Italic</swc-action-button>
