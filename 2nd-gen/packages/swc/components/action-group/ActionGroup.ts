@@ -100,11 +100,7 @@ export class ActionGroup extends ActionGroupBase {
   public override focus(options?: FocusOptions): void {
     const target =
       this.navigation.getActiveItem() ??
-      this.managedChildren?.find(
-        (el) =>
-          !el.hasAttribute('disabled') &&
-          el.getAttribute('aria-disabled') !== 'true'
-      );
+      this.managedChildren?.find((el) => !el.hasAttribute('disabled'));
     target?.focus(options);
   }
 
@@ -120,11 +116,12 @@ export class ActionGroup extends ActionGroupBase {
    * initialized to `horizontal` and updated via `setOptions` whenever
    * `orientation` changes.
    *
-   * `skipDisabled: true` excludes both natively `disabled` and
-   * `aria-disabled="true"` children from arrow navigation and the initial tab
-   * stop. Arrow keys step over disabled buttons intuitively. Group-level
-   * `disabled` propagates `aria-disabled` to all children uniformly, so the
-   * per-item skip does not conflict with the group disable pattern.
+   * `skipDisabled: false` keeps all children — including those with
+   * `aria-disabled="true"` — in the roving tabindex sequence. This is
+   * intentional: per APG toolbar guidance, disabled items should remain
+   * keyboard-discoverable. Group-level `disabled` propagates `aria-disabled`
+   * to all children; with skip enabled those children would all be excluded
+   * and Tab could no longer enter the group.
    *
    * `wrap: true` matches the APG Toolbar example: arrow keys wrap from the
    * last item to the first and vice versa.
@@ -132,7 +129,7 @@ export class ActionGroup extends ActionGroupBase {
   private readonly navigation = new FocusgroupNavigationController(this, {
     direction: this.orientation,
     wrap: true,
-    skipDisabled: true,
+    skipDisabled: false,
     getItems: () => this.managedChildren ?? [],
   });
 
