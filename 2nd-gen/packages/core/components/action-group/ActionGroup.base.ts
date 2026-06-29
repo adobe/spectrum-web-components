@@ -196,6 +196,13 @@ export abstract class ActionGroupBase extends SizedMixin(SpectrumElement, {
   }
 
   private propagateDisabledToChildren(): void {
+    // `aria-disabled` is set on the child host element. For AT to announce the
+    // child as disabled, each child component must forward the host attribute to
+    // its inner interactive element. `swc-action-button` already does this
+    // (observes `aria-disabled` and forwards to its inner <button>).
+    // `swc-action-menu` will need the same treatment when it is built — it must
+    // forward `aria-disabled` from its host to its inner trigger element and
+    // apply disabled appearance via :host([aria-disabled="true"]) CSS.
     for (const child of this.managedChildren ?? []) {
       if (this.disabled) {
         child.setAttribute('aria-disabled', 'true');
