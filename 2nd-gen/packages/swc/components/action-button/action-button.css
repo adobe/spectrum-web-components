@@ -87,6 +87,17 @@
   transform: none;
 }
 
+/* Same inflated specificity — matches when aria-disabled is set externally
+   (e.g. by a disabled swc-action-group). Kept separate from :disabled so the
+   button stays focusable and shows a focus ring for keyboard users. */
+:host([aria-disabled="true"]) .swc-ActionButton:is(*, :hover) {
+  color: var(--swc-action-button-content-color-disabled, token("disabled-content-color"));
+  background-color: var(--swc-action-button-background-color-disabled, token("disabled-background-color"));
+  border-color: var(--swc-action-button-border-color-disabled, transparent);
+  cursor: default;
+  transform: none;
+}
+
 /* ── Sub-elements ─────────────────────────────────── */
 
 .swc-ActionButton-label {
@@ -274,6 +285,16 @@ slot[name="icon"]::slotted(*) {
 @media (forced-colors: active) {
   .swc-ActionButton {
     border-color: ButtonBorder;
+  }
+
+  /* The browser's forced-colors UA only applies GrayText to natively :disabled
+     elements — aria-disabled gets ButtonText/ButtonBorder instead. Override the
+     disabled custom properties with system colors so the button reads as
+     unavailable in high-contrast mode. */
+  :host([aria-disabled="true"]) {
+    --swc-action-button-background-color-disabled: ButtonFace;
+    --swc-action-button-content-color-disabled: GrayText;
+    --swc-action-button-border-color-disabled: GrayText;
   }
 }
 

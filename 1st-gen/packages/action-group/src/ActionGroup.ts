@@ -102,6 +102,10 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
   @property({ type: Boolean, reflect: true })
   public compact = false;
 
+  /**
+   * @deprecated The `emphasized` property is deprecated and will be removed
+   * in a future release.
+   */
   @property({ type: Boolean, reflect: true })
   public emphasized = false;
 
@@ -114,20 +118,45 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
   @property({ type: Boolean, reflect: true })
   public quiet = false;
 
+  /**
+   * @deprecated The `selects` property is deprecated and will be removed in
+   * a future release. Selection UX is available via `swc-toggle-button-group`
+   * (toggle and multi-select) and `swc-segmented-control` (exclusive choice)
+   * in the 2nd-gen library.
+   */
   @property({ type: String })
   public selects: undefined | 'single' | 'multiple';
 
   @property({ reflect: true, attribute: 'static-color' })
   public staticColor?: 'white' | 'black';
 
+  /**
+   * @deprecated The `vertical` attribute is deprecated and will be removed in
+   * a future release. Use `orientation="vertical"` on `swc-action-group`
+   * instead.
+   */
   @property({ type: Boolean, reflect: true })
   public vertical = false;
 
   private _selected: string[] = EMPTY_SELECTION;
 
+  /**
+   * @deprecated The `selected` property is deprecated and will be removed in
+   * a future release. Selection UX is available via `swc-toggle-button-group`
+   * (toggle and multi-select) and `swc-segmented-control` (exclusive choice)
+   * in the 2nd-gen library.
+   */
   set selected(selected: string[]) {
     this.requestUpdate('selected', this._selected);
     this._selected = selected;
+    if (window.__swc?.DEBUG) {
+      window.__swc.warn(
+        this,
+        `The "selected" attribute on <${this.localName}> is deprecated and will be removed in a future release.`,
+        'https://opensource.adobe.com/spectrum-web-components/components/action-group/',
+        { level: 'deprecation' }
+      );
+    }
     this.updateComplete.then(() => {
       this.applySelects();
       this.manageChildren();

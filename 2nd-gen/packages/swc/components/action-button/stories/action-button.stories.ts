@@ -40,6 +40,12 @@ argTypes['static-color'] = {
   options: ACTION_BUTTON_STATIC_COLORS,
 };
 
+// These are programmatic attributes set by parent components (action-group,
+// action-menu) — not user-facing controls.
+argTypes['aria-disabled'] = { table: { disable: true } };
+argTypes['aria-haspopup'] = { table: { disable: true } };
+argTypes['aria-expanded'] = { table: { disable: true } };
+
 /**
  * A compact action button for toolbars, action groups, and icon-first chrome.
  * Supports sizes `xs`–`xl`; `xs` is an action-button-specific addition not

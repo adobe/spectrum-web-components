@@ -85,7 +85,12 @@ export class ActionButton extends ButtonBase {
   // conflicting with ARIAMixin types on HTMLElement and appearing in the CEM.
   /** @internal */
   static override get observedAttributes(): string[] {
-    return [...super.observedAttributes, 'aria-haspopup', 'aria-expanded'];
+    return [
+      ...super.observedAttributes,
+      'aria-haspopup',
+      'aria-expanded',
+      'aria-disabled',
+    ];
   }
 
   /**
@@ -121,6 +126,12 @@ export class ActionButton extends ButtonBase {
       }
       return;
     }
+    if (name === 'aria-disabled') {
+      // Kept on the host (not stripped) — the host attribute is the CSS hook
+      // for disabled appearance via :host([aria-disabled="true"]). The value
+      // is also stored as reactive state so the inner <button> stays in sync.
+      this._ariaDisabled = value ?? undefined;
+    }
     super.attributeChangedCallback(name, old, value);
   }
 
@@ -148,6 +159,9 @@ export class ActionButton extends ButtonBase {
   @state()
   private _ariaExpanded?: string;
 
+  @state()
+  private _ariaDisabled?: string;
+
   // Guard against re-entrant attributeChangedCallback: removeAttribute fires a
   // second callback with value=null; the guard prevents that from clearing the
   // state we just set.
@@ -174,7 +188,7 @@ export class ActionButton extends ButtonBase {
         @click=${this.handleClick}
         ?disabled=${this.disabled}
         aria-disabled=${ifDefined(
-          this.pending && !this.disabled ? 'true' : undefined
+          this.pending && !this.disabled ? 'true' : this._ariaDisabled
         )}
         aria-label=${ifDefined(
           this.pending ? this.getPendingAccessibleName() : this.accessibleLabel
