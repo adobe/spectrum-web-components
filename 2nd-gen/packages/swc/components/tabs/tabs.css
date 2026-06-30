@@ -33,10 +33,10 @@
 /* ── Density: compact ──────────────────────────────────── */
 
 :host([density="compact"]) .tablist {
-  --_swc-tabs-gap: token("tab-item-to-tab-item-horizontal-medium");
+  --_swc-tabs-gap: token("tab-gap-horizontal-medium");
   --swc-tab-height: token("tab-item-compact-height-medium");
-  --swc-tab-padding-block: token("tab-item-top-to-text-compact-medium");
-  --swc-tab-padding-block-end: token("tab-item-bottom-to-text-compact-medium");
+  --swc-tab-padding-block: token("base-padding-vertical-medium");
+  --swc-tab-padding-block-end: token("base-padding-vertical-medium");
 }
 
 /* ── Vertical direction ────────────────────────────────── */
@@ -47,7 +47,7 @@
 }
 
 :host([direction="vertical"][density="compact"]) {
-  gap: token("tab-item-to-tab-item-horizontal-medium");
+  gap: token("tab-gap-horizontal-medium");
 }
 
 :host([direction="vertical"]) .tablist {
@@ -55,11 +55,11 @@
 
   flex-direction: column;
   align-items: flex-start;
-  padding-inline-start: token("tab-item-start-to-edge-medium");
+  padding-inline-start: token("base-padding-horizontal-medium");
 }
 
 :host([direction="vertical"][density="compact"]) .tablist {
-  --_swc-tabs-gap: token("tab-item-to-tab-item-horizontal-medium");
+  --_swc-tabs-gap: token("tab-gap-horizontal-medium");
 }
 
 /* ── Selection indicator ───────────────────────────────── */
