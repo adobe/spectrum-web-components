@@ -8,8 +8,11 @@ VS Code extension providing autocomplete and diagnostics for `token("...")` valu
 - True snippets for grouped typography tokens like `type-component-m-regular`
 - Quote balancing and automatic trimming of trailing whitespace
 - Completions resume after editing inside an existing token
-- Deprecated token detection with "renamed to..." diagnostics
-- Hover guidance that shows replacement tokens
+- Deprecated token detection with "renamed to..." diagnostics and hover guidance
+- Deleted token detection with actionable hover guidance:
+  - Suggests a replacement token when one is known
+  - Indicates when the value should be hardcoded as `0` (zero-pixel tokens removed without replacement)
+  - Surfaces the Spectrum tokens team's removal notes when no replacement is known
 - Improved unknown-token suggestions that can include renamed-token candidates
 - Diagnostic messages as displayed on hover and in "Problems"
 
@@ -70,7 +73,9 @@ Ensure tokens are updated to the latest by running the following command at the 
 yarn tokens:update
 ```
 
-This will update the extension-relative `tokens.json` and regenerate the typography snippet definitions.
+This updates the extension-relative `tokens.json` (which includes `tokens`, `renamed`, `deleted`, and `deprecatedComments` maps) and regenerates the typography snippet definitions.
+
+When upgrading the underlying `@adobe/spectrum-tokens` package version, run the diff script in `swc-tokens` first to identify and curate deleted tokens before regenerating. See the [swc-tokens upgrade guide](../swc-tokens/README.md#upgrading-adobespectrum-tokens) for the full process.
 
 ### Deploy extension
 
