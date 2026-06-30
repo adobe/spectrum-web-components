@@ -298,10 +298,22 @@ export const VirtualAnchor: Story = {
       const area = event.currentTarget as HTMLElement;
       const rect = area.getBoundingClientRect();
       const hasPoint = event.clientX !== 0 || event.clientY !== 0;
-      const x = hasPoint ? event.clientX : rect.left + rect.width / 2;
-      const y = hasPoint ? event.clientY : rect.top + rect.height / 2;
+      // Capture the point in document coordinates so it stays anchored to the
+      // content while the page scrolls. `getBoundingClientRect` is re-read on
+      // every autoUpdate tick, so subtract the live scroll offset to report the
+      // point's current viewport position.
+      const pageX = hasPoint
+        ? event.pageX
+        : rect.left + window.scrollX + rect.width / 2;
+      const pageY = hasPoint
+        ? event.pageY
+        : rect.top + window.scrollY + rect.height / 2;
       popover.triggerElement = {
-        getBoundingClientRect: () => new DOMRect(x, y, 0, 0),
+        getBoundingClientRect: () =>
+          new DOMRect(pageX - window.scrollX, pageY - window.scrollY, 0, 0),
+        // The point lives within the click area; naming its context element lets
+        // the controller's autoUpdate watch the right scroll ancestors.
+        contextElement: area,
       };
       popover.open = true;
     };
@@ -391,7 +403,8 @@ export const HideArrow: Story = {
   args: {
     'hide-arrow': true,
     'accessible-label': 'Sync status',
-    'default-slot': 'Connected to Google Drive. Last synced a few moments ago.',
+    'default-slot':
+      'Connected to Creative Cloud. Last synced a few moments ago.',
   },
   render: (args) =>
     triggered({ ...args }, 'hide-arrow-trigger', 'Open popover'),
