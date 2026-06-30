@@ -11,7 +11,7 @@
  */
 
 import { html } from 'lit';
-import { expect } from '@storybook/test';
+import { expect, waitFor } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import '../index.js';
@@ -75,11 +75,18 @@ export const StatusApiTest: Story = {
       await el.updateComplete;
 
       expect(el.getAttribute('status')).toBe('complete');
-      expect(
-        el.shadowRoot
-          ?.querySelector('.swc-ResponseStatus-label')
-          ?.textContent?.trim()
-      ).toBe('Response generated');
+
+      // The header label rolls to its new value, so wait for it to settle.
+      await waitFor(
+        () => {
+          expect(
+            el.shadowRoot
+              ?.querySelector('.swc-ResponseStatus-label')
+              ?.textContent?.trim()
+          ).toBe('Response generated');
+        },
+        { timeout: 2000 }
+      );
     });
   },
 };
@@ -122,12 +129,15 @@ export const AgenticApiTest: Story = {
       }
     );
 
-    await step('uses accessible-label as the timeline accessible name', async () => {
-      expect(el.shadowRoot?.querySelector('[role="group"]')).toHaveAttribute(
-        'aria-label',
-        'Execution steps'
-      );
-    });
+    await step(
+      'uses accessible-label as the timeline accessible name',
+      async () => {
+        expect(el.shadowRoot?.querySelector('[role="group"]')).toHaveAttribute(
+          'aria-label',
+          'Execution steps'
+        );
+      }
+    );
 
     await step('dispatches toggle event when disclosure toggles', async () => {
       let captured: CustomEvent<{ open: boolean }> | undefined;

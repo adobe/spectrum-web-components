@@ -114,44 +114,8 @@
   visibility: hidden;
 }
 
-/* Rolling header title (processing phase, no disclosure chevron) */
-
-.swc-ResponseStatus-labelViewport {
-  min-inline-size: 0;
-  block-size: var(--swc-response-status-label-line-size, 1.33em);
-  overflow: hidden;
-}
-
-.swc-ResponseStatus-labelStrip {
-  display: flex;
-  flex-direction: column;
-  transform: translateY(0);
-  transition: transform var(--swc-response-status-roll-duration, 500ms) token("animation-ease-in-out");
-}
-
-.swc-ResponseStatus-labelStrip--rolling {
-  transform: translateY(-50%);
-}
-
-.swc-ResponseStatus-labelLine {
-  display: block;
-  block-size: var(--swc-response-status-label-line-size, 1.33em);
-  font-family: token("sans-serif-font");
-  font-size: token("font-size-100");
-  font-weight: token("regular-font-weight");
-  line-height: token("line-height-font-size-100");
-  color: token("neutral-subdued-content-color-default");
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
 @media (prefers-reduced-motion: reduce) {
   .swc-ResponseStatus-headerTrailStrip,
-  .swc-ResponseStatus-labelStrip {
-    transition: none;
-  }
-
   .swc-ResponseStatus-headerTrailLine {
     transition: none;
   }

@@ -10,7 +10,8 @@
  * governing permissions and limitations under the License.
  */
 
-import { html } from 'lit';
+import { html, LitElement, type TemplateResult } from 'lit';
+import { customElement, state } from 'lit/decorators.js';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import '../index.js';
@@ -127,9 +128,7 @@ const allStateSteps = html`
   </swc-response-status-step>
   <swc-response-status-step status="stopped">
     <span slot="label">Verify pricing and availability</span>
-    <span slot="description">
-      Interrupted before this step could finish.
-    </span>
+    <span slot="description">Interrupted before this step could finish.</span>
   </swc-response-status-step>
 `;
 
@@ -139,7 +138,11 @@ const allStateSteps = html`
 
 export const Playground: Story = {
   render: () => html`
-    <swc-response-status status="active" open accessible-label="Execution steps">
+    <swc-response-status
+      status="active"
+      open
+      accessible-label="Execution steps"
+    >
       <span slot="label">Searching repositories for Europe trips</span>
       ${activeSteps}
     </swc-response-status>
@@ -167,7 +170,11 @@ export const Overview: Story = {
 
 export const Anatomy: Story = {
   render: () => html`
-    <swc-response-status status="active" open accessible-label="Execution steps">
+    <swc-response-status
+      status="active"
+      open
+      accessible-label="Execution steps"
+    >
       <span slot="label">Searching repositories for Europe trips</span>
       <span slot="summary">Processing request</span>
       ${activeSteps}
@@ -204,7 +211,11 @@ export const Statuses: Story = {
 
 export const Steps: Story = {
   render: () => html`
-    <swc-response-status status="active" open accessible-label="Execution steps">
+    <swc-response-status
+      status="active"
+      open
+      accessible-label="Execution steps"
+    >
       <span slot="label">Searching repositories for Europe trips</span>
       ${allStateSteps}
     </swc-response-status>
@@ -218,10 +229,90 @@ export const Steps: Story = {
 
 export const Accessibility: Story = {
   render: () => html`
-    <swc-response-status status="complete" open accessible-label="Execution steps">
+    <swc-response-status
+      status="complete"
+      open
+      accessible-label="Execution steps"
+    >
       <span slot="label">Thought for 12 seconds</span>
       ${completeSteps}
     </swc-response-status>
   `,
   tags: ['a11y'],
 };
+
+// ────────────────────────────────
+//    LABEL ROLL DEMO (dynamic labels)
+// ────────────────────────────────
+
+const rollingLabels = [
+  'Processing request',
+  'Searching repositories for Europe trips',
+  'Reviewing internal documentation',
+  'Comparing cruise package pricing',
+  'Composing response',
+];
+
+@customElement('demo-response-status-label-roll')
+class ResponseStatusLabelRollDemo extends LitElement {
+  @state()
+  private _label = rollingLabels[0];
+
+  private _index = 0;
+  private _cycleTimer?: ReturnType<typeof setInterval>;
+
+  public override connectedCallback(): void {
+    super.connectedCallback?.();
+    this._cycleTimer = setInterval(() => {
+      this._index = (this._index + 1) % rollingLabels.length;
+      this._label = rollingLabels[this._index];
+    }, 1600);
+  }
+
+  public override disconnectedCallback(): void {
+    if (this._cycleTimer) {
+      clearInterval(this._cycleTimer);
+    }
+    super.disconnectedCallback?.();
+  }
+
+  // Changes the label several times within the dwell window so the 1s
+  // safeguard has to queue the updates instead of flipping instantly.
+  private _burst = (): void => {
+    rollingLabels.forEach((label, index) => {
+      setTimeout(() => {
+        this._index = index;
+        this._label = label;
+      }, index * 120);
+    });
+  };
+
+  protected override render(): TemplateResult {
+    return html`
+      <div
+        style="display: flex; flex-direction: column; gap: 12px; align-items: flex-start;"
+      >
+        <swc-response-status
+          status="active"
+          open
+          accessible-label="Execution steps"
+        >
+          <span slot="label">${this._label}</span>
+          ${activeSteps}
+        </swc-response-status>
+        <button type="button" @click=${this._burst}>
+          Change label 5× quickly
+        </button>
+      </div>
+    `;
+  }
+}
+
+export const LabelRoll: Story = {
+  render: () => html`
+    <demo-response-status-label-roll></demo-response-status-label-roll>
+  `,
+  tags: ['dev'],
+};
+
+void ResponseStatusLabelRollDemo;
