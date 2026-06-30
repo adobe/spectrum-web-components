@@ -1,5 +1,20 @@
 # Change Log
 
+## 1.12.2-beta.0
+
+### Patch Changes
+
+- Updated dependencies [[`b4740eb`](https://github.com/adobe/spectrum-web-components/commit/b4740eb58f8a9410dbfae2969ca7a21c07bc63bd)]:
+  - @spectrum-web-components/button-group@1.12.2-beta.0
+  - @spectrum-web-components/popover@1.12.2-beta.0
+  - @spectrum-web-components/asset@1.12.2-beta.0
+  - @spectrum-web-components/button@1.12.2-beta.0
+  - @spectrum-web-components/icon@1.12.2-beta.0
+  - @spectrum-web-components/icons-ui@1.12.2-beta.0
+  - @spectrum-web-components/base@1.12.2-beta.0
+  - @spectrum-web-components/reactive-controllers@1.12.2-beta.0
+  - @spectrum-web-components/shared@1.12.2-beta.0
+
 ## 1.12.1
 
 ### Patch Changes

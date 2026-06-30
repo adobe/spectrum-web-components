@@ -1,5 +1,20 @@
 # Change Log
 
+## 1.12.2-beta.0
+
+### Patch Changes
+
+- Updated dependencies [[`57a77bc`](https://github.com/adobe/spectrum-web-components/commit/57a77bcee7eeb8f5a7b1084f3ad91543c2f92034)]:
+  - @spectrum-web-components/action-button@1.12.2-beta.0
+  - @spectrum-web-components/action-group@1.12.2-beta.0
+  - @spectrum-web-components/action-bar@1.12.2-beta.0
+  - @spectrum-web-components/icons-workflow@1.12.2-beta.0
+  - @spectrum-web-components/split-view@1.12.2-beta.0
+  - @spectrum-web-components/base@1.12.2-beta.0
+  - @spectrum-web-components/shared@1.12.2-beta.0
+  - @spectrum-web-components/styles@1.12.2-beta.0
+  - @spectrum-web-components/theme@1.12.2-beta.0
+
 ## 1.12.1
 
 ### Patch Changes
