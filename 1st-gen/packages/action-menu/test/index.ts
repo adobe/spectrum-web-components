@@ -30,6 +30,7 @@ import { spy } from 'sinon';
 
 import { ActionMenu } from '@spectrum-web-components/action-menu';
 import { TemplateResult } from '@spectrum-web-components/base';
+import { Button } from '@spectrum-web-components/button';
 import type { Menu, MenuItem } from '@spectrum-web-components/menu';
 import { Overlay, OverlayTrigger } from '@spectrum-web-components/overlay';
 import { SAFARI_FOCUS_RING_CLASS } from '@spectrum-web-components/picker/src/InteractionController.js';
@@ -978,9 +979,7 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
       const overlayTrigger = test.querySelector(
         'overlay-trigger'
       ) as OverlayTrigger;
-      const button = test.querySelector(
-        'sp-button'
-      ) as unknown as HTMLButtonElement;
+      const button = test.querySelector('sp-button') as Button;
       const actionMenu = test.querySelector('sp-action-menu') as ActionMenu;
       const overlayClosedSpy = spy();
       overlayTrigger.addEventListener('sp-closed', overlayClosedSpy);
