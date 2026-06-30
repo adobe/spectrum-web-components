@@ -26,74 +26,96 @@ import {
   executionStepsLabelSlot,
 } from '../../agentic-demo-flow-script.js';
 import type { ResponseStatusStepStatus } from '../response-status-step/ResponseStatusStep.js';
-import type { ResponseStatusPhase } from '../ResponseStatus.js';
+import type { ResponseStatusStatus } from '../ResponseStatus.js';
 
 const processingFlowSteps = html`
-  <swc-response-status-step status="complete">
+  <swc-response-status-step status="complete" type="thinking">
     <span slot="label">Looked through documentation</span>
-    Prioritizing data from your documents like the ‘2023 Annual Report’ and
-    press releases related to Hilton. Basing the analysis primarily on this
-    content, while only pulling in web searches if necessary.
+    <span slot="description">
+      Prioritizing data from your documents like the ‘2023 Annual Report’ and
+      press releases related to Hilton. Basing the analysis primarily on this
+      content, while only pulling in web searches if necessary.
+    </span>
   </swc-response-status-step>
-  <swc-response-status-step status="complete">
+  <swc-response-status-step status="complete" type="action">
     <span slot="label">
       Searching web for: Carnival cruise trip packages Europe Asia
     </span>
-    Correlating package availability across regions and travel windows.
+    <span slot="description">
+      Correlating package availability across regions and travel windows.
+    </span>
   </swc-response-status-step>
-  <swc-response-status-step status="active">
+  <swc-response-status-step status="active" type="action">
     <span slot="label">Searching repositories for Europe trips</span>
-    Checked 3 internal repositories for previously compiled trip package data
-    and pricing templates.
+    <span slot="description">
+      Checked 3 internal repositories for previously compiled trip package data
+      and pricing templates.
+    </span>
   </swc-response-status-step>
-  <swc-response-status-step status="pending">
+  <swc-response-status-step status="pending" type="thinking">
     <span slot="label">Compose response</span>
-    Synthesizing findings into a structured comparison of available packages
-    with pricing and availability.
+    <span slot="description">
+      Synthesizing findings into a structured comparison of available packages
+      with pricing and availability.
+    </span>
   </swc-response-status-step>
 `;
 
 /** Stopped flow — completed steps plus one interrupted step. */
 const stoppedFlowSteps = html`
-  <swc-response-status-step status="complete">
+  <swc-response-status-step status="complete" type="thinking">
     <span slot="label">Looked through documentation</span>
-    Prioritizing data from your documents like the ‘2023 Annual Report’ and
-    press releases related to Hilton. Basing the analysis primarily on this
-    content, while only pulling in web searches if necessary.
+    <span slot="description">
+      Prioritizing data from your documents like the ‘2023 Annual Report’ and
+      press releases related to Hilton. Basing the analysis primarily on this
+      content, while only pulling in web searches if necessary.
+    </span>
   </swc-response-status-step>
-  <swc-response-status-step status="complete">
+  <swc-response-status-step status="complete" type="action">
     <span slot="label">
       Searching web for: Carnival cruise trip packages Europe Asia
     </span>
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+    <span slot="description">
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+    </span>
   </swc-response-status-step>
-  <swc-response-status-step status="stopped">
+  <swc-response-status-step status="stopped" type="action">
     <span slot="label">Gathering information from the web</span>
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+    <span slot="description">
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+    </span>
   </swc-response-status-step>
 `;
 
 const completeFlowSteps = html`
-  <swc-response-status-step status="complete">
+  <swc-response-status-step status="complete" type="thinking">
     <span slot="label">Looked through documentation</span>
-    Prioritizing data from your documents like the ‘2023 Annual Report’ and
-    press releases related to Hilton.
+    <span slot="description">
+      Prioritizing data from your documents like the ‘2023 Annual Report’ and
+      press releases related to Hilton.
+    </span>
   </swc-response-status-step>
-  <swc-response-status-step status="complete">
+  <swc-response-status-step status="complete" type="action">
     <span slot="label">
       Searching web for: Carnival cruise trip packages Europe Asia
     </span>
-    Correlating package availability across regions and travel windows.
+    <span slot="description">
+      Correlating package availability across regions and travel windows.
+    </span>
   </swc-response-status-step>
-  <swc-response-status-step status="complete">
+  <swc-response-status-step status="complete" type="action">
     <span slot="label">Searching repositories for Europe trips</span>
-    Checked 3 internal repositories for previously compiled trip package data
-    and pricing templates.
+    <span slot="description">
+      Checked 3 internal repositories for previously compiled trip package data
+      and pricing templates.
+    </span>
   </swc-response-status-step>
-  <swc-response-status-step status="complete">
+  <swc-response-status-step status="complete" type="thinking">
     <span slot="label">Compose response</span>
-    Synthesizing findings into a structured comparison of available packages
-    with pricing and availability.
+    <span slot="description">
+      Synthesizing findings into a structured comparison of available packages
+      with pricing and availability.
+    </span>
   </swc-response-status-step>
 `;
 
@@ -120,7 +142,7 @@ const variantBlock = (label: string, story: unknown) => html`
 `;
 
 /**
- * Agentic lifecycle states for `swc-response-status` — uses `phase`, `duration`,
+ * Agentic lifecycle states for `swc-response-status` — uses `status`,
  * and `<swc-response-status-step>` children.
  */
 const meta: Meta = {
@@ -147,7 +169,7 @@ export const Initiating: Story = {
       variantBlock(
         'Initiation / planning',
         html`
-          <swc-response-status phase="initiating">
+          <swc-response-status status="pending">
             ${initiatingSummarySlot}
           </swc-response-status>
         `
@@ -162,7 +184,7 @@ export const ProcessingCollapsed: Story = {
       variantBlock(
         'Processing (collapsed)',
         html`
-          <swc-response-status phase="processing">
+          <swc-response-status status="active">
             ${processingHeaderSlots} ${processingFlowSteps}
           </swc-response-status>
         `
@@ -177,7 +199,7 @@ export const ProcessingExpanded: Story = {
       variantBlock(
         'Processing (expanded)',
         html`
-          <swc-response-status phase="processing" open>
+          <swc-response-status status="active" expanded>
             ${executionStepsLabelSlot} ${processingHeaderSlots}
             ${processingFlowSteps}
           </swc-response-status>
@@ -186,14 +208,15 @@ export const ProcessingExpanded: Story = {
     ),
 };
 
-/** Completed collapsed — duration summary in the header. */
+/** Completed collapsed — summary in the header. */
 export const CompletedCollapsed: Story = {
   render: () =>
     variantStack(
       variantBlock(
         'Completed (collapsed)',
         html`
-          <swc-response-status phase="complete" duration="9">
+          <swc-response-status status="complete">
+            <span slot="label">Thought for 9 seconds</span>
             ${completeFlowSteps}
           </swc-response-status>
         `
@@ -208,7 +231,8 @@ export const StoppedExpanded: Story = {
       variantBlock(
         'Stopped (expanded)',
         html`
-          <swc-response-status phase="stopped" open>
+          <swc-response-status status="stopped" expanded>
+            <span slot="label">You stopped the response</span>
             ${executionStepsLabelSlot} ${stoppedFlowSteps}
           </swc-response-status>
         `
@@ -223,7 +247,8 @@ export const CompletedExpanded: Story = {
       variantBlock(
         'Completed (expanded)',
         html`
-          <swc-response-status phase="complete" duration="9" open>
+          <swc-response-status status="complete" expanded>
+            <span slot="label">Thought for 9 seconds</span>
             ${executionStepsLabelSlot} ${completeFlowSteps}
           </swc-response-status>
         `
@@ -238,7 +263,7 @@ export const AllStates: Story = {
       ${variantBlock(
         '1. Initiation / planning',
         html`
-          <swc-response-status phase="initiating">
+          <swc-response-status status="pending">
             ${initiatingSummarySlot}
           </swc-response-status>
         `
@@ -246,7 +271,7 @@ export const AllStates: Story = {
       ${variantBlock(
         '2. Processing (collapsed)',
         html`
-          <swc-response-status phase="processing">
+          <swc-response-status status="active">
             ${processingHeaderSlots} ${processingFlowSteps}
           </swc-response-status>
         `
@@ -254,7 +279,7 @@ export const AllStates: Story = {
       ${variantBlock(
         '3. Processing (expanded)',
         html`
-          <swc-response-status phase="processing" open>
+          <swc-response-status status="active" expanded>
             ${executionStepsLabelSlot} ${processingHeaderSlots}
             ${processingFlowSteps}
           </swc-response-status>
@@ -263,7 +288,8 @@ export const AllStates: Story = {
       ${variantBlock(
         '4. Completed (collapsed)',
         html`
-          <swc-response-status phase="complete" duration="9">
+          <swc-response-status status="complete">
+            <span slot="label">Thought for 9 seconds</span>
             ${completeFlowSteps}
           </swc-response-status>
         `
@@ -271,7 +297,8 @@ export const AllStates: Story = {
       ${variantBlock(
         '5. Completed (expanded)',
         html`
-          <swc-response-status phase="complete" duration="9" open>
+          <swc-response-status status="complete" expanded>
+            <span slot="label">Thought for 9 seconds</span>
             ${executionStepsLabelSlot} ${completeFlowSteps}
           </swc-response-status>
         `
@@ -279,7 +306,8 @@ export const AllStates: Story = {
       ${variantBlock(
         '6. Stopped (expanded)',
         html`
-          <swc-response-status phase="stopped" open>
+          <swc-response-status status="stopped" expanded>
+            <span slot="label">You stopped the response</span>
             ${executionStepsLabelSlot} ${stoppedFlowSteps}
           </swc-response-status>
         `
@@ -290,13 +318,13 @@ export const AllStates: Story = {
 
 class AgenticStatusSimulationDemo extends LitElement {
   @state()
-  private phase: ResponseStatusPhase = 'initiating';
+  private status: ResponseStatusStatus = 'pending';
 
   @state()
   private activeIndex = 0;
 
   @state()
-  private statusOpen = false;
+  private responseExpanded = false;
 
   @state()
   private duration = 0;
@@ -353,13 +381,13 @@ class AgenticStatusSimulationDemo extends LitElement {
       loopRestart,
     } = AGENTIC_DEMO_FLOW_TIMING;
 
-    this.phase = 'initiating';
+    this.status = 'pending';
     this.activeIndex = 0;
-    this.statusOpen = false;
+    this.responseExpanded = false;
     this.duration = 0;
 
     this._schedule(processing, () => {
-      this.phase = 'processing';
+      this.status = 'active';
       this.activeIndex = 0;
     });
     this._schedule(step1, () => {
@@ -369,16 +397,16 @@ class AgenticStatusSimulationDemo extends LitElement {
       this.activeIndex = 2;
     });
     this._schedule(step3, () => {
-      this.statusOpen = true;
+      this.responseExpanded = true;
     });
     this._schedule(step4, () => {
       this.activeIndex = 3;
     });
     this._schedule(collapse, () => {
-      this.statusOpen = false;
+      this.responseExpanded = false;
     });
     this._schedule(complete, () => {
-      this.phase = 'complete';
+      this.status = 'complete';
       this.duration = Math.max(
         16,
         Math.round((Date.now() - this.startedAt) / 1000)
@@ -389,10 +417,10 @@ class AgenticStatusSimulationDemo extends LitElement {
   }
 
   private _stepStatus(index: number): ResponseStatusStepStatus {
-    if (this.phase === 'initiating') {
+    if (this.status === 'pending') {
       return 'pending';
     }
-    if (this.phase === 'complete' || index < this.activeIndex) {
+    if (this.status === 'complete' || index < this.activeIndex) {
       return 'complete';
     }
     if (index === this.activeIndex) {
@@ -406,17 +434,21 @@ class AgenticStatusSimulationDemo extends LitElement {
       this.runId,
       html`
         <swc-response-status
-          phase=${this.phase}
-          duration=${this.duration}
-          ?open=${this.statusOpen}
+          status=${this.status}
+          ?expanded=${this.responseExpanded}
         >
           ${executionStepsLabelSlot}
           <span slot="summary">Processing request</span>
-          ${this.phase === 'processing' || this.phase === 'complete'
+          ${this.status === 'active'
             ? html`
                 <span slot="label">
                   ${AGENTIC_DEMO_FLOW_STEPS[this.activeIndex]?.label ?? ''}
                 </span>
+              `
+            : ''}
+          ${this.status === 'complete'
+            ? html`
+                <span slot="label">Thought for ${this.duration} seconds</span>
               `
             : ''}
           ${AGENTIC_DEMO_FLOW_STEPS.map((step, index) =>
@@ -466,7 +498,7 @@ export const InSystemMessage: Story = {
   render: () => html`
     <swc-conversation-turn type="system">
       <swc-system-message>
-        <swc-response-status slot="status" phase="processing" open>
+        <swc-response-status slot="status" status="active" expanded>
           ${executionStepsLabelSlot} ${processingHeaderSlots}
           ${processingFlowSteps}
         </swc-response-status>

@@ -11,59 +11,51 @@ import * as ResponseStatusStories from './stories/response-status.stories';
 
 A response status indicator consists of:
 
-1. **Status row**: an indeterminate progress circle (loading) or checkmark (complete) with a label
-2. **Reasoning toggle**: optional expandable disclosure for chain-of-thought content
+1. **Status row**: an indicator, status label, and optional disclosure control
+2. **Step timeline**: optional execution steps that can be expanded for more detail
 
 <Canvas of={ResponseStatusStories.Anatomy} />
 
 ## Options
 
-### Loading
+### Statuses
 
-The `loading` attribute controls which indicator is shown:
+The `status` attribute controls the lifecycle of the whole response:
 
-- **`loading=true`**: indeterminate progress circle + default loading label
-- **`loading=false`**: checkmark + default complete label
-- Use `slot="label"` to customize row text
+- **`pending`**: the request is queued or preparing to start
+- **`active`**: the response is actively working
+- **`complete`**: the response finished successfully
+- **`stopped`**: the user interrupted the response
+- **`error`**: the response failed
 
-<Canvas of={ResponseStatusStories.Loading} />
+Use `slot="label"` for the visible header text.
 
-### Reasoning
+<Canvas of={ResponseStatusStories.Statuses} />
 
-Set **`open`** to control reasoning disclosure:
+### Steps
 
-- **`open=false`**: reasoning collapsed
-- **`open=true`**: reasoning expanded
+Add `swc-response-status-step` children to render an expandable timeline. Set `expanded` to show the timeline by default.
 
-The disclosure chevron only appears when default-slot reasoning content exists. While **`loading=true`**, reasoning UI is not shown. If reasoning slot content is later removed, the component automatically resets `open` to `false`. This internal collapse does not emit `swc-response-status-toggle`.
+Each step uses:
 
-<Canvas of={ResponseStatusStories.Reasoning} />
+- **`status`**: `pending`, `active`, `complete`, `stopped`, or `error`
+- **`type`**: `thinking` or `action`
+- **`slot="label"`**: step title
+- **`slot="description"`**: detail text shown in the expanded timeline
+
+<Canvas of={ResponseStatusStories.Steps} />
 
 ## Accessibility
 
-### Features
-
 The `<swc-response-status>` element implements the following accessibility features:
 
-#### Status announcement
-
-- The loading row carries `role="status"`, so the status label is announced for screen readers
-- When reasoning content exists, the reasoning toggle uses `aria-expanded` and `aria-controls` to communicate panel state
-- The reasoning panel uses `role="group"` with an accessible name from `slot="reasoning-label"` (defaults to “Reasoning”)
+- When steps exist, the disclosure button uses `aria-expanded` and `aria-controls` to communicate panel state
+- The step timeline uses `role="group"` with an accessible name from `slot="list-label"` (defaults to “Execution steps”)
+- The ordered step list uses `role="list"` and each rendered step uses `role="listitem"`
 
 <Canvas of={ResponseStatusStories.Accessibility} />
 
 #### Agentic mode
-
-In agentic mode (`phase` set and/or `swc-response-status-step` children), use slotted labels instead of multiple label attributes:
-
-- **`slot="label"`** on `<swc-response-status>` — header row label
-- **`slot="summary"`** — initiating copy before the first step roll (defaults to “Processing request”)
-- **`slot="reasoning-label"`** — accessible name for the step list / reasoning panel (defaults to “Reasoning”)
-- **`slot="label"`** on each `<swc-response-status-step>` — step title
-- **Default slot** on each step — step detail in the expanded timeline
-
-A visually hidden live region announces **Response processing** at generation start and **Response complete** when finished — not intermediate rolling titles.
 
 <Canvas of={ResponseStatusStories.AgenticAccessibility} />
 

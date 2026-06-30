@@ -28,11 +28,12 @@ import {
   executionStepsLabelSlot,
 } from '../../agentic-demo-flow-script.js';
 import type { ResponseStatusStepStatus } from '../../response-status/response-status-step/ResponseStatusStep.js';
-import type { ResponseStatusPhase } from '../../response-status/ResponseStatus.js';
+import type { ResponseStatusStatus } from '../../response-status/ResponseStatus.js';
 
 type AgenticStep = {
   label: string;
   detail: string;
+  type: 'thinking' | 'action';
   status: ResponseStatusStepStatus;
 };
 
@@ -41,10 +42,10 @@ type DemoTurn = {
   role: 'user' | 'system';
   text: string;
   loading?: boolean;
-  agenticPhase?: ResponseStatusPhase | '';
+  agenticStatus?: ResponseStatusStatus;
   agenticSteps?: AgenticStep[];
   agenticDuration?: number;
-  statusOpen?: boolean;
+  statusExpanded?: boolean;
 };
 
 const buildAssistantReply = (prompt: string): string => {
@@ -71,7 +72,7 @@ export class AgenticConversationFlowDemo extends LitElement {
       id: 'system-1',
       role: 'system',
       text: 'I interpreted your request as an executive narrative task and prioritized a concise, audience-ready structure.',
-      agenticPhase: 'complete',
+      agenticStatus: 'complete',
       agenticDuration: 16,
       agenticSteps: AGENTIC_STEP_SCRIPT.map((step) => ({
         ...step,
@@ -147,10 +148,10 @@ export class AgenticConversationFlowDemo extends LitElement {
 
     this._patchTurn(targetId, {
       loading: true,
-      agenticPhase: 'initiating',
+      agenticStatus: 'pending',
       agenticSteps: [],
       agenticDuration: 0,
-      statusOpen: false,
+      statusExpanded: false,
     });
 
     const {
@@ -166,7 +167,7 @@ export class AgenticConversationFlowDemo extends LitElement {
 
     this._schedule(processing, () => {
       this._patchTurn(targetId, {
-        agenticPhase: 'processing',
+        agenticStatus: 'active',
         agenticSteps: this._stepsThroughActive(0),
       });
     });
@@ -191,7 +192,7 @@ export class AgenticConversationFlowDemo extends LitElement {
 
     this._schedule(step3, () => {
       this._patchTurn(targetId, {
-        statusOpen: true,
+        statusExpanded: true,
       });
     });
 
@@ -203,7 +204,7 @@ export class AgenticConversationFlowDemo extends LitElement {
 
     this._schedule(collapse, () => {
       this._patchTurn(targetId, {
-        statusOpen: false,
+        statusExpanded: false,
       });
     });
 
@@ -214,14 +215,14 @@ export class AgenticConversationFlowDemo extends LitElement {
       );
       this._patchTurn(targetId, {
         loading: false,
-        agenticPhase: 'complete',
+        agenticStatus: 'complete',
         agenticDuration: duration,
         agenticSteps: AGENTIC_STEP_SCRIPT.map((step) => ({
           ...step,
           status: 'complete',
         })),
         text: buildAssistantReply(this.lastPrompt),
-        statusOpen: false,
+        statusExpanded: false,
       });
       this.isGenerating = false;
       this.responseTargetId = null;
@@ -264,8 +265,8 @@ export class AgenticConversationFlowDemo extends LitElement {
     const targetId = this.responseTargetId;
     this._patchTurn(targetId, {
       loading: false,
-      agenticPhase: 'stopped',
-      statusOpen: true,
+      agenticStatus: 'stopped',
+      statusExpanded: true,
       text: '',
       agenticSteps: (
         this.turns.find((t) => t.id === targetId)?.agenticSteps ?? []
@@ -287,32 +288,30 @@ export class AgenticConversationFlowDemo extends LitElement {
     this.submitPrompt(submitEvent.detail?.value ?? '');
   };
 
-  private handleStatusToggle = (event: Event): void => {
-    const toggleEvent = event as CustomEvent<{ open?: boolean }>;
+  private handleStatusExpandedChange = (event: Event): void => {
+    const toggleEvent = event as CustomEvent<{ expanded?: boolean }>;
     const statusHost = event.target as HTMLElement | null;
     const turnId = statusHost?.getAttribute('data-status-id');
-    const open = toggleEvent.detail?.open;
-    if (!turnId || typeof open !== 'boolean') {
+    const expanded = toggleEvent.detail?.expanded;
+    if (!turnId || typeof expanded !== 'boolean') {
       return;
     }
     this.turns = this.turns.map((turn) =>
-      turn.id === turnId ? { ...turn, statusOpen: open } : turn
+      turn.id === turnId ? { ...turn, statusExpanded: expanded } : turn
     );
   };
 
   private renderAgenticStatus(turn: DemoTurn) {
-    const phase =
-      turn.agenticPhase ?? (turn.loading ? 'processing' : 'complete');
+    const status = turn.agenticStatus ?? (turn.loading ? 'active' : 'complete');
     const activeStep = (turn.agenticSteps ?? []).find(
       (step) => step.status === 'active'
     );
     return html`
       <swc-response-status
         slot="status"
-        phase=${phase}
-        duration=${turn.agenticDuration ?? 0}
+        status=${status}
         data-status-id=${turn.id}
-        ?open=${!!turn.statusOpen}
+        ?expanded=${!!turn.statusExpanded}
       >
         ${executionStepsLabelSlot}
         ${activeStep
@@ -320,10 +319,17 @@ export class AgenticConversationFlowDemo extends LitElement {
               <span slot="label">${activeStep.label}</span>
             `
           : ''}
+        ${status === 'complete' && turn.agenticDuration
+          ? html`
+              <span slot="label">
+                Thought for ${turn.agenticDuration} seconds
+              </span>
+            `
+          : ''}
         <span slot="summary">Processing request</span>
         ${(turn.agenticSteps ?? []).map((step) =>
           agenticDemoStep(
-            { label: step.label, detail: step.detail },
+            { label: step.label, detail: step.detail, type: step.type },
             step.status
           )
         )}
@@ -408,7 +414,7 @@ export class AgenticConversationFlowDemo extends LitElement {
       </style>
       <div
         class="swc-AgenticConversationFlowDemo-shell"
-        @swc-response-status-toggle=${this.handleStatusToggle}
+        @swc-response-status-expanded-change=${this.handleStatusExpandedChange}
       >
         <p
           class="swc-AgenticConversationFlowDemo-hint swc-Detail swc-Detail--sizeS"

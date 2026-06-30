@@ -21,29 +21,28 @@ export type ResponseStatusStepStatus =
   | 'pending'
   | 'active'
   | 'complete'
-  | 'stopped';
+  | 'stopped'
+  | 'error';
+
+export type ResponseStatusStepType = 'thinking' | 'action';
 
 /**
  * One agentic execution step inside `<swc-response-status>`.
  *
- * Light DOM marker only — the parent renders the visible timeline from slotted content.
+ * Light DOM marker only. The parent renders the visible timeline from slotted content.
  *
  * @element swc-response-status-step
  * @slot label - Step title (shown in the header when `status="active"`)
- * @slot - Step detail shown in the expanded timeline
+ * @slot description - Step detail shown in the expanded timeline
  */
 export class ResponseStatusStep extends SpectrumElement {
-  /** @deprecated Use the `label` slot. */
-  @property({ type: String, reflect: true })
-  public override title = '';
-
-  /** @deprecated Use the default slot. */
-  @property({ type: String, reflect: true })
-  public detail = '';
-
   /** Timeline state for connector icons. */
   @property({ type: String, reflect: true })
   public status: ResponseStatusStepStatus = 'pending';
+
+  /** Distinguishes thinking vs action copy in the expanded list. */
+  @property({ type: String, reflect: true })
+  public type: ResponseStatusStepType = 'thinking';
 
   public static override get styles(): CSSResultArray {
     return [styles];
@@ -58,11 +57,7 @@ export class ResponseStatusStep extends SpectrumElement {
   };
 
   protected override updated(changed: PropertyValues): void {
-    if (
-      changed.has('title') ||
-      changed.has('detail') ||
-      changed.has('status')
-    ) {
+    if (changed.has('status') || changed.has('type')) {
       this._handleSlotChange();
     }
   }
@@ -70,6 +65,11 @@ export class ResponseStatusStep extends SpectrumElement {
   protected override render(): TemplateResult {
     return html`
       <slot name="label" hidden @slotchange=${this._handleSlotChange}></slot>
+      <slot
+        name="description"
+        hidden
+        @slotchange=${this._handleSlotChange}
+      ></slot>
       <slot hidden @slotchange=${this._handleSlotChange}></slot>
     `;
   }

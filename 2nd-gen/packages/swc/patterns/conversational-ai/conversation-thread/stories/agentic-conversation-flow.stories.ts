@@ -63,7 +63,8 @@ export const AgenticFlowAccessibility: Story = {
           </swc-conversation-turn>
           <swc-conversation-turn type="system">
             <swc-system-message>
-              <swc-response-status slot="status" phase="complete" duration="12">
+              <swc-response-status slot="status" status="complete">
+                <span slot="label">Thought for 12 seconds</span>
                 ${executionStepsLabelSlot} ${completeSteps}
               </swc-response-status>
               <div class="swc-Typography--prose">
