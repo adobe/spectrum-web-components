@@ -24,8 +24,6 @@ export type ResponseStatusStepStatus =
   | 'stopped'
   | 'error';
 
-export type ResponseStatusStepType = 'thinking' | 'action';
-
 /**
  * One agentic execution step inside `<swc-response-status>`.
  *
@@ -40,10 +38,6 @@ export class ResponseStatusStep extends SpectrumElement {
   @property({ type: String, reflect: true })
   public status: ResponseStatusStepStatus = 'pending';
 
-  /** Distinguishes thinking vs action copy in the expanded list. */
-  @property({ type: String, reflect: true })
-  public type: ResponseStatusStepType = 'thinking';
-
   public static override get styles(): CSSResultArray {
     return [styles];
   }
@@ -57,7 +51,7 @@ export class ResponseStatusStep extends SpectrumElement {
   };
 
   protected override updated(changed: PropertyValues): void {
-    if (changed.has('status') || changed.has('type')) {
+    if (changed.has('status')) {
       this._handleSlotChange();
     }
   }

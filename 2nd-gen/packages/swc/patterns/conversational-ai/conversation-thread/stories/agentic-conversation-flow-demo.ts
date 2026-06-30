@@ -33,7 +33,6 @@ import type { ResponseStatusStatus } from '../../response-status/ResponseStatus.
 type AgenticStep = {
   label: string;
   detail: string;
-  type: 'thinking' | 'action';
   status: ResponseStatusStepStatus;
 };
 
@@ -329,7 +328,7 @@ export class AgenticConversationFlowDemo extends LitElement {
         <span slot="summary">Processing request</span>
         ${(turn.agenticSteps ?? []).map((step) =>
           agenticDemoStep(
-            { label: step.label, detail: step.detail, type: step.type },
+            { label: step.label, detail: step.detail },
             step.status
           )
         )}

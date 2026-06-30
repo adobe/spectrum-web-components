@@ -145,7 +145,6 @@ type DemoArtifact = {
 type AgenticStep = {
   label: string;
   detail: string;
-  type: 'thinking' | 'action';
   status: ResponseStatusStepStatus;
 };
 
@@ -535,7 +534,7 @@ class ConversationFullPatternDemo extends LitElement {
         <span slot="summary">Processing request</span>
         ${(turn.agenticSteps ?? []).map((step) =>
           agenticDemoStep(
-            { label: step.label, detail: step.detail, type: step.type },
+            { label: step.label, detail: step.detail },
             step.status
           )
         )}
@@ -783,7 +782,7 @@ const fullPatternSource = `<div style="max-width:800px; margin:auto; padding:24p
         <swc-response-status slot="status" status="complete">
           <span slot="label">Thought for 16 seconds</span>
           ${executionStepsLabelSlot}
-          <swc-response-status-step status="complete" type="thinking">
+          <swc-response-status-step status="complete">
             <span slot="label">Looked through documentation</span>
             <span slot="description">Scanned internal knowledge base articles.</span>
           </swc-response-status-step>

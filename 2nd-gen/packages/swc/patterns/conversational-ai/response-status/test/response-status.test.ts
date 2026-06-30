@@ -36,21 +36,21 @@ const agenticMarkup = html`
     <span slot="summary">Processing request</span>
     <span slot="list-label">Execution steps</span>
 
-    <swc-response-status-step status="complete" type="thinking">
+    <swc-response-status-step status="complete">
       <span slot="label">Looked through documentation</span>
       <span slot="description">
         Prioritizing data from documents and press releases.
       </span>
     </swc-response-status-step>
 
-    <swc-response-status-step status="active" type="action">
+    <swc-response-status-step status="active">
       <span slot="label">Searching repositories for Europe trips</span>
       <span slot="description">
         Checked 3 internal repositories for compiled trip package data.
       </span>
     </swc-response-status-step>
 
-    <swc-response-status-step status="pending" type="thinking">
+    <swc-response-status-step status="pending">
       <span slot="label">Compose response</span>
       <span slot="description">Synthesizing findings into a response.</span>
     </swc-response-status-step>
@@ -112,10 +112,10 @@ export const AgenticApiTest: Story = {
           'Searching repositories for Europe trips'
         );
         expect(details).toContain(
-          'Thinking Prioritizing data from documents and press releases.'
+          'Prioritizing data from documents and press releases.'
         );
         expect(details).toContain(
-          'Acting Checked 3 internal repositories for compiled trip package data.'
+          'Checked 3 internal repositories for compiled trip package data.'
         );
         expect(details).not.toContain('Synthesizing findings into a response.');
       }

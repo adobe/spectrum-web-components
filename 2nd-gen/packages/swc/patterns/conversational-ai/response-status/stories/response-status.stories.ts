@@ -48,14 +48,14 @@ export default meta;
 // ────────────────────
 
 const activeSteps = html`
-  <swc-response-status-step status="complete" type="thinking">
+  <swc-response-status-step status="complete">
     <span slot="label">Looked through documentation</span>
     <span slot="description">
       Prioritizing data from your documents like the ‘2023 Annual Report’ and
       press releases related to Hilton.
     </span>
   </swc-response-status-step>
-  <swc-response-status-step status="complete" type="action">
+  <swc-response-status-step status="complete">
     <span slot="label">
       Searching web for: Carnival cruise trip packages Europe Asia
     </span>
@@ -63,14 +63,14 @@ const activeSteps = html`
       Correlating package availability across regions and travel windows.
     </span>
   </swc-response-status-step>
-  <swc-response-status-step status="active" type="action">
+  <swc-response-status-step status="active">
     <span slot="label">Searching repositories for Europe trips</span>
     <span slot="description">
       Checked 3 internal repositories for previously compiled trip package data
       and pricing templates.
     </span>
   </swc-response-status-step>
-  <swc-response-status-step status="pending" type="thinking">
+  <swc-response-status-step status="pending">
     <span slot="label">Compose response</span>
     <span slot="description">
       Synthesizing findings into a structured comparison.

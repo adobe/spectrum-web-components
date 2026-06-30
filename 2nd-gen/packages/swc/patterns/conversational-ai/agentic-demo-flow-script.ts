@@ -12,15 +12,11 @@
 
 import { html, type TemplateResult } from 'lit';
 
-import type {
-  ResponseStatusStepStatus,
-  ResponseStatusStepType,
-} from './response-status/response-status-step/ResponseStatusStep.js';
+import type { ResponseStatusStepStatus } from './response-status/response-status-step/ResponseStatusStep.js';
 
 export type AgenticDemoFlowStepData = {
   label: string;
   detail: string;
-  type: ResponseStatusStepType;
 };
 
 /** Step labels and details for the canonical Storybook agentic flow demo. */
@@ -29,25 +25,21 @@ export const AGENTIC_DEMO_FLOW_STEPS: AgenticDemoFlowStepData[] = [
     label: 'Looked through documentation',
     detail:
       'Scanned 12 internal knowledge base articles matching the query context and extracted key sections.',
-    type: 'thinking',
   },
   {
     label: 'Searching web for: Carnival cruise trip packages Europe Asia',
     detail:
       'Found 8 relevant results across travel aggregators and official cruise line sites.',
-    type: 'action',
   },
   {
     label: 'Searching repositories for Europe trips',
     detail:
       'Checked 3 internal repositories for previously compiled trip package data and pricing templates.',
-    type: 'action',
   },
   {
     label: 'Compose response',
     detail:
       'Synthesizing findings into a structured comparison of available packages with pricing and availability.',
-    type: 'thinking',
   },
 ];
 
@@ -76,7 +68,7 @@ export const agenticDemoStep = (
   data: AgenticDemoFlowStepData,
   status: ResponseStatusStepStatus
 ): TemplateResult => html`
-  <swc-response-status-step status=${status} type=${data.type}>
+  <swc-response-status-step status=${status}>
     <span slot="label">${data.label}</span>
     <span slot="description">${data.detail}</span>
   </swc-response-status-step>

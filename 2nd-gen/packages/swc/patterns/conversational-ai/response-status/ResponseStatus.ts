@@ -28,7 +28,6 @@ import {
 import {
   ResponseStatusStep,
   type ResponseStatusStepStatus,
-  type ResponseStatusStepType,
 } from './response-status-step/ResponseStatusStep.js';
 
 import styles from './response-status.css';
@@ -44,7 +43,6 @@ export type ResponseStatusStepData = {
   label: string;
   description: string;
   status: ResponseStatusStepStatus;
-  type: ResponseStatusStepType;
 };
 
 /**
@@ -145,8 +143,7 @@ export class ResponseStatus extends SpectrumElement {
       (step, index) =>
         step.label === right[index]?.label &&
         step.description === right[index]?.description &&
-        step.status === right[index]?.status &&
-        step.type === right[index]?.type
+        step.status === right[index]?.status
     );
   }
 
@@ -217,16 +214,11 @@ export class ResponseStatus extends SpectrumElement {
       step.status ||
       (element.getAttribute('status') as ResponseStatusStepStatus | null) ||
       'pending';
-    const type =
-      step.type ||
-      (element.getAttribute('type') as ResponseStatusStepType | null) ||
-      'thinking';
 
     return {
       label,
       description: this._readStepDescription(element),
       status,
-      type,
     };
   }
 
@@ -447,16 +439,14 @@ export class ResponseStatus extends SpectrumElement {
     `;
   }
 
-  private _renderStepDetail(step: ResponseStatusStepData): TemplateResult | '' {
-    if (!step.description) {
+  private _renderStepDetail(description: string): TemplateResult | '' {
+    if (!description) {
       return '';
     }
 
-    const prefix = step.type === 'action' ? 'Acting' : 'Thinking';
-
     return html`
       <p class="swc-ResponseStatus-step-detail swc-Body swc-Body--sizeXXS">
-        ${prefix} ${step.description}
+        ${description}
       </p>
     `;
   }
@@ -499,7 +489,7 @@ export class ResponseStatus extends SpectrumElement {
                 >
                   ${step.label}
                 </p>
-                ${this._renderStepDetail(step)}
+                ${this._renderStepDetail(step.description)}
               </div>
             </li>
           `

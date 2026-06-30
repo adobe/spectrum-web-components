@@ -29,7 +29,7 @@ import type { ResponseStatusStepStatus } from '../response-status-step/ResponseS
 import type { ResponseStatusStatus } from '../ResponseStatus.js';
 
 const processingFlowSteps = html`
-  <swc-response-status-step status="complete" type="thinking">
+  <swc-response-status-step status="complete">
     <span slot="label">Looked through documentation</span>
     <span slot="description">
       Prioritizing data from your documents like the ‘2023 Annual Report’ and
@@ -37,7 +37,7 @@ const processingFlowSteps = html`
       content, while only pulling in web searches if necessary.
     </span>
   </swc-response-status-step>
-  <swc-response-status-step status="complete" type="action">
+  <swc-response-status-step status="complete">
     <span slot="label">
       Searching web for: Carnival cruise trip packages Europe Asia
     </span>
@@ -45,14 +45,14 @@ const processingFlowSteps = html`
       Correlating package availability across regions and travel windows.
     </span>
   </swc-response-status-step>
-  <swc-response-status-step status="active" type="action">
+  <swc-response-status-step status="active">
     <span slot="label">Searching repositories for Europe trips</span>
     <span slot="description">
       Checked 3 internal repositories for previously compiled trip package data
       and pricing templates.
     </span>
   </swc-response-status-step>
-  <swc-response-status-step status="pending" type="thinking">
+  <swc-response-status-step status="pending">
     <span slot="label">Compose response</span>
     <span slot="description">
       Synthesizing findings into a structured comparison of available packages
@@ -63,7 +63,7 @@ const processingFlowSteps = html`
 
 /** Stopped flow — completed steps plus one interrupted step. */
 const stoppedFlowSteps = html`
-  <swc-response-status-step status="complete" type="thinking">
+  <swc-response-status-step status="complete">
     <span slot="label">Looked through documentation</span>
     <span slot="description">
       Prioritizing data from your documents like the ‘2023 Annual Report’ and
@@ -71,7 +71,7 @@ const stoppedFlowSteps = html`
       content, while only pulling in web searches if necessary.
     </span>
   </swc-response-status-step>
-  <swc-response-status-step status="complete" type="action">
+  <swc-response-status-step status="complete">
     <span slot="label">
       Searching web for: Carnival cruise trip packages Europe Asia
     </span>
@@ -79,7 +79,7 @@ const stoppedFlowSteps = html`
       Lorem ipsum dolor sit amet, consectetur adipiscing elit.
     </span>
   </swc-response-status-step>
-  <swc-response-status-step status="stopped" type="action">
+  <swc-response-status-step status="stopped">
     <span slot="label">Gathering information from the web</span>
     <span slot="description">
       Lorem ipsum dolor sit amet, consectetur adipiscing elit.
@@ -88,14 +88,14 @@ const stoppedFlowSteps = html`
 `;
 
 const completeFlowSteps = html`
-  <swc-response-status-step status="complete" type="thinking">
+  <swc-response-status-step status="complete">
     <span slot="label">Looked through documentation</span>
     <span slot="description">
       Prioritizing data from your documents like the ‘2023 Annual Report’ and
       press releases related to Hilton.
     </span>
   </swc-response-status-step>
-  <swc-response-status-step status="complete" type="action">
+  <swc-response-status-step status="complete">
     <span slot="label">
       Searching web for: Carnival cruise trip packages Europe Asia
     </span>
@@ -103,14 +103,14 @@ const completeFlowSteps = html`
       Correlating package availability across regions and travel windows.
     </span>
   </swc-response-status-step>
-  <swc-response-status-step status="complete" type="action">
+  <swc-response-status-step status="complete">
     <span slot="label">Searching repositories for Europe trips</span>
     <span slot="description">
       Checked 3 internal repositories for previously compiled trip package data
       and pricing templates.
     </span>
   </swc-response-status-step>
-  <swc-response-status-step status="complete" type="thinking">
+  <swc-response-status-step status="complete">
     <span slot="label">Compose response</span>
     <span slot="description">
       Synthesizing findings into a structured comparison of available packages
