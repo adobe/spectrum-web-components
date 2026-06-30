@@ -10,7 +10,9 @@
  * governing permissions and limitations under the License.
  */
 
+export { physicalSide } from './actual-placement.js';
 export { capitalize } from './capitalize.js';
+export { deepContains } from './deep-contains.js';
 export {
   isTopDismissible,
   registerDismissible,
@@ -24,3 +26,8 @@ export {
   type ResolvedTrigger,
   type ResolveTriggerOptions,
 } from './resolve-trigger.js';
+export {
+  hasActiveTransition,
+  maxTransitionDurationMs,
+  runAfterTransition,
+} from './transition.js';

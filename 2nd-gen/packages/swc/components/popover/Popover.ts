@@ -22,28 +22,65 @@ import styles from './popover.css';
  * setting the `modal` attribute renders a `<dialog>` opened via
  * `showModal()` for blocking modal behavior.
  *
+ * The behavior (lifecycle, trigger and ARIA wiring, positioning, events) lives
+ * in `PopoverBase`; this class supplies only the styles, the render template,
+ * and the shadow-DOM element getters the base reads.
+ *
  * @element swc-popover
  * @since 2.0.0
  *
  * @slot - Popover content.
  *
+ * @cssprop --swc-popover-content-padding - Padding around the slotted content. Defaults to the `popover-edge-to-content-area` token.
+ * @cssprop --swc-popover-background-color - Background color of the surface and arrow. Defaults to the `background-layer-2-color` token.
+ * @cssprop --swc-popover-border-color - Border color of the surface and arrow. Defaults to the `popover-border-color` token.
+ * @cssprop --swc-popover-corner-radius - Corner radius of the surface. Defaults to the `corner-radius-700` token.
+ *
  * @fires swc-open - Dispatched when the popover begins opening.
  * @fires swc-after-open - Dispatched after the open transition completes.
  * @fires swc-close - Dispatched when the popover begins closing. `detail.source` reports `'escape'`, `'outside'`, or `'programmatic'`.
  * @fires swc-after-close - Dispatched after the close transition completes.
- *
- * @todo Phase 4/5: implement the dialog lifecycle (`showPopover()` /
- * `showModal()`), `swc-*` event dispatch, trigger and ARIA wiring,
- * `PlacementController` integration, and reactive `.swc-Popover--<placement>`
- * modifier classes.
  */
 export class Popover extends PopoverBase {
-  // ──────────────────────────────
-  //     RENDERING & STYLING
-  // ──────────────────────────────
-
   public static override get styles(): CSSResultArray {
     return [styles];
+  }
+
+  protected override get internalElement(): HTMLElement | null {
+    return this.shadowRoot?.querySelector('.swc-Popover') ?? null;
+  }
+
+  protected override get tipElement(): HTMLElement | null {
+    return this.shadowRoot?.querySelector('.swc-Popover-tip') ?? null;
+  }
+
+  // Memoized arrow clearance; see `arrowHeight`. Cleared on disconnect so a
+  // remount (potentially under a different platform scale) recomputes.
+  private _arrowHeight?: number;
+
+  // The arrow clearance lives in this layer's CSS (`--_swc-popover-tip-height`),
+  // read here so the base never reaches into the surface styles. The token is
+  // stable for the element's lifetime, so the `getComputedStyle` reflow is
+  // memoized after the first read. Falls back to 0 (uncached) before the surface
+  // is rendered, so a later read recomputes once it is.
+  protected override get arrowHeight(): number {
+    if (this._arrowHeight !== undefined) {
+      return this._arrowHeight;
+    }
+    const surface = this.internalElement;
+    if (!surface) {
+      return 0;
+    }
+    this._arrowHeight =
+      parseFloat(
+        getComputedStyle(surface).getPropertyValue('--_swc-popover-tip-height')
+      ) || 0;
+    return this._arrowHeight;
+  }
+
+  public override disconnectedCallback(): void {
+    super.disconnectedCallback();
+    this._arrowHeight = undefined;
   }
 
   protected override render(): TemplateResult {
@@ -58,16 +95,32 @@ export class Popover extends PopoverBase {
           `}
     `;
 
-    // @todo Phase 4/5: guard against runtime `modal` toggles while open.
-    // Changing `modal` while the popover is open swaps the internal element,
-    // destroying top-layer state and event listeners. The lifecycle
-    // implementation must close first, let Lit re-render, then re-open.
+    // Branch on `modal`: a `<div popover="auto">` in the default mode, a
+    // `<dialog>` in modal mode. Handlers are defined on the base and bound here,
+    // so the base owns behavior and this layer owns only markup.
     return this.modal
       ? html`
-          <dialog class="swc-Popover">${content}</dialog>
+          <dialog
+            class="swc-Popover"
+            aria-label=${this.accessibleLabel.trim() || nothing}
+            @cancel=${this._onCancel}
+            @close=${this._onClose}
+            @pointerdown=${this._onPointerDown}
+          >
+            ${content}
+          </dialog>
         `
       : html`
-          <div class="swc-Popover" popover="auto">${content}</div>
+          <div
+            class="swc-Popover"
+            popover="auto"
+            role="dialog"
+            tabindex="-1"
+            aria-label=${this.accessibleLabel.trim() || nothing}
+            @beforetoggle=${this._onBeforeToggle}
+          >
+            ${content}
+          </div>
         `;
   }
 }
