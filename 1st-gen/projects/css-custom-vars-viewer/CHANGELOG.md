@@ -1,5 +1,22 @@
 # Change Log
 
+## 1.12.2-beta.0
+
+### Patch Changes
+
+- Updated dependencies [[`758506e`](https://github.com/adobe/spectrum-web-components/commit/758506ed69a330ef4e0b3759a5a5bf32fa7906d7)]:
+  - @spectrum-web-components/menu@1.12.2-beta.0
+  - @spectrum-web-components/picker@1.12.2-beta.0
+  - @spectrum-web-components/story-decorator@1.12.2-beta.0
+  - @spectrum-web-components/field-label@1.12.2-beta.0
+  - @spectrum-web-components/link@1.12.2-beta.0
+  - @spectrum-web-components/swatch@1.12.2-beta.0
+  - @spectrum-web-components/table@1.12.2-beta.0
+  - @spectrum-web-components/toast@1.12.2-beta.0
+  - @spectrum-web-components/base@1.12.2-beta.0
+  - @spectrum-web-components/styles@1.12.2-beta.0
+  - @spectrum-web-components/theme@1.12.2-beta.0
+
 ## 1.12.1
 
 ### Patch Changes

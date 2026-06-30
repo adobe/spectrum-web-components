@@ -97,8 +97,14 @@
     "@spectrum-web-components/stylelint-header-plugin": "1.12.1"
   },
   "changesets": [
+    "accordion-2nd-gen-and-deprecations",
+    "action-button-2nd-gen-migration",
+    "button-group-migration",
+    "fix-action-menu-submenu-mobile-tray",
     "gen2-2-0-0-major",
+    "illustrated-message-actions-slot",
     "light-beers-roll",
+    "link-2nd-gen-migration",
     "meter-2nd-gen-migration",
     "placement-controller-core",
     "silver-mice-pay"

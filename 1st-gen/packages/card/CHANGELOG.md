@@ -1,5 +1,19 @@
 # Change Log
 
+## 1.12.2-beta.0
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @spectrum-web-components/popover@1.12.2-beta.0
+  - @spectrum-web-components/asset@1.12.2-beta.0
+  - @spectrum-web-components/checkbox@1.12.2-beta.0
+  - @spectrum-web-components/divider@1.12.2-beta.0
+  - @spectrum-web-components/icons-workflow@1.12.2-beta.0
+  - @spectrum-web-components/base@1.12.2-beta.0
+  - @spectrum-web-components/shared@1.12.2-beta.0
+  - @spectrum-web-components/styles@1.12.2-beta.0
+
 ## 1.12.1
 
 ### Patch Changes

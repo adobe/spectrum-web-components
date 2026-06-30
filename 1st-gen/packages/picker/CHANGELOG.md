@@ -1,5 +1,25 @@
 # Change Log
 
+## 1.12.2-beta.0
+
+### Patch Changes
+
+- Updated dependencies [[`758506e`](https://github.com/adobe/spectrum-web-components/commit/758506ed69a330ef4e0b3759a5a5bf32fa7906d7)]:
+  - @spectrum-web-components/menu@1.12.2-beta.0
+  - @spectrum-web-components/overlay@1.12.2-beta.0
+  - @spectrum-web-components/popover@1.12.2-beta.0
+  - @spectrum-web-components/tooltip@1.12.2-beta.0
+  - @spectrum-web-components/button@1.12.2-beta.0
+  - @spectrum-web-components/field-label@1.12.2-beta.0
+  - @spectrum-web-components/icon@1.12.2-beta.0
+  - @spectrum-web-components/icons-ui@1.12.2-beta.0
+  - @spectrum-web-components/icons-workflow@1.12.2-beta.0
+  - @spectrum-web-components/progress-circle@1.12.2-beta.0
+  - @spectrum-web-components/tray@1.12.2-beta.0
+  - @spectrum-web-components/base@1.12.2-beta.0
+  - @spectrum-web-components/reactive-controllers@1.12.2-beta.0
+  - @spectrum-web-components/shared@1.12.2-beta.0
+
 ## 1.12.1
 
 ### Patch Changes
