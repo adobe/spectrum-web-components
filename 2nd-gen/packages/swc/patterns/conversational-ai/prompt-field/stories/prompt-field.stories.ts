@@ -10,7 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
-import { html, LitElement } from 'lit';
+import { html, LitElement, nothing } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
@@ -22,9 +22,45 @@ import '../index.js';
 //    METADATA
 // ────────────────
 
-const { args, argTypes, template } = getStorybookHelpers('swc-prompt-field');
+const { args, argTypes } = getStorybookHelpers('swc-prompt-field');
 const defaultPlaceholder =
   'Ready to get started? Ask a question, share an idea, or add a task.';
+const defaultLegalDisclaimer =
+  'AI output may be inaccurate. Verify before using.';
+
+const legalDisclaimerSlot = html`
+  <p slot="legal" class="swc-PromptField-legal-disclaimer">
+    ${defaultLegalDisclaimer}
+  </p>
+`;
+
+type PromptFieldStoryArgs = typeof args;
+
+function renderPromptField(
+  storyArgs: PromptFieldStoryArgs,
+  slots: unknown = legalDisclaimerSlot
+) {
+  return html`
+    <swc-prompt-field
+      label=${storyArgs.label ?? 'Prompt'}
+      placeholder=${storyArgs.placeholder ?? defaultPlaceholder}
+      .value=${storyArgs.value ?? ''}
+      mode=${storyArgs.mode ?? 'default'}
+      accessible-label=${storyArgs['accessible-label'] ?? ''}
+      send-label=${storyArgs['send-label'] ?? 'Send'}
+      stop-label=${storyArgs['stop-label'] ?? 'Stop generating'}
+      upload-label=${storyArgs['upload-label'] ?? 'Add attachment'}
+      artifact-scroll-prev-label=${storyArgs['artifact-scroll-prev-label'] ??
+      'Show previous attachments'}
+      artifact-scroll-next-label=${storyArgs['artifact-scroll-next-label'] ??
+      'Show more attachments'}
+      min-rows=${storyArgs['min-rows'] ?? 1}
+      max-rows=${storyArgs['max-rows'] ?? 4}
+    >
+      ${slots}
+    </swc-prompt-field>
+  `;
+}
 
 argTypes.mode = {
   ...argTypes.mode,
@@ -46,7 +82,7 @@ const meta: Meta = {
   component: 'swc-prompt-field',
   args,
   argTypes,
-  render: (args) => template(args),
+  render: (storyArgs) => renderPromptField(storyArgs),
   parameters: {
     docs: {
       subtitle:
@@ -99,16 +135,10 @@ export const Anatomy: Story = {
         <swc-prompt-field
           label="Prompt"
           placeholder=${defaultPlaceholder}
-        ></swc-prompt-field>
-        <span class="swc-Detail swc-Detail--sizeS">Base structure</span>
-      </div>
-      <div style="display:flex;flex-direction:column;gap:8px;">
-        <swc-prompt-field label="Prompt" placeholder=${defaultPlaceholder}>
-          <div slot="legal">
-            AI output may be inaccurate. Verify before using.
-          </div>
+        >
+          ${legalDisclaimerSlot}
         </swc-prompt-field>
-        <span class="swc-Detail swc-Detail--sizeS">legal slot only</span>
+        <span class="swc-Detail swc-Detail--sizeS">Base structure</span>
       </div>
     </div>
   `,
@@ -126,7 +156,9 @@ export const Modes: Story = {
         <swc-prompt-field
           label="Prompt"
           placeholder=${defaultPlaceholder}
-        ></swc-prompt-field>
+        >
+          ${legalDisclaimerSlot}
+        </swc-prompt-field>
         <span class="swc-Detail swc-Detail--sizeS">
           mode="default" with empty value
         </span>
@@ -135,7 +167,9 @@ export const Modes: Story = {
         <swc-prompt-field
           label="Prompt"
           value="Summarize the API changes in this branch."
-        ></swc-prompt-field>
+        >
+          ${legalDisclaimerSlot}
+        </swc-prompt-field>
         <span class="swc-Detail swc-Detail--sizeS">
           mode="default" with entered value
         </span>
@@ -145,7 +179,9 @@ export const Modes: Story = {
           mode="loading"
           label="Prompt"
           value="Summarize the API changes in this branch."
-        ></swc-prompt-field>
+        >
+          ${legalDisclaimerSlot}
+        </swc-prompt-field>
         <span class="swc-Detail swc-Detail--sizeS">
           mode="loading" (input remains editable)
         </span>
@@ -155,7 +191,9 @@ export const Modes: Story = {
           mode="disabled"
           label="Prompt"
           value="This input is disabled."
-        ></swc-prompt-field>
+        >
+          ${legalDisclaimerSlot}
+        </swc-prompt-field>
         <span class="swc-Detail swc-Detail--sizeS">
           mode="disabled" (input and controls disabled)
         </span>
@@ -173,12 +211,14 @@ export const Artifact: Story = {
         style="margin:0;max-inline-size:720px;"
       >
         <strong>artifact</strong>
-        — Slot multiple
+        — Slot one or more
         <code>&lt;swc-upload-artifact slot="artifact"&gt;</code>
-        nodes; the field lays them out in a wrapping row above the textarea.
-        More variants:
-        <strong>Multi-artifacts</strong>
-        .
+        nodes above the textarea. Use one layout type per session (card or media).
+        When uploads mix images and documents, normalize to media tiles with badges. See
+        <strong>Multi-card</strong>
+        and
+        <strong>Multi-media</strong>
+        on the upload-artifact page.
       </p>
       <div style="display:flex;flex-direction:column;gap:8px;">
         <swc-prompt-field
@@ -190,32 +230,52 @@ export const Artifact: Story = {
             <span slot="title">Brand guidelines</span>
             <span slot="subtitle">PDF</span>
           </swc-upload-artifact>
-          <swc-upload-artifact slot="artifact" type="media" dismissible>
-            <div
-              slot="thumbnail"
-              style="background:linear-gradient(135deg,#6366f1,#ec4899);"
-              role="img"
-              aria-label="Campaign still"
-            ></div>
+          <swc-upload-artifact slot="artifact" type="card" dismissible>
+            <div slot="thumbnail" role="img" aria-label="Spreadsheet"></div>
+            <span slot="title">Q2 metrics draft</span>
+            <span slot="subtitle">XLSX</span>
           </swc-upload-artifact>
-          <swc-upload-artifact slot="artifact" type="media" dismissible>
-            <div
-              slot="thumbnail"
-              style="background:linear-gradient(135deg,#0ea5e9,#22c55e);"
-              role="img"
-              aria-label="Storyboard frame"
-            ></div>
-          </swc-upload-artifact>
+          ${legalDisclaimerSlot}
         </swc-prompt-field>
         <span class="swc-Detail swc-Detail--sizeS">
-          Mixed multi-artifact (card + media, wrapping strip)
+          Multi-card strip (cards only)
+        </span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <swc-prompt-field
+          label="Prompt"
+          value="Review these storyboard frames."
+        >
+          <swc-upload-artifact slot="artifact" type="media" dismissible>
+            <img
+              slot="thumbnail"
+              src="https://picsum.photos/id/64/68/68"
+              alt="Campaign still"
+              style="inline-size:100%;block-size:100%;object-fit:cover;"
+            />
+          </swc-upload-artifact>
+          <swc-upload-artifact slot="artifact" type="media" dismissible>
+            <img
+              slot="thumbnail"
+              src="https://picsum.photos/id/56/68/68"
+              alt="Storyboard frame"
+              style="inline-size:100%;block-size:100%;object-fit:cover;"
+            />
+            <span slot="badge">PDF</span>
+          </swc-upload-artifact>
+          ${legalDisclaimerSlot}
+        </swc-prompt-field>
+        <span class="swc-Detail swc-Detail--sizeS">
+          Multi-media strip (media only, with and without badge)
         </span>
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;">
         <swc-prompt-field
           label="Prompt"
           placeholder=${defaultPlaceholder}
-        ></swc-prompt-field>
+        >
+          ${legalDisclaimerSlot}
+        </swc-prompt-field>
         <span class="swc-Detail swc-Detail--sizeS">None</span>
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;">
@@ -225,6 +285,7 @@ export const Artifact: Story = {
             <span slot="title">Hilton commercial assets</span>
             <span slot="subtitle">2026</span>
           </swc-upload-artifact>
+          ${legalDisclaimerSlot}
         </swc-prompt-field>
         <span class="swc-Detail swc-Detail--sizeS">Single card</span>
       </div>
@@ -233,13 +294,61 @@ export const Artifact: Story = {
           <swc-upload-artifact slot="artifact" type="media" dismissible>
             <img
               slot="thumbnail"
-              src="https://placehold.co/160x120/png"
+              src="https://picsum.photos/id/823/68/68"
               alt="Attachment preview"
+              style="inline-size:100%;block-size:100%;object-fit:cover;"
             />
           </swc-upload-artifact>
+          ${legalDisclaimerSlot}
         </swc-prompt-field>
         <span class="swc-Detail swc-Detail--sizeS">Single media</span>
       </div>
+    </div>
+  `,
+  tags: ['options'],
+};
+
+const multiArtifactScrollMediaIds = [
+  64, 56, 823, 237, 429, 326, 180, 119, 366, 452, 15, 188,
+] as const;
+
+const multiArtifactScrollBadges: Record<number, string> = {
+  452: 'MP4',
+  15: 'MP4',
+  188: 'PDF',
+};
+
+export const MultiArtifactScroll: Story = {
+  render: () => html`
+    <div style="display:flex;flex-direction:column;gap:16px;inline-size:100%;">
+      <p class="swc-Detail swc-Detail--sizeS" style="margin:0;">
+        Full-width composer with twelve media tiles. Chevron controls flank the
+        strip when scrolling is possible; each click scrolls by one tile.
+        Trackpad scrolling works with no persistent scrollbar.
+      </p>
+      <swc-prompt-field
+        label="Prompt"
+        value="Review these storyboard frames."
+      >
+        ${multiArtifactScrollMediaIds.map(
+          (id) => html`
+            <swc-upload-artifact slot="artifact" type="media" dismissible>
+              <img
+                slot="thumbnail"
+                src="https://picsum.photos/id/${id}/68/68"
+                alt="Storyboard frame ${id}"
+                style="inline-size:100%;block-size:100%;object-fit:cover;"
+              />
+              ${multiArtifactScrollBadges[id]
+                ? html`
+                    <span slot="badge">${multiArtifactScrollBadges[id]}</span>
+                  `
+                : nothing}
+            </swc-upload-artifact>
+          `
+        )}
+        ${legalDisclaimerSlot}
+      </swc-prompt-field>
     </div>
   `,
   tags: ['options'],
@@ -254,6 +363,12 @@ interface PromptFieldBehaviorArtifact {
   fileName: string;
   sizeLabel: string;
   thumbnailUrl?: string;
+  badgeLabel?: string;
+}
+
+function fileBadgeLabel(fileName: string): string | undefined {
+  const extension = fileName.match(/\.([a-z0-9]+)$/i)?.[1];
+  return extension ? extension.toUpperCase() : undefined;
 }
 
 @customElement('swc-prompt-field-behavior-demo')
@@ -323,11 +438,12 @@ class PromptFieldBehaviorDemo extends LitElement {
         fileName: file.name || 'Attachment',
         sizeLabel: `${Math.max(1, Math.round(file.size / 1024))} KB`,
         thumbnailUrl: isImage ? URL.createObjectURL(file) : undefined,
+        badgeLabel: isImage ? undefined : fileBadgeLabel(file.name),
       } satisfies PromptFieldBehaviorArtifact;
     });
 
     this.artifacts = [...this.artifacts, ...nextArtifacts];
-    this.readout = `External picker selected ${files.length} file${files.length === 1 ? '' : 's'} and the consumer slotted upload artifacts into the prompt.`;
+    this.readout = `External picker selected ${files.length} file${files.length === 1 ? '' : 's'} and the consumer slotted media upload artifacts into the prompt.`;
     input.value = '';
   }
 
@@ -362,44 +478,40 @@ class PromptFieldBehaviorDemo extends LitElement {
             @swc-prompt-field-upload-click=${this._handleUploadClick}
             @swc-upload-artifact-dismiss=${this._handleArtifactDismiss}
           >
-            ${this.artifacts.map((artifact) =>
-              artifact.thumbnailUrl
-                ? html`
-                    <swc-upload-artifact
-                      slot="artifact"
-                      type="media"
-                      dismissible
-                      data-artifact-id=${artifact.id}
-                    >
-                      <img
-                        slot="thumbnail"
-                        src=${artifact.thumbnailUrl}
-                        alt=${artifact.fileName}
-                        style="inline-size:100%;block-size:100%;object-fit:cover;"
-                      />
-                    </swc-upload-artifact>
-                  `
-                : html`
-                    <swc-upload-artifact
-                      slot="artifact"
-                      type="card"
-                      dismissible
-                      data-artifact-id=${artifact.id}
-                    >
-                      <div
-                        slot="thumbnail"
-                        role="img"
-                        aria-label="File thumbnail"
-                        style="inline-size:40px;block-size:40px;"
-                      ></div>
-                      <span slot="title">${artifact.fileName}</span>
-                      <span slot="subtitle">${artifact.sizeLabel}</span>
-                    </swc-upload-artifact>
-                  `
+            ${this.artifacts.map(
+              (artifact) => html`
+                <swc-upload-artifact
+                  slot="artifact"
+                  type="media"
+                  dismissible
+                  data-artifact-id=${artifact.id}
+                >
+                  ${artifact.thumbnailUrl
+                    ? html`
+                        <img
+                          slot="thumbnail"
+                          src=${artifact.thumbnailUrl}
+                          alt=${artifact.fileName}
+                          style="inline-size:100%;block-size:100%;object-fit:cover;"
+                        />
+                      `
+                    : html`
+                        <div
+                          slot="thumbnail"
+                          role="img"
+                          aria-label=${artifact.fileName}
+                          style="inline-size:100%;block-size:100%;background:#f3f3f3;"
+                        ></div>
+                      `}
+                  ${artifact.badgeLabel
+                    ? html`
+                        <span slot="badge">${artifact.badgeLabel}</span>
+                      `
+                    : nothing}
+                </swc-upload-artifact>
+              `
             )}
-            <div slot="legal">
-              AI output may be inaccurate. Verify before using.
-            </div>
+            ${legalDisclaimerSlot}
           </swc-prompt-field>
           <input
             data-file-input

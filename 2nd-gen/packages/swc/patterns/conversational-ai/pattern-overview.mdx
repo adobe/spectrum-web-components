@@ -56,7 +56,11 @@ A minimal composition tree:
   </swc-conversation-turn>
 </swc-conversation-thread>
 
-<swc-prompt-field></swc-prompt-field>
+<swc-prompt-field>
+  <p slot="legal" class="swc-PromptField-legal-disclaimer">
+    AI output may be inaccurate. Verify before using.
+  </p>
+</swc-prompt-field>
 ```
 
 ---
@@ -91,10 +95,10 @@ Text input with built-in `default`, `loading`, and `generation-complete` modes. 
 
 #### `swc-upload-artifact`
 
-Renders a staged attachment inside `swc-prompt-field` before the message is sent. Supports `card` and `media` types and an optional `dismissible` affordance.
+Renders a staged attachment inside `swc-prompt-field` before the message is sent. Use one layout type per strip (`card` or `media`). For mixed image and document uploads, normalize to media tiles with thumbnails and optional badges.
 
 <Canvas
-  of={UploadArtifactStories.Overview}
+  of={UploadArtifactStories.MediaWithBadge}
   additionalActions={[
     {
       title: 'Component docs',

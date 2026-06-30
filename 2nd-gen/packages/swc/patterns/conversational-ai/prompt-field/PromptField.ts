@@ -10,11 +10,17 @@
  * governing permissions and limitations under the License.
  */
 
-import { CSSResultArray, html, TemplateResult } from 'lit';
-import { property, queryAssignedElements, state } from 'lit/decorators.js';
+import { CSSResultArray, html, nothing, TemplateResult } from 'lit';
+import {
+  property,
+  query,
+  queryAssignedElements,
+  state,
+} from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { styleMap } from 'lit/directives/style-map.js';
 
+import { Chevron75Icon } from '@adobe/spectrum-wc/icon/elements/index.js';
 import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
 
 import '@adobe/spectrum-wc/components/icon/swc-icon.js';
@@ -38,8 +44,8 @@ export type PromptFieldMode = 'default' | 'loading' | 'disabled';
  *
  * @element swc-prompt-field
  *
- * @slot artifact - Optional attachment preview(s); supports multiple slotted artifacts.
- * @slot legal - Optional legal/footer content.
+ * @slot artifact - Optional attachment preview(s). Use one `swc-upload-artifact` type per session (cards only, or media only).
+ * @slot legal - Legal disclaimer content. Required in product implementations; provide Legal-approved copy.
  * @fires swc-prompt-field-input - Dispatched after the textarea value is internally updated.
  * Detail: `{ value: string }`
  * @fires swc-prompt-field-submit - Dispatched when send is triggered.
@@ -75,6 +81,14 @@ export class PromptField extends SpectrumElement {
   @property({ type: String, attribute: 'upload-label' })
   public uploadLabel = 'Add attachment';
 
+  /** Accessible label for the previous-artifact scroll button. */
+  @property({ type: String, attribute: 'artifact-scroll-prev-label' })
+  public artifactScrollPrevLabel = 'Show previous attachments';
+
+  /** Accessible label for the next-artifact scroll button. */
+  @property({ type: String, attribute: 'artifact-scroll-next-label' })
+  public artifactScrollNextLabel = 'Show more attachments';
+
   /** Placeholder text shown inside the textarea. */
   @property({ type: String })
   public placeholder =
@@ -95,6 +109,9 @@ export class PromptField extends SpectrumElement {
   @queryAssignedElements({ slot: 'artifact', flatten: true })
   private _assignedArtifactElements!: HTMLElement[];
 
+  @query('.swc-PromptField-artifacts-scroll')
+  private _artifactScrollEl?: HTMLDivElement;
+
   @queryAssignedElements({ slot: 'legal', flatten: true })
   private _assignedLegalElements!: HTMLElement[];
 
@@ -105,8 +122,36 @@ export class PromptField extends SpectrumElement {
   @state()
   private _promptBoxKeyboardFocusRing = false;
 
+  @state()
+  private _artifactScrollOverflow = false;
+
+  @state()
+  private _artifactCanScrollPrev = false;
+
+  @state()
+  private _artifactCanScrollNext = false;
+
+  private _artifactScrollObserver?: ResizeObserver;
+
   public static override get styles(): CSSResultArray {
     return [styles];
+  }
+
+  public override disconnectedCallback(): void {
+    this._artifactScrollObserver?.disconnect();
+    this._artifactScrollObserver = undefined;
+    super.disconnectedCallback();
+  }
+
+  protected override updated(): void {
+    if ((this._assignedArtifactElements?.length ?? 0) < 2) {
+      this._artifactScrollObserver?.disconnect();
+      return;
+    }
+
+    requestAnimationFrame(() => {
+      this._observeArtifactScrollViewport();
+    });
   }
 
   private _handleInput(event: Event): void {
@@ -189,7 +234,163 @@ export class PromptField extends SpectrumElement {
   }
 
   private _handleArtifactSlotChange(): void {
+    this._warnIfMixedArtifactTypes();
     this.requestUpdate();
+    void this.updateComplete.then(() => {
+      requestAnimationFrame(() => {
+        this._observeArtifactScrollViewport();
+        this._updateArtifactScrollState();
+      });
+    });
+  }
+
+  private _handleArtifactScroll(): void {
+    this._updateArtifactScrollState();
+  }
+
+  private _observeArtifactScrollViewport(): void {
+    const scrollEl = this._artifactScrollEl;
+    if (!scrollEl) {
+      this._artifactScrollObserver?.disconnect();
+      return;
+    }
+
+    if (!this._artifactScrollObserver) {
+      this._artifactScrollObserver = new ResizeObserver(() => {
+        this._updateArtifactScrollState();
+      });
+    }
+
+    this._artifactScrollObserver.disconnect();
+    this._artifactScrollObserver.observe(scrollEl);
+    for (const element of this._assignedArtifactElements ?? []) {
+      this._artifactScrollObserver.observe(element);
+    }
+    this._updateArtifactScrollState();
+  }
+
+  private _getArtifactScrollOffset(child: HTMLElement): number {
+    const scrollEl = this._artifactScrollEl;
+    if (!scrollEl) {
+      return 0;
+    }
+
+    return (
+      child.getBoundingClientRect().left -
+      scrollEl.getBoundingClientRect().left +
+      scrollEl.scrollLeft
+    );
+  }
+
+  private _findLeadingArtifactIndex(): number {
+    const scrollEl = this._artifactScrollEl;
+    const children = this._assignedArtifactElements ?? [];
+    if (!scrollEl || !children.length) {
+      return 0;
+    }
+
+    const scrollLeft = scrollEl.scrollLeft;
+    let index = 0;
+
+    for (let i = 0; i < children.length; i += 1) {
+      const offset = this._getArtifactScrollOffset(children[i]);
+      if (offset >= scrollLeft - 1) {
+        return i;
+      }
+      index = i;
+    }
+
+    return index;
+  }
+
+  private _scrollArtifactsByTile(direction: -1 | 1): void {
+    const scrollEl = this._artifactScrollEl;
+    const children = this._assignedArtifactElements ?? [];
+    if (!scrollEl || children.length < 2) {
+      return;
+    }
+
+    const currentIndex = this._findLeadingArtifactIndex();
+    const nextIndex = Math.max(
+      0,
+      Math.min(children.length - 1, currentIndex + direction)
+    );
+
+    if (nextIndex === currentIndex) {
+      return;
+    }
+
+    scrollEl.scrollTo({
+      left: this._getArtifactScrollOffset(children[nextIndex]),
+      behavior: 'smooth',
+    });
+  }
+
+  private _updateArtifactScrollState(): void {
+    const scrollEl = this._artifactScrollEl;
+    if (!scrollEl) {
+      this._artifactScrollOverflow = false;
+      this._artifactCanScrollPrev = false;
+      this._artifactCanScrollNext = false;
+      return;
+    }
+
+    const { scrollLeft, scrollWidth, clientWidth } = scrollEl;
+    const tolerance = 1;
+    const overflow = scrollWidth > clientWidth + tolerance;
+
+    this._artifactScrollOverflow = overflow;
+    this._artifactCanScrollPrev = overflow && scrollLeft > tolerance;
+    this._artifactCanScrollNext =
+      overflow && scrollLeft + clientWidth < scrollWidth - tolerance;
+  }
+
+  private _warnedMixedArtifactTypes = false;
+
+  private _warnedMissingLegalContent = false;
+
+  private _warnIfMixedArtifactTypes(): void {
+    const elements = this._assignedArtifactElements ?? [];
+    const types = new Set(
+      elements
+        .map((element) => element.getAttribute('type'))
+        .filter(
+          (type): type is 'card' | 'media' =>
+            type === 'card' || type === 'media'
+        )
+    );
+
+    if (types.size <= 1) {
+      this._warnedMixedArtifactTypes = false;
+      return;
+    }
+
+    if (this._warnedMixedArtifactTypes) {
+      return;
+    }
+
+    this._warnedMixedArtifactTypes = true;
+    console.warn(
+      '[swc-prompt-field] The artifact slot contains both card and media upload artifacts. Use one layout type per composer session (all card or all media). When uploads mix images and documents, normalize to media tiles with thumbnails and optional badges. See upload-artifact documentation.'
+    );
+  }
+
+  private _warnIfMissingLegalContent(): void {
+    const elements = this._assignedLegalElements ?? [];
+
+    if (elements.length > 0) {
+      this._warnedMissingLegalContent = false;
+      return;
+    }
+
+    if (this._warnedMissingLegalContent) {
+      return;
+    }
+
+    this._warnedMissingLegalContent = true;
+    console.warn(
+      '[swc-prompt-field] The legal slot is empty. Product implementations must provide Legal-approved disclaimer content via the legal slot. See prompt-field documentation.'
+    );
   }
 
   private get _isPopulated(): boolean {
@@ -219,6 +420,7 @@ export class PromptField extends SpectrumElement {
   }
 
   private _handleLegalSlotChange(): void {
+    this._warnIfMissingLegalContent();
     this.requestUpdate();
   }
 
@@ -241,17 +443,76 @@ export class PromptField extends SpectrumElement {
 
   private _renderArtifact(): TemplateResult {
     const artifactCount = this._assignedArtifactElements?.length ?? 0;
-    const artifactClass =
-      artifactCount <= 1
-        ? 'swc-PromptField-artifacts swc-PromptField-artifacts--single'
-        : 'swc-PromptField-artifacts swc-PromptField-artifacts--multiple';
+
+    if (artifactCount === 0) {
+      return html`
+        <div class="swc-PromptField-artifacts" hidden>
+          <slot
+            name="artifact"
+            @slotchange=${this._handleArtifactSlotChange}
+          ></slot>
+        </div>
+      `;
+    }
+
+    if (artifactCount === 1) {
+      return html`
+        <div
+          class="swc-PromptField-artifacts swc-PromptField-artifacts--single"
+        >
+          <slot
+            name="artifact"
+            @slotchange=${this._handleArtifactSlotChange}
+          ></slot>
+        </div>
+      `;
+    }
 
     return html`
-      <div class=${artifactClass} ?hidden=${artifactCount === 0}>
-        <slot
-          name="artifact"
-          @slotchange=${this._handleArtifactSlotChange}
-        ></slot>
+      <div
+        class="swc-PromptField-artifacts swc-PromptField-artifacts--multiple"
+      >
+        <div class="swc-PromptField-artifacts-row">
+          ${this._artifactScrollOverflow && this._artifactCanScrollPrev
+            ? html`
+                <button
+                  type="button"
+                  class="swc-PromptField-artifacts-scroll-prev"
+                  aria-label=${this.artifactScrollPrevLabel}
+                  @click=${() => this._scrollArtifactsByTile(-1)}
+                >
+                  <swc-icon size="s" aria-hidden="true">
+                    ${Chevron75Icon()}
+                  </swc-icon>
+                </button>
+              `
+            : nothing}
+          <div class="swc-PromptField-artifacts-viewport">
+            <div
+              class="swc-PromptField-artifacts-scroll"
+              @scroll=${this._handleArtifactScroll}
+            >
+              <slot
+                name="artifact"
+                @slotchange=${this._handleArtifactSlotChange}
+              ></slot>
+            </div>
+          </div>
+          ${this._artifactScrollOverflow && this._artifactCanScrollNext
+            ? html`
+                <button
+                  type="button"
+                  class="swc-PromptField-artifacts-scroll-next"
+                  aria-label=${this.artifactScrollNextLabel}
+                  @click=${() => this._scrollArtifactsByTile(1)}
+                >
+                  <swc-icon size="s" aria-hidden="true">
+                    ${Chevron75Icon()}
+                  </swc-icon>
+                </button>
+              `
+            : nothing}
+        </div>
       </div>
     `;
   }

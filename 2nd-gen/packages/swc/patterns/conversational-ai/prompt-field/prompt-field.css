@@ -64,8 +64,9 @@
   display: flex;
   flex-direction: column;
   gap: token("spacing-300");
+  min-inline-size: 0;
   padding-block-start: 0;
-  padding-inline: token("spacing-100");
+  padding-inline: 0;
 }
 
 /* Figma: input area uses 8px top padding only when an artifact row is shown. */
@@ -77,19 +78,22 @@
    Uploaded artifacts
    ───────────────────────────────────── */
 
-.swc-PromptField-artifacts {
+.swc-PromptField-artifacts[hidden] {
+  display: none !important;
+}
+
+.swc-PromptField-artifacts--single {
   display: flex;
   flex-wrap: wrap;
   gap: token("spacing-300");
   align-items: start;
 }
 
-.swc-PromptField-artifacts > slot {
+.swc-PromptField-artifacts--single > slot {
   display: contents;
 }
 
-/* Mixed card/media artifacts support horizontal flow with wrapping. */
-.swc-PromptField-artifacts > slot::slotted(*) {
+.swc-PromptField-artifacts--single > slot::slotted(*) {
   flex: 0 0 auto;
 }
 
@@ -98,19 +102,116 @@
   flex-basis: auto;
 }
 
-/* Multi-artifact card layout targets 3+ cards per row responsively. */
-.swc-PromptField-artifacts--multiple > slot::slotted([type="card"]) {
-  flex-shrink: 1;
-  flex-basis: auto;
-}
-
-/* Prompt-field media artifact uses 68×68 preview tile. */
-.swc-PromptField-artifacts > slot::slotted([type="media"]) {
+.swc-PromptField-artifacts--single > slot::slotted([type="media"]) {
   inline-size: var(--swc-prompt-field-artifact-media-inline-size, 68px);
   min-inline-size: var(--swc-prompt-field-artifact-media-min-inline-size, 68px);
   block-size: var(--swc-prompt-field-artifact-media-block-size, 68px);
   min-block-size: var(--swc-prompt-field-artifact-media-min-block-size, 68px);
   aspect-ratio: 1 / 1;
+}
+
+.swc-PromptField-artifacts--multiple {
+  min-inline-size: 0;
+}
+
+.swc-PromptField-artifacts-row {
+  display: flex;
+  gap: token("spacing-100");
+  align-items: center;
+  inline-size: 100%;
+}
+
+.swc-PromptField-artifacts-viewport {
+  position: relative;
+  flex: 1 1 auto;
+  min-inline-size: 0;
+  padding-block-start: 6px;
+  margin-block-start: -6px;
+  overflow: hidden;
+}
+
+.swc-PromptField-artifacts-scroll {
+  -ms-overflow-style: none;
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: start;
+  inline-size: 100%;
+  max-inline-size: 100%;
+  padding-inline-end: token("spacing-50");
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+}
+
+.swc-PromptField-artifacts-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.swc-PromptField-artifacts-scroll > slot {
+  display: flex;
+  flex: 0 0 auto;
+  flex-wrap: nowrap;
+  gap: token("spacing-100");
+  align-items: start;
+}
+
+.swc-PromptField-artifacts-scroll > slot::slotted(*) {
+  flex: 0 0 auto;
+}
+
+.swc-PromptField-artifacts-scroll > slot::slotted([type="card"]) {
+  inline-size: var(--swc-prompt-field-artifact-card-inline-size, 240px);
+  min-inline-size: var(--swc-prompt-field-artifact-card-inline-size, 240px);
+  max-inline-size: var(--swc-prompt-field-artifact-card-inline-size, 240px);
+}
+
+.swc-PromptField-artifacts-scroll > slot::slotted([type="media"]) {
+  inline-size: var(--swc-prompt-field-artifact-media-inline-size, 68px);
+  min-inline-size: var(--swc-prompt-field-artifact-media-min-inline-size, 68px);
+  max-inline-size: var(--swc-prompt-field-artifact-media-inline-size, 68px);
+  block-size: var(--swc-prompt-field-artifact-media-block-size, 68px);
+  min-block-size: var(--swc-prompt-field-artifact-media-min-block-size, 68px);
+  aspect-ratio: 1 / 1;
+}
+
+.swc-PromptField-artifacts-scroll-prev,
+.swc-PromptField-artifacts-scroll-next {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  inline-size: var(--swc-prompt-field-artifact-scroll-button-inline-size, 32px);
+  block-size: var(--swc-prompt-field-artifact-scroll-button-block-size, 32px);
+  padding: 0;
+  line-height: 0;
+  color: token("gray-800");
+  background: token("gray-100");
+  border: 1px solid transparent;
+  border-radius: token("corner-radius-800");
+  cursor: pointer;
+}
+
+.swc-PromptField-artifacts-scroll-prev:hover,
+.swc-PromptField-artifacts-scroll-next:hover {
+  background: token("gray-200");
+}
+
+.swc-PromptField-artifacts-scroll-prev swc-icon,
+.swc-PromptField-artifacts-scroll-next swc-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.swc-PromptField-artifacts-scroll-prev swc-icon {
+  transform: scaleX(-1);
+}
+
+.swc-PromptField-artifacts-scroll-prev:focus-visible,
+.swc-PromptField-artifacts-scroll-next:focus-visible {
+  outline: token("focus-indicator-thickness") solid token("focus-indicator-color");
+  outline-offset: token("focus-indicator-gap");
 }
 
 /* ─────────────────────────────────────
@@ -121,6 +222,7 @@
   display: flex;
   flex-direction: column;
   gap: token("spacing-75");
+  padding-inline: token("spacing-100");
 }
 
 .swc-PromptField-label {
@@ -297,8 +399,4 @@
 
 .swc-PromptField-legal-disclaimer a {
   color: inherit;
-}
-
-.swc-PromptField-artifacts[hidden] {
-  display: none !important;
 }
