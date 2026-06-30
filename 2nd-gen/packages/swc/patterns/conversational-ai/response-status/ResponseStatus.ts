@@ -50,7 +50,6 @@ export type ResponseStatusStepData = {
  * @element swc-response-status
  * @slot label - Header row label. Falls back to the active step label.
  * @slot summary - Optional secondary summary text for lifecycle states.
- * @slot list-label - Accessible name for the step list panel.
  * @slot - `<swc-response-status-step>` elements.
  * @fires swc-response-status-toggle - Dispatched when the user opens or closes the panel.
  * Detail: `{ open: boolean }`
@@ -67,7 +66,7 @@ export class ResponseStatus extends SpectrumElement {
       stopped: 'You stopped the response',
     };
 
-  private static readonly DEFAULT_LIST_LABEL = 'Execution steps';
+  private static readonly DEFAULT_ACCESSIBLE_LABEL = 'Execution steps';
 
   private readonly panelId = uniqueId('swc-response-status-panel');
 
@@ -80,9 +79,6 @@ export class ResponseStatus extends SpectrumElement {
   @state()
   private _summarySlotText = '';
 
-  @state()
-  private _listLabelSlotText = '';
-
   /** Whole response lifecycle status. */
   @property({ type: String, reflect: true })
   public status: 'pending' | 'active' | 'complete' | 'stopped' = 'pending';
@@ -90,6 +86,10 @@ export class ResponseStatus extends SpectrumElement {
   /** `true`: step timeline open. */
   @property({ type: Boolean, reflect: true })
   public open = false;
+
+  /** Accessible name for the step list panel. */
+  @property({ type: String, attribute: 'accessible-label' })
+  public accessibleLabel = '';
 
   public static override get styles(): CSSResultArray {
     return [styles];
@@ -235,16 +235,12 @@ export class ResponseStatus extends SpectrumElement {
   private _syncNamedSlots(): void {
     const labelText = this._readNamedSlotContent('label');
     const summaryText = this._readNamedSlotContent('summary');
-    const listLabelText = this._readNamedSlotContent('list-label');
 
     if (this._labelSlotText !== labelText) {
       this._labelSlotText = labelText;
     }
     if (this._summarySlotText !== summaryText) {
       this._summarySlotText = summaryText;
-    }
-    if (this._listLabelSlotText !== listLabelText) {
-      this._listLabelSlotText = listLabelText;
     }
   }
 
@@ -498,7 +494,7 @@ export class ResponseStatus extends SpectrumElement {
   private _renderPanel(showPanel: boolean): TemplateResult {
     const panelOpen = showPanel && this.open;
     const panelLabel =
-      this._listLabelSlotText || ResponseStatus.DEFAULT_LIST_LABEL;
+      this.accessibleLabel || ResponseStatus.DEFAULT_ACCESSIBLE_LABEL;
 
     return html`
       <div
@@ -527,11 +523,6 @@ export class ResponseStatus extends SpectrumElement {
         ></slot>
         <slot
           name="summary"
-          hidden
-          @slotchange=${this._handleNamedSlotChange}
-        ></slot>
-        <slot
-          name="list-label"
           hidden
           @slotchange=${this._handleNamedSlotChange}
         ></slot>

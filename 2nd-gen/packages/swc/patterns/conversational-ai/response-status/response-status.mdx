@@ -50,7 +50,7 @@ Each step uses:
 The `<swc-response-status>` element implements the following accessibility features:
 
 - When steps exist, the disclosure button uses `aria-expanded` and `aria-controls` to communicate panel state
-- The step timeline uses `role="group"` with an accessible name from `slot="list-label"` (defaults to “Execution steps”)
+- The step timeline uses `role="group"` with an accessible name from the `accessible-label` attribute (defaults to “Execution steps”)
 - The ordered step list uses `role="list"` and each rendered step uses `role="listitem"`
 
 <Canvas of={ResponseStatusStories.Accessibility} />

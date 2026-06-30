@@ -33,10 +33,9 @@ export default {
 type TestResponseStatus = ResponseStatus;
 
 const agenticMarkup = html`
-  <swc-response-status status="active" open>
+  <swc-response-status status="active" open accessible-label="Execution steps">
     <span slot="label">Searching repositories for Europe trips</span>
     <span slot="summary">Processing request</span>
-    <span slot="list-label">Execution steps</span>
 
     <swc-response-status-step status="complete">
       <span slot="label">Looked through documentation</span>
@@ -123,7 +122,7 @@ export const AgenticApiTest: Story = {
       }
     );
 
-    await step('uses list-label as the timeline accessible name', async () => {
+    await step('uses accessible-label as the timeline accessible name', async () => {
       expect(el.shadowRoot?.querySelector('[role="group"]')).toHaveAttribute(
         'aria-label',
         'Execution steps'

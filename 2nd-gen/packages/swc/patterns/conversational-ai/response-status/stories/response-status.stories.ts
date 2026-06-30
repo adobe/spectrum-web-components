@@ -42,10 +42,6 @@ export default meta;
 //    HELPERS
 // ────────────────────
 
-const executionStepsLabelSlot = html`
-  <span slot="list-label">Execution steps</span>
-`;
-
 const activeSteps = html`
   <swc-response-status-step status="complete">
     <span slot="label">Looked through documentation</span>
@@ -110,15 +106,42 @@ const completeSteps = html`
   </swc-response-status-step>
 `;
 
+const allStateSteps = html`
+  <swc-response-status-step status="complete">
+    <span slot="label">Looked through documentation</span>
+    <span slot="description">
+      Scanned internal knowledge base articles matching the query context.
+    </span>
+  </swc-response-status-step>
+  <swc-response-status-step status="active">
+    <span slot="label">Searching repositories for Europe trips</span>
+    <span slot="description">
+      Checking internal repositories for previously compiled trip package data.
+    </span>
+  </swc-response-status-step>
+  <swc-response-status-step status="pending">
+    <span slot="label">Compose response</span>
+    <span slot="description">
+      Synthesizing findings into a structured comparison.
+    </span>
+  </swc-response-status-step>
+  <swc-response-status-step status="stopped">
+    <span slot="label">Verify pricing and availability</span>
+    <span slot="description">
+      Interrupted before this step could finish.
+    </span>
+  </swc-response-status-step>
+`;
+
 // ────────────────────
 //    PLAYGROUND STORY
 // ────────────────────
 
 export const Playground: Story = {
   render: () => html`
-    <swc-response-status status="active" open>
+    <swc-response-status status="active" open accessible-label="Execution steps">
       <span slot="label">Searching repositories for Europe trips</span>
-      ${executionStepsLabelSlot} ${activeSteps}
+      ${activeSteps}
     </swc-response-status>
   `,
   tags: ['dev'],
@@ -144,10 +167,10 @@ export const Overview: Story = {
 
 export const Anatomy: Story = {
   render: () => html`
-    <swc-response-status status="active" open>
+    <swc-response-status status="active" open accessible-label="Execution steps">
       <span slot="label">Searching repositories for Europe trips</span>
       <span slot="summary">Processing request</span>
-      ${executionStepsLabelSlot} ${activeSteps}
+      ${activeSteps}
     </swc-response-status>
   `,
   tags: ['anatomy'],
@@ -181,9 +204,9 @@ export const Statuses: Story = {
 
 export const Steps: Story = {
   render: () => html`
-    <swc-response-status status="active" open>
+    <swc-response-status status="active" open accessible-label="Execution steps">
       <span slot="label">Searching repositories for Europe trips</span>
-      ${executionStepsLabelSlot} ${activeSteps}
+      ${allStateSteps}
     </swc-response-status>
   `,
   tags: ['options'],
@@ -195,9 +218,9 @@ export const Steps: Story = {
 
 export const Accessibility: Story = {
   render: () => html`
-    <swc-response-status status="complete" open>
+    <swc-response-status status="complete" open accessible-label="Execution steps">
       <span slot="label">Thought for 12 seconds</span>
-      ${executionStepsLabelSlot} ${completeSteps}
+      ${completeSteps}
     </swc-response-status>
   `,
   tags: ['a11y'],
