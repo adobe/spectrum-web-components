@@ -24,7 +24,7 @@ export interface ResolveTriggerOptions {
  * The resolved trigger and the element that should receive ARIA wiring.
  *
  * `trigger` is the element used for positioning. `interactiveElement` is the
- * AT-facing focusable element — the inner `<button>` of an open-shadow SWC
+ * AT-facing focusable element: the inner `<button>` of an open-shadow SWC
  * component when present, otherwise the trigger itself.
  */
 export interface ResolvedTrigger {
@@ -36,13 +36,33 @@ export interface ResolvedTrigger {
  * Resolve the trigger for a popover-like host and discover the AT-facing inner
  * button across shadow boundaries.
  *
- * @todo Phase 4/5: implement `for=` resolution via
- * `host.getRootNode().getElementById()`, the `triggerElement` override, and
- * inner-button discovery (`trigger.shadowRoot?.querySelector('button')`).
+ * Resolution order: a direct `triggerElement` reference wins; otherwise `for`
+ * is resolved by ID within the host's tree root (`getRootNode().getElementById`,
+ * strictly same-root). When the resolved trigger exposes an open shadow root,
+ * its inner `<button>` becomes the `interactiveElement` that receives ARIA;
+ * otherwise ARIA is wired on the trigger itself.
  */
 export function resolveTrigger(
-  _host: HTMLElement,
-  _options: ResolveTriggerOptions
+  host: HTMLElement,
+  options: ResolveTriggerOptions
 ): ResolvedTrigger {
-  return { trigger: null, interactiveElement: null };
+  let trigger: HTMLElement | null = options.triggerElement ?? null;
+
+  if (!trigger && options.for) {
+    // `getRootNode()` returns the Document or the host's ShadowRoot; both expose
+    // `getElementById`, keeping resolution strictly within the same tree root.
+    const root = host.getRootNode() as Document | ShadowRoot;
+    trigger = root.getElementById?.(options.for) ?? null;
+  }
+
+  if (!trigger) {
+    return { trigger: null, interactiveElement: null };
+  }
+
+  // Inner-button discovery: for a 2nd-gen component trigger with an open shadow
+  // root, wire ARIA on the AT-facing inner <button>. Closed-shadow or native
+  // triggers fall back to the trigger host itself.
+  const innerButton = trigger.shadowRoot?.querySelector('button') ?? null;
+
+  return { trigger, interactiveElement: innerButton ?? trigger };
 }
