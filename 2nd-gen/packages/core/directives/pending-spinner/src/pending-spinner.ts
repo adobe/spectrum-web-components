@@ -10,14 +10,21 @@
  * governing permissions and limitations under the License.
  */
 
-import { html, nothing, TemplateResult } from 'lit';
+import { html, nothing, type TemplateResult } from 'lit';
 import { classMap } from 'lit/directives/class-map.js';
 
 /**
- * Shared pending-spinner SVG template used by both swc-button and
- * swc-action-button. Returns `nothing` when `pending` is false so callers
- * can interpolate unconditionally: `${renderPendingSpinner(this.pending,
- * this.pendingActive)}`.
+ * Renders the shared pending-spinner SVG used by pending-capable components.
+ * Returns `nothing` when `pending` is false so callers can interpolate
+ * unconditionally: `${renderPendingSpinner(this.pending, this.pendingActive)}`.
+ *
+ * This is render-only and carries no design-token dependency. Pair it with
+ * `PendingMixin` (state) and the shared `pending-spinner.css` style fragment,
+ * which themes the `swc-PendingSpinner*` classes this emits.
+ *
+ * @param pending - Whether the host is in the pending (busy) state.
+ * @param pendingActive - Whether the delayed busy visual is active; toggles the
+ * `swc-PendingSpinner--active` class that runs the spin animation.
  */
 export function renderPendingSpinner(
   pending: boolean,

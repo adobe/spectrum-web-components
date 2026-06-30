@@ -329,7 +329,7 @@ slot[name="icon"]::slotted(*) {
   --swc-button-down-state-transform: none;
 
   justify-content: center;
-  inline-size: var(--_swc-button-pending-inline-size); /* Preserve measured inline size to avoid impacting layout, set via JS when state changes */
+  inline-size: var(--swc-pending-inline-size); /* Preserve measured inline size to avoid impacting layout, set via the PendingMixin when state changes */
 
   /* Disabled colors reference the already-resolved disabled vars so outline and
    static-color variants automatically get their correct unavailable appearance. */
