@@ -22,4 +22,4 @@ export const version = '1.12.1';
 /**
  * The version of the core base package.
  */
-export const coreVersion = '0.1.0';
+export const coreVersion = '2.0.0-beta.0';

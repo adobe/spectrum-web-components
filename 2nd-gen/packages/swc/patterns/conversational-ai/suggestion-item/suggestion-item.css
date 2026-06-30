@@ -46,7 +46,7 @@
 
 .swc-SuggestionItem:focus-visible {
   outline: token("focus-indicator-thickness") solid token("focus-indicator-color");
-  outline-offset: token("focus-indicator-gap");
+  outline-offset: token("focus-ring-gap");
 }
 
 .swc-SuggestionItem:active {
@@ -57,8 +57,8 @@
 }
 
 .swc-SuggestionItem swc-icon {
-  --swc-icon-inline-size: token("workflow-icon-size-100");
-  --swc-icon-block-size: token("workflow-icon-size-100");
+  --swc-icon-inline-size: token("workflow-icon-medium");
+  --swc-icon-block-size: token("workflow-icon-medium");
 
   flex-shrink: 0;
   margin-inline-start: var(--swc-suggestion-item-icon-margin-inline-start, 14px);

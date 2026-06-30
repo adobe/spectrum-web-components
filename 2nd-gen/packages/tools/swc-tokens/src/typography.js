@@ -128,8 +128,62 @@ const CJK_OVERRIDES = {
 };
 
 const PROSE_CLASS = 'Typography--prose';
+const LINKS_CLASS = 'Typography--links';
+
 function proseSelector(prefix) {
   return `.${prefix}-${PROSE_CLASS}`;
+}
+
+function linksSelector(prefix) {
+  return `.${prefix}-${LINKS_CLASS}`;
+}
+
+function typographyLinksWrapperSelector(prefix) {
+  return `:is(${proseSelector(prefix)}, ${linksSelector(prefix)})`;
+}
+
+/**
+ * Default native anchor appearance inside typography wrappers.
+ * Uses :where(a) so BEM modifiers from link.css can override.
+ */
+function generateTypographyAnchorRules(prefix) {
+  const wrapper = typographyLinksWrapperSelector(prefix);
+  const anchor = ':where(a)';
+  const wrapperSelectors = `${wrapper} ${anchor}`;
+  const stateSelectors = (pseudo) => `${wrapper} ${anchor}${pseudo}`;
+
+  const baseDecls = pickValidDecls({
+    font: 'inherit',
+    color: `var(--${prefix}-link-text-color-default, token("accent-content-color-default"))`,
+    'text-decoration': 'underline',
+    'text-decoration-thickness': `token("text-underline-thickness")`,
+    'text-underline-offset': `token("text-gap-medium")`,
+    transition: `color token("animation-duration-100") ease-in-out`,
+  });
+
+  const hoverDecls = pickValidDecls({
+    color: `var(--${prefix}-link-text-color-hover, token("accent-content-color-hover"))`,
+  });
+
+  const activeDecls = pickValidDecls({
+    color: `var(--${prefix}-link-text-color-down, token("accent-content-color-down"))`,
+  });
+
+  const focusDecls = pickValidDecls({
+    color: `var(--${prefix}-link-text-color-focus, token("accent-content-color-key-focus"))`,
+    'border-radius': 'token("corner-radius-100")',
+    outline: `token("focus-indicator-thickness") solid var(--${prefix}-link-focus-indicator-color, token("focus-indicator-color"))`,
+    'outline-offset': 'token("focus-ring-gap")',
+  });
+
+  return `/* =========================
+  Links (prose and link lists)
+  ========================= */
+${cssBlock(wrapperSelectors, baseDecls)}
+${cssBlock(stateSelectors(':hover'), hoverDecls)}
+${cssBlock(stateSelectors(':active'), activeDecls)}
+${cssBlock(stateSelectors(':focus-visible'), focusDecls)}
+`;
 }
 
 /**
@@ -784,6 +838,9 @@ export async function generateTypographyCssString(options = {}) {
   out += `.${prefix}-Typography--emphasized:not(${CJK_NOT_LIST}) {
   font-style: token("italic-font-style");
 }\n`;
+
+  out += '\n';
+  out += generateTypographyAnchorRules(prefix);
 
   return out;
 }
