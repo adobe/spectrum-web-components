@@ -69,6 +69,8 @@
 
 ## TL;DR
 
+> **Amendment (dialog surface, both modes).** Later in the migration, `<swc-popover>` was made a **dialog in both modes**: the default-mode `<div popover>` carries `role="dialog"`, forwards `accessible-label` as `aria-label`, is focusable (`tabindex="-1"`), and moves focus into the surface on open (restoring to the trigger on close); the trigger carries `aria-haspopup="dialog"` in both modes, and a missing name is dev-warned in both. This was possible because `menu` / `listbox` / `combobox` do **not** wrap the `<swc-popover>` component — they build on the shared `PlacementController` with their own roles — so the surface no longer needs to be a roleless host. Where statements below describe the default-mode surface as roleless / focus as consumer-managed / `aria-haspopup` as modal-only, this amendment supersedes them. Full rationale: [accessibility-migration-analysis.md](./accessibility-migration-analysis.md#2nd-gen-design-update-amends-this-analysis--q4).
+
 The 1st-gen `<sp-popover>` is a 75-line, styles-only component. Open/close, positioning, focus trap, dismissal, and ARIA were all delegated to `<sp-overlay>` or to the consumer. In 2nd-gen, `<swc-popover>` becomes an **opinionated, self-contained component** that renders an internal `<div popover="auto">` for non-modal behavior and an internal `<dialog>` for modal behavior, selecting the element and open method from the `modal` attribute. Native top-layer, light-dismiss (in default mode), anchored positioning, and trigger-side ARIA wiring all come out of the box.
 
 - **Two supported behavior modes — the `modal` attribute selects the internal element and open method:**
@@ -270,8 +272,8 @@ Properties marked **Internal (`@internal`)** below are positioning implementatio
 | -------- | ---- | ------- | --------- | ----- |
 | `open` | `boolean` | `false` | `open` (reflect) | **Confirmed.** Reflected. In auto mode (default), setter calls `showPopover()` / `hidePopover()`. In modal mode, setter calls `showModal()` / `close()` on the internal `<dialog>` element. State sync from the native lifecycle uses a private backing field to avoid setter-listener loops (same guard the tooltip plan documents). |
 | `modal` | `boolean` | `false` | `modal` (reflect) | **Confirmed.** When set, the component opts into `<dialog>.showModal()` behavior: focus trap, background inert, native `role="dialog"`, wired backdrop-click-to-close. When not set (default), the component uses `popover="auto"` for non-blocking light-dismiss behavior. See [Default lifecycle](#default-lifecycle--divshowpopover) and [Opt-in lifecycle](#opt-in-lifecycle--dialogshowmodal) for the two paths. |
-| `accessibleLabel` | `string` | `''` | `accessible-label` | **New in 2nd-gen.** Accessible name for the modal dialog; forwarded as `aria-label` onto the internal `<dialog>` (the standard `accessibleLabel` pattern). Applies in modal mode only — the default-mode surface is a roleless container. A modal popover opened without it is dev-warned. |
-| `placement` | `Placement` | `'bottom'` | `placement` (reflect) | **Confirmed.** "The placement of the element with respect to its anchor element." All 22 React Spectrum values supported on the customer-facing component, space-separated: `bottom`, `bottom left`, `bottom right`, `bottom start`, `bottom end`, `top`, `top left`, `top right`, `top start`, `top end`, `left`, `left top`, `left bottom`, `start`, `start top`, `start bottom`, `right`, `right top`, `right bottom`, `end`, `end top`, `end bottom`. Physical-alignment variants (`top left`, `top right`, `bottom left`, `bottom right`) are distinct from logical-alignment variants (`top start`, `top end`, etc.) — physical stays fixed regardless of direction; logical reverses in RTL. The component translates the space-separated value to Floating UI's hyphenated form internally for `PlacementController`; the controller's resolved physical side is then reflected as the `actual-placement` host attribute for CSS. Each downstream first-party component narrows this set per the proxy pattern — `<swc-popover>` accepts the full 22-value union; downstream components like Picker, Action Menu, etc. each re-declare `placement` with a narrower TypeScript union and runtime validation matching the placements actually supported by their pattern (e.g., a picker dropdown may only accept `bottom-*` and `top-*` variants). |
+| `accessibleLabel` | `string` | `''` | `accessible-label` | **New in 2nd-gen.** Accessible name for the popover's dialog surface; forwarded as `aria-label` onto the internal element. Applies in **both** modes — the surface is a dialog in the default mode too (see the dialog-surface amendment). A popover opened without it is dev-warned in both modes. |
+| `placement` | `Placement` | `'bottom'` | `placement` (reflect) | **Confirmed (revised in session: logical 12-value set).** "The placement of the element with respect to its anchor element." `<swc-popover>` accepts the block sides and the **logical** inline sides, each with two alignments (hyphenated): `top`, `top-start`, `top-end`, `bottom`, `bottom-start`, `bottom-end`, `start`, `start-top`, `start-bottom`, `end`, `end-top`, `end-bottom`. Logical sides resolve against the writing direction (`start` is the left in LTR, the right in RTL), so placements stay correct under RTL without physical aliases. The `PlacementController` (which can also resolve the physical `left`/`right` variants) converts the requested placement to Floating UI's hyphenated form using the element's computed direction; the controller's resolved **physical** side is reflected as the `actual-placement` host attribute for CSS (tip orientation, entry slide). `POPOVER_VALID_PLACEMENTS` is this 12-value logical set, validated at runtime in `update()`. Each downstream first-party component narrows further per the proxy pattern by re-declaring `placement` with its own union and `VALID_PLACEMENTS`. (Earlier draft proposed the full 22-value physical + logical union; narrowed to the logical 12 in session to match the design-recommended positions while staying RTL-correct.) |
 | `size` | `PopoverSize \| undefined` | `undefined` | `size` (reflect) | **New in 2nd-gen.** Optional fixed size. When set, the popover uses a fixed inline size (`s` = 336px, `m` = 416px, `l` = 576px); when unset, it fits its contents. Aligned with React Spectrum S2 `Popover` sizing. |
 | `hide-arrow` | `boolean` | `false` | `hide-arrow` (reflect) | **Renamed from 1st-gen `tip` (B7).** Inverted semantics: in 1st-gen, `tip` was opt-in (set `tip` to show the arrow); in 2nd-gen, the arrow is shown by default and `hide-arrow` hides it. Aligned with React Spectrum S2 where `Popover` shows an arrow by default. The tip element has `class="swc-Popover-tip"` and is positioned by the `PlacementController`'s `arrow` middleware via `tipElement`; orientation comes from the `actual-placement` host attribute. Naming decided with design: `hide-arrow`. |
 | `offset` | `number` | `8` | `offset` | **Confirmed.** Main-axis offset in pixels from the trigger. Default is 8, aligned with React Spectrum S2 `Popover` default. Passed to `PlacementController`. |
@@ -293,16 +295,14 @@ Based on Figma `S2 / Web (Desktop scale)` Popover frame and `spectrum-css` `spec
 | Default surface | Yes | Yes | Yes (border becomes `CanvasText`) |
 | Dialog padding via `<swc-dialog>` adoption | Yes | Yes | Yes |
 
-Placement options follow React Spectrum's API (22 total values, space-separated):
+`<swc-popover>` accepts the logical 12-value set (hyphenated). The controller can also resolve the physical `left`/`right` variants, but the component narrows to the logical set so placements stay RTL-correct:
 
 | Group | Values | Notes |
 | ----- | ------ | ----- |
-| Bottom side | `bottom`, `bottom left`, `bottom right`, `bottom start`, `bottom end` | Tip points up. `left`/`right` are physical alignment (RTL-fixed); `start`/`end` are logical (RTL-aware). `bottom` is the default. |
-| Top side | `top`, `top left`, `top right`, `top start`, `top end` | Tip points down. Same physical-vs-logical split. |
-| Left side | `left`, `left top`, `left bottom` | Physical (RTL-fixed); tip points right. No `left start`/`left end` — sub-alignment is always physical for the physical `left` side. |
-| Right side | `right`, `right top`, `right bottom` | Physical (RTL-fixed); tip points left. Same as `left`. |
-| Start side (logical) | `start`, `start top`, `start bottom` | RTL-aware: `start` = `left` in LTR, `right` in RTL. Tip points outward. |
-| End side (logical) | `end`, `end top`, `end bottom` | RTL-aware: `end` = `right` in LTR, `left` in RTL. Tip points outward. |
+| Bottom side | `bottom`, `bottom-start`, `bottom-end` | Tip points up. `start`/`end` alignments are logical (RTL-aware). `bottom` is the default. |
+| Top side | `top`, `top-start`, `top-end` | Tip points down. Same logical alignment. |
+| Start side (logical) | `start`, `start-top`, `start-bottom` | RTL-aware: `start` = left in LTR, right in RTL. Tip points toward the trigger. |
+| End side (logical) | `end`, `end-top`, `end-bottom` | RTL-aware: `end` = right in LTR, left in RTL. Tip points toward the trigger. |
 
 #### Slots (2nd-gen)
 
@@ -349,7 +349,7 @@ When `modal` is not set, the component opens the internal `<div popover="auto">`
 3. On `open = false`: the component calls `internalPopover.hidePopover()`. Browser fires `beforetoggle` then `toggle`.
 4. The `beforetoggle` listener fires `swc-open` (on open) or `swc-close` (on close). The `transitionend` listener handles `swc-after-open` / `swc-after-close`.
 5. Light-dismiss (Escape, click outside) is browser-handled. The component does not attach its own keydown or click-outside listener in this mode.
-6. Initial focus: `popover="auto"` does not move focus by default. First-party components handle pattern-specific focus targets themselves (e.g., Picker focuses the selected menu item after open). The popover host does not prescribe.
+6. Initial focus: `popover="auto"` does not move focus natively, so the component moves focus into the dialog surface on open and restores it to the trigger on close (deferred to the first placement compute, `preventScroll`, suppressed on the initial render). See the dialog-surface amendment.
 7. The browser's auto-popover-stack handles sibling-dismissal between auto popovers (see [Stacking](#stacking)).
 8. The component registers with `dismissibleStack` on open and unregisters on close, even though it doesn't attach its own Escape handler. This tells other dismissibles (e.g., a modal dialog opened above) that the popover is currently the top — they defer to it when checking `isTopDismissible(this)`.
 
@@ -431,7 +431,7 @@ The shift from "styles-only host + `<sp-overlay>` orchestration" to "self-contai
 | **Stacking sibling popovers** | `OverlayStack` typically dismissed the prior popover | **Browser dismisses prior auto popover.** Same UX. |
 | **Stacking nested popovers** | `OverlayStack` kept parent open | **No native nesting support in v1.** A child popover (`popover="auto"`) opening dismisses its parent. Nested-popover patterns (submenu, etc.) handled per-component-migration via `popover="manual"`. Regression vs 1st-gen; documented in [Stacking](#stacking). |
 | **Default placement** | `undefined` — no class applied | `'bottom'` (B3). The host always has a placement class. |
-| **`role="dialog"` on the surface** | Not set; consumers added `role="presentation"` to strip semantics | **Not set.** `popover="auto"` has no inherent role; consumers slot whatever pattern they're building. |
+| **`role="dialog"` on the surface** | Not set; consumers added `role="presentation"` to strip semantics | **Set in both modes.** The default-mode `<div popover>` carries `role="dialog"` (see the dialog-surface amendment); modal mode gets it natively from `<dialog>`. |
 
 For the default mode, the only consumer-visible API change is "use `for=` on the popover instead of authoring it inside `<sp-overlay>`." The dismissal UX is preserved, the page behavior is preserved, and sibling-popover dismissal is preserved (browser-managed instead of `OverlayStack`-managed). The one real regression is nested-popover support — see [Stacking](#stacking).
 
@@ -446,7 +446,7 @@ For the default mode, the only consumer-visible API change is "use `for=` on the
 | **Click outside the popover** | Closed (1st-gen light-dismiss) | **Closes** via wired backdrop-click listener (component-implemented; see [Opt-in lifecycle — `dialog.showModal()`](#opt-in-lifecycle--dialogshowmodal)). |
 | **Backdrop visual** | None | **Native `::backdrop`** pseudo-element renders behind the dialog. Spectrum 2 chrome TBD per Figma. |
 | **Stacking with other popovers** | `OverlayStack` managed | **Separate top-layer stack** from auto popovers. Multiple modal popovers stack LIFO. |
-| **Initial focus** | Configured via `<sp-overlay receivesFocus>` | **Native `<dialog>` autofocus rules.** First focusable descendant or `autofocus` element. |
+| **Initial focus** | Configured via `<sp-overlay receivesFocus>` | **Focus moves into the dialog surface on open** in both modes (modal via native `<dialog>` autofocus; default mode focuses the surface), and restores to the trigger on close. |
 | **`role="dialog"` on the surface** | Not set | **Set automatically** by the native `<dialog>` element. |
 
 **Most significant practical consequences:**
@@ -481,7 +481,7 @@ On the resolved trigger (or its inner button), the component wires:
 
 **`aria-expanded`** — always present once a trigger is resolved (`"false"` when closed, `"true"` when open). Visibility state; the control relationship stays via `ariaControlsElements`.
 
-**`aria-haspopup="dialog"`** — only when `modal` is set, matching the native `role="dialog"` surface opened via `showModal()`. Auto mode does not set `aria-haspopup`; other components who know their pattern (e.g. menu, listbox) set it themselves (this may change in case we end up deciding menus and pickers need to be blocking too, then this needs to be configurable!). 
+**`aria-haspopup="dialog"`** — set in **both** modes, since the surface is a dialog in both (see the dialog-surface amendment). Menu/listbox/combobox do not wrap `<swc-popover>`; they build on the shared `PlacementController` with their own roles, so they set their own `aria-haspopup` value on their own triggers. 
 This differs from the tooltip plan's `ariaDescribedByElements` wiring, which is open-only. Popover trigger relationships are durable across open/close cycles.
 
 ### Event lifecycle
@@ -651,7 +651,7 @@ CSS targets the internal `.swc-Popover` element regardless of mode. `popover.css
 >
 > **Implemented in the combined Phase 4+5 branch** (`ruben/feat-popover-a11y-styling-swc-1993`): the runtime lifecycle items below are now done — `open` → `showPopover()` / `showModal()` and `hidePopover()` / `close()` with the `#syncingOpen` guard; `swc-open` / `swc-after-open` / `swc-close` / `swc-after-close` dispatch (with the 0-duration transition guard) wired to `beforetoggle` (default) and `cancel` / `close` (modal); modal backdrop-click via `pointerdown` + `event.target === dialog`; `dismissibleStack` register/unregister; lazy `PlacementController` start/stop with tip `arrow` wiring; the `actual-placement` host attribute (reflecting the computed physical side) driving tip orientation and the arrow-gap margin; **trigger click-to-toggle** (with a `#lastDismissAt` guard against light-dismiss reopen) and the **`manual`** opt-out. (Verified in chromium via the vitest storybook project, including a click-to-toggle test.) The checkboxes below are left as the original spec; this note is the completion record for that work.
 
-- [x] `Popover.types.ts`: re-export `Placement` from the placement-controller types; define `POPOVER_VALID_PLACEMENTS` (all 22 React Spectrum values); define `PopoverCloseSource` and `PopoverCloseEventDetail` for the `swc-close` event
+- [x] `Popover.types.ts`: re-export `Placement` from the placement-controller types; define `POPOVER_VALID_PLACEMENTS` (the logical 12-value set: `top`/`bottom` plus the logical `start`/`end` sides, each with two alignments); define `PopoverCloseSource` and `PopoverCloseEventDetail` for the `swc-close` event
 - [x] `Popover.base.ts`: declares all properties (`open`, `modal`, `placement`, `size`, `hideArrow`, `offset`, `crossOffset`, `shouldFlip`, `containerPadding`, `tipPadding`, `for`, `triggerElement`, `manual`) on `SpectrumElement`; `container-padding` / `tip-padding` marked `@internal` (the public surface mirrors React Spectrum's S2 `Popover`); the computed placement is **not** a property (reflected as the internal `actual-placement` attribute by the concrete component); runtime validation of `placement` against the `VALID_PLACEMENTS` static in `update()` (warns in dev mode via `window.__swc.warn`, falls through to controller)
 - [x] `@fires` documentation for `swc-open` / `swc-after-open` / `swc-close` / `swc-after-close` on the SWC class (verified surfaced in the CEM)
 - [x] `Popover.ts` (SWC): render shape branches on `modal` — `<div class="swc-Popover" popover="auto">` in default mode, `<dialog class="swc-Popover">` (no `popover` attribute) in modal mode; both wrap `<div class="swc-Popover-content"><slot></slot></div>`; `<span class="swc-Popover-tip">` rendered unless `hide-arrow` is set; the computed physical side is reflected as the `actual-placement` host attribute (no reactive modifier class); element registration. No `anchor` or `popovertarget` attribute is set on the internal element.
@@ -684,7 +684,7 @@ CSS targets the internal `.swc-Popover` element regardless of mode. `popover.css
 - [ ] Render shape: `<dialog class="swc-Popover"><div class="swc-Popover-content"><slot></slot></div>...</dialog>`. Padding lives on `.swc-Popover-content`, not on `.swc-Popover`; keep styling off `:host` except for structural rules required by the host's element type
 - [ ] Copy S2 source from `spectrum-css/components/popover/index.css` (`spectrum-two` branch, not `/dist`) into `popover.css` as baseline
 - [ ] Map Spectrum CSS selectors to SWC equivalents following the CSS selector guidance in `CONTRIBUTOR-DOCS`
-- [x] Tip orientation and the arrow-gap margin key off the `actual-placement` host attribute, which the controller resolves to a physical side (`top` / `bottom` / `left` / `right`). Logical `start` / `end` and alignment suffixes collapse to the physical side, so four selectors cover all 22 placement values — no per-variant modifier classes are needed. Mirrors Tooltip.
+- [x] Tip orientation and the arrow-gap margin key off the `actual-placement` host attribute, which the controller resolves to a physical side (`top` / `bottom` / `left` / `right`). Logical `start` / `end` and alignment suffixes collapse to the physical side, so four selectors cover every placement value — no per-variant modifier classes are needed. Mirrors Tooltip.
 - [x] Add `.swc-Popover-tip` element styles; orient based on the `actual-placement` host attribute (`:host([actual-placement="…"]) .swc-Popover-tip`). Note: the tip's along-edge position is set by the `PlacementController`'s `arrow` middleware (inline `translate`), not by CSS; CSS handles orientation and base appearance only.
 - [ ] Wrap modal-host-specific rules and any JS-lifecycle-driven animations in `/* @global-exclude */ … /* @global-exclude-end */` markers
 - [ ] Forced-colors media query: sort to the bottom of `popover.css`; verify visible chrome (border becomes `CanvasText`)
@@ -694,7 +694,7 @@ CSS targets the internal `.swc-Popover` element regardless of mode. `popover.css
 #### Visual model and regressions
 
 - [ ] Verify chrome (border, drop shadow, radius, background) matches Figma at all placements
-- [ ] Verify tip geometry across all 22 placement values (5 bottom, 5 top, 3 left, 3 right, 3 start, 3 end) and RTL logical variants (`start`, `end`, and their sub-alignments)
+- [ ] Verify tip geometry across the 12 placement values (3 bottom, 3 top, 3 start, 3 end) in both LTR and RTL (logical `start` / `end` resolve to opposite physical sides per direction)
 - [ ] Verify forced-colors / high-contrast mode
 - [ ] Document that v1 has no public migration path for 1st-gen's `[dialog]` attribute. Visual parity with 1st-gen's dialog-padding behavior is not shipped as a customer-facing surface — consumers needing that visual treatment wait for `<swc-dialog>` to ship as a separate migration.
 
@@ -782,7 +782,7 @@ CSS targets the internal `.swc-Popover` element regardless of mode. `popover.css
 
 #### Visual regression
 
-- [ ] VRT covering at least one variant per side (bottom, top, left, right, start, end) plus representative sub-alignment variants (e.g., `bottom start`, `top end`, `left top`). Full 22-value matrix is not required for VRT but tip orientation and edge-positioning must be visually correct for each side group.
+- [ ] VRT covering at least one variant per side (bottom, top, start, end) plus representative sub-alignment variants (e.g., `bottom-start`, `top-end`, `start-top`). Full 12-value matrix is not required for VRT but tip orientation and edge-positioning must be visually correct for each side group.
 - [ ] VRT for at least 2 logical placements (`start`, `end`) verifying RTL behavior
 - [ ] VRT for arrow present (default) and absent (`hide-arrow`)
 - [ ] VRT for open and closed states with transition

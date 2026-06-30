@@ -79,6 +79,8 @@ export const ClickToggleTest: Story = {
     await step('starts closed with aria-expanded="false"', () => {
       expect(popover.open, 'closed initially').toBe(false);
       expect(trigger.getAttribute('aria-expanded')).toBe('false');
+      // The surface is a dialog in both modes, so the trigger always signals it.
+      expect(trigger.getAttribute('aria-haspopup')).toBe('dialog');
     });
 
     await step('clicking the trigger opens the popover', async () => {
@@ -256,7 +258,7 @@ export const ModalModeRenderTest: Story = {
 };
 
 // ──────────────────────────────────────────────────────────────
-// TEST: accessible-label forwarding (modal mode only)
+// TEST: accessible-label forwarding (both modes — the surface is a dialog)
 // ──────────────────────────────────────────────────────────────
 
 export const AccessibleLabelTest: Story = {
@@ -296,25 +298,28 @@ export const AccessibleLabelWhitespaceTest: Story = {
   },
 };
 
-export const AccessibleLabelDefaultModeTest: Story = {
+export const DefaultModeDialogSemanticsTest: Story = {
   render: () => html`
-    <swc-popover accessible-label="ignored in default mode">
-      Content
-    </swc-popover>
+    <swc-popover accessible-label="Account settings">Content</swc-popover>
   `,
   play: async ({ canvasElement, step }) => {
     const popover = await getComponent<Popover>(canvasElement, 'swc-popover');
     await popover.updateComplete;
 
     await step(
-      'does not set aria-label on the roleless default-mode surface',
+      'the default-mode surface is a named dialog (role + aria-label + focusable)',
       () => {
         const div = popover.shadowRoot?.querySelector('.swc-Popover');
         expect(div?.tagName, 'default mode renders a DIV').toBe('DIV');
+        expect(div?.getAttribute('role'), 'surface is a dialog').toBe('dialog');
         expect(
-          div?.hasAttribute('aria-label'),
-          'no aria-label on the generic container'
-        ).toBe(false);
+          div?.getAttribute('aria-label'),
+          'accessible-label names the dialog in default mode too'
+        ).toBe('Account settings');
+        expect(
+          div?.getAttribute('tabindex'),
+          'surface is programmatically focusable'
+        ).toBe('-1');
       }
     );
   },
@@ -934,6 +939,41 @@ export const FocusRegionContentClickTest: Story = {
         popover.open,
         'focusing content inside the popover does not dismiss it'
       ).toBe(true);
+    });
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Focus moves into the dialog surface on open (default mode)
+// ──────────────────────────────────────────────────────────────
+
+export const FocusOnOpenTest: Story = {
+  render: () => html`
+    <div style="padding: 40px">
+      <button id="focus-open-trigger">Trigger</button>
+      <swc-popover for="focus-open-trigger" accessible-label="Details">
+        <button id="focus-open-inside">Inside</button>
+      </swc-popover>
+    </div>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const popover = await getComponent<Popover>(canvasElement, 'swc-popover');
+    const trigger = canvasElement.querySelector(
+      '#focus-open-trigger'
+    ) as HTMLElement;
+    await popover.updateComplete;
+
+    await step('opening moves focus into the dialog surface', async () => {
+      await userEvent.click(trigger);
+      await waitFor(() => expect(popover.open).toBe(true));
+      const surface = popover.shadowRoot?.querySelector('.swc-Popover');
+      // Focus is deferred to the first placement compute, so wait for it to land.
+      await waitFor(() =>
+        expect(
+          popover.shadowRoot?.activeElement,
+          'focus lands on the dialog surface once anchored'
+        ).toBe(surface)
+      );
     });
   },
 };
