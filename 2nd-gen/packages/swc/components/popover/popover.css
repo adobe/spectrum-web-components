@@ -10,18 +10,234 @@
  * governing permissions and limitations under the License.
  */
 
-/* @todo Phase 5 (styling): port S2 source from spectrum-css and add placement modifiers. */
-
 * {
   box-sizing: border-box;
 }
 
-.swc-Popover {
-  padding: 0;
-  margin: 0;
-  border: none;
+/* The host stays in the light DOM and owns no layout; the internal element
+ * (a `<div popover="auto">` or a `<dialog>`) enters the top layer when opened. */
+:host {
+  display: contents;
 }
 
+/* The internal surface: a `<div popover>` in default mode, a `<dialog>` in modal
+ * mode. Both are `position: absolute` to match the PlacementController's Floating
+ * UI `strategy: 'absolute'`; the controller writes `top: 0; left: 0; translate`,
+ * so reset the UA centering (`margin: auto`, `inset: 0`). */
+.swc-Popover {
+  /* Arrow clearance: space the tip occupies between surface and trigger. The
+   * component reads this token and adds it to the PlacementController's main-axis
+   * offset (a CSS margin can't shift the surface on every side), keeping the gap
+   * in sync with the tip. */
+  --_swc-popover-tip-height: token("popover-tip-height");
+
+  /* Distance the surface slides from the trigger on open/close. */
+  --_swc-popover-animation-distance: token("spacing-75");
+
+  position: absolute;
+  inset: auto;
+  inline-size: max-content;
+
+  /* Cap to the smaller of the placement-aware usable width the
+   * PlacementController exposes (matters for the inline-start/-end placements,
+   * where it is the gap beside the trigger) and the viewport minus container
+   * padding, so both constraints apply. The var falls back to the full inline
+   * viewport before the first position is computed. */
+  max-inline-size: min(var(--swc-placement-available-width, 100vi), calc(100vi - 24px));
+  max-block-size: none;
+  padding: 0;
+  margin: 0;
+  color: inherit;
+  background-color: var(--swc-popover-background-color, token("background-layer-2-color"));
+  border: token("border-width-100") solid var(--swc-popover-border-color, token("popover-border-color"));
+  border-radius: var(--swc-popover-corner-radius, token("corner-radius-700"));
+  overflow: visible;
+
+  /* Keep scrolling inside an internal scroll region from chaining out to the
+   * page (most relevant in modal mode). The page-level scroll lock for modal mode
+   * is handled in JS by the PageScrollLockController (a shadow stylesheet cannot
+   * reach `html`). */
+  overscroll-behavior: contain;
+  outline: none;
+
+  /* Fade and slide on open/close. The PlacementController owns the resting
+   * position via `translate`; the entry/exit slide uses `transform` (composes
+   * with `translate`), starting offset toward the trigger (per `placement` below)
+   * and animating to none once anchored. */
+  opacity: 0;
+
+  /* Elevated drop shadow. With the arrow shown (default), `filter: drop-shadow`
+   * is used so the arrow casts a matching shadow; the three layers mirror the
+   * `--swc-drop-shadow-elevated` token (ambient, transition, key). */
+  filter: drop-shadow(0 4px 12px token("drop-shadow-ambient-color")) drop-shadow(0 2px 6px token("drop-shadow-transition-color")) drop-shadow(0 0 2px token("drop-shadow-elevated-key-color"));
+  transition:
+    opacity token("animation-duration-200") token("animation-ease-out"),
+    transform token("animation-duration-200") token("animation-ease-out"),
+    overlay token("animation-duration-200") allow-discrete,
+    display token("animation-duration-200") allow-discrete;
+}
+
+/* No arrow: use the rectangular `box-shadow` form of the elevated token, which
+ * composites cleanly with nested popovers (e.g. submenus). */
+:host([hide-arrow]) .swc-Popover {
+  box-shadow: token("drop-shadow-elevated");
+  filter: none;
+}
+
+/* Fixed sizes; when `size` is unset the popover fits its contents. */
+:host([size="s"]) .swc-Popover {
+  inline-size: 336px;
+}
+
+:host([size="m"]) .swc-Popover {
+  inline-size: 416px;
+}
+
+:host([size="l"]) .swc-Popover {
+  inline-size: 576px;
+}
+
+/* Entry/exit slide offset by requested side (reflected `placement`, known
+ * immediately, unlike the async `actual-placement`). The surface starts shifted
+ * toward the trigger; the anchored open state below animates it to none. Prefix
+ * selectors cover the aligned variants (e.g. `top-start` starts with `top`). The
+ * logical inline sides slide along the inline axis and resolve against the writing
+ * direction with `:dir()`: `start` is the left in LTR (slides from the right) and
+ * the right in RTL, and `end` is the mirror. Ordered after the `size`/`hide-arrow`
+ * rules so the `:dir()` selectors do not descend in specificity. */
+:host([placement^="top"]) .swc-Popover {
+  transform: translateY(var(--_swc-popover-animation-distance));
+}
+
+:host([placement^="bottom"]) .swc-Popover {
+  transform: translateY(calc(-1 * var(--_swc-popover-animation-distance)));
+}
+
+:host([placement^="start"]:dir(ltr)) .swc-Popover,
+:host([placement^="end"]:dir(rtl)) .swc-Popover {
+  transform: translateX(var(--_swc-popover-animation-distance));
+}
+
+:host([placement^="start"]:dir(rtl)) .swc-Popover,
+:host([placement^="end"]:dir(ltr)) .swc-Popover {
+  transform: translateX(calc(-1 * var(--_swc-popover-animation-distance)));
+}
+
+/* Shown state: open and anchored. Positioning is async, so the fade is gated on
+ * `actual-placement` (set once the first placement lands); otherwise the surface
+ * would fade in at its 0,0 origin and jump to the trigger mid-transition. The
+ * attribute is added post-render, so this is an ordinary attribute-driven
+ * transition (no `@starting-style`). `:popover-open` is the default `<div>`,
+ * `[open]` the modal `<dialog>`. Ordered after the lower-specificity rules above
+ * for `no-descending-specificity`. */
+:host([actual-placement]) .swc-Popover:popover-open,
+:host([actual-placement]) .swc-Popover[open] {
+  opacity: 1;
+  transform: none;
+}
+
+/* The padded content wrapper. Padding lives here (not on `.swc-Popover`) so a
+ * backdrop-click on the dialog's surface is not absorbed by padding in modal
+ * mode. */
 .swc-Popover-content {
-  display: block;
+  /* Bound the content to the smaller of the placement-aware usable height and
+   * 90% of the block viewport, and scroll here (not on `.swc-Popover`, whose
+   * `overflow: visible` lets the arrow render outside the box). The var falls
+   * back to 90vb before the first position is computed. */
+  max-block-size: min(var(--swc-placement-available-height, 90vb), 90vb);
+
+  /* Padding only; slotted content owns its own display/layout. Exposed as a
+   * public custom property. */
+  padding: var(--swc-popover-content-padding, token("popover-edge-to-content-area"));
+  overflow: auto;
+}
+
+/* Modal mode renders no dimming backdrop: keep the `<dialog>`'s backdrop
+ * transparent (overriding any UA default). The backdrop pseudo-element still
+ * exists, so backdrop-click light-dismiss continues to work. */
+.swc-Popover::backdrop {
+  background-color: transparent;
+}
+
+/* ──────────────────────────
+ *    TIP
+ * ────────────────────────── */
+
+/* The tip is a square rotated 45° to read as a triangle (a rotated square's
+ * visible width is its side × √2, so the side is the tip width ÷ √2). The `arrow`
+ * middleware sets its along-edge position via inline `translate`; these rules
+ * only orient it onto the correct edge per the `actual-placement` host attribute
+ * (the flip-resolved physical side). Insets and border removals are physical, so
+ * the tip lands on the same edge regardless of writing direction. */
+.swc-Popover-tip {
+  /* tip width ÷ √2 */
+  --_swc-popover-tip-size: calc(token("popover-tip-width") / 1.4142);
+
+  /* Hidden until `actual-placement` orients it onto an edge below: without a side
+   * it has no inset or border removal and would render as a detached diamond at
+   * the surface's block-end (visible during the close fade-out). */
+  visibility: hidden;
+  position: absolute;
+  inline-size: var(--_swc-popover-tip-size);
+  block-size: var(--_swc-popover-tip-size);
+
+  /* Inherit the surface's background and border (the surface resolves them from
+   * the `--swc-popover-*` props), so theming the surface also themes the arrow.
+   * The orientation rules below drop the two edges that face into the surface. */
+  background-color: inherit;
+  border: inherit;
+  rotate: 45deg;
+}
+
+/* Oriented onto an edge (any side): safe to show. */
+:host([actual-placement]) .swc-Popover-tip {
+  visibility: visible;
+}
+
+/* Tip on the top edge: popover sits below the trigger. */
+:host([actual-placement="bottom"]) .swc-Popover-tip {
+  inset-block-start: calc(var(--_swc-popover-tip-size) / -2);
+  border-right: none;
+  border-bottom: none;
+}
+
+/* Tip on the bottom edge: popover sits above the trigger. */
+:host([actual-placement="top"]) .swc-Popover-tip {
+  inset-block-end: calc(var(--_swc-popover-tip-size) / -2);
+  border-top: none;
+  border-left: none;
+}
+
+/* Popover to the left of the trigger: tip on its right edge, pointing right. */
+:host([actual-placement="left"]) .swc-Popover-tip {
+  right: calc(var(--_swc-popover-tip-size) / -2);
+  border-bottom: none;
+  border-left: none;
+}
+
+/* Popover to the right of the trigger: tip on its left edge, pointing left. */
+:host([actual-placement="right"]) .swc-Popover-tip {
+  left: calc(var(--_swc-popover-tip-size) / -2);
+  border-top: none;
+  border-right: none;
+}
+
+/* ──────────────────────────
+ *    MEDIA QUERIES
+ * ────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  .swc-Popover {
+    transition: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .swc-Popover {
+    border-color: CanvasText;
+  }
+
+  .swc-Popover-tip {
+    border-color: CanvasText;
+  }
 }
