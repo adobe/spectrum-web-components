@@ -36,8 +36,7 @@ export type ResponseStatusStatus =
   | 'pending'
   | 'active'
   | 'complete'
-  | 'stopped'
-  | 'error';
+  | 'stopped';
 
 export type ResponseStatusStepData = {
   label: string;
@@ -66,7 +65,6 @@ export class ResponseStatus extends SpectrumElement {
       active: 'Generating response',
       complete: 'Response generated',
       stopped: 'You stopped the response',
-      error: 'Response failed',
     };
 
   private static readonly DEFAULT_LIST_LABEL = 'Execution steps';
@@ -126,8 +124,7 @@ export class ResponseStatus extends SpectrumElement {
       status === 'pending' ||
       status === 'active' ||
       status === 'complete' ||
-      status === 'stopped' ||
-      status === 'error'
+      status === 'stopped'
     );
   }
 
@@ -363,7 +360,7 @@ export class ResponseStatus extends SpectrumElement {
       return this._renderCheckmark();
     }
 
-    if (this.status === 'stopped' || this.status === 'error') {
+    if (this.status === 'stopped') {
       return '';
     }
 
@@ -418,7 +415,7 @@ export class ResponseStatus extends SpectrumElement {
       `;
     }
 
-    if (status === 'stopped' || status === 'error') {
+    if (status === 'stopped') {
       return html`
         <swc-icon
           class="swc-ResponseStatus-step-icon swc-ResponseStatus-step-icon--stopped"

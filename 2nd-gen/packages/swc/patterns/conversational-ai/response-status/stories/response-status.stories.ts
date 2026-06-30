@@ -146,9 +146,6 @@ export const Statuses: Story = {
       <swc-response-status status="stopped">
         <span slot="label">You stopped the response</span>
       </swc-response-status>
-      <swc-response-status status="error">
-        <span slot="label">Response failed</span>
-      </swc-response-status>
     </div>
   `,
   tags: ['options'],

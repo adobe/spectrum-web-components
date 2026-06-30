@@ -26,7 +26,6 @@ The `status` attribute controls the lifecycle of the whole response:
 - **`active`**: the response is actively working
 - **`complete`**: the response finished successfully
 - **`stopped`**: the user interrupted the response
-- **`error`**: the response failed
 
 Use `slot="label"` for the visible header text.
 
@@ -38,7 +37,7 @@ Add `swc-response-status-step` children to render an expandable timeline. Set `e
 
 Each step uses:
 
-- **`status`**: `pending`, `active`, `complete`, `stopped`, or `error`
+- **`status`**: `pending`, `active`, `complete`, or `stopped`
 - **`slot="label"`**: step title
 - **`slot="description"`**: detail text shown in the expanded timeline
 

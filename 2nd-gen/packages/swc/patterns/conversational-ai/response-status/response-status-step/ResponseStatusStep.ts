@@ -21,8 +21,7 @@ export type ResponseStatusStepStatus =
   | 'pending'
   | 'active'
   | 'complete'
-  | 'stopped'
-  | 'error';
+  | 'stopped';
 
 /**
  * One agentic execution step inside `<swc-response-status>`.
