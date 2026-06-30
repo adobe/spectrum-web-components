@@ -287,7 +287,7 @@ Use lightweight confidence labels: **Confirmed**, **Inferred**, **Open question*
 Additional presentation modes **not supported in 2nd-gen:**
 - Stacked position variant (`block="start"/"end"`) — removed; consistent corner radius in S2
 - Inline position variant (`inline="start"/"end"`) — removed; the parent field host owns inline-group layout (it renders the `.swc-InfieldButton-inline` wrapper around the slotted buttons), not `swc-infield-button` itself
-- Static color (`static-color="white"/"black"`) — **not present** in Figma S2 spec; confirmed absent (not in 1st-gen; no field-chrome use case for static color). **Note:** if `ButtonBase` gains a `staticColor` property (tracked in PR #6410), `swc-infield-button` must explicitly exclude or override it to prevent consumers from setting an unsupported value.
+- Static color (`static-color="white"/"black"`) — **not present** in Figma S2 spec; confirmed absent (not in 1st-gen; no field-chrome use case for static color). PR #6410 explored adding `staticColor` to `ButtonBase`, but the close-button PR reverted that decision specifically because infield-button and clear-button do not use static colors. No exclusion needed.
 
 #### Slots (2nd-gen)
 
@@ -313,7 +313,7 @@ Initial expectation: a small reviewed set, likely `--swc-infield-button-height` 
 Both paths must yield a non-interactive, correctly named button in the accessibility tree. Parent field hosts must explicitly set `disabled` on `swc-infield-button` children (not rely on CSS-only dimming) when the field is disabled or when a specific affordance is inactive (e.g., decrement at minimum value).
 
 **`pending` is not on this component:**
-When a parent field is pending, the parent host disables in-field buttons, shows field-level busy UI, and updates the input/field accessible name. `swc-infield-button` has no `pending` or `pending-label` property.
+When a parent field is pending, the parent host disables in-field buttons, shows field-level busy UI, and updates the input/field accessible name. `swc-infield-button` has no `pending` or `pending-label` property. `ButtonBase` exposes `pending`, but `InfieldButton.base.ts` does not re-expose it, and `infield-button.css` must not include pending visual rules; an inherited `pending` attribute on the host element should have no visual effect.
 
 **Focus delegation and keyboard:**
 `delegatesFocus: true` is set in `ButtonBase.shadowRootOptions`. The inner `<button>` receives focus; `Enter` / `Space` activate. The component does not implement `FocusgroupNavigationController`. The parent field host owns navigation among input, stepper pairs, and other field siblings.
@@ -322,7 +322,7 @@ When a parent field is pending, the parent host disables in-field buttons, shows
 `swc-infield-button` has no `href` or related anchor attributes. It is always `type="button"` in practice.
 
 **`noDefaultSize: true`:**
-The component does not pick a default size. The parent field host must set `size` (either by attribute or inherited context). This behavior is preserved from 1st-gen. 2nd-gen `ButtonBase` already applies `SizedMixin` with `validSizes: BUTTON_VALID_SIZES` (= `['s', 'm', 'l', 'xl']`), so `InfieldButton.base.ts` only needs to re-apply `SizedMixin(..., { noDefaultSize: true })`; the `validSizes` set already matches and does not need to be overridden (see Q6). Note that M is the Figma **reference** size, not a component default.
+The component does not pick a default size. The parent field host must set `size` (either by attribute or inherited context). This behavior is preserved from 1st-gen. `InfieldButton.base.ts` applies `SizedMixin(ButtonBase, { noDefaultSize: true })`; `validSizes` reuses `BUTTON_VALID_SIZES` (`['s', 'm', 'l', 'xl']`) from `ButtonBase` and does not need to be overridden (see Q6). In practice: `getAttribute('size')` returns `null` until the parent field sets it explicitly; the JS property has no useful fallback default. M is the Figma **reference** size for token documentation, not a component default.
 
 ### Accessibility semantics notes (2nd-gen)
 
@@ -409,7 +409,7 @@ html`
 
 - [ ] `InfieldButton.types.ts`: define `InfieldButtonSize` (alias or reuse from `BUTTON_VALID_SIZES`), `InfieldButtonQuiet` boolean
 - [ ] `InfieldButton.base.ts`: extend 2nd-gen `ButtonBase` with `SizedMixin(ButtonBase, { noDefaultSize: true })`; `validSizes` does not need overriding because `BUTTON_VALID_SIZES` already equals `['s', 'm', 'l', 'xl']` (see Q6); add `quiet: boolean` property (reflect: true)
-- [ ] `InfieldButton.ts`: extend `InfieldButton.base.ts`; register as `swc-infield-button`; render inner `<button>` (with size and `quiet` modifier classes via `classMap`) containing a `.swc-InfieldButton-fill` div that wraps the `icon` slot
+- [ ] `InfieldButton.ts`: extend `InfieldButton.base.ts`; register as `swc-infield-button`; render inner `<button>` (size and `quiet` states are handled via `:host([size="s"])` / `:host([quiet])` CSS attribute selectors — no `classMap` needed for those). The `icon` slot may be wrapped in a `.swc-InfieldButton-fill` div if the S2 CSS requires it; verify during Phase 5 and remove if `::slotted()` alone is sufficient.
 - [ ] Confirm no `block`, `inline`, `href`, `target`, `download`, `rel`, `referrerpolicy`, or `pending` on the public API
 - [ ] Confirm `accessible-label` dev warning is active (inherited from `ButtonBase`)
 
@@ -426,10 +426,10 @@ html`
 > **S2 CSS baseline confirmed** (Q2 resolved): `spectrum-css` `spectrum-two` branch `components/infieldbutton/index.css` — stacked `--top`/`--bottom` classes absent, S2 token structure present, no `:lang()` selectors present.
 
 - [ ] Copy S2 source from `spectrum-css` `spectrum-two` branch `components/infieldbutton/index.css` (not `/dist`) into `infield-button.css` as the functionally-equivalent baseline
-- [ ] Apply `.swc-InfieldButton` (with size/quiet modifier classes via `classMap`) to the inner `<button>`; keep styling off `:host`
+- [ ] Apply `.swc-InfieldButton` to the inner `<button>`; use `:host([quiet])` and `:host([size="s"])` attribute selectors for size and quiet state styling (not `classMap` modifiers); keep structural styling off `:host`
 - [ ] Update class and custom property prefixes from `.spectrum-InfieldButton` to `.swc-InfieldButton`; **remove all `--mod-infield-button-*` and `--spectrum-infield-button-*` fallback chains**, collapsing each into a single intentional `--swc-infield-button-*` property with a `token(...)` default per the [custom properties style guide](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md)
 - [ ] Style the slotted icon with `slot[name="icon"]::slotted(*)` (color + size-specific padding), as `swc-button` does; do **not** put a `.swc-InfieldButton-icon` class on the consumer-slotted node (the S2 `.spectrum-InfieldButton-icon` rule targets an inline SVG in the CSS-only template, which does not apply to the slotted web-component case)
-- [ ] `.swc-InfieldButton-fill` (inner `<div>`) owns `background-color`, `border-radius`, and the centering flex
+- [ ] Verify whether `.swc-InfieldButton-fill` (inner `<div>`) is required by S2 selectors or can be removed in favour of `::slotted()` alone; if needed it owns `background-color`, `border-radius`, and the centering flex
 - [ ] Do **not** carry forward `.spectrum-InfieldButton--top` / `--bottom` stacked classes; S2 uses a consistent corner radius on the button itself
 - [ ] The `.swc-InfieldButton-inline` wrapper is **not** rendered by this component; it belongs to the parent field host (number-field/textfield) that composes stepper/clear groups
 
@@ -446,7 +446,7 @@ html`
   - Active/down: background `token("gray-200")`, icon `token("neutral-content-color-down")`; `transform: perspective(...) translateZ(...)` on the `<button>` using the S2 downstate tokens
   - Disabled: background `token("disabled-background-color")`, icon `token("disabled-content-color")`
   - Quiet: `transparent` background for default, hover, active, and disabled (not the gray disabled color)
-- [ ] Focus model: the inner `<button>` sets `outline: none` (matches S2 source). In **composed** field contexts the parent field (number-field, textfield, picker) owns the focus-visible ring while the inner `<button>` stays keyboard-reachable via `delegatesFocus`; verify with a field-level story. In **isolated** standalone usage there is no visible focus indicator by default; if one is required it must be added deliberately and meet WCAG 2.4.7. Do not add a competing `:focus-visible` outline that would double-ring inside a field
+- [ ] Focus model: the inner `<button>` sets `outline: none` (matches S2 source). In **composed** field contexts the parent field (number-field, textfield, picker) owns the focus-visible ring while the inner `<button>` stays keyboard-reachable via `delegatesFocus`; verify with a field-level story. In **isolated** standalone usage the button must show its own `:focus-visible` ring to meet WCAG 2.4.7; verify with a standalone story that the ring is visible. Do not add a competing `:focus-visible` outline that would double-ring inside a field
 - [ ] Forced colors: check each state against browser defaults first; only add `@media (forced-colors: active)` overrides where browser defaults are insufficient (per style guide — do not port spectrum-css forced-colors rules wholesale without this check). Sort the `@media (forced-colors: active)` block to the bottom of the file.
 - [ ] Verify no `:lang(ja)`, `:lang(ko)`, `:lang(zh)` size modifiers needed (not present in S2 baseline)
 - [ ] Add a `@cssprop` JSDoc tag to the primary SWC component class for every exposed `--swc-infield-button-*` property (initial expectation: `--swc-infield-button-height`, `--swc-infield-button-icon-size`)
