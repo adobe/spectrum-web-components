@@ -91,6 +91,40 @@ export const StatusApiTest: Story = {
   },
 };
 
+export const DynamicLabelTest: Story = {
+  render: () => agenticMarkup,
+  play: async ({ canvasElement, step }) => {
+    const el = await getComponent<TestResponseStatus>(
+      canvasElement,
+      'swc-response-status'
+    );
+
+    await step(
+      'rolls the header label when the slotted label text changes',
+      async () => {
+        const slottedLabel = el.querySelector('[slot="label"]');
+        expect(slottedLabel).toBeTruthy();
+
+        // Mutating text content does not fire slotchange, so this exercises
+        // the MutationObserver that drives the rolling header label.
+        (slottedLabel as HTMLElement).textContent =
+          'Comparing cruise package pricing';
+
+        await waitFor(
+          () => {
+            expect(
+              el.shadowRoot
+                ?.querySelector('.swc-ResponseStatus-label')
+                ?.textContent?.trim()
+            ).toBe('Comparing cruise package pricing');
+          },
+          { timeout: 2000 }
+        );
+      }
+    );
+  },
+};
+
 export const AgenticApiTest: Story = {
   render: () => agenticMarkup,
   play: async ({ canvasElement, step }) => {

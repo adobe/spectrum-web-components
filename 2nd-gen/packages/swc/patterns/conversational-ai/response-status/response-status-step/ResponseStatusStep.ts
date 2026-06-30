@@ -41,6 +41,7 @@ export class ResponseStatusStep extends SpectrumElement {
     return [styles];
   }
 
+  /** @internal */
   private _handleSlotChange = (): void => {
     this.dispatchEvent(
       new CustomEvent('swc-response-status-step-change', {

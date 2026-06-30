@@ -78,26 +78,34 @@ export class ResponseStatus extends SpectrumElement {
   /** Header label roll animation duration; keep in sync with the CSS. */
   private static readonly LABEL_ROLL_DURATION_MS = 650;
 
+  /** @internal */
   private readonly panelId = uniqueId('swc-response-status-panel');
 
+  /** @internal */
   @state()
   private _steps: ResponseStatusStepData[] = [];
 
+  /** @internal */
   @state()
   private _labelSlotText = '';
 
+  /** @internal */
   @state()
   private _summarySlotText = '';
 
+  /** @internal */
   @state()
   private _displayedLabel = '';
 
+  /** @internal */
   @state()
   private _rollFromLabel = '';
 
+  /** @internal */
   @state()
   private _rollActive = false;
 
+  /** @internal */
   @state()
   private _rollEngaged = false;
 
@@ -113,19 +121,30 @@ export class ResponseStatus extends SpectrumElement {
   @property({ type: String, attribute: 'accessible-label' })
   public accessibleLabel = '';
 
+  /** @internal */
   private _rollToLabel = '';
+  /** @internal */
   private _labelQueue: string[] = [];
+  /** @internal */
   private _lastQueuedLabel = '';
+  /** @internal */
   private _processingLabelQueue = false;
+  /** @internal */
   private _lastRollStartedAt = 0;
+  /** @internal */
   private _labelDwellTimer: number | null = null;
+  /** @internal */
   private _labelRollTimer: number | null = null;
+  /** @internal */
   private _labelRollRaf: number | null = null;
+  /** @internal */
+  private _contentObserver?: MutationObserver;
 
   public static override get styles(): CSSResultArray {
     return [styles];
   }
 
+  /** @internal */
   private _handleStepChildChange = (): void => {
     this._syncSlotContent();
   };
@@ -136,6 +155,18 @@ export class ResponseStatus extends SpectrumElement {
       'swc-response-status-step-change',
       this._handleStepChildChange
     );
+
+    // Slotchange only fires when assigned nodes are added or removed, not when
+    // their text mutates. Observe the light DOM so updating a slotted label's
+    // text (a common consumer pattern) re-syncs and rolls the header label.
+    this._contentObserver = new MutationObserver(() => {
+      this._syncSlotContent();
+    });
+    this._contentObserver.observe(this, {
+      characterData: true,
+      childList: true,
+      subtree: true,
+    });
   }
 
   protected override firstUpdated(): void {
@@ -154,6 +185,8 @@ export class ResponseStatus extends SpectrumElement {
       'swc-response-status-step-change',
       this._handleStepChildChange
     );
+    this._contentObserver?.disconnect();
+    this._contentObserver = undefined;
     this._clearLabelTimers();
     super.disconnectedCallback();
   }
@@ -471,6 +504,7 @@ export class ResponseStatus extends SpectrumElement {
     `;
   }
 
+  /** @internal */
   private get _showPanel(): boolean {
     return this._steps.length > 0;
   }
