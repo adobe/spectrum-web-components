@@ -41,21 +41,21 @@ test.describe('ResponseStatus - ARIA Snapshots', () => {
   }) => {
     const root = await gotoStory(
       page,
-      'patterns-conversational-ai-response-status-agentic-states--initiating',
+      'patterns-conversational-ai-response-status--statuses',
       'swc-response-status'
     );
     await expect(root.locator('[role="status"]')).toHaveCount(0);
-    await expect(root.locator('.swc-ResponseStatus-label')).toHaveText(
+    await expect(root.locator('.swc-ResponseStatus-label').first()).toHaveText(
       'Processing request'
     );
   });
 
-  test('should expose processing disclosure with expanded step timeline', async ({
+  test('should expose active disclosure with expanded step timeline', async ({
     page,
   }) => {
     const root = await gotoStory(
       page,
-      'patterns-conversational-ai-response-status-agentic-states--processing-expanded',
+      'patterns-conversational-ai-response-status--steps',
       'swc-response-status'
     );
     await waitForCustomElement(page, 'swc-response-status-step');
@@ -71,16 +71,20 @@ test.describe('ResponseStatus - ARIA Snapshots', () => {
     );
   });
 
-  test('should summarize complete status with slotted label', async ({
+  test('should expose collapsed disclosure with slotted label', async ({
     page,
   }) => {
     const root = await gotoStory(
       page,
-      'patterns-conversational-ai-response-status-agentic-states--completed-collapsed',
+      'patterns-conversational-ai-response-status--overview',
       'swc-response-status'
     );
+    await waitForCustomElement(page, 'swc-response-status-step');
     const toggle = root.locator('button[aria-expanded="false"]');
     await expect(toggle).toHaveCount(1);
-    await expect(toggle).toHaveAttribute('aria-label', 'Thought for 9 seconds');
+    await expect(toggle).toHaveAttribute(
+      'aria-label',
+      'Searching repositories for Europe trips'
+    );
   });
 });

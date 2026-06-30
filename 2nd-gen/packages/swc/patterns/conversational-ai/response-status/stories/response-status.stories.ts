@@ -13,13 +13,7 @@
 import { html } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
-import '@adobe/spectrum-wc/patterns/conversational-ai/response-status';
-
-import {
-  AGENTIC_DEMO_FLOW_STEPS,
-  agenticDemoStep,
-  executionStepsLabelSlot,
-} from '../../agentic-demo-flow-script.js';
+import '../index.js';
 
 // ────────────────
 //    METADATA
@@ -37,7 +31,7 @@ const meta: Meta = {
     },
     layout: 'padded',
   },
-  tags: ['migrated'],
+  excludeStories: ['meta'],
 };
 
 export { meta };
@@ -46,6 +40,10 @@ export default meta;
 // ────────────────────
 //    HELPERS
 // ────────────────────
+
+const executionStepsLabelSlot = html`
+  <span slot="list-label">Execution steps</span>
+`;
 
 const activeSteps = html`
   <swc-response-status-step status="complete">
@@ -78,9 +76,38 @@ const activeSteps = html`
   </swc-response-status-step>
 `;
 
-const completeSteps = AGENTIC_DEMO_FLOW_STEPS.map((step) =>
-  agenticDemoStep(step, 'complete')
-);
+const completeSteps = html`
+  <swc-response-status-step status="complete">
+    <span slot="label">Looked through documentation</span>
+    <span slot="description">
+      Scanned 12 internal knowledge base articles matching the query context and
+      extracted key sections.
+    </span>
+  </swc-response-status-step>
+  <swc-response-status-step status="complete">
+    <span slot="label">
+      Searching web for: Carnival cruise trip packages Europe Asia
+    </span>
+    <span slot="description">
+      Found 8 relevant results across travel aggregators and official cruise
+      line sites.
+    </span>
+  </swc-response-status-step>
+  <swc-response-status-step status="complete">
+    <span slot="label">Searching repositories for Europe trips</span>
+    <span slot="description">
+      Checked 3 internal repositories for previously compiled trip package data
+      and pricing templates.
+    </span>
+  </swc-response-status-step>
+  <swc-response-status-step status="complete">
+    <span slot="label">Compose response</span>
+    <span slot="description">
+      Synthesizing findings into a structured comparison of available packages
+      with pricing and availability.
+    </span>
+  </swc-response-status-step>
+`;
 
 // ────────────────────
 //    PLAYGROUND STORY
@@ -166,16 +193,6 @@ export const Steps: Story = {
 // ────────────────────────────────
 
 export const Accessibility: Story = {
-  render: () => html`
-    <swc-response-status status="complete" expanded>
-      <span slot="label">Thought for 12 seconds</span>
-      ${executionStepsLabelSlot} ${completeSteps}
-    </swc-response-status>
-  `,
-  tags: ['a11y'],
-};
-
-export const AgenticAccessibility: Story = {
   render: () => html`
     <swc-response-status status="complete" expanded>
       <span slot="label">Thought for 12 seconds</span>

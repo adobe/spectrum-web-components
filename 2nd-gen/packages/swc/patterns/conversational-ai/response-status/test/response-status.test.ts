@@ -14,6 +14,8 @@ import { html } from 'lit';
 import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
+import '../index.js';
+
 import { getComponent } from '../../../../utils/test-utils.js';
 import type { ResponseStatus } from '../ResponseStatus.js';
 import { meta } from '../stories/response-status.stories.js';

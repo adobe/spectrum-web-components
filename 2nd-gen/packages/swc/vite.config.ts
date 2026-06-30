@@ -156,10 +156,6 @@ export default defineConfig({
       // resolve directly to the source under `./components`. This must come before
       // the short-form alias below so the more specific prefix wins.
       {
-        find: '@adobe/spectrum-wc/patterns',
-        replacement: resolve(__dirname, 'patterns'),
-      },
-      {
         find: '@adobe/spectrum-wc/components',
         replacement: resolve(__dirname, 'components'),
       },
