@@ -182,10 +182,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@adobe/spectrum-tokens@npm:14.1.0":
-  version: 14.1.0
-  resolution: "@adobe/spectrum-tokens@npm:14.1.0"
-  checksum: 10c0/50d8ff0a0169837881c508f5e14fc35232687c9919e81bb03ef700a46b453f57e5843db8eeb4e1e8b5f9cc25dfcd1fe66085562b33c2b8f19bc929c96865aadc
+"@adobe/spectrum-tokens@npm:14.13.1":
+  version: 14.13.1
+  resolution: "@adobe/spectrum-tokens@npm:14.13.1"
+  checksum: 10c0/2122785bfa595223cbf8903bffbd4e2cef74045a86bc4a30ec9c778ca389eaca32e5b2234ba6b4fee12e26fe178c05aa7ed0b35899bede98349d27d699b3a573
   languageName: node
   linkType: hard
 
@@ -243,7 +243,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@adobe/swc-tokens@workspace:2nd-gen/packages/tools/swc-tokens"
   dependencies:
-    "@adobe/spectrum-tokens": "npm:14.1.0"
+    "@adobe/spectrum-tokens": "npm:14.13.1"
     prettier: "npm:3.8.1"
     vitest: "npm:4.1.7"
     yargs: "npm:18.0.0"
@@ -7173,6 +7173,7 @@ __metadata:
   dependencies:
     "@floating-ui/dom": "npm:1.7.6"
     "@lit-labs/observers": "npm:2.0.2"
+    colorjs.io: "npm:0.5.2"
     glob: "npm:11.0.3"
     lit: "npm:^2.5.0 || ^3.1.3"
     rimraf: "npm:6.0.1"
