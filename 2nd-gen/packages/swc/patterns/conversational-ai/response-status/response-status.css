@@ -358,8 +358,8 @@
 
 .swc-ResponseStatus-step-icon {
   flex-shrink: 0;
-  inline-size: token("workflow-icon-size-75");
-  block-size: token("workflow-icon-size-75");
+  inline-size: token("workflow-icon-small");
+  block-size: token("workflow-icon-small");
   transition: color token("animation-duration-200") token("animation-ease-in-out");
 }
 
