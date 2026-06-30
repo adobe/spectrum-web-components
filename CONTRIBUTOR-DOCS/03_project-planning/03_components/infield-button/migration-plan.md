@@ -216,7 +216,7 @@ The ordering recommendation (infield-button before number-field) is derived from
 | --- | ------------ | ---------------- | ---------------- | ----------------------- |
 | **S1** | CSS custom properties (see B5 in API table above) | `--mod-infield-button-*` | `--swc-infield-button-*` (limited set; see A1) | Same as B5 in API table |
 | **S2** | Stacked-border tokens removed | `--mod-infield-button-stacked-*` tokens handled inner border radius resets for stacked pairs | Removed entirely; S2 uses a consistent corner radius on each button | No consumer action needed if `block`/`inline` are removed per B1/B2 |
-| **S3** | Focus state ownership shifts to parent in composed contexts | 1st-gen: each `sp-infield-button` manages its own `:focus-visible` ring | 2nd-gen: when composed inside a parent field, the inner `<button>` suppresses its own outline (`outline: none`, matching S2 source) and the parent field shows the focus ring. **When used standalone (outside a parent field), the button must retain its own `:focus-visible` ring to satisfy WCAG 2.4.7.** | Verify with field-level stories that focus visibility is preserved. Also verify standalone stories show a focus ring. |
+| **S3** | Focus state ownership moves entirely to parent field | 1st-gen: each `sp-infield-button` manages its own `:focus-visible` ring | 2nd-gen: infield buttons are not independently focusable and not in the tab order. The inner `<button>` sets `outline: none`. The parent field owns both the visible focus ring and all keyboard behavior. There is no standalone usage scenario. | Verify with field-level stories that the parent field's focus ring is visible and meets WCAG 2.4.7. |
 
 #### Accessibility and behavior
 
@@ -272,7 +272,7 @@ Use lightweight confidence labels: **Confirmed**, **Inferred**, **Open question*
 | Disabled (quiet variant) | Yes | Rendering analysis CSS selectors |
 | Hover | Yes | Rendering analysis (CSS selectors) |
 | Active / pressed | Yes | Rendering analysis |
-| Focus-visible (parent field owns the ring; inner `<button>` sets `outline: none`) | Yes | a11y analysis + S2 CSS (`:focus-visible { outline: none }`); focus chrome shown at the parent field in composed contexts |
+| Focus-visible (parent field owns the ring; inner `<button>` sets `outline: none`; button is not independently focusable) | Yes | a11y analysis + S2 CSS (`:focus-visible { outline: none }`); focus chrome shown at the parent field |
 | Sizes: S, M, L, XL | Yes | Figma S2 spec, 1st-gen `validSizes`, rendering analysis |
 
 **Icon affordances (consumer-supplied via the `icon` slot, not component variants).** Figma documents four icon shapes for in-field buttons; these are the icons consumers slot in, not properties on the component:
@@ -315,8 +315,8 @@ Both paths must yield a non-interactive, correctly named button in the accessibi
 **`pending` is not on this component:**
 When a parent field is pending, the parent host disables in-field buttons, shows field-level busy UI, and updates the input/field accessible name. `swc-infield-button` has no `pending` or `pending-label` property. `ButtonBase` exposes `pending`, but `InfieldButton.base.ts` does not re-expose it, and `infield-button.css` must not include pending visual rules; an inherited `pending` attribute on the host element should have no visual effect.
 
-**Focus delegation and keyboard:**
-`delegatesFocus: true` is set in `ButtonBase.shadowRootOptions`. The inner `<button>` receives focus; `Enter` / `Space` activate. The component does not implement `FocusgroupNavigationController`. The parent field host owns navigation among input, stepper pairs, and other field siblings.
+**Focus and keyboard model:**
+Infield buttons are not independently focusable and are not in the tab order. The button is clickable via pointer; all keyboard behavior (e.g., arrow keys for number-field increment/decrement) is owned and dispatched by the parent field. The parent field's focus ring is the only visible focus indicator. `Enter`/`Space` are not handled on the button directly — the parent field routes keyboard events to the appropriate button via `.click()`. The component does not implement `FocusgroupNavigationController`. `delegatesFocus` is inherited from `ButtonBase` but infield buttons do not receive direct Tab focus.
 
 **No link API:**
 `swc-infield-button` has no `href` or related anchor attributes. It is always `type="button"` in practice.
@@ -330,14 +330,14 @@ Full details are in the [accessibility migration analysis](./accessibility-migra
 
 | Topic | Decision |
 | ----- | -------- |
-| Role | `button` on inner `<button>` via `ButtonBase` + `delegatesFocus`. Host must not add `role="button"`. |
+| Role | `button` on inner `<button>`. The button is clickable via pointer; it is not in the tab order and is not independently keyboard-focusable. The parent field owns all keyboard interaction. Host must not add a duplicate `role="button"`. |
 | Name | `accessible-label` → `aria-label` on inner `<button>`. Required for icon-only; dev warning enforces. |
 | `block`/`inline` removed | Confirmed. Parent field owns layout and border-radius composition. |
 | `href` | Not supported. |
 | `pending` | Not on `swc-infield-button`. Parent field host owns busy state and disables slotted in-field buttons while pending. |
 | Focus group navigation | Not on `swc-infield-button`. Parent field host owns `FocusgroupNavigationController` and Tab/arrow navigation among siblings. |
 | `role="presentation"` | Explicitly **not** used on the activatable `<button>`. This is a CSS-sample pattern that strips button semantics; 2nd-gen must not carry it forward. |
-| WCAG | WCAG 2.2 AA. Keyboard 2.1.1, Focus Visible 2.4.7, Non-text Contrast 1.4.11, Target Size 2.5.8, Name/Role/Value 4.1.2. |
+| WCAG | WCAG 2.2 AA. Non-text Contrast 1.4.11, Target Size 2.5.8, Name/Role/Value 4.1.2. Focus Visible 2.4.7 is satisfied by the parent field's focus ring, not by the button itself. Keyboard 2.1.1 is satisfied by the parent field's keyboard handling. |
 
 ---
 
@@ -446,7 +446,7 @@ html`
   - Active/down: background `token("gray-200")`, icon `token("neutral-content-color-down")`; `transform: perspective(...) translateZ(...)` on the `<button>` using the S2 downstate tokens
   - Disabled: background `token("disabled-background-color")`, icon `token("disabled-content-color")`
   - Quiet: `transparent` background for default, hover, active, and disabled (not the gray disabled color)
-- [ ] Focus model: the inner `<button>` sets `outline: none` (matches S2 source). In **composed** field contexts the parent field (number-field, textfield, picker) owns the focus-visible ring while the inner `<button>` stays keyboard-reachable via `delegatesFocus`; verify with a field-level story. In **isolated** standalone usage the button must show its own `:focus-visible` ring to meet WCAG 2.4.7; verify with a standalone story that the ring is visible. Do not add a competing `:focus-visible` outline that would double-ring inside a field
+- [ ] Focus model: the inner `<button>` sets `outline: none` (matches S2 source). Infield buttons are not independently focusable and not in the tab order — the parent field owns the visible focus ring and all keyboard behavior. Do not add a `:focus-visible` ring on the button. Verify via field-level stories that the parent field's focus ring is visible and meets WCAG 2.4.7.
 - [ ] Forced colors: check each state against browser defaults first; only add `@media (forced-colors: active)` overrides where browser defaults are insufficient (per style guide — do not port spectrum-css forced-colors rules wholesale without this check). Sort the `@media (forced-colors: active)` block to the bottom of the file.
 - [ ] Verify no `:lang(ja)`, `:lang(ko)`, `:lang(zh)` size modifiers needed (not present in S2 baseline)
 - [ ] Add a `@cssprop` JSDoc tag to the primary SWC component class for every exposed `--swc-infield-button-*` property (initial expectation: `--swc-infield-button-height`, `--swc-infield-button-icon-size`)
@@ -468,7 +468,7 @@ html`
 - [ ] Parent-driven `disabled` (field host sets `disabled` on `swc-infield-button`) → same result
 - [ ] `accessible-label` dynamically updated → `aria-label` on inner `<button>` updates
 - [ ] No `pending` or `aria-disabled` busy state on `swc-infield-button` itself
-- [ ] Inner `<button>` is keyboard-focusable via `delegatesFocus` and activates on `Enter`/`Space`; the inner `<button>` sets `outline: none` and relies on the parent field for the visible focus ring in composed contexts (see the focus model bullet under [Styling](#styling))
+- [ ] Inner `<button>` sets `outline: none`; it is not in the tab order and is not independently keyboard-focusable. Pointer activation works; keyboard activation is dispatched by the parent field. No standalone keyboard test needed for the button itself (see focus model bullet under [Styling](#styling))
 
 ### Testing
 
