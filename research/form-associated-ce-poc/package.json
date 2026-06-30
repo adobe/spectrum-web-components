@@ -1,0 +1,12 @@
+{
+  "name": "face-textfield-poc",
+  "private": true,
+  "description": "Form-associated custom element PoC: text field with ElementInternals",
+  "scripts": {
+    "dev": "vite",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "vite": "^6"
+  }
+}
