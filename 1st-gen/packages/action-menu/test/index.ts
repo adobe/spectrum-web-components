@@ -978,7 +978,9 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
       const overlayTrigger = test.querySelector(
         'overlay-trigger'
       ) as OverlayTrigger;
-      const button = test.querySelector('sp-button') as HTMLButtonElement;
+      const button = test.querySelector(
+        'sp-button'
+      ) as unknown as HTMLButtonElement;
       const actionMenu = test.querySelector('sp-action-menu') as ActionMenu;
       const overlayClosedSpy = spy();
       overlayTrigger.addEventListener('sp-closed', overlayClosedSpy);
