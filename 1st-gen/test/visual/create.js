@@ -58,15 +58,10 @@ regressVisuals('${name}', stories as unknown as TestsType);
 }
 async function main() {
   try {
-    await rimraf('**/*-vrt.ts');
+    const filesToDelete = await fg('**/*-vrt.ts');
+    await rimraf(filesToDelete);
   } catch (error) {
-    if (window.__swc?.DEBUG) {
-      window.__swc.warn(
-        undefined,
-        `Failed to delete test files: ${JSON.stringify(error)}`,
-        { issues: [error instanceof Error ? error.message : 'Unknown error'] }
-      );
-    }
+    console.warn(`Failed to delete test files: ${JSON.stringify(error)}`);
     process.exit(1);
   }
   await createTest('packages');
