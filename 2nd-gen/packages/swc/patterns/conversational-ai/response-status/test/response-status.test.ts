@@ -13,11 +13,23 @@
 import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
-import '../index.js';
-
 import { getComponent } from '../../../../utils/test-utils.js';
 import { ResponseStatus } from '../ResponseStatus.js';
 import { meta, Overview } from '../stories/response-status.stories.js';
+
+const setHostLabelSlot = async (
+  el: ResponseStatus,
+  text: string
+): Promise<void> => {
+  let label = el.querySelector('[slot="label"]');
+  if (!label) {
+    label = document.createElement('span');
+    label.setAttribute('slot', 'label');
+    el.appendChild(label);
+  }
+  label.textContent = text;
+  await el.updateComplete;
+};
 
 export default {
   ...meta,
@@ -54,6 +66,12 @@ export const OverviewTest: Story = {
 
 export const BooleanMutationTest: Story = {
   ...Overview,
+  args: {
+    ...Overview.args,
+    loading: true,
+    open: false,
+    'default-slot': 'Reasoning content for open-state reflection.',
+  },
   play: async ({ canvasElement, step }) => {
     const el = await getComponent<ResponseStatus>(
       canvasElement,
@@ -71,6 +89,10 @@ export const BooleanMutationTest: Story = {
     });
 
     await step('open reflects to attribute after mutation', async () => {
+      // Legacy disclosure only stays open when slot has reasoning content.
+      el.loading = false;
+      await el.updateComplete;
+
       el.open = true;
       await el.updateComplete;
       expect(el.hasAttribute('open')).toBe(true);
@@ -80,42 +102,39 @@ export const BooleanMutationTest: Story = {
       expect(el.hasAttribute('open')).toBe(false);
     });
 
-    await step(
-      'loadingLabel and completeLabel support custom status text',
-      async () => {
-        el.loading = true;
-        el.loadingLabel = 'Generating';
-        await el.updateComplete;
-        let statusLabel = el.shadowRoot?.querySelector(
-          '.swc-ResponseStatus-label'
-        );
-        expect(statusLabel?.textContent?.trim()).toBe('Generating');
-
-        el.loading = false;
-        el.completeLabel = 'Ready';
-        await el.updateComplete;
-        statusLabel = el.shadowRoot?.querySelector('.swc-ResponseStatus-label');
-        expect(statusLabel?.textContent?.trim()).toBe('Ready');
-      }
-    );
-
-    await step('label swaps when loading transitions to complete', async () => {
-      el.loadingLabel = 'Thinking...';
-      el.completeLabel = 'Done';
+    await step('label slot customizes legacy status text', async () => {
       el.loading = true;
-      await el.updateComplete;
-
+      await setHostLabelSlot(el, 'Generating');
       let statusLabel = el.shadowRoot?.querySelector(
         '.swc-ResponseStatus-label'
       );
-      expect(statusLabel?.textContent?.trim()).toBe('Thinking...');
+      expect(statusLabel?.textContent?.trim()).toBe('Generating');
 
       el.loading = false;
-      await el.updateComplete;
-
+      await setHostLabelSlot(el, 'Ready');
       statusLabel = el.shadowRoot?.querySelector('.swc-ResponseStatus-label');
-      expect(statusLabel?.textContent?.trim()).toBe('Done');
+      expect(statusLabel?.textContent?.trim()).toBe('Ready');
     });
+
+    await step(
+      'label slot swaps when loading transitions to complete',
+      async () => {
+        await setHostLabelSlot(el, 'Thinking...');
+        el.loading = true;
+        await el.updateComplete;
+
+        let statusLabel = el.shadowRoot?.querySelector(
+          '.swc-ResponseStatus-label'
+        );
+        expect(statusLabel?.textContent?.trim()).toBe('Thinking...');
+
+        el.loading = false;
+        await setHostLabelSlot(el, 'Done');
+
+        statusLabel = el.shadowRoot?.querySelector('.swc-ResponseStatus-label');
+        expect(statusLabel?.textContent?.trim()).toBe('Done');
+      }
+    );
   },
 };
 
@@ -162,10 +181,10 @@ export const InteractionTest: Story = {
           '.swc-ResponseStatus-row--button'
         );
         const panel = el.shadowRoot?.querySelector<HTMLElement>(
-          '[id^="swc-reasoning-panel-"]'
+          '[id^="swc-response-status-panel-"]'
         );
 
-        expect(panel?.id).toMatch(/^swc-reasoning-panel-[a-f0-9]+$/);
+        expect(panel?.id).toMatch(/^swc-response-status-panel-[a-f0-9]+$/);
         expect(button?.getAttribute('aria-controls')).toBe(panel?.id);
         expect(button?.getAttribute('aria-expanded')).toBe('false');
         expect(panel).toBeTruthy();
@@ -184,7 +203,7 @@ export const InteractionTest: Story = {
           '.swc-ResponseStatus-row--button'
         );
         const panel = el.shadowRoot?.querySelector<HTMLElement>(
-          '[id^="swc-reasoning-panel-"]'
+          '[id^="swc-response-status-panel-"]'
         );
         const row = el.shadowRoot?.querySelector('.swc-ResponseStatus-row');
 
@@ -195,7 +214,7 @@ export const InteractionTest: Story = {
         expect(row).toBeTruthy();
         expect(
           row?.querySelector('.swc-ResponseStatus-label')?.textContent?.trim()
-        ).toBe(el.completeLabel);
+        ).toBe('Response generated');
       }
     );
 
@@ -205,10 +224,10 @@ export const InteractionTest: Story = {
       el.open = true;
       await el.updateComplete;
       const panel = el.shadowRoot?.querySelector(
-        '[id^="swc-reasoning-panel-"]'
+        '[id^="swc-response-status-panel-"]'
       ) as HTMLElement | null;
       const slot = el.shadowRoot?.querySelector<HTMLSlotElement>(
-        '[id^="swc-reasoning-panel-"] slot'
+        '.swc-ResponseStatus-reasoning-panel .swc-ResponseStatus-reasoning-slot'
       );
       const assigned = slot?.assignedNodes({ flatten: true });
 

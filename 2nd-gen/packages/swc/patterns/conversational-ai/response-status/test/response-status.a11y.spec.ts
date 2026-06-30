@@ -12,19 +12,68 @@
 
 import { expect, test } from '@playwright/test';
 
-import { gotoStory } from '../../../../utils/a11y-helpers.js';
+import {
+  gotoStory,
+  waitForCustomElement,
+} from '../../../../utils/a11y-helpers.js';
+
+/**
+ * ARIA snapshot tests for legacy and agentic response status.
+ * WCAG axe scans run via test-storybook on stories tagged `a11y`.
+ */
 
 test.describe('ResponseStatus - ARIA Snapshots', () => {
-  test('should have correct accessibility tree for loading state', async ({
+  test('should announce legacy loading state', async ({ page }) => {
+    const root = await gotoStory(
+      page,
+      'patterns-conversational-ai-response-status--accessibility',
+      'swc-response-status'
+    );
+    await expect(root).toMatchAriaSnapshot(`
+      - button "Response generated"
+    `);
+  });
+
+  test('should announce generation start via aria-live only', async ({
     page,
   }) => {
     const root = await gotoStory(
       page,
-      'patterns-conversational-ai-response-status--overview',
+      'patterns-conversational-ai-response-status-agentic-states--initiating',
       'swc-response-status'
     );
-    await expect(root).toMatchAriaSnapshot(`
-      - status "Generating response"
-    `);
+    await expect(root.locator('[role="status"]')).toHaveCount(0);
+    const announcer = root.locator('.swc-ResponseStatus-liveAnnouncer');
+    await expect(announcer).toHaveAttribute('aria-live', 'polite');
+    await expect(announcer).toHaveText('Response processing');
+  });
+
+  test('should expose processing disclosure with expanded step timeline', async ({
+    page,
+  }) => {
+    const root = await gotoStory(
+      page,
+      'patterns-conversational-ai-response-status-agentic-states--processing-expanded',
+      'swc-response-status'
+    );
+    await waitForCustomElement(page, 'swc-response-status-step');
+    const toggle = root.locator('button[aria-expanded="true"]');
+    await expect(toggle).toHaveCount(1, { timeout: 10000 });
+    await expect(toggle).toHaveAttribute('aria-label', 'Response processing');
+    await expect(root.locator('[role="group"]')).toHaveAttribute(
+      'aria-label',
+      'Execution steps'
+    );
+  });
+
+  test('should summarize complete phase with duration', async ({ page }) => {
+    const root = await gotoStory(
+      page,
+      'patterns-conversational-ai-response-status-agentic-states--completed-collapsed',
+      'swc-response-status'
+    );
+    const toggle = root.locator('button[aria-expanded="false"]');
+    await expect(toggle).toHaveCount(1);
+    await expect(toggle).toHaveAttribute('aria-label', 'Thought for 9 seconds');
   });
 });

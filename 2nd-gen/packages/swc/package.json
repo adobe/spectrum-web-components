@@ -47,9 +47,9 @@
     "./link.css": {
       "default": "./dist/link.css"
     },
-    "./patterns/*": {
-      "types": "./dist/patterns/*/index.d.ts",
-      "import": "./dist/patterns/*/index.js"
+    "./patterns/*/*": {
+      "types": "./dist/patterns/*/*/index.d.ts",
+      "import": "./dist/patterns/*/*/index.js"
     },
     "./utils/*": {
       "types": "./dist/utils/*.d.ts",

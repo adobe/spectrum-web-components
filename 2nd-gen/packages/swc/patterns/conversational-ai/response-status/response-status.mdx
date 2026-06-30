@@ -22,9 +22,9 @@ A response status indicator consists of:
 
 The `loading` attribute controls which indicator is shown:
 
-- **`loading=true`**: indeterminate progress circle + "Thinking…" label
-- **`loading=false`**: checkmark + "Response generated" label
-- Set `loading-label` or `complete-label` to customize row text per state
+- **`loading=true`**: indeterminate progress circle + default loading label
+- **`loading=false`**: checkmark + default complete label
+- Use `slot="label"` to customize row text
 
 <Canvas of={ResponseStatusStories.Loading} />
 
@@ -49,8 +49,22 @@ The `<swc-response-status>` element implements the following accessibility featu
 
 - The loading row carries `role="status"`, so the status label is announced for screen readers
 - When reasoning content exists, the reasoning toggle uses `aria-expanded` and `aria-controls` to communicate panel state
-- The reasoning panel uses `role="group"` with `aria-label="Reasoning"`
+- The reasoning panel uses `role="group"` with an accessible name from `slot="reasoning-label"` (defaults to “Reasoning”)
 
 <Canvas of={ResponseStatusStories.Accessibility} />
+
+#### Agentic mode
+
+In agentic mode (`phase` set and/or `swc-response-status-step` children), use slotted labels instead of multiple label attributes:
+
+- **`slot="label"`** on `<swc-response-status>` — header row label
+- **`slot="summary"`** — initiating copy before the first step roll (defaults to “Processing request”)
+- **`slot="reasoning-label"`** — accessible name for the step list / reasoning panel (defaults to “Reasoning”)
+- **`slot="label"`** on each `<swc-response-status-step>` — step title
+- **Default slot** on each step — step detail in the expanded timeline
+
+A visually hidden live region announces **Response processing** at generation start and **Response complete** when finished — not intermediate rolling titles.
+
+<Canvas of={ResponseStatusStories.AgenticAccessibility} />
 
 <DocsFooter />

@@ -14,7 +14,13 @@ import { html } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
-import '../index.js';
+import '@adobe/spectrum-wc/patterns/conversational-ai/response-status';
+
+import {
+  AGENTIC_DEMO_FLOW_STEPS,
+  agenticDemoStep,
+  executionStepsLabelSlot,
+} from '../../agentic-demo-flow-script.js';
 
 // ────────────────
 //    METADATA
@@ -45,26 +51,21 @@ argTypes.open = {
   },
 };
 
-argTypes.loadingLabel = {
-  ...argTypes.loadingLabel,
-  control: { type: 'text' },
-  table: {
-    category: 'attributes',
-    defaultValue: { summary: 'Generating response' },
-  },
-};
-
-argTypes.completeLabel = {
-  ...argTypes.completeLabel,
-  control: { type: 'text' },
-  table: {
-    category: 'attributes',
-    defaultValue: { summary: 'Response generated' },
-  },
-};
+delete (args as Record<string, unknown>).loadingLabel;
+delete (args as Record<string, unknown>).completeLabel;
+delete (args as Record<string, unknown>).reasoningLabel;
+delete (args as Record<string, unknown>).stoppedLabel;
+delete (args as Record<string, unknown>).processingAnnouncementLabel;
+delete (args as Record<string, unknown>).completeAnnouncementLabel;
+delete (argTypes as Record<string, unknown>).loadingLabel;
+delete (argTypes as Record<string, unknown>).completeLabel;
+delete (argTypes as Record<string, unknown>).reasoningLabel;
+delete (argTypes as Record<string, unknown>).stoppedLabel;
+delete (argTypes as Record<string, unknown>).processingAnnouncementLabel;
+delete (argTypes as Record<string, unknown>).completeAnnouncementLabel;
 
 /**
- * Displays AI response progress with an indeterminate progress circle and optional reasoning disclosure.
+ * Displays AI response progress with an animated three-dot indicator and optional reasoning disclosure.
  */
 const meta: Meta = {
   title: 'Conversational AI/Response status',
@@ -92,8 +93,6 @@ export const Playground: Story = {
   args: {
     loading: true,
     open: false,
-    loadingLabel: 'Generating response',
-    completeLabel: 'Response generated',
   },
   tags: ['dev'],
 };
@@ -106,8 +105,6 @@ export const Overview: Story = {
   args: {
     loading: true,
     open: false,
-    loadingLabel: 'Generating response',
-    completeLabel: 'Response generated',
   },
   tags: ['overview'],
 };
@@ -116,12 +113,16 @@ export const Overview: Story = {
 //    ANATOMY STORY
 // ──────────────────────────
 
+/**
+ * A response status indicator consists of:
+ *
+ * 1. **Status row** — Animated three dots (loading) or checkmark (complete) with a label
+ * 2. **Reasoning toggle** — Optional expandable disclosure for chain-of-thought content
+ */
 export const Anatomy: Story = {
   args: {
     loading: true,
     open: false,
-    loadingLabel: 'Generating response',
-    completeLabel: 'Response generated',
   },
   tags: ['anatomy'],
 };
@@ -130,6 +131,13 @@ export const Anatomy: Story = {
 //    OPTIONS STORIES
 // ──────────────────────────
 
+/**
+ * The `loading` attribute controls which indicator is shown:
+ *
+ * - **`loading=true`** — Animated three dots + default loading label
+ * - **`loading=false`** — Checkmark + default complete label
+ * - Use `slot="label"` to customize row text
+ */
 export const Loading: Story = {
   render: () => html`
     <div style="display:flex;flex-direction:column;gap:24px;">
@@ -147,12 +155,13 @@ export const Loading: Story = {
         </span>
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;">
-        <swc-response-status complete-label="Ready">
+        <swc-response-status>
+          <span slot="label">Ready</span>
           I grouped your request into a presentation outline and prioritized key
           business messages.
         </swc-response-status>
         <span class="swc-Detail swc-Detail--sizeS">
-          Complete (custom label)
+          Complete (custom label via slot)
         </span>
       </div>
     </div>
@@ -196,10 +205,25 @@ export const Accessibility: Story = {
   args: {
     loading: false,
     open: false,
-    loadingLabel: 'Thinking…',
-    completeLabel: 'Response generated',
     'default-slot':
       'I grouped your request into a presentation outline and prioritized key business messages.',
   },
+  tags: ['a11y'],
+};
+
+/**
+ * Frozen agentic complete state for test-runner axe and Playwright.
+ * Uses `phase="complete"` (no rolling header) so docs-view axe stays stable.
+ * Timed demos live under Agentic states and are tagged `!test`.
+ */
+export const AgenticAccessibility: Story = {
+  render: () => html`
+    <swc-response-status phase="complete" duration="12" open>
+      ${executionStepsLabelSlot}
+      ${AGENTIC_DEMO_FLOW_STEPS.map((step) =>
+        agenticDemoStep(step, 'complete')
+      )}
+    </swc-response-status>
+  `,
   tags: ['a11y'],
 };
