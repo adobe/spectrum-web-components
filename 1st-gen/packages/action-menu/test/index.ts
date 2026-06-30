@@ -31,12 +31,16 @@ import { spy } from 'sinon';
 import { ActionMenu } from '@spectrum-web-components/action-menu';
 import { TemplateResult } from '@spectrum-web-components/base';
 import type { Menu, MenuItem } from '@spectrum-web-components/menu';
-import type { Overlay } from '@spectrum-web-components/overlay';
+import { Overlay, OverlayTrigger } from '@spectrum-web-components/overlay';
 import { SAFARI_FOCUS_RING_CLASS } from '@spectrum-web-components/picker/src/InteractionController.js';
 import { isWebKit } from '@spectrum-web-components/shared';
 import type { Tooltip } from '@spectrum-web-components/tooltip';
 
+import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/dialog/sp-dialog-base.js';
+import '@spectrum-web-components/dialog/sp-dialog.js';
+import '@spectrum-web-components/overlay/overlay-trigger.js';
+import '@spectrum-web-components/popover/sp-popover.js';
 
 import { sendMouse } from '../../../test/plugins/browser.js';
 import {
@@ -940,6 +944,82 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
         'menu should emit scroll'
       ).to.be.greaterThan(0);
       expect(handleActionMenuScroll).to.have.been.called;
+    });
+
+    it('scroll event does not reach the action menu host when inside a parent overlay', async () => {
+      const test = await fixture<HTMLDivElement>(html`
+        <sp-theme scale="medium" color="light" system="spectrum">
+          <overlay-trigger type="modal" id="modal-trigger" placement="top">
+            <sp-button
+              variant="primary"
+              slot="trigger"
+              style="position:absolute;bottom:50px"
+            >
+              Open Modal
+            </sp-button>
+            <sp-popover slot="click-content" tip>
+              <sp-dialog no-divider class="options-popover-content">
+                <sp-action-menu label="More Actions" id="action-menu-value">
+                  ${Array.from(
+                    { length: 30 },
+                    (_, i) => html`
+                      <sp-menu-item value=${`item-${i + 1}`}>
+                        Item ${i + 1}
+                      </sp-menu-item>
+                    `
+                  )}
+                </sp-action-menu>
+              </sp-dialog>
+            </sp-popover>
+          </overlay-trigger>
+        </sp-theme>
+      `);
+
+      const overlayTrigger = test.querySelector(
+        'overlay-trigger'
+      ) as OverlayTrigger;
+      const button = test.querySelector('sp-button') as HTMLButtonElement;
+      const actionMenu = test.querySelector('sp-action-menu') as ActionMenu;
+      const overlayClosedSpy = spy();
+      overlayTrigger.addEventListener('sp-closed', overlayClosedSpy);
+
+      button.click();
+      await elementUpdated(overlayTrigger);
+      await waitUntil(
+        () => overlayTrigger.open === 'click',
+        'overlay should be open'
+      );
+
+      const opened = oneEvent(actionMenu, 'sp-opened');
+      actionMenu.click();
+      await opened;
+      await elementUpdated(actionMenu);
+
+      const menu = actionMenu.optionsMenu as Menu;
+      expect(menu, 'action menu menu should be available').to.exist;
+
+      // Listen on the action menu host — the internal scroll must not reach it.
+      const hostScrollSpy = spy();
+      actionMenu.addEventListener('scroll', hostScrollSpy);
+
+      menu.style.maxHeight = '80px';
+      menu.style.overflow = 'auto';
+      menu.scrollTop = 60;
+      await waitUntil(() => menu.scrollTop > 0, 'action menu should scroll');
+      await aTimeout(50);
+
+      expect(
+        overlayClosedSpy.callCount,
+        'parent overlay should not close while scrolling action menu'
+      ).to.equal(0);
+      expect(overlayTrigger.open, 'parent overlay should remain open').to.equal(
+        'click'
+      );
+      expect(actionMenu.open, 'action menu should remain open').to.be.true;
+      expect(
+        hostScrollSpy.callCount,
+        'scroll event must not reach the action menu host element'
+      ).to.equal(0);
     });
   });
 };

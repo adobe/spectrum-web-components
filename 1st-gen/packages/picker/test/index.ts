@@ -2396,8 +2396,10 @@ export function runPickerTests(): void {
 
     const menu = picker.optionsMenu as Menu;
     expect(menu, 'picker menu should be available').to.exist;
-    const menuScrollSpy = spy();
-    menu.addEventListener('scroll', menuScrollSpy);
+
+    // Listen on the picker host — the internal scroll must not reach it.
+    const pickerScrollSpy = spy();
+    picker.addEventListener('scroll', pickerScrollSpy);
 
     // Scroll the real menu content so behavior is exercised end-to-end.
     menu.style.maxHeight = '80px';
@@ -2415,9 +2417,9 @@ export function runPickerTests(): void {
     );
     expect(picker.open, 'picker should remain open').to.be.true;
     expect(
-      menuScrollSpy.callCount,
-      'menu should emit scroll'
-    ).to.be.greaterThan(0);
+      pickerScrollSpy.callCount,
+      'scroll event must not reach the picker host element'
+    ).to.equal(0);
   });
   describe('initial value', function () {
     beforeEach(async function () {
