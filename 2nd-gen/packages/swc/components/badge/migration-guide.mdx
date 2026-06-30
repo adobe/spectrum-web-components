@@ -94,11 +94,13 @@ Add `aria-label` to icon-only badges so assistive tech announces a name:
 </sp-badge>
 <!-- After (default size is `s`; use `size="m"` if you need medium) -->
 <swc-badge aria-label="Approved">
-  <sp-icon-checkmark-circle slot="icon"></sp-icon-checkmark-circle>
+  <swc-icon slot="icon">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10">...</svg>
+  </swc-icon>
 </swc-badge>
 ```
 
-Add `aria-hidden="true"` to decorative icons paired with text so screen readers don't announce the icon and label as duplicate content:
+Omit `label` on decorative icons paired with text so `<swc-icon>` can hide the icon from assistive technology:
 
 ```html
 <!-- Before -->
@@ -108,10 +110,9 @@ Add `aria-hidden="true"` to decorative icons paired with text so screen readers 
 </sp-badge>
 <!-- After -->
 <swc-badge variant="positive">
-  <sp-icon-checkmark-circle
-    aria-hidden="true"
-    slot="icon"
-  ></sp-icon-checkmark-circle>
+  <swc-icon slot="icon">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10">...</svg>
+  </swc-icon>
   Approved
 </swc-badge>
 ```
@@ -132,7 +133,7 @@ The `outline` attribute can only be used with semantic variants (`accent`, `info
 ## Accessibility
 
 - **Icon-only badges** must have `aria-label` on the host. See [step 3](#3-fix-consumer-facing-accessibility-gaps).
-- **Decorative icons** paired with text should use `aria-hidden="true"` so screen readers don't announce duplicate content. See [step 3](#3-fix-consumer-facing-accessibility-gaps).
+- **Decorative icons** paired with text should omit `label` on `<swc-icon>` so the icon remains hidden from assistive technology and the text is announced once. See [step 3](#3-fix-consumer-facing-accessibility-gaps).
 - Badges are non-interactive. Refactor any focusable or clickable badges to `<swc-action-button>`, `<swc-tag>`, or a native button.
 
 ## Styling
@@ -224,5 +225,5 @@ Replace every `--mod-badge-*` property with its `--swc-badge-*` equivalent:
 - [ ] Add an explicit `variant` to every `<swc-badge>` — use `variant="informative"` if that was the Spectrum 1 default intent
 - [ ] Replace `--mod-badge-*` overrides on semantic variants with `--swc-badge-*`; retoken globally for non-semantic color variants
 - [ ] Add `aria-label` to icon-only badges
-- [ ] Add `aria-hidden="true"` to decorative icons
+- [ ] Omit `label` on decorative `<swc-icon>` usage
 - [ ] Refactor any interactive badges

@@ -47,6 +47,7 @@
     - Field Label
     - Grid
     - Help Text
+    - Icon
     - Illustrated Message
     - Infield Button
     - Infield Progress Circle

@@ -59,13 +59,6 @@ Import the side effectful registration of \`<${tagName}>\` via:
 import '@adobe/spectrum-wc/components/${packageName}/${tagName}.js';
 \`\`\`
 
-To reference the \`${baseClassName}\` type, import it as a type-only import:
-
-\`\`\`typescript
-import type { ${baseClassName} } from '@adobe/spectrum-wc/components/${packageName}';
-\`\`\`
-
-> The class is exposed primarily for type purposes. Extending it is possible, but the internal shape is not part of the public API — if you choose to subclass, you do so at your own risk and may need to adjust your code between releases.
 `;
 
     return <Markdown>{markdownContent}</Markdown>;

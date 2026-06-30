@@ -3,49 +3,15 @@ import { DocsFooter, DocsHeader } from '../../.storybook/blocks';
 
 import * as IconStories from './stories/icon.internal.stories';
 
-<Meta of={IconStories} />
+<Meta of={IconStories} name="Internal catalog" />
 
 <DocsHeader />
 
-## Anatomy
+## Usage
 
-An icon consists of:
+> Maintainer catalog only. Not published in production Storybook.
 
-1. **Rendered graphic**: a shared slotted SVG template
-
-### Content
-
-- Default slot: provide SVG markup to render.
-
-<Canvas of={IconStories.Anatomy} />
-
-## Options
-
-### Sizes
-
-Icons come in five sizes to fit different layout contexts:
-
-- **Extra-small (`xs`)**: dense UIs and compact metadata rows
-- **Small (`s`)**: supporting iconography in constrained spaces
-- **Medium (`m`)**: default size for general component usage
-- **Large (`l`)**: prominent icon usage in larger controls
-- **Extra-large (`xl`)**: high-emphasis icon presentation
-
-<Canvas of={IconStories.Sizes} />
-
-### Sources
-
-#### Shared templates
-
-Import reusable templates from `../elements/index.js` and slot them into `<swc-icon>`. This keeps icon usage centralized and avoids per-component SVG duplication.
-
-<Canvas of={IconStories.Sources} />
-
-### Shared Templates
-
-Use the shared icon catalog to keep icon usage consistent across components.
-
-Example import:
+Import reusable SVG factories from `../elements/index.js` for monorepo components. Slot the returned Lit template into `<swc-icon>`.
 
 ```ts
 import { Chevron100Icon } from '../elements/index.js';
@@ -53,29 +19,12 @@ import { Chevron100Icon } from '../elements/index.js';
 
 <Canvas of={IconStories.SharedTemplates} />
 
-### Available Icons
+## Options
 
-Available shared icons in the current internal catalog. Use this story as a quick reference for what can be imported from `../elements/index.js`.
+### Available icons
+
+Shared icons in the current internal catalog. Use this story as a quick reference for what can be imported from `../elements/index.js`.
 
 <Canvas of={IconStories.AvailableIcons} />
-
-## Accessibility
-
-### Features
-
-The `<swc-icon>` element implements several accessibility features:
-
-#### SVG labeling
-
-- Slotted SVGs receive `role="img"` and use `aria-label` when `label` is provided
-- When no label is provided, slotted SVGs are marked `aria-hidden="true"`
-
-### Best practices
-
-- Always provide a descriptive `label` for informative icons
-- Use empty labels only for purely decorative icons
-- Keep labels short and specific (e.g., "Search" instead of "Icon")
-
-<Canvas of={IconStories.Accessibility} />
 
 <DocsFooter />
