@@ -30,6 +30,7 @@ const meta: Meta = {
       subtitle: 'AI response lifecycle status with optional execution steps.',
     },
     layout: 'padded',
+    additionalApiTables: ['swc-response-status-step'],
   },
   excludeStories: ['meta'],
 };
@@ -115,7 +116,7 @@ const completeSteps = html`
 
 export const Playground: Story = {
   render: () => html`
-    <swc-response-status status="active" expanded>
+    <swc-response-status status="active" open>
       <span slot="label">Searching repositories for Europe trips</span>
       ${executionStepsLabelSlot} ${activeSteps}
     </swc-response-status>
@@ -143,7 +144,7 @@ export const Overview: Story = {
 
 export const Anatomy: Story = {
   render: () => html`
-    <swc-response-status status="active" expanded>
+    <swc-response-status status="active" open>
       <span slot="label">Searching repositories for Europe trips</span>
       <span slot="summary">Processing request</span>
       ${executionStepsLabelSlot} ${activeSteps}
@@ -180,7 +181,7 @@ export const Statuses: Story = {
 
 export const Steps: Story = {
   render: () => html`
-    <swc-response-status status="active" expanded>
+    <swc-response-status status="active" open>
       <span slot="label">Searching repositories for Europe trips</span>
       ${executionStepsLabelSlot} ${activeSteps}
     </swc-response-status>
@@ -194,7 +195,7 @@ export const Steps: Story = {
 
 export const Accessibility: Story = {
   render: () => html`
-    <swc-response-status status="complete" expanded>
+    <swc-response-status status="complete" open>
       <span slot="label">Thought for 12 seconds</span>
       ${executionStepsLabelSlot} ${completeSteps}
     </swc-response-status>

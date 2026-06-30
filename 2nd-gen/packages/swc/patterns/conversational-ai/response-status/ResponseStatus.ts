@@ -52,8 +52,8 @@ export type ResponseStatusStepData = {
  * @slot summary - Optional secondary summary text for lifecycle states.
  * @slot list-label - Accessible name for the step list panel.
  * @slot - `<swc-response-status-step>` elements.
- * @fires swc-response-status-expanded-change - Dispatched when the user expands or collapses the panel.
- * Detail: `{ expanded: boolean }`
+ * @fires swc-response-status-toggle - Dispatched when the user opens or closes the panel.
+ * Detail: `{ open: boolean }`
  */
 export class ResponseStatus extends SpectrumElement {
   private static readonly STATUS_LABEL_CLASS =
@@ -85,11 +85,11 @@ export class ResponseStatus extends SpectrumElement {
 
   /** Whole response lifecycle status. */
   @property({ type: String, reflect: true })
-  public status: ResponseStatusStatus = 'pending';
+  public status: 'pending' | 'active' | 'complete' | 'stopped' = 'pending';
 
-  /** `true`: step timeline expanded. */
+  /** `true`: step timeline open. */
   @property({ type: Boolean, reflect: true })
-  public expanded = false;
+  public open = false;
 
   public static override get styles(): CSSResultArray {
     return [styles];
@@ -309,12 +309,12 @@ export class ResponseStatus extends SpectrumElement {
       return;
     }
 
-    this.expanded = !this.expanded;
+    this.open = !this.open;
     this.dispatchEvent(
-      new CustomEvent('swc-response-status-expanded-change', {
+      new CustomEvent('swc-response-status-toggle', {
         bubbles: true,
         composed: true,
-        detail: { expanded: this.expanded },
+        detail: { open: this.open },
       })
     );
   }
@@ -329,10 +329,10 @@ export class ResponseStatus extends SpectrumElement {
     `;
   }
 
-  private _renderChevron(expanded: boolean): TemplateResult {
+  private _renderChevron(open: boolean): TemplateResult {
     return html`
       <swc-icon
-        class=${expanded
+        class=${open
           ? 'swc-ResponseStatus-chevron swc-ResponseStatus-chevron--down'
           : 'swc-ResponseStatus-chevron'}
         style="--swc-icon-inline-size:10px;--swc-icon-block-size:10px;"
@@ -383,7 +383,7 @@ export class ResponseStatus extends SpectrumElement {
       ${this._renderLeadingIcon()}
       <span class="swc-ResponseStatus-headerTrail">
         <span class=${ResponseStatus.STATUS_LABEL_CLASS}>${label}</span>
-        ${showDisclosure ? this._renderChevron(this.expanded) : ''}
+        ${showDisclosure ? this._renderChevron(this.open) : ''}
       </span>
     `;
 
@@ -392,7 +392,7 @@ export class ResponseStatus extends SpectrumElement {
         <button
           class=${rowClass}
           aria-label=${label}
-          aria-expanded=${this.expanded}
+          aria-expanded=${this.open}
           aria-controls=${this.panelId}
           @click=${this._handleToggle}
         >
@@ -496,7 +496,7 @@ export class ResponseStatus extends SpectrumElement {
   }
 
   private _renderPanel(showPanel: boolean): TemplateResult {
-    const panelOpen = showPanel && this.expanded;
+    const panelOpen = showPanel && this.open;
     const panelLabel =
       this._listLabelSlotText || ResponseStatus.DEFAULT_LIST_LABEL;
 

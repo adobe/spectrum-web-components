@@ -33,7 +33,7 @@ export default {
 type TestResponseStatus = ResponseStatus;
 
 const agenticMarkup = html`
-  <swc-response-status status="active" expanded>
+  <swc-response-status status="active" open>
     <span slot="label">Searching repositories for Europe trips</span>
     <span slot="summary">Processing request</span>
     <span slot="list-label">Execution steps</span>
@@ -93,10 +93,10 @@ export const AgenticApiTest: Story = {
       'swc-response-status'
     );
 
-    await step('uses status and expanded as the public state API', async () => {
+    await step('uses status and open as the public state API', async () => {
       expect(el.status).toBe('active');
-      expect(el.expanded).toBe(true);
-      expect(el.hasAttribute('expanded')).toBe(true);
+      expect(el.open).toBe(true);
+      expect(el.hasAttribute('open')).toBe(true);
     });
 
     await step(
@@ -130,23 +130,20 @@ export const AgenticApiTest: Story = {
       );
     });
 
-    await step(
-      'dispatches expanded-change when disclosure toggles',
-      async () => {
-        let captured: CustomEvent<{ expanded: boolean }> | undefined;
-        el.addEventListener('swc-response-status-expanded-change', (event) => {
-          captured = event as CustomEvent<{ expanded: boolean }>;
-        });
+    await step('dispatches toggle event when disclosure toggles', async () => {
+      let captured: CustomEvent<{ open: boolean }> | undefined;
+      el.addEventListener('swc-response-status-toggle', (event) => {
+        captured = event as CustomEvent<{ open: boolean }>;
+      });
 
-        const button = el.shadowRoot?.querySelector<HTMLButtonElement>(
-          '.swc-ResponseStatus-row--button'
-        );
-        button?.click();
-        await el.updateComplete;
+      const button = el.shadowRoot?.querySelector<HTMLButtonElement>(
+        '.swc-ResponseStatus-row--button'
+      );
+      button?.click();
+      await el.updateComplete;
 
-        expect(el.expanded).toBe(false);
-        expect(captured?.detail.expanded).toBe(false);
-      }
-    );
+      expect(el.open).toBe(false);
+      expect(captured?.detail.open).toBe(false);
+    });
   },
 };
