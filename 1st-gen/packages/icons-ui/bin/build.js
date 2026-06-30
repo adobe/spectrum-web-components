@@ -21,7 +21,7 @@ import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-const rootDir = path.join(__dirname, '../../../');
+const rootDir = path.join(__dirname, '../../../').replace(/\\/g, '/');
 
 const disclaimer = `
 /*

@@ -50,8 +50,8 @@ const S2IconsPackagePath = path.dirname(
   )
 );
 
-const S1IconsDir = path.join(S1IconsPackagePath, 'dist/18');
-const S2IconsDir = path.join(S2IconsPackagePath, 'dist/assets/svg');
+const S1IconsDir = path.join(S1IconsPackagePath, 'dist/18').replace(/\\/g, '/');
+const S2IconsDir = path.join(S2IconsPackagePath, 'dist/assets/svg').replace(/\\/g, '/');
 const keepColors = '';
 
 const ensureDirectoryExists = (dirPath) => {
