@@ -19,6 +19,7 @@ import { Popover } from '@adobe/spectrum-wc/popover';
 
 import '@adobe/spectrum-wc/components/avatar/swc-avatar.js';
 import '@adobe/spectrum-wc/components/button/swc-button.js';
+import '@adobe/spectrum-wc/components/button-group/swc-button-group.js';
 import '@adobe/spectrum-wc/components/divider/swc-divider.js';
 import '@adobe/spectrum-wc/components/popover/swc-popover.js';
 
@@ -55,12 +56,19 @@ argTypes['actual-placement'] = {
 };
 
 /**
- * A popover is an anchored top-layer surface. In its default (non-modal) mode it
- * renders an internal `<div popover="auto">` with native light-dismiss; setting
- * `modal` renders a `<dialog>` opened via `showModal()` for blocking behavior.
+ * A `<swc-popover>` is an overlay element positioned relative to a trigger. It
+ * renders in the top layer, anchors itself to the trigger, and points at it with
+ * an arrow (tip) by default.
  *
- * Scaffolded in Phase 2 (Setup). Lifecycle, events, and full stories land in
- * later migration phases.
+ * In its default (non-modal) mode it renders an internal `<div popover="auto">`:
+ * the page behind stays interactive and scrollable, and the browser dismisses it
+ * on outside click or `Escape`. Setting `modal` renders a `<dialog>` opened via
+ * `showModal()` instead, which traps focus, makes the page behind inert, and
+ * exposes `role="dialog"`.
+ *
+ * Associate a trigger with `for` (an id in the same tree root) or the
+ * `triggerElement` property; `open` controls visibility and `manual` opts out of
+ * the built-in click-to-toggle.
  */
 const meta: Meta = {
   title: 'Popover',
@@ -73,7 +81,7 @@ const meta: Meta = {
       handles: events,
     },
     docs: {
-      subtitle: `Anchored top-layer surface for menus, dialogs, and contextual content`,
+      subtitle: `An overlay element positioned relative to a trigger`,
     },
   },
   tags: ['migrated'],
@@ -89,7 +97,7 @@ export default meta;
 // button) and the global typography classes. Passed as the popover's slotted
 // content to show a realistic, polished example rather than a bare sentence.
 const accountCard = `
-  <div style="display: flex; flex-direction: column; gap: 16px; inline-size: 240px;">
+  <div style="display: flex; flex-direction: column; gap: 16px;">
     <div style="display: flex; align-items: center; gap: 12px;">
       <swc-avatar
         src="https://picsum.photos/id/64/48/48"
@@ -102,34 +110,52 @@ const accountCard = `
       </div>
     </div>
     <swc-divider size="s"></swc-divider>
-    <p class="swc-Body swc-Body--sizeS" style="margin: 0;">
+    <p class="swc-Body swc-Body--sizeS">
       Manage your profile, notification preferences, and connected apps.
     </p>
-    <div style="display: flex; gap: 8px; justify-content: flex-end;">
-      <swc-button variant="secondary" fill-style="outline" size="s">
+    <swc-button-group align="end" size="s">
+      <swc-button
+        variant="secondary"
+        fill-style="outline"
+        size="s"
+        onclick="this.closest('swc-popover').open = false"
+      >
         Dismiss
       </swc-button>
       <swc-button variant="accent" size="s">Open settings</swc-button>
-    </div>
+    </swc-button-group>
   </div>
 `;
 
-// Playground content with several focusable controls so the modal focus trap is
-// demonstrable: enable `modal` in the controls, open the popover, then press Tab
-// to see focus cycle within these buttons instead of escaping to the page.
-const playgroundContent = `
-  <div style="display: flex; flex-direction: column; gap: 12px; inline-size: 260px;">
-    <p class="swc-Body swc-Body--sizeS" style="margin: 0;">
-      Enable <code>modal</code> in the controls, then press Tab: focus stays
-      trapped within these controls.
-    </p>
-    <div style="display: flex; gap: 8px; justify-content: flex-end;">
-      <swc-button variant="secondary" fill-style="outline" size="s">
-        Back
-      </swc-button>
-      <swc-button variant="secondary" size="s">Skip</swc-button>
-      <swc-button variant="accent" size="s">Confirm</swc-button>
+// A short prompt with two focusable buttons. Realistic content that also keeps
+// the modal focus trap demonstrable: toggle `modal` in the controls, open the
+// popover, and Tab cycles within these buttons instead of escaping to the page.
+const securityPanel = `
+  <div style="display: flex; flex-direction: column; gap: 16px;">
+    <div style="display: flex; flex-direction: column; gap: 4px;">
+      <span class="swc-Title swc-Title--sizeS">Two-factor authentication</span>
+      <p class="swc-Body swc-Body--sizeS">
+        Add a verification step at sign-in so your account stays protected even
+        if your password is exposed.
+      </p>
     </div>
+    <swc-button-group align="end" size="s">
+      <swc-button
+        variant="secondary"
+        fill-style="outline"
+        size="s"
+        onclick="this.closest('swc-popover').open = false"
+      >
+        Not now
+      </swc-button>
+      <swc-button
+        variant="accent"
+        size="s"
+        onclick="this.closest('swc-popover').open = false"
+      >
+        Turn on
+      </swc-button>
+    </swc-button-group>
   </div>
 `;
 
@@ -142,13 +168,14 @@ export const Playground: Story = {
   args: {
     open: false,
     placement: 'bottom',
+    size: 's',
     'hide-arrow': false,
     for: 'playground-trigger',
-    'accessible-label': 'Playground popover',
-    'default-slot': playgroundContent,
+    'accessible-label': 'Two-factor authentication',
+    'default-slot': securityPanel,
   },
   render: (args) => html`
-    <swc-button id="playground-trigger">Toggle popover</swc-button>
+    <swc-button id="playground-trigger">Open popover</swc-button>
     ${template(args)}
   `,
 };
@@ -161,12 +188,14 @@ export const Overview: Story = {
   args: {
     open: true,
     placement: 'bottom',
+    size: 's',
     'hide-arrow': false,
     for: 'overview-trigger',
-    'default-slot': accountCard,
+    'accessible-label': 'Account',
+    'default-slot': `<div style="padding: 12px;">${accountCard}</div>`,
   },
   render: (args) => html`
-    <swc-button id="overview-trigger">Account</swc-button>
+    <swc-button id="overview-trigger">Open popover</swc-button>
     ${template(args)}
   `,
   tags: ['overview'],
@@ -179,7 +208,9 @@ export const Overview: Story = {
 export const CustomAnchor: Story = {
   args: {
     placement: 'bottom',
-    'default-slot': 'Anchored to the link, not the button that opened it.',
+    'accessible-label': 'Definition',
+    'default-slot': `Spectrum Web Components is Adobe's open-source library of
+      Spectrum-styled UI components.`,
   },
   render: (args) => {
     // The toggle control and the positioning anchor are different elements: the
@@ -218,8 +249,8 @@ export const CustomAnchor: Story = {
         <div
           style="display: flex; flex-direction: column; align-items: flex-start; gap: 24px;"
         >
-          <swc-button @click=${toggle}>Toggle popover</swc-button>
-          <a href="#anchor" id="custom-anchor">Anchored link</a>
+          <swc-button @click=${toggle}>Open popover</swc-button>
+          <a href="#anchor" id="custom-anchor">Spectrum Web Components</a>
         </div>
         ${template({ ...args, manual: true })}
       </div>
@@ -228,3 +259,192 @@ export const CustomAnchor: Story = {
   tags: ['behaviors'],
 };
 CustomAnchor.storyName = 'Custom anchor';
+
+export const VirtualAnchor: Story = {
+  args: {
+    manual: true,
+    'accessible-label': 'Add comment',
+    'default-slot': `
+      <div style="display: flex; flex-direction: column; gap: 12px; max-inline-size: 220px;">
+        <p class="swc-Body swc-Body--sizeS">Leave a comment at this point.</p>
+        <swc-button-group align="end" size="s">
+          <swc-button
+            variant="accent"
+            size="s"
+            onclick="this.closest('swc-popover').open = false"
+          >
+            Add comment
+          </swc-button>
+        </swc-button-group>
+      </div>
+    `,
+  },
+  render: (args) => {
+    // The anchor is a `VirtualTrigger` (an object with `getBoundingClientRect`),
+    // not a DOM element, so the popover opens at an arbitrary point. The wrapper
+    // is captured lazily for the same reason as `Custom anchor`: the popover is
+    // rendered by the `${template()}` child binding after this ref runs.
+    let wrapper: Element | null = null;
+    const capture = (element?: Element): void => {
+      wrapper = element ?? null;
+    };
+    const openAtPoint = (event: MouseEvent): void => {
+      const popover = wrapper?.querySelector<Popover>('swc-popover');
+      if (!popover) {
+        return;
+      }
+      // Keyboard activation has no pointer position (clientX/Y are 0); fall back
+      // to the activated area's center so the example stays operable by keyboard.
+      const area = event.currentTarget as HTMLElement;
+      const rect = area.getBoundingClientRect();
+      const hasPoint = event.clientX !== 0 || event.clientY !== 0;
+      // Capture the point in document coordinates so it stays anchored to the
+      // content while the page scrolls. `getBoundingClientRect` is re-read on
+      // every autoUpdate tick, so subtract the live scroll offset to report the
+      // point's current viewport position.
+      const pageX = hasPoint
+        ? event.pageX
+        : rect.left + window.scrollX + rect.width / 2;
+      const pageY = hasPoint
+        ? event.pageY
+        : rect.top + window.scrollY + rect.height / 2;
+      popover.triggerElement = {
+        getBoundingClientRect: () =>
+          new DOMRect(pageX - window.scrollX, pageY - window.scrollY, 0, 0),
+        // The point lives within the click area; naming its context element lets
+        // the controller's autoUpdate watch the right scroll ancestors.
+        contextElement: area,
+      };
+      popover.open = true;
+    };
+    return html`
+      <div ${ref(capture)}>
+        <button
+          @click=${openAtPoint}
+          style="inline-size: 320px; block-size: 120px; display: grid; place-items: center; border: 1px dashed currentColor; border-radius: 8px; background: transparent; color: inherit; cursor: crosshair;"
+        >
+          Click anywhere to add a comment
+        </button>
+        ${template({ ...args })}
+      </div>
+    `;
+  },
+  tags: ['behaviors'],
+};
+VirtualAnchor.storyName = 'Virtual anchor';
+
+// ──────────────────────────
+//    HELPERS (interactive)
+// ──────────────────────────
+
+// Renders a trigger button wired to a closed popover via `for=`. A top-layer
+// popover can't be shown open inline, and open auto popovers light-dismiss one
+// another, so each example is a trigger the reader clicks to open. Each pair
+// needs a unique id.
+const triggered = (
+  popoverArgs: Record<string, unknown>,
+  id: string,
+  buttonLabel: string
+) => html`
+  <swc-button id=${id}>${buttonLabel}</swc-button>
+  ${template({ ...popoverArgs, for: id })}
+`;
+
+// ──────────────────────────
+//    ANATOMY STORIES
+// ──────────────────────────
+
+export const Anatomy: Story = {
+  args: {
+    'accessible-label': 'Autosave',
+    'default-slot': 'Your changes are saved automatically as you edit.',
+  },
+  render: (args) => triggered({ ...args }, 'anatomy-trigger', 'Open popover'),
+  tags: ['anatomy'],
+};
+
+// ──────────────────────────
+//    OPTIONS STORIES
+// ──────────────────────────
+
+export const Placement: Story = {
+  args: {
+    'accessible-label': 'Draft visibility',
+    'default-slot': 'Drafts stay private until you publish them.',
+  },
+  render: (args) => html`
+    ${triggered({ ...args, placement: 'top' }, 'placement-top', 'Top')}
+    ${triggered({ ...args, placement: 'end' }, 'placement-end', 'End')}
+    ${triggered({ ...args, placement: 'bottom' }, 'placement-bottom', 'Bottom')}
+    ${triggered({ ...args, placement: 'start' }, 'placement-start', 'Start')}
+  `,
+  parameters: { flexLayout: 'row-wrap' },
+  tags: ['options'],
+};
+
+export const Sizes: Story = {
+  args: {
+    'accessible-label': 'Notification settings',
+    'default-slot': `We send a monthly summary of your account activity. Change
+      how often you receive it, or turn it off entirely, in your notification
+      settings.`,
+  },
+  render: (args) => html`
+    ${triggered({ ...args, size: 's' }, 'size-s', 'Small')}
+    ${triggered({ ...args, size: 'm' }, 'size-m', 'Medium')}
+    ${triggered({ ...args, size: 'l' }, 'size-l', 'Large')}
+    ${triggered({ ...args }, 'size-auto', 'Default')}
+  `,
+  parameters: { flexLayout: 'row-wrap' },
+  tags: ['options'],
+};
+
+export const HideArrow: Story = {
+  args: {
+    'hide-arrow': true,
+    'accessible-label': 'Sync status',
+    'default-slot':
+      'Connected to Creative Cloud. Last synced a few moments ago.',
+  },
+  render: (args) =>
+    triggered({ ...args }, 'hide-arrow-trigger', 'Open popover'),
+  tags: ['options'],
+};
+HideArrow.storyName = 'Hide arrow';
+
+// ──────────────────────────
+//    STATES STORIES
+// ──────────────────────────
+
+export const States: Story = {
+  args: {
+    'accessible-label': 'Messages',
+    'default-slot': 'You have 3 unread messages in your inbox.',
+  },
+  render: (args) => triggered({ ...args }, 'states-trigger', 'Open popover'),
+  tags: ['states'],
+};
+
+// ──────────────────────────────
+//    BEHAVIORS STORIES
+// ──────────────────────────────
+
+export const Modal: Story = {
+  args: {
+    modal: true,
+    'accessible-label': 'Account settings',
+    'default-slot': accountCard,
+  },
+  render: (args) => triggered({ ...args }, 'modal-trigger', 'Open modal'),
+  tags: ['behaviors'],
+};
+
+// ────────────────────────────────
+//    ACCESSIBILITY STORIES
+// ────────────────────────────────
+
+export const Accessibility: Story = {
+  args: { 'accessible-label': 'Account', 'default-slot': accountCard },
+  render: (args) => triggered({ ...args }, 'a11y-trigger', 'Open popover'),
+  tags: ['a11y'],
+};
