@@ -3,8 +3,8 @@
 '@spectrum-web-components/action-menu': patch
 ---
 
-**fix(picker, action-menu):** Stop the internal menu scroll from surfacing on the component host.
+**fix(picker, action-menu):** Prevent the internal menu scroll event from crossing the shadow DOM boundary.
 
-`Picker`, `PickerBase`, and `ActionMenu` were re-dispatching the internal `sp-menu` scroll event on their own host element (previously with `composed: true`, which also let it cross the shadow DOM boundary into ancestor light DOM). The internal scroll is now absorbed and no longer re-dispatched, so consumers no longer receive a spurious `scroll` event from the component or its ancestors.
+`Picker`, `PickerBase`, and `ActionMenu` re-dispatch a `scroll` event on their host when the internal menu scrolls. The event was created with `composed: true`, allowing it to cross the shadow DOM boundary and reach ancestor elements, which could close an enclosing overlay while the user was scrolling the menu. The event is now non-composed: it still fires on the component host for consumers, but no longer escapes into ancestors. This applies the #6028 fix to `PickerBase` and `ActionMenu`, which were previously missed.
 
 Reported by PSWeb.

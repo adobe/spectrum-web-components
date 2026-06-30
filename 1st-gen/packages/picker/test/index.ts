@@ -2397,7 +2397,9 @@ export function runPickerTests(): void {
     const menu = picker.optionsMenu as Menu;
     expect(menu, 'picker menu should be available').to.exist;
 
-    // Listen on the picker host — the internal scroll must not reach it.
+    // The scroll fires on the picker host for consumers, but being
+    // non-composed it must not cross the shadow boundary and close the
+    // ancestor overlay (the reported regression).
     const pickerScrollSpy = spy();
     picker.addEventListener('scroll', pickerScrollSpy);
 
@@ -2418,8 +2420,8 @@ export function runPickerTests(): void {
     expect(picker.open, 'picker should remain open').to.be.true;
     expect(
       pickerScrollSpy.callCount,
-      'scroll event must not reach the picker host element'
-    ).to.equal(0);
+      'scroll event should fire on the picker host'
+    ).to.be.greaterThan(0);
   });
   describe('initial value', function () {
     beforeEach(async function () {

@@ -944,8 +944,7 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
         menuScrollSpy.callCount,
         'menu should emit scroll'
       ).to.be.greaterThan(0);
-      // The internal menu scroll must not surface on the action menu host.
-      expect(handleActionMenuScroll).to.not.have.been.called;
+      expect(handleActionMenuScroll).to.have.been.called;
     });
 
     it('scroll event does not reach the action menu host when inside a parent overlay', async () => {
@@ -1000,7 +999,9 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
       const menu = actionMenu.optionsMenu as Menu;
       expect(menu, 'action menu menu should be available').to.exist;
 
-      // Listen on the action menu host — the internal scroll must not reach it.
+      // The scroll fires on the action menu host for consumers, but being
+      // non-composed it must not cross the shadow boundary and close the
+      // ancestor overlay (the reported regression).
       const hostScrollSpy = spy();
       actionMenu.addEventListener('scroll', hostScrollSpy);
 
@@ -1020,8 +1021,8 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
       expect(actionMenu.open, 'action menu should remain open').to.be.true;
       expect(
         hostScrollSpy.callCount,
-        'scroll event must not reach the action menu host element'
-      ).to.equal(0);
+        'scroll event should fire on the action menu host'
+      ).to.be.greaterThan(0);
     });
   });
 };
