@@ -824,13 +824,8 @@ export class ActionMenu extends ObserveSlotPresence(
   /** Tracks whether the overlay has been rendered at least once. */
   protected hasRenderedOverlay = false;
 
-  /**
-   * Dispatches a scroll event when the menu is scrolled.
-   * Allows parent components to react to menu scroll events.
-   */
-  private onScroll(): void {
-    this.dispatchEvent(new Event('scroll'));
-  }
+  /** Absorbs the menu scroll event so it does not reach the action menu host. */
+  private onScroll(): void {}
 
   /**
    * Renders the menu and overlay structure.

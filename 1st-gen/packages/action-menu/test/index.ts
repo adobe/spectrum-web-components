@@ -944,7 +944,8 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
         menuScrollSpy.callCount,
         'menu should emit scroll'
       ).to.be.greaterThan(0);
-      expect(handleActionMenuScroll).to.have.been.called;
+      // The internal menu scroll must not surface on the action menu host.
+      expect(handleActionMenuScroll).to.not.have.been.called;
     });
 
     it('scroll event does not reach the action menu host when inside a parent overlay', async () => {
