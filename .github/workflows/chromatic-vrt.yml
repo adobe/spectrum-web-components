@@ -51,6 +51,10 @@ jobs:
       - name: Publish to Chromatic
         id: chromatic
         uses: chromaui/action@v15
+        env:
+          # Build only *.vrt.ts stories, so Chromatic's catalog only lists
+          # what it actually snapshots.
+          SWC_STORYBOOK_MODE: vrt
         with:
           projectToken: ${{ secrets.CHROMATIC_TOKEN }}
           workingDir: 2nd-gen/packages/swc

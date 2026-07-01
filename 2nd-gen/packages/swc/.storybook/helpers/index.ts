@@ -12,3 +12,4 @@
 
 export { formatTitle } from './format-title.js';
 export { iconForSize } from './icon-for-size.js';
+export { row, staticColorBackground, theme } from './vrt.js';
