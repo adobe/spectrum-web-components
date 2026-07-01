@@ -10,7 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
-import { CSSResultArray, html, TemplateResult } from 'lit';
+import { CSSResultArray, html, PropertyValues, TemplateResult } from 'lit';
 import { styleMap } from 'lit/directives/style-map.js';
 
 import { ColorHandleBase } from '@spectrum-web-components/core/components/color-handle';
@@ -41,12 +41,26 @@ export class ColorHandle extends ColorHandleBase {
     return [opacityCheckerboardStyles, styles];
   }
 
+  protected override updated(changed: PropertyValues): void {
+    super.updated(changed);
+    if (changed.has('color')) {
+      // Apply the core white-first contrast decision to the dark borders.
+      this.style.setProperty(
+        '--_swc-color-handle-border-alpha',
+        String(this.borderAlpha)
+      );
+    }
+  }
+
   protected override render(): TemplateResult {
     return html`
-      <div
-        class="swc-ColorHandle-inner swc-OpacityCheckerboard"
-        style=${styleMap({ 'background-color': this.color })}
-      ></div>
+      <div class="swc-ColorHandle-inner">
+        <div class="swc-ColorHandle-layer swc-OpacityCheckerboard"></div>
+        <div
+          class="swc-ColorHandle-layer swc-ColorHandle-colorFill"
+          style=${styleMap({ '--swc-color-handle-picked-color': this.color })}
+        ></div>
+      </div>
       <swc-color-loupe
         color=${this.color}
         ?open=${this.open && !this.disabled}

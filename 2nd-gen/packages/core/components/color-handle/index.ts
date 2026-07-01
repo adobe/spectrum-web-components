@@ -11,3 +11,4 @@
  */
 export * from './ColorHandle.base.js';
 export * from './ColorHandle.types.js';
+export * from './color-contrast.js';

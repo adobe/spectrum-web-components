@@ -15,6 +15,9 @@ import { property } from 'lit/decorators.js';
 
 import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
 
+import { computeBorderAlpha } from './color-contrast.js';
+import { ColorHandleProperties } from './ColorHandle.types.js';
+
 /**
  * A non-interactive primitive: a draggable dot rendered on top of a color
  * area, slider, or wheel that shows the currently picked color (over an
@@ -27,7 +30,10 @@ import { SpectrumElement } from '@spectrum-web-components/core/element/index.js'
  *
  * @element swc-color-handle
  */
-export abstract class ColorHandleBase extends SpectrumElement {
+export abstract class ColorHandleBase
+  extends SpectrumElement
+  implements ColorHandleProperties
+{
   // ─────────────────
   //     SHARED API
   // ─────────────────
@@ -64,6 +70,21 @@ export abstract class ColorHandleBase extends SpectrumElement {
    */
   @property({ type: Boolean, reflect: true })
   public fill = true;
+
+  // ──────────────────────────
+  //     ADAPTIVE CONTRAST
+  // ──────────────────────────
+
+  /**
+   * The adaptive dark-border opacity for the current `color`, derived by the
+   * white-first strategy so the handle chrome meets WCAG 1.4.11 (≥3:1) across
+   * the color spectrum. The rendering layer applies this to the dark borders.
+   *
+   * @internal
+   */
+  protected get borderAlpha(): number {
+    return computeBorderAlpha(this.color);
+  }
 
   // ──────────────────────────
   //     POINTER / TOUCH BEHAVIOR
