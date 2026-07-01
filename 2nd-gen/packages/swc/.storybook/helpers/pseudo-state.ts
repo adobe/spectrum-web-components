@@ -70,18 +70,29 @@ function augmentShadowRoot(root: ShadowRoot): void {
 }
 
 /**
- * Forces `state`'s visual appearance onto `internalSelector` inside `host`'s shadow
- * root. Call after `host` has rendered (its shadow root must already have its adopted
- * stylesheets in place — true as soon as the element is connected and updated).
+ * Forces `state`'s visual appearance on `host`. Call after `host` has rendered (its
+ * shadow root must already have its adopted stylesheets in place — true as soon as
+ * the element is connected and updated).
+ *
+ * Some components style pseudo-states on an internal shadow part (e.g. Button's
+ * `.swc-Button:hover`) — pass `internalSelector` for those, and the forced class is
+ * added there instead. Others style pseudo-states directly on `:host()` (e.g. Tab's
+ * `:host(:hover)`) — omit `internalSelector` and the class is added to `host` itself.
+ * Either way, the mirrored rule lives in the *same* shadow root's adopted
+ * stylesheets, so `:host(:hover)` naturally still matches against `host`'s own class
+ * list even though the rule was defined inside its own shadow tree.
  */
 export function forcePseudoState(
   host: Element,
-  internalSelector: string,
-  state: ForcedPseudoState
+  state: ForcedPseudoState,
+  internalSelector?: string
 ): void {
   if (!host.shadowRoot) {
     return;
   }
   augmentShadowRoot(host.shadowRoot);
-  host.shadowRoot.querySelector(internalSelector)?.classList.add(`is-${state}`);
+  const target = internalSelector
+    ? host.shadowRoot.querySelector(internalSelector)
+    : host;
+  target?.classList.add(`is-${state}`);
 }

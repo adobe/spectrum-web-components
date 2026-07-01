@@ -214,7 +214,7 @@ export const Permutations: Story = {
           | 'hover'
           | 'focus-visible'
           | 'active';
-        forcePseudoState(host, '.swc-Button', state);
+        forcePseudoState(host, state, '.swc-Button');
       });
   },
 };
