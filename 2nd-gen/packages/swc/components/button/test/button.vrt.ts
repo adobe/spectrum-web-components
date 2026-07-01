@@ -22,6 +22,7 @@ import '@adobe/spectrum-wc/components/button/swc-button.js';
 import '@adobe/spectrum-wc/components/icon/swc-icon.js';
 
 import {
+  forcePseudoState,
   row,
   staticColorBackground,
   theme,
@@ -73,10 +74,11 @@ const arrowIcon = () => html`
 
 // Every variant × fill-style × size combination, disabled/pending states,
 // static-color variants on their contrast backgrounds, icon anatomy
-// (label-only, icon+label, icon-only) for fill and outline, and text
-// wrapping/truncation behavior. Rendered once in light/ltr and once in
-// dark/rtl below (that combination covers both axes), all still in a single
-// story so it costs one snapshot.
+// (label-only, icon+label, icon-only) for fill and outline, text
+// wrapping/truncation behavior, and forced hover/focus-visible/active per
+// variant (see the `play` function below). Rendered once in light/ltr and
+// once in dark/rtl below (that combination covers both axes), all still in a
+// single story so it costs one snapshot.
 const permutationContent = () => html`
   ${ROWS.map(({ variant, fillStyle }) =>
     row(
@@ -174,6 +176,17 @@ const permutationContent = () => html`
       </swc-button>
     `,
   ])}
+  ${BUTTON_VARIANTS.map((variant) =>
+    row(
+      (['hover', 'focus-visible', 'active'] as const).map(
+        (state) => html`
+          <swc-button variant=${variant} data-force-state=${state}>
+            ${variant} ${state}
+          </swc-button>
+        `
+      )
+    )
+  )}
 `;
 
 export const Permutations: Story = {
@@ -183,5 +196,25 @@ export const Permutations: Story = {
   `,
   parameters: {
     styles: { display: 'flex', 'flex-direction': 'column', gap: '16px' },
+    // The global default (preview.ts) only autoplays under Chromatic, so the
+    // forced hover/focus-visible/active row below wouldn't otherwise render
+    // in local dev/the Chromatic addon panel without manually triggering play.
+    autoplay: true,
+  },
+  // :hover/:active can't be triggered by synthetic events, and static VRT
+  // captures have no real pointer — see helpers/pseudo-state.ts. Applying
+  // this after render (rather than baking the class into the markup above)
+  // is what lets it target the real internal `.swc-Button` element inside
+  // the shadow root, which the light-DOM markup above has no access to.
+  play: async ({ canvasElement }) => {
+    canvasElement
+      .querySelectorAll<HTMLElement>('swc-button[data-force-state]')
+      .forEach((host) => {
+        const state = host.dataset.forceState as
+          | 'hover'
+          | 'focus-visible'
+          | 'active';
+        forcePseudoState(host, state, '.swc-Button');
+      });
   },
 };

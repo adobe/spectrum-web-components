@@ -32,6 +32,11 @@ export const row = (children: unknown) => html`
  * across the shadow boundary without needing the toolbar globals. Also
  * stacks its children (e.g. multiple `row()` groups) vertically with a gap,
  * since it already wraps everything a VRT story renders.
+ *
+ * Sets `color` as well as `background-color`: SWC intentionally never sets a
+ * page-level default text color (that's left to the consuming app, same as
+ * background), so plain slotted content (e.g. TabPanel's text) has nothing
+ * to inherit and stays illegible-dark-on-dark without this.
  */
 export const theme = (
   children: unknown,
@@ -41,7 +46,7 @@ export const theme = (
   <div
     class="swc-theme--${mode}"
     dir=${dir}
-    style="display: flex; flex-direction: column; gap: 16px; padding: 16px; background-color: var(--swc-background-base-color);"
+    style="display: flex; flex-direction: column; gap: 16px; padding: 16px; background-color: var(--swc-background-base-color); color: var(--swc-neutral-content-color-default);"
   >
     ${children}
   </div>
