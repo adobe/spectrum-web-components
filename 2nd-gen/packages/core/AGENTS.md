@@ -8,7 +8,7 @@
 core/
 ├── element/       # SpectrumElement base class, defineElement, version tracking
 ├── mixins/        # SizedMixin, ObserveSlotPresence, ObserveSlotText
-├── controllers/   # LanguageResolutionController
+├── controllers/   # LanguageResolutionController, PlacementController, …
 ├── utils/         # capitalize, getLabelFromSlot
 └── components/    # One folder per component
     └── badge/
