@@ -23,3 +23,52 @@ export const row = (children: unknown) => html`
     ${children}
   </div>
 `;
+
+/**
+ * Wraps content so it renders in a given theme/direction regardless of the
+ * Storybook toolbar's global theme/lang. `.swc-theme--{mode}` only sets
+ * `color-scheme`, which every token resolves via `light-dark()`; `dir` is a
+ * plain HTML attribute. Both are inherited properties, so this works even
+ * across the shadow boundary without needing the toolbar globals. Also
+ * stacks its children (e.g. multiple `row()` groups) vertically with a gap,
+ * since it already wraps everything a VRT story renders.
+ */
+export const theme = (
+  children: unknown,
+  mode: 'light' | 'dark' | 'adaptive',
+  dir: 'ltr' | 'rtl' = 'ltr'
+) => html`
+  <div
+    class="swc-theme--${mode}"
+    dir=${dir}
+    style="display: flex; flex-direction: column; gap: 16px; padding: 16px; background-color: var(--swc-background-base-color);"
+  >
+    ${children}
+  </div>
+`;
+
+// Matches the gradients in decorators/static-colors-demo.ts, so VRT static
+// color groups look the same as the docs' staticColorsDemo decorator.
+const STATIC_COLOR_GRADIENTS = {
+  white: 'linear-gradient(45deg, rgb(64 0 22), rgb(14 24 67))',
+  black: 'linear-gradient(45deg, rgb(255 241 246), rgb(238 245 255))',
+} as const;
+
+/**
+ * Wraps a group of static-color="white"/"black" permutations in the matching
+ * contrast background, so they render correctly outside of the docs-only
+ * `staticColorsDemo` decorator (which only targets a story's top-level
+ * children, and can't compose with `theme()` wrapping the whole story too).
+ */
+export const staticColorBackground = (
+  children: unknown,
+  staticColor: 'white' | 'black'
+) => html`
+  <div
+    style="display: flex; flex-wrap: wrap; gap: 16px; align-items: center; padding: 24px; background: ${STATIC_COLOR_GRADIENTS[
+      staticColor
+    ]}; color: ${staticColor === 'white' ? 'white' : 'black'};"
+  >
+    ${children}
+  </div>
+`;
