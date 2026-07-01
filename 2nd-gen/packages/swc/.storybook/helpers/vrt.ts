@@ -10,6 +10,16 @@
  * governing permissions and limitations under the License.
  */
 
-export { formatTitle } from './format-title.js';
-export { iconForSize } from './icon-for-size.js';
-export { row } from './vrt.js';
+import { html } from 'lit';
+
+/**
+ * Wraps a set of permutations in a single flex-wrap row. Stack multiple
+ * `row()` calls inside a VRT story to group permutations (e.g. one row per
+ * variant, one column per size) without needing every combination to be its
+ * own story/snapshot.
+ */
+export const row = (children: unknown) => html`
+  <div style="display: flex; flex-wrap: wrap; gap: 16px; align-items: center;">
+    ${children}
+  </div>
+`;

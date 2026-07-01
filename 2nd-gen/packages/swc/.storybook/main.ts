@@ -28,18 +28,33 @@ mkdirSync(resolve(__dirname, '../coverage'), { recursive: true });
 // - dev: full local Storybook, including docs and test stories
 // - build: production Storybook build, excluding internal and test stories
 // - ci-a11y: minimal component-only Storybook used by CI accessibility checks
-type StorybookMode = 'dev' | 'build' | 'ci-a11y';
+// - vrt: Chromatic-only build containing *just* .vrt.ts stories, so the
+//   Chromatic catalog never lists the non-VRT stories it skips snapshotting.
+type StorybookMode = 'dev' | 'build' | 'ci-a11y' | 'vrt';
 
 const storybookMode: StorybookMode =
   process.env.SWC_STORYBOOK_MODE === 'ci-a11y'
     ? 'ci-a11y'
-    : process.env.NODE_ENV === 'production'
-      ? 'build'
-      : 'dev';
+    : process.env.SWC_STORYBOOK_MODE === 'vrt'
+      ? 'vrt'
+      : process.env.NODE_ENV === 'production'
+        ? 'build'
+        : 'dev';
 
 // Custom indexer to allow .test.ts files to be treated as story files.
 const testStoryIndexer: Indexer = {
   test: /\.test\.ts$/,
+  createIndex: async (fileName, options) => {
+    const csfFile = await readCsf(fileName, options);
+    return csfFile.parse().indexInputs;
+  },
+};
+
+// Custom indexer to allow .vrt.ts files to be treated as story files. Unlike
+// .test.ts fixtures, VRT stories must also index in `build` mode so Chromatic
+// (which builds Storybook in production mode) can snapshot them.
+const vrtStoryIndexer: Indexer = {
+  test: /\.vrt\.ts$/,
   createIndex: async (fileName, options) => {
     const csfFile = await readCsf(fileName, options);
     return csfFile.parse().indexInputs;
@@ -61,30 +76,46 @@ const CORE_STORY_ROOT = {
   titlePrefix: 'Core',
 } as const;
 
-const stories: StorybookConfig['stories'] = [
-  {
-    ...COMPONENT_STORY_ROOT,
-    // Production-style builds exclude internal-only stories; local/dev keeps the full set.
-    files:
-      storybookMode === 'build'
-        ? '**/!(*.internal).stories.ts'
-        : '**/*.stories.ts',
-  },
-  {
-    ...PATTERN_STORY_ROOT,
-    files: '**/*.stories.ts',
-  },
-  {
-    ...PATTERN_STORY_ROOT,
-    files: '**/*.mdx',
-  },
-];
+// vrt mode builds only .vrt.ts stories, so Chromatic's catalog never lists
+// the non-VRT stories it's configured to skip snapshotting anyway.
+const stories: StorybookConfig['stories'] =
+  storybookMode === 'vrt'
+    ? [
+        { ...COMPONENT_STORY_ROOT, files: '**/*.vrt.ts' },
+        { ...PATTERN_STORY_ROOT, files: '**/*.vrt.ts' },
+      ]
+    : [
+        {
+          ...COMPONENT_STORY_ROOT,
+          // Production-style builds exclude internal-only stories; local/dev keeps the full set.
+          files:
+            storybookMode === 'build'
+              ? '**/!(*.internal).stories.ts'
+              : '**/*.stories.ts',
+        },
+        {
+          ...PATTERN_STORY_ROOT,
+          files: '**/*.stories.ts',
+        },
+        {
+          ...PATTERN_STORY_ROOT,
+          files: '**/*.mdx',
+        },
+        {
+          ...COMPONENT_STORY_ROOT,
+          files: '**/*.vrt.ts',
+        },
+        {
+          ...PATTERN_STORY_ROOT,
+          files: '**/*.vrt.ts',
+        },
+      ];
 
 /**
  * The CI a11y mode trims docs/guides
  * that can pull in 1st-gen-linked dependencies the test build does not need.
  */
-if (storybookMode !== 'ci-a11y') {
+if (storybookMode !== 'ci-a11y' && storybookMode !== 'vrt') {
   stories.push({
     directory: '../components',
     // Production-style builds exclude internal-only docs; local/dev keeps the full set.
@@ -197,7 +228,10 @@ const config: StorybookConfig = {
   },
   staticDirs: ['../public', { from: '../coverage', to: '/coverage' }],
   addons,
-  experimental_indexers: storybookMode === 'dev' ? [testStoryIndexer] : [],
+  experimental_indexers:
+    storybookMode === 'dev'
+      ? [testStoryIndexer, vrtStoryIndexer]
+      : [vrtStoryIndexer],
   viteFinal: async (config) => {
     return mergeConfig(config, {
       css: {
