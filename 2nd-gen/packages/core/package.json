@@ -111,6 +111,10 @@
       "types": "./dist/controllers/index.d.ts",
       "import": "./dist/controllers/index.js"
     },
+    "./controllers/color-controller.js": {
+      "types": "./dist/controllers/color-controller/index.d.ts",
+      "import": "./dist/controllers/color-controller/index.js"
+    },
     "./controllers/focus-group-navigation-controller.js": {
       "types": "./dist/controllers/focus-group-navigation-controller/focus-group-navigation-controller.d.ts",
       "import": "./dist/controllers/focus-group-navigation-controller/focus-group-navigation-controller.js"
@@ -277,6 +281,9 @@
       "controllers": [
         "dist/controllers/index.d.ts"
       ],
+      "controllers/color-controller.js": [
+        "dist/controllers/color-controller/index.d.ts"
+      ],
       "controllers/focus-group-navigation-controller/focus-group-navigation-controller.js": [
         "dist/controllers/focus-group-navigation-controller/focus-group-navigation-controller.d.ts"
       ],
@@ -342,6 +349,7 @@
   "dependencies": {
     "@floating-ui/dom": "1.7.6",
     "@lit-labs/observers": "2.0.2",
+    "colorjs.io": "0.5.2",
     "lit": "^2.5.0 || ^3.1.3"
   },
   "devDependencies": {

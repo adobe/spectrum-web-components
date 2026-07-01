@@ -72,6 +72,11 @@
     - [Why This Happens](#why-this-happens)
     - [Why This Is a Problem](#why-this-is-a-problem)
     - [✅ Correct Approach](#-correct-approach)
+- [12. Block padding on text-based components](#12-block-padding-on-text-based-components)
+    - [❌ Anti-Pattern](#-anti-pattern)
+    - [Why This Happens](#why-this-happens)
+    - [Why This Is a Problem](#why-this-is-a-problem)
+    - [✅ Correct Approach](#-correct-approach)
 - [Final Reminder](#final-reminder)
 
 </details>
@@ -575,6 +580,52 @@ swc-accordion[size="compact"] {
 ### ✅ Correct Approach
 
 - Remove the rule entirely. `:focus-visible` already handles when to show the ring; no explicit suppression is needed.
+
+## 12. Block padding on text-based components
+
+### ❌ Anti-Pattern
+
+```css
+.swc-StatusLight {
+  min-block-size: var(--swc-status-light-height, token("component-height-100"));
+  padding-block: token("component-edge-to-text-100");
+}
+```
+
+### Why This Happens
+
+- Spectrum 1 components used `component-height-*` and related spacing tokens to give components a minimum block size regardless of whether it had a visible box
+- Migrating from Spectrum CSS preserves those `padding-block` and `min-block-size` rules by default
+
+### Why This Is a Problem
+
+Spectrum 2 removes block padding from components that have no visible bounding box (no background color, no border). For these components, the block dimension must come entirely from `font-size` and `line-height`. Adding `padding-block` or `min-block-size` makes the component taller than its text metrics, misaligning it relative to adjacent elements and breaking the layout intent of the design spec. Removal also places layout alignment ownership in the hands of consumers or parent components, enabling use of `gap` and/or display alignment properties.
+
+Components in this category include:
+
+- **Status light** — dot + label, no visible box
+- **Checkbox** — control + label, no visible box
+- **Radio** — control + label, no visible box
+- **Field label** — plain label text, no box
+
+### ✅ Correct Approach
+
+Remove `min-block-size` and `padding-block` entirely. Let `font-size` and `line-height` determine the block dimension.
+
+```css
+.swc-StatusLight {
+  font-size: var(--swc-status-light-font-size, token("font-size-100"));
+  line-height: var(--_swc-status-light-line-height, token("line-height-font-size-100"));
+  /* no min-block-size, no padding-block */
+}
+```
+
+The quick test: if the component has no background color and no border on its outer box, its block height must come from line metrics only.
+
+During migration, this removal may affect alignment of accessories (ex. status light dot, checkbox input). A line-height based alignment strategy may be an appropriate replacement, as used for status light.
+
+🔎 **Status light reference:**
+[status-light.css](../../../2nd-gen/packages/swc/components/status-light/status-light.css) sets only `font-size` and `line-height` per size; `min-block-size` and `padding-block` are absent.
 
 ## Final Reminder
 

@@ -138,6 +138,10 @@ slot[name="heading"] {
   color: inherit !important;
 }
 
+:host(:has([slot="actions"])) slot[name="actions"] {
+  margin-block-start: token("spacing-300");
+}
+
 /*
  * Ensure slotted SVG illustrations fill the illustration container
  * and use the component illustration color via currentcolor.
