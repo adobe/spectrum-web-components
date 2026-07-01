@@ -25,11 +25,12 @@ Long-form documentation lives in the per-unit MDX file at the unit's root, not i
 
 ### File template
 
+#### Component / pattern MDX template
+
 ```mdx
 import { Canvas, Meta } from '@storybook/addon-docs/blocks';
 import { DocsFooter, DocsHeader } from '../../.storybook/blocks'; // components
 // or '../../../.storybook/blocks' for patterns
-// or '../../../swc/.storybook/blocks' for controllers
 
 import * as Stories from './stories/<unit>.stories';
 
@@ -80,7 +81,100 @@ import * as Stories from './stories/<unit>.stories';
 <DocsFooter />
 ```
 
+#### Controller MDX template
+
+Controllers do not expose a visual DOM surface, so their MDX uses different top-level sections. The section headings `## What it does`, `## Basic usage`, `## Behaviors`, `## Accessibility`, `## API`, and `## Appendix` are the controller equivalents of the component section order. The `## API` section is **hand-authored** (controllers opt out of `<ApiTable />` via `'controller'` in `meta.tags`).
+
+````mdx
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import { DocsFooter, DocsHeader } from '../../../swc/.storybook/blocks';
+
+import * as Stories from './stories/<controller>.stories';
+
+<Meta of={Stories} />
+
+<DocsHeader />
+
+## What it does
+
+### [Feature group 1]
+
+- Bullet describing behavior A (e.g. "Collapses the tab sequence to one tab stop")
+- Bullet describing behavior B
+
+### [Feature group 2]
+
+...
+
+## Basic usage
+
+1. Construct the controller in your element's `constructor`, passing required options.
+2. Ensure `getItems` returns live `HTMLElement` references from `this.renderRoot`.
+3. Call `refresh()` from `firstUpdated` once shadow DOM exists.
+4. Pair with other controllers when needed (e.g. `FocusgroupNavigationController`).
+
+```typescript
+// Minimal constructor + firstUpdated setup example
+```
+````
+
+## Behaviors
+
+### [Story display name]
+
+...prose...
+
+<Canvas of={Stories.StoryName} />
+
+## Accessibility
+
+### Features
+
+...keyboard navigation, ARIA management, etc....
+
+### Best practices
+
+...
+
+<Canvas of={Stories.Accessibility} />
+
+## API
+
+### Methods
+
+| Member      | Description                        |
+| ----------- | ---------------------------------- |
+| `refresh()` | Re-query items and re-apply state. |
+
+### Events
+
+The controller dispatches **`event-name`** on the host. The event bubbles and is composed.
+
+```typescript
+import { eventConstant } from '@spectrum-web-components/core/controllers';
+
+host.addEventListener(eventConstant, (event) => { ... });
+```
+
+### Options
+
+| Option     | Type                  | Default    | Description |
+| ---------- | --------------------- | ---------- | ----------- |
+| `getItems` | `() => HTMLElement[]` | (required) | ...         |
+
+## Appendix
+
+### See also
+
+- [Related controller](../?path=/docs/controllers-related--docs)
+- [APG pattern link](https://www.w3.org/WAI/ARIA/apg/...)
+
+<DocsFooter />
+```
+
 ### Canonical section order
+
+#### Components and patterns
 
 `DocumentTemplate.mdx` (the fallback template for units without a per-unit MDX) renders sections in this same order, so converted units and unconverted units sit side-by-side without surprises:
 
@@ -96,15 +190,31 @@ import * as Stories from './stories/<unit>.stories';
 10. **Appendix** — `hideTitle` semantics; prose-only.
 11. **Feedback** — rendered by `<DocsFooter />`.
 
+#### Controllers
+
+Controller MDX uses a different section order and different top-level headings because controllers have no visual DOM surface:
+
+1. **`## What it does`** — bullet-list description of what the controller provides (navigation, selection, positioning, etc.)
+2. **`## Basic usage`** — numbered steps: constructor setup, `getItems` contract, `refresh()` lifecycle, pairing guidance, code snippet
+3. **`## Behaviors`** — `### Story display name` + prose + `<Canvas />` for each `'behaviors'`-tagged story
+4. **`## Accessibility`** — `### Features` and `### Best practices` subheadings; `<Canvas of={Stories.Accessibility} />`
+5. **`## API`** — hand-authored; three subsections: `### Methods` (table), `### Events` (import snippet + description), `### Options` (table)
+6. **`## Appendix`** — prose-only; relationship to other controllers, "See also" links
+7. **Feedback** — rendered by `<DocsFooter />`
+
+Sections `## Anatomy`, `## Options`, `## States` do **not** appear in pure utility controllers because there is no user-facing DOM surface to describe. Exceptions: a controller with configurable options that have visual effects (e.g., `HoverController`) may include `## Options` and `## States` sections.
+
 ### Genre-specific notes
 
-| Topic                                | Component                   | Internal                          | Pattern                        | Controller                                           |
-| ------------------------------------ | --------------------------- | --------------------------------- | ------------------------------ | ---------------------------------------------------- |
-| MDX path                             | `components/<n>/<n>.mdx`    | `components/<n>/<n>.internal.mdx` | `patterns/<g>/<n>/<n>.mdx`     | `controllers/<n>/<n>.mdx`                            |
-| Blocks import path                   | `'../../.storybook/blocks'` | `'../../.storybook/blocks'`       | `'../../../.storybook/blocks'` | `'../../../swc/.storybook/blocks'`                   |
-| Meta tag for `DocsFooter` API branch | `'migrated'`                | n/a                               | n/a                            | `'controller'` (omits `<ApiTable />`)                |
-| Anatomy section                      | required (DOM-bearing)      | required if applicable            | required (DOM-bearing)         | omitted (controllers have no DOM)                    |
-| Production build inclusion           | yes                         | no (`.internal.mdx` excluded)     | yes                            | yes (dev) — core docs excluded from production build |
+| Topic                                | Component                   | Internal                          | Pattern                        | Controller                                     |
+| ------------------------------------ | --------------------------- | --------------------------------- | ------------------------------ | ---------------------------------------------- |
+| MDX path                             | `components/<n>/<n>.mdx`    | `components/<n>/<n>.internal.mdx` | `patterns/<g>/<n>/<n>.mdx`     | `controllers/<n>/<n>.mdx`                      |
+| Blocks import path                   | `'../../.storybook/blocks'` | `'../../.storybook/blocks'`       | `'../../../.storybook/blocks'` | `'../../../swc/.storybook/blocks'`             |
+| Meta tag for `DocsFooter` API branch | `'migrated'`                | n/a                               | n/a                            | `'controller'` (omits `<ApiTable />`)          |
+| Top-level section headings           | `Anatomy`, `Options`, etc.  | `Anatomy`, `Options`, etc.        | `Anatomy`, `Options`, etc.     | See controller canonical section order above   |
+| Anatomy section                      | required (DOM-bearing)      | required if applicable            | required (DOM-bearing)         | omitted (controllers have no DOM surface)      |
+| API section                          | auto by `DocsFooter`        | auto by `DocsFooter`              | auto by `DocsFooter`           | hand-authored `## API` before `<DocsFooter />` |
+| Production build inclusion           | yes                         | no (`.internal.mdx` excluded)     | yes                            | yes (dev) — core docs excluded from prod build |
 
 ### Per-story title rules
 
@@ -159,6 +269,103 @@ Organize MDX into these sections (skip sections that don't apply):
 10. **Feedback** - Rendered automatically by `<DocsFooter />`.
 
 The remaining sections of this rule describe the **prose content** for each section. Author that prose inside the per-unit MDX, not as JSDoc above stories.
+
+## Controller-specific MDX sections
+
+The following sections apply **only to controllers** (`core/controllers/<name>/<name>.mdx`). Skip these when authoring component or pattern MDX.
+
+### `## What it does`
+
+A concise feature inventory for the controller: what it provides and what it explicitly does **not** provide. Use bullet groups with `###` subheadings for logical clusters:
+
+```md
+## What it does
+
+### Navigation
+
+- Collapses a composite widget to a single Tab stop via roving `tabindex`.
+- Arrow keys move focus according to `direction`.
+- `Home` / `End` jump to the first or last item.
+
+### Configuration
+
+- `wrap`: end wraps to start.
+- `skipDisabled`: disabled items excluded from arrow movement.
+
+### Programmatic API
+
+- `setActiveItem(element)`: sets the roving tab stop without calling `focus()`.
+```
+
+### `## Basic usage`
+
+A numbered integration checklist followed by a minimal code example. Always include:
+
+1. Where to construct (in `constructor`)
+2. What `getItems` must return (live references from `this.renderRoot`)
+3. When to call `refresh()` (from `firstUpdated`, and after DOM changes)
+4. What the host must provide (ARIA roles, labels — the controller does not set these)
+5. Which controller to pair with when relevant
+
+```md
+## Basic usage
+
+1. Construct the controller in your element's `constructor`.
+2. Ensure `getItems` returns live `HTMLElement` references from `this.renderRoot`.
+3. Call `refresh()` from `firstUpdated` once shadow DOM exists.
+4. Provide ARIA roles and labels on the host; the controller does not set them.
+5. Pair with `FocusgroupNavigationController` when the composite also needs arrow keys.
+
+\`\`\`typescript
+private readonly selection = new SelectionController(this, {
+getItems: () => Array.from(this.renderRoot.querySelectorAll('[role="option"]')),
+selectItem: (el) => el.setAttribute('aria-selected', 'true'),
+deselectItem: (el) => el.setAttribute('aria-selected', 'false'),
+mode: 'multiple',
+keydownActivation: true,
+});
+
+protected override firstUpdated(): void {
+this.selection.refresh();
+}
+\`\`\`
+```
+
+### Hand-authored `## API` section
+
+Controllers opt out of the auto-generated `<ApiTable />` via `'controller'` in `meta.tags`. The `## API` section is therefore written by hand before `<DocsFooter />`. Use three fixed subsections:
+
+```md
+## API
+
+### Methods
+
+| Member                | Description                                                |
+| --------------------- | ---------------------------------------------------------- |
+| `refresh()`           | Re-query items and re-apply state. Call after DOM changes. |
+| `setOptions(partial)` | Merge option updates.                                      |
+
+### Events
+
+The controller dispatches **`swc-example-change`** (`exampleChange`) on the host with
+`detail: { ... }`. The event bubbles and is composed.
+
+\`\`\`typescript
+import { exampleChange } from '@spectrum-web-components/core/controllers';
+
+host.addEventListener(exampleChange, (event) => {
+console.log(event.detail);
+});
+\`\`\`
+
+### Options
+
+| Option     | Type                  | Default    | Description              |
+| ---------- | --------------------- | ---------- | ------------------------ |
+| `getItems` | `() => HTMLElement[]` | (required) | Current participant set. |
+```
+
+If the controller dispatches no events, omit `### Events` and state that explicitly. If the controller has no public methods beyond `refresh()`, list only `refresh()` in the table.
 
 ## Helpers section
 

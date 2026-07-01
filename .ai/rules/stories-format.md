@@ -42,6 +42,8 @@ Component-specific `.usage.mdx` files are no longer used. Units without a per-un
 
 ### Stories file (`.stories.ts`)
 
+#### Component / pattern section order
+
 Required structure with visual separators between sections:
 
 1. **Copyright header** (lines 1-11)
@@ -55,6 +57,22 @@ Required structure with visual separators between sections:
 9. **STATES STORIES** - Component states (if applicable)
 10. **BEHAVIORS STORIES** - Built-in functionality (if applicable)
 11. **ACCESSIBILITY STORIES** - A11y demonstration
+
+#### Controller section order
+
+Controllers do not have `ANATOMY STORIES`, `OPTIONS STORIES`, or `STATES STORIES` sections (no visual DOM surface). The typical controller story file structure is:
+
+1. **Copyright header** (lines 1-11)
+2. **Imports**
+3. **METADATA** - Meta object with `tags: ['migrated', 'controller']`
+4. **HELPERS** - Shared utilities (if needed)
+5. **PLAYGROUND STORY** - tags: `['dev']`
+6. **OVERVIEW STORY** - tags: `['overview']`
+7. **USAGE STORIES** _(optional)_ - tags: `['usage']` / `['usage', 'description-only']` with `'section-order'` parameter; JSDoc code examples above each export (see [Usage stories in controllers](#usage-stories-in-controllers))
+8. **BEHAVIORS STORIES** - tags: `['behaviors']`
+9. **ACCESSIBILITY STORIES** - tags: `['a11y']`
+
+A controller may also include `OPTIONS STORIES` and `STATES STORIES` if it has configurable behaviors with visible differences (e.g., `HoverController` with `disabled` and `manual` states).
 
 #### Visual separators
 
@@ -318,6 +336,64 @@ Section ordering is hand-authored in each component's per-component MDX file (`<
 
 Do not use a `section-order` parameter on stories. The previous `section-order` workaround is retired now that MDX is the source of truth for documentation layout.
 
+**Controller exception:** Some existing `core/controllers` stories (notably `selection-controller.stories.ts`) use the `'usage'` tag, `'description-only'` tag, and `'section-order'` parameter on usage-example stories. These are a preserved documentation pattern for controllers that ship inline code examples alongside the story canvas. Do **not** remove these stories or tags to satisfy a lint error. If a lint error occurs on a different story in the same file (e.g. an `'a11y'` story without a `<Canvas>` reference in the MDX), fix only that story. See the [Usage stories in controllers](#usage-stories-in-controllers) section below.
+
+## Usage stories in controllers
+
+Some `core/controllers` stories use a legacy inline-documentation pattern where `'usage'`-tagged exports carry JSDoc code examples. This is distinct from the component pattern (no JSDoc above story exports). Preserve these stories when they exist.
+
+### When to use
+
+Use this pattern **only in `core/controllers`** when the controller's primary audience is engineers integrating it into a component, and inline code snippets alongside a live demo are more useful than prose alone in MDX.
+
+### Pattern
+
+````typescript
+// ──────────────────────────
+//    USAGE STORIES
+// ──────────────────────────
+
+/**
+ * ## Anatomy of a `MyController`
+ *
+ * Constructor signature, options, and lifecycle description.
+ *
+ * ```typescript
+ * // Example setup code
+ * ```
+ */
+export const Usage: Story = {
+  tags: ['usage', 'description-only'],
+  parameters: { 'section-order': 0 },
+};
+
+/**
+ * ### Single mode example
+ *
+ * Explanation of when to use this mode.
+ *
+ * ```typescript
+ * // Mode-specific code
+ * ```
+ */
+export const UsageExampleSingle: Story = {
+  name: 'Example: single mode',
+  tags: ['usage'],
+  parameters: { 'section-order': 1 },
+  render: () => html`
+    <demo-host></demo-host>
+  `,
+};
+````
+
+### Rules specific to controller usage stories
+
+- The JSDoc above each usage story export **is** authored (exception to the no-story-JSDoc rule).
+- `'description-only'` on the header story means it has no canvas — prose only.
+- `'section-order'` controls display order within the Usage section in `DocumentTemplate.mdx`.
+- The demo custom element rendered by usage stories lives in `stories/demo-hosts.ts` alongside the stories file.
+- Do not add `<Canvas of={Stories.UsageExample...} />` to the controller MDX — usage stories render through `DocumentTemplate.mdx` via the `'usage'` tag, not through the hand-authored MDX page.
+
 ## Tags
 
 ### Required tags
@@ -338,7 +414,9 @@ Do not use a `section-order` parameter on stories. The previous `section-order` 
 
 - `'upcoming'` - Story demonstrates a feature or variant that is not yet available
 
-> The previous `'description-only'` tag is retired. Prose-only sections live in the per-component MDX (`<component>.mdx`) as Markdown without a `<Canvas>` reference, not as story exports.
+> The `'description-only'` tag is retired **for components and patterns**. Prose-only sections live in the per-unit MDX as Markdown without a `<Canvas>` reference, not as story exports.
+>
+> **Controller exception:** `'usage'` and `'description-only'` remain valid in `core/controllers` stories for the usage-example pattern. See [Usage stories in controllers](#usage-stories-in-controllers).
 
 ### Exclusion tags
 
@@ -680,10 +758,10 @@ See `asset.stories.ts` for complete examples.
 
 ### ❌ Don't
 
-- Add JSDoc above any individual story export (Playground, Overview, or any other)
-- Use the `'usage'` tag for new units (deprecated)
-- Use the `'description-only'` tag (retired — prose-only sections live in MDX)
-- Use the `'section-order'` parameter (retired — section order is hand-authored in MDX)
+- Add JSDoc above any individual story export (Playground, Overview, or any other) — **except** usage-example stories in `core/controllers` (see [Usage stories in controllers](#usage-stories-in-controllers))
+- Use the `'usage'` tag for new **component or pattern** units (deprecated for those genres)
+- Use the `'description-only'` tag for **components or patterns** (retired — prose-only sections live in MDX)
+- Use the `'section-order'` parameter for **components or patterns** (retired — section order is hand-authored in MDX)
 - Use `tags: ['autodocs', 'dev']` on a unit that has a per-unit MDX file (creates a duplicate Docs entry — use `['dev']`)
 - Omit `subtitle` in meta parameters
 - Use placeholder text
@@ -715,9 +793,9 @@ See `asset.stories.ts` for complete examples.
 - [ ] Behaviors: `['behaviors']` tag (if applicable)
 - [ ] Accessibility: `['a11y']` tag (prose lives in MDX)
 - [ ] Static colors: three-story or combined-story pattern with `staticColorsDemo` (if applicable)
-- [ ] No story-level JSDoc comments above any `export const`
-- [ ] No `section-order` parameter on any story
-- [ ] No `description-only` tag on any story
+- [ ] No story-level JSDoc comments above any `export const` (exception: usage-example stories in `core/controllers`)
+- [ ] No `section-order` parameter on any story (exception: usage-example stories in `core/controllers`)
+- [ ] No `description-only` tag on any story (exception: usage-example stories in `core/controllers`)
 - [ ] All stories accessible with meaningful content
 - [ ] Image assets: use `picsum.photos` with static IDs (if applicable)
 - [ ] Per-unit MDX file exists at the unit root and references each section-tagged story via `<Canvas of={Stories.StoryName} />` (see `.ai/rules/stories-documentation.md`)

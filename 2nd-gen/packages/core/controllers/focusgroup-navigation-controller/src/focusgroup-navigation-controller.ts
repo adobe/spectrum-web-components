@@ -280,6 +280,13 @@ export class FocusgroupNavigationController implements ReactiveController {
    */
   private cachedRows: HTMLElement[][] | null = null;
 
+  /**
+   * Snapshot of the last non-empty raw item list. Used to reset `tabIndex`
+   * when `getItems()` returns `[]` (e.g. the host signals it is disabled),
+   * since `getRawItems()` would also return `[]` in that state.
+   */
+  private lastKnownItems: HTMLElement[] = [];
+
   // ─────────────────────────
   //     PUBLIC API
   // ─────────────────────────
@@ -334,9 +341,14 @@ export class FocusgroupNavigationController implements ReactiveController {
     this.cachedRows = null;
     const items = this.getEligibleItems();
     if (items.length === 0) {
-      for (const el of this.getRawItems()) {
+      // getRawItems() calls getItems() which may return [] when the host
+      // signals it is disabled. Fall back to the last known item list so
+      // all managed items get tabIndex=-1 even when getItems() is empty.
+      const rawItems = this.getRawItems();
+      for (const el of rawItems.length > 0 ? rawItems : this.lastKnownItems) {
         el.tabIndex = -1;
       }
+      this.lastKnownItems = [];
       this.lastFocused = null;
       if (this.previousActive !== null) {
         this.previousActive = null;
@@ -346,6 +358,7 @@ export class FocusgroupNavigationController implements ReactiveController {
       return;
     }
 
+    this.lastKnownItems = this.getRawItems();
     const preferred =
       (this.options.memory &&
       this.lastFocused &&
@@ -839,18 +852,22 @@ export class FocusgroupNavigationController implements ReactiveController {
 
     const isGrid = this.options.direction === 'grid';
     const rows = isGrid ? this.getRows(items) : null;
+    // Fall back to event.code when event.key is empty (synthetic test events).
+    // Real browser events always populate event.key, so this never affects
+    // numpad disambiguation (e.g. Numpad6 NumLock-off sets key='ArrowRight').
+    const key = event.key || event.code;
 
     if (
       isGrid &&
       event.ctrlKey &&
       !event.metaKey &&
-      (event.key === 'Home' || event.key === 'End')
+      (key === 'Home' || key === 'End')
     ) {
       if (rows!.length > 0) {
         const firstRow = rows![0];
         const lastRow = rows![rows!.length - 1];
         const boundary =
-          event.key === 'Home'
+          key === 'Home'
             ? (firstRow?.[0] ?? null)
             : (lastRow?.[lastRow.length - 1] ?? null);
         if (boundary && boundary !== target) {
@@ -866,14 +883,11 @@ export class FocusgroupNavigationController implements ReactiveController {
     }
 
     const pageMagnitude = this.getEffectivePageMagnitude();
-    if (
-      pageMagnitude !== null &&
-      (event.key === 'PageUp' || event.key === 'PageDown')
-    ) {
+    if (pageMagnitude !== null && (key === 'PageUp' || key === 'PageDown')) {
       const pageNext = this.navigatePage(
         items,
         target,
-        event.key === 'PageDown' ? pageMagnitude : -pageMagnitude,
+        key === 'PageDown' ? pageMagnitude : -pageMagnitude,
         rows
       );
       if (pageNext && pageNext !== target) {
@@ -888,16 +902,16 @@ export class FocusgroupNavigationController implements ReactiveController {
 
     switch (this.options.direction) {
       case 'horizontal':
-        next = this.navigateLinear(items, target, event.key, 'horizontal', rtl);
+        next = this.navigateLinear(items, target, key, 'horizontal', rtl);
         break;
       case 'vertical':
-        next = this.navigateLinear(items, target, event.key, 'vertical', rtl);
+        next = this.navigateLinear(items, target, key, 'vertical', rtl);
         break;
       case 'both':
-        next = this.navigateBothAxes(items, target, event.key, rtl);
+        next = this.navigateBothAxes(items, target, key, rtl);
         break;
       case 'grid':
-        next = this.navigateGrid(target, event.key, rtl, rows!);
+        next = this.navigateGrid(target, key, rtl, rows!);
         break;
       default:
         break;
@@ -909,7 +923,7 @@ export class FocusgroupNavigationController implements ReactiveController {
       return;
     }
 
-    if (event.key === 'Home' || event.key === 'End') {
+    if (key === 'Home' || key === 'End') {
       if (isGrid) {
         // APG grid pattern: Home/End scope to the current row.
         // Ctrl+Home/End (entire grid) is handled above.
@@ -922,9 +936,7 @@ export class FocusgroupNavigationController implements ReactiveController {
           return;
         }
         const boundary =
-          event.key === 'Home'
-            ? currentRow[0]
-            : currentRow[currentRow.length - 1];
+          key === 'Home' ? currentRow[0] : currentRow[currentRow.length - 1];
         if (boundary && boundary !== target) {
           event.preventDefault();
           this.moveKeyNavigationFocusTo(boundary);
@@ -933,8 +945,7 @@ export class FocusgroupNavigationController implements ReactiveController {
         if (items.length === 0) {
           return;
         }
-        const boundary =
-          event.key === 'Home' ? items[0] : items[items.length - 1];
+        const boundary = key === 'Home' ? items[0] : items[items.length - 1];
         if (boundary && boundary !== target) {
           event.preventDefault();
           this.moveKeyNavigationFocusTo(boundary);
