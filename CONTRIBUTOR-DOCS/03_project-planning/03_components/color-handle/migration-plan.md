@@ -400,14 +400,16 @@ Planned rendering shape:
 
 #### General
 
-- [ ] JSDoc on all public props (no slots/events to document).
-- [ ] Storybook stories placing the handle in realistic color-picker contexts, not on a bare canvas.
-- [ ] Per-unit MDX documenting it as a primitive used inside color-area/slider/wheel.
+- [x] JSDoc on all public props (`color`, `disabled`, `focused`, `open`, `fill`) on `ColorHandleBase`; the CEM captures them for the Storybook `<ApiTable />`. No slots/events to document. No public `--swc-*` properties, so no `@cssprop` tags.
+- [x] Storybook stories authored with meaningful color values; each handle sits in its own positioned anchor (the primitive centers itself via negative margins). _Parent-embedded stories (handle inside color-area/slider/wheel) will be added when a parent picker is migrated; those components do not exist in 2nd-gen yet._
+- [x] Per-unit MDX (`color-handle.mdx`) authored: Anatomy, Options (Colors, Fill), States, Behaviors (Adaptive contrast), Accessibility, and Upcoming features. Documents the handle as a primitive whose name/role/value/keyboard belong to the parent color-area/slider/wheel. `yarn lint:docs-pages` passes; Storybook shows a single docs entry (no duplicate).
 
 #### Breaking changes
 
-- [ ] Document the tag rename (`sp-color-handle` to `swc-color-handle`) and removal of `--mod-colorhandle-*` in the consumer migration guide (`focused` is unchanged).
-- [ ] Document the new `fill` option (B7) and note the adaptive-contrast behavior change (improvement, non-breaking) and grow-on-focus indicator.
+> Consumer-facing breaking-change and migration guidance (tag rename, `--mod-*` removal, `fill` usage) belongs in the dedicated consumer migration guide, not the per-component MDX. Deferred to the `consumer-migration-guide` skill.
+
+- [ ] Document the tag rename (`sp-color-handle` to `swc-color-handle`) and removal of `--mod-colorhandle-*` in the consumer migration guide (`focused` is unchanged). _(consumer-migration-guide)_
+- [ ] Document the new `fill` option (B7, property-not-attribute for outline-only), the adaptive-contrast behavior change (improvement, non-breaking), and the grow-on-focus indicator. _(consumer-migration-guide)_
 
 ### Review
 

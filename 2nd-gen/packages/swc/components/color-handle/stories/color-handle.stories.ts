@@ -95,7 +95,7 @@ export const Playground: Story = {
   args: {
     color: 'rgba(0, 128, 255, 0.7)',
   },
-  tags: ['dev', 'autodocs'],
+  tags: ['dev'],
 };
 
 // ──────────────────────────
@@ -208,7 +208,6 @@ AdaptiveContrast.storyName = 'Adaptive contrast';
 //    ACCESSIBILITY STORIES
 // ────────────────────────────────
 
-// TODO(Phase 7): author the Accessibility story body and per-component MDX.
 export const Accessibility: Story = {
   args: {
     color: 'rgba(0, 128, 255, 0.7)',
