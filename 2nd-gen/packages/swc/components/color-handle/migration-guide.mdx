@@ -1,0 +1,108 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Color handle/Migration guide" />
+
+# Color handle migration guide
+
+Replace `<sp-color-handle>` with `<swc-color-handle>`, update the import, and remove any `--mod-colorhandle-*` overrides. The four existing attributes (`color`, `disabled`, `focused`, `open`) are unchanged; a new `fill` attribute and an automatic adaptive border are added.
+
+Color handle is a non-interactive primitive rendered inside a color area, slider, or wheel. It is normally consumed through those parent components rather than on its own.
+
+## Installation
+
+```bash
+# Remove
+yarn remove @spectrum-web-components/color-handle
+
+# Add
+yarn add @adobe/spectrum-wc
+```
+
+Update your import:
+
+```js
+// Before
+import '@spectrum-web-components/color-handle/sp-color-handle.js';
+
+// After
+import '@adobe/spectrum-wc/components/color-handle/swc-color-handle.js';
+```
+
+> `@adobe/spectrum-wc` is a monolithic package. Importing via subpath (e.g. `@adobe/spectrum-wc/components/color-handle/swc-color-handle.js`) registers and loads only that component's bundle.
+
+## What changed
+
+### Renamed
+
+| Area        | Spectrum 1 (`sp-color-handle`)          | Spectrum 2 (`swc-color-handle`)                                  |
+| ----------- | --------------------------------------- | ---------------------------------------------------------------- |
+| Tag         | `sp-color-handle`                       | `swc-color-handle`                                               |
+| Import path | `@spectrum-web-components/color-handle` | `@adobe/spectrum-wc/components/color-handle/swc-color-handle.js` |
+| CSS hooks   | `--mod-colorhandle-*`                   | None (see [Styling](#styling))                                   |
+
+### Added in Spectrum 2
+
+| Addition                 | Notes                                                                                                                                                                 |
+| ------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `fill` boolean attribute | Defaults to `true` (color swatch shown). Set the property `fill = false` for an outline-only handle. See [step 3](#3-optional-render-an-outline-only-handle).         |
+| Adaptive border contrast | The handle border opacity now adapts to the picked color so its chrome keeps ≥3:1 non-text contrast (WCAG 1.4.11) across the spectrum. Automatic; no consumer action. |
+| Grow-on-focus indicator  | When the parent picker is focused, the handle grows instead of drawing a separate focus ring. Automatic; driven by the parent via `focused`.                          |
+
+### Removed in Spectrum 2
+
+| Removed                                     | Replacement                                                                                      |
+| ------------------------------------------- | ------------------------------------------------------------------------------------------------ |
+| All `--mod-colorhandle-*` custom properties | No 1:1 replacement — sizing, borders, and animation are tokenized internally and not overridable |
+
+The `color`, `disabled`, `focused`, and `open` attributes are unchanged.
+
+## Update your code
+
+### 1. Update the import and rename the tag
+
+```html
+<!-- Before -->
+<sp-color-handle color="rgba(255, 0, 0, 0.5)"></sp-color-handle>
+<!-- After -->
+<swc-color-handle color="rgba(255, 0, 0, 0.5)"></swc-color-handle>
+```
+
+### 2. Remove `--mod-colorhandle-*` overrides
+
+Delete any `--mod-colorhandle-*` declarations targeting the handle. They have no effect on `<swc-color-handle>` and have no public replacement.
+
+```css
+/* Before — remove these */
+sp-color-handle {
+  --mod-colorhandle-size: 20px;
+  --mod-colorhandle-border-color: white;
+}
+```
+
+### 3. (Optional) Render an outline-only handle
+
+`fill` is a reflected boolean that defaults to `true`. Set it through the property to hide the color swatch; the `fill="false"` attribute reads as `true` under boolean-attribute semantics, so it does not turn fill off.
+
+```js
+const handle = document.querySelector('swc-color-handle');
+handle.fill = false; // outline-only
+```
+
+## Accessibility
+
+- `swc-color-handle` exposes no role and no accessible name, and is not independently focusable. Name, value, and keyboard interaction are owned by the parent color area, slider, or wheel. This matches Spectrum 1; no consumer markup changes are required.
+- Do not use a standalone handle as an accessible color control. Place it inside a labeled parent color component.
+- The adaptive border satisfies WCAG 1.4.11 automatically; no action needed.
+
+## Styling
+
+Spectrum 1 `--mod-colorhandle-*` properties **do not apply** to `<swc-color-handle>`, and Spectrum 2 exposes no public custom properties for this component at launch. Remove every `--mod-colorhandle-*` override; there is no drop-in replacement. Adjust the handle through Spectrum 2 design tokens globally instead.
+
+Do not target internal classes, `--_swc-color-handle-*` private properties, or shadow DOM. They are not public API and will change without warning on minor releases.
+
+## Checklist
+
+- [ ] Update imports
+- [ ] Rename all `<sp-color-handle>` to `<swc-color-handle>`
+- [ ] Remove `--mod-colorhandle-*` overrides
+- [ ] Set `fill = false` via the property if you need an outline-only handle
