@@ -68,13 +68,6 @@ export class ResponseStatus extends SpectrumElement {
 
   private static readonly DEFAULT_ACCESSIBLE_LABEL = 'Execution steps';
 
-  /**
-   * Minimum time a header label stays visible before rolling to the next one.
-   * Guards against labels flipping too fast when a consumer updates them in
-   * rapid succession.
-   */
-  private static readonly LABEL_MIN_DWELL_MS = 1000;
-
   /** Header label roll animation duration; keep in sync with the CSS. */
   private static readonly LABEL_ROLL_DURATION_MS = 650;
 
@@ -124,16 +117,6 @@ export class ResponseStatus extends SpectrumElement {
   /** @internal */
   private _rollToLabel = '';
   /** @internal */
-  private _labelQueue: string[] = [];
-  /** @internal */
-  private _lastQueuedLabel = '';
-  /** @internal */
-  private _processingLabelQueue = false;
-  /** @internal */
-  private _lastRollStartedAt = 0;
-  /** @internal */
-  private _labelDwellTimer: number | null = null;
-  /** @internal */
   private _labelRollTimer: number | null = null;
   /** @internal */
   private _labelRollRaf: number | null = null;
@@ -173,7 +156,6 @@ export class ResponseStatus extends SpectrumElement {
     this._syncSlotContent();
     const initial = this._getHeaderLabel();
     this._displayedLabel = initial;
-    this._lastQueuedLabel = initial;
   }
 
   protected override updated(): void {
@@ -187,7 +169,7 @@ export class ResponseStatus extends SpectrumElement {
     );
     this._contentObserver?.disconnect();
     this._contentObserver = undefined;
-    this._clearLabelTimers();
+    this._clearLabelAnimation();
     super.disconnectedCallback();
   }
 
@@ -282,7 +264,7 @@ export class ResponseStatus extends SpectrumElement {
     const status =
       step.status ||
       (element.getAttribute('status') as ResponseStatusStepStatus | null) ||
-      'pending';
+      'active';
 
     return {
       label,
@@ -341,10 +323,7 @@ export class ResponseStatus extends SpectrumElement {
   }
 
   private _getActiveStep(): ResponseStatusStepData | undefined {
-    return (
-      this._steps.find((step) => step.status === 'active') ??
-      this._steps.find((step) => step.status === 'pending')
-    );
+    return this._steps.find((step) => step.status === 'active');
   }
 
   private _getHeaderLabel(): string {
@@ -368,11 +347,7 @@ export class ResponseStatus extends SpectrumElement {
       : ResponseStatus.DEFAULT_LABELS.pending;
   }
 
-  private _clearLabelTimers(): void {
-    if (this._labelDwellTimer !== null) {
-      window.clearTimeout(this._labelDwellTimer);
-      this._labelDwellTimer = null;
-    }
+  private _clearLabelAnimation(): void {
     if (this._labelRollTimer !== null) {
       window.clearTimeout(this._labelRollTimer);
       this._labelRollTimer = null;
@@ -390,48 +365,29 @@ export class ResponseStatus extends SpectrumElement {
     );
   }
 
-  /**
-   * Queues header-label changes so each label stays visible for at least
-   * {@link ResponseStatus.LABEL_MIN_DWELL_MS} before rolling to the next one.
-   * Rapid consumer updates are queued and rolled through in order, so the
-   * visible label may lag behind the latest state but never flips faster than
-   * the dwell allows.
-   */
   private _reconcileHeaderLabel(): void {
     const target = this._getHeaderLabel();
-    if (target === this._lastQueuedLabel) {
+    const currentlyVisible = this._rollActive
+      ? this._rollToLabel
+      : this._displayedLabel;
+    if (target === currentlyVisible) {
       return;
     }
-    this._lastQueuedLabel = target;
-    this._labelQueue.push(target);
-    this._processLabelQueue();
-  }
-
-  private _processLabelQueue(): void {
-    if (this._processingLabelQueue || this._labelQueue.length === 0) {
-      return;
-    }
-
-    const next = this._labelQueue.shift() as string;
-    if (next === this._displayedLabel) {
-      this._processLabelQueue();
-      return;
-    }
-
-    this._processingLabelQueue = true;
-    this._beginLabelRoll(next);
+    this._beginLabelRoll(target);
   }
 
   private _beginLabelRoll(target: string): void {
-    this._lastRollStartedAt = Date.now();
-
+    this._clearLabelAnimation();
     if (this._prefersReducedMotion()) {
       this._displayedLabel = target;
-      this._scheduleNextLabel();
+      this._rollActive = false;
+      this._rollEngaged = false;
       return;
     }
 
-    this._rollFromLabel = this._displayedLabel;
+    this._rollFromLabel = this._rollActive
+      ? this._rollToLabel
+      : this._displayedLabel || this._getHeaderLabel();
     this._rollToLabel = target;
     this._rollActive = true;
     this._rollEngaged = false;
@@ -450,18 +406,7 @@ export class ResponseStatus extends SpectrumElement {
       this._displayedLabel = this._rollToLabel;
       this._rollActive = false;
       this._rollEngaged = false;
-      this._scheduleNextLabel();
     }, ResponseStatus.LABEL_ROLL_DURATION_MS);
-  }
-
-  private _scheduleNextLabel(): void {
-    const elapsed = Date.now() - this._lastRollStartedAt;
-    const wait = Math.max(0, ResponseStatus.LABEL_MIN_DWELL_MS - elapsed);
-    this._labelDwellTimer = window.setTimeout(() => {
-      this._labelDwellTimer = null;
-      this._processingLabelQueue = false;
-      this._processLabelQueue();
-    }, wait);
   }
 
   private _currentVisibleLabel(): string {
@@ -654,10 +599,6 @@ export class ResponseStatus extends SpectrumElement {
   }
 
   private _getTimelineSteps(): ResponseStatusStepData[] {
-    if (this.status === 'active' || this.status === 'stopped') {
-      return this._steps.filter((step) => step.status !== 'pending');
-    }
-
     return this._steps;
   }
 

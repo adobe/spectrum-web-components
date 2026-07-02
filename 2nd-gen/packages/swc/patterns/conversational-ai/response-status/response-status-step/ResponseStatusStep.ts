@@ -17,11 +17,7 @@ import { SpectrumElement } from '@spectrum-web-components/core/element/index.js'
 
 import styles from './response-status-step.css';
 
-export type ResponseStatusStepStatus =
-  | 'pending'
-  | 'active'
-  | 'complete'
-  | 'stopped';
+export type ResponseStatusStepStatus = 'active' | 'complete' | 'stopped';
 
 /**
  * One agentic execution step inside `<swc-response-status>`.
@@ -35,7 +31,7 @@ export type ResponseStatusStepStatus =
 export class ResponseStatusStep extends SpectrumElement {
   /** Timeline state for connector icons. */
   @property({ type: String, reflect: true })
-  public status: 'pending' | 'active' | 'complete' | 'stopped' = 'pending';
+  public status: 'active' | 'complete' | 'stopped' = 'active';
 
   public static override get styles(): CSSResultArray {
     return [styles];

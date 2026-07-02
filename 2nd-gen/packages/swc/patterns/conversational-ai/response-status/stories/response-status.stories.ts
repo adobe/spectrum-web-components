@@ -66,12 +66,6 @@ const activeSteps = html`
       and pricing templates.
     </span>
   </swc-response-status-step>
-  <swc-response-status-step status="pending">
-    <span slot="label">Compose response</span>
-    <span slot="description">
-      Synthesizing findings into a structured comparison.
-    </span>
-  </swc-response-status-step>
 `;
 
 const completeSteps = html`
@@ -120,7 +114,7 @@ const allStateSteps = html`
       Checking internal repositories for previously compiled trip package data.
     </span>
   </swc-response-status-step>
-  <swc-response-status-step status="pending">
+  <swc-response-status-step status="complete">
     <span slot="label">Compose response</span>
     <span slot="description">
       Synthesizing findings into a structured comparison.
@@ -260,6 +254,9 @@ class ResponseStatusLabelRollDemo extends LitElement {
 
   private _index = 0;
   private _cycleTimer?: ReturnType<typeof setInterval>;
+  private _consumerQueueTimer?: ReturnType<typeof setTimeout>;
+  private _consumerLabelQueue: string[] = [];
+  private static readonly CONSUMER_LABEL_DELAY_MS = 900;
 
   public override connectedCallback(): void {
     super.connectedCallback?.();
@@ -273,16 +270,43 @@ class ResponseStatusLabelRollDemo extends LitElement {
     if (this._cycleTimer) {
       clearInterval(this._cycleTimer);
     }
+    if (this._consumerQueueTimer) {
+      clearTimeout(this._consumerQueueTimer);
+      this._consumerQueueTimer = undefined;
+    }
+    this._consumerLabelQueue = [];
     super.disconnectedCallback?.();
   }
 
-  // Changes the label several times within the dwell window so the 1s
-  // safeguard has to queue the updates instead of flipping instantly.
+  private _enqueueConsumerLabel(label: string): void {
+    this._consumerLabelQueue.push(label);
+    this._processConsumerQueue();
+  }
+
+  private _processConsumerQueue(): void {
+    if (this._consumerQueueTimer || this._consumerLabelQueue.length === 0) {
+      return;
+    }
+
+    const next = this._consumerLabelQueue.shift();
+    if (!next) {
+      return;
+    }
+    this._label = next;
+
+    this._consumerQueueTimer = setTimeout(() => {
+      this._consumerQueueTimer = undefined;
+      this._processConsumerQueue();
+    }, ResponseStatusLabelRollDemo.CONSUMER_LABEL_DELAY_MS);
+  }
+
+  // Simulates rapid incoming step labels (120ms cadence) and a consumer layer
+  // that queues UI updates with a dwell so the visible label stays readable.
   private _burst = (): void => {
     rollingLabels.forEach((label, index) => {
       setTimeout(() => {
         this._index = index;
-        this._label = label;
+        this._enqueueConsumerLabel(label);
       }, index * 120);
     });
   };
@@ -301,7 +325,7 @@ class ResponseStatusLabelRollDemo extends LitElement {
           ${activeSteps}
         </swc-response-status>
         <button type="button" @click=${this._burst}>
-          Change label 5× quickly
+          Queue labels with consumer delay
         </button>
       </div>
     `;

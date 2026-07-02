@@ -37,11 +37,58 @@ Add `swc-response-status-step` children to render an expandable timeline. Set `o
 
 Each step uses:
 
-- **`status`**: `pending`, `active`, `complete`, or `stopped`
+- **`status`**: `active`, `complete`, or `stopped`
 - **`slot="label"`**: step title
 - **`slot="description"`**: detail text shown in the expanded timeline
 
+All provided steps are rendered in order. The component does not hide or synthesize step rows.
+
 <Canvas of={ResponseStatusStories.Steps} />
+
+## Behaviors
+
+### Handling events
+
+`<swc-response-status>` emits **`swc-response-status-toggle`** when users open or close the step timeline. The event **bubbles** and is **composed**.
+
+`event.detail.open` contains the next disclosure state.
+
+```js
+status.addEventListener('swc-response-status-toggle', (event) => {
+  const { open } = event.detail;
+  status.open = open;
+});
+```
+
+### Label update cadence
+
+Header-label cadence is consumer-managed. If your app streams rapid status updates, debounce, throttle, or queue those updates in application code before setting `slot="label"`.
+
+```js
+const queue = [];
+let timer;
+
+function enqueueLabel(nextLabel) {
+  queue.push(nextLabel);
+  if (timer) return;
+
+  const flush = () => {
+    const label = queue.shift();
+    if (label) labelEl.textContent = label;
+    if (queue.length > 0) {
+      timer = setTimeout(flush, 900);
+    } else {
+      timer = undefined;
+    }
+  };
+
+  flush();
+}
+```
+
+The `LabelRoll` story demonstrates this consumer-side queue pattern.
+
+<Canvas of={ResponseStatusStories.LabelRoll} />
 
 ## Accessibility
 
@@ -52,6 +99,12 @@ The `<swc-response-status>` element implements the following accessibility featu
 - When steps exist, the disclosure button uses `aria-expanded` and `aria-controls` to communicate panel state
 - The step timeline uses `role="group"` with an accessible name from the `accessible-label` attribute (defaults to “Execution steps”)
 - The ordered step list uses `role="list"` and each rendered step uses `role="listitem"`
+
+### Best practices
+
+- Keep step labels concise and action-oriented.
+- Use `slot="description"` for supplemental detail, not required state text.
+- Provide a meaningful `accessible-label` when multiple response-status components can appear on one screen.
 
 <Canvas of={ResponseStatusStories.Accessibility} />
 

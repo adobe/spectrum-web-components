@@ -51,7 +51,7 @@ const agenticMarkup = html`
       </span>
     </swc-response-status-step>
 
-    <swc-response-status-step status="pending">
+    <swc-response-status-step status="complete">
       <span slot="label">Compose response</span>
       <span slot="description">Synthesizing findings into a response.</span>
     </swc-response-status-step>
@@ -76,7 +76,7 @@ export const StatusApiTest: Story = {
 
       expect(el.getAttribute('status')).toBe('complete');
 
-      // The header label rolls to its new value, so wait for it to settle.
+      // The header label animates to its new value, so wait for it to settle.
       await waitFor(
         () => {
           expect(
@@ -159,7 +159,7 @@ export const AgenticApiTest: Story = {
         expect(details).toContain(
           'Checked 3 internal repositories for compiled trip package data.'
         );
-        expect(details).not.toContain('Synthesizing findings into a response.');
+        expect(details).toContain('Synthesizing findings into a response.');
       }
     );
 
