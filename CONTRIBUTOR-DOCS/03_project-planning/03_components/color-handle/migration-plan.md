@@ -197,7 +197,7 @@ color-handle should **compose `swc-color-loupe` internally** and **import the sh
 | B1  | Element tag rename (source: 2nd-gen naming convention) | `<sp-color-handle>` | `<swc-color-handle>` | Update tag name and import path; properties unchanged. |
 | B2  | Import surface | `@spectrum-web-components/color-handle` | 2nd-gen `core` + `swc` packages | Update package import; side-effect registration via `swc-color-handle.js`. |
 | B3  | Remove `--mod-colorhandle-*` modifier surface (source: 2nd-gen custom-property policy) | Many `--mod-*` hooks for size/border/animation | No `--mod-*` exposure; a small reviewed `--swc-*` set only if needed | Replace any `--mod-colorhandle-*` overrides with supported `--swc-*` props or remove. |
-| B7  | Add `fill` option (source: Figma S2 `Show handle fill`; team decision to ship now) | No such option; inner color swatch always shown | Public reflected `fill` boolean, default `true` (swatch shown); `fill=false` renders an outline-only handle | Additive for existing markup (default preserves current look); opt in to `fill="false"` for outline-only. |
+| B7  | Add `fill` option (source: Figma S2 `Show handle fill`; team decision to ship now) | No such option; inner color swatch always shown | Public reflected `fill` boolean, default `true` (swatch shown); `fill=false` renders an outline-only handle | Additive for existing markup (default preserves current look). `fill` is a reflected boolean, so opt into outline-only by **setting the property `fill = false`** (or omitting the reflected attribute) — not with `fill="false"`, which reads as `true` under boolean-attribute semantics. |
 
 > `focused` is **retained unchanged** from 1st-gen (team decision; see TL;DR and Q3). It is not a breaking change, so it has no row here. Behavior is documented under [Behavioral semantics](#behavioral-semantics). An interim proposal to rename `focused` to `highlighted` was considered and withdrawn.
 
@@ -372,40 +372,44 @@ Planned rendering shape:
 
 > Implemented in Phase 5 (Styling): the adaptive white-first dual-border and grow-on-focus now exist (`color-contrast.ts` + `color-handle.css`). The algorithm follows the accessibility migration analysis (RSP-2021, SDS-16402). Numeric ≥3:1 verification across the spectrum is a Phase 6 test/VRT task.
 
-- [ ] Verify adaptive border maintains ≥3:1 across light, dark, and saturated hues (SWC-2295 acceptance criteria). _(implemented Phase 5; automated verification in Phase 6)_
+- [x] Adaptive border α logic verified by unit tests (`computeBorderAlpha`/`findMinAlpha`/`contrastRatio`): white-first holds the floor when white carries 3:1, escalates otherwise, and never returns below the floor. Full ≥3:1-across-the-spectrum confirmation over real gradients is a VRT task once a parent picker is migrated.
 - [x] Default appearance on mid/dark colors is unchanged: white-first keeps α at the 0.42 floor whenever the white separator already carries 3:1, so the border strengthens only where needed.
 - [x] Own-color-reference limitation documented: `computeBorderAlpha` uses the handle's own `color` as the adjacency stand-in (v1, A1), accurate on smooth gradients and approximate at steep/saturated edges; noted in the `color-contrast.ts` module JSDoc.
 
 ### Testing
 
-- [ ] Port `1st-gen/packages/color-handle/test/color-handle.test.ts` coverage that still applies (default + `open` accessible; pointer open/close on touch `pointerdown`/`pointerup`/`pointercancel`).
-- [ ] Port memory test (`color-handle-memory.test.ts`) equivalent if applicable.
-- [ ] Add Playwright `color-handle.a11y.spec.ts` with `toMatchAriaSnapshot`.
+- [x] Ported the applicable 1st-gen coverage as Storybook play tests in `test/color-handle.test.ts`: role-less/name-less host, `color` applied to the fill layer, adaptive border-alpha variable set, and touch pointer open/close (`pointerdown`/`pointerup`/`pointercancel`; mouse does not auto-open).
+- [x] Added `computeBorderAlpha`/`findMinAlpha`/`contrastRatio` unit coverage (parser produces no `NaN`, floor fallback, white-first floor vs escalation) — directly covers the PR-review parser concern. _No separate memory test; 2nd-gen has no equivalent harness for this primitive._
+- [x] Added Playwright `color-handle.a11y.spec.ts` asserting the role-less/name-less host and the built-in loupe SVG `aria-hidden` across chromium/firefox/webkit. _Uses direct attribute assertions rather than `toMatchAriaSnapshot`, which rejects the legitimately-empty tree (same approach as color-loupe)._
 
 #### Behavior
 
-- [ ] Touch opens/closes the loupe; mouse/stylus does not auto-open.
-- [ ] `disabled` suppresses the loupe even when `open`.
-- [ ] Grow-on-focus and shrink-on-blur transitions fire.
+- [x] Touch opens/closes the loupe; mouse does not auto-open (`TouchOpenCloseTest`).
+- [x] `disabled` suppresses the loupe even when `open` (`DisabledSuppressesLoupeTest`).
+- [ ] Grow-on-focus and shrink-on-blur transitions fire. _(covered visually; a `focused`/blur transition assertion is deferred to VRT below.)_
 
 #### Visual regression
 
-- [ ] Add VRT coverage for the handle over color-area / color-slider / color-wheel gradients across the spectrum (SWC-2295 QA).
-- [ ] Add VRT for default vs grown (focus/press) states and disabled.
-- [ ] Add high-contrast (`forced-colors`) coverage (1st-gen ships a forced-colors block).
+- [ ] Add VRT coverage for the handle over color-area / color-slider / color-wheel gradients across the spectrum (SWC-2295 QA). _(deferred: parent pickers not yet migrated; runs when a parent lands.)_
+- [ ] Add VRT for default vs grown (focus/press) states and disabled. _(Chromatic VRT runs in CI on the stories; no separate local action.)_
+- [ ] Add high-contrast (`forced-colors`) coverage (the CSS ships a `forced-colors` block). _(Chromatic VRT.)_
+
+> Verified locally (Node 24.11.1): Vitest storybook project — 13 passed (5 play tests + 8 story smoke renders); Playwright a11y — 12 passed (3 browsers). `test-storybook` aXe run is blocked by an unrelated env issue (`@swc/core` native binding failure + jest haste collision from stray `.claude/worktrees/*` repo copies), not by color-handle; aXe still runs in CI.
 
 ### Documentation
 
 #### General
 
-- [ ] JSDoc on all public props (no slots/events to document).
-- [ ] Storybook stories placing the handle in realistic color-picker contexts, not on a bare canvas.
-- [ ] Per-unit MDX documenting it as a primitive used inside color-area/slider/wheel.
+- [x] JSDoc on all public props (`color`, `disabled`, `focused`, `open`, `fill`) on `ColorHandleBase`; the CEM captures them for the Storybook `<ApiTable />`. No slots/events to document. No public `--swc-*` properties, so no `@cssprop` tags.
+- [x] Storybook stories authored with meaningful color values; each handle sits in its own positioned anchor (the primitive centers itself via negative margins). _Parent-embedded stories (handle inside color-area/slider/wheel) will be added when a parent picker is migrated; those components do not exist in 2nd-gen yet._
+- [x] Per-unit MDX (`color-handle.mdx`) authored: Anatomy, Options (Colors, Fill), States, Behaviors (Adaptive contrast), Accessibility, and Upcoming features. Documents the handle as a primitive whose name/role/value/keyboard belong to the parent color-area/slider/wheel. `yarn lint:docs-pages` passes; Storybook shows a single docs entry (no duplicate).
 
 #### Breaking changes
 
-- [ ] Document the tag rename (`sp-color-handle` to `swc-color-handle`) and removal of `--mod-colorhandle-*` in the consumer migration guide (`focused` is unchanged).
-- [ ] Document the new `fill` option (B7) and note the adaptive-contrast behavior change (improvement, non-breaking) and grow-on-focus indicator.
+> Consumer-facing breaking-change and migration guidance (tag rename, `--mod-*` removal, `fill` usage) belongs in the dedicated consumer migration guide, not the per-component MDX. Deferred to the `consumer-migration-guide` skill.
+
+- [ ] Document the tag rename (`sp-color-handle` to `swc-color-handle`) and removal of `--mod-colorhandle-*` in the consumer migration guide (`focused` is unchanged). _(consumer-migration-guide)_
+- [ ] Document the new `fill` option (B7, property-not-attribute for outline-only), the adaptive-contrast behavior change (improvement, non-breaking), and the grow-on-focus indicator. _(consumer-migration-guide)_
 
 ### Review
 

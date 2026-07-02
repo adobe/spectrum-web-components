@@ -48,7 +48,7 @@ const meta: Meta = {
     // via negative margins, so each instance needs its own relative anchor.
     styles: {
       position: 'relative',
-      'min-block-size': '48px',
+      'min-block-size': '120px',
     },
   },
   render: (args) => template(args),
@@ -69,9 +69,11 @@ const COLOR_FORMATS = [
 ] as const satisfies readonly { label: string; color: string }[];
 
 /**
- * The handle centers itself on its coordinate with negative margins, so
- * comparison stories give each instance its own `position: relative` anchor
- * plus an optional caption.
+ * The handle is `position: absolute` and centers itself on its coordinate via
+ * negative margins, so it anchors to its containing block's origin, not its
+ * center. Each instance therefore gets a zero-size `position: relative` anchor
+ * placed at the bottom-center of a fixed box: the handle centers on that point,
+ * and the box reserves headroom above so an open loupe stays inside the frame.
  */
 const anchoredHandle = (
   label: string,
@@ -80,8 +82,10 @@ const anchoredHandle = (
   <div
     style="display: flex; flex-direction: column; align-items: center; gap: 16px;"
   >
-    <div style="position: relative; inline-size: 24px; block-size: 24px;">
-      ${template(templateArgs)}
+    <div
+      style="display: flex; align-items: flex-end; justify-content: center; inline-size: 48px; block-size: 96px; padding-block-end: 12px;"
+    >
+      <div style="position: relative;">${template(templateArgs)}</div>
     </div>
     <span style="font-size: 12px;">${label}</span>
   </div>
@@ -95,7 +99,7 @@ export const Playground: Story = {
   args: {
     color: 'rgba(0, 128, 255, 0.7)',
   },
-  tags: ['dev', 'autodocs'],
+  tags: ['dev'],
 };
 
 // ──────────────────────────
@@ -187,11 +191,6 @@ export const States: Story = {
 //    BEHAVIORS STORIES
 // ──────────────────────────────
 
-/**
- * The adaptive white-first border keeps the handle chrome at ≥3:1 non-text
- * contrast across the spectrum: the dark-border opacity climbs only where the
- * white separator alone cannot carry the contrast.
- */
 export const AdaptiveContrast: Story = {
   render: (args) => html`
     ${anchoredHandle('White', { ...args, color: 'rgb(255, 255, 255)' })}
@@ -208,7 +207,6 @@ AdaptiveContrast.storyName = 'Adaptive contrast';
 //    ACCESSIBILITY STORIES
 // ────────────────────────────────
 
-// TODO(Phase 7): author the Accessibility story body and per-component MDX.
 export const Accessibility: Story = {
   args: {
     color: 'rgba(0, 128, 255, 0.7)',
