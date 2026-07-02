@@ -562,9 +562,12 @@ export abstract class TabsBase extends SpectrumElement {
     const listRect = tablist.getBoundingClientRect();
 
     if (this._direction === 'horizontal') {
-      const left = tabRect.left - listRect.left;
+      const isRtl = getComputedStyle(this).direction === 'rtl';
+      const offset = isRtl
+        ? tabRect.right - listRect.right
+        : tabRect.left - listRect.left;
       const scale = tabRect.width / TabsBase.INDICATOR_BASE_SIZE;
-      this.selectionIndicatorStyle = `transform: translateX(${left}px) scaleX(${scale})`;
+      this.selectionIndicatorStyle = `transform: translateX(${offset}px) scaleX(${scale})`;
     } else {
       const top = tabRect.top - listRect.top;
       const scale = tabRect.height / TabsBase.INDICATOR_BASE_SIZE;
