@@ -27,7 +27,6 @@
     - [1st-gen Spectrum 2 Enhancements](02_workstreams/05_1st-gen-spectrum-2-enhancements/README.md)
 - [Components](03_components/README.md)
     - Accordion
-    - Action Bar
     - Action Button
     - Action Group
     - Action Menu
@@ -65,6 +64,7 @@
     - Progress Circle
     - Radio
     - Search
+    - Sidenav
     - Slider
     - Status Light
     - Swatch

@@ -49,7 +49,7 @@
 
 .swc-LinearProgress-label,
 .swc-LinearProgress-value {
-  margin-block-start: var(--swc-linear-progress-top-to-text, token("component-top-to-text-100"));
+  margin-block-start: var(--swc-linear-progress-top-to-text, token("base-padding-vertical-medium"));
   margin-block-end: token("spacing-75");
   font-size: var(--swc-linear-progress-font-size, token("font-size-100"));
   line-height: token("line-height-100");
@@ -112,19 +112,19 @@
 :host([size="s"]) {
   --swc-linear-progress-thickness: token("progress-bar-thickness-small");
   --swc-linear-progress-font-size: token("font-size-75");
-  --swc-linear-progress-top-to-text: token("component-top-to-text-75");
+  --swc-linear-progress-top-to-text: token("base-padding-vertical-small");
 }
 
 :host([size="l"]) {
   --swc-linear-progress-thickness: token("progress-bar-thickness-large");
   --swc-linear-progress-font-size: token("font-size-200");
-  --swc-linear-progress-top-to-text: token("component-top-to-text-200");
+  --swc-linear-progress-top-to-text: token("base-padding-vertical-large");
 }
 
 :host([size="xl"]) {
   --swc-linear-progress-thickness: token("progress-bar-thickness-extra-large");
   --swc-linear-progress-font-size: token("font-size-300");
-  --swc-linear-progress-top-to-text: token("component-top-to-text-300");
+  --swc-linear-progress-top-to-text: token("base-padding-vertical-extra-large");
 }
 
 /* Side label — geometric layout, no custom-property indirection needed. */

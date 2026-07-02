@@ -48,6 +48,8 @@ type CachedDiagnosticEntry = {
   diagnostic: Diagnostic;
   unknownToken?: string;
   renamedTo?: string;
+  deletedToken?: string;
+  deletedReplacedBy?: string;
   suggestions?: UnknownTokenSuggestion[];
 };
 
@@ -575,6 +577,27 @@ export function startServer() {
       return null;
     }
 
+    if (active.deletedToken) {
+      const lines = [`**Removed token:** \`${active.deletedToken}\``];
+      if (active.deletedReplacedBy === '0') {
+        lines.push(
+          '**Hardcode:** `0px` (zero-pixel value — no token replacement exists)'
+        );
+      } else if (active.deletedReplacedBy) {
+        lines.push(`**Try:** \`${active.deletedReplacedBy}\``);
+      } else {
+        const comment = store.commentFor(active.deletedToken);
+        if (comment) {
+          lines.push(`_${comment}_`);
+        } else {
+          lines.push(
+            '_No known replacement — check the Spectrum token changelog._'
+          );
+        }
+      }
+      return { contents: { kind: 'markdown', value: lines.join('\n\n') } };
+    }
+
     if (active.renamedTo && active.unknownToken) {
       return {
         contents: {
@@ -687,25 +710,18 @@ export function startServer() {
 
       // 2) Detect unknown token
       if (!store.has(tokenName)) {
-        const renamed = store.replacementFor(tokenName);
-        if (renamed) {
-          diagnostics.push({
-            diagnostic: {
-              severity: DiagnosticSeverity.Error,
-              range: { start, end },
-              message: `Deprecated token '${tokenName}'. Token was renamed to '${renamed}'`,
-            },
-            unknownToken: tokenName,
-            renamedTo: renamed,
-          });
-        } else {
-          const suggestions = buildUnknownTokenSuggestions(tokenName, store);
-          const best = suggestions[0];
-          const message = best
-            ? best.fromRenamed && best.replacement
-              ? `Unknown token '${tokenName}'. Did you mean '${best.token}' (renamed to '${best.replacement}')? Use '${best.replacement}'.`
-              : `Unknown token '${tokenName}'. Did you mean '${best.token}'?`
-            : `Unknown token '${tokenName}'`;
+        const deletedReplacement = store.deletionReplacementFor(tokenName);
+
+        if (deletedReplacement !== undefined) {
+          // Token was removed from @adobe/spectrum-tokens entirely.
+          let message: string;
+          if (deletedReplacement === '0') {
+            message = `Removed token '${tokenName}'. Hardcode a zero-pixel value in implementation.`;
+          } else if (deletedReplacement) {
+            message = `Removed token '${tokenName}'. Try '${deletedReplacement}' instead.`;
+          } else {
+            message = `Removed token '${tokenName}'. No known replacement — check Design specs or React.`;
+          }
 
           diagnostics.push({
             diagnostic: {
@@ -713,9 +729,40 @@ export function startServer() {
               range: { start, end },
               message,
             },
-            unknownToken: tokenName,
-            suggestions,
+            deletedToken: tokenName,
+            deletedReplacedBy: deletedReplacement ?? undefined,
           });
+        } else {
+          const renamed = store.replacementFor(tokenName);
+          if (renamed) {
+            diagnostics.push({
+              diagnostic: {
+                severity: DiagnosticSeverity.Error,
+                range: { start, end },
+                message: `Deprecated token '${tokenName}'. Token was renamed to '${renamed}'`,
+              },
+              unknownToken: tokenName,
+              renamedTo: renamed,
+            });
+          } else {
+            const suggestions = buildUnknownTokenSuggestions(tokenName, store);
+            const best = suggestions[0];
+            const message = best
+              ? best.fromRenamed && best.replacement
+                ? `Unknown token '${tokenName}'. Did you mean '${best.token}' (renamed to '${best.replacement}')? Use '${best.replacement}'.`
+                : `Unknown token '${tokenName}'. Did you mean '${best.token}'?`
+              : `Unknown token '${tokenName}'`;
+
+            diagnostics.push({
+              diagnostic: {
+                severity: DiagnosticSeverity.Error,
+                range: { start, end },
+                message,
+              },
+              unknownToken: tokenName,
+              suggestions,
+            });
+          }
         }
       }
     }
