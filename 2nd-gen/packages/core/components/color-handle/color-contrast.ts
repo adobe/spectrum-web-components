@@ -99,11 +99,7 @@ export function findMinAlpha(
  */
 function parseToRgb255(color: string): Rgb | null {
   try {
-    const { r, g, b } = new Color(color).to('srgb').srgb as unknown as {
-      r: number;
-      g: number;
-      b: number;
-    };
+    const [r, g, b] = new Color(color).to('srgb').coords;
     const clamp = (c: number): number =>
       Math.max(0, Math.min(255, Math.round(c * 255)));
     return [clamp(r), clamp(g), clamp(b)];
