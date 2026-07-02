@@ -10,14 +10,15 @@
  * governing permissions and limitations under the License.
  */
 
-import { expect } from '@storybook/test';
+import { html } from 'lit';
+import { expect, waitFor } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import '../index.js';
 
 import { getComponent } from '../../../../utils/test-utils.js';
-import { ResponseStatus } from '../ResponseStatus.js';
-import { meta, Overview } from '../stories/response-status.stories.js';
+import type { ResponseStatus } from '../ResponseStatus.js';
+import { meta } from '../stories/response-status.stories.js';
 
 export default {
   ...meta,
@@ -29,220 +30,163 @@ export default {
   tags: ['!autodocs', 'dev'],
 } as Meta;
 
-// ──────────────────────────────────────────────────────────────
-// TEST: Defaults
-// ──────────────────────────────────────────────────────────────
+type TestResponseStatus = ResponseStatus;
 
-export const OverviewTest: Story = {
-  ...Overview,
+const agenticMarkup = html`
+  <swc-response-status status="active" open accessible-label="Execution steps">
+    <span slot="label">Searching repositories for Europe trips</span>
+    <span slot="summary">Processing request</span>
+
+    <swc-response-status-step status="complete">
+      <span slot="label">Looked through documentation</span>
+      <span slot="description">
+        Prioritizing data from documents and press releases.
+      </span>
+    </swc-response-status-step>
+
+    <swc-response-status-step status="active">
+      <span slot="label">Searching repositories for Europe trips</span>
+      <span slot="description">
+        Checked 3 internal repositories for compiled trip package data.
+      </span>
+    </swc-response-status-step>
+
+    <swc-response-status-step status="complete">
+      <span slot="label">Compose response</span>
+      <span slot="description">Synthesizing findings into a response.</span>
+    </swc-response-status-step>
+  </swc-response-status>
+`;
+
+export const StatusApiTest: Story = {
+  render: () => html`
+    <swc-response-status status="pending"></swc-response-status>
+  `,
   play: async ({ canvasElement, step }) => {
-    const el = await getComponent<ResponseStatus>(
+    const el = await getComponent<TestResponseStatus>(
       canvasElement,
       'swc-response-status'
     );
 
-    await step('renders with overview args', async () => {
-      expect(el.loading).toBe(true);
-      expect(el.open).toBe(false);
+    await step('status reflects to the host attribute', async () => {
+      expect(el.status).toBe('pending');
+
+      el.status = 'complete';
+      await el.updateComplete;
+
+      expect(el.getAttribute('status')).toBe('complete');
+
+      // The header label animates to its new value, so wait for it to settle.
+      await waitFor(
+        () => {
+          expect(
+            el.shadowRoot
+              ?.querySelector('.swc-ResponseStatus-label')
+              ?.textContent?.trim()
+          ).toBe('Response generated');
+        },
+        { timeout: 2000 }
+      );
     });
   },
 };
 
-// ──────────────────────────────────────────────────────────────
-// TEST: State mutation
-// ──────────────────────────────────────────────────────────────
-
-export const BooleanMutationTest: Story = {
-  ...Overview,
+export const DynamicLabelTest: Story = {
+  render: () => agenticMarkup,
   play: async ({ canvasElement, step }) => {
-    const el = await getComponent<ResponseStatus>(
+    const el = await getComponent<TestResponseStatus>(
       canvasElement,
       'swc-response-status'
     );
 
-    await step('loading reflects to attribute after mutation', async () => {
-      el.loading = false;
-      await el.updateComplete;
-      expect(el.hasAttribute('loading')).toBe(false);
+    await step(
+      'rolls the header label when the slotted label text changes',
+      async () => {
+        const slottedLabel = el.querySelector('[slot="label"]');
+        expect(slottedLabel).toBeTruthy();
 
-      el.loading = true;
-      await el.updateComplete;
-      expect(el.hasAttribute('loading')).toBe(true);
-    });
+        // Mutating text content does not fire slotchange, so this exercises
+        // the MutationObserver that drives the rolling header label.
+        (slottedLabel as HTMLElement).textContent =
+          'Comparing cruise package pricing';
 
-    await step('open reflects to attribute after mutation', async () => {
-      el.open = true;
-      await el.updateComplete;
+        await waitFor(
+          () => {
+            expect(
+              el.shadowRoot
+                ?.querySelector('.swc-ResponseStatus-label')
+                ?.textContent?.trim()
+            ).toBe('Comparing cruise package pricing');
+          },
+          { timeout: 2000 }
+        );
+      }
+    );
+  },
+};
+
+export const AgenticApiTest: Story = {
+  render: () => agenticMarkup,
+  play: async ({ canvasElement, step }) => {
+    const el = await getComponent<TestResponseStatus>(
+      canvasElement,
+      'swc-response-status'
+    );
+
+    await step('uses status and open as the public state API', async () => {
+      expect(el.status).toBe('active');
+      expect(el.open).toBe(true);
       expect(el.hasAttribute('open')).toBe(true);
-
-      el.open = false;
-      await el.updateComplete;
-      expect(el.hasAttribute('open')).toBe(false);
     });
 
     await step(
-      'loadingLabel and completeLabel support custom status text',
+      'renders the slotted header label and step content',
       async () => {
-        el.loading = true;
-        el.loadingLabel = 'Generating';
-        await el.updateComplete;
-        let statusLabel = el.shadowRoot?.querySelector(
+        const headerLabel = el.shadowRoot?.querySelector(
           '.swc-ResponseStatus-label'
         );
-        expect(statusLabel?.textContent?.trim()).toBe('Generating');
+        const details = Array.from(
+          el.shadowRoot?.querySelectorAll('.swc-ResponseStatus-step-detail') ??
+            []
+        ).map((detail) => detail.textContent?.trim());
 
-        el.loading = false;
-        el.completeLabel = 'Ready';
-        await el.updateComplete;
-        statusLabel = el.shadowRoot?.querySelector('.swc-ResponseStatus-label');
-        expect(statusLabel?.textContent?.trim()).toBe('Ready');
+        expect(headerLabel?.textContent?.trim()).toBe(
+          'Searching repositories for Europe trips'
+        );
+        expect(details).toContain(
+          'Prioritizing data from documents and press releases.'
+        );
+        expect(details).toContain(
+          'Checked 3 internal repositories for compiled trip package data.'
+        );
+        expect(details).toContain('Synthesizing findings into a response.');
       }
     );
 
-    await step('label swaps when loading transitions to complete', async () => {
-      el.loadingLabel = 'Thinking...';
-      el.completeLabel = 'Done';
-      el.loading = true;
-      await el.updateComplete;
+    await step(
+      'uses accessible-label as the timeline accessible name',
+      async () => {
+        expect(el.shadowRoot?.querySelector('[role="group"]')).toHaveAttribute(
+          'aria-label',
+          'Execution steps'
+        );
+      }
+    );
 
-      let statusLabel = el.shadowRoot?.querySelector(
-        '.swc-ResponseStatus-label'
+    await step('dispatches toggle event when disclosure toggles', async () => {
+      let captured: CustomEvent<{ open: boolean }> | undefined;
+      el.addEventListener('swc-response-status-toggle', (event) => {
+        captured = event as CustomEvent<{ open: boolean }>;
+      });
+
+      const button = el.shadowRoot?.querySelector<HTMLButtonElement>(
+        '.swc-ResponseStatus-row--button'
       );
-      expect(statusLabel?.textContent?.trim()).toBe('Thinking...');
-
-      el.loading = false;
+      button?.click();
       await el.updateComplete;
 
-      statusLabel = el.shadowRoot?.querySelector('.swc-ResponseStatus-label');
-      expect(statusLabel?.textContent?.trim()).toBe('Done');
+      expect(el.open).toBe(false);
+      expect(captured?.detail.open).toBe(false);
     });
-  },
-};
-
-export const InteractionTest: Story = {
-  ...Overview,
-  args: {
-    ...Overview.args,
-    loading: false,
-    open: false,
-    'default-slot': 'Reasoning details here.',
-  },
-  play: async ({ canvasElement, step }) => {
-    const el = await getComponent<ResponseStatus>(
-      canvasElement,
-      'swc-response-status'
-    );
-
-    await step(
-      'toggle dispatches swc-response-status-toggle with open detail',
-      async () => {
-        let captured: CustomEvent<{ open: boolean }> | undefined;
-        el.addEventListener('swc-response-status-toggle', (event) => {
-          captured = event as CustomEvent<{ open: boolean }>;
-        });
-
-        const button = el.shadowRoot?.querySelector(
-          '.swc-ResponseStatus-row--button'
-        ) as HTMLButtonElement | null;
-        button?.click();
-        await el.updateComplete;
-
-        expect(el.open).toBe(true);
-        expect(captured?.detail.open).toBe(true);
-      }
-    );
-
-    await step(
-      'collapsed complete state keeps the reasoning panel in the DOM but hidden',
-      async () => {
-        el.open = false;
-        await el.updateComplete;
-
-        const button = el.shadowRoot?.querySelector<HTMLButtonElement>(
-          '.swc-ResponseStatus-row--button'
-        );
-        const panel = el.shadowRoot?.querySelector<HTMLElement>(
-          '[id^="swc-reasoning-panel-"]'
-        );
-
-        expect(panel?.id).toMatch(/^swc-reasoning-panel-[a-f0-9]+$/);
-        expect(button?.getAttribute('aria-controls')).toBe(panel?.id);
-        expect(button?.getAttribute('aria-expanded')).toBe('false');
-        expect(panel).toBeTruthy();
-        expect(panel?.hidden).toBe(true);
-      }
-    );
-
-    await step(
-      'complete state without reasoning content hides disclosure controls',
-      async () => {
-        el.textContent = '';
-        el.requestUpdate();
-        await el.updateComplete;
-
-        const button = el.shadowRoot?.querySelector<HTMLButtonElement>(
-          '.swc-ResponseStatus-row--button'
-        );
-        const panel = el.shadowRoot?.querySelector<HTMLElement>(
-          '[id^="swc-reasoning-panel-"]'
-        );
-        const row = el.shadowRoot?.querySelector('.swc-ResponseStatus-row');
-
-        expect(button).toBeNull();
-        expect(panel).toBeTruthy();
-        expect(panel?.hidden).toBe(true);
-        expect(panel?.hasAttribute('role')).toBe(false);
-        expect(row).toBeTruthy();
-        expect(
-          row?.querySelector('.swc-ResponseStatus-label')?.textContent?.trim()
-        ).toBe(el.completeLabel);
-      }
-    );
-
-    await step('default slot content renders in reasoning panel', async () => {
-      el.textContent = 'Reasoning details here.';
-      el.requestUpdate();
-      el.open = true;
-      await el.updateComplete;
-      const panel = el.shadowRoot?.querySelector(
-        '[id^="swc-reasoning-panel-"]'
-      ) as HTMLElement | null;
-      const slot = el.shadowRoot?.querySelector<HTMLSlotElement>(
-        '[id^="swc-reasoning-panel-"] slot'
-      );
-      const assigned = slot?.assignedNodes({ flatten: true });
-
-      expect(panel).toBeTruthy();
-      expect(
-        assigned?.some((node) => node.textContent?.includes('Reasoning'))
-      ).toBe(true);
-    });
-
-    await step('complete-state check icon is decorative only', async () => {
-      const checkIcon = el.shadowRoot?.querySelectorAll('swc-icon')[1];
-      expect(checkIcon?.getAttribute('aria-hidden')).toBe('true');
-    });
-
-    await step(
-      'clearing reasoning content auto-collapses open state without firing swc-response-status-toggle',
-      async () => {
-        let toggleCount = 0;
-        el.addEventListener('swc-response-status-toggle', () => {
-          toggleCount += 1;
-        });
-
-        el.textContent = 'Reasoning details here.';
-        el.open = true;
-        await el.updateComplete;
-        expect(el.open).toBe(true);
-
-        el.textContent = '';
-        el.requestUpdate();
-        await el.updateComplete;
-
-        expect(el.open).toBe(false);
-        expect(toggleCount).toBe(0);
-      }
-    );
   },
 };

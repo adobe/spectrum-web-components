@@ -69,6 +69,36 @@ export const ThreeDotsIcon = (): TemplateResult => html`
   </svg>
 `;
 
+/** Circle outline — used for pending/active agentic steps. */
+export const CircleOutlineIcon = (): TemplateResult => html`
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+    <path
+      fill="currentColor"
+      d="M10 18.75C5.1748 18.75 1.25 14.8252 1.25 10C1.25 5.1748 5.1748 1.25 10 1.25C14.8252 1.25 18.75 5.1748 18.75 10C18.75 14.8252 14.8252 18.75 10 18.75ZM10 2.75C6.00195 2.75 2.75 6.00195 2.75 10C2.75 13.998 6.00195 17.25 10 17.25C13.998 17.25 17.25 13.998 17.25 10C17.25 6.00195 13.998 2.75 10 2.75Z"
+    />
+  </svg>
+`;
+
+/** Circle with X — used for a step that did not finish (user stopped generation). */
+export const StepStoppedCircleIcon = (): TemplateResult => html`
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="16"
+    height="16"
+    viewBox="0 0 16 16"
+    fill="none"
+  >
+    <path
+      d="M8.8484 7.99996L10.6242 6.22417C10.8586 5.9898 10.8586 5.61011 10.6242 5.37573C10.3898 5.14136 10.0101 5.14136 9.77574 5.37573L7.99996 7.15152L6.22417 5.37573C5.9898 5.14136 5.61011 5.14136 5.37573 5.37573C5.14136 5.61011 5.14136 5.9898 5.37573 6.22417L7.15152 7.99996L5.37573 9.77574C5.14136 10.0101 5.14136 10.3898 5.37573 10.6242C5.49292 10.7414 5.64605 10.8 5.79995 10.8C5.95385 10.8 6.10698 10.7414 6.22417 10.6242L7.99995 8.8484L9.77573 10.6242C9.89292 10.7414 10.046 10.8 10.1999 10.8C10.3539 10.8 10.507 10.7414 10.6242 10.6242C10.8585 10.3898 10.8585 10.0101 10.6242 9.77574L8.8484 7.99996Z"
+      fill="#292929"
+    />
+    <path
+      d="M8 15C4.13984 15 1 11.8602 1 8C1 4.13984 4.13984 1 8 1C11.8602 1 15 4.13984 15 8C15 11.8602 11.8602 15 8 15ZM8 2.2C4.80156 2.2 2.2 4.80156 2.2 8C2.2 11.1984 4.80156 13.8 8 13.8C11.1984 13.8 13.8 11.1984 13.8 8C13.8 4.80156 11.1984 2.2 8 2.2Z"
+      fill="#292929"
+    />
+  </svg>
+`;
+
 /** Check-circle icon — used for "response generated" status. */
 export const CheckCircleIcon = (): TemplateResult => html`
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">

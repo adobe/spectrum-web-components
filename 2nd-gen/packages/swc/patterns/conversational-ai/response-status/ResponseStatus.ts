@@ -18,73 +18,447 @@ import { Chevron75Icon } from '@adobe/spectrum-wc/icon/elements/index.js';
 import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
 
 import '@adobe/spectrum-wc/components/icon/swc-icon.js';
-import '@adobe/spectrum-wc/components/progress-circle/swc-progress-circle.js';
 
 import { uniqueId } from '../../../utils/id.js';
-import { CheckCircleIcon } from '../utils/icons/index.js';
+import {
+  CheckCircleIcon,
+  CircleOutlineIcon,
+  StepStoppedCircleIcon,
+} from '../utils/icons/index.js';
+import {
+  ResponseStatusStep,
+  type ResponseStatusStepStatus,
+} from './response-status-step/ResponseStatusStep.js';
 
 import styles from './response-status.css';
+
+export type ResponseStatusStatus =
+  | 'pending'
+  | 'active'
+  | 'complete'
+  | 'stopped';
+
+export type ResponseStatusStepData = {
+  label: string;
+  description: string;
+  status: ResponseStatusStepStatus;
+};
 
 /**
  * Displays the current status of an AI response generation.
  *
- * While **`loading`** is `true`, reasoning is not shown.
- *
  * @element swc-response-status
- * @slot - Optional reasoning content. Disclosure UI is shown only when slot has content
- * and `loading` is `false`; content is visible when `open` is `true`.
- * If slot reasoning content is removed while `open=true`, the component collapses itself
- * by setting `open=false`.
- * @fires swc-response-status-toggle - Dispatched when the user expands or collapses the reasoning panel.
+ * @slot label - Header row label. Falls back to the active step label.
+ * @slot summary - Optional secondary summary text for lifecycle states.
+ * @slot - `<swc-response-status-step>` elements.
+ * @fires swc-response-status-toggle - Dispatched when the user opens or closes the panel.
  * Detail: `{ open: boolean }`
  */
 export class ResponseStatus extends SpectrumElement {
-  private readonly reasoningPanelId = uniqueId('swc-reasoning-panel');
+  private static readonly STATUS_LABEL_CLASS =
+    'swc-ResponseStatus-label swc-Body swc-Body--sizeS';
+
+  private static readonly DEFAULT_LABELS: Record<ResponseStatusStatus, string> =
+    {
+      pending: 'Processing request',
+      active: 'Generating response',
+      complete: 'Response generated',
+      stopped: 'You stopped the response',
+    };
+
+  private static readonly DEFAULT_ACCESSIBLE_LABEL = 'Execution steps';
+
+  /** Header label roll animation duration; keep in sync with the CSS. */
+  private static readonly LABEL_ROLL_DURATION_MS = 650;
+
+  /** @internal */
+  private readonly panelId = uniqueId('swc-response-status-panel');
+
+  /** @internal */
   @state()
-  private _hasReasoningContent = false;
+  private _steps: ResponseStatusStepData[] = [];
 
-  /** `true`: progress circle + status label, `false`: checkmark + status label. */
-  @property({ type: Boolean, reflect: true })
-  public loading = false;
+  /** @internal */
+  @state()
+  private _labelSlotText = '';
 
-  /**
-   * Status row label text shown while `loading=true`.
-   */
+  /** @internal */
+  @state()
+  private _summarySlotText = '';
+
+  /** @internal */
+  @state()
+  private _displayedLabel = '';
+
+  /** @internal */
+  @state()
+  private _rollFromLabel = '';
+
+  /** @internal */
+  @state()
+  private _rollActive = false;
+
+  /** @internal */
+  @state()
+  private _rollEngaged = false;
+
+  /** Whole response lifecycle status. */
   @property({ type: String, reflect: true })
-  public loadingLabel = 'Generating response';
+  public status: 'pending' | 'active' | 'complete' | 'stopped' = 'pending';
 
-  /**
-   * Status row label text shown while `loading=false`.
-   */
-  @property({ type: String, reflect: true })
-  public completeLabel = 'Response generated';
-
-  /**
-   * Accessible label for the reasoning content group.
-   */
-  @property({ type: String, attribute: 'reasoning-label' })
-  public reasoningLabel = 'Reasoning';
-
-  /**
-   * `true`: reasoning expanded; `false`: reasoning collapsed.
-   * Ignored while `loading` is `true`. If reasoning slot content is removed,
-   * `open` is automatically set to `false` and no `swc-response-status-toggle` event is emitted.
-   */
+  /** `true`: step timeline open. */
   @property({ type: Boolean, reflect: true })
   public open = false;
+
+  /** Accessible name for the step list panel. */
+  @property({ type: String, attribute: 'accessible-label' })
+  public accessibleLabel = '';
+
+  /** @internal */
+  private _rollToLabel = '';
+  /** @internal */
+  private _labelRollTimer: number | null = null;
+  /** @internal */
+  private _labelRollRaf: number | null = null;
+  /** @internal */
+  private _contentObserver?: MutationObserver;
 
   public static override get styles(): CSSResultArray {
     return [styles];
   }
 
+  /** @internal */
+  private _handleStepChildChange = (): void => {
+    this._syncSlotContent();
+  };
+
+  public override connectedCallback(): void {
+    super.connectedCallback();
+    this.addEventListener(
+      'swc-response-status-step-change',
+      this._handleStepChildChange
+    );
+
+    // Slotchange only fires when assigned nodes are added or removed, not when
+    // their text mutates. Observe the light DOM so updating a slotted label's
+    // text (a common consumer pattern) re-syncs and rolls the header label.
+    this._contentObserver = new MutationObserver(() => {
+      this._syncSlotContent();
+    });
+    this._contentObserver.observe(this, {
+      characterData: true,
+      childList: true,
+      subtree: true,
+    });
+  }
+
   protected override firstUpdated(): void {
-    this._syncReasoningContent();
+    this._syncSlotContent();
+    const initial = this._getHeaderLabel();
+    this._displayedLabel = initial;
+  }
+
+  protected override updated(): void {
+    this._reconcileHeaderLabel();
+  }
+
+  public override disconnectedCallback(): void {
+    this.removeEventListener(
+      'swc-response-status-step-change',
+      this._handleStepChildChange
+    );
+    this._contentObserver?.disconnect();
+    this._contentObserver = undefined;
+    this._clearLabelAnimation();
+    super.disconnectedCallback();
+  }
+
+  private _isValidStatus(status: string): status is ResponseStatusStatus {
+    return (
+      status === 'pending' ||
+      status === 'active' ||
+      status === 'complete' ||
+      status === 'stopped'
+    );
+  }
+
+  private _stepsEqual(
+    left: ResponseStatusStepData[],
+    right: ResponseStatusStepData[]
+  ): boolean {
+    if (left.length !== right.length) {
+      return false;
+    }
+
+    return left.every(
+      (step, index) =>
+        step.label === right[index]?.label &&
+        step.description === right[index]?.description &&
+        step.status === right[index]?.status
+    );
+  }
+
+  private _readLightDomNamedSlotText(host: Element, slotName: string): string {
+    return Array.from(host.children)
+      .filter(
+        (child): child is HTMLElement =>
+          child instanceof HTMLElement &&
+          child.getAttribute('slot') === slotName
+      )
+      .map((element) => element.textContent?.trim() ?? '')
+      .filter(Boolean)
+      .join(' ');
+  }
+
+  private _readStepDescription(element: Element): string {
+    const description = this._readLightDomNamedSlotText(element, 'description');
+    if (description) {
+      return description;
+    }
+
+    return Array.from(element.childNodes)
+      .filter(
+        (node) =>
+          node.nodeType === Node.TEXT_NODE ||
+          (node instanceof Element && !node.getAttribute('slot'))
+      )
+      .map((node) => node.textContent?.trim() ?? '')
+      .filter(Boolean)
+      .join(' ');
+  }
+
+  private _readShadowSlotText(slotName: string): string {
+    const slot =
+      this.shadowRoot?.querySelector<HTMLSlotElement>(
+        `slot[name="${slotName}"]`
+      ) ?? null;
+
+    if (!slot) {
+      return '';
+    }
+
+    return slot
+      .assignedNodes({ flatten: true })
+      .map((node) => node.textContent?.trim() ?? '')
+      .filter(Boolean)
+      .join(' ');
+  }
+
+  private _readNamedSlotContent(slotName: string): string {
+    return (
+      this._readLightDomNamedSlotText(this, slotName) ||
+      this._readShadowSlotText(slotName)
+    );
+  }
+
+  private _isStepElement(element: Element): element is ResponseStatusStep {
+    return (
+      element instanceof ResponseStatusStep ||
+      element.localName === 'swc-response-status-step'
+    );
+  }
+
+  private _readStepElement(element: Element): ResponseStatusStepData {
+    const step = element as ResponseStatusStep;
+    const label = this._readLightDomNamedSlotText(element, 'label');
+    const status =
+      step.status ||
+      (element.getAttribute('status') as ResponseStatusStepStatus | null) ||
+      'active';
+
+    return {
+      label,
+      description: this._readStepDescription(element),
+      status,
+    };
+  }
+
+  private _readSteps(slot: HTMLSlotElement | null): ResponseStatusStepData[] {
+    if (!slot) {
+      return [];
+    }
+
+    return slot
+      .assignedElements({ flatten: true })
+      .filter((element): element is ResponseStatusStep =>
+        this._isStepElement(element)
+      )
+      .map((element) => this._readStepElement(element));
+  }
+
+  private _syncNamedSlots(): void {
+    const labelText = this._readNamedSlotContent('label');
+    const summaryText = this._readNamedSlotContent('summary');
+
+    if (this._labelSlotText !== labelText) {
+      this._labelSlotText = labelText;
+    }
+    if (this._summarySlotText !== summaryText) {
+      this._summarySlotText = summaryText;
+    }
+  }
+
+  private _syncSlotContent(slot?: HTMLSlotElement): void {
+    this._syncNamedSlots();
+
+    const contentSlot =
+      slot ??
+      this.shadowRoot?.querySelector<HTMLSlotElement>(
+        '.swc-ResponseStatus-content-slot'
+      ) ??
+      null;
+
+    const steps = this._readSteps(contentSlot);
+    if (!this._stepsEqual(steps, this._steps)) {
+      this._steps = steps;
+    }
+  }
+
+  private _handleSlotChange(event: Event): void {
+    this._syncSlotContent(event.target as HTMLSlotElement);
+  }
+
+  private _handleNamedSlotChange(): void {
+    this._syncNamedSlots();
+  }
+
+  private _getActiveStep(): ResponseStatusStepData | undefined {
+    return this._steps.find((step) => step.status === 'active');
+  }
+
+  private _getHeaderLabel(): string {
+    if (this._labelSlotText) {
+      return this._labelSlotText;
+    }
+
+    if (this.status === 'active') {
+      const activeStepLabel = this._getActiveStep()?.label;
+      if (activeStepLabel) {
+        return activeStepLabel;
+      }
+    }
+
+    if (this._summarySlotText) {
+      return this._summarySlotText;
+    }
+
+    return this._isValidStatus(this.status)
+      ? ResponseStatus.DEFAULT_LABELS[this.status]
+      : ResponseStatus.DEFAULT_LABELS.pending;
+  }
+
+  private _clearLabelAnimation(): void {
+    if (this._labelRollTimer !== null) {
+      window.clearTimeout(this._labelRollTimer);
+      this._labelRollTimer = null;
+    }
+    if (this._labelRollRaf !== null) {
+      window.cancelAnimationFrame(this._labelRollRaf);
+      this._labelRollRaf = null;
+    }
+  }
+
+  private _prefersReducedMotion(): boolean {
+    return (
+      typeof window.matchMedia === 'function' &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    );
+  }
+
+  private _reconcileHeaderLabel(): void {
+    const target = this._getHeaderLabel();
+    const currentlyVisible = this._rollActive
+      ? this._rollToLabel
+      : this._displayedLabel;
+    if (target === currentlyVisible) {
+      return;
+    }
+    this._beginLabelRoll(target);
+  }
+
+  private _beginLabelRoll(target: string): void {
+    this._clearLabelAnimation();
+    if (this._prefersReducedMotion()) {
+      this._displayedLabel = target;
+      this._rollActive = false;
+      this._rollEngaged = false;
+      return;
+    }
+
+    this._rollFromLabel = this._rollActive
+      ? this._rollToLabel
+      : this._displayedLabel || this._getHeaderLabel();
+    this._rollToLabel = target;
+    this._rollActive = true;
+    this._rollEngaged = false;
+
+    // Engage the transition on the next frame so it animates from the settled
+    // position instead of jumping straight to the rolled state.
+    this._labelRollRaf = window.requestAnimationFrame(() => {
+      this._labelRollRaf = window.requestAnimationFrame(() => {
+        this._labelRollRaf = null;
+        this._rollEngaged = true;
+      });
+    });
+
+    this._labelRollTimer = window.setTimeout(() => {
+      this._labelRollTimer = null;
+      this._displayedLabel = this._rollToLabel;
+      this._rollActive = false;
+      this._rollEngaged = false;
+    }, ResponseStatus.LABEL_ROLL_DURATION_MS);
+  }
+
+  private _currentVisibleLabel(): string {
+    if (this._rollActive) {
+      return this._rollToLabel;
+    }
+    return this._displayedLabel || this._getHeaderLabel();
+  }
+
+  private _renderRollingLabel(): TemplateResult {
+    const labelClass = ResponseStatus.STATUS_LABEL_CLASS;
+
+    if (!this._rollActive) {
+      return html`
+        <span class="swc-ResponseStatus-headerTrailViewport">
+          <span class="swc-ResponseStatus-headerTrailStrip">
+            <span class="swc-ResponseStatus-headerTrailLine">
+              <span class=${labelClass}>${this._currentVisibleLabel()}</span>
+            </span>
+          </span>
+        </span>
+      `;
+    }
+
+    const stripClass = this._rollEngaged
+      ? 'swc-ResponseStatus-headerTrailStrip swc-ResponseStatus-headerTrailStrip--rolling'
+      : 'swc-ResponseStatus-headerTrailStrip';
+
+    return html`
+      <span class="swc-ResponseStatus-headerTrailViewport">
+        <span class=${stripClass}>
+          <span class="swc-ResponseStatus-headerTrailLine">
+            <span class=${labelClass}>${this._rollFromLabel}</span>
+          </span>
+          <span class="swc-ResponseStatus-headerTrailLine">
+            <span class=${labelClass}>${this._rollToLabel}</span>
+          </span>
+        </span>
+      </span>
+    `;
+  }
+
+  /** @internal */
+  private get _showPanel(): boolean {
+    return this._steps.length > 0;
   }
 
   private _handleToggle(): void {
-    if (this.loading || !this._hasReasoningContent) {
+    if (!this._showPanel) {
       return;
     }
+
     this.open = !this.open;
     this.dispatchEvent(
       new CustomEvent('swc-response-status-toggle', {
@@ -95,132 +469,218 @@ export class ResponseStatus extends SpectrumElement {
     );
   }
 
-  private _getStatusLabel(): string {
-    return this.loading ? this.loadingLabel : this.completeLabel;
-  }
-
-  private _slotHasReasoningContent(slot: HTMLSlotElement | null): boolean {
-    if (!slot) {
-      return false;
-    }
-    for (const node of slot.assignedNodes({ flatten: true })) {
-      if (node.nodeType === Node.TEXT_NODE && node.textContent?.trim()) {
-        return true;
-      }
-      if (node.nodeType === Node.ELEMENT_NODE) {
-        return true;
-      }
-    }
-
-    return false;
-  }
-
-  private _syncReasoningContent(slot?: HTMLSlotElement): void {
-    const reasoningSlot =
-      slot ??
-      this.shadowRoot?.querySelector<HTMLSlotElement>(
-        '.swc-ResponseStatus-reasoning-slot'
-      ) ??
-      null;
-    const hasReasoningContent = this._slotHasReasoningContent(reasoningSlot);
-
-    if (!hasReasoningContent && this.open) {
-      this.open = false;
-    }
-    this._hasReasoningContent = hasReasoningContent;
-  }
-
-  private _handleReasoningSlotChange(event: Event): void {
-    this._syncReasoningContent(event.target as HTMLSlotElement);
-  }
-
-  private _renderLoadingRow(label: string): TemplateResult {
+  private _renderThreeDots(): TemplateResult {
     return html`
-      <div class="swc-ResponseStatus-row" role="status" aria-label=${label}>
-        <span class="swc-ResponseStatus-loadingSlot">
-          <swc-progress-circle
-            size="s"
-            indeterminate
-            aria-hidden="true"
-          ></swc-progress-circle>
-        </span>
-        <span class="swc-ResponseStatus-label">${label}</span>
-      </div>
+      <span class="swc-ResponseStatus-dots" aria-hidden="true">
+        <span class="swc-ResponseStatus-dot"></span>
+        <span class="swc-ResponseStatus-dot"></span>
+        <span class="swc-ResponseStatus-dot"></span>
+      </span>
     `;
   }
 
-  private _renderCompleteRow(
-    label: string,
-    showDisclosure: boolean
-  ): TemplateResult {
-    const expanded = this.open;
+  private _renderChevron(open: boolean): TemplateResult {
+    return html`
+      <swc-icon
+        class=${open
+          ? 'swc-ResponseStatus-chevron swc-ResponseStatus-chevron--down'
+          : 'swc-ResponseStatus-chevron'}
+        style="--swc-icon-inline-size:10px;--swc-icon-block-size:10px;"
+        aria-hidden="true"
+      >
+        ${Chevron75Icon()}
+      </swc-icon>
+    `;
+  }
+
+  private _renderCheckmark(): TemplateResult {
+    return html`
+      <swc-icon
+        class="swc-ResponseStatus-check"
+        style="--swc-icon-inline-size:20px;--swc-icon-block-size:20px;"
+        aria-hidden="true"
+      >
+        ${CheckCircleIcon()}
+      </swc-icon>
+    `;
+  }
+
+  private _renderLeadingIcon(): TemplateResult | string {
+    if (this.status === 'complete') {
+      return this._renderCheckmark();
+    }
+
+    if (this.status === 'stopped') {
+      return '';
+    }
+
+    return this._renderThreeDots();
+  }
+
+  private _renderHeader(showDisclosure: boolean): TemplateResult {
+    const label = this._currentVisibleLabel();
+    const rowClass = [
+      'swc-ResponseStatus-row',
+      showDisclosure ? 'swc-ResponseStatus-row--button' : '',
+      this.status === 'active' ? 'swc-ResponseStatus-row--processing' : '',
+      this.status === 'stopped' ? 'swc-ResponseStatus-row--stopped' : '',
+      this.status === 'complete' ? 'swc-ResponseStatus-row--complete' : '',
+    ]
+      .filter(Boolean)
+      .join(' ');
+
+    const rowContent = html`
+      ${this._renderLeadingIcon()}
+      <span class="swc-ResponseStatus-headerTrail">
+        ${this._renderRollingLabel()}
+        ${showDisclosure ? this._renderChevron(this.open) : ''}
+      </span>
+    `;
 
     if (showDisclosure) {
       return html`
         <button
-          class="swc-ResponseStatus-row swc-ResponseStatus-row--button"
+          class=${rowClass}
           aria-label=${label}
-          aria-expanded=${expanded}
-          aria-controls=${this.reasoningPanelId}
+          aria-expanded=${this.open}
+          aria-controls=${this.panelId}
           @click=${this._handleToggle}
         >
-          <swc-icon
-            class=${expanded
-              ? 'swc-ResponseStatus-chevron swc-ResponseStatus-chevron--down'
-              : 'swc-ResponseStatus-chevron'}
-            style="--swc-icon-inline-size:10px;--swc-icon-block-size:10px;"
-            aria-hidden="true"
-          >
-            ${Chevron75Icon()}
-          </swc-icon>
-          <span class="swc-ResponseStatus-label">${label}</span>
-          <swc-icon
-            style="--swc-icon-inline-size:20px;--swc-icon-block-size:20px;"
-            aria-hidden="true"
-          >
-            ${CheckCircleIcon()}
-          </swc-icon>
+          ${rowContent}
         </button>
       `;
     }
 
     return html`
-      <div class="swc-ResponseStatus-row">
-        <swc-icon
-          style="--swc-icon-inline-size:20px;--swc-icon-block-size:20px;"
-          aria-hidden="true"
-        >
+      <div class=${rowClass}>${rowContent}</div>
+    `;
+  }
+
+  private _renderStepIcon(status: ResponseStatusStepStatus): TemplateResult {
+    if (status === 'complete') {
+      return html`
+        <swc-icon class="swc-ResponseStatus-step-icon" aria-hidden="true">
           ${CheckCircleIcon()}
         </swc-icon>
-        <span class="swc-ResponseStatus-label">${label}</span>
+      `;
+    }
+
+    if (status === 'stopped') {
+      return html`
+        <swc-icon
+          class="swc-ResponseStatus-step-icon swc-ResponseStatus-step-icon--stopped"
+          aria-hidden="true"
+        >
+          ${StepStoppedCircleIcon()}
+        </swc-icon>
+      `;
+    }
+
+    return html`
+      <swc-icon
+        class="swc-ResponseStatus-step-icon swc-ResponseStatus-step-icon--${status}"
+        aria-hidden="true"
+      >
+        ${CircleOutlineIcon()}
+      </swc-icon>
+    `;
+  }
+
+  private _renderStepDetail(description: string): TemplateResult | '' {
+    if (!description) {
+      return '';
+    }
+
+    return html`
+      <p class="swc-ResponseStatus-step-detail swc-Body swc-Body--sizeXXS">
+        ${description}
+      </p>
+    `;
+  }
+
+  private _getTimelineSteps(): ResponseStatusStepData[] {
+    return this._steps;
+  }
+
+  private _renderStepTimeline(): TemplateResult {
+    const steps = this._getTimelineSteps();
+    const lastIndex = steps.length - 1;
+
+    return html`
+      <ol class="swc-ResponseStatus-steps" role="list">
+        ${steps.map(
+          (step, index) => html`
+            <li
+              class="swc-ResponseStatus-step"
+              data-status=${step.status}
+              role="listitem"
+            >
+              <div class="swc-ResponseStatus-step-rail">
+                ${this._renderStepIcon(step.status)}
+                ${index < lastIndex
+                  ? html`
+                      <span
+                        class="swc-ResponseStatus-step-line"
+                        aria-hidden="true"
+                      ></span>
+                    `
+                  : ''}
+              </div>
+              <div class="swc-ResponseStatus-step-body">
+                <p
+                  class="swc-ResponseStatus-step-title swc-Detail swc-Detail--sizeS"
+                >
+                  ${step.label}
+                </p>
+                ${this._renderStepDetail(step.description)}
+              </div>
+            </li>
+          `
+        )}
+      </ol>
+    `;
+  }
+
+  private _renderPanel(showPanel: boolean): TemplateResult {
+    const panelOpen = showPanel && this.open;
+    const panelLabel =
+      this.accessibleLabel || ResponseStatus.DEFAULT_ACCESSIBLE_LABEL;
+
+    return html`
+      <div
+        id=${this.panelId}
+        class="swc-ResponseStatus-panel ${panelOpen
+          ? 'swc-ResponseStatus-panel--open'
+          : ''}"
+        role=${ifDefined(showPanel ? 'group' : undefined)}
+        aria-label=${ifDefined(showPanel ? panelLabel : undefined)}
+      >
+        ${this._renderStepTimeline()}
       </div>
     `;
   }
 
   protected override render(): TemplateResult {
-    const isLoading = this.loading;
-    const statusLabel = this._getStatusLabel();
-    const showDisclosure = !isLoading && this._hasReasoningContent;
+    const showPanel = this._showPanel;
 
     return html`
-      <div class="swc-ResponseStatus">
-        ${isLoading
-          ? this._renderLoadingRow(statusLabel)
-          : this._renderCompleteRow(statusLabel, showDisclosure)}
-        <div
-          id=${this.reasoningPanelId}
-          class="swc-ResponseStatus-reasoning-panel"
-          role=${ifDefined(showDisclosure ? 'group' : undefined)}
-          aria-label=${ifDefined(
-            showDisclosure ? this.reasoningLabel : undefined
-          )}
-          ?hidden=${!showDisclosure || !this.open}
-        >
-          <slot
-            class="swc-ResponseStatus-reasoning-slot"
-            @slotchange=${this._handleReasoningSlotChange}
-          ></slot>
-        </div>
+      <div class="swc-ResponseStatus swc-ResponseStatus--agentic">
+        ${this._renderHeader(showPanel)} ${this._renderPanel(showPanel)}
+        <slot
+          name="label"
+          hidden
+          @slotchange=${this._handleNamedSlotChange}
+        ></slot>
+        <slot
+          name="summary"
+          hidden
+          @slotchange=${this._handleNamedSlotChange}
+        ></slot>
+        <slot
+          class="swc-ResponseStatus-content-slot"
+          hidden
+          @slotchange=${this._handleSlotChange}
+        ></slot>
       </div>
     `;
   }

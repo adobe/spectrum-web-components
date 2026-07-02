@@ -11,33 +11,84 @@ import * as ResponseStatusStories from './stories/response-status.stories';
 
 A response status indicator consists of:
 
-1. **Status row**: an indeterminate progress circle (loading) or checkmark (complete) with a label
-2. **Reasoning toggle**: optional expandable disclosure for chain-of-thought content
+1. **Status row**: an indicator, status label, and optional disclosure control
+2. **Step timeline**: optional execution steps that can be expanded for more detail
 
 <Canvas of={ResponseStatusStories.Anatomy} />
 
 ## Options
 
-### Loading
+### Statuses
 
-The `loading` attribute controls which indicator is shown:
+The `status` attribute controls the lifecycle of the whole response:
 
-- **`loading=true`**: indeterminate progress circle + "Thinking…" label
-- **`loading=false`**: checkmark + "Response generated" label
-- Set `loading-label` or `complete-label` to customize row text per state
+- **`pending`**: the request is queued or preparing to start
+- **`active`**: the response is actively working
+- **`complete`**: the response finished successfully
+- **`stopped`**: the user interrupted the response
 
-<Canvas of={ResponseStatusStories.Loading} />
+Use `slot="label"` for the visible header text.
 
-### Reasoning
+<Canvas of={ResponseStatusStories.Statuses} />
 
-Set **`open`** to control reasoning disclosure:
+### Steps
 
-- **`open=false`**: reasoning collapsed
-- **`open=true`**: reasoning expanded
+Add `swc-response-status-step` children to render an expandable timeline. Set `open` to show the timeline by default.
 
-The disclosure chevron only appears when default-slot reasoning content exists. While **`loading=true`**, reasoning UI is not shown. If reasoning slot content is later removed, the component automatically resets `open` to `false`. This internal collapse does not emit `swc-response-status-toggle`.
+Each step uses:
 
-<Canvas of={ResponseStatusStories.Reasoning} />
+- **`status`**: `active`, `complete`, or `stopped`
+- **`slot="label"`**: step title
+- **`slot="description"`**: detail text shown in the expanded timeline
+
+All provided steps are rendered in order. The component does not hide or synthesize step rows.
+
+<Canvas of={ResponseStatusStories.Steps} />
+
+## Behaviors
+
+### Handling events
+
+`<swc-response-status>` emits **`swc-response-status-toggle`** when users open or close the step timeline. The event **bubbles** and is **composed**.
+
+`event.detail.open` contains the next disclosure state.
+
+```js
+status.addEventListener('swc-response-status-toggle', (event) => {
+  const { open } = event.detail;
+  status.open = open;
+});
+```
+
+### Label update cadence
+
+Header-label cadence is consumer-managed. If your app streams rapid status updates, debounce, throttle, or queue those updates in application code before setting `slot="label"`.
+
+```js
+const queue = [];
+let timer;
+
+function enqueueLabel(nextLabel) {
+  queue.push(nextLabel);
+  if (timer) return;
+
+  const flush = () => {
+    const label = queue.shift();
+    if (label) labelEl.textContent = label;
+    if (queue.length > 0) {
+      timer = setTimeout(flush, 900);
+    } else {
+      timer = undefined;
+    }
+  };
+
+  flush();
+}
+```
+
+The `LabelRoll` story demonstrates this consumer-side queue pattern.
+
+<Canvas of={ResponseStatusStories.LabelRoll} />
 
 ## Accessibility
 
@@ -45,11 +96,15 @@ The disclosure chevron only appears when default-slot reasoning content exists. 
 
 The `<swc-response-status>` element implements the following accessibility features:
 
-#### Status announcement
+- When steps exist, the disclosure button uses `aria-expanded` and `aria-controls` to communicate panel state
+- The step timeline uses `role="group"` with an accessible name from the `accessible-label` attribute (defaults to “Execution steps”)
+- The ordered step list uses `role="list"` and each rendered step uses `role="listitem"`
 
-- The loading row carries `role="status"`, so the status label is announced for screen readers
-- When reasoning content exists, the reasoning toggle uses `aria-expanded` and `aria-controls` to communicate panel state
-- The reasoning panel uses `role="group"` with `aria-label="Reasoning"`
+### Best practices
+
+- Keep step labels concise and action-oriented.
+- Use `slot="description"` for supplemental detail, not required state text.
+- Provide a meaningful `accessible-label` when multiple response-status components can appear on one screen.
 
 <Canvas of={ResponseStatusStories.Accessibility} />
 

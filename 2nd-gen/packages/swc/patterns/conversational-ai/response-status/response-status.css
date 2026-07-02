@@ -20,6 +20,18 @@
   box-sizing: border-box;
 }
 
+.swc-ResponseStatus-liveAnnouncer {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  padding: 0;
+  margin: -1px;
+  white-space: nowrap;
+  border: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+
 .swc-ResponseStatus {
   display: flex;
   flex-direction: column;
@@ -35,11 +47,13 @@
   gap: token("spacing-100");
   align-items: center;
   block-size: var(--swc-response-status-row-block-size, 32px);
+  padding-inline: token("spacing-100");
 }
 
 /* When the row is a button (reasoning toggle) */
 .swc-ResponseStatus-row--button {
   inline-size: fit-content;
+  max-inline-size: 580px;
   padding: var(--swc-sources-toggle-padding, 3px) token("spacing-100");
   background: transparent;
   border: none;
@@ -47,24 +61,118 @@
   transition: background token("animation-duration-100") token("animation-ease-in-out");
 }
 
-/* Progress circle — indeterminate loading indicator */
+.swc-ResponseStatus-row--button .swc-ResponseStatus-label {
+  flex: 1;
+  min-inline-size: 0;
+  text-align: start;
+}
 
-.swc-ResponseStatus-loadingSlot {
+/* Label + chevron trail (processing title transitions) */
+
+.swc-ResponseStatus-headerTrail {
+  display: flex;
+  gap: token("spacing-100");
+  align-items: center;
+  min-inline-size: 0;
+}
+
+.swc-ResponseStatus-headerTrailViewport {
+  min-inline-size: 0;
+  block-size: var(--swc-response-status-label-line-size, 1.33em);
+  overflow: hidden;
+}
+
+.swc-ResponseStatus-row--button .swc-ResponseStatus-headerTrail,
+.swc-ResponseStatus-row--button .swc-ResponseStatus-headerTrailViewport {
+  flex: 1;
+  min-inline-size: 0;
+}
+
+.swc-ResponseStatus-headerTrailStrip {
+  display: flex;
+  flex-direction: column;
+  transform: translateY(0);
+  transition:
+    transform var(--swc-response-status-roll-duration, 650ms) token("animation-ease-in-out"),
+    opacity var(--swc-response-status-roll-duration, 650ms) token("animation-ease-in-out");
+}
+
+.swc-ResponseStatus-headerTrailStrip--rolling {
+  transform: translateY(-50%);
+}
+
+.swc-ResponseStatus-headerTrailLine {
+  display: flex;
+  gap: token("spacing-100");
+  align-items: center;
+  block-size: var(--swc-response-status-label-line-size, 1.33em);
+  opacity: 1;
+  transition: opacity calc(var(--swc-response-status-roll-duration, 650ms) / 2) token("animation-ease-in-out");
+}
+
+.swc-ResponseStatus-headerTrailStrip--rolling .swc-ResponseStatus-headerTrailLine:first-child {
+  visibility: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .swc-ResponseStatus-headerTrailStrip,
+  .swc-ResponseStatus-headerTrailLine {
+    transition: none;
+  }
+}
+
+/* Three-dot loading indicator */
+
+.swc-ResponseStatus-dots {
   display: inline-flex;
   flex-shrink: 0;
+  gap: token("spacing-75");
   align-items: center;
-}
-
-.swc-ResponseStatus-label {
-  font-family: token("sans-serif-font");
-  font-size: token("font-size-100");
-  font-weight: token("regular-font-weight");
-  line-height: token("line-height-font-size-100");
-  color: token("neutral-subdued-content-color-default");
-}
-
-.swc-ResponseStatus-row--button:hover .swc-ResponseStatus-label {
+  block-size: 6px;
   color: token("gray-800");
+}
+
+.swc-ResponseStatus-dot {
+  inline-size: 6px;
+  block-size: 6px;
+  background: currentcolor;
+  border-radius: 50%;
+  opacity: 0.45;
+  animation: swc-response-status-dot-pulse 1.1s token("animation-ease-in-out") infinite;
+}
+
+.swc-ResponseStatus-dot:nth-child(1) {
+  color: token("gray-500");
+  animation-delay: 0s;
+}
+
+.swc-ResponseStatus-dot:nth-child(2) {
+  color: token("gray-600");
+  animation-delay: 0.15s;
+}
+
+.swc-ResponseStatus-dot:nth-child(3) {
+  color: token("gray-800");
+  animation-delay: 0.3s;
+}
+
+@keyframes swc-response-status-dot-pulse {
+  0%,
+  70%,
+  100% {
+    opacity: 0.35;
+  }
+
+  35% {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .swc-ResponseStatus-dot {
+    opacity: 0.7;
+    animation: none;
+  }
 }
 
 .swc-ResponseStatus-row--button:hover {
@@ -108,4 +216,218 @@
 .swc-ResponseStatus-row--button[aria-expanded="true"] + .swc-ResponseStatus-reasoning-panel {
   visibility: visible;
   block-size: auto;
+}
+
+/* ─────────────────────────────────────
+   Agentic mode
+   ───────────────────────────────────── */
+
+.swc-ResponseStatus--agentic {
+  --swc-response-status-roll-duration: 650ms;
+
+  gap: token("spacing-100");
+  inline-size: 100%;
+  max-inline-size: 340px;
+}
+
+.swc-ResponseStatus-row--processing,
+.swc-ResponseStatus-row--button.swc-ResponseStatus-row--processing {
+  padding-inline: token("spacing-100");
+  border-radius: token("corner-radius-medium-default");
+}
+
+.swc-ResponseStatus-row--complete.swc-ResponseStatus-row--button,
+.swc-ResponseStatus-row--stopped.swc-ResponseStatus-row--button {
+  padding-inline: token("spacing-100");
+}
+
+.swc-ResponseStatus-row--stopped .swc-ResponseStatus-dots {
+  display: none;
+}
+
+.swc-ResponseStatus--agentic .swc-ResponseStatus-dots {
+  margin-inline-end: 1px;
+}
+
+.swc-ResponseStatus-check {
+  flex-shrink: 0;
+}
+
+.swc-ResponseStatus-panel {
+  interpolate-size: allow-keywords;
+  display: block;
+  visibility: hidden;
+  block-size: 0;
+  overflow: hidden;
+  transition:
+    block-size token("animation-duration-200") token("animation-ease-in-out"),
+    visibility token("animation-duration-200") linear;
+}
+
+.swc-ResponseStatus-panel--open {
+  visibility: visible;
+  block-size: auto;
+}
+
+.swc-ResponseStatus-steps {
+  padding-inline: token("spacing-100");
+  margin: 0;
+  overflow: visible;
+  list-style: none;
+}
+
+.swc-ResponseStatus-step {
+  display: grid;
+  grid-template-columns: 20px 1fr;
+  align-items: stretch;
+  column-gap: token("spacing-100");
+}
+
+.swc-ResponseStatus-step:last-child {
+  animation: swc-response-status-step-enter var(--swc-response-status-roll-duration, 500ms) token("animation-ease-in-out");
+}
+
+@keyframes swc-response-status-step-enter {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .swc-ResponseStatus-step:last-child {
+    animation: none;
+  }
+}
+
+.swc-ResponseStatus-step-rail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  block-size: 100%;
+  min-block-size: 100%;
+  overflow: visible;
+}
+
+/* Extend rail (and line) through the gap before the next step icon */
+.swc-ResponseStatus-step:not(:last-child) .swc-ResponseStatus-step-rail {
+  box-sizing: content-box;
+  padding-block-end: token("spacing-200");
+}
+
+.swc-ResponseStatus-step-icon {
+  flex-shrink: 0;
+  inline-size: token("workflow-icon-small");
+  block-size: token("workflow-icon-small");
+  transition: color token("animation-duration-200") token("animation-ease-in-out");
+}
+
+.swc-ResponseStatus-step[data-status="complete"] .swc-ResponseStatus-step-icon {
+  transition:
+    color token("animation-duration-200") token("animation-ease-in-out"),
+    opacity token("animation-duration-200") token("animation-ease-in-out");
+}
+
+.swc-ResponseStatus-step-line {
+  flex: 1 1 auto;
+  inline-size: 1px;
+  min-block-size: token("spacing-100");
+  margin-block-start: token("spacing-50");
+  background: token("gray-300");
+}
+
+.swc-ResponseStatus-step-icon--active {
+  color: token("gray-800");
+}
+
+.swc-ResponseStatus-step-icon--stopped,
+.swc-ResponseStatus-step[data-status="stopped"] .swc-ResponseStatus-step-icon {
+  color: token("gray-700");
+}
+
+.swc-ResponseStatus-step-body {
+  min-inline-size: 0;
+}
+
+.swc-ResponseStatus-step:not(:last-child) .swc-ResponseStatus-step-body {
+  padding-block-end: token("spacing-200");
+}
+
+/* Typography utilities (shadow-local; mirrors typography.css) */
+.swc-Body {
+  margin-block: var(--swc-body-margin-top, 0) var(--swc-body-margin-bottom, 0);
+  font-family: var(--swc-body-font-family, token("sans-serif-font"));
+  font-size: var(--swc-body-font-size, token("body-size-m"));
+  font-weight: var(--swc-body-font-weight, token("body-sans-serif-font-weight"));
+  line-height: var(--swc-body-line-height, token("line-height-font-size-200"));
+  color: var(--swc-body-font-color, token("body-color"));
+  letter-spacing: var(--swc-body-letter-spacing, normal);
+
+  &:lang(zh),
+  &:lang(ja),
+  &:lang(ko) {
+    --swc-body-line-height: var(--swc-body-cjk-line-height, token("cjk-line-height-200"));
+    --swc-body-letter-spacing: var(--swc-body-cjk-letter-spacing, token("cjk-letter-spacing"));
+    --swc-body-font-size: var(--swc-body-cjk-font-size, token("font-size-100"));
+  }
+}
+
+.swc-Body--sizeS {
+  --swc-body-font-size: token("body-size-s");
+  --swc-body-line-height: token("line-height-font-size-100");
+}
+
+.swc-Body--sizeXXS {
+  --swc-body-font-size: token("body-size-xxs");
+  --swc-body-line-height: token("line-height-font-size-50");
+
+  &:lang(zh),
+  &:lang(ja),
+  &:lang(ko) {
+    --swc-body-cjk-font-size: token("font-size-25");
+  }
+}
+
+.swc-Detail {
+  margin-block: var(--swc-detail-margin-top, 0) var(--swc-detail-margin-bottom, 0);
+  font-family: var(--swc-detail-font-family, token("sans-serif-font"));
+  font-size: var(--swc-detail-font-size, token("detail-size-m"));
+  font-weight: var(--swc-detail-font-weight, token("detail-sans-serif-font-weight"));
+  line-height: var(--swc-detail-line-height, token("line-height-font-size-100"));
+  color: var(--swc-detail-font-color, token("detail-color"));
+  letter-spacing: var(--swc-detail-letter-spacing, normal);
+
+  &:lang(zh),
+  &:lang(ja),
+  &:lang(ko) {
+    --swc-detail-line-height: var(--swc-detail-cjk-line-height, token("cjk-line-height-100"));
+    --swc-detail-letter-spacing: var(--swc-detail-cjk-letter-spacing, token("cjk-letter-spacing"));
+  }
+}
+
+.swc-Detail--sizeS {
+  --swc-detail-font-size: token("detail-size-s");
+  --swc-detail-line-height: token("line-height-font-size-75");
+
+  &:lang(zh),
+  &:lang(ja),
+  &:lang(ko) {
+    --swc-detail-cjk-font-size: token("font-size-50");
+  }
+}
+
+.swc-ResponseStatus-step-title {
+  margin: 0;
+
+  /* Detail default (gray-600) fails WCAG AA at detail-size-s (12px). */
+  --swc-detail-font-color: token("gray-700");
+}
+
+.swc-ResponseStatus-step-detail {
+  margin-block: token("spacing-75") 0;
 }
