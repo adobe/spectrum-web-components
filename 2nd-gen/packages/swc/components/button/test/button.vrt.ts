@@ -10,7 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
-import { html } from 'lit';
+import { html, nothing } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import {
@@ -73,7 +73,9 @@ const arrowIcon = () => html`
 // ──────────────────────────
 
 // Every variant × fill-style × size combination, disabled/pending states,
-// static-color variants on their contrast backgrounds, icon anatomy
+// static-color variants (each with their own forced hover/focus-visible/
+// active, since static-color buttons keep their own contrast rules
+// regardless of app theme) on their contrast backgrounds, icon anatomy
 // (label-only, icon+label, icon-only) for fill and outline, text
 // wrapping/truncation behavior, and forced hover/focus-visible/active per
 // variant (see the `play` function below). Rendered once in light/ltr and
@@ -85,7 +87,7 @@ const permutationContent = () => html`
       BUTTON_VALID_SIZES.map(
         (size) => html`
           <swc-button variant=${variant} fill-style=${fillStyle} size=${size}>
-            ${variant} ${fillStyle} ${size}
+            I am ${variant} ${fillStyle} ${size}
           </swc-button>
         `
       )
@@ -105,25 +107,42 @@ const permutationContent = () => html`
       `
     )
   )}
-  ${staticColorBackground(
-    ['fill', 'outline'].map(
-      (fillStyle) => html`
-        <swc-button static-color="white" fill-style=${fillStyle}>
-          White ${fillStyle}
-        </swc-button>
-      `
-    ),
-    'white'
-  )}
-  ${staticColorBackground(
-    ['fill', 'outline'].map(
-      (fillStyle) => html`
-        <swc-button static-color="black" fill-style=${fillStyle}>
-          Black ${fillStyle}
-        </swc-button>
-      `
-    ),
-    'black'
+  ${(['white', 'black'] as const).map((color) =>
+    staticColorBackground(
+      [
+        // static-color collapses semantic variants into two treatments —
+        // "solid" (primary/accent/negative, the default here) and
+        // "secondary" (its own, more subtle tokens) — each with its own
+        // hover/focus-visible/active values, so both need covering.
+        ...['fill', 'outline'].flatMap((fillStyle) =>
+          [undefined, 'secondary'].map(
+            (variant) => html`
+              <swc-button
+                static-color=${color}
+                fill-style=${fillStyle}
+                variant=${variant ?? nothing}
+              >
+                ${color} ${variant ?? 'solid'} ${fillStyle}
+              </swc-button>
+            `
+          )
+        ),
+        ...(['hover', 'focus-visible', 'active'] as const).flatMap((state) =>
+          [undefined, 'secondary'].map(
+            (variant) => html`
+              <swc-button
+                static-color=${color}
+                variant=${variant ?? nothing}
+                data-force-state=${state}
+              >
+                ${color} ${variant ?? 'solid'} ${state}
+              </swc-button>
+            `
+          )
+        ),
+      ],
+      color
+    )
   )}
   ${['fill', 'outline'].map((fillStyle) =>
     row([
