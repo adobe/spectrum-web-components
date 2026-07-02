@@ -187,11 +187,6 @@ export const States: Story = {
 //    BEHAVIORS STORIES
 // ──────────────────────────────
 
-/**
- * The adaptive white-first border keeps the handle chrome at ≥3:1 non-text
- * contrast across the spectrum: the dark-border opacity climbs only where the
- * white separator alone cannot carry the contrast.
- */
 export const AdaptiveContrast: Story = {
   render: (args) => html`
     ${anchoredHandle('White', { ...args, color: 'rgb(255, 255, 255)' })}
