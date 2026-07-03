@@ -29,19 +29,18 @@
 const dismissibleStack: object[] = [];
 
 /**
- * Push a dismissible onto the stack when it opens. Duplicate registration
- * (same key already on the stack) is a no-op to prevent double-push from
- * re-entrant open paths.
+ * Register a dismissible as the topmost entry when it opens. Any existing entry
+ * for the same key is removed first, so re-registering moves the key to the top
+ * and the stack never holds duplicates.
  */
 export function registerDismissible(key: object): void {
-  if (!dismissibleStack.includes(key)) {
-    dismissibleStack.push(key);
-  }
+  unregisterDismissible(key);
+  dismissibleStack.push(key);
 }
 
 /**
- * Remove the most-recent entry matching the key when it closes. Idempotent:
- * calling with a key that is not on the stack is a safe no-op.
+ * Remove the most-recent entry matching the key when it closes. Idempotent: a
+ * key that is not present is a no-op (safe to call from `disconnectedCallback`).
  */
 export function unregisterDismissible(key: object): void {
   const index = dismissibleStack.lastIndexOf(key);
@@ -54,5 +53,8 @@ export function unregisterDismissible(key: object): void {
  * Whether the key is the topmost (most-recently-registered) dismissible.
  */
 export function isTopDismissible(key: object): boolean {
-  return dismissibleStack.at(-1) === key;
+  // Index access rather than `Array.prototype.at()`: core's TS lib target does
+  // not include `at`. On an empty stack `length - 1` is `-1`, which reads as
+  // `undefined` and never equals a (non-null) key.
+  return dismissibleStack[dismissibleStack.length - 1] === key;
 }
