@@ -104,7 +104,7 @@ export class ResponseStatus extends SpectrumElement {
 
   /** Whole response lifecycle status. */
   @property({ type: String, reflect: true })
-  public status: 'pending' | 'active' | 'complete' | 'stopped' = 'pending';
+  public status: ResponseStatusStatus = 'pending';
 
   /** `true`: step timeline open. */
   @property({ type: Boolean, reflect: true })
@@ -150,15 +150,12 @@ export class ResponseStatus extends SpectrumElement {
       childList: true,
       subtree: true,
     });
-  }
 
-  protected override firstUpdated(): void {
     this._syncSlotContent();
-    const initial = this._getHeaderLabel();
-    this._displayedLabel = initial;
+    this._displayedLabel = this._getHeaderLabel();
   }
 
-  protected override updated(): void {
+  protected override willUpdate(): void {
     this._reconcileHeaderLabel();
   }
 
@@ -180,6 +177,12 @@ export class ResponseStatus extends SpectrumElement {
       status === 'complete' ||
       status === 'stopped'
     );
+  }
+
+  private _isValidStepStatus(
+    status: string
+  ): status is ResponseStatusStepStatus {
+    return status === 'active' || status === 'complete' || status === 'stopped';
   }
 
   private _stepsEqual(
@@ -261,10 +264,11 @@ export class ResponseStatus extends SpectrumElement {
   private _readStepElement(element: Element): ResponseStatusStepData {
     const step = element as ResponseStatusStep;
     const label = this._readLightDomNamedSlotText(element, 'label');
-    const status =
+    const rawStatus =
       step.status ||
       (element.getAttribute('status') as ResponseStatusStepStatus | null) ||
       'active';
+    const status = this._isValidStepStatus(rawStatus) ? rawStatus : 'active';
 
     return {
       label,
@@ -275,7 +279,11 @@ export class ResponseStatus extends SpectrumElement {
 
   private _readSteps(slot: HTMLSlotElement | null): ResponseStatusStepData[] {
     if (!slot) {
-      return [];
+      return Array.from(this.children)
+        .filter((element): element is ResponseStatusStep =>
+          this._isStepElement(element)
+        )
+        .map((element) => this._readStepElement(element));
     }
 
     return slot
@@ -598,12 +606,8 @@ export class ResponseStatus extends SpectrumElement {
     `;
   }
 
-  private _getTimelineSteps(): ResponseStatusStepData[] {
-    return this._steps;
-  }
-
   private _renderStepTimeline(): TemplateResult {
-    const steps = this._getTimelineSteps();
+    const steps = this._steps;
     const lastIndex = steps.length - 1;
 
     return html`

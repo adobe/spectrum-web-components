@@ -47,7 +47,9 @@ A minimal composition tree:
 
   <swc-conversation-turn type="system">
     <swc-system-message>
-      <swc-response-status slot="status">…</swc-response-status>
+      <swc-response-status slot="status" status="active">
+        <span slot="label">…</span>
+      </swc-response-status>
       <!-- response prose in the default slot -->
       <swc-message-feedback slot="feedback"></swc-message-feedback>
       <swc-message-sources slot="sources">…</swc-message-sources>
@@ -207,10 +209,10 @@ Container for the system reply. The default slot holds the response prose; named
 
 #### `swc-response-status`
 
-A loading indicator while the response is generating and a collapsible reasoning trace once it completes.
+A status indicator while the response is generating and an optional collapsible execution trace when steps are provided.
 
 <Canvas
-  of={ResponseStatusStories.Loading}
+  of={ResponseStatusStories.Overview}
   additionalActions={[
     {
       title: 'Component docs',

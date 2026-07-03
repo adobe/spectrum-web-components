@@ -162,7 +162,7 @@ export const Loading: Story = {
 
 export const Accessibility: Story = {
   args: {
-    'status-slot': `<swc-response-status slot="status">I used the prompt and source context to draft a concise, presentation-ready response structure.</swc-response-status>`,
+    'status-slot': `<swc-response-status slot="status" status="complete"><span slot="label">I used the prompt and source context to draft a concise, presentation-ready response structure.</span></swc-response-status>`,
     'default-slot': `<div class="swc-Typography--prose"><p>According to the assets, there is a clear journey from beginning to end. Let's start with overarching themes and build from there.</p></div>`,
     'feedback-slot': slotFeedback,
     'sources-slot': `<swc-message-sources slot="sources" open><a href="#">Adobe Experience Manager documentation</a><a href="#">Creative Cloud release notes 2026</a></swc-message-sources>`,

@@ -40,7 +40,7 @@ Rich AI body copy should use Spectrum typography **utility classes** on semantic
 
 ### Loading
 
-While the AI is generating a response, slot `<swc-response-status loading>` into the `status` slot. Once generation is complete, remove `loading`.
+While the AI is generating a response, slot `<swc-response-status status="active">` into the `status` slot. When generation completes, update it to `status="complete"` and provide the visible status text with `slot="label"`.
 
 <Canvas of={SystemMessageStories.Loading} />
 
@@ -50,7 +50,7 @@ While the AI is generating a response, slot `<swc-response-status loading>` into
 
 The `<swc-system-message>` element provides a layout container. Accessibility is delegated to the slotted sub-components:
 
-- `<swc-response-status>` announces generation state via `role="status"`
+- `<swc-response-status>` exposes its visible status text and, when steps exist, a labelled disclosure for the execution timeline
 - `<swc-message-feedback>` exposes a labelled toggle button group via `role="group"` and `aria-pressed`
 - `<swc-message-sources>` uses `aria-expanded` on its disclosure toggle
 - `<swc-suggestion-item>` is a native focusable `<button>` element

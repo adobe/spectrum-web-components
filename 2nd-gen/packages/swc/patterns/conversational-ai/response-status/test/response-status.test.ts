@@ -58,6 +58,19 @@ const agenticMarkup = html`
   </swc-response-status>
 `;
 
+const activeStepFallbackMarkup = html`
+  <swc-response-status status="active" open accessible-label="Execution steps">
+    <swc-response-status-step status="complete">
+      <span slot="label">Looked through documentation</span>
+      <span slot="description">Read the uploaded source material.</span>
+    </swc-response-status-step>
+    <swc-response-status-step status="active">
+      <span slot="label">Gathering information from the web</span>
+      <span slot="description">Searching recent public references.</span>
+    </swc-response-status-step>
+  </swc-response-status>
+`;
+
 export const StatusApiTest: Story = {
   render: () => html`
     <swc-response-status status="pending"></swc-response-status>
@@ -125,6 +138,56 @@ export const DynamicLabelTest: Story = {
   },
 };
 
+export const StepApiTest: Story = {
+  render: () => activeStepFallbackMarkup,
+  play: async ({ canvasElement, step }) => {
+    const el = await getComponent<TestResponseStatus>(
+      canvasElement,
+      'swc-response-status'
+    );
+
+    await step(
+      'uses the active step label when no header label is provided',
+      async () => {
+        await waitFor(
+          () => {
+            expect(
+              el.shadowRoot
+                ?.querySelector('.swc-ResponseStatus-label')
+                ?.textContent?.trim()
+            ).toBe('Gathering information from the web');
+          },
+          { timeout: 2000 }
+        );
+      }
+    );
+
+    await step('coerces unsupported step statuses to active', async () => {
+      const invalidStep = document.createElement('swc-response-status-step');
+      invalidStep.setAttribute('status', 'pending');
+      invalidStep.innerHTML = `
+        <span slot="label">Unsupported pending step</span>
+        <span slot="description">This should still render as active.</span>
+      `;
+
+      el.append(invalidStep);
+      await el.updateComplete;
+
+      await waitFor(
+        () => {
+          const renderedStatuses = Array.from(
+            el.shadowRoot?.querySelectorAll('.swc-ResponseStatus-step') ?? []
+          ).map((renderedStep) => renderedStep.getAttribute('data-status'));
+
+          expect(renderedStatuses).toContain('active');
+          expect(renderedStatuses).not.toContain('pending');
+        },
+        { timeout: 2000 }
+      );
+    });
+  },
+};
+
 export const AgenticApiTest: Story = {
   render: () => agenticMarkup,
   play: async ({ canvasElement, step }) => {
@@ -187,6 +250,8 @@ export const AgenticApiTest: Story = {
 
       expect(el.open).toBe(false);
       expect(captured?.detail.open).toBe(false);
+      expect(captured?.bubbles).toBe(true);
+      expect(captured?.composed).toBe(true);
     });
   },
 };
