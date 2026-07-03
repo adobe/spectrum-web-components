@@ -1152,6 +1152,41 @@ export const ModalContentPointerDownTest: Story = {
   },
 };
 
+export const ModalBackdropClickTest: Story = {
+  render: () => html`
+    <swc-popover modal accessible-label="Settings">
+      <button id="mbc-inside">Inside</button>
+    </swc-popover>
+  `,
+  play: async ({ canvasElement }) => {
+    const popover = await getComponent<Popover>(canvasElement, 'swc-popover');
+    const dialog = popover.shadowRoot?.querySelector(
+      '.swc-Popover'
+    ) as HTMLDialogElement;
+    popover.open = true;
+    await waitFor(() => expect(dialog.matches(':modal')).toBe(true));
+
+    // A pointerdown on the dialog itself, at a point outside its box, is a
+    // backdrop click and must dismiss with source "outside".
+    let closeSource: string | undefined;
+    popover.addEventListener('swc-close', (event) => {
+      closeSource = (event as CustomEvent).detail.source;
+    });
+    const rect = dialog.getBoundingClientRect();
+    dialog.dispatchEvent(
+      new PointerEvent('pointerdown', {
+        bubbles: true,
+        clientX: rect.left - 10,
+        clientY: rect.top - 10,
+      })
+    );
+    await waitFor(() =>
+      expect(popover.open, 'backdrop click closes the modal').toBe(false)
+    );
+    expect(closeSource, 'close source is "outside"').toBe('outside');
+  },
+};
+
 export const ModalNestedEscapeTest: Story = {
   render: () => html`
     <swc-popover modal accessible-label="Settings">Content</swc-popover>
