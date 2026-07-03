@@ -236,10 +236,10 @@ export const Accessibility: Story = {
 };
 
 // ────────────────────────────────
-//    LABEL ROLL DEMO (dynamic labels)
+//    LABEL CADENCE DEMO (consumer-managed labels)
 // ────────────────────────────────
 
-const rollingLabels = [
+const cadenceLabels = [
   'Processing request',
   'Searching repositories for Europe trips',
   'Reviewing internal documentation',
@@ -247,10 +247,10 @@ const rollingLabels = [
   'Composing response',
 ];
 
-@customElement('demo-response-status-label-roll')
-class ResponseStatusLabelRollDemo extends LitElement {
+@customElement('demo-response-status-label-cadence')
+class ResponseStatusLabelCadenceDemo extends LitElement {
   @state()
-  private _label = rollingLabels[0];
+  private _label = cadenceLabels[0];
 
   private _index = 0;
   private _cycleTimer?: ReturnType<typeof setInterval>;
@@ -261,8 +261,8 @@ class ResponseStatusLabelRollDemo extends LitElement {
   public override connectedCallback(): void {
     super.connectedCallback?.();
     this._cycleTimer = setInterval(() => {
-      this._index = (this._index + 1) % rollingLabels.length;
-      this._label = rollingLabels[this._index];
+      this._index = (this._index + 1) % cadenceLabels.length;
+      this._label = cadenceLabels[this._index];
     }, 1600);
   }
 
@@ -297,13 +297,13 @@ class ResponseStatusLabelRollDemo extends LitElement {
     this._consumerQueueTimer = setTimeout(() => {
       this._consumerQueueTimer = undefined;
       this._processConsumerQueue();
-    }, ResponseStatusLabelRollDemo.CONSUMER_LABEL_DELAY_MS);
+    }, ResponseStatusLabelCadenceDemo.CONSUMER_LABEL_DELAY_MS);
   }
 
   // Simulates rapid incoming step labels (120ms cadence) and a consumer layer
   // that queues UI updates with a dwell so the visible label stays readable.
   private _burst = (): void => {
-    rollingLabels.forEach((label, index) => {
+    cadenceLabels.forEach((label, index) => {
       setTimeout(() => {
         this._index = index;
         this._enqueueConsumerLabel(label);
@@ -332,13 +332,13 @@ class ResponseStatusLabelRollDemo extends LitElement {
   }
 }
 
-export const LabelRoll: Story = {
+export const LabelCadence: Story = {
   render: () => html`
-    <demo-response-status-label-roll></demo-response-status-label-roll>
+    <demo-response-status-label-cadence></demo-response-status-label-cadence>
   `,
   tags: ['behaviors'],
 };
 
-LabelRoll.storyName = 'Label update cadence';
+LabelCadence.storyName = 'Label update cadence';
 
-void ResponseStatusLabelRollDemo;
+void ResponseStatusLabelCadenceDemo;

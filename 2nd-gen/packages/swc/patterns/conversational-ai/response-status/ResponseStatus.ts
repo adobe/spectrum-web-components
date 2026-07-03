@@ -68,9 +68,6 @@ export class ResponseStatus extends SpectrumElement {
 
   private static readonly DEFAULT_ACCESSIBLE_LABEL = 'Execution steps';
 
-  /** Header label roll animation duration; keep in sync with the CSS. */
-  private static readonly LABEL_ROLL_DURATION_MS = 650;
-
   /** @internal */
   private readonly panelId = uniqueId('swc-response-status-panel');
 
@@ -86,22 +83,6 @@ export class ResponseStatus extends SpectrumElement {
   @state()
   private _summarySlotText = '';
 
-  /** @internal */
-  @state()
-  private _displayedLabel = '';
-
-  /** @internal */
-  @state()
-  private _rollFromLabel = '';
-
-  /** @internal */
-  @state()
-  private _rollActive = false;
-
-  /** @internal */
-  @state()
-  private _rollEngaged = false;
-
   /** Whole response lifecycle status. */
   @property({ type: String, reflect: true })
   public status: ResponseStatusStatus = 'pending';
@@ -114,12 +95,6 @@ export class ResponseStatus extends SpectrumElement {
   @property({ type: String, attribute: 'accessible-label' })
   public accessibleLabel = '';
 
-  /** @internal */
-  private _rollToLabel = '';
-  /** @internal */
-  private _labelRollTimer: number | null = null;
-  /** @internal */
-  private _labelRollRaf: number | null = null;
   /** @internal */
   private _contentObserver?: MutationObserver;
 
@@ -140,8 +115,7 @@ export class ResponseStatus extends SpectrumElement {
     );
 
     // Slotchange only fires when assigned nodes are added or removed, not when
-    // their text mutates. Observe the light DOM so updating a slotted label's
-    // text (a common consumer pattern) re-syncs and rolls the header label.
+    // their text mutates. Observe the light DOM so slotted text updates render.
     this._contentObserver = new MutationObserver(() => {
       this._syncSlotContent();
     });
@@ -152,11 +126,6 @@ export class ResponseStatus extends SpectrumElement {
     });
 
     this._syncSlotContent();
-    this._displayedLabel = this._getHeaderLabel();
-  }
-
-  protected override willUpdate(): void {
-    this._reconcileHeaderLabel();
   }
 
   public override disconnectedCallback(): void {
@@ -166,7 +135,6 @@ export class ResponseStatus extends SpectrumElement {
     );
     this._contentObserver?.disconnect();
     this._contentObserver = undefined;
-    this._clearLabelAnimation();
     super.disconnectedCallback();
   }
 
@@ -355,105 +323,11 @@ export class ResponseStatus extends SpectrumElement {
       : ResponseStatus.DEFAULT_LABELS.pending;
   }
 
-  private _clearLabelAnimation(): void {
-    if (this._labelRollTimer !== null) {
-      window.clearTimeout(this._labelRollTimer);
-      this._labelRollTimer = null;
-    }
-    if (this._labelRollRaf !== null) {
-      window.cancelAnimationFrame(this._labelRollRaf);
-      this._labelRollRaf = null;
-    }
-  }
-
-  private _prefersReducedMotion(): boolean {
-    return (
-      typeof window.matchMedia === 'function' &&
-      window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    );
-  }
-
-  private _reconcileHeaderLabel(): void {
-    const target = this._getHeaderLabel();
-    const currentlyVisible = this._rollActive
-      ? this._rollToLabel
-      : this._displayedLabel;
-    if (target === currentlyVisible) {
-      return;
-    }
-    this._beginLabelRoll(target);
-  }
-
-  private _beginLabelRoll(target: string): void {
-    this._clearLabelAnimation();
-    if (this._prefersReducedMotion()) {
-      this._displayedLabel = target;
-      this._rollActive = false;
-      this._rollEngaged = false;
-      return;
-    }
-
-    this._rollFromLabel = this._rollActive
-      ? this._rollToLabel
-      : this._displayedLabel || this._getHeaderLabel();
-    this._rollToLabel = target;
-    this._rollActive = true;
-    this._rollEngaged = false;
-
-    // Engage the transition on the next frame so it animates from the settled
-    // position instead of jumping straight to the rolled state.
-    this._labelRollRaf = window.requestAnimationFrame(() => {
-      this._labelRollRaf = window.requestAnimationFrame(() => {
-        this._labelRollRaf = null;
-        this._rollEngaged = true;
-      });
-    });
-
-    this._labelRollTimer = window.setTimeout(() => {
-      this._labelRollTimer = null;
-      this._displayedLabel = this._rollToLabel;
-      this._rollActive = false;
-      this._rollEngaged = false;
-    }, ResponseStatus.LABEL_ROLL_DURATION_MS);
-  }
-
-  private _currentVisibleLabel(): string {
-    if (this._rollActive) {
-      return this._rollToLabel;
-    }
-    return this._displayedLabel || this._getHeaderLabel();
-  }
-
-  private _renderRollingLabel(): TemplateResult {
+  private _renderLabel(): TemplateResult {
     const labelClass = ResponseStatus.STATUS_LABEL_CLASS;
 
-    if (!this._rollActive) {
-      return html`
-        <span class="swc-ResponseStatus-headerTrailViewport">
-          <span class="swc-ResponseStatus-headerTrailStrip">
-            <span class="swc-ResponseStatus-headerTrailLine">
-              <span class=${labelClass}>${this._currentVisibleLabel()}</span>
-            </span>
-          </span>
-        </span>
-      `;
-    }
-
-    const stripClass = this._rollEngaged
-      ? 'swc-ResponseStatus-headerTrailStrip swc-ResponseStatus-headerTrailStrip--rolling'
-      : 'swc-ResponseStatus-headerTrailStrip';
-
     return html`
-      <span class="swc-ResponseStatus-headerTrailViewport">
-        <span class=${stripClass}>
-          <span class="swc-ResponseStatus-headerTrailLine">
-            <span class=${labelClass}>${this._rollFromLabel}</span>
-          </span>
-          <span class="swc-ResponseStatus-headerTrailLine">
-            <span class=${labelClass}>${this._rollToLabel}</span>
-          </span>
-        </span>
-      </span>
+      <span class=${labelClass}>${this._getHeaderLabel()}</span>
     `;
   }
 
@@ -526,7 +400,7 @@ export class ResponseStatus extends SpectrumElement {
   }
 
   private _renderHeader(showDisclosure: boolean): TemplateResult {
-    const label = this._currentVisibleLabel();
+    const label = this._getHeaderLabel();
     const rowClass = [
       'swc-ResponseStatus-row',
       showDisclosure ? 'swc-ResponseStatus-row--button' : '',
@@ -540,7 +414,7 @@ export class ResponseStatus extends SpectrumElement {
     const rowContent = html`
       ${this._renderLeadingIcon()}
       <span class="swc-ResponseStatus-headerTrail">
-        ${this._renderRollingLabel()}
+        ${this._renderLabel()}
         ${showDisclosure ? this._renderChevron(this.open) : ''}
       </span>
     `;

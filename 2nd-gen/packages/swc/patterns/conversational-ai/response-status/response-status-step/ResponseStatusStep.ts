@@ -38,7 +38,7 @@ export class ResponseStatusStep extends SpectrumElement {
   }
 
   /** @internal */
-  private _handleSlotChange = (): void => {
+  private _notifyStepChange = (): void => {
     this.dispatchEvent(
       new CustomEvent('swc-response-status-step-change', {
         bubbles: true,
@@ -48,19 +48,19 @@ export class ResponseStatusStep extends SpectrumElement {
 
   protected override updated(changed: PropertyValues): void {
     if (changed.has('status')) {
-      this._handleSlotChange();
+      this._notifyStepChange();
     }
   }
 
   protected override render(): TemplateResult {
     return html`
-      <slot name="label" hidden @slotchange=${this._handleSlotChange}></slot>
+      <slot name="label" hidden @slotchange=${this._notifyStepChange}></slot>
       <slot
         name="description"
         hidden
-        @slotchange=${this._handleSlotChange}
+        @slotchange=${this._notifyStepChange}
       ></slot>
-      <slot hidden @slotchange=${this._handleSlotChange}></slot>
+      <slot hidden @slotchange=${this._notifyStepChange}></slot>
     `;
   }
 }

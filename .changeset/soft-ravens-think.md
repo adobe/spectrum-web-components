@@ -1,5 +1,4 @@
 ---
-'@spectrum-web-components/2nd-gen': patch
 '@adobe/spectrum-wc': patch
 ---
 

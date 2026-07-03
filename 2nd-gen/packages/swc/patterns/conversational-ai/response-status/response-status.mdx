@@ -29,6 +29,8 @@ The `status` attribute controls the lifecycle of the whole response:
 
 Use `slot="label"` for the visible header text.
 
+`pending` applies to the whole response before execution steps are available. Step rows begin at `active`, `complete`, or `stopped` once the timeline is shown.
+
 <Canvas of={ResponseStatusStories.Statuses} />
 
 ### Steps
@@ -41,7 +43,7 @@ Each step uses:
 - **`slot="label"`**: step title
 - **`slot="description"`**: detail text shown in the expanded timeline
 
-All provided steps are rendered in order. The component does not hide or synthesize step rows.
+All provided steps render in their authored order.
 
 <Canvas of={ResponseStatusStories.Steps} />
 
@@ -62,33 +64,11 @@ status.addEventListener('swc-response-status-toggle', (event) => {
 
 ### Label update cadence
 
-Header-label cadence is consumer-managed. If your app streams rapid status updates, debounce, throttle, or queue those updates in application code before setting `slot="label"`.
+Header-label cadence is consumer-managed. If your app streams rapid status updates, keep each visible label readable for about 1 second before replacing it.
 
-```js
-const queue = [];
-let timer;
+The `LabelCadence` story demonstrates one consumer-side queue pattern.
 
-function enqueueLabel(nextLabel) {
-  queue.push(nextLabel);
-  if (timer) return;
-
-  const flush = () => {
-    const label = queue.shift();
-    if (label) labelEl.textContent = label;
-    if (queue.length > 0) {
-      timer = setTimeout(flush, 900);
-    } else {
-      timer = undefined;
-    }
-  };
-
-  flush();
-}
-```
-
-The `LabelRoll` story demonstrates this consumer-side queue pattern.
-
-<Canvas of={ResponseStatusStories.LabelRoll} />
+<Canvas of={ResponseStatusStories.LabelCadence} />
 
 ## Accessibility
 
@@ -103,7 +83,7 @@ The `<swc-response-status>` element implements the following accessibility featu
 ### Best practices
 
 - Keep step labels concise and action-oriented.
-- Use `slot="description"` for supplemental detail, not required state text.
+- Put required state in `slot="label"`; use `slot="description"` for extra context.
 - Provide a meaningful `accessible-label` when multiple response-status components can appear on one screen.
 
 <Canvas of={ResponseStatusStories.Accessibility} />

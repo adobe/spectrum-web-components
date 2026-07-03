@@ -89,7 +89,7 @@ export const StatusApiTest: Story = {
 
       expect(el.getAttribute('status')).toBe('complete');
 
-      // The header label animates to its new value, so wait for it to settle.
+      // Wait for the host update to render the default label.
       await waitFor(
         () => {
           expect(
@@ -113,13 +113,13 @@ export const DynamicLabelTest: Story = {
     );
 
     await step(
-      'rolls the header label when the slotted label text changes',
+      'updates the header label when the slotted label text changes',
       async () => {
         const slottedLabel = el.querySelector('[slot="label"]');
         expect(slottedLabel).toBeTruthy();
 
         // Mutating text content does not fire slotchange, so this exercises
-        // the MutationObserver that drives the rolling header label.
+        // the MutationObserver that keeps slotted label text in sync.
         (slottedLabel as HTMLElement).textContent =
           'Comparing cruise package pricing';
 
