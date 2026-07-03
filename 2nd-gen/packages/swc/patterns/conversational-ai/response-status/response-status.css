@@ -241,12 +241,10 @@
 
 @keyframes swc-response-status-step-enter {
   from {
-    opacity: 0;
     transform: translateY(6px);
   }
 
   to {
-    opacity: 1;
     transform: translateY(0);
   }
 }
@@ -371,7 +369,7 @@
   margin: 0;
 
   /* Detail default (gray-600) fails WCAG AA at detail-size-s (12px). */
-  --swc-detail-font-color: token("gray-700");
+  color: token("gray-800");
 }
 
 .swc-ResponseStatus-step-detail {
