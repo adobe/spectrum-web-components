@@ -826,15 +826,11 @@ export class ActionMenu extends ObserveSlotPresence(
 
   /**
    * Dispatches a scroll event when the menu is scrolled.
-   * Allows parent components to react to menu scroll events.
+   * The event is intentionally non-composed so it fires on the action menu host
+   * for consumers but does not cross the shadow DOM boundary into ancestors.
    */
   private onScroll(): void {
-    this.dispatchEvent(
-      new Event('scroll', {
-        cancelable: true,
-        composed: true,
-      })
-    );
+    this.dispatchEvent(new Event('scroll'));
   }
 
   /**
