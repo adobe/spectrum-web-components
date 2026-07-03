@@ -336,7 +336,9 @@ export const LabelRoll: Story = {
   render: () => html`
     <demo-response-status-label-roll></demo-response-status-label-roll>
   `,
-  tags: ['dev'],
+  tags: ['behaviors'],
 };
+
+LabelRoll.storyName = 'Label update cadence';
 
 void ResponseStatusLabelRollDemo;

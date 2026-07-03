@@ -208,6 +208,17 @@ export const AgenticApiTest: Story = {
         const headerLabel = el.shadowRoot?.querySelector(
           '.swc-ResponseStatus-label'
         );
+        const renderedSteps = Array.from(
+          el.shadowRoot?.querySelectorAll('.swc-ResponseStatus-step') ?? []
+        );
+        const labels = renderedSteps.map((renderedStep) =>
+          renderedStep
+            .querySelector('.swc-ResponseStatus-step-title')
+            ?.textContent?.trim()
+        );
+        const statuses = renderedSteps.map((renderedStep) =>
+          renderedStep.getAttribute('data-status')
+        );
         const details = Array.from(
           el.shadowRoot?.querySelectorAll('.swc-ResponseStatus-step-detail') ??
             []
@@ -223,6 +234,12 @@ export const AgenticApiTest: Story = {
           'Checked 3 internal repositories for compiled trip package data.'
         );
         expect(details).toContain('Synthesizing findings into a response.');
+        expect(labels).toEqual([
+          'Looked through documentation',
+          'Searching repositories for Europe trips',
+          'Compose response',
+        ]);
+        expect(statuses).toEqual(['complete', 'active', 'complete']);
       }
     );
 

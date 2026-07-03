@@ -106,13 +106,6 @@
   visibility: hidden;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .swc-ResponseStatus-headerTrailStrip,
-  .swc-ResponseStatus-headerTrailLine {
-    transition: none;
-  }
-}
-
 /* Three-dot loading indicator */
 
 .swc-ResponseStatus-dots {
@@ -157,13 +150,6 @@
 
   35% {
     opacity: 1;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .swc-ResponseStatus-dot {
-    opacity: 0.7;
-    animation: none;
   }
 }
 
@@ -262,12 +248,6 @@
   to {
     opacity: 1;
     transform: translateY(0);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .swc-ResponseStatus-step:last-child {
-    animation: none;
   }
 }
 
@@ -397,4 +377,20 @@
 .swc-ResponseStatus-step-detail {
   max-inline-size: 340px;
   margin-block: token("spacing-75") 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .swc-ResponseStatus-headerTrailStrip,
+  .swc-ResponseStatus-headerTrailLine {
+    transition: none;
+  }
+
+  .swc-ResponseStatus-dot {
+    opacity: 0.7;
+    animation: none;
+  }
+
+  .swc-ResponseStatus-step:last-child {
+    animation: none;
+  }
 }

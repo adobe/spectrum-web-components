@@ -115,7 +115,7 @@ export const Anatomy: Story = {
 //    OPTIONS STORIES
 // ──────────────────────────
 
-export const Loading: Story = {
+export const ResponseStatus: Story = {
   render: () => html`
     <div style="display:flex;flex-direction:column;gap:48px;">
       <div style="display:flex;flex-direction:column;gap:8px;">
