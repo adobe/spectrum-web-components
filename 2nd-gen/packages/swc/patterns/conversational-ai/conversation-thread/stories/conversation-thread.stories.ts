@@ -151,6 +151,32 @@ const DEMO_SUGGESTIONS = [
   'Summarize development pipeline',
 ] as const;
 
+const renderDemoResponseStatusSteps = (complete: boolean) => html`
+  <swc-response-status-step status="complete">
+    <span slot="label">Read source context</span>
+    <span slot="description">
+      Reviewed the prompt, uploaded assets, and prior conversation context.
+    </span>
+  </swc-response-status-step>
+  <swc-response-status-step status=${complete ? 'complete' : 'active'}>
+    <span slot="label">Draft response structure</span>
+    <span slot="description">
+      Organizing the answer into a concise narrative with supporting proof
+      points.
+    </span>
+  </swc-response-status-step>
+  ${complete
+    ? html`
+        <swc-response-status-step status="complete">
+          <span slot="label">Prepare next-step suggestions</span>
+          <span slot="description">
+            Created follow-up prompts that match the generated response.
+          </span>
+        </swc-response-status-step>
+      `
+    : ''}
+`;
+
 const buildAssistantReply = (prompt: string): string => {
   const normalized = prompt.trim() || 'your request';
   return `Great direction. Based on "${normalized}", I suggest a 12-slide structure with a clear narrative arc, three supporting proof points, and a concise close with next steps.`;
@@ -440,16 +466,18 @@ class ConversationFullPatternDemo extends LitElement {
           <swc-system-message>
             ${turn.loading
               ? html`
-                  <swc-response-status slot="status" status="active">
-                    <span slot="label">Generating response</span>
+                  <swc-response-status slot="status" status="active" open>
+                    <span slot="label">Draft response structure</span>
+                    ${renderDemoResponseStatusSteps(false)}
                   </swc-response-status>
                 `
               : html`
-                  <swc-response-status slot="status" status="complete">
+                  <swc-response-status slot="status" status="complete" open>
                     <span slot="label">
                       Draft complete. I used your latest prompt to generate this
                       response.
                     </span>
+                    ${renderDemoResponseStatusSteps(true)}
                   </swc-response-status>
                 `}
             ${turn.loading
@@ -626,7 +654,17 @@ const fullPatternSource = `<div style="max-width:800px; margin:auto; padding:24p
     </swc-conversation-turn>
     <swc-conversation-turn type="system">
       <swc-system-message>
-        <swc-response-status slot="status" status="complete"><span slot="label">I interpreted your request as an executive narrative task and prioritized a concise, audience-ready structure.</span></swc-response-status>
+        <swc-response-status slot="status" status="complete" open>
+          <span slot="label">I interpreted your request as an executive narrative task and prioritized a concise, audience-ready structure.</span>
+          <swc-response-status-step status="complete">
+            <span slot="label">Read source context</span>
+            <span slot="description">Reviewed the prompt, uploaded assets, and prior conversation context.</span>
+          </swc-response-status-step>
+          <swc-response-status-step status="complete">
+            <span slot="label">Draft response structure</span>
+            <span slot="description">Organized the answer into a concise narrative with supporting proof points.</span>
+          </swc-response-status-step>
+        </swc-response-status>
         <div class="swc-Typography--prose">
           <p>Great direction. I suggest a 12-slide structure...</p>
         </div>
