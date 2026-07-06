@@ -77,9 +77,20 @@ const COLOR_FORMATS = [
  * placed at the bottom-center of a fixed box: the handle centers on that point,
  * and the box reserves headroom above so an open loupe stays inside the frame.
  */
+interface HandleArgs {
+  color?: string;
+  open?: boolean;
+  disabled?: boolean;
+  focused?: boolean;
+  fill?: boolean;
+}
+
+// Renders the handle with a `.fill` property binding: `fill` defaults to true,
+// so an omitted boolean attribute cannot express `false` — outline-only must
+// be set as a property.
 export const anchoredHandle = (
   label: string,
-  templateArgs: Record<string, unknown>
+  { color, open, disabled, focused, fill = true }: HandleArgs = {}
 ) => html`
   <div
     style="display: flex; flex-direction: column; align-items: center; gap: 16px;"
@@ -87,7 +98,15 @@ export const anchoredHandle = (
     <div
       style="display: flex; align-items: flex-end; justify-content: center; inline-size: 48px; block-size: 96px; padding-block-end: 12px;"
     >
-      <div style="position: relative;">${template(templateArgs)}</div>
+      <div style="position: relative;">
+        <swc-color-handle
+          color=${color}
+          ?open=${open}
+          ?disabled=${disabled}
+          ?focused=${focused}
+          .fill=${fill}
+        ></swc-color-handle>
+      </div>
     </div>
     <span style="font-size: 12px;">${label}</span>
   </div>
