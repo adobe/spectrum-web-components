@@ -111,6 +111,11 @@ const TEST_FIXTURES = [
   { ...CORE_STORIES, files: '**/*.test.ts' },
 ];
 
+const VRT_STORIES = [
+  { ...COMPONENT_STORIES, files: '**/*.vrt.ts' },
+  { ...PATTERN_STORIES, files: '**/*.vrt.ts' },
+];
+
 // What each mode builds, spelled out per-mode rather than composed from
 // flags, so "what does build actually include?" is answered by reading one
 // array instead of tracing conditionals scattered through the file.
@@ -124,6 +129,7 @@ const STORIES_BY_MODE: Record<StorybookMode, StorybookConfig['stories']> = {
     ...CORE_AND_CONTRIBUTOR_DOCS,
     ...GUIDES,
     ...TEST_FIXTURES,
+    ...VRT_STORIES,
   ],
   // Production build: same as dev, minus internal-only stories/docs, core
   // controllers, contributor docs (both can pull in 1st-gen-linked
@@ -146,10 +152,7 @@ const STORIES_BY_MODE: Record<StorybookMode, StorybookConfig['stories']> = {
   ],
   // Chromatic-only: just the hand-picked VRT stories, so the catalog never
   // lists the non-VRT stories it's configured to skip snapshotting anyway.
-  vrt: [
-    { ...COMPONENT_STORIES, files: '**/*.vrt.ts' },
-    { ...PATTERN_STORIES, files: '**/*.vrt.ts' },
-  ],
+  vrt: VRT_STORIES,
 };
 
 const stories = STORIES_BY_MODE[storybookMode];
