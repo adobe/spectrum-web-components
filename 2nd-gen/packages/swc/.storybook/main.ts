@@ -207,10 +207,7 @@ const config: StorybookConfig = {
   },
   staticDirs: ['../public', { from: '../coverage', to: '/coverage' }],
   addons,
-  experimental_indexers:
-    storybookMode === 'dev'
-      ? [testStoryIndexer, vrtStoryIndexer]
-      : [vrtStoryIndexer],
+  experimental_indexers: [testStoryIndexer, vrtStoryIndexer],
   viteFinal: async (config) => {
     return mergeConfig(config, {
       css: {
