@@ -284,6 +284,25 @@ export const ShouldAcceptTest: Story = {
     );
 
     await step(
+      'cancelling swc-dropzone-should-accept sets dataTransfer.dropEffect to "none"',
+      async () => {
+        dropzone.addEventListener(
+          SWC_DROPZONE_SHOULD_ACCEPT_EVENT,
+          (event) => event.preventDefault(),
+          { once: true }
+        );
+
+        const dt = new DataTransfer();
+        dropzone.dispatchEvent(makeDragEvent('dragover', dt));
+
+        expect(
+          dt.dropEffect,
+          'dropEffect is "none" when should-accept is cancelled'
+        ).toBe('none');
+      }
+    );
+
+    await step(
       'dragleave after rejected dragover still fires swc-dropzone-dragleave',
       async () => {
         const reject = (event: Event): void => event.preventDefault();
