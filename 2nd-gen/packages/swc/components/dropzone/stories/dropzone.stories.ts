@@ -87,10 +87,7 @@ const makeDropzoneSlot = (headingText: string) => html`
 // HTML string version used by the Playground so template(args) can spread all args.
 const DROPZONE_SLOT_HTML = `
   <swc-illustrated-message>
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 103" slot="" aria-hidden="true">
-      <path d="M133.7,8.5h-118c-1.9,0-3.5,1.6-3.5,3.5v27c0,0.8,0.7,1.5,1.5,1.5s1.5-0.7,1.5-1.5V12c0-0.3,0.2-0.5,0.5-0.5h118c0.3,0,0.5,0.2,0.5,0.5v91c0,0.3-0.2,0.5-0.5,0.5h-118c-0.3,0-0.5-0.2-0.5-0.5V69c0-0.8-0.7-1.5-1.5-1.5s-1.5,0.7-1.5,1.5v34c0,1.9,1.6,3.5,3.5,3.5h118c1.9,0,3.5-1.6,3.5-3.5V12C137.2,10.1,135.6,8.5,133.7,8.5z"/>
-      <path d="M31.4,44.5c0,0.8,0.7,1.5,1.5,1.5h50c0.8,0,1.5-0.7,1.5-1.5s-0.7-1.5-1.5-1.5h-50C32.1,43,31.4,43.7,31.4,44.5z"/>
-    </svg>
+    ${DROPZONE_SVG}
     <h2 slot="heading">Drag and drop your file</h2>
     <swc-button slot="actions" variant="accent">Browse files</swc-button>
   </swc-illustrated-message>
