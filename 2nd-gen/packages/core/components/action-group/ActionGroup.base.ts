@@ -43,6 +43,7 @@ export abstract class ActionGroupBase extends SizedMixin(SpectrumElement, {
 }) {
   static override shadowRootOptions = {
     ...SpectrumElement.shadowRootOptions,
+    delegatesFocus: true,
   };
 
   /**
