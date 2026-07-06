@@ -256,14 +256,20 @@ class ResponseStatusLabelCadenceDemo extends LitElement {
   private _cycleTimer?: ReturnType<typeof setInterval>;
   private _consumerQueueTimer?: ReturnType<typeof setTimeout>;
   private _consumerLabelQueue: string[] = [];
-  private static readonly CONSUMER_LABEL_DELAY_MS = 900;
+  // Time each label stays visible before the next one is applied (~1s readable
+  // dwell plus the component roll duration).
+  private static readonly LABEL_DWELL_MS = 1000;
+  private static readonly ROLL_DURATION_MS = 650;
+  private static readonly CONSUMER_LABEL_DELAY_MS =
+    ResponseStatusLabelCadenceDemo.LABEL_DWELL_MS +
+    ResponseStatusLabelCadenceDemo.ROLL_DURATION_MS;
 
   public override connectedCallback(): void {
     super.connectedCallback?.();
     this._cycleTimer = setInterval(() => {
       this._index = (this._index + 1) % cadenceLabels.length;
-      this._label = cadenceLabels[this._index];
-    }, 1600);
+      this._enqueueConsumerLabel(cadenceLabels[this._index]);
+    }, ResponseStatusLabelCadenceDemo.CONSUMER_LABEL_DELAY_MS);
   }
 
   public override disconnectedCallback(): void {
@@ -303,6 +309,11 @@ class ResponseStatusLabelCadenceDemo extends LitElement {
   // Simulates rapid incoming step labels (120ms cadence) and a consumer layer
   // that queues UI updates with a dwell so the visible label stays readable.
   private _burst = (): void => {
+    if (this._cycleTimer) {
+      clearInterval(this._cycleTimer);
+      this._cycleTimer = undefined;
+    }
+
     cadenceLabels.forEach((label, index) => {
       setTimeout(() => {
         this._index = index;

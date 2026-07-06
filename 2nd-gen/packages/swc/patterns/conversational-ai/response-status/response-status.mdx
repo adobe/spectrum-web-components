@@ -64,7 +64,7 @@ status.addEventListener('swc-response-status-toggle', (event) => {
 
 ### Label update cadence
 
-Header-label cadence is consumer-managed. If your app streams rapid status updates, keep each visible label readable for about 1 second before replacing it.
+Header-label cadence is consumer-managed. The component rolls the header label whenever its text changes; your app decides when to update that text. If you stream rapid status updates, keep each visible label readable for about 1 second before replacing it.
 
 The `LabelCadence` story demonstrates one consumer-side queue pattern.
 
