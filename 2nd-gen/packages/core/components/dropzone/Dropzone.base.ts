@@ -20,6 +20,7 @@ import {
   DROP_EFFECTS,
   type DropEffect,
   DROPZONE_VALID_SIZES,
+  type DropzoneDragLeaveDetail,
   type DropzoneSize,
   SWC_DROPZONE_DRAGLEAVE_EVENT,
   SWC_DROPZONE_DRAGOVER_EVENT,
@@ -41,8 +42,8 @@ import {
  *   reject the dragged payload and set the cursor to `none`.
  * @fires swc-dropzone-dragover - Fired when dragged files are over the zone and accepted.
  * @fires swc-dropzone-dragleave - Fired when dragged files leave the zone after a 100 ms
- *   debounce. `event.detail.dataTransfer` may be `null` if the browser has already ended
- *   the drag session by the time the event fires.
+ *   debounce. Detail is a plain snapshot `{ clientX, clientY, relatedTarget }` captured
+ *   synchronously from the native event before the timer fires.
  * @fires swc-dropzone-drop - Fired when files are dropped on the zone. `element.dragged`
  *   is still `true` when this event fires; it transitions to `false` after dispatch.
  */
@@ -189,16 +190,20 @@ export abstract class DropzoneBase extends SizedMixin(SpectrumElement, {
 
     this._clearDragLeaveTimer();
 
+    // Capture values synchronously; browsers recycle DragEvent objects after
+    // the synchronous handler returns, so reading them inside setTimeout is unsafe.
+    const { clientX, clientY, relatedTarget } = event;
+
     this._dragLeaveTimer = setTimeout(() => {
       this._dragLeaveTimer = null;
       this.dragged = false;
       this._onDragStateChange(false);
 
       this.dispatchEvent(
-        new CustomEvent<DragEvent>(SWC_DROPZONE_DRAGLEAVE_EVENT, {
+        new CustomEvent<DropzoneDragLeaveDetail>(SWC_DROPZONE_DRAGLEAVE_EVENT, {
           bubbles: true,
           composed: true,
-          detail: event,
+          detail: { clientX, clientY, relatedTarget },
         })
       );
     }, 100);

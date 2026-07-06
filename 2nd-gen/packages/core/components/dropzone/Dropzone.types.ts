@@ -52,6 +52,17 @@ export const SWC_DROPZONE_DRAGLEAVE_EVENT = 'swc-dropzone-dragleave';
 /** Fired when files are dropped on the drop zone. */
 export const SWC_DROPZONE_DROP_EVENT = 'swc-dropzone-drop';
 
+/**
+ * Detail emitted with `swc-dropzone-dragleave`. Values are captured synchronously
+ * from the native `DragEvent` before the 100 ms debounce timer fires, preventing
+ * stale reads from a recycled event object.
+ */
+export interface DropzoneDragLeaveDetail {
+  clientX: number;
+  clientY: number;
+  relatedTarget: EventTarget | null;
+}
+
 /** Type alias retained for consumers who imported `DropzoneEventDetail` from the 1st-gen package. */
 export type DropzoneEventDetail = DragEvent;
 
@@ -59,7 +70,7 @@ declare global {
   interface GlobalEventHandlersEventMap {
     [SWC_DROPZONE_SHOULD_ACCEPT_EVENT]: CustomEvent<DragEvent>;
     [SWC_DROPZONE_DRAGOVER_EVENT]: CustomEvent<DragEvent>;
-    [SWC_DROPZONE_DRAGLEAVE_EVENT]: CustomEvent<DragEvent>;
+    [SWC_DROPZONE_DRAGLEAVE_EVENT]: CustomEvent<DropzoneDragLeaveDetail>;
     [SWC_DROPZONE_DROP_EVENT]: CustomEvent<DragEvent>;
   }
 }
