@@ -11,7 +11,8 @@
  */
 import { defineElement } from '@spectrum-web-components/base/src/define-element.js';
 
-import './sp-slider-handle.js'; // codify sp-slider's implicit dependency on sp-slider-handle
+// eslint-disable-next-line import/no-extraneous-dependencies
+import '@spectrum-web-components/slider/sp-slider-handle.js';
 
 import { Slider } from './src/Slider.js';
 
