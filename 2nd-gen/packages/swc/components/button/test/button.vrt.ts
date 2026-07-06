@@ -237,3 +237,19 @@ export const Permutations: Story = {
       });
   },
 };
+
+// `forced-colors` is a real browser media feature Chromatic can emulate
+// directly (parameters.chromatic.forcedColors — see tooltip.test.ts's
+// ForcedColorsOpenTest for the same pattern), unlike :hover/:active/
+// :focus-visible above. But that also means it can't be scoped to a
+// subtree the way theme()'s light/dark split is — forced-colors mode
+// replaces the whole page's palette, so it needs its own story/snapshot
+// rather than folding into Permutations.
+export const ForcedColors: Story = {
+  render: () => theme(permutationContent(), 'light', 'ltr'),
+  parameters: {
+    styles: { display: 'flex', 'flex-direction': 'column', gap: '16px' },
+    // meta already sets chromatic.disableSnapshot: false for this file.
+    chromatic: { forcedColors: 'active' },
+  },
+};
