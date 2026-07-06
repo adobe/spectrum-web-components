@@ -4,9 +4,19 @@ on:
   workflow_dispatch:
     inputs:
       tag:
-        description: 'NPM dist-tag (e.g., latest, beta, snapshot)'
+        description: '1st-gen NPM dist-tag (e.g., next, latest). 2nd-gen always publishes as beta.'
         required: false
         default: 'next'
+      beta_2nd_gen:
+        description: 'Also cut a 2nd-gen beta (2.0.0-beta.N under the beta tag) when 2nd-gen changesets exist. Ignored for the latest tag.'
+        required: false
+        type: boolean
+        default: true
+      dry_run:
+        description: 'Dry run the 2nd-gen beta: build, version, and pack but use npm publish --dry-run (no registry writes).'
+        required: false
+        type: boolean
+        default: false
   pull_request:
     types: [labeled, synchronize]
   push:
@@ -28,6 +38,7 @@ jobs:
     outputs:
       has_changesets: ${{ steps.check.outputs.has_changesets }}
       has_1st_gen_changesets: ${{ steps.check.outputs.has_1st_gen_changesets }}
+      has_2nd_gen_changesets: ${{ steps.check.outputs.has_2nd_gen_changesets }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -38,6 +49,7 @@ jobs:
           if [ -z "$(ls -A .changeset/*.md 2>/dev/null | grep -v README)" ]; then
             echo "has_changesets=false" >> $GITHUB_OUTPUT
             echo "has_1st_gen_changesets=false" >> $GITHUB_OUTPUT
+            echo "has_2nd_gen_changesets=false" >> $GITHUB_OUTPUT
             echo "No changesets found - skipping publish"
           else
             echo "has_changesets=true" >> $GITHUB_OUTPUT
@@ -47,22 +59,31 @@ jobs:
             # Check if any changeset mentions 1st-gen packages
             # 1st-gen packages are @spectrum-web-components/* except core
             HAS_1ST_GEN=false
+            HAS_2ND_GEN=false
             for file in .changeset/*.md; do
               if [ "$(basename "$file")" != "README.md" ]; then
                 PACKAGES=$(grep -oP "@spectrum-web-components/[a-z-]+" "$file")
                 NON_CORE=$(echo "$PACKAGES" | grep -v "^@spectrum-web-components/core$")
                 if [ -n "$NON_CORE" ]; then
                   HAS_1ST_GEN=true
-                  break
+                fi
+                if grep -qE "@spectrum-web-components/core|@adobe/spectrum-wc" "$file"; then
+                  HAS_2ND_GEN=true
                 fi
               fi
             done
 
             echo "has_1st_gen_changesets=$HAS_1ST_GEN" >> $GITHUB_OUTPUT
+            echo "has_2nd_gen_changesets=$HAS_2ND_GEN" >> $GITHUB_OUTPUT
             if [ "$HAS_1ST_GEN" = "true" ]; then
               echo "Found 1st-gen changesets - React wrappers will be built and published"
             else
               echo "No 1st-gen changesets found - React wrappers will be skipped"
+            fi
+            if [ "$HAS_2ND_GEN" = "true" ]; then
+              echo "Found 2nd-gen changesets - 2nd-gen beta step can run when requested"
+            else
+              echo "No 2nd-gen changesets found - 2nd-gen beta step will be skipped"
             fi
           fi
 
@@ -95,6 +116,8 @@ jobs:
         env:
           EVENT_NAME: ${{ github.event_name }}
           INPUT_TAG: ${{ github.event.inputs.tag }}
+          INPUT_BETA_2ND_GEN: ${{ github.event.inputs.beta_2nd_gen }}
+          HAS_2ND_GEN_CHANGESETS: ${{ needs.check-changesets.outputs.has_2nd_gen_changesets }}
         run: |
           if [ "$EVENT_NAME" == "pull_request" ]; then
             # PRs with the snapshot-release label always use snapshot-test
@@ -107,8 +130,31 @@ jobs:
             WORKFLOW_TAG="next"
           fi
 
+          # 2nd-gen (core + @adobe/spectrum-wc) never rides the 1st-gen next/latest
+          # train; it ships on its own beta cadence. Exclude it from the changeset
+          # publish for every real release (push + manual dispatch). PR snapshot-test
+          # runs still publish everything so 2nd-gen changes can be smoke-tested.
+          if [ "$EVENT_NAME" == "pull_request" ]; then
+            EXCLUDE_2ND_GEN="false"
+          else
+            EXCLUDE_2ND_GEN="true"
+          fi
+
+          # Cut 2.0.0-beta.N for 2nd-gen only on a deliberate manual dispatch when
+          # pending changesets mention core or @adobe/spectrum-wc. Never during a
+          # latest prod run or when there is nothing new for 2nd-gen to ship.
+          if [ "$EVENT_NAME" == "workflow_dispatch" ] && [ "$INPUT_BETA_2ND_GEN" != "false" ] && [ "$WORKFLOW_TAG" != "latest" ] && [ "$HAS_2ND_GEN_CHANGESETS" == "true" ]; then
+            RUN_2ND_GEN_BETA="true"
+          else
+            RUN_2ND_GEN_BETA="false"
+          fi
+
           echo "tag=$WORKFLOW_TAG" >> $GITHUB_OUTPUT
+          echo "exclude_2nd_gen=$EXCLUDE_2ND_GEN" >> $GITHUB_OUTPUT
+          echo "run_2nd_gen_beta=$RUN_2ND_GEN_BETA" >> $GITHUB_OUTPUT
           echo "Using npm tag: $WORKFLOW_TAG"
+          echo "Exclude 2nd-gen from 1st-gen publish: $EXCLUDE_2ND_GEN"
+          echo "Cut 2nd-gen beta this run: $RUN_2ND_GEN_BETA"
 
       - name: Validate release tag
         env:
@@ -171,14 +217,27 @@ jobs:
           yarn install --refresh-lockfile
           yarn build
 
-      - name: Publish all packages
+      - name: Exclude 2nd-gen from the 1st-gen publish
+        if: steps.extract-tag.outputs.exclude_2nd_gen == 'true'
+        run: |
+          set -euo pipefail
+          # 2nd-gen (core + @adobe/spectrum-wc) releases on its own beta cadence,
+          # never as next/latest. Marking them private makes `changeset publish`
+          # skip them; the dedicated 2nd-gen beta step publishes them afterwards.
+          # These edits are never committed (see the restore in later steps).
+          (cd 2nd-gen/packages/core && npm pkg set private=true --json)
+          (cd 2nd-gen/packages/swc && npm pkg set private=true --json)
+
+      - name: Publish 1st-gen packages
         if: steps.npm-auth.outcome == 'success'
         env:
           NODE_AUTH_TOKEN: ${{ secrets.ADOBE_BOT_NPM_TOKEN }}
           TAG: ${{ steps.extract-tag.outputs.tag }}
         run: |
-          # Changeset publishes all packages (1st-gen, core, and 2nd-gen)
-          # npm CLI automatically uses:
+          # Changeset publishes every non-private package. For real releases the
+          # 2nd-gen packages are marked private just above, so this publishes 1st-gen
+          # only; PR snapshot-test runs leave them public and publish everything.
+          # npm CLI selects auth automatically:
           # - OIDC trusted publishing for 1st-gen packages (configured on npmjs.com)
           # - Token authentication for 2nd-gen (from .npmrc)
           if [ "$TAG" == "latest" ]; then
@@ -186,6 +245,44 @@ jobs:
           else
             yarn changeset publish --no-git-tag --tag $TAG
           fi
+
+      - name: Prepare 2nd-gen beta release
+        id: prepare-2nd-gen-beta
+        if: >-
+          steps.npm-auth.outcome == 'success' &&
+          steps.extract-tag.outputs.run_2nd_gen_beta == 'true' &&
+          needs.check-changesets.outputs.has_2nd_gen_changesets == 'true'
+        run: node scripts/main-2nd-gen-beta-release.js
+
+      - name: Rebuild after 2nd-gen beta versioning
+        if: steps.prepare-2nd-gen-beta.outcome == 'success'
+        run: |
+          yarn install --refresh-lockfile
+          yarn build
+
+      - name: Publish 2nd-gen beta (core + @adobe/spectrum-wc)
+        id: publish-2nd-gen
+        if: steps.prepare-2nd-gen-beta.outcome == 'success'
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.ADOBE_BOT_NPM_TOKEN }}
+          DRY_RUN: ${{ github.event.inputs.dry_run }}
+          BETA_VERSION: ${{ steps.prepare-2nd-gen-beta.outputs.beta }}
+        run: |
+          set -euo pipefail
+          echo "Publishing 2nd-gen beta: $BETA_VERSION"
+
+          PUBLISH_FLAGS="--tag beta --access public"
+          if [ "$DRY_RUN" == "true" ]; then
+            PUBLISH_FLAGS="$PUBLISH_FLAGS --dry-run"
+            echo "::notice::DRY RUN - packing only, nothing published to npm"
+          fi
+
+          # Changelog entries were written by changeset version --snapshot and
+          # retitled to 2.0.0-beta.N by scripts/main-2nd-gen-beta-release.js.
+          yarn workspace @spectrum-web-components/core pack --out /tmp/swc-core.tgz
+          yarn workspace @adobe/spectrum-wc pack --out /tmp/swc-wc.tgz
+          npm publish /tmp/swc-core.tgz $PUBLISH_FLAGS
+          npm publish /tmp/swc-wc.tgz $PUBLISH_FLAGS
 
       - name: Build React wrappers
         if: needs.check-changesets.outputs.has_1st_gen_changesets == 'true'
@@ -249,6 +346,7 @@ jobs:
           CORE_VERSION: ${{ steps.versions.outputs.core }}
           BUNDLE_VERSION: ${{ steps.versions.outputs.bundle }}
           SWC_VERSION: ${{ steps.versions.outputs.swc }}
+          BETA_VERSION: ${{ steps.prepare-2nd-gen-beta.outputs.beta }}
         run: |
           echo "## Publish summary" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
@@ -277,14 +375,24 @@ jobs:
             echo "| **Commit** | \`${COMMIT_SHA}\` |" >> $GITHUB_STEP_SUMMARY
           fi
 
+          # The 2nd-gen beta step (when it runs) publishes the real beta version;
+          # otherwise 2nd-gen was excluded from this run and only 1st-gen shipped.
+          if [ -n "$BETA_VERSION" ]; then
+            CORE_VERSION="$BETA_VERSION"
+            SWC_VERSION="$BETA_VERSION"
+          else
+            CORE_VERSION=""
+            SWC_VERSION=""
+          fi
+
           if [ -n "$CORE_VERSION" ] || [ -n "$BUNDLE_VERSION" ] || [ -n "$SWC_VERSION" ]; then
             echo "## Versions released" >> $GITHUB_STEP_SUMMARY
             echo "" >> $GITHUB_STEP_SUMMARY
-            echo "| Generation | Package | Version |" >> $GITHUB_STEP_SUMMARY
-            echo "|------------|---------|---------|" >> $GITHUB_STEP_SUMMARY
-            [ -n "$CORE_VERSION" ]   && echo "| Core    | \`@spectrum-web-components/core\`   | \`${CORE_VERSION}\`   |" >> $GITHUB_STEP_SUMMARY
-            [ -n "$BUNDLE_VERSION" ] && echo "| 1st gen | \`@spectrum-web-components/bundle\` | \`${BUNDLE_VERSION}\` |" >> $GITHUB_STEP_SUMMARY
-            [ -n "$SWC_VERSION" ]    && echo "| 2nd gen | \`@adobe/spectrum-wc\`               | \`${SWC_VERSION}\`    |" >> $GITHUB_STEP_SUMMARY
+            echo "| Generation | Package | Version | Tag |" >> $GITHUB_STEP_SUMMARY
+            echo "|------------|---------|---------|-----|" >> $GITHUB_STEP_SUMMARY
+            [ -n "$CORE_VERSION" ]   && echo "| Core    | \`@spectrum-web-components/core\`   | \`${CORE_VERSION}\`   | \`beta\`   |" >> $GITHUB_STEP_SUMMARY
+            [ -n "$BUNDLE_VERSION" ] && echo "| 1st gen | \`@spectrum-web-components/bundle\` | \`${BUNDLE_VERSION}\` | \`${TAG}\` |" >> $GITHUB_STEP_SUMMARY
+            [ -n "$SWC_VERSION" ]    && echo "| 2nd gen | \`@adobe/spectrum-wc\`               | \`${SWC_VERSION}\`    | \`beta\`   |" >> $GITHUB_STEP_SUMMARY
             echo "" >> $GITHUB_STEP_SUMMARY
           fi
 
@@ -297,6 +405,9 @@ jobs:
       - name: Commit and push changes
         if: steps.extract-tag.outputs.tag == 'latest'
         run: |
+          # 2nd-gen manifests may carry an ephemeral private flag / version bump from
+          # this run; restore them so only 1st-gen version + changelog changes land.
+          git checkout -- 2nd-gen/packages/core 2nd-gen/packages/swc || true
           git pull --rebase origin main
           git add .
           git commit --no-verify -m "chore: release packages #publish" || echo "No changes to commit"
