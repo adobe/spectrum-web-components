@@ -1,6 +1,6 @@
 {
   "name": "@spectrum-web-components/shared",
-  "version": "1.12.1",
+  "version": "1.12.2",
   "description": "",
   "license": "Apache-2.0",
   "author": "Adobe",
@@ -96,7 +96,7 @@
   "types": "./src/index.d.ts",
   "dependencies": {
     "@lit-labs/observers": "2.0.2",
-    "@spectrum-web-components/base": "1.12.1",
+    "@spectrum-web-components/base": "1.12.2",
     "focus-visible": "5.2.1"
   },
   "keywords": [
