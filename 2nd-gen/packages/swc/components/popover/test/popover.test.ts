@@ -1494,13 +1494,16 @@ export const TriggerAriaTest: Story = {
       }
     );
 
-    await step('clearing modal removes aria-haspopup', async () => {
-      popover.modal = false;
-      await popover.updateComplete;
-      expect(
-        trigger.hasAttribute('aria-haspopup'),
-        'aria-haspopup is removed in default mode'
-      ).toBe(false);
-    });
+    await step(
+      'aria-haspopup stays "dialog" after clearing modal (dialog in both modes)',
+      async () => {
+        popover.modal = false;
+        await popover.updateComplete;
+        expect(
+          trigger.getAttribute('aria-haspopup'),
+          'the trigger still advertises the dialog in default mode'
+        ).toBe('dialog');
+      }
+    );
   },
 };
