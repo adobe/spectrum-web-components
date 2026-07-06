@@ -52,6 +52,8 @@ const meta: Meta = {
     },
   },
   render: (args) => template(args),
+  // `anchoredHandle` is a shared render helper, not a story.
+  excludeStories: ['anchoredHandle'],
   tags: ['migrated'],
 };
 
@@ -75,7 +77,7 @@ const COLOR_FORMATS = [
  * placed at the bottom-center of a fixed box: the handle centers on that point,
  * and the box reserves headroom above so an open loupe stays inside the frame.
  */
-const anchoredHandle = (
+export const anchoredHandle = (
   label: string,
   templateArgs: Record<string, unknown>
 ) => html`

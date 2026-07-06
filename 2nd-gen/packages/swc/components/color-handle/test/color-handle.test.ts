@@ -23,7 +23,7 @@ import {
 
 import { getComponent } from '../../../utils/test-utils.js';
 import meta from '../stories/color-handle.stories.js';
-import { Overview } from '../stories/color-handle.stories.js';
+import { anchoredHandle, Overview } from '../stories/color-handle.stories.js';
 
 export default {
   ...meta,
@@ -34,12 +34,6 @@ export default {
   },
   tags: ['!autodocs', 'dev'],
 } as Meta;
-
-const anchored = (inner: unknown): ReturnType<typeof html> => html`
-  <div style="position: relative; inline-size: 24px; block-size: 24px;">
-    ${inner}
-  </div>
-`;
 
 // ──────────────────────────────────────────────────────────────
 // TEST: Defaults, role-less host, adaptive border variable
@@ -87,10 +81,7 @@ export const OverviewTest: Story = {
 // ──────────────────────────────────────────────────────────────
 
 export const TouchOpenCloseTest: Story = {
-  render: () =>
-    anchored(html`
-      <swc-color-handle></swc-color-handle>
-    `),
+  render: () => anchoredHandle('Touch open/close', {}),
   play: async ({ canvasElement, step }) => {
     const handle = await getComponent<ColorHandle>(
       canvasElement,
@@ -143,10 +134,7 @@ export const TouchOpenCloseTest: Story = {
 // ──────────────────────────────────────────────────────────────
 
 export const DisabledSuppressesLoupeTest: Story = {
-  render: () =>
-    anchored(html`
-      <swc-color-handle open disabled></swc-color-handle>
-    `),
+  render: () => anchoredHandle('Disabled', { open: true, disabled: true }),
   play: async ({ canvasElement, step }) => {
     const handle = await getComponent<ColorHandle>(
       canvasElement,
@@ -176,10 +164,7 @@ export const DisabledSuppressesLoupeTest: Story = {
 // ──────────────────────────────────────────────────────────────
 
 export const OutlineOnlyTest: Story = {
-  render: () =>
-    anchored(html`
-      <swc-color-handle color="rgb(20, 115, 230)"></swc-color-handle>
-    `),
+  render: () => anchoredHandle('Outline only', { color: 'rgb(20, 115, 230)' }),
   play: async ({ canvasElement, step }) => {
     const handle = await getComponent<ColorHandle>(
       canvasElement,
