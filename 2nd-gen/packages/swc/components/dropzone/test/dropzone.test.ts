@@ -459,6 +459,32 @@ export const DragLeaveTest: Story = {
       dropzone.dragged = false;
       await dropzone.updateComplete;
     });
+
+    await step('drop cancels the pending dragleave timer', async () => {
+      dropzone.dispatchEvent(makeDragEvent('dragover', new DataTransfer()));
+      await dropzone.updateComplete;
+
+      let spuriousLeave = false;
+      dropzone.addEventListener(
+        SWC_DROPZONE_DRAGLEAVE_EVENT,
+        () => {
+          spuriousLeave = true;
+        },
+        { once: true }
+      );
+
+      dropzone.dispatchEvent(makeDragEvent('dragleave'));
+      // Drop immediately: this must clear the pending debounce timer.
+      dropzone.dispatchEvent(makeDragEvent('drop'));
+      await dropzone.updateComplete;
+
+      // Negative assertion: must wait past the debounce window to confirm the timer was cancelled.
+      await new Promise<void>((r) => setTimeout(r, 150));
+      expect(
+        spuriousLeave,
+        'swc-dropzone-dragleave not fired after drop cancelled the timer'
+      ).toBe(false);
+    });
   },
 };
 
