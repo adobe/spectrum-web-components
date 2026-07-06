@@ -391,7 +391,7 @@ No `_lit-styles/` fragment needed — action-group renders only a slot; all layo
 
 #### 1st-gen deprecation notices
 
-- [x] `@deprecated` JSDoc on `vertical`, `selects`, `selected`, `emphasized` in `sp-action-group`; `window.__swc.warn()` added to `selected` setter (existing setter); no runtime warn on `vertical`, `selects`, `emphasized` as no setter existed to add it without refactoring
+- [x] `@deprecated` JSDoc on `vertical`, `selects`, `selected`, `emphasized` in `sp-action-group`; `window.__swc.warn()` added to `selected` setter (existing setter) and to new getter/setter pairs for `vertical`, `selects`, and `emphasized` (following the `swc-button-group` pattern)
 
 #### Alignment checks
 
