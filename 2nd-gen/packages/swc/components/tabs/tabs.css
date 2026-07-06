@@ -108,6 +108,13 @@
   --swc-tabs-indicator-color: token("disabled-border-color");
 }
 
+/* ── RTL ───────────────────────────────────────────────── */
+
+:host([direction="horizontal"]:dir(rtl)) .selection-indicator,
+:host(:not([direction]):dir(rtl)) .selection-indicator {
+  transform-origin: right center;
+}
+
 /* ── High contrast ─────────────────────────────────────── */
 
 @media (forced-colors: active) {

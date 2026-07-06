@@ -9,17 +9,9 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-import { defineElement } from '@spectrum-web-components/base/src/define-element.js';
 
-// eslint-disable-next-line import/no-extraneous-dependencies
-import '@spectrum-web-components/slider/sp-slider-handle.js';
-
-import { Slider } from './src/Slider.js';
-
-defineElement('sp-slider', Slider);
-
-declare global {
-  interface HTMLElementTagNameMap {
-    'sp-slider': Slider;
-  }
-}
+export {
+  ColorController,
+  type Color,
+  type ColorTypes,
+} from './src/color-controller.js';
