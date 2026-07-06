@@ -344,6 +344,7 @@ const preview = {
                 'Action group',
                 [
                   'Accessibility migration analysis',
+                  'Migration plan',
                   'Rendering and styling migration analysis',
                 ],
                 'Action menu',
@@ -489,6 +490,8 @@ const preview = {
                 ['Rendering and styling migration analysis'],
                 'Search',
                 ['Rendering and styling migration analysis'],
+                'Sidenav',
+                ['Accessibility migration analysis'],
                 'Slider',
                 ['Rendering and styling migration analysis'],
                 'Status light',

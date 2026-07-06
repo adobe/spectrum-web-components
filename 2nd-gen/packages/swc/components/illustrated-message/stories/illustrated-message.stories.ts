@@ -17,6 +17,8 @@ import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
 import { IllustratedMessage } from '@adobe/spectrum-wc/illustrated-message';
 
+import '@adobe/spectrum-wc/components/button/swc-button.js';
+import '@adobe/spectrum-wc/components/button-group/swc-button-group.js';
 import '@adobe/spectrum-wc/components/illustrated-message/swc-illustrated-message.js';
 
 // ────────────────
@@ -139,6 +141,15 @@ export const Anatomy: Story = {
         <span slot="description">Optional supporting description.</span>
       `
     )}
+    ${template(
+      args,
+      html`
+        ${unsafeHTML(cloudSvg('aria-hidden="true"'))}
+        <h2 slot="heading">Heading, description, and actions</h2>
+        <span slot="description">Optional supporting description.</span>
+        <swc-button slot="actions" variant="accent">Browse files</swc-button>
+      `
+    )}
   `,
   tags: ['anatomy'],
   parameters: {
@@ -179,7 +190,7 @@ export const Sizes: Story = {
   `,
   tags: ['options'],
   parameters: {
-    flexLayout: true,
+    flexLayout: 'row-wrap',
   },
 };
 
@@ -245,6 +256,42 @@ HeadingLevels.storyName = 'Heading levels';
 // ──────────────────────────────
 //    BEHAVIORS STORIES
 // ──────────────────────────────
+
+export const Actions: Story = {
+  render: (args) => html`
+    ${['s', 'm', 'l'].map(
+      (size) => html`
+        ${template(
+          { ...args, size },
+          html`
+            ${unsafeHTML(cloudSvg('aria-hidden="true"'))}
+            <h2 slot="heading">Upload your files</h2>
+            <span slot="description">Drag and drop or browse to upload.</span>
+            <swc-button slot="actions" variant="accent">
+              Browse files
+            </swc-button>
+          `
+        )}
+      `
+    )}
+    ${template(
+      { ...args, size: 'm' },
+      html`
+        ${unsafeHTML(cloudSvg('aria-hidden="true"'))}
+        <h2 slot="heading">No results found</h2>
+        <span slot="description">Try adjusting your search or filters.</span>
+        <swc-button-group slot="actions">
+          <swc-button variant="accent">Clear filters</swc-button>
+          <swc-button variant="secondary">Browse all</swc-button>
+        </swc-button-group>
+      `
+    )}
+  `,
+  tags: ['behaviors'],
+  parameters: {
+    styles: { display: 'flex', 'flex-direction': 'column', gap: '3rem' },
+  },
+};
 
 export const DescriptionWithLink: Story = {
   render: (args) => html`

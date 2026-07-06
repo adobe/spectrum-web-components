@@ -34,7 +34,7 @@ a:where(:not([class])) {
   color: var(--swc-link-text-color-default, token("accent-content-color-default"));
   text-decoration: underline;
   text-decoration-thickness: token("text-underline-thickness");
-  text-underline-offset: token("text-underline-gap");
+  text-underline-offset: token("text-gap-medium");
   transition: color token("animation-duration-100") ease-in-out;
 
   &:hover {
@@ -50,7 +50,7 @@ a:where(:not([class])) {
     border-radius: token("corner-radius-100");
     outline: token("focus-indicator-thickness") solid
       var(--swc-link-focus-indicator-color, token("focus-indicator-color"));
-    outline-offset: token("focus-indicator-gap");
+    outline-offset: token("focus-ring-gap");
   }
 
   &:lang(ja),

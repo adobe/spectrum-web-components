@@ -1,5 +1,21 @@
 # Change Log
 
+## 1.12.2
+
+### Patch Changes
+
+- [#6467](https://github.com/adobe/spectrum-web-components/pull/6467) [`e4509d8`](https://github.com/adobe/spectrum-web-components/commit/e4509d85553b98e2d0467466c976607a68ca73e5) Thanks [@rubencarvalho](https://github.com/rubencarvalho)! - **fix(menu, slider):** Use package imports for `sp-menu-divider` and `sp-slider-handle` registration instead of relative imports.
+
+  In build systems that alias `@spectrum-web-components/*` packages (for example UXP wrappers), a relative side-effect import can resolve to a different module instance than the package export consumers use, causing `NotSupportedError: Failed to execute 'define' on 'CustomElementRegistry'` from duplicate custom element registration. This applies the same fix as #3225 (already applied to `MenuGroup`, `DialogBase`, `DialogWrapper`, and `Table`) to `Menu` and `Slider`.
+
+- Updated dependencies []:
+  - @spectrum-web-components/number-field@1.12.2
+  - @spectrum-web-components/field-label@1.12.2
+  - @spectrum-web-components/base@1.12.2
+  - @spectrum-web-components/reactive-controllers@1.12.2
+  - @spectrum-web-components/shared@1.12.2
+  - @spectrum-web-components/theme@1.12.2
+
 ## 1.12.1
 
 ### Patch Changes

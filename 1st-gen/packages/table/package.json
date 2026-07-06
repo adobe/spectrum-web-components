@@ -1,6 +1,6 @@
 {
   "name": "@spectrum-web-components/table",
-  "version": "1.12.1",
+  "version": "1.12.2",
   "description": "Web component implementation of a Spectrum design Table",
   "license": "Apache-2.0",
   "author": "Adobe",
@@ -120,10 +120,10 @@
   "dependencies": {
     "@lit-labs/observers": "2.0.2",
     "@lit-labs/virtualizer": "2.0.12",
-    "@spectrum-web-components/base": "1.12.1",
-    "@spectrum-web-components/checkbox": "1.12.1",
-    "@spectrum-web-components/icon": "1.12.1",
-    "@spectrum-web-components/icons-ui": "1.12.1"
+    "@spectrum-web-components/base": "1.12.2",
+    "@spectrum-web-components/checkbox": "1.12.2",
+    "@spectrum-web-components/icon": "1.12.2",
+    "@spectrum-web-components/icons-ui": "1.12.2"
   },
   "keywords": [
     "design-system",
