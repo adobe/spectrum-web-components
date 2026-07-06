@@ -56,9 +56,7 @@ const testStoryIndexer: Indexer = {
   },
 };
 
-// Custom indexer to allow .vrt.ts files to be treated as story files. Unlike
-// .test.ts fixtures, VRT stories must also index in `build` mode so Chromatic
-// (which builds Storybook in production mode) can snapshot them.
+// Custom indexer to allow .vrt.ts files to be treated as story files.
 const vrtStoryIndexer: Indexer = {
   test: /\.vrt\.ts$/,
   createIndex: async (fileName, options) => {
@@ -67,122 +65,94 @@ const vrtStoryIndexer: Indexer = {
   },
 };
 
-const COMPONENT_STORY_ROOT = {
+const COMPONENT_STORIES = {
   directory: '../components',
   titlePrefix: 'Components',
-} as const;
+};
 
-const PATTERN_STORY_ROOT = {
+const PATTERN_STORIES = {
   directory: '../patterns',
   titlePrefix: 'Patterns',
-} as const;
+};
 
-const CORE_STORY_ROOT = {
+const CORE_STORIES = {
   directory: '../../core',
   titlePrefix: 'Core',
-} as const;
+};
 
-// vrt mode builds only .vrt.ts stories, so Chromatic's catalog never lists
-// the non-VRT stories it's configured to skip snapshotting anyway.
-const stories: StorybookConfig['stories'] =
-  storybookMode === 'vrt'
-    ? [
-        { ...COMPONENT_STORY_ROOT, files: '**/*.vrt.ts' },
-        { ...PATTERN_STORY_ROOT, files: '**/*.vrt.ts' },
-      ]
-    : [
-        {
-          ...COMPONENT_STORY_ROOT,
-          // Production-style builds exclude internal-only stories; local/dev keeps the full set.
-          files:
-            storybookMode === 'build'
-              ? '**/!(*.internal).stories.ts'
-              : '**/*.stories.ts',
-        },
-        {
-          ...PATTERN_STORY_ROOT,
-          files: '**/*.stories.ts',
-        },
-        {
-          ...PATTERN_STORY_ROOT,
-          files: '**/*.mdx',
-        },
-        {
-          ...COMPONENT_STORY_ROOT,
-          files: '**/*.vrt.ts',
-        },
-        {
-          ...PATTERN_STORY_ROOT,
-          files: '**/*.vrt.ts',
-        },
-      ];
+const GUIDES = [
+  {
+    directory: 'learn-about-swc',
+    // Keep learn-about docs minimal in production.
+    files: '*.mdx',
+    titlePrefix: 'Learn about SWC',
+  },
+  {
+    directory: 'guides',
+    files: '**/!(*documentation).mdx',
+    titlePrefix: 'Guides',
+  },
+  { directory: 'resources', files: '**/*.mdx', titlePrefix: 'Resources' },
+];
 
-/**
- * The CI a11y mode trims docs/guides
- * that can pull in 1st-gen-linked dependencies the test build does not need.
- */
-if (storybookMode !== 'ci-a11y' && storybookMode !== 'vrt') {
-  stories.push({
-    directory: '../components',
-    // Production-style builds exclude internal-only docs; local/dev keeps the full set.
-    files: storybookMode === 'build' ? '**/!(*.internal).mdx' : '**/*.mdx',
-    titlePrefix: 'Components',
-  });
+const CORE_AND_CONTRIBUTOR_DOCS = [
+  { ...CORE_STORIES, files: '**/*.mdx' },
+  { ...CORE_STORIES, files: '**/stories/*.stories.ts' },
+  {
+    directory: 'contributor-docs',
+    files: '**/*.mdx',
+    titlePrefix: 'Contributor docs',
+  },
+];
 
-  // Production Storybook excludes core and contributor docs entirely.
-  if (storybookMode !== 'build') {
-    stories.push(
-      {
-        ...CORE_STORY_ROOT,
-        files: '**/*.mdx',
-      },
-      {
-        ...CORE_STORY_ROOT,
-        files: '**/stories/*.stories.ts',
-      },
-      {
-        directory: 'contributor-docs',
-        files: '**/*.mdx',
-        titlePrefix: 'Contributor docs',
-      }
-    );
-  }
+const TEST_FIXTURES = [
+  { ...COMPONENT_STORIES, files: '**/*.test.ts' },
+  { ...PATTERN_STORIES, files: '**/*.test.ts' },
+  { ...CORE_STORIES, files: '**/*.test.ts' },
+];
 
-  stories.push(
-    {
-      directory: 'learn-about-swc',
-      // Keep learn-about docs minimal in production.
-      files: '*.mdx',
-      titlePrefix: 'Learn about SWC',
-    },
-    {
-      directory: 'guides',
-      files: '**/!(*documentation).mdx',
-      titlePrefix: 'Guides',
-    },
-    {
-      directory: 'resources',
-      files: '**/*.mdx',
-      titlePrefix: 'Resources',
-    }
-  );
-}
+// What each mode builds, spelled out per-mode rather than composed from
+// flags, so "what does build actually include?" is answered by reading one
+// array instead of tracing conditionals scattered through the file.
+const STORIES_BY_MODE: Record<StorybookMode, StorybookConfig['stories']> = {
+  // Full local Storybook: every story and doc, plus dev-only test fixtures.
+  dev: [
+    { ...COMPONENT_STORIES, files: '**/*.stories.ts' },
+    { ...PATTERN_STORIES, files: '**/*.stories.ts' },
+    { ...PATTERN_STORIES, files: '**/*.mdx' },
+    { ...COMPONENT_STORIES, files: '**/*.mdx' },
+    ...CORE_AND_CONTRIBUTOR_DOCS,
+    ...GUIDES,
+    ...TEST_FIXTURES,
+  ],
+  // Production build: same as dev, minus internal-only stories/docs, core
+  // controllers, contributor docs (both can pull in 1st-gen-linked
+  // dependencies production doesn't need), and .test.ts fixtures.
+  build: [
+    { ...COMPONENT_STORIES, files: '**/!(*.internal).stories.ts' },
+    { ...PATTERN_STORIES, files: '**/*.stories.ts' },
+    { ...PATTERN_STORIES, files: '**/*.mdx' },
+    { ...COMPONENT_STORIES, files: '**/!(*.internal).mdx' },
+    ...GUIDES,
+  ],
+  // CI accessibility checks: component/pattern stories only. addon-docs
+  // stays enabled (see `addons` below) so pattern .mdx still parses, but
+  // component docs, core, contributor docs, and guides are all skipped —
+  // they're not needed for axe checks.
+  'ci-a11y': [
+    { ...COMPONENT_STORIES, files: '**/*.stories.ts' },
+    { ...PATTERN_STORIES, files: '**/*.stories.ts' },
+    { ...PATTERN_STORIES, files: '**/*.mdx' },
+  ],
+  // Chromatic-only: just the hand-picked VRT stories, so the catalog never
+  // lists the non-VRT stories it's configured to skip snapshotting anyway.
+  vrt: [
+    { ...COMPONENT_STORIES, files: '**/*.vrt.ts' },
+    { ...PATTERN_STORIES, files: '**/*.vrt.ts' },
+  ],
+};
 
-// Test stories are dev-only fixtures and should not ship in production Storybook.
-if (storybookMode === 'dev') {
-  stories.push({
-    ...COMPONENT_STORY_ROOT,
-    files: '**/*.test.ts',
-  });
-  stories.push({
-    ...PATTERN_STORY_ROOT,
-    files: '**/*.test.ts',
-  });
-  stories.push({
-    ...CORE_STORY_ROOT,
-    files: '**/*.test.ts',
-  });
-}
+const stories = STORIES_BY_MODE[storybookMode];
 
 /**
  * ci-a11y mode needs docs (for MDX parsing); addon-a11y is excluded because
