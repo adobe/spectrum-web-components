@@ -562,7 +562,7 @@ export abstract class TabsBase extends SpectrumElement {
     const listRect = tablist.getBoundingClientRect();
 
     if (this._direction === 'horizontal') {
-      const isRtl = getComputedStyle(this).direction === 'rtl';
+      const isRtl = this.dir === 'rtl';
       const offset = isRtl
         ? tabRect.right - listRect.right
         : tabRect.left - listRect.left;
