@@ -143,6 +143,10 @@ export abstract class DropzoneBase extends SizedMixin(SpectrumElement, {
   private readonly _onDragOver = (event: DragEvent): void => {
     event.preventDefault();
 
+    if (!event.dataTransfer) {
+      return;
+    }
+
     const shouldAcceptEvent = new CustomEvent<DragEvent>(
       SWC_DROPZONE_SHOULD_ACCEPT_EVENT,
       {
@@ -154,10 +158,6 @@ export abstract class DropzoneBase extends SizedMixin(SpectrumElement, {
     );
 
     const accepted = this.dispatchEvent(shouldAcceptEvent);
-
-    if (!event.dataTransfer) {
-      return;
-    }
 
     if (!accepted) {
       event.dataTransfer.dropEffect = 'none';
