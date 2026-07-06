@@ -26,7 +26,11 @@ export default {
     'node scripts/generate-versions.js',
     'yarn constraints --fix',
     'yarn install --refresh-lockfile',
-    'git add 1st-gen/tools/base/src/version.ts 2nd-gen/packages/core/element/version.ts yarn.lock',
+    // gen2-beta keeps 1st-gen/tools/base/src/version.ts pinned to main: its
+    // generated coreVersion would otherwise leak the 2nd-gen beta version, and
+    // 1st-gen is never published from this branch. Restore instead of staging it.
+    'git checkout -- 1st-gen/tools/base/src/version.ts',
+    'git add 2nd-gen/packages/core/element/version.ts yarn.lock',
   ],
   '.changeset/*.md': ['node 1st-gen/scripts/escape-changelog-tags.js'],
   '!(*.css|*.ts)': [
