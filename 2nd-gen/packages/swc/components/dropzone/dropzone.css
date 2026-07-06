@@ -31,7 +31,9 @@
   justify-content: center;
   padding: var(--swc-dropzone-padding, token("spacing-400"));
   background: var(--swc-dropzone-background-color, transparent);
-  border: var(--swc-dropzone-border-width, token("border-width-200")) var(--swc-dropzone-border-style, dashed) var(--swc-dropzone-border-color, token("gray-300"));
+  border-color: var(--swc-dropzone-border-color, token("gray-300"));
+  border-style: var(--swc-dropzone-border-style, dashed);
+  border-width: var(--swc-dropzone-border-width, token("border-width-200"));
   border-radius: var(--swc-dropzone-corner-radius, token("corner-radius-400"));
 }
 
