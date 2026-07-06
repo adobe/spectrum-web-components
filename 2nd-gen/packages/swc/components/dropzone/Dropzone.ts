@@ -14,6 +14,7 @@ import { CSSResultArray, html, PropertyValues, TemplateResult } from 'lit';
 
 import { DropzoneBase } from '@spectrum-web-components/core/components/dropzone';
 
+import visuallyHiddenStyles from '../../stylesheets/_lit-styles/visually-hidden.css';
 import styles from './dropzone.css';
 
 /**
@@ -49,7 +50,7 @@ import styles from './dropzone.css';
  */
 export class Dropzone extends DropzoneBase {
   public static override get styles(): CSSResultArray {
-    return [styles];
+    return [visuallyHiddenStyles, styles];
   }
 
   // ──────────────────────────
@@ -162,7 +163,11 @@ export class Dropzone extends DropzoneBase {
   protected override render(): TemplateResult {
     return html`
       <div class="swc-Dropzone">
-        <div role="status" aria-live="polite" class="swc-Dropzone-status"></div>
+        <div
+          role="status"
+          aria-live="polite"
+          class="swc-Dropzone-status swc-VisuallyHidden"
+        ></div>
         ${this.filled
           ? html`
               <slot name="filled-content"></slot>
