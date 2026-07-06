@@ -1,0 +1,173 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import { DocsFooter, DocsHeader } from '../../.storybook/blocks';
+
+import * as AccordionStories from './stories/accordion.stories';
+
+<Meta of={AccordionStories} />
+
+<DocsHeader />
+
+## Anatomy
+
+### Visual structure
+
+An accordion consists of:
+
+1. **Item headers**: a button for each item showing a disclosure chevron and the item label
+2. **Disclosure chevron**: rotates to indicate whether the item is open or closed
+3. **Item panels**: the content revealed when an item is expanded
+4. **Actions** (optional): interactive controls placed in the header row, outside the toggle button
+
+### Technical structure
+
+#### Slots
+
+- **Default slot** (on `swc-accordion`): accepts `swc-accordion-item` elements
+- **label slot** (on `swc-accordion-item`): the heading text shown in the header
+- **actions slot** (on `swc-accordion-item`): optional interactive controls placed outside the toggle button so they remain independently clickable
+- **Default slot** (on `swc-accordion-item`): the panel content revealed when the item expands
+
+> **Note**: The header label is provided through the `label` slot. In Spectrum 1 it was a `label` attribute. See the [migration guide](?path=/docs/components-accordion-migration-guide--docs).
+
+<Canvas of={AccordionStories.Anatomy} />
+
+## Options
+
+### Sizes
+
+Accordions come in four sizes: small (`s`), medium (`m`), large (`l`), and extra-large (`xl`). Medium is the default.
+
+<Canvas of={AccordionStories.Sizes} />
+
+### Density
+
+Density controls the vertical padding applied to each item header. Three values are available: `compact`, `regular`, and `spacious`. `regular` is the default; the component emits a development warning when `density` is omitted.
+
+<Canvas of={AccordionStories.Density} />
+
+### Quiet
+
+The `quiet` variant removes the item divider borders and rounds the header corners on hover and focus.
+
+<Canvas of={AccordionStories.Quiet} />
+
+### Heading level
+
+The `level` attribute sets the heading level (`h2`–`h6`) applied to every item header. The default is `3`; values outside the range are clamped.
+
+> **Note**: In Spectrum 1, `level` could be set on each `sp-accordion-item`; in Spectrum 2 it is set only on `<swc-accordion>`. See the [migration guide](?path=/docs/components-accordion-migration-guide--docs).
+
+<Canvas of={AccordionStories.HeadingLevel} />
+
+## States
+
+### Item states
+
+Items can be in a default (collapsed), open (expanded), or disabled state.
+A disabled item remains in the tab order but its toggle is blocked.
+
+<Canvas of={AccordionStories.ItemStates} />
+
+### Disabled accordion
+
+Setting `disabled` on the `<swc-accordion>` parent disables all items at
+once without overwriting individual item disabled state. Re-enabling the
+accordion restores each item's original state.
+
+<Canvas of={AccordionStories.DisabledAccordion} />
+
+### Mixed disabled states
+
+When the accordion host is `disabled`, all items become non-interactive
+regardless of their individual `disabled` state. Per-item `disabled` is
+preserved underneath: toggle the **disabled** control off and the third
+item remains disabled while the first two become interactive again.
+
+This separation means an item that was already disabled before the
+host was disabled does not silently become enabled when the host
+is re-enabled.
+
+<Canvas of={AccordionStories.MixedDisabledStates} />
+
+## Behaviors
+
+### Direct actions
+
+Place interactive controls in the **`actions` slot** to render them inline
+with the heading, outside the toggle button. Because the actions are siblings
+of the toggle button rather than children of it, interacting with them does
+not expand or collapse the item.
+
+<Canvas of={AccordionStories.DirectActions} />
+
+### Allow multiple
+
+By default only one item may be open at a time; opening a new item closes
+the previously open one. Set `allow-multiple` to allow any number of items
+to be open simultaneously.
+
+<Canvas of={AccordionStories.AllowMultiple} />
+
+### Events
+
+Every expand or collapse dispatches events from the item. They all bubble and
+are composed, so a single listener on the `<swc-accordion>` can observe every
+item:
+
+- **`swc-accordion-item-toggle`**: dispatched when the open state is toggled.
+  Cancelable; calling `preventDefault()` reverts the change.
+- **`swc-open` / `swc-close`**: dispatched when the item begins opening or
+  closing.
+- **`swc-after-open` / `swc-after-close`**: dispatched after the panel height
+  transition completes, or immediately when no transition is active.
+
+```javascript
+accordion.addEventListener('swc-accordion-item-toggle', (event) => {
+  console.log('Toggled item is now open:', event.target.open);
+});
+```
+
+Open the **Actions** panel in Storybook to observe events as you interact
+with the accordion below.
+
+<Canvas of={AccordionStories.ToggleEvent} />
+
+## Accessibility
+
+### Features
+
+The `<swc-accordion>` and `<swc-accordion-item>` elements implement the
+[WAI-ARIA Accordion pattern](https://www.w3.org/WAI/ARIA/apg/patterns/accordion/):
+
+#### Keyboard navigation
+
+- <kbd>Tab</kbd>: Moves focus into and between item header buttons
+- <kbd>Enter</kbd>: Activates the focused header button (browser-native click
+  behavior)
+- <kbd>Space</kbd>: Toggles the focused item and prevents page scroll
+
+#### ARIA implementation
+
+1. **Heading wrapper**: Each header button is wrapped in an `h2`–`h6` element matching
+   the accordion's `level` attribute
+2. **`aria-expanded`**: Set to `"true"` on open items, `"false"` on closed items
+3. **`aria-controls`**: Points from the header button to the panel (`id="content"`)
+4. **Panel role**: The panel has `role="region"` and `aria-labelledby` pointing to the
+   header button, making it a labeled landmark
+5. **`aria-disabled`**: Set on the header button (not the native `disabled` attribute)
+   so disabled items remain keyboard-reachable
+6. **`aria-hidden`**: Set to `"true"` on closed panels to remove them from the accessibility tree
+7. **`inert`**: Added to disabled-item panels to block interaction with their contents
+
+### Best practices
+
+- Set a `level` that continues the existing page heading hierarchy without skipping levels
+- Provide meaningful, unique label text for each item so screen reader users can
+  navigate the heading list
+- When using the `actions` slot, include the item subject in the action's accessible
+  name (e.g., "Edit personal information" rather than "Edit") so it is unambiguous out of context
+- Always set `density` explicitly; use `regular` when unsure
+
+<Canvas of={AccordionStories.Accessibility} />
+
+<DocsFooter />

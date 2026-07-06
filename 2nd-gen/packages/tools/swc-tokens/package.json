@@ -22,6 +22,8 @@
   "bin": "index.js",
   "scripts": {
     "debug:tokens": "node index.js --outputType data --out ./tokens.json --debug true",
+    "diff:versions": "node scripts/diff-versions.js",
+    "fix:tokens": "node scripts/fix-token-refs.js",
     "generate:data": "node index.js --outputType data --out ./tokens.json",
     "generate:tokens": "node index.js --outputType tokens --out ./tokens.css --prefix swc",
     "generate:typography": "node index.js --outputType typography --out ./typography.css --prefix swc",
@@ -29,7 +31,7 @@
     "test:watch": "vitest --watch"
   },
   "dependencies": {
-    "@adobe/spectrum-tokens": "14.1.0",
+    "@adobe/spectrum-tokens": "14.13.1",
     "prettier": "3.8.1",
     "yargs": "18.0.0"
   },

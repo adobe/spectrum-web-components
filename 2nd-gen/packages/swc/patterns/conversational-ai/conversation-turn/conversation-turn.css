@@ -67,5 +67,5 @@
  * hugs the visible bubble instead of reshaping it. */
 :host(:focus-visible) ::slotted(*) {
   outline: token("focus-indicator-thickness") solid token("focus-indicator-color");
-  outline-offset: token("focus-indicator-gap");
+  outline-offset: token("focus-ring-gap");
 }

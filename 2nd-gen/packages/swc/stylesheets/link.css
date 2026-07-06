@@ -1,0 +1,90 @@
+/**
+ * Copyright 2026 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+/**
+ * Standalone link presentation for native `<a href>` elements.
+ *
+ * Default anchor appearance inside `.swc-Typography--prose` and
+ * `.swc-Typography--links` ships with `typography.css` (generated). Import this
+ * stylesheet when authors need explicit BEM modifiers on anchors.
+ *
+ */
+
+.swc-Link {
+  inline-size: fit-content;
+  font-family: token("sans-serif-font");
+  font-size: token("font-size-100");
+  font-style: token("default-font-style");
+  font-weight: token("regular-font-weight");
+  line-height: token("line-height-100");
+  color: var(--swc-link-text-color-default, token("accent-content-color-default"));
+  text-decoration: underline;
+  text-decoration-thickness: token("text-underline-thickness");
+  text-underline-offset: token("text-gap-medium");
+  transition: color token("animation-duration-100") ease-in-out;
+
+  &:hover {
+    color: var(--swc-link-text-color-hover, token("accent-content-color-hover"));
+  }
+
+  &:active {
+    color: var(--swc-link-text-color-down, token("accent-content-color-down"));
+  }
+
+  &:focus-visible {
+    color: var(--swc-link-text-color-focus, token("accent-content-color-key-focus"));
+    border-radius: token("corner-radius-100");
+    outline: token("focus-indicator-thickness") solid var(--swc-link-focus-indicator-color, token("focus-indicator-color"));
+    outline-offset: token("focus-ring-gap");
+  }
+
+  &:lang(ja),
+  &:lang(zh),
+  &:lang(ko) {
+    line-height: token("cjk-line-height-100");
+  }
+}
+
+.swc-Link--standalone {
+  font-weight: token("medium-font-weight");
+}
+
+.swc-Link--secondary {
+  --swc-link-text-color-default: token("neutral-content-color-default");
+  --swc-link-text-color-hover: token("neutral-content-color-hover");
+  --swc-link-text-color-down: token("neutral-content-color-down");
+  --swc-link-text-color-focus: token("neutral-content-color-key-focus");
+}
+
+.swc-Link--staticWhite {
+  --swc-link-text-color-default: token("static-white-text-color");
+  --swc-link-text-color-hover: token("static-white-text-color");
+  --swc-link-text-color-down: token("static-white-text-color");
+  --swc-link-text-color-focus: token("static-white-text-color");
+  --swc-link-focus-indicator-color: token("static-white-focus-indicator-color");
+}
+
+.swc-Link--staticBlack {
+  --swc-link-text-color-default: token("static-black-text-color");
+  --swc-link-text-color-hover: token("static-black-text-color");
+  --swc-link-text-color-down: token("static-black-text-color");
+  --swc-link-text-color-focus: token("static-black-text-color");
+  --swc-link-focus-indicator-color: token("static-black-focus-indicator-color");
+}
+
+.swc-Link--quiet.swc-Link--standalone {
+  text-decoration: none;
+}
+
+.swc-Link--quiet.swc-Link--standalone:hover {
+  text-decoration: underline;
+}

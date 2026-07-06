@@ -41,6 +41,12 @@
     "./global-elements.css": {
       "default": "./dist/global-elements.css"
     },
+    "./global-link.css": {
+      "default": "./dist/global-link.css"
+    },
+    "./link.css": {
+      "default": "./dist/link.css"
+    },
     "./patterns/*": {
       "types": "./dist/patterns/*/index.d.ts",
       "import": "./dist/patterns/*/index.js"
@@ -58,7 +64,7 @@
   "scripts": {
     "analyze": "cem analyze --config cem.config.js",
     "analyze:watch": "cem analyze --config cem.config.js --watch",
-    "build": "vite build",
+    "build": "yarn analyze && vite build",
     "clean": "rimraf dist",
     "dev": "vite build --watch",
     "dev:core": "yarn workspace @spectrum-web-components/core dev",

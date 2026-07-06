@@ -9,11 +9,12 @@ import * as IllustratedMessageStories from './stories/illustrated-message.storie
 
 ## Anatomy
 
-An illustrated message consists of three slots:
+An illustrated message consists of four slots:
 
 1. **Default slot**: decorative or informative SVG illustration displayed above (vertical) or beside (horizontal) the heading and description. Decorative SVGs must have `aria-hidden="true"`. Informative SVGs must have `role="img"` and `aria-label`.
 2. **`heading` slot**: consumer-provided `<h2>`–`<h6>` element. The component does not own the heading tag; the consumer chooses the level to match the document outline. The component warns in development if a non-heading element is used.
-3. **`description` slot** (optional): supporting text that elaborates on the heading. May contain phrasing content, links, or action elements.
+3. **`description` slot** (optional): supporting text that elaborates on the heading. May contain phrasing content or links.
+4. **`actions` slot** (optional): one or more interactive controls displayed below the description. The component automatically propagates its `size` to slotted elements.
 
 <Canvas of={IllustratedMessageStories.Anatomy} />
 
@@ -52,6 +53,12 @@ Common patterns:
 
 ## Behaviors
 
+### Actions
+
+The `actions` slot accepts one or more interactive controls displayed below the description. The illustrated message automatically propagates its `size` to every slotted element so buttons remain visually consistent without manual coordination. Use a single `<swc-button>` for a primary call-to-action, or a `<swc-button-group>` when two actions are needed.
+
+<Canvas of={IllustratedMessageStories.Actions} />
+
 ### Description with link
 
 Place an `<a>` element inside the `description` slot to provide a call-to-action link alongside the supporting text.
@@ -75,11 +82,5 @@ The `<swc-illustrated-message>` element implements the following accessibility f
 - Choose the heading level (`h2`–`h6`) that fits the surrounding document outline, not based on visual size.
 
 <Canvas of={IllustratedMessageStories.IllustrationAccessibility} />
-
-## Upcoming features
-
-### Button group slot
-
-- Add a group of action buttons alongside the heading and description using the `button-group` slot
 
 <DocsFooter />

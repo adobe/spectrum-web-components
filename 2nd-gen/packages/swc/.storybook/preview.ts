@@ -28,6 +28,7 @@ import { transformDocsSource } from './utils/docs-source-transform.js';
 
 import '../stylesheets/swc.css';
 import '../stylesheets/typography.css';
+import '../stylesheets/link.css';
 import '../stylesheets/global/global-elements.css';
 import './assets/preview.css';
 
@@ -333,19 +334,17 @@ const preview = {
               'Components',
               [
                 'Accordion',
+                ['Accessibility migration analysis', 'Migration plan'],
+                'Action button',
                 [
                   'Accessibility migration analysis',
                   'Migration plan',
                   'Rendering and styling migration analysis',
                 ],
-                'Action button',
-                [
-                  'Accessibility migration analysis',
-                  'Rendering and styling migration analysis',
-                ],
                 'Action group',
                 [
                   'Accessibility migration analysis',
+                  'Migration plan',
                   'Rendering and styling migration analysis',
                 ],
                 'Action menu',
@@ -393,6 +392,7 @@ const preview = {
                 'Color handle',
                 [
                   'Accessibility migration analysis',
+                  'Migration plan',
                   'Rendering and styling migration analysis',
                 ],
                 'Color loupe',
@@ -407,7 +407,10 @@ const preview = {
                   'Rendering and styling migration analysis',
                 ],
                 'Dropzone',
-                ['Rendering and styling migration analysis'],
+                [
+                  'Accessibility migration analysis',
+                  'Rendering and styling migration analysis',
+                ],
                 'Field group',
                 ['Rendering and styling migration analysis'],
                 'Field label',
@@ -474,6 +477,7 @@ const preview = {
                 'Progress bar',
                 [
                   'Accessibility migration analysis',
+                  'Migration plan',
                   'Rendering and styling migration analysis',
                 ],
                 'Progress circle',
@@ -485,6 +489,8 @@ const preview = {
                 ['Rendering and styling migration analysis'],
                 'Search',
                 ['Rendering and styling migration analysis'],
+                'Sidenav',
+                ['Accessibility migration analysis'],
                 'Slider',
                 ['Rendering and styling migration analysis'],
                 'Status light',

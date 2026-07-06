@@ -382,8 +382,16 @@ function mergeRules(container) {
  *
  * @param {import('postcss').Root} root
  * @param {string} block
+ * @param {string[]} textElements - Child element suffixes (e.g. ['label']) whose
+ *   classes should also receive all:revert-layer, protecting inherited typographic
+ *   properties on light-DOM text nodes from unlayered application CSS.
  */
-function wrapInLayer(root, block) {
+function wrapInLayer(root, block, textElements = []) {
+  if (!Array.isArray(textElements)) {
+    throw new TypeError(
+      `[vite-global-elements-css] textElements must be a string array (got ${typeof textElements})`
+    );
+  }
   /** @type {import('postcss').ChildNode[]} */
   const children = [];
   root.each((node) => children.push(node));
@@ -396,15 +404,21 @@ function wrapInLayer(root, block) {
     params: LAYER,
     raws: { afterName: ' ', between: ' ', after: '\n' },
   });
-  for (const node of children) {
+  for (const [i, node] of children.entries()) {
+    node.raws.before = i === 0 ? '' : '\n\n';
     layer.append(node);
   }
   root.append(layer);
 
-  // Escape-hatch rule outside the layer. Allows page styles on .block to
-  // revert any property to the layer-defined value rather than being
-  // overridden by unlayered application CSS.
-  const revert = postcss.rule({ selector: `.${block}` });
+  // Escape-hatch rule outside the layer. Allows page styles on .block (and any
+  // listed text-bearing child element classes) to revert any property to the
+  // layer-defined value rather than being overridden by unlayered application CSS.
+  const revertSelectors = [
+    `.${block}`,
+    ...textElements.map((suffix) => `.${block}-${suffix}`),
+  ].join(',\n');
+  const revert = postcss.rule({ selector: revertSelectors });
+  revert.raws.before = '\n\n';
   revert.append(
     postcss.decl({ prop: 'all', value: 'revert-layer !important' })
   );
@@ -423,9 +437,11 @@ function wrapInLayer(root, block) {
  *
  * @param {string} sourceCss - Concatenated raw CSS (base + component, token() calls intact).
  * @param {string} block - BEM block class name, e.g. 'swc-Button'.
+ * @param {string[]} [textElements] - Child element suffixes (e.g. ['label']) whose classes
+ *   should also receive all:revert-layer alongside the root block.
  * @returns {string}
  */
-export function deriveCSS(sourceCss, block) {
+export function deriveCSS(sourceCss, block, textElements = []) {
   const root = postcss.parse(sourceCss);
   if (!stripExcludedBlocks(root)) {
     throw new Error(
@@ -435,7 +451,7 @@ export function deriveCSS(sourceCss, block) {
   stripComments(root);
   applySelectTransform(root, block);
   mergeRules(root);
-  wrapInLayer(root, block);
+  wrapInLayer(root, block, textElements);
   return root.toResult({ map: false }).css;
 }
 
@@ -558,7 +574,13 @@ function generateEntry(entry, projectRoot) {
     .join('\n\n');
 
   const block = getBlock(entry);
-  const derived = deriveCSS(combined, block);
+  const textElements = entry.textElements ?? [];
+  if (!Array.isArray(textElements)) {
+    throw new TypeError(
+      `[vite-global-elements-css] entry.textElements must be a string array (got ${typeof textElements} for component '${entry.component}')`
+    );
+  }
+  const derived = deriveCSS(combined, block, textElements);
   const out = getOutputPath(entry, projectRoot);
   const sourcePath = relative(projectRoot, src);
 

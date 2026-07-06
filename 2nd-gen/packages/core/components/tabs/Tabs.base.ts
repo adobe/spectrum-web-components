@@ -484,9 +484,12 @@ export abstract class TabsBase extends SpectrumElement {
     const listRect = tablist.getBoundingClientRect();
 
     if (this._direction === 'horizontal') {
-      const left = tabRect.left - listRect.left;
+      const isRtl = getComputedStyle(this).direction === 'rtl';
+      const offset = isRtl
+        ? tabRect.right - listRect.right
+        : tabRect.left - listRect.left;
       const scale = tabRect.width / TabsBase.INDICATOR_BASE_SIZE;
-      this.selectionIndicatorStyle = `transform: translateX(${left}px) scaleX(${scale})`;
+      this.selectionIndicatorStyle = `transform: translateX(${offset}px) scaleX(${scale})`;
     } else {
       const top = tabRect.top - listRect.top;
       const scale = tabRect.height / TabsBase.INDICATOR_BASE_SIZE;
@@ -501,6 +504,19 @@ export abstract class TabsBase extends SpectrumElement {
 
   /** @internal */
   private _resizeObserver?: ResizeObserver;
+
+  /**
+   * @internal
+   *
+   * Watches for `dir` attribute changes so the indicator recalculates
+   * when writing direction flips at runtime. `getComputedStyle` in
+   * `updateSelectionIndicator` resolves inherited direction correctly,
+   * but nothing else observes it: a `dir` flip on the document root or
+   * an ancestor doesn't resize this element, so the `ResizeObserver`
+   * below won't catch it. Mirrors the `dir`-watching pattern in
+   * `placement-controller.ts`.
+   */
+  private _directionObserver?: MutationObserver;
 
   // ───────────────────────────────────
   //     LIFECYCLE
@@ -584,6 +600,20 @@ export abstract class TabsBase extends SpectrumElement {
       this.updateSelectionIndicator();
     });
     this._resizeObserver.observe(this);
+
+    this._directionObserver = new MutationObserver(() => {
+      this.updateSelectionIndicator();
+    });
+    const observeDir = (node: Element | null | undefined) => {
+      if (node) {
+        this._directionObserver?.observe(node, {
+          attributes: true,
+          attributeFilter: ['dir'],
+        });
+      }
+    };
+    observeDir(this.ownerDocument.documentElement);
+    observeDir(this.closest('[dir]'));
   }
 
   public override disconnectedCallback(): void {
@@ -600,6 +630,8 @@ export abstract class TabsBase extends SpectrumElement {
     }
     this._resizeObserver?.disconnect();
     this._resizeObserver = undefined;
+    this._directionObserver?.disconnect();
+    this._directionObserver = undefined;
     super.disconnectedCallback();
   }
 

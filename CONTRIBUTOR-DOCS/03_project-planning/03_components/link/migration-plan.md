@@ -288,64 +288,64 @@ Planned rendering shape (native-`<a>` model — **preferred**):
 
 ### Preparation (this ticket)
 
-- [ ] 1st-gen API surface documented
-- [ ] Dependencies identified
-- [ ] Breaking changes documented
-- [ ] 2nd-gen API decisions drafted
-- [ ] Plan reviewed by at least one other engineer
+- [x] 1st-gen API surface documented
+- [x] Dependencies identified
+- [x] Breaking changes documented
+- [x] 2nd-gen API decisions drafted
+- [x] Plan reviewed by at least one other engineer
 
 ### Setup
 
-- [ ] Implement [Recommended packaging (default)](#recommended-packaging-default): `link.css`, typography **generator** updates (`.swc-Typography--links` / `--prose` + `:where(a)`), optional `global-link.css` — no `@import` of `link.css` into `typography.css`
-- [ ] If a new package is created: wire exports in the relevant `package.json` files
-- [ ] Check out `spectrum-css` at `spectrum-two` branch as sibling directory
+- [x] Implement [Recommended packaging (default)](#recommended-packaging-default): `link.css`, typography **generator** updates (`.swc-Typography--links` / `--prose` + `:where(a)`), optional `global-link.css` — no `@import` of `link.css` into `typography.css`
+- [x] If a new package is created: wire exports in the relevant `package.json` files
+- [x] Check out `spectrum-css` at `spectrum-two` branch as sibling directory
 
 ### API
 
 #### Naming and public surface
 
 - [x] Publish author-facing decision: **native `<a>`** only (**Q2** resolved)
-- [ ] ~~If CE path: define `Link.types.ts` / base~~ **N/A** — no CE
+- [x] ~~If CE path: define `Link.types.ts` / base~~ **N/A** — no CE
 
 #### Alignment checks
 
-- [ ] Align prose examples with [React Spectrum Link](https://react-spectrum.adobe.com/Link) naming where applicable
+- [x] Align prose examples with [React Spectrum Link](https://react-spectrum.adobe.com/Link) naming where applicable
 - [x] **Q1:** Figma parity — confirmed overview / properties / variants at [S2 / Web — Link (`18850-110`)](https://www.figma.com/design/Mngz9H7WZLbrCvGQf3GnsY/S2---Web--Desktop-scale-?node-id=18850-110)
 
 ### Styling
 
 > Follow the [CSS style guide](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/) as the source of truth for all styling work. Key references: [migration steps](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/04_spectrum-swc-migration.md), [custom properties](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md), [anti-patterns](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/05_anti-patterns.md).
 
-- [ ] ~~If a CE exists: add `.swc-Link`~~ **N/A** — no CE (**Q2**)
-- [ ] Copy S2 source from `spectrum-css` `spectrum-two` branch [`components/link/index.css`](https://github.com/adobe/spectrum-css/tree/spectrum-two/components/link) (not `/dist`) into the chosen 2nd-gen stylesheet entry point
-- [ ] Implement **inline** modifier parity called out in [rendering analysis](./rendering-and-styling-migration-analysis.md)
+- [x] ~~If a CE exists: add `.swc-Link`~~ **N/A** — no CE (**Q2**)
+- [x] Copy S2 source from `spectrum-css` `spectrum-two` branch [`components/link/index.css`](https://github.com/adobe/spectrum-css/tree/spectrum-two/components/link) (not `/dist`) into the chosen 2nd-gen stylesheet entry point
+- [x] Implement **inline** modifier parity called out in [rendering analysis](./rendering-and-styling-migration-analysis.md)
 
 #### Visual model and regressions
 
-- [ ] Verify i18n size modifiers (`:lang(ja)`, `:lang(ko)`, `:lang(zh)`) if present in S2 source
-- [ ] Add `@cssprop` JSDoc on any **new** exposed `--swc-*` tokens (likely on Typography / prose entry if no Link CE)
-- [ ] Pass stylelint (property order, `no-descending-specificity`, token validation)
+- [x] Verify i18n size modifiers (`:lang(ja)`, `:lang(ko)`, `:lang(zh)`) if present in S2 source
+- [x] Add `@cssprop` JSDoc on any **new** exposed `--swc-*` tokens (likely on Typography / prose entry if no Link CE)
+- [x] Pass stylelint (property order, `no-descending-specificity`, token validation)
 
 ### Accessibility
 
 #### Naming and semantics
 
-- [ ] Ship docs + examples per [accessibility migration analysis](./accessibility-migration-analysis.md) checklist (native `<a>`, quiet scope, no `disabled` on links)
-- [ ] Cross-link [Semantic HTML and ARIA](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/semantic_html_aria.mdx) from Typography / Link docs
+- [x] Ship docs + examples per [accessibility migration analysis](./accessibility-migration-analysis.md) checklist (native `<a>`, quiet scope, no `disabled` on links)
+- [x] Cross-link [Semantic HTML and ARIA](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/semantic_html_aria.mdx) from Typography / Link docs
 
 #### State verification
 
-- [ ] Validate focus-visible in prose on light / dark / static-color backgrounds
+- [x] Validate focus-visible in prose on light / dark / static-color backgrounds
 - [ ] Confirm no regression on [SWC-1160](https://jira.corp.adobe.com/browse/SWC-1160) class of issues
 
 ### Testing
 
-- [ ] Port applicable assertions from [`1st-gen/packages/link/test/link.test.ts`](../../../../1st-gen/packages/link/test/link.test.ts) **only if** a CE remains; otherwise replace with **native `<a>`** fixture tests in typography / pattern packages
-- [ ] Add Playwright coverage for prose + links (`toMatchAriaSnapshot`) in the package that owns prose styles
+- [x] Port applicable assertions from [`1st-gen/packages/link/test/link.test.ts`](../../../../1st-gen/packages/link/test/link.test.ts) **only if** a CE remains; otherwise replace with **native `<a>`** fixture tests in typography / pattern packages
+- [x] Add Playwright coverage for prose + links (`toMatchAriaSnapshot`) in the package that owns prose styles
 
 #### Behavior
 
-- [ ] Regression guard: single navigation per user gesture (patterns from [SWC-923](https://jira.corp.adobe.com/browse/SWC-923), [SWC-921](https://jira.corp.adobe.com/browse/SWC-921))
+- [x] Regression guard: single navigation per user gesture (patterns from [SWC-923](https://jira.corp.adobe.com/browse/SWC-923), [SWC-921](https://jira.corp.adobe.com/browse/SWC-921))
 
 #### Visual regression
 
@@ -356,25 +356,25 @@ Planned rendering shape (native-`<a>` model — **preferred**):
 
 #### General
 
-- [ ] JSDoc / MDX for public CSS entries in **`link.css`** (no CE — **Q2**)
-- [ ] **Link docs callout (no story duplication):** document that default anchor appearance comes from **Typography** (`typography.css`, **`.swc-Typography--prose`**, **`.swc-Typography--links`**) and that **`link.css`** is for BEM modifier classes; cross-link [Typography migration guide](../../../../2nd-gen/packages/swc/components/typography/migration-guide.mdx) — **do not** copy the full Typography Storybook surface under Link
-- [ ] Prose / in-body `<a href>` patterns remain documented in **Typography** stories and migration guide (per accessibility analysis)
+- [x] JSDoc / MDX for public CSS entries in **`link.css`** (no CE — **Q2**)
+- [x] **Link docs callout (no story duplication):** document that default anchor appearance comes from **Typography** (`typography.css`, **`.swc-Typography--prose`**, **`.swc-Typography--links`**) and that **`link.css`** is for BEM modifier classes; cross-link [Typography migration guide](../../../../2nd-gen/packages/swc/components/typography/migration-guide.mdx) — **do not** copy the full Typography Storybook surface under Link
+- [x] Prose / in-body `<a href>` patterns remain documented in **Typography** stories and migration guide (per accessibility analysis)
 
 #### Storybook (Typography)
 
-- [ ] Add **one** Typography story: **link list** use case — `<ul class="swc-Typography--links">` with **~3** `<li>` items, each with an `<a href>` (footers / sidebars pattern)
-- [ ] Confirm existing Typography **prose** story(ies) show `<a href>` inside running text (no separate Link storybook package required)
-- [ ] **A2:** static-color / on-image link demos live under Typography or `link.css` stories as needed — not a second full catalog
+- [x] Add **one** Typography story: **link list** use case — `<ul class="swc-Typography--links">` with **~3** `<li>` items, each with an `<a href>` (footers / sidebars pattern)
+- [x] Confirm existing Typography **prose** story(ies) show `<a href>` inside running text (no separate Link storybook package required)
+- [x] **A2:** static-color / on-image link demos live under Typography or `link.css` stories as needed — not a second full catalog
 
 #### Breaking changes
 
-- [ ] Migration guide section: `sp-link` → native `<a>` + classes; `disabled` removal; quiet usage guidance; import path **`@adobe/spectrum-wc/typography.css`** (+ optional **`link.css`**)
+- [x] Migration guide section: `sp-link` → native `<a>` + classes; `disabled` removal; quiet usage guidance; import path **`@adobe/spectrum-wc/typography.css`** (+ optional **`link.css`**)
 
 ### Review
 
-- [ ] `yarn lint:2nd-gen` passes (ESLint, Stylelint, Prettier)
-- [ ] Status table in workstream doc updated
-- [ ] PR created with description referencing Epic [SWC-1956](https://jira.corp.adobe.com/browse/SWC-1956)
+- [ ] `yarn lint:2nd-gen` passes (ESLint, Stylelint, Prettier) — link CSS and docs pass stylelint/prettier; repo-wide ESLint has pre-existing failures unrelated to Link
+- [x] Status table in workstream doc updated
+- [x] PR created with description referencing Epic [SWC-1956](https://jira.corp.adobe.com/browse/SWC-1956)
 - [ ] Peer engineer sign-off
 
 ---

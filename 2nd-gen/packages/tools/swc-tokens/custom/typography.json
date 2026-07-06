@@ -11,7 +11,7 @@
     "value": "{code-font-family-stack}"
   },
   "code-font-family-stack": {
-    "value": "'{code-font-family}',  Monaco, monospace"
+    "value": "source-code-pro, '{code-font-family}',  Monaco, monospace"
   },
   "font-family": {
     "skipResolution": true,

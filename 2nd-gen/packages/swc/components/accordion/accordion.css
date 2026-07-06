@@ -1,0 +1,80 @@
+/**
+ * Copyright 2026 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+:host {
+  display: block;
+  min-inline-size: var(--swc-accordion-min-inline-size, token("accordion-minimum-width"));
+}
+
+.swc-Accordion {
+  --_swc-accordion-corner-radius: token("corner-radius-medium-size-medium");
+}
+
+/* Corner radius per size: cascades to child items so quiet mode resolves correctly */
+:host([size="s"]) .swc-Accordion {
+  --_swc-accordion-corner-radius: token("corner-radius-medium-size-small");
+}
+
+:host([size="l"]) .swc-Accordion {
+  --_swc-accordion-corner-radius: token("corner-radius-medium-size-large");
+}
+
+:host([size="xl"]) .swc-Accordion {
+  --_swc-accordion-corner-radius: token("corner-radius-medium-size-extra-large");
+}
+
+/* Quiet: removes dividers and rounds header corners (visible on hover and focus) */
+:host([quiet]) ::slotted(swc-accordion-item) {
+  --swc-accordion-item-divider-color: transparent;
+  --swc-accordion-item-header-corner-radius: var(--_swc-accordion-corner-radius);
+}
+
+/* Compact & spacious density: overrides cascade to slotted items */
+:host([density="compact"]) ::slotted(swc-accordion-item) {
+  --swc-accordion-item-padding-top: token("base-padding-vertical-medium");
+  --swc-accordion-item-padding-bottom: token("base-padding-vertical-medium");
+}
+
+:host([density="spacious"]) ::slotted(swc-accordion-item) {
+  --swc-accordion-item-padding-top: token("base-padding-vertical-extra-large");
+  --swc-accordion-item-padding-bottom: token("base-padding-vertical-extra-large");
+}
+
+:host([density="compact"][size="s"]) ::slotted(swc-accordion-item) {
+  --swc-accordion-item-padding-top: token("base-padding-vertical-small");
+  --swc-accordion-item-padding-bottom: token("base-padding-vertical-small");
+}
+
+:host([density="compact"][size="l"]) ::slotted(swc-accordion-item) {
+  --swc-accordion-item-padding-top: token("base-padding-vertical-large");
+  --swc-accordion-item-padding-bottom: token("base-padding-vertical-large");
+}
+
+:host([density="compact"][size="xl"]) ::slotted(swc-accordion-item) {
+  --swc-accordion-item-padding-top: token("base-padding-vertical-extra-large");
+  --swc-accordion-item-padding-bottom: token("base-padding-vertical-extra-large");
+}
+
+:host([density="spacious"][size="s"]) ::slotted(swc-accordion-item) {
+  --swc-accordion-item-padding-top: token("base-padding-vertical-large");
+  --swc-accordion-item-padding-bottom: token("base-padding-vertical-large");
+}
+
+:host([density="spacious"][size="l"]) ::slotted(swc-accordion-item) {
+  --swc-accordion-item-padding-top: token("base-padding-vertical-2x-large");
+  --swc-accordion-item-padding-bottom: token("base-padding-vertical-2x-large");
+}
+
+:host([density="spacious"][size="xl"]) ::slotted(swc-accordion-item) {
+  --swc-accordion-item-padding-top: token("base-padding-vertical-3x-large");
+  --swc-accordion-item-padding-bottom: token("base-padding-vertical-3x-large");
+}

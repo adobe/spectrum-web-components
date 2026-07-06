@@ -72,9 +72,18 @@
 
 ### 1. `:host` vs Component Class
 
-Put only layout-participation styles on `:host`. Put actual visuals on `.swc-ComponentName` or internal parts.
+Put layout-participation styles on `:host` (`display`, `inline-size`, `min-*`/`max-*`, `position`, custom property definitions). Put visual styles on `.swc-ComponentName` or an internal part.
 
-**Exception**: three categories of styles may legitimately live on `:host` — each for a distinct reason: UA resets when the browser applies default styles directly to the host element (for example, the native popover stylesheet); transition properties (`opacity`, `transition-*`, `transition-behavior: allow-discrete`) when the host is itself the transition target (for example, when `@starting-style` applies to the host); and positioning surface (`position: absolute`, `inset: auto`, dimension constraints) when an external controller such as a placement controller writes coordinates directly to the host element.
+**Exception**: three categories of styles may legitimately live on `:host`, each for a distinct reason: UA resets when the browser applies default styles directly to the host element (for example, the native popover stylesheet); transition properties (`opacity`, `transition-*`, `transition-behavior: allow-discrete`) when the host is itself the transition target (for example, when `@starting-style` applies to the host); and positioning surface (`position: absolute`, `inset: auto`, dimension constraints) when an external controller such as a placement controller writes coordinates directly to the host element.
+
+Two non-obvious cases to flag explicitly:
+
+- **`padding` on `:host`** — feels like layout but is visual spacing; move it to the internal class.
+- **`cursor: pointer`** — do not set it anywhere; the project relies on browser defaults.
+
+Also check that `display: flex` or `display: grid` on `:host` is actually laying out **direct children of `:host`**, not internal children already wrapped inside a container element. Flex/grid properties (`flex: 1 1 auto`, `align-self`) only activate when their **immediate parent** is the flex/grid container — if the element is inside a wrapper div, the flex context must be on that wrapper, not on `:host`.
+
+**`:host:has()` is unreliable across browsers.** Safari and Firefox do not consistently support `:has()` relative to a shadow host boundary. Move all `:has()` selectors to the internal wrapper: `.swc-Component:has(...)` instead of `:host:has(...)`. Custom properties cascade identically either way. See [01_component-css#state-implementation-patterns](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/01_component-css.md#state-implementation-patterns).
 
 → See [01_component-css#when-to-use-host](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/01_component-css.md#when-to-use-host)
 
@@ -136,6 +145,9 @@ Keep selector specificity at or below `(0,1,0)`. If you need a compounded select
 ### 7. Forced colors
 
 Only add `@media (forced-colors: active)` if browser defaults are not conveying correct semantic intent, and always put it at the end of the component stylesheet.
+
+Semantic HTML elements (`<button>`, `<input>`, `<a>`) get correct forced-colors treatment automatically — `ButtonText`, focus `Highlight`, disabled `GrayText` — without any CSS override. Only non-semantic elements (a decorative `<div>` or a `<span>` using `background-color` as a visual indicator) need explicit overrides. Do not carry over forced-colors rules from 1st-gen Spectrum CSS without first verifying the 2nd-gen component uses non-semantic markup that requires them.
+
 → See [01_component-css#forced-colors-requirements](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/01_component-css.md#forced-colors-requirements)
 
 ### 8. Browser API selectors
