@@ -93,7 +93,7 @@
       >
         ${accessibleMenu}
       </sp-popover>
-    `)}onScroll(){this.dispatchEvent(new Event("scroll",{cancelable:!0,composed:!0}))}get renderMenu(){const menu=index_dev.qy`
+    `)}onScroll(){this.dispatchEvent(new Event("scroll"))}get renderMenu(){const menu=index_dev.qy`
       <sp-menu
         aria-labelledby="applied-label"
         @change=${this.handleChange}
@@ -144,4 +144,4 @@
     <circle cx="29.5" cy="18.2" r="3.4" />
     <circle cx="6.1" cy="18.2" r="3.4" />
   </svg>`}}]);
-//# sourceMappingURL=4300.c45b39cd.iframe.bundle.js.map
+//# sourceMappingURL=4300.206509ad.iframe.bundle.js.map
