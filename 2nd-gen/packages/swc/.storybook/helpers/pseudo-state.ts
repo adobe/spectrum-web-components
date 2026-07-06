@@ -30,24 +30,40 @@ const PSEUDO_TO_FORCED_CLASS: Record<string, string> = {
 export type ForcedPseudoState = 'hover' | 'focus-visible' | 'active';
 
 /** Shadow roots already given mirrored pseudo-class stylesheets. */
-const augmented = new WeakSet<ShadowRoot>();
+const augmentedRoots = new WeakSet<ShadowRoot>();
+/** Whether the document-level mirror <style> has already been injected. */
+let documentAugmented = false;
 
-function mirrorPseudoClassRules(sheet: CSSStyleSheet): CSSStyleSheet | null {
-  const rules: string[] = [];
-  for (const rule of sheet.cssRules) {
-    if (!(rule instanceof CSSStyleRule)) {
-      continue;
-    }
-    for (const [pseudo, forcedClass] of Object.entries(
-      PSEUDO_TO_FORCED_CLASS
-    )) {
-      if (rule.selectorText.includes(pseudo)) {
-        rules.push(
-          `${rule.selectorText.replaceAll(pseudo, forcedClass)} { ${rule.style.cssText} }`
+// Recurses into grouping rules (@media, @layer, @supports, @container) so a
+// mirrored rule stays nested the same way as the original — needed for
+// global-button.css, which wraps everything in `@layer swc-global-elements`.
+function collectMirroredRules(rules: CSSRuleList, out: string[]): void {
+  for (const rule of rules) {
+    if (rule instanceof CSSStyleRule) {
+      for (const [pseudo, forcedClass] of Object.entries(
+        PSEUDO_TO_FORCED_CLASS
+      )) {
+        if (rule.selectorText.includes(pseudo)) {
+          out.push(
+            `${rule.selectorText.replaceAll(pseudo, forcedClass)} { ${rule.style.cssText} }`
+          );
+        }
+      }
+    } else if ('cssRules' in rule) {
+      const inner: string[] = [];
+      collectMirroredRules((rule as CSSGroupingRule).cssRules, inner);
+      if (inner.length) {
+        out.push(
+          `${(rule as CSSRule).cssText.split('{')[0]}{ ${inner.join(' ')} }`
         );
       }
     }
   }
+}
+
+function mirrorPseudoClassRules(sheet: CSSStyleSheet): CSSStyleSheet | null {
+  const rules: string[] = [];
+  collectMirroredRules(sheet.cssRules, rules);
   if (!rules.length) {
     return null;
   }
@@ -57,10 +73,10 @@ function mirrorPseudoClassRules(sheet: CSSStyleSheet): CSSStyleSheet | null {
 }
 
 function augmentShadowRoot(root: ShadowRoot): void {
-  if (augmented.has(root)) {
+  if (augmentedRoots.has(root)) {
     return;
   }
-  augmented.add(root);
+  augmentedRoots.add(root);
   const mirrors = root.adoptedStyleSheets
     .map(mirrorPseudoClassRules)
     .filter((sheet): sheet is CSSStyleSheet => sheet !== null);
@@ -69,10 +85,36 @@ function augmentShadowRoot(root: ShadowRoot): void {
   }
 }
 
+// Global-element styles (e.g. global-button.css) apply via a real page-level
+// stylesheet in `document.styleSheets`, not a shadow root's adopted
+// stylesheets, so they need a separate mirroring pass injected as a <style>
+// element rather than an adopted sheet.
+function augmentDocument(): void {
+  if (documentAugmented) {
+    return;
+  }
+  documentAugmented = true;
+  const rules: string[] = [];
+  for (const sheet of document.styleSheets) {
+    try {
+      collectMirroredRules(sheet.cssRules, rules);
+    } catch {
+      // Cross-origin stylesheets throw on cssRules access; nothing we can do.
+      continue;
+    }
+  }
+  if (!rules.length) {
+    return;
+  }
+  const style = document.createElement('style');
+  style.textContent = rules.join('\n');
+  document.head.appendChild(style);
+}
+
 /**
  * Forces `state`'s visual appearance on `host`. Call after `host` has rendered (its
- * shadow root must already have its adopted stylesheets in place — true as soon as
- * the element is connected and updated).
+ * styles must already be in place — true as soon as the element is connected and
+ * updated).
  *
  * Some components style pseudo-states on an internal shadow part (e.g. Button's
  * `.swc-Button:hover`) — pass `internalSelector` for those, and the forced class is
@@ -81,6 +123,11 @@ function augmentShadowRoot(root: ShadowRoot): void {
  * Either way, the mirrored rule lives in the *same* shadow root's adopted
  * stylesheets, so `:host(:hover)` naturally still matches against `host`'s own class
  * list even though the rule was defined inside its own shadow tree.
+ *
+ * Plain elements with no shadow root (e.g. native `<a>`/`<button>` styled via
+ * global-button.css's classes) are mirrored from `document.styleSheets`
+ * instead, and the forced class is always added to `host` itself —
+ * `internalSelector` doesn't apply there.
  */
 export function forcePseudoState(
   host: Element,
@@ -88,6 +135,8 @@ export function forcePseudoState(
   internalSelector?: string
 ): void {
   if (!host.shadowRoot) {
+    augmentDocument();
+    host.classList.add(`is-${state}`);
     return;
   }
   augmentShadowRoot(host.shadowRoot);
