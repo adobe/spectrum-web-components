@@ -92,7 +92,11 @@ export type SelectionControllerOptions = {
    * the **`onSelectionChange`** mirror) is rolled back to the prior selection and no change event
    * is dispatched. Omit for unconditional commits. Not called for transitions committed with
    * **`{ silent: true }`** (see {@link SelectionController.setSelectedItem} and
-   * {@link SelectionController.refresh}).
+   * {@link SelectionController.refresh}), nor for transitions this controller makes to enforce
+   * its own invariants — removing a disconnected item on **`refresh`**, normalizing a **`mode`**
+   * switch via **`setOptions`**, and asserting **`defaultToFirstSelectable`** are never vetoable,
+   * since reverting any of them would leave the controller violating the invariant it was
+   * enforcing.
    */
   confirmSelectionChange?: (
     detail: SelectionControllerConfirmDetail
@@ -333,7 +337,9 @@ export class SelectionController implements ReactiveController {
       const [first] = this.selectedItems;
       const toRemove = Array.from(this.selectedItems).slice(1);
       const candidate = first ? [first] : [];
-      this.applySelectionTransition(candidate, toRemove);
+      // force: normalizing for the new mode is this controller enforcing its
+      // own invariant, not a selection a consumer should be able to veto.
+      this.applySelectionTransition(candidate, toRemove, { force: true });
     }
 
     this.syncInteractionListeners();
@@ -489,10 +495,13 @@ export class SelectionController implements ReactiveController {
     );
 
     if (stale.length > 0) {
+      // force: removing a disconnected/ineligible item is this controller
+      // enforcing its own invariant, not a selection a consumer should be
+      // able to veto.
       const next = Array.from(this.selectedItems).filter(
         (el) => !stale.includes(el)
       );
-      this.applySelectionTransition(next, stale, { silent });
+      this.applySelectionTransition(next, stale, { silent, force: true });
     }
 
     const isSingle =
@@ -503,13 +512,18 @@ export class SelectionController implements ReactiveController {
       this.selectedItems.size === 0 &&
       eligible.length > 0
     ) {
-      this.applySelectionTransition([eligible[0]], [], { silent });
+      // force: same reasoning — defaultToFirstSelectable exists specifically
+      // to guarantee a selection exists; a veto would leave that unmet.
+      this.applySelectionTransition([eligible[0]], [], { silent, force: true });
     }
   }
 
   public hostConnected(): void {
     this.syncInteractionListeners();
-    this.refresh();
+    // Silent: this runs during connectedCallback, before the host's first
+    // render — a consumer's confirmSelectionChange (and any event it
+    // dispatches) firing this early would be surprising and premature.
+    this.refresh({ silent: true });
   }
 
   public hostDisconnected(): void {
@@ -570,19 +584,34 @@ export class SelectionController implements ReactiveController {
    * **`onSelectionChange`** call so external mirrors roll back too. Lit batches property updates
    * into a microtask, so an apply-then-synchronously-revert never paints the intermediate state.
    *
+   * Because a revert restores **`priorItems`** exactly, **`selectItem`** / **`deselectItem`** (and
+   * **`onSelectionChange`**) may run for a transition that a moment later turns out not to have
+   * happened. Keep them idempotent and side-effect-light beyond reflecting state — safe for
+   * something like setting an attribute, risky for something like an analytics call or a counter.
+   *
    * The added/removed short-circuit below is computed against this controller's own cached
    * **`selectedItems`**, which is only trustworthy when this controller is the sole mutator of
    * selected-ish state (true for interactive, non-silent transitions). Silent transitions exist
    * specifically to reconcile from participants whose state can change independently of this
    * controller, so that cache may be stale — silent calls always proceed to {@link applyMutators}
    * rather than trusting a diff against it.
+   *
+   * **`force`** (internal only — never exposed on the public **`{ silent }`** options bag) skips
+   * **`confirmSelectionChange`** the same way **`silent`** does, but leaves the public event
+   * dispatch alone. It exists for transitions that enforce this controller's *own* invariants
+   * (removing a disconnected item, normalizing a mode switch, asserting
+   * **`defaultToFirstSelectable`**) rather than representing a selection a consumer chose to
+   * make. Those must never be vetoable: reverting one would leave the controller violating the
+   * very invariant it was enforcing (for example more than one item selected while
+   * **`mode: 'single'`**, or a disconnected element still in the selection set).
    */
   private applySelectionTransition(
     next: HTMLElement[],
     removedItems: HTMLElement[],
-    options?: { silent?: boolean }
+    options?: { silent?: boolean; force?: boolean }
   ): boolean {
     const silent = options?.silent ?? false;
+    const force = options?.force ?? false;
     const priorItems = Array.from(this.selectedItems);
     const addedItems = next.filter((el) => !this.selectedItems.has(el));
 
@@ -597,7 +626,7 @@ export class SelectionController implements ReactiveController {
       removedItems,
     });
 
-    if (!silent && this.options.confirmSelectionChange) {
+    if (!silent && !force && this.options.confirmSelectionChange) {
       const ok = this.options.confirmSelectionChange({
         candidateItems: next,
         priorItems,
