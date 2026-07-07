@@ -10,7 +10,7 @@
  * governing permissions and limitations under the License.
  */
 import { html } from 'lit';
-import { expect } from '@storybook/test';
+import { expect, waitFor } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import { ProgressBar } from '@adobe/spectrum-wc/progress-bar';
@@ -284,8 +284,13 @@ export const DescriptionPresentTest: Story = {
       async () => {
         // Remove the description slot content to verify the attribute is absent.
         progressBar.querySelector('[slot="description"]')?.remove();
-        await progressBar.updateComplete;
-        expect(roleEl.hasAttribute('aria-describedby')).toBe(false);
+        // Presence detection runs through a MutationObserver, which then
+        // schedules a deferred re-render, so a single `updateComplete` is not
+        // enough; poll until the attribute is dropped. Timing of the observer
+        // callback varies across engines (notably WebKit).
+        await waitFor(() =>
+          expect(roleEl.hasAttribute('aria-describedby')).toBe(false)
+        );
       }
     );
   },
