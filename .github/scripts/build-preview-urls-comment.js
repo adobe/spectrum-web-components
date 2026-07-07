@@ -84,15 +84,18 @@ export const buildPreviewURLComment = (prNumber) => {
   // Documentation and Storybook URLs
   const docsFirstGenUrl = `${baseUrl}/${prHash}/docs/first-gen-docs/`;
   const storybookFirstGenUrl = `${baseUrl}/${prHash}/docs/first-gen-storybook/`;
-  const storybookSecondGenUrl = `${baseUrl}/${prHash}/docs/second-gen-storybook/`;
+  const storybookSecondGenDevUrl = `${baseUrl}/${prHash}/docs/second-gen-storybook-dev/`;
+  const storybookSecondGenProdUrl = `${baseUrl}/${prHash}/docs/second-gen-storybook-prod/`;
 
   let comment = `## 📚 Branch Preview Links
 
-- [Documentation Site (first-gen)](${docsFirstGenUrl})
-- [Storybook (first-gen)](${storybookFirstGenUrl})
-- [Storybook (second-gen)](${storybookSecondGenUrl})
+- [Documentation Site (Gen1)](${docsFirstGenUrl})
+- [Storybook (Gen1)](${storybookFirstGenUrl})
+- [Storybook (Gen2, dev mode)](${storybookSecondGenDevUrl})
+- [Storybook (Gen2, prod mode)](${storybookSecondGenProdUrl})
 
-<h3><strong>🔍 First Generation Visual Regression Test Results</strong></h3>
+<details>
+<summary><strong>🔍 Gen1 Visual Regression Test Results</strong></summary>
 
 When a visual regression test fails (or has previously failed while working on this branch), its results can be found in the following URLs:
 
@@ -100,8 +103,10 @@ ${previewLinks.join('')}
 
 *Deployed to Azure Blob Storage: \`${prHash}\`*
 
-If the changes are expected, update the <code>current_golden_images_cache</code> hash in the circleci config to accept the new images. Instructions are included in that file. 
+If the changes are expected, update the <code>current_golden_images_cache</code> hash in the circleci config to accept the new images. Instructions are included in that file.
 If the changes are unexpected, you can investigate the cause of the differences and update the code accordingly.
+
+</details>
 `;
   return comment;
 };
