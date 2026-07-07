@@ -445,8 +445,10 @@ export abstract class TooltipBase
   // not for the whole connected lifetime: the tooltip is non-interactive and
   // never receives focus, so a host-level keydown would not fire, and scoping to
   // the open state keeps at most one listener active at a time (popover="auto"
-  // permits one open tooltip). This is a testability backstop; native
-  // popover="auto" Escape dismissal is the primary mechanism.
+  // permits one open tooltip). Under `popover="auto"` this duplicates the
+  // browser's native Escape light-dismiss; it is kept as a mode-independent
+  // handler so a `manual` tooltip (which gets no native light-dismiss, e.g. one
+  // that coexists with an open popover) still closes on Escape.
   private readonly handleKeyDown = (event: KeyboardEvent): void => {
     if (event.key === 'Escape' && this.open) {
       this.open = false;
