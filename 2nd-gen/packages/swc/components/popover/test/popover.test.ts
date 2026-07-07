@@ -460,6 +460,53 @@ export const ActualPlacementTest: Story = {
   },
 };
 
+export const ActualPlacementFlipTest: Story = {
+  // The trigger is pinned to the top of the viewport (position: fixed) so a
+  // placement="top" popover has no room above; the flip middleware resolves to
+  // "bottom" and onPlacementChange reflects actual-placement="bottom".
+  render: () => html`
+    <div
+      style="position: fixed; top: 0; left: 50%; transform: translateX(-50%); z-index: 100;"
+    >
+      <button id="flip-trigger">Trigger</button>
+      <swc-popover
+        for="flip-trigger"
+        placement="top"
+        accessible-label="Flips to bottom"
+      >
+        Content that flips to the opposite side
+      </swc-popover>
+    </div>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const popover = await getComponent<Popover>(canvasElement, 'swc-popover');
+    await popover.updateComplete;
+
+    await step(
+      'placement="top" with no room above resolves actual-placement to bottom',
+      async () => {
+        popover.open = true;
+        // The initial setAttribute in the render writes "top"; the async first
+        // compute overwrites it once Floating UI resolves the flip, so poll.
+        await waitFor(() =>
+          expect(
+            popover.getAttribute('actual-placement'),
+            'reflects the flipped physical side'
+          ).toBe('bottom')
+        );
+        // `placement` stays the requested side; only the internal
+        // actual-placement reflects the resolution.
+        expect(popover.placement, 'requested placement is unchanged').toBe(
+          'top'
+        );
+      }
+    );
+
+    popover.open = false;
+    await popover.updateComplete;
+  },
+};
+
 export const PositionedFadeGateTest: Story = {
   render: () => html`
     <button id="positioned-trigger">Trigger</button>
