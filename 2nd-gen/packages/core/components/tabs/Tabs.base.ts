@@ -391,14 +391,25 @@ export abstract class TabsBase extends SpectrumElement {
    * Handles `focusgroupNavigationActiveChange` events dispatched by
    * `_navigation`. In automatic activation mode, selects the newly
    * focused tab (unless it is disabled) and dispatches `change`.
+   *
+   * Only `reason: 'keyboard'` (arrow keys, Home/End) and `reason: 'focus'`
+   * (pointer click, Tab-key entry) represent a real focus move that
+   * "selection follows focus" should react to. `'refresh'` and
+   * `'programmatic'` fire when `_navigation` re-parks the roving tab stop
+   * without anyone actually moving focus there — for example on mount with
+   * a pre-selected tab, or when re-enabling after `disabled` — and must not
+   * be treated as if the user navigated there.
    */
   private readonly _handleNavigationActiveChange = (event: Event): void => {
     if (this._keyboardActivation !== 'automatic') {
       return;
     }
-    const { activeElement } = (
+    const { activeElement, reason } = (
       event as CustomEvent<FocusgroupNavigationActiveChangeDetail>
     ).detail;
+    if (reason !== 'keyboard' && reason !== 'focus') {
+      return;
+    }
     if (!activeElement) {
       return;
     }

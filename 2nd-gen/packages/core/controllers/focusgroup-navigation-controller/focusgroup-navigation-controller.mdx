@@ -257,33 +257,75 @@ Collapses a composite widget to a single Tab stop by managing `tabindex="0"` on 
 
 ### Events
 
-The controller dispatches **`swc-focusgroup-navigation-active-change`** (`focusgroupNavigationActiveChange`) on the host with `detail: { activeElement }` when the active item changes. The event bubbles and is composed.
+The controller dispatches **`swc-focusgroup-navigation-active-change`** (`focusgroupNavigationActiveChange`) on the host with `detail: { activeElement, reason }` when the active item changes. The event bubbles and is composed.
+
+`reason` tells you _why_ the active item changed:
+
+- **`keyboard`**: arrow keys, Home/End, Page Up/Down, or Ctrl+Home/Ctrl+End moved the roving tab stop.
+- **`focus`**: a managed item received DOM focus directly — a pointer click, Tab-key entry into the group, or a consumer's own `.focus()` call landing on a managed item.
+- **`programmatic`**: an explicit `setActiveItem()` or `focusFirstItemByTextPrefix()` call.
+- **`refresh`**: `refresh()` recomputed the roving tab stop after items or eligibility changed (including the reset applied when focus leaves the group and `memory` is `false`) — not a real focus or selection intent.
+
+If you're implementing "selection follows focus" (for example APG automatic tab activation), only react to `'keyboard'` and `'focus'`. Reacting to `'refresh'` or `'programmatic'` too means mounting with a pre-selected item, disabling/re-enabling the group, or any other DOM change that makes `refresh()` re-park the tab stop gets misread as if the user navigated there — see [Selection follows focus, correctly](#selection-follows-focus-correctly) in the Appendix below.
 
 ```typescript
 import { focusgroupNavigationActiveChange } from '@spectrum-web-components/core/controllers/focusgroup-navigation-controller.js';
 
 host.addEventListener(focusgroupNavigationActiveChange, (event) => {
+  if (event.detail.reason !== 'keyboard' && event.detail.reason !== 'focus') {
+    return;
+  }
   console.log('Active item:', event.detail.activeElement);
 });
 ```
 
 ### Options
 
-| Option               | Type                                                   | Default    | Description                                                                                                                   |
-| -------------------- | ------------------------------------------------------ | ---------- | ----------------------------------------------------------------------------------------------------------------------------- |
-| `getItems`           | `() => HTMLElement[]`                                  | (required) | Current navigable items.                                                                                                      |
-| `direction`          | `'horizontal'` \| `'vertical'` \| `'both'` \| `'grid'` | (required) | Arrow-key mode. **`both`**: Left/Right and Up/Down on the same `getItems()` sequence.                                         |
-| `wrap`               | `boolean`                                              | `false`    | Wrap at ends.                                                                                                                 |
-| `memory`             | `boolean`                                              | `true`     | Remember last focused for re-entry via Tab.                                                                                   |
-| `skipDisabled`       | `boolean`                                              | `false`    | Skip `disabled` / `aria-disabled="true"` items.                                                                               |
-| `pageStep`           | `number`                                               | —          | Non-zero: **Page Up** / **Page Down** move this many items (linear) or rows (**grid**). `0` / omitted / non-finite: disabled. |
-| `onActiveItemChange` | `(el) => void`                                         | —          | Callback when active item changes.                                                                                            |
+| Option               | Type                                                   | Default    | Description                                                                                                                                     |
+| -------------------- | ------------------------------------------------------ | ---------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| `getItems`           | `() => HTMLElement[]`                                  | (required) | Current navigable items.                                                                                                                        |
+| `direction`          | `'horizontal'` \| `'vertical'` \| `'both'` \| `'grid'` | (required) | Arrow-key mode. **`both`**: Left/Right and Up/Down on the same `getItems()` sequence.                                                           |
+| `wrap`               | `boolean`                                              | `false`    | Wrap at ends.                                                                                                                                   |
+| `memory`             | `boolean`                                              | `true`     | Remember last focused for re-entry via Tab.                                                                                                     |
+| `skipDisabled`       | `boolean`                                              | `false`    | Skip `disabled` / `aria-disabled="true"` items.                                                                                                 |
+| `pageStep`           | `number`                                               | —          | Non-zero: **Page Up** / **Page Down** move this many items (linear) or rows (**grid**). `0` / omitted / non-finite: disabled.                   |
+| `onActiveItemChange` | `(el) => void`                                         | —          | Callback when active item changes. Does not receive `reason` — use the `focusgroupNavigationActiveChange` event if you need to filter by cause. |
 
 ## Appendix
 
 ### Relationship to native `focusgroup`
 
 Native `focusgroup` would supply guaranteed tab stops, memory, and arrow behavior in the browser. This controller provides a **JavaScript** implementation for custom elements: you keep explicit ARIA roles and selection logic, and use the controller for tabindex and arrow-key focus movement.
+
+### Selection follows focus, correctly
+
+A composite that pairs this controller with `SelectionController` for "selection follows focus" (APG automatic tab activation) must filter `focusgroupNavigationActiveChange` by `reason`, not react to every event:
+
+```typescript
+private readonly handleActiveChange = (event: Event): void => {
+  if (this.activationMode !== 'automatic') {
+    return;
+  }
+  const { activeElement, reason } = (
+    event as CustomEvent<FocusgroupNavigationActiveChangeDetail>
+  ).detail;
+  // Only a real focus move (arrow keys, Home/End, pointer click, Tab-key
+  // entry) should drive selection. 'refresh' and 'programmatic' fire when
+  // the roving tab stop is re-parked without the user actually navigating
+  // there — for example on mount with a pre-selected item, or when
+  // re-enabling after `disabled` — and must be ignored, or mounting /
+  // toggling `disabled` will silently steal the selection and fire a
+  // spurious change event.
+  if (reason !== 'keyboard' && reason !== 'focus') {
+    return;
+  }
+  if (activeElement) {
+    this.selection.setSelectedItem(activeElement);
+  }
+};
+```
+
+`<swc-tabs>` implements exactly this pattern for `keyboard-activation="automatic"`; see `TabsBase._handleNavigationActiveChange`.
 
 ### See also
 
