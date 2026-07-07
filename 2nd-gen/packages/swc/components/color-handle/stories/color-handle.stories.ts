@@ -11,6 +11,7 @@
  */
 
 import { html } from 'lit';
+import { ifDefined } from 'lit/directives/if-defined.js';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
@@ -100,7 +101,7 @@ export const anchoredHandle = (
     >
       <div style="position: relative;">
         <swc-color-handle
-          color=${color}
+          color=${ifDefined(color)}
           ?open=${open}
           ?disabled=${disabled}
           ?focused=${focused}
