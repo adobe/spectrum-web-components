@@ -144,7 +144,7 @@ test.describe('Popover - native dismissal', () => {
     expect(await readCloseSource(page)).toBe('escape');
   });
 
-  test('nested: Escape peels the topmost popover, ancestor clicks dismiss only descendants', async ({
+  test('nested (3 levels): Escape peels the topmost popover, ancestor clicks dismiss only descendants', async ({
     page,
   }) => {
     await gotoStory(
@@ -154,8 +154,9 @@ test.describe('Popover - native dismissal', () => {
     );
     const outer = page.locator('#ndo-outer');
     const inner = page.locator('#ndo-inner');
+    const innermost = page.locator('#ndo-innermost');
 
-    const openBoth = async (): Promise<void> => {
+    const openAll = async (): Promise<void> => {
       const outerOpen = await outer.evaluate(
         (el) => (el as unknown as { open: boolean }).open
       );
@@ -165,30 +166,49 @@ test.describe('Popover - native dismissal', () => {
       await expect(outer).toHaveJSProperty('open', true);
       await page.locator('#ndo-inner-trigger').click();
       await expect(inner).toHaveJSProperty('open', true);
-      // Nested auto popovers form an ancestor chain, so opening the inner one
-      // does not light-dismiss the outer.
+      await page.locator('#ndo-innermost-trigger').click();
+      await expect(innermost).toHaveJSProperty('open', true);
+      // Nested auto popovers form an ancestor chain, so opening a descendant
+      // does not light-dismiss its ancestors.
       await expect(outer).toHaveJSProperty('open', true);
+      await expect(inner).toHaveJSProperty('open', true);
     };
 
-    // Escape peels the inner (topmost) first, then the outer.
-    await openBoth();
+    // Escape peels the stack one layer at a time, topmost first.
+    await openAll();
+    await page.keyboard.press('Escape');
+    await expect(innermost).toHaveJSProperty('open', false);
+    await expect(inner).toHaveJSProperty('open', true);
+    await expect(outer).toHaveJSProperty('open', true);
     await page.keyboard.press('Escape');
     await expect(inner).toHaveJSProperty('open', false);
     await expect(outer).toHaveJSProperty('open', true);
     await page.keyboard.press('Escape');
     await expect(outer).toHaveJSProperty('open', false);
 
-    // A click on the outer content dismisses only the inner (its descendant).
-    await openBoth();
+    // A click on the inner content dismisses only its descendant (the innermost).
+    await openAll();
+    await page.locator('#ndo-inner-body').click();
+    await expect(innermost).toHaveJSProperty('open', false);
+    await expect(inner).toHaveJSProperty('open', true);
+    await expect(outer).toHaveJSProperty('open', true);
+
+    // A click on the outer content dismisses everything nested below it.
+    await page.locator('#ndo-innermost-trigger').click();
+    await expect(innermost).toHaveJSProperty('open', true);
     await page.locator('#ndo-outer-body').click();
+    await expect(innermost).toHaveJSProperty('open', false);
     await expect(inner).toHaveJSProperty('open', false);
     await expect(outer).toHaveJSProperty('open', true);
 
-    // A click fully outside both closes the whole chain.
+    // A click fully outside the chain closes every layer.
     await page.locator('#ndo-inner-trigger').click();
     await expect(inner).toHaveJSProperty('open', true);
+    await page.locator('#ndo-innermost-trigger').click();
+    await expect(innermost).toHaveJSProperty('open', true);
     await page.locator('#ndo-away').click();
     await expect(outer).toHaveJSProperty('open', false);
     await expect(inner).toHaveJSProperty('open', false);
+    await expect(innermost).toHaveJSProperty('open', false);
   });
 });

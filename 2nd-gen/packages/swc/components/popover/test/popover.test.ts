@@ -1181,15 +1181,26 @@ export const NestedDismissalOrderTest: Story = {
             for="ndo-inner-trigger"
             accessible-label="Inner"
           >
-            Inner popover content
+            <div style="display: flex; flex-direction: column; gap: 12px;">
+              <p id="ndo-inner-body" style="margin: 0;">Inner popover body</p>
+              <swc-button id="ndo-innermost-trigger">Open innermost</swc-button>
+              <swc-popover
+                id="ndo-innermost"
+                for="ndo-innermost-trigger"
+                accessible-label="Innermost"
+              >
+                Innermost popover content
+              </swc-popover>
+            </div>
           </swc-popover>
         </div>
       </swc-popover>
     </div>
   `,
-  // Render-only fixture. Native nested light-dismiss ordering (Escape peels the topmost
-  // popover first; an ancestor click dismisses only descendants) needs trusted browser
-  // input, so the interaction and assertions live in popover.a11y.spec.ts (Playwright).
+  // Render-only fixture: a 3-level popover chain (outer > inner > innermost). Native nested
+  // light-dismiss ordering (Escape peels the topmost popover first; an ancestor click dismisses
+  // only descendants) needs trusted browser input, so the interaction and assertions live in
+  // popover.a11y.spec.ts (Playwright).
 };
 
 // ──────────────────────────────────────────────────────────────
