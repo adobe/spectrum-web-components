@@ -508,7 +508,7 @@ Follow the two-file layout (`test/<component>.test.ts`, `test/<component>.a11y.s
 | Async timing | Use `await nextFrame()` or `element.updateComplete` as needed. |
 | Shadow DOM | Use `shadowRoot.querySelector` and the test utils the repo provides. |
 | A11y rules too strict | Tune rules in the a11y config if needed; do not disable without team agreement. |
-| Native dismissal (Escape, outside/backdrop click) won't fire | `@storybook/test`'s `userEvent` is synthetic (`isTrusted === false`); browser-native `popover`/`<dialog>` light-dismiss ignores it. Drive the native path with `userEvent` from `@vitest/browser/context` (real, trusted input). See [Native dismissal and trusted input](../../../../02_style-guide/04_testing/02_storybook-testing.md#native-dismissal-and-trusted-input). |
+| Native dismissal (Escape, outside/backdrop click) won't fire | `@storybook/test`'s `userEvent` is synthetic (`isTrusted === false`); browser-native `popover`/`<dialog>` light-dismiss ignores it. Test the native path in the Playwright a11y spec (`test/<component>.a11y.spec.ts`) with trusted input, not in a play function (`vitest/browser` throws in the dev Storybook). See [Native dismissal and trusted input](../../../../02_style-guide/04_testing/02_storybook-testing.md#native-dismissal-and-trusted-input). |
 
 ### Quality gate
 
