@@ -1,5 +1,22 @@
 # Change Log
 
+## 1.12.2
+
+### Patch Changes
+
+- Updated dependencies [[`57a77bc`](https://github.com/adobe/spectrum-web-components/commit/57a77bcee7eeb8f5a7b1084f3ad91543c2f92034), [`758506e`](https://github.com/adobe/spectrum-web-components/commit/758506ed69a330ef4e0b3759a5a5bf32fa7906d7), [`e4509d8`](https://github.com/adobe/spectrum-web-components/commit/e4509d85553b98e2d0467466c976607a68ca73e5)]:
+  - @spectrum-web-components/action-button@1.12.2
+  - @spectrum-web-components/menu@1.12.2
+  - @spectrum-web-components/overlay@1.12.2
+  - @spectrum-web-components/popover@1.12.2
+  - @spectrum-web-components/textfield@1.12.2
+  - @spectrum-web-components/icon@1.12.2
+  - @spectrum-web-components/icons-ui@1.12.2
+  - @spectrum-web-components/picker-button@1.12.2
+  - @spectrum-web-components/progress-circle@1.12.2
+  - @spectrum-web-components/base@1.12.2
+  - @spectrum-web-components/reactive-controllers@1.12.2
+
 ## 1.12.1
 
 ### Patch Changes
