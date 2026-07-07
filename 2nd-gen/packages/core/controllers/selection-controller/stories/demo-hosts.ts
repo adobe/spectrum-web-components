@@ -98,6 +98,23 @@ const starRatingStyles = css`
     block-size: 1.85rem;
     flex-shrink: 0;
   }
+  .action-btn {
+    align-self: flex-start;
+    font: inherit;
+    font-size: 0.85rem;
+    padding: 0.3rem 0.75rem;
+    border: 1px solid var(--spectrum-gray-400, #b9b9b9);
+    border-radius: 4px;
+    background: transparent;
+    cursor: pointer;
+  }
+  .action-btn:hover {
+    background: var(--spectrum-gray-100, #f1f1f1);
+  }
+  .action-btn:focus-visible {
+    outline: 2px solid var(--spectrum-blue-800, #0265dc);
+    outline-offset: 2px;
+  }
 `;
 
 const starSvg = html`
@@ -153,6 +170,18 @@ export class DemoSelectionStarSingle extends LitElement {
     this.selection.refresh();
   }
 
+  /**
+   * Clears the selection despite `mode: 'single'` — normally rejected
+   * interactively, but a consumer resyncing from an external property that
+   * explicitly represents "nothing selected" (like `<swc-tabs selected="">`)
+   * can still clear it with `{ silent: true }`.
+   *
+   * @internal
+   */
+  public clearSelectionSilently(): void {
+    this.selection.setSelectedItem(null, { silent: true });
+  }
+
   protected override render(): TemplateResult {
     return html`
       <div role="radiogroup" aria-labelledby="single-label">
@@ -181,6 +210,13 @@ export class DemoSelectionStarSingle extends LitElement {
             `;
           })}
         </div>
+        <button
+          type="button"
+          class="action-btn"
+          @click=${this.clearSelectionSilently}
+        >
+          Clear (silent)
+        </button>
       </div>
     `;
   }
@@ -724,6 +760,14 @@ export class DemoSelectionListbox extends LitElement {
 //   Tabs — pairing with FocusgroupNavigationController
 // ─────────────────────────────────────────────
 
+/**
+ * Cancelable event dispatched from `confirmSelectionChange`, mirroring
+ * `<swc-tabs>`'s `change` event.
+ *
+ * @internal
+ */
+export const DEMO_TAB_CHANGE_EVENT = 'demo-tab-change';
+
 const tabStyles = css`
   :host {
     display: block;
@@ -818,6 +862,16 @@ export class DemoSelectionTabs extends LitElement {
     mode: 'single',
     keydownActivation: true,
     defaultToFirstSelectable: true,
+    // Mirrors <swc-tabs>: dispatches a cancelable event from
+    // confirmSelectionChange, which SelectionController calls *after*
+    // mutators and internal state are already applied for the candidate
+    // transition — so a listener reading tab/panel state synchronously
+    // sees the new selection, not the prior one. Returning false (via
+    // preventDefault) reverts everything to the prior selection.
+    confirmSelectionChange: () =>
+      this.dispatchEvent(
+        new Event(DEMO_TAB_CHANGE_EVENT, { cancelable: true })
+      ),
   });
 
   protected override firstUpdated(): void {

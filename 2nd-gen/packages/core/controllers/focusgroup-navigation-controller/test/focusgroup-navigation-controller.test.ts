@@ -836,6 +836,77 @@ export const ActiveChangeEventAndCallback: Story = {
         handler
       );
     });
+
+    // Entering here, previous steps left the active item on "Third"
+    // (button[2]), with real DOM focus on "Third" too.
+
+    await step('reason is "keyboard" for arrow-key navigation', async () => {
+      host.clearLogs();
+      const current = shadowActiveButton(host)!;
+      current.focus();
+      keydown(current, 'ArrowLeft');
+
+      expect(host.activeChangeLog[host.activeChangeLog.length - 1]).toBe(
+        'Second'
+      );
+      expect(host.reasonLog[host.reasonLog.length - 1]).toBe('keyboard');
+    });
+
+    await step(
+      'reason is "focus" when a managed item receives DOM focus directly',
+      async () => {
+        host.clearLogs();
+        buttons[0].focus(); // "First" — different from the active "Second"
+
+        expect(host.activeChangeLog[host.activeChangeLog.length - 1]).toBe(
+          'First'
+        );
+        expect(host.reasonLog[host.reasonLog.length - 1]).toBe('focus');
+      }
+    );
+
+    await step(
+      'reason is "programmatic" for an explicit setActiveItem() call',
+      async () => {
+        host.clearLogs();
+        // Does not call .focus() — only the roving tab stop moves.
+        const changed = host.callSetActiveItem(buttons[2]); // "Third"
+
+        expect(changed).toBe(true);
+        expect(host.activeChangeLog[host.activeChangeLog.length - 1]).toBe(
+          'Third'
+        );
+        expect(host.reasonLog[host.reasonLog.length - 1]).toBe('programmatic');
+      }
+    );
+
+    await step(
+      'reason is "refresh" when refresh() re-parks the tab stop without any focus move',
+      async () => {
+        // Mirrors the bug this reason exists to prevent misreading: a host
+        // reporting itself disabled (getItems() -> []) then re-enabling,
+        // with nothing actually focused in between.
+        host.clearLogs();
+        host.simulateEmpty = true;
+        host.callRefresh();
+
+        expect(
+          host.activeChangeLog[host.activeChangeLog.length - 1],
+          'active item clears when the group becomes empty'
+        ).toBeNull();
+        expect(host.reasonLog[host.reasonLog.length - 1]).toBe('refresh');
+
+        host.clearLogs();
+        host.simulateEmpty = false;
+        host.callRefresh();
+
+        expect(
+          host.activeChangeLog[host.activeChangeLog.length - 1],
+          're-populating re-parks the tab stop on the first item'
+        ).toBe('First');
+        expect(host.reasonLog[host.reasonLog.length - 1]).toBe('refresh');
+      }
+    );
   },
 };
 

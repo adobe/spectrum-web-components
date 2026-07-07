@@ -21,6 +21,10 @@ import {
 import '../stories/demo-hosts.js';
 
 import { getComponent } from '../../../../swc/utils/test-utils.js';
+import {
+  DEMO_TAB_CHANGE_EVENT,
+  type DemoSelectionStarSingle,
+} from '../stories/demo-hosts.js';
 import selectionMeta, {
   AccordionModeSwitch,
   MultipleListbox,
@@ -86,7 +90,7 @@ export default {
 export const SingleModeRatingTest: Story = {
   ...SingleModeRating,
   play: async ({ canvasElement, step }) => {
-    const host = await getComponent<HTMLElement>(
+    const host = await getComponent<DemoSelectionStarSingle>(
       canvasElement,
       'demo-selection-star-single'
     );
@@ -142,6 +146,24 @@ export const SingleModeRatingTest: Story = {
       expect(stars[4].getAttribute('aria-checked')).toBe('true');
       expect(stars[0].getAttribute('aria-checked')).toBe('false');
     });
+
+    await step(
+      'a silent { silent: true } call clears the selection despite single mode',
+      async () => {
+        // Clicking the active star has no effect in single mode (asserted
+        // above), but a silent programmatic clear — the pattern a consumer
+        // uses to resync from an external property reset to "nothing
+        // selected" — can still empty it.
+        expect(stars[4].getAttribute('aria-checked')).toBe('true');
+
+        host.clearSelectionSilently();
+
+        expect(
+          stars[4].getAttribute('aria-checked'),
+          'previously active star is deselected'
+        ).toBe('false');
+      }
+    );
   },
 };
 
@@ -515,5 +537,67 @@ export const TablistWithFocusgroupTest: Story = {
       expect(shadowFocused(host)?.getAttribute('data-tab')).toBe('export');
       expect(tab('layers').getAttribute('aria-selected')).toBe('true');
     });
+
+    await step(
+      'confirmSelectionChange runs after mutators — the listener sees the new selection',
+      async () => {
+        // 'layers' is selected entering this step (from the prior step).
+        let ariaSelectedInHandler: string | null = null;
+        let panelHiddenInHandler: boolean | null = null;
+        host.addEventListener(
+          DEMO_TAB_CHANGE_EVENT,
+          () => {
+            ariaSelectedInHandler =
+              tab('adjustments').getAttribute('aria-selected');
+            panelHiddenInHandler =
+              tabPanel('adjustments').hasAttribute('hidden');
+          },
+          { once: true }
+        );
+
+        tab('adjustments').click();
+
+        expect(
+          ariaSelectedInHandler,
+          'tab is already aria-selected inside the confirm handler'
+        ).toBe('true');
+        expect(
+          panelHiddenInHandler,
+          "tab's panel is already visible inside the confirm handler"
+        ).toBe(false);
+        expect(tab('adjustments').getAttribute('aria-selected')).toBe('true');
+      }
+    );
+
+    await step(
+      'canceling confirmSelectionChange reverts to the prior selection',
+      async () => {
+        // 'adjustments' is selected entering this step.
+        host.addEventListener(
+          DEMO_TAB_CHANGE_EVENT,
+          (event) => event.preventDefault(),
+          { once: true }
+        );
+
+        tab('export').click();
+
+        expect(
+          tab('export').getAttribute('aria-selected'),
+          'clicked tab reverts to deselected'
+        ).toBe('false');
+        expect(
+          tabPanel('export').hasAttribute('hidden'),
+          "clicked tab's panel reverts to hidden"
+        ).toBe(true);
+        expect(
+          tab('adjustments').getAttribute('aria-selected'),
+          'prior selection is restored'
+        ).toBe('true');
+        expect(
+          tabPanel('adjustments').hasAttribute('hidden'),
+          "prior selection's panel is restored to visible"
+        ).toBe(false);
+      }
+    );
   },
 };
