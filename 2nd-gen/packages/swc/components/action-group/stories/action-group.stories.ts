@@ -94,7 +94,7 @@ const meta: Meta = {
   argTypes,
   render: (renderArgs) => html`
     <swc-action-group
-      label="Text formatting"
+      accessible-label="Text formatting"
       orientation=${renderArgs.orientation ?? 'horizontal'}
       ?disabled=${renderArgs.disabled}
       ?compact=${renderArgs.compact}

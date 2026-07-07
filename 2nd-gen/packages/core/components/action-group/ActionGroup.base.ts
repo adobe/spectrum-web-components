@@ -29,8 +29,8 @@ import {
  * keyboard navigation: one Tab stop into the strip, arrow keys move among
  * `swc-action-button` and `swc-action-menu` children.
  *
- * This base class owns the accessibility semantics, `label` → `aria-label`
- * management, `disabled` state contract, and child collection logic.
+ * This base class owns the accessibility semantics, `accessible-label` →
+ * `aria-label` management, `disabled` state contract, and child collection logic.
  * Rendering and styling live in the concrete SWC subclass.
  *
  * @slot - One or more `swc-action-button` or `swc-action-menu` elements.
@@ -89,8 +89,8 @@ export abstract class ActionGroupBase extends SizedMixin(SpectrumElement, {
    * purpose (e.g. "Text formatting" or "Alignment"). An empty value removes
    * the `aria-label` attribute.
    */
-  @property({ type: String })
-  public label = '';
+  @property({ type: String, attribute: 'accessible-label' })
+  public accessibleLabel = '';
 
   /**
    * Whether the group and all of its children are disabled.
@@ -154,9 +154,9 @@ export abstract class ActionGroupBase extends SizedMixin(SpectrumElement, {
   protected override updated(changed: PropertyValues<this>): void {
     super.updated(changed);
 
-    if (changed.has('label')) {
-      if (this.label) {
-        this.setAttribute('aria-label', this.label);
+    if (changed.has('accessibleLabel')) {
+      if (this.accessibleLabel) {
+        this.setAttribute('aria-label', this.accessibleLabel);
       } else {
         this.removeAttribute('aria-label');
       }

@@ -36,13 +36,13 @@ import styles from './action-group.css';
  * @slot - One or more `swc-action-button` or `swc-action-menu` elements.
  *
  * @example
- * <swc-action-group label="Text formatting">
+ * <swc-action-group accessible-label="Text formatting">
  *   <swc-action-button>Bold</swc-action-button>
  *   <swc-action-button>Italic</swc-action-button>
  * </swc-action-group>
  *
  * @example
- * <swc-action-group orientation="vertical" label="Alignment">
+ * <swc-action-group orientation="vertical" accessible-label="Alignment">
  *   <swc-action-button>Left</swc-action-button>
  *   <swc-action-button>Center</swc-action-button>
  * </swc-action-group>
