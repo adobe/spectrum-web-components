@@ -436,10 +436,7 @@ export class ResponseStatus extends SpectrumElement {
     return this._displayedLabel || this._getHeaderLabel();
   }
 
-  private _renderLabel(
-    showDisclosure: boolean,
-    open: boolean
-  ): TemplateResult {
+  private _renderLabel(showDisclosure: boolean, open: boolean): TemplateResult {
     const labelClass = ResponseStatus.STATUS_LABEL_CLASS;
     const chevron = showDisclosure ? this._renderChevron(open) : '';
 
