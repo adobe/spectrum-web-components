@@ -247,16 +247,6 @@ export abstract class TabsBase extends SpectrumElement {
    */
   private _tabs: TabLike[] = [];
 
-  /**
-   * @internal
-   *
-   * When `true`, the next `confirmSelectionChange` call returns `true`
-   * without dispatching a `change` event. Used to sync the
-   * SelectionController's internal state from external property changes
-   * without raising a user-facing event.
-   */
-  private _suppressSelectionChangeEvent = false;
-
   // ──────────────────────────────
   //     REACTIVE CONTROLLERS
   // ──────────────────────────────
@@ -317,9 +307,6 @@ export abstract class TabsBase extends SpectrumElement {
       }
     },
     confirmSelectionChange: () => {
-      if (this._suppressSelectionChangeEvent) {
-        return true;
-      }
       if (this.disabled) {
         return false;
       }
@@ -353,17 +340,13 @@ export abstract class TabsBase extends SpectrumElement {
       .assignedElements()
       .filter(TabsBase.isTabSlotNode) as TabLike[];
 
-    // Refresh navigation first so its eligible-items cache is populated
-    // before _syncSelectionController calls setActiveItem.
     this._navigation.refresh();
     // Sync any externally-set selection before refresh so a pre-selected tab
     // wins over the defaultToFirstSelectable default.
     this._syncSelectionController();
-    // Refresh without firing a change event: populates lastKnownRawItems and
-    // applies defaultToFirstSelectable when no tab was pre-selected.
-    this._suppressSelectionChangeEvent = true;
-    this._selection.refresh();
-    this._suppressSelectionChangeEvent = false;
+    // Refresh without firing a change event: applies defaultToFirstSelectable
+    // when no tab was pre-selected.
+    this._selection.refresh({ silent: true });
     this.updateSelectionIndicator();
   }
 
@@ -392,9 +375,9 @@ export abstract class TabsBase extends SpectrumElement {
     const selectedTab = this._tabs.find((t) => t.tabId === this.selected);
 
     if (selectedTab) {
-      this._suppressSelectionChangeEvent = true;
-      this._selection.setSelectedItem(selectedTab as HTMLElement);
-      this._suppressSelectionChangeEvent = false;
+      this._selection.setSelectedItem(selectedTab as HTMLElement, {
+        silent: true,
+      });
       // Also sync the roving tab stop so focus() and Tab re-entry target
       // the selected tab rather than the first item in the list.
       this._navigation.setActiveItem(selectedTab as HTMLElement);
@@ -565,11 +548,9 @@ export abstract class TabsBase extends SpectrumElement {
     if (changes.has('disabled') && this._tabs.length) {
       // Refreshing both controllers re-applies roving tabindex accordingly.
       this._navigation.refresh();
-      // Suppress change events: toggling disabled must not look like a
-      // user-initiated selection change to consumers.
-      this._suppressSelectionChangeEvent = true;
-      this._selection.refresh();
-      this._suppressSelectionChangeEvent = false;
+      // Silent: toggling disabled must not look like a user-initiated
+      // selection change to consumers.
+      this._selection.refresh({ silent: true });
       // After re-enabling, restore the roving tab stop to the selected tab
       // (refresh() defaults to items[0] when no item has tabindex=0).
       if (!this.disabled) {
