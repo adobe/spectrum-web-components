@@ -64,6 +64,7 @@
     - Progress Circle
     - Radio
     - Search
+    - Sidenav
     - Slider
     - Status Light
     - Swatch
@@ -74,6 +75,7 @@
     - Tags
     - Textfield
     - Thumbnail
+    - Toast
     - Tooltip
 - [Milestones](04_milestones/README.md)
 - Strategies

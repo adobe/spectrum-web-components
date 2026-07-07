@@ -15,6 +15,11 @@
  */
 
 export {
+  ColorController,
+  type Color,
+  type ColorTypes,
+} from './color-controller/index.js';
+export {
   focusgroupNavigationActiveChange,
   FocusgroupNavigationController,
   type FocusgroupDirection,

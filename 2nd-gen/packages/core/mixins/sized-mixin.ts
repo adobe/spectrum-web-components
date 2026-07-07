@@ -63,8 +63,11 @@ export function SizedMixin<T extends Constructor<ReactiveElement>>(
     public set size(value: ElementSize) {
       const fallbackSize = noDefaultSize ? null : defaultSize;
       const size = (value ? value.toLocaleLowerCase() : value) as ElementSize;
+      const classValidSizes = (
+        this.constructor as unknown as SizedElementConstructor
+      ).VALID_SIZES;
       const validSize = (
-        validSizes.includes(size) ? size : fallbackSize
+        classValidSizes.includes(size) ? size : fallbackSize
       ) as ElementSize;
       if (validSize) {
         this.setAttribute('size', validSize);

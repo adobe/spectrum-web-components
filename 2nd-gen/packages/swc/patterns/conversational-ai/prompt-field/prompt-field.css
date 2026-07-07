@@ -53,7 +53,7 @@
  * distinguish Tab vs click on text inputs). */
 .swc-PromptField-box.swc-PromptField-box--keyboard-focus {
   outline: token("focus-indicator-thickness") solid token("focus-indicator-color");
-  outline-offset: token("focus-indicator-gap");
+  outline-offset: token("focus-ring-gap");
 }
 
 /* ─────────────────────────────────────
@@ -205,8 +205,8 @@
 }
 
 .swc-PromptField-upload swc-icon {
-  --swc-icon-inline-size: token("workflow-icon-size-100");
-  --swc-icon-block-size: token("workflow-icon-size-100");
+  --swc-icon-inline-size: token("workflow-icon-medium");
+  --swc-icon-block-size: token("workflow-icon-medium");
 }
 
 /* Send button (filled circle, right side) */
@@ -247,7 +247,7 @@
 .swc-PromptField-send:focus-visible,
 .swc-PromptField-stop:focus-visible {
   outline: token("focus-indicator-thickness") solid token("focus-indicator-color");
-  outline-offset: token("focus-indicator-gap");
+  outline-offset: token("focus-ring-gap");
 }
 
 .swc-PromptField-send:active,
@@ -263,8 +263,8 @@
 }
 
 .swc-PromptField-send swc-icon {
-  --swc-icon-inline-size: token("workflow-icon-size-100");
-  --swc-icon-block-size: token("workflow-icon-size-100");
+  --swc-icon-inline-size: token("workflow-icon-medium");
+  --swc-icon-block-size: token("workflow-icon-medium");
 }
 
 /* Stop button (filled black circle, right side) */
@@ -274,8 +274,8 @@
 }
 
 .swc-PromptField-stop swc-icon {
-  --swc-icon-inline-size: token("workflow-icon-size-100");
-  --swc-icon-block-size: token("workflow-icon-size-100");
+  --swc-icon-inline-size: token("workflow-icon-medium");
+  --swc-icon-block-size: token("workflow-icon-medium");
 }
 
 /* ─────────────────────────────────────

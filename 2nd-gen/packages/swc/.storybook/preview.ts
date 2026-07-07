@@ -338,11 +338,13 @@ const preview = {
                 'Action button',
                 [
                   'Accessibility migration analysis',
+                  'Migration plan',
                   'Rendering and styling migration analysis',
                 ],
                 'Action group',
                 [
                   'Accessibility migration analysis',
+                  'Migration plan',
                   'Rendering and styling migration analysis',
                 ],
                 'Action menu',
@@ -390,6 +392,7 @@ const preview = {
                 'Color handle',
                 [
                   'Accessibility migration analysis',
+                  'Migration plan',
                   'Rendering and styling migration analysis',
                 ],
                 'Color loupe',
@@ -404,7 +407,10 @@ const preview = {
                   'Rendering and styling migration analysis',
                 ],
                 'Dropzone',
-                ['Rendering and styling migration analysis'],
+                [
+                  'Accessibility migration analysis',
+                  'Rendering and styling migration analysis',
+                ],
                 'Field group',
                 ['Rendering and styling migration analysis'],
                 'Field label',
@@ -425,6 +431,7 @@ const preview = {
                 'Infield button',
                 [
                   'Accessibility migration analysis',
+                  'Migration plan',
                   'Rendering and styling migration analysis',
                 ],
                 'Infield progress circle',
@@ -471,6 +478,7 @@ const preview = {
                 'Progress bar',
                 [
                   'Accessibility migration analysis',
+                  'Migration plan',
                   'Rendering and styling migration analysis',
                 ],
                 'Progress circle',
@@ -482,6 +490,8 @@ const preview = {
                 ['Rendering and styling migration analysis'],
                 'Search',
                 ['Rendering and styling migration analysis'],
+                'Sidenav',
+                ['Accessibility migration analysis'],
                 'Slider',
                 ['Rendering and styling migration analysis'],
                 'Status light',
@@ -508,7 +518,15 @@ const preview = {
                 'Textfield',
                 ['Rendering and styling migration analysis'],
                 'Thumbnail',
-                ['Rendering and styling migration analysis'],
+                [
+                  'Accessibility migration analysis',
+                  'Rendering and styling migration analysis',
+                ],
+                'Toast',
+                [
+                  'Accessibility migration analysis',
+                  'Rendering and styling migration analysis',
+                ],
                 'Tooltip',
                 [
                   'Accessibility migration analysis',

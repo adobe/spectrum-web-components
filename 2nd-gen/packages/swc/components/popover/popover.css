@@ -148,7 +148,7 @@
 
   /* Padding only; slotted content owns its own display/layout. Exposed as a
    * public custom property. */
-  padding: var(--swc-popover-content-padding, token("popover-edge-to-content-area"));
+  padding: var(--swc-popover-content-padding, token("popover-padding"));
   overflow: auto;
 }
 
