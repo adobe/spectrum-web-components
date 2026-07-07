@@ -33,8 +33,8 @@
   background: var(--swc-dropzone-background-color, transparent);
   border-color: var(--swc-dropzone-border-color, token("gray-300"));
   border-style: var(--swc-dropzone-border-style, dashed);
-  border-width: var(--swc-dropzone-border-width, token("border-width-200"));
-  border-radius: var(--swc-dropzone-corner-radius, token("corner-radius-400"));
+  border-width: token("border-width-200");
+  border-radius: token("corner-radius-400");
 }
 
 /* ─────────────────────────────────────

@@ -46,8 +46,11 @@ export class IllustratedMessage extends IllustratedMessageBase {
   protected override render(): TemplateResult {
     return html`
       <div class="swc-IllustratedMessage">
-        <div class="swc-IllustratedMessage-illustration">
-          <slot></slot>
+        <div
+          class="swc-IllustratedMessage-illustration"
+          ?hidden=${!this._hasIllustration}
+        >
+          <slot @slotchange=${this.handleIllustrationSlotChange}></slot>
         </div>
         <div class="swc-IllustratedMessage-content">
           <slot

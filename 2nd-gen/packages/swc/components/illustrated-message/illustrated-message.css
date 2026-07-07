@@ -40,6 +40,15 @@
   color: var(--swc-illustrated-message-illustration-color, token("neutral-content-color-default"));
 }
 
+/*
+ * [hidden] and .swc-IllustratedMessage-illustration share specificity, so the
+ * class rule above wins over the UA stylesheet's [hidden] { display: none }
+ * unless this rule raises the specificity explicitly.
+ */
+.swc-IllustratedMessage-illustration[hidden] {
+  display: none;
+}
+
 .swc-IllustratedMessage-content {
   display: flex;
   flex-direction: column;

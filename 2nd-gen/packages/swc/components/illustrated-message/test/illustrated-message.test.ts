@@ -201,6 +201,69 @@ export const DefaultSlotIllustrationTest: Story = {
   },
 };
 
+export const IllustrationWrapperCollapsesWhenEmptyTest: Story = {
+  render: () => html`
+    <swc-illustrated-message>
+      <h2 slot="heading">Heading</h2>
+    </swc-illustrated-message>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const illustratedMessage = await getComponent<IllustratedMessage>(
+      canvasElement,
+      'swc-illustrated-message'
+    );
+
+    await step(
+      'hides the illustration wrapper when no illustration is slotted',
+      async () => {
+        const wrapper = illustratedMessage.shadowRoot?.querySelector(
+          '.swc-IllustratedMessage-illustration'
+        );
+        expect(wrapper?.hasAttribute('hidden'), 'wrapper has [hidden]').toBe(
+          true
+        );
+      }
+    );
+
+    await step(
+      'reveals the illustration wrapper once an illustration is slotted',
+      async () => {
+        const illustrationSlot =
+          illustratedMessage.shadowRoot?.querySelector<HTMLSlotElement>(
+            'slot:not([name])'
+          );
+        if (!illustrationSlot) {
+          return;
+        }
+
+        const slotChanged = new Promise<void>((resolve) =>
+          illustrationSlot.addEventListener('slotchange', () => resolve(), {
+            once: true,
+          })
+        );
+
+        const svg = document.createElementNS(
+          'http://www.w3.org/2000/svg',
+          'svg'
+        );
+        svg.setAttribute('aria-hidden', 'true');
+        illustratedMessage.prepend(svg);
+
+        await slotChanged;
+        await illustratedMessage.updateComplete;
+
+        const wrapper = illustratedMessage.shadowRoot?.querySelector(
+          '.swc-IllustratedMessage-illustration'
+        );
+        expect(
+          wrapper?.hasAttribute('hidden'),
+          'wrapper no longer has [hidden]'
+        ).toBe(false);
+      }
+    );
+  },
+};
+
 export const DescriptionSlotTest: Story = {
   render: () => html`
     <swc-illustrated-message>
