@@ -1190,6 +1190,53 @@ export const SelectionIndicatorTest: Story = {
   },
 };
 
+export const SelectionIndicatorDirectionChangeTest: Story = {
+  render: () => html`
+    <div id="direction-wrapper" dir="ltr">
+      <swc-tabs selected="2" accessible-label="Direction change indicator test">
+        <swc-tab tab-id="1">Tab 1</swc-tab>
+        <swc-tab tab-id="2">Tab 2</swc-tab>
+        <swc-tab-panel tab-id="1"><p>Panel 1</p></swc-tab-panel>
+        <swc-tab-panel tab-id="2"><p>Panel 2</p></swc-tab-panel>
+      </swc-tabs>
+    </div>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const tabs = await getComponent<Tabs>(canvasElement, 'swc-tabs');
+    const wrapper = canvasElement.querySelector(
+      '#direction-wrapper'
+    ) as HTMLElement;
+
+    await step(
+      'indicator recalculates when an ancestor dir attribute flips at runtime',
+      async () => {
+        await tabs.updateComplete;
+        await new Promise((r) => requestAnimationFrame(r));
+        await tabs.updateComplete;
+
+        const indicator = tabs.shadowRoot?.querySelector(
+          '.selection-indicator'
+        ) as HTMLElement;
+        const styleBefore = indicator.getAttribute('style') || '';
+
+        wrapper.setAttribute('dir', 'rtl');
+
+        await tabs.updateComplete;
+        await new Promise((r) => requestAnimationFrame(r));
+        await tabs.updateComplete;
+
+        const styleAfter = indicator.getAttribute('style') || '';
+        expect(
+          styleBefore !== styleAfter,
+          'indicator style changed after an ancestor dir attribute flips to rtl'
+        ).toBe(true);
+
+        wrapper.removeAttribute('dir');
+      }
+    );
+  },
+};
+
 // ──────────────────────────────────────────────────────────────
 // TEST: Variants / States
 // ──────────────────────────────────────────────────────────────

@@ -1,5 +1,38 @@
 # Change Log
 
+## 1.12.2
+
+### Patch Changes
+
+- [#6425](https://github.com/adobe/spectrum-web-components/pull/6425) [`758506e`](https://github.com/adobe/spectrum-web-components/commit/758506ed69a330ef4e0b3759a5a5bf32fa7906d7) Thanks [@Rajdeepc](https://github.com/Rajdeepc)! - **fix(action-menu):** Submenus inside `sp-action-menu` now open correctly on mobile instead of dismissing the tray.
+
+  On mobile, `sp-action-menu` renders its menu inside an `sp-tray` but was not setting `mobile-view` on the inner `sp-menu`. This meant tapping a submenu item used flyout overlay logic whose click event bubbled up to the tray and triggered dismissal. The same failure occurred with VoiceOver on iOS, where a double-tap fires a synthetic `click` that bypasses the `pointerdown`/`pointerup` sequence entirely.
+
+  `mobile-view` is now applied automatically to the inner `sp-menu` when the action menu is rendering as a tray (i.e. on mobile without `force-popover`). Submenu activation routes through the drill-down path, which stops the event before it reaches the tray.
+
+  **fix(menu):** Added documentation for the `mobile-view` and `mobile-back-label` attributes, which were previously undocumented in the README.
+
+- [#6459](https://github.com/adobe/spectrum-web-components/pull/6459) [`7c909d3`](https://github.com/adobe/spectrum-web-components/commit/7c909d3f97b9c06c472ab95a1a66cf7ca5a12c0c) Thanks [@rubencarvalho](https://github.com/rubencarvalho)! - **fix(picker, action-menu):** Prevent the internal menu scroll event from crossing the shadow DOM boundary.
+
+  `Picker`, `PickerBase`, and `ActionMenu` re-dispatch a `scroll` event on their host when the internal menu scrolls. The event was created with `composed: true`, allowing it to cross the shadow DOM boundary and reach ancestor elements, which could close an enclosing overlay while the user was scrolling the menu. The event is now non-composed: it still fires on the component host for consumers, but no longer escapes into ancestors. This applies the #6028 fix to `PickerBase` and `ActionMenu`, which were previously missed.
+
+  Reported by PSWeb.
+
+- Updated dependencies [[`57a77bc`](https://github.com/adobe/spectrum-web-components/commit/57a77bcee7eeb8f5a7b1084f3ad91543c2f92034), [`758506e`](https://github.com/adobe/spectrum-web-components/commit/758506ed69a330ef4e0b3759a5a5bf32fa7906d7), [`e4509d8`](https://github.com/adobe/spectrum-web-components/commit/e4509d85553b98e2d0467466c976607a68ca73e5), [`7c909d3`](https://github.com/adobe/spectrum-web-components/commit/7c909d3f97b9c06c472ab95a1a66cf7ca5a12c0c)]:
+  - @spectrum-web-components/action-button@1.12.2
+  - @spectrum-web-components/menu@1.12.2
+  - @spectrum-web-components/picker@1.12.2
+  - @spectrum-web-components/overlay@1.12.2
+  - @spectrum-web-components/popover@1.12.2
+  - @spectrum-web-components/tooltip@1.12.2
+  - @spectrum-web-components/field-label@1.12.2
+  - @spectrum-web-components/icon@1.12.2
+  - @spectrum-web-components/icons-workflow@1.12.2
+  - @spectrum-web-components/progress-circle@1.12.2
+  - @spectrum-web-components/tray@1.12.2
+  - @spectrum-web-components/base@1.12.2
+  - @spectrum-web-components/shared@1.12.2
+
 ## 1.12.1
 
 ### Patch Changes
