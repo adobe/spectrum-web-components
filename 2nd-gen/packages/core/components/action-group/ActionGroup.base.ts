@@ -77,8 +77,6 @@ export abstract class ActionGroupBase extends SizedMixin(SpectrumElement, {
    * (the default), `aria-orientation` is omitted because horizontal is the
    * implicit default for `role="group"`.
    *
-   * Breaking change: replaces the 1st-gen `vertical` boolean attribute.
-   *
    * @default horizontal
    */
   @property({ type: String, reflect: true })
@@ -101,8 +99,6 @@ export abstract class ActionGroupBase extends SizedMixin(SpectrumElement, {
    * to each managed child. Children remain keyboard-reachable so that screen
    * reader users can still discover the group — native `disabled` is not
    * applied to children.
-   *
-   * New in 2nd-gen; not available in 1st-gen `sp-action-group`.
    */
   @property({ type: Boolean, reflect: true })
   public disabled = false;
