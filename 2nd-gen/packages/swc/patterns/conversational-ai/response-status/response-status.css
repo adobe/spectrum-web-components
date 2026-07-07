@@ -63,31 +63,14 @@
 
 .swc-ResponseStatus-headerTrail {
   display: inline-flex;
-  gap: token("spacing-100");
   align-items: center;
   min-inline-size: 0;
 }
 
 .swc-ResponseStatus-headerTrailViewport {
-  interpolate-size: allow-keywords;
-  display: inline-block;
-  inline-size: fit-content;
-  max-inline-size: 100%;
+  min-inline-size: 0;
   block-size: var(--swc-response-status-label-line-size, 1.33em);
   overflow: hidden;
-  transition: inline-size var(--swc-response-status-roll-duration, 650ms) token("animation-ease-in-out");
-}
-
-.swc-ResponseStatus-headerTrailViewport--rolling {
-  /* Width is driven inline during rolls so the chevron can slide horizontally. */
-  inline-size: auto;
-}
-
-.swc-ResponseStatus-labelMeasure {
-  visibility: hidden;
-  position: absolute;
-  white-space: nowrap;
-  pointer-events: none;
 }
 
 .swc-ResponseStatus-row--button .swc-ResponseStatus-headerTrail {
@@ -96,12 +79,15 @@
 }
 
 .swc-ResponseStatus-row--button .swc-ResponseStatus-headerTrailViewport {
-  max-inline-size: calc(100% - 18px);
+  flex: 1;
+  min-inline-size: 0;
 }
 
 .swc-ResponseStatus-headerTrailStrip {
   display: flex;
   flex-direction: column;
+  inline-size: fit-content;
+  max-inline-size: 100%;
   transform: translateY(0);
   transition:
     transform var(--swc-response-status-roll-duration, 650ms) token("animation-ease-in-out"),
@@ -113,18 +99,18 @@
 }
 
 .swc-ResponseStatus-headerTrailLine {
-  display: block;
+  display: inline-flex;
+  gap: token("spacing-100");
+  align-items: center;
   max-inline-size: 100%;
   block-size: var(--swc-response-status-label-line-size, 1.33em);
   white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
   opacity: 1;
   transition: opacity calc(var(--swc-response-status-roll-duration, 650ms) / 2) token("animation-ease-in-out");
 }
 
 .swc-ResponseStatus-headerTrailLine .swc-ResponseStatus-label {
-  display: block;
+  flex: 0 1 auto;
   min-inline-size: 0;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -135,10 +121,8 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .swc-ResponseStatus-headerTrailViewport,
   .swc-ResponseStatus-headerTrailStrip,
-  .swc-ResponseStatus-headerTrailLine,
-  .swc-ResponseStatus-chevron {
+  .swc-ResponseStatus-headerTrailLine {
     transition: none;
   }
 }
@@ -200,7 +184,7 @@
 
 .swc-ResponseStatus-chevron {
   flex-shrink: 0;
-  transition: transform var(--swc-response-status-roll-duration, 650ms) token("animation-ease-in-out");
+  transition: transform token("animation-duration-100") ease;
 }
 
 .swc-ResponseStatus-chevron--down {

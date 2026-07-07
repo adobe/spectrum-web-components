@@ -102,10 +102,6 @@ export class ResponseStatus extends SpectrumElement {
   @state()
   private _rollEngaged = false;
 
-  /** @internal */
-  @state()
-  private _rollViewportInlineSizePx?: number;
-
   /** Whole response lifecycle status. */
   @property({ type: String, reflect: true })
   public status: ResponseStatusStatus = 'pending';
@@ -395,7 +391,6 @@ export class ResponseStatus extends SpectrumElement {
       this._displayedLabel = this._rollToLabel;
       this._rollActive = false;
       this._rollEngaged = false;
-      this._rollViewportInlineSizePx = undefined;
     }
 
     if (target === this._displayedLabel) {
@@ -416,19 +411,12 @@ export class ResponseStatus extends SpectrumElement {
     this._rollActive = true;
     this._rollEngaged = false;
 
-    const fromWidth = this._measureLabelWidth(this._displayedLabel);
-    const toWidth = this._measureLabelWidth(target);
-    this._rollViewportInlineSizePx = fromWidth || undefined;
-
     // Engage the transition on the next frame so it animates from the settled
     // position instead of jumping straight to the rolled state.
     this._labelRollRaf = window.requestAnimationFrame(() => {
       this._labelRollRaf = window.requestAnimationFrame(() => {
         this._labelRollRaf = null;
         this._rollEngaged = true;
-        if (fromWidth > 0 && toWidth > 0) {
-          this._rollViewportInlineSizePx = toWidth;
-        }
       });
     });
 
@@ -437,22 +425,8 @@ export class ResponseStatus extends SpectrumElement {
       this._displayedLabel = this._rollToLabel;
       this._rollActive = false;
       this._rollEngaged = false;
-      this._rollViewportInlineSizePx = undefined;
       this._applyLabelRoll();
     }, ResponseStatus.LABEL_ROLL_DURATION_MS);
-  }
-
-  private _measureLabelWidth(text: string): number {
-    const measure = this.renderRoot.querySelector(
-      '.swc-ResponseStatus-labelMeasure'
-    ) as HTMLElement | null;
-
-    if (!measure) {
-      return 0;
-    }
-
-    measure.textContent = text;
-    return measure.getBoundingClientRect().width;
   }
 
   private _currentVisibleLabel(): string {
@@ -462,25 +436,20 @@ export class ResponseStatus extends SpectrumElement {
     return this._displayedLabel || this._getHeaderLabel();
   }
 
-  private _renderLabel(): TemplateResult {
+  private _renderLabel(
+    showDisclosure: boolean,
+    open: boolean
+  ): TemplateResult {
     const labelClass = ResponseStatus.STATUS_LABEL_CLASS;
-    const viewportClass = [
-      'swc-ResponseStatus-headerTrailViewport',
-      this._rollActive ? 'swc-ResponseStatus-headerTrailViewport--rolling' : '',
-    ]
-      .filter(Boolean)
-      .join(' ');
-    const viewportStyle =
-      this._rollViewportInlineSizePx !== undefined
-        ? `inline-size: ${this._rollViewportInlineSizePx}px`
-        : undefined;
+    const chevron = showDisclosure ? this._renderChevron(open) : '';
 
     if (!this._rollActive) {
       return html`
-        <span class=${viewportClass} style=${ifDefined(viewportStyle)}>
+        <span class="swc-ResponseStatus-headerTrailViewport">
           <span class="swc-ResponseStatus-headerTrailStrip">
             <span class="swc-ResponseStatus-headerTrailLine">
               <span class=${labelClass}>${this._currentVisibleLabel()}</span>
+              ${chevron}
             </span>
           </span>
         </span>
@@ -492,13 +461,15 @@ export class ResponseStatus extends SpectrumElement {
       : 'swc-ResponseStatus-headerTrailStrip';
 
     return html`
-      <span class=${viewportClass} style=${ifDefined(viewportStyle)}>
+      <span class="swc-ResponseStatus-headerTrailViewport">
         <span class=${stripClass}>
           <span class="swc-ResponseStatus-headerTrailLine">
             <span class=${labelClass}>${this._rollFromLabel}</span>
+            ${chevron}
           </span>
           <span class="swc-ResponseStatus-headerTrailLine">
             <span class=${labelClass}>${this._rollToLabel}</span>
+            ${chevron}
           </span>
         </span>
       </span>
@@ -588,8 +559,7 @@ export class ResponseStatus extends SpectrumElement {
     const rowContent = html`
       ${this._renderLeadingIcon()}
       <span class="swc-ResponseStatus-headerTrail">
-        ${this._renderLabel()}
-        ${showDisclosure ? this._renderChevron(this.open) : ''}
+        ${this._renderLabel(showDisclosure, this.open)}
       </span>
     `;
 
@@ -733,10 +703,6 @@ export class ResponseStatus extends SpectrumElement {
           hidden
           @slotchange=${this._handleSlotChange}
         ></slot>
-        <span
-          class="swc-ResponseStatus-labelMeasure ${ResponseStatus.STATUS_LABEL_CLASS}"
-          aria-hidden="true"
-        ></span>
       </div>
     `;
   }
