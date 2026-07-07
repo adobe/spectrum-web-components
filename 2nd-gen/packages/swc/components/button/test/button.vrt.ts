@@ -187,27 +187,42 @@ const permutationContent = () => html`
     )
   )}
   ${['fill', 'outline'].map((fillStyle) =>
-    row([
-      html`
-        <swc-button fill-style=${fillStyle}>Next</swc-button>
-      `,
-      html`
-        <swc-button fill-style=${fillStyle}>${arrowIcon()}Next</swc-button>
-      `,
-      // Written inline, not via the `arrowIcon()` helper: a helper call
-      // substituted directly as <swc-button>'s only child is itself a Lit
-      // child-position binding, which leaves the same marker comment problem
-      // described above. Icon-only is the one case where that actually
-      // breaks something (iconOnly detection), so <swc-icon> must appear as
-      // literal markup here, with only the innermost Arrow100Icon() call as
-      // a nested expression.
-      html`
-        <swc-button fill-style=${fillStyle} accessible-label="Next">
-          <swc-icon slot="icon" aria-hidden="true">${Arrow100Icon()}</swc-icon>
-        </swc-button>
-      `,
-    ])
+    row(
+      BUTTON_VALID_SIZES.map(
+        (size) => html`
+          <swc-button fill-style=${fillStyle} size=${size}>
+            ${arrowIcon()}Next ${size}
+          </swc-button>
+        `
+      )
+    )
   )}
+  ${
+    // Written inline, not via the `arrowIcon()` helper: a helper call
+    // substituted directly as <swc-button>'s only child is itself a Lit
+    // child-position binding, which leaves the same marker comment problem
+    // described above. Icon-only is the one case where that actually
+    // breaks something (iconOnly detection), so <swc-icon> must appear as
+    // literal markup here, with only the innermost Arrow100Icon() call as
+    // a nested expression.
+    ['fill', 'outline'].map((fillStyle) =>
+      row(
+        BUTTON_VALID_SIZES.map(
+          (size) => html`
+            <swc-button
+              fill-style=${fillStyle}
+              size=${size}
+              accessible-label="Next ${size}"
+            >
+              <swc-icon slot="icon" aria-hidden="true">
+                ${Arrow100Icon()}
+              </swc-icon>
+            </swc-button>
+          `
+        )
+      )
+    )
+  }
   ${row([
     html`
       <swc-button style="max-inline-size: 180px">
