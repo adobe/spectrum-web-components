@@ -37,14 +37,14 @@ import styles from './action-group.css';
  *
  * @example
  * <swc-action-group label="Text formatting">
- *   <swc-action-button label="Bold">Bold</swc-action-button>
- *   <swc-action-button label="Italic">Italic</swc-action-button>
+ *   <swc-action-button>Bold</swc-action-button>
+ *   <swc-action-button>Italic</swc-action-button>
  * </swc-action-group>
  *
  * @example
  * <swc-action-group orientation="vertical" label="Alignment">
- *   <swc-action-button label="Left">Left</swc-action-button>
- *   <swc-action-button label="Center">Center</swc-action-button>
+ *   <swc-action-button>Left</swc-action-button>
+ *   <swc-action-button>Center</swc-action-button>
  * </swc-action-group>
  */
 export class ActionGroup extends ActionGroupBase {

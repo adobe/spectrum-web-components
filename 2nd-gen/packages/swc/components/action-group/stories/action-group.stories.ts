@@ -103,9 +103,9 @@ const meta: Meta = {
       size=${ifDefined(renderArgs.size)}
       static-color=${ifDefined(renderArgs['static-color'])}
     >
-      <swc-action-button label="Bold">Bold</swc-action-button>
-      <swc-action-button label="Italic">Italic</swc-action-button>
-      <swc-action-button label="Underline">Underline</swc-action-button>
+      <swc-action-button>Bold</swc-action-button>
+      <swc-action-button>Italic</swc-action-button>
+      <swc-action-button>Underline</swc-action-button>
     </swc-action-group>
   `,
   parameters: {
