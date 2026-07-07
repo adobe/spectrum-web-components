@@ -1,5 +1,5 @@
 ---
-'@spectrum-web-components/core': patch
+'@spectrum-web-components/core': minor
 '@adobe/spectrum-wc': patch
 ---
 

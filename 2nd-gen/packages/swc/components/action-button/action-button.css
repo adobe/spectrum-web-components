@@ -237,6 +237,7 @@ slot[name="icon"]::slotted(*) {
   align-items: center;
   justify-content: center;
   inline-size: var(--swc-pending-inline-size);
+  transition: none;
 
   /* Disabled colors reference the already-resolved disabled vars so static-color
      variants automatically get their correct unavailable appearance. */

@@ -137,15 +137,15 @@ export function PendingMixin<T extends Constructor<ReactiveElement>>(
 
     protected override update(changedProperties: PropertyValues): void {
       super.update(changedProperties);
-      if (
-        window.__swc?.DEBUG &&
-        this.pending &&
-        (this as { disabled?: boolean }).disabled
-      ) {
+      // Guard the `disabled` read with an `in` check rather than a cast: not
+      // every host that applies this mixin necessarily has a `disabled`
+      // property.
+      const hasDisabled = 'disabled' in this && this.disabled === true;
+      if (window.__swc?.DEBUG && this.pending && hasDisabled) {
         window.__swc.warn(
           this,
           `<${this.localName}> should not set both "pending" and "disabled" simultaneously. Use "pending" to keep the element focusable while unavailable, or "disabled" to fully remove it from the tab order.`,
-          'https://opensource.adobe.com/spectrum-web-components/components/button/#pending',
+          'https://opensource.adobe.com/spectrum-web-components/',
           { issues: ['pending + disabled'] }
         );
       }

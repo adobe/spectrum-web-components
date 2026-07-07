@@ -330,6 +330,7 @@ slot[name="icon"]::slotted(*) {
 
   justify-content: center;
   inline-size: var(--swc-pending-inline-size); /* Preserve measured inline size to avoid impacting layout, set via the PendingController when state changes */
+  transition: none;
 
   /* Disabled colors reference the already-resolved disabled vars so outline and
    static-color variants automatically get their correct unavailable appearance. */

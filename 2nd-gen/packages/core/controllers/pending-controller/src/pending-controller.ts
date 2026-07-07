@@ -156,6 +156,17 @@ export class PendingController implements ReactiveController {
   //     LIFECYCLE
   // ─────────────────────────
 
+  public hostConnected(): void {
+    // Lit does not schedule an update on reconnect, so `hostUpdate` would not
+    // restart the delay timer for an element that reconnects while still
+    // pending. Re-arm it here. Setting `_wasPending` first prevents a later
+    // `hostUpdate` from starting a second timer.
+    if (this._host.pending && !this._wasPending) {
+      this._wasPending = true;
+      this._activateAfterDelay();
+    }
+  }
+
   public hostUpdate(): void {
     if (this._host.pending === this._wasPending) {
       return;
