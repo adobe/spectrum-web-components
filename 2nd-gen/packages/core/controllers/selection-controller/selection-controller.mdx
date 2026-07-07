@@ -25,10 +25,10 @@ import * as SelectionControllerStories from './stories/selection-controller.stor
 
 ### Programmatic API
 
-- **`setSelectedItem(item | null, options?)`**: assert one item (single/single-toggle) or add to a multiple selection; pass `null` to clear (single-toggle and multiple only).
+- **`setSelectedItem(item | null, options?)`**: assert one item (single/single-toggle) or add to a multiple selection; pass `null` to clear (single-toggle and multiple only — or `single` too with `{ silent: true }`).
 - **`toggleItem(item, options?)`**: toggle using the current mode rules.
 - **`selectAll(options?)`**: select all eligible items (multiple mode only).
-- **`clearAll(options?)`**: deselect all items (single-toggle and multiple modes).
+- **`clearAll(options?)`**: deselect all items (single-toggle and multiple modes — or `single` too with `{ silent: true }`).
 - **`getSelectedItems()`**: returns the current selection as an ordered array.
 - **`isSelected(item)`**: check whether a specific item is selected.
 
@@ -220,14 +220,14 @@ For a multiselect `listbox`, also set `aria-multiselectable="true"` on the host 
 | `getSelectedItems()`                      | Returns the current selection as an ordered array.                                                                                                                          |
 | `isSelected(item)`                        | Returns `true` when `item` is currently selected.                                                                                                                           |
 | `getMode()`                               | Returns the current `SelectionMode`.                                                                                                                                        |
-| `setSelectedItem(item \| null, options?)` | Select one item or add to multiple selection; pass `null` to clear (single-toggle and multiple modes).                                                                      |
+| `setSelectedItem(item \| null, options?)` | Select one item or add to multiple selection; pass `null` to clear (single-toggle and multiple modes, or `single` with `{ silent: true }`).                                 |
 | `toggleItem(item, options?)`              | Toggle an item using the current mode rules. Returns `false` when the item is ineligible or the operation is not allowed (e.g. re-clicking active item in `single` mode).   |
 | `selectAll(options?)`                     | Select all eligible items. Multiple mode only; returns `false` otherwise.                                                                                                   |
-| `clearAll(options?)`                      | Deselect all items. Single-toggle and multiple modes; returns `false` in `single` mode.                                                                                     |
+| `clearAll(options?)`                      | Deselect all items. Single-toggle and multiple modes, or `single` with `{ silent: true }`; otherwise returns `false` in `single` mode.                                      |
 | `hostConnected()`                         | Lit `ReactiveController`: registers capture-phase `click` (and `keydown` when `keydownActivation` is `true`) unless `enableInteraction` is `false`, then calls `refresh()`. |
 | `hostDisconnected()`                      | Lit `ReactiveController`: removes event listeners.                                                                                                                          |
 
-`refresh`, `setSelectedItem`, `toggleItem`, `selectAll`, and `clearAll` all accept an `options?: { silent?: boolean }` parameter — pass `{ silent: true }` to commit without invoking `confirmSelectionChange` or dispatching the change event.
+`refresh`, `setSelectedItem`, `toggleItem`, `selectAll`, and `clearAll` all accept an `options?: { silent?: boolean }` parameter — pass `{ silent: true }` to commit without invoking `confirmSelectionChange` or dispatching the change event. For `setSelectedItem(null, ...)` and `clearAll`, `{ silent: true }` also bypasses the `single`-mode restriction that otherwise rejects clearing: a mandatory single-select group can't be emptied by _clicking_, but a consumer resyncing from an external property that explicitly represents "nothing selected" (for example `<swc-tabs selected="">`) can still clear it.
 
 ### Events
 

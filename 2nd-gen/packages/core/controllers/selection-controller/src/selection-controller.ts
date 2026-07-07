@@ -344,8 +344,11 @@ export class SelectionController implements ReactiveController {
    * Asserts {@link item} as the selection in single / single-toggle modes, or adds it to the
    * set in multiple mode. Disabled or ineligible items are rejected (returns **`false`**).
    *
-   * Passing **`null`** clears the selection; only works when the mode allows an empty selection
-   * (**`single-toggle`** or **`multiple`**).
+   * Passing **`null`** clears the selection; in **`single`** mode this normally returns
+   * **`false`** and leaves the selection unchanged (interactively, a mandatory single-select
+   * group can't be emptied by clicking). Pass **`{ silent: true }`** to clear it anyway — for
+   * example when an external property is explicitly reset to represent "nothing selected,"
+   * which a consumer may legitimately want to allow even in `single` mode.
    *
    * Pass **`{ silent: true }`** to commit this transition without invoking
    * **`confirmSelectionChange`** or dispatching {@link selectionControllerChange} — used to
@@ -356,7 +359,7 @@ export class SelectionController implements ReactiveController {
     options?: { silent?: boolean }
   ): boolean {
     if (item === null) {
-      if (this.options.mode === 'single') {
+      if (this.options.mode === 'single' && !options?.silent) {
         return false;
       }
       return this.clearAll(options);
@@ -447,13 +450,14 @@ export class SelectionController implements ReactiveController {
 
   /**
    * Deselects all items. Works in **`single-toggle`** and **`multiple`** modes. In **`single`**
-   * mode, returns **`false`** and leaves selection unchanged.
+   * mode, returns **`false`** and leaves the selection unchanged — unless **`{ silent: true }`**
+   * is passed, which clears it anyway (see {@link SelectionController.setSelectedItem}).
    *
    * Pass **`{ silent: true }`** to commit without invoking **`confirmSelectionChange`** or
    * dispatching {@link selectionControllerChange}.
    */
   public clearAll(options?: { silent?: boolean }): boolean {
-    if (this.options.mode === 'single') {
+    if (this.options.mode === 'single' && !options?.silent) {
       return false;
     }
     if (this.selectedItems.size === 0) {

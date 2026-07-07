@@ -178,7 +178,46 @@ export const SelectedPropertyTest: Story = {
     await step('selecting nonexistent value clears selection', async () => {
       tabs.selected = 'nonexistent';
       await tabs.updateComplete;
+
+      const tab2 = canvasElement.querySelector('swc-tab[tab-id="2"]') as Tab;
       expect(tabs.selected, 'selected resets to empty').toBe('');
+      expect(
+        tab2.selected,
+        'previously selected tab is deselected, not left highlighted'
+      ).toBe(false);
+    });
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Clearing selection — selected = '' deselects the tab
+// ──────────────────────────────────────────────────────────────
+
+export const ClearSelectionTest: Story = {
+  render: () => html`
+    <swc-tabs selected="2" accessible-label="Clear selection test">
+      <swc-tab tab-id="1">Tab 1</swc-tab>
+      <swc-tab tab-id="2">Tab 2</swc-tab>
+      <swc-tab-panel tab-id="1"><p>Panel 1</p></swc-tab-panel>
+      <swc-tab-panel tab-id="2"><p>Panel 2</p></swc-tab-panel>
+    </swc-tabs>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const tabs = await getComponent<Tabs>(canvasElement, 'swc-tabs');
+
+    await step('setting selected to "" deselects the tab', async () => {
+      const tab2 = canvasElement.querySelector('swc-tab[tab-id="2"]') as Tab;
+      expect(tab2.selected, 'tab 2 starts selected').toBe(true);
+
+      tabs.selected = '';
+      await tabs.updateComplete;
+
+      // Clearing the property should leave no tab looking selected.
+      expect(tabs.selected).toBe('');
+      expect(
+        tab2.selected,
+        'tab 2 should be deselected when the selection clears'
+      ).toBe(false);
     });
   },
 };

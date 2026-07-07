@@ -381,8 +381,20 @@ export abstract class TabsBase extends SpectrumElement {
       // Also sync the roving tab stop so focus() and Tab re-entry target
       // the selected tab rather than the first item in the list.
       this._navigation.setActiveItem(selectedTab as HTMLElement);
-    } else if (this.selected) {
-      // No tab with this id — reset the public property.
+      return;
+    }
+
+    // this.selected is empty, or names a tab that doesn't exist — no tab
+    // should remain visually selected. `single` mode normally rejects
+    // clearing, so this requires `{ silent: true }` to bypass that
+    // interactive-only restriction. Clearing here (rather than only when
+    // this.selected is unset below) fixes the previously-selected tab
+    // immediately, without depending on a second reactive update cycle.
+    this._selection.clearAll({ silent: true });
+
+    if (this.selected) {
+      // Named a tab that doesn't exist — reset the public property to
+      // reflect that nothing is actually selected.
       this.selected = '';
     }
   }
