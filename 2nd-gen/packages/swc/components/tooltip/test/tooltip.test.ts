@@ -13,11 +13,6 @@
 import { html } from 'lit';
 import { expect, userEvent, waitFor } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
-// Real, trusted browser input (Playwright-backed). Unlike @storybook/test's
-// synthetic userEvent, this fires the native `popover="auto"` Escape
-// light-dismiss. See the storybook-testing style guide, "Native dismissal and
-// trusted input".
-import { userEvent as browserUserEvent } from '@vitest/browser/context';
 
 import type { Button } from '@adobe/spectrum-wc/button';
 import { Tooltip } from '@adobe/spectrum-wc/tooltip';
@@ -744,9 +739,10 @@ export const EscapeClosesTest: Story = {
       expect(tooltip.open, 'tooltip is open before Escape').toBe(true);
 
       // Synthetic (untrusted) Escape closes via the JS `handleKeyDown` handler,
-      // not the native popover Escape (which needs trusted input; see
-      // NativeEscapeDismissTest). That handler is also what a `manual` tooltip
-      // would rely on, since manual popovers get no native light-dismiss.
+      // not the native popover Escape (which needs trusted input; that path is
+      // covered by the trusted-Escape test in tooltip.a11y.spec.ts). That handler
+      // is also what a `manual` tooltip would rely on, since manual popovers get
+      // no native light-dismiss.
       await userEvent.keyboard('{Escape}');
       await waitFor(
         () => expect(tooltip.matches(':popover-open')).toBe(false),
@@ -754,37 +750,6 @@ export const EscapeClosesTest: Story = {
       );
       expect(tooltip.open, 'tooltip is closed after Escape').toBe(false);
     });
-  },
-};
-
-// The synthetic Escape in EscapeClosesTest above closes the tooltip via its JS
-// `handleKeyDown` backstop, not the native `popover="auto"` Escape (which needs
-// trusted input). This covers the real, primary path with trusted input from
-// @vitest/browser/context.
-export const NativeEscapeDismissTest: Story = {
-  render: () => html`
-    <swc-button id="tt-native-escape-trigger">Open</swc-button>
-    <swc-tooltip for="tt-native-escape-trigger" placement="top">
-      Press Escape to close
-    </swc-tooltip>
-  `,
-  play: async ({ canvasElement, step }) => {
-    const tooltip = await getComponent<Tooltip>(canvasElement, 'swc-tooltip');
-
-    await step(
-      'a real (trusted) Escape triggers the native popover light-dismiss',
-      async () => {
-        await openTooltip(tooltip);
-        expect(tooltip.open, 'tooltip is open before Escape').toBe(true);
-
-        await browserUserEvent.keyboard('{Escape}');
-        await waitFor(
-          () => expect(tooltip.matches(':popover-open')).toBe(false),
-          { timeout: 1000 }
-        );
-        expect(tooltip.open, 'closed after a trusted Escape').toBe(false);
-      }
-    );
   },
 };
 
