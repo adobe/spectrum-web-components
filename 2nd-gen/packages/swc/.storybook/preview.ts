@@ -518,9 +518,15 @@ const preview = {
                 'Textfield',
                 ['Rendering and styling migration analysis'],
                 'Thumbnail',
-                ['Rendering and styling migration analysis'],
+                [
+                  'Accessibility migration analysis',
+                  'Rendering and styling migration analysis',
+                ],
                 'Toast',
-                ['Accessibility migration analysis'],
+                [
+                  'Accessibility migration analysis',
+                  'Rendering and styling migration analysis',
+                ],
                 'Tooltip',
                 [
                   'Accessibility migration analysis',
