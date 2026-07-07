@@ -82,17 +82,17 @@ export const buildPreviewURLComment = (prNumber) => {
 - [High Contrast Mode | Medium | LTR](${hcmUrl})`);
 
   // Documentation and Storybook URLs
-  const docsFirstGenUrl = `${baseUrl}/${prHash}/docs/first-gen-docs/`;
-  const storybookFirstGenUrl = `${baseUrl}/${prHash}/docs/first-gen-storybook/`;
-  const storybookSecondGenDevUrl = `${baseUrl}/${prHash}/docs/second-gen-storybook-dev/`;
-  const storybookSecondGenProdUrl = `${baseUrl}/${prHash}/docs/second-gen-storybook-prod/`;
+  const docsFirstGenUrl = `${baseUrl}/${prHash}/docs/gen1-docs/`;
+  const storybookFirstGenUrl = `${baseUrl}/${prHash}/docs/gen1-storybook/`;
+  const storybookSecondGenDevUrl = `${baseUrl}/${prHash}/docs/gen2-storybook-dev/`;
+  const storybookSecondGenProdUrl = `${baseUrl}/${prHash}/docs/gen2-storybook-prod/`;
 
   let comment = `## 📚 Branch Preview Links
 
-- [Documentation Site (Gen1)](${docsFirstGenUrl})
-- [Storybook (Gen1)](${storybookFirstGenUrl})
 - [Storybook (Gen2, dev mode)](${storybookSecondGenDevUrl})
 - [Storybook (Gen2, prod mode)](${storybookSecondGenProdUrl})
+- [Documentation Site (Gen1)](${docsFirstGenUrl})
+- [Storybook (Gen1)](${storybookFirstGenUrl})
 
 <details>
 <summary><strong>🔍 Gen1 Visual Regression Test Results</strong></summary>
