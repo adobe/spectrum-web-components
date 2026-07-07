@@ -25,7 +25,7 @@ import * as SelectionControllerStories from './stories/selection-controller.stor
 
 ### Programmatic API
 
-- **`setSelectedItem(item | null)`**: assert one item (single/single-toggle) or add to a multiple selection; pass `null` to clear (single-toggle and multiple only).
+- **`setSelectedItem(item | null, options?)`**: assert one item (single/single-toggle) or add to a multiple selection; pass `null` to clear (single-toggle and multiple only). Pass `{ silent: true }` to commit without invoking `confirmSelectionChange` or dispatching the change event — for resyncing internal state from an external property change.
 - **`toggleItem(item)`**: toggle using the current mode rules.
 - **`selectAll()`**: select all eligible items (multiple mode only).
 - **`clearAll()`**: deselect all items (single-toggle and multiple modes).
@@ -211,19 +211,19 @@ For a multiselect `listbox`, also set `aria-multiselectable="true"` on the host 
 
 ### Methods
 
-| Member                          | Description                                                                                                                                                               |
-| ------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `setOptions(partial)`           | Merge option updates; normalizes selection when mode changes and calls `refresh()`.                                                                                       |
-| `refresh()`                     | Remove stale selections and optionally select the first item (`defaultToFirstSelectable`).                                                                                |
-| `getSelectedItems()`            | Returns the current selection as an ordered array.                                                                                                                        |
-| `isSelected(item)`              | Returns `true` when `item` is currently selected.                                                                                                                         |
-| `getMode()`                     | Returns the current `SelectionMode`.                                                                                                                                      |
-| `setSelectedItem(item \| null)` | Select one item or add to multiple selection; pass `null` to clear (single-toggle and multiple modes).                                                                    |
-| `toggleItem(item)`              | Toggle an item using the current mode rules. Returns `false` when the item is ineligible or the operation is not allowed (e.g. re-clicking active item in `single` mode). |
-| `selectAll()`                   | Select all eligible items. Multiple mode only; returns `false` otherwise.                                                                                                 |
-| `clearAll()`                    | Deselect all items. Single-toggle and multiple modes; returns `false` in `single` mode.                                                                                   |
-| `hostConnected()`               | Lit `ReactiveController`: registers capture-phase `click` (and `keydown` when `keydownActivation` is `true`) and calls `refresh()`.                                       |
-| `hostDisconnected()`            | Lit `ReactiveController`: removes event listeners.                                                                                                                        |
+| Member                                    | Description                                                                                                                                                                                                                                                          |
+| ----------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `setOptions(partial)`                     | Merge option updates; normalizes selection when mode changes and calls `refresh()`.                                                                                                                                                                                  |
+| `refresh(options?)`                       | Remove stale selections and optionally select the first eligible item (`defaultToFirstSelectable`). Pass `{ silent: true }` to skip `confirmSelectionChange` and the change event.                                                                                   |
+| `getSelectedItems()`                      | Returns the current selection as an ordered array.                                                                                                                                                                                                                   |
+| `isSelected(item)`                        | Returns `true` when `item` is currently selected.                                                                                                                                                                                                                    |
+| `getMode()`                               | Returns the current `SelectionMode`.                                                                                                                                                                                                                                 |
+| `setSelectedItem(item \| null, options?)` | Select one item or add to multiple selection; pass `null` to clear (single-toggle and multiple modes). Pass `{ silent: true }` to commit without invoking `confirmSelectionChange` or dispatching the change event — for resyncing from an external property change. |
+| `toggleItem(item)`                        | Toggle an item using the current mode rules. Returns `false` when the item is ineligible or the operation is not allowed (e.g. re-clicking active item in `single` mode).                                                                                            |
+| `selectAll()`                             | Select all eligible items. Multiple mode only; returns `false` otherwise.                                                                                                                                                                                            |
+| `clearAll()`                              | Deselect all items. Single-toggle and multiple modes; returns `false` in `single` mode.                                                                                                                                                                              |
+| `hostConnected()`                         | Lit `ReactiveController`: registers capture-phase `click` (and `keydown` when `keydownActivation` is `true`) and calls `refresh()`.                                                                                                                                  |
+| `hostDisconnected()`                      | Lit `ReactiveController`: removes event listeners.                                                                                                                                                                                                                   |
 
 ### Events
 

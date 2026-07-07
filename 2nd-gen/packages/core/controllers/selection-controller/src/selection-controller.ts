@@ -77,7 +77,9 @@ export type SelectionControllerOptions = {
   /**
    * Called **before** **`selectItem`** / **`deselectItem`** run for the proposed transition.
    * Return **`false`** to abort — mutators do not run, the selection stays unchanged, and no
-   * change event is dispatched. Omit for unconditional commits.
+   * change event is dispatched. Omit for unconditional commits. Not called for transitions
+   * committed with **`{ silent: true }`** (see {@link SelectionController.setSelectedItem} and
+   * {@link SelectionController.refresh}).
    */
   confirmSelectionChange?: (
     detail: SelectionControllerConfirmDetail
@@ -175,13 +177,6 @@ export class SelectionController implements ReactiveController {
     >;
 
   private selectedItems: Set<HTMLElement> = new Set();
-
-  /**
-   * Snapshot of the last non-empty raw item list. Used to support
-   * `defaultToFirstSelectable` and stale-item cleanup when `getItems()`
-   * returns `[]` (e.g. the host signals it is disabled).
-   */
-  private lastKnownRawItems: HTMLElement[] = [];
 
   private keydownListenerAttached = false;
 
@@ -303,8 +298,15 @@ export class SelectionController implements ReactiveController {
    *
    * Passing **`null`** clears the selection; only works when the mode allows an empty selection
    * (**`single-toggle`** or **`multiple`**).
+   *
+   * Pass **`{ silent: true }`** to commit this transition without invoking
+   * **`confirmSelectionChange`** or dispatching {@link selectionControllerChange} — used to
+   * resync internal state from an external property change without raising a public event.
    */
-  public setSelectedItem(item: HTMLElement | null): boolean {
+  public setSelectedItem(
+    item: HTMLElement | null,
+    options?: { silent?: boolean }
+  ): boolean {
     if (item === null) {
       if (this.options.mode === 'single') {
         return false;
@@ -324,12 +326,12 @@ export class SelectionController implements ReactiveController {
         return true;
       }
       const next = [...Array.from(this.selectedItems), item];
-      return this.applySelectionTransition(next, []);
+      return this.applySelectionTransition(next, [], options);
     }
 
     const prev = Array.from(this.selectedItems);
     const toRemove = prev.filter((el) => el !== item);
-    return this.applySelectionTransition([item], toRemove);
+    return this.applySelectionTransition([item], toRemove, options);
   }
 
   /**
@@ -404,21 +406,20 @@ export class SelectionController implements ReactiveController {
   /**
    * Re-applies bookkeeping after structural changes: removes stale selections, and selects the
    * first eligible item when **`defaultToFirstSelectable`** is **`true`** and nothing is selected
-   * (single-item modes only).
+   * (single-item modes only). When nothing is currently eligible, no default selection is forced.
+   *
+   * Pass **`{ silent: true }`** to commit these transitions without invoking
+   * **`confirmSelectionChange`** or dispatching {@link selectionControllerChange} — used to
+   * resync internal state from an external property change without raising a public event.
    */
-  public refresh(): void {
-    // Call getScopedRawItems() once and derive eligible from it so we avoid a
-    // redundant getItems() call inside getEligibleItems().
-    const rawItems = this.getScopedRawItems();
-    if (rawItems.length > 0) {
-      this.lastKnownRawItems = rawItems;
-    }
-    const eligible = rawItems.filter((el) => this.isSelectableItem(el));
+  public refresh(options?: { silent?: boolean }): void {
+    const silent = options?.silent ?? false;
+    const eligible = this.getEligibleItems();
 
     // An item is stale when it is disconnected, or when the eligible list is
     // non-empty and does not include it. When eligible is empty (e.g. the host
-    // signals it is disabled via getItems()→[]), only disconnected items are
-    // removed — connected selections are preserved so aria-selected stays true.
+    // signals it is disabled), only disconnected items are removed — connected
+    // selections are preserved so aria-selected stays true.
     const stale = Array.from(this.selectedItems).filter(
       (el) => !el.isConnected || (eligible.length > 0 && !eligible.includes(el))
     );
@@ -427,7 +428,7 @@ export class SelectionController implements ReactiveController {
       const next = Array.from(this.selectedItems).filter(
         (el) => !stale.includes(el)
       );
-      this.applySelectionTransition(next, stale);
+      this.applySelectionTransition(next, stale, { silent });
     }
 
     const isSingle =
@@ -435,17 +436,10 @@ export class SelectionController implements ReactiveController {
     if (
       isSingle &&
       this.options.defaultToFirstSelectable &&
-      this.selectedItems.size === 0
+      this.selectedItems.size === 0 &&
+      eligible.length > 0
     ) {
-      // For radio types one item must be selected even when the host is disabled.
-      // Use the eligible list when available; fall back to the last known raw
-      // items when getItems() returns [] (host disabled) so the first item
-      // is still selected.
-      const candidates =
-        eligible.length > 0 ? eligible : this.lastKnownRawItems;
-      if (candidates.length > 0) {
-        this.applySelectionTransition([candidates[0]], []);
-      }
+      this.applySelectionTransition([eligible[0]], [], { silent });
     }
   }
 
@@ -502,8 +496,10 @@ export class SelectionController implements ReactiveController {
    */
   private applySelectionTransition(
     next: HTMLElement[],
-    removedItems: HTMLElement[]
+    removedItems: HTMLElement[],
+    options?: { silent?: boolean }
   ): boolean {
+    const silent = options?.silent ?? false;
     const priorItems = Array.from(this.selectedItems);
     const addedItems = next.filter((el) => !this.selectedItems.has(el));
 
@@ -511,7 +507,7 @@ export class SelectionController implements ReactiveController {
       return true;
     }
 
-    if (this.options.confirmSelectionChange) {
+    if (!silent && this.options.confirmSelectionChange) {
       const ok = this.options.confirmSelectionChange({
         candidateItems: next,
         priorItems,
@@ -524,7 +520,10 @@ export class SelectionController implements ReactiveController {
     this.applyMutators(next);
     this.selectedItems = new Set(next);
 
-    this.dispatchChange({ selectedItems: next, addedItems, removedItems });
+    this.dispatchChange(
+      { selectedItems: next, addedItems, removedItems },
+      silent
+    );
     return true;
   }
 
@@ -543,8 +542,19 @@ export class SelectionController implements ReactiveController {
     }
   }
 
-  private dispatchChange(detail: SelectionControllerChangeDetail): void {
+  /**
+   * Invokes **`onSelectionChange`** (always) and dispatches {@link selectionControllerChange}
+   * on the host, unless **`silent`** is **`true`** — used by silent commits to keep internal
+   * mirroring callbacks in sync without raising the public event.
+   */
+  private dispatchChange(
+    detail: SelectionControllerChangeDetail,
+    silent: boolean
+  ): void {
     this.options.onSelectionChange?.(detail);
+    if (silent) {
+      return;
+    }
     this.host.dispatchEvent(
       new CustomEvent<SelectionControllerChangeDetail>(
         selectionControllerChange,

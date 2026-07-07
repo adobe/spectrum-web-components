@@ -380,6 +380,11 @@ export class FocusgroupNavigationController implements ReactiveController {
    * @returns False if `item` is not in the current eligible item list.
    */
   public setActiveItem(item: HTMLElement): boolean {
+    // Clear the eligible-items cache so this reflects the current DOM rather
+    // than a stale snapshot left behind by a previous refresh()/keydown/focusin
+    // cycle. Public entry points must not depend on caller ordering.
+    this.cachedEligibleItems = null;
+    this.cachedRows = null;
     const items = this.getEligibleItems();
     if (!items.includes(item)) {
       return false;
@@ -414,6 +419,10 @@ export class FocusgroupNavigationController implements ReactiveController {
     if (trimmed === '') {
       return false;
     }
+    // Same staleness concern as setActiveItem(): recompute rather than trust a
+    // cache populated by a previous cycle.
+    this.cachedEligibleItems = null;
+    this.cachedRows = null;
     const needle = trimmed.toLowerCase();
     const items = this.getEligibleItems();
     const match = items.find((el) => {
