@@ -2396,8 +2396,12 @@ export function runPickerTests(): void {
 
     const menu = picker.optionsMenu as Menu;
     expect(menu, 'picker menu should be available').to.exist;
-    const menuScrollSpy = spy();
-    menu.addEventListener('scroll', menuScrollSpy);
+
+    // The scroll fires on the picker host for consumers, but being
+    // non-composed it must not cross the shadow boundary and close the
+    // ancestor overlay (the reported regression).
+    const pickerScrollSpy = spy();
+    picker.addEventListener('scroll', pickerScrollSpy);
 
     // Scroll the real menu content so behavior is exercised end-to-end.
     menu.style.maxHeight = '80px';
@@ -2415,8 +2419,8 @@ export function runPickerTests(): void {
     );
     expect(picker.open, 'picker should remain open').to.be.true;
     expect(
-      menuScrollSpy.callCount,
-      'menu should emit scroll'
+      pickerScrollSpy.callCount,
+      'scroll event should fire on the picker host'
     ).to.be.greaterThan(0);
   });
   describe('initial value', function () {
