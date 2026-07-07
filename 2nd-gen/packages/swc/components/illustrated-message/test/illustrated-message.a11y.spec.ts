@@ -97,6 +97,26 @@ test.describe('IllustratedMessage - ARIA Snapshots', () => {
     `);
   });
 
+  test('should expose action buttons in accessibility tree', async ({
+    page,
+  }) => {
+    const root = await gotoStory(
+      page,
+      'components-illustrated-message--actions',
+      'swc-illustrated-message'
+    );
+    // Actions story renders three size variants (s, m, l), each with a heading
+    // and a Browse files button. All three buttons must appear in the tree.
+    await expect(root).toMatchAriaSnapshot(`
+      - heading "Upload your files" [level=2]
+      - button "Browse files"
+      - heading "Upload your files" [level=2]
+      - button "Browse files"
+      - heading "Upload your files" [level=2]
+      - button "Browse files"
+    `);
+  });
+
   test('should expose informative illustration to assistive technology', async ({
     page,
   }) => {

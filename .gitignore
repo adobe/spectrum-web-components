@@ -131,11 +131,12 @@ test/*
 # second gen build artifacts
 2nd-gen/packages/*/dist/
 2nd-gen/packages/*/custom-elements.json
-2nd-gen/packages/*/storybook-static
+2nd-gen/packages/*/storybook-static*
 2nd-gen/packages/swc/.storybook/contributor-docs/
 2nd-gen/packages/swc/public/llms.txt
 2nd-gen/packages/swc/public/llms-full.txt
 2nd-gen/packages/swc/public/sitemap.xml
+2nd-gen/packages/swc/public/.well-known/agent-skills
 2nd-gen/packages/swc/public/reference
 
 # npm assets
