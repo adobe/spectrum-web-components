@@ -99,14 +99,14 @@ jobs:
       - name: Build second-gen Storybook (dev mode)
         env:
           # Full dev-mode story set (internal stories, .test.ts fixtures,
-          # .vrt.ts). `storybook build` otherwise forces NODE_ENV=production
-          # itself, so this can't be achieved by leaving NODE_ENV unset.
-          SWC_STORYBOOK_MODE: dev
+          # .vrt.ts). `storybook build` only defaults NODE_ENV to production
+          # when unset, so setting it explicitly here keeps the dev story set.
+          NODE_ENV: development
         run: yarn workspace @adobe/spectrum-wc storybook:build --output-dir storybook-static-dev
 
       - name: Build second-gen Storybook (prod mode)
-        # No SWC_STORYBOOK_MODE override: this is the same production-trimmed
-        # build that publish-2ndgen-docs.yml deploys to the live site, so
+        # No NODE_ENV override: this is the same production-trimmed build
+        # that publish-2ndgen-docs.yml deploys to the live site, so
         # reviewers can validate exactly what will end up on prod.
         run: yarn workspace @adobe/spectrum-wc storybook:build --output-dir storybook-static-prod
 
