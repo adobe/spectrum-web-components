@@ -150,8 +150,7 @@ const STORIES_BY_MODE: Record<StorybookMode, StorybookConfig['stories']> = {
     { ...PATTERN_STORIES, files: '**/*.stories.ts' },
     { ...PATTERN_STORIES, files: '**/*.mdx' },
   ],
-  // Chromatic-only: just the hand-picked VRT stories, so the catalog never
-  // lists the non-VRT stories it's configured to skip snapshotting anyway.
+  // Chromatic-only: just the hand-picked VRT stories.
   vrt: VRT_STORIES,
 };
 

@@ -12,6 +12,8 @@
 
 import { html } from 'lit';
 
+import { staticColorSettings } from '../decorators/static-colors-demo.js';
+
 /**
  * Wraps a set of permutations in a single flex-wrap row. Stack multiple
  * `row()` calls inside a VRT story to group permutations (e.g. one row per
@@ -52,13 +54,6 @@ export const theme = (
   </div>
 `;
 
-// Matches the gradients in decorators/static-colors-demo.ts, so VRT static
-// color groups look the same as the docs' staticColorsDemo decorator.
-const STATIC_COLOR_GRADIENTS = {
-  white: 'linear-gradient(45deg, rgb(64 0 22), rgb(14 24 67))',
-  black: 'linear-gradient(45deg, rgb(255 241 246), rgb(238 245 255))',
-} as const;
-
 /**
  * Wraps a group of static-color="white"/"black" permutations in the matching
  * contrast background, so they render correctly outside of the docs-only
@@ -70,7 +65,7 @@ export const staticColorBackground = (
   staticColor: 'white' | 'black'
 ) => html`
   <div
-    style="display: flex; flex-wrap: wrap; gap: 16px; align-items: center; padding: 24px; background: ${STATIC_COLOR_GRADIENTS[
+    style="display: flex; flex-wrap: wrap; gap: 16px; align-items: center; padding: 24px; background: ${staticColorSettings[
       staticColor
     ]}; color: ${staticColor === 'white' ? 'white' : 'black'};"
   >

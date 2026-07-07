@@ -21,6 +21,7 @@ import {
 import '@adobe/spectrum-wc/components/button/swc-button.js';
 import '@adobe/spectrum-wc/components/icon/swc-icon.js';
 
+import type { ForcedPseudoState } from '../../../.storybook/helpers/index.js';
 import {
   forcePseudoState,
   row,
@@ -44,9 +45,6 @@ import { Arrow100Icon } from '../../icon/elements/Arrow100Icon.js';
 const meta: Meta = {
   title: 'Button/VRT',
   component: 'swc-button',
-  parameters: {
-    chromatic: { disableSnapshot: false },
-  },
   tags: ['dev'],
 };
 
@@ -78,12 +76,23 @@ const applyForcedStates = (
   internalSelector?: string
 ) => {
   root.querySelectorAll<HTMLElement>(selector).forEach((host) => {
-    const state = host.dataset.forceState as
-      | 'hover'
-      | 'focus-visible'
-      | 'active';
+    const state = host.dataset.forceState as ForcedPseudoState;
     forcePseudoState(host, state, internalSelector);
   });
+};
+
+// Shared by every story below that forces hover/focus-visible/active on
+// swc-button's internal `.swc-Button` element.
+const forceButtonStates = async ({
+  canvasElement,
+}: {
+  canvasElement: HTMLElement;
+}) => {
+  applyForcedStates(
+    canvasElement,
+    'swc-button[data-force-state]',
+    '.swc-Button'
+  );
 };
 
 // ──────────────────────────
@@ -258,13 +267,7 @@ export const Permutations: Story = {
   // this after render (rather than baking the class into the markup above)
   // is what lets it target the real internal `.swc-Button` element inside
   // the shadow root, which the light-DOM markup above has no access to.
-  play: async ({ canvasElement }) => {
-    applyForcedStates(
-      canvasElement,
-      'swc-button[data-force-state]',
-      '.swc-Button'
-    );
-  },
+  play: forceButtonStates,
 };
 
 // `forced-colors` is a real browser media feature Chromatic can emulate
@@ -280,17 +283,10 @@ export const ForcedColors: Story = {
   render: () => theme(permutationContent(), 'light', 'ltr'),
   parameters: {
     styles: { display: 'flex', 'flex-direction': 'column', gap: '16px' },
-    // meta already sets chromatic.disableSnapshot: false for this file.
     chromatic: { forcedColors: 'active' },
     autoplay: true,
   },
-  play: async ({ canvasElement }) => {
-    applyForcedStates(
-      canvasElement,
-      'swc-button[data-force-state]',
-      '.swc-Button'
-    );
-  },
+  play: forceButtonStates,
 };
 
 const globalIconSvg = html`
@@ -331,12 +327,6 @@ const asLinkAndButton = (classes: string, label: string) => [
 // element type. `disabled` is button-only, matching the documented
 // limitation that native links can't support a real disabled state.
 //
-// Pseudo-states (:hover/:active/:focus-visible) aren't covered here:
-// forcePseudoState() mirrors rules from a shadow root's *adopted*
-// stylesheets, but global-button.css applies at the document level, which
-// needs a different mechanism it doesn't support yet. The actual visual
-// rules are still covered by Permutations above (same source stylesheet);
-// what's untested here is specifically their class-based delivery.
 const globalStylesContent = () => html`
   ${[
     { classes: '', label: 'Primary' },
@@ -490,7 +480,7 @@ export const GlobalStyles: Story = {
 type ModPropertyCase = {
   property: string;
   value: string;
-  forceState?: 'hover' | 'focus-visible' | 'active';
+  forceState?: ForcedPseudoState;
   disabled?: boolean;
   withIcon?: boolean;
   label?: string;
@@ -607,11 +597,5 @@ export const CustomProperties: Story = {
     styles: { display: 'flex', 'flex-direction': 'column', gap: '16px' },
     autoplay: true,
   },
-  play: async ({ canvasElement }) => {
-    applyForcedStates(
-      canvasElement,
-      'swc-button[data-force-state]',
-      '.swc-Button'
-    );
-  },
+  play: forceButtonStates,
 };

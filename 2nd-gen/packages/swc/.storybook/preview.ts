@@ -143,9 +143,6 @@ const preview = {
     // same initial path, so without this it would snapshot the pre-play state. Enable
     // autoplay only under Chromatic to restore correct visual regression snapshots.
     autoplay: isChromatic(),
-    // Only dedicated *.vrt.ts stories snapshot in Chromatic; those files opt
-    // back in via `parameters.chromatic.disableSnapshot: false` on their meta.
-    chromatic: { disableSnapshot: true },
     backgrounds: { disable: true }, // Use custom context switches
     controls: {
       expanded: true,

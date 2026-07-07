@@ -29,7 +29,14 @@ const PSEUDO_TO_FORCED_CLASS: Record<string, string> = {
 
 export type ForcedPseudoState = 'hover' | 'focus-visible' | 'active';
 
-/** Shadow roots already given mirrored pseudo-class stylesheets. */
+/**
+ * Mirror sheets already computed, keyed by the *adopted* stylesheet rather
+ * than the shadow root: Lit's static `styles` produce one memoized sheet per
+ * component class, shared by reference across every instance, so keying by
+ * root would redo the same rule walk for every button/tab/etc. on the page.
+ */
+const mirrorCache = new WeakMap<CSSStyleSheet, CSSStyleSheet | null>();
+/** Shadow roots that already have their mirrors adopted. */
 const augmentedRoots = new WeakSet<ShadowRoot>();
 /** Whether the document-level mirror <style> has already been injected. */
 let documentAugmented = false;
@@ -78,7 +85,12 @@ function augmentShadowRoot(root: ShadowRoot): void {
   }
   augmentedRoots.add(root);
   const mirrors = root.adoptedStyleSheets
-    .map(mirrorPseudoClassRules)
+    .map((sheet) => {
+      if (!mirrorCache.has(sheet)) {
+        mirrorCache.set(sheet, mirrorPseudoClassRules(sheet));
+      }
+      return mirrorCache.get(sheet) ?? null;
+    })
     .filter((sheet): sheet is CSSStyleSheet => sheet !== null);
   if (mirrors.length) {
     root.adoptedStyleSheets = [...root.adoptedStyleSheets, ...mirrors];
