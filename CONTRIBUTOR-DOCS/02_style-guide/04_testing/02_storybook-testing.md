@@ -31,6 +31,7 @@
     - [Testing static color variants](#testing-static-color-variants)
     - [Testing dev mode warnings](#testing-dev-mode-warnings)
     - [Testing composed components](#testing-composed-components)
+    - [Native dismissal and trusted input](#native-dismissal-and-trusted-input)
 
 </details>
 
@@ -528,3 +529,38 @@ export const ComposedComponentTest: Story = {
   },
 };
 ```
+
+### Native dismissal and trusted input
+
+`@storybook/test`'s `userEvent` dispatches synthetic DOM events (`isTrusted === false`). Browser-native `popover` and `<dialog>` light-dismiss behavior (such as Escape or outside/backdrop clicks) requires genuine browser input, so synthetic events won't trigger it. To test the native path in a play function, import `userEvent` from `@vitest/browser/context`, which drives real Playwright input (`isTrusted === true`). Reserve it for browser-native behaviors; component JavaScript event handlers can continue using the synthetic `@storybook/test` `userEvent`.
+
+```typescript
+import { expect, waitFor } from '@storybook/test';
+// Real, trusted browser input (Playwright-backed) for native light-dismiss.
+import { userEvent as browserUserEvent } from '@vitest/browser/context';
+
+export const EscapeDismissTest: Story = {
+  render: () => html`
+    <button id="dismiss-trigger">Open</button>
+    <swc-popover for="dismiss-trigger" accessible-label="Details">
+      Content
+    </swc-popover>
+  `,
+  play: async ({ canvasElement }) => {
+    const popover = await getComponent<Popover>(canvasElement, 'swc-popover');
+    const trigger = canvasElement.querySelector(
+      '#dismiss-trigger'
+    ) as HTMLElement;
+
+    await browserUserEvent.click(trigger);
+    await waitFor(() => expect(popover.open, 'opens on click').toBe(true));
+
+    // A synthetic `{Escape}` would be ignored by native light-dismiss; the
+    // trusted keypress closes it.
+    await browserUserEvent.keyboard('{Escape}');
+    await waitFor(() => expect(popover.open, 'Escape closes it').toBe(false));
+  },
+};
+```
+
+> A quick way to confirm which you have: assert `event.isTrusted` inside a listener. `@storybook/test`'s `userEvent` yields `false`, `@vitest/browser/context`'s yields `true`.
