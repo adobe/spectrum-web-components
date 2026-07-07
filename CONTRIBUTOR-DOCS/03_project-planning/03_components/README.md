@@ -88,6 +88,7 @@
     - [Illustrated message migration roadmap](illustrated-message/rendering-and-styling-migration-analysis.md)
 - Infield Button
     - [Infield button accessibility migration analysis](infield-button/accessibility-migration-analysis.md)
+    - [Infield Button migration plan](infield-button/migration-plan.md)
     - [In-field button migration roadmap](infield-button/rendering-and-styling-migration-analysis.md)
 - Infield Progress Circle
     - [In-field progress circle migration roadmap](infield-progress-circle/rendering-and-styling-migration-analysis.md)
