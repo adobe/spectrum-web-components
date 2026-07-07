@@ -67,32 +67,6 @@ import '@adobe/spectrum-wc/components/tabs/swc-tab-panel.js';
 | `rovingTabindexController` field                                                  | Removed; keyboard navigation is internal                         |
 | `focusElement` getter                                                             | Removed; use `tabsEl.focus()`                                    |
 
-### Behavior changes
-
-<div
-  style={{
-    borderLeft: '4px solid #dba842',
-    background: 'rgba(219, 168, 66, 0.12)',
-    padding: '12px 16px',
-    margin: '16px 0',
-    borderRadius: '4px',
-  }}
->
-  <strong>⚠️ Breaking change.</strong> The <code>change</code> event now fires{' '}
-  <strong>before</strong> selection state updates. In Spectrum 1,{' '}
-  <code>{'<sp-tabs>'}</code> set <code>selected</code> to the new value and then
-  dispatched <code>change</code> (reverting <code>selected</code> if{' '}
-  <code>preventDefault()</code> was called). In Spectrum 2, <code>change</code>{' '}
-  dispatches first; <code>{'<swc-tabs>'}</code>'s <code>selected</code> property
-  and each <code>{'<swc-tab>'}</code>'s <code>selected</code> property are still
-  the <strong>previous</strong> selection while your listener runs.{' '}
-  <code>preventDefault()</code> still blocks the change. If your listener reads{' '}
-  <code>event.target.selected</code> or a tab's <code>selected</code> property
-  to get the newly selected tab, read the interacted tab directly instead (for
-  example the tab that received the click or keypress), or defer the read to a
-  microtask/next render.
-</div>
-
 ## Update your code
 
 ### 1. Rename the tags and attributes
@@ -240,4 +214,3 @@ Spectrum 2 uses a different custom property prefix. Spectrum 1 overrides will no
 - [ ] Replace `direction="vertical-right"` with `direction="vertical"`
 - [ ] Replace `label` on icon-only `<sp-tab>` with `aria-label` on `<swc-tab>`
 - [ ] Replace `--mod-tabs-*` CSS overrides with `--swc-tabs-*` / `--swc-tab-*` equivalents
-- [ ] Update `change` listeners that read `selected` from the event target or a tab: that state is now pre-transition inside the listener (see [Behavior changes](#behavior-changes))

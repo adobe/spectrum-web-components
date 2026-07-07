@@ -85,10 +85,13 @@ export type SelectionControllerOptions = {
   onSelectionChange?: (detail: SelectionControllerChangeDetail) => void;
 
   /**
-   * Called **before** **`selectItem`** / **`deselectItem`** run for the proposed transition.
-   * Return **`false`** to abort — mutators do not run, the selection stays unchanged, and no
-   * change event is dispatched. Omit for unconditional commits. Not called for transitions
-   * committed with **`{ silent: true }`** (see {@link SelectionController.setSelectedItem} and
+   * Called **after** **`selectItem`** / **`deselectItem`** have already run for the proposed
+   * transition — so if you dispatch your own cancelable event from inside this callback (the
+   * common pattern), listeners reading selected-ish state synchronously see the *new* value, not
+   * the prior one. Return **`false`** to abort: the transition (mutators, internal state, and
+   * the **`onSelectionChange`** mirror) is rolled back to the prior selection and no change event
+   * is dispatched. Omit for unconditional commits. Not called for transitions committed with
+   * **`{ silent: true }`** (see {@link SelectionController.setSelectedItem} and
    * {@link SelectionController.refresh}).
    */
   confirmSelectionChange?: (
@@ -126,9 +129,13 @@ export type SelectionControllerChangeDetail = {
  * Payload for {@link SelectionControllerOptions.confirmSelectionChange}.
  */
 export type SelectionControllerConfirmDetail = {
-  /** Selection that would result if the transition is committed. */
+  /**
+   * Selection for this transition — already applied (mutators have run, internal state
+   * reflects it) by the time this callback is called. Reverted if this callback returns
+   * **`false`**.
+   */
   candidateItems: HTMLElement[];
-  /** Selection before this transition. */
+  /** Selection before this transition; what state reverts to if this callback returns **`false`**. */
   priorItems: HTMLElement[];
 };
 
@@ -546,8 +553,18 @@ export class SelectionController implements ReactiveController {
   }
 
   /**
-   * Runs **`confirmSelectionChange`** (if any), applies mutators, updates internal state, and
-   * dispatches the change event.
+   * Applies the transition optimistically, then runs **`confirmSelectionChange`** (if any) and
+   * reverts if it returns **`false`**. Finally dispatches the change event when committed.
+   *
+   * **Ordering matches native cancelable-event conventions (and 1st-gen Tabs), not a
+   * confirm-before-apply gate.** Mutators, internal state, and the **`onSelectionChange`** mirror
+   * are all applied *before* **`confirmSelectionChange`** runs, so a consumer's own cancelable
+   * event — typically dispatched from inside **`confirmSelectionChange`** — sees the *new* state
+   * when read synchronously inside its listener (e.g. a host's reflected selection property, or
+   * an item's own selected-ish property). If **`confirmSelectionChange`** returns **`false`**,
+   * every one of those effects is rolled back to **`priorItems`**, including a second
+   * **`onSelectionChange`** call so external mirrors roll back too. Lit batches property updates
+   * into a microtask, so an apply-then-synchronously-revert never paints the intermediate state.
    *
    * The added/removed short-circuit below is computed against this controller's own cached
    * **`selectedItems`**, which is only trustworthy when this controller is the sole mutator of
@@ -569,24 +586,48 @@ export class SelectionController implements ReactiveController {
       return true;
     }
 
+    this.commit(next);
+    this.options.onSelectionChange?.({
+      selectedItems: next,
+      addedItems,
+      removedItems,
+    });
+
     if (!silent && this.options.confirmSelectionChange) {
       const ok = this.options.confirmSelectionChange({
         candidateItems: next,
         priorItems,
       });
       if (!ok) {
+        this.commit(priorItems);
+        this.options.onSelectionChange?.({
+          selectedItems: priorItems,
+          addedItems: removedItems,
+          removedItems: addedItems,
+        });
         return false;
       }
     }
 
+    if (!silent) {
+      this.host.dispatchEvent(
+        new CustomEvent<SelectionControllerChangeDetail>(
+          selectionControllerChange,
+          {
+            bubbles: true,
+            composed: true,
+            detail: { selectedItems: next, addedItems, removedItems },
+          }
+        )
+      );
+    }
+    return true;
+  }
+
+  /** Applies mutators for {@link next} and updates the cached selection to match. */
+  private commit(next: HTMLElement[]): void {
     this.applyMutators(next);
     this.selectedItems = new Set(next);
-
-    this.dispatchChange(
-      { selectedItems: next, addedItems, removedItems },
-      silent
-    );
-    return true;
   }
 
   /**
@@ -602,31 +643,6 @@ export class SelectionController implements ReactiveController {
         this.options.deselectItem(item);
       }
     }
-  }
-
-  /**
-   * Invokes **`onSelectionChange`** (always) and dispatches {@link selectionControllerChange}
-   * on the host, unless **`silent`** is **`true`** — used by silent commits to keep internal
-   * mirroring callbacks in sync without raising the public event.
-   */
-  private dispatchChange(
-    detail: SelectionControllerChangeDetail,
-    silent: boolean
-  ): void {
-    this.options.onSelectionChange?.(detail);
-    if (silent) {
-      return;
-    }
-    this.host.dispatchEvent(
-      new CustomEvent<SelectionControllerChangeDetail>(
-        selectionControllerChange,
-        {
-          bubbles: true,
-          composed: true,
-          detail,
-        }
-      )
-    );
   }
 
   /**

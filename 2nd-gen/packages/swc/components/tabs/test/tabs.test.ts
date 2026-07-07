@@ -1083,6 +1083,49 @@ export const ChangeEventTest: Story = {
   },
 };
 
+export const ChangeHandlerSelectedTest: Story = {
+  render: () => html`
+    <swc-tabs selected="1" accessible-label="Change handler selected test">
+      <swc-tab tab-id="1">Tab 1</swc-tab>
+      <swc-tab tab-id="2">Tab 2</swc-tab>
+      <swc-tab-panel tab-id="1"><p>Panel 1</p></swc-tab-panel>
+      <swc-tab-panel tab-id="2"><p>Panel 2</p></swc-tab-panel>
+    </swc-tabs>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const tabs = await getComponent<Tabs>(canvasElement, 'swc-tabs');
+
+    await step(
+      'selected is the new tab inside the change handler',
+      async () => {
+        const tab2 = canvasElement.querySelector('swc-tab[tab-id="2"]') as Tab;
+        let selectedInHandler: string | undefined;
+        let tab2SelectedInHandler: boolean | undefined;
+        tabs.addEventListener(
+          'change',
+          () => {
+            selectedInHandler = tabs.selected;
+            tab2SelectedInHandler = tab2.selected;
+          },
+          { once: true }
+        );
+
+        tab2.click();
+        await tabs.updateComplete;
+
+        expect(
+          selectedInHandler,
+          'tabs.selected is the newly selected tab inside the handler'
+        ).toBe('2');
+        expect(
+          tab2SelectedInHandler,
+          'the clicked tab is already selected inside the handler'
+        ).toBe(true);
+      }
+    );
+  },
+};
+
 // ──────────────────────────────────────────────────────────────
 // TEST: Slots
 // ──────────────────────────────────────────────────────────────
