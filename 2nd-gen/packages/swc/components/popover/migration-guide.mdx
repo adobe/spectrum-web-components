@@ -44,16 +44,16 @@ import '@adobe/spectrum-wc/components/popover/swc-popover.js';
 
 ### Added in Spectrum 2
 
-| Addition                                                        | Notes                                                                                                         |
-| --------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
-| `for` / `triggerElement` / `manual`                             | Associate a trigger by id, by reference, or opt out of the built-in click-to-toggle                           |
-| `open` (drives visibility directly)                             | Toggle the popover with one property; no overlay element required                                             |
-| `modal` boolean attribute                                       | Opt in to blocking `<dialog>.showModal()`: focus trap, page inert, scroll lock, `role="dialog"`               |
-| `accessible-label`                                              | Forwarded as `aria-label` to the internal `<dialog>` in modal mode (required to name a modal popover)         |
-| `size` (`s` / `m` / `l`)                                        | Fixed inline size (336px / 416px / 576px); unset fits content                                                 |
-| `offset` / `cross-offset` / `should-flip`                       | Main-axis and cross-axis nudges; opt out of flip-on-collision                                                 |
-| `swc-open` / `swc-after-open` / `swc-close` / `swc-after-close` | `swc-close.detail.source` reports `'escape'`, `'outside'`, or `'programmatic'`                                |
-| Automatic trigger ARIA                                          | The component sets `aria-expanded`, `aria-controls`, and (modal only) `aria-haspopup="dialog"` on the trigger |
+| Addition                                                        | Notes                                                                                                          |
+| --------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
+| `for` / `triggerElement` / `manual`                             | Associate a trigger by id, by reference, or opt out of the built-in click-to-toggle                            |
+| `open` (drives visibility directly)                             | Toggle the popover with one property; no overlay element required                                              |
+| `modal` boolean attribute                                       | Opt in to blocking `<dialog>.showModal()`: focus trap, page inert, scroll lock                                 |
+| `accessible-label`                                              | Forwarded as `aria-label` to the internal dialog surface; required in both modal and default mode              |
+| `size` (`s` / `m` / `l`)                                        | Fixed inline size (336px / 416px / 576px); unset fits content                                                  |
+| `offset` / `cross-offset` / `should-flip`                       | Main-axis and cross-axis nudges; opt out of flip-on-collision                                                  |
+| `swc-open` / `swc-after-open` / `swc-close` / `swc-after-close` | `swc-close.detail.source` reports `'escape'`, `'outside'`, or `'programmatic'`                                 |
+| Automatic trigger ARIA                                          | The component sets `aria-expanded`, `aria-controls`, and `aria-haspopup="dialog"` on the trigger in both modes |
 
 ### Removed in Spectrum 2
 
@@ -63,7 +63,7 @@ import '@adobe/spectrum-wc/components/popover/swc-popover.js';
 | `tip` boolean attribute                  | The arrow is shown by default; set `hide-arrow` to remove it (see [step 3](#3-drop-tip-the-arrow-is-on-by-default)) |
 | `<sp-dialog>` wrapper for padding        | No longer needed: `<swc-popover>` applies the correct content padding itself. Slot your content directly            |
 | `sp-opened` / `sp-closed` events         | `swc-after-open` / `swc-after-close` (see [step 4](#4-update-event-listeners))                                      |
-| `--mod-popover-*` custom properties      | No public replacement; see [Styling](#styling)                                                                      |
+| `--mod-popover-*` custom properties      | `--swc-popover-*` custom properties; see [Styling](#styling)                                                        |
 
 ## Update your code
 
@@ -80,7 +80,13 @@ import '@adobe/spectrum-wc/components/popover/swc-popover.js';
 
 <!-- After -->
 <swc-button id="trigger">Account</swc-button>
-<swc-popover for="trigger" placement="bottom">Anchored content.</swc-popover>
+<swc-popover
+  for="trigger"
+  placement="bottom"
+  accessible-label="Account details"
+>
+  Anchored content.
+</swc-popover>
 ```
 
 When the trigger lives in a different shadow root, set the `triggerElement` property to the element reference instead of `for`.
@@ -111,12 +117,16 @@ The arrow (tip) now renders by default. Remove the `tip` attribute. If you inten
 <!-- Before (arrow shown only with tip) -->
 <sp-popover tip>Anchored content.</sp-popover>
 <!-- After (arrow is the default) -->
-<swc-popover for="trigger">Anchored content.</swc-popover>
+<swc-popover for="trigger" accessible-label="Anchored content">
+  Anchored content.
+</swc-popover>
 
 <!-- Before (no arrow) -->
 <sp-popover>Anchored content.</sp-popover>
 <!-- After (opt out explicitly) -->
-<swc-popover for="trigger" hide-arrow>Anchored content.</swc-popover>
+<swc-popover for="trigger" hide-arrow accessible-label="Anchored content">
+  Anchored content.
+</swc-popover>
 ```
 
 ### 4. Update event listeners
@@ -138,8 +148,8 @@ popover.addEventListener('swc-after-close', onClosed);
 
 ## Accessibility
 
-- The component sets `aria-expanded`, `aria-controls`, and (modal only) `aria-haspopup="dialog"` on the resolved trigger automatically. Remove any of this wiring you previously did by hand through the overlay.
-- A modal popover must have an accessible name: set `accessible-label` whenever you set `modal`. See [step 2](#2-replace-typemodal-with-the-modal-attribute). It has no effect in the default mode, where the slotted content and the trigger own the semantics.
+- The component sets `aria-expanded`, `aria-controls`, and `aria-haspopup="dialog"` on the resolved trigger automatically, in both modes. Remove any of this wiring you previously did by hand through the overlay.
+- The popover surface is a dialog in both modes, so it must have an accessible name: set `accessible-label` on every `<swc-popover>`, modal or not. The component dev-warns when opened without one. See [step 2](#2-replace-typemodal-with-the-modal-attribute).
 - Give the trigger a clear, visible label; the popover does not name its own trigger.
 
 ## Styling
@@ -157,9 +167,12 @@ popover.addEventListener('swc-after-close', onClosed);
 >
   <strong>⚠️ Breaking change.</strong> Spectrum 1{' '}
   <code>{'--mod-popover-*'}</code> properties <strong>do not apply</strong> to{' '}
-  <code>{'<swc-popover>'}</code>, and Spectrum 2 does not yet expose public{' '}
-  <code>{'--swc-popover-*'}</code> theming hooks. Remove every{' '}
-  <code>{'--mod-popover-*'}</code> override; size the popover with the{' '}
+  <code>{'<swc-popover>'}</code>. Replace them with the public{' '}
+  <code>{'--swc-popover-*'}</code> custom properties (
+  <code>{'--swc-popover-content-padding'}</code>,{' '}
+  <code>{'--swc-popover-background-color'}</code>,{' '}
+  <code>{'--swc-popover-border-color'}</code>, and{' '}
+  <code>{'--swc-popover-corner-radius'}</code>); size the popover with the{' '}
   <code>size</code> attribute and style your slotted content directly.
 </div>
 
@@ -184,6 +197,7 @@ popover.addEventListener('swc-after-close', onClosed);
 - [ ] Replace each `<sp-overlay>` + `<sp-popover>` pair with `<swc-popover for="…">` and `open`
 - [ ] Drop any `<sp-dialog>` wrapper used only for padding
 - [ ] Replace `type="modal"` overlays with `modal` + `accessible-label`
+- [ ] Add `accessible-label` to every `<swc-popover>`, including non-modal ones
 - [ ] Remove `tip`; add `hide-arrow` only where you rendered no arrow
 - [ ] Move `sp-opened` / `sp-closed` listeners to `swc-after-open` / `swc-after-close`
 - [ ] Remove manual trigger ARIA wiring and any `--mod-popover-*` overrides
