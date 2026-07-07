@@ -96,12 +96,6 @@ jobs:
         run: yarn workspace @spectrum-web-components/1st-gen storybook:build
 
       - name: Build second-gen Storybook
-        env:
-          # Deploy the full dev-mode story set (internal stories, .test.ts
-          # fixtures, .vrt.ts) to the PR preview, not the production-trimmed
-          # build. `storybook build` otherwise forces NODE_ENV=production
-          # itself, so this can't be achieved by leaving NODE_ENV unset.
-          SWC_STORYBOOK_MODE: dev
         run: yarn workspace @adobe/spectrum-wc storybook:build
 
       ## --- DEPLOY TO AZURE BLOB STORAGE --- ##
