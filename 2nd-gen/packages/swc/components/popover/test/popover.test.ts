@@ -12,6 +12,10 @@
 import { html } from 'lit';
 import { expect, userEvent, waitFor } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
+// Real, trusted browser input (Playwright-backed). Unlike @storybook/test's
+// synthetic userEvent, this fires native `popover` light-dismiss (Escape, outside
+// click), which the dismissal-ordering test below relies on.
+import { userEvent as browserUserEvent } from '@vitest/browser/context';
 
 import { Popover } from '@adobe/spectrum-wc/popover';
 import { PopoverBase } from '@spectrum-web-components/core/components/popover';
@@ -1108,6 +1112,103 @@ export const NestedLayersTest: Story = {
       // Nested auto popovers form an ancestor chain, so opening the inner one
       // must not light-dismiss the outer.
       expect(outer.open, 'outer stays open under the inner').toBe(true);
+    });
+  },
+};
+
+// Nested-popover dismissal ordering, driven by real (trusted) input so native
+// light-dismiss actually fires — the coverage NestedLayersTest could not provide
+// with synthetic events. Escape peels the stack topmost-first; an outside click
+// dismisses only the popovers above the clicked ancestor.
+export const NestedDismissalOrderTest: Story = {
+  render: () => html`
+    <div style="display: flex; gap: 24px; padding: 40px">
+      <button id="ndo-outer-trigger">Open outer</button>
+      <button id="ndo-away">Elsewhere</button>
+      <swc-popover
+        id="ndo-outer"
+        for="ndo-outer-trigger"
+        accessible-label="Outer"
+      >
+        <div style="display: flex; flex-direction: column; gap: 12px;">
+          <p id="ndo-outer-body" style="margin: 0;">Outer popover body</p>
+          <button id="ndo-inner-trigger">Open inner</button>
+          <swc-popover
+            id="ndo-inner"
+            for="ndo-inner-trigger"
+            accessible-label="Inner"
+          >
+            Inner popover content
+          </swc-popover>
+        </div>
+      </swc-popover>
+    </div>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const outer = canvasElement.querySelector('#ndo-outer') as Popover;
+    const inner = canvasElement.querySelector('#ndo-inner') as Popover;
+    const outerTrigger = canvasElement.querySelector(
+      '#ndo-outer-trigger'
+    ) as HTMLElement;
+    const away = canvasElement.querySelector('#ndo-away') as HTMLElement;
+    await outer.updateComplete;
+
+    const openBoth = async (): Promise<void> => {
+      if (!outer.open) {
+        await browserUserEvent.click(outerTrigger);
+      }
+      await waitFor(() => expect(outer.open, 'outer open').toBe(true));
+      const innerTrigger = outer.querySelector(
+        '#ndo-inner-trigger'
+      ) as HTMLElement;
+      await browserUserEvent.click(innerTrigger);
+      await waitFor(() => expect(inner.open, 'inner open').toBe(true));
+      // Nested auto popovers form an ancestor chain, so opening the inner one
+      // does not light-dismiss the outer.
+      expect(outer.open, 'outer stays open under the inner').toBe(true);
+    };
+
+    await step('Escape dismisses the inner first, then the outer', async () => {
+      await openBoth();
+      await browserUserEvent.keyboard('{Escape}');
+      await waitFor(() =>
+        expect(inner.open, 'inner (topmost) closes first').toBe(false)
+      );
+      expect(outer.open, 'outer survives the first Escape').toBe(true);
+      await browserUserEvent.keyboard('{Escape}');
+      await waitFor(() =>
+        expect(outer.open, 'outer closes on the second Escape').toBe(false)
+      );
+    });
+
+    await step(
+      'a click on the outer content dismisses only the inner',
+      async () => {
+        await openBoth();
+        const outerBody = outer.querySelector('#ndo-outer-body') as HTMLElement;
+        await browserUserEvent.click(outerBody);
+        await waitFor(() =>
+          expect(
+            inner.open,
+            'inner dismissed by a click inside the outer (its ancestor)'
+          ).toBe(false)
+        );
+        expect(outer.open, 'the clicked ancestor stays open').toBe(true);
+      }
+    );
+
+    await step('a click fully outside closes both', async () => {
+      // Reopen the inner (the previous step left the outer open, inner closed).
+      const innerTrigger = outer.querySelector(
+        '#ndo-inner-trigger'
+      ) as HTMLElement;
+      await browserUserEvent.click(innerTrigger);
+      await waitFor(() => expect(inner.open, 'inner reopened').toBe(true));
+      await browserUserEvent.click(away);
+      await waitFor(() =>
+        expect(outer.open, 'a click outside both closes the outer').toBe(false)
+      );
+      expect(inner.open, 'and the inner').toBe(false);
     });
   },
 };
