@@ -1,5 +1,17 @@
 # Change Log
 
+## 1.12.2
+
+### Patch Changes
+
+- Updated dependencies [[`57a77bc`](https://github.com/adobe/spectrum-web-components/commit/57a77bcee7eeb8f5a7b1084f3ad91543c2f92034)]:
+  - @spectrum-web-components/action-button@1.12.2
+  - @spectrum-web-components/icon@1.12.2
+  - @spectrum-web-components/icons-ui@1.12.2
+  - @spectrum-web-components/base@1.12.2
+  - @spectrum-web-components/reactive-controllers@1.12.2
+  - @spectrum-web-components/shared@1.12.2
+
 ## 1.12.1
 
 ### Patch Changes

@@ -1,6 +1,6 @@
 {
   "name": "@spectrum-web-components/tabs",
-  "version": "1.12.1",
+  "version": "1.12.2",
   "description": "",
   "license": "Apache-2.0",
   "author": "Adobe",
@@ -84,12 +84,12 @@
   "types": "./src/index.d.ts",
   "dependencies": {
     "@lit-labs/observers": "2.0.2",
-    "@spectrum-web-components/action-button": "1.12.1",
-    "@spectrum-web-components/base": "1.12.1",
-    "@spectrum-web-components/icon": "1.12.1",
-    "@spectrum-web-components/icons-ui": "1.12.1",
-    "@spectrum-web-components/reactive-controllers": "1.12.1",
-    "@spectrum-web-components/shared": "1.12.1"
+    "@spectrum-web-components/action-button": "1.12.2",
+    "@spectrum-web-components/base": "1.12.2",
+    "@spectrum-web-components/icon": "1.12.2",
+    "@spectrum-web-components/icons-ui": "1.12.2",
+    "@spectrum-web-components/reactive-controllers": "1.12.2",
+    "@spectrum-web-components/shared": "1.12.2"
   },
   "keywords": [
     "design-system",
