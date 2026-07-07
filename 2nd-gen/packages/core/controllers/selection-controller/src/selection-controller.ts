@@ -71,6 +71,16 @@ export type SelectionControllerOptions = {
    */
   keydownActivation?: boolean;
 
+  /**
+   * When **`false`**, this controller never attaches its own capture-phase **`click`** /
+   * **`keydown`** listeners, so user interaction can never drive a transition. Use this when a
+   * consumer's items already own their own interaction handling (their own click binding, their
+   * own cancelable-event lifecycle) and the controller is only wanted for its mode-aware
+   * selection bookkeeping, driven imperatively via **`{ silent: true }`** calls. Defaults to
+   * **`true`**.
+   */
+  enableInteraction?: boolean;
+
   /** Optional callback mirroring {@link selectionControllerChange}. */
   onSelectionChange?: (detail: SelectionControllerChangeDetail) => void;
 
@@ -84,6 +94,15 @@ export type SelectionControllerOptions = {
   confirmSelectionChange?: (
     detail: SelectionControllerConfirmDetail
   ) => boolean;
+
+  /**
+   * Optional override for the eligibility disabled check. When provided, called instead of the
+   * built-in **`disabled`** property / **`aria-disabled="true"`** heuristic. Use this when a
+   * consumer's disabled state cascades from an ancestor or is computed rather than reflected
+   * directly on the participant itself (for example, a parent-disabled flag mirrored only onto
+   * internal shadow DOM, not onto the participant element `getItems` returns).
+   */
+  isDisabled?: (item: HTMLElement) => boolean;
 };
 
 /**
@@ -143,13 +162,25 @@ export function deepestSelectionItemContaining(
  * - **`multiple`**: any number of items may be selected; clicks toggle individual items.
  *
  * This controller handles capture-phase **`click`** and optional capture-phase **`keydown`**
- * (**Enter** / **Space**) when **`keydownActivation`** is **`true`**. Pair with
- * **`FocusgroupNavigationController`** when the composite also needs roving **`tabindex`**,
- * arrow keys, Home/End, or focus memory; this controller does not implement those behaviors.
+ * (**Enter** / **Space**) when **`keydownActivation`** is **`true`**, unless
+ * **`enableInteraction`** is **`false`**. Pair with **`FocusgroupNavigationController`** when
+ * the composite also needs roving **`tabindex`**, arrow keys, Home/End, or focus memory; this
+ * controller does not implement those behaviors.
  *
  * Call **`setOptions({ mode })`** at any time to switch modes without reconstructing the
  * controller. When switching from **`multiple`** to a single-item mode and more than one item
  * is currently selected, all but the first item are deselected.
+ *
+ * **Mutators always reflect a live scan, not the cached selection.** {@link
+ * SelectionController.applyMutators}, called by every transition, walks a fresh
+ * `getItems()` result and calls `selectItem` / `deselectItem` for every item based on
+ * membership in the transition's `next` set — never based on what this controller previously
+ * believed was selected. This is what makes **`{ silent: true }`** calls (see
+ * {@link SelectionController.setSelectedItem} and {@link SelectionController.refresh}) safe to
+ * use for reconciling from participants whose selected-ish state can also change independently
+ * of this controller (for example, an item with its own public, freely settable `open`
+ * property): even if this controller's cached notion of the selection has drifted, asserting a
+ * transition still corrects every participant to match `next`.
  *
  * @see https://www.w3.org/WAI/ARIA/apg/patterns/listbox/
  * @see https://www.w3.org/WAI/ARIA/apg/patterns/accordion/
@@ -167,16 +198,19 @@ export class SelectionController implements ReactiveController {
         | 'mode'
         | 'defaultToFirstSelectable'
         | 'keydownActivation'
+        | 'enableInteraction'
       >
     >,
     never
   > &
     Pick<
       SelectionControllerOptions,
-      'onSelectionChange' | 'confirmSelectionChange'
+      'onSelectionChange' | 'confirmSelectionChange' | 'isDisabled'
     >;
 
   private selectedItems: Set<HTMLElement> = new Set();
+
+  private clickListenerAttached = false;
 
   private keydownListenerAttached = false;
 
@@ -226,8 +260,10 @@ export class SelectionController implements ReactiveController {
       mode: options.mode ?? 'single',
       defaultToFirstSelectable: options.defaultToFirstSelectable ?? false,
       keydownActivation: options.keydownActivation ?? false,
+      enableInteraction: options.enableInteraction ?? true,
       onSelectionChange: options.onSelectionChange,
       confirmSelectionChange: options.confirmSelectionChange,
+      isDisabled: options.isDisabled,
     };
 
     host.addController(this);
@@ -268,6 +304,10 @@ export class SelectionController implements ReactiveController {
         typeof partial.keydownActivation === 'boolean'
           ? partial.keydownActivation
           : this.options.keydownActivation,
+      enableInteraction:
+        typeof partial.enableInteraction === 'boolean'
+          ? partial.enableInteraction
+          : this.options.enableInteraction,
       getItems: partial.getItems ?? this.options.getItems,
       selectItem: partial.selectItem ?? this.options.selectItem,
       deselectItem: partial.deselectItem ?? this.options.deselectItem,
@@ -275,6 +315,7 @@ export class SelectionController implements ReactiveController {
         partial.onSelectionChange ?? this.options.onSelectionChange,
       confirmSelectionChange:
         partial.confirmSelectionChange ?? this.options.confirmSelectionChange,
+      isDisabled: partial.isDisabled ?? this.options.isDisabled,
     };
 
     const nextMode = this.options.mode;
@@ -288,7 +329,7 @@ export class SelectionController implements ReactiveController {
       this.applySelectionTransition(candidate, toRemove);
     }
 
-    this.syncKeydownActivationListener();
+    this.syncInteractionListeners();
     this.refresh();
   }
 
@@ -311,7 +352,7 @@ export class SelectionController implements ReactiveController {
       if (this.options.mode === 'single') {
         return false;
       }
-      return this.clearAll();
+      return this.clearAll(options);
     }
 
     if (
@@ -343,8 +384,14 @@ export class SelectionController implements ReactiveController {
    * - **`multiple`**: always toggles.
    *
    * @returns **`false`** when the item is ineligible or when the mode disallows the operation.
+   *
+   * Pass **`{ silent: true }`** to commit without invoking **`confirmSelectionChange`** or
+   * dispatching {@link selectionControllerChange}.
    */
-  public toggleItem(item: HTMLElement): boolean {
+  public toggleItem(
+    item: HTMLElement,
+    options?: { silent?: boolean }
+  ): boolean {
     if (
       !this.getEligibleItems().includes(item) ||
       this.isDisabledParticipant(item)
@@ -359,23 +406,26 @@ export class SelectionController implements ReactiveController {
         return false;
       }
       const next = Array.from(this.selectedItems).filter((el) => el !== item);
-      return this.applySelectionTransition(next, [item]);
+      return this.applySelectionTransition(next, [item], options);
     } else {
       if (this.options.mode === 'multiple') {
         const next = [...Array.from(this.selectedItems), item];
-        return this.applySelectionTransition(next, []);
+        return this.applySelectionTransition(next, [], options);
       }
       const prev = Array.from(this.selectedItems);
       const toRemove = prev.filter((el) => el !== item);
-      return this.applySelectionTransition([item], toRemove);
+      return this.applySelectionTransition([item], toRemove, options);
     }
   }
 
   /**
    * Selects all eligible items. Only meaningful in **`multiple`** mode; returns **`false`** in
    * single-item modes (does not throw).
+   *
+   * Pass **`{ silent: true }`** to commit without invoking **`confirmSelectionChange`** or
+   * dispatching {@link selectionControllerChange}.
    */
-  public selectAll(): boolean {
+  public selectAll(options?: { silent?: boolean }): boolean {
     if (this.options.mode !== 'multiple') {
       return false;
     }
@@ -385,14 +435,17 @@ export class SelectionController implements ReactiveController {
       return true;
     }
     const next = [...Array.from(this.selectedItems), ...toAdd];
-    return this.applySelectionTransition(next, []);
+    return this.applySelectionTransition(next, [], options);
   }
 
   /**
    * Deselects all items. Works in **`single-toggle`** and **`multiple`** modes. In **`single`**
    * mode, returns **`false`** and leaves selection unchanged.
+   *
+   * Pass **`{ silent: true }`** to commit without invoking **`confirmSelectionChange`** or
+   * dispatching {@link selectionControllerChange}.
    */
-  public clearAll(): boolean {
+  public clearAll(options?: { silent?: boolean }): boolean {
     if (this.options.mode === 'single') {
       return false;
     }
@@ -400,7 +453,7 @@ export class SelectionController implements ReactiveController {
       return true;
     }
     const toRemove = Array.from(this.selectedItems);
-    return this.applySelectionTransition([], toRemove);
+    return this.applySelectionTransition([], toRemove, options);
   }
 
   /**
@@ -444,13 +497,15 @@ export class SelectionController implements ReactiveController {
   }
 
   public hostConnected(): void {
-    this.host.addEventListener('click', this.handleClickCapture, true);
-    this.syncKeydownActivationListener();
+    this.syncInteractionListeners();
     this.refresh();
   }
 
   public hostDisconnected(): void {
-    this.host.removeEventListener('click', this.handleClickCapture, true);
+    if (this.clickListenerAttached) {
+      this.host.removeEventListener('click', this.handleClickCapture, true);
+      this.clickListenerAttached = false;
+    }
     if (this.keydownListenerAttached) {
       this.host.removeEventListener('keydown', this.handleKeyDownCapture, true);
       this.keydownListenerAttached = false;
@@ -493,6 +548,13 @@ export class SelectionController implements ReactiveController {
   /**
    * Runs **`confirmSelectionChange`** (if any), applies mutators, updates internal state, and
    * dispatches the change event.
+   *
+   * The added/removed short-circuit below is computed against this controller's own cached
+   * **`selectedItems`**, which is only trustworthy when this controller is the sole mutator of
+   * selected-ish state (true for interactive, non-silent transitions). Silent transitions exist
+   * specifically to reconcile from participants whose state can change independently of this
+   * controller, so that cache may be stale — silent calls always proceed to {@link applyMutators}
+   * rather than trusting a diff against it.
    */
   private applySelectionTransition(
     next: HTMLElement[],
@@ -503,7 +565,7 @@ export class SelectionController implements ReactiveController {
     const priorItems = Array.from(this.selectedItems);
     const addedItems = next.filter((el) => !this.selectedItems.has(el));
 
-    if (addedItems.length === 0 && removedItems.length === 0) {
+    if (!silent && addedItems.length === 0 && removedItems.length === 0) {
       return true;
     }
 
@@ -567,15 +629,30 @@ export class SelectionController implements ReactiveController {
     );
   }
 
-  private syncKeydownActivationListener(): void {
+  /**
+   * Attaches or removes the capture-phase **`click`** and **`keydown`** listeners to match
+   * **`enableInteraction`** / **`keydownActivation`**. Neither listener is attached when
+   * **`enableInteraction`** is **`false`**, regardless of **`keydownActivation`**.
+   */
+  private syncInteractionListeners(): void {
     if (!this.host.isConnected) {
       return;
     }
-    const want = this.options.keydownActivation;
-    if (want && !this.keydownListenerAttached) {
+    const wantClick = this.options.enableInteraction;
+    if (wantClick && !this.clickListenerAttached) {
+      this.host.addEventListener('click', this.handleClickCapture, true);
+      this.clickListenerAttached = true;
+    } else if (!wantClick && this.clickListenerAttached) {
+      this.host.removeEventListener('click', this.handleClickCapture, true);
+      this.clickListenerAttached = false;
+    }
+
+    const wantKeydown =
+      this.options.enableInteraction && this.options.keydownActivation;
+    if (wantKeydown && !this.keydownListenerAttached) {
       this.host.addEventListener('keydown', this.handleKeyDownCapture, true);
       this.keydownListenerAttached = true;
-    } else if (!want && this.keydownListenerAttached) {
+    } else if (!wantKeydown && this.keydownListenerAttached) {
       this.host.removeEventListener('keydown', this.handleKeyDownCapture, true);
       this.keydownListenerAttached = false;
     }
@@ -610,6 +687,9 @@ export class SelectionController implements ReactiveController {
   }
 
   private isDisabledParticipant(participant: HTMLElement): boolean {
+    if (this.options.isDisabled) {
+      return this.options.isDisabled(participant);
+    }
     if ('disabled' in participant) {
       if ((participant as HTMLButtonElement).disabled) {
         return true;

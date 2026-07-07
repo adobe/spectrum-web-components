@@ -110,10 +110,9 @@ export abstract class AccordionBase extends SizedMixin(SpectrumElement, {
    * place of manually iterating `assignedItems()`. Only ever driven imperatively
    * from `closeSiblingsOnOpen` with `{ silent: true }` — items keep their own
    * click handling and cancelable-toggle lifecycle in `AccordionItemBase.toggle()`
-   * unchanged. `getItems` is not used for interaction (this controller's own
-   * capture-phase click/keydown handling never applies: `confirmSelectionChange`
-   * unconditionally rejects it), only for `applyMutators`' live scan of every
-   * assigned item when a silent transition is asserted.
+   * unchanged. `enableInteraction: false` means this controller never attaches
+   * its own click/keydown listeners; `getItems` is only used for `applyMutators`'
+   * live scan of every assigned item when a silent transition is asserted.
    *
    * Known limitation: an item opened via a direct `open` property/attribute set
    * (bypassing `toggle()`) is not reconciled by this controller, the same way
@@ -128,7 +127,7 @@ export abstract class AccordionBase extends SizedMixin(SpectrumElement, {
       (item as AccordionItemBase).open = false;
     },
     mode: 'single-toggle',
-    confirmSelectionChange: () => false,
+    enableInteraction: false,
   });
 
   private closeSiblingsOnOpen = (event: Event): void => {
