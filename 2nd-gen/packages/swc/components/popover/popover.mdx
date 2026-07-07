@@ -96,8 +96,9 @@ Set **`accessible-label`** to give the popover an accessible name:
 ### Best practices
 
 - Give the trigger a clear, visible label; the popover does not name its own trigger.
-- Always set `accessible-label`.
-- Use `modal` only when the task must block the page.
+- Always set `accessible-label`; the surface is a dialog in both modes and needs a name.
+- Use `modal` only when the task genuinely needs to block the page; prefer the default mode for menus and contextual content.
+- Ensure a modal popover contains focusable content so focus has somewhere to land.
 
 <Canvas of={Stories.Accessibility} />
 

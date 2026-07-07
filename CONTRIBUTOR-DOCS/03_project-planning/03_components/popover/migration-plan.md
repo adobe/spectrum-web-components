@@ -636,13 +636,13 @@ CSS targets the internal `.swc-Popover` element regardless of mode. `popover.css
 #### `resolveTrigger()` helper
 
 - [ ] `resolve-trigger.ts`: pure function `resolveTrigger(host, { for, triggerElement })` returns `{ trigger, interactiveElement }`. Resolves `for=` via `host.getRootNode().getElementById()`; falls back to the `trigger-element` override; performs inner-button discovery via `trigger.shadowRoot?.querySelector('button')` for open-shadow trigger hosts; returns `trigger` itself as `interactiveElement` for closed-shadow or native triggers.
-- [ ] Unit-test all four resolution scenarios: (1) same-root by ID; (2) customer's shadow root containing both; (3) cross-root with inner-button discovery (open shadow on the trigger host); (4) cross-root via `trigger-element` setter, plus closed-shadow fallback to the host.
+- [x] Unit-test the resolution scenarios (`core/utils/test/resolve-trigger.test.ts`): same-root by ID, `trigger-element` override, inner-button discovery on an open-shadow trigger host, and unresolved-id → null. (Customer-shadow-root variants take the same `getRootNode()` path; not separately fixtured.)
 
 #### `dismissibleStack` module
 
 - [ ] `dismissible-stack.ts`: exports three functions over a module-level `const dismissibleStack: object[] = []` — `registerDismissible(key)` pushes the key onto the stack, `unregisterDismissible(key)` removes the most-recent entry matching the key, `isTopDismissible(key)` returns whether the key is the topmost entry.
 - [ ] No persistence beyond module-level state — the stack is in-memory only and resets on page reload. That's correct for the dismissible coordination use case.
-- [ ] Unit-test register / unregister ordering, `isTopDismissible` correctness, idempotent unregister, and behavior with multiple keys of different types.
+- [x] Unit-test register / unregister ordering, `isTopDismissible` correctness, idempotent unregister, and multiple keys (`core/utils/test/dismissible-stack.test.ts`).
 - [ ] Document the API and the consumer pattern in JSDoc on each exported function; include the "register on open, unregister on close (and `disconnectedCallback`), check `isTopDismissible` before processing custom Escape" usage convention.
 
 #### Popover component
@@ -733,9 +733,9 @@ CSS targets the internal `.swc-Popover` element regardless of mode. `popover.css
 ### Testing
 
 - [ ] `PlacementController` agnostic test suite (`placement-controller.test.ts`): anchor placement + flip + shift + size + arrow on synthetic trigger/target pairs; autoUpdate wiring; rapid-open guard; WebKit compensation in a mocked WebKit context
-- [ ] `resolveTrigger()` agnostic test suite (`resolve-trigger.test.ts`): all four resolution scenarios — same-root by ID, customer's shadow containing both, cross-root 2nd-gen with inner-button discovery, cross-root via trigger-element setter, closed-shadow fallback
-- [ ] `Popover.test.ts`: component-level behavior — renders correctly, attribute reflection, slot content, both modes
-- [ ] Add Playwright `popover.a11y.spec.ts` with `toMatchAriaSnapshot` for both modes (auto: no host role; modal: `role="dialog"` announced)
+- [x] `resolveTrigger()` agnostic test suite (`core/utils/test/resolve-trigger.test.ts`): for= by ID, trigger-element override, inner-button discovery, unresolved → null. Also added `deep-contains.test.ts` and `transition.test.ts`.
+- [x] `popover.test.ts`: component-level behavior — render shape (both modes), attribute reflection, slot content, lifecycle/events, close-source labeling, focus restoration, scroll-lock, dismissal coordination, nested layering, failed-show handling, and trigger ARIA (aria-expanded / aria-haspopup / aria-controls).
+- [ ] Add Playwright `popover.a11y.spec.ts` with `toMatchAriaSnapshot` for both modes (auto: no host role; modal: `role="dialog"`). _Deferred: ARIA-tree baselines need the Playwright a11y runner; trigger/dialog ARIA is covered by play functions and axe runs via the test-runner in the meantime._
 
 #### Behavior — auto mode (default)
 
@@ -792,8 +792,8 @@ CSS targets the internal `.swc-Popover` element regardless of mode. `popover.css
 
 #### General
 
-- [ ] JSDoc on all public properties, slots, and exposed `--swc-*` CSS custom properties
-- [ ] Stories: Playground, Overview, Anatomy (default slot, tip), Options (placement, auto vs modal mode, offset/cross-offset), States (open), Behaviors (auto-mode light-dismiss, modal-mode focus trap, trigger-element, `for` cross-root example), Accessibility (auto vs modal semantics, trigger-side ARIA wiring)
+- [x] JSDoc on all public properties (base `@property`) and slots (`@slot`); the four events are documented with `@fires`. No public `--swc-*` custom properties are exposed, so no `@cssprop` tags are needed.
+- [x] Stories: Playground, Overview, Anatomy, Options (Placement, Sizes, Hide arrow; offsets / `should-flip` via the Playground controls), States (open), Behaviors (Custom anchor, Modal, default-mode dismissal, focus/events), Accessibility. Examples are trigger-based (a top-layer popover can't be shown open inline).
 
 #### Breaking changes
 
@@ -807,9 +807,9 @@ CSS targets the internal `.swc-Popover` element regardless of mode. `popover.css
 
 #### Accessibility
 
-- [ ] Storybook Accessibility story: document `role="dialog"` in modal mode (native, via `<dialog>`); focus trap and Escape behavior (native); trigger-side ARIA wiring (`aria-expanded`, `ariaControlsElements`, and `aria-haspopup="dialog"` when `modal`) including inner-button resolution for SWC component triggers
+- [x] Storybook Accessibility section (in `popover.mdx`): documents `role="dialog"` in modal mode, native focus trap + Escape, and trigger-side ARIA wiring (`aria-expanded`, `aria-controls`, and `aria-haspopup="dialog"` when `modal`) including inner-button resolution for SWC component triggers
 - [x] Document accessible-name expectations: consumers set `accessible-label` to name the modal dialog (forwarded as `aria-label` onto the internal `<dialog>`); nameless modal dialogs are an authoring bug and are dev-warned. Default mode needs no name (roleless surface).
-- [ ] Document auto-mode `aria-haspopup`: not set by the component — consumers wire a pattern-specific value when appropriate
+- [x] Document auto-mode `aria-haspopup`: not set by the component; consumers wire a pattern-specific value when appropriate (in the Accessibility section)
 - [ ] Document the closed-shadow-root fallback (ARIA goes on the trigger host)
 
 ### Review
@@ -843,7 +843,7 @@ During drafting, this section tracks active blockers and open questions. None ar
 | Q4  | **Amend [`accessibility-migration-analysis.md`](./accessibility-migration-analysis.md)** to reflect both modes: default `popover="auto"` (no host role; consumer-managed semantics) and `modal` (`<dialog>` provides `role="dialog"`, focus trap, inert). The original analysis assumed a role-free host — accurate for default mode, needs an amendment for modal mode. | No (this migration); confirmed-direction decision | **Resolved** (amended in the "2nd-gen design update — Q4" section: both modes, trigger-side ARIA, keyboard/focus per mode) | Accessibility reviewer |
 | Q5  | **React Spectrum / Design alignment on the modal opt-in.** Specific UX requirements for modal popovers, whether modal popover should look visually distinct from auto popover, whether some downstream consumers (e.g. coachmark) actually need modal mode at all. Tooltip's `popover="auto"` vs `popover="manual"` question is also part of this conversation (impacts auto-stack pollution when hovering background buttons while a picker is open). | No | Pending — multi-team conversation in progress | Ruben Carvalho |
 | Q6  | **Coachmark inheritance vs composition.** 1st-gen `Coachmark extends Popover`. Decide during the coachmark migration whether 2nd-gen `<swc-coachmark>` embeds `<swc-popover>` or wires `PlacementController` + shared styles directly — same case-by-case choice as other first-party consumers. | No | Deferred | Coachmark migration owner |
-| Q7  | **Modal-mode scroll lock — CSS-only.** Resolved: `<swc-popover modal>` prevents page scroll via `overflow: hidden` applied to `html` while the dialog is open, and the popover surface uses `overscroll-behavior: contain` to prevent scroll chaining out of internal scroll regions. Safari's known `overscroll-behavior` bug is counter-acted via CSS-only adjustments for the modal case. **No JS-level scroll lock and no iOS-specific JavaScript workarounds in v1** — if a validated concern surfaces during implementation or in a downstream consumer's testing, revisit at that point. Default (auto) mode does NOT lock page scroll; users can scroll the page freely while a non-modal popover is open (consistent with `popover="auto"` semantics — if the popover itself doesn't have an internal scroll region, page scroll continuing is fine). | No | **Resolved** (CSS-only direction; specific selectors confirmed during styling phase) | CSS reviewer |
+| Q7  | **Modal-mode scroll lock.** Resolved: `<swc-popover modal>` locks page scroll in JS. On open it sets `overflow: hidden` on `documentElement` (saving the prior inline value, restored on close), because a component's shadow stylesheet cannot reach `html`. The popover surface also uses `overscroll-behavior: contain` (CSS) to prevent scroll chaining out of internal scroll regions. No iOS-specific workarounds in v1. Default (auto) mode does NOT lock page scroll (consistent with `popover="auto"` semantics). | No | **Resolved** (JS overflow lock + CSS overscroll-behavior; implemented in Phase 4+5) | Ruben Carvalho |
 
 ### Scope and prerequisites
 

@@ -15,21 +15,52 @@ import { expect, test } from '@playwright/test';
 import { gotoStory } from '../../../utils/a11y-helpers.js';
 
 /**
- * Accessibility tests for Popover component (2nd Generation)
+ * Accessibility tests for Popover (2nd Generation): ARIA-tree snapshots of the
+ * open states.
  *
- * Verifies the element mounts in the overview story. aXe WCAG compliance and
- * color-contrast validation run via test-storybook (see
- * .storybook/test-runner.ts). Full ARIA-tree snapshots for the open/modal
- * states build on this as the lifecycle semantics are fleshed out.
+ * Behavioral dismissal (Escape, outside/backdrop click) is covered by the
+ * play-function tests in `popover.test.ts`, which use `@vitest/browser/context`
+ * trusted input to fire native light-dismiss. aXe WCAG compliance and
+ * color-contrast validation run via test-storybook (see .storybook/test-runner.ts).
  */
 
-test.describe('Popover - ARIA Snapshots', () => {
-  test('overview story mounts the element', async ({ page }) => {
+test.describe('Popover - ARIA snapshots', () => {
+  test('closed: the trigger exposes a collapsed dialog control', async ({
+    page,
+  }) => {
     const root = await gotoStory(
       page,
-      'components-popover--overview',
-      'swc-popover'
+      'components-popover--anatomy',
+      'swc-button'
     );
-    await expect(root.locator('swc-popover')).toBeAttached();
+    await expect(root).toMatchAriaSnapshot(`
+      - button "Open popover"
+    `);
+  });
+
+  test('open (default mode): a named dialog holds the content', async ({
+    page,
+  }) => {
+    const root = await gotoStory(
+      page,
+      'components-popover--anatomy',
+      'swc-button'
+    );
+    await page.getByRole('button', { name: 'Open popover' }).click();
+    await expect(page.locator('swc-popover')).toHaveJSProperty('open', true);
+    await expect(root).toMatchAriaSnapshot(`
+      - button "Open popover"
+      - dialog "Autosave":
+        - text: Your changes are saved automatically as you edit.
+    `);
+  });
+
+  test('open (modal mode): a named modal dialog', async ({ page }) => {
+    await gotoStory(page, 'components-popover--modal', 'swc-button');
+    await page.getByRole('button', { name: 'Open modal' }).click();
+    await expect(page.locator('swc-popover')).toHaveJSProperty('open', true);
+    await expect(
+      page.getByRole('dialog', { name: 'Account settings' })
+    ).toBeVisible();
   });
 });
