@@ -729,8 +729,10 @@ export abstract class PopoverBase extends SpectrumElement {
     this._removeEscapeListener();
     this._scrollLock.unlock();
     // `aria-expanded` is written by `updated()` on every `open` change, so it is
-    // not set here. Positioning is torn down only after the close transition (see
-    // `_stopPositioningWhenClosed`) so the arrow keeps its offset during the fade.
+    // not set here. Positioning is frozen at close start (autoUpdate stopped in
+    // `_dispatchClose`) and fully torn down only after the close transition (see
+    // `_stopPositioningWhenClosed`), so the surface and arrow keep their position
+    // and offset during the fade.
   }
 
   // Tear down positioning once the close animation has completed. Guarded by
@@ -874,6 +876,16 @@ export abstract class PopoverBase extends SpectrumElement {
   }
 
   private _dispatchClose(source: PopoverCloseSource): void {
+    // Freeze positioning at the current location the moment the close begins.
+    // `stop()` tears down the `autoUpdate` loop but leaves the inline `translate`
+    // and `actual-placement` in place, so the surface fades out from where it is.
+    // `beforetoggle` fires before the surface hides, so this runs before the fade.
+    // Without it, a nested popover keeps auto-updating during its fade: when an
+    // ancestor popover closes and its content collapses, the nested popover's
+    // anchor shifts, `autoUpdate` recomputes, and it flashes to a new position
+    // before disappearing. The attribute and remaining inline styles are cleared
+    // after the transition in `_stopPositioningWhenClosed`.
+    this._placementController.stop();
     this.dispatchEvent(
       new CustomEvent('swc-close', {
         detail: { source },
@@ -885,8 +897,8 @@ export abstract class PopoverBase extends SpectrumElement {
       this.dispatchEvent(
         new CustomEvent('swc-after-close', { bubbles: true, composed: true })
       );
-      // Positioning is torn down only after the exit transition; doing it earlier
-      // would snap the surface to 0,0 while it is still fading out.
+      // Positioning autoUpdate was already frozen at close start; this clears the
+      // now-stale `actual-placement` attribute once the exit transition finishes.
       this._stopPositioningWhenClosed();
     });
     this._closeSource = null;
