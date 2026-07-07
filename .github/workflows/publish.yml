@@ -297,7 +297,7 @@ jobs:
       - name: Commit and push changes
         if: steps.extract-tag.outputs.tag == 'latest'
         run: |
-          git pull --rebase origin main
+          git pull --rebase --autostash origin main
           git add .
           git commit --no-verify -m "chore: release packages #publish" || echo "No changes to commit"
           git push
