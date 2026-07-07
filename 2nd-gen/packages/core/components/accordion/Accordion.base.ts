@@ -13,6 +13,7 @@
 import { PropertyValues } from 'lit';
 import { property } from 'lit/decorators.js';
 
+import { SelectionController } from '@spectrum-web-components/core/controllers/index.js';
 import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
 import { SizedMixin } from '@spectrum-web-components/core/mixins/index.js';
 
@@ -102,6 +103,34 @@ export abstract class AccordionBase extends SizedMixin(SpectrumElement, {
       .filter((el): el is AccordionItemBase => el instanceof AccordionItemBase);
   }
 
+  /**
+   * @internal
+   *
+   * Applies the exclusive-open constraint when `allowMultiple` is false, in
+   * place of manually iterating `assignedItems()`. Only ever driven imperatively
+   * from `closeSiblingsOnOpen` with `{ silent: true }` — items keep their own
+   * click handling and cancelable-toggle lifecycle in `AccordionItemBase.toggle()`
+   * unchanged. `getItems` is not used for interaction (this controller's own
+   * capture-phase click/keydown handling never applies: `confirmSelectionChange`
+   * unconditionally rejects it), only for `applyMutators`' live scan of every
+   * assigned item when a silent transition is asserted.
+   *
+   * Known limitation: an item opened via a direct `open` property/attribute set
+   * (bypassing `toggle()`) is not reconciled by this controller, the same way
+   * `closeSiblingsOnOpen` itself only reacts to toggle-driven changes today.
+   */
+  private readonly _selection = new SelectionController(this, {
+    getItems: () => this.assignedItems() as HTMLElement[],
+    selectItem: (item) => {
+      (item as AccordionItemBase).open = true;
+    },
+    deselectItem: (item) => {
+      (item as AccordionItemBase).open = false;
+    },
+    mode: 'single-toggle',
+    confirmSelectionChange: () => false,
+  });
+
   private closeSiblingsOnOpen = (event: Event): void => {
     if (this.disabled) {
       event.preventDefault();
@@ -120,11 +149,10 @@ export abstract class AccordionBase extends SizedMixin(SpectrumElement, {
       if (!toggling.open) {
         return;
       }
-      for (const item of this.assignedItems()) {
-        if (item !== toggling) {
-          item.open = false;
-        }
-      }
+      // Asserts toggling as the sole selection; applyMutators diffs against a
+      // live scan of every assigned item, so every other item is closed
+      // regardless of what this controller previously believed was selected.
+      this._selection.setSelectedItem(toggling, { silent: true });
     });
   };
 
