@@ -3,6 +3,61 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.12.2](https://github.com/adobe/spectrum-web-components/compare/v1.12.1...v1.12.2) (2026-07-06)
+
+## Patch Changes
+
+**sp-accordion**: **feat(accordion):** Add 2nd-gen `<swc-accordion>` and `<swc-accordion-item>` with Spectrum 2-oriented behavior. Key changes from 1st-gen `<sp-accordion>` / `<sp-accordion-item>`:
+
+- Core `AccordionBase` / `AccordionItemBase` with public API: `allow-multiple`, `level`, `size`, `density`, `quiet`, host `disabled`, item `open` / `disabled`, slotted heading (`slot="label"`), optional `slot="actions"`, and cancellable `swc-accordion-item-toggle`
+- APG-aligned accessibility: `<h*>` wrapping a native header `<button>`, `aria-expanded` / `aria-controls`, `role="region"` + `aria-labelledby`, closed panels use `aria-hidden="true"` plus CSS collapse (not HTML `hidden`; supports `calc-size()` height animation), disabled items use `aria-disabled` on the header and `inert` on the panel (no roving `tabindex` or arrow-key header navigation)
+- Space on the header calls `preventDefault()` and toggles without scrolling overflow containers (SWC-1487)
+- Controlled `open` is frozen while the host or item is disabled (imperative assignment cannot expand or collapse)
+
+**chore(accordion):** Add Spectrum 2 deprecation warnings in dev mode on 1st-gen accordion for `label`, item `level`, and host `focus()`, with matching tests.
+
+**sp-action-button**: Added `<swc-action-button>` with full Spectrum 2 visual fidelity, migrated from the Spectrum 1 `<sp-action-button>`. See the [component docs](https://spectrum-web-components.adobe.com/?path=/docs/components-action-button--docs) and [migration guide](https://spectrum-web-components.adobe.com/?path=/docs/components-action-button-migration-guide--docs).
+
+- **API**: `accessible-label` replaces `label`; `size` includes `xs` (not on `swc-button`); `quiet` and `static-color` retained as primary visual differentiators; `pending` / `pending-label` added (matching `swc-button`); `aria-haspopup` / `aria-expanded` forwarded to the inner `<button>` for menu-trigger patterns.
+- **Breaking changes**: `toggles`, `selected`, `emphasized`, and `aria-pressed` removed (toggle UX moves to `swc-toggle-button` / `swc-toggle-button-group`); `href` and the link API removed (use native `<a>`); `hold-affordance` / `longpress` deferred; `label` renamed to `accessible-label`.
+- **Accessibility**: semantics and focus land on the internal native `<button>` (`delegatesFocus: true`); host carries no `role="button"`; `aria-disabled="true"` on the inner `<button>` during pending state; dev-mode warning when icon-only usage is missing `accessible-label`.
+- **Styling**: exposes `--swc-action-button-*` custom properties (replaces `--mod-actionbutton-*` / `--spectrum-actionbutton-*`); full Spectrum 2 token coverage across all size × quiet × static-color combinations; Windows High Contrast support.
+- **Docs and tests**: per-component Storybook docs page, consumer migration guide, and full unit + accessibility test coverage.
+
+**sp-button-group**: - [#6395](https://github.com/adobe/spectrum-web-components/pull/6395) [`acd555a`](https://github.com/adobe/spectrum-web-components/commit/acd555a975508f9249a1394ac808a62b2d7cbfe3) - `ButtonGroup` — Added `<swc-button-group>` with full Spectrum 2 visual fidelity. See the [component docs](https://spectrum-web-components.adobe.com/?path=/docs/button-group--docs) and [migration guide](https://spectrum-web-components.adobe.com/?path=/docs/button-group-migration-guide--docs).
+
+**sp-action-menu**: **fix(action-menu):** Submenus inside `sp-action-menu` now open correctly on mobile instead of dismissing the tray.
+
+On mobile, `sp-action-menu` renders its menu inside an `sp-tray` but was not setting `mobile-view` on the inner `sp-menu`. This meant tapping a submenu item used flyout overlay logic whose click event bubbled up to the tray and triggered dismissal. The same failure occurred with VoiceOver on iOS, where a double-tap fires a synthetic `click` that bypasses the `pointerdown`/`pointerup` sequence entirely.
+
+`mobile-view` is now applied automatically to the inner `sp-menu` when the action menu is rendering as a tray (i.e. on mobile without `force-popover`). Submenu activation routes through the drill-down path, which stops the event before it reaches the tray.
+
+**fix(menu):** Added documentation for the `mobile-view` and `mobile-back-label` attributes, which were previously undocumented in the README.
+
+**sp-menu**: **fix(action-menu):** Submenus inside `sp-action-menu` now open correctly on mobile instead of dismissing the tray.
+
+On mobile, `sp-action-menu` renders its menu inside an `sp-tray` but was not setting `mobile-view` on the inner `sp-menu`. This meant tapping a submenu item used flyout overlay logic whose click event bubbled up to the tray and triggered dismissal. The same failure occurred with VoiceOver on iOS, where a double-tap fires a synthetic `click` that bypasses the `pointerdown`/`pointerup` sequence entirely.
+
+`mobile-view` is now applied automatically to the inner `sp-menu` when the action menu is rendering as a tray (i.e. on mobile without `force-popover`). Submenu activation routes through the drill-down path, which stops the event before it reaches the tray.
+
+**fix(menu):** Added documentation for the `mobile-view` and `mobile-back-label` attributes, which were previously undocumented in the README.
+
+**sp-menu**: **fix(menu, slider):** Use package imports for `sp-menu-divider` and `sp-slider-handle` registration instead of relative imports.
+
+In build systems that alias `@spectrum-web-components/*` packages (for example UXP wrappers), a relative side-effect import can resolve to a different module instance than the package export consumers use, causing `NotSupportedError: Failed to execute 'define' on 'CustomElementRegistry'` from duplicate custom element registration. This applies the same fix as #3225 (already applied to `MenuGroup`, `DialogBase`, `DialogWrapper`, and `Table`) to `Menu` and `Slider`.
+
+**sp-slider**: **fix(menu, slider):** Use package imports for `sp-menu-divider` and `sp-slider-handle` registration instead of relative imports.
+
+In build systems that alias `@spectrum-web-components/*` packages (for example UXP wrappers), a relative side-effect import can resolve to a different module instance than the package export consumers use, causing `NotSupportedError: Failed to execute 'define' on 'CustomElementRegistry'` from duplicate custom element registration. This applies the same fix as #3225 (already applied to `MenuGroup`, `DialogBase`, `DialogWrapper`, and `Table`) to `Menu` and `Slider`.
+
+**sp-picker**: **fix(picker, action-menu):** Prevent the internal menu scroll event from crossing the shadow DOM boundary.
+
+`Picker`, `PickerBase`, and `ActionMenu` re-dispatch a `scroll` event on their host when the internal menu scrolls. The event was created with `composed: true`, allowing it to cross the shadow DOM boundary and reach ancestor elements, which could close an enclosing overlay while the user was scrolling the menu. The event is now non-composed: it still fires on the component host for consumers, but no longer escapes into ancestors. This applies the #6028 fix to `PickerBase` and `ActionMenu`, which were previously missed.
+
+**sp-action-menu**: **fix(picker, action-menu):** Prevent the internal menu scroll event from crossing the shadow DOM boundary.
+
+`Picker`, `PickerBase`, and `ActionMenu` re-dispatch a `scroll` event on their host when the internal menu scrolls. The event was created with `composed: true`, allowing it to cross the shadow DOM boundary and reach ancestor elements, which could close an enclosing overlay while the user was scrolling the menu. The event is now non-composed: it still fires on the component host for consumers, but no longer escapes into ancestors. This applies the #6028 fix to `PickerBase` and `ActionMenu`, which were previously missed.
+
 # [1.12.1](https://github.com/adobe/spectrum-web-components/compare/v1.12.0...v1.12.1) (2026-05-19)
 
 ## Patch Changes
