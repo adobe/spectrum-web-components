@@ -1382,11 +1382,8 @@ export const DefaultEscapeSourceTest: Story = {
   `,
   play: async ({ canvasElement }) => {
     const popover = await getComponent<Popover>(canvasElement, 'swc-popover');
-    const surface = popover.shadowRoot?.querySelector(
-      '.swc-Popover'
-    ) as HTMLElement;
-    popover.open = true;
-    await waitFor(() => expect(surface.matches(':popover-open')).toBe(true));
+    const trigger = canvasElement.querySelector('#des-trigger') as HTMLElement;
+    await popover.updateComplete;
 
     let source: string | undefined;
     popover.addEventListener(
@@ -1396,15 +1393,46 @@ export const DefaultEscapeSourceTest: Story = {
       },
       { once: true }
     );
-    // The document keydown listener labels the close source as `escape` while the
-    // popover is the topmost dismissible. (Native light-dismiss needs a trusted
-    // event, so close programmatically; the captured source is preserved.)
-    document.dispatchEvent(
-      new KeyboardEvent('keydown', { key: 'Escape', bubbles: true })
+
+    // Real (trusted) input: a genuine Escape fires the native popover
+    // light-dismiss, which a synthetic keydown could not, and labels the source.
+    await browserUserEvent.click(trigger);
+    await waitFor(() => expect(popover.open, 'open on click').toBe(true));
+    await browserUserEvent.keyboard('{Escape}');
+    await waitFor(() => expect(popover.open, 'Escape closes it').toBe(false));
+    expect(source, 'close source is escape').toBe('escape');
+  },
+};
+
+export const DefaultOutsideClickSourceTest: Story = {
+  render: () => html`
+    <button id="docs-trigger">Trigger</button>
+    <button id="docs-outside">Outside</button>
+    <swc-popover for="docs-trigger">Content</swc-popover>
+  `,
+  play: async ({ canvasElement }) => {
+    const popover = await getComponent<Popover>(canvasElement, 'swc-popover');
+    const trigger = canvasElement.querySelector('#docs-trigger') as HTMLElement;
+    const outside = canvasElement.querySelector('#docs-outside') as HTMLElement;
+    await popover.updateComplete;
+
+    let source: string | undefined;
+    popover.addEventListener(
+      'swc-close',
+      (event) => {
+        source = (event as CustomEvent<{ source: string }>).detail.source;
+      },
+      { once: true }
     );
-    popover.open = false;
-    await waitFor(() => expect(popover.open).toBe(false));
-    expect(source, 'close source reflects the Escape keydown').toBe('escape');
+
+    // A trusted click outside the popover triggers native light-dismiss.
+    await browserUserEvent.click(trigger);
+    await waitFor(() => expect(popover.open, 'open on click').toBe(true));
+    await browserUserEvent.click(outside);
+    await waitFor(() =>
+      expect(popover.open, 'an outside click closes it').toBe(false)
+    );
+    expect(source, 'close source is outside').toBe('outside');
   },
 };
 
@@ -1440,15 +1468,18 @@ export const ProgrammaticCloseSourceTest: Story = {
 
 export const ModalEscapeSourceTest: Story = {
   render: () => html`
-    <swc-popover modal accessible-label="Settings">Content</swc-popover>
+    <button id="mes-trigger">Trigger</button>
+    <swc-popover for="mes-trigger" modal accessible-label="Settings">
+      Content
+    </swc-popover>
   `,
   play: async ({ canvasElement }) => {
     const popover = await getComponent<Popover>(canvasElement, 'swc-popover');
+    const trigger = canvasElement.querySelector('#mes-trigger') as HTMLElement;
     const dialog = popover.shadowRoot?.querySelector(
       '.swc-Popover'
     ) as HTMLDialogElement;
-    popover.open = true;
-    await waitFor(() => expect(dialog.matches(':modal')).toBe(true));
+    await popover.updateComplete;
 
     let source: string | undefined;
     popover.addEventListener(
@@ -1458,16 +1489,17 @@ export const ModalEscapeSourceTest: Story = {
       },
       { once: true }
     );
-    // Topmost modal: the native `cancel` (Escape) labels the close source
-    // `escape`. (Synthetic cancel does not natively close, so close
-    // programmatically; the captured source is preserved.)
-    expect(isTopDismissible(popover), 'modal is topmost').toBe(true);
-    dialog.dispatchEvent(new Event('cancel', { cancelable: true }));
-    popover.open = false;
-    // `<dialog>.close()` fires `close` (and thus `swc-close`) asynchronously.
+
+    // Real Escape fires the native `<dialog>` cancel/close on the topmost modal.
+    await browserUserEvent.click(trigger);
     await waitFor(() =>
-      expect(source, 'modal Escape labels source escape').toBe('escape')
+      expect(dialog.matches(':modal'), 'modal open').toBe(true)
     );
+    await browserUserEvent.keyboard('{Escape}');
+    await waitFor(() =>
+      expect(popover.open, 'Escape closes the modal').toBe(false)
+    );
+    expect(source, 'close source is escape').toBe('escape');
   },
 };
 

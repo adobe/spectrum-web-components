@@ -15,71 +15,14 @@ import { expect, test } from '@playwright/test';
 import { gotoStory } from '../../../utils/a11y-helpers.js';
 
 /**
- * Accessibility tests for Popover component (2nd Generation)
+ * Accessibility tests for Popover (2nd Generation): ARIA-tree snapshots of the
+ * open states.
  *
- * Two kinds of coverage the Storybook play-function tests cannot provide:
- * 1. Dismissal via real (trusted) input. Native `popover`/`<dialog>` light
- *    dismiss (Escape, outside click, backdrop click) only fires for trusted
- *    events, which Playwright drives but @storybook/test's synthetic `userEvent`
- *    cannot.
- * 2. ARIA-tree snapshots of the popover in its open states.
- *
- * aXe WCAG compliance and color-contrast validation run separately via
- * test-storybook (see .storybook/test-runner.ts).
+ * Behavioral dismissal (Escape, outside/backdrop click) is covered by the
+ * play-function tests in `popover.test.ts`, which use `@vitest/browser/context`
+ * trusted input to fire native light-dismiss. aXe WCAG compliance and
+ * color-contrast validation run via test-storybook (see .storybook/test-runner.ts).
  */
-
-test.describe('Popover - dismissal (trusted input)', () => {
-  test('default mode: a trigger click opens and Escape closes', async ({
-    page,
-  }) => {
-    await gotoStory(page, 'components-popover--anatomy', 'swc-button');
-    const popover = page.locator('swc-popover');
-
-    await page.getByRole('button', { name: 'Open popover' }).click();
-    await expect(popover).toHaveJSProperty('open', true);
-
-    await page.keyboard.press('Escape');
-    await expect(popover).toHaveJSProperty('open', false);
-  });
-
-  test('default mode: an outside click closes the popover', async ({
-    page,
-  }) => {
-    await gotoStory(page, 'components-popover--anatomy', 'swc-button');
-    const popover = page.locator('swc-popover');
-
-    await page.getByRole('button', { name: 'Open popover' }).click();
-    await expect(popover).toHaveJSProperty('open', true);
-
-    // A press well away from the surface is a native light dismiss.
-    await page.mouse.click(5, 5);
-    await expect(popover).toHaveJSProperty('open', false);
-  });
-
-  test('modal: a backdrop click closes the dialog', async ({ page }) => {
-    await gotoStory(page, 'components-popover--modal', 'swc-button');
-    const popover = page.locator('swc-popover');
-
-    await page.getByRole('button', { name: 'Open modal' }).click();
-    await expect(popover).toHaveJSProperty('open', true);
-
-    // The modal backdrop covers the viewport; a press outside the dialog box
-    // (top-left corner) is a backdrop dismiss.
-    await page.mouse.click(5, 5);
-    await expect(popover).toHaveJSProperty('open', false);
-  });
-
-  test('modal: Escape closes the dialog', async ({ page }) => {
-    await gotoStory(page, 'components-popover--modal', 'swc-button');
-    const popover = page.locator('swc-popover');
-
-    await page.getByRole('button', { name: 'Open modal' }).click();
-    await expect(popover).toHaveJSProperty('open', true);
-
-    await page.keyboard.press('Escape');
-    await expect(popover).toHaveJSProperty('open', false);
-  });
-});
 
 test.describe('Popover - ARIA snapshots', () => {
   test('closed: the trigger exposes a collapsed dialog control', async ({
