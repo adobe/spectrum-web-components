@@ -10,7 +10,6 @@
  * governing permissions and limitations under the License.
  */
 
-import { spawnSync } from 'node:child_process';
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join, relative } from 'node:path';
 import postcss from 'postcss';
@@ -502,53 +501,6 @@ function getOutputPath(entry, projectRoot) {
   );
 }
 
-// ── Post-processing ──────────────────────────────────────────────────────────
-
-/**
- * Walks up from startDir through node_modules/.bin to find a binary.
- *
- * @param {string} name
- * @param {string} startDir
- * @returns {string | null}
- */
-function findBin(name, startDir) {
-  let dir = startDir;
-  for (let i = 0; i < 6; i++) {
-    const p = join(dir, 'node_modules', '.bin', name);
-    if (existsSync(p)) {
-      return p;
-    }
-    const parent = join(dir, '..');
-    if (parent === dir) {
-      break;
-    }
-    dir = parent;
-  }
-  return null;
-}
-
-/**
- * Runs stylelint --fix on the generated file if stylelint is available in the
- * workspace. Silently skips if the binary cannot be found or the command fails.
- *
- * @param {string} filePath - Absolute path to the generated CSS file.
- * @param {string} projectRoot - Vite project root (used to find the binary).
- */
-function runStylelintFix(filePath, projectRoot) {
-  const bin = findBin('stylelint', projectRoot);
-  if (!bin) {
-    return;
-  }
-  try {
-    spawnSync(bin, ['--fix', filePath], {
-      stdio: 'pipe',
-      cwd: projectRoot,
-    });
-  } catch {
-    // Best-effort — ignore failures
-  }
-}
-
 // ── Generation ──────────────────────────────────────────────────────────────
 
 /**
@@ -586,7 +538,6 @@ function generateEntry(entry, projectRoot) {
 
   mkdirSync(dirname(out), { recursive: true });
   writeFileSync(out, makeHeader(sourcePath) + derived, 'utf-8');
-  runStylelintFix(out, projectRoot);
 }
 
 // ── Vite plugin ─────────────────────────────────────────────────────────────

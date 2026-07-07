@@ -431,6 +431,7 @@ const preview = {
                 'Infield button',
                 [
                   'Accessibility migration analysis',
+                  'Migration plan',
                   'Rendering and styling migration analysis',
                 ],
                 'Infield progress circle',
