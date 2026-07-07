@@ -518,10 +518,16 @@ const preview = {
                 'Textfield',
                 ['Rendering and styling migration analysis'],
                 'Thumbnail',
+<<<<<<< nikkimk/swc-2196-thumbnail-a11y
                 [
                   'Accessibility migration analysis',
                   'Rendering and styling migration analysis',
                 ],
+=======
+                ['Rendering and styling migration analysis'],
+                'Toast',
+                ['Accessibility migration analysis'],
+>>>>>>> main
                 'Tooltip',
                 [
                   'Accessibility migration analysis',
