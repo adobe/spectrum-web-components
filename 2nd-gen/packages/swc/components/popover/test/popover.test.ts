@@ -416,6 +416,9 @@ export const ActualPlacementTest: Story = {
   `,
   play: async ({ canvasElement, step }) => {
     const popover = await getComponent<Popover>(canvasElement, 'swc-popover');
+    const trigger = canvasElement.querySelector(
+      '#actual-placement-trigger'
+    ) as HTMLButtonElement;
     await popover.updateComplete;
 
     await step('no actual-placement attribute while closed', () => {
@@ -426,7 +429,7 @@ export const ActualPlacementTest: Story = {
     });
 
     await step('reflects the requested physical side while open', async () => {
-      popover.open = true;
+      await userEvent.click(trigger);
       // The attribute is set by the controller's first (async) compute, so poll.
       // placement="bottom" fits below the trigger (no flip), so the reflected
       // physical side is exactly the requested one; a wrong-side resolution
@@ -442,7 +445,7 @@ export const ActualPlacementTest: Story = {
     await step('removes the attribute after the close transition', async () => {
       // Positioning (and the attribute) is torn down only after the close
       // transition completes, so poll rather than awaiting updateComplete.
-      popover.open = false;
+      await userEvent.click(trigger);
       await waitFor(() =>
         expect(
           popover.hasAttribute('actual-placement'),
@@ -577,10 +580,13 @@ export const UnresolvedTriggerWhileOpenTest: Story = {
   `,
   play: async ({ canvasElement, step }) => {
     const popover = await getComponent<Popover>(canvasElement, 'swc-popover');
+    const trigger = canvasElement.querySelector(
+      '#resolved-trigger'
+    ) as HTMLButtonElement;
     await popover.updateComplete;
 
     await step('opens and anchors against the resolved trigger', async () => {
-      popover.open = true;
+      await userEvent.click(trigger);
       await waitFor(() =>
         expect(popover.hasAttribute('actual-placement')).toBe(true)
       );
@@ -725,6 +731,9 @@ export const ModalToggleWhileOpenTest: Story = {
   `,
   play: async ({ canvasElement, step }) => {
     const popover = await getComponent<Popover>(canvasElement, 'swc-popover');
+    const trigger = canvasElement.querySelector(
+      '#modal-toggle-trigger'
+    ) as HTMLButtonElement;
     await popover.updateComplete;
     const surface = () =>
       popover.shadowRoot?.querySelector('.swc-Popover') as HTMLDialogElement;
@@ -732,7 +741,7 @@ export const ModalToggleWhileOpenTest: Story = {
     popover.addEventListener('swc-open', () => (openCount += 1));
 
     await step('opens in default (non-modal) mode', async () => {
-      popover.open = true;
+      await userEvent.click(trigger);
       await popover.updateComplete;
       await waitFor(() =>
         expect(surface().matches(':popover-open'), 'div popover is open').toBe(
@@ -1324,14 +1333,16 @@ export const SequentialPopoversTest: Story = {
   play: async ({ canvasElement }) => {
     const a = canvasElement.querySelector('#seq-pa') as Popover;
     const b = canvasElement.querySelector('#seq-pb') as Popover;
+    const triggerA = canvasElement.querySelector('#seq-a') as HTMLButtonElement;
+    const triggerB = canvasElement.querySelector('#seq-b') as HTMLButtonElement;
     await a.updateComplete;
     await b.updateComplete;
 
-    a.open = true;
+    await userEvent.click(triggerA);
     await waitFor(() => expect(a.open).toBe(true));
     // Opening B (a sibling auto popover, not an ancestor of A) light-dismisses A
     // natively; only one auto-popover stack stays open at a time.
-    b.open = true;
+    await userEvent.click(triggerB);
     await waitFor(() => expect(a.open, 'A light-dismissed by B').toBe(false));
     expect(b.open, 'B is open').toBe(true);
   },
