@@ -33,9 +33,15 @@ type StorybookMode = 'dev' | 'build' | 'ci-a11y';
 const storybookMode: StorybookMode =
   process.env.SWC_STORYBOOK_MODE === 'ci-a11y'
     ? 'ci-a11y'
-    : process.env.NODE_ENV === 'production'
-      ? 'build'
-      : 'dev';
+    : // Explicit override so a static `storybook build` (e.g. PR preview
+      // deploys) can still produce the full dev-mode story set. The `build`
+      // command otherwise forces NODE_ENV=production itself before this
+      // file runs, regardless of what's set in the shell beforehand.
+      process.env.SWC_STORYBOOK_MODE === 'dev'
+      ? 'dev'
+      : process.env.NODE_ENV === 'production'
+        ? 'build'
+        : 'dev';
 
 // Custom indexer to allow .test.ts files to be treated as story files.
 const testStoryIndexer: Indexer = {
