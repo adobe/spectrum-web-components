@@ -81,7 +81,7 @@ const meta: Meta = {
   component: 'swc-progress-bar',
   parameters: {
     docs: {
-      subtitle: `Non-focusable, read-only bar that shows task progress or an indeterminate loading state.`,
+      subtitle: `Shows the progress of a task or an indeterminate loading state.`,
     },
     styles: { 'min-inline-size': '250px' },
   },
