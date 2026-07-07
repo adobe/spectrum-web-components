@@ -10,18 +10,18 @@
  * governing permissions and limitations under the License.
  */
 
-import { expect, test } from '@playwright/test';
+import { expect, type Page, test } from '@playwright/test';
 
 import { gotoStory } from '../../../utils/a11y-helpers.js';
 
 /**
- * Accessibility tests for Popover (2nd Generation): ARIA-tree snapshots of the
- * open states.
+ * Playwright tests for Popover (2nd Generation): ARIA-tree snapshots of the open states,
+ * plus native light-dismiss behavior (see the second describe block below).
  *
- * Behavioral dismissal (Escape, outside/backdrop click) is covered by the
- * play-function tests in `popover.test.ts`, which use `@vitest/browser/context`
- * trusted input to fire native light-dismiss. aXe WCAG compliance and
- * color-contrast validation run via test-storybook (see .storybook/test-runner.ts).
+ * Native light-dismiss needs trusted browser input, which the Storybook play functions in
+ * `popover.test.ts` cannot produce, so it lives here rather than as a play function. Synthetic
+ * interaction (click-to-toggle, focus, programmatic close) stays in `popover.test.ts`. aXe WCAG
+ * compliance and color-contrast validation run via test-storybook (see .storybook/test-runner.ts).
  */
 
 test.describe('Popover - ARIA snapshots', () => {
@@ -62,5 +62,133 @@ test.describe('Popover - ARIA snapshots', () => {
     await expect(
       page.getByRole('dialog', { name: 'Account settings' })
     ).toBeVisible();
+  });
+});
+
+/**
+ * Native light-dismiss (`popover="auto"` Escape/outside-click, `<dialog>` Escape, and
+ * nested dismissal ordering) is only triggered by trusted browser input, which the
+ * Storybook play functions cannot produce. These run against the render-only fixtures in
+ * popover.test.ts and drive real keyboard/pointer input through Playwright.
+ */
+test.describe('Popover - native dismissal', () => {
+  type CloseSourceWindow = Window & { __closeSource?: string };
+
+  const trackCloseSource = (
+    page: Page,
+    selector = 'swc-popover'
+  ): Promise<void> =>
+    page.evaluate((sel) => {
+      (window as CloseSourceWindow).__closeSource = undefined;
+      document.querySelector(sel)?.addEventListener('swc-close', (event) => {
+        (window as CloseSourceWindow).__closeSource = (
+          event as CustomEvent<{ source: string }>
+        ).detail.source;
+      });
+    }, selector);
+
+  const readCloseSource = (page: Page): Promise<string | undefined> =>
+    page.evaluate(() => (window as CloseSourceWindow).__closeSource);
+
+  test('default mode: Escape closes and labels the source "escape"', async ({
+    page,
+  }) => {
+    await gotoStory(
+      page,
+      'components-popover-tests--default-escape-source-test',
+      'swc-button'
+    );
+    const popover = page.locator('swc-popover');
+    await trackCloseSource(page);
+
+    await page.locator('#des-trigger').click();
+    await expect(popover).toHaveJSProperty('open', true);
+    await page.keyboard.press('Escape');
+    await expect(popover).toHaveJSProperty('open', false);
+    expect(await readCloseSource(page)).toBe('escape');
+  });
+
+  test('default mode: an outside click closes and labels the source "outside"', async ({
+    page,
+  }) => {
+    await gotoStory(
+      page,
+      'components-popover-tests--default-outside-click-source-test',
+      'swc-button'
+    );
+    const popover = page.locator('swc-popover');
+    await trackCloseSource(page);
+
+    await page.locator('#docs-trigger').click();
+    await expect(popover).toHaveJSProperty('open', true);
+    await page.locator('#docs-outside').click();
+    await expect(popover).toHaveJSProperty('open', false);
+    expect(await readCloseSource(page)).toBe('outside');
+  });
+
+  test('modal mode: Escape closes and labels the source "escape"', async ({
+    page,
+  }) => {
+    await gotoStory(
+      page,
+      'components-popover-tests--modal-escape-source-test',
+      'swc-button'
+    );
+    const popover = page.locator('swc-popover');
+    await trackCloseSource(page);
+
+    await page.locator('#mes-trigger').click();
+    await expect(popover).toHaveJSProperty('open', true);
+    await page.keyboard.press('Escape');
+    await expect(popover).toHaveJSProperty('open', false);
+    expect(await readCloseSource(page)).toBe('escape');
+  });
+
+  test('nested: Escape peels the topmost popover, ancestor clicks dismiss only descendants', async ({
+    page,
+  }) => {
+    await gotoStory(
+      page,
+      'components-popover-tests--nested-dismissal-order-test',
+      'swc-button'
+    );
+    const outer = page.locator('#ndo-outer');
+    const inner = page.locator('#ndo-inner');
+
+    const openBoth = async (): Promise<void> => {
+      const outerOpen = await outer.evaluate(
+        (el) => (el as unknown as { open: boolean }).open
+      );
+      if (!outerOpen) {
+        await page.locator('#ndo-outer-trigger').click();
+      }
+      await expect(outer).toHaveJSProperty('open', true);
+      await page.locator('#ndo-inner-trigger').click();
+      await expect(inner).toHaveJSProperty('open', true);
+      // Nested auto popovers form an ancestor chain, so opening the inner one
+      // does not light-dismiss the outer.
+      await expect(outer).toHaveJSProperty('open', true);
+    };
+
+    // Escape peels the inner (topmost) first, then the outer.
+    await openBoth();
+    await page.keyboard.press('Escape');
+    await expect(inner).toHaveJSProperty('open', false);
+    await expect(outer).toHaveJSProperty('open', true);
+    await page.keyboard.press('Escape');
+    await expect(outer).toHaveJSProperty('open', false);
+
+    // A click on the outer content dismisses only the inner (its descendant).
+    await openBoth();
+    await page.locator('#ndo-outer-body').click();
+    await expect(inner).toHaveJSProperty('open', false);
+    await expect(outer).toHaveJSProperty('open', true);
+
+    // A click fully outside both closes the whole chain.
+    await page.locator('#ndo-inner-trigger').click();
+    await expect(inner).toHaveJSProperty('open', true);
+    await page.locator('#ndo-away').click();
+    await expect(outer).toHaveJSProperty('open', false);
+    await expect(inner).toHaveJSProperty('open', false);
   });
 });

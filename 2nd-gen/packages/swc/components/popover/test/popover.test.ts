@@ -12,10 +12,6 @@
 import { html } from 'lit';
 import { expect, userEvent, waitFor } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
-// Real, trusted browser input (Playwright-backed). Unlike @storybook/test's
-// synthetic userEvent, this fires native `popover` light-dismiss (Escape, outside
-// click), which the dismissal-ordering test below relies on.
-import { userEvent as browserUserEvent } from '@vitest/browser/context';
 
 import { Popover } from '@adobe/spectrum-wc/popover';
 import { PopoverBase } from '@spectrum-web-components/core/components/popover';
@@ -1170,8 +1166,8 @@ export const NestedLayersTest: Story = {
 export const NestedDismissalOrderTest: Story = {
   render: () => html`
     <div style="display: flex; gap: 24px; padding: 40px">
-      <button id="ndo-outer-trigger">Open outer</button>
-      <button id="ndo-away">Elsewhere</button>
+      <swc-button id="ndo-outer-trigger">Open outer</swc-button>
+      <swc-button id="ndo-away">Elsewhere</swc-button>
       <swc-popover
         id="ndo-outer"
         for="ndo-outer-trigger"
@@ -1179,7 +1175,7 @@ export const NestedDismissalOrderTest: Story = {
       >
         <div style="display: flex; flex-direction: column; gap: 12px;">
           <p id="ndo-outer-body" style="margin: 0;">Outer popover body</p>
-          <button id="ndo-inner-trigger">Open inner</button>
+          <swc-button id="ndo-inner-trigger">Open inner</swc-button>
           <swc-popover
             id="ndo-inner"
             for="ndo-inner-trigger"
@@ -1191,73 +1187,9 @@ export const NestedDismissalOrderTest: Story = {
       </swc-popover>
     </div>
   `,
-  play: async ({ canvasElement, step }) => {
-    const outer = canvasElement.querySelector('#ndo-outer') as Popover;
-    const inner = canvasElement.querySelector('#ndo-inner') as Popover;
-    const outerTrigger = canvasElement.querySelector(
-      '#ndo-outer-trigger'
-    ) as HTMLElement;
-    const away = canvasElement.querySelector('#ndo-away') as HTMLElement;
-    await outer.updateComplete;
-
-    const openBoth = async (): Promise<void> => {
-      if (!outer.open) {
-        await browserUserEvent.click(outerTrigger);
-      }
-      await waitFor(() => expect(outer.open, 'outer open').toBe(true));
-      const innerTrigger = outer.querySelector(
-        '#ndo-inner-trigger'
-      ) as HTMLElement;
-      await browserUserEvent.click(innerTrigger);
-      await waitFor(() => expect(inner.open, 'inner open').toBe(true));
-      // Nested auto popovers form an ancestor chain, so opening the inner one
-      // does not light-dismiss the outer.
-      expect(outer.open, 'outer stays open under the inner').toBe(true);
-    };
-
-    await step('Escape dismisses the inner first, then the outer', async () => {
-      await openBoth();
-      await browserUserEvent.keyboard('{Escape}');
-      await waitFor(() =>
-        expect(inner.open, 'inner (topmost) closes first').toBe(false)
-      );
-      expect(outer.open, 'outer survives the first Escape').toBe(true);
-      await browserUserEvent.keyboard('{Escape}');
-      await waitFor(() =>
-        expect(outer.open, 'outer closes on the second Escape').toBe(false)
-      );
-    });
-
-    await step(
-      'a click on the outer content dismisses only the inner',
-      async () => {
-        await openBoth();
-        const outerBody = outer.querySelector('#ndo-outer-body') as HTMLElement;
-        await browserUserEvent.click(outerBody);
-        await waitFor(() =>
-          expect(
-            inner.open,
-            'inner dismissed by a click inside the outer (its ancestor)'
-          ).toBe(false)
-        );
-        expect(outer.open, 'the clicked ancestor stays open').toBe(true);
-      }
-    );
-
-    await step('a click fully outside closes both', async () => {
-      // Reopen the inner (the previous step left the outer open, inner closed).
-      const innerTrigger = outer.querySelector(
-        '#ndo-inner-trigger'
-      ) as HTMLElement;
-      await browserUserEvent.click(innerTrigger);
-      await waitFor(() => expect(inner.open, 'inner reopened').toBe(true));
-      await browserUserEvent.click(away);
-      await waitFor(() =>
-        expect(outer.open, 'a click outside both closes the outer').toBe(false)
-      );
-      expect(inner.open, 'and the inner').toBe(false);
-    });
-  },
+  // Render-only fixture. Native nested light-dismiss ordering (Escape peels the topmost
+  // popover first; an ancestor click dismisses only descendants) needs trusted browser
+  // input, so the interaction and assertions live in popover.a11y.spec.ts (Playwright).
 };
 
 // ──────────────────────────────────────────────────────────────
@@ -1377,63 +1309,21 @@ export const ModalNestedEscapeTest: Story = {
 
 export const DefaultEscapeSourceTest: Story = {
   render: () => html`
-    <button id="des-trigger">Trigger</button>
+    <swc-button id="des-trigger">Trigger</swc-button>
     <swc-popover for="des-trigger">Content</swc-popover>
   `,
-  play: async ({ canvasElement }) => {
-    const popover = await getComponent<Popover>(canvasElement, 'swc-popover');
-    const trigger = canvasElement.querySelector('#des-trigger') as HTMLElement;
-    await popover.updateComplete;
-
-    let source: string | undefined;
-    popover.addEventListener(
-      'swc-close',
-      (event) => {
-        source = (event as CustomEvent<{ source: string }>).detail.source;
-      },
-      { once: true }
-    );
-
-    // Real (trusted) input: a genuine Escape fires the native popover
-    // light-dismiss, which a synthetic keydown could not, and labels the source.
-    await browserUserEvent.click(trigger);
-    await waitFor(() => expect(popover.open, 'open on click').toBe(true));
-    await browserUserEvent.keyboard('{Escape}');
-    await waitFor(() => expect(popover.open, 'Escape closes it').toBe(false));
-    expect(source, 'close source is escape').toBe('escape');
-  },
+  // Render-only fixture. Native Escape light-dismiss needs trusted browser input, so the
+  // interaction and close-source assertion live in popover.a11y.spec.ts (Playwright).
 };
 
 export const DefaultOutsideClickSourceTest: Story = {
   render: () => html`
-    <button id="docs-trigger">Trigger</button>
-    <button id="docs-outside">Outside</button>
+    <swc-button id="docs-trigger">Trigger</swc-button>
+    <swc-button id="docs-outside">Outside</swc-button>
     <swc-popover for="docs-trigger">Content</swc-popover>
   `,
-  play: async ({ canvasElement }) => {
-    const popover = await getComponent<Popover>(canvasElement, 'swc-popover');
-    const trigger = canvasElement.querySelector('#docs-trigger') as HTMLElement;
-    const outside = canvasElement.querySelector('#docs-outside') as HTMLElement;
-    await popover.updateComplete;
-
-    let source: string | undefined;
-    popover.addEventListener(
-      'swc-close',
-      (event) => {
-        source = (event as CustomEvent<{ source: string }>).detail.source;
-      },
-      { once: true }
-    );
-
-    // A trusted click outside the popover triggers native light-dismiss.
-    await browserUserEvent.click(trigger);
-    await waitFor(() => expect(popover.open, 'open on click').toBe(true));
-    await browserUserEvent.click(outside);
-    await waitFor(() =>
-      expect(popover.open, 'an outside click closes it').toBe(false)
-    );
-    expect(source, 'close source is outside').toBe('outside');
-  },
+  // Render-only fixture. Native outside-click light-dismiss needs trusted browser input, so
+  // the interaction and close-source assertion live in popover.a11y.spec.ts (Playwright).
 };
 
 export const ProgrammaticCloseSourceTest: Story = {
@@ -1468,39 +1358,13 @@ export const ProgrammaticCloseSourceTest: Story = {
 
 export const ModalEscapeSourceTest: Story = {
   render: () => html`
-    <button id="mes-trigger">Trigger</button>
+    <swc-button id="mes-trigger">Trigger</swc-button>
     <swc-popover for="mes-trigger" modal accessible-label="Settings">
       Content
     </swc-popover>
   `,
-  play: async ({ canvasElement }) => {
-    const popover = await getComponent<Popover>(canvasElement, 'swc-popover');
-    const trigger = canvasElement.querySelector('#mes-trigger') as HTMLElement;
-    const dialog = popover.shadowRoot?.querySelector(
-      '.swc-Popover'
-    ) as HTMLDialogElement;
-    await popover.updateComplete;
-
-    let source: string | undefined;
-    popover.addEventListener(
-      'swc-close',
-      (event) => {
-        source = (event as CustomEvent<{ source: string }>).detail.source;
-      },
-      { once: true }
-    );
-
-    // Real Escape fires the native `<dialog>` cancel/close on the topmost modal.
-    await browserUserEvent.click(trigger);
-    await waitFor(() =>
-      expect(dialog.matches(':modal'), 'modal open').toBe(true)
-    );
-    await browserUserEvent.keyboard('{Escape}');
-    await waitFor(() =>
-      expect(popover.open, 'Escape closes the modal').toBe(false)
-    );
-    expect(source, 'close source is escape').toBe('escape');
-  },
+  // Render-only fixture. Native `<dialog>` Escape (cancel) needs trusted browser input, so
+  // the interaction and close-source assertion live in popover.a11y.spec.ts (Playwright).
 };
 
 export const SequentialPopoversTest: Story = {
