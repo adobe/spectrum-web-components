@@ -83,6 +83,9 @@ export const StatusApiTest: Story = {
 
     await step('status reflects to the host attribute', async () => {
       expect(el.status).toBe('pending');
+      expect(el.shadowRoot?.querySelector('[role="status"]')).toBeTruthy();
+      expect(el.shadowRoot?.querySelector('[aria-expanded]')).toBeNull();
+      expect(el.shadowRoot?.querySelector('[aria-controls]')).toBeNull();
 
       el.status = 'complete';
       await el.updateComplete;

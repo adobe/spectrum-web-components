@@ -44,10 +44,11 @@ test.describe('ResponseStatus - ARIA Snapshots', () => {
       'patterns-conversational-ai-response-status--statuses',
       'swc-response-status'
     );
-    await expect(root.locator('[role="status"]')).toHaveCount(0);
-    await expect(root.locator('.swc-ResponseStatus-label').first()).toHaveText(
-      'Processing request'
-    );
+    const status = root.locator('[role="status"]').first();
+    await expect(status).toHaveText('Processing request');
+    const pendingStatus = root.locator('swc-response-status').first();
+    await expect(pendingStatus.locator('[aria-expanded]')).toHaveCount(0);
+    await expect(pendingStatus.locator('[aria-controls]')).toHaveCount(0);
   });
 
   test('should expose active disclosure with expanded step timeline', async ({

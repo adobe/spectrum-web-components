@@ -543,6 +543,10 @@ export class ResponseStatus extends SpectrumElement {
 
   private _renderHeader(showDisclosure: boolean): TemplateResult {
     const label = this._currentVisibleLabel();
+    const statusRole =
+      !showDisclosure && (this.status === 'pending' || this.status === 'active')
+        ? 'status'
+        : undefined;
     const rowClass = [
       'swc-ResponseStatus-row',
       showDisclosure ? 'swc-ResponseStatus-row--button' : '',
@@ -575,7 +579,7 @@ export class ResponseStatus extends SpectrumElement {
     }
 
     return html`
-      <div class=${rowClass}>${rowContent}</div>
+      <div class=${rowClass} role=${ifDefined(statusRole)}>${rowContent}</div>
     `;
   }
 
