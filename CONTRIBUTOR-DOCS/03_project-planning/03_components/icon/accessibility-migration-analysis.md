@@ -13,14 +13,15 @@
 
 - [Overview](#overview)
     - [Also read](#also-read)
-    - [What an icon is](#what-an-icon-is)
+    - [The generic frame (`swc-icon`)](#the-generic-frame-swc-icon)
+    - [Per-icon workflow elements](#per-icon-workflow-elements)
     - [What it is not](#what-it-is-not)
     - [Related](#related)
 - [ARIA and WCAG context](#aria-and-wcag-context)
     - [Pattern in the APG](#pattern-in-the-apg)
     - [Guidelines that apply](#guidelines-that-apply)
 - [Related 1st-gen accessibility (Jira)](#related-1st-gen-accessibility-jira)
-- [Recommendations: `<swc-icon>`](#recommendations-swc-icon)
+- [Recommendations: `<swc-icon>` and workflow icons](#recommendations-swc-icon-and-workflow-icons)
     - [ARIA roles, states, and properties](#aria-roles-states-and-properties)
     - [Shadow DOM and cross-root ARIA Issues](#shadow-dom-and-cross-root-aria-issues)
     - [Accessibility tree expectations](#accessibility-tree-expectations)
@@ -37,31 +38,36 @@
 
 ## Overview
 
-This document covers the accessibility requirements and recommendations for **`<swc-icon>`**, the 2nd-gen generic SVG wrapper frame. The target standard is **WCAG 2.2 Level AA**.
-
-`<swc-icon>` accepts an SVG in its default slot and controls whether that SVG is exposed to assistive technology (meaningful) or hidden from it (decorative). Per-icon workflow elements such as `<swc-icon-star>` extend the same base class (`IconBase`) and inherit the same accessibility behavior.
+This document covers the accessibility requirements and recommendations for **`<swc-icon>`** (the generic SVG frame) and **per-icon workflow elements** such as `<swc-icon-star>`. Both are built on `IconBase` and share identical ARIA behavior. The target standard is **WCAG 2.2 Level AA**.
 
 ### Also read
 
 [Icon migration roadmap](./rendering-and-styling-migration-analysis.md) for layout, CSS, and DOM changes.
 
-### What an icon is
+### The generic frame (`swc-icon`)
 
-`<swc-icon>` is a **non-interactive SVG wrapper**. It operates in one of two modes:
+`<swc-icon>` accepts an SVG in its default slot and controls whether that SVG is exposed to assistive technology or hidden from it:
 
 - **Decorative** (no `label`): the common case. The icon is inside an already-labeled control such as a button or menu item. Both host and SVG receive `aria-hidden="true"` so the icon does not generate a duplicate announcement.
 - **Meaningful** (with `label`): the icon stands alone as content. The slotted SVG is exposed as an image with the `label` value as its accessible name.
 
+### Per-icon workflow elements
+
+Per-icon workflow elements (`<swc-icon-star>`, `<swc-icon-folder>`, etc.) extend `IconBase` and bake their SVG content in during element definition rather than accepting it via slot. From an accessibility standpoint, the behavior is identical to `<swc-icon>`:
+
+- `label` absent → decorative, both host and SVG are hidden.
+- `label` present → meaningful, SVG exposes as `img` with the label as its accessible name.
+
+One authoring difference matters for accessibility: **the element tag name describes shape, not function.** `<swc-icon-star>` tells the browser what shape to render; it says nothing about why the icon is there. The `label` must describe the function in context — `label="Add to favorites"`, not `label="Star"`. Decorative use (inside a labeled button) requires no `label` at all.
+
 ### What it is not
 
-- A button, link, or interactive element. To add click behavior to an icon, wrap it in `<swc-button>` or another interactive control; do not add event listeners directly to `<swc-icon>`.
-- A font icon or CSS pseudo-element. It renders real SVG markup.
-- A replacement for per-icon workflow elements (`<swc-icon-star>`, etc.), which are the preferred approach for Spectrum workflow icons and extend the same base class.
+- A button, link, or interactive element. To add click behavior to an icon, wrap it in `<swc-button>` or another interactive control; do not add event listeners directly to `<swc-icon>` or a per-icon workflow element.
+- A font icon or CSS pseudo-element. Both element types render real SVG markup.
 
 ### Related
 
-- **Per-icon workflow elements** (`<swc-icon-star>`, etc.): generated wrappers that share `IconBase`; accessibility behavior is identical to `<swc-icon>`.
-- **UI icon functions** (internal): consumed directly by components such as `<swc-button>` and `<swc-menu-item>`; not slotted by authors.
+- **UI icon functions** (internal): consumed directly by components such as `<swc-button>` and `<swc-menu-item>`; not used by authors. Accessibility is component-controlled.
 
 ---
 
@@ -84,7 +90,7 @@ The [APG](https://www.w3.org/WAI/ARIA/apg/) does not define a named pattern for 
 | [Contrast — minimum (WCAG 1.4.3)](https://www.w3.org/TR/WCAG22/#contrast-minimum) | Text rendered inside SVG must meet 4.5:1 against its background. |
 | [Non-text contrast (WCAG 1.4.11)](https://www.w3.org/TR/WCAG22/#non-text-contrast) | The icon fill must meet 3:1 contrast against the adjacent background for UI components. |
 
-**Bottom line:** Every `<swc-icon>` is either explicitly decorative (hidden) or explicitly meaningful (named). Leaving `label` empty when an icon is the sole communication of meaning is an author error that fails WCAG 1.1.1.
+**Bottom line:** Every icon element — `<swc-icon>` or a per-icon workflow element — is either explicitly decorative (hidden) or explicitly meaningful (named). Leaving `label` empty when an icon is the sole communication of meaning is an author error that fails WCAG 1.1.1.
 
 ---
 
@@ -97,20 +103,22 @@ The [APG](https://www.w3.org/WAI/ARIA/apg/) does not define a named pattern for 
 
 ---
 
-## Recommendations: `<swc-icon>`
+## Recommendations: `<swc-icon>` and workflow icons
 
 ### ARIA roles, states, and properties
 
 | Topic | What to do |
 |-------|------------|
-| **One semantic role** | `<swc-icon>` represents one thing: a static SVG image or a decorative glyph. **Do not** set `role="button"`, `role="link"`, or any interactive role on the host. For icon buttons, wrap `<swc-icon>` inside `<swc-button>` or a native `<button>`. |
-| **Host element role** | The host carries no explicit ARIA role; it is a transparent custom-element container. The slotted SVG in the light DOM is the semantic anchor for meaningful icons. This implementation differs from the RFC's stated "host owns semantics" intent: `role="img"` and `aria-label` are applied to the SVG rather than the host. Both approaches produce a correct accessibility tree; the SVG-centric approach avoids needing a separate step to hide the SVG when the host carries the role. The ARIA snapshot confirms the correct outcome: `img "Search"`. |
-| **Decorative (no `label`)** | `updateHostAccessibility()` sets `aria-hidden="true"` on the host. `updateSlottedIcon()` sets `aria-hidden="true"` on the SVG and removes `aria-label`. Both are hidden. This is the default and the common case. |
+| **One semantic role** | Both `<swc-icon>` and per-icon workflow elements represent one thing: a static SVG image or a decorative glyph. **Do not** set `role="button"`, `role="link"`, or any interactive role on the host. For icon buttons, wrap inside `<swc-button>` or a native `<button>`. |
+| **Host element role** | The host carries no explicit ARIA role; it is a transparent custom-element container. The SVG is the semantic anchor for meaningful icons. This differs from the RFC's stated "host owns semantics" intent: `role="img"` and `aria-label` are applied to the SVG rather than the host. Both approaches produce a correct accessibility tree; the SVG-centric approach avoids needing a separate step to hide the SVG. The ARIA snapshot confirms the correct outcome: `img "Search"`. |
+| **Decorative (no `label`)** | `updateHostAccessibility()` sets `aria-hidden="true"` on the host. `updateSlottedIcon()` sets `aria-hidden="true"` on the SVG and removes `aria-label`. Both are hidden. This is the default and the most common case. |
 | **Meaningful (with `label`)** | `updateSlottedIcon()` sets `role="img"` and `aria-label` equal to the `label` value on the SVG, then removes `aria-hidden` from the SVG. `updateHostAccessibility()` removes `aria-hidden` from the host. The host becomes a transparent container; the SVG carries the role and name. |
-| **Label is authoritative** | `updateSlottedIcon()` overwrites whatever ARIA attributes the slotted SVG already carries. If an icon function emits its own `aria-label` or `role`, the frame replaces them with the host's `label` value (or hides them when `label` is empty). This resolves the RFC's "A11y suppression mechanism" open question via overwrite-on-slot. |
+| **Label is authoritative** | `updateSlottedIcon()` overwrites whatever ARIA attributes the SVG already carries. If an icon function emits its own `aria-label` or `role`, the frame replaces them with the host's `label` value (or hides them when `label` is empty). This resolves the RFC's "A11y suppression mechanism" open question via overwrite-on-slot. |
+| **Per-icon element SVG source** | Per-icon workflow elements bake their SVG during element definition rather than accepting it via slot. `updateSlottedIcon()` still runs via `firstUpdated`, so the same ARIA attributes are applied to the baked SVG. No separate handling is needed. |
+| **Workflow icon label content** | The element tag name describes shape, not function. `<swc-icon-star>` says nothing about why the icon is present. When the icon is meaningful, `label` must describe the function in context: `label="Add to favorites"`, not `label="Star"`. When the icon is decorative (inside a labeled button), omit `label` entirely. |
 | **`size`** | Visual only. Not mapped to any ARIA state or property. |
 | **CSS custom properties** | `--swc-icon-color`, `--swc-icon-inline-size`, `--swc-icon-block-size` are visual only. No ARIA mapping. |
-| **Docs expectation** | Document that `label` is required when `<swc-icon>` is used as standalone content. Document that `size` and color properties carry no ARIA meaning. Do not list Tab, Space, or Enter as valid icon keys. |
+| **Docs expectation** | Document that `label` is required when any icon element is used as standalone content, and that `label` should describe function in context, not icon shape. Document that `size` and color properties carry no ARIA meaning. Do not list Tab, Space, or Enter as valid icon keys. |
 
 ### Shadow DOM and cross-root ARIA Issues
 
@@ -120,21 +128,21 @@ None. The slotted SVG is in the light DOM. ARIA attributes are set directly on i
 
 **Decorative icon (no `label`)**
 
-Host has `aria-hidden="true"` and is not in the accessibility tree. The SVG also has `aria-hidden="true"`. Assistive technology sees nothing for this element.
+Host has `aria-hidden="true"` and is not in the accessibility tree. The SVG also has `aria-hidden="true"`. Assistive technology sees nothing for this element. Applies to both `<swc-icon>` and per-icon workflow elements.
 
-**Meaningful icon (with `label`)**
+**Meaningful `<swc-icon>` (with `label`)**
 
 Host has no `aria-hidden` and no explicit role; it is a transparent container. The SVG has `role="img"` and `aria-label="<label value>"`. Assistive technology announces the image node with the label.
 
 Confirmed by `icon.a11y.spec.ts`:
 
-```
+```text
 - img "Search"
 ```
 
 **Sizes story (`icon.a11y.spec.ts`):**
 
-```
+```text
 - img "Extra-small"
 - img "Small"
 - img "Medium"
@@ -142,9 +150,25 @@ Confirmed by `icon.a11y.spec.ts`:
 - img "Extra-large"
 ```
 
+**Meaningful workflow icon (with `label`)**
+
+Per-icon workflow elements produce the same tree shape. The baked SVG carries `role="img"` and `aria-label` via `updateSlottedIcon()`.
+
+Expected for `<swc-icon-star label="Add to favorites">`:
+
+```text
+- img "Add to favorites"
+```
+
+Expected for `<swc-icon-folder label="Open project">`:
+
+```text
+- img "Open project"
+```
+
 **Icon inside a labeled control (most common case)**
 
-When `<swc-icon>` is slotted inside a `<swc-button label="Close">`, the button owns the accessible name. The icon should have no `label` (decorative); the button label covers the announcement. Setting a `label` on the icon here produces redundant speech.
+When any icon element is slotted inside a `<swc-button label="Close">`, the button owns the accessible name. The icon should have no `label` (decorative); the button label covers the announcement. Setting a `label` on the icon here produces redundant speech.
 
 ### Keyboard and focus
 
@@ -158,10 +182,11 @@ When `<swc-icon>` is slotted inside a `<swc-button label="Close">`, the button o
 
 | Kind of test | What to check |
 |--------------|---------------|
-| **Unit (Storybook play functions)** | `SlottedSvgAccessibilityTest`: slotted SVG has `role="img"` and `aria-label` matching `label`. `NoLabelAriaHiddenTest`: both host and SVG have `aria-hidden="true"` when `label` is empty. `LabelTogglingTest`: ARIA attributes update correctly when `label` changes at runtime. |
-| **Playwright ARIA snapshots (`icon.a11y.spec.ts`)** | Labeled icons expose as `img "<label text>"`. Sizes story: each icon exposes with its size-appropriate label. |
-| **aXe + Storybook test-runner** | WCAG 2.x rules on icon stories. Decorative-only story instances must include a `label` to avoid name-required violations, or the story must be scoped to a context where the icon is already inside a labeled parent. |
-| **Color contrast** | Icon fill meets 3:1 against background per WCAG 1.4.11. Verify across semantic color variants and static-color stories. |
+| **Unit (Storybook play functions, `swc-icon`)** | `SlottedSvgAccessibilityTest`: slotted SVG has `role="img"` and `aria-label` matching `label`. `NoLabelAriaHiddenTest`: both host and SVG have `aria-hidden="true"` when `label` is empty. `LabelTogglingTest`: ARIA attributes update correctly when `label` changes at runtime. |
+| **Unit (Storybook play functions, workflow icons)** | Per-icon elements follow the same pattern. Verify that the baked SVG receives `role="img"` and `aria-label` when `label` is set, and `aria-hidden="true"` when `label` is empty. |
+| **Playwright ARIA snapshots (`icon.a11y.spec.ts`)** | `<swc-icon>` labeled stories expose as `img "<label text>"`. Sizes story: each size exposes with its label. Workflow icon stories: each labeled element exposes as `img` with the function-describing label (not the shape name). |
+| **aXe + Storybook test-runner** | WCAG 2.x rules on all icon stories. Decorative-only instances must be inside a labeled parent; standalone icons must have `label` set. |
+| **Color contrast** | Icon fill meets 3:1 against background per WCAG 1.4.11. Verify across color variants and static-color stories for both `<swc-icon>` and workflow icon stories. |
 
 ### Manual screen reader testing
 
@@ -173,16 +198,17 @@ See the **Browse mode (document/scan mode)** section of the [2nd-gen Storybook s
 
 ## Summary checklist
 
-- [ ] Decorative icons (no `label`) have `aria-hidden="true"` on both host and SVG.
-- [ ] Meaningful icons (`label` set) expose the slotted SVG as `img "<label value>"` in the accessibility tree.
+- [ ] Decorative icons (no `label`) have `aria-hidden="true"` on both host and SVG — applies to `<swc-icon>` and all per-icon workflow elements.
+- [ ] Meaningful icons (`label` set) expose the SVG as `img "<label value>"` in the accessibility tree.
 - [ ] `label` changes at runtime update ARIA attributes on both host and SVG correctly.
-- [ ] No ARIA role is set on the host; `role="img"` lives on the slotted SVG in the light DOM.
-- [ ] `<swc-icon>` is not in the Tab order; focus moves to the next focusable element.
+- [ ] No ARIA role is set on the host; `role="img"` lives on the SVG (light DOM for `<swc-icon>`, baked SVG for per-icon elements).
+- [ ] Icon elements are not in the Tab order; focus moves to the next focusable element.
 - [ ] `size` and CSS custom properties are documented as visual-only (no ARIA mapping).
-- [ ] ARIA snapshot tests (`icon.a11y.spec.ts`) cover labeled icons in the overview, anatomy, and sizes stories.
+- [ ] Workflow icon `label` values describe function in context (`"Add to favorites"`), not icon shape (`"Star"`); this is documented for authors.
+- [ ] ARIA snapshot tests (`icon.a11y.spec.ts`) cover labeled `<swc-icon>` stories (overview, anatomy, sizes).
+- [ ] ARIA snapshot tests for per-icon workflow elements verify `img "<function-label>"` for each labeled story.
 - [ ] Manual screen reader testing uses browse mode per the Storybook guide.
-- [ ] aXe runs on icon stories; all story instances either include a `label` or are inside a labeled parent.
-- [ ] Per-icon workflow elements (`<swc-icon-star>`, etc.) share `IconBase` and are covered by the same test assertions.
+- [ ] aXe runs on all icon stories; every standalone icon instance has a `label`, or is inside a labeled parent.
 
 ---
 
