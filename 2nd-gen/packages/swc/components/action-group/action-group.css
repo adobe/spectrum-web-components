@@ -10,4 +10,119 @@
  * governing permissions and limitations under the License.
  */
 
-/* Styles migrated in Phase 5. */
+/* ── Host ─────────────────────────────────────────── */
+
+:host {
+  display: inline-flex;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* ── Base component ───────────────────────────────── */
+
+.swc-ActionGroup {
+  --_swc-action-group-gap: var(--swc-action-group-gap, token("spacing-100"));
+
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--_swc-action-group-gap);
+  inline-size: 100%;
+}
+
+::slotted(*) {
+  flex-shrink: 0;
+}
+
+/* ── Orientation ──────────────────────────────────── */
+
+:host([orientation="vertical"]) .swc-ActionGroup {
+  flex-direction: column;
+}
+
+/* ── Sizes ────────────────────────────────────────── */
+
+:host([size="xs"]),
+:host([size="s"]) {
+  --swc-action-group-gap: token("spacing-75");
+}
+
+/* ── Justified ────────────────────────────────────── */
+
+:host([justified]) ::slotted(*) {
+  flex: 1 1 0%;
+}
+
+/* ── Compact ──────────────────────────────────────── */
+
+:host([compact]:not([quiet])) .swc-ActionGroup {
+  gap: 0;
+}
+
+:host([compact]:not([quiet], [orientation="vertical"])) .swc-ActionGroup {
+  flex-wrap: nowrap;
+}
+
+:host([compact]:not([quiet])) ::slotted(*) {
+  position: relative;
+  z-index: 0;
+}
+
+:host([compact]:not([quiet])) ::slotted(:hover) {
+  z-index: 1;
+}
+
+/* `:focus-visible` does not retarget through `delegatesFocus` in Chromium —
+   only `:focus`/`:focus-within` do — so `:focus-within` is used here even
+   though the visual ring itself is still gated by `:focus-visible` inside
+   action-button's own shadow root. */
+:host([compact]:not([quiet])) ::slotted(:focus-within) {
+  z-index: 2;
+}
+
+/* Horizontal: adjacent buttons share the inline edge between them. */
+
+:host([compact]:not([quiet], [orientation="vertical"])) ::slotted(:not(:first-child)) {
+  margin-inline-start: calc(-1 * token("border-width-100"));
+}
+
+:host([compact]:not([quiet], [orientation="vertical"])) ::slotted(:first-child:not(:last-child)) {
+  --swc-action-button-border-start-end-radius: 0;
+  --swc-action-button-border-end-end-radius: 0;
+}
+
+:host([compact]:not([quiet], [orientation="vertical"])) ::slotted(:last-child:not(:first-child)) {
+  --swc-action-button-border-start-start-radius: 0;
+  --swc-action-button-border-end-start-radius: 0;
+}
+
+:host([compact]:not([quiet], [orientation="vertical"])) ::slotted(:not(:first-child, :last-child)) {
+  --swc-action-button-border-start-start-radius: 0;
+  --swc-action-button-border-start-end-radius: 0;
+  --swc-action-button-border-end-start-radius: 0;
+  --swc-action-button-border-end-end-radius: 0;
+}
+
+/* Vertical: adjacent buttons share the block edge between them. */
+
+:host([compact]:not([quiet])[orientation="vertical"]) ::slotted(:not(:first-child)) {
+  margin-block-start: calc(-1 * token("border-width-100"));
+}
+
+:host([compact]:not([quiet])[orientation="vertical"]) ::slotted(:first-child:not(:last-child)) {
+  --swc-action-button-border-end-start-radius: 0;
+  --swc-action-button-border-end-end-radius: 0;
+}
+
+:host([compact]:not([quiet])[orientation="vertical"]) ::slotted(:last-child:not(:first-child)) {
+  --swc-action-button-border-start-start-radius: 0;
+  --swc-action-button-border-start-end-radius: 0;
+}
+
+:host([compact]:not([quiet])[orientation="vertical"]) ::slotted(:not(:first-child, :last-child)) {
+  --swc-action-button-border-start-start-radius: 0;
+  --swc-action-button-border-start-end-radius: 0;
+  --swc-action-button-border-end-start-radius: 0;
+  --swc-action-button-border-end-end-radius: 0;
+}
