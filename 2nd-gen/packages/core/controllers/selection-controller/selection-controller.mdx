@@ -9,9 +9,15 @@ import * as Stories from './stories/selection-controller.stories';
 
 <DocsHeader />
 
-## Usage
+## What it does
 
-`SelectionController` handles click and keyboard selection for a group of sibling elements so consuming components don't hand-roll it themselves. It owns capture-phase `click` (and, optionally, Enter/Space `keydown`) on its host, keeps an internal cache of what's currently selected, and applies one of three selection modes: `single`, `single-toggle`, or `multiple`.
+`SelectionController` handles click and keyboard selection for a group of sibling elements so consuming components don't hand-roll it themselves.
+
+- **Owns interaction** — capture-phase `click` on its host, plus capture-phase Enter/Space `keydown` when `keydownActivation` is `true`.
+- **Three selection modes** — `single` (one item, re-click has no effect), `single-toggle` (one item, re-click clears it), `multiple` (any number, clicks toggle independently).
+- **Internal cache as source of truth** — the only thing that ever changes what's selected, so the cache never drifts.
+- **Vetoable transitions** — `confirmSelectionChange` runs after mutators have already applied, so a consumer's own cancelable event sees the new state; returning `false` reverts everything.
+- **Guaranteed selection when required** — `defaultToFirstSelectable` asserts a first pick after `refresh()` so a mandatory single-select group is never left empty.
 
 ### When to use this controller
 
@@ -32,7 +38,7 @@ For that second case, use `LiveSelectionController` instead (tracked separately;
 
 `SelectionController` does not implement roving `tabindex` or arrow-key navigation. Pair it with [`FocusgroupNavigationController`](../?path=/docs/controllers-focusgroup-navigation-controller--docs) when the group also needs arrow keys, Home/End, or focus memory — see the [Tablist pattern](#tablist-pattern) behavior below.
 
-### Basic usage
+## Basic usage
 
 1. Construct the controller in the host's constructor, supplying `getItems`, `selectItem`, and `deselectItem`.
 2. Call `refresh()` once the item list is available (for example in `firstUpdated()`, or after a `slotchange`).
@@ -160,5 +166,11 @@ Every method above accepts `{ silent: true }` to commit the transition without i
 | `confirmSelectionChange`   | `(detail: SelectionControllerConfirmDetail) => boolean` | Vetoable hook, called after mutators have already run. Return `false` to revert. Not called for silent or internally-forced transitions. |
 | `isDisabled`               | `(item: HTMLElement) => boolean`                        | Overrides the built-in disabled check.                                                                                                   |
 | `isSelectable`             | `(item: HTMLElement) => boolean`                        | Overrides the whole eligibility check (connected, not `inert`/`hidden`/disabled, CSS-visible).                                           |
+
+## Appendix
+
+- [`FocusgroupNavigationController`](../?path=/docs/controllers-focusgroup-navigation-controller--docs) — pair for roving `tabindex` and arrow-key navigation; see the [Tablist pattern](#tablist-pattern) behavior above.
+- `LiveSelectionController` (tracked separately) — the counterpart for self-owning items; see "When to use this controller" above.
+- `<swc-tabs>` uses this controller internally for click, Enter/Space, and `selected`-property bookkeeping.
 
 <DocsFooter />
