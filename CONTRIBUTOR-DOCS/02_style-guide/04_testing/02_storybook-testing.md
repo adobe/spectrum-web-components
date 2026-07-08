@@ -561,17 +561,21 @@ test('Escape closes the popover (native light-dismiss)', async ({ page }) => {
 });
 ```
 
-To assert a custom event's detail (for example a close-source) from Playwright, attach the listener in the page and read it back:
+To assert a component custom event's detail from Playwright, first confirm that the component's event contract includes that detail. For example, a popover close event documented as `CustomEvent<{ source: string }>` can be captured in the page and read back:
 
 ```typescript
 await page.evaluate(() => {
-  document
-    .querySelector('swc-popover')
-    ?.addEventListener('swc-close', (event) => {
-      (window as Window & { __closeSource?: string }).__closeSource = (
-        event as CustomEvent<{ source: string }>
-      ).detail.source;
-    });
+  const popover = document.querySelector('swc-popover');
+
+  if (!popover) {
+    throw new Error('swc-popover not found.');
+  }
+
+  popover.addEventListener('swc-close', (event) => {
+    (window as Window & { __closeSource?: string }).__closeSource = (
+      event as CustomEvent<{ source: string }>
+    ).detail.source;
+  });
 });
 // ... drive the interaction ...
 const source = await page.evaluate(
@@ -579,4 +583,4 @@ const source = await page.evaluate(
 );
 ```
 
-> A quick way to confirm which input you have: assert `event.isTrusted` inside a listener. `@storybook/test`'s `userEvent` yields `false` (synthetic); Playwright input yields `true` (trusted).
+> A quick way to confirm which input you have: assert `event.isTrusted` on the native event you are testing, such as a `keydown` or `click` listener. `@storybook/test`'s `userEvent` yields `false` (synthetic); Playwright input yields `true` (trusted). Component-dispatched custom events are created by JavaScript and can still report `false`, even when trusted input caused them.
