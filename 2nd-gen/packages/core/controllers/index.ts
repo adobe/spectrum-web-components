@@ -44,3 +44,11 @@ export {
   type PlacementOptions,
   type VirtualTrigger,
 } from './placement-controller/index.js';
+export {
+  deepestSelectionItemContaining,
+  SelectionController,
+  type SelectionControllerChangeDetail,
+  type SelectionControllerConfirmDetail,
+  type SelectionControllerOptions,
+  type SelectionMode,
+} from './selection-controller/index.js';

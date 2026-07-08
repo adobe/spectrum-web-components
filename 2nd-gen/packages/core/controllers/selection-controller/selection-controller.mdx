@@ -1,0 +1,164 @@
+{/* Copyright 2026 Adobe. All rights reserved. This file is licensed to you under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License. */}
+
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import { DocsFooter, DocsHeader } from '../../../swc/.storybook/blocks';
+
+import * as Stories from './stories/selection-controller.stories';
+
+<Meta of={Stories} />
+
+<DocsHeader />
+
+## Usage
+
+`SelectionController` handles click and keyboard selection for a group of sibling elements so consuming components don't hand-roll it themselves. It owns capture-phase `click` (and, optionally, Enter/Space `keydown`) on its host, keeps an internal cache of what's currently selected, and applies one of three selection modes: `single`, `single-toggle`, or `multiple`.
+
+### When to use this controller
+
+Use `SelectionController` when a group of items should act like a set of buttons: a user clicks one, and this controller decides what "selected" means for the group.
+
+Good fits: tabs, radio buttons, a row of view-switcher buttons where only one can be pressed, a set of filter chips where several can be pressed at once.
+
+What makes these a good fit: none of the items ever change themselves. A tab does not decide on its own that it is selected — this controller decides that, and tells the tab. Because this controller is the only thing that ever changes the selection, it can keep a simple internal list of "what's selected right now" and trust that list completely.
+
+Do **not** use this controller when an item can change itself without being told to. The clearest example is an accordion: each panel has its own `open` switch, and a panel can flip that switch on its own, from its own click handler, before this controller ever finds out. If this controller kept its own list of "what's open" for a case like that, the list could get out of sync with what the panels actually show — for example, if a panel already closed itself, but this controller's list still thinks it's open.
+
+For that second case, use `LiveSelectionController` instead (tracked separately; not part of this controller's package). Instead of keeping its own list, it reads the truth straight from the items every time it needs to know what's selected, so there is no list that can go stale. It is built for accordions, menus, and pickers, where items are allowed to manage their own state.
+
+| If your items...                                                                                                                                                | Use                               |
+| --------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------- |
+| Only change because this controller told them to (a plain button, a tab, a radio)                                                                               | `SelectionController` (this page) |
+| Can change themselves on their own, independent of this controller (an accordion panel with its own `open` property, a menu item with its own `selected` state) | `LiveSelectionController`         |
+
+`SelectionController` does not implement roving `tabindex` or arrow-key navigation. Pair it with [`FocusgroupNavigationController`](../?path=/docs/controllers-focusgroup-navigation-controller--docs) when the group also needs arrow keys, Home/End, or focus memory — see the [Tablist pattern](#tablist-pattern) behavior below.
+
+### Basic usage
+
+1. Construct the controller in the host's constructor, supplying `getItems`, `selectItem`, and `deselectItem`.
+2. Call `refresh()` once the item list is available (for example in `firstUpdated()`, or after a `slotchange`).
+3. Read the current selection via `getSelectedItems()` / `isSelected()`, or mirror it into a host property from `onSelectionChange`.
+
+```typescript
+import { LitElement, type TemplateResult } from 'lit';
+import { html } from 'lit';
+import { SelectionController } from '@spectrum-web-components/core/controllers/selection-controller.js';
+
+class ViewSwitcher extends LitElement {
+  private readonly selection = new SelectionController(this, {
+    getItems: () =>
+      Array.from(this.renderRoot.querySelectorAll<HTMLElement>('[data-view]')),
+    selectItem: (item) => item.setAttribute('aria-checked', 'true'),
+    deselectItem: (item) => item.setAttribute('aria-checked', 'false'),
+    mode: 'single',
+    defaultToFirstSelectable: true,
+    keydownActivation: true,
+  });
+
+  protected override firstUpdated(): void {
+    this.selection.refresh();
+  }
+
+  protected override render(): TemplateResult {
+    return html`
+      <div role="radiogroup" aria-label="View">
+        <button type="button" data-view role="radio" aria-checked="false">
+          List
+        </button>
+        <button type="button" data-view role="radio" aria-checked="false">
+          Grid
+        </button>
+      </div>
+    `;
+  }
+}
+```
+
+## Options
+
+### Single mode
+
+The default mode: at most one item is selected, and clicking the already-selected item has no effect. Use this for a mandatory single choice, like tabs or a required radio group.
+
+<Canvas of={Stories.SingleMode} />
+
+### Single-toggle mode
+
+At most one item is selected, but clicking the active item deselects it — representing "no choice made." Use this for an optional single choice.
+
+<Canvas of={Stories.SingleToggleMode} />
+
+### Multiple mode
+
+Any number of items may be selected. Clicking an item toggles it independently of the others. `selectAll()` and `clearAll()` are only meaningful in this mode.
+
+<Canvas of={Stories.MultipleMode} />
+
+### Mode switching
+
+Call `setOptions({ mode })` at any time to switch modes without reconstructing the controller. Switching from `multiple` down to a single-item mode with more than one item selected automatically collapses the selection to the first selected item.
+
+<Canvas of={Stories.ModeSwitching} />
+
+## Behaviors
+
+### Tablist pattern
+
+Pairing `SelectionController` with `FocusgroupNavigationController` covers the common "tablist" composite: arrow keys move a roving `tabindex` (`FocusgroupNavigationController`'s job), and Enter/Space or a pointer click selects the focused or clicked tab (`SelectionController`'s job, via `keydownActivation: true`).
+
+The mutators and `onSelectionChange` mirror are applied _before_ `confirmSelectionChange` runs, so a consumer's own cancelable event — dispatched from inside `confirmSelectionChange`, as shown here — sees the newly selected tab's `aria-selected` and panel visibility already updated. Returning `false` from a `confirmSelectionChange` listener (calling `event.preventDefault()` on the dispatched event) reverts the transition back to the prior selection.
+
+<Canvas of={Stories.TablistPattern} />
+
+## Accessibility
+
+### Features
+
+`SelectionController` does not set ARIA attributes itself — `selectItem` / `deselectItem` are where a consumer applies whatever ARIA state fits the pattern (`aria-selected`, `aria-checked`, `aria-pressed`). What the controller does provide:
+
+1. **Eligibility checks before every transition** — a disconnected, `hidden`, `inert`, or disabled item can never become part of the selection, and a click or Enter/Space on one is ignored entirely.
+2. **Keyboard activation** — when `keydownActivation` is `true`, Enter and Space on a focused, eligible item select it using the same rules as a pointer click.
+3. **A guaranteed selection when required** — `defaultToFirstSelectable` asserts the first eligible item after `refresh()` when nothing is selected, so a mandatory single-select group is never left with no selection after mount or a structural change.
+
+### Best practices
+
+- Apply the ARIA attributes that match your pattern inside `selectItem` / `deselectItem` — this controller only decides _which_ items are selected, not how that's announced.
+- Pair with [`FocusgroupNavigationController`](../?path=/docs/controllers-focusgroup-navigation-controller--docs) for any group that also needs arrow-key focus movement; see the [Tablist pattern](#tablist-pattern) behavior above.
+- Use `single` mode for a mandatory choice (tabs, a required radio group) and `single-toggle` for an optional one.
+- Use `LiveSelectionController` instead when items can change their own selected-ish state independently of this controller — see "When to use this controller" above.
+
+<Canvas of={Stories.Accessibility} />
+
+## API
+
+### Methods
+
+| Member                                                                                | Description                                                                                                                                                     |
+| ------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `getSelectedItems(): HTMLElement[]`                                                   | Returns the current selection, ordered by insertion.                                                                                                            |
+| `isSelected(item: HTMLElement): boolean`                                              | Returns `true` when `item` is currently selected.                                                                                                               |
+| `getMode(): SelectionMode`                                                            | Returns the current selection mode.                                                                                                                             |
+| `setOptions(partial: Partial<SelectionControllerOptions>): void`                      | Merges option deltas and calls `refresh()`. Normalizes an over-selection when switching from `multiple` to a single-item mode.                                  |
+| `setSelectedItem(item: HTMLElement \| null, options?: { silent?: boolean }): boolean` | Asserts `item` as the selection (single-item modes) or adds it (multiple). `null` clears the selection; pass `{ silent: true }` to clear even in `single` mode. |
+| `toggleItem(item: HTMLElement, options?: { silent?: boolean }): boolean`              | Toggles `item` according to the current mode's rules.                                                                                                           |
+| `selectAll(options?: { silent?: boolean }): boolean`                                  | Selects every eligible item. Only meaningful in `multiple` mode.                                                                                                |
+| `clearAll(options?: { silent?: boolean }): boolean`                                   | Deselects every item. Rejected in `single` mode unless `{ silent: true }` is passed.                                                                            |
+| `refresh(options?: { silent?: boolean }): void`                                       | Removes stale selections, collapses an over-selected single-item mode, and asserts `defaultToFirstSelectable` when nothing is selected.                         |
+
+Every method above accepts `{ silent: true }` to commit the transition without invoking `confirmSelectionChange` — used to resync from an external property change without raising a vetoable transition. `onSelectionChange` still runs for a silent transition.
+
+### Constructor options (`SelectionControllerOptions`)
+
+| Option                     | Type                                                    | Description                                                                                                                              |
+| -------------------------- | ------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| `getItems`                 | `() => HTMLElement[]`                                   | Returns the current participant set.                                                                                                     |
+| `selectItem`               | `(item: HTMLElement) => void`                           | Applies selected-state DOM/ARIA to `item`.                                                                                               |
+| `deselectItem`             | `(item: HTMLElement) => void`                           | Removes selected-state DOM/ARIA from `item`.                                                                                             |
+| `mode`                     | `'single' \| 'single-toggle' \| 'multiple'`             | Selection behavior. Defaults to `'single'`.                                                                                              |
+| `defaultToFirstSelectable` | `boolean`                                               | Asserts the first eligible item after `refresh()` when nothing is selected. Single-item modes only. Defaults to `false`.                 |
+| `keydownActivation`        | `boolean`                                               | When `true`, Enter/Space on an eligible item activates it. Defaults to `false`.                                                          |
+| `onSelectionChange`        | `(detail: SelectionControllerChangeDetail) => void`     | Notification callback; this controller never dispatches a DOM event. Fires on every commit, including silent ones.                       |
+| `confirmSelectionChange`   | `(detail: SelectionControllerConfirmDetail) => boolean` | Vetoable hook, called after mutators have already run. Return `false` to revert. Not called for silent or internally-forced transitions. |
+| `isDisabled`               | `(item: HTMLElement) => boolean`                        | Overrides the built-in disabled check.                                                                                                   |
+| `isSelectable`             | `(item: HTMLElement) => boolean`                        | Overrides the whole eligibility check (connected, not `inert`/`hidden`/disabled, CSS-visible).                                           |
+
+<DocsFooter />
