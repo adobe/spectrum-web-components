@@ -19,22 +19,7 @@ The plan's architectural sections also govern **where each property and type lan
 
 **For each breaking change in the migration plan, you must add both `@deprecated` JSDoc and a `window.__swc.warn()` call to the 1st-gen file.** JSDoc alone is not enough — types and IDE tooling pick it up, but consumers building against compiled output won't see it. Restrict 1st-gen changes to these two things only: do not add new backing types, do not convert plain properties to getter/setter patterns, do not add new private fields.
 
-- For properties that already have a setter, add the warn inside the setter.
-- For plain `@property` fields without a setter, add the warn in the existing `updated()` lifecycle method using a `changes.has()` guard and a non-default value check to avoid false positives from property initialization:
-
-```typescript
-// In updated(changes: PropertyValues):
-if (changes.has('progress') && this.progress !== 0) {
-  if (window.__swc?.DEBUG) {
-    window.__swc.warn(
-      this,
-      `The "progress" property on <${this.localName}> has been deprecated. Use the "value" attribute instead.`,
-      'https://opensource.adobe.com/spectrum-web-components/components/progress-bar/',
-      { level: 'deprecation' }
-    );
-  }
-}
-```
+For where the warn goes — inside an existing setter, or in the `updated()` lifecycle method with a `changes.has()` guard and a non-default value check for a setter-less `@property` — follow the [Where to place the warning](../../../CONTRIBUTOR-DOCS/02_style-guide/02_typescript/17_debug-validation.md#where-to-place-the-warning) section of the debug and validation guide. The setter-less pattern matters here because Phase 3 does not allow converting a plain `@property` into a getter/setter just to host the warn, so `updated()` is its only home.
 
 After writing the deprecation notices, scan every `@deprecated` tag in the 1st-gen file and confirm a `__swc.warn()` call exists for each one before closing Phase 3. TypeScript TS6385 hints that arise from deprecated types referencing each other internally are an accepted side effect and do not require structural fixes.
 
@@ -45,11 +30,7 @@ After writing the deprecation notices, scan every `@deprecated` tag in the 1st-g
 - Do not add new class statics to 1st-gen just to provide this alternative — that is a refactor and out of scope.
 - For **renames**, note the new name in the JSDoc: "...will be replaced by `newName` in a future release."
 
-For the `window.__swc.warn()` call format and the `{ level: 'deprecation' }` option, follow the **Deprecation warnings** section of [`CONTRIBUTOR-DOCS/02_style-guide/02_typescript/17_debug-validation.md`](../../../CONTRIBUTOR-DOCS/02_style-guide/02_typescript/17_debug-validation.md). Key rules from that guide:
-
-- Use `{ level: 'deprecation' }` instead of `{ issues: [...] }`.
-- If a 1st-gen replacement exists, include `Use "newProp" instead.` at the end of the message. If there is no 1st-gen alternative, omit the "Use" clause.
-- Do not reference 2nd-gen APIs as replacements in runtime warn messages.
+For the `window.__swc.warn()` call format, the `{ level: 'deprecation' }` option, and the rules on referencing a replacement in the message, follow the **[Deprecation warnings](../../../CONTRIBUTOR-DOCS/02_style-guide/02_typescript/17_debug-validation.md#deprecation-warnings)** section of the debug and validation guide. Applying its replacement-reference rule to migration: reference the 1st-gen replacement if one exists, otherwise omit the "Use" clause — and never point a 1st-gen runtime warn at a 2nd-gen API, since consumers on the 1st-gen build cannot use it.
 
 ## When to use this skill
 

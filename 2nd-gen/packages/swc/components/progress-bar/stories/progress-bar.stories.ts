@@ -74,7 +74,8 @@ argTypes.value = {
  * completion time cannot be determined.
  *
  * For circular progress indicators, see
- * [Progress Circle](../?path=/docs/progress-circle--docs).
+ * [Progress Circle](../?path=/docs/components-progress-circle--docs) and for read-only
+ * values use [Meter](../?path=/docs/components-meter--docs).
  */
 const meta: Meta = {
   title: 'Progress Bar',

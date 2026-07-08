@@ -19,6 +19,8 @@
     - [connectedCallback() — Environment validation](#connectedcallback--environment-validation)
 - [Deprecation warnings](#deprecation-warnings)
     - [Deprecation warning structure](#deprecation-warning-structure)
+    - [Where to place the warning](#where-to-place-the-warning)
+    - [Referencing a replacement in the message](#referencing-a-replacement-in-the-message)
     - [Testing deprecation warnings](#testing-deprecation-warnings)
 - [Warning message format](#warning-message-format)
 
@@ -222,6 +224,8 @@ public override connectedCallback(): void {
 
 Use `{ level: 'deprecation' }` when a property or attribute has been superseded by a new API. This signals to consumers that they need to migrate, not just fix a configuration error.
 
+Every deprecated API needs a runtime warning, not only a `@deprecated` JSDoc tag. TypeScript and IDE tooling read the JSDoc, but consumers building against compiled output never see it. Pair each `@deprecated` tag with a `window.__swc.warn()` call so the deprecation also surfaces at runtime in development.
+
 **When to use deprecation warnings:**
 
 - A property is being replaced by a slot (consumer-owned HTML)
@@ -243,6 +247,51 @@ if (window.__swc?.DEBUG) {
   );
 }
 ```
+
+### Where to place the warning
+
+Place the warning where the deprecated API is actually used, guarded so it fires only when a consumer sets the deprecated value — never on default initialization.
+
+- **Property with a setter** — put the warning inside the setter, so it fires when the value is assigned:
+
+```ts
+public set overBackground(value: boolean) {
+  // ...existing setter work...
+  if (window.__swc?.DEBUG) {
+    window.__swc.warn(
+      this,
+      `The "over-background" attribute on <${this.localName}> has been deprecated and will be removed in a future release. Use "static-color='white'" instead.`,
+      'https://opensource.adobe.com/spectrum-web-components/components/progress-bar/',
+      { level: 'deprecation' }
+    );
+  }
+}
+```
+
+- **Plain `@property` field without a setter** — do not add a setter just to host the warning. Warn from the existing `updated()` lifecycle method, guarded by both a `changes.has()` check and a non-default value check so property initialization does not trigger a false positive:
+
+```ts
+protected override updated(changes: PropertyValues): void {
+  super.updated(changes);
+  if (window.__swc?.DEBUG) {
+    if (changes.has('progress') && this.progress !== 0) {
+      window.__swc.warn(
+        this,
+        `The "progress" property on <${this.localName}> has been deprecated and will be removed in a future release. Use the "value" attribute instead.`,
+        'https://opensource.adobe.com/spectrum-web-components/components/progress-bar/',
+        { level: 'deprecation' }
+      );
+    }
+  }
+}
+```
+
+The non-default guard (`this.progress !== 0`) is what keeps the warning honest: without it, the warning fires at construction on every instance, including consumers who never touched the deprecated property.
+
+### Referencing a replacement in the message
+
+- Include `Use "newProp" instead.` at the end of the message only when the replacement API ships in the same package the consumer already has. If there is no same-package alternative, omit the "Use" clause and end with `...will be removed in a future release.`
+- Do not point a runtime warning at an API from a different package or a newer major generation. A warning should only name a replacement that is available in the build that emitted it.
 
 ### Testing deprecation warnings
 
