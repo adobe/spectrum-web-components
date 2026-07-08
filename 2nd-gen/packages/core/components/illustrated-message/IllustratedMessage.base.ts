@@ -11,9 +11,10 @@
  */
 
 import { PropertyValues } from 'lit';
-import { property, state } from 'lit/decorators.js';
+import { property } from 'lit/decorators.js';
 
 import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
+import { ObserveSlotText } from '@adobe/spectrum-wc-core/mixins/observe-slot-text.js';
 
 import { SlotAttributePropagationController } from '../../controllers/slot-attribute-propagation/index.js';
 import {
@@ -34,7 +35,10 @@ import {
  * @slot description - Supporting description text
  * @slot actions - Optional action controls displayed below the description, typically a button or button group. Receives `size` automatically from the illustrated message.
  */
-export abstract class IllustratedMessageBase extends SpectrumElement {
+export abstract class IllustratedMessageBase extends ObserveSlotText(
+  SpectrumElement,
+  ''
+) {
   // ─────────────────────────
   //     API TO OVERRIDE
   // ─────────────────────────
@@ -83,12 +87,13 @@ export abstract class IllustratedMessageBase extends SpectrumElement {
   );
 
   /**
-   * Tracks whether the default (illustration) slot has assigned content, so
+   * Whether the default (illustration) slot has assigned content, so
    * rendering subclasses can collapse the illustration wrapper when no
    * illustration is provided instead of reserving its fixed size.
    */
-  @state()
-  protected _hasIllustration = false;
+  protected get hasIllustration(): boolean {
+    return this.slotHasContent;
+  }
 
   protected override updated(changedProperties: PropertyValues): void {
     super.updated(changedProperties);
@@ -122,16 +127,6 @@ export abstract class IllustratedMessageBase extends SpectrumElement {
 
   protected handleActionsSlotChange(): void {
     this._sizePropagation.propagate();
-  }
-
-  /**
-   * Rendering subclasses must wire this to the default slot's `slotchange`
-   * event (e.g. `<slot @slotchange=${this.handleIllustrationSlotChange}>`)
-   * so the illustration wrapper collapses when no illustration is slotted.
-   */
-  protected handleIllustrationSlotChange(event: Event): void {
-    const slot = event.target as HTMLSlotElement;
-    this._hasIllustration = slot.assignedElements({ flatten: true }).length > 0;
   }
 
   /**

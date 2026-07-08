@@ -48,9 +48,9 @@ export class IllustratedMessage extends IllustratedMessageBase {
       <div class="swc-IllustratedMessage">
         <div
           class="swc-IllustratedMessage-illustration"
-          ?hidden=${!this._hasIllustration}
+          ?hidden=${!this.hasIllustration}
         >
-          <slot @slotchange=${this.handleIllustrationSlotChange}></slot>
+          <slot></slot>
         </div>
         <div class="swc-IllustratedMessage-content">
           <slot
