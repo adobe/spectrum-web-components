@@ -38,8 +38,8 @@ export const OverviewTest: Story = {
       'swc-prompt-field'
     );
 
-    await step('renders with default mode state', async () => {
-      expect(el.mode).toBe('default');
+    await step('renders in the default idle state', async () => {
+      expect(el.generating).toBe(false);
       expect(el.label).toBe('Prompt');
       expect(el.sendLabel).toBe('Send');
       expect(el.stopLabel).toBe('Stop generating');
@@ -82,7 +82,6 @@ export const InteractionTest: Story = {
   args: {
     ...Overview.args,
     value: 'Summarize the API changes in this branch.',
-    mode: 'default',
   },
   play: async ({ canvasElement, step }) => {
     const el = await getComponent<PromptField>(
@@ -121,7 +120,7 @@ export const InteractionTest: Story = {
     });
 
     await step('stop button supports keyboard activation', async () => {
-      el.mode = 'loading';
+      el.generating = true;
       await el.updateComplete;
 
       let stopCount = 0;

@@ -13,6 +13,26 @@
 :host {
   display: block;
   inline-size: 100%;
+
+  /* --swc-prompt-field-brand (a color) re-tints the light-mode AI treatment; used
+     with a fallback default at each site so it can be set on the element or any
+     ancestor without being overridden here. See the brand cssprop docs. */
+
+  /* Strength of the brand treatment, scaled per variant. Con-hue opacity is
+     subtle 20% / balanced 50% / prominent 75%, i.e. 0.4x / 1x / 1.5x the baseline. */
+  --pf-intensity: 1;
+
+  /* Ease --pf-intensity on the host (where :focus-within changes it) so every
+     intensity-scaled layer — including the sweep — fades smoothly on focus/blur. */
+  transition: --pf-intensity 700ms cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+:host([variant="subtle"]) {
+  --pf-intensity: 0.4;
+}
+
+:host([variant="prominent"]) {
+  --pf-intensity: 1.5;
 }
 
 *,
@@ -33,19 +53,299 @@
 }
 
 /* ─────────────────────────────────────
-   White card box with shadow
+   AI brand treatment (light theme). Two layers: an outer border/glow wrapper (6px
+   padding) and an inner container with layered radial fills + inset shadows. The
+   con-hue radial alpha and the con-bg stops ride registered @property vars so
+   idle→generating morphs smoothly. Colors are the resolved light-mode values.
+   Variants scale the hue via --pf-intensity (con-hue opacity: subtle 20% /
+   balanced 50% / prominent 75%). Theme is driven by light-dark() — the same
+   mechanism as the SWC design tokens (it follows color-scheme, not the OS
+   prefers-color-scheme) — with the dark side taken from the Figma dark board.
+   ponytail: hardcoded resolved colors; SWC has no tokens for the AI palette or for
+   the 24px/30px radii, so those are explicit.
    ───────────────────────────────────── */
 
+/* Registered so an invalid or empty value (e.g. a consumer or the Storybook color
+   control setting it to '') computes to the initial pink instead of poisoning every
+   brand-derived layer. A bare var() fallback would not cover the set-but-invalid case. */
+@property --swc-prompt-field-brand {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: oklch(72% 0.23 350.6deg);
+}
+
+/* Registered as a <number> so it can be transitioned. Every intensity-scaled layer
+   (con-hue wash, inner/outer glows, and the sweep alpha) reads var(--pf-intensity)
+   in a calc(), so easing this one value re-resolves them all frame-by-frame — that
+   is how the sweep (a background gradient, otherwise non-transitionable) fades in and
+   out smoothly on focus instead of snapping. */
+@property --pf-intensity {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 1;
+}
+
+@property --con-hue-opacity {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 0%;
+}
+
+@property --bg-stop-1 {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: #fff;
+}
+
+@property --bg-stop-2 {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: #fff;
+}
+
+@property --bg-stop-3 {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: #fff;
+}
+
+@property --bg-stop-4 {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: #fff;
+}
+
+/* Ambient motion: --pf-sweep drives a visible brand highlight that flows
+   continuously left→right across the card. The keyframes start and end with the
+   highlight fully off-screen (−55% / 155%) so the loop reset is invisible and the
+   motion reads as a seamless one-directional flow (linear timing, no reversal). */
+@property --pf-sweep {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 50%;
+}
+
+@keyframes swc-prompt-field-sweep {
+  from {
+    --pf-sweep: -55%;
+  }
+
+  to {
+    --pf-sweep: 155%;
+  }
+}
+
+/* Outer border + edge glow; idle is a plain neutral ring. */
+.swc-PromptField-outer {
+  padding: 6px;
+
+  /* stylelint-disable scale-unlimited/declaration-strict-value -- resolved AI treatment values; no SWC token */
+
+  /* 30px = the 24px container radius + 6px padding; no 24px SWC radius token exists.
+     light-dark() follows the SWC color scheme (like the design tokens); the light
+     side is the resolved light value, the dark side the dark-theme value. */
+  background: linear-gradient(to right, light-dark(rgb(255 255 255), rgb(255 255 255 / 5%)) 0%, light-dark(rgb(255 255 255), rgb(255 255 255 / 3%)) 37%, light-dark(rgb(255 255 255), rgb(255 255 255 / 3%)) 77%);
+  border-radius: 30px;
+  box-shadow:
+    light-dark(rgb(0 0 0 / 5%), rgb(0 0 0 / 40%)) 0 2px 4px 0,
+    light-dark(oklch(from var(--swc-prompt-field-brand, oklch(72% 0.23 350.6deg)) 67.5% 0.2134 h / calc(12% * var(--pf-intensity))), rgb(61 0 74 / calc(30% * var(--pf-intensity)))) 0 6px 16px -10px;
+  /* stylelint-enable scale-unlimited/declaration-strict-value */
+  transition: box-shadow 700ms cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+:host([generating]) .swc-PromptField-outer {
+  /* stylelint-disable scale-unlimited/declaration-strict-value -- resolved AI treatment values */
+  background: linear-gradient(to right, light-dark(color(srgb 0.9255 0.4119 1 / 3%), rgb(255 255 255 / 5%)) 0%, light-dark(color(srgb 1 0.3179 0.2386 / 3%), rgb(255 255 255 / 3%)) 37%, light-dark(color(srgb 0.9999 0.6356 0.0732 / 3%), rgb(255 255 255 / 3%)) 77%);
+  box-shadow:
+    light-dark(oklch(73.58% 0.2376 322.425deg / 10%), rgb(0 0 0 / 40%)) 0 2px 4px 0,
+    light-dark(oklch(from var(--swc-prompt-field-brand, oklch(72% 0.23 350.6deg)) 67.5% 0.2134 h / calc(30% * var(--pf-intensity))), rgb(61 0 74 / calc(55% * var(--pf-intensity)))) 0 6px 16px -10px;
+  /* stylelint-enable scale-unlimited/declaration-strict-value */
+}
+
+/* Inner container background. */
 .swc-PromptField-box {
   display: flex;
+  position: relative;
   flex-direction: column;
   gap: token("spacing-300");
   padding: token("spacing-300");
-  background: token("background-layer-2-color");
-  border: 1px solid transparent;
-  border-radius: token("corner-radius-800");
-  box-shadow: token("drop-shadow-emphasized-default-x") token("drop-shadow-emphasized-default-y") token("drop-shadow-emphasized-default-blur") token("drop-shadow-emphasized-default-color");
+
+  /* stylelint-disable scale-unlimited/declaration-strict-value -- resolved AI treatment values; no SWC token */
+  background:
+    radial-gradient(45% 85% at var(--pf-sweep) 55%, light-dark(oklch(from var(--swc-prompt-field-brand, oklch(72% 0.23 350.6deg)) 88% 0.09 h / calc(28% * var(--pf-intensity))), oklch(from var(--swc-prompt-field-brand, oklch(72% 0.23 350.6deg)) 60% 0.15 h / calc(35% * var(--pf-intensity)))), transparent),
+    linear-gradient(light-dark(rgb(255 255 255 / 75%), rgb(0 0 0 / 40%)) 0%, light-dark(rgb(255 255 255 / 75%), rgb(0 0 0 / 40%)) 37%, light-dark(rgb(255 255 255 / 15%), rgb(0 0 0 / 12%)) 83%, light-dark(rgb(255 255 255 / 15%), rgb(0 0 0 / 12%)) 100%), radial-gradient(50% 50% at -20% 100%, light-dark(oklch(from var(--swc-prompt-field-brand, oklch(72% 0.23 350.6deg)) 95.17% 0.0271 h / var(--con-hue-opacity)), rgb(181 19 76 / var(--con-hue-opacity))), transparent),
+    radial-gradient(70% 60% at 5% 80%, light-dark(oklch(from var(--swc-prompt-field-brand, oklch(72% 0.23 350.6deg)) 98.19% 0.0145 h / var(--con-hue-opacity)), rgb(127 23 146 / var(--con-hue-opacity))), transparent), radial-gradient(70% 50% at 40% 80%, light-dark(oklch(from var(--swc-prompt-field-brand, oklch(72% 0.23 350.6deg)) 95.64% 0.036 h / var(--con-hue-opacity)), rgb(64 0 122 / var(--con-hue-opacity))), transparent),
+    radial-gradient(circle at right bottom, var(--bg-stop-1) 0%, var(--bg-stop-2) 35%, var(--bg-stop-3) 82%, var(--bg-stop-4) 100%);
+  border: none;
+
+  /* The container radius (24px); no matching SWC radius token exists. */
+  border-radius: 24px;
+  box-shadow:
+    light-dark(rgb(0 0 0 / 5%), rgb(255 255 255 / 5%)) 0 0 0 1px inset,
+    rgb(0 0 0 / 0%) 0 6px 15px 0 inset,
+    light-dark(oklch(from var(--swc-prompt-field-brand, oklch(72% 0.23 350.6deg)) 94% 0.06 h / calc(45% * var(--pf-intensity))), rgb(127 23 146 / calc(30% * var(--pf-intensity)))) 0 -32px 100px -50px inset,
+    rgb(255 255 255 / 4%) 0 -5px 21.6px 0 inset,
+    rgb(255 255 255 / 4%) 0 24px 32px 0 inset,
+    light-dark(oklch(from var(--swc-prompt-field-brand, oklch(72% 0.23 350.6deg)) 85.68% 0.0856 h / calc(32% * var(--pf-intensity))), rgb(61 0 74 / calc(35% * var(--pf-intensity)))) 0 6px 20px -2px;
+  /* stylelint-enable scale-unlimited/declaration-strict-value */
   overflow: hidden;
+
+  /* The whole card reads as a text field: clicking anywhere focuses the textarea
+     (see PromptField._handleBoxPointerDown). Interactive controls reset the cursor. */
+  cursor: text;
+  transition:
+    --con-hue-opacity 700ms cubic-bezier(0.32, 0.72, 0, 1),
+    --bg-stop-1 700ms cubic-bezier(0.32, 0.72, 0, 1),
+    --bg-stop-2 700ms cubic-bezier(0.32, 0.72, 0, 1),
+    --bg-stop-3 700ms cubic-bezier(0.32, 0.72, 0, 1),
+    --bg-stop-4 700ms cubic-bezier(0.32, 0.72, 0, 1),
+    box-shadow 700ms cubic-bezier(0.32, 0.72, 0, 1);
+
+  /* Slow continuous left→right flow of the brand highlight, idle and generating. */
+  animation: swc-prompt-field-sweep 14s linear infinite;
+
+  /* Idle carries a variant-scaled brand wash inside the card too (not just the outer
+     halo, and not only when generating). --pf-intensity scales it per variant, so
+     subtle idle is near-plain and prominent idle has a clearly tinted interior;
+     generating ramps it further (below). */
+  --con-hue-opacity: calc(34% * var(--pf-intensity));
+
+  /* Idle con-bg fill carries a light brand wash (balanced baseline) so the card
+   * reads as tinted even at rest; dark side keeps the surface token. Subtle and
+   * prominent scale the chroma below. Generating ramps further (rules below). */
+  /* stylelint-disable scale-unlimited/declaration-strict-value -- brand-derived AI wash; no SWC token */
+  --bg-stop-1: light-dark(oklch(from var(--swc-prompt-field-brand, oklch(72% 0.23 350.6deg)) 97.8% 0.011 h), token("background-layer-2-color"));
+  --bg-stop-2: light-dark(oklch(from var(--swc-prompt-field-brand, oklch(72% 0.23 350.6deg)) 98.6% 0.009 h), token("background-layer-2-color"));
+  --bg-stop-3: light-dark(oklch(from var(--swc-prompt-field-brand, oklch(72% 0.23 350.6deg)) 98.4% 0.011 h), token("background-layer-2-color"));
+  --bg-stop-4: light-dark(oklch(from var(--swc-prompt-field-brand, oklch(72% 0.23 350.6deg)) 95.2% 0.0345 h), token("background-layer-2-color"));
+  /* stylelint-enable scale-unlimited/declaration-strict-value */
+}
+
+/* Generating: con-hue radials fade in and the con-bg
+ * stops shift from white to the resolved values; the inner shadows swap to the
+ * generating set (near-white inner glow + soft fuchsia outer bloom). */
+:host([generating]) .swc-PromptField-box {
+  box-shadow:
+    light-dark(oklch(73.58% 0.2376 322.425deg / 10%), rgb(255 255 255 / 5%)) 0 0 0 1px inset,
+    rgb(255 255 255 / 4%) 0 6px 15px 0 inset,
+    light-dark(rgb(254 246 255), #7f1792) 0 -32px 100px -50px inset,
+    rgb(255 255 255 / 4%) 0 -5px 21.6px 0 inset,
+    rgb(255 255 255 / 4%) 0 24px 32px 0 inset,
+    light-dark(oklch(58.26% 0.2265 322.025deg / 5%), rgb(213 73 235 / 5%)) 0 -3px 10px 1px,
+    light-dark(oklch(from var(--swc-prompt-field-brand, oklch(72% 0.23 350.6deg)) 85.68% 0.0856 h / calc(50% * var(--pf-intensity))), rgb(61 0 74 / calc(50% * var(--pf-intensity)))) 0 6px 83px 0;
+
+  /* Con-hue opacity, scaled per variant (subtle 20% / balanced 50% / prominent 75%). */
+  --con-hue-opacity: calc(50% * var(--pf-intensity));
+
+  /* stylelint-disable scale-unlimited/declaration-strict-value -- resolved AI treatment values */
+  --bg-stop-1: light-dark(oklch(from var(--swc-prompt-field-brand, oklch(72% 0.23 350.6deg)) 95.38% 0.0219 h), #660978);
+  --bg-stop-2: light-dark(oklch(from var(--swc-prompt-field-brand, oklch(72% 0.23 350.6deg)) 97.8% 0.0179 h), #440d05);
+  --bg-stop-3: light-dark(oklch(from var(--swc-prompt-field-brand, oklch(72% 0.23 350.6deg)) 97.61% 0.022 h), #23006e);
+  --bg-stop-4: light-dark(oklch(from var(--swc-prompt-field-brand, oklch(72% 0.23 350.6deg)) 92.68% 0.0606 h), #08040f);
+  /* stylelint-enable scale-unlimited/declaration-strict-value */
+}
+
+/* Per-variant generating con-bg fill (the fill scales, not just the hue
+ * opacity): subtle is near-white, prominent is a saturated lavender/pink. Light
+ * side derived from --swc-prompt-field-brand (keeps each stop's L/C, hue from brand);
+ * dark side keeps the fixed palette. Balanced is the default rule above. */
+/* stylelint-disable scale-unlimited/declaration-strict-value -- resolved AI treatment values */
+:host([variant="subtle"][generating]) .swc-PromptField-box {
+  --bg-stop-1: light-dark(oklch(from var(--swc-prompt-field-brand, oklch(72% 0.23 350.6deg)) 98.04% 0.0093 h), #40093f);
+  --bg-stop-2: light-dark(oklch(from var(--swc-prompt-field-brand, oklch(72% 0.23 350.6deg)) 99.23% 0.0067 h), #2c0803);
+  --bg-stop-3: light-dark(oklch(from var(--swc-prompt-field-brand, oklch(72% 0.23 350.6deg)) 98.95% 0.009 h), #16003b);
+  --bg-stop-4: light-dark(oklch(from var(--swc-prompt-field-brand, oklch(72% 0.23 350.6deg)) 96.96% 0.0241 h), #05030a);
+}
+
+:host([variant="prominent"][generating]) .swc-PromptField-box {
+  --bg-stop-1: light-dark(oklch(from var(--swc-prompt-field-brand, oklch(72% 0.23 350.6deg)) 90.63% 0.0456 h), #8a0ba0);
+  --bg-stop-2: light-dark(oklch(from var(--swc-prompt-field-brand, oklch(72% 0.23 350.6deg)) 95.64% 0.036 h), #5b1107);
+  --bg-stop-3: light-dark(oklch(from var(--swc-prompt-field-brand, oklch(72% 0.23 350.6deg)) 95.08% 0.0433 h), #2f0092);
+  --bg-stop-4: light-dark(oklch(from var(--swc-prompt-field-brand, oklch(72% 0.23 350.6deg)) 85.78% 0.1222 h), #0b0515);
+}
+
+/* Per-variant idle con-bg fill (mirrors the generating scale, one step lighter):
+ * subtle barely tinted, prominent clearly washed. Placed after the generating
+ * rules so the higher-specificity :not([generating]) selectors don't descend. */
+:host([variant="subtle"]:not([generating])) .swc-PromptField-box {
+  --bg-stop-1: light-dark(oklch(from var(--swc-prompt-field-brand, oklch(72% 0.23 350.6deg)) 98.6% 0.006 h), token("background-layer-2-color"));
+  --bg-stop-2: light-dark(oklch(from var(--swc-prompt-field-brand, oklch(72% 0.23 350.6deg)) 99.1% 0.005 h), token("background-layer-2-color"));
+  --bg-stop-3: light-dark(oklch(from var(--swc-prompt-field-brand, oklch(72% 0.23 350.6deg)) 98.9% 0.006 h), token("background-layer-2-color"));
+  --bg-stop-4: light-dark(oklch(from var(--swc-prompt-field-brand, oklch(72% 0.23 350.6deg)) 97% 0.018 h), token("background-layer-2-color"));
+}
+
+:host([variant="prominent"]:not([generating])) .swc-PromptField-box {
+  --bg-stop-1: light-dark(oklch(from var(--swc-prompt-field-brand, oklch(72% 0.23 350.6deg)) 96.5% 0.022 h), token("background-layer-2-color"));
+  --bg-stop-2: light-dark(oklch(from var(--swc-prompt-field-brand, oklch(72% 0.23 350.6deg)) 97.8% 0.017 h), token("background-layer-2-color"));
+  --bg-stop-3: light-dark(oklch(from var(--swc-prompt-field-brand, oklch(72% 0.23 350.6deg)) 97.4% 0.022 h), token("background-layer-2-color"));
+  --bg-stop-4: light-dark(oklch(from var(--swc-prompt-field-brand, oklch(72% 0.23 350.6deg)) 92.5% 0.0565 h), token("background-layer-2-color"));
+}
+/* stylelint-enable scale-unlimited/declaration-strict-value */
+
+/* Hover, generating: the con-hue wash ramps while the pointer is over the
+ * field — per variant: subtle 20%→75%, balanced 50%→100%, prominent 75%→100%.
+ * (Idle and the outer border do not change on hover.) */
+:host([generating]:hover) .swc-PromptField-box {
+  --con-hue-opacity: 100%;
+}
+
+:host([variant="subtle"][generating]:hover) .swc-PromptField-box {
+  --con-hue-opacity: 75%;
+}
+
+/* Balanced also intensifies its con-bg fill on hover (subtle/prominent fills are
+ * unchanged on hover). */
+/* stylelint-disable scale-unlimited/declaration-strict-value -- resolved AI treatment values */
+:host([variant="balanced"][generating]:hover) .swc-PromptField-box {
+  --bg-stop-1: light-dark(oklch(from var(--swc-prompt-field-brand, oklch(72% 0.23 350.6deg)) 92.95% 0.0341 h), #7a0b8f);
+  --bg-stop-2: light-dark(oklch(from var(--swc-prompt-field-brand, oklch(72% 0.23 350.6deg)) 96.77% 0.0258 h), #4f0f06);
+  --bg-stop-3: light-dark(oklch(from var(--swc-prompt-field-brand, oklch(72% 0.23 350.6deg)) 96.34% 0.0326 h), #1e0080);
+  --bg-stop-4: light-dark(oklch(from var(--swc-prompt-field-brand, oklch(72% 0.23 350.6deg)) 89.25% 0.0905 h), #090412);
+}
+/* stylelint-enable scale-unlimited/declaration-strict-value */
+
+/* Hover, idle: the wash comes up while the pointer is over a resting field too,
+ * per variant. Each variant ramps to its own generating-level fill so idle hover
+ * previews the generating tint. */
+/* stylelint-disable scale-unlimited/declaration-strict-value -- brand-derived AI wash */
+/* stylelint-disable-next-line no-descending-specificity -- :not([generating]) and [generating] are mutually exclusive; order is functionally irrelevant */
+:host(:not([generating]):hover) .swc-PromptField-box {
+  --bg-stop-1: light-dark(oklch(from var(--swc-prompt-field-brand, oklch(72% 0.23 350.6deg)) 95.38% 0.0219 h), token("background-layer-2-color"));
+  --bg-stop-2: light-dark(oklch(from var(--swc-prompt-field-brand, oklch(72% 0.23 350.6deg)) 97.8% 0.0179 h), token("background-layer-2-color"));
+  --bg-stop-3: light-dark(oklch(from var(--swc-prompt-field-brand, oklch(72% 0.23 350.6deg)) 97.61% 0.022 h), token("background-layer-2-color"));
+  --bg-stop-4: light-dark(oklch(from var(--swc-prompt-field-brand, oklch(72% 0.23 350.6deg)) 92.68% 0.0606 h), token("background-layer-2-color"));
+}
+
+:host([variant="subtle"]:not([generating]):hover) .swc-PromptField-box {
+  --bg-stop-1: light-dark(oklch(from var(--swc-prompt-field-brand, oklch(72% 0.23 350.6deg)) 97.8% 0.011 h), token("background-layer-2-color"));
+  --bg-stop-2: light-dark(oklch(from var(--swc-prompt-field-brand, oklch(72% 0.23 350.6deg)) 98.6% 0.009 h), token("background-layer-2-color"));
+  --bg-stop-3: light-dark(oklch(from var(--swc-prompt-field-brand, oklch(72% 0.23 350.6deg)) 98.4% 0.011 h), token("background-layer-2-color"));
+  --bg-stop-4: light-dark(oklch(from var(--swc-prompt-field-brand, oklch(72% 0.23 350.6deg)) 95.2% 0.0345 h), token("background-layer-2-color"));
+}
+
+:host([variant="prominent"]:not([generating]):hover) .swc-PromptField-box {
+  --bg-stop-1: light-dark(oklch(from var(--swc-prompt-field-brand, oklch(72% 0.23 350.6deg)) 90.63% 0.0456 h), token("background-layer-2-color"));
+  --bg-stop-2: light-dark(oklch(from var(--swc-prompt-field-brand, oklch(72% 0.23 350.6deg)) 95.64% 0.036 h), token("background-layer-2-color"));
+  --bg-stop-3: light-dark(oklch(from var(--swc-prompt-field-brand, oklch(72% 0.23 350.6deg)) 95.08% 0.0433 h), token("background-layer-2-color"));
+  --bg-stop-4: light-dark(oklch(from var(--swc-prompt-field-brand, oklch(72% 0.23 350.6deg)) 85.78% 0.1222 h), token("background-layer-2-color"));
+}
+/* stylelint-enable scale-unlimited/declaration-strict-value */
+
+/* Focus: while the caret is inside a resting field, the AI treatment recedes so it
+ * does not distract while typing — the wash, glows and sweep all fade out
+ * (intensity 0) and the con-bg stops drop to the plain surface. Releasing focus fades
+ * it back via the box transition. Scoped to :not([generating]) so the treatment stays
+ * while the AI is actively generating (the color signals activity there). */
+:host(:not([generating]):focus-within) {
+  --pf-intensity: 0;
+}
+
+/* stylelint-disable-next-line no-descending-specificity -- :not([generating]) makes this mutually exclusive with the generating rules above; order is functionally irrelevant */
+:host(:not([generating]):focus-within) .swc-PromptField-box {
+  --bg-stop-1: token("background-layer-2-color");
+  --bg-stop-2: token("background-layer-2-color");
+  --bg-stop-3: token("background-layer-2-color");
+  --bg-stop-4: token("background-layer-2-color");
 }
 
 /* Outer ring only for keyboard focus on the textarea (PromptField toggles
@@ -62,6 +362,8 @@
 
 .swc-PromptField-input-area {
   display: flex;
+  position: relative;
+  z-index: 1;
   flex-direction: column;
   gap: token("spacing-300");
   padding-block-start: 0;
@@ -117,8 +419,23 @@
    Text area (label + textarea)
    ───────────────────────────────────── */
 
+/* Row: pixel-loader logo beside the label + textarea column. */
+.swc-PromptField-prompt-row {
+  display: flex;
+  gap: token("spacing-100");
+  align-items: flex-start;
+}
+
+.swc-PromptField-loader {
+  flex: 0 0 auto;
+
+  /* Neutral logo (dark in light theme, light in dark theme). */
+  color: token("gray-800");
+}
+
 .swc-PromptField-text-area {
   display: flex;
+  flex: 1 1 auto;
   flex-direction: column;
   gap: token("spacing-75");
 }
@@ -154,17 +471,14 @@
   color: token("gray-600");
 }
 
-.swc-PromptField-textarea:disabled {
-  color: token("gray-500");
-  cursor: default;
-}
-
 /* ─────────────────────────────────────
    Action bar
    ───────────────────────────────────── */
 
 .swc-PromptField-action-bar {
   display: flex;
+  position: relative;
+  z-index: 1;
   align-items: center;
   justify-content: space-between;
 }
@@ -179,104 +493,10 @@
   display: none;
 }
 
-/* Upload button (quiet, left side) */
-
-.swc-PromptField-upload {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  inline-size: var(--swc-prompt-field-upload-inline-size, 32px);
-  block-size: var(--swc-prompt-field-upload-block-size, 32px);
-  padding: 0;
-  color: token("gray-800");
-  background: transparent;
-  border: 1px solid transparent;
-  border-radius: token("corner-radius-500");
-}
-
-.swc-PromptField-upload:hover {
-  color: token("gray-800");
-  background: token("gray-75");
-}
-
-.swc-PromptField-upload:disabled {
-  color: token("gray-400");
-  background: transparent;
-}
-
-.swc-PromptField-upload swc-icon {
-  --swc-icon-inline-size: token("workflow-icon-medium");
-  --swc-icon-block-size: token("workflow-icon-medium");
-}
-
-/* Send button (filled circle, right side) */
-
-.swc-PromptField-send {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  inline-size: var(--swc-prompt-field-send-inline-size, 32px);
-  block-size: var(--swc-prompt-field-send-block-size, 32px);
-  padding: 0;
-  color: token("gray-25");
-  background: token("neutral-background-color-default");
-  border: 1px solid transparent;
-  border-radius: token("corner-radius-full");
-  transition: background token("animation-duration-100") ease;
-}
-
-.swc-PromptField-stop {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  inline-size: var(--swc-prompt-field-stop-inline-size, 32px);
-  block-size: var(--swc-prompt-field-stop-block-size, 32px);
-  padding: 0;
-  color: token("gray-25");
-  background: token("gray-900");
-  border: 1px solid transparent;
-  border-radius: token("corner-radius-full");
-  transition: background token("animation-duration-100") ease;
-}
-
-.swc-PromptField-send:disabled {
-  color: token("gray-400");
-  background: token("gray-100");
-}
-
-.swc-PromptField-send:focus-visible,
-.swc-PromptField-stop:focus-visible {
-  outline: token("focus-indicator-thickness") solid token("focus-indicator-color");
-  outline-offset: token("focus-ring-gap");
-}
-
-.swc-PromptField-send:active,
-.swc-PromptField-stop:active {
-  transform: perspective(64px) translate3d(0, 0, -1px);
-  transition: transform token("animation-duration-200") ease;
-  transition-timing-function: token("animation-ease-in-out");
-  will-change: transform;
-}
-
-.swc-PromptField-send:hover:not(:disabled) {
-  background: token("neutral-background-color-hover");
-}
-
-.swc-PromptField-send swc-icon {
-  --swc-icon-inline-size: token("workflow-icon-medium");
-  --swc-icon-block-size: token("workflow-icon-medium");
-}
-
-/* Stop button (filled black circle, right side) */
-
-.swc-PromptField-stop:hover {
-  background: token("gray-800");
-}
-
-.swc-PromptField-stop swc-icon {
-  --swc-icon-inline-size: token("workflow-icon-medium");
-  --swc-icon-block-size: token("workflow-icon-medium");
-}
+/* Upload (swc-action-button, quiet), send/stop (swc-button, primary) style
+ * themselves. S2 buttons are pill-shaped, so the icon-only send/stop render as
+ * circles; the primary variant is theme-aware (dark button in light
+ * theme, light in dark), matching the Figma dark board. */
 
 /* ─────────────────────────────────────
    Footer
@@ -301,4 +521,11 @@
 
 .swc-PromptField-artifacts[hidden] {
   display: none !important;
+}
+
+/* Respect reduced-motion: hold the gradient still instead of drifting. */
+@media (prefers-reduced-motion: reduce) {
+  .swc-PromptField-box {
+    animation: none;
+  }
 }

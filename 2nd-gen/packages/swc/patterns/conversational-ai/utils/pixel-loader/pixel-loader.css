@@ -1,0 +1,57 @@
+/**
+ * Copyright 2026 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+:host {
+  display: inline-block;
+  /* stylelint-disable-next-line scale-unlimited/declaration-strict-value -- zero-height line box removes the inline-block descender gap; not a themeable value */
+  line-height: 0;
+
+  /* Color inherits so any ancestor (or the prompt field's brand hue) drives the logo. */
+}
+
+.canvas {
+  position: relative;
+  overflow: clip;
+}
+
+/* Fixed 1000-unit coordinate space scaled down to the rendered size. */
+.space {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  inline-size: 1000px;
+  block-size: 1000px;
+  transform-origin: 0 0;
+}
+
+.cell {
+  position: absolute;
+  inline-size: 100px;
+  block-size: 100px;
+  background-color: currentcolor;
+  will-change: transform, opacity;
+}
+
+/* Poster frame: when not playing, cells sit settled and opaque (no animation). */
+:host(:not([playing])) .cell {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Respect reduced-motion: hold the settled poster frame instead of falling. */
+@media (prefers-reduced-motion: reduce) {
+  .cell {
+    opacity: 1;
+    transform: translateY(0);
+    animation: none !important;
+  }
+}
