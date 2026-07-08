@@ -31,6 +31,7 @@
     - [Testing static color variants](#testing-static-color-variants)
     - [Testing dev mode warnings](#testing-dev-mode-warnings)
     - [Testing composed components](#testing-composed-components)
+    - [Native dismissal and trusted input](#native-dismissal-and-trusted-input)
 
 </details>
 
@@ -528,3 +529,58 @@ export const ComposedComponentTest: Story = {
   },
 };
 ```
+
+### Native dismissal and trusted input
+
+`@storybook/test`'s `userEvent` dispatches synthetic DOM events (`isTrusted === false`). Browser-native `popover` and `<dialog>` light-dismiss behavior (Escape, outside click, dialog backdrop click) only responds to genuine, trusted browser input, so synthetic events never trigger it. Component-authored JavaScript handlers (click-to-toggle, focus, keydown backstops) work fine with synthetic input and stay in play functions.
+
+**Do not import `vitest/browser` (or the older `@vitest/browser/context`) in a play function.** Play-function files (`test/<component>.test.ts`) are indexed as Storybook stories in dev mode, so the dev Storybook server evaluates them too. `vitest/browser` is a virtual module: the Vitest browser runner resolves it to the real Playwright-backed implementation, but everywhere else (including the dev Storybook server) it resolves to a shim that throws on evaluation. A static import crashes the dev server; a lazy import only defers the same crash to when the story's play runs. Either way the story is broken outside the Vitest runner.
+
+**Test native light-dismiss in the Playwright accessibility spec (`test/<component>.a11y.spec.ts`) instead.** Playwright drives real, trusted input (`page.keyboard`, `page.mouse`, `locator.click()`) against the running Storybook, so native dismissal fires. If the scenario is not an existing story, add a **render-only fixture** story (no `play`) to `test/<component>.test.ts` for Playwright to navigate to, and keep the interaction plus assertions in the spec.
+
+```typescript
+// test/<component>.a11y.spec.ts
+import { expect, test } from '@playwright/test';
+
+import { gotoStory } from '../../../utils/a11y-helpers.js';
+
+test('Escape closes the popover (native light-dismiss)', async ({ page }) => {
+  // gotoStory waits on a visible custom element (an swc-button trigger), not the
+  // display:contents popover host, which never reports as visible.
+  await gotoStory(
+    page,
+    'components-popover-tests--escape-dismiss',
+    'swc-button'
+  );
+  const popover = page.locator('swc-popover');
+
+  await page.locator('#dismiss-trigger').click();
+  await expect(popover).toHaveJSProperty('open', true);
+  await page.keyboard.press('Escape'); // trusted key press
+  await expect(popover).toHaveJSProperty('open', false);
+});
+```
+
+To assert a component custom event's detail from Playwright, first confirm that the component's event contract includes that detail. For example, a popover close event documented as `CustomEvent<{ source: string }>` can be captured in the page and read back:
+
+```typescript
+await page.evaluate(() => {
+  const popover = document.querySelector('swc-popover');
+
+  if (!popover) {
+    throw new Error('swc-popover not found.');
+  }
+
+  popover.addEventListener('swc-close', (event) => {
+    (window as Window & { __closeSource?: string }).__closeSource = (
+      event as CustomEvent<{ source: string }>
+    ).detail.source;
+  });
+});
+// ... drive the interaction ...
+const source = await page.evaluate(
+  () => (window as Window & { __closeSource?: string }).__closeSource
+);
+```
+
+> A quick way to confirm which input you have: assert `event.isTrusted` on the native event you are testing, such as a `keydown` or `click` listener. `@storybook/test`'s `userEvent` yields `false` (synthetic); Playwright input yields `true` (trusted). Component-dispatched custom events are created by JavaScript and can still report `false`, even when trusted input caused them.
