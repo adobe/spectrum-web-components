@@ -1,5 +1,12 @@
 # Change Log
 
+## 1.12.2
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @spectrum-web-components/progress-circle@1.12.2
+
 ## 1.12.1
 
 ### Patch Changes
