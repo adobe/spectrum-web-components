@@ -188,6 +188,33 @@ export class ProgressBar extends SizedMixin(
     }
 
     if (window.__swc?.DEBUG) {
+      if (changes.has('label') && this.label.length > 0) {
+        window.__swc.warn(
+          this,
+          `The "label" attribute on <${this.localName}> has been deprecated and will be removed in a future release. Use a "label" named slot or the "accessible-label" attribute instead.`,
+          'https://opensource.adobe.com/spectrum-web-components/components/progress-bar/#accessibility',
+          { level: 'deprecation' }
+        );
+      }
+      if (changes.has('sideLabel') && this.sideLabel) {
+        window.__swc.warn(
+          this,
+          `The "side-label" attribute on <${this.localName}> has been deprecated and will be removed in a future release. Use label-position="side" instead.`,
+          'https://opensource.adobe.com/spectrum-web-components/components/progress-bar/',
+          { level: 'deprecation' }
+        );
+      }
+      if (changes.has('progress') && this.progress !== 0) {
+        window.__swc.warn(
+          this,
+          `The "progress" property on <${this.localName}> has been deprecated and will be removed in a future release. Use the "value" attribute instead.`,
+          'https://opensource.adobe.com/spectrum-web-components/components/progress-bar/',
+          { level: 'deprecation' }
+        );
+      }
+    }
+
+    if (window.__swc?.DEBUG) {
       if (
         !this.label &&
         !this.getAttribute('aria-label') &&

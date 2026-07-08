@@ -67,12 +67,22 @@ argTypes.value = {
   },
 };
 
+/**
+ * A `<swc-progress-bar>` shows the progression of a system operation such as
+ * downloading, uploading, or processing. Use a determinate bar when progress
+ * can be calculated against a known total; set `indeterminate` when the
+ * completion time cannot be determined.
+ *
+ * For circular progress indicators, see
+ * [Progress Circle](../?path=/docs/components-progress-circle--docs) and for read-only
+ * values use [Meter](../?path=/docs/components-meter--docs).
+ */
 const meta: Meta = {
   title: 'Progress Bar',
   component: 'swc-progress-bar',
   parameters: {
     docs: {
-      subtitle: `Non-focusable, read-only bar that shows task progress or an indeterminate loading state.`,
+      subtitle: `Shows the progress of a task or an indeterminate loading state.`,
     },
     styles: { 'min-inline-size': '250px' },
   },
@@ -110,7 +120,7 @@ const staticColorLabels = {
 // ────────────────────
 
 export const Playground: Story = {
-  tags: ['autodocs', 'dev'],
+  tags: ['dev'],
   args: {
     size: 'm',
     value: 60,
@@ -216,7 +226,6 @@ export const LabelPosition: Story = {
   tags: ['options'],
   args: { value: 50 },
 };
-LabelPosition.storyName = 'Label position';
 
 export const StaticColors: Story = {
   render: (args) => html`
@@ -232,7 +241,6 @@ export const StaticColors: Story = {
   tags: ['options', '!test'],
   args: { value: 50 },
 };
-StaticColors.storyName = 'Static colors';
 
 // ──────────────────────────
 //    STATES STORIES
