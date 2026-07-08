@@ -439,6 +439,50 @@ export const Modal: Story = {
   tags: ['behaviors'],
 };
 
+// Default-mode popovers nest: a popover opened from inside another forms an
+// ancestor chain, so opening a descendant does not dismiss its ancestors.
+// Dismissal peels the chain one layer at a time from the top.
+export const Nested: Story = {
+  render: () => html`
+    <div style="display: flex; gap: 24px; padding: 40px;">
+      <swc-button id="nested-outer-trigger">Open outer</swc-button>
+      <swc-button id="nested-away">Elsewhere</swc-button>
+      <swc-popover
+        id="nested-outer"
+        for="nested-outer-trigger"
+        accessible-label="Outer"
+      >
+        <div style="display: flex; flex-direction: column; gap: 12px;">
+          <p id="nested-outer-body" style="margin: 0;">Outer popover body</p>
+          <swc-button id="nested-inner-trigger">Open inner</swc-button>
+          <swc-popover
+            id="nested-inner"
+            for="nested-inner-trigger"
+            accessible-label="Inner"
+          >
+            <div style="display: flex; flex-direction: column; gap: 12px;">
+              <p id="nested-inner-body" style="margin: 0;">
+                Inner popover body
+              </p>
+              <swc-button id="nested-innermost-trigger">
+                Open innermost
+              </swc-button>
+              <swc-popover
+                id="nested-innermost"
+                for="nested-innermost-trigger"
+                accessible-label="Innermost"
+              >
+                Innermost popover content
+              </swc-popover>
+            </div>
+          </swc-popover>
+        </div>
+      </swc-popover>
+    </div>
+  `,
+  tags: ['behaviors'],
+};
+
 // ────────────────────────────────
 //    ACCESSIBILITY STORIES
 // ────────────────────────────────

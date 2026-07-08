@@ -75,6 +75,12 @@ In the default (non-modal) mode the surface is a `<div popover="auto">`: the bro
 
 Opening the popover moves focus into it and closing returns focus to the trigger. The popover dispatches `swc-open` / `swc-after-open` on open and `swc-close` / `swc-after-close` on close; `swc-close.detail.source` reports why it closed: `escape`, `outside`, or `programmatic`.
 
+### Nested popovers
+
+A default-mode popover opened from inside another forms an ancestor chain, so opening a descendant does not dismiss its ancestors. Dismissal peels the chain from the top: `Escape` closes the topmost popover first, a click inside a popover dismisses only its descendants, and a click fully outside closes the whole chain.
+
+<Canvas of={Stories.Nested} />
+
 ## Accessibility
 
 ### Features
