@@ -55,7 +55,9 @@ export class ColorHandle extends ColorHandleBase {
   protected override render(): TemplateResult {
     return html`
       <div class="swc-ColorHandle-inner">
-        <div class="swc-ColorHandle-layer swc-OpacityCheckerboard"></div>
+        <div
+          class="swc-ColorHandle-layer swc-OpacityCheckerboard swc-OpacityCheckerboard--sizeS"
+        ></div>
         <div
           class="swc-ColorHandle-layer swc-ColorHandle-colorFill"
           style=${styleMap({ '--swc-color-handle-picked-color': this.color })}
