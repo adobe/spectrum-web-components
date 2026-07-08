@@ -23,9 +23,6 @@ export const RESPONSE_STATUS_STEP_STATUSES = [
   'stopped',
 ] as const;
 
-export type ResponseStatusStepStatus =
-  (typeof RESPONSE_STATUS_STEP_STATUSES)[number];
-
 /**
  * One agentic execution step inside `<swc-response-status>`.
  *
@@ -38,7 +35,7 @@ export type ResponseStatusStepStatus =
 export class ResponseStatusStep extends SpectrumElement {
   /** Timeline state for connector icons. */
   @property({ type: String, reflect: true })
-  public status: ResponseStatusStepStatus = 'active';
+  public status: 'active' | 'complete' | 'stopped' = 'active';
 
   public static override get styles(): CSSResultArray {
     return [styles];

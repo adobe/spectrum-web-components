@@ -22,14 +22,13 @@ A response status indicator consists of:
 
 The `status` attribute controls the lifecycle of the whole response:
 
-- **`pending`**: the request is queued or preparing to start
 - **`active`**: the response is actively working
 - **`complete`**: the response finished successfully
 - **`stopped`**: the user interrupted the response
 
 Use `slot="label"` for the visible header text.
 
-`pending` applies to the whole response before execution steps are available. Step rows begin at `active`, `complete`, or `stopped` once the timeline is shown.
+Steps are optional in every response state. When `swc-response-status-step` children are present, the component shows the disclosure timeline; when no steps are present, it renders only the status row.
 
 <Canvas of={ResponseStatusStories.Statuses} />
 
@@ -76,7 +75,7 @@ The `LabelCadence` story demonstrates one consumer-side queue pattern.
 
 The `<swc-response-status>` element implements the following accessibility features:
 
-- When no steps exist, non-final status labels are exposed with `role="status"` so updates are announced politely without moving focus
+- When no steps exist, `active` status labels are exposed with `role="status"` so updates are announced politely without moving focus
 - When steps exist, the disclosure button uses `aria-expanded` and `aria-controls` to communicate panel state
 - The step timeline uses `role="group"` with an accessible name from the `accessible-label` attribute (defaults to “Execution steps”)
 - The ordered step list uses `role="list"` and each rendered step uses `role="listitem"`

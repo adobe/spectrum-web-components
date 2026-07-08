@@ -37,7 +37,7 @@ argTypes.status = {
   table: {
     ...argTypes.status?.table,
     category: 'attributes',
-    defaultValue: { summary: 'pending' },
+    defaultValue: { summary: 'active' },
   },
 };
 
@@ -241,9 +241,6 @@ export const Anatomy: Story = {
 export const Statuses: Story = {
   render: () => html`
     <div style="display:flex;flex-direction:column;gap:24px;">
-      <swc-response-status status="pending">
-        <span slot="label">Processing request</span>
-      </swc-response-status>
       <swc-response-status status="active">
         <span slot="label">Searching repositories for Europe trips</span>
         ${activeSteps}
@@ -297,7 +294,7 @@ export const Accessibility: Story = {
 // ────────────────────────────────
 
 const cadenceLabels = [
-  'Processing request',
+  'Generating response',
   'Searching repositories for Europe trips',
   'Reviewing internal documentation',
   'Comparing cruise package pricing',

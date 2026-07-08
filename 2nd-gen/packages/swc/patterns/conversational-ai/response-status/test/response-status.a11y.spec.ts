@@ -36,7 +36,7 @@ test.describe('ResponseStatus - ARIA Snapshots', () => {
     `);
   });
 
-  test('should expose pending status label without step timeline', async ({
+  test('should expose active status label without step timeline', async ({
     page,
   }) => {
     const root = await gotoStory(
@@ -45,10 +45,10 @@ test.describe('ResponseStatus - ARIA Snapshots', () => {
       'swc-response-status'
     );
     const status = root.locator('[role="status"]').first();
-    await expect(status).toHaveText('Processing request');
-    const pendingStatus = root.locator('swc-response-status').first();
-    await expect(pendingStatus.locator('[aria-expanded]')).toHaveCount(0);
-    await expect(pendingStatus.locator('[aria-controls]')).toHaveCount(0);
+    await expect(status).toHaveText('Searching repositories for Europe trips');
+    const activeStatus = root.locator('swc-response-status').first();
+    await expect(activeStatus.locator('[aria-expanded]')).toHaveCount(0);
+    await expect(activeStatus.locator('[aria-controls]')).toHaveCount(0);
   });
 
   test('should expose active disclosure with expanded step timeline', async ({

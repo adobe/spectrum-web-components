@@ -34,19 +34,15 @@ import {
 import {
   RESPONSE_STATUS_STEP_STATUSES,
   ResponseStatusStep,
-  type ResponseStatusStepStatus,
 } from './response-status-step/ResponseStatusStep.js';
 
 import styles from './response-status.css';
 
-export const RESPONSE_STATUSES = [
-  'pending',
-  'active',
-  'complete',
-  'stopped',
-] as const;
+export const RESPONSE_STATUSES = ['active', 'complete', 'stopped'] as const;
 
 export type ResponseStatusStatus = (typeof RESPONSE_STATUSES)[number];
+
+type ResponseStatusStepStatus = (typeof RESPONSE_STATUS_STEP_STATUSES)[number];
 
 export type ResponseStatusStepData = {
   label: string;
@@ -69,7 +65,6 @@ export class ResponseStatus extends SpectrumElement {
 
   private static readonly DEFAULT_LABELS: Record<ResponseStatusStatus, string> =
     {
-      pending: 'Processing request',
       active: 'Generating response',
       complete: 'Response generated',
       stopped: 'You stopped the response',
@@ -105,7 +100,7 @@ export class ResponseStatus extends SpectrumElement {
 
   /** Whole response lifecycle status. */
   @property({ type: String, reflect: true })
-  public status: ResponseStatusStatus = 'pending';
+  public status: ResponseStatusStatus = 'active';
 
   /** `true`: step timeline open. */
   @property({ type: Boolean, reflect: true })
@@ -312,7 +307,7 @@ export class ResponseStatus extends SpectrumElement {
 
     return this._isValidStatus(this.status)
       ? ResponseStatus.DEFAULT_LABELS[this.status]
-      : ResponseStatus.DEFAULT_LABELS.pending;
+      : ResponseStatus.DEFAULT_LABELS.active;
   }
 
   private _clearLabelRollTimers(): void {
@@ -502,9 +497,7 @@ export class ResponseStatus extends SpectrumElement {
   private _renderHeader(showDisclosure: boolean): TemplateResult {
     const label = this._currentVisibleLabel();
     const statusRole =
-      !showDisclosure && (this.status === 'pending' || this.status === 'active')
-        ? 'status'
-        : undefined;
+      !showDisclosure && this.status === 'active' ? 'status' : undefined;
     const rowClass = [
       'swc-ResponseStatus-row',
       showDisclosure ? 'swc-ResponseStatus-row--button' : '',

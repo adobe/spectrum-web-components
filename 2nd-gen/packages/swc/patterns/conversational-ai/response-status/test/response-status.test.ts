@@ -72,7 +72,7 @@ const activeStepFallbackMarkup = html`
 
 export const StatusApiTest: Story = {
   render: () => html`
-    <swc-response-status status="pending"></swc-response-status>
+    <swc-response-status></swc-response-status>
   `,
   play: async ({ canvasElement, step }) => {
     const el = await getComponent<TestResponseStatus>(
@@ -81,7 +81,7 @@ export const StatusApiTest: Story = {
     );
 
     await step('status reflects to the host attribute', async () => {
-      expect(el.status).toBe('pending');
+      expect(el.status).toBe('active');
       expect(el.shadowRoot?.querySelector('[role="status"]')).toBeTruthy();
       expect(el.shadowRoot?.querySelector('[aria-expanded]')).toBeNull();
       expect(el.shadowRoot?.querySelector('[aria-controls]')).toBeNull();
