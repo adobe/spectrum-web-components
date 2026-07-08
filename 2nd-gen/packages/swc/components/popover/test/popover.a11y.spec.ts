@@ -68,8 +68,9 @@ test.describe('Popover - ARIA snapshots', () => {
 /**
  * Native light-dismiss (`popover="auto"` Escape/outside-click, `<dialog>` Escape, and
  * nested dismissal ordering) is only triggered by trusted browser input, which the
- * Storybook play functions cannot produce. These run against the render-only fixtures in
- * popover.test.ts and drive real keyboard/pointer input through Playwright.
+ * Storybook play functions cannot produce. These drive real keyboard/pointer input
+ * through Playwright against the published component stories (which exist in every
+ * Storybook mode, unlike the dev-only `*.test.ts` fixtures).
  */
 test.describe('Popover - native dismissal', () => {
   type CloseSourceWindow = Window & { __closeSource?: string };
@@ -93,15 +94,11 @@ test.describe('Popover - native dismissal', () => {
   test('default mode: Escape closes and labels the source "escape"', async ({
     page,
   }) => {
-    await gotoStory(
-      page,
-      'components-popover-tests--default-escape-source-test',
-      'swc-button'
-    );
+    await gotoStory(page, 'components-popover--anatomy', 'swc-button');
     const popover = page.locator('swc-popover');
     await trackCloseSource(page);
 
-    await page.locator('#des-trigger').click();
+    await page.locator('#anatomy-trigger').click();
     await expect(popover).toHaveJSProperty('open', true);
     await page.keyboard.press('Escape');
     await expect(popover).toHaveJSProperty('open', false);
@@ -111,17 +108,15 @@ test.describe('Popover - native dismissal', () => {
   test('default mode: an outside click closes and labels the source "outside"', async ({
     page,
   }) => {
-    await gotoStory(
-      page,
-      'components-popover-tests--default-outside-click-source-test',
-      'swc-button'
-    );
+    await gotoStory(page, 'components-popover--anatomy', 'swc-button');
     const popover = page.locator('swc-popover');
     await trackCloseSource(page);
 
-    await page.locator('#docs-trigger').click();
+    await page.locator('#anatomy-trigger').click();
     await expect(popover).toHaveJSProperty('open', true);
-    await page.locator('#docs-outside').click();
+    // A trusted pointer press in the empty top-left corner is outside the popover
+    // and its trigger, so it light-dismisses.
+    await page.mouse.click(2, 2);
     await expect(popover).toHaveJSProperty('open', false);
     expect(await readCloseSource(page)).toBe('outside');
   });
@@ -129,15 +124,11 @@ test.describe('Popover - native dismissal', () => {
   test('modal mode: Escape closes and labels the source "escape"', async ({
     page,
   }) => {
-    await gotoStory(
-      page,
-      'components-popover-tests--modal-escape-source-test',
-      'swc-button'
-    );
+    await gotoStory(page, 'components-popover--modal', 'swc-button');
     const popover = page.locator('swc-popover');
     await trackCloseSource(page);
 
-    await page.locator('#mes-trigger').click();
+    await page.locator('#modal-trigger').click();
     await expect(popover).toHaveJSProperty('open', true);
     await page.keyboard.press('Escape');
     await expect(popover).toHaveJSProperty('open', false);
@@ -147,26 +138,22 @@ test.describe('Popover - native dismissal', () => {
   test('nested (3 levels): Escape peels the topmost popover, ancestor clicks dismiss only descendants', async ({
     page,
   }) => {
-    await gotoStory(
-      page,
-      'components-popover-tests--nested-dismissal-order-test',
-      'swc-button'
-    );
-    const outer = page.locator('#ndo-outer');
-    const inner = page.locator('#ndo-inner');
-    const innermost = page.locator('#ndo-innermost');
+    await gotoStory(page, 'components-popover--nested', 'swc-button');
+    const outer = page.locator('#nested-outer');
+    const inner = page.locator('#nested-inner');
+    const innermost = page.locator('#nested-innermost');
 
     const openAll = async (): Promise<void> => {
       const outerOpen = await outer.evaluate(
         (el) => (el as unknown as { open: boolean }).open
       );
       if (!outerOpen) {
-        await page.locator('#ndo-outer-trigger').click();
+        await page.locator('#nested-outer-trigger').click();
       }
       await expect(outer).toHaveJSProperty('open', true);
-      await page.locator('#ndo-inner-trigger').click();
+      await page.locator('#nested-inner-trigger').click();
       await expect(inner).toHaveJSProperty('open', true);
-      await page.locator('#ndo-innermost-trigger').click();
+      await page.locator('#nested-innermost-trigger').click();
       await expect(innermost).toHaveJSProperty('open', true);
       // Nested auto popovers form an ancestor chain, so opening a descendant
       // does not light-dismiss its ancestors.
@@ -188,25 +175,25 @@ test.describe('Popover - native dismissal', () => {
 
     // A click on the inner content dismisses only its descendant (the innermost).
     await openAll();
-    await page.locator('#ndo-inner-body').click();
+    await page.locator('#nested-inner-body').click();
     await expect(innermost).toHaveJSProperty('open', false);
     await expect(inner).toHaveJSProperty('open', true);
     await expect(outer).toHaveJSProperty('open', true);
 
     // A click on the outer content dismisses everything nested below it.
-    await page.locator('#ndo-innermost-trigger').click();
+    await page.locator('#nested-innermost-trigger').click();
     await expect(innermost).toHaveJSProperty('open', true);
-    await page.locator('#ndo-outer-body').click();
+    await page.locator('#nested-outer-body').click();
     await expect(innermost).toHaveJSProperty('open', false);
     await expect(inner).toHaveJSProperty('open', false);
     await expect(outer).toHaveJSProperty('open', true);
 
     // A click fully outside the chain closes every layer.
-    await page.locator('#ndo-inner-trigger').click();
+    await page.locator('#nested-inner-trigger').click();
     await expect(inner).toHaveJSProperty('open', true);
-    await page.locator('#ndo-innermost-trigger').click();
+    await page.locator('#nested-innermost-trigger').click();
     await expect(innermost).toHaveJSProperty('open', true);
-    await page.locator('#ndo-away').click();
+    await page.locator('#nested-away').click();
     await expect(outer).toHaveJSProperty('open', false);
     await expect(inner).toHaveJSProperty('open', false);
     await expect(innermost).toHaveJSProperty('open', false);

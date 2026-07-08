@@ -1159,50 +1159,6 @@ export const NestedLayersTest: Story = {
   },
 };
 
-// Nested-popover dismissal ordering, driven by real (trusted) input so native
-// light-dismiss actually fires — the coverage NestedLayersTest could not provide
-// with synthetic events. Escape peels the stack topmost-first; an outside click
-// dismisses only the popovers above the clicked ancestor.
-export const NestedDismissalOrderTest: Story = {
-  render: () => html`
-    <div style="display: flex; gap: 24px; padding: 40px">
-      <swc-button id="ndo-outer-trigger">Open outer</swc-button>
-      <swc-button id="ndo-away">Elsewhere</swc-button>
-      <swc-popover
-        id="ndo-outer"
-        for="ndo-outer-trigger"
-        accessible-label="Outer"
-      >
-        <div style="display: flex; flex-direction: column; gap: 12px;">
-          <p id="ndo-outer-body" style="margin: 0;">Outer popover body</p>
-          <swc-button id="ndo-inner-trigger">Open inner</swc-button>
-          <swc-popover
-            id="ndo-inner"
-            for="ndo-inner-trigger"
-            accessible-label="Inner"
-          >
-            <div style="display: flex; flex-direction: column; gap: 12px;">
-              <p id="ndo-inner-body" style="margin: 0;">Inner popover body</p>
-              <swc-button id="ndo-innermost-trigger">Open innermost</swc-button>
-              <swc-popover
-                id="ndo-innermost"
-                for="ndo-innermost-trigger"
-                accessible-label="Innermost"
-              >
-                Innermost popover content
-              </swc-popover>
-            </div>
-          </swc-popover>
-        </div>
-      </swc-popover>
-    </div>
-  `,
-  // Render-only fixture: a 3-level popover chain (outer > inner > innermost). Native nested
-  // light-dismiss ordering (Escape peels the topmost popover first; an ancestor click dismisses
-  // only descendants) needs trusted browser input, so the interaction and assertions live in
-  // popover.a11y.spec.ts (Playwright).
-};
-
 // ──────────────────────────────────────────────────────────────
 // TEST: Close-source labeling + dismissal coordination
 // ──────────────────────────────────────────────────────────────
@@ -1318,25 +1274,6 @@ export const ModalNestedEscapeTest: Story = {
   },
 };
 
-export const DefaultEscapeSourceTest: Story = {
-  render: () => html`
-    <swc-button id="des-trigger">Trigger</swc-button>
-    <swc-popover for="des-trigger">Content</swc-popover>
-  `,
-  // Render-only fixture. Native Escape light-dismiss needs trusted browser input, so the
-  // interaction and close-source assertion live in popover.a11y.spec.ts (Playwright).
-};
-
-export const DefaultOutsideClickSourceTest: Story = {
-  render: () => html`
-    <swc-button id="docs-trigger">Trigger</swc-button>
-    <swc-button id="docs-outside">Outside</swc-button>
-    <swc-popover for="docs-trigger">Content</swc-popover>
-  `,
-  // Render-only fixture. Native outside-click light-dismiss needs trusted browser input, so
-  // the interaction and close-source assertion live in popover.a11y.spec.ts (Playwright).
-};
-
 export const ProgrammaticCloseSourceTest: Story = {
   render: () => html`
     <button id="pcs-trigger">Trigger</button>
@@ -1365,17 +1302,6 @@ export const ProgrammaticCloseSourceTest: Story = {
       'programmatic'
     );
   },
-};
-
-export const ModalEscapeSourceTest: Story = {
-  render: () => html`
-    <swc-button id="mes-trigger">Trigger</swc-button>
-    <swc-popover for="mes-trigger" modal accessible-label="Settings">
-      Content
-    </swc-popover>
-  `,
-  // Render-only fixture. Native `<dialog>` Escape (cancel) needs trusted browser input, so
-  // the interaction and close-source assertion live in popover.a11y.spec.ts (Playwright).
 };
 
 export const SequentialPopoversTest: Story = {
