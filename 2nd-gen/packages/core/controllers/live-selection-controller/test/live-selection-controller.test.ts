@@ -439,6 +439,95 @@ export const DisabledItemSkippedTest: Story = {
 };
 
 // ──────────────────────────────────────────────────────────────
+//     Reconnect after disconnect restores controller
+//
+//     When the host is removed from the DOM and then re-inserted, Lit calls
+//     hostConnected() again and the controller re-attaches its listener.
+//     Sibling-close enforcement must resume as if nothing happened.
+// ──────────────────────────────────────────────────────────────
+
+export const ReconnectRestoresControllerTest: Story = {
+  render: () => html`
+    <div id="mount-point">
+      <demo-live-selection-group mode="single">
+        <demo-live-selection-item
+          label="Item 1"
+          open
+        ></demo-live-selection-item>
+        <demo-live-selection-item label="Item 2"></demo-live-selection-item>
+      </demo-live-selection-group>
+    </div>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const mountPoint = canvasElement.querySelector(
+      '#mount-point'
+    ) as HTMLElement;
+    const group = await getGroup(canvasElement);
+    const [item1, item2] = await getItems(canvasElement);
+
+    await step('disconnect then reconnect the group', async () => {
+      mountPoint.removeChild(group);
+      await group.updateComplete;
+      mountPoint.appendChild(group);
+      await group.updateComplete;
+    });
+
+    await step('after reconnect, opening item 2 closes item 1', async () => {
+      expect(item1.open, 'item 1 is open before toggle').toBe(true);
+      clickToggle(item2);
+      await flushMicrotasks();
+      await Promise.all([item1.updateComplete, item2.updateComplete]);
+
+      expect(item2.open, 'item 2 is now open').toBe(true);
+      expect(item1.open, 'item 1 was closed by the controller').toBe(false);
+    });
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
+//     Dynamically added items are picked up on the next event
+//
+//     getItems() is called live on every toggle event. A child appended
+//     after construction is included in the next scan and subject to the
+//     single-select constraint.
+// ──────────────────────────────────────────────────────────────
+
+export const DynamicItemAddedTest: Story = {
+  render: () => html`
+    <demo-live-selection-group mode="single">
+      <demo-live-selection-item label="Item 1" open></demo-live-selection-item>
+    </demo-live-selection-group>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const group = await getGroup(canvasElement);
+    const [item1] = await getItems(canvasElement);
+
+    await step(
+      'a dynamically added item is picked up by getItems and enforces the constraint',
+      async () => {
+        const item2 = document.createElement(
+          'demo-live-selection-item'
+        ) as DemoLiveSelectionItem;
+        item2.label = 'Item 2';
+        group.appendChild(item2);
+        await item2.updateComplete;
+
+        expect(item1.open, 'item 1 starts open').toBe(true);
+        clickToggle(item2);
+        await flushMicrotasks();
+        await Promise.all([item1.updateComplete, item2.updateComplete]);
+
+        expect(item2.open, 'item 2 is now open').toBe(true);
+        expect(
+          item1.open,
+          'item 1 was closed: controller read the new item from live DOM'
+        ).toBe(false);
+      }
+    );
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
 //     Controller cleans up on disconnect
 // ──────────────────────────────────────────────────────────────
 
