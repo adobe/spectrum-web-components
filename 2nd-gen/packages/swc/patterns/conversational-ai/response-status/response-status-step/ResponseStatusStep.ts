@@ -10,14 +10,21 @@
  * governing permissions and limitations under the License.
  */
 
-import { CSSResultArray, html, PropertyValues, TemplateResult } from 'lit';
+import { CSSResultArray } from 'lit';
 import { property } from 'lit/decorators.js';
 
 import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
 
 import styles from './response-status-step.css';
 
-export type ResponseStatusStepStatus = 'active' | 'complete' | 'stopped';
+export const RESPONSE_STATUS_STEP_STATUSES = [
+  'active',
+  'complete',
+  'stopped',
+] as const;
+
+export type ResponseStatusStepStatus =
+  (typeof RESPONSE_STATUS_STEP_STATUSES)[number];
 
 /**
  * One agentic execution step inside `<swc-response-status>`.
@@ -31,36 +38,9 @@ export type ResponseStatusStepStatus = 'active' | 'complete' | 'stopped';
 export class ResponseStatusStep extends SpectrumElement {
   /** Timeline state for connector icons. */
   @property({ type: String, reflect: true })
-  public status: 'active' | 'complete' | 'stopped' = 'active';
+  public status: ResponseStatusStepStatus = 'active';
 
   public static override get styles(): CSSResultArray {
     return [styles];
-  }
-
-  /** @internal */
-  private _notifyStepChange = (): void => {
-    this.dispatchEvent(
-      new CustomEvent('swc-response-status-step-change', {
-        bubbles: true,
-      })
-    );
-  };
-
-  protected override updated(changed: PropertyValues): void {
-    if (changed.has('status')) {
-      this._notifyStepChange();
-    }
-  }
-
-  protected override render(): TemplateResult {
-    return html`
-      <slot name="label" hidden @slotchange=${this._notifyStepChange}></slot>
-      <slot
-        name="description"
-        hidden
-        @slotchange=${this._notifyStepChange}
-      ></slot>
-      <slot hidden @slotchange=${this._notifyStepChange}></slot>
-    `;
   }
 }

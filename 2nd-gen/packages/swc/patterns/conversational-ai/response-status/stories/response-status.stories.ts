@@ -13,12 +13,70 @@
 import { html, LitElement, type TemplateResult } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
+import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
 import '../index.js';
+
+import { RESPONSE_STATUSES } from '../ResponseStatus.js';
 
 // ────────────────
 //    METADATA
 // ────────────────
+
+const { args, argTypes, template } = getStorybookHelpers('swc-response-status');
+
+const activeStepsSlot = `<swc-response-status-step status="complete"><span slot="label">Looked through documentation</span><span slot="description">Prioritizing data from your documents like the '2023 Annual Report' and press releases related to Hilton.</span></swc-response-status-step><swc-response-status-step status="complete"><span slot="label">Searching web for: Carnival cruise trip packages Europe Asia</span><span slot="description">Correlating package availability across regions and travel windows.</span></swc-response-status-step><swc-response-status-step status="active"><span slot="label">Searching repositories for Europe trips</span><span slot="description">Checked 3 internal repositories for previously compiled trip package data and pricing templates.</span></swc-response-status-step>`;
+
+delete (args as Record<string, unknown>)['summary-slot'];
+delete (argTypes as Record<string, unknown>)['summary-slot'];
+
+argTypes.status = {
+  ...argTypes.status,
+  control: { type: 'select' },
+  options: RESPONSE_STATUSES,
+  table: {
+    ...argTypes.status?.table,
+    category: 'attributes',
+    defaultValue: { summary: 'pending' },
+  },
+};
+
+argTypes.open = {
+  ...argTypes.open,
+  control: { type: 'boolean' },
+  table: {
+    ...argTypes.open?.table,
+    category: 'attributes',
+    defaultValue: { summary: 'false' },
+  },
+};
+
+argTypes['accessible-label'] = {
+  ...argTypes['accessible-label'],
+  control: { type: 'text' },
+  table: {
+    ...argTypes['accessible-label']?.table,
+    category: 'attributes',
+  },
+};
+
+argTypes['label-slot'] = {
+  ...argTypes['label-slot'],
+  control: { type: 'text' },
+  table: {
+    ...argTypes['label-slot']?.table,
+    category: 'slots',
+  },
+};
+
+argTypes['default-slot'] = {
+  ...argTypes['default-slot'],
+  control: { type: 'text' },
+  table: {
+    ...argTypes['default-slot']?.table,
+    category: 'slots',
+  },
+};
 
 /**
  * Displays AI response progress with a compact status row and optional execution step timeline.
@@ -26,6 +84,16 @@ import '../index.js';
 const meta: Meta = {
   title: 'Conversational AI/Response status',
   component: 'swc-response-status',
+  args: {
+    ...args,
+    status: 'active',
+    open: true,
+    'accessible-label': 'Execution steps',
+    'label-slot': 'Searching repositories for Europe trips',
+    'default-slot': activeStepsSlot,
+  },
+  argTypes,
+  render: (args) => template(args),
   parameters: {
     docs: {
       subtitle: 'AI response lifecycle status with optional execution steps.',
@@ -131,16 +199,6 @@ const allStateSteps = html`
 // ────────────────────
 
 export const Playground: Story = {
-  render: () => html`
-    <swc-response-status
-      status="active"
-      open
-      accessible-label="Execution steps"
-    >
-      <span slot="label">Searching repositories for Europe trips</span>
-      ${activeSteps}
-    </swc-response-status>
-  `,
   tags: ['dev'],
 };
 
@@ -170,7 +228,6 @@ export const Anatomy: Story = {
       accessible-label="Execution steps"
     >
       <span slot="label">Searching repositories for Europe trips</span>
-      <span slot="summary">Processing request</span>
       ${activeSteps}
     </swc-response-status>
   `,

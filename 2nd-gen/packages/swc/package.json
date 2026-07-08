@@ -85,6 +85,7 @@
     "test:watch:vitest": "vitest --project storybook --watch"
   },
   "dependencies": {
+    "@lit-labs/observers": "2.0.2",
     "@spectrum-web-components/core": "0.3.0",
     "lit": "^2.5.0 || ^3.1.3"
   },

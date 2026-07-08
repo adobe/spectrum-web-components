@@ -35,7 +35,6 @@ type TestResponseStatus = ResponseStatus;
 const agenticMarkup = html`
   <swc-response-status status="active" open accessible-label="Execution steps">
     <span slot="label">Searching repositories for Europe trips</span>
-    <span slot="summary">Processing request</span>
 
     <swc-response-status-step status="complete">
       <span slot="label">Looked through documentation</span>
@@ -125,6 +124,21 @@ export const DynamicLabelTest: Story = {
         // the MutationObserver that keeps slotted label text in sync.
         (slottedLabel as HTMLElement).textContent =
           'Comparing cruise package pricing';
+
+        await waitFor(
+          () => {
+            const rollingLines = el.shadowRoot?.querySelectorAll(
+              '.swc-ResponseStatus-headerTrailLine'
+            );
+            expect(rollingLines?.length).toBe(2);
+            expect(rollingLines?.[0]?.getAttribute('aria-hidden')).toBe('true');
+            expect(rollingLines?.[1]?.hasAttribute('aria-hidden')).toBe(false);
+            expect(rollingLines?.[1]?.textContent?.trim()).toBe(
+              'Comparing cruise package pricing'
+            );
+          },
+          { timeout: 2000 }
+        );
 
         await waitFor(
           () => {
@@ -255,6 +269,25 @@ export const AgenticApiTest: Story = {
         );
       }
     );
+
+    await step('updates rendered steps when step status changes', async () => {
+      const stepEl = el.querySelector('swc-response-status-step') as
+        | (HTMLElement & { updateComplete?: Promise<boolean> })
+        | null;
+      stepEl?.setAttribute('status', 'stopped');
+      await stepEl?.updateComplete;
+
+      await waitFor(
+        () => {
+          const renderedStatuses = Array.from(
+            el.shadowRoot?.querySelectorAll('.swc-ResponseStatus-step') ?? []
+          ).map((renderedStep) => renderedStep.getAttribute('data-status'));
+
+          expect(renderedStatuses).toEqual(['stopped', 'active', 'complete']);
+        },
+        { timeout: 2000 }
+      );
+    });
 
     await step('dispatches toggle event when disclosure toggles', async () => {
       let captured: CustomEvent<{ open: boolean }> | undefined;

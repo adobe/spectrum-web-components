@@ -10,9 +10,15 @@
  * governing permissions and limitations under the License.
  */
 
-import { CSSResultArray, html, TemplateResult } from 'lit';
-import { property, state } from 'lit/decorators.js';
+import { CSSResultArray, html, PropertyValues, TemplateResult } from 'lit';
+import {
+  property,
+  queryAssignedElements,
+  queryAssignedNodes,
+  state,
+} from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
+import { MutationController } from '@lit-labs/observers/mutation-controller.js';
 
 import { Chevron75Icon } from '@adobe/spectrum-wc/icon/elements/index.js';
 import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
@@ -26,17 +32,21 @@ import {
   StepStoppedCircleIcon,
 } from '../utils/icons/index.js';
 import {
+  RESPONSE_STATUS_STEP_STATUSES,
   ResponseStatusStep,
   type ResponseStatusStepStatus,
 } from './response-status-step/ResponseStatusStep.js';
 
 import styles from './response-status.css';
 
-export type ResponseStatusStatus =
-  | 'pending'
-  | 'active'
-  | 'complete'
-  | 'stopped';
+export const RESPONSE_STATUSES = [
+  'pending',
+  'active',
+  'complete',
+  'stopped',
+] as const;
+
+export type ResponseStatusStatus = (typeof RESPONSE_STATUSES)[number];
 
 export type ResponseStatusStepData = {
   label: string;
@@ -49,7 +59,6 @@ export type ResponseStatusStepData = {
  *
  * @element swc-response-status
  * @slot label - Header row label. Falls back to the active step label.
- * @slot summary - Optional secondary summary text for lifecycle states.
  * @slot - `<swc-response-status-step>` elements.
  * @fires swc-response-status-toggle - Dispatched when the user opens or closes the panel.
  * Detail: `{ open: boolean }`
@@ -71,34 +80,26 @@ export class ResponseStatus extends SpectrumElement {
   /** Header label roll animation duration; keep in sync with the CSS. */
   private static readonly LABEL_ROLL_DURATION_MS = 650;
 
-  /** @internal */
   private readonly panelId = uniqueId('swc-response-status-panel');
 
-  /** @internal */
   @state()
   private _steps: ResponseStatusStepData[] = [];
 
-  /** @internal */
   @state()
   private _labelSlotText = '';
 
-  /** @internal */
-  @state()
-  private _summarySlotText = '';
-
-  /** @internal */
   @state()
   private _displayedLabel = '';
 
-  /** @internal */
   @state()
   private _rollFromLabel = '';
 
-  /** @internal */
+  @state()
+  private _rollToLabel = '';
+
   @state()
   private _rollActive = false;
 
-  /** @internal */
   @state()
   private _rollEngaged = false;
 
@@ -114,80 +115,67 @@ export class ResponseStatus extends SpectrumElement {
   @property({ type: String, attribute: 'accessible-label' })
   public accessibleLabel = '';
 
-  /** @internal */
-  private _contentObserver?: MutationObserver;
+  @queryAssignedNodes({ slot: 'label', flatten: true })
+  private _labelNodes!: Node[];
 
-  /** @internal */
-  private _rollToLabel = '';
+  @queryAssignedElements({
+    selector: 'swc-response-status-step',
+    flatten: true,
+  })
+  private _stepEls!: ResponseStatusStep[];
 
-  /** @internal */
   private _labelRollTimer: number | null = null;
 
-  /** @internal */
   private _labelRollRaf: number | null = null;
 
   public static override get styles(): CSSResultArray {
     return [styles];
   }
 
-  /** @internal */
-  private _handleStepChildChange = (): void => {
-    this._syncSlotContent();
-  };
-
-  public override connectedCallback(): void {
-    super.connectedCallback();
-    this.addEventListener(
-      'swc-response-status-step-change',
-      this._handleStepChildChange
-    );
+  public constructor() {
+    super();
 
     // Slotchange only fires when assigned nodes are added or removed, not when
     // their text mutates. Observe the light DOM so slotted text updates render.
-    this._contentObserver = new MutationObserver(() => {
-      this._syncSlotContent();
+    new MutationController(this, {
+      config: {
+        attributes: true,
+        attributeFilter: ['slot', 'status'],
+        characterData: true,
+        childList: true,
+        subtree: true,
+      },
+      callback: () => {
+        this._syncSlotContent();
+      },
     });
-    this._contentObserver.observe(this, {
-      characterData: true,
-      childList: true,
-      subtree: true,
-    });
+  }
+
+  public override connectedCallback(): void {
+    super.connectedCallback();
 
     this._syncSlotContent();
   }
 
-  protected override firstUpdated(): void {
-    this._displayedLabel = this._getHeaderLabel();
-  }
-
-  protected override updated(): void {
+  protected override willUpdate(_changed: PropertyValues<this>): void {
     this._applyLabelRoll();
   }
 
   public override disconnectedCallback(): void {
-    this.removeEventListener(
-      'swc-response-status-step-change',
-      this._handleStepChildChange
-    );
-    this._contentObserver?.disconnect();
-    this._contentObserver = undefined;
     this._clearLabelRollTimers();
     super.disconnectedCallback();
   }
 
   private _isValidStatus(status: string): status is ResponseStatusStatus {
-    return (
-      status === 'pending' ||
-      status === 'active' ||
-      status === 'complete' ||
-      status === 'stopped'
-    );
+    return (RESPONSE_STATUSES as readonly string[]).includes(status);
   }
 
   private _isValidStepStatus(
     status: string
   ): status is ResponseStatusStepStatus {
-    return status === 'active' || status === 'complete' || status === 'stopped';
+    return (RESPONSE_STATUS_STEP_STATUSES as readonly string[]).includes(
+      status
+    );
   }
 
   private _stepsEqual(
@@ -235,27 +223,10 @@ export class ResponseStatus extends SpectrumElement {
       .join(' ');
   }
 
-  private _readShadowSlotText(slotName: string): string {
-    const slot =
-      this.shadowRoot?.querySelector<HTMLSlotElement>(
-        `slot[name="${slotName}"]`
-      ) ?? null;
-
-    if (!slot) {
-      return '';
-    }
-
-    return slot
-      .assignedNodes({ flatten: true })
-      .map((node) => node.textContent?.trim() ?? '')
-      .filter(Boolean)
-      .join(' ');
-  }
-
-  private _readNamedSlotContent(slotName: string): string {
+  private _readLabelSlotContent(): string {
     return (
-      this._readLightDomNamedSlotText(this, slotName) ||
-      this._readShadowSlotText(slotName)
+      this._readNodeText(this._labelNodes ?? []) ||
+      this._readLightDomNamedSlotText(this, 'label')
     );
   }
 
@@ -269,10 +240,7 @@ export class ResponseStatus extends SpectrumElement {
   private _readStepElement(element: Element): ResponseStatusStepData {
     const step = element as ResponseStatusStep;
     const label = this._readLightDomNamedSlotText(element, 'label');
-    const rawStatus =
-      step.status ||
-      (element.getAttribute('status') as ResponseStatusStepStatus | null) ||
-      'active';
+    const rawStatus = step.status || 'active';
     const status = this._isValidStepStatus(rawStatus) ? rawStatus : 'active';
 
     return {
@@ -282,53 +250,44 @@ export class ResponseStatus extends SpectrumElement {
     };
   }
 
-  private _readSteps(slot: HTMLSlotElement | null): ResponseStatusStepData[] {
-    if (!slot) {
-      return Array.from(this.children)
-        .filter((element): element is ResponseStatusStep =>
-          this._isStepElement(element)
-        )
-        .map((element) => this._readStepElement(element));
-    }
+  private _readNodeText(nodes: Iterable<Node>): string {
+    return Array.from(nodes)
+      .map((node) => node.textContent?.trim() ?? '')
+      .filter(Boolean)
+      .join(' ');
+  }
 
-    return slot
-      .assignedElements({ flatten: true })
-      .filter((element): element is ResponseStatusStep =>
-        this._isStepElement(element)
-      )
-      .map((element) => this._readStepElement(element));
+  private _readSteps(): ResponseStatusStepData[] {
+    const stepEls =
+      this._stepEls?.length > 0
+        ? this._stepEls
+        : Array.from(this.children).filter(
+            (element): element is ResponseStatusStep =>
+              this._isStepElement(element)
+          );
+
+    return stepEls.map((element) => this._readStepElement(element));
   }
 
   private _syncNamedSlots(): void {
-    const labelText = this._readNamedSlotContent('label');
-    const summaryText = this._readNamedSlotContent('summary');
+    const labelText = this._readLabelSlotContent();
 
     if (this._labelSlotText !== labelText) {
       this._labelSlotText = labelText;
     }
-    if (this._summarySlotText !== summaryText) {
-      this._summarySlotText = summaryText;
-    }
   }
 
-  private _syncSlotContent(slot?: HTMLSlotElement): void {
+  private _syncSlotContent(): void {
     this._syncNamedSlots();
 
-    const contentSlot =
-      slot ??
-      this.shadowRoot?.querySelector<HTMLSlotElement>(
-        '.swc-ResponseStatus-content-slot'
-      ) ??
-      null;
-
-    const steps = this._readSteps(contentSlot);
+    const steps = this._readSteps();
     if (!this._stepsEqual(steps, this._steps)) {
       this._steps = steps;
     }
   }
 
-  private _handleSlotChange(event: Event): void {
-    this._syncSlotContent(event.target as HTMLSlotElement);
+  private _handleSlotChange(): void {
+    this._syncSlotContent();
   }
 
   private _handleNamedSlotChange(): void {
@@ -349,10 +308,6 @@ export class ResponseStatus extends SpectrumElement {
       if (activeStepLabel) {
         return activeStepLabel;
       }
-    }
-
-    if (this._summarySlotText) {
-      return this._summarySlotText;
     }
 
     return this._isValidStatus(this.status)
@@ -382,6 +337,11 @@ export class ResponseStatus extends SpectrumElement {
   // consumer-managed; this only animates each transition.
   private _applyLabelRoll(): void {
     const target = this._getHeaderLabel();
+
+    if (!this._displayedLabel) {
+      this._displayedLabel = target;
+      return;
+    }
 
     if (this._rollActive) {
       if (target === this._rollToLabel) {
@@ -417,16 +377,15 @@ export class ResponseStatus extends SpectrumElement {
       this._labelRollRaf = window.requestAnimationFrame(() => {
         this._labelRollRaf = null;
         this._rollEngaged = true;
+        this._labelRollTimer = window.setTimeout(() => {
+          this._labelRollTimer = null;
+          this._displayedLabel = this._rollToLabel;
+          this._rollActive = false;
+          this._rollEngaged = false;
+          this._applyLabelRoll();
+        }, ResponseStatus.LABEL_ROLL_DURATION_MS);
       });
     });
-
-    this._labelRollTimer = window.setTimeout(() => {
-      this._labelRollTimer = null;
-      this._displayedLabel = this._rollToLabel;
-      this._rollActive = false;
-      this._rollEngaged = false;
-      this._applyLabelRoll();
-    }, ResponseStatus.LABEL_ROLL_DURATION_MS);
   }
 
   private _currentVisibleLabel(): string {
@@ -460,7 +419,7 @@ export class ResponseStatus extends SpectrumElement {
     return html`
       <span class="swc-ResponseStatus-headerTrailViewport">
         <span class=${stripClass}>
-          <span class="swc-ResponseStatus-headerTrailLine">
+          <span class="swc-ResponseStatus-headerTrailLine" aria-hidden="true">
             <span class=${labelClass}>${this._rollFromLabel}</span>
             ${chevron}
           </span>
@@ -473,7 +432,6 @@ export class ResponseStatus extends SpectrumElement {
     `;
   }
 
-  /** @internal */
   private get _showPanel(): boolean {
     return this._steps.length > 0;
   }
@@ -691,11 +649,6 @@ export class ResponseStatus extends SpectrumElement {
         ${this._renderHeader(showPanel)} ${this._renderPanel(showPanel)}
         <slot
           name="label"
-          hidden
-          @slotchange=${this._handleNamedSlotChange}
-        ></slot>
-        <slot
-          name="summary"
           hidden
           @slotchange=${this._handleNamedSlotChange}
         ></slot>

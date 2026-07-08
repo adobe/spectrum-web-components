@@ -34,7 +34,7 @@
   display: flex;
   gap: token("spacing-100");
   align-items: center;
-  block-size: var(--swc-response-status-row-block-size, 32px);
+  block-size: var(--_swc-response-status-row-block-size, 32px);
   padding-inline: token("spacing-100");
 }
 
@@ -42,7 +42,7 @@
 .swc-ResponseStatus-row--button {
   inline-size: fit-content;
   max-inline-size: 580px;
-  padding: var(--swc-sources-toggle-padding, 3px) token("spacing-100");
+  padding: var(--_swc-response-status-toggle-padding-block, 3px) token("spacing-100");
   background: transparent;
   border: none;
   border-radius: token("corner-radius-medium-default");
@@ -69,7 +69,7 @@
 
 .swc-ResponseStatus-headerTrailViewport {
   min-inline-size: 0;
-  block-size: var(--swc-response-status-label-line-size, 1.33em);
+  block-size: var(--_swc-response-status-label-line-size, 1.33em);
   overflow: hidden;
 }
 
@@ -90,8 +90,8 @@
   max-inline-size: 100%;
   transform: translateY(0);
   transition:
-    transform var(--swc-response-status-roll-duration, 650ms) token("animation-ease-in-out"),
-    opacity var(--swc-response-status-roll-duration, 650ms) token("animation-ease-in-out");
+    transform 650ms token("animation-ease-in-out"),
+    opacity 650ms token("animation-ease-in-out");
 }
 
 .swc-ResponseStatus-headerTrailStrip--rolling {
@@ -103,10 +103,10 @@
   gap: token("spacing-100");
   align-items: center;
   max-inline-size: 100%;
-  block-size: var(--swc-response-status-label-line-size, 1.33em);
+  block-size: var(--_swc-response-status-label-line-size, 1.33em);
   white-space: nowrap;
   opacity: 1;
-  transition: opacity calc(var(--swc-response-status-roll-duration, 650ms) / 2) token("animation-ease-in-out");
+  transition: opacity 325ms token("animation-ease-in-out");
 }
 
 .swc-ResponseStatus-headerTrailLine .swc-ResponseStatus-label {
@@ -118,13 +118,6 @@
 
 .swc-ResponseStatus-headerTrailStrip--rolling .swc-ResponseStatus-headerTrailLine:first-child {
   visibility: hidden;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .swc-ResponseStatus-headerTrailStrip,
-  .swc-ResponseStatus-headerTrailLine {
-    transition: none;
-  }
 }
 
 /* Three-dot loading indicator */
@@ -391,6 +384,11 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .swc-ResponseStatus-headerTrailStrip,
+  .swc-ResponseStatus-headerTrailLine {
+    transition: none;
+  }
+
   .swc-ResponseStatus-dot {
     opacity: 0.7;
     animation: none;
@@ -398,5 +396,17 @@
 
   .swc-ResponseStatus-step:last-child {
     animation: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .swc-ResponseStatus-dots,
+  .swc-ResponseStatus-step-icon {
+    color: CanvasText;
+  }
+
+  .swc-ResponseStatus-dot,
+  .swc-ResponseStatus-step-line {
+    background: CanvasText;
   }
 }

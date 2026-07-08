@@ -53,12 +53,12 @@ All provided steps render in their authored order.
 
 `<swc-response-status>` emits **`swc-response-status-toggle`** when users open or close the step timeline. The event **bubbles** and is **composed**.
 
-`event.detail.open` contains the next disclosure state.
+`event.detail.open` contains the next disclosure state. The component updates its own `open` state before emitting the event.
 
 ```js
 status.addEventListener('swc-response-status-toggle', (event) => {
   const { open } = event.detail;
-  status.open = open;
+  console.log(open);
 });
 ```
 
