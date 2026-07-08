@@ -30,6 +30,7 @@
   -webkit-tap-highlight-color: transparent;
   display: inline-flex;
   position: relative;
+  inline-size: 100%;
   gap: var(--swc-action-button-gap, token("base-gap-medium"));
   align-items: center;
   justify-content: center;
