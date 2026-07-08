@@ -51,7 +51,7 @@ test.describe('Popover - ARIA snapshots', () => {
     await expect(root).toMatchAriaSnapshot(`
       - button "Open popover"
       - dialog "Autosave":
-        - text: Your changes are saved automatically as you edit.
+        - paragraph: Your changes are saved automatically as you edit.
     `);
   });
 

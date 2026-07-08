@@ -205,7 +205,7 @@ export const Overview: Story = {
 //    BEHAVIORS STORIES
 // ──────────────────────────────
 
-export const CustomAnchor: Story = {
+export const TriggerElement: Story = {
   args: {
     placement: 'bottom',
     'accessible-label': 'Definition',
@@ -258,7 +258,7 @@ export const CustomAnchor: Story = {
   },
   tags: ['behaviors'],
 };
-CustomAnchor.storyName = 'Custom anchor';
+TriggerElement.storyName = 'Trigger element';
 
 export const VirtualAnchor: Story = {
   args: {
@@ -357,7 +357,9 @@ const triggered = (
 export const Anatomy: Story = {
   args: {
     'accessible-label': 'Autosave',
-    'default-slot': 'Your changes are saved automatically as you edit.',
+    // A plain paragraph: the component's `::slotted` reset zeroes the user-agent
+    // block margins so the text does not add space inside the padded surface.
+    'default-slot': '<p>Your changes are saved automatically as you edit.</p>',
   },
   render: (args) => triggered({ ...args }, 'anatomy-trigger', 'Open popover'),
   tags: ['anatomy'],
@@ -438,6 +440,48 @@ export const Modal: Story = {
   render: (args) => triggered({ ...args }, 'modal-trigger', 'Open modal'),
   tags: ['behaviors'],
 };
+
+// A scroll region inside the popover carries `tabindex="0"` (and an accessible
+// name) so keyboard users can focus it and scroll with the arrow keys; the
+// popover does not make slotted content focusable on its own.
+const scrollableReleaseNotes = `
+  <div style="display: flex; flex-direction: column; gap: 12px;">
+    <span class="swc-Title swc-Title--sizeS">Release notes</span>
+    <div
+      tabindex="0"
+      aria-label="Release notes, scrollable"
+      style="max-block-size: 132px; overflow: auto; padding-inline-end: 8px; display: flex; flex-direction: column; gap: 8px;"
+    >
+      <p class="swc-Body swc-Body--sizeS" style="margin: 0;">
+        <strong>2.4.0</strong> — Popover gained a modal mode, logical placements,
+        and a configurable arrow.
+      </p>
+      <p class="swc-Body swc-Body--sizeS" style="margin: 0;">
+        <strong>2.3.0</strong> — Focus now returns to the trigger on close, and
+        nested popovers dismiss one layer at a time.
+      </p>
+      <p class="swc-Body swc-Body--sizeS" style="margin: 0;">
+        <strong>2.2.0</strong> — Added the <code>size</code> attribute and public
+        styling custom properties.
+      </p>
+      <p class="swc-Body swc-Body--sizeS" style="margin: 0;">
+        <strong>2.1.0</strong> — Introduced the virtual-anchor positioning option.
+      </p>
+    </div>
+  </div>
+`;
+
+export const ScrollableContent: Story = {
+  args: {
+    'accessible-label': 'Release notes',
+    size: 's',
+    'default-slot': scrollableReleaseNotes,
+  },
+  render: (args) =>
+    triggered({ ...args }, 'scrollable-trigger', 'Open popover'),
+  tags: ['behaviors'],
+};
+ScrollableContent.storyName = 'Scrollable content';
 
 // Nested-popover fixture (outer > inner > innermost) for the native
 // dismissal-ordering test in popover.a11y.spec.ts. Native light-dismiss needs

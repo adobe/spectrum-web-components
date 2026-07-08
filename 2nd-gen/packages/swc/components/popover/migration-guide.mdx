@@ -29,7 +29,20 @@ import '@adobe/spectrum-wc/components/popover/swc-popover.js';
 
 > `@adobe/spectrum-wc` is a monolithic package. Importing via subpath (e.g. `@adobe/spectrum-wc/components/popover/swc-popover.js`) registers and loads only that component's bundle.
 
-> If a first-party Spectrum 2 component already has a popover built in (for example a picker or action menu), prefer that component. Reach for `<swc-popover>` only when you are composing your own anchored surface.
+<div
+  style={{
+    borderLeft: '4px solid #dba842',
+    background: 'rgba(219, 168, 66, 0.12)',
+    padding: '12px 16px',
+    margin: '16px 0',
+    borderRadius: '4px',
+  }}
+>
+  <strong>⚠️ Prefer a built-in component.</strong> If a first-party Spectrum 2
+  component already has a popover built in (for example a picker or action
+  menu), use that component. Reach for <code>{'<swc-popover>'}</code> only when
+  you are composing your own anchored surface.
+</div>
 
 ## What changed
 

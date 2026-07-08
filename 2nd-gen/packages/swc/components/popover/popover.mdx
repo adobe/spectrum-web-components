@@ -12,7 +12,7 @@ import * as Stories from './stories/popover.stories';
 A popover is made up of:
 
 1. **Surface**: the anchored container that holds the content.
-2. **Default slot**: free-form slotted content such as text, a menu, a form, or an account card.
+2. **Default slot**: free-form slotted content such as text, a form, or an account profile.
 3. **Arrow (tip)**: a triangle pointing back at the trigger, shown by default and removed with `hide-arrow`.
 
 The popover positions itself against a trigger you associate with `for` or `triggerElement`; it does not render the trigger itself.
@@ -23,7 +23,15 @@ The popover positions itself against a trigger you associate with `for` or `trig
 
 ### Placement
 
-`placement` sets the preferred side relative to the trigger: `top`, `bottom` (default), and the logical inline sides `start` and `end`. Logical sides resolve against the writing direction, so `start` is the left in LTR and the right in RTL (and `end` is the mirror), keeping placements correct under right-to-left layouts. Each side also accepts an alignment toward one end of that edge: `top-start` / `top-end`, `bottom-start` / `bottom-end`, `start-top` / `start-bottom`, and `end-top` / `end-bottom`. When the preferred side lacks room the popover flips to the opposite side, unless `should-flip` is `false`. `offset` (main axis) and `cross-offset` (cross axis) nudge it in pixels from the trigger.
+The `placement` attribute sets the preferred position of the popover relative to its trigger: `top`, `bottom` (default), and the logical inline sides `start` and `end`. Each side also accepts an alignment toward one end of that edge: `top-start` / `top-end`, `bottom-start` / `bottom-end`, `start-top` / `start-bottom`, and `end-top` / `end-bottom`.
+
+The `start` and `end` values are RTL-aware: `start` maps to the left side in LTR and to the right in RTL; `end` maps to the right in LTR and to the left in RTL.
+
+`PlacementController` handles pixel positioning automatically. When there is insufficient space on the requested side, the popover flips to the opposite side (unless `should-flip` is `false`). The `placement` attribute always holds your requested value; it is never rewritten by the flip, so if space opens up the popover returns to the originally requested position. The resolved physical side is tracked internally and is not part of the public API, but is reflected to the `actual-placement` attribute for styling.
+
+Because `<swc-popover>` renders in the browser's top layer, the flip boundary is the **viewport**, not a scroll-container ancestor. Flip is triggered by proximity to the viewport edge; `container-padding` sets the minimum inset from that edge before flipping.
+
+Additional attributes control positioning: `offset` sets the pixel gap between the trigger and the surface; `cross-offset` slides the surface along the trigger edge; `should-flip` (default `true`) enables or disables the flip behavior.
 
 <Canvas of={Stories.Placement} />
 
@@ -41,19 +49,26 @@ The arrow (tip) points at the trigger and is shown by default. Set `hide-arrow` 
 
 ## States
 
-### States
-
 `open` is the single source of truth for visibility: the popover is either open or closed. Toggling the trigger, pressing `Escape`, or clicking outside (default mode) all reconcile back to `open`. There are no disabled or selected states.
+
+Because the default mode uses `popover="auto"`, opening a popover dismisses any other open auto popover in the document, including tooltips, menus, pickers, and other popovers. Nested popovers are the exception: a popover opened from inside another forms an ancestor chain and stays open together.
 
 <Canvas of={Stories.States} />
 
 ## Behaviors
 
-### Custom anchor
+### Trigger element
 
-The toggling control and the positioning anchor can be different elements: a button drives `open` while the popover anchors to another element via the `triggerElement` property (`manual` suppresses the anchor's own click-to-toggle).
+The popover positions against a trigger resolved from the `for` attribute (an id in the same tree root) or the `triggerElement` property. Use `triggerElement` when the trigger and popover are in **different shadow roots** (where `getElementById` cannot cross the boundary) or when the popover is **inserted programmatically** and a stable `id` is not available. Setting `triggerElement` to `null` reverts to `for`-based resolution.
 
-<Canvas of={Stories.CustomAnchor} />
+The toggling control and the positioning anchor can also be different elements: a button drives `open` while the popover anchors to another element via `triggerElement`, with `manual` suppressing the anchor's own click-to-toggle.
+
+```js
+const popover = document.querySelector('swc-popover');
+popover.triggerElement = someElement; // replaces any `for` wiring
+```
+
+<Canvas of={Stories.TriggerElement} />
 
 ### Virtual anchor
 
@@ -61,27 +76,52 @@ The toggling control and the positioning anchor can be different elements: a but
 
 <Canvas of={Stories.VirtualAnchor} />
 
-### Modal
+### Focus trapping and dismissal
+
+#### Default-mode dismissal
+
+In the default (non-modal) mode the surface is a `<div popover="auto" role="dialog">`: the browser dismisses it on `Escape` or a click outside its own content, and the page behind stays interactive and scrollable. Clicking or focusing content inside the popover does not dismiss it. Opening it moves focus onto the dialog surface so assistive technology lands inside (an initially-open popover does not steal focus on mount); when it closes, focus returns to the trigger only if focus was still inside the popover, so a dismiss that moved focus elsewhere is left alone.
+
+#### Modal
 
 Setting `modal` switches the surface to a `<dialog>` opened with `showModal()`: focus is trapped inside, the page behind is inert and its scroll is locked, and the surface exposes `role="dialog"`. Dismiss with `Escape` or a click on the backdrop. Name the dialog with `accessible-label` (see [Accessibility](#accessibility)).
 
 <Canvas of={Stories.Modal} />
 
-#### Default-mode dismissal
+### Events
 
-In the default (non-modal) mode the surface is a `<div popover="auto">`: the browser dismisses it on `Escape` or a click outside its own content, and the page behind stays interactive and scrollable. Clicking or focusing content inside the popover does not dismiss it.
+`<swc-popover>` dispatches four lifecycle events as visibility changes:
 
-#### Focus and events
+- **`swc-open`**: dispatched when the popover begins to open, before the enter transition plays.
+- **`swc-after-open`**: dispatched after the enter transition completes.
+- **`swc-close`**: dispatched when the popover begins to close, before the exit transition plays. `detail.source` reports why it closed: `escape`, `outside`, or `programmatic`.
+- **`swc-after-close`**: dispatched after the exit transition completes.
 
-Opening the popover moves focus into it and closing returns focus to the trigger. The popover dispatches `swc-open` / `swc-after-open` on open and `swc-close` / `swc-after-close` on close; `swc-close.detail.source` reports why it closed: `escape`, `outside`, or `programmatic`.
+When no CSS transition is active (for example when `prefers-reduced-motion` removes it), `swc-after-open` and `swc-after-close` dispatch synchronously on the same tick as `swc-open` and `swc-close`. Events fire regardless of what triggered the change: setting `open`, toggling the trigger, pressing `Escape`, or a light-dismiss click.
+
+### Scrollable content
+
+The popover does not make slotted content focusable, so a region that scrolls needs `tabindex="0"` (and an accessible name) for keyboard users to focus it and scroll with the arrow keys. The example below puts a scrollable release-notes region inside the popover.
+
+<Canvas of={Stories.ScrollableContent} />
 
 ## Accessibility
 
 ### Features
 
 - The popover needs an **accessible name**: set `accessible-label` and its value is applied to the surface. The name is required because the surface is exposed with `role="dialog"` internally, and the component warns in development when a popover opens without one.
-- Opening the popover moves focus into it and closing returns focus to the trigger.
+- Opening the popover moves focus onto the dialog surface (natively via `showModal()` in modal mode). On close, focus returns to the trigger: natively in modal mode, and in the default mode when focus was still inside the popover.
 - The resolved trigger receives `aria-expanded`, a durable `aria-controls` relationship wired through the element-reference IDL (so it works across shadow boundaries), and `aria-haspopup="dialog"`. For an SWC component trigger with an open shadow root, the inner `<button>` receives the ARIA.
+
+#### Keyboard navigation
+
+- <kbd>Tab</kbd> / <kbd>Shift+Tab</kbd>: moves focus through the popover's
+  focusable content. In modal mode focus is trapped inside; in the default mode
+  focus can move out to the page and the popover stays open (it dismisses only
+  on <kbd>Escape</kbd> or an outside click).
+- <kbd>Enter</kbd> / <kbd>Space</kbd>: activates the trigger to toggle the
+  popover open and closed.
+- <kbd>Escape</kbd>: closes the popover (handled natively by `popover="auto"` in the default mode and by `<dialog>` in modal mode); focus then returns to the trigger.
 
 ### Naming the popover
 
@@ -99,6 +139,7 @@ Set **`accessible-label`** to give the popover an accessible name:
 - Always set `accessible-label`; the surface is a dialog in both modes and needs a name.
 - Use `modal` only when the task genuinely needs to block the page; prefer the default mode for menus and contextual content.
 - Ensure a modal popover contains focusable content so focus has somewhere to land.
+- Set `tabindex="0"` on regions that may scroll so keyboard users can reach and scroll them (see [Scrollable content](#scrollable-content)).
 
 <Canvas of={Stories.Accessibility} />
 

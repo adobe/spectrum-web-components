@@ -152,6 +152,17 @@
   overflow: auto;
 }
 
+/* Reset user-agent block margins on the first and last slotted children (for
+ * example a plain paragraph or heading) so they do not add space inside the
+ * padded surface. A consumer can override these. */
+::slotted(:first-child) {
+  margin-block-start: 0;
+}
+
+::slotted(:last-child) {
+  margin-block-end: 0;
+}
+
 /* Modal mode renders no dimming backdrop: keep the `<dialog>`'s backdrop
  * transparent (overriding any UA default). The backdrop pseudo-element still
  * exists, so backdrop-click light-dismiss continues to work. */

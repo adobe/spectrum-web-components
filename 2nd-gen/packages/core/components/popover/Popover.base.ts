@@ -106,14 +106,8 @@ export abstract class PopoverBase extends SpectrumElement {
 
   /**
    * Accessible name for the popover's dialog surface, forwarded as `aria-label`
-   * to the internal element (the `<dialog>` in modal mode, the `role="dialog"`
-   * `<div popover>` in the default mode).
-   *
-   * The popover is a dialog in both modes, so a name is required in both: a
-   * dialog with no accessible name is an authoring bug, and the component
-   * dev-warns when opened without one. The internal surface lives in the
-   * popover's shadow root, so a host `aria-labelledby` cannot reach it;
-   * `accessible-label` is the supported naming path.
+   * to the internal element. Required in both modes (the surface is a dialog);
+   * the component dev-warns when opened without one.
    */
   @property({ type: String, attribute: 'accessible-label' })
   public accessibleLabel = '';
