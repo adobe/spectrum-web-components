@@ -35,6 +35,8 @@ import styles from './action-group.css';
  *
  * @slot - One or more `swc-action-button` or `swc-action-menu` elements.
  *
+ * @cssprop --swc-action-group-gap - Space between children. Defaults to the medium spacing token (small spacing token at `xs`/`s` sizes).
+ *
  * @example
  * <swc-action-group accessible-label="Text formatting">
  *   <swc-action-button>Bold</swc-action-button>
@@ -163,7 +165,9 @@ export class ActionGroup extends ActionGroupBase {
 
   protected override render(): TemplateResult {
     return html`
-      <slot role="presentation" @slotchange=${this.handleSlotchange}></slot>
+      <div class="swc-ActionGroup">
+        <slot role="presentation" @slotchange=${this.handleSlotchange}></slot>
+      </div>
     `;
   }
 
