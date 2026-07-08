@@ -468,6 +468,84 @@ export const AllowMultipleTest: Story = {
   },
 };
 
+export const AllowMultipleRuntimeSwitchTest: Story = {
+  render: () => html`
+    <swc-accordion density="regular" allow-multiple>
+      <swc-accordion-item>
+        <span slot="label">Item 1</span>
+        <p>Panel 1</p>
+      </swc-accordion-item>
+      <swc-accordion-item>
+        <span slot="label">Item 2</span>
+        <p>Panel 2</p>
+      </swc-accordion-item>
+      <swc-accordion-item>
+        <span slot="label">Item 3</span>
+        <p>Panel 3</p>
+      </swc-accordion-item>
+    </swc-accordion>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const accordion = await getComponent<Accordion>(
+      canvasElement,
+      'swc-accordion'
+    );
+    const [item1, item2, item3] = await getComponents<AccordionItem>(
+      canvasElement,
+      'swc-accordion-item'
+    );
+
+    await step('open items 1 and 2 while allow-multiple is true', async () => {
+      getHeader(item1).click();
+      await flushMicrotasks();
+      getHeader(item2).click();
+      await flushMicrotasks();
+      await accordion.updateComplete;
+      await Promise.all([item1.updateComplete, item2.updateComplete]);
+
+      expect(item1.open, 'item 1 is open').toBe(true);
+      expect(item2.open, 'item 2 is open').toBe(true);
+    });
+
+    await step(
+      'switching allow-multiple to false re-enforces exclusive open on the next toggle',
+      async () => {
+        accordion.allowMultiple = false;
+        await accordion.updateComplete;
+
+        getHeader(item3).click();
+        await flushMicrotasks();
+        await accordion.updateComplete;
+        await Promise.all([
+          item1.updateComplete,
+          item2.updateComplete,
+          item3.updateComplete,
+        ]);
+
+        expect(item1.open, 'item 1 is closed').toBe(false);
+        expect(item2.open, 'item 2 is closed').toBe(false);
+        expect(item3.open, 'item 3 is the sole open item').toBe(true);
+      }
+    );
+
+    await step(
+      'switching allow-multiple back to true permits multiple open items again',
+      async () => {
+        accordion.allowMultiple = true;
+        await accordion.updateComplete;
+
+        getHeader(item1).click();
+        await flushMicrotasks();
+        await accordion.updateComplete;
+        await Promise.all([item1.updateComplete, item3.updateComplete]);
+
+        expect(item1.open, 'item 1 is open').toBe(true);
+        expect(item3.open, 'item 3 remains open').toBe(true);
+      }
+    );
+  },
+};
+
 // ──────────────────────────────────────────────────────────────
 // TEST: Controlled (cancelable toggle)
 // ──────────────────────────────────────────────────────────────

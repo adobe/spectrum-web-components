@@ -106,13 +106,28 @@ export abstract class AccordionBase extends SizedMixin(SpectrumElement, {
   /**
    * @internal
    *
-   * Applies the exclusive-open constraint when `allowMultiple` is false, in
-   * place of manually iterating `assignedItems()`. Only ever driven imperatively
-   * from `closeSiblingsOnOpen` with `{ silent: true }` — items keep their own
-   * click handling and cancelable-toggle lifecycle in `AccordionItemBase.toggle()`
-   * unchanged. `enableInteraction: false` means this controller never attaches
-   * its own click/keydown listeners; `getItems` is only used for `applyMutators`'
-   * live scan of every assigned item when a silent transition is asserted.
+   * Applies the exclusive-open constraint when in `single-toggle` mode, in
+   * place of manually iterating `assignedItems()`. `allowMultiple` drives this
+   * controller's `mode` via `setOptions` (see the `allowMultiple` branch in
+   * `update()`), so `closeSiblingsOnOpen` only needs to consult `getMode()`
+   * rather than reading the `allowMultiple` property directly. The controller
+   * is only ever driven imperatively from `closeSiblingsOnOpen` with
+   * `{ silent: true }` — items keep their own click handling and
+   * cancelable-toggle lifecycle in `AccordionItemBase.toggle()` unchanged.
+   * `enableInteraction: false` means this controller never attaches its own
+   * click/keydown listeners; `getItems` is only used for `applyMutators`' live
+   * scan of every assigned item when a silent transition is asserted.
+   *
+   * In `multiple` mode this controller's selection cache is intentionally left
+   * unpopulated: `closeSiblingsOnOpen` no-ops entirely, since items already
+   * manage their own `open` state independently and multiple mode does not
+   * need siblings closed. Routing every open/close through the controller's
+   * `multiple`-mode bookkeeping (`setSelectedItem`/`toggleItem`) was
+   * considered, but their `next` selection set is built by extending the
+   * cached `selectedItems`, so a cache that drifted from reality (an item
+   * closing without going through the controller) could cause a later open to
+   * re-select, and therefore re-open, an already-closed item. This controller
+   * is deliberately not the source of truth for `multiple` mode as a result.
    *
    * Known limitation: an item opened via a direct `open` property/attribute set
    * (bypassing `toggle()`) is not reconciled by this controller, the same way
@@ -135,7 +150,7 @@ export abstract class AccordionBase extends SizedMixin(SpectrumElement, {
       event.preventDefault();
       return;
     }
-    if (this.allowMultiple) {
+    if (this._selection.getMode() === 'multiple') {
       return;
     }
     const toggling = event.target;
@@ -193,6 +208,11 @@ export abstract class AccordionBase extends SizedMixin(SpectrumElement, {
   }
 
   protected override update(changedProperties: PropertyValues): void {
+    if (changedProperties.has('allowMultiple')) {
+      this._selection.setOptions({
+        mode: this.allowMultiple ? 'multiple' : 'single-toggle',
+      });
+    }
     if (changedProperties.has('level')) {
       const clamped = Math.min(
         6,
