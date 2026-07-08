@@ -14,6 +14,7 @@ import { expect, userEvent, waitFor } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import { Popover } from '@adobe/spectrum-wc/popover';
+import { PopoverBase } from '@spectrum-web-components/core/components/popover';
 import {
   isTopDismissible,
   registerDismissible,
@@ -415,6 +416,9 @@ export const ActualPlacementTest: Story = {
   `,
   play: async ({ canvasElement, step }) => {
     const popover = await getComponent<Popover>(canvasElement, 'swc-popover');
+    const trigger = canvasElement.querySelector(
+      '#actual-placement-trigger'
+    ) as HTMLButtonElement;
     await popover.updateComplete;
 
     await step('no actual-placement attribute while closed', () => {
@@ -425,7 +429,7 @@ export const ActualPlacementTest: Story = {
     });
 
     await step('reflects the requested physical side while open', async () => {
-      popover.open = true;
+      await userEvent.click(trigger);
       // The attribute is set by the controller's first (async) compute, so poll.
       // placement="bottom" fits below the trigger (no flip), so the reflected
       // physical side is exactly the requested one; a wrong-side resolution
@@ -441,7 +445,7 @@ export const ActualPlacementTest: Story = {
     await step('removes the attribute after the close transition', async () => {
       // Positioning (and the attribute) is torn down only after the close
       // transition completes, so poll rather than awaiting updateComplete.
-      popover.open = false;
+      await userEvent.click(trigger);
       await waitFor(() =>
         expect(
           popover.hasAttribute('actual-placement'),
@@ -449,6 +453,53 @@ export const ActualPlacementTest: Story = {
         ).toBe(false)
       );
     });
+  },
+};
+
+export const ActualPlacementFlipTest: Story = {
+  // The trigger is pinned to the top of the viewport (position: fixed) so a
+  // placement="top" popover has no room above; the flip middleware resolves to
+  // "bottom" and onPlacementChange reflects actual-placement="bottom".
+  render: () => html`
+    <div
+      style="position: fixed; top: 0; left: 50%; transform: translateX(-50%); z-index: 100;"
+    >
+      <button id="flip-trigger">Trigger</button>
+      <swc-popover
+        for="flip-trigger"
+        placement="top"
+        accessible-label="Flips to bottom"
+      >
+        Content that flips to the opposite side
+      </swc-popover>
+    </div>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const popover = await getComponent<Popover>(canvasElement, 'swc-popover');
+    await popover.updateComplete;
+
+    await step(
+      'placement="top" with no room above resolves actual-placement to bottom',
+      async () => {
+        popover.open = true;
+        // The initial setAttribute in the render writes "top"; the async first
+        // compute overwrites it once Floating UI resolves the flip, so poll.
+        await waitFor(() =>
+          expect(
+            popover.getAttribute('actual-placement'),
+            'reflects the flipped physical side'
+          ).toBe('bottom')
+        );
+        // `placement` stays the requested side; only the internal
+        // actual-placement reflects the resolution.
+        expect(popover.placement, 'requested placement is unchanged').toBe(
+          'top'
+        );
+      }
+    );
+
+    popover.open = false;
+    await popover.updateComplete;
   },
 };
 
@@ -576,10 +627,13 @@ export const UnresolvedTriggerWhileOpenTest: Story = {
   `,
   play: async ({ canvasElement, step }) => {
     const popover = await getComponent<Popover>(canvasElement, 'swc-popover');
+    const trigger = canvasElement.querySelector(
+      '#resolved-trigger'
+    ) as HTMLButtonElement;
     await popover.updateComplete;
 
     await step('opens and anchors against the resolved trigger', async () => {
-      popover.open = true;
+      await userEvent.click(trigger);
       await waitFor(() =>
         expect(popover.hasAttribute('actual-placement')).toBe(true)
       );
@@ -724,6 +778,9 @@ export const ModalToggleWhileOpenTest: Story = {
   `,
   play: async ({ canvasElement, step }) => {
     const popover = await getComponent<Popover>(canvasElement, 'swc-popover');
+    const trigger = canvasElement.querySelector(
+      '#modal-toggle-trigger'
+    ) as HTMLButtonElement;
     await popover.updateComplete;
     const surface = () =>
       popover.shadowRoot?.querySelector('.swc-Popover') as HTMLDialogElement;
@@ -731,7 +788,7 @@ export const ModalToggleWhileOpenTest: Story = {
     popover.addEventListener('swc-open', () => (openCount += 1));
 
     await step('opens in default (non-modal) mode', async () => {
-      popover.open = true;
+      await userEvent.click(trigger);
       await popover.updateComplete;
       await waitFor(() =>
         expect(surface().matches(':popover-open'), 'div popover is open').toBe(
@@ -1099,5 +1156,346 @@ export const NestedLayersTest: Story = {
       // must not light-dismiss the outer.
       expect(outer.open, 'outer stays open under the inner').toBe(true);
     });
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Close-source labeling + dismissal coordination
+// ──────────────────────────────────────────────────────────────
+
+export const UnresolvedForWarningTest: Story = {
+  render: () => html`
+    <swc-popover>Content</swc-popover>
+  `,
+  play: async ({ canvasElement }) => {
+    const popover = await getComponent<Popover>(canvasElement, 'swc-popover');
+    await popover.updateComplete;
+    await withWarningSpy(async (warnCalls) => {
+      // Pointing `for` at an id that does not resolve in the tree root warns.
+      popover.for = 'no-such-trigger-id';
+      await popover.updateComplete;
+      expect(
+        warnCalls.length,
+        'exactly one warning when for= does not resolve'
+      ).toBe(1);
+      expect(String(warnCalls[0]?.[1] || '')).toContain('did not resolve');
+    });
+  },
+};
+
+export const ModalContentPointerDownTest: Story = {
+  render: () => html`
+    <swc-popover modal accessible-label="Settings">
+      <button id="mcpd-inside">Inside</button>
+    </swc-popover>
+  `,
+  play: async ({ canvasElement }) => {
+    const popover = await getComponent<Popover>(canvasElement, 'swc-popover');
+    const dialog = popover.shadowRoot?.querySelector(
+      '.swc-Popover'
+    ) as HTMLDialogElement;
+    popover.open = true;
+    await waitFor(() => expect(dialog.matches(':modal')).toBe(true));
+
+    // A pointerdown on the padded content (target is the content, not the
+    // dialog) is not a backdrop click and must not dismiss.
+    const content = popover.shadowRoot?.querySelector(
+      '.swc-Popover-content'
+    ) as HTMLElement;
+    content.dispatchEvent(new PointerEvent('pointerdown', { bubbles: true }));
+    await popover.updateComplete;
+    expect(popover.open, 'pointerdown inside content keeps it open').toBe(true);
+  },
+};
+
+export const ModalBackdropClickTest: Story = {
+  render: () => html`
+    <swc-popover modal accessible-label="Settings">
+      <button id="mbc-inside">Inside</button>
+    </swc-popover>
+  `,
+  play: async ({ canvasElement }) => {
+    const popover = await getComponent<Popover>(canvasElement, 'swc-popover');
+    const dialog = popover.shadowRoot?.querySelector(
+      '.swc-Popover'
+    ) as HTMLDialogElement;
+    popover.open = true;
+    await waitFor(() => expect(dialog.matches(':modal')).toBe(true));
+
+    // A pointerdown on the dialog itself, at a point outside its box, is a
+    // backdrop click and must dismiss with source "outside".
+    let closeSource: string | undefined;
+    popover.addEventListener('swc-close', (event) => {
+      closeSource = (event as CustomEvent).detail.source;
+    });
+    const rect = dialog.getBoundingClientRect();
+    dialog.dispatchEvent(
+      new PointerEvent('pointerdown', {
+        bubbles: true,
+        clientX: rect.left - 10,
+        clientY: rect.top - 10,
+      })
+    );
+    await waitFor(() =>
+      expect(popover.open, 'backdrop click closes the modal').toBe(false)
+    );
+    expect(closeSource, 'close source is "outside"').toBe('outside');
+  },
+};
+
+export const ModalNestedEscapeTest: Story = {
+  render: () => html`
+    <swc-popover modal accessible-label="Settings">Content</swc-popover>
+  `,
+  play: async ({ canvasElement }) => {
+    const popover = await getComponent<Popover>(canvasElement, 'swc-popover');
+    const dialog = popover.shadowRoot?.querySelector(
+      '.swc-Popover'
+    ) as HTMLDialogElement;
+    popover.open = true;
+    await waitFor(() => expect(dialog.matches(':modal')).toBe(true));
+
+    // Something else is the topmost dismissible, so this modal's native Escape
+    // (`cancel`) must be deferred: prevented, and the popover stays open.
+    const other = {};
+    registerDismissible(other);
+    try {
+      expect(isTopDismissible(popover), 'popover is not topmost').toBe(false);
+      const cancelEvent = new Event('cancel', { cancelable: true });
+      dialog.dispatchEvent(cancelEvent);
+      expect(
+        cancelEvent.defaultPrevented,
+        'cancel is prevented when not topmost'
+      ).toBe(true);
+      expect(popover.open, 'modal stays open while not topmost').toBe(true);
+    } finally {
+      unregisterDismissible(other);
+    }
+  },
+};
+
+export const ProgrammaticCloseSourceTest: Story = {
+  render: () => html`
+    <button id="pcs-trigger">Trigger</button>
+    <swc-popover for="pcs-trigger">Content</swc-popover>
+  `,
+  play: async ({ canvasElement }) => {
+    const popover = await getComponent<Popover>(canvasElement, 'swc-popover');
+    const surface = popover.shadowRoot?.querySelector(
+      '.swc-Popover'
+    ) as HTMLElement;
+    popover.open = true;
+    await waitFor(() => expect(surface.matches(':popover-open')).toBe(true));
+
+    let source: string | undefined;
+    popover.addEventListener(
+      'swc-close',
+      (event) => {
+        source = (event as CustomEvent<{ source: string }>).detail.source;
+      },
+      { once: true }
+    );
+    // No Escape/outside cause recorded → a property-driven close is programmatic.
+    popover.open = false;
+    await waitFor(() => expect(popover.open).toBe(false));
+    expect(source, 'property-driven close labels source programmatic').toBe(
+      'programmatic'
+    );
+  },
+};
+
+export const SequentialPopoversTest: Story = {
+  render: () => html`
+    <button id="seq-a">Open A</button>
+    <swc-popover id="seq-pa" for="seq-a">A content</swc-popover>
+    <button id="seq-b">Open B</button>
+    <swc-popover id="seq-pb" for="seq-b">B content</swc-popover>
+  `,
+  play: async ({ canvasElement }) => {
+    const a = canvasElement.querySelector('#seq-pa') as Popover;
+    const b = canvasElement.querySelector('#seq-pb') as Popover;
+    const triggerA = canvasElement.querySelector('#seq-a') as HTMLButtonElement;
+    const triggerB = canvasElement.querySelector('#seq-b') as HTMLButtonElement;
+    await a.updateComplete;
+    await b.updateComplete;
+
+    await userEvent.click(triggerA);
+    await waitFor(() => expect(a.open).toBe(true));
+    // Opening B (a sibling auto popover, not an ancestor of A) light-dismisses A
+    // natively; only one auto-popover stack stays open at a time.
+    await userEvent.click(triggerB);
+    await waitFor(() => expect(a.open, 'A light-dismissed by B').toBe(false));
+    expect(b.open, 'B is open').toBe(true);
+  },
+};
+
+// A minimal concrete subclass exercises the base-class default rendering-layer
+// getters that the SWC layer always overrides (`tipElement` → null, `arrowHeight`
+// → 0), which production tests never reach.
+class BasePopoverProbe extends PopoverBase {
+  protected override get internalElement(): HTMLElement | null {
+    return this.shadowRoot?.querySelector('div') ?? null;
+  }
+  protected override render(): unknown {
+    return html`
+      <div><slot></slot></div>
+    `;
+  }
+}
+if (!customElements.get('base-popover-probe')) {
+  customElements.define('base-popover-probe', BasePopoverProbe);
+}
+
+export const BaseDefaultsTest: Story = {
+  render: () => html`
+    <base-popover-probe>content</base-popover-probe>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const el = canvasElement.querySelector(
+      'base-popover-probe'
+    ) as BasePopoverProbe & {
+      updateComplete: Promise<unknown>;
+      tipElement: HTMLElement | null;
+      arrowHeight: number;
+    };
+    await el.updateComplete;
+
+    await step('base tipElement default is null (no arrow)', () => {
+      expect(el.tipElement, 'base tipElement returns null').toBeNull();
+    });
+    await step('base arrowHeight default is 0', () => {
+      expect(el.arrowHeight, 'base arrowHeight returns 0').toBe(0);
+    });
+  },
+};
+
+export const ModalNoLabelWarningTest: Story = {
+  render: () => html`
+    <swc-popover modal>Content</swc-popover>
+  `,
+  play: async ({ canvasElement }) => {
+    const popover = await getComponent<Popover>(canvasElement, 'swc-popover');
+    await popover.updateComplete;
+    // Opening a modal with no accessible-label warns (the dialog would be
+    // nameless for assistive technology).
+    await withWarningSpy(async (warnCalls) => {
+      popover.open = true;
+      await popover.updateComplete;
+      expect(warnCalls.length, 'exactly one warning for a nameless modal').toBe(
+        1
+      );
+      expect(String(warnCalls[0]?.[1] || '')).toContain('accessible-label');
+    });
+  },
+};
+
+export const FailedShowTest: Story = {
+  render: () => html`
+    <button id="fs-trigger">Trigger</button>
+    <swc-popover for="fs-trigger"><button>Inside</button></swc-popover>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const popover = await getComponent<Popover>(canvasElement, 'swc-popover');
+    const surface = popover.shadowRoot?.querySelector(
+      '.swc-Popover'
+    ) as HTMLElement & { showPopover: () => void };
+
+    await step('a thrown showPopover() leaves no wired-up state', async () => {
+      const original = surface.showPopover.bind(surface);
+      surface.showPopover = () => {
+        throw new Error('show failed');
+      };
+      try {
+        popover.open = true;
+        await popover.updateComplete;
+        // Show failed: the element never entered the top layer and positioning
+        // was not started (no actual-placement), so nothing is left half-wired.
+        expect(surface.matches(':popover-open'), 'not shown').toBe(false);
+        expect(
+          popover.hasAttribute('actual-placement'),
+          'positioning not started on a failed show'
+        ).toBe(false);
+      } finally {
+        surface.showPopover = original;
+        popover.open = false;
+        await popover.updateComplete;
+      }
+    });
+  },
+};
+
+export const FailedShowModalTest: Story = {
+  render: () => html`
+    <swc-popover modal accessible-label="Settings">Content</swc-popover>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const popover = await getComponent<Popover>(canvasElement, 'swc-popover');
+    const dialog = popover.shadowRoot?.querySelector(
+      '.swc-Popover'
+    ) as HTMLDialogElement & { showModal: () => void };
+
+    await step('a thrown showModal() leaves no wired-up state', async () => {
+      const original = dialog.showModal.bind(dialog);
+      dialog.showModal = () => {
+        throw new Error('showModal failed');
+      };
+      try {
+        popover.open = true;
+        await popover.updateComplete;
+        expect(dialog.matches(':modal'), 'not modal-open').toBe(false);
+        expect(
+          popover.hasAttribute('actual-placement'),
+          'positioning not started on a failed modal show'
+        ).toBe(false);
+      } finally {
+        dialog.showModal = original;
+        popover.open = false;
+        await popover.updateComplete;
+      }
+    });
+  },
+};
+
+export const TriggerAriaTest: Story = {
+  render: () => html`
+    <button id="ta-trigger">Trigger</button>
+    <swc-popover for="ta-trigger" modal accessible-label="Settings">
+      Content
+    </swc-popover>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const popover = await getComponent<Popover>(canvasElement, 'swc-popover');
+    const trigger = canvasElement.querySelector(
+      '#ta-trigger'
+    ) as HTMLElement & {
+      ariaControlsElements?: Element[] | null;
+    };
+    await popover.updateComplete;
+
+    await step('a modal trigger advertises aria-haspopup="dialog"', () => {
+      expect(trigger.getAttribute('aria-haspopup')).toBe('dialog');
+    });
+
+    await step(
+      'the trigger controls the popover (element-reference IDL)',
+      () => {
+        expect(
+          trigger.ariaControlsElements,
+          'aria-controls relationship is exactly the popover'
+        ).toEqual([popover]);
+      }
+    );
+
+    await step(
+      'aria-haspopup stays "dialog" after clearing modal (dialog in both modes)',
+      async () => {
+        popover.modal = false;
+        await popover.updateComplete;
+        expect(
+          trigger.getAttribute('aria-haspopup'),
+          'the trigger still advertises the dialog in default mode'
+        ).toBe('dialog');
+      }
+    );
   },
 };
