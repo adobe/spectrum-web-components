@@ -422,6 +422,8 @@ const preview = {
                 ],
                 'Help text',
                 ['Rendering and styling migration analysis'],
+                'Icon',
+                ['Accessibility migration analysis'],
                 'Illustrated message',
                 [
                   'Accessibility migration analysis',
@@ -523,10 +525,7 @@ const preview = {
                   'Rendering and styling migration analysis',
                 ],
                 'Toast',
-                [
-                  'Accessibility migration analysis',
-                  'Rendering and styling migration analysis',
-                ],
+                ['Accessibility migration analysis'],
                 'Tooltip',
                 [
                   'Accessibility migration analysis',

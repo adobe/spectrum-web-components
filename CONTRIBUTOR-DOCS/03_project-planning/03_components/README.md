@@ -82,6 +82,8 @@
     - [Grid migration roadmap](grid/rendering-and-styling-migration-analysis.md)
 - Help Text
     - [Help text migration roadmap](help-text/rendering-and-styling-migration-analysis.md)
+- Icon
+    - [Icon accessibility migration analysis](icon/accessibility-migration-analysis.md)
 - Illustrated Message
     - [Illustrated message accessibility migration analysis](illustrated-message/accessibility-migration-analysis.md)
     - [`sp-illustrated-message` Migration Plan](illustrated-message/migration-plan.md)
