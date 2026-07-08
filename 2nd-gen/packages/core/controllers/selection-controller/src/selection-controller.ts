@@ -105,17 +105,21 @@ export type SelectionControllerOptions = {
    * — in `single` / `single-toggle` mode, when the item is now selected — asserts it as the sole
    * selection, closing every other live-selected item via the normal mutator rescan. In `multiple`
    * mode this is a no-op: a self-owning item toggling itself needs no cross-item enforcement, so
-   * this controller does nothing. Ignored when `enableInteraction` interaction is also relied upon
-   * — the two are alternative ways of learning about a selection attempt, not additive.
+   * this controller does nothing. **Only takes effect when `enableInteraction` is `false`** —
+   * enforced, not just documented: the two are alternative ways of learning about a selection
+   * attempt, not additive, so a consumer that sets both never gets both paths firing for the same
+   * click.
    */
   observeEvent?: string;
 
   /**
-   * Optional callback mirroring {@link selectionControllerChange}.
+   * Optional callback with the `{ selectedItems, addedItems, removedItems }` shape of
+   * {@link SelectionControllerChangeDetail} — this controller's only notification channel; it
+   * never dispatches a DOM event (see {@link SelectionController.applySelectionTransition}).
    *
    * **Fires on every commit, including `{ silent: true }` transitions** — unlike
-   * `confirmSelectionChange` and the `selectionControllerChange` DOM event, `silent` does not gate
-   * this callback. Silent transitions exist to reconcile controller state from participants whose
+   * `confirmSelectionChange`, `silent` does not gate this callback. Silent transitions exist to
+   * reconcile controller state from participants whose
    * selected-ish state changed independently (an external property write, a `defaultToFirstSelectable`
    * assertion during a silent `refresh`), and this callback is frequently the *only* channel a host
    * uses to mirror that reconciled selection into its own public property — see `swc-tabs`'
@@ -153,15 +157,22 @@ export type SelectionControllerOptions = {
    * internal shadow DOM, not onto the participant element `getItems` returns).
    */
   isDisabled?: (item: HTMLElement) => boolean;
+
+  /**
+   * Optional override for the whole eligibility check — connected, not `inert`, not `hidden`,
+   * not disabled, and CSS-visible. When provided, called instead of the built-in check, which
+   * ends in a native `checkVisibility` call. Use this for a large or virtualized list that can
+   * guarantee its items are never CSS-hidden, to skip that call entirely; the built-in default
+   * stays correct for everyone else, since it only pays for `checkVisibility` after every cheaper
+   * signal (connected, `hidden`, disabled, `inert`) has already passed.
+   */
+  isSelectable?: (item: HTMLElement) => boolean;
 };
 
 /**
- * Name of the bubbling composed `CustomEvent` dispatched when the selection changes.
- */
-export const selectionControllerChange = 'swc-selection-controller-change';
-
-/**
- * `detail` object for {@link selectionControllerChange}.
+ * Payload mirrored to {@link SelectionControllerOptions.onSelectionChange}. This controller has
+ * no DOM event of its own — see {@link SelectionController.applySelectionTransition} for why —
+ * so this shape only ever reaches consumers through that callback.
  */
 export type SelectionControllerChangeDetail = {
   /** Current selection after the change. */
@@ -273,6 +284,7 @@ export class SelectionController implements ReactiveController {
       | 'onSelectionChange'
       | 'confirmSelectionChange'
       | 'isDisabled'
+      | 'isSelectable'
       | 'readSelected'
       | 'observeEvent'
     >;
@@ -292,9 +304,14 @@ export class SelectionController implements ReactiveController {
     if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) {
       return;
     }
-    const items = this.getEligibleItems();
-    const hit = deepestSelectionItemContaining(event, items);
-    if (!hit || this.isDisabledParticipant(hit)) {
+    // Find which item was hit from the cheap raw scan, then validate
+    // eligibility on only that one item — this is an O(1) question
+    // (`isSelectableItem`, ending in `checkVisibility`) about the hit, not an
+    // O(n) one (`getEligibleItems`) about the whole list. Matters for a large
+    // list: a picker with hundreds of items shouldn't force a visibility
+    // check on every item for every click.
+    const hit = deepestSelectionItemContaining(event, this.getScopedRawItems());
+    if (!hit || !this.isSelectableItem(hit)) {
       return;
     }
     this.applyClickOrKey(hit);
@@ -313,9 +330,9 @@ export class SelectionController implements ReactiveController {
     if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) {
       return;
     }
-    const items = this.getEligibleItems();
-    const hit = deepestSelectionItemContaining(event, items);
-    if (!hit || this.isDisabledParticipant(hit)) {
+    // See `handleClickCapture` above for why this checks only the hit item.
+    const hit = deepestSelectionItemContaining(event, this.getScopedRawItems());
+    if (!hit || !this.isSelectableItem(hit)) {
       return;
     }
     event.preventDefault();
@@ -335,7 +352,7 @@ export class SelectionController implements ReactiveController {
       event,
       this.getScopedRawItems()
     );
-    if (!target || this.isDisabledParticipant(target)) {
+    if (!target || !this.isSelectableItem(target)) {
       return;
     }
     // Defer until the item's own cancelable-event lifecycle settles — a
@@ -362,6 +379,7 @@ export class SelectionController implements ReactiveController {
       onSelectionChange: options.onSelectionChange,
       confirmSelectionChange: options.confirmSelectionChange,
       isDisabled: options.isDisabled,
+      isSelectable: options.isSelectable,
       readSelected: options.readSelected,
       observeEvent: options.observeEvent,
     };
@@ -432,6 +450,7 @@ export class SelectionController implements ReactiveController {
       confirmSelectionChange:
         partial.confirmSelectionChange ?? this.options.confirmSelectionChange,
       isDisabled: partial.isDisabled ?? this.options.isDisabled,
+      isSelectable: partial.isSelectable ?? this.options.isSelectable,
       readSelected: partial.readSelected ?? this.options.readSelected,
       observeEvent: partial.observeEvent ?? this.options.observeEvent,
     };
@@ -472,9 +491,9 @@ export class SelectionController implements ReactiveController {
    * which a consumer may legitimately want to allow even in `single` mode.
    *
    * Pass **`{ silent: true }`** to commit this transition without invoking
-   * **`confirmSelectionChange`** or dispatching {@link selectionControllerChange} — used to
-   * resync internal state from an external property change without raising a public event.
-   * **`onSelectionChange`** still runs (see its docs for why).
+   * **`confirmSelectionChange`** — used to resync internal state from an external property change
+   * without raising a vetoable transition. **`onSelectionChange`** still runs (see its docs for
+   * why).
    */
   public setSelectedItem(
     item: HTMLElement | null,
@@ -488,8 +507,8 @@ export class SelectionController implements ReactiveController {
     }
 
     if (
-      !this.getEligibleItems().includes(item) ||
-      this.isDisabledParticipant(item)
+      !this.getScopedRawItems().includes(item) ||
+      !this.isSelectableItem(item)
     ) {
       return false;
     }
@@ -518,16 +537,16 @@ export class SelectionController implements ReactiveController {
    *
    * @returns **`false`** when the item is ineligible or when the mode disallows the operation.
    *
-   * Pass **`{ silent: true }`** to commit without invoking **`confirmSelectionChange`** or
-   * dispatching {@link selectionControllerChange}. **`onSelectionChange`** still runs.
+   * Pass **`{ silent: true }`** to commit without invoking **`confirmSelectionChange`**.
+   * **`onSelectionChange`** still runs.
    */
   public toggleItem(
     item: HTMLElement,
     options?: { silent?: boolean }
   ): boolean {
     if (
-      !this.getEligibleItems().includes(item) ||
-      this.isDisabledParticipant(item)
+      !this.getScopedRawItems().includes(item) ||
+      !this.isSelectableItem(item)
     ) {
       return false;
     }
@@ -555,8 +574,8 @@ export class SelectionController implements ReactiveController {
    * Selects all eligible items. Only meaningful in **`multiple`** mode; returns **`false`** in
    * single-item modes (does not throw).
    *
-   * Pass **`{ silent: true }`** to commit without invoking **`confirmSelectionChange`** or
-   * dispatching {@link selectionControllerChange}. **`onSelectionChange`** still runs.
+   * Pass **`{ silent: true }`** to commit without invoking **`confirmSelectionChange`**.
+   * **`onSelectionChange`** still runs.
    */
   public selectAll(options?: { silent?: boolean }): boolean {
     if (this.options.mode !== 'multiple') {
@@ -577,8 +596,8 @@ export class SelectionController implements ReactiveController {
    * mode, returns **`false`** and leaves the selection unchanged — unless **`{ silent: true }`**
    * is passed, which clears it anyway (see {@link SelectionController.setSelectedItem}).
    *
-   * Pass **`{ silent: true }`** to commit without invoking **`confirmSelectionChange`** or
-   * dispatching {@link selectionControllerChange}. **`onSelectionChange`** still runs.
+   * Pass **`{ silent: true }`** to commit without invoking **`confirmSelectionChange`**.
+   * **`onSelectionChange`** still runs.
    */
   public clearAll(options?: { silent?: boolean }): boolean {
     if (this.options.mode === 'single' && !options?.silent) {
@@ -598,29 +617,34 @@ export class SelectionController implements ReactiveController {
    * When nothing is currently eligible, no default selection is forced.
    *
    * Pass **`{ silent: true }`** to commit these transitions without invoking
-   * **`confirmSelectionChange`** or dispatching {@link selectionControllerChange} — used to
-   * resync internal state from an external property change without raising a public event.
-   * **`onSelectionChange`** still runs — this is how `swc-tabs` mirrors a silently-applied
-   * `defaultToFirstSelectable` selection into its own `selected` property.
+   * **`confirmSelectionChange`** — used to resync internal state from an external property change
+   * without raising a vetoable transition. **`onSelectionChange`** still runs — this is how
+   * `swc-tabs` mirrors a silently-applied `defaultToFirstSelectable` selection into its own
+   * `selected` property.
    */
   public refresh(options?: { silent?: boolean }): void {
     const silent = options?.silent ?? false;
-    const eligible = this.getEligibleItems();
+    const scoped = this.getScopedRawItems();
     const current = this.currentSelection();
 
-    // An item is stale when it is disconnected, or when the eligible list is
-    // non-empty and does not include it. When eligible is empty (e.g. the host
-    // signals it is disabled), only disconnected items are removed — connected
-    // selections are preserved so aria-selected stays true. With
-    // `readSelected`, `current` is always a live scan of connected, in-scope
-    // items, so a "disconnected but still selected" item can't occur — this
-    // only does real work for the cache-based path.
+    // An item is stale when it is disconnected, or when the scope is
+    // non-empty and no longer includes it — connectivity/membership, not
+    // CSS-driven eligibility. A selected item that merely went
+    // `display: none` (a collapsed panel, a media-query change) is still a
+    // legitimate participant; forcing it out of the selection over a
+    // transient visual state would be surprising. It also means this check
+    // never pays for `getEligibleItems()`'s `checkVisibility` — worth keeping
+    // cheap since this runs on every structural change, and, via
+    // `hostUpdated`, on every render for `readSelected` consumers. When scope
+    // is empty (e.g. the host signals it is disabled by returning `[]` from
+    // `getItems`), only disconnected items are removed — connected selections
+    // are preserved so `aria-selected` stays true.
     const stale = current.filter(
-      (el) => !el.isConnected || (eligible.length > 0 && !eligible.includes(el))
+      (el) => !el.isConnected || (scoped.length > 0 && !scoped.includes(el))
     );
 
     if (stale.length > 0) {
-      // force: removing a disconnected/ineligible item is this controller
+      // force: removing a disconnected/out-of-scope item is this controller
       // enforcing its own invariant, not a selection a consumer should be
       // able to veto.
       const next = current.filter((el) => !stale.includes(el));
@@ -657,12 +681,21 @@ export class SelectionController implements ReactiveController {
       this.options.defaultToFirstSelectable &&
       // Recomputed rather than reusing `current`: the steps above may have
       // just changed what's actually selected.
-      this.currentSelection().length === 0 &&
-      eligible.length > 0
+      this.currentSelection().length === 0
     ) {
-      // force: same reasoning — defaultToFirstSelectable exists specifically
-      // to guarantee a selection exists; a veto would leave that unmet.
-      this.applySelectionTransition([eligible[0]], [], { silent, force: true });
+      // `getEligibleItems()` — the only place in `refresh` that needs the
+      // full, `checkVisibility`-inclusive eligible set — is computed here,
+      // lazily, only when there's actually nothing selected to default from.
+      const eligible = this.getEligibleItems();
+      if (eligible.length > 0) {
+        // force: same reasoning — defaultToFirstSelectable exists
+        // specifically to guarantee a selection exists; a veto would leave
+        // that unmet.
+        this.applySelectionTransition([eligible[0]], [], {
+          silent,
+          force: true,
+        });
+      }
     }
   }
 
@@ -747,7 +780,14 @@ export class SelectionController implements ReactiveController {
 
   /**
    * Applies the transition optimistically, then runs **`confirmSelectionChange`** (if any) and
-   * reverts if it returns **`false`**. Finally dispatches the change event when committed.
+   * reverts if it returns **`false`**.
+   *
+   * **This controller notifies only through callbacks — `onSelectionChange` and
+   * `confirmSelectionChange` — never a DOM event.** A DOM event dispatched here would bubble
+   * (composed) out of every host's shadow root whether or not the host's own consumers want it,
+   * which is exactly the kind of internal-controller detail a component's public event surface
+   * should not leak. A host that wants a public event dispatches its own from
+   * `confirmSelectionChange` (see `swc-tabs`' `change`) or `onSelectionChange`, on its own terms.
    *
    * **Ordering matches native cancelable-event conventions (and 1st-gen Tabs), not a
    * confirm-before-apply gate.** Mutators, internal state, and the **`onSelectionChange`** mirror
@@ -773,14 +813,15 @@ export class SelectionController implements ReactiveController {
    * {@link applyMutators} rather than trusting a diff against it. With **`readSelected`**, there is
    * no cache to go stale in the first place.
    *
-   * **`force`** (internal only — never exposed on the public **`{ silent }`** options bag) skips
-   * **`confirmSelectionChange`** the same way **`silent`** does, but leaves the public event
-   * dispatch alone. It exists for transitions that enforce this controller's *own* invariants
-   * (removing a disconnected item, normalizing a mode switch, asserting
-   * **`defaultToFirstSelectable`**) rather than representing a selection a consumer chose to
-   * make. Those must never be vetoable: reverting one would leave the controller violating the
-   * very invariant it was enforcing (for example more than one item selected while
-   * **`mode: 'single'`**, or a disconnected element still in the selection set).
+   * **`silent`** and **`force`** both skip **`confirmSelectionChange`** — the only thing left for
+   * either to skip, now that there is no DOM event. **`force`** (internal only — never exposed on
+   * the public **`{ silent }`** options bag) exists for transitions that enforce this controller's
+   * *own* invariants (removing a disconnected item, normalizing a mode switch, asserting
+   * **`defaultToFirstSelectable`**, collapsing an over-selected single-item mode) rather than
+   * representing a selection a consumer chose to make. Those must never be vetoable: reverting one
+   * would leave the controller violating the very invariant it was enforcing (for example more
+   * than one item selected while **`mode: 'single'`**, or a disconnected element still in the
+   * selection set).
    */
   private applySelectionTransition(
     next: HTMLElement[],
@@ -819,18 +860,6 @@ export class SelectionController implements ReactiveController {
       }
     }
 
-    if (!silent) {
-      this.host.dispatchEvent(
-        new CustomEvent<SelectionControllerChangeDetail>(
-          selectionControllerChange,
-          {
-            bubbles: true,
-            composed: true,
-            detail: { selectedItems: next, addedItems, removedItems },
-          }
-        )
-      );
-    }
     return true;
   }
 
@@ -859,6 +888,11 @@ export class SelectionController implements ReactiveController {
    * Attaches or removes the capture-phase **`click`** / **`keydown`** listeners (per
    * **`enableInteraction`** / **`keydownActivation`**) and the bubble-phase **`observeEvent`**
    * listener (per {@link SelectionControllerOptions.observeEvent}).
+   *
+   * **`observeEvent` only ever attaches when `enableInteraction` is `false`.** They are
+   * alternative ways of learning about a selection attempt — the click-owning path or the
+   * item-owns-itself path — not additive; enforced here rather than left as a documentation-only
+   * expectation, so a consumer that sets both never gets both paths firing for the same click.
    */
   private syncListeners(): void {
     if (!this.host.isConnected) {
@@ -883,7 +917,9 @@ export class SelectionController implements ReactiveController {
       this.keydownListenerAttached = false;
     }
 
-    const wantObserved = this.options.observeEvent;
+    const wantObserved = this.options.enableInteraction
+      ? undefined
+      : this.options.observeEvent;
     if (wantObserved !== this.observedEventName) {
       if (this.observedEventName) {
         this.host.removeEventListener(
@@ -938,25 +974,28 @@ export class SelectionController implements ReactiveController {
     return participant.getAttribute('aria-disabled') === 'true';
   }
 
+  /**
+   * Cheapest signals first, so the overwhelmingly common way SWC components exclude an item
+   * (disabled, `hidden`, `inert`) never reaches the last check. `checkVisibility` is a native,
+   * engine-optimized replacement for a hand-rolled `getComputedStyle` read, but it can still
+   * force layout — worth reaching only when every cheaper property/attribute read has already
+   * passed. `isSelectable` lets a consumer that can guarantee its items are never CSS-hidden (a
+   * large or virtualized list) skip `checkVisibility` entirely.
+   */
   private isSelectableItem(participant: HTMLElement): boolean {
+    if (this.options.isSelectable) {
+      return this.options.isSelectable(participant);
+    }
     if (!participant.isConnected) {
+      return false;
+    }
+    if (participant.hidden || this.isDisabledParticipant(participant)) {
       return false;
     }
     if (participant.hasAttribute('inert') || participant.closest('[inert]')) {
       return false;
     }
-    const style = getComputedStyle(participant);
-    if (
-      style.visibility === 'hidden' ||
-      style.display === 'none' ||
-      participant.hidden
-    ) {
-      return false;
-    }
-    if (this.isDisabledParticipant(participant)) {
-      return false;
-    }
-    return true;
+    return participant.checkVisibility({ checkVisibilityCSS: true });
   }
 
   private getEligibleItems(): HTMLElement[] {

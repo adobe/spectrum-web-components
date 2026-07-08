@@ -153,19 +153,6 @@ export abstract class AccordionBase extends SizedMixin(SpectrumElement, {
     }
   }
 
-  private enforceExclusiveOpen(): void {
-    let foundOpen = false;
-    for (const item of this.assignedItems()) {
-      if (item.open) {
-        if (foundOpen) {
-          item.open = false;
-        } else {
-          foundOpen = true;
-        }
-      }
-    }
-  }
-
   public override connectedCallback(): void {
     super.connectedCallback();
     this.addEventListener(
@@ -208,15 +195,11 @@ export abstract class AccordionBase extends SizedMixin(SpectrumElement, {
     ) {
       this.syncAccordionItems();
     }
-    // changedProperties.get() returns the previous value; this fires only when
-    // disabled transitions from true → false (re-enable).
-    if (
-      changedProperties.has('disabled') &&
-      changedProperties.get('disabled') === true &&
-      !this.allowMultiple
-    ) {
-      this.enforceExclusiveOpen();
-    }
+    // Re-enabling with more than one item open (set while disabled, when
+    // toggling was blocked) needs no explicit handling here: this update
+    // cycle's `hostUpdated` runs `_selection`'s `readSelected`-gated
+    // over-selection collapse regardless of what changed, closing every
+    // open item but the first.
     super.update(changedProperties);
   }
 }

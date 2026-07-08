@@ -13,7 +13,6 @@
 export {
   deepestSelectionItemContaining,
   SelectionController,
-  selectionControllerChange,
   type SelectionControllerChangeDetail,
   type SelectionControllerConfirmDetail,
   type SelectionControllerOptions,

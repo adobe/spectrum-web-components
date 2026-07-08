@@ -1168,6 +1168,42 @@ export const ToggleEventTest: Story = {
         true
       );
     });
+
+    await step(
+      'setting the open property directly does not dispatch swc-accordion-item-toggle',
+      async () => {
+        // AccordionBase's SelectionController drives sibling closes via its
+        // `selectItem`/`deselectItem` mutators, which set `item.open` directly
+        // (not through `toggle()`). This guards the invariant that mutator
+        // relies on: if the `open` setter ever started dispatching the toggle
+        // event itself, closing a sibling from inside the controller's own
+        // `observeEvent` handler would re-trigger that same handler for the
+        // sibling, cascading into an event storm across every item in the
+        // accordion.
+        let fired = false;
+        accordion.addEventListener(
+          SWC_ACCORDION_ITEM_TOGGLE_EVENT,
+          () => {
+            fired = true;
+          },
+          { once: true }
+        );
+
+        const openBefore = item.open;
+        item.open = !openBefore;
+        await item.updateComplete;
+
+        expect(item.open, 'open property changed').toBe(!openBefore);
+        expect(
+          fired,
+          'swc-accordion-item-toggle was NOT dispatched by the open setter'
+        ).toBe(false);
+
+        // Restore so later steps/tests are unaffected.
+        item.open = openBefore;
+        await item.updateComplete;
+      }
+    );
   },
 };
 

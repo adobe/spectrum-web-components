@@ -13,11 +13,6 @@
 import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
-import {
-  selectionControllerChange,
-  type SelectionControllerChangeDetail,
-} from '@spectrum-web-components/core/controllers/index.js';
-
 import '../stories/demo-hosts.js';
 
 import { getComponent } from '../../../../swc/utils/test-utils.js';
@@ -35,7 +30,8 @@ import selectionMeta, {
 
 /**
  * Dispatches a keydown with both `key` and `code` set. The SelectionController
- * checks `event.code` for Enter/Space activation, so both must be present.
+ * checks `event.key` for Enter/Space activation; `code` is included since some
+ * consumers or assistive tech may still key off it.
  */
 function activate(
   target: HTMLElement,
@@ -286,42 +282,17 @@ export const MultipleListboxTest: Story = {
     });
 
     await step(
-      'selectionControllerChange event fires with correct detail',
+      'onSelectionChange mirrors the selection into the host — this controller has no DOM event, only callbacks',
       async () => {
-        let receivedDetail: SelectionControllerChangeDetail | null = null;
-        const handler = ((
-          event: CustomEvent<SelectionControllerChangeDetail>
-        ) => {
-          receivedDetail = event.detail;
-        }) as EventListener;
-
-        host.addEventListener(selectionControllerChange, handler);
         options[1].click();
+        expect(options[1].getAttribute('aria-selected')).toBe('true');
 
-        expect(receivedDetail).toBeTruthy();
-        expect(receivedDetail!.selectedItems).toContain(options[1]);
-        expect(receivedDetail!.addedItems).toContain(options[1]);
-        expect(receivedDetail!.removedItems.length).toBe(0);
-        expect(receivedDetail!.selectedItems.length).toBe(1);
+        const count = root.querySelector<HTMLElement>('.count');
+        expect(count?.textContent?.trim()).toBe('1 app selected');
 
-        host.removeEventListener(selectionControllerChange, handler);
-      }
-    );
-
-    await step(
-      'selectionControllerChange event bubbles and is composed',
-      async () => {
-        let captured = false;
-        const handler = ((event: CustomEvent) => {
-          expect(event.bubbles).toBe(true);
-          expect(event.composed).toBe(true);
-          captured = true;
-        }) as EventListener;
-
-        canvasElement.addEventListener(selectionControllerChange, handler);
-        options[3].click();
-        expect(captured).toBe(true);
-        canvasElement.removeEventListener(selectionControllerChange, handler);
+        // Restore the cleared state left by the previous step.
+        options[1].click();
+        expect(count?.textContent?.trim()).toBe('No apps selected');
       }
     );
 
