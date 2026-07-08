@@ -82,18 +82,16 @@
   box-shadow: inset 0 0 0 token("color-handle-inner-border-width") var(--_swc-color-handle-border-color);
 }
 
-/* Grown handle is the focus indicator (no separate ring). The parent sets
-   `focused` when it has keyboard/programmatic focus. */
-:host([focused]),
-:host(:focus-visible) {
+/* Grown handle is the focus indicator (no separate ring). The handle is not
+   focusable on its own; the parent color component sets `focused` when it has
+   keyboard/programmatic focus. A directly-focusable path (a parent assigning
+   `tabindex` plus a `:focus-visible` rule) will be added when a parent picker
+   is migrated and can exercise it. */
+:host([focused]) {
   inline-size: token("color-handle-size-key-focus");
   block-size: token("color-handle-size-key-focus");
   margin-block: calc(-1 * token("color-handle-size"));
   margin-inline: calc(-1 * token("color-handle-size"));
-  outline: none;
-}
-
-:host(:focus) {
   outline: none;
 }
 

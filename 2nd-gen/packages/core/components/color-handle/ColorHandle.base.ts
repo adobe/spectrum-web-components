@@ -90,14 +90,20 @@ export abstract class ColorHandleBase
   //     POINTER / TOUCH BEHAVIOR
   // ──────────────────────────
 
+  // Only touch opens the loupe, so only touch reserves the pointer. Mouse and
+  // stylus are left alone rather than capturing pointers nothing consumes.
   private handlePointerdown(event: PointerEvent): void {
-    if (event.pointerType === 'touch') {
-      this.open = true;
+    if (event.pointerType !== 'touch') {
+      return;
     }
+    this.open = true;
     this.setPointerCapture(event.pointerId);
   }
 
   private handlePointerup(event: PointerEvent): void {
+    if (event.pointerType !== 'touch') {
+      return;
+    }
     this.open = false;
     this.releasePointerCapture(event.pointerId);
   }
