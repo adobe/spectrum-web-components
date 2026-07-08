@@ -49,14 +49,14 @@ import '@adobe/spectrum-wc/components/tabs/swc-tab-panel.js';
 
 | Addition                        | Notes                                                             |
 | ------------------------------- | ----------------------------------------------------------------- |
-| `keyboard-activation` attribute | `'manual'` (default) or `'automatic'` — replaces boolean `auto`   |
+| `keyboard-activation` attribute | `'automatic'` (default) or `'manual'` — replaces boolean `auto`   |
 | `density` attribute             | `'regular'` (default) or `'compact'` — replaces boolean `compact` |
 
 ### Removed in Spectrum 2
 
 | Removed                                                                           | Replacement                                                      |
 | --------------------------------------------------------------------------------- | ---------------------------------------------------------------- |
-| `auto` boolean                                                                    | `keyboard-activation="automatic"`                                |
+| `auto` boolean                                                                    | `keyboard-activation` (see default change note below)            |
 | `compact` boolean                                                                 | `density="compact"`                                              |
 | `quiet` boolean                                                                   | No replacement; not part of Spectrum 2 surface                   |
 | `emphasized` boolean                                                              | No replacement; not part of Spectrum 2 surface                   |
@@ -66,6 +66,8 @@ import '@adobe/spectrum-wc/components/tabs/swc-tab-panel.js';
 | `enableTabsScroll`, `scrollTabs()`, `scrollToSelection()`, `sp-tabs-scroll` event | Not yet migrated; continue using 1st-gen if overflow is required |
 | `rovingTabindexController` field                                                  | Removed; keyboard navigation is internal                         |
 | `focusElement` getter                                                             | Removed; use `tabsEl.focus()`                                    |
+
+> **Default activation mode changed.** In Spectrum 1, `<sp-tabs>` defaulted to manual activation (`auto` omitted or `false`): arrow keys moved focus without changing selection until Enter, Space, or click. Spectrum 2 defaults `keyboard-activation` to `automatic` to match React Spectrum's `Tabs`, so arrow keys now select immediately by default. If you were relying on the implicit manual default (no `auto` attribute) and your tab panels are expensive to render or not fully in the DOM, add `keyboard-activation="manual"` explicitly.
 
 ## Update your code
 
@@ -208,7 +210,7 @@ Spectrum 2 uses a different custom property prefix. Spectrum 1 overrides will no
 - [ ] Replace `<sp-tabs>` with `<swc-tabs>`, `<sp-tab>` with `<swc-tab>`, `<sp-tab-panel>` with `<swc-tab-panel>`
 - [ ] Rename `value` attribute to `tab-id` on every tab and tab panel
 - [ ] Rename `label` attribute to `accessible-label` on `<swc-tabs>`
-- [ ] Replace boolean `auto` with `keyboard-activation="automatic"`
+- [ ] Replace boolean `auto` with `keyboard-activation`; if you relied on the implicit manual default in Spectrum 1, add `keyboard-activation="manual"` explicitly since Spectrum 2 defaults to `automatic`
 - [ ] Replace boolean `compact` with `density="compact"`
 - [ ] Remove `quiet`, `emphasized`, and `size` attributes
 - [ ] Replace `direction="vertical-right"` with `direction="vertical"`
