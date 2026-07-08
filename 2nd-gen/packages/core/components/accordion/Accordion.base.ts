@@ -106,32 +106,17 @@ export abstract class AccordionBase extends SizedMixin(SpectrumElement, {
   /**
    * @internal
    *
-   * Applies the exclusive-open constraint when in `single-toggle` mode, in
-   * place of manually iterating `assignedItems()`. `allowMultiple` drives this
-   * controller's `mode` via `setOptions` (see the `allowMultiple` branch in
-   * `update()`), so `closeSiblingsOnOpen` only needs to consult `getMode()`
-   * rather than reading the `allowMultiple` property directly. The controller
-   * is only ever driven imperatively from `closeSiblingsOnOpen` with
-   * `{ silent: true }` — items keep their own click handling and
-   * cancelable-toggle lifecycle in `AccordionItemBase.toggle()` unchanged.
-   * `enableInteraction: false` means this controller never attaches its own
-   * click/keydown listeners; `getItems` is only used for `applyMutators`' live
-   * scan of every assigned item when a silent transition is asserted.
-   *
-   * In `multiple` mode this controller's selection cache is intentionally left
-   * unpopulated: `closeSiblingsOnOpen` no-ops entirely, since items already
-   * manage their own `open` state independently and multiple mode does not
-   * need siblings closed. Routing every open/close through the controller's
-   * `multiple`-mode bookkeeping (`setSelectedItem`/`toggleItem`) was
-   * considered, but their `next` selection set is built by extending the
-   * cached `selectedItems`, so a cache that drifted from reality (an item
-   * closing without going through the controller) could cause a later open to
-   * re-select, and therefore re-open, an already-closed item. This controller
-   * is deliberately not the source of truth for `multiple` mode as a result.
-   *
-   * Known limitation: an item opened via a direct `open` property/attribute set
-   * (bypassing `toggle()`) is not reconciled by this controller, the same way
-   * `closeSiblingsOnOpen` itself only reacts to toggle-driven changes today.
+   * Items are self-owning — `AccordionItemBase.toggle()` flips its own `open`
+   * property and dispatches its own cancelable toggle event independently of
+   * this controller. `readSelected` makes `open` the live source of truth
+   * (no cache to drift), and `observeEvent` reacts to the item's own toggle
+   * event: in `single`/`single-toggle` mode, when an item announces it just
+   * opened, this controller asserts it as the sole selection, closing every
+   * other live-open item via the normal mutator rescan; in `multiple` mode it
+   * is a no-op, since a self-toggling item needs no cross-item enforcement.
+   * `allowMultiple` drives `mode` via `setOptions` (see `update()`).
+   * `enableInteraction: false` — items own click/keydown, not this
+   * controller.
    */
   private readonly _selection = new SelectionController(this, {
     getItems: () => this.assignedItems() as HTMLElement[],
@@ -143,31 +128,21 @@ export abstract class AccordionBase extends SizedMixin(SpectrumElement, {
     },
     mode: 'single-toggle',
     enableInteraction: false,
+    readSelected: (item) => (item as AccordionItemBase).open,
+    observeEvent: SWC_ACCORDION_ITEM_TOGGLE_EVENT,
   });
 
-  private closeSiblingsOnOpen = (event: Event): void => {
+  /**
+   * Cancels a toggle dispatched while the host is disabled. `toggle()`'s own
+   * `mayExpand()` guard normally prevents this via `parentDisabled`, but that
+   * propagates through a reactive update — a click landing in the same tick
+   * `disabled` is set true, before that update runs, would otherwise still
+   * go through.
+   */
+  private readonly guardDisabledToggle = (event: Event): void => {
     if (this.disabled) {
       event.preventDefault();
-      return;
     }
-    if (this._selection.getMode() === 'multiple') {
-      return;
-    }
-    const toggling = event.target;
-    if (!(toggling instanceof AccordionItemBase)) {
-      return;
-    }
-    // Defer until after dispatch returns so that a canceled toggle (where the
-    // item reverts open back to false) does not incorrectly close siblings.
-    queueMicrotask(() => {
-      if (!toggling.open) {
-        return;
-      }
-      // Asserts toggling as the sole selection; applyMutators diffs against a
-      // live scan of every assigned item, so every other item is closed
-      // regardless of what this controller previously believed was selected.
-      this._selection.setSelectedItem(toggling, { silent: true });
-    });
   };
 
   protected syncAccordionItems(): void {
@@ -195,7 +170,7 @@ export abstract class AccordionBase extends SizedMixin(SpectrumElement, {
     super.connectedCallback();
     this.addEventListener(
       SWC_ACCORDION_ITEM_TOGGLE_EVENT,
-      this.closeSiblingsOnOpen
+      this.guardDisabledToggle
     );
   }
 
@@ -203,12 +178,16 @@ export abstract class AccordionBase extends SizedMixin(SpectrumElement, {
     super.disconnectedCallback();
     this.removeEventListener(
       SWC_ACCORDION_ITEM_TOGGLE_EVENT,
-      this.closeSiblingsOnOpen
+      this.guardDisabledToggle
     );
   }
 
   protected override update(changedProperties: PropertyValues): void {
     if (changedProperties.has('allowMultiple')) {
+      // `readSelected` makes `open` the live source of truth (see the
+      // `_selection` doc comment), so `setOptions`'s own multi→single
+      // normalization sees every actually-open item and collapses to the
+      // first of them immediately — no separate live-DOM pass needed here.
       this._selection.setOptions({
         mode: this.allowMultiple ? 'multiple' : 'single-toggle',
       });

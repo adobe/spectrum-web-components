@@ -76,12 +76,55 @@ export type SelectionControllerOptions = {
    * **`keydown`** listeners, so user interaction can never drive a transition. Use this when a
    * consumer's items already own their own interaction handling (their own click binding, their
    * own cancelable-event lifecycle) and the controller is only wanted for its mode-aware
-   * selection bookkeeping, driven imperatively via **`{ silent: true }`** calls. Defaults to
-   * **`true`**.
+   * selection bookkeeping — pair with **`observeEvent`** and **`readSelected`** so the controller
+   * reacts to the item's own event instead. Defaults to **`true`**.
    */
   enableInteraction?: boolean;
 
-  /** Optional callback mirroring {@link selectionControllerChange}. */
+  /**
+   * When provided, the current selection is *read live from the items themselves* on every
+   * decision (`toggleItem`, `setSelectedItem`, `setOptions` mode-switch normalization, `refresh`,
+   * interactive clicks/keys) instead of from this controller's internal cache. Use this for
+   * self-owning items — an accordion item with its own `open` property, a menu item with its own
+   * `selected` state — where the item can change that state independently of this controller (its
+   * own click handler, a direct property/attribute set). Without `readSelected`, the internal
+   * cache can drift from what the items actually show, which is why `multiple` mode is unsafe to
+   * drive through a cache-based controller for this kind of item: extending a stale cached set can
+   * re-open an item a consumer already closed. With `readSelected`, there is no cache to drift —
+   * every decision reflects what is true on the DOM right now. Pair with `observeEvent` so the
+   * controller also reacts when an item changes itself.
+   */
+  readSelected?: (item: HTMLElement) => boolean;
+
+  /**
+   * Name of a bubbling custom event, dispatched by a self-owning item on its own initiative (for
+   * example an accordion item's own cancelable toggle event), that this controller listens for
+   * instead of capturing `click`/`keydown` itself. Pair with `readSelected` — required when this
+   * option is set. On the event, this controller waits a microtask (so a cancelable event that the
+   * item itself reverts has already settled), reads the item's live state via `readSelected`, and
+   * — in `single` / `single-toggle` mode, when the item is now selected — asserts it as the sole
+   * selection, closing every other live-selected item via the normal mutator rescan. In `multiple`
+   * mode this is a no-op: a self-owning item toggling itself needs no cross-item enforcement, so
+   * this controller does nothing. Ignored when `enableInteraction` interaction is also relied upon
+   * — the two are alternative ways of learning about a selection attempt, not additive.
+   */
+  observeEvent?: string;
+
+  /**
+   * Optional callback mirroring {@link selectionControllerChange}.
+   *
+   * **Fires on every commit, including `{ silent: true }` transitions** — unlike
+   * `confirmSelectionChange` and the `selectionControllerChange` DOM event, `silent` does not gate
+   * this callback. Silent transitions exist to reconcile controller state from participants whose
+   * selected-ish state changed independently (an external property write, a `defaultToFirstSelectable`
+   * assertion during a silent `refresh`), and this callback is frequently the *only* channel a host
+   * uses to mirror that reconciled selection into its own public property — see `swc-tabs`'
+   * `onSelectionChange`, which is how a silently-applied default-selected tab reaches the host's
+   * `selected` property. Gating this callback on `silent` would break that pattern. Keep it
+   * idempotent and side-effect-light beyond mirroring state (safe: setting a property; risky: an
+   * analytics call), since it may also run for a transition that a moment later gets rolled back by
+   * `confirmSelectionChange` returning `false`.
+   */
   onSelectionChange?: (detail: SelectionControllerChangeDetail) => void;
 
   /**
@@ -193,6 +236,17 @@ export function deepestSelectionItemContaining(
  * property): even if this controller's cached notion of the selection has drifted, asserting a
  * transition still corrects every participant to match `next`.
  *
+ * **Two ways to know what's selected.** By default this controller is the source of truth: it
+ * owns an internal cache, and `selectItem` / `deselectItem` are the only way selected-ish state
+ * changes. That works well for items with no state of their own (plain buttons, list rows). For
+ * *self-owning* items — an accordion item with its own `open` property, a menu item with its own
+ * `selected` state, anything that can change that state on its own initiative — pass
+ * **`readSelected`** so this controller reads truth from the items on every decision instead of
+ * trusting a cache that item can silently invalidate. Pair it with **`observeEvent`** so this
+ * controller also reacts when an item changes itself, instead of (or in addition to)
+ * **`enableInteraction`**-driven clicks. With `readSelected` in place, `multiple` mode becomes
+ * safe for self-owning items too: there's no cache to extend with a stale, already-closed entry.
+ *
  * @see https://www.w3.org/WAI/ARIA/apg/patterns/listbox/
  * @see https://www.w3.org/WAI/ARIA/apg/patterns/accordion/
  */
@@ -216,7 +270,11 @@ export class SelectionController implements ReactiveController {
   > &
     Pick<
       SelectionControllerOptions,
-      'onSelectionChange' | 'confirmSelectionChange' | 'isDisabled'
+      | 'onSelectionChange'
+      | 'confirmSelectionChange'
+      | 'isDisabled'
+      | 'readSelected'
+      | 'observeEvent'
     >;
 
   private selectedItems: Set<HTMLElement> = new Set();
@@ -224,6 +282,8 @@ export class SelectionController implements ReactiveController {
   private clickListenerAttached = false;
 
   private keydownListenerAttached = false;
+
+  private observedEventName: string | undefined;
 
   private readonly handleClickCapture = (event: MouseEvent): void => {
     if (event.button !== 0) {
@@ -244,7 +304,7 @@ export class SelectionController implements ReactiveController {
     if (!this.options.keydownActivation) {
       return;
     }
-    if (event.code !== 'Enter' && event.code !== 'Space') {
+    if (event.key !== 'Enter' && event.key !== ' ') {
       return;
     }
     if (event.repeat) {
@@ -262,6 +322,33 @@ export class SelectionController implements ReactiveController {
     this.applyClickOrKey(hit);
   };
 
+  /**
+   * Reacts to a self-owning item's own `observeEvent`, rather than capturing the interaction
+   * directly. See {@link SelectionControllerOptions.observeEvent}.
+   */
+  private readonly handleObservedEvent = (event: Event): void => {
+    const readSelected = this.options.readSelected;
+    if (!readSelected) {
+      return;
+    }
+    const target = deepestSelectionItemContaining(
+      event,
+      this.getScopedRawItems()
+    );
+    if (!target || this.isDisabledParticipant(target)) {
+      return;
+    }
+    // Defer until the item's own cancelable-event lifecycle settles — a
+    // canceled change reverts the item's state synchronously, but only after
+    // every bubble listener (including this one) has already run.
+    queueMicrotask(() => {
+      if (this.options.mode === 'multiple' || !readSelected(target)) {
+        return;
+      }
+      this.setSelectedItem(target, { silent: true });
+    });
+  };
+
   constructor(host: ReactiveElement, options: SelectionControllerOptions) {
     this.host = host;
     this.options = {
@@ -275,18 +362,36 @@ export class SelectionController implements ReactiveController {
       onSelectionChange: options.onSelectionChange,
       confirmSelectionChange: options.confirmSelectionChange,
       isDisabled: options.isDisabled,
+      readSelected: options.readSelected,
+      observeEvent: options.observeEvent,
     };
 
     host.addController(this);
   }
 
-  /** Returns a snapshot of the current selection (ordered by insertion). */
-  public getSelectedItems(): HTMLElement[] {
+  /**
+   * Returns the current selection. Read live from the items via `readSelected` when provided
+   * (see {@link SelectionControllerOptions.readSelected}); otherwise a snapshot of the internal
+   * cache, ordered by insertion.
+   */
+  private currentSelection(): HTMLElement[] {
+    const { readSelected } = this.options;
+    if (readSelected) {
+      return this.getScopedRawItems().filter(readSelected);
+    }
     return Array.from(this.selectedItems);
+  }
+
+  /** Returns the current selection. See {@link SelectionController.currentSelection}. */
+  public getSelectedItems(): HTMLElement[] {
+    return this.currentSelection();
   }
 
   /** Returns **`true`** when {@link item} is currently selected. */
   public isSelected(item: HTMLElement): boolean {
+    if (this.options.readSelected) {
+      return this.options.readSelected(item);
+    }
     return this.selectedItems.has(item);
   }
 
@@ -327,22 +432,32 @@ export class SelectionController implements ReactiveController {
       confirmSelectionChange:
         partial.confirmSelectionChange ?? this.options.confirmSelectionChange,
       isDisabled: partial.isDisabled ?? this.options.isDisabled,
+      readSelected: partial.readSelected ?? this.options.readSelected,
+      observeEvent: partial.observeEvent ?? this.options.observeEvent,
     };
 
     const nextMode = this.options.mode;
     const wasSingle = prevMode === 'single' || prevMode === 'single-toggle';
     const isNowSingle = nextMode === 'single' || nextMode === 'single-toggle';
 
-    if (!wasSingle && isNowSingle && this.selectedItems.size > 1) {
-      const [first] = this.selectedItems;
-      const toRemove = Array.from(this.selectedItems).slice(1);
-      const candidate = first ? [first] : [];
-      // force: normalizing for the new mode is this controller enforcing its
-      // own invariant, not a selection a consumer should be able to veto.
-      this.applySelectionTransition(candidate, toRemove, { force: true });
+    if (!wasSingle && isNowSingle) {
+      // Read live rather than trusting the pre-switch cache: with
+      // `readSelected`, `multiple` mode never populates the cache (see its
+      // docs), so this is the only way to see everything actually selected
+      // going into the switch.
+      const current = this.currentSelection();
+      if (current.length > 1) {
+        const [first] = current;
+        const toRemove = current.slice(1);
+        const candidate = first ? [first] : [];
+        // force: normalizing for the new mode is this controller enforcing
+        // its own invariant, not a selection a consumer should be able to
+        // veto.
+        this.applySelectionTransition(candidate, toRemove, { force: true });
+      }
     }
 
-    this.syncInteractionListeners();
+    this.syncListeners();
     this.refresh();
   }
 
@@ -359,6 +474,7 @@ export class SelectionController implements ReactiveController {
    * Pass **`{ silent: true }`** to commit this transition without invoking
    * **`confirmSelectionChange`** or dispatching {@link selectionControllerChange} — used to
    * resync internal state from an external property change without raising a public event.
+   * **`onSelectionChange`** still runs (see its docs for why).
    */
   public setSelectedItem(
     item: HTMLElement | null,
@@ -378,16 +494,17 @@ export class SelectionController implements ReactiveController {
       return false;
     }
 
+    const current = this.currentSelection();
+
     if (this.options.mode === 'multiple') {
-      if (this.selectedItems.has(item)) {
+      if (current.includes(item)) {
         return true;
       }
-      const next = [...Array.from(this.selectedItems), item];
+      const next = [...current, item];
       return this.applySelectionTransition(next, [], options);
     }
 
-    const prev = Array.from(this.selectedItems);
-    const toRemove = prev.filter((el) => el !== item);
+    const toRemove = current.filter((el) => el !== item);
     return this.applySelectionTransition([item], toRemove, options);
   }
 
@@ -402,7 +519,7 @@ export class SelectionController implements ReactiveController {
    * @returns **`false`** when the item is ineligible or when the mode disallows the operation.
    *
    * Pass **`{ silent: true }`** to commit without invoking **`confirmSelectionChange`** or
-   * dispatching {@link selectionControllerChange}.
+   * dispatching {@link selectionControllerChange}. **`onSelectionChange`** still runs.
    */
   public toggleItem(
     item: HTMLElement,
@@ -415,21 +532,21 @@ export class SelectionController implements ReactiveController {
       return false;
     }
 
-    const isSelected = this.selectedItems.has(item);
+    const current = this.currentSelection();
+    const isSelected = current.includes(item);
 
     if (isSelected) {
       if (this.options.mode === 'single') {
         return false;
       }
-      const next = Array.from(this.selectedItems).filter((el) => el !== item);
+      const next = current.filter((el) => el !== item);
       return this.applySelectionTransition(next, [item], options);
     } else {
       if (this.options.mode === 'multiple') {
-        const next = [...Array.from(this.selectedItems), item];
+        const next = [...current, item];
         return this.applySelectionTransition(next, [], options);
       }
-      const prev = Array.from(this.selectedItems);
-      const toRemove = prev.filter((el) => el !== item);
+      const toRemove = current.filter((el) => el !== item);
       return this.applySelectionTransition([item], toRemove, options);
     }
   }
@@ -439,18 +556,19 @@ export class SelectionController implements ReactiveController {
    * single-item modes (does not throw).
    *
    * Pass **`{ silent: true }`** to commit without invoking **`confirmSelectionChange`** or
-   * dispatching {@link selectionControllerChange}.
+   * dispatching {@link selectionControllerChange}. **`onSelectionChange`** still runs.
    */
   public selectAll(options?: { silent?: boolean }): boolean {
     if (this.options.mode !== 'multiple') {
       return false;
     }
+    const current = this.currentSelection();
     const eligible = this.getEligibleItems();
-    const toAdd = eligible.filter((el) => !this.selectedItems.has(el));
+    const toAdd = eligible.filter((el) => !current.includes(el));
     if (toAdd.length === 0) {
       return true;
     }
-    const next = [...Array.from(this.selectedItems), ...toAdd];
+    const next = [...current, ...toAdd];
     return this.applySelectionTransition(next, [], options);
   }
 
@@ -460,37 +578,44 @@ export class SelectionController implements ReactiveController {
    * is passed, which clears it anyway (see {@link SelectionController.setSelectedItem}).
    *
    * Pass **`{ silent: true }`** to commit without invoking **`confirmSelectionChange`** or
-   * dispatching {@link selectionControllerChange}.
+   * dispatching {@link selectionControllerChange}. **`onSelectionChange`** still runs.
    */
   public clearAll(options?: { silent?: boolean }): boolean {
     if (this.options.mode === 'single' && !options?.silent) {
       return false;
     }
-    if (this.selectedItems.size === 0) {
+    const current = this.currentSelection();
+    if (current.length === 0) {
       return true;
     }
-    const toRemove = Array.from(this.selectedItems);
-    return this.applySelectionTransition([], toRemove, options);
+    return this.applySelectionTransition([], current, options);
   }
 
   /**
-   * Re-applies bookkeeping after structural changes: removes stale selections, and selects the
-   * first eligible item when **`defaultToFirstSelectable`** is **`true`** and nothing is selected
-   * (single-item modes only). When nothing is currently eligible, no default selection is forced.
+   * Re-applies bookkeeping after structural changes: removes stale selections, collapses an
+   * over-selected single-item mode down to one, and selects the first eligible item when
+   * **`defaultToFirstSelectable`** is **`true`** and nothing is selected (single-item modes only).
+   * When nothing is currently eligible, no default selection is forced.
    *
    * Pass **`{ silent: true }`** to commit these transitions without invoking
    * **`confirmSelectionChange`** or dispatching {@link selectionControllerChange} — used to
    * resync internal state from an external property change without raising a public event.
+   * **`onSelectionChange`** still runs — this is how `swc-tabs` mirrors a silently-applied
+   * `defaultToFirstSelectable` selection into its own `selected` property.
    */
   public refresh(options?: { silent?: boolean }): void {
     const silent = options?.silent ?? false;
     const eligible = this.getEligibleItems();
+    const current = this.currentSelection();
 
     // An item is stale when it is disconnected, or when the eligible list is
     // non-empty and does not include it. When eligible is empty (e.g. the host
     // signals it is disabled), only disconnected items are removed — connected
-    // selections are preserved so aria-selected stays true.
-    const stale = Array.from(this.selectedItems).filter(
+    // selections are preserved so aria-selected stays true. With
+    // `readSelected`, `current` is always a live scan of connected, in-scope
+    // items, so a "disconnected but still selected" item can't occur — this
+    // only does real work for the cache-based path.
+    const stale = current.filter(
       (el) => !el.isConnected || (eligible.length > 0 && !eligible.includes(el))
     );
 
@@ -498,18 +623,41 @@ export class SelectionController implements ReactiveController {
       // force: removing a disconnected/ineligible item is this controller
       // enforcing its own invariant, not a selection a consumer should be
       // able to veto.
-      const next = Array.from(this.selectedItems).filter(
-        (el) => !stale.includes(el)
-      );
+      const next = current.filter((el) => !stale.includes(el));
       this.applySelectionTransition(next, stale, { silent, force: true });
     }
 
     const isSingle =
       this.options.mode === 'single' || this.options.mode === 'single-toggle';
+
+    if (isSingle && this.options.readSelected) {
+      // Only meaningful with `readSelected`: without it, this controller is
+      // the sole mutator of the cache, so more than one item selected in a
+      // single-item mode can only happen mid-transition from `multiple`
+      // (already normalized by `setOptions`). With `readSelected`, an item
+      // can select itself independently of any transition this controller
+      // drove — e.g. two items both declared `open` in markup — so this
+      // catches that drift wherever `refresh` runs, including from
+      // `hostUpdated` (see below).
+      const overSelected = this.currentSelection();
+      if (overSelected.length > 1) {
+        const [first] = overSelected;
+        const toRemove = overSelected.slice(1);
+        // force: same reasoning as the stale-removal above — enforcing this
+        // controller's own mode invariant, not a consumer's selection.
+        this.applySelectionTransition([first], toRemove, {
+          silent,
+          force: true,
+        });
+      }
+    }
+
     if (
       isSingle &&
       this.options.defaultToFirstSelectable &&
-      this.selectedItems.size === 0 &&
+      // Recomputed rather than reusing `current`: the steps above may have
+      // just changed what's actually selected.
+      this.currentSelection().length === 0 &&
       eligible.length > 0
     ) {
       // force: same reasoning — defaultToFirstSelectable exists specifically
@@ -519,10 +667,31 @@ export class SelectionController implements ReactiveController {
   }
 
   public hostConnected(): void {
-    this.syncInteractionListeners();
+    this.syncListeners();
     // Silent: this runs during connectedCallback, before the host's first
     // render — a consumer's confirmSelectionChange (and any event it
     // dispatches) firing this early would be surprising and premature.
+    this.refresh({ silent: true });
+  }
+
+  /**
+   * Best-effort backstop for `readSelected` consumers: a free, silent `refresh` after every
+   * update of *this controller's host* — cheap, since Lit already schedules the pass.
+   *
+   * **This does not fire when only a descendant item updates.** `hostUpdated` is scoped to the
+   * `ReactiveElement` this controller is attached to; an accordion item toggling its own `open`
+   * property re-renders *that item*, a separate `ReactiveElement` with its own independent update
+   * cycle — it does not, by itself, cause the accordion's `hostUpdated` to run. Real-time reaction
+   * to a self-owning item's own change is `observeEvent`'s job, not this one. What this catches is
+   * drift from a source that never announces itself at all — an `open` attribute set directly in
+   * markup on two items, or a property write outside `toggle()` — reconciled the next time the
+   * host happens to re-render for any reason. It is a supplement to `observeEvent`, not a
+   * replacement for it.
+   */
+  public hostUpdated(): void {
+    if (!this.options.readSelected) {
+      return;
+    }
     this.refresh({ silent: true });
   }
 
@@ -535,6 +704,13 @@ export class SelectionController implements ReactiveController {
       this.host.removeEventListener('keydown', this.handleKeyDownCapture, true);
       this.keydownListenerAttached = false;
     }
+    if (this.observedEventName) {
+      this.host.removeEventListener(
+        this.observedEventName,
+        this.handleObservedEvent
+      );
+      this.observedEventName = undefined;
+    }
   }
 
   // ─────────────────────────
@@ -544,27 +720,26 @@ export class SelectionController implements ReactiveController {
   /** Applies the mode-appropriate selection logic for a pointer click or Enter/Space key. */
   private applyClickOrKey(hit: HTMLElement): void {
     const mode = this.options.mode;
-    const isSelected = this.selectedItems.has(hit);
+    const current = this.currentSelection();
+    const isSelected = current.includes(hit);
 
     if (mode === 'single') {
       if (isSelected) {
         return;
       }
-      const prev = Array.from(this.selectedItems);
-      this.applySelectionTransition([hit], prev);
+      this.applySelectionTransition([hit], current);
     } else if (mode === 'single-toggle') {
       if (isSelected) {
         this.applySelectionTransition([], [hit]);
       } else {
-        const prev = Array.from(this.selectedItems);
-        this.applySelectionTransition([hit], prev);
+        this.applySelectionTransition([hit], current);
       }
     } else {
       if (isSelected) {
-        const next = Array.from(this.selectedItems).filter((el) => el !== hit);
+        const next = current.filter((el) => el !== hit);
         this.applySelectionTransition(next, [hit]);
       } else {
-        const next = [...Array.from(this.selectedItems), hit];
+        const next = [...current, hit];
         this.applySelectionTransition(next, []);
       }
     }
@@ -589,12 +764,14 @@ export class SelectionController implements ReactiveController {
    * happened. Keep them idempotent and side-effect-light beyond reflecting state — safe for
    * something like setting an attribute, risky for something like an analytics call or a counter.
    *
-   * The added/removed short-circuit below is computed against this controller's own cached
-   * **`selectedItems`**, which is only trustworthy when this controller is the sole mutator of
-   * selected-ish state (true for interactive, non-silent transitions). Silent transitions exist
+   * The added/removed short-circuit below is computed against **`currentSelection()`** — the
+   * cache when no **`readSelected`** was given, or a live scan when it was. Without
+   * **`readSelected`**, that cache is only trustworthy when this controller is the sole mutator of
+   * selected-ish state (true for interactive, non-silent transitions); silent transitions exist
    * specifically to reconcile from participants whose state can change independently of this
-   * controller, so that cache may be stale — silent calls always proceed to {@link applyMutators}
-   * rather than trusting a diff against it.
+   * controller, so the cache may be stale there — silent calls always proceed to
+   * {@link applyMutators} rather than trusting a diff against it. With **`readSelected`**, there is
+   * no cache to go stale in the first place.
    *
    * **`force`** (internal only — never exposed on the public **`{ silent }`** options bag) skips
    * **`confirmSelectionChange`** the same way **`silent`** does, but leaves the public event
@@ -612,8 +789,8 @@ export class SelectionController implements ReactiveController {
   ): boolean {
     const silent = options?.silent ?? false;
     const force = options?.force ?? false;
-    const priorItems = Array.from(this.selectedItems);
-    const addedItems = next.filter((el) => !this.selectedItems.has(el));
+    const priorItems = this.currentSelection();
+    const addedItems = next.filter((el) => !priorItems.includes(el));
 
     if (!silent && addedItems.length === 0 && removedItems.length === 0) {
       return true;
@@ -679,11 +856,11 @@ export class SelectionController implements ReactiveController {
   }
 
   /**
-   * Attaches or removes the capture-phase **`click`** and **`keydown`** listeners to match
-   * **`enableInteraction`** / **`keydownActivation`**. Neither listener is attached when
-   * **`enableInteraction`** is **`false`**, regardless of **`keydownActivation`**.
+   * Attaches or removes the capture-phase **`click`** / **`keydown`** listeners (per
+   * **`enableInteraction`** / **`keydownActivation`**) and the bubble-phase **`observeEvent`**
+   * listener (per {@link SelectionControllerOptions.observeEvent}).
    */
-  private syncInteractionListeners(): void {
+  private syncListeners(): void {
     if (!this.host.isConnected) {
       return;
     }
@@ -704,6 +881,20 @@ export class SelectionController implements ReactiveController {
     } else if (!wantKeydown && this.keydownListenerAttached) {
       this.host.removeEventListener('keydown', this.handleKeyDownCapture, true);
       this.keydownListenerAttached = false;
+    }
+
+    const wantObserved = this.options.observeEvent;
+    if (wantObserved !== this.observedEventName) {
+      if (this.observedEventName) {
+        this.host.removeEventListener(
+          this.observedEventName,
+          this.handleObservedEvent
+        );
+      }
+      if (wantObserved) {
+        this.host.addEventListener(wantObserved, this.handleObservedEvent);
+      }
+      this.observedEventName = wantObserved;
     }
   }
 

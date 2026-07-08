@@ -508,23 +508,20 @@ export const AllowMultipleRuntimeSwitchTest: Story = {
     });
 
     await step(
-      'switching allow-multiple to false re-enforces exclusive open on the next toggle',
+      'switching allow-multiple to false immediately collapses to one open item, before any further toggle',
       async () => {
         accordion.allowMultiple = false;
         await accordion.updateComplete;
+        await Promise.all([item1.updateComplete, item2.updateComplete]);
 
-        getHeader(item3).click();
-        await flushMicrotasks();
-        await accordion.updateComplete;
-        await Promise.all([
-          item1.updateComplete,
-          item2.updateComplete,
-          item3.updateComplete,
-        ]);
-
-        expect(item1.open, 'item 1 is closed').toBe(false);
-        expect(item2.open, 'item 2 is closed').toBe(false);
-        expect(item3.open, 'item 3 is the sole open item').toBe(true);
+        const openItems = [item1, item2, item3].filter((i) => i.open);
+        expect(
+          openItems.length,
+          'exactly one item remains open immediately after allow-multiple is cleared, with no intervening toggle'
+        ).toBe(1);
+        expect(item1.open, 'item 1 (opened first) is the one kept open').toBe(
+          true
+        );
       }
     );
 
@@ -534,13 +531,13 @@ export const AllowMultipleRuntimeSwitchTest: Story = {
         accordion.allowMultiple = true;
         await accordion.updateComplete;
 
-        getHeader(item1).click();
+        getHeader(item3).click();
         await flushMicrotasks();
         await accordion.updateComplete;
         await Promise.all([item1.updateComplete, item3.updateComplete]);
 
-        expect(item1.open, 'item 1 is open').toBe(true);
-        expect(item3.open, 'item 3 remains open').toBe(true);
+        expect(item1.open, 'item 1 remains open').toBe(true);
+        expect(item3.open, 'item 3 is also open').toBe(true);
       }
     );
   },
