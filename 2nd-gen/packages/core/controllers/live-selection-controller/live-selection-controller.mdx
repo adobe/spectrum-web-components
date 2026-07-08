@@ -9,11 +9,9 @@ import * as Stories from './stories/live-selection-controller.stories';
 
 <DocsHeader />
 
-## Usage
+## What it does
 
 `LiveSelectionController` enforces a selection constraint on a group of items that each **own their own selected state**. Items manage their own `open` (or `selected`) property and dispatch a change event; this controller observes those events and deselects siblings when `mode` is `'single'`.
-
-Use it for patterns like accordions and disclosure groups where items are self-contained and the host does not cache selection centrally.
 
 ### When to use this controller
 
@@ -23,27 +21,35 @@ The clearest example is an accordion: when a user clicks a panel header, `Accord
 
 That live-read approach is the right choice when items can change themselves, because any internal list this controller kept would go stale the moment an item changes itself outside the controller.
 
-**Do not use this controller** when items are passive — they only change because a controller told them to. Tabs, radio buttons, and filter chips are good examples: none of them flip their own `aria-selected` or `aria-pressed` on their own initiative. For those, use `SelectionController` (tracked separately) instead. `SelectionController` owns the `click` event on the host, keeps an internal cache of which items are selected, and calls `selectItem`/`deselectItem` to tell each item what state to reflect. Because the controller is the only thing that ever changes selection, its cache is always authoritative.
+**Do not use this controller** when items are passive; they only change because a controller told them to. Tabs, radio buttons, and filter chips are good examples: none of them flip their own `aria-selected` or `aria-pressed` on their own initiative. For those, use `SelectionController` (tracked separately) instead. `SelectionController` owns the `click` event on the host, keeps an internal cache of which items are selected, and calls `selectItem`/`deselectItem` to tell each item what state to reflect. Because the controller is the only thing that ever changes selection, its cache is always authoritative.
 
 | If your items...                                                                                                      | Use                                   |
 | --------------------------------------------------------------------------------------------------------------------- | ------------------------------------- |
 | Own their state and can change it themselves (accordion panel with its own `open`, menu item with its own `selected`) | `LiveSelectionController` (this page) |
 | Are passive and only change because a controller told them to (tab, radio button, filter chip)                        | `SelectionController`                 |
 
-### What it does
+### Item observation
 
-- **Observes a bubbled event** — listens for a named event dispatched by items after their state changes.
-- **Enforces exclusive selection** — in `'single'` mode, deselects all other items when one becomes selected.
-- **Defers by one microtask** — reads item state after any in-flight event cancellation has already reverted the item, so `readSelected` always sees the final committed value.
-- **Respects canceled events** — if the host cancels the toggle event and the item reverts its state, the controller detects the revert and does not close siblings.
-- **Supports dynamic mode switching** — accepts a getter function as `mode` so the effective mode can react to host property changes without re-constructing the controller. Call `refresh()` after switching from `'multiple'` to `'single'` to enforce the new constraint over the current DOM state.
+- Listens for a named event dispatched by items after their state changes; items must dispatch the event with `bubbles: true` and `composed: true`.
+- Defers sibling-close work by one microtask so that any in-flight event cancellation has already reverted the item's state before `readSelected` is called.
 
-### Basic usage
+### Selection enforcement
+
+- In `'single'` mode, deselects every other open item when one becomes selected.
+- If the host cancels the toggle event and the item reverts its state, the controller detects the revert (via the deferred read) and does not close any sibling.
+
+### Dynamic mode
+
+- Accepts a getter function as `mode` so the effective mode reacts to host property changes without re-constructing the controller.
+- Call `refresh()` after switching from `'multiple'` to `'single'` to enforce the new constraint over the current DOM state.
+
+## Basic usage
 
 1. Implement a `getItems` function that returns the current item list (slotted children or shadow DOM children).
 2. Provide `readSelected` to read whether an item is open/selected, and `deselect` to close one.
 3. Set `observeEvent` to the event name items dispatch after their state changes.
-4. Pass `mode` as a static value or a getter; call `refresh()` when switching from `'multiple'` to `'single'`.
+4. Provide ARIA attributes on the host and items; this controller does not set them.
+5. Pass `mode` as a static value or a getter; call `refresh()` when switching from `'multiple'` to `'single'`.
 
 ```typescript
 import { LitElement, type PropertyValues } from 'lit';
@@ -117,7 +123,7 @@ Call `refresh()` after an imperative state change that may leave the group incon
 
 ### Features
 
-`LiveSelectionController` is a structural pattern — it enforces which items are open, but does not manage ARIA relationships itself. The consuming component is responsible for:
+`LiveSelectionController` is a structural pattern; it enforces which items are open, but does not manage ARIA relationships itself. The consuming component is responsible for:
 
 1. **`aria-expanded`** — each item's toggle button must reflect the `open` state via `aria-expanded`.
 2. **`aria-controls` / `aria-labelledby`** — pair each toggle button with its panel using `aria-controls` and the reverse with `aria-labelledby`.
@@ -135,7 +141,17 @@ Call `refresh()` after an imperative state change that may leave the group incon
 
 ## API
 
-### Constructor options (`LiveSelectionOptions`)
+### Methods
+
+| Member      | Description                                                                                                                                                                                                      |
+| ----------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `refresh()` | Reads the current selected state of every item and enforces the active mode. In `'single'` mode, keeps the first selected item and deselects the rest. In `'multiple'` mode, is a no-op. Safe on an empty group. |
+
+### Events
+
+This controller dispatches no events of its own. Items dispatch the event named by `observeEvent`; this controller listens for it on the host and responds, but does not dispatch or re-dispatch any events.
+
+### Options
 
 | Option         | Type                                             | Default    | Description                                                                                                                                                                        |
 | -------------- | ------------------------------------------------ | ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -144,11 +160,5 @@ Call `refresh()` after an imperative state change that may leave the group incon
 | `deselect`     | `(item: T) => void`                              | (required) | Deselects an item. Called by the controller when enforcing the single-selection constraint. Must be idempotent.                                                                    |
 | `observeEvent` | `string`                                         | (required) | Event name to listen for on the host. Items must dispatch this event with `bubbles: true` and `composed: true` after their state changes.                                          |
 | `mode`         | `LiveSelectionMode \| (() => LiveSelectionMode)` | `'single'` | Selection constraint. Pass a getter function to switch modes dynamically without re-constructing the controller. Call `refresh()` after switching from `'multiple'` to `'single'`. |
-
-### Methods
-
-| Member      | Description                                                                                                                                                                                                      |
-| ----------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `refresh()` | Reads the current selected state of every item and enforces the active mode. In `'single'` mode, keeps the first selected item and deselects the rest. In `'multiple'` mode, is a no-op. Safe on an empty group. |
 
 <DocsFooter />
