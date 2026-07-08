@@ -267,7 +267,11 @@ export class SelectionController implements ReactiveController {
     if (!this.options.keydownActivation) {
       return;
     }
-    if (event.key !== 'Enter' && event.key !== ' ') {
+    // Fall back to event.code when event.key is empty (synthetic test
+    // events). Real browser events always populate event.key, so this never
+    // affects the space bar, where key (' ') and code ('Space') differ.
+    const key = event.key || event.code;
+    if (key !== 'Enter' && key !== ' ' && key !== 'Space') {
       return;
     }
     if (event.repeat) {

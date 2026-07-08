@@ -12,6 +12,7 @@
 import { PropertyValues } from 'lit';
 import { property, state } from 'lit/decorators.js';
 
+import { SelectionController } from '@spectrum-web-components/core/controllers/index.js';
 import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
 
 import {
@@ -243,6 +244,46 @@ export abstract class TabsBase extends SpectrumElement {
   private _tabs: TabLike[] = [];
 
   /**
+   * @internal
+   *
+   * Manages click and Enter/Space selection within the tab list. `selectItem`
+   * / `deselectItem` set each tab element's `selected` property; `getItems`
+   * always returns the full tab list (even when `disabled`) so `refresh()`
+   * still sees participants — user interaction is blocked instead via
+   * `confirmSelectionChange`, below. `onSelectionChange` keeps the public
+   * `selected` (tab-id) string in sync; `confirmSelectionChange` dispatches
+   * the cancelable `change` event so consumers may veto a selection.
+   *
+   * Arrow-key / Home / End navigation and roving `tabindex` remain
+   * hand-rolled in this class (see `focusByDelta` / `updateRovingTabindex`);
+   * this controller only owns click and Enter/Space activation.
+   */
+  private readonly _selection = new SelectionController(this, {
+    getItems: () => this._tabs as HTMLElement[],
+    selectItem: (item) => {
+      (item as TabLike).selected = true;
+    },
+    deselectItem: (item) => {
+      (item as TabLike).selected = false;
+    },
+    mode: 'single',
+    keydownActivation: true,
+    onSelectionChange: ({ selectedItems }) => {
+      const newTab = selectedItems[0] as TabLike | undefined;
+      const newId = newTab?.tabId ?? '';
+      if (this.selected !== newId) {
+        this.selected = newId;
+      }
+    },
+    confirmSelectionChange: () => {
+      if (this.disabled) {
+        return false;
+      }
+      return this.dispatchEvent(new Event('change', { cancelable: true }));
+    },
+  });
+
+  /**
    * Whether an assigned node is treated as a tab. `role="tab"` is set in
    * each tab's `firstUpdated`, so `slotchange` may run before that — accept
    * known tab host tag names so the tab list and selection indicator sync.
@@ -267,7 +308,7 @@ export abstract class TabsBase extends SpectrumElement {
     this._tabs = slot
       .assignedElements()
       .filter(TabsBase.isTabSlotNode) as TabLike[];
-    this.updateCheckedState();
+    this._syncSelectionController();
     this.updateSelectionIndicator();
   }
 
@@ -283,29 +324,10 @@ export abstract class TabsBase extends SpectrumElement {
   }
 
   /**
-   * Click handler bound to the tablist wrapper in the concrete
-   * template. Activates the clicked tab.
-   */
-  protected handleClick(event: Event): void {
-    if (this.disabled) {
-      return;
-    }
-
-    const target = event
-      .composedPath()
-      .find((el) => (el as TabLike).parentElement === this) as
-      | TabLike
-      | undefined;
-
-    if (!target || target.disabled) {
-      return;
-    }
-
-    this.selectTarget(target);
-  }
-
-  /**
-   * Full keyboard handler per WAI-ARIA APG Tabs pattern.
+   * Keyboard handler for arrow-key / Home / End navigation, per WAI-ARIA APG
+   * Tabs pattern. Enter/Space activation is owned by `_selection`
+   * (`keydownActivation: true`) via its own capture-phase listener, not this
+   * bubble-phase handler.
    *
    * **Horizontal:** Left/Right navigate; Up/Down ignored.
    * **Vertical:** Up/Down navigate; Left/Right ignored.
@@ -323,15 +345,6 @@ export abstract class TabsBase extends SpectrumElement {
     }
 
     const { code } = event;
-
-    if (code === 'Enter' || code === 'Space') {
-      event.preventDefault();
-      const target = event.target as TabLike | null;
-      if (target && !target.disabled) {
-        this.selectTarget(target);
-      }
-      return;
-    }
 
     const delta = this.getNavigationDelta(code);
     if (delta !== null) {
@@ -417,7 +430,7 @@ export abstract class TabsBase extends SpectrumElement {
     }
 
     if (this._keyboardActivation === 'automatic' && !tab.disabled) {
-      this.selectTarget(tab);
+      this._selection.setSelectedItem(tab as HTMLElement);
     }
 
     this.setRovingTabindex(tab);
@@ -443,9 +456,14 @@ export abstract class TabsBase extends SpectrumElement {
   }
 
   /**
-   * Attempts to select the given tab element. Dispatches a cancelable
-   * `change` event — if the consumer calls `preventDefault()`, the
-   * selection reverts to the previous value.
+   * Directly selects {@link target} and dispatches a cancelable `change`
+   * event, reverting on `preventDefault()`. Used **only** to seed selection
+   * from a `<swc-tab selected>` written directly in markup — see the
+   * `willUpdate` call site. That runs before the first `slotchange`, so
+   * `_selection`'s `getItems` (which reads `this._tabs`) would still see an
+   * empty list; going through `_selection` there would silently drop the
+   * seed. Every other selection path (click, Enter/Space, automatic
+   * activation) goes through `_selection` instead.
    */
   private selectTarget(target: TabLike): void {
     const id = target.tabId;
@@ -468,40 +486,64 @@ export abstract class TabsBase extends SpectrumElement {
   }
 
   /**
-   * Synchronizes the `selected` attribute and roving tabindex on
-   * each child tab to match the container's `selected` value.
-   * Ensures at least one tab has `tabindex="0"` for Tab-key entry
-   * when the container is not disabled. When the container is
-   * disabled, all tabs get `tabindex="-1"` to prevent Tab-key
-   * entry into the tab list.
+   * Syncs `_selection`'s cache to match `this.selected`, without raising a
+   * vetoable transition (`{ silent: true }`) — called when `selected`
+   * changes externally, when `disabled` toggles, and when the tab list is
+   * rebuilt. Also re-applies roving `tabindex` via `updateRovingTabindex`,
+   * since both need to run together whenever the tab list or selection
+   * changes.
+   *
+   * When `this.selected` names a tab that doesn't exist (or is empty),
+   * clears the selection — `single` mode normally rejects clearing
+   * interactively, so this requires `{ silent: true }` to bypass that
+   * restriction. Without it, adopting `_selection` would regress `<swc-tabs
+   * selected="">` no longer deselecting the previously-selected tab.
    */
-  private updateCheckedState(): void {
-    let hasTabStop = false;
-
-    for (const tab of this._tabs) {
-      tab.selected = false;
+  private _syncSelectionController(): void {
+    if (!this._tabs.length) {
+      return;
     }
 
-    if (this.selected) {
-      const currentTab = this._tabs.find((el) => el.tabId === this.selected);
+    const selectedTab = this._tabs.find((t) => t.tabId === this.selected);
 
-      if (currentTab) {
-        currentTab.selected = true;
-        if (!this.disabled) {
-          this.setRovingTabindex(currentTab);
-          hasTabStop = true;
-        }
-      } else {
+    if (selectedTab) {
+      this._selection.setSelectedItem(selectedTab as HTMLElement, {
+        silent: true,
+      });
+    } else {
+      this._selection.clearAll({ silent: true });
+
+      if (this.selected) {
+        // Named a tab that doesn't exist — reset the public property to
+        // reflect that nothing is actually selected.
         this.selected = '';
       }
     }
 
+    this.updateRovingTabindex();
+  }
+
+  /**
+   * Updates roving tabindex so only the selected tab has `tabindex="0"` and
+   * all others have `tabindex="-1"`. Ensures at least one tab has
+   * `tabindex="0"` for Tab-key entry when the container is not disabled
+   * (defaulting to the first tab when none is selected). When the container
+   * is disabled, all tabs get `tabindex="-1"` to prevent Tab-key entry into
+   * the tab list.
+   */
+  private updateRovingTabindex(): void {
     if (this.disabled) {
       for (const tab of this._tabs) {
         tab.tabIndex = -1;
       }
-    } else if (!hasTabStop && this._tabs.length) {
-      this._tabs[0].tabIndex = 0;
+      return;
+    }
+
+    const currentTab = this._tabs.find((t) => t.tabId === this.selected);
+    if (currentTab) {
+      this.setRovingTabindex(currentTab);
+    } else if (this._tabs.length) {
+      this.setRovingTabindex(this._tabs[0]);
     }
   }
 
@@ -616,7 +658,7 @@ export abstract class TabsBase extends SpectrumElement {
 
     if (changes.has('selected')) {
       if (this._tabs.length) {
-        this.updateCheckedState();
+        this._syncSelectionController();
       }
 
       const previousValue = changes.get('selected') as string | undefined;
@@ -642,7 +684,7 @@ export abstract class TabsBase extends SpectrumElement {
     }
 
     if (changes.has('disabled') && this._tabs.length) {
-      this.updateCheckedState();
+      this._syncSelectionController();
     }
 
     if (changes.has('direction')) {
