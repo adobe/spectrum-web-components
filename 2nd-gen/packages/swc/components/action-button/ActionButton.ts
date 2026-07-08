@@ -37,7 +37,11 @@ import styles from './action-button.css';
  * @slot icon - Optional leading icon displayed before the label.
  *
  * @cssprop --swc-action-button-min-block-size - Minimum block size. Defaults to the medium component height token.
- * @cssprop --swc-action-button-border-radius - Corner radius. Defaults to `corner-radius-medium-size-medium`.
+ * @cssprop --swc-action-button-border-radius - Corner radius applied to all four corners. Defaults to `corner-radius-medium-size-medium`.
+ * @cssprop --swc-action-button-border-start-start-radius - Start-start corner radius override. Defaults to `--swc-action-button-border-radius`. Used by `swc-action-group` compact mode to reset interior corners.
+ * @cssprop --swc-action-button-border-start-end-radius - Start-end corner radius override. Defaults to `--swc-action-button-border-radius`. Used by `swc-action-group` compact mode to reset interior corners.
+ * @cssprop --swc-action-button-border-end-start-radius - End-start corner radius override. Defaults to `--swc-action-button-border-radius`. Used by `swc-action-group` compact mode to reset interior corners.
+ * @cssprop --swc-action-button-border-end-end-radius - End-end corner radius override. Defaults to `--swc-action-button-border-radius`. Used by `swc-action-group` compact mode to reset interior corners.
  * @cssprop --swc-action-button-font-size - Font size of the label. Defaults to the medium font-size token.
  * @cssprop --swc-action-button-gap - Gap between icon and label.
  * @cssprop --swc-action-button-edge-to-text - Inline padding from edge to label text.

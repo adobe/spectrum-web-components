@@ -45,7 +45,10 @@
   text-decoration: none;
   background-color: var(--swc-action-button-background-color-default, token("gray-100"));
   border: var(--_swc-action-button-border-width) solid var(--swc-action-button-border-color-default, transparent);
-  border-radius: var(--swc-action-button-border-radius, token("corner-radius-medium-size-medium"));
+  border-start-start-radius: var(--swc-action-button-border-start-start-radius, var(--swc-action-button-border-radius, token("corner-radius-medium-size-medium")));
+  border-start-end-radius: var(--swc-action-button-border-start-end-radius, var(--swc-action-button-border-radius, token("corner-radius-medium-size-medium")));
+  border-end-start-radius: var(--swc-action-button-border-end-start-radius, var(--swc-action-button-border-radius, token("corner-radius-medium-size-medium")));
+  border-end-end-radius: var(--swc-action-button-border-end-end-radius, var(--swc-action-button-border-radius, token("corner-radius-medium-size-medium")));
   overflow: visible;
   cursor: default;
   user-select: none;
