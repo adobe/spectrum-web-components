@@ -439,9 +439,12 @@ export const Modal: Story = {
   tags: ['behaviors'],
 };
 
-// Default-mode popovers nest: a popover opened from inside another forms an
-// ancestor chain, so opening a descendant does not dismiss its ancestors.
-// Dismissal peels the chain one layer at a time from the top.
+// Nested-popover fixture (outer > inner > innermost) for the native
+// dismissal-ordering test in popover.a11y.spec.ts. Native light-dismiss needs
+// trusted input and a real story that exists in every Storybook mode (dev-only
+// `*.test.ts` fixtures are not indexed in the a11y build). It inherits the global
+// `!autodocs` / `!dev` tags, so it is a reachable test target but does not appear
+// in the docs page or the sidebar.
 export const Nested: Story = {
   render: () => html`
     <div style="display: flex; gap: 24px; padding: 40px;">
@@ -480,7 +483,6 @@ export const Nested: Story = {
       </swc-popover>
     </div>
   `,
-  tags: ['behaviors'],
 };
 
 // ────────────────────────────────
