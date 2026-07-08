@@ -31,7 +31,11 @@ jobs:
     name: Chromatic
     runs-on: ubuntu-latest
     timeout-minutes: 20
-    if: ${{ github.event_name == 'push' || github.event_name == 'workflow_dispatch' || github.event_name == 'workflow_call' || contains(github.event.pull_request.labels.*.name, 'run_vrt') }}
+    if: ${{ github.event_name == 'push' || github.event_name == 'workflow_dispatch' || github.event_name == 'workflow_call' || contains(github.event.pull_request.labels.*.name, 'run_vrt') || contains(github.event.pull_request.labels.*.name, 'skip_vrt') }}
+    env:
+      # Skip the build but let Chromatic mark "UI Tests"/"UI Review" as passing.
+      # True for workflow_call opt-out, or a PR labeled skip_vrt (unless run_vrt wins).
+      SKIP_VRT: ${{ inputs.skip || (github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'skip_vrt') && !contains(github.event.pull_request.labels.*.name, 'run_vrt')) }}
     outputs:
       storybook-url: ${{ steps.chromatic.outputs.storybookUrl != 'undefined' && steps.chromatic.outputs.storybookUrl || '' }}
 
@@ -42,9 +46,11 @@ jobs:
           fetch-depth: 0
 
       - name: Setup Job and Install Dependencies
+        if: ${{ env.SKIP_VRT != 'true' }}
         uses: ./.github/actions/setup-job
 
       - name: Generate Custom Elements Manifest
+        if: ${{ env.SKIP_VRT != 'true' }}
         working-directory: 2nd-gen/packages/swc
         run: yarn analyze
 
@@ -55,4 +61,4 @@ jobs:
           projectToken: ${{ secrets.CHROMATIC_TOKEN }}
           workingDir: 2nd-gen/packages/swc
           autoAcceptChanges: 'main'
-          skip: ${{ inputs.skip }}
+          skip: ${{ env.SKIP_VRT }}
