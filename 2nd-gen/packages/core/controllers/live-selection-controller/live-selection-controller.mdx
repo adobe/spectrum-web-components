@@ -15,6 +15,21 @@ import * as Stories from './stories/live-selection-controller.stories';
 
 Use it for patterns like accordions and disclosure groups where items are self-contained and the host does not cache selection centrally.
 
+### When to use this controller
+
+Use `LiveSelectionController` when each item in a group can change its own selected state (from its own click handler or a direct property set) without going through a central controller.
+
+The clearest example is an accordion: when a user clicks a panel header, `AccordionItem.toggle()` sets `this.open = !this.open` and then dispatches an event. This controller observes that event and closes other open panels, but it never decided to open the clicked panel, and it keeps no list of what's open. It reads the `open` property directly off each item whenever it needs to know the current state.
+
+That live-read approach is the right choice when items can change themselves, because any internal list this controller kept would go stale the moment an item changes itself outside the controller.
+
+**Do not use this controller** when items are passive — they only change because a controller told them to. Tabs, radio buttons, and filter chips are good examples: none of them flip their own `aria-selected` or `aria-pressed` on their own initiative. For those, use `SelectionController` (tracked separately) instead. `SelectionController` owns the `click` event on the host, keeps an internal cache of which items are selected, and calls `selectItem`/`deselectItem` to tell each item what state to reflect. Because the controller is the only thing that ever changes selection, its cache is always authoritative.
+
+| If your items...                                                                                                      | Use                                   |
+| --------------------------------------------------------------------------------------------------------------------- | ------------------------------------- |
+| Own their state and can change it themselves (accordion panel with its own `open`, menu item with its own `selected`) | `LiveSelectionController` (this page) |
+| Are passive and only change because a controller told them to (tab, radio button, filter chip)                        | `SelectionController`                 |
+
 ### What it does
 
 - **Observes a bubbled event** — listens for a named event dispatched by items after their state changes.
