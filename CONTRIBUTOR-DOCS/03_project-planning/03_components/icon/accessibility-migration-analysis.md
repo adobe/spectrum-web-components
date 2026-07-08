@@ -58,7 +58,9 @@ Per-icon workflow elements (`<swc-icon-star>`, `<swc-icon-folder>`, etc.) extend
 - `label` absent → decorative, both host and SVG are hidden.
 - `label` present → meaningful, SVG exposes as `img` with the label as its accessible name.
 
-One authoring difference matters for accessibility: **the element tag name describes shape, not function.** `<swc-icon-star>` tells the browser what shape to render; it says nothing about why the icon is there. The `label` must describe the function in context — `label="Add to favorites"`, not `label="Star"`. Decorative use (inside a labeled button) requires no `label` at all.
+One authoring difference matters for accessibility: **the element tag name describes shape, not function.** `<swc-icon-star>` tells the browser what shape to render; it says nothing about why the icon is there.
+
+In practice, workflow icons are almost always decorative. The parent element — a `<swc-button>`, `<swc-badge>`, or menu item — carries the `label` that assistive technology announces, and the icon itself needs no `label` at all. Only set `label` on a workflow icon when it genuinely stands alone as the sole communication of meaning, with no labeled parent. In that case `label` must describe the function in context — `label="Add to favorites"`, not `label="Star"`.
 
 ### What it is not
 
