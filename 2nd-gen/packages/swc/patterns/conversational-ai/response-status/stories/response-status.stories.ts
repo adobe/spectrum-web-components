@@ -257,6 +257,15 @@ export const Statuses: Story = {
   tags: ['options'],
 };
 
+export const StatusOnly: Story = {
+  render: () => html`
+    <swc-response-status status="active">
+      <span slot="label">Searching repositories for Europe trips</span>
+    </swc-response-status>
+  `,
+  tags: ['dev'],
+};
+
 export const Steps: Story = {
   render: () => html`
     <swc-response-status

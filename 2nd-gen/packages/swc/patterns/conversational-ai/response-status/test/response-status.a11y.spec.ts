@@ -41,7 +41,7 @@ test.describe('ResponseStatus - ARIA Snapshots', () => {
   }) => {
     const root = await gotoStory(
       page,
-      'patterns-conversational-ai-response-status--statuses',
+      'patterns-conversational-ai-response-status--status-only',
       'swc-response-status'
     );
     const status = root.locator('[role="status"]').first();
