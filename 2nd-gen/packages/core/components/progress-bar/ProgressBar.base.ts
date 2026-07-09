@@ -53,5 +53,4 @@ export abstract class ProgressBarBase extends LinearProgressMixin(
    */
   @property({ type: Boolean, reflect: true })
   public indeterminate = false;
-
 }
