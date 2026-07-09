@@ -99,7 +99,10 @@ React's card implementation is simplified to four patterns, mixed with consumer-
 
 Three concrete SWC components, all extending the already-built `CardBase`:
 
-- **`swc-card`** — regular, collection, and gallery layouts, all driven by slot presence (no explicit layout attribute). Phase 1 handles basic `<img>` content and "cover" fit behavior directly. Once the 2nd-gen `Asset` component ships, documentation updates to recommend it in place of plain `<img>`; no dedicated `swc-asset-card` is planned.
+- **`swc-card`** — regular, collection, and gallery layouts, all driven purely by slot presence, with no explicit layout attribute:
+  - **Collection** — populating the `collection` slot displays it; leaving it empty hides it, the same simple presence rule as any other optional slot.
+  - **Gallery** — triggered by a populated `preview` slot *and* the absence of **all** of `title`, `description`, `actions`, the default slot, and `footer`. That combination signals the image/asset is the card's only content, so it fills the available space. Any other combination renders the regular layout.
+  Phase 1 handles basic `<img>` content and "cover" fit behavior directly. Once the 2nd-gen `Asset` component ships, documentation updates to recommend it in place of plain `<img>`; no dedicated `swc-asset-card` is planned.
 - **`swc-user-card`** — adds an `avatar` glyph slot; optional preview image, aspect ratio `3/1`.
 - **`swc-product-card`** — adds a `thumbnail` glyph slot (expects a logo); optional preview image, aspect ratio `5/1`; footer content alignment forced to `end`.
 
@@ -146,7 +149,7 @@ Shared slots from `renderCardTemplate()`: `preview`, `title`, `actions`, `descri
 
 | Component | Glyph slot | Preview aspect ratio | Notes |
 |---|---|---|---|
-| `swc-card` | none | `3/2` default, `1:1` gallery | Enables the `collection` slot: 1–3 images, square aspect ratio. Gallery layout: content area omitted, image fills the available space. `preview` and `collection` are independently optional — a card can render `collection` alone with no larger `preview` image. Current `renderCardTemplate()` already tolerates this (an empty `<slot name="preview">` simply renders nothing); the swc-card styling phase needs to verify the media wrapper's sizing/aspect-ratio rules degrade correctly when only one of the two is populated, rather than assuming both. |
+| `swc-card` | none | `3/2` default, `1:1` gallery | Enables the `collection` slot: 1–3 images, square aspect ratio, shown when populated and hidden otherwise. Gallery is triggered by a populated `preview` slot plus the absence of **all** of `title`/`description`/`actions`/default/`footer` — the image becomes the only content and fills the available space. `preview` and `collection` are independently optional — a card can render `collection` alone with no larger `preview` image. Current `renderCardTemplate()` already tolerates this (an empty `<slot name="preview">` simply renders nothing); the swc-card styling phase needs to verify the media wrapper's sizing/aspect-ratio rules degrade correctly when only one of the two is populated, rather than assuming both. |
 | `swc-user-card` | `avatar` | `3/1` (optional) | |
 | `swc-product-card` | `thumbnail` | `5/1` (optional) | Footer content forced to `end` alignment. |
 
