@@ -31,6 +31,31 @@ alwaysApply: false
   - Term definitions
   - Emphasis in technical explanations
 
+### CSS class names in prose
+
+When mentioning a CSS class in documentation:
+
+| Context                                                         | Form                           | Example                              |
+| --------------------------------------------------------------- | ------------------------------ | ------------------------------------ |
+| The word "class" (or "base class" / "modifier class") is stated | Backticks, **no** leading `.`  | apply the `swc-Link` base class      |
+| Class token alone (no "class" in the sentence)                  | Backticks **with** leading `.` | add `.swc-Typography--emphasized`    |
+| HTML `class` attribute values                                   | Backticks, **no** leading `.`  | `<ul class="swc-Typography--links">` |
+| Class column in an API / reference table                        | Backticks, **no** leading `.`  | `swc-Link--standalone`               |
+
+Do not write "the `.swc-Link` class" — the leading `.` and the word "class" are redundant. Pick one signal.
+
+```markdown
+<!-- ❌ Bad -->
+
+apply the `.swc-Link` class
+add `swc-Typography--emphasized`
+
+<!-- ✅ Good -->
+
+apply the `swc-Link` class
+add `.swc-Typography--emphasized`
+```
+
 ## Lists and bullets
 
 - Start each bullet point with a capital letter

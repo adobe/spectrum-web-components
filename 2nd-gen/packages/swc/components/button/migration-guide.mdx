@@ -125,7 +125,7 @@ import '@adobe/spectrum-wc/global-button.css';
 - **Icon-only buttons** must have `accessible-label` on the host. See [step 4](#4-rename-label-to-accessible-label).
 - **Pending state**: when `pending` is set, the button announces as `"[label], busy"` by default. Supply `pending-label` to override with a more specific description of the in-progress operation.
 - **Disabled vs. pending**: use `pending` to keep the button focusable while an operation is in progress. Use `disabled` to remove it from the tab order entirely. Do not set both at the same time.
-- **Navigation**: do not use `<swc-button>` for navigation. Buttons activate on both Enter and Space; links activate on Enter only. Use a native `<a>` with global button styles instead (see [step 5](#5-migrate-link-mode-usage-to-native-anchors)).
+- **Navigation**: do not use `<swc-button>` for navigation. Buttons activate on both <kbd>Enter</kbd> and <kbd>Space</kbd>; links activate on <kbd>Enter</kbd> only. Use a native `<a>` with global button styles instead (see [step 5](#5-migrate-link-mode-usage-to-native-anchors)).
 - **Form submission**: `<swc-button>` behaves as `type="button"` only. For `submit` and `reset`, use a native `<button>` with [global button styles](/docs/guides-customization-global-element-styling--readme) until form-associated behavior is added in a future release.
 
 ## Styling

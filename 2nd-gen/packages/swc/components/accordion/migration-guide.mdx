@@ -31,12 +31,12 @@ Replace `<sp-accordion>` / `<sp-accordion-item>` with `<swc-accordion>` / `<swc-
 
 ### Removed in Spectrum 2
 
-| Removed                                                     | Replacement                                                                                                           |
-| ----------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
-| `label` attribute (on `sp-accordion-item`)                  | Use the `label` slot: `<span slot="label">…</span>`; see [step 3](#3-move-the-heading-label-to-the-label-slot)        |
-| `level` attribute on the item                               | Set `level` on `<swc-accordion>`; it applies to every item. See [step 4](#4-move-level-to-the-accordion)              |
-| Arrow / Home / End navigation between headers               | `Tab` and `Shift+Tab` move between headers; there is no arrow-key roving                                              |
-| `--mod-accordion-*` / `--spectrum-accordion-*` custom props | `--swc-accordion-item-*` where a hook exists (see [Styling](#styling)); most are token-driven with no 1:1 replacement |
+| Removed                                                             | Replacement                                                                                                           |
+| ------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
+| `label` attribute (on `sp-accordion-item`)                          | Use the `label` slot: `<span slot="label">…</span>`; see [step 3](#3-move-the-heading-label-to-the-label-slot)        |
+| `level` attribute on the item                                       | Set `level` on `<swc-accordion>`; it applies to every item. See [step 4](#4-move-level-to-the-accordion)              |
+| Arrow / <kbd>Home</kbd> / <kbd>End</kbd> navigation between headers | <kbd>Tab</kbd> and <kbd>Shift</kbd> + <kbd>Tab</kbd> move between headers; there is no arrow-key roving               |
+| `--mod-accordion-*` / `--spectrum-accordion-*` custom props         | `--swc-accordion-item-*` where a hook exists (see [Styling](#styling)); most are token-driven with no 1:1 replacement |
 
 ## Update your code
 
@@ -129,7 +129,9 @@ See [Styling](#styling) for the full property mapping.
 - Each item needs meaningful text in the `label` slot so screen reader users can navigate the heading list. See [step 3](#3-move-the-heading-label-to-the-label-slot).
 - When using the `actions` slot, include the item subject in each action's accessible name (for example "Edit personal information", not "Edit") so it is unambiguous out of context.
 - Disabled items now use `aria-disabled` and remain keyboard-focusable (Spectrum 1 used the native `disabled` attribute). No markup change is required.
-- `Tab` and `Shift+Tab` move between headers; arrow, `Home`, and `End` keys no longer move focus between headers. No markup change is required.
+- <kbd>Tab</kbd> and <kbd>Shift</kbd> + <kbd>Tab</kbd> move between headers;
+  arrow, <kbd>Home</kbd>, and <kbd>End</kbd> keys no longer move focus between
+  headers. No markup change is required.
 
 ## Styling
 

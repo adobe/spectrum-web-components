@@ -21,7 +21,7 @@ Whether you're a contributor testing your component implementation or a consumer
 
 ## Why keyboard accessibility matters
 
-Keyboard accessibility ensures that users who cannot or prefer not to use a mouse can still fully interact with web content. This is not just about supporting a specific disability—it's about making interfaces work for everyone.
+Keyboard accessibility ensures that users who cannot or prefer not to use a mouse can still fully interact with web content. This is not just about supporting a specific disability — it's about making interfaces work for everyone.
 
 ### Who benefits from keyboard accessibility
 
@@ -43,18 +43,20 @@ Without proper keyboard support, users may encounter:
 
 ## Platform setup instructions
 
-> ⚠️ **Important for MacOS and Safari users**
->
-> By default, MacOS and Safari do not enable full keyboard navigation. You must manually enable these settings before testing keyboard accessibility. **This is the most commonly overlooked setup step.**
+macOS and Safari need manual setup before keyboard testing works as expected. Other browsers are usually ready by default.
 
-### MacOS keyboard navigation
+### macOS keyboard navigation
 
-To enable keyboard navigation system-wide on MacOS:
+By default, macOS does not enable full keyboard navigation. Enable it before testing.
 
-1. Open **System Settings** (or System Preferences on older versions)
+> ⚠️ **Important:** This is the most commonly overlooked setup step on Mac.
+
+To enable keyboard navigation system-wide on macOS:
+
+1. Open **System Settings** (or **System Preferences** on older versions)
 2. Navigate to **Keyboard**
-3. Enable **"Keyboard navigation"** toggle
-   - On older MacOS versions, go to **Shortcuts** tab and select **"All controls"** under "Full Keyboard Access"
+3. Enable **Keyboard navigation**
+   - On older macOS versions, go to the **Shortcuts** tab and select **All controls** under **Full Keyboard Access**
 
 This setting allows you to use <kbd>Tab</kbd> to navigate to all controls, not just text fields and lists.
 
@@ -65,19 +67,19 @@ This setting allows you to use <kbd>Tab</kbd> to navigate to all controls, not j
     style={keyboardTestingGuideImageStyle}
   />
   <figcaption>
-    macOS System Settings, Keyboard: the Keyboard navigation option (or, on
-    older macOS, All controls under Full Keyboard Access) so Tab reaches all
-    focusable controls.
+    macOS **System Settings**, **Keyboard**: the **Keyboard navigation** option
+    (or, on older macOS, **All controls** under **Full Keyboard Access**) so{' '}
+    <kbd>Tab</kbd> reaches all focusable controls.
   </figcaption>
 </figure>
 
 ### Safari browser settings
 
-Safari requires an additional setting to enable full keyboard navigation:
+Even with macOS keyboard navigation enabled, Safari needs its own setting for in-page <kbd>Tab</kbd> focus.
 
-1. Open **Safari** and go to **Settings** (or Preferences)
+1. Open **Safari** and go to **Settings** (or **Preferences**)
 2. Navigate to the **Advanced** tab
-3. Under **Accessibility**, check **"Press Tab to highlight each item on a webpage"**
+3. Under **Accessibility**, check **Press Tab to highlight each item on a webpage**
 
 <figure>
   <img
@@ -86,16 +88,16 @@ Safari requires an additional setting to enable full keyboard navigation:
     style={keyboardTestingGuideImageStyle}
   />
   <figcaption>
-    Safari Settings, Advanced tab: under Accessibility, Press Tab to highlight
-    each item on a webpage is enabled so in-page focus moves to every link and
-    control.
+    Safari **Settings**, **Advanced** tab: under **Accessibility**, **Press Tab
+    to highlight each item on a webpage** is enabled so in-page focus moves to
+    every link and control.
   </figcaption>
 </figure>
 
 ### Other browsers
 
 - **Chrome/Edge**: Full keyboard navigation is enabled by default
-- **Firefox**: Full keyboard navigation is enabled by default. For additional options, see `about:preferences#general` under "Browsing"
+- **Firefox**: Full keyboard navigation is enabled by default. For additional options, open **Settings** → **General** and review **Browsing**.
 
 ## Keyboard navigation basics
 
@@ -174,16 +176,16 @@ Use this checklist when testing keyboard accessibility:
 
 ## See also (Storybook)
 
-- [WAVE toolbar testing](/docs/guides-accessibility-guides-wave-toolbar-testing--docs) — **Order** tab: compare **navigable** order and the drawn path to your visual layout (complements **Tab** testing here)
-- [Headings and landmarks](/docs/guides-accessibility-guides-headings-and-landmarks--docs) — **Skip** links and a sensible **main** / **nav** structure make keyboard traversal predictable
-- [Screen reader testing](/docs/guides-accessibility-guides-screen-reader-testing--docs) — many screen reader users move focus with the same keys you use for quick navigation in browse mode
+- [WAVE toolbar testing](/docs/guides-accessibility-guides-wave-toolbar-testing--docs): **order** tab: compare **navigable** order and the drawn path to your visual layout (complements **Tab** testing here)
+- [Headings and landmarks](/docs/guides-accessibility-guides-headings-and-landmarks--docs): **skip** links and a sensible **main** / **nav** structure make keyboard traversal predictable
+- [Screen reader testing](/docs/guides-accessibility-guides-screen-reader-testing--docs): many screen reader users move focus with the same keys you use for quick navigation in browse mode
 
 ## Resources
 
 For more information on keyboard accessibility, consult these authoritative sources:
 
-- [W3C ARIA Authoring Practices Guide (APG)](https://www.w3.org/WAI/ARIA/apg/) - Design patterns and keyboard behaviors for common components
-- [WebAIM Keyboard Accessibility](https://webaim.org/techniques/keyboard) - Practical guide to keyboard testing
-- [WCAG 2.1 Keyboard Success Criteria](https://www.w3.org/WAI/WCAG21/quickref/?showtechniques=211#keyboard-accessible) - The official accessibility guidelines for keyboard access
-- [Deque University - How Keyboard Testing Improves Accessibility](https://www.deque.com/blog/how-keyboard-testing-improves-digital-accessibility/) - Why keyboard testing matters
-- [web.dev Learn Accessibility](https://web.dev/learn/accessibility) - Google's comprehensive accessibility course
+- [W3C ARIA Authoring Practices Guide (APG)](https://www.w3.org/WAI/ARIA/apg/): design patterns and keyboard behaviors for common components
+- [WebAIM Keyboard Accessibility](https://webaim.org/techniques/keyboard): practical guide to keyboard testing
+- [WCAG 2.1 Keyboard Success Criteria](https://www.w3.org/WAI/WCAG21/quickref/?showtechniques=211#keyboard-accessible): the official accessibility guidelines for keyboard access
+- [Deque University: How Keyboard Testing Improves Accessibility](https://www.deque.com/blog/how-keyboard-testing-improves-digital-accessibility/): why keyboard testing matters
+- [web.dev: Learn Accessibility](https://web.dev/learn/accessibility): Google's comprehensive accessibility course

@@ -226,9 +226,9 @@ export const Orientations: Story = {
  * The `align` property controls the alignment of buttons within the group along
  * the main axis:
  *
- * - **start** (default): Buttons align to the inline start
- * - **center**: Buttons center within the available space
- * - **end**: Buttons align to the inline end (useful for dialog footers)
+ * - **`start`** (default): Buttons align to the inline start
+ * - **`center`**: Buttons center within the available space
+ * - **`end`**: Buttons align to the inline end (useful for dialog footers)
  */
 export const Alignment: Story = {
   render: () => html`
@@ -284,7 +284,7 @@ export const Disabled: Story = {
  *
  * - <kbd>Tab</kbd> / <kbd>Shift+Tab</kbd>: Moves focus between buttons in DOM order
  * - <kbd>Enter</kbd> / <kbd>Space</kbd>: Activates the focused button
- * - Each button is a **separate Tab stop** — the group does NOT use roving tabindex
+ * - Each button is a **separate tab stop** — the group does NOT use roving `tabindex`
  * - The group host is **NOT focusable**
  *
  * #### Why `aria-orientation` is not set

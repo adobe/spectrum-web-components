@@ -35,10 +35,10 @@ Meters come in four sizes: small (`s`), medium (`m`), large (`l`), and extra-lar
 
 Variants convey semantic meaning through both color and the value they represent:
 
-- **informative** (default): a neutral or non-semantic value, such as the number of tutorials completed
-- **positive**: a positive value, such as ample remaining space
-- **notice**: a situation that may need to be addressed soon, such as space becoming limited
-- **negative**: a critical situation needing urgent attention, such as space becoming very limited
+- **`informative`** (default): a neutral or non-semantic value, such as the number of tutorials completed
+- **`positive`**: a positive value, such as ample remaining space
+- **`notice`**: a situation that may need to be addressed soon, such as space becoming limited
+- **`negative`**: a critical situation needing urgent attention, such as space becoming very limited
 
 <Canvas of={Stories.Variants} />
 
@@ -52,8 +52,8 @@ The label can be displayed above the bar or beside it. Set `label-position="top"
 
 Use the `static-color` attribute when the meter is displayed over images or colored backgrounds:
 
-- **white**: use on dark or colored backgrounds for contrast
-- **black**: use on light backgrounds for contrast
+- **Static white**: use on dark or colored backgrounds for contrast
+- **Static black**: use on light backgrounds for contrast
 
 <Canvas of={Stories.StaticColors} />
 
@@ -75,7 +75,7 @@ Set `min-value` and `max-value` to measure against an arbitrary numeric range ra
 
 ### Value label
 
-Set the `value-label` attribute to replace the auto-formatted value in both the rendered value text and `aria-valuetext` with a custom string, such as `2.4 GB / 5 GB`.
+Set the `value-label` attribute to replace the auto-formatted value in both the rendered value text and `aria-valuetext` with a custom string, such as "2.4 GB / 5 GB".
 
 <Canvas of={Stories.ValueLabel} />
 

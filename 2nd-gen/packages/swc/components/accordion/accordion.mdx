@@ -23,8 +23,8 @@ An accordion consists of:
 #### Slots
 
 - **Default slot** (on `swc-accordion`): accepts `swc-accordion-item` elements
-- **label slot** (on `swc-accordion-item`): the heading text shown in the header
-- **actions slot** (on `swc-accordion-item`): optional interactive controls placed outside the toggle button so they remain independently clickable
+- **`label` slot** (on `swc-accordion-item`): the heading text shown in the header
+- **`actions` slot** (on `swc-accordion-item`): optional interactive controls placed outside the toggle button so they remain independently clickable
 - **Default slot** (on `swc-accordion-item`): the panel content revealed when the item expands
 
 > **Note**: The header label is provided through the `label` slot. In Spectrum 1 it was a `label` attribute. See the [migration guide](?path=/docs/components-accordion-migration-guide--docs).
@@ -41,13 +41,13 @@ Accordions come in four sizes: small (`s`), medium (`m`), large (`l`), and extra
 
 ### Density
 
-Density controls the vertical padding applied to each item header. Three values are available: `compact`, `regular`, and `spacious`. `regular` is the default; the component emits a development warning when `density` is omitted.
+Density controls the vertical padding applied to each item header. Three values are available: `compact`, `regular`, and `spacious`. The default is `regular`; the component emits a development warning when `density` is omitted.
 
 <Canvas of={AccordionStories.Density} />
 
 ### Quiet
 
-The `quiet` variant removes the item divider borders and rounds the header corners on hover and focus.
+The `quiet` variant removes the item divider borders and rounds the header corners on hover.
 
 <Canvas of={AccordionStories.Quiet} />
 

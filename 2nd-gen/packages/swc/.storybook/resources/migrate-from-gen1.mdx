@@ -14,17 +14,17 @@ For a high-level comparison of what changed, see [Gen1 vs Gen2](/docs/learn-abou
 2. Switch Gen1 to the `spectrum-two` theme so it better aligns with Gen2 visually.
 3. Add the Gen2 stylesheet and `swc-theme` classes to your application root.
 4. Load Adobe Clean Spectrum VF (the Spectrum 2 font family).
-5. Replace `<sp-*>` with `<swc-*>` one component at a time, following each component's **Migration guide**. Remove deprecated `--mod-*` overrides and apply `--swc-*` overrides if necessary.
+5. Replace `<sp-*>` with `<swc-*>` one component at a time, following each component's **migration guide**. Remove deprecated `--mod-*` overrides and apply `--swc-*` overrides if necessary.
 6. Once no `<sp-*>` elements remain, remove the Gen1 package, the `spectrum-two` theme imports, and the `<sp-theme>` element.
 
 ## Gen1 and Gen2 can coexist
 
 Four properties make a gradual migration possible:
 
-- **Different package names** — `@spectrum-web-components` and `@adobe/spectrum-wc` install side by side without conflicting.
-- **Different tag prefixes** — `<sp-badge>` and `<swc-badge>` are independent custom elements. You can have both in the same tree.
-- **Shared visual language** — Gen1's `spectrum-two` theme serves as a bridge between Spectrum/Express and Spectrum 2, which Gen2 uses out of the box. Using this theme on Gen1 components creates visual consistency between both generations.
-- **Separate token namespace** — Design token custom properties use the `swc` namespace to prevent conflicts with Gen1 visuals.
+- **Different package names**: `@spectrum-web-components` and `@adobe/spectrum-wc` install side by side without conflicting.
+- **Different tag prefixes**: `<sp-badge>` and `<swc-badge>` are independent custom elements. You can have both in the same tree.
+- **Shared visual language**: Gen1's `spectrum-two` theme serves as a bridge between Spectrum/Express and Spectrum 2, which Gen2 uses out of the box. Using this theme on Gen1 components creates visual consistency between both generations.
+- **Separate token namespace**: Design token custom properties use the `swc` namespace to prevent conflicts with Gen1 visuals.
 
 ## Step 1 — Install Gen2
 
@@ -49,7 +49,7 @@ import '@spectrum-web-components/theme/src/spectrum-two/themes.js';
 </sp-theme>
 ```
 
-Gen1 components inside this theme adopt Spectrum 2 tokens and use the same colours, border radii, and icons as their `<swc-*>` neighbors.
+Gen1 components inside this theme adopt Spectrum 2 tokens and use the same colors, border radii, and icons as their `<swc-*>` neighbors.
 
 ## Step 3 — Add the Gen2 stylesheet and theme classes
 
@@ -86,7 +86,7 @@ How you load it depends on your environment — for Adobe Fonts (Typekit), CDN, 
 
 For each migrated Gen2 component:
 
-1. Open the component's **Migration guide** (e.g. [Badge](/docs/components-badge-migration-guide--docs)) for breaking attribute, slot, event, and default-value changes. Check the component's docs page too, under "Upcoming features", for any Spectrum 2 coverage gaps.
+1. Open the component's **migration guide** (e.g. [Badge](/docs/components-badge-migration-guide--docs)) for breaking attribute, slot, event, and default-value changes. Check the component's docs page too, under "Upcoming features", for any Spectrum 2 coverage gaps.
 2. Update the import to the per-element side-effect path:
 
    ```ts
@@ -100,7 +100,7 @@ For each migrated Gen2 component:
 3. Rename the tag (`<sp-badge>` → `<swc-badge>`) and apply any attribute renames called out in the migration guide.
 4. Remove deprecated `--mod-*` overrides and apply `--swc-*` overrides if necessary (covered below).
 
-The components index on this site lists every Gen2 component that has shipped, with its Migration guide and full API reference.
+The components index on this site lists every Gen2 component that has shipped, with its migration guide and full API reference.
 
 ## Step 6 — Migrate styling
 

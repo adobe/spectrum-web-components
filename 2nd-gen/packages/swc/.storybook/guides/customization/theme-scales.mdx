@@ -1,12 +1,12 @@
 import { Meta } from '@storybook/addon-docs/blocks';
 
-<Meta title="Customization/Theme and Scales" />
+<Meta title="Customization/Theme and scales" />
 
-# Theme and Scales
+# Theme and scales
 
 The theme and scale context classes and methods replace the features previously offered via `<sp-theme>`.
 
-Be sure to review the [getting started guide](/docs/guides-customization-getting-started--docs) for how to include the required stylesheet.
+Be sure to review the [Getting started guide](/docs/guides-customization-getting-started--docs) for how to include the required stylesheet.
 
 ## Themes
 
@@ -18,11 +18,11 @@ Preview component theme color changes via the top toolbar.
 
 ### Theme classes
 
-You can change your application - or a section or element - to an alternate theme by including both the `swc-theme` class and a theme class.
+You can change your application, a section, or an element to an alternate theme by including both the `swc-theme` class and a theme class.
 
-- `.swc-theme--dark` - sets `color-scheme: dark`
-- `.swc-theme--light` - sets `color-scheme: light`
-- `.swc-theme--adaptive` - sets `color-scheme: light dark`, adapts to user's OS setting
+- `.swc-theme--dark` sets `color-scheme: dark`
+- `.swc-theme--light` sets `color-scheme: light`
+- `.swc-theme--adaptive` sets `color-scheme: light dark` and adapts to the user's OS setting
 
 ### Theme examples
 
@@ -44,7 +44,7 @@ You can change your application - or a section or element - to an alternate them
 
 ## Scale contexts
 
-There are two scale contexts available: medium (aka "Desktop") and large (aka "Mobile"). Scales apply to properties such as `font-size` and spacing-related values.
+There are two scale contexts available: `medium` (aka desktop) and `large` (aka mobile). Scales apply to properties such as `font-size` and spacing-related values.
 
 By default, the application will be set to use a medium scaling context.
 
@@ -54,8 +54,8 @@ Preview component scale changes via the top toolbar.
 
 You can change your application - or a section or element - to an alternate theme by including both the `swc-theme` class and a scale class.
 
-- `.swc-theme--sizeM` - use the medium scale
-- `.swc-theme--sizeL` - use the large scale
+- `.swc-theme--sizeM` uses the medium scale
+- `.swc-theme--sizeL` uses the large scale
 
 See the examples for you can also change the scale responsively.
 
@@ -109,7 +109,7 @@ You can also do this per a custom class (or other selector) for a section or spe
 
 ### How dynamic scaling works
 
-Dynamic scaling is available via all provided design tokens which include values for `desktop` (medium) and `mobile` (large) contexts.
+Dynamic scaling is available via all provided design tokens which include values for desktop (`medium`) and mobile (`large`) contexts.
 
 These are processed into a format like the following:
 

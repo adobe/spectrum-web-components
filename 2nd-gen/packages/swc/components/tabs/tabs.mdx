@@ -80,9 +80,8 @@ Disabled tabs remain focusable via arrow keys but cannot be activated; see the [
 
 ### Activation Modes
 
-`keyboard-activation="automatic"` (default): selection follows focus when arrowing, matching React Spectrum's `Tabs` behavior.
-
-`keyboard-activation="manual"`: arrow keys move focus between tabs without changing the selected tab until Enter or Space. Prefer this when tab panels are expensive to render or not fully present in the DOM.
+- `keyboard-activation="automatic"` (default): selection follows focus when arrowing, matching React Spectrum's `Tabs` behavior.
+- `keyboard-activation="manual"`: arrow keys move focus between tabs without changing the selected tab until <kbd>Enter</kbd> or <kbd>Space</kbd>. Prefer this when tab panels are expensive to render or not fully present in the DOM.
 
 #### Events
 
@@ -130,7 +129,7 @@ The tablist uses a roving tabindex strategy: exactly one tab has `tabindex="0"` 
 
 #### Disabled tabs
 
-Disabled tabs use `aria-disabled="true"` (not the native `disabled` attribute) so they remain discoverable by assistive technology. They are focusable via arrow keys but cannot be activated (Enter, Space, and click are guarded).
+Disabled tabs use `aria-disabled="true"` (not the native `disabled` attribute) so they remain discoverable by assistive technology. They are focusable via arrow keys but cannot be activated (<kbd>Enter</kbd>, <kbd>Space</kbd>, and click are guarded).
 
 #### Tab panel focus management
 
