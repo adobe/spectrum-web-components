@@ -622,3 +622,57 @@ export const VrtModal = vrtStory(
   { modal: true, 'accessible-label': 'Account settings' },
   'vrt-modal'
 );
+
+// Nested popovers with both layers open (the inner opened from inside the outer
+// forms an ancestor chain, so the outer stays open beneath it).
+export const VrtNested: Story = {
+  render: () => html`
+    <div
+      style="display: grid; place-items: center; min-block-size: 360px; padding: 64px;"
+    >
+      <swc-button id="vrt-nested-outer-trigger">Open outer</swc-button>
+      <swc-popover
+        id="vrt-nested-outer"
+        for="vrt-nested-outer-trigger"
+        accessible-label="Outer"
+      >
+        <div style="display: flex; flex-direction: column; gap: 12px;">
+          <p class="swc-Body swc-Body--sizeS" style="margin: 0;">
+            Outer popover
+          </p>
+          <swc-button id="vrt-nested-inner-trigger" size="s">
+            Open inner
+          </swc-button>
+          <swc-popover
+            id="vrt-nested-inner"
+            for="vrt-nested-inner-trigger"
+            placement="end"
+            accessible-label="Inner"
+          >
+            Inner popover
+          </swc-popover>
+        </div>
+      </swc-popover>
+    </div>
+  `,
+  play: async ({ canvasElement }) => {
+    const outer = canvasElement.querySelector('#vrt-nested-outer') as Popover;
+    const inner = canvasElement.querySelector('#vrt-nested-inner') as Popover;
+    await outer.updateComplete;
+    outer.open = true;
+    await waitFor(() =>
+      expect(outer.hasAttribute('actual-placement'), 'outer anchored').toBe(
+        true
+      )
+    );
+    inner.open = true;
+    await waitFor(() =>
+      expect(inner.hasAttribute('actual-placement'), 'inner anchored').toBe(
+        true
+      )
+    );
+    // The ancestor chain keeps the outer open beneath the inner.
+    expect(outer.open, 'outer stays open under the inner').toBe(true);
+  },
+  parameters: { chromatic: { disableSnapshot: false } },
+};
