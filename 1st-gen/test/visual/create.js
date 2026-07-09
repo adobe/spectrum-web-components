@@ -58,10 +58,14 @@ regressVisuals('${name}', stories as unknown as TestsType);
 }
 async function main() {
   try {
-    const filesToDelete = await fg('**/*-vrt.ts');
+    const filesToDelete = await fg('**/*-vrt.ts', {
+      ignore: ['**/node_modules/**'],
+    });
     await rimraf(filesToDelete);
   } catch (error) {
-    console.warn(`Failed to delete test files: ${JSON.stringify(error)}`);
+    console.warn(
+      `Failed to delete test files: ${error instanceof Error ? error.message : String(error)}`
+    );
     process.exit(1);
   }
   await createTest('packages');
