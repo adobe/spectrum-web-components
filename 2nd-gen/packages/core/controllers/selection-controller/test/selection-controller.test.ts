@@ -363,11 +363,17 @@ export const ModeSwitchingTest: Story = {
       async () => {
         modeBtn('single').click();
 
+        // "First" means first inserted into the selection cache, not first
+        // clicked in this step: "appearance" was already selected before the
+        // switch to multiple mode, so it is first in insertion order even
+        // though "general" and "privacy" were clicked more recently.
         const openCount = ['general', 'appearance', 'privacy'].filter(
           (key) => trigger(key).getAttribute('aria-expanded') === 'true'
         ).length;
         expect(openCount).toBe(1);
-        expect(trigger('general').getAttribute('aria-expanded')).toBe('true');
+        expect(trigger('appearance').getAttribute('aria-expanded')).toBe(
+          'true'
+        );
       }
     );
   },
