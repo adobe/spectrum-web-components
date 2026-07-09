@@ -10,7 +10,7 @@
  * governing permissions and limitations under the License.
  */
 import { html } from 'lit';
-import { expect } from '@storybook/test';
+import { expect, userEvent } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import {
@@ -856,7 +856,11 @@ export const ActiveChangeEventAndCallback: Story = {
       'reason is "focus" when a managed item receives DOM focus directly',
       async () => {
         host.clearLogs();
-        buttons[0].focus(); // "First" — different from the active "Second"
+        // A bare `.focus()` call doesn't reliably dispatch a native
+        // `focusin` event across browsers in an automated test context;
+        // `userEvent.click()` mirrors a real pointer click, which reliably
+        // moves focus and fires the event everywhere.
+        await userEvent.click(buttons[0]); // "First" — different from the active "Second"
 
         expect(host.activeChangeLog[host.activeChangeLog.length - 1]).toBe(
           'First'

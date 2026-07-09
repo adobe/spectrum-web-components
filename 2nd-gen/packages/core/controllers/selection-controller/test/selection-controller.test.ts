@@ -13,7 +13,7 @@
 import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
-import './demo-hosts.js';
+import '../stories/demo-hosts.js';
 
 import { getComponent } from '../../../../swc/utils/test-utils.js';
 import {
