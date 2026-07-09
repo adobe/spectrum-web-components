@@ -1,0 +1,117 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import { DocsFooter, DocsHeader } from '../../../swc/.storybook/blocks';
+
+import * as Stories from './stories/slot-attribute-propagation.stories';
+
+<Meta of={Stories} />
+
+<DocsHeader />
+
+## Usage
+
+`SlotAttributePropagationController` keeps a slot's assigned elements in sync with a host attribute, so consuming components don't each re-implement the same slot-observation logic. It's used by `ButtonGroup` (propagating `size` to the default slot) and `IllustratedMessage` (propagating `size` to the named `actions` slot).
+
+### Basic usage
+
+1. Construct the controller in the host's constructor, passing `attribute`, `getValue`, and optionally `slotName` and `selector`.
+2. The controller propagates automatically in `hostUpdated()` whenever the value returned by `getValue` changes, including on first render.
+3. Wire the host's `slotchange` event on the targeted slot to call `propagate()`, so elements assigned after the first render (for example, content added dynamically) still receive the attribute. `slotchange` does not itself trigger a Lit update, so this call is required.
+
+```typescript
+import { LitElement, html } from 'lit';
+import { property } from 'lit/decorators.js';
+import { SlotAttributePropagationController } from '@spectrum-web-components/core/controllers/slot-attribute-propagation.js';
+
+class MyBase extends LitElement {
+  @property({ type: String, reflect: true })
+  public size: MySize = 'm';
+
+  private readonly sizePropagation = new SlotAttributePropagationController(
+    this,
+    {
+      attribute: 'size',
+      getValue: () => this.size,
+      slotName: 'actions',
+    }
+  );
+
+  protected handleActionsSlotChange(): void {
+    this.sizePropagation.propagate();
+  }
+
+  protected override render() {
+    return html`
+      <slot name="actions" @slotchange=${this.handleActionsSlotChange}></slot>
+    `;
+  }
+}
+```
+
+## Options
+
+### Default slot
+
+Omit `slotName` to target the default (unnamed) slot. Every element assigned to it receives the attribute.
+
+<Canvas of={Stories.DefaultSlot} />
+
+### Named slot
+
+Set `slotName` to target a specific named slot. Elements assigned to other slots on the same host, including the default slot, are left untouched.
+
+<Canvas of={Stories.NamedSlot} />
+
+### Selector filtering
+
+Set `selector` to a CSS selector to propagate the attribute only to assigned elements that match it. Elements in the same slot that don't match are left untouched.
+
+<Canvas of={Stories.Selector} />
+
+## Behaviors
+
+### Propagation timing
+
+The controller propagates the current value to all matching assigned elements on first render and again in `hostUpdated()` any time the value returned by `getValue` differs from the value tracked at the last propagation. If the value hasn't changed, `hostUpdated()` is a no-op: the controller does not touch assigned elements on every unrelated host update.
+
+### Propagates to dynamically added elements
+
+Elements assigned to the slot after the first render (for example, appended to the host's light DOM at runtime) don't trigger a Lit update on their own, so they aren't covered by the automatic `hostUpdated()` propagation. Call `propagate()` from the host's `slotchange` handler to cover them.
+
+<Canvas of={Stories.DynamicSlotting} />
+
+### Disconnect and reconnect
+
+`hostDisconnected()` clears the internally tracked value. If the host reconnects and updates again with the _same_ value it had before disconnecting, the controller still re-propagates, because the internal guard has no prior value to compare against. This keeps propagation correct after a host is moved in the DOM (which disconnects and reconnects it).
+
+## Accessibility
+
+### Features
+
+`SlotAttributePropagationController` sets a plain DOM attribute on assigned elements via `setAttribute`. It does not manage ARIA relationships, roles, or attributes on its own: it will propagate whatever attribute name it's configured with, including an ARIA attribute, but the consuming component is responsible for deciding whether that's an appropriate way to convey that particular relationship.
+
+### Best practices
+
+- Use this controller for presentation-oriented attributes that slotted children are expected to read declaratively, such as `size` or a visual `variant`.
+- Prefer explicit ARIA wiring (for example `aria-describedby` set directly on the relevant elements) over propagating ARIA attributes through this controller, since assigned elements may have their own ARIA semantics that a blanket propagation could override unexpectedly.
+- Always wire the targeted slot's `slotchange` event to `propagate()` so elements added after first render aren't missed.
+
+<Canvas of={Stories.Accessibility} />
+
+## API
+
+### Methods
+
+| Member        | Description                                                                                                                                                           |
+| ------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `propagate()` | Propagates the current value (from `getValue()`) to all matching assigned elements immediately, bypassing the no-op guard. Call from the host's `slotchange` handler. |
+
+### Constructor options (`SlotAttributePropagationControllerOptions`)
+
+| Option      | Type           | Description                                                                                                   |
+| ----------- | -------------- | ------------------------------------------------------------------------------------------------------------- |
+| `attribute` | `string`       | The attribute name to propagate to assigned elements.                                                         |
+| `getValue`  | `() => string` | Returns the current value to propagate.                                                                       |
+| `slotName`  | `string`       | Named slot to target. Omit for the default (unnamed) slot.                                                    |
+| `selector`  | `string`       | CSS selector used to filter assigned elements before propagating. Omit to propagate to all assigned elements. |
+
+<DocsFooter />

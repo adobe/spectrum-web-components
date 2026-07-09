@@ -56,3 +56,7 @@ export {
   type PlacementOptions,
   type VirtualTrigger,
 } from './placement-controller/index.js';
+export {
+  SlotAttributePropagationController,
+  type SlotAttributePropagationControllerOptions,
+} from './slot-attribute-propagation/index.js';
