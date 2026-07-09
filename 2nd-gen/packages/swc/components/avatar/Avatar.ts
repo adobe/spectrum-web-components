@@ -11,7 +11,7 @@
  */
 import { CSSResultArray, html, TemplateResult } from 'lit';
 
-import { AvatarBase } from '@spectrum-web-components/core/components/avatar';
+import { AvatarBase } from '@adobe/spectrum-wc-core/components/avatar';
 
 import styles from './avatar.css';
 

@@ -12,7 +12,7 @@
 import { CSSResultArray, html, nothing, TemplateResult } from 'lit';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
-import { TabsBase } from '@spectrum-web-components/core/components/tabs';
+import { TabsBase } from '@adobe/spectrum-wc-core/components/tabs';
 
 import styles from './tabs.css';
 

@@ -20,7 +20,7 @@ import {
   type TabDensity,
   TABS_DIRECTIONS,
   type TabsDirection,
-} from '@spectrum-web-components/core/components/tabs/index.js';
+} from '@adobe/spectrum-wc-core/components/tabs/index.js';
 
 import '@adobe/spectrum-wc/components/tabs/swc-tabs.js';
 import '@adobe/spectrum-wc/components/tabs/swc-tab.js';

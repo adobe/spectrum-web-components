@@ -20,7 +20,7 @@ import {
   STATUS_LIGHT_VARIANTS_SEMANTIC,
   StatusLightBase,
   type StatusLightVariant,
-} from '@spectrum-web-components/core/components/status-light';
+} from '@adobe/spectrum-wc-core/components/status-light';
 
 import styles from './status-light.css';
 

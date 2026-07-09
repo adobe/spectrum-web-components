@@ -12,7 +12,7 @@
 
 import { CSSResultArray, html, TemplateResult } from 'lit';
 
-import { ButtonGroupBase } from '@spectrum-web-components/core/components/button-group';
+import { ButtonGroupBase } from '@adobe/spectrum-wc-core/components/button-group';
 
 import styles from './button-group.css';
 

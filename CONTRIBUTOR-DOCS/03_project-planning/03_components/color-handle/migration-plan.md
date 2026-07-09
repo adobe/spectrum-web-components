@@ -145,7 +145,7 @@ None. The component dispatches no custom events. It only listens internally for 
 
 | Package                                          | Version | Role |
 | ------------------------------------------------ | ------- | ---- |
-| `@spectrum-web-components/base`                  | 1st-gen | `SpectrumElement`, `html`, decorators. Replaced by `@spectrum-web-components/core` in 2nd-gen. |
+| `@spectrum-web-components/base`                  | 1st-gen | `SpectrumElement`, `html`, decorators. Replaced by `@adobe/spectrum-wc-core` in 2nd-gen. |
 | `@spectrum-web-components/color-loupe`           | 1st-gen | Rendered internally (`sp-color-loupe`). 2nd-gen equivalent (`swc-color-loupe`) already exists. |
 | `@spectrum-web-components/opacity-checkerboard`  | 1st-gen | Checkerboard styles for transparent colors. In 2nd-gen this is a **shared stylesheet** (`2nd-gen/packages/swc/stylesheets/shared/opacity-checkerboard.css`), not a component. |
 

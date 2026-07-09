@@ -22,7 +22,7 @@ import {
   type ButtonFillStyle,
   type ButtonStaticColor,
   type ButtonVariant,
-} from '@spectrum-web-components/core/components/button';
+} from '@adobe/spectrum-wc-core/components/button';
 
 import { renderPendingSpinner } from './pending-spinner.js';
 

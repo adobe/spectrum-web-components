@@ -25,7 +25,7 @@ import {
   type BadgeSize,
   FIXED_VALUES,
   type FixedValues,
-} from '@spectrum-web-components/core/components/badge/index.js';
+} from '@adobe/spectrum-wc-core/components/badge/index.js';
 
 import '@adobe/spectrum-wc/components/badge/swc-badge.js';
 import '@adobe/spectrum-wc/components/icon/swc-icon.js';

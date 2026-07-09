@@ -13,7 +13,7 @@
 import { CSSResultArray, html, TemplateResult } from 'lit';
 import { styleMap } from 'lit/directives/style-map.js';
 
-import { ColorLoupeBase } from '@spectrum-web-components/core/components/color-loupe';
+import { ColorLoupeBase } from '@adobe/spectrum-wc-core/components/color-loupe';
 
 import opacityCheckerboardStyles from '../../stylesheets/_lit-styles/opacity-checkerboard.css';
 import styles from './color-loupe.css';

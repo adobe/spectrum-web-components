@@ -13,7 +13,7 @@
 import { html } from 'lit';
 import type { Meta, StoryObj } from '@storybook/web-components';
 
-import type { FocusgroupDirection } from '@spectrum-web-components/core/controllers/index.js';
+import type { FocusgroupDirection } from '@adobe/spectrum-wc-core/controllers/index.js';
 
 import './demo-hosts.js';
 

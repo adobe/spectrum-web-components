@@ -22,7 +22,7 @@ import {
   StatusLightColorVariant,
   StatusLightSemanticVariant,
   type StatusLightSize,
-} from '@spectrum-web-components/core/components/status-light';
+} from '@adobe/spectrum-wc-core/components/status-light';
 
 import '@adobe/spectrum-wc/components/status-light/swc-status-light.js';
 

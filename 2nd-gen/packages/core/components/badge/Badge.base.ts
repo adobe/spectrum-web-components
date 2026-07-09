@@ -12,10 +12,10 @@
 import { PropertyValues } from 'lit';
 import { property } from 'lit/decorators.js';
 
-import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
-import { SizedMixin } from '@spectrum-web-components/core/mixins/index.js';
-import { ObserveSlotPresence } from '@spectrum-web-components/core/mixins/observe-slot-presence.js';
-import { ObserveSlotText } from '@spectrum-web-components/core/mixins/observe-slot-text.js';
+import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
+import { SizedMixin } from '@adobe/spectrum-wc-core/mixins/index.js';
+import { ObserveSlotPresence } from '@adobe/spectrum-wc-core/mixins/observe-slot-presence.js';
+import { ObserveSlotText } from '@adobe/spectrum-wc-core/mixins/observe-slot-text.js';
 
 import {
   BADGE_VALID_SIZES,
