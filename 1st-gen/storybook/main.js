@@ -53,6 +53,7 @@ export default {
           '../2nd-gen/packages',
         ],
         alias: {
+          '@adobe/spectrum-wc-core': resolve('../2nd-gen/packages/core/dist'),
           '@adobe/spectrum-wc': resolve('../2nd-gen/packages/swc/dist'),
         },
       },
