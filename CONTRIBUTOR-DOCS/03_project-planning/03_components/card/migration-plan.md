@@ -127,6 +127,8 @@ Already implemented (prior scaffold ticket); this plan governs the three concret
 | `size` | `'xs' \| 's' \| 'm' \| 'l' \| 'xl'` | `'m'` | Via `SizedMixin`. |
 | `variant` | `CardVariant` | `'primary'` | Static `VARIANTS` is overridable per concrete component (see below) — same mechanism as `ActionButton` overriding `ButtonBase.VALID_SIZES`. |
 | `density` | `CardDensity` | `'regular'` | `'compact' \| 'regular' \| 'spacious'`. |
+| `titleAsLink` | `boolean` | `false` | Reflects to the `title-as-link` attribute. Extends a consumer-supplied `title`-slot link's hit area to the card surface. See [A11y-3](#a11y-3-whole-card-clickable-while-preserving-nested-interactive-targets). |
+| `selectable` | `boolean` | `false` | Manages `tabindex` and dispatches `swc-card-click` on activation (click, Enter, Space), independent of `titleAsLink`. See [A11y-3](#a11y-3-whole-card-clickable-while-preserving-nested-interactive-targets). |
 
 ### Variant support per component
 
