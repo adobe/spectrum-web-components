@@ -151,6 +151,22 @@
       "types": "./dist/element/version.d.ts",
       "import": "./dist/element/version.js"
     },
+    "./directives": {
+      "types": "./dist/directives/index.d.ts",
+      "import": "./dist/directives/index.js"
+    },
+    "./directives/index.js": {
+      "types": "./dist/directives/index.d.ts",
+      "import": "./dist/directives/index.js"
+    },
+    "./directives/pending-spinner": {
+      "types": "./dist/directives/pending-spinner/index.d.ts",
+      "import": "./dist/directives/pending-spinner/index.js"
+    },
+    "./directives/pending-spinner/index.js": {
+      "types": "./dist/directives/pending-spinner/index.d.ts",
+      "import": "./dist/directives/pending-spinner/index.js"
+    },
     "./mixins": {
       "types": "./dist/mixins/index.d.ts",
       "import": "./dist/mixins/index.js"
@@ -302,6 +318,18 @@
       ],
       "element/version.js": [
         "dist/element/version.d.ts"
+      ],
+      "directives": [
+        "dist/directives/index.d.ts"
+      ],
+      "directives/index.js": [
+        "dist/directives/index.d.ts"
+      ],
+      "directives/pending-spinner": [
+        "dist/directives/pending-spinner/index.d.ts"
+      ],
+      "directives/pending-spinner/index.js": [
+        "dist/directives/pending-spinner/index.d.ts"
       ],
       "mixins": [
         "dist/mixins/index.d.ts"
