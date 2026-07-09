@@ -207,6 +207,39 @@ Both modes need the same two supporting pieces, whichever (or both) are enabled:
 - **Elevate nested interactive targets** — actions, in-content links, etc. need `position: relative` plus a higher stacking order than the stretched pseudo-element/click-catching surface, in `card-template.css`, so native hit-testing routes their own clicks to them rather than the card surface. This is a CSS-only concern, independent of the JS filtering below.
 - **Filter clicks on nested interactive targets** — implemented in `CardBase`'s click handler via `event.composedPath()`, checking each node's `tabIndex` IDL property (not the `tabindex` attribute or a tag-name list): natively-interactive elements (`button`, `input`, `select`, `textarea`, `a[href]`) report `tabIndex >= 0` with no explicit attribute needed, `tabindex="-1"` and disabled controls correctly report as non-interactive, and — because `composedPath()` already traverses into other custom elements' shadow roots for composed events like `click` — an internal `<button>` inside e.g. `<swc-button>` slotted into `actions` is inspected directly, regardless of which shadow tree it belongs to. No tag-name enumeration, and no `stopPropagation()` wiring on wrapper elements in `renderCardTemplate()`, is needed. The `actions` slot is additionally excluded unconditionally (checking whether its `<slot>` element appears in the composed path) as defense in depth, since it's contractually for interactive content regardless of whether a given control correctly reflects focusability — mirroring 1st-gen's own belt-and-suspenders approach (a hard `stopPropagationOnHref` boundary for actions, plus a softer anchor-detection heuristic for everything else).
 
+<details>
+<summary>Click/keydown decision flowchart</summary>
+
+(`handleSurfaceClick`/`handleSelectableKeydown` in `Card.base.ts`)
+
+```mermaid
+flowchart TD
+    A["Pointer click on card (bubbles to host)"] --> C
+    B["Enter / Space keydown (listener only attached when selectable)"] --> C
+
+    C{"titleAsLink or\nselectable set?"}
+    C -->|No| Z1["No-op"]
+    C -->|Yes| D{"Click path includes the actions slot?"}
+
+    D -->|Yes| Z2["No-op — actions slot is\nexcluded unconditionally"]
+    D -->|No| E{"Any node before the host has tabIndex >= 0?\n(checks across shadow-root boundaries too)"}
+
+    E -->|Yes| Z3["No-op — hit a nested interactive target"]
+    E -->|No| F{"titleAsLink set?"}
+
+    F -->|Yes| G["Find the title slot's linked anchor (direct or nested, requires href) and call .click()"]
+    F -->|No| H
+    G --> H{"selectable set?"}
+
+    H -->|Yes| I["Dispatch swc-card-click\n(bubbles, composed)"]
+    H -->|No| J["Done"]
+    I --> J
+```
+
+</details>
+
+Both branches (`titleAsLink`'s proxy-click and `selectable`'s event dispatch) run independently once a click clears the filtering step — a card with both attributes set does both for the same click.
+
 **Where this lives:** the `title-as-link`/`selectable` property declarations and the click-filtering/proxy logic are all behavior with no rendering — they belong in `CardBase`'s `SHARED API`/`IMPLEMENTATION` sections. Resolving the assigned title-link element needs **no** change to `renderCardTemplate()`: the existing `<slot name="title">` and `<slot name="actions">` markup is already directly queryable via `renderRoot.querySelector('slot[name="..."]')`, and `HTMLSlotElement.assignedElements()` returns the actual light-DOM element(s) assigned to it — that's the standard API for reading slotted content from script.
 
 **Status:** implemented in `Card.base.ts` — `titleAsLink`/`selectable` properties, `tabindex` management, the click-vs-interactive-target filter, and the click-proxy/event dispatch. Only `selectable`'s dispatched event name remains open (see [Blockers Q1](#blockers-and-open-questions)).
