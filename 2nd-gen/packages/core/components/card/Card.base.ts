@@ -28,11 +28,13 @@ import {
  * Abstract base class for all card-family components. Owns the semantics
  * shared across every card type: sizing, visual variant, and density.
  *
- * `swc-card`, `swc-asset-card`, `swc-user-card`, and `swc-product-card` each
- * extend this base directly and render the shared anatomy via
- * `renderCardTemplate()` in `swc/components/card/card-template.ts`. That
- * template also carries a collection placeholder and an avatar/thumbnail
- * glyph, each supplied per-component via `renderCollection`/`renderGlyph`.
+ * `swc-card`, `swc-user-card`, and `swc-product-card` each extend this base
+ * directly and render the shared anatomy via `renderCardTemplate()` in
+ * `swc/components/card/card-template.ts`. That template also carries a
+ * collection placeholder and an avatar/thumbnail glyph, each supplied
+ * per-component via `renderCollection`/`renderGlyph`.
+ *
+ * @attribute {ElementSize} size - The size of the card.
  *
  * @slot preview - Primary preview content
  * @slot title - Card title
@@ -226,7 +228,13 @@ export abstract class CardBase extends SizedMixin(SpectrumElement, {
     return node instanceof HTMLElement && node.tabIndex >= 0;
   }
 
-  private readonly handleSurfaceClick = (event: Event): void => {
+  /**
+   * Proxies a qualifying surface click to `titleAsLink`'s link and/or
+   * dispatches `swc-card-click` for `selectable`, after filtering out
+   * clicks that landed on a nested interactive target (see `isFocusable()`
+   * and the `actions`-slot exclusion above).
+   */
+  protected readonly handleSurfaceClick = (event: Event): void => {
     if (!this.titleAsLink && !this.selectable) {
       return;
     }
@@ -262,7 +270,7 @@ export abstract class CardBase extends SizedMixin(SpectrumElement, {
    * `selectable` makes the card itself the focused target, regardless of
    * what that activation happens to proxy to.
    */
-  private readonly handleSelectableKeydown = (event: KeyboardEvent): void => {
+  protected readonly handleSelectableKeydown = (event: KeyboardEvent): void => {
     if (event.code === 'Enter' || event.code === 'Space') {
       event.preventDefault();
       this.handleSurfaceClick(event);

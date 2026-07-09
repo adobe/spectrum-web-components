@@ -16,7 +16,7 @@ import { html, nothing, TemplateResult } from 'lit';
  * Options for {@link renderCardTemplate}.
  */
 export interface CardTemplateOptions {
-  /** Per-component class root (e.g. `AssetCard`), prefixed with `swc-`. */
+  /** Per-component class root (e.g. `UserCard`), prefixed with `swc-`. */
   cardClass: string;
 
   /** Renders the collection slot in addition to the preview. Default: none. */
@@ -30,7 +30,7 @@ export interface CardTemplateOptions {
  * Shared card anatomy: preview with an optional collection slot, an
  * optional avatar/thumbnail glyph, title/actions/description/default
  * content, and a footer. Called from each concrete card's `render()`
- * (swc-card, swc-asset-card, swc-user-card, swc-product-card).
+ * (swc-card, swc-user-card, swc-product-card).
  */
 export function renderCardTemplate({
   cardClass,
