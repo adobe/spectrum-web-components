@@ -1,5 +1,13 @@
 # Change Log
 
+## 1.12.2
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @spectrum-web-components/button@1.12.2
+  - @spectrum-web-components/base@1.12.2
+
 ## 1.12.1
 
 ### Patch Changes

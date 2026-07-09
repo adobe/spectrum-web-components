@@ -1,5 +1,17 @@
 # Change Log
 
+## 1.12.2
+
+### Patch Changes
+
+- Updated dependencies [[`b4740eb`](https://github.com/adobe/spectrum-web-components/commit/b4740eb58f8a9410dbfae2969ca7a21c07bc63bd)]:
+  - @spectrum-web-components/button-group@1.12.2
+  - @spectrum-web-components/button@1.12.2
+  - @spectrum-web-components/divider@1.12.2
+  - @spectrum-web-components/icons-workflow@1.12.2
+  - @spectrum-web-components/base@1.12.2
+  - @spectrum-web-components/shared@1.12.2
+
 ## 1.12.1
 
 ### Patch Changes

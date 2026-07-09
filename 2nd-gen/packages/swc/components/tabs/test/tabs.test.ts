@@ -59,7 +59,7 @@ export const OverviewTest: Story = {
         'horizontal'
       );
       expect(tabs.keyboardActivation, 'default keyboard activation').toBe(
-        'manual'
+        'automatic'
       );
       expect(tabs.density, 'default density is regular').toBe('regular');
       expect(tabs.disabled, 'default disabled is false').toBe(false);
@@ -288,24 +288,29 @@ export const HostAutoDisabledReactiveTest: Story = {
     const tab2 = canvasElement.querySelector('swc-tab[tab-id="2"]') as Tab;
 
     await step(
-      'manual mode: arrow moves focus without changing selection',
+      'automatic mode (default): arrow selects focused tab',
       async () => {
-        expect(tabs.keyboardActivation, 'starts in manual mode').toBe('manual');
+        expect(tabs.keyboardActivation, 'starts in automatic mode').toBe(
+          'automatic'
+        );
         tab1.focus();
         tab1.dispatchEvent(
           new KeyboardEvent('keydown', { code: 'ArrowRight', bubbles: true })
         );
         await tabs.updateComplete;
         expect(tabs.ownerDocument.activeElement, 'focus on tab 2').toBe(tab2);
-        expect(tabs.selected, 'selection unchanged in manual mode').toBe('1');
+        expect(tabs.selected, 'selection follows focus in automatic mode').toBe(
+          '2'
+        );
       }
     );
 
-    await step('automatic mode: arrow then selects focused tab', async () => {
-      tabs.keyboardActivation = 'automatic';
+    await step('manual mode: arrow moves focus without selecting', async () => {
+      tabs.keyboardActivation = 'manual';
+      tabs.selected = '1';
       await tabs.updateComplete;
-      expect(tabs.keyboardActivation, 'keyboard activation is automatic').toBe(
-        'automatic'
+      expect(tabs.keyboardActivation, 'keyboard activation is manual').toBe(
+        'manual'
       );
 
       tab1.focus();
@@ -317,9 +322,7 @@ export const HostAutoDisabledReactiveTest: Story = {
         tabs.ownerDocument.activeElement,
         'focus on tab 2 after arrow'
       ).toBe(tab2);
-      expect(tabs.selected, 'selection follows focus in automatic mode').toBe(
-        '2'
-      );
+      expect(tabs.selected, 'selection unchanged in manual mode').toBe('1');
     });
 
     await step(
@@ -900,7 +903,11 @@ export const HomeEndKeyTest: Story = {
 
 export const EnterSpaceActivationTest: Story = {
   render: () => html`
-    <swc-tabs selected="1" accessible-label="Activation test">
+    <swc-tabs
+      selected="1"
+      keyboard-activation="manual"
+      accessible-label="Activation test"
+    >
       <swc-tab tab-id="1">Tab 1</swc-tab>
       <swc-tab tab-id="2">Tab 2</swc-tab>
       <swc-tab-panel tab-id="1"><p>Panel 1</p></swc-tab-panel>
@@ -1185,6 +1192,53 @@ export const SelectionIndicatorTest: Story = {
           !indicator.classList.contains('first-position'),
           'first-position class removed after initial render'
         ).toBe(true);
+      }
+    );
+  },
+};
+
+export const SelectionIndicatorDirectionChangeTest: Story = {
+  render: () => html`
+    <div id="direction-wrapper" dir="ltr">
+      <swc-tabs selected="2" accessible-label="Direction change indicator test">
+        <swc-tab tab-id="1">Tab 1</swc-tab>
+        <swc-tab tab-id="2">Tab 2</swc-tab>
+        <swc-tab-panel tab-id="1"><p>Panel 1</p></swc-tab-panel>
+        <swc-tab-panel tab-id="2"><p>Panel 2</p></swc-tab-panel>
+      </swc-tabs>
+    </div>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const tabs = await getComponent<Tabs>(canvasElement, 'swc-tabs');
+    const wrapper = canvasElement.querySelector(
+      '#direction-wrapper'
+    ) as HTMLElement;
+
+    await step(
+      'indicator recalculates when an ancestor dir attribute flips at runtime',
+      async () => {
+        await tabs.updateComplete;
+        await new Promise((r) => requestAnimationFrame(r));
+        await tabs.updateComplete;
+
+        const indicator = tabs.shadowRoot?.querySelector(
+          '.selection-indicator'
+        ) as HTMLElement;
+        const styleBefore = indicator.getAttribute('style') || '';
+
+        wrapper.setAttribute('dir', 'rtl');
+
+        await tabs.updateComplete;
+        await new Promise((r) => requestAnimationFrame(r));
+        await tabs.updateComplete;
+
+        const styleAfter = indicator.getAttribute('style') || '';
+        expect(
+          styleBefore !== styleAfter,
+          'indicator style changed after an ancestor dir attribute flips to rtl'
+        ).toBe(true);
+
+        wrapper.removeAttribute('dir');
       }
     );
   },

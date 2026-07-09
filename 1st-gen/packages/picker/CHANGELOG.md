@@ -1,5 +1,31 @@
 # Change Log
 
+## 1.12.2
+
+### Patch Changes
+
+- [#6459](https://github.com/adobe/spectrum-web-components/pull/6459) [`7c909d3`](https://github.com/adobe/spectrum-web-components/commit/7c909d3f97b9c06c472ab95a1a66cf7ca5a12c0c) Thanks [@rubencarvalho](https://github.com/rubencarvalho)! - **fix(picker, action-menu):** Prevent the internal menu scroll event from crossing the shadow DOM boundary.
+
+  `Picker`, `PickerBase`, and `ActionMenu` re-dispatch a `scroll` event on their host when the internal menu scrolls. The event was created with `composed: true`, allowing it to cross the shadow DOM boundary and reach ancestor elements, which could close an enclosing overlay while the user was scrolling the menu. The event is now non-composed: it still fires on the component host for consumers, but no longer escapes into ancestors. This applies the #6028 fix to `PickerBase` and `ActionMenu`, which were previously missed.
+
+  Reported by PSWeb.
+
+- Updated dependencies [[`758506e`](https://github.com/adobe/spectrum-web-components/commit/758506ed69a330ef4e0b3759a5a5bf32fa7906d7), [`e4509d8`](https://github.com/adobe/spectrum-web-components/commit/e4509d85553b98e2d0467466c976607a68ca73e5)]:
+  - @spectrum-web-components/menu@1.12.2
+  - @spectrum-web-components/overlay@1.12.2
+  - @spectrum-web-components/popover@1.12.2
+  - @spectrum-web-components/tooltip@1.12.2
+  - @spectrum-web-components/button@1.12.2
+  - @spectrum-web-components/field-label@1.12.2
+  - @spectrum-web-components/icon@1.12.2
+  - @spectrum-web-components/icons-ui@1.12.2
+  - @spectrum-web-components/icons-workflow@1.12.2
+  - @spectrum-web-components/progress-circle@1.12.2
+  - @spectrum-web-components/tray@1.12.2
+  - @spectrum-web-components/base@1.12.2
+  - @spectrum-web-components/reactive-controllers@1.12.2
+  - @spectrum-web-components/shared@1.12.2
+
 ## 1.12.1
 
 ### Patch Changes

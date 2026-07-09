@@ -76,6 +76,7 @@
     - Tags
     - Textfield
     - Thumbnail
+    - Toast
     - Tooltip
 - [Milestones](04_milestones/README.md)
 - Strategies
