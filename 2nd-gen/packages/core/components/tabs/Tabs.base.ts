@@ -71,8 +71,9 @@ export abstract class TabsBase extends SpectrumElement {
   static readonly VALID_DENSITIES: readonly TabDensity[] = TAB_DENSITIES;
 
   /**
-   * Whether selection follows keyboard focus (`automatic`) or the user
-   * must press Enter or Space to activate (`manual`, default).
+   * Whether selection follows keyboard focus (`automatic`, default) or the
+   * user must press Enter or Space to activate (`manual`). Prefer `manual`
+   * when tab panels are expensive to render or not fully present in the DOM.
    *
    * @see https://w3c.github.io/aria-practices/#kbd_selection_follows_focus
    */
