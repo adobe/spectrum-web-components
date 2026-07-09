@@ -178,7 +178,50 @@ export const SelectedPropertyTest: Story = {
     await step('selecting nonexistent value clears selection', async () => {
       tabs.selected = 'nonexistent';
       await tabs.updateComplete;
+
+      const tab2 = canvasElement.querySelector('swc-tab[tab-id="2"]') as Tab;
       expect(tabs.selected, 'selected resets to empty').toBe('');
+      expect(
+        tab2.selected,
+        'previously selected tab is deselected, not left highlighted'
+      ).toBe(false);
+    });
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Clearing selection — selected = '' deselects the tab
+// ──────────────────────────────────────────────────────────────
+
+export const ClearSelectionTest: Story = {
+  render: () => html`
+    <swc-tabs selected="2" accessible-label="Clear selection test">
+      <swc-tab tab-id="1">Tab 1</swc-tab>
+      <swc-tab tab-id="2">Tab 2</swc-tab>
+      <swc-tab-panel tab-id="1"><p>Panel 1</p></swc-tab-panel>
+      <swc-tab-panel tab-id="2"><p>Panel 2</p></swc-tab-panel>
+    </swc-tabs>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const tabs = await getComponent<Tabs>(canvasElement, 'swc-tabs');
+
+    await step('setting selected to "" deselects the tab', async () => {
+      const tab2 = canvasElement.querySelector('swc-tab[tab-id="2"]') as Tab;
+      expect(tab2.selected, 'tab 2 starts selected').toBe(true);
+
+      tabs.selected = '';
+      await tabs.updateComplete;
+
+      // Adopting SelectionController's mode: 'single' reintroduces a rule
+      // that mandatory single-select groups can't be emptied interactively —
+      // _syncSelectionController uses { silent: true } specifically so an
+      // external reset to "" still clears the tab, rather than leaving the
+      // old tab visually selected with its panel hidden.
+      expect(tabs.selected).toBe('');
+      expect(
+        tab2.selected,
+        'tab 2 should be deselected when the selection clears'
+      ).toBe(false);
     });
   },
 };
@@ -975,6 +1018,93 @@ export const AutoActivationTest: Story = {
   },
 };
 
+// ──────────────────────────────────────────────────────────────
+// TEST: Automatic activation — mount keeps the pre-selection
+// ──────────────────────────────────────────────────────────────
+
+export const AutomaticActivationMountTest: Story = {
+  render: () => html`
+    <swc-tabs
+      selected="2"
+      keyboard-activation="automatic"
+      accessible-label="Automatic activation mount test"
+    >
+      <swc-tab tab-id="1">Tab 1</swc-tab>
+      <swc-tab tab-id="2">Tab 2</swc-tab>
+      <swc-tab tab-id="3">Tab 3</swc-tab>
+      <swc-tab-panel tab-id="1"><p>Panel 1</p></swc-tab-panel>
+      <swc-tab-panel tab-id="2"><p>Panel 2</p></swc-tab-panel>
+      <swc-tab-panel tab-id="3"><p>Panel 3</p></swc-tab-panel>
+    </swc-tabs>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const tabs = await getComponent<Tabs>(canvasElement, 'swc-tabs');
+
+    await step('mount preserves the pre-selected tab', async () => {
+      // `_navigation.refresh()` (called from `handleTabSlotChange`) parks the
+      // roving tab stop on tab 1 before `_syncSelectionController()` moves it
+      // to the pre-selected tab. That `refresh()`-driven move dispatches
+      // `focusgroupNavigationActiveChange` with `reason: 'refresh'`, which
+      // `_handleNavigationActiveChange` must ignore — otherwise the
+      // pre-selected tab would be silently overridden by tab 1 on mount.
+      expect(tabs.selected).toBe('2');
+      const tab2 = canvasElement.querySelector('swc-tab[tab-id="2"]') as Tab;
+      expect(tab2.selected).toBe(true);
+    });
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Automatic activation — disable toggle keeps the selection
+// ──────────────────────────────────────────────────────────────
+
+export const AutomaticActivationDisableToggleTest: Story = {
+  render: () => html`
+    <swc-tabs
+      selected="2"
+      keyboard-activation="automatic"
+      accessible-label="Automatic activation disable test"
+    >
+      <swc-tab tab-id="1">Tab 1</swc-tab>
+      <swc-tab tab-id="2">Tab 2</swc-tab>
+      <swc-tab tab-id="3">Tab 3</swc-tab>
+      <swc-tab-panel tab-id="1"><p>Panel 1</p></swc-tab-panel>
+      <swc-tab-panel tab-id="2"><p>Panel 2</p></swc-tab-panel>
+      <swc-tab-panel tab-id="3"><p>Panel 3</p></swc-tab-panel>
+    </swc-tabs>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const tabs = await getComponent<Tabs>(canvasElement, 'swc-tabs');
+
+    await step('disabling then re-enabling keeps the selection', async () => {
+      // Reset in case mount already moved the selection, so this step is
+      // independent and isolates the disable/enable behavior.
+      tabs.selected = '2';
+      await tabs.updateComplete;
+
+      let changeCount = 0;
+      const onChange = (): void => {
+        changeCount += 1;
+      };
+      tabs.addEventListener('change', onChange);
+
+      tabs.disabled = true;
+      await tabs.updateComplete;
+      tabs.disabled = false;
+      await tabs.updateComplete;
+
+      tabs.removeEventListener('change', onChange);
+
+      // Toggling `disabled` is not a user selection: `_navigation.refresh()`
+      // re-parks the roving tab stop (reason: 'refresh') on both the disable
+      // and re-enable transitions, which `_handleNavigationActiveChange`
+      // must ignore.
+      expect(tabs.selected).toBe('2');
+      expect(changeCount).toBe(0);
+    });
+  },
+};
+
 export const DisabledTabKeyboardTest: Story = {
   render: () => html`
     <swc-tabs selected="1" accessible-label="Disabled tab keyboard test">
@@ -1087,6 +1217,57 @@ export const ChangeEventTest: Story = {
         '1'
       );
     });
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Change handler reads the new selection, not stale state
+// ──────────────────────────────────────────────────────────────
+
+export const ChangeHandlerSelectedTest: Story = {
+  render: () => html`
+    <swc-tabs selected="1" accessible-label="Change handler selected test">
+      <swc-tab tab-id="1">Tab 1</swc-tab>
+      <swc-tab tab-id="2">Tab 2</swc-tab>
+      <swc-tab-panel tab-id="1"><p>Panel 1</p></swc-tab-panel>
+      <swc-tab-panel tab-id="2"><p>Panel 2</p></swc-tab-panel>
+    </swc-tabs>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const tabs = await getComponent<Tabs>(canvasElement, 'swc-tabs');
+
+    await step(
+      'selected is the new tab inside the change handler',
+      async () => {
+        // SelectionController applies mutators and mirrors `selected` before
+        // running confirmSelectionChange (which dispatches this event), so a
+        // listener reading state synchronously sees the new selection, not
+        // the value from before the click.
+        const tab2 = canvasElement.querySelector('swc-tab[tab-id="2"]') as Tab;
+        let selectedInHandler: string | undefined;
+        let tab2SelectedInHandler: boolean | undefined;
+        tabs.addEventListener(
+          'change',
+          () => {
+            selectedInHandler = tabs.selected;
+            tab2SelectedInHandler = tab2.selected;
+          },
+          { once: true }
+        );
+
+        tab2.click();
+        await tabs.updateComplete;
+
+        expect(
+          selectedInHandler,
+          'tabs.selected is the newly selected tab inside the handler'
+        ).toBe('2');
+        expect(
+          tab2SelectedInHandler,
+          'the clicked tab is already selected inside the handler'
+        ).toBe(true);
+      }
+    );
   },
 };
 

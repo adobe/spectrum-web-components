@@ -125,3 +125,19 @@ export const Accessibility: Story = {
   `,
   tags: ['a11y'],
 };
+
+// ────────────────────────────────
+//    TEST-ONLY FIXTURES
+// ────────────────────────────────
+
+/**
+ * Test-only fixture for eligibility exclusion (disabled, hidden, custom
+ * `isDisabled`). Not part of the documented section flow — excluded from the
+ * dev sidebar and not referenced by any `<Canvas>` in the per-unit MDX.
+ */
+export const Eligibility: Story = {
+  render: () => html`
+    <demo-selection-eligibility></demo-selection-eligibility>
+  `,
+  tags: ['!dev'],
+};

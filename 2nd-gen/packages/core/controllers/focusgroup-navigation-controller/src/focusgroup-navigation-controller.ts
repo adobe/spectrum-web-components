@@ -134,6 +134,23 @@ export type FocusgroupNavigationActiveChangeDetail = {
    * Element that now has `tabindex="0"` among managed items, or null when the group is empty.
    */
   activeElement: HTMLElement | null;
+
+  /**
+   * What caused the active item to change:
+   *
+   * - **`keyboard`**: arrow keys, Home/End, Page Up/Down, or Ctrl+Home/Ctrl+End moved the
+   *   roving tab stop.
+   * - **`focus`**: a managed item received DOM focus directly — a pointer click, Tab-key entry
+   *   into the group, or a consumer's own `.focus()` call landing on a managed item.
+   * - **`programmatic`**: an explicit `setActiveItem()` or `focusFirstItemByTextPrefix()` call.
+   * - **`refresh`**: `refresh()` recomputed the roving tab stop after items or eligibility
+   *   changed, including the reset applied when focus leaves the group and `memory` is
+   *   `false`. Not a real focus or selection intent — a consumer implementing
+   *   "selection follows focus" (for example APG automatic tab activation) should ignore this
+   *   reason so that DOM changes, disabling/re-enabling, or mounting with a pre-selected item
+   *   don't get treated as if the user navigated there.
+   */
+  reason: 'keyboard' | 'focus' | 'programmatic' | 'refresh';
 };
 
 /**
@@ -280,6 +297,13 @@ export class FocusgroupNavigationController implements ReactiveController {
    */
   private cachedRows: HTMLElement[][] | null = null;
 
+  /**
+   * Snapshot of the last non-empty raw item list. Used to reset `tabIndex`
+   * when `getItems()` returns `[]` (e.g. the host signals it is disabled),
+   * since `getRawItems()` would also return `[]` in that state.
+   */
+  private lastKnownItems: HTMLElement[] = [];
+
   // ─────────────────────────
   //     PUBLIC API
   // ─────────────────────────
@@ -334,18 +358,24 @@ export class FocusgroupNavigationController implements ReactiveController {
     this.cachedRows = null;
     const items = this.getEligibleItems();
     if (items.length === 0) {
-      for (const el of this.getRawItems()) {
+      // getRawItems() calls getItems() which may return [] when the host
+      // signals it is disabled. Fall back to the last known item list so
+      // all managed items get tabIndex=-1 even when getItems() is empty.
+      const rawItems = this.getRawItems();
+      for (const el of rawItems.length > 0 ? rawItems : this.lastKnownItems) {
         el.tabIndex = -1;
       }
+      this.lastKnownItems = [];
       this.lastFocused = null;
       if (this.previousActive !== null) {
         this.previousActive = null;
-        this.dispatchActiveChange(null);
+        this.dispatchActiveChange(null, 'refresh');
         this.options.onActiveItemChange?.(null);
       }
       return;
     }
 
+    this.lastKnownItems = this.getRawItems();
     const preferred =
       (this.options.memory &&
       this.lastFocused &&
@@ -355,7 +385,7 @@ export class FocusgroupNavigationController implements ReactiveController {
       this.getActiveItem() ??
       items[0];
 
-    this.applyRovingTabindex(preferred);
+    this.applyRovingTabindex(preferred, 'refresh');
   }
 
   /**
@@ -363,15 +393,36 @@ export class FocusgroupNavigationController implements ReactiveController {
    * group are `-1`. Does **not** call `focus()`. When {@link FocusgroupNavigationOptions.memory}
    * is true, updates the stored last-focused item so Tab re-entry can target this item.
    *
+   * Dispatches {@link focusgroupNavigationActiveChange} with **`reason: 'programmatic'`** — call
+   * this from consumer code that re-syncs the roving tab stop (for example to match an
+   * externally-owned selection), not from code implementing arrow-key movement itself.
+   *
    * @param item - Item to mark active; must be returned by `getItems` and pass eligibility checks.
    * @returns False if `item` is not in the current eligible item list.
    */
   public setActiveItem(item: HTMLElement): boolean {
+    return this.assignActiveItem(item, 'programmatic');
+  }
+
+  /**
+   * Shared implementation for {@link setActiveItem} and keyboard-driven navigation, threading
+   * through the {@link FocusgroupNavigationActiveChangeDetail.reason} so consumers can
+   * distinguish real arrow-key movement from a programmatic re-sync.
+   */
+  private assignActiveItem(
+    item: HTMLElement,
+    reason: FocusgroupNavigationActiveChangeDetail['reason']
+  ): boolean {
+    // Clear the eligible-items cache so this reflects the current DOM rather
+    // than a stale snapshot left behind by a previous refresh()/keydown/focusin
+    // cycle. Public entry points must not depend on caller ordering.
+    this.cachedEligibleItems = null;
+    this.cachedRows = null;
     const items = this.getEligibleItems();
     if (!items.includes(item)) {
       return false;
     }
-    this.applyRovingTabindex(item);
+    this.applyRovingTabindex(item, reason);
     if (this.options.memory) {
       this.lastFocused = item;
     }
@@ -401,6 +452,10 @@ export class FocusgroupNavigationController implements ReactiveController {
     if (trimmed === '') {
       return false;
     }
+    // Same staleness concern as setActiveItem(): recompute rather than trust a
+    // cache populated by a previous cycle.
+    this.cachedEligibleItems = null;
+    this.cachedRows = null;
     const needle = trimmed.toLowerCase();
     const items = this.getEligibleItems();
     const match = items.find((el) => {
@@ -410,7 +465,7 @@ export class FocusgroupNavigationController implements ReactiveController {
     if (!match) {
       return false;
     }
-    this.applyRovingTabindex(match);
+    this.applyRovingTabindex(match, 'programmatic');
     return true;
   }
 
@@ -620,8 +675,12 @@ export class FocusgroupNavigationController implements ReactiveController {
    * Dispatches the active-change event and {@link FocusgroupNavigationOptions.onActiveItemChange}.
    *
    * @param active - Preferred item to mark as the single tab stop when eligible.
+   * @param reason - Cause of the change, forwarded to {@link dispatchActiveChange}.
    */
-  private applyRovingTabindex(active: HTMLElement): void {
+  private applyRovingTabindex(
+    active: HTMLElement,
+    reason: FocusgroupNavigationActiveChangeDetail['reason']
+  ): void {
     const items = this.getEligibleItems();
     const eligibleSet = new Set(items);
     for (const el of this.getRawItems()) {
@@ -652,7 +711,7 @@ export class FocusgroupNavigationController implements ReactiveController {
     }
     if (safeActive !== this.previousActive) {
       this.previousActive = safeActive;
-      this.dispatchActiveChange(safeActive);
+      this.dispatchActiveChange(safeActive, reason);
       this.options.onActiveItemChange?.(safeActive);
     }
   }
@@ -661,15 +720,19 @@ export class FocusgroupNavigationController implements ReactiveController {
    * Dispatches {@link focusgroupNavigationActiveChange} on the reactive host with the given detail.
    *
    * @param activeElement - New active item, or null when clearing selection.
+   * @param reason - Cause of the change; see {@link FocusgroupNavigationActiveChangeDetail.reason}.
    */
-  private dispatchActiveChange(activeElement: HTMLElement | null): void {
+  private dispatchActiveChange(
+    activeElement: HTMLElement | null,
+    reason: FocusgroupNavigationActiveChangeDetail['reason']
+  ): void {
     this.host.dispatchEvent(
       new CustomEvent<FocusgroupNavigationActiveChangeDetail>(
         focusgroupNavigationActiveChange,
         {
           bubbles: true,
           composed: true,
-          detail: { activeElement },
+          detail: { activeElement, reason },
         }
       )
     );
@@ -731,7 +794,7 @@ export class FocusgroupNavigationController implements ReactiveController {
     if (!target) {
       return;
     }
-    this.applyRovingTabindex(target);
+    this.applyRovingTabindex(target, 'focus');
     if (this.options.memory) {
       this.lastFocused = target;
     }
@@ -763,7 +826,7 @@ export class FocusgroupNavigationController implements ReactiveController {
       this.cachedRows = null;
       const items = this.getEligibleItems();
       if (items.length > 0) {
-        this.applyRovingTabindex(items[0]);
+        this.applyRovingTabindex(items[0], 'refresh');
       }
     }
   }
@@ -839,18 +902,22 @@ export class FocusgroupNavigationController implements ReactiveController {
 
     const isGrid = this.options.direction === 'grid';
     const rows = isGrid ? this.getRows(items) : null;
+    // Fall back to event.code when event.key is empty (synthetic test events).
+    // Real browser events always populate event.key, so this never affects
+    // numpad disambiguation (e.g. Numpad6 NumLock-off sets key='ArrowRight').
+    const key = event.key || event.code;
 
     if (
       isGrid &&
       event.ctrlKey &&
       !event.metaKey &&
-      (event.key === 'Home' || event.key === 'End')
+      (key === 'Home' || key === 'End')
     ) {
       if (rows!.length > 0) {
         const firstRow = rows![0];
         const lastRow = rows![rows!.length - 1];
         const boundary =
-          event.key === 'Home'
+          key === 'Home'
             ? (firstRow?.[0] ?? null)
             : (lastRow?.[lastRow.length - 1] ?? null);
         if (boundary && boundary !== target) {
@@ -866,14 +933,11 @@ export class FocusgroupNavigationController implements ReactiveController {
     }
 
     const pageMagnitude = this.getEffectivePageMagnitude();
-    if (
-      pageMagnitude !== null &&
-      (event.key === 'PageUp' || event.key === 'PageDown')
-    ) {
+    if (pageMagnitude !== null && (key === 'PageUp' || key === 'PageDown')) {
       const pageNext = this.navigatePage(
         items,
         target,
-        event.key === 'PageDown' ? pageMagnitude : -pageMagnitude,
+        key === 'PageDown' ? pageMagnitude : -pageMagnitude,
         rows
       );
       if (pageNext && pageNext !== target) {
@@ -888,16 +952,16 @@ export class FocusgroupNavigationController implements ReactiveController {
 
     switch (this.options.direction) {
       case 'horizontal':
-        next = this.navigateLinear(items, target, event.key, 'horizontal', rtl);
+        next = this.navigateLinear(items, target, key, 'horizontal', rtl);
         break;
       case 'vertical':
-        next = this.navigateLinear(items, target, event.key, 'vertical', rtl);
+        next = this.navigateLinear(items, target, key, 'vertical', rtl);
         break;
       case 'both':
-        next = this.navigateBothAxes(items, target, event.key, rtl);
+        next = this.navigateBothAxes(items, target, key, rtl);
         break;
       case 'grid':
-        next = this.navigateGrid(target, event.key, rtl, rows!);
+        next = this.navigateGrid(target, key, rtl, rows!);
         break;
       default:
         break;
@@ -909,7 +973,7 @@ export class FocusgroupNavigationController implements ReactiveController {
       return;
     }
 
-    if (event.key === 'Home' || event.key === 'End') {
+    if (key === 'Home' || key === 'End') {
       if (isGrid) {
         // APG grid pattern: Home/End scope to the current row.
         // Ctrl+Home/End (entire grid) is handled above.
@@ -922,9 +986,7 @@ export class FocusgroupNavigationController implements ReactiveController {
           return;
         }
         const boundary =
-          event.key === 'Home'
-            ? currentRow[0]
-            : currentRow[currentRow.length - 1];
+          key === 'Home' ? currentRow[0] : currentRow[currentRow.length - 1];
         if (boundary && boundary !== target) {
           event.preventDefault();
           this.moveKeyNavigationFocusTo(boundary);
@@ -933,8 +995,7 @@ export class FocusgroupNavigationController implements ReactiveController {
         if (items.length === 0) {
           return;
         }
-        const boundary =
-          event.key === 'Home' ? items[0] : items[items.length - 1];
+        const boundary = key === 'Home' ? items[0] : items[items.length - 1];
         if (boundary && boundary !== target) {
           event.preventDefault();
           this.moveKeyNavigationFocusTo(boundary);
@@ -949,7 +1010,7 @@ export class FocusgroupNavigationController implements ReactiveController {
   private moveKeyNavigationFocusTo(item: HTMLElement): void {
     this.isNavigating = true;
     try {
-      if (this.setActiveItem(item)) {
+      if (this.assignActiveItem(item, 'keyboard')) {
         item.focus();
       }
     } finally {

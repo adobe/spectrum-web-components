@@ -1084,12 +1084,24 @@ export class DemoFocusgroupEventTracker extends LitElement {
 
   public activeChangeLog: (string | null)[] = [];
   public callbackLog: (string | null)[] = [];
+  public reasonLog: FocusgroupNavigationActiveChangeDetail['reason'][] = [];
+
+  /**
+   * When `true`, `getItems` returns `[]` — mirrors a host reporting itself
+   * disabled, so `refresh()` re-parks (or clears) the roving tab stop the
+   * same way it does across a real disable/re-enable cycle.
+   *
+   * @internal
+   */
+  public simulateEmpty = false;
 
   private readonly navigation = new FocusgroupNavigationController(this, {
     direction: 'horizontal',
     wrap: false,
     getItems: () =>
-      Array.from(this.renderRoot.querySelectorAll<HTMLElement>('button')),
+      this.simulateEmpty
+        ? []
+        : Array.from(this.renderRoot.querySelectorAll<HTMLElement>('button')),
     onActiveItemChange: (el: HTMLElement | null) => {
       this.callbackLog.push(el?.textContent?.trim() ?? null);
     },
@@ -1122,11 +1134,23 @@ export class DemoFocusgroupEventTracker extends LitElement {
     this.activeChangeLog.push(
       event.detail.activeElement?.textContent?.trim() ?? null
     );
+    this.reasonLog.push(event.detail.reason);
   };
 
   public clearLogs(): void {
     this.activeChangeLog = [];
     this.callbackLog = [];
+    this.reasonLog = [];
+  }
+
+  /** Triggers a `reason: 'refresh'` active-change, if the active item recomputes to a new value. */
+  public callRefresh(): void {
+    this.navigation.refresh();
+  }
+
+  /** Triggers a `reason: 'programmatic'` active-change. */
+  public callSetActiveItem(item: HTMLElement): boolean {
+    return this.navigation.setActiveItem(item);
   }
 
   protected override render(): TemplateResult {

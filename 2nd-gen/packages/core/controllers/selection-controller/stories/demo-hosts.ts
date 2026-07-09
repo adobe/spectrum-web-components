@@ -26,6 +26,7 @@ declare global {
     'demo-selection-filter-tags': DemoSelectionFilterTags;
     'demo-selection-mode-switcher': DemoSelectionModeSwitcher;
     'demo-selection-tablist': DemoSelectionTablist;
+    'demo-selection-eligibility': DemoSelectionEligibility;
   }
 }
 
@@ -465,7 +466,10 @@ export class DemoSelectionModeSwitcher extends LitElement {
     this.selection.refresh();
   }
 
-  private setMode = (mode: SelectionMode): void => {
+  private handleModeClick = (event: Event): void => {
+    const mode = (event.currentTarget as HTMLElement).getAttribute(
+      'data-mode'
+    ) as SelectionMode;
     this.mode = mode;
     this.selection.setOptions({ mode });
     this.requestUpdate();
@@ -480,8 +484,9 @@ export class DemoSelectionModeSwitcher extends LitElement {
             <button
               type="button"
               class="mode-btn"
+              data-mode=${mode}
               aria-pressed=${this.mode === mode}
-              @click=${() => this.setMode(mode)}
+              @click=${this.handleModeClick}
             >
               ${mode}
             </button>
@@ -653,6 +658,67 @@ export class DemoSelectionTablist extends LitElement {
           </div>
         `
       )}
+    `;
+  }
+}
+
+// ─────────────────────────────────────────────
+//   Eligibility — disabled, hidden, custom isDisabled
+// ─────────────────────────────────────────────
+
+/**
+ * Test-only fixture (not referenced from the docs page) exercising
+ * eligibility exclusion: the built-in `disabled` and `hidden` checks, plus a
+ * custom `isDisabled` override treating `data-locked` as disabled.
+ *
+ * @internal
+ */
+@customElement('demo-selection-eligibility')
+export class DemoSelectionEligibility extends LitElement {
+  static override styles = groupStyles;
+
+  private readonly selection = new SelectionController(this, {
+    getItems: () =>
+      Array.from(
+        this.renderRoot.querySelectorAll<HTMLButtonElement>('[data-elig]')
+      ),
+    selectItem: (item) => item.setAttribute('aria-pressed', 'true'),
+    deselectItem: (item) => item.setAttribute('aria-pressed', 'false'),
+    mode: 'multiple',
+    keydownActivation: true,
+    isDisabled: (item) => item.hasAttribute('data-locked'),
+  });
+
+  protected override firstUpdated(): void {
+    this.selection.refresh();
+  }
+
+  protected override render(): TemplateResult {
+    return html`
+      <div class="group" role="group" aria-label="Eligibility test">
+        <button type="button" data-elig="normal" aria-pressed="false">
+          Normal
+        </button>
+        <button
+          type="button"
+          data-elig="disabled"
+          disabled
+          aria-pressed="false"
+        >
+          Disabled
+        </button>
+        <button type="button" data-elig="hidden" hidden aria-pressed="false">
+          Hidden
+        </button>
+        <button
+          type="button"
+          data-elig="locked"
+          data-locked
+          aria-pressed="false"
+        >
+          Locked
+        </button>
+      </div>
     `;
   }
 }

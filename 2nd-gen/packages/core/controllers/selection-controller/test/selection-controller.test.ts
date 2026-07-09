@@ -21,6 +21,7 @@ import {
   type DemoSelectionViewSwitcher,
 } from '../stories/demo-hosts.js';
 import selectionMeta, {
+  Eligibility,
   ModeSwitching,
   MultipleMode,
   SingleMode,
@@ -186,12 +187,15 @@ export const SingleToggleModeTest: Story = {
       }
     );
 
-    await step('clicking a different option replaces the selection', async () => {
-      options[0].click();
-      options[2].click();
-      expect(options[2].getAttribute('aria-checked')).toBe('true');
-      expect(options[0].getAttribute('aria-checked')).toBe('false');
-    });
+    await step(
+      'clicking a different option replaces the selection',
+      async () => {
+        options[0].click();
+        options[2].click();
+        expect(options[2].getAttribute('aria-checked')).toBe('true');
+        expect(options[0].getAttribute('aria-checked')).toBe('false');
+      }
+    );
 
     await step('Space on the active option clears the selection', async () => {
       options[2].focus();
@@ -280,14 +284,11 @@ export const MultipleModeTest: Story = {
       );
     });
 
-    await step(
-      'Enter key toggles a focused tag in multiple mode',
-      async () => {
-        tags[1].focus();
-        activate(tags[1], 'Enter');
-        expect(tags[1].getAttribute('aria-pressed')).toBe('true');
-      }
-    );
+    await step('Enter key toggles a focused tag in multiple mode', async () => {
+      tags[1].focus();
+      activate(tags[1], 'Enter');
+      expect(tags[1].getAttribute('aria-pressed')).toBe('true');
+    });
   },
 };
 
@@ -319,9 +320,7 @@ export const ModeSwitchingTest: Story = {
     await step(
       'starts in single-toggle mode with everything collapsed',
       async () => {
-        expect(trigger('general').getAttribute('aria-expanded')).toBe(
-          'false'
-        );
+        expect(trigger('general').getAttribute('aria-expanded')).toBe('false');
         expect(body('general').hidden).toBe(true);
       }
     );
@@ -339,9 +338,7 @@ export const ModeSwitchingTest: Story = {
         expect(trigger('appearance').getAttribute('aria-expanded')).toBe(
           'true'
         );
-        expect(trigger('general').getAttribute('aria-expanded')).toBe(
-          'false'
-        );
+        expect(trigger('general').getAttribute('aria-expanded')).toBe('false');
       }
     );
 
@@ -353,9 +350,7 @@ export const ModeSwitchingTest: Story = {
         trigger('general').click();
         trigger('privacy').click();
 
-        expect(trigger('general').getAttribute('aria-expanded')).toBe(
-          'true'
-        );
+        expect(trigger('general').getAttribute('aria-expanded')).toBe('true');
         expect(trigger('appearance').getAttribute('aria-expanded')).toBe(
           'true'
         );
@@ -372,9 +367,7 @@ export const ModeSwitchingTest: Story = {
           (key) => trigger(key).getAttribute('aria-expanded') === 'true'
         ).length;
         expect(openCount).toBe(1);
-        expect(trigger('general').getAttribute('aria-expanded')).toBe(
-          'true'
-        );
+        expect(trigger('general').getAttribute('aria-expanded')).toBe('true');
       }
     );
   },
@@ -402,9 +395,7 @@ export const TablistPatternTest: Story = {
       'defaultToFirstSelectable selects the first tab on mount',
       async () => {
         expect(tab('layers').getAttribute('aria-selected')).toBe('true');
-        expect(tab('adjustments').getAttribute('aria-selected')).toBe(
-          'false'
-        );
+        expect(tab('adjustments').getAttribute('aria-selected')).toBe('false');
         expect(panel('layers').hidden).toBe(false);
         expect(panel('adjustments').hidden).toBe(true);
       }
@@ -419,9 +410,7 @@ export const TablistPatternTest: Story = {
         expect(shadowFocused(host)?.getAttribute('data-tab')).toBe(
           'adjustments'
         );
-        expect(tab('adjustments').getAttribute('aria-selected')).toBe(
-          'false'
-        );
+        expect(tab('adjustments').getAttribute('aria-selected')).toBe('false');
         expect(tab('layers').getAttribute('aria-selected')).toBe('true');
       }
     );
@@ -462,9 +451,7 @@ export const TablistPatternTest: Story = {
         host.addEventListener(
           DEMO_TABLIST_CHANGE_EVENT,
           () => {
-            ariaSelectedInHandler = tab('layers').getAttribute(
-              'aria-selected'
-            );
+            ariaSelectedInHandler = tab('layers').getAttribute('aria-selected');
             panelHiddenInHandler = panel('layers').hidden;
           },
           { once: true }
@@ -511,6 +498,106 @@ export const TablistPatternTest: Story = {
           panel('layers').hidden,
           "prior selection's panel is restored to visible"
         ).toBe(false);
+      }
+    );
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
+// Eligibility — disabled, hidden, custom isDisabled; guard conditions
+// ──────────────────────────────────────────────────────────────
+
+export const EligibilityTest: Story = {
+  ...Eligibility,
+  play: async ({ canvasElement, step }) => {
+    const host = await getComponent<HTMLElement>(
+      canvasElement,
+      'demo-selection-eligibility'
+    );
+    const root = host.shadowRoot!;
+    const normal = root.querySelector<HTMLButtonElement>(
+      '[data-elig="normal"]'
+    )!;
+    const disabled = root.querySelector<HTMLButtonElement>(
+      '[data-elig="disabled"]'
+    )!;
+    const hidden = root.querySelector<HTMLButtonElement>(
+      '[data-elig="hidden"]'
+    )!;
+    const locked = root.querySelector<HTMLButtonElement>(
+      '[data-elig="locked"]'
+    )!;
+
+    await step('clicking a native disabled item has no effect', async () => {
+      disabled.click();
+      expect(disabled.getAttribute('aria-pressed')).toBe('false');
+    });
+
+    await step('clicking a hidden item has no effect', async () => {
+      // A native `hidden` attribute makes the element non-clickable in a
+      // real browser (display: none), but the controller's eligibility
+      // check also rejects it directly if a synthetic click still reaches it.
+      hidden.click();
+      expect(hidden.getAttribute('aria-pressed')).toBe('false');
+    });
+
+    await step(
+      'clicking an item excluded by a custom isDisabled has no effect',
+      async () => {
+        locked.click();
+        expect(locked.getAttribute('aria-pressed')).toBe('false');
+      }
+    );
+
+    await step('clicking a normal item still works', async () => {
+      normal.click();
+      expect(normal.getAttribute('aria-pressed')).toBe('true');
+      normal.click();
+      expect(normal.getAttribute('aria-pressed')).toBe('false');
+    });
+
+    await step(
+      'Enter on a disabled item (via a custom isDisabled) has no effect',
+      async () => {
+        locked.focus();
+        activate(locked, 'Enter');
+        expect(locked.getAttribute('aria-pressed')).toBe('false');
+      }
+    );
+
+    await step('a non-primary mouse button click is ignored', async () => {
+      normal.dispatchEvent(
+        new MouseEvent('click', { bubbles: true, composed: true, button: 1 })
+      );
+      expect(normal.getAttribute('aria-pressed')).toBe('false');
+    });
+
+    await step('a modifier-key click is ignored', async () => {
+      normal.dispatchEvent(
+        new MouseEvent('click', {
+          bubbles: true,
+          composed: true,
+          button: 0,
+          ctrlKey: true,
+        })
+      );
+      expect(normal.getAttribute('aria-pressed')).toBe('false');
+    });
+
+    await step(
+      'a repeated keydown (held key) does not re-trigger activation',
+      async () => {
+        normal.focus();
+        normal.dispatchEvent(
+          new KeyboardEvent('keydown', {
+            key: 'Enter',
+            bubbles: true,
+            composed: true,
+            cancelable: true,
+            repeat: true,
+          })
+        );
+        expect(normal.getAttribute('aria-pressed')).toBe('false');
       }
     );
   },
