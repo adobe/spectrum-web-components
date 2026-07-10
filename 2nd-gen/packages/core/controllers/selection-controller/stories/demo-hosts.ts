@@ -285,6 +285,7 @@ export class DemoSelectionFilterTags extends LitElement {
     selectItem: (item) => item.setAttribute('aria-pressed', 'true'),
     deselectItem: (item) => item.setAttribute('aria-pressed', 'false'),
     mode: 'multiple',
+    keydownActivation: true,
     onSelectionChange: ({ selectedItems }) => {
       this.selectedCount = selectedItems.length;
       this.requestUpdate();
