@@ -20,8 +20,18 @@ declare global {
     'demo-slot-propagation-default': DemoSlotPropagationDefault;
     'demo-slot-propagation-named': DemoSlotPropagationNamed;
     'demo-slot-propagation-selector': DemoSlotPropagationSelector;
+    'demo-slot-propagation-optional': DemoSlotPropagationOptional;
   }
 }
+
+/** Shared by demo hosts that lay out assigned elements in a wrapping row. */
+const sharedStyles = css`
+  :host {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+`;
 
 // ─────────────────────────────────────────
 //     DEFAULT (UNNAMED) SLOT DEMO HOST
@@ -37,13 +47,7 @@ declare global {
  */
 @customElement('demo-slot-propagation-default')
 export class DemoSlotPropagationDefault extends LitElement {
-  static override styles = css`
-    :host {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-  `;
+  static override styles = sharedStyles;
 
   static override properties = {
     size: { type: String },
@@ -142,6 +146,53 @@ export class DemoSlotPropagationNamed extends LitElement {
   }
 }
 
+// ─────────────────────────────────
+//    OPTIONAL ATTRIBUTE DEMO HOST
+// ─────────────────────────────────
+
+/**
+ * @internal
+ *
+ * Storybook-only host demonstrating {@link SlotAttributePropagationController}
+ * with a `getValue` that can return `null`: when `invalid` is `false`,
+ * `getValue` returns `null` and the controller removes the `invalid`
+ * attribute from assigned elements instead of setting it.
+ */
+@customElement('demo-slot-propagation-optional')
+export class DemoSlotPropagationOptional extends LitElement {
+  static override styles = sharedStyles;
+
+  static override properties = {
+    invalid: { type: Boolean },
+  };
+
+  declare invalid: boolean;
+
+  constructor() {
+    super();
+    this.invalid = false;
+  }
+
+  private readonly _invalidPropagation = new SlotAttributePropagationController(
+    this,
+    {
+      attribute: 'invalid',
+      getValue: () => (this.invalid ? '' : null),
+    }
+  );
+
+  /** Re-propagates to elements assigned after the first render. */
+  private _handleSlotchange(): void {
+    this._invalidPropagation.propagate();
+  }
+
+  protected override render(): TemplateResult {
+    return html`
+      <slot @slotchange=${this._handleSlotchange}></slot>
+    `;
+  }
+}
+
 // ────────────────────────────────
 //     SELECTOR-FILTERED DEMO HOST
 // ────────────────────────────────
@@ -156,13 +207,7 @@ export class DemoSlotPropagationNamed extends LitElement {
  */
 @customElement('demo-slot-propagation-selector')
 export class DemoSlotPropagationSelector extends LitElement {
-  static override styles = css`
-    :host {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-  `;
+  static override styles = sharedStyles;
 
   static override properties = {
     variant: { type: String },

@@ -47,6 +47,8 @@ class MyBase extends LitElement {
 }
 ```
 
+`getValue` can also return `null` for attributes that are only sometimes present on the host; see "Optional attributes" under Behaviors below.
+
 ## Options
 
 ### Default slot
@@ -73,6 +75,12 @@ Set `selector` to a CSS selector to propagate the attribute only to assigned ele
 
 The controller propagates the current value to all matching assigned elements on first render and again in `hostUpdated()` any time the value returned by `getValue` differs from the value tracked at the last propagation. If the value hasn't changed, `hostUpdated()` is a no-op: the controller does not touch assigned elements on every unrelated host update.
 
+### Optional attributes
+
+`getValue` can return `null` for attributes that are only sometimes present on the host. When it does, the controller removes the attribute from assigned elements via `removeAttribute` instead of setting it to an empty string. This is the mechanism to use for attributes that are genuinely optional, such as `invalid`, rather than always-present attributes like `size`.
+
+<Canvas of={Stories.OptionalAttributeRemoval} />
+
 ### Propagates to dynamically added elements
 
 Elements assigned to the slot after the first render (for example, appended to the host's light DOM at runtime) don't trigger a Lit update on their own, so they aren't covered by the automatic `hostUpdated()` propagation. Call `propagate()` from the host's `slotchange` handler to cover them.
@@ -87,7 +95,7 @@ Elements assigned to the slot after the first render (for example, appended to t
 
 ### Features
 
-`SlotAttributePropagationController` sets a plain DOM attribute on assigned elements via `setAttribute`. It does not manage ARIA relationships, roles, or attributes on its own: it will propagate whatever attribute name it's configured with, including an ARIA attribute, but the consuming component is responsible for deciding whether that's an appropriate way to convey that particular relationship.
+`SlotAttributePropagationController` sets a plain DOM attribute on assigned elements via `setAttribute`, or removes it via `removeAttribute` when `getValue` returns `null`. It does not manage ARIA relationships, roles, or attributes on its own: it will propagate whatever attribute name it's configured with, including an ARIA attribute, but the consuming component is responsible for deciding whether that's an appropriate way to convey that particular relationship.
 
 ### Best practices
 
@@ -101,17 +109,17 @@ Elements assigned to the slot after the first render (for example, appended to t
 
 ### Methods
 
-| Member        | Description                                                                                                                                                           |
-| ------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `propagate()` | Propagates the current value (from `getValue()`) to all matching assigned elements immediately, bypassing the no-op guard. Call from the host's `slotchange` handler. |
+| Member        | Description                                                                                                                                                                                                                                                                                |
+| ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `propagate()` | Propagates the current value (from `getValue()`) to all matching assigned elements immediately, without waiting for `hostUpdated()`. Also updates the internally tracked value, so a subsequent `hostUpdated()` with the same value is a no-op. Call from the host's `slotchange` handler. |
 
 ### Constructor options (`SlotAttributePropagationControllerOptions`)
 
-| Option      | Type           | Description                                                                                                   |
-| ----------- | -------------- | ------------------------------------------------------------------------------------------------------------- |
-| `attribute` | `string`       | The attribute name to propagate to assigned elements.                                                         |
-| `getValue`  | `() => string` | Returns the current value to propagate.                                                                       |
-| `slotName`  | `string`       | Named slot to target. Omit for the default (unnamed) slot.                                                    |
-| `selector`  | `string`       | CSS selector used to filter assigned elements before propagating. Omit to propagate to all assigned elements. |
+| Option      | Type                   | Description                                                                                                   |
+| ----------- | ---------------------- | ------------------------------------------------------------------------------------------------------------- |
+| `attribute` | `string`               | The attribute name to propagate to assigned elements.                                                         |
+| `getValue`  | `() => string \| null` | Returns the current value to propagate. Return `null` to remove the attribute from assigned elements.         |
+| `slotName`  | `string`               | Named slot to target. Omit for the default (unnamed) slot.                                                    |
+| `selector`  | `string`               | CSS selector used to filter assigned elements before propagating. Omit to propagate to all assigned elements. |
 
 <DocsFooter />

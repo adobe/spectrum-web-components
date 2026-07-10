@@ -15,6 +15,8 @@ import type { Meta, StoryObj } from '@storybook/web-components';
 
 import './demo-hosts.js';
 
+import type { DemoSlotPropagationOptional } from './demo-hosts.js';
+
 // ────────────────
 //    METADATA
 // ────────────────
@@ -146,6 +148,35 @@ export const DynamicSlotting: Story = {
   tags: ['behaviors'],
 };
 DynamicSlotting.storyName = 'Propagates to dynamically added elements';
+
+function toggleInvalid(): void {
+  const host = document.getElementById(
+    'optional-attribute-host'
+  ) as DemoSlotPropagationOptional | null;
+  if (!host) {
+    return;
+  }
+  host.invalid = !host.invalid;
+}
+
+export const OptionalAttributeRemoval: Story = {
+  render: () => html`
+    <demo-slot-propagation-optional id="optional-attribute-host">
+      <input
+        class="swc-Textfield"
+        aria-label="Email address"
+        placeholder="you@example.com"
+      />
+    </demo-slot-propagation-optional>
+    <div style="margin-top: 12px;">
+      <button class="swc-Button swc-Button--secondary" @click=${toggleInvalid}>
+        Toggle invalid
+      </button>
+    </div>
+  `,
+  tags: ['behaviors'],
+};
+OptionalAttributeRemoval.storyName = 'Optional attributes';
 
 // ────────────────────────────────
 //    ACCESSIBILITY STORIES

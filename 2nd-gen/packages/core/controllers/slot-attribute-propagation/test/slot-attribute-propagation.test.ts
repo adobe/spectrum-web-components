@@ -37,6 +37,7 @@ import { getComponent } from '../../../../swc/utils/test-utils.js';
 import type {
   DemoSlotPropagationDefault,
   DemoSlotPropagationNamed,
+  DemoSlotPropagationOptional,
   DemoSlotPropagationSelector,
 } from '../stories/demo-hosts.js';
 import meta from '../stories/slot-attribute-propagation.stories.js';
@@ -50,6 +51,14 @@ export default {
   },
   tags: ['!autodocs', 'dev'],
 } as Meta;
+
+/** Resolves the default (unnamed) slot in a demo host's shadow DOM. */
+function resolveDefaultSlot(host: Element): HTMLSlotElement | null {
+  const slot =
+    host.shadowRoot?.querySelector<HTMLSlotElement>('slot:not([name])');
+  expect(slot, 'default slot must exist in shadow DOM').not.toBeNull();
+  return slot ?? null;
+}
 
 // ──────────────────────────────────────────────────────────────────────────
 //     Propagates on first render, targeting the default slot when slotName
@@ -177,9 +186,7 @@ export const PropagatesViaSlotchange: Story = {
     await step(
       'a dynamically added element receives the current value via propagate()',
       async () => {
-        const slot =
-          host.shadowRoot?.querySelector<HTMLSlotElement>('slot:not([name])');
-        expect(slot, 'default slot must exist in shadow DOM').not.toBeNull();
+        const slot = resolveDefaultSlot(host);
         if (!slot) {
           return;
         }
@@ -207,6 +214,68 @@ export const PropagatesViaSlotchange: Story = {
 };
 PropagatesViaSlotchange.storyName =
   'Propagates to elements added after first render';
+
+// ──────────────────────────────────────────────────────────────────────────
+//     propagate() updates the previousValue guard, so a hostUpdated() that
+//     was already scheduled before propagate() ran doesn't repeat the sweep
+// ──────────────────────────────────────────────────────────────────────────
+
+export const PropagateUpdatesPreviousValueGuard: Story = {
+  render: () => html`
+    <demo-slot-propagation-default size="m">
+      <button class="swc-Button">Save</button>
+    </demo-slot-propagation-default>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const host = await getComponent<DemoSlotPropagationDefault>(
+      canvasElement,
+      'demo-slot-propagation-default'
+    );
+    const button = host.querySelector('button')!;
+    const slot = resolveDefaultSlot(host);
+    if (!slot) {
+      return;
+    }
+
+    await step('initial value is propagated', async () => {
+      expect(button.getAttribute('size'), 'initial size').toBe('m');
+    });
+
+    await step(
+      'does not repeat propagation once a value has already been applied by propagate()',
+      async () => {
+        // Change the tracked property (schedules a hostUpdated() call for
+        // 'l' without awaiting it yet), then synchronously dispatch
+        // 'slotchange' so propagate() applies 'l' before that scheduled
+        // hostUpdated() runs. This ordering is forced here (native
+        // slotchange timing relative to Lit's update cycle isn't
+        // guaranteed) specifically to prove hostUpdated() treats the
+        // already-applied value as a no-op instead of repeating it.
+        host.size = 'l';
+        slot.dispatchEvent(new Event('slotchange'));
+
+        expect(
+          button.getAttribute('size'),
+          'propagate() applies the new value immediately'
+        ).toBe('l');
+
+        // Mutate out-of-band after propagate() ran. If the still-pending
+        // hostUpdated() redundantly repeats the sweep for the same value,
+        // it will stomp this back to 'l'.
+        button.setAttribute('size', 'manually-set');
+
+        await host.updateComplete;
+
+        expect(
+          button.getAttribute('size'),
+          'hostUpdated() does not repeat propagation for a value already applied by propagate()'
+        ).toBe('manually-set');
+      }
+    );
+  },
+};
+PropagateUpdatesPreviousValueGuard.storyName =
+  'propagate() updates the previousValue guard';
 
 // ──────────────────────────────────────────────────────────────────────────
 //     hostDisconnected() resets previousValue so reconnect re-propagates
@@ -342,3 +411,58 @@ export const SelectorFiltersAssignedElements: Story = {
 };
 SelectorFiltersAssignedElements.storyName =
   'selector filters which assigned elements receive the attribute';
+
+// ──────────────────────────────────────────────────────────────────────────
+//     getValue returning null removes the attribute instead of setting it
+// ──────────────────────────────────────────────────────────────────────────
+
+export const NullValueRemovesAttribute: Story = {
+  render: () => html`
+    <demo-slot-propagation-optional>
+      <input class="swc-Textfield" />
+    </demo-slot-propagation-optional>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const host = await getComponent<DemoSlotPropagationOptional>(
+      canvasElement,
+      'demo-slot-propagation-optional'
+    );
+    const input = host.querySelector('input')!;
+
+    await step(
+      'omits the attribute on first render when getValue returns null',
+      async () => {
+        expect(
+          input.getAttribute('invalid'),
+          'attribute is absent when getValue() returns null'
+        ).toBeNull();
+      }
+    );
+
+    await step(
+      'sets the attribute once getValue starts returning a string',
+      async () => {
+        host.invalid = true;
+        await host.updateComplete;
+        expect(
+          input.getAttribute('invalid'),
+          'attribute is set once getValue() returns a string'
+        ).toBe('');
+      }
+    );
+
+    await step(
+      'removes the attribute again once getValue returns null',
+      async () => {
+        host.invalid = false;
+        await host.updateComplete;
+        expect(
+          input.getAttribute('invalid'),
+          'attribute is removed once getValue() returns null again'
+        ).toBeNull();
+      }
+    );
+  },
+};
+NullValueRemovesAttribute.storyName =
+  'getValue returning null removes the attribute';
