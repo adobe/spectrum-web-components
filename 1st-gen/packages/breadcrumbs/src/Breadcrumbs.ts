@@ -29,6 +29,8 @@ import {
   ref,
 } from '@spectrum-web-components/base/src/directives.js';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
+import type { Directionality } from '@spectrum-web-components/base/src/normalize-dir.js';
+import { normalizeDir } from '@spectrum-web-components/base/src/normalize-dir.js';
 
 /* eslint-disable import/no-extraneous-dependencies */
 import '@spectrum-web-components/breadcrumbs/sp-breadcrumb-item.js';
@@ -48,6 +50,8 @@ type BreadcrumbItem = {
   value: string;
   offsetWidth: number;
   isVisible: boolean; // false if displayed in menu overlay
+  lang?: string;
+  dir?: Directionality;
 };
 
 /**
@@ -190,6 +194,11 @@ export class Breadcrumbs extends SpectrumElement {
         value: el.value || index.toString(),
         offsetWidth: width,
         isVisible: true,
+        lang: el.lang || undefined,
+        // `SpectrumElement` overrides `dir` to return the *computed* CSS
+        // direction rather than the attribute, so read the attribute
+        // directly to capture the item's own authored direction override.
+        dir: normalizeDir(el.getAttribute('dir')),
       };
     });
   }
@@ -293,7 +302,12 @@ export class Breadcrumbs extends SpectrumElement {
 
           ${this.items.map(
             (item) => html`
-              <sp-menu-item href=${ifDefined(item.href)} value=${item.value}>
+              <sp-menu-item
+                href=${ifDefined(item.href)}
+                value=${item.value}
+                lang=${ifDefined(item.lang)}
+                dir=${ifDefined(item.dir)}
+              >
                 ${item.label}
               </sp-menu-item>
             `
