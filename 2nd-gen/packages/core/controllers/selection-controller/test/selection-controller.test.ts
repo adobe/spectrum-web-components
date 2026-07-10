@@ -18,6 +18,7 @@ import '../stories/demo-hosts.js';
 import { getComponent } from '../../../../swc/utils/test-utils.js';
 import {
   DEMO_TABLIST_CHANGE_EVENT,
+  type DemoSelectionFilterTags,
   type DemoSelectionViewSwitcher,
 } from '../stories/demo-hosts.js';
 import selectionMeta, {
@@ -214,7 +215,7 @@ export const SingleToggleModeTest: Story = {
 export const MultipleModeTest: Story = {
   ...MultipleMode,
   play: async ({ canvasElement, step }) => {
-    const host = await getComponent<HTMLElement>(
+    const host = await getComponent<DemoSelectionFilterTags>(
       canvasElement,
       'demo-selection-filter-tags'
     );
@@ -258,6 +259,12 @@ export const MultipleModeTest: Story = {
     await step(
       'onSelectionChange mirrors the count into the host',
       async () => {
+        // `.count`'s text depends on `selectedCount`, a reactive property
+        // updated inside `onSelectionChange` — unlike the `aria-pressed`
+        // attributes above (set synchronously by `selectItem`/`deselectItem`),
+        // its render into the DOM is async, so this must wait for the host's
+        // update cycle to flush before reading textContent.
+        await host.updateComplete;
         expect(root.querySelector('.count')?.textContent?.trim()).toBe(
           '1 filter selected'
         );
@@ -269,6 +276,7 @@ export const MultipleModeTest: Story = {
       for (const tag of tags) {
         expect(tag.getAttribute('aria-pressed')).toBe('true');
       }
+      await host.updateComplete;
       expect(root.querySelector('.count')?.textContent?.trim()).toBe(
         '5 filters selected'
       );
@@ -279,6 +287,7 @@ export const MultipleModeTest: Story = {
       for (const tag of tags) {
         expect(tag.getAttribute('aria-pressed')).toBe('false');
       }
+      await host.updateComplete;
       expect(root.querySelector('.count')?.textContent?.trim()).toBe(
         'No filters selected'
       );
