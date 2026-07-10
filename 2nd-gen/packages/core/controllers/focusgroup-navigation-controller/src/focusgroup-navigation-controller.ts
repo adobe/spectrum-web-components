@@ -363,7 +363,7 @@ export class FocusgroupNavigationController implements ReactiveController {
       this.lastFocused = null;
       if (this.previousActive !== null) {
         this.previousActive = null;
-        this.dispatchActiveChange(null);
+        this.dispatchActiveChange(null, 'refresh');
         this.options.onActiveItemChange?.(null);
       }
       return;
@@ -378,7 +378,7 @@ export class FocusgroupNavigationController implements ReactiveController {
       this.getActiveItem() ??
       items[0];
 
-    this.applyRovingTabindex(preferred);
+    this.applyRovingTabindex(preferred, 'refresh');
   }
 
   /**
@@ -394,7 +394,7 @@ export class FocusgroupNavigationController implements ReactiveController {
     if (!items.includes(item)) {
       return false;
     }
-    this.applyRovingTabindex(item);
+    this.applyRovingTabindex(item, 'programmatic');
     if (this.options.memory) {
       this.lastFocused = item;
     }
@@ -433,7 +433,7 @@ export class FocusgroupNavigationController implements ReactiveController {
     if (!match) {
       return false;
     }
-    this.applyRovingTabindex(match);
+    this.applyRovingTabindex(match, 'programmatic');
     return true;
   }
 
@@ -643,8 +643,12 @@ export class FocusgroupNavigationController implements ReactiveController {
    * Dispatches the active-change event and {@link FocusgroupNavigationOptions.onActiveItemChange}.
    *
    * @param active - Preferred item to mark as the single tab stop when eligible.
+   * @param reason - Why the active item is changing; included in the dispatched event detail.
    */
-  private applyRovingTabindex(active: HTMLElement): void {
+  private applyRovingTabindex(
+    active: HTMLElement,
+    reason: FocusgroupActiveChangeReason
+  ): void {
     const items = this.getEligibleItems();
     const eligibleSet = new Set(items);
     for (const el of this.getRawItems()) {
@@ -675,7 +679,7 @@ export class FocusgroupNavigationController implements ReactiveController {
     }
     if (safeActive !== this.previousActive) {
       this.previousActive = safeActive;
-      this.dispatchActiveChange(safeActive);
+      this.dispatchActiveChange(safeActive, reason);
       this.options.onActiveItemChange?.(safeActive);
     }
   }
@@ -684,15 +688,19 @@ export class FocusgroupNavigationController implements ReactiveController {
    * Dispatches {@link focusgroupNavigationActiveChange} on the reactive host with the given detail.
    *
    * @param activeElement - New active item, or null when clearing selection.
+   * @param reason - Why the active item changed.
    */
-  private dispatchActiveChange(activeElement: HTMLElement | null): void {
+  private dispatchActiveChange(
+    activeElement: HTMLElement | null,
+    reason: FocusgroupActiveChangeReason
+  ): void {
     this.host.dispatchEvent(
       new CustomEvent<FocusgroupNavigationActiveChangeDetail>(
         focusgroupNavigationActiveChange,
         {
           bubbles: true,
           composed: true,
-          detail: { activeElement },
+          detail: { activeElement, reason },
         }
       )
     );
@@ -754,7 +762,7 @@ export class FocusgroupNavigationController implements ReactiveController {
     if (!target) {
       return;
     }
-    this.applyRovingTabindex(target);
+    this.applyRovingTabindex(target, 'focus');
     if (this.options.memory) {
       this.lastFocused = target;
     }
@@ -786,7 +794,7 @@ export class FocusgroupNavigationController implements ReactiveController {
       this.cachedRows = null;
       const items = this.getEligibleItems();
       if (items.length > 0) {
-        this.applyRovingTabindex(items[0]);
+        this.applyRovingTabindex(items[0], 'focus');
       }
     }
   }
@@ -972,7 +980,12 @@ export class FocusgroupNavigationController implements ReactiveController {
   private moveKeyNavigationFocusTo(item: HTMLElement): void {
     this.isNavigating = true;
     try {
-      if (this.setActiveItem(item)) {
+      const items = this.getEligibleItems();
+      if (items.includes(item)) {
+        this.applyRovingTabindex(item, 'keyboard');
+        if (this.options.memory) {
+          this.lastFocused = item;
+        }
         item.focus();
       }
     } finally {

@@ -295,7 +295,11 @@ export const HostAutoDisabledReactiveTest: Story = {
         );
         tab1.focus();
         tab1.dispatchEvent(
-          new KeyboardEvent('keydown', { code: 'ArrowRight', bubbles: true })
+          new KeyboardEvent('keydown', {
+            key: 'ArrowRight',
+            code: 'ArrowRight',
+            bubbles: true,
+          })
         );
         await tabs.updateComplete;
         expect(tabs.ownerDocument.activeElement, 'focus on tab 2').toBe(tab2);
@@ -315,7 +319,11 @@ export const HostAutoDisabledReactiveTest: Story = {
 
       tab1.focus();
       tab1.dispatchEvent(
-        new KeyboardEvent('keydown', { code: 'ArrowRight', bubbles: true })
+        new KeyboardEvent('keydown', {
+          key: 'ArrowRight',
+          code: 'ArrowRight',
+          bubbles: true,
+        })
       );
       await tabs.updateComplete;
       expect(
@@ -429,6 +437,7 @@ export const KeyboardActivationFromAttributeTest: Story = {
       t1.focus();
       t1.dispatchEvent(
         new KeyboardEvent('keydown', {
+          key: 'ArrowRight',
           code: 'ArrowRight',
           bubbles: true,
           cancelable: true,
@@ -457,6 +466,7 @@ export const KeyboardActivationFromAttributeTest: Story = {
       t1.focus();
       t1.dispatchEvent(
         new KeyboardEvent('keydown', {
+          key: 'ArrowRight',
           code: 'ArrowRight',
           bubbles: true,
           cancelable: true,
@@ -778,7 +788,11 @@ export const ArrowKeyNavigationTest: Story = {
 
     await step('ArrowRight moves focus to next tab', async () => {
       tab1.dispatchEvent(
-        new KeyboardEvent('keydown', { code: 'ArrowRight', bubbles: true })
+        new KeyboardEvent('keydown', {
+          key: 'ArrowRight',
+          code: 'ArrowRight',
+          bubbles: true,
+        })
       );
       await tabs.updateComplete;
       expect(document.activeElement, 'focus moved to tab 2').toBe(tab2);
@@ -787,7 +801,11 @@ export const ArrowKeyNavigationTest: Story = {
     await step('ArrowRight wraps from last to first', async () => {
       tab3.focus();
       tab3.dispatchEvent(
-        new KeyboardEvent('keydown', { code: 'ArrowRight', bubbles: true })
+        new KeyboardEvent('keydown', {
+          key: 'ArrowRight',
+          code: 'ArrowRight',
+          bubbles: true,
+        })
       );
       await tabs.updateComplete;
       expect(document.activeElement, 'focus wrapped to tab 1').toBe(tab1);
@@ -796,7 +814,11 @@ export const ArrowKeyNavigationTest: Story = {
     await step('ArrowLeft moves focus to previous tab', async () => {
       tab2.focus();
       tab2.dispatchEvent(
-        new KeyboardEvent('keydown', { code: 'ArrowLeft', bubbles: true })
+        new KeyboardEvent('keydown', {
+          key: 'ArrowLeft',
+          code: 'ArrowLeft',
+          bubbles: true,
+        })
       );
       await tabs.updateComplete;
       expect(document.activeElement, 'focus moved to tab 1').toBe(tab1);
@@ -805,7 +827,11 @@ export const ArrowKeyNavigationTest: Story = {
     await step('ArrowLeft wraps from first to last', async () => {
       tab1.focus();
       tab1.dispatchEvent(
-        new KeyboardEvent('keydown', { code: 'ArrowLeft', bubbles: true })
+        new KeyboardEvent('keydown', {
+          key: 'ArrowLeft',
+          code: 'ArrowLeft',
+          bubbles: true,
+        })
       );
       await tabs.updateComplete;
       expect(document.activeElement, 'focus wrapped to tab 3').toBe(tab3);
@@ -835,7 +861,11 @@ export const VerticalArrowKeyTest: Story = {
 
     await step('ArrowDown moves focus in vertical mode', async () => {
       tab1.dispatchEvent(
-        new KeyboardEvent('keydown', { code: 'ArrowDown', bubbles: true })
+        new KeyboardEvent('keydown', {
+          key: 'ArrowDown',
+          code: 'ArrowDown',
+          bubbles: true,
+        })
       );
       await tabs.updateComplete;
       expect(document.activeElement, 'focus moved to tab 2').toBe(tab2);
@@ -845,6 +875,7 @@ export const VerticalArrowKeyTest: Story = {
       tab1.focus();
       tab1.dispatchEvent(
         new KeyboardEvent('keydown', {
+          key: 'ArrowRight',
           code: 'ArrowRight',
           bubbles: true,
         })
@@ -856,7 +887,11 @@ export const VerticalArrowKeyTest: Story = {
     await step('ArrowUp moves focus backward in vertical mode', async () => {
       tab2.focus();
       tab2.dispatchEvent(
-        new KeyboardEvent('keydown', { code: 'ArrowUp', bubbles: true })
+        new KeyboardEvent('keydown', {
+          key: 'ArrowUp',
+          code: 'ArrowUp',
+          bubbles: true,
+        })
       );
       await tabs.updateComplete;
       expect(document.activeElement, 'focus moved to tab 1').toBe(tab1);
@@ -885,7 +920,11 @@ export const HomeEndKeyTest: Story = {
 
     await step('Home moves focus to first tab', async () => {
       tab2.dispatchEvent(
-        new KeyboardEvent('keydown', { code: 'Home', bubbles: true })
+        new KeyboardEvent('keydown', {
+          key: 'Home',
+          code: 'Home',
+          bubbles: true,
+        })
       );
       await tabs.updateComplete;
       expect(document.activeElement, 'focus on first tab').toBe(tab1);
@@ -893,7 +932,7 @@ export const HomeEndKeyTest: Story = {
 
     await step('End moves focus to last tab', async () => {
       tab1.dispatchEvent(
-        new KeyboardEvent('keydown', { code: 'End', bubbles: true })
+        new KeyboardEvent('keydown', { key: 'End', code: 'End', bubbles: true })
       );
       await tabs.updateComplete;
       expect(document.activeElement, 'focus on last tab').toBe(tab3);
@@ -966,7 +1005,11 @@ export const AutoActivationTest: Story = {
       'arrow key immediately selects tab in automatic mode',
       async () => {
         tab1.dispatchEvent(
-          new KeyboardEvent('keydown', { code: 'ArrowRight', bubbles: true })
+          new KeyboardEvent('keydown', {
+            key: 'ArrowRight',
+            code: 'ArrowRight',
+            bubbles: true,
+          })
         );
         await tabs.updateComplete;
         expect(tabs.selected, 'selection follows focus to tab 2').toBe('2');
@@ -1080,7 +1123,11 @@ export const DisabledTabKeyboardTest: Story = {
 
     await step('disabled tab receives focus via arrow keys', async () => {
       tab1.dispatchEvent(
-        new KeyboardEvent('keydown', { code: 'ArrowRight', bubbles: true })
+        new KeyboardEvent('keydown', {
+          key: 'ArrowRight',
+          code: 'ArrowRight',
+          bubbles: true,
+        })
       );
       await tabs.updateComplete;
       expect(document.activeElement, 'focus moves to disabled tab').toBe(tab2);

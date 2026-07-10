@@ -261,6 +261,7 @@ export abstract class TabsBase extends SpectrumElement {
   private readonly _navigation = new FocusgroupNavigationController(this, {
     direction: this._direction,
     wrap: true,
+    memory: true,
     getItems: () => (this.disabled ? [] : (this._tabs as HTMLElement[])),
   });
 
