@@ -1,0 +1,98 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import { DocsFooter, DocsHeader } from '../../.storybook/blocks';
+
+import * as ColorHandleStories from './stories/color-handle.stories';
+
+<Meta of={ColorHandleStories} />
+
+<DocsHeader />
+
+## Anatomy
+
+A color handle consists of:
+
+1. **Handle circle**: a round thumb sized to sit on a color-selection track, with a white separator border between two dark borders
+2. **Color fill**: the currently picked color, shown over an opacity checkerboard so transparency is visible (hidden when `fill` is `false`)
+3. **Built-in loupe**: an embedded `<swc-color-loupe>` that appears above the handle during touch interaction
+
+<Canvas of={ColorHandleStories.Anatomy} />
+
+## Options
+
+### Colors
+
+The `color` property accepts any valid CSS color string, including alpha transparency:
+
+- **Named colors**: `tomato`, `red`, `blue`, etc.
+- **Hex**: `#1473e6`
+- **RGB/RGBA**: `rgba(44, 62, 224, 0.81)`; alpha reveals the opacity checkerboard
+- **HSL**: `hsl(111, 82%, 56%)`
+
+The color also drives the adaptive border: the handle picks the dark-border opacity needed to keep its chrome visible against that color (see [Adaptive contrast](#adaptive-contrast)).
+
+<Canvas of={ColorHandleStories.Colors} />
+
+### Fill
+
+The `fill` boolean controls whether the inner color swatch is shown. It defaults to `true` (swatch shown). When `false`, the handle renders as an outline-only ring with no color fill.
+
+`fill` is a reflected boolean, so set outline-only through the property (`handle.fill = false`) rather than the `fill="false"` attribute, which reads as `true` under boolean-attribute semantics.
+
+<Canvas of={ColorHandleStories.Fill} />
+
+## States
+
+### States
+
+The handle reflects three boolean states, all set by the parent color component:
+
+- **Default**: the resting handle showing its color fill
+- **Focused**: when the parent picker has keyboard or programmatic focus, `focused` grows the handle to roughly twice its size; the growth itself is the focus indicator (no separate focus ring)
+- **Disabled**: `disabled` removes pointer interaction, hides the color fill, and suppresses the loupe
+
+A click on the handle while the parent is not focused does not grow it; instead it opens the loupe.
+
+<Canvas of={ColorHandleStories.States} />
+
+## Behaviors
+
+### Adaptive contrast
+
+The handle keeps its border at 3:1 non-text contrast (WCAG 1.4.11) across the color spectrum using a white-first adaptive border. The chrome is a dark border, a white separator, and a second dark border; the handle stays visible if either the dark borders or the white separator meet 3:1 against the underlying color.
+
+The dark-border opacity is computed from the current `color`: it holds a floor of 42% whenever the white separator already carries 3:1, and climbs only where white cannot. In this release the surrounding color is approximated by the handle's own `color`, which is accurate on smooth gradients and approximate at steep or saturated edges.
+
+Touch interaction opens the built-in loupe: on a touch `pointerdown` the handle sets `open`, and it clears `open` on `pointerup` or `pointercancel`. Mouse and stylus input do not auto-open the loupe. While `disabled`, the loupe stays closed even when `open` is set.
+
+<Canvas of={ColorHandleStories.AdaptiveContrast} />
+
+## Accessibility
+
+### Features
+
+The `<swc-color-handle>` element is a **visual-only** primitive:
+
+#### ARIA implementation
+
+- **No host role or accessible name**: the handle sets no `role`, `aria-label`, or `aria-labelledby`
+- **Not independently focusable**: the handle has no `tabindex` of its own; the parent picker owns the tab stop and keyboard interaction
+- **Decorative loupe**: the built-in `<swc-color-loupe>` keeps its SVG `aria-hidden="true"`
+
+#### Accessibility model
+
+Name, role, value, and keyboard semantics are provided by the **parent** color-selection component, for example `<swc-color-area>`, `<swc-color-slider>`, or `<swc-color-wheel>`. The handle is a thumb rendered on that control's track; it does not represent a standalone accessible control.
+
+### Best practices
+
+- Always place the handle inside a labeled parent color component; do not ship a lone handle as an accessible control
+- Do not add `role`, `aria-label`, or focus management to the handle itself; it is intentionally inert
+- Do not rely on the handle color alone to convey a value; pair color selection with labeled controls that expose the value to assistive technology
+
+<Canvas of={ColorHandleStories.Accessibility} />
+
+## Upcoming features
+
+- **Exact surrounding-color contrast**: sampling the true adjacent gradient color (rather than the handle's own color) so the adaptive border is precise at steep gradient edges
+- **Reviewed custom properties**: a small set of documented `--swc-color-handle-*` properties may be added if concrete consumer needs appear
+
+<DocsFooter />
