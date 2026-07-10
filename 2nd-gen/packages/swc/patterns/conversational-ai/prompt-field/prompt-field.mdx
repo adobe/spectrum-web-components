@@ -69,7 +69,9 @@ Artifacts own dismiss behavior via **`dismissible`** and emit **`swc-upload-arti
 
 ### Multi-artifact scroll
 
-When several attachments exceed the composer width, the strip scrolls horizontally at full width with hidden scrollbars. Chevron buttons flank the strip (32px gray circles) and render only when scrolling is possible in that direction. Each click advances by one tile. Trackpad or touch scrolling still works.
+When several attachments exceed the composer width, the strip scrolls horizontally at full width. Chevron buttons flank the strip (32px gray circles) and render only when scrolling is possible in that direction. Each click advances by one **set** of tiles: the last visible tile becomes the first tile in the next set so the carousel keeps continuity. On the final set, the strip right-aligns to stay full. Edge fades on both sides signal overflow and hide at the ends of the list.
+
+Trackpad, wheel, touch scrolling, and the overlay scrollbar lane below the tiles all work on the artifact strip. The lane is always reserved in the gap below the tiles so composer height stays fixed; the thumb appears only during physical interaction (wheel, touch, or dragging the scrollbar). Chevron paging does not reveal the scrollbar.
 
 <Canvas of={PromptFieldStories.MultiArtifactScroll} />
 
