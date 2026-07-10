@@ -134,10 +134,7 @@ export const Anatomy: Story = {
   render: () => html`
     <div style="display:flex;flex-direction:column;gap:24px;">
       <div style="display:flex;flex-direction:column;gap:8px;">
-        <swc-prompt-field
-          label="Prompt"
-          placeholder=${defaultPlaceholder}
-        >
+        <swc-prompt-field label="Prompt" placeholder=${defaultPlaceholder}>
           ${legalDisclaimerSlot}
         </swc-prompt-field>
         <span class="swc-Detail swc-Detail--sizeS">Base structure</span>
@@ -155,10 +152,7 @@ export const Modes: Story = {
   render: () => html`
     <div style="display:flex;flex-direction:column;gap:32px;">
       <div style="display:flex;flex-direction:column;gap:8px;">
-        <swc-prompt-field
-          label="Prompt"
-          placeholder=${defaultPlaceholder}
-        >
+        <swc-prompt-field label="Prompt" placeholder=${defaultPlaceholder}>
           ${legalDisclaimerSlot}
         </swc-prompt-field>
         <span class="swc-Detail swc-Detail--sizeS">
@@ -215,8 +209,9 @@ export const Artifact: Story = {
         <strong>artifact</strong>
         — Slot one or more
         <code>&lt;swc-upload-artifact slot="artifact"&gt;</code>
-        nodes above the textarea. Use one layout type per session (card or media).
-        When uploads mix images and documents, normalize to media tiles with badges. See
+        nodes above the textarea. Use one layout type per session (card or
+        media). When uploads mix images and documents, normalize to media tiles
+        with badges. See
         <strong>Multi-card</strong>
         and
         <strong>Multi-media</strong>
@@ -272,10 +267,7 @@ export const Artifact: Story = {
         </span>
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;">
-        <swc-prompt-field
-          label="Prompt"
-          placeholder=${defaultPlaceholder}
-        >
+        <swc-prompt-field label="Prompt" placeholder=${defaultPlaceholder}>
           ${legalDisclaimerSlot}
         </swc-prompt-field>
         <span class="swc-Detail swc-Detail--sizeS">None</span>
@@ -310,14 +302,25 @@ export const Artifact: Story = {
   tags: ['options'],
 };
 
-const multiArtifactScrollMediaIds = [
-  64, 56, 823, 237, 429, 326, 180, 119, 366, 452, 15, 188,
+const multiArtifactScrollGradients = [
+  'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+  'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
+  'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
+  'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)',
+  'linear-gradient(135deg, #fa709a 0%, #fee140 100%)',
+  'linear-gradient(135deg, #30cfd0 0%, #330867 100%)',
+  'linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)',
+  'linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%)',
+  'linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%)',
+  'linear-gradient(135deg, #ff6e7f 0%, #bfe9ff 100%)',
+  'linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%)',
+  'linear-gradient(135deg, #f77062 0%, #fe5196 100%)',
 ] as const;
 
 const multiArtifactScrollBadges: Record<number, string> = {
-  452: 'MP4',
-  15: 'MP4',
-  188: 'PDF',
+  9: 'MP4',
+  10: 'MP4',
+  11: 'PDF',
 };
 
 export const MultiArtifactScroll: Story = {
@@ -325,25 +328,26 @@ export const MultiArtifactScroll: Story = {
     <div style="display:flex;flex-direction:column;gap:16px;inline-size:100%;">
       <p class="swc-Detail swc-Detail--sizeS" style="margin:0;">
         Full-width composer with twelve media tiles. Chevron controls flank the
-        strip when scrolling is possible; each click scrolls by one tile.
-        Trackpad scrolling works with no persistent scrollbar.
+        strip when scrolling is possible; each click advances by one set with
+        the last visible tile anchoring the next view. Edge fades signal
+        overflow. An overlay scrollbar lane below the tiles appears during
+        wheel, touch, or drag.
       </p>
-      <swc-prompt-field
-        label="Prompt"
-        value="Review these storyboard frames."
-      >
-        ${multiArtifactScrollMediaIds.map(
-          (id) => html`
+      <swc-prompt-field label="Prompt" value="Review these storyboard frames.">
+        ${multiArtifactScrollGradients.map(
+          (gradient, index) => html`
             <swc-upload-artifact slot="artifact" type="media" dismissible>
-              <img
+              <div
                 slot="thumbnail"
-                src="https://picsum.photos/id/${id}/68/68"
-                alt="Storyboard frame ${id}"
-                style="inline-size:100%;block-size:100%;object-fit:cover;"
-              />
-              ${multiArtifactScrollBadges[id]
+                role="img"
+                aria-label="Storyboard frame ${index + 1}"
+                style="inline-size:100%;block-size:100%;background:${gradient};"
+              ></div>
+              ${multiArtifactScrollBadges[index]
                 ? html`
-                    <span slot="badge">${multiArtifactScrollBadges[id]}</span>
+                    <span slot="badge">
+                      ${multiArtifactScrollBadges[index]}
+                    </span>
                   `
                 : nothing}
             </swc-upload-artifact>

@@ -155,13 +155,20 @@ export const LegalMissingWarningTest: Story = {
     try {
       render(
         html`
-          <swc-prompt-field label="Prompt" value="No legal disclaimer">
-          </swc-prompt-field>
+          <swc-prompt-field
+            label="Prompt"
+            value="No legal disclaimer"
+          ></swc-prompt-field>
         `,
         canvasElement
       );
 
-      await getComponent<PromptField>(canvasElement, 'swc-prompt-field');
+      const el = await getComponent<PromptField>(
+        canvasElement,
+        'swc-prompt-field'
+      );
+      await el.updateComplete;
+      await new Promise((resolve) => requestAnimationFrame(resolve));
 
       await step(
         'logs a development warning when the legal slot is empty',
@@ -223,5 +230,162 @@ export const MixedArtifactWarningTest: Story = {
     } finally {
       console.warn = originalWarn;
     }
+  },
+};
+
+const artifactScrollGradient =
+  'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
+
+function renderMultiArtifactPromptField(canvasElement: HTMLElement): void {
+  render(
+    html`
+      <div style="inline-size:480px;">
+        <swc-prompt-field label="Prompt" value="Review attachments.">
+          ${Array.from({ length: 8 }, (_, index) => index).map(
+            (index) => html`
+              <swc-upload-artifact slot="artifact" type="media" dismissible>
+                <div
+                  slot="thumbnail"
+                  role="img"
+                  aria-label="Frame ${index + 1}"
+                  style="inline-size:100%;block-size:100%;background:${artifactScrollGradient};"
+                ></div>
+              </swc-upload-artifact>
+            `
+          )}
+        </swc-prompt-field>
+      </div>
+    `,
+    canvasElement
+  );
+}
+
+export const ArtifactScrollPaginationTest: Story = {
+  render: () => nothing,
+  play: async ({ canvasElement, step }) => {
+    renderMultiArtifactPromptField(canvasElement);
+
+    const el = await getComponent<PromptField>(
+      canvasElement,
+      'swc-prompt-field'
+    );
+    await el.updateComplete;
+    await new Promise((resolve) => requestAnimationFrame(resolve));
+    await el.updateComplete;
+
+    const scrollEl = el.shadowRoot?.querySelector<HTMLDivElement>(
+      '.swc-PromptField-artifacts-scroll'
+    );
+    const nextButton = el.shadowRoot?.querySelector<HTMLButtonElement>(
+      '.swc-PromptField-artifacts-scroll-next'
+    );
+
+    await step(
+      'renders multi-artifact paging controls when overflowing',
+      async () => {
+        expect(scrollEl).toBeTruthy();
+        expect(nextButton).toBeTruthy();
+        expect(
+          (scrollEl?.scrollWidth ?? 0) > (scrollEl?.clientWidth ?? 0)
+        ).toBe(true);
+      }
+    );
+
+    await step('edge fades render when paging is available', async () => {
+      const endFade = el.shadowRoot?.querySelector(
+        '.swc-PromptField-artifacts-fade--end'
+      );
+      expect(endFade).toBeTruthy();
+    });
+
+    await step('chevron paging advances by more than one tile', async () => {
+      const initialScrollLeft = scrollEl?.scrollLeft ?? 0;
+      nextButton?.click();
+      await el.updateComplete;
+      expect(
+        scrollEl?.classList.contains('is-artifact-scroll-from-buttons')
+      ).toBe(true);
+
+      await new Promise((resolve) => window.setTimeout(resolve, 400));
+
+      const nextScrollLeft = scrollEl?.scrollLeft ?? 0;
+      expect(nextScrollLeft).toBeGreaterThan(initialScrollLeft);
+
+      const tileWidth =
+        scrollEl
+          ?.querySelector('slot')
+          ?.assignedElements({ flatten: true })[0]
+          ?.getBoundingClientRect().width ?? 68;
+      expect(nextScrollLeft - initialScrollLeft).toBeGreaterThan(tileWidth);
+    });
+
+    await step('chevron paging keeps the scrollbar thumb hidden', async () => {
+      await new Promise<void>((resolve) => {
+        const done = (): void => resolve();
+        scrollEl?.addEventListener('scrollend', done, { once: true });
+        window.setTimeout(done, 1500);
+      });
+      await el.updateComplete;
+
+      const scrollbarLane = el.shadowRoot?.querySelector(
+        '.swc-PromptField-artifacts-scrollbar-lane'
+      );
+      expect(
+        scrollEl?.classList.contains('is-artifact-scroll-from-buttons')
+      ).toBe(false);
+      expect(
+        scrollbarLane?.classList.contains('is-artifact-scrollbar-interacting')
+      ).toBe(false);
+    });
+
+    await step('wheel interaction shows the scrollbar thumb', async () => {
+      scrollEl?.dispatchEvent(
+        new WheelEvent('wheel', {
+          bubbles: true,
+          deltaX: 12,
+        })
+      );
+      await el.updateComplete;
+
+      const scrollbarLane = el.shadowRoot?.querySelector(
+        '.swc-PromptField-artifacts-scrollbar-lane'
+      );
+      expect(
+        scrollbarLane?.classList.contains('is-artifact-scrollbar-interacting')
+      ).toBe(true);
+    });
+
+    await step(
+      'chevron paging reaches the end when the last tile is only partially visible',
+      async () => {
+        const maxScroll = Math.max(
+          0,
+          (scrollEl?.scrollWidth ?? 0) - (scrollEl?.clientWidth ?? 0)
+        );
+        scrollEl?.scrollTo({
+          left: Math.max(0, maxScroll - 10),
+          behavior: 'auto',
+        });
+        await new Promise((resolve) => requestAnimationFrame(resolve));
+        await el.updateComplete;
+
+        const nextButtonAtEnd = el.shadowRoot?.querySelector<HTMLButtonElement>(
+          '.swc-PromptField-artifacts-scroll-next'
+        );
+        expect(nextButtonAtEnd).toBeTruthy();
+
+        const beforeClick = scrollEl?.scrollLeft ?? 0;
+        nextButtonAtEnd?.click();
+
+        await new Promise<void>((resolve) => {
+          const done = (): void => resolve();
+          scrollEl?.addEventListener('scrollend', done, { once: true });
+          window.setTimeout(done, 1500);
+        });
+        await el.updateComplete;
+
+        expect(scrollEl?.scrollLeft ?? 0).toBeGreaterThan(beforeClick);
+      }
+    );
   },
 };

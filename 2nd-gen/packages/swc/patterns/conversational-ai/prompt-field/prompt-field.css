@@ -112,6 +112,8 @@
 
 .swc-PromptField-artifacts--multiple {
   min-inline-size: 0;
+
+  --swc-prompt-field-artifact-scrollbar-size: 8px;
 }
 
 .swc-PromptField-artifacts-row {
@@ -125,18 +127,40 @@
   position: relative;
   flex: 1 1 auto;
   min-inline-size: 0;
+  block-size: calc(var(--swc-prompt-field-artifact-media-block-size, 68px) + var(--swc-prompt-field-artifact-scrollbar-size, 8px));
   padding-block-start: 6px;
   margin-block-start: -6px;
-  overflow: hidden;
+  margin-block-end: calc(-1 * var(--swc-prompt-field-artifact-scrollbar-size, 8px));
+  overflow: visible;
+
+  --swc-prompt-field-artifact-fade-solid: color-mix(in srgb, token("background-layer-2-color") 80%, transparent);
+}
+
+.swc-PromptField-artifacts-fade {
+  position: absolute;
+  inset-block-start: 6px;
+  z-index: 3;
+  inline-size: 16px;
+  block-size: var(--swc-prompt-field-artifact-media-block-size, 68px);
+  pointer-events: none;
+}
+
+.swc-PromptField-artifacts-fade--start {
+  inset-inline-start: 0;
+  background: linear-gradient(to right, var(--swc-prompt-field-artifact-fade-solid), transparent);
+}
+
+.swc-PromptField-artifacts-fade--end {
+  inset-inline-end: 0;
+  background: linear-gradient(to left, var(--swc-prompt-field-artifact-fade-solid), transparent);
 }
 
 .swc-PromptField-artifacts-scroll {
   -ms-overflow-style: none;
-  display: flex;
-  flex-wrap: nowrap;
-  align-items: start;
+  box-sizing: border-box;
   inline-size: 100%;
   max-inline-size: 100%;
+  block-size: var(--swc-prompt-field-artifact-media-block-size, 68px);
   padding-inline-end: token("spacing-50");
   overflow-x: auto;
   overflow-y: hidden;
@@ -148,7 +172,44 @@
   display: none;
 }
 
-.swc-PromptField-artifacts-scroll > slot {
+.swc-PromptField-artifacts-tiles {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: start;
+  inline-size: max-content;
+  min-inline-size: 100%;
+  block-size: var(--swc-prompt-field-artifact-media-block-size, 68px);
+}
+
+.swc-PromptField-artifacts-scrollbar-lane {
+  position: absolute;
+  inset-block-end: 0;
+  inset-inline: 0;
+  block-size: var(--swc-prompt-field-artifact-scrollbar-size, 8px);
+  border-radius: calc(var(--swc-prompt-field-artifact-scrollbar-size, 8px) / 2);
+  touch-action: none;
+  cursor: pointer;
+}
+
+.swc-PromptField-artifacts-scrollbar-thumb {
+  position: absolute;
+  inset-block-start: 0;
+  block-size: var(--swc-prompt-field-artifact-scrollbar-size, 8px);
+  background: transparent;
+  border-radius: calc(var(--swc-prompt-field-artifact-scrollbar-size, 8px) / 2);
+  touch-action: none;
+  cursor: grab;
+}
+
+.swc-PromptField-artifacts-scrollbar-thumb:active {
+  cursor: grabbing;
+}
+
+.swc-PromptField-artifacts-scrollbar-lane.is-artifact-scrollbar-interacting .swc-PromptField-artifacts-scrollbar-thumb {
+  background: token("gray-600");
+}
+
+.swc-PromptField-artifacts-tiles > slot {
   display: flex;
   flex: 0 0 auto;
   flex-wrap: nowrap;
@@ -156,17 +217,17 @@
   align-items: start;
 }
 
-.swc-PromptField-artifacts-scroll > slot::slotted(*) {
+.swc-PromptField-artifacts-tiles > slot::slotted(*) {
   flex: 0 0 auto;
 }
 
-.swc-PromptField-artifacts-scroll > slot::slotted([type="card"]) {
+.swc-PromptField-artifacts-tiles > slot::slotted([type="card"]) {
   inline-size: var(--swc-prompt-field-artifact-card-inline-size, 240px);
   min-inline-size: var(--swc-prompt-field-artifact-card-inline-size, 240px);
   max-inline-size: var(--swc-prompt-field-artifact-card-inline-size, 240px);
 }
 
-.swc-PromptField-artifacts-scroll > slot::slotted([type="media"]) {
+.swc-PromptField-artifacts-tiles > slot::slotted([type="media"]) {
   inline-size: var(--swc-prompt-field-artifact-media-inline-size, 68px);
   min-inline-size: var(--swc-prompt-field-artifact-media-min-inline-size, 68px);
   max-inline-size: var(--swc-prompt-field-artifact-media-inline-size, 68px);
@@ -211,7 +272,7 @@
 .swc-PromptField-artifacts-scroll-prev:focus-visible,
 .swc-PromptField-artifacts-scroll-next:focus-visible {
   outline: token("focus-indicator-thickness") solid token("focus-indicator-color");
-  outline-offset: token("focus-indicator-gap");
+  outline-offset: token("focus-ring-gap");
 }
 
 /* ─────────────────────────────────────
