@@ -135,7 +135,7 @@ export const focusgroupNavigationActiveChange =
  * - **`programmatic`** — {@link FocusgroupNavigationController.setActiveItem} or
  *   {@link FocusgroupNavigationController.focusFirstItemByTextPrefix} was called directly.
  */
-export type FocusgroupActiveChangeReason =
+export type FocusgroupActiveChangeSource =
   | 'keyboard'
   | 'focus'
   | 'refresh'
@@ -152,11 +152,11 @@ export type FocusgroupNavigationActiveChangeDetail = {
 
   /**
    * Why the active item changed. Hosts that implement selection-follows-focus (e.g. automatic
-   * activation in a tab list) should react to `'keyboard'` and `'focus'` reasons and ignore
+   * activation in a tab list) should react to `'keyboard'` and `'focus'` sources and ignore
    * `'refresh'` and `'programmatic'` to avoid spurious selection changes on mount or when
    * toggling `disabled`.
    */
-  reason: FocusgroupActiveChangeReason;
+  source: FocusgroupActiveChangeSource;
 };
 
 /**
@@ -643,11 +643,11 @@ export class FocusgroupNavigationController implements ReactiveController {
    * Dispatches the active-change event and {@link FocusgroupNavigationOptions.onActiveItemChange}.
    *
    * @param active - Preferred item to mark as the single tab stop when eligible.
-   * @param reason - Why the active item is changing; included in the dispatched event detail.
+   * @param source - Why the active item is changing; included in the dispatched event detail.
    */
   private applyRovingTabindex(
     active: HTMLElement,
-    reason: FocusgroupActiveChangeReason
+    source: FocusgroupActiveChangeSource
   ): void {
     const items = this.getEligibleItems();
     const eligibleSet = new Set(items);
@@ -679,7 +679,7 @@ export class FocusgroupNavigationController implements ReactiveController {
     }
     if (safeActive !== this.previousActive) {
       this.previousActive = safeActive;
-      this.dispatchActiveChange(safeActive, reason);
+      this.dispatchActiveChange(safeActive, source);
       this.options.onActiveItemChange?.(safeActive);
     }
   }
@@ -688,11 +688,11 @@ export class FocusgroupNavigationController implements ReactiveController {
    * Dispatches {@link focusgroupNavigationActiveChange} on the reactive host with the given detail.
    *
    * @param activeElement - New active item, or null when clearing selection.
-   * @param reason - Why the active item changed.
+   * @param source - Why the active item changed.
    */
   private dispatchActiveChange(
     activeElement: HTMLElement | null,
-    reason: FocusgroupActiveChangeReason
+    source: FocusgroupActiveChangeSource
   ): void {
     this.host.dispatchEvent(
       new CustomEvent<FocusgroupNavigationActiveChangeDetail>(
@@ -700,7 +700,7 @@ export class FocusgroupNavigationController implements ReactiveController {
         {
           bubbles: true,
           composed: true,
-          detail: { activeElement, reason },
+          detail: { activeElement, source },
         }
       )
     );

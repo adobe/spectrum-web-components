@@ -1044,7 +1044,7 @@ export const AutomaticActivationMountTest: Story = {
       // FocusgroupNavigationController.refresh() (called from handleTabSlotChange)
       // parks the roving tab stop on tab 1 before updateCheckedState() moves
       // it to the pre-selected tab. That refresh-driven active-change fires
-      // focusgroupNavigationActiveChange with reason: 'refresh', which
+      // focusgroupNavigationActiveChange with source: 'refresh', which
       // _handleNavigationActiveChange must ignore — otherwise the pre-selected
       // tab would be silently overridden by tab 1 on mount.
       expect(tabs.selected).toBe('2');
@@ -1093,9 +1093,9 @@ export const AutomaticActivationDisableToggleTest: Story = {
 
       tabs.removeEventListener('change', onChange);
 
-      // _navigation.refresh() re-parks the roving tab stop (reason: 'refresh')
+      // _navigation.refresh() re-parks the roving tab stop (source: 'refresh')
       // on both the disable and re-enable transitions.
-      // _handleNavigationActiveChange must ignore 'refresh' reasons so that
+      // _handleNavigationActiveChange must ignore 'refresh' sources so that
       // toggling disabled is not treated as a user selection.
       expect(tabs.selected).toBe('2');
       expect(changeCount, 'no change events from disable/enable').toBe(0);

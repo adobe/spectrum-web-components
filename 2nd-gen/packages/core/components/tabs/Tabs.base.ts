@@ -270,7 +270,7 @@ export abstract class TabsBase extends SpectrumElement {
    * `_navigation`. In automatic activation mode, selects the newly focused
    * tab (unless it is disabled).
    *
-   * Only `reason: 'keyboard'` (arrow keys, Home/End) and `reason: 'focus'`
+   * Only `source: 'keyboard'` (arrow keys, Home/End) and `source: 'focus'`
    * (pointer click, Tab-key entry) represent a real focus move that
    * "selection follows focus" should react to. `'refresh'` and
    * `'programmatic'` fire when `_navigation` re-parks the roving tab stop
@@ -282,10 +282,10 @@ export abstract class TabsBase extends SpectrumElement {
     if (this._keyboardActivation !== 'automatic') {
       return;
     }
-    const { activeElement, reason } = (
+    const { activeElement, source } = (
       event as CustomEvent<FocusgroupNavigationActiveChangeDetail>
     ).detail;
-    if (reason !== 'keyboard' && reason !== 'focus') {
+    if (source !== 'keyboard' && source !== 'focus') {
       return;
     }
     if (!activeElement) {
