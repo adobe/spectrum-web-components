@@ -47,7 +47,7 @@ Screen readers and other assistive technologies expose an **accessibility tree**
 
 ### What ARIA is
 
-**WAI-ARIA** (Accessible Rich Internet Applications) is a set of attributes that refine or expose accessibility information in the accessibility tree—roles, states, properties, and relationships between nodes. The formal rules live in [WAI-ARIA 1.2](https://www.w3.org/TR/wai-aria-1.2/). Patterns for common widgets are described in the [ARIA authoring practices guide (APG)](https://www.w3.org/WAI/ARIA/apg/).
+**WAI-ARIA** (Accessible Rich Internet Applications) is a set of attributes that refine or expose accessibility information in the accessibility tree — roles, states, properties, and relationships between nodes. The formal rules live in [WAI-ARIA 1.2](https://www.w3.org/TR/wai-aria-1.2/). Patterns for common widgets are described in the [ARIA authoring practices guide (APG)](https://www.w3.org/WAI/ARIA/apg/).
 
 ### When to use ARIA
 
@@ -61,7 +61,7 @@ Use ARIA **only when native HTML cannot express the needed role, state, or relat
 
 ### Patterns to avoid
 
-- **`role="button"`** on a `div` instead of a real `button`—you lose native keyboard activation and many platform behaviors unless you reimplement them completely.
+- **`role="button"`** on a `div` instead of a real `button` — you lose native keyboard activation and many platform behaviors unless you reimplement them completely.
 - **Redundant ARIA** on elements that already imply the role (for example, `role="button"` on a `button`).
 - **Large `aria-label` values** that duplicate visible text; prefer visible labels and `aria-labelledby` or native `<label>` when possible. See [MDN: ARIA labels](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Attributes/aria-label) and the APG [read me first](https://www.w3.org/WAI/ARIA/apg/practices/read-me-first/) for naming guidance.
 
@@ -106,7 +106,7 @@ These workarounds can be fragile or verbose. Documenting **what consumers must p
 ## Further reading
 
 - [Headings and landmarks](/docs/guides-accessibility-guides-headings-and-landmarks--docs): page-level landmarks and `h1`–`h6` structure, WCAG table, and WAVE
-- [Using ARIA](https://www.w3.org/TR/using-aria/) — including the [first rule of ARIA use](https://www.w3.org/TR/using-aria/#rule1).
+- [Using ARIA](https://www.w3.org/TR/using-aria/): including the [first rule of ARIA use](https://www.w3.org/TR/using-aria/#rule1).
 - [ARIA authoring practices guide](https://www.w3.org/WAI/ARIA/apg/): patterns and keyboard models for composite widgets.
 - [MDN: semantics in HTML](https://developer.mozilla.org/en-US/docs/Glossary/Semantics#semantics_in_html): glossary entry tying semantics to accessibility.
 - [Cross-root ARIA delegation (explainer)](https://leobalter.github.io/cross-root-aria-delegation/) and [repository](https://github.com/leobalter/cross-root-aria-delegation).
