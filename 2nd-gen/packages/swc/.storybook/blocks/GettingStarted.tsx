@@ -7,20 +7,27 @@ import { formatTitle } from '../helpers/index.js';
  * Automatically derives package name and component names from the Storybook meta title.
  *
  * @param of - The Storybook meta or story to resolve the component from
- * @param packageName - Optional override for the package name (defaults to derived kebab-case from title)
- * @param componentName - Optional override for the component class name (defaults to derived PascalCase from title)
- * @param tagName - Optional override for the custom element tag name (defaults to swc-{packageName})
+ * @param packageName - Optional override for the controller/package export name (defaults to derived kebab-case from title; needed when a controller's `core` package export key doesn't include a `-controller` suffix that the title has, e.g. `slot-attribute-propagation`)
  */
-export const GettingStarted = ({ of, tags }: { of?: any; tags?: string[] }) => {
+export const GettingStarted = ({
+  of,
+  tags,
+  packageName: packageNameOverride,
+}: {
+  of?: any;
+  tags?: string[];
+  packageName?: string;
+}) => {
   const resolvedOf = useOf(of || 'meta', ['meta']);
 
   if (tags?.includes('utility')) return null;
 
   if (tags?.includes('controller')) {
-    // Extract component name in kebab-case from the title (e.g., "Components/Progress Circle" -> "progress-circle")
-    const packageName = formatTitle(resolvedOf.preparedMeta?.title);
+    // Extract component name in kebab-case from the title (e.g., "Controllers/Hover controller" -> "hover-controller")
+    const packageName =
+      packageNameOverride ?? formatTitle(resolvedOf.preparedMeta?.title);
 
-    // Extract component name in PascalCase from the title (e.g., "Components/Progress Circle" -> "ProgressCircle")
+    // Extract component name in PascalCase from the title (e.g., "Controllers/Hover controller" -> "HoverController")
     const baseClassName = formatTitle(resolvedOf.preparedMeta?.title, 'pascal');
     return (
       <Markdown>{`## Getting started
@@ -30,7 +37,7 @@ Controllers are not published as packages. Instead, they are imported directly f
 Import the controller directly from the core package:
 
 \`\`\`typescript
-import { ${baseClassName} } from '@adobe/spectrum-wc/components/core/controllers/${packageName}.js';
+import { ${baseClassName} } from '@spectrum-web-components/core/controllers/${packageName}.js';
 \`\`\`
 `}</Markdown>
     );
