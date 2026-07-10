@@ -51,6 +51,14 @@
       "types": "./dist/components/button/index.d.ts",
       "import": "./dist/components/button/index.js"
     },
+    "./components/infield-button": {
+      "types": "./dist/components/infield-button/index.d.ts",
+      "import": "./dist/components/infield-button/index.js"
+    },
+    "./components/infield-button/index.js": {
+      "types": "./dist/components/infield-button/index.d.ts",
+      "import": "./dist/components/infield-button/index.js"
+    },
     "./components/button-group": {
       "types": "./dist/components/button-group/index.d.ts",
       "import": "./dist/components/button-group/index.js"
@@ -227,6 +235,12 @@
       ],
       "components/button": [
         "dist/components/button/index.d.ts"
+      ],
+      "components/infield-button": [
+        "dist/components/infield-button/index.d.ts"
+      ],
+      "components/infield-button/index.js": [
+        "dist/components/infield-button/index.d.ts"
       ],
       "components/button-group": [
         "dist/components/button-group/index.d.ts"
