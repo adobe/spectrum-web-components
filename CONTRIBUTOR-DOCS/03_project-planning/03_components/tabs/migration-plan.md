@@ -92,6 +92,7 @@ The first **`swc-tabs`**, **`swc-tab`**, and **`swc-tab-panel`** implementation 
 - `Q8`: **Resolved for S2 ship** — **`size`** is not a public API on `swc-tabs`; default typography only (supersedes prior “default `size=m`” interim note).
 - `Q11`: Internal DOM changes are not a consumer concern.
 - `Q16`–`Q18`: **Resolved for S2 ship** — **`keyboard-activation`** / **`density`** replace **`auto`** / **`compact`**; **`emphasized`** and **`quiet`** removed from the public surface (see **`migration-guide.mdx`**).
+- `Q20`: **Resolved** — **`keyboard-activation`** default changed from **`manual`** (inherited from 1st-gen `auto = false`) to **`automatic`**, to align with React Spectrum/React Aria `Tabs`. The a11y team confirmed this is APG-safe because `swc-tab-panel` content is always present in the light DOM (not lazily mounted), which is the condition the [APG guidance on selection-follows-focus](https://www.w3.org/WAI/ARIA/apg/patterns/tabs/examples/tabs-automatic/) recommends for automatic activation. The "manual is safer for expensive/lazy panels" caveat is retained as consumer-facing guidance (`tabs.mdx`, `migration-guide.mdx`) rather than as the default rationale.
 
 ---
 
@@ -372,7 +373,7 @@ This full modifier surface will not be carried forward to 2nd-gen. Consumers mus
 | **B10** | Keyboard controller | `RovingTabindexController` | **`TabsBase.handleKeyDown`** implements APG-aligned navigation; optional later adoption of **`FocusgroupNavigationController`** ([#6129](https://github.com/adobe/spectrum-web-components/pull/6129)) for shared infrastructure. | No consumer action (internal). Keyboard behavior verified to match APG. |
 | **B11** | `sp-tabs-scroll` event | `sp-tabs-scroll` | **Phase 1:** scroll APIs / overflow deferred — event not reintroduced until phase 2 overflow work. When shipped, align naming with 2nd-gen conventions (e.g. `swc-tabs-scroll`). | Update event listeners only after overflow phase lands. |
 | **B12** | Default size / typography | `SizedMixin` with `noDefaultSize: true` — optional `size` on host. | **No `size` API** on `swc-tabs`; single S2 default typography scale. Customize with `--swc-tabs-*` / `--swc-tab-*` if needed. | Remove `size` from `swc-tabs`; adjust CSS tokens for density/visual emphasis. |
-| **B21** | `auto` → `keyboardActivation` | `auto` boolean; `true` = automatic activation. | **`keyboard-activation`**: `manual` (default) or `automatic`. | Replace `auto` with `keyboard-activation="automatic"`; omit attribute for manual. |
+| **B21** | `auto` → `keyboardActivation` | `auto` boolean; default `false` (manual activation). | **`keyboard-activation`**: `automatic` (default) or `manual`. | Default flips from manual to automatic (Q20). Consumers relying on the implicit 1st-gen manual default must add `keyboard-activation="manual"` explicitly if their panels are expensive/lazy. |
 | **B22** | `compact` → `density` | `compact` boolean. | **`density`**: `regular` (default) or `compact`. | Replace `compact` with `density="compact"`. |
 | **B23** | `emphasized` removal | `emphasized` boolean on host. | **Not exposed** on `swc-tabs`. | Use CSS custom properties for accent styling if required. |
 | **B24** | `quiet` removal | `quiet` boolean on host. | **Not exposed** on `swc-tabs`. | Use CSS custom properties for divider treatment if required. |
@@ -413,7 +414,7 @@ This full modifier surface will not be carried forward to 2nd-gen. Consumers mus
 
 | Property | Type | Default | Attribute | Notes |
 |---|---|---|---|---|
-| `keyboard-activation` | `'manual' \| 'automatic'` | `'manual'` | `keyboard-activation` | `manual` = APG manual activation; `automatic` = selection follows focus. |
+| `keyboard-activation` | `'manual' \| 'automatic'` | `'automatic'` | `keyboard-activation` | `automatic` = selection follows focus (matches React Spectrum/React Aria `Tabs`, Q20); `manual` = APG manual activation, recommended for expensive/lazy panels. |
 | `density` | `'regular' \| 'compact'` | `'regular'` | `density` | `compact` reduces tab spacing (replaces 1st-gen boolean `compact`). |
 | `direction` | `'horizontal' \| 'vertical'` | `'horizontal'` | `direction` | Reflected. `vertical-right` dropped unless Q4 resolves to keep. |
 | `label` | `string` | `''` | `label` | `aria-label` for the tablist. |
@@ -441,8 +442,8 @@ This full modifier surface will not be carried forward to 2nd-gen. Consumers mus
 
 ### Behavioral semantics
 
-- **Automatic activation (`keyboard-activation="automatic"`):** Selection follows focus as the user arrows between tabs.
-- **Manual activation (default, `keyboard-activation="manual"`):** Arrow keys move focus without changing selection. Enter/Space/click activate the focused tab.
+- **Automatic activation (default, `keyboard-activation="automatic"`):** Selection follows focus as the user arrows between tabs. Matches React Spectrum/React Aria `Tabs` (Q20).
+- **Manual activation (`keyboard-activation="manual"`):** Arrow keys move focus without changing selection. Enter/Space/click activate the focused tab. Recommended when tab panels are expensive to render or not fully present in the DOM.
 - **Cancelable selection:** `change` event supports `preventDefault()` to revert selection.
 - **Tab-to-panel:** Tab key moves focus from the tablist to the active `tabpanel` (`tabindex="0"` on the active panel). Shift+Tab returns to the tablist.
 - **Roving tabindex:** Exactly one tab has `tabindex="0"` at all times; all others are `tabindex="-1"`.

@@ -38,3 +38,7 @@ Read the migration plan at `CONTRIBUTOR-DOCS/03_project-planning/03_components/[
 Follow **[Phase 6: Testing](../../../CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md#phase-6-testing)** in the washing machine workflow doc — it covers what to do, what to check, common problems, and the quality gate for this phase.
 
 If the implementation or the needed test coverage has drifted from the migration plan, follow [`migration-plan-contract`](../migration-prep/references/migration-plan-contract.md).
+
+## Native dismissal and trusted input
+
+`@storybook/test`'s `userEvent` dispatches synthetic events (`isTrusted === false`), which browser-native `popover`/`<dialog>` light-dismiss (Escape, outside/backdrop click) ignores, so a synthetic Escape does not dismiss a native overlay. Test that native path in the Playwright accessibility spec (`test/<component>.a11y.spec.ts`), which drives real, trusted input, not in a play function. Play-function files (`test/<component>.test.ts`) are indexed as dev Storybook stories, and importing `vitest/browser` there throws outside the Vitest runner, breaking the dev server. Component-authored JavaScript handlers (click-to-toggle, focus, keydown backstops) work with the synthetic `@storybook/test` `userEvent` and stay in play functions. See [Native dismissal and trusted input](../../../CONTRIBUTOR-DOCS/02_style-guide/04_testing/02_storybook-testing.md#native-dismissal-and-trusted-input) for the full pattern.

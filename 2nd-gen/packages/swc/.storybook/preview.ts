@@ -187,7 +187,8 @@ const preview = {
       canvas: {
         withToolbar: true,
         layout: 'centered',
-        sourceState: 'shown',
+        // Individual stories can override this with parameters.docs.canvas.sourceState.
+        sourceState: 'hidden',
       },
       source: {
         excludeDecorators: true,
@@ -523,10 +524,7 @@ const preview = {
                   'Rendering and styling migration analysis',
                 ],
                 'Toast',
-                [
-                  'Accessibility migration analysis',
-                  'Rendering and styling migration analysis',
-                ],
+                ['Accessibility migration analysis'],
                 'Tooltip',
                 [
                   'Accessibility migration analysis',
