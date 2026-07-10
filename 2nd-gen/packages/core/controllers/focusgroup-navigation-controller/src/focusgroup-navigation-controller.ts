@@ -127,6 +127,21 @@ export const focusgroupNavigationActiveChange =
   'swc-focusgroup-navigation-active-change';
 
 /**
+ * Describes why the active item changed in a {@link focusgroupNavigationActiveChange} event.
+ *
+ * - **`keyboard`** — Arrow key, Home, or End navigation moved focus.
+ * - **`focus`** — A managed item received DOM focus directly (pointer click or Tab-key entry).
+ * - **`refresh`** — {@link FocusgroupNavigationController.refresh} re-parked the roving tab stop.
+ * - **`programmatic`** — {@link FocusgroupNavigationController.setActiveItem} or
+ *   {@link FocusgroupNavigationController.focusFirstItemByTextPrefix} was called directly.
+ */
+export type FocusgroupActiveChangeReason =
+  | 'keyboard'
+  | 'focus'
+  | 'refresh'
+  | 'programmatic';
+
+/**
  * `detail` object for the {@link focusgroupNavigationActiveChange} event.
  */
 export type FocusgroupNavigationActiveChangeDetail = {
@@ -134,6 +149,14 @@ export type FocusgroupNavigationActiveChangeDetail = {
    * Element that now has `tabindex="0"` among managed items, or null when the group is empty.
    */
   activeElement: HTMLElement | null;
+
+  /**
+   * Why the active item changed. Hosts that implement selection-follows-focus (e.g. automatic
+   * activation in a tab list) should react to `'keyboard'` and `'focus'` reasons and ignore
+   * `'refresh'` and `'programmatic'` to avoid spurious selection changes on mount or when
+   * toggling `disabled`.
+   */
+  reason: FocusgroupActiveChangeReason;
 };
 
 /**

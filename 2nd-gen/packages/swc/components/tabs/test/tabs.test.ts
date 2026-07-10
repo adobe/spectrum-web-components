@@ -975,6 +975,91 @@ export const AutoActivationTest: Story = {
   },
 };
 
+// ──────────────────────────────────────────────────────────────
+// TEST: Automatic activation — mount keeps the pre-selected tab
+// ──────────────────────────────────────────────────────────────
+
+export const AutomaticActivationMountTest: Story = {
+  render: () => html`
+    <swc-tabs
+      selected="2"
+      keyboard-activation="automatic"
+      accessible-label="Automatic activation mount test"
+    >
+      <swc-tab tab-id="1">Tab 1</swc-tab>
+      <swc-tab tab-id="2">Tab 2</swc-tab>
+      <swc-tab tab-id="3">Tab 3</swc-tab>
+      <swc-tab-panel tab-id="1"><p>Panel 1</p></swc-tab-panel>
+      <swc-tab-panel tab-id="2"><p>Panel 2</p></swc-tab-panel>
+      <swc-tab-panel tab-id="3"><p>Panel 3</p></swc-tab-panel>
+    </swc-tabs>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const tabs = await getComponent<Tabs>(canvasElement, 'swc-tabs');
+
+    await step('mount preserves the pre-selected tab', async () => {
+      // FocusgroupNavigationController.refresh() (called from handleTabSlotChange)
+      // parks the roving tab stop on tab 1 before updateCheckedState() moves
+      // it to the pre-selected tab. That refresh-driven active-change fires
+      // focusgroupNavigationActiveChange with reason: 'refresh', which
+      // _handleNavigationActiveChange must ignore — otherwise the pre-selected
+      // tab would be silently overridden by tab 1 on mount.
+      expect(tabs.selected).toBe('2');
+      const tab2 = canvasElement.querySelector('swc-tab[tab-id="2"]') as Tab;
+      expect(tab2.selected).toBe(true);
+    });
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Automatic activation — disable toggle keeps the selection
+// ──────────────────────────────────────────────────────────────
+
+export const AutomaticActivationDisableToggleTest: Story = {
+  render: () => html`
+    <swc-tabs
+      selected="2"
+      keyboard-activation="automatic"
+      accessible-label="Automatic activation disable test"
+    >
+      <swc-tab tab-id="1">Tab 1</swc-tab>
+      <swc-tab tab-id="2">Tab 2</swc-tab>
+      <swc-tab tab-id="3">Tab 3</swc-tab>
+      <swc-tab-panel tab-id="1"><p>Panel 1</p></swc-tab-panel>
+      <swc-tab-panel tab-id="2"><p>Panel 2</p></swc-tab-panel>
+      <swc-tab-panel tab-id="3"><p>Panel 3</p></swc-tab-panel>
+    </swc-tabs>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const tabs = await getComponent<Tabs>(canvasElement, 'swc-tabs');
+
+    await step('disabling then re-enabling keeps the selection', async () => {
+      tabs.selected = '2';
+      await tabs.updateComplete;
+
+      let changeCount = 0;
+      const onChange = (): void => {
+        changeCount += 1;
+      };
+      tabs.addEventListener('change', onChange);
+
+      tabs.disabled = true;
+      await tabs.updateComplete;
+      tabs.disabled = false;
+      await tabs.updateComplete;
+
+      tabs.removeEventListener('change', onChange);
+
+      // _navigation.refresh() re-parks the roving tab stop (reason: 'refresh')
+      // on both the disable and re-enable transitions.
+      // _handleNavigationActiveChange must ignore 'refresh' reasons so that
+      // toggling disabled is not treated as a user selection.
+      expect(tabs.selected).toBe('2');
+      expect(changeCount, 'no change events from disable/enable').toBe(0);
+    });
+  },
+};
+
 export const DisabledTabKeyboardTest: Story = {
   render: () => html`
     <swc-tabs selected="1" accessible-label="Disabled tab keyboard test">
