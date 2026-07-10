@@ -568,12 +568,16 @@ export abstract class TabsBase extends SpectrumElement {
     }
 
     if (changes.has('disabled') && this._tabs.length) {
-      // refresh() re-applies roving tabindex: returns [] when disabled (all
-      // tabs lose their tab stop) or the full list when re-enabled.
       this._navigation.refresh();
-      // After re-enabling, restore the roving tab stop to the selected tab.
-      // refresh() defaults to items[0] when no item currently has tabindex=0.
-      if (!this.disabled) {
+      if (this.disabled) {
+        // When disabled, getItems() returns [] so the controller's cleanup
+        // loop in refresh() iterates nothing. Explicitly remove all tabs from
+        // the tab order so the tablist is fully inert.
+        for (const tab of this._tabs) {
+          (tab as HTMLElement).tabIndex = -1;
+        }
+      } else {
+        // After re-enabling, restore the roving tab stop to the selected tab.
         this.updateCheckedState();
       }
     }
