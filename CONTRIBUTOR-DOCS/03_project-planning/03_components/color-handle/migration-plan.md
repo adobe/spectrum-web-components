@@ -406,10 +406,8 @@ Planned rendering shape:
 
 #### Breaking changes
 
-> Consumer-facing breaking-change and migration guidance (tag rename, `--mod-*` removal, `fill` usage) belongs in the dedicated consumer migration guide, not the per-component MDX. Deferred to the `consumer-migration-guide` skill.
-
-- [ ] Document the tag rename (`sp-color-handle` to `swc-color-handle`) and removal of `--mod-colorhandle-*` in the consumer migration guide (`focused` is unchanged). _(consumer-migration-guide)_
-- [ ] Document the new `fill` option (B7, property-not-attribute for outline-only), the adaptive-contrast behavior change (improvement, non-breaking), and the grow-on-focus indicator. _(consumer-migration-guide)_
+- [x] Tag rename (`sp-color-handle` to `swc-color-handle`) and removal of `--mod-colorhandle-*` documented in the consumer migration guide (`migration-guide.mdx`); `focused` noted as unchanged.
+- [x] New `fill` option (B7, property-not-attribute for outline-only), the adaptive-contrast behavior change (improvement, non-breaking), and the grow-on-focus indicator documented in `migration-guide.mdx`.
 
 ### Review
 
