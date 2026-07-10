@@ -28,6 +28,8 @@ import {
   live,
   repeat,
 } from '@spectrum-web-components/base/src/directives.js';
+import type { Directionality } from '@spectrum-web-components/base/src/normalize-dir.js';
+import { normalizeDir } from '@spectrum-web-components/base/src/normalize-dir.js';
 import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
 import { Menu, MenuItem } from '@spectrum-web-components/menu';
 import { Textfield } from '@spectrum-web-components/textfield';
@@ -47,7 +49,21 @@ export type ComboboxOption = {
   value: string;
   itemText: string;
   disabled?: boolean;
+  lang?: string;
+  dir?: Directionality;
 };
+
+// `SpectrumElement` (the base class behind `MenuItem`) overrides `dir` to
+// return the *computed* CSS direction rather than the attribute, so a
+// slotted `MenuItem`'s authored `dir` must be read via `getAttribute`
+// instead of the `dir` property. Plain `ComboboxOption` data has no such
+// override.
+const getOptionDir = (
+  option: ComboboxOption | MenuItem
+): Directionality | undefined =>
+  normalizeDir(
+    option instanceof MenuItem ? option.getAttribute('dir') : option.dir
+  );
 
 /**
  * @element sp-combobox
@@ -330,6 +346,20 @@ export class Combobox extends Textfield {
     this.inputElement.focus();
   }
 
+  // The input displays the committed option's own text, so it should be
+  // pronounced in that option's language rather than the combobox's
+  // ambient `lang`. `undefined` while typing/filtering (before `itemValue`
+  // resolves to a match), so the input falls back to the ambient `lang`.
+  private get selectedItemLang(): string | undefined {
+    if (!this.itemValue) {
+      return undefined;
+    }
+    return (
+      this.availableOptions.find((option) => option.value === this.itemValue)
+        ?.lang || undefined
+    );
+  }
+
   protected override shouldUpdate(
     changed: PropertyValues<this & { optionEls: MenuItem[] }>
   ): boolean {
@@ -426,6 +456,7 @@ export class Combobox extends Textfield {
         class="input"
         role="combobox"
         type="text"
+        lang=${ifDefined(this.selectedItemLang)}
         .value=${live(this.displayValue)}
         tabindex="0"
         @sp-closed=${this.handleClosed}
@@ -503,6 +534,8 @@ export class Combobox extends Textfield {
                     return html`
                       <sp-menu-item
                         id=${option.value}
+                        lang=${ifDefined(option.lang || undefined)}
+                        dir=${ifDefined(getOptionDir(option))}
                         ?focused=${this.activeDescendant?.value ===
                         option.value}
                         aria-selected=${this.activeDescendant?.value ===

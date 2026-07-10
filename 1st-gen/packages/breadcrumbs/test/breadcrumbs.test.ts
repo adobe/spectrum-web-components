@@ -21,6 +21,7 @@ import { spy } from 'sinon';
 
 import { ActionMenu } from '@spectrum-web-components/action-menu';
 import {
+  BreadcrumbItem,
   Breadcrumbs,
   BreadcrumbSelectDetail,
 } from '@spectrum-web-components/breadcrumbs';
@@ -212,5 +213,89 @@ describe('Breadcrumbs', () => {
 
     expect(changeSpy).to.have.been.calledOnce;
     expect(changeSpy).to.have.been.calledWith('1');
+  });
+  describe('language and direction of parts', () => {
+    // Autonyms (each language's name rendered in that language), alphabetized
+    // by the rendered text so both LTR and RTL scripts are interleaved.
+    const languages = [
+      { value: 'de', label: 'Deutsch', lang: 'de', dir: 'ltr' },
+      { value: 'en', label: 'English', lang: 'en', dir: 'ltr' },
+      { value: 'es', label: 'Español', lang: 'es', dir: 'ltr' },
+      { value: 'fr', label: 'Français', lang: 'fr', dir: 'ltr' },
+      { value: 'ru', label: 'Русский', lang: 'ru', dir: 'ltr' },
+      { value: 'he', label: 'עברית', lang: 'he', dir: 'rtl' },
+      { value: 'ar', label: 'العربية', lang: 'ar', dir: 'rtl' },
+    ] as const;
+
+    it('propagates lang and dir from a slotted sp-breadcrumb-item to its rendered counterpart in the overflow menu', async () => {
+      const el = await fixture<Breadcrumbs>(html`
+        <sp-breadcrumbs max-visible-items="3">
+          ${languages.map(
+            (language) => html`
+              <sp-breadcrumb-item
+                value=${language.value}
+                lang=${language.lang}
+                dir=${language.dir}
+              >
+                ${language.label}
+              </sp-breadcrumb-item>
+            `
+          )}
+        </sp-breadcrumbs>
+      `);
+
+      await elementUpdated(el);
+
+      const menu = el.shadowRoot.querySelector('sp-action-menu') as ActionMenu;
+      menu.click();
+      await elementUpdated(menu);
+
+      languages.forEach((language) => {
+        const renderedItem = menu.querySelector(
+          `sp-menu-item[value="${language.value}"]`
+        ) as HTMLElement;
+
+        expect(renderedItem, `rendered item for ${language.value}`).to.exist;
+        expect(renderedItem.lang, `lang for ${language.value}`).to.equal(
+          language.lang
+        );
+        expect(
+          renderedItem.getAttribute('dir'),
+          `dir attribute for ${language.value}`
+        ).to.equal(language.dir);
+      });
+    });
+  });
+  it('updates the overflow menu wrapper separator when dir changes after mount', async () => {
+    // The "is-menu" wrapper `<sp-breadcrumb-item>` rendered by `renderMenu()`
+    // lives inside `Breadcrumbs`' own shadow root rather than as a light-DOM
+    // child, so a plain `parentElement` walk for ancestor `dir` changes
+    // never reaches `<sp-breadcrumbs>` itself.
+    const el = await fixture<Breadcrumbs>(html`
+      <sp-breadcrumbs max-visible-items="1">
+        ${getBreadcrumbs(4)}
+      </sp-breadcrumbs>
+    `);
+    await elementUpdated(el);
+
+    const menuWrapper = el.shadowRoot.querySelector(
+      'sp-breadcrumb-item.is-menu'
+    ) as BreadcrumbItem;
+    const separator = menuWrapper.shadowRoot.querySelector(
+      '#separator'
+    ) as HTMLElement;
+    expect(
+      getComputedStyle(separator).transform,
+      'unmirrored before the ancestor sets dir="rtl"'
+    ).to.equal('none');
+
+    el.setAttribute('dir', 'rtl');
+    await elementUpdated(el);
+    await menuWrapper.updateComplete;
+
+    expect(
+      getComputedStyle(separator).transform,
+      'mirrored once sp-breadcrumbs dir changes after mount'
+    ).to.not.equal('none');
   });
 });

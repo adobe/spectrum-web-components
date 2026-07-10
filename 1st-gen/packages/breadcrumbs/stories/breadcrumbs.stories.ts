@@ -114,6 +114,43 @@ AddItemsDynamic.swc_vrt = {
   skip: true,
 };
 
+// Autonyms (each language's name rendered in that language), alphabetized
+// by the rendered text so both LTR and RTL scripts are interleaved.
+const languages = [
+  { value: 'de', label: 'Deutsch', lang: 'de', dir: 'ltr' },
+  { value: 'en', label: 'English', lang: 'en', dir: 'ltr' },
+  { value: 'es', label: 'Español', lang: 'es', dir: 'ltr' },
+  { value: 'fr', label: 'Français', lang: 'fr', dir: 'ltr' },
+  { value: 'ru', label: 'Русский', lang: 'ru', dir: 'ltr' },
+  { value: 'he', label: 'עברית', lang: 'he', dir: 'rtl' },
+  { value: 'ar', label: 'العربية', lang: 'ar', dir: 'rtl' },
+] as const;
+
+export const LanguageOfParts = (args: StoryArgs): TemplateResult => {
+  return html`
+    <sp-breadcrumbs
+      ${spreadProps(args)}
+      max-visible-items=${ifDefined(args['max-visible-items'])}
+      @change=${args.onChange}
+    >
+      ${languages.map(
+        (language) => html`
+          <sp-breadcrumb-item
+            value=${language.value}
+            lang=${language.lang}
+            dir=${language.dir}
+          >
+            ${language.label}
+          </sp-breadcrumb-item>
+        `
+      )}
+    </sp-breadcrumbs>
+  `;
+};
+LanguageOfParts.args = {
+  'max-visible-items': 3,
+};
+
 export const ShowRoot = (args: StoryArgs): TemplateResult => {
   return html`
     <sp-breadcrumbs

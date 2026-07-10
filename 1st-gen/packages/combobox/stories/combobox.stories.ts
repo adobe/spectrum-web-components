@@ -182,6 +182,40 @@ export const lightDOM = (): TemplateResult => {
   `;
 };
 
+// Autonyms (each language's name rendered in that language), alphabetized
+// by the rendered text so both LTR and RTL scripts are interleaved.
+const languages = [
+  { value: 'de', itemText: 'Deutsch', lang: 'de', dir: 'ltr' },
+  { value: 'en', itemText: 'English', lang: 'en', dir: 'ltr' },
+  { value: 'es', itemText: 'Español', lang: 'es', dir: 'ltr' },
+  { value: 'fr', itemText: 'Français', lang: 'fr', dir: 'ltr' },
+  { value: 'ru', itemText: 'Русский', lang: 'ru', dir: 'ltr' },
+  { value: 'he', itemText: 'עברית', lang: 'he', dir: 'rtl' },
+  { value: 'ar', itemText: 'العربية', lang: 'ar', dir: 'rtl' },
+] as const;
+
+export const languageOfParts = (): TemplateResult => {
+  return html`
+    <sp-field-label for="combobox-language">Language</sp-field-label>
+    <sp-combobox
+      id="combobox-language"
+      style="min-width: 80px;--spectrum-textfield-m-min-width:0;width:160px;"
+    >
+      ${languages.map(
+        (language) => html`
+          <sp-menu-item
+            value=${language.value}
+            lang=${language.lang}
+            dir=${language.dir}
+          >
+            ${language.itemText}
+          </sp-menu-item>
+        `
+      )}
+    </sp-combobox>
+  `;
+};
+
 export const withTooltip = (): TemplateResult => {
   return html`
     <sp-combobox
