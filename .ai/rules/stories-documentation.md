@@ -357,10 +357,10 @@ export const Anatomy: Story = {
 /**
  * Component-names come in [X] sizes to fit various contexts:
  *
- * - **Small (s)**: Used for inline indicators or space-constrained areas
- * - **Medium (m)**: Default size, used for typical use cases
- * - **Large (l)**: Used for prominent displays or primary content areas
- * - **Extra-large (xl)**: Maximum visibility (if applicable)
+ * - **Small (`s`)**: Used for inline indicators or space-constrained areas
+ * - **Medium (`m`)**: Default size, used for typical use cases
+ * - **Large (`l`)**: Used for prominent displays or primary content areas
+ * - **Extra-large (`xl`)**: Maximum visibility (if applicable)
  *
  * All sizes shown below for comparison.
  */
@@ -383,12 +383,12 @@ export const Sizes: Story = {
 /**
  * Semantic variants provide meaning through color:
  *
- * - **accent**: New, beta, prototype, draft
- * - **informative**: Active, in use, live, published
- * - **neutral**: Archived, deleted, paused, draft, not started, ended
- * - **positive**: Approved, complete, success, new, purchased, licensed
- * - **notice**: Needs approval, pending, scheduled
- * - **negative**: Error, alert, rejected, failed
+ * - **`accent`**: New, beta, prototype, draft
+ * - **`informative`**: Active, in use, live, published
+ * - **`neutral`**: Archived, deleted, paused, draft, not started, ended
+ * - **`positive`**: Approved, complete, success, new, purchased, licensed
+ * - **`notice`**: Needs approval, pending, scheduled
+ * - **`negative`**: Error, alert, rejected, failed
  *
  * All semantic variants shown below for comparison.
  */
@@ -413,8 +413,8 @@ export const SemanticVariants: Story = {
 /**
  * Use the `static-color` attribute when displaying over images or colored backgrounds:
  *
- * - **white**: Use on dark or colored backgrounds for better contrast
- * - **black**: Use on light backgrounds for better contrast
+ * - **`white`**: Use on dark or colored backgrounds for better contrast
+ * - **`black`**: Use on light backgrounds for better contrast
  *
  * Both variants shown below with appropriate backgrounds.
  */
