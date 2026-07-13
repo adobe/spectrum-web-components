@@ -116,6 +116,13 @@ export abstract class AccordionBase extends SizedMixin(SpectrumElement, {
     mode: () => (this.allowMultiple ? 'multiple' : 'single'),
   });
 
+  protected override firstUpdated(changedProperties: PropertyValues): void {
+    super.firstUpdated(changedProperties);
+    // The controller is event-driven and won't catch items that start open via
+    // HTML attributes; read the initial DOM state and enforce the constraint now.
+    this.selectionController.refresh();
+  }
+
   protected syncAccordionItems(): void {
     for (const item of this.assignedItems()) {
       item.setManagedHeading(this.level);

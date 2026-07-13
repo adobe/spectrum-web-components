@@ -209,18 +209,31 @@ export class LiveSelectionController<
     if (this.currentMode !== 'single') {
       return;
     }
-    const source = event.target;
+    // composedPath()[0] is the original dispatch target before any shadow-boundary
+    // retargeting, ensuring we identify the correct item element.
+    const source = event.composedPath()[0];
     if (!(source instanceof HTMLElement)) {
       return;
     }
     // Defer by one microtask so that a cancelable event has already run
     // preventDefault() and the item has already reverted its own state.
     queueMicrotask(() => {
+      // Re-check mode: it may have changed since the event fired.
+      if (this.currentMode !== 'single') {
+        return;
+      }
       // Re-read the source item's state after the potential revert.
       if (!this.options.readSelected(source as T)) {
         return;
       }
-      for (const item of this.options.getItems()) {
+      // Only enforce the constraint if the source belongs to this group.
+      // Events from nested groups (e.g. a nested accordion) bubble here too;
+      // the membership check prevents the outer group from reacting to them.
+      const items = this.options.getItems();
+      if (!items.includes(source as T)) {
+        return;
+      }
+      for (const item of items) {
         if (item !== source && this.options.readSelected(item)) {
           this.options.deselect(item);
         }
