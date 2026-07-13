@@ -22,7 +22,7 @@ parameters:
   # 3. Commit this change to the PR branch where the changes exist.
   current_golden_images_hash:
     type: string
-    default: 75b8c3cdc71a773889e3bdd1032f89ff73c12475
+    default: f642b916be8766723dddd73d04b84a9e3189749d
 
 commands:
   halt-if-not-affected:
