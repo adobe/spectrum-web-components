@@ -27,11 +27,13 @@ Dividers come in three sizes to fit various contexts:
 
 <Canvas of={DividerStories.Sizes} />
 
-### Vertical
+### Orientation
 
-The default horizontal divider is used to separate content stacked vertically. To separate horizontal content, use the `vertical` attribute.
+The default **horizontal** divider separates content stacked vertically, such as sections beneath headings. To separate side-by-side content in a flex row (e.g., navigation breadcrumbs, toolbars), use the `vertical` attribute to render a **vertical** divider.
 
-<Canvas of={DividerStories.Vertical} />
+Vertical dividers require the parent to have an **explicit height** (`block-size`). Without it, `block-size: 100%` resolves to zero and the divider is invisible.
+
+<Canvas of={DividerStories.Orientation} />
 
 ### Static colors
 
@@ -43,19 +45,6 @@ Use `static-color` when the divider needs to sit on top of a photo or colored ba
 Each static color panel shows **horizontal** dividers at sizes `s`, `m`, and `l`, and **vertical** dividers at the same sizes (vertical rows use an explicit `block-size` so the line is visible).
 
 <Canvas of={DividerStories.StaticColors} />
-
-## Behaviors
-
-### Layout orientation
-
-Dividers can be oriented **horizontally** (default) or **vertically** to match the layout they serve:
-
-- **Horizontal dividers** separate stacked content, such as sections beneath headings
-- **Vertical dividers** separate side-by-side items in a flex row (e.g., navigation breadcrumbs, toolbars)
-
-Vertical dividers require the parent to have an **explicit height** (`block-size`): without it, `block-size: 100%` resolves to zero and the divider is invisible.
-
-<Canvas of={DividerStories.LayoutOrientation} />
 
 ## Accessibility
 

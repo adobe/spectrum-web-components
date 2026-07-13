@@ -166,17 +166,6 @@ export const MarginsModifier: Story = {
   tags: ['options'],
 };
 
-/**
- * Applies block-direction margins to all type variants within a container with the `.swc-Typography--prose` class applied.
- *
- * This also applies foundational type properties based on heading, title and body styles to common semantic typography elements including:
- * - `h1` - Heading, size M
- * - `h2` - Title, size XL
- * - `h3` - Title, size L
- * - `h4` - Title, size M
- * - `p, li` - Body, size M
- * - `a` - inherits font styles, such as Body, size M from paragraphs
- */
 export const ProseContainer: Story = {
   args: {
     variant: 'body',
@@ -220,13 +209,8 @@ export const ProseContainer: Story = {
     </div>
   `,
 };
+ProseContainer.storyName = 'Prose container';
 
-/**
- * Link lists in footers, sidebars, and navigation regions use
- * `.swc-Typography--links` so child `<a href>` elements receive default link
- * styling without per-link classes. See [Link migration guide](/docs/link-migration-guide--docs)
- * for modifier classes on individual anchors.
- */
 export const LinkList: Story = {
   tags: ['options'],
   render: () => html`
