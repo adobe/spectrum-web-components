@@ -14,12 +14,12 @@ import { CSSResultArray, html, TemplateResult } from 'lit';
 import { property, state } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
-import { Chevron75Icon } from '@adobe/spectrum-wc/icon/elements/index.js';
 import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
 
 import '@adobe/spectrum-wc/components/icon/swc-icon.js';
 import '@adobe/spectrum-wc/components/progress-circle/swc-progress-circle.js';
 
+import { Chevron75Icon } from '../../../components/icon/elements/index.js';
 import { uniqueId } from '../../../utils/id.js';
 import { CheckCircleIcon } from '../utils/icons/index.js';
 

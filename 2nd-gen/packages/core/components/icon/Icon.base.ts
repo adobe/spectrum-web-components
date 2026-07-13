@@ -82,9 +82,11 @@ export abstract class IconBase extends SizedMixin(SpectrumElement, {
     if (this.label) {
       svgElement.setAttribute('aria-label', this.label);
       svgElement.removeAttribute('aria-hidden');
+      svgElement.removeAttribute('focusable');
     } else {
       svgElement.setAttribute('aria-hidden', 'true');
       svgElement.removeAttribute('aria-label');
+      svgElement.setAttribute('focusable', 'false');
     }
   }
 

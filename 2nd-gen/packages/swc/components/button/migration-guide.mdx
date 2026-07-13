@@ -86,11 +86,13 @@ The deprecated aliases `cta`, `overBackground`, `white`, and `black` are removed
 ```html
 <!-- Before -->
 <sp-button label="Add item">
-  <svg slot="icon">...</svg>
+  <sp-icon-help slot="icon"></sp-icon-help>
 </sp-button>
 <!-- After -->
 <swc-button accessible-label="Add item">
-  <svg slot="icon">...</svg>
+  <swc-icon slot="icon">
+    <svg viewBox="0 0 36 36">...</svg>
+  </swc-icon>
 </swc-button>
 ```
 

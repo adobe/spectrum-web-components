@@ -130,7 +130,9 @@ The `label` attribute on `<sp-tab>` is removed. Use `aria-label` directly.
 
 <!-- After -->
 <swc-tab tab-id="dashboard" aria-label="Dashboard">
-  <sp-icon-dashboard slot="icon"></sp-icon-dashboard>
+  <swc-icon slot="icon" aria-hidden="true">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10">...</svg>
+  </swc-icon>
 </swc-tab>
 ```
 

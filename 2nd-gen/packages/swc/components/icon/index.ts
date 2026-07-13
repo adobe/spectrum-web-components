@@ -10,4 +10,3 @@
  * governing permissions and limitations under the License.
  */
 export * from './Icon.js';
-export * from './elements/index.js';

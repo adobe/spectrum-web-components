@@ -423,6 +423,8 @@ const preview = {
                 ],
                 'Help text',
                 ['Rendering and styling migration analysis'],
+                'Icon',
+                ['Migration plan'],
                 'Illustrated message',
                 [
                   'Accessibility migration analysis',

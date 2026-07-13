@@ -199,7 +199,7 @@ export const Playground: Story = {
       >
         ${iconKey
           ? html`
-              <swc-icon size=${size} slot="icon" aria-hidden="true">
+              <swc-icon size=${size} slot="icon">
                 ${iconForSize(Icons, iconKey, size)}
               </swc-icon>
             `
@@ -488,9 +488,9 @@ export const Accessibility: Story = {
       'default-slot': 'Version 1.2.10',
     })}
 
-    <!-- Icon + text: icon is decorative, aria-hidden="true" hides it from assistive technology -->
+    <!-- Icon + text: omit label on swc-icon so it remains decorative. -->
     <swc-badge variant="positive" size=${args.size}>
-      <swc-icon size=${args.size} slot="icon" aria-hidden="true">
+      <swc-icon size=${args.size} slot="icon">
         ${iconForSize(Icons, 'Checkmark', args.size)}
       </swc-icon>
       Approved

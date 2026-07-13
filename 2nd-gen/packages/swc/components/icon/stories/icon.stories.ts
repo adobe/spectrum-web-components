@@ -9,8 +9,8 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-import { html, type TemplateResult } from 'lit';
-import { styleMap } from 'lit/directives/style-map.js';
+import { html } from 'lit';
+import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
@@ -20,9 +20,6 @@ import {
 } from '@spectrum-web-components/core/components/icon';
 
 import '@adobe/spectrum-wc/components/icon/swc-icon.js';
-
-import { Chevron100Icon } from '../elements/index.js';
-import * as iconElements from '../elements/index.js';
 
 // ────────────────
 //    METADATA
@@ -36,21 +33,30 @@ argTypes.size = {
   options: ICON_VALID_SIZES,
 };
 
+argTypes.svg = {
+  name: 'svg',
+  control: { type: 'text' },
+  description: 'Inline SVG markup to render in the default slot.',
+  table: {
+    category: 'Story controls',
+    type: { summary: 'string' },
+  },
+};
+
 /**
- * **Internal maintainer catalog.**
- *
- * Shared SVG templates under `../elements/` for monorepo usage only.
- * Public `<swc-icon>` docs use BYO inline SVG. See `icon.stories.ts`.
+ * Icons represent symbols, objects, or actions. `<swc-icon>` renders SVG markup
+ * from the default slot. Bring your own SVG. Spectrum 2 does not ship iconsets
+ * or a `name` registry.
  */
 const meta: Meta = {
-  title: 'Icon/Internal catalog',
+  title: 'Icon',
   component: 'swc-icon',
   args,
   argTypes,
   render: (args) => template(args),
   parameters: {
     docs: {
-      subtitle: `Internal SVG template catalog for monorepo maintainers.`,
+      subtitle: `Slot your own SVG to render an icon at a Spectrum size.`,
     },
   },
   tags: ['migrated'],
@@ -62,31 +68,12 @@ export default meta;
 //    HELPERS
 // ────────────────────
 
-const iconSvg = Chevron100Icon();
-
-const iconCatalog = Object.entries(iconElements)
-  .filter(
-    ([name, iconFactory]) =>
-      name.endsWith('Icon') && typeof iconFactory === 'function'
-  )
-  .sort(([a], [b]) => a.localeCompare(b))
-  .map(([name, iconFactory]) => ({
-    name,
-    icon: iconFactory as () => TemplateResult,
-  }));
-
-const defaultIconName = 'Chevron100Icon';
-
-argTypes['icon-name'] = {
-  name: 'icon-name',
-  control: { type: 'select' },
-  options: iconCatalog.map(({ name }) => name),
-  description: 'Internal icon factory to render in the default slot.',
-  table: {
-    category: 'Story controls',
-    type: { summary: 'string' },
-  },
-};
+// SVG copied from `elements/Chevron100Icon.ts` for docs examples (BYO slot content).
+const chevronIconSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10">
+  <path
+    d="M2.83789 9.8252c-.19238 0-.38379-.07324-.53027-.21973-.29297-.29297-.29297-.76758 0-1.06055l3.54395-3.54492L2.30762 1.45508c-.29297-.29297-.29297-.76758 0-1.06055s.76758-.29297 1.06055 0l4.07422 4.0752c.29297.29297.29297.76758 0 1.06055l-4.07422 4.0752c-.14648.14648-.33789.21973-.53027.21973Z"
+  />
+</svg>`;
 
 const sizeLabels = {
   xs: 'Extra-small',
@@ -96,29 +83,14 @@ const sizeLabels = {
   xl: 'Extra-large',
 } as const satisfies Record<IconSize, string>;
 
-const iconCardStyles = {
-  display: 'inline-flex',
-  'flex-direction': 'column',
-  'align-items': 'center',
-  gap: '8px',
-  'min-inline-size': '120px',
-  padding: '8px',
-} as const;
-
-type InternalIconStoryArgs = Record<string, unknown> & {
-  'icon-name'?: string;
+type IconStoryArgs = Record<string, unknown> & {
+  svg?: string;
 };
 
-const renderInternalIcon = ({
-  'icon-name': iconName = defaultIconName,
+const renderStoryIcon = ({
+  svg = chevronIconSvg,
   ...iconArgs
-}: InternalIconStoryArgs) =>
-  template(
-    iconArgs,
-    (
-      iconCatalog.find(({ name }) => name === iconName)?.icon ?? Chevron100Icon
-    )()
-  );
+}: IconStoryArgs) => template(iconArgs, unsafeHTML(svg));
 
 // ────────────────────
 //    PLAYGROUND STORY
@@ -126,11 +98,11 @@ const renderInternalIcon = ({
 
 export const Playground: Story = {
   tags: ['dev'],
-  render: (args) => renderInternalIcon(args),
+  render: (args) => renderStoryIcon(args),
   args: {
-    label: 'Search',
+    label: 'Expand',
     size: 'm',
-    'icon-name': defaultIconName,
+    svg: chevronIconSvg,
   },
 };
 
@@ -140,9 +112,9 @@ export const Playground: Story = {
 
 export const Overview: Story = {
   tags: ['overview'],
-  render: (args) => template(args, iconSvg),
+  render: (args) => renderStoryIcon(args),
   args: {
-    label: 'Search',
+    label: 'Expand',
     size: 'm',
   },
 };
@@ -153,7 +125,7 @@ export const Overview: Story = {
 
 export const Anatomy: Story = {
   render: (args) =>
-    template({ ...args, label: args.label || 'Chevron icon' }, iconSvg),
+    renderStoryIcon({ ...args, label: args.label || 'Chevron icon' }),
   tags: ['anatomy'],
 };
 
@@ -164,53 +136,11 @@ export const Anatomy: Story = {
 export const Sizes: Story = {
   render: (args) => html`
     ${ICON_VALID_SIZES.map((size) =>
-      template(
-        { ...args, label: args.label || sizeLabels[size], size },
-        iconSvg
-      )
+      renderStoryIcon({ ...args, label: args.label || sizeLabels[size], size })
     )}
   `,
   tags: ['options'],
   parameters: {
-    flexLayout: 'row-wrap',
-  },
-};
-
-export const Sources: Story = {
-  render: (args) =>
-    template({ ...args, label: args.label || 'Chevron icon' }, iconSvg),
-  tags: ['options'],
-};
-
-export const SharedTemplates: Story = {
-  render: (args) =>
-    template({ ...args, label: args.label || 'Chevron' }, Chevron100Icon()),
-  tags: ['options'],
-};
-
-export const AvailableIcons: Story = {
-  render: (args) => {
-    return html`
-      ${iconCatalog.map(
-        (entry) => html`
-          <div style=${styleMap(iconCardStyles)}>
-            ${template(
-              { ...args, label: args.label || entry.name },
-              entry.icon()
-            )}
-            <code>${entry.name}</code>
-          </div>
-        `
-      )}
-    `;
-  },
-  tags: ['options'],
-  parameters: {
-    docs: {
-      canvas: {
-        sourceState: 'none',
-      },
-    },
     flexLayout: 'row-wrap',
   },
 };
@@ -220,6 +150,6 @@ export const AvailableIcons: Story = {
 // ────────────────────────────────
 
 export const Accessibility: Story = {
-  render: (args) => template(args, iconSvg),
+  render: (args) => renderStoryIcon(args),
   tags: ['a11y'],
 };

@@ -29,7 +29,7 @@ test.describe('Icon - ARIA Snapshots', () => {
   }) => {
     const root = await gotoStory(page, 'components-icon--overview', 'swc-icon');
     await expect(root).toMatchAriaSnapshot(`
-      - img "Search"
+      - img "Expand"
     `);
   });
 
