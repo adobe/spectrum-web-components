@@ -25,8 +25,14 @@ import '../swc-prompt-field.js';
 const { args, argTypes } = getStorybookHelpers('swc-prompt-field');
 const defaultPlaceholder =
   'Ready to get started? Ask a question, share an idea, or add a task.';
-const defaultLegalDisclaimer =
-  'AI output may be inaccurate. Verify before using.';
+const defaultLegalDisclaimer = html`
+  Responses are generated using AI, and may be inaccurate. Check before using.
+  <a
+    href="https://www.adobe.com/legal/licenses-terms/adobe-gen-ai-user-guidelines.html"
+  >
+    AI User Guidelines
+  </a>
+`;
 
 const legalDisclaimerSlot = html`
   <p slot="legal" class="swc-PromptField-legal-disclaimer">
