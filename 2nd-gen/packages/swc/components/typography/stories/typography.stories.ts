@@ -97,6 +97,7 @@ export const SerifModifier: Story = {
   },
   tags: ['options'],
 };
+SerifModifier.storyName = 'Serif modifier';
 
 export const EmphasizedModifier: Story = {
   args: {
@@ -105,6 +106,7 @@ export const EmphasizedModifier: Story = {
   },
   tags: ['options'],
 };
+EmphasizedModifier.storyName = 'Emphasized modifier';
 
 export const HeadingVariant: Story = {
   args: {
@@ -113,6 +115,7 @@ export const HeadingVariant: Story = {
   },
   tags: ['options'],
 };
+HeadingVariant.storyName = 'Heading variant';
 
 export const HeadingHeavy: Story = {
   args: {
@@ -123,6 +126,7 @@ export const HeadingHeavy: Story = {
   },
   tags: ['options'],
 };
+HeadingHeavy.storyName = 'Heading heavy';
 
 export const TitleVariant: Story = {
   args: {
@@ -131,6 +135,7 @@ export const TitleVariant: Story = {
   },
   tags: ['options'],
 };
+TitleVariant.storyName = 'Title variant';
 
 export const BodyVariant: Story = {
   args: {
@@ -139,6 +144,7 @@ export const BodyVariant: Story = {
   },
   tags: ['options'],
 };
+BodyVariant.storyName = 'Body variant';
 
 export const DetailVariant: Story = {
   args: {
@@ -147,6 +153,7 @@ export const DetailVariant: Story = {
   },
   tags: ['options'],
 };
+DetailVariant.storyName = 'Detail variant';
 
 export const CodeVariant: Story = {
   args: {
@@ -155,6 +162,7 @@ export const CodeVariant: Story = {
   },
   tags: ['options'],
 };
+CodeVariant.storyName = 'Code variant';
 
 export const MarginsModifier: Story = {
   args: {
@@ -165,6 +173,7 @@ export const MarginsModifier: Story = {
   },
   tags: ['options'],
 };
+MarginsModifier.storyName = 'Margins modifier';
 
 export const ProseContainer: Story = {
   args: {
@@ -224,3 +233,4 @@ export const LinkList: Story = {
     </ul>
   `,
 };
+LinkList.storyName = 'Link list';

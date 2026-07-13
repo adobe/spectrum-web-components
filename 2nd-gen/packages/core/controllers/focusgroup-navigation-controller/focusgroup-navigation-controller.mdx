@@ -74,7 +74,7 @@ export class MyFormatToolbar extends LitElement {
 
 ## Behaviors
 
-### Horizontal Toolbar
+### Horizontal toolbar
 
 Use `direction: 'horizontal'` for inline-axis arrow navigation. <kbd>ArrowLeft</kbd> and <kbd>ArrowRight</kbd> move between controls (respecting `dir` for RTL); <kbd>Tab</kbd> yields one stop for the entire group.
 
@@ -89,7 +89,7 @@ this.navigation = new FocusgroupNavigationController(this, {
 
 <Canvas of={FocusgroupNavigationControllerStories.HorizontalToolbar} />
 
-### Both Axes Linear
+### Both axes linear
 
 Use `direction: 'both'` when controls are laid out in a line (or any single sequence) but you want <kbd>ArrowUp</kbd> / <kbd>ArrowDown</kbd> to move focus as well as <kbd>ArrowLeft</kbd> / <kbd>ArrowRight</kbd>. Inline arrows follow `dir` like `horizontal`; <kbd>ArrowUp</kbd> / <kbd>ArrowDown</kbd> step backward / forward in `getItems()` order.
 
@@ -104,7 +104,7 @@ this.navigation = new FocusgroupNavigationController(this, {
 
 <Canvas of={FocusgroupNavigationControllerStories.BothAxesLinear} />
 
-### Vertical Menu
+### Vertical menu
 
 Use `direction: 'vertical'` for block-axis arrow navigation in menus and lists. <kbd>ArrowDown</kbd> / <kbd>ArrowUp</kbd> traverse items; <kbd>Page Up</kbd> / <kbd>Page Down</kbd> skip multiple items when `pageStep` is set (in this demo, `pageStep: 2`).
 
@@ -123,7 +123,7 @@ this.navigation = new FocusgroupNavigationController(this, {
 
 <Canvas of={FocusgroupNavigationControllerStories.VerticalMenu} />
 
-### Skip Disabled Menu
+### Skip disabled menu
 
 With `skipDisabled: true`, items stay in the DOM (for layout or screen reader context), but both native **`disabled`** and **`aria-disabled="true"`** items are removed from the roving tab stop and from arrow movement. In this demo, **Save** (`disabled`) and **Close** (`aria-disabled="true"`) are skipped; the arrow sequence is **New → Open → Print → Help**.
 
@@ -168,7 +168,7 @@ this.navigation = new FocusgroupNavigationController(this, {
 
 <Canvas of={FocusgroupNavigationControllerStories.Grid} />
 
-### Programmatic Focus
+### Programmatic focus
 
 **`setActiveItem(element)`** updates roving `tabindex` to a chosen eligible item only; it does **not** call `focus()`. Returns `false` if the element is not eligible (not in `getItems()` or skipped by `skipDisabled`). Call **`getActiveItem()?.focus()`** afterward to move focus.
 
@@ -185,7 +185,7 @@ if (el && this.navigation.setActiveItem(el)) {
 
 <Canvas of={FocusgroupNavigationControllerStories.ProgrammaticFocus} />
 
-### Text Prefix Focus
+### Text prefix focus
 
 **`focusFirstItemByTextPrefix(prefix)`** updates roving `tabindex` to the first eligible item whose typeahead label starts with `prefix` (case-insensitive), in `getItems()` order. Matching uses each item's typeahead label: trimmed **`aria-label`** if set, otherwise text from **`aria-labelledby`** references (in order), otherwise trimmed **`textContent`**. Only **eligible** items are considered (respects **`skipDisabled`**). The first match in `getItems()` order becomes the roving tab stop; **`focus()` is not called** by the controller.
 

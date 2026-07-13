@@ -513,6 +513,7 @@ export const TriggerElement: Story = {
   },
   tags: ['behaviors'],
 };
+TriggerElement.storyName = 'Trigger element';
 
 export const Labeling: Story = {
   render: (args) => html`

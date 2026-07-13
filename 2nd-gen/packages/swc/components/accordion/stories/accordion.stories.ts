@@ -298,6 +298,7 @@ export const HeadingLevel: Story = {
   tags: ['options'],
   parameters: { 'section-order': 4 },
 };
+HeadingLevel.storyName = 'Heading level';
 
 // ──────────────────────────
 //    STATES STORIES
@@ -324,6 +325,7 @@ export const ItemStates: Story = {
   tags: ['states'],
   parameters: { 'section-order': 1 },
 };
+ItemStates.storyName = 'Item states';
 
 export const DisabledAccordion: Story = {
   render: (args) => template({ ...args, disabled: true }, defaultItems),
@@ -331,6 +333,7 @@ export const DisabledAccordion: Story = {
   tags: ['states'],
   parameters: { 'section-order': 2 },
 };
+DisabledAccordion.storyName = 'Disabled accordion';
 
 export const MixedDisabledStates: Story = {
   render: (args) =>
@@ -355,6 +358,7 @@ export const MixedDisabledStates: Story = {
   tags: ['states'],
   parameters: { 'section-order': 3 },
 };
+MixedDisabledStates.storyName = 'Mixed disabled states';
 
 // ──────────────────────────────
 //    BEHAVIORS STORIES
@@ -408,6 +412,7 @@ export const DirectActions: Story = {
   tags: ['behaviors'],
   parameters: { 'section-order': 1 },
 };
+DirectActions.storyName = 'Direct actions';
 
 const allowMultipleItems = html`
   <swc-accordion-item open>
@@ -431,6 +436,7 @@ export const AllowMultiple: Story = {
   tags: ['behaviors'],
   parameters: { 'section-order': 2 },
 };
+AllowMultiple.storyName = 'Allow multiple';
 
 export const ToggleEvent: Story = {
   render: (args) => template(args, defaultItems),
@@ -438,6 +444,7 @@ export const ToggleEvent: Story = {
   tags: ['behaviors'],
   parameters: { 'section-order': 3 },
 };
+ToggleEvent.storyName = 'Events';
 
 // ────────────────────────────────
 //    ACCESSIBILITY STORIES

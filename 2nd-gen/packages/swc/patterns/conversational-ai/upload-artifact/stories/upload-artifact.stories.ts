@@ -138,6 +138,7 @@ export const MultiArtifact: Story = {
   `,
   tags: ['options'],
 };
+MultiArtifact.storyName = 'Multi artifact';
 
 export const Card: Story = {
   render: () => html`
@@ -179,3 +180,4 @@ export const TextOverflow: Story = {
   `,
   tags: ['options'],
 };
+TextOverflow.storyName = 'Text overflow';

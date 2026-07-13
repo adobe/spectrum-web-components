@@ -205,6 +205,7 @@ export const TransparentContent: Story = {
   parameters: { flexLayout: 'row-wrap' },
   tags: ['behaviors'],
 };
+TransparentContent.storyName = 'Transparent content';
 
 // ────────────────────────────────
 //    ACCESSIBILITY STORIES

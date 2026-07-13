@@ -401,6 +401,7 @@ export const TextWrapping: Story = {
   `,
   tags: ['behaviors'],
 };
+TextWrapping.storyName = 'Text wrapping';
 
 export const Inline: Story = {
   render: (args) => html`
