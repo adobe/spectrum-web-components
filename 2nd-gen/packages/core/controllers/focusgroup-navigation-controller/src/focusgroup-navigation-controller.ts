@@ -665,6 +665,13 @@ export class FocusgroupNavigationController implements ReactiveController {
     // Natively disabled elements cannot receive focus even with tabindex="0".
     // Fall through to the first non-disabled eligible item so the group
     // remains reachable via Tab.
+    //
+    // The active-change event is dispatched with the originally requested item
+    // (before the fallback), not the fallback tab-stop. This lets consumers
+    // such as a tab list in automatic-activation mode inspect the item and skip
+    // the selection change when it is disabled — without being misled by the
+    // roving tab stop landing on a different element.
+    const reportedActive = safeActive;
     if (this.isNativelyDisabled(safeActive)) {
       safeActive =
         items.find((el) => !this.isNativelyDisabled(el)) ?? safeActive;
@@ -677,9 +684,9 @@ export class FocusgroupNavigationController implements ReactiveController {
         el.tabIndex = -1;
       }
     }
-    if (safeActive !== this.previousActive) {
-      this.previousActive = safeActive;
-      this.dispatchActiveChange(safeActive, source);
+    if (reportedActive !== this.previousActive) {
+      this.previousActive = reportedActive;
+      this.dispatchActiveChange(reportedActive, source);
       this.options.onActiveItemChange?.(safeActive);
     }
   }
