@@ -187,7 +187,8 @@ const preview = {
       canvas: {
         withToolbar: true,
         layout: 'centered',
-        sourceState: 'shown',
+        // Individual stories can override this with parameters.docs.canvas.sourceState.
+        sourceState: 'hidden',
       },
       source: {
         excludeDecorators: true,

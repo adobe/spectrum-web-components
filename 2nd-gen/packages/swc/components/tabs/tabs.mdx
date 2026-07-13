@@ -37,7 +37,7 @@ Properties that render visual content:
 - **accessible-label** (on `swc-tabs`): accessible name for the tablist
 - **aria-label** (on `swc-tab`): accessible name for icon-only tabs
 - **direction**: layout direction (`horizontal` or `vertical`)
-- **keyboard-activation**: `manual` (default) or `automatic` (selection follows focus)
+- **keyboard-activation**: `automatic` (default; selection follows focus) or `manual`
 - **density**: `regular` (default) or `compact` spacing
 
 <Canvas of={TabsStories.Anatomy} />
@@ -80,9 +80,9 @@ Disabled tabs remain focusable via arrow keys but cannot be activated; see the [
 
 ### Activation Modes
 
-`keyboard-activation="manual"` (default): arrow keys move focus between tabs without changing the selected tab until Enter or Space.
+`keyboard-activation="automatic"` (default): selection follows focus when arrowing, matching React Spectrum's `Tabs` behavior.
 
-`keyboard-activation="automatic"`: selection follows focus when arrowing.
+`keyboard-activation="manual"`: arrow keys move focus between tabs without changing the selected tab until Enter or Space. Prefer this when tab panels are expensive to render or not fully present in the DOM.
 
 #### Events
 
@@ -114,7 +114,7 @@ The `<swc-tabs>` component implements several accessibility features:
 - <kbd>Home</kbd>: moves focus to the first tab
 - <kbd>End</kbd>: moves focus to the last tab
 - <kbd>Space</kbd> / <kbd>Enter</kbd>: activates the focused tab (manual mode).
-  In automatic activation, tabs activate when focused via arrows.
+  In automatic activation (default), tabs activate when focused via arrows.
 
 #### ARIA implementation
 
