@@ -67,6 +67,41 @@ function statusPlugin() {
   };
 }
 
+/**
+ * Removes Core modules after the analyzer has flattened their inherited API
+ * onto the concrete SWC declarations.
+ */
+function publicManifestPlugin() {
+  return {
+    name: 'cem-plugin-public-manifest',
+    packageLinkPhase({ customElementsManifest }) {
+      customElementsManifest.modules = customElementsManifest.modules.filter(
+        (module) => !module.path.startsWith('../core/')
+      );
+
+      for (const module of customElementsManifest.modules) {
+        for (const declaration of module.declarations ?? []) {
+          for (const collection of [
+            'attributes',
+            'cssParts',
+            'cssProperties',
+            'cssStates',
+            'events',
+            'members',
+            'slots',
+          ]) {
+            for (const item of declaration[collection] ?? []) {
+              if (item.inheritedFrom?.module?.startsWith('../core/')) {
+                delete item.inheritedFrom.module;
+              }
+            }
+          }
+        }
+      }
+    },
+  };
+}
+
 export default {
   globs: [
     'components/**/*.ts',
@@ -86,8 +121,8 @@ export default {
     '../core/**/stories/**',
     '../core/**/test/**',
   ],
-  outdir: '.storybook',
+  outdir: 'dist',
   litelement: true,
   dev: false,
-  plugins: [statusPlugin()],
+  plugins: [statusPlugin(), publicManifestPlugin()],
 };
