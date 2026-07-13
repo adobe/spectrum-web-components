@@ -21,10 +21,10 @@ import './demo-hosts.js';
 
 /**
  * `SelectionController` is a Lit `ReactiveController` that manages click- and keyboard-driven
- * selection for a group of sibling elements — tabs, radio groups, and segmented "view switcher"
- * button groups. It owns capture-phase `click` (and, optionally, Enter/Space `keydown`) on its
- * host, keeps an internal cache of what's selected, and supports two modes: `single` and
- * `single-toggle`.
+ * selection for a group of sibling elements — tabs, radio groups, segmented "view switcher"
+ * button groups, and multi-select filter chips. It owns capture-phase `click` (and, optionally,
+ * Enter/Space `keydown`) on its host, keeps an internal cache of what's selected, and supports
+ * three modes: `single`, `single-toggle`, and `multiple`.
  *
  * This controller is the click-owning, cache-authoritative half of selection management. For
  * self-owning items — elements that can change their own selected-ish state independently, like
@@ -86,6 +86,14 @@ export const SingleToggleMode: Story = {
   tags: ['options'],
 };
 SingleToggleMode.storyName = 'Single-toggle mode';
+
+export const MultipleMode: Story = {
+  render: () => html`
+    <demo-selection-filter-tags></demo-selection-filter-tags>
+  `,
+  tags: ['options'],
+};
+MultipleMode.storyName = 'Multiple mode';
 
 export const ModeSwitching: Story = {
   render: () => html`

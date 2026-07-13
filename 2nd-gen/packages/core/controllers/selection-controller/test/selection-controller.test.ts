@@ -18,11 +18,13 @@ import '../stories/demo-hosts.js';
 import { getComponent } from '../../../../swc/utils/test-utils.js';
 import {
   DEMO_TABLIST_CHANGE_EVENT,
+  type DemoSelectionFilterTags,
   type DemoSelectionViewSwitcher,
 } from '../stories/demo-hosts.js';
 import selectionMeta, {
   Eligibility,
   ModeSwitching,
+  MultipleMode,
   SingleMode,
   SingleToggleMode,
   TablistPattern,
@@ -207,6 +209,99 @@ export const SingleToggleModeTest: Story = {
 };
 
 // ──────────────────────────────────────────────────────────────
+// Multiple mode — independent toggles, selectAll, clearAll
+// ──────────────────────────────────────────────────────────────
+
+export const MultipleModeTest: Story = {
+  ...MultipleMode,
+  play: async ({ canvasElement, step }) => {
+    const host = await getComponent<DemoSelectionFilterTags>(
+      canvasElement,
+      'demo-selection-filter-tags'
+    );
+    const root = host.shadowRoot!;
+    const tags = Array.from(
+      root.querySelectorAll<HTMLButtonElement>('[data-tag]')
+    );
+    expect(tags.length).toBe(5);
+
+    const [selectAllBtn, clearBtn] = Array.from(
+      root.querySelectorAll<HTMLButtonElement>('.action-btn')
+    );
+
+    await step('initially all tags are deselected', async () => {
+      for (const tag of tags) {
+        expect(tag.getAttribute('aria-pressed')).toBe('false');
+      }
+      expect(root.querySelector('.count')?.textContent?.trim()).toBe(
+        'No filters selected'
+      );
+    });
+
+    await step('clicking a tag selects it independently', async () => {
+      tags[0].click();
+      expect(tags[0].getAttribute('aria-pressed')).toBe('true');
+      expect(tags[1].getAttribute('aria-pressed')).toBe('false');
+    });
+
+    await step('clicking another tag adds it to the selection', async () => {
+      tags[2].click();
+      expect(tags[0].getAttribute('aria-pressed')).toBe('true');
+      expect(tags[2].getAttribute('aria-pressed')).toBe('true');
+    });
+
+    await step('clicking a selected tag deselects it (toggle)', async () => {
+      tags[0].click();
+      expect(tags[0].getAttribute('aria-pressed')).toBe('false');
+      expect(tags[2].getAttribute('aria-pressed')).toBe('true');
+    });
+
+    await step(
+      'onSelectionChange mirrors the count into the host',
+      async () => {
+        // `.count`'s text depends on `selectedCount`, a reactive property
+        // updated inside `onSelectionChange` — unlike the `aria-pressed`
+        // attributes above (set synchronously by `selectItem`/`deselectItem`),
+        // its render into the DOM is async, so this must wait for the host's
+        // update cycle to flush before reading textContent.
+        await host.updateComplete;
+        expect(root.querySelector('.count')?.textContent?.trim()).toBe(
+          '1 filter selected'
+        );
+      }
+    );
+
+    await step('selectAll selects every tag', async () => {
+      selectAllBtn.click();
+      for (const tag of tags) {
+        expect(tag.getAttribute('aria-pressed')).toBe('true');
+      }
+      await host.updateComplete;
+      expect(root.querySelector('.count')?.textContent?.trim()).toBe(
+        '5 filters selected'
+      );
+    });
+
+    await step('clearAll deselects every tag', async () => {
+      clearBtn.click();
+      for (const tag of tags) {
+        expect(tag.getAttribute('aria-pressed')).toBe('false');
+      }
+      await host.updateComplete;
+      expect(root.querySelector('.count')?.textContent?.trim()).toBe(
+        'No filters selected'
+      );
+    });
+
+    await step('Enter key toggles a focused tag in multiple mode', async () => {
+      tags[1].focus();
+      activate(tags[1], 'Enter');
+      expect(tags[1].getAttribute('aria-pressed')).toBe('true');
+    });
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
 // Runtime mode switch via setOptions
 // ──────────────────────────────────────────────────────────────
 
@@ -257,46 +352,37 @@ export const ModeSwitchingTest: Story = {
     );
 
     await step(
-      'single-toggle: clicking the open trigger closes it',
+      'switching to multiple mode: several panels can open at once',
       async () => {
-        trigger('appearance').click();
+        modeBtn('multiple').click();
+
+        trigger('general').click();
+        trigger('privacy').click();
+
+        expect(trigger('general').getAttribute('aria-expanded')).toBe('true');
         expect(trigger('appearance').getAttribute('aria-expanded')).toBe(
-          'false'
+          'true'
         );
+        expect(trigger('privacy').getAttribute('aria-expanded')).toBe('true');
       }
     );
 
     await step(
-      'switching to single mode: clicking the open trigger no longer closes it',
+      'switching back to single collapses to only the first selected panel',
       async () => {
-        trigger('general').click();
-        expect(trigger('general').getAttribute('aria-expanded')).toBe('true');
-
         modeBtn('single').click();
 
-        // Re-clicking the already-open trigger has no effect in single mode
-        // — unlike the single-toggle behavior asserted above.
-        trigger('general').click();
-        expect(trigger('general').getAttribute('aria-expanded')).toBe('true');
-      }
-    );
-
-    await step(
-      'single mode: clicking a different trigger still replaces the open panel',
-      async () => {
-        trigger('privacy').click();
-        expect(trigger('privacy').getAttribute('aria-expanded')).toBe('true');
-        expect(trigger('general').getAttribute('aria-expanded')).toBe('false');
-      }
-    );
-
-    await step(
-      'switching back to single-toggle re-enables closing the open trigger',
-      async () => {
-        modeBtn('single-toggle').click();
-
-        trigger('privacy').click();
-        expect(trigger('privacy').getAttribute('aria-expanded')).toBe('false');
+        // "First" means first inserted into the selection cache, not first
+        // clicked in this step: "appearance" was already selected before the
+        // switch to multiple mode, so it is first in insertion order even
+        // though "general" and "privacy" were clicked more recently.
+        const openCount = ['general', 'appearance', 'privacy'].filter(
+          (key) => trigger(key).getAttribute('aria-expanded') === 'true'
+        ).length;
+        expect(openCount).toBe(1);
+        expect(trigger('appearance').getAttribute('aria-expanded')).toBe(
+          'true'
+        );
       }
     );
   },
