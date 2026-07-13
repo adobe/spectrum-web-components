@@ -63,6 +63,14 @@
       "types": "./dist/components/button-group/index.d.ts",
       "import": "./dist/components/button-group/index.js"
     },
+    "./components/color-handle": {
+      "types": "./dist/components/color-handle/index.d.ts",
+      "import": "./dist/components/color-handle/index.js"
+    },
+    "./components/color-handle/index.js": {
+      "types": "./dist/components/color-handle/index.d.ts",
+      "import": "./dist/components/color-handle/index.js"
+    },
     "./components/divider": {
       "types": "./dist/components/divider/index.d.ts",
       "import": "./dist/components/divider/index.js"
@@ -244,6 +252,12 @@
       ],
       "components/button-group": [
         "dist/components/button-group/index.d.ts"
+      ],
+      "components/color-handle": [
+        "dist/components/color-handle/index.d.ts"
+      ],
+      "components/color-handle/index.js": [
+        "dist/components/color-handle/index.d.ts"
       ],
       "components/divider": [
         "dist/components/divider/index.d.ts"
