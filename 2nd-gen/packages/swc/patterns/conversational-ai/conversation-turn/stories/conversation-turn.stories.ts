@@ -33,6 +33,7 @@ const meta: Meta = {
   component: 'swc-conversation-turn',
   parameters: {
     docs: {
+      packagePath: 'patterns/conversational-ai/conversation-turn',
       subtitle:
         'Aligns user vs system content in a thread column and supports grouped message stacking.',
     },

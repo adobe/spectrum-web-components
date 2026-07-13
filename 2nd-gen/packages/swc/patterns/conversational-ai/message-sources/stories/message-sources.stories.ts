@@ -63,6 +63,7 @@ const meta: Meta = {
   render: (args) => template(args),
   parameters: {
     docs: {
+      packagePath: 'patterns/conversational-ai/message-sources',
       subtitle: 'Collapsible list of sources for an AI response.',
     },
     layout: 'padded',

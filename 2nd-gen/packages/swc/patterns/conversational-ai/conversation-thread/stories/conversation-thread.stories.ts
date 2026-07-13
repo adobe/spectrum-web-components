@@ -48,6 +48,7 @@ const meta: Meta = {
   component: 'swc-conversation-thread',
   parameters: {
     docs: {
+      packagePath: 'patterns/conversational-ai/conversation-thread',
       subtitle:
         'Stacks conversation turns and enables roving keyboard focus between them.',
     },

@@ -37,6 +37,7 @@ const meta: Meta = {
   render: (args) => template(args),
   parameters: {
     docs: {
+      packagePath: 'patterns/conversational-ai/suggestion-item',
       subtitle: 'Interactive chip action used in suggestion groups.',
     },
     layout: 'padded',

@@ -76,7 +76,6 @@ const SHARED_SECTIONS = [
 const SHARED_FOOTER = ['Upcoming features', 'API', 'Appendix', 'Feedback'];
 
 const COMPONENT_LIKE_SECTIONS = [
-  'Getting started',
   'Anatomy',
   ...SHARED_SECTIONS,
   'Full pattern',

@@ -53,6 +53,7 @@ const meta: Meta = {
   render: (args) => template(args),
   parameters: {
     docs: {
+      packagePath: 'patterns/conversational-ai/message-feedback',
       subtitle: 'Binary positive / negative feedback control.',
     },
     layout: 'padded',

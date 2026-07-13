@@ -7,28 +7,6 @@ import * as UserMessageStories from './stories/user-message.stories';
 
 <DocsHeader />
 
-## Getting started
-
-Add the package to your project:
-
-```zsh
-yarn add @adobe/spectrum-wc
-```
-
-Import the side-effectful registration of `<swc-user-message>`:
-
-```ts
-import '@adobe/spectrum-wc/patterns/conversational-ai/user-message/swc-user-message.js';
-```
-
-To reference the `UserMessage` type, use a type-only import:
-
-```ts
-import type { UserMessage } from '@adobe/spectrum-wc/patterns/conversational-ai/user-message';
-```
-
-> The class is exposed primarily for type purposes. Extending it is possible, but its internal shape is not part of the public API. Subclasses may require changes between releases.
-
 ## Anatomy
 
 A user message consists of:

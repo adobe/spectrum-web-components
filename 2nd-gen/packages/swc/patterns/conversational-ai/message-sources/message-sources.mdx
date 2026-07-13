@@ -7,28 +7,6 @@ import * as MessageSourcesStories from './stories/message-sources.stories';
 
 <DocsHeader />
 
-## Getting started
-
-Add the package to your project:
-
-```zsh
-yarn add @adobe/spectrum-wc
-```
-
-Import the side-effectful registration of `<swc-message-sources>`:
-
-```ts
-import '@adobe/spectrum-wc/patterns/conversational-ai/message-sources/swc-message-sources.js';
-```
-
-To reference the `MessageSources` type, use a type-only import:
-
-```ts
-import type { MessageSources } from '@adobe/spectrum-wc/patterns/conversational-ai/message-sources';
-```
-
-> The class is exposed primarily for type purposes. Extending it is possible, but its internal shape is not part of the public API. Subclasses may require changes between releases.
-
 ## Anatomy
 
 A message sources component consists of:
