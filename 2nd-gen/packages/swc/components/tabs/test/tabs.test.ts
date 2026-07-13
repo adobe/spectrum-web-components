@@ -1222,6 +1222,79 @@ export const ChangeEventTest: Story = {
   },
 };
 
+export const ChangeHandlerSelectedStateTest: Story = {
+  render: () => html`
+    <swc-tabs selected="1" accessible-label="Change handler selected state test">
+      <swc-tab tab-id="1">Tab 1</swc-tab>
+      <swc-tab tab-id="2">Tab 2</swc-tab>
+      <swc-tab-panel tab-id="1"><p>Panel 1</p></swc-tab-panel>
+      <swc-tab-panel tab-id="2"><p>Panel 2</p></swc-tab-panel>
+    </swc-tabs>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const tabs = await getComponent<Tabs>(canvasElement, 'swc-tabs');
+    const tab2 = canvasElement.querySelector('swc-tab[tab-id="2"]') as Tab;
+
+    await step(
+      'clicked tab reflects its selected state inside the change handler',
+      async () => {
+        let containerSelected: string | undefined;
+        let tabSelected: boolean | undefined;
+        tabs.addEventListener(
+          'change',
+          () => {
+            containerSelected = tabs.selected;
+            tabSelected = tab2.selected;
+          },
+          { once: true }
+        );
+        tab2.click();
+        await tabs.updateComplete;
+        expect(containerSelected, 'tabs.selected updated in handler').toBe('2');
+        expect(tabSelected, 'tab2.selected updated in handler').toBe(true);
+      }
+    );
+  },
+};
+
+export const AutoActivationDisabledTabTest: Story = {
+  render: () => html`
+    <swc-tabs
+      selected="3"
+      keyboard-activation="automatic"
+      accessible-label="Auto activation disabled tab test"
+    >
+      <swc-tab tab-id="1">Tab 1</swc-tab>
+      <swc-tab tab-id="2" disabled>Tab 2</swc-tab>
+      <swc-tab tab-id="3">Tab 3</swc-tab>
+      <swc-tab-panel tab-id="1"><p>Panel 1</p></swc-tab-panel>
+      <swc-tab-panel tab-id="2"><p>Panel 2</p></swc-tab-panel>
+      <swc-tab-panel tab-id="3"><p>Panel 3</p></swc-tab-panel>
+    </swc-tabs>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const tabs = await getComponent<Tabs>(canvasElement, 'swc-tabs');
+    const tab3 = canvasElement.querySelector('swc-tab[tab-id="3"]') as Tab;
+
+    tab3.focus();
+
+    await step(
+      'arrow-keying onto a disabled tab does not change selection in automatic mode',
+      async () => {
+        tab3.dispatchEvent(
+          new KeyboardEvent('keydown', {
+            key: 'ArrowLeft',
+            code: 'ArrowLeft',
+            bubbles: true,
+          })
+        );
+        await tabs.updateComplete;
+        expect(tabs.selected, 'selection stays on tab 3').toBe('3');
+      }
+    );
+  },
+};
+
 // ──────────────────────────────────────────────────────────────
 // TEST: Slots
 // ──────────────────────────────────────────────────────────────

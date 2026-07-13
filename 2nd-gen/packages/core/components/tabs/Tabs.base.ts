@@ -396,6 +396,11 @@ export abstract class TabsBase extends SpectrumElement {
     const previous = this.selected;
     this.selected = id;
 
+    // Sync child tab.selected eagerly so that change-event handlers read the
+    // correct state on individual tab elements without waiting for the next
+    // Lit render cycle (tabs.selected is already updated synchronously above).
+    this.updateCheckedState();
+
     const applyDefault = this.dispatchEvent(
       new Event('change', {
         cancelable: true,
