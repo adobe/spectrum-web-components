@@ -1224,7 +1224,10 @@ export const ChangeEventTest: Story = {
 
 export const ChangeHandlerSelectedStateTest: Story = {
   render: () => html`
-    <swc-tabs selected="1" accessible-label="Change handler selected state test">
+    <swc-tabs
+      selected="1"
+      accessible-label="Change handler selected state test"
+    >
       <swc-tab tab-id="1">Tab 1</swc-tab>
       <swc-tab tab-id="2">Tab 2</swc-tab>
       <swc-tab-panel tab-id="1"><p>Panel 1</p></swc-tab-panel>
