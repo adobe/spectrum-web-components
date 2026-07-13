@@ -7,6 +7,28 @@ import * as MessageFeedbackStories from './stories/message-feedback.stories';
 
 <DocsHeader />
 
+## Getting started
+
+Add the package to your project:
+
+```zsh
+yarn add @adobe/spectrum-wc
+```
+
+Import the side-effectful registration of `<swc-message-feedback>`:
+
+```ts
+import '@adobe/spectrum-wc/patterns/conversational-ai/message-feedback/swc-message-feedback.js';
+```
+
+To reference the `MessageFeedback` type, use a type-only import:
+
+```ts
+import type { MessageFeedback } from '@adobe/spectrum-wc/patterns/conversational-ai/message-feedback';
+```
+
+> The class is exposed primarily for type purposes. Extending it is possible, but its internal shape is not part of the public API. Subclasses may require changes between releases.
+
 ## Anatomy
 
 A message feedback control consists of two quiet toggle buttons:

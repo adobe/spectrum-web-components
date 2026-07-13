@@ -7,6 +7,28 @@ import * as SuggestionItemStories from './stories/suggestion-item.stories';
 
 <DocsHeader />
 
+## Getting started
+
+Add the package to your project:
+
+```zsh
+yarn add @adobe/spectrum-wc
+```
+
+Import the side-effectful registration of `<swc-suggestion-item>`:
+
+```ts
+import '@adobe/spectrum-wc/patterns/conversational-ai/suggestion-item/swc-suggestion-item.js';
+```
+
+To reference the `SuggestionItem` type, use a type-only import:
+
+```ts
+import type { SuggestionItem } from '@adobe/spectrum-wc/patterns/conversational-ai/suggestion-item';
+```
+
+> The class is exposed primarily for type purposes. Extending it is possible, but its internal shape is not part of the public API. Subclasses may require changes between releases.
+
 ## Anatomy
 
 A suggestion item consists of:

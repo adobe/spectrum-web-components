@@ -7,6 +7,28 @@ import * as SystemMessageStories from './stories/system-message.stories';
 
 <DocsHeader />
 
+## Getting started
+
+Add the package to your project:
+
+```zsh
+yarn add @adobe/spectrum-wc
+```
+
+Import the side-effectful registration of `<swc-system-message>`:
+
+```ts
+import '@adobe/spectrum-wc/patterns/conversational-ai/system-message/swc-system-message.js';
+```
+
+To reference the `SystemMessage` type, use a type-only import:
+
+```ts
+import type { SystemMessage } from '@adobe/spectrum-wc/patterns/conversational-ai/system-message';
+```
+
+> The class is exposed primarily for type purposes. Extending it is possible, but its internal shape is not part of the public API. Subclasses may require changes between releases.
+
 ## Anatomy
 
 ### Fixed layout order

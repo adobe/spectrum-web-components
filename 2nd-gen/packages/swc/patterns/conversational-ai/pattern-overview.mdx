@@ -21,41 +21,6 @@ A composable set of web components for building AI conversational interfaces wit
 
 ---
 
-## Import pattern elements
-
-Import the side-effect entry point for each custom element your application uses. These imports register the elements without loading the rest of the pattern:
-
-| Element                   | Import                                                                                         |
-| ------------------------- | ---------------------------------------------------------------------------------------------- |
-| `swc-conversation-thread` | `@adobe/spectrum-wc/patterns/conversational-ai/conversation-thread/swc-conversation-thread.js` |
-| `swc-conversation-turn`   | `@adobe/spectrum-wc/patterns/conversational-ai/conversation-turn/swc-conversation-turn.js`     |
-| `swc-message-feedback`    | `@adobe/spectrum-wc/patterns/conversational-ai/message-feedback/swc-message-feedback.js`       |
-| `swc-message-sources`     | `@adobe/spectrum-wc/patterns/conversational-ai/message-sources/swc-message-sources.js`         |
-| `swc-prompt-field`        | `@adobe/spectrum-wc/patterns/conversational-ai/prompt-field/swc-prompt-field.js`               |
-| `swc-response-status`     | `@adobe/spectrum-wc/patterns/conversational-ai/response-status/swc-response-status.js`         |
-| `swc-suggestion-group`    | `@adobe/spectrum-wc/patterns/conversational-ai/suggestion/swc-suggestion-group.js`             |
-| `swc-suggestion-item`     | `@adobe/spectrum-wc/patterns/conversational-ai/suggestion-item/swc-suggestion-item.js`         |
-| `swc-system-message`      | `@adobe/spectrum-wc/patterns/conversational-ai/system-message/swc-system-message.js`           |
-| `swc-upload-artifact`     | `@adobe/spectrum-wc/patterns/conversational-ai/upload-artifact/swc-upload-artifact.js`         |
-| `swc-user-message`        | `@adobe/spectrum-wc/patterns/conversational-ai/user-message/swc-user-message.js`               |
-
-For example:
-
-```ts
-import '@adobe/spectrum-wc/patterns/conversational-ai/conversation-thread/swc-conversation-thread.js';
-import '@adobe/spectrum-wc/patterns/conversational-ai/conversation-turn/swc-conversation-turn.js';
-import '@adobe/spectrum-wc/patterns/conversational-ai/system-message/swc-system-message.js';
-import '@adobe/spectrum-wc/patterns/conversational-ai/user-message/swc-user-message.js';
-```
-
-Import public classes and types from the corresponding index path. Index imports do not register custom elements:
-
-```ts
-import type { ConversationThread } from '@adobe/spectrum-wc/patterns/conversational-ai/conversation-thread';
-```
-
----
-
 ## Full example
 
 An end-to-end conversation with streaming generation, file upload, feedback, and follow-up suggestions. This example illustrates interactions like sending prompts, attaching files, and selecting suggestions.

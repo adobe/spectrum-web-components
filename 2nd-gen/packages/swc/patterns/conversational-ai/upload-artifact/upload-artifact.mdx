@@ -7,6 +7,28 @@ import * as UploadArtifactStories from './stories/upload-artifact.stories';
 
 <DocsHeader />
 
+## Getting started
+
+Add the package to your project:
+
+```zsh
+yarn add @adobe/spectrum-wc
+```
+
+Import the side-effectful registration of `<swc-upload-artifact>`:
+
+```ts
+import '@adobe/spectrum-wc/patterns/conversational-ai/upload-artifact/swc-upload-artifact.js';
+```
+
+To reference the `UploadArtifact` type, use a type-only import:
+
+```ts
+import type { UploadArtifact } from '@adobe/spectrum-wc/patterns/conversational-ai/upload-artifact';
+```
+
+> The class is exposed primarily for type purposes. Extending it is possible, but its internal shape is not part of the public API. Subclasses may require changes between releases.
+
 ## Options
 
 ### Multi Artifact
