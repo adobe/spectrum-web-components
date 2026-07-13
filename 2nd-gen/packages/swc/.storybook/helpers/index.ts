@@ -10,8 +10,19 @@
  * governing permissions and limitations under the License.
  */
 
+export { createPermutations } from './create-permutations.js';
+export type { ComponentPermutations } from './create-permutations.js';
 export { formatTitle } from './format-title.js';
 export { iconForSize } from './icon-for-size.js';
 export { forcePseudoState } from './pseudo-state.js';
 export type { ForcedPseudoState } from './pseudo-state.js';
-export { row, staticColorBackground, theme } from './vrt.js';
+export {
+  forcedColorsVrtParameters,
+  forcePseudoStates,
+  FORCED_STATES,
+  renderStorybookPermutation,
+  row,
+  staticColorBackground,
+  theme,
+  vrtParameters,
+} from './vrt.js';

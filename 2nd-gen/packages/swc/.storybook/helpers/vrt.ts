@@ -11,8 +11,47 @@
  */
 
 import { html } from 'lit';
+import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
 import { staticColorSettings } from '../decorators/static-colors-demo.js';
+import { type ForcedPseudoState, forcePseudoState } from './pseudo-state.js';
+
+export const FORCED_STATES = [
+  'hover',
+  'focus-visible',
+  'active',
+] as const satisfies readonly ForcedPseudoState[];
+
+export const renderStorybookPermutation = (
+  tagName: string,
+  fixedArgs: Record<string, unknown> = {}
+) => {
+  const { args, template } = getStorybookHelpers(tagName);
+
+  return (permutation: Record<string, unknown>) =>
+    template({ ...args, ...permutation, ...fixedArgs });
+};
+
+export const forcePseudoStates =
+  (selector: string, internalSelector?: string) =>
+  async ({ canvasElement }: { canvasElement: HTMLElement }) => {
+    canvasElement.querySelectorAll<HTMLElement>(selector).forEach((host) => {
+      const state = host.dataset.forceState as ForcedPseudoState | undefined;
+      if (state) {
+        forcePseudoState(host, state, internalSelector);
+      }
+    });
+  };
+
+export const vrtParameters = {
+  styles: { display: 'flex', 'flex-direction': 'column', gap: '16px' },
+  autoplay: true,
+};
+
+export const forcedColorsVrtParameters = {
+  ...vrtParameters,
+  chromatic: { forcedColors: 'active' },
+};
 
 /**
  * Wraps a set of permutations in a single flex-wrap row. Stack multiple
@@ -20,11 +59,25 @@ import { staticColorSettings } from '../decorators/static-colors-demo.js';
  * variant, one column per size) without needing every combination to be its
  * own story/snapshot.
  */
-export const row = (children: unknown) => html`
-  <div style="display: flex; flex-wrap: wrap; gap: 16px; align-items: center;">
-    ${children}
-  </div>
-`;
+export const row = (children: unknown, label?: string) =>
+  label
+    ? html`
+        <div style="display: flex; flex-direction: column; gap: 4px;">
+          <span style="font-size: 12px; font-weight: 700;">${label}</span>
+          <div
+            style="display: flex; flex-wrap: wrap; gap: 16px; align-items: center;"
+          >
+            ${children}
+          </div>
+        </div>
+      `
+    : html`
+        <div
+          style="display: flex; flex-wrap: wrap; gap: 16px; align-items: center;"
+        >
+          ${children}
+        </div>
+      `;
 
 /**
  * Wraps content so it renders in a given theme/direction regardless of the
