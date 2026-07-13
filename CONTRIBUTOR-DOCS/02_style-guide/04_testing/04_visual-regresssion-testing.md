@@ -33,7 +33,7 @@ VRT covers things that are hard to test programmatically:
 
 ## How to author VRT stories
 
-Author dense visual coverage in `test/vrt/*.vrt.ts`. Keep documentation stories readable; use VRT stories for large matrices.
+Author dense visual coverage in `test/vrt/*.vrt.ts` for components and patterns. Keep documentation stories readable; use VRT stories for large matrices.
 
 Aim for maximum meaningful coverage: include every size, variant, state, anatomy, theme, static-color, global-style, custom-property, and component-specific visual axis that can produce a useful visual difference. Cover CJK language rendering explicitly when text metrics can change, e.g. `lang="ja"` / `lang="ko"` / `lang="zh"` line-height, wrapping, or truncation. Skip only impossible, unsupported, or truly redundant combinations.
 
@@ -46,6 +46,8 @@ Use this shape:
 Use shared helpers from `.storybook/helpers`: `createPermutations`, `row`, `theme`, `staticColorBackground`, `forcePseudoStates`, `vrtParameters`, `forcedColorsVrtParameters`, `customPropertyRows`, and `verifyCustomPropertyCoverage`.
 
 Keep component files small: local case lists and component-specific renderers only. Move reusable mechanics to `.storybook/helpers`.
+
+For composed patterns, use deterministic realistic content instead of behavior demos: fixed prompts, sources, attachments, feedback states, and response text.
 
 Stories tagged with `'!test'` are excluded from VRT runs. See [Excluding stories from tests](01_testing-overview.md#excluding-stories-from-tests) for when and why to use this tag.
 

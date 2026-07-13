@@ -7,11 +7,13 @@ description: Author dedicated Storybook visual regression stories for 2nd-gen co
 
 ## Pattern
 
-- Put VRT stories in `2nd-gen/packages/swc/components/<component>/test/vrt/*.vrt.ts`.
+- Put VRT stories in `2nd-gen/packages/swc/components/<component>/test/vrt/*.vrt.ts` or `2nd-gen/packages/swc/patterns/<pattern>/test/vrt/*.vrt.ts`.
 - Keep docs stories for examples; keep `.vrt.ts` stories for dense visual coverage.
 - Aim for maximum meaningful coverage: include every size, variant, state, anatomy, theme, static-color, global-style, custom-property, and component-specific visual axis that can produce a useful visual difference. Cover CJK language rendering explicitly when text metrics can change, e.g. `lang="ja"` / `lang="ko"` / `lang="zh"` line-height, wrapping, or truncation. Skip only impossible, unsupported, or truly redundant combinations.
 - Use shared helpers from `.storybook/helpers`: `createPermutations`, `row`, `theme`, `staticColorBackground`, `forcePseudoStates`, `vrtParameters`, and `forcedColorsVrtParameters`.
-- Keep component files data-driven: local case lists and component renderers only. Move reusable mechanics to `.storybook/helpers`.
+- Keep unit files data-driven: local case lists and renderers only. Move reusable mechanics to `.storybook/helpers`.
+- For composed patterns, prefer deterministic realistic content over behavior demos: fixed prompts, sources, attachments, feedback states, and response text.
+- Before skipping global styles, check `2nd-gen/packages/swc/stylesheets/global/` for a matching generated stylesheet such as `global-<component>.css` and cover its plain-class API when present.
 
 ## Story shape
 
