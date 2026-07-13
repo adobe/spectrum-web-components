@@ -21,9 +21,8 @@ import type { ReactiveController, ReactiveElement } from 'lit';
  *
  * - **`single`**: at most one item selected at a time; clicking the active item has no effect.
  * - **`single-toggle`**: at most one item selected at a time; clicking the active item deselects it.
- * - **`multiple`**: any number of items may be selected; clicking an item toggles it.
  */
-export type SelectionMode = 'single' | 'single-toggle' | 'multiple';
+export type SelectionMode = 'single' | 'single-toggle';
 
 /**
  * Options for {@link SelectionController}.
@@ -54,13 +53,11 @@ export type SelectionControllerOptions = {
    *
    * - **`single`** (default): at most one item; clicking the active item has no effect.
    * - **`single-toggle`**: at most one item; clicking the active item deselects it.
-   * - **`multiple`**: any number; clicking an item toggles it.
    */
   mode?: SelectionMode;
 
   /**
    * When **`true`**, asserts the first eligible item after **`refresh`** when nothing is selected.
-   * Only meaningful in `single` and `single-toggle` modes.
    */
   defaultToFirstSelectable?: boolean;
 
@@ -98,10 +95,9 @@ export type SelectionControllerOptions = {
    * is dispatched. Omit for unconditional commits. Not called for transitions committed with
    * **`{ silent: true }`** (see {@link SelectionController.setSelectedItem} and
    * {@link SelectionController.refresh}), nor for transitions this controller makes to enforce
-   * its own invariants — removing a disconnected item on **`refresh`**, normalizing a **`mode`**
-   * switch via **`setOptions`**, and asserting **`defaultToFirstSelectable`** are never vetoable,
-   * since reverting any of them would leave the controller violating the invariant it was
-   * enforcing.
+   * its own invariants — removing a disconnected item on **`refresh`** and asserting
+   * **`defaultToFirstSelectable`** are never vetoable, since reverting either of them would leave
+   * the controller violating the invariant it was enforcing.
    */
   confirmSelectionChange?: (
     detail: SelectionControllerConfirmDetail
@@ -175,14 +171,12 @@ export function deepestSelectionItemContaining(
 }
 
 /**
- * Manages item selection across a set of sibling elements in three modes: **`single`**,
- * **`single-toggle`**, and **`multiple`**. You supply **`getItems`** (who participates),
- * **`selectItem`** / **`deselectItem`** (how DOM or ARIA reflects state), and **`mode`**
- * (selection behavior).
+ * Manages item selection across a set of sibling elements in two modes: **`single`** and
+ * **`single-toggle`**. You supply **`getItems`** (who participates), **`selectItem`** /
+ * **`deselectItem`** (how DOM or ARIA reflects state), and **`mode`** (selection behavior).
  *
  * - **`single`**: one item may be selected; clicking the selected item has no effect.
  * - **`single-toggle`**: one item may be selected; clicking the selected item deselects it.
- * - **`multiple`**: any number of items may be selected; clicks toggle individual items.
  *
  * This controller always owns capture-phase **`click`** and, when **`keydownActivation`** is
  * **`true`**, capture-phase **`keydown`** (**Enter** / **Space**) on its host — that ownership is
@@ -191,8 +185,7 @@ export function deepestSelectionItemContaining(
  * this controller does not implement those behaviors.
  *
  * Call **`setOptions({ mode })`** at any time to switch modes without reconstructing the
- * controller. When switching from **`multiple`** to a single-item mode and more than one item
- * is currently selected, all but the first item are deselected.
+ * controller.
  *
  * **This controller owns an internal cache and is the sole mutator of selected-ish state.**
  * {@link SelectionController.applyMutators}, called by every transition, walks a fresh
@@ -327,14 +320,8 @@ export class SelectionController implements ReactiveController {
     return this.options.mode;
   }
 
-  /**
-   * Merges option deltas, normalizes selection for a mode change, and calls {@link refresh}.
-   *
-   * When switching from **`multiple`** to a single-item mode with more than one item selected,
-   * only the first selected item is retained.
-   */
+  /** Merges option deltas and calls {@link refresh}. */
   public setOptions(partial: Partial<SelectionControllerOptions>): void {
-    const prevMode = this.options.mode;
     this.options = {
       ...this.options,
       ...partial,
@@ -358,30 +345,13 @@ export class SelectionController implements ReactiveController {
       isSelectable: partial.isSelectable ?? this.options.isSelectable,
     };
 
-    const nextMode = this.options.mode;
-    const wasSingle = prevMode === 'single' || prevMode === 'single-toggle';
-    const isNowSingle = nextMode === 'single' || nextMode === 'single-toggle';
-
-    if (!wasSingle && isNowSingle) {
-      const current = this.currentSelection();
-      if (current.length > 1) {
-        const [first] = current;
-        const toRemove = current.slice(1);
-        const candidate = first ? [first] : [];
-        // force: normalizing for the new mode is this controller enforcing
-        // its own invariant, not a selection a consumer should be able to
-        // veto.
-        this.applySelectionTransition(candidate, toRemove, { force: true });
-      }
-    }
-
     this.syncListeners();
     this.refresh();
   }
 
   /**
-   * Asserts {@link item} as the selection in single / single-toggle modes, or adds it to the
-   * set in multiple mode. Disabled or ineligible items are rejected (returns **`false`**).
+   * Asserts {@link item} as the selection. Disabled or ineligible items are rejected (returns
+   * **`false`**).
    *
    * Passing **`null`** clears the selection; in **`single`** mode this normally returns
    * **`false`** and leaves the selection unchanged (interactively, a mandatory single-select
@@ -413,15 +383,6 @@ export class SelectionController implements ReactiveController {
     }
 
     const current = this.currentSelection();
-
-    if (this.options.mode === 'multiple') {
-      if (current.includes(item)) {
-        return true;
-      }
-      const next = [...current, item];
-      return this.applySelectionTransition(next, [], options);
-    }
-
     const toRemove = current.filter((el) => el !== item);
     return this.applySelectionTransition([item], toRemove, options);
   }
@@ -432,7 +393,6 @@ export class SelectionController implements ReactiveController {
    * - **`single`**: selects {@link item} (deselects previous); clicking the active item has no
    *   effect (returns **`false`**).
    * - **`single-toggle`**: selects {@link item} when deselected, deselects when selected.
-   * - **`multiple`**: always toggles.
    *
    * @returns **`false`** when the item is ineligible or when the mode disallows the operation.
    *
@@ -457,43 +417,17 @@ export class SelectionController implements ReactiveController {
       if (this.options.mode === 'single') {
         return false;
       }
-      const next = current.filter((el) => el !== item);
-      return this.applySelectionTransition(next, [item], options);
-    } else {
-      if (this.options.mode === 'multiple') {
-        const next = [...current, item];
-        return this.applySelectionTransition(next, [], options);
-      }
-      const toRemove = current.filter((el) => el !== item);
-      return this.applySelectionTransition([item], toRemove, options);
+      return this.applySelectionTransition([], [item], options);
     }
+
+    const toRemove = current.filter((el) => el !== item);
+    return this.applySelectionTransition([item], toRemove, options);
   }
 
   /**
-   * Selects all eligible items. Only meaningful in **`multiple`** mode; returns **`false`** in
-   * single-item modes (does not throw).
-   *
-   * Pass **`{ silent: true }`** to commit without invoking **`confirmSelectionChange`**.
-   * **`onSelectionChange`** still runs.
-   */
-  public selectAll(options?: { silent?: boolean }): boolean {
-    if (this.options.mode !== 'multiple') {
-      return false;
-    }
-    const current = this.currentSelection();
-    const eligible = this.getEligibleItems();
-    const toAdd = eligible.filter((el) => !current.includes(el));
-    if (toAdd.length === 0) {
-      return true;
-    }
-    const next = [...current, ...toAdd];
-    return this.applySelectionTransition(next, [], options);
-  }
-
-  /**
-   * Deselects all items. Works in **`single-toggle`** and **`multiple`** modes. In **`single`**
-   * mode, returns **`false`** and leaves the selection unchanged — unless **`{ silent: true }`**
-   * is passed, which clears it anyway (see {@link SelectionController.setSelectedItem}).
+   * Deselects all items. Works in **`single-toggle`** mode. In **`single`** mode, returns
+   * **`false`** and leaves the selection unchanged — unless **`{ silent: true }`** is passed,
+   * which clears it anyway (see {@link SelectionController.setSelectedItem}).
    *
    * Pass **`{ silent: true }`** to commit without invoking **`confirmSelectionChange`**.
    * **`onSelectionChange`** still runs.
@@ -510,10 +444,9 @@ export class SelectionController implements ReactiveController {
   }
 
   /**
-   * Re-applies bookkeeping after structural changes: removes stale selections, collapses an
-   * over-selected single-item mode down to one, and selects the first eligible item when
-   * **`defaultToFirstSelectable`** is **`true`** and nothing is selected (single-item modes only).
-   * When nothing is currently eligible, no default selection is forced.
+   * Re-applies bookkeeping after structural changes: removes stale selections, and selects the
+   * first eligible item when **`defaultToFirstSelectable`** is **`true`** and nothing is
+   * selected. When nothing is currently eligible, no default selection is forced.
    *
    * Pass **`{ silent: true }`** to commit these transitions without invoking
    * **`confirmSelectionChange`** — used to resync internal state from an external property change
@@ -549,11 +482,7 @@ export class SelectionController implements ReactiveController {
       this.applySelectionTransition(next, stale, { silent, force: true });
     }
 
-    const isSingle =
-      this.options.mode === 'single' || this.options.mode === 'single-toggle';
-
     if (
-      isSingle &&
       this.options.defaultToFirstSelectable &&
       // Recomputed rather than reusing `current`: the step above may have
       // just changed what's actually selected.
@@ -600,29 +529,16 @@ export class SelectionController implements ReactiveController {
 
   /** Applies the mode-appropriate selection logic for a pointer click or Enter/Space key. */
   private applyClickOrKey(hit: HTMLElement): void {
-    const mode = this.options.mode;
     const current = this.currentSelection();
     const isSelected = current.includes(hit);
 
-    if (mode === 'single') {
-      if (isSelected) {
+    if (isSelected) {
+      if (this.options.mode === 'single') {
         return;
       }
-      this.applySelectionTransition([hit], current);
-    } else if (mode === 'single-toggle') {
-      if (isSelected) {
-        this.applySelectionTransition([], [hit]);
-      } else {
-        this.applySelectionTransition([hit], current);
-      }
+      this.applySelectionTransition([], [hit]);
     } else {
-      if (isSelected) {
-        const next = current.filter((el) => el !== hit);
-        this.applySelectionTransition(next, [hit]);
-      } else {
-        const next = [...current, hit];
-        this.applySelectionTransition(next, []);
-      }
+      this.applySelectionTransition([hit], current);
     }
   }
 
@@ -655,12 +571,10 @@ export class SelectionController implements ReactiveController {
    * **`silent`** and **`force`** both skip **`confirmSelectionChange`** — the only thing left for
    * either to skip, now that there is no DOM event. **`force`** (internal only — never exposed on
    * the public **`{ silent }`** options bag) exists for transitions that enforce this controller's
-   * *own* invariants (removing a disconnected item, normalizing a mode switch, asserting
-   * **`defaultToFirstSelectable`**, collapsing an over-selected single-item mode) rather than
-   * representing a selection a consumer chose to make. Those must never be vetoable: reverting one
-   * would leave the controller violating the very invariant it was enforcing (for example more
-   * than one item selected while **`mode: 'single'`**, or a disconnected element still in the
-   * selection set).
+   * *own* invariants (removing a disconnected item, asserting **`defaultToFirstSelectable`**)
+   * rather than representing a selection a consumer chose to make. Those must never be vetoable:
+   * reverting one would leave the controller violating the very invariant it was enforcing (for
+   * example a disconnected element still in the selection set).
    */
   private applySelectionTransition(
     next: HTMLElement[],

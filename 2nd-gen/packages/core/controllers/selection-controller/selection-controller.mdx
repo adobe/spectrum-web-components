@@ -14,7 +14,7 @@ import * as Stories from './stories/selection-controller.stories';
 `SelectionController` handles click and keyboard selection for a group of sibling elements so consuming components don't hand-roll it themselves.
 
 - **Owns interaction** — capture-phase `click` on its host, plus capture-phase Enter/Space `keydown` when `keydownActivation` is `true`.
-- **Three selection modes** — `single` (one item, re-click has no effect), `single-toggle` (one item, re-click clears it), `multiple` (any number, clicks toggle independently).
+- **Two selection modes** — `single` (one item, re-click has no effect), `single-toggle` (one item, re-click clears it).
 - **Internal cache as source of truth** — the only thing that ever changes what's selected, so the cache never drifts.
 - **Vetoable transitions** — `confirmSelectionChange` runs after mutators have already applied, so a consumer's own cancelable event sees the new state; returning `false` reverts everything.
 - **Guaranteed selection when required** — `defaultToFirstSelectable` asserts a first pick after `refresh()` so a mandatory single-select group is never left empty.
@@ -23,7 +23,7 @@ import * as Stories from './stories/selection-controller.stories';
 
 Use `SelectionController` when a group of items should act like a set of buttons: a user clicks one, and this controller decides what "selected" means for the group.
 
-Good fits: tabs, radio buttons, a row of view-switcher buttons where only one can be pressed, a set of filter chips where several can be pressed at once.
+Good fits: tabs, radio buttons, a row of view-switcher buttons where only one can be pressed.
 
 What makes these a good fit: none of the items ever change themselves. A tab does not decide on its own that it is selected — this controller decides that, and tells the tab. Because this controller is the only thing that ever changes the selection, it can keep a simple internal list of "what's selected right now" and trust that list completely.
 
@@ -93,15 +93,9 @@ At most one item is selected, but clicking the active item deselects it — repr
 
 <Canvas of={Stories.SingleToggleMode} />
 
-### Multiple mode
-
-Any number of items may be selected. Clicking an item toggles it independently of the others. `selectAll()` and `clearAll()` are only meaningful in this mode.
-
-<Canvas of={Stories.MultipleMode} />
-
 ### Mode switching
 
-Call `setOptions({ mode })` at any time to switch modes without reconstructing the controller. Switching from `multiple` down to a single-item mode with more than one item selected automatically collapses the selection to the first selected item.
+Call `setOptions({ mode })` at any time to switch modes without reconstructing the controller — for example, to make an optional choice mandatory (or vice versa) in response to some other state change.
 
 <Canvas of={Stories.ModeSwitching} />
 
@@ -138,17 +132,16 @@ The mutators and `onSelectionChange` mirror are applied _before_ `confirmSelecti
 
 ### Methods
 
-| Member                                                                                | Description                                                                                                                                                     |
-| ------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `getSelectedItems(): HTMLElement[]`                                                   | Returns the current selection, ordered by insertion.                                                                                                            |
-| `isSelected(item: HTMLElement): boolean`                                              | Returns `true` when `item` is currently selected.                                                                                                               |
-| `getMode(): SelectionMode`                                                            | Returns the current selection mode.                                                                                                                             |
-| `setOptions(partial: Partial<SelectionControllerOptions>): void`                      | Merges option deltas and calls `refresh()`. Normalizes an over-selection when switching from `multiple` to a single-item mode.                                  |
-| `setSelectedItem(item: HTMLElement \| null, options?: { silent?: boolean }): boolean` | Asserts `item` as the selection (single-item modes) or adds it (multiple). `null` clears the selection; pass `{ silent: true }` to clear even in `single` mode. |
-| `toggleItem(item: HTMLElement, options?: { silent?: boolean }): boolean`              | Toggles `item` according to the current mode's rules.                                                                                                           |
-| `selectAll(options?: { silent?: boolean }): boolean`                                  | Selects every eligible item. Only meaningful in `multiple` mode.                                                                                                |
-| `clearAll(options?: { silent?: boolean }): boolean`                                   | Deselects every item. Rejected in `single` mode unless `{ silent: true }` is passed.                                                                            |
-| `refresh(options?: { silent?: boolean }): void`                                       | Removes stale selections, collapses an over-selected single-item mode, and asserts `defaultToFirstSelectable` when nothing is selected.                         |
+| Member                                                                                | Description                                                                                                           |
+| ------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
+| `getSelectedItems(): HTMLElement[]`                                                   | Returns the current selection, ordered by insertion.                                                                  |
+| `isSelected(item: HTMLElement): boolean`                                              | Returns `true` when `item` is currently selected.                                                                     |
+| `getMode(): SelectionMode`                                                            | Returns the current selection mode.                                                                                   |
+| `setOptions(partial: Partial<SelectionControllerOptions>): void`                      | Merges option deltas and calls `refresh()`.                                                                           |
+| `setSelectedItem(item: HTMLElement \| null, options?: { silent?: boolean }): boolean` | Asserts `item` as the selection. `null` clears the selection; pass `{ silent: true }` to clear even in `single` mode. |
+| `toggleItem(item: HTMLElement, options?: { silent?: boolean }): boolean`              | Toggles `item` according to the current mode's rules.                                                                 |
+| `clearAll(options?: { silent?: boolean }): boolean`                                   | Deselects every item. Rejected in `single` mode unless `{ silent: true }` is passed.                                  |
+| `refresh(options?: { silent?: boolean }): void`                                       | Removes stale selections, and asserts `defaultToFirstSelectable` when nothing is selected.                            |
 
 Every method above accepts `{ silent: true }` to commit the transition without invoking `confirmSelectionChange` — used to resync from an external property change without raising a vetoable transition. `onSelectionChange` still runs for a silent transition.
 
@@ -159,8 +152,8 @@ Every method above accepts `{ silent: true }` to commit the transition without i
 | `getItems`                 | `() => HTMLElement[]`                                   | Returns the current participant set.                                                                                                     |
 | `selectItem`               | `(item: HTMLElement) => void`                           | Applies selected-state DOM/ARIA to `item`.                                                                                               |
 | `deselectItem`             | `(item: HTMLElement) => void`                           | Removes selected-state DOM/ARIA from `item`.                                                                                             |
-| `mode`                     | `'single' \| 'single-toggle' \| 'multiple'`             | Selection behavior. Defaults to `'single'`.                                                                                              |
-| `defaultToFirstSelectable` | `boolean`                                               | Asserts the first eligible item after `refresh()` when nothing is selected. Single-item modes only. Defaults to `false`.                 |
+| `mode`                     | `'single' \| 'single-toggle'`                           | Selection behavior. Defaults to `'single'`.                                                                                              |
+| `defaultToFirstSelectable` | `boolean`                                               | Asserts the first eligible item after `refresh()` when nothing is selected. Defaults to `false`.                                         |
 | `keydownActivation`        | `boolean`                                               | When `true`, Enter/Space on an eligible item activates it. Defaults to `false`.                                                          |
 | `onSelectionChange`        | `(detail: SelectionControllerChangeDetail) => void`     | Notification callback; this controller never dispatches a DOM event. Fires on every commit, including silent ones.                       |
 | `confirmSelectionChange`   | `(detail: SelectionControllerConfirmDetail) => boolean` | Vetoable hook, called after mutators have already run. Return `false` to revert. Not called for silent or internally-forced transitions. |

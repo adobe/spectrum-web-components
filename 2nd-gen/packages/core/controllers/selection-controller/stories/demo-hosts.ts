@@ -23,7 +23,6 @@ declare global {
   interface HTMLElementTagNameMap {
     'demo-selection-view-switcher': DemoSelectionViewSwitcher;
     'demo-selection-priority': DemoSelectionPriority;
-    'demo-selection-filter-tags': DemoSelectionFilterTags;
     'demo-selection-mode-switcher': DemoSelectionModeSwitcher;
     'demo-selection-tablist': DemoSelectionTablist;
     'demo-selection-eligibility': DemoSelectionEligibility;
@@ -103,10 +102,6 @@ const groupStyles = css`
     border-radius: 999px;
     background: transparent;
     cursor: pointer;
-  }
-  .count {
-    font-size: 0.85rem;
-    color: var(--spectrum-gray-700, #464646);
   }
 `;
 
@@ -248,100 +243,6 @@ export class DemoSelectionPriority extends LitElement {
 }
 
 // ─────────────────────────────────────────────
-//   Filter tags — mode: 'multiple'
-// ─────────────────────────────────────────────
-
-const filterTagsStyles = css`
-  ${groupStyles}
-  .group {
-    flex-wrap: wrap;
-  }
-  .group button {
-    border-radius: 999px;
-    border-inline-start: 1px solid var(--spectrum-gray-400, #b9b9b9);
-  }
-`;
-
-const FILTER_TAGS = ['Photos', 'Documents', 'Videos', 'Audio', 'Archives'];
-
-/**
- * Multi-select filter tags using **`mode: 'multiple'`**: any number of tags can be active at
- * once, and clicking a tag toggles it independently of the others. Demonstrates `selectAll`,
- * `clearAll`, and `onSelectionChange` mirroring the count into the host.
- *
- * @internal
- */
-@customElement('demo-selection-filter-tags')
-export class DemoSelectionFilterTags extends LitElement {
-  static override styles = filterTagsStyles;
-
-  private selectedCount = 0;
-
-  private readonly selection = new SelectionController(this, {
-    getItems: () =>
-      Array.from(
-        this.renderRoot.querySelectorAll<HTMLButtonElement>('[data-tag]')
-      ),
-    selectItem: (item) => item.setAttribute('aria-pressed', 'true'),
-    deselectItem: (item) => item.setAttribute('aria-pressed', 'false'),
-    mode: 'multiple',
-    keydownActivation: true,
-    onSelectionChange: ({ selectedItems }) => {
-      this.selectedCount = selectedItems.length;
-      this.requestUpdate();
-    },
-  });
-
-  protected override firstUpdated(): void {
-    this.selection.refresh();
-  }
-
-  private selectAll = (): void => {
-    this.selection.selectAll();
-  };
-
-  private clearAll = (): void => {
-    this.selection.clearAll();
-  };
-
-  protected override render(): TemplateResult {
-    return html`
-      <p class="hint">
-        Any number of tags may be active —
-        <code>mode</code>
-        is
-        <code>'multiple'</code>
-        .
-      </p>
-      <div class="group" role="group" aria-label="Filter by type">
-        ${FILTER_TAGS.map(
-          (label) => html`
-            <button type="button" data-tag aria-pressed="false">
-              ${label}
-            </button>
-          `
-        )}
-      </div>
-      <div class="actions">
-        <button type="button" class="action-btn" @click=${this.selectAll}>
-          Select all
-        </button>
-        <button type="button" class="action-btn" @click=${this.clearAll}>
-          Clear all
-        </button>
-        <span class="count">
-          ${this.selectedCount === 0
-            ? 'No filters selected'
-            : `${this.selectedCount} filter${
-                this.selectedCount === 1 ? '' : 's'
-              } selected`}
-        </span>
-      </div>
-    `;
-  }
-}
-
-// ─────────────────────────────────────────────
 //   Mode switcher — runtime setOptions({ mode })
 // ─────────────────────────────────────────────
 
@@ -419,12 +320,12 @@ const MODE_SWITCHER_PANELS = [
   { key: 'privacy', label: 'Privacy', body: 'Privacy settings content.' },
 ];
 
-const MODE_OPTIONS: SelectionMode[] = ['single', 'single-toggle', 'multiple'];
+const MODE_OPTIONS: SelectionMode[] = ['single', 'single-toggle'];
 
 /**
  * Trigger/panel group that switches its `SelectionController`'s `mode` at runtime via
- * `setOptions({ mode })`. Demonstrates that switching from `multiple` down to a single-item
- * mode automatically collapses an over-selection to the first selected item.
+ * `setOptions({ mode })`. Demonstrates the behavioral difference between `single` (clicking the
+ * open trigger has no effect) and `single-toggle` (clicking the open trigger closes it).
  *
  * @internal
  */
@@ -685,7 +586,7 @@ export class DemoSelectionEligibility extends LitElement {
       ),
     selectItem: (item) => item.setAttribute('aria-pressed', 'true'),
     deselectItem: (item) => item.setAttribute('aria-pressed', 'false'),
-    mode: 'multiple',
+    mode: 'single-toggle',
     keydownActivation: true,
     isDisabled: (item) => item.hasAttribute('data-locked'),
   });
