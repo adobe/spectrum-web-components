@@ -103,6 +103,23 @@ export const StatusApiTest: Story = {
         { timeout: 2000 }
       );
     });
+
+    await step(
+      'coerces unsupported host status to active behavior',
+      async () => {
+        el.setAttribute('status', 'pending');
+        await el.updateComplete;
+
+        expect(el.getAttribute('status')).toBe('pending');
+        expect(el.shadowRoot?.querySelector('[role="status"]')).toBeTruthy();
+        expect(
+          el.shadowRoot?.querySelector('.swc-ResponseStatus-row--processing')
+        ).toBeTruthy();
+        expect(
+          el.shadowRoot?.querySelector('.swc-ResponseStatus-dots')
+        ).toBeTruthy();
+      }
+    );
   },
 };
 

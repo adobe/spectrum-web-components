@@ -165,6 +165,11 @@ export class ResponseStatus extends SpectrumElement {
     return (RESPONSE_STATUSES as readonly string[]).includes(status);
   }
 
+  /** Validated host status; invalid runtime values fall back to `active`. */
+  private get _resolvedStatus(): ResponseStatusStatus {
+    return this._isValidStatus(this.status) ? this.status : 'active';
+  }
+
   private _isValidStepStatus(
     status: string
   ): status is ResponseStatusStepStatus {
@@ -298,16 +303,16 @@ export class ResponseStatus extends SpectrumElement {
       return this._labelSlotText;
     }
 
-    if (this.status === 'active') {
+    const status = this._resolvedStatus;
+
+    if (status === 'active') {
       const activeStepLabel = this._getActiveStep()?.label;
       if (activeStepLabel) {
         return activeStepLabel;
       }
     }
 
-    return this._isValidStatus(this.status)
-      ? ResponseStatus.DEFAULT_LABELS[this.status]
-      : ResponseStatus.DEFAULT_LABELS.active;
+    return ResponseStatus.DEFAULT_LABELS[status];
   }
 
   private _clearLabelRollTimers(): void {
@@ -483,11 +488,13 @@ export class ResponseStatus extends SpectrumElement {
   }
 
   private _renderLeadingIcon(): TemplateResult | string {
-    if (this.status === 'complete') {
+    const status = this._resolvedStatus;
+
+    if (status === 'complete') {
       return this._renderCheckmark();
     }
 
-    if (this.status === 'stopped') {
+    if (status === 'stopped') {
       return '';
     }
 
@@ -496,14 +503,15 @@ export class ResponseStatus extends SpectrumElement {
 
   private _renderHeader(showDisclosure: boolean): TemplateResult {
     const label = this._currentVisibleLabel();
+    const status = this._resolvedStatus;
     const statusRole =
-      !showDisclosure && this.status === 'active' ? 'status' : undefined;
+      !showDisclosure && status === 'active' ? 'status' : undefined;
     const rowClass = [
       'swc-ResponseStatus-row',
       showDisclosure ? 'swc-ResponseStatus-row--button' : '',
-      this.status === 'active' ? 'swc-ResponseStatus-row--processing' : '',
-      this.status === 'stopped' ? 'swc-ResponseStatus-row--stopped' : '',
-      this.status === 'complete' ? 'swc-ResponseStatus-row--complete' : '',
+      status === 'active' ? 'swc-ResponseStatus-row--processing' : '',
+      status === 'stopped' ? 'swc-ResponseStatus-row--stopped' : '',
+      status === 'complete' ? 'swc-ResponseStatus-row--complete' : '',
     ]
       .filter(Boolean)
       .join(' ');
