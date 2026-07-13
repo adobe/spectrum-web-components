@@ -279,21 +279,7 @@ export const GridLayout: Story = {
 
 ### Static color decorator
 
-For static color stories, use `staticColorsDemo: true` with `flexLayout: 'row-wrap'`:
-
-```typescript
-export const StaticColors: Story = {
-    render: (args) => html`
-        ${['white', 'black'].map((color) => template({ 'static-color': color }),
-    parameters: {
-        flexLayout: 'row-wrap',
-        staticColorsDemo: true
-    },
-    tags: ['options', '!test'],
-};
-```
-
-The decorator displays two background zones—dark gradient for `static-color="white"` content, light gradient for `static-color="black"` content.
+For static color stories, use `staticColorsDemo: true`. The decorator displays two background zones: dark gradient for `static-color="white"` content, light gradient for `static-color="black"` content. See [Static color pattern](#static-color-pattern) below for the flat vs. div-wrapped story shapes and when to use `flexLayout` vs. structural `<div>` wrappers.
 
 ## Story naming
 
@@ -463,27 +449,11 @@ Prose for each story (e.g. the description of size choices, semantic variant mea
 
 #### Static color pattern
 
-For components with a `static-color` attribute, use whichever of these two patterns best fits the component's visual surface:
+Every component with a `static-color` option uses a single `StaticColors` story (not separate `StaticBlack`/`StaticWhite`/`StaticColors` stories). Pick whichever of these two shapes fits the component's visual surface:
 
-**Three-story pattern** — use when each color can be shown independently (simple components with a single fill style):
-
-1. **`StaticBlack`** - `static-color="black"` on light background
-2. **`StaticWhite`** - `static-color="white"` on dark background
-3. **`StaticColors`** - Both variants side-by-side
+**Flat shape**: use when the component has no other dimension to cross with color (the common case).
 
 ```typescript
-export const StaticBlack: Story = {
-  args: { 'static-color': 'black' },
-  parameters: { styles: { color: 'black' } },
-  tags: ['options'],
-};
-
-export const StaticWhite: Story = {
-  args: { 'static-color': 'white' },
-  parameters: { styles: { color: 'white' } },
-  tags: ['options'],
-};
-
 export const StaticColors: Story = {
   render: (args) => html`
     ${['white', 'black'].map(
@@ -492,12 +462,12 @@ export const StaticColors: Story = {
       `
     )}
   `,
-  parameters: { flexLayout: 'row-wrap', staticColorsDemo: true },
+  parameters: { flexLayout: false, staticColorsDemo: true },
   tags: ['options', '!test'],
 };
 ```
 
-**Combined-story pattern** — use when the component has additional dimensions (e.g., fill styles) that are most clearly shown together in a single story. Use structural `<div>` wrappers instead of `flexLayout` here: the `staticColorsDemo` decorator targets `:first-child` and `:last-child` to apply the dark/light background zones, so the two color groups must be direct children of the render output.
+**Div-wrapped shape**: use when the component has additional dimensions (e.g., fill styles) that are most clearly shown together in a single story. Use structural `<div>` wrappers instead of `flexLayout` here: the `staticColorsDemo` decorator targets `:first-child` and `:last-child` to apply the dark/light background zones, so the two color groups must be direct children of the render output.
 
 ```typescript
 export const StaticColors: Story = {
@@ -522,7 +492,7 @@ export const StaticColors: Story = {
 };
 ```
 
-In the three-story pattern, `staticColorsDemo: true` enables the background zone decorator and `flexLayout: 'row-wrap'` handles item spacing. In the combined-story pattern, use structural `<div>` children instead of `flexLayout` so the decorator's `:first-child`/`:last-child` zone targeting is preserved.
+In the flat shape, `staticColorsDemo: true` enables the background zone decorator and the first/last array items automatically land in the dark/light zones; no `flexLayout` is needed (`false`, not `'row-wrap'`). In the div-wrapped shape, use structural `<div>` children instead of `flexLayout` so the decorator's `:first-child`/`:last-child` zone targeting is preserved.
 
 ### States
 

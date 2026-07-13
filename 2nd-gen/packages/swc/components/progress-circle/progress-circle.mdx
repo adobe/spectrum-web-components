@@ -31,12 +31,12 @@ Progress circles come in three sizes to fit various contexts:
 
 <Canvas of={ProgressCircleStories.Sizes} />
 
-### Static Colors
+### Static colors
 
-Use the `static-color` attribute when displaying over images or colored backgrounds:
+Use `static-color` when the progress circle needs to sit on top of a photo or colored background. It pins the progress circle's color to the chosen value regardless of the active color theme:
 
-- **Static white**: use on dark or colored backgrounds for better contrast
-- **Static black**: use on light backgrounds for better contrast
+- **`white`**: use on dark color or image backgrounds
+- **`black`**: use on light color or image backgrounds
 
 Each panel lists **small**, **medium**, and **large** in order so Chromatic can snapshot every static-color and size pairing with the same label text (stroke weight is what changes).
 

@@ -36,7 +36,12 @@ The `quiet` attribute applies a low-emphasis visual treatment with no background
 
 ### Static colors
 
-The `static-color` attribute pins the button's color to either `"white"` or `"black"` regardless of the active theme. Use `static-color="white"` on dark backgrounds and `static-color="black"` on light backgrounds. Both default and `quiet` treatments support static color.
+Use `static-color` when the button needs to sit on top of a photo or colored background. It pins the button's color to the chosen value regardless of the active color theme:
+
+- **`white`**: use on dark color or image backgrounds
+- **`black`**: use on light color or image backgrounds
+
+Both default and `quiet` treatments support static color.
 
 <Canvas of={ActionButtonStories.StaticColors} />
 

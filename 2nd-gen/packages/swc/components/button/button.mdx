@@ -42,7 +42,12 @@ The `outline` fill style renders a transparent background with a visible border.
 
 ### Static colors
 
-The `static-color` attribute pins the button's color to either `"white"` or `"black"` regardless of the active theme. `static-color` is only supported with `primary` and `secondary` variants. Both fill styles are supported.
+Use `static-color` when the button needs to sit on top of a photo or colored background. It pins the button's color to the chosen value regardless of the active color theme:
+
+- **`white`**: use on dark color or image backgrounds
+- **`black`**: use on light color or image backgrounds
+
+`static-color` is only supported with `primary` and `secondary` variants. Both fill styles are supported.
 
 When combining a `static-color` with `fill-style="outline"`, verify that the background color maintains sufficient contrast on hover.
 

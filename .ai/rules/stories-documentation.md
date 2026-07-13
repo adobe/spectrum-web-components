@@ -389,17 +389,16 @@ export const SemanticVariants: Story = {
 };
 ```
 
-**Pattern for static color**:
+**Pattern for static color**: sourced from Spectrum's static color usage guidance (e.g. [Button](https://spectrum.adobe.com/page/button/#Static-color)). The component's color pins to the chosen value regardless of the active theme, and the choice of value depends on the background it sits over.
+
+```mdx
+Use `static-color` when the component-name needs to sit on top of a photo or colored background. It pins the component-name's color to the chosen value regardless of the active color theme:
+
+- **`white`**: use on dark color or image backgrounds
+- **`black`**: use on light color or image backgrounds
+```
 
 ```typescript
-/**
- * Use the `static-color` attribute when displaying over images or colored backgrounds:
- *
- * - **`white`**: Use on dark or colored backgrounds for better contrast
- * - **`black`**: Use on light backgrounds for better contrast
- *
- * Both variants shown below with appropriate backgrounds.
- */
 export const StaticColors: Story = {
   render: (args) => html`
     ${['white', 'black'].map(
