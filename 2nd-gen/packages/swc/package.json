@@ -19,13 +19,13 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
     },
-    "./*": {
-      "types": "./dist/components/*/index.d.ts",
-      "import": "./dist/components/*/index.js"
+    "./patterns/*": {
+      "types": "./dist/patterns/*/index.d.ts",
+      "import": "./dist/patterns/*/index.js"
     },
-    "./*.css": {
-      "types": "./dist/*.css.d.ts",
-      "default": "./dist/*.css"
+    "./patterns/*/index.js": {
+      "types": "./dist/patterns/*/index.d.ts",
+      "import": "./dist/patterns/*/index.js"
     },
     "./components/*": {
       "types": "./dist/components/*/index.d.ts",
@@ -34,6 +34,18 @@
     "./components/*.js": {
       "types": "./dist/components/*.d.ts",
       "default": "./dist/components/*.js"
+    },
+    "./utils/*": {
+      "types": "./dist/utils/*.d.ts",
+      "import": "./dist/utils/*.js"
+    },
+    "./*": {
+      "types": "./dist/components/*/index.d.ts",
+      "import": "./dist/components/*/index.js"
+    },
+    "./*.css": {
+      "types": "./dist/*.css.d.ts",
+      "default": "./dist/*.css"
     },
     "./global-button.css": {
       "default": "./dist/global-button.css"
@@ -46,14 +58,6 @@
     },
     "./link.css": {
       "default": "./dist/link.css"
-    },
-    "./patterns/*": {
-      "types": "./dist/patterns/*/index.d.ts",
-      "import": "./dist/patterns/*/index.js"
-    },
-    "./utils/*": {
-      "types": "./dist/utils/*.d.ts",
-      "import": "./dist/utils/*.js"
     }
   },
   "main": "./dist/index.js",
@@ -85,6 +89,7 @@
     "test:watch:vitest": "vitest --project storybook --watch"
   },
   "dependencies": {
+    "@lit-labs/observers": "2.0.2",
     "@spectrum-web-components/core": "0.3.0",
     "lit": "^2.5.0 || ^3.1.3"
   },
