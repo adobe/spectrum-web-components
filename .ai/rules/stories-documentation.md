@@ -488,6 +488,8 @@ export const Indeterminate: Story = {
 
 **Purpose**: Document methods, events, and automatic behaviors.
 
+**Focus management belongs here only when it's a side effect of a lifecycle or state transition**, independent of which input method triggered it: for example, a dialog trapping focus when it opens and restoring it when it closes, or a listbox auto-focusing its first result when it opens. Focus movement that **is** the keyboard interaction model itself (roving tabindex, arrow keys moving focus between items) belongs in `## Accessibility` under keyboard navigation instead: it isn't separable from "how do you operate this with a keyboard," which is already that section's job.
+
 **Pattern for automatic behaviors**:
 
 ```typescript

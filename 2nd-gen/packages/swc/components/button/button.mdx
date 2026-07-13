@@ -59,13 +59,11 @@ Buttons support three interaction states:
 
 - **Default**: the button is active and can be interacted with.
 - **Disabled**: the button is removed from the tab order and cannot be activated.
-- **Pending**: the button remains focusable but activation is suppressed while an asynchronous operation is in progress. See [Pending in Behaviors](#pending) for the full behavioral details.
+- **Pending**: the button remains focusable but activation is suppressed while an asynchronous operation is in progress.
 
 Do not set both `disabled` and `pending` simultaneously.
 
 <Canvas of={ButtonStories.States} />
-
-## Behaviors
 
 ### Pending
 
@@ -76,6 +74,8 @@ The accessible name during pending defaults to the visible label plus `", busy"`
 Use the **Pending** checkbox above the buttons to trigger and clear the state interactively. This lets you observe the 1-second activation delay and verify the accessible name switch in browser DevTools.
 
 <Canvas of={ButtonStories.Pending} />
+
+## Behaviors
 
 ### Text wrapping
 

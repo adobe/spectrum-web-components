@@ -272,10 +272,6 @@ export const States: Story = {
   tags: ['states'],
 };
 
-// ──────────────────────────────
-//    BEHAVIORS STORIES
-// ──────────────────────────────
-
 export const Pending: Story = {
   render: (args) => {
     let pending = false;
@@ -312,8 +308,12 @@ export const Pending: Story = {
       </div>
     `;
   },
-  tags: ['behaviors', '!test'],
+  tags: ['states', '!test'],
 };
+
+// ──────────────────────────────
+//    BEHAVIORS STORIES
+// ──────────────────────────────
 
 export const TextWrapping: Story = {
   render: (args) => html`
