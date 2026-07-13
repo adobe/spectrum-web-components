@@ -17,6 +17,8 @@ export { iconForSize } from './icon-for-size.js';
 export { forcePseudoState } from './pseudo-state.js';
 export type { ForcedPseudoState } from './pseudo-state.js';
 export {
+  coveredCustomProperties,
+  customPropertyRows,
   forcedColorsVrtParameters,
   forcePseudoStates,
   FORCED_STATES,
@@ -24,5 +26,7 @@ export {
   row,
   staticColorBackground,
   theme,
+  verifyCustomPropertyCoverage,
   vrtParameters,
 } from './vrt.js';
+export type { CustomPropertyCase } from './vrt.js';

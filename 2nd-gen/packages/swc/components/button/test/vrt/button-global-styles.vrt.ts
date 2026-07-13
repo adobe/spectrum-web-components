@@ -62,6 +62,25 @@ const asLinkAndButton = (classes: string, label: string) => [
   `,
 ];
 
+const VARIANT_CASES = [
+  { classes: '', label: 'Primary' },
+  { classes: 'swc-Button--secondary', label: 'Secondary' },
+  { classes: 'swc-Button--accent', label: 'Accent' },
+  { classes: 'swc-Button--negative', label: 'Negative' },
+  { classes: 'swc-Button--outline', label: 'Primary outline' },
+  {
+    classes: 'swc-Button--secondary swc-Button--outline',
+    label: 'Secondary outline',
+  },
+];
+
+const SIZE_CASES = [
+  { classes: 'swc-Button--sizeS', label: 'Small' },
+  { classes: '', label: 'Medium' },
+  { classes: 'swc-Button--sizeL', label: 'Large' },
+  { classes: 'swc-Button--sizeXl', label: 'Extra-large' },
+];
+
 // Same variant/fill-style, size, icon anatomy, truncate, and justified
 // permutations as Button/VRT, but for global-button.css's class-based
 // delivery on plain <a>/<button> elements (global-elements.css is imported in
@@ -71,114 +90,125 @@ const asLinkAndButton = (classes: string, label: string) => [
 // button-only, matching the documented limitation that native links can't
 // support a real disabled state.
 const globalStylesContent = () => html`
-  ${[
-    { classes: '', label: 'Primary' },
-    { classes: 'swc-Button--secondary', label: 'Secondary' },
-    { classes: 'swc-Button--accent', label: 'Accent' },
-    { classes: 'swc-Button--negative', label: 'Negative' },
-    { classes: 'swc-Button--outline', label: 'Primary outline' },
-    {
-      classes: 'swc-Button--secondary swc-Button--outline',
-      label: 'Secondary outline',
-    },
-  ].map(({ classes, label }) => row(asLinkAndButton(classes, label)))}
-  ${[
-    { classes: 'swc-Button--sizeS', label: 'Small' },
-    { classes: '', label: 'Medium' },
-    { classes: 'swc-Button--sizeL', label: 'Large' },
-    { classes: 'swc-Button--sizeXl', label: 'Extra-large' },
-  ].map(({ classes, label }) => row(asLinkAndButton(classes, label)))}
-  ${row([
-    html`
-      <button type="button" class="swc-Button" disabled>
-        Disabled (button)
-      </button>
-    `,
-  ])}
-  ${row([
-    html`
-      <a href="#" class="swc-Button" onclick="return false;">
-        <span class="swc-Button-label">Label only (link)</span>
-      </a>
-    `,
-    html`
-      <button type="button" class="swc-Button swc-Button--hasIcon">
-        ${globalIconSvg}
-        <span class="swc-Button-label">With icon (button)</span>
-      </button>
-    `,
-    html`
-      <button
-        type="button"
-        class="swc-Button swc-Button--iconOnly"
-        aria-label="Icon only"
-      >
-        ${globalIconSvg}
-      </button>
-    `,
-  ])}
-  ${row([
-    html`
-      <button
-        type="button"
-        class="swc-Button"
-        style="--swc-button-max-inline-size: 120px;"
-      >
-        <span class="swc-Button-label">Submit to stakeholders</span>
-      </button>
-    `,
-    html`
-      <button
-        type="button"
-        class="swc-Button swc-Button--truncate"
-        style="--swc-button-max-inline-size: 120px;"
-      >
-        <span class="swc-Button-label">Submit to stakeholders</span>
-      </button>
-    `,
-  ])}
-  ${row([
-    html`
-      <div style="inline-size: 240px;">
-        <a
-          href="#"
-          class="swc-Button swc-Button--justified"
-          onclick="return false;"
-        >
-          Justified (link)
-        </a>
-      </div>
-    `,
-    html`
-      <div style="inline-size: 64px;">
-        <button type="button" class="swc-Button swc-Button--justified">
-          Justified narrow (button)
-        </button>
-      </div>
-    `,
-  ])}
-  ${staticColorBackground(
+  ${row(
+    VARIANT_CASES.flatMap(({ classes, label }) =>
+      asLinkAndButton(classes, label)
+    ),
+    'Variants'
+  )}
+  ${row(
+    SIZE_CASES.flatMap(({ classes, label }) => asLinkAndButton(classes, label)),
+    'Sizes'
+  )}
+  ${row(
     [
-      ...asLinkAndButton('swc-Button--staticWhite', 'White'),
-      ...asLinkAndButton(
-        'swc-Button--staticWhite swc-Button--secondary',
-        'White secondary'
-      ),
+      html`
+        <button type="button" class="swc-Button" disabled>
+          Disabled (button)
+        </button>
+      `,
     ],
+    'Disabled'
+  )}
+  ${row(
+    [
+      html`
+        <a href="#" class="swc-Button" onclick="return false;">
+          <span class="swc-Button-label">Label only (link)</span>
+        </a>
+      `,
+      html`
+        <button type="button" class="swc-Button swc-Button--hasIcon">
+          ${globalIconSvg}
+          <span class="swc-Button-label">With icon (button)</span>
+        </button>
+      `,
+      html`
+        <button
+          type="button"
+          class="swc-Button swc-Button--iconOnly"
+          aria-label="Icon only"
+        >
+          ${globalIconSvg}
+        </button>
+      `,
+    ],
+    'Anatomy'
+  )}
+  ${row(
+    [
+      html`
+        <button
+          type="button"
+          class="swc-Button"
+          style="--swc-button-max-inline-size: 120px;"
+        >
+          <span class="swc-Button-label">Submit to stakeholders</span>
+        </button>
+      `,
+      html`
+        <button
+          type="button"
+          class="swc-Button swc-Button--truncate"
+          style="--swc-button-max-inline-size: 120px;"
+        >
+          <span class="swc-Button-label">Submit to stakeholders</span>
+        </button>
+      `,
+    ],
+    'Wrapping and truncation'
+  )}
+  ${row(
+    [
+      html`
+        <div style="inline-size: 240px;">
+          <a
+            href="#"
+            class="swc-Button swc-Button--justified"
+            onclick="return false;"
+          >
+            Justified (link)
+          </a>
+        </div>
+      `,
+      html`
+        <div style="inline-size: 64px;">
+          <button type="button" class="swc-Button swc-Button--justified">
+            Justified narrow (button)
+          </button>
+        </div>
+      `,
+    ],
+    'Justified'
+  )}
+  ${staticColorBackground(
+    row(
+      [
+        ...asLinkAndButton('swc-Button--staticWhite', 'White'),
+        ...asLinkAndButton(
+          'swc-Button--staticWhite swc-Button--secondary',
+          'White secondary'
+        ),
+      ],
+      'Static white'
+    ),
     'white'
   )}
   ${staticColorBackground(
-    [
-      ...asLinkAndButton('swc-Button--staticBlack', 'Black'),
-      ...asLinkAndButton(
-        'swc-Button--staticBlack swc-Button--secondary',
-        'Black secondary'
-      ),
-    ],
+    row(
+      [
+        ...asLinkAndButton('swc-Button--staticBlack', 'Black'),
+        ...asLinkAndButton(
+          'swc-Button--staticBlack swc-Button--secondary',
+          'Black secondary'
+        ),
+      ],
+      'Static black'
+    ),
     'black'
   )}
-  ${FORCED_STATES.map((state) =>
-    row([
+  ${row(
+    FORCED_STATES.flatMap((state) => [
       html`
         <a
           href="#"
@@ -194,7 +224,8 @@ const globalStylesContent = () => html`
           ${state} (button)
         </button>
       `,
-    ])
+    ]),
+    'Forced states'
   )}
 `;
 

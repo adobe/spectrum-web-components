@@ -11,10 +11,27 @@
  */
 
 import { html } from 'lit';
+import { expect } from '@storybook/test';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
 import { staticColorSettings } from '../decorators/static-colors-demo.js';
 import { type ForcedPseudoState, forcePseudoState } from './pseudo-state.js';
+
+type CssPropertyManifest = {
+  modules: Array<{
+    path: string;
+    declarations: Array<{
+      name: string;
+      cssProperties?: Array<{ name: string }>;
+    }>;
+  }>;
+};
+
+export type CustomPropertyCase<Property extends `--${string}` = `--${string}`> =
+  {
+    property: Property;
+    value: string;
+  };
 
 export const FORCED_STATES = [
   'hover',
@@ -78,6 +95,47 @@ export const row = (children: unknown, label?: string) =>
           ${children}
         </div>
       `;
+
+export const customPropertyRows = <Case extends CustomPropertyCase>(
+  cases: readonly Case[],
+  renderCase: (testCase: Case, style?: string) => unknown
+) =>
+  cases.map((testCase) =>
+    row(
+      [
+        renderCase(testCase),
+        renderCase(testCase, `${testCase.property}: ${testCase.value};`),
+      ],
+      testCase.property
+    )
+  );
+
+export const coveredCustomProperties = (cases: readonly CustomPropertyCase[]) =>
+  cases.map(({ property }) => property).sort();
+
+export const verifyCustomPropertyCoverage = async ({
+  customElementsManifest,
+  modulePath,
+  declarationName,
+  coveredProperties,
+}: {
+  customElementsManifest: CssPropertyManifest;
+  modulePath: string;
+  declarationName: string;
+  coveredProperties: readonly string[];
+}) => {
+  const documentedProperties = customElementsManifest.modules
+    .find(({ path }) => path === modulePath)
+    ?.declarations.find(({ name }) => name === declarationName)
+    ?.cssProperties?.map(({ name }) => name)
+    .sort();
+
+  await expect(documentedProperties?.length).toBeGreaterThan(0);
+  await expect(coveredProperties).toHaveLength(new Set(coveredProperties).size);
+  await expect(coveredProperties).toEqual(
+    expect.arrayContaining(documentedProperties ?? [])
+  );
+};
 
 /**
  * Wraps content so it renders in a given theme/direction regardless of the
