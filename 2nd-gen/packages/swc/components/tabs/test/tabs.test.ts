@@ -226,6 +226,77 @@ export const ClearSelectionTest: Story = {
   },
 };
 
+// ──────────────────────────────────────────────────────────────
+// TEST: A tab's own `selected` is still a public property — setting
+// it directly bypasses `_selection` and desyncs from `tabs.selected`
+// until the next resync.
+// ──────────────────────────────────────────────────────────────
+
+export const ExternalTabSelectedMutationTest: Story = {
+  render: () => html`
+    <swc-tabs selected="1" accessible-label="External mutation test">
+      <swc-tab tab-id="1">Tab 1</swc-tab>
+      <swc-tab tab-id="2">Tab 2</swc-tab>
+      <swc-tab-panel tab-id="1"><p>Panel 1</p></swc-tab-panel>
+      <swc-tab-panel tab-id="2"><p>Panel 2</p></swc-tab-panel>
+    </swc-tabs>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const tabs = await getComponent<Tabs>(canvasElement, 'swc-tabs');
+    const tab1 = canvasElement.querySelector('swc-tab[tab-id="1"]') as Tab;
+    const tab2 = canvasElement.querySelector('swc-tab[tab-id="2"]') as Tab;
+
+    await step(
+      "setting a tab's selected property directly desyncs it from tabs.selected",
+      async () => {
+        expect(tab1.selected, 'tab 1 starts selected via tabs.selected').toBe(
+          true
+        );
+
+        // `Tab.selected` is a public property; `_selection`'s cache-based
+        // model assumes items never change their own selected-ish state
+        // independently (see SelectionController's own docs). Setting it
+        // directly, instead of through `tabs.selected`, is exactly that —
+        // `_selection` has no way to learn about it, so nothing reverts it.
+        tab2.selected = true;
+        await tab2.updateComplete;
+
+        expect(
+          tab2.selected,
+          'tab 2 now shows selected even though nothing asked for that'
+        ).toBe(true);
+        expect(
+          tabs.selected,
+          'the host property is unaware of the external mutation'
+        ).toBe('1');
+      }
+    );
+
+    await step(
+      'the next resync corrects every tab from the cache, not just the one that changed',
+      async () => {
+        // Toggling `disabled` (without touching `tabs.selected`) re-runs
+        // `_syncSelectionController`, whose silent `setSelectedItem` commits
+        // through `applyMutators` — a full re-scan of every scoped item
+        // against the cache, not a diff against whatever the DOM currently
+        // shows. That scan reasserts `selectItem`/`deselectItem` for every
+        // tab, including tab 2, which nothing directly told to change back.
+        tabs.disabled = true;
+        await tabs.updateComplete;
+        tabs.disabled = false;
+        await tabs.updateComplete;
+
+        expect(tabs.selected, 'host selection is unchanged').toBe('1');
+        expect(tab1.selected, 'tab 1 remains selected').toBe(true);
+        expect(
+          tab2.selected,
+          'tab 2 is corrected back to deselected by the resync'
+        ).toBe(false);
+      }
+    );
+  },
+};
+
 export const DensityAndKeyboardActivationTest: Story = {
   render: () => html`
     <swc-tabs selected="1" accessible-label="Density / activation test">

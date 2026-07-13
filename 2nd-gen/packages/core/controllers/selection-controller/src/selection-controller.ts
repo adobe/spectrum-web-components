@@ -155,7 +155,10 @@ export type SelectionControllerConfirmDetail = {
  * Returns the deepest entry from {@link Event.composedPath} that participates in {@link items}.
  *
  * @param event - Interaction bubbling through shadow roots.
- * @param items - Pre-filtered collection (eligible slice).
+ * @param items - Candidate collection to match against. Callers on a hot path (every click,
+ *   every keydown) should pass the consumer's raw, unfiltered item list here and defer any
+ *   per-item scope/eligibility check to the single resolved hit, rather than filtering the whole
+ *   list up front.
  */
 export function deepestSelectionItemContaining(
   event: Event,
@@ -243,14 +246,20 @@ export class SelectionController implements ReactiveController {
     if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) {
       return;
     }
-    // Find which item was hit from the cheap raw scan, then validate
-    // eligibility on only that one item — this is an O(1) question
-    // (`isSelectableItem`, ending in `checkVisibility`) about the hit, not an
-    // O(n) one (`getEligibleItems`) about the whole list. Matters for a large
-    // list: a picker with hundreds of items shouldn't force a visibility
-    // check on every item for every click.
-    const hit = deepestSelectionItemContaining(event, this.getScopedRawItems());
-    if (!hit || !this.isSelectableItem(hit)) {
+    // Find which item was hit from the cheap *unfiltered* item list, then
+    // validate scope and eligibility on only that one item — both are O(1)
+    // questions about the hit (`isNodeWithinHostScope` walks up from a single
+    // node; `isSelectableItem` ends in a single `checkVisibility` call), not
+    // an O(n) walk of every item in the list. Matters for a large list: a
+    // picker with hundreds of items shouldn't force a host-scope walk *and* a
+    // visibility check on every item for every click — most clicks in such a
+    // list don't even hit a participant.
+    const hit = deepestSelectionItemContaining(event, this.getRawItems());
+    if (
+      !hit ||
+      !this.isNodeWithinHostScope(hit) ||
+      !this.isSelectableItem(hit)
+    ) {
       return;
     }
     this.applyClickOrKey(hit);
@@ -274,8 +283,12 @@ export class SelectionController implements ReactiveController {
       return;
     }
     // See `handleClickCapture` above for why this checks only the hit item.
-    const hit = deepestSelectionItemContaining(event, this.getScopedRawItems());
-    if (!hit || !this.isSelectableItem(hit)) {
+    const hit = deepestSelectionItemContaining(event, this.getRawItems());
+    if (
+      !hit ||
+      !this.isNodeWithinHostScope(hit) ||
+      !this.isSelectableItem(hit)
+    ) {
       return;
     }
     event.preventDefault();
@@ -679,10 +692,13 @@ export class SelectionController implements ReactiveController {
     return false;
   }
 
+  /** Returns the consumer's raw item list, with no scope filtering applied. */
+  private getRawItems(): HTMLElement[] {
+    return this.options.getItems();
+  }
+
   private getScopedRawItems(): HTMLElement[] {
-    return this.options
-      .getItems()
-      .filter((el) => this.isNodeWithinHostScope(el));
+    return this.getRawItems().filter((el) => this.isNodeWithinHostScope(el));
   }
 
   private isDisabledParticipant(participant: HTMLElement): boolean {
