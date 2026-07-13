@@ -15,6 +15,10 @@
   },
   "type": "module",
   "exports": {
+    "./components/accordion": {
+      "types": "./dist/components/accordion/index.d.ts",
+      "import": "./dist/components/accordion/index.js"
+    },
     "./components/action-button": {
       "types": "./dist/components/action-button/index.d.ts",
       "import": "./dist/components/action-button/index.js"
@@ -22,10 +26,6 @@
     "./components/alert-banner": {
       "types": "./dist/components/alert-banner/index.d.ts",
       "import": "./dist/components/alert-banner/index.js"
-    },
-    "./components/accordion": {
-      "types": "./dist/components/accordion/index.d.ts",
-      "import": "./dist/components/accordion/index.js"
     },
     "./components/asset": {
       "types": "./dist/components/asset/index.d.ts",
@@ -54,6 +54,10 @@
     "./components/button-group": {
       "types": "./dist/components/button-group/index.d.ts",
       "import": "./dist/components/button-group/index.js"
+    },
+    "./components/card": {
+      "types": "./dist/components/card/index.d.ts",
+      "import": "./dist/components/card/index.js"
     },
     "./components/color-handle": {
       "types": "./dist/components/color-handle/index.d.ts",
@@ -213,14 +217,14 @@
   },
   "typesVersions": {
     "*": {
+      "components/accordion": [
+        "dist/components/accordion/index.d.ts"
+      ],
       "components/action-button": [
         "dist/components/action-button/index.d.ts"
       ],
       "components/alert-banner": [
         "dist/components/alert-banner/index.d.ts"
-      ],
-      "components/accordion": [
-        "dist/components/accordion/index.d.ts"
       ],
       "components/asset": [
         "dist/components/asset/index.d.ts"
@@ -242,6 +246,9 @@
       ],
       "components/button-group": [
         "dist/components/button-group/index.d.ts"
+      ],
+      "components/card": [
+        "dist/components/card/index.d.ts"
       ],
       "components/color-handle": [
         "dist/components/color-handle/index.d.ts"
