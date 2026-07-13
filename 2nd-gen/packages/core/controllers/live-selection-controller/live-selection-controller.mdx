@@ -42,6 +42,7 @@ That live-read approach is the right choice when items can change themselves, be
 
 - Accepts a getter function as `mode` so the effective mode reacts to host property changes without re-constructing the controller.
 - Call `refresh()` after switching from `'multiple'` to `'single'` to enforce the new constraint over the current DOM state.
+- Call `refresh()` in `firstUpdated()` to enforce the constraint over any items that start open via HTML attributes; the controller is event-driven and won't observe state set before the first toggle event fires.
 
 ## Basic usage
 
@@ -50,6 +51,7 @@ That live-read approach is the right choice when items can change themselves, be
 3. Set `observeEvent` to the event name items dispatch after their state changes.
 4. Provide ARIA attributes on the host and items; this controller does not set them.
 5. Pass `mode` as a static value or a getter; call `refresh()` when switching from `'multiple'` to `'single'`.
+6. Override `firstUpdated()` to call `refresh()` so that items starting open via HTML attributes are covered on initial render.
 
 ```typescript
 import { LitElement, type PropertyValues } from 'lit';
