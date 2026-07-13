@@ -202,6 +202,31 @@ const permutationContent = () => html`
     ],
     'Truncation'
   )}
+  ${row(
+    [
+      html`
+        <swc-button lang="ja" style="max-inline-size: 180px">
+          承認ワークフローを開始
+        </swc-button>
+      `,
+      html`
+        <swc-button lang="ko" truncate style="max-inline-size: 140px">
+          승인 워크플로 시작
+        </swc-button>
+      `,
+      html`
+        <swc-button lang="zh" style="max-inline-size: 180px">
+          启动审批工作流
+        </swc-button>
+      `,
+      html`
+        <swc-button lang="ja" truncate style="max-inline-size: 160px">
+          ${arrowIcon()}承認ワークフローを開始
+        </swc-button>
+      `,
+    ],
+    'CJK language'
+  )}
 `;
 
 // VRT stories

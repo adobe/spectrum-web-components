@@ -9,12 +9,13 @@ description: Author dedicated Storybook visual regression stories for 2nd-gen co
 
 - Put VRT stories in `2nd-gen/packages/swc/components/<component>/test/vrt/*.vrt.ts`.
 - Keep docs stories for examples; keep `.vrt.ts` stories for dense visual coverage.
+- Aim for maximum meaningful coverage: include every size, variant, state, anatomy, theme, static-color, global-style, custom-property, and component-specific visual axis that can produce a useful visual difference. Cover CJK language rendering explicitly when text metrics can change, e.g. `lang="ja"` / `lang="ko"` / `lang="zh"` line-height, wrapping, or truncation. Skip only impossible, unsupported, or truly redundant combinations.
 - Use shared helpers from `.storybook/helpers`: `createPermutations`, `row`, `theme`, `staticColorBackground`, `forcePseudoStates`, `vrtParameters`, and `forcedColorsVrtParameters`.
 - Keep component files data-driven: local case lists and component renderers only. Move reusable mechanics to `.storybook/helpers`.
 
 ## Story shape
 
-- `button.vrt.ts`-style permutations: size, variant, state, anatomy, static-color, wrapping, and truncation.
+- `<component>.vrt.ts`: permutations for size, variant, state, anatomy, static-color, wrapping, and truncation.
 - `*-global-styles.vrt.ts`: plain global class coverage for `<a>` / `<button>` or equivalent elements.
 - `*-custom-properties.vrt.ts`: one reference/override row per public custom property.
 

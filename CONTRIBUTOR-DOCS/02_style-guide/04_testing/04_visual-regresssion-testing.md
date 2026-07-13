@@ -35,6 +35,8 @@ VRT covers things that are hard to test programmatically:
 
 Author dense visual coverage in `test/vrt/*.vrt.ts`. Keep documentation stories readable; use VRT stories for large matrices.
 
+Aim for maximum meaningful coverage: include every size, variant, state, anatomy, theme, static-color, global-style, custom-property, and component-specific visual axis that can produce a useful visual difference. Cover CJK language rendering explicitly when text metrics can change, e.g. `lang="ja"` / `lang="ko"` / `lang="zh"` line-height, wrapping, or truncation. Skip only impossible, unsupported, or truly redundant combinations.
+
 Use this shape:
 
 - `test/vrt/<component>.vrt.ts` for permutations, states, static colors, forced colors, wrapping, and anatomy.
