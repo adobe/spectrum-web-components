@@ -4,24 +4,13 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
 # Getting started
 
-With the deprecation of `<sp-theme>`, you must include a new stylesheet at the application level. The stylesheet contains basic document typography values, a default application background color, and all of the relevant Spectrum 2 design data tokens as custom properties.
+For installing the package, adding the base stylesheet, and rendering your first component, see [Get started](/docs/get-started--docs). This page covers customization specifics once that basic setup is in place.
+
+With the deprecation of `<sp-theme>`, the SWC stylesheet contains basic document typography values, a default application background color, and all of the relevant Spectrum 2 design data tokens as custom properties.
 
 Spectrum Web Components (SWC) also offers options to alter the [theme and scale contexts](/docs/guides-customization-theme-and-scales--docs).
 
-## Required setup
-
-To use Gen2 SWC in your application, you need two things:
-
-1. **Include the SWC stylesheet** (covered below)
-2. **Load Adobe Clean Spectrum VF fonts**: see the [Fonts guide](/docs/guides-customization-fonts--docs) for detailed instructions
-
-## Include the stylesheet
-
-The stylesheet is available via `@adobe/spectrum-wc/swc.css`.
-
-Inclusion will be dependent on your application environment and build pipeline.
-
-### Application background color
+## Application background color
 
 You may override the default application background color via the `--swc-application-background` custom property. Place this override after inclusion of the main stylesheet.
 
