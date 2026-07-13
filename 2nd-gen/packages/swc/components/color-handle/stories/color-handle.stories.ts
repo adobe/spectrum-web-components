@@ -38,13 +38,14 @@ const meta: Meta = {
   argTypes,
   parameters: {
     actions: { handles: events },
-    design: {
-      type: 'figma',
-      url: 'https://www.figma.com/design/Mngz9H7WZLbrCvGQf3GnsY/S2---Web--Desktop-scale-?node-id=13065-162',
-    },
     docs: {
       subtitle: `Draggable dot marking the picked color on a color area, slider, or wheel`,
     },
+    // TODO: add a Stackblitz link for swc-color-handle once it's published to
+    // npm; @adobe/spectrum-wc@0.3.0 (and the latest 0.3.0-next snapshot) don't
+    // include dist/components/color-handle yet, so no demo can resolve the
+    // import until a release ships it.
+    stackblitz: {},
     // The handle is `position: absolute` and centers itself on its coordinate
     // via negative margins, so each instance needs its own relative anchor.
     styles: {

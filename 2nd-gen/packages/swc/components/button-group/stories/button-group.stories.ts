@@ -99,10 +99,6 @@ const meta: Meta = {
       subtitle:
         'Clusters related button actions with consistent spacing and sizing',
     },
-    design: {
-      type: 'figma',
-      url: 'https://www.figma.com/design/Mngz9H7WZLbrCvGQf3GnsY/S2---Web--Desktop-scale-?node-id=13663-6530',
-    },
     stackblitz: {
       url: 'https://stackblitz.com/edit/swc-button-group?file=src%2Fmy-element.ts',
     },
