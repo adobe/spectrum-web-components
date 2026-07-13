@@ -72,6 +72,13 @@ class MyDisclosureGroup extends LitElement {
     mode: () => (this.allowMultiple ? 'multiple' : 'single'),
   });
 
+  protected override firstUpdated(changed: PropertyValues): void {
+    super.firstUpdated(changed);
+    // The controller is event-driven and won't observe items that start open
+    // via HTML attributes; read the initial DOM state and enforce the constraint.
+    this.selection.refresh();
+  }
+
   protected override update(changed: PropertyValues): void {
     super.update(changed);
     // Enforce the stricter single-select constraint when allow-multiple is removed.
@@ -115,7 +122,10 @@ Items can dispatch cancelable events. When the host (or any ancestor) calls `eve
 
 ### Programmatic refresh
 
-Call `refresh()` after an imperative state change that may leave the group inconsistent with the current mode. The most common case is switching from `'multiple'` to `'single'`: existing open items are not automatically deselected by the mode change itself; `refresh()` reads the current DOM state and closes the extras.
+Call `refresh()` any time the group may be in an inconsistent state that no toggle event has corrected. Two common cases:
+
+- **Mode switch** — switching from `'multiple'` to `'single'` leaves extra items open; `refresh()` reads the current DOM state and closes them.
+- **Initial render** — items with the `open` attribute set in HTML are already open before the first toggle event; call `refresh()` in `firstUpdated()` to enforce the constraint from the start.
 
 `refresh()` is a no-op in `'multiple'` mode. It is safe to call on an empty group.
 
@@ -145,9 +155,9 @@ Call `refresh()` after an imperative state change that may leave the group incon
 
 ### Methods
 
-| Member      | Description                                                                                                                                                                                                      |
-| ----------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `refresh()` | Reads the current selected state of every item and enforces the active mode. In `'single'` mode, keeps the first selected item and deselects the rest. In `'multiple'` mode, is a no-op. Safe on an empty group. |
+| Member      | Description                                                                                                                                                                                                                                                                                                                                                                                                                       |
+| ----------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `refresh()` | Reads the current selected state of every item and enforces the active mode. In `'single'` mode, keeps the first selected item and deselects the rest. In `'multiple'` mode, is a no-op. Safe on an empty group. Call in `firstUpdated()` to enforce the constraint over items that start open via HTML attributes, and after switching from `'multiple'` to `'single'` to enforce the stricter mode over the existing DOM state. |
 
 ### Events
 

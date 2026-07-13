@@ -131,6 +131,13 @@ export type LiveSelectionOptions<T extends HTMLElement = HTMLElement> = {
  *     mode: () => (this.allowMultiple ? 'multiple' : 'single'),
  *   });
  *
+ *   protected override firstUpdated(changed: PropertyValues) {
+ *     super.firstUpdated(changed);
+ *     // Items that start open via HTML attributes are set before the first toggle
+ *     // event; refresh() reads the initial DOM state and enforces the constraint.
+ *     this.selection.refresh();
+ *   }
+ *
  *   protected override update(changed: PropertyValues) {
  *     super.update(changed);
  *     // Enforce single-select when switching away from allowMultiple.
