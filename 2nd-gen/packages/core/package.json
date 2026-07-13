@@ -1,6 +1,6 @@
 {
   "name": "@spectrum-web-components/core",
-  "version": "0.1.0",
+  "version": "0.3.0",
   "description": "Abstract base classes for Spectrum Web Components",
   "license": "Apache-2.0",
   "author": "Adobe",
@@ -54,6 +54,14 @@
     "./components/button-group": {
       "types": "./dist/components/button-group/index.d.ts",
       "import": "./dist/components/button-group/index.js"
+    },
+    "./components/color-handle": {
+      "types": "./dist/components/color-handle/index.d.ts",
+      "import": "./dist/components/color-handle/index.js"
+    },
+    "./components/color-handle/index.js": {
+      "types": "./dist/components/color-handle/index.d.ts",
+      "import": "./dist/components/color-handle/index.js"
     },
     "./components/divider": {
       "types": "./dist/components/divider/index.d.ts",
@@ -230,6 +238,12 @@
       ],
       "components/button-group": [
         "dist/components/button-group/index.d.ts"
+      ],
+      "components/color-handle": [
+        "dist/components/color-handle/index.d.ts"
+      ],
+      "components/color-handle/index.js": [
+        "dist/components/color-handle/index.d.ts"
       ],
       "components/divider": [
         "dist/components/divider/index.d.ts"
