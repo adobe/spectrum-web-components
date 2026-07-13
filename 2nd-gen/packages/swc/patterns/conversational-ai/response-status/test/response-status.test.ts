@@ -13,7 +13,7 @@
 import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
-import '../index.js';
+import '../swc-response-status.js';
 
 import { getComponent } from '../../../../utils/test-utils.js';
 import { ResponseStatus } from '../ResponseStatus.js';

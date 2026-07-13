@@ -14,8 +14,8 @@ import { html } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
-import '../../suggestion-item/index.js';
-import '../index.js';
+import '../../suggestion-item/swc-suggestion-item.js';
+import '../swc-suggestion-group.js';
 
 // ────────────────
 //    METADATA

@@ -51,6 +51,10 @@
       "types": "./dist/patterns/*/index.d.ts",
       "import": "./dist/patterns/*/index.js"
     },
+    "./patterns/*.js": {
+      "types": "./dist/patterns/*.d.ts",
+      "default": "./dist/patterns/*.js"
+    },
     "./utils/*": {
       "types": "./dist/utils/*.d.ts",
       "import": "./dist/utils/*.js"

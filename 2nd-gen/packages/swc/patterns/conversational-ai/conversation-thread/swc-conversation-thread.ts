@@ -9,4 +9,14 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-export * from './UserMessage.js';
+import { defineElement } from '@spectrum-web-components/core/element/index.js';
+
+import { ConversationThread } from './ConversationThread.js';
+
+declare global {
+  interface HTMLElementTagNameMap {
+    'swc-conversation-thread': ConversationThread;
+  }
+}
+
+defineElement('swc-conversation-thread', ConversationThread);

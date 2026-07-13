@@ -15,7 +15,7 @@ import { ref } from 'lit/directives/ref.js';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
-import '../index.js';
+import '../swc-message-feedback.js';
 
 // ────────────────
 //    METADATA

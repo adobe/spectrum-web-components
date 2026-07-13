@@ -15,8 +15,8 @@ import { customElement, state } from 'lit/decorators.js';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
-import '../../upload-artifact/index.js';
-import '../index.js';
+import '../../upload-artifact/swc-upload-artifact.js';
+import '../swc-prompt-field.js';
 
 // ────────────────
 //    METADATA

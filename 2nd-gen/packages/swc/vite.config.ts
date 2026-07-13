@@ -111,6 +111,7 @@ export default defineConfig({
         ...glob.sync(resolve(__dirname, 'components/*/index.ts')),
         ...glob.sync(resolve(__dirname, 'components/*/swc-*.ts')),
         ...glob.sync(resolve(__dirname, 'patterns/*/*/index.ts')),
+        ...glob.sync(resolve(__dirname, 'patterns/*/*/swc-*.ts')),
       ].reduce(
         (entries, file) => {
           const name = file
@@ -158,6 +159,11 @@ export default defineConfig({
       {
         find: '@adobe/spectrum-wc/components',
         replacement: resolve(__dirname, 'components'),
+      },
+      // Pattern imports resolve directly to the source under `./patterns`.
+      {
+        find: '@adobe/spectrum-wc/patterns',
+        replacement: resolve(__dirname, 'patterns'),
       },
       // Short-form imports (e.g. `@adobe/spectrum-wc/badge`) point at the source
       // package layout under `./components`, mirroring the published package's
