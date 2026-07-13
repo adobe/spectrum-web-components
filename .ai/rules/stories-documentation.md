@@ -148,7 +148,7 @@ The same checks run inside `yarn lint:ai` and in CI, so a green run locally mean
 Organize MDX into these sections (skip sections that don't apply):
 
 1. **Overview** - rendered automatically by `<DocsHeader />` from the meta JSDoc, subtitle, and Overview story
-2. **Anatomy** - Both visual and technical structure (components and patterns)
+2. **Anatomy** - A flat, unordered list of the component's parts, with slot names called out inline where needed (components and patterns)
 3. **Usage** - How to instantiate and configure (controllers)
 4. **Options** - Configuration, variants, sizes, styles
 5. **States** - Different component states
@@ -272,43 +272,26 @@ export const Overview: Story = {
 
 ### Anatomy
 
-**Purpose**: Document both visual structure (what users see) and technical structure (slots, parts, properties).
+**Purpose**: Give the reader a mental model of the component's parts in plain language. Anatomy is not a second copy of the API table: the generated `<ApiTable />` (rendered by `<DocsFooter />`) already lists every slot and property from source with type and description. Anatomy should not duplicate it.
 
 **Required content:**
 
-- **All slots** with descriptions
-- **Content-rendering properties** (label, icon, src, value, etc.)
+- A flat, unordered list of the component's visual parts
+- Slot names called out **inline**, only where a reader needs to know a piece of content comes from a slot (so they write it as markup) rather than a property (so they write it as an attribute); not a separate slot inventory
 - Visual examples showing structure
 
 **Consolidation rule**: Combine all slotted content combinations into a **single Anatomy story**.
 
-**MDX prose** (`## Anatomy` section uses `hideTitle` semantics — no per-story `###`):
+**MDX prose** (`## Anatomy` section uses `hideTitle` semantics: no per-story `###`, and no `###`/`####` subsections of any kind):
 
 ```mdx
 ## Anatomy
 
 A component-name consists of:
 
-1. **Primary element** — main visual component
-2. **Secondary element** — additional visual content
-3. **Optional indicator** — shown conditionally
-
-### Content
-
-#### Slots
-
-- **Default slot**: primary content (text or HTML)
-- **icon slot**: optional icon element
-- **description slot**: additional descriptive content
-
-#### Properties
-
-Properties that render visual content:
-
-- **label**: text label displayed by the component
-- **icon**: icon identifier to display
-- **src**: image source URL
-- **value**: displayed value content
+- **Primary element**: main visual component
+- **Secondary element**, provided via the `icon` slot
+- **Optional indicator**: shown conditionally
 
 <Canvas of={Stories.Anatomy} />
 ```
@@ -331,10 +314,9 @@ export const Anatomy: Story = {
 
 **Key principles:**
 
-- Start with visual structure (designer-focused)
-- Follow with technical structure (developer-focused)
-- Document all slots with clear descriptions
-- List content-rendering properties (label, icon, src, value, etc.)
+- Use a flat, unordered list of parts. Never a numbered list: there is no numbered diagram for the numbers to key off of, and it reads oddly for single-part components. Never `###`/`####` subsections (e.g. no "Content", "Slots", or "Properties" headings). Doing so re-creates the API table by hand and drifts out of sync with it.
+- Name a slot inline in the parts list only when a reader needs to know content is passed as a slot rather than a property to compose it correctly
+- Don't re-list content-rendering properties that are already visible in the rendered example or covered by the API table
 - Show all meaningful combinations in one story
 
 ### Options
@@ -975,9 +957,8 @@ When creating or updating documentation:
 - [ ] Per-story `### Title` headings match Storybook's rendered story names (PascalCase → Title Case, or explicit `storyName`)
 - [ ] No `<Canvas>` references to untagged stories
 - [ ] Controllers: hand-authored `## API` section ahead of `<DocsFooter />`; `meta.tags` contains `'controller'` so `<ApiTable />` is omitted
-- [ ] Anatomy: visual and technical structure documented (components and patterns)
-- [ ] All slots documented with descriptions
-- [ ] All content-rendering properties listed
+- [ ] Anatomy: parts listed as a flat, unordered list with no `###`/`####` subsections (components and patterns)
+- [ ] Slot names called out inline in the Anatomy list only where needed for composition clarity (not a separate slot inventory)
 - [ ] All configuration options documented
 - [ ] All states documented
 - [ ] Methods documented (if applicable)

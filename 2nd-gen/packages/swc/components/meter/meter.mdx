@@ -11,11 +11,11 @@ import * as Stories from './stories/meter.stories';
 
 A meter consists of:
 
-1. **Label**: text describing what is being measured, provided through the `label` named slot
-2. **Value**: the formatted current value, rendered from `value` within the `min-value` and `max-value` range
-3. **Track**: the bar background showing the full range
-4. **Fill**: the portion of the track representing the current value
-5. **Description**: optional supporting text below the bar, provided through the `description` named slot
+- **Label**, provided through the `label` slot: text describing what is being measured
+- **Value**: the formatted current value, rendered from `value` within the `min-value` and `max-value` range
+- **Track**: the bar background showing the full range
+- **Fill**: the portion of the track representing the current value
+- **Description** (optional), provided through the `description` slot: supporting text below the bar
 
 The accessible `meter` role and all of its `aria-value*`, `aria-labelledby`, and `aria-describedby` attributes live on the internal bar wrapper, not on the host element.
 

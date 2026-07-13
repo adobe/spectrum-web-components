@@ -9,36 +9,12 @@ import * as TabsStories from './stories/tabs.stories';
 
 ## Anatomy
 
-### Visual structure
-
 A tabs component consists of:
 
-1. **Tab list**: a horizontal or vertical row of tab items
-2. **Tab items**: clickable labels representing each section
-3. **Selection indicator**: a visual line highlighting the active tab
-4. **Tab panels**: content areas associated with each tab
-
-### Technical structure
-
-#### Slots
-
-- **Default slot** (on `swc-tabs`): accepts `swc-tab` elements
-- **tab-panel slot** (on `swc-tabs`): accepts `swc-tab-panel` elements
-- **Default slot** (on `swc-tab`): text label content
-- **icon slot** (on `swc-tab`): optional icon displayed before the label
-- **Default slot** (on `swc-tab-panel`): panel content (any HTML)
-
-#### Properties
-
-Properties that render visual content:
-
-- **selected** (on `swc-tabs`): value of the currently active tab
-- **tab-id** (on `swc-tab` and `swc-tab-panel`): unique identifier linking tab to panel
-- **accessible-label** (on `swc-tabs`): accessible name for the tablist
-- **aria-label** (on `swc-tab`): accessible name for icon-only tabs
-- **direction**: layout direction (`horizontal` or `vertical`)
-- **keyboard-activation**: `automatic` (default; selection follows focus) or `manual`
-- **density**: `regular` (default) or `compact` spacing
+- **Tab list** (`swc-tabs`): a horizontal or vertical row of tab items, accepting `swc-tab` elements through its default slot
+- **Tab item** (`swc-tab`): a clickable label representing each section, with the label as its default slot content and an optional icon provided through the `icon` slot
+- **Selection indicator**: a visual line highlighting the active tab
+- **Tab panel** (`swc-tab-panel`), provided through the `tab-panel` slot on `swc-tabs`: the content area associated with each tab, rendered through its own default slot
 
 <Canvas of={TabsStories.Anatomy} />
 

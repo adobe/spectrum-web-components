@@ -9,25 +9,13 @@ import * as AccordionStories from './stories/accordion.stories';
 
 ## Anatomy
 
-### Visual structure
-
 An accordion consists of:
 
-1. **Item headers**: a button for each item showing a disclosure chevron and the item label
-2. **Disclosure chevron**: rotates to indicate whether the item is open or closed
-3. **Item panels**: the content revealed when an item is expanded
-4. **Actions** (optional): interactive controls placed in the header row, outside the toggle button
-
-### Technical structure
-
-#### Slots
-
-- **Default slot** (on `swc-accordion`): accepts `swc-accordion-item` elements
-- **`label` slot** (on `swc-accordion-item`): the heading text shown in the header
-- **`actions` slot** (on `swc-accordion-item`): optional interactive controls placed outside the toggle button so they remain independently clickable
-- **Default slot** (on `swc-accordion-item`): the panel content revealed when the item expands
-
-> **Note**: The header label is provided through the `label` slot. In Spectrum 1 it was a `label` attribute. See the [migration guide](?path=/docs/components-accordion-migration-guide--docs).
+- **Accordion container** (`swc-accordion`): accepts `swc-accordion-item` elements through its default slot
+- **Item header**: a button showing a disclosure chevron and the item's label, provided through the `label` slot on `swc-accordion-item`
+- **Disclosure chevron**: rotates to indicate whether the item is open or closed
+- **Item panel**: the content revealed when an item expands, provided through the default slot on `swc-accordion-item`
+- **Actions** (optional), provided through the `actions` slot on `swc-accordion-item`: interactive controls placed in the header row, independently clickable from the toggle button
 
 <Canvas of={AccordionStories.Anatomy} />
 

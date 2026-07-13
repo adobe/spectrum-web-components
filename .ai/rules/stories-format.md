@@ -385,18 +385,11 @@ export const Overview: Story = {
 
 ### Anatomy
 
-Document all slots and content-rendering properties (e.g., `label`, `icon`, `src`). Combine variations into one story.
+Document the component's parts as a flat, unordered list. Call out a slot name inline in the list only where a reader needs to know content is passed as a slot rather than a property to compose it correctly. Don't enumerate every content-rendering property separately; that's the API table's job. Combine variations into one story.
 
 **Important**: When using `render: (args) =>`, **always** spread `...args` into template calls to ensure Storybook controls work correctly.
 
 ```typescript
-/**
- * A component-name consists of:
- *
- * - **Default slot**: Primary content
- * - **icon slot**: Optional icon element
- * - **label**: Text label rendered by the component
- */
 export const Anatomy: Story = {
   render: (args) => html`
     ${template({ ...args /* text only */ })}
@@ -406,6 +399,19 @@ export const Anatomy: Story = {
   tags: ['anatomy'],
   parameters: { flexLayout: 'row-wrap' },
 };
+```
+
+The corresponding MDX prose (in the per-unit MDX, not above this export) would read:
+
+```mdx
+## Anatomy
+
+A component-name consists of:
+
+- **Default slot**: primary content
+- **Secondary element**, provided via the `icon` slot
+
+<Canvas of={Stories.Anatomy} />
 ```
 
 ### Options
@@ -709,7 +715,7 @@ See `asset.stories.ts` for complete examples.
 - [ ] Subtitle is concise and non-repetitive (plain text only, no links)
 - [ ] Playground: `['dev']` tag when an MDX exists (or `['autodocs', 'dev']` for template-only fallback), no JSDoc, common use case args
 - [ ] Overview: `['overview']` tag, common use case args, no JSDoc on story itself
-- [ ] Anatomy: all slots + content properties, `['anatomy']` tag, `flexLayout: 'row-wrap'`
+- [ ] Anatomy: flat unordered list of parts (no subsections), slot names inline where needed, `['anatomy']` tag, `flexLayout: 'row-wrap'`
 - [ ] Options: all uncovered attributes, `['options']` tag, `flexLayout: 'row-wrap'`
 - [ ] States: consolidated states, `['states']` tag, `flexLayout: 'row-wrap'` (if applicable)
 - [ ] Behaviors: `['behaviors']` tag (if applicable)

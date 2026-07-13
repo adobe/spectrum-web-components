@@ -11,9 +11,9 @@ import * as ProgressCircleStories from './stories/progress-circle.stories';
 
 A progress circle consists of:
 
-1. **Track**: background ring showing the full progress range
-2. **Fill**: colored ring segment showing current progress
-3. **Label**: accessible text describing the operation (not visually rendered).
+- **Track**: background ring showing the full progress range
+- **Fill**: colored ring segment showing current progress
+- **Label**: accessible text describing the operation, provided through the `label` attribute or property (not visually rendered)
 
 > **A11y Note**: Light DOM children are not projected into the shadow tree, so content between the opening and closing tags does not supply an accessible name. Use the `label` attribute or property, or `aria-label` / `aria-labelledby` on the host.
 

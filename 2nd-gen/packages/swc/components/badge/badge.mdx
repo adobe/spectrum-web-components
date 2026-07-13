@@ -11,14 +11,9 @@ import * as BadgeStories from './stories/badge.stories';
 
 A badge consists of:
 
-1. **Container**: colored background with rounded corners
-2. **Label**: text content describing the status or category (required)
-3. **Icon** (optional): visual indicator positioned before the label
-
-### Content
-
-- **Default slot**: text content describing the status or category (required for accessibility)
-- **icon slot**: optional visual indicator positioned before the label
+- **Container**: colored background with rounded corners
+- **Label** (required), provided through the default slot: text content describing the status or category
+- **Icon** (optional), provided through the `icon` slot: visual indicator positioned before the label
 
 <Canvas of={BadgeStories.Anatomy} />
 

@@ -9,12 +9,12 @@ import * as IllustratedMessageStories from './stories/illustrated-message.storie
 
 ## Anatomy
 
-An illustrated message consists of four slots:
+An illustrated message consists of:
 
-1. **Default slot**: decorative or informative SVG illustration displayed above (vertical) or beside (horizontal) the heading and description. Decorative SVGs must have `aria-hidden="true"`. Informative SVGs must have `role="img"` and `aria-label`.
-2. **`heading` slot**: consumer-provided `<h2>`–`<h6>` element. The component does not own the heading tag; the consumer chooses the level to match the document outline. The component warns in development if a non-heading element is used.
-3. **`description` slot** (optional): supporting text that elaborates on the heading. May contain phrasing content or links.
-4. **`actions` slot** (optional): one or more interactive controls displayed below the description. The component automatically propagates its `size` to slotted elements.
+- **Illustration**, provided through the default slot: decorative or informative SVG displayed above (vertical) or beside (horizontal) the heading and description. Decorative SVGs must have `aria-hidden="true"`. Informative SVGs must have `role="img"` and `aria-label`.
+- **Heading**, provided through the `heading` slot: a consumer-provided `<h2>`–`<h6>` element. The component does not own the heading tag; the consumer chooses the level to match the document outline. The component warns in development if a non-heading element is used.
+- **Description** (optional), provided through the `description` slot: supporting text that elaborates on the heading. May contain phrasing content or links.
+- **Actions** (optional), provided through the `actions` slot: one or more interactive controls displayed below the description. The component automatically propagates its `size` to slotted elements.
 
 <Canvas of={IllustratedMessageStories.Anatomy} />
 
