@@ -147,6 +147,10 @@ The `<swc-accordion>` and `<swc-accordion-item>` elements implement the
 6. **`aria-hidden`**: Set to `"true"` on closed panels to remove them from the accessibility tree
 7. **`inert`**: Added to disabled-item panels to block interaction with their contents
 
+#### Method delegation
+
+- **`focus()`** and **`click()`** called on `swc-accordion-item` delegate to its internal header button, so calling either programmatically focuses or activates the header the same way direct user interaction would.
+
 ### Best practices
 
 - Set a `level` that continues the existing page heading hierarchy without skipping levels
