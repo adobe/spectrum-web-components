@@ -173,13 +173,13 @@ When the trigger receives keyboard focus (<kbd>Tab</kbd> / <kbd>Shift</kbd> + <k
 
 The host element must implement this interface. All members are read by the controller; none are written.
 
-| Member           | Type      | Default | Description                                                                                                                                          |
-| ---------------- | --------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `delay`          | `number`  | —       | Warm-up duration in ms before the popover opens on hover. `0` opens immediately.                                                                     |
+| Member           | Type      | Default | Description                                                                                                                                                                                                                        |
+| ---------------- | --------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `delay`          | `number`  | —       | Warm-up duration in ms before the popover opens on hover. `0` opens immediately.                                                                                                                                                   |
 | `closeDelay`     | `number`  | `300`   | Cooldown duration in ms after the pointer leaves the trigger or popover. Independent of `delay` so the [WCAG 1.4.13](https://www.w3.org/WAI/WCAG21/Understanding/content-on-hover-or-focus.html) bridge always has time to cancel. |
-| `manual`         | `boolean` | —       | When `true`, the controller skips all event wiring.                                                                                                  |
-| `disabled`       | `boolean` | —       | When `true`, the controller skips all event wiring.                                                                                                  |
-| `requestOpen()`  | method    | —       | Called by the controller to ask the host to open. The host owns visibility state. Must be idempotent.                                                |
-| `requestClose()` | method    | —       | Called by the controller to ask the host to close. Must be idempotent.                                                                               |
+| `manual`         | `boolean` | —       | When `true`, the controller skips all event wiring.                                                                                                                                                                                |
+| `disabled`       | `boolean` | —       | When `true`, the controller skips all event wiring.                                                                                                                                                                                |
+| `requestOpen()`  | method    | —       | Called by the controller to ask the host to open. The host owns visibility state. Must be idempotent.                                                                                                                              |
+| `requestClose()` | method    | —       | Called by the controller to ask the host to close. Must be idempotent.                                                                                                                                                             |
 
 <DocsFooter />

@@ -13,9 +13,13 @@ import * as FocusgroupNavigationControllerStories from './stories/focusgroup-nav
 
 - Collapses the tab sequence to **one** tab stop by setting `tabindex="0"` on the active item and `tabindex="-1"` on all others.
 - Arrow keys move focus according to `direction`: horizontal (inline axis), vertical (block axis), `both` (all four arrows on one linear order), or `grid` (rows and columns from layout).
-- <kbd>Home</kbd> / <kbd>End</kbd> jump to the first or last item (row-major order for `grid`).
-- <kbd>Ctrl</kbd> + <kbd>Home</kbd> / <kbd>Ctrl</kbd> + <kbd>End</kbd> (`grid` only) jump to the first cell of the first row or the last cell of the last row.
-- <kbd>Page Up</kbd> / <kbd>Page Down</kbd> move `pageStep` items (linear modes) or rows (`grid`) when `pageStep` is set.
+- <kbd>Home</kbd> / <kbd>End</kbd> jump to the first or last item (row-major
+  order for `grid`).
+- <kbd>Ctrl</kbd> + <kbd>Home</kbd> / <kbd>Ctrl</kbd> + <kbd>End</kbd> (`grid`
+  only) jump to the first cell of the first row or the last cell of the last
+  row.
+- <kbd>Page Up</kbd> / <kbd>Page Down</kbd> move `pageStep` items (linear modes)
+  or rows (`grid`) when `pageStep` is set.
 
 ### Configuration
 
@@ -152,9 +156,15 @@ this.navigation = new FocusgroupNavigationController(this, {
 
 Use `direction: 'grid'` when items are laid out in rows (for example CSS Grid). The controller groups items into rows using bounding rectangles, then maps Arrow keys to cell movement.
 
-- <kbd>Home</kbd> / <kbd>End</kbd> use visual row-major order (first and last item in that flattened sequence).
-- <kbd>Ctrl</kbd> + <kbd>Home</kbd> / <kbd>Ctrl</kbd> + <kbd>End</kbd> jump to the first cell of the top row or the last cell of the bottom row, which matches rectangular grids and differs from plain <kbd>End</kbd> only when the last row has fewer cells than earlier rows.
-- <kbd>Page Up</kbd> / <kbd>Page Down</kbd> move `pageStep` rows at a time (in this demo, `pageStep: 2`); the focused column index is clamped when a row has fewer cells (same rule as <kbd>ArrowUp</kbd> / <kbd>ArrowDown</kbd>).
+- <kbd>Home</kbd> / <kbd>End</kbd> use visual row-major order (first and last
+  item in that flattened sequence).
+- <kbd>Ctrl</kbd> + <kbd>Home</kbd> / <kbd>Ctrl</kbd> + <kbd>End</kbd> jump to
+  the first cell of the top row or the last cell of the bottom row, which
+  matches rectangular grids and differs from plain <kbd>End</kbd> only when the
+  last row has fewer cells than earlier rows.
+- <kbd>Page Up</kbd> / <kbd>Page Down</kbd> move `pageStep` rows at a time (in
+  this demo, `pageStep: 2`); the focused column index is clamped when a row has
+  fewer cells (same rule as <kbd>ArrowUp</kbd> / <kbd>ArrowDown</kbd>).
 
 ```typescript
 this.navigation = new FocusgroupNavigationController(this, {
@@ -269,15 +279,15 @@ host.addEventListener(focusgroupNavigationActiveChange, (event) => {
 
 ### Options
 
-| Option               | Type                                                   | Default    | Description                                                                                                                   |
-| -------------------- | ------------------------------------------------------ | ---------- | ----------------------------------------------------------------------------------------------------------------------------- |
-| `getItems`           | `() => HTMLElement[]`                                  | (required) | Current navigable items.                                                                                                      |
-| `direction`          | `'horizontal'` \| `'vertical'` \| `'both'` \| `'grid'` | (required) | Arrow-key mode. **`both`**: Left/Right and Up/Down on the same `getItems()` sequence.                                         |
-| `wrap`               | `boolean`                                              | `false`    | Wrap at ends.                                                                                                                 |
-| `memory`             | `boolean`                                              | `true`     | Remember last focused for re-entry via <kbd>Tab</kbd>.                                                                        |
-| `skipDisabled`       | `boolean`                                              | `false`    | Skip `disabled` / `aria-disabled="true"` items.                                                                               |
+| Option               | Type                                                   | Default    | Description                                                                                                                               |
+| -------------------- | ------------------------------------------------------ | ---------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| `getItems`           | `() => HTMLElement[]`                                  | (required) | Current navigable items.                                                                                                                  |
+| `direction`          | `'horizontal'` \| `'vertical'` \| `'both'` \| `'grid'` | (required) | Arrow-key mode. **`both`**: Left/Right and Up/Down on the same `getItems()` sequence.                                                     |
+| `wrap`               | `boolean`                                              | `false`    | Wrap at ends.                                                                                                                             |
+| `memory`             | `boolean`                                              | `true`     | Remember last focused for re-entry via <kbd>Tab</kbd>.                                                                                    |
+| `skipDisabled`       | `boolean`                                              | `false`    | Skip `disabled` / `aria-disabled="true"` items.                                                                                           |
 | `pageStep`           | `number`                                               | —          | Non-zero: <kbd>Page Up</kbd> / <kbd>Page Down</kbd> move this many items (linear) or rows (`grid`). `0` / omitted / non-finite: disabled. |
-| `onActiveItemChange` | `(el) => void`                                         | —          | Callback when active item changes.                                                                                            |
+| `onActiveItemChange` | `(el) => void`                                         | —          | Callback when active item changes.                                                                                                        |
 
 ## Appendix
 

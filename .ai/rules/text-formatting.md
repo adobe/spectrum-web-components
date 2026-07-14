@@ -58,7 +58,7 @@ add `.swc-Typography--emphasized`
 
 ## Keyboard keys
 
-Wrap individual key names in `<kbd>` tags, including in bulleted lists and table cells: `<kbd>Tab</kbd>`, `<kbd>Enter</kbd>`, `<kbd>Home</kbd>`, `<kbd>End</kbd>`. For chords, wrap each key separately and join with ` + `: `<kbd>Shift</kbd> + <kbd>Tab</kbd>` (not `Shift+Tab` as plain text).
+Wrap individual key names in `<kbd>` tags, including in bulleted lists and table cells: `<kbd>Tab</kbd>`, `<kbd>Enter</kbd>`, `<kbd>Home</kbd>`, `<kbd>End</kbd>`. For chords, wrap each key separately and join with `+`: `<kbd>Shift</kbd> + <kbd>Tab</kbd>` (not `Shift+Tab` as plain text).
 
 ## Attribute and variant values in bulleted definitions
 
@@ -76,7 +76,7 @@ When the bolded lead-in of a bullet **is itself** the literal attribute/enum val
 - **`start`** (default): Buttons align to the inline start
 ```
 
-When the bolded lead-in is a human-readable label that is *distinct* from the code value (e.g. a size name where the value is a single-letter code), backtick only the code, not the label:
+When the bolded lead-in is a human-readable label that is _distinct_ from the code value (e.g. a size name where the value is a single-letter code), backtick only the code, not the label:
 
 ```markdown
 <!-- ❌ Bad -->
@@ -142,11 +142,11 @@ Ensure sufficient contrast between link text and surrounding content ([WCAG 1.4.
 
 Do not use em dashes (`—`) in documentation prose or code comments. Replace them with the punctuation that matches the sentence's intent:
 
-| Em dash usage                         | Replace with                   |
-|---------------------------------------|--------------------------------|
-| Clause separator                      | Semicolon (`;`)                |
-| Introducing elaboration or an example | Colon (`:`) or a new sentence  |
-| Parenthetical aside                   | Comma or parentheses           |
+| Em dash usage                         | Replace with                  |
+| ------------------------------------- | ----------------------------- |
+| Clause separator                      | Semicolon (`;`)               |
+| Introducing elaboration or an example | Colon (`:`) or a new sentence |
+| Parenthetical aside                   | Comma or parentheses          |
 
 ```markdown
 <!-- ❌ Bad -->

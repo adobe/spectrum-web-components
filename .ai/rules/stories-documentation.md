@@ -128,7 +128,7 @@ Examples:
 
 When a section has only one story and that story's rendered name is identical to the `## Section` heading (e.g. a single `States` story named `States`), omit the `### Title` subheading. Author the prose directly under `## Section`, with the `<Canvas>` reference immediately below it. A `## States` heading followed immediately by a `### States` subheading is a redundant repeat to a reader; collapse it to one heading. (`button.mdx`, `color-handle.mdx`.)
 
-If a single-story section's rendered name *differs* from the `## Section` heading (e.g. a `## Behaviors` section whose only story renders as "Toggle behavior"), keep the `### Title` subheading. It's adding real information there, not repeating the section title.
+If a single-story section's rendered name _differs_ from the `## Section` heading (e.g. a `## Behaviors` section whose only story renders as "Toggle behavior"), keep the `### Title` subheading. It's adding real information there, not repeating the section title.
 
 Note: the `SpectrumStories` fallback block (used by `DocumentTemplate.mdx` for units without a per-unit MDX yet) always renders a per-story `### ${story.name}` heading when `hideTitle=false`, regardless of story count, so an unmigrated unit's auto-generated docs page will still show the duplicate for a single same-named story. That's a limitation of the fallback renderer, not something to preserve when hand-authoring a per-unit MDX.
 
