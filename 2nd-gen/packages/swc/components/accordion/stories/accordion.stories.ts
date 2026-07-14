@@ -154,13 +154,8 @@ const meta: Meta = {
     docs: {
       subtitle: 'Groups related content sections behind expandable headers.',
     },
-    design: {
-      type: 'figma',
-      url: 'https://www.figma.com/design/Mngz9H7WZLbrCvGQf3GnsY/S2---Web--Desktop-scale-?node-id=124732-6479&m=dev',
-    },
-    // TODO: replace with the accordion Stackblitz project URL (resolved in PR).
     stackblitz: {
-      url: '',
+      url: 'https://stackblitz.com/edit/vitejs-vite-9abfrlbm?file=src%2Fmy-element.ts',
     },
     // swc-accordion-item is a second element of this component; surface its API
     // table alongside swc-accordion's on the docs page.
