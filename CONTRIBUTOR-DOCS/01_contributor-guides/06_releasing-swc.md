@@ -22,6 +22,8 @@
 - [Approving the publish job](#approving-the-publish-job)
 - [Verifying the release](#verifying-the-release)
 - [Publishing the documentation site](#publishing-the-documentation-site)
+    - [1st-gen documentation site](#1st-gen-documentation-site)
+    - [2nd-gen documentation site](#2nd-gen-documentation-site)
 - [Troubleshooting](#troubleshooting)
 
 </details>
@@ -182,7 +184,9 @@ After the workflow completes, verify the following:
 
 ## Publishing the documentation site
 
-The documentation site publishes automatically on any push to `main` whose commit message contains `#publish`, `docs:`, or `docs(`. This happens automatically as part of every production release (the version commit uses `#publish`).
+### 1st-gen documentation site
+
+The 1st-gen documentation site publishes automatically on any push to `main` whose commit message contains `#publish`, `docs:`, or `docs(`. This happens automatically as part of every production release (the version commit uses `#publish`).
 
 To publish the docs site manually:
 
@@ -194,6 +198,29 @@ To publish the docs site manually:
 
 ```bash
 gh workflow run publish-docs-site.yml --ref main
+```
+
+### 2nd-gen documentation site
+
+The 2nd-gen docs site (the Storybook served at `spectrum-web-components.adobe.com`) uses a two-target flow so the public site stays in sync with releases while a staging copy always tracks `main`:
+
+| Target | URL | When it deploys |
+| --- | --- | --- |
+| Staging | `https://swcpreviews.z13.web.core.windows.net/docs-staging/` | Every push to `main` that touches non-1st-gen files |
+| Production | `spectrum-web-components.adobe.com` (`docs/` path) | Manual run, or a push to `main` whose commit message contains `#gen2-publish` |
+
+> **Note:** the production keyword is `#gen2-publish`, not `#publish`. It deliberately avoids the `#publish` substring so publishing the 2nd-gen site does not also trigger the 1st-gen documentation site above.
+
+To publish the 2nd-gen production site manually:
+
+**From GitHub:**
+1. Navigate to **Actions → Publish 2nd-Gen Documentation**.
+2. Click **Run workflow**, select `main`, and click **Run workflow**.
+
+**From the terminal** (requires [GitHub CLI](https://cli.github.com)):
+
+```bash
+gh workflow run publish-2ndgen-docs.yml --ref main
 ```
 
 ---
