@@ -6,6 +6,30 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
 Replace `<sp-accordion>` / `<sp-accordion-item>` with `<swc-accordion>` / `<swc-accordion-item>`, update the imports, move each item's `label` attribute into a `label` slot, and set `level` on the accordion instead of on each item.
 
+## Installation
+
+```bash
+# Remove
+yarn remove @spectrum-web-components/accordion
+
+# Add
+yarn add @adobe/spectrum-wc
+```
+
+Update your import:
+
+```js
+// Before
+import '@spectrum-web-components/accordion/sp-accordion.js';
+import '@spectrum-web-components/accordion/sp-accordion-item.js';
+
+// After
+import '@adobe/spectrum-wc/components/accordion/swc-accordion.js';
+import '@adobe/spectrum-wc/components/accordion/swc-accordion-item.js';
+```
+
+> `@adobe/spectrum-wc` is a monolithic package. Importing via subpath (e.g. `@adobe/spectrum-wc/components/accordion/swc-accordion.js`) registers and loads only that component's bundle.
+
 ## What changed
 
 ### Renamed

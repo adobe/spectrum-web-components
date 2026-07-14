@@ -6,6 +6,28 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
 Replace `<sp-illustrated-message>` with `<swc-illustrated-message>`, move heading and description content into semantic slots, and declare illustration accessibility intent on your SVG.
 
+## Installation
+
+```bash
+# Remove
+yarn remove @spectrum-web-components/illustrated-message
+
+# Add
+yarn add @adobe/spectrum-wc
+```
+
+Update your import:
+
+```js
+// Before
+import '@spectrum-web-components/illustrated-message/sp-illustrated-message.js';
+
+// After
+import '@adobe/spectrum-wc/components/illustrated-message/swc-illustrated-message.js';
+```
+
+> `@adobe/spectrum-wc` is a monolithic package. Importing via subpath (e.g. `@adobe/spectrum-wc/components/illustrated-message/swc-illustrated-message.js`) registers and loads only that component's bundle.
+
 ## What changed
 
 ### Renamed

@@ -6,6 +6,28 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
 Replace `<sp-button>` with `<swc-button>`, update the import, and migrate renamed attributes.
 
+## Installation
+
+```bash
+# Remove
+yarn remove @spectrum-web-components/button
+
+# Add
+yarn add @adobe/spectrum-wc
+```
+
+Update your import:
+
+```js
+// Before
+import '@spectrum-web-components/button/sp-button.js';
+
+// After
+import '@adobe/spectrum-wc/components/button/swc-button.js';
+```
+
+> `@adobe/spectrum-wc` is a monolithic package. Importing via subpath (e.g. `@adobe/spectrum-wc/components/button/swc-button.js`) registers and loads only that component's bundle.
+
 ## What changed
 
 ### Renamed

@@ -6,6 +6,28 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
 Replace `<sp-button-group>` with `<swc-button-group>`, update the import, and replace the `vertical` boolean with `orientation="vertical"`.
 
+## Installation
+
+```bash
+# Remove
+yarn remove @spectrum-web-components/button-group
+
+# Add
+yarn add @adobe/spectrum-wc
+```
+
+Update your import:
+
+```js
+// Before
+import '@spectrum-web-components/button-group/sp-button-group.js';
+
+// After
+import '@adobe/spectrum-wc/components/button-group/swc-button-group.js';
+```
+
+> `@adobe/spectrum-wc` is a monolithic package. Importing via subpath (e.g. `@adobe/spectrum-wc/components/button-group/swc-button-group.js`) registers and loads only that component's bundle.
+
 ## What changed
 
 ### Renamed
