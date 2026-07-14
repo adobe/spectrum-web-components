@@ -121,7 +121,7 @@ interface OpacityCheckerboardProps {
 const SIZES = ['m', 's'] as const;
 
 const meta: Meta<OpacityCheckerboardProps> = {
-  title: 'Opacity Checkerboard',
+  title: 'Opacity checkerboard',
   component: 'demo-opacity-checkerboard-swatch',
   parameters: {
     docs: {

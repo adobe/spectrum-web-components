@@ -47,7 +47,7 @@ argTypes['static-color'] = {
  * button styles](/docs/guides-customization-global-element-styling--docs) instead.
  */
 const meta: Meta = {
-  title: 'Action Button',
+  title: 'Action button',
   component: 'swc-action-button',
   args,
   argTypes,

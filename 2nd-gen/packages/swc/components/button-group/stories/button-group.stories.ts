@@ -78,7 +78,7 @@ argTypes.disabled = {
  * or contextual action sets).
  */
 const meta: Meta = {
-  title: 'Button Group',
+  title: 'Button group',
   component: 'swc-button-group',
   args,
   argTypes,
