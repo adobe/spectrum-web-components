@@ -22,8 +22,8 @@
 - [Approving the publish job](#approving-the-publish-job)
 - [Verifying the release](#verifying-the-release)
 - [Publishing the documentation site](#publishing-the-documentation-site)
-    - [1st-gen documentation site](#1st-gen-documentation-site)
-    - [2nd-gen documentation site](#2nd-gen-documentation-site)
+    - [Gen1 documentation site](#gen1-documentation-site)
+    - [Gen2 documentation site](#gen2-documentation-site)
 - [Troubleshooting](#troubleshooting)
 
 </details>
@@ -184,9 +184,9 @@ After the workflow completes, verify the following:
 
 ## Publishing the documentation site
 
-### 1st-gen documentation site
+### Gen1 documentation site
 
-The 1st-gen documentation site publishes automatically on any push to `main` whose commit message contains `#publish`, `docs:`, or `docs(`. This happens automatically as part of every production release (the version commit uses `#publish`).
+The Gen1 documentation site publishes automatically on any push to `main` whose commit message contains `#publish`, `docs:`, or `docs(`. This happens automatically as part of every production release (the version commit uses `#publish`).
 
 To publish the docs site manually:
 
@@ -200,18 +200,18 @@ To publish the docs site manually:
 gh workflow run publish-docs-site.yml --ref main
 ```
 
-### 2nd-gen documentation site
+### Gen2 documentation site
 
-The 2nd-gen docs site (the Storybook served at `spectrum-web-components.adobe.com`) uses a two-target flow so the public site stays in sync with releases while a staging copy always tracks `main`:
+The Gen2 docs site (the Storybook served at `spectrum-web-components.adobe.com`) uses a two-target flow so the public site stays in sync with releases while a staging copy always tracks `main`:
 
 | Target | URL | When it deploys |
 | --- | --- | --- |
-| Staging | `https://swcpreviews.z13.web.core.windows.net/docs-staging/` | Every push to `main` that touches non-1st-gen files |
+| Staging | `https://swcpreviews.z13.web.core.windows.net/docs-staging/` | Every push to `main` that touches non-Gen1 files |
 | Production | `spectrum-web-components.adobe.com` (`docs/` path) | Manual run, or a push to `main` whose commit message contains `#gen2-publish` |
 
-> **Note:** the production keyword is `#gen2-publish`, not `#publish`. It deliberately avoids the `#publish` substring so publishing the 2nd-gen site does not also trigger the 1st-gen documentation site above.
+> **Note:** the production keyword is `#gen2-publish`, not `#publish`. It deliberately avoids the `#publish` substring so publishing the Gen2 site does not also trigger the Gen1 documentation site above.
 
-To publish the 2nd-gen production site manually:
+To publish the Gen2 production site manually:
 
 **From GitHub:**
 1. Navigate to **Actions → Publish 2nd-Gen Documentation**.

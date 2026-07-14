@@ -77,7 +77,7 @@ jobs:
       # production path (docs/) maps to spectrum-web-components.adobe.com and is
       # published only on a manual run or a commit whose message contains
       # `#gen2-publish`, so the public site stays in sync with releases. The
-      # keyword deliberately avoids the substring `#publish`, which the 1st-gen
+      # keyword deliberately avoids the substring `#publish`, which the Gen1
       # publish-docs-site workflow matches on.
       - name: Deploy to staging
         run: |
