@@ -20,7 +20,7 @@ import styles from './accordion.css';
  * An accordion component that groups expandable content sections.
  *
  * @element swc-accordion
- * @since 2.0.0
+ * @since 2.0.0-beta.1
  *
  * @example
  * <swc-accordion density="regular">
