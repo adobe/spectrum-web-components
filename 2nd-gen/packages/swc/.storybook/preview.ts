@@ -206,7 +206,12 @@ const preview = {
           'Learn about SWC',
           ['Overview', 'Get started', 'Gen1 vs Gen2'],
           'Resources',
-          ['Support and compatibility', 'Migrate from Gen1', 'Changelog'],
+          [
+            'Support and compatibility',
+            'Migrate from Gen1',
+            'Build with AI',
+            'Changelog',
+          ],
           'Core',
           ['Overview', 'Controllers'],
           'Components',
