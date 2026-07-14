@@ -257,7 +257,6 @@ export const Sizes: Story = {
   `,
   args: { density: 'regular' },
   tags: ['options'],
-  parameters: { 'section-order': 1 },
 };
 
 export const Density: Story = {
@@ -282,21 +281,18 @@ export const Density: Story = {
   `,
   args: { density: 'regular' },
   tags: ['options'],
-  parameters: { 'section-order': 2 },
 };
 
 export const Quiet: Story = {
   render: (args) => template({ ...args, quiet: true }, defaultItems),
   args: { density: 'regular' },
   tags: ['options'],
-  parameters: { 'section-order': 3 },
 };
 
 export const HeadingLevel: Story = {
   render: (args) => template({ ...args, level: 2 }, defaultItems),
   args: { density: 'regular' },
   tags: ['options'],
-  parameters: { 'section-order': 4 },
 };
 HeadingLevel.storyName = 'Heading level';
 
@@ -323,7 +319,6 @@ export const ItemStates: Story = {
   render: (args) => template({ ...args, 'allow-multiple': true }, stateItems),
   args: { density: 'regular' },
   tags: ['states'],
-  parameters: { 'section-order': 1 },
 };
 ItemStates.storyName = 'Item states';
 
@@ -331,7 +326,6 @@ export const DisabledAccordion: Story = {
   render: (args) => template({ ...args, disabled: true }, defaultItems),
   args: { density: 'regular' },
   tags: ['states'],
-  parameters: { 'section-order': 2 },
 };
 DisabledAccordion.storyName = 'Disabled accordion';
 
@@ -356,7 +350,6 @@ export const MixedDisabledStates: Story = {
     ),
   args: { density: 'regular' },
   tags: ['states'],
-  parameters: { 'section-order': 3 },
 };
 MixedDisabledStates.storyName = 'Mixed disabled states';
 
@@ -410,7 +403,6 @@ export const DirectActions: Story = {
   render: (args) => template(args, directActionsItems),
   args: { density: 'regular' },
   tags: ['behaviors'],
-  parameters: { 'section-order': 1 },
 };
 DirectActions.storyName = 'Direct actions';
 
@@ -434,7 +426,6 @@ export const AllowMultiple: Story = {
     template({ ...args, 'allow-multiple': true }, allowMultipleItems),
   args: { density: 'regular' },
   tags: ['behaviors'],
-  parameters: { 'section-order': 2 },
 };
 AllowMultiple.storyName = 'Allow multiple';
 
@@ -442,7 +433,6 @@ export const ToggleEvent: Story = {
   render: (args) => template(args, defaultItems),
   args: { density: 'regular' },
   tags: ['behaviors'],
-  parameters: { 'section-order': 3 },
 };
 ToggleEvent.storyName = 'Events';
 
