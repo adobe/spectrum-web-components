@@ -118,7 +118,7 @@ The `<swc-button>` element implements several accessibility features:
 - Always provide an `accessible-label` for icon-only buttons so screen readers can announce the button's purpose.
 - Prefer `accessible-label` over placing `aria-label` directly on the `<swc-button>` host, as it is intentionally forwarded to the internal native control.
 - Do not set both `pending` and `disabled` at the same time. Use `pending` to keep the button focusable while unavailable, or `disabled` to remove it from the tab order entirely.
-- For navigation, use a native `<a>` element and leverage [global element styles](/docs/guides-customization-global-element-styling--readme), not `<swc-button>`. The button element activates on both <kbd>Enter</kbd> and <kbd>Space</kbd>; links activate on <kbd>Enter</kbd> only.
+- For navigation, use a native `<a>` element and leverage [global element styles](/docs/guides-customization-global-element-styling--docs), not `<swc-button>`. The button element activates on both <kbd>Enter</kbd> and <kbd>Space</kbd>; links activate on <kbd>Enter</kbd> only.
 
 ### Host event contract
 
@@ -134,7 +134,7 @@ Host-level `focus` and `blur` compatibility events are not part of the initial 2
 The following features are outside the initial 2nd-gen Button scope:
 
 - **Cross-root ARIA** (`aria-labelledby` / `aria-describedby` from outside the shadow root).
-- **Form-associated `submit` / `reset` types**: the button currently behaves as `type="button"` only. Use native `<button type="submit">` or [global button styles](/docs/guides-customization-global-element-styling--readme) for form submission until this lands.
+- **Form-associated `submit` / `reset` types**: the button currently behaves as `type="button"` only. Use native `<button type="submit">` or [global button styles](/docs/guides-customization-global-element-styling--docs) for form submission until this lands.
 
 <Canvas of={ButtonStories.Accessibility} />
 
@@ -142,7 +142,7 @@ The following features are outside the initial 2nd-gen Button scope:
 
 The following features are planned for future releases:
 
-- **Form submission** (`type="submit"` / `type="reset"`): native form participation. Until then, use a native `<button type="submit">` with [global button styles](/docs/guides-customization-global-element-styling--readme).
+- **Form submission** (`type="submit"` / `type="reset"`): native form participation. Until then, use a native `<button type="submit">` with [global button styles](/docs/guides-customization-global-element-styling--docs).
 - **`genai` variant**: for generative AI actions.
 - **`premium` variant**: for premium or upgrade flows.
 

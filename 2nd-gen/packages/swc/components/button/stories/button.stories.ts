@@ -66,7 +66,7 @@ args.size = 'm';
  * Buttons trigger actions when activated. Use a button when users need to take an
  * action like saving changes or triggering a workflow step.
  *
- * For navigation, [use a link with global button styles](/docs/guides-customization-global-element-styling--readme) instead.
+ * For navigation, [use a link with global button styles](/docs/guides-customization-global-element-styling--docs) instead.
  */
 const meta: Meta = {
   title: 'Button',
