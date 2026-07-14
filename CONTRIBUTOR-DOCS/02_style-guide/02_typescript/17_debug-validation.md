@@ -12,15 +12,22 @@
 <summary><strong>In this doc</strong></summary>
 
 - [Debug mode API](#debug-mode-api)
+- [Reusable validation helpers](#reusable-validation-helpers)
+    - [validateEnum() — Union types and enum values](#validateenum--union-types-and-enum-values)
+    - [warnIf() — Required, conditionally required, mutually exclusive, and one-off checks](#warnif--required-conditionally-required-mutually-exclusive-and-one-off-checks)
 - [Validation by lifecycle hook](#validation-by-lifecycle-hook)
     - [update() — Pre-render validation](#update--pre-render-validation)
     - [firstUpdated() — One-time setup validation](#firstupdated--one-time-setup-validation)
     - [updated() — Post-render validation](#updated--post-render-validation)
     - [connectedCallback() — Environment validation](#connectedcallback--environment-validation)
+- [Slot validation](#slot-validation)
+    - [validateRequiredSlot() — Required slots](#validaterequiredslot--required-slots)
+    - [validateAllowedChildren() — Allowed children](#validateallowedchildren--allowed-children)
 - [Deprecation warnings](#deprecation-warnings)
     - [Deprecation warning structure](#deprecation-warning-structure)
     - [Testing deprecation warnings](#testing-deprecation-warnings)
 - [Warning message format](#warning-message-format)
+- [Known limitations](#known-limitations)
 
 </details>
 
@@ -60,9 +67,144 @@ if (window.__swc?.DEBUG) {
 }
 ```
 
+## Reusable validation helpers
+
+`@spectrum-web-components/core/utils` exports four helpers that wrap
+`window.__swc.warn` for the most common validation shapes. **Use these
+instead of hand-writing an `includes()` + `warn()` check.** Doing so keeps
+message wording and the `DEBUG` gate consistent across components, and they
+are the only thing that needs to change if the underlying warning engine is
+ever reworked.
+
+```ts
+import {
+  validateAllowedChildren,
+  validateEnum,
+  validateRequiredSlot,
+  warnIf,
+} from '@spectrum-web-components/core/utils';
+```
+
+None of the four require an outer `if (window.__swc?.DEBUG)` check. They
+gate on `DEBUG` internally. **They do not manage lifecycle timing for you.**
+Calling the right helper from the wrong place can check stale data (a
+property that hasn't updated yet) or DOM that doesn't exist yet (slot content
+before it's assigned). Which hook to call each helper from:
+
+| Helper / check | Call from | Why |
+|---|---|---|
+| `validateEnum` | `update()`, before `super.update()` | Runs on every property change, before render commits; see [update()](#update--pre-render-validation). |
+| `warnIf`: required property | `firstUpdated()` | One-time check once the DOM exists; see [firstUpdated()](#firstupdated--one-time-setup-validation). |
+| `warnIf`: conditionally required property (depends on slot content) | `updated()` | Needs both the current property value *and* rendered/slotted DOM to check against; see [updated()](#updated--post-render-validation). |
+| `warnIf`: mutually exclusive / no-effect combination | `update()`, before `super.update()` | Same as enum checks: pure property-to-property comparison, no DOM needed. |
+| `warnIf`: ancestor/context requirement | `connectedCallback()` | Needs the element attached to the tree to call `closest()`/traverse context; see [connectedCallback()](#connectedcallback--environment-validation). |
+| `validateRequiredSlot`, `validateAllowedChildren` | The slot's own `slotchange` handler | Not a Lit lifecycle hook at all: slot assignment is a separate DOM event. See [Slot validation](#slot-validation). |
+
+Never call any of these from the constructor: no property values have been
+set and there's no rendered DOM yet, so every check would run against
+placeholder/undefined state.
+
+**Re-firing across renders is expected and handled for you.** `update()`/
+`updated()` run on every reactive update, so a `validateEnum`/`warnIf` call
+placed there re-evaluates its condition every time; that's correct, not a
+bug to guard against with a `changedProperties.has(...)` check (unless the
+check is expensive; the existing `Indeterminate` example above guards for
+that reason, not to avoid re-firing). Repeated warnings for the *same*
+underlying issue don't spam the console: `window.__swc.warn`'s
+`localName:type:level:message` dedup (see [Known limitations](#known-limitations)
+for the one remaining collision case, across multiple instances of the same
+component) suppresses repeat fires within a session regardless of how many
+times the lifecycle hook re-runs.
+
+### validateEnum() — Union types and enum values
+
+```ts
+protected override update(changedProperties: PropertyValues): void {
+  validateEnum(this, {
+    prop: 'variant',
+    value: this.variant,
+    valid: BadgeBase.VARIANTS,
+    url: 'https://opensource.adobe.com/spectrum-web-components/components/badge/',
+  });
+  super.update(changedProperties);
+}
+```
+
+### warnIf() — Required, conditionally required, mutually exclusive, and one-off checks
+
+`warnIf(element, condition, message, url, options?)` is the general-purpose
+primitive: it warns when `condition` is `true`. It covers every validation
+shape that isn't an enum or a slot check.
+
+**Required property:**
+
+```ts
+protected override firstUpdated(changed: PropertyValues): void {
+  super.firstUpdated(changed);
+  warnIf(
+    this,
+    !this.accessibleLabel,
+    `<${this.localName}> requires an "accessible-label" attribute to provide an accessible name for the tablist.`,
+    'https://opensource.adobe.com/spectrum-web-components/components/tabs/',
+    { type: 'accessibility', level: 'high' }
+  );
+}
+```
+
+**Conditionally required property** (e.g. `accessibleLabel` is only required
+when no label content is slotted):
+
+```ts
+protected override updated(changed: PropertyValues<this>): void {
+  super.updated(changed);
+  const hasLabelSlotContent = this.labelSlot?.assignedNodes().length ?? 0;
+  warnIf(
+    this,
+    !this.accessibleLabel && !hasLabelSlotContent,
+    `<${this.localName}> requires either slotted label content or an "accessible-label" attribute.`,
+    'https://opensource.adobe.com/spectrum-web-components/components/example/',
+    { type: 'accessibility', level: 'high' }
+  );
+}
+```
+
+**Mutually exclusive / no-effect combination** (e.g. `outline` has no effect
+unless `variant` is semantic):
+
+```ts
+warnIf(
+  this,
+  this.outline && !BadgeBase.VARIANTS_SEMANTIC.includes(this.variant),
+  `Outline styling requires a semantic variant. Current variant "${this.variant}" is not semantic.`,
+  'https://opensource.adobe.com/spectrum-web-components/components/badge/',
+  { issues: [`outline + variant="${this.variant}"`] }
+);
+```
+
+**Component-specific quirk** (for anything that doesn't fit the shapes above,
+call `warnIf` directly with whatever predicate the component needs; there is
+no separate "quirks" API):
+
+```ts
+warnIf(
+  this,
+  this.indeterminate && this.value !== undefined,
+  `Indeterminate progress should not have a value. The value will be ignored.`,
+  'https://opensource.adobe.com/spectrum-web-components/components/progress-circle/',
+  { issues: ['indeterminate + value'] }
+);
+```
+
 ## Validation by lifecycle hook
 
 Different validation concerns belong in different lifecycle methods. Choose based on when the validation is relevant and what information is available.
+
+The examples below show the underlying `window.__swc.warn` shape each helper
+in [Reusable validation helpers](#reusable-validation-helpers) is built on.
+New validation code should call `validateEnum()` or `warnIf()` rather than
+writing `window.__swc.warn()` directly, but the lifecycle-hook guidance
+(which method to override, and why) still applies regardless of which call
+you make inside it.
 
 ### update() — Pre-render validation
 
@@ -218,6 +360,51 @@ public override connectedCallback(): void {
 }
 ```
 
+## Slot validation
+
+Slot content can't be checked until it's actually assigned, so both helpers
+below are wired to the slot's `slotchange` event rather than a Lit lifecycle
+hook. Wiring is manual (there is no base-class magic that auto-attaches
+these): add a `@slotchange=${this.handleXSlotChange}` on the `<slot>` in
+`render()` and call the helper from that handler.
+
+### validateRequiredSlot() — Required slots
+
+```ts
+protected override render(): TemplateResult {
+  return html`
+    <slot name="label" @slotchange=${this.handleLabelSlotChange}></slot>
+  `;
+}
+
+protected handleLabelSlotChange(event: Event): void {
+  validateRequiredSlot(
+    this,
+    event.target as HTMLSlotElement,
+    'label',
+    'https://opensource.adobe.com/spectrum-web-components/components/example/'
+  );
+}
+```
+
+### validateAllowedChildren() — Allowed children
+
+Generalizes the pattern IllustratedMessage's heading slot already uses
+(previously a one-off `['H2','H3','H4','H5','H6']` allowlist inline in the
+component):
+
+```ts
+protected handleHeadingSlotChange(event: Event): void {
+  validateAllowedChildren(
+    this,
+    event.target as HTMLSlotElement,
+    ['h2', 'h3', 'h4', 'h5', 'h6'],
+    'heading',
+    'https://opensource.adobe.com/spectrum-web-components/components/illustrated-message/'
+  );
+}
+```
+
 ## Deprecation warnings
 
 Use `{ level: 'deprecation' }` when a property or attribute has been superseded by a new API. This signals to consumers that they need to migrate, not just fix a configuration error.
@@ -316,3 +503,34 @@ Use the full documentation URL for the component:
 ```ts
 'https://opensource.adobe.com/spectrum-web-components/components/badge/'
 ```
+
+## Known limitations
+
+**Dedup granularity (partially fixed).** Warnings are deduplicated on
+`${localName}:${type}:${level}:${message}` in one **global** `Set`
+(`window.__swc.issuedWarnings`) shared across the whole page. The `message`
+segment was added specifically so that **two different checks on the same
+component no longer suppress each other**. Previously, any two warnings
+sharing a `type`/`level` (most calls use the `default`/`default` bucket, so
+this was common) collided, and only the first one to fire in a session ever
+logged.
+
+One collision case remains, unfixed: the key has no per-instance identity, so
+**two different instances of the same component with the identical
+message** still collide. Ten `<swc-badge>` elements on a page all set to the
+same invalid `variant` still produce exactly **one** console warning (from
+whichever updates first), not ten, which is easy to misread as "only one
+badge is broken." Set `window.__swc.verbose = true` before components load
+to skip the `issuedWarnings` check entirely and log every occurrence, from
+every instance, every time. Reach for this when auditing a page for every
+instance of a given issue.
+
+**No guaranteed production stripping (not addressed here).** The
+`process.env.NODE_ENV === 'development'` gate in `spectrum-element.ts` ships
+as literal, unreplaced code in this package's own library build;
+dead-code elimination depends entirely on the *consuming application's*
+bundler defining `process.env.NODE_ENV` and applying that define to
+`node_modules`. A consumer loading the package as a bare ES module with no
+bundler at all will hit a `ReferenceError` on `process`. This is a build
+tooling problem, not a call-site problem, and is tracked as its own
+follow-up. Raise it as a separate change if you want to pursue a fix.

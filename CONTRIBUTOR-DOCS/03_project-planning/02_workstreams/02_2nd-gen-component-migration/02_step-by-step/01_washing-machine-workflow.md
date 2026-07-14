@@ -275,6 +275,7 @@ See [Step 2](02_factor-rendering-out-of-1st-gen-component.md) and [Step 3](03_mo
 2. **Define types** in `Component.types.ts`; put shared API in base (core), SWC-only in concrete class.
 3. **Mark internal API** with JSDoc `@internal`; add JSDoc for public props/slots.
 4. **Implement static readonly arrays and debug warnings** — follow [API patterns (statics and warnings)](#api-patterns-statics-and-warnings) below; reference implementation: 2nd-gen Badge (`Badge.base.ts`, `Badge.ts`).
+5. **Apply dev-warning validation for every applicable category**: union/enum values, required properties, conditionally required properties, mutually exclusive/no-effect property combinations, required slots, and allowed children. Use the shared helpers in `@spectrum-web-components/core/utils` (`validateEnum`, `warnIf`, `validateRequiredSlot`, `validateAllowedChildren`) rather than hand-rolled `window.__swc.warn()` checks. See [Debug and validation](../../../../02_style-guide/02_typescript/17_debug-validation.md#reusable-validation-helpers).
 
 ### Property migration scenarios
 
@@ -302,6 +303,27 @@ Follow team **TypeScript conventions** for naming and structure; use **Badge** a
 **`window.__swc.warn()` (debug-only)**
 
 - When `window.__swc?.DEBUG` is enabled, warn on invalid API combinations (e.g. incompatible variant + outline) so developers catch mistakes without affecting production. See `Badge.base.ts` (`update()` and `window.__swc.warn(...)` with structured issue metadata).
+
+**Dev-warning validation categories (use the shared helpers)**
+
+Do not write `includes()` + `window.__swc.warn()` checks by hand. Import the
+shared helpers from `@spectrum-web-components/core/utils` instead
+(`validateEnum`, `warnIf`, `validateRequiredSlot`, `validateAllowedChildren`).
+Every component should be checked against each applicable category:
+
+| Category | Helper | Example |
+|---|---|---|
+| Union types / enum values | `validateEnum` | `variant`, `size` |
+| Required properties | `warnIf` | `accessibleLabel` with no accessible name available |
+| Conditionally required properties | `warnIf` | `accessibleLabel` required only when no label slot content is provided |
+| Mutually exclusive / no-effect combinations | `warnIf` | `outline` has no effect without a semantic `variant` |
+| Required slots | `validateRequiredSlot` | a slot that must have assigned content |
+| Allowed children | `validateAllowedChildren` | a heading slot that only accepts `<h2>`-`<h6>` |
+| Component-specific quirks | `warnIf` (called directly, no dedicated helper) | anything that doesn't fit the categories above |
+
+Full worked examples for each category are in
+[Reusable validation helpers](../../../../02_style-guide/02_typescript/17_debug-validation.md#reusable-validation-helpers)
+and [Slot validation](../../../../02_style-guide/02_typescript/17_debug-validation.md#slot-validation).
 
 **Deprecating 1st-gen APIs during migration**
 
@@ -363,6 +385,8 @@ Notes on the pattern:
 - [ ] Internal helpers are marked `@internal`.
 - [ ] Static `readonly` arrays match types; used for validation, Storybook, and tests where applicable.
 - [ ] Invalid prop combinations emit `window.__swc.warn()` when debug is on (where the component has combination rules).
+- [ ] Every applicable dev-warning category is covered: enum values, required properties, conditionally required properties, mutually exclusive/no-effect combinations, required slots, allowed children.
+- [ ] Dev-warning checks use the shared helpers (`validateEnum`, `warnIf`, `validateRequiredSlot`, `validateAllowedChildren`) rather than hand-rolled `includes()` + `warn()` code.
 
 ### Common problems and solutions
 
@@ -382,6 +406,7 @@ If you are renaming or removing a public prop or attribute, confirm with the tea
 
 - [ ] Public API is documented; types are in core; base holds behavior; SWC holds rendering.
 - [ ] Static readonly pattern, debug warnings, and 1st-gen deprecation notices align with Badge (or equivalent) and TypeScript conventions.
+- [ ] Dev-warning validation uses the shared `core/utils` helpers for every applicable category (see table above), not hand-rolled checks.
 
 ---
 
@@ -408,6 +433,7 @@ If you are renaming or removing a public prop or attribute, confirm with the tea
 - [ ] Component behaves as expected with screen reader. 
 - [ ] Keyboard and focus behavior are implemented and tested.
 - [ ] No accessibility regressions vs 1st-gen.
+- [ ] Accessible-name validation (required or conditionally required `accessibleLabel`/label slot, required label/heading slots, allowed slot children) uses the shared `core/utils` helpers with `{ type: 'accessibility' }`. See [Reusable validation helpers](../../../../02_style-guide/02_typescript/17_debug-validation.md#reusable-validation-helpers) and [Slot validation](../../../../02_style-guide/02_typescript/17_debug-validation.md#slot-validation).
 
 ### Common problems and solutions
 
@@ -491,6 +517,7 @@ For troubleshooting and detailed patterns (e.g. 1st-gen Constructable Stylesheet
 2. **A11y tests (Playwright):** Run a11y checks in Storybook; use `gotoStory` and `toMatchAriaSnapshot`.
 3. **Storybook play functions:** Add play functions for defaults, variants, keyboard.
 4. **Coverage:** Main props, variants, user actions.
+5. **Dev-warning tests:** For every dev-warning check added in Phase 3/4, add a pair of test cases (fires for the invalid/missing case, silent for the valid case) using `withWarningSpy` from `@spectrum-web-components/swc/utils/test-utils`. See the **Testing deprecation warnings** pattern in [Debug and validation](../../../../02_style-guide/02_typescript/17_debug-validation.md#testing-deprecation-warnings), which applies to all warning categories, not just deprecations.
 
 Follow the two-file layout (`test/<component>.test.ts`, `test/<component>.a11y.spec.ts`). See the [2nd gen testing conventions](../../../../01_contributor-guides/11_2ndgen_testing.md) and reference implementations in `link/test/`, `checkbox/test/`, `badge/test/`, etc.
 
@@ -500,6 +527,7 @@ Follow the two-file layout (`test/<component>.test.ts`, `test/<component>.a11y.s
 - [ ] Unit tests pass; a11y tests pass.
 - [ ] Critical paths (render, props, slots, events) are covered.
 - [ ] Tests follow the project [testing conventions](../../../../01_contributor-guides/11_2ndgen_testing.md).
+- [ ] Every dev-warning check has a fires/does-not-fire test pair via `withWarningSpy`.
 
 ### Common problems and solutions
 
