@@ -36,6 +36,7 @@ export {
   LanguageResolutionController,
   languageResolverUpdatedSymbol,
 } from './language-resolution.js';
+export { PageScrollLockController } from './page-scroll-lock.js';
 export {
   ALL_PLACEMENTS,
   fromFloatingPlacement,
