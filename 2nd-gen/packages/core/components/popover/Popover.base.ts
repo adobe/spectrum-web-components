@@ -275,6 +275,9 @@ export abstract class PopoverBase extends SpectrumElement {
    */
   private _triggerPointerActive = false;
 
+  /** Cancels the pending press-end listeners armed in `_onTriggerPressStart`. */
+  private _pressEndAbort: AbortController | null = null;
+
   /**
    * Set when the trigger press light-dismissed an open popover (an `'outside'`
    * close observed while `_triggerPointerActive`), so the trailing `click` of
@@ -504,6 +507,35 @@ export abstract class PopoverBase extends SpectrumElement {
   // already recorded (`_onTriggerClick` clears it per gesture).
   private _onTriggerPressStart = (): void => {
     this._triggerPointerActive = true;
+    // Catches a press that ends without a click (drag off the trigger, or a
+    // cancelled gesture), which would otherwise leave the flag stuck true.
+    this._pressEndAbort = new AbortController();
+    const { signal } = this._pressEndAbort;
+    document.addEventListener('pointerup', this._onTriggerPressEnd, {
+      capture: true,
+      once: true,
+      signal,
+    });
+    document.addEventListener('pointercancel', this._onTriggerPressEnd, {
+      capture: true,
+      once: true,
+      signal,
+    });
+  };
+
+  private _onTriggerPressEnd = (event: PointerEvent): void => {
+    this._pressEndAbort?.abort();
+    // A same-target pointerup still gets its own click, which resets the flag
+    // itself; resetting it here too would race that click's read of
+    // `_dismissedByTriggerPress`. pointercancel never gets a click, so it
+    // always resets.
+    if (
+      event.type === 'pointerup' &&
+      event.composedPath().includes(this._clickTrigger as EventTarget)
+    ) {
+      return;
+    }
+    this._triggerPointerActive = false;
   };
 
   // If the press light-dismissed the popover (recorded in `_onBeforeToggle`),
