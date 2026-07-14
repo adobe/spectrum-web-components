@@ -38,14 +38,14 @@ import { ${baseClassName} } from '@adobe/spectrum-wc/components/core/controllers
     );
   }
 
-  if (tags?.includes('migrated') || packagePath) {
+  if (tags?.includes('migrated')) {
     // Extract component name in kebab-case from the title (e.g., "Components/Progress Circle" -> "progress-circle")
     const packageName = formatTitle(resolvedOf.preparedMeta?.title);
 
     // Extract component name in PascalCase from the title (e.g., "Components/Progress Circle" -> "ProgressCircle")
     const baseClassName = formatTitle(resolvedOf.preparedMeta?.title, 'pascal');
 
-    const tagName = resolvedOf.preparedMeta?.component || `swc-${packageName}`;
+    const tagName = `swc-${packageName}`;
     const resolvedPackagePath = packagePath || `components/${packageName}`;
 
     const markdownContent = `## Getting started

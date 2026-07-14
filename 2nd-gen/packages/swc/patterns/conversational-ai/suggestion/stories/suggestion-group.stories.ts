@@ -53,6 +53,7 @@ const meta: Meta = {
     layout: 'padded',
   },
   excludeStories: ['meta'],
+  tags: ['migrated'],
 };
 
 export { meta };
