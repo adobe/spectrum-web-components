@@ -11,6 +11,8 @@
  */
 import { defineElement } from '@spectrum-web-components/core/element/index.js';
 
+import './response-status-step/swc-response-status-step.js';
+
 import { ResponseStatus } from './ResponseStatus.js';
 
 declare global {

@@ -112,6 +112,8 @@ export default defineConfig({
         ...glob.sync(resolve(__dirname, 'components/*/swc-*.ts')),
         ...glob.sync(resolve(__dirname, 'patterns/*/*/index.ts')),
         ...glob.sync(resolve(__dirname, 'patterns/*/*/swc-*.ts')),
+        ...glob.sync(resolve(__dirname, 'patterns/*/*/*/index.ts')),
+        ...glob.sync(resolve(__dirname, 'patterns/*/*/*/swc-*.ts')),
       ].reduce(
         (entries, file) => {
           const name = file
@@ -160,7 +162,8 @@ export default defineConfig({
         find: '@adobe/spectrum-wc/components',
         replacement: resolve(__dirname, 'components'),
       },
-      // Pattern imports resolve directly to the source under `./patterns`.
+      // Pattern imports (e.g. `@adobe/spectrum-wc/patterns/conversational-ai/response-status`)
+      // resolve to `./patterns`, mirroring the published `./patterns/*` export.
       {
         find: '@adobe/spectrum-wc/patterns',
         replacement: resolve(__dirname, 'patterns'),

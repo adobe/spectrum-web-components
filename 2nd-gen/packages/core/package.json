@@ -15,6 +15,10 @@
   },
   "type": "module",
   "exports": {
+    "./components/accordion": {
+      "types": "./dist/components/accordion/index.d.ts",
+      "import": "./dist/components/accordion/index.js"
+    },
     "./components/action-button": {
       "types": "./dist/components/action-button/index.d.ts",
       "import": "./dist/components/action-button/index.js"
@@ -22,10 +26,6 @@
     "./components/alert-banner": {
       "types": "./dist/components/alert-banner/index.d.ts",
       "import": "./dist/components/alert-banner/index.js"
-    },
-    "./components/accordion": {
-      "types": "./dist/components/accordion/index.d.ts",
-      "import": "./dist/components/accordion/index.js"
     },
     "./components/asset": {
       "types": "./dist/components/asset/index.d.ts",
@@ -55,6 +55,10 @@
       "types": "./dist/components/button-group/index.d.ts",
       "import": "./dist/components/button-group/index.js"
     },
+    "./components/card": {
+      "types": "./dist/components/card/index.d.ts",
+      "import": "./dist/components/card/index.js"
+    },
     "./components/color-handle": {
       "types": "./dist/components/color-handle/index.d.ts",
       "import": "./dist/components/color-handle/index.js"
@@ -82,6 +86,14 @@
     "./components/meter": {
       "types": "./dist/components/meter/index.d.ts",
       "import": "./dist/components/meter/index.js"
+    },
+    "./components/popover": {
+      "types": "./dist/components/popover/index.d.ts",
+      "import": "./dist/components/popover/index.js"
+    },
+    "./components/popover/index.js": {
+      "types": "./dist/components/popover/index.d.ts",
+      "import": "./dist/components/popover/index.js"
     },
     "./components/progress-circle": {
       "types": "./dist/components/progress-circle/index.d.ts",
@@ -187,6 +199,10 @@
       "types": "./dist/utils/capitalize.d.ts",
       "import": "./dist/utils/capitalize.js"
     },
+    "./utils/dismissible-stack.js": {
+      "types": "./dist/utils/dismissible-stack.d.ts",
+      "import": "./dist/utils/dismissible-stack.js"
+    },
     "./utils/get-label-from-slot.js": {
       "types": "./dist/utils/get-label-from-slot.d.ts",
       "import": "./dist/utils/get-label-from-slot.js"
@@ -194,6 +210,10 @@
     "./utils/index.js": {
       "types": "./dist/utils/index.d.ts",
       "import": "./dist/utils/index.js"
+    },
+    "./utils/resolve-trigger.js": {
+      "types": "./dist/utils/resolve-trigger.d.ts",
+      "import": "./dist/utils/resolve-trigger.js"
     }
   },
   "main": "./dist/index.js",
@@ -209,14 +229,14 @@
   },
   "typesVersions": {
     "*": {
+      "components/accordion": [
+        "dist/components/accordion/index.d.ts"
+      ],
       "components/action-button": [
         "dist/components/action-button/index.d.ts"
       ],
       "components/alert-banner": [
         "dist/components/alert-banner/index.d.ts"
-      ],
-      "components/accordion": [
-        "dist/components/accordion/index.d.ts"
       ],
       "components/asset": [
         "dist/components/asset/index.d.ts"
@@ -238,6 +258,9 @@
       ],
       "components/button-group": [
         "dist/components/button-group/index.d.ts"
+      ],
+      "components/card": [
+        "dist/components/card/index.d.ts"
       ],
       "components/color-handle": [
         "dist/components/color-handle/index.d.ts"

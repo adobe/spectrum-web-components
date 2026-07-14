@@ -10,3 +10,4 @@
  * governing permissions and limitations under the License.
  */
 export * from './ResponseStatus.js';
+export * from './response-status-step/ResponseStatusStep.js';
