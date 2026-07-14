@@ -20,7 +20,7 @@ import styles from './divider.css';
 
 /**
  * @element swc-divider
- * @since 2.0.0
+ * @since 2.0.0-beta.1
  *
  * @cssprop --swc-divider-background-color - Background color of the divider.
  * @cssprop --swc-divider-thickness - Thickness of the divider.

@@ -30,7 +30,7 @@ import styles from './badge.css';
  * Badges are typically used to indicate status, categories, or provide supplementary information.
  *
  * @element swc-badge
- * @since 2.0.0
+ * @since 2.0.0-beta.1
  *
  * @example
  * <swc-badge variant="positive">New</swc-badge>

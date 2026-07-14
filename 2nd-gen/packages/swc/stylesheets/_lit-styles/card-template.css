@@ -1,0 +1,24 @@
+/**
+ * Copyright 2026 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+/**
+ * Shared structural rules for the card template, composed into the
+ * `styles()` array of every concrete card component. Import as a JavaScript
+ * module, not via a CSS `@import` — see
+ * CONTRIBUTOR-DOCS/02_style-guide/01_css/07_stylesheets.md.
+ *
+ * Targets the plain `.card`/`.card__*` classes from `card-template.ts`.
+ *
+ * @todo Populate with the shared layout and the size/density token wiring
+ * for CardBase's `size` and `density` properties, following token guidance
+ * from the Layout RFC.
+ */
