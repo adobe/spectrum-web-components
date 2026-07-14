@@ -80,17 +80,6 @@ export abstract class ButtonBase extends SizedMixin(
   }
 
   /**
-   * Resolves the accessible name for the button from `accessibleLabel` or
-   * visible text content. Returns `null` when no accessible name is
-   * determinable.
-   *
-   * @internal
-   */
-  protected getResolvedAccessibleName(): string | null {
-    return this.accessibleLabel ?? (this.textContent?.trim() || null);
-  }
-
-  /**
    * Returns the set of attributes that should be forwarded to the internal
    * semantic `<button>` element, if not otherwise directly managed.
    *

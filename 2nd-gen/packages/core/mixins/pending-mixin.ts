@@ -16,12 +16,13 @@ import { property } from 'lit/decorators.js';
 import { PendingController } from '../controllers/pending-controller/index.js';
 import type { PendingSpinnerResult } from '../directives/pending-spinner/index.js';
 
-type Constructor<T = Record<string, unknown>> = {
+// Abstract-capable so the mixin can be applied over abstract base classes such
+// as `ButtonBase`; `new` alone cannot construct an abstract class.
+type Constructor<T = Record<string, unknown>> =
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  new (...args: any[]): T;
-  prototype: T;
-};
+  abstract new (...args: any[]) => T;
 
+/** The API {@link PendingMixin} adds to its host. */
 export interface PendingInterface {
   pending: boolean;
   pendingLabel?: string;
@@ -42,8 +43,8 @@ export interface PendingInterface {
  * {@link PendingInterface.getPendingAccessibleName}), and for rendering the
  * spinner with the `renderPendingSpinner` directive.
  *
- * Hosts override {@link resolvePendingAccessibleName} to supply their non-busy
- * accessible name; the default uses trimmed `textContent`.
+ * The busy accessible name is derived from the host's optional
+ * `accessibleLabel` when present, otherwise from trimmed `textContent`.
  *
  * @example
  * ```typescript
@@ -51,19 +52,22 @@ export interface PendingInterface {
  *   render() {
  *     return html`<button
  *       aria-disabled=${ifDefined(this.pending ? 'true' : undefined)}
- *       aria-label=${ifDefined(this.pending ? this.getPendingAccessibleName() : undefined)}
+ *       aria-label=${ifDefined(this.pending ? this.getPendingAccessibleName() : this.accessibleLabel)}
  *     >
  *       <slot></slot>
- *       ${renderPendingSpinner(this.pending, this.pendingActive)}
+ *       ${this.renderPendingState()}
  *     </button>`;
  *   }
  * }
  * ```
  */
-export function PendingMixin<T extends Constructor<ReactiveElement>>(
-  constructor: T
-): T & Constructor<PendingInterface> {
-  class PendingElement extends constructor implements PendingInterface {
+export function PendingMixin<
+  T extends Constructor<ReactiveElement & { accessibleLabel?: string }>,
+>(constructor: T): T & Constructor<PendingInterface> {
+  abstract class PendingElement
+    extends constructor
+    implements PendingInterface
+  {
     /**
      * Whether the element is in a pending (busy) state. The element remains
      * focusable but activation is suppressed.
@@ -80,7 +84,8 @@ export function PendingMixin<T extends Constructor<ReactiveElement>>(
     public pendingLabel?: string;
 
     private _pendingController = new PendingController(this, {
-      resolveAccessibleName: () => this.resolvePendingAccessibleName(),
+      resolveAccessibleName: () =>
+        this.accessibleLabel ?? (this.textContent?.trim() || null),
     });
 
     /**
@@ -103,15 +108,6 @@ export function PendingMixin<T extends Constructor<ReactiveElement>>(
      */
     public renderPendingState(): PendingSpinnerResult {
       return this._pendingController.renderPendingState();
-    }
-
-    /**
-     * Returns the host's non-busy accessible name, used to derive the default
-     * busy label. Hosts override this to supply a richer name (e.g. an
-     * `accessible-label` fallback); the default uses trimmed `textContent`.
-     */
-    protected resolvePendingAccessibleName(): string | null {
-      return this.textContent?.trim() || null;
     }
 
     /**

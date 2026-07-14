@@ -123,11 +123,6 @@ export class Button extends PendingMixin(ButtonBase) {
     return [baseStyles, pendingSpinnerStyles, styles];
   }
 
-  /** The busy accessible name derives from the button's resolved name. */
-  protected override resolvePendingAccessibleName(): string | null {
-    return this.getResolvedAccessibleName();
-  }
-
   // @todo SWC-2034: handle form-associated types reset / submit
   protected override render(): TemplateResult {
     return html`

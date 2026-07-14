@@ -160,11 +160,6 @@ export class ActionButton extends PendingMixin(ButtonBase) {
     return [pendingSpinnerStyles, styles];
   }
 
-  /** The busy accessible name derives from the button's resolved name. */
-  protected override resolvePendingAccessibleName(): string | null {
-    return this.getResolvedAccessibleName();
-  }
-
   protected override render(): TemplateResult {
     return html`
       <button
