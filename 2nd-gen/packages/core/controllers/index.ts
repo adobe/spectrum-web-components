@@ -22,6 +22,7 @@ export {
 export {
   focusgroupNavigationActiveChange,
   FocusgroupNavigationController,
+  type FocusgroupActiveChangeSource,
   type FocusgroupDirection,
   type FocusgroupNavigationActiveChangeDetail,
   type FocusgroupNavigationOptions,
