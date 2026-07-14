@@ -9,21 +9,16 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-import { defineElement } from '@spectrum-web-components/core/element/index.js';
 
-import './response-status-step/index.js';
-
-import { ResponseStatusStep } from './response-status-step/ResponseStatusStep.js';
-import { ResponseStatus } from './ResponseStatus.js';
-
-export * from './ResponseStatus.js';
-export * from './response-status-step/ResponseStatusStep.js';
-
-declare global {
-  interface HTMLElementTagNameMap {
-    'swc-response-status': ResponseStatus;
-    'swc-response-status-step': ResponseStatusStep;
-  }
-}
-
-defineElement('swc-response-status', ResponseStatus);
+/**
+ * Shared structural rules for the card template, composed into the
+ * `styles()` array of every concrete card component. Import as a JavaScript
+ * module, not via a CSS `@import` — see
+ * CONTRIBUTOR-DOCS/02_style-guide/01_css/07_stylesheets.md.
+ *
+ * Targets the plain `.card`/`.card__*` classes from `card-template.ts`.
+ *
+ * @todo Populate with the shared layout and the size/density token wiring
+ * for CardBase's `size` and `density` properties, following token guidance
+ * from the Layout RFC.
+ */

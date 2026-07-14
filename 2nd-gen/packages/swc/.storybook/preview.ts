@@ -381,6 +381,8 @@ const preview = {
                   'Migration plan',
                   'Rendering and styling migration analysis',
                 ],
+                'Card',
+                ['Migration plan'],
                 'Checkbox',
                 ['Rendering and styling migration analysis'],
                 'Close button',
