@@ -28,7 +28,7 @@ import '../../response-status/index.js';
 
 const { args, argTypes, template } = getStorybookHelpers('swc-system-message');
 
-const slotStatusRich = `<swc-response-status slot="status" open>The user said make a presentation deck but didn't specify duration of deck. Assumption is a brief presentation. I should check previous Hilton executive presentation decks and extract the structure.</swc-response-status>`;
+const slotStatusRich = `<swc-response-status slot="status" status="complete"><span slot="label">I used the prompt and source context to draft a concise, presentation-ready response structure.</span></swc-response-status>`;
 
 const slotMessageRich = `<div class="swc-Typography--prose"><p>According to the assets, there is a clear journey from beginning to end. Let's start with overarching themes and build from there.</p><h2>Big idea/ core narrative: The warmth of welcome</h2><p>Hospitality begins the moment our customers set foot off their plane. We are more than accommodation, and we service a diverse base. We hope to be the anchor and bounce board for all who stay with us.</p><h3>Belonging happens at Hilton</h3><p>We strive to be familiar but exceed expectations. These assets highlight how belonging is personified.</p><h3>We are more than accommodation</h3><ul><li>Airport pick up service</li><li>Local recommendations</li><li>Everyday excursions</li><li>Customizable experience</li></ul></div>`;
 
@@ -101,7 +101,7 @@ export const Overview: Story = {
 
 export const Anatomy: Story = {
   args: {
-    'status-slot': `<swc-response-status slot="status">I used the prompt and source context to draft a concise, presentation-ready response structure.</swc-response-status>`,
+    'status-slot': `<swc-response-status slot="status" status="complete"><span slot="label">I used the prompt and source context to draft a concise, presentation-ready response structure.</span></swc-response-status>`,
     'default-slot': `<div class="swc-Typography--prose"><p>Here is the AI-generated response content.</p></div>`,
     'feedback-slot': slotFeedback,
     'sources-slot': `<swc-message-sources slot="sources"><a href="#">Source one</a></swc-message-sources>`,
@@ -115,13 +115,15 @@ export const Anatomy: Story = {
 //    OPTIONS STORIES
 // ──────────────────────────
 
-export const Loading: Story = {
+export const ResponseStatus: Story = {
   render: () => html`
     <div style="display:flex;flex-direction:column;gap:48px;">
       <div style="display:flex;flex-direction:column;gap:8px;">
         <swc-conversation-turn type="system">
           <swc-system-message>
-            <swc-response-status slot="status" loading></swc-response-status>
+            <swc-response-status slot="status" status="active">
+              <span slot="label">Generating response</span>
+            </swc-response-status>
           </swc-system-message>
         </swc-conversation-turn>
         <span class="swc-Detail swc-Detail--sizeS">Generating response</span>
@@ -129,9 +131,11 @@ export const Loading: Story = {
       <div style="display:flex;flex-direction:column;gap:8px;">
         <swc-conversation-turn type="system">
           <swc-system-message>
-            <swc-response-status slot="status">
-              I used the prompt and source context to draft a concise,
-              presentation-ready response structure.
+            <swc-response-status slot="status" status="complete">
+              <span slot="label">
+                I used the prompt and source context to draft a concise,
+                presentation-ready response structure.
+              </span>
             </swc-response-status>
             <div class="swc-Typography--prose">
               <p>
@@ -158,7 +162,7 @@ export const Loading: Story = {
 
 export const Accessibility: Story = {
   args: {
-    'status-slot': `<swc-response-status slot="status">I used the prompt and source context to draft a concise, presentation-ready response structure.</swc-response-status>`,
+    'status-slot': `<swc-response-status slot="status" status="complete"><span slot="label">I used the prompt and source context to draft a concise, presentation-ready response structure.</span></swc-response-status>`,
     'default-slot': `<div class="swc-Typography--prose"><p>According to the assets, there is a clear journey from beginning to end. Let's start with overarching themes and build from there.</p></div>`,
     'feedback-slot': slotFeedback,
     'sources-slot': `<swc-message-sources slot="sources" open><a href="#">Adobe Experience Manager documentation</a><a href="#">Creative Cloud release notes 2026</a></swc-message-sources>`,
