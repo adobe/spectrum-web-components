@@ -113,10 +113,6 @@ const meta: Meta = {
     docs: {
       subtitle: `Display small amounts of color-categorized metadata to get a user's attention.`,
     },
-    design: {
-      type: 'figma',
-      url: 'https://www.figma.com/design/Mngz9H7WZLbrCvGQf3GnsY/S2---Desktop?node-id=36806-6551',
-    },
     stackblitz: {
       url: 'https://stackblitz.com/edit/vitejs-vite-aqp4tpvf?file=src%2Fmy-element.ts',
     },

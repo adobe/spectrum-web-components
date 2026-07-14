@@ -148,6 +148,9 @@ const meta: Meta = {
     docs: {
       subtitle: `Brief contextual message that appears near a trigger element.`,
     },
+    stackblitz: {
+      url: 'https://stackblitz.com/edit/vitejs-vite-wr38rbib?file=src%2Fmy-element.ts',
+    },
     chromatic: {
       delay: 500,
       cropToViewport: true,

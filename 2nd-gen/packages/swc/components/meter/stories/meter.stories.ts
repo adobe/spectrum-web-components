@@ -96,6 +96,9 @@ const meta: Meta = {
     docs: {
       subtitle: `Non-focusable, read-only bar that shows a value inside a fixed range.`,
     },
+    stackblitz: {
+      url: 'https://stackblitz.com/edit/vitejs-vite-bccezzju?file=src%2Fmy-element.ts',
+    },
   },
   args,
   argTypes,
