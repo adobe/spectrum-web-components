@@ -100,7 +100,7 @@ const meta: Meta = {
         'Clusters related button actions with consistent spacing and sizing',
     },
     stackblitz: {
-      url: 'https://stackblitz.com/edit/swc-button-group?file=src%2Fmy-element.ts',
+      url: 'https://stackblitz.com/edit/vitejs-vite-d8gbozzx?file=package.json',
     },
     flexLayout: 'row-wrap',
   },
