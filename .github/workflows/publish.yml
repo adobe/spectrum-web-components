@@ -160,11 +160,9 @@ jobs:
         id: versions
         run: |
           CORE_VERSION=$(node -p "require('./2nd-gen/packages/core/package.json').version")
-          CORE_NAME=$(node -p "require('./2nd-gen/packages/core/package.json').name")
           BUNDLE_VERSION=$(node -p "require('./1st-gen/tools/bundle/package.json').version")
           SWC_VERSION=$(node -p "require('./2nd-gen/packages/swc/package.json').version")
           echo "core=$CORE_VERSION" >> $GITHUB_OUTPUT
-          echo "core_name=$CORE_NAME" >> $GITHUB_OUTPUT
           echo "bundle=$BUNDLE_VERSION" >> $GITHUB_OUTPUT
           echo "swc=$SWC_VERSION" >> $GITHUB_OUTPUT
 
@@ -249,7 +247,6 @@ jobs:
           COMMIT_SHA: ${{ github.sha }}
           AUTH_OUTCOME: ${{ steps.npm-auth.outcome }}
           CORE_VERSION: ${{ steps.versions.outputs.core }}
-          CORE_NAME: ${{ steps.versions.outputs.core_name }}
           BUNDLE_VERSION: ${{ steps.versions.outputs.bundle }}
           SWC_VERSION: ${{ steps.versions.outputs.swc }}
         run: |
@@ -285,7 +282,7 @@ jobs:
             echo "" >> $GITHUB_STEP_SUMMARY
             echo "| Generation | Package | Version |" >> $GITHUB_STEP_SUMMARY
             echo "|------------|---------|---------|" >> $GITHUB_STEP_SUMMARY
-            [ -n "$CORE_VERSION" ]   && echo "| Core    | \`${CORE_NAME}\`   | \`${CORE_VERSION}\`   |" >> $GITHUB_STEP_SUMMARY
+            [ -n "$CORE_VERSION" ]   && echo "| Core    | \`@adobe/spectrum-wc-core\`   | \`${CORE_VERSION}\`   |" >> $GITHUB_STEP_SUMMARY
             [ -n "$BUNDLE_VERSION" ] && echo "| 1st gen | \`@spectrum-web-components/bundle\` | \`${BUNDLE_VERSION}\` |" >> $GITHUB_STEP_SUMMARY
             [ -n "$SWC_VERSION" ]    && echo "| 2nd gen | \`@adobe/spectrum-wc\`               | \`${SWC_VERSION}\`    |" >> $GITHUB_STEP_SUMMARY
             echo "" >> $GITHUB_STEP_SUMMARY
