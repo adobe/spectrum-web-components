@@ -49,12 +49,12 @@ CHANGELOG, and `version.ts` all derive from that one bump once the prerelease co
 `main`.
 
 ```bash
-# Stamp @since UNRELEASED with the release version; frozen values are left alone.
-# Version defaults to the 2nd-gen package.json (--version to override; --from-npm reads the
-# npm `beta` dist-tag as a bridge while main isn't bumped yet).
-$ node scripts/stamp-since.js --version 2.0.0-beta.2
-✓ stamped @since -> 2.0.0-beta.2 in 1 file(s):
-  - 2nd-gen/packages/swc/components/divider/Divider.ts
+# At release, stamp any @since UNRELEASED with the version (from the 2nd-gen package.json;
+# --from-npm bridges to the npm `beta` dist-tag while main isn't bumped yet). Frozen values
+# are left alone.
+$ node scripts/stamp-since.js --from-npm
+✓ stamped @since -> 2.0.0-beta.1 in 1 file(s):
+  - 2nd-gen/packages/swc/components/new-thing/NewThing.ts
 
 # CI guard: fail if any element is missing @since
 $ node scripts/stamp-since.js --check

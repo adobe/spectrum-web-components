@@ -88,9 +88,8 @@ fallback (and flip the docs line from `beta` to `latest` at GA) then.
 ## Prototype (PR #2)
 
 - `scripts/stamp-since.js` stamps `@since UNRELEASED` with the release version and freezes it.
-  It resolves the version from the 2nd-gen `package.json` by default (`--version` to override,
-  `--from-npm` for the dist-tag bridge today), and `--check` fails on any element missing
-  `@since`.
+  It reads the version from the 2nd-gen `package.json` by default (`--from-npm` for the
+  dist-tag bridge today), and `--check` fails on any element missing `@since`.
 - `StatusBadge.tsx` renders the `UNRELEASED` sentinel as an "Unreleased" badge.
 
 `--check` already flags ~12 `conversational-ai` elements with no `@since` (no badge today).

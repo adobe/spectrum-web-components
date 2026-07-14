@@ -29,19 +29,20 @@
  *   - `--check` is the CI guard: every element must carry an `@since` (sentinel or version).
  *
  * Version source (nothing is computed/predicted; `changeset version` already wrote it):
- *   1. `--version <v>` (explicit / manual).
- *   2. `--from-npm` reads the npm `beta` dist-tag (transition-only bridge while `main` is not
- *      yet bumped).
- *   3. Default: the 2nd-gen `package.json` version.
+ *   - Default: the 2nd-gen `package.json` version.
+ *   - `--from-npm`: the npm `beta` dist-tag (transition-only bridge while `main` is not yet
+ *     bumped).
+ *
+ * The file is organized into four sections: matching/scan config, version source,
+ * scanning + stamping, and the CLI. The scanning/stamping functions are pure and exported
+ * (for a future release-flow import); the CLI runs only when the file is executed directly.
  *
  * @example
  * ```bash
- * node scripts/stamp-since.js                 # version from 2nd-gen package.json (default)
- * node scripts/stamp-since.js --version 2.0.0-beta.2   # explicit version
- * node scripts/stamp-since.js --from-npm      # transition fallback: npm `beta` dist-tag
- * node scripts/stamp-since.js --base          # stamp the base line (2.0.0, not 2.0.0-beta.1)
- * node scripts/stamp-since.js --dry-run       # preview, write nothing
- * node scripts/stamp-since.js --check         # CI: fail if any element is missing @since
+ * node scripts/stamp-since.js             # version from 2nd-gen package.json (default)
+ * node scripts/stamp-since.js --from-npm  # transition fallback: npm `beta` dist-tag
+ * node scripts/stamp-since.js --dry-run   # preview, write nothing
+ * node scripts/stamp-since.js --check     # CI: fail if any element is missing @since
  * ```
  */
 
@@ -53,14 +54,19 @@ import { fileURLToPath } from 'url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.resolve(__dirname, '..');
 
+/* ── Matching and scan config ────────────────────────────────────────────────
+ * What the script looks for in a component's class JSDoc, and where it scans.
+ * A "badge-bearing element" is any file whose JSDoc carries an `@element` tag.
+ */
+
 /** Sentinel `@since` value an author writes on a not-yet-released component. */
 const SENTINEL = 'UNRELEASED';
 
-// Matches `@since UNRELEASED`, capturing the `@since ` lead so spacing is preserved.
+/** Matches `@since UNRELEASED`, capturing the `@since ` lead so spacing is preserved. */
 const SENTINEL_RE = /(@since\s+)UNRELEASED\b/g;
-// Any `@since` tag at all — used by the check.
+/** Matches any `@since` tag at all (used by the check to detect a missing tag). */
 const SINCE_RE = /@since\s+\S+/;
-// A file defines a badge-bearing element when its class JSDoc carries an `@element` tag.
+/** Matches an `@element` tag, marking a file as a badge-bearing element definition. */
 const ELEMENT_RE = /@element\s+\S+/;
 
 /** Default scan roots (absolute): where 2nd-gen badge-bearing elements are defined. */
@@ -69,7 +75,12 @@ const DEFAULT_ROOTS = [
   '2nd-gen/packages/swc/patterns',
 ].map((rel) => path.join(repoRoot, rel));
 
-// ─── version source ───
+/* ── Version source ──────────────────────────────────────────────────────────
+ * Answers "which version do we stamp?". We never compute or predict it: at release
+ * `changeset version` writes it into the 2nd-gen `package.json`, so the default just
+ * reads that. `--from-npm` is a transition-only bridge for today, while `main`'s
+ * `package.json` still reads the stable line and the real beta lives on the npm tag.
+ */
 
 /** The 2nd-gen package + package.json that `changeset version` bumps. */
 const GEN2_PACKAGE = '@adobe/spectrum-wc';
@@ -79,10 +90,14 @@ const GEN2_PACKAGE_JSON = path.join(
 );
 /** The npm dist-tag the docs represent today (transition fallback). Flip to `latest` at GA. */
 const DEFAULT_DOCS_TAG = 'beta';
-// A permissive semver check: `2.0.0`, `2.0.0-beta.1`, `0.3.0-next.20260706135249`.
+/** Permissive semver check: `2.0.0`, `2.0.0-beta.1`, `0.3.0-next.20260706135249`. */
 const SEMVER = /^\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?(?:\+[0-9A-Za-z.-]+)?$/;
 
-/** Read the `version` field from the 2nd-gen package.json (the default source). */
+/**
+ * Read the `version` field from the 2nd-gen `package.json` (the default source).
+ *
+ * @returns {string | undefined} The version, or undefined if the file is unreadable.
+ */
 function readPackageVersion() {
   try {
     return JSON.parse(readFileSync(GEN2_PACKAGE_JSON, 'utf-8')).version;
@@ -91,7 +106,11 @@ function readPackageVersion() {
   }
 }
 
-/** Read the npm `beta` dist-tag version (opt-in transition fallback). */
+/**
+ * Read the npm `beta` dist-tag version (opt-in transition fallback).
+ *
+ * @returns {string | undefined} The version, or undefined if unset or npm is unreachable.
+ */
 function readDistTag() {
   try {
     const out = execSync(
@@ -108,28 +127,23 @@ function readDistTag() {
   }
 }
 
-/** Strip a prerelease/build suffix: `2.0.0-beta.1` -> `2.0.0` (for a possible GA-normalize). */
-function baseLine(version) {
-  return version.replace(/[-+].*$/, '');
-}
-
 /**
- * Resolve the version to stamp: `--version`, else `--from-npm` dist-tag, else the 2nd-gen
- * `package.json`. Validates that the result is semver-shaped.
+ * Resolve the version to stamp: the npm `beta` dist-tag with `--from-npm`, otherwise the
+ * 2nd-gen `package.json`. Validates that the result is semver-shaped.
  *
  * @param {string[]} args - CLI args.
- * @param {(name: string) => (string | undefined)} getFlag - Reads a `--flag value` pair.
  * @returns {string} The resolved, semver-validated version.
+ * @throws If no source yields a version, or the value is not valid semver.
  */
-function resolveVersion(args, getFlag) {
-  const candidate =
-    getFlag('--version') ||
-    (args.includes('--from-npm') ? readDistTag() : readPackageVersion());
+function resolveVersion(args) {
+  const candidate = args.includes('--from-npm')
+    ? readDistTag()
+    : readPackageVersion();
 
   if (!candidate) {
     throw new Error(
-      'Could not resolve a version. Pass --version, ensure the 2nd-gen package.json has a ' +
-        'version, or use --from-npm.'
+      'Could not resolve a version. Ensure the 2nd-gen package.json has a version, ' +
+        'or use --from-npm.'
     );
   }
   if (!SEMVER.test(candidate)) {
@@ -140,7 +154,12 @@ function resolveVersion(args, getFlag) {
   return candidate;
 }
 
-// ─── scanning + stamping ───
+/* ── Scanning and stamping ───────────────────────────────────────────────────
+ * The filesystem work: find the element files under the scan roots, detect which are
+ * missing an `@since` (the check), and rewrite the `@since UNRELEASED` sentinels.
+ * These functions are pure (side effects only in `stampSince`, gated by `dryRun`) and
+ * take an injectable `roots` so they can be pointed at a fixture directory.
+ */
 
 /**
  * Recursively collect component/pattern source files under `roots`, skipping tests/stories.
@@ -181,11 +200,17 @@ function collectSourceFiles(roots = DEFAULT_ROOTS) {
   return files;
 }
 
-/** Files that declare a badge-bearing element (`@element` in their JSDoc). */
+/**
+ * Scanned files that declare a badge-bearing element (`@element` in their JSDoc), each read
+ * once and returned with its content so callers do not re-read from disk.
+ *
+ * @param {string[]} [roots] - Absolute directories to scan.
+ * @returns {{ file: string, content: string }[]} Each element file with its text content.
+ */
 function elementFiles(roots = DEFAULT_ROOTS) {
-  return collectSourceFiles(roots).filter((f) =>
-    ELEMENT_RE.test(readFileSync(f, 'utf-8'))
-  );
+  return collectSourceFiles(roots)
+    .map((file) => ({ file, content: readFileSync(file, 'utf-8') }))
+    .filter(({ content }) => ELEMENT_RE.test(content));
 }
 
 /**
@@ -195,9 +220,9 @@ function elementFiles(roots = DEFAULT_ROOTS) {
  * @returns {string[]} Absolute file paths.
  */
 export function findMissingSince(roots = DEFAULT_ROOTS) {
-  return elementFiles(roots).filter(
-    (f) => !SINCE_RE.test(readFileSync(f, 'utf-8'))
-  );
+  return elementFiles(roots)
+    .filter(({ content }) => !SINCE_RE.test(content))
+    .map(({ file }) => file);
 }
 
 /**
@@ -211,10 +236,9 @@ export function findMissingSince(roots = DEFAULT_ROOTS) {
  */
 export function stampSince({ version, roots = DEFAULT_ROOTS, dryRun = false }) {
   const stamped = [];
-  for (const file of elementFiles(roots)) {
-    const before = readFileSync(file, 'utf-8');
-    const after = before.replace(SENTINEL_RE, `$1${version}`);
-    if (after === before) {
+  for (const { file, content } of elementFiles(roots)) {
+    const after = content.replace(SENTINEL_RE, `$1${version}`);
+    if (after === content) {
       continue;
     }
     if (!dryRun) {
@@ -225,15 +249,18 @@ export function stampSince({ version, roots = DEFAULT_ROOTS, dryRun = false }) {
   return stamped;
 }
 
-/** CLI wrapper: logs and sets the exit code; kept separate from the pure functions above. */
+/* ── Command-line interface ──────────────────────────────────────────────────
+ * Parses flags, runs either the `--check` guard or a stamp pass, logs the result, and
+ * sets a non-zero exit code on failure. Kept separate from the pure functions above and
+ * only invoked when the file is executed directly (not when imported).
+ */
+
+/** Parse args, run the requested mode (`--check` or stamp), and set the exit code. */
 function main() {
   const args = process.argv.slice(2);
-  const getFlag = (name) => {
-    const i = args.indexOf(name);
-    return i !== -1 ? args[i + 1] : undefined;
-  };
   const rel = (f) => path.relative(repoRoot, f);
 
+  // `--check`: CI guard. Fail (exit 1) if any element lacks an `@since`.
   if (args.includes('--check')) {
     const missing = findMissingSince();
     if (missing.length) {
@@ -250,11 +277,9 @@ function main() {
     return;
   }
 
+  // Default: resolve the version and stamp the `UNRELEASED` sentinels.
   try {
-    let version = resolveVersion(args, getFlag);
-    if (args.includes('--base')) {
-      version = baseLine(version);
-    }
+    const version = resolveVersion(args);
     const dryRun = args.includes('--dry-run');
     const stamped = stampSince({ version, dryRun });
     if (!stamped.length) {
