@@ -29,6 +29,13 @@ const STATUS_CONFIG: Record<
 };
 
 /**
+ * Sentinel `@since` value for a component that has not shipped yet. The release-time
+ * stamp step (scripts/stamp-since.js) replaces it with the release version and freezes it;
+ * until then the badge renders "Unreleased" instead of the literal "Since UNRELEASED".
+ */
+const UNRELEASED_SINCE = 'UNRELEASED';
+
+/**
  * Renders a single `<swc-badge>` via a ref, since React's JSX doesn't
  * natively type custom elements without global augmentation.
  */
@@ -103,6 +110,11 @@ export const StatusBadge = ({ of }: { of?: any }) => {
 
   const statusConfig = hasStatus ? STATUS_CONFIG[status as Status] : undefined;
 
+  // Components not yet shipped carry the `@since UNRELEASED` sentinel (see stamp-since.js).
+  // Render that as a "Unreleased" preview badge rather than the literal "Since UNRELEASED";
+  // it only appears on staging, since production publishes stamped, released values.
+  const isUnreleased = since === UNRELEASED_SINCE;
+
   return (
     <div
       style={{
@@ -113,8 +125,8 @@ export const StatusBadge = ({ of }: { of?: any }) => {
       }}
     >
       {since && (
-        <Badge variant="neutral" outline>
-          {`Since ${since}`}
+        <Badge variant={isUnreleased ? 'notice' : 'neutral'} outline>
+          {isUnreleased ? 'Unreleased' : `Since ${since}`}
         </Badge>
       )}
       {statusConfig && (
