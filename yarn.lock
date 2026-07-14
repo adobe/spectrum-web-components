@@ -189,7 +189,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@adobe/spectrum-wc-core@npm:0.0.1, @adobe/spectrum-wc-core@workspace:2nd-gen/packages/core":
+"@adobe/spectrum-wc-core@npm:0.3.0, @adobe/spectrum-wc-core@workspace:2nd-gen/packages/core":
   version: 0.0.0-use.local
   resolution: "@adobe/spectrum-wc-core@workspace:2nd-gen/packages/core"
   dependencies:
@@ -210,7 +210,7 @@ __metadata:
   resolution: "@adobe/spectrum-wc@workspace:2nd-gen/packages/swc"
   dependencies:
     "@adobe/postcss-token": "workspace:*"
-    "@adobe/spectrum-wc-core": "npm:0.0.1"
+    "@adobe/spectrum-wc-core": "npm:0.3.0"
     "@adobe/swc-tokens": "workspace:*"
     "@adobe/vite-global-elements-css": "workspace:*"
     "@axe-core/playwright": "npm:4.11.2"
