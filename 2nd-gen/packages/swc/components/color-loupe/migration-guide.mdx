@@ -13,7 +13,7 @@ Replace `<sp-color-loupe>` with `<swc-color-loupe>`, update the import, and remo
 | Area        | Spectrum 1                                               | Spectrum 2                                  |
 | ----------- | -------------------------------------------------------- | ------------------------------------------- |
 | Tag name    | `sp-color-loupe`                                         | `swc-color-loupe`                           |
-| Import path | `@spectrum-web-components/color-loupe/sp-color-loupe.js` | `@adobe/spectrum-wc/components/color-loupe` |
+| Import path | `@spectrum-web-components/color-loupe/sp-color-loupe.js` | `@adobe/spectrum-wc/components/color-loupe/swc-color-loupe.js` |
 
 ### Removed in Spectrum 2
 
@@ -31,7 +31,7 @@ Replace `<sp-color-loupe>` with `<swc-color-loupe>`, update the import, and remo
 import '@spectrum-web-components/color-loupe/sp-color-loupe.js';
 
 // After
-import '@adobe/spectrum-wc/components/color-loupe';
+import '@adobe/spectrum-wc/components/color-loupe/swc-color-loupe.js';
 ```
 
 ### 2. Rename the tag
@@ -113,7 +113,7 @@ The loupe is a visual-only, presentational element with no interactive role. No 
 
 ## Checklist
 
-- [ ] Update the import from `@spectrum-web-components/color-loupe/sp-color-loupe.js` to `@adobe/spectrum-wc/components/color-loupe`
+- [ ] Update the import from `@spectrum-web-components/color-loupe/sp-color-loupe.js` to `@adobe/spectrum-wc/components/color-loupe/swc-color-loupe.js`
 - [ ] Rename every `<sp-color-loupe>` tag to `<swc-color-loupe>`
 - [ ] Remove all `--spectrum-picked-color` and `--mod-colorloupe-*` CSS overrides
 - [ ] Set the displayed color via the `color` attribute (or `element.color` in JavaScript)
