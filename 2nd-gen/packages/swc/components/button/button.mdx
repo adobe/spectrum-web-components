@@ -42,7 +42,7 @@ The `outline` fill style renders a transparent background with a visible border.
 
 ### Static colors
 
-Use `static-color` when the button needs to sit on top of a photo or colored background. It pins the button's color to the chosen value regardless of the active color theme:
+Use `static-color` when the button needs to sit on top of a photo or colored background. It pins the button's color to the chosen value, regardless of the active color theme:
 
 - **`white`**: use on dark color or image backgrounds
 - **`black`**: use on light color or image backgrounds
@@ -59,7 +59,7 @@ Buttons support three interaction states:
 
 - **Default**: the button is active and can be interacted with.
 - **Disabled**: the button is removed from the tab order and cannot be activated.
-- **Pending**: the button remains focusable but activation is suppressed while an asynchronous operation is in progress.
+- **Pending**: the button remains focusable, but activation is suppressed while an asynchronous operation is in progress.
 
 Do not set both `disabled` and `pending` simultaneously.
 
@@ -109,7 +109,7 @@ The `<swc-button>` element implements several accessibility features:
 
 1. **Native button semantics**: a real `<button>` inside shadow DOM provides the role, so assistive technologies see a genuine button, not a host with `role="button"`.
 2. **Focus delegation**: `delegatesFocus: true` routes Tab focus and programmatic focus to the internal `<button>`, keeping the host out of the tab order.
-3. **Keyboard activation**: <kbd>Enter</kbd> and <kbd>Space</kbd> both activate the button via native browser behavior; no custom keyboard handling is needed or added.
+3. **Keyboard activation**: <kbd>Enter</kbd> and <kbd>Space</kbd> both activate the button via native browser behavior. No custom keyboard handling is needed or added.
 4. **Pending state**: when `pending` is true, `aria-disabled="true"` is set on the internal `<button>` and the accessible name becomes `"[label], busy"` (e.g., `"Save, busy"`). The button remains focusable so users can discover it is unavailable rather than losing track of it entirely. A custom `pending-label` overrides the derived busy name.
 5. **Icon-only labeling**: when there is no visible text, the `accessible-label` attribute is forwarded as `aria-label` on the internal `<button>`. A debug warning is emitted in development when an icon-only button is missing `accessible-label`.
 

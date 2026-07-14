@@ -11,11 +11,11 @@ Gen2 SWC uses **Adobe Clean Spectrum VF** (Variable Font), which is the updated 
 
 Adobe Clean Spectrum VF is the default typeface for Spectrum 2. While it looks visually identical to Adobe Clean — the characters, glyphs, and sizing remain the same — it introduces several important improvements:
 
-- **Updated font metrics**: Improved vertical alignment, especially within components and patterns. The font's baseline position is adjusted to better align text with nearby UI elements like icons and visuals
-- **Variable font technology**: Supports expanded width and weight controls, including Condensed and SemiCondensed options, for more precise typographic adjustments and better performance
-- **Serif alignment**: Adobe Clean Spectrum VF and Adobe Clean Spectrum Serif VF are now aligned vertically
-- **Performance and consistency**: Bug fixes and greater consistency across tools used in product design
-- **Modern font development**: Unified vertical metrics in line with current best practices, reducing the need for manual pixel tweaks in layouts
+- **Updated font metrics**: Improved vertical alignment, especially within components and patterns. The font's baseline position is adjusted to better align text with nearby UI elements like icons and visuals.
+- **Variable font technology**: Supports expanded width and weight controls, including Condensed and SemiCondensed options, for more precise typographic adjustments and better performance.
+- **Serif alignment**: Adobe Clean Spectrum VF and Adobe Clean Spectrum Serif VF are now aligned vertically.
+- **Performance and consistency**: Bug fixes and greater consistency across tools used in product design.
+- **Modern font development**: Unified vertical metrics in line with current best practices, reducing the need for manual pixel tweaks in layouts.
 
 ## Font loading in Gen2 Storybook
 
@@ -45,9 +45,9 @@ You can verify the font is loaded by:
 
 You can also verify programmatically in the browser console. Inside the Storybook preview iframe:
 
-- **`document.fonts`**: Lists all registered font faces and their load status. Filter for CJK fonts with `[...document.fonts].filter(f => f.family.includes('han'))`
-- **`document.documentElement.className`**: Typekit adds `wf-*-active` classes for each loaded font weight (e.g. `wf-adobe-clean-han-japanese-n4-active` for Japanese normal weight 400)
-- **`window.currentKitId`**: Shows the currently active Adobe Fonts kit ID
+- **`document.fonts`**: Lists all registered font faces and their load status. Filter for CJK fonts with `[...document.fonts].filter(f => f.family.includes('han'))`.
+- **`document.documentElement.className`**: Typekit adds `wf-*-active` classes for each loaded font weight (e.g. `wf-adobe-clean-han-japanese-n4-active` for Japanese normal weight 400).
+- **`window.currentKitId`**: Shows the currently active Adobe Fonts kit ID.
 
 ### Try it with translations
 
@@ -77,7 +77,7 @@ If your organization has access to Adobe Fonts:
 
 For reference, Adobe employees can refer to the internal RSP Spectrum 2 Fonts guide documentation for additional details (Adobe internal wiki).
 
-**Note:** There is also a static (non-variable) version of Adobe Clean Spectrum available for teams or platforms that don't support variable fonts. They look exactly the same; it's just about how they function. Adobe-internal teams can reach out to the Spectrum team for access. Variable font support is broad across modern browsers, so this only matters for legacy platform constraints; if you hit one as an external consumer, check your Adobe Fonts web project for a static font option, or contact Adobe Fonts support directly.
+**Note:** There is also a static (non-variable) version of Adobe Clean Spectrum available for teams or platforms that don't support variable fonts. They look exactly the same; the difference is in how they function. Adobe-internal teams can reach out to the Spectrum team for access. Variable fonts are broadly supported across modern browsers, so this only matters for legacy platform constraints. If you hit constraints as an external consumer, check your Adobe Fonts web project for a static font option, or contact Adobe Fonts support directly.
 
 ### Option 2: Self-hosted fonts
 
@@ -226,7 +226,7 @@ Add this before switching locales. The event is dispatched by both `preview-head
 
 To add font support for a new language in Storybook:
 
-1. **Create an Adobe Fonts web project** containing the font family for that language (e.g. Adobe Clean Han for CJK locales). Note the kit ID
+1. **Create an Adobe Fonts web project** containing the font family for that language (e.g. Adobe Clean Han for CJK locales). Note the kit ID.
 2. **Register the kit ID** in `preview-head.html` by adding an entry to the `__SWC_FONT_KIT_IDS__` mapping:
 
 ```js
@@ -236,8 +236,8 @@ window.__SWC_FONT_KIT_IDS__ = {
 };
 ```
 
-3. **Add the locale to the Storybook toolbar** so it appears in the **Language** dropdown. This is configured in the Storybook global types
-4. **Verify** by selecting the new locale in the toolbar, then confirming the kit loads using the programmatic verification steps above
+3. **Add the locale to the Storybook toolbar** so it appears in the **Language** dropdown. This is configured in the Storybook global types.
+4. **Verify** by selecting the new locale in the toolbar, then confirming the kit loads using the programmatic verification steps above.
 
 The language decorator (`decorators/language.ts`) handles the rest automatically — it reads the kit ID from `__SWC_FONT_KIT_IDS__`, injects the script, and calls `Typekit.load()` to activate the fonts.
 
@@ -268,12 +268,12 @@ The language decorator (`decorators/language.ts`) handles the rest automatically
 
 ### CJK fonts not rendering
 
-If you switch to a CJK locale in the **Language** toolbar but text still renders in a system font:
+If you switch to a CJK locale in the **Language** toolbar, but text still renders in a system font:
 
 1. Manually inspect the element and check the text elements **Computed** styles. Inheritance of the `font-family` property value could be interfering.
-2. Check `window.currentKitId` in the preview iframe console — it should match the expected kit for that locale
-3. Look for `wf-*-active` classes on the iframe's `<html>` element (e.g. `wf-adobe-clean-han-japanese-n4-active`). If missing, the kit script loaded but `Typekit.load()` may not have been called
-4. Check the browser console for `Typekit.load() failed` warnings
+2. Check `window.currentKitId` in the preview iframe console. It should match the expected kit for that locale.
+3. Look for `wf-*-active` classes on the iframe's `<html>` element (e.g. `wf-adobe-clean-han-japanese-n4-active`). If missing, the kit script loaded, but `Typekit.load()` may not have been called.
+4. Check the browser console for `Typekit.load() failed` warnings.
 5. Verify the kit ID in `preview-head.html` (`__SWC_FONT_KIT_IDS__`) is correct and the Adobe Fonts web project is published
 6. Try a hard refresh — <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>R</kbd> / <kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>R</kbd> — to clear cached scripts
 

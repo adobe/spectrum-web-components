@@ -126,7 +126,7 @@ Examples:
 
 ### Single-story sections
 
-When a section has only one story and that story's rendered name is identical to the `## Section` heading (e.g. a single `States` story named `States`), omit the `### Title` subheading. Author the prose directly under `## Section`, with the `<Canvas>` reference immediately below it. A `## States` heading followed immediately by a `### States` subheading is a redundant repeat to a reader; collapse it to one heading. (`button.mdx`, `color-handle.mdx`.)
+When a section has only one story, and that story's rendered name is identical to the `## Section` heading (e.g. a single `States` story named `States`), omit the `### Title` subheading. Author the prose directly under `## Section`, with the `<Canvas>` reference immediately below it. A `## States` heading followed immediately by a `### States` subheading is redundant; collapse it to one heading. (`button.mdx`, `color-handle.mdx`.)
 
 If a single-story section's rendered name _differs_ from the `## Section` heading (e.g. a `## Behaviors` section whose only story renders as "Toggle behavior"), keep the `### Title` subheading. It's adding real information there, not repeating the section title.
 

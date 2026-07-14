@@ -18,7 +18,7 @@ export const waveToolbarGuideImageStyle = {
 
 ## Overview
 
-This guide explains how to use the [WAVE (Web Accessibility Evaluation Tool) browser extension](https://wave.webaim.org/extension/) to test accessibility in the browser, with a focus on **headings** and **landmarks** in the page outline. It pairs with [Headings and landmarks](/docs/guides-accessibility-guides-headings-and-landmarks--docs) for W3C WAI principles, **landmark** and **heading** structure, how screen readers navigate by both, and Spectrum Web Components patterns—here you learn **where** in WAVE to see the outline and **how** to run a report.
+This guide explains how to use the [WAVE (Web Accessibility Evaluation Tool) browser extension](https://wave.webaim.org/extension/) to test accessibility in the browser, with a focus on **headings** and **landmarks** in the page outline. You'll learn **where** in WAVE to see the outline and **how** to run a report. It pairs with our [Headings and landmarks](/docs/guides-accessibility-guides-headings-and-landmarks--docs) guide, which covers W3C WAI principles, **landmark** and **heading** structure, screen reader navigation, and Spectrum Web Components patterns.
 
 WAVE is a free extension for **Chrome**, **Firefox**, and **Edge**. It evaluates the **rendered** page in your browser. No page content is sent to WAVE servers, so reporting stays private. You can use it on local files, password-protected pages, intranets, and pages with dynamic or AJAX content — anywhere the browser can load the final DOM and styles.
 
@@ -57,9 +57,9 @@ To allow WAVE on **local files** or in **private/incognito** windows, enable the
 
 ## Run a WAVE report
 
-1. Navigate to the page you want to test (for example, a Storybook page or your app)
-2. Click the **WAVE** icon in the browser toolbar, or use the shortcut <kbd>Control</kbd> + <kbd>Shift</kbd> + <kbd>U</kbd> (Windows/Linux) or <kbd>Command</kbd> + <kbd>Shift</kbd> + <kbd>U</kbd> (macOS). You can also use the context menu **WAVE this page** where available
-3. The WAVE panel opens (often on the left). Use the tabs at the top to switch views. Click the WAVE icon again or refresh the page to close WAVE
+1. Navigate to the page you want to test (for example, a Storybook page or your app).
+2. Click the **WAVE** icon in the browser toolbar, or use the shortcut <kbd>Control</kbd> + <kbd>Shift</kbd> + <kbd>U</kbd> (Windows/Linux) or <kbd>Command</kbd> + <kbd>Shift</kbd> + <kbd>U</kbd> (macOS). You can also use the context menu **WAVE this page** where available.
+3. The WAVE panel opens (often on the left). Use the tabs at the top to switch views. To close WAVE, click the WAVE icon again or refresh the page.
 
 Use the **Styles** toggle in the panel to see the page with browser styles on or off. Turning styles off can expose raw document order, which is useful with the **Order** tab.
 
@@ -119,7 +119,7 @@ The **Order** tab lists **navigable** elements in sequence with their **role** a
   </figcaption>
 </figure>
 
-Use it to check that users who move with <kbd>Tab</kbd> and users who follow the **announced order** in a screen reader get a sequence that matches your design. It does not replace keyboard testing, but it highlights mismatches between DOM order and layout.
+Use it to check whether users who move with <kbd>Tab</kbd> and users who follow the **announced order** in a screen reader get a sequence that matches your design. It does not replace keyboard testing, but it does highlight mismatches between DOM order and layout.
 
 ### Contrast tab and color testing
 

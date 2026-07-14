@@ -11,7 +11,7 @@ import * as DividerStories from './stories/divider.stories';
 
 A divider consists of:
 
-- **Line**: the visual separator element that creates visual separation between content
+- **Line**: the element that creates visual separation between content
 
 <Canvas of={DividerStories.Anatomy} />
 
@@ -29,7 +29,7 @@ Dividers come in three sizes to fit various contexts:
 
 ### Orientation
 
-The default **horizontal** divider separates content stacked vertically, such as sections beneath headings. To separate side-by-side content in a flex row (e.g., navigation breadcrumbs, toolbars), use the `vertical` attribute to render a **vertical** divider.
+The default **horizontal** divider separates vertically stacked content, such as sections beneath headings. To separate side-by-side content in a flex row (e.g., navigation breadcrumbs, toolbars), use the `vertical` attribute to render a **vertical** divider.
 
 Vertical dividers require the parent to have an **explicit height** (`block-size`). Without it, `block-size: 100%` resolves to zero and the divider is invisible.
 

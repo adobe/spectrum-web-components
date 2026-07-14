@@ -86,7 +86,7 @@ How you load it depends on your environment — for Adobe Fonts (Typekit), CDN, 
 
 For each migrated Gen2 component:
 
-1. Open the component's **migration guide** (e.g. [Badge](/docs/components-badge-migration-guide--docs)) for breaking attribute, slot, event, and default-value changes. Check the component's docs page too, under "Upcoming features", for any Spectrum 2 coverage gaps.
+1. Open the component's **migration guide** (e.g. [Badge](/docs/components-badge-migration-guide--docs)) for breaking changes to attribute, slot, event, and default-values. Additionally, certain components have an "Upcoming features" section which details any Spectrum 2 coverage gaps.
 2. Update the import to the per-element side-effect path:
 
    ```ts
@@ -100,7 +100,7 @@ For each migrated Gen2 component:
 3. Rename the tag (`<sp-badge>` → `<swc-badge>`) and apply any attribute renames called out in the migration guide.
 4. Remove deprecated `--mod-*` overrides and apply `--swc-*` overrides if necessary (covered below).
 
-The components index on this site lists every Gen2 component that has shipped, with its migration guide and full API reference.
+The Components index on this site lists every Gen2 component that has shipped, with its migration guide and full API reference.
 
 ## Step 6 — Migrate styling
 
