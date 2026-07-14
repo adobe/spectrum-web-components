@@ -20,17 +20,19 @@
  *
  * The badge is rendered from each component's `@since` JSDoc tag (extracted into the CEM
  * by `cem.config.js`, rendered by `StatusBadge.tsx`). "Since X" means "first shipped in X",
- * so the value must be captured once and then frozen — never re-derived from the current
- * version on every release.
+ * so the value is captured once and then frozen, never re-derived on every release.
  *
- * Workflow this supports:
+ * Workflow:
  *   - Authors write `@since UNRELEASED` (a sentinel) on a new component, never a real number.
- *   - At release, this script fills every `@since UNRELEASED` with the version being
- *     released (from resolve-gen2-version.js) and leaves already-stamped components frozen.
+ *   - At release, this fills every `@since UNRELEASED` with the released version and leaves
+ *     already-stamped components frozen.
  *   - `--check` is the CI guard: every element must carry an `@since` (sentinel or version).
  *
- * The core functions are exported (with an injectable `roots`); the CLI runs only when the
- * file is executed directly.
+ * Version source (nothing is computed/predicted; `changeset version` already wrote it):
+ *   1. `--version <v>` (explicit / manual).
+ *   2. `--from-npm` reads the npm `beta` dist-tag (transition-only bridge while `main` is not
+ *      yet bumped).
+ *   3. Default: the 2nd-gen `package.json` version.
  *
  * @example
  * ```bash
@@ -43,15 +45,10 @@
  * ```
  */
 
+import { execSync } from 'child_process';
 import { readdirSync, readFileSync, writeFileSync } from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-
-import {
-  baseLine,
-  readDistTag,
-  resolveGen2Version,
-} from './resolve-gen2-version.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.resolve(__dirname, '..');
@@ -71,6 +68,79 @@ const DEFAULT_ROOTS = [
   '2nd-gen/packages/swc/components',
   '2nd-gen/packages/swc/patterns',
 ].map((rel) => path.join(repoRoot, rel));
+
+// ─── version source ───
+
+/** The 2nd-gen package + package.json that `changeset version` bumps. */
+const GEN2_PACKAGE = '@adobe/spectrum-wc';
+const GEN2_PACKAGE_JSON = path.join(
+  repoRoot,
+  '2nd-gen/packages/swc/package.json'
+);
+/** The npm dist-tag the docs represent today (transition fallback). Flip to `latest` at GA. */
+const DEFAULT_DOCS_TAG = 'beta';
+// A permissive semver check: `2.0.0`, `2.0.0-beta.1`, `0.3.0-next.20260706135249`.
+const SEMVER = /^\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?(?:\+[0-9A-Za-z.-]+)?$/;
+
+/** Read the `version` field from the 2nd-gen package.json (the default source). */
+function readPackageVersion() {
+  try {
+    return JSON.parse(readFileSync(GEN2_PACKAGE_JSON, 'utf-8')).version;
+  } catch {
+    return undefined;
+  }
+}
+
+/** Read the npm `beta` dist-tag version (opt-in transition fallback). */
+function readDistTag() {
+  try {
+    const out = execSync(
+      `npm view ${GEN2_PACKAGE} dist-tags.${DEFAULT_DOCS_TAG}`,
+      {
+        encoding: 'utf-8',
+        stdio: ['ignore', 'pipe', 'ignore'],
+      }
+    ).trim();
+    return out && out !== 'undefined' ? out : undefined;
+  } catch {
+    // network error, unpublished package, or unknown tag.
+    return undefined;
+  }
+}
+
+/** Strip a prerelease/build suffix: `2.0.0-beta.1` -> `2.0.0` (for a possible GA-normalize). */
+function baseLine(version) {
+  return version.replace(/[-+].*$/, '');
+}
+
+/**
+ * Resolve the version to stamp: `--version`, else `--from-npm` dist-tag, else the 2nd-gen
+ * `package.json`. Validates that the result is semver-shaped.
+ *
+ * @param {string[]} args - CLI args.
+ * @param {(name: string) => (string | undefined)} getFlag - Reads a `--flag value` pair.
+ * @returns {string} The resolved, semver-validated version.
+ */
+function resolveVersion(args, getFlag) {
+  const candidate =
+    getFlag('--version') ||
+    (args.includes('--from-npm') ? readDistTag() : readPackageVersion());
+
+  if (!candidate) {
+    throw new Error(
+      'Could not resolve a version. Pass --version, ensure the 2nd-gen package.json has a ' +
+        'version, or use --from-npm.'
+    );
+  }
+  if (!SEMVER.test(candidate)) {
+    throw new Error(
+      `Resolved version "${candidate}" is not a valid semver string.`
+    );
+  }
+  return candidate;
+}
+
+// ─── scanning + stamping ───
 
 /**
  * Recursively collect component/pattern source files under `roots`, skipping tests/stories.
@@ -111,12 +181,7 @@ function collectSourceFiles(roots = DEFAULT_ROOTS) {
   return files;
 }
 
-/**
- * Files that declare a badge-bearing element (`@element` in their JSDoc).
- *
- * @param {string[]} [roots] - Absolute directories to scan.
- * @returns {string[]} Absolute file paths.
- */
+/** Files that declare a badge-bearing element (`@element` in their JSDoc). */
 function elementFiles(roots = DEFAULT_ROOTS) {
   return collectSourceFiles(roots).filter((f) =>
     ELEMENT_RE.test(readFileSync(f, 'utf-8'))
@@ -186,10 +251,7 @@ function main() {
   }
 
   try {
-    const fromNpm = args.includes('--from-npm');
-    let version =
-      getFlag('--version') ||
-      resolveGen2Version(fromNpm ? { read: () => readDistTag() } : {});
+    let version = resolveVersion(args, getFlag);
     if (args.includes('--base')) {
       version = baseLine(version);
     }

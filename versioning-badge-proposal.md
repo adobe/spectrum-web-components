@@ -41,23 +41,17 @@ freeze, rather than deriving a rolling number that would change every release.
 
 ## Working example (already built + verified)
 
-Two small scripts (`scripts/resolve-gen2-version.js`, `scripts/stamp-since.js`).
+One small script (`scripts/stamp-since.js`).
 
-We do **not** compute the next version — `changeset version` already writes it into the 2nd-gen
-`package.json`, so the default just reads that. Eventual parity: badge, npm publish, CHANGELOG,
-and `version.ts` all derive from that one bump once the prerelease command runs on `main`.
+We do **not** compute the next version: `changeset version` already writes it into the 2nd-gen
+`package.json`, so the stamp step just reads that. Eventual parity: badge, npm publish,
+CHANGELOG, and `version.ts` all derive from that one bump once the prerelease command runs on
+`main`.
 
 ```bash
-# Default: read the 2nd-gen package.json (== the released version once pre-mode is on main).
-# On today's transitional main it's still the stable line:
-$ node scripts/resolve-gen2-version.js
-0.3.0
-
-# Transition-only fallback while main isn't bumped yet — read the npm `beta` dist-tag:
-$ node scripts/resolve-gen2-version.js --from-npm
-2.0.0-beta.1
-
-# Stamp any @since UNRELEASED with the resolved version; frozen values are left alone.
+# Stamp @since UNRELEASED with the release version; frozen values are left alone.
+# Version defaults to the 2nd-gen package.json (--version to override; --from-npm reads the
+# npm `beta` dist-tag as a bridge while main isn't bumped yet).
 $ node scripts/stamp-since.js --version 2.0.0-beta.2
 ✓ stamped @since -> 2.0.0-beta.2 in 1 file(s):
   - 2nd-gen/packages/swc/components/divider/Divider.ts

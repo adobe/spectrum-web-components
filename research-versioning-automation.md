@@ -81,15 +81,15 @@ just read that. Once pre-mode is on `main`, one bump feeds everything:
 No network, no version math, no mirroring. That is the parity.
 
 **Today's bridge:** `main`'s `package.json` still reads the stable line (`0.3.0`), while the
-real beta is the npm `beta` dist-tag (`2.0.0-beta.1`). So the resolver reads `package.json` by
-default, with an opt-in `--from-npm` fallback for use until pre-mode lands on `main`. Retire the
+real beta is the npm `beta` dist-tag (`2.0.0-beta.1`). So the stamp script reads `package.json`
+by default, with an opt-in `--from-npm` fallback for use until pre-mode lands on `main`. Retire the
 fallback (and flip the docs line from `beta` to `latest` at GA) then.
 
 ## Prototype (PR #2)
 
-- `scripts/resolve-gen2-version.js` resolves the version: `GEN2_VERSION` override → 2nd-gen
-  `package.json` → opt-in `--from-npm` dist-tag.
-- `scripts/stamp-since.js` stamps `@since UNRELEASED`; `--check` fails on any element missing
+- `scripts/stamp-since.js` stamps `@since UNRELEASED` with the release version and freezes it.
+  It resolves the version from the 2nd-gen `package.json` by default (`--version` to override,
+  `--from-npm` for the dist-tag bridge today), and `--check` fails on any element missing
   `@since`.
 - `StatusBadge.tsx` renders the `UNRELEASED` sentinel as an "Unreleased" badge.
 
