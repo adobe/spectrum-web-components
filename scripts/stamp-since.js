@@ -13,8 +13,8 @@
  */
 
 /**
- * PROTOTYPE for the versioning-automation proposal (PR #2). Not yet wired into the
- * release flow. See research-versioning-automation.md.
+ * Prototype for the versioning-automation proposal (PR #2). Not yet wired into the
+ * release flow. See ../research-versioning-automation.md.
  *
  * Keeps the "Since X" component badge automatic and semantically correct.
  *
@@ -34,8 +34,8 @@
  *     bumped).
  *
  * The file is organized into four sections: matching/scan config, version source,
- * scanning + stamping, and the CLI. The scanning/stamping functions are pure and exported
- * (for a future release-flow import); the CLI runs only when the file is executed directly.
+ * scanning + stamping, and the CLI. `stampSince` and `findMissingSince` are exported for a
+ * future release-flow import; the CLI runs only when the file is executed directly.
  *
  * @example
  * ```bash
