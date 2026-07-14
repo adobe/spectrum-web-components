@@ -80,16 +80,15 @@ just read that. Once pre-mode is on `main`, one bump feeds everything:
 
 No network, no version math, no mirroring. That is the parity.
 
-**Today's bridge:** `main`'s `package.json` still reads the stable line (`0.3.0`), while the
-real beta is the npm `beta` dist-tag (`2.0.0-beta.1`). So the stamp script reads `package.json`
-by default, with an opt-in `--from-npm` fallback for use until pre-mode lands on `main`. Retire the
-fallback (and flip the docs line from `beta` to `latest` at GA) then.
+**Adoption timing:** the tool is meant to run once pre-mode is on `main`, where `package.json`
+holds the real version. During the current gen2-beta transition `main`'s `package.json` still
+reads the stable line (`0.3.0`), so it is not wired in yet; running it today would stamp that
+stable version.
 
 ## Prototype (PR #2)
 
-- `scripts/stamp-since.js` stamps `@since UNRELEASED` with the release version and freezes it.
-  It reads the version from the 2nd-gen `package.json` by default (`--from-npm` for the
-  dist-tag bridge today), and `--check` fails on any element missing `@since`.
+- `scripts/stamp-since.js` stamps `@since UNRELEASED` with the release version (read from the
+  2nd-gen `package.json`) and freezes it; `--check` fails on any element missing `@since`.
 - `StatusBadge.tsx` renders the `UNRELEASED` sentinel as an "Unreleased" badge.
 
 `--check` already flags ~12 `conversational-ai` elements with no `@since` (no badge today).

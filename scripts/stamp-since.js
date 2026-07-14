@@ -28,10 +28,10 @@
  *     already-stamped components frozen.
  *   - `--check` is the CI guard: every element must carry an `@since` (sentinel or version).
  *
- * Version source (nothing is computed/predicted; `changeset version` already wrote it):
- *   - Default: the 2nd-gen `package.json` version.
- *   - `--from-npm`: the npm `beta` dist-tag (transition-only bridge while `main` is not yet
- *     bumped).
+ * The version is read from the 2nd-gen `package.json` (what `changeset version` bumps);
+ * nothing is computed or predicted. This is meant to run once the prerelease command is on
+ * `main`, where `package.json` holds the real version, so it is not wired in during the
+ * current gen2-beta transition.
  *
  * The file is organized into four sections: matching/scan config, version source,
  * scanning + stamping, and the CLI. `stampSince` and `findMissingSince` are exported for a
@@ -39,14 +39,12 @@
  *
  * @example
  * ```bash
- * node scripts/stamp-since.js             # version from 2nd-gen package.json (default)
- * node scripts/stamp-since.js --from-npm  # transition fallback: npm `beta` dist-tag
- * node scripts/stamp-since.js --dry-run   # preview, write nothing
- * node scripts/stamp-since.js --check     # CI: fail if any element is missing @since
+ * node scripts/stamp-since.js            # stamp using the 2nd-gen package.json version
+ * node scripts/stamp-since.js --dry-run  # preview, write nothing
+ * node scripts/stamp-since.js --check    # CI: fail if any element is missing @since
  * ```
  */
 
-import { execSync } from 'child_process';
 import { readdirSync, readFileSync, writeFileSync } from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -77,79 +75,38 @@ const DEFAULT_ROOTS = [
 
 /* ── Version source ──────────────────────────────────────────────────────────
  * Answers "which version do we stamp?". We never compute or predict it: at release
- * `changeset version` writes it into the 2nd-gen `package.json`, so the default just
- * reads that. `--from-npm` is a transition-only bridge for today, while `main`'s
- * `package.json` still reads the stable line and the real beta lives on the npm tag.
+ * `changeset version` writes it into the 2nd-gen `package.json`, and this reads that.
  */
 
-/** The 2nd-gen package + package.json that `changeset version` bumps. */
-const GEN2_PACKAGE = '@adobe/spectrum-wc';
+/** The 2nd-gen `package.json` that `changeset version` bumps. */
 const GEN2_PACKAGE_JSON = path.join(
   repoRoot,
   '2nd-gen/packages/swc/package.json'
 );
-/** The npm dist-tag the docs represent today (transition fallback). Flip to `latest` at GA. */
-const DEFAULT_DOCS_TAG = 'beta';
 /** Permissive semver check: `2.0.0`, `2.0.0-beta.1`, `0.3.0-next.20260706135249`. */
 const SEMVER = /^\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?(?:\+[0-9A-Za-z.-]+)?$/;
 
 /**
- * Read the `version` field from the 2nd-gen `package.json` (the default source).
+ * Read and validate the version to stamp from the 2nd-gen `package.json`.
  *
- * @returns {string | undefined} The version, or undefined if the file is unreadable.
+ * @returns {string} The semver-validated version.
+ * @throws If the version is missing or not valid semver.
  */
-function readPackageVersion() {
+function resolveVersion() {
+  let candidate;
   try {
-    return JSON.parse(readFileSync(GEN2_PACKAGE_JSON, 'utf-8')).version;
+    candidate = JSON.parse(readFileSync(GEN2_PACKAGE_JSON, 'utf-8')).version;
   } catch {
-    return undefined;
+    // fall through to the missing-version error below.
   }
-}
-
-/**
- * Read the npm `beta` dist-tag version (opt-in transition fallback).
- *
- * @returns {string | undefined} The version, or undefined if unset or npm is unreachable.
- */
-function readDistTag() {
-  try {
-    const out = execSync(
-      `npm view ${GEN2_PACKAGE} dist-tags.${DEFAULT_DOCS_TAG}`,
-      {
-        encoding: 'utf-8',
-        stdio: ['ignore', 'pipe', 'ignore'],
-      }
-    ).trim();
-    return out && out !== 'undefined' ? out : undefined;
-  } catch {
-    // network error, unpublished package, or unknown tag.
-    return undefined;
-  }
-}
-
-/**
- * Resolve the version to stamp: the npm `beta` dist-tag with `--from-npm`, otherwise the
- * 2nd-gen `package.json`. Validates that the result is semver-shaped.
- *
- * @param {string[]} args - CLI args.
- * @returns {string} The resolved, semver-validated version.
- * @throws If no source yields a version, or the value is not valid semver.
- */
-function resolveVersion(args) {
-  const candidate = args.includes('--from-npm')
-    ? readDistTag()
-    : readPackageVersion();
 
   if (!candidate) {
     throw new Error(
-      'Could not resolve a version. Ensure the 2nd-gen package.json has a version, ' +
-        'or use --from-npm.'
+      `Could not read a version from ${path.relative(repoRoot, GEN2_PACKAGE_JSON)}.`
     );
   }
   if (!SEMVER.test(candidate)) {
-    throw new Error(
-      `Resolved version "${candidate}" is not a valid semver string.`
-    );
+    throw new Error(`Version "${candidate}" is not a valid semver string.`);
   }
   return candidate;
 }
@@ -279,7 +236,7 @@ function main() {
 
   // Default: resolve the version and stamp the `UNRELEASED` sentinels.
   try {
-    const version = resolveVersion(args);
+    const version = resolveVersion();
     const dryRun = args.includes('--dry-run');
     const stamped = stampSince({ version, dryRun });
     if (!stamped.length) {

@@ -29,8 +29,8 @@ freeze, rather than deriving a rolling number that would change every release.
 - **Frozen on release** (first-shipped), not a rolling current-release number.
 - **Stamp the exact prerelease** (`@since 2.0.0-beta.N`).
 - **Version source:** the stamp reads the 2nd-gen `package.json` that `changeset version` bumps
-  (no computing/predicting). Today `main` still reads the stable line, so an opt-in `--from-npm`
-  fallback bridges to the `beta` dist-tag until the prerelease command moves onto `main`.
+  (no computing/predicting). Adopted once the prerelease command is on `main`, where
+  `package.json` holds the real version.
 - **Stamp step = an explicit step in the release flow**, right after `changeset version` (next
   to `generate-versions.js`). Not an npm lifecycle hook — changesets doesn't fire those.
 - **Lint rule** blocks CI when an element lacks `@since`.
@@ -49,11 +49,10 @@ CHANGELOG, and `version.ts` all derive from that one bump once the prerelease co
 `main`.
 
 ```bash
-# At release, stamp any @since UNRELEASED with the version (from the 2nd-gen package.json;
-# --from-npm bridges to the npm `beta` dist-tag while main isn't bumped yet). Frozen values
-# are left alone.
-$ node scripts/stamp-since.js --from-npm
-✓ stamped @since -> 2.0.0-beta.1 in 1 file(s):
+# At release on main, stamp any @since UNRELEASED with the package.json version;
+# already-stamped values are left frozen.
+$ node scripts/stamp-since.js
+✓ stamped @since -> 2.0.0-beta.2 in 1 file(s):
   - 2nd-gen/packages/swc/components/new-thing/NewThing.ts
 
 # CI guard: fail if any element is missing @since
@@ -75,4 +74,4 @@ through the CEM.
 2. Exact wiring point in the on-`main` release flow once the prerelease command moves there.
 3. Fix the ~12 missing-`@since` elements in this PR, or a follow-up?
 4. Badge label for unreleased-on-staging — "Unreleased" ok, or prefer "Since next"/hidden?
-5. OK to lean on the `--from-npm` bridge until pre-mode is on `main`, or wire it to `version.ts` sooner?
+5. OK to adopt this only once pre-mode is on `main` (no interim version bridge), or is a stopgap needed sooner?
