@@ -102,8 +102,30 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
   @property({ type: Boolean, reflect: true })
   public compact = false;
 
+  /**
+   * @deprecated The `emphasized` property is deprecated and will be removed
+   * in a future release.
+   */
   @property({ type: Boolean, reflect: true })
-  public emphasized = false;
+  public set emphasized(value: boolean) {
+    const oldValue = this._emphasized;
+    this._emphasized = value;
+    this.requestUpdate('emphasized', oldValue);
+    if (window.__swc?.DEBUG) {
+      window.__swc.warn(
+        this,
+        `The "emphasized" attribute on <${this.localName}> is deprecated and will be removed in a future release.`,
+        'https://opensource.adobe.com/spectrum-web-components/components/action-group/',
+        { level: 'deprecation' }
+      );
+    }
+  }
+
+  public get emphasized(): boolean {
+    return this._emphasized;
+  }
+
+  private _emphasized = false;
 
   @property({ type: Boolean, reflect: true })
   public justified = false;
@@ -114,20 +136,81 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
   @property({ type: Boolean, reflect: true })
   public quiet = false;
 
+  /**
+   * @deprecated The `selects` property is deprecated and will be removed in
+   * a future release. Selection UX will be available via `swc-toggle-button-group`
+   * (toggle and multi-select) and `swc-segmented-control` (exclusive choice)
+   * in the 2nd-gen library.
+   */
   @property({ type: String })
-  public selects: undefined | 'single' | 'multiple';
+  public set selects(value: undefined | 'single' | 'multiple') {
+    const oldValue = this._selects;
+    this._selects = value;
+    this.requestUpdate('selects', oldValue);
+    if (window.__swc?.DEBUG) {
+      window.__swc.warn(
+        this,
+        `The "selects" attribute on <${this.localName}> is deprecated and will be removed in a future release. Selection UX is available via \`swc-toggle-button-group\` (toggle and multi-select) and \`swc-segmented-control\` (exclusive choice) in the 2nd-gen library.`,
+        'https://opensource.adobe.com/spectrum-web-components/components/action-group/',
+        { level: 'deprecation' }
+      );
+    }
+  }
+
+  public get selects(): undefined | 'single' | 'multiple' {
+    return this._selects;
+  }
+
+  private _selects: undefined | 'single' | 'multiple' = undefined;
 
   @property({ reflect: true, attribute: 'static-color' })
   public staticColor?: 'white' | 'black';
 
+  /**
+   * @deprecated The `vertical` attribute is deprecated and will be removed in
+   * a future release. Use `orientation="vertical"` on `swc-action-group`
+   * instead.
+   */
   @property({ type: Boolean, reflect: true })
-  public vertical = false;
+  public set vertical(value: boolean) {
+    const oldValue = this._vertical;
+    this._vertical = value;
+    this.requestUpdate('vertical', oldValue);
+    if (window.__swc?.DEBUG) {
+      window.__swc.warn(
+        this,
+        `The "vertical" attribute on <${this.localName}> is deprecated and will be removed in a future release. Use \`orientation="vertical"\` on \`swc-action-group\` instead.`,
+        'https://opensource.adobe.com/spectrum-web-components/components/action-group/',
+        { level: 'deprecation' }
+      );
+    }
+  }
+
+  public get vertical(): boolean {
+    return this._vertical;
+  }
+
+  private _vertical = false;
 
   private _selected: string[] = EMPTY_SELECTION;
 
+  /**
+   * @deprecated The `selected` property is deprecated and will be removed in
+   * a future release. Selection UX is available via `swc-toggle-button-group`
+   * (toggle and multi-select) and `swc-segmented-control` (exclusive choice)
+   * in the 2nd-gen library.
+   */
   set selected(selected: string[]) {
     this.requestUpdate('selected', this._selected);
     this._selected = selected;
+    if (window.__swc?.DEBUG) {
+      window.__swc.warn(
+        this,
+        `The "selected" attribute on <${this.localName}> is deprecated and will be removed in a future release.`,
+        'https://opensource.adobe.com/spectrum-web-components/components/action-group/',
+        { level: 'deprecation' }
+      );
+    }
     this.updateComplete.then(() => {
       this.applySelects();
       this.manageChildren();
