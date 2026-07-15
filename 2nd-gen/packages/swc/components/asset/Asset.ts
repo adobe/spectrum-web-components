@@ -55,6 +55,8 @@ const folder = (label: string): TemplateResult => html`
 `;
 
 /**
+ * A visual representation of a file, folder, or image asset.
+ *
  * @element swc-asset
  * @slot - content to be displayed when no `variant` is set (typically an `<img>` element)
  *

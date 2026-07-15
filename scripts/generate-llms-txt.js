@@ -51,6 +51,11 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
  * @returns {string}
  */
 function mdTable(headers, rows) {
+  // Escape pipes so union types like `'card' | 'media'` don't break the table.
+  const esc = (str) => (str ?? '').replace(/\|/g, '\\|');
+  headers = headers.map(esc);
+  rows = rows.map((r) => r.map(esc));
+
   const cols = headers.length;
   const widths = Array.from({ length: cols }, (_, i) =>
     Math.max(headers[i].length, ...rows.map((r) => (r[i] ?? '').length))
