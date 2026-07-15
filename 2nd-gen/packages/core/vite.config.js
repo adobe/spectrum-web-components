@@ -116,7 +116,7 @@ export default defineConfig({
           id.startsWith('@floating-ui/') ||
           id === 'colorjs.io' ||
           id.startsWith('colorjs.io/') ||
-          id.startsWith('@spectrum-web-components/core/')
+          id.startsWith('@adobe/spectrum-wc-core/')
         );
       },
       output: {

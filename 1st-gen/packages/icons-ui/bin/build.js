@@ -21,7 +21,7 @@ import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-const rootDir = path.join(__dirname, '../../../');
+const rootDir = path.join(__dirname, '../../../').replace(/\\/g, '/');
 
 const disclaimer = `
 /*
@@ -83,7 +83,7 @@ const defaultIconImport = `import { DefaultIcon as AlternateIcon } from '../Defa
 
 async function buildIcons(icons, tag, iconsNameList) {
     console.log('Building icons for', { icons, tag, iconsNameList });
-    icons.forEach((i) => {
+    for (const i of icons) {
         const svg = fs.readFileSync(i, 'utf-8');
         let id = path
             .basename(i, '.svg')
@@ -124,7 +124,7 @@ async function buildIcons(icons, tag, iconsNameList) {
         );
 
         if (!Number.isNaN(Number(ComponentName[0]))) {
-            return;
+            continue;
         }
 
         $('*').each((index, el) => {
@@ -179,22 +179,19 @@ async function buildIcons(icons, tag, iconsNameList) {
         }
     `;
 
-        prettier
-            .format(iconLiteral, {
-                printWidth: 100,
-                tabWidth: 2,
-                useTabs: false,
-                semi: true,
-                singleQuote: true,
-                trailingComma: 'all',
-                bracketSpacing: true,
-                jsxBracketSameLine: false,
-                arrowParens: 'avoid',
-                parser: 'typescript',
-            })
-            .then((icon) => {
-                fs.writeFileSync(location, icon, 'utf-8');
-            });
+        const icon = await prettier.format(iconLiteral, {
+            printWidth: 100,
+            tabWidth: 2,
+            useTabs: false,
+            semi: true,
+            singleQuote: true,
+            trailingComma: 'all',
+            bracketSpacing: true,
+            jsxBracketSameLine: false,
+            arrowParens: 'avoid',
+            parser: 'typescript',
+        });
+        fs.writeFileSync(location, icon, 'utf-8');
 
         const exportString = `export {${ComponentName}Icon} from './${tag}/${id}.js';\r\n`;
         fs.appendFileSync(
@@ -250,33 +247,23 @@ async function buildIcons(icons, tag, iconsNameList) {
         }
         `;
 
-        prettier
-            .format(iconElement, {
-                printWidth: 100,
-                tabWidth: 2,
-                useTabs: false,
-                semi: true,
-                singleQuote: true,
-                trailingComma: 'all',
-                bracketSpacing: true,
-                jsxBracketSameLine: false,
-                arrowParens: 'avoid',
-                parser: 'typescript',
-            })
-            .then((iconElementFile) => {
-                fs.writeFileSync(
-                    path.join(
-                        rootDir,
-                        'packages',
-                        'icons-ui',
-                        'src',
-                        'elements',
-                        `Icon${id}.ts`
-                    ),
-                    iconElementFile,
-                    'utf-8'
-                );
-            });
+        const iconElementFile = await prettier.format(iconElement, {
+            printWidth: 100,
+            tabWidth: 2,
+            useTabs: false,
+            semi: true,
+            singleQuote: true,
+            trailingComma: 'all',
+            bracketSpacing: true,
+            jsxBracketSameLine: false,
+            arrowParens: 'avoid',
+            parser: 'typescript',
+        });
+        fs.writeFileSync(
+            path.join(rootDir, 'packages', 'icons-ui', 'src', 'elements', `Icon${id}.ts`),
+            iconElementFile,
+            'utf-8'
+        );
 
         const iconRegistration = `
         ${disclaimer}
@@ -293,32 +280,23 @@ async function buildIcons(icons, tag, iconsNameList) {
         }
         `;
 
-        prettier
-            .format(iconRegistration, {
-                printWidth: 100,
-                tabWidth: 2,
-                useTabs: false,
-                semi: true,
-                singleQuote: true,
-                trailingComma: 'all',
-                bracketSpacing: true,
-                jsxBracketSameLine: false,
-                arrowParens: 'avoid',
-                parser: 'typescript',
-            })
-            .then((iconRegistrationFile) => {
-                fs.writeFileSync(
-                    path.join(
-                        rootDir,
-                        'packages',
-                        'icons-ui',
-                        'icons',
-                        `${iconElementName}.ts`
-                    ),
-                    iconRegistrationFile,
-                    'utf-8'
-                );
-            });
+        const iconRegistrationFile = await prettier.format(iconRegistration, {
+            printWidth: 100,
+            tabWidth: 2,
+            useTabs: false,
+            semi: true,
+            singleQuote: true,
+            trailingComma: 'all',
+            bracketSpacing: true,
+            jsxBracketSameLine: false,
+            arrowParens: 'avoid',
+            parser: 'typescript',
+        });
+        fs.writeFileSync(
+            path.join(rootDir, 'packages', 'icons-ui', 'icons', `${iconElementName}.ts`),
+            iconRegistrationFile,
+            'utf-8'
+        );
 
         const importStatement = `\r\nimport '@spectrum-web-components/icons-ui/icons/${iconElementName}.js';`;
         const metadata = `{name: '${Case.sentence(
@@ -326,7 +304,7 @@ async function buildIcons(icons, tag, iconsNameList) {
         )}', tag: '<${iconElementName}>', story: (size: string): TemplateResult => html\`<${iconElementName} size=\$\{size\}></${iconElementName}>\`},\r\n`;
         manifestImports += importStatement;
         manifestListings += metadata;
-    });
+    }
 }
 
 const iconsV1 = (

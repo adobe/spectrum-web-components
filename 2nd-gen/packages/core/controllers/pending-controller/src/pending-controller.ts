@@ -76,9 +76,9 @@ const INLINE_SIZE_PROPERTY = '--swc-pending-inline-size';
  * host element: the delayed visual activation, freezing the host's inline size
  * while busy, and deriving the pending accessible name. Rendering is handled
  * separately by the `renderPendingSpinner` directive
- * (`@spectrum-web-components/core/directives/pending-spinner`); wiring (the
+ * (`@adobe/spectrum-wc-core/directives/pending-spinner`); wiring (the
  * `pending` / `pending-label` properties and click suppression) is handled by
- * `PendingMixin` (`@spectrum-web-components/core/mixins`).
+ * `PendingMixin` (`@adobe/spectrum-wc-core/mixins`).
  *
  * The accessible name and `aria-disabled` are applied by the host's own
  * template, keyed off `host.pending` for an immediate (non-delayed) response;

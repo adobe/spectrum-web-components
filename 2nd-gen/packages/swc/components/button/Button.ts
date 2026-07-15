@@ -22,8 +22,8 @@ import {
   type ButtonFillStyle,
   type ButtonStaticColor,
   type ButtonVariant,
-} from '@spectrum-web-components/core/components/button';
-import { PendingMixin } from '@spectrum-web-components/core/mixins';
+} from '@adobe/spectrum-wc-core/components/button';
+import { PendingMixin } from '@adobe/spectrum-wc-core/mixins';
 
 import pendingSpinnerStyles from '../../stylesheets/_lit-styles/pending-spinner.css';
 import styles from './button.css';
@@ -33,7 +33,7 @@ import baseStyles from './button-base.css';
  * A button component that triggers an action when activated.
  *
  * @element swc-button
- * @since 0.0.1
+ * @since 2.0.0-beta.1
  *
  * @slot - Visible button label.
  * @slot icon - Leading icon displayed before the label.

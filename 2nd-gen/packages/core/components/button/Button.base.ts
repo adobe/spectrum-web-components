@@ -13,12 +13,12 @@
 import { PropertyValues } from 'lit';
 import { property } from 'lit/decorators.js';
 
-import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
+import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
 import {
   ObserveSlotPresence,
   ObserveSlotText,
   SizedMixin,
-} from '@spectrum-web-components/core/mixins/index.js';
+} from '@adobe/spectrum-wc-core/mixins/index.js';
 
 import { BUTTON_VALID_SIZES } from './Button.types.js';
 
@@ -31,9 +31,6 @@ import { BUTTON_VALID_SIZES } from './Button.types.js';
  * is intentionally absent so that ActionButton, ClearButton, CloseButton,
  * PickerButton, and InfieldButton can extend this base without inheriting
  * the `swc-button` visual surface.
- *
- * @slot - Visible button label.
- * @slot icon - Optional leading icon.
  *
  * @attribute {ElementSize} size - The size of the button.
  *

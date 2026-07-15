@@ -187,7 +187,8 @@ const preview = {
       canvas: {
         withToolbar: true,
         layout: 'centered',
-        sourceState: 'shown',
+        // Individual stories can override this with parameters.docs.canvas.sourceState.
+        sourceState: 'hidden',
       },
       source: {
         excludeDecorators: true,
@@ -380,6 +381,8 @@ const preview = {
                   'Migration plan',
                   'Rendering and styling migration analysis',
                 ],
+                'Card',
+                ['Migration plan'],
                 'Checkbox',
                 ['Rendering and styling migration analysis'],
                 'Close button',
@@ -423,6 +426,8 @@ const preview = {
                 ],
                 'Help text',
                 ['Rendering and styling migration analysis'],
+                'Icon',
+                ['Accessibility migration analysis'],
                 'Illustrated message',
                 [
                   'Accessibility migration analysis',
@@ -519,7 +524,10 @@ const preview = {
                 'Textfield',
                 ['Rendering and styling migration analysis'],
                 'Thumbnail',
-                ['Rendering and styling migration analysis'],
+                [
+                  'Accessibility migration analysis',
+                  'Rendering and styling migration analysis',
+                ],
                 'Toast',
                 ['Accessibility migration analysis'],
                 'Tooltip',

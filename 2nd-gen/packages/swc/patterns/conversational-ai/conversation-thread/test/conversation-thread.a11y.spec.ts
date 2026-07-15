@@ -27,7 +27,7 @@ test.describe('ConversationThread - ARIA Snapshots', () => {
     await expect(root).toMatchAriaSnapshot(`
       - group "User message": Can you help me create a 45-minute presentation, with animations, for an executive update?
       - group "System message":
-        - button "Response generated"
+        - text: I interpreted your request as an executive narrative task and prioritized a concise, audience-ready structure.
         - 'heading "Big idea/core narrative: The warmth of welcome" [level=3]'
         - paragraph: Hospitality begins the moment our customers set foot off their plane.
         - group "Response feedback":
