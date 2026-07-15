@@ -17,7 +17,7 @@ import {
   BUTTON_GROUP_ALIGNMENTS,
   BUTTON_GROUP_ORIENTATIONS,
   BUTTON_GROUP_SIZES,
-} from '@spectrum-web-components/core/components/button-group';
+} from '@adobe/spectrum-wc-core/components/button-group';
 
 import '@adobe/spectrum-wc/components/button-group/swc-button-group.js';
 import '@adobe/spectrum-wc/components/button/swc-button.js';

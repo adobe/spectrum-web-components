@@ -16,7 +16,7 @@ import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import {
   PROGRESS_CIRCLE_STATIC_COLORS,
   PROGRESS_CIRCLE_VALID_SIZES,
-} from '@spectrum-web-components/core/components/progress-circle';
+} from '@adobe/spectrum-wc-core/components/progress-circle';
 
 import '@adobe/spectrum-wc/components/progress-circle/swc-progress-circle.js';
 

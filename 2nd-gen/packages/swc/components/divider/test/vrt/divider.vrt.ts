@@ -16,7 +16,7 @@ import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import {
   DIVIDER_STATIC_COLORS,
   DIVIDER_VALID_SIZES,
-} from '@spectrum-web-components/core/components/divider';
+} from '@adobe/spectrum-wc-core/components/divider';
 
 import '@adobe/spectrum-wc/components/divider/swc-divider.js';
 

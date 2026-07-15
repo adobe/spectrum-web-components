@@ -17,7 +17,7 @@ import {
   KEYBOARD_ACTIVATIONS,
   TAB_DENSITIES,
   TABS_DIRECTIONS,
-} from '@spectrum-web-components/core/components/tabs';
+} from '@adobe/spectrum-wc-core/components/tabs';
 
 import '@adobe/spectrum-wc/components/tabs/swc-tabs.js';
 import '@adobe/spectrum-wc/components/tabs/swc-tab.js';

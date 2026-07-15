@@ -13,7 +13,7 @@
 import { html } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
-import { ASSET_VARIANTS } from '@spectrum-web-components/core/components/asset';
+import { ASSET_VARIANTS } from '@adobe/spectrum-wc-core/components/asset';
 
 import '@adobe/spectrum-wc/components/asset/swc-asset.js';
 

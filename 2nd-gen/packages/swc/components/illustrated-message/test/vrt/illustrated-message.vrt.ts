@@ -16,7 +16,7 @@ import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import {
   ILLUSTRATED_MESSAGE_VALID_ORIENTATIONS,
   ILLUSTRATED_MESSAGE_VALID_SIZES,
-} from '@spectrum-web-components/core/components/illustrated-message';
+} from '@adobe/spectrum-wc-core/components/illustrated-message';
 
 import '@adobe/spectrum-wc/components/button/swc-button.js';
 import '@adobe/spectrum-wc/components/button-group/swc-button-group.js';

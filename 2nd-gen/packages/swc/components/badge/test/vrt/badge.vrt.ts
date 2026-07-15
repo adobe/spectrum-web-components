@@ -18,7 +18,7 @@ import {
   BADGE_VARIANTS_COLOR,
   BADGE_VARIANTS_SEMANTIC,
   FIXED_VALUES,
-} from '@spectrum-web-components/core/components/badge';
+} from '@adobe/spectrum-wc-core/components/badge';
 
 import '@adobe/spectrum-wc/components/badge/swc-badge.js';
 import '@adobe/spectrum-wc/components/icon/swc-icon.js';

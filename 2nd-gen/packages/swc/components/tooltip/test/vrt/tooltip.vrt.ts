@@ -16,7 +16,7 @@ import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import {
   TOOLTIP_PLACEMENTS,
   TOOLTIP_VARIANTS,
-} from '@spectrum-web-components/core/components/tooltip';
+} from '@adobe/spectrum-wc-core/components/tooltip';
 
 import '@adobe/spectrum-wc/components/tooltip/swc-tooltip.js';
 

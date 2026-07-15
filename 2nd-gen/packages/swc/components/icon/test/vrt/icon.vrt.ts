@@ -13,7 +13,7 @@
 import { html } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
-import { ICON_VALID_SIZES } from '@spectrum-web-components/core/components/icon';
+import { ICON_VALID_SIZES } from '@adobe/spectrum-wc-core/components/icon';
 
 import '@adobe/spectrum-wc/components/icon/swc-icon.js';
 

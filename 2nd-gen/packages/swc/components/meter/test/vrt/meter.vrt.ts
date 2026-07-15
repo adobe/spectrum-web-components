@@ -13,12 +13,12 @@
 import { html } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
-import { METER_VARIANTS } from '@spectrum-web-components/core/components/meter';
+import { METER_VARIANTS } from '@adobe/spectrum-wc-core/components/meter';
 import {
   LINEAR_PROGRESS_LABEL_POSITIONS,
   LINEAR_PROGRESS_STATIC_COLORS,
   LINEAR_PROGRESS_VALID_SIZES,
-} from '@spectrum-web-components/core/mixins/index.js';
+} from '@adobe/spectrum-wc-core/mixins/index.js';
 
 import '@adobe/spectrum-wc/components/meter/swc-meter.js';
 

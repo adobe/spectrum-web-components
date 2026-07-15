@@ -13,7 +13,7 @@
 import { html } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
-import { AVATAR_VALID_SIZES } from '@spectrum-web-components/core/components/avatar';
+import { AVATAR_VALID_SIZES } from '@adobe/spectrum-wc-core/components/avatar';
 
 import '@adobe/spectrum-wc/components/avatar/swc-avatar.js';
 
