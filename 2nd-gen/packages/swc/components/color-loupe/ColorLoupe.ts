@@ -10,7 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
-import { CSSResultArray, html, TemplateResult } from 'lit';
+import { CSSResultArray, html, PropertyValues, TemplateResult } from 'lit';
 import { styleMap } from 'lit/directives/style-map.js';
 
 import { ColorLoupeBase } from '@adobe/spectrum-wc-core/components/color-loupe';
@@ -37,6 +37,17 @@ export class ColorLoupe extends ColorLoupeBase {
 
   public static override get styles(): CSSResultArray {
     return [opacityCheckerboardStyles, styles];
+  }
+
+  protected override updated(changed: PropertyValues): void {
+    super.updated(changed);
+    if (changed.has('color')) {
+      // Apply the core white-first contrast decision to the inner border.
+      this.style.setProperty(
+        '--_swc-color-loupe-border-alpha',
+        String(this.borderAlpha)
+      );
+    }
   }
 
   protected override render(): TemplateResult {
