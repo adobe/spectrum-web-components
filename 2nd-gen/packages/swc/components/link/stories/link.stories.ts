@@ -29,9 +29,8 @@ const meta: Meta<LinkTemplateProps> = {
     docs: {
       subtitle: 'Native link variant styles are available via CSS classes.',
     },
-    design: {
-      type: 'figma',
-      url: 'https://www.figma.com/design/Mngz9H7WZLbrCvGQf3GnsY/S2---Web--Desktop-scale-?node-id=18850-110',
+    stackblitz: {
+      url: 'https://stackblitz.com/edit/vitejs-vite-kph47lra?file=src%2Fmy-element.ts',
     },
   },
   argTypes: {

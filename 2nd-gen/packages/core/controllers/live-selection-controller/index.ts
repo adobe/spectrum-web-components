@@ -11,10 +11,7 @@
  */
 
 export {
-  focusgroupNavigationActiveChange,
-  FocusgroupNavigationController,
-  type FocusgroupActiveChangeSource,
-  type FocusgroupDirection,
-  type FocusgroupNavigationActiveChangeDetail,
-  type FocusgroupNavigationOptions,
-} from './src/focusgroup-navigation-controller.js';
+  LiveSelectionController,
+  type LiveSelectionMode,
+  type LiveSelectionOptions,
+} from './src/live-selection-controller.js';
