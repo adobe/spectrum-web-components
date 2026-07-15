@@ -1,0 +1,166 @@
+/**
+ * Copyright 2026 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+:host {
+  display: block;
+  position: relative;
+  inline-size: 100%;
+  block-size: 100%;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+.swc-UserMessageAttachment {
+  inline-size: 100%;
+  block-size: 100%;
+}
+
+.swc-UserMessageAttachment-meta {
+  display: flex;
+  flex-direction: column;
+  gap: token("spacing-50");
+  min-inline-size: 0;
+}
+
+.swc-UserMessageAttachment-title {
+  font-family: token("sans-serif-font");
+  font-size: token("font-size-100");
+  font-weight: token("bold-font-weight");
+  line-height: token("line-height-font-size-100");
+  color: token("gray-900");
+}
+
+.swc-UserMessageAttachment-subtitle {
+  font-family: token("sans-serif-font");
+  font-size: token("font-size-75");
+  font-weight: token("regular-font-weight");
+  line-height: token("line-height-font-size-75");
+  color: token("gray-800");
+}
+
+/* Card: stacked-row tile (icon/preview + title + subtitle). */
+:host([type="card"]) .swc-UserMessageAttachment-surface {
+  display: flex;
+  gap: token("spacing-300");
+  align-items: center;
+  min-block-size: var(--swc-user-message-attachment-card-min-block-size, 68px);
+  padding: token("spacing-300");
+  background: token("gray-50");
+  border: 1px solid transparent;
+  border-radius: token("corner-radius-medium-default");
+}
+
+:host([type="card"]) .swc-UserMessageAttachment-thumbnail {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+}
+
+:host([type="card"]) .swc-UserMessageAttachment-thumbnail ::slotted(*) {
+  box-sizing: border-box;
+  flex-shrink: 0;
+  inline-size: var(--swc-user-message-attachment-card-thumbnail-inline-size, 32px);
+  block-size: var(--swc-user-message-attachment-card-thumbnail-block-size, 32px);
+  background: token("gray-100");
+  border: 1px solid transparent;
+  border-radius: token("corner-radius-75");
+}
+
+:host([type="card"]) .swc-UserMessageAttachment-meta {
+  flex: 1;
+  align-items: flex-start;
+}
+
+:host([type="card"]) .swc-UserMessageAttachment-title,
+:host([type="card"]) .swc-UserMessageAttachment-subtitle {
+  inline-size: 100%;
+  min-inline-size: 0;
+  text-align: start;
+}
+
+:host([type="card"]) .swc-UserMessageAttachment-title ::slotted(*),
+:host([type="card"]) .swc-UserMessageAttachment-subtitle ::slotted(*) {
+  display: block;
+  min-inline-size: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Media: fixed square grid tile. */
+:host([type="media"]) {
+  inline-size: var(--swc-user-message-attachment-media-size, 120px);
+  block-size: var(--swc-user-message-attachment-media-size, 120px);
+}
+
+:host([type="media"]) .swc-UserMessageAttachment-surface {
+  display: block;
+  position: relative;
+  inline-size: 100%;
+  block-size: 100%;
+  border-radius: token("corner-radius-medium-default");
+  overflow: hidden;
+}
+
+:host([type="media"]) .swc-UserMessageAttachment-thumbnail {
+  display: block;
+  position: relative;
+  inline-size: 100%;
+  block-size: 100%;
+  background: token("gray-100");
+  border: 1px solid transparent;
+  border-radius: token("corner-radius-medium-default");
+  overflow: hidden;
+}
+
+:host([type="media"]) .swc-UserMessageAttachment-thumbnail ::slotted(*) {
+  display: block;
+  position: absolute;
+  inset: 0;
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: cover;
+}
+
+:host([type="media"]) .swc-UserMessageAttachment-badge {
+  display: inline-flex;
+  position: absolute;
+  inset-block-end: token("spacing-50");
+  inset-inline-start: token("spacing-50");
+  z-index: 1;
+  align-items: center;
+  max-inline-size: calc(100% - (2 * token("spacing-50")));
+  min-block-size: 24px;
+  padding-block: token("spacing-75");
+  padding-inline: calc(token("spacing-75") + token("spacing-50") + token("corner-radius-75"));
+  font-family: token("sans-serif-font");
+  font-size: token("font-size-75");
+  font-weight: token("medium-font-weight");
+  line-height: token("line-height-font-size-75");
+  color: token("gray-25");
+  background: token("transparent-black-700");
+  border-radius: token("corner-radius-400");
+}
+
+:host([type="media"]) .swc-UserMessageAttachment-badge ::slotted(*) {
+  display: block;
+  min-inline-size: 0;
+  max-inline-size: 152px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

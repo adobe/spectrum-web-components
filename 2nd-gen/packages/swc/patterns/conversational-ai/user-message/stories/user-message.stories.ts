@@ -28,7 +28,7 @@ delete (argTypes as Record<string, unknown>).content;
 argTypes.type = {
   ...argTypes.type,
   control: { type: 'select' },
-  options: ['copy', 'card', 'media'],
+  options: ['copy', 'card', 'media', 'attachments'],
   table: {
     category: 'attributes',
     defaultValue: { summary: 'copy' },
@@ -168,6 +168,62 @@ export const Content: Story = {
   `,
   tags: ['options'],
 };
+
+const mediaAttachment = (src: string, alt: string) => html`
+  <swc-user-message-attachment type="media">
+    <img slot="thumbnail" src=${src} alt=${alt} />
+  </swc-user-message-attachment>
+`;
+
+export const Attachments: Story = {
+  render: () => html`
+    <swc-conversation-turn type="user">
+      <swc-user-message type="attachments">
+        ${mediaAttachment(
+          'https://picsum.photos/id/64/240/240',
+          'User portrait'
+        )}
+        ${mediaAttachment(
+          'https://picsum.photos/id/823/240/240',
+          'Team profile'
+        )}
+        ${mediaAttachment('https://picsum.photos/id/56/240/240', 'Texture')}
+        <swc-user-message-attachment type="card">
+          <div
+            slot="thumbnail"
+            style="inline-size:32px;block-size:32px;border-radius:3px;background:var(--swc-gray-200);"
+            role="img"
+            aria-label="Video file"
+          ></div>
+          <span slot="title">colorful-video-1770010806412.mp4</span>
+          <span slot="subtitle">18 MB</span>
+        </swc-user-message-attachment>
+      </swc-user-message>
+    </swc-conversation-turn>
+  `,
+  tags: ['options'],
+};
+
+// ──────────────────────────────
+//    BEHAVIORS STORIES
+// ──────────────────────────────
+
+export const AttachmentsDisclosure: Story = {
+  render: () => html`
+    <swc-conversation-turn type="user">
+      <swc-user-message type="attachments">
+        ${mediaAttachment('https://picsum.photos/id/64/240/240', 'Photo 1')}
+        ${mediaAttachment('https://picsum.photos/id/823/240/240', 'Photo 2')}
+        ${mediaAttachment('https://picsum.photos/id/56/240/240', 'Photo 3')}
+        ${mediaAttachment('https://picsum.photos/id/65/240/240', 'Photo 4')}
+        ${mediaAttachment('https://picsum.photos/id/48/240/240', 'Photo 5')}
+        ${mediaAttachment('https://picsum.photos/id/28/240/240', 'Photo 6')}
+      </swc-user-message>
+    </swc-conversation-turn>
+  `,
+  tags: ['behaviors'],
+};
+AttachmentsDisclosure.storyName = 'Show all / show less';
 
 // ────────────────────────────────
 //    ACCESSIBILITY STORY

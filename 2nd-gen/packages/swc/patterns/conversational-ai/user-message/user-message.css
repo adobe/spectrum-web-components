@@ -56,6 +56,13 @@
   padding: var(--swc-user-message-media-padding, token("spacing-100"));
 }
 
+/* Attachments: fits a 4-column media grid; not yet in the Figma sizing spec above, revisit with design. */
+:host([type="attachments"]) {
+  inline-size: var(--swc-user-message-attachments-inline-size, 420px);
+  max-inline-size: 536px;
+  padding: var(--swc-user-message-attachments-padding, token("spacing-100"));
+}
+
 .swc-UserMessage-attachment {
   display: flex;
   min-inline-size: 0;
@@ -173,4 +180,62 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+/* Attachments: 4-column media grid + full-width stacked file rows. */
+.swc-UserMessage-attachments {
+  display: flex;
+  flex-direction: column;
+  gap: token("spacing-200");
+}
+
+.swc-UserMessage-attachments-media {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: token("spacing-100");
+}
+
+.swc-UserMessage-attachments-media[hidden] {
+  display: none;
+}
+
+/* Assigned nodes become direct grid items instead of the slot itself. */
+.swc-UserMessage-attachments-media slot {
+  display: contents;
+}
+
+.swc-UserMessage-attachments-files {
+  display: flex;
+  flex-direction: column;
+  gap: token("spacing-100");
+}
+
+.swc-UserMessage-attachments-files[hidden] {
+  display: none;
+}
+
+.swc-UserMessage-attachments-files slot {
+  display: contents;
+}
+
+.swc-UserMessage-attachments-toggle {
+  display: inline-flex;
+  gap: token("spacing-75");
+  align-items: center;
+  padding: 0;
+  font-family: token("sans-serif-font");
+  font-size: token("font-size-75");
+  font-weight: token("bold-font-weight");
+  color: token("gray-800");
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.swc-UserMessage-attachments-chevron {
+  transition: transform token("animation-duration-100") ease;
+}
+
+.swc-UserMessage-attachments-chevron--down {
+  transform: rotate(90deg);
 }

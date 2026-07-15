@@ -170,6 +170,133 @@ export const DefaultSlotHiddenForAttachmentTypesTest: Story = {
   },
 };
 
+function attachmentsMarkup(mediaCount: number, cardCount: number): string {
+  const media = Array.from(
+    { length: mediaCount },
+    (_, index) => `
+      <swc-user-message-attachment type="media">
+        <div slot="thumbnail" role="img" aria-label="Photo ${index + 1}"></div>
+      </swc-user-message-attachment>
+    `
+  ).join('');
+
+  const cards = Array.from(
+    { length: cardCount },
+    (_, index) => `
+      <swc-user-message-attachment type="card">
+        <div slot="thumbnail" role="img" aria-label="File icon"></div>
+        <span slot="title">File ${index + 1}</span>
+        <span slot="subtitle">1 MB</span>
+      </swc-user-message-attachment>
+    `
+  ).join('');
+
+  return media + cards;
+}
+
+export const AttachmentsGroupingTest: Story = {
+  ...Overview,
+  play: async ({ canvasElement, step }) => {
+    const el = await getComponent<UserMessage>(
+      canvasElement,
+      'swc-user-message'
+    );
+
+    await step(
+      'media count at or below the visible limit renders no disclosure',
+      async () => {
+        el.type = 'attachments';
+        el.open = false;
+        el.innerHTML = attachmentsMarkup(4, 1);
+        await el.updateComplete;
+
+        const toggle = el.shadowRoot?.querySelector(
+          '.swc-UserMessage-attachments-toggle'
+        );
+        expect(toggle).toBeNull();
+
+        const mediaChildren = Array.from(el.children).filter(
+          (child) => child.getAttribute('type') !== 'card'
+        );
+        const cardChildren = Array.from(el.children).filter(
+          (child) => child.getAttribute('type') === 'card'
+        );
+        expect(
+          mediaChildren.every((child) => !child.hasAttribute('hidden'))
+        ).toBe(true);
+        expect(
+          cardChildren.every((child) => !child.hasAttribute('hidden'))
+        ).toBe(true);
+        expect(
+          mediaChildren.every(
+            (child) => child.getAttribute('slot') === 'attachment-media'
+          )
+        ).toBe(true);
+        expect(
+          cardChildren.every(
+            (child) => child.getAttribute('slot') === 'attachment-card'
+          )
+        ).toBe(true);
+      }
+    );
+
+    await step(
+      'media count above the visible limit hides overflow tiles and shows the disclosure',
+      async () => {
+        el.type = 'attachments';
+        el.open = false;
+        el.innerHTML = attachmentsMarkup(6, 0);
+        await el.updateComplete;
+        await new Promise((resolve) => requestAnimationFrame(resolve));
+        await el.updateComplete;
+
+        const toggle = el.shadowRoot?.querySelector(
+          '.swc-UserMessage-attachments-toggle'
+        );
+        expect(toggle).toBeTruthy();
+        expect(toggle?.getAttribute('aria-expanded')).toBe('false');
+        expect(toggle?.textContent?.trim()).toContain('Show all');
+
+        const mediaChildren = Array.from(el.children);
+        expect(mediaChildren.slice(0, 4).some((child) => child.hidden)).toBe(
+          false
+        );
+        expect(mediaChildren.slice(4).every((child) => child.hidden)).toBe(
+          true
+        );
+      }
+    );
+
+    await step(
+      'clicking the disclosure reveals overflow tiles and fires the toggle event',
+      async () => {
+        let detail: { open: boolean } | undefined;
+        el.addEventListener(
+          'swc-user-message-toggle',
+          (event) => {
+            detail = (event as CustomEvent<{ open: boolean }>).detail;
+          },
+          { once: true }
+        );
+
+        const toggle = el.shadowRoot?.querySelector<HTMLButtonElement>(
+          '.swc-UserMessage-attachments-toggle'
+        );
+        toggle?.click();
+        await el.updateComplete;
+
+        expect(el.open).toBe(true);
+        expect(detail?.open).toBe(true);
+        expect(toggle?.getAttribute('aria-expanded')).toBe('true');
+        expect(toggle?.textContent?.trim()).toContain('Show less');
+        expect(Array.from(el.children).every((child) => !child.hidden)).toBe(
+          true
+        );
+      }
+    );
+  },
+};
+
 const longSpacedCopy =
   'This is a deliberately long line of user copy that should wrap within a narrow column without horizontal overflow. '.repeat(
     3
