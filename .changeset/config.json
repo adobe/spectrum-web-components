@@ -13,7 +13,6 @@
   "fixed": [
     [
       "@spectrum-web-components/*",
-      "!@adobe/spectrum-wc-core",
       "!@spectrum-web-components/1st-gen",
       "!@spectrum-web-components/2nd-gen"
     ]

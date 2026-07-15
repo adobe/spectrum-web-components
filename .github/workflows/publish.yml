@@ -45,13 +45,11 @@ jobs:
             echo "Found $CHANGESET_COUNT changesets"
 
             # Check if any changeset mentions 1st-gen packages
-            # 1st-gen packages are @spectrum-web-components/* except core
+            # 1st-gen packages are @spectrum-web-components/*
             HAS_1ST_GEN=false
             for file in .changeset/*.md; do
               if [ "$(basename "$file")" != "README.md" ]; then
-                PACKAGES=$(grep -oP "@spectrum-web-components/[a-z-]+" "$file" || true)
-                NON_CORE=$(echo "$PACKAGES" | grep -v "^@spectrum-web-components/core$" || true)
-                if [ -n "$NON_CORE" ]; then
+                if grep -qP "@spectrum-web-components/[a-z-]+" "$file"; then
                   HAS_1ST_GEN=true
                   break
                 fi
