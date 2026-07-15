@@ -335,6 +335,18 @@ export class PromptField extends SpectrumElement {
     }, 1000);
   }
 
+  private _handleArtifactScrollKeydown(event: KeyboardEvent): void {
+    if (event.key !== 'ArrowRight' && event.key !== 'ArrowLeft') {
+      return;
+    }
+
+    // Prevent the browser's native small-step scroll on this overflow-x:auto
+    // container so ArrowLeft/ArrowRight always trigger the same set-based
+    // paging as the chevron buttons.
+    event.preventDefault();
+    this._scrollArtifactsByPage(event.key === 'ArrowRight' ? 1 : -1);
+  }
+
   private _handleArtifactWheel(event: WheelEvent): void {
     if (Math.abs(event.deltaX) > 0 || Math.abs(event.deltaY) > 0) {
       this._showArtifactScrollbarFromInteraction();
@@ -494,6 +506,25 @@ export class PromptField extends SpectrumElement {
     return Math.max(0, scrollEl.scrollWidth - scrollEl.clientWidth);
   }
 
+  private _getArtifactTileVisibleFraction(
+    child: HTMLElement,
+    scrollEl: HTMLDivElement
+  ): number {
+    const tileWidth = this._getArtifactTileWidth(child);
+    if (!tileWidth) {
+      return 0;
+    }
+
+    const offset = this._getArtifactScrollOffset(child);
+    const right = offset + tileWidth;
+    const scrollLeft = scrollEl.scrollLeft;
+    const viewportRight = scrollLeft + scrollEl.clientWidth;
+    const visibleWidth =
+      Math.min(right, viewportRight) - Math.max(offset, scrollLeft);
+
+    return Math.max(0, visibleWidth) / tileWidth;
+  }
+
   private _scrollArtifactsByPage(direction: -1 | 1): void {
     const scrollEl = this._artifactScrollEl;
     const children = this._assignedArtifactElements ?? [];
@@ -521,7 +552,17 @@ export class PromptField extends SpectrumElement {
         return;
       }
 
-      children[last].scrollIntoView({
+      // last < children.length - 1 here (the "already at the end" case
+      // returned above), so an ambiguous edge tile (< 50% visible) is
+      // carried over as the next page's anchor; otherwise page fully.
+      const lastVisibleFraction = this._getArtifactTileVisibleFraction(
+        children[last],
+        scrollEl
+      );
+      const nextStart =
+        lastVisibleFraction >= 0.5 ? children[last + 1] : children[last];
+
+      nextStart.scrollIntoView({
         behavior: 'smooth',
         block: 'nearest',
         inline: 'start',
@@ -534,7 +575,24 @@ export class PromptField extends SpectrumElement {
     }
 
     this._markArtifactScrollFromButtons();
-    children[first].scrollIntoView({
+
+    if (first <= 0) {
+      children[0].scrollIntoView({
+        behavior: 'smooth',
+        block: 'nearest',
+        inline: 'start',
+      });
+      return;
+    }
+
+    const firstVisibleFraction = this._getArtifactTileVisibleFraction(
+      children[first],
+      scrollEl
+    );
+    const prevEnd =
+      firstVisibleFraction >= 0.5 ? children[first - 1] : children[first];
+
+    prevEnd.scrollIntoView({
       behavior: 'smooth',
       block: 'nearest',
       inline: 'end',
@@ -688,7 +746,10 @@ export class PromptField extends SpectrumElement {
       <div
         class="swc-PromptField-artifacts swc-PromptField-artifacts--multiple"
       >
-        <div class="swc-PromptField-artifacts-row">
+        <div
+          class="swc-PromptField-artifacts-row"
+          @keydown=${this._handleArtifactScrollKeydown}
+        >
           ${this._artifactScrollOverflow && this._artifactCanScrollPrev
             ? html`
                 <button
