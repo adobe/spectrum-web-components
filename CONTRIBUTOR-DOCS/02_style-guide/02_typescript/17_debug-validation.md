@@ -544,8 +544,7 @@ What this does **not** fix:
   pass, in every build, because JS evaluates a function's arguments before
   calling it, so the message template string and `options` object literal
   at each call site are still constructed even when the function itself
-  immediately no-ops. This is a small, bounded cost (one string interpolation
-  and one small object per call), not a hot-loop concern, but it is not zero.
+  immediately no-ops.
 - **Whether the substitution actually happens.** This package's own build
   does not currently replace `process.env.NODE_ENV` before publishing (it
   ships the literal check as-is), so whether any of the folding above
