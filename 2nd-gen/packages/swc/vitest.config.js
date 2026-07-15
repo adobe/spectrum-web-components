@@ -121,7 +121,7 @@ export default mergeConfig(
             alias: {
               // Keep the Vite aliases from `vite.config.ts` for Storybook/Vitest.
               // Without these, imports can resolve to built output and/or be excluded from coverage.
-              '@spectrum-web-components/core': path.resolve(dirname, '../core'),
+              '@adobe/spectrum-wc-core': path.resolve(dirname, '../core'),
               '@adobe/spectrum-wc': path.resolve(dirname, './components'),
               '@adobe/postcss-token': path.resolve(
                 dirname,
@@ -163,7 +163,7 @@ export default mergeConfig(
         // a node environment for their tests. So I wanted to leave this here to
         // modify so all our tools and utils can use a node environment for their tests.
         //
-        // Slot for pure-logic Node tests in `@spectrum-web-components/core`
+        // Slot for pure-logic Node tests in `@adobe/spectrum-wc-core`
         // (controllers, mixins, utils) that do not need a browser. These are
         // ~100x cheaper to run than the storybook project and are the right
         // home for any test that does not render Lit elements or dispatch DOM

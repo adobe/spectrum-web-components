@@ -37,7 +37,7 @@ The workflow publishes four package groups:
 | Package group | npm namespace | Auth method |
 |---|---|---|
 | 1st-gen components | `@spectrum-web-components/*` | OIDC trusted publishing |
-| Core | `@spectrum-web-components/core` | OIDC trusted publishing |
+| Core | `@adobe/spectrum-wc-core` | OIDC trusted publishing |
 | 2nd-gen components | `@adobe/spectrum-wc` | npm token (`ADOBE_BOT_NPM_TOKEN`) |
 | React wrappers | `@swc-react/*` | OIDC trusted publishing |
 
@@ -63,14 +63,14 @@ yarn changeset
 
 Follow the prompts to select packages and bump type.
 
-> **Note:** 1st-gen and 2nd-gen are independent. Changes to `@spectrum-web-components/core` only affect 2nd-gen. The `linked` versioning between Core and 2nd-gen handles this automatically. 1st-gen packages are in a separate `fixed` group.
+> **Note:** 1st-gen and 2nd-gen are independent. Changes to `@adobe/spectrum-wc-core` only affect 2nd-gen. The `linked` versioning between Core and 2nd-gen handles this automatically. 1st-gen packages are in a separate `fixed` group.
 
 ### Understand the versioning strategy
 
 The `.changeset/config.json` defines how packages version together:
 
 - **Fixed group** – All `@spectrum-web-components/*` packages (except Core) always version together at the same number.
-- **Linked group** – `@adobe/spectrum-wc` and `@spectrum-web-components/core` receive the same bump type when either changes.
+- **Linked group** – `@adobe/spectrum-wc` and `@adobe/spectrum-wc-core` receive the same bump type when either changes.
 - **Ignored** – The workspace root packages (`@spectrum-web-components/1st-gen`, `@spectrum-web-components/2nd-gen`) are never published.
 
 ---

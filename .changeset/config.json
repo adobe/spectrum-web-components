@@ -13,7 +13,6 @@
   "fixed": [
     [
       "@spectrum-web-components/*",
-      "!@spectrum-web-components/core",
       "!@spectrum-web-components/1st-gen",
       "!@spectrum-web-components/2nd-gen"
     ]
@@ -22,7 +21,7 @@
     "@spectrum-web-components/1st-gen",
     "@spectrum-web-components/2nd-gen"
   ],
-  "linked": [["@adobe/spectrum-wc", "@spectrum-web-components/core"]],
+  "linked": [["@adobe/spectrum-wc", "@adobe/spectrum-wc-core"]],
   "snapshot": {
     "prereleaseTemplate": "{tag}.{datetime}",
     "useCalculatedVersion": true

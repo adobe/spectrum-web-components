@@ -17,7 +17,7 @@ import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import {
   CARD_DENSITIES,
   CARD_VARIANTS,
-} from '@spectrum-web-components/core/components/card/index.js';
+} from '@adobe/spectrum-wc-core/components/card/index.js';
 
 import './test-card-base.js';
 

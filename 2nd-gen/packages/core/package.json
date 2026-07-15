@@ -1,5 +1,5 @@
 {
-  "name": "@spectrum-web-components/core",
+  "name": "@adobe/spectrum-wc-core",
   "version": "0.3.0",
   "description": "Abstract base classes for Spectrum Web Components",
   "license": "Apache-2.0",
@@ -142,6 +142,10 @@
     "./controllers/language-resolution.js": {
       "types": "./dist/controllers/language-resolution.d.ts",
       "import": "./dist/controllers/language-resolution.js"
+    },
+    "./controllers/live-selection-controller/index.js": {
+      "types": "./dist/controllers/live-selection-controller/index.d.ts",
+      "import": "./dist/controllers/live-selection-controller/index.js"
     },
     "./controllers/placement-controller": {
       "types": "./dist/controllers/placement-controller/index.d.ts",
@@ -318,6 +322,9 @@
       ],
       "controllers/language-resolution.js": [
         "dist/controllers/language-resolution.d.ts"
+      ],
+      "controllers/live-selection-controller/index.js": [
+        "dist/controllers/live-selection-controller/index.d.ts"
       ],
       "controllers/placement-controller": [
         "dist/controllers/placement-controller/index.d.ts"

@@ -16,9 +16,9 @@ import { property } from 'lit/decorators.js';
 import {
   LanguageResolutionController,
   languageResolverUpdatedSymbol,
-} from '@spectrum-web-components/core/controllers/language-resolution.js';
-import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
-import { SizedMixin } from '@spectrum-web-components/core/mixins/index.js';
+} from '@adobe/spectrum-wc-core/controllers/language-resolution.js';
+import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
+import { SizedMixin } from '@adobe/spectrum-wc-core/mixins/index.js';
 
 import {
   PROGRESS_CIRCLE_VALID_SIZES,

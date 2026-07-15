@@ -72,7 +72,7 @@
     "build": "vite build && yarn analyze",
     "clean": "rimraf dist",
     "dev": "vite build --watch",
-    "dev:core": "yarn workspace @spectrum-web-components/core dev",
+    "dev:core": "yarn workspace @adobe/spectrum-wc-core dev",
     "generate:contributor-docs": "node .storybook/scripts/generate-contributor-docs.mjs",
     "storybook": "yarn generate:contributor-docs && yarn analyze && storybook dev -p 6006",
     "storybook:build": "yarn generate:contributor-docs && yarn analyze && storybook build",
@@ -90,8 +90,8 @@
     "test:watch:vitest": "vitest --project storybook --watch"
   },
   "dependencies": {
+    "@adobe/spectrum-wc-core": "0.3.0",
     "@lit-labs/observers": "2.0.2",
-    "@spectrum-web-components/core": "0.3.0",
     "lit": "^2.5.0 || ^3.1.3"
   },
   "devDependencies": {

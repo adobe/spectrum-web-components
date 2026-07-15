@@ -26,6 +26,8 @@ export * from './Cross75Icon.js';
 export * from './Cross100Icon.js';
 export * from './Cross200Icon.js';
 export * from './Cross300Icon.js';
+export * from './Cross400Icon.js';
+export * from './Cross500Icon.js';
 export * from './Dash75Icon.js';
 export * from './Dash100Icon.js';
 export * from './Dash200Icon.js';

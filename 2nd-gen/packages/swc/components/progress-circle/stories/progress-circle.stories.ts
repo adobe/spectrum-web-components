@@ -19,7 +19,7 @@ import {
   PROGRESS_CIRCLE_STATIC_COLORS,
   PROGRESS_CIRCLE_VALID_SIZES,
   type ProgressCircleSize,
-} from '@spectrum-web-components/core/components/progress-circle';
+} from '@adobe/spectrum-wc-core/components/progress-circle';
 
 import '@adobe/spectrum-wc/components/progress-circle/swc-progress-circle.js';
 
@@ -56,10 +56,6 @@ const meta: Meta = {
   parameters: {
     docs: {
       subtitle: `Progress circles show the progression of a system operation such as downloading, uploading, processing, etc. in a visual way.`,
-    },
-    design: {
-      type: 'figma',
-      url: 'https://www.figma.com/design/Mngz9H7WZLbrCvGQf3GnsY/S2---Web--Desktop-scale-?node-id=13061-181&p=f&t=l8WhfseyuepkVXrl-0',
     },
     stackblitz: {
       url: 'https://stackblitz.com/edit/vitejs-vite-xmvjuhyk?file=src%2Fmy-element.ts',

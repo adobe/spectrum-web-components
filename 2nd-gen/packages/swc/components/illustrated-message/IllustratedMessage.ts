@@ -12,7 +12,7 @@
 
 import { CSSResultArray, html, TemplateResult } from 'lit';
 
-import { IllustratedMessageBase } from '@spectrum-web-components/core/components/illustrated-message';
+import { IllustratedMessageBase } from '@adobe/spectrum-wc-core/components/illustrated-message';
 
 import styles from './illustrated-message.css';
 

@@ -15,7 +15,7 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 import { when } from 'lit/directives/when.js';
 import { html as staticHtml, unsafeStatic } from 'lit/static-html.js';
 
-import { AccordionItemBase } from '@spectrum-web-components/core/components/accordion';
+import { AccordionItemBase } from '@adobe/spectrum-wc-core/components/accordion';
 
 import '../icon/swc-icon.js';
 

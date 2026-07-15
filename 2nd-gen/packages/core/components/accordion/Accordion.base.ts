@@ -13,8 +13,9 @@
 import { PropertyValues } from 'lit';
 import { property } from 'lit/decorators.js';
 
-import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
-import { SizedMixin } from '@spectrum-web-components/core/mixins/index.js';
+import { LiveSelectionController } from '@adobe/spectrum-wc-core/controllers/index.js';
+import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
+import { SizedMixin } from '@adobe/spectrum-wc-core/mixins/index.js';
 
 import {
   ACCORDION_VALID_SIZES,
@@ -102,31 +103,25 @@ export abstract class AccordionBase extends SizedMixin(SpectrumElement, {
       .filter((el): el is AccordionItemBase => el instanceof AccordionItemBase);
   }
 
-  private closeSiblingsOnOpen = (event: Event): void => {
-    if (this.disabled) {
-      event.preventDefault();
-      return;
-    }
-    if (this.allowMultiple) {
-      return;
-    }
-    const toggling = event.target;
-    if (!(toggling instanceof AccordionItemBase)) {
-      return;
-    }
-    // Defer until after dispatch returns so that a canceled toggle (where the
-    // item reverts open back to false) does not incorrectly close siblings.
-    queueMicrotask(() => {
-      if (!toggling.open) {
-        return;
-      }
-      for (const item of this.assignedItems()) {
-        if (item !== toggling) {
-          item.open = false;
-        }
-      }
-    });
-  };
+  // LiveSelectionController observes swc-accordion-item-toggle events and
+  // enforces the exclusive-open constraint when allowMultiple is false. Items
+  // own their own open state; the controller only closes siblings.
+  private readonly selectionController = new LiveSelectionController(this, {
+    getItems: () => this.assignedItems(),
+    readSelected: (item) => item.open,
+    deselect: (item) => {
+      item.open = false;
+    },
+    observeEvent: SWC_ACCORDION_ITEM_TOGGLE_EVENT,
+    mode: () => (this.allowMultiple ? 'multiple' : 'single'),
+  });
+
+  protected override firstUpdated(changedProperties: PropertyValues): void {
+    super.firstUpdated(changedProperties);
+    // The controller is event-driven and won't catch items that start open via
+    // HTML attributes; read the initial DOM state and enforce the constraint now.
+    this.selectionController.refresh();
+  }
 
   protected syncAccordionItems(): void {
     for (const item of this.assignedItems()) {
@@ -134,35 +129,6 @@ export abstract class AccordionBase extends SizedMixin(SpectrumElement, {
       item.size = this.size;
       item.setManagedParentDisabled(this.disabled);
     }
-  }
-
-  private enforceExclusiveOpen(): void {
-    let foundOpen = false;
-    for (const item of this.assignedItems()) {
-      if (item.open) {
-        if (foundOpen) {
-          item.open = false;
-        } else {
-          foundOpen = true;
-        }
-      }
-    }
-  }
-
-  public override connectedCallback(): void {
-    super.connectedCallback();
-    this.addEventListener(
-      SWC_ACCORDION_ITEM_TOGGLE_EVENT,
-      this.closeSiblingsOnOpen
-    );
-  }
-
-  public override disconnectedCallback(): void {
-    super.disconnectedCallback();
-    this.removeEventListener(
-      SWC_ACCORDION_ITEM_TOGGLE_EVENT,
-      this.closeSiblingsOnOpen
-    );
   }
 
   protected override update(changedProperties: PropertyValues): void {
@@ -182,14 +148,24 @@ export abstract class AccordionBase extends SizedMixin(SpectrumElement, {
     ) {
       this.syncAccordionItems();
     }
-    // changedProperties.get() returns the previous value; this fires only when
-    // disabled transitions from true → false (re-enable).
+    // When allow-multiple is removed, enforce the stricter single-select
+    // constraint over the current DOM state.
+    if (
+      changedProperties.has('allowMultiple') &&
+      changedProperties.get('allowMultiple') === true &&
+      !this.allowMultiple
+    ) {
+      this.selectionController.refresh();
+    }
+    // When the accordion is re-enabled after being disabled, enforce
+    // exclusive-open so items that were opened while disabled are corrected.
     if (
       changedProperties.has('disabled') &&
       changedProperties.get('disabled') === true &&
+      !this.disabled &&
       !this.allowMultiple
     ) {
-      this.enforceExclusiveOpen();
+      this.selectionController.refresh();
     }
     super.update(changedProperties);
   }
