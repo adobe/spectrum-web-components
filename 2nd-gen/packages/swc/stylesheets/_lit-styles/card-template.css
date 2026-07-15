@@ -24,6 +24,8 @@
    ───────────────────────────────────────────────────────────────────────────── */
 
 :host {
+  --_card-border-radius: var(--card-border-radius, token("corner-radius-700"));
+
   display: block;
   max-inline-size: var(--card-max-inline-size, 280px);
 }
@@ -37,7 +39,7 @@
    ───────────────────────────────────────────────────────────────────────────── */
 
 .card {
-  --_card-border-radius: var(--card-border-radius, token("corner-radius-700"));
+  --_card-outline-width: var(--card-outline-width, 0px);
   --_card-box-shadow: var(--card-box-shadow, token("drop-shadow-emphasized"));
   --_card-title-font-size: var(--card-title-font-size, token("font-size-200"));
   --_card-title-font-weight: token("title-sans-serif-font-weight");
@@ -329,15 +331,42 @@
   z-index: 1;
 }
 
-:host([title-as-link]:not([variant="tertiary"], [variant="quiet"]):hover) {
+/* ─────────────────────────────────────────────────────────────────────────────
+   SELECTABLE
+   ───────────────────────────────────────────────────────────────────────────── */
+:host([selectable]:not([variant="quiet"]):focus-visible) {
+  --card-outline-width: token("focus-indicator-thickness");
+
+  border-radius: var(--_card-border-radius);
+  outline-color: token("gray-800");
+  outline-offset: 1px;
+}
+
+:host([selectable][variant="tertiary"]:focus-visible) {
+  --card-box-shadow: none;
+}
+
+:host([selectable][variant="quiet"]:focus-visible) {
+  outline: none;
+}
+
+:host([selectable][variant="quiet"]:focus-visible) .card-media {
+  outline: var(--card-outline-width, token("focus-indicator-thickness")) solid token("gray-800");
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   COMBINED STATES
+   ───────────────────────────────────────────────────────────────────────────── */
+
+:host(:is([title-as-link], [selectable]):not([variant="tertiary"], [variant="quiet"]):is(:hover, :focus-visible)) {
   --card-box-shadow: token("drop-shadow-emphasized-hover");
 }
 
-:host([title-as-link][variant="tertiary"]:hover) {
+:host(:is([title-as-link], [selectable])[variant="tertiary"]:is(:hover, :focus-visible)) {
   --card-box-shadow: 0 0 0 1px token("gray-100");
 }
 
-:host([title-as-link][variant="quiet"]:hover) .card-media {
+:host(:is([title-as-link], [selectable])[variant="quiet"]:is(:hover, :focus-visible)) .card-media {
   box-shadow: token("drop-shadow-emphasized-hover");
 }
 
