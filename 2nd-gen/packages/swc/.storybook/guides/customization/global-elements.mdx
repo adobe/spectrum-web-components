@@ -4,13 +4,13 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
 # Global element styling
 
-Optional styling is available for **global elements**, such as button-styled native links, in order to retain native semantics and default accessibility benefits.
+Optional styling is available for **global elements**, such as native links styled as buttons, in order to retain native semantics and default accessibility benefits.
 
-For global element styles to be fully available to slotted elements, you must include the stylesheet for `@adobe/spectrum-wc/global-elements.css` at the application level and ensure it's processed by your bundler to resolve the relative imports.
+For global element styles to be fully available to slotted elements, you must include the stylesheet for `@adobe/spectrum-wc/global-elements.css` at the application level and ensure that it's processed by your bundler to resolve the relative imports.
 
 To use global element styles within the shadow DOM of extended and custom components, ensure their stylesheet also imports the global stylesheet.
 
-Individual stylesheets are also available instead of the comprehensive index as `global-[component].css`.
+Individual stylesheets are also available as `global-[component].css` instead of the comprehensive index.
 
 ## Customizing global elements
 
@@ -28,7 +28,7 @@ The preferred method is to pass overrides to the exposed custom properties.
 
 ### Overrides cascade layer
 
-If you need to modify properties not exposed through custom properties, you can pass your additions to the global element by including styles within the `swc-global-element-overrides` layer.
+If you need to modify properties that aren't exposed through custom properties, you can pass your additions to the global element by including styles within the `swc-global-element-overrides` layer.
 
 ```css
 @layer swc-global-element-overrides {
@@ -105,7 +105,7 @@ Using a wrapper around the label with class `swc-Button-label` is recommended to
 </button>
 ```
 
-Icons in buttons or icon-only variants are supported, with the assumption of an SVG as the icon with the class of `swc-Button-icon`. For best text wrapping support, add `swc-Button--hasIcon` to the base element.
+Icons in buttons or icon-only variants are supported, with the assumption that the icon is represented as an SVG with the class `swc-Button-icon`. For the best text wrapping support, add `swc-Button--hasIcon` to the base element.
 
 Icon-only should include the class `swc-Button--iconOnly` on the base element, and provide a label via `aria-label`.
 

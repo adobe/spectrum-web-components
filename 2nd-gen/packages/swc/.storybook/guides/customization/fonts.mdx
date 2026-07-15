@@ -41,23 +41,23 @@ You can verify the font is loaded by:
 
 1. Opening your browser's **Network** tab and looking for successful requests to `use.typekit.net` (status 200)
 2. Checking the browser's **Computed** tab to verify the font family is inherited correctly when inspecting any component's individual text elements
-3. Switching the **Language** toolbar and confirming a new kit script loads (e.g. for Japanese, a request for the Japanese kit)
+3. Switching the **Language** toolbar and confirming a new kit script loads (e.g., for Japanese, a request for the Japanese kit)
 
-You can also verify programmatically in the browser console. Inside the Storybook preview iframe:
+You can also verify this programmatically in the browser console. Inside the Storybook preview `iframe`:
 
 - **`document.fonts`**: Lists all registered font faces and their load status. Filter for CJK fonts with `[...document.fonts].filter(f => f.family.includes('han'))`.
-- **`document.documentElement.className`**: Typekit adds `wf-*-active` classes for each loaded font weight (e.g. `wf-adobe-clean-han-japanese-n4-active` for Japanese normal weight 400).
+- **`document.documentElement.className`**: Typekit adds `wf-*-active` classes for each loaded font weight (e.g., `wf-adobe-clean-han-japanese-n4-active` for Japanese normal weight 400).
 - **`window.currentKitId`**: Shows the currently active Adobe Fonts kit ID.
 
 ### Try it with translations
 
-Use the **Language** toolbar above to change the locale. The sample below will render in the correct font for the selected language (Latin or the matching CJK kit).
+Use the **Language** toolbar above to change the locale. The sample below will render in the correct font for the selected language (either Latin or the matching CJK kit).
 
 <Canvas of={StatusLightStories.WithLocaleWrapper} />
 
 ## Using fonts in your application
 
-> ⚠️ **Important:** If you're implementing Gen2 SWC in your application, you **must also** include Adobe Clean Spectrum VF in your project. The components will not render correctly with legacy Adobe Clean or system fonts.
+> ⚠️ **Important:** If you're using SWC Gen2 in your application, you **must also** include Adobe Clean Spectrum VF in your project. The components will not render correctly with legacy Adobe Clean or system fonts.
 
 ### Option 1: Adobe Fonts (Typekit) - Recommended
 
@@ -75,9 +75,9 @@ If your organization has access to Adobe Fonts:
 <link rel="stylesheet" href="https://use.typekit.net/YOUR-KIT-ID.css" />
 ```
 
-For reference, Adobe employees can refer to the internal RSP Spectrum 2 Fonts guide documentation for additional details (Adobe internal wiki).
+For additional details, Adobe employees can refer to the React Spectrum 2 Fonts guide documentation on the Adobe-internal wiki.
 
-**Note:** There is also a static (non-variable) version of Adobe Clean Spectrum available for teams or platforms that don't support variable fonts. They look exactly the same; the difference is in how they function. Adobe-internal teams can reach out to the Spectrum team for access. Variable fonts are broadly supported across modern browsers, so this only matters for legacy platform constraints. If you hit constraints as an external consumer, check your Adobe Fonts web project for a static font option, or contact Adobe Fonts support directly.
+**Note:** There is also a static (i.e., non-variable) version of Adobe Clean Spectrum available for teams or platforms that don't support variable fonts. They look exactly the same — the difference is in how they function. Adobe-internal teams can reach out to the Spectrum team for access. Variable fonts are broadly supported across modern browsers, so this only matters for legacy platform constraints. If you hit constraints as an external consumer, check your Adobe Fonts web project for a static font option, or contact Adobe Fonts support directly.
 
 ### Option 2: Self-hosted fonts
 
@@ -125,7 +125,7 @@ Note: `'Adobe Clean Spectrum Serif VF'` appears from the upstream Spectrum token
 
 ## CJK font support
 
-CJK (Chinese, Japanese, Korean) font delivery is handled separately from the base Latin fonts. If you need CJK support, ensure you've included Adobe Clean Han in your Adobe Fonts web project or font loading setup.
+CJK (Chinese, Japanese, Korean) font delivery is handled separately from the base Latin fonts. If you need CJK support, ensure you've included Adobe Clean Han in your Adobe Fonts web project or font-loading setup.
 
 Japanese font family token example:
 
@@ -157,14 +157,14 @@ After switching to a CJK locale in the Storybook toolbar, open the browser conso
 document.documentElement.className;
 ```
 
-You should see classes like:
+You should see classes, like:
 
 ```
 wf-loading → (briefly, while loading)
 wf-active wf-adobe-clean-han-korean-n4-active wf-adobe-clean-han-korean-n5-active wf-adobe-clean-han-korean-n7-active wf-adobe-clean-han-korean-n9-active
 ```
 
-All four weight variants going active (`n4` = normal, `n5` = 500, `n7` = 700, `n9` = 900) confirms Typekit has fully loaded the kit.
+All four weight variants becoming active (`n4` = normal, `n5` = 500, `n7` = 700, `n9` = 900) confirms that Typekit has fully loaded the kit.
 
 **Check `document.fonts` for registered `FontFace` objects**
 
