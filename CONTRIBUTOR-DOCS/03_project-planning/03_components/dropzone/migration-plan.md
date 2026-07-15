@@ -239,6 +239,7 @@ No sequencing, shared-base, or inheritance decisions require explicit user confi
 | **B5** | `dropEffect` becomes a proper `@property` | Manual getter/setter; attribute changes at runtime not reactive | `@property({ type: String, attribute: 'drop-effect', reflect: true })`; fully reactive | No migration needed for consumers using the attribute. JS consumers using `element.dropEffect = 'move'` are unaffected. |
 | **B6** | Public methods `onDragOver`, `onDragLeave`, `onDrop` visibility | `public` | `protected` | Consumers who subclass `Dropzone` and override these methods must update visibility. **Inferred** as low-risk (see Q9). |
 | **B7** | Event prefix | `sp-dropzone-should-accept`, `sp-dropzone-dragover`, `sp-dropzone-dragleave`, `sp-dropzone-drop` | **Confirmed.** Rename to `swc-dropzone-should-accept`, `swc-dropzone-dragover`, `swc-dropzone-dragleave`, `swc-dropzone-drop`. Consistent with all other migrated 2nd-gen components. | Update all `addEventListener` calls. |
+| **B17** | `DropzoneEventDetail` type removed | `export type DropzoneEventDetail = DragEvent;` exported from `src/index.ts` | Not exported. Clean break, same posture as other migrated components (no retained type aliases elsewhere in 2nd-gen). | Replace `DropzoneEventDetail` imports with `DragEvent` directly; the two types were always structurally identical. |
 
 #### Styling and visuals
 
@@ -398,8 +399,9 @@ Follow the [Badge migration reference](../../02_workstreams/02_2nd-gen-component
 ```ts
 export type DropEffects = 'copy' | 'move' | 'link' | 'none';
 export type DropzoneSize = 's' | 'm' | 'l';
-export type DropzoneEventDetail = DragEvent; // retained for consumers who imported this type
 ```
+
+No `DropzoneEventDetail` alias is exported. 2nd-gen is a clean break from 1st-gen (see [Architecture: core vs SWC split](#architecture-core-vs-swc-split) above); consumers use `DragEvent` directly. See [B17](#api-and-naming).
 
 ---
 
@@ -419,29 +421,40 @@ export type DropzoneEventDetail = DragEvent; // retained for consumers who impor
 - [x] Dependencies identified
 - [x] Breaking changes documented
 - [x] 2nd-gen API decisions drafted
-- [ ] Figma PNG received and visual decisions finalized (Q1–Q4)
-- [ ] Epic number added to plan header
+- [x] Figma PNG received and visual decisions finalized (Q1–Q4) — Q1–Q6 resolved; see TL;DR
+- [x] Epic number added to plan header — SWC-2145
 - [ ] Plan reviewed by at least one other engineer
 
 ### Setup
 
-- [ ] Create `2nd-gen/packages/core/components/dropzone/`
-- [ ] Create `2nd-gen/packages/swc/components/dropzone/`
-- [ ] Wire exports in both `package.json` files
+- [x] Create `2nd-gen/packages/core/components/dropzone/`
+- [x] Create `2nd-gen/packages/swc/components/dropzone/`
+- [x] Wire exports in `core/package.json` — SWC `package.json` exports pending (see note below)
+- [ ] Wire exports in `swc/package.json` — not yet updated
 - [ ] Confirm `spectrum-css` is checked out at `spectrum-two` branch as sibling directory (`/spectrum-css/components/dropzone/index.css`)
 
 ### API
 
 #### Naming and public surface
 
-- [ ] `Dropzone.types.ts`: define `DropEffects`, `DropzoneSize`, retain `DropzoneEventDetail` alias
-- [ ] `Dropzone.base.ts`: declare `dropEffect`, `dragged`, `filled` with correct `@property` decorators and reflection
-- [ ] `Dropzone.base.ts`: implement drag event binding in `connectedCallback` / `disconnectedCallback`
-- [ ] `Dropzone.base.ts`: implement debounced drag-leave with `clearDebouncedDragLeave` in `disconnectedCallback`
-- [ ] `Dropzone.base.ts`: implement `dropEffect` value validation (ignore invalid values silently)
-- [ ] `Dropzone.base.ts`: implement dev warning for missing accessible name
-- [ ] `Dropzone.base.ts`: implement status text updates for dragged, drop, and filled+dragged states
-- [ ] Change event handler visibility from `public` to `protected` (B6; confirm with Q9)
+- [x] `Dropzone.types.ts`: define `DropEffect` type and `DROP_EFFECTS` const, four event name constants
+  — **Diverges from plan:** implemented as `DropEffect` (singular) rather than `DropEffects`.
+  `DropzoneSize` added (needed for Phase 5 `size` property). `DropzoneEventDetail` alias
+  intentionally **not** shipped (see [B17](#api-and-naming)) — clean break, no retained type alias.
+- [x] `Dropzone.base.ts`: declare `dragged` and `filled` with `@property({ type: Boolean, reflect: true })`
+  — **Diverges from plan:** `dropEffect` does not reflect as `drop-effect` attribute (intentional; controls
+  browser chrome, not component state). Plan specifies `reflect: true`; implementation differs.
+- [x] `Dropzone.base.ts`: implement drag event binding in `connectedCallback` / `disconnectedCallback`
+- [x] `Dropzone.base.ts`: implement debounced drag-leave; timer cleared in `disconnectedCallback`
+- [x] `Dropzone.base.ts`: implement `dropEffect` value validation with dev warning in DEBUG builds
+- [x] Dev warning for missing accessible name — implemented in `Dropzone.ts` (SWC class), not base class.
+  Correct per architecture (SWC layer owns ARIA/debug concerns); plan locates it in the base.
+- [x] Status text updates for dragged, filled+dragged, and filled states — implemented in `Dropzone.ts`
+  via `_updateStatusRegion()` (Lit cycle) and `_onDragStateChange()` hook (synchronous). Correct per
+  architecture; plan locates these in the base class.
+- [x] Event handler methods made **private** (`_onDragOver`, `_onDragLeave`, `_onDrop`) — stricter than
+  the plan's `protected` recommendation (B6/Q9), but more correct: no subclass should override
+  individual handlers.
 
 #### Alignment checks
 
@@ -452,16 +465,16 @@ export type DropzoneEventDetail = DragEvent; // retained for consumers who impor
 
 > Follow the [CSS style guide](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/) as the source of truth. Key references: [migration steps](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/04_spectrum-swc-migration.md), [custom properties](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md), [anti-patterns](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/05_anti-patterns.md).
 
-- [ ] Resolve SVG stroke vs. CSS border question (Q4) before writing `dropzone.css`
-- [ ] Add `.swc-Dropzone` to the internal wrapper `<div>` in `render()`; keep `:host` styling minimal
-- [ ] Copy `spectrum-css/components/dropzone/index.css` from `spectrum-two` branch as baseline (not `/dist`)
-- [ ] Redesign `swc-illustrated-message` styling relationship (Q8) before porting passthrough tokens
-- [ ] Verify `[dragged]`, `[filled]`, and `[filled][dragged]` state selectors map to the 2nd-gen attribute names
-- [ ] Verify CJK font size modifier (`:lang(ja)`, `:lang(ko)`, `:lang(zh)`) is present in S2 source and ported
-- [ ] Add visually-hidden utility class for `.swc-Dropzone-status` (position absolute, `clip-path: inset(50%)` pattern)
-- [ ] Verify `@media (forced-colors: active)` high-contrast overrides are present and correct
-- [ ] Add `@cssprop` JSDoc tags on any exposed `--swc-*` properties
-- [ ] Pass `yarn lint:css`
+- [x] Resolve SVG stroke vs. CSS border question (Q4) — **Decided: CSS-only dashed border.** SVG stroke deferred; matches `spectrum-css` `main`; additive if needed later.
+- [x] Add `.swc-Dropzone` to the internal wrapper `<div>` in `render()`; keep `:host` styling minimal
+- [x] Copy `spectrum-css/components/dropzone/index.css` from `spectrum-two` branch as baseline (not `/dist`) — **Note:** sibling is on `main`; used S2 tokens from `spectrum-two.css` theme file + S2 token names.
+- [x] Redesign `swc-illustrated-message` styling relationship (Q8) — **Resolved:** CSS custom property `--swc-illustrated-message-illustration-color` cascades from `:host([dragged])` into the slotted element via normal CSS inheritance. No `--mod-*` passthrough needed.
+- [x] Verify `[dragged]`, `[filled]`, and `[filled][dragged]` state selectors map to the 2nd-gen attribute names
+- [ ] Verify CJK font size modifier (`:lang(ja)`, `:lang(ko)`, `:lang(zh)`) is present in S2 source and ported — **Deferred:** no CJK text tokens in dropzone container; only relevant if text inside illustrated message needs overrides. Tracked for Phase 7 review.
+- [x] Add visually-hidden utility class for `.swc-Dropzone-status` (position absolute, `clip-path: inset(50%)` pattern)
+- [x] Verify `@media (forced-colors: active)` high-contrast overrides are present and correct
+- [x] Add `@cssprop` JSDoc tags on any exposed `--swc-*` properties
+- [x] Pass `yarn lint:css`
 
 #### Visual model and regressions
 
@@ -477,57 +490,59 @@ export type DropzoneEventDetail = DragEvent; // retained for consumers who impor
 
 #### Naming and semantics
 
-- [ ] `role="group"` fixed on host element via `role` host attribute in `render()`
-- [ ] `aria-dropeffect` and `aria-grabbed` must not appear anywhere in the component or documentation
-- [ ] Shadow DOM contains `<div role="status" aria-live="polite">` with visually-hidden class
-- [ ] Dev warning fires in debug builds when neither `aria-label` nor `aria-labelledby` is present on the host
+- [x] `role="group"` fixed on host — **Diverges from plan:** set in `connectedCallback` via
+  `setAttribute` (guarded with `hasAttribute` so consumer-set roles are not overwritten), rather than
+  via a `role` attribute on the host in `render()`.
+- [x] `aria-dropeffect` and `aria-grabbed` not used anywhere in implementation or documentation
+- [x] Shadow DOM contains `<div role="status" aria-live="polite" class="visually-hidden">`
+- [x] Dev warning fires in debug builds when neither `aria-label` nor `aria-labelledby` is present
 
 #### State verification
 
-- [ ] Status text updates to "File ready to drop" when `dragged` becomes true
-- [ ] Status text updates to "File accepted" when `swc-dropzone-drop` fires
-- [ ] Status text updates to "Drop to replace existing file" when `dragged` becomes true while `filled` is already set
-- [ ] Host has no `tabindex`; browse control in slot owns the Tab stop
-- [ ] All stories and documentation examples include a browse control (button or link)
-- [ ] Documentation replaces `javascript:;` hrefs and inline `onclick` patterns with accessible alternatives
+- [x] Status text updates to "File ready to drop" when `dragged` becomes true
+- [x] Status text updates to "File accepted" when `filled` is set (consumer sets this in drop handler)
+- [x] Status text updates to "Drop to replace existing file" when `dragged` becomes true while `filled` is set
+- [x] Host has no `tabindex`; browse control in slot owns the Tab stop
+- [ ] All stories and documentation examples include a browse control (button or link) — Phase 7
+- [ ] Documentation replaces `javascript:;` hrefs and inline `onclick` patterns with accessible alternatives — Phase 7
 
 ### Testing
 
-- [ ] Port `1st-gen/packages/dropzone/test/dropzone.test.ts` coverage that still applies
-- [ ] Add Playwright `dropzone.a11y.spec.ts` with `toMatchAriaSnapshot`
+- [x] Port `1st-gen/packages/dropzone/test/dropzone.test.ts` coverage that still applies
+- [x] Add Playwright `dropzone.a11y.spec.ts` with `toMatchAriaSnapshot`
 
 #### Behavior
 
-- [ ] `dropEffect` defaults to `'copy'`; invalid values are silently ignored
-- [ ] `dragover` without `dataTransfer` always calls `event.preventDefault()` (cross-platform drop support)
-- [ ] `dragover` with `dataTransfer` sets `dragged = true` and fires the dragover event
-- [ ] Cancelling `swc-dropzone-should-accept` sets `dataTransfer.dropEffect = 'none'` and prevents `dragged = true`
-- [ ] `dragleave` is debounced at 100 ms
-- [ ] `dragleave` is ignored when `relatedTarget` is an internal child
-- [ ] Debounce timeout is cleared on `drop` and `dragover`
-- [ ] Debounce timeout is cleared in `disconnectedCallback`
-- [ ] `filled = true` reflects to the `[filled]` attribute (regression: was not reflected in 1st-gen)
-- [ ] `dragged = true` reflects to the `[dragged]` attribute
-- [ ] `swc-dropzone-drop` fires after `dragover` + `drop` sequence on Windows Chrome (SWC-2069 regression)
-- [ ] Shadow DOM status text updates on drag state transitions
-- [ ] Dev warning fires when no accessible name is present
+- [x] `dropEffect` defaults to `'copy'`; invalid values are silently ignored
+- [x] `dragover` without `dataTransfer` always calls `event.preventDefault()` (cross-platform drop support)
+- [x] `dragover` with `dataTransfer` sets `dragged = true` and fires the dragover event
+- [x] Cancelling `swc-dropzone-should-accept` sets `dataTransfer.dropEffect = 'none'` and prevents `dragged = true`
+- [x] `dragleave` is debounced at 100 ms
+- [x] `dragleave` is ignored when `relatedTarget` is an internal child
+- [x] Debounce timeout is cleared on `drop` and `dragover`
+- [x] Debounce timeout is cleared in `disconnectedCallback`
+- [x] `filled = true` reflects to the `[filled]` attribute (regression: was not reflected in 1st-gen)
+- [x] `dragged = true` reflects to the `[dragged]` attribute
+- [x] `swc-dropzone-drop` fires after `dragover` + `drop` sequence on Windows Chrome (SWC-2069 regression)
+- [x] Shadow DOM status text updates on drag state transitions
+- [x] Dev warning fires when no accessible name is present
 
 #### Accessibility tests (unit)
 
-- [ ] `role="group"` (or confirmed equivalent) is on the host
-- [ ] Shadow DOM contains `role="status"` element
-- [ ] Status text is empty in default state
-- [ ] Status text is "File ready to drop" when `dragged = true`
-- [ ] Status text is "File accepted" after a drop event
-- [ ] Status text is "Drop to replace existing file" when `dragged = true` while `filled = true`
-- [ ] Host has no `tabindex` attribute by default
+- [x] `role="group"` (or confirmed equivalent) is on the host
+- [x] Shadow DOM contains `role="status"` element
+- [x] Status text is empty in default state
+- [x] Status text is "File ready to drop" when `dragged = true`
+- [x] Status text is "File accepted" after a drop event
+- [x] Status text is "Drop to replace existing file" when `dragged = true` while `filled = true`
+- [x] Host has no `tabindex` attribute by default
 
 #### Accessibility tests (Playwright ARIA snapshots)
 
-- [ ] Default state: group label, heading in slot, browse button focusable
-- [ ] Dragged state: status text update verified
-- [ ] Filled state: illustrated message hidden; status text update
-- [ ] Filled+dragged state: replace announcement verified
+- [x] Default state: group label, heading in slot, browse button focusable
+- [x] Dragged state: status text update verified
+- [x] Filled state: illustrated message hidden; status text update
+- [x] Filled+dragged state: replace announcement verified
 
 #### Visual regression
 
@@ -550,7 +565,7 @@ export type DropzoneEventDetail = DragEvent; // retained for consumers who impor
 
 #### Breaking changes
 
-- [ ] Document B1–B7 with migration steps in `migration-guide.mdx`; note B16 (`size`) as additive (no consumer action needed)
+- [ ] Document B1–B7 and B17 with migration steps in `migration-guide.mdx`; note B16 (`size`) as additive (no consumer action needed)
 - [ ] Document that `--mod-*` properties are not carried forward
 - [ ] Document that `aria-label` or `aria-labelledby` is now required
 - [ ] Document that `role="group"` is now fixed on the host (remove any consumer-added `role`)
