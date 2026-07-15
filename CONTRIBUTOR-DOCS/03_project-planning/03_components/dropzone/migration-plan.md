@@ -508,41 +508,41 @@ No `DropzoneEventDetail` alias is exported. 2nd-gen is a clean break from 1st-ge
 
 ### Testing
 
-- [ ] Port `1st-gen/packages/dropzone/test/dropzone.test.ts` coverage that still applies
-- [ ] Add Playwright `dropzone.a11y.spec.ts` with `toMatchAriaSnapshot`
+- [x] Port `1st-gen/packages/dropzone/test/dropzone.test.ts` coverage that still applies
+- [x] Add Playwright `dropzone.a11y.spec.ts` with `toMatchAriaSnapshot`
 
 #### Behavior
 
-- [ ] `dropEffect` defaults to `'copy'`; invalid values are silently ignored
-- [ ] `dragover` without `dataTransfer` always calls `event.preventDefault()` (cross-platform drop support)
-- [ ] `dragover` with `dataTransfer` sets `dragged = true` and fires the dragover event
-- [ ] Cancelling `swc-dropzone-should-accept` sets `dataTransfer.dropEffect = 'none'` and prevents `dragged = true`
-- [ ] `dragleave` is debounced at 100 ms
-- [ ] `dragleave` is ignored when `relatedTarget` is an internal child
-- [ ] Debounce timeout is cleared on `drop` and `dragover`
-- [ ] Debounce timeout is cleared in `disconnectedCallback`
-- [ ] `filled = true` reflects to the `[filled]` attribute (regression: was not reflected in 1st-gen)
-- [ ] `dragged = true` reflects to the `[dragged]` attribute
-- [ ] `swc-dropzone-drop` fires after `dragover` + `drop` sequence on Windows Chrome (SWC-2069 regression)
-- [ ] Shadow DOM status text updates on drag state transitions
-- [ ] Dev warning fires when no accessible name is present
+- [x] `dropEffect` defaults to `'copy'`; invalid values are silently ignored
+- [x] `dragover` without `dataTransfer` always calls `event.preventDefault()` (cross-platform drop support)
+- [x] `dragover` with `dataTransfer` sets `dragged = true` and fires the dragover event
+- [x] Cancelling `swc-dropzone-should-accept` sets `dataTransfer.dropEffect = 'none'` and prevents `dragged = true`
+- [x] `dragleave` is debounced at 100 ms
+- [x] `dragleave` is ignored when `relatedTarget` is an internal child
+- [x] Debounce timeout is cleared on `drop` and `dragover`
+- [x] Debounce timeout is cleared in `disconnectedCallback`
+- [x] `filled = true` reflects to the `[filled]` attribute (regression: was not reflected in 1st-gen)
+- [x] `dragged = true` reflects to the `[dragged]` attribute
+- [x] `swc-dropzone-drop` fires after `dragover` + `drop` sequence on Windows Chrome (SWC-2069 regression)
+- [x] Shadow DOM status text updates on drag state transitions
+- [x] Dev warning fires when no accessible name is present
 
 #### Accessibility tests (unit)
 
-- [ ] `role="group"` (or confirmed equivalent) is on the host
-- [ ] Shadow DOM contains `role="status"` element
-- [ ] Status text is empty in default state
-- [ ] Status text is "File ready to drop" when `dragged = true`
-- [ ] Status text is "File accepted" after a drop event
-- [ ] Status text is "Drop to replace existing file" when `dragged = true` while `filled = true`
-- [ ] Host has no `tabindex` attribute by default
+- [x] `role="group"` (or confirmed equivalent) is on the host
+- [x] Shadow DOM contains `role="status"` element
+- [x] Status text is empty in default state
+- [x] Status text is "File ready to drop" when `dragged = true`
+- [x] Status text is "File accepted" after a drop event
+- [x] Status text is "Drop to replace existing file" when `dragged = true` while `filled = true`
+- [x] Host has no `tabindex` attribute by default
 
 #### Accessibility tests (Playwright ARIA snapshots)
 
-- [ ] Default state: group label, heading in slot, browse button focusable
-- [ ] Dragged state: status text update verified
-- [ ] Filled state: illustrated message hidden; status text update
-- [ ] Filled+dragged state: replace announcement verified
+- [x] Default state: group label, heading in slot, browse button focusable
+- [x] Dragged state: status text update verified
+- [x] Filled state: illustrated message hidden; status text update
+- [x] Filled+dragged state: replace announcement verified
 
 #### Visual regression
 
