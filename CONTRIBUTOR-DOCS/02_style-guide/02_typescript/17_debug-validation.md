@@ -534,3 +534,10 @@ bundler defining `process.env.NODE_ENV` and applying that define to
 bundler at all will hit a `ReferenceError` on `process`. This is a build
 tooling problem, not a call-site problem, and is tracked as its own
 follow-up. Raise it as a separate change if you want to pursue a fix.
+
+In the meantime, point consumers who are worried about shipping dev-mode
+code to production at the per-bundler stripping recipes in the
+["Only in development"](https://github.com/adobe/spectrum-web-components/blob/main/2nd-gen/packages/swc/.storybook/guides/dev-mode/dev-mode-warnings.mdx)
+section of the consumer-facing guide. This package cannot guarantee
+stripping on its own, but most bundler configurations already do it
+correctly by default.

@@ -33,13 +33,43 @@ accessibility bug later.
 ## Only in development
 
 These checks run behind a `window.__swc.DEBUG` flag, set automatically when
-`process.env.NODE_ENV === 'development'`. Whether that flag ends up `false`
-(and the checks are skipped) in your production build depends on **your own
-build tooling** replacing `process.env.NODE_ENV` with `'production'` and
-tree-shaking the resulting dead code. Most common bundler setups (webpack,
-Next.js, Vite app builds) do this by default. If your setup doesn't process
-`node_modules` this way, the checks will still run (silently, at negligible
-cost) in production too.
+`process.env.NODE_ENV === 'development'`. This package ships that check as
+literal source in its published build (it does not pre-strip it), so
+whether the flag ends up `false` (and the check, and every warning string
+and `window.__swc.warn` call alongside it, gets removed by your bundler's
+dead-code elimination) depends on **your own build configuration**.
+
+**Recommended: confirm your production build actually strips this.** Most
+setups handle it automatically, but "automatically" depends on your bundler
+processing `node_modules`, which not every default config does:
+
+- **Webpack / Next.js**: `mode: 'production'` sets `process.env.NODE_ENV` via
+  `DefinePlugin` and minifies with Terser, both of which apply to
+  `node_modules` by default. No extra configuration needed in most setups.
+- **Vite (app builds)**: `vite build` (default mode `production`) replaces
+  `process.env.NODE_ENV` and removes the resulting dead branch during
+  minification, including inside dependencies. No extra configuration
+  needed in most setups.
+- **esbuild directly**: pass `--define:process.env.NODE_ENV='"production"'`.
+  esbuild removes statically-false branches as part of normal bundling, so
+  this alone is enough even without `--minify`.
+- **Rollup**: use [`@rollup/plugin-replace`](https://github.com/rollup/plugins/tree/master/packages/replace)
+  to replace `process.env.NODE_ENV`, paired with a minifier plugin (e.g.
+  `@rollup/plugin-terser`) so the resulting dead branch is actually removed,
+  not just replaced.
+- **No bundler at all** (a bare `<script type="module">` import): there is no
+  build step to strip anything, and `process` is not defined in the browser,
+  so the check throws a `ReferenceError` rather than silently running. Load
+  a `process` shim (e.g. a global `window.process = { env: { NODE_ENV:
+'production' } }` set before the import) if you need to support this.
+
+If your production bundle still contains the dev-mode strings (search your
+built output for `"Spectrum Web Components is in dev mode"` to check),
+nothing is broken, but you're shipping validation code, message strings, and
+the warning engine to users for no benefit. Fixing that is a build
+configuration change on your end, not something this package can guarantee
+on its own. See [Known limitations](https://github.com/adobe/spectrum-web-components/blob/main/CONTRIBUTOR-DOCS/02_style-guide/02_typescript/17_debug-validation.md#known-limitations)
+for why.
 
 ## Configuring which warnings you see
 
