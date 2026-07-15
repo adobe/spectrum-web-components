@@ -75,6 +75,15 @@ Trackpad, wheel, touch scrolling, and the overlay scrollbar lane below the tiles
 
 <Canvas of={PromptFieldStories.MultiArtifactScroll} />
 
+### Upload action menu
+
+`swc-prompt-field` fires `swc-prompt-field-upload-click` from the **`+`** button and leaves the resulting UI entirely to the consuming product; the component has no opinion on what opens. Design recommends the **`+`** button open a menu with, at minimum:
+
+- **Add from Adobe cloud storage**
+- **Attach files**
+
+Product teams control the exact menu contents and may add more sources, but these two are the recommended baseline. Attachments added through either path should surface as staged artifacts using the same **`swc-upload-artifact`** error/invalid state as a directly-dropped file, since the artifact strip does not distinguish attachments by origin.
+
 ## Behaviors
 
 ### Handling events
