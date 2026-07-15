@@ -70,10 +70,6 @@ const meta: Meta = {
     docs: {
       subtitle: `Status lights convey semantic meaning through colored dots accompanied by descriptive text.`,
     },
-    design: {
-      type: 'figma',
-      url: 'https://www.figma.com/design/Mngz9H7WZLbrCvGQf3GnsY/S2---Desktop?node-id=36797-954',
-    },
     stackblitz: {
       url: 'https://stackblitz.com/edit/vitejs-vite-rdaytnkj?file=src%2Fmy-element.ts',
     },

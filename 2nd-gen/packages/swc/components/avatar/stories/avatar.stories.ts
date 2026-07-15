@@ -59,7 +59,6 @@ const meta: Meta = {
     docs: {
       subtitle: 'A circular profile image for identifying a person or entity.',
     },
-    // @todo Add Figma design link: design: { type: 'figma', url: '<avatar-node-url>' }
     stackblitz: {
       url: 'https://stackblitz.com/edit/vitejs-vite-bfsrbyma?file=src%2Fmy-element.ts',
     },

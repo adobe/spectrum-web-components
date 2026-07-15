@@ -247,6 +247,10 @@ const config: StorybookConfig = {
             replacement: resolve(__dirname, '../components'),
           },
           {
+            find: '@adobe/spectrum-wc/patterns',
+            replacement: resolve(__dirname, '../patterns'),
+          },
+          {
             find: '@adobe/spectrum-wc',
             replacement: resolve(__dirname, '../components'),
           },
