@@ -18,7 +18,7 @@ import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 import {
   DROPZONE_VALID_SIZES,
   type DropzoneSize,
-} from '@spectrum-web-components/core/components/dropzone';
+} from '@adobe/spectrum-wc-core/components/dropzone';
 
 import '@adobe/spectrum-wc/components/button/swc-button.js';
 import '@adobe/spectrum-wc/components/dropzone/swc-dropzone.js';

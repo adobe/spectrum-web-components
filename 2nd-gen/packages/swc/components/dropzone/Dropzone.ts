@@ -12,7 +12,7 @@
 
 import { CSSResultArray, html, PropertyValues, TemplateResult } from 'lit';
 
-import { DropzoneBase } from '@spectrum-web-components/core/components/dropzone';
+import { DropzoneBase } from '@adobe/spectrum-wc-core/components/dropzone';
 
 import visuallyHiddenStyles from '../../stylesheets/_lit-styles/visually-hidden.css';
 import styles from './dropzone.css';
