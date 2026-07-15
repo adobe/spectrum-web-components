@@ -15,6 +15,7 @@ import { property } from 'lit/decorators.js';
 
 import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
 import { SizedMixin } from '@spectrum-web-components/core/mixins/index.js';
+import { validateEnum } from '@spectrum-web-components/core/utils/index.js';
 
 import {
   DIVIDER_STATIC_COLORS,
@@ -71,21 +72,14 @@ export abstract class DividerBase extends SizedMixin(SpectrumElement, {
   // ──────────────────────
 
   protected override update(changedProperties: PropertyValues): void {
-    if (window.__swc?.DEBUG) {
+    if (typeof this.staticColor !== 'undefined') {
       const constructor = this.constructor as typeof DividerBase;
-      if (
-        typeof this.staticColor !== 'undefined' &&
-        !constructor.STATIC_COLORS.includes(this.staticColor)
-      ) {
-        window.__swc.warn(
-          this,
-          `<${this.localName}> element expects the "static-color" attribute to be one of the following:`,
-          'https://opensource.adobe.com/spectrum-web-components/components/divider/',
-          {
-            issues: [...constructor.STATIC_COLORS],
-          }
-        );
-      }
+      validateEnum(this, {
+        prop: 'static-color',
+        value: this.staticColor,
+        valid: constructor.STATIC_COLORS,
+        url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-divider--docs',
+      });
     }
     super.update(changedProperties);
   }
