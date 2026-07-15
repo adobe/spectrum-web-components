@@ -305,10 +305,17 @@ export abstract class CardBase extends SizedMixin(SpectrumElement, {
   /**
    * Proxies a qualifying surface click to `titleAsLink`'s link and/or
    * dispatches `swc-card-click` for `selectable`, after filtering out
-   * clicks that landed on a nested interactive target.
+   * clicks that landed on a nested interactive target or followed a
+   * text-selection drag.
    */
   protected readonly handleSurfaceClick = (event: Event): void => {
     if (!this.titleAsLink && !this.selectable) {
+      return;
+    }
+    // A text-selection drag still fires `click` on mouseup; a non-collapsed
+    // selection at that point means the user was selecting text, not
+    // clicking through the card.
+    if (document.getSelection()?.isCollapsed === false) {
       return;
     }
     const path = event.composedPath();

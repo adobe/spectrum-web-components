@@ -608,6 +608,63 @@ export const InteractiveTargetFilteringTest: Story = {
   },
 };
 
+export const TextSelectionFilteringTest: Story = {
+  render: () => html`
+    <test-card-base selectable>
+      <span slot="description">Selectable description text</span>
+    </test-card-base>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const card = await getComponent<TestCardBase>(
+      canvasElement,
+      'test-card-base'
+    );
+    const description = card.querySelector(
+      '[slot="description"]'
+    ) as HTMLElement;
+    let dispatched = false;
+    card.addEventListener('swc-card-click', () => {
+      dispatched = true;
+    });
+
+    await step(
+      'does not dispatch swc-card-click when a text selection is active',
+      async () => {
+        dispatched = false;
+        const range = document.createRange();
+        range.selectNodeContents(description);
+        const selection = window.getSelection();
+        selection?.removeAllRanges();
+        selection?.addRange(range);
+
+        card.click();
+
+        expect(
+          dispatched,
+          'swc-card-click does not fire while a text selection is active'
+        ).toBe(false);
+
+        selection?.removeAllRanges();
+      }
+    );
+
+    await step(
+      'dispatches swc-card-click normally once the selection is cleared',
+      async () => {
+        dispatched = false;
+        window.getSelection()?.removeAllRanges();
+
+        card.click();
+
+        expect(
+          dispatched,
+          'swc-card-click fires again once no selection is active'
+        ).toBe(true);
+      }
+    );
+  },
+};
+
 // ──────────────────────────────────────────────────────────────
 // TEST: Dev mode warnings
 // ──────────────────────────────────────────────────────────────

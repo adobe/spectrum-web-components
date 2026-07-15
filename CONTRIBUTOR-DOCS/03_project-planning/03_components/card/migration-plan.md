@@ -50,7 +50,7 @@
 - **Clickable card, no `href` on Card:** the consumer supplies their own link in the `title` slot; `title-as-link` extends its hit area, `selectable` independently makes the card focusable and dispatches a click event. Both are implemented and tested on `CardBase`.
 - **Labeling (avatar/thumbnail vs. title) is consumer documentation, not code** — Card doesn't validate or bridge accessible names that consumers already fully control.
 - **Styling:** CSS Grid for the shared structural layout; `size`/`density` resolve through `container-padding` tokens for content/footer padding. Region and intra-region spacing (title-to-description, media-to-content) relies on padding plus a blanket `margin-block: 0` reset on slotted content, not a gap-token scale.
-- **Tested:** `CardBase` has 19 passing behavior/dev-warning tests against test-only fixtures, plus 8 automated per-story smoke tests from `swc-card`'s own stories file (render-only; no explicit `play` functions yet). `swc-card` itself has no dedicated test file — it's still in the Styling pass, ahead of Testing.
+- **Tested:** `CardBase` has 20 passing behavior/dev-warning tests against test-only fixtures, plus 7 automated per-story smoke tests from `swc-card`'s own stories file (render-only; no explicit `play` functions yet). `swc-card` itself has no dedicated test file — it's still in the Styling pass, ahead of Testing.
 - **Still open:** five items (see [Blockers](#blockers-and-open-questions)) — naming, deferred design questions, and unresolved product-card scoping, none blocking.
 
 
@@ -215,6 +215,7 @@ Both modes need the same two supporting pieces, whichever (or both) are enabled:
 
 - **Elevate nested interactive targets** — actions, in-content links, etc. need `position: relative` plus a higher stacking order than the stretched pseudo-element/click-catching surface, in `card-template.css`, so native hit-testing routes their own clicks to them rather than the card surface. This is a CSS-only concern, independent of the JS filtering below.
 - **Filter clicks on nested interactive targets** — implemented in `CardBase`'s click handler via `event.composedPath()`, checking each node's `tabIndex` IDL property (not the `tabindex` attribute or a tag-name list): natively-interactive elements (`button`, `input`, `select`, `textarea`, `a[href]`) report `tabIndex >= 0` with no explicit attribute needed, `tabindex="-1"` and disabled controls correctly report as non-interactive, and — because `composedPath()` already traverses into other custom elements' shadow roots for composed events like `click` — an internal `<button>` inside e.g. `<swc-button>` slotted into `actions` is inspected directly, regardless of which shadow tree it belongs to. No tag-name enumeration, and no `stopPropagation()` wiring on wrapper elements in `renderCardTemplate()`, is needed. The `actions` slot is additionally excluded unconditionally (checking whether its `<slot>` element appears in the composed path) as defense in depth, since it's contractually for interactive content regardless of whether a given control correctly reflects focusability — mirroring 1st-gen's own belt-and-suspenders approach (a hard `stopPropagationOnHref` boundary for actions, plus a softer anchor-detection heuristic for everything else).
+- **Filter clicks that follow a text-selection drag** — a click-drag to select text (e.g. dragging across the description) still fires a native `click` event on mouseup. `CardBase` checks `document.getSelection()?.isCollapsed` at the start of the click handler and bails out if a non-collapsed selection is active, so selecting text inside the card doesn't also trigger the `title-as-link` proxy or dispatch `swc-card-click`.
 
 <details>
 <summary>Click/keydown decision flowchart</summary>
@@ -228,7 +229,10 @@ flowchart TD
 
     C{"titleAsLink or\nselectable set?"}
     C -->|No| Z1["No-op"]
-    C -->|Yes| D{"Click path includes the actions slot?"}
+    C -->|Yes| S{"Active (non-collapsed)\ntext selection?"}
+
+    S -->|Yes| Z0["No-op — click followed\na text-selection drag"]
+    S -->|No| D{"Click path includes the actions slot?"}
 
     D -->|Yes| Z2["No-op — actions slot is\nexcluded unconditionally"]
     D -->|No| E{"Any node before the host has tabIndex >= 0?\n(checks across shadow-root boundaries too)"}
@@ -277,7 +281,7 @@ Both branches (`titleAsLink`'s proxy-click and `selectable`'s event dispatch) ru
 `CardBase` has no concrete card component yet, so its behavior is tested directly through test-only fixtures rather than a real `swc-*` component — a first for this codebase (no prior precedent for testing an abstract base via a throwaway concrete subclass; see [References](#references)). Location: `swc/components/card/test/`.
 
 - **`test-card-base.ts`** — `TestCardBase` (renders `renderCardTemplate()` with no overrides), `TestCardWithMediaExtras` (supplies `renderCollection`/`renderGlyph`, to verify those callback parameters render when provided), and `TestNestedButtonHost` (a custom element with its own shadow-DOM `<button>`, used to verify interactive-target filtering across shadow boundaries).
-- **`card-base.test.ts`** — 19 tests across Defaults, Properties/Attributes, Slots, Behaviors, and Dev mode warnings. All passing. Notably, this exercise **validated** rather than just assumed two of this plan's interactive-pattern claims:
+- **`card-base.test.ts`** — 20 tests across Defaults, Properties/Attributes, Slots, Behaviors, and Dev mode warnings. All passing. Notably, this exercise **validated** rather than just assumed two of this plan's interactive-pattern claims:
   - `composedPath()` traversing into another custom element's shadow root (A11y-3's justification for dropping the tag-name selector approach) is confirmed directly: a `<button>` inside `TestNestedButtonHost`'s own shadow root, slotted into `actions`, is correctly excluded from surface-click handling — both when reached via the unconditional `actions`-slot exclusion and, independently, when the same nested button is slotted into `description` instead (isolating the `tabIndex`-across-shadow-boundaries mechanism from the actions-slot shortcut).
   - `tabindex="-1"` is confirmed **not** treated as interactive (a click on such an element outside `actions` still triggers surface-click handling) — the specific bug the `tabIndex` IDL property check was chosen to avoid.
   - Both `title-as-link` forms (`<a slot="title">` directly, and an anchor nested inside a wrapper) are confirmed to receive the click-proxy correctly.
