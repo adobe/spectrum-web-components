@@ -1,5 +1,29 @@
 # @spectrum-web-components/core
 
+## 2.0.0-beta.2
+
+### Minor Changes
+
+- [#6410](https://github.com/adobe/spectrum-web-components/pull/6410) [`b0c6e37`](https://github.com/adobe/spectrum-web-components/commit/b0c6e375760ccc1ec6c1773ed1aa4015aa3b0f03) Thanks [@TarunAdobe](https://github.com/TarunAdobe)! - Add the 2nd-gen `<swc-close-button>`, migrated from the Spectrum 1 `<sp-close-button>`.
+  - **API**: `size`, `disabled`, `accessible-label`, and `static-color`; omits the legacy `variant` surface in favor of `static-color`.
+  - **Accessibility**: renders a real inner `<button type="button">` with delegated focus; requires `accessible-label` for its icon-only name; the cross icon remains decorative.
+  - **Styling**: ships Spectrum 2 sizing and static-color treatments plus the `--swc-close-button-*` custom-property surface for token-aligned overrides.
+  - **Docs and tests**: includes Storybook docs, consumer migration guidance, unit coverage, and Playwright accessibility and keyboard tests.
+
+- [#6480](https://github.com/adobe/spectrum-web-components/pull/6480) [`f27f690`](https://github.com/adobe/spectrum-web-components/commit/f27f6906f142f824dcc28f588e205271a36ec04a) Thanks [@blunteshwar](https://github.com/blunteshwar)! - **feat(color-handle):** Added `<swc-color-handle>`, the Spectrum 2 migration of `sp-color-handle`.
+
+  A non-interactive color-picker primitive exposing `color`, `disabled`, `focused`, `open`, and the new `fill` property, with a built-in `<swc-color-loupe>` and an adaptive white-first dual border that meets WCAG 1.4.11 non-text contrast across the color spectrum. The `--mod-colorhandle-*` custom properties are removed; see the migration guide.
+
+- [#6494](https://github.com/adobe/spectrum-web-components/pull/6494) [`9e7995a`](https://github.com/adobe/spectrum-web-components/commit/9e7995ad8189970d6788a7872007d611af247663) Thanks [@nikkimk](https://github.com/nikkimk)! - **refactor(tabs):** Migrate `<swc-tabs>` keyboard navigation to `FocusgroupNavigationController`.
+
+  Arrow-key, Home, and End navigation is now handled by the controller rather than by manually computed deltas in `handleKeyDown`. The `handleKeyDown` method retains only Enter/Space activation; all roving-tabindex management is delegated to the controller. In automatic activation mode, `focusgroupNavigationActiveChange` events with `source: 'keyboard'` drive selection-follows-focus; events with `source: 'refresh'` or `source: 'programmatic'` are intentionally ignored so that mounting or toggling `disabled` cannot trigger spurious `change` events.
+
+### Patch Changes
+
+- [#6506](https://github.com/adobe/spectrum-web-components/pull/6506) [`6049706`](https://github.com/adobe/spectrum-web-components/commit/6049706e5d08bb92cd6531cbf7661c282b3ab409) Thanks [@rubencarvalho](https://github.com/rubencarvalho)! - **fix(popover):** Fixed `swc-popover` staying dismissed on the next unrelated outside click after a trigger press was dragged off and released elsewhere.
+
+  A `pointerdown` on the trigger followed by a drag off the trigger and a release elsewhere never dispatches a `click`, so the internal reopen-guard flag was left stuck `true`, misattributing the next unrelated outside light-dismiss to that stale press and swallowing the following legitimate trigger click.
+
 ## 2.0.0-beta.1
 
 ### Minor Changes

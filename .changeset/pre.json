@@ -87,7 +87,7 @@
     "@spectrum-web-components/theme": "1.12.1",
     "@spectrum-web-components/truncated": "1.12.1",
     "@spectrum-web-components/2nd-gen": "0.0.1",
-    "@spectrum-web-components/core": "1.0.0",
+    "@adobe/spectrum-wc-core": "2.0.0-beta.1",
     "@adobe/spectrum-wc": "1.0.0",
     "@adobe/postcss-token": "0.0.2",
     "@adobe/swc-tokens": "0.2.0",
@@ -97,16 +97,13 @@
     "@spectrum-web-components/stylelint-header-plugin": "1.12.1"
   },
   "changesets": [
-    "accordion-2nd-gen-and-deprecations",
-    "action-button-2nd-gen-migration",
-    "button-group-migration",
-    "fix-action-menu-submenu-mobile-tray",
-    "gen2-2-0-0-major",
-    "illustrated-message-actions-slot",
-    "light-beers-roll",
-    "link-2nd-gen-migration",
-    "meter-2nd-gen-migration",
-    "placement-controller-core",
-    "silver-mice-pay"
+    "close-button-2nd-gen-migration",
+    "color-handle-migration",
+    "feat-live-selection-controller",
+    "fix-illustrated-message-actions-slot-alignment",
+    "fix-popover-trigger-pointer-active-stuck",
+    "fix-tabs-keyboard-activation-default",
+    "soft-ravens-think",
+    "tabs-focusgroup-controller"
   ]
 }

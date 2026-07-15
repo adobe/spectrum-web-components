@@ -169,7 +169,7 @@ function main() {
   const coreVersion = readJson(CORE_PKG).version;
   const swcVersion = readJson(SWC_PKG).version;
   console.log('\n✅ gen2 beta prepared:');
-  console.log(`     @spectrum-web-components/core   ${coreVersion}`);
+  console.log(`     @adobe/spectrum-wc-core         ${coreVersion}`);
   console.log(`     @adobe/spectrum-wc              ${swcVersion}`);
   console.log(
     '\nNext steps:\n' +

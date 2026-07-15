@@ -235,14 +235,14 @@ jobs:
           # `yarn pack` resolves the workspace: protocol and honors each package's
           # files field, producing a publishable tarball. `npm publish` then selects
           # the correct auth automatically, matching how `changeset publish` behaves:
-          # - @spectrum-web-components/core -> OIDC trusted publishing
-          # - @adobe/spectrum-wc           -> npm token (from ~/.npmrc)
+          # - @adobe/spectrum-wc-core -> npm token (from ~/.npmrc)
+          # - @adobe/spectrum-wc      -> npm token (from ~/.npmrc)
           PUBLISH_FLAGS="--tag $TAG --access public"
           if [ "$DRY_RUN" == "true" ]; then
             PUBLISH_FLAGS="$PUBLISH_FLAGS --dry-run"
             echo "::notice::DRY RUN - packing only, no packages will be published to npm"
           fi
-          yarn workspace @spectrum-web-components/core pack --out /tmp/swc-core.tgz
+          yarn workspace @adobe/spectrum-wc-core pack --out /tmp/swc-core.tgz
           yarn workspace @adobe/spectrum-wc pack --out /tmp/swc-wc.tgz
           npm publish /tmp/swc-core.tgz $PUBLISH_FLAGS
           npm publish /tmp/swc-wc.tgz $PUBLISH_FLAGS
