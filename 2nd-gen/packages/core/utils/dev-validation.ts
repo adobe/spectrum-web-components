@@ -38,6 +38,9 @@ export function validateEnum<T extends string>(
     options?: SWCWarningOptions;
   }
 ): void {
+  if (process.env.NODE_ENV === 'production') {
+    return;
+  }
   if (!window.__swc?.DEBUG) {
     return;
   }
@@ -71,6 +74,9 @@ export function warnIf(
   url: string,
   options?: SWCWarningOptions
 ): void {
+  if (process.env.NODE_ENV === 'production') {
+    return;
+  }
   if (!window.__swc?.DEBUG || !condition) {
     return;
   }
@@ -93,6 +99,9 @@ export function validateRequiredSlot(
   url: string,
   options?: SWCWarningOptions
 ): void {
+  if (process.env.NODE_ENV === 'production') {
+    return;
+  }
   if (!window.__swc?.DEBUG) {
     return;
   }
@@ -128,6 +137,9 @@ export function validateAllowedChildren(
   url: string,
   options?: SWCWarningOptions
 ): void {
+  if (process.env.NODE_ENV === 'production') {
+    return;
+  }
   if (!window.__swc?.DEBUG || !slot) {
     return;
   }
