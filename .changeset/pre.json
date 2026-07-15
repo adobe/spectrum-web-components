@@ -97,13 +97,16 @@
     "@spectrum-web-components/stylelint-header-plugin": "1.12.1"
   },
   "changesets": [
-    "close-button-2nd-gen-migration",
-    "color-handle-migration",
-    "feat-live-selection-controller",
-    "fix-illustrated-message-actions-slot-alignment",
-    "fix-popover-trigger-pointer-active-stuck",
-    "fix-tabs-keyboard-activation-default",
-    "soft-ravens-think",
-    "tabs-focusgroup-controller"
+    "accordion-2nd-gen-and-deprecations",
+    "action-button-2nd-gen-migration",
+    "button-group-migration",
+    "fix-action-menu-submenu-mobile-tray",
+    "gen2-2-0-0-major",
+    "illustrated-message-actions-slot",
+    "light-beers-roll",
+    "link-2nd-gen-migration",
+    "meter-2nd-gen-migration",
+    "placement-controller-core",
+    "silver-mice-pay"
   ]
 }
