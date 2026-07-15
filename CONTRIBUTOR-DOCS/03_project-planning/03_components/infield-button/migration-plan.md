@@ -153,9 +153,9 @@ This full modifier surface will not be carried forward to 2nd-gen.
 
 | Package | Role |
 | ------- | ---- |
-| `@spectrum-web-components/core/components/button` | Provides 2nd-gen `ButtonBase`, `BUTTON_VALID_SIZES`, `ObserveSlotPresence`, `ObserveSlotText` |
-| `@spectrum-web-components/core/element` | Provides `SpectrumElement` |
-| `@spectrum-web-components/core/mixins` | Provides `SizedMixin` |
+| `@adobe/spectrum-wc-core/components/button` | Provides 2nd-gen `ButtonBase`, `BUTTON_VALID_SIZES`, `ObserveSlotPresence`, `ObserveSlotText` |
+| `@adobe/spectrum-wc-core/element` | Provides `SpectrumElement` |
+| `@adobe/spectrum-wc-core/mixins` | Provides `SizedMixin` |
 | `spectrum-css` (`spectrum-two` branch) `components/infieldbutton/index.css` | S2 CSS baseline (**confirmed — Q2 resolved; see [Styling](#styling)**) |
 
 ---

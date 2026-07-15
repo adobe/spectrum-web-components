@@ -36,6 +36,7 @@
     - Badge
     - Button
     - Button Group
+    - Card
     - Checkbox
     - Close Button
     - Color Field

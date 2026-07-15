@@ -1,0 +1,128 @@
+/**
+ * Copyright 2026 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+:host {
+  display: inline-flex;
+  vertical-align: top;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.swc-CloseButton {
+  --_swc-close-button-border-width: token("border-width-200");
+
+  -webkit-tap-highlight-color: transparent;
+  display: inline-flex;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  inline-size: var(--swc-close-button-size, token("component-height-100"));
+  block-size: var(--swc-close-button-size, token("component-height-100"));
+  padding: 0;
+  margin: 0;
+  color: var(--swc-close-button-icon-color-default, token("neutral-content-color-default"));
+  background-color: var(--swc-close-button-background-color-default, transparent);
+  border-color: transparent;
+  border-style: solid;
+  border-width: var(--_swc-close-button-border-width);
+  border-radius: var(--swc-close-button-border-radius, token("corner-radius-full"));
+  overflow: visible;
+  cursor: pointer;
+  user-select: none;
+  outline: 0 solid transparent;
+  transition-timing-function: token("animation-ease-in-out");
+  transition-duration: token("animation-duration-100");
+  transition-property: outline, border-color, color, background-color, transform;
+}
+
+.swc-CloseButton:focus-visible {
+  color: var(--swc-close-button-icon-color-focus, token("neutral-content-color-key-focus"));
+  background-color: var(--swc-close-button-background-color-focus, token("gray-100"));
+  outline: var(--swc-close-button-focus-indicator-thickness, token("focus-indicator-thickness")) solid var(--swc-close-button-focus-indicator-color, token("focus-indicator-color"));
+  outline-offset: var(--swc-close-button-focus-indicator-gap, token("focus-ring-gap"));
+}
+
+.swc-CloseButton:hover {
+  color: var(--swc-close-button-icon-color-hover, token("neutral-content-color-hover"));
+  background-color: var(--swc-close-button-background-color-hover, token("gray-100"));
+}
+
+.swc-CloseButton:active {
+  color: var(--swc-close-button-icon-color-down, token("neutral-content-color-down"));
+  background-color: var(--swc-close-button-background-color-down, token("gray-100"));
+  transform: perspective(var(--swc-close-button-size, token("component-height-100"))) translate3d(0, 0, token("component-size-difference-down"));
+  will-change: transform;
+}
+
+.swc-CloseButton:disabled:is(*, :hover) {
+  color: var(--swc-close-button-icon-color-disabled, token("disabled-content-color"));
+  background-color: var(--swc-close-button-background-color-default, transparent);
+  cursor: default;
+  transform: none;
+}
+
+.swc-CloseButton-icon {
+  display: block;
+  flex-shrink: 0;
+  inline-size: var(--swc-close-button-icon-size, token("ui-icon-large"));
+  block-size: var(--swc-close-button-icon-size, token("ui-icon-large"));
+}
+
+.swc-CloseButton-icon svg {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+  fill: currentcolor;
+}
+
+:host([size="s"]) {
+  --swc-close-button-icon-size: token("ui-icon-small");
+  --swc-close-button-size: token("component-height-75");
+}
+
+:host([size="l"]) {
+  --swc-close-button-icon-size: token("ui-icon-large");
+  --swc-close-button-size: token("component-height-200");
+}
+
+:host([size="xl"]) {
+  --swc-close-button-icon-size: token("ui-icon-extra-large");
+  --swc-close-button-size: token("component-height-300");
+}
+
+:host([static-color="white"]) {
+  --swc-close-button-background-color-default: transparent;
+  --swc-close-button-background-color-down: token("transparent-white-100");
+  --swc-close-button-background-color-focus: token("transparent-white-100");
+  --swc-close-button-background-color-hover: token("transparent-white-100");
+  --swc-close-button-focus-indicator-color: token("static-white-focus-indicator-color");
+  --swc-close-button-icon-color-default: token("transparent-white-800");
+  --swc-close-button-icon-color-disabled: token("disabled-static-white-background-color");
+  --swc-close-button-icon-color-down: token("transparent-white-900");
+  --swc-close-button-icon-color-focus: token("transparent-white-900");
+  --swc-close-button-icon-color-hover: token("transparent-white-900");
+}
+
+:host([static-color="black"]) {
+  --swc-close-button-background-color-default: transparent;
+  --swc-close-button-background-color-down: token("transparent-black-100");
+  --swc-close-button-background-color-focus: token("transparent-black-100");
+  --swc-close-button-background-color-hover: token("transparent-black-100");
+  --swc-close-button-focus-indicator-color: token("static-black-focus-indicator-color");
+  --swc-close-button-icon-color-default: token("transparent-black-800");
+  --swc-close-button-icon-color-disabled: token("disabled-static-black-background-color");
+  --swc-close-button-icon-color-down: token("transparent-black-900");
+  --swc-close-button-icon-color-focus: token("transparent-black-900");
+  --swc-close-button-icon-color-hover: token("transparent-black-900");
+}

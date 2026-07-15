@@ -48,7 +48,7 @@ interface SWCDebug {
 }
 ```
 
-**Initialization:** The `window.__swc` object is automatically created when the first Spectrum Web Component loads, but only in development builds (`process.env.NODE_ENV === 'development'`). The initialization lives in `@spectrum-web-components/core/element/spectrum-element.ts`. In production builds, `window.__swc` is not created, so all debug checks short-circuit via the optional chaining pattern (`window.__swc?.DEBUG`).
+**Initialization:** The `window.__swc` object is automatically created when the first Spectrum Web Component loads, but only in development builds (`process.env.NODE_ENV === 'development'`). The initialization lives in `@adobe/spectrum-wc-core/element/spectrum-element.ts`. In production builds, `window.__swc` is not created, so all debug checks short-circuit via the optional chaining pattern (`window.__swc?.DEBUG`).
 
 Debug mode is enabled by default in development builds. To disable it, set `window.__swc.DEBUG = false` before components load. In production builds, debug checks are either stripped or short-circuit when `DEBUG` is false.
 

@@ -18,7 +18,7 @@ import {
   METER_VARIANTS,
   MeterBase,
   type MeterVariant,
-} from '@spectrum-web-components/core/components/meter';
+} from '@adobe/spectrum-wc-core/components/meter';
 
 import sharedStyles from '../../stylesheets/_lit-styles/linear-progress-base.css';
 import styles from './meter.css';
@@ -29,7 +29,7 @@ import styles from './meter.css';
  * `.swc-LinearProgress` wrapper; the host carries no ARIA role.
  *
  * @element swc-meter
- * @since 2.0.0
+ * @since 2.0.0-beta.1
  *
  * @example
  * <swc-meter value="60" variant="positive">
