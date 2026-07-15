@@ -26,7 +26,7 @@ When testing components with screen readers, focus on these key outcomes:
 3. **Meaningful information**: Content should be announced in a logical order with appropriate context
 4. **Efficient navigation**: Users should be able to navigate quickly using headings, landmarks, and other semantic structures
 
-See [Headings and landmarks](/docs/guides-accessibility-guides-headings-and-landmarks--docs) for guidance on structuring **landmarks** and **headings** in markup. You can **inspect** that structure in the browser with WAVE; see [WAVE toolbar testing](/docs/guides-accessibility-guides-wave-toolbar-testing--docs#structure-tab).
+See [Headings and landmarks](/docs/guides-accessibility-guides-headings-and-landmarks--docs) for guidance on structuring **landmarks** and **headings** in markup. You can **inspect** that structure in the browser with WAVE — see [WAVE toolbar testing](/docs/guides-accessibility-guides-wave-toolbar-testing--docs#structure-tab).
 
 ### Relationship to keyboard accessibility
 
@@ -61,7 +61,7 @@ Screen readers work best with specific browsers. Use these recommended pairings 
 | iOS      | VoiceOver     | Safari  | Built-in; only supported browser engine on iOS |
 | Android  | TalkBack      | Chrome  | Built-in; best compatibility with Chrome       |
 
-**Recommended minimum testing:** Test with at least VoiceOver/Safari (macOS) and NVDA/Firefox (Windows) to cover the most common usage patterns.
+**Recommended minimum testing:** At minimum, test with VoiceOver/Safari (macOS) and NVDA/Firefox (Windows) to cover the most common usage patterns.
 
 ## Screen reader modes
 
@@ -113,9 +113,9 @@ Focus mode is for interacting with form controls and custom widgets. In this mod
 
 **Note:** VoiceOver does not use the browse/focus mode paradigm. Instead, it uses **Quick Nav** (toggled with <kbd>Left Arrow</kbd> + <kbd>Right Arrow</kbd> pressed simultaneously) to enable single-key navigation, and the **Interact model** (<kbd>VO</kbd> + <kbd>Shift</kbd> + <kbd>Down Arrow</kbd> to drill into elements, <kbd>VO</kbd> + <kbd>Shift</kbd> + <kbd>Up Arrow</kbd> to move back up). VoiceOver handles form controls more seamlessly without requiring an explicit mode switch.
 
-**Auto forms mode:** JAWS and NVDA automatically switch to focus mode when landing on certain form controls. JAWS can be configured to use "Auto Forms Mode" which automatically switches modes based on the focused element.
+**Auto forms mode:** JAWS and NVDA automatically switch to focus mode when landing on certain form controls. JAWS can be configured to use "Auto Forms Mode", which automatically switches modes based on the focused element.
 
-**Associated information:** In focus mode, screen readers announce associated information such as:
+**Associated information:** In focus mode, screen readers announce associated information, such as:
 
 - Labels (from `<label>`, `aria-label`, or `aria-labelledby`)
 - Descriptions (from `aria-describedby`)

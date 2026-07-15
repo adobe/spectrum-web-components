@@ -58,7 +58,7 @@ To allow WAVE on **local files** or in **private/incognito** windows, enable the
 ## Run a WAVE report
 
 1. Navigate to the page you want to test (for example, a Storybook page or your app).
-2. Click the **WAVE** icon in the browser toolbar, or use the shortcut <kbd>Control</kbd> + <kbd>Shift</kbd> + <kbd>U</kbd> (Windows/Linux) or <kbd>Command</kbd> + <kbd>Shift</kbd> + <kbd>U</kbd> (macOS). You can also use the context menu **WAVE this page** where available.
+2. Click the **WAVE** icon in the browser toolbar, or use the shortcut <kbd>Control</kbd> + <kbd>Shift</kbd> + <kbd>U</kbd> (Windows/Linux) or <kbd>Command</kbd> + <kbd>Shift</kbd> + <kbd>U</kbd> (macOS). You can also use the **WAVE this page** in the context menu, where available.
 3. The WAVE panel opens (often on the left). Use the tabs at the top to switch views. To close WAVE, click the WAVE icon again or refresh the page.
 
 Use the **Styles** toggle in the panel to see the page with browser styles on or off. Turning styles off can expose raw document order, which is useful with the **Order** tab.
@@ -123,7 +123,7 @@ Use it to check whether users who move with <kbd>Tab</kbd> and users who follow 
 
 ### Contrast tab and color testing
 
-The **Contrast** tab lets you set **foreground** and **background** colors (including with the color picker), read the **contrast ratio**, and see **WCAG AA/AAA** pass or fail for normal or large text. WAVE also notes that **gradients**, **filters**, and **transparency** may need **manual** checks with the eyedropper or other tools.
+The **Contrast** tab lets you set **foreground** and **background** colors (including with the color picker), read the **contrast ratio**, and see whether **WCAG AA/AAA** passes or fails for normal or large text. WAVE also notes that **gradients**, **filters**, and **transparency** may need **manual** checks with the eyedropper or other tools.
 
 <figure>
   <img
@@ -137,7 +137,7 @@ The **Contrast** tab lets you set **foreground** and **background** colors (incl
   </figcaption>
 </figure>
 
-**Desaturate page** renders the page in **grayscale** to reduce reliance on **hue** when checking hierarchy and meaning. It can surface cases where information or structure depends too much on color. It is **not** a full simulation of all types of color vision deficiency; dedicated **color blindness** browser extensions can simulate **specific** conditions (for example, protanopia, deuteranopia) in more detail.
+**Desaturate page** renders the page in **grayscale** to reduce reliance on **hue** when checking hierarchy and meaning. It can surface cases where information or structure depends too much on color. It is **not** a full simulation of all types of color vision deficiency. Dedicated **color blindness** browser extensions can simulate **specific** conditions (for example, protanopia, deuteranopia) in more detail.
 
 <figure>
   <img
