@@ -50,7 +50,7 @@
 - **Clickable card, no `href` on Card:** the consumer supplies their own link in the `title` slot; `title-as-link` extends its hit area, `selectable` independently makes the card focusable and dispatches a click event. Both are implemented and tested on `CardBase`.
 - **Labeling (avatar/thumbnail vs. title) is consumer documentation, not code** — Card doesn't validate or bridge accessible names that consumers already fully control.
 - **Styling:** CSS Grid for the shared structural layout; `size`/`density` resolve through `container-padding` tokens for content/footer padding. Region and intra-region spacing (title-to-description, media-to-content) relies on padding plus a blanket `margin-block: 0` reset on slotted content, not a gap-token scale.
-- **Tested:** `CardBase` has 20 passing behavior/dev-warning tests against test-only fixtures, plus 7 automated per-story smoke tests from `swc-card`'s own stories file (render-only; no explicit `play` functions yet). `swc-card` itself has no dedicated test file — it's still in the Styling pass, ahead of Testing.
+- **Tested:** `CardBase` has 20 passing behavior/dev-warning tests against test-only fixtures, plus 8 automated per-story smoke tests from `swc-card`'s own stories file (render-only; no explicit `play` functions yet). `swc-card` itself has no dedicated test file — it's still in the Styling pass, ahead of Testing.
 - **Still open:** five items (see [Blockers](#blockers-and-open-questions)) — naming, deferred design questions, and unresolved product-card scoping, none blocking.
 
 

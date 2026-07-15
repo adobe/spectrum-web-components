@@ -241,7 +241,12 @@ export const TitleAsLink: Story = {
 };
 TitleAsLink.storyName = 'Title as link';
 
-// TODO: Selectable - will complete in separate documentation pass of phase 7
+export const Selectable: Story = {
+  render: (args) => html`
+    ${template({ ...args, selectable: true }, basicSlots)}
+  `,
+  tags: ['behaviors'],
+};
 
 // ────────────────────────────────
 //    ACCESSIBILITY STORIES
