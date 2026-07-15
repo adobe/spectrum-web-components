@@ -12,13 +12,13 @@
 
 import { CSSResultArray, html, TemplateResult } from 'lit';
 
-import { IllustratedMessageBase } from '@spectrum-web-components/core/components/illustrated-message';
+import { IllustratedMessageBase } from '@adobe/spectrum-wc-core/components/illustrated-message';
 
 import styles from './illustrated-message.css';
 
 /**
  * @element swc-illustrated-message
- * @since 2.0.0
+ * @since 2.0.0-beta.1
  *
  * @example
  * <swc-illustrated-message>

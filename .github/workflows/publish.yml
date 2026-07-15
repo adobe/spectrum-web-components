@@ -58,16 +58,11 @@ jobs:
             echo "Found $CHANGESET_COUNT changesets"
 
             # Check if any changeset mentions 1st-gen packages
-            # 1st-gen packages are @spectrum-web-components/* except core
+            # 1st-gen packages are @spectrum-web-components/*
             HAS_1ST_GEN=false
             for file in .changeset/*.md; do
               if [ "$(basename "$file")" != "README.md" ]; then
-                # `|| true` keeps `set -e` from aborting when grep finds no match
-                # (e.g. a changeset that references only @spectrum-web-components/core,
-                # or only @adobe/spectrum-wc with no @spectrum-web-components/* package).
-                PACKAGES=$(grep -oP "@spectrum-web-components/[a-z-]+" "$file" || true)
-                NON_CORE=$(echo "$PACKAGES" | grep -v "^@spectrum-web-components/core$" || true)
-                if [ -n "$NON_CORE" ]; then
+                if grep -qP "@spectrum-web-components/[a-z-]+" "$file"; then
                   HAS_1ST_GEN=true
                   break
                 fi
@@ -349,7 +344,7 @@ jobs:
             echo "" >> $GITHUB_STEP_SUMMARY
             echo "| Generation | Package | Version |" >> $GITHUB_STEP_SUMMARY
             echo "|------------|---------|---------|" >> $GITHUB_STEP_SUMMARY
-            [ -n "$CORE_VERSION" ]   && echo "| Core    | \`@spectrum-web-components/core\`   | \`${CORE_VERSION}\`   |" >> $GITHUB_STEP_SUMMARY
+            [ -n "$CORE_VERSION" ]   && echo "| Core    | \`@adobe/spectrum-wc-core\`   | \`${CORE_VERSION}\`   |" >> $GITHUB_STEP_SUMMARY
             [ -n "$BUNDLE_VERSION" ] && echo "| 1st gen | \`@spectrum-web-components/bundle\` | \`${BUNDLE_VERSION}\` |" >> $GITHUB_STEP_SUMMARY
             [ -n "$SWC_VERSION" ]    && echo "| 2nd gen | \`@adobe/spectrum-wc\`               | \`${SWC_VERSION}\`    |" >> $GITHUB_STEP_SUMMARY
             echo "" >> $GITHUB_STEP_SUMMARY
@@ -364,9 +359,9 @@ jobs:
       - name: Commit and push changes
         if: steps.extract-tag.outputs.tag == 'latest'
         run: |
-          git pull --rebase origin main
           git add .
           git commit --no-verify -m "chore: release packages #publish" || echo "No changes to commit"
+          git pull --rebase origin main
           git push
 
       - name: Create git tag

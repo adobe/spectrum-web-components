@@ -738,6 +738,11 @@ export const EscapeClosesTest: Story = {
       await openTooltip(tooltip);
       expect(tooltip.open, 'tooltip is open before Escape').toBe(true);
 
+      // Synthetic (untrusted) Escape closes via the JS `handleKeyDown` handler,
+      // not the native popover Escape (which needs trusted input; that path is
+      // covered by the trusted-Escape test in tooltip.a11y.spec.ts). That handler
+      // is also what a `manual` tooltip would rely on, since manual popovers get
+      // no native light-dismiss.
       await userEvent.keyboard('{Escape}');
       await waitFor(
         () => expect(tooltip.matches(':popover-open')).toBe(false),

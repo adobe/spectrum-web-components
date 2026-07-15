@@ -20,7 +20,7 @@ import {
   STATUS_LIGHT_VARIANTS_SEMANTIC,
   StatusLightBase,
   type StatusLightVariant,
-} from '@spectrum-web-components/core/components/status-light';
+} from '@adobe/spectrum-wc-core/components/status-light';
 
 import styles from './status-light.css';
 
@@ -28,7 +28,7 @@ import styles from './status-light.css';
  * A status light is a great way to convey semantic meaning and the condition of an entity, such as statuses and categories. It provides visual indicators through colored dots accompanied by descriptive text.
  *
  * @element swc-status-light
- * @since 2.0.0
+ * @since 2.0.0-beta.1
  *
  * @property {string} variant - Semantic or non-semantic color variant for the status dot.
  *

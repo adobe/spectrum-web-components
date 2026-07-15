@@ -11,7 +11,7 @@
  */
 import { CSSResultArray, html, TemplateResult } from 'lit';
 
-import { AvatarBase } from '@spectrum-web-components/core/components/avatar';
+import { AvatarBase } from '@adobe/spectrum-wc-core/components/avatar';
 
 import styles from './avatar.css';
 
@@ -23,7 +23,7 @@ import styles from './avatar.css';
  * technology.
  *
  * @element swc-avatar
- * @since 2.0.0
+ * @since 2.0.0-beta.1
  *
  * @example
  * <swc-avatar src="/path/to/image.jpg" alt="Jane Doe"></swc-avatar>

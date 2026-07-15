@@ -36,6 +36,7 @@
     - Badge
     - Button
     - Button Group
+    - Card
     - Checkbox
     - Close Button
     - Color Field
@@ -75,6 +76,7 @@
     - Tags
     - Textfield
     - Thumbnail
+    - Toast
     - Tooltip
 - [Milestones](04_milestones/README.md)
 - Strategies

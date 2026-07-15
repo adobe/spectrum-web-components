@@ -32,7 +32,6 @@
     "chromatic": "chromatic --build-script-name storybook:build # note that --project-token must be set in your env variables",
     "create-git-tag": "node --no-warnings ./scripts/create-git-tag.js",
     "custom-element-json": "node ./scripts/custom-element-json.js",
-    "dev:core": "yarn workspace @spectrum-web-components/core dev",
     "docs:analyze": "cem analyze --globs \"packages/**/*.ts\" --exclude \"**/*.d.ts\" --exclude \"**/stories/**\" --exclude \"**/icons/**\" --exclude \"**/elements/**\" --outdir projects/documentation --litelement",
     "docs:build": "yarn workspace documentation build",
     "docs:ci": "yarn docs:analyze && yarn generate:llms && run-p docs:production storybook:build && cp projects/documentation/custom-elements.json projects/documentation/dist/storybook",
@@ -49,7 +48,6 @@
     "new-package": "yarn workspace swc-templates plop",
     "postinstall": "husky || true",
     "postpack": "pinst --enable",
-    "prebuild": "wireit",
     "preeleventy": "yarn docs:analyze",
     "prepack": "pinst --disable",
     "prestorybook": "wireit",
@@ -57,7 +55,7 @@
     "pretest:bench": "yarn build:tests && test -f test/benchmark/cli.js ||:",
     "pretest:visual": "yarn build && yarn build",
     "process-icons": "wireit",
-    "start": "run-p dev:core storybook",
+    "start": "storybook",
     "storybook": "wireit",
     "storybook:build": "NODE_ENV=production storybook build -o projects/documentation/dist/storybook -c storybook",
     "storybook:quick": "run-p build:watch storybook:run",
@@ -77,7 +75,7 @@
     "test:visual:clean:current": "rimraf test/visual/screenshots-current",
     "test:watch": "yarn test:watch:focus unit",
     "test:watch:flags:focus": "yarn build && run-p build:watch \"test:start --watch --group {1} --config web-test-runner.config.ci-chromium-flags.js\" --",
-    "test:watch:focus": "yarn dev:core & yarn build && run-p build:watch \"test:start --watch --group {1}\" --",
+    "test:watch:focus": "yarn build && run-p build:watch \"test:start --watch --group {1}\" --",
     "vrt:preview": "yarn wds --config test/visual/wds-vrt.config.js"
   },
   "workspaces": [
@@ -234,7 +232,6 @@
       "clean": "if-file-deleted",
       "command": "node ./scripts/build-ts.js",
       "dependencies": [
-        "prebuild",
         "process-icons",
         "test:create",
         "build:css"
@@ -289,7 +286,6 @@
       "clean": "if-file-deleted",
       "command": "tsc --build tsconfig-all.json --pretty",
       "dependencies": [
-        "prebuild",
         "process-icons",
         "test:create",
         "build:css"
@@ -362,17 +358,6 @@
         "!packages/icons-workflow/src/DefaultIcon.ts",
         "!packages/icons-workflow/bin/icons-mapping.json"
       ]
-    },
-    "prebuild": {
-      "command": "yarn workspace @spectrum-web-components/core build",
-      "files": [
-        "../2nd-gen/packages/core/components/**/*",
-        "../2nd-gen/packages/core/shared/**/*",
-        "../2nd-gen/packages/core/package.json",
-        "../2nd-gen/packages/core/vite.config.js",
-        "../2nd-gen/packages/core/tsconfig.json"
-      ],
-      "output": []
     },
     "prestorybook": {
       "command": "cem analyze --outdir storybook/",

@@ -11,7 +11,7 @@
  */
 import { CSSResultArray, html, TemplateResult } from 'lit';
 
-import { IconBase } from '@spectrum-web-components/core/components/icon';
+import { IconBase } from '@adobe/spectrum-wc-core/components/icon';
 
 import styles from './icon.css';
 
@@ -20,7 +20,7 @@ import styles from './icon.css';
  *
  * @element swc-icon
  * @status internal
- * @since 2.0.0
+ * @since 2.0.0-beta.1
  *
  * @example
  * <swc-icon label="Search">
