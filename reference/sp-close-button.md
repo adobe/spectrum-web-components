@@ -24,4 +24,3 @@ import '@spectrum-web-components/button/sp-close-button.js';
 | Name        | Description                    |
 | ----------- | ------------------------------ |
 | `(default)` | text label of the Close Button |
-| `icon`      | Optional leading icon.         |

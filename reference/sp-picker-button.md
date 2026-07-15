@@ -18,10 +18,3 @@ import '@spectrum-web-components/picker-button/sp-picker-button.js';
 | `pending`          | `boolean`            | `false`   | Whether the button is in a pending (busy) state. The button remains focusable but activation is suppressed.                                                                          |
 | `accessible-label` | `string | undefined` | -         | Accessible label forwarded to the internal `<button>` element as `aria-label`. Required for icon-only buttons, which have no visible text.                                           |
 | `pending-label`    | `string | undefined` | -         | Custom accessible label used during the pending state. When omitted, the pending label is derived from the resolved non-busy accessible name plus a busy suffix (e.g. "Save, busy"). |
-
-## Slots
-
-| Name        | Description            |
-| ----------- | ---------------------- |
-| `(default)` | Visible button label.  |
-| `icon`      | Optional leading icon. |

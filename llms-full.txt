@@ -1,6 +1,6 @@
 # Spectrum Web Components - Spectrum 1 Full API Reference
 
-> Generated 2026-07-14. For the link index see [llms.txt](https://opensource.adobe.com/spectrum-web-components/llms.txt).
+> Generated 2026-07-15. For the link index see [llms.txt](https://opensource.adobe.com/spectrum-web-components/llms.txt).
 
 All public `sp-*` components with their full attribute, slot, event, and CSS
 custom property tables. Useful when you want the entire API in one context window.
@@ -598,13 +598,6 @@ import '@spectrum-web-components/button/sp-clear-button.js';
 | `accessible-label` | `string | undefined`           | -       | Accessible label forwarded to the internal `<button>` element as `aria-label`. Required for icon-only buttons, which have no visible text.                                           |
 | `pending-label`    | `string | undefined`           | -       | Custom accessible label used during the pending state. When omitted, the pending label is derived from the resolved non-busy accessible name plus a busy suffix (e.g. "Save, busy"). |
 
-## Slots
-
-| Name        | Description            |
-| ----------- | ---------------------- |
-| `(default)` | Visible button label.  |
-| `icon`      | Optional leading icon. |
-
 ---
 ## sp-close-button
 
@@ -632,7 +625,6 @@ import '@spectrum-web-components/button/sp-close-button.js';
 | Name        | Description                    |
 | ----------- | ------------------------------ |
 | `(default)` | text label of the Close Button |
-| `icon`      | Optional leading icon.         |
 
 ---
 ## sp-coach-indicator
@@ -1298,13 +1290,6 @@ import '@spectrum-web-components/infield-button/sp-infield-button.js';
 | `accessible-label` | `string | undefined` | -       | Accessible label forwarded to the internal `<button>` element as `aria-label`. Required for icon-only buttons, which have no visible text.                                           |
 | `pending-label`    | `string | undefined` | -       | Custom accessible label used during the pending state. When omitted, the pending label is derived from the resolved non-busy accessible name plus a busy suffix (e.g. "Save, busy"). |
 
-## Slots
-
-| Name        | Description            |
-| ----------- | ---------------------- |
-| `(default)` | Visible button label.  |
-| `icon`      | Optional leading icon. |
-
 ---
 ## sp-link
 
@@ -1680,13 +1665,6 @@ import '@spectrum-web-components/picker-button/sp-picker-button.js';
 | `pending`          | `boolean`            | `false`   | Whether the button is in a pending (busy) state. The button remains focusable but activation is suppressed.                                                                          |
 | `accessible-label` | `string | undefined` | -         | Accessible label forwarded to the internal `<button>` element as `aria-label`. Required for icon-only buttons, which have no visible text.                                           |
 | `pending-label`    | `string | undefined` | -         | Custom accessible label used during the pending state. When omitted, the pending label is derived from the resolved non-busy accessible name plus a busy suffix (e.g. "Save, busy"). |
-
-## Slots
-
-| Name        | Description            |
-| ----------- | ---------------------- |
-| `(default)` | Visible button label.  |
-| `icon`      | Optional leading icon. |
 
 ---
 ## sp-popover
