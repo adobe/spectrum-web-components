@@ -331,6 +331,87 @@ export const TitleAsLinkClickProxyTest: Story = {
   },
 };
 
+export const ActionsSizePropagationTest: Story = {
+  render: () => html`
+    <test-card-base size="l">
+      <button slot="actions" type="button">Edit</button>
+    </test-card-base>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const card = await getComponent<TestCardBase>(
+      canvasElement,
+      'test-card-base'
+    );
+    const button = card.querySelector('[slot="actions"]') as HTMLElement;
+
+    await step(
+      'propagates a size one step smaller than the card onto the actions slot content',
+      async () => {
+        expect(
+          button.getAttribute('size'),
+          'actions content size is one step smaller than the card'
+        ).toBe('m');
+      }
+    );
+
+    await step(
+      'updates the propagated size reactively when the card size changes',
+      async () => {
+        card.size = 'xl';
+        await card.updateComplete;
+
+        expect(
+          button.getAttribute('size'),
+          'actions content size updates when card size changes'
+        ).toBe('l');
+      }
+    );
+
+    await step(
+      'clamps at the smallest size instead of propagating an invalid value',
+      async () => {
+        card.size = 'xs';
+        await card.updateComplete;
+
+        expect(
+          button.getAttribute('size'),
+          'actions content size clamps at xs'
+        ).toBe('xs');
+      }
+    );
+
+    await step(
+      'propagates to actions content slotted in after the initial render',
+      async () => {
+        card.size = 'l';
+        await card.updateComplete;
+
+        const actionsSlot = card.renderRoot.querySelector(
+          'slot[name="actions"]'
+        ) as HTMLSlotElement;
+        const slotChanged = new Promise<void>((resolve) =>
+          actionsSlot.addEventListener('slotchange', () => resolve(), {
+            once: true,
+          })
+        );
+
+        const lateButton = document.createElement('button');
+        lateButton.slot = 'actions';
+        lateButton.textContent = 'Delete';
+        card.appendChild(lateButton);
+
+        await slotChanged;
+
+        expect(
+          lateButton.getAttribute('size'),
+          'size propagates to content slotted in after the initial render'
+        ).toBe('m');
+        card.removeChild(lateButton);
+      }
+    );
+  },
+};
+
 export const SelectableActivationTest: Story = {
   render: () => html`
     <test-card-base selectable></test-card-base>
@@ -687,6 +768,122 @@ export const TitleAsLinkWithAnchorNoWarningTest: Story = {
           expect(
             warnCalls.length,
             'no warnings are emitted when a title anchor is present'
+          ).toBe(0);
+        })
+    );
+  },
+};
+
+export const ActionsUnsupportedSizeWarningTest: Story = {
+  render: () => html`
+    <test-card-base size="l">
+      <button slot="actions" type="button">Edit</button>
+    </test-card-base>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const card = await getComponent<TestCardBase>(
+      canvasElement,
+      'test-card-base'
+    );
+
+    await step(
+      'warns when actions content is slotted and size changes to xs',
+      () =>
+        withWarningSpy(async (warnCalls) => {
+          card.size = 'xs';
+          await card.updateComplete;
+
+          expect(
+            warnCalls.length,
+            'at least one warning is emitted for unsupported actions at size xs'
+          ).toBeGreaterThan(0);
+          expect(
+            String(warnCalls[0]?.[1] || ''),
+            'warning message references actions'
+          ).toContain('actions');
+        })
+    );
+
+    await step(
+      'warns when actions content is slotted in after size is already xs',
+      () =>
+        withWarningSpy(async (warnCalls) => {
+          const actionsSlot = card.renderRoot.querySelector(
+            'slot[name="actions"]'
+          ) as HTMLSlotElement;
+          const slotChanged = new Promise<void>((resolve) =>
+            actionsSlot.addEventListener('slotchange', () => resolve(), {
+              once: true,
+            })
+          );
+
+          const lateButton = document.createElement('button');
+          lateButton.slot = 'actions';
+          lateButton.textContent = 'Delete';
+          card.appendChild(lateButton);
+
+          await slotChanged;
+
+          expect(
+            warnCalls.length,
+            'a warning is emitted for actions content slotted in while size is xs'
+          ).toBeGreaterThan(0);
+          card.removeChild(lateButton);
+        })
+    );
+  },
+};
+
+export const ActionsSupportedSizeNoWarningTest: Story = {
+  render: () => html`
+    <test-card-base size="m">
+      <button slot="actions" type="button">Edit</button>
+    </test-card-base>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const card = await getComponent<TestCardBase>(
+      canvasElement,
+      'test-card-base'
+    );
+
+    await step(
+      'does not warn for actions content at a size that supports actions',
+      () =>
+        withWarningSpy(async (warnCalls) => {
+          card.size = 'l';
+          await card.updateComplete;
+          card.size = 'm';
+          await card.updateComplete;
+
+          expect(
+            warnCalls.length,
+            'no warnings are emitted when actions are supported'
+          ).toBe(0);
+        })
+    );
+  },
+};
+
+export const ActionsUnsupportedSizeEmptyNoWarningTest: Story = {
+  render: () => html`
+    <test-card-base></test-card-base>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const card = await getComponent<TestCardBase>(
+      canvasElement,
+      'test-card-base'
+    );
+
+    await step(
+      'does not warn when switching to size xs with an empty actions slot',
+      () =>
+        withWarningSpy(async (warnCalls) => {
+          card.size = 'xs';
+          await card.updateComplete;
+
+          expect(
+            warnCalls.length,
+            'no warnings are emitted when the actions slot has no content'
           ).toBe(0);
         })
     );

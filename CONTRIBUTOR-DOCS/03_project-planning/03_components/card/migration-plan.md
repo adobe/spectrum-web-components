@@ -31,7 +31,7 @@
 - [Test coverage](#test-coverage)
 - [Component checklist](#component-checklist)
     - [Preparation (this doc)](#preparation-this-doc)
-    - [Per-component tickets (not started)](#per-component-tickets-not-started)
+    - [Per-component tickets](#per-component-tickets)
 - [Blockers and open questions](#blockers-and-open-questions)
 - [References](#references)
 
@@ -45,13 +45,13 @@
 ## TL;DR
 
 - **Scope:** three concrete components — `swc-card` (regular/collection/gallery), `swc-user-card`, `swc-product-card`. No dedicated `swc-asset-card`; that need is folded into `swc-card` until the 2nd-gen `Asset` component ships.
-- **Architecture, already built:** `CardBase` (core, behavior only) + `renderCardTemplate()` (shared SWC render function) + `card-template.css` (shared, still empty). No concrete card component exists yet.
+- **Architecture, already built:** `CardBase` (core, behavior only) + `renderCardTemplate()` (shared SWC render function) + `card-template.css` (shared, implemented). `swc-card` itself now exists (`Card.ts`, `swc-card.ts`, `card.css`, stories) and is mid-implementation; `swc-user-card`/`swc-product-card` have not started.
 - **API:** `variant` is a pure style axis, independent of layout (layout is driven entirely by slot presence). `swc-user-card`/`swc-product-card` don't support `quiet`. `title`/`description` are slot-only.
 - **Clickable card, no `href` on Card:** the consumer supplies their own link in the `title` slot; `title-as-link` extends its hit area, `selectable` independently makes the card focusable and dispatches a click event. Both are implemented and tested on `CardBase`.
 - **Labeling (avatar/thumbnail vs. title) is consumer documentation, not code** — Card doesn't validate or bridge accessible names that consumers already fully control.
-- **Styling:** CSS Grid for the shared structural layout; `size`/`density` resolve through the Layout RFC's `container-padding`/`container-gap` token scales rather than hand-picked values. Not yet implemented — `card-template.css` is still empty.
-- **Tested:** `CardBase` has 15 passing tests against test-only fixtures — no concrete card exists yet to test through.
-- **Still open:** eight items (see [Blockers](#blockers-and-open-questions)) — naming, deferred design questions, and unresolved styling-token mapping details, none blocking. The plan itself still needs review.
+- **Styling:** CSS Grid for the shared structural layout; `size`/`density` resolve through `container-padding` tokens for content/footer padding. Region and intra-region spacing (title-to-description, media-to-content) relies on padding plus a blanket `margin-block: 0` reset on slotted content, not a gap-token scale.
+- **Tested:** `CardBase` has 19 passing behavior/dev-warning tests against test-only fixtures, plus 8 automated per-story smoke tests from `swc-card`'s own stories file (render-only; no explicit `play` functions yet). `swc-card` itself has no dedicated test file — it's still in the Styling pass, ahead of Testing.
+- **Still open:** five items (see [Blockers](#blockers-and-open-questions)) — naming, deferred design questions, and unresolved product-card scoping, none blocking.
 
 
 ## Table of contents
@@ -117,7 +117,7 @@ Already implemented (prior scaffold ticket); this plan governs the three concret
 |---|---|---|
 | Core | `2nd-gen/packages/core/components/card/` | `CardBase` — `size` (via `SizedMixin`), `variant`, `density`, and their validation only. No rendering. |
 | SWC (shared template) | `2nd-gen/packages/swc/components/card/card-template.ts` | `renderCardTemplate()` — shared anatomy function called from every concrete card's `render()`, following the same shared-function pattern as `renderPendingSpinner()` (`swc/components/button/pending-spinner.ts`). |
-| SWC (shared styles) | `2nd-gen/packages/swc/stylesheets/_lit-styles/card-template.css` | Shared structural rules for the plain `.card`/`.card__*` classes; imported into every concrete card's `styles()` array. |
+| SWC (shared styles) | `2nd-gen/packages/swc/stylesheets/_lit-styles/card-template.css` | Shared structural rules for the plain `.card`/`.card-*` classes; imported into every concrete card's `styles()` array. |
 | SWC (concrete, not started) | `2nd-gen/packages/swc/components/{card,user-card,product-card}/` | Each extends `CardBase` directly — sibling-inheritance pattern, same shape as `ButtonBase` extended independently by `Button` and `ActionButton`. Each owns its own `render()`, styles, glyph slot (if any), stories, and tests. |
 
 
@@ -147,6 +147,10 @@ Variants are distinct card styles, not fills.
 
 Shared slots from `renderCardTemplate()`: `preview`, `title`, `actions`, `description`, default (body), `footer`.
 
+**`actions` slot size propagation:** `CardBase` propagates its own `size` — one step smaller (e.g. a `large` card propagates `medium` to its actions content) — onto elements assigned to the `actions` slot, via `SlotAttributePropagationController`. This mirrors `IllustratedMessageBase`'s use of the same controller for its own `actions` slot, so a slotted `swc-action-button` (or similar) stays visually proportionate to the card without the consumer having to set `size` themselves. Re-propagates reactively when `size` changes, and for content slotted in after the initial render (wired to the slot's `slotchange` in `firstUpdated()`, since the shared `renderCardTemplate()` doesn't take a callback for this).
+
+**`actions` slot support is conditional:** `xs` cards do not support the `actions` slot — there isn't enough room for the shrunk-once-more actions content at that size. `CardBase` exposes this as a `protected get actionsSupported(): boolean` getter (default: `this.size !== 'xs'`), deliberately structured as an overridable getter rather than a hardcoded check so a concrete card can redefine it for its own reasons. `swc-product-card` may need to exclude `actions` entirely, for a different reason than size (still under discussion — see open questions below). `CardBase` cannot visually hide the slot itself, since it has no styling opinions; hiding unsupported actions content is the styling layer's responsibility (`swc-card`'s own CSS, driven by `:host([size="xs"])`). What `CardBase` does provide is a dev-mode-only warning (`checkActionsSupport()`) when actions content is present but `actionsSupported` is false, checked on `size` changes and on `actions` slot changes.
+
 | Component | Glyph slot | Preview aspect ratio | Notes |
 |---|---|---|---|
 | `swc-card` | none | `3/2` default, `1:1` gallery | Enables the `collection` slot: 1–3 images, square aspect ratio, shown when populated and hidden otherwise. Gallery is triggered by a populated `preview` slot plus the absence of **all** of `title`/`description`/`actions`/default/`footer` — the image becomes the only content and fills the available space. `preview` and `collection` are independently optional — a card can render `collection` alone with no larger `preview` image. Current `renderCardTemplate()` already tolerates this (an empty `<slot name="preview">` simply renders nothing); the swc-card styling phase needs to verify the media wrapper's sizing/aspect-ratio rules degrade correctly when only one of the two is populated, rather than assuming both. |
@@ -158,13 +162,13 @@ Only `swc-product-card` and `swc-user-card` include a glyph slot, named `thumbna
 
 ## Styling approach
 
-`card-template.css` (currently an empty placeholder) uses **CSS Grid** for the shared structural layout — the `.card` root and its media/content/footer regions are grid areas/tracks.
+`card-template.css` (implemented; shared across every concrete card) uses **CSS Grid** for the shared structural layout — the `.card` root and its media/content/footer regions are grid areas/tracks.
 
-`size` and `density` both resolve through Layout RFC token scales:
+`size` and `density` both resolve through token scales:
 
-- **`container-padding-*` / `container-gap-*`** (the Layout RFC's "container" scale, `2x-small` through `3x-large`) drive the card's own outer padding and the gap between major regions (media/content/footer). `density` shifts position along this scale relative to `size`'s baseline rung — e.g. for a small card, Compact/Regular/Spacious map to `container-padding-extra-small` / `container-padding-small` / `container-padding-medium` respectively, per the reference card layouts.
-- **`Base/Gap/*`** is a separate, finer-grained scale for spacing *within* a region — e.g. the gap between the title and description inside the content block — distinct from `Container/Gap/*`, which governs the card's own outer rhythm between regions.
-- **Typography** scales via `Component/{size}/{weight}` tokens (e.g. `Component/M/Regular` → `Font size/100` + `Line height/100`; `Component/S/Regular` → `Font size/75` + `Line height/75`), tied to `size`.
+- **`container-padding-*`** (`2x-small` through `2x-large`) drives the card's own content/footer padding, exposed per size via `--card-content-padding-regular/-compact/-spacious`. `density` selects which of the three a given size uses — e.g. for a small card, Compact/Regular/Spacious map to `container-padding-extra-small` / `container-padding-small` / `container-padding-medium` respectively.
+- **No `container-gap-*` or `Base/Gap/*` tokens are used.** The original plan called for a gap-token scale to drive spacing both between major regions (media/content/footer) and within a region (e.g. title-to-description). The implemented approach instead relies entirely on padding plus `::slotted(*) { margin-block: 0; }` (a blanket margin reset on slotted content) — there is currently no explicit title-to-description spacing rule.
+- **Typography** scales per size via direct `font-size-*`/`line-height-font-size-*` token pairs (e.g. `font-size-100` + `line-height-font-size-100` at `size="s"`), tied to `size`. Font weight is fixed (not size-driven): `title-sans-serif-font-weight` for the title, `regular-font-weight` for description/default-slot/footer content.
 
 
 ## Accessibility decisions
@@ -205,7 +209,7 @@ Only `swc-product-card` and `swc-user-card` include a glyph slot, named `thumbna
 **Keyboard activation:** `tabindex` and the Enter/Space `keydown` listener are added and removed together, in the same conditional (`CardBase.updated()`) — a focusable card is never left without keyboard activation. When `titleAsLink` alone is set (no `selectable`), the host gets no `tabindex` and needs no card-level keydown handling at all: the consumer's real anchor is the only tab stop, and the browser's native anchor activation already handles Enter correctly. Two related decisions, confirmed:
 
 - **Enter and Space are treated identically**, both proxying to `titleAsLink`'s link when both attributes are set together, even though a bare link conventionally responds to Enter only. The card's own activation contract (Enter+Space, more button-like) governs once `selectable` makes the card itself the focused target, regardless of what that activation happens to proxy to.
-- **No `role` is set when `selectable` is true.** Deferred rather than defaulting to `role="button"`, since the eventual `CardView` selection model may call for a different role (e.g. `option`/`gridcell`) that `role="button"` would be wrong to have committed to today — see [Blockers Q5](#blockers-and-open-questions).
+- **No `role` is set when `selectable` is true.** Deferred rather than defaulting to `role="button"`, since the eventual `CardView` selection model may call for a different role (e.g. `option`/`gridcell`) that `role="button"` would be wrong to have committed to today — see [Blockers Q4](#blockers-and-open-questions).
 
 Both modes need the same two supporting pieces, whichever (or both) are enabled:
 
@@ -259,9 +263,10 @@ Both branches (`titleAsLink`'s proxy-click and `selectable`'s event dispatch) ru
 | Item | Notes |
 |---|---|
 | Horizontal card orientation | Needs its own template and regions. |
-| Hover / disabled states | Only meaningful in a future "CardView" grid context; no `CardBase` placeholder added — accepted as a temporary capability gap versus 1st-gen's per-card `toggles`/`disabled`. A standalone `selected` (complementing `selectable`) is tracked separately as non-blocking — see [Blockers Q4](#blockers-and-open-questions). |
+| Hover / disabled states | Only meaningful in a future "CardView" grid context; no `CardBase` placeholder added — accepted as a temporary capability gap versus 1st-gen's per-card `toggles`/`disabled`. |
 | Loading state | Likely an `Asset` concern (media-related) rather than a card-level state. |
 | Checkbox-based selection UI | A `CardView` feature, not an individual card feature. |
+| A standalone `selected` property (complementing `selectable`) | Resolved: deferred to a future `CardView` rather than added to `CardBase` now. |
 | `swc-product-card` "side" title position | Deferred per the prior scaffold ticket. |
 | Gallery badge/avatar via `actions`-slot reuse | TBD per the prior scaffold ticket — logic sketch was: when no title, description, or footer is present, those slots could be absolute-positioned over the image instead. Or, consumer can provide within the Preview slot. |
 | Dedicated `swc-asset-card` component | Folded into `swc-card` for now; revisit once the 2nd-gen `Asset` component ships (see Scope). |
@@ -272,7 +277,7 @@ Both branches (`titleAsLink`'s proxy-click and `selectable`'s event dispatch) ru
 `CardBase` has no concrete card component yet, so its behavior is tested directly through test-only fixtures rather than a real `swc-*` component — a first for this codebase (no prior precedent for testing an abstract base via a throwaway concrete subclass; see [References](#references)). Location: `swc/components/card/test/`.
 
 - **`test-card-base.ts`** — `TestCardBase` (renders `renderCardTemplate()` with no overrides), `TestCardWithMediaExtras` (supplies `renderCollection`/`renderGlyph`, to verify those callback parameters render when provided), and `TestNestedButtonHost` (a custom element with its own shadow-DOM `<button>`, used to verify interactive-target filtering across shadow boundaries).
-- **`card-base.test.ts`** — 15 tests across Defaults, Properties/Attributes, Slots, Behaviors, and Dev mode warnings. All passing. Notably, this exercise **validated** rather than just assumed two of this plan's interactive-pattern claims:
+- **`card-base.test.ts`** — 19 tests across Defaults, Properties/Attributes, Slots, Behaviors, and Dev mode warnings. All passing. Notably, this exercise **validated** rather than just assumed two of this plan's interactive-pattern claims:
   - `composedPath()` traversing into another custom element's shadow root (A11y-3's justification for dropping the tag-name selector approach) is confirmed directly: a `<button>` inside `TestNestedButtonHost`'s own shadow root, slotted into `actions`, is correctly excluded from surface-click handling — both when reached via the unconditional `actions`-slot exclusion and, independently, when the same nested button is slotted into `description` instead (isolating the `tabIndex`-across-shadow-boundaries mechanism from the actions-slot shortcut).
   - `tabindex="-1"` is confirmed **not** treated as interactive (a click on such an element outside `actions` still triggers surface-click handling) — the specific bug the `tabIndex` IDL property check was chosen to avoid.
   - Both `title-as-link` forms (`<a slot="title">` directly, and an anchor nested inside a wrapper) are confirmed to receive the click-proxy correctly.
@@ -283,12 +288,12 @@ Both branches (`titleAsLink`'s proxy-click and `selectable`'s event dispatch) ru
 
 | Item | Why untestable now | Verify when |
 |---|---|---|
-| `::slotted(a)::after` stretched-link CSS trick (A11y-3) | `card-template.css` is still an empty placeholder; there is no rule to test, and verifying it properly needs coordinate-based clicking (e.g. clicking an empty corner of the rendered card) rather than DOM event dispatch | `card-template.css` gets real rules |
-| Native modifier-click/middle-click/right-click-"open in new tab" across the *extended* surface | Tests intentionally use `event.preventDefault()` on the test anchor to avoid triggering real navigation inside the test run — this confirms the click-proxy fires, not that a real click-through would fully succeed, and modifier/button state can't be verified via `.click()` at all (see A11y-3) | Real browser/manual verification once `card-template.css` exists; likely also needs a Playwright-level test, not a `.click()`-based one |
-| "Elevate nested interactive targets" CSS stacking (A11y-3) | Pure CSS, no rules exist yet; needs the same coordinate-based click verification as the stretched-link trick, once both a real anchor-extension rule and real actions-slot content are styled together | `card-template.css` gets real rules |
-| Collection (1–3 images, square) and gallery (content area omitted) layout behavior | `swc-card`-specific, not `CardBase`'s — no concrete component or CSS exists to verify the visual/layout claims | `swc-card` ticket |
+| Stretched-link CSS trick (A11y-3) | The rule now exists in `card-template.css` (`:host([title-as-link]) ::slotted(a[slot="title"])::before`, using `::before`), but verifying it properly needs coordinate-based clicking (e.g. clicking an empty corner of the rendered card) rather than DOM event dispatch | Playwright-level or manual browser verification |
+| Native modifier-click/middle-click/right-click-"open in new tab" across the *extended* surface | Tests intentionally use `event.preventDefault()` on the test anchor to avoid triggering real navigation inside the test run — this confirms the click-proxy fires, not that a real click-through would fully succeed, and modifier/button state can't be verified via `.click()` at all (see A11y-3) | Real browser/manual verification; likely also needs a Playwright-level test, not a `.click()`-based one |
+| "Elevate nested interactive targets" CSS stacking (A11y-3) | The rule now exists (`:host([title-as-link]) ::slotted(*:not([slot="title"])) { position: relative; z-index: 1; }`), but needs the same coordinate-based click verification as the stretched-link trick, with real actions-slot content styled alongside it | Playwright-level or manual browser verification |
+| Collection (1–3 images, square) and gallery (content area omitted) layout behavior | `swc-card`-specific; not yet implemented in `card-template.css` — deferred to its own follow-up ticket per the epic breakdown | Collection/gallery follow-up tickets |
 | Per-component `VARIANTS` override (e.g. `swc-user-card`/`swc-product-card` excluding `quiet`) | Only the base's full variant set is tested; no concrete class exists yet to override the static | Each per-component ticket |
-| Aspect ratios (3/2, 3/1, 5/1, square) and footer `end`-alignment override | `swc-card`/`swc-user-card`/`swc-product-card`-specific CSS, none of which exists yet | Each per-component ticket |
+| Aspect ratios (3/1, 5/1) and footer `end`-alignment override | `swc-user-card`/`swc-product-card`-specific CSS, neither of which exists yet. `swc-card`'s own default `3/2` preview aspect ratio is implemented (`--card-preview-aspect-ratio`) but still untested through a real component | Each per-component ticket |
 | A11y-1/A11y-2 consumer-documentation guidance | Prose guidance for consumers, not `CardBase` behavior — nothing to assert against | N/A (documentation task, not a test) |
 | Accessibility tree / screen reader snapshots (`*.a11y.spec.ts` pattern) | No rendered ARIA roles/labels beyond what's inherited, and A11y-1/A11y-2 are consumer-owned; a snapshot test needs real content to be meaningful | Each per-component ticket, once real anatomy/content exists |
 
@@ -301,11 +306,19 @@ Both branches (`titleAsLink`'s proxy-click and `selectable`'s event dispatch) ru
 - [x] Reference implementations documented (React + 1st-gen pointers)
 - [x] Accessibility decisions drafted
 - [x] `CardBase` behavior covered by tests against test-only fixtures (see [Test coverage](#test-coverage))
-- [ ] Plan reviewed by at least one other engineer
+- [x] Plan reviewed by at least one other engineer
 
-### Per-component tickets (not started)
+### Per-component tickets
 
 `swc-card`, `swc-user-card`, and `swc-product-card` each need their own pass through Setup → API → Styling → Accessibility → Testing → Documentation → Review, using the standard migration-phase skills even though none of these are literal 1st-gen migrations (same approach as the prior scaffold ticket, which followed `migration-api` conventions for non-migration work).
+
+- **`swc-card`** — in progress:
+  - [x] Setup: `Card.ts`, `swc-card.ts`, `index.ts`, `card.css` placeholder, stories file scaffolded
+  - [x] Shared `card-template.css` implemented: base structure, size/density/visual variants, title-as-link CSS mechanisms, actions-slot support gating, forced-colors override
+  - [ ] Styling: in progress — collection/gallery layout still outstanding
+  - [ ] Accessibility, Testing, Documentation, Review: not started
+- **`swc-user-card`** — not started
+- **`swc-product-card`** — not started
 
 
 ## Blockers and open questions
@@ -315,8 +328,8 @@ Both branches (`titleAsLink`'s proxy-click and `selectable`'s event dispatch) ru
 | **Q1** | `selectable`: exact dispatched event name (`swc-card-click` proposed) | Open — naming only; `tabindex` management is implemented |
 | **Q2** | Gallery badge/avatar via `actions`-slot reuse | Carried over from the scaffold ticket, still TBD |
 | **Q3** | `swc-product-card` "side" title position | Carried over from the scaffold ticket, still deferred |
-| **Q4** | A `selected` property to complement `selectable` — independently useful (visual/state only), not necessarily tied to a future `CardView` | Open — non-blocking, exploratory; may still end up deferred to `CardView` |
-| **Q5** | ARIA `role` for `selectable` (e.g. `button` vs. a future `CardView`-driven `option`/`gridcell`) | Open — deferred; not set today so an eventual role choice isn't foreclosed by committing to `role="button"` now |
+| **Q4** | ARIA `role` for `selectable` (e.g. `button` vs. a future `CardView`-driven `option`/`gridcell`) | Open — deferred; not set today so an eventual role choice isn't foreclosed by committing to `role="button"` now |
+| **Q5** | Whether `swc-product-card` should exclude the `actions` slot entirely (not size-related — `xs` exclusion is already decided and implemented via `CardBase.actionsSupported`) | Open — tentative, raised during `swc-card` implementation; `actionsSupported` is already structured as an overridable getter so `ProductCard` can redefine it once resolved |
 
 
 ## References

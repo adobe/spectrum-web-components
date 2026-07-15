@@ -39,18 +39,18 @@ export function renderCardTemplate({
 }: CardTemplateOptions): TemplateResult {
   return html`
     <div class="card swc-${cardClass}">
-      <div class="card__media swc-${cardClass}-media">
+      <div class="card-media swc-${cardClass}-media">
         <slot name="preview"></slot>
         ${renderCollection()}
       </div>
       ${renderGlyph()}
-      <div class="card__content swc-${cardClass}-content">
+      <div class="card-content swc-${cardClass}-content">
         <slot name="title"></slot>
         <slot name="actions"></slot>
         <slot name="description"></slot>
         <slot></slot>
       </div>
-      <footer class="card__footer swc-${cardClass}-footer">
+      <footer class="card-footer swc-${cardClass}-footer">
         <slot name="footer"></slot>
       </footer>
     </div>
