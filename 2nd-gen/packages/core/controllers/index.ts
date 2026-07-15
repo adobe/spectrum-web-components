@@ -22,10 +22,16 @@ export {
 export {
   focusgroupNavigationActiveChange,
   FocusgroupNavigationController,
+  type FocusgroupActiveChangeSource,
   type FocusgroupDirection,
   type FocusgroupNavigationActiveChangeDetail,
   type FocusgroupNavigationOptions,
 } from './focusgroup-navigation-controller/index.js';
+export {
+  LiveSelectionController,
+  type LiveSelectionMode,
+  type LiveSelectionOptions,
+} from './live-selection-controller/index.js';
 export {
   HoverController,
   type HoverControllerHost,

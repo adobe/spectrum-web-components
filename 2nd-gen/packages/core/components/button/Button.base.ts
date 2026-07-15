@@ -32,9 +32,6 @@ import { BUTTON_VALID_SIZES } from './Button.types.js';
  * PickerButton, and InfieldButton can extend this base without inheriting
  * the `swc-button` visual surface.
  *
- * @slot - Visible button label.
- * @slot icon - Optional leading icon.
- *
  * @attribute {ElementSize} size - The size of the button.
  *
  * @todo We currently have 3 levels of mixins on this class, but the mixin

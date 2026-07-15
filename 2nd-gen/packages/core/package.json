@@ -143,6 +143,10 @@
       "types": "./dist/controllers/language-resolution.d.ts",
       "import": "./dist/controllers/language-resolution.js"
     },
+    "./controllers/live-selection-controller/index.js": {
+      "types": "./dist/controllers/live-selection-controller/index.d.ts",
+      "import": "./dist/controllers/live-selection-controller/index.js"
+    },
     "./controllers/placement-controller": {
       "types": "./dist/controllers/placement-controller/index.d.ts",
       "import": "./dist/controllers/placement-controller/index.js"
@@ -318,6 +322,9 @@
       ],
       "controllers/language-resolution.js": [
         "dist/controllers/language-resolution.d.ts"
+      ],
+      "controllers/live-selection-controller/index.js": [
+        "dist/controllers/live-selection-controller/index.d.ts"
       ],
       "controllers/placement-controller": [
         "dist/controllers/placement-controller/index.d.ts"

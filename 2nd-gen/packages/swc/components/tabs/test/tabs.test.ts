@@ -295,7 +295,11 @@ export const HostAutoDisabledReactiveTest: Story = {
         );
         tab1.focus();
         tab1.dispatchEvent(
-          new KeyboardEvent('keydown', { code: 'ArrowRight', bubbles: true })
+          new KeyboardEvent('keydown', {
+            key: 'ArrowRight',
+            code: 'ArrowRight',
+            bubbles: true,
+          })
         );
         await tabs.updateComplete;
         expect(tabs.ownerDocument.activeElement, 'focus on tab 2').toBe(tab2);
@@ -315,7 +319,11 @@ export const HostAutoDisabledReactiveTest: Story = {
 
       tab1.focus();
       tab1.dispatchEvent(
-        new KeyboardEvent('keydown', { code: 'ArrowRight', bubbles: true })
+        new KeyboardEvent('keydown', {
+          key: 'ArrowRight',
+          code: 'ArrowRight',
+          bubbles: true,
+        })
       );
       await tabs.updateComplete;
       expect(
@@ -429,6 +437,7 @@ export const KeyboardActivationFromAttributeTest: Story = {
       t1.focus();
       t1.dispatchEvent(
         new KeyboardEvent('keydown', {
+          key: 'ArrowRight',
           code: 'ArrowRight',
           bubbles: true,
           cancelable: true,
@@ -457,6 +466,7 @@ export const KeyboardActivationFromAttributeTest: Story = {
       t1.focus();
       t1.dispatchEvent(
         new KeyboardEvent('keydown', {
+          key: 'ArrowRight',
           code: 'ArrowRight',
           bubbles: true,
           cancelable: true,
@@ -778,7 +788,11 @@ export const ArrowKeyNavigationTest: Story = {
 
     await step('ArrowRight moves focus to next tab', async () => {
       tab1.dispatchEvent(
-        new KeyboardEvent('keydown', { code: 'ArrowRight', bubbles: true })
+        new KeyboardEvent('keydown', {
+          key: 'ArrowRight',
+          code: 'ArrowRight',
+          bubbles: true,
+        })
       );
       await tabs.updateComplete;
       expect(document.activeElement, 'focus moved to tab 2').toBe(tab2);
@@ -787,7 +801,11 @@ export const ArrowKeyNavigationTest: Story = {
     await step('ArrowRight wraps from last to first', async () => {
       tab3.focus();
       tab3.dispatchEvent(
-        new KeyboardEvent('keydown', { code: 'ArrowRight', bubbles: true })
+        new KeyboardEvent('keydown', {
+          key: 'ArrowRight',
+          code: 'ArrowRight',
+          bubbles: true,
+        })
       );
       await tabs.updateComplete;
       expect(document.activeElement, 'focus wrapped to tab 1').toBe(tab1);
@@ -796,7 +814,11 @@ export const ArrowKeyNavigationTest: Story = {
     await step('ArrowLeft moves focus to previous tab', async () => {
       tab2.focus();
       tab2.dispatchEvent(
-        new KeyboardEvent('keydown', { code: 'ArrowLeft', bubbles: true })
+        new KeyboardEvent('keydown', {
+          key: 'ArrowLeft',
+          code: 'ArrowLeft',
+          bubbles: true,
+        })
       );
       await tabs.updateComplete;
       expect(document.activeElement, 'focus moved to tab 1').toBe(tab1);
@@ -805,7 +827,11 @@ export const ArrowKeyNavigationTest: Story = {
     await step('ArrowLeft wraps from first to last', async () => {
       tab1.focus();
       tab1.dispatchEvent(
-        new KeyboardEvent('keydown', { code: 'ArrowLeft', bubbles: true })
+        new KeyboardEvent('keydown', {
+          key: 'ArrowLeft',
+          code: 'ArrowLeft',
+          bubbles: true,
+        })
       );
       await tabs.updateComplete;
       expect(document.activeElement, 'focus wrapped to tab 3').toBe(tab3);
@@ -835,7 +861,11 @@ export const VerticalArrowKeyTest: Story = {
 
     await step('ArrowDown moves focus in vertical mode', async () => {
       tab1.dispatchEvent(
-        new KeyboardEvent('keydown', { code: 'ArrowDown', bubbles: true })
+        new KeyboardEvent('keydown', {
+          key: 'ArrowDown',
+          code: 'ArrowDown',
+          bubbles: true,
+        })
       );
       await tabs.updateComplete;
       expect(document.activeElement, 'focus moved to tab 2').toBe(tab2);
@@ -845,6 +875,7 @@ export const VerticalArrowKeyTest: Story = {
       tab1.focus();
       tab1.dispatchEvent(
         new KeyboardEvent('keydown', {
+          key: 'ArrowRight',
           code: 'ArrowRight',
           bubbles: true,
         })
@@ -856,7 +887,11 @@ export const VerticalArrowKeyTest: Story = {
     await step('ArrowUp moves focus backward in vertical mode', async () => {
       tab2.focus();
       tab2.dispatchEvent(
-        new KeyboardEvent('keydown', { code: 'ArrowUp', bubbles: true })
+        new KeyboardEvent('keydown', {
+          key: 'ArrowUp',
+          code: 'ArrowUp',
+          bubbles: true,
+        })
       );
       await tabs.updateComplete;
       expect(document.activeElement, 'focus moved to tab 1').toBe(tab1);
@@ -885,7 +920,11 @@ export const HomeEndKeyTest: Story = {
 
     await step('Home moves focus to first tab', async () => {
       tab2.dispatchEvent(
-        new KeyboardEvent('keydown', { code: 'Home', bubbles: true })
+        new KeyboardEvent('keydown', {
+          key: 'Home',
+          code: 'Home',
+          bubbles: true,
+        })
       );
       await tabs.updateComplete;
       expect(document.activeElement, 'focus on first tab').toBe(tab1);
@@ -893,7 +932,7 @@ export const HomeEndKeyTest: Story = {
 
     await step('End moves focus to last tab', async () => {
       tab1.dispatchEvent(
-        new KeyboardEvent('keydown', { code: 'End', bubbles: true })
+        new KeyboardEvent('keydown', { key: 'End', code: 'End', bubbles: true })
       );
       await tabs.updateComplete;
       expect(document.activeElement, 'focus on last tab').toBe(tab3);
@@ -966,12 +1005,101 @@ export const AutoActivationTest: Story = {
       'arrow key immediately selects tab in automatic mode',
       async () => {
         tab1.dispatchEvent(
-          new KeyboardEvent('keydown', { code: 'ArrowRight', bubbles: true })
+          new KeyboardEvent('keydown', {
+            key: 'ArrowRight',
+            code: 'ArrowRight',
+            bubbles: true,
+          })
         );
         await tabs.updateComplete;
         expect(tabs.selected, 'selection follows focus to tab 2').toBe('2');
       }
     );
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Automatic activation — mount keeps the pre-selected tab
+// ──────────────────────────────────────────────────────────────
+
+export const AutomaticActivationMountTest: Story = {
+  render: () => html`
+    <swc-tabs
+      selected="2"
+      keyboard-activation="automatic"
+      accessible-label="Automatic activation mount test"
+    >
+      <swc-tab tab-id="1">Tab 1</swc-tab>
+      <swc-tab tab-id="2">Tab 2</swc-tab>
+      <swc-tab tab-id="3">Tab 3</swc-tab>
+      <swc-tab-panel tab-id="1"><p>Panel 1</p></swc-tab-panel>
+      <swc-tab-panel tab-id="2"><p>Panel 2</p></swc-tab-panel>
+      <swc-tab-panel tab-id="3"><p>Panel 3</p></swc-tab-panel>
+    </swc-tabs>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const tabs = await getComponent<Tabs>(canvasElement, 'swc-tabs');
+
+    await step('mount preserves the pre-selected tab', async () => {
+      // FocusgroupNavigationController.refresh() (called from handleTabSlotChange)
+      // parks the roving tab stop on tab 1 before updateCheckedState() moves
+      // it to the pre-selected tab. That refresh-driven active-change fires
+      // focusgroupNavigationActiveChange with source: 'refresh', which
+      // _handleNavigationActiveChange must ignore — otherwise the pre-selected
+      // tab would be silently overridden by tab 1 on mount.
+      expect(tabs.selected).toBe('2');
+      const tab2 = canvasElement.querySelector('swc-tab[tab-id="2"]') as Tab;
+      expect(tab2.selected).toBe(true);
+    });
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Automatic activation — disable toggle keeps the selection
+// ──────────────────────────────────────────────────────────────
+
+export const AutomaticActivationDisableToggleTest: Story = {
+  render: () => html`
+    <swc-tabs
+      selected="2"
+      keyboard-activation="automatic"
+      accessible-label="Automatic activation disable test"
+    >
+      <swc-tab tab-id="1">Tab 1</swc-tab>
+      <swc-tab tab-id="2">Tab 2</swc-tab>
+      <swc-tab tab-id="3">Tab 3</swc-tab>
+      <swc-tab-panel tab-id="1"><p>Panel 1</p></swc-tab-panel>
+      <swc-tab-panel tab-id="2"><p>Panel 2</p></swc-tab-panel>
+      <swc-tab-panel tab-id="3"><p>Panel 3</p></swc-tab-panel>
+    </swc-tabs>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const tabs = await getComponent<Tabs>(canvasElement, 'swc-tabs');
+
+    await step('disabling then re-enabling keeps the selection', async () => {
+      tabs.selected = '2';
+      await tabs.updateComplete;
+
+      let changeCount = 0;
+      const onChange = (): void => {
+        changeCount += 1;
+      };
+      tabs.addEventListener('change', onChange);
+
+      tabs.disabled = true;
+      await tabs.updateComplete;
+      tabs.disabled = false;
+      await tabs.updateComplete;
+
+      tabs.removeEventListener('change', onChange);
+
+      // _navigation.refresh() re-parks the roving tab stop (source: 'refresh')
+      // on both the disable and re-enable transitions.
+      // _handleNavigationActiveChange must ignore 'refresh' sources so that
+      // toggling disabled is not treated as a user selection.
+      expect(tabs.selected).toBe('2');
+      expect(changeCount, 'no change events from disable/enable').toBe(0);
+    });
   },
 };
 
@@ -995,7 +1123,11 @@ export const DisabledTabKeyboardTest: Story = {
 
     await step('disabled tab receives focus via arrow keys', async () => {
       tab1.dispatchEvent(
-        new KeyboardEvent('keydown', { code: 'ArrowRight', bubbles: true })
+        new KeyboardEvent('keydown', {
+          key: 'ArrowRight',
+          code: 'ArrowRight',
+          bubbles: true,
+        })
       );
       await tabs.updateComplete;
       expect(document.activeElement, 'focus moves to disabled tab').toBe(tab2);
@@ -1087,6 +1219,82 @@ export const ChangeEventTest: Story = {
         '1'
       );
     });
+  },
+};
+
+export const ChangeHandlerSelectedStateTest: Story = {
+  render: () => html`
+    <swc-tabs
+      selected="1"
+      accessible-label="Change handler selected state test"
+    >
+      <swc-tab tab-id="1">Tab 1</swc-tab>
+      <swc-tab tab-id="2">Tab 2</swc-tab>
+      <swc-tab-panel tab-id="1"><p>Panel 1</p></swc-tab-panel>
+      <swc-tab-panel tab-id="2"><p>Panel 2</p></swc-tab-panel>
+    </swc-tabs>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const tabs = await getComponent<Tabs>(canvasElement, 'swc-tabs');
+    const tab2 = canvasElement.querySelector('swc-tab[tab-id="2"]') as Tab;
+
+    await step(
+      'clicked tab reflects its selected state inside the change handler',
+      async () => {
+        let containerSelected: string | undefined;
+        let tabSelected: boolean | undefined;
+        tabs.addEventListener(
+          'change',
+          () => {
+            containerSelected = tabs.selected;
+            tabSelected = tab2.selected;
+          },
+          { once: true }
+        );
+        tab2.click();
+        await tabs.updateComplete;
+        expect(containerSelected, 'tabs.selected updated in handler').toBe('2');
+        expect(tabSelected, 'tab2.selected updated in handler').toBe(true);
+      }
+    );
+  },
+};
+
+export const AutoActivationDisabledTabTest: Story = {
+  render: () => html`
+    <swc-tabs
+      selected="3"
+      keyboard-activation="automatic"
+      accessible-label="Auto activation disabled tab test"
+    >
+      <swc-tab tab-id="1">Tab 1</swc-tab>
+      <swc-tab tab-id="2" disabled>Tab 2</swc-tab>
+      <swc-tab tab-id="3">Tab 3</swc-tab>
+      <swc-tab-panel tab-id="1"><p>Panel 1</p></swc-tab-panel>
+      <swc-tab-panel tab-id="2"><p>Panel 2</p></swc-tab-panel>
+      <swc-tab-panel tab-id="3"><p>Panel 3</p></swc-tab-panel>
+    </swc-tabs>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const tabs = await getComponent<Tabs>(canvasElement, 'swc-tabs');
+    const tab3 = canvasElement.querySelector('swc-tab[tab-id="3"]') as Tab;
+
+    tab3.focus();
+
+    await step(
+      'arrow-keying onto a disabled tab does not change selection in automatic mode',
+      async () => {
+        tab3.dispatchEvent(
+          new KeyboardEvent('keydown', {
+            key: 'ArrowLeft',
+            code: 'ArrowLeft',
+            bubbles: true,
+          })
+        );
+        await tabs.updateComplete;
+        expect(tabs.selected, 'selection stays on tab 3').toBe('3');
+      }
+    );
   },
 };
 
