@@ -114,6 +114,7 @@
   min-inline-size: 0;
 
   --swc-prompt-field-artifact-scrollbar-size: 8px;
+  --swc-prompt-field-artifact-scrollbar-gap: 4px;
 }
 
 .swc-PromptField-artifacts-row {
@@ -127,10 +128,8 @@
   position: relative;
   flex: 1 1 auto;
   min-inline-size: 0;
-  block-size: calc(var(--swc-prompt-field-artifact-media-block-size, 68px) + var(--swc-prompt-field-artifact-scrollbar-size, 8px));
-  padding-block-start: 6px;
-  margin-block-start: -6px;
-  margin-block-end: calc(-1 * var(--swc-prompt-field-artifact-scrollbar-size, 8px));
+  block-size: calc(var(--swc-prompt-field-artifact-media-block-size, 68px) + var(--swc-prompt-field-artifact-scrollbar-gap, 4px) + var(--swc-prompt-field-artifact-scrollbar-size, 8px));
+  margin-block-end: calc(-1 * (var(--swc-prompt-field-artifact-scrollbar-gap, 4px) + var(--swc-prompt-field-artifact-scrollbar-size, 8px)));
   overflow: visible;
 
   --swc-prompt-field-artifact-fade-solid: color-mix(in srgb, token("background-layer-2-color") 80%, transparent);
@@ -138,7 +137,7 @@
 
 .swc-PromptField-artifacts-fade {
   position: absolute;
-  inset-block-start: 6px;
+  inset-block-start: 0;
   z-index: 3;
   inline-size: 16px;
   block-size: var(--swc-prompt-field-artifact-media-block-size, 68px);

@@ -241,7 +241,7 @@ function renderMultiArtifactPromptField(canvasElement: HTMLElement): void {
     html`
       <div style="inline-size:480px;">
         <swc-prompt-field label="Prompt" value="Review attachments.">
-          ${Array.from({ length: 8 }, (_, index) => index).map(
+          ${Array.from({ length: 14 }, (_, index) => index).map(
             (index) => html`
               <swc-upload-artifact slot="artifact" type="media" dismissible>
                 <div
@@ -300,6 +300,7 @@ export const ArtifactScrollPaginationTest: Story = {
 
     await step('chevron paging advances by more than one tile', async () => {
       const initialScrollLeft = scrollEl?.scrollLeft ?? 0;
+      const clientWidth = scrollEl?.clientWidth ?? 0;
       nextButton?.click();
       await el.updateComplete;
       expect(
@@ -317,6 +318,13 @@ export const ArtifactScrollPaginationTest: Story = {
           ?.assignedElements({ flatten: true })[0]
           ?.getBoundingClientRect().width ?? 68;
       expect(nextScrollLeft - initialScrollLeft).toBeGreaterThan(tileWidth);
+
+      // The whole visible set should page forward together (only the one
+      // edge tile that was under 50% visible may be carried over) rather
+      // than nudging by a single tile's worth of scroll.
+      expect(nextScrollLeft - initialScrollLeft).toBeGreaterThan(
+        clientWidth - 2 * tileWidth
+      );
     });
 
     await step('chevron paging keeps the scrollbar thumb hidden', async () => {
