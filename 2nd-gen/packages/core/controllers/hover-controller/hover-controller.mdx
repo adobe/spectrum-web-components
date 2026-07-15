@@ -96,7 +96,7 @@ When `disabled` transitions to `true` while the popover is open, the popover clo
 
 ### Manual
 
-When `manual` is set on the host, the controller skips all event wiring. The consuming component is responsible for opening and closing the popover programmatically (e.g. by toggling its `open` state). Hover and focus events on the trigger have no effect.
+When `manual` is set on the host, the controller skips all event wiring. The consuming component is responsible for opening and closing the popover programmatically (e.g., by toggling its `open` state). Hover and focus events on the trigger have no effect.
 
 Use `manual` mode when the component needs click-to-toggle behavior or programmatic control over open/close. The `for` attribute and ARIA wiring still function in manual mode.
 
@@ -149,7 +149,7 @@ When the trigger receives keyboard focus (<kbd>Tab</kbd> / <kbd>Shift</kbd> + <k
 ### Best practices
 
 - Pair with a `PlacementController` so the popover is always visible and positioned relative to the trigger, even near viewport edges.
-- Set `warmStateKey` to the consuming element's tag name (e.g. `'swc-tooltip'`) to isolate warm state per component type.
+- Set `warmStateKey` to the consuming element's tag name (e.g., `'swc-tooltip'`) to isolate warm state per component type.
 - Use `manual` mode for programmatic control; the consuming component is then responsible for ARIA relationships and for opening and closing the popover at the right times.
 - Wire `aria-describedby` or `aria-labelledby` from the trigger to the popover in the host's `updated()` lifecycle — the controller does not set ARIA attributes.
 
@@ -165,9 +165,9 @@ When the trigger receives keyboard focus (<kbd>Tab</kbd> / <kbd>Shift</kbd> + <k
 
 ### Constructor options (`HoverControllerOptions`)
 
-| Option         | Type     | Description                                                                                                                                              |
-| -------------- | -------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `warmStateKey` | `string` | Per-component-type key for shared warm state on `document`. Use the element tag name (e.g. `'swc-tooltip'`). Must be static; must not vary per instance. |
+| Option         | Type     | Description                                                                                                                                               |
+| -------------- | -------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `warmStateKey` | `string` | Per-component-type key for shared warm state on `document`. Use the element tag name (e.g., `'swc-tooltip'`). Must be static; must not vary per instance. |
 
 ### Host interface (`HoverControllerHost`)
 

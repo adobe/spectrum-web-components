@@ -74,7 +74,7 @@ class DemoOpacityCheckerboardSwatch extends LitElement {
   @property()
   public label = '';
 
-  /** CSS color for the fill layer, e.g. `rgba(255, 0, 0, 0.4)` or `transparent`. */
+  /** CSS color for the fill layer, e.g., `rgba(255, 0, 0, 0.4)` or `transparent`. */
   @property()
   public color = 'transparent';
 
