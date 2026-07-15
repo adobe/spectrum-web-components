@@ -40,13 +40,10 @@ package ships as-is (it does not pre-strip them), so whether your production
 build actually removes them depends on **your own build configuration**
 replacing `process.env.NODE_ENV` with `'production'` and minifying.
 
-Even in a well-configured production build, this only removes the internal
-validation logic (the actual checks, message building, and console output).
-It does not remove the small per-call overhead of invoking a validation
-helper (a cheap property check that immediately no-ops) from every component
-that calls one, on every update. That overhead is negligible for typical
-usage, but it does mean "stripped" here means "inert," not "physically
-absent from the bundle."
+Even in a well-configured production build, this removes the internal
+validation logic (the actual checks, message building, and console output),
+not the call sites themselves: every component still invokes a cheap
+property check that immediately no-ops, on every update.
 
 **Recommended: confirm your production build actually strips what it can.**
 Most setups handle it automatically, but "automatically" depends on your
