@@ -19,7 +19,7 @@ import {
   ButtonBase,
   type ButtonSize,
   type ButtonStaticColor,
-} from '@spectrum-web-components/core/components/button';
+} from '@adobe/spectrum-wc-core/components/button';
 
 import {
   Cross200Icon,

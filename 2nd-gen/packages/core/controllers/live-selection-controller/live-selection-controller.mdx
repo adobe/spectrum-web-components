@@ -56,7 +56,7 @@ That live-read approach is the right choice when items can change themselves, be
 ```typescript
 import { LitElement, type PropertyValues } from 'lit';
 import { property } from 'lit/decorators.js';
-import { LiveSelectionController } from '@spectrum-web-components/core/controllers/index.js';
+import { LiveSelectionController } from '@adobe/spectrum-wc-core/controllers/index.js';
 
 class MyDisclosureGroup extends LitElement {
   @property({ type: Boolean, attribute: 'allow-multiple' })

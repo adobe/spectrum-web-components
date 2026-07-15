@@ -13,12 +13,12 @@
 import { PropertyValues } from 'lit';
 import { property, state } from 'lit/decorators.js';
 
-import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
+import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
 import {
   ObserveSlotPresence,
   ObserveSlotText,
   SizedMixin,
-} from '@spectrum-web-components/core/mixins/index.js';
+} from '@adobe/spectrum-wc-core/mixins/index.js';
 
 import { BUTTON_VALID_SIZES } from './Button.types.js';
 
