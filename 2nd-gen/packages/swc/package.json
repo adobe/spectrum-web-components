@@ -19,13 +19,13 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
     },
-    "./*": {
-      "types": "./dist/components/*/index.d.ts",
-      "import": "./dist/components/*/index.js"
+    "./patterns/*": {
+      "types": "./dist/patterns/*/index.d.ts",
+      "import": "./dist/patterns/*/index.js"
     },
-    "./*.css": {
-      "types": "./dist/*.css.d.ts",
-      "default": "./dist/*.css"
+    "./patterns/*/index.js": {
+      "types": "./dist/patterns/*/index.d.ts",
+      "import": "./dist/patterns/*/index.js"
     },
     "./components/*": {
       "types": "./dist/components/*/index.d.ts",
@@ -34,6 +34,18 @@
     "./components/*.js": {
       "types": "./dist/components/*.d.ts",
       "default": "./dist/components/*.js"
+    },
+    "./utils/*": {
+      "types": "./dist/utils/*.d.ts",
+      "import": "./dist/utils/*.js"
+    },
+    "./*": {
+      "types": "./dist/components/*/index.d.ts",
+      "import": "./dist/components/*/index.js"
+    },
+    "./*.css": {
+      "types": "./dist/*.css.d.ts",
+      "default": "./dist/*.css"
     },
     "./global-button.css": {
       "default": "./dist/global-button.css"
@@ -46,14 +58,6 @@
     },
     "./link.css": {
       "default": "./dist/link.css"
-    },
-    "./patterns/*": {
-      "types": "./dist/patterns/*/index.d.ts",
-      "import": "./dist/patterns/*/index.js"
-    },
-    "./utils/*": {
-      "types": "./dist/utils/*.d.ts",
-      "import": "./dist/utils/*.js"
     }
   },
   "main": "./dist/index.js",
@@ -67,7 +71,7 @@
     "build": "yarn analyze && vite build",
     "clean": "rimraf dist",
     "dev": "vite build --watch",
-    "dev:core": "yarn workspace @spectrum-web-components/core dev",
+    "dev:core": "yarn workspace @adobe/spectrum-wc-core dev",
     "generate:contributor-docs": "node .storybook/scripts/generate-contributor-docs.mjs",
     "storybook": "yarn generate:contributor-docs && yarn analyze && storybook dev -p 6006",
     "storybook:build": "yarn generate:contributor-docs && yarn analyze && storybook build",
@@ -86,7 +90,8 @@
     "test:watch:vitest": "vitest --project storybook --watch"
   },
   "dependencies": {
-    "@spectrum-web-components/core": "0.3.0",
+    "@adobe/spectrum-wc-core": "0.3.0",
+    "@lit-labs/observers": "2.0.2",
     "lit": "^2.5.0 || ^3.1.3"
   },
   "devDependencies": {

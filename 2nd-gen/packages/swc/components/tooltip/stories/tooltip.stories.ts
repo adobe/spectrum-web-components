@@ -21,7 +21,7 @@ import {
   TOOLTIP_VARIANTS,
   type TooltipPlacement,
   type TooltipVariant,
-} from '@spectrum-web-components/core/components/tooltip';
+} from '@adobe/spectrum-wc-core/components/tooltip';
 
 import '@adobe/spectrum-wc/components/button/swc-button.js';
 import '@adobe/spectrum-wc/components/tooltip/swc-tooltip.js';
@@ -147,6 +147,9 @@ const meta: Meta = {
     },
     docs: {
       subtitle: `Brief contextual message that appears near a trigger element.`,
+    },
+    stackblitz: {
+      url: 'https://stackblitz.com/edit/vitejs-vite-wr38rbib?file=src%2Fmy-element.ts',
     },
     chromatic: {
       delay: 500,

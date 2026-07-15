@@ -17,7 +17,7 @@ import { Divider } from '@adobe/spectrum-wc/divider';
 import {
   DIVIDER_STATIC_COLORS,
   DIVIDER_VALID_SIZES,
-} from '@spectrum-web-components/core/components/divider/index.js';
+} from '@adobe/spectrum-wc-core/components/divider/index.js';
 
 import '@adobe/spectrum-wc/components/divider/swc-divider.js';
 

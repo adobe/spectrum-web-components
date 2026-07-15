@@ -1,0 +1,80 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import { DocsFooter, DocsHeader } from '../../.storybook/blocks';
+
+import * as CloseButtonStories from './stories/close-button.stories';
+
+<Meta of={CloseButtonStories} />
+
+<DocsHeader />
+
+## Anatomy
+
+A close button consists of:
+
+1. **Button** — native `<button type="button">` with delegated focus; handles pointer and keyboard activation
+2. **Icon** — cross icon (`aria-hidden="true"`); size follows the `size` attribute
+
+<Canvas of={CloseButtonStories.Anatomy} />
+
+## Options
+
+### Sizes
+
+Close buttons come in four sizes to fit various contexts:
+
+- Small (`s`)
+- Medium (`m`)
+- Large (`l`)
+- Extra large (`xl`)
+
+<Canvas of={CloseButtonStories.Sizes} />
+
+### Static colors
+
+Use the `static-color` attribute when displaying over images or colored backgrounds:
+
+- **white** — use on dark or colored backgrounds for better contrast
+- **black** — use on light backgrounds for better contrast
+
+<Canvas of={CloseButtonStories.StaticColors} />
+
+## States
+
+Close buttons support enabled and disabled states. Hover, active, and keyboard focus styles apply only when the control is not disabled.
+
+<Canvas of={CloseButtonStories.States} />
+
+## Accessibility
+
+### Features
+
+The `<swc-close-button>` element implements several accessibility features:
+
+#### Keyboard navigation
+
+- **Tab** — moves focus to the inner dismiss button via delegated focus
+- **Enter** or **Space** — activates the dismiss action
+- **Focus indicator** — visible `:focus-visible` ring on keyboard focus
+
+#### ARIA implementation
+
+1. **Native button** — renders a real `<button type="button">` inside the shadow root
+2. **Accessible name** — provided via `accessible-label` and forwarded as `aria-label` on the inner button
+3. **Decorative icon** — cross icon is marked `aria-hidden="true"` so screen readers announce the button name only
+4. **Disabled state** — `disabled` removes activation and applies disabled visuals on the inner button
+
+#### Visual accessibility
+
+- Hit target size scales with the `size` attribute
+- Static color variants maintain contrast on colored backgrounds
+- Transparent border and outline focus treatment support high contrast mode without custom forced-color overrides
+
+### Best practices
+
+- Always provide a descriptive accessible name such as "Close" or "Close dialog" via `accessible-label` — not a clear/reset verb
+- Use `static-color="white"` or `static-color="black"` when the default neutral icon lacks contrast on the background
+- Test keyboard focus order when placing close buttons in dialog headers or banner corners
+
+<Canvas of={CloseButtonStories.Accessibility} />
+
+<DocsFooter />

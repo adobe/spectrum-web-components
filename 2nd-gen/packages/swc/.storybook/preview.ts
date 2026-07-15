@@ -412,6 +412,8 @@ const preview = {
                   'Migration plan',
                   'Rendering and styling migration analysis',
                 ],
+                'Card',
+                ['Migration plan'],
                 'Checkbox',
                 ['Rendering and styling migration analysis'],
                 'Close button',
@@ -455,6 +457,8 @@ const preview = {
                 ],
                 'Help text',
                 ['Rendering and styling migration analysis'],
+                'Icon',
+                ['Accessibility migration analysis'],
                 'Illustrated message',
                 [
                   'Accessibility migration analysis',

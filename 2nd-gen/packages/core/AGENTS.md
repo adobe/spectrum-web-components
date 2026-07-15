@@ -1,6 +1,6 @@
 # core
 
-`@spectrum-web-components/core` — abstract base classes, mixins, types, and utilities shared by both 1st-gen and 2nd-gen. No rendering, no CSS, no element registration.
+`@adobe/spectrum-wc-core` — abstract base classes, mixins, types, and utilities shared by both 1st-gen and 2nd-gen. No rendering, no CSS, no element registration.
 
 ## Structure
 
@@ -8,7 +8,7 @@
 core/
 ├── element/       # SpectrumElement base class, defineElement, version tracking
 ├── mixins/        # SizedMixin, ObserveSlotPresence, ObserveSlotText
-├── controllers/   # LanguageResolutionController
+├── controllers/   # LanguageResolutionController, PlacementController, …
 ├── utils/         # capitalize, getLabelFromSlot
 └── components/    # One folder per component
     └── badge/

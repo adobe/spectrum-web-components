@@ -18,7 +18,7 @@ import {
   ACTION_BUTTON_STATIC_COLORS,
   ACTION_BUTTON_VALID_SIZES,
   type ActionButtonSize,
-} from '@spectrum-web-components/core/components/action-button';
+} from '@adobe/spectrum-wc-core/components/action-button';
 
 import '@adobe/spectrum-wc/components/action-button/swc-action-button.js';
 
@@ -56,12 +56,9 @@ const meta: Meta = {
     docs: {
       subtitle: 'Compact button for toolbars and action groups',
     },
-    design: {
-      type: 'figma',
-      url: 'https://www.figma.com/design/Mngz9H7WZLbrCvGQf3GnsY/S2---Web--Desktop-scale-?node-id=702-2877',
+    stackblitz: {
+      url: 'https://stackblitz.com/edit/vitejs-vite-8m9urm6b?file=src%2Fmy-element.ts',
     },
-    // TODO: add a Stackblitz link for swc-action-button once one exists
-    stackblitz: {},
   },
   tags: ['migrated'],
 };

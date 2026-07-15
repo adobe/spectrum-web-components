@@ -18,7 +18,7 @@ import {
   BUTTON_STATIC_COLORS,
   BUTTON_VALID_SIZES,
   BUTTON_VARIANTS,
-} from '@spectrum-web-components/core/components/button';
+} from '@adobe/spectrum-wc-core/components/button';
 
 import '@adobe/spectrum-wc/components/button/swc-button.js';
 import '@adobe/spectrum-wc/components/icon/swc-icon.js';
@@ -66,6 +66,18 @@ const BUTTON_PERMUTATIONS = createPermutations([
     'fill-style': ['outline'],
     size: BUTTON_VALID_SIZES,
   },
+  // Disabled and pending outline, which the fill-style axis above doesn't
+  // cross with the state axes below.
+  {
+    variant: ['primary', 'secondary'],
+    'fill-style': ['outline'],
+    disabled: [true],
+  },
+  {
+    variant: ['primary', 'secondary'],
+    'fill-style': ['outline'],
+    pending: [true],
+  },
   { size: BUTTON_VALID_SIZES, disabled: [true] },
   { size: BUTTON_VALID_SIZES, pending: [true] },
   { variant: BUTTON_VARIANTS, 'data-force-state': FORCED_STATES },
@@ -94,6 +106,17 @@ const STATIC_COLOR_PERMUTATION_GROUPS = BUTTON_STATIC_COLORS.map((color) => ({
       variant: ['primary', 'secondary'],
       'data-force-state': FORCED_STATES,
     },
+    // Disabled and pending static-color states.
+    {
+      'static-color': [color],
+      variant: ['primary', 'secondary'],
+      disabled: [true],
+    },
+    {
+      'static-color': [color],
+      variant: ['primary', 'secondary'],
+      pending: [true],
+    },
   ]),
 }));
 
@@ -117,13 +140,32 @@ const renderButtonPermutation = renderStorybookPermutation('swc-button', {
 // template()'s icon-slot.
 const ICON_ONLY_PERMUTATIONS = createPermutations([
   { 'fill-style': BUTTON_FILL_STYLES, size: BUTTON_VALID_SIZES },
+  // Disabled and pending icon-only, at the default size since the state, not
+  // the scale, is what's under test here.
+  { 'fill-style': BUTTON_FILL_STYLES, disabled: [true] },
+  { 'fill-style': BUTTON_FILL_STYLES, pending: [true] },
 ]);
+
+type IconOnlyCase = {
+  'fill-style': (typeof BUTTON_FILL_STYLES)[number];
+  size?: (typeof BUTTON_VALID_SIZES)[number];
+  disabled?: boolean;
+  pending?: boolean;
+};
 
 const renderIconOnlyPermutation = ({
   'fill-style': fillStyle,
-  size,
-}: (typeof ICON_ONLY_PERMUTATIONS)[number]) => html`
-  <swc-button fill-style=${fillStyle} size=${size} accessible-label="Button">
+  size = 'm',
+  disabled = false,
+  pending = false,
+}: IconOnlyCase) => html`
+  <swc-button
+    fill-style=${fillStyle}
+    size=${size}
+    ?disabled=${disabled}
+    ?pending=${pending}
+    accessible-label="Button"
+  >
     <swc-icon slot="icon" aria-hidden="true">${Arrow100Icon()}</swc-icon>
   </swc-button>
 `;

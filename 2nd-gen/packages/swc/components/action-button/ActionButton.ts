@@ -19,8 +19,8 @@ import {
   ACTION_BUTTON_VALID_SIZES,
   type ActionButtonSize,
   type ActionButtonStaticColor,
-} from '@spectrum-web-components/core/components/action-button';
-import { ButtonBase } from '@spectrum-web-components/core/components/button';
+} from '@adobe/spectrum-wc-core/components/action-button';
+import { ButtonBase } from '@adobe/spectrum-wc-core/components/button';
 
 import { renderPendingSpinner } from '../button/pending-spinner.js';
 
@@ -31,7 +31,7 @@ import styles from './action-button.css';
  * A compact action button for toolbars, action groups, and icon-first chrome.
  *
  * @element swc-action-button
- * @since 2.0.0
+ * @since 2.0.0-beta.1
  *
  * @slot - Visible button label.
  * @slot icon - Optional leading icon displayed before the label.

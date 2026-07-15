@@ -1,6 +1,6 @@
 # swc
 
-`@adobe/spectrum-wc` — the rendering layer. Extends abstract base classes from `@spectrum-web-components/core` and adds `render()`, CSS, element registration, Storybook stories, and tests.
+`@adobe/spectrum-wc` — the rendering layer. Extends abstract base classes from `@adobe/spectrum-wc-core` and adds `render()`, CSS, element registration, Storybook stories, and tests.
 
 ## Structure
 
