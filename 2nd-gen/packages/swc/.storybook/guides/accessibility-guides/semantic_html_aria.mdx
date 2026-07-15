@@ -37,11 +37,11 @@ Native HTML elements carry **roles**, **keyboard behavior**, and **state** that 
 <span class="link" onclick="go()">Read the documentation</span>
 ```
 
-If you must use a non-interactive wrapper for layout, keep **real** controls, like `button`s, `a`s, or other form elements inside it.
+If you must use a non-interactive wrapper for layout, keep **real** controls, like `button` elements, `a` elements, or other form elements inside it.
 
 ### How semantics help assistive technologies
 
-Screen readers and other assistive technologies expose an **accessibility tree** derived from the DOM. Semantic elements map to familiar roles and names. For example, a `button` is announced as a button, and a labelled text field exposes its label association. Headings define an **outline** to aid in page navigation. Landmark regions, like `main`, `nav`, or `header`, can help users jump to the right part of the page. See [Understanding success criterion 1.3.1: info and relationships](https://www.w3.org/WAI/WCAG22/Understanding/info-and-relationships.html) in WCAG 2.2 for why programmatic relationships and structure matter. Practical guidance is found in our guide about [Headings and landmarks](/docs/guides-accessibility-guides-headings-and-landmarks--docs) (outlines, `aria-labelledby`, and avoiding **too many** generic regions), as well as how to perform in-browser **verification** with [WAVE](/docs/guides-accessibility-guides-wave-toolbar-testing--docs#structure-tab).
+Screen readers and other assistive technologies expose an **accessibility tree** derived from the DOM. Semantic elements map to familiar roles and names. For example, a `button` is announced as a button, and a labeled text field exposes its label association. Headings define an **outline** to aid in page navigation. Landmark regions, like `main`, `nav`, or `header`, can help users jump to the right part of the page. See [Understanding success criterion 1.3.1: info and relationships](https://www.w3.org/WAI/WCAG22/Understanding/info-and-relationships.html) in WCAG 2.2 for why programmatic relationships and structure matter. Practical guidance is found in our guide about [Headings and landmarks](/docs/guides-accessibility-guides-headings-and-landmarks--docs) (outlines, `aria-labelledby`, and avoiding **too many** generic regions), as well as how to perform in-browser **verification** with [WAVE](/docs/guides-accessibility-guides-wave-toolbar-testing--docs#structure-tab).
 
 ## ARIA as a secondary method
 
@@ -55,11 +55,9 @@ Use ARIA **only when native HTML cannot express the needed role, state, or relat
 
 ### Appropriate ARIA examples
 
-- **`aria-expanded`**, **`aria-controls`**: on a disclosure or menu button when you need to expose open/closed state and related content (often **in addition** to a native `button`).
-- **`aria-live`** regions: for status messages that update without moving focus, when no native element conveys the update.
 - **`aria-expanded`**, **`aria-controls`**: on a disclosure or menu button when you need to expose the open or closed state and related content (often **in addition** to a native `button`)
 - **`aria-live`** regions: for status messages that update without moving focus, when no native element conveys the update
-- **`aria-invalid`** and **`aria-describedby`**: tying validation messages to fields when relationships from native labelling are unclear
+- **`aria-invalid`** and **`aria-describedby`**: tying validation messages to fields when relationships from native labeling are unclear
 
 ### Patterns to avoid
 
@@ -83,7 +81,7 @@ This tension between encapsulation and accessibility relationships is explained 
 
 **Cross-root ARIA delegation** is a proposed direction that would let authors delegate selected ARIA attributes from a custom element host to nodes inside its shadow tree (similar in spirit to `delegatesFocus`). [Leo Balter](https://github.com/leobalter) maintains an explainer and draft ideas in the [cross-root ARIA delegation repository](https://github.com/leobalter/cross-root-aria-delegation) and [hosted explainer](https://leobalter.github.io/cross-root-aria-delegation/).
 
-**Reference target** (below) is a related and more narrowly scoped proposal for forwarding ID-based references to a single element inside the shadow root. Both remain **forward-looking** until browsers ship them broadly.  Validate these behaviors in your target browsers and assistive technology matrix.
+**Reference target** (below) is a related and more narrowly scoped proposal for forwarding ID-based references to a single element inside the shadow root. Both remain **forward-looking** until browsers ship them broadly. Validate these behaviors in your target browsers and assistive technology matrix.
 
 ### Reference target (cross-root ARIA)
 
@@ -99,17 +97,15 @@ Reference target is **not fully supported** in production browsers yet. Availabi
 
 Until cross-root solutions are widely available, teams often:
 
-- **Duplicate or mirror** accessible names (for example, `aria-label` on the host when internal labelling cannot reference external nodes).
-- **Slot** labelling elements or use **light DOM** for parts that must participate in ID references.
-- **Duplicate or mirror** accessible names (for example, `aria-label` on the host when internal labelling cannot reference external nodes)
-- **Slot** labelling elements or use **light DOM** for parts that must participate in ID references
+- **Duplicate or mirror** accessible names (for example, `aria-label` on the host when internal labeling cannot reference external nodes)
+- **Slot** labeling elements or use **light DOM** for parts that must participate in ID references
 - **Restructure** UIs so relationships stay within a single tree (host + same shadow root)
 
 These workarounds can be fragile or verbose. Documenting **what consumers must provide** (visible text, `for`/`id` pairs in light DOM, heading structure) is part of shipping accessible components.
 
 ## Further reading
 
-- [Headings and landmarks](/docs/guides-accessibility-guides-headings-and-landmarks--docs): page-level landmarks and `h1`–`h6` structure, WCAG table, and WAVE
+- [Headings and landmarks](/docs/guides-accessibility-guides-headings-and-landmarks--docs): page-level landmarks and `h1`-`h6` structure, WCAG table, and WAVE
 - [Using ARIA](https://www.w3.org/TR/using-aria/): including the [first rule of ARIA use](https://www.w3.org/TR/using-aria/#rule1)
 - [ARIA authoring practices guide](https://www.w3.org/WAI/ARIA/apg/): patterns and keyboard models for composite widgets
 - [MDN: semantics in HTML](https://developer.mozilla.org/en-US/docs/Glossary/Semantics#semantics_in_html): glossary entry tying semantics to accessibility

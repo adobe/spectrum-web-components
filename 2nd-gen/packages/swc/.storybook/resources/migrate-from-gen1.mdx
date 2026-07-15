@@ -26,7 +26,7 @@ Four properties make a gradual migration possible:
 - **Shared visual language**: Gen1's `spectrum-two` theme serves as a bridge between Spectrum/Express and Spectrum 2, which Gen2 uses out of the box. Using this theme on Gen1 components creates visual consistency between both generations.
 - **Separate token namespace**: Design token custom properties use the `swc` namespace to prevent conflicts with Gen1 visuals.
 
-## Step 1 — Install Gen2
+## Step 1: Install Gen2
 
 ```bash
 yarn add @adobe/spectrum-wc
@@ -34,7 +34,7 @@ yarn add @adobe/spectrum-wc
 
 Gen2 ships as a single package; you import individual components from subpaths. You can keep your existing `@spectrum-web-components/*` packages.
 
-## Step 2 — Align Gen1 visually with Spectrum 2
+## Step 2: Align Gen1 visually with Spectrum 2
 
 Switch your existing `<sp-theme>` to the `spectrum-two` system so any remaining Gen1 components align with Gen2 visually during the migration:
 
@@ -51,7 +51,7 @@ import '@spectrum-web-components/theme/src/spectrum-two/themes.js';
 
 Gen1 components inside this theme adopt Spectrum 2 tokens and use the same colors, border radii, and icons as their `<swc-*>` neighbors.
 
-## Step 3 — Add the Gen2 stylesheet and theme classes
+## Step 3: Add the Gen2 stylesheet and theme classes
 
 Gen2 does **not** use `<sp-theme>`. Theme and scale are controlled by CSS classes on your application root.
 
@@ -76,13 +76,13 @@ You can scope a theme to a region by applying these classes lower in the tree. S
 
 > The Gen1 `<sp-theme>` element only affects its `<sp-*>` descendants. The Gen2 `swc-theme*` classes only affect `<swc-*>` descendants. The two systems do not interfere with each other.
 
-## Step 4 — Load Adobe Clean Spectrum VF
+## Step 4: Load Adobe Clean Spectrum VF
 
 Gen2 uses Adobe Clean Spectrum VF, the Spectrum 2 font family. It looks visually identical to Adobe Clean (the Gen1 font) but ships updated metrics for better vertical alignment inside components.
 
 How you load it depends on your environment — for Adobe Fonts (Typekit), CDN, or self-hosted setups, see the [Fonts guide](/docs/guides-customization-fonts--docs).
 
-## Step 5 — Replace components one at a time
+## Step 5: Replace components one at a time
 
 For each migrated Gen2 component:
 
@@ -102,7 +102,7 @@ For each migrated Gen2 component:
 
 The Components index on this site lists every Gen2 component that has shipped, with its migration guide and full API reference.
 
-## Step 6 — Migrate styling
+## Step 6: Migrate styling
 
 Two things change for application CSS.
 
@@ -145,7 +145,7 @@ Anything you were doing with `<sp-theme>` (theme, scale, language, direction) no
 
 You can keep the Gen1 `<sp-theme>` wrapping any remaining `<sp-*>` components for as long as you need; the two systems do not conflict.
 
-## Step 7 — Decommission Gen1
+## Step 7: Decommission Gen1
 
 Once no `<sp-*>` element remains in your app:
 
