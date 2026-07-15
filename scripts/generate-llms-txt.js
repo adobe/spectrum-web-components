@@ -89,9 +89,7 @@ const SECOND_GEN_CEM = join(
 );
 
 const FIRST_GEN_URL = 'https://opensource.adobe.com/spectrum-web-components';
-// TODO: 2nd-gen has no stable production URL yet; update once one is established.
-const SECOND_GEN_URL =
-  'https://opensource.adobe.com/spectrum-web-components/second-gen';
+const SECOND_GEN_URL = 'https://spectrum-web-components.adobe.com';
 
 /**
  * Elements defined in helper/internal packages that should not appear in the
