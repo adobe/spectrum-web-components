@@ -11,6 +11,7 @@
  */
 
 import { html } from 'lit';
+import { ref } from 'lit/directives/ref.js';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
@@ -51,8 +52,13 @@ const meta: Meta = {
     docs: {
       subtitle: `Target area for drag-and-drop file uploads with a required browse control.`,
     },
-    // design: { type: 'figma', url: 'https://www.figma.com/...' },
-    // stackblitz: { url: 'https://stackblitz.com/...' },
+    design: {
+      type: 'figma',
+      url: 'https://www.figma.com/design/Mngz9H7WZLbrCvGQf3GnsY/S2---Web--Desktop-scale-?node-id=13049-185',
+    },
+    stackblitz: {
+      url: 'https://stackblitz.com/edit/vitejs-vite-q5adfsfk?file=package.json',
+    },
   },
   tags: ['migrated'],
 };
@@ -99,12 +105,49 @@ const DROPZONE_SLOT_HTML = `
   </swc-illustrated-message>
 `;
 
+// Shared wiring for the browse-button + drop event pattern recommended by the
+// accessibility analysis: both paths call the same handler so `filled` and the
+// status region update identically regardless of how the file was provided.
+// Each getter resolves the element captured by that story's own `ref()`, so
+// the lookup always targets the specific dropzone that fired the event rather
+// than the first match in a shared container.
+const bindFilledStateHandlers = (
+  getDropzone: () => Element | null,
+  getFilledContent: () => HTMLElement | null,
+  getFileInput: () => HTMLInputElement | null
+): {
+  handleDrop: (event: Event) => void;
+  handleChange: () => void;
+  browseFiles: () => void;
+} => {
+  const acceptFile = (name: string): void => {
+    const filledContent = getFilledContent();
+    if (filledContent) {
+      filledContent.textContent = `${name} uploaded`;
+    }
+    getDropzone()?.setAttribute('filled', '');
+  };
+
+  return {
+    handleDrop: (event: Event): void => {
+      const detail = (event as CustomEvent<DragEvent>).detail;
+      acceptFile(detail.dataTransfer?.files?.[0]?.name ?? 'File');
+    },
+    handleChange: (): void => {
+      acceptFile(getFileInput()?.files?.[0]?.name ?? 'File');
+    },
+    browseFiles: (): void => {
+      getFileInput()?.click();
+    },
+  };
+};
+
 // ────────────────────────
 //    PLAYGROUND STORY
 // ────────────────────────
 
 export const Playground: Story = {
-  tags: ['autodocs', 'dev'],
+  tags: ['dev'],
   args: {
     size: 'm',
     dragged: false,
@@ -189,7 +232,13 @@ export const States: Story = {
       style="min-inline-size: 260px;"
     >
       ${makeDropzoneSlot('Drag and drop your file')}
-      <p slot="filled-content">report-q4.pdf uploaded</p>
+      <div
+        slot="filled-content"
+        style="display: flex; align-items: center; gap: 8px;"
+      >
+        <span>report-q4.pdf uploaded</span>
+        <swc-button size="s" variant="secondary">Replace file</swc-button>
+      </div>
     </swc-dropzone>
 
     <swc-dropzone
@@ -210,10 +259,107 @@ export const States: Story = {
 //    BEHAVIORS STORIES
 // ──────────────────────────────
 
-// TODO: Phase 7 — add event log story demonstrating drag events
+export const EventLog: Story = {
+  render: () => {
+    let log: HTMLElement | null = null;
+    const captureLog = (element?: Element): void => {
+      log = (element as HTMLElement) ?? null;
+    };
+    const logEvent = (event: Event): void => {
+      const entry = document.createElement('li');
+      entry.textContent = event.type;
+      log?.prepend(entry);
+    };
+    return html`
+      <div
+        style="display: flex; flex-direction: column; gap: 16px; min-inline-size: 260px;"
+      >
+        <swc-dropzone
+          aria-label="Upload files"
+          @swc-dropzone-should-accept=${logEvent}
+          @swc-dropzone-dragover=${logEvent}
+          @swc-dropzone-dragleave=${logEvent}
+          @swc-dropzone-drop=${logEvent}
+        >
+          ${makeDropzoneSlot('Drag and drop your file')}
+        </swc-dropzone>
+        <ul
+          ${ref(captureLog)}
+          aria-label="Drop zone event log"
+          style="margin: 0; padding-inline-start: 20px; font-size: 14px;"
+        ></ul>
+      </div>
+    `;
+  },
+  tags: ['behaviors'],
+};
+EventLog.storyName = 'Event log';
+
+// Shared by BrowseAndDrop and Accessibility: both stories demonstrate the same
+// browse-button + drop wiring, differing only in the accessible name.
+const renderFilledStateExample = (ariaLabel: string) => {
+  let dropzone: Element | null = null;
+  let fileInput: HTMLInputElement | null = null;
+  let filledContent: HTMLElement | null = null;
+  const { handleDrop, handleChange, browseFiles } = bindFilledStateHandlers(
+    () => dropzone,
+    () => filledContent,
+    () => fileInput
+  );
+  return html`
+    <swc-dropzone
+      ${ref((element?: Element) => (dropzone = element ?? null))}
+      aria-label=${ariaLabel}
+      style="min-inline-size: 260px;"
+      @swc-dropzone-drop=${handleDrop}
+    >
+      <swc-illustrated-message>
+        ${unsafeHTML(DROPZONE_SVG)}
+        <h2 slot="heading">Drag and drop your file</h2>
+        <span slot="description">${DEFAULT_DROPZONE_DESCRIPTION}</span>
+        <swc-button slot="actions" variant="accent" @click=${browseFiles}>
+          Browse files
+        </swc-button>
+      </swc-illustrated-message>
+      <input
+        ${ref(
+          (element?: Element) =>
+            (fileInput = (element as HTMLInputElement) ?? null)
+        )}
+        type="file"
+        aria-label="Choose a file"
+        style="display: none;"
+        @change=${handleChange}
+      />
+      <div
+        slot="filled-content"
+        style="display: flex; align-items: center; gap: 8px;"
+      >
+        <span
+          ${ref(
+            (element?: Element) =>
+              (filledContent = (element as HTMLElement) ?? null)
+          )}
+        ></span>
+        <swc-button size="s" variant="secondary" @click=${browseFiles}>
+          Replace file
+        </swc-button>
+      </div>
+    </swc-dropzone>
+  `;
+};
+
+export const BrowseAndDrop: Story = {
+  render: () => renderFilledStateExample('Upload files'),
+  tags: ['behaviors'],
+};
+BrowseAndDrop.storyName = 'Browse and drop';
 
 // ────────────────────────────────
 //    ACCESSIBILITY STORIES
 // ────────────────────────────────
 
-// TODO: will complete in separate documentation pass of phase 7
+export const Accessibility: Story = {
+  render: () => renderFilledStateExample('Upload a profile photo'),
+  tags: ['a11y'],
+};

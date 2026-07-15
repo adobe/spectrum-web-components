@@ -45,6 +45,7 @@ import styles from './dropzone.css';
  * @cssprop --swc-dropzone-border-color - Border color. Defaults to the gray-300 token in the default state; overridden to the accent visual color in the dragged and focus-within states.
  * @cssprop --swc-dropzone-border-style - Border style. Defaults to dashed; overridden to solid in the dragged and focus-within states.
  * @cssprop --swc-dropzone-padding - Padding inside the drop zone. Defaults vary by size: spacing-300 (s), spacing-400 (m), spacing-600 (l).
+ * @cssprop --swc-illustrated-message-illustration-color - Illustration color cascaded into a slotted `swc-illustrated-message`. Unset by default; overridden to the accent-visual-color token in the dragged state.
  */
 export class Dropzone extends DropzoneBase {
   public static override get styles(): CSSResultArray {

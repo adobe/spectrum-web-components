@@ -1,0 +1,117 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import { DocsFooter, DocsHeader } from '../../.storybook/blocks';
+
+import * as DropzoneStories from './stories/dropzone.stories';
+
+<Meta of={DropzoneStories} />
+
+<DocsHeader />
+
+## Anatomy
+
+A drop zone consists of:
+
+1. **Container**: a dashed-border area that invites a file to be dragged into it
+2. **Default slot content**: typically a `swc-illustrated-message` with a heading, description, and a required browse button or link
+3. **Status region** (visually hidden): announces drag and drop state changes to assistive technology
+4. **`filled-content` slot content**: shown in place of the default slot once a file has been accepted
+
+### Content
+
+#### Slots
+
+- **Default slot**: drop zone content. The recommended pattern is a `swc-illustrated-message` with a browse button or link placed in its `actions` slot. Hidden automatically when `filled` is `true`. A browse control must always be present so keyboard users can open the OS file picker.
+- **`filled-content` slot**: content shown after a file has been accepted, such as a file name or image preview. Shown automatically when `filled` is `true`; hidden otherwise.
+
+<Canvas of={DropzoneStories.Anatomy} />
+
+## Options
+
+### Sizes
+
+Drop zones come in three sizes:
+
+- **Small (`s`)**
+- **Medium (`m`)**: the default
+- **Large (`l`)**
+
+Size controls the drop zone's padding and is propagated automatically to a slotted `swc-illustrated-message`, scaling its illustration and spacing to match.
+
+<Canvas of={DropzoneStories.Sizes} />
+
+## States
+
+### States
+
+A drop zone can be in the following states:
+
+- **Default**: dashed border; invites a file to be dragged in or the browse control to be used
+- **Dragged** (`dragged`): a file is being held over the zone. The border becomes solid and shifts to the accent color, the background gains a subtle accent tint, and a slotted illustration switches to an accent color treatment.
+- **Filled** (`filled`): a file has been accepted. The default slot content is hidden and the `filled-content` slot is shown.
+- **Filled and dragged** (`filled` + `dragged`): a new file is dragged over an already-filled zone. Use this combination to show replace-state content, such as a "Drop file to replace" prompt.
+
+<Canvas of={DropzoneStories.States} />
+
+## Behaviors
+
+### Event log
+
+The drop zone dispatches four events over the course of a drag-and-drop interaction:
+
+- **`swc-dropzone-should-accept`**: fired on `dragover`, before `dragged` is set. Cancelable; cancel it to reject the dragged payload and show a `none` cursor.
+- **`swc-dropzone-dragover`**: fired once the drag is accepted and `dragged` is set to `true`.
+- **`swc-dropzone-dragleave`**: fired after a 100 ms debounce once the drag leaves the zone.
+- **`swc-dropzone-drop`**: fired when a file is dropped on the zone. `dragged` is still `true` when this event fires.
+
+<Canvas of={DropzoneStories.EventLog} />
+
+### Browse and drop
+
+`filled` is not set automatically: the consumer sets it in response to either a successful drop or a file selected through the browse control, so both paths reach the same state. Listening for `swc-dropzone-drop` and the hidden file input's `change` event with a shared handler keeps the two paths consistent. Once filled, keep a control such as "Replace file" reachable in the `filled-content` slot so keyboard users can still change the selection.
+
+<Canvas of={DropzoneStories.BrowseAndDrop} />
+
+## Accessibility
+
+### Features
+
+The `<swc-dropzone>` element implements several accessibility features:
+
+#### ARIA implementation
+
+1. **Host role**: `role="group"` is set automatically on the host and cannot be overridden. This creates a labeled boundary without introducing a page landmark.
+2. **Accessible name**: required via `aria-label` or `aria-labelledby`. A development-mode warning fires when neither is present.
+3. **Status announcements**: a visually hidden `role="status"` element in shadow DOM announces drag and drop state changes without moving focus:
+   - "File ready to drop" when `dragged` becomes `true`
+   - "File accepted" when `filled` is set
+   - "Drop to replace existing file" when `dragged` becomes `true` while `filled` is already set
+4. **No deprecated drag ARIA**: `aria-dropeffect` and `aria-grabbed` are not used, as both are deprecated as of ARIA 1.1.
+
+#### Keyboard support
+
+The host carries no `tabindex`. Keyboard users reach the drop zone through the slotted browse control, which is the accessible baseline for the upload workflow; drag-and-drop is a progressive enhancement layered on top of it.
+
+- <kbd>Tab</kbd>: moves focus to the browse button or link in the default slot
+- <kbd>Enter</kbd> / <kbd>Space</kbd>: activates the browse control, opening the
+  OS file picker
+
+### Best practices
+
+- Always provide an accessible name via `aria-label` or `aria-labelledby`, describing the upload's purpose (for example, "Upload profile photo" rather than "Upload").
+- Always include a browse button or link in the default slot. It is the only way keyboard-only users can select a file, and it is required for [keyboard (WCAG 2.1.1)](https://www.w3.org/TR/WCAG22/#keyboard) and [dragging movements (WCAG 2.5.7)](https://www.w3.org/TR/WCAG22/#dragging-movements) conformance.
+- Set `filled` from both the drop handler and the browse control's file input `change` handler so upload confirmation and status announcements are consistent regardless of how the file was provided.
+- Do not rely on the `dragged` and `filled` border and background color changes alone to communicate state: the built-in status region carries that information to assistive technology.
+
+<Canvas of={DropzoneStories.Accessibility} />
+
+## Upcoming features
+
+### Error state
+
+An error state for failed or rejected uploads is not yet available.
+
+### Customizable replace state content
+
+The "Drop file to replace" prompt shown in the filled and dragged combination is not yet exposed as a dedicated slot; the default status announcement covers the accessibility requirement in the meantime.
+
+<DocsFooter />

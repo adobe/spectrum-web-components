@@ -470,7 +470,7 @@ No `DropzoneEventDetail` alias is exported. 2nd-gen is a clean break from 1st-ge
 - [x] Copy `spectrum-css/components/dropzone/index.css` from `spectrum-two` branch as baseline (not `/dist`) — **Note:** sibling is on `main`; used S2 tokens from `spectrum-two.css` theme file + S2 token names.
 - [x] Redesign `swc-illustrated-message` styling relationship (Q8) — **Resolved:** CSS custom property `--swc-illustrated-message-illustration-color` cascades from `:host([dragged])` into the slotted element via normal CSS inheritance. No `--mod-*` passthrough needed.
 - [x] Verify `[dragged]`, `[filled]`, and `[filled][dragged]` state selectors map to the 2nd-gen attribute names
-- [ ] Verify CJK font size modifier (`:lang(ja)`, `:lang(ko)`, `:lang(zh)`) is present in S2 source and ported — **Deferred:** no CJK text tokens in dropzone container; only relevant if text inside illustrated message needs overrides. Tracked for Phase 7 review.
+- [x] Verify CJK font size modifier (`:lang(ja)`, `:lang(ko)`, `:lang(zh)`) is present in S2 source and ported — **Resolved (Phase 7 review):** not applicable to `dropzone.css`. The component renders no text nodes of its own; `swc-illustrated-message` already owns `:lang(ja|ko|zh)` overrides for its slotted heading and description text.
 - [x] Add visually-hidden utility class for `.swc-Dropzone-status` (position absolute, `clip-path: inset(50%)` pattern)
 - [x] Verify `@media (forced-colors: active)` high-contrast overrides are present and correct
 - [x] Add `@cssprop` JSDoc tags on any exposed `--swc-*` properties
@@ -503,8 +503,8 @@ No `DropzoneEventDetail` alias is exported. 2nd-gen is a clean break from 1st-ge
 - [x] Status text updates to "File accepted" when `filled` is set (consumer sets this in drop handler)
 - [x] Status text updates to "Drop to replace existing file" when `dragged` becomes true while `filled` is set
 - [x] Host has no `tabindex`; browse control in slot owns the Tab stop
-- [ ] All stories and documentation examples include a browse control (button or link) — Phase 7
-- [ ] Documentation replaces `javascript:;` hrefs and inline `onclick` patterns with accessible alternatives — Phase 7
+- [x] All stories and documentation examples include a browse control (button or link) — Phase 7
+- [x] Documentation replaces `javascript:;` hrefs and inline `onclick` patterns with accessible alternatives — Phase 7. All examples use `<swc-button>` with a Lit `@click` listener that calls `.click()` on the hidden file input.
 
 ### Testing
 
@@ -556,19 +556,19 @@ No `DropzoneEventDetail` alias is exported. 2nd-gen is a clean break from 1st-ge
 
 #### General
 
-- [ ] JSDoc on all public properties (`dropEffect`, `dragged`, `filled`, `size`), slots, and CSS custom properties
-- [ ] Storybook stories: Playground, Overview, Anatomy, Options (Sizes story: `s`, `m`, `l`), States (default, dragged, filled, filled+dragged), Behaviors (event log, browse+drop interaction), Accessibility
-- [ ] Per-unit MDX file at `2nd-gen/packages/swc/components/dropzone/dropzone.mdx`
-- [ ] All stories include a browse control; no example omits it
-- [ ] Accessibility story demonstrates `aria-label` and event-driven `filled` state management
-- [ ] Consumer migration guide at `migration-guide.mdx`
+- [x] JSDoc on all public properties (`dropEffect`, `dragged`, `filled`, `size`), slots, and CSS custom properties — includes a `@cssprop` tag for `--swc-illustrated-message-illustration-color`, added during the Phase 7 `@cssprop` completeness review.
+- [x] Storybook stories: Playground, Overview, Anatomy, Options (Sizes story: `s`, `m`, `l`), States (default, dragged, filled, filled+dragged), Behaviors (event log, browse+drop interaction), Accessibility
+- [x] Per-unit MDX file at `2nd-gen/packages/swc/components/dropzone/dropzone.mdx`
+- [x] All stories include a browse control; no example omits it
+- [x] Accessibility story demonstrates `aria-label` and event-driven `filled` state management
+- [x] Consumer migration guide at `migration-guide.mdx`
 
 #### Breaking changes
 
-- [ ] Document B1–B7 and B17 with migration steps in `migration-guide.mdx`; note B16 (`size`) as additive (no consumer action needed)
-- [ ] Document that `--mod-*` properties are not carried forward
-- [ ] Document that `aria-label` or `aria-labelledby` is now required
-- [ ] Document that `role="group"` is now fixed on the host (remove any consumer-added `role`)
+- [x] Document B1–B3 and B7 and B17 with migration steps in `migration-guide.mdx`; note B16 (`size`) as additive (no consumer action needed). B4 (filled reflection fix) is covered by a note in the Renamed table since it can change visible behavior with no code change on upgrade. B5 (`dropEffect` reactivity/dev warning) is covered by a note in the Styling section. B6 (method visibility) is covered in the Removed table.
+- [x] Document that `--mod-*` properties are not carried forward
+- [x] Document that `aria-label` or `aria-labelledby` is now required
+- [x] Document that `role="group"` is now fixed on the host (remove any consumer-added `role`)
 
 ### Review
 
