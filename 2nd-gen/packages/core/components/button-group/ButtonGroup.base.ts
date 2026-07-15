@@ -16,6 +16,7 @@ import { property, queryAssignedElements } from 'lit/decorators.js';
 import type { ButtonBase } from '@spectrum-web-components/core/components/button';
 import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
 import { SizedMixin } from '@spectrum-web-components/core/mixins/index.js';
+import { validateEnum } from '@spectrum-web-components/core/utils/index.js';
 
 import { SlotAttributePropagationController } from '../../controllers/slot-attribute-propagation/index.js';
 import {
@@ -122,25 +123,19 @@ export abstract class ButtonGroupBase extends SizedMixin(SpectrumElement, {
   }
 
   protected override update(changedProperties: PropertyValues): void {
-    if (window.__swc?.DEBUG) {
-      const constructor = this.constructor as typeof ButtonGroupBase;
-      if (!constructor.ORIENTATIONS.includes(this.orientation)) {
-        window.__swc.warn(
-          this,
-          `<${this.localName}> element expects the "orientation" attribute to be one of the following:`,
-          'https://opensource.adobe.com/spectrum-web-components/components/button-group/',
-          { issues: [...constructor.ORIENTATIONS] }
-        );
-      }
-      if (!constructor.ALIGNMENTS.includes(this.align)) {
-        window.__swc.warn(
-          this,
-          `<${this.localName}> element expects the "align" attribute to be one of the following:`,
-          'https://opensource.adobe.com/spectrum-web-components/components/button-group/',
-          { issues: [...constructor.ALIGNMENTS] }
-        );
-      }
-    }
+    const constructor = this.constructor as typeof ButtonGroupBase;
+    validateEnum(this, {
+      prop: 'orientation',
+      value: this.orientation,
+      valid: constructor.ORIENTATIONS,
+      url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-button-group--docs',
+    });
+    validateEnum(this, {
+      prop: 'align',
+      value: this.align,
+      valid: constructor.ALIGNMENTS,
+      url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-button-group--docs',
+    });
     super.update(changedProperties);
   }
 

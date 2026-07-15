@@ -13,6 +13,7 @@ import { PropertyValues, ReactiveElement } from 'lit';
 import { property } from 'lit/decorators.js';
 
 import { LanguageResolutionController } from '../controllers/language-resolution.js';
+import { validateEnum, warnIf } from '../utils/index.js';
 import {
   ObserveSlotPresence,
   type SlotPresenceObservingInterface,
@@ -284,6 +285,24 @@ export function LinearProgressMixin<T extends Constructor<ReactiveElement>>(
       ) {
         this.warnValueOutOfRange();
       }
+
+      if (changes.has('labelPosition')) {
+        validateEnum(this, {
+          prop: 'label-position',
+          value: this.labelPosition,
+          valid: LINEAR_PROGRESS_LABEL_POSITIONS,
+          url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-meter--docs',
+        });
+      }
+
+      if (changes.has('staticColor') && this.staticColor !== undefined) {
+        validateEnum(this, {
+          prop: 'static-color',
+          value: this.staticColor,
+          valid: LINEAR_PROGRESS_STATIC_COLORS,
+          url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-meter--docs',
+        });
+      }
     }
 
     private _hasWarnedNoAccessibleName = false;
@@ -302,8 +321,9 @@ export function LinearProgressMixin<T extends Constructor<ReactiveElement>>(
         return;
       }
       this._hasWarnedValueOutOfRange = true;
-      window.__swc?.warn(
+      warnIf(
         this,
+        true,
         `<${this.localName}> "value" (${value}) is outside the [${min}, ${max}] range and was clamped to ${this.clampedValue}.`,
         'https://spectrum-web-components.adobe.com/?path=/docs/components-meter--docs',
         {
@@ -321,8 +341,9 @@ export function LinearProgressMixin<T extends Constructor<ReactiveElement>>(
         return;
       }
       this._hasWarnedNoAccessibleName = true;
-      window.__swc?.warn(
+      warnIf(
         this,
+        true,
         `<${this.localName}> requires an accessible name.`,
         'https://spectrum-web-components.adobe.com/?path=/docs/components-meter--docs',
         {

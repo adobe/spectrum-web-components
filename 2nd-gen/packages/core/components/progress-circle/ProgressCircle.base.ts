@@ -19,6 +19,10 @@ import {
 } from '@spectrum-web-components/core/controllers/language-resolution.js';
 import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
 import { SizedMixin } from '@spectrum-web-components/core/mixins/index.js';
+import {
+  validateEnum,
+  warnIf,
+} from '@spectrum-web-components/core/utils/index.js';
 
 import {
   PROGRESS_CIRCLE_VALID_SIZES,
@@ -158,36 +162,12 @@ export abstract class ProgressCircleBase extends SizedMixin(SpectrumElement, {
   }
 
   private warnDeprecatedLightDomChildren(): void {
-    if (!window.__swc?.DEBUG) {
-      return;
-    }
-    if (!ProgressCircleBase.hasMeaningfulLightDomChildren(this)) {
-      return;
-    }
-    window.__swc.warn(
+    warnIf(
       this,
+      ProgressCircleBase.hasMeaningfulLightDomChildren(this),
       `<${this.localName}> no longer has a default slot. Light DOM children are not rendered and are not used for an accessible name. Use the "label" attribute or property, or "aria-label" / "aria-labelledby" on the host instead.`,
-      'https://opensource.adobe.com/spectrum-web-components/second-gen/?path=/docs/components-progress-circle--docs',
+      'https://spectrum-web-components.adobe.com/?path=/docs/components-progress-circle--docs',
       { level: 'deprecation' }
-    );
-  }
-
-  private warnMissingAccessibleName(): void {
-    if (!window.__swc?.DEBUG) {
-      return;
-    }
-    window.__swc?.warn(
-      this,
-      `<${this.localName}> requires an accessible name. A default label of "${ProgressCircleBase.DEFAULT_LABEL}" has been applied, but a more specific label should be provided via:`,
-      'https://opensource.adobe.com/spectrum-web-components/second-gen/?path=/docs/components-progress-circle--docs',
-      {
-        type: 'accessibility',
-        issues: [
-          'value supplied to the "label" attribute, which will be displayed visually as part of the element, or',
-          'value supplied to the "aria-label" attribute, which will only be provided to screen readers, or',
-          'an element ID reference supplied to the "aria-labelledby" attribute, which will be provided by screen readers and will need to be managed manually by the parent application.',
-        ],
-      }
     );
   }
 
@@ -238,11 +218,32 @@ export abstract class ProgressCircleBase extends SizedMixin(SpectrumElement, {
     // Apply default accessible name fallback after handling explicit label changes.
     if (changes.has('label') && !this.hasAccessibleName()) {
       this.setAttribute('aria-label', ProgressCircleBase.DEFAULT_LABEL);
-      this.warnMissingAccessibleName();
+      warnIf(
+        this,
+        true,
+        `<${this.localName}> requires an accessible name. A default label of "${ProgressCircleBase.DEFAULT_LABEL}" has been applied, but a more specific label should be provided via:`,
+        'https://spectrum-web-components.adobe.com/?path=/docs/components-progress-circle--docs',
+        {
+          type: 'accessibility',
+          issues: [
+            'value supplied to the "label" attribute, which will be displayed visually as part of the element, or',
+            'value supplied to the "aria-label" attribute, which will only be provided to screen readers, or',
+            'an element ID reference supplied to the "aria-labelledby" attribute, which will be provided by screen readers and will need to be managed manually by the parent application.',
+          ],
+        }
+      );
     }
 
-    if (window.__swc?.DEBUG) {
-      this.warnDeprecatedLightDomChildren();
+    if (changes.has('staticColor') && this.staticColor !== undefined) {
+      const constructor = this.constructor as typeof ProgressCircleBase;
+      validateEnum(this, {
+        prop: 'static-color',
+        value: this.staticColor,
+        valid: constructor.STATIC_COLORS,
+        url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-progress-circle--docs',
+      });
     }
+
+    this.warnDeprecatedLightDomChildren();
   }
 }

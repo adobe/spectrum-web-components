@@ -13,6 +13,10 @@ import { PropertyValues } from 'lit';
 import { property, state } from 'lit/decorators.js';
 
 import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
+import {
+  validateEnum,
+  warnIf,
+} from '@spectrum-web-components/core/utils/index.js';
 
 import {
   KEYBOARD_ACTIVATION_DEFAULT,
@@ -85,14 +89,12 @@ export abstract class TabsBase extends SpectrumElement {
   public set keyboardActivation(value: string) {
     const isValid = (KEYBOARD_ACTIVATIONS as readonly string[]).includes(value);
 
-    if (!isValid && window.__swc?.DEBUG) {
-      window.__swc.warn(
-        this,
-        `<${this.localName}> expects "keyboard-activation" to be one of:`,
-        'https://opensource.adobe.com/spectrum-web-components/components/tabs/',
-        { issues: [...KEYBOARD_ACTIVATIONS] }
-      );
-    }
+    validateEnum(this, {
+      prop: 'keyboard-activation',
+      value,
+      valid: KEYBOARD_ACTIVATIONS,
+      url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-tabs--docs',
+    });
 
     const valid = isValid
       ? (value as KeyboardActivation)
@@ -121,14 +123,12 @@ export abstract class TabsBase extends SpectrumElement {
   public set density(value: string) {
     const isValid = (TAB_DENSITIES as readonly string[]).includes(value);
 
-    if (!isValid && window.__swc?.DEBUG) {
-      window.__swc.warn(
-        this,
-        `<${this.localName}> expects "density" to be one of:`,
-        'https://opensource.adobe.com/spectrum-web-components/components/tabs/',
-        { issues: [...TAB_DENSITIES] }
-      );
-    }
+    validateEnum(this, {
+      prop: 'density',
+      value,
+      valid: TAB_DENSITIES,
+      url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-tabs--docs',
+    });
 
     const valid = isValid ? (value as TabDensity) : TAB_DENSITY_DEFAULT;
 
@@ -160,16 +160,12 @@ export abstract class TabsBase extends SpectrumElement {
   public set direction(value: TabsDirection) {
     const isValid = (TABS_DIRECTIONS as readonly string[]).includes(value);
 
-    if (!isValid && window.__swc?.DEBUG) {
-      window.__swc.warn(
-        this,
-        `<${this.localName}> expects the "direction" attribute to be one of the following:`,
-        'https://opensource.adobe.com/spectrum-web-components/components/tabs/',
-        {
-          issues: [...TABS_DIRECTIONS],
-        }
-      );
-    }
+    validateEnum(this, {
+      prop: 'direction',
+      value,
+      valid: TABS_DIRECTIONS,
+      url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-tabs--docs',
+    });
 
     const validDirection = isValid
       ? (value as TabsDirection)
@@ -725,14 +721,13 @@ export abstract class TabsBase extends SpectrumElement {
       this.setAttribute('direction', this.direction);
     }
 
-    if (window.__swc?.DEBUG && !this.accessibleLabel) {
-      window.__swc.warn(
-        this,
-        `<${this.localName}> requires an "accessible-label" attribute to provide an accessible name for the tablist.`,
-        'https://opensource.adobe.com/spectrum-web-components/components/tabs/',
-        { type: 'accessibility', level: 'high' }
-      );
-    }
+    warnIf(
+      this,
+      !this.accessibleLabel,
+      `<${this.localName}> requires an "accessible-label" attribute to provide an accessible name for the tablist.`,
+      'https://spectrum-web-components.adobe.com/?path=/docs/components-tabs--docs',
+      { type: 'accessibility', level: 'high' }
+    );
   }
 
   /**

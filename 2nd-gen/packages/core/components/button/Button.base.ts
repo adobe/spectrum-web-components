@@ -19,6 +19,7 @@ import {
   ObserveSlotText,
   SizedMixin,
 } from '@spectrum-web-components/core/mixins/index.js';
+import { warnIf } from '@spectrum-web-components/core/utils/index.js';
 
 import { BUTTON_VALID_SIZES } from './Button.types.js';
 
@@ -206,23 +207,19 @@ export abstract class ButtonBase extends SizedMixin(
       }
     }
     super.update(changedProperties);
-    if (window.__swc?.DEBUG) {
-      if (this.pending && this.disabled) {
-        window.__swc.warn(
-          this,
-          `<${this.localName}> should not set both "pending" and "disabled" simultaneously. Use "pending" to keep the button focusable while unavailable, or "disabled" to fully remove it from the tab order.`,
-          'https://opensource.adobe.com/spectrum-web-components/components/button/#pending',
-          { issues: ['pending + disabled'] }
-        );
-      }
-      if (this.hasIcon && !this.hasLabel && !this.accessibleLabel) {
-        window.__swc.warn(
-          this,
-          `<${this.localName}> with an icon and no label must have an "accessible-label" attribute to be accessible.`,
-          'https://opensource.adobe.com/spectrum-web-components/components/button/#icon-only',
-          { issues: ['accessible-label'] }
-        );
-      }
-    }
+    warnIf(
+      this,
+      this.pending && this.disabled,
+      `<${this.localName}> should not set both "pending" and "disabled" simultaneously. Use "pending" to keep the button focusable while unavailable, or "disabled" to fully remove it from the tab order.`,
+      'https://spectrum-web-components.adobe.com/?path=/docs/components-button--docs',
+      { issues: ['pending + disabled'] }
+    );
+    warnIf(
+      this,
+      this.hasIcon && !this.hasLabel && !this.accessibleLabel,
+      `<${this.localName}> with an icon and no label must have an "accessible-label" attribute to be accessible.`,
+      'https://spectrum-web-components.adobe.com/?path=/docs/components-button--docs',
+      { type: 'accessibility', issues: ['accessible-label'] }
+    );
   }
 }

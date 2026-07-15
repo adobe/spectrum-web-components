@@ -15,6 +15,10 @@ import { property } from 'lit/decorators.js';
 
 import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
 import { SizedMixin } from '@spectrum-web-components/core/mixins/index.js';
+import {
+  validateEnum,
+  warnIf,
+} from '@spectrum-web-components/core/utils/index.js';
 
 import {
   CARD_DENSITIES,
@@ -136,46 +140,35 @@ export abstract class CardBase extends SizedMixin(SpectrumElement, {
       }
     }
 
-    if (window.__swc?.DEBUG) {
-      const { VARIANTS, DENSITIES } = this.constructor as typeof CardBase;
+    const { VARIANTS, DENSITIES } = this.constructor as typeof CardBase;
 
-      if (
-        changedProperties.has('variant') &&
-        !VARIANTS.includes(this.variant)
-      ) {
-        window.__swc.warn(
-          this,
-          `<${this.localName}> received an invalid "variant" value of "${this.variant}". Valid values are ${VARIANTS.join(', ')}.`,
-          'https://opensource.adobe.com/spectrum-web-components/components/card/',
-          { issues: [`variant="${this.variant}"`] }
-        );
-      }
-
-      if (
-        changedProperties.has('density') &&
-        !DENSITIES.includes(this.density)
-      ) {
-        window.__swc.warn(
-          this,
-          `<${this.localName}> received an invalid "density" value of "${this.density}". Valid values are ${DENSITIES.join(', ')}.`,
-          'https://opensource.adobe.com/spectrum-web-components/components/card/',
-          { issues: [`density="${this.density}"`] }
-        );
-      }
-
-      if (
-        changedProperties.has('titleAsLink') &&
-        this.titleAsLink &&
-        !this.getTitleLinkElement()
-      ) {
-        window.__swc.warn(
-          this,
-          `<${this.localName}> has "title-as-link" set but no link element was found in the "title" slot.`,
-          'https://opensource.adobe.com/spectrum-web-components/components/card/',
-          { issues: ['title-as-link'] }
-        );
-      }
+    if (changedProperties.has('variant')) {
+      validateEnum(this, {
+        prop: 'variant',
+        value: this.variant,
+        valid: VARIANTS,
+        url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-card--docs',
+      });
     }
+
+    if (changedProperties.has('density')) {
+      validateEnum(this, {
+        prop: 'density',
+        value: this.density,
+        valid: DENSITIES,
+        url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-card--docs',
+      });
+    }
+
+    warnIf(
+      this,
+      changedProperties.has('titleAsLink') &&
+        this.titleAsLink &&
+        !this.getTitleLinkElement(),
+      `<${this.localName}> has "title-as-link" set but no link element was found in the "title" slot.`,
+      'https://spectrum-web-components.adobe.com/?path=/docs/components-card--docs',
+      { issues: ['title-as-link'] }
+    );
   }
 
   /**

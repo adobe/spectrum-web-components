@@ -28,6 +28,8 @@ import {
   resolveTrigger,
   runAfterTransition,
   unregisterDismissible,
+  validateEnum,
+  warnIf,
 } from '@spectrum-web-components/core/utils/index.js';
 
 import {
@@ -338,20 +340,22 @@ export abstract class PopoverBase extends SpectrumElement {
   }
 
   protected override update(changedProperties: PropertyValues): void {
-    if (window.__swc?.DEBUG) {
-      // Validate against the static so subclasses that narrow the placement set
-      // (the proxy pattern) get their own valid values checked at runtime.
-      const constructor = this.constructor as typeof PopoverBase;
-      if (!constructor.VALID_PLACEMENTS.includes(this.placement)) {
-        window.__swc.warn(
-          this,
-          `<${this.localName}> element expects the "placement" attribute to be one of the following:`,
-          'https://spectrum-web-components.adobe.com/?path=/docs/components-popover--docs',
-          {
-            issues: [...constructor.VALID_PLACEMENTS],
-          }
-        );
-      }
+    // Validate against the static so subclasses that narrow the placement set
+    // (the proxy pattern) get their own valid values checked at runtime.
+    const constructor = this.constructor as typeof PopoverBase;
+    validateEnum(this, {
+      prop: 'placement',
+      value: this.placement,
+      valid: constructor.VALID_PLACEMENTS,
+      url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-popover--docs',
+    });
+    if (this.size !== undefined) {
+      validateEnum(this, {
+        prop: 'size',
+        value: this.size,
+        valid: constructor.VALID_SIZES,
+        url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-popover--docs',
+      });
     }
     super.update(changedProperties);
   }
@@ -419,14 +423,13 @@ export abstract class PopoverBase extends SpectrumElement {
         this.triggerElement instanceof HTMLElement ? this.triggerElement : null,
     });
 
-    if (!trigger && this.for && window.__swc?.DEBUG) {
-      window.__swc.warn(
-        this,
-        `<${this.localName}> for="${this.for}" did not resolve to an element in the current tree root. Check that the referenced id exists in the same document tree root.`,
-        'https://spectrum-web-components.adobe.com/?path=/docs/components-popover--docs',
-        { level: 'high' }
-      );
-    }
+    warnIf(
+      this,
+      !trigger && Boolean(this.for),
+      `<${this.localName}> for="${this.for}" did not resolve to an element in the current tree root. Check that the referenced id exists in the same document tree root.`,
+      'https://spectrum-web-components.adobe.com/?path=/docs/components-popover--docs',
+      { level: 'high' }
+    );
 
     if (
       this._interactiveElement &&
@@ -608,14 +611,13 @@ export abstract class PopoverBase extends SpectrumElement {
       return;
     }
     // The surface is a dialog in both modes, so it must have an accessible name.
-    if (window.__swc?.DEBUG && !this.accessibleLabel.trim()) {
-      window.__swc.warn(
-        this,
-        `<${this.localName}> must have an "accessible-label" attribute to name the dialog for assistive technology.`,
-        'https://spectrum-web-components.adobe.com/?path=/docs/components-popover--docs',
-        { issues: ['accessible-label'] }
-      );
-    }
+    warnIf(
+      this,
+      !this.accessibleLabel.trim(),
+      `<${this.localName}> must have an "accessible-label" attribute to name the dialog for assistive technology.`,
+      'https://spectrum-web-components.adobe.com/?path=/docs/components-popover--docs',
+      { issues: ['accessible-label'] }
+    );
     // Enter the top layer first; only register listeners, the dismissible stack,
     // and positioning once the native show actually succeeds, so a failed
     // `showPopover()`/`showModal()` does not leave the component wired up for a

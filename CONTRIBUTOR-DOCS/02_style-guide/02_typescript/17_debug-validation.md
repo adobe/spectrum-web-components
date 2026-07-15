@@ -124,7 +124,7 @@ protected override update(changedProperties: PropertyValues): void {
     prop: 'variant',
     value: this.variant,
     valid: BadgeBase.VARIANTS,
-    url: 'https://opensource.adobe.com/spectrum-web-components/components/badge/',
+    url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-badge--docs',
   });
   super.update(changedProperties);
 }
@@ -145,7 +145,7 @@ protected override firstUpdated(changed: PropertyValues): void {
     this,
     !this.accessibleLabel,
     `<${this.localName}> requires an "accessible-label" attribute to provide an accessible name for the tablist.`,
-    'https://opensource.adobe.com/spectrum-web-components/components/tabs/',
+    'https://spectrum-web-components.adobe.com/?path=/docs/components-tabs--docs',
     { type: 'accessibility', level: 'high' }
   );
 }
@@ -162,7 +162,7 @@ protected override updated(changed: PropertyValues<this>): void {
     this,
     !this.accessibleLabel && !hasLabelSlotContent,
     `<${this.localName}> requires either slotted label content or an "accessible-label" attribute.`,
-    'https://opensource.adobe.com/spectrum-web-components/components/example/',
+    'https://spectrum-web-components.adobe.com/?path=/docs/components-example--docs',
     { type: 'accessibility', level: 'high' }
   );
 }
@@ -176,7 +176,7 @@ warnIf(
   this,
   this.outline && !BadgeBase.VARIANTS_SEMANTIC.includes(this.variant),
   `Outline styling requires a semantic variant. Current variant "${this.variant}" is not semantic.`,
-  'https://opensource.adobe.com/spectrum-web-components/components/badge/',
+  'https://spectrum-web-components.adobe.com/?path=/docs/components-badge--docs',
   { issues: [`outline + variant="${this.variant}"`] }
 );
 ```
@@ -190,7 +190,7 @@ warnIf(
   this,
   this.indeterminate && this.value !== undefined,
   `Indeterminate progress should not have a value. The value will be ignored.`,
-  'https://opensource.adobe.com/spectrum-web-components/components/progress-circle/',
+  'https://spectrum-web-components.adobe.com/?path=/docs/components-progress-circle--docs',
   { issues: ['indeterminate + value'] }
 );
 ```
@@ -382,7 +382,7 @@ protected handleLabelSlotChange(event: Event): void {
     this,
     event.target as HTMLSlotElement,
     'label',
-    'https://opensource.adobe.com/spectrum-web-components/components/example/'
+    'https://spectrum-web-components.adobe.com/?path=/docs/components-example--docs'
   );
 }
 ```
@@ -400,7 +400,7 @@ protected handleHeadingSlotChange(event: Event): void {
     event.target as HTMLSlotElement,
     ['h2', 'h3', 'h4', 'h5', 'h6'],
     'heading',
-    'https://opensource.adobe.com/spectrum-web-components/components/illustrated-message/'
+    'https://spectrum-web-components.adobe.com/?path=/docs/components-illustrated-message--docs'
   );
 }
 ```

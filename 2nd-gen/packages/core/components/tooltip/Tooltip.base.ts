@@ -13,6 +13,10 @@ import { PropertyValues } from 'lit';
 import { property } from 'lit/decorators.js';
 
 import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
+import {
+  validateEnum,
+  warnIf,
+} from '@spectrum-web-components/core/utils/index.js';
 
 import {
   HoverController,
@@ -279,14 +283,13 @@ export abstract class TooltipBase
     if (this.for) {
       const root = this.getRootNode() as Document | ShadowRoot;
       const trigger = root.getElementById(this.for);
-      if (!trigger && window.__swc?.DEBUG) {
-        window.__swc.warn(
-          this,
-          `<${this.localName}> for="${this.for}" did not resolve to an element in the current tree root. Check that the referenced id exists in the same document tree root.`,
-          'https://opensource.adobe.com/spectrum-web-components/components/tooltip/',
-          { level: 'high' }
-        );
-      }
+      warnIf(
+        this,
+        !trigger,
+        `<${this.localName}> for="${this.for}" did not resolve to an element in the current tree root. Check that the referenced id exists in the same document tree root.`,
+        'https://spectrum-web-components.adobe.com/?path=/docs/components-tooltip--docs',
+        { level: 'high' }
+      );
       return trigger;
     }
     return null;
@@ -470,6 +473,24 @@ export abstract class TooltipBase
 
   protected override updated(changedProperties: PropertyValues): void {
     super.updated(changedProperties);
+    if (changedProperties.has('variant')) {
+      const constructor = this.constructor as typeof TooltipBase;
+      validateEnum(this, {
+        prop: 'variant',
+        value: this.variant,
+        valid: constructor.VARIANTS,
+        url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-tooltip--docs',
+      });
+    }
+    if (changedProperties.has('placement')) {
+      const constructor = this.constructor as typeof TooltipBase;
+      validateEnum(this, {
+        prop: 'placement',
+        value: this.placement,
+        valid: constructor.PLACEMENTS,
+        url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-tooltip--docs',
+      });
+    }
     if (changedProperties.has('offset')) {
       this.style.setProperty(
         '--_swc-tooltip-animation-distance',

@@ -13,6 +13,7 @@ import { PropertyValues } from 'lit';
 import { property } from 'lit/decorators.js';
 
 import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
+import { warnIf } from '@spectrum-web-components/core/utils/index.js';
 
 import {
   AVATAR_DEFAULT_SIZE,
@@ -73,11 +74,20 @@ export abstract class AvatarBase extends SpectrumElement {
   }
 
   public set size(value: AvatarSize) {
-    const validSize = (AVATAR_VALID_SIZES as readonly number[]).includes(
+    const isValid = (AVATAR_VALID_SIZES as readonly number[]).includes(
       Number(value)
-    )
+    );
+    const validSize = isValid
       ? (Number(value) as AvatarSize)
       : AVATAR_DEFAULT_SIZE;
+
+    warnIf(
+      this,
+      !isValid,
+      `<${this.localName}> expects "size" to be one of: ${AVATAR_VALID_SIZES.join(', ')}. Received "${value}".`,
+      'https://spectrum-web-components.adobe.com/?path=/docs/components-avatar--docs',
+      { issues: [`size="${value}"`] }
+    );
 
     if (this._size === validSize) {
       return;
@@ -126,9 +136,7 @@ export abstract class AvatarBase extends SpectrumElement {
       this.setAttribute('size', String(this.size));
     }
     this._syncAriaHidden();
-    if (window.__swc?.DEBUG) {
-      this._warnMissingAlt();
-    }
+    this._warnMissingAlt();
   }
 
   protected override updated(changes: PropertyValues): void {
@@ -136,7 +144,7 @@ export abstract class AvatarBase extends SpectrumElement {
     if (changes.has('decorative')) {
       this._syncAriaHidden();
     }
-    if (changes.has('alt') && window.__swc?.DEBUG) {
+    if (changes.has('alt')) {
       this._warnMissingAlt();
     }
   }
@@ -150,19 +158,18 @@ export abstract class AvatarBase extends SpectrumElement {
   }
 
   private _warnMissingAlt(): void {
-    if (this.alt === undefined && !this.decorative) {
-      window.__swc?.warn(
-        this,
-        `<${this.localName}> is missing an \`alt\` attribute. Provide a text description or pass \`alt=""\` and mark it as \`decorative\`.`,
-        'https://opensource.adobe.com/spectrum-web-components/components/avatar/#accessibility',
-        {
-          type: 'accessibility',
-          issues: [
-            'Provide an `alt` attribute with meaningful alternative text, or',
-            'Set `alt=""` and mark the image as `decorative` (hidden from screen readers).',
-          ],
-        }
-      );
-    }
+    warnIf(
+      this,
+      this.alt === undefined && !this.decorative,
+      `<${this.localName}> is missing an \`alt\` attribute. Provide a text description or pass \`alt=""\` and mark it as \`decorative\`.`,
+      'https://spectrum-web-components.adobe.com/?path=/docs/components-avatar--docs',
+      {
+        type: 'accessibility',
+        issues: [
+          'Provide an `alt` attribute with meaningful alternative text, or',
+          'Set `alt=""` and mark the image as `decorative` (hidden from screen readers).',
+        ],
+      }
+    );
   }
 }

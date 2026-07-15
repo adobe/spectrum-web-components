@@ -14,6 +14,10 @@ import { PropertyValues } from 'lit';
 import { property } from 'lit/decorators.js';
 
 import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
+import {
+  validateAllowedChildren,
+  validateEnum,
+} from '@spectrum-web-components/core/utils/index.js';
 
 import { SlotAttributePropagationController } from '../../controllers/slot-attribute-propagation/index.js';
 import {
@@ -85,30 +89,22 @@ export abstract class IllustratedMessageBase extends SpectrumElement {
   protected override updated(changedProperties: PropertyValues): void {
     super.updated(changedProperties);
 
-    if (window.__swc?.DEBUG) {
-      if (
-        changedProperties.has('size') &&
-        !ILLUSTRATED_MESSAGE_VALID_SIZES.includes(this.size)
-      ) {
-        window.__swc.warn(
-          this,
-          `<${this.localName}> received an invalid "size" value of "${this.size}". Valid values are ${ILLUSTRATED_MESSAGE_VALID_SIZES.join(', ')}.`,
-          'https://opensource.adobe.com/spectrum-web-components/components/illustrated-message/',
-          { issues: [`size="${this.size}"`] }
-        );
-      }
+    if (changedProperties.has('size')) {
+      validateEnum(this, {
+        prop: 'size',
+        value: this.size,
+        valid: ILLUSTRATED_MESSAGE_VALID_SIZES,
+        url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-illustrated-message--docs',
+      });
+    }
 
-      if (
-        changedProperties.has('orientation') &&
-        !ILLUSTRATED_MESSAGE_VALID_ORIENTATIONS.includes(this.orientation)
-      ) {
-        window.__swc.warn(
-          this,
-          `<${this.localName}> received an invalid "orientation" value of "${this.orientation}". Valid values are ${ILLUSTRATED_MESSAGE_VALID_ORIENTATIONS.join(', ')}.`,
-          'https://opensource.adobe.com/spectrum-web-components/components/illustrated-message/',
-          { issues: [`orientation="${this.orientation}"`] }
-        );
-      }
+    if (changedProperties.has('orientation')) {
+      validateEnum(this, {
+        prop: 'orientation',
+        value: this.orientation,
+        valid: ILLUSTRATED_MESSAGE_VALID_ORIENTATIONS,
+        url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-illustrated-message--docs',
+      });
     }
   }
 
@@ -125,18 +121,12 @@ export abstract class IllustratedMessageBase extends SpectrumElement {
    * for the validation warning to fire.
    */
   protected handleHeadingSlotChange(event: Event): void {
-    if (window.__swc?.DEBUG) {
-      const headingSlot = event.target as HTMLSlotElement;
-      for (const el of headingSlot.assignedElements()) {
-        if (!['H2', 'H3', 'H4', 'H5', 'H6'].includes(el.tagName)) {
-          window.__swc.warn(
-            this,
-            `<${this.localName}> heading slot received a <${el.tagName.toLowerCase()}> element. Only <h2>–<h6> elements are allowed in the heading slot.`,
-            'https://opensource.adobe.com/spectrum-web-components/components/illustrated-message/',
-            { issues: [`heading slot: <${el.tagName.toLowerCase()}>`] }
-          );
-        }
-      }
-    }
+    validateAllowedChildren(
+      this,
+      event.target as HTMLSlotElement,
+      ['h2', 'h3', 'h4', 'h5', 'h6'],
+      'heading',
+      'https://spectrum-web-components.adobe.com/?path=/docs/components-illustrated-message--docs'
+    );
   }
 }
