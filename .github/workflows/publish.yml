@@ -16,7 +16,7 @@ on:
           - all
           - 2nd-gen
       dry_run:
-        description: 'Dry run: build, version, and pack but use npm publish --dry-run (no registry writes). Only applies to the 2nd-gen scope.'
+        description: 'Dry run the 2nd-gen publish: build, pack, and npm publish --dry-run only. Does not bump versions, write changelogs, or delete changesets.'
         required: false
         type: boolean
         default: false
@@ -190,11 +190,13 @@ jobs:
 
       # For scope=2nd-gen, version via Changesets pre mode (not snapshot). The
       # gen2-beta release script bumps 2.0.0-beta.N, writes changelogs, and prunes
-      # stale changeset files before we pack and publish.
+      # stale changeset files before we pack and publish. Skipped on dry_run so
+      # changelogs and .changeset/*.md files are left untouched.
       - name: Prepare gen2-beta release
         if: >-
           steps.extract-tag.outputs.scope == '2nd-gen' &&
-          needs.check-changesets.outputs.has_2nd_gen_changesets == 'true'
+          needs.check-changesets.outputs.has_2nd_gen_changesets == 'true' &&
+          github.event.inputs.dry_run != 'true'
         run: yarn release:gen2-beta
 
       - name: Version packages
@@ -264,7 +266,7 @@ jobs:
           PUBLISH_FLAGS="--tag $TAG --access public"
           if [ "$DRY_RUN" == "true" ]; then
             PUBLISH_FLAGS="$PUBLISH_FLAGS --dry-run"
-            echo "::notice::DRY RUN - packing only, no packages will be published to npm"
+            echo "::notice::DRY RUN - pack and npm publish --dry-run only; versions, changelogs, and changesets are not modified"
           fi
           yarn workspace @adobe/spectrum-wc-core pack --out /tmp/swc-core.tgz
           yarn workspace @adobe/spectrum-wc pack --out /tmp/swc-wc.tgz
