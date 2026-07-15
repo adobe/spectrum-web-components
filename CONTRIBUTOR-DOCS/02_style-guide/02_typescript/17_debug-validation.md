@@ -525,15 +525,44 @@ to skip the `issuedWarnings` check entirely and log every occurrence, from
 every instance, every time. Reach for this when auditing a page for every
 instance of a given issue.
 
-**No guaranteed production stripping (not addressed here).** The
-`process.env.NODE_ENV === 'development'` gate in `spectrum-element.ts` ships
-as literal, unreplaced code in this package's own library build;
-dead-code elimination depends entirely on the *consuming application's*
-bundler defining `process.env.NODE_ENV` and applying that define to
-`node_modules`. A consumer loading the package as a bare ES module with no
-bundler at all will hit a `ReferenceError` on `process`. This is a build
-tooling problem, not a call-site problem, and is tracked as its own
-follow-up. Raise it as a separate change if you want to pursue a fix.
+**Production stripping (partially fixed).** Each helper in
+`dev-validation.ts` now starts with `if (process.env.NODE_ENV === 'production')
+return;`, ahead of the `window.__swc?.DEBUG` check. This matters because a
+bundler can only dead-code-eliminate a branch it can *prove* false at build
+time. `window.__swc?.DEBUG` is a runtime read on a global: no bundler can
+know it will be `undefined` just because a *different* file's `if (literal)`
+block never assigns it. `process.env.NODE_ENV` is the opposite: once a
+bundler replaces it with the literal `"production"`, `if ("production" ===
+"production") return;` folds to `if (true) return;`, and a minifier can then
+delete everything after it **inside that function**: the dedup lookup, the
+message formatting, the `window.__swc.warn` call. That's a real, provable
+removal, not a hope.
+
+What this does **not** fix:
+- **The call sites themselves.** Every `validateEnum(...)`/`warnIf(...)`
+  expression in every component still executes on every `update()`/`updated()`
+  pass, in every build, because JS evaluates a function's arguments before
+  calling it, so the message template string and `options` object literal
+  at each call site are still constructed even when the function itself
+  immediately no-ops. This is a small, bounded cost (one string interpolation
+  and one small object per call), not a hot-loop concern, but it is not zero.
+- **Whether the substitution actually happens.** This package's own build
+  does not currently replace `process.env.NODE_ENV` before publishing (it
+  ships the literal check as-is), so whether any of the folding above
+  actually occurs still depends on either this package's own build pipeline
+  being updated to perform the substitution + minification, or the
+  *consuming application's* bundler doing so downstream. Neither is
+  guaranteed today.
+- **The bare-ES-module case.** A consumer loading this package with no
+  bundler at all (a raw `<script type="module">` import) still hits a
+  `ReferenceError` on `process`, since it's never defined in that
+  environment.
+
+The more complete fix, publishing genuinely separate development/production
+builds (the pattern React uses: a small entry that `require()`s one of two
+fully-built files, so the unused one is never even parsed), is a
+significantly larger project (doubled build output, a stripping transform,
+doubled test coverage) and is tracked as a follow-up, not attempted here.
 
 In the meantime, point consumers who are worried about shipping dev-mode
 code to production at the per-bundler stripping recipes in the

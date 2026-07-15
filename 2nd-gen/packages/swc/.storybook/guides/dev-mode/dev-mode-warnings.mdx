@@ -32,16 +32,25 @@ accessibility bug later.
 
 ## Only in development
 
-These checks run behind a `window.__swc.DEBUG` flag, set automatically when
-`process.env.NODE_ENV === 'development'`. This package ships that check as
-literal source in its published build (it does not pre-strip it), so
-whether the flag ends up `false` (and the check, and every warning string
-and `window.__swc.warn` call alongside it, gets removed by your bundler's
-dead-code elimination) depends on **your own build configuration**.
+These checks run behind a `window.__swc.DEBUG` flag, set when
+`process.env.NODE_ENV === 'development'`, plus an internal guard in each
+validation helper that skips its own logic when
+`process.env.NODE_ENV === 'production'`. Both are literal checks this
+package ships as-is (it does not pre-strip them), so whether your production
+build actually removes them depends on **your own build configuration**
+replacing `process.env.NODE_ENV` with `'production'` and minifying.
 
-**Recommended: confirm your production build actually strips this.** Most
-setups handle it automatically, but "automatically" depends on your bundler
-processing `node_modules`, which not every default config does:
+Even in a well-configured production build, this only removes the internal
+validation logic (the actual checks, message building, and console output).
+It does not remove the small per-call overhead of invoking a validation
+helper (a cheap property check that immediately no-ops) from every component
+that calls one, on every update. That overhead is negligible for typical
+usage, but it does mean "stripped" here means "inert," not "physically
+absent from the bundle."
+
+**Recommended: confirm your production build actually strips what it can.**
+Most setups handle it automatically, but "automatically" depends on your
+bundler processing `node_modules`, which not every default config does:
 
 - **Webpack / Next.js**: `mode: 'production'` sets `process.env.NODE_ENV` via
   `DefinePlugin` and minifies with Terser, both of which apply to
