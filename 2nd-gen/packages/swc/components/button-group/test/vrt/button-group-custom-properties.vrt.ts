@@ -27,7 +27,7 @@ import {
 } from '../../../../.storybook/helpers/index.js';
 
 const meta: Meta = {
-  title: 'Button Group/VRT',
+  title: 'Button Group/Button Group VRT',
   component: 'swc-button-group',
   tags: ['dev'],
 };

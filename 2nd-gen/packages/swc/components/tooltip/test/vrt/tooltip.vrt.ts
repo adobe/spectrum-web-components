@@ -28,7 +28,7 @@ import {
 } from '../../../../.storybook/helpers/index.js';
 
 const meta: Meta = {
-  title: 'Tooltip/VRT',
+  title: 'Tooltip/Tooltip VRT',
   component: 'swc-tooltip',
   tags: ['dev'],
 };

@@ -23,7 +23,7 @@ import {
 } from '../../../../.storybook/helpers/index.js';
 
 const meta: Meta = {
-  title: 'Color Handle/VRT',
+  title: 'Color Handle/Color Handle VRT',
   component: 'swc-color-handle',
   tags: ['dev'],
 };

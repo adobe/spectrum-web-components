@@ -26,7 +26,7 @@ import {
 } from '../../../../.storybook/helpers/index.js';
 
 const meta: Meta = {
-  title: 'Avatar/VRT',
+  title: 'Avatar/Avatar VRT',
   component: 'swc-avatar',
   tags: ['dev'],
 };

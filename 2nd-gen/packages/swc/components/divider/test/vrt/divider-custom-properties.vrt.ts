@@ -26,7 +26,7 @@ import {
 } from '../../../../.storybook/helpers/index.js';
 
 const meta: Meta = {
-  title: 'Divider/VRT',
+  title: 'Divider/Divider VRT',
   component: 'swc-divider',
   tags: ['dev'],
 };

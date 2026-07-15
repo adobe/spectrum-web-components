@@ -25,7 +25,7 @@ import {
 } from '../../../../.storybook/helpers/index.js';
 
 const meta: Meta = {
-  title: 'Asset/VRT',
+  title: 'Asset/Asset VRT',
   component: 'swc-asset',
   tags: ['dev'],
 };

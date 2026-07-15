@@ -34,7 +34,7 @@ import { Arrow100Icon } from '../../../icon/elements/Arrow100Icon.js';
 // Metadata
 
 const meta: Meta = {
-  title: 'Button/VRT',
+  title: 'Button/Button VRT',
   component: 'swc-button',
   tags: ['dev'],
 };

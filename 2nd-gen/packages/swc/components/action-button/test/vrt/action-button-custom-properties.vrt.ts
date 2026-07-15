@@ -29,7 +29,7 @@ import {
 import { Arrow100Icon } from '../../../icon/elements/Arrow100Icon.js';
 
 const meta: Meta = {
-  title: 'Action Button/VRT',
+  title: 'Action Button/Action Button VRT',
   component: 'swc-action-button',
   tags: ['dev'],
 };

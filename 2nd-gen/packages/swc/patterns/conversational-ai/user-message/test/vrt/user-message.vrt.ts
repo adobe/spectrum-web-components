@@ -24,7 +24,7 @@ import {
 } from '../../../../../.storybook/helpers/index.js';
 
 const meta: Meta = {
-  title: 'Conversational AI/User message/VRT',
+  title: 'Conversational AI/User message/User message VRT',
   component: 'swc-user-message',
   tags: ['dev'],
 };

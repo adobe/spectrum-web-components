@@ -23,7 +23,7 @@ import {
 } from '../../../../.storybook/helpers/index.js';
 
 const meta: Meta = {
-  title: 'Action Button/VRT',
+  title: 'Action Button/Action Button VRT',
   tags: ['dev'],
 };
 

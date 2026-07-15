@@ -27,7 +27,7 @@ import {
 import { Chevron100Icon } from '../../../icon/elements/index.js';
 
 const meta: Meta = {
-  title: 'Icon/VRT',
+  title: 'Icon/Icon VRT',
   component: 'swc-icon',
   tags: ['dev'],
 };

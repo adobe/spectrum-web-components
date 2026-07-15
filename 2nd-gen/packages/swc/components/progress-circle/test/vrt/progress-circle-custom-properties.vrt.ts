@@ -26,7 +26,7 @@ import {
 } from '../../../../.storybook/helpers/index.js';
 
 const meta: Meta = {
-  title: 'Progress circle/VRT',
+  title: 'Progress circle/Progress circle VRT',
   component: 'swc-progress-circle',
   tags: ['dev'],
 };

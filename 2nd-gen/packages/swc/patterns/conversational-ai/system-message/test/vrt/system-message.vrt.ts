@@ -29,7 +29,7 @@ import {
 } from '../../../../../.storybook/helpers/index.js';
 
 const meta: Meta = {
-  title: 'Conversational AI/System message/VRT',
+  title: 'Conversational AI/System message/System message VRT',
   component: 'swc-system-message',
   tags: ['dev'],
 };

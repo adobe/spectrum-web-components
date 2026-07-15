@@ -31,7 +31,7 @@ import {
 } from '../../../../.storybook/helpers/index.js';
 
 const meta: Meta = {
-  title: 'Tabs/VRT',
+  title: 'Tabs/Tabs VRT',
   component: 'swc-tabs',
   tags: ['dev'],
 };

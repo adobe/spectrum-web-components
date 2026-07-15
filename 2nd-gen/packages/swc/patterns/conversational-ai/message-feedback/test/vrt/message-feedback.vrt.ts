@@ -23,7 +23,7 @@ import {
 } from '../../../../../.storybook/helpers/index.js';
 
 const meta: Meta = {
-  title: 'Conversational AI/Message feedback/VRT',
+  title: 'Conversational AI/Message feedback/Message feedback VRT',
   component: 'swc-message-feedback',
   tags: ['dev'],
 };

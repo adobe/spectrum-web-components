@@ -23,7 +23,7 @@ import {
 } from '../../../../.storybook/helpers/index.js';
 
 const meta: Meta = {
-  title: 'Color Loupe/VRT',
+  title: 'Color Loupe/Color Loupe VRT',
   component: 'swc-color-loupe',
   tags: ['dev'],
 };

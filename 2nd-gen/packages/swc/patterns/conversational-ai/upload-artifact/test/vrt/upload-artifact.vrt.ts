@@ -23,7 +23,7 @@ import {
 } from '../../../../../.storybook/helpers/index.js';
 
 const meta: Meta = {
-  title: 'Conversational AI/Upload artifact/VRT',
+  title: 'Conversational AI/Upload artifact/Upload artifact VRT',
   component: 'swc-upload-artifact',
   tags: ['dev'],
 };

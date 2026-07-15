@@ -26,7 +26,7 @@ import {
 } from '../../stories/typography.template.js';
 
 const meta: Meta = {
-  title: 'Typography/VRT',
+  title: 'Typography/Typography VRT',
   tags: ['dev'],
 };
 

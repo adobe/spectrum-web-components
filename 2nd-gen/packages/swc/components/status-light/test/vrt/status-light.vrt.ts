@@ -31,7 +31,7 @@ import {
 } from '../../../../.storybook/helpers/index.js';
 
 const meta: Meta = {
-  title: 'Status light/VRT',
+  title: 'Status light/Status light VRT',
   component: 'swc-status-light',
   tags: ['dev'],
 };

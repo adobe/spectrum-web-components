@@ -26,7 +26,7 @@ import {
 } from '../../../../.storybook/helpers/index.js';
 
 const meta: Meta = {
-  title: 'Meter/VRT',
+  title: 'Meter/Meter VRT',
   component: 'swc-meter',
   tags: ['dev'],
 };

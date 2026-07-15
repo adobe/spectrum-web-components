@@ -23,7 +23,7 @@ import {
 } from '../../../../../.storybook/helpers/index.js';
 
 const meta: Meta = {
-  title: 'Conversational AI/Response status/VRT',
+  title: 'Conversational AI/Response status/Response status VRT',
   component: 'swc-response-status',
   tags: ['dev'],
 };

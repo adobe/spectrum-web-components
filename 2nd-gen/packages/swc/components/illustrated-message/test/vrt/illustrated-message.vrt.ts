@@ -30,7 +30,7 @@ import {
 } from '../../../../.storybook/helpers/index.js';
 
 const meta: Meta = {
-  title: 'Illustrated Message/VRT',
+  title: 'Illustrated Message/Illustrated Message VRT',
   component: 'swc-illustrated-message',
   tags: ['dev'],
 };

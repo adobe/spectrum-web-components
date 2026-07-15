@@ -28,7 +28,7 @@ import {
 import { Arrow100Icon } from '../../../icon/elements/Arrow100Icon.js';
 
 const meta: Meta = {
-  title: 'Badge/VRT',
+  title: 'Badge/Badge VRT',
   component: 'swc-badge',
   tags: ['dev'],
 };

@@ -31,7 +31,7 @@ import {
 } from '../../../../.storybook/helpers/index.js';
 
 const meta: Meta = {
-  title: 'Accordion/VRT',
+  title: 'Accordion/Accordion VRT',
   component: 'swc-accordion',
   tags: ['dev'],
 };

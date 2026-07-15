@@ -74,7 +74,7 @@ declare global {
 }
 
 const meta: Meta = {
-  title: 'Opacity Checkerboard/VRT',
+  title: 'Opacity Checkerboard/Opacity Checkerboard VRT',
   component: 'demo-opacity-checkerboard-vrt-swatch',
   tags: ['dev'],
 };

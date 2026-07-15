@@ -28,7 +28,7 @@ import {
 } from '../../stories/link.template.js';
 
 const meta: Meta = {
-  title: 'Link/VRT',
+  title: 'Link/Link VRT',
   tags: ['dev'],
 };
 

@@ -24,7 +24,7 @@ import {
 } from '../../../../../.storybook/helpers/index.js';
 
 const meta: Meta = {
-  title: 'Conversational AI/Suggestion item/VRT',
+  title: 'Conversational AI/Suggestion item/Suggestion item VRT',
   component: 'swc-suggestion-item',
   tags: ['dev'],
 };

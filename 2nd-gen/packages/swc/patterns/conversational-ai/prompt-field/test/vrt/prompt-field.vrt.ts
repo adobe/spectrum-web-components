@@ -24,7 +24,7 @@ import {
 } from '../../../../../.storybook/helpers/index.js';
 
 const meta: Meta = {
-  title: 'Conversational AI/Prompt field/VRT',
+  title: 'Conversational AI/Prompt field/Prompt field VRT',
   component: 'swc-prompt-field',
   tags: ['dev'],
 };
