@@ -239,6 +239,7 @@ No sequencing, shared-base, or inheritance decisions require explicit user confi
 | **B5** | `dropEffect` becomes a proper `@property` | Manual getter/setter; attribute changes at runtime not reactive | `@property({ type: String, attribute: 'drop-effect', reflect: true })`; fully reactive | No migration needed for consumers using the attribute. JS consumers using `element.dropEffect = 'move'` are unaffected. |
 | **B6** | Public methods `onDragOver`, `onDragLeave`, `onDrop` visibility | `public` | `protected` | Consumers who subclass `Dropzone` and override these methods must update visibility. **Inferred** as low-risk (see Q9). |
 | **B7** | Event prefix | `sp-dropzone-should-accept`, `sp-dropzone-dragover`, `sp-dropzone-dragleave`, `sp-dropzone-drop` | **Confirmed.** Rename to `swc-dropzone-should-accept`, `swc-dropzone-dragover`, `swc-dropzone-dragleave`, `swc-dropzone-drop`. Consistent with all other migrated 2nd-gen components. | Update all `addEventListener` calls. |
+| **B17** | `DropzoneEventDetail` type removed | `export type DropzoneEventDetail = DragEvent;` exported from `src/index.ts` | Not exported. Clean break, same posture as other migrated components (no retained type aliases elsewhere in 2nd-gen). | Replace `DropzoneEventDetail` imports with `DragEvent` directly; the two types were always structurally identical. |
 
 #### Styling and visuals
 
@@ -398,8 +399,9 @@ Follow the [Badge migration reference](../../02_workstreams/02_2nd-gen-component
 ```ts
 export type DropEffects = 'copy' | 'move' | 'link' | 'none';
 export type DropzoneSize = 's' | 'm' | 'l';
-export type DropzoneEventDetail = DragEvent; // retained for consumers who imported this type
 ```
+
+No `DropzoneEventDetail` alias is exported. 2nd-gen is a clean break from 1st-gen (see [Architecture: core vs SWC split](#architecture-core-vs-swc-split) above); consumers use `DragEvent` directly. See [B17](#api-and-naming).
 
 ---
 
@@ -437,7 +439,8 @@ export type DropzoneEventDetail = DragEvent; // retained for consumers who impor
 
 - [x] `Dropzone.types.ts`: define `DropEffect` type and `DROP_EFFECTS` const, four event name constants
   — **Diverges from plan:** implemented as `DropEffect` (singular) rather than `DropEffects`.
-  `DropzoneSize` and `DropzoneEventDetail` alias not yet added (needed for Phase 5 `size` property).
+  `DropzoneSize` added (needed for Phase 5 `size` property). `DropzoneEventDetail` alias
+  intentionally **not** shipped (see [B17](#api-and-naming)) — clean break, no retained type alias.
 - [x] `Dropzone.base.ts`: declare `dragged` and `filled` with `@property({ type: Boolean, reflect: true })`
   — **Diverges from plan:** `dropEffect` does not reflect as `drop-effect` attribute (intentional; controls
   browser chrome, not component state). Plan specifies `reflect: true`; implementation differs.
@@ -562,7 +565,7 @@ export type DropzoneEventDetail = DragEvent; // retained for consumers who impor
 
 #### Breaking changes
 
-- [ ] Document B1–B7 with migration steps in `migration-guide.mdx`; note B16 (`size`) as additive (no consumer action needed)
+- [ ] Document B1–B7 and B17 with migration steps in `migration-guide.mdx`; note B16 (`size`) as additive (no consumer action needed)
 - [ ] Document that `--mod-*` properties are not carried forward
 - [ ] Document that `aria-label` or `aria-labelledby` is now required
 - [ ] Document that `role="group"` is now fixed on the host (remove any consumer-added `role`)

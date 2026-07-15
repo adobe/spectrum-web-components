@@ -63,9 +63,6 @@ export interface DropzoneDragLeaveDetail {
   relatedTarget: EventTarget | null;
 }
 
-/** Type alias retained for consumers who imported `DropzoneEventDetail` from the 1st-gen package. */
-export type DropzoneEventDetail = DragEvent;
-
 declare global {
   interface GlobalEventHandlersEventMap {
     [SWC_DROPZONE_SHOULD_ACCEPT_EVENT]: CustomEvent<DragEvent>;
