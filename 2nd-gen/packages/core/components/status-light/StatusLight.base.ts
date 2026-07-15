@@ -14,6 +14,10 @@ import { property } from 'lit/decorators.js';
 
 import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
 import { SizedMixin } from '@spectrum-web-components/core/mixins/index.js';
+import {
+  validateEnum,
+  warnIf,
+} from '@spectrum-web-components/core/utils/index.js';
 
 import {
   STATUS_LIGHT_VALID_SIZES,
@@ -93,34 +97,30 @@ export abstract class StatusLightBase extends SizedMixin(SpectrumElement, {
 
   protected override updated(changes: PropertyValues): void {
     super.updated(changes);
-    if (window.__swc?.DEBUG) {
-      const constructor = this.constructor as typeof StatusLightBase;
-      // @ts-expect-error -- intentional runtime guard: 1st-gen consumers may pass 'accent'
-      if (this.variant === 'accent') {
-        window.__swc.warn(
-          this,
-          `<${this.localName}> does not support the "accent" variant in Spectrum 2. Use "neutral" or "info" depending on intent.`,
-          'https://spectrum-web-components.adobe.com/?path=/docs/status-light-migration-guide--docs',
-          { level: 'deprecation' }
-        );
-      } else if (!constructor.VARIANTS.includes(this.variant)) {
-        window.__swc.warn(
-          this,
-          `<${this.localName}> element expects the "variant" attribute to be one of the following:`,
-          'https://opensource.adobe.com/spectrum-web-components/components/status-light/#variants',
-          {
-            issues: [...constructor.VARIANTS],
-          }
-        );
-      }
-      if (this.hasAttribute('disabled')) {
-        window.__swc.warn(
-          this,
-          `<${this.localName}> does not support the "disabled" attribute. It was deprecated in Spectrum 1 and has been removed in Spectrum 2.`,
-          'https://spectrum-web-components.adobe.com/?path=/docs/status-light-migration-guide--docs',
-          { level: 'deprecation' }
-        );
-      }
+    const constructor = this.constructor as typeof StatusLightBase;
+    // @ts-expect-error -- intentional runtime guard: 1st-gen consumers may pass 'accent'
+    if (this.variant === 'accent') {
+      warnIf(
+        this,
+        true,
+        `<${this.localName}> does not support the "accent" variant in Spectrum 2. Use "neutral" or "info" depending on intent.`,
+        'https://spectrum-web-components.adobe.com/?path=/docs/status-light-migration-guide--docs',
+        { level: 'deprecation' }
+      );
+    } else {
+      validateEnum(this, {
+        prop: 'variant',
+        value: this.variant,
+        valid: constructor.VARIANTS,
+        url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-status-light--docs',
+      });
     }
+    warnIf(
+      this,
+      this.hasAttribute('disabled'),
+      `<${this.localName}> does not support the "disabled" attribute. It was deprecated in Spectrum 1 and has been removed in Spectrum 2.`,
+      'https://spectrum-web-components.adobe.com/?path=/docs/status-light-migration-guide--docs',
+      { level: 'deprecation' }
+    );
   }
 }
