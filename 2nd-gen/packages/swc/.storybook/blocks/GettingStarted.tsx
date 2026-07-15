@@ -37,7 +37,7 @@ Controllers are not published as packages. Instead, they are imported directly f
 Import the controller directly from the core package:
 
 \`\`\`typescript
-import { ${baseClassName} } from '@spectrum-web-components/core/controllers/${packageName}.js';
+import { ${baseClassName} } from '@adobe/spectrum-wc-core/controllers/${packageName}.js';
 \`\`\`
 `}</Markdown>
     );
