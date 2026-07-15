@@ -19,7 +19,7 @@ import {
   BUTTON_STATIC_COLORS,
   BUTTON_VALID_SIZES,
   ButtonBase,
-} from '@spectrum-web-components/core/components/button';
+} from '@adobe/spectrum-wc-core/components/button';
 
 import '@adobe/spectrum-wc/components/close-button/swc-close-button.js';
 

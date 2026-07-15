@@ -19,8 +19,8 @@ import {
   ACTION_BUTTON_VALID_SIZES,
   type ActionButtonSize,
   type ActionButtonStaticColor,
-} from '@spectrum-web-components/core/components/action-button';
-import { ButtonBase } from '@spectrum-web-components/core/components/button';
+} from '@adobe/spectrum-wc-core/components/action-button';
+import { ButtonBase } from '@adobe/spectrum-wc-core/components/button';
 
 import { renderPendingSpinner } from '../button/pending-spinner.js';
 

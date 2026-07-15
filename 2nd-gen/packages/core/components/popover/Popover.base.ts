@@ -17,8 +17,8 @@ import {
   PageScrollLockController,
   PlacementController,
   type VirtualTrigger,
-} from '@spectrum-web-components/core/controllers/index.js';
-import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
+} from '@adobe/spectrum-wc-core/controllers/index.js';
+import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
 import {
   deepContains,
   getActiveElement,
@@ -28,7 +28,7 @@ import {
   resolveTrigger,
   runAfterTransition,
   unregisterDismissible,
-} from '@spectrum-web-components/core/utils/index.js';
+} from '@adobe/spectrum-wc-core/utils/index.js';
 
 import {
   type Placement,

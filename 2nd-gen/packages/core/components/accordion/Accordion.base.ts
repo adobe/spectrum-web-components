@@ -13,9 +13,9 @@
 import { PropertyValues } from 'lit';
 import { property } from 'lit/decorators.js';
 
-import { LiveSelectionController } from '@spectrum-web-components/core/controllers/index.js';
-import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
-import { SizedMixin } from '@spectrum-web-components/core/mixins/index.js';
+import { LiveSelectionController } from '@adobe/spectrum-wc-core/controllers/index.js';
+import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
+import { SizedMixin } from '@adobe/spectrum-wc-core/mixins/index.js';
 
 import {
   ACCORDION_VALID_SIZES,
