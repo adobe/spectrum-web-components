@@ -64,4 +64,17 @@ test.describe('UserMessage - ARIA Snapshots', () => {
       - text: Hilton commercial assets 2026
     `);
   });
+
+  test('should expose the show all disclosure and grouped attachments', async ({
+    page,
+  }) => {
+    const root = await gotoStory(
+      page,
+      'patterns-conversational-ai-user-message--attachments-disclosure',
+      'swc-user-message'
+    );
+    await expect(root).toMatchAriaSnapshot(`
+      - button "Show all" [expanded=false]
+    `);
+  });
 });

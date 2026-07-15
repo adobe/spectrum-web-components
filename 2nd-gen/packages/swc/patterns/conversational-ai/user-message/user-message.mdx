@@ -28,6 +28,24 @@ Bubble sizing and padding are inferred from slotted content:
 
 <Canvas of={UserMessageStories.Content} />
 
+### Attachments
+
+`type="attachments"` accepts many `<swc-user-message-attachment>` children in one bubble, for sending several files together:
+
+- **`type="media"`** attachments (images) lay out in a fixed 4-column grid
+- **`type="card"`** attachments (documents, video, other non-image files) stack full-width, one per row, beneath the grid
+- `swc-user-message` groups attachments by their own `type`, regardless of the order they're slotted in
+
+<Canvas of={UserMessageStories.Attachments} />
+
+## Behaviors
+
+### Show all / show less
+
+When there are more than 4 media attachments, the extra tiles collapse behind a "Show all" disclosure below the grid. Card/file attachments are always fully shown. Toggling fires `swc-user-message-toggle` with `{ open: boolean }`.
+
+<Canvas of={UserMessageStories.AttachmentsDisclosure} />
+
 ## Accessibility
 
 ### Features
@@ -39,11 +57,13 @@ The `<swc-user-message>` element implements the following accessibility features
 - The bubble is rendered as a `<div>` acting as a visual container
 - `type="copy"` uses the default slot for message text
 - `type="card"` and `type="media"` use named slots for thumbnail, title, and subtitle
+- `type="attachments"` renders a `<button>` with `aria-expanded` and `aria-controls` for the show all/less disclosure
 
 ### Best practices
 
 - Ensure message text is descriptive and self-contained
 - For card and media attachments, ensure titles/subtitles and `aria-label`/`alt` text are present for previews
+- For `type="attachments"`, ensure every `swc-user-message-attachment` includes descriptive `title`/`subtitle` text or `alt` text on its thumbnail, since sighted users rely on the grid layout alone to distinguish tiles
 
 <Canvas of={UserMessageStories.Accessibility} />
 
