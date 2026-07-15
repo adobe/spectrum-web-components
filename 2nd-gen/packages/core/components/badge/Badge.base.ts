@@ -160,10 +160,10 @@ export abstract class BadgeBase extends SizedMixin(
       this,
       'outline' in this &&
         (this as { outline: boolean }).outline === true &&
-        !(BADGE_VARIANTS_SEMANTIC as readonly string[]).includes(this.variant),
+        !constructor.VARIANTS_SEMANTIC.includes(this.variant),
       `<${this.localName}> element only supports the outline styling if the variant is a semantic color variant.`,
       'https://spectrum-web-components.adobe.com/?path=/docs/components-badge--docs',
-      { issues: [...BADGE_VARIANTS_SEMANTIC] }
+      { issues: [...constructor.VARIANTS_SEMANTIC] }
     );
     super.update(changedProperties);
   }
