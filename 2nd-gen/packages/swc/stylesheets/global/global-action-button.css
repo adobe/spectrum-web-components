@@ -15,10 +15,6 @@
  * Edit that file and rerun the dev server or build. */
 
 @layer swc-global-elements {.swc-ActionButton {
-  vertical-align: top;
-  --_swc-action-button-border-width: token("border-width-100");
-  --_swc-action-button-min-block-size: var(--swc-action-button-min-block-size, token("component-height-100"));
-
   -webkit-tap-highlight-color: transparent;
   display: inline-flex;
   position: relative;
@@ -32,6 +28,7 @@
   font-size: var(--swc-action-button-font-size, token("font-size-100"));
   font-weight: token("medium-font-weight");
   line-height: round(down, calc(token("line-height-100") * 1em), 1px);
+  vertical-align: top;
   color: var(--swc-action-button-content-color-default, token("neutral-content-color-default"));
   text-transform: none;
   text-decoration: none;
@@ -44,6 +41,9 @@
   transition-timing-function: token("animation-ease-in-out");
   transition-duration: token("animation-duration-100");
   transition-property: outline, border-color, color, background-color, transform;
+
+  --_swc-action-button-border-width: token("border-width-100");
+  --_swc-action-button-min-block-size: var(--swc-action-button-min-block-size, token("component-height-100"));
 }
 
 .swc-ActionButton, .swc-ActionButton * {
