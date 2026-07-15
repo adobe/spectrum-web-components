@@ -10,7 +10,24 @@
  * governing permissions and limitations under the License.
  */
 
+export { physicalSide } from './actual-placement.js';
 export { capitalize } from './capitalize.js';
+export { deepContains } from './deep-contains.js';
+export {
+  isTopDismissible,
+  registerDismissible,
+  unregisterDismissible,
+} from './dismissible-stack.js';
 export { getActiveElement } from './get-active-element.js';
 export { focusableSelector, tabbableSelector } from './focusable-selectors.js';
 export { getLabelFromSlot } from './get-label-from-slot.js';
+export {
+  resolveTrigger,
+  type ResolvedTrigger,
+  type ResolveTriggerOptions,
+} from './resolve-trigger.js';
+export {
+  hasActiveTransition,
+  maxTransitionDurationMs,
+  runAfterTransition,
+} from './transition.js';

@@ -336,6 +336,7 @@ const preview = {
               [
                 'Accordion',
                 ['Accessibility migration analysis', 'Migration plan'],
+                'Action bar',
                 'Action button',
                 [
                   'Accessibility migration analysis',
@@ -380,6 +381,8 @@ const preview = {
                   'Migration plan',
                   'Rendering and styling migration analysis',
                 ],
+                'Card',
+                ['Migration plan'],
                 'Checkbox',
                 ['Rendering and styling migration analysis'],
                 'Close button',

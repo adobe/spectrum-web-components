@@ -68,7 +68,7 @@ const threadExampleSource = `<div style="max-inline-size: 720px;">
     </swc-conversation-turn>
     <swc-conversation-turn type="system">
       <swc-system-message>
-        <swc-response-status slot="status">I interpreted your request as an executive narrative task and prioritized a concise, audience-ready structure.</swc-response-status>
+        <swc-response-status slot="status" status="complete"><span slot="label">I interpreted your request as an executive narrative task and prioritized a concise, audience-ready structure.</span></swc-response-status>
         <div class="swc-Typography--prose">
           <h3>Big idea/core narrative: The warmth of welcome</h3>
           <p>Hospitality begins the moment our customers set foot off their plane.</p>
@@ -97,9 +97,11 @@ const renderThread = () => html`
 
       <swc-conversation-turn type="system">
         <swc-system-message>
-          <swc-response-status slot="status">
-            I interpreted your request as an executive narrative task and
-            prioritized a concise, audience-ready structure.
+          <swc-response-status slot="status" status="complete">
+            <span slot="label">
+              I interpreted your request as an executive narrative task and
+              prioritized a concise, audience-ready structure.
+            </span>
           </swc-response-status>
           <div class="swc-Typography--prose">
             <h3>Big idea/core narrative: The warmth of welcome</h3>
@@ -139,7 +141,6 @@ type DemoTurn = {
   text: string;
   artifacts?: DemoArtifact[];
   loading?: boolean;
-  statusOpen?: boolean;
   sourcesOpen?: boolean;
   feedbackStatus?: 'positive' | 'negative' | undefined;
 };
@@ -149,6 +150,32 @@ const DEMO_SUGGESTIONS = [
   'Generate congratulatory poster',
   'Summarize development pipeline',
 ] as const;
+
+const renderDemoResponseStatusSteps = (complete: boolean) => html`
+  <swc-response-status-step status="complete">
+    <span slot="label">Read source context</span>
+    <span slot="description">
+      Reviewed the prompt, uploaded assets, and prior conversation context.
+    </span>
+  </swc-response-status-step>
+  <swc-response-status-step status=${complete ? 'complete' : 'active'}>
+    <span slot="label">Draft response structure</span>
+    <span slot="description">
+      Organizing the answer into a concise narrative with supporting proof
+      points.
+    </span>
+  </swc-response-status-step>
+  ${complete
+    ? html`
+        <swc-response-status-step status="complete">
+          <span slot="label">Prepare next-step suggestions</span>
+          <span slot="description">
+            Created follow-up prompts that match the generated response.
+          </span>
+        </swc-response-status-step>
+      `
+    : ''}
+`;
 
 const buildAssistantReply = (prompt: string): string => {
   const normalized = prompt.trim() || 'your request';
@@ -167,7 +194,6 @@ class ConversationFullPatternDemo extends LitElement {
       id: 'system-1',
       role: 'system',
       text: 'I interpreted your request as an executive narrative task and prioritized a concise, audience-ready structure.',
-      statusOpen: false,
       sourcesOpen: false,
     },
   ];
@@ -227,7 +253,6 @@ class ConversationFullPatternDemo extends LitElement {
       role: 'system',
       text: '',
       loading: true,
-      statusOpen: false,
       sourcesOpen: false,
     };
 
@@ -383,19 +408,6 @@ class ConversationFullPatternDemo extends LitElement {
     this.artifacts = this.artifacts.filter((item) => item.id !== artifactId);
   };
 
-  private handleStatusToggle = (event: Event): void => {
-    const toggleEvent = event as CustomEvent<{ open?: boolean }>;
-    const statusHost = event.target as HTMLElement | null;
-    const turnId = statusHost?.getAttribute('data-status-id');
-    const open = toggleEvent.detail?.open;
-    if (!turnId || typeof open !== 'boolean') {
-      return;
-    }
-    this.turns = this.turns.map((turn) =>
-      turn.id === turnId ? { ...turn, statusOpen: open } : turn
-    );
-  };
-
   private handleSourcesToggle = (event: Event): void => {
     const toggleEvent = event as CustomEvent<{ open?: boolean }>;
     const sourcesHost = event.target as HTMLElement | null;
@@ -454,19 +466,18 @@ class ConversationFullPatternDemo extends LitElement {
           <swc-system-message>
             ${turn.loading
               ? html`
-                  <swc-response-status
-                    slot="status"
-                    loading
-                  ></swc-response-status>
+                  <swc-response-status slot="status" status="active" open>
+                    <span slot="label">Draft response structure</span>
+                    ${renderDemoResponseStatusSteps(false)}
+                  </swc-response-status>
                 `
               : html`
-                  <swc-response-status
-                    slot="status"
-                    data-status-id=${turn.id}
-                    ?open=${!!turn.statusOpen}
-                  >
-                    Draft complete. I used your latest prompt to generate this
-                    response.
+                  <swc-response-status slot="status" status="complete" open>
+                    <span slot="label">
+                      Draft complete. I used your latest prompt to generate this
+                      response.
+                    </span>
+                    ${renderDemoResponseStatusSteps(true)}
                   </swc-response-status>
                 `}
             ${turn.loading
@@ -598,7 +609,6 @@ class ConversationFullPatternDemo extends LitElement {
         @swc-message-feedback-change=${this.handleFeedback}
         @swc-suggestion=${this.handleSuggestion}
         @swc-upload-artifact-dismiss=${this.handleDismiss}
-        @swc-response-status-toggle=${this.handleStatusToggle}
         @swc-message-sources-toggle=${this.handleSourcesToggle}
       >
         <div class="swc-ConversationFullPatternDemo-scroll">
@@ -644,7 +654,17 @@ const fullPatternSource = `<div style="max-width:800px; margin:auto; padding:24p
     </swc-conversation-turn>
     <swc-conversation-turn type="system">
       <swc-system-message>
-        <swc-response-status slot="status">I interpreted your request as an executive narrative task and prioritized a concise, audience-ready structure.</swc-response-status>
+        <swc-response-status slot="status" status="complete" open>
+          <span slot="label">I interpreted your request as an executive narrative task and prioritized a concise, audience-ready structure.</span>
+          <swc-response-status-step status="complete">
+            <span slot="label">Read source context</span>
+            <span slot="description">Reviewed the prompt, uploaded assets, and prior conversation context.</span>
+          </swc-response-status-step>
+          <swc-response-status-step status="complete">
+            <span slot="label">Draft response structure</span>
+            <span slot="description">Organized the answer into a concise narrative with supporting proof points.</span>
+          </swc-response-status-step>
+        </swc-response-status>
         <div class="swc-Typography--prose">
           <p>Great direction. I suggest a 12-slide structure...</p>
         </div>
