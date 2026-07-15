@@ -1,11 +1,11 @@
 import { Canvas, Meta } from '@storybook/addon-docs/blocks';
 import { DocsFooter, DocsHeader } from '../../../swc/.storybook/blocks';
 
-import * as Stories from './stories/slot-attribute-propagation.stories';
+import * as Stories from './stories/slot-attribute-propagation-controller.stories';
 
 <Meta of={Stories} />
 
-<DocsHeader packageName="slot-attribute-propagation" />
+<DocsHeader />
 
 ## Usage
 
@@ -20,7 +20,7 @@ import * as Stories from './stories/slot-attribute-propagation.stories';
 ```typescript
 import { LitElement, html } from 'lit';
 import { property } from 'lit/decorators.js';
-import { SlotAttributePropagationController } from '@spectrum-web-components/core/controllers/slot-attribute-propagation.js';
+import { SlotAttributePropagationController } from '@adobe/spectrum-wc-core/controllers/slot-attribute-propagation-controller.js';
 
 class MyBase extends LitElement {
   @property({ type: String, reflect: true })

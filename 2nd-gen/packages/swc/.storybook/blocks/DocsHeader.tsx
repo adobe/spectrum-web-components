@@ -37,8 +37,7 @@ import { StatusBadge } from './StatusBadge';
  *
  * @param packageName - Optional override forwarded to `GettingStarted` for
  * controllers whose `core` package export name doesn't match the title-derived
- * kebab-case (e.g. `slot-attribute-propagation`, whose title ends in
- * "controller" but whose export key doesn't).
+ * kebab-case.
  */
 export const DocsHeader = ({ packageName }: { packageName?: string } = {}) => {
   const resolvedOf = useOf('meta', ['meta']);

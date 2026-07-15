@@ -59,4 +59,4 @@ export {
 export {
   SlotAttributePropagationController,
   type SlotAttributePropagationControllerOptions,
-} from './slot-attribute-propagation/index.js';
+} from './slot-attribute-propagation-controller/index.js';

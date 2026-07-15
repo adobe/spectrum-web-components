@@ -7,7 +7,7 @@ import { formatTitle } from '../helpers/index.js';
  * Automatically derives package name and component names from the Storybook meta title.
  *
  * @param of - The Storybook meta or story to resolve the component from
- * @param packageName - Optional override for the controller/package export name (defaults to derived kebab-case from title; needed when a controller's `core` package export key doesn't include a `-controller` suffix that the title has, e.g. `slot-attribute-propagation`)
+ * @param packageName - Optional override for the controller/package export name (defaults to derived kebab-case from title; needed when a controller's `core` package export key doesn't match the title-derived kebab-case)
  */
 export const GettingStarted = ({
   of,

@@ -167,9 +167,9 @@
       "types": "./dist/controllers/placement-controller/index.d.ts",
       "import": "./dist/controllers/placement-controller/index.js"
     },
-    "./controllers/slot-attribute-propagation.js": {
-      "types": "./dist/controllers/slot-attribute-propagation/index.d.ts",
-      "import": "./dist/controllers/slot-attribute-propagation/index.js"
+    "./controllers/slot-attribute-propagation-controller.js": {
+      "types": "./dist/controllers/slot-attribute-propagation-controller/index.d.ts",
+      "import": "./dist/controllers/slot-attribute-propagation-controller/index.js"
     },
     "./directives": {
       "types": "./dist/directives/index.d.ts",
@@ -373,8 +373,8 @@
       "controllers/placement-controller/index.js": [
         "dist/controllers/placement-controller/index.d.ts"
       ],
-      "controllers/slot-attribute-propagation.js": [
-        "dist/controllers/slot-attribute-propagation/index.d.ts"
+      "controllers/slot-attribute-propagation-controller.js": [
+        "dist/controllers/slot-attribute-propagation-controller/index.d.ts"
       ],
       "directives": [
         "dist/directives/index.d.ts"

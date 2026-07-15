@@ -40,7 +40,7 @@ import type {
   DemoSlotPropagationOptional,
   DemoSlotPropagationSelector,
 } from '../stories/demo-hosts.js';
-import meta from '../stories/slot-attribute-propagation.stories.js';
+import meta from '../stories/slot-attribute-propagation-controller.stories.js';
 
 export default {
   ...meta,
