@@ -10,17 +10,19 @@
  * governing permissions and limitations under the License.
  */
 
-import { CSSResultArray, html, TemplateResult } from 'lit';
+import { CSSResultArray, html, PropertyValues, TemplateResult } from 'lit';
 import { property, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
 import {
+  ACTION_BUTTON_STATIC_COLORS,
   ACTION_BUTTON_VALID_SIZES,
   type ActionButtonSize,
   type ActionButtonStaticColor,
 } from '@spectrum-web-components/core/components/action-button';
 import { ButtonBase } from '@spectrum-web-components/core/components/button';
+import { validateEnum } from '@spectrum-web-components/core/utils/index.js';
 
 import { renderPendingSpinner } from '../button/pending-spinner.js';
 
@@ -152,6 +154,21 @@ export class ActionButton extends ButtonBase {
   // second callback with value=null; the guard prevents that from clearing the
   // state we just set.
   private _ariaForwardingInProgress = false;
+
+  protected override updated(changedProperties: PropertyValues): void {
+    super.updated(changedProperties);
+    if (
+      changedProperties.has('staticColor') &&
+      this.staticColor !== undefined
+    ) {
+      validateEnum(this, {
+        prop: 'static-color',
+        value: this.staticColor,
+        valid: ACTION_BUTTON_STATIC_COLORS,
+        url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-action-button--docs',
+      });
+    }
+  }
 
   // ──────────────────────────────
   //     RENDERING & STYLING
