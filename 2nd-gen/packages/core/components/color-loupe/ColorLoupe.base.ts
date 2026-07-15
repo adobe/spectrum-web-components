@@ -17,7 +17,7 @@ import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
 
 /**
  * Minimum inner-border opacity (matches the existing `transparent-black-200`
- * token) so the default look on mid/dark colors is unchanged (SWC-2295).
+ * token) so the default look on mid/dark colors is unchanged.
  */
 export const COLOR_LOUPE_ALPHA_FLOOR = 0.12;
 

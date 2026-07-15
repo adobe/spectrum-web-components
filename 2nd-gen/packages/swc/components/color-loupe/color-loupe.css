@@ -11,11 +11,11 @@
  */
 
 /* The inner-border opacity is set adaptively by the component (white-first
-   contrast, SWC-2295); the floor here matches the existing
-   `transparent-black-200` token and is the fallback before the component
-   computes a value. The outer border stays the fixed white halo: the loupe
-   stays visible if either the inner dark border or the white outer border
-   meets 3:1 against the underlying color. */
+   contrast); the floor here matches the existing `transparent-black-200`
+   token and is the fallback before the component computes a value. The outer
+   border stays the fixed white halo: the loupe stays visible if either the
+   inner dark border or the white outer border meets 3:1 against the
+   underlying color. */
 :host {
   --_swc-color-loupe-width: token("color-loupe-width");
   --_swc-color-loupe-border-alpha: 0.12;
