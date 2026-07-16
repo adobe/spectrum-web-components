@@ -95,6 +95,10 @@
       "types": "./dist/components/popover/index.d.ts",
       "import": "./dist/components/popover/index.js"
     },
+    "./components/progress-bar": {
+      "types": "./dist/components/progress-bar/index.d.ts",
+      "import": "./dist/components/progress-bar/index.js"
+    },
     "./components/progress-circle": {
       "types": "./dist/components/progress-circle/index.d.ts",
       "import": "./dist/components/progress-circle/index.js"
@@ -286,6 +290,9 @@
       ],
       "components/meter": [
         "dist/components/meter/index.d.ts"
+      ],
+      "components/progress-bar": [
+        "dist/components/progress-bar/index.d.ts"
       ],
       "components/progress-circle": [
         "dist/components/progress-circle/index.d.ts"
