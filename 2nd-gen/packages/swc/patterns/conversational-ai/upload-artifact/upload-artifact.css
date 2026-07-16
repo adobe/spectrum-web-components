@@ -19,10 +19,14 @@
 
 /* Figma focus-order spec (node 243-9156, §9): thumbnail and Close button use a
  * dedicated ring color, distinct from the S2 default ring used elsewhere in the
- * strip (chevrons, textarea, Add/Send). No matching design token exists yet. */
+ * strip (chevrons, textarea, Add/Send). No matching design token exists yet.
+ * Drawn inward (negative offset) rather than the spec's outward 2px: an
+ * outward ring gets clipped by the artifact strip's scroll/card overflow
+ * boundaries at the first/last tile, and reserving clearance for it proved
+ * fragile across two attempts. Inward avoids the problem entirely. */
 :host(:focus-visible) {
   outline: 2px solid #4b4efc;
-  outline-offset: 2px;
+  outline-offset: -2px;
 }
 
 *,
@@ -63,7 +67,7 @@
 
 .swc-UploadArtifact-dismiss:focus-visible {
   outline: 2px solid #4b4efc;
-  outline-offset: 2px;
+  outline-offset: -2px;
 }
 
 :host([type="card"]) .swc-UploadArtifact-dismiss {
