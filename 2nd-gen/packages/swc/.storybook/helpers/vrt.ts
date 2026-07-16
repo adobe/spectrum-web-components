@@ -129,7 +129,9 @@ export const forcedColorsVrtParameters = {
 export const row = (children: unknown, label?: string) =>
   label
     ? html`
-        <div style="display: flex; flex-direction: column; gap: 4px;">
+        <div
+          style="display: flex; flex-direction: column; gap: var(--swc-spacing-100);"
+        >
           <span class="swc-Detail swc-Detail--sizeM">${label}</span>
           <div
             style="display: flex; flex-wrap: wrap; gap: 16px; align-items: center;"
