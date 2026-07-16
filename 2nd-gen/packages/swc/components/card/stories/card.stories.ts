@@ -102,7 +102,7 @@ const densityLabels = {
 } as const satisfies Record<CardDensity, string>;
 
 const previewImage = html`
-  <img slot="preview" src="/images/card-preview.jpg" alt="" />
+  <img slot="preview" src="./images/card-preview.jpg" alt="" />
 `;
 
 const basicSlots = html`
@@ -120,7 +120,8 @@ export const Playground: Story = {
     variant: 'primary',
     density: 'regular',
     size: 'm',
-    'preview-slot': '<img src="/images/card-preview.jpg" alt="" />',
+    'preview-slot':
+      '<img slot="preview" src="./images/card-preview.jpg" alt="" />',
     'title-slot': 'Card title',
     'description-slot': 'Supporting description text.',
     'actions-slot': `<swc-action-button quiet accessible-label="More actions"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true"
