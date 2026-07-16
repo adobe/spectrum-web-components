@@ -13,6 +13,7 @@
 
 - [When to use](#when-to-use)
 - [How to author VRT stories](#how-to-author-vrt-stories)
+    - [Grouping permutations into rows](#grouping-permutations-into-rows)
 - [Tips for reliable VRT](#tips-for-reliable-vrt)
 
 </details>
@@ -43,9 +44,21 @@ Use this shape:
 - `test/vrt/<component>-global-styles.vrt.ts` when the component ships global class styles.
 - `test/vrt/<component>-custom-properties.vrt.ts` when public custom properties need visual coverage.
 
-Use shared helpers from `.storybook/helpers`: `createPermutations`, `row`, `theme`, `staticColorBackground`, `forcePseudoStates`, `vrtParameters`, `forcedColorsVrtParameters`, `customPropertyRows`, and `verifyCustomPropertyCoverage`.
+Use shared helpers from `.storybook/helpers`: `createPermutations`, `groupPermutationsBy`, `row`, `theme`, `staticColorBackground`, `forcePseudoStates`, `vrtParameters`, `forcedColorsVrtParameters`, `customPropertyRows`, and `verifyCustomPropertyCoverage`.
 
 Keep component files small: local case lists and component-specific renderers only. Move reusable mechanics to `.storybook/helpers`.
+
+### Grouping permutations into rows
+
+A single dense row of every permutation is hard to scan when reviewing a Chromatic diff. Use `groupPermutationsBy(permutations, key)` to split a flat permutation list into one labeled `row()` per value of `key`, plus a `default` row for permutations that lack the key.
+
+Which key to group by is a per-component decision, not a fixed rule. Pick the axis that carries the most meaning for the component:
+
+- Components with a `variant` axis (button, badge, action button, status light): group by `'variant'`.
+- Components whose primary axis is something else: group by that (for example `'size'` or `'direction'`).
+- Components with no natural grouping axis (divider, icon, avatar, typography): grouping by a missing key collapses everything into a single `default` row and adds no value, so keep one ungrouped `row()` instead.
+
+Split forced pseudo-states (`data-force-state`) into their own per-state rows (`hover`, `focus-visible`, `active`) rather than folding them into the variant rows. Once the row heading conveys the grouping axis, keep the component's own label plain: the heading and visual rendering already carry the permutation's meaning, so there is no need to print axis values into the component. Label rows with the `swc-Detail` typography classes rather than inline font styles.
 
 For composed patterns, use deterministic realistic content instead of behavior demos: fixed prompts, sources, attachments, feedback states, and response text.
 
