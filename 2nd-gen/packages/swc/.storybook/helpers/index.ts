@@ -19,6 +19,7 @@ export type { ForcedPseudoState } from './pseudo-state.js';
 export {
   coveredCustomProperties,
   customPropertyRows,
+  forceManualPopover,
   forcedColorsVrtParameters,
   forcePseudoStates,
   FORCED_STATES,

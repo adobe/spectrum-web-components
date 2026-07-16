@@ -60,6 +60,52 @@ export const forcePseudoStates =
     });
   };
 
+/**
+ * Forces a group of native `popover="auto"` elements (Tooltip, default-mode
+ * Popover) to render simultaneously open in a single VRT snapshot.
+ *
+ * `popover="auto"` elements share one top-layer dismissal group: opening one
+ * that is not a DOM/anchor descendant of another open auto popover
+ * light-dismisses that other popover, and these components' own `toggle`
+ * listeners sync `open` back to `false` to match. A VRT story that renders
+ * several open instances side by side (every Tooltip placement, every
+ * Popover variant) would therefore only ever show the *last* instance
+ * connected as actually open — every earlier instance silently closes itself
+ * during initial render, well before Chromatic snapshots it.
+ *
+ * `popover="manual"` has no such cross-instance dismissal. This play function
+ * switches each instance to manual mode after render, then re-toggles its
+ * `open` property (through the component's own public API, not the native
+ * Popover API directly) so the component's real open/close lifecycle
+ * — placement, ARIA wiring, `showPopover()` — runs again under the new,
+ * non-dismissing mode. This is a VRT-only workaround: production usage
+ * should keep the default `auto` mode and its native light-dismiss behavior.
+ *
+ * @param selector - selects the host elements whose `open` property should
+ * be re-toggled.
+ * @param resolvePopoverElement - resolves the element that actually carries
+ * the `popover` attribute for a given host. Defaults to the host itself
+ * (e.g. Tooltip, which sets `popover` on its own host). Pass an override for
+ * components whose popover lives on an internal shadow element instead (e.g.
+ * Popover's default-mode `.swc-Popover` shadow child).
+ */
+export const forceManualPopover =
+  (
+    selector: string,
+    resolvePopoverElement: (host: Element) => Element | null = (host) => host
+  ) =>
+  async ({ canvasElement }: { canvasElement: HTMLElement }) => {
+    canvasElement
+      .querySelectorAll<HTMLElement & { open?: boolean }>(selector)
+      .forEach((host) => {
+        resolvePopoverElement(host)?.setAttribute('popover', 'manual');
+        if (typeof host.open === 'boolean') {
+          host.open = false;
+          host.open = true;
+        }
+      });
+  };
+
 export const vrtParameters = {
   styles: { display: 'flex', 'flex-direction': 'column', gap: '16px' },
   autoplay: true,

@@ -22,6 +22,7 @@ import '@adobe/spectrum-wc/components/tooltip/swc-tooltip.js';
 
 import {
   forcedColorsVrtParameters,
+  forceManualPopover,
   row,
   theme,
   vrtParameters,
@@ -72,15 +73,27 @@ const tooltipContent = () => html`
   )}
 `;
 
+// Every tooltip above renders `open`, but native `popover="auto"` (Tooltip's
+// default mode) only permits one open instance page-wide: each one that
+// connects light-dismisses the previously-open one, and Tooltip's own toggle
+// listener syncs that dismissal back into `open`. Without this play
+// function, only the last tooltip in DOM order would actually render open by
+// the time Chromatic snapshots. Forcing `popover="manual"` (VRT-only; not
+// how Tooltip behaves in production) lets every placement and variant stay
+// open simultaneously. See `forceManualPopover` in `.storybook/helpers/vrt.ts`.
+const forceOpenTooltips = forceManualPopover('swc-tooltip');
+
 export const Permutations: Story = {
   render: () => html`
     ${theme(tooltipContent(), 'light', 'ltr')}
     ${theme(tooltipContent(), 'dark', 'rtl')}
   `,
   parameters: vrtParameters,
+  play: forceOpenTooltips,
 };
 
 export const ForcedColors: Story = {
   render: () => theme(tooltipContent(), 'light', 'ltr'),
   parameters: forcedColorsVrtParameters,
+  play: forceOpenTooltips,
 };
