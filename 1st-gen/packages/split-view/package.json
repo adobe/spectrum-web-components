@@ -1,6 +1,6 @@
 {
   "name": "@spectrum-web-components/split-view",
-  "version": "1.12.1",
+  "version": "1.12.2",
   "description": "",
   "license": "Apache-2.0",
   "author": "Adobe",
@@ -58,8 +58,8 @@
   ],
   "types": "./src/index.d.ts",
   "dependencies": {
-    "@spectrum-web-components/base": "1.12.1",
-    "@spectrum-web-components/shared": "1.12.1"
+    "@spectrum-web-components/base": "1.12.2",
+    "@spectrum-web-components/shared": "1.12.2"
   },
   "keywords": [
     "design-system",

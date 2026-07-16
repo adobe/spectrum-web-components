@@ -10,11 +10,12 @@
  * governing permissions and limitations under the License.
  */
 
-import { CSSResultArray, html, TemplateResult } from 'lit';
+import { CSSResultArray, html, PropertyValues, TemplateResult } from 'lit';
 import { styleMap } from 'lit/directives/style-map.js';
 
-import { ColorLoupeBase } from '@spectrum-web-components/core/components/color-loupe';
+import { ColorLoupeBase } from '@adobe/spectrum-wc-core/components/color-loupe';
 
+import opacityCheckerboardStyles from '../../stylesheets/_lit-styles/opacity-checkerboard.css';
 import styles from './color-loupe.css';
 
 /**
@@ -24,7 +25,7 @@ import styles from './color-loupe.css';
  * color selection controls such as `<swc-color-field>`.
  *
  * @element swc-color-loupe
- * @since 0.0.1
+ * @since 2.0.0-beta.1
  *
  * @example
  * <swc-color-loupe open color="rgba(0, 128, 255, 0.7)"></swc-color-loupe>
@@ -34,20 +35,29 @@ export class ColorLoupe extends ColorLoupeBase {
   //     RENDERING & STYLING
   // ──────────────────────────────
 
-  /**
-   * @todo SWC-2029 - Migrate opacity-checkerboard to 2nd gen and consume it
-   * here; checkerboard styling is currently hardcoded in color-loupe.css.
-   */
   public static override get styles(): CSSResultArray {
-    return [styles];
+    return [opacityCheckerboardStyles, styles];
+  }
+
+  protected override updated(changed: PropertyValues): void {
+    super.updated(changed);
+    if (changed.has('color')) {
+      // Apply the core white-first contrast decision to the inner border.
+      this.style.setProperty(
+        '--_swc-color-loupe-border-alpha',
+        String(this.borderAlpha)
+      );
+    }
   }
 
   protected override render(): TemplateResult {
     return html`
       <div class="swc-ColorLoupe">
-        <div class="swc-ColorLoupe-checkerboard swc-ColorLoupe--clipped"></div>
         <div
-          class="swc-ColorLoupe-colorFill swc-ColorLoupe--clipped"
+          class="swc-ColorLoupe-layer swc-OpacityCheckerboard swc-ColorLoupe--clipped"
+        ></div>
+        <div
+          class="swc-ColorLoupe-layer swc-ColorLoupe-colorFill swc-ColorLoupe--clipped"
           style=${styleMap({
             '--swc-color-loupe-picked-color': this.color,
           })}

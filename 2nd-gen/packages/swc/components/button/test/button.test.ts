@@ -20,7 +20,7 @@ import {
   BUTTON_STATIC_COLORS,
   BUTTON_VALID_SIZES,
   BUTTON_VARIANTS,
-} from '@spectrum-web-components/core/components/button';
+} from '@adobe/spectrum-wc-core/components/button';
 
 import '@adobe/spectrum-wc/components/button/swc-button.js';
 

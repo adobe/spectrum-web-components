@@ -14,6 +14,8 @@ import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import { ColorLoupe } from '@adobe/spectrum-wc/color-loupe';
+import { computeBorderAlpha } from '@adobe/spectrum-wc-core/components/color-handle';
+import { COLOR_LOUPE_ALPHA_FLOOR } from '@adobe/spectrum-wc-core/components/color-loupe';
 
 import '@adobe/spectrum-wc/color-loupe';
 
@@ -26,7 +28,7 @@ import {
 
 export default {
   ...meta,
-  title: 'Color Components/Color Loupe/Tests',
+  title: 'Color Loupe/Tests',
   parameters: {
     ...meta.parameters,
     docs: { disable: true, page: null },
@@ -66,6 +68,15 @@ export const OverviewTest: Story = {
       expect(
         fill.style.getPropertyValue('--swc-color-loupe-picked-color')
       ).toContain('0, 128, 255');
+    });
+
+    await step('sets the adaptive inner-border opacity variable', async () => {
+      const alpha = loupe.style.getPropertyValue(
+        '--_swc-color-loupe-border-alpha'
+      );
+      expect(alpha).not.toBe('');
+      expect(Number.isNaN(Number(alpha))).toBe(false);
+      expect(Number(alpha)).toBeGreaterThanOrEqual(COLOR_LOUPE_ALPHA_FLOOR);
     });
   },
 };
@@ -200,5 +211,36 @@ export const ParentDrivenVisibilityTest: Story = {
       expect(btn.getAttribute('aria-expanded')).toBe('false');
       expect(btn.textContent?.trim()).toBe('Show loupe');
     });
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
+// TEST: adaptive contrast helper, loupe's own floor (pure logic, no DOM)
+// ──────────────────────────────────────────────────────────────
+
+export const ContrastHelperTest: Story = {
+  render: () => html`
+    <div></div>
+  `,
+  play: async ({ step }) => {
+    await step(
+      'white-first keeps the loupe floor when white already carries 3:1',
+      async () => {
+        // Black background: white outer border has maximal contrast, so the
+        // inner border stays at the loupe's own (lower) floor.
+        expect(
+          computeBorderAlpha('black', { floor: COLOR_LOUPE_ALPHA_FLOOR })
+        ).toBe(COLOR_LOUPE_ALPHA_FLOOR);
+      }
+    );
+
+    await step(
+      'escalates alpha above the loupe floor for light colors white cannot carry',
+      async () => {
+        expect(
+          computeBorderAlpha('tomato', { floor: COLOR_LOUPE_ALPHA_FLOOR })
+        ).toBeGreaterThan(COLOR_LOUPE_ALPHA_FLOOR);
+      }
+    );
   },
 };

@@ -12,7 +12,7 @@ import * as PlacementControllerStories from './stories/placement-controller.stor
 ### Positioning
 
 - Computes `top`, `left`, and `translate` on the **floating element** using
-  `strategy: 'fixed'` (suitable for native popover top-layer surfaces).
+  `strategy: 'absolute'` (required for correct top-layer element placement).
 - Subscribes to scroll, resize, and layout shift via Floating UI's `autoUpdate`
   while `PlacementController.start` is active.
 - Waits for `document.fonts.ready` and applies iOS WebKit `visualViewport`
@@ -55,7 +55,7 @@ Same order as Gen1: `offset → shift → flip → size`.
 ```typescript
 import { LitElement, html } from 'lit';
 import { customElement, query } from 'lit/decorators.js';
-import { PlacementController } from '@spectrum-web-components/core/controllers/placement-controller.js';
+import { PlacementController } from '@adobe/spectrum-wc-core/controllers/placement-controller.js';
 
 @customElement('my-picker')
 export class MyPicker extends LitElement {
@@ -300,11 +300,11 @@ responsible for accessible open/close behavior.
 
 ### Methods
 
-| Member                               | Description                                                                                                                                                                    |
-| ------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `start(trigger, floating, options?)` | Begin positioning; tear down any prior session and subscribe to Floating UI `autoUpdate`. Skips compute when the floating element has zero dimensions until size is available. |
-| `stop()`                             | Tear down positioning, unsubscribe from `autoUpdate`, and clear `actualPlacement` and `isConstrained`. Called from `hostDisconnected` when the Lit host disconnects.           |
-| `recompute()`                        | Force one `computePosition` pass outside `autoUpdate` — for example after floating content reflows or a virtual trigger moves without layout events. No-op if not started.     |
+| Member                               | Description                                                                                                                                                                                                                                                                                                                                |
+| ------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `start(trigger, floating, options?)` | Begin positioning; tear down any prior session and subscribe to Floating UI `autoUpdate`. Skips compute when the floating element has zero dimensions until size is available.                                                                                                                                                             |
+| `stop()`                             | Tear down positioning, unsubscribe from `autoUpdate`, and clear `actualPlacement` and `isConstrained`. Inline styles (`translate`, `top`, `left`) and `--swc-placement-available-*` custom properties are left for the caller to remove after any exit transition completes. Called from `hostDisconnected` when the Lit host disconnects. |
+| `recompute()`                        | Force one `computePosition` pass outside `autoUpdate` — for example after floating content reflows or a virtual trigger moves without layout events. No-op if not started.                                                                                                                                                                 |
 
 ### Readonly properties
 

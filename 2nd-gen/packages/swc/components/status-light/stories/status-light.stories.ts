@@ -22,7 +22,7 @@ import {
   StatusLightColorVariant,
   StatusLightSemanticVariant,
   type StatusLightSize,
-} from '@spectrum-web-components/core/components/status-light';
+} from '@adobe/spectrum-wc-core/components/status-light';
 
 import '@adobe/spectrum-wc/components/status-light/swc-status-light.js';
 
@@ -69,10 +69,6 @@ const meta: Meta = {
   parameters: {
     docs: {
       subtitle: `Status lights convey semantic meaning through colored dots accompanied by descriptive text.`,
-    },
-    design: {
-      type: 'figma',
-      url: 'https://www.figma.com/design/Mngz9H7WZLbrCvGQf3GnsY/S2---Desktop?node-id=36797-954',
     },
     stackblitz: {
       url: 'https://stackblitz.com/edit/vitejs-vite-rdaytnkj?file=src%2Fmy-element.ts',
@@ -188,19 +184,6 @@ export const SemanticVariants: Story = {
         })
     )}
   `,
-  parameters: {
-    a11y: {
-      // @todo Known issue: neutral variant has color contrast of 4.39:1 vs required 4.5:1
-      // Exclude only the neutral variant from color-contrast checks
-      // Tracking this in SWC-1606
-      exclude: {
-        'color-contrast': [
-          'swc-status-light[variant="neutral"]',
-          '.swc-StatusLight--neutral',
-        ],
-      },
-    },
-  },
   tags: ['options'],
 };
 
@@ -282,19 +265,6 @@ export const Accessibility: Story = {
       'default-slot': nonSemanticLabels['silver'],
     })}
   `,
-  parameters: {
-    a11y: {
-      // @todo Known issue: neutral variant has color contrast of 4.39:1 vs required 4.5:1
-      // Exclude only the neutral variant from color-contrast checks
-      // Tracking this in SWC-1606
-      exclude: {
-        'color-contrast': [
-          'swc-status-light[variant="neutral"]',
-          '.swc-StatusLight--neutral',
-        ],
-      },
-    },
-  },
   tags: ['a11y'],
 };
 

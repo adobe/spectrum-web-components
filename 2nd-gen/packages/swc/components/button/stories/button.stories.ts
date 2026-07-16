@@ -23,7 +23,7 @@ import {
   type ButtonSize,
   type ButtonStaticColor,
   type ButtonVariant,
-} from '@spectrum-web-components/core/components/button';
+} from '@adobe/spectrum-wc-core/components/button';
 
 import '@adobe/spectrum-wc/components/button/swc-button.js';
 

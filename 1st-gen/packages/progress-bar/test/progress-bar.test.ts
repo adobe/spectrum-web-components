@@ -168,29 +168,6 @@ describe('ProgressBar', () => {
       consoleWarnStub.restore();
     });
 
-    it('warns in Dev Mode when accessible attributes are not leveraged', async () => {
-      const el = await fixture<ProgressBar>(html`
-        <sp-progress-bar progress="50"></sp-progress-bar>
-      `);
-
-      await elementUpdated(el);
-
-      const spyCall = consoleWarnStub.getCall(0);
-      expect(
-        (spyCall.args[0] as string).includes('accessible'),
-        'confirm accessibility-centric message'
-      ).to.be.true;
-      expect(
-        spyCall.args[spyCall.args.length - 1],
-        'confirm `data` shape'
-      ).to.deep.equal({
-        data: {
-          localName: 'sp-progress-bar',
-          type: 'accessibility',
-          level: 'default',
-        },
-      });
-    });
     it('resolves a language (en-US)', async () => {
       const [languageContext] = createLanguageContext('en-US');
       const test = await fixture(html`
@@ -270,13 +247,18 @@ describe('ProgressBar', () => {
         'confirm deprecated over-background warning'
       ).to.be.true;
 
-      const spyCall = consoleWarnStub.getCall(0);
+      const spyCall = consoleWarnStub
+        .getCalls()
+        .find((call: { args: unknown[] }) =>
+          (call.args[0] as string)?.includes('over-background')
+        );
+      expect(spyCall, 'over-background warning emitted').to.not.be.undefined;
       expect(
-        (spyCall.args[0] as string).includes('deprecated'),
+        (spyCall!.args[0] as string).includes('deprecated'),
         'confirm deprecated over-background warning'
       ).to.be.true;
       expect(
-        spyCall.args[spyCall.args.length - 1],
+        spyCall!.args[spyCall!.args.length - 1],
         'confirm `data` shape'
       ).to.deep.equal({
         data: {
@@ -294,13 +276,21 @@ describe('ProgressBar', () => {
       await elementUpdated(el);
 
       expect(consoleWarnStub.called).to.be.true;
-      const spyCall = consoleWarnStub.getCall(0);
+      const spyCall = consoleWarnStub.getCalls().find(
+        (call: { args: unknown[] }) =>
+          (
+            call.args[call.args.length - 1] as {
+              data?: { type?: string };
+            }
+          )?.data?.type === 'accessibility'
+      );
+      expect(spyCall, 'accessibility warning emitted').to.not.be.undefined;
       expect(
-        (spyCall.args[0] as string).includes('accessible'),
+        (spyCall!.args[0] as string).includes('accessible'),
         'confirm accessibility-centric message'
       ).to.be.true;
       expect(
-        spyCall.args[spyCall.args.length - 1],
+        spyCall!.args[spyCall!.args.length - 1],
         'confirm `data` shape'
       ).to.deep.equal({
         data: {

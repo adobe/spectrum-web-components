@@ -22,7 +22,7 @@ import * as Stories from './stories/hover-controller.stories';
 
 ### Basic usage
 
-1. Implement `HoverControllerHost` on your element (`delay`, `closeDelay`, `manual`, `disabled`, `showPopover`, `hidePopover`). The host must have `popover` set so it participates in the native Popover API.
+1. Implement `HoverControllerHost` on your element (`delay`, `closeDelay`, `manual`, `disabled`, `requestOpen`, `requestClose`). The host owns its visibility state; `requestOpen` / `requestClose` let the controller ask the host to open or close without driving the Popover API itself. The host must have `popover` set so it participates in the native Popover API.
 2. Construct the controller in the host's `constructor`.
 3. Resolve the trigger element and call `setTarget()` from `updated()` whenever it changes. The controller does not resolve trigger elements itself.
 4. Wire ARIA relationships (`aria-describedby` / `aria-labelledby`) in the host on `open` change — the controller does not set ARIA attributes.
@@ -33,13 +33,14 @@ import { property } from 'lit/decorators.js';
 import {
   HoverController,
   type HoverControllerHost,
-} from '@spectrum-web-components/core/controllers/hover-controller.js';
+} from '@adobe/spectrum-wc-core/controllers/hover-controller.js';
 
 class SwcTooltip extends LitElement implements HoverControllerHost {
   @property({ type: Number }) delay = 1500;
   @property({ type: Number }) closeDelay = 300;
   @property({ type: Boolean }) manual = false;
   @property({ type: Boolean }) disabled = false;
+  @property({ type: Boolean, reflect: true }) open = false;
 
   private triggerElement: HTMLElement | null = null;
 
@@ -47,10 +48,27 @@ class SwcTooltip extends LitElement implements HoverControllerHost {
     warmStateKey: 'swc-tooltip',
   });
 
+  // `open` is the single source of truth. The controller asks to open/close
+  // through these methods; updated() reconciles the Popover API.
+  requestOpen(): void {
+    this.open = true;
+  }
+
+  requestClose(): void {
+    this.open = false;
+  }
+
   protected override updated(changes: PropertyValues): void {
     super.updated(changes);
     if (changes.has('triggerElement')) {
       this.hoverController.setTarget(this.triggerElement ?? null);
+    }
+    if (changes.has('open')) {
+      if (this.open && !this.matches(':popover-open')) {
+        this.showPopover();
+      } else if (!this.open && this.matches(':popover-open')) {
+        this.hidePopover();
+      }
     }
   }
 }
@@ -78,7 +96,7 @@ When `disabled` transitions to `true` while the popover is open, the popover clo
 
 ### Manual
 
-When `manual` is set on the host, the controller skips all event wiring. The consuming component is responsible for calling `showPopover()` / `hidePopover()` programmatically. Hover and focus events on the trigger have no effect.
+When `manual` is set on the host, the controller skips all event wiring. The consuming component is responsible for opening and closing the popover programmatically (e.g. by toggling its `open` state). Hover and focus events on the trigger have no effect.
 
 Use `manual` mode when the component needs click-to-toggle behavior or programmatic control over open/close. The `for` attribute and ARIA wiring still function in manual mode.
 
@@ -132,7 +150,7 @@ When the trigger receives keyboard focus (Tab / Shift+Tab), the popover opens im
 
 - Pair with a `PlacementController` so the popover is always visible and positioned relative to the trigger, even near viewport edges.
 - Set `warmStateKey` to the consuming element's tag name (e.g. `'swc-tooltip'`) to isolate warm state per component type.
-- Use `manual` mode for programmatic control; the consuming component is then responsible for ARIA relationships and calling `showPopover()` / `hidePopover()` at the right times.
+- Use `manual` mode for programmatic control; the consuming component is then responsible for ARIA relationships and for opening and closing the popover at the right times.
 - Wire `aria-describedby` or `aria-labelledby` from the trigger to the popover in the host's `updated()` lifecycle — the controller does not set ARIA attributes.
 
 <Canvas of={Stories.Accessibility} />
@@ -155,13 +173,13 @@ When the trigger receives keyboard focus (Tab / Shift+Tab), the popover opens im
 
 The host element must implement this interface. All members are read by the controller; none are written.
 
-| Member          | Type      | Default | Description                                                                                                                                          |
-| --------------- | --------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `delay`         | `number`  | —       | Warm-up duration in ms before the popover opens on hover. `0` opens immediately.                                                                     |
-| `closeDelay`    | `number`  | `300`   | Cooldown duration in ms after the pointer leaves the trigger or popover. Independent of `delay` so the WCAG 1.4.13 bridge always has time to cancel. |
-| `manual`        | `boolean` | —       | When `true`, the controller skips all event wiring.                                                                                                  |
-| `disabled`      | `boolean` | —       | When `true`, the controller skips all event wiring.                                                                                                  |
-| `showPopover()` | method    | —       | Called by the controller to open the popover.                                                                                                        |
-| `hidePopover()` | method    | —       | Called by the controller to close the popover.                                                                                                       |
+| Member           | Type      | Default | Description                                                                                                                                          |
+| ---------------- | --------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `delay`          | `number`  | —       | Warm-up duration in ms before the popover opens on hover. `0` opens immediately.                                                                     |
+| `closeDelay`     | `number`  | `300`   | Cooldown duration in ms after the pointer leaves the trigger or popover. Independent of `delay` so the WCAG 1.4.13 bridge always has time to cancel. |
+| `manual`         | `boolean` | —       | When `true`, the controller skips all event wiring.                                                                                                  |
+| `disabled`       | `boolean` | —       | When `true`, the controller skips all event wiring.                                                                                                  |
+| `requestOpen()`  | method    | —       | Called by the controller to ask the host to open. The host owns visibility state. Must be idempotent.                                                |
+| `requestClose()` | method    | —       | Called by the controller to ask the host to close. Must be idempotent.                                                                               |
 
 <DocsFooter />

@@ -1,0 +1,209 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import { DocsFooter, DocsHeader } from '../../../swc/.storybook/blocks';
+
+import * as ColorControllerStories from './stories/color-controller.stories';
+
+<Meta of={ColorControllerStories} />
+
+<DocsHeader />
+
+## What it does
+
+`ColorController` is the color-state engine for color components (color area, color
+slider, color wheel, color field). It wraps [colorjs.io](https://colorjs.io/) and
+adds parsing, validation, and format-faithful round-tripping on top of it.
+
+### Parsing and validation
+
+- Accepts color strings (`rgb`/`rgba`, `hsl`/`hsla`, `hsv`/`hsva`, and hex with
+  optional alpha), `colorjs.io` `Color` instances, and channel objects
+  (`{ r, g, b, a }`, `{ h, s, l, a }`, `{ h, s, v, a }`).
+- Supports comma, space, and percentage notations, including the non-standard
+  no-parenthesis forms (`rgb 255 0 0`) and HSV, which is not a CSS color function.
+- `validateColorString` returns the resolved space id, normalized coordinates,
+  alpha, and a validity flag without mutating controller state.
+- Invalid input leaves the current color unchanged; a bare hex (`ff0000`) is retried
+  with a `#` prefix before giving up.
+
+### Format-faithful output
+
+`colorValue` returns the current color in the **same notation it was given** — the
+function name, comma vs. percentage style, and presence of alpha are all preserved
+(for example `rgba(255, 87, 51, 0.5)` round-trips byte-for-byte). This is why the
+controller does not delegate to `colorjs.io`'s own `toString()`, which emits modern
+space-separated CSS and drops `alpha=1`.
+
+### What the caller owns
+
+- Rendering — the controller produces no DOM and no markup.
+- ARIA, focus, and keyboard — color components wire these around the controller.
+- Calling `host.requestUpdate()` is handled by the controller on `color`/`hue`
+  changes; the host just reads `color`, `colorValue`, or `hue` during render.
+
+## Basic usage
+
+1. Construct the controller in your element, optionally pinning a storage space
+   with `manageAs`.
+2. Assign user input to `color` (string, `Color`, or channel object).
+3. Read `colorValue` for the format-faithful value, or `getColor()` / `getHslString()`
+   for conversions.
+
+```typescript
+import { LitElement, html } from 'lit';
+import { customElement, property } from 'lit/decorators.js';
+import { ColorController } from '@adobe/spectrum-wc-core/controllers/color-controller.js';
+
+@customElement('my-color-field')
+export class MyColorField extends LitElement {
+  private colorController = new ColorController(this);
+
+  @property({ type: String })
+  set value(value: string) {
+    this.colorController.color = value;
+  }
+  get value(): string {
+    return this.colorController.colorValue as string;
+  }
+
+  render() {
+    return html`
+      <span style="background:${this.colorController.getHslString()}"></span>
+    `;
+  }
+}
+```
+
+## Behaviors
+
+### Formats
+
+Assign any supported notation to `color` and read it back from `colorValue` in the
+same form. RGB stays `rgb(...)` / `rgba(...)`, HSL and HSV keep their function names
+and percentage units, percentage RGB stays percentage, and hex keeps its length and
+optional alpha.
+
+<Canvas of={ColorControllerStories.Formats} />
+
+### Managed space
+
+Pass `manageAs` to the constructor (`new ColorController(this, { manageAs: 'hsl' })`)
+to store the color in a fixed space regardless of input. The input is still parsed
+from its original notation, then converted to the managed space for storage; this
+keeps round-trips stable for components that operate in a single space (for example
+a hue wheel working in HSL).
+
+<Canvas of={ColorControllerStories.ManagedSpace} />
+
+### Hue
+
+`hue` reads the current color's HSL hue and the setter writes it directly on the
+stored color, requesting a host update. Components such as the color wheel drive
+hue independently of saturation and value.
+
+```typescript
+this.colorController.hue = 180;
+const current = this.colorController.hue; // 180
+```
+
+### Conversion helpers
+
+`getColor(format)` returns a `colorjs.io` color object in `'srgb'`, `'hsv'`, or
+`'hsl'` (other strings throw). `getHslString()` returns the current color as an
+`hsl(...)` string, handy for CSS.
+
+```typescript
+const asHsl = this.colorController.getColor('hsl');
+const hslCss = this.colorController.getHslString(); // "hsl(...)"
+```
+
+### Save and restore
+
+`savePreviousColor()` clones the current color; `restorePreviousColor()` reverts to
+it. Color components use this to support cancel/restore interactions (for example
+reverting an in-progress edit on <kbd>Escape</kbd>).
+
+```typescript
+this.colorController.savePreviousColor();
+// ...interactive edit...
+this.colorController.restorePreviousColor();
+```
+
+## Accessibility
+
+### Features
+
+`ColorController` handles **color state only** — it renders nothing and exposes no
+roles, names, or keyboard behavior of its own. Accessibility lives in the consuming
+color components.
+
+#### What the controller provides
+
+- A single, validated source of truth for the current color and its original
+  notation, so components can present consistent values to assistive technology.
+- Dev Mode parse warnings (guarded behind `window.__swc.DEBUG`) when an input cannot
+  be parsed, surfaced to developers rather than users.
+
+#### What the caller must provide
+
+- Roles and labels for the color UI (`slider`, `textbox`, etc.) and their values.
+- Keyboard interaction and focus management for the color surface.
+- Announcing color changes where appropriate (for example `aria-valuetext`).
+
+### Best practices
+
+- Provide a text alternative for color (a readable value or name); never rely on the
+  swatch alone.
+- Keep the value exposed to assistive technology in sync with `colorValue` so users
+  hear the same notation they typed.
+- Pair `savePreviousColor()` / `restorePreviousColor()` with a clear keyboard
+  affordance (such as <kbd>Escape</kbd> to cancel an edit).
+
+## API
+
+### Methods
+
+| Member                       | Description                                                                                                                                        |
+| ---------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `validateColorString(color)` | Parse a color string and return `{ spaceId, coords, alpha, isValid }` without mutating controller state. Supports RGB(A), HSL(A), HSV(A), and hex. |
+| `getColor(format)`           | Return the current color converted to `'srgb'`, `'hsv'`, or `'hsl'` as a `colorjs.io` color object. Throws on any other format string.             |
+| `getHslString()`             | Return the current color as an `hsl(...)` string.                                                                                                  |
+| `savePreviousColor()`        | Clone the current color and store it as the previous color.                                                                                        |
+| `restorePreviousColor()`     | Restore the color to the previously saved value.                                                                                                   |
+
+### Properties
+
+| Property      | Type         | Description                                                                                                                                  |
+| ------------- | ------------ | -------------------------------------------------------------------------------------------------------------------------------------------- |
+| `color`       | `Color`      | Get the current `colorjs.io` color. Set from a string, `Color`, or channel object; setting requests a host update and records `colorOrigin`. |
+| `colorValue`  | `ColorTypes` | The current color in the **original input notation** (format-faithful string, or a channel object when the input was an object).             |
+| `colorOrigin` | `ColorTypes` | The original value last assigned to `color`. Settable to influence `colorValue` formatting (for example percentage RGB).                     |
+| `hue`         | `number`     | Get/set the HSL hue of the current color; the setter requests a host update.                                                                 |
+
+### Options
+
+| Option     | Type     | Default         | Description                                                                                           |
+| ---------- | -------- | --------------- | ----------------------------------------------------------------------------------------------------- |
+| `manageAs` | `string` | _(input space)_ | colorjs.io space id to store the color in (`'srgb'`, `'hsl'`, `'hsv'`). Omit to keep the input space. |
+
+### Types
+
+| Type         | Description                                                                                                    |
+| ------------ | -------------------------------------------------------------------------------------------------------------- |
+| `Color`      | Re-exported `colorjs.io` color class.                                                                          |
+| `ColorTypes` | Accepted input/output union: colorjs.io defaults plus `{ r, g, b, a? }`, `{ h, s, l, a? }`, `{ h, s, v, a? }`. |
+
+## Appendix
+
+### Relationship to Gen1 `ColorController`
+
+The Gen2 controller is a behavior-preserving migration of the Gen1
+`ColorController` from `1st-gen` reactive controllers. The public API and every
+color-format round-trip are unchanged; internally it hoists its validation regexes,
+removes dead conversion formats, dedupes space detection, and guards Dev Mode
+warnings for non-browser environments.
+
+### See also
+
+- [colorjs.io documentation](https://colorjs.io/docs/)
+
+<DocsFooter />

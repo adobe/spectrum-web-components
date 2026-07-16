@@ -18,6 +18,7 @@
 /* @global-exclude: host display/alignment apply to the custom element wrapper, not the native element */
 :host {
   display: inline-block;
+  inline-size: fit-content;
   vertical-align: top;
 }
 
@@ -43,7 +44,7 @@
 
 .swc-Button:focus-visible {
   outline: token("focus-indicator-thickness") solid var(--swc-button-focus-indicator-color, token("focus-indicator-color"));
-  outline-offset: token("focus-indicator-gap");
+  outline-offset: token("focus-ring-gap");
 }
 
 /* Inflated specificity to prevent variant override */

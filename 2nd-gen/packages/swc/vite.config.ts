@@ -35,26 +35,42 @@ const postcssPlugins = [
       'logical-properties-and-values': false,
       'is-pseudo-class': false,
       'cascade-layers': false,
+      'dir-pseudo-class': false,
     },
   }),
 ];
 
-/** Processes stylesheets/ CSS through PostCSS and writes them to dist/. */
+/**
+ * Processes stylesheets/ CSS through PostCSS and writes them to dist/.
+ * Skips `stylesheets/_lit-styles/**` — those files are imported into component
+ * `static styles` arrays via `vite-plugin-lit-css` and should not also
+ * ship as standalone CSS in `dist/`.
+ */
 function processStylesheets(): Plugin {
   return {
     name: 'process-stylesheets',
     apply: 'build',
     async closeBundle() {
       const processor = postcss(postcssPlugins);
-      for (const file of glob.sync(
-        resolve(__dirname, 'stylesheets/**/*.css')
-      )) {
+      for (const file of glob.sync(resolve(__dirname, 'stylesheets/**/*.css'), {
+        ignore: [resolve(__dirname, 'stylesheets/_lit-styles/**/*.css')],
+      })) {
         const dest = resolve(__dirname, 'dist', basename(file));
         const result = await processor.process(await readFile(file, 'utf-8'), {
           from: file,
           to: dest,
         });
-        await writeFile(dest, result.css);
+        // Stylesheets are flattened into dist/ root, so a source `@import`
+        // written relative to its subfolder (e.g. global/../link.css) must be
+        // rewritten to a sibling reference. Skip absolute and remote URLs.
+        const css = result.css.replace(
+          /@import\s+url\((['"]?)([^'")]+)\1\)/g,
+          (match, quote, url) =>
+            /^(?:[a-z]+:)?\/\//i.test(url) || url.startsWith('/')
+              ? match
+              : `@import url(${quote}./${basename(url)}${quote})`
+        );
+        await writeFile(dest, css);
         await writeFile(`${dest}.d.ts`, 'export {};\n');
       }
     },
@@ -64,9 +80,18 @@ function processStylesheets(): Plugin {
 export default defineConfig({
   plugins: [
     globalElementCSS({
-      elements: [{ component: 'button' }],
+      elements: [
+        { component: 'button', textElements: ['label'] },
+        { component: 'action-button', textElements: ['label'] },
+      ],
     }),
-    litCss({ exclude: ['./stylesheets/**/*.css'] }),
+    litCss({
+      exclude: [
+        './stylesheets/*.css',
+        './stylesheets/global/**/*.css',
+        './stylesheets/typography/**/*.css',
+      ],
+    }),
     processStylesheets(),
     dts({
       include: ['**/*.ts'],
@@ -77,9 +102,9 @@ export default defineConfig({
           filePath,
           content: content
             // @todo: figure out why this is needed (type imports are becoming
-            // relative instead of targeting the @spectrum-web-components/core package)
-            // this fixes it e.g. ../../../core/... or ../core/... -> @spectrum-web-components/core/...
-            .replace(/(\.\.\/)+core\//g, '@spectrum-web-components/core/'),
+            // relative instead of targeting the @adobe/spectrum-wc-core package)
+            // this fixes it e.g. ../../../core/... or ../core/... -> @adobe/spectrum-wc-core/...
+            .replace(/(\.\.\/)+core\//g, '@adobe/spectrum-wc-core/'),
         };
       },
     }),
@@ -114,7 +139,7 @@ export default defineConfig({
           id === 'lit' ||
           id.startsWith('lit/') ||
           id.startsWith('@lit/') ||
-          id.startsWith('@spectrum-web-components/core/')
+          id.startsWith('@adobe/spectrum-wc-core/')
         );
       },
       output: {
@@ -134,7 +159,7 @@ export default defineConfig({
     // Needed for Storybook to work
     alias: [
       {
-        find: '@spectrum-web-components/core',
+        find: '@adobe/spectrum-wc-core',
         replacement: resolve(__dirname, '../core'),
       },
       // Long-form imports (e.g. `@adobe/spectrum-wc/components/badge/swc-badge.js`)
@@ -143,6 +168,12 @@ export default defineConfig({
       {
         find: '@adobe/spectrum-wc/components',
         replacement: resolve(__dirname, 'components'),
+      },
+      // Pattern imports (e.g. `@adobe/spectrum-wc/patterns/conversational-ai/response-status`)
+      // resolve to `./patterns`, mirroring the published `./patterns/*` export.
+      {
+        find: '@adobe/spectrum-wc/patterns',
+        replacement: resolve(__dirname, 'patterns'),
       },
       // Short-form imports (e.g. `@adobe/spectrum-wc/badge`) point at the source
       // package layout under `./components`, mirroring the published package's

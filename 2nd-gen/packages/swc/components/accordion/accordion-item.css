@@ -1,0 +1,276 @@
+/**
+ * Copyright 2026 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+:host {
+  display: block;
+  inline-size: 100%;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* ── Item wrapper ───────────────────────────────────────────────────── */
+
+.swc-AccordionItem {
+  --_swc-accordion-item-header-background: transparent;
+  --_swc-accordion-item-header-text-color: token("neutral-content-color-default");
+
+  inline-size: 100%;
+  border-block-end: token("border-width-100") solid var(--swc-accordion-item-divider-color, token("gray-200"));
+}
+
+:host(:first-child) .swc-AccordionItem {
+  border-block-start: token("border-width-100") solid var(--swc-accordion-item-divider-color, token("gray-200"));
+}
+
+/* ── Header row (heading + actions) ─────────────────────────────────── */
+
+.swc-AccordionItem-row {
+  display: flex;
+  gap: token("spacing-100");
+  align-items: center;
+}
+
+/* ── Heading reset (h2–h6 wrapping the button) ──────────────────────── */
+
+.swc-AccordionItem-heading {
+  flex: 1 1 auto;
+  min-inline-size: 0;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+}
+
+/* ── Header button ──────────────────────────────────────────────────── */
+
+.swc-AccordionItem-header {
+  --_swc-accordion-item-padding-top: var(--swc-accordion-item-padding-top, token("base-padding-vertical-large"));
+  --_swc-accordion-item-padding-bottom: var(--swc-accordion-item-padding-bottom, token("base-padding-vertical-large"));
+  --_swc-accordion-item-disclosure-indicator-gap: var(--swc-accordion-item-disclosure-indicator-gap, token("base-gap-large"));
+  --_swc-accordion-item-edge-to-content-area: var(--swc-accordion-item-edge-to-content-area, token("container-padding-extra-small"));
+  --_swc-accordion-item-header-font-size: var(--swc-accordion-item-header-font-size, token("font-size-200"));
+
+  display: flex;
+  gap: var(--_swc-accordion-item-disclosure-indicator-gap);
+  align-items: center;
+  inline-size: 100%;
+  padding-block: var(--_swc-accordion-item-padding-top) var(--_swc-accordion-item-padding-bottom);
+  padding-inline: var(--_swc-accordion-item-edge-to-content-area);
+  font-family: inherit;
+  font-size: var(--_swc-accordion-item-header-font-size);
+  font-weight: token("bold-font-weight");
+  line-height: token("line-height-100");
+  color: var(--_swc-accordion-item-header-text-color);
+  text-align: start;
+  background-color: var(--_swc-accordion-item-header-background);
+  border: 0;
+  border-radius: var(--swc-accordion-item-header-corner-radius, 0);
+  appearance: none;
+}
+
+/* The container sets the color tokens so they cascade into .swc-AccordionItem-header; the
+   outline and border-radius stay on the button so the focus ring matches
+   the hover footprint (toggle area only, independent of the actions slot). */
+.swc-AccordionItem:has(.swc-AccordionItem-header:focus-visible) {
+  --_swc-accordion-item-header-background: token("transparent-black-100");
+  --_swc-accordion-item-header-text-color: token("neutral-content-color-key-focus");
+}
+
+.swc-AccordionItem-header:focus-visible {
+  border-radius: var(--swc-accordion-item-focus-indicator-corner-radius, token("corner-radius-medium-size-medium"));
+  outline: token("focus-indicator-thickness") solid token("focus-indicator-color");
+  outline-offset: calc(token("focus-ring-gap") * -1);
+}
+
+.swc-AccordionItem:has(.swc-AccordionItem-header:hover) {
+  --_swc-accordion-item-header-background: token("transparent-black-100");
+  --_swc-accordion-item-header-text-color: token("neutral-content-color-hover");
+}
+
+.swc-AccordionItem:has(.swc-AccordionItem-header:active) {
+  --_swc-accordion-item-header-background: token("transparent-black-300");
+  --_swc-accordion-item-header-text-color: token("neutral-content-color-down");
+}
+
+.swc-AccordionItem:has(.swc-AccordionItem-header[aria-disabled="true"]),
+.swc-AccordionItem:has(.swc-AccordionItem-header[aria-disabled="true"]:hover) {
+  --_swc-accordion-item-header-background: transparent;
+  --_swc-accordion-item-header-text-color: token("disabled-content-color");
+}
+
+/* ── Disclosure indicator (chevron) ─────────────────────────────────── */
+
+/* Default size (m): Chevron100 */
+.swc-AccordionItem-indicator {
+  --swc-icon-inline-size: token("ui-icon-medium");
+  --swc-icon-block-size: token("ui-icon-medium");
+
+  flex-shrink: 0;
+  rotate: 0deg;
+  transition: rotate token("animation-duration-100") token("animation-ease-in-out");
+}
+
+/* Mirror for RTL so the chevron points left */
+:dir(rtl) .swc-AccordionItem-indicator {
+  scale: -1 1;
+}
+
+/* Size: small, Chevron75 */
+:host([size="s"]) .swc-AccordionItem-indicator {
+  --swc-icon-inline-size: token("ui-icon-small");
+  --swc-icon-block-size: token("ui-icon-small");
+}
+
+/* Size: large, Chevron200 */
+:host([size="l"]) .swc-AccordionItem-indicator {
+  --swc-icon-inline-size: token("ui-icon-large");
+  --swc-icon-block-size: token("ui-icon-large");
+}
+
+/* Size: extra-large, Chevron300 */
+:host([size="xl"]) .swc-AccordionItem-indicator {
+  --swc-icon-inline-size: token("ui-icon-extra-large");
+  --swc-icon-block-size: token("ui-icon-extra-large");
+}
+
+:host([open]) .swc-AccordionItem-indicator {
+  rotate: 90deg;
+}
+
+/* RTL + open: rotate the opposite direction */
+:host([open]):dir(rtl) .swc-AccordionItem-indicator {
+  rotate: -90deg;
+}
+
+/* ── Item title (heading slot wrapper) ──────────────────────────────── */
+
+.swc-AccordionItem-label {
+  flex: 1;
+}
+
+/*
+ * Override light-DOM heading styles (browser defaults, host-document resets)
+ * that would otherwise win over the inherited header font. Applies to
+ * phrasing content like <strong> or <code> slotted into the label.
+ * The :not([class]) guard leaves intentionally-classed elements untouched.
+ * !important is required to win over any light-DOM styles targeting the
+ * slotted element (e.g. global h* resets from the host document).
+ */
+::slotted([slot="label"]:not([class])) {
+  margin: 0 !important;
+  font: inherit !important;
+}
+
+/* ── Direct actions (inline with heading, outside the toggle area) ───── */
+
+.swc-AccordionItem-actions {
+  display: flex;
+  flex: 0 0 auto;
+  gap: token("spacing-100");
+  align-items: center;
+  margin-inline-end: var(--swc-accordion-item-edge-to-content-area, token("container-padding-extra-small"));
+}
+
+/* ── Content panel ──────────────────────────────────────────────────── */
+
+.swc-AccordionItem-content {
+  display: none;
+}
+
+:host([open]) .swc-AccordionItem-content {
+  display: block;
+}
+
+/* Inner wrapper holds padding and typography. The outer container (.swc-AccordionItem-content)
+   is padding-free so height: 0 collapses it cleanly in the @supports animation block. */
+.swc-AccordionItem-contentBody {
+  --_swc-accordion-item-content-padding-inline: var(--swc-accordion-item-content-padding-inline, token("container-padding-extra-small"));
+
+  padding-block: token("container-padding-extra-small") token("container-padding-medium");
+  padding-inline: var(--_swc-accordion-item-content-padding-inline);
+  font-size: token("font-size-100");
+  font-weight: token("regular-font-weight");
+  line-height: token("line-height-100");
+  color: token("neutral-subdued-content-color-default");
+}
+
+/* Zero out default browser margins at the panel edges. :nth-child(1 of :not([slot]))
+   skips named-slot siblings (span[slot="label"], etc.) and targets the first
+   default-slot child regardless of element type. */
+.swc-AccordionItem-contentBody ::slotted(:nth-child(1 of :not([slot]))) {
+  margin-block-start: 0;
+}
+
+.swc-AccordionItem-contentBody ::slotted(:last-child) {
+  margin-block-end: 0;
+}
+
+/* ── Size: small ────────────────────────────────────────────────────── */
+
+:host([size="s"]) {
+  --swc-accordion-item-focus-indicator-corner-radius: token("corner-radius-medium-size-small");
+  --swc-accordion-item-padding-top: token("base-padding-vertical-medium");
+  --swc-accordion-item-padding-bottom: token("base-padding-vertical-medium");
+  --swc-accordion-item-disclosure-indicator-gap: token("base-gap-medium");
+  --swc-accordion-item-edge-to-content-area: token("container-padding-extra-small");
+  --swc-accordion-item-header-font-size: token("font-size-100");
+  --swc-accordion-item-content-padding-inline: token("container-padding-extra-small");
+}
+
+/* ── Size: large ────────────────────────────────────────────────────── */
+
+:host([size="l"]) {
+  --swc-accordion-item-focus-indicator-corner-radius: token("corner-radius-medium-size-large");
+  --swc-accordion-item-padding-top: token("base-padding-vertical-extra-large");
+  --swc-accordion-item-padding-bottom: token("base-padding-vertical-extra-large");
+  --swc-accordion-item-disclosure-indicator-gap: token("base-gap-extra-large");
+  --swc-accordion-item-edge-to-content-area: token("container-padding-small");
+  --swc-accordion-item-header-font-size: token("font-size-300");
+  --swc-accordion-item-content-padding-inline: token("container-padding-small");
+}
+
+/* ── Size: extra-large ──────────────────────────────────────────────── */
+
+:host([size="xl"]) {
+  --swc-accordion-item-focus-indicator-corner-radius: token("corner-radius-medium-size-extra-large");
+  --swc-accordion-item-padding-top: token("base-padding-vertical-2x-large");
+  --swc-accordion-item-padding-bottom: token("base-padding-vertical-2x-large");
+  --swc-accordion-item-disclosure-indicator-gap: token("base-gap-2x-large");
+  --swc-accordion-item-edge-to-content-area: token("container-padding-medium");
+  --swc-accordion-item-header-font-size: token("font-size-400");
+  --swc-accordion-item-content-padding-inline: token("container-padding-medium");
+}
+
+/* ── Progressive enhancement: height animation ───────────────────────
+   calc-size() allows animating height: auto, which CSS transitions
+   could not previously target. Supported in Chrome/Edge 129+; all
+   other browsers keep the current instant show/hide behavior.       */
+
+@supports (height: calc-size(auto, size)) {
+  .swc-AccordionItem-content {
+    display: block;
+    height: 0;
+    overflow: hidden;
+    transition: height token("animation-duration-100") token("animation-ease-in-out");
+  }
+
+  :host([open]) .swc-AccordionItem-content {
+    height: calc-size(auto, size);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .swc-AccordionItem-content {
+      transition: none;
+    }
+  }
+}

@@ -15,8 +15,9 @@ import {
   type Options,
   setStorybookHelpersConfig,
 } from '@wc-toolkit/storybook-helpers';
+import isChromatic from 'chromatic/isChromatic';
 
-import customElements from './custom-elements.json';
+import customElements from '../dist/custom-elements.json';
 import { withContext } from './decorators/contexts.js';
 import { withFlexLayout, withStaticColorsDemo } from './decorators/index.js';
 import { withLanguageWrapper } from './decorators/language.js';
@@ -27,6 +28,7 @@ import { transformDocsSource } from './utils/docs-source-transform.js';
 
 import '../stylesheets/swc.css';
 import '../stylesheets/typography.css';
+import '../stylesheets/link.css';
 import '../stylesheets/global/global-elements.css';
 import './assets/preview.css';
 
@@ -135,6 +137,12 @@ const preview = {
   ],
   parameters: {
     layout: 'centered',
+    // The Storybook patch (.yarn/patches/storybook-npm-10.4.1.patch) gates play
+    // functions on initial render behind `parameters.autoplay` so they do not run
+    // automatically while browsing the dev UI. Chromatic renders each story via that
+    // same initial path, so without this it would snapshot the pre-play state. Enable
+    // autoplay only under Chromatic to restore correct visual regression snapshots.
+    autoplay: isChromatic(),
     backgrounds: { disable: true }, // Use custom context switches
     controls: {
       expanded: true,
@@ -179,7 +187,8 @@ const preview = {
       canvas: {
         withToolbar: true,
         layout: 'centered',
-        sourceState: 'shown',
+        // Individual stories can override this with parameters.docs.canvas.sourceState.
+        sourceState: 'hidden',
       },
       source: {
         excludeDecorators: true,
@@ -260,6 +269,7 @@ const preview = {
                 'Spectrum SWC migration',
                 'Anti patterns',
                 'Property order quick reference',
+                'Stylesheets',
               ],
               'TypeScript',
               [
@@ -323,184 +333,8 @@ const preview = {
                 '1st gen spectrum 2 enhancements',
               ],
               'Components',
-              [
-                'Accordion',
-                [
-                  'Accessibility migration analysis',
-                  'Migration plan',
-                  'Rendering and styling migration analysis',
-                ],
-                'Action button',
-                [
-                  'Accessibility migration analysis',
-                  'Rendering and styling migration analysis',
-                ],
-                'Action group',
-                ['Rendering and styling migration analysis'],
-                'Action menu',
-                [
-                  'Accessibility migration analysis',
-                  'Rendering and styling migration analysis',
-                ],
-                'Alert banner',
-                ['Rendering and styling migration analysis'],
-                'Asset',
-                ['Rendering and styling migration analysis'],
-                'Avatar',
-                [
-                  'Accessibility migration analysis',
-                  'Migration plan',
-                  'Rendering and styling migration analysis',
-                ],
-                'Badge',
-                [
-                  'Accessibility migration analysis',
-                  'Rendering and styling migration analysis',
-                ],
-                'Button',
-                [
-                  'Accessibility migration analysis',
-                  'Migration plan',
-                  'Rendering and styling migration analysis',
-                ],
-                'Button group',
-                [
-                  'Accessibility migration analysis',
-                  'Migration plan',
-                  'Rendering and styling migration analysis',
-                ],
-                'Checkbox',
-                ['Rendering and styling migration analysis'],
-                'Close button',
-                [
-                  'Accessibility migration analysis',
-                  'Migration plan',
-                  'Rendering and styling migration analysis',
-                ],
-                'Color field',
-                ['Rendering and styling migration analysis'],
-                'Color loupe',
-                [
-                  'Accessibility migration analysis',
-                  'Migration checklist',
-                  'Rendering and styling migration analysis',
-                ],
-                'Divider',
-                [
-                  'Accessibility migration analysis',
-                  'Rendering and styling migration analysis',
-                ],
-                'Dropzone',
-                ['Rendering and styling migration analysis'],
-                'Field group',
-                ['Rendering and styling migration analysis'],
-                'Field label',
-                ['Rendering and styling migration analysis'],
-                'Grid',
-                [
-                  'Accessibility migration analysis',
-                  'Rendering and styling migration analysis',
-                ],
-                'Help text',
-                ['Rendering and styling migration analysis'],
-                'Illustrated message',
-                [
-                  'Accessibility migration analysis',
-                  'Migration plan',
-                  'Rendering and styling migration analysis',
-                ],
-                'Infield button',
-                [
-                  'Accessibility migration analysis',
-                  'Rendering and styling migration analysis',
-                ],
-                'Infield progress circle',
-                ['Rendering and styling migration analysis'],
-                'Link',
-                [
-                  'Accessibility migration analysis',
-                  'Migration plan',
-                  'Rendering and styling migration analysis',
-                ],
-                'Menu',
-                [
-                  'Accessibility migration analysis',
-                  'Rendering and styling migration analysis',
-                ],
-                'Menu group',
-                ['Accessibility migration analysis'],
-                'Menu item',
-                ['Accessibility migration analysis'],
-                'Menu separator',
-                ['Accessibility migration analysis'],
-                'Meter',
-                [
-                  'Accessibility migration analysis',
-                  'Rendering and styling migration analysis',
-                ],
-                'Number field',
-                ['Rendering and styling migration analysis'],
-                'Opacity checkerboard',
-                ['Rendering and styling migration analysis'],
-                'Picker button',
-                ['Rendering and styling migration analysis'],
-                'Popover',
-                [
-                  'Accessibility migration analysis',
-                  'Migration plan',
-                  'Rendering and styling migration analysis',
-                ],
-                'Progress bar',
-                [
-                  'Accessibility migration analysis',
-                  'Rendering and styling migration analysis',
-                ],
-                'Progress circle',
-                [
-                  'Accessibility migration analysis',
-                  'Rendering and styling migration analysis',
-                ],
-                'Radio',
-                ['Rendering and styling migration analysis'],
-                'Search',
-                ['Rendering and styling migration analysis'],
-                'Slider',
-                ['Rendering and styling migration analysis'],
-                'Status light',
-                [
-                  'Accessibility migration analysis',
-                  'Rendering and styling migration analysis',
-                ],
-                'Swatch',
-                ['Rendering and styling migration analysis'],
-                'Swatch group',
-                ['Rendering and styling migration analysis'],
-                'Switch',
-                ['Rendering and styling migration analysis'],
-                'Tabs',
-                [
-                  'Accessibility migration analysis',
-                  'Migration plan',
-                  'Rendering and styling migration analysis',
-                ],
-                'Tag',
-                ['Rendering and styling migration analysis'],
-                'Tags',
-                ['Rendering and styling migration analysis'],
-                'Textfield',
-                ['Rendering and styling migration analysis'],
-                'Thumbnail',
-                ['Rendering and styling migration analysis'],
-                'Tooltip',
-                [
-                  'Accessibility migration analysis',
-                  'Migration plan',
-                  'Rendering and styling migration analysis',
-                ],
-              ],
               'Milestones',
               'Strategies',
-              ['Focus management strategy rfc'],
             ],
           ],
           // GENERATED:CONTRIBUTOR-DOCS-SORT-END

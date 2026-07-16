@@ -44,6 +44,7 @@
   display: flex;
   flex-direction: column;
   gap: token("spacing-75");
+  align-items: center;
   text-align: center;
 }
 
@@ -136,6 +137,10 @@ slot[name="heading"] {
   font: inherit !important;
   /* stylelint-disable-next-line scale-unlimited/declaration-strict-value */
   color: inherit !important;
+}
+
+:host(:has([slot="actions"])) slot[name="actions"] {
+  margin-block-start: token("spacing-300");
 }
 
 /*

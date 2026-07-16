@@ -1,0 +1,163 @@
+/**
+ * Copyright 2026 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+import { CSSResultArray, html, TemplateResult } from 'lit';
+import { ifDefined } from 'lit/directives/if-defined.js';
+import { when } from 'lit/directives/when.js';
+import { html as staticHtml, unsafeStatic } from 'lit/static-html.js';
+
+import { AccordionItemBase } from '@adobe/spectrum-wc-core/components/accordion';
+
+import '../icon/swc-icon.js';
+
+import { Chevron75Icon } from '../icon/elements/Chevron75Icon.js';
+import { Chevron100Icon } from '../icon/elements/Chevron100Icon.js';
+import { Chevron200Icon } from '../icon/elements/Chevron200Icon.js';
+import { Chevron300Icon } from '../icon/elements/Chevron300Icon.js';
+
+import styles from './accordion-item.css';
+
+/**
+ * An accordion item component that wraps a single expandable content section.
+ *
+ * @element swc-accordion-item
+ * @since 2.0.0-beta.1
+ *
+ * @fires swc-accordion-item-toggle - Dispatched when the item open state is
+ *   toggled. Cancelable; `preventDefault()` reverts the change.
+ * @fires swc-open - Dispatched when the item begins opening.
+ * @fires swc-close - Dispatched when the item begins closing.
+ * @fires swc-after-open - Dispatched after the item has fully opened.
+ * @fires swc-after-close - Dispatched after the item has fully closed.
+ *
+ * @example
+ * <swc-accordion-item>
+ *   <span slot="label">Section heading</span>
+ *   Panel content goes here.
+ * </swc-accordion-item>
+ *
+ * @cssprop --swc-accordion-item-focus-indicator-corner-radius - Corner radius of the focus ring drawn around the header button.
+ * @cssprop --swc-accordion-item-header-corner-radius - Corner radius of the header button background.
+ * @cssprop --swc-accordion-item-padding-top - Block-start padding of the header button.
+ * @cssprop --swc-accordion-item-padding-bottom - Block-end padding of the header button.
+ * @cssprop --swc-accordion-item-disclosure-indicator-gap - Gap between the chevron indicator and the header label.
+ * @cssprop --swc-accordion-item-edge-to-content-area - Inline padding of the header button.
+ * @cssprop --swc-accordion-item-header-font-size - Font size of the header label.
+ * @cssprop --swc-accordion-item-content-padding-inline - Inline padding of the content panel.
+ * @cssprop --swc-accordion-item-divider-color - Color of the item's top and bottom divider borders.
+ */
+export class AccordionItem extends AccordionItemBase {
+  // ──────────────────────────────
+  //     STYLING
+  // ──────────────────────────────
+
+  public static override get styles(): CSSResultArray {
+    return [styles];
+  }
+
+  // ──────────────────────────────
+  //     DELEGATION
+  // ──────────────────────────────
+
+  public override focus(options?: FocusOptions): void {
+    this.shadowRoot?.getElementById('header')?.focus(options);
+  }
+
+  public override click(): void {
+    this.shadowRoot?.getElementById('header')?.click();
+  }
+
+  // ──────────────────────────────
+  //     RENDERING
+  // ──────────────────────────────
+
+  private chevronForSize(): TemplateResult {
+    switch (this.size) {
+      case 's':
+        return Chevron75Icon();
+      case 'l':
+        return Chevron200Icon();
+      case 'xl':
+        return Chevron300Icon();
+      case 'm':
+      default:
+        return Chevron100Icon();
+    }
+  }
+
+  private handleHeaderKeydown(event: Event): void {
+    if ((event as KeyboardEvent).key === ' ') {
+      // Space requires preventDefault to suppress page scroll; toggle is then
+      // called explicitly. Enter is not handled here — the browser's native
+      // button activation fires a click event, which calls toggle() via the
+      // @click binding.
+      event.preventDefault();
+      this.toggle();
+    }
+  }
+
+  private renderHeadingWrapper(content: TemplateResult): TemplateResult {
+    const tag = unsafeStatic(`h${this.headingLevel}`);
+    return staticHtml`<${tag} class="swc-AccordionItem-heading">${content}</${tag}>`;
+  }
+
+  protected override render(): TemplateResult {
+    const button = html`
+      <button
+        id="header"
+        class="swc-AccordionItem-header"
+        type="button"
+        aria-expanded=${this.open ? 'true' : 'false'}
+        aria-controls="content"
+        aria-disabled=${ifDefined(
+          this.disabled || this.parentDisabled ? 'true' : undefined
+        )}
+        @click=${this.toggle}
+        @keydown=${this.handleHeaderKeydown}
+      >
+        <swc-icon class="swc-AccordionItem-indicator" aria-hidden="true">
+          ${this.chevronForSize()}
+        </swc-icon>
+        <span class="swc-AccordionItem-label">
+          <slot name="label"></slot>
+        </span>
+      </button>
+    `;
+    return html`
+      <div class="swc-AccordionItem">
+        <div class="swc-AccordionItem-row">
+          ${this.renderHeadingWrapper(button)}
+          ${when(
+            this.slotContentIsPresent,
+            () => html`
+              <div class="swc-AccordionItem-actions">
+                <slot name="actions"></slot>
+              </div>
+            `
+          )}
+        </div>
+        <div
+          id="content"
+          class="swc-AccordionItem-content"
+          role="region"
+          aria-labelledby="header"
+          aria-hidden=${ifDefined(this.open ? undefined : 'true')}
+          .inert=${this.disabled || this.parentDisabled}
+        >
+          <div class="swc-AccordionItem-contentBody">
+            <slot></slot>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+}

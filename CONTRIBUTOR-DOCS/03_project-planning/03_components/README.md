@@ -21,11 +21,13 @@
 - Accordion
     - [Accordion accessibility migration analysis](accordion/accessibility-migration-analysis.md)
     - [Accordion migration plan](accordion/migration-plan.md)
-    - [Accordion migration roadmap](accordion/rendering-and-styling-migration-analysis.md)
 - Action Button
     - [Action button accessibility migration analysis](action-button/accessibility-migration-analysis.md)
+    - [Action button migration plan](action-button/migration-plan.md)
     - [Action button migration roadmap](action-button/rendering-and-styling-migration-analysis.md)
 - Action Group
+    - [Action group accessibility migration analysis](action-group/accessibility-migration-analysis.md)
+    - [Action group migration plan](action-group/migration-plan.md)
     - [Action group migration roadmap](action-group/rendering-and-styling-migration-analysis.md)
 - Action Menu
     - [Action menu accessibility migration analysis](action-menu/accessibility-migration-analysis.md)
@@ -49,6 +51,8 @@
     - [Button group accessibility migration analysis](button-group/accessibility-migration-analysis.md)
     - [Button group migration plan](button-group/migration-plan.md)
     - [Button Group migration roadmap](button-group/rendering-and-styling-migration-analysis.md)
+- Card
+    - [Card family plan](card/migration-plan.md)
 - Checkbox
     - [Checkbox migration roadmap](checkbox/rendering-and-styling-migration-analysis.md)
 - Close Button
@@ -57,6 +61,10 @@
     - [Close button migration roadmap](close-button/rendering-and-styling-migration-analysis.md)
 - Color Field
     - [Color field migration roadmap](color-field/rendering-and-styling-migration-analysis.md)
+- Color Handle
+    - [Color handle accessibility migration analysis](color-handle/accessibility-migration-analysis.md)
+    - [Color Handle migration plan](color-handle/migration-plan.md)
+    - [Color handle migration roadmap](color-handle/rendering-and-styling-migration-analysis.md)
 - Color Loupe
     - [Color loupe accessibility migration analysis](color-loupe/accessibility-migration-analysis.md)
     - [Color loupe migration checklist](color-loupe/migration-checklist.md)
@@ -65,6 +73,7 @@
     - [Divider accessibility migration analysis](divider/accessibility-migration-analysis.md)
     - [Divider migration roadmap](divider/rendering-and-styling-migration-analysis.md)
 - Dropzone
+    - [Dropzone accessibility migration analysis](dropzone/accessibility-migration-analysis.md)
     - [Dropzone migration roadmap](dropzone/rendering-and-styling-migration-analysis.md)
 - Field Group
     - [Field Group migration roadmap](field-group/rendering-and-styling-migration-analysis.md)
@@ -75,12 +84,15 @@
     - [Grid migration roadmap](grid/rendering-and-styling-migration-analysis.md)
 - Help Text
     - [Help text migration roadmap](help-text/rendering-and-styling-migration-analysis.md)
+- Icon
+    - [Icon accessibility migration analysis](icon/accessibility-migration-analysis.md)
 - Illustrated Message
     - [Illustrated message accessibility migration analysis](illustrated-message/accessibility-migration-analysis.md)
     - [`sp-illustrated-message` Migration Plan](illustrated-message/migration-plan.md)
     - [Illustrated message migration roadmap](illustrated-message/rendering-and-styling-migration-analysis.md)
 - Infield Button
     - [Infield button accessibility migration analysis](infield-button/accessibility-migration-analysis.md)
+    - [Infield Button migration plan](infield-button/migration-plan.md)
     - [In-field button migration roadmap](infield-button/rendering-and-styling-migration-analysis.md)
 - Infield Progress Circle
     - [In-field progress circle migration roadmap](infield-progress-circle/rendering-and-styling-migration-analysis.md)
@@ -99,6 +111,7 @@
     - [Menu separator accessibility migration analysis](menu-separator/accessibility-migration-analysis.md)
 - Meter
     - [Meter accessibility migration analysis](meter/accessibility-migration-analysis.md)
+    - [Meter migration plan](meter/migration-plan.md)
     - [Meter migration roadmap](meter/rendering-and-styling-migration-analysis.md)
 - Number Field
     - [Number field migration roadmap](number-field/rendering-and-styling-migration-analysis.md)
@@ -114,6 +127,7 @@
     - [Popover migration roadmap](popover/rendering-and-styling-migration-analysis.md)
 - Progress Bar
     - [Progress bar accessibility migration analysis](progress-bar/accessibility-migration-analysis.md)
+    - [Progress bar migration plan](progress-bar/migration-plan.md)
     - [Progress bar migration roadmap](progress-bar/rendering-and-styling-migration-analysis.md)
 - Progress Circle
     - [Progress circle accessibility migration analysis](progress-circle/accessibility-migration-analysis.md)
@@ -122,6 +136,8 @@
     - [Radio migration roadmap](radio/rendering-and-styling-migration-analysis.md)
 - Search
     - [Search migration roadmap](search/rendering-and-styling-migration-analysis.md)
+- Sidenav
+    - [Side navigation accessibility migration analysis](sidenav/accessibility-migration-analysis.md)
 - Slider
     - [Slider migration roadmap](slider/rendering-and-styling-migration-analysis.md)
 - Status Light
@@ -144,7 +160,10 @@
 - Textfield
     - [Textfield and Textarea migration roadmap](textfield/rendering-and-styling-migration-analysis.md)
 - Thumbnail
+    - [Thumbnail accessibility migration analysis](thumbnail/accessibility-migration-analysis.md)
     - [Thumbnail migration roadmap](thumbnail/rendering-and-styling-migration-analysis.md)
+- Toast
+    - [Toast accessibility migration analysis](toast/accessibility-migration-analysis.md)
 - Tooltip
     - [Tooltip accessibility migration analysis](tooltip/accessibility-migration-analysis.md)
     - [Tooltip migration plan](tooltip/migration-plan.md)

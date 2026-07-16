@@ -108,7 +108,9 @@ export default defineConfig({
           id.startsWith('@lit/') ||
           id.startsWith('@lit-labs/') ||
           id.startsWith('@floating-ui/') ||
-          id.startsWith('@spectrum-web-components/core/')
+          id === 'colorjs.io' ||
+          id.startsWith('colorjs.io/') ||
+          id.startsWith('@adobe/spectrum-wc-core/')
         );
       },
       output: {

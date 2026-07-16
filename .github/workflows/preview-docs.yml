@@ -27,7 +27,8 @@ jobs:
     outputs:
       first_gen_docs_url: ${{ steps.deploy.outputs.first_gen_docs_url }}
       first_gen_storybook_url: ${{ steps.deploy.outputs.first_gen_storybook_url }}
-      second_gen_storybook_url: ${{ steps.deploy.outputs.second_gen_storybook_url }}
+      second_gen_storybook_dev_url: ${{ steps.deploy.outputs.second_gen_storybook_dev_url }}
+      second_gen_storybook_prod_url: ${{ steps.deploy.outputs.second_gen_storybook_prod_url }}
     steps:
       ## --- SETUP --- ##
       - name: Check out code
@@ -80,75 +81,103 @@ jobs:
       - name: Generate LLM reference files
         run: yarn generate:llms
 
+      - name: Generate Agent Skills
+        run: yarn generate:skills
+
       - name: Move CEM to Storybook directory
         run: cp 1st-gen/projects/documentation/custom-elements.json 1st-gen/storybook/
 
       - name: Build documentation with path prefix
         env:
-          SWC_DIR: ${{ steps.pr_hash.outputs.hash }}/docs/first-gen-docs
+          SWC_DIR: ${{ steps.pr_hash.outputs.hash }}/docs/gen1-docs
         run: |
           yarn workspace @spectrum-web-components/1st-gen docs:build
 
-      - name: Build first-gen Storybook
+      - name: Build Gen1 Storybook
         run: yarn workspace @spectrum-web-components/1st-gen storybook:build
 
-      - name: Build second-gen Storybook
-        run: yarn workspace @adobe/spectrum-wc storybook:build
+      - name: Build Gen2 Storybook (dev mode)
+        env:
+          # Full dev-mode story set (internal stories, .test.ts fixtures,
+          # .vrt.ts). `storybook build` only defaults NODE_ENV to production
+          # when unset, so setting it explicitly here keeps the dev story set.
+          NODE_ENV: development
+        run: yarn workspace @adobe/spectrum-wc storybook:build --output-dir storybook-static-dev
+
+      - name: Build Gen2 Storybook (prod mode)
+        # No NODE_ENV override: this is the same production-trimmed build
+        # that publish-2ndgen-docs.yml deploys to the live site, so
+        # reviewers can validate exactly what will end up on prod.
+        run: yarn workspace @adobe/spectrum-wc storybook:build --output-dir storybook-static-prod
 
       ## --- DEPLOY TO AZURE BLOB STORAGE --- ##
       - name: Setup AzCopy
         uses: ./.github/actions/setup-azcopy
 
-      - name: Deploy first-gen documentation to Azure Blob Storage
+      - name: Deploy Gen1 documentation to Azure Blob Storage
         env:
           PR_HASH: ${{ steps.pr_hash.outputs.hash }}
         run: |
-          echo "Uploading first-gen documentation to ${PR_HASH}/docs/first-gen-docs/"
+          echo "Uploading Gen1 documentation to ${PR_HASH}/docs/gen1-docs/"
           azcopy copy "1st-gen/projects/documentation/dist/*" \
-            "https://swcpreviews.blob.core.windows.net/\$web/${PR_HASH}/docs/first-gen-docs/" \
+            "https://swcpreviews.blob.core.windows.net/\$web/${PR_HASH}/docs/gen1-docs/" \
             --recursive \
             --from-to LocalBlob
-          echo "✅ First-gen documentation uploaded successfully"
+          echo "✅ Gen1 documentation uploaded successfully"
 
-      - name: Deploy first-gen Storybook to Azure Blob Storage
+      - name: Deploy Gen1 Storybook to Azure Blob Storage
         env:
           PR_HASH: ${{ steps.pr_hash.outputs.hash }}
         run: |
-          echo "Uploading first-gen Storybook to ${PR_HASH}/docs/first-gen-storybook/"
+          echo "Uploading Gen1 Storybook to ${PR_HASH}/docs/gen1-storybook/"
           azcopy copy "1st-gen/projects/documentation/dist/storybook/*" \
-            "https://swcpreviews.blob.core.windows.net/\$web/${PR_HASH}/docs/first-gen-storybook/" \
+            "https://swcpreviews.blob.core.windows.net/\$web/${PR_HASH}/docs/gen1-storybook/" \
             --recursive \
             --from-to LocalBlob
-          echo "✅ First-gen Storybook uploaded successfully"
+          echo "✅ Gen1 Storybook uploaded successfully"
 
-      - name: Deploy second-gen Storybook to Azure Blob Storage
+      - name: Deploy Gen2 Storybook (dev mode) to Azure Blob Storage
         env:
           PR_HASH: ${{ steps.pr_hash.outputs.hash }}
         run: |
-          echo "Uploading second-gen Storybook to ${PR_HASH}/docs/second-gen-storybook/"
-          azcopy copy "2nd-gen/packages/swc/storybook-static/*" \
-            "https://swcpreviews.blob.core.windows.net/\$web/${PR_HASH}/docs/second-gen-storybook/" \
+          echo "Uploading Gen2 Storybook (dev) to ${PR_HASH}/docs/gen2-storybook-dev/"
+          azcopy copy "2nd-gen/packages/swc/storybook-static-dev/*" \
+            "https://swcpreviews.blob.core.windows.net/\$web/${PR_HASH}/docs/gen2-storybook-dev/" \
             --recursive \
             --from-to LocalBlob
-          echo "✅ Second-gen Storybook uploaded successfully"
+          echo "✅ Gen2 Storybook (dev) uploaded successfully"
+
+      - name: Deploy Gen2 Storybook (prod mode) to Azure Blob Storage
+        env:
+          PR_HASH: ${{ steps.pr_hash.outputs.hash }}
+        run: |
+          echo "Uploading Gen2 Storybook (prod) to ${PR_HASH}/docs/gen2-storybook-prod/"
+          azcopy copy "2nd-gen/packages/swc/storybook-static-prod/*" \
+            "https://swcpreviews.blob.core.windows.net/\$web/${PR_HASH}/docs/gen2-storybook-prod/" \
+            --recursive \
+            --from-to LocalBlob
+          echo "✅ Gen2 Storybook (prod) uploaded successfully"
 
       - name: Set deployment URLs
         id: deploy
         env:
           PR_HASH: ${{ steps.pr_hash.outputs.hash }}
         run: |
-          first_gen_docs_url="https://swcpreviews.z13.web.core.windows.net/${PR_HASH}/docs/first-gen-docs/"
-          first_gen_storybook_url="https://swcpreviews.z13.web.core.windows.net/${PR_HASH}/docs/first-gen-storybook/"
-          second_gen_storybook_url="https://swcpreviews.z13.web.core.windows.net/${PR_HASH}/docs/second-gen-storybook/"
+          first_gen_docs_url="https://swcpreviews.z13.web.core.windows.net/${PR_HASH}/docs/gen1-docs/"
+          first_gen_storybook_url="https://swcpreviews.z13.web.core.windows.net/${PR_HASH}/docs/gen1-storybook/"
+          second_gen_storybook_dev_url="https://swcpreviews.z13.web.core.windows.net/${PR_HASH}/docs/gen2-storybook-dev/"
+          second_gen_storybook_prod_url="https://swcpreviews.z13.web.core.windows.net/${PR_HASH}/docs/gen2-storybook-prod/"
 
           echo "first_gen_docs_url=${first_gen_docs_url}" >> "$GITHUB_OUTPUT"
           echo "first_gen_storybook_url=${first_gen_storybook_url}" >> "$GITHUB_OUTPUT"
-          echo "second_gen_storybook_url=${second_gen_storybook_url}" >> "$GITHUB_OUTPUT"
+          echo "second_gen_storybook_dev_url=${second_gen_storybook_dev_url}" >> "$GITHUB_OUTPUT"
+          echo "second_gen_storybook_prod_url=${second_gen_storybook_prod_url}" >> "$GITHUB_OUTPUT"
 
           echo "📦 All deployments completed:"
           echo "  - Documentation: ${first_gen_docs_url}"
-          echo "  - First-gen Storybook: ${first_gen_storybook_url}"
-          echo "  - Second-gen Storybook: ${second_gen_storybook_url}"
+          echo "  - Gen1 Storybook: ${first_gen_storybook_url}"
+          echo "  - Gen2 Storybook (dev): ${second_gen_storybook_dev_url}"
+          echo "  - Gen2 Storybook (prod): ${second_gen_storybook_prod_url}"
 
       - name: Post Previews Comment
         uses: actions/github-script@v7

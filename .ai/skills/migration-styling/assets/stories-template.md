@@ -58,7 +58,7 @@ import {
   type [Component]Size,
   type [Component]Variant,
   // …add other types used in satisfies constraints below
-} from '@spectrum-web-components/core/components/[component]';
+} from '@adobe/spectrum-wc-core/components/[component]';
 
 // ────────────────
 //    METADATA
@@ -134,9 +134,9 @@ const variantLabels = {
 //
 // const allVariantLabels = { ...semanticLabels, ...nonSemanticLabels };
 
-// ────────────────────
-//    AUTODOCS STORY
-// ────────────────────
+// ────────────────────────
+//    PLAYGROUND STORY
+// ────────────────────────
 
 export const Playground: Story = {
   tags: ['autodocs', 'dev'],
@@ -148,9 +148,9 @@ export const Playground: Story = {
   },
 };
 
-// ──────────────────────────────
-//    OVERVIEW STORIES
-// ──────────────────────────────
+// ──────────────────────────
+//    OVERVIEW STORY
+// ──────────────────────────
 
 export const Overview: Story = {
   tags: ['overview'],

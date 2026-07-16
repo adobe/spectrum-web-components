@@ -20,7 +20,7 @@ import {
   STATUS_LIGHT_VARIANTS_SEMANTIC,
   StatusLightBase,
   type StatusLightVariant,
-} from '@spectrum-web-components/core/components/status-light';
+} from '@adobe/spectrum-wc-core/components/status-light';
 
 import styles from './status-light.css';
 
@@ -28,7 +28,7 @@ import styles from './status-light.css';
  * A status light is a great way to convey semantic meaning and the condition of an entity, such as statuses and categories. It provides visual indicators through colored dots accompanied by descriptive text.
  *
  * @element swc-status-light
- * @since 2.0.0
+ * @since 2.0.0-beta.1
  *
  * @property {string} variant - Semantic or non-semantic color variant for the status dot.
  *
@@ -41,13 +41,10 @@ import styles from './status-light.css';
  * @example
  * <swc-status-light variant="silver">Supported in Edge</swc-status-light>
  *
- * @cssprop --swc-status-light-height - Minimum block size of the status light.
  * @cssprop --swc-status-light-dot-size - Size of the indicator dot.
  * @cssprop --swc-status-light-dot-color - Color of the indicator dot.
  * @cssprop --swc-status-light-font-size - Font size of the label.
  * @cssprop --swc-status-light-line-height - Line height of the label.
- * @cssprop --swc-status-light-padding-block - Block padding.
- * @cssprop --swc-status-light-top-to-dot - Distance from the block-start edge to the center of the dot.
  * @cssprop --swc-status-light-text-to-visual - Gap between the dot and the label.
  * @cssprop --swc-status-light-content-color - Color of the label text.
  */

@@ -115,7 +115,7 @@ The 1st-gen component imports `spectrum-illustratedmessage.css` (Spectrum 1 toke
 | `@spectrum-web-components/base` | `1.11.2` | `SpectrumElement`, `html`, `property` decorator — 1st-gen internal package only |
 | `@spectrum-web-components/styles` | `1.11.2` | `bodyStyles`, `headingStyles` (applied via `static get styles()`). Note: 2nd-gen has typography classes but whether they will be importable in the same way is TBD — tracked in SWC-1545. |
 
-No mixins, no shared utilities, no other SWC components composed inside. No dependency on `@spectrum-web-components/core` (2nd-gen).
+No mixins, no shared utilities, no other SWC components composed inside. No dependency on `@adobe/spectrum-wc-core` (2nd-gen).
 
 ---
 

@@ -194,6 +194,17 @@ export default defineConfig([
       },
       globals: globals.browser,
     },
+    settings: {
+      jsdoc: {
+        // CEM event tags name a custom event (e.g. `swc-open`), not a JS
+        // namepath. Treat the name as free text and forbid a bracketed type so
+        // `jsdoc/valid-types` stops flagging the hyphen as an invalid namepath.
+        structuredTags: {
+          fires: { name: 'text', type: false },
+          event: { name: 'text', type: false },
+        },
+      },
+    },
     rules: {
       // Copyright header (global for all .ts/.js files)
       'notice/notice': [
@@ -294,7 +305,7 @@ export default defineConfig([
       'jsdoc/no-undefined-types': 'off', // Disabled: TS handles type checking, JSDoc types are often custom
       'jsdoc/require-param-description': 'warn', // Params should have descriptions
       'jsdoc/require-returns-description': 'warn', // Returns should have descriptions
-      'jsdoc/valid-types': 'warn', // Type expressions are valid (warn for @internal usage)
+      'jsdoc/valid-types': 'off', // Disabled: @fires event names use hyphens which aren't valid namepaths; TS handles type checking
       'jsdoc/lines-before-block': 'error',
       'jsdoc/tag-lines': ['error', 'any', { startLines: 1, endLines: 0 }],
 

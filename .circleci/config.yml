@@ -24,9 +24,6 @@ parameters:
     type: string
     default: 75b8c3cdc71a773889e3bdd1032f89ff73c12475
 
-  wireit_cache_name:
-    type: string
-    default: wireit
 commands:
   halt-if-not-affected:
     description: >
@@ -124,17 +121,20 @@ commands:
   install-azcopy:
     description: 'Install AzCopy and set up authentication'
     steps:
+      - restore_cache:
+          keys:
+            - azcopy-v10.29.1-{{ arch }}
       - run:
           when: always
           name: Install AzCopy
           command: |
-            # Create a bin directory in the home folder
             mkdir -p ~/bin
-            cd ~/bin
-            wget -O azcopy.tar.gz https://github.com/Azure/azure-storage-azcopy/releases/download/v10.29.1/azcopy_linux_amd64_10.29.1.tar.gz
-            tar -xf azcopy.tar.gz --strip-components=1
-            chmod +x azcopy
-            # Add to PATH and set environment variables
+            if [ ! -f ~/bin/azcopy ]; then
+              cd ~/bin
+              wget -O azcopy.tar.gz https://github.com/Azure/azure-storage-azcopy/releases/download/v10.29.1/azcopy_linux_amd64_10.29.1.tar.gz
+              tar -xf azcopy.tar.gz --strip-components=1
+              chmod +x azcopy
+            fi
             echo 'export PATH=~/bin:$PATH' >> $BASH_ENV
             echo 'export AZCOPY_AUTO_LOGIN_TYPE="SPN"' >> $BASH_ENV
             echo 'export AZCOPY_SPA_APPLICATION_ID="$AZURE_CLIENT_ID"' >> $BASH_ENV
@@ -142,6 +142,10 @@ commands:
             echo 'export AZCOPY_TENANT_ID="$AZURE_TENANT_ID"' >> $BASH_ENV
             source $BASH_ENV
             azcopy --version
+      - save_cache:
+          paths:
+            - ~/bin/azcopy
+          key: azcopy-v10.29.1-{{ arch }}
   setup-node-dependencies:
     description: 'Checkout code and install node dependencies'
     steps:
@@ -164,20 +168,8 @@ commands:
   downstream:
     steps:
       - setup-node-dependencies
-      - restore_cache:
-          keys:
-            - cache-wireit-1st-gen-{{ arch }}-{{ checksum "1st-gen/package.json" }}-
-      - run:
-          name: Build the project
-          command: |
-            yarn build
-      - save-node-dependencies-cache
-      - save_cache:
-          paths:
-            - 1st-gen/.wireit
-          key: cache-wireit-1st-gen-{{ arch }}-{{ checksum "1st-gen/package.json" }}-{{ .Revision }}
       - attach_workspace:
-          at: /
+          at: .
   downstream-2ndgen:
     description: 'Setup and build for 2nd-gen tests'
     steps:
@@ -326,6 +318,24 @@ commands:
           key: v2-golden-images-{{ .Branch }}-<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-{{ .Revision }}
 
 jobs:
+  build:
+    executor: node
+    steps:
+      - setup-node-dependencies
+      - run:
+          name: Build the project
+          command: yarn build
+      - save-node-dependencies-cache
+      - persist_to_workspace:
+          root: .
+          paths:
+            - 1st-gen/packages
+            - 1st-gen/tools
+            - 1st-gen/test
+            - 1st-gen/scripts
+            - 1st-gen/storybook
+            - 1st-gen/projects
+
   test-chromium:
     executor: node
     parallelism: 5
@@ -337,7 +347,7 @@ jobs:
       - run:
           name: Run chromium tests
           command: |
-            TEST=$(circleci tests glob "1st-gen/{packages,tools}/*/test/*.test.js" | grep -v ".*-memory\.test\.js$" | sed 's/1st-gen\///' | circleci tests split --split-by=timings)
+            TEST=$(circleci tests glob "1st-gen/{packages,tools}/*/test/*.test.js" | grep -v ".*-memory\.test\.js$" | circleci tests split --split-by=timings | sed 's/1st-gen\///')
             yarn workspace @spectrum-web-components/1st-gen test:start --files $TEST --config ./web-test-runner.config.ci-chromium.js --group unit-ci
       - store_test_results:
           path: /root/project/1st-gen/results/
@@ -368,7 +378,7 @@ jobs:
       - run:
           name: Run memory tests
           command: |
-            TEST=$(circleci tests glob "1st-gen/{packages,tools}/*/test/*-memory.test.js" | grep -v "packages/color-.*/test/.*-memory\.test\.js" | grep -v "tools/grid/test/.*-memory\.test\.js" | sed 's/1st-gen\///' | circleci tests split --split-by=timings)
+            TEST=$(circleci tests glob "1st-gen/{packages,tools}/*/test/*-memory.test.js" | grep -v "packages/color-.*/test/.*-memory\.test\.js" | grep -v "tools/grid/test/.*-memory\.test\.js" | circleci tests split --split-by=timings | sed 's/1st-gen\///')
             echo $TEST
             yarn workspace @spectrum-web-components/1st-gen test:start --files $TEST --config web-test-runner.config.ci-chromium-memory.js --group unit-ci
       - store_test_results:
@@ -385,7 +395,7 @@ jobs:
       - run:
           name: Run firefox tests
           command: |
-            TEST=$(circleci tests glob "1st-gen/{packages,tools}/*/test/*.test.js" | grep -v ".*-memory\.test\.js$" | sed 's/1st-gen\///' | circleci tests split --split-by=timings)
+            TEST=$(circleci tests glob "1st-gen/{packages,tools}/*/test/*.test.js" | grep -v ".*-memory\.test\.js$" | circleci tests split --split-by=timings | sed 's/1st-gen\///')
             yarn workspace @spectrum-web-components/1st-gen test:start --files $TEST --config web-test-runner.config.ci-firefox.js --group unit-ci
       - store_test_results:
           path: /root/project/results/
@@ -401,7 +411,7 @@ jobs:
       - run:
           name: Run webkit tests
           command: |
-            TEST=$(circleci tests glob "1st-gen/{packages,tools}/*/test/*.test.js" | grep -v ".*-memory\.test\.js$" | sed 's/1st-gen\///' | circleci tests split --split-by=timings)
+            TEST=$(circleci tests glob "1st-gen/{packages,tools}/*/test/*.test.js" | grep -v ".*-memory\.test\.js$" | circleci tests split --split-by=timings | sed 's/1st-gen\///')
             yarn workspace @spectrum-web-components/1st-gen test:start --files $TEST --config web-test-runner.config.ci-webkit.js --group unit-ci
       - store_test_results:
           path: /root/project/results/
@@ -685,32 +695,44 @@ workflows:
   # fast no-op, instead of being absent from the status check list.
   build:
     jobs:
-      # 2nd-gen tests
+      - build
+      # 2nd-gen tests (downstream-2ndgen — no dependency on build job)
       - test-2ndgen-browser:
           name: test-2ndgen-browser-<< matrix.browser >>
           matrix:
             parameters:
               browser: [chromium, firefox, webkit]
-      - test-2ndgen-a11y
-      - test-2ndgen-axe
+      # 2nd-gen Storybook tests use downstream (needs 1st-gen build)
+      - test-2ndgen-a11y:
+          requires: [build]
+      - test-2ndgen-axe:
+          requires: [build]
       # 1st-gen tests
-      - test-chromium
-      - test-chromium-memory
-      - test-firefox
-      - test-webkit
-      - test-chromium-coverage
+      - test-chromium:
+          requires: [build]
+      - test-chromium-memory:
+          requires: [build]
+      - test-firefox:
+          requires: [build]
+      - test-webkit:
+          requires: [build]
+      - test-chromium-coverage:
+          requires: [build]
       - hcm-visual:
+          requires: [build]
           filters:
             branches:
               # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
               ignore: /pull\/[0-9]+/
       - beta-docs:
+          requires: [build]
           filters:
             branches:
               # Beta docs are only published from main
               only: main
       - visual:
           name: << matrix.system >>-<< matrix.color >>-<< matrix.scale >>-<< matrix.dir >>
+          requires: [build]
           matrix:
             parameters:
               system: [spectrum, express, spectrum-two]
@@ -723,6 +745,7 @@ workflows:
               ignore: /pull\/[0-9]+/
       - visual:
           name: << matrix.system >>-<< matrix.color >>-<< matrix.scale >>-<< matrix.dir >>
+          requires: [build]
           matrix:
             parameters:
               system: [spectrum, express, spectrum-two]
