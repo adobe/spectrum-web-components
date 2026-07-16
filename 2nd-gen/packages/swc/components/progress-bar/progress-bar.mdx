@@ -76,7 +76,7 @@ Set the `value-label` attribute to replace the auto-formatted value in both the 
 
 ### Format options
 
-When `value-label` is unset, the value is formatted with `Intl.NumberFormat`. The default style is percent. Set the `formatOptions` property (JavaScript only, no attribute) to any `Intl.NumberFormatOptions` to change the formatting. Percent style formats the fraction of the range; every other style formats the raw clamped value.
+When `value-label` is unset, the value is formatted with `Intl.NumberFormat`. The default style is percent. Set the `formatOptions` property (JavaScript only, no attribute) to any `Intl.NumberFormatOptions` to change the formatting, for example `{ style: 'decimal', maximumFractionDigits: 0 }`. Percent style formats the fraction of the range; every other style formats the raw clamped value.
 
 <Canvas of={Stories.FormatOptions} />
 
