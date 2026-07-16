@@ -60,6 +60,8 @@ Which key to group by is a per-component decision, not a fixed rule. Pick the ax
 
 Split forced pseudo-states (`data-force-state`) into their own per-state rows (`hover`, `focus-visible`, `active`) rather than folding them into the variant rows. Once the row heading conveys the grouping axis, keep the component's own label plain: the heading and visual rendering already carry the permutation's meaning, so there is no need to print axis values into the component. Label rows with the `swc-Detail` typography classes rather than inline font styles.
 
+Every item in a row must be identifiable. A single multi-item row is only fine when each item carries visible text that names it (a button label, link text, or a typography sample). When the items render near-identical visuals with no visible label — small controls such as a color handle or color loupe, or fixed-content widgets such as an accordion or avatar in different states — a generic `States` row does not tell a reviewer which item is which. Give each such state its own row labeled with the state name instead.
+
 For composed patterns, use deterministic realistic content instead of behavior demos: fixed prompts, sources, attachments, feedback states, and response text.
 
 Stories tagged with `'!test'` are excluded from VRT runs. See [Excluding stories from tests](01_testing-overview.md#excluding-stories-from-tests) for when and why to use this tag.
