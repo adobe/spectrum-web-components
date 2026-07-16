@@ -52,10 +52,6 @@ const meta: Meta = {
     docs: {
       subtitle: `Target area for drag-and-drop file uploads with a required browse control.`,
     },
-    design: {
-      type: 'figma',
-      url: 'https://www.figma.com/design/Mngz9H7WZLbrCvGQf3GnsY/S2---Web--Desktop-scale-?node-id=13049-185',
-    },
     stackblitz: {
       url: 'https://stackblitz.com/edit/vitejs-vite-q5adfsfk?file=package.json',
     },
