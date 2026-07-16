@@ -25,14 +25,36 @@ declare global {
 /**
  * @internal
  *
- * Storybook-only host demonstrating {@link SlotTextController}. It reports
- * whether the default slot has meaningful content and toggles a "no label"
- * presentation when empty, mirroring how Badge and Button switch to an
- * icon-only layout. The default slot binds `handleSlotChange` so content added
- * or removed after the first render is tracked.
+ * Abstract base that constructs {@link SlotTextController} as a protected field,
+ * exactly as the real consumers (`BadgeBase`, `ButtonBase`) do. Instantiating
+ * the controller on an abstract class is safe: the field initializer runs in
+ * this constructor during construction of the concrete subclass, so the
+ * controller receives the concrete element as its host. The concrete subclass
+ * binds `handleSlotChange` in its template — the `protected` field is reachable
+ * from the subclass `render()`, mirroring how `swc-badge` / `swc-button` bind
+ * the controller their abstract base owns.
+ */
+export abstract class AbstractSlotTextHost extends LitElement {
+  protected readonly slotText = new SlotTextController(this);
+
+  /** Whether the default slot has meaningful content. */
+  public get hasContent(): boolean {
+    return this.slotText.hasContent;
+  }
+}
+
+/**
+ * @internal
+ *
+ * Storybook-only host demonstrating {@link SlotTextController}, driven from the
+ * abstract base above. It reports whether the default slot has meaningful
+ * content and toggles a "no label" presentation when empty, mirroring how Badge
+ * and Button switch to an icon-only layout. The default slot binds
+ * `handleSlotChange` so content added or removed after the first render is
+ * tracked.
  */
 @customElement('demo-slot-text-host')
-export class DemoSlotTextHost extends LitElement {
+export class DemoSlotTextHost extends AbstractSlotTextHost {
   static override styles = css`
     :host {
       display: inline-flex;
@@ -54,13 +76,6 @@ export class DemoSlotTextHost extends LitElement {
       padding-inline: 4px;
     }
   `;
-
-  private readonly slotText = new SlotTextController(this);
-
-  /** Whether the default slot has meaningful content. */
-  public get hasContent(): boolean {
-    return this.slotText.hasContent;
-  }
 
   protected override render(): TemplateResult {
     return html`

@@ -26,13 +26,36 @@ declare global {
 /**
  * @internal
  *
+ * Abstract base that constructs {@link SlotPresenceController} as a protected
+ * field, exactly as the real consumers (`BadgeBase`, `ButtonBase`,
+ * `AccordionItemBase`) do. Instantiating the controller on an abstract class is
+ * safe: the field initializer runs in this constructor during construction of
+ * the concrete subclass, so the controller receives the concrete element as its
+ * host. The concrete `demo-slot-presence-host` below supplies the tag name,
+ * styles, and template.
+ */
+export abstract class AbstractSlotPresenceHost extends LitElement {
+  protected readonly slotPresence = new SlotPresenceController(
+    this,
+    '[slot="icon"]'
+  );
+
+  /** Whether an icon is currently slotted. */
+  public get hasIcon(): boolean {
+    return this.slotPresence.isPresent;
+  }
+}
+
+/**
+ * @internal
+ *
  * Storybook-only host demonstrating {@link SlotPresenceController} with a single
- * selector. It reports whether an element is slotted into `[slot="icon"]` and
- * only renders the icon container when one is present, mirroring how Badge and
- * Button gate their icon markup.
+ * selector, driven from the abstract base above. It reports whether an element
+ * is slotted into `[slot="icon"]` and only renders the icon container when one
+ * is present, mirroring how Badge and Button gate their icon markup.
  */
 @customElement('demo-slot-presence-host')
-export class DemoSlotPresenceHost extends LitElement {
+export class DemoSlotPresenceHost extends AbstractSlotPresenceHost {
   static override styles = css`
     :host {
       display: inline-flex;
@@ -55,16 +78,6 @@ export class DemoSlotPresenceHost extends LitElement {
       color: var(--swc-blue-900, #1473e6);
     }
   `;
-
-  private readonly slotPresence = new SlotPresenceController(
-    this,
-    '[slot="icon"]'
-  );
-
-  /** Whether an icon is currently slotted. */
-  public get hasIcon(): boolean {
-    return this.slotPresence.isPresent;
-  }
 
   protected override render(): TemplateResult {
     return html`
@@ -101,7 +114,7 @@ export class DemoSlotPresenceMultiHost extends LitElement {
     }
   `;
 
-  private readonly slotPresence = new SlotPresenceController(this, [
+  protected readonly slotPresence = new SlotPresenceController(this, [
     '[slot="label"]',
     '[slot="description"]',
   ]);
