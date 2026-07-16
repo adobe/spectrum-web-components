@@ -191,7 +191,7 @@ export class ProgressBar extends SizedMixin(
       if (changes.has('label') && this.label.length > 0) {
         window.__swc.warn(
           this,
-          `The "label" attribute on <${this.localName}> has been deprecated and will be removed in a future release. Use a "label" named slot or the "accessible-label" attribute instead.`,
+          `The "label" attribute on <${this.localName}> has been deprecated and will be removed in a future release. Use a "label" named slot, or set "aria-label" or "aria-labelledby" on the element instead.`,
           'https://opensource.adobe.com/spectrum-web-components/components/progress-bar/#accessibility',
           { level: 'deprecation' }
         );
@@ -229,7 +229,7 @@ export class ProgressBar extends SizedMixin(
             type: 'accessibility',
             issues: [
               'value supplied to the "label" attribute, which will be displayed visually as part of the element, or',
-              'text content supplied directly to the <sp-progress-circle> element, or',
+              'text content supplied directly to the <sp-progress-bar> element, or',
               'value supplied to the "aria-label" attribute, which will only be provided to screen readers, or',
               'an element ID reference supplied to the "aria-labelledby" attribute, which will be provided by screen readers and will need to be managed manually by the parent application.',
             ],
