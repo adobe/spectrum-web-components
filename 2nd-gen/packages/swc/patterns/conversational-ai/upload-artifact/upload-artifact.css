@@ -20,10 +20,12 @@
 /* Figma focus-order spec (node 243-9156, §9): thumbnail and Close button use a
  * dedicated ring color, distinct from the S2 default ring used elsewhere in the
  * strip (chevrons, textarea, Add/Send). No matching design token exists yet.
- * Drawn inward (negative offset) rather than the spec's outward 2px: an
- * outward ring gets clipped by the artifact strip's scroll/card overflow
- * boundaries at the first/last tile, and reserving clearance for it proved
- * fragile across two attempts. Inward avoids the problem entirely. */
+ * Drawn inward (negative offset) rather than the spec's outward 2px so it
+ * never extends past the host's own box: an outward ring gets clipped by the
+ * artifact strip's scroll/card overflow boundaries at the first/last tile.
+ * The 2px margin/inset on .swc-UploadArtifact-surface (below) leaves this
+ * ring a real empty gap to sit in, instead of being painted over by that
+ * (opaque) surface. */
 :host(:focus-visible) {
   outline: 2px solid #4b4efc;
   outline-offset: -2px;
@@ -179,6 +181,11 @@
   align-items: center;
   min-block-size: var(--swc-upload-artifact-card-min-block-size, 68px);
   padding: token("spacing-300");
+
+  /* 2px margin leaves a real gap between the host edge and this surface so
+   * the host's inward focus ring (below) lands in empty space instead of
+   * being painted over by the surface, which renders on top of it. */
+  margin: 2px;
   border: 1px solid transparent;
   border-radius: token("corner-radius-medium-default");
 }
@@ -236,9 +243,12 @@
 
 :host([type="media"]) .swc-UploadArtifact-surface {
   display: block;
-  position: relative;
-  inline-size: 100%;
-  block-size: 100%;
+  position: absolute;
+
+  /* 2px inset leaves a real gap between the host edge and this (opaque)
+   * surface so the host's inward focus ring (below) lands in empty space
+   * instead of being painted over by the surface, which renders on top of it. */
+  inset: 2px;
   border-radius: token("corner-radius-medium-default");
   box-shadow: token("drop-shadow-emphasized-default-x") token("drop-shadow-emphasized-default-y") token("drop-shadow-emphasized-default-blur") token("drop-shadow-emphasized-default-color");
   overflow: hidden;
