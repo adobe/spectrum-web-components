@@ -17,7 +17,7 @@
  *
  * Data sources:
  *   - 1st-gen/projects/documentation/custom-elements.json  (1st-gen APIs)
- *   - 2nd-gen/packages/swc/.storybook/custom-elements.json  (2nd-gen APIs)
+ *   - 2nd-gen/packages/swc/dist/custom-elements.json  (2nd-gen APIs)
  *   - 1st-gen/packages/[name]/README.md  (1st-gen descriptions)
  *   - 1st-gen/projects/documentation/content/*.md  (1st-gen guide pages, Eleventy frontmatter)
  *   - 2nd-gen/packages/swc/.storybook/{guides,learn-about-swc}/**\/*.mdx  (2nd-gen guides)
@@ -85,7 +85,7 @@ const FIRST_GEN_OUT = join(ROOT, '1st-gen/projects/documentation/content');
 const SECOND_GEN_OUT = join(ROOT, '2nd-gen/packages/swc/public');
 const SECOND_GEN_CEM = join(
   ROOT,
-  '2nd-gen/packages/swc/.storybook/custom-elements.json'
+  '2nd-gen/packages/swc/dist/custom-elements.json'
 );
 
 const FIRST_GEN_URL = 'https://opensource.adobe.com/spectrum-web-components';
