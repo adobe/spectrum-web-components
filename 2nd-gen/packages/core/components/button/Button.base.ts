@@ -162,14 +162,21 @@ export abstract class ButtonBase extends SizedMixin(
   }
 
   /**
-   * Suppresses click activation while the button is `disabled` or `pending`.
+   * Suppresses click activation while the button is `disabled`, `pending`,
+   * or externally marked `aria-disabled` (e.g. by a disabled parent
+   * `swc-action-group`, which uses `aria-disabled` instead of native
+   * `disabled` so children remain keyboard-reachable).
    *
    * Slotted icon content lives in the light DOM, so pointer clicks on icons
    * bypass the disabled inner `<button>` and bubble on the host. The host
    * listener (capture) and inner `@click` binding both call this handler.
    */
   protected readonly handleClick = (event: Event): void => {
-    if (this.disabled || this.pending) {
+    if (
+      this.disabled ||
+      this.pending ||
+      this.getAttribute('aria-disabled') === 'true'
+    ) {
       event.preventDefault();
       event.stopImmediatePropagation();
     }
