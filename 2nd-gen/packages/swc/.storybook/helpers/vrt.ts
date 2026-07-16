@@ -107,7 +107,11 @@ export const forceManualPopover =
   };
 
 export const vrtParameters = {
-  styles: { display: 'flex', 'flex-direction': 'column', gap: '16px' },
+  styles: {
+    display: 'flex',
+    'flex-direction': 'column',
+    gap: 'var(--swc-spacing-500)',
+  },
   autoplay: true,
 };
 
