@@ -17,7 +17,7 @@ import {
 } from '@wc-toolkit/storybook-helpers';
 import isChromatic from 'chromatic/isChromatic';
 
-import customElements from './custom-elements.json';
+import customElements from '../dist/custom-elements.json';
 import { withContext } from './decorators/contexts.js';
 import { withFlexLayout, withStaticColorsDemo } from './decorators/index.js';
 import { withLanguageWrapper } from './decorators/language.js';
