@@ -28,6 +28,7 @@ import {
   FORCED_STATES,
   forcedColorsVrtParameters,
   forcePseudoStates,
+  groupPermutationsBy,
   renderStorybookPermutation,
   row,
   staticColorBackground,
@@ -126,6 +127,8 @@ const STATIC_COLOR_PERMUTATION_GROUPS = BUTTON_STATIC_COLORS.map((color) => ({
 // gets serialized into a literal "undefined" text node. `args` already
 // carries every declared slot/attr at its real default (empty string for
 // slots), so only the axes each permutation actually sets override it.
+// The per-variant row grouping conveys the structure, so the button keeps a
+// plain label rather than spelling out its permutation.
 const renderButtonPermutation = renderStorybookPermutation('swc-button', {
   'default-slot': 'Button',
 });
@@ -179,8 +182,20 @@ const forceButtonStates = forcePseudoStates(
   '.swc-Button'
 );
 
+// Forced pseudo-state permutations render in their own titled row rather
+// than folded into the per-variant grouping.
+const isPseudoState = (permutation: Record<string, unknown>) =>
+  'data-force-state' in permutation;
+
 const permutationContent = () => html`
-  ${row(BUTTON_PERMUTATIONS.map(renderButtonPermutation), 'Permutations')}
+  ${groupPermutationsBy(
+    BUTTON_PERMUTATIONS.filter((permutation) => !isPseudoState(permutation)),
+    'variant'
+  ).map(([variant, perms]) => row(perms.map(renderButtonPermutation), variant))}
+  ${groupPermutationsBy(
+    BUTTON_PERMUTATIONS.filter(isPseudoState),
+    'data-force-state'
+  ).map(([state, perms]) => row(perms.map(renderButtonPermutation), state))}
   ${row(
     ICON_ONLY_PERMUTATIONS.map(renderIconOnlyPermutation),
     'Icon-only anatomy'
@@ -205,7 +220,23 @@ const permutationContent = () => html`
   )}
   ${STATIC_COLOR_PERMUTATION_GROUPS.map(({ color, permutations }) =>
     staticColorBackground(
-      row(permutations.map(renderButtonPermutation), `Static ${color}`),
+      [
+        ...groupPermutationsBy(
+          permutations.filter((permutation) => !isPseudoState(permutation)),
+          'variant'
+        ).map(([variant, perms]) =>
+          row(
+            perms.map(renderButtonPermutation),
+            `Static ${color} · ${variant}`
+          )
+        ),
+        ...groupPermutationsBy(
+          permutations.filter(isPseudoState),
+          'data-force-state'
+        ).map(([state, perms]) =>
+          row(perms.map(renderButtonPermutation), `Static ${color} · ${state}`)
+        ),
+      ],
       color
     )
   )}
