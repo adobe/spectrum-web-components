@@ -25,7 +25,7 @@ import {
 // Metadata
 
 const meta: Meta = {
-  title: 'Button/VRT',
+  title: 'Button/Button VRT',
   tags: ['dev'],
 };
 

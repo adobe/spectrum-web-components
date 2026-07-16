@@ -80,7 +80,7 @@ export const row = (children: unknown, label?: string) =>
   label
     ? html`
         <div style="display: flex; flex-direction: column; gap: 4px;">
-          <span style="font-size: 12px; font-weight: 700;">${label}</span>
+          <span class="swc-Detail swc-Detail--sizeM">${label}</span>
           <div
             style="display: flex; flex-wrap: wrap; gap: 16px; align-items: center;"
           >
@@ -95,6 +95,31 @@ export const row = (children: unknown, label?: string) =>
           ${children}
         </div>
       `;
+
+/**
+ * Partitions permutations by the value of `key` (e.g. 'variant') so each
+ * group can render as its own labeled `row()`, making a dense matrix easier
+ * to scan by variant. Permutations without the key fall into a 'default'
+ * group. Preserves first-seen order.
+ */
+export const groupPermutationsBy = <
+  Permutation extends Record<string, unknown>,
+>(
+  permutations: readonly Permutation[],
+  key: string
+): Array<[label: string, permutations: Permutation[]]> => {
+  const groups = new Map<string, Permutation[]>();
+  for (const permutation of permutations) {
+    const label = key in permutation ? String(permutation[key]) : 'default';
+    const group = groups.get(label);
+    if (group) {
+      group.push(permutation);
+    } else {
+      groups.set(label, [permutation]);
+    }
+  }
+  return [...groups.entries()];
+};
 
 export const customPropertyRows = <Case extends CustomPropertyCase>(
   cases: readonly Case[],
@@ -170,15 +195,22 @@ export const theme = (
  * contrast background, so they render correctly outside of the docs-only
  * `staticColorsDemo` decorator (which only targets a story's top-level
  * children, and can't compose with `theme()` wrapping the whole story too).
+ *
+ * Stacks its children in a column so multiple `row()` groups read top to
+ * bottom, and overrides `--swc-detail-font-color` to `currentColor` so
+ * `swc-Detail` row labels inherit the background's contrast color instead of
+ * the muted default token (which is illegible on the dark/light gradient).
  */
 export const staticColorBackground = (
   children: unknown,
   staticColor: 'white' | 'black'
 ) => html`
   <div
-    style="display: flex; flex-wrap: wrap; gap: 16px; align-items: center; padding: 24px; background: ${staticColorSettings[
+    style="display: flex; flex-direction: column; gap: 16px; align-items: flex-start; padding: 24px; background: ${staticColorSettings[
       staticColor
-    ]}; color: ${staticColor === 'white' ? 'white' : 'black'};"
+    ]}; color: ${staticColor === 'white'
+      ? 'white'
+      : 'black'}; --swc-detail-font-color: currentColor;"
   >
     ${children}
   </div>

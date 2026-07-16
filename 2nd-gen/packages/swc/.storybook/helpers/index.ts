@@ -22,6 +22,7 @@ export {
   forcedColorsVrtParameters,
   forcePseudoStates,
   FORCED_STATES,
+  groupPermutationsBy,
   renderStorybookPermutation,
   row,
   staticColorBackground,
