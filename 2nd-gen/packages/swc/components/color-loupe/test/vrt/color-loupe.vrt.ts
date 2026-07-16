@@ -51,10 +51,8 @@ const colorLoupeContent = () => html`
     ],
     'Colors'
   )}
-  ${row(
-    [loupe('Open', '#1473e6'), loupe('Closed', '#1473e6', false)],
-    'States'
-  )}
+  ${row([loupe('Open', '#1473e6')], 'Open')}
+  ${row([loupe('Closed', '#1473e6', false)], 'Closed')}
 `;
 
 export const Permutations: Story = {

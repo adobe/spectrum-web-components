@@ -75,14 +75,18 @@ const colorHandleContent = () => html`
     ],
     'Colors'
   )}
+  ${row([handle({ label: 'Open', color: '#1473e6', open: true })], 'Open')}
   ${row(
-    [
-      handle({ label: 'Open', color: '#1473e6', open: true }),
-      handle({ label: 'Focused', color: '#1473e6', focused: true }),
-      handle({ label: 'Disabled', color: '#1473e6', disabled: true }),
-      handle({ label: 'Outline only', color: '#1473e6', fill: false }),
-    ],
-    'States'
+    [handle({ label: 'Focused', color: '#1473e6', focused: true })],
+    'Focused'
+  )}
+  ${row(
+    [handle({ label: 'Disabled', color: '#1473e6', disabled: true })],
+    'Disabled'
+  )}
+  ${row(
+    [handle({ label: 'Outline only', color: '#1473e6', fill: false })],
+    'Outline only'
   )}
 `;
 

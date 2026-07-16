@@ -96,15 +96,10 @@ const accordionContent = () => html`
     ACCORDION_DENSITIES.map((density) => accordion({ density })),
     'Densities'
   )}
-  ${row(
-    [
-      accordion({ quiet: true }),
-      accordion({ disabled: true }),
-      accordion({ state: 'hover' }),
-      accordion({ state: 'focus-visible' }),
-    ],
-    'States'
-  )}
+  ${row([accordion({ quiet: true })], 'Quiet')}
+  ${row([accordion({ disabled: true })], 'Disabled')}
+  ${row([accordion({ state: 'hover' })], 'Hover')}
+  ${row([accordion({ state: 'focus-visible' })], 'Focus visible')}
   ${row([accordion({ cjk: true })], 'CJK language')}
 `;
 

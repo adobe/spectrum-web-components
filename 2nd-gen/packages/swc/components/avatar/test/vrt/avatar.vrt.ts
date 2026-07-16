@@ -70,12 +70,17 @@ const avatarContent = () => html`
           ${avatar({ size: 1000, outline: true })}
         </div>
       `,
-      avatar({ size: 500, disabled: true }),
+    ],
+    'Outline'
+  )}
+  ${row([avatar({ size: 500, disabled: true })], 'Disabled')}
+  ${row(
+    [
       html`
         <span>${avatar({ size: 500, decorative: true })}Jane Doe</span>
       `,
     ],
-    'States'
+    'Decorative'
   )}
 `;
 
