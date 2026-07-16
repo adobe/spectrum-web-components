@@ -544,11 +544,12 @@ export class PromptField extends SpectrumElement {
       this._markArtifactScrollFromButtons();
 
       if (last >= children.length - 1) {
-        children[children.length - 1].scrollIntoView({
-          behavior: 'smooth',
-          block: 'nearest',
-          inline: 'end',
-        });
+        // Land on the exact numeric maxScroll rather than a geometry-based
+        // scrollIntoView alignment: aligning the last tile's end edge can
+        // land a subpixel short of maxScroll (unlike aligning to the first
+        // tile's start, which is trivially exact at 0), leaving the next
+        // chevron stuck visible since it compares against this same maxScroll.
+        scrollEl.scrollTo({ left: maxScroll, behavior: 'smooth' });
         return;
       }
 
