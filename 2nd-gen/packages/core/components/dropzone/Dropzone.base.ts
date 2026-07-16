@@ -19,6 +19,7 @@ import { SlotAttributePropagationController } from '../../controllers/slot-attri
 import {
   DROP_EFFECTS,
   type DropEffect,
+  DROPZONE_DEFAULT_DROP_EFFECT,
   DROPZONE_VALID_SIZES,
   type DropzoneDragLeaveDetail,
   type DropzoneSize,
@@ -79,19 +80,30 @@ export abstract class DropzoneBase extends SizedMixin(SpectrumElement, {
 
   /**
    * The OS drag-cursor feedback shown while a file is held over the zone.
-   * Maps directly to `DataTransfer.dropEffect`. Does not reflect as an
-   * attribute because it controls browser chrome, not component state.
+   * Maps directly to `DataTransfer.dropEffect`. Settable via the `drop-effect`
+   * attribute, but property changes do not reflect back to the attribute
+   * because it controls browser chrome, not component state.
    *
+   * @attr drop-effect
    * @type {'copy' | 'move' | 'link' | 'none'}
    * @default 'copy'
    */
+  @property({ type: String, attribute: 'drop-effect' })
   public get dropEffect(): DropEffect {
     return this._dropEffect;
   }
 
-  public set dropEffect(value: DropEffect) {
-    if ((DROP_EFFECTS as readonly string[]).includes(value)) {
+  public set dropEffect(value: DropEffect | null) {
+    // Lit passes `null` here when the `drop-effect` attribute is removed;
+    // treat that as "reset to the default" rather than an invalid value.
+    if (value === null) {
+      const oldValue = this._dropEffect;
+      this._dropEffect = DROPZONE_DEFAULT_DROP_EFFECT;
+      this.requestUpdate('dropEffect', oldValue);
+    } else if ((DROP_EFFECTS as readonly string[]).includes(value)) {
+      const oldValue = this._dropEffect;
       this._dropEffect = value;
+      this.requestUpdate('dropEffect', oldValue);
     } else if (window.__swc?.DEBUG) {
       window.__swc?.warn(
         this,
@@ -102,7 +114,7 @@ export abstract class DropzoneBase extends SizedMixin(SpectrumElement, {
     }
   }
 
-  private _dropEffect: DropEffect = 'copy';
+  private _dropEffect: DropEffect = DROPZONE_DEFAULT_DROP_EFFECT;
 
   // ──────────────────────────
   //     IMPLEMENTATION

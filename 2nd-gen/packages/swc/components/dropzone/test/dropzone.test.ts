@@ -28,6 +28,7 @@ import '@adobe/spectrum-wc/components/button/swc-button.js';
 import '@adobe/spectrum-wc/components/dropzone/swc-dropzone.js';
 
 import {
+  fixture,
   getComponent,
   getComponents,
   withWarningSpy,
@@ -745,6 +746,72 @@ export const DropEffectTest: Story = {
             warnCalls.length,
             'warning emitted for invalid dropEffect'
           ).toBeGreaterThan(0);
+        })
+    );
+
+    await step(
+      'reflects the drop-effect attribute at initial parse',
+      async () => {
+        const fresh = await fixture<Dropzone>(html`
+          <swc-dropzone aria-label="Upload files" drop-effect="move">
+            <swc-button variant="accent">Browse files</swc-button>
+          </swc-dropzone>
+        `);
+        expect(
+          fresh.dropEffect,
+          'drop-effect attribute parsed into dropEffect on connect'
+        ).toBe('move');
+        fresh.parentElement?.remove();
+      }
+    );
+
+    await step(
+      'reacts to drop-effect attribute changes at runtime',
+      async () => {
+        dropzone.setAttribute('drop-effect', 'link');
+        await dropzone.updateComplete;
+        expect(
+          dropzone.dropEffect,
+          'dropEffect updates when the attribute changes'
+        ).toBe('link');
+      }
+    );
+
+    await step(
+      'rejects an invalid drop-effect attribute and emits a warning',
+      () =>
+        withWarningSpy(async (warnCalls) => {
+          dropzone.setAttribute('drop-effect', 'link');
+          await dropzone.updateComplete;
+          dropzone.setAttribute('drop-effect', 'invalid-effect');
+          await dropzone.updateComplete;
+          expect(
+            dropzone.dropEffect,
+            'invalid attribute value rejected; stays at prior valid value'
+          ).toBe('link');
+          expect(
+            warnCalls.length,
+            'warning emitted for invalid drop-effect attribute'
+          ).toBeGreaterThan(0);
+        })
+    );
+
+    await step(
+      'removing the drop-effect attribute resets to the default without a warning',
+      () =>
+        withWarningSpy(async (warnCalls) => {
+          dropzone.setAttribute('drop-effect', 'move');
+          await dropzone.updateComplete;
+          dropzone.removeAttribute('drop-effect');
+          await dropzone.updateComplete;
+          expect(
+            dropzone.dropEffect,
+            'dropEffect resets to the default when the attribute is removed'
+          ).toBe('copy');
+          expect(
+            warnCalls.length,
+            'no warning emitted when the attribute is removed'
+          ).toBe(0);
         })
     );
   },

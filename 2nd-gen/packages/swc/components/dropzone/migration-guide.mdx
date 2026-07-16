@@ -278,7 +278,7 @@ Spectrum 2 exposes a small set of public CSS custom properties on `<swc-dropzone
 
 None of the other ~30 `--mod-drop-zone-*` / `--mod-illustrated-message-*` properties have a replacement above; retoken or remove them. CJK-specific font-size overrides (e.g. `--mod-illustrated-message-title-font-size` under `:lang(ja|ko|zh)`) need no replacement: `swc-illustrated-message` now applies CJK sizing automatically.
 
-`dropEffect` gained a development-mode console warning for invalid values (it was silently ignored before); no markup or code change is required.
+`dropEffect` gained a development-mode console warning for invalid values (it was silently ignored before) and now reacts to the `drop-effect` attribute, both at parse time and at runtime; it was JavaScript-property-only in Spectrum 1. No markup change is required for consumers already setting `element.dropEffect` in JavaScript; consumers using `drop-effect="..."` in markup will see it take effect for the first time.
 
 <div
   style={{
