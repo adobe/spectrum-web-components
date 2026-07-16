@@ -59,7 +59,7 @@ export class DemoPendingHost
       padding: 6px 16px;
       font: inherit;
       color: #fff;
-      background: #2680eb;
+      background: var(--swc-gray-800);
       border: none;
       border-radius: 16px;
       cursor: pointer;
@@ -67,7 +67,7 @@ export class DemoPendingHost
 
     button.is-pendingActive {
       inline-size: var(--swc-pending-inline-size);
-      background: #b3b3b3;
+      background: var(--swc-gray-100);
       cursor: default;
     }
 
@@ -75,50 +75,31 @@ export class DemoPendingHost
       display: none;
     }
 
-    /*
-     * @todo The spinner rules below are a hand-maintained mirror of
-     * swc/stylesheets/_lit-styles/pending-spinner.css: the structure, custom
-     * properties, keyframes, animation timing, and reduced-motion behavior are
-     * identical, with the fragment's token(...) colors substituted by this
-     * demo's literals and --_swc-pending-spinner-size fixed at 18px. It is
-     * duplicated because core has no token/lit-css CSS build and must not depend
-     * on swc, so the shared fragment cannot be imported here. Investigate
-     * enabling a CSS/token build for core so this demo (and any future
-     * core-side styles) can consume the shared fragment directly instead of
-     * copying it — that would also restore the token-driven static-color and
-     * forced-colors treatments, which cannot be reproduced faithfully here.
-     */
-    @keyframes swc-pending-spinner-rotate {
+    @keyframes demo-pending-spinner-rotate {
       0% {
-        transform: rotate(var(--swc-pending-spinner-rotate-start, -90deg));
+        transform: rotate(-90deg);
       }
 
       100% {
-        transform: rotate(var(--swc-pending-spinner-rotate-end, 270deg));
+        transform: rotate(270deg);
       }
     }
 
-    @keyframes swc-pending-spinner-dashoffset {
+    @keyframes demo-pending-spinner-dashoffset {
       0%,
       100% {
         stroke-dashoffset: 75px;
       }
 
       30% {
-        stroke-dashoffset: var(--swc-pending-spinner-dashoffset-30, 20px);
+        stroke-dashoffset: 20px;
       }
     }
 
     .swc-PendingSpinner {
-      /* token("track-color") / token("accent-content-color-default") → demo literals */
-      --_swc-pending-spinner-track-border-color: rgb(255 255 255 / 40%);
-      --_swc-pending-spinner-fill-border-color: #fff;
-      --_swc-pending-spinner-thickness: 2px;
-
-      /* Provided by the consuming component in the shared fragment. */
-      --_swc-pending-spinner-size: 18px;
-
       display: none;
+      inline-size: 18px;
+      block-size: 18px;
     }
 
     .swc-PendingSpinner--active {
@@ -127,39 +108,23 @@ export class DemoPendingHost
 
     .swc-PendingSpinner-track,
     .swc-PendingSpinner-fill {
-      inline-size: var(--_swc-pending-spinner-size);
-      block-size: var(--_swc-pending-spinner-size);
+      inline-size: 18px;
+      block-size: 18px;
+      stroke-width: 2px;
     }
 
     .swc-PendingSpinner-track {
-      stroke: var(--_swc-pending-spinner-track-border-color);
-      stroke-width: var(--_swc-pending-spinner-thickness);
+      stroke: rgb(255 255 255 / 40%);
     }
 
     .swc-PendingSpinner-fill {
-      stroke: var(--_swc-pending-spinner-fill-border-color);
-      stroke-width: var(--_swc-pending-spinner-thickness);
+      stroke: var(--swc-blue-900);
       transform: rotate(-90deg);
       transform-origin: center;
-    }
-
-    .swc-PendingSpinner--active .swc-PendingSpinner-fill {
       animation:
-        swc-pending-spinner-rotate 1s cubic-bezier(0.6, 0.1, 0.3, 0.9) infinite,
-        swc-pending-spinner-dashoffset 1s cubic-bezier(0.25, 0.1, 0.25, 1.3)
+        demo-pending-spinner-rotate 1s cubic-bezier(0.6, 0.1, 0.3, 0.9) infinite,
+        demo-pending-spinner-dashoffset 1s cubic-bezier(0.25, 0.1, 0.25, 1.3)
           infinite;
-      will-change: transform;
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      .swc-PendingSpinner--active .swc-PendingSpinner-fill {
-        --swc-pending-spinner-dashoffset-30: 0;
-        --swc-pending-spinner-rotate-start: 0deg;
-        --swc-pending-spinner-rotate-end: 360deg;
-
-        animation-duration: 15s;
-        animation-timing-function: linear, linear;
-      }
     }
   `;
 
