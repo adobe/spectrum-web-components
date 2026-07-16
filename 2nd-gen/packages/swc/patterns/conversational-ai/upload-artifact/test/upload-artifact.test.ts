@@ -43,7 +43,7 @@ export const OverviewTest: Story = {
       async () => {
         expect(el.type).toBe('card');
         expect(el.dismissible).toBe(true);
-        expect(el.dismissLabel).toBe('Remove attachment');
+        expect(el.dismissLabel).toBe('');
 
         const dismissButton = el.shadowRoot?.querySelector<HTMLButtonElement>(
           '.swc-UploadArtifact-dismiss'
@@ -52,7 +52,7 @@ export const OverviewTest: Story = {
           '.swc-UploadArtifact-dismiss-icon'
         );
         expect(dismissButton?.getAttribute('aria-label')).toBe(
-          'Remove attachment'
+          'Remove Hilton commercial assets'
         );
         expect(dismissIcon?.getAttribute('aria-hidden')).toBe('true');
       }

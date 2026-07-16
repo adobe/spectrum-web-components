@@ -10,7 +10,13 @@
  * governing permissions and limitations under the License.
  */
 
-import { CSSResultArray, html, nothing, TemplateResult } from 'lit';
+import {
+  CSSResultArray,
+  html,
+  nothing,
+  PropertyValues,
+  TemplateResult,
+} from 'lit';
 import {
   property,
   query,
@@ -22,7 +28,16 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 import { styleMap } from 'lit/directives/style-map.js';
 
 import { Chevron75Icon } from '@adobe/spectrum-wc/icon/elements/index.js';
+import {
+  focusgroupNavigationActiveChange,
+  type FocusgroupNavigationActiveChangeDetail,
+  FocusgroupNavigationController,
+} from '@adobe/spectrum-wc-core/controllers/index.js';
 import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
+import {
+  deepContains,
+  getActiveElement,
+} from '@adobe/spectrum-wc-core/utils/index.js';
 
 import '@adobe/spectrum-wc/components/icon/swc-icon.js';
 
@@ -90,6 +105,10 @@ export class PromptField extends SpectrumElement {
   @property({ type: String, attribute: 'artifact-scroll-next-label' })
   public artifactScrollNextLabel = 'Show more attachments';
 
+  /** Accessible name for the uploaded-artifacts strip landmark. */
+  @property({ type: String, attribute: 'artifact-strip-label' })
+  public artifactStripLabel = 'Uploaded assets strip';
+
   /** Placeholder text shown inside the textarea. */
   @property({ type: String })
   public placeholder =
@@ -142,12 +161,47 @@ export class PromptField extends SpectrumElement {
 
   private _artifactScrollButtonResetTimer?: number;
 
+  /**
+   * Roving tabindex + arrow-key focus movement across artifact tiles (Figma
+   * focus-order spec §3). One step per Arrow Left/Right; chevron buttons
+   * separately page by a full set (§6-7), unrelated to this controller.
+   */
+  private readonly _artifactNavigation = new FocusgroupNavigationController(
+    this,
+    {
+      direction: 'horizontal',
+      wrap: false,
+      memory: true,
+      getItems: () => this._assignedArtifactElements ?? [],
+      onActiveItemChange: () => this.requestUpdate(),
+    }
+  );
+
+  /**
+   * Whether the user has interacted with the artifact strip via Arrow keys or
+   * Enter/Space (Figma focus-order spec §4). Gates whether Tab from the active
+   * tile reveals its Close button, and resets when focus leaves the strip.
+   */
+  @state()
+  private _artifactStripEntered = false;
+
+  /** Set in `willUpdate` when a chevron about to disappear currently has focus; consumed in `updated`. */
+  private _pendingArtifactFocusRedirect: 'first' | 'last' | null = null;
+
   private _artifactScrollbarInteractTimer?: number;
 
   private _artifactScrollbarThumbDragOffset = 0;
 
   public static override get styles(): CSSResultArray {
     return [styles];
+  }
+
+  public constructor() {
+    super();
+    this.addEventListener(
+      focusgroupNavigationActiveChange,
+      this._handleArtifactActiveChange as EventListener
+    );
   }
 
   public override disconnectedCallback(): void {
@@ -162,8 +216,13 @@ export class PromptField extends SpectrumElement {
     super.disconnectedCallback();
   }
 
+  protected override willUpdate(changed: PropertyValues<this>): void {
+    this._captureArtifactChevronFocusRedirect(changed);
+  }
+
   protected override updated(): void {
     this._warnIfMissingLegalContent();
+    this._applyArtifactChevronFocusRedirect();
 
     if ((this._assignedArtifactElements?.length ?? 0) < 2) {
       this._artifactScrollObserver?.disconnect();
@@ -256,6 +315,7 @@ export class PromptField extends SpectrumElement {
 
   private _handleArtifactSlotChange(): void {
     this._warnIfMixedArtifactTypes();
+    this._artifactNavigation.refresh();
     this.requestUpdate();
     void this.updateComplete.then(() => {
       requestAnimationFrame(() => {
@@ -335,16 +395,224 @@ export class PromptField extends SpectrumElement {
     }, 1000);
   }
 
-  private _handleArtifactScrollKeydown(event: KeyboardEvent): void {
-    if (event.key !== 'ArrowRight' && event.key !== 'ArrowLeft') {
+  private _prefersReducedMotion(): boolean {
+    return (
+      typeof window.matchMedia === 'function' &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    );
+  }
+
+  private _focusArtifact(el: HTMLElement): void {
+    this._artifactNavigation.setActiveItem(el);
+    el.scrollIntoView({
+      behavior: this._prefersReducedMotion() ? 'auto' : 'smooth',
+      block: 'nearest',
+      inline: 'nearest',
+    });
+    el.focus();
+  }
+
+  private _findFullyVisibleArtifact(
+    direction: 'first' | 'last'
+  ): HTMLElement | null {
+    const scrollEl = this._artifactScrollEl;
+    const artifacts = this._assignedArtifactElements ?? [];
+    if (!scrollEl || artifacts.length === 0) {
+      return null;
+    }
+    const ordered =
+      direction === 'first' ? artifacts : [...artifacts].reverse();
+    for (const el of ordered) {
+      if (this._getArtifactTileVisibleFraction(el, scrollEl) >= 0.999) {
+        return el;
+      }
+    }
+    return null;
+  }
+
+  /** Reacts to `swc-focusgroup-navigation-active-change` from `_artifactNavigation`. */
+  private _handleArtifactActiveChange = (
+    event: CustomEvent<FocusgroupNavigationActiveChangeDetail>
+  ): void => {
+    const { activeElement, source } = event.detail;
+    if (!activeElement || (source !== 'keyboard' && source !== 'focus')) {
+      return;
+    }
+    if (source === 'keyboard') {
+      this._artifactStripEntered = true;
+    }
+    activeElement.scrollIntoView({
+      behavior: this._prefersReducedMotion() ? 'auto' : 'smooth',
+      block: 'nearest',
+      inline: 'nearest',
+    });
+  };
+
+  /** Whether `node` is a focus target that belongs to the artifact strip (tiles, their dismiss buttons, or the chevrons). */
+  private _isArtifactStripFocusTarget(node: Node | null): boolean {
+    if (!node) {
+      return false;
+    }
+    const row = this.shadowRoot?.querySelector(
+      '.swc-PromptField-artifacts-row'
+    );
+    if (row && deepContains(row, node)) {
+      return true;
+    }
+    return (this._assignedArtifactElements ?? []).some((el) =>
+      deepContains(el, node)
+    );
+  }
+
+  private _handleArtifactRowFocusOut(event: FocusEvent): void {
+    if (!this._isArtifactStripFocusTarget(event.relatedTarget as Node | null)) {
+      this._artifactStripEntered = false;
+    }
+  }
+
+  private _handleArtifactRowKeydown(event: KeyboardEvent): void {
+    if (event.key === 'Enter' || event.key === ' ') {
+      const active = getActiveElement();
+      if (
+        (this._assignedArtifactElements ?? []).includes(active as HTMLElement)
+      ) {
+        // Marks the strip as "entered" per the focus-order spec. Opening a
+        // Spotlight preview here is a follow-up; for now this only unlocks
+        // Tab access to the tile's Close button.
+        event.preventDefault();
+        this._artifactStripEntered = true;
+      }
       return;
     }
 
-    // Prevent the browser's native small-step scroll on this overflow-x:auto
-    // container so ArrowLeft/ArrowRight always trigger the same set-based
-    // paging as the chevron buttons.
-    event.preventDefault();
-    this._scrollArtifactsByPage(event.key === 'ArrowRight' ? 1 : -1);
+    if (event.key !== 'Tab') {
+      return;
+    }
+
+    this._handleArtifactTabKey(event);
+  }
+
+  private _handleArtifactTabKey(event: KeyboardEvent): void {
+    const active = getActiveElement();
+    if (!active) {
+      return;
+    }
+
+    const artifacts = this._assignedArtifactElements ?? [];
+    const prevButton = this.shadowRoot?.querySelector<HTMLButtonElement>(
+      '.swc-PromptField-artifacts-scroll-prev'
+    );
+    const nextButton = this.shadowRoot?.querySelector<HTMLButtonElement>(
+      '.swc-PromptField-artifacts-scroll-next'
+    );
+
+    // From the active thumbnail: Tab reveals its Close button, but only once
+    // the user has "entered" the strip (Arrow keys or Enter/Space).
+    if (artifacts.includes(active as HTMLElement)) {
+      if (!event.shiftKey && this._artifactStripEntered) {
+        const dismiss = (
+          active as HTMLElement
+        ).shadowRoot?.querySelector<HTMLButtonElement>(
+          '.swc-UploadArtifact-dismiss'
+        );
+        if (dismiss && !dismiss.hidden) {
+          event.preventDefault();
+          dismiss.focus();
+        }
+      }
+      return;
+    }
+
+    // From a tile's Close button.
+    const root = active.getRootNode();
+    if (
+      root instanceof ShadowRoot &&
+      artifacts.includes(root.host as HTMLElement) &&
+      active.classList.contains('swc-UploadArtifact-dismiss')
+    ) {
+      const tile = root.host as HTMLElement;
+      if (event.shiftKey) {
+        event.preventDefault();
+        tile.focus();
+        return;
+      }
+      if (nextButton) {
+        event.preventDefault();
+        nextButton.focus();
+      }
+      return;
+    }
+
+    // From the "<" (previous set) button: Tab enters the strip at the first
+    // fully-visible thumbnail beside it.
+    if (active === prevButton) {
+      if (!event.shiftKey) {
+        const target = this._findFullyVisibleArtifact('first');
+        if (target) {
+          event.preventDefault();
+          this._focusArtifact(target);
+        }
+      }
+      return;
+    }
+
+    // From the ">" (next set) button: Shift+Tab re-enters the strip at the
+    // last fully-visible thumbnail beside it.
+    if (active === nextButton && event.shiftKey) {
+      const target = this._findFullyVisibleArtifact('last');
+      if (target) {
+        event.preventDefault();
+        this._focusArtifact(target);
+      }
+    }
+  }
+
+  private _captureArtifactChevronFocusRedirect(
+    changed: PropertyValues<this>
+  ): void {
+    const active = getActiveElement();
+
+    if (
+      changed.has('_artifactCanScrollPrev') &&
+      changed.get('_artifactCanScrollPrev') === true &&
+      !this._artifactCanScrollPrev
+    ) {
+      const prevButton = this.shadowRoot?.querySelector(
+        '.swc-PromptField-artifacts-scroll-prev'
+      );
+      if (active === prevButton) {
+        this._pendingArtifactFocusRedirect = 'first';
+      }
+    }
+
+    if (
+      changed.has('_artifactCanScrollNext') &&
+      changed.get('_artifactCanScrollNext') === true &&
+      !this._artifactCanScrollNext
+    ) {
+      const nextButton = this.shadowRoot?.querySelector(
+        '.swc-PromptField-artifacts-scroll-next'
+      );
+      if (active === nextButton) {
+        this._pendingArtifactFocusRedirect = 'last';
+      }
+    }
+  }
+
+  private _applyArtifactChevronFocusRedirect(): void {
+    if (!this._pendingArtifactFocusRedirect) {
+      return;
+    }
+
+    const artifacts = this._assignedArtifactElements ?? [];
+    const target =
+      this._pendingArtifactFocusRedirect === 'first'
+        ? artifacts[0]
+        : artifacts[artifacts.length - 1];
+    this._pendingArtifactFocusRedirect = null;
+    if (target) {
+      this._focusArtifact(target);
+    }
   }
 
   private _handleArtifactWheel(event: WheelEvent): void {
@@ -749,7 +1017,10 @@ export class PromptField extends SpectrumElement {
       >
         <div
           class="swc-PromptField-artifacts-row"
-          @keydown=${this._handleArtifactScrollKeydown}
+          role="region"
+          aria-label=${this.artifactStripLabel}
+          @keydown=${this._handleArtifactRowKeydown}
+          @focusout=${this._handleArtifactRowFocusOut}
         >
           ${this._artifactScrollOverflow && this._artifactCanScrollPrev
             ? html`

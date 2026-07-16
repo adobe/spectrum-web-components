@@ -111,6 +111,16 @@ The `<swc-prompt-field>` element implements the following accessibility features
 - All icon buttons carry descriptive `aria-label` attributes
 - The send button uses `disabled` natively when the prompt has no content
 
+#### Artifact strip keyboard navigation
+
+The artifact strip is a `role="region"` landmark (labeled `artifact-strip-label`, default "Uploaded assets strip") with roving-tabindex thumbnails:
+
+- **Tab**: moves to the active thumbnail (one tile is ever a tab stop); once you've interacted with a thumbnail via Arrow keys or Enter/Space, Tab additionally reveals that tile's Close button before continuing
+- **Arrow Left/Right**: move the active thumbnail one tile at a time and scroll it into view (distinct from the `<`/`>` chevrons, which page by a full set)
+- **Enter/Space** on a thumbnail: marks the strip as interacted with, unlocking Tab access to Close
+- **Shift+Tab** from Close: returns to the thumbnail; **Tab** from Close reaches the `>` chevron when more content is scrolled out of view, otherwise continues to the prompt textarea
+- The `<`/`>` chevrons redirect focus to the nearest thumbnail instead of losing it if they disappear while focused (for example, paging all the way to one end)
+
 ### Best practices
 
 - Always provide a meaningful `label` value
