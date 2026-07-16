@@ -110,7 +110,7 @@ export const vrtParameters = {
   styles: {
     display: 'flex',
     'flex-direction': 'column',
-    gap: 'var(--swc-spacing-700)',
+    gap: 'var(--swc-spacing-500)',
   },
   autoplay: true,
 };
