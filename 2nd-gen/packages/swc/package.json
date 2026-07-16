@@ -35,6 +35,7 @@
       "types": "./dist/components/*.d.ts",
       "default": "./dist/components/*.js"
     },
+    "./customElements": "./dist/custom-elements.json",
     "./utils/*": {
       "types": "./dist/utils/*.d.ts",
       "import": "./dist/utils/*.js"
@@ -68,14 +69,14 @@
   "scripts": {
     "analyze": "cem analyze --config cem.config.js",
     "analyze:watch": "cem analyze --config cem.config.js --watch",
-    "build": "yarn analyze && vite build",
+    "build": "vite build && yarn analyze",
     "clean": "rimraf dist",
     "dev": "vite build --watch",
     "dev:core": "yarn workspace @adobe/spectrum-wc-core dev",
     "generate:contributor-docs": "node .storybook/scripts/generate-contributor-docs.mjs",
     "storybook": "yarn generate:contributor-docs && yarn analyze && storybook dev -p 6006",
     "storybook:build": "yarn generate:contributor-docs && yarn analyze && storybook build",
-    "storybook:build:vrt": "yarn analyze && test -s .storybook/custom-elements.json && SWC_STORYBOOK_MODE=vrt storybook build",
+    "storybook:build:vrt": "yarn analyze && node .storybook/scripts/verify-cem-manifest.mjs && SWC_STORYBOOK_MODE=vrt storybook build",
     "stylesheet:tokens": "swc-tokens --outputType tokens --out ./stylesheets/tokens.css --prefix swc",
     "stylesheet:typography": "swc-tokens --outputType typography --out ./stylesheets/typography.css --prefix swc",
     "test": "vitest --run --project storybook",
@@ -149,7 +150,7 @@
     "component",
     "css"
   ],
-  "customElements": ".storybook/custom-elements.json",
+  "customElements": "dist/custom-elements.json",
   "publishConfig": {
     "access": "public"
   }
