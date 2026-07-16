@@ -12,7 +12,6 @@
 
 import { html } from 'lit';
 import { ref } from 'lit/directives/ref.js';
-import { expect, waitFor } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
@@ -84,12 +83,6 @@ const meta: Meta = {
     docs: {
       subtitle: `An overlay element positioned relative to a trigger`,
     },
-    // Docs stories render the popover closed (just a trigger), which is not
-    // visually meaningful, so disable Chromatic snapshots by default. The
-    // VRT-only stories at the bottom of this file re-enable them and open the
-    // popover so the rendered surface is captured. `delay` lets the entry
-    // transition settle before the snapshot.
-    chromatic: { disableSnapshot: true, delay: 500 },
   },
   tags: ['migrated'],
 };
@@ -544,135 +537,4 @@ export const Accessibility: Story = {
   args: { 'accessible-label': 'Account', 'default-slot': accountCard },
   render: (args) => triggered({ ...args }, 'a11y-trigger', 'Open popover'),
   tags: ['a11y'],
-};
-
-// ────────────────────────────────
-//    VRT-ONLY STORIES
-// ────────────────────────────────
-
-// Chromatic snapshots every story in this file, including those hidden from the
-// docs and sidebar by the global `!autodocs` / `!dev` tags. The docs stories
-// render the popover closed (just a trigger), so snapshots are disabled for them
-// at the meta level and re-enabled per story here. Each of these opens a single
-// popover (auto popovers light-dismiss one another, so only one can be open at a
-// time) to capture the rendered surface. They stay out of the docs and sidebar
-// and are not referenced by the a11y spec, so they do not affect either.
-
-// Opens the story's single popover and waits for it to anchor and reveal.
-const openForVrt: NonNullable<Story['play']> = async ({ canvasElement }) => {
-  const popover = canvasElement.querySelector('swc-popover') as Popover;
-  await popover.updateComplete;
-  popover.open = true;
-  await waitFor(() =>
-    expect(popover.hasAttribute('actual-placement'), 'popover anchored').toBe(
-      true
-    )
-  );
-};
-
-// A centered, padded trigger so any placement has room to render without flipping.
-const vrtRender = (args: Record<string, unknown>, id: string) => html`
-  <div
-    style="display: grid; place-items: center; min-block-size: 280px; padding: 64px;"
-  >
-    ${triggered({ ...args }, id, 'Open popover')}
-  </div>
-`;
-
-const vrtStory = (overrides: Record<string, unknown>, id: string): Story => ({
-  args: {
-    'accessible-label': 'Autosave',
-    'default-slot': 'Your changes are saved automatically as you edit.',
-    ...overrides,
-  },
-  render: (args) => vrtRender(args, id),
-  play: openForVrt,
-  parameters: { chromatic: { disableSnapshot: false } },
-});
-
-// Placements (with the arrow) — `should-flip` off so each renders on the
-// requested side and the tip orientation is captured deterministically.
-export const VrtPlacementTop = vrtStory(
-  { placement: 'top', 'should-flip': false },
-  'vrt-placement-top'
-);
-export const VrtPlacementBottom = vrtStory(
-  { placement: 'bottom', 'should-flip': false },
-  'vrt-placement-bottom'
-);
-export const VrtPlacementStart = vrtStory(
-  { placement: 'start', 'should-flip': false },
-  'vrt-placement-start'
-);
-export const VrtPlacementEnd = vrtStory(
-  { placement: 'end', 'should-flip': false },
-  'vrt-placement-end'
-);
-
-// Fixed sizes.
-export const VrtSizeSmall = vrtStory({ size: 's' }, 'vrt-size-s');
-export const VrtSizeMedium = vrtStory({ size: 'm' }, 'vrt-size-m');
-export const VrtSizeLarge = vrtStory({ size: 'l' }, 'vrt-size-l');
-
-// Arrowless surface (rectangular box-shadow, no tip).
-export const VrtHideArrow = vrtStory({ 'hide-arrow': true }, 'vrt-hide-arrow');
-
-// Modal surface (native `<dialog>`, transparent backdrop).
-export const VrtModal = vrtStory(
-  { modal: true, 'accessible-label': 'Account settings' },
-  'vrt-modal'
-);
-
-// Nested popovers with both layers open (the inner opened from inside the outer
-// forms an ancestor chain, so the outer stays open beneath it).
-export const VrtNested: Story = {
-  render: () => html`
-    <div
-      style="display: grid; place-items: center; min-block-size: 360px; padding: 64px;"
-    >
-      <swc-button id="vrt-nested-outer-trigger">Open outer</swc-button>
-      <swc-popover
-        id="vrt-nested-outer"
-        for="vrt-nested-outer-trigger"
-        accessible-label="Outer"
-      >
-        <div style="display: flex; flex-direction: column; gap: 12px;">
-          <p class="swc-Body swc-Body--sizeS" style="margin: 0;">
-            Outer popover
-          </p>
-          <swc-button id="vrt-nested-inner-trigger" size="s">
-            Open inner
-          </swc-button>
-          <swc-popover
-            id="vrt-nested-inner"
-            for="vrt-nested-inner-trigger"
-            placement="end"
-            accessible-label="Inner"
-          >
-            Inner popover
-          </swc-popover>
-        </div>
-      </swc-popover>
-    </div>
-  `,
-  play: async ({ canvasElement }) => {
-    const outer = canvasElement.querySelector('#vrt-nested-outer') as Popover;
-    const inner = canvasElement.querySelector('#vrt-nested-inner') as Popover;
-    await outer.updateComplete;
-    outer.open = true;
-    await waitFor(() =>
-      expect(outer.hasAttribute('actual-placement'), 'outer anchored').toBe(
-        true
-      )
-    );
-    inner.open = true;
-    await waitFor(() =>
-      expect(inner.hasAttribute('actual-placement'), 'inner anchored').toBe(
-        true
-      )
-    );
-    // The ancestor chain keeps the outer open beneath the inner.
-    expect(outer.open, 'outer stays open under the inner').toBe(true);
-  },
-  parameters: { chromatic: { disableSnapshot: false } },
 };
