@@ -82,12 +82,9 @@ export class Badge extends BadgeBase {
   /**
    * The semantic or non-semantic color variant of the badge.
    *
-   * Re-declared to ensure `reflect: true` is honoured on the concrete
-   * element class (inherited `@property` alone is insufficient in ES2022
-   * class-field semantics).
-   *
    * @default neutral
    */
+  // Re-declared to ensure reflect: true is honoured on the concrete element class (inherited @property alone is insufficient in ES2022 class-field semantics).
   @property({ type: String, reflect: true })
   public override variant: BadgeVariant = 'neutral';
 
