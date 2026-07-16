@@ -236,7 +236,7 @@ export const theme = (
   <div
     class="swc-theme--${mode}"
     dir=${dir}
-    style="display: flex; flex-direction: column; gap: 16px; padding: 16px; background-color: var(--swc-background-base-color); color: var(--swc-neutral-content-color-default);"
+    style="display: flex; flex-direction: column; gap: var(--swc-spacing-400); padding: 16px; background-color: var(--swc-background-base-color); color: var(--swc-neutral-content-color-default);"
   >
     ${children}
   </div>
@@ -258,7 +258,7 @@ export const staticColorBackground = (
   staticColor: 'white' | 'black'
 ) => html`
   <div
-    style="display: flex; flex-direction: column; gap: 16px; align-items: flex-start; padding: 24px; background: ${staticColorSettings[
+    style="display: flex; flex-direction: column; gap: var(--swc-spacing-400); align-items: flex-start; padding: 24px; background: ${staticColorSettings[
       staticColor
     ]}; color: ${staticColor === 'white'
       ? 'white'
