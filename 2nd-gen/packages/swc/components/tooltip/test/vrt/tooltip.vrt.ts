@@ -18,6 +18,7 @@ import {
   TOOLTIP_VARIANTS,
 } from '@adobe/spectrum-wc-core/components/tooltip';
 
+import '@adobe/spectrum-wc/components/button/swc-button.js';
 import '@adobe/spectrum-wc/components/tooltip/swc-tooltip.js';
 
 import {
@@ -36,38 +37,56 @@ const meta: Meta = {
 
 export default meta;
 
-const tooltip = ({
-  variant = 'neutral',
-  placement = 'top',
-  content = 'Tooltip content',
-}: {
-  variant?: (typeof TOOLTIP_VARIANTS)[number];
-  placement?: (typeof TOOLTIP_PLACEMENTS)[number];
-  content?: string;
-}) => html`
-  <div style="position: relative; inline-size: 120px; block-size: 72px;">
-    <swc-tooltip open variant=${variant} placement=${placement}>
+// `PlacementController` positions the tooltip relative to a real trigger
+// element, resolved via `for="id"` (see resolveTrigger() in
+// Tooltip.base.ts); with no trigger to measure against, every tooltip
+// renders at the popover's unpositioned default (the viewport corner). Each
+// call needs a globally unique id: `tooltipContent()` runs twice per story
+// (once per theme() block), so a bare per-row counter would collide between
+// the light/ltr and dark/rtl copies sharing one document.
+const tooltip = (
+  id: string,
+  {
+    variant = 'neutral',
+    placement = 'top',
+    content = 'Tooltip content',
+  }: {
+    variant?: (typeof TOOLTIP_VARIANTS)[number];
+    placement?: (typeof TOOLTIP_PLACEMENTS)[number];
+    content?: string;
+  }
+) => html`
+  <div
+    style="position: relative; inline-size: 120px; block-size: 72px; display: flex; align-items: center; justify-content: center;"
+  >
+    <swc-button id=${id} size="s">Trigger</swc-button>
+    <swc-tooltip open for=${id} variant=${variant} placement=${placement}>
       ${content}
     </swc-tooltip>
   </div>
 `;
 
-const tooltipContent = () => html`
+const tooltipContent = (idPrefix: string) => html`
   ${row(
     TOOLTIP_VARIANTS.map((variant) =>
-      tooltip({ variant, content: `${variant} tooltip` })
+      tooltip(`${idPrefix}-variant-${variant}`, {
+        variant,
+        content: `${variant} tooltip`,
+      })
     ),
     'Variants'
   )}
   ${row(
-    TOOLTIP_PLACEMENTS.map((placement) => tooltip({ placement })),
+    TOOLTIP_PLACEMENTS.map((placement) =>
+      tooltip(`${idPrefix}-placement-${placement}`, { placement })
+    ),
     'Placements'
   )}
   ${row(
     [
-      tooltip({ content: '承認ワークフローを開始' }),
-      tooltip({ content: '승인 워크플로 시작' }),
-      tooltip({ content: '启动审批工作流' }),
+      tooltip(`${idPrefix}-cjk-ja`, { content: '承認ワークフローを開始' }),
+      tooltip(`${idPrefix}-cjk-ko`, { content: '승인 워크플로 시작' }),
+      tooltip(`${idPrefix}-cjk-zh`, { content: '启动审批工作流' }),
     ],
     'CJK language'
   )}
@@ -85,15 +104,15 @@ const forceOpenTooltips = forceManualPopover('swc-tooltip');
 
 export const Permutations: Story = {
   render: () => html`
-    ${theme(tooltipContent(), 'light', 'ltr')}
-    ${theme(tooltipContent(), 'dark', 'rtl')}
+    ${theme(tooltipContent('light'), 'light', 'ltr')}
+    ${theme(tooltipContent('dark'), 'dark', 'rtl')}
   `,
   parameters: vrtParameters,
   play: forceOpenTooltips,
 };
 
 export const ForcedColors: Story = {
-  render: () => theme(tooltipContent(), 'light', 'ltr'),
+  render: () => theme(tooltipContent('forced'), 'light', 'ltr'),
   parameters: forcedColorsVrtParameters,
   play: forceOpenTooltips,
 };
