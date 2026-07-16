@@ -115,6 +115,10 @@
 
   --swc-prompt-field-artifact-scrollbar-size: 8px;
   --swc-prompt-field-artifact-scrollbar-gap: 4px;
+
+  /* Room for the 2px outline + 2px offset focus ring (upload-artifact.css) so
+   * overflow-y: hidden below doesn't clip it top/bottom on the tiles. */
+  --swc-prompt-field-artifact-focus-ring-clearance: 4px;
 }
 
 .swc-PromptField-artifacts-row {
@@ -128,8 +132,9 @@
   position: relative;
   flex: 1 1 auto;
   min-inline-size: 0;
-  block-size: calc(var(--swc-prompt-field-artifact-media-block-size, 68px) + var(--swc-prompt-field-artifact-scrollbar-gap, 4px) + var(--swc-prompt-field-artifact-scrollbar-size, 8px));
-  margin-block-end: calc(-1 * (var(--swc-prompt-field-artifact-scrollbar-gap, 4px) + var(--swc-prompt-field-artifact-scrollbar-size, 8px)));
+  block-size: calc(var(--swc-prompt-field-artifact-media-block-size, 68px) + (2 * var(--swc-prompt-field-artifact-focus-ring-clearance)) + var(--swc-prompt-field-artifact-scrollbar-gap, 4px) + var(--swc-prompt-field-artifact-scrollbar-size, 8px));
+  margin-block-start: calc(-1 * var(--swc-prompt-field-artifact-focus-ring-clearance));
+  margin-block-end: calc(-1 * (var(--swc-prompt-field-artifact-focus-ring-clearance) + var(--swc-prompt-field-artifact-scrollbar-gap, 4px) + var(--swc-prompt-field-artifact-scrollbar-size, 8px)));
   overflow: visible;
 
   --swc-prompt-field-artifact-fade-solid: color-mix(in srgb, token("background-layer-2-color") 80%, transparent);
@@ -137,7 +142,7 @@
 
 .swc-PromptField-artifacts-fade {
   position: absolute;
-  inset-block-start: 0;
+  inset-block-start: var(--swc-prompt-field-artifact-focus-ring-clearance);
   z-index: 3;
   inline-size: 16px;
   block-size: var(--swc-prompt-field-artifact-media-block-size, 68px);
@@ -154,13 +159,19 @@
   background: linear-gradient(to left, var(--swc-prompt-field-artifact-fade-solid), transparent);
 }
 
+/* Figma focus-order spec (node 243-9156, §9): padding on all sides keeps the
+ * thumbnail focus ring from being clipped by this container's overflow
+ * boundary at the first/last visible tile (inline) and top/bottom (block).
+ * block-size is inflated by the same clearance so the tiles themselves stay
+ * exactly --swc-prompt-field-artifact-media-block-size tall. */
 .swc-PromptField-artifacts-scroll {
   -ms-overflow-style: none;
   box-sizing: border-box;
   inline-size: 100%;
   max-inline-size: 100%;
-  block-size: var(--swc-prompt-field-artifact-media-block-size, 68px);
-  padding-inline-end: token("spacing-50");
+  block-size: calc(var(--swc-prompt-field-artifact-media-block-size, 68px) + (2 * var(--swc-prompt-field-artifact-focus-ring-clearance)));
+  padding-block: var(--swc-prompt-field-artifact-focus-ring-clearance);
+  padding-inline: token("spacing-75");
   overflow-x: auto;
   overflow-y: hidden;
   scroll-behavior: smooth;

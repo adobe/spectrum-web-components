@@ -14,6 +14,15 @@
   display: block;
   position: relative;
   max-inline-size: 100%;
+  border-radius: token("corner-radius-medium-default");
+}
+
+/* Figma focus-order spec (node 243-9156, §9): thumbnail and Close button use a
+ * dedicated ring color, distinct from the S2 default ring used elsewhere in the
+ * strip (chevrons, textarea, Add/Send). No matching design token exists yet. */
+:host(:focus-visible) {
+  outline: 2px solid #4b4efc;
+  outline-offset: 2px;
 }
 
 *,
@@ -50,6 +59,11 @@
 
 .swc-UploadArtifact-dismiss:hover {
   background: transparent;
+}
+
+.swc-UploadArtifact-dismiss:focus-visible {
+  outline: 2px solid #4b4efc;
+  outline-offset: 2px;
 }
 
 :host([type="card"]) .swc-UploadArtifact-dismiss {

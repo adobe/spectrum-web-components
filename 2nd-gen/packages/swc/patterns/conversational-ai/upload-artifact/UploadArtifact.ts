@@ -10,7 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
-import { CSSResultArray, html, TemplateResult } from 'lit';
+import { CSSResultArray, html, PropertyValues, TemplateResult } from 'lit';
 import { property, queryAssignedElements } from 'lit/decorators.js';
 
 import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
@@ -23,6 +23,11 @@ import styles from './upload-artifact.css';
  * Shared upload artifact primitive with card and media types.
  * Do not mix `type="card"` and `type="media"` in the same attachment strip.
  * When uploads mix images and documents, normalize to one layout (typically all `type="media"` with thumbnails and optional badges).
+ *
+ * Not independently keyboard-reachable: this tile has no default `tabindex` of its
+ * own. `swc-prompt-field` manages roving `tabindex`, focus, and the dismiss button's
+ * Tab-key reachability for tiles slotted into its `artifact` slot. Standalone usage
+ * outside that context should set `tabIndex` itself if keyboard access is needed.
  *
  * @element swc-upload-artifact
  *
@@ -43,15 +48,63 @@ export class UploadArtifact extends SpectrumElement {
   @property({ type: Boolean, reflect: true })
   public dismissible = false;
 
-  /** Accessible label for the dismiss/remove attachment button. */
+  /**
+   * Accessible label for the dismiss/remove attachment button. When unset, derives
+   * "Remove [file name].[file type]" from the `title` slot's text content, falling
+   * back to "Remove attachment" when no title text is available.
+   */
   @property({ type: String, attribute: 'dismiss-label' })
-  public dismissLabel = 'Remove attachment';
+  public dismissLabel = '';
+
+  /**
+   * Accessible name for the tile itself. When unset, derives from the `title`
+   * slot's text content (typically the file name and type).
+   */
+  @property({ type: String, attribute: 'accessible-label' })
+  public accessibleLabel = '';
 
   @queryAssignedElements({ slot: 'badge', flatten: true })
   private _assignedBadge!: HTMLElement[];
 
+  @queryAssignedElements({ slot: 'title', flatten: true })
+  private _assignedTitle!: HTMLElement[];
+
   public static override get styles(): CSSResultArray {
     return [styles];
+  }
+
+  protected override willUpdate(_changed: PropertyValues<this>): void {
+    this._syncHostAccessibleLabel();
+  }
+
+  private _titleText(): string {
+    return this._assignedTitle
+      .map((element) => element.textContent?.trim() ?? '')
+      .filter(Boolean)
+      .join(' ');
+  }
+
+  private _syncHostAccessibleLabel(): void {
+    const label = this.accessibleLabel.trim() || this._titleText();
+    if (label) {
+      this.setAttribute('aria-label', label);
+    } else {
+      this.removeAttribute('aria-label');
+    }
+  }
+
+  private _resolvedDismissLabel(): string {
+    const explicit = this.dismissLabel.trim();
+    if (explicit) {
+      return explicit;
+    }
+    const title = this._titleText();
+    return title ? `Remove ${title}` : 'Remove attachment';
+  }
+
+  private _handleTitleSlotChange(): void {
+    this._syncHostAccessibleLabel();
+    this.requestUpdate();
   }
 
   private _handleBadgeSlotChange(): void {
@@ -76,7 +129,8 @@ export class UploadArtifact extends SpectrumElement {
     return html`
       <button
         class="swc-UploadArtifact-dismiss"
-        aria-label=${this.dismissLabel}
+        tabindex="-1"
+        aria-label=${this._resolvedDismissLabel()}
         ?hidden=${!this.dismissible}
         @click=${this._handleDismissClick}
       >
@@ -119,6 +173,11 @@ export class UploadArtifact extends SpectrumElement {
         <div class="swc-UploadArtifact-actions">
           <slot name="actions"></slot>
         </div>
+        <slot
+          name="title"
+          hidden
+          @slotchange=${this._handleTitleSlotChange}
+        ></slot>
       </div>
     `;
   }
@@ -131,7 +190,10 @@ export class UploadArtifact extends SpectrumElement {
         </div>
         <div class="swc-UploadArtifact-meta">
           <div class="swc-UploadArtifact-title">
-            <slot name="title"></slot>
+            <slot
+              name="title"
+              @slotchange=${this._handleTitleSlotChange}
+            ></slot>
           </div>
           <div class="swc-UploadArtifact-subtitle">
             <slot name="subtitle"></slot>

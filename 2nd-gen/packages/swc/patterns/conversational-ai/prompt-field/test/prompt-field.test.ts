@@ -14,6 +14,8 @@ import { html, nothing, render } from 'lit';
 import { expect, userEvent } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
+import { getActiveElement } from '@adobe/spectrum-wc-core/utils/index.js';
+
 import '../../upload-artifact/swc-upload-artifact.js';
 import '../swc-prompt-field.js';
 
@@ -393,6 +395,240 @@ export const ArtifactScrollPaginationTest: Story = {
         await el.updateComplete;
 
         expect(scrollEl?.scrollLeft ?? 0).toBeGreaterThan(beforeClick);
+      }
+    );
+  },
+};
+
+function waitForScrollEnd(
+  scrollEl: HTMLDivElement | null | undefined
+): Promise<void> {
+  return new Promise<void>((resolve) => {
+    const done = (): void => resolve();
+    scrollEl?.addEventListener('scrollend', done, { once: true });
+    window.setTimeout(done, 1500);
+  });
+}
+
+function dispatchKeydown(
+  target: EventTarget,
+  key: string,
+  eventInit: Partial<KeyboardEventInit> = {}
+): KeyboardEvent {
+  const event = new KeyboardEvent('keydown', {
+    key,
+    bubbles: true,
+    composed: true,
+    cancelable: true,
+    ...eventInit,
+  });
+  target.dispatchEvent(event);
+  return event;
+}
+
+export const ArtifactFocusOrderTest: Story = {
+  render: () => nothing,
+  play: async ({ canvasElement, step }) => {
+    renderMultiArtifactPromptField(canvasElement);
+
+    const el = await getComponent<PromptField>(
+      canvasElement,
+      'swc-prompt-field'
+    );
+    await el.updateComplete;
+    await new Promise((resolve) => requestAnimationFrame(resolve));
+    await el.updateComplete;
+
+    const artifacts = Array.from(
+      el.querySelectorAll<HTMLElement>('[slot="artifact"]')
+    );
+    const textarea = el.shadowRoot?.querySelector<HTMLTextAreaElement>(
+      '.swc-PromptField-textarea'
+    );
+    const scrollEl = el.shadowRoot?.querySelector<HTMLDivElement>(
+      '.swc-PromptField-artifacts-scroll'
+    );
+    const getNextButton = (): HTMLButtonElement | null | undefined =>
+      el.shadowRoot?.querySelector<HTMLButtonElement>(
+        '.swc-PromptField-artifacts-scroll-next'
+      );
+    const getPrevButton = (): HTMLButtonElement | null | undefined =>
+      el.shadowRoot?.querySelector<HTMLButtonElement>(
+        '.swc-PromptField-artifacts-scroll-prev'
+      );
+    const getDismissButton = (
+      tile: HTMLElement
+    ): HTMLButtonElement | null | undefined =>
+      tile.shadowRoot?.querySelector<HTMLButtonElement>(
+        '.swc-UploadArtifact-dismiss'
+      );
+
+    await step('landmark region wraps the strip', async () => {
+      const row = el.shadowRoot?.querySelector(
+        '.swc-PromptField-artifacts-row'
+      );
+      expect(row?.getAttribute('role')).toBe('region');
+      expect(row?.getAttribute('aria-label')).toBe('Uploaded assets strip');
+    });
+
+    await step(
+      'only one tile is the roving tab stop; dismiss buttons are never a normal tab stop',
+      async () => {
+        expect(artifacts[0]?.tabIndex).toBe(0);
+        expect(artifacts.slice(1).every((tile) => tile.tabIndex === -1)).toBe(
+          true
+        );
+        expect(
+          artifacts.every((tile) => getDismissButton(tile)?.tabIndex === -1)
+        ).toBe(true);
+      }
+    );
+
+    await step(
+      'Arrow Right moves the roving tab stop one tile and marks the strip entered',
+      async () => {
+        artifacts[0]?.focus();
+        dispatchKeydown(artifacts[0]!, 'ArrowRight');
+        await el.updateComplete;
+
+        expect(artifacts[0]?.tabIndex).toBe(-1);
+        expect(artifacts[1]?.tabIndex).toBe(0);
+        expect(getActiveElement()).toBe(artifacts[1]);
+      }
+    );
+
+    await step(
+      'Tab from the active (entered) tile reveals its Close button',
+      async () => {
+        const active = artifacts[1]!;
+        const event = dispatchKeydown(active, 'Tab');
+        await el.updateComplete;
+
+        expect(event.defaultPrevented).toBe(true);
+        expect(getActiveElement()).toBe(getDismissButton(active));
+      }
+    );
+
+    await step(
+      'Shift+Tab from the Close button returns focus to the tile',
+      async () => {
+        const active = artifacts[1]!;
+        const dismiss = getDismissButton(active)!;
+        const event = dispatchKeydown(dismiss, 'Tab', { shiftKey: true });
+        await el.updateComplete;
+
+        expect(event.defaultPrevented).toBe(true);
+        expect(getActiveElement()).toBe(active);
+      }
+    );
+
+    await step(
+      'Tab from the Close button reaches the ">" button when more content is scrolled out of view',
+      async () => {
+        const active = artifacts[1]!;
+        const dismiss = getDismissButton(active)!;
+        dismiss.focus();
+        const event = dispatchKeydown(dismiss, 'Tab');
+        await el.updateComplete;
+
+        const nextButton = getNextButton();
+        expect(nextButton).toBeTruthy();
+        expect(event.defaultPrevented).toBe(true);
+        expect(getActiveElement()).toBe(nextButton);
+      }
+    );
+
+    await step(
+      'focus leaving the strip resets "entered"; Tab from an untouched tile does not intercept',
+      async () => {
+        textarea?.focus();
+        await el.updateComplete;
+
+        artifacts[1]?.focus();
+        await el.updateComplete;
+        const event = dispatchKeydown(artifacts[1]!, 'Tab');
+
+        // Not "entered" (focus arrived via .focus(), not Arrow/Enter), so the
+        // Close button/">" intercept must not fire; native Tab is left alone.
+        expect(event.defaultPrevented).toBe(false);
+      }
+    );
+
+    await step(
+      'Enter marks the strip entered without moving focus off the tile',
+      async () => {
+        const active = artifacts[1]!;
+        active.focus();
+        const event = dispatchKeydown(active, 'Enter');
+        await el.updateComplete;
+
+        expect(event.defaultPrevented).toBe(true);
+        expect(getActiveElement()).toBe(active);
+
+        const tabEvent = dispatchKeydown(active, 'Tab');
+        await el.updateComplete;
+        expect(tabEvent.defaultPrevented).toBe(true);
+        expect(getActiveElement()).toBe(getDismissButton(active));
+      }
+    );
+
+    await step(
+      'Tab from the "<" button focuses the first fully-visible tile',
+      async () => {
+        artifacts[artifacts.length - 1]?.focus();
+        await waitForScrollEnd(scrollEl);
+        await el.updateComplete;
+        dispatchKeydown(artifacts[artifacts.length - 1]!, 'ArrowLeft');
+        await waitForScrollEnd(scrollEl);
+        await el.updateComplete;
+
+        const prevButton = getPrevButton();
+        expect(prevButton).toBeTruthy();
+        prevButton?.focus();
+        const event = dispatchKeydown(prevButton!, 'Tab');
+        await el.updateComplete;
+
+        expect(event.defaultPrevented).toBe(true);
+        const active = getActiveElement();
+        expect(active).not.toBe(prevButton);
+        expect(artifacts.includes(active as HTMLElement)).toBe(true);
+      }
+    );
+
+    await step(
+      'Shift+Tab from the ">" button focuses the last fully-visible tile',
+      async () => {
+        const nextButton = getNextButton();
+        expect(nextButton).toBeTruthy();
+        nextButton?.focus();
+        const event = dispatchKeydown(nextButton!, 'Tab', { shiftKey: true });
+        await el.updateComplete;
+
+        expect(event.defaultPrevented).toBe(true);
+        const active = getActiveElement();
+        expect(artifacts.includes(active as HTMLElement)).toBe(true);
+      }
+    );
+
+    await step(
+      'the "<" button disappearing while focused redirects focus to the first tile',
+      async () => {
+        scrollEl?.scrollTo({ left: 200, behavior: 'auto' });
+        await waitForScrollEnd(scrollEl);
+        await el.updateComplete;
+        expect(scrollEl?.scrollLeft ?? 0).toBeGreaterThan(0);
+
+        const prevButton = getPrevButton();
+        expect(prevButton).toBeTruthy();
+        prevButton?.focus();
+        expect(getActiveElement()).toBe(prevButton);
+
+        scrollEl?.scrollTo({ left: 0, behavior: 'auto' });
+        await waitForScrollEnd(scrollEl);
+        await el.updateComplete;
+
+        expect(getPrevButton()).toBeFalsy();
+        expect(getActiveElement()).toBe(artifacts[0]);
       }
     );
   },
