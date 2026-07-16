@@ -60,7 +60,17 @@ function processStylesheets(): Plugin {
           from: file,
           to: dest,
         });
-        await writeFile(dest, result.css);
+        // Stylesheets are flattened into dist/ root, so a source `@import`
+        // written relative to its subfolder (e.g. global/../link.css) must be
+        // rewritten to a sibling reference. Skip absolute and remote URLs.
+        const css = result.css.replace(
+          /@import\s+url\((['"]?)([^'")]+)\1\)/g,
+          (match, quote, url) =>
+            /^(?:[a-z]+:)?\/\//i.test(url) || url.startsWith('/')
+              ? match
+              : `@import url(${quote}./${basename(url)}${quote})`
+        );
+        await writeFile(dest, css);
         await writeFile(`${dest}.d.ts`, 'export {};\n');
       }
     },
