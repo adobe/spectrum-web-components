@@ -61,7 +61,11 @@ export const forcePseudoStates =
   };
 
 export const vrtParameters = {
-  styles: { display: 'flex', 'flex-direction': 'column', gap: '16px' },
+  styles: {
+    display: 'flex',
+    'flex-direction': 'column',
+    gap: 'var(--swc-spacing-500)',
+  },
   autoplay: true,
 };
 
@@ -79,10 +83,12 @@ export const forcedColorsVrtParameters = {
 export const row = (children: unknown, label?: string) =>
   label
     ? html`
-        <div style="display: flex; flex-direction: column; gap: 4px;">
+        <div
+          style="display: flex; flex-direction: column; gap: var(--swc-spacing-100);"
+        >
           <span class="swc-Detail swc-Detail--sizeM">${label}</span>
           <div
-            style="display: flex; flex-wrap: wrap; gap: 16px; align-items: center;"
+            style="display: flex; flex-wrap: wrap; gap: var(--swc-spacing-400); align-items: center;"
           >
             ${children}
           </div>
@@ -90,7 +96,7 @@ export const row = (children: unknown, label?: string) =>
       `
     : html`
         <div
-          style="display: flex; flex-wrap: wrap; gap: 16px; align-items: center;"
+          style="display: flex; flex-wrap: wrap; gap: var(--swc-spacing-400); align-items: center;"
         >
           ${children}
         </div>
@@ -184,7 +190,7 @@ export const theme = (
   <div
     class="swc-theme--${mode}"
     dir=${dir}
-    style="display: flex; flex-direction: column; gap: 16px; padding: 16px; background-color: var(--swc-background-base-color); color: var(--swc-neutral-content-color-default);"
+    style="display: flex; flex-direction: column; gap: var(--swc-spacing-400); padding: 16px; background-color: var(--swc-background-base-color); color: var(--swc-neutral-content-color-default);"
   >
     ${children}
   </div>
@@ -206,7 +212,7 @@ export const staticColorBackground = (
   staticColor: 'white' | 'black'
 ) => html`
   <div
-    style="display: flex; flex-direction: column; gap: 16px; align-items: flex-start; padding: 24px; background: ${staticColorSettings[
+    style="display: flex; flex-direction: column; gap: var(--swc-spacing-400); align-items: flex-start; padding: 24px; background: ${staticColorSettings[
       staticColor
     ]}; color: ${staticColor === 'white'
       ? 'white'
