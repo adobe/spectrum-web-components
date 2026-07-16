@@ -16,7 +16,6 @@ import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import '@adobe/spectrum-wc/components/accordion/swc-accordion.js';
 import '@adobe/spectrum-wc/components/accordion/swc-accordion-item.js';
 
-import customElementsManifest from '../../../../.storybook/custom-elements.json';
 import type { CustomPropertyCase } from '../../../../.storybook/helpers/index.js';
 import {
   coveredCustomProperties,
@@ -26,6 +25,7 @@ import {
   verifyCustomPropertyCoverage,
   vrtParameters,
 } from '../../../../.storybook/helpers/index.js';
+import customElementsManifest from '../../../../dist/custom-elements.json';
 
 const meta: Meta = {
   title: 'Accordion/Accordion VRT',

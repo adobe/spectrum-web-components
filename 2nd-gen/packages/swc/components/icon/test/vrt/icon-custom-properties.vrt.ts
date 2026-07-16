@@ -15,7 +15,6 @@ import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import '@adobe/spectrum-wc/components/icon/swc-icon.js';
 
-import customElementsManifest from '../../../../.storybook/custom-elements.json';
 import type { CustomPropertyCase } from '../../../../.storybook/helpers/index.js';
 import {
   coveredCustomProperties,
@@ -24,6 +23,7 @@ import {
   verifyCustomPropertyCoverage,
   vrtParameters,
 } from '../../../../.storybook/helpers/index.js';
+import customElementsManifest from '../../../../dist/custom-elements.json';
 import { Chevron100Icon } from '../../../icon/elements/index.js';
 
 const meta: Meta = {
