@@ -494,11 +494,21 @@ function nameToDisplayName(name) {
  * Walks the directory tree in sorted order (honoring numeric prefixes)
  * but outputs human-readable names.
  *
+ * Directories that don't use numeric prefixes (e.g. `03_components/accordion`,
+ * `action-button`, ...) are treated as "naturally alphabetical": Storybook's
+ * alphabetical-by-kind fallback already sorts anything absent from `order`
+ * correctly, so we skip emitting them. This keeps `preview.ts` (a dependency
+ * of every story, per Chromatic TurboSnap) unchanged when a new component or
+ * doc is added to one of these directories - only directories that use
+ * numeric prefixes to express a deliberate non-alphabetical order need to be
+ * (and are) captured here.
+ *
  * @param {string} dir - Directory to process
  * @returns {Array} Nested array for storySort.order
  */
 function buildSortOrder(dir) {
   const entries = readdirSync(dir).sort();
+  const hasCuratedOrder = entries.some((entry) => /^\d+_/.test(entry));
   const order = [];
 
   for (const entry of entries) {
@@ -506,16 +516,20 @@ function buildSortOrder(dir) {
     const stat = statSync(fullPath);
 
     if (stat.isDirectory()) {
-      const displayName = nameToDisplayName(entry);
       const children = buildSortOrder(fullPath);
 
+      if (!hasCuratedOrder && children.length === 0) {
+        continue;
+      }
+
+      const displayName = nameToDisplayName(entry);
       if (children.length > 0) {
         order.push(displayName, children);
       } else {
         order.push(displayName);
       }
     } else if (entry.endsWith('.md')) {
-      if (entry === 'README.md') {
+      if (entry === 'README.md' || !hasCuratedOrder) {
         continue;
       }
       const baseName = entry.replace(/\.md$/, '');
