@@ -26,6 +26,8 @@ import styles from './tab-panel.css';
  *
  * @slot - Content displayed when the associated tab is selected
  *
+ * @cssprop --swc-tab-panel-padding-top - Block-start padding of the panel content.
+ *
  * @example
  * <swc-tab-panel tab-id="settings">
  *   <p>Settings content goes here.</p>

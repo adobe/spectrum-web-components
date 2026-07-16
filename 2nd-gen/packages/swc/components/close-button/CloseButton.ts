@@ -70,6 +70,8 @@ const crossIconBySize: Record<ButtonSize, () => TemplateResult> = {
  * @cssprop --swc-close-button-background-color-down - Background color when pressed.
  * @cssprop --swc-close-button-background-color-focus - Background color when keyboard focused.
  * @cssprop --swc-close-button-focus-indicator-color - Focus ring color. Defaults to the focus indicator color token.
+ * @cssprop --swc-close-button-focus-indicator-thickness - Focus ring thickness. Defaults to the focus indicator thickness token.
+ * @cssprop --swc-close-button-focus-indicator-gap - Focus ring offset gap. Defaults to the focus ring gap token.
  */
 export class CloseButton extends ButtonBase {
   /**
