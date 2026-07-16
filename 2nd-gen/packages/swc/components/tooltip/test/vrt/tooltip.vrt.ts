@@ -50,19 +50,45 @@ const tooltip = (
     variant = 'neutral',
     placement = 'top',
     content = 'Tooltip content',
+    gridArea,
   }: {
     variant?: (typeof TOOLTIP_VARIANTS)[number];
     placement?: (typeof TOOLTIP_PLACEMENTS)[number];
     content?: string;
+    // Set only by the Placements compass grid below; every other caller
+    // renders inside a plain row() instead.
+    gridArea?: string;
   }
 ) => html`
   <div
-    style="position: relative; inline-size: 120px; block-size: 72px; display: flex; align-items: center; justify-content: center;"
+    style="position: relative; inline-size: 120px; block-size: 72px; display: flex; align-items: center; justify-content: center; ${gridArea
+      ? `grid-area: ${gridArea};`
+      : ''}"
   >
     <swc-button id=${id} size="s">Trigger</swc-button>
     <swc-tooltip open for=${id} variant=${variant} placement=${placement}>
       ${content}
     </swc-tooltip>
+  </div>
+`;
+
+// Six tooltips forced open at once with only a 16px flex gap (the plain
+// row() layout) overlap badly: a "left"/"right"/"start"/"end" tooltip's
+// bubble is top-layer content positioned by translate, not clipped by its
+// trigger's local box, so it spills into the neighboring cell. Arranging the
+// six placements on a compass-rose grid — the same layout the docs stories
+// use for a single open tooltip — gives every direction an empty cell to pop
+// into, so it holds up even with all six open simultaneously.
+const placementsGrid = (idPrefix: string) => html`
+  <div
+    style="display: grid; justify-content: center; justify-items: center; gap: var(--swc-spacing-400); grid-template-areas: '. top .' 'start . right' 'left . end' '. bottom .';"
+  >
+    ${TOOLTIP_PLACEMENTS.map((placement) =>
+      tooltip(`${idPrefix}-placement-${placement}`, {
+        placement,
+        gridArea: placement,
+      })
+    )}
   </div>
 `;
 
@@ -76,12 +102,7 @@ const tooltipContent = (idPrefix: string) => html`
     ),
     'Variants'
   )}
-  ${row(
-    TOOLTIP_PLACEMENTS.map((placement) =>
-      tooltip(`${idPrefix}-placement-${placement}`, { placement })
-    ),
-    'Placements'
-  )}
+  ${row([placementsGrid(idPrefix)], 'Placements')}
   ${row(
     [
       tooltip(`${idPrefix}-cjk-ja`, { content: '承認ワークフローを開始' }),
