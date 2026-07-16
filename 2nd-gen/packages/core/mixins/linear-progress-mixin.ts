@@ -147,6 +147,20 @@ export function LinearProgressMixin<T extends Constructor<ReactiveElement>>(
 
     /**
      * @internal
+     *
+     * Documentation URL used in DEBUG warnings. Derived from the custom
+     * element tag name so each concrete component gets an accurate link
+     * with no per-subclass override needed (e.g. `swc-meter` →
+     * `components-meter--docs`, `swc-progress-bar` →
+     * `components-progress-bar--docs`).
+     */
+    protected get docsHref(): string {
+      const name = this.localName.replace(/^swc-/, '');
+      return `https://spectrum-web-components.adobe.com/?path=/docs/components-${name}--docs`;
+    }
+
+    /**
+     * @internal
      */
     public get labelContainerId(): string {
       return `swc-linear-progress-label-${this._instanceId}`;
@@ -305,7 +319,7 @@ export function LinearProgressMixin<T extends Constructor<ReactiveElement>>(
       window.__swc?.warn(
         this,
         `<${this.localName}> "value" (${value}) is outside the [${min}, ${max}] range and was clamped to ${this.clampedValue}.`,
-        'https://spectrum-web-components.adobe.com/?path=/docs/components-meter--docs',
+        this.docsHref,
         {
           issues: [
             'set "value" within the "min-value" and "max-value" range, or',
@@ -324,12 +338,12 @@ export function LinearProgressMixin<T extends Constructor<ReactiveElement>>(
       window.__swc?.warn(
         this,
         `<${this.localName}> requires an accessible name.`,
-        'https://spectrum-web-components.adobe.com/?path=/docs/components-meter--docs',
+        this.docsHref,
         {
           type: 'accessibility',
           issues: [
             'add visible label content via the "label" named slot, or',
-            'set the "accessible-label" attribute (or "accessibleLabel" property) when there is no visible label, for example a data grid of meters.',
+            'set the "accessible-label" attribute (or "accessibleLabel" property) when there is no visible label.',
           ],
         }
       );

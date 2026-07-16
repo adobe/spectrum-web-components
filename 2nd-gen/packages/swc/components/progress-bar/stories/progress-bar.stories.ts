@@ -14,11 +14,6 @@ import { html } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
-import { Meter } from '@adobe/spectrum-wc/meter';
-import {
-  METER_VARIANTS,
-  type MeterVariant,
-} from '@adobe/spectrum-wc-core/components/meter';
 import {
   LINEAR_PROGRESS_LABEL_POSITIONS,
   LINEAR_PROGRESS_STATIC_COLORS,
@@ -28,23 +23,13 @@ import {
   type LinearProgressStaticColor,
 } from '@adobe/spectrum-wc-core/mixins/index.js';
 
-import '@adobe/spectrum-wc/components/meter/swc-meter.js';
+import '@adobe/spectrum-wc/components/progress-bar/swc-progress-bar.js';
 
 // ────────────────
 //    METADATA
 // ────────────────
 
-const { args, argTypes, template } = getStorybookHelpers('swc-meter');
-
-argTypes.variant = {
-  ...argTypes.variant,
-  control: { type: 'select' },
-  options: Meter.VARIANTS,
-  table: {
-    category: 'attributes',
-    defaultValue: { summary: 'informative' },
-  },
-};
+const { args, argTypes, template } = getStorybookHelpers('swc-progress-bar');
 
 argTypes.size = {
   ...argTypes.size,
@@ -83,25 +68,23 @@ argTypes.value = {
 };
 
 /**
- * A `<swc-meter>` is a non-focusable, read-only bar that shows a value inside a
- * fixed range, such as storage used or tasks completed. Its value is driven by
- * user actions rather than system progress. The accessible `meter` role and its
- * `aria-value*` attributes live on the internal bar wrapper; the host carries no
- * ARIA role.
+ * A `<swc-progress-bar>` shows the progression of a system operation such as
+ * downloading, uploading, or processing. Use a determinate bar when progress
+ * can be calculated against a known total; set `indeterminate` when the
+ * completion time cannot be determined.
  *
- * To show the progression of a system operation such as downloading or processing,
- * see [Progress Bar](../?path=/docs/components-progress-bar--docs).
+ * For circular progress indicators, see
+ * [Progress Circle](../?path=/docs/components-progress-circle--docs) and for read-only
+ * values use [Meter](../?path=/docs/components-meter--docs).
  */
 const meta: Meta = {
-  title: 'Meter',
-  component: 'swc-meter',
+  title: 'Progress Bar',
+  component: 'swc-progress-bar',
   parameters: {
     docs: {
-      subtitle: `Non-focusable, read-only bar that shows a value inside a fixed range.`,
+      subtitle: `Shows the progress of a task or an indeterminate loading state.`,
     },
-    stackblitz: {
-      url: 'https://stackblitz.com/edit/vitejs-vite-bccezzju?file=src%2Fmy-element.ts',
-    },
+    styles: { 'min-inline-size': '250px' },
   },
   args,
   argTypes,
@@ -122,13 +105,6 @@ const sizeLabels = {
   xl: 'Extra-large',
 } as const satisfies Record<LinearProgressSize, string>;
 
-const variantLabels = {
-  informative: 'Informative',
-  positive: 'Positive',
-  notice: 'Notice',
-  negative: 'Negative',
-} as const satisfies Record<MeterVariant, string>;
-
 const labelPositionLabels = {
   top: 'Top label',
   side: 'Side label',
@@ -146,25 +122,23 @@ const staticColorLabels = {
 export const Playground: Story = {
   tags: ['dev'],
   args: {
-    variant: 'informative',
     size: 'm',
     value: 60,
-    'label-slot': 'Storage used',
+    'label-slot': 'Uploading file',
   },
 };
 
 // ──────────────────────────────
-//    OVERVIEW STORIES
+//    OVERVIEW STORY
 // ──────────────────────────────
 
 export const Overview: Story = {
   tags: ['overview'],
   args: {
-    variant: 'informative',
     size: 'm',
-    value: 80,
-    'label-slot': 'Profile completeness',
-    'description-slot': 'Add a photo to reach 100%',
+    value: 75,
+    'label-slot': 'Uploading file',
+    'description-slot': 'Step 3 of 4 complete',
   },
 };
 
@@ -187,12 +161,19 @@ export const Anatomy: Story = {
     ${template({
       ...args,
       'label-slot': 'Custom value text',
-      'value-label': '1 of 4',
+      'value-label': '3 of 4 steps',
     })}
   `,
   tags: ['anatomy'],
+  parameters: {
+    styles: {
+      display: 'flex',
+      'flex-direction': 'column',
+      gap: 'var(--swc-spacing-200)',
+      margin: '0 auto',
+    },
+  },
   args: {
-    variant: 'informative',
     size: 'm',
     value: 40,
   },
@@ -213,20 +194,14 @@ export const Sizes: Story = {
     )}
   `,
   tags: ['options'],
-  args: { value: 50 },
-};
-
-export const Variants: Story = {
-  render: (args) => html`
-    ${METER_VARIANTS.map((variant) =>
-      template({
-        ...args,
-        variant,
-        'label-slot': variantLabels[variant],
-      })
-    )}
-  `,
-  tags: ['options'],
+  parameters: {
+    styles: {
+      display: 'flex',
+      'flex-direction': 'column',
+      gap: 'var(--swc-spacing-200)',
+      margin: '0 auto',
+    },
+  },
   args: { value: 50 },
 };
 
@@ -241,15 +216,16 @@ export const LabelPosition: Story = {
     )}
   `,
   parameters: {
-    flexLayout: 'column-stretch',
     styles: {
-      gap: 'var(--swc-spacing-300)',
+      display: 'flex',
+      'flex-direction': 'column',
+      gap: '20px',
+      margin: '0 auto',
     },
   },
   tags: ['options'],
   args: { value: 50 },
 };
-LabelPosition.storyName = 'Label position';
 
 export const StaticColors: Story = {
   render: (args) => html`
@@ -265,15 +241,13 @@ export const StaticColors: Story = {
   tags: ['options', '!test'],
   args: { value: 50 },
 };
-StaticColors.storyName = 'Static colors';
 
 // ──────────────────────────
 //    STATES STORIES
 // ──────────────────────────
 
-// Meter is read-only and has no interactive states. The values below
-// exercise the CSS-visible range edges (0 %, midpoint, 100 %) so the
-// fill / track contrast can be verified at the boundaries.
+// The value stories exercise the CSS-visible range edges (0 %, midpoint, 100 %)
+// so the fill / track contrast can be verified at the boundaries (WCAG 1.4.11).
 export const Values: Story = {
   render: (args) => html`
     ${template({ ...args, value: 0, 'label-slot': '0 %' })}
@@ -283,7 +257,25 @@ export const Values: Story = {
     ${template({ ...args, value: 100, 'label-slot': '100 %' })}
   `,
   tags: ['states'],
-  args: { variant: 'informative', size: 'm' },
+  parameters: {
+    styles: {
+      display: 'flex',
+      'flex-direction': 'column',
+      gap: 'var(--swc-spacing-200)',
+      margin: '0 auto',
+    },
+  },
+  args: { size: 'm' },
+};
+
+// Indeterminate suppresses all aria-value* attributes and the visible
+// value text, and runs the sliding fill animation.
+export const Indeterminate: Story = {
+  tags: ['states'],
+  args: {
+    indeterminate: true,
+    'accessible-label': 'Loading content',
+  },
 };
 
 // ──────────────────────────────
@@ -299,12 +291,12 @@ export const CustomRange: Story = {
       'min-value': 0,
       'max-value': 10,
       value: 3,
-      'label-slot': 'Inputs filled',
+      'label-slot': 'Steps completed',
       'value-label': '3 of 10',
     })}
   `,
   tags: ['behaviors'],
-  args: { variant: 'informative', size: 'm' },
+  args: { size: 'm' },
 };
 CustomRange.storyName = 'Custom range';
 
@@ -314,14 +306,14 @@ export const ValueLabel: Story = {
   render: (args) => html`
     ${template({
       ...args,
-      value: 2.4,
+      value: 2,
       'max-value': 5,
-      'label-slot': 'Storage used',
-      'value-label': '2.4 GB / 5 GB',
+      'label-slot': 'Files uploaded',
+      'value-label': '2 of 5',
     })}
   `,
   tags: ['behaviors'],
-  args: { variant: 'informative', size: 'm' },
+  args: { size: 'm' },
 };
 ValueLabel.storyName = 'Value label';
 
@@ -333,12 +325,12 @@ export const FormatOptions: Story = {
       ...args,
       value: 42,
       'max-value': 100,
-      'label-slot': 'Amount due',
-      formatOptions: { style: 'currency', currency: 'USD' },
+      'label-slot': 'Amount processed',
+      formatOptions: { style: 'decimal', maximumFractionDigits: 0 },
     })}
   `,
   tags: ['behaviors'],
-  args: { variant: 'informative', size: 'm' },
+  args: { size: 'm' },
 };
 FormatOptions.storyName = 'Format options';
 
@@ -346,14 +338,14 @@ FormatOptions.storyName = 'Format options';
 //    ACCESSIBILITY STORIES
 // ────────────────────────────────
 
+// TODO (Phase 7): add accessibility prose to progress-bar.mdx § Accessibility
 export const Accessibility: Story = {
   tags: ['a11y'],
   args: {
-    variant: 'informative',
     size: 'm',
     value: 2,
     'max-value': 5,
-    'label-slot': 'Storage used',
-    'description-slot': 'Backed up 2 hours ago',
+    'label-slot': 'Files uploaded',
+    'description-slot': 'Upload will complete shortly',
   },
 };
