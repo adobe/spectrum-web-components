@@ -11,9 +11,9 @@ import * as Stories from './stories/pending-controller.stories';
 
 `PendingController` manages a host element's pending (busy) _state_ so components do not reimplement the timing, layout, and accessibility-name concerns. It is one of three decoupled primitives:
 
-- **`PendingController`** (`@spectrum-web-components/core/controllers/pending-controller`) — state (delayed activation, inline-size freeze, derived accessible name) and `renderPendingState()`, which renders the spinner so the host needs no separate directive import.
-- **`renderPendingSpinner`** (`@spectrum-web-components/core/directives/pending-spinner`) — the underlying render-only directive. The controller owns and exposes it; use it directly only for a stateless spinner without a controller.
-- **`PendingMixin`** (`@spectrum-web-components/core/mixins`) — wires the controller, the `pending` / `pending-label` properties, and click suppression onto a host in one step, and re-exposes `renderPendingState()`.
+- **`PendingController`** (`@adobe/spectrum-wc-core/controllers/pending-controller`) — state (delayed activation, inline-size freeze, derived accessible name) and `renderPendingState()`, which renders the spinner so the host needs no separate directive import.
+- **`renderPendingSpinner`** (`@adobe/spectrum-wc-core/directives/pending-spinner`) — the underlying render-only directive. The controller owns and exposes it; use it directly only for a stateless spinner without a controller.
+- **`PendingMixin`** (`@adobe/spectrum-wc-core/mixins`) — wires the controller, the `pending` / `pending-label` properties, and click suppression onto a host in one step, and re-exposes `renderPendingState()`.
 
 `swc-button` and `swc-action-button` opt in via `PendingMixin`. Components that cannot use the mixin can use the controller and directive directly.
 
@@ -37,7 +37,7 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 import {
   PendingController,
   type PendingControllerHost,
-} from '@spectrum-web-components/core/controllers/pending-controller';
+} from '@adobe/spectrum-wc-core/controllers/pending-controller';
 
 class SwcThing extends LitElement implements PendingControllerHost {
   @property({ type: Boolean, reflect: true }) pending = false;
@@ -136,9 +136,9 @@ Click the button below to start a pending operation. The button receives focus v
 
 ### Related primitives
 
-| Export                 | Module                                                     | Purpose                                                                         |
-| ---------------------- | ---------------------------------------------------------- | ------------------------------------------------------------------------------- |
-| `renderPendingSpinner` | `@spectrum-web-components/core/directives/pending-spinner` | Underlying spinner render; exposed via the controller's `renderPendingState()`. |
-| `PendingMixin`         | `@spectrum-web-components/core/mixins`                     | Wire the controller + properties + click suppression; re-exposes the render.    |
+| Export                 | Module                                               | Purpose                                                                         |
+| ---------------------- | ---------------------------------------------------- | ------------------------------------------------------------------------------- |
+| `renderPendingSpinner` | `@adobe/spectrum-wc-core/directives/pending-spinner` | Underlying spinner render; exposed via the controller's `renderPendingState()`. |
+| `PendingMixin`         | `@adobe/spectrum-wc-core/mixins`                     | Wire the controller + properties + click suppression; re-exposes the render.    |
 
 <DocsFooter />
