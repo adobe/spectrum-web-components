@@ -471,18 +471,29 @@ export class PromptField extends SpectrumElement {
   }
 
   private _handleArtifactRowKeydown(event: KeyboardEvent): void {
-    if (event.key === 'Enter' || event.key === ' ') {
+    const isEnterOrSpace = event.key === 'Enter' || event.key === ' ';
+    const isArrow = event.key === 'ArrowLeft' || event.key === 'ArrowRight';
+
+    if (isEnterOrSpace || isArrow) {
       const active = getActiveElement();
-      if (
-        (this._assignedArtifactElements ?? []).includes(active as HTMLElement)
-      ) {
-        // Marks the strip as "entered" per the focus-order spec. Opening a
-        // Spotlight preview here is a follow-up; for now this only unlocks
+      const isTile = (this._assignedArtifactElements ?? []).includes(
+        active as HTMLElement
+      );
+      if (isTile) {
+        // Marks the strip as "entered" per the focus-order spec, even when an
+        // Arrow key is a no-op at the first/last tile boundary (the roving
+        // controller only fires its active-change event on an actual move,
+        // so relying on that alone misses this case). Opening a Spotlight
+        // preview on Enter/Space is a follow-up; for now this only unlocks
         // Tab access to the tile's Close button.
-        event.preventDefault();
         this._artifactStripEntered = true;
+        if (isEnterOrSpace) {
+          event.preventDefault();
+        }
       }
-      return;
+      if (isEnterOrSpace) {
+        return;
+      }
     }
 
     if (event.key !== 'Tab') {

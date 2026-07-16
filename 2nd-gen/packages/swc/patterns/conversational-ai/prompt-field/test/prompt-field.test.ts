@@ -641,5 +641,29 @@ export const ArtifactFocusOrderTest: Story = {
         expect(getActiveElement()).toBe(artifacts[0]);
       }
     );
+
+    await step(
+      'a boundary Arrow key (no-op move) still marks the strip entered',
+      async () => {
+        // Leave and re-enter the first tile via .focus() (source: 'focus',
+        // not 'keyboard') so "entered" is genuinely false going into this.
+        textarea?.focus();
+        await el.updateComplete;
+        artifacts[0]?.focus();
+        await el.updateComplete;
+
+        // ArrowLeft at index 0 with wrap:false is a no-op for the roving
+        // controller (no active-change event fires), but the spec still
+        // counts pressing it as "entering" the strip.
+        dispatchKeydown(artifacts[0]!, 'ArrowLeft');
+        await el.updateComplete;
+        expect(getActiveElement()).toBe(artifacts[0]);
+
+        const event = dispatchKeydown(artifacts[0]!, 'Tab');
+        await el.updateComplete;
+        expect(event.defaultPrevented).toBe(true);
+        expect(getActiveElement()).toBe(getDismissButton(artifacts[0]!));
+      }
+    );
   },
 };
