@@ -92,10 +92,6 @@ export class CloseButton extends ButtonBase {
     return false;
   }
 
-  public override getResolvedAccessibleName(): string | null {
-    return this.accessibleLabel ?? null;
-  }
-
   // ──────────────────────────────
   //     RENDERING & STYLING
   // ──────────────────────────────
@@ -105,18 +101,16 @@ export class CloseButton extends ButtonBase {
   }
 
   protected override render(): TemplateResult {
-    const resolvedName = this.getResolvedAccessibleName();
-
     return html`
       <button
         class="swc-CloseButton"
         type="button"
         @click=${this.handleClick}
         ?disabled=${this.disabled}
-        aria-label=${ifDefined(resolvedName ?? undefined)}
+        aria-label=${ifDefined(this.accessibleLabel ?? undefined)}
       >
         <span class="swc-CloseButton-icon" aria-hidden="true">
-          ${crossIconBySize[this.size]()}
+          ${crossIconBySize[this.size as ButtonSize]()}
         </span>
       </button>
     `;
