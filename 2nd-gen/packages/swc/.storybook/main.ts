@@ -50,12 +50,31 @@ const testStoryIndexer: Indexer = {
   },
 };
 
+// Storybook derives each story's display name from its export name using
+// Title Case (e.g. ForcedColors -> "Forced Colors"), which doesn't match
+// this project's sentence-case convention. Rather than hand-adding a
+// `storyName` override to every multi-word export across every .vrt.ts
+// file, lowercase every word but the first (and any all-caps acronym) once
+// here, at index time.
+const sentenceCase = (name: string) => {
+  const [first, ...rest] = name.split(' ');
+  return [
+    first,
+    ...rest.map((word) => (/^[A-Z]+$/.test(word) ? word : word.toLowerCase())),
+  ].join(' ');
+};
+
 // Custom indexer to allow .vrt.ts files to be treated as story files.
 const vrtStoryIndexer: Indexer = {
   test: /\.vrt\.ts$/,
   createIndex: async (fileName, options) => {
     const csfFile = await readCsf(fileName, options);
-    return csfFile.parse().indexInputs;
+    const { indexInputs } = csfFile.parse();
+    return indexInputs.map((input) =>
+      input.type === 'story' && input.name
+        ? { ...input, name: sentenceCase(input.name) }
+        : input
+    );
   },
 };
 
