@@ -528,6 +528,8 @@ const preview = {
               'Milestones',
               'Strategies',
               ['Focus management strategy rfc'],
+              'Decisions',
+              ['0001 dual generation release workflows'],
             ],
           ],
           // GENERATED:CONTRIBUTOR-DOCS-SORT-END
