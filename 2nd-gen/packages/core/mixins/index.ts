@@ -29,6 +29,7 @@ export {
   ObserveSlotText,
   type SlotTextObservingInterface,
 } from './observe-slot-text.js';
+export { PendingMixin, type PendingInterface } from './pending-mixin.js';
 export {
   DEFAULT_ELEMENT_SIZES,
   ELEMENT_SIZES,
