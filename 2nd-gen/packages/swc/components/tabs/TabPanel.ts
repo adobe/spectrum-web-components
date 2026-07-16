@@ -11,7 +11,7 @@
  */
 import { CSSResultArray, html, TemplateResult } from 'lit';
 
-import { TabPanelBase } from '@spectrum-web-components/core/components/tabs';
+import { TabPanelBase } from '@adobe/spectrum-wc-core/components/tabs';
 
 import styles from './tab-panel.css';
 
@@ -22,7 +22,7 @@ import styles from './tab-panel.css';
  * container based on which tab is selected.
  *
  * @element swc-tab-panel
- * @since 2.0.0
+ * @since 2.0.0-beta.1
  *
  * @slot - Content displayed when the associated tab is selected
  *

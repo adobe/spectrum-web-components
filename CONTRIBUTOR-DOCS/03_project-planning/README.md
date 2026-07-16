@@ -27,7 +27,6 @@
     - [1st-gen Spectrum 2 Enhancements](02_workstreams/05_1st-gen-spectrum-2-enhancements/README.md)
 - [Components](03_components/README.md)
     - Accordion
-    - Action Bar
     - Action Button
     - Action Group
     - Action Menu
@@ -37,6 +36,7 @@
     - Badge
     - Button
     - Button Group
+    - Card
     - Checkbox
     - Close Button
     - Color Field
@@ -48,6 +48,7 @@
     - Field Label
     - Grid
     - Help Text
+    - Icon
     - Illustrated Message
     - Infield Button
     - Infield Progress Circle

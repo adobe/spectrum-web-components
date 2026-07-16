@@ -21,7 +21,6 @@
 - Accordion
     - [Accordion accessibility migration analysis](accordion/accessibility-migration-analysis.md)
     - [Accordion migration plan](accordion/migration-plan.md)
-- Action Bar
 - Action Button
     - [Action button accessibility migration analysis](action-button/accessibility-migration-analysis.md)
     - [Action button migration plan](action-button/migration-plan.md)
@@ -52,6 +51,8 @@
     - [Button group accessibility migration analysis](button-group/accessibility-migration-analysis.md)
     - [Button group migration plan](button-group/migration-plan.md)
     - [Button Group migration roadmap](button-group/rendering-and-styling-migration-analysis.md)
+- Card
+    - [Card family plan](card/migration-plan.md)
 - Checkbox
     - [Checkbox migration roadmap](checkbox/rendering-and-styling-migration-analysis.md)
 - Close Button
@@ -83,6 +84,8 @@
     - [Grid migration roadmap](grid/rendering-and-styling-migration-analysis.md)
 - Help Text
     - [Help text migration roadmap](help-text/rendering-and-styling-migration-analysis.md)
+- Icon
+    - [Icon accessibility migration analysis](icon/accessibility-migration-analysis.md)
 - Illustrated Message
     - [Illustrated message accessibility migration analysis](illustrated-message/accessibility-migration-analysis.md)
     - [`sp-illustrated-message` Migration Plan](illustrated-message/migration-plan.md)

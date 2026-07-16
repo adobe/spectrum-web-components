@@ -18,7 +18,7 @@ import { Meter } from '@adobe/spectrum-wc/meter';
 import {
   METER_VARIANTS,
   type MeterVariant,
-} from '@spectrum-web-components/core/components/meter';
+} from '@adobe/spectrum-wc-core/components/meter';
 import {
   LINEAR_PROGRESS_LABEL_POSITIONS,
   LINEAR_PROGRESS_STATIC_COLORS,
@@ -26,7 +26,7 @@ import {
   type LinearProgressLabelPosition,
   type LinearProgressSize,
   type LinearProgressStaticColor,
-} from '@spectrum-web-components/core/mixins/index.js';
+} from '@adobe/spectrum-wc-core/mixins/index.js';
 
 import '@adobe/spectrum-wc/components/meter/swc-meter.js';
 
@@ -98,6 +98,9 @@ const meta: Meta = {
   parameters: {
     docs: {
       subtitle: `Non-focusable, read-only bar that shows a value inside a fixed range.`,
+    },
+    stackblitz: {
+      url: 'https://stackblitz.com/edit/vitejs-vite-bccezzju?file=src%2Fmy-element.ts',
     },
   },
   args,

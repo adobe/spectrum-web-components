@@ -19,4 +19,4 @@ export type {
   LinearProgressLabelPosition,
   LinearProgressSize,
   LinearProgressStaticColor,
-} from '@spectrum-web-components/core/mixins/index.js';
+} from '@adobe/spectrum-wc-core/mixins/index.js';

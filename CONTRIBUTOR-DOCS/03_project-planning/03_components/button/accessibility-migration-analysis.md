@@ -41,7 +41,7 @@
 
 This doc describes how **`swc-button`** should behave for **accessibility** in 2nd-gen, targeting **WCAG 2.2 Level AA**. **Navigation** uses **`swc-link`**, **native `<a href>`**, or Spectrum global styling on anchors—not a button-with-**`href`**. In 1st-gen, **`href`** on **`<sp-button>`** was **deprecated** with a migration warning; 2nd-gen **continues** that direction: **do not** ship a **link button** or revive **`href`** on the button component. **Pending / loading** treatment aligns with Spectrum loading guidance ([Figma — Loading animation discovery](https://www.figma.com/design/42VzvpW262EAUbYsadO4e8/Loading-animation-discovery)) and internal **general / accessibility guidance** for loading indicators (delay before show, determinate vs indeterminate, placement, status announcements, and motion).
 
-**Shared infra:** [spectrum-web-components#6120](https://github.com/adobe/spectrum-web-components/pull/6120) proposes moving mixins and utilities into **`@spectrum-web-components/core`**. **`swc-button`** does **not** need **`like-anchor.ts`** (`LikeAnchor`)—that mixin existed to bolt **anchor** behavior onto controls that already looked like buttons; **`swc-button`** is **only** a **`<button>`**, and navigation stays on **`swc-link`** / **`<a>`**.
+**Shared infra:** [spectrum-web-components#6120](https://github.com/adobe/spectrum-web-components/pull/6120) proposes moving mixins and utilities into **`@adobe/spectrum-wc-core`**. **`swc-button`** does **not** need **`like-anchor.ts`** (`LikeAnchor`)—that mixin existed to bolt **anchor** behavior onto controls that already looked like buttons; **`swc-button`** is **only** a **`<button>`**, and navigation stays on **`swc-link`** / **`<a>`**.
 
 ### Also read
 

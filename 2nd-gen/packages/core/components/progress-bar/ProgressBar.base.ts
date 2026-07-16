@@ -12,12 +12,12 @@
 
 import { property } from 'lit/decorators.js';
 
-import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
+import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
 import {
   LINEAR_PROGRESS_VALID_SIZES,
   LinearProgressMixin,
   SizedMixin,
-} from '@spectrum-web-components/core/mixins/index.js';
+} from '@adobe/spectrum-wc-core/mixins/index.js';
 
 /**
  * A non-focusable, read-only bar that shows task progress (0–100, or a custom

@@ -772,7 +772,7 @@ Create these tickets before this migration PR closes. Link each to Epic SWC-2017
 
 ## Addendum: HoverController interface requirements
 
-> **Implemented.** `HoverController` has been extracted to `@spectrum-web-components/core/controllers/hover-controller` and integrated into `Tooltip.base.ts`. This section is retained as a historical record of the interface contract that drove the controller's design.
+> **Implemented.** `HoverController` has been extracted to `@adobe/spectrum-wc-core/controllers/hover-controller` and integrated into `Tooltip.base.ts`. This section is retained as a historical record of the interface contract that drove the controller's design.
 
 This section captures what Tooltip requires from `HoverController`. It is a separate body of work — not part of the core Tooltip migration — but is recorded here so the controller's design is informed by a concrete consumer.
 

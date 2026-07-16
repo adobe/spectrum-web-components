@@ -145,7 +145,7 @@ None. The component dispatches no custom events. It only listens internally for 
 
 | Package                                          | Version | Role |
 | ------------------------------------------------ | ------- | ---- |
-| `@spectrum-web-components/base`                  | 1st-gen | `SpectrumElement`, `html`, decorators. Replaced by `@spectrum-web-components/core` in 2nd-gen. |
+| `@spectrum-web-components/base`                  | 1st-gen | `SpectrumElement`, `html`, decorators. Replaced by `@adobe/spectrum-wc-core` in 2nd-gen. |
 | `@spectrum-web-components/color-loupe`           | 1st-gen | Rendered internally (`sp-color-loupe`). 2nd-gen equivalent (`swc-color-loupe`) already exists. |
 | `@spectrum-web-components/opacity-checkerboard`  | 1st-gen | Checkerboard styles for transparent colors. In 2nd-gen this is a **shared stylesheet** (`2nd-gen/packages/swc/stylesheets/shared/opacity-checkerboard.css`), not a component. |
 
@@ -197,7 +197,7 @@ color-handle should **compose `swc-color-loupe` internally** and **import the sh
 | B1  | Element tag rename (source: 2nd-gen naming convention) | `<sp-color-handle>` | `<swc-color-handle>` | Update tag name and import path; properties unchanged. |
 | B2  | Import surface | `@spectrum-web-components/color-handle` | 2nd-gen `core` + `swc` packages | Update package import; side-effect registration via `swc-color-handle.js`. |
 | B3  | Remove `--mod-colorhandle-*` modifier surface (source: 2nd-gen custom-property policy) | Many `--mod-*` hooks for size/border/animation | No `--mod-*` exposure; a small reviewed `--swc-*` set only if needed | Replace any `--mod-colorhandle-*` overrides with supported `--swc-*` props or remove. |
-| B7  | Add `fill` option (source: Figma S2 `Show handle fill`; team decision to ship now) | No such option; inner color swatch always shown | Public reflected `fill` boolean, default `true` (swatch shown); `fill=false` renders an outline-only handle | Additive for existing markup (default preserves current look); opt in to `fill="false"` for outline-only. |
+| B7  | Add `fill` option (source: Figma S2 `Show handle fill`; team decision to ship now) | No such option; inner color swatch always shown | Public reflected `fill` boolean, default `true` (swatch shown); `fill=false` renders an outline-only handle | Additive for existing markup (default preserves current look). `fill` is a reflected boolean, so opt into outline-only by **setting the property `fill = false`** (or omitting the reflected attribute) — not with `fill="false"`, which reads as `true` under boolean-attribute semantics. |
 
 > `focused` is **retained unchanged** from 1st-gen (team decision; see TL;DR and Q3). It is not a breaking change, so it has no row here. Behavior is documented under [Behavioral semantics](#behavioral-semantics). An interim proposal to rename `focused` to `highlighted` was considered and withdrawn.
 
@@ -322,40 +322,42 @@ Planned rendering shape:
 
 ### Setup
 
-- [ ] Create `2nd-gen/packages/core/components/color-handle/`
-- [ ] Create `2nd-gen/packages/swc/components/color-handle/`
-- [ ] Wire exports in both `package.json` files
-- [ ] Check out `spectrum-css` at `spectrum-two` branch as sibling directory _(already present at `../spectrum-css` on `spectrum-two`)_
+- [x] Create `2nd-gen/packages/core/components/color-handle/` (`ColorHandle.base.ts`, `ColorHandle.types.ts`, `index.ts`)
+- [x] Create `2nd-gen/packages/swc/components/color-handle/` (`ColorHandle.ts`, `color-handle.css`, `index.ts`, `swc-color-handle.ts`, `stories/`, `test/`)
+- [x] Wire exports in both `package.json` files — core: explicit `./components/color-handle` + `/index.js` entries added to `exports` and `typesVersions` (badge pattern); swc: covered by existing `./components/*.js` / `./components/*` wildcard exports, no edit needed
+- [x] Check out `spectrum-css` at `spectrum-two` branch as sibling directory _(already present at `../spectrum-css` on `spectrum-two`)_
 
 ### API
 
 #### Naming and public surface
 
-- [ ] `ColorHandle.types.ts`: define the public property contract (`color: string`, `disabled/open/focused/fill: boolean`).
-- [ ] `ColorHandle.base.ts`: retain `color`, `disabled`, `open`, `focused` as reflected properties; add `fill` (default `true`, B7); carry pointer/touch open-close behavior and the focus-vs-click model; add adaptive-contrast helper.
-- [ ] `ColorHandle.ts` (`swc-color-handle`): render inner swatch + built-in `swc-color-loupe`; apply S2 styling.
+- [x] `ColorHandle.types.ts`: define the public property contract (`color: string`, `disabled/open/focused/fill: boolean`) via the `ColorHandleProperties` interface; `ColorHandleBase implements` it so class/interface drift is caught at compile time.
+- [x] `ColorHandle.base.ts`: retains `color`, `disabled`, `open`, `focused` as reflected properties; `fill` added (default `true`, B7); pointer/touch open-close behavior carried from 1st-gen. _Adaptive-contrast helper deferred to Phase 5 (algorithm is specified in the accessibility migration analysis and implemented with styling), not Phase 3._
+- [ ] `ColorHandle.ts` (`swc-color-handle`): render inner swatch + built-in `swc-color-loupe`; apply S2 styling. _(render stub in place from Phase 2; S2 styling is Phase 5.)_
+
+> **No static `readonly` arrays, no `window.__swc.warn()` validation, and no 1st-gen deprecation notices in Phase 3.** Color Handle has no variant/size/treatment enums and no invalid-property-combination rules, so there is nothing to validate. 1st-gen `color-handle` exports only the `ColorHandle` class (no types/consts) and renames no properties (`color`/`disabled`/`focused`/`open` unchanged; `fill` is additive), so there is no 1st-gen surface to deprecate. The tag rename (`sp-` → `swc-`) and `--mod-*` removal are inherent 2nd-gen changes, not per-property deprecations.
 
 #### Alignment checks
 
-- [ ] Confirm the `fill` attribute name (B7/Q7) in implementation; `focused` and `open` are settled (kept unchanged).
-- [ ] Verify the focus-vs-click model against RSP: handle enlarges only on parent focus (keyboard/programmatic); click without parent focus sets `open`.
-- [ ] Confirm React Spectrum S2 color-handle (if it exists as a distinct primitive) does not introduce additional public API.
+- [x] `fill` attribute name confirmed as the implementation name (B7/Q7 recommendation kept); `focused` and `open` settled (kept unchanged).
+- [x] Focus-vs-click model verified against RSP and design spec: `focused` is parent-set and drives enlargement (Phase 5 visual); the handle's own touch `pointerdown` sets `open`. No handle-side code needed beyond the carried pointer handlers — the parent owns `focused`.
+- [x] React Spectrum S2 color-handle introduces no additional public API; the surface stays at the five properties.
 
 ### Styling
 
 > Follow the [CSS style guide](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/) as the source of truth for all styling work. Key references: [migration steps](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/04_spectrum-swc-migration.md), [custom properties](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md), [anti-patterns](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/05_anti-patterns.md).
 
-- [ ] Add `.swc-ColorHandle` to the internal semantic element in `render()`; keep styling off `:host` where possible (note: 1st-gen relies on `:host` sizing/transitions; review during styling).
-- [ ] Copy S2 source from `spectrum-css` `spectrum-two` branch `components/colorhandle/index.css` (not `/dist`) into `color-handle.css` as baseline.
-- [ ] Import the shared `opacity-checkerboard.css` stylesheet for transparent-color display.
+- [x] Semantic internal classes used in `render()` (`.swc-ColorHandle-inner`, `.swc-ColorHandle-layer`, `.swc-ColorHandle-colorFill`). _Deviation from "keep styling off `:host`": the circle, white separator border, outer dark ring (box-shadow), size, and grow-on-focus stay on `:host`, matching 1st-gen. The parent positions `:host` and the handle centers itself via negative margins keyed to its own size, so the sized box must be `:host`; a wrapper would double the positioning contract. Documented per the checklist's own note that 1st-gen relies on `:host` sizing._
+- [x] Rebuilt from `spectrum-css@spectrum-two` `components/colorhandle/index.css` as baseline, with S2 tokens and the SWC-2295 adaptive border layered on top.
+- [x] Imports the shared `opacity-checkerboard.css` fragment (checkerboard layer behind the color-fill layer) for transparent-color display.
 
 #### Visual model and regressions
 
-- [ ] Implement grow-on-focus/press, shrink-on-blur as the focus indicator (B4); retain `outline: none` on focus.
-- [ ] Implement adaptive white-first dual-border for ≥3:1 non-text contrast (B6).
-- [ ] Verify i18n size modifiers (`:lang(ja)`, `:lang(ko)`, `:lang(zh)`) if present in S2 source _(unlikely for this primitive; confirm)_.
-- [ ] Add `@cssprop` JSDoc tag to the primary SWC component class for every exposed `--swc-*` property (if any are exposed).
-- [ ] Pass stylelint (property order, `no-descending-specificity`, token validation).
+- [x] Grow-on-focus as the focus indicator (B4): `:host([focused])` / `:host(:focus-visible)` enlarge to `color-handle-size-key-focus` with `outline: none`; `animation-duration-100` ease transition drives grow/shrink.
+- [x] Adaptive white-first dual-border for ≥3:1 non-text contrast (B6): dark→white→dark stack (outer box-shadow, white `:host` border, inner inset shadow on `.swc-ColorHandle-colorFill`), with dark-border opacity computed by the core `computeBorderAlpha` helper (`color-contrast.ts`, own-color v1, white-first) and applied via `--_swc-color-handle-border-alpha`. _Contrast ≥3:1 across the spectrum is verified by tests/VRT in Phase 6._
+- [x] i18n size modifiers: confirmed none in the S2 source for this primitive; n/a.
+- [x] `@cssprop`: no public `--swc-*` properties are exposed (size/animation handled by tokens; `--_swc-color-handle-border-alpha` is private; `--swc-color-handle-picked-color` is component-set internal, mirroring color-loupe). None to document, matching the plan's "likely none at launch."
+- [x] Stylelint passes (property order auto-fixed; no `no-descending-specificity` or token-validation errors).
 
 ### Accessibility
 
@@ -363,45 +365,49 @@ Planned rendering shape:
 
 #### Naming and semantics
 
-- [ ] Confirm the handle exposes no ARIA role/name and is not independently focusable; a11y owned by parent color components (per the accessibility migration analysis).
-- [ ] Keep any decorative graphics out of the accessibility tree (mirror color-loupe).
+- [x] Confirmed: the handle sets no host `role`, no `aria-label`, and no `tabindex` (verified by absence in `ColorHandle.base.ts` / `ColorHandle.ts`); a11y owned by parent color components (per the accessibility migration analysis). `disabled`/`focused`/`open` are reflected visual states, not ARIA states.
+- [x] Confirmed: decorative graphics stay out of the accessibility tree. The built-in `swc-color-loupe` renders its SVG with `aria-hidden="true"` (mirrors color-loupe); the handle adds no graphic role of its own. No cross-root ARIA, no live regions.
 
 #### State verification
 
-- [ ] Verify adaptive border maintains ≥3:1 across light, dark, and saturated hues (SWC-2295 acceptance criteria).
-- [ ] Verify default appearance on mid/dark colors is unchanged (border strengthens only where needed).
-- [ ] Document the own-color-reference limitation at steep gradient areas.
+> Implemented in Phase 5 (Styling): the adaptive white-first dual-border and grow-on-focus now exist (`color-contrast.ts` + `color-handle.css`). The algorithm follows the accessibility migration analysis (RSP-2021, SDS-16402). Numeric ≥3:1 verification across the spectrum is a Phase 6 test/VRT task.
+
+- [x] Adaptive border α logic verified by unit tests (`computeBorderAlpha`/`findMinAlpha`/`contrastRatio`): white-first holds the floor when white carries 3:1, escalates otherwise, and never returns below the floor. Full ≥3:1-across-the-spectrum confirmation over real gradients is a VRT task once a parent picker is migrated.
+- [x] Default appearance on mid/dark colors is unchanged: white-first keeps α at the 0.42 floor whenever the white separator already carries 3:1, so the border strengthens only where needed.
+- [x] Own-color-reference limitation documented: `computeBorderAlpha` uses the handle's own `color` as the adjacency stand-in (v1, A1), accurate on smooth gradients and approximate at steep/saturated edges; noted in the `color-contrast.ts` module JSDoc.
 
 ### Testing
 
-- [ ] Port `1st-gen/packages/color-handle/test/color-handle.test.ts` coverage that still applies (default + `open` accessible; pointer open/close on touch `pointerdown`/`pointerup`/`pointercancel`).
-- [ ] Port memory test (`color-handle-memory.test.ts`) equivalent if applicable.
-- [ ] Add Playwright `color-handle.a11y.spec.ts` with `toMatchAriaSnapshot`.
+- [x] Ported the applicable 1st-gen coverage as Storybook play tests in `test/color-handle.test.ts`: role-less/name-less host, `color` applied to the fill layer, adaptive border-alpha variable set, and touch pointer open/close (`pointerdown`/`pointerup`/`pointercancel`; mouse does not auto-open).
+- [x] Added `computeBorderAlpha`/`findMinAlpha`/`contrastRatio` unit coverage (parser produces no `NaN`, floor fallback, white-first floor vs escalation) — directly covers the PR-review parser concern. _No separate memory test; 2nd-gen has no equivalent harness for this primitive._
+- [x] Added Playwright `color-handle.a11y.spec.ts` asserting the role-less/name-less host and the built-in loupe SVG `aria-hidden` across chromium/firefox/webkit. _Uses direct attribute assertions rather than `toMatchAriaSnapshot`, which rejects the legitimately-empty tree (same approach as color-loupe)._
 
 #### Behavior
 
-- [ ] Touch opens/closes the loupe; mouse/stylus does not auto-open.
-- [ ] `disabled` suppresses the loupe even when `open`.
-- [ ] Grow-on-focus and shrink-on-blur transitions fire.
+- [x] Touch opens/closes the loupe; mouse does not auto-open (`TouchOpenCloseTest`).
+- [x] `disabled` suppresses the loupe even when `open` (`DisabledSuppressesLoupeTest`).
+- [ ] Grow-on-focus and shrink-on-blur transitions fire. _(covered visually; a `focused`/blur transition assertion is deferred to VRT below.)_
 
 #### Visual regression
 
-- [ ] Add VRT coverage for the handle over color-area / color-slider / color-wheel gradients across the spectrum (SWC-2295 QA).
-- [ ] Add VRT for default vs grown (focus/press) states and disabled.
-- [ ] Add high-contrast (`forced-colors`) coverage (1st-gen ships a forced-colors block).
+- [ ] Add VRT coverage for the handle over color-area / color-slider / color-wheel gradients across the spectrum (SWC-2295 QA). _(deferred: parent pickers not yet migrated; runs when a parent lands.)_
+- [ ] Add VRT for default vs grown (focus/press) states and disabled. _(Chromatic VRT runs in CI on the stories; no separate local action.)_
+- [ ] Add high-contrast (`forced-colors`) coverage (the CSS ships a `forced-colors` block). _(Chromatic VRT.)_
+
+> Verified locally (Node 24.11.1): Vitest storybook project — 13 passed (5 play tests + 8 story smoke renders); Playwright a11y — 12 passed (3 browsers). `test-storybook` aXe run is blocked by an unrelated env issue (`@swc/core` native binding failure + jest haste collision from stray `.claude/worktrees/*` repo copies), not by color-handle; aXe still runs in CI.
 
 ### Documentation
 
 #### General
 
-- [ ] JSDoc on all public props (no slots/events to document).
-- [ ] Storybook stories placing the handle in realistic color-picker contexts, not on a bare canvas.
-- [ ] Per-unit MDX documenting it as a primitive used inside color-area/slider/wheel.
+- [x] JSDoc on all public props (`color`, `disabled`, `focused`, `open`, `fill`) on `ColorHandleBase`; the CEM captures them for the Storybook `<ApiTable />`. No slots/events to document. No public `--swc-*` properties, so no `@cssprop` tags.
+- [x] Storybook stories authored with meaningful color values; each handle sits in its own positioned anchor (the primitive centers itself via negative margins). _Parent-embedded stories (handle inside color-area/slider/wheel) will be added when a parent picker is migrated; those components do not exist in 2nd-gen yet._
+- [x] Per-unit MDX (`color-handle.mdx`) authored: Anatomy, Options (Colors, Fill), States, Behaviors (Adaptive contrast), Accessibility, and Upcoming features. Documents the handle as a primitive whose name/role/value/keyboard belong to the parent color-area/slider/wheel. `yarn lint:docs-pages` passes; Storybook shows a single docs entry (no duplicate).
 
 #### Breaking changes
 
-- [ ] Document the tag rename (`sp-color-handle` to `swc-color-handle`) and removal of `--mod-colorhandle-*` in the consumer migration guide (`focused` is unchanged).
-- [ ] Document the new `fill` option (B7) and note the adaptive-contrast behavior change (improvement, non-breaking) and grow-on-focus indicator.
+- [x] Tag rename (`sp-color-handle` to `swc-color-handle`) and removal of `--mod-colorhandle-*` documented in the consumer migration guide (`migration-guide.mdx`); `focused` noted as unchanged.
+- [x] New `fill` option (B7, property-not-attribute for outline-only), the adaptive-contrast behavior change (improvement, non-breaking), and the grow-on-focus indicator documented in `migration-guide.mdx`.
 
 ### Review
 

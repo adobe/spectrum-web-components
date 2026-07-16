@@ -20,7 +20,7 @@ import {
   type TabDensity,
   TABS_DIRECTIONS,
   type TabsDirection,
-} from '@spectrum-web-components/core/components/tabs/index.js';
+} from '@adobe/spectrum-wc-core/components/tabs/index.js';
 
 import '@adobe/spectrum-wc/components/tabs/swc-tabs.js';
 import '@adobe/spectrum-wc/components/tabs/swc-tab.js';
@@ -85,10 +85,6 @@ export const meta: Meta = {
     docs: {
       subtitle: 'Organize content into sections navigated by a tab bar',
       source: { type: 'dynamic' },
-    },
-    design: {
-      type: 'figma',
-      url: 'https://www.figma.com/design/PLACEHOLDER',
     },
     stackblitz: {
       url: 'https://stackblitz.com/edit/vitejs-vite-5jtmpzjk?file=src%2Fmy-element.ts',

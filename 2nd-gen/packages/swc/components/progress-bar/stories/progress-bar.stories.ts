@@ -21,7 +21,7 @@ import {
   type LinearProgressLabelPosition,
   type LinearProgressSize,
   type LinearProgressStaticColor,
-} from '@spectrum-web-components/core/mixins/index.js';
+} from '@adobe/spectrum-wc-core/mixins/index.js';
 
 import '@adobe/spectrum-wc/components/progress-bar/swc-progress-bar.js';
 
