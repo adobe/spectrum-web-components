@@ -1,0 +1,124 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Dev mode warnings" />
+
+# Dev mode warnings
+
+Spectrum Web Components Gen2 components run extra validation checks in
+development builds of your application. When a component receives an invalid
+value, is missing a required property, has a mutually exclusive combination
+of properties set, or is missing required slot content, you'll see a warning
+printed to the browser console describing the problem and linking to the
+component's documentation.
+
+These warnings exist to catch configuration mistakes early, in your own
+development environment, rather than surfacing as a subtle visual or
+accessibility bug later.
+
+## What triggers a warning
+
+- **Invalid enum/union values**: e.g. setting `variant` to a value that
+  isn't one of the component's documented options.
+- **Missing required properties**: e.g. omitting an accessible label where
+  one is required.
+- **Missing conditionally required properties**: e.g. omitting an
+  accessible label when no label content is slotted either.
+- **Mutually exclusive or no-effect property combinations**: e.g. setting
+  two properties together where one has no effect given the other's value.
+- **Missing required slot content**: a slot that must have something
+  assigned to it is empty.
+- **Disallowed slotted children**: a slot received an element type it
+  doesn't support (e.g. a `<p>` in a slot that only accepts headings).
+
+## Only in development
+
+These checks run behind a `window.__swc.DEBUG` flag, set when
+`process.env.NODE_ENV === 'development'`, plus an internal guard in each
+validation helper that skips its own logic when
+`process.env.NODE_ENV === 'production'`. Both are literal checks this
+package ships as-is (it does not pre-strip them), so whether your production
+build actually removes them depends on **your own build configuration**
+replacing `process.env.NODE_ENV` with `'production'` and minifying.
+
+Even in a well-configured production build, this removes the internal
+validation logic (the actual checks, message building, and console output),
+not the call sites themselves: every component still invokes a cheap
+property check that immediately no-ops, on every update.
+
+**Recommended: confirm your production build actually strips what it can.**
+Most setups handle it automatically, but "automatically" depends on your
+bundler processing `node_modules`, which not every default config does:
+
+- **Webpack / Next.js**: `mode: 'production'` sets `process.env.NODE_ENV` via
+  `DefinePlugin` and minifies with Terser, both of which apply to
+  `node_modules` by default. No extra configuration needed in most setups.
+- **Vite (app builds)**: `vite build` (default mode `production`) replaces
+  `process.env.NODE_ENV` and removes the resulting dead branch during
+  minification, including inside dependencies. No extra configuration
+  needed in most setups.
+- **esbuild directly**: pass `--define:process.env.NODE_ENV='"production"'`.
+  esbuild removes statically-false branches as part of normal bundling, so
+  this alone is enough even without `--minify`.
+- **Rollup**: use [`@rollup/plugin-replace`](https://github.com/rollup/plugins/tree/master/packages/replace)
+  to replace `process.env.NODE_ENV`, paired with a minifier plugin (e.g.
+  `@rollup/plugin-terser`) so the resulting dead branch is actually removed,
+  not just replaced.
+- **No bundler at all** (a bare `<script type="module">` import): there is no
+  build step to strip anything, and `process` is not defined in the browser,
+  so the check throws a `ReferenceError` rather than silently running. Load
+  a `process` shim (e.g. a global `window.process = { env: { NODE_ENV:
+'production' } }` set before the import) if you need to support this.
+
+If your production bundle still contains the dev-mode strings (search your
+built output for `"Spectrum Web Components is in dev mode"` to check),
+nothing is broken, but you're shipping validation code, message strings, and
+the warning engine to users for no benefit. Fixing that is a build
+configuration change on your end, not something this package can guarantee
+on its own. See [Known limitations](https://github.com/adobe/spectrum-web-components/blob/main/CONTRIBUTOR-DOCS/02_style-guide/02_typescript/17_debug-validation.md#known-limitations)
+for why.
+
+## Configuring which warnings you see
+
+Each distinct warning message fires once per element type per page load, not
+once per problem occurrence; this keeps a single repeated mistake from
+flooding your console. Two different problems on the same component (even
+ones that share a warning type and severity) each get their own warning; the
+one case that's still collapsed is **multiple instances of the same
+component with the identical problem**: ten badges all set to the same
+invalid `variant` produce one console warning, not ten, from whichever badge
+updates first.
+
+If you want to see every occurrence while debugging (e.g. auditing a page
+for every instance of an issue), set:
+
+```js
+window.__swc = { ...window.__swc, verbose: true };
+```
+
+This disables the once-per-session dedup and logs every check that fails,
+every time it fails.
+
+You can silence categories of warnings from your application code before any
+components are defined:
+
+```js
+window.__swc = {
+  ...window.__swc,
+  // Silence every warning from a specific tag name.
+  ignoreWarningLocalNames: { 'swc-badge': true },
+  // Silence a warning type across all components.
+  ignoreWarningTypes: { accessibility: false, api: false },
+  // Silence a severity level across all components (e.g. hide deprecation notices).
+  ignoreWarningLevels: { deprecation: true },
+};
+```
+
+Or disable dev mode checks entirely:
+
+```js
+window.__swc = { ...window.__swc, DEBUG: false };
+```
+
+Set these before your first `<swc-*>` element is defined (e.g. before your
+component imports run), since `window.__swc` is created once, the first time
+a Spectrum Web Component initializes.

@@ -103,7 +103,11 @@ if (process.env.NODE_ENV === 'development') {
       { type = 'api', level = 'default', issues } = {}
     ): void => {
       const { localName = 'base' } = element || {};
-      const id = `${localName}:${type}:${level}` as BrandedSWCWarningID;
+      // Message is part of the dedup key so two distinct problems that share
+      // a type/level (the common case) don't suppress each other. Only a
+      // verbatim repeat of the same warning is deduplicated.
+      const id =
+        `${localName}:${type}:${level}:${message}` as BrandedSWCWarningID;
       if (!window.__swc.verbose && window.__swc.issuedWarnings.has(id)) {
         return;
       }
