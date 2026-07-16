@@ -84,7 +84,6 @@ export class Badge extends BadgeBase {
    *
    * @default neutral
    */
-  // Re-declared to ensure reflect: true is honoured on the concrete element class (inherited @property alone is insufficient in ES2022 class-field semantics).
   @property({ type: String, reflect: true })
   public override variant: BadgeVariant = 'neutral';
 
