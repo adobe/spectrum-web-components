@@ -87,6 +87,7 @@ const placementsGrid = (idPrefix: string) => html`
       tooltip(`${idPrefix}-placement-${placement}`, {
         placement,
         gridArea: placement,
+        content: placement,
       })
     )}
   </div>
