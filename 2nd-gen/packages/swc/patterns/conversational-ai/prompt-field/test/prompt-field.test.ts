@@ -472,7 +472,7 @@ export const ArtifactFocusOrderTest: Story = {
     });
 
     await step(
-      'only one tile is the roving tab stop; dismiss buttons are never a normal tab stop',
+      'only one tile is the roving tab stop; dismiss/">" are never normal tab stops',
       async () => {
         expect(artifacts[0]?.tabIndex).toBe(0);
         expect(artifacts.slice(1).every((tile) => tile.tabIndex === -1)).toBe(
@@ -481,6 +481,9 @@ export const ArtifactFocusOrderTest: Story = {
         expect(
           artifacts.every((tile) => getDismissButton(tile)?.tabIndex === -1)
         ).toBe(true);
+        // ">" is excludeFromTabOrder per spec: reachable only via the Close
+        // button's explicit Tab intercept below, never via native Tab.
+        expect(getNextButton()?.tabIndex).toBe(-1);
       }
     );
 

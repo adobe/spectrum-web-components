@@ -1096,6 +1096,7 @@ export class PromptField extends SpectrumElement {
                 <button
                   type="button"
                   class="swc-PromptField-artifacts-scroll-next"
+                  tabindex="-1"
                   aria-label=${this.artifactScrollNextLabel}
                   @click=${() => this._scrollArtifactsByPage(1)}
                 >

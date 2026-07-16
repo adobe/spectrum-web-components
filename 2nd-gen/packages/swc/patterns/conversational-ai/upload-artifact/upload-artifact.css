@@ -69,7 +69,12 @@
 
 .swc-UploadArtifact-dismiss:focus-visible {
   outline: 2px solid #4b4efc;
-  outline-offset: -2px;
+
+  /* -4px, not -2px: the media dismiss button's own hit-box overhangs the
+   * tile by 2px (inset-block-start/inline-end: calc(spacing-75 4px - 6px) =
+   * -2px), so a -2px ring landed exactly on the tile's true edge with zero
+   * buffer against the strip's overflow clipping. -4px gives it real margin. */
+  outline-offset: -4px;
 }
 
 :host([type="card"]) .swc-UploadArtifact-dismiss {
