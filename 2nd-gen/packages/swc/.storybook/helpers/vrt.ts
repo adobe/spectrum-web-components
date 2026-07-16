@@ -134,7 +134,7 @@ export const row = (children: unknown, label?: string) =>
         >
           <span class="swc-Detail swc-Detail--sizeM">${label}</span>
           <div
-            style="display: flex; flex-wrap: wrap; gap: 16px; align-items: center;"
+            style="display: flex; flex-wrap: wrap; gap: var(--swc-spacing-400); align-items: center;"
           >
             ${children}
           </div>
@@ -142,7 +142,7 @@ export const row = (children: unknown, label?: string) =>
       `
     : html`
         <div
-          style="display: flex; flex-wrap: wrap; gap: 16px; align-items: center;"
+          style="display: flex; flex-wrap: wrap; gap: var(--swc-spacing-400); align-items: center;"
         >
           ${children}
         </div>
