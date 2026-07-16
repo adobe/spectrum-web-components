@@ -598,6 +598,13 @@ export const ArtifactFocusOrderTest: Story = {
     await step(
       'Shift+Tab from the ">" button focuses the last fully-visible tile',
       async () => {
+        // Force a known, deterministic scroll position rather than relying on
+        // wherever the previous step's "first fully-visible tile" landed
+        // (that position is layout-dependent and varies across browsers).
+        scrollEl?.scrollTo({ left: 0, behavior: 'auto' });
+        await waitForScrollEnd(scrollEl);
+        await el.updateComplete;
+
         const nextButton = getNextButton();
         expect(nextButton).toBeTruthy();
         nextButton?.focus();
