@@ -111,13 +111,6 @@ const basicSlots = html`
   <span slot="description">Supporting description text.</span>
 `;
 
-const withActionsSlots = html`
-  ${previewImage}
-  <span slot="title">Card title</span>
-  <span slot="description">Supporting description text.</span>
-  <swc-action-button slot="actions" quiet>Edit</swc-action-button>
-`;
-
 // ────────────────────
 //    PLAYGROUND STORY
 // ────────────────────
@@ -127,8 +120,20 @@ export const Playground: Story = {
     variant: 'primary',
     density: 'regular',
     size: 'm',
+    'preview-slot': '<img src="/images/card-preview.jpg" alt="" />',
+    'title-slot': 'Card title',
+    'description-slot': 'Supporting description text.',
+    'actions-slot': `<swc-action-button quiet accessible-label="More actions"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true"
+      viewBox="0 0 18 18" slot="icon">
+      <circle cx="10" cy="10" r="1.5" />
+      <path d="M10 8.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3" />
+      <circle cx="4" cy="10" r="1.5" />
+      <circle cx="4" cy="10" r="1.5" />
+      <circle cx="16" cy="10" r="1.5" />
+      <circle cx="16" cy="10" r="1.5" />
+    </svg></swc-action-button>`,
   },
-  render: (args) => template(args, withActionsSlots),
+  render: (args) => template(args),
   tags: ['autodocs', 'dev'],
 };
 
@@ -153,7 +158,21 @@ export const Anatomy: Story = {
         ${previewImage}
         <span slot="title">Full anatomy</span>
         <p slot="description">Supporting description text.</p>
-        <swc-action-button slot="actions" quiet>Edit</swc-action-button>
+        <swc-action-button slot="actions" quiet accessible-label="More actions">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+            viewBox="0 0 20 20"
+            slot="icon"
+          >
+            <circle cx="10" cy="10" r="1.5" />
+            <path d="M10 8.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3" />
+            <circle cx="4" cy="10" r="1.5" />
+            <circle cx="4" cy="10" r="1.5" />
+            <circle cx="16" cy="10" r="1.5" />
+            <circle cx="16" cy="10" r="1.5" />
+          </svg>
+        </swc-action-button>
         <swc-status-light slot="footer" variant="positive" size="s">
           Published
         </swc-status-light>
@@ -233,7 +252,21 @@ export const TitleAsLink: Story = {
         <span slot="description">
           Clicking anywhere on the card activates this link.
         </span>
-        <swc-action-button slot="actions" quiet>Edit</swc-action-button>
+        <swc-action-button slot="actions" quiet accessible-label="More actions">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+            viewBox="0 0 20 20"
+            slot="icon"
+          >
+            <circle cx="10" cy="10" r="1.5" />
+            <path d="M10 8.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3" />
+            <circle cx="4" cy="10" r="1.5" />
+            <circle cx="4" cy="10" r="1.5" />
+            <circle cx="16" cy="10" r="1.5" />
+            <circle cx="16" cy="10" r="1.5" />
+          </svg>
+        </swc-action-button>
       `
     )}
   `,

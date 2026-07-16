@@ -42,7 +42,6 @@
   --_card-outline-width: var(--card-outline-width, 0px);
   --_card-box-shadow: var(--card-box-shadow, token("drop-shadow-emphasized"));
   --_card-title-font-size: var(--card-title-font-size, token("font-size-200"));
-  --_card-title-font-weight: token("title-sans-serif-font-weight");
   --_card-title-line-height: var(--card-title-line-height, token("line-height-font-size-300"));
   --_card-description-font-size: var(--card-description-font-size, token("font-size-75"));
   --_card-action-component-height: var(--card-action-component-height, token("component-height-75"));
@@ -58,7 +57,6 @@
   grid-template-rows: auto auto 1fr auto;
   align-items: start;
   font-size: var(--_card-title-font-size);
-  font-weight: var(--_card-title-font-weight);
   line-height: var(--_card-title-line-height);
   color: token("neutral-content-color-default");
   background-color: var(--card-background-color, token("background-layer-2-color"));
@@ -143,7 +141,7 @@
 
 ::slotted([slot="title"]:not([class])) {
   font-size: var(--_card-title-font-size) !important;
-  font-weight: var(--_card-title-font-weight) !important;
+  font-weight: token("title-sans-serif-font-weight") !important;
   line-height: var(--_card-title-line-height) !important;
 }
 
@@ -151,6 +149,7 @@
   grid-area: description;
 }
 
+::slotted([slot="actions"]),
 ::slotted([slot="description"]:not([class])),
 ::slotted(:not([slot], [class])),
 ::slotted([slot="footer"]) {
@@ -166,7 +165,14 @@
 ::slotted([slot="actions"]) {
   grid-area: actions;
   justify-self: end;
-  margin-block: calc(((var(--_card-action-component-height) - 1lh) / 2) * -1);
+}
+
+::slotted([slot="actions"]:not(swc-action-button)) {
+  margin-block-start: calc((var(--_card-title-line-height) - 1lh) / 2);
+}
+
+::slotted(swc-action-button[slot="actions"]) {
+  margin-block: calc(((var(--_card-action-component-height) - var(--_card-title-line-height)) / 2) * -1);
 }
 
 ::slotted(:not([slot])) {
