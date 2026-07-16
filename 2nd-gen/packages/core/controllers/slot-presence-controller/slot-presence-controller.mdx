@@ -1,0 +1,83 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import { DocsFooter, DocsHeader } from '../../../swc/.storybook/blocks';
+
+import * as Stories from './stories/slot-presence-controller.stories';
+
+<Meta of={Stories} />
+
+<DocsHeader />
+
+## Usage
+
+`SlotPresenceController` observes whether slotted content matching one or more CSS selectors is present in the host's light DOM. Components use it to gate shadow-DOM markup — an icon container, an actions group — on whether a consumer actually provided that content, so empty wrappers are never rendered.
+
+It replaces the `ObserveSlotPresence` mixin. A reactive controller composes onto the host without deepening the prototype chain, so a component no longer pays a mixin layer for this one concern.
+
+```typescript
+import { LitElement, html, nothing } from 'lit';
+import { SlotPresenceController } from '@adobe/spectrum-wc-core/controllers/slot-presence-controller';
+
+class SwcThing extends LitElement {
+  private readonly slotPresence = new SlotPresenceController(
+    this,
+    '[slot="icon"]'
+  );
+
+  get hasIcon(): boolean {
+    return this.slotPresence.isPresent;
+  }
+
+  render() {
+    return html`
+      ${this.hasIcon
+        ? html`
+            <span class="icon"><slot name="icon"></slot></span>
+          `
+        : nothing}
+      <slot></slot>
+    `;
+  }
+}
+```
+
+A `MutationObserver` watches the host's subtree for `childList` changes, so presence stays current as slotted elements are added or removed. Unlike [Slot text controller](../?path=/docs/controllers-slot-text-controller--docs), no `@slotchange` binding is required.
+
+## Behaviors
+
+### Single selector
+
+Constructed with one selector, the controller exposes `isPresent`. Presence is evaluated against direct light-DOM children (`:scope > selector`), so only content the consumer slots into the host counts. Adding or removing a matching child re-renders the host.
+
+<Canvas of={Stories.IconPresent} />
+
+### Multiple selectors
+
+Constructed with an array of selectors, each is tracked independently and read through `getPresence(selector)`. `isPresent` throws in this mode — it is only valid for a single selector. This is how a component can conditionally render several slots (for example a `label` and a `description`) from one controller.
+
+<Canvas of={Stories.MultipleSelectors} />
+
+## Accessibility
+
+The controller has no direct accessibility surface: it only reports slot presence. Accessibility depends on how the host uses that signal — for example, an icon-only control still needs an accessible name because the presence controller does not supply one.
+
+### Best practices
+
+- Gate purely presentational wrappers (icon boxes, decorative containers) on presence so assistive technology is not exposed to empty structure.
+- When presence drives an icon-only presentation, pair it with a text-content check (see [Slot text controller](../?path=/docs/controllers-slot-text-controller--docs)) and require an accessible label.
+
+<Canvas of={Stories.Accessibility} />
+
+## API
+
+### Constructor
+
+`new SlotPresenceController(host, selectors)` — registers the controller on the host. `selectors` is a single CSS selector string or an array of them.
+
+### Members
+
+| Member                  | Description                                                                                                                                                   |
+| ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `isPresent`             | Read-only. `true` when the single observed selector matches a direct child. Throws if the controller observes multiple selectors — use `getPresence` instead. |
+| `getPresence(selector)` | Returns whether the given observed selector matches a direct child. Throws if `selector` is not one of the observed selectors.                                |
+
+<DocsFooter />
