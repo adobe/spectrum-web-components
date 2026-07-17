@@ -27,6 +27,7 @@ import {
   type CardDensity,
   type CardSize,
   type CardVariant,
+  SWC_CARD_CLICK_EVENT,
 } from './Card.types.js';
 
 /**
@@ -335,7 +336,7 @@ export abstract class CardBase extends SizedMixin(SpectrumElement, {
     }
     if (this.selectable) {
       this.dispatchEvent(
-        new Event('swc-card-click', { bubbles: true, composed: true })
+        new Event(SWC_CARD_CLICK_EVENT, { bubbles: true, composed: true })
       );
     }
   };

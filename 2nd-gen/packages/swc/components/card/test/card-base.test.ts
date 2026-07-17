@@ -17,6 +17,7 @@ import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import {
   CARD_DENSITIES,
   CARD_VARIANTS,
+  SWC_CARD_CLICK_EVENT,
 } from '@spectrum-web-components/core/components/card/index.js';
 
 import './test-card-base.js';
@@ -422,19 +423,23 @@ export const SelectableActivationTest: Story = {
       'test-card-base'
     );
     let dispatched = false;
-    card.addEventListener('swc-card-click', () => {
+    card.addEventListener(SWC_CARD_CLICK_EVENT, () => {
       dispatched = true;
     });
 
-    await step('dispatches swc-card-click for a surface click', async () => {
-      dispatched = false;
-      card.click();
-      expect(dispatched, 'swc-card-click dispatched for a surface click').toBe(
-        true
-      );
-    });
+    await step(
+      `dispatches ${SWC_CARD_CLICK_EVENT} for a surface click`,
+      async () => {
+        dispatched = false;
+        card.click();
+        expect(
+          dispatched,
+          `${SWC_CARD_CLICK_EVENT} dispatched for a surface click`
+        ).toBe(true);
+      }
+    );
 
-    await step('dispatches swc-card-click on Enter', async () => {
+    await step(`dispatches ${SWC_CARD_CLICK_EVENT} on Enter`, async () => {
       dispatched = false;
       card.dispatchEvent(
         new KeyboardEvent('keydown', {
@@ -443,12 +448,13 @@ export const SelectableActivationTest: Story = {
           composed: true,
         })
       );
-      expect(dispatched, 'swc-card-click dispatched on Enter keydown').toBe(
-        true
-      );
+      expect(
+        dispatched,
+        `${SWC_CARD_CLICK_EVENT} dispatched on Enter keydown`
+      ).toBe(true);
     });
 
-    await step('dispatches swc-card-click on Space', async () => {
+    await step(`dispatches ${SWC_CARD_CLICK_EVENT} on Space`, async () => {
       dispatched = false;
       card.dispatchEvent(
         new KeyboardEvent('keydown', {
@@ -457,9 +463,10 @@ export const SelectableActivationTest: Story = {
           composed: true,
         })
       );
-      expect(dispatched, 'swc-card-click dispatched on Space keydown').toBe(
-        true
-      );
+      expect(
+        dispatched,
+        `${SWC_CARD_CLICK_EVENT} dispatched on Space keydown`
+      ).toBe(true);
     });
   },
 };
@@ -474,12 +481,12 @@ export const InteractiveTargetFilteringTest: Story = {
       'test-card-base'
     );
     let dispatched = false;
-    card.addEventListener('swc-card-click', () => {
+    card.addEventListener(SWC_CARD_CLICK_EVENT, () => {
       dispatched = true;
     });
 
     await step(
-      'does not dispatch swc-card-click for a click inside actions',
+      `does not dispatch ${SWC_CARD_CLICK_EVENT} for a click inside actions`,
       async () => {
         dispatched = false;
         const button = document.createElement('button');
@@ -493,7 +500,7 @@ export const InteractiveTargetFilteringTest: Story = {
 
         expect(
           dispatched,
-          'swc-card-click did not fire for an actions click'
+          `${SWC_CARD_CLICK_EVENT} did not fire for an actions click`
         ).toBe(false);
         card.removeChild(button);
       }
@@ -520,7 +527,7 @@ export const InteractiveTargetFilteringTest: Story = {
     );
 
     await step(
-      'dispatches swc-card-click for a non-interactive click outside actions',
+      `dispatches ${SWC_CARD_CLICK_EVENT} for a non-interactive click outside actions`,
       async () => {
         dispatched = false;
         const span = document.createElement('span');
@@ -533,7 +540,7 @@ export const InteractiveTargetFilteringTest: Story = {
 
         expect(
           dispatched,
-          'swc-card-click fires for a non-interactive click outside actions'
+          `${SWC_CARD_CLICK_EVENT} fires for a non-interactive click outside actions`
         ).toBe(true);
         card.removeChild(span);
       }
@@ -623,12 +630,12 @@ export const TextSelectionFilteringTest: Story = {
       '[slot="description"]'
     ) as HTMLElement;
     let dispatched = false;
-    card.addEventListener('swc-card-click', () => {
+    card.addEventListener(SWC_CARD_CLICK_EVENT, () => {
       dispatched = true;
     });
 
     await step(
-      'does not dispatch swc-card-click when a text selection is active',
+      `does not dispatch ${SWC_CARD_CLICK_EVENT} when a text selection is active`,
       async () => {
         dispatched = false;
         const range = document.createRange();
@@ -641,7 +648,7 @@ export const TextSelectionFilteringTest: Story = {
 
         expect(
           dispatched,
-          'swc-card-click does not fire while a text selection is active'
+          `${SWC_CARD_CLICK_EVENT} does not fire while a text selection is active`
         ).toBe(false);
 
         selection?.removeAllRanges();
@@ -649,7 +656,7 @@ export const TextSelectionFilteringTest: Story = {
     );
 
     await step(
-      'dispatches swc-card-click normally once the selection is cleared',
+      `dispatches ${SWC_CARD_CLICK_EVENT} normally once the selection is cleared`,
       async () => {
         dispatched = false;
         window.getSelection()?.removeAllRanges();
@@ -658,7 +665,7 @@ export const TextSelectionFilteringTest: Story = {
 
         expect(
           dispatched,
-          'swc-card-click fires again once no selection is active'
+          `${SWC_CARD_CLICK_EVENT} fires again once no selection is active`
         ).toBe(true);
       }
     );
