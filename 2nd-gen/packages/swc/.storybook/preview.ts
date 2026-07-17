@@ -336,7 +336,6 @@ const preview = {
               [
                 'Accordion',
                 ['Accessibility migration analysis', 'Migration plan'],
-                'Action bar',
                 'Action button',
                 [
                   'Accessibility migration analysis',
@@ -537,7 +536,11 @@ const preview = {
               ],
               'Milestones',
               'Strategies',
-              ['Focus management strategy rfc'],
+              [
+                'Focus management strategy rfc',
+                'Research versioning automation',
+                'Versioning badge proposal',
+              ],
             ],
           ],
           // GENERATED:CONTRIBUTOR-DOCS-SORT-END

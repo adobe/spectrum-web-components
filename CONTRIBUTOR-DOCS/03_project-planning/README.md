@@ -81,6 +81,8 @@
 - [Milestones](04_milestones/README.md)
 - Strategies
     - [Focus Management Strategy: 2nd-Gen Proposal](05_strategies/focus-management-strategy-rfc.md)
+    - [Versioning automation and the `@since` badge](05_strategies/research-versioning-automation.md)
+    - [Proposal: automate the "Since X" version badge on 2nd-gen components](05_strategies/versioning-badge-proposal.md)
 
 </details>
 

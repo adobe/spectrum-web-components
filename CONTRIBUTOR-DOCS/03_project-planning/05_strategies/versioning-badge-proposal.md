@@ -1,4 +1,25 @@
+<!-- Generated breadcrumbs - DO NOT EDIT -->
+
+[CONTRIBUTOR-DOCS](../../README.md) / [Project planning](../README.md) / Strategies / Proposal: automate the "Since X" version badge on 2nd-gen components
+
+<!-- Document title (editable) -->
+
 # Proposal: automate the "Since X" version badge on 2nd-gen components
+
+<!-- Generated TOC - DO NOT EDIT -->
+
+<details open>
+<summary><strong>In this doc</strong></summary>
+
+- [Problem](#problem)
+- [Proposal: stamp `@since` on first release](#proposal-stamp-since-on-first-release)
+    - [Assumptions in the example](#assumptions-in-the-example)
+- [Working example (already built + verified)](#working-example-already-built--verified)
+- [What I'd like feedback on](#what-id-like-feedback-on)
+
+</details>
+
+<!-- Document content (editable) -->
 
 **Status:** proposal + working example, for feedback. Not merge-ready.
 **Deep dive:** see `research-versioning-automation.md` for the full analysis.

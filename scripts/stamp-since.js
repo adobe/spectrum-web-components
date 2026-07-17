@@ -14,7 +14,8 @@
 
 /**
  * Prototype for the versioning-automation proposal (PR #2). Not yet wired into the
- * release flow. See ../research-versioning-automation.md.
+ * release flow. See
+ * CONTRIBUTOR-DOCS/03_project-planning/05_strategies/research-versioning-automation.md.
  *
  * Keeps the "Since X" component badge automatic and semantically correct.
  *

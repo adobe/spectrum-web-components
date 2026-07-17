@@ -1,4 +1,27 @@
+<!-- Generated breadcrumbs - DO NOT EDIT -->
+
+[CONTRIBUTOR-DOCS](../../README.md) / [Project planning](../README.md) / Strategies / Versioning automation and the `@since` badge
+
+<!-- Document title (editable) -->
+
 # Versioning automation and the `@since` badge
+
+<!-- Generated TOC - DO NOT EDIT -->
+
+<details open>
+<summary><strong>In this doc</strong></summary>
+
+- [The two models at a glance](#the-two-models-at-a-glance)
+- [How the badge works, and why it drifts](#how-the-badge-works-and-why-it-drifts)
+- [Constraint: the docs build from `main`](#constraint-the-docs-build-from-main)
+- [Proposal: stamp `@since` on first release](#proposal-stamp-since-on-first-release)
+- [The version source, and eventual parity](#the-version-source-and-eventual-parity)
+- [Prototype (PR #2)](#prototype-pr-2)
+- [Current direction and open questions](#current-direction-and-open-questions)
+
+</details>
+
+<!-- Document content (editable) -->
 
 How the 2nd-gen prerelease version is produced, how it drives the "Since X" docs badge, and how
 to make the badge automatic (PR #2).
