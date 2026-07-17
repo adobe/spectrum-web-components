@@ -26,14 +26,6 @@ import {
 } from './ProgressCircle.types.js';
 
 /**
- * @todo SWC-2037 Extract shared progress logic (ARIA, label, clamping, formatting,
- * indeterminate derivation) into a `ProgressBase` mixin or abstract class in
- * `core/components/progress/` so that both `ProgressCircleBase` and a future
- * `ProgressBarBase` can extend it. Also add `formatOptions` support for
- * progress-bar's custom value labels (e.g. "3 of 10", "45 MB / 100 MB").
- */
-
-/**
  * A progress circle component that visually represents the completion progress of a task.
  * Can be used in both determinate (with specific progress value) and indeterminate (loading) states.
  *
