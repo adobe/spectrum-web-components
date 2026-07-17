@@ -353,7 +353,19 @@
 }
 
 :host([selectable][variant="quiet"]:focus-visible) .swc-CardBase-media {
+  position: relative;
   outline: var(--_swc-card-base-selected-focus-outline);
+
+  &::after {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    border-radius: var(--_swc-card-base-border-radius);
+    pointer-events: none;
+    outline: token("focus-indicator-thickness") solid token("transparent-white-600");
+    outline-offset: calc(token("focus-indicator-thickness") * -1);
+    content: "";
+  }
 }
 
 /* ─────────────────────────────────────────────────────────────────────────────
