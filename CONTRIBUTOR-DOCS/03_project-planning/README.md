@@ -82,8 +82,6 @@
 - [Milestones](04_milestones/README.md)
 - Strategies
     - [Focus Management Strategy: 2nd-Gen Proposal](05_strategies/focus-management-strategy-rfc.md)
-- Decisions
-    - [ADR 0001: Dual-generation release workflows](decisions/0001-dual-generation-release-workflows.md)
 
 </details>
 

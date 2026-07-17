@@ -335,7 +335,6 @@ const preview = {
               'Components',
               'Milestones',
               'Strategies',
-              'Decisions',
             ],
           ],
           // GENERATED:CONTRIBUTOR-DOCS-SORT-END
