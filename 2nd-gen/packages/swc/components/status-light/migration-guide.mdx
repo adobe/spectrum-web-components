@@ -26,7 +26,7 @@ import '@spectrum-web-components/status-light/sp-status-light.js';
 import '@adobe/spectrum-wc/components/status-light/swc-status-light.js';
 ```
 
-> `@adobe/spectrum-wc` is a monolithic package. Importing via subpath (e.g. `@adobe/spectrum-wc/components/status-light/swc-status-light.js`) registers and loads only that component's bundle.
+> `@adobe/spectrum-wc` is a monolithic package. Importing via subpath (e.g., `@adobe/spectrum-wc/components/status-light/swc-status-light.js`) registers and loads only that component's bundle.
 
 ## What changed
 
@@ -89,9 +89,9 @@ The `accent` semantic variant is not part of the Spectrum 2 specification. Subst
 ## Accessibility
 
 - `<swc-status-light>` is a non-interactive, presentational component. Do not add event listeners or `tabindex` to it.
-- Status is conveyed by the indicator dot color. Always pair it with a visible text label so the meaning is not lost for users who cannot perceive color (WCAG 1.4.1).
-- The text content of the element provides the accessible name. Keep labels short and descriptive (e.g. "Approved", "Pending review").
-- Do not rely on variant color alone to communicate critical state — supplement with an icon or additional context when needed.
+- Status is conveyed by the indicator dot color. Always pair it with a visible text label so the meaning is not lost for users who cannot perceive color ([WCAG 1.4.1](https://www.w3.org/WAI/WCAG22/Understanding/use-of-color.html)).
+- The text content of the element provides the accessible name. Keep labels short and descriptive (e.g., "Approved", "Pending review").
+- Do not rely on variant color alone to communicate critical state ([WCAG 1.4.1](https://www.w3.org/WAI/WCAG22/Understanding/use-of-color.html)). Supplement with an icon or additional context when needed.
 
 ## Styling
 

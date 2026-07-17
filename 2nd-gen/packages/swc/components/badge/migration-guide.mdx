@@ -26,7 +26,7 @@ import '@spectrum-web-components/badge/sp-badge.js';
 import '@adobe/spectrum-wc/components/badge/swc-badge.js';
 ```
 
-> `@adobe/spectrum-wc` is a monolithic package. Importing via subpath (e.g. `@adobe/spectrum-wc/components/badge/swc-badge.js`) registers and loads only that component's bundle.
+> `@adobe/spectrum-wc` is a monolithic package. Importing via subpath (e.g., `@adobe/spectrum-wc/components/badge/swc-badge.js`) registers and loads only that component's bundle.
 
 ## What changed
 
@@ -53,7 +53,7 @@ import '@adobe/spectrum-wc/components/badge/swc-badge.js';
 
 | Removed                                                                           | Replacement                                                                                                                                                                                                                                          |
 | --------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `--mod-badge-*` custom properties (e.g. `--mod-badge-background-color-positive`)  | `--swc-badge-*` for semantic variants only — semantic per-variant overrides collapse into one `--swc-badge-background-color`. Non-semantic variants (`gray`, `red`, `seafoam`, etc.) no longer expose per-color overrides; retoken globally instead. |
+| `--mod-badge-*` custom properties (e.g., `--mod-badge-background-color-positive`) | `--swc-badge-*` for semantic variants only — semantic per-variant overrides collapse into one `--swc-badge-background-color`. Non-semantic variants (`gray`, `red`, `seafoam`, etc.) no longer expose per-color overrides; retoken globally instead. |
 | `--highcontrast-badge-border-color`                                               | No 1:1 replacement — Spectrum 2 badge has no forced-colors override hook                                                                                                                                                                             |
 | Top-level exports `BADGE_VARIANTS`, `FIXED_VALUES`, `BadgeVariant`, `FixedValues` | Use `Badge.VARIANTS`, `Badge.FIXED_VALUES`, or `typeof Badge.prototype.variant`                                                                                                                                                                      |
 
