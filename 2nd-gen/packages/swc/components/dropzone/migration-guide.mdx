@@ -45,10 +45,11 @@ If your code only ever set `dropzone.isFilled = true` in JavaScript (never `setA
 
 ### Added in Spectrum 2
 
-| Addition              | Notes                                                                                                                                                              |
-| --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `size` attribute      | `'s' \| 'm' \| 'l'`, default `'m'`. Scales the container and a slotted `swc-illustrated-message`'s illustration.                                                   |
-| `filled-content` slot | Dedicated slot for uploaded-state content, shown automatically when `filled` is `true`. See [step 4](#4-move-uploaded-state-content-into-the-filled-content-slot). |
+| Addition                           | Notes                                                                                                                                                                                                                                             |
+| ---------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `size` attribute                   | `'s' \| 'm' \| 'l'`, default `'m'`. Scales the container and a slotted `swc-illustrated-message`'s illustration.                                                                                                                                  |
+| `filled-content` slot              | Dedicated slot for uploaded-state content, shown automatically when `filled` is `true`. See [step 4](#4-move-uploaded-state-content-into-the-filled-content-slot).                                                                                |
+| `drop-effect` attribute reactivity | `dropEffect` was JavaScript-property-only in Spectrum 1 and silently ignored invalid values. In Spectrum 2 it reacts to the `drop-effect` attribute at parse time and at runtime, and logs a development-mode console warning for invalid values. |
 
 ### Removed in Spectrum 2
 
@@ -266,15 +267,13 @@ Spectrum 2 exposes a small set of public CSS custom properties on `<swc-dropzone
   property has a 1:1 replacement, so read the list below carefully.
 </div>
 
-{/* @todo Replace the Description column with the `@cssproperty` JSDoc descriptions from `<swc-dropzone>`'s CEM entry once they are added in a follow-up PR. */}
-
-| Custom property                                | Description                                                           |
-| ---------------------------------------------- | --------------------------------------------------------------------- |
-| `--swc-dropzone-background-color`              | Background color of the drop zone.                                    |
-| `--swc-dropzone-border-color`                  | Border color of the drop zone.                                        |
-| `--swc-dropzone-border-style`                  | Border style of the drop zone.                                        |
-| `--swc-dropzone-padding`                       | Padding inside the drop zone.                                         |
-| `--swc-illustrated-message-illustration-color` | Illustration color cascaded into a slotted `swc-illustrated-message`. |
+| Custom property                                | Description                                                                                                                                               |
+| ---------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `--swc-dropzone-background-color`              | Background color of the drop zone. Defaults to transparent; overridden to a subtle accent tint in the dragged state.                                      |
+| `--swc-dropzone-border-color`                  | Border color. Defaults to the gray-300 token in the default state; overridden to the accent visual color in the dragged and focus-within states.          |
+| `--swc-dropzone-border-style`                  | Border style. Defaults to dashed; overridden to solid in the dragged and focus-within states.                                                             |
+| `--swc-dropzone-padding`                       | Padding inside the drop zone. Defaults vary by size: spacing-300 (s), spacing-400 (m), spacing-600 (l).                                                   |
+| `--swc-illustrated-message-illustration-color` | Illustration color cascaded into a slotted `swc-illustrated-message`. Unset by default; overridden to the accent-visual-color token in the dragged state. |
 
 None of the other ~30 `--mod-drop-zone-*` / `--mod-illustrated-message-*` properties have a replacement above; retoken or remove them. CJK-specific font-size overrides (e.g. `--mod-illustrated-message-title-font-size` under `:lang(ja|ko|zh)`) need no replacement: `swc-illustrated-message` now applies CJK sizing automatically.
 
