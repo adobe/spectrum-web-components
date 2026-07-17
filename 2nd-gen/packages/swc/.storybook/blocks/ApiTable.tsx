@@ -205,7 +205,7 @@ function PropertiesTable({
                         {prop.reflects && (
                           <small
                             className="swc-Detail swc-Detail--sizeS"
-                            style={{ opacity: '0.8', marginLeft: 4 }}
+                            style={{ marginLeft: 4 }}
                           >
                             (reflects)
                           </small>
