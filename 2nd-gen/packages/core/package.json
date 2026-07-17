@@ -1,5 +1,5 @@
 {
-  "name": "@spectrum-web-components/core",
+  "name": "@adobe/spectrum-wc-core",
   "version": "0.3.0",
   "description": "Abstract base classes for Spectrum Web Components",
   "license": "Apache-2.0",
@@ -95,6 +95,10 @@
       "types": "./dist/components/popover/index.d.ts",
       "import": "./dist/components/popover/index.js"
     },
+    "./components/progress-bar": {
+      "types": "./dist/components/progress-bar/index.d.ts",
+      "import": "./dist/components/progress-bar/index.js"
+    },
     "./components/progress-circle": {
       "types": "./dist/components/progress-circle/index.d.ts",
       "import": "./dist/components/progress-circle/index.js"
@@ -147,6 +151,14 @@
       "types": "./dist/controllers/live-selection-controller/index.d.ts",
       "import": "./dist/controllers/live-selection-controller/index.js"
     },
+    "./controllers/pending-controller": {
+      "types": "./dist/controllers/pending-controller/index.d.ts",
+      "import": "./dist/controllers/pending-controller/index.js"
+    },
+    "./controllers/pending-controller/index.js": {
+      "types": "./dist/controllers/pending-controller/index.d.ts",
+      "import": "./dist/controllers/pending-controller/index.js"
+    },
     "./controllers/placement-controller": {
       "types": "./dist/controllers/placement-controller/index.d.ts",
       "import": "./dist/controllers/placement-controller/index.js"
@@ -154,6 +166,22 @@
     "./controllers/placement-controller/index.js": {
       "types": "./dist/controllers/placement-controller/index.d.ts",
       "import": "./dist/controllers/placement-controller/index.js"
+    },
+    "./directives": {
+      "types": "./dist/directives/index.d.ts",
+      "import": "./dist/directives/index.js"
+    },
+    "./directives/index.js": {
+      "types": "./dist/directives/index.d.ts",
+      "import": "./dist/directives/index.js"
+    },
+    "./directives/pending-spinner": {
+      "types": "./dist/directives/pending-spinner/index.d.ts",
+      "import": "./dist/directives/pending-spinner/index.js"
+    },
+    "./directives/pending-spinner/index.js": {
+      "types": "./dist/directives/pending-spinner/index.d.ts",
+      "import": "./dist/directives/pending-spinner/index.js"
     },
     "./element": {
       "types": "./dist/element/index.d.ts",
@@ -287,6 +315,9 @@
       "components/meter": [
         "dist/components/meter/index.d.ts"
       ],
+      "components/progress-bar": [
+        "dist/components/progress-bar/index.d.ts"
+      ],
       "components/progress-circle": [
         "dist/components/progress-circle/index.d.ts"
       ],
@@ -326,11 +357,29 @@
       "controllers/live-selection-controller/index.js": [
         "dist/controllers/live-selection-controller/index.d.ts"
       ],
+      "controllers/pending-controller": [
+        "dist/controllers/pending-controller/index.d.ts"
+      ],
+      "controllers/pending-controller/index.js": [
+        "dist/controllers/pending-controller/index.d.ts"
+      ],
       "controllers/placement-controller": [
         "dist/controllers/placement-controller/index.d.ts"
       ],
       "controllers/placement-controller/index.js": [
         "dist/controllers/placement-controller/index.d.ts"
+      ],
+      "directives": [
+        "dist/directives/index.d.ts"
+      ],
+      "directives/index.js": [
+        "dist/directives/index.d.ts"
+      ],
+      "directives/pending-spinner": [
+        "dist/directives/pending-spinner/index.d.ts"
+      ],
+      "directives/pending-spinner/index.js": [
+        "dist/directives/pending-spinner/index.d.ts"
       ],
       "element": [
         "dist/element/index.d.ts"

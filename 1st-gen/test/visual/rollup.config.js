@@ -12,7 +12,6 @@
 import { rollupPluginHTML as html } from '@web/rollup-plugin-html';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
 import { copy } from '@web/rollup-plugin-copy';
-import alias from '@rollup/plugin-alias';
 import replace from '@rollup/plugin-replace';
 import path from 'path';
 
@@ -23,17 +22,6 @@ export default {
   plugins: [
     nodeResolve({
       exportConditions: ['browser', 'production'],
-    }),
-    alias({
-      entries: [
-        {
-          find: /^@spectrum-web-components\/core\/(.*)$/,
-          replacement: path.resolve(
-            process.cwd(),
-            '../2nd-gen/packages/core/dist/$1'
-          ),
-        },
-      ],
     }),
     replace({
       'process.env.NODE_ENV': JSON.stringify('production'),

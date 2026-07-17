@@ -13,7 +13,7 @@
 import { html } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
-import type { LiveSelectionMode } from '@spectrum-web-components/core/controllers/index.js';
+import type { LiveSelectionMode } from '@adobe/spectrum-wc-core/controllers/index.js';
 
 import './demo-hosts.js';
 

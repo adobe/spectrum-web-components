@@ -22,9 +22,8 @@ import {
   type ButtonFillStyle,
   type ButtonStaticColor,
   type ButtonVariant,
-} from '@spectrum-web-components/core/components/button';
-
-import { renderPendingSpinner } from './pending-spinner.js';
+} from '@adobe/spectrum-wc-core/components/button';
+import { PendingMixin } from '@adobe/spectrum-wc-core/mixins';
 
 import pendingSpinnerStyles from '../../stylesheets/_lit-styles/pending-spinner.css';
 import styles from './button.css';
@@ -73,7 +72,7 @@ import baseStyles from './button-base.css';
  * @example
  * <swc-button variant="secondary" fill-style="outline">Cancel</swc-button>
  */
-export class Button extends ButtonBase {
+export class Button extends PendingMixin(ButtonBase) {
   // ───────────────────
   //     API ADDITIONS
   // ───────────────────
@@ -148,7 +147,7 @@ export class Button extends ButtonBase {
         <span class="swc-Button-label">
           <slot></slot>
         </span>
-        ${renderPendingSpinner(this.pending, this.pendingActive)}
+        ${this.renderPendingState()}
       </button>
     `;
   }

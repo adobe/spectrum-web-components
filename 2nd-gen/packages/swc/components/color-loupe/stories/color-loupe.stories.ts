@@ -47,7 +47,7 @@ const meta: Meta = {
       'min-block-size': '120px',
     },
     // TODO: add a Stackblitz link for swc-color-loupe once a release syncs
-    // @adobe/spectrum-wc and @spectrum-web-components/core; the published
+    // @adobe/spectrum-wc and @adobe/spectrum-wc-core; the published
     // core@0.3.0 exports map is missing ./components/color-loupe (and
     // ./components/color-handle) even though @adobe/spectrum-wc@0.3.0's
     // compiled output imports from it, so no demo can resolve the import
@@ -219,6 +219,30 @@ export const ParentDrivenVisibility: Story = {
   },
 };
 ParentDrivenVisibility.storyName = 'Parent-driven visibility';
+
+export const AdaptiveContrast: Story = {
+  render: (args) => html`
+    ${labeledLoupe('White', {
+      ...args,
+      open: true,
+      color: 'rgb(255, 255, 255)',
+    })}
+    ${labeledLoupe('Yellow', {
+      ...args,
+      open: true,
+      color: 'rgb(255, 235, 0)',
+    })}
+    ${labeledLoupe('Mid gray', {
+      ...args,
+      open: true,
+      color: 'rgb(120, 120, 120)',
+    })}
+    ${labeledLoupe('Black', { ...args, open: true, color: 'rgb(0, 0, 0)' })}
+  `,
+  tags: ['behaviors'],
+  parameters: { flexLayout: 'row-wrap' },
+};
+AdaptiveContrast.storyName = 'Adaptive contrast';
 
 // ────────────────────────────────
 //    ACCESSIBILITY STORIES

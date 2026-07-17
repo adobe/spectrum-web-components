@@ -233,7 +233,7 @@ const config: StorybookConfig = {
       resolve: {
         alias: [
           {
-            find: '@spectrum-web-components/core',
+            find: '@adobe/spectrum-wc-core',
             replacement: resolve(__dirname, '../../core'),
           },
           // Long-form imports (e.g. `@adobe/spectrum-wc/components/badge/swc-badge.js`)

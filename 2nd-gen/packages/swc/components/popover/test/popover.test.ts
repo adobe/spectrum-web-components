@@ -14,12 +14,12 @@ import { expect, userEvent, waitFor } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import { Popover } from '@adobe/spectrum-wc/popover';
-import { PopoverBase } from '@spectrum-web-components/core/components/popover';
+import { PopoverBase } from '@adobe/spectrum-wc-core/components/popover';
 import {
   isTopDismissible,
   registerDismissible,
   unregisterDismissible,
-} from '@spectrum-web-components/core/utils/index.js';
+} from '@adobe/spectrum-wc-core/utils/index.js';
 
 import '@adobe/spectrum-wc/components/popover/swc-popover.js';
 import '@adobe/spectrum-wc/components/tooltip/swc-tooltip.js';
