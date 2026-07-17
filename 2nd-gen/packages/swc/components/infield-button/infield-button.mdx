@@ -1,0 +1,44 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import { DocsFooter, DocsHeader } from '../../.storybook/blocks';
+
+import * as Stories from './stories/infield-button.stories';
+
+<Meta of={Stories} />
+
+<DocsHeader />
+
+## Anatomy
+
+An infield button consists of a single icon inside a pressable container. It has no text label; its accessible name comes from the required `accessible-label` attribute.
+
+<Canvas of={Stories.Anatomy} />
+
+## Options
+
+### Sizes
+
+Infield buttons inherit their size from the parent field. All four sizes are supported; the parent field sets the `size` attribute directly on the button.
+
+<Canvas of={Stories.Sizes} />
+
+### Quiet
+
+The quiet treatment removes the background, leaving only the icon. Use it when the parent field uses a quiet variant.
+
+<Canvas of={Stories.Quiet} />
+
+## States
+
+### States
+
+Infield buttons support default, disabled, quiet, and quiet-disabled states. The disabled state removes interactivity while preserving layout. The parent field is responsible for disabling all slotted infield buttons when the field itself is disabled or pending.
+
+<Canvas of={Stories.States} />
+
+## Accessibility
+
+Infield buttons are not in the tab order (`tabindex="-1"`). The parent field owns keyboard behavior and the visible focus ring. Each infield button must have an `accessible-label` attribute that describes its action (for example, "Open picker", "Clear search", "Increase quantity").
+
+<Canvas of={Stories.Accessibility} />
+
+<DocsFooter />

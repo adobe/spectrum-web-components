@@ -153,9 +153,9 @@ This full modifier surface will not be carried forward to 2nd-gen.
 
 | Package | Role |
 | ------- | ---- |
-| `@adobe/spectrum-wc-core/components/button` | Provides 2nd-gen `ButtonBase`, `BUTTON_VALID_SIZES`, `ObserveSlotPresence`, `ObserveSlotText` |
-| `@adobe/spectrum-wc-core/element` | Provides `SpectrumElement` |
-| `@adobe/spectrum-wc-core/mixins` | Provides `SizedMixin` |
+| `@spectrum-web-components/core/components/button` | Provides 2nd-gen `ButtonBase`, `BUTTON_VALID_SIZES`, `ObserveSlotPresence`, `ObserveSlotText` |
+| `@spectrum-web-components/core/element` | Provides `SpectrumElement` |
+| `@spectrum-web-components/core/mixins` | Provides `SizedMixin` |
 | `spectrum-css` (`spectrum-two` branch) `components/infieldbutton/index.css` | S2 CSS baseline (**confirmed — Q2 resolved; see [Styling](#styling)**) |
 
 ---
@@ -425,32 +425,33 @@ html`
 >
 > **S2 CSS baseline confirmed** (Q2 resolved): `spectrum-css` `spectrum-two` branch `components/infieldbutton/index.css` — stacked `--top`/`--bottom` classes absent, S2 token structure present, no `:lang()` selectors present.
 
-- [ ] Copy S2 source from `spectrum-css` `spectrum-two` branch `components/infieldbutton/index.css` (not `/dist`) into `infield-button.css` as the functionally-equivalent baseline
-- [ ] Apply `.swc-InfieldButton` to the inner `<button>`; use `:host([quiet])` and `:host([size="s"])` attribute selectors for size and quiet state styling (not `classMap` modifiers); keep structural styling off `:host`
-- [ ] Update class and custom property prefixes from `.spectrum-InfieldButton` to `.swc-InfieldButton`; **remove all `--mod-infield-button-*` and `--spectrum-infield-button-*` fallback chains**, collapsing each into a single intentional `--swc-infield-button-*` property with a `token(...)` default per the [custom properties style guide](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md)
-- [ ] Style the slotted icon with `slot[name="icon"]::slotted(*)` (color + size-specific padding), as `swc-button` does; do **not** put a `.swc-InfieldButton-icon` class on the consumer-slotted node (the S2 `.spectrum-InfieldButton-icon` rule targets an inline SVG in the CSS-only template, which does not apply to the slotted web-component case)
-- [ ] Verify whether `.swc-InfieldButton-fill` (inner `<div>`) is required by S2 selectors or can be removed in favour of `::slotted()` alone; if needed it owns `background-color`, `border-radius`, and the centering flex
-- [ ] Do **not** carry forward `.spectrum-InfieldButton--top` / `--bottom` stacked classes; S2 uses a consistent corner radius on the button itself
-- [ ] The `.swc-InfieldButton-inline` wrapper is **not** rendered by this component; it belongs to the parent field host (number-field/textfield) that composes stepper/clear groups
+- [x] Copy S2 source from `spectrum-css` `spectrum-two` branch `components/infieldbutton/index.css` (not `/dist`) into `infield-button.css` as the functionally-equivalent baseline
+- [x] Apply `.swc-InfieldButton` to the inner `<button>`; use `:host([quiet])` and `:host([size="s"])` attribute selectors for size and quiet state styling (not `classMap` modifiers); keep structural styling off `:host`
+- [x] Update class and custom property prefixes from `.spectrum-InfieldButton` to `.swc-InfieldButton`; **remove all `--mod-infield-button-*` and `--spectrum-infield-button-*` fallback chains**, collapsing each into a single intentional `--swc-infield-button-*` property with a `token(...)` default per the [custom properties style guide](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md)
+- [x] Style the slotted icon with `slot[name="icon"]::slotted(*)` (color + size-specific padding), as `swc-button` does; do **not** put a `.swc-InfieldButton-icon` class on the consumer-slotted node (the S2 `.spectrum-InfieldButton-icon` rule targets an inline SVG in the CSS-only template, which does not apply to the slotted web-component case)
+- [x] Verify whether `.swc-InfieldButton-fill` (inner `<div>`) is required by S2 selectors or can be removed in favour of `::slotted()` alone; **Phase 5 decision: fill wrapper dropped.** `::slotted()` alone is sufficient. Background color, border, border-radius, and icon centering flex are applied directly to the inner `<button>`, simplifying the shadow DOM structure.
+- [x] Do **not** carry forward `.spectrum-InfieldButton--top` / `--bottom` stacked classes; S2 uses a consistent corner radius on the button itself
+- [x] The `.swc-InfieldButton-inline` wrapper is **not** rendered by this component; it belongs to the parent field host (number-field/textfield) that composes stepper/clear groups
 
 #### Visual model and regressions
 
-- [ ] Map size tokens to `var(--swc-infield-button-*, token("..."))`. M is the Figma reference size, not a component default (`noDefaultSize: true`):
-  - Size M (reference): height/width `token("component-height-100")`, border-radius `token("corner-radius-small-size-medium")`, padding `token("in-field-button-edge-to-fill-medium")`
-  - Size S: `:host([size="s"])` → `token("component-height-75")`, `token("corner-radius-small-size-small")`, `token("in-field-button-edge-to-fill-small")`, `token("in-field-button-side-edge-to-fill-small")`
-  - Size L: `:host([size="l"])` → `token("component-height-200")`, `token("corner-radius-small-size-large")`, `token("in-field-button-edge-to-fill-large")`
-  - Size XL: `:host([size="xl"])` → `token("component-height-300")`, `token("corner-radius-small-size-extra-large")`, `token("in-field-button-edge-to-fill-extra-large")`
-- [ ] Map visual states to `token()`:
+- [x] Map size tokens to `var(--swc-infield-button-*, token("..."))`. M is the Figma reference size, not a component default (`noDefaultSize: true`).
+  **Phase 5 confirmed token mapping** (from spectrum-two.css; replaces speculative plan entries):
+  - Size M (reference): height/width `token("component-height-100")`, border-radius `token("corner-radius-100")` (not `corner-radius-small-size-medium` — spectrum-two.css is authoritative). No edge-to-fill padding (fill wrapper dropped).
+  - Size S: `:host([size="s"])` → `token("component-height-75")`, icon `token("workflow-icon-small")`
+  - Size L: `:host([size="l"])` → `token("component-height-200")`, icon `token("workflow-icon-large")`
+  - Size XL: `:host([size="xl"])` → `token("component-height-300")`, icon `token("workflow-icon-extra-large")`
+- [x] Map visual states to `token()`:
   - Default: background `token("gray-100")`, icon `token("neutral-content-color-default")`
   - Hover: background `token("gray-200")`, icon `token("neutral-content-color-hover")`
-  - Active/down: background `token("gray-200")`, icon `token("neutral-content-color-down")`; `transform: perspective(...) translateZ(...)` on the `<button>` using the S2 downstate tokens
+  - Active/down: background `token("gray-200")`, icon `token("neutral-content-color-down")`. **No active transform** — `spectrum-css` S2 source has no transform on the active state; the plan entry was copied from button and does not apply.
   - Disabled: background `token("disabled-background-color")`, icon `token("disabled-content-color")`
   - Quiet: `transparent` background for default, hover, active, and disabled (not the gray disabled color)
-- [ ] Focus model: the inner `<button>` sets `outline: none` (matches S2 source). Infield buttons are not independently focusable and not in the tab order — the parent field owns the visible focus ring and all keyboard behavior. Do not add a `:focus-visible` ring on the button. Verify via field-level stories that the parent field's focus ring is visible and meets WCAG 2.4.7.
-- [ ] Forced colors: check each state against browser defaults first; only add `@media (forced-colors: active)` overrides where browser defaults are insufficient (per style guide — do not port spectrum-css forced-colors rules wholesale without this check). Sort the `@media (forced-colors: active)` block to the bottom of the file.
-- [ ] Verify no `:lang(ja)`, `:lang(ko)`, `:lang(zh)` size modifiers needed (not present in S2 baseline)
-- [ ] Add a `@cssprop` JSDoc tag to the primary SWC component class for every exposed `--swc-infield-button-*` property (initial expectation: `--swc-infield-button-height`, `--swc-infield-button-icon-size`)
-- [ ] Pass stylelint (property order, `no-descending-specificity`, token validation)
+- [x] Focus model: the inner `<button>` sets `outline: none` (matches S2 source). Infield buttons are not independently focusable and not in the tab order — the parent field owns the visible focus ring and all keyboard behavior. Do not add a `:focus-visible` ring on the button. Verify via field-level stories that the parent field's focus ring is visible and meets WCAG 2.4.7.
+- [x] Forced colors: `@media (forced-colors: active)` block added at bottom of file with ButtonFace/ButtonText/ButtonBorder/Highlight/GrayText system colors for each state.
+- [x] Verify no `:lang(ja)`, `:lang(ko)`, `:lang(zh)` size modifiers needed (not present in S2 baseline)
+- [x] Add a `@cssprop` JSDoc tag to the primary SWC component class for every exposed `--swc-infield-button-*` property. Exposed: `--swc-infield-button-height`, `--swc-infield-button-icon-size`, `--swc-infield-button-border-radius`, four individual corner-radius properties, `--swc-infield-button-border-color`.
+- [x] Pass stylelint (property order, `no-descending-specificity`, token validation)
 
 ### Accessibility
 

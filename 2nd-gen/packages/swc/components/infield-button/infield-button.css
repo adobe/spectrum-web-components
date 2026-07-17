@@ -1,0 +1,143 @@
+/**
+ * Copyright 2026 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+/* ── Host (outer container) ───────────────────────── */
+
+/* No fixed sizing here — the button self-sizes from padding + icon. The
+   consuming field controls the outer dimensions and any additional spacing. */
+
+:host {
+  display: inline-flex;
+}
+
+:host([size="s"]) {
+  --swc-infield-button-padding: token("accessory-item-padding-small");
+}
+
+:host([size="l"]) {
+  --swc-infield-button-padding: token("accessory-item-padding-large");
+  --swc-infield-button-icon-size: token("workflow-icon-2x-small");
+}
+
+:host([size="xl"]) {
+  --swc-infield-button-padding: token("accessory-item-padding-extra-large");
+  --swc-infield-button-icon-size: token("workflow-icon-extra-small");
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* ── Fill (button) ────────────────────────────────── */
+
+.swc-InfieldButton {
+  --_swc-infield-button-border-radius: var(--swc-infield-button-border-radius, token("corner-radius-100"));
+
+  /* Total block size: 2× padding + icon. Used as the perspective distance for
+     the press transform so the effect scales with component size. */
+  --_swc-infield-button-block-size: calc(var(--swc-infield-button-padding, token("accessory-item-padding-medium")) * 2 + var(--swc-infield-button-icon-size, token("workflow-icon-3x-small")));
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--swc-infield-button-padding, token("accessory-item-padding-medium"));
+  margin: 0;
+  color: var(--swc-infield-button-icon-color, token("neutral-content-color-default"));
+  background-color: var(--swc-infield-button-background-color, token("gray-100"));
+  border: none;
+  border-radius: var(--_swc-infield-button-border-radius);
+  border-start-start-radius: var(--swc-infield-button-border-start-start-radius, var(--_swc-infield-button-border-radius));
+  border-start-end-radius: var(--swc-infield-button-border-start-end-radius, var(--_swc-infield-button-border-radius));
+  border-end-start-radius: var(--swc-infield-button-border-end-start-radius, var(--_swc-infield-button-border-radius));
+  border-end-end-radius: var(--swc-infield-button-border-end-end-radius, var(--_swc-infield-button-border-radius));
+  appearance: none;
+  cursor: default;
+  transition-timing-function: token("animation-ease-in-out");
+  transition-duration: token("animation-duration-100");
+  transition-property: background-color, color, transform;
+}
+
+/* ── States ───────────────────────────────────────── */
+
+.swc-InfieldButton:hover {
+  color: var(--swc-infield-button-icon-color-hover, token("neutral-content-color-hover"));
+  background-color: var(--swc-infield-button-background-color-hover, token("gray-200"));
+}
+
+.swc-InfieldButton:active {
+  color: var(--swc-infield-button-icon-color-active, token("neutral-content-color-down"));
+  background-color: var(--swc-infield-button-background-color-active, token("gray-200"));
+  transform: var(--swc-infield-button-down-state-transform, perspective(var(--_swc-infield-button-block-size)) translate3d(0, 0, token("component-size-difference-down")));
+  will-change: transform;
+}
+
+/* Parent field owns the focus ring; inner button must not show its own. */
+.swc-InfieldButton:focus-visible {
+  color: var(--swc-infield-button-icon-color-focus, token("neutral-content-color-key-focus"));
+  background-color: var(--swc-infield-button-background-color-focus, token("gray-200"));
+  outline: none;
+}
+
+/* Inflated specificity prevents hover from overriding disabled */
+.swc-InfieldButton:disabled:is(*, :hover, :active) {
+  color: var(--swc-infield-button-icon-color-disabled, token("disabled-content-color"));
+  background-color: var(--swc-infield-button-background-color-disabled, token("disabled-background-color"));
+  cursor: default;
+  transform: none;
+}
+
+/* ── Icon slot ────────────────────────────────────── */
+
+slot[name="icon"]::slotted(*) {
+  --_swc-infield-button-icon-size: var(--swc-infield-button-icon-size, token("workflow-icon-3x-small"));
+
+  flex-shrink: 0;
+  inline-size: var(--_swc-infield-button-icon-size);
+  block-size: var(--_swc-infield-button-icon-size);
+  color: inherit;
+  fill: currentcolor;
+}
+
+/* ── Quiet ────────────────────────────────────────── */
+
+:host([quiet]) .swc-InfieldButton {
+  background-color: transparent;
+}
+
+:host([quiet]) .swc-InfieldButton:disabled:is(*, :hover, :active) {
+  background-color: transparent;
+}
+
+/* ── Forced colors ────────────────────────────────── */
+
+@media (forced-colors: active) {
+  .swc-InfieldButton {
+    color: ButtonText;
+    background-color: ButtonFace;
+    border-color: ButtonBorder;
+    forced-color-adjust: none;
+  }
+
+  .swc-InfieldButton:hover,
+  .swc-InfieldButton:active,
+  .swc-InfieldButton:focus-visible {
+    color: ButtonText;
+    background-color: ButtonFace;
+    border-color: Highlight;
+  }
+
+  .swc-InfieldButton:disabled:is(*, :hover, :active) {
+    color: GrayText;
+    background-color: ButtonFace;
+    border-color: GrayText;
+  }
+}
