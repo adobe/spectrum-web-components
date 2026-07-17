@@ -58,7 +58,7 @@ export class DemoOpacityCheckerboardSwatch extends LitElement {
   /** Human-readable name including opacity; lives on the control, not the pattern. */
   @property()
   public label = '';
-  /** CSS color for the fill layer, e.g. `rgba(255, 0, 0, 0.4)` or `transparent`. */
+  /** CSS color for the fill layer, e.g., `rgba(255, 0, 0, 0.4)` or `transparent`. */
   @property()
   public color = 'transparent';
   /** Checkerboard square size: medium (default, no modifier) or small. */
@@ -95,7 +95,7 @@ The default square size uses the medium token. The `.swc-OpacityCheckerboard--si
 
 ## Behaviors
 
-### Transparent Content
+### Transparent content
 
 The checkerboard is meant to sit behind transparent or semi-transparent content so the level of transparency reads against a neutral pattern. Fully opaque content covers it entirely.
 
@@ -111,13 +111,12 @@ The shared `css` fragment sets no ARIA. It only keeps `forced-color-adjust: none
 
 ### Best practices
 
-- **Hide the decoration.** Mark the `.swc-OpacityCheckerboard` element `aria-hidden="true"` when it is only a background. Never put `aria-hidden` on a wrapper that also contains slotted or interactive content; it suppresses every descendant.
-- **Name and value on the real control.** Expose color and opacity in human-readable text on the focusable or semantic element (`aria-label`, a visible label, or `aria-valuetext`), as the demo host does with `role="img"` and an `aria-label` such as "Selected color: red, 40% opacity". Avoid raw `rgba(...)` strings as the only name.
+- **Hide the decoration.** Mark the `.swc-OpacityCheckerboard` element `aria-hidden="true"` when it is only a background ([WCAG 1.1.1](https://www.w3.org/WAI/WCAG22/Understanding/non-text-content.html)). Never put `aria-hidden` on a wrapper that also contains slotted or interactive content; it suppresses every descendant.
+- **Name and value on the real control.** Expose color and opacity in human-readable text on the focusable or semantic element (`aria-label`, a visible label, or `aria-valuetext`), as the demo host does with `role="img"` and an `aria-label` such as "Selected color: red, 40% opacity" ([WCAG 4.1.2](https://www.w3.org/WAI/WCAG22/Understanding/name-role-value.html)). Avoid raw `rgba(...)` strings as the only name.
 - **Not focusable.** Do not add `tabindex` to a node that only shows the pattern. Tab order and activation stay on the parent widget (swatch button, color slider, color field).
-- **Convey opacity textually.** Transparency must not rely on the checkerboard alone (WCAG 1.4.1). Pair it with a label, value, or instruction that states the opacity.
+- **Convey opacity textually.** Transparency must not rely on the checkerboard alone ([WCAG 1.4.1](https://www.w3.org/WAI/WCAG22/Understanding/use-of-color.html)). Pair it with a label, value, or instruction that states the opacity.
 - **Live regions are rarely needed.** When opacity changes, update the control's value or visible text first. Use `aria-live="polite"` only when nothing else announces the change; never `assertive` for routine opacity updates.
 
 <Canvas of={Stories.Accessibility} />
 
 <DocsFooter />
-```

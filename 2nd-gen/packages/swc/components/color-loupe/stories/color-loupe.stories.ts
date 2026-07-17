@@ -30,7 +30,7 @@ const { events, args, argTypes, template } =
  * color slider, and color wheel. Visibility is controlled by a parent component such as `<swc-color-handle>`.
  */
 const meta: Meta = {
-  title: 'Color Loupe',
+  title: 'Color loupe',
   component: 'swc-color-loupe',
   args: {
     ...args,
@@ -219,30 +219,6 @@ export const ParentDrivenVisibility: Story = {
   },
 };
 ParentDrivenVisibility.storyName = 'Parent-driven visibility';
-
-export const AdaptiveContrast: Story = {
-  render: (args) => html`
-    ${labeledLoupe('White', {
-      ...args,
-      open: true,
-      color: 'rgb(255, 255, 255)',
-    })}
-    ${labeledLoupe('Yellow', {
-      ...args,
-      open: true,
-      color: 'rgb(255, 235, 0)',
-    })}
-    ${labeledLoupe('Mid gray', {
-      ...args,
-      open: true,
-      color: 'rgb(120, 120, 120)',
-    })}
-    ${labeledLoupe('Black', { ...args, open: true, color: 'rgb(0, 0, 0)' })}
-  `,
-  tags: ['behaviors'],
-  parameters: { flexLayout: 'row-wrap' },
-};
-AdaptiveContrast.storyName = 'Adaptive contrast';
 
 // ────────────────────────────────
 //    ACCESSIBILITY STORIES

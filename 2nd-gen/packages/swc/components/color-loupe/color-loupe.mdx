@@ -11,8 +11,8 @@ import * as ColorLoupeStories from './stories/color-loupe.stories';
 
 A color loupe consists of:
 
-1. **Floating loupe element**: a teardrop-shaped container positioned above the interaction point, with an inner and outer border
-2. **Color preview**: displays the currently picked color over an opacity checkerboard so transparency is visible
+- **Floating loupe element**: a teardrop-shaped container positioned above the interaction point, with an inner and outer border
+- **Color preview**: displays the currently picked color over an opacity checkerboard so transparency is visible
 
 <Canvas of={ColorLoupeStories.Anatomy} />
 
@@ -58,14 +58,6 @@ The loupe animates its visibility with CSS transitions: `opacity` over 125 ms an
 
 <Canvas of={ColorLoupeStories.ParentDrivenVisibility} />
 
-### Adaptive contrast
-
-The loupe keeps its chrome at 3:1 non-text contrast (WCAG 1.4.11) across the color spectrum using a white-first adaptive border. The chrome is an inner dark border and a fixed white outer border; the loupe stays visible if either the inner border or the white outer border meets 3:1 against the underlying color.
-
-The inner-border opacity is computed from the current `color`: it holds a floor of 12% whenever the white outer border already carries 3:1, and climbs only where white cannot. The surrounding color is approximated by the loupe's own `color`, which is accurate on smooth gradients and approximate at steep or saturated edges.
-
-<Canvas of={ColorLoupeStories.AdaptiveContrast} />
-
 ## Accessibility
 
 ### Features
@@ -89,9 +81,5 @@ The loupe does not represent a standalone accessible control. Accessibility sema
 - Avoid conveying meaning through the loupe color alone; pair color selection with text labels or other indicators as appropriate
 
 <Canvas of={ColorLoupeStories.Accessibility} />
-
-## Upcoming features
-
-- **Exact surrounding-color contrast**: sampling the true adjacent gradient color (rather than the loupe's own color) so the adaptive border is precise at steep gradient edges
 
 <DocsFooter />

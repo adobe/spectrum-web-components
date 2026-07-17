@@ -32,7 +32,7 @@ const { events, args, argTypes, template } =
  * color picker, not the handle.
  */
 const meta: Meta = {
-  title: 'Color Handle',
+  title: 'Color handle',
   component: 'swc-color-handle',
   args,
   argTypes,

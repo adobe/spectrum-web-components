@@ -147,6 +147,7 @@ export const SharedTemplates: Story = {
     template({ ...args, label: args.label || 'Chevron' }, Chevron100Icon()),
   tags: ['options'],
 };
+SharedTemplates.storyName = 'Shared templates';
 
 export const AvailableIcons: Story = {
   render: (args) => {
@@ -184,6 +185,7 @@ export const AvailableIcons: Story = {
     flexLayout: 'row-wrap',
   },
 };
+AvailableIcons.storyName = 'Available icons';
 
 // ────────────────────────────────
 //    ACCESSIBILITY STORIES
