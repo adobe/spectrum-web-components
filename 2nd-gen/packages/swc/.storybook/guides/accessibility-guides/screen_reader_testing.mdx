@@ -2,6 +2,8 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
 <Meta title="Accessibility/Screen reader testing" />
 
+# Screen reader testing
+
 ## Overview
 
 Screen reader testing is essential for verifying that Spectrum Web Components provide an equivalent experience for users who rely on assistive technology. This guide covers the fundamentals of screen reader testing, including browser pairings, interaction modes, and keyboard shortcuts.
@@ -24,7 +26,7 @@ When testing components with screen readers, focus on these key outcomes:
 3. **Meaningful information**: Content should be announced in a logical order with appropriate context
 4. **Efficient navigation**: Users should be able to navigate quickly using headings, landmarks, and other semantic structures
 
-For how **landmarks** and **headings** should be structured in your markup, see [Headings and landmarks](/docs/guides-accessibility-guides-headings-and-landmarks--docs). You can **inspect** that structure in the browser with WAVE; see [WAVE toolbar testing](/docs/guides-accessibility-guides-wave-toolbar-testing--readme#structure-tab).
+See [Headings and landmarks](/docs/guides-accessibility-guides-headings-and-landmarks--docs) for guidance on structuring **landmarks** and **headings** in markup. You can **inspect** that structure in the browser with WAVE — see [WAVE toolbar testing](/docs/guides-accessibility-guides-wave-toolbar-testing--docs#structure-tab).
 
 ### Relationship to keyboard accessibility
 
@@ -59,7 +61,7 @@ Screen readers work best with specific browsers. Use these recommended pairings 
 | iOS      | VoiceOver     | Safari  | Built-in; only supported browser engine on iOS |
 | Android  | TalkBack      | Chrome  | Built-in; best compatibility with Chrome       |
 
-**Recommended minimum testing:** Test with at least VoiceOver/Safari (macOS) and NVDA/Firefox (Windows) to cover the most common usage patterns.
+**Recommended minimum testing:** At minimum, test with VoiceOver/Safari (macOS) and NVDA/Firefox (Windows) to cover the most common usage patterns.
 
 ## Screen reader modes
 
@@ -111,16 +113,16 @@ Focus mode is for interacting with form controls and custom widgets. In this mod
 
 **Note:** VoiceOver does not use the browse/focus mode paradigm. Instead, it uses **Quick Nav** (toggled with <kbd>Left Arrow</kbd> + <kbd>Right Arrow</kbd> pressed simultaneously) to enable single-key navigation, and the **Interact model** (<kbd>VO</kbd> + <kbd>Shift</kbd> + <kbd>Down Arrow</kbd> to drill into elements, <kbd>VO</kbd> + <kbd>Shift</kbd> + <kbd>Up Arrow</kbd> to move back up). VoiceOver handles form controls more seamlessly without requiring an explicit mode switch.
 
-**Auto forms mode:** JAWS and NVDA automatically switch to focus mode when landing on certain form controls. JAWS can be configured to use "Auto Forms Mode" which automatically switches modes based on the focused element.
+**Auto forms mode:** JAWS and NVDA automatically switch to focus mode when landing on certain form controls. JAWS can be configured to use "Auto Forms Mode", which automatically switches modes based on the focused element.
 
-**Associated information:** In focus mode, screen readers announce associated information such as:
+**Associated information:** In focus mode, screen readers announce associated information, such as:
 
 - Labels (from `<label>`, `aria-label`, or `aria-labelledby`)
 - Descriptions (from `aria-describedby`)
 - Required state (from `required` or `aria-required`)
 - Invalid state (from `aria-invalid`)
 
-> **Important:** In focus mode, only interactive elements and their associated labels/descriptions are announced. If content is not a label or description for a focusable element, it will not be read. For non-interactive content, screen reader users must switch to Browse mode. This is expected behavior, not a bug — ensure you test both modes when evaluating component accessibility.
+> ⚠️ **Important:** In focus mode, only interactive elements and their associated labels or descriptions are announced. If content is not a label or description for a focusable element, it will not be read. For non-interactive content, screen reader users must switch to browse mode. This is expected behavior, not a bug — ensure you test both modes when evaluating component accessibility.
 
 ### Table mode
 
@@ -211,8 +213,8 @@ Each screen reader has its own set of keyboard shortcuts. Below are essential sh
 
 For comprehensive keyboard shortcut references, see:
 
-- [Deque University Screen Reader Keyboard Shortcuts](https://dequeuniversity.com/screenreaders/) — printable cheatsheets for all major screen readers
-- [WebAIM Screen Reader User Survey](https://webaim.org/projects/screenreadersurvey/) — usage statistics and preferences
+- [Deque University Screen Reader Keyboard Shortcuts](https://dequeuniversity.com/screenreaders/): printable cheatsheets for all major screen readers
+- [WebAIM Screen Reader User Survey](https://webaim.org/projects/screenreadersurvey/): usage statistics and preferences
 - [VoiceOver User Guide (Apple)](https://support.apple.com/guide/voiceover/welcome/mac)
 - [NVDA User Guide](https://www.nvaccess.org/files/nvda/documentation/userGuide.html)
 - [JAWS Documentation (Freedom Scientific)](https://support.freedomscientific.com/Products/Blindness/JAWS)

@@ -18,9 +18,9 @@ export const waveToolbarGuideImageStyle = {
 
 ## Overview
 
-This guide explains how to use the [WAVE (Web Accessibility Evaluation Tool) browser extension](https://wave.webaim.org/extension/) to test accessibility in the browser, with a focus on **headings** and **landmarks** in the page outline. It pairs with [Headings and landmarks](/docs/guides-accessibility-guides-headings-and-landmarks--docs) for W3C WAI principles, **landmark** and **heading** structure, how screen readers navigate by both, and Spectrum Web Components patterns—here you learn **where** in WAVE to see the outline and **how** to run a report.
+This guide explains how to use the [WAVE (Web Accessibility Evaluation Tool) browser extension](https://wave.webaim.org/extension/) to test accessibility in the browser, with a focus on **headings** and **landmarks** in the page outline. You'll learn **where** in WAVE to see the outline and **how** to run a report. It pairs with our [Headings and landmarks](/docs/guides-accessibility-guides-headings-and-landmarks--docs) guide, which covers W3C WAI principles, **landmark** and **heading** structure, screen reader navigation, and Spectrum Web Components patterns.
 
-WAVE is a free extension for **Chrome**, **Firefox**, and **Edge**. It evaluates the **rendered** page in your browser. No page content is sent to WAVE servers, so reporting stays private. You can use it on local files, password-protected pages, intranets, and pages with dynamic or AJAX content—anywhere the browser can load the final DOM and styles.
+WAVE is a free extension for **Chrome**, **Firefox**, and **Edge**. It evaluates the **rendered** page in your browser. No page content is sent to WAVE servers, so reporting stays private. You can use it on local files, password-protected pages, intranets, and pages with dynamic or AJAX content — anywhere the browser can load the final DOM and styles.
 
 > **Note:** WAVE is one of several useful tools. It complements (and does not replace) [keyboard testing](/docs/guides-accessibility-guides-keyboard-testing--docs), [screen reader testing](/docs/guides-accessibility-guides-screen-reader-testing--docs), and manual review.
 
@@ -31,7 +31,7 @@ Use WAVE to get quick feedback on accessibility, including:
 - **Automated and semi-automated checks** for many common issues (the **Details** tab annotates the page and summarizes errors, alerts, and features)
 - **Structural review** of headings, landmarks, and how they appear in an outline (**Structure** tab)
 - **Reading and tab order** for navigable elements versus visual layout (**Order** tab)
-- **Color contrast** exploration and a **desaturate** view on the **Contrast** tab (see [Contrast tab and color testing](#contrast-tab-and-color-testing))
+- **Color contrast** exploration and a **Desaturate** view on the **Contrast** tab (see [Contrast tab and color testing](#contrast-tab-and-color-testing))
 
 WAVE is especially helpful for **spot-checking heading levels** and **landmarks** before or alongside screen reader testing. Interpret what you see using [Headings and landmarks](/docs/guides-accessibility-guides-headings-and-landmarks--docs) so you know which levels, regions, and patterns to aim for in your app.
 
@@ -57,9 +57,9 @@ To allow WAVE on **local files** or in **private/incognito** windows, enable the
 
 ## Run a WAVE report
 
-1. Navigate to the page you want to test (for example, a Storybook page or your app)
-2. Click the **WAVE** icon in the browser toolbar, or use the shortcut **Control** + **Shift** + **U** (Windows/Linux) or **Command** + **Shift** + **U** (macOS). You can also use the context menu **WAVE this page** where available
-3. The WAVE panel opens (often on the left). Use the tabs at the top to switch views. Click the WAVE icon again or refresh the page to close WAVE
+1. Navigate to the page you want to test (for example, a Storybook page or your app).
+2. Click the **WAVE** icon in the browser toolbar, or use the shortcut <kbd>Control</kbd> + <kbd>Shift</kbd> + <kbd>U</kbd> (Windows/Linux) or <kbd>Command</kbd> + <kbd>Shift</kbd> + <kbd>U</kbd> (macOS). You can also use the **WAVE this page** in the context menu, where available.
+3. The WAVE panel opens (often on the left). Use the tabs at the top to switch views. To close WAVE, click the WAVE icon again or refresh the page.
 
 Use the **Styles** toggle in the panel to see the page with browser styles on or off. Turning styles off can expose raw document order, which is useful with the **Order** tab.
 
@@ -78,8 +78,8 @@ The **Details** tab summarizes **errors**, **alerts**, **features**, and **struc
     style={waveToolbarGuideImageStyle}
   />
   <figcaption>
-    WAVE extension Details tab: summary counts and structural elements, with h1
-    and h2 icons overlaid on a web page
+    WAVE extension **Details** tab: summary counts and structural elements, with
+    `h1` and `h2` icons overlaid on a web page
   </figcaption>
 </figure>
 
@@ -87,7 +87,7 @@ Use it to confirm that headings are detected, that landmark regions are present,
 
 ### Structure tab
 
-The **Structure** tab shows a **hierarchical outline** of headings and regions (for example, `header`, `nav`, `main`, `footer`). It helps you verify that **heading levels form a logical outline**—like a table of contents—and that they match what you intend visually.
+The **Structure** tab shows a **hierarchical outline** of headings and regions (for example, `header`, `nav`, `main`, `footer`). It helps you verify that **heading levels form a logical outline** — like a table of contents — and that they match what you intend visually.
 
 <figure>
   <img
@@ -96,8 +96,8 @@ The **Structure** tab shows a **hierarchical outline** of headings and regions (
     style={waveToolbarGuideImageStyle}
   />
   <figcaption>
-    WAVE Structure tab: left sidebar lists nested h1 and h2 headings and
-    regions; the page shows h1 and h2 badges beside matching headings
+    WAVE Structure tab: left sidebar lists nested `h1` and `h2` headings and
+    regions; the page shows `h1` and `h2` badges beside matching headings
   </figcaption>
 </figure>
 
@@ -114,16 +114,16 @@ The **Order** tab lists **navigable** elements in sequence with their **role** a
     style={waveToolbarGuideImageStyle}
   />
   <figcaption>
-    WAVE Order tab: styles off, numbered arrows show tab order across links and
-    controls on a web page
+    WAVE **Order** tab: styles off, numbered arrows show tab order across links
+    and controls on a web page
   </figcaption>
 </figure>
 
-Use it to check that users who move with **Tab** and users who follow the **announced order** in a screen reader get a sequence that matches your design. It does not replace keyboard testing, but it highlights mismatches between DOM order and layout.
+Use it to check whether users who move with <kbd>Tab</kbd> and users who follow the **announced order** in a screen reader get a sequence that matches your design. It does not replace keyboard testing, but it does highlight mismatches between DOM order and layout.
 
 ### Contrast tab and color testing
 
-The **Contrast** tab lets you set **foreground** and **background** colors (including with the color picker), read the **contrast ratio**, and see **WCAG AA/AAA** pass or fail for normal or large text. WAVE also notes that **gradients**, **filters**, and **transparency** may need **manual** checks with the eyedropper or other tools.
+The **Contrast** tab lets you set **foreground** and **background** colors (including with the color picker), read the **contrast ratio**, and see whether **WCAG AA/AAA** passes or fails for normal or large text. WAVE also notes that **gradients**, **filters**, and **transparency** may need **manual** checks with the eyedropper or other tools.
 
 <figure>
   <img
@@ -132,22 +132,22 @@ The **Contrast** tab lets you set **foreground** and **background** colors (incl
     style={waveToolbarGuideImageStyle}
   />
   <figcaption>
-    WAVE Contrast tab: foreground and background color inputs, contrast ratio
-    8.59 to 1, WCAG AA and AAA pass, and Desaturate page link
+    WAVE **Contrast** tab: foreground and background color inputs, contrast
+    ratio 8.59 to 1, WCAG AA and AAA pass, and **Desaturate page** link
   </figcaption>
 </figure>
 
-**Desaturate page** renders the page in **grayscale** to reduce reliance on **hue** when checking hierarchy and meaning. It can surface cases where information or structure depends too much on color. It is **not** a full simulation of all types of color vision deficiency; dedicated **color blindness** browser extensions can simulate **specific** conditions (for example, protanopia, deuteranopia) in more detail.
+**Desaturate page** renders the page in **grayscale** to reduce reliance on **hue** when checking hierarchy and meaning. It can surface cases where information or structure depends too much on color. It is **not** a full simulation of all types of color vision deficiency. Dedicated **color blindness** browser extensions can simulate **specific** conditions (for example, protanopia, deuteranopia) in more detail.
 
 <figure>
   <img
     src={waveContrastDesaturate}
-    alt="WAVE Contrast, desaturate"
+    alt="WAVE Contrast tab, Desaturate page"
     style={waveToolbarGuideImageStyle}
   />
   <figcaption>
-    WAVE Contrast tab with desaturate enabled: same panel with grayscale page
-    content to review layout without color
+    WAVE **Contrast** tab with **Desaturate page** enabled: same panel with
+    grayscale page content to review layout without color
   </figcaption>
 </figure>
 
@@ -155,16 +155,16 @@ The **Contrast** tab lets you set **foreground** and **background** colors (incl
 
 **In Storybook**
 
-- [Overview](/docs/guides-accessibility-guides-overview--docs) — all accessibility guides in this section
-- [Headings and landmarks](/docs/guides-accessibility-guides-headings-and-landmarks--docs) — W3C WAI landmarks and `h1`–`h6` guidance, WCAG criteria, screen readers, and **swc** examples
-- [Screen reader testing](/docs/guides-accessibility-guides-screen-reader-testing--docs) — heading shortcuts and testing workflow
-- [Keyboard testing](/docs/guides-accessibility-guides-keyboard-testing--docs) — focus order and tab order
-- [Semantic HTML and ARIA](/docs/guides-accessibility-guides-semantic-html-aria--docs) — roles, names, and light-DOM expectations
-- [Accessibility resources](/docs/guides-accessibility-guides-accessibility-resources--docs) — broader links
+- [Overview](/docs/guides-accessibility-guides-overview--docs): all accessibility guides in this section
+- [Headings and landmarks](/docs/guides-accessibility-guides-headings-and-landmarks--docs): W3C WAI landmarks and `h1`–`h6` guidance, WCAG criteria, screen readers, and Spectrum Web Components markup patterns
+- [Screen reader testing](/docs/guides-accessibility-guides-screen-reader-testing--docs): heading shortcuts and testing workflow
+- [Keyboard testing](/docs/guides-accessibility-guides-keyboard-testing--docs): focus order and tab order
+- [Semantic HTML and ARIA](/docs/guides-accessibility-guides-semantic-html-aria--docs): roles, names, and light-DOM expectations
+- [Accessibility resources](/docs/guides-accessibility-guides-accessibility-resources--docs): broader links
 
 **WAVE and WebAIM**
 
 - [WAVE browser extension (install and overview)](https://wave.webaim.org/extension/)
-- [WebAIM](https://webaim.org/) — WAVE and accessibility articles
+- [WebAIM](https://webaim.org/): WAVE and accessibility articles
 
 **W3C** heading and page-structure tutorials, plus **WCAG** “Understanding” links, are on [Headings and landmarks](/docs/guides-accessibility-guides-headings-and-landmarks--docs).
