@@ -107,6 +107,8 @@ jobs:
 
       - name: Prepare gen2-beta release
         if: github.event.inputs.dry_run != 'true'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: yarn release:gen2-beta
 
       - name: Capture released versions

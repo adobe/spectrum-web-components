@@ -151,6 +151,8 @@ jobs:
 
       - name: Version packages (snapshot — all generations)
         if: steps.release-mode.outputs.mode == 'snapshot'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: yarn changeset version --snapshot snapshot-test
 
       - name: Version packages (release — 1st-gen only)
