@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       tag:
-        description: 'NPM dist-tag for 1st-gen (e.g., latest, next, snapshot). 2nd-gen beta uses publish-2nd-gen.yml on gen2-beta.'
+        description: 'NPM dist-tag for 1st-gen (e.g., latest, next, snapshot). 2nd-gen beta releases separately via publish-2nd-gen.yml.'
         required: false
         default: 'next'
   pull_request:
@@ -276,7 +276,7 @@ jobs:
           echo "| **Mode** | \`${MODE}\` |" >> $GITHUB_STEP_SUMMARY
           echo "| **NPM tag** | \`${TAG}\` |" >> $GITHUB_STEP_SUMMARY
           if [ "$MODE" == "release" ]; then
-            echo "| **2nd-gen beta** | Use \`publish-2nd-gen.yml\` on \`gen2-beta\` |" >> $GITHUB_STEP_SUMMARY
+            echo "| **2nd-gen beta** | Use \`publish-2nd-gen.yml\` (runs separately on \`main\`) |" >> $GITHUB_STEP_SUMMARY
           fi
           echo "" >> $GITHUB_STEP_SUMMARY
 

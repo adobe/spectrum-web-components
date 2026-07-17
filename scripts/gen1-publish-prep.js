@@ -15,9 +15,10 @@
 /**
  * Helpers for the 1st-gen publish workflow on `main`.
  *
- * 2nd-gen packages release from `gen2-beta` via `publish-2nd-gen.yml`. When both
- * generations have pending changesets on `main`, `changeset version` must not
- * consume 2nd-gen-only files or leave 2nd-gen package bumps behind for
+ * 2nd-gen packages also release from `main`, via `publish-2nd-gen.yml`
+ * (see scripts/gen2-beta-release.js), but in Changesets prerelease mode.
+ * When both generations have pending changesets, `changeset version` must
+ * not consume 2nd-gen-only files or leave 2nd-gen package bumps behind for
  * `changeset publish` to ship accidentally.
  *
  * @example
@@ -78,7 +79,7 @@ function holdSecondGenOnlyChangesets() {
 
     renameSync(fullPath, path.join(HELD_DIR, file));
     held += 1;
-    console.log(`   📦 Held 2nd-gen-only changeset for gen2-beta: ${file}`);
+    console.log(`   📦 Held 2nd-gen-only changeset: ${file}`);
   }
 
   console.log(`\n✓ Held ${held} 2nd-gen-only changeset(s) out of versioning.`);
@@ -119,7 +120,7 @@ function revertSecondGenChurn() {
   }
 
   console.log(
-    `\n🧹 Reverting ${changed.length} 2nd-gen file(s) (published from gen2-beta, not main):`
+    `\n🧹 Reverting ${changed.length} 2nd-gen file(s) (published separately via publish-2nd-gen.yml):`
   );
   changed.forEach((file) => console.log(`     • ${file}`));
   execSync(`git checkout -- ${changed.map((file) => `'${file}'`).join(' ')}`, {

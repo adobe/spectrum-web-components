@@ -60,16 +60,12 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Validate gen2-beta branch
+      - name: Validate main branch
         env:
           REF_NAME: ${{ github.ref_name }}
         run: |
-          if [ "$REF_NAME" != "gen2-beta" ]; then
-            echo "ERROR: Publish 2nd-Gen Packages must run on the gen2-beta branch (got: $REF_NAME)"
-            exit 1
-          fi
-          if [ ! -f .changeset/pre.json ]; then
-            echo "ERROR: .changeset/pre.json not found. gen2-beta must be in Changesets pre-release mode."
+          if [ "$REF_NAME" != "main" ]; then
+            echo "ERROR: Publish 2nd-Gen Packages must run on main (got: $REF_NAME)"
             exit 1
           fi
 
@@ -105,7 +101,7 @@ jobs:
       - name: Build all packages
         run: yarn build
 
-      - name: Prepare gen2-beta release
+      - name: Prepare 2nd-gen beta release
         if: github.event.inputs.dry_run != 'true'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -180,9 +176,10 @@ jobs:
             echo "❌ 2nd-gen publish failed — NPM authentication did not succeed" >> $GITHUB_STEP_SUMMARY
           fi
 
-      - name: Commit and push gen2-beta release
+      - name: Commit and push 2nd-gen release
         if: github.event.inputs.dry_run != 'true'
         run: |
           git add .
           git commit --no-verify -m "chore: release 2nd-gen beta packages #publish-2nd-gen" || echo "No changes to commit"
-          git push origin gen2-beta
+          git pull --rebase origin main
+          git push
