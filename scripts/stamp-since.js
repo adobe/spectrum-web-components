@@ -49,8 +49,12 @@ import { readdirSync, readFileSync, writeFileSync } from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
+import cemConfig from '../2nd-gen/packages/swc/cem.config.js';
+
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.resolve(__dirname, '..');
+/** Directory the `cem.config.js` globs are relative to. */
+const SWC_DIR = path.join(repoRoot, '2nd-gen/packages/swc');
 
 /* ── Matching and scan config ────────────────────────────────────────────────
  * What the script looks for in a component's class JSDoc, and where it scans.
@@ -67,11 +71,15 @@ const SINCE_RE = /@since\s+\S+/;
 /** Matches an `@element` tag, marking a file as a badge-bearing element definition. */
 const ELEMENT_RE = /@element\s+\S+/;
 
-/** Default scan roots (absolute): where 2nd-gen badge-bearing elements are defined. */
-const DEFAULT_ROOTS = [
-  '2nd-gen/packages/swc/components',
-  '2nd-gen/packages/swc/patterns',
-].map((rel) => path.join(repoRoot, rel));
+/**
+ * Scan roots, derived from `cem.config.js` `globs` so this scan and the CEM the badge is built
+ * from stay in lockstep (no independent drift). Each glob is reduced to its base directory for
+ * the recursive walk; files are still filtered to `@element` definitions, so globs that hold no
+ * elements (e.g. core mixins/utils) are harmless.
+ */
+const DEFAULT_ROOTS = cemConfig.globs.map((glob) =>
+  path.resolve(SWC_DIR, glob.replace(/\/\*\*.*$/, ''))
+);
 
 /* ── Version source ──────────────────────────────────────────────────────────
  * Answers "which version do we stamp?". We never compute or predict it: at release
@@ -87,10 +95,18 @@ const GEN2_PACKAGE_JSON = path.join(
 const SEMVER = /^\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?(?:\+[0-9A-Za-z.-]+)?$/;
 
 /**
- * Read and validate the version to stamp from the 2nd-gen `package.json`.
+ * The stamp only runs for the beta prerelease line (e.g. `2.0.0-beta.1`). This guards against
+ * running it on `main`'s stable line (today `0.3.0`), which would stamp the wrong version into
+ * every component and cause drift. Relax this for the stable GA release when that lands.
+ */
+const BETA_VERSION = /-beta\.\d+/;
+
+/**
+ * Read the version to stamp from the 2nd-gen `package.json`, and refuse anything that is not a
+ * beta prerelease.
  *
- * @returns {string} The semver-validated version.
- * @throws If the version is missing or not valid semver.
+ * @returns {string} The `-beta.N` version to stamp.
+ * @throws If the version is missing, not valid semver, or not a beta prerelease.
  */
 function resolveVersion() {
   let candidate;
@@ -107,6 +123,12 @@ function resolveVersion() {
   }
   if (!SEMVER.test(candidate)) {
     throw new Error(`Version "${candidate}" is not a valid semver string.`);
+  }
+  if (!BETA_VERSION.test(candidate)) {
+    throw new Error(
+      `Refusing to stamp non-beta version "${candidate}". stamp-since only runs for beta ` +
+        `releases; on main's stable line it would stamp the wrong version and cause drift.`
+    );
   }
   return candidate;
 }
