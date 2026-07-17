@@ -344,7 +344,7 @@
   outline: var(--_swc-card-base-selected-focus-outline);
 }
 
-:host([selectable][variant="tertiary"]:focus-visible) {
+:host([selectable][variant="tertiary"]:is(:hover:focus-visible, :focus-visible)) {
   --swc-card-base-box-shadow: none;
 }
 
