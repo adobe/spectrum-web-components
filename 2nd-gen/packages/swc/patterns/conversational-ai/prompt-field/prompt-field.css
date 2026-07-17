@@ -130,9 +130,18 @@
   min-inline-size: 0;
   block-size: calc(var(--swc-prompt-field-artifact-media-block-size, 68px) + var(--swc-prompt-field-artifact-scrollbar-gap, 4px) + var(--swc-prompt-field-artifact-scrollbar-size, 8px));
   margin-block-end: calc(-1 * (var(--swc-prompt-field-artifact-scrollbar-gap, 4px) + var(--swc-prompt-field-artifact-scrollbar-size, 8px)));
+  border-radius: token("corner-radius-100");
   overflow: visible;
 
   --swc-prompt-field-artifact-fade-solid: color-mix(in srgb, token("background-layer-2-color") 80%, transparent);
+}
+
+/* Container-level focus stop: Tab reaches the strip itself (between the "<"
+ * and ">" buttons, which sit outside this ring), distinct from a tile's own
+ * ring; Enter/Space then moves focus into a tile. */
+.swc-PromptField-artifacts-viewport:focus-visible {
+  outline: token("focus-indicator-thickness") solid token("focus-indicator-color");
+  outline-offset: token("focus-ring-gap");
 }
 
 .swc-PromptField-artifacts-fade {
