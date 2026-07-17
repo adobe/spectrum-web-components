@@ -41,7 +41,10 @@ import {
 import path from 'path';
 
 const CHANGESET_DIR = '.changeset';
-const HELD_DIR = path.join(CHANGESET_DIR, '.held-for-gen2');
+// Must live outside `.changeset/`: `@changesets/read`'s legacy v1-changeset
+// support treats every directory under `.changeset/` as an old-format
+// changeset folder and crashes reading its `changes.md`/`changes.json`.
+const HELD_DIR = '.changeset-held-for-gen2';
 
 const SECOND_GEN_PATTERN =
   /@adobe\/spectrum-wc(-core)?|@spectrum-web-components\/core/;
