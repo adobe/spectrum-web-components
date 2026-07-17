@@ -39,17 +39,8 @@ import styles from './infield-button.css';
  * @cssprop --swc-infield-button-icon-size - Size of the slotted icon element.
  *   Defaults to `workflow-icon-3x-small` (10px) for sizes S and M.
  *   Overridden to `workflow-icon-2x-small` (12px) for L and `workflow-icon-extra-small` (14px) for XL.
- * @cssprop --swc-infield-button-border-radius - Default corner radius applied to all four
- *   corners. Defaults to `token("corner-radius-100")`. Override individual corners with the
- *   `--swc-infield-button-border-{start-start,start-end,end-start,end-end}-radius` properties.
- * @cssprop --swc-infield-button-border-start-start-radius - Start-start corner radius.
- *   Parent fields zero this out for side-aligned buttons.
- * @cssprop --swc-infield-button-border-start-end-radius - Start-end corner radius.
- *   Parent fields zero this out for side-aligned buttons.
- * @cssprop --swc-infield-button-border-end-start-radius - End-start corner radius.
- *   Parent fields zero this out for side-aligned buttons.
- * @cssprop --swc-infield-button-border-end-end-radius - End-end corner radius.
- *   Parent fields zero this out for side-aligned buttons.
+ * @cssprop --swc-infield-button-background-color-disabled - Background color when disabled.
+ *   Defaults to `token("disabled-background-color")`. Overridden to `transparent` by `[quiet]`.
  * @cssprop --swc-infield-button-down-state-transform - Transform applied on press (down state).
  *   Defaults to a perspective + translate3d that produces the tactile press effect.
  *   Set to `none` to disable the press animation (e.g. when the button is in a pending state).

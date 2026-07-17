@@ -33,6 +33,11 @@
   --swc-infield-button-icon-size: token("workflow-icon-extra-small");
 }
 
+:host([quiet]) {
+  --swc-infield-button-background-color: transparent;
+  --swc-infield-button-background-color-disabled: transparent;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -40,25 +45,22 @@
 /* ── Fill (button) ────────────────────────────────── */
 
 .swc-InfieldButton {
-  --_swc-infield-button-border-radius: var(--swc-infield-button-border-radius, token("corner-radius-100"));
+  --_swc-infield-button-padding: var(--swc-infield-button-padding, token("accessory-item-padding-medium"));
+  --_swc-infield-button-icon-size: var(--swc-infield-button-icon-size, token("workflow-icon-3x-small"));
 
   /* Total block size: 2× padding + icon. Used as the perspective distance for
      the press transform so the effect scales with component size. */
-  --_swc-infield-button-block-size: calc(var(--swc-infield-button-padding, token("accessory-item-padding-medium")) * 2 + var(--swc-infield-button-icon-size, token("workflow-icon-3x-small")));
+  --_swc-infield-button-block-size: calc(var(--_swc-infield-button-padding) * 2 + var(--_swc-infield-button-icon-size));
 
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: var(--swc-infield-button-padding, token("accessory-item-padding-medium"));
+  padding: var(--_swc-infield-button-padding);
   margin: 0;
   color: var(--swc-infield-button-icon-color, token("neutral-content-color-default"));
   background-color: var(--swc-infield-button-background-color, token("gray-100"));
   border: none;
-  border-radius: var(--_swc-infield-button-border-radius);
-  border-start-start-radius: var(--swc-infield-button-border-start-start-radius, var(--_swc-infield-button-border-radius));
-  border-start-end-radius: var(--swc-infield-button-border-start-end-radius, var(--_swc-infield-button-border-radius));
-  border-end-start-radius: var(--swc-infield-button-border-end-start-radius, var(--_swc-infield-button-border-radius));
-  border-end-end-radius: var(--swc-infield-button-border-end-end-radius, var(--_swc-infield-button-border-radius));
+  border-radius: token("corner-radius-100");
   appearance: none;
   cursor: default;
   transition-timing-function: token("animation-ease-in-out");
@@ -87,7 +89,7 @@
   outline: none;
 }
 
-/* Inflated specificity prevents hover from overriding disabled */
+/* Inflated specificity prevents hover from overriding disabled. */
 .swc-InfieldButton:disabled:is(*, :hover, :active) {
   color: var(--swc-infield-button-icon-color-disabled, token("disabled-content-color"));
   background-color: var(--swc-infield-button-background-color-disabled, token("disabled-background-color"));
@@ -97,24 +99,12 @@
 
 /* ── Icon slot ────────────────────────────────────── */
 
-slot[name="icon"]::slotted(*) {
-  --_swc-infield-button-icon-size: var(--swc-infield-button-icon-size, token("workflow-icon-3x-small"));
-
+::slotted([slot="icon"]) {
   flex-shrink: 0;
   inline-size: var(--_swc-infield-button-icon-size);
   block-size: var(--_swc-infield-button-icon-size);
   color: inherit;
   fill: currentcolor;
-}
-
-/* ── Quiet ────────────────────────────────────────── */
-
-:host([quiet]) .swc-InfieldButton {
-  background-color: transparent;
-}
-
-:host([quiet]) .swc-InfieldButton:disabled:is(*, :hover, :active) {
-  background-color: transparent;
 }
 
 /* ── Forced colors ────────────────────────────────── */
@@ -123,16 +113,8 @@ slot[name="icon"]::slotted(*) {
   .swc-InfieldButton {
     color: ButtonText;
     background-color: ButtonFace;
-    border-color: ButtonBorder;
+    border: 1px solid ButtonBorder;
     forced-color-adjust: none;
-  }
-
-  .swc-InfieldButton:hover,
-  .swc-InfieldButton:active,
-  .swc-InfieldButton:focus-visible {
-    color: ButtonText;
-    background-color: ButtonFace;
-    border-color: Highlight;
   }
 
   .swc-InfieldButton:disabled:is(*, :hover, :active) {
