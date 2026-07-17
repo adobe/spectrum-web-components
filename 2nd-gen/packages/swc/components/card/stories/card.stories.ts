@@ -125,7 +125,7 @@ export const Playground: Story = {
     'title-slot': 'Card title',
     'description-slot': 'Supporting description text.',
     'actions-slot': `<swc-action-button quiet accessible-label="More actions"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true"
-      viewBox="0 0 18 18" slot="icon">
+      viewBox="0 0 20 18" slot="icon">
       <circle cx="10" cy="10" r="1.5" />
       <path d="M10 8.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3" />
       <circle cx="4" cy="10" r="1.5" />
@@ -163,7 +163,7 @@ export const Anatomy: Story = {
           <svg
             xmlns="http://www.w3.org/2000/svg"
             aria-hidden="true"
-            viewBox="0 0 20 20"
+            viewBox="0 0 20 18"
             slot="icon"
           >
             <circle cx="10" cy="10" r="1.5" />
@@ -257,7 +257,7 @@ export const TitleAsLink: Story = {
           <svg
             xmlns="http://www.w3.org/2000/svg"
             aria-hidden="true"
-            viewBox="0 0 20 20"
+            viewBox="0 0 20 18"
             slot="icon"
           >
             <circle cx="10" cy="10" r="1.5" />

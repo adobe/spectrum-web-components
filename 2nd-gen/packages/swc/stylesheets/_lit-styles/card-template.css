@@ -25,6 +25,7 @@
 
 :host {
   --_swc-card-base-border-radius: var(--swc-card-base-border-radius, token("corner-radius-700"));
+  --_swc-card-base-selected-focus-outline: token("focus-indicator-thickness") solid token("gray-800");
 
   display: block;
   max-inline-size: var(--swc-card-base-max-inline-size, 280px);
@@ -39,7 +40,6 @@
    ───────────────────────────────────────────────────────────────────────────── */
 
 .swc-CardBase {
-  --_swc-card-base-outline-width: var(--swc-card-base-outline-width, 0px);
   --_swc-card-base-box-shadow: var(--swc-card-base-box-shadow, token("drop-shadow-emphasized"));
   --_swc-card-base-title-font-size: var(--swc-card-base-title-font-size, token("font-size-200"));
   --_swc-card-base-title-line-height: var(--swc-card-base-title-line-height, token("line-height-font-size-300"));
@@ -47,6 +47,8 @@
   --_swc-card-base-action-component-height: var(--swc-card-base-action-component-height, token("component-height-75"));
   --_swc-card-base-content-padding: var(--swc-card-base-content-padding, var(--swc-card-base-content-padding-regular, token("container-padding-medium")));
   --_swc-card-base-footer-padding: 0 var(--_swc-card-base-content-padding) var(--_swc-card-base-content-padding);
+  --_swc-card-base-transition-timing-function: token("animation-ease-in-out");
+  --_swc-card-base-transition-duration: token("animation-duration-100");
 
   display: grid;
   position: relative;
@@ -62,8 +64,8 @@
   background-color: var(--swc-card-base-background-color, token("background-layer-2-color"));
   border-radius: var(--_swc-card-base-border-radius);
   box-shadow: var(--_swc-card-base-box-shadow);
-  transition-timing-function: token("animation-ease-in-out");
-  transition-duration: token("animation-duration-100");
+  transition-timing-function: var(--_swc-card-base-transition-timing-function);
+  transition-duration: var(--_swc-card-base-transition-duration);
   transition-property: outline, border, box-shadow;
 }
 
@@ -114,6 +116,28 @@
    SLOTTED CONTENT
    ───────────────────────────────────────────────────────────────────────────── */
 
+::slotted(*) {
+  margin-block: 0;
+}
+
+::slotted(a) {
+  inline-size: fit-content;
+  color: inherit;
+  text-decoration: none;
+}
+
+::slotted(a:hover) {
+  text-decoration: underline;
+}
+
+::slotted(a:focus-visible) {
+  outline: token("focus-indicator-thickness") solid token("focus-indicator-color");
+}
+
+::slotted(:not([slot])) {
+  grid-area: default-slot;
+}
+
 ::slotted([slot="preview"]) {
   display: block;
   grid-area: preview;
@@ -158,10 +182,6 @@
   line-height: token("line-height-200") !important;
 }
 
-::slotted(*) {
-  margin-block: 0;
-}
-
 ::slotted([slot="actions"]) {
   grid-area: actions;
   justify-self: end;
@@ -173,24 +193,6 @@
 
 ::slotted(swc-action-button[slot="actions"]) {
   margin-block: calc(((var(--_swc-card-base-action-component-height) - var(--_swc-card-base-title-line-height)) / 2) * -1);
-}
-
-::slotted(:not([slot])) {
-  grid-area: default-slot;
-}
-
-::slotted(a) {
-  inline-size: fit-content;
-  color: inherit;
-  text-decoration: none;
-}
-
-::slotted(a:hover) {
-  text-decoration: underline;
-}
-
-::slotted(a:focus-visible) {
-  outline: token("focus-indicator-thickness") solid token("focus-indicator-color");
 }
 
 /* ─────────────────────────────────────────────────────────────────────────────
@@ -296,8 +298,8 @@
   .swc-CardBase-media {
     border-radius: var(--_swc-card-base-border-radius);
     box-shadow: var(--_swc-card-base-box-shadow);
-    transition-timing-function: token("animation-ease-in-out");
-    transition-duration: token("animation-duration-100");
+    transition-timing-function: var(--_swc-card-base-transition-timing-function);
+    transition-duration: var(--_swc-card-base-transition-duration);
     transition-property: outline, box-shadow;
   }
 }
@@ -338,11 +340,8 @@
    SELECTABLE
    ───────────────────────────────────────────────────────────────────────────── */
 :host([selectable]:not([variant="quiet"]):focus-visible) {
-  --swc-card-base-outline-width: token("focus-indicator-thickness");
-
   border-radius: var(--_swc-card-base-border-radius);
-  outline-color: token("gray-800");
-  outline-offset: 1px;
+  outline: var(--_swc-card-base-selected-focus-outline);
 }
 
 :host([selectable][variant="tertiary"]:focus-visible) {
@@ -354,7 +353,7 @@
 }
 
 :host([selectable][variant="quiet"]:focus-visible) .swc-CardBase-media {
-  outline: var(--swc-card-base-outline-width, token("focus-indicator-thickness")) solid token("gray-800");
+  outline: var(--_swc-card-base-selected-focus-outline);
 }
 
 /* ─────────────────────────────────────────────────────────────────────────────
@@ -365,7 +364,7 @@
   --swc-card-base-box-shadow: token("drop-shadow-emphasized-hover");
 }
 
-:host(:is([title-as-link], [selectable])[variant="tertiary"]:is(:hover, :focus-visible)) {
+:host(:is([title-as-link], [selectable])[variant="tertiary"]:hover) {
   --swc-card-base-box-shadow: 0 0 0 1px token("gray-100");
 }
 

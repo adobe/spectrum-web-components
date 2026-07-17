@@ -43,7 +43,6 @@ import styles from './card.css';
  * @cssprop --swc-card-base-max-inline-size - Maximum inline size of the card. Defaults to 280px, overridden per size.
  * @cssprop --swc-card-base-border-radius - Corner radius of the card. Defaults to the extra-large corner-radius token, overridden per size.
  * @cssprop --swc-card-base-box-shadow - Box shadow (elevation) of the card. Defaults to the emphasized drop-shadow token; overridden by the tertiary variant, selectable focus, and title-as-link/selectable hover.
- * @cssprop --swc-card-base-outline-width - Focus-visible outline width when `selectable`. Defaults to 0; set to the focus-indicator-thickness token on focus.
  * @cssprop --swc-card-base-background-color - Background color of the card. Defaults to the layer-2 background token; overridden by the secondary, tertiary, and quiet variants.
  * @cssprop --swc-card-base-preview-aspect-ratio - Aspect ratio of the preview slot. Defaults to 3/2.
  * @cssprop --swc-card-base-title-font-size - Font size of the title slot. Defaults to the medium font-size token, overridden per size.
