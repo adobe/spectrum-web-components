@@ -37,25 +37,27 @@ Contributors add changesets on `main` for both generations. Versioning mechanics
 - **1st-gen** uses Changesets snapshot or `latest` releases on `main`
 - **2nd-gen** uses Changesets **pre-release mode** (`pre.json`, tag `beta`) on `gen2-beta` so versions stay on the `2.0.0-beta.N` line through GA
 
-Each generation uses different npm auth (OIDC for 1st-gen, token for `@adobe/*`) and different dist-tags. Combining both into one workflow would mix those concerns in a single job.
+Each generation uses different npm auth (OIDC for 1st-gen, token for `@adobe/*`) and different dist-tags. A single combined workflow would force scope or branch switching per generation inside one job and risks publishing a package under the wrong dist-tag.
 
 ## Decision
 
-Use **two CI workflows** on **two branches**:
+Use **two independent CI workflows** on **two branches**:
 
 | Workflow | File | Branch | Trigger | Publishes |
 | -------- | ---- | ------ | ------- | --------- |
 | Publish Packages | `publish.yml` | `main` | push to `main`, manual dispatch, PR `snapshot-release` label | 1st-gen → `next`, `latest`, or `snapshot-test` |
-| Publish 2nd-Gen Packages | `publish-2nd-gen.yml` | `gen2-beta` | manual dispatch | `@adobe/spectrum-wc-core`, `@adobe/spectrum-wc` → `beta` |
+| Publish 2nd-Gen Packages | `publish-2nd-gen.yml` | `gen2-beta` | manual dispatch | `@adobe/spectrum-wc-core`, `@adobe/spectrum-wc` → `beta` (`2.0.0-beta.N`) |
 
-| Scenario | Behavior |
-| -------- | -------- |
-| 1st-gen changesets only | `publish.yml` on `main`; `publish-2nd-gen.yml` skips |
-| 2nd-gen changesets only | `publish-2nd-gen.yml` on `gen2-beta`; `publish.yml` skips on `main` |
-| Both generations | Run each workflow on its branch |
-| `latest` on `main` | 1st-gen production only |
-| PR `snapshot-release` | `publish.yml` snapshot-versions all pending changesets under `snapshot-test` |
-| 2nd-gen dry run | `publish-2nd-gen.yml` with `dry_run=true` — pack and `npm publish --dry-run` only |
+The operator runs one or both workflows as needed. Two steps are required when both generations ship in the same release.
+
+| Scenario | Result |
+| -------- | ------ |
+| Both gens have changesets | Run both workflows; 1st-gen → `next`, 2nd-gen → `beta` with pre-mode changelog |
+| Only 1st-gen changesets | `publish.yml` ships; `publish-2nd-gen.yml` skips |
+| Only 2nd-gen changesets | `publish-2nd-gen.yml` ships; `publish.yml` skips on `main` |
+| Prod (`latest`) | `publish.yml` only; never cuts a 2nd-gen beta |
+| PR `snapshot-release` | `publish.yml` snapshots both gens under `snapshot-test` |
+| Dry run | `publish-2nd-gen.yml` with `dry_run=true` |
 
 Supporting scripts:
 
