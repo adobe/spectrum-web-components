@@ -27,7 +27,7 @@ Put the AI reply in the **default slot** as semantic HTML styled with Spectrum t
 
 ### Typography in the default slot
 
-Rich AI body copy should use Spectrum typography **utility classes** on semantic HTML. Applications must load **`typography.css`** from `@adobe/spectrum-wc` after design tokens. See **Typography** and the typography [consumer migration guide](/docs/components-typography-consumer-migration-guide--readme).
+Rich AI body copy should use Spectrum typography **utility classes** on semantic HTML. Applications must load **`typography.css`** from `@adobe/spectrum-wc` after design tokens. See **Typography** and the typography [consumer migration guide](/docs/components-typography-consumer-migration-guide--docs) for more information.
 
 - **Wrapper**: root container `class="swc-Typography--prose"`. `swc-Typography--prose` applies consistent vertical spacing between block-level children.
 - **Body**: use semantic paragraphs and lists for body styling.
@@ -50,8 +50,8 @@ While the AI is generating a response, slot `<swc-response-status status="active
 
 The `<swc-system-message>` element provides a layout container. Accessibility is delegated to the slotted sub-components:
 
-- `<swc-response-status>` exposes its visible status text and, when steps exist, a labelled disclosure for the execution timeline
-- `<swc-message-feedback>` exposes a labelled toggle button group via `role="group"` and `aria-pressed`
+- `<swc-response-status>` exposes its visible status text and, when steps exist, a labeled disclosure for the execution timeline
+- `<swc-message-feedback>` exposes a labeled toggle button group via `role="group"` and `aria-pressed`
 - `<swc-message-sources>` uses `aria-expanded` on its disclosure toggle
 - `<swc-suggestion-item>` is a native focusable `<button>` element
 

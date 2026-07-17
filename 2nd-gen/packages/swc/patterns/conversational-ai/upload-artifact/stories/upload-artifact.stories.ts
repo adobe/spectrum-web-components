@@ -31,7 +31,7 @@ argTypes.type = {
 /**
  * Shared upload artifact primitive used across conversational AI surfaces such as prompt field and user message.
  * Supports both **`card`** and **`media`** types with a unified slot model.
- * For several attachments at once, see **Multi-artifact** and **[Prompt field → Artifact](/docs/patterns-conversational-ai-prompt-field--readme#artifact)**.
+ * For several attachments at once, see **Multi-artifact** and **[Prompt field → Artifact](/docs/patterns-conversational-ai-prompt-field--docs#artifact)**.
  */
 const meta: Meta = {
   title: 'Conversational AI/Upload artifact',
@@ -138,6 +138,7 @@ export const MultiArtifact: Story = {
   `,
   tags: ['options'],
 };
+MultiArtifact.storyName = 'Multi artifact';
 
 export const Card: Story = {
   render: () => html`
@@ -179,3 +180,4 @@ export const TextOverflow: Story = {
   `,
   tags: ['options'],
 };
+TextOverflow.storyName = 'Text overflow';

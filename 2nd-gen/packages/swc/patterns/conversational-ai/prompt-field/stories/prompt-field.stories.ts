@@ -434,6 +434,7 @@ export const HandlingEvents: Story = {
   },
   tags: ['behaviors'],
 };
+HandlingEvents.storyName = 'Handling events';
 
 // ────────────────────────────────
 //    ACCESSIBILITY STORY

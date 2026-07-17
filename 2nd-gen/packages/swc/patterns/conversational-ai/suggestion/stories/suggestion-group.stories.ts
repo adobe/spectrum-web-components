@@ -151,6 +151,7 @@ export const SuggestionCount: Story = {
   `,
   tags: ['options'],
 };
+SuggestionCount.storyName = 'Suggestion count';
 
 export const Heading: Story = {
   render: () => html`

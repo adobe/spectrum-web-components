@@ -22,24 +22,24 @@ import * as PlacementControllerStories from './stories/placement-controller.stor
 
 Same order as Gen1: `offset → shift → flip → size`.
 
-1. **`offset`** — trigger-relative gap along the placement direction (`offset`
+1. **`offset`**: trigger-relative gap along the placement direction (`offset`
    option) and along the trigger edge (`crossOffset` option).
-2. **`shift`** — slides the floating element along the placement axis to keep it
+2. **`shift`**: slides the floating element along the placement axis to keep it
    inside the boundary using `containerPadding` as inset. Always installed.
-3. **`flip`** (when `shouldFlip: true`) — reorients to the opposite side when
+3. **`flip`** (when `shouldFlip: true`): reorients to the opposite side when
    there is not enough room, respecting `containerPadding`.
-4. **`size`** — always installed. Exposes the available space as the
+4. **`size`**: always installed. Exposes the available space as the
    `--swc-placement-available-width` / `--swc-placement-available-height` custom
    properties (components opt in via `min()`). Read `isConstrained` to detect
    when content overflows the available space.
-5. **`arrow`** (when a `tipElement` is provided) — positions a tip element so it
+5. **`arrow`** (when a `tipElement` is provided): positions a tip element so it
    stays pointing at the trigger's center as the floating panel shifts.
 
 ### What the caller owns
 
 - Showing and hiding the floating surface (`showPopover`, `hidden`, etc.).
 - ARIA (`aria-controls`, `aria-expanded`, focus trap, escape dismissal).
-- Placement styling — use `onPlacementChange` to apply CSS modifier classes; the
+- Placement styling: use `onPlacementChange` to apply CSS modifier classes; the
   controller does **not** write `placement` attributes on the floating element.
 
 ## Basic usage
@@ -184,7 +184,7 @@ Components opt in with `min()`, e.g.
 `max-inline-size: min(<intended>, var(--swc-placement-available-width))`. The
 readonly **`isConstrained`** property is `true` when the content would overflow the
 available block space, so consumers can react to "content is currently clamped" —
-e.g. enable scrolling or show a scrollbar hint.
+e.g., enable scrolling or show a scrollbar hint.
 
 No option to opt out of the measurement. Only components positioned by the
 controller receive these properties.
@@ -279,10 +279,10 @@ responsible for accessible open/close behavior.
 
 - **`aria-expanded`**, **`aria-controls`**, and appropriate roles on trigger and
   floating content (`dialog`, `listbox`, `tooltip`, etc.).
-- Focus management — move focus into modal popovers, restore focus on close, trap
+- Focus management: move focus into modal popovers, restore focus on close, trap
   focus when required.
-- Keyboard dismissal — typically <kbd>Escape</kbd> to close interactive surfaces.
-- Visibility — the controller does not show or hide the floating element; use
+- Keyboard dismissal: typically <kbd>Escape</kbd> to close interactive surfaces.
+- Visibility: the controller does not show or hide the floating element; use
   `hidden`, `showPopover()`, or similar in the host.
 
 ### Best practices
