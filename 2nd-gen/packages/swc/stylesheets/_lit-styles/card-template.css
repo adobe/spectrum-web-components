@@ -281,10 +281,7 @@
 
 :host([variant="quiet"]) {
   --card-background-color: transparent;
-
-  .card {
-    box-shadow: none;
-  }
+  --card-box-shadow: none;
 
   .card-content,
   .card-footer {
