@@ -14,27 +14,29 @@ import { PropertyValues } from 'lit';
 import { property } from 'lit/decorators.js';
 
 import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
-import { SizedMixin } from '@spectrum-web-components/core/mixins/index.js';
+import {
+  type ElementSize,
+  SizedMixin,
+} from '@spectrum-web-components/core/mixins/index.js';
 
+import { SlotAttributePropagationController } from '../../controllers/slot-attribute-propagation/index.js';
 import {
   CARD_DENSITIES,
   CARD_VALID_SIZES,
   CARD_VARIANTS,
   type CardDensity,
+  type CardSize,
   type CardVariant,
+  SWC_CARD_CLICK_EVENT,
 } from './Card.types.js';
 
 /**
  * Abstract base class for all card-family components. Owns the semantics
  * shared across every card type: sizing, visual variant, and density.
  *
- * `swc-card`, `swc-user-card`, and `swc-product-card` each extend this base
- * directly and render the shared anatomy via `renderCardTemplate()` in
- * `swc/components/card/card-template.ts`. That template also carries a
- * collection placeholder and an avatar/thumbnail glyph, each supplied
- * per-component via `renderCollection`/`renderGlyph`.
- *
  * @attribute {ElementSize} size - The size of the card.
+ *
+ * @fires swc-card-click - Dispatched when a `selectable` card is activated (click, Enter, or Space).
  *
  * @slot preview - Primary preview content
  * @slot title - Card title
@@ -84,9 +86,6 @@ export abstract class CardBase extends SizedMixin(SpectrumElement, {
    * Indicates the consumer has wrapped their `title` slot content in a real
    * link. Extends that link's hit area to cover the card surface while
    * leaving navigation entirely consumer-owned — Card accepts no `href`.
-   *
-   * @todo Naming, and the `::slotted(a)::after` vs. click-proxy mechanism,
-   * are still open. See the card family plan, A11y-3 / Q2.
    */
   @property({ type: Boolean, reflect: true, attribute: 'title-as-link' })
   public titleAsLink = false;
@@ -94,16 +93,10 @@ export abstract class CardBase extends SizedMixin(SpectrumElement, {
   /**
    * Makes the card focusable and captures surface clicks (excluding nested
    * interactive targets) to dispatch a `swc-card-click` event, independent
-   * of `titleAsLink`. Lays groundwork for a future `CardView` selection
-   * model without Card owning selected-state UI itself.
+   * of `titleAsLink`.
    *
-   * @todo Event name and `tabindex` management details are still open. See
-   * the card family plan, A11y-3 / Q3.
-   * @todo No `role` is set when `selectable` is true — deferred rather than
-   * defaulting to `role="button"`, since the eventual `CardView` selection
-   * model may call for a different role (e.g. `option`/`gridcell`) that
-   * `role="button"` would be wrong to have committed to today. See the card
-   * family plan, A11y-3 / Q8.
+   * @todo No ARIA role is set yet; deferred until a future `CardView`
+   * selection model determines the appropriate role.
    */
   @property({ type: Boolean, reflect: true })
   public selectable = false;
@@ -111,6 +104,19 @@ export abstract class CardBase extends SizedMixin(SpectrumElement, {
   // ──────────────────────
   //     IMPLEMENTATION
   // ──────────────────────
+
+  /**
+   * Keeps a slotted action control's `size` one step smaller than the
+   * card's own `size`.
+   */
+  private readonly _sizePropagation = new SlotAttributePropagationController(
+    this,
+    {
+      attribute: 'size',
+      getValue: () => CardBase.getSmallerSize(this.size),
+      slotName: 'actions',
+    }
+  );
 
   public override connectedCallback(): void {
     super.connectedCallback();
@@ -121,6 +127,16 @@ export abstract class CardBase extends SizedMixin(SpectrumElement, {
     this.removeEventListener('click', this.handleSurfaceClick);
     this.removeEventListener('keydown', this.handleSelectableKeydown);
     super.disconnectedCallback();
+  }
+
+  protected override firstUpdated(changedProperties: PropertyValues): void {
+    super.firstUpdated(changedProperties);
+    // renderCardTemplate() doesn't take a slotchange callback, so the
+    // listener is attached imperatively rather than declaratively in the
+    // template — the slot node itself persists across re-renders.
+    this.renderRoot
+      ?.querySelector('slot[name="actions"]')
+      ?.addEventListener('slotchange', this.handleActionsSlotChange);
   }
 
   protected override updated(changedProperties: PropertyValues): void {
@@ -159,7 +175,7 @@ export abstract class CardBase extends SizedMixin(SpectrumElement, {
           this,
           `<${this.localName}> received an invalid "density" value of "${this.density}". Valid values are ${DENSITIES.join(', ')}.`,
           'https://opensource.adobe.com/spectrum-web-components/components/card/',
-          { issues: [`density="${this.density}"`] }
+          { level: 'low', issues: [`density="${this.density}"`] }
         );
       }
 
@@ -172,16 +188,20 @@ export abstract class CardBase extends SizedMixin(SpectrumElement, {
           this,
           `<${this.localName}> has "title-as-link" set but no link element was found in the "title" slot.`,
           'https://opensource.adobe.com/spectrum-web-components/components/card/',
-          { issues: ['title-as-link'] }
+          { level: 'high', issues: ['title-as-link'] }
         );
+      }
+
+      if (changedProperties.has('size')) {
+        this.checkActionsSupport();
       }
     }
   }
 
   /**
    * @internal
-   * The card's own `title` slot element, or `null` before the concrete
-   * class's `renderCardTemplate()` call has rendered.
+   *
+   * The card's own `title` slot element.
    */
   protected getTitleSlotElement(): HTMLSlotElement | null {
     return this.renderRoot?.querySelector('slot[name="title"]') ?? null;
@@ -189,11 +209,51 @@ export abstract class CardBase extends SizedMixin(SpectrumElement, {
 
   /**
    * @internal
-   * The `title` slot's link, supporting both forms consumers reasonably
-   * use: the assigned element itself is the anchor (`<a slot="title"
-   * href="...">`), or the anchor is nested inside a wrapper (`<span
-   * slot="title"><a href="...">`). Requires `href` — a link with no
-   * destination can't usefully be clicked-through.
+   *
+   * The card's own `actions` slot element.
+   */
+  protected getActionsSlotElement(): HTMLSlotElement | null {
+    return this.renderRoot?.querySelector('slot[name="actions"]') ?? null;
+  }
+
+  /**
+   * Whether the `actions` slot is supported for this card's current state.
+   * `xs` cards don't have room for it. Concrete classes may override this
+   * to exclude the slot for other reasons, independent of size.
+   */
+  protected get actionsSupported(): boolean {
+    return this.size !== 'xs';
+  }
+
+  /**
+   * @internal
+   *
+   * Warns in dev mode when the `actions` slot has content but isn't
+   * supported for the current state. Visual suppression is handled in
+   * CSS, not here.
+   */
+  private checkActionsSupport(): void {
+    if (
+      window.__swc?.DEBUG &&
+      !this.actionsSupported &&
+      (this.getActionsSlotElement()?.assignedElements({ flatten: true })
+        .length ?? 0) > 0
+    ) {
+      window.__swc.warn(
+        this,
+        `<${this.localName}> has content in the "actions" slot, but actions are not supported for this card (size="${this.size}").`,
+        'https://opensource.adobe.com/spectrum-web-components/components/card/',
+        { level: 'medium', issues: ['actions'] }
+      );
+    }
+  }
+
+  /**
+   * @internal
+   *
+   * The `title` slot's link: either the assigned element itself
+   * (`<a slot="title" href="...">`) or an anchor nested inside a wrapper
+   * (`<span slot="title"><a href="...">`). Requires `href`.
    */
   protected getTitleLinkElement(): HTMLAnchorElement | null {
     const assigned = this.getTitleSlotElement()?.assignedElements({
@@ -213,38 +273,59 @@ export abstract class CardBase extends SizedMixin(SpectrumElement, {
 
   /**
    * @internal
-   * Whether `node` provides its own interaction/focus semantics. Checking
-   * the `tabIndex` IDL property (rather than the `tabindex` attribute or a
-   * tag-name list) correctly covers natively-interactive elements
-   * (`button`, `input`, `select`, `textarea`, `a[href]`) with no explicit
-   * attribute, excludes `tabindex="-1"` (focusable for scripting, not a
-   * click target) and disabled controls, and works for a custom element's
-   * internal shadow-DOM control too — `composedPath()` already traverses
-   * into other elements' shadow roots for composed events like `click`, so
-   * an internal `<button>` inside e.g. `<swc-button>` is inspected directly
-   * regardless of which shadow tree it belongs to.
+   *
+   * Whether `node` has its own interaction/focus semantics, via the
+   * `tabIndex` IDL property rather than the `tabindex` attribute — this
+   * also correctly excludes `tabindex="-1"` and disabled controls.
    */
   private static isFocusable(node: EventTarget): boolean {
     return node instanceof HTMLElement && node.tabIndex >= 0;
   }
 
   /**
+   * @internal
+   *
+   * The size one step below `size` in `CARD_VALID_SIZES`, clamped at the
+   * smallest size.
+   */
+  private static getSmallerSize(size: ElementSize): CardSize {
+    const index = CARD_VALID_SIZES.indexOf(size as CardSize);
+    return CARD_VALID_SIZES[Math.max(index - 1, 0)];
+  }
+
+  /**
+   * Re-propagates the `actions` slot's `size` for elements assigned after
+   * the initial render — wired to the slot's `slotchange` in
+   * `firstUpdated()`.
+   */
+  protected readonly handleActionsSlotChange = (): void => {
+    this._sizePropagation.propagate();
+    this.checkActionsSupport();
+  };
+
+  /**
    * Proxies a qualifying surface click to `titleAsLink`'s link and/or
    * dispatches `swc-card-click` for `selectable`, after filtering out
-   * clicks that landed on a nested interactive target (see `isFocusable()`
-   * and the `actions`-slot exclusion above).
+   * clicks that landed on a nested interactive target or followed a
+   * text-selection drag.
    */
   protected readonly handleSurfaceClick = (event: Event): void => {
     if (!this.titleAsLink && !this.selectable) {
       return;
     }
+    // A text-selection drag still fires `click` on mouseup; a non-collapsed
+    // selection at that point means the user was selecting text, not
+    // clicking through the card.
+    if (document.getSelection()?.isCollapsed === false) {
+      return;
+    }
     const path = event.composedPath();
     const precedingPath = path.slice(0, path.indexOf(this));
-    const actionsSlot = this.renderRoot?.querySelector('slot[name="actions"]');
+    const actionsSlot = this.getActionsSlotElement();
     const hitInteractiveTarget =
-      // The `actions` slot is unconditionally excluded, defense-in-depth,
-      // since it's contractually for interactive content regardless of
-      // whether a given control correctly reflects focusability.
+      // The actions slot is always excluded, since it's contractually
+      // for interactive content regardless of whether a control reflects
+      // focusability correctly.
       (actionsSlot && precedingPath.includes(actionsSlot)) ||
       precedingPath.some(CardBase.isFocusable);
     if (hitInteractiveTarget) {
@@ -255,20 +336,16 @@ export abstract class CardBase extends SizedMixin(SpectrumElement, {
     }
     if (this.selectable) {
       this.dispatchEvent(
-        new Event('swc-card-click', { bubbles: true, composed: true })
+        new Event(SWC_CARD_CLICK_EVENT, { bubbles: true, composed: true })
       );
     }
   };
 
   /**
-   * `tabindex` is only ever added alongside this listener (see `updated()`)
-   * and removed alongside its removal — a focusable card is never left
-   * without keyboard activation. Enter and Space are treated identically
-   * and both proxy to `titleAsLink`'s link when set, even though a bare
-   * link conventionally responds to Enter only: the card's own activation
-   * contract (Enter+Space, more button-like) is authoritative once
-   * `selectable` makes the card itself the focused target, regardless of
-   * what that activation happens to proxy to.
+   * Enter and Space both activate the card, even though a bare link
+   * conventionally responds to Enter only — the card's own activation
+   * contract takes precedence once `selectable` makes it the focused
+   * target.
    */
   protected readonly handleSelectableKeydown = (event: KeyboardEvent): void => {
     if (event.code === 'Enter' || event.code === 'Space') {

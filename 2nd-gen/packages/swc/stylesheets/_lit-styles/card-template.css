@@ -16,9 +16,380 @@
  * module, not via a CSS `@import` — see
  * CONTRIBUTOR-DOCS/02_style-guide/01_css/07_stylesheets.md.
  *
- * Targets the plain `.card`/`.card__*` classes from `card-template.ts`.
- *
- * @todo Populate with the shared layout and the size/density token wiring
- * for CardBase's `size` and `density` properties, following token guidance
- * from the Layout RFC.
+ * Targets the plain `.swc-CardBase`/`.swc-CardBase-*` classes from `card-template.ts`.
  */
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   HOST
+   ───────────────────────────────────────────────────────────────────────────── */
+
+:host {
+  --_swc-card-base-border-radius: var(--swc-card-base-border-radius, token("corner-radius-700"));
+  --_swc-card-base-selected-focus-outline: token("focus-indicator-thickness") solid token("gray-800");
+
+  display: block;
+  max-inline-size: var(--swc-card-base-max-inline-size, 280px);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   BASE STRUCTURE
+   ───────────────────────────────────────────────────────────────────────────── */
+
+.swc-CardBase {
+  --_swc-card-base-box-shadow: var(--swc-card-base-box-shadow, token("drop-shadow-emphasized"));
+  --_swc-card-base-title-font-size: var(--swc-card-base-title-font-size, token("font-size-200"));
+  --_swc-card-base-title-line-height: var(--swc-card-base-title-line-height, token("line-height-font-size-300"));
+  --_swc-card-base-description-font-size: var(--swc-card-base-description-font-size, token("font-size-75"));
+  --_swc-card-base-action-component-height: var(--swc-card-base-action-component-height, token("component-height-75"));
+  --_swc-card-base-content-padding: var(--swc-card-base-content-padding, var(--swc-card-base-content-padding-regular, token("container-padding-medium")));
+  --_swc-card-base-footer-padding: 0 var(--_swc-card-base-content-padding) var(--_swc-card-base-content-padding);
+  --_swc-card-base-transition-timing-function: token("animation-ease-in-out");
+  --_swc-card-base-transition-duration: token("animation-duration-100");
+
+  display: grid;
+  position: relative;
+  grid-template-areas:
+    "media"
+    "content"
+    "footer";
+  grid-template-rows: auto auto 1fr auto;
+  align-items: start;
+  font-size: var(--_swc-card-base-title-font-size);
+  line-height: var(--_swc-card-base-title-line-height);
+  color: token("neutral-content-color-default");
+  background-color: var(--swc-card-base-background-color, token("background-layer-2-color"));
+  border-radius: var(--_swc-card-base-border-radius);
+  box-shadow: var(--_swc-card-base-box-shadow);
+  transition-timing-function: var(--_swc-card-base-transition-timing-function);
+  transition-duration: var(--_swc-card-base-transition-duration);
+  transition-property: outline, border, box-shadow;
+}
+
+.swc-CardBase-content {
+  display: grid;
+  grid-area: content;
+  grid-template-areas:
+    "title actions"
+    "description description"
+    "default-slot default-slot";
+  grid-template-rows: auto auto 1fr;
+  grid-template-columns: 1fr auto;
+  align-items: start;
+  padding: var(--_swc-card-base-content-padding);
+  column-gap: var(--swc-card-base-content-header-gap, token("base-gap-medium"));
+}
+
+.swc-CardBase-media {
+  display: grid;
+  grid-area: media;
+  grid-template-areas:
+    "preview"
+    "collection";
+  grid-template-rows: auto auto;
+  border-radius: var(--_swc-card-base-border-radius) var(--_swc-card-base-border-radius) 0 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.swc-CardBase-footer {
+  display: none;
+  grid-area: footer;
+  padding: var(--_swc-card-base-footer-padding);
+}
+
+:host(:has([slot="footer"])) .swc-CardBase-footer {
+  display: block;
+}
+
+/* Chromium :host(:has()) support */
+@scope {
+  :scope:has([slot="footer"]) .swc-CardBase-footer {
+    display: block;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   SLOTTED CONTENT
+   ───────────────────────────────────────────────────────────────────────────── */
+
+::slotted(*) {
+  margin-block: 0;
+}
+
+::slotted(a) {
+  inline-size: fit-content;
+  color: inherit;
+  text-decoration: none;
+}
+
+::slotted(a:hover) {
+  text-decoration: underline;
+}
+
+::slotted(a:focus-visible) {
+  outline: token("focus-indicator-thickness") solid token("focus-indicator-color");
+}
+
+::slotted(:not([slot])) {
+  grid-area: default-slot;
+}
+
+::slotted([slot="preview"]) {
+  display: block;
+  grid-area: preview;
+  inline-size: 100%;
+  aspect-ratio: var(--swc-card-base-preview-aspect-ratio, 3/2);
+  object-fit: cover;
+}
+
+::slotted([slot="collection"]) {
+  grid-area: collection;
+}
+
+::slotted([slot="content"]) {
+  grid-area: content;
+}
+
+::slotted([slot="footer"]) {
+  grid-area: footer;
+}
+
+::slotted([slot="title"]) {
+  grid-area: title;
+  text-wrap: pretty;
+}
+
+::slotted([slot="title"]:not([class])) {
+  font-size: var(--_swc-card-base-title-font-size) !important;
+  font-weight: token("title-sans-serif-font-weight") !important;
+  line-height: var(--_swc-card-base-title-line-height) !important;
+}
+
+::slotted([slot="description"]) {
+  grid-area: description;
+}
+
+::slotted([slot="actions"]),
+::slotted([slot="description"]:not([class])),
+::slotted(:not([slot], [class])),
+::slotted([slot="footer"]) {
+  font-size: var(--_swc-card-base-description-font-size) !important;
+  font-weight: token("regular-font-weight") !important;
+  line-height: token("line-height-200") !important;
+}
+
+::slotted([slot="actions"]) {
+  grid-area: actions;
+  justify-self: end;
+}
+
+::slotted([slot="actions"]:not(swc-action-button)) {
+  margin-block-start: calc((var(--_swc-card-base-title-line-height) - 1lh) / 2);
+}
+
+::slotted(swc-action-button[slot="actions"]) {
+  margin-block: calc(((var(--_swc-card-base-action-component-height) - var(--_swc-card-base-title-line-height)) / 2) * -1);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   ACTIONS SUPPORT
+   ───────────────────────────────────────────────────────────────────────────── */
+
+/* xs cards don't support actions; CardBase.actionsSupported warns in dev mode */
+:host([size="xs"]) ::slotted([slot="actions"]) {
+  display: none;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   SIZE VARIANTS
+   ───────────────────────────────────────────────────────────────────────────── */
+
+:host([size="xs"]) {
+  --swc-card-base-title-font-size: token("font-size-75");
+  --swc-card-base-title-line-height: token("line-height-font-size-75");
+  --swc-card-base-description-font-size: token("font-size-50");
+  --swc-card-base-border-radius: token("corner-radius-500");
+  --swc-card-base-max-inline-size: 140px;
+  --swc-card-base-content-padding-regular: token("container-padding-extra-small");
+  --swc-card-base-content-padding-compact: token("container-padding-2x-small");
+  --swc-card-base-content-padding-spacious: token("container-padding-small");
+}
+
+:host([size="s"]) {
+  --swc-card-base-title-font-size: token("font-size-100");
+  --swc-card-base-title-line-height: token("line-height-font-size-100");
+  --swc-card-base-description-font-size: token("font-size-50");
+  --swc-card-base-border-radius: token("corner-radius-500");
+  --swc-card-base-max-inline-size: 210px;
+  --swc-card-base-content-padding-regular: token("container-padding-small");
+  --swc-card-base-content-padding-compact: token("container-padding-extra-small");
+  --swc-card-base-content-padding-spacious: token("container-padding-medium");
+  --swc-card-base-action-component-height: token("component-height-75");
+  --swc-card-base-content-header-gap: token("base-gap-small");
+}
+
+:host([size="l"]) {
+  --swc-card-base-title-font-size: token("font-size-300");
+  --swc-card-base-title-line-height: token("line-height-font-size-300");
+  --swc-card-base-description-font-size: token("font-size-100");
+  --swc-card-base-max-inline-size: 370px;
+  --swc-card-base-content-padding-regular: token("container-padding-large");
+  --swc-card-base-content-padding-compact: token("container-padding-medium");
+  --swc-card-base-content-padding-spacious: token("container-padding-extra-large");
+  --swc-card-base-action-component-height: token("component-height-100");
+  --swc-card-base-content-header-gap: token("base-gap-large");
+}
+
+:host([size="xl"]) {
+  --swc-card-base-title-font-size: token("font-size-400");
+  --swc-card-base-title-line-height: token("line-height-font-size-400");
+  --swc-card-base-description-font-size: token("font-size-200");
+  --swc-card-base-max-inline-size: 460px;
+  --swc-card-base-content-padding-regular: token("container-padding-extra-large");
+  --swc-card-base-content-padding-compact: token("container-padding-large");
+  --swc-card-base-content-padding-spacious: token("container-padding-2x-large");
+  --swc-card-base-action-component-height: token("component-height-200");
+  --swc-card-base-content-header-gap: token("base-gap-large");
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   DENSITY VARIANTS
+   ───────────────────────────────────────────────────────────────────────────── */
+
+:host([density="compact"]) {
+  --swc-card-base-content-padding: var(--swc-card-base-content-padding-compact, token("container-padding-small"));
+}
+
+:host([density="spacious"]) {
+  --swc-card-base-content-padding: var(--swc-card-base-content-padding-spacious, token("container-padding-large"));
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   VISUAL VARIANTS
+   ───────────────────────────────────────────────────────────────────────────── */
+
+:host([variant="secondary"]) {
+  --swc-card-base-background-color: token("background-layer-1-color");
+}
+
+:host([variant="tertiary"]) {
+  --swc-card-base-background-color: transparent;
+  --swc-card-base-box-shadow: 0 0 0 2px token("gray-100");
+}
+
+:host([variant="quiet"]) {
+  --swc-card-base-background-color: transparent;
+  --swc-card-base-box-shadow: none;
+
+  .swc-CardBase-content,
+  .swc-CardBase-footer {
+    padding-inline: 0;
+  }
+
+  .swc-CardBase-footer {
+    padding-block-end: 0;
+  }
+
+  /* TODO: Consolidate with "gallery" view when available */
+  .swc-CardBase-media {
+    border-radius: var(--_swc-card-base-border-radius);
+    box-shadow: var(--_swc-card-base-box-shadow);
+    transition-timing-function: var(--_swc-card-base-transition-timing-function);
+    transition-duration: var(--_swc-card-base-transition-duration);
+    transition-property: outline, box-shadow;
+  }
+}
+
+:host([variant="quiet"]:not(:has([slot="footer"]))) .swc-CardBase-content {
+  padding-block-end: 0;
+}
+
+/* Chromium :host(:has()) support */
+@scope (:host([variant="quiet"])) {
+  :scope:not(:has([slot="footer"])) .swc-CardBase-content {
+    padding-block-end: 0;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   TITLE AS LINK
+   Extends a consumer-supplied title-slot anchor's hit area to the card
+   surface via a stretched-link pseudo-element; see CardBase.titleAsLink.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+:host([title-as-link]) ::slotted(a[slot="title"])::before {
+  position: absolute;
+  inset: 0;
+  content: "";
+}
+
+:host([title-as-link]) ::slotted(a[slot="title"]) {
+  border-radius: token("corner-radius-75");
+}
+
+:host([title-as-link]) ::slotted(*:not([slot="title"])) {
+  position: relative;
+  z-index: 1;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   SELECTABLE
+   ───────────────────────────────────────────────────────────────────────────── */
+:host([selectable]:not([variant="quiet"]):focus-visible) {
+  border-radius: var(--_swc-card-base-border-radius);
+  outline: var(--_swc-card-base-selected-focus-outline);
+}
+
+:host([selectable][variant="tertiary"]:is(:hover:focus-visible, :focus-visible)) {
+  --swc-card-base-box-shadow: none;
+}
+
+:host([selectable][variant="quiet"]:focus-visible) {
+  outline: none;
+}
+
+:host([selectable][variant="quiet"]:focus-visible) .swc-CardBase-media {
+  position: relative;
+  outline: var(--_swc-card-base-selected-focus-outline);
+
+  &::after {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    border-radius: var(--_swc-card-base-border-radius);
+    pointer-events: none;
+    outline: token("focus-indicator-thickness") solid token("transparent-white-600");
+    outline-offset: calc(token("focus-indicator-thickness") * -1);
+    content: "";
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   COMBINED STATES
+   ───────────────────────────────────────────────────────────────────────────── */
+
+:host(:is([title-as-link], [selectable]):not([variant="tertiary"], [variant="quiet"]):is(:hover, :focus-visible)) {
+  --swc-card-base-box-shadow: token("drop-shadow-emphasized-hover");
+}
+
+:host(:is([title-as-link], [selectable])[variant="tertiary"]:hover) {
+  --swc-card-base-box-shadow: 0 0 0 1px token("gray-100");
+}
+
+:host(:is([title-as-link], [selectable])[variant="quiet"]:is(:hover, :focus-visible)) .swc-CardBase-media {
+  box-shadow: token("drop-shadow-emphasized-hover");
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   FORCED COLORS
+   ───────────────────────────────────────────────────────────────────────────── */
+
+@media (forced-colors: active) {
+  :host(:not([variant="quiet"])) .swc-CardBase {
+    border: 1px solid CanvasText;
+  }
+}

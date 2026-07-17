@@ -57,6 +57,27 @@ describe('server utilities', () => {
       expect(buildUnknownTokenSuggestions('a', store)).toEqual([]);
     });
 
+    it('prefers a true prefix match even when the missing suffix pushes the length delta past the fuzzy-match cutoff', () => {
+      const prefixStore = new TokenStore({
+        tokens: {
+          'background-layer-2-color': 'var(--swc-background-layer-2-color)',
+          'background-base-color': 'var(--swc-background-base-color)',
+          'background-opacity-down': 'var(--swc-background-opacity-down)',
+          'base-gap-2x-large': 'var(--swc-base-gap-2x-large)',
+        },
+      });
+
+      const suggestions = buildUnknownTokenSuggestions(
+        'background-layer-2',
+        prefixStore
+      );
+      expect(suggestions[0]).toEqual({
+        token: 'background-layer-2-color',
+        fromRenamed: false,
+        replacement: undefined,
+      });
+    });
+
     it('returns exact match quickly from a large candidate set', () => {
       const manyTokens = Object.fromEntries(
         Array.from({ length: 600 }, (_, i) => [

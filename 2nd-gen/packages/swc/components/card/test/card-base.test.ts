@@ -17,6 +17,7 @@ import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import {
   CARD_DENSITIES,
   CARD_VARIANTS,
+  SWC_CARD_CLICK_EVENT,
 } from '@spectrum-web-components/core/components/card/index.js';
 
 import './test-card-base.js';
@@ -331,6 +332,87 @@ export const TitleAsLinkClickProxyTest: Story = {
   },
 };
 
+export const ActionsSizePropagationTest: Story = {
+  render: () => html`
+    <test-card-base size="l">
+      <button slot="actions" type="button">Edit</button>
+    </test-card-base>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const card = await getComponent<TestCardBase>(
+      canvasElement,
+      'test-card-base'
+    );
+    const button = card.querySelector('[slot="actions"]') as HTMLElement;
+
+    await step(
+      'propagates a size one step smaller than the card onto the actions slot content',
+      async () => {
+        expect(
+          button.getAttribute('size'),
+          'actions content size is one step smaller than the card'
+        ).toBe('m');
+      }
+    );
+
+    await step(
+      'updates the propagated size reactively when the card size changes',
+      async () => {
+        card.size = 'xl';
+        await card.updateComplete;
+
+        expect(
+          button.getAttribute('size'),
+          'actions content size updates when card size changes'
+        ).toBe('l');
+      }
+    );
+
+    await step(
+      'clamps at the smallest size instead of propagating an invalid value',
+      async () => {
+        card.size = 'xs';
+        await card.updateComplete;
+
+        expect(
+          button.getAttribute('size'),
+          'actions content size clamps at xs'
+        ).toBe('xs');
+      }
+    );
+
+    await step(
+      'propagates to actions content slotted in after the initial render',
+      async () => {
+        card.size = 'l';
+        await card.updateComplete;
+
+        const actionsSlot = card.renderRoot.querySelector(
+          'slot[name="actions"]'
+        ) as HTMLSlotElement;
+        const slotChanged = new Promise<void>((resolve) =>
+          actionsSlot.addEventListener('slotchange', () => resolve(), {
+            once: true,
+          })
+        );
+
+        const lateButton = document.createElement('button');
+        lateButton.slot = 'actions';
+        lateButton.textContent = 'Delete';
+        card.appendChild(lateButton);
+
+        await slotChanged;
+
+        expect(
+          lateButton.getAttribute('size'),
+          'size propagates to content slotted in after the initial render'
+        ).toBe('m');
+        card.removeChild(lateButton);
+      }
+    );
+  },
+};
+
 export const SelectableActivationTest: Story = {
   render: () => html`
     <test-card-base selectable></test-card-base>
@@ -341,19 +423,23 @@ export const SelectableActivationTest: Story = {
       'test-card-base'
     );
     let dispatched = false;
-    card.addEventListener('swc-card-click', () => {
+    card.addEventListener(SWC_CARD_CLICK_EVENT, () => {
       dispatched = true;
     });
 
-    await step('dispatches swc-card-click for a surface click', async () => {
-      dispatched = false;
-      card.click();
-      expect(dispatched, 'swc-card-click dispatched for a surface click').toBe(
-        true
-      );
-    });
+    await step(
+      `dispatches ${SWC_CARD_CLICK_EVENT} for a surface click`,
+      async () => {
+        dispatched = false;
+        card.click();
+        expect(
+          dispatched,
+          `${SWC_CARD_CLICK_EVENT} dispatched for a surface click`
+        ).toBe(true);
+      }
+    );
 
-    await step('dispatches swc-card-click on Enter', async () => {
+    await step(`dispatches ${SWC_CARD_CLICK_EVENT} on Enter`, async () => {
       dispatched = false;
       card.dispatchEvent(
         new KeyboardEvent('keydown', {
@@ -362,12 +448,13 @@ export const SelectableActivationTest: Story = {
           composed: true,
         })
       );
-      expect(dispatched, 'swc-card-click dispatched on Enter keydown').toBe(
-        true
-      );
+      expect(
+        dispatched,
+        `${SWC_CARD_CLICK_EVENT} dispatched on Enter keydown`
+      ).toBe(true);
     });
 
-    await step('dispatches swc-card-click on Space', async () => {
+    await step(`dispatches ${SWC_CARD_CLICK_EVENT} on Space`, async () => {
       dispatched = false;
       card.dispatchEvent(
         new KeyboardEvent('keydown', {
@@ -376,9 +463,10 @@ export const SelectableActivationTest: Story = {
           composed: true,
         })
       );
-      expect(dispatched, 'swc-card-click dispatched on Space keydown').toBe(
-        true
-      );
+      expect(
+        dispatched,
+        `${SWC_CARD_CLICK_EVENT} dispatched on Space keydown`
+      ).toBe(true);
     });
   },
 };
@@ -393,12 +481,12 @@ export const InteractiveTargetFilteringTest: Story = {
       'test-card-base'
     );
     let dispatched = false;
-    card.addEventListener('swc-card-click', () => {
+    card.addEventListener(SWC_CARD_CLICK_EVENT, () => {
       dispatched = true;
     });
 
     await step(
-      'does not dispatch swc-card-click for a click inside actions',
+      `does not dispatch ${SWC_CARD_CLICK_EVENT} for a click inside actions`,
       async () => {
         dispatched = false;
         const button = document.createElement('button');
@@ -412,7 +500,7 @@ export const InteractiveTargetFilteringTest: Story = {
 
         expect(
           dispatched,
-          'swc-card-click did not fire for an actions click'
+          `${SWC_CARD_CLICK_EVENT} did not fire for an actions click`
         ).toBe(false);
         card.removeChild(button);
       }
@@ -439,7 +527,7 @@ export const InteractiveTargetFilteringTest: Story = {
     );
 
     await step(
-      'dispatches swc-card-click for a non-interactive click outside actions',
+      `dispatches ${SWC_CARD_CLICK_EVENT} for a non-interactive click outside actions`,
       async () => {
         dispatched = false;
         const span = document.createElement('span');
@@ -452,7 +540,7 @@ export const InteractiveTargetFilteringTest: Story = {
 
         expect(
           dispatched,
-          'swc-card-click fires for a non-interactive click outside actions'
+          `${SWC_CARD_CLICK_EVENT} fires for a non-interactive click outside actions`
         ).toBe(true);
         card.removeChild(span);
       }
@@ -522,6 +610,63 @@ export const InteractiveTargetFilteringTest: Story = {
           'nested shadow-DOM button outside actions is still excluded via tabIndex'
         ).toBe(false);
         card.removeChild(host);
+      }
+    );
+  },
+};
+
+export const TextSelectionFilteringTest: Story = {
+  render: () => html`
+    <test-card-base selectable>
+      <span slot="description">Selectable description text</span>
+    </test-card-base>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const card = await getComponent<TestCardBase>(
+      canvasElement,
+      'test-card-base'
+    );
+    const description = card.querySelector(
+      '[slot="description"]'
+    ) as HTMLElement;
+    let dispatched = false;
+    card.addEventListener(SWC_CARD_CLICK_EVENT, () => {
+      dispatched = true;
+    });
+
+    await step(
+      `does not dispatch ${SWC_CARD_CLICK_EVENT} when a text selection is active`,
+      async () => {
+        dispatched = false;
+        const range = document.createRange();
+        range.selectNodeContents(description);
+        const selection = window.getSelection();
+        selection?.removeAllRanges();
+        selection?.addRange(range);
+
+        card.click();
+
+        expect(
+          dispatched,
+          `${SWC_CARD_CLICK_EVENT} does not fire while a text selection is active`
+        ).toBe(false);
+
+        selection?.removeAllRanges();
+      }
+    );
+
+    await step(
+      `dispatches ${SWC_CARD_CLICK_EVENT} normally once the selection is cleared`,
+      async () => {
+        dispatched = false;
+        window.getSelection()?.removeAllRanges();
+
+        card.click();
+
+        expect(
+          dispatched,
+          `${SWC_CARD_CLICK_EVENT} fires again once no selection is active`
+        ).toBe(true);
       }
     );
   },
@@ -687,6 +832,122 @@ export const TitleAsLinkWithAnchorNoWarningTest: Story = {
           expect(
             warnCalls.length,
             'no warnings are emitted when a title anchor is present'
+          ).toBe(0);
+        })
+    );
+  },
+};
+
+export const ActionsUnsupportedSizeWarningTest: Story = {
+  render: () => html`
+    <test-card-base size="l">
+      <button slot="actions" type="button">Edit</button>
+    </test-card-base>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const card = await getComponent<TestCardBase>(
+      canvasElement,
+      'test-card-base'
+    );
+
+    await step(
+      'warns when actions content is slotted and size changes to xs',
+      () =>
+        withWarningSpy(async (warnCalls) => {
+          card.size = 'xs';
+          await card.updateComplete;
+
+          expect(
+            warnCalls.length,
+            'at least one warning is emitted for unsupported actions at size xs'
+          ).toBeGreaterThan(0);
+          expect(
+            String(warnCalls[0]?.[1] || ''),
+            'warning message references actions'
+          ).toContain('actions');
+        })
+    );
+
+    await step(
+      'warns when actions content is slotted in after size is already xs',
+      () =>
+        withWarningSpy(async (warnCalls) => {
+          const actionsSlot = card.renderRoot.querySelector(
+            'slot[name="actions"]'
+          ) as HTMLSlotElement;
+          const slotChanged = new Promise<void>((resolve) =>
+            actionsSlot.addEventListener('slotchange', () => resolve(), {
+              once: true,
+            })
+          );
+
+          const lateButton = document.createElement('button');
+          lateButton.slot = 'actions';
+          lateButton.textContent = 'Delete';
+          card.appendChild(lateButton);
+
+          await slotChanged;
+
+          expect(
+            warnCalls.length,
+            'a warning is emitted for actions content slotted in while size is xs'
+          ).toBeGreaterThan(0);
+          card.removeChild(lateButton);
+        })
+    );
+  },
+};
+
+export const ActionsSupportedSizeNoWarningTest: Story = {
+  render: () => html`
+    <test-card-base size="m">
+      <button slot="actions" type="button">Edit</button>
+    </test-card-base>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const card = await getComponent<TestCardBase>(
+      canvasElement,
+      'test-card-base'
+    );
+
+    await step(
+      'does not warn for actions content at a size that supports actions',
+      () =>
+        withWarningSpy(async (warnCalls) => {
+          card.size = 'l';
+          await card.updateComplete;
+          card.size = 'm';
+          await card.updateComplete;
+
+          expect(
+            warnCalls.length,
+            'no warnings are emitted when actions are supported'
+          ).toBe(0);
+        })
+    );
+  },
+};
+
+export const ActionsUnsupportedSizeEmptyNoWarningTest: Story = {
+  render: () => html`
+    <test-card-base></test-card-base>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const card = await getComponent<TestCardBase>(
+      canvasElement,
+      'test-card-base'
+    );
+
+    await step(
+      'does not warn when switching to size xs with an empty actions slot',
+      () =>
+        withWarningSpy(async (warnCalls) => {
+          card.size = 'xs';
+          await card.updateComplete;
+
+          expect(
+            warnCalls.length,
+            'no warnings are emitted when the actions slot has no content'
           ).toBe(0);
         })
     );
