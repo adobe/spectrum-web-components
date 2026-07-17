@@ -39,7 +39,7 @@ import * as FocusgroupNavigationControllerStories from './stories/focusgroup-nav
 ```typescript
 import { LitElement, html, css } from 'lit';
 import { customElement } from 'lit/decorators.js';
-import { FocusgroupNavigationController } from '@spectrum-web-components/core/controllers/focusgroup-navigation-controller.js';
+import { FocusgroupNavigationController } from '@adobe/spectrum-wc-core/controllers/focusgroup-navigation-controller.js';
 
 @customElement('my-format-toolbar')
 export class MyFormatToolbar extends LitElement {
@@ -260,7 +260,7 @@ Collapses a composite widget to a single Tab stop by managing `tabindex="0"` on 
 The controller dispatches **`swc-focusgroup-navigation-active-change`** (`focusgroupNavigationActiveChange`) on the host with `detail: { activeElement }` when the active item changes. The event bubbles and is composed.
 
 ```typescript
-import { focusgroupNavigationActiveChange } from '@spectrum-web-components/core/controllers/focusgroup-navigation-controller.js';
+import { focusgroupNavigationActiveChange } from '@adobe/spectrum-wc-core/controllers/focusgroup-navigation-controller.js';
 
 host.addEventListener(focusgroupNavigationActiveChange, (event) => {
   console.log('Active item:', event.detail.activeElement);

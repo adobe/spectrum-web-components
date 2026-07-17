@@ -11,7 +11,7 @@
  */
 import { CSSResultArray, html, TemplateResult } from 'lit';
 
-import { TabBase } from '@spectrum-web-components/core/components/tabs';
+import { TabBase } from '@adobe/spectrum-wc-core/components/tabs';
 
 import styles from './tab.css';
 
@@ -24,7 +24,7 @@ import styles from './tab.css';
  * [migration guide](?path=/docs/components-tabs-migration-guide--docs).
  *
  * @element swc-tab
- * @since 2.0.0
+ * @since 2.0.0-beta.1
  *
  * @slot - Text label of the tab
  * @slot icon - Optional icon displayed before the label

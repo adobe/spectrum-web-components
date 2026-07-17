@@ -19,10 +19,9 @@ import {
   ACTION_BUTTON_VALID_SIZES,
   type ActionButtonSize,
   type ActionButtonStaticColor,
-} from '@spectrum-web-components/core/components/action-button';
-import { ButtonBase } from '@spectrum-web-components/core/components/button';
-
-import { renderPendingSpinner } from '../button/pending-spinner.js';
+} from '@adobe/spectrum-wc-core/components/action-button';
+import { ButtonBase } from '@adobe/spectrum-wc-core/components/button';
+import { PendingMixin } from '@adobe/spectrum-wc-core/mixins';
 
 import pendingSpinnerStyles from '../../stylesheets/_lit-styles/pending-spinner.css';
 import styles from './action-button.css';
@@ -31,7 +30,7 @@ import styles from './action-button.css';
  * A compact action button for toolbars, action groups, and icon-first chrome.
  *
  * @element swc-action-button
- * @since 2.0.0
+ * @since 2.0.0-beta.1
  *
  * @slot - Visible button label.
  * @slot icon - Optional leading icon displayed before the label.
@@ -72,7 +71,7 @@ import styles from './action-button.css';
  *   Edit
  * </swc-action-button>
  */
-export class ActionButton extends ButtonBase {
+export class ActionButton extends PendingMixin(ButtonBase) {
   // ────────────────────
   //     API OVERRIDES
   // ────────────────────
@@ -186,7 +185,7 @@ export class ActionButton extends ButtonBase {
         <span class="swc-ActionButton-label">
           <slot></slot>
         </span>
-        ${renderPendingSpinner(this.pending, this.pendingActive)}
+        ${this.renderPendingState()}
       </button>
     `;
   }

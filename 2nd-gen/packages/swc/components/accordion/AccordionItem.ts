@@ -15,7 +15,7 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 import { when } from 'lit/directives/when.js';
 import { html as staticHtml, unsafeStatic } from 'lit/static-html.js';
 
-import { AccordionItemBase } from '@spectrum-web-components/core/components/accordion';
+import { AccordionItemBase } from '@adobe/spectrum-wc-core/components/accordion';
 
 import '../icon/swc-icon.js';
 
@@ -30,7 +30,7 @@ import styles from './accordion-item.css';
  * An accordion item component that wraps a single expandable content section.
  *
  * @element swc-accordion-item
- * @since 2.0.0
+ * @since 2.0.0-beta.1
  *
  * @fires swc-accordion-item-toggle - Dispatched when the item open state is
  *   toggled. Cancelable; `preventDefault()` reverts the change.

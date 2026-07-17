@@ -20,7 +20,7 @@ import {
   type TabDensity,
   TABS_DIRECTIONS,
   type TabsDirection,
-} from '@spectrum-web-components/core/components/tabs/index.js';
+} from '@adobe/spectrum-wc-core/components/tabs/index.js';
 
 import '@adobe/spectrum-wc/components/tabs/swc-tabs.js';
 import '@adobe/spectrum-wc/components/tabs/swc-tab.js';
@@ -63,7 +63,7 @@ export const meta: Meta = {
     selected: '1',
     'accessible-label': 'Product details',
     direction: 'horizontal',
-    'keyboard-activation': 'manual',
+    'keyboard-activation': 'automatic',
     density: 'regular',
     disabled: false,
   },
@@ -75,7 +75,7 @@ export const meta: Meta = {
       accessibleLabel: (raw['accessible-label'] ?? 'Product details') as string,
       direction: args.direction as TabsDirection,
       keyboardActivation: (raw['keyboard-activation'] ??
-        'manual') as KeyboardActivation,
+        'automatic') as KeyboardActivation,
       density: args.density as TabDensity,
       disabled: Boolean(args.disabled),
     });
@@ -85,10 +85,6 @@ export const meta: Meta = {
     docs: {
       subtitle: 'Organize content into sections navigated by a tab bar',
       source: { type: 'dynamic' },
-    },
-    design: {
-      type: 'figma',
-      url: 'https://www.figma.com/design/PLACEHOLDER',
     },
     stackblitz: {
       url: 'https://stackblitz.com/edit/vitejs-vite-5jtmpzjk?file=src%2Fmy-element.ts',
@@ -145,7 +141,7 @@ const renderTabGroup = ({
   direction = 'horizontal',
   accessibleLabel = 'Product details',
   selected = '1',
-  keyboardActivation = 'manual',
+  keyboardActivation = 'automatic',
   density = 'regular',
   disabled = false,
   tabs = defaultTabs,
@@ -316,25 +312,25 @@ export const States: Story = {
 
 export const ActivationModes: Story = {
   render: () => html`
-    <p><strong>Manual activation (default)</strong></p>
+    <p><strong>Automatic activation (default)</strong></p>
     ${renderTabGroup({
-      accessibleLabel: 'Manual activation',
+      accessibleLabel: 'Automatic activation',
       panels: html`
         <swc-tab-panel tab-id="1">
-          <p>Use arrow keys to move focus, then Enter or Space to select.</p>
+          <p>Arrow keys immediately select and display content.</p>
         </swc-tab-panel>
         <swc-tab-panel tab-id="2"><p>Specifications content.</p></swc-tab-panel>
         <swc-tab-panel tab-id="3"><p>Guidelines content.</p></swc-tab-panel>
       `,
     })}
     <br />
-    <p><strong>Automatic activation</strong></p>
+    <p><strong>Manual activation</strong></p>
     ${renderTabGroup({
-      keyboardActivation: 'automatic',
-      accessibleLabel: 'Automatic activation',
+      keyboardActivation: 'manual',
+      accessibleLabel: 'Manual activation',
       panels: html`
         <swc-tab-panel tab-id="1">
-          <p>Arrow keys immediately select and display content.</p>
+          <p>Use arrow keys to move focus, then Enter or Space to select.</p>
         </swc-tab-panel>
         <swc-tab-panel tab-id="2"><p>Specifications content.</p></swc-tab-panel>
         <swc-tab-panel tab-id="3"><p>Guidelines content.</p></swc-tab-panel>

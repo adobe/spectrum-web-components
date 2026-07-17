@@ -36,6 +36,7 @@
     - Badge
     - Button
     - Button Group
+    - Card
     - Checkbox
     - Close Button
     - Color Field
@@ -47,6 +48,7 @@
     - Field Label
     - Grid
     - Help Text
+    - Icon
     - Illustrated Message
     - Infield Button
     - Infield Progress Circle
@@ -75,6 +77,7 @@
     - Tags
     - Textfield
     - Thumbnail
+    - Toast
     - Tooltip
 - [Milestones](04_milestones/README.md)
 - Strategies

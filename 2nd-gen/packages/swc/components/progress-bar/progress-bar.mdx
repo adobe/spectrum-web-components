@@ -1,0 +1,117 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import { DocsFooter, DocsHeader } from '../../.storybook/blocks';
+
+import * as Stories from './stories/progress-bar.stories';
+
+<Meta of={Stories} />
+
+<DocsHeader />
+
+## Anatomy
+
+A progress bar consists of:
+
+1. **Label**: text describing the operation in progress, provided through the `label` named slot
+2. **Value**: the formatted current value, rendered from `value` within the `min-value` and `max-value` range (omitted when indeterminate)
+3. **Track**: the bar background showing the full range
+4. **Fill**: the portion of the track representing the current value (animates continuously when indeterminate)
+5. **Description**: optional supporting text below the bar, provided through the `description` named slot
+
+The `progressbar` role and all `aria-value*`, `aria-labelledby`, and `aria-describedby` attributes live on the internal bar wrapper, not on the host element.
+
+When there is no visible `label` slot content, set the `accessible-label` attribute to supply an accessible name without showing visible text (for example, a full-page loading animation).
+
+<Canvas of={Stories.Anatomy} />
+
+## Options
+
+### Sizes
+
+Progress bars come in four sizes: small (`s`), medium (`m`), large (`l`), and extra-large (`xl`). Medium is the default.
+
+<Canvas of={Stories.Sizes} />
+
+### Label Position
+
+The label can be displayed above the bar or beside it. Set `label-position="top"` (default) or `label-position="side"`.
+
+<Canvas of={Stories.LabelPosition} />
+
+### Static Colors
+
+Use the `static-color` attribute when the progress bar is displayed over images or colored backgrounds:
+
+- **white**: use on dark or colored backgrounds for contrast
+- **black**: use on light backgrounds for contrast
+
+<Canvas of={Stories.StaticColors} />
+
+## States
+
+### Values
+
+The bar fill and the formatted value reflect `value` relative to the sanitized `min-value` and `max-value` range. Values outside the range are clamped to the nearest bound.
+
+<Canvas of={Stories.Values} />
+
+### Indeterminate
+
+Set `indeterminate` when the operation is in progress but the completion time cannot be determined, such as reconnecting to a server. The fill runs a looping animation and all four `aria-value*` attributes are omitted.
+
+<Canvas of={Stories.Indeterminate} />
+
+## Behaviors
+
+### Custom range
+
+Set `min-value` and `max-value` to measure against an arbitrary numeric range rather than the default 0 to 100. The fill and `aria-valuetext` use the sanitized range; if the two bounds are reversed they are swapped, and non-finite bounds fall back to 0 and 100.
+
+<Canvas of={Stories.CustomRange} />
+
+### Value label
+
+Set the `value-label` attribute to replace the auto-formatted value in both the rendered value text and `aria-valuetext` with a custom string, such as `3 of 10 steps`. This attribute is ignored when `indeterminate` is set.
+
+<Canvas of={Stories.ValueLabel} />
+
+### Format options
+
+When `value-label` is unset, the value is formatted with `Intl.NumberFormat`. The default style is percent. Set the `formatOptions` property (JavaScript only, no attribute) to any `Intl.NumberFormatOptions` to change the formatting, for example `{ style: 'decimal', maximumFractionDigits: 0 }`. Percent style formats the fraction of the range; every other style formats the raw clamped value.
+
+<Canvas of={Stories.FormatOptions} />
+
+## Accessibility
+
+### Features
+
+The `<swc-progress-bar>` element implements these accessibility features:
+
+#### ARIA implementation
+
+1. **ARIA role**: sets `role="progressbar"` on the internal bar wrapper. The host element carries no ARIA role.
+2. **Labeling**: when the `label` slot has content, the role element references it via `aria-labelledby`. When there is no `label` slot content, the `accessible-label` value is exposed as `aria-label`.
+3. **Description**: when the `description` slot has content, the role element references it via `aria-describedby`.
+4. **Determinate value**: sets `aria-valuemin`, `aria-valuemax`, `aria-valuenow`, and `aria-valuetext` from the sanitized range and clamped value. `aria-valuetext` matches the formatted value, including `value-label` and `formatOptions` overrides, and is localized from the document language.
+5. **Indeterminate state**: all four `aria-value*` attributes are omitted when `indeterminate` is set, as required by ARIA.
+
+#### Visual accessibility
+
+- Progress is communicated through the fill amount and the formatted value text, not through color alone.
+- Forced-colors mode is supported with appropriate color overrides.
+- Static color variants maintain sufficient contrast on images and colored backgrounds.
+
+#### Non-interactive element
+
+- Progress bars are not focusable and are not in the tab order.
+- No keyboard interaction is required or expected.
+
+### Best practices
+
+- Provide an accessible name through either visible `label` slot content or the `accessible-label` attribute.
+- Use specific, meaningful label text that describes the ongoing operation; for example, `"Uploading file"` rather than `"Loading"`.
+- When no visible label is appropriate, such as when the surrounding context already names the operation, set `accessible-label` to provide a screen-reader-only name.
+- Ensure sufficient color contrast between the bar and its background; use `static-color="white"` on dark backgrounds and `static-color="black"` on light backgrounds.
+
+<Canvas of={Stories.Accessibility} />
+
+<DocsFooter />

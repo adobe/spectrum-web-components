@@ -17,8 +17,7 @@
     - [Understand the versioning strategy](#understand-the-versioning-strategy)
 - [Release types](#release-types)
     - [Snapshot release (for testing a PR)](#snapshot-release-for-testing-a-pr)
-    - [Pre-release (next)](#pre-release-next)
-    - [Pre-release (2nd-gen beta)](#pre-release-2nd-gen-beta)
+    - [Pre-release (next, beta, rc, etc.)](#pre-release-next-beta-rc-etc)
     - [Production release (latest)](#production-release-latest)
 - [Approving the publish job](#approving-the-publish-job)
 - [Verifying the release](#verifying-the-release)
@@ -31,30 +30,18 @@
 
 ## Overview
 
-Releases are automated through **two GitHub Actions workflows**:
+Releases are fully automated through a GitHub Actions workflow (`.github/workflows/publish-1st-gen.yml`). There is no manual command to run locally — you trigger the release from GitHub and the workflow handles building, versioning, and publishing.
 
-| Workflow | File | Branch | Publishes |
-| -------- | ---- | ------ | --------- |
-| **Publish Packages** | `.github/workflows/publish.yml` | `main` (+ PR snapshots) | 1st-gen → `next` / `latest` / `snapshot-test` |
-| **Publish 2nd-Gen Packages** | `.github/workflows/publish-2nd-gen.yml` | `gen2-beta` | `@adobe/spectrum-wc-core` + `@adobe/spectrum-wc` → `beta` (`2.0.0-beta.N`) |
-
-See [ADR 0001: Dual-generation release workflows](../03_project-planning/decisions/0001-dual-generation-release-workflows.md).
-
-**1st-gen** (`publish.yml`) publishes:
+The workflow publishes four package groups:
 
 | Package group | npm namespace | Auth method |
 |---|---|---|
 | 1st-gen components | `@spectrum-web-components/*` | OIDC trusted publishing |
+| Core | `@adobe/spectrum-wc-core` | OIDC trusted publishing |
+| 2nd-gen components | `@adobe/spectrum-wc` | npm token (`ADOBE_BOT_NPM_TOKEN`) |
 | React wrappers | `@swc-react/*` | OIDC trusted publishing |
 
-**2nd-gen beta** (`publish-2nd-gen.yml`) publishes:
-
-| Package group | npm namespace | Auth method |
-|---|---|---|
-| Core | `@adobe/spectrum-wc-core` | npm token (`ADOBE_BOT_NPM_TOKEN`) |
-| 2nd-gen components | `@adobe/spectrum-wc` | npm token (`ADOBE_BOT_NPM_TOKEN`) |
-
-> **Note:** React wrappers are only built when 1st-gen packages have changesets. PR snapshot releases still version and publish **both** 1st- and 2nd-gen under `snapshot-test` for smoke testing.
+> **Note:** React wrappers are only built and published when 1st-gen packages have changesets.
 
 ---
 
@@ -115,39 +102,31 @@ yarn add @spectrum-web-components/button@snapshot-test
 
 ---
 
-### Pre-release (next)
+### Pre-release (next, beta, rc, etc.)
 
-Use this to publish 1st-gen to the `next` dist-tag from `main`.
+Use this to publish to a dist-tag other than `latest` — for example, before a new major version is ready, or for nightly builds.
 
 **How to trigger:**
 
-1. Go to **Actions → Publish Packages**.
-2. Click **Run workflow**, select branch **`main`**.
-3. Leave the dist-tag as `next` (default) or enter another 1st-gen tag.
-4. Click **Run workflow**.
+1. Go to the repository on GitHub.
+2. Navigate to **Actions → Publish Packages**.
+3. Click **Run workflow**.
+4. Optionally enter a dist-tag in the **NPM dist-tag** field (e.g., `beta`, `rc`, `next`). If left blank, the default is `next`.
+5. Click **Run workflow**.
 
-> **Note:** Pushes to `main` also automatically trigger a `next` pre-release when **1st-gen** changesets are present. 2nd-gen-only changesets do not trigger this workflow.
+> **Note:** Pushes to `main` also automatically trigger a `next` pre-release if changesets are present.
 
-> **2nd-gen beta:** Sync changesets to `gen2-beta`, then run **Actions → Publish 2nd-Gen Packages** with `tag=beta`. See [ADR 0001](../03_project-planning/decisions/0001-dual-generation-release-workflows.md).
-
-**What gets published (1st-gen):**
+**What gets published:**
 
 ```
 @spectrum-web-components/button@1.2.3-next.20260101120000
 ```
 
-### Pre-release (2nd-gen beta)
-
-2nd-gen beta (`2.0.0-beta.N`) is **not** cut from `main`. Use the dedicated workflow on `gen2-beta`:
+**Install a pre-release version:**
 
 ```bash
-gh workflow run publish-2nd-gen.yml --ref gen2-beta -f tag=beta
-```
-
-Dry run first:
-
-```bash
-gh workflow run publish-2nd-gen.yml --ref gen2-beta -f tag=beta -f dry_run=true
+yarn add @spectrum-web-components/button@next
+yarn add @spectrum-web-components/button@beta
 ```
 
 ---
@@ -221,9 +200,7 @@ gh workflow run publish-docs-site.yml --ref main
 
 ## Troubleshooting
 
-- **The publish job was skipped entirely** — For `main` releases, only **1st-gen** changesets trigger `publish.yml`. Add a 1st-gen changeset with `yarn changeset`, or use `publish-2nd-gen.yml` on `gen2-beta` for 2nd-gen beta.
-
-- **I need to ship both 1st-gen and 2nd-gen** — Run `publish.yml` on `main` and `publish-2nd-gen.yml` on `gen2-beta` (after syncing changesets). See [ADR 0001](../03_project-planning/decisions/0001-dual-generation-release-workflows.md).
+- **The publish job was skipped entirely** — The `check-changesets` job found no pending changesets. Add a changeset with `yarn changeset` and push the change.
 
 - **"Cannot publish 'latest' from non-main branch"** — You entered `latest` as the dist-tag but the workflow was triggered from a branch other than `main`. Merge your changes into `main` first, then re-run the workflow from `main`.
 
