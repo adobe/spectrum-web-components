@@ -165,6 +165,12 @@ export class PromptField extends SpectrumElement {
    * Roving tabindex + arrow-key focus movement across artifact tiles (Figma
    * focus-order spec §3). One step per Arrow Left/Right; chevron buttons
    * separately page by a full set (§6-7), unrelated to this controller.
+   *
+   * `getItems` returns no items until the strip has been "entered" (see
+   * `_artifactStripEntered`): the tiles must stay out of the Tab order so the
+   * container's own focus stop (`.swc-PromptField-artifacts-row`,
+   * `tabindex="0"`) is what Tab reaches first, with Enter/Space diving into
+   * the tiles from there.
    */
   private readonly _artifactNavigation = new FocusgroupNavigationController(
     this,
@@ -172,15 +178,18 @@ export class PromptField extends SpectrumElement {
       direction: 'horizontal',
       wrap: false,
       memory: true,
-      getItems: () => this._assignedArtifactElements ?? [],
+      getItems: () =>
+        this._artifactStripEntered ? (this._assignedArtifactElements ?? []) : [],
       onActiveItemChange: () => this.requestUpdate(),
     }
   );
 
   /**
-   * Whether the user has interacted with the artifact strip via Arrow keys or
-   * Enter/Space (Figma focus-order spec §4). Gates whether Tab from the active
-   * tile reveals its Close button, and resets when focus leaves the strip.
+   * Whether the user has "entered" the artifact strip past its container
+   * focus stop, via Enter/Space on the container or Arrow keys/Enter/Space on
+   * a tile (Figma focus-order spec §4). Gates whether tiles are in the Tab
+   * order at all, and whether Tab from the active tile reveals its Close
+   * button. Resets when focus leaves the strip entirely.
    */
   @state()
   private _artifactStripEntered = false;
@@ -467,15 +476,43 @@ export class PromptField extends SpectrumElement {
   private _handleArtifactRowFocusOut(event: FocusEvent): void {
     if (!this._isArtifactStripFocusTarget(event.relatedTarget as Node | null)) {
       this._artifactStripEntered = false;
+      // `getItems` returns [] while not entered, so the roving controller's
+      // own tabindex bookkeeping never touches these tiles again; clear their
+      // leftover tabindex from the last time the strip was entered directly
+      // so a tile can never be reached by a plain Tab into the strip.
+      for (const el of this._assignedArtifactElements ?? []) {
+        el.tabIndex = -1;
+      }
     }
+  }
+
+  /** Moves focus into the artifact strip's active (or first) tile, entering it. */
+  private _enterArtifactStrip(): void {
+    const artifacts = this._assignedArtifactElements ?? [];
+    if (artifacts.length === 0) {
+      return;
+    }
+    this._artifactStripEntered = true;
+    this._artifactNavigation.refresh();
+    const target = this._artifactNavigation.getActiveItem() ?? artifacts[0];
+    this._focusArtifact(target);
   }
 
   private _handleArtifactRowKeydown(event: KeyboardEvent): void {
     const isEnterOrSpace = event.key === 'Enter' || event.key === ' ';
     const isArrow = event.key === 'ArrowLeft' || event.key === 'ArrowRight';
+    const active = getActiveElement();
+    const stripContainer = this.shadowRoot?.querySelector(
+      '.swc-PromptField-artifacts-viewport'
+    );
+
+    if (isEnterOrSpace && active === stripContainer) {
+      event.preventDefault();
+      this._enterArtifactStrip();
+      return;
+    }
 
     if (isEnterOrSpace || isArrow) {
-      const active = getActiveElement();
       const isTile = (this._assignedArtifactElements ?? []).includes(
         active as HTMLElement
       );
@@ -520,6 +557,13 @@ export class PromptField extends SpectrumElement {
     // From the active thumbnail: Tab reveals its Close button, but only once
     // the user has "entered" the strip (Arrow keys or Enter/Space).
     if (artifacts.includes(active as HTMLElement)) {
+      // Shift+Tab from the first tile exits the strip entirely rather than
+      // landing back on the container's own focus stop or the "<" button;
+      // there is no re-entry ring on the way out.
+      if (event.shiftKey && artifacts.indexOf(active as HTMLElement) === 0) {
+        this._skipArtifactStripContainerForShiftTab();
+        return;
+      }
       if (!event.shiftKey && this._artifactStripEntered) {
         const dismiss = (
           active as HTMLElement
@@ -576,6 +620,26 @@ export class PromptField extends SpectrumElement {
         this._focusArtifact(target);
       }
     }
+  }
+
+  /**
+   * Temporarily takes the strip container out of the Tab order so the
+   * browser's own (un-prevented) Shift+Tab default action lands on the "<"
+   * button (if rendered) or whatever precedes the strip, rather than
+   * re-triggering the container's own ring on the way out. Restores it on
+   * the next frame once the browser has already moved focus.
+   */
+  private _skipArtifactStripContainerForShiftTab(): void {
+    const stripContainer = this.shadowRoot?.querySelector<HTMLElement>(
+      '.swc-PromptField-artifacts-viewport'
+    );
+    if (!stripContainer) {
+      return;
+    }
+    stripContainer.tabIndex = -1;
+    requestAnimationFrame(() => {
+      stripContainer.tabIndex = 0;
+    });
   }
 
   private _captureArtifactChevronFocusRedirect(
@@ -1028,8 +1092,6 @@ export class PromptField extends SpectrumElement {
       >
         <div
           class="swc-PromptField-artifacts-row"
-          role="region"
-          aria-label=${this.artifactStripLabel}
           @keydown=${this._handleArtifactRowKeydown}
           @focusout=${this._handleArtifactRowFocusOut}
         >
@@ -1047,13 +1109,19 @@ export class PromptField extends SpectrumElement {
                 </button>
               `
             : nothing}
-          <div class="swc-PromptField-artifacts-viewport">
+          <div
+            class="swc-PromptField-artifacts-viewport"
+            role="region"
+            tabindex="0"
+            aria-label=${this.artifactStripLabel}
+          >
             <div
               class=${classMap({
                 'swc-PromptField-artifacts-scroll': true,
                 'is-artifact-scroll-from-buttons':
                   this._artifactScrollFromButtons,
               })}
+              tabindex="-1"
               @scroll=${this._handleArtifactScroll}
               @wheel=${this._handleArtifactWheel}
               @touchstart=${this._showArtifactScrollbarFromInteraction}
@@ -1107,7 +1175,6 @@ export class PromptField extends SpectrumElement {
                 <button
                   type="button"
                   class="swc-PromptField-artifacts-scroll-next"
-                  tabindex="-1"
                   aria-label=${this.artifactScrollNextLabel}
                   @click=${() => this._scrollArtifactsByPage(1)}
                 >
