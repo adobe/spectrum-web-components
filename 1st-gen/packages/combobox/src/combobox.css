@@ -61,6 +61,84 @@ sp-popover:not(sp-overlay sp-popover) {
   border-color: var(--mod-combobox-border-color-default, var(--spectrum-combobox-border-color-focus-hover));
 }
 
+/* `#input` has `dir="auto"` (see Combobox.ts), so its own computed `direction`
+ * can diverge from the host's stable ambient direction whenever the typed or
+ * selected value is RTL script. `.button` isn't given `dir="auto"`, so its
+ * position still tracks the host's direction alone. `padding-inline-start`/
+ * `-end` on `#input` are logical properties that resolve against `#input`'s
+ * own direction, so they'd flip out of step with `.button` and stop clearing
+ * its actual (physically fixed) side. Capture each state's clearance value
+ * once here, matching spectrum-combobox.css's `#input` rules, then apply
+ * those values physically below, keyed to the host's direction instead.
+ */
+#input {
+  --mod-combobox-input-padding-start: calc(var(--mod-combobox-spacing-inline-start-edge-to-text, var(--spectrum-combobox-spacing-inline-start-edge-to-text)) - var(--mod-combobox-border-width, var(--spectrum-combobox-border-width)));
+  --mod-combobox-input-padding-end: calc(var(--mod-combobox-button-width, var(--spectrum-combobox-button-width)) + var(--mod-combobox-spacing-inline-end-edge-to-text, var(--spectrum-combobox-spacing-inline-end-edge-to-text)) - var(--mod-combobox-border-width, var(--spectrum-combobox-border-width)) * 2);
+}
+
+:host([invalid]) #textfield #input,
+:host([pending]) #textfield #input {
+  --mod-combobox-input-padding-end: calc(
+    var(--mod-combobox-button-width, var(--spectrum-combobox-button-width)) + var(--mod-combobox-spacing-inline-icon-to-button, var(--spectrum-combobox-spacing-inline-icon-to-button)) + var(--mod-combobox-icon-size, var(--spectrum-combobox-icon-size)) + var(--mod-combobox-spacing-inline-end-edge-to-text, var(--spectrum-combobox-spacing-inline-end-edge-to-text)) - var(--mod-combobox-button-inline-offset, var(--spectrum-combobox-button-inline-offset, 0px)) -
+      var(--mod-combobox-border-width, var(--spectrum-combobox-border-width)) * 2
+  );
+}
+
+:host([quiet]) #input {
+  --mod-combobox-input-padding-start: var(--mod-combobox-spacing-inline-start-edge-to-text, var(--spectrum-combobox-spacing-inline-start-edge-to-text));
+  --mod-combobox-input-padding-end: calc(var(--mod-combobox-button-width, var(--spectrum-combobox-button-width)) + var(--mod-combobox-spacing-inline-end-edge-to-text, var(--spectrum-combobox-spacing-inline-end-edge-to-text)) - var(--mod-combobox-button-inline-offset, var(--spectrum-combobox-button-inline-offset, 0px)));
+}
+
+:host([quiet][invalid]) #textfield #input,
+:host([quiet][pending]) #textfield #input {
+  --mod-combobox-input-padding-end: calc(var(--mod-combobox-button-width, var(--spectrum-combobox-button-width)) + var(--mod-combobox-spacing-inline-icon-to-button, var(--spectrum-combobox-spacing-inline-icon-to-button)) + var(--mod-combobox-icon-size, var(--spectrum-combobox-icon-size)) + var(--mod-combobox-spacing-inline-end-edge-to-text, var(--spectrum-combobox-spacing-inline-end-edge-to-text)) - var(--mod-combobox-button-inline-offset, var(--spectrum-combobox-button-inline-offset, 0px)));
+}
+
+/* Physical overrides. Each selector below adds `:dir()` to its
+ * corresponding rule above, which raises its specificity just enough to
+ * win over the matching `padding-inline-*` declaration for that same state
+ * (in this file or spectrum-combobox.css), regardless of source order.
+ */
+:host(:dir(ltr)) #input {
+  padding-right: var(--mod-combobox-input-padding-end);
+  padding-left: var(--mod-combobox-input-padding-start);
+}
+
+:host(:dir(rtl)) #input {
+  padding-right: var(--mod-combobox-input-padding-start);
+  padding-left: var(--mod-combobox-input-padding-end);
+}
+
+:host(:dir(ltr)[invalid]) #textfield #input,
+:host(:dir(ltr)[pending]) #textfield #input {
+  padding-right: var(--mod-combobox-input-padding-end);
+}
+
+:host(:dir(rtl)[invalid]) #textfield #input,
+:host(:dir(rtl)[pending]) #textfield #input {
+  padding-left: var(--mod-combobox-input-padding-end);
+}
+
+:host(:dir(ltr)[quiet]) #input {
+  padding-right: var(--mod-combobox-input-padding-end);
+  padding-left: var(--mod-combobox-input-padding-start);
+}
+
+:host(:dir(rtl)[quiet]) #input {
+  padding-right: var(--mod-combobox-input-padding-start);
+  padding-left: var(--mod-combobox-input-padding-end);
+}
+
+:host(:dir(ltr)[quiet][invalid]) #textfield #input,
+:host(:dir(ltr)[quiet][pending]) #textfield #input {
+  padding-right: var(--mod-combobox-input-padding-end);
+}
+
+:host(:dir(rtl)[quiet][invalid]) #textfield #input,
+:host(:dir(rtl)[quiet][pending]) #textfield #input {
+  padding-left: var(--mod-combobox-input-padding-end);
+}
+
 ::slotted([slot="option"]) {
   display: none;
 }
