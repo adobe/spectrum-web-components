@@ -59,7 +59,6 @@ const crossIconBySize: Record<ButtonSize, () => TemplateResult> = {
  *
  * @cssprop --swc-close-button-size - Inline and block size of the close button. Defaults to the medium component height token.
  * @cssprop --swc-close-button-icon-size - Size of the cross icon. Defaults to the medium cross icon token.
- * @cssprop --swc-close-button-border-radius - Corner radius. Defaults to the full corner radius token.
  * @cssprop --swc-close-button-icon-color-default - Cross icon color in the default state.
  * @cssprop --swc-close-button-icon-color-hover - Cross icon color when hovered.
  * @cssprop --swc-close-button-icon-color-down - Cross icon color when pressed.
@@ -70,8 +69,6 @@ const crossIconBySize: Record<ButtonSize, () => TemplateResult> = {
  * @cssprop --swc-close-button-background-color-down - Background color when pressed.
  * @cssprop --swc-close-button-background-color-focus - Background color when keyboard focused.
  * @cssprop --swc-close-button-focus-indicator-color - Focus ring color. Defaults to the focus indicator color token.
- * @cssprop --swc-close-button-focus-indicator-thickness - Focus ring thickness. Defaults to the focus indicator thickness token.
- * @cssprop --swc-close-button-focus-indicator-gap - Focus ring offset gap. Defaults to the focus ring gap token.
  */
 export class CloseButton extends ButtonBase {
   /**
