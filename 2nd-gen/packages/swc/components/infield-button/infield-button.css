@@ -106,20 +106,3 @@
   color: inherit;
   fill: currentcolor;
 }
-
-/* ── Forced colors ────────────────────────────────── */
-
-@media (forced-colors: active) {
-  .swc-InfieldButton {
-    color: ButtonText;
-    background-color: ButtonFace;
-    border: 1px solid ButtonBorder;
-    forced-color-adjust: none;
-  }
-
-  .swc-InfieldButton:disabled:is(*, :hover, :active) {
-    color: GrayText;
-    background-color: ButtonFace;
-    border-color: GrayText;
-  }
-}
