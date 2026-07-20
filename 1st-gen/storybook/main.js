@@ -59,8 +59,8 @@ export default {
       },
     });
   },
-  refs:
-    process.env.NODE_ENV === 'development'
+  refs: {
+    ...(process.env.NODE_ENV === 'development'
       ? {
           'design-system': {
             title: 'Spectrum CSS',
@@ -68,5 +68,14 @@ export default {
             expanded: false, // Optional, true by default
           },
         }
-      : {},
+      : {}),
+    // Cross-link to the 2nd-gen Storybook. Defaults to production; CI overrides
+    // this to the matching PR-preview URL when building a per-PR preview.
+    '2nd-gen': {
+      title: '2nd-gen',
+      url:
+        process.env.SWC_GEN2_STORYBOOK_URL ||
+        'https://spectrum-web-components.adobe.com/',
+    },
+  },
 };
