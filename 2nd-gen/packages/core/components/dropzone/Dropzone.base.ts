@@ -15,7 +15,7 @@ import { property } from 'lit/decorators.js';
 import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
 import { SizedMixin } from '@adobe/spectrum-wc-core/mixins/index.js';
 
-import { SlotAttributePropagationController } from '../../controllers/slot-attribute-propagation/index.js';
+import { SlotAttributePropagationController } from '../../controllers/slot-attribute-propagation-controller/index.js';
 import {
   DROP_EFFECTS,
   type DropEffect,
