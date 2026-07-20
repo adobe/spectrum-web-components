@@ -7,25 +7,15 @@ import { formatTitle } from '../helpers/index.js';
  * Automatically derives package name and component names from the Storybook meta title.
  *
  * @param of - The Storybook meta or story to resolve the component from
- * @param packageName - Optional override for the controller/package export name (defaults to derived kebab-case from title; needed when a controller's `core` package export key doesn't match the title-derived kebab-case)
  */
-export const GettingStarted = ({
-  of,
-  tags,
-  packageName: packageNameOverride,
-}: {
-  of?: any;
-  tags?: string[];
-  packageName?: string;
-}) => {
+export const GettingStarted = ({ of, tags }: { of?: any; tags?: string[] }) => {
   const resolvedOf = useOf(of || 'meta', ['meta']);
 
   if (tags?.includes('utility')) return null;
 
   if (tags?.includes('controller')) {
     // Extract component name in kebab-case from the title (e.g., "Controllers/Hover controller" -> "hover-controller")
-    const packageName =
-      packageNameOverride ?? formatTitle(resolvedOf.preparedMeta?.title);
+    const packageName = formatTitle(resolvedOf.preparedMeta?.title);
 
     // Extract component name in PascalCase from the title (e.g., "Controllers/Hover controller" -> "HoverController")
     const baseClassName = formatTitle(resolvedOf.preparedMeta?.title, 'pascal');

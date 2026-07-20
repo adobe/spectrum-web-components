@@ -34,12 +34,8 @@ import { StatusBadge } from './StatusBadge';
  *   <DocsHeader />
  *   ...component-specific sections...
  *   <DocsFooter />
- *
- * @param packageName - Optional override forwarded to `GettingStarted` for
- * controllers whose `core` package export name doesn't match the title-derived
- * kebab-case.
  */
-export const DocsHeader = ({ packageName }: { packageName?: string } = {}) => {
+export const DocsHeader = () => {
   const resolvedOf = useOf('meta', ['meta']);
   const tags: string[] = resolvedOf?.preparedMeta?.tags ?? [];
 
@@ -50,7 +46,7 @@ export const DocsHeader = ({ packageName }: { packageName?: string } = {}) => {
       <Subtitle />
       <Description />
       <OverviewStory />
-      <GettingStarted tags={tags} packageName={packageName} />
+      <GettingStarted tags={tags} />
     </>
   );
 };
