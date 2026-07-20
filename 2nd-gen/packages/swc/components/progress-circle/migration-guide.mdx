@@ -46,11 +46,11 @@ import '@adobe/spectrum-wc/components/progress-circle/swc-progress-circle.js';
 
 ### Removed in Spectrum 2
 
-| Removed                                     | Replacement                                                                                  |
-| ------------------------------------------- | -------------------------------------------------------------------------------------------- |
+| Removed                                     | Replacement                                                                                 |
+| ------------------------------------------- | ------------------------------------------------------------------------------------------- |
 | `indeterminate` boolean attribute           | Omit the `progress` attribute (or set it to `null`, see [step 2](#2-replace-indeterminate)) |
-| Light DOM children rendered as label        | Use the `label` attribute (see [step 3](#3-move-label-text-to-the-label-attribute))          |
-| `--mod-progress-circle-*` custom properties | `--swc-progress-circle-*` equivalents (see [Styling](#styling))                              |
+| Light DOM children rendered as label        | Use the `label` attribute (see [step 3](#3-move-label-text-to-the-label-attribute))         |
+| `--mod-progress-circle-*` custom properties | `--swc-progress-circle-*` equivalents (see [Styling](#styling))                             |
 
 ## Update your code
 
@@ -148,16 +148,16 @@ Spectrum 2 exposes a new set of public CSS custom properties on `<swc-progress-c
 
 Replace every `--mod-progress-circle-*` property with its `--swc-progress-circle-*` equivalent:
 
-| Removed (Spectrum 1)                                       | Replacement (Spectrum 2)                                                                        |
-| ---------------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
-| `--mod-progress-circle-size`                               | `--swc-progress-circle-size`                                                                    |
-| `--mod-progress-circle-thickness`                          | `--swc-progress-circle-thickness`                                                               |
-| `--mod-progress-circle-track-border-color`                 | `--swc-progress-circle-track-border-color`                                                      |
-| `--mod-progress-circle-fill-border-color`                  | `--swc-progress-circle-fill-border-color`                                                       |
+| Removed (Spectrum 1)                                       | Replacement (Spectrum 2)                                                                       |
+| ---------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
+| `--mod-progress-circle-size`                               | `--swc-progress-circle-size`                                                                   |
+| `--mod-progress-circle-thickness`                          | `--swc-progress-circle-thickness`                                                              |
+| `--mod-progress-circle-track-border-color`                 | `--swc-progress-circle-track-border-color`                                                     |
+| `--mod-progress-circle-fill-border-color`                  | `--swc-progress-circle-fill-border-color`                                                      |
 | `--mod-progress-circle-track-border-color-over-background` | No replacement (use the `static-color` attribute instead, `static-color="white"` or `"black"`) |
 | `--mod-progress-circle-fill-border-color-over-background`  | No replacement (use the `static-color` attribute instead, `static-color="white"` or `"black"`) |
-| `--mod-progress-circle-track-border-style`                 | No replacement (S2 uses SVG strokes; border style is not configurable)                          |
-| `--mod-progress-circle-position`                           | No replacement                                                                                  |
+| `--mod-progress-circle-track-border-style`                 | No replacement (S2 uses SVG strokes; border style is not configurable)                         |
+| `--mod-progress-circle-position`                           | No replacement                                                                                 |
 
 ### Public custom properties
 
