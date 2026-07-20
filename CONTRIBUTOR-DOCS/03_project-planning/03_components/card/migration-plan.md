@@ -50,7 +50,7 @@
 - **Clickable card, no `href` on Card:** the consumer supplies their own link in the `title` slot; `title-as-link` extends its hit area, `selectable` independently makes the card focusable and dispatches a click event. Both are implemented and tested on `CardBase`.
 - **Labeling (avatar/thumbnail vs. title) is consumer documentation, not code** — Card doesn't validate or bridge accessible names that consumers already fully control.
 - **Styling:** CSS Grid for the shared structural layout; `size`/`density` resolve through `container-padding` tokens for content/footer padding. Region and intra-region spacing (title-to-description, media-to-content) relies on padding plus a blanket `margin-block: 0` reset on slotted content, not a gap-token scale.
-- **Tested:** `CardBase` has 20 passing behavior/dev-warning tests against test-only fixtures, plus 8 automated per-story smoke tests from `swc-card`'s own stories file (render-only; no explicit `play` functions yet). `swc-card` itself has no dedicated test file — it's still in the Styling pass, ahead of Testing.
+- **Tested:** `CardBase` has 20 passing behavior/dev-warning tests against test-only fixtures, plus 9 automated per-story smoke tests from `swc-card`'s own stories file (render-only; no explicit `play` functions yet). `swc-card` itself has no dedicated test file — it's still in the Styling pass, ahead of Testing.
 - **Still open:** five items (see [Blockers](#blockers-and-open-questions)) — naming, deferred design questions, and unresolved product-card scoping, none blocking.
 
 
@@ -100,8 +100,8 @@ React's card implementation is simplified to four patterns, mixed with consumer-
 Three concrete SWC components, all extending the already-built `CardBase`:
 
 - **`swc-card`** — regular, collection, and gallery layouts, all driven purely by slot presence, with no explicit layout attribute:
-  - **Collection** — populating the `collection` slot displays it; leaving it empty hides it, the same simple presence rule as any other optional slot.
-  - **Gallery** — triggered by a populated `preview` slot *and* the absence of **all** of `title`, `description`, `actions`, the default slot, and `footer`. That combination signals the image/asset is the card's only content, so it fills the available space. Any other combination renders the regular layout.
+  - **Collection** — populating the `collection` slot displays it; leaving it empty hides it, the same simple presence rule as any other optional slot. Implemented in `card.css`: up to 3 square-aspect images in a row below `preview`, extras beyond the 3rd hidden via `:nth-child(n + 4 of [slot="collection"])`. `preview` and `collection` are independently optional in either direction — a card can render `collection` alone with no `preview`, or vice versa. **`size="xs"` special case:** when both `preview` and `collection` are populated at `xs`, the preview image moves into the first position of the collection row (sharing its square aspect ratio) instead of stacking above it, and only 2 collection images show instead of 3 — implemented via a `--_swc-card-media-layout` custom property read through a CSS `@container style()` query, set conditionally via `:host([size="xs"]):has([slot="preview"]):has([slot="collection"])`.
+  - **Gallery** — triggered by a populated `preview` slot *and* the absence of **all** of `title`, `description`, `actions`, the default slot, and `footer`. That combination signals the image/asset is the card's only content, so it fills the available space. Any other combination renders the regular layout. Not yet implemented — tracked as its own follow-up ticket.
   Phase 1 handles basic `<img>` content and "cover" fit behavior directly. Once the 2nd-gen `Asset` component ships, documentation updates to recommend it in place of plain `<img>`; no dedicated `swc-asset-card` is planned.
 - **`swc-user-card`** — adds an `avatar` glyph slot; optional preview image, aspect ratio `3/1`.
 - **`swc-product-card`** — adds a `thumbnail` glyph slot (expects a logo); optional preview image, aspect ratio `5/1`; footer content alignment forced to `end`.
@@ -153,7 +153,7 @@ Shared slots from `renderCardTemplate()`: `preview`, `title`, `actions`, `descri
 
 | Component | Glyph slot | Preview aspect ratio | Notes |
 |---|---|---|---|
-| `swc-card` | none | `3/2` default, `1:1` gallery | Enables the `collection` slot: 1–3 images, square aspect ratio, shown when populated and hidden otherwise. Gallery is triggered by a populated `preview` slot plus the absence of **all** of `title`/`description`/`actions`/default/`footer` — the image becomes the only content and fills the available space. `preview` and `collection` are independently optional — a card can render `collection` alone with no larger `preview` image. Current `renderCardTemplate()` already tolerates this (an empty `<slot name="preview">` simply renders nothing); the swc-card styling phase needs to verify the media wrapper's sizing/aspect-ratio rules degrade correctly when only one of the two is populated, rather than assuming both. |
+| `swc-card` | none | `3/2` default, `1:1` collection/gallery | **Collection implemented** (`card.css`): 1–3 square-aspect images below `preview`, shown when populated and hidden otherwise (extras past the 3rd hidden via `:nth-child(n + 4 of [slot="collection"])`); `preview` and `collection` are independently optional in either direction, verified via the `WithCollection` story's four combinations (xs preview+3 collection, m preview+3 collection, m preview+2 collection, m collection-only/no-preview). **Gallery not yet implemented** — triggered by a populated `preview` slot plus the absence of **all** of `title`/`description`/`actions`/default/`footer` — the image becomes the only content and fills the available space; tracked as its own follow-up ticket. |
 | `swc-user-card` | `avatar` | `3/1` (optional) | |
 | `swc-product-card` | `thumbnail` | `5/1` (optional) | Footer content forced to `end` alignment. |
 
@@ -295,7 +295,8 @@ Both branches (`titleAsLink`'s proxy-click and `selectable`'s event dispatch) ru
 | Stretched-link CSS trick (A11y-3) | The rule now exists in `card-template.css` (`:host([title-as-link]) ::slotted(a[slot="title"])::before`, using `::before`), but verifying it properly needs coordinate-based clicking (e.g. clicking an empty corner of the rendered card) rather than DOM event dispatch | Playwright-level or manual browser verification |
 | Native modifier-click/middle-click/right-click-"open in new tab" across the *extended* surface | Tests intentionally use `event.preventDefault()` on the test anchor to avoid triggering real navigation inside the test run — this confirms the click-proxy fires, not that a real click-through would fully succeed, and modifier/button state can't be verified via `.click()` at all (see A11y-3) | Real browser/manual verification; likely also needs a Playwright-level test, not a `.click()`-based one |
 | "Elevate nested interactive targets" CSS stacking (A11y-3) | The rule now exists (`:host([title-as-link]) ::slotted(*:not([slot="title"])) { position: relative; z-index: 1; }`), but needs the same coordinate-based click verification as the stretched-link trick, with real actions-slot content styled alongside it | Playwright-level or manual browser verification |
-| Collection (1–3 images, square) and gallery (content area omitted) layout behavior | `swc-card`-specific; not yet implemented in `card-template.css` — deferred to its own follow-up ticket per the epic breakdown | Collection/gallery follow-up tickets |
+| Collection layout visual verification | Implemented in `card.css` and demonstrated across 4 combinations in the `WithCollection` story, but only visually — no automated test asserts the rendered grid/overflow behavior (e.g. that a 4th+ image is actually hidden, or that the `xs` merged preview+collection layout renders correctly) | `swc-card` Testing phase |
+| Gallery (content area omitted) layout behavior | `swc-card`-specific; not yet implemented — tracked as its own follow-up ticket | Gallery follow-up ticket |
 | Per-component `VARIANTS` override (e.g. `swc-user-card`/`swc-product-card` excluding `quiet`) | Only the base's full variant set is tested; no concrete class exists yet to override the static | Each per-component ticket |
 | Aspect ratios (3/1, 5/1) and footer `end`-alignment override | `swc-user-card`/`swc-product-card`-specific CSS, neither of which exists yet. `swc-card`'s own default `3/2` preview aspect ratio is implemented (`--swc-card-base-preview-aspect-ratio`) but still untested through a real component | Each per-component ticket |
 | A11y-1/A11y-2 consumer-documentation guidance | Prose guidance for consumers, not `CardBase` behavior — nothing to assert against | N/A (documentation task, not a test) |
@@ -319,7 +320,8 @@ Both branches (`titleAsLink`'s proxy-click and `selectable`'s event dispatch) ru
 - **`swc-card`** — in progress:
   - [x] Setup: `Card.ts`, `swc-card.ts`, `index.ts`, `card.css` placeholder, stories file scaffolded
   - [x] Shared `card-template.css` implemented: base structure, size/density/visual variants, title-as-link CSS mechanisms, actions-slot support gating, forced-colors override
-  - [ ] Styling: in progress — collection/gallery layout still outstanding
+  - [x] Collection layout implemented in `card.css` (own-component styles), including the `size="xs"` merged preview+collection layout
+  - [ ] Styling: in progress — gallery layout still outstanding
   - [ ] Accessibility, Testing, Documentation, Review: not started
 - **`swc-user-card`** — not started
 - **`swc-product-card`** — not started

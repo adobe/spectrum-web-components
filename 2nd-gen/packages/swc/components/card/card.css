@@ -9,3 +9,110 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
+
+.swc-Card {
+  --_swc-card-collection-item-aspect-ratio: var(--swc-card-collection-item-aspect-ratio, 1);
+  --_swc-card-collection-gap: var(--swc-card-collection-gap, token("group-gap-extra-small"));
+}
+
+.swc-Card-media {
+  grid-template-areas:
+    "preview"
+    "collection";
+  grid-template-rows: repeat(2, auto);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   COLLECTION SLOT
+   ───────────────────────────────────────────────────────────────────────────── */
+
+.swc-Card-collection {
+  display: none;
+  grid-area: collection;
+  grid-template-columns: repeat(3, 1fr);
+  margin-block-start: var(--_swc-card-collection-gap);
+  column-gap: var(--_swc-card-collection-gap);
+}
+
+:host(:has([slot="collection"])) .swc-Card-collection {
+  display: grid;
+}
+
+/* Chromium :host(:has()) support */
+@scope {
+  :scope:has([slot="collection"]) .swc-Card-collection {
+    display: grid;
+  }
+}
+
+::slotted([slot="collection"]) {
+  inline-size: 100%;
+  aspect-ratio: var(--_swc-card-collection-item-aspect-ratio);
+  object-fit: cover;
+}
+
+/* Hide collection items after the 3rd one */
+::slotted(:nth-child(n + 4 of [slot="collection"])) {
+  display: none;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   COLLECTION WITHOUT PREVIEW
+   ───────────────────────────────────────────────────────────────────────────── */
+
+:host(:has([slot="collection"]):not(:has([slot="preview"]))) .swc-Card-collection {
+  margin-block-start: 0;
+}
+
+/* Chromium :host(:has()) support */
+@scope {
+  :scope:has([slot="collection"]):not(:has([slot="preview"])) .swc-Card-collection {
+    margin-block-start: 0;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   SIZE=XS
+   For the extra-small size, if both the preview and collection slots are filled,
+   move the preview item into the first position of the collection row and 
+   hide overflow.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+:host([size="xs"]) {
+  --swc-card-collection-gap: token("group-gap-compact");
+}
+
+:host([size="xs"]:has([slot="preview"]):has([slot="collection"])) .swc-Card {
+  --_swc-card-media-layout: xs;
+}
+
+/* Chromium :host(:has()) support */
+@scope (:host([size="xs"])) {
+  :scope:has([slot="preview"]):has([slot="collection"]) .swc-Card {
+    --_swc-card-media-layout: xs;
+  }
+}
+
+@container style(--_swc-card-media-layout: xs) {
+  .swc-Card-media {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    column-gap: var(--_swc-card-collection-gap);
+  }
+
+  .swc-Card-collection {
+    grid-template-columns: subgrid;
+    grid-row: -1 / 1;
+    grid-column: 2 / -1;
+    margin-block-start: 0;
+  }
+
+  ::slotted([slot="preview"]) {
+    --swc-card-base-preview-aspect-ratio: var(--_swc-card-collection-item-aspect-ratio);
+  }
+
+  /* Hide collection items after the 2nd one */
+  ::slotted(:nth-child(n + 3 of [slot="collection"])) {
+    display: none;
+  }
+}

@@ -101,12 +101,12 @@ const densityLabels = {
   spacious: 'Spacious',
 } as const satisfies Record<CardDensity, string>;
 
-const previewImage = html`
-  <img slot="preview" src="./images/card-preview.jpg" alt="" />
+const mediaImage = (slot = 'preview') => html`
+  <img slot=${slot} src="./images/card-preview.jpg" alt="" />
 `;
 
 const basicSlots = html`
-  ${previewImage}
+  ${mediaImage()}
   <span slot="title">Card title</span>
   <span slot="description">Supporting description text.</span>
 `;
@@ -156,8 +156,35 @@ export const Anatomy: Story = {
     ${template(
       args,
       html`
-        ${previewImage}
-        <span slot="title">Full anatomy</span>
+        ${mediaImage()} ${mediaImage('collection')} ${mediaImage('collection')}
+        ${mediaImage('collection')}
+        <span slot="title">Collection slots filled</span>
+        <p slot="description">Supporting description text.</p>
+        <swc-action-button slot="actions" quiet accessible-label="More actions">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+            viewBox="0 0 20 18"
+            slot="icon"
+          >
+            <circle cx="10" cy="10" r="1.5" />
+            <path d="M10 8.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3" />
+            <circle cx="4" cy="10" r="1.5" />
+            <circle cx="4" cy="10" r="1.5" />
+            <circle cx="16" cy="10" r="1.5" />
+            <circle cx="16" cy="10" r="1.5" />
+          </svg>
+        </swc-action-button>
+        <swc-status-light slot="footer" variant="positive" size="s">
+          Published
+        </swc-status-light>
+      `
+    )}
+    ${template(
+      args,
+      html`
+        ${mediaImage()}
+        <span slot="title">Preview only</span>
         <p slot="description">Supporting description text.</p>
         <swc-action-button slot="actions" quiet accessible-label="More actions">
           <svg
@@ -181,7 +208,7 @@ export const Anatomy: Story = {
     )}
   `,
   tags: ['anatomy'],
-  parameters: { flexLayout: 'column-center' },
+  parameters: { flexLayout: 'row-wrap' },
 };
 
 // ──────────────────────────
@@ -194,7 +221,7 @@ export const Sizes: Story = {
       template(
         { ...args, size },
         html`
-          ${previewImage}
+          ${mediaImage()}
           <span slot="title">${sizeLabels[size]}</span>
           <span slot="description">Supporting description text.</span>
         `
@@ -211,7 +238,7 @@ export const Variants: Story = {
       template(
         { ...args, variant },
         html`
-          ${previewImage}
+          ${mediaImage()}
           <span slot="title">${variantLabels[variant]}</span>
           <span slot="description">Supporting description text.</span>
         `
@@ -228,11 +255,57 @@ export const Density: Story = {
       template(
         { ...args, density },
         html`
-          ${previewImage}
+          ${mediaImage()}
           <span slot="title">${densityLabels[density]}</span>
           <span slot="description">Supporting description text.</span>
         `
       )
+    )}
+  `,
+  tags: ['options'],
+  parameters: { flexLayout: 'column-center' },
+};
+
+export const WithCollection: Story = {
+  render: (args) => html`
+    ${template(
+      { ...args, size: 'xs' },
+      html`
+        ${mediaImage()} ${mediaImage('collection')} ${mediaImage('collection')}
+        ${mediaImage('collection')}
+        <span slot="title">Extra Small</span>
+        <span slot="description">
+          Preview slot placed in first row position.
+        </span>
+      `
+    )}
+    ${template(
+      { ...args, size: 'm' },
+      html`
+        ${mediaImage()} ${mediaImage('collection')} ${mediaImage('collection')}
+        ${mediaImage('collection')}
+        <span slot="title">Filled Collection Card</span>
+        <span slot="description">Preview and collection slots are full.</span>
+      `
+    )}
+    ${template(
+      { ...args, size: 'm' },
+      html`
+        ${mediaImage()} ${mediaImage('collection')} ${mediaImage('collection')}
+        <span slot="title">Partial Collection Card</span>
+        <span slot="description">Only two collection slots filled.</span>
+      `
+    )}
+    ${template(
+      { ...args, size: 'm' },
+      html`
+        ${mediaImage('collection')} ${mediaImage('collection')}
+        ${mediaImage('collection')}
+        <span slot="title">Collection With No Preview</span>
+        <span slot="description">
+          No preview slot content, only collection items.
+        </span>
+      `
     )}
   `,
   tags: ['options'],
@@ -248,7 +321,7 @@ export const TitleAsLink: Story = {
     ${template(
       { ...args, 'title-as-link': true },
       html`
-        ${previewImage}
+        ${mediaImage()}
         <a slot="title" href="#">Linked card title</a>
         <span slot="description">
           Clicking anywhere on the card activates this link.
