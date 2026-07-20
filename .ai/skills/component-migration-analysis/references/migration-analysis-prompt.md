@@ -14,6 +14,7 @@ The purpose of this documentation is to help SWC engineers understand:
 2. **What features are new** and need implementation
 3. **What features are deprecated** and should be removed or flagged
 4. **What structural changes** affect render methods
+5. **What existing issues** have been logged in the component's gen1 implementation
 
 Write for an engineer who will scan this document to estimate migration work. Every section should answer: "What do I need to change in the web component?"
 
@@ -282,6 +283,21 @@ CSS and SWC often use different names for the same concept. When mapping:
 1. Mapped pairs (CSS selector ↔ Attribute/Slot) with appropriate status
 2. Unmapped selectors (empty "Attribute or slot" column, "Missing from WC" status)
 3. Unmapped attributes/slots (empty "CSS selector" column, "Missing from CSS" status)
+
+#### 2.3 List open gen1 issues
+
+Create a level 3 heading called `### Open gen1 issues`.
+
+Put a **markdown table** immediately under the **H3** (no intro paragraph). **Adobe Jira** is authoritative for **open** vs **closed** status and for **resolution**—refresh table cells when you triage; this table is only a snapshot. Use link targets such as `https://jira.corp.adobe.com/browse/SWC-####`.
+
+- **After the table:** Do **not** add follow-up paragraphs that list excluded issues or explain cross-component scope (for example paragraphs starting with **Omitted from this table (by doc rules)** or **Scope note**). Apply **Exclude** by **omitting rows**; put any needed nuance in an optional **Notes** column or in the **Summary** cell.
+- **Columns (recommended): Jira** | **Type** (Story, Bug, Epic, …) | **Status (snapshot)** | **Resolution (snapshot)** (e.g. Unresolved, Done, Fixed—omit or use “—” when not applicable) | **Summary**. Optional **Notes** when helpful (PR references, file paths, `@todo` locations, “applies to related `sp-*` …”).
+- **Scope:** Include rows your team tracks for this component’s **1st-gen** (`sp-*`) bugs and stories with the label `gen2-tbd`; **add rows** when you file or discover issues, and **trim or update** when Jira state or scope changes. Do **not** maintain a separate contributor-doc index file for the same list.
+- **Exclude (always apply when curating the table):**
+  - **Labels:** Do **not** list issues that carry Jira labels **`a11y`** or **`gen2`** (match your project’s spelling and casing). This section tracks **1st-gen** (`sp-*`) issues only, not gen2 tickets.
+  - **Resolution:** Do **not** list issues that have been resolved, ie with a Jira Workflow Status of "Done".
+  - **Issue types:** Do **not** list issues of the type Epic or Initiative. Track those in Jira or program views, not in per-component tables.
+- **Reference:** See **`avatar/rendering-and-styling-migration-analysis.md`** (and sibling component docs) for a full example table. This example only includes accessibility issues. It should follow the same format but document non-accessibility gen1 issues.
 
 ### 3. Summary of changes
 
