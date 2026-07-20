@@ -205,7 +205,7 @@ const config: StorybookConfig = {
       ? {}
       : {
           '1st-gen': {
-            title: 'SWC-1st Gen',
+            title: 'SWC Gen1',
             url:
               process.env.SWC_GEN1_STORYBOOK_URL ||
               'https://opensource.adobe.com/spectrum-web-components/storybook/',
