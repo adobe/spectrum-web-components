@@ -265,6 +265,37 @@ describe('Breadcrumbs', () => {
         ).to.equal(language.dir);
       });
     });
+
+    it("resyncs the overflow menu's copy when a slotted item's lang/dir changes after mount", async () => {
+      const el = await fixture<Breadcrumbs>(html`
+        <sp-breadcrumbs max-visible-items="1">
+          <sp-breadcrumb-item value="a">A</sp-breadcrumb-item>
+          <sp-breadcrumb-item value="b">B</sp-breadcrumb-item>
+          <sp-breadcrumb-item value="c">C</sp-breadcrumb-item>
+        </sp-breadcrumbs>
+      `);
+      await elementUpdated(el);
+
+      const source = el.querySelector(
+        'sp-breadcrumb-item[value="a"]'
+      ) as BreadcrumbItem;
+      source.setAttribute('lang', 'he');
+      source.setAttribute('dir', 'rtl');
+      await elementUpdated(el);
+
+      const menu = el.shadowRoot.querySelector('sp-action-menu') as ActionMenu;
+      const renderedItem = menu.querySelector(
+        'sp-menu-item[value="a"]'
+      ) as HTMLElement;
+
+      expect(renderedItem.lang, 'overflow copy picks up the new lang').to.equal(
+        'he'
+      );
+      expect(
+        renderedItem.getAttribute('dir'),
+        'overflow copy picks up the new dir'
+      ).to.equal('rtl');
+    });
   });
   it('updates the overflow menu wrapper separator when dir changes after mount', async () => {
     // The "is-menu" wrapper `<sp-breadcrumb-item>` rendered by `renderMenu()`
