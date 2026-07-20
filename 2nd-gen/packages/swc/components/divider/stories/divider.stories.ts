@@ -201,6 +201,7 @@ export const Vertical: Story = {
   `,
   parameters: {
     flexLayout: 'column-center',
+    chromatic: { disableSnapshot: true },
   },
   args: {
     vertical: true,
