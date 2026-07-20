@@ -33,7 +33,7 @@
 - [Focus utilities](#focus-utilities)
     - [getActiveElement()](#getactiveelement)
     - [focusableSelector and tabbableSelector](#focusableselector-and-tabbableselector)
-    - [hasVisibleFocusInTree()](#hasvisiblefocusintree)
+    - [isFocusVisibleInTree()](#isfocusvisibleintree)
 - [Migration from 1st-gen](#migration-from-1st-gen)
     - [Replacing Focusable base class](#replacing-focusable-base-class)
     - [Replacing focusElement getter](#replacing-focuselement-getter)
@@ -517,19 +517,23 @@ const tabbable = [...container.querySelectorAll(tabbableSelector)];
 
 These use standard HTML focusability rules only. The 1st-gen `[focusable]` attribute selector is not included — native `delegatesFocus` replaces that workaround.
 
-### hasVisibleFocusInTree()
+### isFocusVisibleInTree()
 
-Available on all `SpectrumElement` subclasses. Returns `true` if the deepest focused element in the current tree matches `:focus-visible` — i.e., the browser would show a focus ring.
+Import from `@adobe/spectrum-wc-core/utils`. Returns `true` if the deepest focused element in a tree matches `:focus-visible`, meaning the browser would show a focus ring. Pass a root node to scope the check to that tree; it defaults to `document`.
 
 ```typescript
+import { isFocusVisibleInTree } from '@adobe/spectrum-wc-core/utils';
+
 class SpButton extends SpectrumElement {
   private handleFocus() {
-    if (this.hasVisibleFocusInTree()) {
-      // Keyboard focus — show custom focus indicator
+    if (isFocusVisibleInTree(this.getRootNode() as Document | ShadowRoot)) {
+      // Keyboard focus: show custom focus indicator
     }
   }
 }
 ```
+
+Previously this was a `hasVisibleFocusInTree()` method on `SpectrumElement`. It is now a standalone utility (built on `getActiveElement()`) so components pull it in only where needed rather than carrying it on the base class.
 
 ---
 

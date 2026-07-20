@@ -11,49 +11,73 @@
  */
 
 import { html } from 'lit';
-import { expect } from '@storybook/test';
+import { expect, userEvent } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
-import { isFocusVisibleInTree } from '../index.js';
+import { getActiveElement, isFocusVisibleInTree } from '../index.js';
 
 export default {
   title: 'Utils/Is focus visible in tree/Tests',
   tags: ['!autodocs', 'dev'],
   render: () => html`
-    <input id="probe" aria-label="probe" />
+    <button id="probe">Probe</button>
   `,
 } as Meta;
 
 export const IsFocusVisibleInTreeTest: Story = {
   play: async ({ canvasElement, step }) => {
-    const input = canvasElement.querySelector<HTMLInputElement>('#probe');
-    if (!input) {
-      throw new Error('probe input not found');
-    }
+    const button = canvasElement.querySelector('#probe') as HTMLButtonElement;
 
     await step('returns false when nothing is focused', () => {
-      input.blur();
+      (getActiveElement() as HTMLElement | null)?.blur();
       expect(isFocusVisibleInTree(document)).toBe(false);
     });
 
     await step(
-      'reflects the :focus-visible state of the active element',
-      () => {
-        input.focus();
-        // Keyboard-style focus produces :focus-visible; the helper mirrors
-        // whatever the platform reports for the active element.
-        expect(isFocusVisibleInTree(document)).toBe(
-          input.matches(':focus-visible')
-        );
+      'returns false when the active element is not :focus-visible (pointer/programmatic focus)',
+      async () => {
+        // A pointer interaction sets the UA focus modality to "pointer"; a button
+        // focused under that modality does not match :focus-visible (no focus ring).
+        await userEvent.click(canvasElement);
+        button.focus();
+
+        expect(getActiveElement(document)).toBe(button);
+        expect(button.matches(':focus-visible')).toBe(false);
+        expect(isFocusVisibleInTree(document)).toBe(false);
+      }
+    );
+
+    await step(
+      'returns true when the active element is :focus-visible (keyboard focus)',
+      async () => {
+        (getActiveElement() as HTMLElement | null)?.blur();
+        // A real Tab keydown puts the UA in keyboard modality, so the focused
+        // button matches :focus-visible across evergreen browsers.
+        await userEvent.tab();
+
+        expect(getActiveElement(document)).toBe(button);
+        expect(button.matches(':focus-visible')).toBe(true);
+        expect(isFocusVisibleInTree(document)).toBe(true);
       }
     );
 
     await step('scopes the query to the provided root', () => {
-      input.blur();
-      const detached = document.createElement('div').attachShadow({
-        mode: 'open',
-      });
-      expect(isFocusVisibleInTree(detached)).toBe(false);
+      // The button (in the light DOM) is still keyboard-focused from the
+      // previous step, so the document sees a :focus-visible element.
+      expect(isFocusVisibleInTree(document)).toBe(true);
+
+      // A separate, attached shadow root holds no focused element, so scoping
+      // the query to it returns false even though the document does not.
+      const host = document.createElement('div');
+      document.body.append(host);
+      const shadow = host.attachShadow({ mode: 'open' });
+      try {
+        expect(isFocusVisibleInTree(shadow)).toBe(false);
+      } finally {
+        host.remove();
+      }
     });
+
+    (getActiveElement() as HTMLElement | null)?.blur();
   },
 };
