@@ -76,6 +76,7 @@ export default {
       url:
         process.env.SWC_GEN2_STORYBOOK_URL ||
         'https://spectrum-web-components.adobe.com/',
+      expanded: false,
     },
   },
 };

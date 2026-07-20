@@ -209,6 +209,7 @@ const config: StorybookConfig = {
             url:
               process.env.SWC_GEN1_STORYBOOK_URL ||
               'https://opensource.adobe.com/spectrum-web-components/storybook/',
+            expanded: false,
           },
         },
   experimental_indexers: storybookMode === 'dev' ? [testStoryIndexer] : [],
