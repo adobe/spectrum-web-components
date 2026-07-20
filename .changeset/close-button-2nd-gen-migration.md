@@ -1,6 +1,6 @@
 ---
 '@adobe/spectrum-wc': minor
-'@spectrum-web-components/core': minor
+'@adobe/spectrum-wc-core': minor
 ---
 
 Add the 2nd-gen `<swc-close-button>`, migrated from the Spectrum 1 `<sp-close-button>`.
