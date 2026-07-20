@@ -18,17 +18,16 @@ import { PageScrollLockController } from '../index.js';
 declare global {
   interface HTMLElementTagNameMap {
     'demo-scroll-lock-host': DemoScrollLockHost;
-    'demo-scroll-lock-status': DemoScrollLockStatus;
   }
 }
 
 /**
  * @internal
  *
- * Storybook-only host pairing {@link PageScrollLockController} with a toggle
- * button and a tall filler area so the effect on the document's scrollbar is
- * observable in the Canvas iframe. Reflects `locked` so multiple instances on
- * one page can be toggled independently while sharing the same document.
+ * Storybook-only host pairing {@link PageScrollLockController} with a single
+ * toggle button and a tall filler area so the effect on the document's
+ * scrollbar is observable in the Canvas iframe. `PageScrollLockController` has
+ * no host interface requirement, so a plain `LitElement` is enough here.
  */
 @customElement('demo-scroll-lock-host')
 export class DemoScrollLockHost extends LitElement {
@@ -45,10 +44,6 @@ export class DemoScrollLockHost extends LitElement {
       cursor: pointer;
     }
   `;
-
-  /** Visible label for the toggle button. */
-  @property({ type: String })
-  public label = 'Modal surface';
 
   /** Whether this host currently holds a page scroll lock. */
   @property({ type: Boolean, reflect: true })
@@ -68,53 +63,8 @@ export class DemoScrollLockHost extends LitElement {
   protected override render(): TemplateResult {
     return html`
       <button type="button" @click=${this._onToggle}>
-        ${this.locked ? `Close ${this.label}` : `Open ${this.label}`}
+        ${this.locked ? 'Unlock page scroll' : 'Lock page scroll'}
       </button>
-    `;
-  }
-}
-
-/**
- * @internal
- *
- * Read-only status readout for the demo stories. Observes
- * `document.documentElement`'s `style` attribute so it reflects the page
- * scroll lock state regardless of how many {@link DemoScrollLockHost}
- * instances are toggled.
- */
-@customElement('demo-scroll-lock-status')
-export class DemoScrollLockStatus extends LitElement {
-  static override styles = css`
-    :host {
-      display: block;
-      margin-block-end: 8px;
-      font-family: monospace;
-    }
-  `;
-
-  @property({ type: Boolean, state: true })
-  private _locked = document.documentElement.style.overflow === 'hidden';
-
-  private readonly _observer = new MutationObserver(() => {
-    this._locked = document.documentElement.style.overflow === 'hidden';
-  });
-
-  public override connectedCallback(): void {
-    super.connectedCallback?.();
-    this._observer.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ['style'],
-    });
-  }
-
-  public override disconnectedCallback(): void {
-    super.disconnectedCallback?.();
-    this._observer.disconnect();
-  }
-
-  protected override render(): TemplateResult {
-    return html`
-      Page scroll: ${this._locked ? 'locked' : 'unlocked'}
     `;
   }
 }

@@ -21,18 +21,6 @@ import { scrollFiller } from './demo-hosts.js';
 //    METADATA
 // ────────────────
 
-const args = {
-  label: 'Modal surface',
-};
-
-const argTypes = {
-  label: {
-    control: 'text',
-    description: 'Visible label for the demo toggle button.',
-    table: { category: 'Host', defaultValue: { summary: 'Modal surface' } },
-  },
-};
-
 /**
  * `PageScrollLockController` is a Lit `ReactiveController` that locks page
  * scroll behind a blocking surface (a modal popover, dialog, or tray) by
@@ -46,11 +34,8 @@ const argTypes = {
 const meta: Meta = {
   title: 'Controllers/Page scroll lock controller',
   component: 'demo-scroll-lock-host',
-  args,
-  argTypes,
-  render: (args) => html`
-    <demo-scroll-lock-status></demo-scroll-lock-status>
-    <demo-scroll-lock-host label=${args.label}></demo-scroll-lock-host>
+  render: () => html`
+    <demo-scroll-lock-host></demo-scroll-lock-host>
     ${scrollFiller}
   `,
   parameters: {
@@ -86,16 +71,10 @@ export const Overview: Story = {
 //    BEHAVIORS STORIES
 // ──────────────────────────────
 
-export const StackedLocks: Story = {
-  render: () => html`
-    <demo-scroll-lock-status></demo-scroll-lock-status>
-    <demo-scroll-lock-host label="Dialog"></demo-scroll-lock-host>
-    <demo-scroll-lock-host label="Nested popover"></demo-scroll-lock-host>
-    ${scrollFiller}
-  `,
+export const LockUnlock: Story = {
   tags: ['behaviors'],
 };
-StackedLocks.storyName = 'Stacked locks';
+LockUnlock.storyName = 'Lock and unlock';
 
 // ────────────────────────────────
 //    ACCESSIBILITY STORIES

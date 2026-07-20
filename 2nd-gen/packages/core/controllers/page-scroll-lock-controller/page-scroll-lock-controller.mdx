@@ -49,11 +49,13 @@ class SwcModalSurface extends LitElement {
 
 ## Behaviors
 
-### Stacked locks
+### Lock and unlock
 
-Opening the first surface locks page scroll and captures the original `overflow` value. Opening a second, nested surface increments the shared count without touching the captured value. Closing surfaces in any order does not restore page scroll until the last lock releases.
+Toggling the lock sets `overflow: hidden` on `document.documentElement`; toggling it off restores the original value. `PageScrollLockController` has no host interface requirement: any Lit `ReactiveElement` can construct one directly and call `lock()` / `unlock()`.
 
-<Canvas of={Stories.StackedLocks} />
+The lock is reference-counted at module scope. With multiple hosts locking and unlocking independently, for example stacked modal surfaces, the original `overflow` is captured once on the first lock and restored once the last lock releases. An inner surface releasing first keeps the page locked until the outer surface also releases.
+
+<Canvas of={Stories.LockUnlock} />
 
 ## Accessibility
 
