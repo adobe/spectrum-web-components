@@ -41,7 +41,7 @@ export {
   LanguageResolutionController,
   languageResolverUpdatedSymbol,
 } from './language-resolution.js';
-export { PageScrollLockController } from './page-scroll-lock.js';
+export { PageScrollLockController } from './page-scroll-lock-controller/index.js';
 export {
   PendingController,
   type PendingControllerHost,
