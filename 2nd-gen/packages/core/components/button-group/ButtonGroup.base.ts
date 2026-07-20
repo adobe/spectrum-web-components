@@ -17,7 +17,7 @@ import type { ButtonBase } from '@adobe/spectrum-wc-core/components/button';
 import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
 import { SizedMixin } from '@adobe/spectrum-wc-core/mixins/index.js';
 
-import { SlotAttributePropagationController } from '../../controllers/slot-attribute-propagation/index.js';
+import { SlotAttributePropagationController } from '../../controllers/slot-attribute-propagation-controller/index.js';
 import {
   BUTTON_GROUP_ALIGNMENTS,
   BUTTON_GROUP_ORIENTATIONS,
