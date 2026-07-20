@@ -13,11 +13,11 @@
 import { PropertyValues } from 'lit';
 import { property } from 'lit/decorators.js';
 
-import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
+import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
 import {
   type ElementSize,
   SizedMixin,
-} from '@spectrum-web-components/core/mixins/index.js';
+} from '@adobe/spectrum-wc-core/mixins/index.js';
 
 import { SlotAttributePropagationController } from '../../controllers/slot-attribute-propagation/index.js';
 import {

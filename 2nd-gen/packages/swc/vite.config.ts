@@ -60,7 +60,17 @@ function processStylesheets(): Plugin {
           from: file,
           to: dest,
         });
-        await writeFile(dest, result.css);
+        // Stylesheets are flattened into dist/ root, so a source `@import`
+        // written relative to its subfolder (e.g. global/../link.css) must be
+        // rewritten to a sibling reference. Skip absolute and remote URLs.
+        const css = result.css.replace(
+          /@import\s+url\((['"]?)([^'")]+)\1\)/g,
+          (match, quote, url) =>
+            /^(?:[a-z]+:)?\/\//i.test(url) || url.startsWith('/')
+              ? match
+              : `@import url(${quote}./${basename(url)}${quote})`
+        );
+        await writeFile(dest, css);
         await writeFile(`${dest}.d.ts`, 'export {};\n');
       }
     },
@@ -92,9 +102,9 @@ export default defineConfig({
           filePath,
           content: content
             // @todo: figure out why this is needed (type imports are becoming
-            // relative instead of targeting the @spectrum-web-components/core package)
-            // this fixes it e.g. ../../../core/... or ../core/... -> @spectrum-web-components/core/...
-            .replace(/(\.\.\/)+core\//g, '@spectrum-web-components/core/'),
+            // relative instead of targeting the @adobe/spectrum-wc-core package)
+            // this fixes it e.g. ../../../core/... or ../core/... -> @adobe/spectrum-wc-core/...
+            .replace(/(\.\.\/)+core\//g, '@adobe/spectrum-wc-core/'),
         };
       },
     }),
@@ -129,7 +139,7 @@ export default defineConfig({
           id === 'lit' ||
           id.startsWith('lit/') ||
           id.startsWith('@lit/') ||
-          id.startsWith('@spectrum-web-components/core/')
+          id.startsWith('@adobe/spectrum-wc-core/')
         );
       },
       output: {
@@ -149,7 +159,7 @@ export default defineConfig({
     // Needed for Storybook to work
     alias: [
       {
-        find: '@spectrum-web-components/core',
+        find: '@adobe/spectrum-wc-core',
         replacement: resolve(__dirname, '../core'),
       },
       // Long-form imports (e.g. `@adobe/spectrum-wc/components/badge/swc-badge.js`)
@@ -158,6 +168,12 @@ export default defineConfig({
       {
         find: '@adobe/spectrum-wc/components',
         replacement: resolve(__dirname, 'components'),
+      },
+      // Pattern imports (e.g. `@adobe/spectrum-wc/patterns/conversational-ai/response-status`)
+      // resolve to `./patterns`, mirroring the published `./patterns/*` export.
+      {
+        find: '@adobe/spectrum-wc/patterns',
+        replacement: resolve(__dirname, 'patterns'),
       },
       // Short-form imports (e.g. `@adobe/spectrum-wc/badge`) point at the source
       // package layout under `./components`, mirroring the published package's

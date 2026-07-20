@@ -18,7 +18,7 @@ import {
   CARD_DENSITIES,
   CARD_VARIANTS,
   SWC_CARD_CLICK_EVENT,
-} from '@spectrum-web-components/core/components/card/index.js';
+} from '@adobe/spectrum-wc-core/components/card/index.js';
 
 import './test-card-base.js';
 

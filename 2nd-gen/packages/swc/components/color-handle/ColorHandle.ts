@@ -13,7 +13,7 @@
 import { CSSResultArray, html, PropertyValues, TemplateResult } from 'lit';
 import { styleMap } from 'lit/directives/style-map.js';
 
-import { ColorHandleBase } from '@spectrum-web-components/core/components/color-handle';
+import { ColorHandleBase } from '@adobe/spectrum-wc-core/components/color-handle';
 
 import '../color-loupe/swc-color-loupe.js';
 
@@ -27,7 +27,7 @@ import styles from './color-handle.css';
  * accessibility is owned by the parent color picker.
  *
  * @element swc-color-handle
- * @since 0.0.1
+ * @since 2.0.0-beta.1
  *
  * @example
  * <swc-color-handle color="rgba(0, 128, 255, 0.7)"></swc-color-handle>

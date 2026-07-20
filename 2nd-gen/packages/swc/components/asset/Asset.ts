@@ -14,7 +14,7 @@ import { CSSResultArray, html, TemplateResult } from 'lit';
 import { choose } from 'lit/directives/choose.js';
 import { classMap } from 'lit/directives/class-map.js';
 
-import { AssetBase } from '@spectrum-web-components/core/components/asset';
+import { AssetBase } from '@adobe/spectrum-wc-core/components/asset';
 
 import styles from './asset.css';
 
@@ -55,11 +55,13 @@ const folder = (label: string): TemplateResult => html`
 `;
 
 /**
+ * A visual representation of a file, folder, or image asset.
+ *
  * @element swc-asset
  * @slot - content to be displayed when no `variant` is set (typically an `<img>` element)
  *
  * @status internal
- * @since 2.0.0
+ * @since 2.0.0-beta.1
  *
  * @example
  * <swc-asset>

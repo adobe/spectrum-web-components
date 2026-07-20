@@ -7,10 +7,10 @@
     "paths": {
       "@adobe/spectrum-wc/*": ["./components/*"],
       "@adobe/vite-global-elements-css": ["../tools/vite-global-elements-css"],
-      "@spectrum-web-components/core/*": ["../core/*"]
+      "@adobe/spectrum-wc-core/*": ["../core/*"]
     },
     "rootDir": "./",
-    "types": ["@vitest/browser/providers/playwright"]
+    "types": ["@vitest/browser-playwright"]
   },
   "exclude": ["node_modules", "dist"],
   "extends": "../../tsconfig.json",

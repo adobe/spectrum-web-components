@@ -12,7 +12,7 @@
 
 import { CSSResultArray, TemplateResult } from 'lit';
 
-import { CardBase } from '@spectrum-web-components/core/components/card';
+import { CardBase } from '@adobe/spectrum-wc-core/components/card';
 
 import { renderCardTemplate } from './card-template.js';
 

@@ -21,7 +21,7 @@ import {
   type CardDensity,
   type CardSize,
   type CardVariant,
-} from '@spectrum-web-components/core/components/card';
+} from '@adobe/spectrum-wc-core/components/card';
 
 import '@adobe/spectrum-wc/components/action-button/swc-action-button.js';
 import '@adobe/spectrum-wc/components/card/swc-card.js';

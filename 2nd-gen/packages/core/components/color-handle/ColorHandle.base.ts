@@ -13,7 +13,7 @@
 import { PropertyValues } from 'lit';
 import { property } from 'lit/decorators.js';
 
-import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
+import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
 
 import { computeBorderAlpha } from './color-contrast.js';
 import { ColorHandleProperties } from './ColorHandle.types.js';
