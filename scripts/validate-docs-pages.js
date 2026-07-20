@@ -298,7 +298,7 @@ function extractCanvasReferences(content, binding) {
  * name, e.g. "In Action Button"). Extend this list as new components are
  * referenced from headings.
  */
-const PROPER_NOUN_PHRASES = ['Action Button', 'Avatar Group'];
+const PROPER_NOUN_PHRASES = ['Action button', 'Avatar group'];
 
 /**
  * Extract all `###`/`####` heading texts (heading level 3 or deeper) in
@@ -481,8 +481,7 @@ function checkMdx(absPath) {
   }
 
   // Check 5: Sentence-case ###/#### headings (component and internal genres
-  // only; patterns and controllers have not been audited for this yet, see
-  // .ai-output/071326-migration-docs-tickets.md)
+  // only; patterns and controllers have not been audited for this yet)
   if (rules.genre === 'component' || rules.genre === 'internal') {
     for (const h of extractSubHeadings(content)) {
       if (!isSentenceCase(h.text)) {
