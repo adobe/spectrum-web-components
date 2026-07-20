@@ -20,6 +20,7 @@ import { property } from '@spectrum-web-components/base/src/decorators.js';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import { normalizeDir } from '@spectrum-web-components/base/src/normalize-dir.js';
 import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
+import { observeAttribute } from '@spectrum-web-components/reactive-controllers/src/AttributeObserver.js';
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 import { LikeAnchor } from '@spectrum-web-components/shared/src/like-anchor.js';
 
@@ -79,11 +80,25 @@ export class BreadcrumbItem extends LikeAnchor(Focusable) {
   // Neither `lang` nor `dir` is a reactive Lit property here, so — unlike
   // plain CSS inheritance — none of that updates on its own if this host's
   // own `lang`/`dir` change, or an ancestor's `dir` changes, after mount.
-  // Watching this host (for `lang`/`dir`) and every ancestor (for `dir`)
-  // keeps both cases live.
-  private readonly ancestorDirObserver = new MutationObserver(() =>
-    this.requestUpdate()
-  );
+  public static override get observedAttributes(): string[] {
+    return [...super.observedAttributes, 'dir', 'lang'];
+  }
+
+  public override attributeChangedCallback(
+    name: string,
+    old: string | null,
+    value: string | null
+  ): void {
+    super.attributeChangedCallback(name, old, value);
+    if (name === 'dir' || name === 'lang') {
+      this.requestUpdate();
+    }
+  }
+
+  // `attributeChangedCallback` only reaches this host's own attributes, not
+  // an ancestor's `dir` — react to those via the shared `AttributeObserver`
+  // singleton instead of a `MutationObserver` per item.
+  private ancestorDirUnsubscribes: (() => void)[] = [];
 
   override connectedCallback(): void {
     super.connectedCallback();
@@ -92,21 +107,16 @@ export class BreadcrumbItem extends LikeAnchor(Focusable) {
       this.setAttribute('role', 'listitem');
     }
 
-    this.ancestorDirObserver.observe(this, {
-      attributes: true,
-      attributeFilter: ['dir', 'lang'],
-    });
-
     for (const ancestor of ancestorElements(this)) {
-      this.ancestorDirObserver.observe(ancestor, {
-        attributes: true,
-        attributeFilter: ['dir'],
-      });
+      this.ancestorDirUnsubscribes.push(
+        observeAttribute(ancestor, 'dir', () => this.requestUpdate())
+      );
     }
   }
 
   override disconnectedCallback(): void {
-    this.ancestorDirObserver.disconnect();
+    this.ancestorDirUnsubscribes.forEach((unsubscribe) => unsubscribe());
+    this.ancestorDirUnsubscribes = [];
     super.disconnectedCallback();
   }
 
