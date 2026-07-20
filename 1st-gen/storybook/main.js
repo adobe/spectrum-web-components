@@ -72,7 +72,7 @@ export default {
     // Cross-link to the 2nd-gen Storybook. Defaults to production; CI overrides
     // this to the matching PR-preview URL when building a per-PR preview.
     '2nd-gen': {
-      title: '2nd-gen',
+      title: 'Spectrum Web Components - 2nd Gen',
       url:
         process.env.SWC_GEN2_STORYBOOK_URL ||
         'https://spectrum-web-components.adobe.com/',
