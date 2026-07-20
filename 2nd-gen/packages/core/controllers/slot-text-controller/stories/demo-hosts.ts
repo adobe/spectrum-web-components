@@ -19,6 +19,7 @@ import { SlotTextController } from '../index.js';
 declare global {
   interface HTMLElementTagNameMap {
     'demo-slot-text-host': DemoSlotTextHost;
+    'demo-slot-text-named-host': DemoSlotTextNamedHost;
   }
 }
 
@@ -85,6 +86,33 @@ export class DemoSlotTextHost extends AbstractSlotTextHost {
       >
         <slot @slotchange=${this.slotText.handleSlotChange}></slot>
       </span>
+    `;
+  }
+}
+
+/**
+ * @internal
+ *
+ * Storybook/test-only host that observes a **named** `label` slot. Used to
+ * verify that bare text nodes (which can never carry a `slot` attribute, so are
+ * only assigned to the default slot) do not count as content for a named slot —
+ * only an element carrying `slot="label"` does.
+ */
+@customElement('demo-slot-text-named-host')
+export class DemoSlotTextNamedHost extends LitElement {
+  protected readonly slotText = new SlotTextController(this, {
+    slotName: 'label',
+  });
+
+  /** Whether the observed `label` slot has meaningful content. */
+  public get hasContent(): boolean {
+    return this.slotText.hasContent;
+  }
+
+  protected override render(): TemplateResult {
+    return html`
+      <span class="status">Has content: ${this.hasContent ? 'yes' : 'no'}</span>
+      <slot name="label" @slotchange=${this.slotText.handleSlotChange}></slot>
     `;
   }
 }

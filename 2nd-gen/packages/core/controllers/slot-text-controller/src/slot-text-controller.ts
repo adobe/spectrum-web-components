@@ -115,6 +115,12 @@ export class SlotTextController implements ReactiveController {
       if (el.tagName) {
         return !this.excludeSelectors.some((sel) => el.matches(sel));
       }
+      // A bare text node can never carry a `slot` attribute, so it is only
+      // ever assigned to the default slot. When observing a named slot it must
+      // not count as content.
+      if (this.slotName) {
+        return false;
+      }
       return node.textContent ? node.textContent.trim().length > 0 : false;
     });
 
@@ -152,6 +158,11 @@ export class SlotTextController implements ReactiveController {
         return this.slotName
           ? el.getAttribute('slot') === this.slotName
           : !el.hasAttribute('slot');
+      }
+      // A bare text node has no `slot` attribute, so it is only assigned to
+      // the default slot; it never counts as content for a named slot.
+      if (this.slotName) {
+        return false;
       }
       return node.textContent ? node.textContent.trim().length > 0 : false;
     });

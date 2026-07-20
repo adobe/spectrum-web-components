@@ -31,7 +31,7 @@ import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import './demo-hosts.js';
 
-import type { DemoSlotTextHost } from './demo-hosts.js';
+import type { DemoSlotTextHost, DemoSlotTextNamedHost } from './demo-hosts.js';
 import textMeta from './slot-text-controller.stories.js';
 
 // ─────────────────────────
@@ -167,3 +167,47 @@ export const DynamicContentTest: Story = {
   },
 };
 DynamicContentTest.storyName = 'Dynamic content';
+
+// ──────────────────────────────────────────────────────────────────────────
+//     Named slot ignores bare text nodes
+// ──────────────────────────────────────────────────────────────────────────
+
+export const NamedSlotTest: Story = {
+  render: () => html`
+    <demo-slot-text-named-host>loose text</demo-slot-text-named-host>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const host = canvasElement.querySelector<DemoSlotTextNamedHost>(
+      'demo-slot-text-named-host'
+    );
+    if (!host) {
+      throw new Error('demo-slot-text-named-host not found');
+    }
+    await host.updateComplete;
+
+    await step(
+      'bare text (default slot) does not count for a named slot',
+      async () => {
+        expect(
+          host.hasContent,
+          'loose text with no slot="label" is not content for the label slot'
+        ).toBe(false);
+      }
+    );
+
+    await step('an element with slot="label" counts as content', async () => {
+      const label = document.createElement('span');
+      label.setAttribute('slot', 'label');
+      label.textContent = 'Progress';
+      host.appendChild(label);
+      await flush();
+      await host.updateComplete;
+
+      expect(
+        host.hasContent,
+        'hasContent is true once a label is slotted'
+      ).toBe(true);
+    });
+  },
+};
+NamedSlotTest.storyName = 'Named slot ignores bare text';
