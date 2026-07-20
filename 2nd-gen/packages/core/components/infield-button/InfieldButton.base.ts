@@ -10,7 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
-import { property, state } from 'lit/decorators.js';
+import { property } from 'lit/decorators.js';
 
 import { ButtonBase } from '@adobe/spectrum-wc-core/components/button';
 import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
@@ -42,18 +42,6 @@ export abstract class InfieldButtonBase extends ButtonBase {
   /** @internal */
   static override readonly VALID_SIZES: readonly InfieldButtonSize[] =
     INFIELD_BUTTON_VALID_SIZES;
-
-  // Infield buttons have no pending state. When the parent field is pending, the
-  // parent host disables slotted infield buttons and owns busy UI and announcements.
-  // Override with @state() to suppress from public API / CEM while keeping the
-  // inherited handleClick guard (which checks this.pending) harmless.
-  /** @internal */
-  @state()
-  public override pending: boolean = false;
-
-  /** @internal */
-  @state()
-  public override pendingLabel: string | undefined = undefined;
 
   // Infield buttons are clickable but never independently focusable. The parent field
   // owns keyboard behavior and supplies the only focus ring.
