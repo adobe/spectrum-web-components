@@ -220,6 +220,21 @@ const config: StorybookConfig = {
   staticDirs: ['../public', { from: '../coverage', to: '/coverage' }],
   addons,
   experimental_indexers: [testStoryIndexer, vrtStoryIndexer],
+  // Cross-link to the 1st-gen Storybook. Omitted from the minimal ci-a11y test
+  // build. Defaults to production; CI overrides this to the matching PR-preview
+  // URL when building a per-PR preview.
+  refs:
+    storybookMode === 'ci-a11y'
+      ? {}
+      : {
+          '1st-gen': {
+            title: 'SWC Gen1',
+            url:
+              process.env.SWC_GEN1_STORYBOOK_URL ||
+              'https://opensource.adobe.com/spectrum-web-components/storybook/',
+            expanded: false,
+          },
+        },
   viteFinal: async (config) => {
     return mergeConfig(config, {
       css: {
