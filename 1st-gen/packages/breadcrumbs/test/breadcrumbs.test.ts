@@ -281,8 +281,8 @@ describe('Breadcrumbs', () => {
       ) as BreadcrumbItem;
       source.setAttribute('lang', 'he');
       source.setAttribute('dir', 'rtl');
+      await new Promise((resolve) => requestAnimationFrame(resolve));
       await elementUpdated(el);
-
       const menu = el.shadowRoot.querySelector('sp-action-menu') as ActionMenu;
       const renderedItem = menu.querySelector(
         'sp-menu-item[value="a"]'
