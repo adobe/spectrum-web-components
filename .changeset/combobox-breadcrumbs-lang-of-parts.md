@@ -1,6 +1,8 @@
 ---
 '@spectrum-web-components/combobox': patch
 '@spectrum-web-components/breadcrumbs': patch
+'@spectrum-web-components/base': patch
+'@spectrum-web-components/reactive-controllers': patch
 ---
 
 **Fixed**: Propagate `lang`/`dir` for a single item's language without breaking layout:
