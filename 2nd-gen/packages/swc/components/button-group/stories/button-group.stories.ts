@@ -70,7 +70,7 @@ argTypes.disabled = {
 /**
  * A button group clusters related actions together, providing consistent spacing,
  * sizing, and orientation. It propagates `size` and `disabled` state to its slotted
- * [Button](../?path=/docs/button--overview) children and exposes `role="group"` for
+ * [Button](../?path=/docs/components-button--overview) children and exposes `role="group"` for
  * accessibility.
  *
  * Use button group when you have two or more related button actions that belong
@@ -292,14 +292,13 @@ export const Disabled: Story = {
  * directional key navigation, such as `toolbar` or `listbox`).
  *
  * If your use case has many buttons and would benefit from arrow-key navigation,
- * consider using a
- * [FocusgroupNavigationController](../?path=/docs/focusgroup-navigation-controller--overview)
+ * consider using `FocusgroupNavigationController` (an internal core controller)
  * on a parent composite with `role="toolbar"` instead.
  *
  * #### What button-group is NOT
  *
  * - **Not a radio group**: Do not use for exclusive selection.
- *   Use [Segmented Control](../?path=/docs/segmented-control--overview) instead.
+ *   Use Segmented Control instead.
  * - **Not a toggle group**: Do not use for pressed/toggle states.
  *   Use Toggle Group instead.
  * - **Not a toolbar**: Does not implement arrow-key navigation.
