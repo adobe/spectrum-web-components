@@ -463,27 +463,41 @@ export const ArtifactFocusOrderTest: Story = {
         '.swc-UploadArtifact-dismiss'
       );
 
-    await step('landmark region wraps the strip', async () => {
-      const row = el.shadowRoot?.querySelector(
-        '.swc-PromptField-artifacts-row'
+    await step('landmark region is the strip container tab stop', async () => {
+      const viewport = el.shadowRoot?.querySelector(
+        '.swc-PromptField-artifacts-viewport'
       );
-      expect(row?.getAttribute('role')).toBe('region');
-      expect(row?.getAttribute('aria-label')).toBe('Uploaded assets strip');
+      expect(viewport?.getAttribute('role')).toBe('region');
+      expect(viewport?.getAttribute('aria-label')).toBe(
+        'Uploaded assets strip'
+      );
+      expect((viewport as HTMLElement | null)?.tabIndex).toBe(0);
     });
 
     await step(
-      'only one tile is the roving tab stop; dismiss/">" are never normal tab stops',
+      'before entering, tiles/dismiss buttons stay out of the tab order; ">" is a normal tab stop',
       async () => {
-        expect(artifacts[0]?.tabIndex).toBe(0);
-        expect(artifacts.slice(1).every((tile) => tile.tabIndex === -1)).toBe(
-          true
-        );
+        expect(artifacts.every((tile) => tile.tabIndex === -1)).toBe(true);
         expect(
           artifacts.every((tile) => getDismissButton(tile)?.tabIndex === -1)
         ).toBe(true);
-        // ">" is excludeFromTabOrder per spec: reachable only via the Close
-        // button's explicit Tab intercept below, never via native Tab.
-        expect(getNextButton()?.tabIndex).toBe(-1);
+        expect(getNextButton()?.tabIndex).toBe(0);
+      }
+    );
+
+    await step(
+      'Enter on the container enters the strip at the first tile',
+      async () => {
+        const viewport = el.shadowRoot?.querySelector<HTMLElement>(
+          '.swc-PromptField-artifacts-viewport'
+        );
+        viewport?.focus();
+        const event = dispatchKeydown(viewport!, 'Enter');
+        await el.updateComplete;
+
+        expect(event.defaultPrevented).toBe(true);
+        expect(getActiveElement()).toBe(artifacts[0]);
+        expect(artifacts[0]?.tabIndex).toBe(0);
       }
     );
 

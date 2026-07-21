@@ -166,10 +166,11 @@ export class PromptField extends SpectrumElement {
    * focus-order spec §3). One step per Arrow Left/Right; chevron buttons
    * separately page by a full set (§6-7), unrelated to this controller.
    *
-   * Always active so the roving tab stop (tile 0 by default) is a normal Tab
-   * target; `.swc-PromptField-artifacts-row` is only an ARIA `region`
-   * landmark, not a separate focus stop. `_artifactStripEntered` gates the
-   * Tab-reveals-Close-button behavior below, not the roving tabindex itself.
+   * `getItems` returns no items until the strip has been "entered" (see
+   * `_artifactStripEntered`): the tiles must stay out of the Tab order so the
+   * container's own focus stop (`.swc-PromptField-artifacts-row`,
+   * `tabindex="0"`) is what Tab reaches first, with Enter/Space diving into
+   * the tiles from there.
    */
   private readonly _artifactNavigation = new FocusgroupNavigationController(
     this,
@@ -177,7 +178,10 @@ export class PromptField extends SpectrumElement {
       direction: 'horizontal',
       wrap: false,
       memory: true,
-      getItems: () => this._assignedArtifactElements ?? [],
+      getItems: () =>
+        this._artifactStripEntered
+          ? (this._assignedArtifactElements ?? [])
+          : [],
       onActiveItemChange: () => this.requestUpdate(),
     }
   );
@@ -474,6 +478,13 @@ export class PromptField extends SpectrumElement {
   private _handleArtifactRowFocusOut(event: FocusEvent): void {
     if (!this._isArtifactStripFocusTarget(event.relatedTarget as Node | null)) {
       this._artifactStripEntered = false;
+      // `getItems` returns [] while not entered, so the roving controller's
+      // own tabindex bookkeeping never touches these tiles again; clear their
+      // leftover tabindex from the last time the strip was entered directly
+      // so a tile can never be reached by a plain Tab into the strip.
+      for (const el of this._assignedArtifactElements ?? []) {
+        el.tabIndex = -1;
+      }
     }
   }
 
@@ -1083,8 +1094,6 @@ export class PromptField extends SpectrumElement {
       >
         <div
           class="swc-PromptField-artifacts-row"
-          role="region"
-          aria-label=${this.artifactStripLabel}
           @keydown=${this._handleArtifactRowKeydown}
           @focusout=${this._handleArtifactRowFocusOut}
         >
@@ -1102,7 +1111,12 @@ export class PromptField extends SpectrumElement {
                 </button>
               `
             : nothing}
-          <div class="swc-PromptField-artifacts-viewport" tabindex="0">
+          <div
+            class="swc-PromptField-artifacts-viewport"
+            role="region"
+            tabindex="0"
+            aria-label=${this.artifactStripLabel}
+          >
             <div
               class=${classMap({
                 'swc-PromptField-artifacts-scroll': true,
@@ -1163,7 +1177,6 @@ export class PromptField extends SpectrumElement {
                 <button
                   type="button"
                   class="swc-PromptField-artifacts-scroll-next"
-                  tabindex="-1"
                   aria-label=${this.artifactScrollNextLabel}
                   @click=${() => this._scrollArtifactsByPage(1)}
                 >
