@@ -130,8 +130,6 @@ When a section has only one story, and that story's rendered name is identical t
 
 If a single-story section's rendered name _differs_ from the `## Section` heading (e.g., a `## Behaviors` section whose only story renders as "Toggle behavior"), keep the `### Title` subheading. It's adding real information there, not repeating the section title.
 
-Note: the `SpectrumStories` fallback block (used by `DocumentTemplate.mdx` for units without a per-unit MDX yet) always renders a per-story `### ${story.name}` heading when `hideTitle=false`, regardless of story count, so an unmigrated unit's auto-generated docs page will still show the duplicate for a single same-named story. That's a limitation of the fallback renderer, not something to preserve when hand-authoring a per-unit MDX.
-
 ### Untagged stories do not appear
 
 Stories without any section tag (`anatomy`, `options`, `states`, `behaviors`, `a11y`, `upcoming`, `usage`, `appendix`, `full-pattern`, `api`) are not surfaced on the Docs page (subject to the global `'!autodocs'` / `'!dev'` exclusion in `preview.ts`). Do not author a `<Canvas of={...}>` for an untagged story in MDX; that would surface content production does not render.
