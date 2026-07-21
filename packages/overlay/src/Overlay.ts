@@ -38,6 +38,7 @@ import type {
     TriggerInteraction,
 } from './overlay-types.js';
 import { AbstractOverlay, nextFrame } from './AbstractOverlay.js';
+import { OverlayDialog } from './OverlayDialog.js';
 import { OverlayPopover } from './OverlayPopover.js';
 import { OverlayNoPopover } from './OverlayNoPopover.js';
 import { overlayStack } from './OverlayStack.js';
@@ -54,14 +55,16 @@ import {
 } from './slottable-request-event.js';
 
 import styles from './overlay.css.js';
-import { FocusTrap } from 'focus-trap';
 
 const browserSupportsPopover = 'showPopover' in document.createElement('div');
 
-// Start the base class and add the popover or no-popover functionality
-let ComputedOverlayBase = OverlayPopover(AbstractOverlay);
-if (!browserSupportsPopover) {
-    ComputedOverlayBase = OverlayNoPopover(AbstractOverlay);
+// Start the base class and add the dialog functionality, then layer the
+// popover or no-popover functionality on top of it.
+let ComputedOverlayBase = OverlayDialog(AbstractOverlay);
+if (browserSupportsPopover) {
+    ComputedOverlayBase = OverlayPopover(ComputedOverlayBase);
+} else {
+    ComputedOverlayBase = OverlayNoPopover(ComputedOverlayBase);
 }
 
 /**
@@ -79,7 +82,6 @@ if (!browserSupportsPopover) {
  * @attr {string} receives-focus - How focus should be handled ('true'|'false'|'auto')
  * @attr {boolean} delayed - Whether the overlay should wait for a warm-up period before opening
  * @attr {boolean} open - Whether the overlay is currently open
- * @attr {boolean} allow-outside-click - @deprecated Whether clicks outside the overlay should close it (not recommended for accessibility)
  */
 export class Overlay extends ComputedOverlayBase {
     static override styles = [styles];
@@ -291,18 +293,6 @@ export class Overlay extends ComputedOverlayBase {
     override receivesFocus: 'true' | 'false' | 'auto' = 'auto';
 
     /**
-     * @deprecated This property will be removed in a future version.
-     * We do not recommend using this property for accessibility reasons.
-     * It allows clicks outside the overlay to close it, which can cause
-     * unexpected behavior and accessibility issues.
-     *
-     * @type {boolean}
-     * @default false
-     */
-    @property({ type: Boolean, attribute: 'allow-outside-click' })
-    allowOutsideClick = false;
-
-    /**
      * A reference to the slot element within the overlay.
      *
      * This element is used to manage the content slotted into the overlay.
@@ -408,12 +398,6 @@ export class Overlay extends ComputedOverlayBase {
     protected wasOpen = false;
 
     /**
-     * Focus trap to keep focus within the dialog
-     * @private
-     */
-    private _focusTrap: FocusTrap | null = null;
-
-    /**
      * Provides an instance of the `ElementResolutionController` for managing the element
      * that the overlay should be associated with. If the instance does not already exist,
      * it is created and assigned to the `_elementResolver` property.
@@ -427,6 +411,17 @@ export class Overlay extends ComputedOverlayBase {
         }
 
         return this._elementResolver;
+    }
+
+    /**
+     * Determines if the overlay uses a dialog.
+     * Returns `true` if the overlay type is "modal" or "page".
+     *
+     * @private
+     * @returns {boolean} `true` if the overlay uses a dialog, otherwise `false`.
+     */
+    private get usesDialog(): boolean {
+        return this.type === 'modal' || this.type === 'page';
     }
 
     /**
@@ -444,9 +439,8 @@ export class Overlay extends ComputedOverlayBase {
 
         switch (this.type) {
             case 'modal':
-                return 'auto';
             case 'page':
-                return 'manual';
+                return undefined;
             case 'hint':
                 return 'manual';
             default:
@@ -508,6 +502,7 @@ export class Overlay extends ComputedOverlayBase {
      *
      * This method handles the necessary steps to open the popover, including managing delays,
      * ensuring the popover is in the DOM, making transitions, and applying focus.
+     *
      * @protected
      * @override
      * @returns {Promise<void>} A promise that resolves when the popover has been fully opened.
@@ -549,27 +544,6 @@ export class Overlay extends ComputedOverlayBase {
 
         if (this.open !== targetOpenState) {
             return;
-        }
-        if (targetOpenState) {
-            const focusTrap = await import('focus-trap');
-            this._focusTrap = focusTrap.createFocusTrap(this.dialogEl, {
-                initialFocus: focusEl || undefined,
-                tabbableOptions: {
-                    getShadowRoot: true,
-                },
-                fallbackFocus: () => {
-                    // set tabIndex to -1 allow the focus-trap to still be applied
-                    this.dialogEl.setAttribute('tabIndex', '-1');
-                    return this.dialogEl;
-                },
-                // disable escape key capture to close the overlay, the focus-trap library captures it otherwise
-                escapeDeactivates: false,
-                allowOutsideClick: this.allowOutsideClick,
-            });
-
-            if (this.type === 'modal' || this.type === 'page') {
-                this._focusTrap.activate();
-            }
         }
         // Apply focus to the appropriate element after opening the popover.
         await this.applyFocus(targetOpenState, focusEl);
@@ -713,10 +687,6 @@ export class Overlay extends ComputedOverlayBase {
         event.relatedTarget.dispatchEvent(relationEvent);
     };
 
-    private closeOnCancelEvent = (): void => {
-        this.open = false;
-    };
-
     /**
      * Manages the process of opening or closing the overlay.
      *
@@ -761,8 +731,6 @@ export class Overlay extends ComputedOverlayBase {
             }
         } else {
             if (oldOpen) {
-                this._focusTrap?.deactivate();
-                this._focusTrap = null;
                 // Dispose of the overlay if it was previously open.
                 this.dispose();
             }
@@ -778,43 +746,26 @@ export class Overlay extends ComputedOverlayBase {
             this.state = 'closing';
         }
 
-        this.managePopoverOpen();
-
-        const listenerRoot = this.getRootNode() as Document;
-        // Handle focus events for auto type overlays.
-        if (this.type === 'auto') {
-            if (this.open) {
-                listenerRoot.addEventListener(
-                    'focusout',
-                    this.closeOnFocusOut,
-                    { capture: true }
-                );
-            } else {
-                listenerRoot.removeEventListener(
-                    'focusout',
-                    this.closeOnFocusOut,
-                    { capture: true }
-                );
-            }
+        if (this.usesDialog) {
+            this.manageDialogOpen();
+        } else {
+            this.managePopoverOpen();
         }
 
-        // Handle cancel events for modal and page type overlays.
-        if (this.type === 'modal' || this.type === 'page') {
+        // Handle focus events for auto type overlays.
+        if (this.type === 'auto') {
+            const listenerRoot = this.getRootNode() as Document;
             if (this.open) {
                 listenerRoot.addEventListener(
-                    'cancel',
-                    this.closeOnCancelEvent,
-                    {
-                        capture: true,
-                    }
+                    'focusout',
+                    this.closeOnFocusOut,
+                    { capture: true }
                 );
             } else {
                 listenerRoot.removeEventListener(
-                    'cancel',
-                    this.closeOnCancelEvent,
-                    {
-                        capture: true,
-                    }
+                    'focusout',
+                    this.closeOnFocusOut,
+                    { capture: true }
                 );
             }
         }
@@ -985,23 +936,6 @@ export class Overlay extends ComputedOverlayBase {
             );
         }
 
-        // Warn about deprecated allowOutsideClick property
-        if (changes.has('allowOutsideClick') && this.allowOutsideClick) {
-            if (window.__swc?.DEBUG) {
-                window.__swc.warn(
-                    this,
-                    `The "allow-outside-click" attribute on <${this.localName}> has been deprecated and will be removed in a future release. We do not recommend using this attribute for accessibility reasons. It allows clicks outside the overlay to close it, which can cause unexpected behavior and accessibility issues.`,
-                    'https://opensource.adobe.com/spectrum-web-components/components/overlay/',
-                    { level: 'deprecation' }
-                );
-            } else {
-                // Fallback for testing environments or when SWC is not available
-                console.warn(
-                    `[${this.localName}] The "allow-outside-click" attribute has been deprecated and will be removed in a future release. We do not recommend using this attribute for accessibility reasons. It allows clicks outside the overlay to close it, which can cause unexpected behavior and accessibility issues.`
-                );
-            }
-        }
-
         // Manage the open state if the 'open' property has changed.
         if (changes.has('open') && (this.hasUpdated || this.open)) {
             this.manageOpen(changes.get('open'));
@@ -1112,6 +1046,36 @@ export class Overlay extends ComputedOverlayBase {
     }
 
     /**
+     * Renders the dialog element for the overlay.
+     *
+     * This method returns a template result containing a dialog element. The dialog element
+     * includes various attributes and event listeners to manage the overlay's state and behavior.
+     *
+     * @protected
+     * @returns {TemplateResult} The template result containing the dialog element.
+     */
+    protected renderDialog(): TemplateResult {
+        return html`
+            <dialog
+                class="dialog"
+                part="dialog"
+                placement=${ifDefined(
+                    this.requiresPositioning
+                        ? this.placement || 'right'
+                        : undefined
+                )}
+                style=${styleMap(this.dialogStyleMap)}
+                @close=${this.handleBrowserClose}
+                @cancel=${this.handleBrowserClose}
+                @beforetoggle=${this.handleBeforetoggle}
+                ?is-visible=${this.state !== 'closed'}
+            >
+                ${this.renderContent()}
+            </dialog>
+        `;
+    }
+
+    /**
      * Renders the popover element for the overlay.
      *
      * This method returns a template result containing a div element styled as a popover.
@@ -1134,16 +1098,6 @@ export class Overlay extends ComputedOverlayBase {
             <div
                 class="dialog"
                 part="dialog"
-                role=${ifDefined(
-                    this.type === 'modal' || this.type === 'page'
-                        ? 'dialog'
-                        : undefined
-                )}
-                aria-modal=${ifDefined(
-                    this.type === 'modal' || this.type === 'page'
-                        ? 'true'
-                        : undefined
-                )}
                 placement=${ifDefined(
                     this.requiresPositioning
                         ? this.placement || 'right'
@@ -1170,8 +1124,9 @@ export class Overlay extends ComputedOverlayBase {
      * @returns {TemplateResult} The template result containing the overlay content.
      */
     public override render(): TemplateResult {
+        const isDialog = this.type === 'modal' || this.type === 'page';
         return html`
-            ${this.renderPopover()}
+            ${isDialog ? this.renderDialog() : this.renderPopover()}
             <slot name="longpress-describedby-descriptor"></slot>
         `;
     }

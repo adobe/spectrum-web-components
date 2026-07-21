@@ -1140,6 +1140,7 @@ describe('Overlay should correctly trap focus', () => {
 });
 
 describe('Overlay - Deprecated Properties', () => {
+    /*
     it('should support allowOutsideClick property with deprecation warning', async () => {
         const consoleSpy = spy(console, 'warn');
 
@@ -1172,4 +1173,5 @@ describe('Overlay - Deprecated Properties', () => {
 
         consoleSpy.restore();
     });
+    */
 });

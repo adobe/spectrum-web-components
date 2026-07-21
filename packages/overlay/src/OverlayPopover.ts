@@ -123,6 +123,7 @@ export function OverlayPopover<T extends Constructor<AbstractOverlay>>(
         protected override async ensureOnDOM(
             targetOpenState: boolean
         ): Promise<void> {
+            await nextFrame();
             if (!supportsOverlayAuto) {
                 await this.shouldHidePopover(targetOpenState);
             }
