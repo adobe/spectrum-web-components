@@ -173,9 +173,10 @@ function main() {
   console.log(`     @adobe/spectrum-wc              ${swcVersion}`);
   console.log(
     '\nNext steps:\n' +
-      '  1. Review the working tree (git status / git diff).\n' +
-      '  2. Commit and push to gen2-beta.\n' +
-      '  3. Trigger the Publish workflow with scope=2nd-gen and tag=beta.'
+      '  1. Review the working tree (git status / git diff) when running locally.\n' +
+      '  2. Trigger the Publish workflow on gen2-beta with scope=2nd-gen and tag=beta.\n' +
+      '     CI runs this script, publishes to npm, commits changelogs to gen2-beta,\n' +
+      '     and pushes a git tag (for example v2.0.0-beta.2).'
   );
 }
 

@@ -161,6 +161,10 @@ jobs:
             echo "ERROR: 2nd-gen-only scope does not support the 'latest' tag; use a pre-release tag such as 'beta'"
             exit 1
           fi
+          if [ "$SCOPE" == "2nd-gen" ] && [ "$GIT_REF" != "refs/heads/gen2-beta" ]; then
+            echo "ERROR: 2nd-gen scope must be published from the gen2-beta branch"
+            exit 1
+          fi
 
       - name: Verify OIDC token and configure NPM authentication
         id: npm-auth
@@ -390,6 +394,28 @@ jobs:
           git pull --rebase origin main
           git push
 
+      - name: Commit and push gen2-beta release
+        if: >-
+          github.event.inputs.dry_run != 'true' &&
+          steps.extract-tag.outputs.scope == '2nd-gen' &&
+          needs.check-changesets.outputs.has_2nd_gen_changesets == 'true' &&
+          steps.npm-auth.outcome == 'success'
+        env:
+          SWC_VERSION: ${{ steps.versions.outputs.swc }}
+        run: |
+          git add .
+          git commit --no-verify -m "chore(release): @adobe/spectrum-wc@${SWC_VERSION} #publish" || echo "No changes to commit"
+          git pull --rebase origin gen2-beta
+          git push origin gen2-beta
+
       - name: Create git tag
         if: steps.extract-tag.outputs.tag == 'latest'
         run: node ./1st-gen/scripts/create-git-tag.js
+
+      - name: Create gen2 git tag
+        if: >-
+          github.event.inputs.dry_run != 'true' &&
+          steps.extract-tag.outputs.scope == '2nd-gen' &&
+          needs.check-changesets.outputs.has_2nd_gen_changesets == 'true' &&
+          steps.npm-auth.outcome == 'success'
+        run: node ./scripts/create-gen2-git-tag.js
