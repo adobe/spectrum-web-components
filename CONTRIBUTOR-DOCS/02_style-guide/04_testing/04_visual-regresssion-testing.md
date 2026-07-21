@@ -12,14 +12,15 @@
 <summary><strong>In this doc</strong></summary>
 
 - [When to use](#when-to-use)
-- [How it works](#how-it-works)
+- [How to author VRT stories](#how-to-author-vrt-stories)
+    - [Grouping permutations into rows](#grouping-permutations-into-rows)
 - [Tips for reliable VRT](#tips-for-reliable-vrt)
 
 </details>
 
 <!-- Document content (editable) -->
 
-Visual regression testing (VRT) catches rendering changes across browsers and themes. Stories themselves serve as the test cases — Chromatic captures screenshots and compares them to baselines.
+Visual regression testing (VRT) catches rendering changes across browsers and themes. Chromatic captures dedicated Storybook stories and compares screenshots to approved baselines.
 
 ## When to use
 
@@ -31,9 +32,37 @@ VRT covers things that are hard to test programmatically:
 - Theme support (light, dark, high contrast)
 - Animation states
 
-## How it works
+## How to author VRT stories
 
-Every story is a VRT test case. When you create a story in your `*.stories.ts` file, it automatically becomes part of VRT. No extra code is needed.
+Author dense visual coverage in `test/vrt/*.vrt.ts` for components and patterns. Keep documentation stories readable; use VRT stories for large matrices.
+
+Aim for maximum meaningful coverage: include every size, variant, state, anatomy, theme, static-color, global-style, custom-property, and component-specific visual axis that can produce a useful visual difference. Cover CJK language rendering explicitly when text metrics can change, e.g. `lang="ja"` / `lang="ko"` / `lang="zh"` line-height, wrapping, or truncation. Skip only impossible, unsupported, or truly redundant combinations.
+
+Use this shape:
+
+- `test/vrt/<component>.vrt.ts` for permutations, states, static colors, forced colors, wrapping, and anatomy.
+- `test/vrt/<component>-global-styles.vrt.ts` when the component ships global class styles.
+- `test/vrt/<component>-custom-properties.vrt.ts` when public custom properties need visual coverage.
+
+Use shared helpers from `.storybook/helpers`: `createPermutations`, `groupPermutationsBy`, `row`, `theme`, `staticColorBackground`, `forcePseudoStates`, `vrtParameters`, `forcedColorsVrtParameters`, `customPropertyRows`, and `verifyCustomPropertyCoverage`.
+
+Keep component files small: local case lists and component-specific renderers only. Move reusable mechanics to `.storybook/helpers`.
+
+### Grouping permutations into rows
+
+A single dense row of every permutation is hard to scan when reviewing a Chromatic diff. Use `groupPermutationsBy(permutations, key)` to split a flat permutation list into one labeled `row()` per value of `key`, plus a `default` row for permutations that lack the key.
+
+Which key to group by is a per-component decision, not a fixed rule. Pick the axis that carries the most meaning for the component:
+
+- Components with a `variant` axis (button, badge, action button, status light): group by `'variant'`.
+- Components whose primary axis is something else: group by that (for example `'size'` or `'direction'`).
+- Components with no natural grouping axis (divider, icon, avatar, typography): grouping by a missing key collapses everything into a single `default` row and adds no value, so keep one ungrouped `row()` instead.
+
+Split forced pseudo-states (`data-force-state`) into their own per-state rows (`hover`, `focus-visible`, `active`) rather than folding them into the variant rows. Once the row heading conveys the grouping axis, keep the component's own label plain: the heading and visual rendering already carry the permutation's meaning, so there is no need to print axis values into the component. Label rows with the `swc-Detail` typography classes rather than inline font styles.
+
+Every item in a row must be identifiable. A single multi-item row is only fine when each item carries visible text that names it (a button label, link text, or a typography sample). When the items render near-identical visuals with no visible label — small controls such as a color handle or color loupe, or fixed-content widgets such as an accordion or avatar in different states — a generic `States` row does not tell a reviewer which item is which. Give each such state its own row labeled with the state name instead.
+
+For composed patterns, use deterministic realistic content instead of behavior demos: fixed prompts, sources, attachments, feedback states, and response text.
 
 Stories tagged with `'!test'` are excluded from VRT runs. See [Excluding stories from tests](01_testing-overview.md#excluding-stories-from-tests) for when and why to use this tag.
 
@@ -42,4 +71,5 @@ Stories tagged with `'!test'` are excluded from VRT runs. See [Excluding stories
 - Use deterministic content (no random data, no timestamps)
 - Use static image IDs from picsum.photos (see stories format guide)
 - Disable animations in test mode (Playwright config sets `reducedMotion: 'reduce'`)
-- Keep stories focused — one visual state per story is easier to debug
+- Keep stories focused by concern; split large files into permutations, global styles, and custom properties
+- For custom properties, compare covered cases against `.storybook/custom-elements.json` so API-table docs and VRT coverage do not drift
