@@ -43,6 +43,11 @@ export {
 } from './language-resolution.js';
 export { PageScrollLockController } from './page-scroll-lock.js';
 export {
+  PendingController,
+  type PendingControllerHost,
+  type PendingControllerOptions,
+} from './pending-controller/index.js';
+export {
   ALL_PLACEMENTS,
   fromFloatingPlacement,
   PlacementController,
@@ -51,3 +56,7 @@ export {
   type PlacementOptions,
   type VirtualTrigger,
 } from './placement-controller/index.js';
+export {
+  SlotAttributePropagationController,
+  type SlotAttributePropagationControllerOptions,
+} from './slot-attribute-propagation-controller/index.js';

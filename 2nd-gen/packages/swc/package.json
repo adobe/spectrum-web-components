@@ -35,6 +35,7 @@
       "types": "./dist/components/*.d.ts",
       "default": "./dist/components/*.js"
     },
+    "./customElements": "./dist/custom-elements.json",
     "./global-button.css": {
       "default": "./dist/global-button.css"
     },
@@ -50,6 +51,10 @@
     "./patterns/*": {
       "types": "./dist/patterns/*/index.d.ts",
       "import": "./dist/patterns/*/index.js"
+    },
+    "./patterns/*.js": {
+      "types": "./dist/patterns/*.d.ts",
+      "default": "./dist/patterns/*.js"
     },
     "./patterns/*/index.js": {
       "types": "./dist/patterns/*/index.d.ts",
@@ -68,13 +73,14 @@
   "scripts": {
     "analyze": "cem analyze --config cem.config.js",
     "analyze:watch": "cem analyze --config cem.config.js --watch",
-    "build": "yarn analyze && vite build",
+    "build": "vite build && yarn analyze",
     "clean": "rimraf dist",
     "dev": "vite build --watch",
     "dev:core": "yarn workspace @adobe/spectrum-wc-core dev",
     "generate:contributor-docs": "node .storybook/scripts/generate-contributor-docs.mjs",
     "storybook": "yarn generate:contributor-docs && yarn analyze && storybook dev -p 6006",
     "storybook:build": "yarn generate:contributor-docs && yarn analyze && storybook build",
+    "storybook:build:vrt": "yarn analyze && SWC_STORYBOOK_MODE=vrt storybook build",
     "stylesheet:tokens": "swc-tokens --outputType tokens --out ./stylesheets/tokens.css --prefix swc",
     "stylesheet:typography": "swc-tokens --outputType typography --out ./stylesheets/typography.css --prefix swc",
     "test": "vitest --run --project storybook",
@@ -148,7 +154,7 @@
     "component",
     "css"
   ],
-  "customElements": ".storybook/custom-elements.json",
+  "customElements": "dist/custom-elements.json",
   "publishConfig": {
     "access": "public"
   }

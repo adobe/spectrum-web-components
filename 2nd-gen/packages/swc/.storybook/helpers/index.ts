@@ -10,5 +10,24 @@
  * governing permissions and limitations under the License.
  */
 
+export { createPermutations } from './create-permutations.js';
+export type { ComponentPermutations } from './create-permutations.js';
 export { formatTitle } from './format-title.js';
 export { iconForSize } from './icon-for-size.js';
+export { forcePseudoState } from './pseudo-state.js';
+export type { ForcedPseudoState } from './pseudo-state.js';
+export {
+  coveredCustomProperties,
+  customPropertyRows,
+  forcedColorsVrtParameters,
+  forcePseudoStates,
+  FORCED_STATES,
+  groupPermutationsBy,
+  renderStorybookPermutation,
+  row,
+  staticColorBackground,
+  theme,
+  verifyCustomPropertyCoverage,
+  vrtParameters,
+} from './vrt.js';
+export type { CustomPropertyCase } from './vrt.js';

@@ -21,8 +21,7 @@ import {
   type ActionButtonStaticColor,
 } from '@adobe/spectrum-wc-core/components/action-button';
 import { ButtonBase } from '@adobe/spectrum-wc-core/components/button';
-
-import { renderPendingSpinner } from '../button/pending-spinner.js';
+import { PendingMixin } from '@adobe/spectrum-wc-core/mixins';
 
 import pendingSpinnerStyles from '../../stylesheets/_lit-styles/pending-spinner.css';
 import styles from './action-button.css';
@@ -72,7 +71,7 @@ import styles from './action-button.css';
  *   Edit
  * </swc-action-button>
  */
-export class ActionButton extends ButtonBase {
+export class ActionButton extends PendingMixin(ButtonBase) {
   // ────────────────────
   //     API OVERRIDES
   // ────────────────────
@@ -186,7 +185,7 @@ export class ActionButton extends ButtonBase {
         <span class="swc-ActionButton-label">
           <slot></slot>
         </span>
-        ${renderPendingSpinner(this.pending, this.pendingActive)}
+        ${this.renderPendingState()}
       </button>
     `;
   }
