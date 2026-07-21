@@ -78,7 +78,7 @@ argTypes.disabled = {
  * or contextual action sets).
  */
 const meta: Meta = {
-  title: 'Button Group',
+  title: 'Button group',
   component: 'swc-button-group',
   args,
   argTypes,
@@ -155,7 +155,7 @@ export const Overview: Story = {
 /**
  * A button group consists of:
  *
- * - **Default slot**: One or more `<swc-button>` elements that form the action set
+ * - **Default slot**: one or more `<swc-button>` elements that form the action set
  *
  * The group propagates its `size` and `disabled` state to all slotted button children
  * automatically, ensuring visual and behavioral consistency without requiring per-button
@@ -179,10 +179,10 @@ export const Anatomy: Story = {
 /**
  * Button groups come in four sizes that propagate to all child buttons:
  *
- * - **Small (`s`)**: For compact interfaces with limited space
- * - **Medium (`m`)**: Default size for most contexts
- * - **Large (`l`)**: For prominent actions needing more visual weight
- * - **Extra-large (`xl`)**: For hero sections or primary call-to-action areas
+ * - **Small (`s`)**: for compact interfaces with limited space
+ * - **Medium (`m`)**: default size for most contexts
+ * - **Large (`l`)**: for prominent actions needing more visual weight
+ * - **Extra-large (`xl`)**: for hero sections or primary call-to-action areas
  */
 export const Sizes: Story = {
   render: () => html`
@@ -196,14 +196,13 @@ export const Sizes: Story = {
     )}
   `,
   tags: ['options'],
-  parameters: { 'section-order': 1 },
 };
 
 /**
  * Button groups support two orientations:
  *
- * - **Horizontal** (default): Buttons flow left-to-right (or inline-start to inline-end)
- * - **Vertical**: Buttons stack top-to-bottom, useful when horizontal space is limited
+ * - **Horizontal** (default): buttons that flow left-to-right (or inline-start to inline-end)
+ * - **Vertical**: buttons stacked top-to-bottom; useful when horizontal space is limited
  *
  * The `orientation` attribute reflects on the host for CSS styling hooks.
  */
@@ -219,16 +218,15 @@ export const Orientations: Story = {
     )}
   `,
   tags: ['options'],
-  parameters: { 'section-order': 2 },
 };
 
 /**
  * The `align` property controls the alignment of buttons within the group along
  * the main axis:
  *
- * - **start** (default): Buttons align to the inline start
- * - **center**: Buttons center within the available space
- * - **end**: Buttons align to the inline end (useful for dialog footers)
+ * - **`start`** (default): buttons aligned to the inline start
+ * - **`center`**: buttons centered within the available space
+ * - **`end`**: buttons aligned to the inline end (useful for dialog footers)
  */
 export const Alignment: Story = {
   render: () => html`
@@ -242,7 +240,6 @@ export const Alignment: Story = {
     )}
   `,
   tags: ['options'],
-  parameters: { 'section-order': 3 },
 };
 
 // ──────────────────────────
@@ -276,15 +273,15 @@ export const Disabled: Story = {
  *
  * #### ARIA implementation
  *
- * 1. **ARIA role**: Automatically sets `role="group"` on the host element
- * 2. **Group naming**: Supports `aria-label` or `aria-labelledby` for screen readers.
- *    Provide a name when the group's purpose is not obvious from context.
+ * 1. **ARIA role**: automatically sets `role="group"` on the host element
+ * 2. **Group naming**: supports `aria-label` or `aria-labelledby` for screen readers;
+ *    provide a name when the group's purpose is not obvious from context
  *
  * #### Keyboard navigation
  *
- * - <kbd>Tab</kbd> / <kbd>Shift+Tab</kbd>: Moves focus between buttons in DOM order
- * - <kbd>Enter</kbd> / <kbd>Space</kbd>: Activates the focused button
- * - Each button is a **separate Tab stop** — the group does NOT use roving tabindex
+ * - <kbd>Tab</kbd> / <kbd>Shift+Tab</kbd>: moves focus between buttons in DOM order
+ * - <kbd>Enter</kbd> / <kbd>Space</kbd>: activates the focused button
+ * - Each button is a **separate tab stop**. The group does NOT use roving `tabindex`
  * - The group host is **NOT focusable**
  *
  * #### Why `aria-orientation` is not set
@@ -301,13 +298,13 @@ export const Disabled: Story = {
  *
  * #### What button-group is NOT
  *
- * - **Not a radio group**: Do not use for exclusive selection —
- *   use [Segmented Control](../?path=/docs/segmented-control--overview) instead
- * - **Not a toggle group**: Do not use for pressed/toggle states —
- *   use Toggle Group instead
+ * - **Not a radio group**: Do not use for exclusive selection.
+ *   Use [Segmented Control](../?path=/docs/segmented-control--overview) instead.
+ * - **Not a toggle group**: Do not use for pressed/toggle states.
+ *   Use Toggle Group instead.
  * - **Not a toolbar**: Does not implement arrow-key navigation.
  *   For toolbar semantics, use `role="toolbar"` on a parent composite with
- *   `FocusgroupNavigationController`
+ *   `FocusgroupNavigationController`.
  *
  * ### Best practices
  *

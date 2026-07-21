@@ -7,7 +7,7 @@ import * as ActionButtonStories from './stories/action-button.stories';
 
 <DocsHeader />
 
-Migrating from `<sp-action-button>`? See the [Action Button migration guide](?path=/docs/action-button-migration-guide--docs).
+Migrating from `<sp-action-button>`? See the [Action button migration guide](?path=/docs/action-button-migration-guide--docs).
 
 ## Anatomy
 
@@ -36,7 +36,12 @@ The `quiet` attribute applies a low-emphasis visual treatment with no background
 
 ### Static colors
 
-The `static-color` attribute pins the button's color to either `"white"` or `"black"` regardless of the active theme. Use `static-color="white"` on dark backgrounds and `static-color="black"` on light backgrounds. Both default and `quiet` treatments support static color.
+Use `static-color` when the button needs to sit on top of a photo or colored background. It pins the button's color to the chosen value regardless of the active color theme:
+
+- **`white`**: use on dark color or image backgrounds
+- **`black`**: use on light color or image backgrounds
+
+Both default and `quiet` treatments support static color.
 
 <Canvas of={ActionButtonStories.StaticColors} />
 
@@ -62,11 +67,9 @@ When `pending` is set, the button remains focusable but click events are suppres
 
 The accessible name during pending defaults to the visible label plus `", busy"`. For example, a button labeled "Upload" announces as `"Upload, busy"`. Provide `pending-label` to override this with a more specific description of the in-progress operation. When pending clears, the accessible name reverts to the original label.
 
-## Behaviors
-
-### Pending
-
 <Canvas of={ActionButtonStories.Pending} />
+
+## Behaviors
 
 ### Icon only
 
@@ -88,9 +91,9 @@ The `<swc-action-button>` element implements several accessibility features:
 
 1. **Native button semantics**: a real `<button>` inside shadow DOM provides the role, so assistive technologies see a genuine button rather than a host with `role="button"`.
 2. **Focus delegation**: `delegatesFocus: true` routes Tab focus and programmatic focus to the internal `<button>`, keeping the host out of the tab order.
-3. **Keyboard activation**: Enter and Space both activate the button via native browser behavior; no custom keyboard handling is added.
+3. **Keyboard activation**: <kbd>Enter</kbd> and <kbd>Space</kbd> both activate the button via native browser behavior. No custom keyboard handling is added.
 4. **Pending state**: when `pending` is true, `aria-disabled="true"` is set on the internal `<button>` and the accessible name becomes `"[label], busy"`. The button remains focusable so users can discover it is unavailable. Provide `pending-label` to override the derived busy name.
-5. **Icon-only labeling**: when there is no visible text, the `accessible-label` attribute is forwarded as `aria-label` on the internal `<button>`. A development warning is emitted when an icon-only button is missing `accessible-label`. Setting `aria-label` directly on the host has no effect on the button's accessible name; the host element has no interactive role and is never focused by assistive technologies.
+5. **Icon-only labeling**: when there is no visible text, the `accessible-label` attribute is forwarded as `aria-label` on the internal `<button>`. A development warning is emitted when an icon-only button is missing `accessible-label`. Setting `aria-label` directly on the host has no effect on the button's accessible name because the host element has no interactive role and is never focused by assistive technologies.
 6. **Menu trigger forwarding**: `aria-haspopup` and `aria-expanded` set on the host are automatically forwarded to the internal `<button>` and stripped from the host to prevent duplicate ARIA state on both elements.
 
 ### Best practices
