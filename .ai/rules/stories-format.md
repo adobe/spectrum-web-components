@@ -494,6 +494,15 @@ export const StaticColors: Story = {
 
 In the flat shape, `staticColorsDemo: true` enables the background zone decorator and the first/last array items automatically land in the dark/light zones; no `flexLayout` is needed (`false`, not `'row-wrap'`). In the div-wrapped shape, use structural `<div>` children instead of `flexLayout` so the decorator's `:first-child`/`:last-child` zone targeting is preserved.
 
+### States vs. Behaviors: which tag to use
+
+Both tags cover things that aren't the component's core Options (size, variant, style), but they answer different questions:
+
+- **`states`**: a condition the component can be _in_ at a point in time, usually driven by a boolean or enum attribute/property (`disabled`, `selected`, `invalid`, `pending`, `indeterminate`). If you can ask "is it currently X?" and get a yes/no or single-value answer, it's a state.
+- **`behaviors`**: something the component _does_ over time or in response to interaction: automatic wrapping/truncation, focus management, methods, events, and multi-step interaction patterns. If describing it requires a verb phrase ("wraps text", "delegates focus", "emits an event"), it's a behavior.
+
+A single attribute can look like either at first glance; use the test above rather than guessing per component. For example, `pending` is a `states` tag: it's a boolean condition the button is in, even though _entering_ pending has a time-delayed visual transition. The transition itself isn't documented as a separate behavior story; the condition is documented once, under States.
+
 ### States
 
 Combine all states into one story when possible.
