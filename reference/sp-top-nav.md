@@ -9,14 +9,14 @@ import '@spectrum-web-components/top-nav/sp-top-nav.js';
 
 ## Attributes
 
-| Name                      | Type                 | Default            | Description                                                                                                                                                                                 |
-| ------------------------- | -------------------- | ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `compact`                 | `boolean`            | -                  | The collection of tabs take up less space                                                                                                                                                   |
-| `label`                   | `string`             | `''`               |                                                                                                                                                                                             |
-| `ignore-url-parts`        | `string`             | `''`               | A space separated list of part of the URL to ignore when matching for the "selected" Top Nav Item. Currently supported values are `hash` and `search`, which will remove the `#hash` and `? |
-| `selectionIndicatorStyle` |                      | `noSelectionStyle` |                                                                                                                                                                                             |
-| `quiet`                   | `boolean`            | `false`            | The Top Nav is displayed without a border.                                                                                                                                                  |
-| `selected`                | `string | undefined` | -                  |                                                                                                                                                                                             |
+| Name                      | Type                  | Default            | Description                                                                                                                                                                                 |
+| ------------------------- | --------------------- | ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `compact`                 | `boolean`             | -                  | The collection of tabs take up less space                                                                                                                                                   |
+| `label`                   | `string`              | `''`               |                                                                                                                                                                                             |
+| `ignore-url-parts`        | `string`              | `''`               | A space separated list of part of the URL to ignore when matching for the "selected" Top Nav Item. Currently supported values are `hash` and `search`, which will remove the `#hash` and `? |
+| `selectionIndicatorStyle` |                       | `noSelectionStyle` |                                                                                                                                                                                             |
+| `quiet`                   | `boolean`             | `false`            | The Top Nav is displayed without a border.                                                                                                                                                  |
+| `selected`                | `string \| undefined` | -                  |                                                                                                                                                                                             |
 
 ## Slots
 

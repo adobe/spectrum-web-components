@@ -7,10 +7,10 @@ import '@spectrum-web-components/asset/sp-asset.js';
 
 ## Attributes
 
-| Name      | Type                       | Default | Description                                                                             |
-| --------- | -------------------------- | ------- | --------------------------------------------------------------------------------------- |
-| `variant` | `AssetVariant | undefined` | -       | The variant of the asset. When not provided, slot content is rendered (e.g., an image). |
-| `label`   | `string`                   | `''`    | Accessible label for the asset’s file or folder variant.                                |
+| Name      | Type                        | Default | Description                                                                             |
+| --------- | --------------------------- | ------- | --------------------------------------------------------------------------------------- |
+| `variant` | `AssetVariant \| undefined` | -       | The variant of the asset. When not provided, slot content is rendered (e.g., an image). |
+| `label`   | `string`                    | `''`    | Accessible label for the asset’s file or folder variant.                                |
 
 ## Slots
 

@@ -7,17 +7,17 @@ import '@spectrum-web-components/action-group/sp-action-group.js';
 
 ## Attributes
 
-| Name           | Type                                | Default | Description |
-| -------------- | ----------------------------------- | ------- | ----------- |
-| `compact`      | `boolean`                           | `false` |             |
-| `emphasized`   | `boolean`                           | `false` |             |
-| `justified`    | `boolean`                           | `false` |             |
-| `label`        | `string`                            | `''`    |             |
-| `quiet`        | `boolean`                           | `false` |             |
-| `selects`      | `undefined | 'single' | 'multiple'` | -       |             |
-| `static-color` | `'white' | 'black' | undefined`     | -       |             |
-| `vertical`     | `boolean`                           | `false` |             |
-| `selected`     | `string[]`                          | -       |             |
+| Name           | Type                                  | Default | Description |
+| -------------- | ------------------------------------- | ------- | ----------- |
+| `compact`      | `boolean`                             | `false` |             |
+| `emphasized`   | `boolean`                             | `false` |             |
+| `justified`    | `boolean`                             | `false` |             |
+| `label`        | `string`                              | `''`    |             |
+| `quiet`        | `boolean`                             | `false` |             |
+| `selects`      | `undefined \| 'single' \| 'multiple'` | -       |             |
+| `static-color` | `'white' \| 'black' \| undefined`     | -       |             |
+| `vertical`     | `boolean`                             | `false` |             |
+| `selected`     | `string[]`                            | -       |             |
 
 ## Slots
 

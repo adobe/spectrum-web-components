@@ -9,7 +9,7 @@ import '@spectrum-web-components/table/sp-table-head.js';
 
 ## Attributes
 
-| Name       | Type                  | Default | Description |
-| ---------- | --------------------- | ------- | ----------- |
-| `role`     | `string`              | `'row'` |             |
-| `selected` | `boolean | undefined` | -       |             |
+| Name       | Type                   | Default | Description |
+| ---------- | ---------------------- | ------- | ----------- |
+| `role`     | `string`               | `'row'` |             |
+| `selected` | `boolean \| undefined` | -       |             |

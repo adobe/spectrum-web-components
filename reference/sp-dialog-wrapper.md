@@ -9,25 +9,25 @@ import '@spectrum-web-components/dialog/sp-dialog-wrapper.js';
 
 ## Attributes
 
-| Name                  | Type                                              | Default   | Description                                                                                  |
-| --------------------- | ------------------------------------------------- | --------- | -------------------------------------------------------------------------------------------- |
-| `error`               | `boolean`                                         | `false`   |                                                                                              |
-| `cancel-label`        | `string`                                          | `''`      |                                                                                              |
-| `confirm-label`       | `string`                                          | `''`      |                                                                                              |
-| `dismiss-label`       | `string`                                          | `'Close'` |                                                                                              |
-| `footer`              | `string`                                          | `''`      |                                                                                              |
-| `hero`                | `string`                                          | `''`      |                                                                                              |
-| `hero-label`          | `string`                                          | `''`      |                                                                                              |
-| `no-divider`          | `boolean`                                         | `false`   |                                                                                              |
-| `size`                | `'s' | 'm' | 'l' | undefined`                     | -         |                                                                                              |
-| `secondary-label`     | `string`                                          | `''`      |                                                                                              |
-| `headline`            | `string`                                          | `''`      |                                                                                              |
-| `headline-visibility` | `'none' | undefined`                              | -         |                                                                                              |
-| `dismissable`         | `boolean`                                         | `false`   |                                                                                              |
-| `open`                | `boolean`                                         | `false`   |                                                                                              |
-| `mode`                | `'fullscreen' | 'fullscreenTakeover' | undefined` | -         |                                                                                              |
-| `responsive`          | `boolean`                                         | `false`   | When set to true, fills screens smaller than 350px high and 400px wide with the full dialog. |
-| `underlay`            | `boolean`                                         | `false`   |                                                                                              |
+| Name                  | Type                                                | Default   | Description                                                                                  |
+| --------------------- | --------------------------------------------------- | --------- | -------------------------------------------------------------------------------------------- |
+| `error`               | `boolean`                                           | `false`   |                                                                                              |
+| `cancel-label`        | `string`                                            | `''`      |                                                                                              |
+| `confirm-label`       | `string`                                            | `''`      |                                                                                              |
+| `dismiss-label`       | `string`                                            | `'Close'` |                                                                                              |
+| `footer`              | `string`                                            | `''`      |                                                                                              |
+| `hero`                | `string`                                            | `''`      |                                                                                              |
+| `hero-label`          | `string`                                            | `''`      |                                                                                              |
+| `no-divider`          | `boolean`                                           | `false`   |                                                                                              |
+| `size`                | `'s' \| 'm' \| 'l' \| undefined`                    | -         |                                                                                              |
+| `secondary-label`     | `string`                                            | `''`      |                                                                                              |
+| `headline`            | `string`                                            | `''`      |                                                                                              |
+| `headline-visibility` | `'none' \| undefined`                               | -         |                                                                                              |
+| `dismissable`         | `boolean`                                           | `false`   |                                                                                              |
+| `open`                | `boolean`                                           | `false`   |                                                                                              |
+| `mode`                | `'fullscreen' \| 'fullscreenTakeover' \| undefined` | -         |                                                                                              |
+| `responsive`          | `boolean`                                           | `false`   | When set to true, fills screens smaller than 350px high and 400px wide with the full dialog. |
+| `underlay`            | `boolean`                                           | `false`   |                                                                                              |
 
 ## Slots
 

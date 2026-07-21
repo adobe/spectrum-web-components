@@ -9,13 +9,13 @@ import '@spectrum-web-components/table/sp-table-head-cell.js';
 
 ## Attributes
 
-| Name             | Type                         | Default          | Description |
-| ---------------- | ---------------------------- | ---------------- | ----------- |
-| `active`         | `boolean`                    | `false`          |             |
-| `role`           | `string`                     | `'columnheader'` |             |
-| `sortable`       | `boolean`                    | `false`          |             |
-| `sort-direction` | `'asc' | 'desc' | undefined` | -                |             |
-| `sort-key`       | `string`                     | `''`             |             |
+| Name             | Type                           | Default          | Description |
+| ---------------- | ------------------------------ | ---------------- | ----------- |
+| `active`         | `boolean`                      | `false`          |             |
+| `role`           | `string`                       | `'columnheader'` |             |
+| `sortable`       | `boolean`                      | `false`          |             |
+| `sort-direction` | `'asc' \| 'desc' \| undefined` | -                |             |
+| `sort-key`       | `string`                       | `''`             |             |
 
 ## Events
 

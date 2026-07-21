@@ -9,11 +9,11 @@ import '@spectrum-web-components/progress-bar/sp-progress-bar.js';
 
 ## Attributes
 
-| Name              | Type                  | Default | Description |
-| ----------------- | --------------------- | ------- | ----------- |
-| `indeterminate`   | `boolean`             | `false` |             |
-| `label`           | `string`              | `''`    |             |
-| `over-background` | `boolean`             | -       |             |
-| `side-label`      | `boolean`             | `false` |             |
-| `progress`        | `number`              | `0`     |             |
-| `static-color`    | `'white' | undefined` | -       |             |
+| Name              | Type                   | Default | Description |
+| ----------------- | ---------------------- | ------- | ----------- |
+| `indeterminate`   | `boolean`              | `false` |             |
+| `label`           | `string`               | `''`    |             |
+| `over-background` | `boolean`              | -       |             |
+| `side-label`      | `boolean`              | `false` |             |
+| `progress`        | `number`               | `0`     |             |
+| `static-color`    | `'white' \| undefined` | -       |             |

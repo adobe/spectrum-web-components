@@ -9,15 +9,15 @@ import '@spectrum-web-components/dialog/sp-dialog.js';
 
 ## Attributes
 
-| Name            | Type                                              | Default   | Description |
-| --------------- | ------------------------------------------------- | --------- | ----------- |
-| `error`         | `boolean`                                         | `false`   |             |
-| `dismissable`   | `boolean`                                         | `false`   |             |
-| `dismiss-label` | `string`                                          | `'Close'` |             |
-| `no-divider`    | `boolean`                                         | `false`   |             |
-| `mode`          | `'fullscreen' | 'fullscreenTakeover' | undefined` | -         |             |
-| `size`          | `'s' | 'm' | 'l' | undefined`                     | -         |             |
-| `variant`       | `AlertDialogVariants`                             | -         |             |
+| Name            | Type                                                | Default   | Description |
+| --------------- | --------------------------------------------------- | --------- | ----------- |
+| `error`         | `boolean`                                           | `false`   |             |
+| `dismissable`   | `boolean`                                           | `false`   |             |
+| `dismiss-label` | `string`                                            | `'Close'` |             |
+| `no-divider`    | `boolean`                                           | `false`   |             |
+| `mode`          | `'fullscreen' \| 'fullscreenTakeover' \| undefined` | -         |             |
+| `size`          | `'s' \| 'm' \| 'l' \| undefined`                    | -         |             |
+| `variant`       | `AlertDialogVariants`                               | -         |             |
 
 ## Slots
 

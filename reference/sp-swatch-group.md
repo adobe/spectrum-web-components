@@ -9,14 +9,14 @@ import '@spectrum-web-components/swatch/sp-swatch-group.js';
 
 ## Attributes
 
-| Name       | Type                                 | Default | Description |
-| ---------- | ------------------------------------ | ------- | ----------- |
-| `border`   | `SwatchBorder`                       | -       |             |
-| `density`  | `'compact' | 'spacious' | undefined` | -       |             |
-| `rounding` | `SwatchRounding`                     | -       |             |
-| `selected` | `string[]`                           | -       |             |
-| `selects`  | `SwatchSelects`                      | -       |             |
-| `shape`    | `SwatchShape`                        | -       |             |
+| Name       | Type                                   | Default | Description |
+| ---------- | -------------------------------------- | ------- | ----------- |
+| `border`   | `SwatchBorder`                         | -       |             |
+| `density`  | `'compact' \| 'spacious' \| undefined` | -       |             |
+| `rounding` | `SwatchRounding`                       | -       |             |
+| `selected` | `string[]`                             | -       |             |
+| `selects`  | `SwatchSelects`                        | -       |             |
+| `shape`    | `SwatchShape`                          | -       |             |
 
 ## Slots
 

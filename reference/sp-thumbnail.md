@@ -9,12 +9,12 @@ import '@spectrum-web-components/thumbnail/sp-thumbnail.js';
 
 ## Attributes
 
-| Name         | Type                 | Default | Description |
-| ------------ | -------------------- | ------- | ----------- |
-| `background` | `string | undefined` | -       |             |
-| `cover`      | `boolean`            | `false` |             |
-| `layer`      | `boolean`            | `false` |             |
-| `size`       | `ThumbnailSize`      | -       |             |
+| Name         | Type                  | Default | Description |
+| ------------ | --------------------- | ------- | ----------- |
+| `background` | `string \| undefined` | -       |             |
+| `cover`      | `boolean`             | `false` |             |
+| `layer`      | `boolean`             | `false` |             |
+| `size`       | `ThumbnailSize`       | -       |             |
 
 ## Slots
 

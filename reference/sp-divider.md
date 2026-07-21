@@ -9,8 +9,8 @@ import '@spectrum-web-components/divider/sp-divider.js';
 
 ## Attributes
 
-| Name           | Type                             | Default | Description                                                                                 |
-| -------------- | -------------------------------- | ------- | ------------------------------------------------------------------------------------------- |
-| `size`         | `ElementSize`                    | -       | The size of the divider.                                                                    |
-| `vertical`     | `boolean`                        | `false` | Whether the divider is vertical. If false, the divider is horizontal. The default is false. |
-| `static-color` | `DividerStaticColor | undefined` | -       | The static color variant to use for the divider.                                            |
+| Name           | Type                              | Default | Description                                                                                 |
+| -------------- | --------------------------------- | ------- | ------------------------------------------------------------------------------------------- |
+| `size`         | `ElementSize`                     | -       | The size of the divider.                                                                    |
+| `vertical`     | `boolean`                         | `false` | Whether the divider is vertical. If false, the divider is horizontal. The default is false. |
+| `static-color` | `DividerStaticColor \| undefined` | -       | The static color variant to use for the divider.                                            |

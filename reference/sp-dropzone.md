@@ -9,11 +9,11 @@ import '@spectrum-web-components/dropzone/sp-dropzone.js';
 
 ## Attributes
 
-| Name         | Type                                | Default | Description                                                                                 |
-| ------------ | ----------------------------------- | ------- | ------------------------------------------------------------------------------------------- |
-| `dropEffect` | `'copy' | 'move' | 'link' | 'none'` | -       | Controls the feedback (typically visual) the user is given during a drag and drop operation |
-| `dragged`    | `boolean`                           | `false` | Indicates that files are currently being dragged over the dropzone.                         |
-| `filled`     | `boolean`                           | `false` | Set this property to indicate that the component is in a filled state.                      |
+| Name         | Type                                   | Default | Description                                                                                 |
+| ------------ | -------------------------------------- | ------- | ------------------------------------------------------------------------------------------- |
+| `dropEffect` | `'copy' \| 'move' \| 'link' \| 'none'` | -       | Controls the feedback (typically visual) the user is given during a drag and drop operation |
+| `dragged`    | `boolean`                              | `false` | Indicates that files are currently being dragged over the dropzone.                         |
+| `filled`     | `boolean`                              | `false` | Set this property to indicate that the component is in a filled state.                      |
 
 ## Slots
 

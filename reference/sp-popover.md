@@ -9,11 +9,11 @@ import '@spectrum-web-components/popover/sp-popover.js';
 
 ## Attributes
 
-| Name        | Type                                                                                                                                                      | Default | Description                            |
-| ----------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- | -------------------------------------- |
-| `placement` | `"top" | "top-start" | "top-end" | "right" | "right-start" | "right-end" | "bottom" | "bottom-start" | "bottom-end" | "left" | "left-start" | "left-end"` | -       |                                        |
-| `open`      | `boolean`                                                                                                                                                 | `false` | Whether the popover is visible or not. |
-| `tip`       | `boolean`                                                                                                                                                 | `false` |                                        |
+| Name        | Type                                                                                                                                                                 | Default | Description                            |
+| ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- | -------------------------------------- |
+| `placement` | `"top" \| "top-start" \| "top-end" \| "right" \| "right-start" \| "right-end" \| "bottom" \| "bottom-start" \| "bottom-end" \| "left" \| "left-start" \| "left-end"` | -       |                                        |
+| `open`      | `boolean`                                                                                                                                                            | `false` | Whether the popover is visible or not. |
+| `tip`       | `boolean`                                                                                                                                                            | `false` |                                        |
 
 ## Slots
 

@@ -9,13 +9,13 @@ import '@spectrum-web-components/field-label/sp-field-label.js';
 
 ## Attributes
 
-| Name           | Type                          | Default | Description |
-| -------------- | ----------------------------- | ------- | ----------- |
-| `disabled`     | `boolean`                     | `false` |             |
-| `id`           | `string`                      | `''`    |             |
-| `for`          | `string`                      | `''`    |             |
-| `required`     | `boolean`                     | `false` |             |
-| `side-aligned` | `'start' | 'end' | undefined` | -       |             |
+| Name           | Type                            | Default | Description |
+| -------------- | ------------------------------- | ------- | ----------- |
+| `disabled`     | `boolean`                       | `false` |             |
+| `id`           | `string`                        | `''`    |             |
+| `for`          | `string`                        | `''`    |             |
+| `required`     | `boolean`                       | `false` |             |
+| `side-aligned` | `'start' \| 'end' \| undefined` | -       |             |
 
 ## Slots
 

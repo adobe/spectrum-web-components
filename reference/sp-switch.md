@@ -9,15 +9,15 @@ import '@spectrum-web-components/switch/sp-switch.js';
 
 ## Attributes
 
-| Name         | Type                 | Default | Description                                                                                        |
-| ------------ | -------------------- | ------- | -------------------------------------------------------------------------------------------------- |
-| `emphasized` | `boolean`            | `false` |                                                                                                    |
-| `checked`    | `boolean`            | `false` |                                                                                                    |
-| `name`       | `string | undefined` | -       |                                                                                                    |
-| `readonly`   | `boolean`            | `false` |                                                                                                    |
-| `disabled`   | `boolean`            | `false` | Disable this control. It will not receive focus or events                                          |
-| `autofocus`  | `boolean`            | `false` | When this control is rendered, focus it automatically                                              |
-| `tabIndex`   | `number`             | -       | The tab index to apply to this control. See general documentation about the tabindex HTML property |
+| Name         | Type                  | Default | Description                                                                                        |
+| ------------ | --------------------- | ------- | -------------------------------------------------------------------------------------------------- |
+| `emphasized` | `boolean`             | `false` |                                                                                                    |
+| `checked`    | `boolean`             | `false` |                                                                                                    |
+| `name`       | `string \| undefined` | -       |                                                                                                    |
+| `readonly`   | `boolean`             | `false` |                                                                                                    |
+| `disabled`   | `boolean`             | `false` | Disable this control. It will not receive focus or events                                          |
+| `autofocus`  | `boolean`             | `false` | When this control is rendered, focus it automatically                                              |
+| `tabIndex`   | `number`              | -       | The tab index to apply to this control. See general documentation about the tabindex HTML property |
 
 ## Slots
 

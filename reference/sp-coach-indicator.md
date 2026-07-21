@@ -9,7 +9,7 @@ import '@spectrum-web-components/coachmark/sp-coach-indicator.js';
 
 ## Attributes
 
-| Name           | Type                            | Default | Description |
-| -------------- | ------------------------------- | ------- | ----------- |
-| `quiet`        | `boolean`                       | `false` |             |
-| `static-color` | `'white' | 'black' | undefined` | -       |             |
+| Name           | Type                              | Default | Description |
+| -------------- | --------------------------------- | ------- | ----------- |
+| `quiet`        | `boolean`                         | `false` |             |
+| `static-color` | `'white' \| 'black' \| undefined` | -       |             |

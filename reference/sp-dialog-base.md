@@ -9,13 +9,13 @@ import '@spectrum-web-components/dialog/sp-dialog-base.js';
 
 ## Attributes
 
-| Name          | Type                                              | Default | Description                                                                                  |
-| ------------- | ------------------------------------------------- | ------- | -------------------------------------------------------------------------------------------- |
-| `dismissable` | `boolean`                                         | `false` |                                                                                              |
-| `open`        | `boolean`                                         | `false` |                                                                                              |
-| `mode`        | `'fullscreen' | 'fullscreenTakeover' | undefined` | -       |                                                                                              |
-| `responsive`  | `boolean`                                         | `false` | When set to true, fills screens smaller than 350px high and 400px wide with the full dialog. |
-| `underlay`    | `boolean`                                         | `false` |                                                                                              |
+| Name          | Type                                                | Default | Description                                                                                  |
+| ------------- | --------------------------------------------------- | ------- | -------------------------------------------------------------------------------------------- |
+| `dismissable` | `boolean`                                           | `false` |                                                                                              |
+| `open`        | `boolean`                                           | `false` |                                                                                              |
+| `mode`        | `'fullscreen' \| 'fullscreenTakeover' \| undefined` | -       |                                                                                              |
+| `responsive`  | `boolean`                                           | `false` | When set to true, fills screens smaller than 350px high and 400px wide with the full dialog. |
+| `underlay`    | `boolean`                                           | `false` |                                                                                              |
 
 ## Slots
 

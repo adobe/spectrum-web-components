@@ -8,7 +8,7 @@
 - [GitHub](https://github.com/adobe/spectrum-web-components): Source code and issues
 - [npm](https://www.npmjs.com/search?q=%40spectrum-web-components): All 1st-gen packages
 - [llms-full.txt](https://opensource.adobe.com/spectrum-web-components/llms-full.txt): All Spectrum 1 component APIs in one file
-- [2nd-gen llms.txt](https://opensource.adobe.com/spectrum-web-components/second-gen/llms.txt): Spectrum 2 (swc-*) component index
+- [2nd-gen llms.txt](https://spectrum-web-components.adobe.com/llms.txt): Spectrum 2 (swc-*) component index
 
 ## Guides
 
