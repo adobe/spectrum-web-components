@@ -9,4 +9,14 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-export * from './UserMessage.js';
+import { defineElement } from '@adobe/spectrum-wc-core/element/index.js';
+
+import { SuggestionItem } from './SuggestionItem.js';
+
+declare global {
+  interface HTMLElementTagNameMap {
+    'swc-suggestion-item': SuggestionItem;
+  }
+}
+
+defineElement('swc-suggestion-item', SuggestionItem);

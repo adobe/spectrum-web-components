@@ -13,8 +13,8 @@
 import { expect, userEvent } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
-import '../../upload-artifact/index.js';
-import '../index.js';
+import '../../upload-artifact/swc-upload-artifact.js';
+import '../swc-prompt-field.js';
 
 import { getComponent } from '../../../../utils/test-utils.js';
 import { PromptField } from '../PromptField.js';

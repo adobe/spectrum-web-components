@@ -65,6 +65,26 @@ import '@adobe/spectrum-wc/components/badge/swc-badge.js';
 
 You can open that component's documentation page for the feature overview, accessibility guidance, and the full API. For this example, see [Badge](/docs/components-badge--docs).
 
+## Use your first pattern
+
+Patterns use the same per-element side-effect imports as components. Include only the pattern elements your application uses:
+
+```ts
+import '@adobe/spectrum-wc/patterns/conversational-ai/response-status/swc-response-status.js';
+```
+
+```html
+<swc-response-status loading></swc-response-status>
+```
+
+Import a pattern's public class or types from its index path without registering the custom element:
+
+```ts
+import type { ResponseStatus } from '@adobe/spectrum-wc/patterns/conversational-ai/response-status';
+```
+
+See the [Conversational AI pattern overview](/docs/conversational-ai-pattern-overview--docs) for the available elements and their registration imports.
+
 ## Where to look next
 
 - **Components** — individual building blocks: badge, button, avatar, progress-circle, and more.
