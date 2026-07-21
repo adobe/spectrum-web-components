@@ -41,7 +41,9 @@ import '@adobe/spectrum-wc/components/dropzone/swc-dropzone.js';
 | Events           | `sp-dropzone-should-accept`, `sp-dropzone-dragover`, `sp-dropzone-dragleave`, `sp-dropzone-drop` | `swc-dropzone-should-accept`, `swc-dropzone-dragover`, `swc-dropzone-dragleave`, `swc-dropzone-drop` |
 | CSS custom props | `--mod-drop-zone-*` and `--mod-illustrated-message-*` passthrough                                | `--swc-dropzone-*` (see [Styling](#styling))                                                         |
 
-If your code only ever set `dropzone.isFilled = true` in JavaScript (never `setAttribute('filled', ...)`), the filled background tint and the `filled-content` slot swap never actually applied in Spectrum 1, because the attribute was never reflected. In Spectrum 2 the same JavaScript now works correctly, so you may see this visual change appear for the first time after upgrading with no code changes on your part.
+If your code only ever set `dropzone.isFilled = true` in JavaScript (never `setAttribute('filled', ...)`), the filled background tint never actually applied in Spectrum 1, because the attribute was never reflected. In Spectrum 2 the same JavaScript now works correctly, so you may see this visual change appear for the first time after upgrading with no code changes on your part.
+
+Note that the `filled-content` slot itself is new in Spectrum 2, not a restored behavior; Spectrum 1 had no dedicated slot for uploaded-state content, so any content swap was something you managed yourself by mutating the default slot in place (see [step 4](#4-move-uploaded-state-content-into-the-filled-content-slot)).
 
 ### Added in Spectrum 2
 
