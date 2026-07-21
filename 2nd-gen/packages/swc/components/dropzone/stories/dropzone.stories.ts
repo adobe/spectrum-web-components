@@ -37,6 +37,20 @@ argTypes.size = {
   options: DROPZONE_VALID_SIZES,
 };
 
+// Playground renders real illustrated-message/browse/file-input markup so drag-and-drop and
+// browse-to-upload actually swap the zone into its filled state; the generic slot controls
+// have no effect on that markup, so hide them rather than leave dead controls in the sidebar.
+argTypes['default-slot'] = {
+  ...argTypes['default-slot'],
+  table: { disable: true },
+  control: false,
+};
+argTypes['filled-content-slot'] = {
+  ...argTypes['filled-content-slot'],
+  table: { disable: true },
+  control: false,
+};
+
 /**
  * A drop zone is a target area that accepts dragged-and-dropped content, typically files,
  * from the operating system or from within the same page. It pairs a visual drop area with
@@ -91,16 +105,6 @@ const makeDropzoneSlot = (
   </swc-illustrated-message>
 `;
 
-// HTML string version used by the Playground so template(args) can spread all args.
-const DROPZONE_SLOT_HTML = `
-  <swc-illustrated-message>
-    ${DROPZONE_SVG}
-    <h2 slot="heading">Drag and drop your file</h2>
-    <span slot="description">${DEFAULT_DROPZONE_DESCRIPTION}</span>
-    <swc-button slot="actions" variant="accent">Browse files</swc-button>
-  </swc-illustrated-message>
-`;
-
 // Shared wiring for the browse-button + drop event pattern recommended by the
 // accessibility analysis: both paths call the same handler so `filled` and the
 // status region update identically regardless of how the file was provided.
@@ -138,6 +142,70 @@ const bindFilledStateHandlers = (
   };
 };
 
+// Shared by Playground, BrowseAndDrop, and Accessibility: all three demonstrate the same
+// browse-button + drop wiring so dragging a real file over the zone (or using the browse
+// button) actually swaps it into the filled state, rather than only responding to the
+// `filled` control. Playground drives `size`/`aria-label`/`dragged`/`filled` from Storybook
+// args; the other two callers pass a fixed accessible name and accept the defaults.
+const renderFilledStateExample = (
+  ariaLabel: string,
+  options: { size?: DropzoneSize; dragged?: boolean; filled?: boolean } = {}
+) => {
+  const { size = 'm', dragged = false, filled = false } = options;
+  let dropzone: Element | null = null;
+  let fileInput: HTMLInputElement | null = null;
+  let filledContent: HTMLElement | null = null;
+  const { handleDrop, handleChange, browseFiles } = bindFilledStateHandlers(
+    () => dropzone,
+    () => filledContent,
+    () => fileInput
+  );
+  return html`
+    <swc-dropzone
+      ${ref((element?: Element) => (dropzone = element ?? null))}
+      size=${size}
+      aria-label=${ariaLabel}
+      ?dragged=${dragged}
+      ?filled=${filled}
+      style="min-inline-size: 260px;"
+      @swc-dropzone-drop=${handleDrop}
+    >
+      <swc-illustrated-message>
+        ${unsafeHTML(DROPZONE_SVG)}
+        <h2 slot="heading">Drag and drop your file</h2>
+        <span slot="description">${DEFAULT_DROPZONE_DESCRIPTION}</span>
+        <swc-button slot="actions" variant="accent" @click=${browseFiles}>
+          Browse files
+        </swc-button>
+      </swc-illustrated-message>
+      <input
+        ${ref(
+          (element?: Element) =>
+            (fileInput = (element as HTMLInputElement) ?? null)
+        )}
+        type="file"
+        aria-label="Choose a file"
+        style="display: none;"
+        @change=${handleChange}
+      />
+      <div
+        slot="filled-content"
+        style="display: flex; align-items: center; gap: 8px;"
+      >
+        <span
+          ${ref(
+            (element?: Element) =>
+              (filledContent = (element as HTMLElement) ?? null)
+          )}
+        ></span>
+        <swc-button size="s" variant="secondary" @click=${browseFiles}>
+          Replace file
+        </swc-button>
+      </div>
+    </swc-dropzone>
+  `;
+};
+
 // ────────────────────────
 //    PLAYGROUND STORY
 // ────────────────────────
@@ -149,8 +217,13 @@ export const Playground: Story = {
     dragged: false,
     filled: false,
     'aria-label': 'Upload files',
-    'default-slot': DROPZONE_SLOT_HTML,
   },
+  render: (args) =>
+    renderFilledStateExample(args['aria-label'] as string, {
+      size: args.size as DropzoneSize,
+      dragged: args.dragged as boolean,
+      filled: args.filled as boolean,
+    }),
 };
 
 // ──────────────────────────
@@ -290,60 +363,6 @@ export const EventLog: Story = {
   tags: ['behaviors'],
 };
 EventLog.storyName = 'Event log';
-
-// Shared by BrowseAndDrop and Accessibility: both stories demonstrate the same
-// browse-button + drop wiring, differing only in the accessible name.
-const renderFilledStateExample = (ariaLabel: string) => {
-  let dropzone: Element | null = null;
-  let fileInput: HTMLInputElement | null = null;
-  let filledContent: HTMLElement | null = null;
-  const { handleDrop, handleChange, browseFiles } = bindFilledStateHandlers(
-    () => dropzone,
-    () => filledContent,
-    () => fileInput
-  );
-  return html`
-    <swc-dropzone
-      ${ref((element?: Element) => (dropzone = element ?? null))}
-      aria-label=${ariaLabel}
-      style="min-inline-size: 260px;"
-      @swc-dropzone-drop=${handleDrop}
-    >
-      <swc-illustrated-message>
-        ${unsafeHTML(DROPZONE_SVG)}
-        <h2 slot="heading">Drag and drop your file</h2>
-        <span slot="description">${DEFAULT_DROPZONE_DESCRIPTION}</span>
-        <swc-button slot="actions" variant="accent" @click=${browseFiles}>
-          Browse files
-        </swc-button>
-      </swc-illustrated-message>
-      <input
-        ${ref(
-          (element?: Element) =>
-            (fileInput = (element as HTMLInputElement) ?? null)
-        )}
-        type="file"
-        aria-label="Choose a file"
-        style="display: none;"
-        @change=${handleChange}
-      />
-      <div
-        slot="filled-content"
-        style="display: flex; align-items: center; gap: 8px;"
-      >
-        <span
-          ${ref(
-            (element?: Element) =>
-              (filledContent = (element as HTMLElement) ?? null)
-          )}
-        ></span>
-        <swc-button size="s" variant="secondary" @click=${browseFiles}>
-          Replace file
-        </swc-button>
-      </div>
-    </swc-dropzone>
-  `;
-};
 
 export const BrowseAndDrop: Story = {
   render: () => renderFilledStateExample('Upload files'),
