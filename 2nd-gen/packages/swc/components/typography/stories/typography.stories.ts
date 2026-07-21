@@ -97,6 +97,7 @@ export const SerifModifier: Story = {
   },
   tags: ['options'],
 };
+SerifModifier.storyName = 'Serif modifier';
 
 export const EmphasizedModifier: Story = {
   args: {
@@ -105,6 +106,7 @@ export const EmphasizedModifier: Story = {
   },
   tags: ['options'],
 };
+EmphasizedModifier.storyName = 'Emphasized modifier';
 
 export const HeadingVariant: Story = {
   args: {
@@ -113,6 +115,7 @@ export const HeadingVariant: Story = {
   },
   tags: ['options'],
 };
+HeadingVariant.storyName = 'Heading variant';
 
 export const HeadingHeavy: Story = {
   args: {
@@ -123,6 +126,7 @@ export const HeadingHeavy: Story = {
   },
   tags: ['options'],
 };
+HeadingHeavy.storyName = 'Heading heavy';
 
 export const TitleVariant: Story = {
   args: {
@@ -131,6 +135,7 @@ export const TitleVariant: Story = {
   },
   tags: ['options'],
 };
+TitleVariant.storyName = 'Title variant';
 
 export const BodyVariant: Story = {
   args: {
@@ -139,6 +144,7 @@ export const BodyVariant: Story = {
   },
   tags: ['options'],
 };
+BodyVariant.storyName = 'Body variant';
 
 export const DetailVariant: Story = {
   args: {
@@ -147,6 +153,7 @@ export const DetailVariant: Story = {
   },
   tags: ['options'],
 };
+DetailVariant.storyName = 'Detail variant';
 
 export const CodeVariant: Story = {
   args: {
@@ -155,6 +162,7 @@ export const CodeVariant: Story = {
   },
   tags: ['options'],
 };
+CodeVariant.storyName = 'Code variant';
 
 export const MarginsModifier: Story = {
   args: {
@@ -165,18 +173,8 @@ export const MarginsModifier: Story = {
   },
   tags: ['options'],
 };
+MarginsModifier.storyName = 'Margins modifier';
 
-/**
- * Applies block-direction margins to all type variants within a container with the `.swc-Typography--prose` class applied.
- *
- * This also applies foundational type properties based on heading, title and body styles to common semantic typography elements including:
- * - `h1` - Heading, size M
- * - `h2` - Title, size XL
- * - `h3` - Title, size L
- * - `h4` - Title, size M
- * - `p, li` - Body, size M
- * - `a` - inherits font styles, such as Body, size M from paragraphs
- */
 export const ProseContainer: Story = {
   args: {
     variant: 'body',
@@ -220,13 +218,8 @@ export const ProseContainer: Story = {
     </div>
   `,
 };
+ProseContainer.storyName = 'Prose container';
 
-/**
- * Link lists in footers, sidebars, and navigation regions use
- * `.swc-Typography--links` so child `<a href>` elements receive default link
- * styling without per-link classes. See [Link migration guide](/docs/link-migration-guide--docs)
- * for modifier classes on individual anchors.
- */
 export const LinkList: Story = {
   tags: ['options'],
   render: () => html`
@@ -240,3 +233,4 @@ export const LinkList: Story = {
     </ul>
   `,
 };
+LinkList.storyName = 'Link list';
