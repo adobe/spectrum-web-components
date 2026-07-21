@@ -19,6 +19,8 @@ import { capitalize } from '@adobe/spectrum-wc-core/utils/index.js';
 import styles from './divider.css';
 
 /**
+ * A divider separates and distinguishes sections of content or groups of menu items.
+ *
  * @element swc-divider
  * @since 2.0.0-beta.1
  *

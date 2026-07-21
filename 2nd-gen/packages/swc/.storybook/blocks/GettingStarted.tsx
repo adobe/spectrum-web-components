@@ -19,10 +19,10 @@ export const GettingStarted = ({ of, tags }: { of?: any; tags?: string[] }) => {
   const packagePath = resolvedOf.preparedMeta?.parameters?.docs?.packagePath;
 
   if (tags?.includes('controller')) {
-    // Extract component name in kebab-case from the title (e.g., "Components/Progress Circle" -> "progress-circle")
+    // Extract component name in kebab-case from the title (e.g., "Controllers/Hover controller" -> "hover-controller")
     const packageName = formatTitle(resolvedOf.preparedMeta?.title);
 
-    // Extract component name in PascalCase from the title (e.g., "Components/Progress Circle" -> "ProgressCircle")
+    // Extract component name in PascalCase from the title (e.g., "Controllers/Hover controller" -> "HoverController")
     const baseClassName = formatTitle(resolvedOf.preparedMeta?.title, 'pascal');
     return (
       <Markdown>{`## Getting started
@@ -32,7 +32,7 @@ Controllers are not published as packages. Instead, they are imported directly f
 Import the controller directly from the core package:
 
 \`\`\`typescript
-import { ${baseClassName} } from '@adobe/spectrum-wc/components/core/controllers/${packageName}.js';
+import { ${baseClassName} } from '@adobe/spectrum-wc-core/controllers/${packageName}.js';
 \`\`\`
 `}</Markdown>
     );

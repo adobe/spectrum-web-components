@@ -10,7 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
-import { HeaderMdx, useOf } from '@storybook/addon-docs/blocks';
+import { HeaderMdx, Markdown, useOf } from '@storybook/addon-docs/blocks';
 import type {
   Attribute,
   ClassField,
@@ -91,6 +91,24 @@ function sectionId(baseId: string, tagName?: string): string {
   return tagName ? `${baseId}-${tagName}` : baseId;
 }
 
+/** Renders a CEM description as inline markdown (code spans, links, bold, etc). */
+function Description({ text }: { text?: string }) {
+  if (!text) return null;
+  return (
+    <Markdown
+      className="swc-Typography--prose"
+      options={{
+        forceInline: true,
+        overrides: {
+          code: { props: { className: 'swc-Code swc-Code--sizeS' } },
+        },
+      }}
+    >
+      {text}
+    </Markdown>
+  );
+}
+
 function getArgTypeForMember(
   argTypes: Record<string, ArgType>,
   propName: string,
@@ -144,7 +162,10 @@ function PropertiesTable({
         Properties
       </HeaderMdx>
       <div style={scrollStyle}>
-        <table style={tableStyle}>
+        <table
+          style={tableStyle}
+          className="swc-ApiTable swc-Body swc-Body--sizeM"
+        >
           <thead>
             <tr>
               <th>Property</th>
@@ -171,14 +192,21 @@ function PropertiesTable({
               return (
                 <tr key={prop.name}>
                   <td>
-                    <code>{prop.name}</code>
+                    <code className="swc-Code swc-Code--sizeS">
+                      {prop.name}
+                    </code>
                   </td>
                   <td>
                     {attr ? (
                       <>
-                        <code>{attr.name}</code>
+                        <code className="swc-Code swc-Code--sizeS">
+                          {attr.name}
+                        </code>
                         {prop.reflects && (
-                          <small style={{ opacity: '0.8', marginLeft: 4 }}>
+                          <small
+                            className="swc-Detail swc-Detail--sizeS"
+                            style={{ marginLeft: 4 }}
+                          >
                             (reflects)
                           </small>
                         )}
@@ -187,11 +215,25 @@ function PropertiesTable({
                       '-'
                     )}
                   </td>
-                  <td>{typeName && <code>{typeName}</code>}</td>
                   <td>
-                    {prop.default != null ? <code>{prop.default}</code> : '-'}
+                    {typeName && (
+                      <code className="swc-Code swc-Code--sizeS">
+                        {typeName}
+                      </code>
+                    )}
                   </td>
-                  <td>{prop.description ?? ''}</td>
+                  <td>
+                    {prop.default != null ? (
+                      <code className="swc-Code swc-Code--sizeS">
+                        {prop.default}
+                      </code>
+                    ) : (
+                      '-'
+                    )}
+                  </td>
+                  <td>
+                    <Description text={prop.description} />
+                  </td>
                 </tr>
               );
             })}
@@ -218,7 +260,10 @@ function SlotsTable({
         Slots
       </HeaderMdx>
       <div style={scrollStyle}>
-        <table style={tableStyle}>
+        <table
+          style={tableStyle}
+          className="swc-ApiTable swc-Body swc-Body--sizeM"
+        >
           <thead>
             <tr>
               <th>Name</th>
@@ -229,9 +274,13 @@ function SlotsTable({
             {slots.map((slot) => (
               <tr key={slot.name || 'default'}>
                 <td>
-                  <code>{slot.name || '(default)'}</code>
+                  <code className="swc-Code swc-Code--sizeS">
+                    {slot.name || '(default)'}
+                  </code>
                 </td>
-                <td>{slot.description ?? ''}</td>
+                <td>
+                  <Description text={slot.description} />
+                </td>
               </tr>
             ))}
           </tbody>
@@ -258,7 +307,10 @@ function EventsTable({
         Events
       </HeaderMdx>
       <div style={scrollStyle}>
-        <table style={tableStyle}>
+        <table
+          style={tableStyle}
+          className="swc-ApiTable swc-Body swc-Body--sizeM"
+        >
           <thead>
             <tr>
               <th>Name</th>
@@ -269,9 +321,11 @@ function EventsTable({
             {events.map((event) => (
               <tr key={event.name}>
                 <td>
-                  <code>{event.name}</code>
+                  <code className="swc-Code swc-Code--sizeS">{event.name}</code>
                 </td>
-                <td>{event.description ?? ''}</td>
+                <td>
+                  <Description text={event.description} />
+                </td>
               </tr>
             ))}
           </tbody>
@@ -300,7 +354,10 @@ function CssPropsTable({
         CSS Custom Properties
       </HeaderMdx>
       <div style={scrollStyle}>
-        <table style={tableStyle}>
+        <table
+          style={tableStyle}
+          className="swc-ApiTable swc-Body swc-Body--sizeM"
+        >
           <thead>
             <tr>
               <th>Name</th>
@@ -312,12 +369,20 @@ function CssPropsTable({
             {cssProps.map((prop) => (
               <tr key={prop.name}>
                 <td>
-                  <code>{prop.name}</code>
+                  <code className="swc-Code swc-Code--sizeS">{prop.name}</code>
                 </td>
                 <td>
-                  {prop.default != null ? <code>{prop.default}</code> : '-'}
+                  {prop.default != null ? (
+                    <code className="swc-Code swc-Code--sizeS">
+                      {prop.default}
+                    </code>
+                  ) : (
+                    '-'
+                  )}
                 </td>
-                <td>{prop.description ?? ''}</td>
+                <td>
+                  <Description text={prop.description} />
+                </td>
               </tr>
             ))}
           </tbody>
@@ -343,7 +408,10 @@ function CssPartsTable({
         CSS Parts
       </HeaderMdx>
       <div style={scrollStyle}>
-        <table style={tableStyle}>
+        <table
+          style={tableStyle}
+          className="swc-ApiTable swc-Body swc-Body--sizeM"
+        >
           <thead>
             <tr>
               <th>Name</th>
@@ -354,9 +422,11 @@ function CssPartsTable({
             {cssParts.map((part) => (
               <tr key={part.name}>
                 <td>
-                  <code>{part.name}</code>
+                  <code className="swc-Code swc-Code--sizeS">{part.name}</code>
                 </td>
-                <td>{part.description ?? ''}</td>
+                <td>
+                  <Description text={part.description} />
+                </td>
               </tr>
             ))}
           </tbody>
@@ -394,12 +464,16 @@ export function ApiTable({
 
   const cem = window.__STORYBOOK_CUSTOM_ELEMENTS_MANIFEST__;
   if (!cem || !tagName) {
-    return <p>No API data available.</p>;
+    return <p className="swc-Body swc-Body--sizeM">No API data available.</p>;
   }
 
   const component = findComponent(cem, tagName);
   if (!component) {
-    return <p>Component &ldquo;{tagName}&rdquo; not found in manifest.</p>;
+    return (
+      <p className="swc-Body swc-Body--sizeM">
+        Component &ldquo;{tagName}&rdquo; not found in manifest.
+      </p>
+    );
   }
 
   const members = component.members ?? [];

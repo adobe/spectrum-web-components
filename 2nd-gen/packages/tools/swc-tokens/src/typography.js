@@ -57,6 +57,9 @@ const VARIANT_CONFIG = {
     // Prevent clash with code design tokens by using "monospace" as cp base
     cpBaseSuffix: 'monospace',
     supportsCjkSizeAdjustment: false,
+    // Code should always render in the code font, even in CJK languages, where
+    // per-locale font-family rules otherwise win via their own `!important`.
+    forceFontFamilyImportant: true,
   },
 };
 
@@ -686,7 +689,9 @@ export async function generateTypographyCssString(options = {}) {
       }),
       pickValidDecls({
         color: `var(--${cpBase}-font-color, ${colorRef})`,
-        'font-family': `var(--${cpBase}-font-family, token("${defaultFont}"))`,
+        'font-family': `var(--${cpBase}-font-family, token("${defaultFont}"))${
+          cfg.forceFontFamilyImportant ? ' !important' : ''
+        }`,
         'font-weight': sansWeightRef
           ? `var(--${cpBase}-font-weight, ${sansWeightRef})`
           : `var(--${cpBase}-font-weight, token("regular-font-weight"))`,

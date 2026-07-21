@@ -17,6 +17,8 @@ import { IllustratedMessageBase } from '@adobe/spectrum-wc-core/components/illus
 import styles from './illustrated-message.css';
 
 /**
+ * An illustrated message displays an illustration and a message, typically used in empty states or error pages.
+ *
  * @element swc-illustrated-message
  * @since 2.0.0-beta.1
  *
