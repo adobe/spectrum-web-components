@@ -272,13 +272,12 @@ export const Overview: Story = {
 
 ### Anatomy
 
-**Purpose**: Document the component's parts and, for each part, how it is populated (slot, attribute/property, or fixed markup) in a single flat list that serves both designers and developers.
+**Purpose**: Document both visual structure (what users see) and technical structure (slots, parts, properties).
 
 **Required content:**
 
-- **Every part** of the component, in visual/reading order
-- For each part, **how it's populated**: which slot, attribute, or property supplies it (omit this only for parts with no configurable content, e.g. a purely decorative container)
-- Whether a part is **optional** or **required**, called out inline when it isn't obvious
+- **All slots** with descriptions
+- **Content-rendering properties** (label, icon, src, value, etc.)
 - Visual examples showing structure
 
 **Consolidation rule**: Combine all slotted content combinations into a **single Anatomy story**.
@@ -290,23 +289,26 @@ export const Overview: Story = {
 
 A component-name consists of:
 
-- **Primary element**: main visual component, provided through the default slot
-- **Secondary element** (optional), provided through the `icon` slot: additional visual content
-- **Optional indicator**: shown conditionally based on the `value` property
+1. **Primary element** — main visual component
+2. **Secondary element** — additional visual content
+3. **Optional indicator** — shown conditionally
 
-<Canvas of={Stories.Anatomy} />
-```
+### Content
 
-For a component that wraps other custom elements (e.g. a container plus a repeated item), name the element each bullet describes so the mapping from part to tag is unambiguous:
+#### Slots
 
-```mdx
-## Anatomy
+- **Default slot**: primary content (text or HTML)
+- **icon slot**: optional icon element
+- **description slot**: additional descriptive content
 
-A component-name consists of:
+#### Properties
 
-- **Container** (`swc-component-name`): accepts `swc-component-name-item` elements through its default slot
-- **Item label**: the item's heading text, provided through the `label` slot on `swc-component-name-item`
-- **Item panel**: the content revealed when an item expands, provided through the default slot on `swc-component-name-item`
+Properties that render visual content:
+
+- **label**: text label displayed by the component
+- **icon**: icon identifier to display
+- **src**: image source URL
+- **value**: displayed value content
 
 <Canvas of={Stories.Anatomy} />
 ```
@@ -329,11 +331,11 @@ export const Anatomy: Story = {
 
 **Key principles:**
 
-- One flat bullet list, not separate "visual structure" and "technical structure" passes; each bullet carries both the plain-language part name and its slot/property source
-- Document every slot with a clear description of what it accepts
-- Fold content-rendering properties (label, icon, src, value, etc.) into the bullet for the part they populate, rather than a separate properties list
+- Start with visual structure (designer-focused)
+- Follow with technical structure (developer-focused)
+- Document all slots with clear descriptions
+- List content-rendering properties (label, icon, src, value, etc.)
 - Show all meaningful combinations in one story
-- Do not add a `### Content` (or similar) subheading under Anatomy; the bullet list is the whole section
 
 ### Options
 

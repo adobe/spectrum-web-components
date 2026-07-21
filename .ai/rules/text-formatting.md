@@ -69,24 +69,6 @@ appearance: disabled colors and an animated spinner
 fill-only; fill-style="outline" is not supported
 ```
 
-## Callouts
-
-### Important blockquotes
-
-When a `> **Important**:` blockquote warns about a constraint that is easy to miss and has real consequences if ignored (an invalid attribute combination, a WCAG failure, a behavior that looks like a bug but isn't), prefix it with the ⚠️ emoji so it's visually distinct from a plain aside:
-
-```markdown
-<!-- ❌ Bad -->
-
-> **Important**: The outline style is only valid for semantic variants.
-
-<!-- ✅ Good -->
-
-> ⚠️ **Important:** The outline style is only valid for semantic variants.
-```
-
-Do not use ⚠️ on routine notes, tips, or `> **Note**:` asides; reserve it for the "if you get this wrong, something will visibly break" case. This is the only place project docs use emoji outside of the ❌/✅ markers in this file's own before/after examples; do not introduce emoji elsewhere in prose, headings, or code comments.
-
 ## Internal references
 
 ### No Jira ticket references in documentation
