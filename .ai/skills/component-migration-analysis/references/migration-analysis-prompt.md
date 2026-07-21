@@ -111,12 +111,12 @@ If any of these sections are empty, write for that section only, "None found for
 
 ##### 1.2.1 Open gen1 issues
 
-Add a **markdown table** immediately under the **H5**. Do not add an intro paragraph. **Adobe Jira** is authoritative for **open** vs **closed** status and for **resolution**—refresh table cells when you triage; this table is only a snapshot. Use link targets such as `https://jira.corp.adobe.com/browse/SWC-####`.
+Add a **markdown table** immediately under the heading titled "Open gen1 issues". Do not add an intro paragraph before the markdown table. When generating the table, note that **Adobe Jira** is authoritative for **open** vs **closed** status and for **resolution**—refresh table cells when you triage. Use link targets such as `https://jira.corp.adobe.com/browse/SWC-####`.
 
 - **After the table:** Do **not** add follow-up paragraphs that list excluded issues or explain cross-component scope (for example paragraphs starting with **Omitted from this table (by doc rules)** or **Scope note**). Apply **Exclude** by **omitting rows**; put any needed nuance in an optional **Notes** column or in the **Summary** cell.
 - **Columns (recommended): Jira** | **Type** (Story, Bug, Epic, …) | **Status (snapshot)** | **Resolution (snapshot)** (e.g. Unresolved, Done, Fixed—omit or use “—” when not applicable) | **Summary**. Optional **Notes** when helpful (PR references, file paths, `@todo` locations, “applies to related `sp-*` …”).
 - **Scope:** Include rows your team tracks for this component’s **gen1** (`sp-*`) bugs and stories with the label `gen2-tbd`; **add rows** when you file or discover issues, and **trim or update** when Jira state or scope changes. Do **not** maintain a separate contributor-doc index file for the same list.
-- **Component:** In the query for the list of Jira issues, use the `Component` field, where the value of the `Component` matches the name of the component currently being migrated. For example, if the component being migrated is Avatar, include `component = "Avatar"` in the JQL query.
+- **Components:** In the query for the list of Jira issues, use the `Component` field, where the value of the `Component` matches the name of the component currently being migrated. For example, if the component being migrated is Avatar, include `component = "Avatar"` in the JQL query.
 - **Exclude (always apply when curating the table):**
   - **Labels:** Do **not** list issues that carry Jira labels **`a11y`** or **`gen2`**. This section tracks **gen1** (`sp-*`) issues only, not gen2 tickets or a11y issues for the gen1 component.
   - **Resolution:** Do **not** list issues that have been resolved, ie with a Jira Workflow Status of "Done".
