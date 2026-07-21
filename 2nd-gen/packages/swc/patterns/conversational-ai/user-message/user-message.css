@@ -12,9 +12,11 @@
 
 /* Sizing per explicit user-message type sourced from Figma spec (node 5-2281), full-screen modality.
  *
- * copy  — fills available column width, capped at 536px (text reflows naturally)
- * card  — fixed 324px (content 292px = 324px − 2×16px padding), capped at 440px
- * media — shrinks to the fixed 180×180px inner card + 2×8px padding ≈ 196px square
+ * copy        — fills available column width, capped at 536px (text reflows naturally)
+ * attachments — shrink-wraps to its content; a single attachment gets a larger
+ *               "hero" tile (see `.swc-UserMessage-attachments-media--single`
+ *               and `.swc-UserMessage-attachments-files--single`) than a
+ *               grouped one
  *
  * The host IS the visible bubble so focus rings rendered by the parent
  * `swc-conversation-turn` hug its border box exactly.
@@ -42,144 +44,15 @@
   box-sizing: border-box;
 }
 
-/* Card: fixed 324px per Figma spec (content 292px = 324px − 2×16px padding). */
-:host([type="card"]) {
-  inline-size: 324px;
-  min-inline-size: 212px;
-  max-inline-size: 440px;
-  padding: var(--swc-user-message-card-padding, token("spacing-300"));
-}
-
-/* Image: shrinks to the fixed 180px inner card + 2×8px padding. */
-:host([type="media"]) {
-  inline-size: fit-content;
-  padding: var(--swc-user-message-media-padding, token("spacing-100"));
-}
-
-/* Attachments: fits a 4-column media grid; not yet in the Figma sizing spec above, revisit with design. */
+/* Attachments: fits its content; the media grid and each card row are
+ * independent boxes (see `.swc-UserMessage-attachments-media` and each
+ * `swc-user-message-attachment[type="card"]`'s own surface), never merged
+ * into one shared box. */
 :host([type="attachments"]) {
-  inline-size: var(--swc-user-message-attachments-inline-size, 420px);
+  inline-size: fit-content;
   max-inline-size: 536px;
-  padding: var(--swc-user-message-attachments-padding, token("spacing-100"));
-}
-
-.swc-UserMessage-attachment {
-  display: flex;
-  min-inline-size: 0;
-}
-
-.swc-UserMessage-attachment--card {
-  gap: var(--swc-user-message-attachment-card-gap, token("spacing-300"));
-  align-items: center;
-}
-
-/* Media inner card is fixed 180 × 180px, constrained by min/max (Figma spec). */
-.swc-UserMessage-attachment--media {
-  flex-direction: column;
-  gap: var(--swc-user-message-attachment-media-gap, token("spacing-100"));
-  inline-size: 180px;
-  min-inline-size: 150px;
-  max-inline-size: 210px;
-  block-size: 180px;
-  min-block-size: 135px;
-}
-
-.swc-UserMessage-thumbnail {
-  min-inline-size: 0;
-}
-
-.swc-UserMessage-thumbnail ::slotted(*) {
-  display: block;
-}
-
-:host([type="card"]) .swc-UserMessage-thumbnail {
-  display: flex;
-  flex-shrink: 0;
-  align-items: center;
-  justify-content: center;
-}
-
-:host([type="card"]) .swc-UserMessage-thumbnail ::slotted(*) {
-  flex-shrink: 0;
-  inline-size: 32px;
-  block-size: 32px;
-  border: 1px solid transparent;
-  border-radius: token("corner-radius-75");
-  object-fit: cover;
-}
-
-/* Thumbnail fills the available vertical space, image covers it fully. */
-:host([type="media"]) .swc-UserMessage-thumbnail {
-  position: relative;
-  flex: 1 0 0;
-  inline-size: 100%;
-  min-block-size: 0;
-  background: token("gray-100");
-  border: 1px solid transparent;
-  border-radius: token("corner-radius-200");
-  overflow: hidden;
-}
-
-:host([type="media"]) .swc-UserMessage-thumbnail ::slotted(*) {
-  position: absolute;
-  inset: 0;
-  inline-size: 100%;
-  block-size: 100%;
-  object-fit: cover;
-}
-
-.swc-UserMessage-meta {
-  display: flex;
-  flex-direction: column;
-  gap: var(--swc-user-message-meta-gap, token("spacing-50"));
-  min-inline-size: 0;
-}
-
-:host([type="card"]) .swc-UserMessage-meta {
-  flex: 1;
-  align-items: flex-start;
-}
-
-:host([type="media"]) .swc-UserMessage-meta {
-  inline-size: 100%;
-}
-
-.swc-UserMessage-title {
-  font-family: token("sans-serif-font");
-  font-size: token("font-size-100");
-  font-weight: token("bold-font-weight");
-  line-height: token("line-height-font-size-100");
-  color: token("gray-900");
-}
-
-.swc-UserMessage-subtitle {
-  font-family: token("sans-serif-font");
-  font-size: token("font-size-75");
-  font-weight: token("regular-font-weight");
-  line-height: token("line-height-font-size-75");
-  color: token("gray-800");
-  text-overflow: ellipsis;
-}
-
-:host([type="card"]) .swc-UserMessage-title,
-:host([type="card"]) .swc-UserMessage-subtitle,
-:host([type="media"]) .swc-UserMessage-title {
-  inline-size: 100%;
-  min-inline-size: 0;
-  text-align: start;
-}
-
-/* Long, unbroken tokens (e.g. filenames without spaces) break at any character
- * so the title wraps inside the meta column instead of overflowing the bubble. */
-:host([type="card"]) .swc-UserMessage-title ::slotted(*),
-:host([type="media"]) .swc-UserMessage-title ::slotted(*),
-:host([type="card"]) .swc-UserMessage-subtitle ::slotted(*),
-:host([type="media"]) .swc-UserMessage-subtitle ::slotted(*) {
-  display: block;
-  min-inline-size: 0;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  padding: 0;
+  background: transparent;
 }
 
 /* Attachments: 4-column media grid + full-width stacked file rows. */
@@ -189,14 +62,37 @@
   gap: token("spacing-200");
 }
 
+/* Its own box, independent of the card rows below (never a shared background).
+ * Fixed-size (not `1fr`) columns + `inline-size: fit-content` so the box
+ * shrink-wraps to however many tiles are actually present (1-4 per row)
+ * instead of always reserving a full 4-column width. Column *count* itself
+ * is also dynamic (set as an inline `grid-template-columns` by
+ * `swc-user-message`, since `repeat()`'s count argument must be a literal
+ * integer — a custom property doesn't substitute there): a fixed
+ * `repeat(4, ...)` would always reserve 4 columns' width even for e.g. 3
+ * tiles, which `fit-content` alone can't shrink past. This is the no-JS/
+ * initial-paint fallback. */
 .swc-UserMessage-attachments-media {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4, var(--swc-user-message-attachment-media-size, 96px));
   gap: token("spacing-100");
+  inline-size: fit-content;
+  padding: token("spacing-100");
+  background: token("gray-50");
+  border-radius: token("corner-radius-large-default");
 }
 
 .swc-UserMessage-attachments-media[hidden] {
   display: none;
+}
+
+/* A single media attachment (no siblings) is a 180×180 "hero" tile rather
+ * than the smaller grouped-grid size (Figma spec). Overriding the custom
+ * property here resizes both the grid track (above) and the tile itself
+ * (`swc-user-message-attachment`'s `:host([type="media"])`), since it
+ * inherits through the flattened tree into the slotted attachment. */
+.swc-UserMessage-attachments-media--single {
+  --swc-user-message-attachment-media-size: 180px;
 }
 
 /* Assigned nodes become direct grid items instead of the slot itself. */
@@ -204,10 +100,72 @@
   display: contents;
 }
 
+/* Scrim + pill overlay on the last visible tile (4th column, 1st row) instead
+ * of a separate control below the grid; stretches to fill that grid cell so
+ * it exactly covers the tile underneath. `position: relative` + `z-index`
+ * are required, not cosmetic: the tile sharing this cell is slotted content,
+ * and the flattened tree paints it above later shadow-DOM siblings despite
+ * DOM order, so an explicit stacking context is the only reliable way to
+ * keep the scrim on top. */
+.swc-UserMessage-attachments-overflow {
+  display: flex;
+  position: relative;
+  z-index: 1;
+  grid-row: 1;
+  grid-column: 4;
+  align-items: flex-end;
+  justify-content: flex-end;
+  padding: token("spacing-100");
+  background: token("transparent-black-700");
+  border: none;
+  border-radius: token("corner-radius-medium-default");
+  cursor: pointer;
+  transition-timing-function: ease;
+  transition-duration: token("animation-duration-100");
+  transition-property: opacity, display;
+  transition-behavior: allow-discrete;
+}
+
+/* Fades out in step with the newly-revealed tiles fading in (see
+ * `user-message-attachment.css`), rather than vanishing instantly while
+ * they animate — matches `?hidden` binding in `_renderMediaOverflow`. */
+.swc-UserMessage-attachments-overflow[hidden] {
+  display: none;
+  opacity: 0;
+}
+
+@starting-style {
+  .swc-UserMessage-attachments-overflow {
+    opacity: 0;
+  }
+}
+
+.swc-UserMessage-attachments-overflow-pill {
+  padding-block: token("spacing-75");
+  padding-inline: token("spacing-200");
+  font-family: token("sans-serif-font");
+  font-size: token("font-size-75");
+  font-weight: token("medium-font-weight");
+  line-height: token("line-height-font-size-75");
+  color: token("gray-900");
+  white-space: nowrap;
+  background: token("gray-25");
+  border-radius: token("corner-radius-400");
+}
+
 .swc-UserMessage-attachments-files {
   display: flex;
   flex-direction: column;
   gap: token("spacing-100");
+}
+
+/* A single card attachment (no siblings) is a 324px "hero" row (content
+ * 292px = 324px − 2×16px padding, capped 212-440px) rather than an
+ * unbounded full-width row (Figma spec). */
+.swc-UserMessage-attachments-files--single {
+  inline-size: 324px;
+  min-inline-size: 212px;
+  max-inline-size: 440px;
 }
 
 .swc-UserMessage-attachments-files[hidden] {

@@ -15,6 +15,16 @@
   position: relative;
   inline-size: 100%;
   block-size: 100%;
+  transition-timing-function: ease;
+  transition-duration: token("animation-duration-100");
+  transition-property: opacity, display;
+  transition-behavior: allow-discrete;
+}
+
+@starting-style {
+  :host {
+    opacity: 0;
+  }
 }
 
 *,
@@ -101,17 +111,27 @@
   text-overflow: ellipsis;
 }
 
-/* Media: fixed square grid tile. */
+/* Media: fixed-width square thumbnail + optional caption below (see
+ * `_renderMediaMeta`). The grid tracks in `swc-user-message`
+ * (`.swc-UserMessage-attachments-media`) are sized from this same custom
+ * property so the grid's `fit-content` box shrink-wraps to a well-defined
+ * width instead of stretching to fill the bubble. Block-size is `auto` (not
+ * matched to inline-size) so a captioned "hero" tile can grow taller than a
+ * plain square grid tile; the thumbnail itself stays square via
+ * `aspect-ratio` regardless. */
 :host([type="media"]) {
-  inline-size: var(--swc-user-message-attachment-media-size, 120px);
-  block-size: var(--swc-user-message-attachment-media-size, 120px);
+  display: flex;
+  flex-direction: column;
+  gap: token("spacing-100");
+  inline-size: var(--swc-user-message-attachment-media-size, 96px);
 }
 
 :host([type="media"]) .swc-UserMessageAttachment-surface {
   display: block;
   position: relative;
+  flex-shrink: 0;
   inline-size: 100%;
-  block-size: 100%;
+  aspect-ratio: 1;
   border-radius: token("corner-radius-medium-default");
   overflow: hidden;
 }
@@ -163,4 +183,41 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+:host([type="media"]) .swc-UserMessageAttachment-meta {
+  display: flex;
+  flex-direction: column;
+  gap: token("spacing-50");
+  min-inline-size: 0;
+}
+
+:host([type="media"]) .swc-UserMessageAttachment-title,
+:host([type="media"]) .swc-UserMessageAttachment-subtitle {
+  inline-size: 100%;
+  min-inline-size: 0;
+  text-align: start;
+}
+
+:host([type="media"]) .swc-UserMessageAttachment-title ::slotted(*),
+:host([type="media"]) .swc-UserMessageAttachment-subtitle ::slotted(*) {
+  display: block;
+  min-inline-size: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Declared last (not just once, near the base `:host` rule) so it wins the
+ * cascade regardless of source order: every `:host([type="..."])` rule above
+ * has the same specificity as `:host([hidden])`, and author `display` rules
+ * always beat the UA `[hidden] { display: none }` rule regardless of
+ * specificity — so whichever same-specificity rule is declared *later* wins,
+ * and any future `:host([type="..."])` block that sets its own `display`
+ * would otherwise silently re-break `swc-user-message`'s `el.hidden = true`
+ * on overflow tiles. Fades rather than abruptly popping in/out when the
+ * "Show all/less" disclosure toggles. */
+:host([hidden]) {
+  display: none;
+  opacity: 0;
 }

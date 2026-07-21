@@ -12,6 +12,7 @@
 
 import { CSSResultArray, html, PropertyValues, TemplateResult } from 'lit';
 import { property, state } from 'lit/decorators.js';
+import { classMap } from 'lit/directives/class-map.js';
 import { MutationController } from '@lit-labs/observers/mutation-controller.js';
 
 import { Chevron75Icon } from '@adobe/spectrum-wc/icon/elements/index.js';
@@ -24,7 +25,7 @@ import { UserMessageAttachment } from './user-message-attachment/UserMessageAtta
 
 import styles from './user-message.css';
 
-export type UserMessageType = 'copy' | 'card' | 'media' | 'attachments';
+export type UserMessageType = 'copy' | 'attachments';
 
 /** Grid tiles beyond this count collapse behind "Show all" by default. */
 const VISIBLE_MEDIA_COUNT = 4;
@@ -33,17 +34,19 @@ const VISIBLE_MEDIA_COUNT = 4;
  * User-authored conversation bubble for conversational AI pattern exploration.
  * Default slot content is rendered only when `type="copy"` and ignored otherwise.
  *
- * `type="attachments"` accepts many `<swc-user-message-attachment>` children:
- * `type="media"` attachments lay out in a 4-column grid (collapsing behind a
- * "Show all" disclosure beyond {@link VISIBLE_MEDIA_COUNT}), `type="card"`
- * attachments stack full-width beneath the grid. `swc-user-message` owns this
- * grouping and disclosure; the attachment tiles are presentation-only.
+ * `type="attachments"` accepts one or more `<swc-user-message-attachment>`
+ * children — a single attachment (media or card) is a common case, not a
+ * special one, and gets a larger "hero" tile size than a grouped attachment:
+ * `type="media"` attachments lay out in a 4-column grid — beyond
+ * {@link VISIBLE_MEDIA_COUNT}, the last visible tile gets a "View all (N)"
+ * scrim overlay instead of being grouped with a separate control — and
+ * `type="card"` attachments stack full-width, each in its own row, never
+ * merged into the grid's box. `swc-user-message` owns this grouping,
+ * disclosure, and hero-vs-grouped sizing; the attachment tiles are
+ * presentation-only.
  *
  * @element swc-user-message
  * @slot - Message copy content when `type="copy"`.
- * @slot thumbnail - Attachment preview when `type="card"` or `type="media"`.
- * @slot title - Attachment title when `type="card"` or `type="media"`.
- * @slot subtitle - Attachment subtitle when `type="card"` or `type="media"`.
  * @slot - `<swc-user-message-attachment>` elements when `type="attachments"`.
  * @fires swc-user-message-toggle - Dispatched when the "Show all/less" disclosure is toggled (`type="attachments"` only).
  * Detail: `{ open: boolean }`
@@ -61,9 +64,9 @@ export class UserMessage extends SpectrumElement {
   @property({ type: Boolean, reflect: true })
   public open = false;
 
-  /** Label for the disclosure button when collapsed. */
+  /** Label for the overflow overlay on the last visible media tile (collapsed). */
   @property({ type: String, attribute: 'show-all-label' })
-  public showAllLabel = 'Show all';
+  public showAllLabel = 'View all';
 
   /** Label for the disclosure button when expanded. */
   @property({ type: String, attribute: 'show-less-label' })
@@ -77,6 +80,14 @@ export class UserMessage extends SpectrumElement {
 
   @state()
   private _hasMediaOverflow = false;
+
+  /**
+   * Number of grid columns actually needed (1-{@link VISIBLE_MEDIA_COUNT}).
+   * Keeps the grid's `fit-content` box shrink-wrapped to a partial single
+   * row (e.g. 3 tiles) instead of always reserving 4 columns' width.
+   */
+  @state()
+  private _mediaColumnCount = VISIBLE_MEDIA_COUNT;
 
   public static override get styles(): CSSResultArray {
     return [styles];
@@ -141,10 +152,62 @@ export class UserMessage extends SpectrumElement {
     mediaAttachments.forEach((el, index) => {
       el.hidden = hasOverflow && !this.open && index >= VISIBLE_MEDIA_COUNT;
     });
+    this._alignMediaGrid(mediaAttachments, hasOverflow);
 
     this._mediaCount = mediaAttachments.length;
     this._cardCount = cardAttachments.length;
     this._hasMediaOverflow = hasOverflow;
+  }
+
+  /**
+   * Explicitly places every visible tile in the grid (row/column) instead of
+   * leaving it to implicit auto-placement, for two reasons:
+   *
+   * 1. A trailing row shorter than {@link VISIBLE_MEDIA_COUNT} columns should
+   *    hug the end of the grid (empty cells on the start side), not the
+   *    start (default auto-placement fills from the start).
+   * 2. The "View all" overlay (`.swc-UserMessage-attachments-overflow`) is
+   *    explicitly positioned at row 1 / column {@link VISIBLE_MEDIA_COUNT}
+   *    so it can stack on top of the last visible tile. Per the CSS Grid
+   *    placement algorithm, explicitly-positioned items reserve their cell
+   *    *before* auto-placed items are laid out, so leaving the 4th tile to
+   *    auto-placement pushes it into row 2 instead of under the overlay.
+   *    Explicit placement here avoids that fight entirely.
+   */
+  private _alignMediaGrid(
+    mediaAttachments: UserMessageAttachment[],
+    hasOverflow: boolean
+  ): void {
+    const visible = mediaAttachments.filter(
+      (_el, index) => !(hasOverflow && !this.open && index >= VISIBLE_MEDIA_COUNT)
+    );
+    const total = visible.length;
+    const columnCount = Math.max(1, Math.min(total, VISIBLE_MEDIA_COUNT));
+    this._mediaColumnCount = columnCount;
+
+    mediaAttachments.forEach((el) => {
+      el.style.removeProperty('grid-row-start');
+      el.style.removeProperty('grid-column-start');
+    });
+
+    visible.forEach((el, index) => {
+      const row = Math.floor(index / VISIBLE_MEDIA_COUNT);
+      const isLastRow = row === Math.floor((total - 1) / VISIBLE_MEDIA_COUNT);
+      const itemsInThisRow = isLastRow
+        ? total - row * VISIBLE_MEDIA_COUNT
+        : VISIBLE_MEDIA_COUNT;
+      // Offset against the grid's actual column count (`columnCount`), not
+      // the constant VISIBLE_MEDIA_COUNT: when there's only a single row
+      // (total <= VISIBLE_MEDIA_COUNT) the container itself shrinks to fit
+      // that row exactly, so there's no leftover space to offset into —
+      // using the constant here would place items past the declared column
+      // count and force CSS Grid to fabricate an extra implicit column.
+      const columnOffset = isLastRow ? columnCount - itemsInThisRow : 0;
+      const posInRow = index - row * VISIBLE_MEDIA_COUNT;
+
+      el.style.gridRowStart = String(row + 1);
+      el.style.gridColumnStart = String(columnOffset + posInRow + 1);
+    });
   }
 
   private _handleAttachmentsToggle(): void {
@@ -158,25 +221,50 @@ export class UserMessage extends SpectrumElement {
     );
   }
 
-  private _renderAttachmentsToggle(): TemplateResult | '' {
+  /**
+   * Scrim + pill overlay on the last visible media tile, shown only while
+   * collapsed. Uses `?hidden` (not a conditional template) so it stays in
+   * the DOM and fades out via CSS in step with the newly-revealed tiles
+   * fading in, instead of vanishing instantly while they fade in gradually.
+   */
+  private _renderMediaOverflow(): TemplateResult | '' {
     if (!this._hasMediaOverflow) {
       return '';
     }
 
-    const label = this.open ? this.showLessLabel : this.showAllLabel;
-
     return html`
       <button
-        class="swc-UserMessage-attachments-toggle"
-        aria-expanded=${this.open}
+        type="button"
+        class="swc-UserMessage-attachments-overflow"
+        ?hidden=${this.open}
+        aria-expanded="false"
         aria-controls=${this.attachmentsPanelId}
         @click=${this._handleAttachmentsToggle}
       >
-        ${label}
+        <span class="swc-UserMessage-attachments-overflow-pill">
+          ${this.showAllLabel} (${this._mediaCount})
+        </span>
+      </button>
+    `;
+  }
+
+  /** "Show less" control below the grid, shown only while expanded. */
+  private _renderShowLessToggle(): TemplateResult | '' {
+    if (!this._hasMediaOverflow || !this.open) {
+      return '';
+    }
+
+    return html`
+      <button
+        type="button"
+        class="swc-UserMessage-attachments-toggle"
+        aria-expanded="true"
+        aria-controls=${this.attachmentsPanelId}
+        @click=${this._handleAttachmentsToggle}
+      >
+        ${this.showLessLabel}
         <swc-icon
-          class=${this.open
-            ? 'swc-UserMessage-attachments-chevron swc-UserMessage-attachments-chevron--down'
-            : 'swc-UserMessage-attachments-chevron'}
+          class="swc-UserMessage-attachments-chevron swc-UserMessage-attachments-chevron--down"
           style="--swc-icon-inline-size:10px;--swc-icon-block-size:10px;"
           aria-hidden="true"
         >
@@ -187,42 +275,36 @@ export class UserMessage extends SpectrumElement {
   }
 
   private _renderAttachments(): TemplateResult {
+    // A single attachment (no siblings) gets the larger "hero" tile size
+    // instead of the smaller grouped-grid size (Figma spec: a lone media
+    // attachment is a 180×180 hero, a lone card attachment caps at 440px).
+    const isSingleMedia = this._mediaCount === 1 && this._cardCount === 0;
+    const isSingleCard = this._cardCount === 1 && this._mediaCount === 0;
+
     return html`
       <div id=${this.attachmentsPanelId} class="swc-UserMessage-attachments">
         <div
-          class="swc-UserMessage-attachments-media"
+          class=${classMap({
+            'swc-UserMessage-attachments-media': true,
+            'swc-UserMessage-attachments-media--single': isSingleMedia,
+          })}
+          style="grid-template-columns: repeat(${this
+            ._mediaColumnCount}, var(--swc-user-message-attachment-media-size, 96px));"
           ?hidden=${this._mediaCount === 0}
         >
           <slot name="attachment-media"></slot>
+          ${this._renderMediaOverflow()}
         </div>
         <div
-          class="swc-UserMessage-attachments-files"
+          class=${classMap({
+            'swc-UserMessage-attachments-files': true,
+            'swc-UserMessage-attachments-files--single': isSingleCard,
+          })}
           ?hidden=${this._cardCount === 0}
         >
           <slot name="attachment-card"></slot>
         </div>
-        ${this._renderAttachmentsToggle()}
-      </div>
-    `;
-  }
-
-  private _renderSingleAttachment(): TemplateResult {
-    return html`
-      <div
-        class="swc-UserMessage-attachment swc-UserMessage-attachment--${this
-          .type}"
-      >
-        <div class="swc-UserMessage-thumbnail">
-          <slot name="thumbnail"></slot>
-        </div>
-        <div class="swc-UserMessage-meta">
-          <div class="swc-UserMessage-title">
-            <slot name="title"></slot>
-          </div>
-          <div class="swc-UserMessage-subtitle">
-            <slot name="subtitle"></slot>
-          </div>
-        </div>
+        ${this._renderShowLessToggle()}
       </div>
     `;
   }
@@ -234,8 +316,6 @@ export class UserMessage extends SpectrumElement {
       `;
     }
 
-    return this.type === 'attachments'
-      ? this._renderAttachments()
-      : this._renderSingleAttachment();
+    return this._renderAttachments();
   }
 }
