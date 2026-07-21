@@ -34,7 +34,7 @@ The send button enablement is derived internally from prompt content (value or a
 
 ### Legal disclaimer
 
-Every prompt field in production must include Legal-approved disclaimer copy below the composer. Slot your product's approved text into **`legal`** — wording, links, and locale are consumer-owned, not baked into the component.
+Every prompt field in production must include Legal-approved disclaimer copy below the composer. Slot your product's approved text into **`legal`**: wording, links, and locale are consumer-owned, not baked into the component.
 
 Apply the `.swc-PromptField-legal-disclaimer` class for default footer typography. `swc-prompt-field` logs a development warning when the `legal` slot is empty.
 
@@ -46,7 +46,7 @@ Artifact layout is inferred from the **`artifact`** slot content:
 - **`swc-upload-artifact type="card"`**: file-style card artifacts (one or more)
 - **`swc-upload-artifact type="media"`**: media tile artifacts (one or more, with or without badge)
 
-**Use one layout type per composer session** (`card` or `media`). Slot multiple artifacts of that same type — for example, several cards or several media tiles. Do not mix `card` and `media` in the same strip; `swc-prompt-field` logs a development warning when both are detected.
+**Use one layout type per composer session** (`card` or `media`). Slot multiple artifacts of that same type: for example, several cards or several media tiles. Do not mix `card` and `media` in the same strip; `swc-prompt-field` logs a development warning when both are detected.
 
 This rule is about **component layout**, not file MIME type. You can attach many files in one session as long as they share the same layout:
 

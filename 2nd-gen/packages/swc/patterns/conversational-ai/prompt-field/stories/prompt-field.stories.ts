@@ -212,8 +212,7 @@ export const Artifact: Story = {
         class="swc-Detail swc-Detail--sizeS"
         style="margin:0;max-inline-size:720px;"
       >
-        <strong>artifact</strong>
-        — Slot one or more
+        <strong>artifact</strong>: Slot one or more
         <code>&lt;swc-upload-artifact slot="artifact"&gt;</code>
         nodes above the textarea. Use one layout type per session (card or
         media). When uploads mix images and documents, normalize to media tiles

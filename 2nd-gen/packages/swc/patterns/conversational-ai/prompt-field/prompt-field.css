@@ -256,7 +256,6 @@
   inline-size: var(--swc-prompt-field-artifact-scroll-button-inline-size, 32px);
   block-size: var(--swc-prompt-field-artifact-scroll-button-block-size, 32px);
   padding: 0;
-  line-height: 0;
   color: token("gray-800");
   background: token("gray-100");
   border: 1px solid transparent;

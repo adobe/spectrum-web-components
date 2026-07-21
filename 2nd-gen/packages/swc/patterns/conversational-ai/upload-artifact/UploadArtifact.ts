@@ -31,6 +31,11 @@ import styles from './upload-artifact.css';
  *
  * @element swc-upload-artifact
  *
+ * @example
+ * <swc-upload-artifact type="card" dismissible>
+ *   <span slot="title">Brief.pdf</span>
+ * </swc-upload-artifact>
+ *
  * @slot thumbnail - Shared visual slot for icon/thumbnail/preview image.
  * @slot badge - Optional file-type badge rendered over `type="media"` previews (for example, "PDF").
  * @slot title - Primary text label.

@@ -31,7 +31,7 @@ argTypes.type = {
 /**
  * Shared upload artifact primitive used across conversational AI surfaces such as prompt field and user message.
  * Supports **`card`** and **`media`** types with a unified slot model.
- * Use one layout type per attachment strip — cards only, or media tiles only (with or without badge).
+ * Use one layout type per attachment strip: cards only, or media tiles only (with or without badge).
  * When uploads mix images and documents, normalize to all media tiles.
  * For several attachments at once, see **Multi-card**, **Multi-media**, and **[Prompt field → Artifact](/docs/patterns-conversational-ai-prompt-field--docs#artifact)**.
  */
@@ -139,7 +139,7 @@ export const MultiMedia: Story = {
     >
       <p class="swc-Detail swc-Detail--sizeS" style="margin:0;">
         Multiple media tiles in one strip, with and without a badge. Use media
-        only — not mixed with cards.
+        only, not mixed with cards.
       </p>
       <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:flex-start;">
         <swc-upload-artifact type="media" dismissible>

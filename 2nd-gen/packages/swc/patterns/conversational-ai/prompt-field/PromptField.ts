@@ -60,6 +60,11 @@ export type PromptFieldMode = 'default' | 'loading' | 'disabled';
  *
  * @element swc-prompt-field
  *
+ * @example
+ * <swc-prompt-field label="Prompt">
+ *   <div slot="legal">Responses are generated using AI and may be inaccurate.</div>
+ * </swc-prompt-field>
+ *
  * @slot artifact - Optional attachment preview(s). Use one `swc-upload-artifact` type per session (cards only, or media only).
  * @slot legal - Legal disclaimer content. Required in product implementations; provide Legal-approved copy.
  * @fires swc-prompt-field-input - Dispatched after the textarea value is internally updated.
@@ -215,8 +220,8 @@ export class PromptField extends SpectrumElement {
     return [styles];
   }
 
-  public constructor() {
-    super();
+  public override connectedCallback(): void {
+    super.connectedCallback();
     this.addEventListener(
       focusgroupNavigationActiveChange,
       this._handleArtifactActiveChange as EventListener
@@ -224,6 +229,10 @@ export class PromptField extends SpectrumElement {
   }
 
   public override disconnectedCallback(): void {
+    this.removeEventListener(
+      focusgroupNavigationActiveChange,
+      this._handleArtifactActiveChange as EventListener
+    );
     this._artifactScrollObserver?.disconnect();
     this._artifactScrollObserver = undefined;
     if (this._artifactScrollButtonResetTimer !== undefined) {
