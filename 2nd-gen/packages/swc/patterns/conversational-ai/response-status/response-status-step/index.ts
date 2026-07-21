@@ -9,16 +9,4 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-import { defineElement } from '@adobe/spectrum-wc-core/element/index.js';
-
-import { ResponseStatusStep } from './ResponseStatusStep.js';
-
 export * from './ResponseStatusStep.js';
-
-declare global {
-  interface HTMLElementTagNameMap {
-    'swc-response-status-step': ResponseStatusStep;
-  }
-}
-
-defineElement('swc-response-status-step', ResponseStatusStep);

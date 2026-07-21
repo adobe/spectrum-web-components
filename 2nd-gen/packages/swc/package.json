@@ -27,6 +27,10 @@
       "types": "./dist/patterns/*/index.d.ts",
       "import": "./dist/patterns/*/index.js"
     },
+    "./patterns/*.js": {
+      "types": "./dist/patterns/*.d.ts",
+      "default": "./dist/patterns/*.js"
+    },
     "./components/*": {
       "types": "./dist/components/*/index.d.ts",
       "import": "./dist/components/*/index.js"
