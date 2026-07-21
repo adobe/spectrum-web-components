@@ -227,7 +227,6 @@ export const StaticColors: Story = {
   parameters: {
     flexLayout: false,
     staticColorsDemo: true,
-    'section-order': 2,
   },
 };
 StaticColors.storyName = 'Static colors';

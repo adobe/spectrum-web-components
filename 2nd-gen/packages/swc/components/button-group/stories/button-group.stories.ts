@@ -196,7 +196,6 @@ export const Sizes: Story = {
     )}
   `,
   tags: ['options'],
-  parameters: { 'section-order': 1 },
 };
 
 /**
@@ -219,7 +218,6 @@ export const Orientations: Story = {
     )}
   `,
   tags: ['options'],
-  parameters: { 'section-order': 2 },
 };
 
 /**
@@ -242,7 +240,6 @@ export const Alignment: Story = {
     )}
   `,
   tags: ['options'],
-  parameters: { 'section-order': 3 },
 };
 
 // ──────────────────────────
