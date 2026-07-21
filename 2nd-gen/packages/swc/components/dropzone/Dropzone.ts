@@ -34,9 +34,11 @@ import styles from './dropzone.css';
  * @slot filled-content - Slot for the uploaded-state content (e.g. an image preview).
  *   Shown automatically when `filled` is `true`; hidden otherwise.
  *
- * @fires swc-dropzone-should-accept - Cancelable event fired on `dragover`. Cancel to
- *   reject the dragged payload and show a `none` cursor.
- * @fires swc-dropzone-dragover - Fired when dragged files are over the zone and accepted.
+ * @fires swc-dropzone-should-accept - Cancelable event fired on every native `dragover`
+ *   tick while a drag is over the zone, not just on entry. Cancel to reject the dragged
+ *   payload and set the cursor to `none`.
+ * @fires swc-dropzone-dragover - Fired once when dragged files enter the zone and are
+ *   accepted; does not repeat on subsequent `dragover` ticks while still hovering.
  * @fires swc-dropzone-dragleave - Fired when dragged files leave the zone.
  * @fires swc-dropzone-drop - Fired when files are dropped on the zone. Set `filled` in
  *   your handler to transition the zone to its filled state.

@@ -108,7 +108,9 @@ dropzone.addEventListener('sp-dropzone-drop', handleDrop);
 dropzone.addEventListener('swc-dropzone-drop', handleDrop);
 ```
 
-Rename `sp-dropzone-should-accept` and `sp-dropzone-dragover` the same way.
+Rename `sp-dropzone-should-accept` to `swc-dropzone-should-accept` the same way; its firing behavior is unchanged, on every native `dragover` tick while a drag is over the zone.
+
+Rename `sp-dropzone-dragover` to `swc-dropzone-dragover` too, but note a behavior change: `swc-dropzone-dragover` fires once, on entry into the dragged state, instead of repeating on every native `dragover` tick the way `sp-dropzone-dragover` did. If your handler did anything per-tick (resetting a timer, reading the live event coordinates on each tick), switch that logic to `swc-dropzone-should-accept` instead, which still fires every tick.
 
 Rename `sp-dropzone-dragleave` to `swc-dropzone-dragleave` too, but update how you read its detail: it no longer carries the full `DragEvent`, only `{ clientX, clientY, relatedTarget }`.
 

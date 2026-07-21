@@ -241,6 +241,7 @@ No sequencing, shared-base, or inheritance decisions require explicit user confi
 | **B7** | Event prefix | `sp-dropzone-should-accept`, `sp-dropzone-dragover`, `sp-dropzone-dragleave`, `sp-dropzone-drop` | **Confirmed.** Rename to `swc-dropzone-should-accept`, `swc-dropzone-dragover`, `swc-dropzone-dragleave`, `swc-dropzone-drop`. Consistent with all other migrated 2nd-gen components. | Update all `addEventListener` calls. |
 | **B17** | `DropzoneEventDetail` type removed | `export type DropzoneEventDetail = DragEvent;` exported from `src/index.ts` | Not exported. Clean break, same posture as other migrated components (no retained type aliases elsewhere in 2nd-gen). | Replace `DropzoneEventDetail` imports with `DragEvent` directly; the two types were always structurally identical. |
 | **B18** | New `filled-content` slot; `filled` swaps slots instead of restyling in place | Setting `isFilled`/`filled` only changed styling; the same slotted content stayed in the DOM and consumers updated it in place. | **Shipped.** A dedicated `filled-content` slot holds uploaded-state content. `render()` conditionally renders either the default slot or the `filled-content` slot based on `filled`, so the entire default slot (illustrated message, browse control) is unslotted while `filled` is `true`. Supersedes the narrower "replace" slot discussed in [A4](#additive--ships-when-ready-zero-breakage-for-consumers-already-on-2nd-gen), which is resolved by this broader slot rather than deferred. | Move uploaded-state content into `slot="filled-content"` instead of mutating the default slot's content in place. Keep a reachable control (e.g. "Replace file") in `filled-content` since the default slot's browse control is hidden while `filled` is `true`. See `migration-guide.mdx`. |
+| **B19** | `swc-dropzone-dragover` no longer repeats on every native `dragover` tick | Inherited from 1st-gen: `sp-dropzone-dragover` re-fired on every native `dragover` (typically every 100–350 ms) for as long as a drag sat over the zone, even though `isDragged`/`dragged` only changed once. Found via manual testing: 30+ events accumulate from a single brief hover. | **Shipped, safe to break pre-1.0 (no changeset/CHANGELOG entry for dropzone exists yet).** `swc-dropzone-dragover` now fires once on entry into the dragged state and does not repeat while still hovering. `swc-dropzone-should-accept` is unchanged and still fires on every tick, since it drives `dataTransfer.dropEffect`, which the native Drag and Drop API requires reasserting on every `dragover`. | Consumers listening for `swc-dropzone-dragover` to run per-tick logic (e.g. resetting a timer on every hover pulse) must switch to `swc-dropzone-should-accept` for that. Consumers only using it to detect "a drag started" are unaffected. |
 
 #### Styling and visuals
 
@@ -338,12 +339,12 @@ The exact set depends on styling-phase review. No `--swc-*` properties are confi
 
 #### Drag-and-drop event flow
 
-The event flow in 2nd-gen should preserve 1st-gen semantics with one correction:
+The event flow in 2nd-gen should preserve 1st-gen semantics with two corrections (SWC-2069 and B19, below):
 
-1. `dragover` native event fires on the host.
+1. `dragover` native event fires on the host, repeatedly for as long as the drag sits over it (typically every 100–350 ms).
 2. `event.preventDefault()` is always called unconditionally (required for Chrome/Windows drop support; confirmed by the 1st-gen `always prevents default on dragover` test).
-3. `swc-dropzone-should-accept` (or renamed equivalent) is dispatched. If cancelled, `dataTransfer.dropEffect = 'none'`; `dragged` stays false; dragover flow stops.
-4. If not cancelled and `dataTransfer` is present, `dragged = true` and `swc-dropzone-dragover` (or renamed equivalent) fires.
+3. `swc-dropzone-should-accept` (or renamed equivalent) is dispatched on every one of those native events, not just the first. If cancelled, `dataTransfer.dropEffect = 'none'`; `dragged` stays false; dragover flow stops.
+4. If not cancelled and `dataTransfer` is present, `dataTransfer.dropEffect` is set on every tick, but `dragged = true` and `swc-dropzone-dragover` (or renamed equivalent) only fire once, on entry (**B19**: 1st-gen re-dispatched `dragover` on every tick even though `dragged` only changed once).
 5. `dragleave` native event fires. If `relatedTarget` is an internal child, the event is ignored (prevents flicker during child traversal). Otherwise, a 100 ms debounced timeout runs; on expiry, `dragged = false` and `swc-dropzone-dragleave` fires.
 6. `drop` native event fires. `event.preventDefault()`. If `dragged` is true: clear timeout, `dragged = false`, dispatch `swc-dropzone-drop`.
 7. The shadow DOM `role="status"` element is updated at steps 4 and 6 (and for the filled+dragged state).

@@ -56,8 +56,8 @@ A drop zone can be in the following states:
 
 The drop zone dispatches four events over the course of a drag-and-drop interaction:
 
-- **`swc-dropzone-should-accept`**: fired on `dragover`, before `dragged` is set. Cancelable; cancel it to reject the dragged payload and show a `none` cursor.
-- **`swc-dropzone-dragover`**: fired once the drag is accepted and `dragged` is set to `true`.
+- **`swc-dropzone-should-accept`**: fired on every native `dragover` tick while a drag is over the zone, not just on entry. Cancelable; cancel it to reject the dragged payload and show a `none` cursor.
+- **`swc-dropzone-dragover`**: fired once when the drag is accepted and `dragged` is set to `true`; does not repeat on subsequent `dragover` ticks while still hovering.
 - **`swc-dropzone-dragleave`**: fired after a 100 ms debounce once the drag leaves the zone.
 - **`swc-dropzone-drop`**: fired when a file is dropped on the zone. `dragged` is still `true` when this event fires.
 

@@ -227,7 +227,7 @@ export const DragOverTest: Story = {
     );
 
     await step(
-      'swc-dropzone-dragover fires on every dragover, not only the first',
+      'swc-dropzone-dragover fires once on entry and does not repeat while still hovering',
       async () => {
         // dropzone.dragged is already true from the previous step.
         let dragoverCount = 0;
@@ -242,7 +242,31 @@ export const DragOverTest: Story = {
         dropzone.removeEventListener(SWC_DROPZONE_DRAGOVER_EVENT, listener);
         expect(
           dragoverCount,
-          'swc-dropzone-dragover fires on each dragover'
+          'swc-dropzone-dragover does not fire again while already dragged'
+        ).toBe(0);
+      }
+    );
+
+    await step(
+      'swc-dropzone-should-accept still fires on every dragover tick, unlike swc-dropzone-dragover',
+      async () => {
+        // dropzone.dragged is already true from the previous steps.
+        let shouldAcceptCount = 0;
+        const listener = (): void => {
+          shouldAcceptCount++;
+        };
+        dropzone.addEventListener(SWC_DROPZONE_SHOULD_ACCEPT_EVENT, listener);
+
+        dropzone.dispatchEvent(makeDragEvent('dragover', new DataTransfer()));
+        dropzone.dispatchEvent(makeDragEvent('dragover', new DataTransfer()));
+
+        dropzone.removeEventListener(
+          SWC_DROPZONE_SHOULD_ACCEPT_EVENT,
+          listener
+        );
+        expect(
+          shouldAcceptCount,
+          'swc-dropzone-should-accept fires on each dragover tick (native API requirement)'
         ).toBe(2);
       }
     );
