@@ -15,6 +15,7 @@ import { ref } from 'lit/directives/ref.js';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
+import { action } from 'storybook/actions';
 
 import type { Dropzone } from '@adobe/spectrum-wc/dropzone';
 import {
@@ -174,6 +175,17 @@ const renderFilledStateExample = (
     () => fileInput,
     () => replaceButton
   );
+  // `template(args)` (the wc-toolkit helper) wires every CEM-declared event to
+  // the Actions panel automatically, but these stories use a custom render for
+  // real drag-and-drop and browse behavior, which bypasses that wiring
+  // entirely. Reproduce it by hand for each event so the Actions panel still
+  // reflects what's happening; `swc-dropzone-drop` combines the action log
+  // with this story's own accept-file handler.
+  const logAction = (name: string) => (event: Event) => action(name)(event);
+  const handleDropAndLog = (event: Event): void => {
+    handleDrop(event);
+    action('swc-dropzone-drop')(event);
+  };
   return html`
     <swc-dropzone
       ${ref((element?: Element) => (dropzone = (element as Dropzone) ?? null))}
@@ -182,7 +194,10 @@ const renderFilledStateExample = (
       ?dragged=${dragged}
       ?filled=${filled}
       style="min-inline-size: 260px;"
-      @swc-dropzone-drop=${handleDrop}
+      @swc-dropzone-should-accept=${logAction('swc-dropzone-should-accept')}
+      @swc-dropzone-dragover=${logAction('swc-dropzone-dragover')}
+      @swc-dropzone-dragleave=${logAction('swc-dropzone-dragleave')}
+      @swc-dropzone-drop=${handleDropAndLog}
     >
       <swc-illustrated-message>
         ${unsafeHTML(DROPZONE_SVG)}
