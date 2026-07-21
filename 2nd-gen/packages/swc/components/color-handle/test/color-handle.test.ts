@@ -27,7 +27,7 @@ import { anchoredHandle, Overview } from '../stories/color-handle.stories.js';
 
 export default {
   ...meta,
-  title: 'Color handle/Tests',
+  title: `${meta.title}/Tests`,
   parameters: {
     ...meta.parameters,
     docs: { disable: true, page: null },

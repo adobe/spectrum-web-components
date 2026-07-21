@@ -28,7 +28,7 @@ import {
 
 export default {
   ...meta,
-  title: 'Color loupe/Tests',
+  title: `${meta.title}/Tests`,
   parameters: {
     ...meta.parameters,
     docs: { disable: true, page: null },

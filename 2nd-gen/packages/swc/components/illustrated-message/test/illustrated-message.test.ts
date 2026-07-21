@@ -34,7 +34,7 @@ import meta, {
 // This file defines dev-only test stories that reuse the main story metadata.
 export default {
   ...meta,
-  title: 'Illustrated message/Tests',
+  title: `${meta.title}/Tests`,
   parameters: {
     ...meta.parameters,
     docs: { disable: true, page: null },
