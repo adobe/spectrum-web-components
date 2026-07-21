@@ -159,6 +159,13 @@ In Spectrum 1, setting `filled` only changed styling; the same slotted content s
   // Update the filled-content element's text instead of the illustrated message.
   // Keep a control such as "Replace file" reachable: the default slot's browse
   // button is hidden once filled, so it can no longer receive focus.
+  //
+  // Move focus yourself: `filled-content` is your own markup, so `swc-dropzone`
+  // has no way to know which element in it is the right one to focus. If focus
+  // was on the browse control, move it to your replace control once the update
+  // completes (filled-content isn't assigned into the shadow DOM until then):
+  //   dropzone.setAttribute('filled', 'true');
+  //   dropzone.updateComplete.then(() => replaceButton.focus());
 </script>
 ```
 

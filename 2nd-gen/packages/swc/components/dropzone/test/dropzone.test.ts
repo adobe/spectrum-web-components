@@ -33,7 +33,12 @@ import {
   getComponents,
   withWarningSpy,
 } from '../../../utils/test-utils.js';
-import meta, { Overview, Sizes, States } from '../stories/dropzone.stories.js';
+import meta, {
+  BrowseAndDrop,
+  Overview,
+  Sizes,
+  States,
+} from '../stories/dropzone.stories.js';
 
 export default {
   ...meta,
@@ -951,6 +956,50 @@ export const AriaLabelledbyNoWarningTest: Story = {
             'no warning emitted when aria-labelledby is present'
           ).toBe(0);
         })
+    );
+  },
+};
+
+// ──────────────────────────────────────
+//    TEST: Focus management on fill
+// ──────────────────────────────────────
+
+// Focus management here is the consumer's responsibility (see
+// bindFilledStateHandlers in dropzone.stories.ts), not the component's:
+// filled-content is consumer-authored, so this verifies the story's own
+// handler moves focus correctly, not a component-level guarantee.
+export const BrowseAndDropFocusTest: Story = {
+  ...BrowseAndDrop,
+  play: async ({ canvasElement, step }) => {
+    const dropzone = await getComponent<Dropzone>(
+      canvasElement,
+      'swc-dropzone'
+    );
+    const browseButton = dropzone.querySelector(
+      'swc-button:not([slot])'
+    ) as HTMLElement;
+    const replaceButton = dropzone.querySelector(
+      '[slot="filled-content"] swc-button'
+    ) as HTMLElement;
+
+    await step(
+      'moves focus to the replace control after the consumer handler accepts a drop',
+      async () => {
+        browseButton.focus();
+        dropzone.dispatchEvent(
+          new CustomEvent(SWC_DROPZONE_DROP_EVENT, {
+            bubbles: true,
+            composed: true,
+            detail: {},
+          })
+        );
+        await dropzone.updateComplete;
+
+        expect(
+          document.activeElement,
+          'focus moves to the replace control'
+        ).toBe(replaceButton);
+      }
     );
   },
 };

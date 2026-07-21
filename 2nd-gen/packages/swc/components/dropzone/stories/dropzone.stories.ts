@@ -16,6 +16,7 @@ import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
+import type { Dropzone } from '@adobe/spectrum-wc/dropzone';
 import {
   DROPZONE_VALID_SIZES,
   type DropzoneSize,
@@ -111,10 +112,17 @@ const makeDropzoneSlot = (
 // Each getter resolves the element captured by that story's own `ref()`, so
 // the lookup always targets the specific dropzone that fired the event rather
 // than the first match in a shared container.
+//
+// Moving focus to the replace control here, not inside `swc-dropzone` itself:
+// `filled-content` is consumer-authored, so only the consumer reliably knows
+// which of its own elements is the right one to focus. `filled-content` isn't
+// assigned into the shadow DOM until the `filled` update completes, so the
+// `focus()` call waits on `updateComplete` first.
 const bindFilledStateHandlers = (
-  getDropzone: () => Element | null,
+  getDropzone: () => Dropzone | null,
   getFilledContent: () => HTMLElement | null,
-  getFileInput: () => HTMLInputElement | null
+  getFileInput: () => HTMLInputElement | null,
+  getReplaceButton: () => HTMLElement | null
 ): {
   handleDrop: (event: Event) => void;
   handleChange: () => void;
@@ -125,7 +133,11 @@ const bindFilledStateHandlers = (
     if (filledContent) {
       filledContent.textContent = `${name} uploaded`;
     }
-    getDropzone()?.setAttribute('filled', '');
+    const dropzone = getDropzone();
+    dropzone?.setAttribute('filled', '');
+    dropzone?.updateComplete.then(() => {
+      getReplaceButton()?.focus();
+    });
   };
 
   return {
@@ -152,17 +164,19 @@ const renderFilledStateExample = (
   options: { size?: DropzoneSize; dragged?: boolean; filled?: boolean } = {}
 ) => {
   const { size = 'm', dragged = false, filled = false } = options;
-  let dropzone: Element | null = null;
+  let dropzone: Dropzone | null = null;
   let fileInput: HTMLInputElement | null = null;
   let filledContent: HTMLElement | null = null;
+  let replaceButton: HTMLElement | null = null;
   const { handleDrop, handleChange, browseFiles } = bindFilledStateHandlers(
     () => dropzone,
     () => filledContent,
-    () => fileInput
+    () => fileInput,
+    () => replaceButton
   );
   return html`
     <swc-dropzone
-      ${ref((element?: Element) => (dropzone = element ?? null))}
+      ${ref((element?: Element) => (dropzone = (element as Dropzone) ?? null))}
       size=${size}
       aria-label=${ariaLabel}
       ?dragged=${dragged}
@@ -198,7 +212,15 @@ const renderFilledStateExample = (
               (filledContent = (element as HTMLElement) ?? null)
           )}
         ></span>
-        <swc-button size="s" variant="secondary" @click=${browseFiles}>
+        <swc-button
+          ${ref(
+            (element?: Element) =>
+              (replaceButton = (element as HTMLElement) ?? null)
+          )}
+          size="s"
+          variant="secondary"
+          @click=${browseFiles}
+        >
           Replace file
         </swc-button>
       </div>
