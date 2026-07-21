@@ -409,5 +409,45 @@ describe('Combobox accessibility', () => {
         'input falls back once the value no longer matches an option'
       ).to.equal('');
     });
+    it("renders RTL values via unicode-bidi: plaintext without changing the input's own direction", async () => {
+      const el = await fixture<TestableCombobox>(html`
+        <sp-combobox label="Language">
+          <sp-menu-item value="he" lang="he" dir="rtl">עברית</sp-menu-item>
+          <sp-menu-item value="en" lang="en">English</sp-menu-item>
+        </sp-combobox>
+      `);
+      await elementUpdated(el);
+
+      const input = el.shadowRoot.querySelector('#input') as HTMLInputElement;
+
+      expect(
+        getComputedStyle(input).unicodeBidi,
+        'input shapes bidi text via its own plaintext paragraphs'
+      ).to.equal('plaintext');
+
+      const beforeDirection = getComputedStyle(input).direction;
+      const beforePaddingLeft = getComputedStyle(input).paddingLeft;
+      const beforePaddingRight = getComputedStyle(input).paddingRight;
+
+      el.value = 'עברית';
+      await elementUpdated(el);
+
+      // Unlike `dir="auto"`, `unicode-bidi: plaintext` shapes/aligns RTL
+      // runs without changing the input's own `direction`, so its
+      // button-clearance padding can never diverge from `.button`'s fixed
+      // position.
+      expect(
+        getComputedStyle(input).direction,
+        "input's own direction never changes for an rtl value"
+      ).to.equal(beforeDirection);
+      expect(
+        getComputedStyle(input).paddingLeft,
+        'padding-left stays put for an rtl value'
+      ).to.equal(beforePaddingLeft);
+      expect(
+        getComputedStyle(input).paddingRight,
+        'padding-right (clearing .button) stays put for an rtl value'
+      ).to.equal(beforePaddingRight);
+    });
   });
 });
