@@ -106,3 +106,14 @@
   color: inherit;
   fill: currentcolor;
 }
+
+/* ── Forced colors ────────────────────────────────── */
+
+/* The base style removes borders. In forced-colors mode the button loses its
+   visual boundary without one; re-add a 1px border so the UA can map it to
+   the appropriate system color (ButtonBorder). */
+@media (forced-colors: active) {
+  .swc-InfieldButton {
+    border: 1px solid;
+  }
+}
