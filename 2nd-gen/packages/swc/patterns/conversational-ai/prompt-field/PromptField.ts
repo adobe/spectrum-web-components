@@ -196,6 +196,14 @@ export class PromptField extends SpectrumElement {
   @state()
   private _artifactStripEntered = false;
 
+  /**
+   * Whether the strip has ever been entered before. On the very first entry
+   * there is no roving-controller memory yet, so `_enterArtifactStrip` lands
+   * on the first fully-visible tile instead of always tile 0; on every entry
+   * after that, the controller's own memory of the last-active tile wins.
+   */
+  private _artifactStripHasBeenEntered = false;
+
   /** Set in `willUpdate` when a chevron about to disappear currently has focus; consumed in `updated`. */
   private _pendingArtifactFocusRedirect: 'first' | 'last' | null = null;
 
@@ -470,15 +478,41 @@ export class PromptField extends SpectrumElement {
     }
   }
 
-  /** Moves focus into the artifact strip's active (or first) tile, entering it. */
+  /** The first tile that is fully (not partially) within the current scroll viewport. */
+  private _firstFullyVisibleArtifact(): HTMLElement | null {
+    const scrollEl = this._artifactScrollEl;
+    if (!scrollEl) {
+      return null;
+    }
+    return (
+      (this._assignedArtifactElements ?? []).find(
+        (el) => this._getArtifactTileVisibleFraction(el, scrollEl) >= 0.999
+      ) ?? null
+    );
+  }
+
+  /**
+   * Moves focus into the artifact strip, entering it. Prefers the tile the
+   * roving controller already remembers as active (e.g. re-entering after
+   * tabbing away); otherwise lands on the first fully-visible tile for the
+   * strip's current scroll position rather than always tile 0, so entering
+   * after scrolling doesn't jump focus off-screen.
+   */
   private _enterArtifactStrip(): void {
     const artifacts = this._assignedArtifactElements ?? [];
     if (artifacts.length === 0) {
       return;
     }
     this._artifactStripEntered = true;
+    // Read before `refresh()`: with no prior memory, `refresh()` itself
+    // defaults to tile 0, which would make it indistinguishable from a
+    // genuinely-remembered tile 0 once read back afterward.
+    const isFirstEntry = !this._artifactStripHasBeenEntered;
+    this._artifactStripHasBeenEntered = true;
     this._artifactNavigation.refresh();
-    const target = this._artifactNavigation.getActiveItem() ?? artifacts[0];
+    const target = isFirstEntry
+      ? (this._firstFullyVisibleArtifact() ?? artifacts[0])
+      : (this._artifactNavigation.getActiveItem() ?? artifacts[0]);
     this._focusArtifact(target);
   }
 

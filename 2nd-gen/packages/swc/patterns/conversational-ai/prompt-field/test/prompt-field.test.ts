@@ -679,3 +679,47 @@ export const ArtifactFocusOrderTest: Story = {
     );
   },
 };
+
+export const ArtifactEnterAfterScrollTest: Story = {
+  render: () => nothing,
+  play: async ({ canvasElement, step }) => {
+    renderMultiArtifactPromptField(canvasElement);
+
+    const el = await getComponent<PromptField>(
+      canvasElement,
+      'swc-prompt-field'
+    );
+    await el.updateComplete;
+    await new Promise((resolve) => requestAnimationFrame(resolve));
+    await el.updateComplete;
+
+    const artifacts = Array.from(
+      el.querySelectorAll<HTMLElement>('[slot="artifact"]')
+    );
+    const scrollEl = el.shadowRoot?.querySelector<HTMLDivElement>(
+      '.swc-PromptField-artifacts-scroll'
+    );
+    const viewport = el.shadowRoot?.querySelector<HTMLElement>(
+      '.swc-PromptField-artifacts-viewport'
+    );
+
+    await step(
+      'entering the strip for the first time after scrolling lands on the first fully-visible tile, not tile 0',
+      async () => {
+        scrollEl?.scrollTo({ left: 300, behavior: 'auto' });
+        await waitForScrollEnd(scrollEl);
+        await el.updateComplete;
+        expect(scrollEl?.scrollLeft ?? 0).toBeGreaterThan(0);
+
+        viewport?.focus();
+        const event = dispatchKeydown(viewport!, 'Enter');
+        await el.updateComplete;
+
+        expect(event.defaultPrevented).toBe(true);
+        const active = getActiveElement();
+        expect(active).not.toBe(artifacts[0]);
+        expect(artifacts.includes(active as HTMLElement)).toBe(true);
+      }
+    );
+  },
+};
