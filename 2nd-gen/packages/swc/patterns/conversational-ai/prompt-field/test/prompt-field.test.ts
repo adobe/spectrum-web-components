@@ -590,7 +590,7 @@ export const ArtifactFocusOrderTest: Story = {
     );
 
     await step(
-      'Tab from the "<" button focuses the first fully-visible tile',
+      'Tab from the "<" button is left to native default, not intercepted into a tile',
       async () => {
         artifacts[artifacts.length - 1]?.focus();
         await waitForScrollEnd(scrollEl);
@@ -605,19 +605,19 @@ export const ArtifactFocusOrderTest: Story = {
         const event = dispatchKeydown(prevButton!, 'Tab');
         await el.updateComplete;
 
-        expect(event.defaultPrevented).toBe(true);
-        const active = getActiveElement();
-        expect(active).not.toBe(prevButton);
-        expect(artifacts.includes(active as HTMLElement)).toBe(true);
+        // The "<" chevron is a normal tab stop like any other outside the
+        // strip: Tab/Shift+Tab from it is never intercepted, so the next
+        // real stop is always the container (region), never a tile directly.
+        expect(event.defaultPrevented).toBe(false);
       }
     );
 
     await step(
-      'Shift+Tab from the ">" button focuses the last fully-visible tile',
+      'Shift+Tab from the ">" button is left to native default, not intercepted into a tile',
       async () => {
         // Force a known, deterministic scroll position rather than relying on
-        // wherever the previous step's "first fully-visible tile" landed
-        // (that position is layout-dependent and varies across browsers).
+        // wherever the previous step left the scroll offset (that position
+        // is layout-dependent and varies across browsers).
         scrollEl?.scrollTo({ left: 0, behavior: 'auto' });
         await waitForScrollEnd(scrollEl);
         await el.updateComplete;
@@ -628,9 +628,7 @@ export const ArtifactFocusOrderTest: Story = {
         const event = dispatchKeydown(nextButton!, 'Tab', { shiftKey: true });
         await el.updateComplete;
 
-        expect(event.defaultPrevented).toBe(true);
-        const active = getActiveElement();
-        expect(artifacts.includes(active as HTMLElement)).toBe(true);
+        expect(event.defaultPrevented).toBe(false);
       }
     );
 

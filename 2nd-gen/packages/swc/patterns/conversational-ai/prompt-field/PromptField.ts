@@ -423,24 +423,6 @@ export class PromptField extends SpectrumElement {
     el.focus();
   }
 
-  private _findFullyVisibleArtifact(
-    direction: 'first' | 'last'
-  ): HTMLElement | null {
-    const scrollEl = this._artifactScrollEl;
-    const artifacts = this._assignedArtifactElements ?? [];
-    if (!scrollEl || artifacts.length === 0) {
-      return null;
-    }
-    const ordered =
-      direction === 'first' ? artifacts : [...artifacts].reverse();
-    for (const el of ordered) {
-      if (this._getArtifactTileVisibleFraction(el, scrollEl) >= 0.999) {
-        return el;
-      }
-    }
-    return null;
-  }
-
   /** Reacts to `swc-focusgroup-navigation-active-change` from `_artifactNavigation`. */
   private _handleArtifactActiveChange = (
     event: CustomEvent<FocusgroupNavigationActiveChangeDetail>
@@ -549,9 +531,6 @@ export class PromptField extends SpectrumElement {
     }
 
     const artifacts = this._assignedArtifactElements ?? [];
-    const prevButton = this.shadowRoot?.querySelector<HTMLButtonElement>(
-      '.swc-PromptField-artifacts-scroll-prev'
-    );
     const nextButton = this.shadowRoot?.querySelector<HTMLButtonElement>(
       '.swc-PromptField-artifacts-scroll-next'
     );
@@ -596,30 +575,6 @@ export class PromptField extends SpectrumElement {
       if (nextButton) {
         event.preventDefault();
         nextButton.focus();
-      }
-      return;
-    }
-
-    // From the "<" (previous set) button: Tab enters the strip at the first
-    // fully-visible thumbnail beside it.
-    if (active === prevButton) {
-      if (!event.shiftKey) {
-        const target = this._findFullyVisibleArtifact('first');
-        if (target) {
-          event.preventDefault();
-          this._focusArtifact(target);
-        }
-      }
-      return;
-    }
-
-    // From the ">" (next set) button: Shift+Tab re-enters the strip at the
-    // last fully-visible thumbnail beside it.
-    if (active === nextButton && event.shiftKey) {
-      const target = this._findFullyVisibleArtifact('last');
-      if (target) {
-        event.preventDefault();
-        this._focusArtifact(target);
       }
     }
   }
