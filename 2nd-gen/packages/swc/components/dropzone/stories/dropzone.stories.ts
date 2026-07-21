@@ -365,41 +365,10 @@ export const States: Story = {
 //    BEHAVIORS STORIES
 // ──────────────────────────────
 
-export const EventLog: Story = {
-  render: () => {
-    let log: HTMLElement | null = null;
-    const captureLog = (element?: Element): void => {
-      log = (element as HTMLElement) ?? null;
-    };
-    const logEvent = (event: Event): void => {
-      const entry = document.createElement('li');
-      entry.textContent = event.type;
-      log?.prepend(entry);
-    };
-    return html`
-      <div
-        style="display: flex; flex-direction: column; gap: 16px; min-inline-size: 260px;"
-      >
-        <swc-dropzone
-          aria-label="Upload files"
-          @swc-dropzone-should-accept=${logEvent}
-          @swc-dropzone-dragover=${logEvent}
-          @swc-dropzone-dragleave=${logEvent}
-          @swc-dropzone-drop=${logEvent}
-        >
-          ${makeDropzoneSlot('Drag and drop your file')}
-        </swc-dropzone>
-        <ul
-          ${ref(captureLog)}
-          aria-label="Drop zone event log"
-          style="margin: 0; padding-inline-start: 20px; font-size: 14px;"
-        ></ul>
-      </div>
-    `;
-  },
+export const Events: Story = {
+  render: () => renderFilledStateExample('Upload files'),
   tags: ['behaviors'],
 };
-EventLog.storyName = 'Event log';
 
 export const BrowseAndDrop: Story = {
   render: () => renderFilledStateExample('Upload files'),
