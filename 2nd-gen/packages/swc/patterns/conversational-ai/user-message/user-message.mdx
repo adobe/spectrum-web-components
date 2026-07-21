@@ -22,18 +22,17 @@ A user message consists of:
 
 Bubble sizing and padding are inferred from slotted content:
 
-- **Copy**: default text-only content with the bubble's default width and padding
-- **Card**: compact attachment layout with thumbnail, title, and subtitle
-- **Media**: larger preview-first attachment layout with metadata beneath the preview
+- **Copy** (`type="copy"`): default text-only content with the bubble's default width and padding
+- **Attachments** (`type="attachments"`): one or more `<swc-user-message-attachment>` children — a single attachment (media or card) renders at a larger "hero" size than a grouped one
 
 <Canvas of={UserMessageStories.Content} />
 
 ### Attachments
 
-`type="attachments"` accepts many `<swc-user-message-attachment>` children in one bubble, for sending several files together:
+`type="attachments"` accepts one or more `<swc-user-message-attachment>` children in one bubble — a single attachment is a common case, not a special one:
 
-- **`type="media"`** attachments (images) lay out in a fixed 4-column grid
-- **`type="card"`** attachments (documents, video, other non-image files) stack full-width, one per row, beneath the grid
+- **`type="media"`** attachments (images) lay out in a fixed 4-column grid; a lone media attachment gets a larger 180×180 hero tile instead of the smaller grouped-grid size
+- **`type="card"`** attachments (documents, video, other non-image files) stack full-width, one per row, beneath the grid; a lone card attachment gets a wider hero row (capped at 440px) instead of shrink-wrapping to the grid's width
 - `swc-user-message` groups attachments by their own `type`, regardless of the order they're slotted in
 
 <Canvas of={UserMessageStories.Attachments} />
@@ -42,7 +41,7 @@ Bubble sizing and padding are inferred from slotted content:
 
 ### Show all / show less
 
-When there are more than 4 media attachments, the extra tiles collapse behind a "Show all" disclosure below the grid. Card/file attachments are always fully shown. Toggling fires `swc-user-message-toggle` with `{ open: boolean }`.
+When there are more than 4 media attachments, the extra tiles collapse behind a "View all (N)" scrim overlay on the last visible tile; expanding reveals every tile, still 4 per row, with a "Show less" control below the grid to collapse again. Card/file attachments are always fully shown. Toggling fires `swc-user-message-toggle` with `{ open: boolean }`.
 
 <Canvas of={UserMessageStories.AttachmentsDisclosure} />
 
@@ -56,13 +55,11 @@ The `<swc-user-message>` element implements the following accessibility features
 
 - The bubble is rendered as a `<div>` acting as a visual container
 - `type="copy"` uses the default slot for message text
-- `type="card"` and `type="media"` use named slots for thumbnail, title, and subtitle
-- `type="attachments"` renders a `<button>` with `aria-expanded` and `aria-controls` for the show all/less disclosure
+- `type="attachments"` renders a `<button>` with `aria-expanded` and `aria-controls` for the show all/less disclosure (the "View all (N)" overlay while collapsed, the "Show less" control while expanded)
 
 ### Best practices
 
 - Ensure message text is descriptive and self-contained
-- For card and media attachments, ensure titles/subtitles and `aria-label`/`alt` text are present for previews
 - For `type="attachments"`, ensure every `swc-user-message-attachment` includes descriptive `title`/`subtitle` text or `alt` text on its thumbnail, since sighted users rely on the grid layout alone to distinguish tiles
 
 <Canvas of={UserMessageStories.Accessibility} />

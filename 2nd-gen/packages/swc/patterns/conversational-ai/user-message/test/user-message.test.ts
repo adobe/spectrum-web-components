@@ -19,6 +19,7 @@ import '../swc-user-message.js';
 
 import { getComponent, getComponents } from '../../../../utils/test-utils.js';
 import { meta, Overview } from '../stories/user-message.stories.js';
+import { UserMessageAttachment } from '../user-message-attachment/UserMessageAttachment.js';
 import { UserMessage } from '../UserMessage.js';
 
 export default {
@@ -55,46 +56,61 @@ export const TypeAndSlotTest: Story = {
     );
 
     await step(
-      'type reflects to the host and drives card structure',
+      'a single card attachment reflects "attachments" on the host and gets the hero row',
       async () => {
-        el.type = 'card';
+        el.type = 'attachments';
         el.innerHTML = `
-        <div
-          slot="thumbnail"
-          role="img"
-          aria-label="File preview"
-        ></div>
-        <span slot="title">Brand guidelines</span>
-        <span slot="subtitle">PDF</span>
+        <swc-user-message-attachment type="card">
+          <div slot="thumbnail" role="img" aria-label="File preview"></div>
+          <span slot="title">Brand guidelines</span>
+          <span slot="subtitle">PDF</span>
+        </swc-user-message-attachment>
       `;
         await el.updateComplete;
+        await new Promise((resolve) => requestAnimationFrame(resolve));
+        await el.updateComplete;
 
-        const title = el.shadowRoot?.querySelector('.swc-UserMessage-title');
-        const subtitle = el.shadowRoot?.querySelector(
-          '.swc-UserMessage-subtitle'
+        const attachment = el.querySelector<UserMessageAttachment>(
+          'swc-user-message-attachment'
+        )!;
+        await attachment.updateComplete;
+
+        const heroFilesBox = el.shadowRoot?.querySelector(
+          '.swc-UserMessage-attachments-files--single'
         );
-        expect(el.getAttribute('type')).toBe('card');
+        const title = attachment.shadowRoot?.querySelector(
+          '.swc-UserMessageAttachment-title'
+        );
+        const subtitle = attachment.shadowRoot?.querySelector(
+          '.swc-UserMessageAttachment-subtitle'
+        );
+        expect(el.getAttribute('type')).toBe('attachments');
+        expect(heroFilesBox).toBeTruthy();
         expect(title).toBeTruthy();
         expect(subtitle).toBeTruthy();
       }
     );
 
     await step(
-      'media type renders the media attachment container',
+      'a single media attachment gets the hero grid tile',
       async () => {
-        el.type = 'media';
+        el.type = 'attachments';
         el.innerHTML = `
-        <div slot="thumbnail" role="img" aria-label="Preview"></div>
-        <span slot="title">Preview image</span>
-        <span slot="subtitle">PNG</span>
+        <swc-user-message-attachment type="media">
+          <div slot="thumbnail" role="img" aria-label="Preview"></div>
+          <span slot="title">Preview image</span>
+          <span slot="subtitle">PNG</span>
+        </swc-user-message-attachment>
       `;
         await el.updateComplete;
+        await new Promise((resolve) => requestAnimationFrame(resolve));
+        await el.updateComplete;
 
-        const attachment = el.shadowRoot?.querySelector(
-          '.swc-UserMessage-attachment--media'
+        const heroMediaBox = el.shadowRoot?.querySelector(
+          '.swc-UserMessage-attachments-media--single'
         );
-        expect(el.getAttribute('type')).toBe('media');
-        expect(attachment).toBeTruthy();
+        expect(el.getAttribute('type')).toBe('attachments');
+        expect(heroMediaBox).toBeTruthy();
       }
     );
 
@@ -118,7 +134,7 @@ export const TypeAndSlotTest: Story = {
 };
 
 export const DefaultSlotHiddenForAttachmentTypesTest: Story = {
-  name: 'Default slot not used for card and media',
+  name: 'Default slot not used for attachments',
   ...Overview,
   play: async ({ canvasElement, step }) => {
     const el = await getComponent<UserMessage>(
@@ -126,34 +142,28 @@ export const DefaultSlotHiddenForAttachmentTypesTest: Story = {
       'swc-user-message'
     );
 
-    const attachmentMarkup = (label: string) => `
-        <p data-test-default-slotted>${label}</p>
-        <div slot="thumbnail" role="img" aria-label="Preview"></div>
-        <span slot="title">T</span>
-        <span slot="subtitle">S</span>
+    await step(
+      'type="attachments": no unnamed slot; unslotted children are not shown',
+      async () => {
+        el.type = 'attachments';
+        el.innerHTML = `
+        <p data-test-default-slotted>Default copy that must not appear in the bubble for attachments type.</p>
+        <swc-user-message-attachment type="media">
+          <div slot="thumbnail" role="img" aria-label="Preview"></div>
+        </swc-user-message-attachment>
       `;
+        await el.updateComplete;
 
-    for (const type of ['card', 'media'] as const) {
-      await step(
-        `type="${type}": no unnamed slot; default-slot children are not shown`,
-        async () => {
-          el.type = type;
-          el.innerHTML = attachmentMarkup(
-            'Default copy that must not appear in the bubble for attachment types.'
-          );
-          await el.updateComplete;
+        expect(el.shadowRoot?.querySelector('slot:not([name])')).toBeNull();
 
-          expect(el.shadowRoot?.querySelector('slot:not([name])')).toBeNull();
-
-          const leaked = el.querySelector<HTMLElement>(
-            '[data-test-default-slotted]'
-          );
-          expect(leaked).toBeTruthy();
-          const { width, height } = leaked!.getBoundingClientRect();
-          expect(width * height).toBe(0);
-        }
-      );
-    }
+        const leaked = el.querySelector<HTMLElement>(
+          '[data-test-default-slotted]'
+        );
+        expect(leaked).toBeTruthy();
+        const { width, height } = leaked!.getBoundingClientRect();
+        expect(width * height).toBe(0);
+      }
+    );
 
     await step(
       'type="copy" keeps an unnamed (default) slot in the shadow root',
@@ -210,6 +220,10 @@ export const AttachmentsGroupingTest: Story = {
         el.innerHTML = attachmentsMarkup(4, 1);
         await el.updateComplete;
 
+        const overflow = el.shadowRoot?.querySelector(
+          '.swc-UserMessage-attachments-overflow'
+        );
+        expect(overflow).toBeNull();
         const toggle = el.shadowRoot?.querySelector(
           '.swc-UserMessage-attachments-toggle'
         );
@@ -250,12 +264,12 @@ export const AttachmentsGroupingTest: Story = {
         await new Promise((resolve) => requestAnimationFrame(resolve));
         await el.updateComplete;
 
-        const toggle = el.shadowRoot?.querySelector(
-          '.swc-UserMessage-attachments-toggle'
+        const overflow = el.shadowRoot?.querySelector(
+          '.swc-UserMessage-attachments-overflow'
         );
-        expect(toggle).toBeTruthy();
-        expect(toggle?.getAttribute('aria-expanded')).toBe('false');
-        expect(toggle?.textContent?.trim()).toContain('Show all');
+        expect(overflow).toBeTruthy();
+        expect(overflow?.getAttribute('aria-expanded')).toBe('false');
+        expect(overflow?.textContent?.trim()).toContain('View all (6)');
 
         const mediaChildren = Array.from(el.children);
         expect(mediaChildren.slice(0, 4).some((child) => child.hidden)).toBe(
@@ -279,14 +293,23 @@ export const AttachmentsGroupingTest: Story = {
           { once: true }
         );
 
-        const toggle = el.shadowRoot?.querySelector<HTMLButtonElement>(
-          '.swc-UserMessage-attachments-toggle'
+        const overflow = el.shadowRoot?.querySelector<HTMLButtonElement>(
+          '.swc-UserMessage-attachments-overflow'
         );
-        toggle?.click();
+        overflow?.click();
         await el.updateComplete;
 
         expect(el.open).toBe(true);
         expect(detail?.open).toBe(true);
+        // Stays in the DOM (fades out via CSS) rather than being removed.
+        expect(
+          el.shadowRoot?.querySelector('.swc-UserMessage-attachments-overflow')
+        ).not.toBeNull();
+        expect(overflow?.hidden).toBe(true);
+
+        const toggle = el.shadowRoot?.querySelector(
+          '.swc-UserMessage-attachments-toggle'
+        );
         expect(toggle?.getAttribute('aria-expanded')).toBe('true');
         expect(toggle?.textContent?.trim()).toContain('Show less');
         expect(Array.from(el.children).every((child) => !child.hidden)).toBe(
@@ -320,15 +343,17 @@ export const LongTextWrapTest: Story = {
       style="max-inline-size: 640px; margin-block-start: 32px; padding-inline: 1px;"
     >
       <swc-conversation-turn type="user">
-        <swc-user-message type="card">
-          <div
-            slot="thumbnail"
-            style="inline-size:32px;block-size:32px;border-radius:3px;background:var(--swc-gray-200);"
-            role="img"
-            aria-label="File"
-          ></div>
-          <span slot="title">${longUnbrokenFileName}</span>
-          <span slot="subtitle">PDF</span>
+        <swc-user-message type="attachments">
+          <swc-user-message-attachment type="card">
+            <div
+              slot="thumbnail"
+              style="inline-size:32px;block-size:32px;border-radius:3px;background:var(--swc-gray-200);"
+              role="img"
+              aria-label="File"
+            ></div>
+            <span slot="title">${longUnbrokenFileName}</span>
+            <span slot="subtitle">PDF</span>
+          </swc-user-message-attachment>
         </swc-user-message>
       </swc-conversation-turn>
     </div>

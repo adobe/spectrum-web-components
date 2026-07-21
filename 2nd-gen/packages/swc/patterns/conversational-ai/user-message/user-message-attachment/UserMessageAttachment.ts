@@ -29,8 +29,10 @@ import styles from './user-message-attachment.css';
  *
  * @slot thumbnail - Shared visual slot for icon/thumbnail/preview image.
  * @slot badge - Optional file-type badge rendered over `type="media"` previews (for example, "PDF").
- * @slot title - Primary text label.
- * @slot subtitle - Secondary text label.
+ * @slot title - Primary text label. For `type="media"`, omit on grouped grid tiles
+ * (matching the compose-time `swc-upload-artifact` strip's caption-less tiles); a
+ * single "hero" attachment typically includes one.
+ * @slot subtitle - Secondary text label. Same `type="media"` guidance as `title`.
  */
 export class UserMessageAttachment extends SpectrumElement {
   /** Visual treatment type for this attachment: `media` renders a grid tile, `card` renders a stacked row. */
@@ -40,6 +42,12 @@ export class UserMessageAttachment extends SpectrumElement {
   @queryAssignedElements({ slot: 'badge', flatten: true })
   private _assignedBadge!: HTMLElement[];
 
+  @queryAssignedElements({ slot: 'title', flatten: true })
+  private _assignedTitle!: HTMLElement[];
+
+  @queryAssignedElements({ slot: 'subtitle', flatten: true })
+  private _assignedSubtitle!: HTMLElement[];
+
   public static override get styles(): CSSResultArray {
     return [styles];
   }
@@ -48,7 +56,18 @@ export class UserMessageAttachment extends SpectrumElement {
     return (this._assignedBadge?.length ?? 0) > 0;
   }
 
+  private _hasMediaMetaContent(): boolean {
+    return (
+      (this._assignedTitle?.length ?? 0) > 0 ||
+      (this._assignedSubtitle?.length ?? 0) > 0
+    );
+  }
+
   private _handleBadgeSlotChange(): void {
+    this.requestUpdate();
+  }
+
+  private _handleMediaMetaSlotChange(): void {
     this.requestUpdate();
   }
 
@@ -70,6 +89,46 @@ export class UserMessageAttachment extends SpectrumElement {
     `;
   }
 
+  /**
+   * Title/subtitle beneath the media square, shown only when slotted:
+   * grouped grid tiles are conventionally caption-less (matching the compose-time
+   * `swc-upload-artifact` strip), while a single "hero" attachment typically
+   * has one, same as `type="card"`.
+   */
+  private _renderMediaMeta(): TemplateResult {
+    if (!this._hasMediaMetaContent()) {
+      return html`
+        <slot
+          name="title"
+          hidden
+          @slotchange=${this._handleMediaMetaSlotChange}
+        ></slot>
+        <slot
+          name="subtitle"
+          hidden
+          @slotchange=${this._handleMediaMetaSlotChange}
+        ></slot>
+      `;
+    }
+
+    return html`
+      <div class="swc-UserMessageAttachment-meta">
+        <div class="swc-UserMessageAttachment-title">
+          <slot
+            name="title"
+            @slotchange=${this._handleMediaMetaSlotChange}
+          ></slot>
+        </div>
+        <div class="swc-UserMessageAttachment-subtitle">
+          <slot
+            name="subtitle"
+            @slotchange=${this._handleMediaMetaSlotChange}
+          ></slot>
+        </div>
+      </div>
+    `;
+  }
+
   private _renderMediaSurface(): TemplateResult {
     return html`
       <div class="swc-UserMessageAttachment-surface">
@@ -78,6 +137,7 @@ export class UserMessageAttachment extends SpectrumElement {
         </div>
         ${this._renderBadge()}
       </div>
+      ${this._renderMediaMeta()}
     `;
   }
 

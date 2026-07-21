@@ -28,7 +28,7 @@ delete (argTypes as Record<string, unknown>).content;
 argTypes.type = {
   ...argTypes.type,
   control: { type: 'select' },
-  options: ['copy', 'card', 'media', 'attachments'],
+  options: ['copy', 'attachments'],
   table: {
     category: 'attributes',
     defaultValue: { summary: 'copy' },
@@ -77,10 +77,6 @@ export const Playground: Story = {
     type: 'copy',
     'default-slot':
       'Can you help me create a 45-minute presentation, with animations, for an executive update?',
-    'thumbnail-slot':
-      '<img src="https://placehold.co/180x180" alt="Placeholder" />',
-    'title-slot': 'Hilton commercial assets',
-    'subtitle-slot': '2026',
   },
   decorators: [withUserTurn],
   tags: ['dev'],
@@ -95,10 +91,6 @@ export const Overview: Story = {
     type: 'copy',
     'default-slot':
       'Can you help me create a 45-minute presentation, with animations, for an executive update?',
-    'thumbnail-slot':
-      '<img src="https://placehold.co/180x180" alt="Placeholder" />',
-    'title-slot': 'Hilton commercial assets',
-    'subtitle-slot': '2026',
   },
   decorators: [withUserTurn],
   tags: ['overview'],
@@ -136,33 +128,39 @@ export const Content: Story = {
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;">
         <swc-conversation-turn type="user">
-          <swc-user-message type="card">
-            <div
-              slot="thumbnail"
-              style="inline-size:32px;block-size:32px;border-radius:3px;background:var(--swc-gray-200);flex-shrink:0;"
-              role="img"
-              aria-label="File"
-            ></div>
-            <span slot="title">Hilton commercial assets</span>
-            <span slot="subtitle">2026</span>
+          <swc-user-message type="attachments">
+            <swc-user-message-attachment type="card">
+              <div
+                slot="thumbnail"
+                style="inline-size:32px;block-size:32px;border-radius:3px;background:var(--swc-gray-200);flex-shrink:0;"
+                role="img"
+                aria-label="File"
+              ></div>
+              <span slot="title">Hilton commercial assets</span>
+              <span slot="subtitle">2026</span>
+            </swc-user-message-attachment>
           </swc-user-message>
         </swc-conversation-turn>
         <span class="swc-Detail swc-Detail--sizeS">Card</span>
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;">
         <swc-conversation-turn type="user">
-          <swc-user-message type="media">
-            <div
-              slot="thumbnail"
-              style="background:linear-gradient(135deg,#a78bfa,#f472b6);"
-              role="img"
-              aria-label="Campaign preview"
-            ></div>
-            <span slot="title">Hilton commercial assets</span>
-            <span slot="subtitle">2026</span>
+          <swc-user-message type="attachments">
+            <swc-user-message-attachment type="media">
+              <div
+                slot="thumbnail"
+                style="background:linear-gradient(135deg,#a78bfa,#f472b6);"
+                role="img"
+                aria-label="Campaign preview"
+              ></div>
+              <span slot="title">Hilton commercial assets</span>
+              <span slot="subtitle">2026</span>
+            </swc-user-message-attachment>
           </swc-user-message>
         </swc-conversation-turn>
-        <span class="swc-Detail swc-Detail--sizeS">Media</span>
+        <span class="swc-Detail swc-Detail--sizeS">
+          Media (single attachment gets a larger hero tile)
+        </span>
       </div>
     </div>
   `,
@@ -210,16 +208,18 @@ export const Attachments: Story = {
 
 export const AttachmentsDisclosure: Story = {
   render: () => html`
-    <swc-conversation-turn type="user">
-      <swc-user-message type="attachments">
-        ${mediaAttachment('https://picsum.photos/id/64/240/240', 'Photo 1')}
-        ${mediaAttachment('https://picsum.photos/id/823/240/240', 'Photo 2')}
-        ${mediaAttachment('https://picsum.photos/id/56/240/240', 'Photo 3')}
-        ${mediaAttachment('https://picsum.photos/id/65/240/240', 'Photo 4')}
-        ${mediaAttachment('https://picsum.photos/id/48/240/240', 'Photo 5')}
-        ${mediaAttachment('https://picsum.photos/id/28/240/240', 'Photo 6')}
-      </swc-user-message>
-    </swc-conversation-turn>
+    <div style="min-block-size:300px;">
+      <swc-conversation-turn type="user">
+        <swc-user-message type="attachments">
+          ${mediaAttachment('https://picsum.photos/id/64/240/240', 'Photo 1')}
+          ${mediaAttachment('https://picsum.photos/id/823/240/240', 'Photo 2')}
+          ${mediaAttachment('https://picsum.photos/id/56/240/240', 'Photo 3')}
+          ${mediaAttachment('https://picsum.photos/id/65/240/240', 'Photo 4')}
+          ${mediaAttachment('https://picsum.photos/id/48/240/240', 'Photo 5')}
+          ${mediaAttachment('https://picsum.photos/id/28/240/240', 'Photo 6')}
+        </swc-user-message>
+      </swc-conversation-turn>
+    </div>
   `,
   tags: ['behaviors'],
 };

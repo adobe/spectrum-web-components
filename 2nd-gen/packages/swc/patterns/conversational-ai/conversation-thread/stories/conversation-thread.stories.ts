@@ -132,8 +132,10 @@ type DemoArtifact = {
   id: string;
   title: string;
   subtitle: string;
-  /** Image preview URL when the attachment is a visual file. */
+  /** Image or video preview URL when the attachment is a visual file. */
   thumbnailUrl?: string;
+  /** Renders `thumbnailUrl` as a muted, unplayed `<video>` (first-frame poster) instead of an `<img>`. */
+  isVideo?: boolean;
   objectUrl?: string;
   /** File-type label for non-image media tiles (for example, "PDF"). */
   badge?: string;
@@ -159,24 +161,41 @@ const getFileBadge = (fileName: string): string | undefined => {
 
 const renderDemoArtifactThumbnail = (
   artifact: DemoArtifact
-): ReturnType<typeof html> =>
-  artifact.thumbnailUrl
-    ? html`
-        <img
-          slot="thumbnail"
-          src=${artifact.thumbnailUrl}
-          alt=${artifact.title}
-          style="inline-size:100%;block-size:100%;object-fit:cover;"
-        />
-      `
-    : html`
-        <div
-          slot="thumbnail"
-          role="img"
-          aria-label=${artifact.title}
-          style="inline-size:100%;block-size:100%;background:#f3f3f3;"
-        ></div>
-      `;
+): ReturnType<typeof html> => {
+  if (artifact.thumbnailUrl && artifact.isVideo) {
+    return html`
+      <video
+        slot="thumbnail"
+        src=${artifact.thumbnailUrl}
+        aria-label=${artifact.title}
+        muted
+        playsinline
+        preload="metadata"
+        style="inline-size:100%;block-size:100%;object-fit:cover;"
+      ></video>
+    `;
+  }
+
+  if (artifact.thumbnailUrl) {
+    return html`
+      <img
+        slot="thumbnail"
+        src=${artifact.thumbnailUrl}
+        alt=${artifact.title}
+        style="inline-size:100%;block-size:100%;object-fit:cover;"
+      />
+    `;
+  }
+
+  return html`
+    <div
+      slot="thumbnail"
+      role="img"
+      aria-label=${artifact.title}
+      style="inline-size:100%;block-size:100%;background:#f3f3f3;"
+    ></div>
+  `;
+};
 
 type DemoTurn = {
   id: string;
@@ -254,12 +273,18 @@ class ConversationFullPatternDemo extends LitElement {
   private responseTimer: number | null = null;
   private responseTargetId: string | null = null;
   private lastPrompt = '';
+  /** Every object URL created via `appendFiles`, live for as long as this demo is mounted. */
+  private readonly objectUrls = new Set<string>();
 
   public override disconnectedCallback(): void {
     if (this.responseTimer !== null) {
       window.clearTimeout(this.responseTimer);
       this.responseTimer = null;
     }
+    for (const url of this.objectUrls) {
+      URL.revokeObjectURL(url);
+    }
+    this.objectUrls.clear();
     super.disconnectedCallback();
   }
 
@@ -306,11 +331,9 @@ class ConversationFullPatternDemo extends LitElement {
       (hasArtifacts ? this.artifacts.map((a) => a.title).join(', ') : '');
     this.responseTargetId = systemTurn.id;
     this.promptValue = '';
-    for (const artifact of this.artifacts) {
-      if (artifact.objectUrl) {
-        URL.revokeObjectURL(artifact.objectUrl);
-      }
-    }
+    // Do not revoke these artifacts' object URLs here: `userTurn.artifacts`
+    // above still references the same blob URLs for display in the sent
+    // message. They're revoked in `disconnectedCallback` instead.
     this.artifacts = [];
 
     this.responseTimer = window.setTimeout(() => {
@@ -377,7 +400,14 @@ class ConversationFullPatternDemo extends LitElement {
       const isImage =
         mimeType.startsWith('image/') ||
         /\.(png|jpe?g|gif|webp|bmp|svg|avif)$/.test(lowerName);
-      const objectUrl = isImage ? URL.createObjectURL(file) : undefined;
+      const isVideo =
+        mimeType.startsWith('video/') ||
+        /\.(mp4|webm|ogg|ogv|mov)$/.test(lowerName);
+      const objectUrl =
+        isImage || isVideo ? URL.createObjectURL(file) : undefined;
+      if (objectUrl) {
+        this.objectUrls.add(objectUrl);
+      }
       const sizeLabel =
         typeof file.size === 'number'
           ? `${Math.max(1, Math.round(file.size / 1024))} KB`
@@ -389,6 +419,7 @@ class ConversationFullPatternDemo extends LitElement {
         title: fileName,
         subtitle: sizeLabel,
         thumbnailUrl: objectUrl,
+        isVideo,
         objectUrl,
         badge: isImage ? undefined : getFileBadge(fileName),
       } satisfies DemoArtifact;
@@ -450,6 +481,7 @@ class ConversationFullPatternDemo extends LitElement {
     const removed = this.artifacts.find((item) => item.id === artifactId);
     if (removed?.objectUrl) {
       URL.revokeObjectURL(removed.objectUrl);
+      this.objectUrls.delete(removed.objectUrl);
     }
     this.artifacts = this.artifacts.filter((item) => item.id !== artifactId);
   };
@@ -470,18 +502,36 @@ class ConversationFullPatternDemo extends LitElement {
   private renderTurns() {
     return this.turns.map((turn) => {
       if (turn.role === 'user') {
+        const artifacts = turn.artifacts ?? [];
         return html`
-          ${(turn.artifacts ?? []).map(
-            (artifact) => html`
-              <swc-conversation-turn type="user">
-                <swc-user-message type="media">
-                  ${renderDemoArtifactThumbnail(artifact)}
-                  <span slot="title">${artifact.title}</span>
-                  <span slot="subtitle">${artifact.subtitle}</span>
-                </swc-user-message>
-              </swc-conversation-turn>
-            `
-          )}
+          ${artifacts.length > 0
+            ? html`
+                <swc-conversation-turn type="user">
+                  <swc-user-message type="attachments">
+                    ${artifacts.map(
+                      (artifact) => html`
+                        <swc-user-message-attachment type="media">
+                          ${renderDemoArtifactThumbnail(artifact)}
+                          ${artifact.badge
+                            ? html`
+                                <span slot="badge">${artifact.badge}</span>
+                              `
+                            : ''}
+                          ${artifacts.length === 1
+                            ? html`
+                                <span slot="title">${artifact.title}</span>
+                                <span slot="subtitle">
+                                  ${artifact.subtitle}
+                                </span>
+                              `
+                            : ''}
+                        </swc-user-message-attachment>
+                      `
+                    )}
+                  </swc-user-message>
+                </swc-conversation-turn>
+              `
+            : ''}
           ${turn.text
             ? html`
                 <swc-conversation-turn type="user">

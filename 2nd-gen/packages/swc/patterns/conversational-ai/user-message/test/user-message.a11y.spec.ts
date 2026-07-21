@@ -74,7 +74,7 @@ test.describe('UserMessage - ARIA Snapshots', () => {
       'swc-user-message'
     );
     await expect(root).toMatchAriaSnapshot(`
-      - button "Show all" [expanded=false]
+      - button "View all (6)" [expanded=false]
     `);
   });
 });
