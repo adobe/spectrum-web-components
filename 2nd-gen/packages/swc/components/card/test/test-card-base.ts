@@ -32,7 +32,10 @@ import { renderCardTemplate } from '../card-template.js';
  */
 export class TestCardBase extends CardBase {
   protected override render(): TemplateResult {
-    return renderCardTemplate({ cardClass: 'TestCardBase' });
+    return renderCardTemplate({
+      cardClass: 'TestCardBase',
+      hasDefaultSlotContent: this.slotHasContent,
+    });
   }
 }
 

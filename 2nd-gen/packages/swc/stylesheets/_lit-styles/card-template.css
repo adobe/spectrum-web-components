@@ -90,7 +90,6 @@
   grid-template-rows: auto;
   border-radius: var(--_swc-card-base-border-radius) var(--_swc-card-base-border-radius) 0 0;
   overflow: hidden;
-  pointer-events: none;
 }
 
 .swc-CardBase-footer {
@@ -141,6 +140,7 @@
   grid-area: preview;
   inline-size: 100%;
   aspect-ratio: var(--swc-card-base-preview-aspect-ratio, 3/2);
+  pointer-events: none;
   object-fit: cover;
 }
 
@@ -293,7 +293,6 @@
     padding-block-end: 0;
   }
 
-  /* TODO: Consolidate with "gallery" view when available */
   .swc-CardBase-media {
     border-radius: var(--_swc-card-base-border-radius);
     box-shadow: var(--_swc-card-base-box-shadow);

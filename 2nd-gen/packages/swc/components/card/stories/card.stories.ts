@@ -26,6 +26,8 @@ import {
 import '@adobe/spectrum-wc/components/action-button/swc-action-button.js';
 import '@adobe/spectrum-wc/components/card/swc-card.js';
 import '../../status-light/swc-status-light';
+import '../../badge/swc-badge';
+import '../../avatar/swc-avatar';
 
 // ────────────────
 //    METADATA
@@ -101,8 +103,8 @@ const densityLabels = {
   spacious: 'Spacious',
 } as const satisfies Record<CardDensity, string>;
 
-const mediaImage = (slot = 'preview') => html`
-  <img slot=${slot} src="./images/card-preview.jpg" alt="" />
+const mediaImage = (slot = 'preview', alt = '') => html`
+  <img slot=${slot} src="./images/card-preview.jpg" alt=${alt} />
 `;
 
 const basicSlots = html`
@@ -310,6 +312,56 @@ export const WithCollection: Story = {
   `,
   tags: ['options'],
   parameters: { flexLayout: 'column-center' },
+};
+
+export const Gallery: Story = {
+  render: (args) => html`
+    ${template(
+      { ...args },
+      html`
+        ${mediaImage('preview', 'Gallery image example')}
+      `
+    )}
+    ${template(
+      { ...args },
+      html`
+        ${mediaImage()} ${mediaImage('collection')} ${mediaImage('collection')}
+        ${mediaImage('collection')}
+      `
+    )}
+    ${template(
+      { ...args },
+      html`
+        ${mediaImage('preview', 'Media overlay example')}
+        <swc-badge
+          slot="media"
+          variant="yellow"
+          size="s"
+          style="
+        justify-self: end;
+        margin-block-start: var(--swc-spacing-300);
+        margin-inline-end: var(--swc-spacing-300);
+    "
+        >
+          Free
+        </swc-badge>
+        <swc-avatar
+          slot="media"
+          src="https://picsum.photos/id/64/500/500"
+          alt="Credit: Jane Doe"
+          size="100"
+          outline
+          style="
+        align-self: end;
+        margin-block-end: var(--swc-spacing-300);
+        margin-inline-start: var(--swc-spacing-300);
+        "
+        ></swc-avatar>
+      `
+    )}
+  `,
+  tags: ['options'],
+  parameters: { flexLayout: 'row-wrap' },
 };
 
 // ──────────────────────────────

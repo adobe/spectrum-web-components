@@ -22,6 +22,11 @@
   grid-template-rows: repeat(2, auto);
 }
 
+::slotted([slot="media"]) {
+  position: relative;
+  grid-area: media;
+}
+
 /* ─────────────────────────────────────────────────────────────────────────────
    COLLECTION SLOT
    ───────────────────────────────────────────────────────────────────────────── */
@@ -48,6 +53,7 @@
 ::slotted([slot="collection"]) {
   inline-size: 100%;
   aspect-ratio: var(--_swc-card-collection-item-aspect-ratio);
+  pointer-events: none;
   object-fit: cover;
 }
 
@@ -68,6 +74,72 @@
 @scope {
   :scope:has([slot="collection"]):not(:has([slot="preview"])) .swc-Card-collection {
     margin-block-start: 0;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   GALLERY LAYOUT
+   ───────────────────────────────────────────────────────────────────────────── */
+
+:host(:not(:has([slot="title"]), :has([slot="description"]), :has([slot="actions"]), :has([slot="footer"]))) :not(.swc-Card--hasDefault) {
+  --_swc-card-media-layout: gallery;
+}
+
+:host(:has([slot="preview"])) {
+  --_swc-card-media-contains: preview;
+}
+
+:host(:has([slot="collection"])) {
+  --_swc-card-media-contains: collection;
+}
+
+@scope {
+  :scope:not(:has([slot="title"]), :has([slot="description"]), :has([slot="actions"]), :has([slot="footer"])) :not(.swc-Card--hasDefault) {
+    --_swc-card-media-layout: gallery;
+  }
+
+  :scope:has([slot="preview"]) {
+    --_swc-card-media-contains: preview;
+  }
+
+  :scope:has([slot="collection"]) {
+    --_swc-card-media-contains: collection;
+  }
+}
+
+@container style(--_swc-card-media-layout: gallery) {
+  .swc-Card-content {
+    padding: 0;
+  }
+
+  .swc-Card-media {
+    border-radius: var(--_swc-card-base-border-radius);
+    box-shadow: var(--_swc-card-base-box-shadow);
+    transition-timing-function: var(--_swc-card-base-transition-timing-function);
+    transition-duration: var(--_swc-card-base-transition-duration);
+    transition-property: outline, box-shadow;
+  }
+
+  :host([selectable]:focus-visible) .swc-CardBase-media {
+    position: relative;
+    outline: var(--_swc-card-base-selected-focus-outline);
+
+    &::after {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      border-radius: var(--_swc-card-base-border-radius);
+      pointer-events: none;
+      outline: token("focus-indicator-thickness") solid token("transparent-white-600");
+      outline-offset: calc(token("focus-indicator-thickness") * -1);
+      content: "";
+    }
+  }
+
+  @container not style(--_swc-card-media-contains: collection) {
+    ::slotted([slot="preview"]) {
+      aspect-ratio: var(--swc-card-gallery-preview-aspect-ratio, 1);
+    }
   }
 }
 

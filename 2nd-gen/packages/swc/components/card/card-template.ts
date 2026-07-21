@@ -11,6 +11,7 @@
  */
 
 import { html, nothing, TemplateResult } from 'lit';
+import { classMap } from 'lit/directives/class-map.js';
 
 /**
  * Options for {@link renderCardTemplate}.
@@ -24,26 +25,48 @@ export interface CardTemplateOptions {
 
   /** Renders the avatar/thumbnail glyph. Default: none. */
   renderGlyph?: () => TemplateResult | typeof nothing;
+
+  /**
+   * Renders the `media` overlay slot (consumer content layered over the
+   * preview/collection region, e.g. a badge or avatar). Default: none.
+   */
+  renderMedia?: () => TemplateResult | typeof nothing;
+
+  /**
+   * Whether the default (unnamed) slot has assigned content. Applies the
+   * `hasDefault` class, driven by `CardBase`'s `ObserveSlotText` mixin.
+   * Default: false.
+   */
+  hasDefaultSlotContent?: boolean;
 }
 
 /**
  * Shared card anatomy: preview with an optional collection slot, an
- * optional avatar/thumbnail glyph, title/actions/description/default
- * content, and a footer. Called from each concrete card's `render()`
- * (swc-card, swc-user-card, swc-product-card).
+ * optional `media` overlay slot, an optional avatar/thumbnail glyph,
+ * title/actions/description/default content, and a footer. Called from
+ * each concrete card's `render()` (swc-card, swc-user-card,
+ * swc-product-card).
  */
 export function renderCardTemplate({
   cardClass,
   renderCollection = () => nothing,
   renderGlyph = () => nothing,
+  renderMedia = () => nothing,
+  hasDefaultSlotContent = false,
 }: CardTemplateOptions): TemplateResult {
   return html`
-    <div class="swc-CardBase swc-${cardClass}">
+    <div
+      class=${classMap({
+        'swc-CardBase': true,
+        [`swc-${cardClass}`]: true,
+        [`swc-${cardClass}--hasDefault`]: hasDefaultSlotContent,
+      })}
+    >
       <div class="swc-CardBase-media swc-${cardClass}-media">
         <slot name="preview"></slot>
         ${renderCollection()}
       </div>
-      ${renderGlyph()}
+      ${renderMedia()} ${renderGlyph()}
       <div class="swc-CardBase-content swc-${cardClass}-content">
         <slot name="title"></slot>
         <slot name="actions"></slot>
