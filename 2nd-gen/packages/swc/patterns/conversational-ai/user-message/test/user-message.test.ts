@@ -14,8 +14,8 @@ import { html } from 'lit';
 import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
-import '../../conversation-turn/index.js';
-import '../index.js';
+import '../../conversation-turn/swc-conversation-turn.js';
+import '../swc-user-message.js';
 
 import { getComponent, getComponents } from '../../../../utils/test-utils.js';
 import { meta, Overview } from '../stories/user-message.stories.js';

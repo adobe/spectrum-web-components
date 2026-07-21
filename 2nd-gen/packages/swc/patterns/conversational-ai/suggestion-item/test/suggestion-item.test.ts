@@ -14,8 +14,8 @@ import { html } from 'lit';
 import { expect, userEvent } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
-import '../../suggestion/index.js';
-import '../index.js';
+import '../../suggestion/swc-suggestion-group.js';
+import '../swc-suggestion-item.js';
 
 import { getComponent } from '../../../../utils/test-utils.js';
 import { SuggestionGroup } from '../../suggestion/SuggestionGroup.js';

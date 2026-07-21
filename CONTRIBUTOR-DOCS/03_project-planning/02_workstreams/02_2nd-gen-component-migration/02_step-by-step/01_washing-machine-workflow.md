@@ -490,13 +490,15 @@ For troubleshooting and detailed patterns (e.g. 1st-gen Constructable Stylesheet
 1. **Unit tests (Vitest):** Defaults, props, slots, key interactions. Use test helpers (e.g. `fixture`).
 2. **A11y tests (Playwright):** Run a11y checks in Storybook; use `gotoStory` and `toMatchAriaSnapshot`.
 3. **Storybook play functions:** Add play functions for defaults, variants, keyboard.
-4. **Coverage:** Main props, variants, user actions.
+4. **Visual regression stories:** Add dedicated `test/vrt/*.vrt.ts` stories for dense visual coverage. See [Visual regression testing](../../../../02_style-guide/04_testing/04_visual-regresssion-testing.md).
+5. **Coverage:** Main props, variants, user actions, visual states, global styles, and public custom properties when applicable.
 
 Follow the two-file layout (`test/<component>.test.ts`, `test/<component>.a11y.spec.ts`). See the [2nd gen testing conventions](../../../../01_contributor-guides/11_2ndgen_testing.md) and reference implementations in `link/test/`, `checkbox/test/`, `badge/test/`, etc.
 
 ### What to check
 
 - [ ] `test/<component>.test.ts` and `test/<component>.a11y.spec.ts` are present and follow the structure described above (test stories under *Component/Tests*, a11y spec with `gotoStory` and `toMatchAriaSnapshot`).
+- [ ] `test/vrt/*.vrt.ts` covers the component's important visual matrix without bloating docs stories.
 - [ ] Unit tests pass; a11y tests pass.
 - [ ] Critical paths (render, props, slots, events) are covered.
 - [ ] Tests follow the project [testing conventions](../../../../01_contributor-guides/11_2ndgen_testing.md).
@@ -508,11 +510,12 @@ Follow the two-file layout (`test/<component>.test.ts`, `test/<component>.a11y.s
 | Async timing | Use `await nextFrame()` or `element.updateComplete` as needed. |
 | Shadow DOM | Use `shadowRoot.querySelector` and the test utils the repo provides. |
 | A11y rules too strict | Tune rules in the a11y config if needed; do not disable without team agreement. |
+| VRT file is too large | Split by concern: permutations, global styles, custom properties. Keep reusable mechanics in `.storybook/helpers`. |
 | Native dismissal (Escape, outside/backdrop click) won't fire | `@storybook/test`'s `userEvent` is synthetic (`isTrusted === false`); browser-native `popover`/`<dialog>` light-dismiss ignores it. Test the native path in the Playwright a11y spec (`test/<component>.a11y.spec.ts`) with trusted input, not in a play function (`vitest/browser` throws in the dev Storybook). See [Native dismissal and trusted input](../../../../02_style-guide/04_testing/02_storybook-testing.md#native-dismissal-and-trusted-input). |
 
 ### Quality gate
 
-- [ ] All new tests pass; no unnecessary skipped tests; testing style guide followed.
+- [ ] All new tests pass; dedicated VRT stories build; no unnecessary skipped tests; testing style guide followed.
 
 ---
 

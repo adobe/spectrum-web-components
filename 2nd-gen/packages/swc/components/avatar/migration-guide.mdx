@@ -26,7 +26,7 @@ import '@spectrum-web-components/avatar/sp-avatar.js';
 import '@adobe/spectrum-wc/components/avatar/swc-avatar.js';
 ```
 
-> `@adobe/spectrum-wc` is a monolithic package. Importing via subpath (e.g. `@adobe/spectrum-wc/components/avatar/swc-avatar.js`) registers and loads only that component's bundle.
+> `@adobe/spectrum-wc` is a monolithic package. Importing via subpath (e.g., `@adobe/spectrum-wc/components/avatar/swc-avatar.js`) registers and loads only that component's bundle.
 
 ## What changed
 
@@ -36,8 +36,8 @@ import '@adobe/spectrum-wc/components/avatar/swc-avatar.js';
 | ------------------------- | ---------------------------------------------- | ----------------------------------------------------------------------------- |
 | Tag                       | `sp-avatar`                                    | `swc-avatar`                                                                  |
 | Import path               | `@spectrum-web-components/avatar/sp-avatar.js` | `@adobe/spectrum-wc/components/avatar/swc-avatar.js`                          |
-| `label` attribute         | Accessible label for the image                 | Renamed to `alt` — see [step 2](#2-rename-label-to-alt)                       |
-| `is-decorative` attribute | Marks avatar as decorative (hides from AT)     | Renamed to `decorative` — see [step 3](#3-rename-is-decorative-to-decorative) |
+| `label` attribute         | Accessible label for the image                 | Renamed to `alt` (see [step 2](#2-rename-label-to-alt))                       |
+| `is-decorative` attribute | Marks avatar as decorative (hides from AT)     | Renamed to `decorative` (see [step 3](#3-rename-is-decorative-to-decorative)) |
 | CSS custom props          | `--mod-avatar-*`                               | `--swc-avatar-*` (see [Styling](#styling))                                    |
 
 ### Added in Spectrum 2
@@ -52,7 +52,7 @@ import '@adobe/spectrum-wc/components/avatar/swc-avatar.js';
 
 | Removed                            | Replacement                                                                                    |
 | ---------------------------------- | ---------------------------------------------------------------------------------------------- |
-| `href` attribute                   | No replacement — wrap `<swc-avatar>` in an `<a>` element if link behavior is needed            |
+| `href` attribute                   | No replacement (wrap `<swc-avatar>` in an `<a>` element if link behavior is needed)            |
 | `--mod-avatar-*` custom properties | `--swc-avatar-*` equivalents (see [Styling](#styling))                                         |
 | Default `size` of `100`            | Default is now `500` — set `size="100"` explicitly if your design requires the smaller default |
 

@@ -202,6 +202,7 @@ const preview = {
     options: {
       storySort: {
         method: 'alphabetical-by-kind',
+        includeNames: true,
         order: [
           'Learn about SWC',
           ['Overview', 'Get started', 'Gen1 vs Gen2'],
@@ -215,10 +216,41 @@ const preview = {
           'Core',
           ['Overview', 'Controllers'],
           'Components',
+          [
+            '*',
+            [
+              'Docs',
+              'Playground',
+              'Migration guide',
+              'Tests',
+              '*',
+              'VRT',
+              [
+                'Permutations',
+                'Forced Colors',
+                'Global Styles',
+                'Custom Properties',
+                '*',
+              ],
+            ],
+          ],
           'Patterns',
           [
             'Conversational AI',
-            ['Pattern overview', 'Prompt field', 'User message'],
+            [
+              'Pattern overview',
+              'Prompt field',
+              'User message',
+              '*',
+              'VRT',
+              [
+                'Permutations',
+                'Forced Colors',
+                'Global Styles',
+                'Custom Properties',
+                '*',
+              ],
+            ],
           ],
           'Guides',
           [

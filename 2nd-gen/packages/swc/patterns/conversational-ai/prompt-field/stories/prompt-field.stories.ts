@@ -15,8 +15,8 @@ import { customElement, state } from 'lit/decorators.js';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
-import '../../upload-artifact/index.js';
-import '../index.js';
+import '../../upload-artifact/swc-upload-artifact.js';
+import '../swc-prompt-field.js';
 
 // ────────────────
 //    METADATA
@@ -49,12 +49,14 @@ const meta: Meta = {
   render: (args) => template(args),
   parameters: {
     docs: {
+      packagePath: 'patterns/conversational-ai/prompt-field',
       subtitle:
         'Prompt entry surface for conversational AI flows. Populate attachments by slotting one or more swc-upload-artifact nodes into artifact',
     },
     layout: 'padded',
   },
   excludeStories: ['meta'],
+  tags: ['migrated'],
 };
 
 export { meta };

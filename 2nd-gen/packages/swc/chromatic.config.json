@@ -1,5 +1,5 @@
 {
-  "buildScriptName": "storybook:build",
+  "buildScriptName": "storybook:build:vrt",
   "exitOnceUploaded": true,
   "onlyChanged": true,
   "projectId": "Project:669e5de19faa57de85e1c1bb",
