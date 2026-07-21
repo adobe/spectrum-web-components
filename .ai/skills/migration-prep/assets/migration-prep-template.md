@@ -141,10 +141,10 @@ This full modifier surface will not be carried forward to 2nd-gen.
 
 ## Open gen1 issues
 
-<!-- Fill in the table below with the list of issues still open in gen1.  -->
+<!-- Fill in the table below with a list of this component’s gen1 (`sp-*`) bugs and stories with the label `gen2-tbd`. Do not list issues that carry Jira labels `a11y` or `gen2`. -->
 
-| Jira | Type | Status (snapshot) | Resolution (snapshot) | Summary |
-| ---- | ---- | ----------------- | --------------------- | ------- |
+| Jira | Type | Status (snapshot) | Summary |
+| ---- | ---- | ----------------- | ------- |
 
 ## Migration sequencing and prerequisites
 
