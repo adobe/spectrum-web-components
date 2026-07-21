@@ -436,12 +436,6 @@ export class Combobox extends Textfield {
   }
 
   protected override renderField(): TemplateResult {
-    // `dir="auto"` derives the input's directionality from its own value on
-    // every keystroke via the browser's bidi algorithm, so typed-but-not-yet
-    // -committed RTL search text gets correct caret/alignment too, not just a
-    // committed selection. Syncing to the selected option's own `dir`
-    // (mirroring `selectedItemLang`) can't do that, since `itemValue` only
-    // resolves once typed text matches an option.
     return html`
       ${this.renderStateIcons()}
       <input
@@ -463,7 +457,6 @@ export class Combobox extends Textfield {
         role="combobox"
         type="text"
         lang=${ifDefined(this.selectedItemLang)}
-        dir="auto"
         .value=${live(this.displayValue)}
         tabindex="0"
         @sp-closed=${this.handleClosed}
