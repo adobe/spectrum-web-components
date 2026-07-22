@@ -17,8 +17,6 @@ import { IllustratedMessageBase } from '@adobe/spectrum-wc-core/components/illus
 import styles from './illustrated-message.css';
 
 /**
- * An illustrated message displays an illustration and a message, typically used in empty states or error pages.
- *
  * @element swc-illustrated-message
  * @since 2.0.0-beta.1
  *
@@ -35,6 +33,17 @@ import styles from './illustrated-message.css';
  *   <h3 slot="heading">No results found.</h3>
  *   <span slot="description">Try adjusting your search or filters.</span>
  * </swc-illustrated-message>
+ *
+ * @cssprop --swc-illustrated-message-max-inline-size - Maximum inline size of the component.
+ * @cssprop --swc-illustrated-message-illustration-size - Square size of the illustration (width and height). Defaults to 96px for `size="s"` and `size="m"`, 160px for `size="l"`.
+ * @cssprop --swc-illustrated-message-illustration-inline-size - Illustration inline size override. Falls back to `--swc-illustrated-message-illustration-size`.
+ * @cssprop --swc-illustrated-message-illustration-block-size - Illustration block size override. Falls back to `--swc-illustrated-message-illustration-size`.
+ * @cssprop --swc-illustrated-message-illustration-color - Color applied to the SVG illustration via `currentcolor`.
+ * @cssprop --swc-illustrated-message-illustration-to-content - Gap between the illustration and the heading/description area.
+ * @cssprop --swc-illustrated-message-heading-font-size - Font size of the heading.
+ * @cssprop --swc-illustrated-message-heading-line-height - Line height of the heading.
+ * @cssprop --swc-illustrated-message-description-font-size - Font size of the description.
+ * @cssprop --swc-illustrated-message-description-line-height - Line height of the description.
  */
 export class IllustratedMessage extends IllustratedMessageBase {
   // ──────────────────────────────
