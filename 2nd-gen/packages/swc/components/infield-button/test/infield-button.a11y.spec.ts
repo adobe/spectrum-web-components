@@ -33,11 +33,12 @@ test.describe('Infield Button - ARIA Snapshots', () => {
       'swc-infield-button'
     );
     await expect(root).toMatchAriaSnapshot(`
-      - button "Open picker"
+      - textbox "Country"
+      - button "Open country picker"
     `);
   });
 
-  test('should handle anatomy — all four icon-only affordances', async ({
+  test('should handle anatomy — three real field use cases', async ({
     page,
   }) => {
     const root = await gotoStory(
@@ -46,10 +47,13 @@ test.describe('Infield Button - ARIA Snapshots', () => {
       'swc-infield-button'
     );
     await expect(root).toMatchAriaSnapshot(`
-      - button "Open picker"
-      - button "Clear"
-      - button "Increment"
-      - button "Decrement"
+      - textbox "Country"
+      - button "Open country picker"
+      - searchbox "Keyword"
+      - button "Clear keyword search"
+      - spinbutton "Quantity"
+      - button "Decrement quantity"
+      - button "Increment quantity"
     `);
   });
 
@@ -108,7 +112,13 @@ test.describe('Infield Button - ARIA Snapshots', () => {
       'swc-infield-button'
     );
     await expect(root).toMatchAriaSnapshot(`
-      - button "Open picker"
+      - textbox "Country"
+      - button "Open country picker"
+      - searchbox "Keyword"
+      - button "Clear keyword search"
+      - spinbutton "Quantity"
+      - button "Decrement quantity"
+      - button "Increment quantity"
     `);
   });
 
@@ -147,17 +157,22 @@ test.describe('Infield Button - Keyboard Interactions', () => {
       'components-infield-button--overview',
       'swc-infield-button'
     );
-    // Press Tab: infield buttons are removed from the tab order; no button
-    // should receive keyboard focus.
-    await page.keyboard.press('Tab');
-    const focused = await page.evaluate(() => {
-      const active = document.activeElement;
-      return active?.tagName.toLowerCase() ?? '';
-    });
-    expect(
-      focused,
-      'Tab does not focus swc-infield-button — component is pointer-only'
-    ).not.toBe('swc-infield-button');
+    // Tab through the entire story; swc-infield-button must never be the
+    // active element (the native <input> may receive focus, which is correct).
+    for (let i = 0; i < 5; i++) {
+      await page.keyboard.press('Tab');
+      const focused = await page.evaluate(() => {
+        const active = document.activeElement;
+        return active?.tagName.toLowerCase() ?? '';
+      });
+      if (focused === 'swc-infield-button') {
+        expect(
+          focused,
+          'Tab must not land on swc-infield-button — component is pointer-only'
+        ).not.toBe('swc-infield-button');
+        break;
+      }
+    }
   });
 });
 
