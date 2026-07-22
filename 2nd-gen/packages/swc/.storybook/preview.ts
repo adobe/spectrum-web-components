@@ -202,18 +202,55 @@ const preview = {
     options: {
       storySort: {
         method: 'alphabetical-by-kind',
+        includeNames: true,
         order: [
           'Learn about SWC',
           ['Overview', 'Get started', 'Gen1 vs Gen2'],
           'Resources',
-          ['Support and compatibility', 'Migrate from Gen1', 'Changelog'],
+          [
+            'Support and compatibility',
+            'Migrate from Gen1',
+            'Build with AI',
+            'Changelog',
+          ],
           'Core',
           ['Overview', 'Controllers'],
           'Components',
+          [
+            '*',
+            [
+              'Docs',
+              'Playground',
+              'Migration guide',
+              'Tests',
+              '*',
+              'VRT',
+              [
+                'Permutations',
+                'Forced Colors',
+                'Global Styles',
+                'Custom Properties',
+                '*',
+              ],
+            ],
+          ],
           'Patterns',
           [
             'Conversational AI',
-            ['Pattern overview', 'Prompt field', 'User message'],
+            [
+              'Pattern overview',
+              'Prompt field',
+              'User message',
+              '*',
+              'VRT',
+              [
+                'Permutations',
+                'Forced Colors',
+                'Global Styles',
+                'Custom Properties',
+                '*',
+              ],
+            ],
           ],
           'Guides',
           [
@@ -230,11 +267,11 @@ const preview = {
             ],
             'Customization',
             [
-              'Getting Started',
-              'Theme and Scales',
+              'Getting started',
+              'Theme and scales',
               'Fonts',
-              'Component Styles',
-              'Global Element Styling',
+              'Component styles',
+              'Global element styling',
             ],
           ],
           'Contributor docs',

@@ -14,8 +14,8 @@ import { html } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
-import '../../suggestion-item/index.js';
-import '../index.js';
+import '../../suggestion-item/swc-suggestion-item.js';
+import '../swc-suggestion-group.js';
 
 // ────────────────
 //    METADATA
@@ -47,11 +47,13 @@ const meta: Meta = {
   render: (args) => template(args),
   parameters: {
     docs: {
+      packagePath: 'patterns/conversational-ai/suggestion',
       subtitle: 'Follow-up suggestion group for an AI response.',
     },
     layout: 'padded',
   },
   excludeStories: ['meta'],
+  tags: ['migrated'],
 };
 
 export { meta };
