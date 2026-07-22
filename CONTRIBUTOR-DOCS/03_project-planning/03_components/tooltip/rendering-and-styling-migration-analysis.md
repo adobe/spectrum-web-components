@@ -337,7 +337,7 @@ None found for this component.
 | `.spectrum-Tooltip--end`                                                                 |                                         | Missing from WC |
 | `.spectrum-Tooltip--end-top`                                                             |                                         | Missing from WC |
 | `.spectrum-Tooltip--end-bottom`                                                          |                                         | Missing from WC |
-| `.spectrum-Tooltip--no-tip`                                                              |                                         | Missing from WC |
+| `.spectrum-Tooltip--no-tip`                                                              |                                         | Not pursuing (as of 2026-07-22); out of scope for Tooltip |
 | `.spectrum-Tooltip--positive`                                                            |                                         | Deprecated      |
 
 ## Summary of changes
@@ -356,9 +356,9 @@ None found for this component.
 - Only `neutral`, `info`, and `negative` variants remain in Spectrum 2
 - CSS classes for the positive variant (`.spectrum-Tooltip--positive`) are deprecated
 
-**New feature in Spectrum 2:**
+**Spectrum CSS class not pursued in WC:**
 
-- `.spectrum-Tooltip--noTip` - Optional removal of directional tip placement.
+- `.spectrum-Tooltip--noTip` / `.spectrum-Tooltip--no-tip` — Optional removal of the directional tip. Present in Spectrum CSS / Figma, but **not pursuing for 2nd-gen Tooltip (as of 2026-07-22)**.
 
 **No structural HTML changes:**
 

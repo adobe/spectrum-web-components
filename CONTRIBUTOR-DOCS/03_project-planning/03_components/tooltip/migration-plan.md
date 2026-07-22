@@ -247,7 +247,7 @@ Both controllers are integrated. No outstanding controller prerequisites remain.
 | ~~A2~~ | ~~Warm-up / cooldown (`delay`)~~ | **Shipped.** `delay` is now an active attribute read by `HoverController`. Default 1500ms; `delay="0"` opens immediately. |
 | ~~A3~~ | ~~`disabled` for automatic mode~~ | **Shipped.** `disabled` prevents hover/focus response via `HoverController`'s guard. |
 | ~~A4~~ | ~~WCAG 1.4.13 pointer bridge~~ | **Shipped.** Pointer can move from trigger into the tooltip bubble without closing; managed by `HoverController`. |
-| A5 | `no-tip` property | Shown in Figma (Orientation section, "No tip") but not supported by React Spectrum. Deferred. Create a follow-on ticket when React adds support. |
+| ~~A5~~ | ~~`no-tip` property~~ | **Not pursuing (as of 2026-07-22).** Shown in Figma (Orientation section, "No tip") and tracked as SWC-2278, but confirmed out of scope for 2nd-gen Tooltip. |
 | A6 | `tooltip-directive` for 2nd-gen | Lit directive for programmatic tooltip insertion. The 2nd-gen directive will be simpler than 1st-gen: no `sp-overlay` wrapper needed; it creates `<swc-tooltip>`, inserts it as a sibling of the target, sets `trigger-element` (element reference, bypassing ID management), and handles lifecycle cleanup. Both controllers are now active; this can proceed when prioritized. |
 | ~~A7~~ | ~~`container-padding`~~ | **Shipped.** Default `12`. Passed to `PlacementController` `containerPadding` option. |
 | ~~A8~~ | ~~`cross-offset`~~ | **Shipped.** Default `0`. Passed to `PlacementController` `crossOffset` option. |
@@ -308,7 +308,7 @@ Orientation options confirmed in Figma:
 | Top (default) | Confirmed; React Spectrum default |
 | Left | Confirmed |
 | Right | Confirmed |
-| No tip | Confirmed in Figma; **additive/deferred** |
+| No tip | Present in Figma; **not pursuing (as of 2026-07-22)**. Tip-less display is out of scope for Tooltip. |
 
 S2 CSS adds logical placement sub-variants (`start`, `end`) not directly shown as Figma properties but required for RTL correctness.
 
@@ -745,7 +745,7 @@ The impact is most acute in the additive phase, when `HoverController` opens the
 - [x] Follow-on ticket created: PlacementController integration (link from this PR)
 - [x] Follow-on ticket created: HoverController integration (link from this PR)
 - [x] Follow-on ticket created: `tooltip-directive` 2nd-gen — SWC-2279
-- [x] Follow-on ticket created: `no-tip` attribute, gated on React Spectrum signal — SWC-2278
+- [x] Follow-on ticket created: `no-tip` attribute, gated on React Spectrum signal — SWC-2278 (**not pursuing as of 2026-07-22**; out of scope for Tooltip)
 - [x] Peer engineer sign-off
 
 ---
@@ -766,7 +766,7 @@ Create these tickets before this migration PR closes. Link each to Epic SWC-2017
 | ~~SWC-2210~~ | ~~**Integrate PlacementController into Tooltip.**~~ | **Shipped.** `PlacementController` wired in `Tooltip.base.ts`; `start()`/`stop()` called on `open` changes; `onPlacementChange` calls `setAttribute('actual-placement', resolvedSide)` directly; `placement` is never mutated and always holds the consumer's declared value. All `[actual-placement]` CSS selectors handle tip direction, margin spacing, and `@starting-style` animation. `offset`, `cross-offset`, `container-padding`, and `should-flip` feed directly into controller options. | ~~Additive A1 (positioning), A7, A8, A9~~ |
 | ~~SWC-2210~~ | ~~**Integrate HoverController into Tooltip.**~~ | **Shipped.** `TooltipBase` implements `HoverControllerHost`; `HoverController` wired with `warmStateKey: 'swc-tooltip'`; target set from `resolveTrigger()` in `updated()`. Hover/focus wiring, warm-up/cooldown, `disabled` guard, and WCAG 1.4.13 pointer bridge are all active. | ~~Additive A1 (hover/focus), A2, A3, A4~~ |
 | SWC-2279 | **2nd-gen tooltip-directive.** Lit directive for programmatic tooltip insertion. Creates `<swc-tooltip>` as a sibling of the target and handles lifecycle cleanup. Simpler than 1st-gen: no `sp-overlay` wrapper needed; automatic trigger wiring activates because `manual` is not set. | Both controllers are now active; this can proceed. | Additive A6 |
-| SWC-2278 | **`no-tip` attribute.** Remove the directional tip arrow. Figma-confirmed. Can proceed independently of controller integration; no controller dependency. Create when React Spectrum adds support as a confirming signal. | No cross-framework confirmation yet; Figma-only signal is not sufficient to ship. | Additive A5 |
+| ~~SWC-2278~~ | ~~**`no-tip` attribute.** Remove the directional tip arrow.~~ | **Not pursuing (as of 2026-07-22).** Confirmed out of scope for 2nd-gen Tooltip. | ~~Additive A5~~ |
 
 ---
 
