@@ -35,33 +35,20 @@ jobs:
       - name: Check for changesets
         id: check
         run: |
+          # This workflow is 1st-gen only, always - independent of 2nd-gen in every
+          # trigger (push, manual dispatch, and snapshot-release PRs). 2nd-gen has its
+          # own changesets setup in 2nd-gen/.changeset/ and its own workflow,
+          # publish-2nd-gen.yml, including its own snapshot-release PR path.
           GEN1_COUNT=$(ls -1 1st-gen/.changeset/*.md 2>/dev/null | grep -v README | wc -l | tr -d ' ')
 
-          # snapshot-release PRs exercise both gens under the snapshot-test tag; every
-          # other trigger (push to main, manual dispatch) only ever ships 1st-gen here -
-          # 2nd-gen has its own independent changesets setup in 2nd-gen/.changeset/ and
-          # ships via publish-2nd-gen.yml.
-          GEN2_COUNT=0
-          if [ "${{ github.event_name }}" = "pull_request" ]; then
-            GEN2_COUNT=$(ls -1 2nd-gen/.changeset/*.md 2>/dev/null | grep -v README | wc -l | tr -d ' ')
-          fi
-
-          TOTAL_COUNT=$((GEN1_COUNT + GEN2_COUNT))
-          if [ "$TOTAL_COUNT" -eq 0 ]; then
+          if [ "$GEN1_COUNT" -eq 0 ]; then
             echo "has_changesets=false" >> $GITHUB_OUTPUT
             echo "has_1st_gen_changesets=false" >> $GITHUB_OUTPUT
             echo "No changesets found - skipping publish"
           else
             echo "has_changesets=true" >> $GITHUB_OUTPUT
-            echo "Found $GEN1_COUNT 1st-gen changeset(s), $GEN2_COUNT 2nd-gen changeset(s) (PR snapshot only)"
-
-            if [ "$GEN1_COUNT" -gt 0 ]; then
-              echo "has_1st_gen_changesets=true" >> $GITHUB_OUTPUT
-              echo "Found 1st-gen changesets - React wrappers will be built and published"
-            else
-              echo "has_1st_gen_changesets=false" >> $GITHUB_OUTPUT
-              echo "No 1st-gen changesets found - React wrappers will be skipped"
-            fi
+            echo "has_1st_gen_changesets=true" >> $GITHUB_OUTPUT
+            echo "Found $GEN1_COUNT 1st-gen changeset(s) - React wrappers will be built and published"
           fi
 
   publish:
@@ -162,12 +149,6 @@ jobs:
             (cd 1st-gen && yarn changeset version --snapshot $TAG)
           fi
 
-      - name: Version 2nd-gen packages for snapshot-release testing
-        if: github.event_name == 'pull_request'
-        env:
-          TAG: ${{ steps.extract-tag.outputs.tag }}
-        run: (cd 2nd-gen && yarn changeset version --snapshot $TAG)
-
       - name: Capture released versions
         id: versions
         run: |
@@ -192,13 +173,6 @@ jobs:
           else
             (cd 1st-gen && yarn changeset publish --no-git-tag --tag $TAG)
           fi
-
-      - name: Publish 2nd-gen packages for snapshot-release testing
-        if: github.event_name == 'pull_request' && steps.npm-auth.outcome == 'success'
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.ADOBE_BOT_NPM_TOKEN }}
-          TAG: ${{ steps.extract-tag.outputs.tag }}
-        run: (cd 2nd-gen && yarn changeset publish --no-git-tag --tag $TAG)
 
       - name: Build React wrappers
         if: needs.check-changesets.outputs.has_1st_gen_changesets == 'true'
