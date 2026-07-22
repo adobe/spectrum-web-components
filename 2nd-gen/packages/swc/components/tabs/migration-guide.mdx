@@ -30,7 +30,7 @@ import '@adobe/spectrum-wc/components/tabs/swc-tab.js';
 import '@adobe/spectrum-wc/components/tabs/swc-tab-panel.js';
 ```
 
-> `@adobe/spectrum-wc` is a monolithic package. Importing via subpath (e.g. `@adobe/spectrum-wc/components/tabs/swc-tabs.js`) registers and loads only that component's bundle.
+> `@adobe/spectrum-wc` is a monolithic package. Importing via subpath (e.g., `@adobe/spectrum-wc/components/tabs/swc-tabs.js`) registers and loads only that component's bundle.
 
 ## What changed
 
@@ -67,7 +67,7 @@ import '@adobe/spectrum-wc/components/tabs/swc-tab-panel.js';
 | `rovingTabindexController` field                                                  | Removed; keyboard navigation is internal                         |
 | `focusElement` getter                                                             | Removed; use `tabsEl.focus()`                                    |
 
-> **Default activation mode changed.** In Spectrum 1, `<sp-tabs>` defaulted to manual activation (`auto` omitted or `false`): arrow keys moved focus without changing selection until Enter, Space, or click. Spectrum 2 defaults `keyboard-activation` to `automatic` to match React Spectrum's `Tabs`, so arrow keys now select immediately by default. If you were relying on the implicit manual default (no `auto` attribute) and your tab panels are expensive to render or not fully in the DOM, add `keyboard-activation="manual"` explicitly.
+> **Default activation mode changed.** In Spectrum 1, `<sp-tabs>` defaulted to manual activation (`auto` omitted or `false`): arrow keys moved focus without changing selection until <kbd>Enter</kbd>, <kbd>Space</kbd>, or click. Spectrum 2 defaults `keyboard-activation` to `automatic` to match React Spectrum's `Tabs`, so arrow keys now select immediately by default. If you were relying on the implicit manual default (no `auto` attribute) and your tab panels are expensive to render or not fully in the DOM, add `keyboard-activation="manual"` explicitly.
 
 ## Update your code
 
@@ -155,7 +155,7 @@ Remove `quiet`, `emphasized`, and `size` from `<swc-tabs>`. Remove `direction="v
 - Always provide `accessible-label` on `<swc-tabs>` for the tablist accessible name. See [step 1](#1-rename-the-tags-and-attributes).
 - For icon-only tabs, add `aria-label` directly to `<swc-tab>`. See [step 3](#3-update-icon-only-tabs).
 - **Disabled tabs are now focusable via arrow keys** but cannot be activated. This follows WAI-ARIA Authoring Practices. If your application relied on disabled tabs being unreachable by keyboard, verify the new behavior is acceptable.
-- Arrow keys are now restricted by orientation: Left/Right for horizontal, Up/Down for vertical. Home/End jump to first/last tab.
+- Arrow keys are now restricted by orientation: <kbd>Left Arrow</kbd> / <kbd>Right Arrow</kbd> for horizontal, <kbd>Up Arrow</kbd> / <kbd>Down Arrow</kbd> for vertical. <kbd>Home</kbd> / <kbd>End</kbd> jump to first/last tab.
 
 ## Styling
 

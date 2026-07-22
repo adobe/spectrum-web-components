@@ -13,11 +13,11 @@
 import { html } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
-import '../index.js';
-import '../../system-message/index.js';
-import '../../user-message/index.js';
-import '../../response-status/index.js';
-import '../../message-feedback/index.js';
+import '../swc-conversation-turn.js';
+import '../../system-message/swc-system-message.js';
+import '../../user-message/swc-user-message.js';
+import '../../response-status/swc-response-status.js';
+import '../../message-feedback/swc-message-feedback.js';
 
 // ────────────────
 //    METADATA
@@ -33,12 +33,14 @@ const meta: Meta = {
   component: 'swc-conversation-turn',
   parameters: {
     docs: {
+      packagePath: 'patterns/conversational-ai/conversation-turn',
       subtitle:
         'Aligns user vs system content in a thread column and supports grouped message stacking.',
     },
     layout: 'padded',
   },
   excludeStories: ['meta'],
+  tags: ['migrated'],
 };
 
 export { meta };

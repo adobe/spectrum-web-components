@@ -494,7 +494,7 @@ On the resolved trigger (or its inner button), the component wires:
 
 **`aria-expanded`** — always present once a trigger is resolved (`"false"` when closed, `"true"` when open). Visibility state; the control relationship stays via `ariaControlsElements`.
 
-**`aria-haspopup="dialog"`** — set in **both** modes, since the surface is a dialog in both (see the dialog-surface amendment). Menu/listbox/combobox do not wrap `<swc-popover>`; they build on the shared `PlacementController` with their own roles, so they set their own `aria-haspopup` value on their own triggers. 
+**`aria-haspopup="dialog"`** — set in **both** modes, since the surface is a dialog in both (see the dialog-surface amendment). Menu/listbox/combobox do not wrap `<swc-popover>`; they build on the shared `PlacementController` with their own roles, so they set their own `aria-haspopup` value on their own triggers.
 This differs from the tooltip plan's `ariaDescribedByElements` wiring, which is open-only. Popover trigger relationships are durable across open/close cycles.
 
 ### Event lifecycle

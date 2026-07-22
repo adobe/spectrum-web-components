@@ -34,7 +34,7 @@ import meta, {
 
 export default {
   ...meta,
-  title: 'Button Group/Tests',
+  title: 'Button group/Tests',
   parameters: {
     ...meta.parameters,
     docs: { disable: true, page: null },
