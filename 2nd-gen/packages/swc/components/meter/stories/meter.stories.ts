@@ -88,6 +88,9 @@ argTypes.value = {
  * user actions rather than system progress. The accessible `meter` role and its
  * `aria-value*` attributes live on the internal bar wrapper; the host carries no
  * ARIA role.
+ *
+ * To show the progression of a system operation such as downloading or processing,
+ * see [Progress Bar](../?path=/docs/components-progress-bar--docs).
  */
 const meta: Meta = {
   title: 'Meter',

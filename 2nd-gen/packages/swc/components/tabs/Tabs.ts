@@ -41,6 +41,8 @@ import styles from './tabs.css';
  *   <swc-tab-panel tab-id="1">Product overview content</swc-tab-panel>
  *   <swc-tab-panel tab-id="2">Technical specifications</swc-tab-panel>
  * </swc-tabs>
+ *
+ * @cssprop --swc-tabs-indicator-color - Color of the selection indicator.
  */
 export class Tabs extends TabsBase {
   /**

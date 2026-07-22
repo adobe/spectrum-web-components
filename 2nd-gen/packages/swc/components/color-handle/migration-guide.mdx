@@ -1,6 +1,6 @@
 import { Meta } from '@storybook/addon-docs/blocks';
 
-<Meta title="Color Handle/Migration guide" />
+<Meta title="Color handle/Migration guide" />
 
 # Color handle migration guide
 
@@ -28,7 +28,7 @@ import '@spectrum-web-components/color-handle/sp-color-handle.js';
 import '@adobe/spectrum-wc/components/color-handle/swc-color-handle.js';
 ```
 
-> `@adobe/spectrum-wc` is a monolithic package. Importing via subpath (e.g. `@adobe/spectrum-wc/components/color-handle/swc-color-handle.js`) registers and loads only that component's bundle.
+> `@adobe/spectrum-wc` is a monolithic package. Importing via subpath (e.g., `@adobe/spectrum-wc/components/color-handle/swc-color-handle.js`) registers and loads only that component's bundle.
 
 ## What changed
 
@@ -52,7 +52,7 @@ import '@adobe/spectrum-wc/components/color-handle/swc-color-handle.js';
 
 | Removed                                     | Replacement                                                                                      |
 | ------------------------------------------- | ------------------------------------------------------------------------------------------------ |
-| All `--mod-colorhandle-*` custom properties | No 1:1 replacement — sizing, borders, and animation are tokenized internally and not overridable |
+| All `--mod-colorhandle-*` custom properties | No 1:1 replacement (sizing, borders, and animation are tokenized internally and not overridable) |
 
 The `color`, `disabled`, `focused`, and `open` attributes are unchanged.
 

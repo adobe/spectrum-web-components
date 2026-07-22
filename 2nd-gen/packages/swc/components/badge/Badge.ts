@@ -36,7 +36,7 @@ import styles from './badge.css';
  * <swc-badge variant="positive">New</swc-badge>
  *
  * @example
- * <swc-badge variant="neutral" fixed="fill">
+ * <swc-badge variant="neutral" fixed="block-end">
  *   <sp-icon-checkmark slot="icon"></sp-icon-checkmark>
  *   Verified
  * </swc-badge>

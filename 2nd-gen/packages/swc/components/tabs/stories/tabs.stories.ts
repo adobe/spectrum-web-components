@@ -256,6 +256,7 @@ export const DensityVariants: Story = {
   `,
   tags: ['options'],
 };
+DensityVariants.storyName = 'Density variants';
 
 export const Directions: Story = {
   render: () => html`
@@ -343,6 +344,7 @@ export const ActivationModes: Story = {
   `,
   tags: ['behaviors'],
 };
+ActivationModes.storyName = 'Activation modes';
 
 // ────────────────────────────────
 //    ACCESSIBILITY STORIES

@@ -51,6 +51,11 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
  * @returns {string}
  */
 function mdTable(headers, rows) {
+  // Escape pipes so union types like `'card' | 'media'` don't break the table.
+  const esc = (str) => (str ?? '').replace(/\|/g, '\\|');
+  headers = headers.map(esc);
+  rows = rows.map((r) => r.map(esc));
+
   const cols = headers.length;
   const widths = Array.from({ length: cols }, (_, i) =>
     Math.max(headers[i].length, ...rows.map((r) => (r[i] ?? '').length))
@@ -89,9 +94,7 @@ const SECOND_GEN_CEM = join(
 );
 
 const FIRST_GEN_URL = 'https://opensource.adobe.com/spectrum-web-components';
-// TODO: 2nd-gen has no stable production URL yet; update once one is established.
-const SECOND_GEN_URL =
-  'https://opensource.adobe.com/spectrum-web-components/second-gen';
+const SECOND_GEN_URL = 'https://spectrum-web-components.adobe.com';
 
 /**
  * Elements defined in helper/internal packages that should not appear in the
