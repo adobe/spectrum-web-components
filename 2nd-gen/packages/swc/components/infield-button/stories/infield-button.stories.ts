@@ -11,6 +11,7 @@
  */
 
 import { html } from 'lit';
+import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
@@ -44,15 +45,125 @@ const sizeLabels = {
   xl: 'Extra-large',
 } as const satisfies Record<InfieldButtonSize, string>;
 
-// Chevron disclosure icon — the canonical Figma reference icon for infield buttons
+// Icon SVG strings — include slot="icon" so they work with both the template()
+// helper (via the 'icon-slot' arg) and unsafeHTML() in hand-authored field markup.
 const chevronIconSvg = `<svg slot="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M5 7.376 1.281 3.656l.875-.875L5 5.625l2.844-2.844.875.875Z"/></svg>`;
-
-// Add/Dash icons for stepper demonstration
 const addIconSvg = `<svg slot="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36" aria-hidden="true" focusable="false"><path d="M16 16V4.5a2 2 0 0 1 4 0V16h11.5a2 2 0 0 1 0 4H20v11.5a2 2 0 0 1-4 0V20H4.5a2 2 0 0 1 0-4Z"/></svg>`;
 const removeIconSvg = `<svg slot="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36" aria-hidden="true" focusable="false"><rect x="4" y="16" width="28" height="4" rx="2"/></svg>`;
-
-// Cross (clear) icon
 const crossIconSvg = `<svg slot="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36" aria-hidden="true" focusable="false"><path d="M20.5 18l8.2-8.2a1.8 1.8 0 1 0-2.5-2.5L18 15.5 9.8 7.3a1.8 1.8 0 0 0-2.5 2.5L15.5 18l-8.2 8.2a1.8 1.8 0 1 0 2.5 2.5L18 20.5l8.2 8.2a1.8 1.8 0 1 0 2.5-2.5Z"/></svg>`;
+
+// Field context helpers — show swc-infield-button inside a labelled native field,
+// mirroring real-world usage where the parent field owns focus and the focus ring.
+
+const pickerField = (
+  id: string,
+  labelText: string,
+  value: string,
+  size: InfieldButtonSize = 'm',
+  disabled = false
+) => html`
+  <div
+    style="display:flex;flex-direction:column;gap:4px;min-inline-size:220px;"
+  >
+    <label
+      for=${id}
+      style="font-size:11px;font-weight:700;letter-spacing:0.06em;"
+    >
+      ${labelText}
+    </label>
+    <div
+      style="display:flex;align-items:center;border:1px solid var(--spectrum-gray-400,#b0b0b0);border-radius:4px;overflow:hidden;"
+    >
+      <input
+        id=${id}
+        type="text"
+        .value=${value}
+        readonly
+        ?disabled=${disabled}
+        style="flex:1;border:none;outline:none;padding:7px 8px;font-size:14px;background:transparent;min-inline-size:0;color:inherit;"
+      />
+      <swc-infield-button
+        accessible-label="Open ${labelText.toLowerCase()} picker"
+        size=${size}
+        ?disabled=${disabled}
+      >
+        ${unsafeHTML(chevronIconSvg)}
+      </swc-infield-button>
+    </div>
+  </div>
+`;
+
+const searchField = (id: string, labelText: string, value: string) => html`
+  <div
+    style="display:flex;flex-direction:column;gap:4px;min-inline-size:220px;"
+  >
+    <label
+      for=${id}
+      style="font-size:11px;font-weight:700;letter-spacing:0.06em;"
+    >
+      ${labelText}
+    </label>
+    <div
+      style="display:flex;align-items:center;border:1px solid var(--spectrum-gray-400,#b0b0b0);border-radius:4px;overflow:hidden;"
+    >
+      <input
+        id=${id}
+        type="search"
+        .value=${value}
+        style="flex:1;border:none;outline:none;padding:7px 8px;font-size:14px;background:transparent;min-inline-size:0;color:inherit;"
+      />
+      <swc-infield-button
+        accessible-label="Clear ${labelText.toLowerCase()} search"
+      >
+        ${unsafeHTML(crossIconSvg)}
+      </swc-infield-button>
+    </div>
+  </div>
+`;
+
+const stepperField = (
+  id: string,
+  labelText: string,
+  value: number,
+  size: InfieldButtonSize = 'm',
+  disabled = false
+) => html`
+  <div
+    style="display:flex;flex-direction:column;gap:4px;min-inline-size:160px;"
+  >
+    <label
+      for=${id}
+      style="font-size:11px;font-weight:700;letter-spacing:0.06em;"
+    >
+      ${labelText}
+    </label>
+    <div
+      style="display:flex;align-items:center;border:1px solid var(--spectrum-gray-400,#b0b0b0);border-radius:4px;overflow:hidden;"
+    >
+      <swc-infield-button
+        accessible-label="Decrement ${labelText.toLowerCase()}"
+        size=${size}
+        ?disabled=${disabled}
+      >
+        ${unsafeHTML(removeIconSvg)}
+      </swc-infield-button>
+      <input
+        id=${id}
+        type="number"
+        .value=${String(value)}
+        ?disabled=${disabled}
+        style="flex:1;border:none;outline:none;padding:7px 8px;font-size:14px;background:transparent;text-align:center;min-inline-size:0;color:inherit;-moz-appearance:textfield;"
+      />
+      <swc-infield-button
+        accessible-label="Increment ${labelText.toLowerCase()}"
+        size=${size}
+        ?disabled=${disabled}
+      >
+        ${unsafeHTML(addIconSvg)}
+      </swc-infield-button>
+    </div>
+  </div>
+`;
 
 /**
  * A compact icon button embedded inside a form field. Infield buttons are clickable via
@@ -95,11 +206,7 @@ export const Playground: Story = {
 // ──────────────────────────
 
 export const Overview: Story = {
-  args: {
-    'accessible-label': 'Open picker',
-    'icon-slot': chevronIconSvg,
-    size: 'm',
-  },
+  render: () => pickerField('overview-country', 'Country', 'United States'),
   tags: ['overview'],
 };
 
@@ -108,27 +215,10 @@ export const Overview: Story = {
 // ──────────────────────────
 
 export const Anatomy: Story = {
-  render: (args) => html`
-    ${template({
-      ...args,
-      'accessible-label': 'Open picker',
-      'icon-slot': chevronIconSvg,
-    })}
-    ${template({
-      ...args,
-      'accessible-label': 'Clear',
-      'icon-slot': crossIconSvg,
-    })}
-    ${template({
-      ...args,
-      'accessible-label': 'Increment',
-      'icon-slot': addIconSvg,
-    })}
-    ${template({
-      ...args,
-      'accessible-label': 'Decrement',
-      'icon-slot': removeIconSvg,
-    })}
+  render: () => html`
+    ${pickerField('anatomy-country', 'Country', 'United States')}
+    ${searchField('anatomy-keyword', 'Keyword', 'Spectrum')}
+    ${stepperField('anatomy-quantity', 'Quantity', 5)}
   `,
   tags: ['anatomy'],
   parameters: { flexLayout: 'row-wrap' },
@@ -154,12 +244,22 @@ export const Sizes: Story = {
 };
 
 export const Quiet: Story = {
-  args: {
-    quiet: true,
-    'accessible-label': 'Open picker',
-    'icon-slot': chevronIconSvg,
-  },
+  render: (args) => html`
+    ${template({
+      ...args,
+      quiet: false,
+      'accessible-label': 'Open picker (default)',
+      'icon-slot': chevronIconSvg,
+    })}
+    ${template({
+      ...args,
+      quiet: true,
+      'accessible-label': 'Open picker (quiet)',
+      'icon-slot': chevronIconSvg,
+    })}
+  `,
   tags: ['options'],
+  parameters: { flexLayout: 'row-wrap' },
 };
 
 // ──────────────────────────
@@ -202,10 +302,11 @@ export const States: Story = {
 // ────────────────────────────────
 
 export const Accessibility: Story = {
-  args: {
-    'accessible-label': 'Open picker',
-    'icon-slot': chevronIconSvg,
-    size: 'm',
-  },
+  render: () => html`
+    ${pickerField('a11y-country', 'Country', 'United States')}
+    ${searchField('a11y-keyword', 'Keyword', 'Spectrum')}
+    ${stepperField('a11y-quantity', 'Quantity', 5)}
+  `,
   tags: ['a11y'],
+  parameters: { flexLayout: 'row-wrap' },
 };
