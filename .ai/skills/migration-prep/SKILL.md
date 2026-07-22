@@ -60,7 +60,7 @@ Review these sources before filling out the plan:
 - The component's rendering and styling analysis doc in `CONTRIBUTOR-DOCS/03_project-planning/03_components/[component]/`
 - The component's accessibility migration analysis doc in `CONTRIBUTOR-DOCS/03_project-planning/03_components/[component]/`, if available
 - The 1st-gen source, tests, README, and any shared mixins or helpers it depends on
-- Relevant bug tickets and prior migration decisions
+- Relevant gen1 bug tickets and prior migration decisions
 - Relevant Figma and React Spectrum references for naming, variants, and expected behavior
 
 For the Figma reference specifically, ask for images from the internal Figma file **`S2 / Web (Desktop scale)`**. The preferred artifact is a PNG copied from the **primary frame** that includes the component's **overview**, **properties**, and **variants**. Ask the user to use Figma's **Copy as PNG** on that frame.
@@ -92,6 +92,22 @@ Do not jump straight to in-scope work without first inventorying what exists tod
 
 Treat the accessibility migration analysis as a separate-workstream input. If it is missing, do not create it as part of `migration-prep`. Instead, ask the user to provide the existing analysis, or proceed only with clearly provisional accessibility-dependent notes if the user explicitly wants that.
 
+### Generating a table of open gen1 issues
+
+In the section titled "Open gen1 issues" in the [assets/migration-prep-template.md](assets/migration-prep-template.md), fill out the **markdown table** immediately under the heading. Do not add an intro paragraph before the markdown table.
+
+- When generating the table, note that **Adobe Jira** is authoritative for **open** vs **closed** status and for **resolution**—refresh table cells when you triage. Use link targets such as `https://jira.corp.adobe.com/browse/SWC-####`.
+- After the table, do **not** add follow-up paragraphs that list excluded issues or explain cross-component scope (for example paragraphs starting with **Omitted from this table (by doc rules)** or **Scope note**). Apply **Exclude** by **omitting rows**; put any needed nuance in an optional **Notes** column or in the **Summary** cell.
+- **Columns (recommended): Jira** | **Type** (Story, Bug, Epic, …) | **Status (snapshot)** | **Summary**. Optional **Notes** when helpful (PR references, file paths, `@todo` locations, “applies to related `sp-*` …”).
+- **Scope:** Include rows your team tracks for this component’s **gen1** (`sp-*`) bugs and stories, including those with the label `gen2-tbd`; **add rows** when you file or discover issues, and **trim or update** when Jira state or scope changes. Do **not** maintain a separate contributor-doc index file for the same list.
+- **Components:** In the query for the list of Jira issues, use the `Component` field, where the value of the `Component` matches the name of the component currently being migrated. For example, if the component being migrated is Avatar, include `component = "Avatar"` in the JQL query.
+
+- **Exclude (always apply when curating the table):**
+  - **Labels:** Do **not** list issues that carry Jira labels **`a11y`** or **`gen2`**. This section tracks **gen1** (`sp-*`) issues only, not gen2 tickets or a11y issues for the gen1 component.
+  - **Resolution:** Do **not** list issues that have been resolved, ie with a Jira Workflow Status of "Done".
+  - **Issue types:** Do **not** list issues of the type Epic or Initiative. Track those in Jira or program views, not in per-component tables.
+- **Reference:** See the section "## Related 1st-gen accessibility (Jira)" in **`avatar/rendering-and-styling-migration-analysis.md`** (and sibling component docs) for a full example table. This example only includes accessibility issues. It should follow the same format, but document non-accessibility gen1 issues.
+
 ## Readiness threshold
 
 Do not present the plan as review-ready until all of the following are available:
@@ -99,6 +115,7 @@ Do not present the plan as review-ready until all of the following are available
 - 1st-gen source
 - Rendering and styling migration analysis
 - Figma reference image(s) from **`S2 / Web (Desktop scale)`**, copied as PNG from the primary frame that includes overview, properties, and variants
+- A table of existing gen1 issues for the component, which are pulled from Jira
 - Epic or ticket context if renames, deprecations, or breaking changes are proposed
 
 If any are missing, follow `Critical missing-input handling`.
