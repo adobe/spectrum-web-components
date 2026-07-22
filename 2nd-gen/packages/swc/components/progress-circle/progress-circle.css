@@ -12,11 +12,11 @@
 
 @keyframes swc-fills-rotate {
   0% {
-    transform: rotate(-90deg);
+    transform: rotate(var(--swc-progress-circle-rotate-start, -90deg));
   }
 
   100% {
-    transform: rotate(270deg);
+    transform: rotate(var(--swc-progress-circle-rotate-end, 270deg));
   }
 }
 
@@ -27,7 +27,7 @@
   }
 
   30% {
-    stroke-dashoffset: 20px;
+    stroke-dashoffset: var(--swc-progress-circle-dashoffset-30, 20px);
   }
 }
 
@@ -100,11 +100,14 @@
   --swc-progress-circle-fill-border-color: token("static-black-track-indicator-color");
 }
 
-/* @todo Come back to this when we discuss reduce motion animations */
 @media (prefers-reduced-motion: reduce) {
   .swc-ProgressCircle--indeterminate .swc-ProgressCircle-fill {
-    stroke-dashoffset: 75px;
-    animation: none;
+    --swc-progress-circle-dashoffset-30: 0;
+    --swc-progress-circle-rotate-start: 0deg;
+    --swc-progress-circle-rotate-end: 360deg;
+
+    animation-duration: 15s;
+    animation-timing-function: linear, linear;
   }
 }
 
