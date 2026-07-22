@@ -149,10 +149,6 @@
   display: none;
 }
 
-::slotted([slot="content"]) {
-  grid-area: content;
-}
-
 ::slotted([slot="footer"]) {
   grid-area: footer;
 }

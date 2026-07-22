@@ -13,6 +13,7 @@
 .swc-Card {
   --_swc-card-collection-item-aspect-ratio: var(--swc-card-collection-item-aspect-ratio, 1);
   --_swc-card-collection-gap: var(--swc-card-collection-gap, token("group-gap-extra-small"));
+  --_swc-card-collection-columns: repeat(3, 1fr);
 }
 
 .swc-Card-media {
@@ -34,7 +35,7 @@
 .swc-Card-collection {
   display: none;
   grid-area: collection;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: var(--_swc-card-collection-columns);
   margin-block-start: var(--_swc-card-collection-gap);
   column-gap: var(--_swc-card-collection-gap);
 }
@@ -155,20 +156,20 @@
 }
 
 :host([size="xs"]:has([slot="preview"]):has([slot="collection"])) .swc-Card {
-  --_swc-card-media-layout: xs;
+  --_swc-card-media-layout: 3col;
 }
 
 /* Chromium :host(:has()) support */
 @scope (:host([size="xs"])) {
   :scope:has([slot="preview"]):has([slot="collection"]) .swc-Card {
-    --_swc-card-media-layout: xs;
+    --_swc-card-media-layout: 3col;
   }
 }
 
-@container style(--_swc-card-media-layout: xs) {
+@container style(--_swc-card-media-layout: 3col) {
   .swc-Card-media {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: var(--_swc-card-collection-columns);
     column-gap: var(--_swc-card-collection-gap);
   }
 
