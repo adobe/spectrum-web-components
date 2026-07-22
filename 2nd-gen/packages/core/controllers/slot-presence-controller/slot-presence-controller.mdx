@@ -42,6 +42,25 @@ class SwcThing extends LitElement {
 
 A `MutationObserver` watches the host's subtree for `childList` changes, so presence stays current as slotted elements are added or removed. Unlike [Slot text controller](../?path=/docs/controllers-slot-text-controller--docs), no `@slotchange` binding is required.
 
+### Prefer CSS when the effect is purely visual
+
+Only reach for this controller when slot presence must drive JavaScript, such as a dev-time warning, conditional rendering, or state read elsewhere. When the sole goal is to style the shadow DOM based on whether a **named** slot is filled, prefer CSS `:has()`: it needs no controller, no re-render, and no light-DOM query.
+
+```css
+:host(:has([slot='footer'])) .swc-CardBase-footer {
+  display: block;
+}
+
+/* Chromium :host(:has()) support */
+@scope {
+  :scope:has([slot='footer']) .swc-CardBase-footer {
+    display: block;
+  }
+}
+```
+
+This technique is limited to named slots. Detecting default-slot content still requires [Slot text controller](../?path=/docs/controllers-slot-text-controller--docs), because bare text nodes cannot be matched by a selector.
+
 ## Behaviors
 
 ### Single selector
