@@ -57,7 +57,8 @@ requires Lit. Art is manually downloaded and added to this repo from a private s
    - **icons** (new, `@adobe/spectrum-wc-icons`): the per-icon workflow elements and
      functions, extending `IconBase`. No components; depends only on core.
    - **swc** (`@adobe/spectrum-wc`): components, the concrete `<swc-icon>` frame,
-     and the internal `<swc-ui-icon>` element with its UI art. Icon rendering is a
+     and the internal `<swc-ui-icon>` element with its UI art (under
+     `components/ui-icons/`). Icon rendering is a
      presentation concern, so it lives in the concrete layer. swc has no runtime
      need for workflow icons, so it only **devDepends** on the icons package for
      Storybook examples. (UI-in-swc assumes no core base class renders a UI icon
@@ -92,7 +93,7 @@ So a consumer only ever touches two public things: **workflow icons** and the
 | --- | --- | --- | --- |
 | **Purpose** | Icons consumers choose (star, folder, trash) | Control internals (chevron, checkmark, picker arrow) | Wrapper for a custom, non-Spectrum SVG |
 | **Audience** | Public | Internal (components only) | Public |
-| **Package home** | `@adobe/spectrum-wc-icons` (icons) | `@adobe/spectrum-wc` (swc, internal) | `@adobe/spectrum-wc` (swc) |
+| **Package home** | `@adobe/spectrum-wc-icons` (icons) | `@adobe/spectrum-wc` (swc, `components/ui-icons/`, internal) | `@adobe/spectrum-wc` (swc) |
 | **Art source** | S2 Icon Global Set Open Source (413, no third-party/brand) | S2 UI Icon Global Set | Consumer-supplied SVG |
 | **Ships as** | Per-icon element (`<swc-icon-star>`) **and** per-icon SVG-string function (`StarIcon()`) | Internal `<swc-ui-icon>` element (Lit `TemplateResult`), rendered by components; not public | One generic element |
 | **Sizing** | One asset scaled to a token box; `size` sets the box, CSS resize is safe | Discrete optical assets; `size` **selects** the step, do not CSS-resize | `size` sets the box; slotted art scales |
@@ -298,9 +299,9 @@ customElements.define('swc-icon-star', IconStar);
 optical step and renders a Lit `TemplateResult`. Not public; no `unsafeSVG`.**
 
 ```ts
-// @adobe/spectrum-wc  (internal element; not exported publicly)
+// @adobe/spectrum-wc, components/ui-icons/ (internal; imported relatively, not a public subpath)
 import { IconBase } from '@adobe/spectrum-wc-core';
-import { UI_ICONS } from './ui-icons.js'; // icon → per-step Lit `svg` templates
+import { UI_ICONS } from './index.js'; // icon → per-step Lit `svg` templates
 
 export class UiIcon extends IconBase {
     @property() icon!: UiIconName;
@@ -374,19 +375,26 @@ can be committed and shipped.
 
 1. **Manual A4U download** (the only human step; no committed code points at the
    gated registry).
-2. **Commit the raw SVGs** into a source folder (`svg-source/ui/`,
-   `svg-source/workflow/`).
+2. **Commit the raw SVGs** into a source folder at the swc package root
+   (`svg-source/ui/`; `svg-source/workflow/` for the workflow family).
 3. **Generator** converts committed SVGs per family: workflow into SVG-string
-   functions plus public per-icon elements; UI into Lit `svg` `TemplateResult`s plus
-   the internal `<swc-ui-icon>` registry (so components need no `unsafeSVG`).
+   functions plus public per-icon elements; UI into Lit `svg` `TemplateResult`
+   bundles under `components/ui-icons/`, consumed by the internal `<swc-ui-icon>`
+   element (so components need no `unsafeSVG`).
    Per-icon cleanup: SVGO with `removeViewBox: false`, strip `data-*`, prefix or
    strip element ids, rewrite fill to `var(--swc-icon-color, currentColor)`, group
    files by logical name (collapsing `Chevron50/75/100/200` into one `Chevron`), and
    emit the size-to-step map.
-4. **Record pulled A4U versions** in an `icon-source.json` (not in
-   `package.json` dependencies).
+4. **Record pulled A4U versions** in `svg-source/icon-source.json`, alongside the
+   committed SVGs (not in `package.json` dependencies).
 5. **Commit** SVGs, generated output, and metadata. External contributors and
    public CI build only from committed art and never need A4U access.
+
+**Layout (POC).** UI source SVGs live at `2nd-gen/packages/swc/svg-source/ui/`, with
+`icon-source.json` alongside them in `svg-source/`. The generated bundles and the
+`<swc-ui-icon>` element live at `2nd-gen/packages/swc/components/ui-icons/` as an
+internal component, imported relatively by swc components rather than through a
+public subpath.
 
 **Styling (function vs element):** the SVG-string function returns markup only; it
 carries no stylesheet. The baseline display and sizing rules that live in today's
@@ -509,7 +517,7 @@ verified in Phase 7 against workflow icons and custom SVGs.
 
   ```ts
   // Generated module for one logical icon = numeral step → Lit `svg` template.
-  // @adobe/spectrum-wc/ui-icons/Chevron.js
+  // components/ui-icons/Chevron.js (internal, imported relatively)
   export const Chevron = {
       75: svg`<svg viewBox="0 0 10 10">…</svg>`, // s
       100: svg`<svg viewBox="0 0 12 12">…</svg>`, // m
