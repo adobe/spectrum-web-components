@@ -35,14 +35,15 @@ jobs:
       - name: Check for changesets
         id: check
         run: |
-          GEN1_COUNT=$(ls -1 .changeset/*.md 2>/dev/null | grep -v README | wc -l | tr -d ' ')
+          GEN1_COUNT=$(ls -1 1st-gen/.changeset/*.md 2>/dev/null | grep -v README | wc -l | tr -d ' ')
 
           # snapshot-release PRs exercise both gens under the snapshot-test tag; every
           # other trigger (push to main, manual dispatch) only ever ships 1st-gen here -
-          # 2nd-gen changesets live in .changeset-2nd-gen/ and ship via publish-2nd-gen.yml.
+          # 2nd-gen has its own independent changesets setup in 2nd-gen/.changeset/ and
+          # ships via publish-2nd-gen.yml.
           GEN2_COUNT=0
           if [ "${{ github.event_name }}" = "pull_request" ]; then
-            GEN2_COUNT=$(ls -1 .changeset-2nd-gen/*.md 2>/dev/null | grep -v README | wc -l | tr -d ' ')
+            GEN2_COUNT=$(ls -1 2nd-gen/.changeset/*.md 2>/dev/null | grep -v README | wc -l | tr -d ' ')
           fi
 
           TOTAL_COUNT=$((GEN1_COUNT + GEN2_COUNT))
@@ -117,15 +118,6 @@ jobs:
             exit 1
           fi
 
-      - name: Include 2nd-gen changesets for snapshot-release testing
-        if: github.event_name == 'pull_request'
-        run: |
-          shopt -s nullglob
-          for f in .changeset-2nd-gen/*.md; do
-            [ "$(basename "$f")" = "README.md" ] && continue
-            cp "$f" .changeset/
-          done
-
       - name: Lock main during release
         if: steps.extract-tag.outputs.tag == 'latest'
         uses: ./.github/actions/release-branch-lock
@@ -158,17 +150,23 @@ jobs:
       - name: Confirm build artifacts
         run: yarn workspace @spectrum-web-components/1st-gen build:confirm
 
-      - name: Version packages
+      - name: Version 1st-gen packages
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TAG: ${{ steps.extract-tag.outputs.tag }}
         run: |
           if [ "$TAG" == "latest" ]; then
             yarn workspace @spectrum-web-components/1st-gen changelog:global
-            yarn changeset version
+            (cd 1st-gen && yarn changeset version)
           else
-            yarn changeset version --snapshot $TAG
+            (cd 1st-gen && yarn changeset version --snapshot $TAG)
           fi
+
+      - name: Version 2nd-gen packages for snapshot-release testing
+        if: github.event_name == 'pull_request'
+        env:
+          TAG: ${{ steps.extract-tag.outputs.tag }}
+        run: (cd 2nd-gen && yarn changeset version --snapshot $TAG)
 
       - name: Capture released versions
         id: versions
@@ -181,21 +179,26 @@ jobs:
           yarn install --refresh-lockfile
           yarn build
 
-      - name: Publish all packages
+      - name: Publish 1st-gen packages
         if: steps.npm-auth.outcome == 'success'
         env:
           NODE_AUTH_TOKEN: ${{ secrets.ADOBE_BOT_NPM_TOKEN }}
           TAG: ${{ steps.extract-tag.outputs.tag }}
         run: |
-          # Changeset publishes 1st-gen packages (and, on a snapshot-release PR only,
-          # the 2nd-gen packages copied in above for end-to-end testing).
           # npm CLI automatically uses OIDC trusted publishing for 1st-gen packages
           # (configured on npmjs.com).
           if [ "$TAG" == "latest" ]; then
-            yarn changeset publish --no-git-tag
+            (cd 1st-gen && yarn changeset publish --no-git-tag)
           else
-            yarn changeset publish --no-git-tag --tag $TAG
+            (cd 1st-gen && yarn changeset publish --no-git-tag --tag $TAG)
           fi
+
+      - name: Publish 2nd-gen packages for snapshot-release testing
+        if: github.event_name == 'pull_request' && steps.npm-auth.outcome == 'success'
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.ADOBE_BOT_NPM_TOKEN }}
+          TAG: ${{ steps.extract-tag.outputs.tag }}
+        run: (cd 2nd-gen && yarn changeset publish --no-git-tag --tag $TAG)
 
       - name: Build React wrappers
         if: needs.check-changesets.outputs.has_1st_gen_changesets == 'true'

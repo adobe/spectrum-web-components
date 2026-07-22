@@ -32,7 +32,7 @@ jobs:
       - name: Check for 2nd-gen changesets
         id: check
         run: |
-          COUNT=$(ls -1 .changeset-2nd-gen/*.md 2>/dev/null | grep -v README | wc -l | tr -d ' ')
+          COUNT=$(ls -1 2nd-gen/.changeset/*.md 2>/dev/null | grep -v README | wc -l | tr -d ' ')
           if [ "$COUNT" -eq 0 ]; then
             echo "has_changesets=false" >> $GITHUB_OUTPUT
             echo "No 2nd-gen changesets found - skipping publish"
@@ -83,26 +83,11 @@ jobs:
           branch: gen2-beta
           token: ${{ secrets.RELEASE_BOT_TOKEN }}
 
-      - name: Load 2nd-gen changesets into .changeset/
-        run: |
-          # @changesets/cli always reads .changeset/ at the repo root - there's no flag
-          # to point it at a different folder - so bring this branch's persisted 2nd-gen
-          # changeset state in before invoking it. Everything here is consumed by
-          # `changeset version` below and copied back out after.
-          cp .changeset-2nd-gen/config.json .changeset/config.json
-          if [ -f .changeset-2nd-gen/pre.json ]; then
-            cp .changeset-2nd-gen/pre.json .changeset/pre.json
-          fi
-          shopt -s nullglob
-          for f in .changeset-2nd-gen/*.md; do
-            [ "$(basename "$f")" = "README.md" ] && continue
-            cp "$f" .changeset/
-          done
-
       - name: Enter changesets pre-release mode
-        if: ${{ !hashFiles('.changeset/pre.json') }}
+        if: ${{ !hashFiles('2nd-gen/.changeset/pre.json') }}
         env:
           TAG: ${{ steps.extract-tag.outputs.tag }}
+        working-directory: 2nd-gen
         run: yarn changeset pre enter $TAG
 
       - name: Verify NPM authentication
@@ -117,6 +102,7 @@ jobs:
         run: yarn build
 
       - name: Version packages
+        working-directory: 2nd-gen
         run: yarn changeset version
 
       - name: Capture released versions
@@ -147,20 +133,8 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.ADOBE_BOT_NPM_TOKEN }}
           TAG: ${{ steps.extract-tag.outputs.tag }}
+        working-directory: 2nd-gen
         run: yarn changeset publish --no-git-tag --tag $TAG
-
-      - name: Persist 2nd-gen changeset state back to .changeset-2nd-gen/
-        if: env.DRY_RUN != 'true'
-        run: |
-          # `changeset version` consumed everything copied in above and updated pre.json;
-          # mirror that back into the folder this branch actually commits.
-          rm -f .changeset-2nd-gen/*.md
-          for f in .changeset/*.md; do
-            [ "$(basename "$f")" = "README.md" ] && continue
-            mv "$f" .changeset-2nd-gen/
-          done
-          cp .changeset/pre.json .changeset-2nd-gen/pre.json
-          rm -f .changeset/config.json .changeset/pre.json
 
       - name: Commit and push changes
         if: env.DRY_RUN != 'true'

@@ -39,6 +39,8 @@
     "packages/*"
   ],
   "devDependencies": {
+    "@changesets/changelog-github": "0.5.1",
+    "@changesets/cli": "2.29.7",
     "@storybook/addon-vitest": "10.3.5",
     "eslint": "9.39.2",
     "eslint-plugin-simple-import-sort": "12.1.1",

@@ -1,7 +1,7 @@
 {
   "$schema": "https://unpkg.com/@changesets/config@3.0.0/schema.json",
   "access": "public",
-  "baseBranch": "gen2-beta",
+  "baseBranch": "main",
   "changelog": [
     "@changesets/changelog-github",
     {
@@ -10,8 +10,8 @@
     }
   ],
   "commit": false,
-  "ignore": ["@spectrum-web-components/*"],
-  "linked": [["@adobe/spectrum-wc", "@adobe/spectrum-wc-core"]],
+  "fixed": [["@spectrum-web-components/*"]],
+  "ignore": [],
   "snapshot": {
     "prereleaseTemplate": "{tag}.{datetime}",
     "useCalculatedVersion": true
