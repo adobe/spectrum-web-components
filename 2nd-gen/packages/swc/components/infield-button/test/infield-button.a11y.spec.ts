@@ -51,8 +51,8 @@ test.describe('Infield Button - ARIA Snapshots', () => {
       - button "Open country picker"
       - searchbox "Keyword"
       - button "Clear keyword search"
-      - spinbutton "Quantity"
       - button "Decrement quantity"
+      - spinbutton "Quantity"
       - button "Increment quantity"
     `);
   });
@@ -116,8 +116,8 @@ test.describe('Infield Button - ARIA Snapshots', () => {
       - button "Open country picker"
       - searchbox "Keyword"
       - button "Clear keyword search"
-      - spinbutton "Quantity"
       - button "Decrement quantity"
+      - spinbutton "Quantity"
       - button "Increment quantity"
     `);
   });
