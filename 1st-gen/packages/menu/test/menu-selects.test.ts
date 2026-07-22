@@ -138,6 +138,42 @@ describe('Menu [selects]', () => {
 
     expect(el.value).to.equal('');
   });
+  it('toggles a single selection per keypress when [selects="multiple"]', async () => {
+    el.selects = 'multiple';
+
+    await elementUpdated(el);
+
+    expect(el.value).to.equal('');
+
+    const input = document.createElement('input');
+    el.insertAdjacentElement('afterend', input);
+    input.focus();
+    await sendShiftTabKey();
+
+    expect(document.activeElement === options[0]).to.be.true;
+
+    let changeCount = 0;
+    el.addEventListener('change', () => {
+      changeCount += 1;
+    });
+
+    await sendKeys({ press: 'Space' });
+    await elementUpdated(el);
+
+    expect(el.value, 'selects the item on the first Space press').to.equal('1');
+    expect(changeCount, 'fires a single `change` event').to.equal(1);
+
+    await sendKeys({ press: 'Enter' });
+    await elementUpdated(el);
+
+    expect(el.value, 'a second press toggles the item back off').to.equal('');
+    expect(
+      changeCount,
+      'fires exactly one `change` event per keypress'
+    ).to.equal(2);
+
+    input.remove();
+  });
 });
 
 describe('Menu [selects] w/ group', () => {
