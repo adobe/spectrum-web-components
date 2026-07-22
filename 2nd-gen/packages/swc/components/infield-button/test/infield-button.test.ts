@@ -25,7 +25,6 @@ import {
   withWarningSpy,
 } from '../../../utils/test-utils.js';
 import meta, {
-  Accessibility,
   Anatomy,
   Overview,
   Quiet,
@@ -470,7 +469,22 @@ export const FocusDelegationTest: Story = {
 };
 
 export const AccessibilityTest: Story = {
-  ...Accessibility,
+  // Standalone render so this test story is independent of the docs Accessibility
+  // story's field-context layout. The accessible-label value must be stable across
+  // refactors to the docs story.
+  render: () => html`
+    <swc-infield-button accessible-label="Open picker">
+      <svg
+        slot="icon"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 10 10"
+        aria-hidden="true"
+        focusable="false"
+      >
+        <path d="M5 7.376 1.281 3.656l.875-.875L5 5.625l2.844-2.844.875.875Z" />
+      </svg>
+    </swc-infield-button>
+  `,
   play: async ({ canvasElement, step }) => {
     const button = await getComponent<InfieldButton>(
       canvasElement,
