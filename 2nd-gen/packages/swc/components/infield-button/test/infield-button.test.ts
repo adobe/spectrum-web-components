@@ -281,10 +281,10 @@ export const SizesTest: Story = {
   play: async ({ canvasElement, step }) => {
     await step('renders all valid sizes', async () => {
       for (const size of INFIELD_BUTTON_VALID_SIZES) {
-        const button = canvasElement.querySelector(
+        const button = await getComponent<InfieldButton>(
+          canvasElement,
           `swc-infield-button[size="${size}"]`
-        ) as InfieldButton;
-        await button.updateComplete;
+        );
         expect(button.size, `size="${size}" is reflected`).toBe(size);
       }
     });

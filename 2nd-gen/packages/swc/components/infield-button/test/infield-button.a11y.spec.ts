@@ -159,28 +159,6 @@ test.describe('Infield Button - Keyboard Interactions', () => {
       'Tab does not focus swc-infield-button — component is pointer-only'
     ).not.toBe('swc-infield-button');
   });
-
-  test('inner button should not be in tab order — tabindex="-1"', async ({
-    page,
-  }) => {
-    await gotoStory(
-      page,
-      'components-infield-button--overview',
-      'swc-infield-button'
-    );
-    // Verify that pressing Tab does not land on any infield button component.
-    await page.keyboard.press('Tab');
-    const isInfieldFocused = await page.evaluate(() => {
-      const active = document.activeElement;
-      return (
-        active instanceof HTMLElement &&
-        active.tagName.toLowerCase() === 'swc-infield-button'
-      );
-    });
-    expect(isInfieldFocused, 'swc-infield-button is not in the tab order').toBe(
-      false
-    );
-  });
 });
 
 test.describe('Infield Button - Pointer Interactions', () => {
