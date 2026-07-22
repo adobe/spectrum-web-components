@@ -1,0 +1,185 @@
+name: Publish 2nd-Gen Packages
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'NPM dist-tag for 2nd-gen beta packages (typically beta)'
+        required: false
+        default: 'beta'
+      dry_run:
+        description: 'Dry run only: build, pack, and npm publish --dry-run. Does not bump versions, write changelogs, or delete changesets.'
+        required: false
+        type: boolean
+        default: false
+
+concurrency:
+  group: publish-2nd-gen-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  check-changesets:
+    runs-on: ubuntu-latest
+    outputs:
+      has_2nd_gen_changesets: ${{ steps.check.outputs.has_2nd_gen_changesets }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Check for 2nd-gen changesets
+        id: check
+        run: |
+          HAS_2ND_GEN=false
+          for file in .changeset/*.md; do
+            [ "$(basename "$file")" = "README.md" ] && continue
+            if grep -qE "@adobe/spectrum-wc-core|@adobe/spectrum-wc|@spectrum-web-components/core" "$file"; then
+              HAS_2ND_GEN=true
+              break
+            fi
+          done
+
+          echo "has_2nd_gen_changesets=$HAS_2ND_GEN" >> $GITHUB_OUTPUT
+          if [ "$HAS_2ND_GEN" = "true" ]; then
+            echo "Found 2nd-gen changesets"
+          else
+            echo "No 2nd-gen changesets found - skipping publish"
+          fi
+
+  publish:
+    needs: check-changesets
+    if: needs.check-changesets.outputs.has_2nd_gen_changesets == 'true'
+    runs-on: ubuntu-latest
+    environment: npm-publish
+    permissions:
+      contents: write
+    env:
+      YARN_ENABLE_IMMUTABLE_INSTALLS: false
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Validate main branch
+        env:
+          REF_NAME: ${{ github.ref_name }}
+        run: |
+          if [ "$REF_NAME" != "main" ]; then
+            echo "ERROR: Publish 2nd-Gen Packages must run on main (got: $REF_NAME)"
+            exit 1
+          fi
+
+      - name: Setup job and install dependencies
+        uses: ./.github/actions/setup-job
+
+      - name: Set Git identity
+        run: |
+          git config --global user.email "support+actions@github.com"
+          git config --global user.name "github-actions-bot"
+
+      - name: Determine release tag
+        id: extract-tag
+        env:
+          INPUT_TAG: ${{ github.event.inputs.tag }}
+        run: |
+          WORKFLOW_TAG="${INPUT_TAG:-beta}"
+          if [ "$WORKFLOW_TAG" = "latest" ]; then
+            echo "ERROR: 2nd-gen beta releases do not use the 'latest' tag; use 'beta' or another pre-release tag"
+            exit 1
+          fi
+          echo "tag=$WORKFLOW_TAG" >> $GITHUB_OUTPUT
+          echo "Using npm tag: $WORKFLOW_TAG"
+
+      - name: Configure NPM authentication
+        id: npm-auth
+        env:
+          NPM_TOKEN: ${{ secrets.ADOBE_BOT_NPM_TOKEN }}
+        run: |
+          echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
+          echo "✓ NPM authentication configured for @adobe/* packages"
+
+      - name: Build all packages
+        run: yarn build
+
+      - name: Prepare 2nd-gen beta release
+        if: github.event.inputs.dry_run != 'true'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: yarn release:gen2-beta
+
+      - name: Capture released versions
+        id: versions
+        run: |
+          CORE_VERSION=$(node -p "require('./2nd-gen/packages/core/package.json').version")
+          SWC_VERSION=$(node -p "require('./2nd-gen/packages/swc/package.json').version")
+          echo "core=$CORE_VERSION" >> $GITHUB_OUTPUT
+          echo "swc=$SWC_VERSION" >> $GITHUB_OUTPUT
+
+      - name: Refresh lockfile and rebuild
+        if: github.event.inputs.dry_run != 'true'
+        run: |
+          yarn install --refresh-lockfile
+          yarn build
+
+      - name: Publish 2nd-gen packages
+        if: steps.npm-auth.outcome == 'success'
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.ADOBE_BOT_NPM_TOKEN }}
+          TAG: ${{ steps.extract-tag.outputs.tag }}
+          DRY_RUN: ${{ github.event.inputs.dry_run }}
+        run: |
+          set -euo pipefail
+          PUBLISH_FLAGS="--tag $TAG --access public"
+          if [ "$DRY_RUN" = "true" ]; then
+            PUBLISH_FLAGS="$PUBLISH_FLAGS --dry-run"
+            echo "::notice::DRY RUN - pack and npm publish --dry-run only; versions, changelogs, and changesets are not modified"
+          fi
+          yarn workspace @adobe/spectrum-wc-core pack --out /tmp/swc-core.tgz
+          yarn workspace @adobe/spectrum-wc pack --out /tmp/swc-wc.tgz
+          npm publish /tmp/swc-core.tgz $PUBLISH_FLAGS
+          npm publish /tmp/swc-wc.tgz $PUBLISH_FLAGS
+
+      - name: Publish summary
+        if: always()
+        env:
+          TAG: ${{ steps.extract-tag.outputs.tag }}
+          DRY_RUN: ${{ github.event.inputs.dry_run }}
+          REF_NAME: ${{ github.ref_name }}
+          ACTOR: ${{ github.actor }}
+          AUTH_OUTCOME: ${{ steps.npm-auth.outcome }}
+          CORE_VERSION: ${{ steps.versions.outputs.core }}
+          SWC_VERSION: ${{ steps.versions.outputs.swc }}
+        run: |
+          echo "## 2nd-gen publish summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Field | Value |" >> $GITHUB_STEP_SUMMARY
+          echo "|-------|-------|" >> $GITHUB_STEP_SUMMARY
+          echo "| **Branch** | \`${REF_NAME}\` |" >> $GITHUB_STEP_SUMMARY
+          echo "| **NPM tag** | \`${TAG}\` |" >> $GITHUB_STEP_SUMMARY
+          echo "| **Dry run** | \`${DRY_RUN}\` |" >> $GITHUB_STEP_SUMMARY
+          echo "| **Actor** | @${ACTOR} |" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          if [ -n "$CORE_VERSION" ] || [ -n "$SWC_VERSION" ]; then
+            echo "## Versions" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "| Package | Version |" >> $GITHUB_STEP_SUMMARY
+            echo "|---------|---------|" >> $GITHUB_STEP_SUMMARY
+            [ -n "$CORE_VERSION" ] && echo "| \`@adobe/spectrum-wc-core\` | \`${CORE_VERSION}\` |" >> $GITHUB_STEP_SUMMARY
+            [ -n "$SWC_VERSION" ] && echo "| \`@adobe/spectrum-wc\` | \`${SWC_VERSION}\` |" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+          fi
+
+          if [ "$AUTH_OUTCOME" = "success" ]; then
+            echo "✅ 2nd-gen publish completed with tag \`${TAG}\`" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "❌ 2nd-gen publish failed — NPM authentication did not succeed" >> $GITHUB_STEP_SUMMARY
+          fi
+
+      - name: Commit and push 2nd-gen release
+        if: github.event.inputs.dry_run != 'true'
+        run: |
+          git add .
+          git commit --no-verify -m "chore: release 2nd-gen beta packages #publish-2nd-gen" || echo "No changes to commit"
+          git pull --rebase origin main
+          git push

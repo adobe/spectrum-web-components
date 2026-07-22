@@ -161,6 +161,9 @@ test-results/
 # local debug logs
 debug-storybook.log
 
+# transient hold dir used by scripts/gen1-publish-prep.js
+.changeset-held-for-gen2/
+
 # yarn
 .pnp.*
 .yarn/*
