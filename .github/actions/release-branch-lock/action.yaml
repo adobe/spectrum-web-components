@@ -1,0 +1,25 @@
+name: Release branch lock
+description: >-
+  Temporarily blocks PR merges to a branch for the duration of a release run, via a
+  synthetic required status check. No-ops with a warning if the branch has no protection
+  configured, so a missing/unreadable protection rule never fails the release itself.
+inputs:
+  mode:
+    description: 'lock or unlock'
+    required: true
+  branch:
+    description: 'Branch to lock or unlock'
+    required: true
+  token:
+    description: 'Token with Administration:write on the branch protection settings'
+    required: true
+runs:
+  using: 'composite'
+  steps:
+    - name: Toggle release lock
+      shell: bash
+      env:
+        GH_TOKEN: ${{ inputs.token }}
+      run: |
+        node "${{ github.action_path }}/../../scripts/toggle-release-lock.mjs" \
+          "${{ inputs.mode }}" "${{ inputs.branch }}"

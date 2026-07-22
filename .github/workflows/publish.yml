@@ -1,4 +1,4 @@
-name: Publish Packages
+name: Publish Packages (1st-gen)
 
 on:
   workflow_dispatch:
@@ -35,31 +35,30 @@ jobs:
       - name: Check for changesets
         id: check
         run: |
-          if [ -z "$(ls -A .changeset/*.md 2>/dev/null | grep -v README)" ]; then
+          GEN1_COUNT=$(ls -1 .changeset/*.md 2>/dev/null | grep -v README | wc -l | tr -d ' ')
+
+          # snapshot-release PRs exercise both gens under the snapshot-test tag; every
+          # other trigger (push to main, manual dispatch) only ever ships 1st-gen here -
+          # 2nd-gen changesets live in .changeset-2nd-gen/ and ship via publish-2nd-gen.yml.
+          GEN2_COUNT=0
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            GEN2_COUNT=$(ls -1 .changeset-2nd-gen/*.md 2>/dev/null | grep -v README | wc -l | tr -d ' ')
+          fi
+
+          TOTAL_COUNT=$((GEN1_COUNT + GEN2_COUNT))
+          if [ "$TOTAL_COUNT" -eq 0 ]; then
             echo "has_changesets=false" >> $GITHUB_OUTPUT
             echo "has_1st_gen_changesets=false" >> $GITHUB_OUTPUT
             echo "No changesets found - skipping publish"
           else
             echo "has_changesets=true" >> $GITHUB_OUTPUT
-            CHANGESET_COUNT=$(ls -1 .changeset/*.md 2>/dev/null | grep -v README | wc -l | tr -d ' ')
-            echo "Found $CHANGESET_COUNT changesets"
+            echo "Found $GEN1_COUNT 1st-gen changeset(s), $GEN2_COUNT 2nd-gen changeset(s) (PR snapshot only)"
 
-            # Check if any changeset mentions 1st-gen packages
-            # 1st-gen packages are @spectrum-web-components/*
-            HAS_1ST_GEN=false
-            for file in .changeset/*.md; do
-              if [ "$(basename "$file")" != "README.md" ]; then
-                if grep -qP "@spectrum-web-components/[a-z-]+" "$file"; then
-                  HAS_1ST_GEN=true
-                  break
-                fi
-              fi
-            done
-
-            echo "has_1st_gen_changesets=$HAS_1ST_GEN" >> $GITHUB_OUTPUT
-            if [ "$HAS_1ST_GEN" = "true" ]; then
+            if [ "$GEN1_COUNT" -gt 0 ]; then
+              echo "has_1st_gen_changesets=true" >> $GITHUB_OUTPUT
               echo "Found 1st-gen changesets - React wrappers will be built and published"
             else
+              echo "has_1st_gen_changesets=false" >> $GITHUB_OUTPUT
               echo "No 1st-gen changesets found - React wrappers will be skipped"
             fi
           fi
@@ -118,6 +117,23 @@ jobs:
             exit 1
           fi
 
+      - name: Include 2nd-gen changesets for snapshot-release testing
+        if: github.event_name == 'pull_request'
+        run: |
+          shopt -s nullglob
+          for f in .changeset-2nd-gen/*.md; do
+            [ "$(basename "$f")" = "README.md" ] && continue
+            cp "$f" .changeset/
+          done
+
+      - name: Lock main during release
+        if: steps.extract-tag.outputs.tag == 'latest'
+        uses: ./.github/actions/release-branch-lock
+        with:
+          mode: lock
+          branch: main
+          token: ${{ secrets.RELEASE_BOT_TOKEN }}
+
       - name: Verify OIDC token and configure NPM authentication
         id: npm-auth
         env:
@@ -157,12 +173,8 @@ jobs:
       - name: Capture released versions
         id: versions
         run: |
-          CORE_VERSION=$(node -p "require('./2nd-gen/packages/core/package.json').version")
           BUNDLE_VERSION=$(node -p "require('./1st-gen/tools/bundle/package.json').version")
-          SWC_VERSION=$(node -p "require('./2nd-gen/packages/swc/package.json').version")
-          echo "core=$CORE_VERSION" >> $GITHUB_OUTPUT
           echo "bundle=$BUNDLE_VERSION" >> $GITHUB_OUTPUT
-          echo "swc=$SWC_VERSION" >> $GITHUB_OUTPUT
 
       - name: Refresh lockfile and rebuild
         run: |
@@ -175,10 +187,10 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.ADOBE_BOT_NPM_TOKEN }}
           TAG: ${{ steps.extract-tag.outputs.tag }}
         run: |
-          # Changeset publishes all packages (1st-gen, core, and 2nd-gen)
-          # npm CLI automatically uses:
-          # - OIDC trusted publishing for 1st-gen packages (configured on npmjs.com)
-          # - Token authentication for 2nd-gen (from .npmrc)
+          # Changeset publishes 1st-gen packages (and, on a snapshot-release PR only,
+          # the 2nd-gen packages copied in above for end-to-end testing).
+          # npm CLI automatically uses OIDC trusted publishing for 1st-gen packages
+          # (configured on npmjs.com).
           if [ "$TAG" == "latest" ]; then
             yarn changeset publish --no-git-tag
           else
@@ -205,7 +217,7 @@ jobs:
             local dir=$1
             local max_attempts=3
             local attempt=1
-            
+
             while [ $attempt -le $max_attempts ]; do
               echo "Publishing $dir (attempt $attempt/$max_attempts)..."
               if (cd "$dir" && $PUBLISH_CMD); then
@@ -244,9 +256,7 @@ jobs:
           ACTOR: ${{ github.actor }}
           COMMIT_SHA: ${{ github.sha }}
           AUTH_OUTCOME: ${{ steps.npm-auth.outcome }}
-          CORE_VERSION: ${{ steps.versions.outputs.core }}
           BUNDLE_VERSION: ${{ steps.versions.outputs.bundle }}
-          SWC_VERSION: ${{ steps.versions.outputs.swc }}
         run: |
           echo "## Publish summary" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
@@ -275,14 +285,12 @@ jobs:
             echo "| **Commit** | \`${COMMIT_SHA}\` |" >> $GITHUB_STEP_SUMMARY
           fi
 
-          if [ -n "$CORE_VERSION" ] || [ -n "$BUNDLE_VERSION" ] || [ -n "$SWC_VERSION" ]; then
+          if [ -n "$BUNDLE_VERSION" ]; then
             echo "## Versions released" >> $GITHUB_STEP_SUMMARY
             echo "" >> $GITHUB_STEP_SUMMARY
             echo "| Generation | Package | Version |" >> $GITHUB_STEP_SUMMARY
             echo "|------------|---------|---------|" >> $GITHUB_STEP_SUMMARY
-            [ -n "$CORE_VERSION" ]   && echo "| Core    | \`@adobe/spectrum-wc-core\`   | \`${CORE_VERSION}\`   |" >> $GITHUB_STEP_SUMMARY
-            [ -n "$BUNDLE_VERSION" ] && echo "| 1st gen | \`@spectrum-web-components/bundle\` | \`${BUNDLE_VERSION}\` |" >> $GITHUB_STEP_SUMMARY
-            [ -n "$SWC_VERSION" ]    && echo "| 2nd gen | \`@adobe/spectrum-wc\`               | \`${SWC_VERSION}\`    |" >> $GITHUB_STEP_SUMMARY
+            echo "| 1st gen | \`@spectrum-web-components/bundle\` | \`${BUNDLE_VERSION}\` |" >> $GITHUB_STEP_SUMMARY
             echo "" >> $GITHUB_STEP_SUMMARY
           fi
 
@@ -294,12 +302,23 @@ jobs:
 
       - name: Commit and push changes
         if: steps.extract-tag.outputs.tag == 'latest'
+        env:
+          RELEASE_BOT_TOKEN: ${{ secrets.RELEASE_BOT_TOKEN }}
         run: |
           git add .
           git commit --no-verify -m "chore: release packages #publish" || echo "No changes to commit"
+          git remote set-url origin "https://x-access-token:${RELEASE_BOT_TOKEN}@github.com/${{ github.repository }}.git"
           git pull --rebase origin main
           git push
 
       - name: Create git tag
         if: steps.extract-tag.outputs.tag == 'latest'
         run: node ./1st-gen/scripts/create-git-tag.js
+
+      - name: Unlock main after release
+        if: always() && steps.extract-tag.outputs.tag == 'latest'
+        uses: ./.github/actions/release-branch-lock
+        with:
+          mode: unlock
+          branch: main
+          token: ${{ secrets.RELEASE_BOT_TOKEN }}

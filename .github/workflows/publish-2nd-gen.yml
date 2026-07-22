@@ -1,0 +1,207 @@
+name: Publish Packages (2nd-gen)
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'NPM dist-tag'
+        required: false
+        default: 'beta'
+      dry_run:
+        description: 'Version packages and report the diff, but do not publish or push'
+        type: boolean
+        required: false
+        default: false
+  push:
+    branches:
+      - gen2-beta
+
+concurrency:
+  group: publish-2nd-gen-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  check-changesets:
+    runs-on: ubuntu-latest
+    outputs:
+      has_changesets: ${{ steps.check.outputs.has_changesets }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Check for 2nd-gen changesets
+        id: check
+        run: |
+          COUNT=$(ls -1 .changeset-2nd-gen/*.md 2>/dev/null | grep -v README | wc -l | tr -d ' ')
+          if [ "$COUNT" -eq 0 ]; then
+            echo "has_changesets=false" >> $GITHUB_OUTPUT
+            echo "No 2nd-gen changesets found - skipping publish"
+          else
+            echo "has_changesets=true" >> $GITHUB_OUTPUT
+            echo "Found $COUNT 2nd-gen changeset(s)"
+          fi
+
+  publish:
+    needs: check-changesets
+    if: needs.check-changesets.outputs.has_changesets == 'true'
+    runs-on: ubuntu-latest
+    environment: npm-publish
+    permissions:
+      contents: write # Required for git push (via RELEASE_BOT_TOKEN below)
+    env:
+      YARN_ENABLE_IMMUTABLE_INSTALLS: false
+      DRY_RUN: ${{ github.event.inputs.dry_run }}
+    steps:
+      - name: Checkout gen2-beta
+        uses: actions/checkout@v4
+        with:
+          ref: gen2-beta
+          fetch-depth: 0
+
+      - name: Setup job and install dependencies
+        uses: ./.github/actions/setup-job
+
+      - name: Set Git identity
+        run: |
+          git config --global user.email "support+actions@github.com"
+          git config --global user.name "github-actions-bot"
+
+      - name: Determine release tag
+        id: extract-tag
+        env:
+          INPUT_TAG: ${{ github.event.inputs.tag }}
+        run: |
+          WORKFLOW_TAG="${INPUT_TAG:-beta}"
+          echo "tag=$WORKFLOW_TAG" >> $GITHUB_OUTPUT
+          echo "Using npm tag: $WORKFLOW_TAG"
+
+      - name: Lock gen2-beta during release
+        if: env.DRY_RUN != 'true'
+        uses: ./.github/actions/release-branch-lock
+        with:
+          mode: lock
+          branch: gen2-beta
+          token: ${{ secrets.RELEASE_BOT_TOKEN }}
+
+      - name: Load 2nd-gen changesets into .changeset/
+        run: |
+          # @changesets/cli always reads .changeset/ at the repo root - there's no flag
+          # to point it at a different folder - so bring this branch's persisted 2nd-gen
+          # changeset state in before invoking it. Everything here is consumed by
+          # `changeset version` below and copied back out after.
+          cp .changeset-2nd-gen/config.json .changeset/config.json
+          if [ -f .changeset-2nd-gen/pre.json ]; then
+            cp .changeset-2nd-gen/pre.json .changeset/pre.json
+          fi
+          shopt -s nullglob
+          for f in .changeset-2nd-gen/*.md; do
+            [ "$(basename "$f")" = "README.md" ] && continue
+            cp "$f" .changeset/
+          done
+
+      - name: Enter changesets pre-release mode
+        if: ${{ !hashFiles('.changeset/pre.json') }}
+        env:
+          TAG: ${{ steps.extract-tag.outputs.tag }}
+        run: yarn changeset pre enter $TAG
+
+      - name: Verify NPM authentication
+        id: npm-auth
+        env:
+          NPM_TOKEN: ${{ secrets.ADOBE_BOT_NPM_TOKEN }}
+        run: |
+          echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
+          echo "✓ NPM authentication configured for 2nd-gen (Adobe namespace)"
+
+      - name: Build all packages
+        run: yarn build
+
+      - name: Version packages
+        run: yarn changeset version
+
+      - name: Capture released versions
+        id: versions
+        run: |
+          CORE_VERSION=$(node -p "require('./2nd-gen/packages/core/package.json').version")
+          SWC_VERSION=$(node -p "require('./2nd-gen/packages/swc/package.json').version")
+          echo "core=$CORE_VERSION" >> $GITHUB_OUTPUT
+          echo "swc=$SWC_VERSION" >> $GITHUB_OUTPUT
+
+      - name: Report dry-run diff
+        if: env.DRY_RUN == 'true'
+        run: |
+          echo "## Dry run - 2nd-gen version diff" >> $GITHUB_STEP_SUMMARY
+          echo '```diff' >> $GITHUB_STEP_SUMMARY
+          git diff --stat -- 2nd-gen/ >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          echo "Dry run requested - no packages were published and gen2-beta was not modified." >> $GITHUB_STEP_SUMMARY
+
+      - name: Refresh lockfile and rebuild
+        if: env.DRY_RUN != 'true'
+        run: |
+          yarn install --refresh-lockfile
+          yarn build
+
+      - name: Publish all packages
+        if: env.DRY_RUN != 'true' && steps.npm-auth.outcome == 'success'
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.ADOBE_BOT_NPM_TOKEN }}
+          TAG: ${{ steps.extract-tag.outputs.tag }}
+        run: yarn changeset publish --no-git-tag --tag $TAG
+
+      - name: Persist 2nd-gen changeset state back to .changeset-2nd-gen/
+        if: env.DRY_RUN != 'true'
+        run: |
+          # `changeset version` consumed everything copied in above and updated pre.json;
+          # mirror that back into the folder this branch actually commits.
+          rm -f .changeset-2nd-gen/*.md
+          for f in .changeset/*.md; do
+            [ "$(basename "$f")" = "README.md" ] && continue
+            mv "$f" .changeset-2nd-gen/
+          done
+          cp .changeset/pre.json .changeset-2nd-gen/pre.json
+          rm -f .changeset/config.json .changeset/pre.json
+
+      - name: Commit and push changes
+        if: env.DRY_RUN != 'true'
+        env:
+          RELEASE_BOT_TOKEN: ${{ secrets.RELEASE_BOT_TOKEN }}
+        run: |
+          git add .
+          git commit --no-verify -m "chore: release 2nd-gen packages #publish" || echo "No changes to commit"
+          git remote set-url origin "https://x-access-token:${RELEASE_BOT_TOKEN}@github.com/${{ github.repository }}.git"
+          git pull --rebase origin gen2-beta
+          git push origin HEAD:gen2-beta
+
+      - name: Publish summary
+        if: always()
+        env:
+          TAG: ${{ steps.extract-tag.outputs.tag }}
+          CORE_VERSION: ${{ steps.versions.outputs.core }}
+          SWC_VERSION: ${{ steps.versions.outputs.swc }}
+          AUTH_OUTCOME: ${{ steps.npm-auth.outcome }}
+        run: |
+          echo "## Publish summary (2nd-gen)" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Field | Value |" >> $GITHUB_STEP_SUMMARY
+          echo "|-------|-------|" >> $GITHUB_STEP_SUMMARY
+          echo "| **NPM tag** | \`${TAG}\` |" >> $GITHUB_STEP_SUMMARY
+          echo "| **Dry run** | \`${DRY_RUN}\` |" >> $GITHUB_STEP_SUMMARY
+          [ -n "$CORE_VERSION" ] && echo "| **@adobe/spectrum-wc-core** | \`${CORE_VERSION}\` |" >> $GITHUB_STEP_SUMMARY
+          [ -n "$SWC_VERSION" ] && echo "| **@adobe/spectrum-wc** | \`${SWC_VERSION}\` |" >> $GITHUB_STEP_SUMMARY
+
+          if [ "$DRY_RUN" == "true" ]; then
+            echo "🔎 Dry run only — nothing published or pushed" >> $GITHUB_STEP_SUMMARY
+          elif [ "$AUTH_OUTCOME" == "success" ]; then
+            echo "✅ Publish completed with tag \`${TAG}\`" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "❌ Publish failed — NPM authentication did not succeed" >> $GITHUB_STEP_SUMMARY
+          fi
+
+      - name: Unlock gen2-beta after release
+        if: always() && env.DRY_RUN != 'true'
+        uses: ./.github/actions/release-branch-lock
+        with:
+          mode: unlock
+          branch: gen2-beta
+          token: ${{ secrets.RELEASE_BOT_TOKEN }}
