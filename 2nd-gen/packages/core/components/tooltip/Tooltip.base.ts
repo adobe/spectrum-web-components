@@ -38,6 +38,11 @@ import {
  * (hover/focus open/close), and `PlacementController` integration (pixel positioning).
  *
  * @slot - Text label displayed in the tooltip.
+ *
+ * @fires swc-open - Dispatched when the tooltip begins to open, before the transition plays.
+ * @fires swc-close - Dispatched when the tooltip begins to close, before the transition plays.
+ * @fires swc-after-open - Dispatched after the tooltip finishes opening, once the transition completes.
+ * @fires swc-after-close - Dispatched after the tooltip finishes closing, once the transition completes.
  */
 export abstract class TooltipBase
   extends SpectrumElement
