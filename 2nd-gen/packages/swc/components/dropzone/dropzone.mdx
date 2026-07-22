@@ -75,12 +75,15 @@ Open the **Actions** panel in Storybook to observe events as you drag over, drop
 
 `filled` is not set automatically: the consumer sets it in response to either a successful drop or a file selected through the browse control, so both paths reach the same state. Listening for `swc-dropzone-drop` and the hidden file input's `change` event with a shared handler keeps the two paths consistent. Once filled, keep a control such as "Replace file" reachable in the `filled-content` slot so keyboard users can still change the selection.
 
-If focus was on the browse control when the file is accepted, that control is hidden along with the rest of the default slot, and focus is left stranded on it. `filled-content` is entirely consumer-authored, so `swc-dropzone` has no way to know which element in it is the right one to focus; move focus yourself once the update completes (`filled-content` isn't assigned into the shadow DOM until then):
+If focus was on the browse control when the file is accepted, that control is hidden along with the rest of the default slot, and focus is left stranded on it. `filled-content` is entirely consumer-authored, so `swc-dropzone` has no way to know which element in it is the right one to focus; move focus yourself once the update completes (`filled-content` isn't assigned into the shadow DOM until then). Set the control's accessible name to include the file name (for example, "Replace report-q4.pdf" instead of "Replace file") before moving focus there, not concurrently with or after the move:
 
 ```js
+replaceButton.setAttribute('accessible-label', `Replace ${fileName}`);
 dropzone.setAttribute('filled', 'true');
 dropzone.updateComplete.then(() => replaceButton.focus());
 ```
+
+This is necessary because the built-in status region's "File accepted" announcement can be pre-empted by the focus-change announcement that follows it.
 
 <Canvas of={DropzoneStories.BrowseAndDrop} />
 
@@ -113,7 +116,7 @@ The host carries no `tabindex`. Keyboard users reach the drop zone through the s
 - Always provide an accessible name via `aria-label` or `aria-labelledby`, describing the upload's purpose (for example, "Upload profile photo" rather than "Upload").
 - Always include a browse button or link in the default slot. It is the only way keyboard-only users can select a file, and it is required for [keyboard (WCAG 2.1.1)](https://www.w3.org/TR/WCAG22/#keyboard) and [dragging movements (WCAG 2.5.7)](https://www.w3.org/TR/WCAG22/#dragging-movements) conformance.
 - Set `filled` from both the drop handler and the browse control's file input `change` handler so upload confirmation and status announcements are consistent regardless of how the file was provided.
-- Move focus to a control in `filled-content` (such as "Replace file") if focus was on the browse control when `filled` is set, so keyboard users land on a control instead of being stranded on the now-hidden browse control. See [Browse and drop](#browse-and-drop).
+- Move focus to a control in `filled-content` (such as "Replace file") if focus was on the browse control when `filled` is set, so keyboard users land on a control instead of being stranded on the now-hidden browse control. Set that control's accessible name to include the accepted file's name before moving focus there, since the focus-change announcement can pre-empt the status region's own announcement. See [Browse and drop](#browse-and-drop).
 - Do not rely on the `dragged` and `filled` border and background color changes alone to communicate state: the built-in status region carries that information to assistive technology.
 
 <Canvas of={DropzoneStories.Accessibility} />

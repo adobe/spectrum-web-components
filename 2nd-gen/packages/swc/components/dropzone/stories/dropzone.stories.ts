@@ -107,18 +107,11 @@ const makeDropzoneSlot = (
   </swc-illustrated-message>
 `;
 
-// Shared wiring for the browse-button + drop event pattern recommended by the
-// accessibility analysis: both paths call the same handler so `filled` and the
-// status region update identically regardless of how the file was provided.
-// Each getter resolves the element captured by that story's own `ref()`, so
-// the lookup always targets the specific dropzone that fired the event rather
-// than the first match in a shared container.
-//
-// Moving focus to the replace control here, not inside `swc-dropzone` itself:
-// `filled-content` is consumer-authored, so only the consumer reliably knows
-// which of its own elements is the right one to focus. `filled-content` isn't
-// assigned into the shadow DOM until the `filled` update completes, so the
-// `focus()` call waits on `updateComplete` first.
+// Focus management on accept lives here, not in the component: `filled-content`
+// is consumer-authored, so only the consumer knows which element to focus.
+// The replace button's accessible name includes the file name, set before
+// focus moves there, since a screen reader can otherwise announce the stale
+// default name.
 const bindFilledStateHandlers = (
   getDropzone: () => Dropzone | null,
   getFilledContent: () => HTMLElement | null,
@@ -134,6 +127,7 @@ const bindFilledStateHandlers = (
     if (filledContent) {
       filledContent.textContent = `${name} uploaded`;
     }
+    getReplaceButton()?.setAttribute('accessible-label', `Replace ${name}`);
     const dropzone = getDropzone();
     dropzone?.setAttribute('filled', '');
     dropzone?.updateComplete.then(() => {
@@ -155,11 +149,7 @@ const bindFilledStateHandlers = (
   };
 };
 
-// Shared by Playground, BrowseAndDrop, and Accessibility: all three demonstrate the same
-// browse-button + drop wiring so dragging a real file over the zone (or using the browse
-// button) actually swaps it into the filled state, rather than only responding to the
-// `filled` control. Playground drives `size`/`aria-label`/`dragged`/`filled` from Storybook
-// args; the other two callers pass a fixed accessible name and accept the defaults.
+// Shared interactive render for the Playground and behavior/a11y stories.
 const renderFilledStateExample = (
   ariaLabel: string,
   options: { size?: DropzoneSize; dragged?: boolean; filled?: boolean } = {}
@@ -175,12 +165,8 @@ const renderFilledStateExample = (
     () => fileInput,
     () => replaceButton
   );
-  // `template(args)` (the wc-toolkit helper) wires every CEM-declared event to
-  // the Actions panel automatically, but these stories use a custom render for
-  // real drag-and-drop and browse behavior, which bypasses that wiring
-  // entirely. Reproduce it by hand for each event so the Actions panel still
-  // reflects what's happening; `swc-dropzone-drop` combines the action log
-  // with this story's own accept-file handler.
+  // Custom render bypasses `template(args)`'s automatic event-to-Actions-panel
+  // wiring, so each event is logged explicitly here instead.
   const logAction = (name: string) => (event: Event) => action(name)(event);
   const handleDropAndLog = (event: Event): void => {
     handleDrop(event);
