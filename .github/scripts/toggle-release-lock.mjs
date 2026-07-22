@@ -35,67 +35,35 @@ if (!['lock', 'unlock'].includes(mode) || !branch) {
   process.exit(1);
 }
 
-function readProtection() {
+function branchProtectionExists() {
   try {
-    return JSON.parse(
-      execSync(`gh api repos/${repo}/branches/${branch}/protection`, {
-        encoding: 'utf-8',
-      })
+    execSync(`gh api repos/${repo}/branches/${branch}/protection`, {
+      encoding: 'utf-8',
+    });
+    return true;
+  } catch (err) {
+    console.warn(
+      `No branch protection found for '${branch}' (or this token can't read it) - skipping ${mode}. ` +
+        `Concurrent-merge protection during this release is not active for this branch. (${err.message})`
     );
-  } catch {
-    return null;
+    return false;
   }
 }
 
-const protection = readProtection();
-
-if (!protection) {
-  console.warn(
-    `No branch protection found for '${branch}' (or this token can't read it) - skipping ${mode}. ` +
-      'Concurrent-merge protection during this release is not active for this branch.'
-  );
+if (!branchProtectionExists()) {
   process.exit(0);
 }
 
-const contexts = new Set(protection.required_status_checks?.contexts ?? []);
-if (mode === 'lock') {
-  contexts.add(LOCK_CONTEXT);
-} else {
-  contexts.delete(LOCK_CONTEXT);
-}
-
-const payload = {
-  required_status_checks: {
-    strict: protection.required_status_checks?.strict ?? false,
-    contexts: [...contexts],
-  },
-  enforce_admins: protection.enforce_admins?.enabled ?? false,
-  required_pull_request_reviews: protection.required_pull_request_reviews
-    ? {
-        dismiss_stale_reviews:
-          protection.required_pull_request_reviews.dismiss_stale_reviews ??
-          false,
-        require_code_owner_reviews:
-          protection.required_pull_request_reviews.require_code_owner_reviews ??
-          false,
-        required_approving_review_count:
-          protection.required_pull_request_reviews
-            .required_approving_review_count ?? 1,
-      }
-    : null,
-  restrictions: protection.restrictions
-    ? {
-        users: protection.restrictions.users.map((user) => user.login),
-        teams: protection.restrictions.teams.map((team) => team.slug),
-        apps: protection.restrictions.apps.map((app) => app.slug),
-      }
-    : null,
-};
-
+// Add/remove only this one context via the dedicated endpoint, rather than reading
+// the whole protection object and PUTing it back - a whole-object PUT only sends the
+// fields this script knows about, silently resetting every other configured
+// protection setting (allow_force_pushes, required_linear_history, etc.) to its API
+// default on every lock and unlock.
+const method = mode === 'lock' ? 'POST' : 'DELETE';
 execSync(
-  `gh api repos/${repo}/branches/${branch}/protection -X PUT --input -`,
+  `gh api repos/${repo}/branches/${branch}/protection/required_status_checks/contexts -X ${method} --input -`,
   {
-    input: JSON.stringify(payload),
+    input: JSON.stringify({ contexts: [LOCK_CONTEXT] }),
     encoding: 'utf-8',
   }
 );
