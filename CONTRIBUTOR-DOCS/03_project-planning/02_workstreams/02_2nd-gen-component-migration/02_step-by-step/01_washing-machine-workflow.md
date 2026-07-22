@@ -491,6 +491,7 @@ For troubleshooting and detailed patterns (e.g. 1st-gen Constructable Stylesheet
 2. **A11y tests (Playwright):** Run a11y checks in Storybook; use `gotoStory` and `toMatchAriaSnapshot`.
 3. **Storybook play functions:** Add play functions for defaults, variants, keyboard.
 4. **Coverage:** Main props, variants, user actions.
+5. **VRTs:** Add VRTs. 
 
 Follow the two-file layout (`test/<component>.test.ts`, `test/<component>.a11y.spec.ts`). See the [2nd gen testing conventions](../../../../01_contributor-guides/11_2ndgen_testing.md) and reference implementations in `link/test/`, `checkbox/test/`, `badge/test/`, etc.
 
