@@ -82,7 +82,7 @@
    GALLERY LAYOUT
    ───────────────────────────────────────────────────────────────────────────── */
 
-:host(:not(:has([slot="title"]), :has([slot="description"]), :has([slot="actions"]), :has([slot="footer"]))) :not(.swc-Card--hasDefault) {
+:host(:not(:has([slot="title"]), :has([slot="description"]), :has([slot="actions"]), :has([slot="footer"]))) .swc-Card:not(.swc-Card--hasDefault) {
   --_swc-card-media-layout: gallery;
 }
 
@@ -95,7 +95,7 @@
 }
 
 @scope {
-  :scope:not(:has([slot="title"]), :has([slot="description"]), :has([slot="actions"]), :has([slot="footer"])) :not(.swc-Card--hasDefault) {
+  :scope:not(:has([slot="title"]), :has([slot="description"]), :has([slot="actions"]), :has([slot="footer"])) .swc-Card:not(.swc-Card--hasDefault) {
     --_swc-card-media-layout: gallery;
   }
 
