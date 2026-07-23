@@ -1,6 +1,6 @@
 {
   "name": "@adobe/spectrum-wc",
-  "version": "2.0.0-beta.1",
+  "version": "2.0.0-beta.2",
   "description": "Spectrum Web Components 2nd generation - rendering implementations",
   "license": "Apache-2.0",
   "author": "Adobe",
@@ -95,7 +95,7 @@
     "test:watch:vitest": "vitest --project storybook --watch"
   },
   "dependencies": {
-    "@adobe/spectrum-wc-core": "2.0.0-beta.1",
+    "@adobe/spectrum-wc-core": "2.0.0-beta.2",
     "@lit-labs/observers": "2.0.2",
     "lit": "^2.5.0 || ^3.1.3"
   },
