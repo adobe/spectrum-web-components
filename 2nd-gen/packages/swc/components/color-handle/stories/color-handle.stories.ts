@@ -27,12 +27,12 @@ const { events, args, argTypes, template } =
 /**
  * An `<swc-color-handle>` is a non-interactive primitive: a draggable dot
  * rendered on top of a color area, slider, or wheel that marks the currently
- * picked color and pops a built-in [Color Loupe](../?path=/docs/color-loupe--docs)
+ * picked color and pops a built-in [Color Loupe](../?path=/docs/components-color-loupe--docs)
  * on touch. Accessibility — label, value, and keyboard — is owned by the parent
  * color picker, not the handle.
  */
 const meta: Meta = {
-  title: 'Color Handle',
+  title: 'Color handle',
   component: 'swc-color-handle',
   args,
   argTypes,
