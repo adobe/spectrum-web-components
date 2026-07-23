@@ -205,6 +205,10 @@ export const Outline: Story = {
   tags: ['options'],
 };
 
+// ──────────────────────────────
+//    STATES STORIES
+// ──────────────────────────────
+
 export const Disabled: Story = {
   render: (args) => html`
     <swc-avatar
@@ -219,7 +223,7 @@ export const Disabled: Story = {
     alt: 'Jane Doe',
     size: '500',
   },
-  tags: ['options'],
+  tags: ['states'],
 };
 
 // ──────────────────────────────

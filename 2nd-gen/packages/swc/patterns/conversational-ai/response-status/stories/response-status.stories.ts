@@ -15,7 +15,7 @@ import { customElement, state } from 'lit/decorators.js';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
-import '../index.js';
+import '../swc-response-status.js';
 
 import { RESPONSE_STATUSES } from '../ResponseStatus.js';
 
@@ -96,12 +96,14 @@ const meta: Meta = {
   render: (args) => template(args),
   parameters: {
     docs: {
+      packagePath: 'patterns/conversational-ai/response-status',
       subtitle: 'AI response lifecycle status with optional execution steps.',
     },
     layout: 'padded',
     additionalApiTables: ['swc-response-status-step'],
   },
   excludeStories: ['meta'],
+  tags: ['migrated'],
 };
 
 export { meta };

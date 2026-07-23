@@ -521,6 +521,126 @@ export const XsMergedLayoutTest: Story = {
   },
 };
 
+export const HasDefaultSlotClassTest: Story = {
+  render: () => html`
+    <test-card-base>
+      <span>Default body content</span>
+    </test-card-base>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const card = await getComponent<TestCardBase>(
+      canvasElement,
+      'test-card-base'
+    );
+
+    await step(
+      'applies the hasDefault class when default slot content is present',
+      async () => {
+        const wrapper = card.renderRoot.querySelector('.swc-CardBase');
+        expect(
+          wrapper?.classList.contains('swc-TestCardBase--hasDefault'),
+          'hasDefault class is applied when default slot content exists'
+        ).toBe(true);
+      }
+    );
+  },
+};
+
+export const HasDefaultSlotClassBareTextTest: Story = {
+  render: () => html`
+    <test-card-base>Bare text with no wrapping element</test-card-base>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const card = await getComponent<TestCardBase>(
+      canvasElement,
+      'test-card-base'
+    );
+
+    await step(
+      'applies the hasDefault class for bare text with no wrapping element',
+      async () => {
+        const wrapper = card.renderRoot.querySelector('.swc-CardBase');
+        expect(
+          wrapper?.classList.contains('swc-TestCardBase--hasDefault'),
+          'hasDefault class is applied for a bare text node'
+        ).toBe(true);
+      }
+    );
+  },
+};
+
+export const NoDefaultSlotClassTest: Story = {
+  render: () => html`
+    <test-card-base></test-card-base>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const card = await getComponent<TestCardBase>(
+      canvasElement,
+      'test-card-base'
+    );
+
+    await step(
+      'does not apply the hasDefault class when the default slot is empty',
+      async () => {
+        const wrapper = card.renderRoot.querySelector('.swc-CardBase');
+        expect(
+          wrapper?.classList.contains('swc-TestCardBase--hasDefault'),
+          'hasDefault class is not applied when default slot is empty'
+        ).toBe(false);
+      }
+    );
+  },
+};
+
+export const DefaultSlotClassUpdatesDynamicallyTest: Story = {
+  render: () => html`
+    <test-card-base></test-card-base>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const card = await getComponent<TestCardBase>(
+      canvasElement,
+      'test-card-base'
+    );
+    const wrapper = card.renderRoot.querySelector('.swc-CardBase');
+    // ObserveSlotText's MutationController fires as a microtask; a
+    // requestAnimationFrame tick reliably runs after it has resolved.
+    const waitForMutation = () =>
+      new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+
+    await step(
+      'applies the hasDefault class when content is added after initial render',
+      async () => {
+        const content = document.createElement('span');
+        content.textContent = 'Added later';
+        card.appendChild(content);
+
+        await waitForMutation();
+        await card.updateComplete;
+
+        expect(
+          wrapper?.classList.contains('swc-TestCardBase--hasDefault'),
+          'hasDefault class is applied after dynamically adding content'
+        ).toBe(true);
+      }
+    );
+
+    await step(
+      'removes the hasDefault class when that content is later removed',
+      async () => {
+        card.querySelector('span')?.remove();
+
+        await waitForMutation();
+        await card.updateComplete;
+
+        expect(
+          wrapper?.classList.contains('swc-TestCardBase--hasDefault'),
+          'hasDefault class is removed after removing the content'
+        ).toBe(false);
+      }
+    );
+  },
+};
+
 // ──────────────────────────────────────────────────────────────
 // TEST: Behaviors
 // ──────────────────────────────────────────────────────────────

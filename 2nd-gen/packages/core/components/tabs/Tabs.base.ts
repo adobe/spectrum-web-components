@@ -150,10 +150,7 @@ export abstract class TabsBase extends SpectrumElement {
   private _density: TabDensity = TAB_DENSITY_DEFAULT;
 
   /**
-   * The layout direction of the tab list.
-   *
-   * **Breaking change:** `'vertical-right'` is no longer supported.
-   * Use `'vertical'` instead.
+   * The layout direction of the tab list: `horizontal` (default) or `vertical`.
    *
    * @default 'horizontal'
    */

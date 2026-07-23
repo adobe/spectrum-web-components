@@ -31,7 +31,7 @@ The `placement` attribute sets the preferred position of the tooltip relative to
 
 The `start` and `end` values are RTL-aware: `start` maps to the left side in LTR and to the right in RTL; `end` maps to the right in LTR and to the left in RTL.
 
-`PlacementController` handles pixel positioning automatically. When there is insufficient space on the requested side, the tooltip flips to the opposite side. The `placement` attribute always holds your requested value — it is never rewritten by the flip — so if space opens up the tooltip returns to the originally requested position. The resolved physical side is tracked internally and is not part of the public API, but is reflected to the `actual-placement` attribute.
+`PlacementController` handles pixel positioning automatically. When there is insufficient space on the requested side, the tooltip flips to the opposite side. The `placement` attribute always holds your requested value; the flip never rewrites it. If space reopens, the tooltip returns to the requested side. The resolved side is reflected on `actual-placement` (read-only, not public API).
 
 Because `<swc-tooltip>` uses `popover="auto"`, the tooltip renders in the browser's top layer, outside the normal document flow. The flip boundary is therefore the **viewport**, not the tooltip's scroll container ancestor. Flip is triggered by proximity to the viewport edge, not to any overflow container boundary.
 
@@ -53,7 +53,7 @@ Because the component uses `popover="auto"`, opening a tooltip dismisses any oth
 
 When `disabled` is set, the tooltip does not respond to hover or focus events. The trigger remains interactive; only the automatic wiring is suppressed.
 
-`disabled` takes priority over `open`: while disabled, the tooltip cannot be shown, even by setting `open` to `true` programmatically (`open` reverts to `false`). Setting `disabled` to `true` while the tooltip is open closes it. This applies in [manual](#manual) mode as well. ARIA relationship wiring still fires when `open` is set directly.
+A disabled tooltip takes priority over `open`. While disabled, the tooltip cannot be shown, even by setting `open` to `true` programmatically (`open` reverts to `false`). Setting `disabled` to `true` while the tooltip is open closes it. This applies in [manual](#manual) mode as well. ARIA relationship wiring still fires when `open` is set directly.
 
 <Canvas of={TooltipStories.Disabled} />
 
@@ -69,9 +69,9 @@ When `manual` is set, `HoverController` wiring is suppressed entirely and the co
 
 The tooltip opens automatically when the trigger receives pointer hover or keyboard focus:
 
-- **Pointer hover**: after a warm-up delay (default `1500ms`), the tooltip opens. Set `delay="0"` to open immediately. Once any tooltip of the same type has warmed up, subsequent hovers on other triggers open immediately without waiting for the full delay.
+- **Pointer hover**: after a warm-up delay (default 1500 ms), the tooltip opens. Set `delay="0"` to open immediately. Once any tooltip of the same type has warmed up, subsequent hovers on other triggers open immediately without waiting for the full delay.
 - **Keyboard focus**: the tooltip opens immediately, bypassing the warm-up delay entirely.
-- **Close**: the tooltip closes `300ms` after the pointer leaves the trigger. If the pointer enters the tooltip bubble before that cooldown expires, the tooltip stays open (WCAG 1.4.13 pointer bridge). The tooltip closes immediately when focus leaves the trigger.
+- **Close**: the tooltip closes 300 ms after the pointer leaves the trigger. If the pointer enters the tooltip bubble before that cooldown expires, the tooltip stays open ([WCAG 1.4.13](https://www.w3.org/WAI/WCAG22/Understanding/content-on-hover-or-focus.html) pointer bridge). The tooltip closes immediately when focus leaves the trigger.
 
 Set `disabled` to prevent the tooltip from responding to hover and focus while leaving the trigger interactive. Set `manual` to suppress automatic wiring entirely and manage visibility via the `open` property or the popover API directly. `disabled` takes priority over both automatic and manual opening: a disabled tooltip cannot be shown regardless of `manual`.
 
@@ -138,7 +138,7 @@ A `1px` border on the bubble is set to `CanvasText` and the tip also filled in u
 
 #### Variant colors
 
-Variant colors supplement the tooltip text and are never the sole conveyance of meaning (WCAG 1.4.1).
+Variant colors supplement the tooltip text and are never the sole conveyance of meaning ([WCAG 1.4.1](https://www.w3.org/WAI/WCAG22/Understanding/use-of-color.html)).
 
 ### Best practices
 
@@ -146,16 +146,15 @@ Variant colors supplement the tooltip text and are never the sole conveyance of 
 - **Use plain text.** Do not include interactive elements or rich formatting inside a tooltip. `role="tooltip"` is not focusable; use `<swc-popover>` or contextual help for disclosures that require interactive content.
 - **Supplement, do not duplicate.** Tooltip text supplements the trigger's accessible name. Do not repeat what `aria-label` or `aria-labelledby` already conveys.
 - **Icon-only triggers.** Prefer adding an accessible name directly to the trigger: `aria-label` on native elements; `accessible-label` on 2nd-gen SWC components. Use the `labeling` attribute when the trigger host cannot be modified.
-- **No auto-dismiss timer.** The tooltip must remain visible until the user dismisses it or the triggering state ends (WCAG 1.4.13).
+- **No auto-dismiss timer.** The tooltip must remain visible until the user dismisses it or the triggering state ends ([WCAG 1.4.13](https://www.w3.org/WAI/WCAG22/Understanding/content-on-hover-or-focus.html)).
 - **Touch devices.** Hover-triggered tooltips are not accessible on touch-only devices, even with `delay="0"` since interacting with a trigger will activate the trigger's function rather than show the tooltip due to lack of hover support. Use `<swc-popover>` or contextual help for touch disclosure.
 
 <Canvas of={TooltipStories.Accessibility} />
 
 ## Upcoming features
 
-The following features are planned for future releases:
+The following feature is planned for future releases:
 
-- **Tip-less display**: removes the directional tip arrow from the tooltip bubble.
 - **Tooltip directive**: a Lit directive for programmatic tooltip insertion and lifecycle management.
 
 <DocsFooter />
