@@ -14,17 +14,17 @@ import { html, LitElement } from 'lit';
 import { state } from 'lit/decorators.js';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
-import '../index.js';
-import '../../conversation-turn/index.js';
-import '../../system-message/index.js';
-import '../../user-message/index.js';
-import '../../response-status/index.js';
-import '../../message-feedback/index.js';
-import '../../message-sources/index.js';
-import '../../suggestion/index.js';
-import '../../suggestion-item/index.js';
-import '../../prompt-field/index.js';
-import '../../upload-artifact/index.js';
+import '../swc-conversation-thread.js';
+import '../../conversation-turn/swc-conversation-turn.js';
+import '../../system-message/swc-system-message.js';
+import '../../user-message/swc-user-message.js';
+import '../../response-status/swc-response-status.js';
+import '../../message-feedback/swc-message-feedback.js';
+import '../../message-sources/swc-message-sources.js';
+import '../../suggestion/swc-suggestion-group.js';
+import '../../suggestion-item/swc-suggestion-item.js';
+import '../../prompt-field/swc-prompt-field.js';
+import '../../upload-artifact/swc-upload-artifact.js';
 
 import { uniqueId } from '../../../../utils/id.js';
 
@@ -48,12 +48,14 @@ const meta: Meta = {
   component: 'swc-conversation-thread',
   parameters: {
     docs: {
+      packagePath: 'patterns/conversational-ai/conversation-thread',
       subtitle:
         'Stacks conversation turns and enables roving keyboard focus between them.',
     },
     layout: 'padded',
   },
   excludeStories: ['meta'],
+  tags: ['migrated'],
 };
 
 export { meta };

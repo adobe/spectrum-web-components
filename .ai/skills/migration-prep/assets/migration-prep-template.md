@@ -32,6 +32,7 @@ AGENT / CONTRIBUTOR QUICK START:
   - [CSS custom properties](#css-custom-properties)
   - [Shadow DOM output (rendered HTML)](#shadow-dom-output-rendered-html)
 - [Dependencies](#dependencies)
+- [Open gen1 issues](#open-gen1-issues)
 - [Migration sequencing and prerequisites](#migration-sequencing-and-prerequisites)
 - [Changes overview](#changes-overview)
   - [Must ship — breaking or a11y-required](#must-ship--breaking-or-a11y-required)
@@ -137,6 +138,13 @@ This full modifier surface will not be carried forward to 2nd-gen.
 | ------- | ------- | ---- |
 
 ---
+
+## Open gen1 issues
+
+<!-- Fill in the table below with a list of this component’s gen1 (`sp-*`) bugs and stories with the label `gen2-tbd`. Do not list issues that carry Jira labels `a11y` or `gen2`. -->
+
+| Jira | Type | Status (snapshot) | Summary |
+| ---- | ---- | ----------------- | ------- |
 
 ## Migration sequencing and prerequisites
 

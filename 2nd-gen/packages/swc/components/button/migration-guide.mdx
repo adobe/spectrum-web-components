@@ -6,6 +6,28 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
 Replace `<sp-button>` with `<swc-button>`, update the import, and migrate renamed attributes.
 
+## Installation
+
+```bash
+# Remove
+yarn remove @spectrum-web-components/button
+
+# Add
+yarn add @adobe/spectrum-wc
+```
+
+Update your import:
+
+```js
+// Before
+import '@spectrum-web-components/button/sp-button.js';
+
+// After
+import '@adobe/spectrum-wc/components/button/swc-button.js';
+```
+
+> `@adobe/spectrum-wc` is a monolithic package. Importing via subpath (e.g., `@adobe/spectrum-wc/components/button/swc-button.js`) registers and loads only that component's bundle.
+
 ## What changed
 
 ### Renamed
@@ -21,10 +43,10 @@ Replace `<sp-button>` with `<swc-button>`, update the import, and migrate rename
 
 ### Added in Spectrum 2
 
-| Addition                      | Notes                                                                                                                                              |
-| ----------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `justified` boolean attribute | Stretches the button to fill its container's inline size. The container must allow the element to grow.                                            |
-| `pending-label` derivation    | When `pending` is set and no `pending-label` is provided, the accessible name is automatically derived as `"[label], busy"` (e.g. `"Save, busy"`). |
+| Addition                      | Notes                                                                                                                                               |
+| ----------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `justified` boolean attribute | Stretches the button to fill its container's inline size. The container must allow the element to grow.                                             |
+| `pending-label` derivation    | When `pending` is set and no `pending-label` is provided, the accessible name is automatically derived as `"[label], busy"` (e.g., `"Save, busy"`). |
 
 ### Removed in Spectrum 2
 
@@ -96,7 +118,7 @@ The deprecated aliases `cta`, `overBackground`, `white`, and `black` are removed
 
 ### 5. Migrate link-mode usage to native anchors
 
-`<sp-button href="...">` is removed. Use a native `<a>` element with [global button styles](/docs/guides-customization-global-element-styling--readme) instead:
+`<sp-button href="...">` is removed. Use a native `<a>` element with [global button styles](/docs/guides-customization-global-element-styling--docs) instead:
 
 ```html
 <!-- Before -->
@@ -125,8 +147,8 @@ import '@adobe/spectrum-wc/global-button.css';
 - **Icon-only buttons** must have `accessible-label` on the host. See [step 4](#4-rename-label-to-accessible-label).
 - **Pending state**: when `pending` is set, the button announces as `"[label], busy"` by default. Supply `pending-label` to override with a more specific description of the in-progress operation.
 - **Disabled vs. pending**: use `pending` to keep the button focusable while an operation is in progress. Use `disabled` to remove it from the tab order entirely. Do not set both at the same time.
-- **Navigation**: do not use `<swc-button>` for navigation. Buttons activate on both Enter and Space; links activate on Enter only. Use a native `<a>` with global button styles instead (see [step 5](#5-migrate-link-mode-usage-to-native-anchors)).
-- **Form submission**: `<swc-button>` behaves as `type="button"` only. For `submit` and `reset`, use a native `<button>` with [global button styles](/docs/guides-customization-global-element-styling--readme) until form-associated behavior is added in a future release.
+- **Navigation**: do not use `<swc-button>` for navigation. Buttons activate on both <kbd>Enter</kbd> and <kbd>Space</kbd>; links activate on <kbd>Enter</kbd> only. Use a native `<a>` with global button styles instead (see [step 5](#5-migrate-link-mode-usage-to-native-anchors)).
+- **Form submission**: `<swc-button>` behaves as `type="button"` only. For `submit` and `reset`, use a native `<button>` with [global button styles](/docs/guides-customization-global-element-styling--docs) until form-associated behavior is added in a future release.
 
 ## Styling
 

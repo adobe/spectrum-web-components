@@ -11,13 +11,7 @@ import * as AvatarStories from './stories/avatar.stories';
 
 An avatar consists of:
 
-1. **Image** — a circular clipped profile photo
-
-### Content
-
-- `src`: URL of the profile image
-- `alt`: text description for assistive technology. Pass `alt=""` to mark as decorative.
-- `size`: numeric size token (50–1500). Defaults to `500` (40 px).
+- **Image**: a circular, clipped profile photo, set via the `src` property with alternative text supplied by `alt` (pass `alt=""` to mark it decorative)
 
 <Canvas of={AvatarStories.Anatomy} />
 
@@ -42,9 +36,11 @@ Use this **only when the surrounding context already identifies the person** (e.
 
 ### Outline
 
-Use the `outline` attribute to render a solid outline around the avatar image. This is useful when the avatar's image border color matches the surrounding background. The outline uses `--swc-avatar-outline-width` (currently 1 px) for sizes 50–900 and a hardcoded 2 px for sizes 1000–1500, matching the Spectrum 2 specification. Within an Avatar Group, `outline` defaults to `true` to visually separate stacked avatars.
+Use the `outline` attribute to render a solid outline around the avatar image. This is useful when the avatar's image border color matches the surrounding background. The outline uses `--swc-avatar-outline-width` (currently 1 px) for sizes 50–900 and a hardcoded 2 px for sizes 1000–1500, matching the Spectrum 2 specification.
 
 <Canvas of={AvatarStories.Outline} />
+
+## States
 
 ### Disabled
 
@@ -96,6 +92,7 @@ The `<swc-avatar>` element implements several accessibility features:
 
 ### Avatar Group
 
-- Display a collection of avatars in a stacked layout with configurable overlap and overflow
+- Display a collection of avatars in a stacked layout with configurable overlap and overflow.
+- Within a group, `outline` is expected to default to `true` to visually separate stacked avatars.
 
 <DocsFooter />
