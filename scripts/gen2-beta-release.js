@@ -176,7 +176,10 @@ function main() {
       '  1. Review the working tree (git status / git diff) when running locally.\n' +
       '  2. Trigger the Publish workflow on gen2-beta with scope=2nd-gen and tag=beta.\n' +
       '     CI runs this script, publishes to npm, commits changelogs to gen2-beta,\n' +
-      '     and pushes a git tag (for example v2.0.0-beta.2).'
+      '     and pushes a git tag (for example v2.0.0-beta.2).\n' +
+      '  3. After publish, open a follow-up PR to main for changelog cleanup only.\n' +
+      '     Set @since on a component class only when that component first ships;\n' +
+      '     do not bulk-update @since on later betas — it records introduction version.'
   );
 }
 
