@@ -51,7 +51,7 @@
     - [A.4 `FocusgroupNavigationController` Usage Example](#a4-focusgroupnavigationcontroller-usage-example)
     - [A.5 `focusable-selectors.ts`](#a5-focusable-selectorsts)
     - [A.6 `get-active-element.ts`](#a6-get-active-elementts)
-    - [A.7 Updated `hasVisibleFocusInTree()`](#a7-updated-hasvisiblefocusintree)
+    - [A.7 Extracted `isFocusVisibleInTree()` utility](#a7-extracted-isfocusvisibleintree-utility)
 - [Appendix B: Focus Containment (Overlay) — OUT OF SCOPE](#appendix-b-focus-containment-overlay--out-of-scope)
 
 </details>
@@ -154,7 +154,7 @@ class MyTextfield extends DisabledMixin(SpectrumElement) {
 
 ### Already implemented
 
-- `SpectrumMixin` with `hasVisibleFocusInTree()` — needs cleanup (dead code + legacy `.focus-visible` fallback)
+- `isFocusVisibleInTree()` utility, extracted from the former `SpectrumMixin.hasVisibleFocusInTree()` method. `SpectrumMixin` has been removed; `SpectrumElement` now extends `LitElement` directly
 - `LanguageResolutionController` — done
 - `SizedMixin` — done
 - `SlotPresenceController` / `SlotTextController` — done (converted from `ObserveSlotPresence` / `ObserveSlotText` mixins to controllers)
@@ -481,20 +481,22 @@ The Open UI alignment means the controller's options map conceptually to the `fo
 
 > Returns the truly focused element by traversing shadow DOM boundaries.
 
-`document.activeElement` stops at shadow hosts. This utility follows `shadowRoot.activeElement` chains to find the deepest focused element. Used by `FocusgroupNavigationController` and `hasVisibleFocusInTree()`.
+`document.activeElement` stops at shadow hosts. This utility follows `shadowRoot.activeElement` chains to find the deepest focused element. Used by `FocusgroupNavigationController` and the `isFocusVisibleInTree()` utility.
 
-**Relationship to `hasVisibleFocusInTree()`:** They answer different questions:
+**Relationship to `isFocusVisibleInTree()`:** They answer different questions:
 
 ```
 getActiveElement()           → "Which element has focus?"     → returns HTMLElement
-hasVisibleFocusInTree()      → "Should I show a focus ring?"  → returns boolean
+isFocusVisibleInTree()       → "Should I show a focus ring?"  → returns boolean
 ```
 
-`hasVisibleFocusInTree()` should use `getActiveElement()` internally (its current implementation duplicates the shadow DOM traversal):
+`isFocusVisibleInTree()` is built on `getActiveElement()`:
 
 ```typescript
-public hasVisibleFocusInTree(): boolean {
-  const active = getActiveElement(this.getRootNode() as Document);
+export function isFocusVisibleInTree(
+  root: Document | ShadowRoot = document
+): boolean {
+  const active = getActiveElement(root);
   return active?.matches(':focus-visible') ?? false;
 }
 ```
@@ -524,10 +526,10 @@ See [Appendix A.5](#a5-focusable-selectorsts) for the full selector definitions.
 
 ### Phase 1: Core Utilities
 
-1. Clean up `hasVisibleFocusInTree()` in `spectrum-element.ts`
-   - Remove dead ancestor-chain code
-   - Remove `.focus-visible` CSS class fallback
-   - Use `getActiveElement()` internally
+1. Extract `hasVisibleFocusInTree()` from `spectrum-element.ts` into the `isFocusVisibleInTree()` utility
+   - Remove dead ancestor-chain code and the `.focus-visible` CSS class fallback
+   - Build it on `getActiveElement()`
+   - Remove the method from `SpectrumMixin`; the mixin is dropped and `SpectrumElement` extends `LitElement` directly
 2. Add `get-active-element.ts` to `utils/`
 3. Add `focusable-selectors.ts` to `utils/`
 
@@ -660,7 +662,7 @@ The following 1st-gen concepts are **not carried forward** to 2nd-gen. Each remo
 
 - **`focus-visible.ts`** — The entire polyfill loader file: script injection, `data-js-focus-visible` attribute management, and global event listeners for tracking focus method (keyboard vs pointer). All of this is replaced by the browser's native `:focus-visible` pseudo-class, which requires no JavaScript.
 
-- **`.focus-visible` CSS class fallback** — Used in `hasVisibleFocusInTree()` as a fallback for browsers that only supported the polyfill's CSS class instead of the native pseudo-class. Since all target browsers now support `:focus-visible`, the fallback path is dead code. The simplified `hasVisibleFocusInTree()` checks only `activeElement.matches(':focus-visible')`.
+- **`.focus-visible` CSS class fallback** — Used in the former `hasVisibleFocusInTree()` as a fallback for browsers that only supported the polyfill's CSS class instead of the native pseudo-class. Since all target browsers now support `:focus-visible`, the fallback path is dead code. The extracted `isFocusVisibleInTree()` utility checks only `activeElement.matches(':focus-visible')`.
 
 - **Autofocus synthetic KeyboardEvent hack** — 1st-gen dispatched a synthetic `KeyboardEvent` followed by two `requestAnimationFrame` waits to trick the polyfill into showing a focus ring on autofocused elements. Browsers now correctly apply `:focus-visible` to programmatically focused elements, making the hack unnecessary.
 
@@ -676,7 +678,7 @@ The following 1st-gen concepts are **not carried forward** to 2nd-gen. Each remo
 | `FocusGroupController` | `FocusgroupNavigationController` | See [§4.4](#44-focusgroupnavigationcontroller) |
 | `RovingTabindexController` (1st-gen) | `FocusgroupNavigationController` | See [§4.4](#44-focusgroupnavigationcontroller) |
 | `FocusVisiblePolyfillMixin` | Native `:focus-visible` | No import needed |
-| `hasVisibleFocusInTree()` | Same method, simplified | Uses `getActiveElement()` internally |
+| `hasVisibleFocusInTree()` | `isFocusVisibleInTree()` utility | Standalone util built on `getActiveElement()`; no longer a mixin method |
 
 ---
 
@@ -684,7 +686,7 @@ The following 1st-gen concepts are **not carried forward** to 2nd-gen. Each remo
 
 | Concern | 1st-Gen | 2nd-Gen |
 |---------|---------|---------|
-| Focus-visible detection | Polyfill mixin + `hasVisibleFocusInTree()` | Native `:focus-visible` + simplified `hasVisibleFocusInTree()` |
+| Focus-visible detection | Polyfill mixin + `hasVisibleFocusInTree()` | Native `:focus-visible` + `isFocusVisibleInTree()` utility |
 | Focus delegation | `Focusable` base class with `focusElement` getter | Native `delegatesFocus: true` on shadow root |
 | Disabled state | Bundled into `Focusable` base class | Standalone `DisabledMixin` |
 | TabIndex management | Complex getter/setter with `manipulatingTabindex` flag | Handled natively by `delegatesFocus` and `FocusgroupNavigationController` |
@@ -976,14 +978,14 @@ export function getActiveElement(
 
 ---
 
-### A.7 Updated `hasVisibleFocusInTree()`
+### A.7 Extracted `isFocusVisibleInTree()` utility
 
 Referenced from [§4.5 get-active-element.ts](#45-utilities) and [§2](#2-what-exists-in-2nd-gen-today).
 
-Shows how the existing `SpectrumMixin` method simplifies by using `getActiveElement()`:
+Shows how the former `SpectrumMixin.hasVisibleFocusInTree()` method became a standalone utility built on `getActiveElement()`:
 
 ```typescript
-// Before (current 2nd-gen — dead code + legacy fallback)
+// Before (former SpectrumMixin method: dead code + legacy fallback)
 public hasVisibleFocusInTree(): boolean {
   const getAncestors = (root: Document = document): HTMLElement[] => {
     let currentNode = root.activeElement as HTMLElement;
@@ -1010,9 +1012,11 @@ public hasVisibleFocusInTree(): boolean {
 ```
 
 ```ts
-// After (proposed cleanup)
-public hasVisibleFocusInTree(): boolean {
-  const active = getActiveElement(this.getRootNode() as Document);
+// After (extracted to utils/is-focus-visible-in-tree.ts)
+export function isFocusVisibleInTree(
+  root: Document | ShadowRoot = document
+): boolean {
+  const active = getActiveElement(root);
   return active?.matches(':focus-visible') ?? false;
 }
 ```
