@@ -83,7 +83,7 @@
 
 - `progress` (Number) - Progress value
 - `variant` (String) - Meter variant: 'positive', 'notice', or 'negative'
-- `accessibleLabel` (String) - Screen-reader-only label for contexts where no visible label slot is used (for example a data grid). Sets `aria-label` on the inner `role="meter"` element instead of `aria-labelledby`.
+- `accessibleLabel` (String) - Screen reader-only label for contexts where no visible label slot is used (for example a data grid). Sets `aria-label` on the inner `role="meter"` element instead of `aria-labelledby`.
 - `sideLabel` (Boolean) - Whether to display label on the side
 - `staticColor` (String) - Static color: 'white'
 

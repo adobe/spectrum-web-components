@@ -17,6 +17,7 @@ import { SizedMixin } from '@adobe/spectrum-wc-core/mixins/index.js';
 
 import {
   STATUS_LIGHT_VALID_SIZES,
+  type StatusLightSize,
   type StatusLightVariant,
 } from './StatusLight.types.js';
 
@@ -30,6 +31,11 @@ export abstract class StatusLightBase extends SizedMixin(SpectrumElement, {
   validSizes: STATUS_LIGHT_VALID_SIZES,
   noDefaultSize: true,
 }) {
+  /**
+   * The size of the status light.
+   */
+  declare public size: StatusLightSize;
+
   // ─────────────────────────
   //     API TO OVERRIDE
   // ─────────────────────────

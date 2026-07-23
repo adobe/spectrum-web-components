@@ -1,6 +1,6 @@
 {
   "name": "@adobe/spectrum-wc-core",
-  "version": "0.3.0",
+  "version": "2.0.0-beta.2",
   "description": "Abstract base classes for Spectrum Web Components",
   "license": "Apache-2.0",
   "author": "Adobe",
@@ -166,6 +166,10 @@
     "./controllers/placement-controller/index.js": {
       "types": "./dist/controllers/placement-controller/index.d.ts",
       "import": "./dist/controllers/placement-controller/index.js"
+    },
+    "./controllers/slot-attribute-propagation-controller.js": {
+      "types": "./dist/controllers/slot-attribute-propagation-controller/index.d.ts",
+      "import": "./dist/controllers/slot-attribute-propagation-controller/index.js"
     },
     "./directives": {
       "types": "./dist/directives/index.d.ts",
@@ -368,6 +372,9 @@
       ],
       "controllers/placement-controller/index.js": [
         "dist/controllers/placement-controller/index.d.ts"
+      ],
+      "controllers/slot-attribute-propagation-controller.js": [
+        "dist/controllers/slot-attribute-propagation-controller/index.d.ts"
       ],
       "directives": [
         "dist/directives/index.d.ts"

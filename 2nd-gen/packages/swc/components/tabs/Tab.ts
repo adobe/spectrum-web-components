@@ -29,8 +29,18 @@ import styles from './tab.css';
  * @slot - Text label of the tab
  * @slot icon - Optional icon displayed before the label
  *
+ * @cssprop --swc-tab-height - Block size of the tab.
+ * @cssprop --swc-tab-padding-block - Block padding of the tab.
+ * @cssprop --swc-tab-padding-block-end - Block-end padding of the tab.
+ * @cssprop --swc-tab-text-color - Color of the tab label text.
+ *
  * @example
  * <swc-tab tab-id="settings">Settings</swc-tab>
+ *
+ * @cssprop --swc-tab-text-color - Text color of the tab label.
+ * @cssprop --swc-tab-height - Block size of the tab.
+ * @cssprop --swc-tab-padding-block - Block-start padding of the tab.
+ * @cssprop --swc-tab-padding-block-end - Block-end padding of the tab.
  */
 export class Tab extends TabBase {
   // ─────────────────────────────

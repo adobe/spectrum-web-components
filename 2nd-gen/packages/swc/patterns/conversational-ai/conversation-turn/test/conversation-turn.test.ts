@@ -13,7 +13,7 @@
 import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
-import '../index.js';
+import '../swc-conversation-turn.js';
 
 import { ConversationTurn } from '../ConversationTurn.js';
 import { meta, Overview } from '../stories/conversation-turn.stories.js';
