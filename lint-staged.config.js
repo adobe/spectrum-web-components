@@ -28,7 +28,9 @@ export default {
     'yarn install --refresh-lockfile',
     'git add 1st-gen/tools/base/src/version.ts 2nd-gen/packages/core/element/version.ts yarn.lock',
   ],
-  '.changeset/*.md': ['node 1st-gen/scripts/escape-changelog-tags.js'],
+  '{1st-gen,2nd-gen}/.changeset/*.md': [
+    'node 1st-gen/scripts/escape-changelog-tags.js',
+  ],
   '!(*.css|*.ts)': [
     'prettier --cache --no-error-on-unmatched-pattern --ignore-unknown --log-level silent --write',
   ],

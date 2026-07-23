@@ -103,7 +103,7 @@ function extractChanges(frontmatter, description, pattern, prefix = '') {
  * @returns {Promise<object>} Object containing categorized changes for both 1st-gen and core
  */
 async function processChangesets() {
-  const changesetDir = path.resolve(__dirname, '../../.changeset');
+  const changesetDir = path.resolve(__dirname, '../.changeset');
 
   // Use non-blocking I/O for directory read
   const files = await fsPromises.readdir(changesetDir);

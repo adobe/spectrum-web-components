@@ -1,0 +1,20 @@
+{
+  "$schema": "https://unpkg.com/@changesets/config@3.0.0/schema.json",
+  "access": "public",
+  "baseBranch": "main",
+  "changelog": [
+    "@changesets/changelog-github",
+    {
+      "disableThanks": true,
+      "repo": "adobe/spectrum-web-components"
+    }
+  ],
+  "commit": false,
+  "fixed": [["@spectrum-web-components/*"]],
+  "ignore": [],
+  "snapshot": {
+    "prereleaseTemplate": "{tag}.{datetime}",
+    "useCalculatedVersion": true
+  },
+  "updateInternalDependencies": "patch"
+}

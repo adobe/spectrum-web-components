@@ -1,0 +1,209 @@
+name: Publish Packages (2nd-gen)
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'NPM dist-tag'
+        required: false
+        default: 'beta'
+      dry_run:
+        description: 'Version packages and report the diff, but do not publish or push'
+        type: boolean
+        required: false
+        default: false
+  pull_request:
+    types: [labeled, synchronize]
+  push:
+    branches:
+      - gen2-beta
+
+concurrency:
+  group: publish-2nd-gen-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  check-changesets:
+    runs-on: ubuntu-latest
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      github.event_name == 'push' ||
+      (github.event_name == 'pull_request' &&
+      contains(github.event.pull_request.labels.*.name, 'snapshot-release'))
+    outputs:
+      has_changesets: ${{ steps.check.outputs.has_changesets }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Check for 2nd-gen changesets
+        id: check
+        run: |
+          # Independent of 1st-gen in every trigger - this workflow never reads
+          # 1st-gen/.changeset/, including for its own snapshot-release PR path.
+          COUNT=$(ls -1 2nd-gen/.changeset/*.md 2>/dev/null | grep -v README | wc -l | tr -d ' ')
+          if [ "$COUNT" -eq 0 ]; then
+            echo "has_changesets=false" >> $GITHUB_OUTPUT
+            echo "No 2nd-gen changesets found - skipping publish"
+          else
+            echo "has_changesets=true" >> $GITHUB_OUTPUT
+            echo "Found $COUNT 2nd-gen changeset(s)"
+          fi
+
+  publish:
+    needs: check-changesets
+    if: needs.check-changesets.outputs.has_changesets == 'true'
+    runs-on: ubuntu-latest
+    environment: npm-publish
+    permissions:
+      contents: write # Required for git push (via RELEASE_BOT_TOKEN below)
+    env:
+      YARN_ENABLE_IMMUTABLE_INSTALLS: false
+      DRY_RUN: ${{ github.event.inputs.dry_run }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.ref || 'gen2-beta' }}
+          fetch-depth: 0
+
+      - name: Setup job and install dependencies
+        uses: ./.github/actions/setup-job
+
+      - name: Set Git identity
+        run: |
+          git config --global user.email "support+actions@github.com"
+          git config --global user.name "github-actions-bot"
+
+      - name: Determine release tag
+        id: extract-tag
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          INPUT_TAG: ${{ github.event.inputs.tag }}
+        run: |
+          if [ "$EVENT_NAME" == "pull_request" ]; then
+            # PRs with the snapshot-release label always use snapshot-test, same as
+            # 1st-gen's snapshot-release path - a separate, throwaway run either way.
+            WORKFLOW_TAG="snapshot-test"
+          else
+            WORKFLOW_TAG="${INPUT_TAG:-beta}"
+          fi
+          echo "tag=$WORKFLOW_TAG" >> $GITHUB_OUTPUT
+          echo "Using npm tag: $WORKFLOW_TAG"
+
+      - name: Lock gen2-beta during release
+        if: github.event_name != 'pull_request' && env.DRY_RUN != 'true'
+        uses: ./.github/actions/release-branch-lock
+        with:
+          mode: lock
+          branch: gen2-beta
+          token: ${{ secrets.RELEASE_BOT_TOKEN }}
+
+      - name: Enter changesets pre-release mode
+        if: github.event_name != 'pull_request' && !hashFiles('2nd-gen/.changeset/pre.json')
+        env:
+          TAG: ${{ steps.extract-tag.outputs.tag }}
+        working-directory: 2nd-gen
+        run: yarn changeset pre enter $TAG
+
+      - name: Verify NPM authentication
+        id: npm-auth
+        env:
+          NPM_TOKEN: ${{ secrets.ADOBE_BOT_NPM_TOKEN }}
+        run: |
+          echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
+          echo "✓ NPM authentication configured for 2nd-gen (Adobe namespace)"
+
+      - name: Build all packages
+        run: yarn build
+
+      - name: Version packages
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          TAG: ${{ steps.extract-tag.outputs.tag }}
+        working-directory: 2nd-gen
+        run: |
+          if [ "$EVENT_NAME" == "pull_request" ]; then
+            # Throwaway snapshot version for PR testing only - never enters/touches
+            # the persistent pre-release (beta.N) state used by real gen2-beta releases.
+            yarn changeset version --snapshot $TAG
+          else
+            yarn changeset version
+          fi
+
+      - name: Capture released versions
+        id: versions
+        run: |
+          CORE_VERSION=$(node -p "require('./2nd-gen/packages/core/package.json').version")
+          SWC_VERSION=$(node -p "require('./2nd-gen/packages/swc/package.json').version")
+          echo "core=$CORE_VERSION" >> $GITHUB_OUTPUT
+          echo "swc=$SWC_VERSION" >> $GITHUB_OUTPUT
+
+      - name: Report dry-run diff
+        if: env.DRY_RUN == 'true'
+        run: |
+          echo "## Dry run - 2nd-gen version diff" >> $GITHUB_STEP_SUMMARY
+          echo '```diff' >> $GITHUB_STEP_SUMMARY
+          git diff --stat -- 2nd-gen/ >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          echo "Dry run requested - no packages were published and gen2-beta was not modified." >> $GITHUB_STEP_SUMMARY
+
+      - name: Refresh lockfile and rebuild
+        if: env.DRY_RUN != 'true'
+        run: |
+          yarn install --refresh-lockfile
+          yarn build
+
+      - name: Publish all packages
+        if: env.DRY_RUN != 'true' && steps.npm-auth.outcome == 'success'
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.ADOBE_BOT_NPM_TOKEN }}
+          TAG: ${{ steps.extract-tag.outputs.tag }}
+        working-directory: 2nd-gen
+        run: yarn changeset publish --no-git-tag --tag $TAG
+
+      - name: Commit and push changes
+        if: github.event_name != 'pull_request' && env.DRY_RUN != 'true'
+        env:
+          RELEASE_BOT_TOKEN: ${{ secrets.RELEASE_BOT_TOKEN }}
+        run: |
+          git add .
+          git commit --no-verify -m "chore: release 2nd-gen packages #publish" || echo "No changes to commit"
+          git remote set-url origin "https://x-access-token:${RELEASE_BOT_TOKEN}@github.com/${{ github.repository }}.git"
+          git pull --rebase origin gen2-beta
+          git push origin HEAD:gen2-beta
+
+      - name: Publish summary
+        if: always()
+        env:
+          TAG: ${{ steps.extract-tag.outputs.tag }}
+          EVENT_NAME: ${{ github.event_name }}
+          CORE_VERSION: ${{ steps.versions.outputs.core }}
+          SWC_VERSION: ${{ steps.versions.outputs.swc }}
+          AUTH_OUTCOME: ${{ steps.npm-auth.outcome }}
+        run: |
+          echo "## Publish summary (2nd-gen)" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Field | Value |" >> $GITHUB_STEP_SUMMARY
+          echo "|-------|-------|" >> $GITHUB_STEP_SUMMARY
+          echo "| **Trigger** | \`${EVENT_NAME}\` |" >> $GITHUB_STEP_SUMMARY
+          echo "| **NPM tag** | \`${TAG}\` |" >> $GITHUB_STEP_SUMMARY
+          echo "| **Dry run** | \`${DRY_RUN}\` |" >> $GITHUB_STEP_SUMMARY
+          [ -n "$CORE_VERSION" ] && echo "| **@adobe/spectrum-wc-core** | \`${CORE_VERSION}\` |" >> $GITHUB_STEP_SUMMARY
+          [ -n "$SWC_VERSION" ] && echo "| **@adobe/spectrum-wc** | \`${SWC_VERSION}\` |" >> $GITHUB_STEP_SUMMARY
+
+          if [ "$DRY_RUN" == "true" ]; then
+            echo "🔎 Dry run only — nothing published or pushed" >> $GITHUB_STEP_SUMMARY
+          elif [ "$AUTH_OUTCOME" == "success" ]; then
+            echo "✅ Publish completed with tag \`${TAG}\`" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "❌ Publish failed — NPM authentication did not succeed" >> $GITHUB_STEP_SUMMARY
+          fi
+
+      - name: Unlock gen2-beta after release
+        if: always() && github.event_name != 'pull_request' && env.DRY_RUN != 'true'
+        uses: ./.github/actions/release-branch-lock
+        with:
+          mode: unlock
+          branch: gen2-beta
+          token: ${{ secrets.RELEASE_BOT_TOKEN }}

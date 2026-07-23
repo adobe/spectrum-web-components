@@ -6775,6 +6775,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/2nd-gen@workspace:2nd-gen"
   dependencies:
+    "@changesets/changelog-github": "npm:0.5.1"
+    "@changesets/cli": "npm:2.29.7"
     "@storybook/addon-vitest": "npm:10.3.5"
     eslint: "npm:9.39.2"
     eslint-plugin-simple-import-sort: "npm:12.1.1"
