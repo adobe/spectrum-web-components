@@ -11,10 +11,13 @@
  */
 
 import { html } from 'lit';
+import { ref } from 'lit/directives/ref.js';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
+import { action } from 'storybook/actions';
 
+import type { Dropzone } from '@adobe/spectrum-wc/dropzone';
 import {
   DROPZONE_VALID_SIZES,
   type DropzoneSize,
@@ -36,6 +39,20 @@ argTypes.size = {
   options: DROPZONE_VALID_SIZES,
 };
 
+// Playground renders real illustrated-message/browse/file-input markup so drag-and-drop and
+// browse-to-upload actually swap the zone into its filled state; the generic slot controls
+// have no effect on that markup, so hide them rather than leave dead controls in the sidebar.
+argTypes['default-slot'] = {
+  ...argTypes['default-slot'],
+  table: { disable: true },
+  control: false,
+};
+argTypes['filled-content-slot'] = {
+  ...argTypes['filled-content-slot'],
+  table: { disable: true },
+  control: false,
+};
+
 /**
  * A drop zone is a target area that accepts dragged-and-dropped content, typically files,
  * from the operating system or from within the same page. It pairs a visual drop area with
@@ -51,8 +68,9 @@ const meta: Meta = {
     docs: {
       subtitle: `Target area for drag-and-drop file uploads with a required browse control.`,
     },
-    // design: { type: 'figma', url: 'https://www.figma.com/...' },
-    // stackblitz: { url: 'https://stackblitz.com/...' },
+    stackblitz: {
+      url: 'https://stackblitz.com/edit/vitejs-vite-wcmws1cg',
+    },
   },
   tags: ['migrated'],
 };
@@ -89,29 +107,146 @@ const makeDropzoneSlot = (
   </swc-illustrated-message>
 `;
 
-// HTML string version used by the Playground so template(args) can spread all args.
-const DROPZONE_SLOT_HTML = `
-  <swc-illustrated-message>
-    ${DROPZONE_SVG}
-    <h2 slot="heading">Drag and drop your file</h2>
-    <span slot="description">${DEFAULT_DROPZONE_DESCRIPTION}</span>
-    <swc-button slot="actions" variant="accent">Browse files</swc-button>
-  </swc-illustrated-message>
-`;
+// Focus management on accept lives here, not in the component: `filled-content`
+// is consumer-authored, so only the consumer knows which element to focus.
+// The replace button's accessible name includes the file name, set before
+// focus moves there, since a screen reader can otherwise announce the stale
+// default name.
+const bindFilledStateHandlers = (
+  getDropzone: () => Dropzone | null,
+  getFilledContent: () => HTMLElement | null,
+  getFileInput: () => HTMLInputElement | null,
+  getReplaceButton: () => HTMLElement | null
+): {
+  handleDrop: (event: Event) => void;
+  handleChange: () => void;
+  browseFiles: () => void;
+} => {
+  const acceptFile = (name: string): void => {
+    const filledContent = getFilledContent();
+    if (filledContent) {
+      filledContent.textContent = `${name} uploaded`;
+    }
+    getReplaceButton()?.setAttribute('accessible-label', `Replace ${name}`);
+    const dropzone = getDropzone();
+    dropzone?.setAttribute('filled', '');
+    dropzone?.updateComplete.then(() => {
+      getReplaceButton()?.focus();
+    });
+  };
+
+  return {
+    handleDrop: (event: Event): void => {
+      const detail = (event as CustomEvent<DragEvent>).detail;
+      acceptFile(detail.dataTransfer?.files?.[0]?.name ?? 'File');
+    },
+    handleChange: (): void => {
+      acceptFile(getFileInput()?.files?.[0]?.name ?? 'File');
+    },
+    browseFiles: (): void => {
+      getFileInput()?.click();
+    },
+  };
+};
+
+// Shared interactive render for the Playground and behavior/a11y stories.
+const renderFilledStateExample = (
+  ariaLabel: string,
+  options: { size?: DropzoneSize; dragged?: boolean; filled?: boolean } = {}
+) => {
+  const { size = 'm', dragged = false, filled = false } = options;
+  let dropzone: Dropzone | null = null;
+  let fileInput: HTMLInputElement | null = null;
+  let filledContent: HTMLElement | null = null;
+  let replaceButton: HTMLElement | null = null;
+  const { handleDrop, handleChange, browseFiles } = bindFilledStateHandlers(
+    () => dropzone,
+    () => filledContent,
+    () => fileInput,
+    () => replaceButton
+  );
+  // Custom render bypasses `template(args)`'s automatic event-to-Actions-panel
+  // wiring, so each event is logged explicitly here instead.
+  const logAction = (name: string) => (event: Event) => action(name)(event);
+  const handleDropAndLog = (event: Event): void => {
+    handleDrop(event);
+    action('swc-dropzone-drop')(event);
+  };
+  return html`
+    <swc-dropzone
+      ${ref((element?: Element) => (dropzone = (element as Dropzone) ?? null))}
+      size=${size}
+      aria-label=${ariaLabel}
+      ?dragged=${dragged}
+      ?filled=${filled}
+      style="min-inline-size: 260px;"
+      @swc-dropzone-should-accept=${logAction('swc-dropzone-should-accept')}
+      @swc-dropzone-dragover=${logAction('swc-dropzone-dragover')}
+      @swc-dropzone-dragleave=${logAction('swc-dropzone-dragleave')}
+      @swc-dropzone-drop=${handleDropAndLog}
+    >
+      <swc-illustrated-message>
+        ${unsafeHTML(DROPZONE_SVG)}
+        <h2 slot="heading">Drag and drop your file</h2>
+        <span slot="description">${DEFAULT_DROPZONE_DESCRIPTION}</span>
+        <swc-button slot="actions" variant="accent" @click=${browseFiles}>
+          Browse files
+        </swc-button>
+      </swc-illustrated-message>
+      <input
+        ${ref(
+          (element?: Element) =>
+            (fileInput = (element as HTMLInputElement) ?? null)
+        )}
+        type="file"
+        aria-label="Choose a file"
+        style="display: none;"
+        @change=${handleChange}
+      />
+      <div
+        slot="filled-content"
+        style="display: flex; align-items: center; gap: 8px;"
+      >
+        <span
+          ${ref(
+            (element?: Element) =>
+              (filledContent = (element as HTMLElement) ?? null)
+          )}
+        ></span>
+        <swc-button
+          ${ref(
+            (element?: Element) =>
+              (replaceButton = (element as HTMLElement) ?? null)
+          )}
+          size="s"
+          variant="secondary"
+          @click=${browseFiles}
+        >
+          Replace file
+        </swc-button>
+      </div>
+    </swc-dropzone>
+  `;
+};
 
 // ────────────────────────
 //    PLAYGROUND STORY
 // ────────────────────────
 
 export const Playground: Story = {
-  tags: ['autodocs', 'dev'],
+  tags: ['dev'],
   args: {
     size: 'm',
     dragged: false,
     filled: false,
     'aria-label': 'Upload files',
-    'default-slot': DROPZONE_SLOT_HTML,
   },
+  render: (args) =>
+    renderFilledStateExample(args['aria-label'] as string, {
+      size: args.size as DropzoneSize,
+      dragged: args.dragged as boolean,
+      filled: args.filled as boolean,
+    }),
 };
 
 // ──────────────────────────
@@ -189,7 +324,13 @@ export const States: Story = {
       style="min-inline-size: 260px;"
     >
       ${makeDropzoneSlot('Drag and drop your file')}
-      <p slot="filled-content">report-q4.pdf uploaded</p>
+      <div
+        slot="filled-content"
+        style="display: flex; align-items: center; gap: 8px;"
+      >
+        <span>report-q4.pdf uploaded</span>
+        <swc-button size="s" variant="secondary">Replace file</swc-button>
+      </div>
     </swc-dropzone>
 
     <swc-dropzone
@@ -210,10 +351,22 @@ export const States: Story = {
 //    BEHAVIORS STORIES
 // ──────────────────────────────
 
-// TODO: Phase 7 — add event log story demonstrating drag events
+export const Events: Story = {
+  render: () => renderFilledStateExample('Upload files'),
+  tags: ['behaviors'],
+};
+
+export const BrowseAndDrop: Story = {
+  render: () => renderFilledStateExample('Upload files'),
+  tags: ['behaviors'],
+};
+BrowseAndDrop.storyName = 'Browse and drop';
 
 // ────────────────────────────────
 //    ACCESSIBILITY STORIES
 // ────────────────────────────────
 
-// TODO: will complete in separate documentation pass of phase 7
+export const Accessibility: Story = {
+  render: () => renderFilledStateExample('Upload a profile photo'),
+  tags: ['a11y'],
+};
