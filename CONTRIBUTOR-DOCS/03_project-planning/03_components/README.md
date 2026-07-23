@@ -35,6 +35,7 @@
 - Alert Banner
     - [Alert Banner migration roadmap](alert-banner/rendering-and-styling-migration-analysis.md)
 - Asset
+    - [Asset component plan](asset/component-plan.md)
     - [Asset migration roadmap](asset/rendering-and-styling-migration-analysis.md)
 - Avatar
     - [Avatar accessibility migration analysis](avatar/accessibility-migration-analysis.md)
