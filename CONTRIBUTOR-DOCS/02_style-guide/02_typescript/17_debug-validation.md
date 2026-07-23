@@ -13,16 +13,16 @@
 
 - [Debug mode API](#debug-mode-api)
 - [Reusable validation helpers](#reusable-validation-helpers)
-    - [validateEnum() — Union types and enum values](#validateenum--union-types-and-enum-values)
-    - [warnIf() — Required, conditionally required, mutually exclusive, and one-off checks](#warnif--required-conditionally-required-mutually-exclusive-and-one-off-checks)
+    - [validateEnum(): Union types and enum values](#validateenum-union-types-and-enum-values)
+    - [warnIf(): Required, conditionally required, mutually exclusive, and one-off checks](#warnif-required-conditionally-required-mutually-exclusive-and-one-off-checks)
 - [Validation by lifecycle hook](#validation-by-lifecycle-hook)
-    - [update() — Pre-render validation](#update--pre-render-validation)
-    - [firstUpdated() — One-time setup validation](#firstupdated--one-time-setup-validation)
-    - [updated() — Post-render validation](#updated--post-render-validation)
-    - [connectedCallback() — Environment validation](#connectedcallback--environment-validation)
+    - [update(): Pre-render validation](#update-pre-render-validation)
+    - [firstUpdated(): One-time setup validation](#firstupdated-one-time-setup-validation)
+    - [updated(): Post-render validation](#updated-post-render-validation)
+    - [connectedCallback(): Environment validation](#connectedcallback-environment-validation)
 - [Slot validation](#slot-validation)
-    - [validateRequiredSlot() — Required slots](#validaterequiredslot--required-slots)
-    - [validateAllowedChildren() — Allowed children](#validateallowedchildren--allowed-children)
+    - [validateRequiredSlot(): Required slots](#validaterequiredslot-required-slots)
+    - [validateAllowedChildren(): Allowed children](#validateallowedchildren-allowed-children)
 - [Deprecation warnings](#deprecation-warnings)
     - [Deprecation warning structure](#deprecation-warning-structure)
     - [Testing deprecation warnings](#testing-deprecation-warnings)
@@ -93,11 +93,11 @@ before it's assigned). Which hook to call each helper from:
 
 | Helper / check | Call from | Why |
 |---|---|---|
-| `validateEnum` | `update()`, before `super.update()` | Runs on every property change, before render commits; see [update()](#update--pre-render-validation). |
-| `warnIf`: required property | `firstUpdated()` | One-time check once the DOM exists; see [firstUpdated()](#firstupdated--one-time-setup-validation). |
-| `warnIf`: conditionally required property (depends on slot content) | `updated()` | Needs both the current property value *and* rendered/slotted DOM to check against; see [updated()](#updated--post-render-validation). |
+| `validateEnum` | `update()`, before `super.update()` | Runs on every property change, before render commits; see [update()](#update-pre-render-validation). |
+| `warnIf`: required property | `firstUpdated()` | One-time check once the DOM exists; see [firstUpdated()](#firstupdated-one-time-setup-validation). |
+| `warnIf`: conditionally required property (depends on slot content) | `updated()` | Needs both the current property value *and* rendered/slotted DOM to check against; see [updated()](#updated-post-render-validation). |
 | `warnIf`: mutually exclusive / no-effect combination | `update()`, before `super.update()` | Same as enum checks: pure property-to-property comparison, no DOM needed. |
-| `warnIf`: ancestor/context requirement | `connectedCallback()` | Needs the element attached to the tree to call `closest()`/traverse context; see [connectedCallback()](#connectedcallback--environment-validation). |
+| `warnIf`: ancestor/context requirement | `connectedCallback()` | Needs the element attached to the tree to call `closest()`/traverse context; see [connectedCallback()](#connectedcallback-environment-validation). |
 | `validateRequiredSlot`, `validateAllowedChildren` | The slot's own `slotchange` handler | Not a Lit lifecycle hook at all: slot assignment is a separate DOM event. See [Slot validation](#slot-validation). |
 
 Never call any of these from the constructor: no property values have been
@@ -116,7 +116,7 @@ for the one remaining collision case, across multiple instances of the same
 component) suppresses repeat fires within a session regardless of how many
 times the lifecycle hook re-runs.
 
-### validateEnum() — Union types and enum values
+### validateEnum(): Union types and enum values
 
 ```ts
 protected override update(changedProperties: PropertyValues): void {
@@ -130,7 +130,7 @@ protected override update(changedProperties: PropertyValues): void {
 }
 ```
 
-### warnIf() — Required, conditionally required, mutually exclusive, and one-off checks
+### warnIf(): Required, conditionally required, mutually exclusive, and one-off checks
 
 `warnIf(element, condition, message, url, options?)` is the general-purpose
 primitive: it warns when `condition` is `true`. It covers every validation
@@ -206,7 +206,7 @@ writing `window.__swc.warn()` directly, but the lifecycle-hook guidance
 (which method to override, and why) still applies regardless of which call
 you make inside it.
 
-### update() — Pre-render validation
+### update(): Pre-render validation
 
 **What to validate:**
 
@@ -221,7 +221,7 @@ Lit’s [`update()`](https://lit.dev/docs/components/lifecycle/#update) “refle
 - If you call `super.update()` **first** and then run DEBUG code, that code runs **after** `render()` has run for this cycle (still before Lit calls [`updated()`](https://lit.dev/docs/components/lifecycle/#updated)).
 - For DEBUG that should fire **before** `render()` and DOM commit, run it **before** `super.update()` in your override, or use [`willUpdate()`](https://lit.dev/docs/components/lifecycle/#willupdate) (Lit calls it before `update()`).
 
-The [reactive update cycle](https://lit.dev/docs/components/lifecycle/#reactive-update-cycle) runs at microtask timing, generally before the browser paints the next frame—but “before paint” is not the same as “before `render()`” inside your component.
+The [reactive update cycle](https://lit.dev/docs/components/lifecycle/#reactive-update-cycle) runs at microtask timing, generally before the browser paints the next frame, but “before paint” is not the same as “before `render()`” inside your component.
 
 **References (Lit):**
 
@@ -261,7 +261,7 @@ protected override update(changedProperties: PropertyValues): void {
 }
 ```
 
-### firstUpdated() — One-time setup validation
+### firstUpdated(): One-time setup validation
 
 **What to validate:**
 
@@ -294,7 +294,7 @@ protected override firstUpdated(changed: PropertyValues): void {
 }
 ```
 
-### updated() — Post-render validation
+### updated(): Post-render validation
 
 **What to validate:**
 
@@ -327,7 +327,7 @@ protected override updated(changed: PropertyValues<this>): void {
 }
 ```
 
-### connectedCallback() — Environment validation
+### connectedCallback(): Environment validation
 
 **What to validate:**
 
@@ -368,7 +368,7 @@ hook. Wiring is manual (there is no base-class magic that auto-attaches
 these): add a `@slotchange=${this.handleXSlotChange}` on the `<slot>` in
 `render()` and call the helper from that handler.
 
-### validateRequiredSlot() — Required slots
+### validateRequiredSlot(): Required slots
 
 ```ts
 protected override render(): TemplateResult {
@@ -387,7 +387,7 @@ protected handleLabelSlotChange(event: Event): void {
 }
 ```
 
-### validateAllowedChildren() — Allowed children
+### validateAllowedChildren(): Allowed children
 
 Generalizes the pattern IllustratedMessage's heading slot already uses
 (previously a one-off `['H2','H3','H4','H5','H6']` allowlist inline in the
@@ -483,16 +483,16 @@ window.__swc.warn(
 **Writing good warning messages:**
 
 ```ts
-// ✅ Good — specific, actionable
+// ✅ Good: specific, actionable
 `Invalid variant "${this.variant}". Valid variants: positive, negative, informative, notice, neutral.`
 
-// ❌ Bad — vague
+// ❌ Bad: vague
 `Invalid variant.`
 
-// ✅ Good — explains the constraint
+// ✅ Good: explains the constraint
 `Outline styling requires a semantic variant. Current variant "${this.variant}" is not semantic.`
 
-// ❌ Bad — doesn't explain why
+// ❌ Bad: doesn't explain why
 `Cannot use outline with this variant.`
 ```
 
