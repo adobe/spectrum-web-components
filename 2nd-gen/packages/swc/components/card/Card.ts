@@ -44,7 +44,7 @@ import styles from './card.css';
  * @slot media - Optional overlay content (e.g. a badge or avatar) layered over the preview/collection media region.
  *
  * @cssprop --swc-card-collection-item-aspect-ratio - Aspect ratio of each collection image. Defaults to 1 (square).
- * @cssprop --swc-card-collection-gap - Gap between collection images, and between the preview and the collection row. Defaults to a small group-gap token, overridden at size="xs".
+ * @cssprop --swc-card-collection-gap - Gap between collection images, and between the preview and the collection row. Defaults to a extra-small group-gap token, overridden at size="xs".
  */
 export class Card extends CardBase {
   // ──────────────────────────────
