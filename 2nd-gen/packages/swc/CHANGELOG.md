@@ -4,23 +4,23 @@
 
 ### Minor Changes
 
-- [#6413](https://github.com/adobe/spectrum-web-components/pull/6413) [`b4f454b`](https://github.com/adobe/spectrum-web-components/commit/b4f454b979fe60212d1c7ea4f4b86a29def4666b) - Add the 2nd-gen `<swc-close-button>`, migrated from the Spectrum 1 `<sp-close-button>`.
+- [#6410](https://github.com/adobe/spectrum-web-components/pull/6410) [`b0c6e37`](https://github.com/adobe/spectrum-web-components/commit/b0c6e375760ccc1ec6c1773ed1aa4015aa3b0f03) - Add the 2nd-gen `<swc-close-button>`, migrated from the Spectrum 1 `<sp-close-button>`.
   - **API**: `size`, `disabled`, `accessible-label`, and `static-color`; omits the legacy `variant` surface in favor of `static-color`.
   - **Accessibility**: renders a real inner `<button type="button">` with delegated focus; requires `accessible-label` for its icon-only name; the cross icon remains decorative.
   - **Styling**: ships Spectrum 2 sizing and static-color treatments plus the `--swc-close-button-*` custom-property surface for token-aligned overrides.
   - **Docs and tests**: includes Storybook docs, consumer migration guidance, unit coverage, and Playwright accessibility and keyboard tests.
 
-- [#6413](https://github.com/adobe/spectrum-web-components/pull/6413) [`b4f454b`](https://github.com/adobe/spectrum-web-components/commit/b4f454b979fe60212d1c7ea4f4b86a29def4666b) - **feat(color-handle):** Added `<swc-color-handle>`, the Spectrum 2 migration of `sp-color-handle`.
+- [#6480](https://github.com/adobe/spectrum-web-components/pull/6480) [`f27f690`](https://github.com/adobe/spectrum-web-components/commit/f27f6906f142f824dcc28f588e205271a36ec04a) - **feat(color-handle):** Added `<swc-color-handle>`, the Spectrum 2 migration of `sp-color-handle`.
 
   A non-interactive color-picker primitive exposing `color`, `disabled`, `focused`, `open`, and the new `fill` property, with a built-in `<swc-color-loupe>` and an adaptive white-first dual border that meets WCAG 1.4.11 non-text contrast across the color spectrum. The `--mod-colorhandle-*` custom properties are removed; see the migration guide.
 
-- [#6413](https://github.com/adobe/spectrum-web-components/pull/6413) [`b4f454b`](https://github.com/adobe/spectrum-web-components/commit/b4f454b979fe60212d1c7ea4f4b86a29def4666b) - **feat(live-selection-controller):** Added `LiveSelectionController`, a Lit reactive controller that enforces a selection constraint (single or multiple) on a group of items that each own their own selected state.
+- [#6486](https://github.com/adobe/spectrum-web-components/pull/6486) [`bf02e76`](https://github.com/adobe/spectrum-web-components/commit/bf02e76631132eceab732095587cf3f761fe2e87) - **feat(live-selection-controller):** Added `LiveSelectionController`, a Lit reactive controller that enforces a selection constraint (single or multiple) on a group of items that each own their own selected state.
 
   Use it for patterns like accordions and disclosure groups where items manage their own `open` or `selected` property and can change that state on their own initiative. Unlike a cache-authoritative controller, it reads item state live from the DOM on each observed event rather than maintaining an internal list, so it stays correct even when items change themselves outside a controller-driven transition.
 
   The accordion (`swc-accordion`) now uses `LiveSelectionController` internally to enforce its exclusive-open constraint; its public API and behavior are unchanged.
 
-- [#6413](https://github.com/adobe/spectrum-web-components/pull/6413) [`b4f454b`](https://github.com/adobe/spectrum-web-components/commit/b4f454b979fe60212d1c7ea4f4b86a29def4666b) - **fix(tabs):** Changed the default `keyboard-activation` on `<swc-tabs>` from `manual` to `automatic`, aligning with React Spectrum/React Aria `Tabs`.
+- [#6476](https://github.com/adobe/spectrum-web-components/pull/6476) [`e2a7e4e`](https://github.com/adobe/spectrum-web-components/commit/e2a7e4ef200a88e991ac6f2fcf0098c65df91969) - **fix(tabs):** Changed the default `keyboard-activation` on `<swc-tabs>` from `manual` to `automatic`, aligning with React Spectrum/React Aria `Tabs`.
 
   `swc-tab-panel` content is always present in the light DOM (not lazily mounted), which is the condition the WAI-ARIA APG recommends for automatic activation. Consumers relying on the previous implicit `manual` default (inherited from 1st-gen `sp-tabs`' `auto = false`) should add `keyboard-activation="manual"` explicitly, particularly if their own panel content is expensive to render or lazy-loaded.
 
@@ -32,7 +32,7 @@
 
   New in Spectrum 2: `min-value` / `max-value` for arbitrary numeric ranges, `static-color="black"`, `value-label`, a `formatOptions` property, `accessible-label`, and a `description` slot. `over-background` is removed in favor of `static-color="white"`, and `role="progressbar"` plus the `aria-value*` attributes now live on an internal element rather than the host. See the Progress Bar migration guide for full upgrade steps.
 
-- [#6413](https://github.com/adobe/spectrum-web-components/pull/6413) [`b4f454b`](https://github.com/adobe/spectrum-web-components/commit/b4f454b979fe60212d1c7ea4f4b86a29def4666b) - **refactor(tabs):** Migrate `<swc-tabs>` keyboard navigation to `FocusgroupNavigationController`.
+- [#6494](https://github.com/adobe/spectrum-web-components/pull/6494) [`9e7995a`](https://github.com/adobe/spectrum-web-components/commit/9e7995ad8189970d6788a7872007d611af247663) - **refactor(tabs):** Migrate `<swc-tabs>` keyboard navigation to `FocusgroupNavigationController`.
 
   Arrow-key, Home, and End navigation is now handled by the controller rather than by manually computed deltas in `handleKeyDown`. The `handleKeyDown` method retains only Enter/Space activation; all roving-tabindex management is delegated to the controller. In automatic activation mode, `focusgroupNavigationActiveChange` events with `source: 'keyboard'` drive selection-follows-focus; events with `source: 'refresh'` or `source: 'programmatic'` are intentionally ignored so that mounting or toggling `disabled` cannot trigger spurious `change` events.
 
@@ -51,11 +51,11 @@
 
 - [#6519](https://github.com/adobe/spectrum-web-components/pull/6519) [`c28d00c`](https://github.com/adobe/spectrum-web-components/commit/c28d00c474bd0480390984891d35ad50a11608be) - Fix the broken `@import` in the published `global-link.css`. The build flattens all stylesheets into `dist/` root, but `global-link.css` shipped with `@import url("../link.css")` (relative to its source subfolder), which pointed one directory above `dist/` and failed to resolve for consumers of `@adobe/spectrum-wc/global-link.css`. Local `@import` targets are now rewritten to sibling references (`./link.css`) during the flatten.
 
-- [#6413](https://github.com/adobe/spectrum-web-components/pull/6413) [`b4f454b`](https://github.com/adobe/spectrum-web-components/commit/b4f454b979fe60212d1c7ea4f4b86a29def4666b) - **fix(illustrated-message):** Fixed the `actions` slot content alignment in `<swc-illustrated-message>`.
+- [#6457](https://github.com/adobe/spectrum-web-components/pull/6457) [`8c4acae`](https://github.com/adobe/spectrum-web-components/commit/8c4acae801b1d8c43d9e41c79b0afe8bb6eff8f4) - **fix(illustrated-message):** Fixed the `actions` slot content alignment in `<swc-illustrated-message>`.
 
   The `.swc-IllustratedMessage-content` flex container was missing `align-items: center`, causing slotted actions (e.g. a `<swc-button>` or `<swc-button-group>`) to stretch to the container width instead of centering horizontally.
 
-- [#6413](https://github.com/adobe/spectrum-web-components/pull/6413) [`b4f454b`](https://github.com/adobe/spectrum-web-components/commit/b4f454b979fe60212d1c7ea4f4b86a29def4666b) - **fix(popover):** Fixed `swc-popover` staying dismissed on the next unrelated outside click after a trigger press was dragged off and released elsewhere.
+- [#6506](https://github.com/adobe/spectrum-web-components/pull/6506) [`6049706`](https://github.com/adobe/spectrum-web-components/commit/6049706e5d08bb92cd6531cbf7661c282b3ab409) - **fix(popover):** Fixed `swc-popover` staying dismissed on the next unrelated outside click after a trigger press was dragged off and released elsewhere.
 
   A `pointerdown` on the trigger followed by a drag off the trigger and a release elsewhere never dispatches a `click`, so the internal reopen-guard flag was left stuck `true`, misattributing the next unrelated outside light-dismiss to that stale press and swallowing the following legitimate trigger click.
 
@@ -71,12 +71,12 @@
 
 - [#6533](https://github.com/adobe/spectrum-web-components/pull/6533) [`5da5474`](https://github.com/adobe/spectrum-web-components/commit/5da54741eadcf61d60fd37d700ff457419a4d2ca) - **fix(progress-circle):** Replaced the `animation: none` reduced-motion override on `<swc-progress-circle>`'s indeterminate state with a slowed, single-rotation animation driven by custom properties (`--swc-progress-circle-rotate-start`, `--swc-progress-circle-rotate-end`, `--swc-progress-circle-dashoffset-30`), so `prefers-reduced-motion: reduce` still conveys progress without the distracting spin.
 
-- [#6413](https://github.com/adobe/spectrum-web-components/pull/6413) [`b4f454b`](https://github.com/adobe/spectrum-web-components/commit/b4f454b979fe60212d1c7ea4f4b86a29def4666b) - Refine the 2nd-gen response status pattern API, animation, and docs.
+- [#6462](https://github.com/adobe/spectrum-web-components/pull/6462) [`2865959`](https://github.com/adobe/spectrum-web-components/commit/286595965919b77dd2a17f4db5169171ca18a4db) - Refine the 2nd-gen response status pattern API, animation, and docs.
   - **Added**: Header label roll animation on text changes; update cadence remains consumer-managed.
   - **Added**: `<swc-response-status-step>` as a dedicated step element with its own styles and exports.
   - **Updated**: Conversational AI stories, docs, and regression/a11y coverage for the new API and behaviors.
 
-- Updated dependencies [[`36052f3`](https://github.com/adobe/spectrum-web-components/commit/36052f305622ad8f46b44bf5d71e2b02ebd8229c), [`b4f454b`](https://github.com/adobe/spectrum-web-components/commit/b4f454b979fe60212d1c7ea4f4b86a29def4666b), [`b4f454b`](https://github.com/adobe/spectrum-web-components/commit/b4f454b979fe60212d1c7ea4f4b86a29def4666b), [`41e0483`](https://github.com/adobe/spectrum-web-components/commit/41e0483f59d3956ce973bbe50b2d54a1d8c73e9f), [`b4f454b`](https://github.com/adobe/spectrum-web-components/commit/b4f454b979fe60212d1c7ea4f4b86a29def4666b), [`1e053fe`](https://github.com/adobe/spectrum-web-components/commit/1e053fe761c20b1df70c842cb3f9dcee94e02d8d), [`7f0c3e9`](https://github.com/adobe/spectrum-web-components/commit/7f0c3e937e697e3e1d5d3973ce4f709542f1bbef), [`5da5474`](https://github.com/adobe/spectrum-web-components/commit/5da54741eadcf61d60fd37d700ff457419a4d2ca), [`b4f454b`](https://github.com/adobe/spectrum-web-components/commit/b4f454b979fe60212d1c7ea4f4b86a29def4666b)]:
+- Updated dependencies [[`36052f3`](https://github.com/adobe/spectrum-web-components/commit/36052f305622ad8f46b44bf5d71e2b02ebd8229c), [`b0c6e37`](https://github.com/adobe/spectrum-web-components/commit/b0c6e375760ccc1ec6c1773ed1aa4015aa3b0f03), [`f27f690`](https://github.com/adobe/spectrum-web-components/commit/f27f6906f142f824dcc28f588e205271a36ec04a), [`41e0483`](https://github.com/adobe/spectrum-web-components/commit/41e0483f59d3956ce973bbe50b2d54a1d8c73e9f), [`9e7995a`](https://github.com/adobe/spectrum-web-components/commit/9e7995ad8189970d6788a7872007d611af247663), [`1e053fe`](https://github.com/adobe/spectrum-web-components/commit/1e053fe761c20b1df70c842cb3f9dcee94e02d8d), [`7f0c3e9`](https://github.com/adobe/spectrum-web-components/commit/7f0c3e937e697e3e1d5d3973ce4f709542f1bbef), [`5da5474`](https://github.com/adobe/spectrum-web-components/commit/5da54741eadcf61d60fd37d700ff457419a4d2ca), [`6049706`](https://github.com/adobe/spectrum-web-components/commit/6049706e5d08bb92cd6531cbf7661c282b3ab409)]:
   - @adobe/spectrum-wc-core@2.0.0-beta.2
 
 ## 2.0.0-beta.1
