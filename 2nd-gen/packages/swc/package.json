@@ -103,7 +103,7 @@
     "@adobe/postcss-token": "workspace:*",
     "@adobe/swc-tokens": "workspace:*",
     "@adobe/vite-global-elements-css": "workspace:*",
-    "@axe-core/playwright": "4.11.2",
+    "@axe-core/playwright": "4.12.1",
     "@chromatic-com/storybook": "5.2.1",
     "@custom-elements-manifest/analyzer": "0.10.8",
     "@github-ui/storybook-addon-performance-panel": "1.1.4",
