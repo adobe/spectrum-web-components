@@ -279,7 +279,7 @@ export const Overview: Story = {
 **Required content:**
 
 - A flat, unordered list of the component's visual parts
-- Slot names called out **inline**, only where a reader needs to know a piece of content comes from a slot (so they write it as markup) rather than a property (so they write it as an attribute); not a separate slot inventory
+- Slot names are called out **inline** only in places where a reader needs to know a piece of content comes from a slot (so they write it as markup) rather than a property (so they write it as an attribute); not a separate slot inventory
 - Visual examples showing structure
 
 **Consolidation rule**: Combine all slotted content combinations into a **single Anatomy story**.
