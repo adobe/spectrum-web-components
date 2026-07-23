@@ -27,7 +27,7 @@ import styles from './color-handle.css';
  * accessibility is owned by the parent color picker.
  *
  * @element swc-color-handle
- * @since 2.0.0-beta.1
+ * @since 2.0.0-beta.2
  *
  * @example
  * <swc-color-handle color="rgba(0, 128, 255, 0.7)"></swc-color-handle>

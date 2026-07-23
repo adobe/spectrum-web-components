@@ -23,7 +23,7 @@ import styles from './avatar.css';
  * technology.
  *
  * @element swc-avatar
- * @since 2.0.0-beta.1
+ * @since 2.0.0-beta.2
  *
  * @example
  * <swc-avatar src="/path/to/image.jpg" alt="Jane Doe"></swc-avatar>

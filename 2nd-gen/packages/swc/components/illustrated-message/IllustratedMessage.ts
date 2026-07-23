@@ -18,7 +18,7 @@ import styles from './illustrated-message.css';
 
 /**
  * @element swc-illustrated-message
- * @since 2.0.0-beta.1
+ * @since 2.0.0-beta.2
  *
  * @cssprop --swc-illustrated-message-max-inline-size - Maximum inline size of the message.
  * @cssprop --swc-illustrated-message-illustration-size - Inline and block size of the illustration when no directional override is set.
