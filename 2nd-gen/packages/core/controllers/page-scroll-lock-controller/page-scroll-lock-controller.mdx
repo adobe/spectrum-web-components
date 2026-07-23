@@ -1,0 +1,87 @@
+{/* Copyright 2026 Adobe. All rights reserved. This file is licensed to you under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License. */}
+
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import { DocsFooter, DocsHeader } from '../../../swc/.storybook/blocks';
+
+import * as Stories from './stories/page-scroll-lock-controller.stories';
+
+<Meta of={Stories} />
+
+<DocsHeader />
+
+## Usage
+
+`PageScrollLockController` locks page scroll behind a blocking surface (a modal popover, dialog, or tray) by setting `overflow: hidden` on `document.documentElement`. A component's shadow stylesheet cannot reach `<html>`, so this has to be done in JS.
+
+### What it does
+
+- **Reference-counted locking** — the lock is tracked at module scope with a shared count. The original `overflow` is captured once on the 0 → 1 transition and restored once on the 1 → 0 transition, so stacked blocking surfaces (a modal popover opened over another) don't clobber each other's saved state.
+- **Idempotent per host** — each host holds at most one count; calling `lock()` or `unlock()` again while already in that state is a no-op.
+- **Automatic release on disconnect** — `hostDisconnected()` releases the host's held lock, so a removed component never leaves the page permanently unscrollable.
+
+### Basic usage
+
+1. Construct the controller in the host's constructor.
+2. Call `lock()` when the host becomes a blocking surface, and `unlock()` when it stops being one (for example, from `updated()` when an `open` property changes).
+
+```typescript
+import { LitElement, type PropertyValues } from 'lit';
+import { property } from 'lit/decorators.js';
+import { PageScrollLockController } from '@adobe/spectrum-wc-core/controllers/page-scroll-lock-controller.js';
+
+class SwcModalSurface extends LitElement {
+  @property({ type: Boolean, reflect: true }) open = false;
+
+  private readonly scrollLock = new PageScrollLockController(this);
+
+  protected override updated(changes: PropertyValues): void {
+    super.updated(changes);
+    if (changes.has('open')) {
+      if (this.open) {
+        this.scrollLock.lock();
+      } else {
+        this.scrollLock.unlock();
+      }
+    }
+  }
+}
+```
+
+## Behaviors
+
+### Lock and unlock
+
+Toggling the lock sets `overflow: hidden` on `document.documentElement`; toggling it off restores the original value. `PageScrollLockController` has no host interface requirement: any Lit `ReactiveElement` can construct one directly and call `lock()` / `unlock()`.
+
+The lock is reference-counted at module scope. With multiple hosts locking and unlocking independently, for example stacked modal surfaces, the original `overflow` is captured once on the first lock and restored once the last lock releases. An inner surface releasing first keeps the page locked until the outer surface also releases.
+
+<Canvas of={Stories.LockUnlock} />
+
+## Accessibility
+
+### Features
+
+`PageScrollLockController` only toggles `overflow` on `document.documentElement`; it does not manage focus. Pair it with focus management (for example trapping focus within a modal dialog, or relying on the native Popover API's focus behavior) so keyboard and screen reader users cannot reach content behind the blocking surface either.
+
+### Best practices
+
+- Only lock page scroll for true modal surfaces (dialogs, modal popovers, trays that block interaction with the rest of the page). Non-modal surfaces like tooltips or hint popovers should not lock scroll.
+- Call `lock()` / `unlock()` from a single lifecycle path (for example `updated()` keyed off an `open` property) rather than scattered call sites, so the host's lock state can't drift out of sync with its visible state.
+- Rely on `hostDisconnected()` for cleanup; there is no need to call `unlock()` manually when a host is removed from the DOM.
+
+<Canvas of={Stories.Accessibility} />
+
+## API
+
+### Constructor
+
+`new PageScrollLockController(host)` — registers the controller on the host.
+
+### Members
+
+| Member     | Description                                                                                             |
+| ---------- | ------------------------------------------------------------------------------------------------------- |
+| `lock()`   | Locks page scroll on behalf of the host. Idempotent per host.                                           |
+| `unlock()` | Releases the host's lock if it holds one. Idempotent per host. Also called automatically on disconnect. |
+
+<DocsFooter />

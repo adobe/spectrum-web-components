@@ -151,6 +151,10 @@
       "types": "./dist/controllers/live-selection-controller/index.d.ts",
       "import": "./dist/controllers/live-selection-controller/index.js"
     },
+    "./controllers/page-scroll-lock-controller.js": {
+      "types": "./dist/controllers/page-scroll-lock-controller/index.d.ts",
+      "import": "./dist/controllers/page-scroll-lock-controller/index.js"
+    },
     "./controllers/pending-controller": {
       "types": "./dist/controllers/pending-controller/index.d.ts",
       "import": "./dist/controllers/pending-controller/index.js"
@@ -360,6 +364,9 @@
       ],
       "controllers/live-selection-controller/index.js": [
         "dist/controllers/live-selection-controller/index.d.ts"
+      ],
+      "controllers/page-scroll-lock-controller.js": [
+        "dist/controllers/page-scroll-lock-controller/index.d.ts"
       ],
       "controllers/pending-controller": [
         "dist/controllers/pending-controller/index.d.ts"
