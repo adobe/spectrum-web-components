@@ -386,4 +386,10 @@
   :host(:not([variant="quiet"])) .swc-CardBase {
     border: 1px solid CanvasText;
   }
+
+  /* Offset to distinguish from added border */
+  :host([selectable]:not([variant="quiet"]):focus-visible),
+  :host([selectable][variant="quiet"]:focus-visible) .swc-CardBase-media {
+    outline-offset: 2px;
+  }
 }
