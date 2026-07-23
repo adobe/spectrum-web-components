@@ -95,8 +95,21 @@ export class Combobox extends Textfield {
   @property({ type: String, attribute: 'pending-label' })
   public pendingLabel = 'Pending';
 
+  /**
+   * When true, enables haptic feedback on supported platforms (e.g. iOS 18+ Safari)
+   * for accessibility. Uses the native `<input type="checkbox" switch>` haptic
+   * by toggling a hidden control on selection and when the list opens.
+   *
+   * @see https://webkit.org/blog/15865/webkit-features-in-safari-18-0/
+   */
+  @property({ type: Boolean, attribute: 'haptic-feedback', reflect: true })
+  public hapticFeedback = false;
+
   @query('slot:not([name])')
   private optionSlot!: HTMLSlotElement;
+
+  @query('#haptic-trigger')
+  private hapticTriggerEl?: HTMLInputElement;
 
   @state()
   overlayOpen = false;
@@ -306,6 +319,7 @@ export class Combobox extends Textfield {
       (item) => item.value === target?.value
     );
     this.value = selected?.itemText || '';
+    this.triggerHapticFeedback();
     event.preventDefault();
     this.open = false;
     this._returnItems();
@@ -321,12 +335,36 @@ export class Combobox extends Textfield {
     // Do stuff here?
   }
 
+  /**
+   * Triggers haptic feedback when enabled. Uses Vibration API on Android when
+   * available; on iOS (no vibrate), programmatically clicks the hidden switch's
+   * label so the native switch haptic fires (Safari 18+).
+   *
+   * @see https://codepen.io/jh3y/pen/PwGPaZQ
+   */
+  private triggerHapticFeedback(): void {
+    if (!this.hapticFeedback) {
+      return;
+    }
+    if ('vibrate' in navigator) {
+      navigator.vibrate(16);
+      return;
+    }
+    const label = this.shadowRoot?.getElementById('haptic-label');
+    if (label) {
+      label.click();
+    }
+  }
+
   public toggleOpen(): void {
     if (this.readonly || this.pending) {
       this.open = false;
       return;
     }
     this.open = !this.open;
+    if (this.open) {
+      this.triggerHapticFeedback();
+    }
     this.inputElement.focus();
   }
 
@@ -524,6 +562,23 @@ export class Combobox extends Textfield {
         </sp-popover>
       </sp-overlay>
       ${this.renderVisuallyHiddenLabels()}
+      ${this.hapticFeedback
+        ? html`
+            <label
+              id="haptic-label"
+              for="haptic-trigger"
+              class="visually-hidden"
+              aria-hidden="true"
+            ></label>
+            <input
+              type="checkbox"
+              id="haptic-trigger"
+              class="visually-hidden"
+              aria-hidden="true"
+              tabindex="-1"
+            />
+          `
+        : nothing}
       <slot
         aria-hidden="true"
         name="tooltip"
@@ -567,6 +622,9 @@ export class Combobox extends Textfield {
   }
 
   protected override updated(changed: PropertyValues<this>): void {
+    if (this.hapticFeedback && this.hapticTriggerEl) {
+      this.hapticTriggerEl.setAttribute('switch', '');
+    }
     if (changed.has('open') && !this.pending) {
       this.manageListOverlay();
     }
