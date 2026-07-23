@@ -41,6 +41,7 @@ import styles from './card.css';
  * </swc-card>
  *
  * @slot collection - Optional collection images. Assign each image to the slot.
+ * @slot media - Optional overlay content (e.g. a badge or avatar) layered over the preview/collection media region.
  *
  * @cssprop --swc-card-collection-item-aspect-ratio - Aspect ratio of each collection image. Defaults to 1 (square).
  * @cssprop --swc-card-collection-gap - Gap between collection images, and between the preview and the collection row. Defaults to a extra-small group-gap token, overridden at size="xs".
@@ -57,8 +58,12 @@ export class Card extends CardBase {
   protected override render(): TemplateResult {
     return renderCardTemplate({
       cardClass: 'Card',
+      hasDefaultSlotContent: this.slotHasContent,
       renderCollection: () => html`
         <div class="swc-Card-collection"><slot name="collection"></slot></div>
+      `,
+      renderMedia: () => html`
+        <slot name="media"></slot>
       `,
     });
   }

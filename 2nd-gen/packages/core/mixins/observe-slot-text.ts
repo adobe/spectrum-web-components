@@ -10,10 +10,8 @@
  * governing permissions and limitations under the License.
  */
 import { PropertyValues, ReactiveElement } from 'lit';
-import { property, queryAssignedNodes } from 'lit/decorators.js';
+import { property } from 'lit/decorators.js';
 import { MutationController } from '@lit-labs/observers/mutation-controller.js';
-
-const assignedNodesList = Symbol('assignedNodes');
 
 type Constructor<T = Record<string, unknown>> = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -46,11 +44,15 @@ export function ObserveSlotText<T extends Constructor<ReactiveElement>>(
       new MutationController(this, {
         config: {
           characterData: true,
+          childList: true,
           subtree: true,
         },
         callback: (mutationsList: Array<MutationRecord>) => {
           for (const mutation of mutationsList) {
-            if (mutation.type === 'characterData') {
+            if (
+              mutation.type === 'characterData' ||
+              mutation.type === 'childList'
+            ) {
               this.manageTextObservedSlot();
               return;
             }
@@ -65,28 +67,32 @@ export function ObserveSlotText<T extends Constructor<ReactiveElement>>(
     @property({ type: Boolean, attribute: false })
     public slotHasContent = false;
 
-    @queryAssignedNodes({
-      slot: slotName,
-      flatten: true,
-    })
-    private [assignedNodesList]!: NodeListOf<HTMLElement>;
+    /**
+     * @internal
+     *
+     * Reads the observed slot's assigned nodes directly from the rendered
+     * `<slot>` element, rather than via the `@queryAssignedNodes` decorator
+     * — that decorator doesn't resolve correctly against a computed
+     * (`Symbol`-keyed) class field, always returning `undefined`.
+     */
+    private getAssignedNodes(): Node[] {
+      const slotSelector = `slot${slotName ? `[name=${slotName}]` : ':not([name])'}`;
+      const slotEl =
+        this.renderRoot?.querySelector<HTMLSlotElement>(slotSelector);
+      return slotEl ? slotEl.assignedNodes({ flatten: true }) : [];
+    }
 
     /**
      * @internal
      */
     public manageTextObservedSlot(): void {
-      if (!this[assignedNodesList]) {
-        return;
-      }
-      const assignedNodes = [...this[assignedNodesList]].filter(
-        (currentNode) => {
-          const node = currentNode as HTMLElement;
-          if (node.tagName) {
-            return !excludedSelectors.some(notExcluded(node));
-          }
-          return node.textContent ? node.textContent.trim() : false;
+      const assignedNodes = this.getAssignedNodes().filter((currentNode) => {
+        const node = currentNode as HTMLElement;
+        if (node.tagName) {
+          return !excludedSelectors.some(notExcluded(node));
         }
-      );
+        return node.textContent ? node.textContent.trim() : false;
+      });
       this.slotHasContent = assignedNodes.length > 0;
     }
 

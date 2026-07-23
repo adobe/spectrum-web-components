@@ -20,6 +20,7 @@ import {
 } from '@adobe/spectrum-wc-core/mixins/index.js';
 
 import { SlotAttributePropagationController } from '../../controllers/slot-attribute-propagation/index.js';
+import { ObserveSlotText } from '../../mixins/observe-slot-text.js';
 import {
   CARD_DENSITIES,
   CARD_VALID_SIZES,
@@ -60,9 +61,12 @@ import {
  * @cssprop --swc-card-base-content-padding-compact - Content padding used at compact density, per size.
  * @cssprop --swc-card-base-content-padding-spacious - Content padding used at spacious density, per size.
  */
-export abstract class CardBase extends SizedMixin(SpectrumElement, {
-  validSizes: CARD_VALID_SIZES,
-}) {
+export abstract class CardBase extends ObserveSlotText(
+  SizedMixin(SpectrumElement, {
+    validSizes: CARD_VALID_SIZES,
+  }),
+  ''
+) {
   // ─────────────────────────
   //     API TO OVERRIDE
   // ─────────────────────────

@@ -929,3 +929,53 @@ export const IconOnlyMissingLabelWarningTest: Story = {
     );
   },
 };
+
+export const LabelSlotUpdatesDynamicallyTest: Story = {
+  render: () => html`
+    <swc-button>
+      <svg
+        slot="icon"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 36 36"
+        aria-hidden="true"
+        focusable="false"
+      >
+        <path
+          d="M31.5 17H19V4.5a1 1 0 0 0-2 0V17H4.5a1 1 0 0 0 0 2H17v12.5a1 1 0 0 0 2 0V19h12.5a1 1 0 0 0 0-2z"
+        />
+      </svg>
+      Save
+    </swc-button>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const button = await getComponent<Button>(canvasElement, 'swc-button');
+    // ObserveSlotText's MutationController fires as a microtask; a
+    // requestAnimationFrame tick reliably runs after it has resolved.
+    const waitForMutation = () =>
+      new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+
+    await step(
+      'warns after the label is dynamically removed, leaving an icon-only button with no accessible-label',
+      () =>
+        withWarningSpy(async (warnCalls) => {
+          const labelNode = [...button.childNodes].find(
+            (node) =>
+              node.nodeType === Node.TEXT_NODE && node.textContent?.trim()
+          );
+          labelNode?.remove();
+
+          await waitForMutation();
+          await button.updateComplete;
+
+          expect(
+            warnCalls.length,
+            'warning emitted after dynamically removing the label'
+          ).toBeGreaterThan(0);
+          expect(
+            String(warnCalls[0]?.[1] || ''),
+            'warning message mentions accessible-label'
+          ).toContain('accessible-label');
+        })
+    );
+  },
+};
