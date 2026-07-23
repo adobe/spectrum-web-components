@@ -67,7 +67,7 @@
   },
   "devDependencies": {
     "@axe-core/playwright": "4.11.2",
-    "@changesets/cli": "2.29.7",
+    "@changesets/cli": "2.31.1",
     "@commitlint/cli": "19.8.1",
     "@commitlint/config-conventional": "19.8.1",
     "@eslint/js": "9.39.2",
