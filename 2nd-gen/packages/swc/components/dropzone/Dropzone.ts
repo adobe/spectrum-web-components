@@ -11,6 +11,7 @@
  */
 
 import { CSSResultArray, html, PropertyValues, TemplateResult } from 'lit';
+import { property } from 'lit/decorators.js';
 
 import { DropzoneBase } from '@adobe/spectrum-wc-core/components/dropzone';
 
@@ -50,13 +51,66 @@ import styles from './dropzone.css';
  * @cssprop --swc-illustrated-message-illustration-color - Illustration color cascaded into a slotted `swc-illustrated-message`. Unset by default; overridden to the accent-visual-color token in the dragged state.
  */
 export class Dropzone extends DropzoneBase {
+  // ───────────────────
+  //     API ADDITIONS
+  // ───────────────────
+
+  /**
+   * Message announced via the built-in status region when a file is dragged over an
+   * empty drop zone. Override to localize.
+   *
+   * @attr dragged-message
+   * @default 'File ready to drop'
+   */
+  @property({ type: String, attribute: 'dragged-message' })
+  public draggedMessage = 'File ready to drop';
+
+  /**
+   * Message announced via the built-in status region when a file is accepted.
+   * Override to localize.
+   *
+   * @attr filled-message
+   * @default 'File accepted'
+   */
+  @property({ type: String, attribute: 'filled-message' })
+  public filledMessage = 'File accepted';
+
+  /**
+   * Message announced via the built-in status region when a file is dragged over an
+   * already-filled drop zone. Override to localize.
+   *
+   * @attr replace-message
+   * @default 'Drop to replace existing file'
+   */
+  @property({ type: String, attribute: 'replace-message' })
+  public replaceMessage = 'Drop to replace existing file';
+
+  // ────────────────────
+  //     API OVERRIDES
+  // ────────────────────
+
+  /**
+   * Called synchronously on drag-enter and drag-leave so the status region is
+   * updated before the next Lit render cycle completes. The drop case is handled
+   * by `updated()` so that `filled` has been set by the consumer's handler first.
+   *
+   * @param isDragged - `true` when drag enters; `false` when it leaves.
+   * @internal
+   */
+  protected override _onDragStateChange(isDragged: boolean): void {
+    const el = this._statusEl;
+    if (el) {
+      el.textContent = this._statusText(isDragged, this.filled);
+    }
+  }
+
+  // ──────────────────────────────
+  //     RENDERING & STYLING
+  // ──────────────────────────────
+
   public static override get styles(): CSSResultArray {
     return [visuallyHiddenStyles, styles];
   }
-
-  // ──────────────────────────
-  //     IMPLEMENTATION
-  // ──────────────────────────
 
   /** @internal Ref to the shadow DOM status region for live announcements. */
   private get _statusEl(): HTMLElement | null {
@@ -83,10 +137,6 @@ export class Dropzone extends DropzoneBase {
     }
   }
 
-  // ──────────────────────────
-  //     API OVERRIDES
-  // ──────────────────────────
-
   /**
    * Updates the shadow DOM `role="status"` text to match the current drag/fill state.
    * Called from `updated()` after Lit re-renders.
@@ -100,29 +150,14 @@ export class Dropzone extends DropzoneBase {
     }
   }
 
-  /**
-   * Called synchronously on drag-enter and drag-leave so the status region is
-   * updated before the next Lit render cycle completes. The drop case is handled
-   * by `updated()` so that `filled` has been set by the consumer's handler first.
-   *
-   * @param isDragged - `true` when drag enters; `false` when it leaves.
-   * @internal
-   */
-  protected override _onDragStateChange(isDragged: boolean): void {
-    const el = this._statusEl;
-    if (el) {
-      el.textContent = this._statusText(isDragged, this.filled);
-    }
-  }
-
   /** @internal */
   private _statusText(isDragged: boolean, isFilled: boolean): string {
     if (isDragged && isFilled) {
-      return 'Drop to replace existing file';
+      return this.replaceMessage;
     } else if (isDragged) {
-      return 'File ready to drop';
+      return this.draggedMessage;
     } else if (isFilled) {
-      return 'File accepted';
+      return this.filledMessage;
     }
     return '';
   }
@@ -156,10 +191,6 @@ export class Dropzone extends DropzoneBase {
       }
     );
   }
-
-  // ──────────────────────────────
-  //     RENDERING & STYLING
-  // ──────────────────────────────
 
   protected override render(): TemplateResult {
     return html`

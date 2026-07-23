@@ -98,10 +98,25 @@ The `<swc-dropzone>` element implements several accessibility features:
 1. **Host role**: `role="group"` is set automatically on the host and cannot be overridden. This creates a labeled boundary without introducing a page landmark.
 2. **Accessible name**: required via `aria-label` or `aria-labelledby`. A development-mode warning fires when neither is present.
 3. **Status announcements**: a visually hidden `role="status"` element in shadow DOM announces drag and drop state changes without moving focus:
-   - "File ready to drop" when `dragged` becomes `true`
-   - "File accepted" when `filled` is set
-   - "Drop to replace existing file" when `dragged` becomes `true` while `filled` is already set
+   - `dragged-message` (default: "File ready to drop") when `dragged` becomes `true`
+   - `filled-message` (default: "File accepted") when `filled` is set
+   - `replace-message` (default: "Drop to replace existing file") when `dragged` becomes `true` while `filled` is already set
 4. **No deprecated drag ARIA**: `aria-dropeffect` and `aria-grabbed` are not used, as both are deprecated as of ARIA 1.1.
+
+#### Localization
+
+The three status announcement strings default to English. Override `dragged-message`, `filled-message`, and `replace-message` with translated text for non-English locales:
+
+```html
+<swc-dropzone
+  aria-label="Charger des fichiers"
+  dragged-message="Fichier prêt à être déposé"
+  filled-message="Fichier accepté"
+  replace-message="Déposer le fichier pour le remplacer"
+>
+  ...
+</swc-dropzone>
+```
 
 #### Keyboard support
 

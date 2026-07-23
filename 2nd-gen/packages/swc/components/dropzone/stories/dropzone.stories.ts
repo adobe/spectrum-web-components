@@ -69,7 +69,7 @@ const meta: Meta = {
       subtitle: `Target area for drag-and-drop file uploads with a required browse control.`,
     },
     stackblitz: {
-      url: 'https://stackblitz.com/edit/vitejs-vite-q5adfsfk?file=package.json',
+      url: 'https://stackblitz.com/edit/vitejs-vite-wcmws1cg',
     },
   },
   tags: ['migrated'],

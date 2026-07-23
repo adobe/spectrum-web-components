@@ -258,7 +258,7 @@ No sequencing, shared-base, or inheritance decisions require explicit user confi
 | - | ------------ | ---------------- | ---------------- | ----------------------- |
 | **B11** | `role="group"` on host | No default role; consumers were told to add `role` and `aria-label` manually. | **Confirmed.** `role="group"` is fixed on the host; not author-overridable. Accessible name required via `aria-label` or `aria-labelledby`. | Consumers who already added `role` must remove it. All consumers must add `aria-label` or `aria-labelledby`. |
 | **B12** | Dev warning for missing accessible name | No warning. | Warning in debug builds when neither `aria-label` nor `aria-labelledby` is present. | Add a label; no code change needed after labeling. |
-| **B13** | Shadow DOM `role="status"` for drag announcements | No AT announcements for drag state changes. | Visually-hidden `role="status"` (`aria-live="polite"`) in shadow DOM. Text updates: "File ready to drop" (dragged), "File accepted" (drop), "Drop to replace existing file" (filled+dragged). | No consumer migration needed. |
+| **B13** | Shadow DOM `role="status"` for drag announcements | No AT announcements for drag state changes. | Visually-hidden `role="status"` (`aria-live="polite"`) in shadow DOM. Text defaults: "File ready to drop" (dragged), "File accepted" (drop), "Drop to replace existing file" (filled+dragged); overridable via `dragged-message`/`filled-message`/`replace-message` (see [A5](#additive--ships-when-ready-zero-breakage-for-consumers-already-on-2nd-gen)). | No consumer migration needed. |
 | **B14** | SWC-2069 regression guard (drop event on Windows Chrome) | `sp-dropzone-drop` does not fire in some Windows Chrome configurations. | Fix and add a regression test. | No consumer migration needed. |
 | **B15** | Documentation anti-patterns removed | Examples use `javascript:;` hrefs and inline `onclick` handlers. | Examples use `<sp-button>` or `<sp-link>` triggering hidden `<input type="file">` via an event listener. | Update custom implementations based on documentation. |
 
@@ -270,6 +270,7 @@ No sequencing, shared-base, or inheritance decisions require explicit user confi
 | **A2** | ~~Hover state visually distinct from keyboard focus~~ | **Resolved by Figma.** The "Hover" state in Figma is the same as the drag-over state; no separate pointer-hover treatment exists. The same accent border applies to `:focus-visible` on the browse control. No additive work needed; this is fully in scope as part of B10. |
 | **A3** | ~~Illustration accent color passthrough when dragged~~ | **Resolved by Figma.** The icon/illustration switches to the accent/gradient treatment in the "Hover" (dragged) state. This is confirmed Must-ship and is absorbed into the styling phase; see the B8/size matrix in the visual matrix section. No separate additive ticket needed. |
 | **A4** | ~~Customizable replace-state overlay content~~ | **Resolved during implementation.** A `filled-content` slot shipped as Must-ship (see [B18](#must-ship--breaking-or-a11y-required)), broader than the "replace" slot originally scoped here: it holds all uploaded-state content, not just the filled+dragged overlay text. No separate additive ticket needed. |
+| **A5** | ~~Localizable status announcement strings~~ | **Shipped.** `dragged-message`, `filled-message`, and `replace-message` properties (concrete class, `Dropzone.ts`) override the three built-in `role="status"` announcement strings, which previously had no override path and were hardcoded to English. Each defaults to its existing English string, so no consumer migration is needed. |
 
 ---
 
@@ -293,6 +294,9 @@ Use lightweight confidence labels:
 | `dragged` | `boolean` | `false` | `dragged` | Yes | Confirmed | Renamed from `isDragged`. Attribute unchanged. |
 | `filled` | `boolean` | `false` | `filled` | **Yes** | Confirmed | Renamed from `isFilled`. Attribute unchanged. Reflection is a bug fix. |
 | `size` | `'s' \| 'm' \| 'l'` | `'m'` | `size` | Yes | Confirmed | **New in 2nd-gen.** Figma shows Small, Medium, Large sizes. Maps to `'s'`, `'m'`, `'l'` per SWC conventions. Not present in 1st-gen; additive, not breaking. |
+| `draggedMessage` | `string` | `'File ready to drop'` | `dragged-message` | No | Confirmed | **New in 2nd-gen.** Overrides the built-in status region's dragged-state announcement, primarily for localization. See [A5](#additive--ships-when-ready-zero-breakage-for-consumers-already-on-2nd-gen). |
+| `filledMessage` | `string` | `'File accepted'` | `filled-message` | No | Confirmed | **New in 2nd-gen.** Overrides the built-in status region's filled-state announcement, primarily for localization. See [A5](#additive--ships-when-ready-zero-breakage-for-consumers-already-on-2nd-gen). |
+| `replaceMessage` | `string` | `'Drop to replace existing file'` | `replace-message` | No | Confirmed | **New in 2nd-gen.** Overrides the built-in status region's filled+dragged-state announcement, primarily for localization. See [A5](#additive--ships-when-ready-zero-breakage-for-consumers-already-on-2nd-gen). |
 
 #### Visual matrix (2nd-gen)
 
@@ -368,9 +372,9 @@ Sourced from [accessibility-migration-analysis.md](./accessibility-migration-ana
 | Host role | `role="group"` — **confirmed** per a11y analysis |
 | Accessible name | Required via `aria-label` or `aria-labelledby`; dev warning in debug builds if missing |
 | Status region | Visually-hidden `role="status"` (`aria-live="polite"`) in shadow DOM |
-| Status text: dragged | "File ready to drop" |
-| Status text: drop | "File accepted" |
-| Status text: filled+dragged | "Drop to replace existing file" |
+| Status text: dragged | `dragged-message`; default "File ready to drop" |
+| Status text: drop | `filled-message`; default "File accepted" |
+| Status text: filled+dragged | `replace-message`; default "Drop to replace existing file" |
 | `aria-dropeffect` / `aria-grabbed` | Must not appear; deprecated in ARIA 1.1 |
 | Host `tabindex` | None; the browse control in the slot owns the Tab stop |
 | Browse control requirement | Must always be present in slot; required for WCAG 2.1.1 and 2.5.7 compliance |
@@ -569,7 +573,7 @@ No `DropzoneEventDetail` alias is exported. 2nd-gen is a clean break from 1st-ge
 
 #### General
 
-- [x] JSDoc on all public properties (`dropEffect`, `dragged`, `filled`, `size`), slots, and CSS custom properties — includes a `@cssprop` tag for `--swc-illustrated-message-illustration-color`, added during the Phase 7 `@cssprop` completeness review.
+- [x] JSDoc on all public properties (`dropEffect`, `dragged`, `filled`, `size`, `draggedMessage`, `filledMessage`, `replaceMessage`), slots, and CSS custom properties. Includes a `@cssprop` tag for `--swc-illustrated-message-illustration-color`, added during the Phase 7 `@cssprop` completeness review.
 - [x] Storybook stories: Playground, Overview, Anatomy, Options (Sizes story: `s`, `m`, `l`), States (default, dragged, filled, filled+dragged), Behaviors (event log, browse+drop interaction), Accessibility
 - [x] Per-unit MDX file at `2nd-gen/packages/swc/components/dropzone/dropzone.mdx`
 - [x] All stories include a browse control; no example omits it
