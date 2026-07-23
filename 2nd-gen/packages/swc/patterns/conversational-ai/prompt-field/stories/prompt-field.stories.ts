@@ -26,14 +26,25 @@ const { args, argTypes, template } = getStorybookHelpers('swc-prompt-field');
 const defaultPlaceholder =
   'Ready to get started? Ask a question, share an idea, or add a task.';
 
-argTypes.mode = {
-  ...argTypes.mode,
+argTypes.variant = {
+  ...argTypes.variant,
   control: { type: 'select' },
-  options: ['default', 'loading', 'disabled'],
+  options: ['subtle', 'balanced', 'prominent'],
   table: {
     category: 'attributes',
-    defaultValue: { summary: 'default' },
+    defaultValue: { summary: 'balanced' },
   },
+};
+
+// The Storybook helper auto-generates a text control for the `@cssprop`
+// --swc-prompt-field-brand and applies it on the element. Override it to a color
+// picker so it's actually customizable, and leave a single control (no manual duplicate).
+argTypes['--swc-prompt-field-brand'] = {
+  name: '--swc-prompt-field-brand',
+  description:
+    'Brand hue for the light-mode AI treatment. Each layer keeps its own lightness and chroma and takes only the hue from this color, so any hue rethemes the interior wash and glows. Dark theme uses its own fixed palette.',
+  control: { type: 'color' },
+  table: { category: 'CSS custom properties' },
 };
 
 /**
@@ -47,6 +58,12 @@ const meta: Meta = {
   args,
   argTypes,
   render: (args) => template(args),
+  // Cap every demo at 800px so the field doesn't stretch the full canvas width.
+  decorators: [
+    (story) => html`
+      <div style="max-inline-size: 800px;">${story()}</div>
+    `,
+  ],
   parameters: {
     docs: {
       packagePath: 'patterns/conversational-ai/prompt-field',
@@ -71,7 +88,6 @@ export const Playground: Story = {
     label: 'Prompt',
     placeholder: defaultPlaceholder,
     value: '',
-    mode: 'default',
   },
   tags: ['dev'],
 };
@@ -85,7 +101,6 @@ export const Overview: Story = {
     label: 'Prompt',
     placeholder: defaultPlaceholder,
     value: '',
-    mode: 'default',
   },
   tags: ['overview'],
 };
@@ -121,7 +136,7 @@ export const Anatomy: Story = {
 //    OPTIONS STORIES
 // ──────────────────────────
 
-export const Modes: Story = {
+export const States: Story = {
   render: () => html`
     <div style="display:flex;flex-direction:column;gap:32px;">
       <div style="display:flex;flex-direction:column;gap:8px;">
@@ -129,9 +144,7 @@ export const Modes: Story = {
           label="Prompt"
           placeholder=${defaultPlaceholder}
         ></swc-prompt-field>
-        <span class="swc-Detail swc-Detail--sizeS">
-          mode="default" with empty value
-        </span>
+        <span class="swc-Detail swc-Detail--sizeS">Idle, empty value</span>
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;">
         <swc-prompt-field
@@ -139,29 +152,49 @@ export const Modes: Story = {
           value="Summarize the API changes in this branch."
         ></swc-prompt-field>
         <span class="swc-Detail swc-Detail--sizeS">
-          mode="default" with entered value
+          Idle, with entered value (send enabled)
         </span>
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;">
         <swc-prompt-field
-          mode="loading"
-          label="Prompt"
+          generating
+          label="Reply"
           value="Summarize the API changes in this branch."
         ></swc-prompt-field>
         <span class="swc-Detail swc-Detail--sizeS">
-          mode="loading" (input remains editable)
+          generating (stop button shown; input remains editable)
         </span>
       </div>
-      <div style="display:flex;flex-direction:column;gap:8px;">
-        <swc-prompt-field
-          mode="disabled"
-          label="Prompt"
-          value="This input is disabled."
-        ></swc-prompt-field>
-        <span class="swc-Detail swc-Detail--sizeS">
-          mode="disabled" (input and controls disabled)
-        </span>
-      </div>
+    </div>
+  `,
+  tags: ['states'],
+};
+
+export const Variants: Story = {
+  render: () => html`
+    <div style="display:flex;flex-direction:column;gap:72px;">
+      ${(['subtle', 'balanced', 'prominent'] as const).map(
+        (variant) => html`
+          <div style="display:flex;flex-direction:column;gap:16px;">
+            <span class="swc-Detail swc-Detail--sizeS">variant=${variant}</span>
+            <div
+              style="display:flex;flex-direction:column;gap:56px;align-items:stretch;"
+            >
+              <swc-prompt-field
+                variant=${variant}
+                label="Prompt"
+                placeholder=${defaultPlaceholder}
+              ></swc-prompt-field>
+              <swc-prompt-field
+                variant=${variant}
+                generating
+                label="Reply"
+                value="Summarizing the API changes…"
+              ></swc-prompt-field>
+            </div>
+          </div>
+        `
+      )}
     </div>
   `,
   tags: ['options'],
@@ -447,7 +480,6 @@ export const Accessibility: Story = {
     label: 'Prompt',
     placeholder: defaultPlaceholder,
     value: '',
-    mode: 'default',
   },
   tags: ['a11y'],
 };

@@ -20,17 +20,19 @@ A prompt field consists of:
 
 ## Options
 
-### Modes
+### Variants
 
-The `mode` attribute controls interaction and action state:
+The `variant` attribute controls how strongly the AI brand treatment (gradient border, outer glow, and hue wash) reads. It scales **both** the idle and generating states — idle carries a lighter version of the same treatment, and generating ramps it up:
 
-- **`default`**: send button shown, normal interactivity
-- **`loading`**: stop button shown while generation is in progress
-- **`disabled`**: input/upload/send are disabled
+- **`subtle`**: lightest treatment; idle reads as a near-plain card. Use inside dense UI or when the field should recede.
+- **`balanced`** (default): moderate treatment. The general-purpose choice.
+- **`prominent`**: strongest treatment in both states. Use for a hero or primary AI entry point.
 
-The send button enablement is derived internally from prompt content (value or artifact).
+Each variant below is shown idle (top) and generating (bottom). The treatment adapts per color scheme: a fuchsia halo on the white card in light mode, and a deep purple/magenta gradient in dark mode.
 
-<Canvas of={PromptFieldStories.Modes} />
+The light-mode hue is customizable via the `--swc-prompt-field-brand` CSS custom property — set it on the field (or any ancestor) to re-tint the interior wash and glows. Each layer keeps its own lightness and chroma and takes only the hue from this color, so any hue rethemes the whole light treatment. Try it with the `--swc-prompt-field-brand` control in the Playground. (Dark theme uses its own fixed palette.)
+
+<Canvas of={PromptFieldStories.Variants} />
 
 ### Artifact
 
@@ -52,6 +54,16 @@ Upload button behavior:
 Artifacts own dismiss behavior via **`dismissible`** and emit **`swc-upload-artifact-dismiss`**.
 
 <Canvas of={PromptFieldStories.Artifact} />
+
+## States
+
+The `generating` attribute reflects whether the field is producing a response.
+When set, the send button is replaced by a stop button and the AI brand
+treatment ramps up; the input stays editable. The send button's own enabled
+state is derived internally from prompt content (a non-empty value or a slotted
+artifact).
+
+<Canvas of={PromptFieldStories.States} />
 
 ## Behaviors
 
