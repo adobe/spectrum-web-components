@@ -201,6 +201,8 @@ jobs:
           steps.extract-tag.outputs.scope == '2nd-gen' &&
           needs.check-changesets.outputs.has_2nd_gen_changesets == 'true' &&
           github.event.inputs.dry_run != 'true'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: yarn release:gen2-beta
 
       - name: Version packages
