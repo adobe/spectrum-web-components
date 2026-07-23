@@ -11,14 +11,14 @@ import * as Stories from './stories/hover-controller.stories';
 
 ## Usage
 
-`HoverController` handles hover and keyboard-focus events so consuming components don't duplicate this logic. It opens and closes a `popover="auto"` surface relative to a resolved trigger element, enforces warm-up and cooldown timing, and provides the WCAG 1.4.13 pointer bridge that keeps the popover open when the pointer moves into it.
+`HoverController` handles hover and keyboard-focus events so consuming components don't duplicate this logic. It opens and closes a `popover="auto"` surface relative to a resolved trigger element, enforces warm-up and cooldown timing, and provides the [WCAG 1.4.13](https://www.w3.org/WAI/WCAG21/Understanding/content-on-hover-or-focus.html) pointer bridge that keeps the popover open when the pointer moves into it.
 
 ### What it does
 
-- **Warm-up / cooldown timing** — the popover opens only after the pointer has rested on the trigger for `delay` ms. Leaving the trigger or the popover starts a `closeDelay` cooldown before close.
-- **Warm-state acceleration** — once any instance of a component type has opened, subsequent hovers on the same type open immediately without re-timing. Warm state resets after the `closeDelay` cooldown elapses.
-- **WCAG 1.4.13 pointer bridge** — moving the pointer from the trigger into the popover cancels the cooldown, keeping the popover open so users can interact with its content.
-- **Keyboard focus priority** — `Tab` focus opens immediately and suppresses all pointer-driven timers until `focusout`. Pointer-click focus is excluded; see the Behaviors section.
+- **Warm-up / cooldown timing**: the popover opens only after the pointer has rested on the trigger for `delay` ms. Leaving the trigger or the popover starts a `closeDelay` cooldown before close.
+- **Warm-state acceleration**: once any instance of a component type has opened, subsequent hovers on the same type open immediately without re-timing. Warm state resets after the `closeDelay` cooldown elapses.
+- **[WCAG 1.4.13](https://www.w3.org/WAI/WCAG21/Understanding/content-on-hover-or-focus.html) pointer bridge**: moving the pointer from the trigger into the popover cancels the cooldown, keeping the popover open so users can interact with its content.
+- **Keyboard focus priority**: <kbd>Tab</kbd> focus opens immediately and suppresses all pointer-driven timers until `focusout`. Pointer-click focus is excluded; see the Behaviors section.
 
 ### Basic usage
 
@@ -96,7 +96,7 @@ When `disabled` transitions to `true` while the popover is open, the popover clo
 
 ### Manual
 
-When `manual` is set on the host, the controller skips all event wiring. The consuming component is responsible for opening and closing the popover programmatically (e.g. by toggling its `open` state). Hover and focus events on the trigger have no effect.
+When `manual` is set on the host, the controller skips all event wiring. The consuming component is responsible for opening and closing the popover programmatically (e.g., by toggling its `open` state). Hover and focus events on the trigger have no effect.
 
 Use `manual` mode when the component needs click-to-toggle behavior or programmatic control over open/close. The `for` attribute and ARIA wiring still function in manual mode.
 
@@ -124,13 +124,13 @@ The bridge works by cancelling the `closeDelay` cooldown timer when `pointerente
 
 ### Immediate open with delay="0"
 
-When `delay` is `0`, the popover opens synchronously on `pointerenter`. The cooldown on `pointerleave` uses `closeDelay` (default 300 ms), independent of `delay`, so the WCAG 1.4.13 pointer bridge still applies regardless of how quickly the popover opened.
+When `delay` is `0`, the popover opens synchronously on `pointerenter`. The cooldown on `pointerleave` uses `closeDelay` (default 300 ms), independent of `delay`, so the [WCAG 1.4.13](https://www.w3.org/WAI/WCAG21/Understanding/content-on-hover-or-focus.html) pointer bridge still applies regardless of how quickly the popover opened.
 
 <Canvas of={Stories.ImmediateDelay} />
 
 ### Keyboard focus opens immediately
 
-When the trigger receives keyboard focus (Tab / Shift+Tab), the popover opens immediately without waiting for the warm-up timer. The controller enters focus-priority mode: `pointerenter` and `pointerleave` events on both the trigger and the popover bubble are ignored until `focusout` fires. `focusout` closes immediately and restores normal pointer behaviour.
+When the trigger receives keyboard focus (<kbd>Tab</kbd> / <kbd>Shift</kbd> + <kbd>Tab</kbd>), the popover opens immediately without waiting for the warm-up timer. The controller enters focus-priority mode: `pointerenter` and `pointerleave` events on both the trigger and the popover bubble are ignored until `focusout` fires. `focusout` closes immediately and restores normal pointer behaviour.
 
 **Pointer-click focus is excluded** — a pointer click on the trigger does not open the popover. `pointerdown` on the trigger fires a `popover="auto"` light dismiss synchronously; opening on the subsequent `focusin` would immediately be reversed, producing a visible flash. The controller detects this sequence via the `hadPointerdown` flag and skips the open.
 
@@ -142,14 +142,14 @@ When the trigger receives keyboard focus (Tab / Shift+Tab), the popover opens im
 
 `HoverController` implements two built-in accessibility behaviours:
 
-1. **WCAG 1.4.13 pointer bridge** — the popover remains open when the pointer moves from the trigger into the popover bubble, satisfying the "hoverable" requirement of [WCAG 1.4.13 Content on Hover or Focus](https://www.w3.org/WAI/WCAG21/Understanding/content-on-hover-or-focus.html). Users who need to interact with the popover content (for example to copy text or follow a link) can do so without the popover closing.
+1. **WCAG 1.4.13 pointer bridge**: the popover remains open when the pointer moves from the trigger into the popover bubble, satisfying the "hoverable" requirement of [WCAG 1.4.13 Content on Hover or Focus](https://www.w3.org/WAI/WCAG21/Understanding/content-on-hover-or-focus.html). Users who need to interact with the popover content (for example to copy text or follow a link) can do so without the popover closing.
 
-2. **Keyboard focus opens immediately** — Tab focus bypasses the warm-up timer and opens the popover at once. While the trigger is focused, pointer events on both the trigger and the popover are suppressed, preventing them from inadvertently starting cooldown timers.
+2. **Keyboard focus opens immediately**: <kbd>Tab</kbd> focus bypasses the warm-up timer and opens the popover at once. While the trigger is focused, pointer events on both the trigger and the popover are suppressed, preventing them from inadvertently starting cooldown timers.
 
 ### Best practices
 
 - Pair with a `PlacementController` so the popover is always visible and positioned relative to the trigger, even near viewport edges.
-- Set `warmStateKey` to the consuming element's tag name (e.g. `'swc-tooltip'`) to isolate warm state per component type.
+- Set `warmStateKey` to the consuming element's tag name (e.g., `'swc-tooltip'`) to isolate warm state per component type.
 - Use `manual` mode for programmatic control; the consuming component is then responsible for ARIA relationships and for opening and closing the popover at the right times.
 - Wire `aria-describedby` or `aria-labelledby` from the trigger to the popover in the host's `updated()` lifecycle — the controller does not set ARIA attributes.
 
@@ -165,21 +165,21 @@ When the trigger receives keyboard focus (Tab / Shift+Tab), the popover opens im
 
 ### Constructor options (`HoverControllerOptions`)
 
-| Option         | Type     | Description                                                                                                                                              |
-| -------------- | -------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `warmStateKey` | `string` | Per-component-type key for shared warm state on `document`. Use the element tag name (e.g. `'swc-tooltip'`). Must be static; must not vary per instance. |
+| Option         | Type     | Description                                                                                                                                               |
+| -------------- | -------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `warmStateKey` | `string` | Per-component-type key for shared warm state on `document`. Use the element tag name (e.g., `'swc-tooltip'`). Must be static; must not vary per instance. |
 
 ### Host interface (`HoverControllerHost`)
 
 The host element must implement this interface. All members are read by the controller; none are written.
 
-| Member           | Type      | Default | Description                                                                                                                                          |
-| ---------------- | --------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `delay`          | `number`  | —       | Warm-up duration in ms before the popover opens on hover. `0` opens immediately.                                                                     |
-| `closeDelay`     | `number`  | `300`   | Cooldown duration in ms after the pointer leaves the trigger or popover. Independent of `delay` so the WCAG 1.4.13 bridge always has time to cancel. |
-| `manual`         | `boolean` | —       | When `true`, the controller skips all event wiring.                                                                                                  |
-| `disabled`       | `boolean` | —       | When `true`, the controller skips all event wiring.                                                                                                  |
-| `requestOpen()`  | method    | —       | Called by the controller to ask the host to open. The host owns visibility state. Must be idempotent.                                                |
-| `requestClose()` | method    | —       | Called by the controller to ask the host to close. Must be idempotent.                                                                               |
+| Member           | Type      | Default | Description                                                                                                                                                                                                                        |
+| ---------------- | --------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `delay`          | `number`  | —       | Warm-up duration in ms before the popover opens on hover. `0` opens immediately.                                                                                                                                                   |
+| `closeDelay`     | `number`  | `300`   | Cooldown duration in ms after the pointer leaves the trigger or popover. Independent of `delay` so the [WCAG 1.4.13](https://www.w3.org/WAI/WCAG21/Understanding/content-on-hover-or-focus.html) bridge always has time to cancel. |
+| `manual`         | `boolean` | —       | When `true`, the controller skips all event wiring.                                                                                                                                                                                |
+| `disabled`       | `boolean` | —       | When `true`, the controller skips all event wiring.                                                                                                                                                                                |
+| `requestOpen()`  | method    | —       | Called by the controller to ask the host to open. The host owns visibility state. Must be idempotent.                                                                                                                              |
+| `requestClose()` | method    | —       | Called by the controller to ask the host to close. Must be idempotent.                                                                                                                                                             |
 
 <DocsFooter />

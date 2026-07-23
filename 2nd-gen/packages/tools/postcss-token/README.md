@@ -35,7 +35,7 @@ This package is intentionally **narrow in scope**.
 - Works in:
   - Property values
   - Nested functions
-  - Fallback expressions (e.g. inside `var()`)
+  - Fallback expressions (e.g., inside `var()`)
 - Fails fast when a referenced token does not exist
 
 ### What This Plugin Does _Not_ Do
