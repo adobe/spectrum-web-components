@@ -29,7 +29,7 @@ import styles from './meter.css';
  * `.swc-LinearProgress` wrapper; the host carries no ARIA role.
  *
  * @element swc-meter
- * @since 2.0.0-beta.2
+ * @since 2.0.0-beta.1
  *
  * @example
  * <swc-meter value="60" variant="positive">

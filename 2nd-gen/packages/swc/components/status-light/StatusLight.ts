@@ -28,7 +28,7 @@ import styles from './status-light.css';
  * A status light conveys the condition of an entity as a colored dot with a descriptive label.
  *
  * @element swc-status-light
- * @since 2.0.0-beta.2
+ * @since 2.0.0-beta.1
  *
  * @property {string} variant - Semantic or non-semantic color variant for the status dot.
  *

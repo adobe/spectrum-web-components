@@ -61,7 +61,7 @@ const folder = (label: string): TemplateResult => html`
  * @slot - content to be displayed when no `variant` is set (typically an `<img>` element)
  *
  * @status internal
- * @since 2.0.0-beta.2
+ * @since 2.0.0-beta.1
  *
  * @example
  * <swc-asset>

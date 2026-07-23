@@ -30,7 +30,7 @@ import styles from './accordion-item.css';
  * An accordion item component that wraps a single expandable content section.
  *
  * @element swc-accordion-item
- * @since 2.0.0-beta.2
+ * @since 2.0.0-beta.1
  *
  * @fires swc-accordion-item-toggle - Dispatched when the item open state is
  *   toggled. Cancelable; `preventDefault()` reverts the change.

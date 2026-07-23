@@ -22,7 +22,7 @@ import styles from './tab-panel.css';
  * container based on which tab is selected.
  *
  * @element swc-tab-panel
- * @since 2.0.0-beta.2
+ * @since 2.0.0-beta.1
  *
  * @slot - Content displayed when the associated tab is selected
  *

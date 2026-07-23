@@ -25,7 +25,7 @@ import styles from './color-loupe.css';
  * color selection controls such as `<swc-color-field>`.
  *
  * @element swc-color-loupe
- * @since 2.0.0-beta.2
+ * @since 2.0.0-beta.1
  *
  * @example
  * <swc-color-loupe open color="rgba(0, 128, 255, 0.7)"></swc-color-loupe>

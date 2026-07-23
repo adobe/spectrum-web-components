@@ -21,7 +21,7 @@ import styles from './button-group.css';
  * spacing, sizing, and orientation.
  *
  * @element swc-button-group
- * @since 2.0.0-beta.2
+ * @since 2.0.0-beta.1
  *
  * @slot - One or more `swc-button` elements.
  *

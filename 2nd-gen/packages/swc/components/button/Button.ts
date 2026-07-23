@@ -33,7 +33,7 @@ import baseStyles from './button-base.css';
  * A button component that triggers an action when activated.
  *
  * @element swc-button
- * @since 2.0.0-beta.2
+ * @since 2.0.0-beta.1
  *
  * @slot - Visible button label.
  * @slot icon - Leading icon displayed before the label.
