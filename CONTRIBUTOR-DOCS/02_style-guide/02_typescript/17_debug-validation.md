@@ -556,66 +556,18 @@ Use the full documentation URL for the component:
 
 ## Known limitations
 
-**Dedup granularity (partially fixed).** Warnings are deduplicated on
-`${localName}:${type}:${level}:${message}` in one **global** `Set`
-(`window.__swc.issuedWarnings`) shared across the whole page. The `message`
-segment was added specifically so that **two different checks on the same
-component no longer suppress each other**. Previously, any two warnings
-sharing a `type`/`level` (most calls use the `default`/`default` bucket, so
-this was common) collided, and only the first one to fire in a session ever
-logged.
+**Dedup granularity (partially fixed).** Warnings are deduplicated on `${localName}:${type}:${level}:${message}` in one **global** `Set` (`window.__swc.issuedWarnings`) shared across the whole page. The `message` segment was added specifically so that **two different checks on the same component no longer suppress each other**. Previously, any two warnings sharing a `type`/`level` (most calls use the `default`/`default` bucket, so this was common) collided, and only the first one to fire in a session ever logged.
 
-One collision case remains, unfixed: the key has no per-instance identity, so
-**two different instances of the same component with the identical
-message** still collide. Ten `<swc-badge>` elements on a page all set to the
-same invalid `variant` still produce exactly **one** console warning (from
-whichever updates first), not ten, which is easy to misread as "only one
-badge is broken." Set `window.__swc.verbose = true` before components load
-to skip the `issuedWarnings` check entirely and log every occurrence, from
-every instance, every time. Reach for this when auditing a page for every
-instance of a given issue.
+One collision case remains, unfixed: the key has no per-instance identity, so **two different instances of the same component with the identical message** still collide. Ten `<swc-badge>` elements on a page all set to the same invalid `variant` still produce exactly **one** console warning (from whichever updates first), not ten, which is easy to misread as "only one badge is broken." Set `window.__swc.verbose = true` before components load to skip the `issuedWarnings` check entirely and log every occurrence, from every instance, every time. Reach for this when auditing a page for every instance of a given issue.
 
-**Production stripping (partially fixed).** Each helper in
-`dev-validation.ts` now starts with `if (process.env.NODE_ENV === 'production')
-return;`, ahead of the `window.__swc?.DEBUG` check. This matters because a
-bundler can only dead-code-eliminate a branch it can *prove* false at build
-time. `window.__swc?.DEBUG` is a runtime read on a global: no bundler can
-know it will be `undefined` just because a *different* file's `if (literal)`
-block never assigns it. `process.env.NODE_ENV` is the opposite: once a
-bundler replaces it with the literal `"production"`, `if ("production" ===
-"production") return;` folds to `if (true) return;`, and a minifier can then
-delete everything after it **inside that function**: the dedup lookup, the
-message formatting, the `window.__swc.warn` call. That's a real, provable
-removal, not a hope.
+**Production stripping (partially fixed).** Each helper in `dev-validation.ts` now starts with `if (process.env.NODE_ENV === 'production') return;`, ahead of the `window.__swc?.DEBUG` check. This matters because a bundler can only dead-code-eliminate a branch it can *prove* false at build time. `window.__swc?.DEBUG` is a runtime read on a global: no bundler can know it will be `undefined` just because a *different* file's `if (literal)` block never assigns it. `process.env.NODE_ENV` is the opposite: once a bundler replaces it with the literal `"production"`, `if ("production" === "production") return;` folds to `if (true) return;`, and a minifier can then delete everything after it **inside that function**: the dedup lookup, the message formatting, the `window.__swc.warn` call. That's a real, provable removal, not a hope.
 
 What this does **not** fix:
-- **The call sites themselves.** Every `validateEnum(...)`/`warnIf(...)`
-  expression in every component still executes on every `update()`/`updated()`
-  pass, in every build, because JS evaluates a function's arguments before
-  calling it, so the message template string and `options` object literal
-  at each call site are still constructed even when the function itself
-  immediately no-ops.
-- **Whether the substitution actually happens.** This package's own build
-  does not currently replace `process.env.NODE_ENV` before publishing (it
-  ships the literal check as-is), so whether any of the folding above
-  actually occurs still depends on either this package's own build pipeline
-  being updated to perform the substitution + minification, or the
-  *consuming application's* bundler doing so downstream. Neither is
-  guaranteed today.
-- **The bare-ES-module case.** A consumer loading this package with no
-  bundler at all (a raw `<script type="module">` import) still hits a
-  `ReferenceError` on `process`, since it's never defined in that
-  environment.
 
-The more complete fix, publishing genuinely separate development/production
-builds (the pattern React uses: a small entry that `require()`s one of two
-fully-built files, so the unused one is never even parsed), is a
-significantly larger project (doubled build output, a stripping transform,
-doubled test coverage) and is tracked as a follow-up, not attempted here.
+- **The call sites themselves.** Every `validateEnum(...)`/`warnIf(...)` expression in every component still executes on every `update()`/`updated()` pass, in every build, because JS evaluates a function's arguments before calling it, so the message template string and `options` object literal at each call site are still constructed even when the function itself immediately no-ops.
+- **Whether the substitution actually happens.** This package's own build does not currently replace `process.env.NODE_ENV` before publishing (it ships the literal check as-is), so whether any of the folding above actually occurs still depends on either this package's own build pipeline being updated to perform the substitution + minification, or the *consuming application's* bundler doing so downstream. Neither is guaranteed today.
+- **The bare-ES-module case.** A consumer loading this package with no bundler at all (a raw `<script type="module">` import) still hits a `ReferenceError` on `process`, since it's never defined in that environment.
 
-In the meantime, point consumers who are worried about shipping dev-mode
-code to production at the per-bundler stripping recipes in the
-["Only in development"](https://github.com/adobe/spectrum-web-components/blob/main/2nd-gen/packages/swc/.storybook/guides/dev-mode/dev-mode-warnings.mdx)
-section of the consumer-facing guide. This package cannot guarantee
-stripping on its own, but most bundler configurations already do it
-correctly by default.
+The more complete fix, publishing genuinely separate development/production builds (the pattern React uses: a small entry that `require()`s one of two fully-built files, so the unused one is never even parsed), is a significantly larger project (doubled build output, a stripping transform, doubled test coverage) and is tracked as a follow-up, not attempted here.
+
+In the meantime, point consumers who are worried about shipping dev-mode code to production at the per-bundler stripping recipes in the ["Only in development"](https://github.com/adobe/spectrum-web-components/blob/main/2nd-gen/packages/swc/.storybook/guides/dev-mode/dev-mode-warnings.mdx) section of the consumer-facing guide. This package cannot guarantee stripping on its own, but most bundler configurations already do it correctly by default.
