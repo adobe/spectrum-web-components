@@ -14,15 +14,6 @@ import { html } from 'lit';
 import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
-declare global {
-  interface Window {
-    __swc?: {
-      DEBUG?: boolean;
-      warn?: (...args: unknown[]) => void;
-    };
-  }
-}
-
 import {
   validateAllowedChildren,
   validateEnum,
