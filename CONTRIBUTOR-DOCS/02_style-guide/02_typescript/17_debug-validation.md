@@ -72,9 +72,10 @@ if (window.__swc?.DEBUG) {
 `@spectrum-web-components/core/utils` exports four helpers that wrap
 `window.__swc.warn` for the most common validation shapes. **Use these
 instead of hand-writing an `includes()` + `warn()` check.** Doing so keeps
-message wording and the `DEBUG` gate consistent across components, and they
-are the only thing that needs to change if the underlying warning engine is
-ever reworked.
+message wording and the `DEBUG` gate consistent across components. Internally
+all four defer the actual gate-and-emit step to one private `emitWarning`
+primitive, so that is the single place that needs to change if the underlying
+warning engine is ever reworked.
 
 ```ts
 import {
