@@ -12,18 +12,18 @@ treat the **SVG function as the preferred delivery**.
 
 ## 1. What we keep, drop, and add
 
-| 1st-gen concept | 2nd-gen | Why |
-| --- | --- | --- |
-| `iconset` registry + `sp-iconset-added` events | **Drop** | No sprite sheets, no async lookup, so no registry needed. |
-| `icons` sprite-sheet packages | **Drop** | Ships every icon whether used or not; already deprecated. |
-| `<sp-icon name>` / `src` | **Drop** | Name lookup depends on the registry; `src` is just an `<img>`. |
-| Dual S1 + S2 art with runtime switch | **Drop** | 2nd-gen is S2-only; one drawing per icon. |
-| Per-icon **class** (`IconAdd`) | **Drop** | No unique value once the function exists. |
-| Per-icon **registered element** | **Reconsidered** | Restored as the primary public delivery (see the RFC); framework-native. |
-| Per-icon **SVG function** | **Keep, primary substrate** | One tiny tree-shakeable file per icon. |
-| Generic "picture frame" element | **Keep, simplified** | One `<swc-icon>` for size, color, a11y, slotting. |
-| `fill="currentColor"` | **Evolve** | Preserve `--iconPrimary` with a `currentColor` fallback. |
-| `label` → `aria-label` / else `aria-hidden` | **Keep** | The single accessibility rule. |
+| 1st-gen concept                                | 2nd-gen                     | Why                                                                      |
+| ---------------------------------------------- | --------------------------- | ------------------------------------------------------------------------ |
+| `iconset` registry + `sp-iconset-added` events | **Drop**                    | No sprite sheets, no async lookup, so no registry needed.                |
+| `icons` sprite-sheet packages                  | **Drop**                    | Ships every icon whether used or not; already deprecated.                |
+| `<sp-icon name>` / `src`                       | **Drop**                    | Name lookup depends on the registry; `src` is just an `<img>`.           |
+| Dual S1 + S2 art with runtime switch           | **Drop**                    | 2nd-gen is S2-only; one drawing per icon.                                |
+| Per-icon **class** (`IconAdd`)                 | **Drop**                    | No unique value once the function exists.                                |
+| Per-icon **registered element**                | **Reconsidered**            | Restored as the primary public delivery (see the RFC); framework-native. |
+| Per-icon **SVG function**                      | **Keep, primary substrate** | One tiny tree-shakeable file per icon.                                   |
+| Generic "picture frame" element                | **Keep, simplified**        | One `<swc-icon>` for size, color, a11y, slotting.                        |
+| `fill="currentColor"`                          | **Evolve**                  | Preserve `--iconPrimary` with a `currentColor` fallback.                 |
+| `label` → `aria-label` / else `aria-hidden`    | **Keep**                    | The single accessibility rule.                                           |
 
 Net result: the drawing (SVG function) plus the frame (`<swc-icon>`), plus the
 per-icon elements generated from the function.
@@ -32,8 +32,8 @@ per-icon elements generated from the function.
 
 ## 2. The core model: function + frame
 
-- The **function** is *what the icon is*: a tree-shakeable unit of SVG markup.
-- The **frame** is *how an icon is presented*: consistent size, color, and
+- The **function** is _what the icon is_: a tree-shakeable unit of SVG markup.
+- The **frame** is _how an icon is presented_: consistent size, color, and
   accessibility, and a stable slot target inside other components.
 
 ```
@@ -168,10 +168,10 @@ spectrum-css and React Spectrum are both downstream redistributors of it
 (confirmed: a public package's `S2_Icon_Add_20_N.svg` is byte-identical to React
 Spectrum's committed copy). Two scoped packages cover the two families:
 
-| Family | A4U package |
-| --- | --- |
+| Family   | A4U package                                                           |
+| -------- | --------------------------------------------------------------------- |
 | Workflow | S2 Icon Global Set Open Source (413 icons; third-party/brand removed) |
-| UI | S2 Ui Icon Global Set (no open-source variant needed) |
+| UI       | S2 Ui Icon Global Set (no open-source variant needed)                 |
 
 Two facts about access govern the approach:
 

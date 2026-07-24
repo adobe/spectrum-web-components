@@ -1,8 +1,8 @@
 {
-    "_comment": "Records the Adobe A4U icon-set versions pulled for generation. Updated on each manual re-download. A4U is a private registry and is never a dependency of this repo; only the committed SVGs and this metadata live in the tree. See icon-rfc.md section 8. The workflow family is added here when it is scaffolded.",
-    "ui": {
-        "set": "S2 UI Icon Global Set",
-        "version": "TODO",
-        "pulledAt": "TODO"
-    }
+  "_comment": "Records the Adobe A4U icon-set versions pulled for generation. Updated on each manual re-download. A4U is a private registry and is never a dependency of this repo; only the committed SVGs and this metadata live in the tree. See icon-rfc.md section 8. The workflow family is added here when it is scaffolded.",
+  "ui": {
+    "set": "S2 UI Icon Global Set",
+    "version": "TODO",
+    "pulledAt": "TODO"
+  }
 }

@@ -1,10 +1,10 @@
 # RFC: 2nd-gen icon strategy (S2-only)
 
-| | |
-| --- | --- |
-| **Status** | Draft for review |
-| **Scope** | Spectrum 2 (S2) icon delivery for 2nd-gen Spectrum Web Components |
-| **Supersedes** | 1st-gen `icon`, `iconset`, `icons`, `icons-workflow`, `icons-ui` strategy |
+|                    |                                                                                                                                                                  |
+| ------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Status**         | Draft for review                                                                                                                                                 |
+| **Scope**          | Spectrum 2 (S2) icon delivery for 2nd-gen Spectrum Web Components                                                                                                |
+| **Supersedes**     | 1st-gen `icon`, `iconset`, `icons`, `icons-workflow`, `icons-ui` strategy                                                                                        |
 | **Companion docs** | `icon-system-eli5.md` (1st-gen deep dive), `icon-strategy-comparison.md` (spectrum-css vs React Spectrum vs 1st-gen), `icon-strategy-2nd-gen.md` (full proposal) |
 
 > A leaner, self-contained version of this RFC (no companion-doc references) lives
@@ -134,12 +134,16 @@ swappable tag, directive, and controller stay dropped (section 8).
 // Flavor 2 (primary): per-icon element, zero ceremony, any framework, no Lit
 import '@swc/icons-workflow/swc-icon-add.js';
 ```
+
 ```html
-<swc-icon-add label="Add"></swc-icon-add>   <!-- HTML / Angular / Svelte -->
+<swc-icon-add label="Add"></swc-icon-add>
+<!-- HTML / Angular / Svelte -->
 ```
+
 ```jsx
 <swc-icon-add label="Add" />                {/* React 19 */}
 ```
+
 ```ts
 // Flavor 1 substrate: the string function, for build-time / SSR / custom
 import { AddIcon } from '@swc/icons-workflow/Add.js';
@@ -197,15 +201,25 @@ export abstract class IconBase extends SpectrumElement {
   }
 
   protected abstract renderGraphic(): unknown;
-  protected render(): unknown { return this.renderGraphic(); }
+  protected render(): unknown {
+    return this.renderGraphic();
+  }
 }
 
-export class Icon extends IconBase {                 // <swc-icon>
-  protected renderGraphic() { return html`<slot></slot>`; }
+export class Icon extends IconBase {
+  // <swc-icon>
+  protected renderGraphic() {
+    return html`
+      <slot></slot>
+    `;
+  }
 }
 
-export class IconAdd extends IconBase {              // <swc-icon-add>
-  protected renderGraphic() { return unsafeSVG(AddIcon({ hidden: true })); }
+export class IconAdd extends IconBase {
+  // <swc-icon-add>
+  protected renderGraphic() {
+    return unsafeSVG(AddIcon({ hidden: true }));
+  }
 }
 ```
 
@@ -226,26 +240,31 @@ invisible to consumers.
 
 ### 6.4 Proposed API (`<swc-icon>`)
 
-| Member | Type | Default | Notes |
-| --- | --- | --- | --- |
-| `size` | `'xs' \| 's' \| 'm' \| 'l' \| 'xl'` | `'m'` | Sizes the box; for UI icons also selects the optical variant (section 7). `xxs`/`xxl` are not part of S2. |
-| `label` | `string` | `''` | Set: host gets `role="img"` + `aria-label`. Empty: host gets `aria-hidden="true"`. |
-| default slot | — | — | The SVG for the generic element. Per-icon elements fill it internally. |
-| CSS `color` | `<color>` | inherited | Drives icon color via the `currentColor` fallback. |
-| CSS `--iconPrimary` | `<color>` | `currentColor` | Advanced override, independent of text `color`. |
-| CSS part `icon` (optional) | — | — | The rendered `<svg>`; decide when the frame is built (Phase 3) whether to ship it. |
+| Member                     | Type                                | Default        | Notes                                                                                                     |
+| -------------------------- | ----------------------------------- | -------------- | --------------------------------------------------------------------------------------------------------- |
+| `size`                     | `'xs' \| 's' \| 'm' \| 'l' \| 'xl'` | `'m'`          | Sizes the box; for UI icons also selects the optical variant (section 7). `xxs`/`xxl` are not part of S2. |
+| `label`                    | `string`                            | `''`           | Set: host gets `role="img"` + `aria-label`. Empty: host gets `aria-hidden="true"`.                        |
+| default slot               | —                                   | —              | The SVG for the generic element. Per-icon elements fill it internally.                                    |
+| CSS `color`                | `<color>`                           | inherited      | Drives icon color via the `currentColor` fallback.                                                        |
+| CSS `--iconPrimary`        | `<color>`                           | `currentColor` | Advanced override, independent of text `color`.                                                           |
+| CSS part `icon` (optional) | —                                   | —              | The rendered `<svg>`; decide when the frame is built (Phase 3) whether to ship it.                        |
 
 No `name`, no `src`, no public methods or events.
 
 ```html
 <!-- decorative, inside an already-labeled button -->
-<swc-button><swc-icon-add slot="icon"></swc-icon-add> Add item</swc-button>
+<swc-button>
+  <swc-icon-add slot="icon"></swc-icon-add>
+  Add item
+</swc-button>
 
 <!-- meaningful, standalone -->
 <swc-icon-add label="Add" size="l"></swc-icon-add>
 
 <!-- custom SVG in the generic frame -->
-<swc-icon size="s"><svg viewBox="0 0 20 20"><!-- … --></svg></swc-icon>
+<swc-icon size="s">
+  <svg viewBox="0 0 20 20"><!-- … --></svg>
+</swc-icon>
 
 <!-- color follows text; override with color or --iconPrimary -->
 <swc-icon-add label="Brand" style="--iconPrimary: rebeccapurple"></swc-icon-add>
@@ -256,12 +275,12 @@ No `name`, no `src`, no public methods or events.
 The numeric-to-t-shirt map is fixed and stable (unchanged since S1):
 
 | Numeric step | `size` |
-| --- | --- |
-| 50 | `xs` |
-| 75 | `s` |
-| 100 | `m` |
-| 200 | `l` |
-| 300 | `xl` |
+| ------------ | ------ |
+| 50           | `xs`   |
+| 75           | `s`    |
+| 100          | `m`    |
+| 200          | `l`    |
+| 300          | `xl`   |
 
 Two mechanisms:
 
@@ -290,11 +309,26 @@ component and scales.
   inline-size: var(--swc-icon-size, 1.25rem);
   block-size: var(--swc-icon-size, 1.25rem);
 }
-:host([size='s']) { --swc-icon-size: var(--spectrum-workflow-icon-size-s); }
-:host([size='m']) { --swc-icon-size: var(--spectrum-workflow-icon-size-m); }
-:host([size='l']) { --swc-icon-size: var(--spectrum-workflow-icon-size-l); }
-::slotted(svg), svg { display: block; inline-size: 100%; block-size: 100%; }
-@media (forced-colors: active) { :host { forced-color-adjust: auto; } }
+:host([size='s']) {
+  --swc-icon-size: var(--spectrum-workflow-icon-size-s);
+}
+:host([size='m']) {
+  --swc-icon-size: var(--spectrum-workflow-icon-size-m);
+}
+:host([size='l']) {
+  --swc-icon-size: var(--spectrum-workflow-icon-size-l);
+}
+::slotted(svg),
+svg {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+}
+@media (forced-colors: active) {
+  :host {
+    forced-color-adjust: auto;
+  }
+}
 ```
 
 ```ts
@@ -307,7 +341,8 @@ function pickChevron(size) {
   if (STEPS[wanted]) return STEPS[wanted]();
   const available = Object.keys(STEPS).map(Number);
   const closest = available.reduce((a, b) =>
-    Math.abs(b - wanted) < Math.abs(a - wanted) ? b : a);
+    Math.abs(b - wanted) < Math.abs(a - wanted) ? b : a
+  );
   return STEPS[closest]();
 }
 ```
@@ -321,9 +356,15 @@ function pickChevron(size) {
 
 ```html
 <!-- decorative -->
-<swc-icon-add aria-hidden="true">#shadow-root<svg aria-hidden="true" focusable="false">…</svg></swc-icon-add>
+<swc-icon-add aria-hidden="true">
+  #shadow-root
+  <svg aria-hidden="true" focusable="false">…</svg>
+</swc-icon-add>
 <!-- meaningful -->
-<swc-icon-add role="img" aria-label="Add">#shadow-root<svg aria-hidden="true" focusable="false">…</svg></swc-icon-add>
+<swc-icon-add role="img" aria-label="Add">
+  #shadow-root
+  <svg aria-hidden="true" focusable="false">…</svg>
+</swc-icon-add>
 ```
 
 ### 6.7 Risks, edge cases, and open questions
@@ -376,16 +417,16 @@ Per-icon custom elements are **recommended** (Flavor 2). Rejected:
 Sequenced **UI icons first** (internal, already needed by migrated components),
 then workflow. Phase 1 tooling is family-agnostic so workflow is low-lift.
 
-| Phase | Deliverable | Exit |
-| --- | --- | --- |
-| **0. Decisions locked** | Sign-off: UI internal / workflow public, string output, fallback color, names, layout. | Open questions resolved or deferred. |
+| Phase                                | Deliverable                                                                                                                                                                                    | Exit                                                                                       |
+| ------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------ |
+| **0. Decisions locked**              | Sign-off: UI internal / workflow public, string output, fallback color, names, layout.                                                                                                         | Open questions resolved or deferred.                                                       |
 | **1. UI icons, internal (priority)** | Manual UI download + committed SVGs + `icon-source.json`; family-agnostic generator core; per-logical-icon UI functions with size-to-step selection (internal only); shared render convention. | Migrated components render UI icons from this source, sized by the component, off 1st-gen. |
-| **2. Workflow-readiness gate** | Confirm the generator, source layout, metadata, and refresh accept a second family and a public-element output mode. | Adding workflow is additive, not a rewrite. |
-| **3. Workflow icons, public** | Manual workflow download; `IconBase` + generic `<swc-icon>`; per-icon workflow functions and elements, reusing the core. | A workflow icon works as element and function in HTML and a non-Lit framework. |
-| **4. Packaging and tree-shaking** | Published shapes; per-icon subpath exports for element and function; optional Lit entry points. | A 3-icon sample bundle ships only those 3. |
-| **5. Refresh automation** | Scripted post-download refresh for both families; optional internal scheduled-CI PR. | One documented command refreshes a family (after manual download). |
-| **6. Documentation** | Per-framework usage, the custom-icon SVG contract, a 1st-gen migration note (UI now internal). | A developer on any framework can add a workflow icon and a custom icon from the docs. |
-| **7. Verification and rollout** | React/Vue/vanilla samples + VRT (including internal UI icons across sizes). | Samples pass; 1st-gen icon packages deprecated with a pointer. |
+| **2. Workflow-readiness gate**       | Confirm the generator, source layout, metadata, and refresh accept a second family and a public-element output mode.                                                                           | Adding workflow is additive, not a rewrite.                                                |
+| **3. Workflow icons, public**        | Manual workflow download; `IconBase` + generic `<swc-icon>`; per-icon workflow functions and elements, reusing the core.                                                                       | A workflow icon works as element and function in HTML and a non-Lit framework.             |
+| **4. Packaging and tree-shaking**    | Published shapes; per-icon subpath exports for element and function; optional Lit entry points.                                                                                                | A 3-icon sample bundle ships only those 3.                                                 |
+| **5. Refresh automation**            | Scripted post-download refresh for both families; optional internal scheduled-CI PR.                                                                                                           | One documented command refreshes a family (after manual download).                         |
+| **6. Documentation**                 | Per-framework usage, the custom-icon SVG contract, a 1st-gen migration note (UI now internal).                                                                                                 | A developer on any framework can add a workflow icon and a custom icon from the docs.      |
+| **7. Verification and rollout**      | React/Vue/vanilla samples + VRT (including internal UI icons across sizes).                                                                                                                    | Samples pass; 1st-gen icon packages deprecated with a pointer.                             |
 
 ## 10. Open questions
 

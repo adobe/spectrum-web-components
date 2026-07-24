@@ -10,15 +10,15 @@ S2-relevant unless noted.
 
 ## At a glance
 
-| Stage | spectrum-css (`ui-icons`) | React Spectrum S2 (`@react-spectrum/s2`) | SWC 1st-gen (`icons-workflow` / `icons-ui`) |
-| --- | --- | --- | --- |
-| **Source** | A4U `@a4u/a4u-s2-*-global-set` (Adobe-internal, gated) | **Raw A4U export committed in-repo** (`s2wf-icons/S2_Icon_*_20_N.svg`) | Public npm `@adobe/spectrum-css-workflow-icons` + `@spectrum-css/ui-icons` (republished A4U) |
-| **Ultimate origin** | A4U S2 icon global set (`icons.corp.adobe.com`) | same A4U set (committed verbatim; byte-identical to the public package) | same A4U set (via the public packages) |
-| **Processing** | svgo (clean ids/classes, add `spectrum-UIIcon` class, idPrefix) + svgstore (sprite) | **Parcel** compiles each SVG to a React component at build, via the `exports` wildcard + `@react-spectrum/parcel-transformer-s2-icon` wrapping with `createIcon` | Custom `bin/build.js` (cheerio): strip ids/defs, **force `currentColor`**, emit 3 flavors for both S1 + S2 |
-| **Delivery** | Public npm package: committed `dist/svg/` + sprite + `icons.json` | Per-icon subpath entry points `@react-spectrum/s2/icons/Add` (`.mjs`/`.cjs`); no committed generated components; plus consumer build tools | Committed per-icon `.ts` (function + class + `<sp-icon-*>` element) + barrels; deprecated sprite via `iconset`/`icons` |
-| **Usage** | Framework-agnostic: sprite symbol or inline SVG; color via `--iconPrimary` / CSS | React only: `import Add from '.../icons/Add'; <Add aria-label />`; custom via `createIcon` / `<Icon>` | Web components: `<sp-icon-add>`, `AddIcon()`, or `<sp-icon name="ui:…">` |
-| **Color model** | source fills `var(--iconPrimary, #222)` | `--iconPrimary` (private, set by the style macro) | flattened to `currentColor` |
-| **Reach** | any framework (CSS/SVG) | React | any framework (custom elements) |
+| Stage               | spectrum-css (`ui-icons`)                                                           | React Spectrum S2 (`@react-spectrum/s2`)                                                                                                                         | SWC 1st-gen (`icons-workflow` / `icons-ui`)                                                                            |
+| ------------------- | ----------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| **Source**          | A4U `@a4u/a4u-s2-*-global-set` (Adobe-internal, gated)                              | **Raw A4U export committed in-repo** (`s2wf-icons/S2_Icon_*_20_N.svg`)                                                                                           | Public npm `@adobe/spectrum-css-workflow-icons` + `@spectrum-css/ui-icons` (republished A4U)                           |
+| **Ultimate origin** | A4U S2 icon global set (`icons.corp.adobe.com`)                                     | same A4U set (committed verbatim; byte-identical to the public package)                                                                                          | same A4U set (via the public packages)                                                                                 |
+| **Processing**      | svgo (clean ids/classes, add `spectrum-UIIcon` class, idPrefix) + svgstore (sprite) | **Parcel** compiles each SVG to a React component at build, via the `exports` wildcard + `@react-spectrum/parcel-transformer-s2-icon` wrapping with `createIcon` | Custom `bin/build.js` (cheerio): strip ids/defs, **force `currentColor`**, emit 3 flavors for both S1 + S2             |
+| **Delivery**        | Public npm package: committed `dist/svg/` + sprite + `icons.json`                   | Per-icon subpath entry points `@react-spectrum/s2/icons/Add` (`.mjs`/`.cjs`); no committed generated components; plus consumer build tools                       | Committed per-icon `.ts` (function + class + `<sp-icon-*>` element) + barrels; deprecated sprite via `iconset`/`icons` |
+| **Usage**           | Framework-agnostic: sprite symbol or inline SVG; color via `--iconPrimary` / CSS    | React only: `import Add from '.../icons/Add'; <Add aria-label />`; custom via `createIcon` / `<Icon>`                                                            | Web components: `<sp-icon-add>`, `AddIcon()`, or `<sp-icon name="ui:…">`                                               |
+| **Color model**     | source fills `var(--iconPrimary, #222)`                                             | `--iconPrimary` (private, set by the style macro)                                                                                                                | flattened to `currentColor`                                                                                            |
+| **Reach**           | any framework (CSS/SVG)                                                             | React                                                                                                                                                            | any framework (custom elements)                                                                                        |
 
 ---
 
@@ -44,6 +44,7 @@ S2-relevant unless noted.
   maintainer downloads by hand, commits the SVGs, and a build-time script
   converts them. React Spectrum gives us the committed-source shape and a
   conversion script, but the A4U download itself is deliberately manual.
+
 - **SWC 1st-gen** does not touch the gated source at all; it depends on the
   already-public processed packages (`@adobe/spectrum-css-workflow-icons`,
   `@spectrum-css/ui-icons`), accepting the extra hop.
@@ -120,12 +121,12 @@ requirement for a custom S2 icon.
   (`@react-spectrum/s2/icons/Add`) compiled to `.mjs` and `.cjs`. Tree-shaking
   comes from importing exactly the subpath you need, not from shaking a barrel.
   React Spectrum also ships **two consumer build tools** so apps can convert their
-  *own* conformant SVGs:
+  _own_ conformant SVGs:
   - `@react-spectrum/parcel-transformer-s2-icon`: a Parcel pipeline
     (`import Icon from 'icon:./Foo.svg'`).
   - `@react-spectrum/s2-icon-builder`: a CLI that emits TSX.
-  Workflow icons are exposed publicly (`./icons/*` from `s2wf-icons`); **UI icons
-  live in `ui-icons/` but have no package export**, so they are internal-only.
+    Workflow icons are exposed publicly (`./icons/*` from `s2wf-icons`); **UI icons
+    live in `ui-icons/` but have no package export**, so they are internal-only.
 - **SWC 1st-gen**: committed per-icon `.ts` modules in three flavors (factory
   function, base class, registered `<sp-icon-*>` element) plus barrels. Plus the
   now-deprecated runtime sprite path (`iconset` registry + `<sp-icons-*>`).
@@ -152,15 +153,22 @@ requirement for a custom S2 icon.
   unless `aria-label`), `role="img"`, `focusable={false}`. Parent components feed
   size/color through `IconContext`, and icons participate in loading skeletons via
   `SkeletonWrapper`.
+
 - **SWC 1st-gen**: web components, framework-agnostic.
 
   ```html
-  <sp-icon-add label="Add"></sp-icon-add>   <!-- per-icon element -->
-  <sp-icon name="ui:Add"></sp-icon>          <!-- registry lookup (deprecated) -->
+  <sp-icon-add label="Add"></sp-icon-add>
+  <!-- per-icon element -->
+  <sp-icon name="ui:Add"></sp-icon>
+  <!-- registry lookup (deprecated) -->
   ```
+
   ```ts
-  html`<sp-icon>${AddIcon()}</sp-icon>`      // factory function
+  html`
+    <sp-icon>${AddIcon()}</sp-icon>
+  `; // factory function
   ```
+
   Color via `currentColor`, `size` attribute, decorative-by-default. The
   web-component frame is the equivalent of React Spectrum's `createIcon`/`<Icon>`
   wrapper but needs **no per-consumer build transform**, and parent-driven

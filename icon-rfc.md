@@ -1,10 +1,10 @@
 # RFC: 2nd-gen icon strategy (Spectrum 2)
 
-| | |
-| --- | --- |
-| **Status** | Draft for review |
-| **Scope** | Spectrum 2 (S2) icon delivery for 2nd-gen Spectrum Web Components |
-| **Supersedes** | 1st-gen `icon`, `iconset`, `icons`, `icons-workflow`, `icons-ui` |
+|                |                                                                   |
+| -------------- | ----------------------------------------------------------------- |
+| **Status**     | Draft for review                                                  |
+| **Scope**      | Spectrum 2 (S2) icon delivery for 2nd-gen Spectrum Web Components |
+| **Supersedes** | 1st-gen `icon`, `iconset`, `icons`, `icons-workflow`, `icons-ui`  |
 
 ## 1. Summary
 
@@ -89,17 +89,17 @@ language:
 So a consumer only ever touches two public things: **workflow icons** and the
 **`<swc-icon>` frame**. UI icons stay behind the component boundary.
 
-| | Workflow icons | UI icons | `<swc-icon>` frame |
-| --- | --- | --- | --- |
-| **Purpose** | Icons consumers choose (star, folder, trash) | Control internals (chevron, checkmark, picker arrow) | Wrapper for a custom, non-Spectrum SVG |
-| **Audience** | Public | Internal (components only) | Public |
-| **Package home** | `@adobe/spectrum-wc-icons` (icons) | `@adobe/spectrum-wc` (swc, `components/ui-icons/`) | `@adobe/spectrum-wc` (swc) |
-| **Art source** | S2 Icon Global Set Open Source (413, no third-party/brand) | S2 UI Icon Global Set | Consumer-supplied SVG |
-| **Ships as** | Per-icon element (`<swc-icon-star>`) **and** per-icon SVG-string function (`StarIcon()`) | Internal `<swc-ui-icon>` element (Lit `TemplateResult`), rendered by components; not public | One generic element |
-| **Sizing** | One asset scaled to a token box; `size` sets the box, CSS resize is safe | Discrete optical assets; `size` **selects** the step, do not CSS-resize | `size` sets the box; slotted art scales |
-| **Baseline styling** | In the element's shadow CSS; the function alone is raw SVG | Shared via `IconBase` (the internal element) | In the element's shadow CSS |
-| **A11y owner** | Host element (`accessibleLabel` → `role="img"`; empty → decorative) | Consuming component | Host element |
-| **Consumer Lit dependency** | None (element and function are both Lit-free) | N/A (internal element; Lit `TemplateResult`) | None |
+|                             | Workflow icons                                                                           | UI icons                                                                                    | `<swc-icon>` frame                      |
+| --------------------------- | ---------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- | --------------------------------------- |
+| **Purpose**                 | Icons consumers choose (star, folder, trash)                                             | Control internals (chevron, checkmark, picker arrow)                                        | Wrapper for a custom, non-Spectrum SVG  |
+| **Audience**                | Public                                                                                   | Internal (components only)                                                                  | Public                                  |
+| **Package home**            | `@adobe/spectrum-wc-icons` (icons)                                                       | `@adobe/spectrum-wc` (swc, `components/ui-icons/`)                                          | `@adobe/spectrum-wc` (swc)              |
+| **Art source**              | S2 Icon Global Set Open Source (413, no third-party/brand)                               | S2 UI Icon Global Set                                                                       | Consumer-supplied SVG                   |
+| **Ships as**                | Per-icon element (`<swc-icon-star>`) **and** per-icon SVG-string function (`StarIcon()`) | Internal `<swc-ui-icon>` element (Lit `TemplateResult`), rendered by components; not public | One generic element                     |
+| **Sizing**                  | One asset scaled to a token box; `size` sets the box, CSS resize is safe                 | Discrete optical assets; `size` **selects** the step, do not CSS-resize                     | `size` sets the box; slotted art scales |
+| **Baseline styling**        | In the element's shadow CSS; the function alone is raw SVG                               | Shared via `IconBase` (the internal element)                                                | In the element's shadow CSS             |
+| **A11y owner**              | Host element (`accessibleLabel` → `role="img"`; empty → decorative)                      | Consuming component                                                                         | Host element                            |
+| **Consumer Lit dependency** | None (element and function are both Lit-free)                                            | N/A (internal element; Lit `TemplateResult`)                                                | None                                    |
 
 Sections 5–7 detail each; the table above is the one-screen summary.
 
@@ -119,11 +119,11 @@ Three complementary outputs, none coupling a consumer to Lit:
 
 ### 5.1 Why a string function, not a Lit template
 
-| Option | Verdict |
-| --- | --- |
-| **SVG string** | **Chosen.** Framework-agnostic; usable via `innerHTML`, React `dangerouslySetInnerHTML`, Vue `v-html`, or Lit `unsafeSVG`. No runtime dependency. |
-| Lit `TemplateResult` | Rejected. Only renderable inside Lit; fails the no-Lit goal. |
-| Swappable template tag | Rejected. Module-level mutable global state; the element already covers cross-framework reach. |
+| Option                 | Verdict                                                                                                                                           |
+| ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **SVG string**         | **Chosen.** Framework-agnostic; usable via `innerHTML`, React `dangerouslySetInnerHTML`, Vue `v-html`, or Lit `unsafeSVG`. No runtime dependency. |
+| Lit `TemplateResult`   | Rejected. Only renderable inside Lit; fails the no-Lit goal.                                                                                      |
+| Swappable template tag | Rejected. Module-level mutable global state; the element already covers cross-framework reach.                                                    |
 
 An optional, additive Lit entry point (`@adobe/spectrum-wc-icons/lit/*` wrapping
 `unsafeSVG`) may be offered later; it is not on the critical path.
@@ -136,7 +136,8 @@ import '@adobe/spectrum-wc-icons/swc-icon-star.js';
 ```
 
 ```html
-<swc-icon-star accessible-label="Favorite"></swc-icon-star>   <!-- HTML, Angular, Svelte -->
+<swc-icon-star accessible-label="Favorite"></swc-icon-star>
+<!-- HTML, Angular, Svelte -->
 ```
 
 ```jsx
@@ -179,13 +180,13 @@ extend the same `IconBase` (section 3).
 
 ### 6.1 API
 
-| Member | Type | Default | Notes |
-| --- | --- | --- | --- |
-| `size` | `'xs' \| 's' \| 'm' \| 'l' \| 'xl'` | `'m'` | Sizes the box; for UI icons also selects the optical variant (section 7). |
-| `accessibleLabel` | `string` | `''` | Attribute: `accessible-label`. Set: host gets `role="img"` + `aria-label`. Empty: host gets `aria-hidden="true"` (decorative). |
-| default slot | — | — | The SVG for the generic frame. Per-icon elements fill it internally. |
-| CSS `color` | `<color>` | inherited | Drives icon color via the `currentColor` fallback. |
-| CSS `--swc-icon-color` | `<color>` | `currentColor` | Advanced color override, independent of text `color`. |
+| Member                 | Type                                | Default        | Notes                                                                                                                          |
+| ---------------------- | ----------------------------------- | -------------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| `size`                 | `'xs' \| 's' \| 'm' \| 'l' \| 'xl'` | `'m'`          | Sizes the box; for UI icons also selects the optical variant (section 7).                                                      |
+| `accessibleLabel`      | `string`                            | `''`           | Attribute: `accessible-label`. Set: host gets `role="img"` + `aria-label`. Empty: host gets `aria-hidden="true"` (decorative). |
+| default slot           | —                                   | —              | The SVG for the generic frame. Per-icon elements fill it internally.                                                           |
+| CSS `color`            | `<color>`                           | inherited      | Drives icon color via the `currentColor` fallback.                                                                             |
+| CSS `--swc-icon-color` | `<color>`                           | `currentColor` | Advanced color override, independent of text `color`.                                                                          |
 
 No `name`, no `src`, no public methods or events. The frame is static and
 presentational.
@@ -237,21 +238,21 @@ SVG is supplied; each is a custom element. The code below is illustrative.
 ```ts
 // @adobe/spectrum-wc-core
 export abstract class IconBase extends SizedMixin(SpectrumElement, {
-    validSizes: [...ICON_VALID_SIZES],
+  validSizes: [...ICON_VALID_SIZES],
 }) {
-    @property({ type: String, attribute: 'accessible-label' })
-    accessibleLabel = '';
+  @property({ type: String, attribute: 'accessible-label' })
+  accessibleLabel = '';
 
-    // Host owns a11y: labeled -> role="img" + aria-label; unlabeled -> aria-hidden.
-    protected override firstUpdated(c: PropertyValues) {
-        super.firstUpdated(c);
-        this.#applyHostA11y();
-    }
-    protected override updated(c: PropertyValues) {
-        super.updated(c);
-        if (c.has('accessibleLabel')) this.#applyHostA11y();
-    }
-    // #applyHostA11y() toggles role / aria-label / aria-hidden on the host.
+  // Host owns a11y: labeled -> role="img" + aria-label; unlabeled -> aria-hidden.
+  protected override firstUpdated(c: PropertyValues) {
+    super.firstUpdated(c);
+    this.#applyHostA11y();
+  }
+  protected override updated(c: PropertyValues) {
+    super.updated(c);
+    if (c.has('accessibleLabel')) this.#applyHostA11y();
+  }
+  // #applyHostA11y() toggles role / aria-label / aria-hidden on the host.
 }
 ```
 
@@ -262,10 +263,12 @@ export abstract class IconBase extends SizedMixin(SpectrumElement, {
 import { IconBase } from '@adobe/spectrum-wc-core';
 
 export class Icon extends IconBase {
-    static styles = [iconBaseCss]; // shared _lit-styles/icon-base.css
-    render() {
-        return html`<span class="swc-Icon"><slot></slot></span>`;
-    }
+  static styles = [iconBaseCss]; // shared _lit-styles/icon-base.css
+  render() {
+    return html`
+      <span class="swc-Icon"><slot></slot></span>
+    `;
+  }
 }
 customElements.define('swc-icon', Icon);
 ```
@@ -280,7 +283,7 @@ underlying substrate function.**
 ```ts
 // @adobe/spectrum-wc-icons/Star.js  (substrate function, framework-agnostic)
 export function StarIcon(): string {
-    return '<svg viewBox="0 0 20 20"><path fill="var(--swc-icon-color, currentColor)" d="…"/></svg>';
+  return '<svg viewBox="0 0 20 20"><path fill="var(--swc-icon-color, currentColor)" d="…"/></svg>';
 }
 
 // @adobe/spectrum-wc-icons/swc-icon-star.js  (generated element, extends IconBase)
@@ -288,10 +291,12 @@ import { IconBase } from '@adobe/spectrum-wc-core';
 import { StarIcon } from './Star.js';
 
 export class IconStar extends IconBase {
-    static styles = [iconBaseCss];
-    render() {
-        return html`<span class="swc-Icon">${unsafeSVG(StarIcon())}</span>`; // baked in
-    }
+  static styles = [iconBaseCss];
+  render() {
+    return html`
+      <span class="swc-Icon">${unsafeSVG(StarIcon())}</span>
+    `; // baked in
+  }
 }
 customElements.define('swc-icon-star', IconStar);
 ```
@@ -309,12 +314,14 @@ import { IconBase } from '@adobe/spectrum-wc-core';
 import { UI_ICONS } from './icon-set/index.js'; // icon → per-step Lit `html` templates
 
 export class UiIcon extends IconBase {
-    @property() icon!: UiIconName; // selects the icon-set
-    static styles = [iconBaseCss];
-    render() {
-        // size selects the optical step; icon selects the set.
-        return html`<span class="swc-Icon">${UI_ICONS[this.icon][uiStepFor(this.size)]}</span>`;
-    }
+  @property() icon!: UiIconName; // selects the icon-set
+  static styles = [iconBaseCss];
+  render() {
+    // size selects the optical step; icon selects the set.
+    return html`
+      <span class="swc-Icon">${UI_ICONS[this.icon][uiStepFor(this.size)]}</span>
+    `;
+  }
 }
 customElements.define('swc-ui-icon', UiIcon);
 ```
@@ -340,12 +347,12 @@ render() {
 The numeric-to-t-shirt map is fixed and stable (unchanged since S1):
 
 | Numeric step | `size` |
-| --- | --- |
-| 50 | `xs` |
-| 75 | `s` |
-| 100 | `m` |
-| 200 | `l` |
-| 300 | `xl` |
+| ------------ | ------ |
+| 50           | `xs`   |
+| 75           | `s`    |
+| 100          | `m`    |
+| 200          | `l`    |
+| 300          | `xl`   |
 
 Two mechanisms, one `size` attribute:
 
@@ -448,15 +455,15 @@ migration, not deferred to a follow-up. Components that render UI icons internal
 are covered when Phase 1 lands their source; components that expose icon slots are
 verified in Phase 7 against workflow icons and custom SVGs.
 
-| Phase | Deliverable | Exit |
-| --- | --- | --- |
-| **1. UI icons, internal** | Manual UI download + committed SVGs + `icon-source.json`; family-agnostic generator core; UI art as Lit `TemplateResult`s and the internal `<swc-ui-icon>` element (size-to-step selection). | Migrated components render UI icons via `<swc-ui-icon>`, sized by the component, off the 1st-gen packages, with no `unsafeSVG`. |
-| **2. Workflow-readiness gate** | Confirm the Phase 1 generator, source layout, metadata, and refresh already accept a second family and a public-element output mode. | Adding workflow is additive, not a rewrite. |
-| **3. Workflow icons, public** | Manual workflow download; the `IconBase` + generic `<swc-icon>`; per-icon workflow functions and elements, reusing the generator core. | A workflow icon works as element and function in HTML and a non-Lit framework. |
-| **4. Packaging and tree-shaking** | Published shapes: the `<swc-icon>` frame in swc, and the per-icon workflow elements and functions in the dedicated **icons** package; per-icon subpath exports for element and function; swc devDepends on the icons package for stories; optional additive Lit entry points. | A 3-icon sample bundle ships only those 3. |
-| **5. Refresh automation** | Scripted post-download refresh for both families; optional internal scheduled-CI PR. | One documented command refreshes a family (after the manual download). |
-| **6. Documentation** | Per-framework usage, the custom-icon SVG contract, and a 1st-gen migration note (including UI icons now internal). | A developer on any framework can add a workflow icon and a custom icon from the docs. |
-| **7. Verification and rollout** | React/Vue/vanilla samples and VRT (including internal UI icons across sizes). | Samples pass; 1st-gen icon packages deprecated with a pointer to the replacement. |
+| Phase                             | Deliverable                                                                                                                                                                                                                                                                   | Exit                                                                                                                            |
+| --------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| **1. UI icons, internal**         | Manual UI download + committed SVGs + `icon-source.json`; family-agnostic generator core; UI art as Lit `TemplateResult`s and the internal `<swc-ui-icon>` element (size-to-step selection).                                                                                  | Migrated components render UI icons via `<swc-ui-icon>`, sized by the component, off the 1st-gen packages, with no `unsafeSVG`. |
+| **2. Workflow-readiness gate**    | Confirm the Phase 1 generator, source layout, metadata, and refresh already accept a second family and a public-element output mode.                                                                                                                                          | Adding workflow is additive, not a rewrite.                                                                                     |
+| **3. Workflow icons, public**     | Manual workflow download; the `IconBase` + generic `<swc-icon>`; per-icon workflow functions and elements, reusing the generator core.                                                                                                                                        | A workflow icon works as element and function in HTML and a non-Lit framework.                                                  |
+| **4. Packaging and tree-shaking** | Published shapes: the `<swc-icon>` frame in swc, and the per-icon workflow elements and functions in the dedicated **icons** package; per-icon subpath exports for element and function; swc devDepends on the icons package for stories; optional additive Lit entry points. | A 3-icon sample bundle ships only those 3.                                                                                      |
+| **5. Refresh automation**         | Scripted post-download refresh for both families; optional internal scheduled-CI PR.                                                                                                                                                                                          | One documented command refreshes a family (after the manual download).                                                          |
+| **6. Documentation**              | Per-framework usage, the custom-icon SVG contract, and a 1st-gen migration note (including UI icons now internal).                                                                                                                                                            | A developer on any framework can add a workflow icon and a custom icon from the docs.                                           |
+| **7. Verification and rollout**   | React/Vue/vanilla samples and VRT (including internal UI icons across sizes).                                                                                                                                                                                                 | Samples pass; 1st-gen icon packages deprecated with a pointer to the replacement.                                               |
 
 ## 10. Alternatives considered
 
@@ -506,11 +513,11 @@ verified in Phase 7 against workflow icons and custom SVGs.
   standalone frame-only package was considered and rejected as unnecessary package
   sprawl.)
 - **Component-render audit:** during component migration, confirm (a) no swc
-  component needs a *workflow* icon at runtime, and (b) no *core* base class renders
+  component needs a _workflow_ icon at runtime, and (b) no _core_ base class renders
   a UI icon itself (which would conflict with UI living in swc). Deferred to that
   work; not a blocker for this RFC.
 - **Fallback color:** accepted for the first pass: `var(--swc-icon-color,
-  currentColor)`. A `light-dark(<token>, <token>)` fallback can be revisited later
+currentColor)`. A `light-dark(<token>, <token>)` fallback can be revisited later
   if frameless icons must be theme-correct on their own.
 - **Optional Lit entry point:** none shipped. Lit consumers call `unsafeSVG`
   themselves; the documentation must show this clearly.
@@ -535,15 +542,23 @@ verified in Phase 7 against workflow icons and custom SVGs.
   // Generated module for one logical icon = numeral step → Lit `html` template.
   // components/ui-icons/icon-set/Chevron.ts (internal, imported relatively)
   export const Chevron = {
-      75: html`<svg viewBox="0 0 10 10">…</svg>`, // s
-      100: html`<svg viewBox="0 0 10 10">…</svg>`, // m
-      200: html`<svg viewBox="0 0 12 12">…</svg>`, // l
-      // …one entry per available optical step
+    75: html`
+      <svg viewBox="0 0 10 10">…</svg>
+    `, // s
+    100: html`
+      <svg viewBox="0 0 10 10">…</svg>
+    `, // m
+    200: html`
+      <svg viewBox="0 0 12 12">…</svg>
+    `, // l
+    // …one entry per available optical step
   } satisfies UiIconArt;
 
   // Static registry (chosen): the element resolves the bundled set by name, then
   // step. Internally: renderSVG() => UI_ICONS[this.icon][uiStepFor(this.size)].
-  html`<swc-ui-icon icon="chevron" .size=${this.size}></swc-ui-icon>`;
+  html`
+    <swc-ui-icon icon="chevron" .size=${this.size}></swc-ui-icon>
+  `;
   ```
 
 ### Still open

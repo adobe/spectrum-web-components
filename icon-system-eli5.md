@@ -27,9 +27,12 @@ different ways, and it checks for them in this order:
 3. **A slotted SVG** — "I'll just hand you the drawing directly, hold it for me."
 
 ```html
-<sp-icon name="ui:Arrow100"></sp-icon>          <!-- look it up by name -->
-<sp-icon src="data:image/svg..."></sp-icon>     <!-- show an image -->
-<sp-icon><svg>...</svg></sp-icon>               <!-- hold this drawing -->
+<sp-icon name="ui:Arrow100"></sp-icon>
+<!-- look it up by name -->
+<sp-icon src="data:image/svg..."></sp-icon>
+<!-- show an image -->
+<sp-icon><svg>...</svg></sp-icon>
+<!-- hold this drawing -->
 ```
 
 ### What the code actually does
@@ -45,7 +48,7 @@ There are two layers:
 Two small but important behaviors live in `IconBase`:
 
 - **Accessibility auto-pilot.** If you give the icon a `label`, it removes
-  `aria-hidden` (screen readers should announce it). If you *don't*, it sets
+  `aria-hidden` (screen readers should announce it). If you _don't_, it sets
   `aria-hidden="true"` (it's just decoration, ignore it). You don't have to
   think about it; the frame does it for you.
 - **It knows what "Spectrum version" it's in.** A helper
@@ -62,7 +65,7 @@ But you need to understand it because lots of old code still uses it.
 
 ### `iconset` = the rulebook for sticker boxes
 
-The `iconset` package doesn't contain any stickers. It contains the *rules* for
+The `iconset` package doesn't contain any stickers. It contains the _rules_ for
 what a "box of stickers" is, so other people can make their own.
 
 The key trick is a single shared phone book called the **`IconsetRegistry`**
@@ -73,17 +76,17 @@ It works like a tiny announcement system:
 
 1. You put a sticker box on the page. It shouts: "Hi! I'm the `ui` box!" and
    writes itself into the phone book. (It fires a `sp-iconset-added` event.)
-2. Every `<sp-icon name="ui:something">` on the page is *listening* for that
+2. Every `<sp-icon name="ui:something">` on the page is _listening_ for that
    shout. When it hears "`ui` box arrived!", it goes "oh good, now I can find
    my sticker," looks it up, and draws it.
 
 This is why the README says to drop `<sp-icons-medium>` somewhere on your page —
-that element *is* a sticker box announcing itself.
+that element _is_ a sticker box announcing itself.
 
 #### The event flow, step by step
 
 The tricky part is **timing**: an `<sp-icon>` and its sticker box can show up on
-the page in *either* order. The system handles both. Here's the "box arrives
+the page in _either_ order. The system handles both. Here's the "box arrives
 second" case (the harder one), which is why the announcement system exists at
 all:
 
@@ -122,7 +125,7 @@ A few details that make this work:
   shout by one tick so its own slotted SVG has finished parsing before any icon
   tries to read a sticker out of it.
 - **The filter check.** When an icon hears `sp-iconset-added`, it only reacts if
-  `event.detail.name` matches *its* iconset (`ui`). An icon waiting on the `ui`
+  `event.detail.name` matches _its_ iconset (`ui`). An icon waiting on the `ui`
   box ignores some other box arriving.
 - **The "box arrives first" case is simpler.** If the box is already registered
   when the icon's `firstUpdated()` runs, `getIconset('ui')` returns it
