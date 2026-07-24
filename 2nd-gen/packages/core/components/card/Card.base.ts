@@ -101,7 +101,7 @@ export abstract class CardBase extends SizedMixin(SpectrumElement, {
   /**
    * Indicates the consumer has wrapped their `title` slot content in a real
    * link. Extends that link's hit area to cover the card surface while
-   * leaving navigation entirely consumer-owned — Card accepts no `href`.
+   * leaving navigation entirely consumer-owned; Card accepts no `href`.
    */
   @property({ type: Boolean, reflect: true, attribute: 'title-as-link' })
   public titleAsLink = false;
@@ -170,7 +170,7 @@ export abstract class CardBase extends SizedMixin(SpectrumElement, {
     super.firstUpdated(changedProperties);
     // renderCardTemplate() doesn't take a slotchange callback, so the
     // listener is attached imperatively rather than declaratively in the
-    // template — the slot node itself persists across re-renders.
+    // template; the slot node itself persists across re-renders.
     this.renderRoot
       ?.querySelector('slot[name="actions"]')
       ?.addEventListener('slotchange', this.handleActionsSlotChange);
@@ -312,7 +312,7 @@ export abstract class CardBase extends SizedMixin(SpectrumElement, {
    * @internal
    *
    * Whether `node` has its own interaction/focus semantics, via the
-   * `tabIndex` IDL property rather than the `tabindex` attribute — this
+   * `tabIndex` IDL property rather than the `tabindex` attribute; this
    * also correctly excludes `tabindex="-1"` and disabled controls.
    */
   private static isFocusable(node: EventTarget): boolean {
@@ -332,7 +332,7 @@ export abstract class CardBase extends SizedMixin(SpectrumElement, {
 
   /**
    * Re-propagates the `actions` slot's `size` for elements assigned after
-   * the initial render — wired to the slot's `slotchange` in
+   * the initial render, wired to the slot's `slotchange` in
    * `firstUpdated()`.
    */
   protected readonly handleActionsSlotChange = (): void => {
@@ -380,7 +380,7 @@ export abstract class CardBase extends SizedMixin(SpectrumElement, {
 
   /**
    * Enter and Space both activate the card, even though a bare link
-   * conventionally responds to Enter only — the card's own activation
+   * conventionally responds to Enter only; the card's own activation
    * contract takes precedence once `selectable` makes it the focused
    * target.
    */

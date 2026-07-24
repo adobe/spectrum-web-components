@@ -42,9 +42,9 @@ export default meta;
 
 // Every `--swc-card-*` custom property documented on the Card element is a
 // public contract: consumers override these directly, so a CSS refactor that
-// quietly dropped one would be a breaking change. One row per property — a
+// quietly dropped one would be a breaking change. One row per property: a
 // reference card beside the same card with that one property overridden to an
-// obviously different value — so a real visual difference confirms the
+// obviously different value, so a real visual difference confirms the
 // override still works. verifyCustomPropertyCoverage() (play function) asserts
 // this list stays a superset of the API-table properties in the CEM.
 type CardPropertyCase = CustomPropertyCase<`--swc-card-${string}`> & {

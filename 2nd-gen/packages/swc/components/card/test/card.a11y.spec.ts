@@ -27,7 +27,7 @@ import { gotoStory } from '../../../utils/a11y-helpers.js';
  */
 
 test.describe('Card - roles and names', () => {
-  test('does not set a role on the host — a plain card is a generic container', async ({
+  test('does not set a role on the host (a plain card is a generic container)', async ({
     page,
   }) => {
     const root = await gotoStory(page, 'components-card--overview', 'swc-card');
@@ -61,7 +61,7 @@ test.describe('Card - roles and names', () => {
     ).toBeVisible();
   });
 
-  test('selectable card sets no role yet — deferred to the future CardView selection model', async ({
+  test('selectable card sets no role yet (deferred to the future CardView selection model)', async ({
     page,
   }) => {
     const root = await gotoStory(
@@ -95,7 +95,7 @@ test.describe('Card - keyboard', () => {
     await expect(host).toBeFocused();
   });
 
-  test('a title-as-link card is not itself focusable — its anchor is the tab stop', async ({
+  test('a title-as-link card is not itself focusable; its anchor is the tab stop', async ({
     page,
   }) => {
     const root = await gotoStory(

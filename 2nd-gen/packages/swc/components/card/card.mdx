@@ -49,7 +49,7 @@ The `density` attribute adjusts the internal padding of the content and footer r
 
 ### With collection
 
-Populating the `collection` slot renders its images in a row below the `preview`. One to three square images are shown; any beyond the third are not shown. The `preview` and `collection` slots are independently optional — a card can render a collection with no preview, or the reverse.
+Populating the `collection` slot renders its images in a row below the `preview`. One to three square images are shown; any beyond the third are not shown. The `preview` and `collection` slots are independently optional: a card can render a collection with no preview, or the reverse.
 
 At `size="xs"`, when both a `preview` and a `collection` are present, the preview moves into the first position of the collection row and the collection is capped at two images.
 
@@ -67,7 +67,7 @@ The `media` slot can overlay content, such as a badge or avatar, over that media
 
 ### Title as link
 
-Set the `title-as-link` attribute when the `title` slot contains a real link. It extends that link's hit area to cover the whole card surface. The card itself accepts no `href` — navigation stays entirely with the consumer's link.
+Set the `title-as-link` attribute when the `title` slot contains a real link. It extends that link's hit area to cover the whole card surface. The card itself accepts no `href`; navigation stays entirely with the consumer's link.
 
 The interaction fidelity depends on how the link is authored:
 
@@ -87,7 +87,7 @@ Set the `selectable` attribute to make the card focusable and dispatch a `swc-ca
 ### Features
 
 - **Preview and collection images** are consumer-supplied through their slots; the card does not add or manage their alternative text.
-- **`title-as-link`** extends a consumer's real `<a>` across the card surface while the anchor remains the single tab stop and keyboard target. Native anchor activation is preserved — <kbd>Enter</kbd> in every form, and middle-click / modifier-click when the anchor is the slotted `title` element directly.
+- **`title-as-link`** extends a consumer's real `<a>` across the card surface while the anchor remains the single tab stop and keyboard target. Native anchor activation is preserved: <kbd>Enter</kbd> in every form, and middle-click / modifier-click when the anchor is the slotted `title` element directly.
 - **`selectable`** makes the card focusable (`tabindex="0"`) and activatable by <kbd>Enter</kbd> and <kbd>Space</kbd>, dispatching `swc-card-click`. It does not set an ARIA role.
 - **Nested interactive controls** inside the card (an `actions` button, an in-content link) keep their own focus and activation; `title-as-link` and `selectable` do not intercept clicks on them.
 
