@@ -17,14 +17,20 @@
  * them from genuine pointer/OS input state, which doesn't exist in a static snapshot.
  * `:focus-visible` has a similar heuristic gotcha. So instead of trying to fake the
  * input, this mirrors the component's own `:hover`/`:focus-visible`/`:active` rules
- * (in its shadow root's adopted stylesheets) into equivalent class selectors, then
- * applies the matching class directly to the component's internal element.
+ * (in its shadow root's adopted stylesheets) into equivalent attribute selectors,
+ * then applies the matching `data-forced-*` attribute directly to the target element.
+ *
+ * A `data-*` attribute — rather than a class — is used deliberately: components
+ * commonly scope default styles with a `:not([class])` guard (so a consumer-supplied
+ * class opts out of them), and adding a class to force a state would trip that guard
+ * and drop the default styling from the snapshot. An attribute never sets `class`, so
+ * every such guard is inherently exempt from the forced state.
  */
 
-const PSEUDO_TO_FORCED_CLASS: Record<string, string> = {
-  ':hover': '.is-hover',
-  ':focus-visible': '.is-focus-visible',
-  ':active': '.is-active',
+const PSEUDO_TO_FORCED_ATTRIBUTE: Record<string, string> = {
+  ':hover': '[data-forced-hover]',
+  ':focus-visible': '[data-forced-focus-visible]',
+  ':active': '[data-forced-active]',
 };
 
 export type ForcedPseudoState = 'hover' | 'focus-visible' | 'active';
@@ -47,14 +53,26 @@ let documentAugmented = false;
 function collectMirroredRules(rules: CSSRuleList, out: string[]): void {
   for (const rule of rules) {
     if (rule instanceof CSSStyleRule) {
-      for (const [pseudo, forcedClass] of Object.entries(
-        PSEUDO_TO_FORCED_CLASS
-      )) {
-        if (rule.selectorText.includes(pseudo)) {
-          out.push(
-            `${rule.selectorText.replaceAll(pseudo, forcedClass)} { ${rule.style.cssText} }`
-          );
+      // Mirror the rule's *entire* text (including any nested rules such as a
+      // `&::after` block), replacing every forced pseudo-class with its
+      // attribute equivalent — anywhere it appears, in the parent selector or a
+      // nested one. Using the full `cssText` rather than just this rule's own
+      // declarations is what preserves nested rules, whose appearance would
+      // otherwise be dropped (e.g. Card's quiet selectable focus ring, drawn
+      // by a nested `::after`).
+      const { cssText } = rule;
+      if (
+        Object.keys(PSEUDO_TO_FORCED_ATTRIBUTE).some((pseudo) =>
+          cssText.includes(pseudo)
+        )
+      ) {
+        let mirrored = cssText;
+        for (const [pseudo, forcedAttribute] of Object.entries(
+          PSEUDO_TO_FORCED_ATTRIBUTE
+        )) {
+          mirrored = mirrored.replaceAll(pseudo, forcedAttribute);
         }
+        out.push(mirrored);
       }
     } else if ('cssRules' in rule) {
       const inner: string[] = [];
@@ -129,16 +147,16 @@ function augmentDocument(): void {
  * updated).
  *
  * Some components style pseudo-states on an internal shadow part (e.g. Button's
- * `.swc-Button:hover`) — pass `internalSelector` for those, and the forced class is
- * added there instead. Others style pseudo-states directly on `:host()` (e.g. Tab's
- * `:host(:hover)`) — omit `internalSelector` and the class is added to `host` itself.
- * Either way, the mirrored rule lives in the *same* shadow root's adopted
- * stylesheets, so `:host(:hover)` naturally still matches against `host`'s own class
- * list even though the rule was defined inside its own shadow tree.
+ * `.swc-Button:hover`) — pass `internalSelector` for those, and the forced attribute
+ * is added there instead. Others style pseudo-states directly on `:host()` (e.g. Tab's
+ * `:host(:hover)`) — omit `internalSelector` and the attribute is added to `host`
+ * itself. Either way, the mirrored rule lives in the *same* shadow root's adopted
+ * stylesheets, so `:host(:hover)` naturally still matches against `host`'s own
+ * attributes even though the rule was defined inside its own shadow tree.
  *
  * Plain elements with no shadow root (e.g. native `<a>`/`<button>` styled via
  * global-button.css's classes) are mirrored from `document.styleSheets`
- * instead, and the forced class is always added to `host` itself —
+ * instead, and the forced attribute is always added to `host` itself —
  * `internalSelector` doesn't apply there.
  */
 export function forcePseudoState(
@@ -148,12 +166,12 @@ export function forcePseudoState(
 ): void {
   if (!host.shadowRoot) {
     augmentDocument();
-    host.classList.add(`is-${state}`);
+    host.setAttribute(`data-forced-${state}`, '');
     return;
   }
   augmentShadowRoot(host.shadowRoot);
   const target = internalSelector
     ? host.shadowRoot.querySelector(internalSelector)
     : host;
-  target?.classList.add(`is-${state}`);
+  target?.setAttribute(`data-forced-${state}`, '');
 }
