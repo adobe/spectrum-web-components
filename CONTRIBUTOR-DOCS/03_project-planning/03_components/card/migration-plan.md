@@ -86,7 +86,7 @@ React's card implementation is simplified to four patterns, mixed with consumer-
 
 ### 1st-gen `sp-card` (secondary reference)
 
-`1st-gen/packages/card` already exists. The differences below are **deliberate redesign decisions**, not migration gaps — this section stays light on purpose and exists only to save a future consumer-migration-guide author from re-deriving this comparison:
+`1st-gen/packages/card` already exists. The differences below are **deliberate redesign decisions**, not migration gaps — this section stays light on purpose and fed the consumer migration guide (`2nd-gen/packages/swc/components/card/migration-guide.mdx`), which is the authored, consumer-facing form of this comparison:
 
 - **Variant model split.** 1st-gen's `variant` (`'standard' | 'gallery' | 'quiet'`) conflates layout and style in one enum. 2nd-gen splits these: layout is implicit (driven by which slots are populated — see Scope), and `variant` becomes a pure style axis (`primary` / `secondary` / `tertiary` / `quiet`).
 - **Slot consolidation.** 1st-gen uses two image-area slot names (`cover-photo` for standard/quiet, `preview` for gallery). 2nd-gen consolidates to one `preview` slot.
@@ -332,8 +332,8 @@ Both branches (`titleAsLink`'s proxy-click and `selectable`'s event dispatch) ru
   - [x] Testing: `test/card.test.ts` (29 play-function tests) and `test/card.a11y.spec.ts` (7 Playwright tests) — all passing; original `CardBase` fixtures removed
   - [x] VRT: `test/vrt/card.vrt.ts` (Permutations + ForcedColors) and `test/vrt/card-custom-properties.vrt.ts` (all 17 documented custom properties, CEM-coverage-verified)
   - [x] Documentation: per-component `card.mdx` (Anatomy, Options, Behaviors, Accessibility, Upcoming features); Accessibility story added; Playground dropped `autodocs`; `Card.ts` `@cssprop` completed (added `--swc-card-gallery-preview-aspect-ratio`); Options prose kept to verifiable facts (no invented "when to use" guidance)
+  - [x] Consumer migration guide: `migration-guide.mdx` (1st-gen `sp-card` → `swc-card`), authored separately from the docs page per the `consumer-migration-guide` skill; scoped to `swc-card` only
   - [ ] Review: not started
-  - Consumer migration guide (1st-gen `sp-card` → `swc-card`) deferred to the `consumer-migration-guide` skill, not the docs page
 - **`swc-user-card`** — not started
 - **`swc-product-card`** — not started
 
@@ -357,6 +357,7 @@ Both branches (`titleAsLink`'s proxy-click and `selectable`'s event dispatch) ru
 - 1st-gen docs: [`1st-gen/packages/card/README.md`](../../../../1st-gen/packages/card/README.md)
 - Existing 2nd-gen files: [`Card.base.ts`](../../../../2nd-gen/packages/core/components/card/Card.base.ts), [`Card.types.ts`](../../../../2nd-gen/packages/core/components/card/Card.types.ts), [`card-template.ts`](../../../../2nd-gen/packages/swc/components/card/card-template.ts), [`card-template.css`](../../../../2nd-gen/packages/swc/stylesheets/_lit-styles/card-template.css)
 - Tests: [`card.test.ts`](../../../../2nd-gen/packages/swc/components/card/test/card.test.ts), [`card.a11y.spec.ts`](../../../../2nd-gen/packages/swc/components/card/test/card.a11y.spec.ts)
+- Docs: [`card.mdx`](../../../../2nd-gen/packages/swc/components/card/card.mdx) (Storybook docs page), [`migration-guide.mdx`](../../../../2nd-gen/packages/swc/components/card/migration-guide.mdx) (consumer migration guide)
 - [Storybook testing guide](../../../02_style-guide/04_testing/02_storybook-testing.md) — play-function test conventions followed above
 - [Base class vs concrete class](../../../02_style-guide/02_typescript/11_base-vs-concrete.md)
 - [Inclusive Components — Cards: the pseudo-content trick](https://inclusive-components.design/cards/#thepseudocontenttrick) — stretched-link technique referenced in A11y-3
