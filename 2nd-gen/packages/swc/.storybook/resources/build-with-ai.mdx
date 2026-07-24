@@ -11,7 +11,9 @@ Resources to help AI coding tools understand and work with Spectrum Web Componen
 [Agent Skills](https://agentskills.io) are bundles of instructions and reference files that
 your AI coding tool can load when they are relevant to a task.
 
-Two skills are available for Spectrum Web Components:
+Two skills are available for Spectrum Web Components. There is not yet a dedicated skill for
+building a new Gen2 project with no Gen1 code to migrate; in the meantime, point your AI client
+at this documentation site directly for Gen2 component and pattern references.
 
 ### Gen1
 
@@ -38,8 +40,8 @@ npx skills add spectrum-web-components.adobe.com
 
 ## llms.txt
 
-An [`llms.txt`](https://spectrum-web-components.adobe.com/llms.txt) file is available for the Gen2
-documentation site, alongside an [`llms-full.txt`](https://spectrum-web-components.adobe.com/llms-full.txt)
-that inlines every `swc-*` component API in a single file. AI tools that support the
-[llms.txt convention](https://llmstxt.org) can use these files to discover and load the right
-documentation for a given task.
+An [`llms.txt`](https://opensource.adobe.com/spectrum-web-components/llms.txt) file is available
+for the **Gen1** documentation site only. AI tools that support the
+[llms.txt convention](https://llmstxt.org) can use this file to discover and load the right
+Gen1 documentation page for a given task. A Gen2-specific `llms.txt` is not yet available;
+until then, use the Agent Skills above for Gen2 guidance.

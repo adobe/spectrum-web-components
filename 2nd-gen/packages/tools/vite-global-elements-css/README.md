@@ -26,8 +26,8 @@ Transformations are derived from BEM conventions with no per-component mapping r
 
 The modifier value comes from:
 
-- **String attributes**: the attribute **value** (e.g. `variant="primary"` → `--primary`)
-- **Boolean attributes**: the attribute **name** (e.g. `[truncate]` → `--truncate`)
+- **String attributes**: the attribute **value** (e.g., `variant="primary"` → `--primary`)
+- **Boolean attributes**: the attribute **name** (e.g., `[truncate]` → `--truncate`)
 
 This relies on all modifier values being unique within a component's BEM namespace, which is enforced by the type definitions in `Button.types.ts` and equivalent files.
 
@@ -104,7 +104,7 @@ All CSS comments are removed from the source before generating the output. The g
 
 ## Rule merging
 
-When base and component stylesheets both define rules with the same selector (e.g. both declare `.swc-Button { … }`), the plugin merges them into a single rule. If the same property appears in both, the last declaration wins — matching CSS cascade order.
+When base and component stylesheets both define rules with the same selector (e.g., both declare `.swc-Button { … }`), the plugin merges them into a single rule. If the same property appears in both, the last declaration wins — matching CSS cascade order.
 
 ## Cascade layer
 
@@ -122,7 +122,7 @@ The generated stylesheet wraps all rules inside `@layer swc-global-elements`:
 
 This provides encapsulation similar to shadow DOM to prevent application styles affecting these global element style utilities. The `all: revert-layer` escape-hatch rule is written outside the layer so page styles on those selectors revert to the layer-defined values rather than inheriting from unlayered application CSS.
 
-Child element classes (e.g. `.swc-Button-label`) receive the same escape hatch when listed in `textElements`. This protects light-DOM child nodes from broad typographic resets like `body * { font-family: sans-serif }`.
+Child element classes (e.g., `.swc-Button-label`) receive the same escape hatch when listed in `textElements`. This protects light-DOM child nodes from broad typographic resets like `body * { font-family: sans-serif }`.
 
 **Limitation:** the CSS `all` shorthand explicitly excludes custom properties (`--*`). Unlayered application rules that set custom properties on these selectors will not be cleared by the escape hatch.
 
@@ -193,12 +193,12 @@ Wrap any block that should not appear in the global stylesheet:
 
 Array of component entries. Each entry:
 
-| Option                | Type       | Required | Description                                                                                                                                                                                                                  |
-| --------------------- | ---------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `component`           | `string`   | yes      | Component name, e.g. `'button'`. Derives all paths and the block class.                                                                                                                                                      |
-| `source`              | `string`   | no       | Override source CSS filename when it differs from `component`.                                                                                                                                                               |
-| `rootElementSelector` | `string`   | no       | Override the derived BEM block class (e.g. `'swc-Button'`).                                                                                                                                                                  |
-| `textElements`        | `string[]` | no       | Child element suffixes (e.g. `['label']`) that receive `all: revert-layer !important` alongside the root block. Use this for light-DOM text-bearing child elements vulnerable to inherited overrides from unlayered app CSS. |
+| Option                | Type       | Required | Description                                                                                                                                                                                                                   |
+| --------------------- | ---------- | -------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `component`           | `string`   | yes      | Component name, e.g., `'button'`. Derives all paths and the block class.                                                                                                                                                      |
+| `source`              | `string`   | no       | Override source CSS filename when it differs from `component`.                                                                                                                                                                |
+| `rootElementSelector` | `string`   | no       | Override the derived BEM block class (e.g., `'swc-Button'`).                                                                                                                                                                  |
+| `textElements`        | `string[]` | no       | Child element suffixes (e.g., `['label']`) that receive `all: revert-layer !important` alongside the root block. Use this for light-DOM text-bearing child elements vulnerable to inherited overrides from unlayered app CSS. |
 
 The `source` option is only needed for naming discrepancies:
 
