@@ -13,8 +13,8 @@
 import { PropertyValues } from 'lit';
 import { property } from 'lit/decorators.js';
 
+import { SlotTextController } from '@adobe/spectrum-wc-core/controllers/slot-text-controller/index.js';
 import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
-import { ObserveSlotText } from '@adobe/spectrum-wc-core/mixins/observe-slot-text.js';
 
 import { SlotAttributePropagationController } from '../../controllers/slot-attribute-propagation-controller/index.js';
 import {
@@ -35,10 +35,7 @@ import {
  * @slot description - Supporting description text
  * @slot actions - Optional action controls displayed below the description, typically a button or button group. Receives `size` automatically from the illustrated message.
  */
-export abstract class IllustratedMessageBase extends ObserveSlotText(
-  SpectrumElement,
-  ''
-) {
+export abstract class IllustratedMessageBase extends SpectrumElement {
   // ─────────────────────────
   //     API TO OVERRIDE
   // ─────────────────────────
@@ -74,6 +71,17 @@ export abstract class IllustratedMessageBase extends ObserveSlotText(
   public orientation: IllustratedMessageOrientation = 'vertical';
 
   // ──────────────────────
+  //     CONTROLLERS
+  // ──────────────────────
+
+  /**
+   * Observes whether the default (illustration) slot has assigned content.
+   *
+   * @internal
+   */
+  protected slotText = new SlotTextController(this);
+
+  // ──────────────────────
   //     IMPLEMENTATION
   // ──────────────────────
 
@@ -92,7 +100,7 @@ export abstract class IllustratedMessageBase extends ObserveSlotText(
    * illustration is provided instead of reserving its fixed size.
    */
   protected get hasIllustration(): boolean {
-    return this.slotHasContent;
+    return this.slotText.hasContent;
   }
 
   protected override updated(changedProperties: PropertyValues): void {
