@@ -19,8 +19,13 @@ import type { ReactiveController, ReactiveElement } from 'lit';
 export interface SlotAttributePropagationControllerOptions {
   /** The attribute name to propagate to assigned elements. */
   attribute: string;
-  /** Returns the current value to propagate. */
-  getValue: () => string;
+
+  /**
+   * Returns the current value to propagate. Return `null` to remove the
+   * attribute from assigned elements, for attributes that are only
+   * sometimes present on the host.
+   */
+  getValue: () => string | null;
   /** Named slot to target. Omit for the default (unnamed) slot. */
   slotName?: string;
 
@@ -43,6 +48,10 @@ export interface SlotAttributePropagationControllerOptions {
  * value returned by `getValue` changes. Call `propagate()` from the host's
  * `slotchange` handler to cover elements inserted after the first render.
  *
+ * `getValue` may return `null` for attributes that are only sometimes present
+ * on the host; the controller removes the attribute from assigned elements
+ * rather than setting it to an empty string.
+ *
  * @example
  * ```ts
  * class MyBase extends SpectrumElement {
@@ -64,7 +73,7 @@ export interface SlotAttributePropagationControllerOptions {
 export class SlotAttributePropagationController implements ReactiveController {
   private readonly _host: ReactiveElement;
   private readonly _options: SlotAttributePropagationControllerOptions;
-  private _previousValue?: string;
+  private _previousValue?: string | null;
 
   constructor(
     host: ReactiveElement,
@@ -82,30 +91,44 @@ export class SlotAttributePropagationController implements ReactiveController {
   public hostUpdated(): void {
     const value = this._options.getValue();
     if (value !== this._previousValue) {
-      this._previousValue = value;
       this._propagateToSlot(value);
     }
   }
 
   /**
-   * Propagates the current value to all matching assigned elements.
-   * Call this from the host's `slotchange` event handler.
+   * Propagates the current value to all matching assigned elements
+   * immediately, updating the value tracked for the `hostUpdated()` no-op
+   * guard so it isn't repeated once the pending update runs. Call this from
+   * the host's `slotchange` event handler.
    */
   public propagate(): void {
     this._propagateToSlot(this._options.getValue());
   }
 
-  private _propagateToSlot(value: string): void {
+  private _propagateToSlot(value: string | null): void {
     const slot = this._resolveSlot();
     if (!slot) {
       return;
     }
+    // Tracked here (not just in hostUpdated()) so a propagate() call from a
+    // slotchange handler also updates the no-op guard; otherwise a
+    // subsequently-scheduled hostUpdated() with the same value would repeat
+    // the same setAttribute()/removeAttribute() sweep over every target. Set
+    // only once the slot resolves: if a call (from either hostUpdated() or
+    // propagate()) can't resolve the slot yet, the value must not be marked
+    // as applied, or a slot that resolves later with an unchanged value
+    // would be silently skipped forever.
+    this._previousValue = value;
     const assigned = slot.assignedElements({ flatten: true });
     const targets = this._options.selector
       ? assigned.filter((el) => el.matches(this._options.selector!))
       : assigned;
     for (const el of targets) {
-      el.setAttribute(this._options.attribute, value);
+      if (value === null) {
+        el.removeAttribute(this._options.attribute);
+      } else {
+        el.setAttribute(this._options.attribute, value);
+      }
     }
   }
 

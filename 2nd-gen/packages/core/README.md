@@ -1,4 +1,4 @@
-# @spectrum-web-components/core
+# @adobe/spectrum-wc-core
 
 Abstract base classes for Spectrum Web Components.
 
@@ -27,10 +27,10 @@ All new folders and files in `/core` should be kebab-case.
 
 Prefer the new top-level paths for new code:
 
-- `@spectrum-web-components/core/element`
-- `@spectrum-web-components/core/mixins`
-- `@spectrum-web-components/core/controllers`
-- `@spectrum-web-components/core/utils`
+- `@adobe/spectrum-wc-core/element`
+- `@adobe/spectrum-wc-core/mixins`
+- `@adobe/spectrum-wc-core/controllers`
+- `@adobe/spectrum-wc-core/utils`
 
 New code should use the top-level paths above.
 

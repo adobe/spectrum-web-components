@@ -11,7 +11,7 @@
  */
 import { CSSResultArray, html, TemplateResult } from 'lit';
 
-import { IconBase } from '@spectrum-web-components/core/components/icon';
+import { IconBase } from '@adobe/spectrum-wc-core/components/icon';
 
 import styles from './icon.css';
 

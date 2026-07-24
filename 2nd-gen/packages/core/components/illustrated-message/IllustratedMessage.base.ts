@@ -13,13 +13,13 @@
 import { PropertyValues } from 'lit';
 import { property } from 'lit/decorators.js';
 
-import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
+import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
 import {
   validateAllowedChildren,
   validateEnum,
-} from '@spectrum-web-components/core/utils/index.js';
+} from '@adobe/spectrum-wc-core/utils/index.js';
 
-import { SlotAttributePropagationController } from '../../controllers/slot-attribute-propagation/index.js';
+import { SlotAttributePropagationController } from '../../controllers/slot-attribute-propagation-controller/index.js';
 import {
   ILLUSTRATED_MESSAGE_VALID_ORIENTATIONS,
   ILLUSTRATED_MESSAGE_VALID_SIZES,

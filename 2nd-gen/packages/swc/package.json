@@ -1,6 +1,6 @@
 {
   "name": "@adobe/spectrum-wc",
-  "version": "0.3.0",
+  "version": "2.0.0-beta.2",
   "description": "Spectrum Web Components 2nd generation - rendering implementations",
   "license": "Apache-2.0",
   "author": "Adobe",
@@ -19,13 +19,13 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
     },
-    "./patterns/*": {
-      "types": "./dist/patterns/*/index.d.ts",
-      "import": "./dist/patterns/*/index.js"
+    "./*": {
+      "types": "./dist/components/*/index.d.ts",
+      "import": "./dist/components/*/index.js"
     },
-    "./patterns/*/index.js": {
-      "types": "./dist/patterns/*/index.d.ts",
-      "import": "./dist/patterns/*/index.js"
+    "./*.css": {
+      "types": "./dist/*.css.d.ts",
+      "default": "./dist/*.css"
     },
     "./components/*": {
       "types": "./dist/components/*/index.d.ts",
@@ -35,18 +35,7 @@
       "types": "./dist/components/*.d.ts",
       "default": "./dist/components/*.js"
     },
-    "./utils/*": {
-      "types": "./dist/utils/*.d.ts",
-      "import": "./dist/utils/*.js"
-    },
-    "./*": {
-      "types": "./dist/components/*/index.d.ts",
-      "import": "./dist/components/*/index.js"
-    },
-    "./*.css": {
-      "types": "./dist/*.css.d.ts",
-      "default": "./dist/*.css"
-    },
+    "./customElements": "./dist/custom-elements.json",
     "./global-button.css": {
       "default": "./dist/global-button.css"
     },
@@ -58,6 +47,22 @@
     },
     "./link.css": {
       "default": "./dist/link.css"
+    },
+    "./patterns/*": {
+      "types": "./dist/patterns/*/index.d.ts",
+      "import": "./dist/patterns/*/index.js"
+    },
+    "./patterns/*.js": {
+      "types": "./dist/patterns/*.d.ts",
+      "default": "./dist/patterns/*.js"
+    },
+    "./patterns/*/index.js": {
+      "types": "./dist/patterns/*/index.d.ts",
+      "import": "./dist/patterns/*/index.js"
+    },
+    "./utils/*": {
+      "types": "./dist/utils/*.d.ts",
+      "import": "./dist/utils/*.js"
     }
   },
   "main": "./dist/index.js",
@@ -68,13 +73,14 @@
   "scripts": {
     "analyze": "cem analyze --config cem.config.js",
     "analyze:watch": "cem analyze --config cem.config.js --watch",
-    "build": "yarn analyze && vite build",
+    "build": "vite build && yarn analyze",
     "clean": "rimraf dist",
     "dev": "vite build --watch",
-    "dev:core": "yarn workspace @spectrum-web-components/core dev",
+    "dev:core": "yarn workspace @adobe/spectrum-wc-core dev",
     "generate:contributor-docs": "node .storybook/scripts/generate-contributor-docs.mjs",
     "storybook": "yarn generate:contributor-docs && yarn analyze && storybook dev -p 6006",
     "storybook:build": "yarn generate:contributor-docs && yarn analyze && storybook build",
+    "storybook:build:vrt": "yarn analyze && SWC_STORYBOOK_MODE=vrt storybook build",
     "stylesheet:tokens": "swc-tokens --outputType tokens --out ./stylesheets/tokens.css --prefix swc",
     "stylesheet:typography": "swc-tokens --outputType typography --out ./stylesheets/typography.css --prefix swc",
     "test": "vitest --run --project storybook",
@@ -89,8 +95,8 @@
     "test:watch:vitest": "vitest --project storybook --watch"
   },
   "dependencies": {
+    "@adobe/spectrum-wc-core": "2.0.0-beta.2",
     "@lit-labs/observers": "2.0.2",
-    "@spectrum-web-components/core": "0.3.0",
     "lit": "^2.5.0 || ^3.1.3"
   },
   "devDependencies": {
@@ -148,7 +154,7 @@
     "component",
     "css"
   ],
-  "customElements": ".storybook/custom-elements.json",
+  "customElements": "dist/custom-elements.json",
   "publishConfig": {
     "access": "public"
   }

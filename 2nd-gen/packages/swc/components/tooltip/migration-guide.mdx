@@ -26,7 +26,7 @@ import '@spectrum-web-components/tooltip/sp-tooltip.js';
 import '@adobe/spectrum-wc/components/tooltip/swc-tooltip.js';
 ```
 
-> `@adobe/spectrum-wc` is a monolithic package. Importing via subpath (e.g. `@adobe/spectrum-wc/components/tooltip/swc-tooltip.js`) registers and loads only that component's bundle.
+> `@adobe/spectrum-wc` is a monolithic package. Importing via subpath (e.g., `@adobe/spectrum-wc/components/tooltip/swc-tooltip.js`) registers and loads only that component's bundle.
 
 ## What changed
 
@@ -184,7 +184,7 @@ tooltip.triggerElement = shadowRoot.querySelector('#the-trigger');
 
 ### 6. Optional `manual` event handling
 
-The tooltip opens after a warm-up delay (default `1500 ms`; set `delay="0"` to open immediately) and closes when the pointer leaves or focus moves away. To permanently opt out of automatic wiring and retain full programmatic control, add the `manual` attribute:
+The tooltip opens after a warm-up delay (default is 1500 ms; set `delay="0"` to open immediately) and closes when the pointer leaves or focus moves away. To permanently opt out of automatic wiring and retain full programmatic control, add the `manual` attribute:
 
 ```html
 <button id="save-btn">Save</button>

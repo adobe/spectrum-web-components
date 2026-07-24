@@ -14,13 +14,13 @@ import { html } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
-import '../index.js';
-import '../../conversation-turn/index.js';
-import '../../message-feedback/index.js';
-import '../../message-sources/index.js';
-import '../../suggestion/index.js';
-import '../../suggestion-item/index.js';
-import '../../response-status/index.js';
+import '../swc-system-message.js';
+import '../../conversation-turn/swc-conversation-turn.js';
+import '../../message-feedback/swc-message-feedback.js';
+import '../../message-sources/swc-message-sources.js';
+import '../../suggestion/swc-suggestion-group.js';
+import '../../suggestion-item/swc-suggestion-item.js';
+import '../../response-status/swc-response-status.js';
 
 // ────────────────
 //    METADATA
@@ -67,11 +67,13 @@ const meta: Meta = {
   render: (args) => template(args),
   parameters: {
     docs: {
+      packagePath: 'patterns/conversational-ai/system-message',
       subtitle: 'Layout container for a single system reply.',
     },
     layout: 'padded',
   },
   excludeStories: ['meta'],
+  tags: ['migrated'],
 };
 
 export { meta };

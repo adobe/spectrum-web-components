@@ -33,7 +33,7 @@
 - [Focus utilities](#focus-utilities)
     - [getActiveElement()](#getactiveelement)
     - [focusableSelector and tabbableSelector](#focusableselector-and-tabbableselector)
-    - [hasVisibleFocusInTree()](#hasvisiblefocusintree)
+    - [isFocusVisibleInTree()](#isfocusvisibleintree)
 - [Migration from 1st-gen](#migration-from-1st-gen)
     - [Replacing Focusable base class](#replacing-focusable-base-class)
     - [Replacing focusElement getter](#replacing-focuselement-getter)
@@ -69,8 +69,8 @@ For the full technical rationale, see the [Focus Management Strategy RFC](../03_
 | Primitive | What it does | Import |
 |-----------|-------------|--------|
 | `delegatesFocus: true` | Browser-native focus delegation from host to first focusable child | Built-in (shadow root option) |
-| `DisabledMixin` | Reactive `disabled` property with `aria-disabled`, tabindex, blur | `@spectrum-web-components/core/mixins` |
-| `FocusgroupNavigationController` | Arrow key navigation + tabindex management for composite widgets (Open UI `focusgroup` aligned) | `@spectrum-web-components/core/controllers` |
+| `DisabledMixin` | Reactive `disabled` property with `aria-disabled`, tabindex, blur | `@adobe/spectrum-wc-core/mixins` |
+| `FocusgroupNavigationController` | Arrow key navigation + tabindex management for composite widgets (Open UI `focusgroup` aligned) | `@adobe/spectrum-wc-core/controllers` |
 
 ---
 
@@ -105,8 +105,8 @@ Use `delegatesFocus` when there is **exactly one place focus should ever go** in
 ### How to use
 
 ```typescript
-import { DisabledMixin } from '@spectrum-web-components/core/mixins';
-import { SpectrumElement } from '@spectrum-web-components/core/element';
+import { DisabledMixin } from '@adobe/spectrum-wc-core/mixins';
+import { SpectrumElement } from '@adobe/spectrum-wc-core/element';
 import { html, css } from 'lit';
 
 class SpCheckbox extends DisabledMixin(SpectrumElement) {
@@ -240,8 +240,8 @@ Any interactive component that can be disabled — buttons, inputs, links, menu 
 ### How to use
 
 ```typescript
-import { DisabledMixin } from '@spectrum-web-components/core/mixins';
-import { SpectrumElement } from '@spectrum-web-components/core/element';
+import { DisabledMixin } from '@adobe/spectrum-wc-core/mixins';
+import { SpectrumElement } from '@adobe/spectrum-wc-core/element';
 import { html } from 'lit';
 
 class SpButton extends DisabledMixin(SpectrumElement) {
@@ -354,8 +354,8 @@ The controller is aligned with the [Open UI `focusgroup` attribute](https://open
 ### How to use
 
 ```typescript
-import { FocusgroupNavigationController } from '@spectrum-web-components/core/controllers';
-import { SpectrumElement } from '@spectrum-web-components/core/element';
+import { FocusgroupNavigationController } from '@adobe/spectrum-wc-core/controllers';
+import { SpectrumElement } from '@adobe/spectrum-wc-core/element';
 
 class SpTabs extends SpectrumElement {
   private navigation = new FocusgroupNavigationController(this, {
@@ -492,7 +492,7 @@ class SpMenu extends SpectrumElement {
 Returns the deepest focused element by traversing shadow DOM boundaries. `document.activeElement` stops at shadow hosts — this follows the chain.
 
 ```typescript
-import { getActiveElement } from '@spectrum-web-components/core/utils';
+import { getActiveElement } from '@adobe/spectrum-wc-core/utils';
 
 // Get the truly focused element across all shadow boundaries
 const active = getActiveElement();
@@ -506,7 +506,7 @@ const active = getActiveElement(this.getRootNode() as Document);
 CSS selector strings matching focusable and tabbable elements per the HTML spec.
 
 ```typescript
-import { focusableSelector, tabbableSelector } from '@spectrum-web-components/core/utils';
+import { focusableSelector, tabbableSelector } from '@adobe/spectrum-wc-core/utils';
 
 // Find the first focusable element in a container
 const first = container.querySelector(focusableSelector);
@@ -517,19 +517,23 @@ const tabbable = [...container.querySelectorAll(tabbableSelector)];
 
 These use standard HTML focusability rules only. The 1st-gen `[focusable]` attribute selector is not included — native `delegatesFocus` replaces that workaround.
 
-### hasVisibleFocusInTree()
+### isFocusVisibleInTree()
 
-Available on all `SpectrumElement` subclasses. Returns `true` if the deepest focused element in the current tree matches `:focus-visible` — i.e., the browser would show a focus ring.
+Import from `@adobe/spectrum-wc-core/utils`. Returns `true` if the deepest focused element in a tree matches `:focus-visible`, meaning the browser would show a focus ring. Pass a root node to scope the check to that tree; it defaults to `document`.
 
 ```typescript
+import { isFocusVisibleInTree } from '@adobe/spectrum-wc-core/utils';
+
 class SpButton extends SpectrumElement {
   private handleFocus() {
-    if (this.hasVisibleFocusInTree()) {
-      // Keyboard focus — show custom focus indicator
+    if (isFocusVisibleInTree(this.getRootNode() as Document | ShadowRoot)) {
+      // Keyboard focus: show custom focus indicator
     }
   }
 }
 ```
+
+Previously this was a `hasVisibleFocusInTree()` method on `SpectrumElement`. It is now a standalone utility (built on `getActiveElement()`) so components pull it in only where needed rather than carrying it on the base class.
 
 ---
 
@@ -548,8 +552,8 @@ class SpTextfield extends Focusable {
 }
 
 // 2nd-gen
-import { DisabledMixin } from '@spectrum-web-components/core/mixins';
-import { SpectrumElement } from '@spectrum-web-components/core/element';
+import { DisabledMixin } from '@adobe/spectrum-wc-core/mixins';
+import { SpectrumElement } from '@adobe/spectrum-wc-core/element';
 
 class SpTextfield extends DisabledMixin(SpectrumElement) {
   static override shadowRootOptions = {
@@ -591,7 +595,7 @@ import { FocusGroupController } from '@spectrum-web-components/reactive-controll
 import { RovingTabindexController } from '@spectrum-web-components/reactive-controllers';
 
 // 2nd-gen
-import { FocusgroupNavigationController } from '@spectrum-web-components/core/controllers';
+import { FocusgroupNavigationController } from '@adobe/spectrum-wc-core/controllers';
 ```
 
 Key API differences from 1st-gen:

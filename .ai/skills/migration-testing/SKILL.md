@@ -18,6 +18,7 @@ Read the migration plan at `CONTRIBUTOR-DOCS/03_project-planning/03_components/[
 - Phases 4 (migration-a11y) and 5 (migration-styling) are complete
 - The user asks to "add tests" or "write tests" for a migrated component
 - The user asks to add play functions, a11y specs, or unit tests
+- The user asks to add dedicated VRT stories for a migrated component
 - The user refers to "Phase 6" of the 2nd-gen component migration workstream
 
 ## When NOT to use
@@ -38,6 +39,8 @@ Read the migration plan at `CONTRIBUTOR-DOCS/03_project-planning/03_components/[
 Follow **[Phase 6: Testing](../../../CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md#phase-6-testing)** in the washing machine workflow doc — it covers what to do, what to check, common problems, and the quality gate for this phase.
 
 If the implementation or the needed test coverage has drifted from the migration plan, follow [`migration-plan-contract`](../migration-prep/references/migration-plan-contract.md).
+
+For dedicated visual regression stories (`test/vrt/*.vrt.ts`), also use the [`vrt-authoring`](../vrt-authoring/SKILL.md) skill.
 
 ## Native dismissal and trusted input
 

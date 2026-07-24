@@ -71,10 +71,6 @@ const meta: Meta = {
     docs: {
       subtitle: `Visual separator for grouping and dividing content`,
     },
-    design: {
-      type: 'figma',
-      url: 'https://www.figma.com/design/Mngz9H7WZLbrCvGQf3GnsY/S2---Desktop?node-id=13642-334',
-    },
     stackblitz: {
       url: 'https://stackblitz.com/edit/vitejs-vite-dbcd31ow?file=src%2Fmy-element.ts',
     },
@@ -172,6 +168,7 @@ export const Sizes: Story = {
   tags: ['options'],
 };
 
+/** Kept for test reuse (all dividers vertical) — not tagged for docs; the Options page uses {@link Orientation} instead. */
 export const Vertical: Story = {
   render: (args) => html`
     <div
@@ -204,12 +201,40 @@ export const Vertical: Story = {
   `,
   parameters: {
     flexLayout: 'column-center',
+    chromatic: { disableSnapshot: true },
   },
-  tags: ['options'],
   args: {
     vertical: true,
   },
 };
+
+export const Orientation: Story = {
+  render: (args) => html`
+    <nav
+      style="display: flex; align-items: center; gap: 8px; block-size: 24px;"
+    >
+      <span>Overview</span>
+      ${template({ ...args, size: 's', vertical: true })}
+      <span>Files</span>
+      ${template({ ...args, size: 's', vertical: true })}
+      <span>Settings</span>
+    </nav>
+    <div style="margin-block-start: 16px;">
+      <h4 style="margin: 0 0 8px 0;">Project details</h4>
+      <p style="margin: 0 0 8px 0;">
+        Review the project timeline and deliverables.
+      </p>
+      ${template({ ...args, size: 'l' })}
+      <h4 style="margin: 8px 0 8px 0;">Team members</h4>
+      <p style="margin: 0;">Manage your team roles and access permissions.</p>
+    </div>
+  `,
+  parameters: {
+    flexLayout: 'column-stretch',
+  },
+  tags: ['options'],
+};
+Orientation.storyName = 'Orientation';
 
 /** Same prose for each horizontal thickness so snapshots emphasize divider weight only. */
 const STATIC_COLORS_HORIZONTAL_COPY = {
@@ -290,38 +315,6 @@ export const StaticColors: Story = {
   tags: ['options'],
 };
 StaticColors.storyName = 'Static colors';
-
-// ──────────────────────────────
-//    BEHAVIORS STORIES
-// ──────────────────────────────
-
-export const LayoutOrientation: Story = {
-  render: (args) => html`
-    <nav
-      style="display: flex; align-items: center; gap: 8px; block-size: 24px;"
-    >
-      <span>Overview</span>
-      ${template({ ...args, size: 's', vertical: true })}
-      <span>Files</span>
-      ${template({ ...args, size: 's', vertical: true })}
-      <span>Settings</span>
-    </nav>
-    <div style="margin-block-start: 16px;">
-      <h4 style="margin: 0 0 8px 0;">Project details</h4>
-      <p style="margin: 0 0 8px 0;">
-        Review the project timeline and deliverables.
-      </p>
-      ${template({ ...args, size: 'l' })}
-      <h4 style="margin: 8px 0 8px 0;">Team members</h4>
-      <p style="margin: 0;">Manage your team roles and access permissions.</p>
-    </div>
-  `,
-  parameters: {
-    flexLayout: 'column-stretch',
-  },
-  tags: ['behaviors'],
-};
-LayoutOrientation.storyName = 'Layout orientation';
 
 // ────────────────────────────────
 //    ACCESSIBILITY STORIES

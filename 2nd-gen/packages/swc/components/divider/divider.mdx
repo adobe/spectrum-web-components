@@ -11,7 +11,7 @@ import * as DividerStories from './stories/divider.stories';
 
 A divider consists of:
 
-1. **Line**: the visual separator element that creates visual separation between content
+- **Line**: the element that creates visual separation between content
 
 <Canvas of={DividerStories.Anatomy} />
 
@@ -27,35 +27,24 @@ Dividers come in three sizes to fit various contexts:
 
 <Canvas of={DividerStories.Sizes} />
 
-### Vertical
+### Orientation
 
-The default horizontal divider is used to separate content stacked vertically. To separate horizontal content, use the `vertical` attribute.
+The default **horizontal** divider separates vertically stacked content, such as sections beneath headings. To separate side-by-side content in a flex row (e.g., navigation breadcrumbs, toolbars), use the `vertical` attribute to render a **vertical** divider.
 
-<Canvas of={DividerStories.Vertical} />
+Vertical dividers require the parent to have an **explicit height** (`block-size`). Without it, `block-size: 100%` resolves to zero and the divider is invisible.
+
+<Canvas of={DividerStories.Orientation} />
 
 ### Static colors
 
-Use the `static-color` attribute when displaying over images or colored backgrounds:
+Use `static-color` when the divider needs to sit on top of a photo or colored background. It pins the divider's color to the chosen value regardless of the active color theme:
 
-- **white**: use on dark or colored backgrounds for better contrast
-- **black**: use on light backgrounds for better contrast
+- **`white`**: use on dark color or image backgrounds
+- **`black`**: use on light color or image backgrounds
 
 Each static color panel shows **horizontal** dividers at sizes `s`, `m`, and `l`, and **vertical** dividers at the same sizes (vertical rows use an explicit `block-size` so the line is visible).
 
 <Canvas of={DividerStories.StaticColors} />
-
-## Behaviors
-
-### Layout orientation
-
-Dividers can be oriented **horizontally** (default) or **vertically** to match the layout they serve:
-
-- **Horizontal dividers** separate stacked content, such as sections beneath headings
-- **Vertical dividers** separate side-by-side items in a flex row (e.g., navigation breadcrumbs, toolbars)
-
-Vertical dividers require the parent to have an **explicit height** (`block-size`): without it, `block-size: 100%` resolves to zero and the divider is invisible.
-
-<Canvas of={DividerStories.LayoutOrientation} />
 
 ## Accessibility
 

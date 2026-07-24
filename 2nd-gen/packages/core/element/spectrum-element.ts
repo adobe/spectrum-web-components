@@ -10,46 +10,11 @@
  * governing permissions and limitations under the License.
  */
 
-import { LitElement, ReactiveElement } from 'lit';
+import { LitElement } from 'lit';
 
-import { getActiveElement } from '../utils/get-active-element.js';
 import { coreVersion, version } from './version.js';
 
-type Constructor<T = Record<string, unknown>> = {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  new (...args: any[]): T;
-  prototype: T;
-};
-
-export interface SpectrumInterface {
-  shadowRoot: ShadowRoot;
-  hasVisibleFocusInTree(): boolean;
-}
-
-export function SpectrumMixin<T extends Constructor<ReactiveElement>>(
-  constructor: T
-): T & Constructor<SpectrumInterface> {
-  class SpectrumMixinElement extends constructor {
-    /**
-     * @internal
-     */
-    public override shadowRoot!: ShadowRoot;
-
-    /**
-     * @internal
-     */
-    public hasVisibleFocusInTree(): boolean {
-      const active = getActiveElement(
-        this.getRootNode() as Document | ShadowRoot
-      );
-
-      return active?.matches(':focus-visible') ?? false;
-    }
-  }
-  return SpectrumMixinElement;
-}
-
-export class SpectrumElement extends SpectrumMixin(LitElement) {
+export class SpectrumElement extends LitElement {
   /**
    * @internal
    */
@@ -59,13 +24,22 @@ export class SpectrumElement extends SpectrumMixin(LitElement) {
    * @internal
    */
   static CORE_VERSION = coreVersion;
+}
 
-  /**
-   * @internal
-   */
-  public override get dir(): CSSStyleDeclaration['direction'] {
-    return getComputedStyle(this).direction ?? 'ltr';
-  }
+/**
+ * Builds the deduplication key for a dev-mode warning. The `message` is part of
+ * the key so two distinct problems that share a `type`/`level` (the common
+ * case) do not suppress each other; only a verbatim repeat of the same warning
+ * is deduplicated. Exported so the dedup key can be unit tested without relying
+ * on the `NODE_ENV`-gated `window.__swc` setup below.
+ */
+export function warningId(
+  localName: string,
+  type: WarningType,
+  level: WarningLevel,
+  message: string
+): BrandedSWCWarningID {
+  return `${localName}:${type}:${level}:${message}` as BrandedSWCWarningID;
 }
 
 if (process.env.NODE_ENV === 'development') {
@@ -103,11 +77,7 @@ if (process.env.NODE_ENV === 'development') {
       { type = 'api', level = 'default', issues } = {}
     ): void => {
       const { localName = 'base' } = element || {};
-      // Message is part of the dedup key so two distinct problems that share
-      // a type/level (the common case) don't suppress each other. Only a
-      // verbatim repeat of the same warning is deduplicated.
-      const id =
-        `${localName}:${type}:${level}:${message}` as BrandedSWCWarningID;
+      const id = warningId(localName, type, level, message);
       if (!window.__swc.verbose && window.__swc.issuedWarnings.has(id)) {
         return;
       }

@@ -15,7 +15,7 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 import { when } from 'lit/directives/when.js';
 import { html as staticHtml, unsafeStatic } from 'lit/static-html.js';
 
-import { AccordionItemBase } from '@spectrum-web-components/core/components/accordion';
+import { AccordionItemBase } from '@adobe/spectrum-wc-core/components/accordion';
 
 import '../icon/swc-icon.js';
 
@@ -137,7 +137,7 @@ export class AccordionItem extends AccordionItemBase {
         <div class="swc-AccordionItem-row">
           ${this.renderHeadingWrapper(button)}
           ${when(
-            this.slotContentIsPresent,
+            this.hasActions,
             () => html`
               <div class="swc-AccordionItem-actions">
                 <slot name="actions"></slot>

@@ -12,7 +12,6 @@
 
 import rollupCommonjs from '@rollup/plugin-commonjs';
 import rollupJson from '@rollup/plugin-json';
-import rollupAlias from '@rollup/plugin-alias';
 import rollupReplace from '@rollup/plugin-replace';
 import { fromRollup } from '@web/dev-server-rollup';
 import {
@@ -40,7 +39,6 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const commonjs = fromRollup(rollupCommonjs);
 const json = fromRollup(rollupJson);
-const alias = fromRollup(rollupAlias);
 const replace = fromRollup(rollupReplace);
 
 export default {
@@ -55,17 +53,6 @@ export default {
     a11ySnapshotPlugin(),
     configuredVisualRegressionPlugin(),
     json({}),
-    alias({
-      entries: [
-        {
-          find: /^@spectrum-web-components\/core\/(.*)$/,
-          replacement: path.resolve(
-            __dirname,
-            '../2nd-gen/packages/core/dist/$1'
-          ),
-        },
-      ],
-    }),
     replace({
       'process.env.NODE_ENV': JSON.stringify('development'),
       preventAssignment: true,

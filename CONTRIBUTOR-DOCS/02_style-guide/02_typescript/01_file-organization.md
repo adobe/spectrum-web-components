@@ -56,10 +56,10 @@ import { when } from 'lit/directives/when.js';
 Imports from `@adobe/spectrum-wc` or `@spectrum-web-components`.
 
 ```ts
-import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
-import { SizedMixin } from '@spectrum-web-components/core/mixins/index.js';
-import { ObserveSlotPresence } from '@spectrum-web-components/core/mixins/observe-slot-presence.js';
-import { ObserveSlotText } from '@spectrum-web-components/core/mixins/observe-slot-text.js';
+import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
+import { SizedMixin } from '@adobe/spectrum-wc-core/mixins/index.js';
+import { ObserveSlotPresence } from '@adobe/spectrum-wc-core/mixins/observe-slot-presence.js';
+import { ObserveSlotText } from '@adobe/spectrum-wc-core/mixins/observe-slot-text.js';
 ```
 
 ### Group 3: Side-effect imports
@@ -117,10 +117,10 @@ import { PropertyValues } from 'lit';
 import { property } from 'lit/decorators.js';
 
 // Group 2: Internal packages
-import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
-import { SizedMixin } from '@spectrum-web-components/core/mixins/index.js';
-import { ObserveSlotPresence } from '@spectrum-web-components/core/mixins/observe-slot-presence.js';
-import { ObserveSlotText } from '@spectrum-web-components/core/mixins/observe-slot-text.js';
+import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
+import { SizedMixin } from '@adobe/spectrum-wc-core/mixins/index.js';
+import { ObserveSlotPresence } from '@adobe/spectrum-wc-core/mixins/observe-slot-presence.js';
+import { ObserveSlotText } from '@adobe/spectrum-wc-core/mixins/observe-slot-text.js';
 
 // Group 4: Relative imports
 import {
@@ -147,7 +147,7 @@ import {
   BADGE_VARIANTS_COLOR,
   BadgeBase,
   type BadgeVariant,
-} from '@spectrum-web-components/core/components/badge';
+} from '@adobe/spectrum-wc-core/components/badge';
 
 // Group 5: Style imports
 import styles from './badge.css';
@@ -159,12 +159,12 @@ The core package provides utility functions that concrete classes may import for
 
 | Utility | Import path | Purpose |
 |---------|------------|---------|
-| `capitalize` | `@spectrum-web-components/core/utils/index.js` | Capitalize a string for CSS class generation |
+| `capitalize` | `@adobe/spectrum-wc-core/utils/index.js` | Capitalize a string for CSS class generation |
 
 **Example from Divider.ts:**
 
 ```ts
-import { capitalize } from '@spectrum-web-components/core/utils/index.js';
+import { capitalize } from '@adobe/spectrum-wc-core/utils/index.js';
 
 // Used in render
 [`swc-Divider--static${capitalize(this.staticColor)}`]: this.staticColor != null,
@@ -212,7 +212,7 @@ The concrete class in swc imports types from core through the package path:
 ```ts
 import {
   type BadgeVariant,
-} from '@spectrum-web-components/core/components/badge';
+} from '@adobe/spectrum-wc-core/components/badge';
 ```
 
 ## Export patterns
@@ -235,7 +235,7 @@ The SWC `index.ts` does three things:
 3. Declares the element in the global `HTMLElementTagNameMap`.
 
 ```ts
-import { defineElement } from '@spectrum-web-components/core/element/index.js';
+import { defineElement } from '@adobe/spectrum-wc-core/element/index.js';
 
 import { Badge } from './Badge.js';
 

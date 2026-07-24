@@ -20,11 +20,10 @@ import {
   ACTION_BUTTON_VALID_SIZES,
   type ActionButtonSize,
   type ActionButtonStaticColor,
-} from '@spectrum-web-components/core/components/action-button';
-import { ButtonBase } from '@spectrum-web-components/core/components/button';
-import { validateEnum } from '@spectrum-web-components/core/utils/index.js';
-
-import { renderPendingSpinner } from '../button/pending-spinner.js';
+} from '@adobe/spectrum-wc-core/components/action-button';
+import { ButtonBase } from '@adobe/spectrum-wc-core/components/button';
+import { PendingMixin } from '@adobe/spectrum-wc-core/mixins';
+import { validateEnum } from '@adobe/spectrum-wc-core/utils';
 
 import pendingSpinnerStyles from '../../stylesheets/_lit-styles/pending-spinner.css';
 import styles from './action-button.css';
@@ -64,6 +63,7 @@ import styles from './action-button.css';
  * @cssprop --swc-action-button-background-color-disabled - Background color when disabled or pending.
  * @cssprop --swc-action-button-border-color-disabled - Border color when disabled or pending.
  * @cssprop --swc-action-button-content-color-disabled - Text and icon color when disabled or pending.
+ * @cssprop --swc-action-button-down-state-transform - Transform applied to the button in the pressed (down) state. Defaults to a scale/translate effect; set to `none` to disable.
  *
  * @example
  * <swc-action-button>Edit</swc-action-button>
@@ -74,7 +74,7 @@ import styles from './action-button.css';
  *   Edit
  * </swc-action-button>
  */
-export class ActionButton extends ButtonBase {
+export class ActionButton extends PendingMixin(ButtonBase) {
   // ────────────────────
   //     API OVERRIDES
   // ────────────────────
@@ -112,9 +112,11 @@ export class ActionButton extends ButtonBase {
     }
     if (isAriaPassthrough) {
       if (name === 'aria-haspopup') {
-        this._ariaHasPopup = value ?? undefined;
+        this._ariaHasPopup = (value ??
+          undefined) as ActionButton['_ariaHasPopup'];
       } else {
-        this._ariaExpanded = value ?? undefined;
+        this._ariaExpanded = (value ??
+          undefined) as ActionButton['_ariaExpanded'];
       }
       if (value !== null) {
         this._ariaForwardingInProgress = true;
@@ -145,10 +147,17 @@ export class ActionButton extends ButtonBase {
   // Forwarded to the inner <button> for menu-trigger patterns; stripped from
   // the host after reading to avoid duplicate ARIA state on both elements.
   @state()
-  private _ariaHasPopup?: string;
+  private _ariaHasPopup?:
+    | 'false'
+    | 'true'
+    | 'menu'
+    | 'listbox'
+    | 'tree'
+    | 'grid'
+    | 'dialog';
 
   @state()
-  private _ariaExpanded?: string;
+  private _ariaExpanded?: 'true' | 'false';
 
   // Guard against re-entrant attributeChangedCallback: removeAttribute fires a
   // second callback with value=null; the guard prevents that from clearing the
@@ -203,7 +212,7 @@ export class ActionButton extends ButtonBase {
         <span class="swc-ActionButton-label">
           <slot></slot>
         </span>
-        ${renderPendingSpinner(this.pending, this.pendingActive)}
+        ${this.renderPendingState()}
       </button>
     `;
   }

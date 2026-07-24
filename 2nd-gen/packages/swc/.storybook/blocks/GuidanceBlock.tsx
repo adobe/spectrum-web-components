@@ -17,7 +17,7 @@ import {
   useOf,
 } from '@storybook/addon-docs/blocks';
 import React, { Fragment } from 'react';
-import customElements from '../custom-elements.json' with { type: 'json' };
+import customElements from '../../dist/custom-elements.json' with { type: 'json' };
 
 interface GuidanceBlockProps {
   of?: any;

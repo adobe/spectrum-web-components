@@ -12,8 +12,7 @@
 import { PropertyValues } from 'lit';
 import { property } from 'lit/decorators.js';
 
-import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
-import { warnIf } from '@spectrum-web-components/core/utils/index.js';
+import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
 
 import {
   AVATAR_DEFAULT_SIZE,

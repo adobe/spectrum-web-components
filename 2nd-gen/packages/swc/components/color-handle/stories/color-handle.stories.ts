@@ -27,24 +27,25 @@ const { events, args, argTypes, template } =
 /**
  * An `<swc-color-handle>` is a non-interactive primitive: a draggable dot
  * rendered on top of a color area, slider, or wheel that marks the currently
- * picked color and pops a built-in [Color Loupe](../?path=/docs/color-loupe--docs)
+ * picked color and pops a built-in [Color Loupe](../?path=/docs/components-color-loupe--docs)
  * on touch. Accessibility — label, value, and keyboard — is owned by the parent
  * color picker, not the handle.
  */
 const meta: Meta = {
-  title: 'Color Handle',
+  title: 'Color handle',
   component: 'swc-color-handle',
   args,
   argTypes,
   parameters: {
     actions: { handles: events },
-    design: {
-      type: 'figma',
-      url: 'https://www.figma.com/design/Mngz9H7WZLbrCvGQf3GnsY/S2---Web--Desktop-scale-?node-id=13065-162',
-    },
     docs: {
       subtitle: `Draggable dot marking the picked color on a color area, slider, or wheel`,
     },
+    // TODO: add a Stackblitz link for swc-color-handle once it's published to
+    // npm; @adobe/spectrum-wc@0.3.0 (and the latest 0.3.0-next snapshot) don't
+    // include dist/components/color-handle yet, so no demo can resolve the
+    // import until a release ships it.
+    stackblitz: {},
     // The handle is `position: absolute` and centers itself on its coordinate
     // via negative margins, so each instance needs its own relative anchor.
     styles: {

@@ -1545,3 +1545,81 @@ export const EnforceExclusiveOpenOnReenableTest: Story = {
     );
   },
 };
+
+export const InitialSingleSelectEnforcedTest: Story = {
+  render: () => html`
+    <swc-accordion accessible-label="Initial single-select test">
+      <swc-accordion-item open>
+        <span slot="label">Item 1</span>
+        <p>Panel 1</p>
+      </swc-accordion-item>
+      <swc-accordion-item open>
+        <span slot="label">Item 2</span>
+        <p>Panel 2</p>
+      </swc-accordion-item>
+    </swc-accordion>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const accordion = await getComponent<Accordion>(
+      canvasElement,
+      'swc-accordion'
+    );
+    const [item1, item2] = await getComponents<AccordionItem>(
+      canvasElement,
+      'swc-accordion-item'
+    );
+
+    await step(
+      'two items starting open — only one survives the initial single-select enforcement',
+      async () => {
+        await accordion.updateComplete;
+        await Promise.all([item1.updateComplete, item2.updateComplete]);
+
+        const openCount = [item1, item2].filter((i) => i.open).length;
+        expect(openCount, 'exactly one item is open after initial render').toBe(
+          1
+        );
+      }
+    );
+  },
+};
+
+export const NestedAccordionIsolationTest: Story = {
+  render: () => html`
+    <swc-accordion accessible-label="Outer accordion">
+      <swc-accordion-item open>
+        <span slot="label">Outer item</span>
+        <swc-accordion accessible-label="Inner accordion">
+          <swc-accordion-item>
+            <span slot="label">Inner item</span>
+            <p>Inner panel</p>
+          </swc-accordion-item>
+        </swc-accordion>
+      </swc-accordion-item>
+    </swc-accordion>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const [outerItem, innerItem] =
+      canvasElement.querySelectorAll<AccordionItem>('swc-accordion-item');
+
+    await outerItem.updateComplete;
+    await innerItem.updateComplete;
+
+    await step(
+      'toggling an inner accordion item does not affect outer accordion items',
+      async () => {
+        expect(outerItem.open, 'outer item starts open').toBe(true);
+
+        getHeader(innerItem).click();
+        await flushMicrotasks();
+        await innerItem.updateComplete;
+        await outerItem.updateComplete;
+
+        expect(
+          outerItem.open,
+          'outer item stays open after inner item toggle'
+        ).toBe(true);
+      }
+    );
+  },
+};

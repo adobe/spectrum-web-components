@@ -19,7 +19,7 @@
 
 import { html, TemplateResult } from 'lit';
 
-import { CardBase } from '@spectrum-web-components/core/components/card/index.js';
+import { CardBase } from '@adobe/spectrum-wc-core/components/card/index.js';
 
 import { renderCardTemplate } from '../card-template.js';
 

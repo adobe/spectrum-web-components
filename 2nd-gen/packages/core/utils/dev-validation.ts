@@ -11,6 +11,35 @@
  */
 
 /**
+ * The single place "warn in development" lives: the `DEBUG` gate plus the
+ * `window.__swc.warn` call. Every public helper below computes its own
+ * predicate and message, then defers the actual emit to this primitive, so
+ * there is one source of truth for how a warning is gated and dispatched.
+ *
+ * Note: this deliberately does **not** include the
+ * `process.env.NODE_ENV === 'production'` guard. That guard must stay in each
+ * public helper so a bundler can dead-code-eliminate the message construction
+ * inside that function for production builds; centralizing it here would leave
+ * each caller's message-building in the production bundle.
+ *
+ * @param element - The component instance the warning is attributed to.
+ * @param message - The warning message.
+ * @param url - Documentation URL for the component.
+ * @param options - Passed through to `window.__swc.warn`.
+ */
+function emitWarning(
+  element: HTMLElement,
+  message: string,
+  url: string,
+  options?: SWCWarningOptions
+): void {
+  if (!window.__swc?.DEBUG) {
+    return;
+  }
+  window.__swc.warn(element, message, url, options);
+}
+
+/**
  * Warns when `value` is not one of `valid`. Covers union-type/enum property
  * validation (e.g. `variant`, `size`).
  *
@@ -41,13 +70,10 @@ export function validateEnum<T extends string>(
   if (process.env.NODE_ENV === 'production') {
     return;
   }
-  if (!window.__swc?.DEBUG) {
-    return;
-  }
   if ((valid as readonly string[]).includes(value)) {
     return;
   }
-  window.__swc.warn(
+  emitWarning(
     element,
     `<${element.localName}> expects "${prop}" to be one of: ${valid.join(', ')}. Received "${value}".`,
     url,
@@ -77,10 +103,10 @@ export function warnIf(
   if (process.env.NODE_ENV === 'production') {
     return;
   }
-  if (!window.__swc?.DEBUG || !condition) {
+  if (!condition) {
     return;
   }
-  window.__swc.warn(element, message, url, options);
+  emitWarning(element, message, url, options);
 }
 
 /**
@@ -102,14 +128,11 @@ export function validateRequiredSlot(
   if (process.env.NODE_ENV === 'production') {
     return;
   }
-  if (!window.__swc?.DEBUG) {
-    return;
-  }
   const isEmpty = !slot || slot.assignedNodes({ flatten: true }).length === 0;
   if (!isEmpty) {
     return;
   }
-  window.__swc.warn(
+  emitWarning(
     element,
     `<${element.localName}> requires content in the "${slotName}" slot.`,
     url,
@@ -140,14 +163,14 @@ export function validateAllowedChildren(
   if (process.env.NODE_ENV === 'production') {
     return;
   }
-  if (!window.__swc?.DEBUG || !slot) {
+  if (!slot) {
     return;
   }
   const allowed = allowedTagNames.map((tag) => tag.toUpperCase());
   const allowedList = allowedTagNames.map((tag) => `<${tag}>`).join(', ');
   for (const el of slot.assignedElements()) {
     if (!allowed.includes(el.tagName)) {
-      window.__swc.warn(
+      emitWarning(
         element,
         `<${element.localName}> "${slotName}" slot received a <${el.tagName.toLowerCase()}> element. Only ${allowedList} elements are allowed.`,
         url,
