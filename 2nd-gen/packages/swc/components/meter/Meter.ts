@@ -18,7 +18,7 @@ import {
   METER_VARIANTS,
   MeterBase,
   type MeterVariant,
-} from '@spectrum-web-components/core/components/meter';
+} from '@adobe/spectrum-wc-core/components/meter';
 
 import sharedStyles from '../../stylesheets/_lit-styles/linear-progress-base.css';
 import styles from './meter.css';

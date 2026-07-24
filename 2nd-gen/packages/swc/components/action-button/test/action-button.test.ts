@@ -18,7 +18,7 @@ import { ActionButton } from '@adobe/spectrum-wc/action-button';
 import {
   ACTION_BUTTON_STATIC_COLORS,
   ACTION_BUTTON_VALID_SIZES,
-} from '@spectrum-web-components/core/components/action-button';
+} from '@adobe/spectrum-wc-core/components/action-button';
 
 import '@adobe/spectrum-wc/components/action-button/swc-action-button.js';
 
@@ -38,7 +38,7 @@ import meta, {
 
 export default {
   ...meta,
-  title: 'Action Button/Tests',
+  title: 'Action button/Tests',
   parameters: {
     ...meta.parameters,
     docs: { disable: true, page: null },

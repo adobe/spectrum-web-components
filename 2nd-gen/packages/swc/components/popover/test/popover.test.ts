@@ -14,12 +14,12 @@ import { expect, userEvent, waitFor } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import { Popover } from '@adobe/spectrum-wc/popover';
-import { PopoverBase } from '@spectrum-web-components/core/components/popover';
+import { PopoverBase } from '@adobe/spectrum-wc-core/components/popover';
 import {
   isTopDismissible,
   registerDismissible,
   unregisterDismissible,
-} from '@spectrum-web-components/core/utils/index.js';
+} from '@adobe/spectrum-wc-core/utils/index.js';
 
 import '@adobe/spectrum-wc/components/popover/swc-popover.js';
 import '@adobe/spectrum-wc/components/tooltip/swc-tooltip.js';
@@ -96,6 +96,45 @@ export const ClickToggleTest: Story = {
       expect(popover.open, 'closed after second click').toBe(false);
       expect(trigger.getAttribute('aria-expanded')).toBe('false');
     });
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
+// TEST: A press dragged off the trigger does not stick the reopen guard
+// ──────────────────────────────────────────────────────────────
+
+// A `pointerdown` on the trigger with the matching `pointerup` landing
+// elsewhere (drag-off) never dispatches `click` on the trigger, so it must
+// not leave the trigger's internal press-tracking stuck. A subsequent normal
+// click cycle must still open and close as usual.
+export const PressDragOffTest: Story = {
+  render: () => html`
+    <button id="drag-off-trigger">Trigger</button>
+    <swc-popover for="drag-off-trigger">Popover content</swc-popover>
+  `,
+  play: async ({ canvasElement }) => {
+    const popover = await getComponent<Popover>(canvasElement, 'swc-popover');
+    const trigger = canvasElement.querySelector(
+      '#drag-off-trigger'
+    ) as HTMLButtonElement;
+    await popover.updateComplete;
+
+    trigger.dispatchEvent(
+      new PointerEvent('pointerdown', { bubbles: true, composed: true })
+    );
+    document.body.dispatchEvent(
+      new PointerEvent('pointerup', { bubbles: true, composed: true })
+    );
+
+    await userEvent.click(trigger);
+    await popover.updateComplete;
+    expect(popover.open, 'opens after a drag-off then a normal click').toBe(
+      true
+    );
+
+    await userEvent.click(trigger);
+    await popover.updateComplete;
+    expect(popover.open, 'closes on the following normal click').toBe(false);
   },
 };
 

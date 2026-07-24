@@ -26,7 +26,7 @@ import '@spectrum-web-components/icon/sp-icon.js';
 import '@adobe/spectrum-wc/components/icon/swc-icon.js';
 ```
 
-> `@adobe/spectrum-wc` is a monolithic package. Importing via subpath (e.g. `@adobe/spectrum-wc/components/icon/swc-icon.js`) registers and loads only that component's bundle.
+> `@adobe/spectrum-wc` is a monolithic package. Importing via subpath (e.g., `@adobe/spectrum-wc/components/icon/swc-icon.js`) registers and loads only that component's bundle.
 
 ## What changed
 
@@ -44,7 +44,7 @@ import '@adobe/spectrum-wc/components/icon/swc-icon.js';
 | -------------------------------- | ------------------------------------------------------------------------------------------------------------- |
 | `name` attribute                 | Slot an SVG directly, or use an icon factory function — see [step 2](#2-replace-name-or-src-with-slotted-svg) |
 | `src` attribute                  | Slot an `<svg>` or `<img>` element directly — see [step 2](#2-replace-name-or-src-with-slotted-svg)           |
-| `error` event                    | Removed along with `src` support — remove any `error` listeners on `sp-icon`                                  |
+| `error` event                    | Removed along with `src` support (remove any `error` listeners on `sp-icon`)                                  |
 | `xxs` and `xxl` size values      | Use `xs` for `xxs` and `xl` for `xxl`                                                                         |
 | `--mod-icon-*` custom properties | `--swc-icon-*` equivalents (see [Styling](#styling))                                                          |
 

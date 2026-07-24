@@ -13,12 +13,14 @@
 import { CSSResultArray, html, TemplateResult } from 'lit';
 import { classMap } from 'lit/directives/class-map.js';
 
-import { DividerBase } from '@spectrum-web-components/core/components/divider';
-import { capitalize } from '@spectrum-web-components/core/utils/index.js';
+import { DividerBase } from '@adobe/spectrum-wc-core/components/divider';
+import { capitalize } from '@adobe/spectrum-wc-core/utils/index.js';
 
 import styles from './divider.css';
 
 /**
+ * A divider separates and distinguishes sections of content or groups of menu items.
+ *
  * @element swc-divider
  * @since 2.0.0-beta.1
  *

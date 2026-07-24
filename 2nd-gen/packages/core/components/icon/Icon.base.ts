@@ -12,8 +12,8 @@
 import { PropertyValues } from 'lit';
 import { property, queryAssignedElements } from 'lit/decorators.js';
 
-import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
-import { SizedMixin } from '@spectrum-web-components/core/mixins/index.js';
+import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
+import { SizedMixin } from '@adobe/spectrum-wc-core/mixins/index.js';
 
 import { ICON_VALID_SIZES } from './Icon.types.js';
 

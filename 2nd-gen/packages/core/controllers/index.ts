@@ -22,10 +22,16 @@ export {
 export {
   focusgroupNavigationActiveChange,
   FocusgroupNavigationController,
+  type FocusgroupActiveChangeSource,
   type FocusgroupDirection,
   type FocusgroupNavigationActiveChangeDetail,
   type FocusgroupNavigationOptions,
 } from './focusgroup-navigation-controller/index.js';
+export {
+  LiveSelectionController,
+  type LiveSelectionMode,
+  type LiveSelectionOptions,
+} from './live-selection-controller/index.js';
 export {
   HoverController,
   type HoverControllerHost,
@@ -37,6 +43,11 @@ export {
 } from './language-resolution.js';
 export { PageScrollLockController } from './page-scroll-lock.js';
 export {
+  PendingController,
+  type PendingControllerHost,
+  type PendingControllerOptions,
+} from './pending-controller/index.js';
+export {
   ALL_PLACEMENTS,
   fromFloatingPlacement,
   PlacementController,
@@ -45,3 +56,12 @@ export {
   type PlacementOptions,
   type VirtualTrigger,
 } from './placement-controller/index.js';
+export {
+  SlotAttributePropagationController,
+  type SlotAttributePropagationControllerOptions,
+} from './slot-attribute-propagation-controller/index.js';
+export { SlotPresenceController } from './slot-presence-controller/index.js';
+export {
+  SlotTextController,
+  type SlotTextConfig,
+} from './slot-text-controller/index.js';

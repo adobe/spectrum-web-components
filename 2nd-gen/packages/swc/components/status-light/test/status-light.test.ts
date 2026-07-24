@@ -22,7 +22,7 @@ import {
   STATUS_LIGHT_VALID_SIZES,
   STATUS_LIGHT_VARIANTS_COLOR,
   STATUS_LIGHT_VARIANTS_SEMANTIC,
-} from '@spectrum-web-components/core/components/status-light/index.js';
+} from '@adobe/spectrum-wc-core/components/status-light/index.js';
 
 import '@adobe/spectrum-wc/components/status-light/swc-status-light.js';
 

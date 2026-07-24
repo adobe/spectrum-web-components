@@ -20,7 +20,7 @@ import {
   type TabDensity,
   TABS_DIRECTIONS,
   type TabsDirection,
-} from '@spectrum-web-components/core/components/tabs/index.js';
+} from '@adobe/spectrum-wc-core/components/tabs/index.js';
 
 import '@adobe/spectrum-wc/components/tabs/swc-tabs.js';
 import '@adobe/spectrum-wc/components/tabs/swc-tab.js';
@@ -86,13 +86,13 @@ export const meta: Meta = {
       subtitle: 'Organize content into sections navigated by a tab bar',
       source: { type: 'dynamic' },
     },
-    design: {
-      type: 'figma',
-      url: 'https://www.figma.com/design/PLACEHOLDER',
-    },
     stackblitz: {
       url: 'https://stackblitz.com/edit/vitejs-vite-5jtmpzjk?file=src%2Fmy-element.ts',
     },
+    // swc-tab and swc-tab-panel are the other two elements of this
+    // three-element component; surface their API tables alongside
+    // swc-tabs's on the docs page.
+    additionalApiTables: ['swc-tab', 'swc-tab-panel'],
   },
   tags: ['migrated'],
 };
@@ -256,6 +256,7 @@ export const DensityVariants: Story = {
   `,
   tags: ['options'],
 };
+DensityVariants.storyName = 'Density variants';
 
 export const Directions: Story = {
   render: () => html`
@@ -343,6 +344,7 @@ export const ActivationModes: Story = {
   `,
   tags: ['behaviors'],
 };
+ActivationModes.storyName = 'Activation modes';
 
 // ────────────────────────────────
 //    ACCESSIBILITY STORIES

@@ -12,7 +12,7 @@
 import { CSSResultArray, PropertyValues, TemplateResult } from 'lit';
 import { property } from 'lit/decorators.js';
 
-import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
+import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
 
 import {
   ALERT_BANNER_VALID_VARIANTS,

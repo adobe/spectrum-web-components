@@ -21,7 +21,7 @@ import {
   TOOLTIP_VARIANTS,
   type TooltipPlacement,
   type TooltipVariant,
-} from '@spectrum-web-components/core/components/tooltip';
+} from '@adobe/spectrum-wc-core/components/tooltip';
 
 import '@adobe/spectrum-wc/components/button/swc-button.js';
 import '@adobe/spectrum-wc/components/tooltip/swc-tooltip.js';
@@ -49,7 +49,7 @@ argTypes.placement = {
 // side from PlacementController). The Storybook helper otherwise observes every
 // attribute change, writes it back into `args`, and re-applies it through its
 // `spread` directive on the next render — clobbering the resolved side with a
-// stale value (e.g. a flipped tooltip reverting to its declared `top`). Declaring
+// stale value (e.g., a flipped tooltip reverting to its declared `top`). Declaring
 // it here (control disabled) makes the helper exclude it from the spread.
 argTypes['actual-placement'] = {
   table: { disable: true },
@@ -147,6 +147,9 @@ const meta: Meta = {
     },
     docs: {
       subtitle: `Brief contextual message that appears near a trigger element.`,
+    },
+    stackblitz: {
+      url: 'https://stackblitz.com/edit/vitejs-vite-wr38rbib?file=src%2Fmy-element.ts',
     },
     chromatic: {
       delay: 500,
@@ -510,6 +513,7 @@ export const TriggerElement: Story = {
   },
   tags: ['behaviors'],
 };
+TriggerElement.storyName = 'Trigger element';
 
 export const Labeling: Story = {
   render: (args) => html`

@@ -287,6 +287,13 @@ Skills are used on-demand. When a task matches a skill’s purpose, the agent re
 - Use when: Implementation is feature-complete and the approved `migration-plan.md` can be used to derive the must-ship test matrix before review
 - Provides: Test coverage checklist, unit/a11y/play-function patterns, test-running verification, and plan-driven coverage checks for breaking changes and regressions
 
+#### VRT authoring (`vrt-authoring`)
+
+- **purpose**: Author dedicated Storybook visual regression stories for 2nd-gen components
+- **How to invoke**: Say "add VRT for [component]", "write visual regression stories", or mention `.vrt.ts`, Chromatic, forced-colors VRT, global styles VRT, or custom-property VRT
+- Use when: Adding or reviewing `test/vrt/*.vrt.ts` files during migration or test cleanup
+- Provides: Dedicated VRT file shape, shared helper usage, pseudo-state/forced-colors patterns, and custom-property coverage checks against the generated API metadata
+
 #### Migration — conformance sub-task (`migration-conformance`)
 
 - **purpose**: Verify all migrated files conform to project style guides, run all linters, and surface any guideline gaps as PR comment notes

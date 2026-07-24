@@ -12,7 +12,7 @@
 
 import { useOf } from '@storybook/addon-docs/blocks';
 import React, { useEffect, useRef } from 'react';
-import customElements from '../custom-elements.json' with { type: 'json' };
+import customElements from '../../dist/custom-elements.json' with { type: 'json' };
 
 // Register the badge component for use in the docs iframe
 import '@adobe/spectrum-wc/components/badge/swc-badge.js';

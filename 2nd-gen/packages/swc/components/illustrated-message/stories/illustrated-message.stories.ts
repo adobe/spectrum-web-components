@@ -58,7 +58,7 @@ argTypes.orientation = {
  * via slots.
  */
 export const meta: Meta = {
-  title: 'Illustrated Message',
+  title: 'Illustrated message',
   component: 'swc-illustrated-message',
   args,
   argTypes,
@@ -66,10 +66,6 @@ export const meta: Meta = {
   parameters: {
     docs: {
       subtitle: 'Display an illustration with a heading and description.',
-    },
-    design: {
-      type: 'figma',
-      url: 'https://www.figma.com/design/Mngz9H7WZLbrCvGQf3GnsY/S2---Web--Desktop-scale-?node-id=20032-601&p=f&t=v3YDUMXflgtF0NtJ-0',
     },
     stackblitz: {
       url: 'https://stackblitz.com/edit/vitejs-vite-akpphxht?file=src%2Fmy-element.ts',
@@ -80,7 +76,7 @@ export const meta: Meta = {
 
 export default {
   ...meta,
-  title: 'Illustrated Message',
+  title: 'Illustrated message',
   excludeStories: ['meta'],
 } as Meta;
 

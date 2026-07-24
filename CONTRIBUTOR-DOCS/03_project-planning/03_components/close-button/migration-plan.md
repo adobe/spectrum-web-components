@@ -55,15 +55,15 @@
 
 ## TL;DR
 
-- `swc-close-button` should ship as a dedicated 2nd-gen component in both `core` and `swc` layers, not as an extension point buried inside `swc-button`.
+- `swc-close-button` should ship as a dedicated 2nd-gen SWC component extending `ButtonBase`, not as an extension point buried inside `swc-button`.
 - API should align with modern button conventions: `accessible-label` (consumer-facing), `static-color`, and `size` (`s|m|l|xl`).
-- Variant aliases from 1st-gen (`variant="white|black"`) should be deprecated in favor of `static-color`.
+- 2nd-gen does not ship the 1st-gen `variant="white|black"` alias; use `static-color` only. Deprecation of `variant` is a 1st-gen (`sp-close-button`) concern.
 - Styling source of truth is Spectrum CSS `spectrum-two` `components/closebutton`; 2nd-gen should not re-expose the 1st-gen `--mod-closebutton-*` surface.
 - Accessibility is must-ship: real inner `<button type="button">`, delegated focus, mandatory discernible name, and keyboard parity for Enter/Space.
 
 ### Most blocking open questions
 
-- [Q1](#architecture-and-behavior): Confirm whether `icon-size` should be a public API in SWC or kept internal.
+None at this time. [Q1](#architecture-and-behavior) (icon scale) is resolved: no `icon-size` attribute; scale follows `size`, with optional `--swc-close-button-icon-size` CSS override only.
 
 ---
 
@@ -129,7 +129,7 @@ No close-button-specific custom events.
 `close-button` should follow this order:
 
 1. Finish this plan and rendering analysis.
-2. Scaffold 2nd-gen `core` and `swc` close-button files.
+2. Scaffold `swc-close-button` (reuse `ButtonBase` from core).
 3. Land API + accessibility behavior before visual parity.
 4. Land S2 styling and then tests/docs.
 
@@ -149,7 +149,7 @@ Prerequisite dependency:
 | --- | --- | --- | --- | --- |
 | B1 | Tag rename | `<sp-close-button>` | `<swc-close-button>` | Rename markup and import path. |
 | B2 | Accessible name channel rename | `label` | `accessible-label` | Rename attribute/property and keep semantics identical. |
-| B3 | Static color API cleanup and deprecation | `variant="white|black"` and `static-color` both allowed | `static-color` is canonical; `variant` is deprecated in this migration and scheduled for removal after deprecation window | Replace `variant` with `static-color`; treat `variant` usage as migration debt. |
+| B3 | Static color API cleanup | `variant="white|black"` and `static-color` both allowed on `sp-close-button` | `static-color` only on `swc-close-button`; `variant` attribute is not supported | Replace `variant` with `static-color` when migrating to 2nd-gen. |
 
 #### Styling and visuals
 
@@ -169,7 +169,7 @@ Prerequisite dependency:
 
 | # | What is added | Notes |
 | --- | --- | --- |
-| A1 | Optional icon-scale API (`icon-size`) | Add only if design and implementation both require it. |
+| A1 | Optional icon-scale API (`icon-size`) | Resolved: no attribute; icon scale follows `size`. Consumers may override via `--swc-close-button-icon-size` only. |
 | A2 | Expanded public custom property set | Keep minimal initially; expand only for proven consumer needs. |
 
 ---
@@ -184,13 +184,14 @@ Prerequisite dependency:
 | `staticColor` | `'white' \| 'black' \| undefined` | `undefined` | `static-color` | Confirmed |
 | `accessibleLabel` | `string \| undefined` | `undefined` | `accessible-label` | Confirmed |
 | `disabled` | `boolean` | `false` | `disabled` | Confirmed |
-| `variant` (deprecated alias) | `'white' \| 'black' \| ''` | `''` | `variant` | Deprecated in 2nd-gen close-button migration; map to `static-color` with deprecation warning during transition, then remove. |
+| — | — | — | `variant` | **Removed in 2nd-gen.** Use `static-color` only. Deprecation and alias mapping belong on 1st-gen (`sp-close-button`) until that generation is retired. |
 
 ### Behavioral semantics
 
 - Component must be a dismiss control, not a clear/reset control.
 - Enter and Space activate like native button behavior.
 - Focus-visible ring behavior must match S2 closebutton semantics including forced-colors compatibility.
+- `pending` and `pending-label` are inherited from `ButtonBase` for now; the close-button SWC template does not implement pending visuals. When pending moves off `ButtonBase` (button pending-controller work), close-button should not need follow-up changes.
 
 ### Accessibility semantics notes (2nd-gen)
 
@@ -201,9 +202,9 @@ Prerequisite dependency:
 
 ## Architecture: core vs SWC split
 
-- `core`: `CloseButton.base.ts`, types, validations, semantic contracts.
+- `core`: reuse `ButtonBase` for shared button semantics; close-button-specific API lives on the SWC class.
 - `swc`: render template, CSS, element registration, stories, tests.
-- Reuse button-base patterns where possible, but keep close-button semantics distinct from clear-button.
+- Reuse `ButtonBase` for shared button semantics (accessible naming, disabled, sizing). Do not implement pending visuals on close-button; inherited pending host attributes are acceptable until pending moves off `ButtonBase`.
 
 ---
 
@@ -215,37 +216,37 @@ Prerequisite dependency:
 - [x] Migration plan exists and is reviewable.
 
 ### Setup
-- [ ] Create `2nd-gen/packages/core/components/close-button/`.
-- [ ] Create `2nd-gen/packages/swc/components/close-button/`.
-- [ ] Wire exports and package entrypoints.
+- [x] Reuse `ButtonBase` from core (no separate close-button core package).
+- [x] Create `2nd-gen/packages/swc/components/close-button/`.
+- [x] Wire exports and package entrypoints.
 
 ### API
-- [ ] Define `size`, `static-color`, `accessible-label`, `disabled`.
-- [ ] Add deprecation strategy for `variant="white|black"`.
+- [x] Define `size`, `static-color`, `accessible-label`, `disabled`.
+- [x] Omit `variant` from 2nd-gen public API (breaking change; use `static-color` only).
 
 ### Styling
-- [ ] Implement S2 closebutton selectors/tokens in SWC CSS.
-- [ ] Define minimal public `--swc-close-button-*` properties.
+- [x] Implement S2 closebutton selectors/tokens in SWC CSS.
+- [x] Define minimal public `--swc-close-button-*` properties.
 
 ### Accessibility
-- [ ] Real inner button with delegated focus.
-- [ ] Discernible name enforcement/warnings.
-- [ ] Keyboard and focus-visible parity.
+- [x] Real inner button with delegated focus.
+- [x] Discernible name enforcement/warnings.
+- [x] Keyboard activation covered in Storybook tests (focus-visible polish deferred to styling phase).
 
 ### Testing
-- [ ] Unit tests for API and DOM contract.
-- [ ] Playwright a11y snapshots and keyboard tests.
-- [ ] Storybook interaction coverage.
+- [x] Unit tests for API and DOM contract (Storybook interaction tests on integration branch).
+- [x] Playwright a11y snapshots and keyboard tests.
+- [x] Storybook interaction coverage for API and accessibility contract.
 
 ### Documentation
-- [ ] Storybook docs complete.
-- [ ] Consumer migration guide reconciled to shipped API/CSS.
-- [ ] `@cssprop` docs match migration guide tables.
+- [x] Storybook docs complete.
+- [x] Consumer migration guide reconciled to shipped API/CSS.
+- [x] `@cssprop` docs match migration guide tables.
 
 ### Review
 - [ ] Lint/tests/build pass.
-- [ ] Status doc updated.
-- [ ] Changeset included.
+- [x] Status doc updated.
+- [x] Changeset included.
 - [ ] Two reviewer sign-off.
 
 ---
@@ -262,7 +263,7 @@ Prerequisite dependency:
 
 | # | Item | Blocking? | Status | Owner |
 | --- | --- | --- | --- | --- |
-| Q1 | Should `icon-size` be exposed in public API, or remain internal visual implementation detail? | Yes | Open | Design + implementation |
+| Q1 | Should `icon-size` be exposed in public API, or remain internal visual implementation detail? | No | Resolved — no `icon-size` attribute; scale follows `size` with optional `--swc-close-button-icon-size` CSS override | Design + implementation |
 
 ### Scope and prerequisites
 

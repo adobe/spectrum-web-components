@@ -16,22 +16,14 @@ import { property } from 'lit/decorators.js';
 import {
   LanguageResolutionController,
   languageResolverUpdatedSymbol,
-} from '@spectrum-web-components/core/controllers/language-resolution.js';
-import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
-import { SizedMixin } from '@spectrum-web-components/core/mixins/index.js';
+} from '@adobe/spectrum-wc-core/controllers/language-resolution.js';
+import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
+import { SizedMixin } from '@adobe/spectrum-wc-core/mixins/index.js';
 
 import {
   PROGRESS_CIRCLE_VALID_SIZES,
   ProgressCircleStaticColor,
 } from './ProgressCircle.types.js';
-
-/**
- * @todo SWC-2037 Extract shared progress logic (ARIA, label, clamping, formatting,
- * indeterminate derivation) into a `ProgressBase` mixin or abstract class in
- * `core/components/progress/` so that both `ProgressCircleBase` and a future
- * `ProgressBarBase` can extend it. Also add `formatOptions` support for
- * progress-bar's custom value labels (e.g. "3 of 10", "45 MB / 100 MB").
- */
 
 /**
  * A progress circle component that visually represents the completion progress of a task.

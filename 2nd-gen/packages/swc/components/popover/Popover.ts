@@ -12,7 +12,7 @@
 
 import { CSSResultArray, html, nothing, TemplateResult } from 'lit';
 
-import { PopoverBase } from '@spectrum-web-components/core/components/popover';
+import { PopoverBase } from '@adobe/spectrum-wc-core/components/popover';
 
 import styles from './popover.css';
 
@@ -27,7 +27,7 @@ import styles from './popover.css';
  * and the shadow-DOM element getters the base reads.
  *
  * @element swc-popover
- * @since 2.0.0
+ * @since 2.0.0-beta.2
  *
  * @slot - Popover content.
  *

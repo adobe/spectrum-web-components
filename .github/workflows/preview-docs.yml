@@ -94,6 +94,10 @@ jobs:
           yarn workspace @spectrum-web-components/1st-gen docs:build
 
       - name: Build Gen1 Storybook
+        env:
+          # Cross-link to this PR's gen2 preview (prod-mode build) instead of
+          # the default production URL.
+          SWC_GEN2_STORYBOOK_URL: https://swcpreviews.z13.web.core.windows.net/${{ steps.pr_hash.outputs.hash }}/docs/gen2-storybook-prod/
         run: yarn workspace @spectrum-web-components/1st-gen storybook:build
 
       - name: Build Gen2 Storybook (dev mode)
@@ -108,6 +112,10 @@ jobs:
         # No NODE_ENV override: this is the same production-trimmed build
         # that publish-2ndgen-docs.yml deploys to the live site, so
         # reviewers can validate exactly what will end up on prod.
+        env:
+          # Cross-link to this PR's gen1 preview instead of the default
+          # production URL.
+          SWC_GEN1_STORYBOOK_URL: https://swcpreviews.z13.web.core.windows.net/${{ steps.pr_hash.outputs.hash }}/docs/gen1-storybook/
         run: yarn workspace @adobe/spectrum-wc storybook:build --output-dir storybook-static-prod
 
       ## --- DEPLOY TO AZURE BLOB STORAGE --- ##
