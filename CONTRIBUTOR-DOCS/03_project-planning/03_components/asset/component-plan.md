@@ -257,7 +257,7 @@ class, per the standard convention.
 - When the consumer sets `aspectRatio` explicitly, Asset's JS sets `--_swc-asset-aspect-ratio`
   as a plain custom-property assignment (not an inline `style.aspectRatio`) — it resolves first
   in the `var()` chain, so it always wins over any ancestor-supplied default.
-- Card's existing `card-template.css` rule for ::slotted([slot="preview"])`
+- Card's existing `card-template.css` rule for `::slotted([slot="preview"])`
   needs a type-based split to support both content types at once, since a plain `<img>` and a
   `<swc-asset>` need different declarations for the same conceptual default:
 
