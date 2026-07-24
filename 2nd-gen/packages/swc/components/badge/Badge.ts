@@ -123,7 +123,7 @@ export class Badge extends BadgeBase {
           `
         )}
         <div class="swc-Badge-label">
-          <slot></slot>
+          <slot @slotchange=${this.slotText.handleSlotChange}></slot>
         </div>
       </div>
     `;

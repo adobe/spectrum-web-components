@@ -1,0 +1,93 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import { DocsFooter, DocsHeader } from '../../../swc/.storybook/blocks';
+
+import * as Stories from './stories/slot-text-controller.stories';
+
+<Meta of={Stories} />
+
+<DocsHeader />
+
+## Usage
+
+`SlotTextController` observes whether a slot contains meaningful text or element content. Components use it to switch to an icon-only presentation when a consumer supplies no visible label, and to require an accessible name in that case.
+
+It replaces the `ObserveSlotText` mixin. Because a reactive controller cannot see a slot's assigned nodes on its own, bind `handleSlotChange` to the observed slot's `@slotchange` event. A `characterData` `MutationObserver` additionally catches in-place text edits.
+
+```typescript
+import { LitElement, html } from 'lit';
+import { SlotTextController } from '@adobe/spectrum-wc-core/controllers/slot-text-controller';
+
+class SwcThing extends LitElement {
+  private readonly slotText = new SlotTextController(this);
+
+  get hasLabel(): boolean {
+    return this.slotText.hasContent;
+  }
+
+  render() {
+    return html`
+      <slot @slotchange=${this.slotText.handleSlotChange}></slot>
+    `;
+  }
+}
+```
+
+For a named slot, or to ignore certain elements (for example a visually hidden helper), pass a config:
+
+```typescript
+new SlotTextController(this, {
+  slotName: 'description',
+  excludeSelectors: ['.visually-hidden'],
+});
+```
+
+## Behaviors
+
+### Content presence
+
+`hasContent` is `true` when the observed slot has any non-excluded element or non-whitespace text. An empty slot reports `false`, letting the host render an icon-only or no-label layout.
+
+<Canvas of={Stories.ContentPresence} />
+
+### Element content
+
+Slotted elements count as content, not just text nodes, so a label composed of rich markup is still recognized.
+
+<Canvas of={Stories.ElementContent} />
+
+### Initial content and reactivity
+
+Initial light-DOM content is evaluated in `hostConnected`, before the first render, so it is reflected on first paint without an extra update. The mixin this replaces assigned a reactive `slotHasContent` property during `update()`; the controller sets its initial value directly and relies on `@slotchange` (bound in the template) and the `characterData` observer to request updates as content changes afterward. See the controller tests for coverage of initial content and dynamic add/remove/edit.
+
+## Accessibility
+
+The controller reports content presence only; it does not itself change ARIA. Its value is what makes an accessible-name requirement enforceable: when `hasContent` is `false`, a host with only an icon has no visible label and must be given an accessible name (for example an `accessible-label` attribute forwarded to `aria-label`).
+
+### Best practices
+
+- Use `hasContent` to detect icon-only usage and warn (in DEBUG) or require an accessible label.
+- Prefer visible text labels; treat the icon-only path as the exception, not the default.
+
+<Canvas of={Stories.Accessibility} />
+
+## API
+
+### Constructor
+
+`new SlotTextController(host, config?)` — registers the controller on the host.
+
+### Members
+
+| Member                    | Description                                                                                     |
+| ------------------------- | ----------------------------------------------------------------------------------------------- |
+| `hasContent`              | Read-only. `true` when the observed slot has meaningful text or non-excluded element content.   |
+| `handleSlotChange(event)` | Bind to the observed slot's `@slotchange`. Re-evaluates content from the slot's assigned nodes. |
+
+### Config (`SlotTextConfig`)
+
+| Option             | Type       | Default             | Description                                                                        |
+| ------------------ | ---------- | ------------------- | ---------------------------------------------------------------------------------- |
+| `slotName`         | `string`   | `''` (default slot) | Name of the slot to observe. Use `''` for the default slot.                        |
+| `excludeSelectors` | `string[]` | `[]`                | Selectors for elements that should not count as content (for example helper text). |
+
+<DocsFooter />
