@@ -20,7 +20,7 @@ import {
 } from '@adobe/spectrum-wc-core/mixins/index.js';
 
 import { SlotAttributePropagationController } from '../../controllers/slot-attribute-propagation-controller/index.js';
-import { ObserveSlotText } from '../../mixins/observe-slot-text.js';
+import { SlotTextController } from '../../controllers/slot-text-controller/index.js';
 import {
   CARD_DENSITIES,
   CARD_VALID_SIZES,
@@ -61,12 +61,9 @@ import {
  * @cssprop --swc-card-base-content-padding-compact - Content padding used at compact density, per size.
  * @cssprop --swc-card-base-content-padding-spacious - Content padding used at spacious density, per size.
  */
-export abstract class CardBase extends ObserveSlotText(
-  SizedMixin(SpectrumElement, {
-    validSizes: CARD_VALID_SIZES,
-  }),
-  ''
-) {
+export abstract class CardBase extends SizedMixin(SpectrumElement, {
+  validSizes: CARD_VALID_SIZES,
+}) {
   // ─────────────────────────
   //     API TO OVERRIDE
   // ─────────────────────────
@@ -136,6 +133,27 @@ export abstract class CardBase extends ObserveSlotText(
       slotName: 'actions',
     }
   );
+
+  /**
+   * Observes whether the default slot has meaningful content. Each concrete
+   * card's `render()` must bind `@slotchange=${this.slotText.handleSlotChange}`
+   * on the default slot (via `renderCardTemplate`'s `onDefaultSlotChange`) for
+   * changes after the first render to be tracked.
+   *
+   * @internal
+   */
+  protected slotText = new SlotTextController(this);
+
+  /**
+   * Whether the default slot has meaningful content. Consumed by each concrete
+   * card's `render()` (through `renderCardTemplate`'s `hasDefaultSlotContent`)
+   * to toggle the `--hasDefault` class.
+   *
+   * @internal
+   */
+  protected get slotHasContent(): boolean {
+    return this.slotText.hasContent;
+  }
 
   public override connectedCallback(): void {
     super.connectedCallback();

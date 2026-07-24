@@ -350,9 +350,9 @@ export const DefaultSlotClassUpdatesDynamicallyTest: Story = {
   play: async ({ canvasElement, step }) => {
     const card = await getComponent<Card>(canvasElement, 'swc-card');
     const wrapper = card.renderRoot.querySelector('.swc-CardBase');
-    // ObserveSlotText's MutationController fires as a microtask; a
-    // requestAnimationFrame tick reliably runs after it has resolved.
-    const waitForMutation = (): Promise<void> =>
+    // SlotTextController re-evaluates on slotchange / characterData as a
+    // microtask; a requestAnimationFrame tick reliably runs after it resolves.
+    const waitForMutation = () =>
       new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
 
     await step(

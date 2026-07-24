@@ -126,7 +126,9 @@ Examples:
 
 ### Single-story sections
 
-Even when a section has only one story (e.g. a single `States` story called `States`), the `### Title` subheading appears under the `## Section` heading. This matches the `SpectrumStories` block's behavior when `hideTitle=false`.
+When a section has only one story, and that story's rendered name is identical to the `## Section` heading (e.g., a single `States` story named `States`), omit the `### Title` subheading. Author the prose directly under `## Section`, with the `<Canvas>` reference immediately below it. A `## States` heading followed immediately by a `### States` subheading is redundant; collapse it to one heading. (`button.mdx`, `color-handle.mdx`.)
+
+If a single-story section's rendered name _differs_ from the `## Section` heading (e.g., a `## Behaviors` section whose only story renders as "Toggle behavior"), keep the `### Title` subheading. It's adding real information there, not repeating the section title.
 
 ### Untagged stories do not appear
 
@@ -148,7 +150,7 @@ The same checks run inside `yarn lint:ai` and in CI, so a green run locally mean
 Organize MDX into these sections (skip sections that don't apply):
 
 1. **Overview** - rendered automatically by `<DocsHeader />` from the meta JSDoc, subtitle, and Overview story
-2. **Anatomy** - Both visual and technical structure (components and patterns)
+2. **Anatomy** - A flat, unordered list of the component's parts, with slot names called out inline where needed (components and patterns)
 3. **Usage** - How to instantiate and configure (controllers)
 4. **Options** - Configuration, variants, sizes, styles
 5. **States** - Different component states
@@ -272,43 +274,26 @@ export const Overview: Story = {
 
 ### Anatomy
 
-**Purpose**: Document both visual structure (what users see) and technical structure (slots, parts, properties).
+**Purpose**: Give the reader a mental model of the component's parts in plain language. Anatomy is not a second copy of the API table: the generated `<ApiTable />` (rendered by `<DocsFooter />`) already lists every slot and property from source with type and description. Anatomy should not duplicate it.
 
 **Required content:**
 
-- **All slots** with descriptions
-- **Content-rendering properties** (label, icon, src, value, etc.)
+- A flat, unordered list of the component's visual parts
+- Slot names are called out **inline** only in places where a reader needs to know a piece of content comes from a slot (so they write it as markup) rather than a property (so they write it as an attribute); not a separate slot inventory
 - Visual examples showing structure
 
 **Consolidation rule**: Combine all slotted content combinations into a **single Anatomy story**.
 
-**MDX prose** (`## Anatomy` section uses `hideTitle` semantics — no per-story `###`):
+**MDX prose** (`## Anatomy` section uses `hideTitle` semantics: no per-story `###`, and no `###`/`####` subsections of any kind):
 
 ```mdx
 ## Anatomy
 
 A component-name consists of:
 
-1. **Primary element** — main visual component
-2. **Secondary element** — additional visual content
-3. **Optional indicator** — shown conditionally
-
-### Content
-
-#### Slots
-
-- **Default slot**: primary content (text or HTML)
-- **icon slot**: optional icon element
-- **description slot**: additional descriptive content
-
-#### Properties
-
-Properties that render visual content:
-
-- **label**: text label displayed by the component
-- **icon**: icon identifier to display
-- **src**: image source URL
-- **value**: displayed value content
+- **Primary element**: main visual component
+- **Secondary element**, provided via the `icon` slot
+- **Optional indicator**: shown conditionally
 
 <Canvas of={Stories.Anatomy} />
 ```
@@ -331,10 +316,9 @@ export const Anatomy: Story = {
 
 **Key principles:**
 
-- Start with visual structure (designer-focused)
-- Follow with technical structure (developer-focused)
-- Document all slots with clear descriptions
-- List content-rendering properties (label, icon, src, value, etc.)
+- Use a flat, unordered list of parts. Never a numbered list: there is no numbered diagram for the numbers to key off of, and it reads oddly for single-part components. Never `###`/`####` subsections (e.g. no "Content", "Slots", or "Properties" headings). Doing so re-creates the API table by hand and drifts out of sync with it.
+- Name a slot inline in the parts list only when a reader needs to know content is passed as a slot rather than a property to compose it correctly
+- Don't re-list content-rendering properties that are already visible in the rendered example or covered by the API table
 - Show all meaningful combinations in one story
 
 ### Options
@@ -357,10 +341,10 @@ export const Anatomy: Story = {
 /**
  * Component-names come in [X] sizes to fit various contexts:
  *
- * - **Small (s)**: Used for inline indicators or space-constrained areas
- * - **Medium (m)**: Default size, used for typical use cases
- * - **Large (l)**: Used for prominent displays or primary content areas
- * - **Extra-large (xl)**: Maximum visibility (if applicable)
+ * - **Small (`s`)**: Used for inline indicators or space-constrained areas
+ * - **Medium (`m`)**: Default size, used for typical use cases
+ * - **Large (`l`)**: Used for prominent displays or primary content areas
+ * - **Extra-large (`xl`)**: Maximum visibility (if applicable)
  *
  * All sizes shown below for comparison.
  */
@@ -383,12 +367,12 @@ export const Sizes: Story = {
 /**
  * Semantic variants provide meaning through color:
  *
- * - **accent**: New, beta, prototype, draft
- * - **informative**: Active, in use, live, published
- * - **neutral**: Archived, deleted, paused, draft, not started, ended
- * - **positive**: Approved, complete, success, new, purchased, licensed
- * - **notice**: Needs approval, pending, scheduled
- * - **negative**: Error, alert, rejected, failed
+ * - **`accent`**: New, beta, prototype, draft
+ * - **`informative`**: Active, in use, live, published
+ * - **`neutral`**: Archived, deleted, paused, draft, not started, ended
+ * - **`positive`**: Approved, complete, success, new, purchased, licensed
+ * - **`notice`**: Needs approval, pending, scheduled
+ * - **`negative`**: Error, alert, rejected, failed
  *
  * All semantic variants shown below for comparison.
  */
@@ -407,17 +391,16 @@ export const SemanticVariants: Story = {
 };
 ```
 
-**Pattern for static color**:
+**Pattern for static color**: sourced from Spectrum's static color usage guidance (e.g. [Button](https://spectrum.adobe.com/page/button/#Static-color)). The component's color pins to the chosen value regardless of the active theme, and the choice of value depends on the background it sits over.
+
+```mdx
+Use `static-color` when the component-name needs to sit on top of a photo or colored background. It pins the component-name's color to the chosen value regardless of the active color theme:
+
+- **`white`**: use on dark color or image backgrounds
+- **`black`**: use on light color or image backgrounds
+```
 
 ```typescript
-/**
- * Use the `static-color` attribute when displaying over images or colored backgrounds:
- *
- * - **white**: Use on dark or colored backgrounds for better contrast
- * - **black**: Use on light backgrounds for better contrast
- *
- * Both variants shown below with appropriate backgrounds.
- */
 export const StaticColors: Story = {
   render: (args) => html`
     ${['white', 'black'].map(
@@ -502,6 +485,8 @@ export const Indeterminate: Story = {
 ### Behaviors
 
 **Purpose**: Document methods, events, and automatic behaviors.
+
+**Focus management belongs here only when it's a side effect of a lifecycle or state transition**, independent of which input method triggered it: for example, a dialog trapping focus when it opens and restoring it when it closes, or a listbox auto-focusing its first result when it opens. Focus movement that **is** the keyboard interaction model itself (roving tabindex, arrow keys moving focus between items) belongs in `## Accessibility` under keyboard navigation instead: it isn't separable from "how do you operate this with a keyboard," which is already that section's job.
 
 **Pattern for automatic behaviors**:
 
@@ -975,9 +960,8 @@ When creating or updating documentation:
 - [ ] Per-story `### Title` headings match Storybook's rendered story names (PascalCase → Title Case, or explicit `storyName`)
 - [ ] No `<Canvas>` references to untagged stories
 - [ ] Controllers: hand-authored `## API` section ahead of `<DocsFooter />`; `meta.tags` contains `'controller'` so `<ApiTable />` is omitted
-- [ ] Anatomy: visual and technical structure documented (components and patterns)
-- [ ] All slots documented with descriptions
-- [ ] All content-rendering properties listed
+- [ ] Anatomy: parts listed as a flat, unordered list with no `###`/`####` subsections (components and patterns)
+- [ ] Slot names called out inline in the Anatomy list only where needed for composition clarity (not a separate slot inventory)
 - [ ] All configuration options documented
 - [ ] All states documented
 - [ ] Methods documented (if applicable)

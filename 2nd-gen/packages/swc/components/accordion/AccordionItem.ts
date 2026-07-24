@@ -137,7 +137,7 @@ export class AccordionItem extends AccordionItemBase {
         <div class="swc-AccordionItem-row">
           ${this.renderHeadingWrapper(button)}
           ${when(
-            this.slotContentIsPresent,
+            this.hasActions,
             () => html`
               <div class="swc-AccordionItem-actions">
                 <slot name="actions"></slot>
