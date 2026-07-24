@@ -42,7 +42,9 @@ export const OverviewTest: Story = {
     const icon = await getComponent<Icon>(canvasElement, 'swc-icon');
 
     await step('renders with expected default properties', async () => {
-      expect(icon.label, 'label property is "Search"').toBe('Search');
+      expect(icon.accessibleLabel, 'accessibleLabel property is "Search"').toBe(
+        'Search'
+      );
       expect(icon.shadowRoot, 'shadow root is attached').toBeTruthy();
     });
   },
@@ -54,7 +56,7 @@ export const OverviewTest: Story = {
 
 export const SizeAttributeTest: Story = {
   render: () => html`
-    <swc-icon size="xl" label="Search">
+    <swc-icon size="xl" accessible-label="Search">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
         <path
           d="M14.5 13.09 11.41 10a6 6 0 1 0-1.41 1.41l3.09 3.09a1 1 0 0 0 1.41-1.41zM3 7a4 4 0 1 1 8 0 4 4 0 0 1-8 0z"
@@ -72,12 +74,12 @@ export const SizeAttributeTest: Story = {
 };
 
 // ──────────────────────────────────────────────────────────────
-// TEST: Accessibility
+// TEST: Accessibility (host owns semantics)
 // ──────────────────────────────────────────────────────────────
 
-export const SlottedSvgAccessibilityTest: Story = {
+export const LabeledHostAccessibilityTest: Story = {
   render: () => html`
-    <swc-icon label="Search">
+    <swc-icon accessible-label="Search">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
         <path
           d="M14.5 13.09 11.41 10a6 6 0 1 0-1.41 1.41l3.09 3.09a1 1 0 0 0 1.41-1.41zM3 7a4 4 0 1 1 8 0 4 4 0 0 1-8 0z"
@@ -88,15 +90,16 @@ export const SlottedSvgAccessibilityTest: Story = {
   play: async ({ canvasElement, step }) => {
     const icon = await getComponent<Icon>(canvasElement, 'swc-icon');
 
-    await step('applies aria attributes to slotted svg', async () => {
-      const svg = icon.querySelector('svg')!;
-      expect(svg.getAttribute('role'), 'slotted SVG has role="img"').toBe(
-        'img'
-      );
+    await step('applies role and aria-label to the host', async () => {
+      expect(icon.getAttribute('role'), 'host has role="img"').toBe('img');
       expect(
-        svg.getAttribute('aria-label'),
-        'slotted SVG aria-label matches icon label'
+        icon.getAttribute('aria-label'),
+        'host aria-label matches accessibleLabel'
       ).toBe('Search');
+      expect(
+        icon.hasAttribute('aria-hidden'),
+        'labeled host is not aria-hidden'
+      ).toBe(false);
     });
   },
 };
@@ -114,27 +117,25 @@ export const NoLabelAriaHiddenTest: Story = {
   play: async ({ canvasElement, step }) => {
     const icon = await getComponent<Icon>(canvasElement, 'swc-icon');
 
-    await step('applies aria-hidden when no label', async () => {
-      const svg = icon.querySelector('svg')!;
-      expect(
-        svg.getAttribute('aria-hidden'),
-        'slotted SVG has aria-hidden="true" when no label'
-      ).toBe('true');
-      expect(
-        svg.hasAttribute('aria-label'),
-        'slotted SVG has no aria-label when icon has no label'
-      ).toBe(false);
+    await step('marks the host aria-hidden when no label', async () => {
       expect(
         icon.getAttribute('aria-hidden'),
-        'host element has aria-hidden="true" when no label'
+        'host has aria-hidden="true" when no label'
       ).toBe('true');
+      expect(icon.hasAttribute('role'), 'host has no role when no label').toBe(
+        false
+      );
+      expect(
+        icon.hasAttribute('aria-label'),
+        'host has no aria-label when no label'
+      ).toBe(false);
     });
   },
 };
 
 export const LabelTogglingTest: Story = {
   render: () => html`
-    <swc-icon label="x">
+    <swc-icon accessible-label="x">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
         <path
           d="M14.5 13.09 11.41 10a6 6 0 1 0-1.41 1.41l3.09 3.09a1 1 0 0 0 1.41-1.41zM3 7a4 4 0 1 1 8 0 4 4 0 0 1-8 0z"
@@ -144,43 +145,43 @@ export const LabelTogglingTest: Story = {
   `,
   play: async ({ canvasElement, step }) => {
     const icon = await getComponent<Icon>(canvasElement, 'swc-icon');
-    const svg = () => icon.querySelector('svg')!;
 
-    await step('initial label "x" sets aria-label on svg', async () => {
+    await step('initial label "x" sets aria-label on the host', async () => {
+      expect(icon.getAttribute('aria-label'), 'host aria-label is "x"').toBe(
+        'x'
+      );
       expect(
-        svg().getAttribute('aria-label'),
-        'SVG aria-label is "x" initially'
-      ).toBe('x');
-      expect(
-        svg().getAttribute('aria-hidden'),
-        'SVG has no aria-hidden when label is set'
-      ).toBeNull();
-    });
-
-    await step('clearing label sets aria-hidden on svg', async () => {
-      icon.label = '';
-      await icon.updateComplete;
-      expect(
-        svg().getAttribute('aria-hidden'),
-        'SVG has aria-hidden="true" after label is cleared'
-      ).toBe('true');
-      expect(
-        svg().hasAttribute('aria-label'),
-        'SVG has no aria-label after label is cleared'
+        icon.hasAttribute('aria-hidden'),
+        'host has no aria-hidden when label is set'
       ).toBe(false);
     });
 
-    await step('setting label "y" restores aria-label on svg', async () => {
-      icon.label = 'y';
+    await step('clearing label marks the host aria-hidden', async () => {
+      icon.accessibleLabel = '';
       await icon.updateComplete;
       expect(
-        svg().getAttribute('aria-label'),
-        'SVG aria-label is "y" after setting new label'
-      ).toBe('y');
+        icon.getAttribute('aria-hidden'),
+        'host has aria-hidden="true" after label is cleared'
+      ).toBe('true');
       expect(
-        svg().getAttribute('aria-hidden'),
-        'SVG has no aria-hidden after label is restored'
-      ).toBeNull();
+        icon.hasAttribute('aria-label'),
+        'host has no aria-label after label is cleared'
+      ).toBe(false);
     });
+
+    await step(
+      'setting label "y" restores aria-label on the host',
+      async () => {
+        icon.accessibleLabel = 'y';
+        await icon.updateComplete;
+        expect(icon.getAttribute('aria-label'), 'host aria-label is "y"').toBe(
+          'y'
+        );
+        expect(
+          icon.hasAttribute('aria-hidden'),
+          'host has no aria-hidden after label is restored'
+        ).toBe(false);
+      }
+    );
   },
 };
