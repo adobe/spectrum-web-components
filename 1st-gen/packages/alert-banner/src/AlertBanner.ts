@@ -12,6 +12,7 @@
 import {
   CSSResultArray,
   html,
+  nothing,
   TemplateResult,
 } from '@spectrum-web-components/base';
 
@@ -38,7 +39,9 @@ export class AlertBanner extends AlertBannerBase {
     return [styles];
   }
 
-  protected override renderIcon(variant: string): TemplateResult {
+  protected override renderIcon(
+    variant: string
+  ): TemplateResult | typeof nothing {
     switch (variant) {
       case 'info':
         return html`
@@ -49,7 +52,7 @@ export class AlertBanner extends AlertBannerBase {
           <sp-icon-alert label="Error" class="type"></sp-icon-alert>
         `;
       default:
-        return html``;
+        return nothing;
     }
   }
 
@@ -71,7 +74,7 @@ export class AlertBanner extends AlertBannerBase {
                 static-color="white"
               ></sp-close-button>
             `
-          : html``}
+          : nothing}
       </div>
     `;
   }

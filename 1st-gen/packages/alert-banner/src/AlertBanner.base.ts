@@ -11,6 +11,7 @@
  */
 import {
   CSSResultArray,
+  nothing,
   PropertyValues,
   SpectrumElement,
   TemplateResult,
@@ -98,7 +99,9 @@ export abstract class AlertBannerBase extends SpectrumElement {
     return (ALERT_BANNER_VALID_VARIANTS as readonly string[]).includes(variant);
   }
 
-  protected abstract renderIcon(variant: string): TemplateResult;
+  protected abstract renderIcon(
+    variant: string
+  ): TemplateResult | typeof nothing;
 
   protected shouldClose(): void {
     const applyDefault = this.dispatchEvent(
