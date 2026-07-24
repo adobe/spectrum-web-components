@@ -68,7 +68,7 @@ export class SpectrumElement extends SpectrumMixin(LitElement) {
   }
 }
 
-if (process.env.NODE_ENV === 'development') {
+if (typeof process !== 'undefined' && process.env.NODE_ENV === 'development') {
   const ignoreWarningTypes = {
     default: false,
     accessibility: false,
