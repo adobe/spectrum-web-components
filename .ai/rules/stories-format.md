@@ -279,21 +279,7 @@ export const GridLayout: Story = {
 
 ### Static color decorator
 
-For static color stories, use `staticColorsDemo: true` with `flexLayout: 'row-wrap'`:
-
-```typescript
-export const StaticColors: Story = {
-    render: (args) => html`
-        ${['white', 'black'].map((color) => template({ 'static-color': color }),
-    parameters: {
-        flexLayout: 'row-wrap',
-        staticColorsDemo: true
-    },
-    tags: ['options', '!test'],
-};
-```
-
-The decorator displays two background zones—dark gradient for `static-color="white"` content, light gradient for `static-color="black"` content.
+For static color stories, use `staticColorsDemo: true`. The decorator displays two background zones: dark gradient for `static-color="white"` content, light gradient for `static-color="black"` content. See [Static color pattern](#static-color-pattern) below for the flat vs. div-wrapped story shapes and when to use `flexLayout` vs. structural `<div>` wrappers.
 
 ## Story naming
 
@@ -385,18 +371,11 @@ export const Overview: Story = {
 
 ### Anatomy
 
-Document all slots and content-rendering properties (e.g., `label`, `icon`, `src`). Combine variations into one story.
+Document the component's parts as a flat, unordered list. Call out a slot name inline in the list only where a reader needs to know content is passed as a slot rather than a property to compose it correctly. Don't enumerate every content-rendering property separately; that's the API table's job. Combine variations into one story.
 
 **Important**: When using `render: (args) =>`, **always** spread `...args` into template calls to ensure Storybook controls work correctly.
 
 ```typescript
-/**
- * A component-name consists of:
- *
- * - **Default slot**: Primary content
- * - **icon slot**: Optional icon element
- * - **label**: Text label rendered by the component
- */
 export const Anatomy: Story = {
   render: (args) => html`
     ${template({ ...args /* text only */ })}
@@ -406,6 +385,19 @@ export const Anatomy: Story = {
   tags: ['anatomy'],
   parameters: { flexLayout: 'row-wrap' },
 };
+```
+
+The corresponding MDX prose (in the per-unit MDX, not above this export) would read:
+
+```mdx
+## Anatomy
+
+A component-name consists of:
+
+- **Default slot**: primary content
+- **Secondary element**, provided via the `icon` slot
+
+<Canvas of={Stories.Anatomy} />
 ```
 
 ### Options
@@ -457,27 +449,11 @@ Prose for each story (e.g. the description of size choices, semantic variant mea
 
 #### Static color pattern
 
-For components with a `static-color` attribute, use whichever of these two patterns best fits the component's visual surface:
+Every component with a `static-color` option uses a single `StaticColors` story (not separate `StaticBlack`/`StaticWhite`/`StaticColors` stories). Pick whichever of these two shapes fits the component's visual surface:
 
-**Three-story pattern** — use when each color can be shown independently (simple components with a single fill style):
-
-1. **`StaticBlack`** - `static-color="black"` on light background
-2. **`StaticWhite`** - `static-color="white"` on dark background
-3. **`StaticColors`** - Both variants side-by-side
+**Flat shape**: use when the component has no other dimension to cross with color (the common case).
 
 ```typescript
-export const StaticBlack: Story = {
-  args: { 'static-color': 'black' },
-  parameters: { styles: { color: 'black' } },
-  tags: ['options'],
-};
-
-export const StaticWhite: Story = {
-  args: { 'static-color': 'white' },
-  parameters: { styles: { color: 'white' } },
-  tags: ['options'],
-};
-
 export const StaticColors: Story = {
   render: (args) => html`
     ${['white', 'black'].map(
@@ -486,12 +462,12 @@ export const StaticColors: Story = {
       `
     )}
   `,
-  parameters: { flexLayout: 'row-wrap', staticColorsDemo: true },
+  parameters: { flexLayout: false, staticColorsDemo: true },
   tags: ['options', '!test'],
 };
 ```
 
-**Combined-story pattern** — use when the component has additional dimensions (e.g., fill styles) that are most clearly shown together in a single story. Use structural `<div>` wrappers instead of `flexLayout` here: the `staticColorsDemo` decorator targets `:first-child` and `:last-child` to apply the dark/light background zones, so the two color groups must be direct children of the render output.
+**Div-wrapped shape**: use when the component has additional dimensions (e.g., fill styles) that are most clearly shown together in a single story. Use structural `<div>` wrappers instead of `flexLayout` here: the `staticColorsDemo` decorator targets `:first-child` and `:last-child` to apply the dark/light background zones, so the two color groups must be direct children of the render output.
 
 ```typescript
 export const StaticColors: Story = {
@@ -516,7 +492,16 @@ export const StaticColors: Story = {
 };
 ```
 
-In the three-story pattern, `staticColorsDemo: true` enables the background zone decorator and `flexLayout: 'row-wrap'` handles item spacing. In the combined-story pattern, use structural `<div>` children instead of `flexLayout` so the decorator's `:first-child`/`:last-child` zone targeting is preserved.
+In the flat shape, `staticColorsDemo: true` enables the background zone decorator and the first/last array items automatically land in the dark/light zones; no `flexLayout` is needed (`false`, not `'row-wrap'`). In the div-wrapped shape, use structural `<div>` children instead of `flexLayout` so the decorator's `:first-child`/`:last-child` zone targeting is preserved.
+
+### States vs. Behaviors: which tag to use
+
+Both tags cover things that aren't the component's core Options (size, variant, style), but they answer different questions:
+
+- **`states`**: a condition the component can be _in_ at a point in time, usually driven by a boolean or enum attribute/property (`disabled`, `selected`, `invalid`, `pending`, `indeterminate`). If you can ask "is it currently X?" and get a yes/no or single-value answer, it's a state.
+- **`behaviors`**: something the component _does_ over time or in response to interaction: automatic wrapping/truncation, focus management, methods, events, and multi-step interaction patterns. If describing it requires a verb phrase ("wraps text", "delegates focus", "emits an event"), it's a behavior.
+
+A single attribute can look like either at first glance; use the test above rather than guessing per component. For example, `pending` is a `states` tag: it's a boolean condition the button is in, even though _entering_ pending has a time-delayed visual transition. The transition itself isn't documented as a separate behavior story; the condition is documented once, under States.
 
 ### States
 
@@ -709,7 +694,7 @@ See `asset.stories.ts` for complete examples.
 - [ ] Subtitle is concise and non-repetitive (plain text only, no links)
 - [ ] Playground: `['dev']` tag when an MDX exists (or `['autodocs', 'dev']` for template-only fallback), no JSDoc, common use case args
 - [ ] Overview: `['overview']` tag, common use case args, no JSDoc on story itself
-- [ ] Anatomy: all slots + content properties, `['anatomy']` tag, `flexLayout: 'row-wrap'`
+- [ ] Anatomy: flat unordered list of parts (no subsections), slot names inline where needed, `['anatomy']` tag, `flexLayout: 'row-wrap'`
 - [ ] Options: all uncovered attributes, `['options']` tag, `flexLayout: 'row-wrap'`
 - [ ] States: consolidated states, `['states']` tag, `flexLayout: 'row-wrap'` (if applicable)
 - [ ] Behaviors: `['behaviors']` tag (if applicable)
