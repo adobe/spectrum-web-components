@@ -57,8 +57,8 @@ requires Lit. Art is manually downloaded and added to this repo from a private s
    - **icons** (new, `@adobe/spectrum-wc-icons`): the per-icon workflow elements and
      functions, extending `IconBase`. No components; depends only on core.
    - **swc** (`@adobe/spectrum-wc`): components, the concrete `<swc-icon>` frame,
-     and the internal `<swc-ui-icon>` element with its UI art (under
-     `components/ui-icons/`). Icon rendering is a
+     and the internal `<swc-ui-icon>` element with its generated UI art (under
+     `components/ui-icons/`, art in its `icon-set/` subfolder). Icon rendering is a
      presentation concern, so it lives in the concrete layer. swc has no runtime
      need for workflow icons, so it only **devDepends** on the icons package for
      Storybook examples. (UI-in-swc assumes no core base class renders a UI icon
@@ -93,7 +93,7 @@ So a consumer only ever touches two public things: **workflow icons** and the
 | --- | --- | --- | --- |
 | **Purpose** | Icons consumers choose (star, folder, trash) | Control internals (chevron, checkmark, picker arrow) | Wrapper for a custom, non-Spectrum SVG |
 | **Audience** | Public | Internal (components only) | Public |
-| **Package home** | `@adobe/spectrum-wc-icons` (icons) | `@adobe/spectrum-wc` (swc, `components/ui-icons/`, internal) | `@adobe/spectrum-wc` (swc) |
+| **Package home** | `@adobe/spectrum-wc-icons` (icons) | `@adobe/spectrum-wc` (swc, `components/ui-icons/`) | `@adobe/spectrum-wc` (swc) |
 | **Art source** | S2 Icon Global Set Open Source (413, no third-party/brand) | S2 UI Icon Global Set | Consumer-supplied SVG |
 | **Ships as** | Per-icon element (`<swc-icon-star>`) **and** per-icon SVG-string function (`StarIcon()`) | Internal `<swc-ui-icon>` element (Lit `TemplateResult`), rendered by components; not public | One generic element |
 | **Sizing** | One asset scaled to a token box; `size` sets the box, CSS resize is safe | Discrete optical assets; `size` **selects** the step, do not CSS-resize | `size` sets the box; slotted art scales |
@@ -232,23 +232,26 @@ presentational.
 All three share one base class (`IconBase`, in core) and differ only in how their
 SVG is supplied; each is a custom element. The code below is illustrative.
 
-**Shared base (core):**
+**Shared base (core) — behavior only: no `render()`, no styles (core has no CSS processing):**
 
 ```ts
 // @adobe/spectrum-wc-core
-export abstract class IconBase extends SpectrumElement {
+export abstract class IconBase extends SizedMixin(SpectrumElement, {
+    validSizes: [...ICON_VALID_SIZES],
+}) {
     @property({ type: String, attribute: 'accessible-label' })
     accessibleLabel = '';
 
-    @property({ reflect: true }) size: IconSize = 'm';
-
-    // Size box, `--swc-icon-color`, and accessibleLabel → role/aria all live here.
-    protected abstract renderSVG(): TemplateResult;
-
-/** Core base classes should never include a render, that should be implemented in the composed component class*/
-    render() {
-        return this.renderSVG();
+    // Host owns a11y: labeled -> role="img" + aria-label; unlabeled -> aria-hidden.
+    protected override firstUpdated(c: PropertyValues) {
+        super.firstUpdated(c);
+        this.#applyHostA11y();
     }
+    protected override updated(c: PropertyValues) {
+        super.updated(c);
+        if (c.has('accessibleLabel')) this.#applyHostA11y();
+    }
+    // #applyHostA11y() toggles role / aria-label / aria-hidden on the host.
 }
 ```
 
@@ -259,8 +262,9 @@ export abstract class IconBase extends SpectrumElement {
 import { IconBase } from '@adobe/spectrum-wc-core';
 
 export class Icon extends IconBase {
-    protected renderSVG() {
-        return html`<slot></slot>`;
+    static styles = [iconBaseCss]; // shared _lit-styles/icon-base.css
+    render() {
+        return html`<span class="swc-Icon"><slot></slot></span>`;
     }
 }
 customElements.define('swc-icon', Icon);
@@ -284,8 +288,9 @@ import { IconBase } from '@adobe/spectrum-wc-core';
 import { StarIcon } from './Star.js';
 
 export class IconStar extends IconBase {
-    protected renderSVG() {
-        return unsafeSVG(StarIcon()); // baked in at build time
+    static styles = [iconBaseCss];
+    render() {
+        return html`<span class="swc-Icon">${unsafeSVG(StarIcon())}</span>`; // baked in
     }
 }
 customElements.define('swc-icon-star', IconStar);
@@ -301,13 +306,14 @@ optical step and renders a Lit `TemplateResult`. Not public; no `unsafeSVG`.**
 ```ts
 // @adobe/spectrum-wc, components/ui-icons/ (internal; imported relatively, not a public subpath)
 import { IconBase } from '@adobe/spectrum-wc-core';
-import { UI_ICONS } from './index.js'; // icon → per-step Lit `svg` templates
+import { UI_ICONS } from './icon-set/index.js'; // icon → per-step Lit `html` templates
 
 export class UiIcon extends IconBase {
-    @property() icon!: UiIconName;
-
-    protected renderSVG() {
-        return UI_ICONS[this.icon][uiStepFor(this.size)]; // a TemplateResult
+    @property() icon!: UiIconName; // selects the icon-set
+    static styles = [iconBaseCss];
+    render() {
+        // size selects the optical step; icon selects the set.
+        return html`<span class="swc-Icon">${UI_ICONS[this.icon][uiStepFor(this.size)]}</span>`;
     }
 }
 customElements.define('swc-ui-icon', UiIcon);
@@ -323,6 +329,11 @@ render() {
     `;
 }
 ```
+
+> **Implemented.** `IconBase` carries `accessibleLabel` + host-owned a11y (no
+> `render()`, no CSS); the `<swc-icon>` frame and `<swc-ui-icon>` both extend it and
+> both use the shared `stylesheets/_lit-styles/icon-base.css` (identical box styling).
+> As part of this the frame's a11y moved from the slotted SVG to the host.
 
 ## 7. Sizing
 
@@ -378,13 +389,14 @@ can be committed and shipped.
 2. **Commit the raw SVGs** into a source folder at the swc package root
    (`svg-source/ui/`; `svg-source/workflow/` for the workflow family).
 3. **Generator** converts committed SVGs per family: workflow into SVG-string
-   functions plus public per-icon elements; UI into Lit `svg` `TemplateResult`
-   bundles under `components/ui-icons/`, consumed by the internal `<swc-ui-icon>`
-   element (so components need no `unsafeSVG`).
-   Per-icon cleanup: SVGO with `removeViewBox: false`, strip `data-*`, prefix or
-   strip element ids, rewrite fill to `var(--swc-icon-color, currentColor)`, group
-   files by logical name (collapsing `Chevron50/75/100/200` into one `Chevron`), and
-   emit the size-to-step map.
+   functions plus public per-icon elements; UI into Lit `html` `TemplateResult`
+   bundles under `components/ui-icons/icon-set/`, consumed by the internal
+   `<swc-ui-icon>` element (so components need no `unsafeSVG`).
+   Per-icon cleanup: SVGO (`preset-default`, which keeps the `viewBox` in v4, plus
+   `removeDimensions` to drop `width`/`height`) and a rewrite of the A4U
+   `var(--iconPrimary, …)` fill to `var(--swc-icon-color, currentColor)`. Files are
+   grouped by the logical name parsed from the A4U filename
+   `S2_Icon_UI<Name>_Size<step>_N.svg`, keyed by numeral step.
 4. **Record pulled A4U versions** in `svg-source/icon-source.json`, alongside the
    committed SVGs (not in `package.json` dependencies).
 5. **Commit** SVGs, generated output, and metadata. External contributors and
@@ -392,9 +404,11 @@ can be committed and shipped.
 
 **Layout (POC).** UI source SVGs live at `2nd-gen/packages/swc/svg-source/ui/`, with
 `icon-source.json` alongside them in `svg-source/`. The generated bundles and the
-`<swc-ui-icon>` element live at `2nd-gen/packages/swc/components/ui-icons/` as an
-internal component, imported relatively by swc components rather than through a
-public subpath.
+`<swc-ui-icon>` element live at `2nd-gen/packages/swc/components/ui-icons/` (generated
+art in its `icon-set/` subfolder), imported relatively by swc components rather than
+through a public subpath. A dev-only
+Storybook gallery (Internal → UI icons) previews the available icons and their
+optical sizes; internal stories are excluded from the production build.
 
 **Styling (function vs element):** the SVG-string function returns markup only; it
 carries no stylesheet. The baseline display and sizing rules that live in today's
@@ -479,10 +493,12 @@ verified in Phase 7 against workflow icons and custom SVGs.
   **`@adobe/spectrum-wc-icons`** package (depends only on core); swc holds the
   components, the `<swc-icon>` frame, and the internal `<swc-ui-icon>` element, and
   devDepends on the icons package for Storybook examples.
-- **UI icon rendering:** an internal `<swc-ui-icon>` element (extends `IconBase`;
-  `icon` + `size` + `accessibleLabel`) rendering Lit `TemplateResult`s, in swc. This
+- **UI icon rendering:** an internal `<swc-ui-icon>` element (`icon` + `size` +
+  `accessibleLabel`) rendering Lit `TemplateResult`s, in `components/ui-icons/`. This
   resolves the earlier inline-vs-controller question and removes `unsafeSVG` from
-  component code.
+  component code. It extends the behavior-only `IconBase` (size + `accessibleLabel` +
+  host a11y); the `<swc-icon>` frame extends the same base, and both share
+  `stylesheets/_lit-styles/icon-base.css`.
 - **Frame placement:** the concrete `<swc-icon>` frame ships in **swc** with the
   components, not in the icons package, so consumers using swc components with their
   own or A4U icons need not depend on the workflow-icon art package. Because all
@@ -516,12 +532,12 @@ verified in Phase 7 against workflow icons and custom SVGs.
   `size` to the numeral step (section 7):
 
   ```ts
-  // Generated module for one logical icon = numeral step → Lit `svg` template.
-  // components/ui-icons/Chevron.js (internal, imported relatively)
+  // Generated module for one logical icon = numeral step → Lit `html` template.
+  // components/ui-icons/icon-set/Chevron.ts (internal, imported relatively)
   export const Chevron = {
-      75: svg`<svg viewBox="0 0 10 10">…</svg>`, // s
-      100: svg`<svg viewBox="0 0 12 12">…</svg>`, // m
-      200: svg`<svg viewBox="0 0 14 14">…</svg>`, // l
+      75: html`<svg viewBox="0 0 10 10">…</svg>`, // s
+      100: html`<svg viewBox="0 0 10 10">…</svg>`, // m
+      200: html`<svg viewBox="0 0 12 12">…</svg>`, // l
       // …one entry per available optical step
   } satisfies UiIconArt;
 
