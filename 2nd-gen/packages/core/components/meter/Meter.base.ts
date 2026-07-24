@@ -75,12 +75,6 @@ export abstract class MeterBase extends LinearProgressMixin(
         valid: constructor.VARIANTS,
         url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-meter--docs',
       });
-      // Unknown variant: fall back to the default so the reflected
-      // attribute and fill color always resolve to a valid variant.
-      // Normalizing in `willUpdate` (Lit's input-normalization hook) folds
-      // the change into the current cycle instead of scheduling a second
-      // reactive update.
-      this.variant = 'informative';
     }
     super.willUpdate(changes);
   }

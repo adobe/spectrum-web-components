@@ -114,16 +114,15 @@ export const VariantValidationTest: Story = {
       })
     );
 
-    await step('invalid variant warns and falls back to informative', () =>
+    await step('invalid variant warns', () =>
       withWarningSpy(async (warnCalls) => {
         meter.variant = 'invalid' as Meter['variant'];
         await meter.updateComplete;
         expect(warnCalls.length).toBeGreaterThan(0);
         expect(String(warnCalls[0]?.[1] ?? '')).toContain('variant');
-        // Unknown variant is sanitized to the default and reflected.
         await meter.updateComplete;
-        expect(meter.variant).toBe('informative');
-        expect(meter.getAttribute('variant')).toBe('informative');
+        expect(meter.variant).toBe('invalid');
+        expect(meter.getAttribute('variant')).toBe('invalid');
       })
     );
   },

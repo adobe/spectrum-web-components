@@ -82,67 +82,13 @@ export abstract class TabsBase extends SpectrumElement {
    * @see https://w3c.github.io/aria-practices/#kbd_selection_follows_focus
    */
   @property({ type: String, reflect: true, attribute: 'keyboard-activation' })
-  public get keyboardActivation(): KeyboardActivation {
-    return this._keyboardActivation;
-  }
-
-  public set keyboardActivation(value: string) {
-    const isValid = (KEYBOARD_ACTIVATIONS as readonly string[]).includes(value);
-
-    validateEnum(this, {
-      prop: 'keyboard-activation',
-      value,
-      valid: KEYBOARD_ACTIVATIONS,
-      url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-tabs--docs',
-    });
-
-    const valid = isValid
-      ? (value as KeyboardActivation)
-      : KEYBOARD_ACTIVATION_DEFAULT;
-
-    if (this._keyboardActivation === valid) {
-      return;
-    }
-
-    const old = this._keyboardActivation;
-    this._keyboardActivation = valid;
-    this.requestUpdate('keyboardActivation', old);
-  }
-
-  /** @internal */
-  private _keyboardActivation: KeyboardActivation = KEYBOARD_ACTIVATION_DEFAULT;
+  public keyboardActivation: KeyboardActivation = KEYBOARD_ACTIVATION_DEFAULT;
 
   /**
    * Layout density: `regular` (default) or `compact` (reduced tab spacing).
    */
   @property({ type: String, reflect: true })
-  public get density(): TabDensity {
-    return this._density;
-  }
-
-  public set density(value: string) {
-    const isValid = (TAB_DENSITIES as readonly string[]).includes(value);
-
-    validateEnum(this, {
-      prop: 'density',
-      value,
-      valid: TAB_DENSITIES,
-      url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-tabs--docs',
-    });
-
-    const valid = isValid ? (value as TabDensity) : TAB_DENSITY_DEFAULT;
-
-    if (this._density === valid) {
-      return;
-    }
-
-    const old = this._density;
-    this._density = valid;
-    this.requestUpdate('density', old);
-  }
-
-  /** @internal */
-  private _density: TabDensity = TAB_DENSITY_DEFAULT;
+  public density: TabDensity = TAB_DENSITY_DEFAULT;
 
   /**
    * The layout direction of the tab list.
@@ -153,35 +99,7 @@ export abstract class TabsBase extends SpectrumElement {
    * @default 'horizontal'
    */
   @property({ type: String, reflect: true })
-  public get direction(): TabsDirection {
-    return this._direction;
-  }
-
-  public set direction(value: TabsDirection) {
-    const isValid = (TABS_DIRECTIONS as readonly string[]).includes(value);
-
-    validateEnum(this, {
-      prop: 'direction',
-      value,
-      valid: TABS_DIRECTIONS,
-      url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-tabs--docs',
-    });
-
-    const validDirection = isValid
-      ? (value as TabsDirection)
-      : TABS_DEFAULT_DIRECTION;
-
-    if (this._direction === validDirection) {
-      return;
-    }
-
-    const oldDirection = this._direction;
-    this._direction = validDirection;
-    this.requestUpdate('direction', oldDirection);
-  }
-
-  /** @internal */
-  private _direction: TabsDirection = TABS_DEFAULT_DIRECTION;
+  public direction: TabsDirection = TABS_DEFAULT_DIRECTION;
 
   /**
    * Whether the entire tab list is disabled. When `true`,
@@ -357,7 +275,7 @@ export abstract class TabsBase extends SpectrumElement {
   private getNavigationDelta(code: string): number | null {
     const isRtl = this.dir === 'rtl';
 
-    if (this._direction === 'horizontal') {
+    if (this.direction === 'horizontal') {
       if (code === 'ArrowRight') {
         return isRtl ? -1 : 1;
       }
@@ -412,7 +330,7 @@ export abstract class TabsBase extends SpectrumElement {
       return;
     }
 
-    if (this._keyboardActivation === 'automatic' && !tab.disabled) {
+    if (this.keyboardActivation === 'automatic' && !tab.disabled) {
       this.selectTarget(tab);
     }
 
@@ -558,7 +476,7 @@ export abstract class TabsBase extends SpectrumElement {
     const tabRect = selectedElement.getBoundingClientRect();
     const listRect = tablist.getBoundingClientRect();
 
-    if (this._direction === 'horizontal') {
+    if (this.direction === 'horizontal') {
       const isRtl = getComputedStyle(this).direction === 'rtl';
       const offset = isRtl
         ? tabRect.right - listRect.right
@@ -598,6 +516,30 @@ export abstract class TabsBase extends SpectrumElement {
   // ───────────────────────────────────
 
   protected override willUpdate(changes: PropertyValues): void {
+    // Warn-only enum validation, before render. Invalid values are left in
+    // place (not coerced); the union types are the compile-time guardrail and
+    // these warnings are the runtime backstop for attribute / plain-JS writes.
+    const url =
+      'https://spectrum-web-components.adobe.com/?path=/docs/components-tabs--docs';
+    validateEnum(this, {
+      prop: 'direction',
+      value: this.direction,
+      valid: TABS_DIRECTIONS,
+      url,
+    });
+    validateEnum(this, {
+      prop: 'keyboard-activation',
+      value: this.keyboardActivation,
+      valid: KEYBOARD_ACTIVATIONS,
+      url,
+    });
+    validateEnum(this, {
+      prop: 'density',
+      value: this.density,
+      valid: TAB_DENSITIES,
+      url,
+    });
+
     if (!this.hasUpdated) {
       const selectedChild = this.querySelector(
         ':scope > [selected]'
@@ -617,21 +559,21 @@ export abstract class TabsBase extends SpectrumElement {
 
       const previousValue = changes.get('selected') as string | undefined;
       if (previousValue) {
-        const previous = this.querySelector(
+        const previousPanel = this.querySelector(
           `[role="tabpanel"][tab-id="${previousValue}"]`
         ) as TabPanelLike | null;
 
-        if (previous) {
-          previous.selected = false;
+        if (previousPanel) {
+          previousPanel.selected = false;
         }
       }
 
-      const next = this.querySelector(
+      const selectedPanel = this.querySelector(
         `[role="tabpanel"][tab-id="${this.selected}"]`
       ) as TabPanelLike | null;
 
-      if (next) {
-        next.selected = true;
+      if (selectedPanel) {
+        selectedPanel.selected = true;
       }
 
       this.updateSelectionIndicator();
