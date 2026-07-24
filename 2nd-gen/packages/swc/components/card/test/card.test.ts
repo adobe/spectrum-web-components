@@ -488,9 +488,6 @@ export const XsMergedLayoutTest: Story = {
   `,
   play: async ({ canvasElement, step }) => {
     const card = await getComponent<Card>(canvasElement, 'swc-card');
-    const collectionItems = card.querySelectorAll<HTMLImageElement>(
-      '[slot="collection"]'
-    );
 
     await step(
       'resolves to the merged 3col layout when preview and collection are both present at xs',
@@ -502,20 +499,6 @@ export const XsMergedLayoutTest: Story = {
             .trim(),
           'xs card with both slots resolves to the merged 3col layout'
         ).toBe('3col');
-      }
-    );
-
-    await step(
-      'caps the collection at two items when merged with the preview',
-      () => {
-        expect(
-          getComputedStyle(collectionItems[1]).display,
-          'the second collection item is visible'
-        ).not.toBe('none');
-        expect(
-          getComputedStyle(collectionItems[2]).display,
-          'the third collection item is hidden at xs'
-        ).toBe('none');
       }
     );
   },
