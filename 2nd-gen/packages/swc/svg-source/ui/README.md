@@ -16,41 +16,44 @@ pipeline.
 
 ## Naming convention
 
-One file per optical step, named `<LogicalName><numeralStep>.svg` in PascalCase:
+Upload the raw A4U files unchanged; the generator parses the native A4U filename:
+
+`S2_Icon_UI<LogicalName>_Size<numeralStep>_N.svg`
 
 ```
-Chevron50.svg
-Chevron75.svg
-Chevron100.svg
-Chevron200.svg
-Chevron300.svg
-Checkmark75.svg
-Checkmark100.svg
+S2_Icon_UIChevron_Size50_N.svg
+S2_Icon_UIChevron_Size75_N.svg
+S2_Icon_UIChevron_Size100_N.svg
+S2_Icon_UIChevron_Size200_N.svg
+S2_Icon_UIChevron_Size300_N.svg
 …
 ```
 
-The generator groups files by logical name (collapsing `Chevron50/75/100/200/300`
-into a single `Chevron` bundle) and emits the numeral-step-to-size map.
+The generator groups files by `<LogicalName>` (collapsing all steps into one
+`Chevron` bundle keyed by numeral step). The `icon` attribute value the component
+uses is the kebab-case logical name (`chevron`, `corner-triangle`, `drag-handle`).
 
 ### Numeral step to t-shirt size
 
 | Numeral step | `size` |
-| --- | --- |
-| 50 | `xs` |
-| 75 | `s` |
-| 100 | `m` |
-| 200 | `l` |
-| 300 | `xl` |
+| ------------ | ------ |
+| 50           | `xs`   |
+| 75           | `s`    |
+| 100          | `m`    |
+| 200          | `l`    |
+| 300          | `xl`   |
 
 Not every logical icon ships every step; the element falls back to the nearest
 available step.
 
-## What the generator will do with these (later)
+## What the generator does with these
 
-- Clean each SVG (SVGO with `removeViewBox: false`, strip `data-*`, prefix or strip
-  ids), rewrite `fill` to `var(--swc-icon-color, currentColor)`, and keep a tight,
-  square `viewBox`.
-- Emit per-logical-icon Lit `svg` `TemplateResult` bundles to
-  `../../components/ui-icons/`.
+Run `yarn generate:ui-icons` (from the swc package) after adding or updating SVGs.
+
+- Cleans each SVG with SVGO (`preset-default` keeps the `viewBox`; `removeDimensions`
+  drops `width`/`height` so the element sizes the box) and rewrites the A4U
+  `var(--iconPrimary, …)` fill to `var(--swc-icon-color, currentColor)`.
+- Emits per-logical-icon Lit `html` `TemplateResult` bundles to
+  `../../components/ui-icons/icon-set/` (one `<Name>.ts` per icon, plus `index.ts`).
 - The internal `<swc-ui-icon>` element (`icon`, `size`, `accessibleLabel`) maps
   `size` to the numeral step and renders the matching template, with no `unsafeSVG`.
