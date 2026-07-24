@@ -1,22 +1,29 @@
-# UI icons (internal component)
+# UI icons (internal)
 
-The internal UI-icon component and its generated art. Not published for consumers;
-consumed by other swc components to render control internals (chevrons, checkmarks,
-arrows).
+The internal UI icon set: chevrons, checkmarks, arrows, and other control
+internals. Not published for consumers; consumed by other swc components through the
+`<swc-ui-icon>` element.
 
 Contents:
 
-- **`<swc-ui-icon>` element** (added in the functional phase): extends `IconBase`,
-  takes `icon`, `size`, and `accessibleLabel`, maps `size` to the numeral step, and
-  renders the matching template with no `unsafeSVG`.
-- **Generated per-logical-icon bundles** (added by the generator): each exports a
-  numeral-step to Lit `svg` `TemplateResult` map for one logical icon (for example
-  `Chevron`). **Generated: do not hand-edit.**
+- **`<swc-ui-icon>` element** (`UiIcon.ts` + `swc-ui-icon.ts`): takes `icon`, `size`,
+  and `accessible-label`; maps the size to the numeral optical step and renders the
+  matching template (no `unsafeSVG`). Host owns a11y: labeled → `role="img"`,
+  unlabeled → `aria-hidden`.
+- **`icon-set/`** — generated per-logical-icon bundles (`icon-set/<Name>.ts`), each a
+  numeral-step to Lit `html` `TemplateResult` map for one logical icon (for example
+  `Chevron`). `icon-set/index.ts` is the `UI_ICONS` registry, keyed by the kebab-case
+  `icon` name. **Generated: do not hand-edit.**
+- **`ui-icons.types.ts`** (hand-authored): `UiStep`, `UiIconArt`, `SIZE_TO_STEP`, and
+  `uiStepFor`.
 
 Source and generation:
 
-- Built from `../../svg-source/ui/` by the icon generator (a later step).
+- `icon-set/` is built from `../../svg-source/ui/` by `yarn generate:ui-icons`.
 - The A4U set version is recorded in `../../svg-source/icon-source.json`.
 
-This folder holds only this README until the generator and element land; functional
-code is a later step.
+Preview:
+
+- The available icons and their optical sizes render in dev Storybook under
+  **UI icons** (`stories/ui-icons.internal.stories.ts`, `ui-icons.internal.mdx`).
+  The `.internal.*` files are excluded from the production Storybook build.
