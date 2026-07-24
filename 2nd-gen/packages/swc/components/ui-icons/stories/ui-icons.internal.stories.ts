@@ -96,7 +96,7 @@ export const Playground: Story = {
   args: {
     icon: 'chevron',
     size: 'm',
-    accessibleLabel: 'Chevron',
+    'accessible-label': 'Chevron',
   },
 };
 
@@ -109,7 +109,7 @@ export const Overview: Story = {
   args: {
     icon: 'chevron',
     size: 'm',
-    accessibleLabel: 'Chevron',
+    'accessible-label': 'Chevron',
   },
 };
 
@@ -122,7 +122,12 @@ export const AvailableIcons: Story = {
     ${ICON_NAMES.map(
       (name) => html`
         <div style=${styleMap(cardStyles)}>
-          ${template({ ...args, icon: name, size: 'm', accessibleLabel: name })}
+          ${template({
+            ...args,
+            icon: name,
+            size: 'm',
+            'accessible-label': name,
+          })}
           <code>${name}</code>
         </div>
       `
@@ -142,7 +147,7 @@ export const OpticalSizes: Story = {
             ...args,
             icon: 'chevron',
             size,
-            accessibleLabel: `Chevron ${sizeLabels[size]}`,
+            'accessible-label': `Chevron ${sizeLabels[size]}`,
           })}
           <code>${size}</code>
         </div>

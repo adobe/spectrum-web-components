@@ -89,7 +89,7 @@ export const Playground: Story = {
   tags: ['dev'],
   render: (args) => template(args, iconSvg),
   args: {
-    accessibleLabel: 'Search',
+    'accessible-label': 'Search',
     size: 'm',
   },
 };
@@ -102,7 +102,7 @@ export const Overview: Story = {
   tags: ['overview'],
   render: (args) => template(args, iconSvg),
   args: {
-    accessibleLabel: 'Search',
+    'accessible-label': 'Search',
     size: 'm',
   },
 };
@@ -114,7 +114,10 @@ export const Overview: Story = {
 export const Anatomy: Story = {
   render: (args) =>
     template(
-      { ...args, accessibleLabel: args.accessibleLabel || 'Chevron icon' },
+      {
+        ...args,
+        'accessible-label': args['accessible-label'] || 'Chevron icon',
+      },
       iconSvg
     ),
   tags: ['anatomy'],
@@ -130,7 +133,7 @@ export const Sizes: Story = {
       template(
         {
           ...args,
-          accessibleLabel: args.accessibleLabel || sizeLabels[size],
+          'accessible-label': args['accessible-label'] || sizeLabels[size],
           size,
         },
         iconSvg
@@ -146,7 +149,10 @@ export const Sizes: Story = {
 export const Sources: Story = {
   render: (args) =>
     template(
-      { ...args, accessibleLabel: args.accessibleLabel || 'Chevron icon' },
+      {
+        ...args,
+        'accessible-label': args['accessible-label'] || 'Chevron icon',
+      },
       iconSvg
     ),
   tags: ['options'],
@@ -155,7 +161,7 @@ export const Sources: Story = {
 export const SharedTemplates: Story = {
   render: (args) =>
     template(
-      { ...args, accessibleLabel: args.accessibleLabel || 'Chevron' },
+      { ...args, 'accessible-label': args['accessible-label'] || 'Chevron' },
       Chevron100Icon()
     ),
   tags: ['options'],
@@ -179,7 +185,10 @@ export const AvailableIcons: Story = {
         (entry) => html`
           <div style=${styleMap(iconCardStyles)}>
             ${template(
-              { ...args, accessibleLabel: args.accessibleLabel || entry.name },
+              {
+                ...args,
+                'accessible-label': args['accessible-label'] || entry.name,
+              },
               entry.icon
             )}
             <code>${entry.name}</code>
