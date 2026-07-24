@@ -228,6 +228,14 @@ const collectionCards = [
     {},
     html`
       ${collectionPreviewImage} ${previewImage('collection')}
+      ${previewImage('collection')}
+      <span slot="title">Two collection items</span>
+    `
+  ),
+  renderCard(
+    {},
+    html`
+      ${collectionPreviewImage} ${previewImage('collection')}
       ${previewImage('collection')} ${previewImage('collection')}
       <span slot="title">Three collection items</span>
     `
@@ -279,6 +287,13 @@ const galleryCards = [
     html`
       ${previewImage('collection')} ${previewImage('collection')}
       ${previewImage('collection')}
+    `
+  ),
+  renderCard(
+    {},
+    html`
+      ${previewImage()} ${previewImage('collection')}
+      ${previewImage('collection')} ${previewImage('collection')}
     `
   ),
   renderCard(
