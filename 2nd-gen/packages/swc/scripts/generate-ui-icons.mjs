@@ -20,11 +20,10 @@
  *
  * Run with `yarn generate:ui-icons`. Regenerate whenever the source SVGs change.
  */
+import { globSync } from 'glob';
 import { mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-
-import { globSync } from 'glob';
 import { optimize } from 'svgo';
 
 const scriptDir = path.dirname(fileURLToPath(import.meta.url));
