@@ -34,10 +34,17 @@ export interface CardTemplateOptions {
 
   /**
    * Whether the default (unnamed) slot has assigned content. Applies the
-   * `hasDefault` class, driven by `CardBase`'s `ObserveSlotText` mixin.
+   * `hasDefault` class, driven by `CardBase`'s `SlotTextController`.
    * Default: false.
    */
   hasDefaultSlotContent?: boolean;
+
+  /**
+   * Bound to the default slot's `slotchange` event so `CardBase`'s
+   * `SlotTextController` re-evaluates default-slot content after the first
+   * render. Pass `this.slotText.handleSlotChange`. Default: none.
+   */
+  onDefaultSlotChange?: (event: Event) => void;
 }
 
 /**
@@ -53,6 +60,7 @@ export function renderCardTemplate({
   renderGlyph = () => nothing,
   renderMedia = () => nothing,
   hasDefaultSlotContent = false,
+  onDefaultSlotChange,
 }: CardTemplateOptions): TemplateResult {
   return html`
     <div
@@ -71,7 +79,7 @@ export function renderCardTemplate({
         <slot name="title"></slot>
         <slot name="actions"></slot>
         <slot name="description"></slot>
-        <slot></slot>
+        <slot @slotchange=${onDefaultSlotChange}></slot>
       </div>
       <footer class="swc-CardBase-footer swc-${cardClass}-footer">
         <slot name="footer"></slot>

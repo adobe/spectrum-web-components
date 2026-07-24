@@ -35,6 +35,7 @@ export class TestCardBase extends CardBase {
     return renderCardTemplate({
       cardClass: 'TestCardBase',
       hasDefaultSlotContent: this.slotHasContent,
+      onDefaultSlotChange: this.slotText.handleSlotChange,
     });
   }
 }

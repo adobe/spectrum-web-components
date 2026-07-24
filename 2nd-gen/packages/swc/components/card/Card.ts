@@ -59,6 +59,7 @@ export class Card extends CardBase {
     return renderCardTemplate({
       cardClass: 'Card',
       hasDefaultSlotContent: this.slotHasContent,
+      onDefaultSlotChange: this.slotText.handleSlotChange,
       renderCollection: () => html`
         <div class="swc-Card-collection"><slot name="collection"></slot></div>
       `,

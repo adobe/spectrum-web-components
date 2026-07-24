@@ -349,8 +349,8 @@ export const DefaultSlotClassUpdatesDynamicallyTest: Story = {
       'test-card-base'
     );
     const wrapper = card.renderRoot.querySelector('.swc-CardBase');
-    // ObserveSlotText's MutationController fires as a microtask; a
-    // requestAnimationFrame tick reliably runs after it has resolved.
+    // SlotTextController re-evaluates on slotchange / characterData as a
+    // microtask; a requestAnimationFrame tick reliably runs after it resolves.
     const waitForMutation = () =>
       new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
 
