@@ -10,6 +10,10 @@
  * governing permissions and limitations under the License.
  */
 
+// Data-driven Spectrum Web Components rules, authored in TypeScript under `src/`
+// and compiled to `dist/` by the package `build` script (run on install via the
+// root `postinstall`). See `src/index.ts` for the rule and preset definitions.
+import { rules as componentRules } from './dist/index.js';
 import { createFixerForShebang, resolveOptions } from './notice-utils.js';
 
 /** @type {import('eslint').ESLint.Plugin} */
@@ -19,6 +23,11 @@ const swcPlugin = {
     version: '1.0.0',
   },
   rules: {
+    // Data-driven rules ported from eslint-plugin-spectrum-wc: accessible-component,
+    // no-deprecated, required-attributes, valid-attribute-values, valid-slot-names,
+    // valid-slot-children. Registered here but not enabled by default in the repo's
+    // root eslint.config.js.
+    ...componentRules,
     'notice-after-shebang': {
       meta: {
         type: 'layout',

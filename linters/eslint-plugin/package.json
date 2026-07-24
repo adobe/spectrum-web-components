@@ -2,7 +2,7 @@
   "name": "@spectrum-web-components/eslint-plugin",
   "version": "1.12.2",
   "private": true,
-  "description": "ESLint plugin for Spectrum Web Components (prevent-argument-names, document-active-element)",
+  "description": "ESLint plugin for Spectrum Web Components: notice/argument-name/document-active-element rules plus data-driven accessibility, deprecation, attribute, and slot validation for sp-* usage in Lit and JSX.",
   "license": "Apache-2.0",
   "author": "Adobe",
   "homepage": "https://opensource.adobe.com/spectrum-web-components/",
@@ -23,14 +23,42 @@
     "./notice-utils": {
       "import": "./notice-utils.js",
       "default": "./notice-utils.js"
+    },
+    "./configs": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
     }
   },
   "main": "index.js",
   "files": [
     "index.js",
-    "notice-utils.js"
+    "notice-utils.js",
+    "dist"
   ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "prepare": "yarn build",
+    "clean": "rimraf dist",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "peerDependencies": {
+    "eslint": ">=8.0.0"
+  },
+  "dependencies": {
+    "parse5": "^7.3.0"
+  },
+  "devDependencies": {
+    "@types/node": "24.10.13",
+    "@typescript-eslint/rule-tester": "^8.54.0",
+    "@typescript-eslint/utils": "^8.54.0",
+    "typescript": "5.9.2",
+    "vitest": "^4.1.7"
+  },
   "keywords": [
+    "eslint",
+    "eslintplugin",
     "design-system",
     "spectrum",
     "adobe",
@@ -38,6 +66,9 @@
     "web components",
     "web-components",
     "lit-element",
-    "lit-html"
+    "lit-html",
+    "jsx",
+    "accessibility",
+    "a11y"
   ]
 }

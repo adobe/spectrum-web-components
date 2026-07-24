@@ -31,7 +31,7 @@
     "lint:eslint": "echo 'Linting with ESLint...' && eslint ${LINT_PATH:-.} --cache",
     "lint:prettier": "echo 'Linting with Prettier...' && prettier ${LINT_PATH:-.} --cache --check",
     "lint:styles": "echo 'Linting with Stylelint...' && stylelint '${LINT_PATH:+$LINT_PATH/**/*.css}${LINT_PATH:-**/*.css}' --cache --allow-empty-input",
-    "postinstall": "husky || true",
+    "postinstall": "husky || true && yarn workspace @spectrum-web-components/eslint-plugin build",
     "publish": "node ./scripts/publish.js",
     "publish:snapshot": "node ./scripts/publish.js --tag snapshot",
     "start": "run-p start:2nd-gen start:1st-gen",

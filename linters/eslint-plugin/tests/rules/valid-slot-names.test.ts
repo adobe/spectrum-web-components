@@ -1,0 +1,91 @@
+/**
+ * Copyright 2026 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+import { RuleTester } from '@typescript-eslint/rule-tester';
+import { afterAll, describe, it } from 'vitest';
+
+import { validSlotNames } from '../../src/rules/valid-slot-names.js';
+
+RuleTester.afterAll = afterAll;
+RuleTester.describe = describe;
+RuleTester.it = it;
+
+const ruleTester = new RuleTester({
+  languageOptions: {
+    ecmaVersion: 2022,
+    sourceType: 'module',
+  },
+});
+
+ruleTester.run('valid-slot-names', validSlotNames as never, {
+  valid: [
+    // sp-action-menu with valid default slot children
+    {
+      code: 'const t = html`<sp-action-menu label="Actions"><sp-menu-item>Edit</sp-menu-item></sp-action-menu>`;',
+    },
+    // sp-action-menu with valid named slot
+    {
+      code: 'const t = html`<sp-action-menu label="Actions"><sp-icon slot="icon"></sp-icon></sp-action-menu>`;',
+    },
+    // sp-action-menu with tooltip slot
+    {
+      code: 'const t = html`<sp-action-menu label="Actions"><sp-tooltip slot="tooltip">Help</sp-tooltip></sp-action-menu>`;',
+    },
+    // sp-picker with valid default slot children
+    {
+      code: 'const t = html`<sp-picker label="Choose"><sp-menu-item>Option A</sp-menu-item></sp-picker>`;',
+    },
+    // sp-tabs with valid children
+    {
+      code: 'const t = html`<sp-tabs accessible-label="Nav"><sp-tab>Tab 1</sp-tab><sp-tab-panel>Content</sp-tab-panel></sp-tabs>`;',
+    },
+    // sp-button with icon slot
+    {
+      code: 'const t = html`<sp-button><sp-icon slot="icon"></sp-icon>Click</sp-button>`;',
+    },
+    // Non-SWC parent element (no slot validation)
+    {
+      code: 'const t = html`<div><sp-button slot="footer">OK</sp-button></div>`;',
+    },
+    // Element without slots descriptor
+    {
+      code: 'const t = html`<sp-progress-bar aria-label="Loading"></sp-progress-bar>`;',
+    },
+  ],
+  invalid: [
+    // sp-action-menu with invalid slot name
+    {
+      code: 'const t = html`<sp-action-menu label="Actions"><sp-menu-item slot="header">Edit</sp-menu-item></sp-action-menu>`;',
+      errors: [{ messageId: 'invalidSlot' }],
+    },
+    // sp-action-menu with another invalid slot
+    {
+      code: 'const t = html`<sp-action-menu label="Actions"><sp-icon slot="footer"></sp-icon></sp-action-menu>`;',
+      errors: [{ messageId: 'invalidSlot' }],
+    },
+    // sp-picker with invalid slot
+    {
+      code: 'const t = html`<sp-picker label="Choose"><sp-menu-item slot="actions">Option</sp-menu-item></sp-picker>`;',
+      errors: [{ messageId: 'invalidSlot' }],
+    },
+    // sp-button with invalid slot name
+    {
+      code: 'const t = html`<sp-button><sp-icon slot="prefix"></sp-icon>Click</sp-button>`;',
+      errors: [{ messageId: 'invalidSlot' }],
+    },
+    // sp-tabs with invalid slot
+    {
+      code: 'const t = html`<sp-tabs accessible-label="Nav"><sp-tab slot="header">Tab 1</sp-tab></sp-tabs>`;',
+      errors: [{ messageId: 'invalidSlot' }],
+    },
+  ],
+});
