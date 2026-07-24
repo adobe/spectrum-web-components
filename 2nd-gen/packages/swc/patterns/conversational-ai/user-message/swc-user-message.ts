@@ -11,6 +11,8 @@
  */
 import { defineElement } from '@adobe/spectrum-wc-core/element/index.js';
 
+import './user-message-attachment/index.js';
+
 import { UserMessage } from './UserMessage.js';
 
 declare global {

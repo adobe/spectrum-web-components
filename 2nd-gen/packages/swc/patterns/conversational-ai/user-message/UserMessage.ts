@@ -101,6 +101,7 @@ export class UserMessage extends SpectrumElement {
         attributes: true,
         attributeFilter: ['type'],
         childList: true,
+        subtree: true,
       },
       callback: () => {
         this._routeAttachments();
@@ -137,13 +138,19 @@ export class UserMessage extends SpectrumElement {
       (element): element is UserMessageAttachment =>
         this._isAttachmentElement(element)
     );
-    const mediaAttachments = attachments.filter((el) => el.type !== 'card');
-    const cardAttachments = attachments.filter((el) => el.type === 'card');
+    const mediaAttachments = attachments.filter(
+      (el) => el.getAttribute('type') !== 'card'
+    );
+    const cardAttachments = attachments.filter(
+      (el) => el.getAttribute('type') === 'card'
+    );
     const hasOverflow = mediaAttachments.length > VISIBLE_MEDIA_COUNT;
 
     for (const el of attachments) {
       const targetSlot =
-        el.type === 'card' ? 'attachment-card' : 'attachment-media';
+        el.getAttribute('type') === 'card'
+          ? 'attachment-card'
+          : 'attachment-media';
       if (el.getAttribute('slot') !== targetSlot) {
         el.setAttribute('slot', targetSlot);
       }
@@ -179,7 +186,8 @@ export class UserMessage extends SpectrumElement {
     hasOverflow: boolean
   ): void {
     const visible = mediaAttachments.filter(
-      (_el, index) => !(hasOverflow && !this.open && index >= VISIBLE_MEDIA_COUNT)
+      (_el, index) =>
+        !(hasOverflow && !this.open && index >= VISIBLE_MEDIA_COUNT)
     );
     const total = visible.length;
     const columnCount = Math.max(1, Math.min(total, VISIBLE_MEDIA_COUNT));
