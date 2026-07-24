@@ -162,7 +162,7 @@ export class UserMessageAttachment extends SpectrumElement {
   protected override render(): TemplateResult {
     return html`
       <div class="swc-UserMessageAttachment">
-        ${this.type === 'card'
+        ${this.getAttribute('type') === 'card'
           ? this._renderCardSurface()
           : this._renderMediaSurface()}
       </div>
