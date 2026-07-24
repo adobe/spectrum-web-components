@@ -68,6 +68,22 @@ export class SpectrumElement extends SpectrumMixin(LitElement) {
   }
 }
 
+/**
+ * Builds the deduplication key for a dev-mode warning. The `message` is part of
+ * the key so two distinct problems that share a `type`/`level` (the common
+ * case) do not suppress each other; only a verbatim repeat of the same warning
+ * is deduplicated. Exported so the dedup key can be unit tested without relying
+ * on the `NODE_ENV`-gated `window.__swc` setup below.
+ */
+export function warningId(
+  localName: string,
+  type: WarningType,
+  level: WarningLevel,
+  message: string
+): BrandedSWCWarningID {
+  return `${localName}:${type}:${level}:${message}` as BrandedSWCWarningID;
+}
+
 if (process.env.NODE_ENV === 'development') {
   const ignoreWarningTypes = {
     default: false,
@@ -103,11 +119,7 @@ if (process.env.NODE_ENV === 'development') {
       { type = 'api', level = 'default', issues } = {}
     ): void => {
       const { localName = 'base' } = element || {};
-      // Message is part of the dedup key so two distinct problems that share
-      // a type/level (the common case) don't suppress each other. Only a
-      // verbatim repeat of the same warning is deduplicated.
-      const id =
-        `${localName}:${type}:${level}:${message}` as BrandedSWCWarningID;
+      const id = warningId(localName, type, level, message);
       if (!window.__swc.verbose && window.__swc.issuedWarnings.has(id)) {
         return;
       }
