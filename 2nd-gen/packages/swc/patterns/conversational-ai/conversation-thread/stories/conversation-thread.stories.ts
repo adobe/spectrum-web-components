@@ -132,10 +132,51 @@ type DemoArtifact = {
   id: string;
   title: string;
   subtitle: string;
-  /** Present only for image uploads; used to render `type="media"` in the thread. */
+  /** Image preview URL when the attachment is a visual file. */
   thumbnailUrl?: string;
   objectUrl?: string;
+  /** File-type label for non-image media tiles (for example, "PDF"). */
+  badge?: string;
 };
+
+const getFileBadge = (fileName: string): string | undefined => {
+  const match = fileName.toLowerCase().match(/\.([a-z0-9]+)$/);
+  if (!match) {
+    return 'FILE';
+  }
+
+  const extension = match[1];
+  if (/^(png|jpe?g|gif|webp|bmp|svg|avif)$/.test(extension)) {
+    return undefined;
+  }
+
+  if (extension === 'pdf') {
+    return 'PDF';
+  }
+
+  return extension.toUpperCase();
+};
+
+const renderDemoArtifactThumbnail = (
+  artifact: DemoArtifact
+): ReturnType<typeof html> =>
+  artifact.thumbnailUrl
+    ? html`
+        <img
+          slot="thumbnail"
+          src=${artifact.thumbnailUrl}
+          alt=${artifact.title}
+          style="inline-size:100%;block-size:100%;object-fit:cover;"
+        />
+      `
+    : html`
+        <div
+          slot="thumbnail"
+          role="img"
+          aria-label=${artifact.title}
+          style="inline-size:100%;block-size:100%;background:#f3f3f3;"
+        ></div>
+      `;
 
 type DemoTurn = {
   id: string;
@@ -341,12 +382,15 @@ class ConversationFullPatternDemo extends LitElement {
         typeof file.size === 'number'
           ? `${Math.max(1, Math.round(file.size / 1024))} KB`
           : 'Attachment';
+      const fileName = file.name || 'Attachment';
+
       return {
         id: uniqueId(`artifact-${index}`),
-        title: file.name || 'Attachment',
+        title: fileName,
         subtitle: sizeLabel,
         thumbnailUrl: objectUrl,
         objectUrl,
+        badge: isImage ? undefined : getFileBadge(fileName),
       } satisfies DemoArtifact;
     });
 
@@ -427,31 +471,16 @@ class ConversationFullPatternDemo extends LitElement {
     return this.turns.map((turn) => {
       if (turn.role === 'user') {
         return html`
-          ${(turn.artifacts ?? []).map((artifact) =>
-            artifact.thumbnailUrl
-              ? html`
-                  <swc-conversation-turn type="user">
-                    <swc-user-message type="media">
-                      <img
-                        slot="thumbnail"
-                        src=${artifact.thumbnailUrl}
-                        alt=${artifact.title}
-                        style="inline-size:100%;block-size:100%;object-fit:cover;"
-                      />
-                      <span slot="title">${artifact.title}</span>
-                      <span slot="subtitle">${artifact.subtitle}</span>
-                    </swc-user-message>
-                  </swc-conversation-turn>
-                `
-              : html`
-                  <swc-conversation-turn type="user">
-                    <swc-user-message type="card">
-                      <div slot="thumbnail" role="img" aria-label="File"></div>
-                      <span slot="title">${artifact.title}</span>
-                      <span slot="subtitle">${artifact.subtitle}</span>
-                    </swc-user-message>
-                  </swc-conversation-turn>
-                `
+          ${(turn.artifacts ?? []).map(
+            (artifact) => html`
+              <swc-conversation-turn type="user">
+                <swc-user-message type="media">
+                  ${renderDemoArtifactThumbnail(artifact)}
+                  <span slot="title">${artifact.title}</span>
+                  <span slot="subtitle">${artifact.subtitle}</span>
+                </swc-user-message>
+              </swc-conversation-turn>
+            `
           )}
           ${turn.text
             ? html`
@@ -535,32 +564,16 @@ class ConversationFullPatternDemo extends LitElement {
       (artifact) => html`
         <swc-upload-artifact
           slot="artifact"
-          type=${artifact.thumbnailUrl ? 'media' : 'card'}
+          type="media"
           dismissible
           data-artifact-id=${artifact.id}
         >
-          ${artifact.thumbnailUrl
+          ${renderDemoArtifactThumbnail(artifact)}
+          ${artifact.badge
             ? html`
-                <img
-                  slot="thumbnail"
-                  src=${artifact.thumbnailUrl}
-                  alt=${artifact.title}
-                  style="inline-size:100%;block-size:100%;object-fit:cover;"
-                />
+                <span slot="badge">${artifact.badge}</span>
               `
-            : html`
-                <div
-                  slot="thumbnail"
-                  role="img"
-                  aria-label="File thumbnail"
-                ></div>
-              `}
-          ${artifact.thumbnailUrl
-            ? ''
-            : html`
-                <span slot="title">${artifact.title}</span>
-                <span slot="subtitle">${artifact.subtitle}</span>
-              `}
+            : ''}
         </swc-upload-artifact>
       `
     );
@@ -628,6 +641,15 @@ class ConversationFullPatternDemo extends LitElement {
             @swc-prompt-field-upload-click=${this.handleUploadClick}
           >
             ${this.renderArtifacts()}
+            <p slot="legal" class="swc-PromptField-legal-disclaimer">
+              Responses are generated using AI, and may be inaccurate. Check
+              before using.
+              <a
+                href="https://www.adobe.com/legal/licenses-terms/adobe-gen-ai-user-guidelines.html"
+              >
+                AI User Guidelines
+              </a>
+            </p>
           </swc-prompt-field>
           <input
             id=${this.fileInputId}
@@ -679,15 +701,24 @@ const fullPatternSource = `<div style="max-width:800px; margin:auto; padding:24p
   </swc-conversation-thread>
 
   <swc-prompt-field>
-    <swc-upload-artifact slot="artifact" type="card" dismissible>
+    <swc-upload-artifact slot="artifact" type="media" dismissible>
       <div
         slot="thumbnail"
         role="img"
-        aria-label="File thumbnail"
+        aria-label="Hilton commercial assets"
+        style="inline-size:100%;block-size:100%;background:#f3f3f3;"
       ></div>
-      <span slot="title">Hilton commercial assets</span>
-      <span slot="subtitle">2026</span>
+      <span slot="badge">PDF</span>
     </swc-upload-artifact>
+    <p slot="legal" class="swc-PromptField-legal-disclaimer">
+      Responses are generated using AI, and may be inaccurate. Check before
+      using.
+      <a
+        href="https://www.adobe.com/legal/licenses-terms/adobe-gen-ai-user-guidelines.html"
+      >
+        AI User Guidelines
+      </a>
+    </p>
   </swc-prompt-field>
 </div>`;
 

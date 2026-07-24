@@ -58,7 +58,16 @@ A minimal composition tree:
   </swc-conversation-turn>
 </swc-conversation-thread>
 
-<swc-prompt-field></swc-prompt-field>
+<swc-prompt-field>
+  <p slot="legal" class="swc-PromptField-legal-disclaimer">
+    Responses are generated using AI, and may be inaccurate. Check before using.
+    <a
+      href="https://www.adobe.com/legal/licenses-terms/adobe-gen-ai-user-guidelines.html"
+    >
+      AI User Guidelines
+    </a>
+  </p>
+</swc-prompt-field>
 ```
 
 ---
@@ -74,6 +83,8 @@ The composer surface where the user types a prompt and attaches files.
 #### `swc-prompt-field`
 
 Text input with built-in `default`, `loading`, and `generation-complete` modes. Emits submit, input, stop, and upload-click events so products can drive their own generation pipeline.
+
+The **`+`** button should open a menu with, at minimum, **Add from Adobe cloud storage** and **Attach files**. See [Upload action menu](/docs/patterns-conversational-ai-prompt-field--docs#upload-action-menu) for the full guidance.
 
 <Canvas
   of={PromptFieldStories.Overview}
@@ -93,10 +104,10 @@ Text input with built-in `default`, `loading`, and `generation-complete` modes. 
 
 #### `swc-upload-artifact`
 
-Renders a staged attachment inside `swc-prompt-field` before the message is sent. Supports `card` and `media` types and an optional `dismissible` affordance.
+Renders a staged attachment inside `swc-prompt-field` before the message is sent. Use one layout type per strip (`card` or `media`). For mixed image and document uploads, normalize to media tiles with thumbnails and optional badges.
 
 <Canvas
-  of={UploadArtifactStories.Overview}
+  of={UploadArtifactStories.MediaWithBadge}
   additionalActions={[
     {
       title: 'Component docs',

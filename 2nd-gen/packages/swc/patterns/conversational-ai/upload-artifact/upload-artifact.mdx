@@ -7,15 +7,32 @@ import * as UploadArtifactStories from './stories/upload-artifact.stories';
 
 <DocsHeader />
 
+## Usage
+
+Use **one artifact layout type per attachment strip**. Pick either:
+
+- **`type="card"`** — metadata-first files (title, subtitle, small thumbnail). Best when the strip is document-only and filenames or file types matter more than visual preview.
+- **`type="media"`** — square preview tiles, with an optional **`badge`** slot for file-type labels (for example, "PDF")
+
+Do not slot `card` and `media` artifacts together in the same prompt field or wrapping row.
+
+When a single upload batch mixes **images and documents**, normalize the whole strip to **`type="media"`**: use image previews in `thumbnail` for photos, and thumbnail plus **`badge`** for documents. Do not render images as `media` and documents as `card` in the same session.
+
+The tile's own accessible name and its Close button's accessible name ("Remove [file name].[file type]") derive automatically from the `title` slot's text content; set `accessible-label` / `dismiss-label` to override. This tile has no default `tabindex` of its own — `swc-prompt-field` manages roving `tabindex` and keyboard focus for tiles slotted into its `artifact` slot.
+
 ## Options
 
-### Multi artifact
+### Multi Card
 
-Multiple **`swc-upload-artifact`** nodes in a wrapping flex row, similar width to the prompt-field composer attachment strip, so card vs media spacing and wraps are easy to compare in isolation.
+Several card artifacts in one strip, similar width to the prompt-field composer attachment region.
 
-To see the same tiles inside **`swc-prompt-field`**, open **[Artifact](/docs/patterns-conversational-ai-prompt-field--docs#artifact)**.
+<Canvas of={UploadArtifactStories.MultiCard} />
 
-<Canvas of={UploadArtifactStories.MultiArtifact} />
+### Multi Media
+
+Several media tiles in one strip, with and without badge overlays.
+
+<Canvas of={UploadArtifactStories.MultiMedia} />
 
 ### Card
 
@@ -29,9 +46,15 @@ Media type uses a larger preview region without title and subtitle text.
 
 <Canvas of={UploadArtifactStories.Media} />
 
+### Media with badge
+
+Use `type="media"` with an optional `badge` slot when the preview needs a file-type label (for example, a document thumbnail with a bottom-left "PDF" tag).
+
+<Canvas of={UploadArtifactStories.MediaWithBadge} />
+
 ### Text overflow
 
-Title and subtitle truncate with an ellipsis when the artifact is narrower than the text. **Card** uses a compact row; **media** keeps the actions region visible while the title shrinks.
+Title and subtitle truncate with an ellipsis when the artifact is narrower than the text.
 
 <Canvas of={UploadArtifactStories.TextOverflow} />
 

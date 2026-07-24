@@ -14,7 +14,7 @@ A prompt field consists of:
 1. **Box**: white card container with shadow and 16px border radius.
 2. **Input area**: visible label + textarea.
 3. **Action bar**: upload trigger (left) and send/stop action (right).
-4. **Footer**: optional legal content rendered below the prompt surface.
+4. **Footer**: legal disclaimer rendered below the prompt surface. Required in product implementations.
 
 <Canvas of={PromptFieldStories.Anatomy} />
 
@@ -32,17 +32,31 @@ The send button enablement is derived internally from prompt content (value or a
 
 <Canvas of={PromptFieldStories.Modes} />
 
+### Legal disclaimer
+
+Every prompt field in production must include Legal-approved disclaimer copy below the composer. Slot your product's approved text into **`legal`** — wording, links, and locale are consumer-owned, not baked into the component.
+
+Apply the `.swc-PromptField-legal-disclaimer` class for default footer typography. `swc-prompt-field` logs a development warning when the `legal` slot is empty.
+
 ### Artifact
 
-Artifact layout is inferred from the **`artifact`** slot content and supports multiple mixed items:
+Artifact layout is inferred from the **`artifact`** slot content:
 
 - No slot content: no artifact region
-- **`swc-upload-artifact type="card"`**: file-style card artifact
-- **`swc-upload-artifact type="media"`**: media tile artifact
+- **`swc-upload-artifact type="card"`**: file-style card artifacts (one or more)
+- **`swc-upload-artifact type="media"`**: media tile artifacts (one or more, with or without badge)
 
-**Populate the attachment strip** by slotting **one `<swc-upload-artifact>` per file**, each with **`slot="artifact"`** (same slot name repeated). Mixed card + media entries wrap inside the composer like this story's first example.
+**Use one layout type per composer session** (`card` or `media`). Slot multiple artifacts of that same type — for example, several cards or several media tiles. Do not mix `card` and `media` in the same strip; `swc-prompt-field` logs a development warning when both are detected.
 
-For additional combinations, like narrow widths, ellipsis, or more tiles, see **[Multi-artifact](/docs/patterns-conversational-ai-upload-artifact--docs#multi-artifact)**.
+This rule is about **component layout**, not file MIME type. You can attach many files in one session as long as they share the same layout:
+
+- **Document-only uploads** where title and subtitle carry meaning → all **`type="card"`**
+- **Visual previews** (photos, storyboard frames) → all **`type="media"`**
+- **Mixed images and documents in one batch** → normalize to all **`type="media"`**: image previews in `thumbnail`, and document tiles with a preview or icon in `thumbnail` plus an optional **`badge`** (for example, "PDF"). See **[Media with badge](/docs/patterns-conversational-ai-upload-artifact--readme#media-with-badge)**.
+
+**Populate the attachment strip** by slotting **one `<swc-upload-artifact>` per file**, each with **`slot="artifact"`** (same slot name repeated).
+
+For additional card and media gallery examples, see **[Multi-card](/docs/patterns-conversational-ai-upload-artifact--docs#multi-card)** and **[Multi-media](/docs/patterns-conversational-ai-upload-artifact--docs#multi-media)**.
 
 Upload button behavior:
 
@@ -52,6 +66,23 @@ Upload button behavior:
 Artifacts own dismiss behavior via **`dismissible`** and emit **`swc-upload-artifact-dismiss`**.
 
 <Canvas of={PromptFieldStories.Artifact} />
+
+### Multi-artifact scroll
+
+When several attachments exceed the composer width, the strip scrolls horizontally at full width. Chevron buttons flank the strip (32px gray circles) and render only when scrolling is possible in that direction. Each click advances by one **set** of tiles: the last visible tile becomes the first tile in the next set so the carousel keeps continuity. On the final set, the strip right-aligns to stay full. Edge fades on both sides signal overflow and hide at the ends of the list.
+
+Trackpad, wheel, touch scrolling, and the overlay scrollbar lane below the tiles all work on the artifact strip. The lane is always reserved in the gap below the tiles so composer height stays fixed; the thumb appears only during physical interaction (wheel, touch, or dragging the scrollbar). Chevron paging does not reveal the scrollbar.
+
+<Canvas of={PromptFieldStories.MultiArtifactScroll} />
+
+### Upload action menu
+
+`swc-prompt-field` fires `swc-prompt-field-upload-click` from the **`+`** button and leaves the resulting UI entirely to the consuming product; the component has no opinion on what opens. Design recommends the **`+`** button open a menu with, at minimum:
+
+- **Add from Adobe cloud storage**
+- **Attach files**
+
+Product teams control the exact menu contents and may add more sources, but these two are the recommended baseline. Attachments added through either path should surface as staged artifacts using the same **`swc-upload-artifact`** error/invalid state as a directly-dropped file, since the artifact strip does not distinguish attachments by origin.
 
 ## Behaviors
 
@@ -79,6 +110,16 @@ The `<swc-prompt-field>` element implements the following accessibility features
 - `accessible-label` can override the accessible name when needed
 - All icon buttons carry descriptive `aria-label` attributes
 - The send button uses `disabled` natively when the prompt has no content
+
+#### Artifact strip keyboard navigation
+
+The artifact strip is a `role="region"` landmark (labeled `artifact-strip-label`, default "Uploaded assets strip") with roving-tabindex thumbnails:
+
+- **Tab**: moves to the active thumbnail (one tile is ever a tab stop); once you've interacted with a thumbnail via Arrow keys or Enter/Space, Tab additionally reveals that tile's Close button before continuing
+- **Arrow Left/Right**: move the active thumbnail one tile at a time and scroll it into view (distinct from the `<`/`>` chevrons, which page by a full set)
+- **Enter/Space** on a thumbnail: marks the strip as interacted with, unlocking Tab access to Close
+- **Shift+Tab** from Close: returns to the thumbnail; **Tab** from Close reaches the `>` chevron when more content is scrolled out of view, otherwise continues to the prompt textarea
+- The `<`/`>` chevrons redirect focus to the nearest thumbnail instead of losing it if they disappear while focused (for example, paging all the way to one end)
 
 ### Best practices
 

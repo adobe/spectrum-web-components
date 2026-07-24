@@ -27,7 +27,7 @@ test.describe('UploadArtifact - ARIA Snapshots', () => {
     const artifact = root.locator('swc-upload-artifact').first();
 
     await expect(artifact).toMatchAriaSnapshot(`
-      - button "Remove attachment"
+      - button "Remove Hilton commercial assets"
       - img "File thumbnail"
       - text: Hilton commercial assets 2026
     `);
