@@ -29,6 +29,10 @@
  *    `<Canvas of={Stories.ExportName} />` reference.
  * 4. **No broken story references** — every `<Canvas of={...} />` in MDX
  *    points to an export that exists in the stories module.
+ * 5. **Sentence-case `###`/`####` headings** (component and internal genres
+ *    only; patterns and controllers have not been audited for this yet).
+ *    Only the first word, acronyms, and known proper-noun phrases may start
+ *    with a capital letter.
  *
  * Usage (standalone):
  *   yarn lint:docs-pages
@@ -288,6 +292,60 @@ function extractCanvasReferences(content, binding) {
   return refs;
 }
 
+/**
+ * Multi-word proper-noun phrases allowed to keep title case inside an
+ * otherwise sentence-case heading (component/pattern names referenced by
+ * name, e.g. "In Action Button"). Extend this list as new components are
+ * referenced from headings.
+ */
+const PROPER_NOUN_PHRASES = ['Action button', 'Avatar group'];
+
+/**
+ * Extract all `###`/`####` heading texts (heading level 3 or deeper) in
+ * document order, along with their 1-based line number.
+ */
+function extractSubHeadings(content) {
+  const headings = [];
+  const lines = content.split('\n');
+  for (let i = 0; i < lines.length; i++) {
+    const m = lines[i].match(/^(#{3,4})\s+(.+?)\s*$/);
+    if (m) {
+      headings.push({ level: m[1].length, text: m[2].trim(), line: i + 1 });
+    }
+  }
+  return headings;
+}
+
+/**
+ * Check whether a heading follows sentence case: only the first word may
+ * start with a capital letter, unless a later word is a recognized acronym
+ * (fully uppercase) or part of a known proper-noun phrase.
+ *
+ * Tolerates:
+ * - Inline code spans (`` `foo` ``), stripped before word-splitting.
+ * - Fully uppercase words (acronyms: ARIA, CSS, SVG, WCAG, RTL, API, ...).
+ * - Multi-word proper-noun phrases in `PROPER_NOUN_PHRASES`.
+ */
+function isSentenceCase(heading) {
+  let text = heading.replace(/`[^`]*`/g, '');
+  for (const phrase of PROPER_NOUN_PHRASES) {
+    text = text.split(phrase).join('');
+  }
+  const words = text.split(/\s+/).filter(Boolean);
+  for (let i = 1; i < words.length; i++) {
+    const word = words[i].replace(/[^A-Za-z]/g, '');
+    if (!word) {
+      continue;
+    }
+    const isAllCaps = word === word.toUpperCase() && /[A-Z]/.test(word);
+    const startsUpper = /^[A-Z]/.test(word);
+    if (startsUpper && !isAllCaps) {
+      return false;
+    }
+  }
+  return true;
+}
+
 // ────────────────────────────────────────────────────────────────────────────
 //   Stories file inspection
 // ────────────────────────────────────────────────────────────────────────────
@@ -420,6 +478,18 @@ function checkMdx(absPath) {
       );
     }
     lastIndex = Math.max(lastIndex, idx);
+  }
+
+  // Check 5: Sentence-case ###/#### headings (component and internal genres
+  // only; patterns and controllers have not been audited for this yet)
+  if (rules.genre === 'component' || rules.genre === 'internal') {
+    for (const h of extractSubHeadings(content)) {
+      if (!isSentenceCase(h.text)) {
+        errors.push(
+          `${relPath}:${h.line}: heading "${h.text}" is not sentence case (capitalize only the first word, acronyms, and known proper nouns)`
+        );
+      }
+    }
   }
 
   // Check 2a: <DocsFooter /> presence
