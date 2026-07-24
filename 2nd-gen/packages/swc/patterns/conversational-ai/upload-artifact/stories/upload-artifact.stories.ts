@@ -172,7 +172,7 @@ export const MultiMedia: Story = {
   `,
   tags: ['options'],
 };
-MultiArtifact.storyName = 'Multi artifact';
+MultiCard.storyName = 'Multi artifact';
 
 export const Card: Story = {
   render: () => html`
