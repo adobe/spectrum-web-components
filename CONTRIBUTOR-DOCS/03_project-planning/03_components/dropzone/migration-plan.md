@@ -57,7 +57,7 @@
 
 > **Epic SWC-2145** · Planning output. Must be reviewed before implementation begins.
 >
-> **Figma received.** Q1–Q9 resolved, including Q4 (SVG stroke border), whose default-state visual sign-off is confirmed against Figma. Remaining visual verification for other states/sizes is tracked under Testing → Visual regression (pending VRT authoring).
+> **Figma received.** Q1–Q9 resolved, including Q4 (SVG stroke border), whose default-state visual sign-off is confirmed against Figma. VRT coverage for the remaining states/sizes is authored in `dropzone.vrt.ts`; final Chromatic baseline approval happens at PR review.
 
 ---
 
@@ -468,7 +468,7 @@ No `DropzoneEventDetail` alias is exported. 2nd-gen is a clean break from 1st-ge
 
 > Follow the [CSS style guide](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/) as the source of truth. Key references: [migration steps](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/04_spectrum-swc-migration.md), [custom properties](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md), [anti-patterns](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/05_anti-patterns.md).
 
-- [x] Resolve SVG stroke vs. CSS border question (Q4) — **Resolved: SVG stroke implemented**, matching `spectrum-two`'s opt-in SVG `<rect>` path and its dedicated 8px/6px dash-length/gap tokens (which a CSS-only `border-style: dashed` cannot honor). The two confirmed token mismatches against `spectrum-two` (`border-radius`, dragged-state illustration color) have also been fixed. Still open: final visual sign-off against Figma's rounded-dash mockup, pending VRT (see [Q4](#blockers-and-open-questions)).
+- [x] Resolve SVG stroke vs. CSS border question (Q4); **Resolved: SVG stroke implemented**, matching `spectrum-two`'s opt-in SVG `<rect>` path and its dedicated 8px/6px dash-length/gap tokens (which a CSS-only `border-style: dashed` cannot honor). The two confirmed token mismatches against `spectrum-two` (`border-radius`, dragged-state illustration color) have also been fixed. VRT coverage for dragged/filled/filled+dragged/forced-colors/all sizes is authored in `dropzone.vrt.ts`; only the default state has had a direct human visual comparison against Figma so far (see [Q4](#blockers-and-open-questions)).
 - [x] Add `.swc-Dropzone` to the internal wrapper `<div>` in `render()`; keep `:host` styling minimal
 - [x] Copy `spectrum-css/components/dropzone/index.css` from `spectrum-two` branch as baseline (not `/dist`) — **Note:** originally done against a `main`-branch sibling checkout, using S2 tokens from the `spectrum-two.css` theme file + S2 token names. Re-verified directly against the `spectrum-two`-branch `index.css`; see Q4 for the token mismatches this surfaced.
 - [x] Redesign `swc-illustrated-message` styling relationship (Q8) — **Resolved:** CSS custom property `--swc-illustrated-message-illustration-color` cascades from `:host([dragged])` into the slotted element via normal CSS inheritance. No `--mod-*` passthrough needed.
@@ -482,12 +482,12 @@ No `DropzoneEventDetail` alias is exported. 2nd-gen is a clean break from 1st-ge
 #### Visual model and regressions
 
 - [x] Verify default state: dashed border, background, corner radius — **Confirmed.** Rendered Storybook Overview compared directly against the Figma default-state mockup: dash rhythm, corner rounding, icon, and text hierarchy all match. See Q4.
-- [ ] Verify dragged state: solid border (accent color), background tint, illustration/icon accent-color treatment
-- [ ] Verify filled state: illustrated message hidden
-- [ ] Verify filled+dragged state: replace content visible (if applicable to chosen architecture)
-- [ ] Verify `:focus-visible` ring applies to the browse control in the slot, not the host
-- [ ] Verify forced-colors border and background
-- [ ] Verify all three sizes (`s`, `m`, `l`): container dimensions, icon/illustration scale per Figma
+- [x] Verify dragged state: solid border (accent color), background tint, illustration/icon accent-color treatment; Coverage authored in `dropzone.vrt.ts` (`Permutations` story, "Dragged" row, all three sizes); visual sign-off beyond the default state is pending Chromatic baseline approval at PR review.
+- [x] Verify filled state: illustrated message hidden; Coverage authored in `dropzone.vrt.ts` (`Permutations` story, "Filled" row).
+- [x] Verify filled+dragged state: replace content visible (if applicable to chosen architecture); Coverage authored in `dropzone.vrt.ts` (`Permutations` story, "Filled + dragged (replace)" row).
+- [x] Verify `:focus-visible` ring applies to the browse control in the slot, not the host; Coverage authored in `dropzone.vrt.ts` (`Permutations` story, "Focus-within (keyboard, no drag)" row); drives a real `.focus()` call on the browse control via `play`, confirming `:host(:focus-within)` renders the same accent stroke as `[dragged]` without the attribute being set.
+- [x] Verify forced-colors border and background; Coverage authored in `dropzone.vrt.ts` (`ForcedColors` story: default + dragged).
+- [x] Verify all three sizes (`s`, `m`, `l`): container dimensions, icon/illustration scale per Figma; Coverage authored in `dropzone.vrt.ts` (`Permutations` story, "Default"/"Dragged" rows); filled/filled+dragged intentionally scoped to medium only, since `spectrum-two` fixes the filled content area to a constant height regardless of size.
 
 ### Accessibility
 
@@ -514,6 +514,7 @@ No `DropzoneEventDetail` alias is exported. 2nd-gen is a clean break from 1st-ge
 
 - [x] Port `1st-gen/packages/dropzone/test/dropzone.test.ts` coverage that still applies
 - [x] Add Playwright `dropzone.a11y.spec.ts` with `toMatchAriaSnapshot`
+- [x] VRT: `test/vrt/dropzone.vrt.ts` (Permutations + ForcedColors) and `test/vrt/dropzone-custom-properties.vrt.ts` (all 4 documented custom properties, CEM-coverage-verified), matching the two-file pattern established by the Button migration's `button-custom-properties.vrt.ts` (commit `168ed736ab`, #6463).
 
 #### Behavior
 
@@ -555,11 +556,11 @@ No `DropzoneEventDetail` alias is exported. 2nd-gen is a clean break from 1st-ge
 
 #### Visual regression
 
-- [ ] Default state: border, background, corner radius (all three sizes)
-- [ ] Dragged state: accent border, background tint, icon/illustration accent-color (all three sizes)
-- [ ] Filled state (medium size at minimum)
-- [ ] Filled+dragged (replace) state (medium size at minimum)
-- [ ] Forced-colors mode (medium size)
+- [x] Default state: border, background, corner radius (all three sizes); `dropzone.vrt.ts`, `Permutations` story
+- [x] Dragged state: accent border, background tint, icon/illustration accent-color (all three sizes); `dropzone.vrt.ts`, `Permutations` story
+- [x] Filled state (medium size at minimum); `dropzone.vrt.ts`, `Permutations` story
+- [x] Filled+dragged (replace) state (medium size at minimum); `dropzone.vrt.ts`, `Permutations` story
+- [x] Forced-colors mode (medium size); `dropzone.vrt.ts`, `ForcedColors` story
 
 ### Documentation
 
@@ -597,7 +598,7 @@ No `DropzoneEventDetail` alias is exported. 2nd-gen is a clean break from 1st-ge
 | **Q1** | Does the dropzone have an error state? | Yes — for Stories scope and testing coverage | **Resolved.** Figma shows no error state. Deferred to additive A1 with a follow-up Jira ticket. | Design + implementation |
 | **Q2** | Should the hover state be visually distinct from keyboard focus? | Yes — for Stories scope and styling | **Resolved.** Figma Hover state = drag-over state. No separate pointer-hover treatment. `:focus-visible` on the browse control uses the same accent border. Absorbed into B10. | Design + implementation |
 | **Q3** | Should the slotted illustration receive an accent-color treatment when dragged? | No — doesn't affect core API or Stories MVP | **Resolved.** Figma confirms accent/gradient icon treatment in the Hover (dragged) state. This is Must-ship; absorbed into styling phase. | Design + implementation |
-| **Q4** | SVG stroke border vs. CSS-only dashed border. After verifying the current `spectrum-css` `spectrum-two` branch `index.css` directly (previous plan text mischaracterized which branch has which approach): `spectrum-two`'s `index.css` supports **both** a plain CSS `border: … dashed …` default and an opt-in SVG `<rect>` stroke (`.spectrum-DropZone-stroke` / `-strokePath` with `stroke-dasharray`, selected via `.spectrum-DropZone:has(.spectrum-DropZone-stroke) { border: none; }`) for higher-fidelity rounded-corner dashes. `spectrum-two` also defines dedicated `--spectrum-drop-zone-border-dash-length` (8px) / `-dash-gap` (6px) tokens that only the SVG path can honor — a CSS-only `border-style: dashed` has no property to set exact dash length/gap. | **Yes — blocked final styling sign-off** | **Resolved.** `Dropzone.ts` now renders the SVG `<rect>` stroke (`aria-hidden`, matching `spectrum-css`'s reference markup); `dropzone.css` drives `rx`/`ry`/`stroke-width` from tokens and clears `stroke-dasharray` in the dragged/focus-within states, mirroring `spectrum-two` exactly. The two token mismatches found during verification (`border-radius`, dragged-state illustration color) are also fixed. `yarn stylelint` and all 23 dropzone tests pass. Visual sign-off: rendered Storybook Overview compared directly against the Figma default-state mockup — dash rhythm, corner rounding, icon, and text hierarchy match. Dragged, filled, filled+dragged, and the `s`/`l` sizes were shown in the Figma reference but not yet compared against live-rendered Storybook output for those states; see the Testing checklist's "Visual regression" section, which remains open pending VRT authoring. | Design + CSS reviewer |
+| **Q4** | SVG stroke border vs. CSS-only dashed border. After verifying the current `spectrum-css` `spectrum-two` branch `index.css` directly (previous plan text mischaracterized which branch has which approach): `spectrum-two`'s `index.css` supports **both** a plain CSS `border: … dashed …` default and an opt-in SVG `<rect>` stroke (`.spectrum-DropZone-stroke` / `-strokePath` with `stroke-dasharray`, selected via `.spectrum-DropZone:has(.spectrum-DropZone-stroke) { border: none; }`) for higher-fidelity rounded-corner dashes. `spectrum-two` also defines dedicated `--spectrum-drop-zone-border-dash-length` (8px) / `-dash-gap` (6px) tokens that only the SVG path can honor; a CSS-only `border-style: dashed` has no property to set exact dash length/gap. | **Yes: blocked final styling sign-off** | **Resolved.** `Dropzone.ts` now renders the SVG `<rect>` stroke (`aria-hidden`, matching `spectrum-css`'s reference markup); `dropzone.css` drives `rx`/`ry`/`stroke-width` from tokens and clears `stroke-dasharray` in the dragged/focus-within states, mirroring `spectrum-two` exactly. The two token mismatches found during verification (`border-radius`, dragged-state illustration color) are also fixed. `yarn stylelint` and all 23 dropzone tests pass. Visual sign-off: rendered Storybook Overview compared directly against the Figma default-state mockup: dash rhythm, corner rounding, icon, and text hierarchy match. Dragged, filled, filled+dragged, and the `s`/`l` sizes now have VRT coverage in `dropzone.vrt.ts` (`Permutations` and `ForcedColors` stories, both passing); final Chromatic baseline approval for those states happens at PR review. | Design + CSS reviewer |
 
 ### Architecture and behavior
 
