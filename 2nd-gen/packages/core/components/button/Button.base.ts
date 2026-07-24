@@ -13,12 +13,10 @@
 import { PropertyValues } from 'lit';
 import { property } from 'lit/decorators.js';
 
+import { SlotPresenceController } from '@adobe/spectrum-wc-core/controllers/slot-presence-controller/index.js';
+import { SlotTextController } from '@adobe/spectrum-wc-core/controllers/slot-text-controller/index.js';
 import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
-import {
-  ObserveSlotPresence,
-  ObserveSlotText,
-  SizedMixin,
-} from '@adobe/spectrum-wc-core/mixins/index.js';
+import { SizedMixin } from '@adobe/spectrum-wc-core/mixins/index.js';
 
 import { BUTTON_VALID_SIZES, type ButtonSize } from './Button.types.js';
 
@@ -33,14 +31,10 @@ import { BUTTON_VALID_SIZES, type ButtonSize } from './Button.types.js';
  * the `swc-button` visual surface.
  *
  * @attribute {ElementSize} size - The size of the button.
- *
- * @todo We currently have 3 levels of mixins on this class, but the mixin
- * composition guide recommends a maximum of 2. Explore reducing after milestone 2.
  */
-export abstract class ButtonBase extends SizedMixin(
-  ObserveSlotText(ObserveSlotPresence(SpectrumElement, '[slot="icon"]'), ''),
-  { validSizes: BUTTON_VALID_SIZES }
-) {
+export abstract class ButtonBase extends SizedMixin(SpectrumElement, {
+  validSizes: BUTTON_VALID_SIZES,
+}) {
   static override shadowRootOptions: ShadowRootInit = {
     ...SpectrumElement.shadowRootOptions,
     delegatesFocus: true,
@@ -72,15 +66,35 @@ export abstract class ButtonBase extends SizedMixin(
   public accessibleLabel?: string;
 
   // ──────────────────────
+  //     CONTROLLERS
+  // ──────────────────────
+
+  /**
+   * Observes whether an icon is slotted into `[slot="icon"]`.
+   *
+   * @internal
+   */
+  protected slotPresence = new SlotPresenceController(this, '[slot="icon"]');
+
+  /**
+   * Observes whether the default slot has a meaningful text label. The default
+   * slot must bind `@slotchange=${this.slotText.handleSlotChange}` for changes
+   * after the first render to be tracked.
+   *
+   * @internal
+   */
+  protected slotText = new SlotTextController(this);
+
+  // ──────────────────────
   //     IMPLEMENTATION
   // ──────────────────────
 
   protected get hasIcon(): boolean {
-    return this.slotContentIsPresent;
+    return this.slotPresence.isPresent;
   }
 
   protected get hasLabel(): boolean {
-    return this.slotHasContent;
+    return this.slotText.hasContent;
   }
 
   /**
