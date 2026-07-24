@@ -57,7 +57,7 @@
 
 > **Epic SWC-2145** · Planning output. Must be reviewed before implementation begins.
 >
-> **Figma received.** Q1–Q6 resolved. Remaining blocker: Q8 (`swc-illustrated-message` styling strategy, blocks styling phase).
+> **Figma received.** Q1–Q9 resolved, including Q4 (SVG stroke border), whose default-state visual sign-off is confirmed against Figma. Remaining visual verification for other states/sizes is tracked under Testing → Visual regression (pending VRT authoring).
 
 ---
 
@@ -68,7 +68,7 @@
 - **Three property renames** (B1–B3) are the primary API-level breaking changes. The HTML attributes (`dragged`, `filled`, `drop-effect`) stay the same; only the JavaScript property names change to drop the `is` prefix and match the attribute names. Consumers using the Lit template syntax (`?dragged=…`) are unaffected; consumers who reference `element.isDragged` or `element.isFilled` directly in JavaScript will need to update.
 - **`isFilled` is currently not reflected** — setting `element.isFilled = true` in JS does not update the `filled` attribute, so the drag-over highlight and replace-state styles do not apply. This is a silent bug that must be fixed in 2nd-gen (B4).
 - **`dropEffect` has no `@property` decorator** in 1st-gen, making it non-reactive to attribute changes (B5). Properly declaring it with `@property` in 2nd-gen is a behavior fix, not a consumer-breaking change.
-- **Figma confirms SVG stroke border** with rounded dashes (B8). The spectrum-css `index.css` uses CSS-only borders; this discrepancy must be aligned with the CSS team before the styling phase, but the Figma intent is clear.
+- **Figma confirms SVG stroke border** with rounded dashes (B8). **Shipped:** `spectrum-two`'s `index.css` supports an opt-in SVG `<rect>` stroke (in addition to its CSS-only fallback); 2nd-gen implements the SVG stroke path, matching the design system's dedicated dash-length/gap tokens (8px/6px) that a CSS-only `border-style: dashed` cannot reproduce.
 - **Figma confirms illustration accent color in the dragged state** (was open in Q3; now confirmed). The slotted illustration should receive accent-color treatment when `dragged` is true.
 - **Figma shows no error state.** Error state is deferred to additive A1.
 - **Figma confirms Hover and drag share the same visual state** — there is no separate pointer-hover vs. drag-hover treatment. `:focus-visible` on the browse control uses the same accent border. Q2 is resolved.
@@ -78,8 +78,7 @@
 
 ### Most blocking open questions
 
-- **Q4 in [Design](#design):** SVG stroke border — Figma confirms rounded dashes require SVG; spectrum-css `index.css` uses CSS borders. The CSS team must align before the styling phase. Shadow DOM render shape depends on this decision.
-- **Q8 in [Architecture and behavior](#architecture-and-behavior):** How `swc-dropzone` styles the slotted `swc-illustrated-message` in S2. Must be resolved before styling phase.
+- **Q4 in [Design](#design):** SVG stroke border is implemented and its `spectrum-two` token values are verified; the only remaining step is a visual sign-off comparing the rendered result against Figma's rounded-dash mockup.
 
 ---
 
@@ -155,17 +154,7 @@ The full `--mod-*` modifier surface from 1st-gen will not be carried forward to 
 <slot></slot>
 ```
 
-**Target 2nd-gen (provisional — see Q4 for SVG stroke decision):**
-
-```html
-<!-- swc-dropzone shadow root -->
-<div class="swc-Dropzone">
-  <div role="status" aria-live="polite" class="swc-Dropzone-status"></div>
-  <slot></slot>
-</div>
-```
-
-If SVG stroke is confirmed (Q4), the render shape becomes:
+**Shipped 2nd-gen:**
 
 ```html
 <!-- swc-dropzone shadow root -->
@@ -174,10 +163,13 @@ If SVG stroke is confirmed (Q4), the render shape becomes:
     <rect class="swc-Dropzone-strokePath" x="1" y="1" rx="10px" ry="10px" fill="none" width="100%" height="100%"
       stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke" />
   </svg>
-  <div role="status" aria-live="polite" class="swc-Dropzone-status"></div>
+  <div role="status" aria-live="polite" class="swc-Dropzone-status swc-VisuallyHidden"></div>
+  <!-- filled ? <slot name="filled-content"> : <slot> (see B18) -->
   <slot></slot>
 </div>
 ```
+
+The SVG stroke's `rx`/`ry`/`stroke-width`/`stroke-dasharray` and the outer wrapper's `border-radius` are token-driven via CSS (see Styling checklist); the markup attributes above are static fallback defaults, overridden by CSS at runtime.
 
 ---
 
@@ -247,7 +239,7 @@ No sequencing, shared-base, or inheritance decisions require explicit user confi
 
 | # | What changes | 1st-gen behavior | 2nd-gen behavior | Consumer migration path |
 | - | ------------ | ---------------- | ---------------- | ----------------------- |
-| **B8** | SVG stroke border — **Figma confirmed; spectrum-css alignment pending (Q4)** | CSS `border-style: dashed` (pure CSS border; no SVG) | Inline SVG `<rect>` stroke for rounded corner dashes as shown in Figma. Spectrum-css currently uses CSS; team must align before styling phase. | No consumer migration if the visual result is functionally equivalent; SVG border adds a shadow DOM element. |
+| **B8** | SVG stroke border — **Figma confirmed; shipped** | CSS `border-style: dashed` (pure CSS border; no SVG) | Inline SVG `<rect>` stroke for rounded corner dashes as shown in Figma, matching `spectrum-two`'s token-driven dash pattern (8px dash / 6px gap). Final visual sign-off against Figma still pending (Q4). | No consumer migration; SVG border adds a shadow DOM element (`aria-hidden`, no impact on the accessibility tree). |
 | **B9** | CJK font size tokens | Applied via `--mod-illustrated-message-*` passthrough | Applied via direct token usage inside `swc-dropzone` (passthrough redesign per Q8) | No consumer migration needed; visual behavior preserved. |
 | **B10** | `:focus-visible` styling scoped to browse control | 1st-gen applied focus styles to host only when consumer added `tabindex`. | 2nd-gen has no `tabindex` on host. `:focus-visible` applies to the browse control in the slot; browse control accent ring matches the Figma Hover state border style. | See a11y changes below. |
 | **B16** | `size` attribute — **new, not in 1st-gen** | No size variants; fixed visual scale. | `size: 's' \| 'm' \| 'l'`; default `'m'`. Controls illustrated icon scale and container dimensions per Figma. Use `SizedMixin` from `@spectrum-web-components/core/mixins` with `validSizes: ['s', 'm', 'l']` applied in `DropzoneBase`; the mixin provides the `size` `@property`, validation, and attribute reflection. | No breaking change for existing consumers (defaults to `'m'`). |
@@ -304,7 +296,7 @@ Figma state labels and their component attribute equivalents:
 
 | Figma state | Attribute(s) | Notes |
 | ----------- | ------------ | ----- |
-| Default | (none) | Dashed SVG stroke border (see Q4); illustrated message and browse control visible in slot. |
+| Default | (none) | Dashed SVG stroke border (shipped; see Q4 for pending visual sign-off); illustrated message and browse control visible in slot. |
 | Hover (drag-hover) | `[dragged]` | **Confirmed.** Solid accent-color border; light blue background tint; illustration color changes to accent (see illustration note below). Figma's "Hover" label = file dragged over the zone, not pointer hover. |
 | Replace | `[filled][dragged]` | **Confirmed.** Accent "Drop file to replace" pill overlaid on the background image (consumer-provided filled content). Status announcement fires. |
 | Filled (programming layer only) | `[filled]` | **Inferred.** Not shown as a standalone state in Figma. `filled = true` means content has been uploaded; the component's illustrated message should be hidden and the consumer-provided content (e.g. the background image) should be shown. No separate Figma visual exists for filled-without-drag. |
@@ -390,7 +382,7 @@ Follow the [Badge migration reference](../../02_workstreams/02_2nd-gen-component
 | Layer | Path | Contains |
 | ----- | ---- | -------- |
 | **Core** | `2nd-gen/packages/core/components/dropzone/` | `Dropzone.base.ts`, `Dropzone.types.ts`. Base class: drag event binding, debounce logic, `dropEffect` validation, `dragged` / `filled` state, dev warning for missing accessible name, status region text management. No rendering. |
-| **SWC** | `2nd-gen/packages/swc/components/dropzone/` | `Dropzone.ts`, `dropzone.css`, `swc-dropzone.ts` (element registration), stories, and tests. Extends `Dropzone.base.ts`. Renders the shadow DOM: status `<div>`, optional SVG stroke, and `<slot>`. |
+| **SWC** | `2nd-gen/packages/swc/components/dropzone/` | `Dropzone.ts`, `dropzone.css`, `swc-dropzone.ts` (element registration), stories, and tests. Extends `Dropzone.base.ts`. Renders the shadow DOM: SVG stroke, status `<div>`, and `<slot>`. |
 
 **Planned rendering shape:**
 
@@ -398,7 +390,7 @@ Follow the [Badge migration reference](../../02_workstreams/02_2nd-gen-component
 - SWC renders:
   - `<div class="swc-Dropzone">` host wrapper
   - `<div role="status" aria-live="polite" class="swc-Dropzone-status">` — visually hidden; updated by base class via `statusText` reactive property
-  - SVG stroke `<rect>` (if confirmed by Q4)
+  - SVG stroke `<rect>` (shipped; see Q4)
   - `<slot></slot>`
 
 **Types file (`Dropzone.types.ts`):**
@@ -440,7 +432,7 @@ No `DropzoneEventDetail` alias is exported. 2nd-gen is a clean break from 1st-ge
 - [x] Wire exports in `swc/package.json` — **N/A.** No SWC component has an explicit named
   package.json export; every component (including dropzone) resolves through the existing
   `"./*"` → `dist/components/*/index.js` wildcard, so no dropzone-specific entry is needed.
-- [ ] Confirm `spectrum-css` is checked out at `spectrum-two` branch as sibling directory (`/spectrum-css/components/dropzone/index.css`)
+- [x] Confirm `spectrum-css` is checked out at `spectrum-two` branch as sibling directory (`/spectrum-css/components/dropzone/index.css`) — **Note:** originally implemented against a `main`-branch checkout (see Q4); sibling has since been switched to `spectrum-two` and pulled to head for the Q4 re-verification.
 
 ### API
 
@@ -476,9 +468,9 @@ No `DropzoneEventDetail` alias is exported. 2nd-gen is a clean break from 1st-ge
 
 > Follow the [CSS style guide](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/) as the source of truth. Key references: [migration steps](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/04_spectrum-swc-migration.md), [custom properties](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md), [anti-patterns](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/05_anti-patterns.md).
 
-- [x] Resolve SVG stroke vs. CSS border question (Q4) — **Decided: CSS-only dashed border.** SVG stroke deferred; matches `spectrum-css` `main`; additive if needed later.
+- [x] Resolve SVG stroke vs. CSS border question (Q4) — **Resolved: SVG stroke implemented**, matching `spectrum-two`'s opt-in SVG `<rect>` path and its dedicated 8px/6px dash-length/gap tokens (which a CSS-only `border-style: dashed` cannot honor). The two confirmed token mismatches against `spectrum-two` (`border-radius`, dragged-state illustration color) have also been fixed. Still open: final visual sign-off against Figma's rounded-dash mockup, pending VRT (see [Q4](#blockers-and-open-questions)).
 - [x] Add `.swc-Dropzone` to the internal wrapper `<div>` in `render()`; keep `:host` styling minimal
-- [x] Copy `spectrum-css/components/dropzone/index.css` from `spectrum-two` branch as baseline (not `/dist`) — **Note:** sibling is on `main`; used S2 tokens from `spectrum-two.css` theme file + S2 token names.
+- [x] Copy `spectrum-css/components/dropzone/index.css` from `spectrum-two` branch as baseline (not `/dist`) — **Note:** originally done against a `main`-branch sibling checkout, using S2 tokens from the `spectrum-two.css` theme file + S2 token names. Re-verified directly against the `spectrum-two`-branch `index.css`; see Q4 for the token mismatches this surfaced.
 - [x] Redesign `swc-illustrated-message` styling relationship (Q8) — **Resolved:** CSS custom property `--swc-illustrated-message-illustration-color` cascades from `:host([dragged])` into the slotted element via normal CSS inheritance. No `--mod-*` passthrough needed.
 - [x] Verify `[dragged]`, `[filled]`, and `[filled][dragged]` state selectors map to the 2nd-gen attribute names
 - [x] Verify CJK font size modifier (`:lang(ja)`, `:lang(ko)`, `:lang(zh)`) is present in S2 source and ported — **Resolved (Phase 7 review):** not applicable to `dropzone.css`. The component renders no text nodes of its own; `swc-illustrated-message` already owns `:lang(ja|ko|zh)` overrides for its slotted heading and description text.
@@ -489,7 +481,7 @@ No `DropzoneEventDetail` alias is exported. 2nd-gen is a clean break from 1st-ge
 
 #### Visual model and regressions
 
-- [ ] Verify default state: dashed border, background, corner radius
+- [x] Verify default state: dashed border, background, corner radius — **Confirmed.** Rendered Storybook Overview compared directly against the Figma default-state mockup: dash rhythm, corner rounding, icon, and text hierarchy all match. See Q4.
 - [ ] Verify dragged state: solid border (accent color), background tint, illustration/icon accent-color treatment
 - [ ] Verify filled state: illustrated message hidden
 - [ ] Verify filled+dragged state: replace content visible (if applicable to chosen architecture)
@@ -605,7 +597,7 @@ No `DropzoneEventDetail` alias is exported. 2nd-gen is a clean break from 1st-ge
 | **Q1** | Does the dropzone have an error state? | Yes — for Stories scope and testing coverage | **Resolved.** Figma shows no error state. Deferred to additive A1 with a follow-up Jira ticket. | Design + implementation |
 | **Q2** | Should the hover state be visually distinct from keyboard focus? | Yes — for Stories scope and styling | **Resolved.** Figma Hover state = drag-over state. No separate pointer-hover treatment. `:focus-visible` on the browse control uses the same accent border. Absorbed into B10. | Design + implementation |
 | **Q3** | Should the slotted illustration receive an accent-color treatment when dragged? | No — doesn't affect core API or Stories MVP | **Resolved.** Figma confirms accent/gradient icon treatment in the Hover (dragged) state. This is Must-ship; absorbed into styling phase. | Design + implementation |
-| **Q4** | SVG stroke border vs. CSS-only dashed border. The rendering-and-styling analysis documents an SVG `<rect>` stroke system. The actual `spectrum-css` `spectrum-two` branch `index.css` uses `border-style: dashed` (no SVG). This discrepancy changes the shadow DOM render shape and whether an SVG element is needed. | **Yes — blocks shadow DOM architecture and CSS** | **Partially resolved.** Figma confirms visual intent for rounded dashes at corners (implies SVG). The spectrum-css CSS-only implementation is inconsistent with Figma. CSS team alignment required before styling phase begins. | Design + CSS reviewer |
+| **Q4** | SVG stroke border vs. CSS-only dashed border. After verifying the current `spectrum-css` `spectrum-two` branch `index.css` directly (previous plan text mischaracterized which branch has which approach): `spectrum-two`'s `index.css` supports **both** a plain CSS `border: … dashed …` default and an opt-in SVG `<rect>` stroke (`.spectrum-DropZone-stroke` / `-strokePath` with `stroke-dasharray`, selected via `.spectrum-DropZone:has(.spectrum-DropZone-stroke) { border: none; }`) for higher-fidelity rounded-corner dashes. `spectrum-two` also defines dedicated `--spectrum-drop-zone-border-dash-length` (8px) / `-dash-gap` (6px) tokens that only the SVG path can honor — a CSS-only `border-style: dashed` has no property to set exact dash length/gap. | **Yes — blocked final styling sign-off** | **Resolved.** `Dropzone.ts` now renders the SVG `<rect>` stroke (`aria-hidden`, matching `spectrum-css`'s reference markup); `dropzone.css` drives `rx`/`ry`/`stroke-width` from tokens and clears `stroke-dasharray` in the dragged/focus-within states, mirroring `spectrum-two` exactly. The two token mismatches found during verification (`border-radius`, dragged-state illustration color) are also fixed. `yarn stylelint` and all 23 dropzone tests pass. Visual sign-off: rendered Storybook Overview compared directly against the Figma default-state mockup — dash rhythm, corner rounding, icon, and text hierarchy match. Dragged, filled, filled+dragged, and the `s`/`l` sizes were shown in the Figma reference but not yet compared against live-rendered Storybook output for those states; see the Testing checklist's "Visual regression" section, which remains open pending VRT authoring. | Design + CSS reviewer |
 
 ### Architecture and behavior
 
@@ -613,9 +605,9 @@ No `DropzoneEventDetail` alias is exported. 2nd-gen is a clean break from 1st-ge
 | - | ---- | --------- | ------ | ----- |
 | **Q5** | Event naming convention in 2nd-gen. Current 1st-gen events use `sp-dropzone-*` prefix. | **Yes — blocks API phase** | **Resolved.** All migrated 2nd-gen components use the `swc-` prefix (e.g. `swc-accordion-item-toggle`, `swc-open`). Events rename to `swc-dropzone-should-accept`, `swc-dropzone-dragover`, `swc-dropzone-dragleave`, `swc-dropzone-drop`. Breaking for consumers listening to `sp-dropzone-*` events; document in migration guide. | Architecture reviewer |
 | **Q6** | `role="group"` (accessibility analysis recommendation) vs. `role="region"` (spectrum-css template). `group` creates a labeled group; `region` creates a page landmark. The a11y analysis strongly recommends `group` to avoid polluting the landmark tree. | **Yes — blocks API phase** | **Resolved.** Use `role="group"` per the a11y analysis. | Accessibility reviewer |
-| **Q7** | `filled` vs. `replace` as the state name. The rendering analysis notes that the Figma design file calls the filled state the "replace" variant. Should the attribute/property be renamed from `filled` to `replace`? Renaming would be an attribute-level breaking change (consumers who set `filled` in HTML would break). **Recommendation: keep `filled`.** "Filled" accurately describes the component's state (content has been uploaded). "Replace" is the user-facing overlay message shown in the filled+dragged composite state, not the persistent state itself. | No — current evidence favors keeping `filled` | Open. Confirm with design. | Design + ticket owner |
-| **Q8** | How does `swc-dropzone` style the slotted `swc-illustrated-message` in S2? In 1st-gen, `sp-dropzone` sets `--mod-illustrated-message-*` CSS custom properties on `:host`, which are inherited by `sp-illustrated-message` in the slot. In 2nd-gen, `swc-illustrated-message` may not expose the same `--mod-*` hooks. The replacement approach (CSS custom properties, `::slotted()` selectors, or consumer-managed styling) must be decided before the styling phase. | **Yes — blocks styling phase** | Open. Requires investigation of `swc-illustrated-message` CSS API before styling can begin. | Architecture reviewer |
-| **Q9** | Should `onDragOver`, `onDragLeave`, `onDrop` change from `public` to `protected`? This is breaking for any consumer subclassing the component and overriding these methods. Risk is assessed as low — no evidence of this pattern in the wild — but should be confirmed. **Recommendation: make them `protected`; they are implementation details, not a stable public API.** | No — low-impact breaking change | Open. Confirm with team. | Ticket owner |
+| **Q7** | `filled` vs. `replace` as the state name. The rendering analysis notes that the Figma design file calls the filled state the "replace" variant. Should the attribute/property be renamed from `filled` to `replace`? Renaming would be an attribute-level breaking change (consumers who set `filled` in HTML would break). **Recommendation: keep `filled`.** "Filled" accurately describes the component's state (content has been uploaded). "Replace" is the user-facing overlay message shown in the filled+dragged composite state, not the persistent state itself. | No — current evidence favors keeping `filled` | **Resolved.** Implemented as `filled` (see [API checklist](#api)); matches the recommendation above. | Design + ticket owner |
+| **Q8** | How does `swc-dropzone` style the slotted `swc-illustrated-message` in S2? In 1st-gen, `sp-dropzone` sets `--mod-illustrated-message-*` CSS custom properties on `:host`, which are inherited by `sp-illustrated-message` in the slot. In 2nd-gen, `swc-illustrated-message` may not expose the same `--mod-*` hooks. The replacement approach (CSS custom properties, `::slotted()` selectors, or consumer-managed styling) must be decided before the styling phase. | **Yes — blocks styling phase** | **Resolved.** `--swc-illustrated-message-illustration-color` cascades from `:host([dragged])` into the slotted element via normal CSS inheritance (see [Styling checklist](#styling)). No `--mod-*` passthrough needed. | Architecture reviewer |
+| **Q9** | Should `onDragOver`, `onDragLeave`, `onDrop` change from `public` to `protected`? This is breaking for any consumer subclassing the component and overriding these methods. Risk is assessed as low — no evidence of this pattern in the wild — but should be confirmed. **Recommendation: make them `protected`; they are implementation details, not a stable public API.** | No — low-impact breaking change | **Resolved, stricter than recommended.** Implemented as `private` (`_onDragOver`, `_onDragLeave`, `_onDrop`) rather than `protected` — no subclass should override individual handlers (see [API checklist](#api)). | Ticket owner |
 
 ### Scope and prerequisites
 

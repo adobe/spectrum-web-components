@@ -31,10 +31,36 @@
   justify-content: center;
   padding: var(--swc-dropzone-padding, token("spacing-400"));
   background: var(--swc-dropzone-background-color, transparent);
-  border-color: var(--swc-dropzone-border-color, token("gray-300"));
-  border-style: var(--swc-dropzone-border-style, dashed);
-  border-width: token("border-width-200");
-  border-radius: token("corner-radius-400");
+  border-radius: token("corner-radius-700");
+}
+
+/* ─────────────────────────────────────
+   SVG stroke border
+   ───────────────────────────────────── */
+
+/* Rounded-corner dashes require an SVG stroke; a CSS `border-style: dashed`
+   cannot reproduce the exact dash length/gap the design system specifies,
+   nor render evenly around a curved corner. */
+.swc-Dropzone-stroke {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  inline-size: 100%;
+  block-size: 100%;
+  pointer-events: none;
+}
+
+.swc-Dropzone-strokePath {
+  --_swc-dropzone-stroke-dash-length: 8px;
+  --_swc-dropzone-stroke-dash-gap: 6px;
+
+  rx: token("corner-radius-700");
+  ry: token("corner-radius-700");
+  inline-size: calc(100% - token("border-width-200"));
+  block-size: calc(100% - token("border-width-200"));
+  stroke: var(--swc-dropzone-border-color, token("gray-300"));
+  stroke-width: token("border-width-200");
+  stroke-dasharray: var(--_swc-dropzone-stroke-dash-length) var(--_swc-dropzone-stroke-dash-gap);
 }
 
 /* ─────────────────────────────────────
@@ -56,12 +82,16 @@
 :host([dragged]),
 :host(:focus-within) {
   --swc-dropzone-border-color: token("accent-visual-color");
-  --swc-dropzone-border-style: solid;
+}
+
+:host([dragged]) .swc-Dropzone-strokePath,
+:host(:focus-within) .swc-Dropzone-strokePath {
+  stroke-dasharray: none;
 }
 
 :host([dragged]) {
   --swc-dropzone-background-color: token("accent-subtle-background-color-default");
-  --swc-illustrated-message-illustration-color: token("accent-visual-color");
+  --swc-illustrated-message-illustration-color: token("accent-content-color-default");
 }
 
 ::slotted(p) {
@@ -74,13 +104,17 @@
    ───────────────────────────────────── */
 
 @media (forced-colors: active) {
-  .swc-Dropzone {
-    border-color: ButtonText;
+  .swc-Dropzone-strokePath {
+    stroke: ButtonText;
   }
 
   :host([dragged]) .swc-Dropzone,
   :host(:focus-within) .swc-Dropzone {
     background: Canvas;
-    border-color: Highlight;
+  }
+
+  :host([dragged]) .swc-Dropzone-strokePath,
+  :host(:focus-within) .swc-Dropzone-strokePath {
+    stroke: Highlight;
   }
 }

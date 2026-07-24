@@ -45,8 +45,7 @@ import styles from './dropzone.css';
  *   your handler to transition the zone to its filled state.
  *
  * @cssprop --swc-dropzone-background-color - Background color of the drop zone. Defaults to transparent; overridden to a subtle accent tint in the dragged state.
- * @cssprop --swc-dropzone-border-color - Border color. Defaults to the gray-300 token in the default state; overridden to the accent visual color in the dragged and focus-within states.
- * @cssprop --swc-dropzone-border-style - Border style. Defaults to dashed; overridden to solid in the dragged and focus-within states.
+ * @cssprop --swc-dropzone-border-color - Color of the SVG stroke border. Defaults to the gray-300 token in the default state; overridden to the accent visual color in the dragged and focus-within states.
  * @cssprop --swc-dropzone-padding - Padding inside the drop zone. Defaults vary by size: spacing-300 (s), spacing-400 (m), spacing-600 (l).
  * @cssprop --swc-illustrated-message-illustration-color - Illustration color cascaded into a slotted `swc-illustrated-message`. Unset by default; overridden to the accent-visual-color token in the dragged state.
  */
@@ -195,6 +194,26 @@ export class Dropzone extends DropzoneBase {
   protected override render(): TemplateResult {
     return html`
       <div class="swc-Dropzone">
+        <svg
+          class="swc-Dropzone-stroke"
+          xmlns="http://www.w3.org/2000/svg"
+          preserveAspectRatio="none"
+          aria-hidden="true"
+        >
+          <rect
+            class="swc-Dropzone-strokePath"
+            x="1"
+            y="1"
+            rx="10px"
+            ry="10px"
+            fill="none"
+            width="100%"
+            height="100%"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            vector-effect="non-scaling-stroke"
+          ></rect>
+        </svg>
         <div
           role="status"
           aria-live="polite"
