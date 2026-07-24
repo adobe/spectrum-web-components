@@ -39,6 +39,10 @@
       "development": "./html.dev.js",
       "default": "./html.js"
     },
+    "./normalize-dir.js": {
+      "development": "./normalize-dir.dev.js",
+      "default": "./normalize-dir.js"
+    },
     "./package.json": "./package.json",
     "./src/Base.js": {
       "development": "./src/Base.dev.js",
@@ -75,6 +79,10 @@
     "./src/index.js": {
       "development": "./src/index.dev.js",
       "default": "./src/index.js"
+    },
+    "./src/normalize-dir.js": {
+      "development": "./src/normalize-dir.dev.js",
+      "default": "./src/normalize-dir.js"
     },
     "./src/sizedMixin.js": {
       "development": "./src/sizedMixin.dev.js",

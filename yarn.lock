@@ -6920,6 +6920,7 @@ __metadata:
     "@spectrum-web-components/icons-workflow": "npm:1.12.2"
     "@spectrum-web-components/link": "npm:1.12.2"
     "@spectrum-web-components/menu": "npm:1.12.2"
+    "@spectrum-web-components/reactive-controllers": "npm:1.12.2"
     "@spectrum-web-components/shared": "npm:1.12.2"
   languageName: unknown
   linkType: soft

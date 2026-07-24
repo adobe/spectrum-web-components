@@ -29,6 +29,9 @@ import {
   ref,
 } from '@spectrum-web-components/base/src/directives.js';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
+import type { Directionality } from '@spectrum-web-components/base/src/normalize-dir.js';
+import { normalizeDir } from '@spectrum-web-components/base/src/normalize-dir.js';
+import { observeAttribute } from '@spectrum-web-components/reactive-controllers/src/AttributeObserver.js';
 
 /* eslint-disable import/no-extraneous-dependencies */
 import '@spectrum-web-components/breadcrumbs/sp-breadcrumb-item.js';
@@ -48,6 +51,8 @@ type BreadcrumbItem = {
   value: string;
   offsetWidth: number;
   isVisible: boolean; // false if displayed in menu overlay
+  lang?: string;
+  dir?: Directionality;
 };
 
 /**
@@ -105,6 +110,13 @@ export class Breadcrumbs extends SpectrumElement {
   private resizeObserver: ResizeObserver | undefined;
   private firstRender = true;
 
+  // `calculateBreadcrumbItemsWidth()` only re-snapshots `lang`/`dir` into
+  // `items` when items are added/removed or the layout recalculates
+  // (`maxVisibleItems`/`compact` change); watch each item's own `lang`/`dir`
+  // directly so the cached `<sp-menu-item>` rendered by `renderMenu()`
+  // doesn't go stale relative to the live, now-reactive breadcrumb item.
+  private itemAttributeUnsubscribes: (() => void)[] = [];
+
   private menuRef: Ref<ActionMenu> = createRef();
 
   private get hasMenu(): boolean {
@@ -132,6 +144,8 @@ export class Breadcrumbs extends SpectrumElement {
 
   public override disconnectedCallback(): void {
     this.resizeObserver?.unobserve(this);
+    this.itemAttributeUnsubscribes.forEach((unsubscribe) => unsubscribe());
+    this.itemAttributeUnsubscribes = [];
     super.disconnectedCallback();
   }
 
@@ -190,8 +204,38 @@ export class Breadcrumbs extends SpectrumElement {
         value: el.value || index.toString(),
         offsetWidth: width,
         isVisible: true,
+        lang: el.lang || undefined,
+        // `SpectrumElement` overrides `dir` to return the *computed* CSS
+        // direction rather than the attribute, so read the attribute
+        // directly to capture the item's own authored direction override.
+        dir: normalizeDir(el.getAttribute('dir')),
       };
     });
+  }
+
+  /**
+   * Re-syncs a single cached item's `lang`/`dir` whenever the corresponding
+   * live breadcrumb item's own `lang`/`dir` changes, without touching its
+   * cached `offsetWidth`/`isVisible`.
+   */
+  private watchItemAttributes(): void {
+    this.itemAttributeUnsubscribes.forEach((unsubscribe) => unsubscribe());
+    this.itemAttributeUnsubscribes = this.breadcrumbsElements.flatMap(
+      (el, index) =>
+        (['lang', 'dir'] as const).map((attribute) =>
+          observeAttribute(el, attribute, () => {
+            this.items = this.items.map((item, i) =>
+              i === index
+                ? {
+                    ...item,
+                    lang: el.lang || undefined,
+                    dir: normalizeDir(el.getAttribute('dir')),
+                  }
+                : item
+            );
+          })
+        )
+    );
   }
 
   /**
@@ -293,7 +337,12 @@ export class Breadcrumbs extends SpectrumElement {
 
           ${this.items.map(
             (item) => html`
-              <sp-menu-item href=${ifDefined(item.href)} value=${item.value}>
+              <sp-menu-item
+                href=${ifDefined(item.href)}
+                value=${item.value}
+                lang=${ifDefined(item.lang)}
+                dir=${ifDefined(item.dir)}
+              >
                 ${item.label}
               </sp-menu-item>
             `
@@ -311,6 +360,8 @@ export class Breadcrumbs extends SpectrumElement {
     if (this.breadcrumbsElements.length === 0) {
       this.items = [];
       this.visibleItems = 0;
+      this.itemAttributeUnsubscribes.forEach((unsubscribe) => unsubscribe());
+      this.itemAttributeUnsubscribes = [];
       return;
     }
 
@@ -319,6 +370,7 @@ export class Breadcrumbs extends SpectrumElement {
 
     // Force a recalculation of widths and overflow
     this.calculateBreadcrumbItemsWidth();
+    this.watchItemAttributes();
 
     // Reset visibleItems to 0 to force a full recalculation
     this.visibleItems = 0;

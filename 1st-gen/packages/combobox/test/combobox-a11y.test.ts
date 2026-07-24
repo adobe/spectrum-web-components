@@ -36,7 +36,7 @@ import {
   withHelpText,
   withTooltip,
 } from '../stories/combobox.stories.js';
-import type { AccessibleNamedNode } from './helpers.js';
+import type { AccessibleNamedNode, TestableCombobox } from './helpers.js';
 import { comboboxFixture } from './helpers.js';
 
 describe('Combobox accessibility', () => {
@@ -288,5 +288,166 @@ describe('Combobox accessibility', () => {
     );
 
     expect(a11yNode).to.not.be.null;
+  });
+  describe('language and direction of parts', () => {
+    // Autonyms (each language's name rendered in that language), alphabetized
+    // by the rendered text so both LTR and RTL scripts are interleaved.
+    const languages = [
+      { value: 'de', itemText: 'Deutsch', lang: 'de', dir: 'ltr' },
+      { value: 'en', itemText: 'English', lang: 'en', dir: 'ltr' },
+      { value: 'es', itemText: 'Español', lang: 'es', dir: 'ltr' },
+      { value: 'fr', itemText: 'Français', lang: 'fr', dir: 'ltr' },
+      { value: 'ru', itemText: 'Русский', lang: 'ru', dir: 'ltr' },
+      { value: 'he', itemText: 'עברית', lang: 'he', dir: 'rtl' },
+      { value: 'ar', itemText: 'العربية', lang: 'ar', dir: 'rtl' },
+      { value: 'zh', itemText: '中文', lang: 'zh', dir: 'ltr' },
+      { value: 'ja', itemText: '日本語', lang: 'ja', dir: 'ltr' },
+      { value: 'ko', itemText: '한국어', lang: 'ko', dir: 'ltr' },
+    ] as const;
+
+    it('propagates lang and dir from a slotted sp-menu-item to its rendered counterpart in the popover', async () => {
+      const el = await fixture<TestableCombobox>(html`
+        <sp-combobox label="Language">
+          ${languages.map(
+            (language) => html`
+              <sp-menu-item
+                value=${language.value}
+                lang=${language.lang}
+                dir=${language.dir}
+              >
+                ${language.itemText}
+              </sp-menu-item>
+            `
+          )}
+        </sp-combobox>
+      `);
+      await elementUpdated(el);
+
+      const opened = oneEvent(el, 'sp-opened');
+      el.open = true;
+      await opened;
+      await elementUpdated(el);
+
+      languages.forEach((language) => {
+        const renderedItem = el.shadowRoot.querySelector(
+          `#${language.value}`
+        ) as MenuItem;
+
+        expect(renderedItem, `rendered item for ${language.value}`).to.exist;
+        expect(renderedItem.lang, `lang for ${language.value}`).to.equal(
+          language.lang
+        );
+        expect(
+          renderedItem.getAttribute('dir'),
+          `dir attribute for ${language.value}`
+        ).to.equal(language.dir);
+      });
+    });
+    it('reads the authored dir from a slotted sp-menu-item even when its own computed direction differs', async () => {
+      const el = await fixture<TestableCombobox>(html`
+        <sp-combobox label="Language">
+          <sp-menu-item value="he" lang="he" dir="rtl" style="direction: ltr">
+            עברית
+          </sp-menu-item>
+          <sp-menu-item value="en">English</sp-menu-item>
+        </sp-combobox>
+      `);
+      await elementUpdated(el);
+
+      const source = el.querySelector('sp-menu-item[value="he"]') as MenuItem;
+      // `SpectrumElement` overrides `dir` to return the computed CSS
+      // direction, not the attribute; the inline style above forces that
+      // divergence so this test actually exercises the fallback to
+      // `getAttribute('dir')` in `Combobox.ts`'s `getOptionDir()`.
+      expect(source.dir, 'computed dir on the source element').to.equal('ltr');
+      expect(source.getAttribute('dir'), 'authored dir attribute').to.equal(
+        'rtl'
+      );
+
+      const opened = oneEvent(el, 'sp-opened');
+      el.open = true;
+      await opened;
+      await elementUpdated(el);
+
+      const renderedItem = el.shadowRoot.querySelector('#he') as MenuItem;
+      expect(renderedItem.getAttribute('dir'), 'rendered item dir').to.equal(
+        'rtl'
+      );
+    });
+    it("syncs the input's lang to the selected option's language", async () => {
+      const el = await fixture<TestableCombobox>(html`
+        <sp-combobox label="Language">
+          <sp-menu-item value="he" lang="he" dir="rtl">עברית</sp-menu-item>
+          <sp-menu-item value="en" lang="en">English</sp-menu-item>
+        </sp-combobox>
+      `);
+      await elementUpdated(el);
+
+      const input = el.shadowRoot.querySelector('#input') as HTMLInputElement;
+      expect(input.lang, 'no lang before a value is selected').to.equal('');
+
+      el.value = 'עברית';
+      await elementUpdated(el);
+
+      expect(input.lang, "input adopts the selected option's lang").to.equal(
+        'he'
+      );
+
+      el.value = 'English';
+      await elementUpdated(el);
+
+      expect(
+        input.lang,
+        'input switches lang with the newly selected option'
+      ).to.equal('en');
+
+      el.value = 'not one of the options';
+      await elementUpdated(el);
+
+      expect(
+        input.lang,
+        'input falls back once the value no longer matches an option'
+      ).to.equal('');
+    });
+    it("renders RTL values via unicode-bidi: plaintext without changing the input's own direction", async () => {
+      const el = await fixture<TestableCombobox>(html`
+        <sp-combobox label="Language">
+          <sp-menu-item value="he" lang="he" dir="rtl">עברית</sp-menu-item>
+          <sp-menu-item value="en" lang="en">English</sp-menu-item>
+        </sp-combobox>
+      `);
+      await elementUpdated(el);
+
+      const input = el.shadowRoot.querySelector('#input') as HTMLInputElement;
+
+      expect(
+        getComputedStyle(input).unicodeBidi,
+        'input shapes bidi text via its own plaintext paragraphs'
+      ).to.equal('plaintext');
+
+      const beforeDirection = getComputedStyle(input).direction;
+      const beforePaddingLeft = getComputedStyle(input).paddingLeft;
+      const beforePaddingRight = getComputedStyle(input).paddingRight;
+
+      el.value = 'עברית';
+      await elementUpdated(el);
+
+      // Unlike `dir="auto"`, `unicode-bidi: plaintext` shapes/aligns RTL
+      // runs without changing the input's own `direction`, so its
+      // button-clearance padding can never diverge from `.button`'s fixed
+      // position.
+      expect(
+        getComputedStyle(input).direction,
+        "input's own direction never changes for an rtl value"
+      ).to.equal(beforeDirection);
+      expect(
+        getComputedStyle(input).paddingLeft,
+        'padding-left stays put for an rtl value'
+      ).to.equal(beforePaddingLeft);
+      expect(
+        getComputedStyle(input).paddingRight,
+        'padding-right (clearing .button) stays put for an rtl value'
+      ).to.equal(beforePaddingRight);
+    });
   });
 });
