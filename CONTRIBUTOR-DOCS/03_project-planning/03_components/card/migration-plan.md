@@ -51,7 +51,7 @@
 - **Labeling (avatar/thumbnail vs. title) is consumer documentation, not code** — Card doesn't validate or bridge accessible names that consumers already fully control.
 - **Styling:** CSS Grid for the shared structural layout; `size`/`density` resolve through `container-padding` tokens for content/footer padding. Region and intra-region spacing (title-to-description, media-to-content) relies on padding plus a blanket `margin-block: 0` reset on slotted content, not a gap-token scale.
 - **Gallery layout and the `media` overlay slot are now implemented.** Gallery (triggered by the absence of title/description/actions/footer/default content) renders via `--_swc-card-media-layout`/`--_swc-card-media-contains` custom properties read through `@container style()`. A new `media` slot, opt-in per component via a `renderMedia` callback on `renderCardTemplate()` (mirroring `renderCollection`/`renderGlyph`) and wired up in `swc-card` today, shares `grid-area: media` with `.swc-CardBase-media` — letting consumer-supplied content (badges, avatars) overlay the preview/collection region. This resolves the previously-open Q2 (see [Blockers](#blockers-and-open-questions)) with a dedicated slot rather than `actions`-slot reuse.
-- **Tested:** `CardBase` has 23 passing behavior/dev-warning tests against test-only fixtures, plus 9 automated per-story smoke tests from `swc-card`'s own stories file (render-only; no explicit `play` functions yet). `swc-card` itself has no dedicated test file — it's still in the Styling pass, ahead of Testing.
+- **Tested:** `swc-card` has 29 passing play-function tests (`test/card.test.ts`) plus a 7-test Playwright a11y spec (`test/card.a11y.spec.ts`), covering the shared `CardBase` behavior, the swc-card-specific slot wiring (collection/media), the swc-card CSS layout contracts (gallery trigger, collection overflow, xs merged layout), and the two title-as-link CSS hit-testing mechanisms (stretched link + elevated nested targets, via `elementFromPoint`). The earlier throwaway `CardBase` fixtures (`test-card-base.ts`, `card-base.test.ts`) have been removed now that a real element exists to test through. Chromatic VRT (`test/vrt/`) covers the full visual matrix and all 16 documented custom properties (CEM-coverage-verified).
 - **Still open:** four items (see [Blockers](#blockers-and-open-questions)) — naming, deferred design questions, and unresolved product-card scoping, none blocking.
 
 
@@ -158,8 +158,6 @@ Shared (always-rendered) slots from `renderCardTemplate()`: `preview`, `title`, 
 **Default slot presence is observed via `SlotTextController`:** `CardBase` holds a `SlotTextController` (`core/controllers/slot-text-controller`, default slot) and exposes `this.slotHasContent` (a getter delegating to `this.slotText.hasContent`). Each concrete card's `render()` passes `hasDefaultSlotContent: this.slotHasContent` into `renderCardTemplate()`, which applies a `--hasDefault` class to the `.swc-CardBase` wrapper via `classMap` when true — a derived-state class (not a consumer-settable attribute), per the "when to use classes vs attributes" style guide convention.
 
 The controller requires the observed slot to bind its `handleSlotChange` to `slotchange` so content added or removed after the first render is tracked. Because `renderCardTemplate()` is shared, it exposes an `onDefaultSlotChange` option that each concrete card wires to `this.slotText.handleSlotChange`; the template binds it on the default `<slot>`. `DefaultSlotClassUpdatesDynamicallyTest` covers this dynamic add/remove path.
-
-
 
 | Component | Glyph slot | Preview aspect ratio | Notes |
 |---|---|---|---|
@@ -287,29 +285,29 @@ Both branches (`titleAsLink`'s proxy-click and `selectable`'s event dispatch) ru
 
 ## Test coverage
 
-`CardBase` has no concrete card component yet, so its behavior is tested directly through test-only fixtures rather than a real `swc-*` component — a first for this codebase (no prior precedent for testing an abstract base via a throwaway concrete subclass; see [References](#references)). Location: `swc/components/card/test/`.
+`swc-card` is now the test surface for the whole card family. Because `CardBase` is abstract and `renderCardTemplate()` is a plain function, both are exercised **transitively** through the real `swc-card` element rather than through throwaway fixtures. The earlier `test-card-base.ts` / `card-base.test.ts` fixtures were removed once `swc-card` existed to test through, per the project convention to test through a real component wherever one exists. Location: `swc/components/card/test/`.
 
-- **`test-card-base.ts`** — `TestCardBase` (renders `renderCardTemplate()` with no overrides), `TestCardWithMediaExtras` (supplies `renderCollection`/`renderGlyph`, to verify those callback parameters render when provided), and `TestNestedButtonHost` (a custom element with its own shadow-DOM `<button>`, used to verify interactive-target filtering across shadow boundaries).
-- **`card-base.test.ts`** — 23 tests across Defaults, Properties/Attributes, Slots, Behaviors, and Dev mode warnings. All passing. Notably, this exercise **validated** rather than just assumed two of this plan's interactive-pattern claims:
-  - `composedPath()` traversing into another custom element's shadow root (A11y-3's justification for dropping the tag-name selector approach) is confirmed directly: a `<button>` inside `TestNestedButtonHost`'s own shadow root, slotted into `actions`, is correctly excluded from surface-click handling — both when reached via the unconditional `actions`-slot exclusion and, independently, when the same nested button is slotted into `description` instead (isolating the `tabIndex`-across-shadow-boundaries mechanism from the actions-slot shortcut).
-  - `tabindex="-1"` is confirmed **not** treated as interactive (a click on such an element outside `actions` still triggers surface-click handling) — the specific bug the `tabIndex` IDL property check was chosen to avoid.
-  - Both `title-as-link` forms (`<a slot="title">` directly, and an anchor nested inside a wrapper) are confirmed to receive the click-proxy correctly.
+- **`card.test.ts`** — 29 Storybook play-function tests across Defaults, Properties/Attributes, Slots and anatomy, the `hasDefault` derived-state class, the swc-card CSS layout contracts, Behaviors, the two title-as-link CSS hit-testing mechanisms, and Dev-mode warnings. Notably, this suite **validates** rather than assumes several of this plan's claims:
+  - `composedPath()` traversing into another custom element's shadow root (A11y-3's justification for dropping the tag-name selector approach) is confirmed directly, using a real `swc-action-button` (the documented expected content of the `actions` slot) as the element whose internal `<button>` lives in another shadow tree: it's excluded from surface-click handling both via the unconditional `actions`-slot exclusion and, independently, when slotted into `description` (isolating the `tabIndex`-across-shadow-boundaries mechanism from the actions-slot shortcut).
+  - `tabindex="-1"` is confirmed **not** treated as interactive — the specific bug the `tabIndex` IDL property check was chosen to avoid.
+  - Both `title-as-link` forms (`<a slot="title">` directly, and an anchor nested inside a wrapper) receive the click-proxy correctly.
+  - The swc-card CSS layout contracts are asserted via computed style: collection overflow (`display: none` on the 4th+ item), the gallery-layout trigger (`--_swc-card-media-layout: gallery` when no content slots are populated, unset when a title is present), and the `size="xs"` merged layout (`--_swc-card-media-layout: 3col` plus the 2-item collection cap).
+  - The two title-as-link CSS hit-testing mechanisms are asserted via `elementFromPoint` (real z-order/hit-testing, which direct `.click()` cannot exercise): the **stretched link** (`::before` over the `pointer-events: none` preview region resolves to the title anchor, proving its hit area extends past its own text box) and the **elevated nested target** (a nested in-content link is the topmost element at its own location, i.e. above the stretched pseudo-element, so it stays independently clickable). Both were confirmed to fail when their CSS rule is regressed.
+- **`card.a11y.spec.ts`** — 7 Playwright tests. A card is a generic container with no role of its own, so these target the accessible structure the consumer's slotted content provides: no `role` on the host (plain or `selectable` — the latter deferred per Q4), slotted title/description exposed as readable content, `title-as-link` exposing the consumer anchor as a `link` with the nested action button keeping its own role/name, and the keyboard/tab-order contract (plain card not focusable, `selectable` card focusable, `title-as-link` card deferring the tab stop to its anchor). aXe WCAG/contrast checks run separately via the Storybook test-runner across all stories.
+- **`test/vrt/card.vrt.ts`** — Chromatic VRT. A single `Permutations` story (rendered once light/ltr and once dark/rtl) covers the variant × size matrix, the three densities, slot anatomy, the collection layout (1–3 items, 4-item overflow, collection-without-preview, and the `size="xs"` merge), the gallery layout with its `media` overlay, the interactive `selectable`/`title-as-link` hover and focus-visible states (forced via the pseudo-state play function), and title wrapping / CJK rendering. A separate `ForcedColors` story captures the forced-colors palette (the CanvasText border on non-quiet variants). Card has no `static-color` axis and no `global-<component>.css`, so no static-color rows and no `*-global-styles.vrt.ts` file.
+- **`test/vrt/card-custom-properties.vrt.ts`** — one reference/override row per public custom property; the `play` function runs `verifyCustomPropertyCoverage()` against the CEM (`components/card/Card.ts` → `Card`), so the 16 documented `--swc-card-*` properties can't drift from VRT coverage.
 
-**Coupling to the still-open event name (Q1):** tests assert the literal string `'swc-card-click'`. If it's renamed before a concrete card ships, these tests need a matching update — they are not yet insulated from that decision.
+**Coupling to the still-open event name (Q1):** tests assert the literal string `'swc-card-click'` (via the exported `SWC_CARD_CLICK_EVENT` constant). If the event is renamed, the constant carries the tests along with it — they reference the constant, not a bare string literal.
 
-**Untestable at this phase — verify once a real card exists:**
+**Untestable at this phase — verify later:**
 
 | Item | Why untestable now | Verify when |
 |---|---|---|
-| Stretched-link CSS trick (A11y-3) | The rule now exists in `card-template.css` (`:host([title-as-link]) ::slotted(a[slot="title"])::before`, using `::before`), but verifying it properly needs coordinate-based clicking (e.g. clicking an empty corner of the rendered card) rather than DOM event dispatch | Playwright-level or manual browser verification |
-| Native modifier-click/middle-click/right-click-"open in new tab" across the *extended* surface | Tests intentionally use `event.preventDefault()` on the test anchor to avoid triggering real navigation inside the test run — this confirms the click-proxy fires, not that a real click-through would fully succeed, and modifier/button state can't be verified via `.click()` at all (see A11y-3) | Real browser/manual verification; likely also needs a Playwright-level test, not a `.click()`-based one |
-| "Elevate nested interactive targets" CSS stacking (A11y-3) | The rule now exists (`:host([title-as-link]) ::slotted(*:not([slot="title"])) { position: relative; z-index: 1; }`), but needs the same coordinate-based click verification as the stretched-link trick, with real actions-slot content styled alongside it | Playwright-level or manual browser verification |
-| Collection layout visual verification | Implemented in `card.css` and demonstrated across 4 combinations in the `WithCollection` story, but only visually — no automated test asserts the rendered grid/overflow behavior (e.g. that a 4th+ image is actually hidden, or that the `xs` merged preview+collection layout renders correctly) | `swc-card` Testing phase |
-| Gallery layout and `media` overlay slot visual verification | Both implemented in `card.css`/`card-template.css` and demonstrated in the `Gallery` story (preview-only, collection-only, and a badge/avatar `media`-overlay variant), but only visually — no automated test asserts the container-query-driven layout switch or the overlay's shared-grid-area stacking | `swc-card` Testing phase |
+| `renderCardTemplate()` glyph callback (`renderGlyph`) and its callback-absent branches | `swc-card` supplies `renderCollection`/`renderMedia` but never a glyph, and always supplies the collection/media callbacks — so the template's glyph rendering and its "callback omitted renders nothing" branches are no longer reachable through any existing element (the fixtures that exercised them were removed) | `swc-user-card` / `swc-product-card` tickets, which add glyph slots and exercise the omitted-callback branches |
+| Native modifier-click/middle-click/right-click-"open in new tab" across the stretched-link surface (A11y-3) | The stretched link's *surface coverage* is now tested (`StretchedLinkSurfaceTest`, via `elementFromPoint`), but native anchor *navigation* from a modifier/middle-click needs trusted input and real navigation, which synthetic `userEvent` can't produce and `.click()` can't carry button/modifier state for | Real browser/manual verification |
 | Per-component `VARIANTS` override (e.g. `swc-user-card`/`swc-product-card` excluding `quiet`) | Only the base's full variant set is tested; no concrete class exists yet to override the static | Each per-component ticket |
-| Aspect ratios (3/1, 5/1) and footer `end`-alignment override | `swc-user-card`/`swc-product-card`-specific CSS, neither of which exists yet. `swc-card`'s own default `3/2` preview aspect ratio is implemented (`--swc-card-base-preview-aspect-ratio`) but still untested through a real component | Each per-component ticket |
+| Aspect ratios (3/1, 5/1) and footer `end`-alignment override | `swc-user-card`/`swc-product-card`-specific CSS, neither of which exists yet | Each per-component ticket |
 | A11y-1/A11y-2 consumer-documentation guidance | Prose guidance for consumers, not `CardBase` behavior — nothing to assert against | N/A (documentation task, not a test) |
-| Accessibility tree / screen reader snapshots (`*.a11y.spec.ts` pattern) | No rendered ARIA roles/labels beyond what's inherited, and A11y-1/A11y-2 are consumer-owned; a snapshot test needs real content to be meaningful | Each per-component ticket, once real anatomy/content exists |
 
 
 ## Component checklist
@@ -319,7 +317,7 @@ Both branches (`titleAsLink`'s proxy-click and `selectable`'s event dispatch) ru
 - [x] Scaffold complete: `CardBase`, `Card.types.ts`, `index.ts`, shared `renderCardTemplate()`, shared `card-template.css` (prior ticket)
 - [x] Reference implementations documented (React + 1st-gen pointers)
 - [x] Accessibility decisions drafted
-- [x] `CardBase` behavior covered by tests against test-only fixtures (see [Test coverage](#test-coverage))
+- [x] `CardBase` behavior covered by tests — now through the concrete `swc-card` (see [Test coverage](#test-coverage)); the original test-only fixtures have been retired
 - [x] Plan reviewed by at least one other engineer
 
 ### Per-component tickets
@@ -331,7 +329,9 @@ Both branches (`titleAsLink`'s proxy-click and `selectable`'s event dispatch) ru
   - [x] Shared `card-template.css` implemented: base structure, size/density/visual variants, title-as-link CSS mechanisms, actions-slot support gating, forced-colors override, `media` overlay slot
   - [x] Collection layout implemented in `card.css` (own-component styles), including the `size="xs"` merged preview+collection layout
   - [x] Gallery layout implemented in `card.css`, via `--_swc-card-media-layout`/`--_swc-card-media-contains` custom properties read through `@container style()`
-  - [ ] Accessibility, Testing, Documentation, Review: not started
+  - [x] Testing: `test/card.test.ts` (29 play-function tests) and `test/card.a11y.spec.ts` (7 Playwright tests) — all passing; original `CardBase` fixtures removed
+  - [x] VRT: `test/vrt/card.vrt.ts` (Permutations + ForcedColors) and `test/vrt/card-custom-properties.vrt.ts` (all 16 documented custom properties, CEM-coverage-verified)
+  - [ ] Accessibility, Documentation, Review: not started
 - **`swc-user-card`** — not started
 - **`swc-product-card`** — not started
 
@@ -354,7 +354,7 @@ Both branches (`titleAsLink`'s proxy-click and `selectable`'s event dispatch) ru
 - 1st-gen source: [`1st-gen/packages/card/src/Card.ts`](../../../../1st-gen/packages/card/src/Card.ts), [`1st-gen/tools/shared/src/like-anchor.ts`](../../../../1st-gen/tools/shared/src/like-anchor.ts)
 - 1st-gen docs: [`1st-gen/packages/card/README.md`](../../../../1st-gen/packages/card/README.md)
 - Existing 2nd-gen files: [`Card.base.ts`](../../../../2nd-gen/packages/core/components/card/Card.base.ts), [`Card.types.ts`](../../../../2nd-gen/packages/core/components/card/Card.types.ts), [`card-template.ts`](../../../../2nd-gen/packages/swc/components/card/card-template.ts), [`card-template.css`](../../../../2nd-gen/packages/swc/stylesheets/_lit-styles/card-template.css)
-- Test fixtures and tests: [`test-card-base.ts`](../../../../2nd-gen/packages/swc/components/card/test/test-card-base.ts), [`card-base.test.ts`](../../../../2nd-gen/packages/swc/components/card/test/card-base.test.ts)
+- Tests: [`card.test.ts`](../../../../2nd-gen/packages/swc/components/card/test/card.test.ts), [`card.a11y.spec.ts`](../../../../2nd-gen/packages/swc/components/card/test/card.a11y.spec.ts)
 - [Storybook testing guide](../../../02_style-guide/04_testing/02_storybook-testing.md) — play-function test conventions followed above
 - [Base class vs concrete class](../../../02_style-guide/02_typescript/11_base-vs-concrete.md)
 - [Inclusive Components — Cards: the pseudo-content trick](https://inclusive-components.design/cards/#thepseudocontenttrick) — stretched-link technique referenced in A11y-3
