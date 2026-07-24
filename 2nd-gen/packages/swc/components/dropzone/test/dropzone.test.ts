@@ -28,11 +28,17 @@ import '@adobe/spectrum-wc/components/button/swc-button.js';
 import '@adobe/spectrum-wc/components/dropzone/swc-dropzone.js';
 
 import {
+  fixture,
   getComponent,
   getComponents,
   withWarningSpy,
 } from '../../../utils/test-utils.js';
-import meta, { Overview, Sizes, States } from '../stories/dropzone.stories.js';
+import meta, {
+  BrowseAndDrop,
+  Overview,
+  Sizes,
+  States,
+} from '../stories/dropzone.stories.js';
 
 export default {
   ...meta,
@@ -221,7 +227,7 @@ export const DragOverTest: Story = {
     );
 
     await step(
-      'swc-dropzone-dragover fires on every dragover, not only the first',
+      'swc-dropzone-dragover fires once on entry and does not repeat while still hovering',
       async () => {
         // dropzone.dragged is already true from the previous step.
         let dragoverCount = 0;
@@ -236,7 +242,31 @@ export const DragOverTest: Story = {
         dropzone.removeEventListener(SWC_DROPZONE_DRAGOVER_EVENT, listener);
         expect(
           dragoverCount,
-          'swc-dropzone-dragover fires on each dragover'
+          'swc-dropzone-dragover does not fire again while already dragged'
+        ).toBe(0);
+      }
+    );
+
+    await step(
+      'swc-dropzone-should-accept still fires on every dragover tick, unlike swc-dropzone-dragover',
+      async () => {
+        // dropzone.dragged is already true from the previous steps.
+        let shouldAcceptCount = 0;
+        const listener = (): void => {
+          shouldAcceptCount++;
+        };
+        dropzone.addEventListener(SWC_DROPZONE_SHOULD_ACCEPT_EVENT, listener);
+
+        dropzone.dispatchEvent(makeDragEvent('dragover', new DataTransfer()));
+        dropzone.dispatchEvent(makeDragEvent('dragover', new DataTransfer()));
+
+        dropzone.removeEventListener(
+          SWC_DROPZONE_SHOULD_ACCEPT_EVENT,
+          listener
+        );
+        expect(
+          shouldAcceptCount,
+          'swc-dropzone-should-accept fires on each dragover tick (native API requirement)'
         ).toBe(2);
       }
     );
@@ -747,6 +777,72 @@ export const DropEffectTest: Story = {
           ).toBeGreaterThan(0);
         })
     );
+
+    await step(
+      'reflects the drop-effect attribute at initial parse',
+      async () => {
+        const fresh = await fixture<Dropzone>(html`
+          <swc-dropzone aria-label="Upload files" drop-effect="move">
+            <swc-button variant="accent">Browse files</swc-button>
+          </swc-dropzone>
+        `);
+        expect(
+          fresh.dropEffect,
+          'drop-effect attribute parsed into dropEffect on connect'
+        ).toBe('move');
+        fresh.parentElement?.remove();
+      }
+    );
+
+    await step(
+      'reacts to drop-effect attribute changes at runtime',
+      async () => {
+        dropzone.setAttribute('drop-effect', 'link');
+        await dropzone.updateComplete;
+        expect(
+          dropzone.dropEffect,
+          'dropEffect updates when the attribute changes'
+        ).toBe('link');
+      }
+    );
+
+    await step(
+      'rejects an invalid drop-effect attribute and emits a warning',
+      () =>
+        withWarningSpy(async (warnCalls) => {
+          dropzone.setAttribute('drop-effect', 'link');
+          await dropzone.updateComplete;
+          dropzone.setAttribute('drop-effect', 'invalid-effect');
+          await dropzone.updateComplete;
+          expect(
+            dropzone.dropEffect,
+            'invalid attribute value rejected; stays at prior valid value'
+          ).toBe('link');
+          expect(
+            warnCalls.length,
+            'warning emitted for invalid drop-effect attribute'
+          ).toBeGreaterThan(0);
+        })
+    );
+
+    await step(
+      'removing the drop-effect attribute resets to the default without a warning',
+      () =>
+        withWarningSpy(async (warnCalls) => {
+          dropzone.setAttribute('drop-effect', 'move');
+          await dropzone.updateComplete;
+          dropzone.removeAttribute('drop-effect');
+          await dropzone.updateComplete;
+          expect(
+            dropzone.dropEffect,
+            'dropEffect resets to the default when the attribute is removed'
+          ).toBe('copy');
+          expect(
+            warnCalls.length,
+            'no warning emitted when the attribute is removed'
+          ).toBe(0);
+        })
+    );
   },
 };
 
@@ -884,6 +980,50 @@ export const AriaLabelledbyNoWarningTest: Story = {
             'no warning emitted when aria-labelledby is present'
           ).toBe(0);
         })
+    );
+  },
+};
+
+// ──────────────────────────────────────
+//    TEST: Focus management on fill
+// ──────────────────────────────────────
+
+// Focus management here is the consumer's responsibility (see
+// bindFilledStateHandlers in dropzone.stories.ts), not the component's:
+// filled-content is consumer-authored, so this verifies the story's own
+// handler moves focus correctly, not a component-level guarantee.
+export const BrowseAndDropFocusTest: Story = {
+  ...BrowseAndDrop,
+  play: async ({ canvasElement, step }) => {
+    const dropzone = await getComponent<Dropzone>(
+      canvasElement,
+      'swc-dropzone'
+    );
+    const browseButton = dropzone.querySelector(
+      'swc-button:not([slot])'
+    ) as HTMLElement;
+    const replaceButton = dropzone.querySelector(
+      '[slot="filled-content"] swc-button'
+    ) as HTMLElement;
+
+    await step(
+      'moves focus to the replace control after the consumer handler accepts a drop',
+      async () => {
+        browseButton.focus();
+        dropzone.dispatchEvent(
+          new CustomEvent(SWC_DROPZONE_DROP_EVENT, {
+            bubbles: true,
+            composed: true,
+            detail: {},
+          })
+        );
+        await dropzone.updateComplete;
+
+        expect(
+          document.activeElement,
+          'focus moves to the replace control'
+        ).toBe(replaceButton);
+      }
     );
   },
 };

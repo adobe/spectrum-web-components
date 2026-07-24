@@ -36,6 +36,9 @@ export const DROP_EFFECTS = [
   'none',
 ] as const satisfies readonly DropEffect[];
 
+export const DROPZONE_DEFAULT_DROP_EFFECT =
+  'copy' as const satisfies DropEffect;
+
 // ──────────────────
 //     EVENTS
 // ──────────────────

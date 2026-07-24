@@ -19,6 +19,7 @@ import { SlotAttributePropagationController } from '../../controllers/slot-attri
 import {
   DROP_EFFECTS,
   type DropEffect,
+  DROPZONE_DEFAULT_DROP_EFFECT,
   DROPZONE_VALID_SIZES,
   type DropzoneDragLeaveDetail,
   type DropzoneSize,
@@ -38,9 +39,11 @@ import {
  * @slot - Slot for the illustrated message and browse control. Hidden automatically when `filled` is true.
  * @slot filled-content - Slot for the uploaded-state content (e.g. an image preview). Shown automatically when `filled` is true; hidden otherwise.
  *
- * @fires swc-dropzone-should-accept - Cancelable event fired on `dragover`. Cancel to
- *   reject the dragged payload and set the cursor to `none`.
- * @fires swc-dropzone-dragover - Fired when dragged files are over the zone and accepted.
+ * @fires swc-dropzone-should-accept - Cancelable event fired on every native `dragover`
+ *   tick while a drag is over the zone, not just on entry. Cancel to reject the dragged
+ *   payload and set the cursor to `none`.
+ * @fires swc-dropzone-dragover - Fired once when dragged files enter the zone and are
+ *   accepted; does not repeat on subsequent `dragover` ticks while still hovering.
  * @fires swc-dropzone-dragleave - Fired when dragged files leave the zone after a 100 ms
  *   debounce. Detail is a plain snapshot `{ clientX, clientY, relatedTarget }` captured
  *   synchronously from the native event before the timer fires.
@@ -79,19 +82,30 @@ export abstract class DropzoneBase extends SizedMixin(SpectrumElement, {
 
   /**
    * The OS drag-cursor feedback shown while a file is held over the zone.
-   * Maps directly to `DataTransfer.dropEffect`. Does not reflect as an
-   * attribute because it controls browser chrome, not component state.
+   * Maps directly to `DataTransfer.dropEffect`. Settable via the `drop-effect`
+   * attribute, but property changes do not reflect back to the attribute
+   * because it controls browser chrome, not component state.
    *
+   * @attr drop-effect
    * @type {'copy' | 'move' | 'link' | 'none'}
    * @default 'copy'
    */
+  @property({ type: String, attribute: 'drop-effect' })
   public get dropEffect(): DropEffect {
     return this._dropEffect;
   }
 
-  public set dropEffect(value: DropEffect) {
-    if ((DROP_EFFECTS as readonly string[]).includes(value)) {
+  public set dropEffect(value: DropEffect | null) {
+    // Lit passes `null` here when the `drop-effect` attribute is removed;
+    // treat that as "reset to the default" rather than an invalid value.
+    if (value === null) {
+      const oldValue = this._dropEffect;
+      this._dropEffect = DROPZONE_DEFAULT_DROP_EFFECT;
+      this.requestUpdate('dropEffect', oldValue);
+    } else if ((DROP_EFFECTS as readonly string[]).includes(value)) {
+      const oldValue = this._dropEffect;
       this._dropEffect = value;
+      this.requestUpdate('dropEffect', oldValue);
     } else if (window.__swc?.DEBUG) {
       window.__swc?.warn(
         this,
@@ -102,7 +116,7 @@ export abstract class DropzoneBase extends SizedMixin(SpectrumElement, {
     }
   }
 
-  private _dropEffect: DropEffect = 'copy';
+  private _dropEffect: DropEffect = DROPZONE_DEFAULT_DROP_EFFECT;
 
   // ──────────────────────────
   //     IMPLEMENTATION
@@ -165,21 +179,24 @@ export abstract class DropzoneBase extends SizedMixin(SpectrumElement, {
     }
 
     this._clearDragLeaveTimer();
+    event.dataTransfer.dropEffect = this._dropEffect;
 
+    // `should-accept` above re-fires on every native `dragover` tick (a
+    // browser requirement: `dropEffect` must be reasserted on each one), but
+    // `dragged` only actually changes once per hover session, so this
+    // informational event fires on entry only, not on every tick.
     if (!this.dragged) {
       this.dragged = true;
       this._onDragStateChange(true);
+
+      this.dispatchEvent(
+        new CustomEvent<DragEvent>(SWC_DROPZONE_DRAGOVER_EVENT, {
+          bubbles: true,
+          composed: true,
+          detail: event,
+        })
+      );
     }
-
-    event.dataTransfer.dropEffect = this._dropEffect;
-
-    this.dispatchEvent(
-      new CustomEvent<DragEvent>(SWC_DROPZONE_DRAGOVER_EVENT, {
-        bubbles: true,
-        composed: true,
-        detail: event,
-      })
-    );
   };
 
   /** @internal */
