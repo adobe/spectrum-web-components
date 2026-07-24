@@ -71,13 +71,7 @@ if (window.__swc?.DEBUG) {
 
 ## Reusable validation helpers
 
-`@spectrum-web-components/core/utils` exports four helpers that wrap
-`window.__swc.warn` for the most common validation shapes. **Use these
-instead of hand-writing an `includes()` + `warn()` check.** Doing so keeps
-message wording and the `DEBUG` gate consistent across components. Internally
-all four defer the actual gate-and-emit step to one private `emitWarning`
-primitive, so that is the single place that needs to change if the underlying
-warning engine is ever reworked.
+`@spectrum-web-components/core/utils` exports four helpers that wrap `window.__swc.warn` for the most common validation shapes. **Use these instead of hand-writing an `includes()` + `warn()` check.** Doing so keeps message wording and the `DEBUG` gate consistent across components. Internally all four defer the actual gate-and-emit step to one private `emitWarning` primitive, so that is the single place that needs to change if the underlying warning engine is ever reworked.
 
 ```ts
 import {
@@ -88,36 +82,20 @@ import {
 } from '@spectrum-web-components/core/utils';
 ```
 
-None of the four require an outer `if (window.__swc?.DEBUG)` check. They
-gate on `DEBUG` internally. **They do not manage lifecycle timing for you.**
-Calling the right helper from the wrong place can check stale data (a
-property that hasn't updated yet) or DOM that doesn't exist yet (slot content
-before it's assigned). Which hook to call each helper from:
+None of the four require an outer `if (window.__swc?.DEBUG)` check. They gate on `DEBUG` internally. **They do not manage lifecycle timing for you.** Calling the right helper from the wrong place can check stale data (a property that hasn't updated yet) or DOM that doesn't exist yet (slot content before it's assigned). Which hook to call each helper from:
 
 | Helper / check | Call from | Why |
-|---|---|---|
+| --- | --- | --- |
 | `validateEnum` | `update()`, before `super.update()` | Runs on every property change, before render commits; see [update()](#update-pre-render-validation). |
 | `warnIf`: required property | `firstUpdated()` | One-time check once the DOM exists; see [firstUpdated()](#firstupdated-one-time-setup-validation). |
-| `warnIf`: conditionally required property (depends on slot content) | `updated()` | Needs both the current property value *and* rendered/slotted DOM to check against; see [updated()](#updated-post-render-validation). |
+| `warnIf`: conditionally required property (depends on slot content) | `updated()` | Needs both the current property value _and_ rendered/slotted DOM to check against; see [updated()](#updated-post-render-validation). |
 | `warnIf`: mutually exclusive / no-effect combination | `update()`, before `super.update()` | Same as enum checks: pure property-to-property comparison, no DOM needed. |
 | `warnIf`: ancestor/context requirement | `connectedCallback()` | Needs the element attached to the tree to call `closest()`/traverse context; see [connectedCallback()](#connectedcallback-environment-validation). |
 | `validateRequiredSlot`, `validateAllowedChildren` | The slot's own `slotchange` handler | Not a Lit lifecycle hook at all: slot assignment is a separate DOM event. See [Slot validation](#slot-validation). |
 
-Never call any of these from the constructor: no property values have been
-set and there's no rendered DOM yet, so every check would run against
-placeholder/undefined state.
+Never call any of these from the constructor: no property values have been set and there's no rendered DOM yet, so every check would run against placeholder/undefined state.
 
-**Re-firing across renders is expected and handled for you.** `update()`/
-`updated()` run on every reactive update, so a `validateEnum`/`warnIf` call
-placed there re-evaluates its condition every time; that's correct, not a
-bug to guard against with a `changedProperties.has(...)` check (unless the
-check is expensive; the existing `Indeterminate` example above guards for
-that reason, not to avoid re-firing). Repeated warnings for the *same*
-underlying issue don't spam the console: `window.__swc.warn`'s
-`localName:type:level:message` dedup (see [Known limitations](#known-limitations)
-for the one remaining collision case, across multiple instances of the same
-component) suppresses repeat fires within a session regardless of how many
-times the lifecycle hook re-runs.
+**Re-firing across renders is expected and handled for you.** `update()`/ `updated()` run on every reactive update, so a `validateEnum`/`warnIf` call placed there re-evaluates its condition every time; that's correct, not a bug to guard against with a `changedProperties.has(...)` check (unless the check is expensive; the existing `Indeterminate` example above guards for that reason, not to avoid re-firing). Repeated warnings for the _same_ underlying issue don't spam the console: `window.__swc.warn`'s `localName:type:level:message` dedup (see [Known limitations](#known-limitations) for the one remaining collision case, across multiple instances of the same component) suppresses repeat fires within a session regardless of how many times the lifecycle hook re-runs.
 
 ### validateEnum(): Union types and enum values
 
@@ -135,9 +113,7 @@ protected override update(changedProperties: PropertyValues): void {
 
 ### warnIf(): Required, conditionally required, mutually exclusive, and one-off checks
 
-`warnIf(element, condition, message, url, options?)` is the general-purpose
-primitive: it warns when `condition` is `true`. It covers every validation
-shape that isn't an enum or a slot check.
+`warnIf(element, condition, message, url, options?)` is the general-purpose primitive: it warns when `condition` is `true`. It covers every validation shape that isn't an enum or a slot check.
 
 **Required property:**
 
@@ -154,8 +130,7 @@ protected override firstUpdated(changed: PropertyValues): void {
 }
 ```
 
-**Conditionally required property** (e.g. `accessibleLabel` is only required
-when no label content is slotted):
+**Conditionally required property** (e.g. `accessibleLabel` is only required when no label content is slotted):
 
 ```ts
 protected override updated(changed: PropertyValues<this>): void {
@@ -171,8 +146,7 @@ protected override updated(changed: PropertyValues<this>): void {
 }
 ```
 
-**Mutually exclusive / no-effect combination** (e.g. `outline` has no effect
-unless `variant` is semantic):
+**Mutually exclusive / no-effect combination** (e.g. `outline` has no effect unless `variant` is semantic):
 
 ```ts
 warnIf(
@@ -184,9 +158,7 @@ warnIf(
 );
 ```
 
-**Component-specific quirk** (for anything that doesn't fit the shapes above,
-call `warnIf` directly with whatever predicate the component needs; there is
-no separate "quirks" API):
+**Component-specific quirk** (for anything that doesn't fit the shapes above, call `warnIf` directly with whatever predicate the component needs; there is no separate "quirks" API):
 
 ```ts
 warnIf(
@@ -202,12 +174,7 @@ warnIf(
 
 Different validation concerns belong in different lifecycle methods. Choose based on when the validation is relevant and what information is available.
 
-The examples below show the underlying `window.__swc.warn` shape each helper
-in [Reusable validation helpers](#reusable-validation-helpers) is built on.
-New validation code should call `validateEnum()` or `warnIf()` rather than
-writing `window.__swc.warn()` directly, but the lifecycle-hook guidance
-(which method to override, and why) still applies regardless of which call
-you make inside it.
+The examples below show the underlying `window.__swc.warn` shape each helper in [Reusable validation helpers](#reusable-validation-helpers) is built on. New validation code should call `validateEnum()` or `warnIf()` rather than writing `window.__swc.warn()` directly, but the lifecycle-hook guidance (which method to override, and why) still applies regardless of which call you make inside it.
 
 ### update(): Pre-render validation
 
@@ -365,11 +332,7 @@ public override connectedCallback(): void {
 
 ## Slot validation
 
-Slot content can't be checked until it's actually assigned, so both helpers
-below are wired to the slot's `slotchange` event rather than a Lit lifecycle
-hook. Wiring is manual (there is no base-class magic that auto-attaches
-these): add a `@slotchange=${this.handleXSlotChange}` on the `<slot>` in
-`render()` and call the helper from that handler.
+Slot content can't be checked until it's actually assigned, so both helpers below are wired to the slot's `slotchange` event rather than a Lit lifecycle hook. Wiring is manual (there is no base-class magic that auto-attaches these): add a `@slotchange=${this.handleXSlotChange}` on the `<slot>` in `render()` and call the helper from that handler.
 
 ### validateRequiredSlot(): Required slots
 
@@ -392,9 +355,7 @@ protected handleLabelSlotChange(event: Event): void {
 
 ### validateAllowedChildren(): Allowed children
 
-Generalizes the pattern IllustratedMessage's heading slot already uses
-(previously a one-off `['H2','H3','H4','H5','H6']` allowlist inline in the
-component):
+Generalizes the pattern IllustratedMessage's heading slot already uses (previously a one-off `['H2','H3','H4','H5','H6']` allowlist inline in the component):
 
 ```ts
 protected handleHeadingSlotChange(event: Event): void {
@@ -419,7 +380,6 @@ Every deprecated API needs a runtime warning, not only a `@deprecated` JSDoc tag
 - A property is being replaced by a slot (consumer-owned HTML)
 - A property value is being renamed (e.g. `variant="cta"` → `variant="accent"`)
 - An attribute is being removed, or replaced by a different attribute
-
 
 ### Deprecation warning structure
 
@@ -535,15 +495,12 @@ window.__swc.warn(
 ```ts
 // ✅ Good: specific, actionable
 `Invalid variant "${this.variant}". Valid variants: positive, negative, informative, notice, neutral.`
-
 // ❌ Bad: vague
 `Invalid variant.`
-
 // ✅ Good: explains the constraint
 `Outline styling requires a semantic variant. Current variant "${this.variant}" is not semantic.`
-
 // ❌ Bad: doesn't explain why
-`Cannot use outline with this variant.`
+`Cannot use outline with this variant.`;
 ```
 
 **URL format:**
@@ -551,7 +508,7 @@ window.__swc.warn(
 Use the full documentation URL for the component:
 
 ```ts
-'https://opensource.adobe.com/spectrum-web-components/components/badge/'
+'https://opensource.adobe.com/spectrum-web-components/components/badge/';
 ```
 
 ## Known limitations
@@ -560,12 +517,12 @@ Use the full documentation URL for the component:
 
 One collision case remains, unfixed: the key has no per-instance identity, so **two different instances of the same component with the identical message** still collide. Ten `<swc-badge>` elements on a page all set to the same invalid `variant` still produce exactly **one** console warning (from whichever updates first), not ten, which is easy to misread as "only one badge is broken." Set `window.__swc.verbose = true` before components load to skip the `issuedWarnings` check entirely and log every occurrence, from every instance, every time. Reach for this when auditing a page for every instance of a given issue.
 
-**Production stripping (partially fixed).** Each helper in `dev-validation.ts` now starts with `if (process.env.NODE_ENV === 'production') return;`, ahead of the `window.__swc?.DEBUG` check. This matters because a bundler can only dead-code-eliminate a branch it can *prove* false at build time. `window.__swc?.DEBUG` is a runtime read on a global: no bundler can know it will be `undefined` just because a *different* file's `if (literal)` block never assigns it. `process.env.NODE_ENV` is the opposite: once a bundler replaces it with the literal `"production"`, `if ("production" === "production") return;` folds to `if (true) return;`, and a minifier can then delete everything after it **inside that function**: the dedup lookup, the message formatting, the `window.__swc.warn` call. That's a real, provable removal, not a hope.
+**Production stripping (partially fixed).** Each helper in `dev-validation.ts` now starts with `if (process.env.NODE_ENV === 'production') return;`, ahead of the `window.__swc?.DEBUG` check. This matters because a bundler can only dead-code-eliminate a branch it can _prove_ false at build time. `window.__swc?.DEBUG` is a runtime read on a global: no bundler can know it will be `undefined` just because a _different_ file's `if (literal)` block never assigns it. `process.env.NODE_ENV` is the opposite: once a bundler replaces it with the literal `"production"`, `if ("production" === "production") return;` folds to `if (true) return;`, and a minifier can then delete everything after it **inside that function**: the dedup lookup, the message formatting, the `window.__swc.warn` call. That's a real, provable removal, not a hope.
 
 What this does **not** fix:
 
 - **The call sites themselves.** Every `validateEnum(...)`/`warnIf(...)` expression in every component still executes on every `update()`/`updated()` pass, in every build, because JS evaluates a function's arguments before calling it, so the message template string and `options` object literal at each call site are still constructed even when the function itself immediately no-ops.
-- **Whether the substitution actually happens.** This package's own build does not currently replace `process.env.NODE_ENV` before publishing (it ships the literal check as-is), so whether any of the folding above actually occurs still depends on either this package's own build pipeline being updated to perform the substitution + minification, or the *consuming application's* bundler doing so downstream. Neither is guaranteed today.
+- **Whether the substitution actually happens.** This package's own build does not currently replace `process.env.NODE_ENV` before publishing (it ships the literal check as-is), so whether any of the folding above actually occurs still depends on either this package's own build pipeline being updated to perform the substitution + minification, or the _consuming application's_ bundler doing so downstream. Neither is guaranteed today.
 - **The bare-ES-module case.** A consumer loading this package with no bundler at all (a raw `<script type="module">` import) still hits a `ReferenceError` on `process`, since it's never defined in that environment.
 
 The more complete fix, publishing genuinely separate development/production builds (the pattern React uses: a small entry that `require()`s one of two fully-built files, so the unused one is never even parsed), is a significantly larger project (doubled build output, a stripping transform, doubled test coverage) and is tracked as a follow-up, not attempted here.
