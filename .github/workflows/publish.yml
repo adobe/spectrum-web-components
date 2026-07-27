@@ -69,7 +69,7 @@ jobs:
       # (push to next, snapshot-test) never reaches tag == 'latest'.
       - name: Lock main during release
         if: github.event_name == 'workflow_dispatch' && github.event.inputs.tag == 'latest'
-        uses: adobe/spectrum-web-components/.github/actions/release-branch-lock@main
+        uses: adobe/spectrum-web-components/.github/actions/release-branch-lock@${{ github.sha }}
         with:
           mode: lock
           branch: main

@@ -67,7 +67,7 @@ jobs:
       # checkout + dependency install.
       - name: Lock gen2-beta during release
         if: github.event_name != 'pull_request' && env.DRY_RUN != 'true'
-        uses: adobe/spectrum-web-components/.github/actions/release-branch-lock@main
+        uses: adobe/spectrum-web-components/.github/actions/release-branch-lock@${{ github.sha }}
         with:
           mode: lock
           branch: gen2-beta
