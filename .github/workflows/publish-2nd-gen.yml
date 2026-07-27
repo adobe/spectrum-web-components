@@ -61,17 +61,19 @@ jobs:
       YARN_ENABLE_IMMUTABLE_INSTALLS: false
       DRY_RUN: ${{ github.event.inputs.dry_run || 'false' }}
     steps:
-      # Locked before checkout (via the remote action ref, not the local ./path one -
-      # a local path reference needs the repo already checked out to resolve) so the
-      # race window is closed from the very start of the job, not just from after
-      # checkout + dependency install.
+      # Locked before checkout via a raw gh api call (not the composite action - `uses:`
+      # doesn't support expressions, so it can't be pinned to github.sha, and a literal
+      # @main ref would 404 until this action is merged there; a raw call needs no repo
+      # checkout at all) so the race window is closed from the very start of the job,
+      # not just from after checkout + dependency install.
       - name: Lock gen2-beta during release
         if: github.event_name != 'pull_request' && env.DRY_RUN != 'true'
-        uses: adobe/spectrum-web-components/.github/actions/release-branch-lock@${{ github.sha }}
-        with:
-          mode: lock
-          branch: gen2-beta
-          token: ${{ secrets.RELEASE_BOT_TOKEN }}
+        env:
+          GH_TOKEN: ${{ secrets.RELEASE_BOT_TOKEN }}
+        run: |
+          gh api "repos/${{ github.repository }}/branches/gen2-beta/protection/required_status_checks/contexts" \
+            -X POST --input - <<< '{"contexts":["release/in-progress"]}' \
+            || echo "No branch protection on gen2-beta (or insufficient access) - skipping lock. Concurrent-merge protection during this release is not active."
 
       # head.ref (no repository:) resolves against the base repo - fine for same-repo
       # snapshot-release PRs, which is the only way this workflow's pull_request
