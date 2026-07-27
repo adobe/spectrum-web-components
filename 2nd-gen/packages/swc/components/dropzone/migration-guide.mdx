@@ -41,7 +41,7 @@ import '@adobe/spectrum-wc/components/dropzone/swc-dropzone.js';
 | Events           | `sp-dropzone-should-accept`, `sp-dropzone-dragover`, `sp-dropzone-dragleave`, `sp-dropzone-drop` | `swc-dropzone-should-accept`, `swc-dropzone-dragover`, `swc-dropzone-dragleave`, `swc-dropzone-drop` |
 | CSS custom props | `--mod-drop-zone-*` and `--mod-illustrated-message-*` passthrough                                | `--swc-dropzone-*` (see [Styling](#styling))                                                         |
 
-If your code only ever set `dropzone.isFilled = true` in JavaScript (never `setAttribute('filled', ...)`), the filled background tint never actually applied in Spectrum 1, because the attribute was never reflected. In Spectrum 2 the same JavaScript now works correctly, so you may see this visual change appear for the first time after upgrading with no code changes on your part.
+If your code only ever set `dropzone.isFilled = true` in JavaScript (never `setAttribute('filled', ...)`), the `filled` HTML attribute was never actually set in Spectrum 1, because the property didn't reflect. Any of your own CSS or JavaScript that checked for the `filled` attribute (rather than the property) would have silently never matched. In Spectrum 2 the equivalent JavaScript (`dropzone.filled = true`) now reliably sets the attribute too, so attribute-based checks that previously never fired may start working for the first time after upgrading with no code changes on your part.
 
 ### Added in Spectrum 2
 
@@ -181,7 +181,7 @@ An accessible name is now required. Add `aria-label` or `aria-labelledby`; a dev
 <swc-dropzone aria-label="Upload files">...</swc-dropzone>
 ```
 
-Remove any `role` attribute you previously added. `role="group"` is now fixed on the host and is not author-overridable.
+Remove any `role` attribute you previously added. `role="group"` is now set on the host every time it connects to the DOM, overwriting any author-supplied `role` at that point.
 
 ```html
 <!-- Before -->
@@ -283,7 +283,7 @@ Spectrum 2 exposes a small set of public CSS custom properties on `<swc-dropzone
 | `--swc-dropzone-padding`                       | Padding inside the drop zone. Defaults vary by size: spacing-300 (s), spacing-400 (m), spacing-600 (l).                                                            |
 | `--swc-illustrated-message-illustration-color` | Illustration color cascaded into a slotted `swc-illustrated-message`. Unset by default; overridden to the accent-content-color-default token in the dragged state. |
 
-None of the other ~30 `--mod-drop-zone-*` / `--mod-illustrated-message-*` properties have a replacement above; retoken or remove them. CJK-specific font-size overrides (e.g. `--mod-illustrated-message-title-font-size` under `:lang(ja|ko|zh)`) need no replacement: `swc-illustrated-message` now applies CJK sizing automatically.
+None of the other ~57 `--mod-drop-zone-*` / `--mod-illustrated-message-*` properties have a replacement above; retoken or remove them. CJK-specific font-size overrides (e.g. `--mod-illustrated-message-title-font-size` under `:lang(ja|ko|zh)`) need no replacement: `swc-illustrated-message` now applies CJK sizing automatically.
 
 `dropEffect` gained a development-mode console warning for invalid values (it was silently ignored before) and now reacts to the `drop-effect` attribute, both at parse time and at runtime; it was JavaScript-property-only in Spectrum 1. No markup change is required for consumers already setting `element.dropEffect` in JavaScript; consumers using `drop-effect="..."` in markup will see it take effect for the first time.
 

@@ -88,7 +88,7 @@ The `<swc-dropzone>` element implements several accessibility features:
 
 #### ARIA implementation
 
-1. **Host role**: `role="group"` is set automatically on the host and cannot be overridden. This creates a labeled boundary without introducing a page landmark.
+1. **Host role**: `role="group"` is set on the host every time it connects to the DOM, overwriting any author-supplied `role` at that point. This creates a labeled boundary without introducing a page landmark.
 2. **Accessible name**: required via `aria-label` or `aria-labelledby`. A development-mode warning fires when neither is present.
 3. **Status announcements**: a visually hidden `role="status"` element in shadow DOM announces drag and drop state changes without moving focus:
    - `dragged-message` (default: "File ready to drop") when `dragged` becomes `true`
