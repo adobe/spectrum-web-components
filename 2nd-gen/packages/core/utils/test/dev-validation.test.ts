@@ -15,6 +15,7 @@ import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import {
+  isDebug,
   validateAllowedChildren,
   validateEnum,
   validateRequiredSlot,
@@ -250,6 +251,39 @@ export const DevValidationTest: Story = {
         window.__swc = original;
       }
     });
+
+    // `isDebug()` is the call-site guard for expensive checks. It mirrors the
+    // same gate `emitWarning` uses, so it must track `window.__swc.DEBUG` and
+    // stay safe when `__swc` was never created.
+    await step('isDebug is true when DEBUG is on', () =>
+      withWarningSpy(() => {
+        expect(isDebug()).toBe(true);
+      })
+    );
+
+    await step('isDebug is false when DEBUG is off', () =>
+      withWarningSpy(
+        () => {
+          expect(isDebug()).toBe(false);
+        },
+        { debug: false }
+      )
+    );
+
+    await step(
+      'isDebug is false (no throw) when window.__swc is undefined',
+      () => {
+        const original = window.__swc;
+        // @ts-expect-error - simulate an environment where __swc was never created
+        window.__swc = undefined;
+        try {
+          expect(() => isDebug()).not.toThrow();
+          expect(isDebug()).toBe(false);
+        } finally {
+          window.__swc = original;
+        }
+      }
+    );
 
     await step('validateAllowedChildren warns once per disallowed child', () =>
       withWarningSpy((warnCalls) => {
