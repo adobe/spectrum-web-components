@@ -273,7 +273,8 @@ export const WithCollection: Story = {
     ${template(
       { ...args, size: 'xs' },
       html`
-        ${mediaImage()} ${mediaImage('collection')} ${mediaImage('collection')}
+        <img slot="preview" src="https://picsum.photos/id/56/280/186/" alt="" />
+        ${mediaImage('collection')} ${mediaImage('collection')}
         ${mediaImage('collection')}
         <span slot="title">Extra Small</span>
         <span slot="description">
@@ -284,29 +285,11 @@ export const WithCollection: Story = {
     ${template(
       { ...args, size: 'm' },
       html`
-        ${mediaImage()} ${mediaImage('collection')} ${mediaImage('collection')}
+        <img slot="preview" src="https://picsum.photos/id/56/280/186/" alt="" />
+        ${mediaImage('collection')} ${mediaImage('collection')}
         ${mediaImage('collection')}
         <span slot="title">Filled Collection Card</span>
         <span slot="description">Preview and collection slots are full.</span>
-      `
-    )}
-    ${template(
-      { ...args, size: 'm' },
-      html`
-        ${mediaImage()} ${mediaImage('collection')} ${mediaImage('collection')}
-        <span slot="title">Partial Collection Card</span>
-        <span slot="description">Only two collection slots filled.</span>
-      `
-    )}
-    ${template(
-      { ...args, size: 'm' },
-      html`
-        ${mediaImage('collection')} ${mediaImage('collection')}
-        ${mediaImage('collection')}
-        <span slot="title">Collection With No Preview</span>
-        <span slot="description">
-          No preview slot content, only collection items.
-        </span>
       `
     )}
   `,
