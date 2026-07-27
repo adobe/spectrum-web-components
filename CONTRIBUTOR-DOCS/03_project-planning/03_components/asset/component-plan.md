@@ -520,6 +520,8 @@ plan contract pattern this document follows).
 - [ ] Playwright `asset.a11y.spec.ts` with `toMatchAriaSnapshot`
 - [ ] VRT coverage for `background` treatments (transparent/solid/checkerboard) and `fit`
       (cover/contain), including `fit="contain"` with a non-transparent `background`
+- [ ] VRT coverage for `border-radius` inheritance
+- [ ] VRT coverage for `aspect-ratio` including in combination with either `width`, or `height`, or both
 
 ### Documentation (SWC-2321)
 
