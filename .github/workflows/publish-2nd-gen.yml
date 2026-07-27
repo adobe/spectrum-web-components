@@ -129,6 +129,7 @@ jobs:
 
       - name: Version packages
         env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           EVENT_NAME: ${{ github.event_name }}
           TAG: ${{ steps.extract-tag.outputs.tag }}
         working-directory: 2nd-gen
