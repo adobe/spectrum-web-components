@@ -198,7 +198,7 @@ Before you start, know the split:
 
 1. **Read or generate the component analysis** — See [Step 1: Analyze rendering and styling](01_analyze-rendering-and-styling/README.md). Analysis docs live under [03_components/](../../../03_components/) (e.g. `badge/rendering-and-styling-migration-analysis.md`). Have **spectrum-css** in the [same workspace](#workspace-setup) so comparisons to Spectrum 2 source are practical. **Optional (AI-assisted):** If you use Cursor, the **component-migration-analysis** skill (when available in your setup) can be used together with Step 1’s [Cursor prompt](01_analyze-rendering-and-styling/README.md#using-the-cursor-prompt) to produce or update the analysis; still follow Step 1 QA before treating the doc as final.
 2. **Read the 1st-gen code** and dependencies (mixins, shared modules).
-3. **List breaking changes** and existing bug tickets; consider severity and whether fixes require breaking changes.
+3. **List breaking changes** and existing bug tickets for the gen1 implementation; consider severity and whether fixes require breaking changes.
 4. **Write a short migration plan** — scope, risks, order of work. A reusable template is available at [`.ai/skills/migration-prep/assets/migration-prep-template.md`](../../../../../.ai/skills/migration-prep/assets/migration-prep-template.md); copy it to `CONTRIBUTOR-DOCS/03_project-planning/03_components/[component]/migration-plan.md` before editing so the relative links resolve correctly.
 5. **Capture API washing / naming cleanup in the plan** — Note alignment with **React Spectrum** where relevant, **Figma** option names, possible **splits** (e.g. menu vs listbox), and **overlay / event** conventions (`sp-opened`, `sp-closed`, which components may emit them); **get team review on the plan before large refactors** so downstream phases stay aligned.
 
@@ -557,7 +557,7 @@ See [Step 7](07_add-stories-for-2nd-gen-component.md) for structure and examples
 
 ## Phase 8: Review
 
-**Goal:** Final checks and PR readiness. Update the workstream **status table** so the team can see progress.
+**Goal:** Final checks and PR readiness. Update the status of gen1 bugs and issues to reflect their resolution in the gen2 implementation. Update the workstream **status table** so the team can see progress.
 
 ### What to do
 
@@ -566,8 +566,9 @@ See [Step 7](07_add-stories-for-2nd-gen-component.md) for structure and examples
 3. **Tests:** Run the full test suite for the affected packages.
 4. **Build:** Ensure build succeeds.
 5. **Storybook:** Load the component in Storybook; click through stories and variants.
-6. **Update status:** In the [status table](../01_status.md), mark the component's row with checkmarks for the steps you completed (Analyze, Factor, Move to Core, Data Model, Add 2nd-Gen, Render & Style, Add Stories).
-7. **Create the PR** with a clear description: component name, breaking changes, and link to this guide or the ticket.
+6. **Review and close all resolved gen1 bugs:** Verify that all bugs documented in both the a11y and migration analysis plans have been tested for and resolved.
+7. **Update status:** In the [status table](../01_status.md), mark the component's row with checkmarks for the steps you completed (Analyze, Factor, Move to Core, Data Model, Add 2nd-Gen, Render & Style, Add Stories).
+8. **Create the PR** with a clear description: component name, breaking changes, and link to this guide or the ticket.
 
 ### Final checklist (copy and use)
 
@@ -578,11 +579,11 @@ See [Step 7](07_add-stories-for-2nd-gen-component.md) for structure and examples
 - [ ] Phase 5: CSS follows style guide; tokens and variants work; **stylelint passes** for 2nd-gen component CSS (property order, no-descending-specificity, tokens).
 - [ ] Phase 6: Unit and a11y tests pass; coverage is reasonable.
 - [ ] Phase 7: JSDoc and stories complete; migration notes if needed.
-- [ ] Phase 8: Lint clean; tests green; Storybook verified; status table updated; PR created.
+- [ ] Phase 8: Lint clean; tests green; Storybook verified; gen1 issues closed if fixed; status table updated; PR created.
 
 ### Quality gate
 
-- [ ] Checklist complete; status table updated; PR open; at least one reviewer assigned.
+- [ ] Checklist complete; gen1 issues closed if fixed; status table updated; PR open; at least one reviewer assigned.
 
 ---
 

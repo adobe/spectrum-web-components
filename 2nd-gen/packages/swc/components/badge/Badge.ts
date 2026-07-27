@@ -79,7 +79,11 @@ export class Badge extends BadgeBase {
    */
   static override readonly VALID_SIZES = BADGE_VALID_SIZES;
 
-  // Re-declare to ensure reflect: true is honoured on the concrete element class (inherited @property alone is insufficient in ES2022 class-field semantics).
+  /**
+   * The semantic or non-semantic color variant of the badge.
+   *
+   * @default neutral
+   */
   @property({ type: String, reflect: true })
   public override variant: BadgeVariant = 'neutral';
 
@@ -119,7 +123,7 @@ export class Badge extends BadgeBase {
           `
         )}
         <div class="swc-Badge-label">
-          <slot></slot>
+          <slot @slotchange=${this.slotText.handleSlotChange}></slot>
         </div>
       </div>
     `;
