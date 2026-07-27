@@ -7,8 +7,8 @@
 ```text
 core/
 ├── element/       # SpectrumElement base class, defineElement, version tracking
-├── mixins/        # SizedMixin, ObserveSlotPresence, ObserveSlotText
-├── controllers/   # LanguageResolutionController, PlacementController, …
+├── mixins/        # SizedMixin, PendingMixin, LinearProgressMixin
+├── controllers/   # LanguageResolutionController, PlacementController, SlotPresenceController, SlotTextController, …
 ├── utils/         # capitalize, getLabelFromSlot
 └── components/    # One folder per component
     └── badge/

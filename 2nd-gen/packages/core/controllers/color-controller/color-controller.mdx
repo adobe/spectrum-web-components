@@ -35,8 +35,8 @@ space-separated CSS and drops `alpha=1`.
 
 ### What the caller owns
 
-- Rendering — the controller produces no DOM and no markup.
-- ARIA, focus, and keyboard — color components wire these around the controller.
+- Rendering: the controller produces no DOM and no markup.
+- ARIA, focus, and keyboard: color components wire these around the controller.
 - Calling `host.requestUpdate()` is handled by the controller on `color`/`hue`
   changes; the host just reads `color`, `colorValue`, or `hue` during render.
 

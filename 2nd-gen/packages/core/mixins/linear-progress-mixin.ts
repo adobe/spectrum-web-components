@@ -13,10 +13,7 @@ import { PropertyValues, ReactiveElement } from 'lit';
 import { property } from 'lit/decorators.js';
 
 import { LanguageResolutionController } from '../controllers/language-resolution.js';
-import {
-  ObserveSlotPresence,
-  type SlotPresenceObservingInterface,
-} from './observe-slot-presence.js';
+import { SlotPresenceController } from '../controllers/slot-presence-controller/index.js';
 import type { ElementSize } from './sized-mixin.js';
 
 type Constructor<T = Record<string, unknown>> = {
@@ -46,7 +43,7 @@ const DEFAULT_FORMAT_OPTIONS: Intl.NumberFormatOptions = { style: 'percent' };
 const LABEL_SLOT_SELECTOR = '[slot="label"]';
 const DESCRIPTION_SLOT_SELECTOR = '[slot="description"]';
 
-export interface LinearProgressInterface extends SlotPresenceObservingInterface {
+export interface LinearProgressInterface {
   value: number;
   minValue: number;
   maxValue: number;
@@ -81,12 +78,18 @@ export function LinearProgressMixin<T extends Constructor<ReactiveElement>>(
   constructor: T
 ): T & Constructor<LinearProgressInterface> {
   class LinearProgressElement
-    extends ObserveSlotPresence(constructor, [
-      LABEL_SLOT_SELECTOR,
-      DESCRIPTION_SLOT_SELECTOR,
-    ])
+    extends constructor
     implements LinearProgressInterface
   {
+    /**
+     * Observes the light-DOM `label` and `description` slots so the shadow-DOM
+     * containers and slots can be fully conditional.
+     */
+    private readonly slotPresence = new SlotPresenceController(this, [
+      LABEL_SLOT_SELECTOR,
+      DESCRIPTION_SLOT_SELECTOR,
+    ]);
+
     /**
      * Current value. Sanitized via `clampedValue` for rendering and
      * `aria-valuenow`.
@@ -177,14 +180,14 @@ export function LinearProgressMixin<T extends Constructor<ReactiveElement>>(
      * @internal
      */
     public get hasLabelSlotContent(): boolean {
-      return this.getSlotContentPresence(LABEL_SLOT_SELECTOR);
+      return this.slotPresence.getPresence(LABEL_SLOT_SELECTOR);
     }
 
     /**
      * @internal
      */
     public get hasDescriptionSlotContent(): boolean {
-      return this.getSlotContentPresence(DESCRIPTION_SLOT_SELECTOR);
+      return this.slotPresence.getPresence(DESCRIPTION_SLOT_SELECTOR);
     }
 
     /**

@@ -322,9 +322,10 @@ export const Permutations: Story = {
   parameters: vrtParameters,
   // :hover/:active can't be triggered by synthetic events, and static VRT
   // captures have no real pointer. See helpers/pseudo-state.ts. Applying
-  // this after render (rather than baking the class into the markup above)
-  // is what lets it target the real internal `.swc-Button` element inside
-  // the shadow root, which the light-DOM markup above has no access to.
+  // this after render (rather than baking the forced-state attribute into the
+  // markup above) is what lets it target the real internal `.swc-Button`
+  // element inside the shadow root, which the light-DOM markup above has no
+  // access to.
   play: forceButtonStates,
 };
 

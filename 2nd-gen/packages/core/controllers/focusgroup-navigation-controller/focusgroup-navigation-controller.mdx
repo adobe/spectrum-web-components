@@ -12,17 +12,21 @@ import * as FocusgroupNavigationControllerStories from './stories/focusgroup-nav
 ### Navigation
 
 - Collapses the tab sequence to **one** tab stop by setting `tabindex="0"` on the active item and `tabindex="-1"` on all others.
-- **Arrow** keys move focus according to `direction`: horizontal (inline axis), vertical (block axis), **both** (all four arrows on one linear order), or **grid** (rows and columns from layout).
-- **Home** / **End** jump to the first or last item (row-major order for `grid`).
-- **Ctrl+Home** / **Ctrl+End** (`grid` only) jump to the first cell of the first row or the last cell of the last row.
-- **Page Up** / **Page Down** move `pageStep` items (linear modes) or rows (`grid`) when `pageStep` is set.
+- Arrow keys move focus according to `direction`: `horizontal` (inline axis), `vertical` (block axis), `both` (all four arrows on one linear order), or `grid` (rows and columns from layout).
+- <kbd>Home</kbd> / <kbd>End</kbd> jump to the first or last item (row-major
+  order for `grid`).
+- <kbd>Ctrl</kbd> + <kbd>Home</kbd> / <kbd>Ctrl</kbd> + <kbd>End</kbd> (`grid`
+  only) jump to the first cell of the first row or the last cell of the last
+  row.
+- <kbd>Page Up</kbd> / <kbd>Page Down</kbd> move `pageStep` items (linear modes)
+  or rows (`grid`) when `pageStep` is set.
 
 ### Configuration
 
 - **`wrap`**: end wraps to start (and vice versa), similar to `wrap` concepts in the `focusgroup` proposal.
-- **`memory`**: Tab returns to the last focused item instead of resetting, similar to the `nomemory` concepts in the `focusgroup` proposal.
+- **`memory`**: <kbd>Tab</kbd> returns to the last focused item instead of resetting, similar to the `nomemory` concepts in the `focusgroup` proposal.
 - **`skipDisabled`**: when `true`, elements with `disabled` or `aria-disabled="true"` are excluded from the roving tab stop and arrow navigation.
-- **`pageStep`**: non-zero positive integer enables Page Up / Page Down movement.
+- **`pageStep`**: non-zero positive integer enables <kbd>Page Up</kbd> / <kbd>Page Down</kbd> movement.
 
 ### Programmatic API
 
@@ -74,9 +78,9 @@ export class MyFormatToolbar extends LitElement {
 
 ## Behaviors
 
-### Horizontal Toolbar
+### Horizontal toolbar
 
-Use `direction: 'horizontal'` for inline-axis arrow navigation. **ArrowLeft** and **ArrowRight** move between controls (respecting `dir` for RTL); **Tab** yields one stop for the entire group.
+Use `direction: 'horizontal'` for inline-axis arrow navigation. <kbd>ArrowLeft</kbd> and <kbd>ArrowRight</kbd> move between controls (respecting `dir` for RTL); <kbd>Tab</kbd> yields one stop for the entire group.
 
 ```typescript
 this.navigation = new FocusgroupNavigationController(this, {
@@ -89,9 +93,9 @@ this.navigation = new FocusgroupNavigationController(this, {
 
 <Canvas of={FocusgroupNavigationControllerStories.HorizontalToolbar} />
 
-### Both Axes Linear
+### Both axes linear
 
-Use `direction: 'both'` when controls are laid out in a line (or any single sequence) but you want **ArrowUp** / **ArrowDown** to move focus as well as **ArrowLeft** / **ArrowRight**. Inline arrows follow `dir` like `horizontal`; **ArrowUp** / **ArrowDown** step backward / forward in `getItems()` order.
+Use `direction: 'both'` when controls are laid out in a line (or any single sequence) but you want <kbd>ArrowUp</kbd> / <kbd>ArrowDown</kbd> to move focus as well as <kbd>ArrowLeft</kbd> / <kbd>ArrowRight</kbd>. Inline arrows follow `dir` like `horizontal`; <kbd>ArrowUp</kbd> / <kbd>ArrowDown</kbd> step backward / forward in `getItems()` order.
 
 ```typescript
 this.navigation = new FocusgroupNavigationController(this, {
@@ -104,9 +108,9 @@ this.navigation = new FocusgroupNavigationController(this, {
 
 <Canvas of={FocusgroupNavigationControllerStories.BothAxesLinear} />
 
-### Vertical Menu
+### Vertical menu
 
-Use `direction: 'vertical'` for block-axis arrow navigation in menus and lists. **ArrowDown** / **ArrowUp** traverse items; **Page Up** / **Page Down** skip multiple items when `pageStep` is set (in this demo, `pageStep: 2`).
+Use `direction: 'vertical'` for block-axis arrow navigation in menus and lists. <kbd>ArrowDown</kbd> / <kbd>ArrowUp</kbd> traverse items; <kbd>Page Up</kbd> / <kbd>Page Down</kbd> skip multiple items when `pageStep` is set (in this demo, `pageStep: 2`).
 
 One control uses `aria-disabled="true"` instead of native `disabled` so it stays focusable while arrow keys move through the list: native `disabled` removes focusability and would block reaching items after it.
 
@@ -123,9 +127,9 @@ this.navigation = new FocusgroupNavigationController(this, {
 
 <Canvas of={FocusgroupNavigationControllerStories.VerticalMenu} />
 
-### Skip Disabled Menu
+### Skip disabled menu
 
-With `skipDisabled: true`, items stay in the DOM (for layout or screen-reader context), but both native **`disabled`** and **`aria-disabled="true"`** items are removed from the roving tab stop and from arrow movement. In this demo, **Save** (`disabled`) and **Close** (`aria-disabled="true"`) are skipped; the arrow sequence is **New → Open → Print → Help**.
+With `skipDisabled: true`, items stay in the DOM (for layout or screen reader context), but both native **`disabled`** and **`aria-disabled="true"`** items are removed from the roving tab stop and from arrow movement. In this demo, **Save** (`disabled`) and **Close** (`aria-disabled="true"`) are skipped; the arrow sequence is **New → Open → Print → Help**.
 
 ```typescript
 this.navigation = new FocusgroupNavigationController(this, {
@@ -152,9 +156,15 @@ this.navigation = new FocusgroupNavigationController(this, {
 
 Use `direction: 'grid'` when items are laid out in rows (for example CSS Grid). The controller groups items into rows using bounding rectangles, then maps Arrow keys to cell movement.
 
-- **Home** / **End** use visual row-major order (first and last item in that flattened sequence).
-- **Ctrl+Home** / **Ctrl+End** jump to the first cell of the top row or the last cell of the bottom row, which matches rectangular grids and differs from plain **End** only when the last row has fewer cells than earlier rows.
-- **Page Up** / **Page Down** move `pageStep` rows at a time (in this demo, `pageStep: 2`); the focused column index is clamped when a row has fewer cells (same rule as **ArrowUp** / **ArrowDown**).
+- <kbd>Home</kbd> / <kbd>End</kbd> use visual row-major order (first and last
+  item in that flattened sequence).
+- <kbd>Ctrl</kbd> + <kbd>Home</kbd> / <kbd>Ctrl</kbd> + <kbd>End</kbd> jump to
+  the first cell of the top row or the last cell of the bottom row, which
+  matches rectangular grids and differs from plain <kbd>End</kbd> only when the
+  last row has fewer cells than earlier rows.
+- <kbd>Page Up</kbd> / <kbd>Page Down</kbd> move `pageStep` rows at a time (in
+  this demo, `pageStep: 2`); the focused column index is clamped when a row has
+  fewer cells (same rule as <kbd>ArrowUp</kbd> / <kbd>ArrowDown</kbd>).
 
 ```typescript
 this.navigation = new FocusgroupNavigationController(this, {
@@ -168,7 +178,7 @@ this.navigation = new FocusgroupNavigationController(this, {
 
 <Canvas of={FocusgroupNavigationControllerStories.Grid} />
 
-### Programmatic Focus
+### Programmatic focus
 
 **`setActiveItem(element)`** updates roving `tabindex` to a chosen eligible item only; it does **not** call `focus()`. Returns `false` if the element is not eligible (not in `getItems()` or skipped by `skipDisabled`). Call **`getActiveItem()?.focus()`** afterward to move focus.
 
@@ -185,7 +195,7 @@ if (el && this.navigation.setActiveItem(el)) {
 
 <Canvas of={FocusgroupNavigationControllerStories.ProgrammaticFocus} />
 
-### Text Prefix Focus
+### Text prefix focus
 
 **`focusFirstItemByTextPrefix(prefix)`** updates roving `tabindex` to the first eligible item whose typeahead label starts with `prefix` (case-insensitive), in `getItems()` order. Matching uses each item's typeahead label: trimmed **`aria-label`** if set, otherwise text from **`aria-labelledby`** references (in order), otherwise trimmed **`textContent`**. Only **eligible** items are considered (respects **`skipDisabled`**). The first match in `getItems()` order becomes the roving tab stop; **`focus()` is not called** by the controller.
 
@@ -231,8 +241,8 @@ Collapses a composite widget to a single Tab stop by managing `tabindex="0"` on 
 
 #### RTL and writing modes
 
-- For `horizontal`, **ArrowLeft** / **ArrowRight** follow the host's resolved `dir` (`rtl` swaps forward/back).
-- For `both`, **ArrowLeft** / **ArrowRight** follow `dir` the same way, while **ArrowUp** / **ArrowDown** always step backward / forward in `getItems()` order.
+- For `horizontal`, <kbd>ArrowLeft</kbd> / <kbd>ArrowRight</kbd> follow the host's resolved `dir` (`rtl` swaps forward/back).
+- For `both`, <kbd>ArrowLeft</kbd> / <kbd>ArrowRight</kbd> follow `dir` the same way, while <kbd>ArrowUp</kbd> / <kbd>ArrowDown</kbd> always step backward / forward in `getItems()` order.
 - In `grid` mode, vertical movement uses row geometry; column movement respects `dir` for left/right.
 
 ### Best practices
@@ -269,15 +279,15 @@ host.addEventListener(focusgroupNavigationActiveChange, (event) => {
 
 ### Options
 
-| Option               | Type                                                   | Default    | Description                                                                                                                   |
-| -------------------- | ------------------------------------------------------ | ---------- | ----------------------------------------------------------------------------------------------------------------------------- |
-| `getItems`           | `() => HTMLElement[]`                                  | (required) | Current navigable items.                                                                                                      |
-| `direction`          | `'horizontal'` \| `'vertical'` \| `'both'` \| `'grid'` | (required) | Arrow-key mode. **`both`**: Left/Right and Up/Down on the same `getItems()` sequence.                                         |
-| `wrap`               | `boolean`                                              | `false`    | Wrap at ends.                                                                                                                 |
-| `memory`             | `boolean`                                              | `true`     | Remember last focused for re-entry via Tab.                                                                                   |
-| `skipDisabled`       | `boolean`                                              | `false`    | Skip `disabled` / `aria-disabled="true"` items.                                                                               |
-| `pageStep`           | `number`                                               | —          | Non-zero: **Page Up** / **Page Down** move this many items (linear) or rows (**grid**). `0` / omitted / non-finite: disabled. |
-| `onActiveItemChange` | `(el) => void`                                         | —          | Callback when active item changes.                                                                                            |
+| Option               | Type                                                   | Default    | Description                                                                                                                               |
+| -------------------- | ------------------------------------------------------ | ---------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| `getItems`           | `() => HTMLElement[]`                                  | (required) | Current navigable items.                                                                                                                  |
+| `direction`          | `'horizontal'` \| `'vertical'` \| `'both'` \| `'grid'` | (required) | Arrow-key mode. **`both`**: Left/Right and Up/Down on the same `getItems()` sequence.                                                     |
+| `wrap`               | `boolean`                                              | `false`    | Wrap at ends.                                                                                                                             |
+| `memory`             | `boolean`                                              | `true`     | Remember last focused for re-entry via <kbd>Tab</kbd>.                                                                                    |
+| `skipDisabled`       | `boolean`                                              | `false`    | Skip `disabled` / `aria-disabled="true"` items.                                                                                           |
+| `pageStep`           | `number`                                               | —          | Non-zero: <kbd>Page Up</kbd> / <kbd>Page Down</kbd> move this many items (linear) or rows (`grid`). `0` / omitted / non-finite: disabled. |
+| `onActiveItemChange` | `(el) => void`                                         | —          | Callback when active item changes.                                                                                                        |
 
 ## Appendix
 
