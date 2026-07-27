@@ -16,8 +16,8 @@ import { property } from 'lit/decorators.js';
 import {
   ActionGroupBase,
   type ActionGroupStaticColor,
-} from '@spectrum-web-components/core/components/action-group';
-import { FocusgroupNavigationController } from '@spectrum-web-components/core/controllers';
+} from '@adobe/spectrum-wc-core/components/action-group';
+import { FocusgroupNavigationController } from '@adobe/spectrum-wc-core/controllers/index.js';
 
 import styles from './action-group.css';
 
