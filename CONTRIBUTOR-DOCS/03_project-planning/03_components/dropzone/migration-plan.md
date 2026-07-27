@@ -71,7 +71,7 @@
 - **Figma confirms SVG stroke border** with rounded dashes (B8). **Shipped:** `spectrum-two`'s `index.css` supports an opt-in SVG `<rect>` stroke (in addition to its CSS-only fallback); 2nd-gen implements the SVG stroke path, matching the design system's dedicated dash-length/gap tokens (8px/6px) that a CSS-only `border-style: dashed` cannot reproduce.
 - **Figma confirms illustration accent color in the dragged state** (was open in Q3; now confirmed). The slotted illustration should receive accent-color treatment when `dragged` is true.
 - **Figma shows no error state.** Error state is deferred to additive A1.
-- **Figma confirms Hover and drag share the same visual state** — there is no separate pointer-hover vs. drag-hover treatment. `:focus-visible` on the browse control uses the same accent border. Q2 is resolved.
+- **Figma confirms Hover and drag share the same visual state** — there is no separate pointer-hover vs. drag-hover treatment. `:host(:focus-within)` applies the same accent border to the container when the browse control has focus. Q2 is resolved.
 - **Two new shadow DOM nodes** are required for a11y compliance: a `role="status"` element for AT drag-state announcements and a fixed `role="group"` on the host (B9–B10). Neither breaks consumer markup.
 - **`swc-illustrated-message` is already fully migrated.** The CSS passthrough pattern (`--mod-illustrated-message-*` variables) used in 1st-gen does not carry forward to 2nd-gen; the styling relationship between `swc-dropzone` and `swc-illustrated-message` must be re-evaluated (Q8).
 - **One active non-a11y bug to address:** SWC-2069 (`sp-dropzone-drop` does not fire on Windows Chrome). The 2nd-gen implementation and tests must include a regression guard.
@@ -241,7 +241,7 @@ No sequencing, shared-base, or inheritance decisions require explicit user confi
 | - | ------------ | ---------------- | ---------------- | ----------------------- |
 | **B8** | SVG stroke border — **Figma confirmed; shipped** | CSS `border-style: dashed` (pure CSS border; no SVG) | Inline SVG `<rect>` stroke for rounded corner dashes as shown in Figma, matching `spectrum-two`'s token-driven dash pattern (8px dash / 6px gap). Final visual sign-off against Figma still pending (Q4). | No consumer migration; SVG border adds a shadow DOM element (`aria-hidden`, no impact on the accessibility tree). |
 | **B9** | CJK font size tokens | Applied via `--mod-illustrated-message-*` passthrough | Applied via direct token usage inside `swc-dropzone` (passthrough redesign per Q8) | No consumer migration needed; visual behavior preserved. |
-| **B10** | `:focus-visible` styling scoped to browse control | 1st-gen applied focus styles to host only when consumer added `tabindex`. | 2nd-gen has no `tabindex` on host. `:focus-visible` applies to the browse control in the slot; browse control accent ring matches the Figma Hover state border style. | See a11y changes below. |
+| **B10** | Focus styling scoped to browse control | 1st-gen applied focus styles to host only when consumer added `tabindex`. | 2nd-gen has no `tabindex` on host. `:host(:focus-within)` applies the same accent border/background to the container as the dragged state when the browse control has focus; the browse control (`swc-button`) also has its own independent `:focus-visible` ring. | See a11y changes below. |
 | **B16** | `size` attribute — **new, not in 1st-gen** | No size variants; fixed visual scale. | `size: 's' \| 'm' \| 'l'`; default `'m'`. Controls illustrated icon scale and container dimensions per Figma. Use `SizedMixin` from `@spectrum-web-components/core/mixins` with `validSizes: ['s', 'm', 'l']` applied in `DropzoneBase`; the mixin provides the `size` `@property`, validation, and attribute reflection. | No breaking change for existing consumers (defaults to `'m'`). |
 
 #### Accessibility and behavior
@@ -259,7 +259,7 @@ No sequencing, shared-base, or inheritance decisions require explicit user confi
 | # | What is added | Notes |
 | - | ------------- | ----- |
 | **A1** | Error state | **Figma shows no error state.** Deferred. Create a follow-up Jira ticket when design spec is available. |
-| **A2** | ~~Hover state visually distinct from keyboard focus~~ | **Resolved by Figma.** The "Hover" state in Figma is the same as the drag-over state; no separate pointer-hover treatment exists. The same accent border applies to `:focus-visible` on the browse control. No additive work needed; this is fully in scope as part of B10. |
+| **A2** | ~~Hover state visually distinct from keyboard focus~~ | **Resolved by Figma.** The "Hover" state in Figma is the same as the drag-over state; no separate pointer-hover treatment exists. The same accent border applies via `:host(:focus-within)` when the browse control has focus. No additive work needed; this is fully in scope as part of B10. |
 | **A3** | ~~Illustration accent color passthrough when dragged~~ | **Resolved by Figma.** The icon/illustration switches to the accent/gradient treatment in the "Hover" (dragged) state. This is confirmed Must-ship and is absorbed into the styling phase; see the B8/size matrix in the visual matrix section. No separate additive ticket needed. |
 | **A4** | ~~Customizable replace-state overlay content~~ | **Resolved during implementation.** A `filled-content` slot shipped as Must-ship (see [B18](#must-ship--breaking-or-a11y-required)), broader than the "replace" slot originally scoped here: it holds all uploaded-state content, not just the filled+dragged overlay text. No separate additive ticket needed. |
 | **A5** | ~~Localizable status announcement strings~~ | **Shipped.** `dragged-message`, `filled-message`, and `replace-message` properties (concrete class, `Dropzone.ts`) override the three built-in `role="status"` announcement strings, which previously had no override path and were hardcoded to English. Each defaults to its existing English string, so no consumer migration is needed. |
@@ -300,7 +300,7 @@ Figma state labels and their component attribute equivalents:
 | Hover (drag-hover) | `[dragged]` | **Confirmed.** Solid accent-color border; light blue background tint; illustration color changes to accent (see illustration note below). Figma's "Hover" label = file dragged over the zone, not pointer hover. |
 | Replace | `[filled][dragged]` | **Confirmed.** Accent "Drop file to replace" pill overlaid on the background image (consumer-provided filled content). Status announcement fires. |
 | Filled (programming layer only) | `[filled]` | **Inferred.** Not shown as a standalone state in Figma. `filled = true` means content has been uploaded; the component's illustrated message should be hidden and the consumer-provided content (e.g. the background image) should be shown. No separate Figma visual exists for filled-without-drag. |
-| Focus-visible | `:focus-visible` on browse control | **Confirmed.** Figma shows a single "Hover" state for both drag and interaction feedback. Pointer hover and drag share the same visual. Keyboard focus (`:focus-visible`) on the browse control applies the same accent border ring. There is no separate hover-only treatment on the host. |
+| Focus-within | `:host(:focus-within)` on the container | **Confirmed.** Figma shows a single "Hover" state for both drag and interaction feedback. Pointer hover and drag share the same visual. Focus on the browse control applies the same accent border ring to the container via `:host(:focus-within)` (the browse control itself also has its own independent `:focus-visible` ring). There is no separate hover-only treatment on the host. |
 | Error | Deferred (A1) | **Confirmed not in Figma.** No error state is shown in the Figma properties or states. Deferred to A1. |
 
 **Size matrix (Figma-confirmed):**
@@ -381,15 +381,16 @@ Follow the [Badge migration reference](../../02_workstreams/02_2nd-gen-component
 
 | Layer | Path | Contains |
 | ----- | ---- | -------- |
-| **Core** | `2nd-gen/packages/core/components/dropzone/` | `Dropzone.base.ts`, `Dropzone.types.ts`. Base class: drag event binding, debounce logic, `dropEffect` validation, `dragged` / `filled` state, dev warning for missing accessible name, status region text management. No rendering. |
-| **SWC** | `2nd-gen/packages/swc/components/dropzone/` | `Dropzone.ts`, `dropzone.css`, `swc-dropzone.ts` (element registration), stories, and tests. Extends `Dropzone.base.ts`. Renders the shadow DOM: SVG stroke, status `<div>`, and `<slot>`. |
+| **Core** | `2nd-gen/packages/core/components/dropzone/` | `Dropzone.base.ts`, `Dropzone.types.ts`. Base class: drag event binding, debounce logic, `dropEffect` validation, `dragged` / `filled` state. No rendering. |
+| **SWC** | `2nd-gen/packages/swc/components/dropzone/` | `Dropzone.ts`, `dropzone.css`, `swc-dropzone.ts` (element registration), stories, and tests. Extends `Dropzone.base.ts`. Owns ARIA/debug concerns (dev warning for missing accessible name) and renders the shadow DOM: SVG stroke, status `<div>` (including its text updates), and `<slot>`. |
 
-**Planned rendering shape:**
+**Implemented rendering shape** (diverges from the original core/SWC split above: the accessible-name dev warning and status-region text updates were moved to the SWC layer as the correct home for ARIA/rendering concerns; see the API checklist):
 
-- Core owns: drag event orchestration, `dropEffect` validation, `dragged` / `filled` state management, debounce logic, status text updates, accessible-name dev warning.
-- SWC renders:
+- Core owns: drag event orchestration, `dropEffect` validation, `dragged` / `filled` state management, debounce logic.
+- SWC owns and renders:
   - `<div class="swc-Dropzone">` host wrapper
-  - `<div role="status" aria-live="polite" class="swc-Dropzone-status">` — visually hidden; updated by base class via `statusText` reactive property
+  - `<div role="status" aria-live="polite" class="swc-Dropzone-status">` — visually hidden; text updated imperatively by `_updateStatusRegion()` in `updated()`, the sole writer
+  - Accessible-name dev warning (`_warnMissingAccessibleName()`)
   - SVG stroke `<rect>` (shipped; see Q4)
   - `<slot></slot>`
 
@@ -453,8 +454,10 @@ No `DropzoneEventDetail` alias is exported. 2nd-gen is a clean break from 1st-ge
 - [x] Dev warning for missing accessible name — implemented in `Dropzone.ts` (SWC class), not base class.
   Correct per architecture (SWC layer owns ARIA/debug concerns); plan locates it in the base.
 - [x] Status text updates for dragged, filled+dragged, and filled states — implemented in `Dropzone.ts`
-  via `_updateStatusRegion()` (Lit cycle) and `_onDragStateChange()` hook (synchronous). Correct per
-  architecture; plan locates these in the base class.
+  via `_updateStatusRegion()` in `updated()`, the sole writer. The base class's abstract `_onDragStateChange()`
+  hook is implemented as an intentional no-op in the SWC class (an earlier revision wrote the same text
+  synchronously from this hook in addition to `updated()`; that redundant write was removed as a fix during
+  Phase 8 review — see the gap-audit findings). Correct per architecture; plan locates status text in the base class.
 - [x] Event handler methods made **private** (`_onDragOver`, `_onDragLeave`, `_onDrop`) — stricter than
   the plan's `protected` recommendation (B6/Q9), but more correct: no subclass should override
   individual handlers.
@@ -596,7 +599,7 @@ No `DropzoneEventDetail` alias is exported. 2nd-gen is a clean break from 1st-ge
 | # | Item | Blocking? | Status | Owner |
 | - | ---- | --------- | ------ | ----- |
 | **Q1** | Does the dropzone have an error state? | Yes — for Stories scope and testing coverage | **Resolved.** Figma shows no error state. Deferred to additive A1 with a follow-up Jira ticket. | Design + implementation |
-| **Q2** | Should the hover state be visually distinct from keyboard focus? | Yes — for Stories scope and styling | **Resolved.** Figma Hover state = drag-over state. No separate pointer-hover treatment. `:focus-visible` on the browse control uses the same accent border. Absorbed into B10. | Design + implementation |
+| **Q2** | Should the hover state be visually distinct from keyboard focus? | Yes — for Stories scope and styling | **Resolved.** Figma Hover state = drag-over state. No separate pointer-hover treatment. `:host(:focus-within)` applies the same accent border to the container when the browse control has focus. Absorbed into B10. | Design + implementation |
 | **Q3** | Should the slotted illustration receive an accent-color treatment when dragged? | No — doesn't affect core API or Stories MVP | **Resolved.** Figma confirms accent/gradient icon treatment in the Hover (dragged) state. This is Must-ship; absorbed into styling phase. | Design + implementation |
 | **Q4** | SVG stroke border vs. CSS-only dashed border. After verifying the current `spectrum-css` `spectrum-two` branch `index.css` directly (previous plan text mischaracterized which branch has which approach): `spectrum-two`'s `index.css` supports **both** a plain CSS `border: … dashed …` default and an opt-in SVG `<rect>` stroke (`.spectrum-DropZone-stroke` / `-strokePath` with `stroke-dasharray`, selected via `.spectrum-DropZone:has(.spectrum-DropZone-stroke) { border: none; }`) for higher-fidelity rounded-corner dashes. `spectrum-two` also defines dedicated `--spectrum-drop-zone-border-dash-length` (8px) / `-dash-gap` (6px) tokens that only the SVG path can honor; a CSS-only `border-style: dashed` has no property to set exact dash length/gap. | **Yes: blocked final styling sign-off** | **Resolved.** `Dropzone.ts` now renders the SVG `<rect>` stroke (`aria-hidden`, matching `spectrum-css`'s reference markup); `dropzone.css` drives `rx`/`ry`/`stroke-width` from tokens and clears `stroke-dasharray` in the dragged/focus-within states, mirroring `spectrum-two` exactly. The two token mismatches found during verification (`border-radius`, dragged-state illustration color) are also fixed. `yarn stylelint` and all 23 dropzone tests pass. Visual sign-off: rendered Storybook Overview compared directly against the Figma default-state mockup: dash rhythm, corner rounding, icon, and text hierarchy match. Dragged, filled, filled+dragged, and the `s`/`l` sizes now have VRT coverage in `dropzone.vrt.ts` (`Permutations` and `ForcedColors` stories, both passing); final Chromatic baseline approval for those states happens at PR review. | Design + CSS reviewer |
 
