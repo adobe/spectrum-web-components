@@ -36,6 +36,8 @@ import {
  * validation logic. Rendering, ARIA, and CSS are provided by the concrete
  * SWC subclass.
  *
+ * @attribute {DropzoneSize} size - Controls the illustrated icon scale and container dimensions.
+ *
  * @slot - Slot for the illustrated message and browse control. Hidden automatically when `filled` is true.
  * @slot filled-content - Slot for the uploaded-state content (e.g. an image preview). Shown automatically when `filled` is true; hidden otherwise.
  *
@@ -53,6 +55,11 @@ import {
 export abstract class DropzoneBase extends SizedMixin(SpectrumElement, {
   validSizes: DROPZONE_VALID_SIZES,
 }) {
+  /**
+   * The size of the drop zone.
+   *
+   * @default m
+   */
   declare public size: DropzoneSize;
 
   // ──────────────────────────
@@ -110,18 +117,20 @@ export abstract class DropzoneBase extends SizedMixin(SpectrumElement, {
       window.__swc?.warn(
         this,
         `<${this.localName}> "dropEffect" received an invalid value: "${value}". Must be one of: ${DROP_EFFECTS.join(', ')}.`,
-        'https://opensource.adobe.com/spectrum-web-components/?path=/docs/dropzone--docs',
+        'https://opensource.adobe.com/spectrum-web-components/components/dropzone/#options',
         { type: 'api' }
       );
     }
   }
 
+  /** @internal */
   private _dropEffect: DropEffect = DROPZONE_DEFAULT_DROP_EFFECT;
 
   // ──────────────────────────
   //     IMPLEMENTATION
   // ──────────────────────────
 
+  /** @internal */
   private readonly _sizePropagation = new SlotAttributePropagationController(
     this,
     {
@@ -131,11 +140,16 @@ export abstract class DropzoneBase extends SizedMixin(SpectrumElement, {
     }
   );
 
+  /** @internal */
   protected handleDefaultSlotChange(): void {
     this._sizePropagation.propagate();
   }
 
-  /** Timer ID for debounced dragleave — prevents flickering on child drag events. */
+  /**
+   * @internal
+   *
+   * Timer ID for debounced dragleave; prevents flickering on child drag events.
+   */
   private _dragLeaveTimer: ReturnType<typeof setTimeout> | null = null;
 
   public override connectedCallback(): void {

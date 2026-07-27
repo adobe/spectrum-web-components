@@ -213,10 +213,6 @@ export const DefaultSlotIllustrationTest: Story = {
   },
 };
 
-// Presence is derived once, from the light DOM children the element already
-// has when it first updates (see `ObserveSlotText`), not from an ongoing
-// `slotchange` subscription. So this only covers illustration content
-// present at render time, not content added afterward.
 export const IllustrationWrapperCollapsesWhenEmptyTest: Story = {
   render: () => html`
     <swc-illustrated-message>

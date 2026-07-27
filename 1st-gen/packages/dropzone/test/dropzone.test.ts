@@ -10,6 +10,7 @@
  * governing permissions and limitations under the License.
  */
 import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
+import { stub } from 'sinon';
 
 import { Dropzone } from '@spectrum-web-components/dropzone';
 
@@ -343,5 +344,120 @@ describe('Dropzone', () => {
 
     expect(el.isFilled).to.be.true;
     expect(el.hasAttribute('filled')).to.be.true;
+  });
+  describe('dev mode', () => {
+    let consoleWarnStub!: ReturnType<typeof stub>;
+    const warnedAbout = (fragment: string): boolean =>
+      consoleWarnStub.args.some((args: unknown[]) =>
+        (args[0] as string).includes(fragment)
+      );
+    before(() => {
+      window.__swc.verbose = true;
+      consoleWarnStub = stub(console, 'warn');
+    });
+    afterEach(() => {
+      consoleWarnStub.resetHistory();
+    });
+    after(() => {
+      window.__swc.verbose = false;
+      consoleWarnStub.restore();
+    });
+    it('warns when deprecated `isDragged` is set to `true`', async () => {
+      const el = await fixture<Dropzone>(html`
+        <sp-dropzone id="dropzone"></sp-dropzone>
+      `);
+      await elementUpdated(el);
+      consoleWarnStub.resetHistory();
+
+      el.isDragged = true;
+      await elementUpdated(el);
+
+      expect(warnedAbout('"isDragged"'), 'warns about isDragged').to.be.true;
+    });
+    it('does not warn about `isDragged` when set back to `false`', async () => {
+      const el = await fixture<Dropzone>(html`
+        <sp-dropzone id="dropzone"></sp-dropzone>
+      `);
+      await elementUpdated(el);
+      consoleWarnStub.resetHistory();
+
+      el.isDragged = true;
+      await elementUpdated(el);
+      consoleWarnStub.resetHistory();
+
+      el.isDragged = false;
+      await elementUpdated(el);
+
+      expect(warnedAbout('"isDragged"'), 'does not warn about isDragged').to.be
+        .false;
+    });
+    it('warns when deprecated `isFilled` is set to `true`', async () => {
+      const el = await fixture<Dropzone>(html`
+        <sp-dropzone id="dropzone"></sp-dropzone>
+      `);
+      await elementUpdated(el);
+      consoleWarnStub.resetHistory();
+
+      el.isFilled = true;
+      await elementUpdated(el);
+
+      expect(warnedAbout('"isFilled"'), 'warns about isFilled').to.be.true;
+    });
+    it('warns about the upcoming event name prefix change on dragover', async () => {
+      const el = await fixture<Dropzone>(html`
+        <sp-dropzone id="dropzone"></sp-dropzone>
+      `);
+      await elementUpdated(el);
+      consoleWarnStub.resetHistory();
+
+      let dataTransfer: DataTransfer | boolean = false;
+
+      /**
+       * @todo Another try/catch weird pattern here...
+       */
+      try {
+        dataTransfer = new DataTransfer();
+        // eslint-disable-next-line no-empty, @typescript-eslint/no-unused-vars
+      } catch (error) {}
+      if (dataTransfer) {
+        el.dispatchEvent(new DragEvent('dragover', { dataTransfer }));
+
+        expect(
+          warnedAbout('swc-dropzone-'),
+          'warns about the event prefix change'
+        ).to.be.true;
+      }
+    });
+    it('warns when a subclass overrides `onDragOver`, `onDragLeave`, or `onDrop`', async () => {
+      class OverriddenDropzone extends Dropzone {
+        public override onDragOver(event: DragEvent): void {
+          super.onDragOver(event);
+        }
+      }
+      if (!customElements.get('overridden-dropzone')) {
+        customElements.define('overridden-dropzone', OverriddenDropzone);
+      }
+
+      const el = await fixture<OverriddenDropzone>(html`
+        <overridden-dropzone id="overridden-dropzone"></overridden-dropzone>
+      `);
+      await elementUpdated(el);
+
+      expect(
+        warnedAbout('"onDragOver"'),
+        'warns about overridden handler methods'
+      ).to.be.true;
+    });
+    it('does not warn about overridden handler methods when not subclassed', async () => {
+      const el = await fixture<Dropzone>(html`
+        <sp-dropzone id="dropzone"></sp-dropzone>
+      `);
+      await elementUpdated(el);
+
+      expect(
+        warnedAbout('"onDragOver"'),
+        'does not warn about overridden handler methods'
+      ).to.be.false;
+    });
   });
 });

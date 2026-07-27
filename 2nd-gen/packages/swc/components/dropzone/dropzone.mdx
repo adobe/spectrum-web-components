@@ -11,17 +11,10 @@ import * as DropzoneStories from './stories/dropzone.stories';
 
 A drop zone consists of:
 
-1. **Container**: a dashed-border area that invites a file to be dragged into it
-2. **Default slot content**: typically a `swc-illustrated-message` with a heading, description, and a required browse button or link
-3. **Status region** (visually hidden): announces drag and drop state changes to assistive technology
-4. **`filled-content` slot content**: shown in place of the default slot once a file has been accepted
-
-### Content
-
-#### Slots
-
-- **Default slot**: drop zone content. The recommended pattern is a `swc-illustrated-message` with a browse button or link placed in its `actions` slot. Hidden automatically when `filled` is `true`. A browse control must always be present so keyboard users can open the OS file picker.
-- **`filled-content` slot**: content shown after a file has been accepted, such as a file name or image preview. Shown automatically when `filled` is `true`; hidden otherwise.
+- **Container**: a dashed-border area that invites a file to be dragged into it
+- **Default slot content**: typically a `swc-illustrated-message` with a heading, description, and a required browse button or link placed in its `actions` slot. Hidden automatically when `filled` is `true`.
+- **Status region** (visually hidden): announces drag and drop state changes to assistive technology
+- **Uploaded-state content**, provided via the `filled-content` slot: shown in place of the default slot once a file has been accepted, such as a file name or image preview
 
 <Canvas of={DropzoneStories.Anatomy} />
 

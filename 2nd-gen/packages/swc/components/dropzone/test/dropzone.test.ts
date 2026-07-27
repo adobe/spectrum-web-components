@@ -50,7 +50,6 @@ export default {
   tags: ['!autodocs', 'dev'],
 } as Meta;
 
-// Creates a synthetic DragEvent, optionally with a DataTransfer.
 const makeDragEvent = (type: string, dt?: DataTransfer): DragEvent =>
   new DragEvent(type, {
     cancelable: true,
@@ -59,7 +58,6 @@ const makeDragEvent = (type: string, dt?: DataTransfer): DragEvent =>
     dataTransfer: dt,
   });
 
-// Returns the textContent of the shadow DOM status region.
 const statusText = (dropzone: Dropzone): string =>
   dropzone.renderRoot.querySelector('[role="status"]')?.textContent ?? '';
 

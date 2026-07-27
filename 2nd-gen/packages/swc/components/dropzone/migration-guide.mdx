@@ -276,13 +276,12 @@ Spectrum 2 exposes a small set of public CSS custom properties on `<swc-dropzone
   property has a 1:1 replacement, so read the list below carefully.
 </div>
 
-| Custom property                                | Description                                                                                                                                               |
-| ---------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `--swc-dropzone-background-color`              | Background color of the drop zone. Defaults to transparent; overridden to a subtle accent tint in the dragged state.                                      |
-| `--swc-dropzone-border-color`                  | Border color. Defaults to the gray-300 token in the default state; overridden to the accent visual color in the dragged and focus-within states.          |
-| `--swc-dropzone-border-style`                  | Border style. Defaults to dashed; overridden to solid in the dragged and focus-within states.                                                             |
-| `--swc-dropzone-padding`                       | Padding inside the drop zone. Defaults vary by size: spacing-300 (s), spacing-400 (m), spacing-600 (l).                                                   |
-| `--swc-illustrated-message-illustration-color` | Illustration color cascaded into a slotted `swc-illustrated-message`. Unset by default; overridden to the accent-visual-color token in the dragged state. |
+| Custom property                                | Description                                                                                                                                                        |
+| ---------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `--swc-dropzone-background-color`              | Background color of the drop zone. Defaults to transparent; overridden to a subtle accent tint in the dragged state.                                               |
+| `--swc-dropzone-border-color`                  | Border color. Defaults to the gray-300 token in the default state; overridden to the accent visual color in the dragged and focus-within states.                   |
+| `--swc-dropzone-padding`                       | Padding inside the drop zone. Defaults vary by size: spacing-300 (s), spacing-400 (m), spacing-600 (l).                                                            |
+| `--swc-illustrated-message-illustration-color` | Illustration color cascaded into a slotted `swc-illustrated-message`. Unset by default; overridden to the accent-content-color-default token in the dragged state. |
 
 None of the other ~30 `--mod-drop-zone-*` / `--mod-illustrated-message-*` properties have a replacement above; retoken or remove them. CJK-specific font-size overrides (e.g. `--mod-illustrated-message-title-font-size` under `:lang(ja|ko|zh)`) need no replacement: `swc-illustrated-message` now applies CJK sizing automatically.
 

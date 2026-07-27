@@ -44,10 +44,18 @@ import styles from './dropzone.css';
  * @fires swc-dropzone-drop - Fired when files are dropped on the zone. Set `filled` in
  *   your handler to transition the zone to its filled state.
  *
+ * @example
+ * <swc-dropzone aria-label="Upload files">
+ *   <swc-illustrated-message>
+ *     <h2 slot="heading">Drag and drop your file</h2>
+ *     <swc-button slot="actions">Browse</swc-button>
+ *   </swc-illustrated-message>
+ * </swc-dropzone>
+ *
  * @cssprop --swc-dropzone-background-color - Background color of the drop zone. Defaults to transparent; overridden to a subtle accent tint in the dragged state.
  * @cssprop --swc-dropzone-border-color - Color of the SVG stroke border. Defaults to the gray-300 token in the default state; overridden to the accent visual color in the dragged and focus-within states.
  * @cssprop --swc-dropzone-padding - Padding inside the drop zone. Defaults vary by size: spacing-300 (s), spacing-400 (m), spacing-600 (l).
- * @cssprop --swc-illustrated-message-illustration-color - Illustration color cascaded into a slotted `swc-illustrated-message`. Unset by default; overridden to the accent-visual-color token in the dragged state.
+ * @cssprop --swc-illustrated-message-illustration-color - Illustration color cascaded into a slotted `swc-illustrated-message`. Unset by default; overridden to the accent-content-color-default token in the dragged state.
  */
 export class Dropzone extends DropzoneBase {
   // ───────────────────
@@ -106,7 +114,11 @@ export class Dropzone extends DropzoneBase {
     return [visuallyHiddenStyles, styles];
   }
 
-  /** @internal Ref to the shadow DOM status region for live announcements. */
+  /**
+   * @internal
+   *
+   * Ref to the shadow DOM status region for live announcements.
+   */
   private get _statusEl(): HTMLElement | null {
     return this.shadowRoot?.querySelector('[role="status"]') ?? null;
   }
@@ -175,7 +187,7 @@ export class Dropzone extends DropzoneBase {
     window.__swc?.warn(
       this,
       `<${this.localName}> requires an accessible name describing the upload purpose.`,
-      'https://opensource.adobe.com/spectrum-web-components/?path=/docs/dropzone--docs',
+      'https://opensource.adobe.com/spectrum-web-components/components/dropzone/#accessibility',
       {
         type: 'accessibility',
         issues: [
