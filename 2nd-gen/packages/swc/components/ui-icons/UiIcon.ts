@@ -15,7 +15,7 @@ import { property } from 'lit/decorators.js';
 import { IconBase } from '@adobe/spectrum-wc-core/components/icon';
 
 import { UI_ICONS, UiIconName } from './icon-set/index.js';
-import { uiStepFor } from './ui-icons.types.js';
+import { resolveUiIconArt } from './ui-icons.types.js';
 
 import styles from '../../stylesheets/_lit-styles/icon-base.css';
 
@@ -50,11 +50,9 @@ export class UiIcon extends IconBase {
   }
 
   protected override render(): TemplateResult {
-    const iconSet = UI_ICONS[this.icon];
-    // Prefer the step for the current size; fall back to the nearest available.
-    const art =
-      iconSet?.[uiStepFor(this.size)] ??
-      (iconSet ? Object.values(iconSet)[0] : undefined);
+    // Prefer the step for the current size; `resolveUiIconArt` falls back to the
+    // nearest available step when a logical icon does not ship every step.
+    const art = resolveUiIconArt(UI_ICONS[this.icon], this.size);
     return html`
       <span class="swc-Icon">${art}</span>
     `;

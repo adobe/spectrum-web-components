@@ -569,6 +569,10 @@ follow-up.
 ### Deferred to implementation (no design decision)
 
 - **Per-family size tokens:** gather the concrete values during implementation: the
-  workflow icon pixel sizes and the UI per-step box sizes from the Spectrum tokens,
-  and enumerate any UI logical icon that lacks an optical step so the nearest-step
-  fallback is specified. Tracked in Phase 1 (UI) and Phases 3–4 (workflow).
+  workflow icon pixel sizes and the UI per-step box sizes from the Spectrum tokens.
+  Tracked in Phase 1 (UI) and Phases 3–4 (workflow).
+- **Nearest-step fallback (resolved in Phase 1 POC):** `resolveUiIconArt` renders the
+  step that matches the size, or the nearest available step by numeral distance when
+  that step is absent (ties resolve to the smaller step). All 10 initial UI icons ship
+  every optical step, so no logical icon currently lacks one; the fallback is verified
+  by unit tests over a synthetic partial bundle rather than by a shipped partial icon.

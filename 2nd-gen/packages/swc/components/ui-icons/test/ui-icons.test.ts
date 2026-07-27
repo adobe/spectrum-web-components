@@ -19,6 +19,8 @@ import '@adobe/spectrum-wc/components/ui-icons/swc-ui-icon.js';
 
 import { getComponent } from '../../../utils/test-utils.js';
 import meta, { Overview } from '../stories/ui-icons.internal.stories.js';
+import type { UiIconArt } from '../ui-icons.types.js';
+import { resolveUiIconArt } from '../ui-icons.types.js';
 
 // This file defines dev-only test stories that reuse the main story metadata.
 export default {
@@ -203,5 +205,64 @@ export const UnknownIconTest: Story = {
         ).toBeNull();
       }
     );
+  },
+};
+
+// The 10 shipped UI icons currently cover all five optical steps, so the
+// nearest-step fallback in `resolveUiIconArt` cannot be reached through the
+// registry. These cases construct a partial bundle — simulating a logical icon
+// that does not ship every step — to exercise that fallback directly.
+export const NearestStepFallbackTest: Story = {
+  render: () => html`
+    <swc-ui-icon icon="chevron"></swc-ui-icon>
+  `,
+  play: async ({ step }) => {
+    // A bundle that ships only the smallest (50) and largest (300) steps.
+    const small = html`
+      <svg id="small"></svg>
+    `;
+    const large = html`
+      <svg id="large"></svg>
+    `;
+    const partial: UiIconArt = { 50: small, 300: large };
+
+    await step('uses the exact step when the bundle ships it', async () => {
+      expect(resolveUiIconArt(partial, 'xs'), 'xs (50) is present').toBe(small);
+      expect(resolveUiIconArt(partial, 'xl'), 'xl (300) is present').toBe(
+        large
+      );
+    });
+
+    await step(
+      'falls back to the nearest available step when the exact one is missing',
+      async () => {
+        // m -> 100 is absent; nearest of {50, 300} by numeral distance is 50.
+        expect(
+          resolveUiIconArt(partial, 'm'),
+          'm (100) falls back to the 50 step'
+        ).toBe(small);
+        // l -> 200 is absent; nearest of {50, 300} is 300.
+        expect(
+          resolveUiIconArt(partial, 'l'),
+          'l (200) falls back to the 300 step'
+        ).toBe(large);
+        // s -> 75 is absent; nearest of {50, 300} is 50.
+        expect(
+          resolveUiIconArt(partial, 's'),
+          's (75) falls back to the 50 step'
+        ).toBe(small);
+      }
+    );
+
+    await step('returns undefined for an empty or missing bundle', async () => {
+      expect(
+        resolveUiIconArt({}, 'm'),
+        'an empty bundle resolves to undefined'
+      ).toBeUndefined();
+      expect(
+        resolveUiIconArt(undefined, 'm'),
+        'a missing bundle resolves to undefined'
+      ).toBeUndefined();
+    });
   },
 };
