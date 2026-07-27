@@ -171,6 +171,22 @@
       "types": "./dist/controllers/slot-attribute-propagation-controller/index.d.ts",
       "import": "./dist/controllers/slot-attribute-propagation-controller/index.js"
     },
+    "./controllers/slot-presence-controller": {
+      "types": "./dist/controllers/slot-presence-controller/index.d.ts",
+      "import": "./dist/controllers/slot-presence-controller/index.js"
+    },
+    "./controllers/slot-presence-controller/index.js": {
+      "types": "./dist/controllers/slot-presence-controller/index.d.ts",
+      "import": "./dist/controllers/slot-presence-controller/index.js"
+    },
+    "./controllers/slot-text-controller": {
+      "types": "./dist/controllers/slot-text-controller/index.d.ts",
+      "import": "./dist/controllers/slot-text-controller/index.js"
+    },
+    "./controllers/slot-text-controller/index.js": {
+      "types": "./dist/controllers/slot-text-controller/index.d.ts",
+      "import": "./dist/controllers/slot-text-controller/index.js"
+    },
     "./directives": {
       "types": "./dist/directives/index.d.ts",
       "import": "./dist/directives/index.js"
@@ -214,14 +230,6 @@
     "./mixins/index.js": {
       "types": "./dist/mixins/index.d.ts",
       "import": "./dist/mixins/index.js"
-    },
-    "./mixins/observe-slot-presence.js": {
-      "types": "./dist/mixins/observe-slot-presence.d.ts",
-      "import": "./dist/mixins/observe-slot-presence.js"
-    },
-    "./mixins/observe-slot-text.js": {
-      "types": "./dist/mixins/observe-slot-text.d.ts",
-      "import": "./dist/mixins/observe-slot-text.js"
     },
     "./mixins/sized-mixin.js": {
       "types": "./dist/mixins/sized-mixin.d.ts",
@@ -376,6 +384,18 @@
       "controllers/slot-attribute-propagation-controller.js": [
         "dist/controllers/slot-attribute-propagation-controller/index.d.ts"
       ],
+      "controllers/slot-presence-controller": [
+        "dist/controllers/slot-presence-controller/index.d.ts"
+      ],
+      "controllers/slot-presence-controller/index.js": [
+        "dist/controllers/slot-presence-controller/index.d.ts"
+      ],
+      "controllers/slot-text-controller": [
+        "dist/controllers/slot-text-controller/index.d.ts"
+      ],
+      "controllers/slot-text-controller/index.js": [
+        "dist/controllers/slot-text-controller/index.d.ts"
+      ],
       "directives": [
         "dist/directives/index.d.ts"
       ],
@@ -408,12 +428,6 @@
       ],
       "mixins/index.js": [
         "dist/mixins/index.d.ts"
-      ],
-      "mixins/observe-slot-presence.js": [
-        "dist/mixins/observe-slot-presence.d.ts"
-      ],
-      "mixins/observe-slot-text.js": [
-        "dist/mixins/observe-slot-text.d.ts"
       ],
       "mixins/sized-mixin.js": [
         "dist/mixins/sized-mixin.d.ts"

@@ -10,6 +10,4 @@
  * governing permissions and limitations under the License.
  */
 
-export { defineElement } from './define-element.js';
-export { SpectrumElement } from './spectrum-element.js';
-export { coreVersion, version } from './version.js';
+export { SlotPresenceController } from './src/slot-presence-controller.js';
