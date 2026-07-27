@@ -18,7 +18,7 @@ import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 import {
   ACTION_GROUP_ORIENTATIONS,
   ACTION_GROUP_VALID_SIZES,
-} from '@spectrum-web-components/core/components/action-group';
+} from '@adobe/spectrum-wc-core/components/action-group';
 
 import '@adobe/spectrum-wc/components/action-group/swc-action-group.js';
 import '@adobe/spectrum-wc/components/action-button/swc-action-button.js';
