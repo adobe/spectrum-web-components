@@ -53,9 +53,7 @@ import * as Stories from './stories/<unit>.stories';
 
 ## States
 
-### States
-
-...prose...
+...prose (single-story section whose story name matches the heading — no `### States`; see "Single-story sections")...
 
 <Canvas of={Stories.States} />
 
