@@ -59,8 +59,23 @@ jobs:
       contents: write # Required for git push (via RELEASE_BOT_TOKEN below)
     env:
       YARN_ENABLE_IMMUTABLE_INSTALLS: false
-      DRY_RUN: ${{ github.event.inputs.dry_run }}
+      DRY_RUN: ${{ github.event.inputs.dry_run || 'false' }}
     steps:
+      # Locked before checkout (via the remote action ref, not the local ./path one -
+      # a local path reference needs the repo already checked out to resolve) so the
+      # race window is closed from the very start of the job, not just from after
+      # checkout + dependency install.
+      - name: Lock gen2-beta during release
+        if: github.event_name != 'pull_request' && env.DRY_RUN != 'true'
+        uses: adobe/spectrum-web-components/.github/actions/release-branch-lock@main
+        with:
+          mode: lock
+          branch: gen2-beta
+          token: ${{ secrets.RELEASE_BOT_TOKEN }}
+
+      # head.ref (no repository:) resolves against the base repo - fine for same-repo
+      # snapshot-release PRs, which is the only way this workflow's pull_request
+      # trigger fires; would need a fork-aware checkout if that ever changes.
       - name: Checkout
         uses: actions/checkout@v4
         with:
@@ -91,14 +106,6 @@ jobs:
           echo "tag=$WORKFLOW_TAG" >> $GITHUB_OUTPUT
           echo "Using npm tag: $WORKFLOW_TAG"
 
-      - name: Lock gen2-beta during release
-        if: github.event_name != 'pull_request' && env.DRY_RUN != 'true'
-        uses: ./.github/actions/release-branch-lock
-        with:
-          mode: lock
-          branch: gen2-beta
-          token: ${{ secrets.RELEASE_BOT_TOKEN }}
-
       - name: Enter changesets pre-release mode
         if: github.event_name != 'pull_request' && !hashFiles('2nd-gen/.changeset/pre.json')
         env:
@@ -112,6 +119,7 @@ jobs:
           NPM_TOKEN: ${{ secrets.ADOBE_BOT_NPM_TOKEN }}
         run: |
           echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
+          npm whoami --registry=https://registry.npmjs.org
           echo "✓ NPM authentication configured for 2nd-gen (Adobe namespace)"
 
       - name: Build all packages
@@ -167,7 +175,7 @@ jobs:
         env:
           RELEASE_BOT_TOKEN: ${{ secrets.RELEASE_BOT_TOKEN }}
         run: |
-          git add .
+          git add 2nd-gen yarn.lock
           git commit --no-verify -m "chore: release 2nd-gen packages #publish" || echo "No changes to commit"
           git remote set-url origin "https://x-access-token:${RELEASE_BOT_TOKEN}@github.com/${{ github.repository }}.git"
           git pull --rebase origin gen2-beta

@@ -28,9 +28,18 @@
 
 <!-- Document content (editable) -->
 
+> ⚠️ **This page is out of date and pending a rewrite.** It still describes a single combined release workflow. As of the gen1/gen2 release-architecture split, 1st-gen and 2nd-gen release from **two separate workflows** with their own changeset folders:
+>
+> | | Workflow | Changesets | Branch | Ships to |
+> |---|---|---|---|---|
+> | 1st-gen | `.github/workflows/publish.yml` | `1st-gen/.changeset/` | `main` | `next` / `latest` |
+> | 2nd-gen | `.github/workflows/publish-2nd-gen.yml` | `2nd-gen/.changeset/` | `gen2-beta` | `beta` (pre-release mode) |
+>
+> The sections below (package groups, versioning strategy, release types) still describe the old single-workflow model and should not be relied on until this page is rewritten to match.
+
 ## Overview
 
-Releases are fully automated through a GitHub Actions workflow (`.github/workflows/publish-1st-gen.yml`). There is no manual command to run locally — you trigger the release from GitHub and the workflow handles building, versioning, and publishing.
+Releases are fully automated through GitHub Actions workflows — see the table above for which workflow covers which generation. There is no manual command to run locally — you trigger the release from GitHub and the workflow handles building, versioning, and publishing.
 
 The workflow publishes four package groups:
 
@@ -51,14 +60,15 @@ The workflow publishes four package groups:
 
 > For the 2nd-gen changeset format and how entries flow into the CHANGELOG, see the [Changelog strategy](15_changelog-strategy.md).
 
-The workflow only publishes if there are pending changesets in `.changeset/*.md`. If no changesets exist, the publish job is skipped automatically.
+Each workflow only publishes if there are pending changesets in its own folder — `1st-gen/.changeset/*.md` for `publish.yml`, `2nd-gen/.changeset/*.md` for `publish-2nd-gen.yml`. If no changesets exist for that generation, its publish job is skipped automatically.
 
-To check what's pending, look at the `.changeset/` directory (exclude `README.md`). Each changeset file lists the packages it affects and the bump type (`patch`, `minor`, or `major`).
+To check what's pending, look at the relevant `.changeset/` directory (exclude `README.md`). Each changeset file lists the packages it affects and the bump type (`patch`, `minor`, or `major`).
 
 **If changesets are missing for packages you expected to update**, add them before triggering the release:
 
 ```bash
-yarn changeset
+yarn changeset:1st-gen
+yarn changeset:2nd-gen
 ```
 
 Follow the prompts to select packages and bump type.
@@ -67,11 +77,10 @@ Follow the prompts to select packages and bump type.
 
 ### Understand the versioning strategy
 
-The `.changeset/config.json` defines how packages version together:
+Each generation has its own `config.json` (`1st-gen/.changeset/config.json`, `2nd-gen/.changeset/config.json`) defining how its own packages version together:
 
-- **Fixed group** – All `@spectrum-web-components/*` packages (except Core) always version together at the same number.
-- **Linked group** – `@adobe/spectrum-wc` and `@adobe/spectrum-wc-core` receive the same bump type when either changes.
-- **Ignored** – The workspace root packages (`@spectrum-web-components/1st-gen`, `@spectrum-web-components/2nd-gen`) are never published.
+- **Fixed group** (1st-gen) – All `@spectrum-web-components/*` packages always version together at the same number.
+- **Linked group** (2nd-gen) – `@adobe/spectrum-wc` and `@adobe/spectrum-wc-core` receive the same bump type when either changes.
 
 ---
 

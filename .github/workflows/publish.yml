@@ -62,6 +62,19 @@ jobs:
     env:
       YARN_ENABLE_IMMUTABLE_INSTALLS: false
     steps:
+      # Locked before checkout (via the remote action ref, not the local ./path one -
+      # a local path reference needs the repo already checked out to resolve) so the
+      # race window is closed from the very start of the job, not just from after
+      # checkout + dependency install. Only main@latest ever locks; every other trigger
+      # (push to next, snapshot-test) never reaches tag == 'latest'.
+      - name: Lock main during release
+        if: github.event_name == 'workflow_dispatch' && github.event.inputs.tag == 'latest'
+        uses: adobe/spectrum-web-components/.github/actions/release-branch-lock@main
+        with:
+          mode: lock
+          branch: main
+          token: ${{ secrets.RELEASE_BOT_TOKEN }}
+
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
@@ -104,14 +117,6 @@ jobs:
             echo "ERROR: Cannot publish 'latest' from non-main branch"
             exit 1
           fi
-
-      - name: Lock main during release
-        if: steps.extract-tag.outputs.tag == 'latest'
-        uses: ./.github/actions/release-branch-lock
-        with:
-          mode: lock
-          branch: main
-          token: ${{ secrets.RELEASE_BOT_TOKEN }}
 
       - name: Verify OIDC token and configure NPM authentication
         id: npm-auth
@@ -282,7 +287,7 @@ jobs:
         env:
           RELEASE_BOT_TOKEN: ${{ secrets.RELEASE_BOT_TOKEN }}
         run: |
-          git add .
+          git add 1st-gen yarn.lock
           git commit --no-verify -m "chore: release packages #publish" || echo "No changes to commit"
           git remote set-url origin "https://x-access-token:${RELEASE_BOT_TOKEN}@github.com/${{ github.repository }}.git"
           git pull --rebase origin main

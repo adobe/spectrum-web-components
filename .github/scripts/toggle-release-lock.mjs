@@ -19,7 +19,7 @@
  * direct `git push` from an actor with push access, so this does not interfere with the
  * release job's own commit-and-push step.
  *
- * ponytail: classic branch protection only; repos on the newer rulesets API instead of
+ * NOTE: classic branch protection only; repos on the newer rulesets API instead of
  * classic protection will get a 404 here and this no-ops with a warning rather than
  * failing the release. Upgrade to the rulesets API if/when this repo migrates to it.
  */
