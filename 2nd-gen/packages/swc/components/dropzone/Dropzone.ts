@@ -89,19 +89,14 @@ export class Dropzone extends DropzoneBase {
   // ────────────────────
 
   /**
-   * Called synchronously on drag-enter and drag-leave so the status region is
-   * updated before the next Lit render cycle completes. The drop case is handled
-   * by `updated()` so that `filled` has been set by the consumer's handler first.
+   * Required by the base class's abstract hook, but intentionally left empty. The
+   * status region is updated once, from `updated()` via `_updateStatusRegion()`,
+   * which already fires for every `dragged`/`filled` transition; this mirrors how
+   * `_onDrop` relies on `updated()` alone rather than announcing here as well.
    *
-   * @param isDragged - `true` when drag enters; `false` when it leaves.
    * @internal
    */
-  protected override _onDragStateChange(isDragged: boolean): void {
-    const el = this._statusEl;
-    if (el) {
-      el.textContent = this._statusText(isDragged, this.filled);
-    }
-  }
+  protected override _onDragStateChange(): void {}
 
   // ──────────────────────────────
   //     RENDERING & STYLING
