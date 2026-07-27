@@ -16,6 +16,7 @@ import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import { DROPZONE_VALID_SIZES } from '@adobe/spectrum-wc-core/components/dropzone';
 
+import '@adobe/spectrum-wc/components/badge/swc-badge.js';
 import '@adobe/spectrum-wc/components/button/swc-button.js';
 import '@adobe/spectrum-wc/components/dropzone/swc-dropzone.js';
 import '@adobe/spectrum-wc/components/illustrated-message/swc-illustrated-message.js';
@@ -64,7 +65,7 @@ const renderDropzone = ({
   const filledContent = filled
     ? dragged
       ? html`
-          <p>Drop file to replace</p>
+          <swc-badge variant="accent">Drop file to replace</swc-badge>
         `
       : html`
           <span>report-q4.pdf uploaded</span>

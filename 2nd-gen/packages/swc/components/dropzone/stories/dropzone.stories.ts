@@ -23,6 +23,7 @@ import {
   type DropzoneSize,
 } from '@adobe/spectrum-wc-core/components/dropzone';
 
+import '@adobe/spectrum-wc/components/badge/swc-badge.js';
 import '@adobe/spectrum-wc/components/button/swc-button.js';
 import '@adobe/spectrum-wc/components/dropzone/swc-dropzone.js';
 import '@adobe/spectrum-wc/components/illustrated-message/swc-illustrated-message.js';
@@ -340,7 +341,9 @@ export const States: Story = {
       style="min-inline-size: 260px;"
     >
       ${makeDropzoneSlot('Drag and drop your file')}
-      <p slot="filled-content">Drop file to replace</p>
+      <swc-badge slot="filled-content" variant="accent">
+        Drop file to replace
+      </swc-badge>
     </swc-dropzone>
   `,
   parameters: { flexLayout: 'row-wrap' },
