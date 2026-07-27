@@ -68,13 +68,12 @@
 }
 
 .swc-UploadArtifact-dismiss:focus-visible {
+  /* Round to match the visible circular icon: the hit target (24px card /
+   * 32px media) is deliberately larger than the 20px visible icon, so an
+   * unrounded ring at the box's own edge reads as a square around the whole
+   * touch area rather than a ring around the icon. */
+  border-radius: token("corner-radius-full");
   outline: 2px solid #4b4efc;
-
-  /* -4px, not -2px: the media dismiss button's own hit-box overhangs the
-   * tile by 2px (inset-block-start/inline-end: calc(spacing-75 4px - 6px) =
-   * -2px), so a -2px ring landed exactly on the tile's true edge with zero
-   * buffer against the strip's overflow clipping. -4px gives it real margin. */
-  outline-offset: -4px;
 }
 
 :host([type="card"]) .swc-UploadArtifact-dismiss {
@@ -126,6 +125,22 @@
   justify-content: center;
   inline-size: 20px;
   block-size: 20px;
+}
+
+/* card: 24px hit target, 20px icon inset 2px (spacing-50) on each side.
+ * -1px leaves a 1px gap around the icon without extending past the box. */
+:host([type="card"]) .swc-UploadArtifact-dismiss:focus-visible {
+  outline-offset: -1px;
+}
+
+/* media: 32px hit target, 20px icon inset 6px on each side. -4px, not -2px:
+ * the media dismiss button's own hit-box overhangs the tile by 2px
+ * (inset-block-start/inline-end: calc(spacing-75 4px - 6px) = -2px), so a
+ * -2px ring landed exactly on the tile's true edge with zero buffer against
+ * the strip's overflow clipping. -4px gives it real margin, leaving a 2px
+ * gap around the icon. */
+:host([type="media"]) .swc-UploadArtifact-dismiss:focus-visible {
+  outline-offset: -4px;
 }
 
 :host([type="card"]) .swc-UploadArtifact-dismiss:hover .swc-UploadArtifact-dismiss-visual,
