@@ -13,6 +13,7 @@ import { CSSResultArray, PropertyValues, TemplateResult } from 'lit';
 import { property } from 'lit/decorators.js';
 
 import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
+import { validateEnum } from '@adobe/spectrum-wc-core/utils/index.js';
 
 import {
   ALERT_BANNER_VALID_VARIANTS,

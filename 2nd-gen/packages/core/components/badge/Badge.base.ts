@@ -16,6 +16,7 @@ import { SlotPresenceController } from '@adobe/spectrum-wc-core/controllers/slot
 import { SlotTextController } from '@adobe/spectrum-wc-core/controllers/slot-text-controller/index.js';
 import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
 import { SizedMixin } from '@adobe/spectrum-wc-core/mixins/index.js';
+import { validateEnum, warnIf } from '@adobe/spectrum-wc-core/utils/index.js';
 
 import {
   BADGE_VALID_SIZES,

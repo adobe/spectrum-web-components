@@ -14,6 +14,7 @@ import { PropertyValues } from 'lit';
 import { property } from 'lit/decorators.js';
 
 import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
+import { validateEnum } from '@adobe/spectrum-wc-core/utils/index.js';
 
 import { ASSET_VARIANTS, type AssetVariant } from './Asset.types.js';
 

@@ -15,6 +15,7 @@ import { property } from 'lit/decorators.js';
 
 import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
 import { SizedMixin } from '@adobe/spectrum-wc-core/mixins/index.js';
+import { validateEnum, warnIf } from '@adobe/spectrum-wc-core/utils/index.js';
 
 import {
   CARD_DENSITIES,

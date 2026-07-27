@@ -16,6 +16,7 @@ import { property, queryAssignedElements } from 'lit/decorators.js';
 import type { ButtonBase } from '@adobe/spectrum-wc-core/components/button';
 import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
 import { SizedMixin } from '@adobe/spectrum-wc-core/mixins/index.js';
+import { validateEnum } from '@adobe/spectrum-wc-core/utils/index.js';
 
 import { SlotAttributePropagationController } from '../../controllers/slot-attribute-propagation-controller/index.js';
 import {
