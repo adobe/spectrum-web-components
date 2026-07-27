@@ -42,9 +42,9 @@ export default meta;
 
 // Every `--swc-card-*` custom property documented on the Card element is a
 // public contract: consumers override these directly, so a CSS refactor that
-// quietly dropped one would be a breaking change. One row per property — a
+// quietly dropped one would be a breaking change. One row per property: a
 // reference card beside the same card with that one property overridden to an
-// obviously different value — so a real visual difference confirms the
+// obviously different value, so a real visual difference confirms the
 // override still works. verifyCustomPropertyCoverage() (play function) asserts
 // this list stays a superset of the API-table properties in the CEM.
 type CardPropertyCase = CustomPropertyCase<`--swc-card-${string}`> & {
@@ -53,6 +53,9 @@ type CardPropertyCase = CustomPropertyCase<`--swc-card-${string}`> & {
   density?: CardDensity;
   withActions?: boolean;
   withCollection?: boolean;
+  // The gallery preview aspect ratio only applies in the gallery layout, which
+  // is triggered by a preview-only card (no title/description/actions/footer).
+  gallery?: boolean;
 };
 
 const CARD_PROPERTY_CASES: readonly CardPropertyCase[] = [
@@ -96,6 +99,11 @@ const CARD_PROPERTY_CASES: readonly CardPropertyCase[] = [
     value: '40px',
     withCollection: true,
   },
+  {
+    property: '--swc-card-gallery-preview-aspect-ratio',
+    value: '3 / 1',
+    gallery: true,
+  },
 ];
 
 const previewImage = (slot = 'preview'): ReturnType<typeof html> => html`
@@ -103,26 +111,38 @@ const previewImage = (slot = 'preview'): ReturnType<typeof html> => html`
 `;
 
 const modPropertyCard = (
-  { density = 'regular', withActions, withCollection }: CardPropertyCase,
+  {
+    density = 'regular',
+    withActions,
+    withCollection,
+    gallery,
+  }: CardPropertyCase,
   style?: string
-) => html`
-  <swc-card density=${density} style=${style ?? nothing}>
-    ${previewImage()}
-    ${withCollection
-      ? html`
-          ${previewImage('collection')} ${previewImage('collection')}
-          ${previewImage('collection')}
-        `
-      : nothing}
-    <span slot="title">This is the card title</span>
-    <span slot="description">Supporting description text.</span>
-    ${withActions
-      ? html`
-          <swc-action-button slot="actions" quiet>Edit</swc-action-button>
-        `
-      : nothing}
-  </swc-card>
-`;
+) =>
+  gallery
+    ? // Gallery layout: preview only, no content slots, so
+      // `--swc-card-gallery-preview-aspect-ratio` governs the preview.
+      html`
+        <swc-card style=${style ?? nothing}>${previewImage()}</swc-card>
+      `
+    : html`
+        <swc-card density=${density} style=${style ?? nothing}>
+          ${previewImage()}
+          ${withCollection
+            ? html`
+                ${previewImage('collection')} ${previewImage('collection')}
+                ${previewImage('collection')}
+              `
+            : nothing}
+          <span slot="title">This is the card title</span>
+          <span slot="description">Supporting description text.</span>
+          ${withActions
+            ? html`
+                <swc-action-button slot="actions" quiet>Edit</swc-action-button>
+              `
+            : nothing}
+        </swc-card>
+      `;
 
 const modPropertiesContent = () =>
   customPropertyRows(CARD_PROPERTY_CASES, modPropertyCard);

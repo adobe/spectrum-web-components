@@ -13,8 +13,8 @@
 /**
  * Shared structural rules for the card template, composed into the
  * `styles()` array of every concrete card component. Import as a JavaScript
- * module, not via a CSS `@import` — see
- * CONTRIBUTOR-DOCS/02_style-guide/01_css/07_stylesheets.md.
+ * module, not via a CSS `@import` (see
+ * CONTRIBUTOR-DOCS/02_style-guide/01_css/07_stylesheets.md).
  *
  * Targets the plain `.swc-CardBase`/`.swc-CardBase-*` classes from `card-template.ts`.
  */

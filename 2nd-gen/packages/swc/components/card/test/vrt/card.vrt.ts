@@ -51,7 +51,7 @@ export default meta;
 // Helpers
 
 // Card styles pseudo-states on `:host(...)` (not an internal element), and
-// only for hover/focus-visible — it has no `:active` treatment — so the
+// only for hover/focus-visible (it has no `:active` treatment), so the
 // forced-state axis is limited to those two.
 const CARD_FORCED_STATES = [
   'hover',
@@ -192,7 +192,7 @@ const contentOnlyCards = [
       <span slot="footer">Footer content</span>
     `
   ),
-  // Default content only — no preview, title, or other named slots.
+  // Default content only, no preview, title, or other named slots.
   renderCard(
     {},
     html`
@@ -369,7 +369,7 @@ const forceCardStates = async ({
       forcePseudoState(host, state);
       // The title-as-link underline and focus outline are `::slotted(a:hover)`
       // / `::slotted(a:focus-visible)` rules, which match on the light-DOM
-      // anchor itself rather than the host — so force the state there too. A
+      // anchor itself rather than the host, so force the state there too. A
       // `data-forced-*` attribute (not a class) is used so the anchor still
       // satisfies the title typography's `:not([class])` guard.
       host
@@ -455,7 +455,7 @@ export const Permutations: Story = {
 };
 
 // Forced-colors mode replaces the whole page palette, so it can't be scoped to
-// a subtree the way theme()'s light/dark split is — it needs its own snapshot.
+// a subtree the way theme()'s light/dark split is, so it needs its own snapshot.
 // Card draws a 1px CanvasText border in forced colors for non-quiet variants.
 export const ForcedColors: Story = {
   render: () => theme(permutationContent(), 'light', 'ltr'),

@@ -1,0 +1,107 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import { DocsFooter, DocsHeader } from '../../.storybook/blocks';
+
+import * as Stories from './stories/card.stories';
+
+<Meta of={Stories} />
+
+<DocsHeader />
+
+## Anatomy
+
+A card is composed of a media region, a content region, and a footer. Which regions appear is driven entirely by which slots are populated.
+
+- **`preview`**: the primary preview image, at the top of the card
+- **`collection`**: one to three additional images shown in a row below the preview. Images beyond the third are not shown
+- **`media`**: overlay content, such as a badge or avatar, layered over the preview/collection region
+- **`title`**: the card title
+- **`actions`**: action controls shown beside the title; not available at `size="xs"`
+- **`description`**: supporting text below the title
+- **default slot**: additional body content below the description
+- **`footer`**: footer content at the bottom of the card
+
+<Canvas of={Stories.Anatomy} />
+
+## Options
+
+### Sizes
+
+Cards come in five sizes: extra-small (`xs`), small (`s`), medium (`m`), large (`l`), and extra-large (`xl`). Medium is the default. Size scales the card's typography, internal padding, and maximum inline size. The `actions` slot is not available at `size="xs"`.
+
+<Canvas of={Stories.Sizes} />
+
+### Variants
+
+The `variant` attribute is a pure style axis and does not affect layout. Four variants are available:
+
+- **`primary`** (default): an elevated surface with a drop shadow over a `layer-2` background
+- **`secondary`**: a `layer-1` background
+- **`tertiary`**: a transparent background with a thin border and no drop shadow
+- **`quiet`**: no background or shadow on the card itself; the preview/collection media keeps its own rounded corners and elevation, and the content and footer drop their horizontal padding to align with the media edge
+
+<Canvas of={Stories.Variants} />
+
+### Density
+
+The `density` attribute adjusts the internal padding of the content and footer regions. Three densities are available: `compact`, `regular` (default), and `spacious`.
+
+<Canvas of={Stories.Density} />
+
+### With collection
+
+Populating the `collection` slot renders its images in a row below the `preview`. One to three square images are shown; any beyond the third are not shown. The `preview` and `collection` slots are independently optional: a card can render a collection with no preview, or the reverse.
+
+At `size="xs"`, when both a `preview` and a `collection` are present, the preview moves into the first position of the collection row and the collection is capped at two images.
+
+<Canvas of={Stories.WithCollection} />
+
+### Gallery
+
+When a card has media (a `preview` and/or a `collection`) but none of `title`, `description`, `actions`, `footer`, or default-slot content, it renders in the gallery layout: the media fills the card and the content region is omitted.
+
+The `media` slot can overlay content, such as a badge or avatar, over that media. Position content within the `media` slot using `*-self` CSS grid alignment.
+
+<Canvas of={Stories.Gallery} />
+
+## Behaviors
+
+### Title as link
+
+Set the `title-as-link` attribute when the `title` slot contains a real link. It extends that link's hit area to cover the whole card surface. The card itself accepts no `href`; navigation stays entirely with the consumer's link.
+
+The interaction fidelity depends on how the link is authored:
+
+- **`<a slot="title" href>` directly**: full native anchor behavior across the whole surface, including middle-click and modifier-click to open in a new tab, and the right-click context menu.
+- **an anchor nested inside a wrapper** (`<span slot="title"><a href>`): a plain click anywhere on the card activates the link, but middle-click, modifier-click, and the context menu work only when the visible anchor text itself is the target.
+
+<Canvas of={Stories.TitleAsLink} />
+
+### Selectable
+
+Set the `selectable` attribute to make the card focusable and dispatch a `swc-card-click` event when it is activated by click, <kbd>Enter</kbd>, or <kbd>Space</kbd>. It is independent of `title-as-link`. Clicks that land on a nested interactive control (for example a button in the `actions` slot) or that follow a text selection do not dispatch the event.
+
+<Canvas of={Stories.Selectable} />
+
+## Accessibility
+
+### Features
+
+- **Preview and collection images** are consumer-supplied through their slots; the card does not add or manage their alternative text.
+- **`title-as-link`** extends a consumer's real `<a>` across the card surface while the anchor remains the single tab stop and keyboard target. Native anchor activation is preserved: <kbd>Enter</kbd> in every form, and middle-click / modifier-click when the anchor is the slotted `title` element directly.
+- **`selectable`** makes the card focusable (`tabindex="0"`) and activatable by <kbd>Enter</kbd> and <kbd>Space</kbd>, dispatching `swc-card-click`. It does not set an ARIA role.
+- **Nested interactive controls** inside the card (an `actions` button, an in-content link) keep their own focus and activation; `title-as-link` and `selectable` do not intercept clicks on them.
+
+### Best practices
+
+- Provide meaningful `alt` text on preview and collection images, or `alt=""` for images that are purely decorative.
+- For `title-as-link`, put a real `<a href>` in the `title` slot, and prefer the anchor as the slotted element itself (`<a slot="title" href>`) so middle-click and modifier-click work across the whole card.
+- Give a `selectable` card an accessible name through its `title` slot content so the focusable card is identifiable, and set an ARIA role that matches your selection context if one is needed.
+- Keep independently interactive content in the `actions` slot or the content region rather than overlapping the whole-card link or selection.
+
+<Canvas of={Stories.Accessibility} />
+
+## Upcoming features
+
+- Once the 2nd-gen Asset component is available, it will be the recommended content for the `preview` and `collection` slots in place of a plain `<img>`.
+
+<DocsFooter />

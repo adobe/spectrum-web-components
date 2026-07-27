@@ -54,11 +54,10 @@ argTypes.size = {
 };
 
 /**
- * A card represents a rectangular container for a preview image, title,
- * description, and actions. Regular, collection, and gallery layouts are
- * driven entirely by which slots are populated — see the card family plan
- * for the exact trigger rules. Collection and gallery are covered in
- * follow-up tickets and are not yet exercised here.
+ * A `<swc-card>` is a flexible container that groups a preview image,
+ * title, description, actions, and footer content. Its regular, collection,
+ * and gallery layouts are driven entirely by which slots are populated, with
+ * no explicit layout attribute.
  */
 const meta: Meta = {
   title: 'Card',
@@ -68,7 +67,7 @@ const meta: Meta = {
   render: (args) => template(args),
   parameters: {
     docs: {
-      subtitle: 'Rectangular container for a preview, title, and description.',
+      subtitle: 'Flexible container that summarizes an object.',
     },
     // design: { type: 'figma', url: 'https://www.figma.com/...' },
     // stackblitz: { url: 'https://stackblitz.com/...' },
@@ -137,7 +136,7 @@ export const Playground: Story = {
     </svg></swc-action-button>`,
   },
   render: (args) => template(args),
-  tags: ['autodocs', 'dev'],
+  tags: ['dev'],
 };
 
 // ──────────────────────────
@@ -394,4 +393,7 @@ export const Selectable: Story = {
 //    ACCESSIBILITY STORIES
 // ────────────────────────────────
 
-// TODO: will complete in separate documentation pass of phase 7
+export const Accessibility: Story = {
+  render: (args) => template(args, basicSlots),
+  tags: ['a11y'],
+};

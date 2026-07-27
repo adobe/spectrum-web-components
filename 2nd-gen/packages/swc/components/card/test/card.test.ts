@@ -28,15 +28,15 @@ import { getComponent, withWarningSpy } from '../../../utils/test-utils.js';
 
 // Tests for the concrete swc-card. This is the sole automated coverage for
 // the card family's shared behavior (CardBase) and shared template
-// (renderCardTemplate) — both are exercised transitively through the real
+// (renderCardTemplate); both are exercised transitively through the real
 // element rather than through throwaway fixtures. Coverage that a concrete
 // swc-card cannot reach (the template's glyph callback and its
 // callback-absent branches, which only swc-user-card / swc-product-card will
 // exercise) is tracked in the card family plan's "Untestable at this phase"
 // table.
 //
-// The cross-shadow-boundary filtering cases use a real swc-action-button —
-// the documented expected content of the actions slot — as the element whose
+// The cross-shadow-boundary filtering cases use a real swc-action-button
+// (the documented expected content of the actions slot) as the element whose
 // internal <button> lives in another shadow tree.
 export default {
   title: 'Card/Tests',
@@ -857,7 +857,7 @@ export const InteractiveTargetFilteringTest: Story = {
  * link's location must resolve to the nested link itself, not to the title
  * anchor (which owns the covering `::before` and would be the hit-test result
  * if the nested content were not elevated). Unlike the JS click-filtering
- * above — which uses direct `.click()` and never exercises hit-testing — this
+ * above (which uses direct `.click()` and never exercises hit-testing), this
  * fails if the elevation regresses.
  */
 export const ElevatedNestedTargetTest: Story = {
@@ -906,8 +906,8 @@ export const ElevatedNestedTargetTest: Story = {
  * `title-as-link` renders a `::before` pseudo-element on the title anchor,
  * absolutely positioned to `inset: 0` of the card, extending the anchor's hit
  * area across the whole surface. Hit-testing (`elementFromPoint`) over the
- * preview region — which has `pointer-events: none`, so the pointer passes
- * through it — must resolve to the title anchor (the pseudo-element's
+ * preview region (which has `pointer-events: none`, so the pointer passes
+ * through it) must resolve to the title anchor (the pseudo-element's
  * originating element), proving the stretched link reaches beyond the anchor's
  * own text box. This isolates the CSS mechanism from CardBase's JS click-proxy
  * (which would also activate the link on a surface click, so a click-based
