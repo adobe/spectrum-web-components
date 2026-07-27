@@ -828,6 +828,11 @@ export const InteractiveTargetFilteringTest: Story = {
 
         const innerButton = actionButton.shadowRoot?.querySelector('button');
 
+        expect(
+          innerButton,
+          'the action button renders a <button> in its own shadow root'
+        ).toBeTruthy();
+
         innerButton?.click();
 
         expect(
