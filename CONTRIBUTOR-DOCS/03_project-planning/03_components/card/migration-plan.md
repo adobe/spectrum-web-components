@@ -45,7 +45,7 @@
 ## TL;DR
 
 - **Scope:** three concrete components — `swc-card` (regular/collection/gallery), `swc-user-card`, `swc-product-card`. No dedicated `swc-asset-card`; that need is folded into `swc-card` until the 2nd-gen `Asset` component ships.
-- **Architecture, already built:** `CardBase` (core, behavior only) + `renderCardTemplate()` (shared SWC render function) + `card-template.css` (shared, implemented). `swc-card` itself now exists (`Card.ts`, `swc-card.ts`, `card.css`, stories) and is mid-implementation; `swc-user-card`/`swc-product-card` have not started.
+- **Architecture, already built:** `CardBase` (core, behavior only) + `renderCardTemplate()` (shared SWC render function) + `card-template.css` (shared, implemented). `swc-card` is complete through all migration phases (API, styling, accessibility, tests, VRT, and documentation) and in review; `swc-user-card`/`swc-product-card` have not started.
 - **API:** `variant` is a pure style axis, independent of layout (layout is driven entirely by slot presence). `swc-user-card`/`swc-product-card` don't support `quiet`. `title`/`description` are slot-only.
 - **Clickable card, no `href` on Card:** the consumer supplies their own link in the `title` slot; `title-as-link` extends its hit area, `selectable` independently makes the card focusable and dispatches a click event. Both are implemented and tested on `CardBase`.
 - **Labeling (avatar/thumbnail vs. title) is consumer documentation, not code** — Card doesn't validate or bridge accessible names that consumers already fully control.
@@ -333,9 +333,8 @@ Both branches (`titleAsLink`'s proxy-click and `selectable`'s event dispatch) ru
   - [x] VRT: `test/vrt/card.vrt.ts` (Permutations + ForcedColors) and `test/vrt/card-custom-properties.vrt.ts` (all 17 documented custom properties, CEM-coverage-verified)
   - [x] Documentation: per-component `card.mdx` (Anatomy, Options, Behaviors, Accessibility, Upcoming features); Accessibility story added; Playground dropped `autodocs`; `Card.ts` `@cssprop` completed (added `--swc-card-gallery-preview-aspect-ratio`); Options prose kept to verifiable facts (no invented "when to use" guidance)
   - [x] Consumer migration guide: `migration-guide.mdx` (1st-gen `sp-card` → `swc-card`), authored separately from the docs page per the `consumer-migration-guide` skill; scoped to `swc-card` only
-  - [ ] Review: not started
-- **`swc-user-card`** — not started
-- **`swc-product-card`** — not started
+- **`swc-user-card`** — Epic SWC-2367, not started
+- **`swc-product-card`** — Epic SWC-2372, not started
 
 
 ## Blockers and open questions
