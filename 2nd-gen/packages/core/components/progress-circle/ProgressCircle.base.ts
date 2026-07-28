@@ -146,6 +146,7 @@ export abstract class ProgressCircleBase extends SizedMixin(SpectrumElement, {
   private formatProgress(): string {
     return new Intl.NumberFormat(this.languageResolver.language, {
       style: 'percent',
+      unitDisplay: 'narrow',
     }).format((this.progress ?? 0) / 100);
   }
 

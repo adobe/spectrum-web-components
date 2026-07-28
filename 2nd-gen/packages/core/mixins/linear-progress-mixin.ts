@@ -14,7 +14,7 @@ import { property } from 'lit/decorators.js';
 
 import { LanguageResolutionController } from '../controllers/language-resolution.js';
 import { SlotPresenceController } from '../controllers/slot-presence-controller/index.js';
-import { validateEnum, warnIf } from '../utils/index.js';
+import { isDebug, validateEnum, warnIf } from '../utils/index.js';
 import type { ElementSize } from './sized-mixin.js';
 
 type Constructor<T = Record<string, unknown>> = {
@@ -285,7 +285,7 @@ export function LinearProgressMixin<T extends Constructor<ReactiveElement>>(
       // that determine it actually change, so the warning does not fire
       // on every property update during development.
       if (
-        window.__swc?.DEBUG &&
+        isDebug() &&
         (changes.has('accessibleLabel') || !this._hasWarnedNoAccessibleName)
       ) {
         this.warnMissingAccessibleName();
@@ -295,7 +295,7 @@ export function LinearProgressMixin<T extends Constructor<ReactiveElement>>(
       // range. The value is still clamped for rendering and ARIA, but the
       // clamp is otherwise silent, so flag it as a likely authoring error.
       if (
-        window.__swc?.DEBUG &&
+        isDebug() &&
         (changes.has('value') ||
           changes.has('minValue') ||
           changes.has('maxValue'))
