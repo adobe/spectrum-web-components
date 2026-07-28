@@ -46,7 +46,7 @@ argTypes.size = {
 /**
  * **Internal-only.** UI icons are the small glyphs Spectrum controls render
  * internally (chevrons, checkmarks, arrows, and the like). They are not published
- * for consumers. Art is generated from `svg-source/ui/` into
+ * for consumers. Art is generated from `icon-source/ui/` into
  * `components/ui-icons/icon-set/`, and the `<swc-ui-icon>` element selects the
  * optical step that matches its `size`.
  */

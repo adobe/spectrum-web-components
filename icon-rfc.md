@@ -398,7 +398,7 @@ can be committed and shipped.
 1. **Manual A4U download** (the only human step; no committed code points at the
    gated registry).
 2. **Commit the raw SVGs** into a source folder at the swc package root
-   (`svg-source/ui/`; `svg-source/workflow/` for the workflow family).
+   (`icon-source/ui/`; `icon-source/workflow/` for the workflow family).
 3. **Generator** converts committed SVGs per family: workflow into SVG-string
    functions plus public per-icon elements; UI into Lit `html` `TemplateResult`
    bundles under `components/ui-icons/icon-set/`, consumed by the internal
@@ -408,13 +408,13 @@ can be committed and shipped.
    `var(--iconPrimary, …)` fill to `var(--swc-icon-color, currentColor)`. Files are
    grouped by the logical name parsed from the A4U filename
    `S2_Icon_UI<Name>_Size<step>_N.svg`, keyed by numeral step.
-4. **Record pulled A4U versions** in `svg-source/icon-source.json`, alongside the
+4. **Record pulled A4U versions** in `icon-source/icon-source.json`, alongside the
    committed SVGs (not in `package.json` dependencies).
 5. **Commit** SVGs, generated output, and metadata. External contributors and
    public CI build only from committed art and never need A4U access.
 
-**Layout (POC).** UI source SVGs live at `2nd-gen/packages/swc/svg-source/ui/`, with
-`icon-source.json` alongside them in `svg-source/`. The generated bundles and the
+**Layout (POC).** UI source SVGs live at `2nd-gen/packages/swc/icon-source/ui/`, with
+`icon-source.json` alongside them in `icon-source/`. The generated bundles and the
 `<swc-ui-icon>` element live at `2nd-gen/packages/swc/components/ui-icons/` (generated
 art in its `icon-set/` subfolder), imported relatively by swc components rather than
 through a public subpath. A dev-only

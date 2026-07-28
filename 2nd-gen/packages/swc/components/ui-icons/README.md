@@ -19,8 +19,8 @@ Contents:
 
 Source and generation:
 
-- `icon-set/` is built from `../../svg-source/ui/` by `yarn generate:ui-icons`.
-- The A4U set version is recorded in `../../svg-source/icon-source.json`.
+- `icon-set/` is built from `../../icon-source/ui/` by `yarn generate:ui-icons`.
+- The A4U set version is recorded in `../../icon-source/icon-source.json`.
 
 Preview:
 
