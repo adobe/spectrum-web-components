@@ -176,10 +176,19 @@ export const Anatomy: Story = {
 // ──────────────────────────
 
 export const Sizes: Story = {
-  render: () => html`
+  render: (args) => html`
     ${ACTION_GROUP_VALID_SIZES.map(
       (size) => html`
-        <swc-action-group accessible-label=${sizeLabels[size]} size=${size}>
+        <swc-action-group
+          accessible-label=${sizeLabels[size]}
+          orientation=${args.orientation ?? 'horizontal'}
+          ?disabled=${args.disabled}
+          ?compact=${args.compact}
+          ?quiet=${args.quiet}
+          ?justified=${args.justified}
+          static-color=${ifDefined(args['static-color'])}
+          size=${size}
+        >
           <swc-action-button>${sizeLabels[size]}</swc-action-button>
           <swc-action-button>Action</swc-action-button>
         </swc-action-group>
@@ -187,16 +196,21 @@ export const Sizes: Story = {
     )}
   `,
   tags: ['options'],
-  parameters: { 'section-order': 1 },
 };
 
 export const Orientations: Story = {
-  render: () => html`
+  render: (args) => html`
     ${ACTION_GROUP_ORIENTATIONS.map(
       (orientation) => html`
         <swc-action-group
           accessible-label=${orientation}
           orientation=${orientation}
+          ?disabled=${args.disabled}
+          ?compact=${args.compact}
+          ?quiet=${args.quiet}
+          ?justified=${args.justified}
+          size=${ifDefined(args.size)}
+          static-color=${ifDefined(args['static-color'])}
         >
           <swc-action-button>${orientation} 1</swc-action-button>
           <swc-action-button>${orientation} 2</swc-action-button>
@@ -205,15 +219,20 @@ export const Orientations: Story = {
     )}
   `,
   tags: ['options'],
-  parameters: { 'section-order': 2 },
 };
 
 export const StaticColors: Story = {
-  render: () => html`
+  render: (args) => html`
     ${ACTION_GROUP_STATIC_COLORS.map(
       (staticColor) => html`
         <swc-action-group
           accessible-label=${staticColor}
+          orientation=${args.orientation ?? 'horizontal'}
+          ?disabled=${args.disabled}
+          ?compact=${args.compact}
+          ?quiet=${args.quiet}
+          ?justified=${args.justified}
+          size=${ifDefined(args.size)}
           static-color=${staticColor}
         >
           <swc-action-button>${staticColor}</swc-action-button>
@@ -223,7 +242,7 @@ export const StaticColors: Story = {
     )}
   `,
   tags: ['options', '!test'],
-  parameters: { staticColorsDemo: true, 'section-order': 3 },
+  parameters: { staticColorsDemo: true },
 };
 StaticColors.storyName = 'Static colors';
 
@@ -232,8 +251,17 @@ StaticColors.storyName = 'Static colors';
 // ──────────────────────────
 
 export const Disabled: Story = {
-  render: () => html`
-    <swc-action-group accessible-label="Text formatting" disabled>
+  render: (args) => html`
+    <swc-action-group
+      accessible-label="Text formatting"
+      orientation=${args.orientation ?? 'horizontal'}
+      ?compact=${args.compact}
+      ?quiet=${args.quiet}
+      ?justified=${args.justified}
+      size=${ifDefined(args.size)}
+      static-color=${ifDefined(args['static-color'])}
+      disabled
+    >
       <swc-action-button>Bold</swc-action-button>
       <swc-action-button>Italic</swc-action-button>
       <swc-action-button>Underline</swc-action-button>
@@ -247,8 +275,16 @@ export const Disabled: Story = {
 // ──────────────────────────────
 
 export const Compact: Story = {
-  render: () => html`
-    <swc-action-group accessible-label="Text formatting" compact>
+  render: (args) => html`
+    <swc-action-group
+      accessible-label="Text formatting"
+      ?disabled=${args.disabled}
+      ?quiet=${args.quiet}
+      ?justified=${args.justified}
+      size=${ifDefined(args.size)}
+      static-color=${ifDefined(args['static-color'])}
+      compact
+    >
       <swc-action-button>Bold</swc-action-button>
       <swc-action-button>Italic</swc-action-button>
       <swc-action-button>Underline</swc-action-button>
@@ -256,6 +292,11 @@ export const Compact: Story = {
     <swc-action-group
       accessible-label="Text formatting, vertical and compact"
       orientation="vertical"
+      ?disabled=${args.disabled}
+      ?quiet=${args.quiet}
+      ?justified=${args.justified}
+      size=${ifDefined(args.size)}
+      static-color=${ifDefined(args['static-color'])}
       compact
     >
       <swc-action-button>Bold</swc-action-button>
@@ -267,14 +308,27 @@ export const Compact: Story = {
 };
 
 export const Quiet: Story = {
-  render: () => html`
-    <swc-action-group accessible-label="Text formatting" quiet>
+  render: (args) => html`
+    <swc-action-group
+      accessible-label="Text formatting"
+      orientation=${args.orientation ?? 'horizontal'}
+      ?disabled=${args.disabled}
+      ?justified=${args.justified}
+      size=${ifDefined(args.size)}
+      static-color=${ifDefined(args['static-color'])}
+      quiet
+    >
       <swc-action-button>Bold</swc-action-button>
       <swc-action-button>Italic</swc-action-button>
       <swc-action-button>Underline</swc-action-button>
     </swc-action-group>
     <swc-action-group
       accessible-label="Text formatting, compact and quiet"
+      orientation=${args.orientation ?? 'horizontal'}
+      ?disabled=${args.disabled}
+      ?justified=${args.justified}
+      size=${ifDefined(args.size)}
+      static-color=${ifDefined(args['static-color'])}
       quiet
       compact
     >
@@ -288,9 +342,15 @@ export const Quiet: Story = {
 Quiet.storyName = 'Quiet (compact join disabled)';
 
 export const Justified: Story = {
-  render: () => html`
+  render: (args) => html`
     <swc-action-group
       accessible-label="Text formatting"
+      orientation=${args.orientation ?? 'horizontal'}
+      ?disabled=${args.disabled}
+      ?compact=${args.compact}
+      ?quiet=${args.quiet}
+      size=${ifDefined(args.size)}
+      static-color=${ifDefined(args['static-color'])}
       justified
       style="inline-size: 300px;"
     >
