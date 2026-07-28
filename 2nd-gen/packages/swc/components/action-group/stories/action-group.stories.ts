@@ -73,6 +73,12 @@ argTypes.quiet = {
 };
 
 argTypes.justified = {
+  ...argTypes.justified,
+  description:
+    'Whether slotted children should expand equally to fill the available ' +
+    'inline width of the group. Has no visible effect unless the host has ' +
+    'more available width than its content needs, e.g., an explicit ' +
+    '`inline-size` set on the host, or a container that stretches it.',
   table: {
     category: 'attributes',
     defaultValue: { summary: 'false' },
