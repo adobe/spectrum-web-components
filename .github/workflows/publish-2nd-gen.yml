@@ -117,10 +117,13 @@ jobs:
 
       - name: Verify NPM authentication
         id: npm-auth
+        # setup-node (in setup-job) already wrote an .npmrc that npm reads via
+        # NPM_CONFIG_USERCONFIG and that authenticates through ${NODE_AUTH_TOKEN};
+        # just point that at the real token. Writing ~/.npmrc here is a no-op because
+        # the userconfig override wins.
         env:
-          NPM_TOKEN: ${{ secrets.ADOBE_BOT_NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.ADOBE_BOT_NPM_TOKEN }}
         run: |
-          echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
           npm whoami --registry=https://registry.npmjs.org
           echo "✓ NPM authentication configured for 2nd-gen (Adobe namespace)"
 
