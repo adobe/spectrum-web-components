@@ -15,7 +15,6 @@ on:
         required: true
         options:
           - main
-          - gen2-beta
 
 jobs:
   unlock:
