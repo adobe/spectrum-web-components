@@ -39,8 +39,26 @@ import styles from './infield-button.css';
  * @cssprop --swc-infield-button-icon-size - Size of the slotted icon element.
  *   Defaults to `workflow-icon-3x-small` (10px) for sizes S and M.
  *   Overridden to `workflow-icon-2x-small` (12px) for L and `workflow-icon-extra-small` (14px) for XL.
+ * @cssprop --swc-infield-button-background-color - Background color in the default state.
+ *   Defaults to `token("gray-100")`. Overridden to `transparent` by `[quiet]`.
+ * @cssprop --swc-infield-button-background-color-hover - Background color on hover.
+ *   Defaults to `token("gray-200")`.
+ * @cssprop --swc-infield-button-background-color-active - Background color on press.
+ *   Defaults to `token("gray-200")`.
+ * @cssprop --swc-infield-button-background-color-focus - Background color when focused.
+ *   Defaults to `token("gray-200")`.
  * @cssprop --swc-infield-button-background-color-disabled - Background color when disabled.
  *   Defaults to `token("disabled-background-color")`. Overridden to `transparent` by `[quiet]`.
+ * @cssprop --swc-infield-button-icon-color - Icon color in the default state.
+ *   Defaults to `token("neutral-content-color-default")`.
+ * @cssprop --swc-infield-button-icon-color-hover - Icon color on hover.
+ *   Defaults to `token("neutral-content-color-hover")`.
+ * @cssprop --swc-infield-button-icon-color-active - Icon color on press.
+ *   Defaults to `token("neutral-content-color-down")`.
+ * @cssprop --swc-infield-button-icon-color-focus - Icon color when focused.
+ *   Defaults to `token("neutral-content-color-key-focus")`.
+ * @cssprop --swc-infield-button-icon-color-disabled - Icon color when disabled.
+ *   Defaults to `token("disabled-content-color")`.
  * @cssprop --swc-infield-button-down-state-transform - Transform applied on press (down state).
  *   Defaults to a perspective + translate3d that produces the tactile press effect.
  *   Set to `none` to disable the press animation (e.g. when the button is in a pending state).

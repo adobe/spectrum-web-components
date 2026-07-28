@@ -57,6 +57,9 @@ const crossIconSvg = `<svg slot="icon" xmlns="http://www.w3.org/2000/svg" viewBo
 // Single function renders the labelled field wrapper for all three field types.
 // Wrapper: padding:6px on all sides, border-inline-end on input as separator.
 // Stepper places both buttons on the trailing edge (Figma spec).
+//
+// TODO: Replace the native <label> and <input> elements with <swc-text-field>,
+// <swc-search>, and <swc-number-field> once those components are migrated to 2nd-gen.
 
 type FieldType = 'picker' | 'search' | 'stepper';
 
@@ -184,6 +187,23 @@ const meta: Meta = {
   args,
   argTypes,
   render: (args) => template(args),
+  decorators: [
+    (story) => html`
+      <style>
+        /* Hide browser-native spinner controls on story number inputs */
+        input[type='number']::-webkit-outer-spin-button,
+        input[type='number']::-webkit-inner-spin-button {
+          -webkit-appearance: none;
+          margin: 0;
+        }
+        /* Hide browser-native clear button on story search inputs */
+        input[type='search']::-webkit-search-cancel-button {
+          -webkit-appearance: none;
+        }
+      </style>
+      ${story()}
+    `,
+  ],
   parameters: {
     docs: {
       subtitle: 'Icon button embedded inside a form field',
