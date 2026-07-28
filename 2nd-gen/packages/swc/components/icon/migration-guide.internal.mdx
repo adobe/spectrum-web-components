@@ -40,13 +40,13 @@ import '@adobe/spectrum-wc/components/icon/swc-icon.js';
 
 ### Removed in Spectrum 2
 
-| Removed                          | Replacement                                                                                                   |
-| -------------------------------- | ------------------------------------------------------------------------------------------------------------- |
-| `name` attribute                 | Slot an SVG directly, or use an icon factory function — see [step 2](#2-replace-name-or-src-with-slotted-svg) |
-| `src` attribute                  | Slot an `<svg>` or `<img>` element directly — see [step 2](#2-replace-name-or-src-with-slotted-svg)           |
-| `error` event                    | Removed along with `src` support (remove any `error` listeners on `sp-icon`)                                  |
-| `xxs` and `xxl` size values      | Use `xs` for `xxs` and `xl` for `xxl`                                                                         |
-| `--mod-icon-*` custom properties | `--swc-icon-*` equivalents (see [Styling](#styling))                                                          |
+| Removed                          | Replacement                                                                                                  |
+| -------------------------------- | ------------------------------------------------------------------------------------------------------------ |
+| `name` attribute                 | Slot an SVG directly, or use an icon factory function; see [step 2](#2-replace-name-or-src-with-slotted-svg) |
+| `src` attribute                  | Slot an `<svg>` or `<img>` element directly; see [step 2](#2-replace-name-or-src-with-slotted-svg)           |
+| `error` event                    | Removed along with `src` support (remove any `error` listeners on `sp-icon`)                                 |
+| `xxs` and `xxl` size values      | Use `xs` for `xxs` and `xl` for `xxl`                                                                        |
+| `--mod-icon-*` custom properties | `--swc-icon-*` equivalents (see [Styling](#styling))                                                         |
 
 ## Update your code
 
@@ -103,12 +103,12 @@ html`
 <!-- Before -->
 <sp-icon src="/icons/my-icon.svg" label="My icon"></sp-icon>
 
-<!-- After: option 1 — inline SVG in the default slot -->
+<!-- After: option 1, inline SVG in the default slot -->
 <swc-icon accessible-label="My icon">
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">…</svg>
 </swc-icon>
 
-<!-- After: option 2 — standalone <img> when no icon wrapper is needed -->
+<!-- After: option 2, standalone <img> when no icon wrapper is needed -->
 <img src="/icons/my-icon.svg" alt="My icon" />
 ```
 
@@ -136,14 +136,14 @@ The `xxs` and `xxl` size values have been removed. Update to the nearest availab
 When an icon communicates information not available from surrounding text, add an `accessible-label` attribute so assistive technology can announce it.
 
 ```html
-<!-- Decorative icon alongside visible text — omit label -->
+<!-- Decorative icon alongside visible text, omit label -->
 <swc-icon><svg>…</svg></swc-icon>
 Save
 
-<!-- Meaningful standalone icon — set label directly on the icon -->
+<!-- Meaningful standalone icon, set label directly on the icon -->
 <swc-icon accessible-label="Search"><svg>…</svg></swc-icon>
 
-<!-- Icon inside an interactive element — label the wrapper instead -->
+<!-- Icon inside an interactive element, label the wrapper instead -->
 <button aria-label="Search">
   <swc-icon><svg>…</svg></swc-icon>
 </button>

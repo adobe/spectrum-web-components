@@ -10,7 +10,7 @@ Contents:
   and `accessible-label`; maps the size to the numeral optical step and renders the
   matching template (no `unsafeSVG`). Host owns a11y: labeled → `role="img"`,
   unlabeled → `aria-hidden`.
-- **`icon-set/`** — generated per-logical-icon bundles (`icon-set/<Name>.ts`), each a
+- **`icon-set/`:** generated per-logical-icon bundles (`icon-set/<Name>.ts`), each a
   numeral-step to Lit `html` `TemplateResult` map for one logical icon (for example
   `Chevron`). `icon-set/index.ts` is the `UI_ICONS` registry, keyed by the kebab-case
   `icon` name. **Generated: do not hand-edit.**

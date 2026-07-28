@@ -233,7 +233,7 @@ presentational.
 All three share one base class (`IconBase`, in core) and differ only in how their
 SVG is supplied; each is a custom element. The code below is illustrative.
 
-**Shared base (core) — behavior only: no `render()`, no styles (core has no CSS processing):**
+**Shared base (core): behavior only, no `render()` and no styles (core has no CSS processing):**
 
 ```ts
 // @adobe/spectrum-wc-core
@@ -413,7 +413,7 @@ can be committed and shipped.
 5. **Commit** SVGs, generated output, and metadata. External contributors and
    public CI build only from committed art and never need A4U access.
 
-**Layout (POC).** UI source SVGs live at `2nd-gen/packages/swc/icon-source/ui/`, with
+**Layout.** UI source SVGs live at `2nd-gen/packages/swc/icon-source/ui/`, with
 `icon-source.json` alongside them in `icon-source/`. The generated bundles and the
 `<swc-ui-icon>` element live at `2nd-gen/packages/swc/components/ui-icons/` (generated
 art in its `icon-set/` subfolder), imported relatively by swc components rather than
@@ -481,7 +481,7 @@ verified in Phase 7 against workflow icons and custom SVGs.
   manage. Rejected.
 - **Public UI icons (as in 1st-gen):** dropped to match React Spectrum and design;
   UI icons are internal.
-- **UI icons as SVG-string functions inlined with `unsafeSVG`** (earlier draft):
+- **UI icons as SVG-string functions inlined with `unsafeSVG`:**
   superseded by the internal `<swc-ui-icon>` element, which removes `unsafeSVG` from
   components and centralizes the size-to-step mapping.
 
@@ -572,11 +572,11 @@ follow-up.
 
 ### Deferred to implementation (no design decision)
 
-- **Per-family size tokens (UI resolved in Phase 1):** `<swc-ui-icon>` now sizes its
+- **Per-family size tokens (UI resolved):** `<swc-ui-icon>` now sizes its
   box from the `ui-icon-*` token scale via `ui-icon-sizes.css`, and the `<swc-icon>`
   frame keeps the `workflow-icon-*` scale via `workflow-icon-sizes.css`. Concrete
   workflow values are confirmed when workflow art lands (Phases 3–4).
-- **Nearest-step fallback (resolved in Phase 1 POC):** `resolveUiIconArt` renders the
+- **Nearest-step fallback (resolved):** `resolveUiIconArt` renders the
   step that matches the size, or the nearest available step by numeral distance when
   that step is absent (ties resolve to the smaller step). All 10 initial UI icons ship
   every optical step, so no logical icon currently lacks one; the fallback is verified

@@ -208,10 +208,8 @@ export const UnknownIconTest: Story = {
   },
 };
 
-// The 10 shipped UI icons currently cover all five optical steps, so the
-// nearest-step fallback in `resolveUiIconArt` cannot be reached through the
-// registry. These cases construct a partial bundle — simulating a logical icon
-// that does not ship every step — to exercise that fallback directly.
+// The shipped icons cover every optical step, so a partial bundle (only steps
+// 50 and 300) is used to exercise the nearest-step fallback directly.
 export const NearestStepFallbackTest: Story = {
   render: () => html`
     <swc-ui-icon icon="chevron"></swc-ui-icon>
