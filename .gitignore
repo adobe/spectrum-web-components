@@ -171,7 +171,9 @@ debug-storybook.log
 !.yarn/version
 
 # transient icon source SVGs: downloaded per family, transformed by the icon
-# generator, and not persisted after the generated art is committed (see
-# 2nd-gen/packages/swc/icon-source/README.md)
-2nd-gen/packages/swc/icon-source/ui/
-2nd-gen/packages/swc/icon-source/workflow/
+# generator, and not persisted after the generated art is committed. The family
+# folders stay tracked (via their README) so teammates can find where to add icons;
+# only the raw .svg assets are ignored. See
+# 2nd-gen/packages/swc/icon-source/README.md
+2nd-gen/packages/swc/icon-source/ui/*.svg
+2nd-gen/packages/swc/icon-source/workflow/*.svg
