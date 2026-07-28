@@ -78,7 +78,7 @@ argTypes.value = {
  * values use [Meter](../?path=/docs/components-meter--docs).
  */
 const meta: Meta = {
-  title: 'Progress Bar',
+  title: 'Progress bar',
   component: 'swc-progress-bar',
   parameters: {
     docs: {
