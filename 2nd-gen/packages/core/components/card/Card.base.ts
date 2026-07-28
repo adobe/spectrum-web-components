@@ -353,7 +353,10 @@ export abstract class CardBase extends SizedMixin(SpectrumElement, {
     // A text-selection drag still fires `click` on mouseup; a non-collapsed
     // selection at that point means the user was selecting text, not
     // clicking through the card.
-    if (document.getSelection()?.isCollapsed === false) {
+    if (
+      event instanceof MouseEvent &&
+      document.getSelection()?.isCollapsed === false
+    ) {
       return;
     }
     const path = event.composedPath();
