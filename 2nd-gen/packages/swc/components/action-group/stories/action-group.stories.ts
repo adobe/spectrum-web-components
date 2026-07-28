@@ -101,8 +101,8 @@ const meta: Meta = {
       ?compact=${renderArgs.compact}
       ?quiet=${renderArgs.quiet}
       ?justified=${renderArgs.justified}
-      size=${ifDefined(renderArgs.size)}
-      static-color=${ifDefined(renderArgs['static-color'])}
+      size=${ifDefined(renderArgs.size || undefined)}
+      static-color=${ifDefined(renderArgs['static-color'] || undefined)}
     >
       <swc-action-button>Bold</swc-action-button>
       <swc-action-button>Italic</swc-action-button>
@@ -186,7 +186,7 @@ export const Sizes: Story = {
           ?compact=${args.compact}
           ?quiet=${args.quiet}
           ?justified=${args.justified}
-          static-color=${ifDefined(args['static-color'])}
+          static-color=${ifDefined(args['static-color'] || undefined)}
           size=${size}
         >
           <swc-action-button>${sizeLabels[size]}</swc-action-button>
@@ -209,8 +209,8 @@ export const Orientations: Story = {
           ?compact=${args.compact}
           ?quiet=${args.quiet}
           ?justified=${args.justified}
-          size=${ifDefined(args.size)}
-          static-color=${ifDefined(args['static-color'])}
+          size=${ifDefined(args.size || undefined)}
+          static-color=${ifDefined(args['static-color'] || undefined)}
         >
           <swc-action-button>${orientation} 1</swc-action-button>
           <swc-action-button>${orientation} 2</swc-action-button>
@@ -232,7 +232,7 @@ export const StaticColors: Story = {
           ?compact=${args.compact}
           ?quiet=${args.quiet}
           ?justified=${args.justified}
-          size=${ifDefined(args.size)}
+          size=${ifDefined(args.size || undefined)}
           static-color=${staticColor}
         >
           <swc-action-button>${staticColor}</swc-action-button>
@@ -258,8 +258,8 @@ export const Disabled: Story = {
       ?compact=${args.compact}
       ?quiet=${args.quiet}
       ?justified=${args.justified}
-      size=${ifDefined(args.size)}
-      static-color=${ifDefined(args['static-color'])}
+      size=${ifDefined(args.size || undefined)}
+      static-color=${ifDefined(args['static-color'] || undefined)}
       disabled
     >
       <swc-action-button>Bold</swc-action-button>
@@ -281,8 +281,8 @@ export const Compact: Story = {
       ?disabled=${args.disabled}
       ?quiet=${args.quiet}
       ?justified=${args.justified}
-      size=${ifDefined(args.size)}
-      static-color=${ifDefined(args['static-color'])}
+      size=${ifDefined(args.size || undefined)}
+      static-color=${ifDefined(args['static-color'] || undefined)}
       compact
     >
       <swc-action-button>Bold</swc-action-button>
@@ -295,8 +295,8 @@ export const Compact: Story = {
       ?disabled=${args.disabled}
       ?quiet=${args.quiet}
       ?justified=${args.justified}
-      size=${ifDefined(args.size)}
-      static-color=${ifDefined(args['static-color'])}
+      size=${ifDefined(args.size || undefined)}
+      static-color=${ifDefined(args['static-color'] || undefined)}
       compact
     >
       <swc-action-button>Bold</swc-action-button>
@@ -314,8 +314,8 @@ export const Quiet: Story = {
       orientation=${args.orientation ?? 'horizontal'}
       ?disabled=${args.disabled}
       ?justified=${args.justified}
-      size=${ifDefined(args.size)}
-      static-color=${ifDefined(args['static-color'])}
+      size=${ifDefined(args.size || undefined)}
+      static-color=${ifDefined(args['static-color'] || undefined)}
       quiet
     >
       <swc-action-button>Bold</swc-action-button>
@@ -327,8 +327,8 @@ export const Quiet: Story = {
       orientation=${args.orientation ?? 'horizontal'}
       ?disabled=${args.disabled}
       ?justified=${args.justified}
-      size=${ifDefined(args.size)}
-      static-color=${ifDefined(args['static-color'])}
+      size=${ifDefined(args.size || undefined)}
+      static-color=${ifDefined(args['static-color'] || undefined)}
       quiet
       compact
     >
@@ -349,8 +349,8 @@ export const Justified: Story = {
       ?disabled=${args.disabled}
       ?compact=${args.compact}
       ?quiet=${args.quiet}
-      size=${ifDefined(args.size)}
-      static-color=${ifDefined(args['static-color'])}
+      size=${ifDefined(args.size || undefined)}
+      static-color=${ifDefined(args['static-color'] || undefined)}
       justified
       style="inline-size: 300px;"
     >
