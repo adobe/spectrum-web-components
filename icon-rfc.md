@@ -375,6 +375,10 @@ component.
 
 **Implication:** workflow and UI use different size token scales, so a single
 `--swc-icon-size-m` cannot serve both; the frame resolves the box per family.
+Implemented as separate lit-style fragments: `ui-icon-sizes.css` sizes
+`<swc-ui-icon>` from the `ui-icon-*` scale and `workflow-icon-sizes.css` sizes the
+`<swc-icon>` frame from the `workflow-icon-*` scale, both feeding the shared
+`--swc-icon-inline-size` / `--swc-icon-block-size` box in `icon-base.css`.
 
 ## 8. Source and processing
 
@@ -568,9 +572,10 @@ follow-up.
 
 ### Deferred to implementation (no design decision)
 
-- **Per-family size tokens:** gather the concrete values during implementation: the
-  workflow icon pixel sizes and the UI per-step box sizes from the Spectrum tokens.
-  Tracked in Phase 1 (UI) and Phases 3–4 (workflow).
+- **Per-family size tokens (UI resolved in Phase 1):** `<swc-ui-icon>` now sizes its
+  box from the `ui-icon-*` token scale via `ui-icon-sizes.css`, and the `<swc-icon>`
+  frame keeps the `workflow-icon-*` scale via `workflow-icon-sizes.css`. Concrete
+  workflow values are confirmed when workflow art lands (Phases 3–4).
 - **Nearest-step fallback (resolved in Phase 1 POC):** `resolveUiIconArt` renders the
   step that matches the size, or the nearest available step by numeral distance when
   that step is absent (ties resolve to the smaller step). All 10 initial UI icons ship

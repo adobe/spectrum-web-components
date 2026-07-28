@@ -17,7 +17,8 @@ import { IconBase } from '@adobe/spectrum-wc-core/components/icon';
 import { UI_ICONS, UiIconName } from './icon-set/index.js';
 import { resolveUiIconArt } from './ui-icons.types.js';
 
-import styles from '../../stylesheets/_lit-styles/icon-base.css';
+import iconBaseStyles from '../../stylesheets/_lit-styles/icon-base.css';
+import uiIconSizeStyles from '../../stylesheets/_lit-styles/ui-icon-sizes.css';
 
 /**
  * An internal icon renderer for Spectrum UI icons (chevrons, checkmarks, arrows, and
@@ -46,7 +47,7 @@ export class UiIcon extends IconBase {
   public icon!: UiIconName;
 
   public static override get styles(): CSSResultArray {
-    return [styles];
+    return [iconBaseStyles, uiIconSizeStyles];
   }
 
   protected override render(): TemplateResult {

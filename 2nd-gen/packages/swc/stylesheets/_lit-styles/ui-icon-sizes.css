@@ -1,0 +1,48 @@
+/**
+ * Copyright 2026 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+/*
+ * Box size for swc-ui-icon, from the UI-icon token scale (icon-rfc.md, section 7). Sets
+ * the shared --swc-icon-inline-size / --swc-icon-block-size custom properties consumed by
+ * icon-base.css. The default is medium; each size maps to its UI-icon token. Note the
+ * box only sizes the container: swc-ui-icon selects the optically-tuned step for the
+ * size and does not scale one step to fake another.
+ */
+:host {
+  --swc-icon-inline-size: token("ui-icon-medium");
+  --swc-icon-block-size: token("ui-icon-medium");
+}
+
+:host([size="xs"]) {
+  --swc-icon-inline-size: token("ui-icon-extra-small");
+  --swc-icon-block-size: token("ui-icon-extra-small");
+}
+
+:host([size="s"]) {
+  --swc-icon-inline-size: token("ui-icon-small");
+  --swc-icon-block-size: token("ui-icon-small");
+}
+
+:host([size="m"]) {
+  --swc-icon-inline-size: token("ui-icon-medium");
+  --swc-icon-block-size: token("ui-icon-medium");
+}
+
+:host([size="l"]) {
+  --swc-icon-inline-size: token("ui-icon-large");
+  --swc-icon-block-size: token("ui-icon-large");
+}
+
+:host([size="xl"]) {
+  --swc-icon-inline-size: token("ui-icon-extra-large");
+  --swc-icon-block-size: token("ui-icon-extra-large");
+}
