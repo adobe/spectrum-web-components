@@ -222,14 +222,13 @@ argTypes['internal-attribute'] = {
 
 These rules apply to every `title` field in meta objects and every `<Meta title="..." />` in MDX files.
 
-- **Component names are proper nouns — keep their title case.** `'Action Button'`, `'Illustrated Message'`, `'Color Loupe'`. Each word in the component name is capitalised.
-- **Everything else uses sentence case.** Page labels, section names, and group names that are not component names: `'Pattern overview'`, `'Migration guide'`.
+- **Use sentence case — including component names**, matching Spectrum's own docs (e.g. [Action bar](https://spectrum.adobe.com/page/action-bar/), [Color loupe](https://spectrum.adobe.com/page/color-loupe/)). Capitalize only the first word plus any proper nouns/acronyms: `'Action button'`, `'Illustrated message'`, `'Color loupe'`. Page labels, section names, and group names follow the same rule: `'Pattern overview'`, `'Migration guide'`.
 - **No filename as label.** Never use a bare filename (`README`, `CHANGELOG`) as a Storybook title or page name. Use a descriptive label: `'Pattern overview'`, `'Migration guide'`.
-- **Flatten single-component groups.** If a Storybook group contains only one component, do not nest it. Use a flat title (`'Color Loupe'`) rather than a group path (`'Color Components/Color Loupe'`).
+- **Flatten single-component groups.** If a Storybook group contains only one component, do not nest it. Use a flat title (`'Color loupe'`) rather than a group path (`'Color components/Color loupe'`).
 
 | ❌ Don't                         | ✅ Do                                  |
 | -------------------------------- | -------------------------------------- |
-| `'Color Components/Color Loupe'` | `'Color Loupe'` (flattened)            |
+| `'Color components/Color loupe'` | `'Color loupe'` (flattened)            |
 | `'Conversational AI/README'`     | `'Conversational AI/Pattern overview'` |
 | `'Badge/Migration Guide'`        | `'Badge/Migration guide'`              |
 | `'Pattern Overview'`             | `'Pattern overview'`                   |
