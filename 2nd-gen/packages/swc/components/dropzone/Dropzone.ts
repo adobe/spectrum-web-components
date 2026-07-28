@@ -92,20 +92,6 @@ export class Dropzone extends DropzoneBase {
   @property({ type: String, attribute: 'replace-message' })
   public replaceMessage = 'Drop to replace existing file';
 
-  // ────────────────────
-  //     API OVERRIDES
-  // ────────────────────
-
-  /**
-   * Required by the base class's abstract hook, but intentionally left empty. The
-   * status region is updated once, from `updated()` via `_updateStatusRegion()`,
-   * which already fires for every `dragged`/`filled` transition; this mirrors how
-   * `_onDrop` relies on `updated()` alone rather than announcing here as well.
-   *
-   * @internal
-   */
-  protected override _onDragStateChange(): void {}
-
   // ──────────────────────────────
   //     RENDERING & STYLING
   // ──────────────────────────────

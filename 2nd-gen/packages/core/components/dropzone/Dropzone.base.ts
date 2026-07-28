@@ -201,7 +201,6 @@ export abstract class DropzoneBase extends SizedMixin(SpectrumElement, {
     // informational event fires on entry only, not on every tick.
     if (!this.dragged) {
       this.dragged = true;
-      this._onDragStateChange(true);
 
       this.dispatchEvent(
         new CustomEvent<DragEvent>(SWC_DROPZONE_DRAGOVER_EVENT, {
@@ -228,7 +227,6 @@ export abstract class DropzoneBase extends SizedMixin(SpectrumElement, {
     this._dragLeaveTimer = setTimeout(() => {
       this._dragLeaveTimer = null;
       this.dragged = false;
-      this._onDragStateChange(false);
 
       this.dispatchEvent(
         new CustomEvent<DropzoneDragLeaveDetail>(SWC_DROPZONE_DRAGLEAVE_EVENT, {
@@ -259,19 +257,6 @@ export abstract class DropzoneBase extends SizedMixin(SpectrumElement, {
     );
     this.dragged = false;
   };
-
-  // ──────────────────────────────
-  //     API TO OVERRIDE
-  // ──────────────────────────────
-
-  /**
-   * Called when the `dragged` state changes. Subclasses implement this to
-   * update the shadow DOM status region for accessibility announcements.
-   *
-   * @param isDragged - `true` when drag enters; `false` when it leaves.
-   * @internal
-   */
-  protected abstract _onDragStateChange(isDragged: boolean): void;
 
   /** @internal */
   private _clearDragLeaveTimer(): void {

@@ -362,46 +362,38 @@ describe('Dropzone', () => {
       window.__swc.verbose = false;
       consoleWarnStub.restore();
     });
-    it('warns when deprecated `isDragged` is set to `true`', async () => {
+    it('does not warn about `isDragged` during normal drag interaction', async () => {
       const el = await fixture<Dropzone>(html`
         <sp-dropzone id="dropzone"></sp-dropzone>
       `);
       await elementUpdated(el);
       consoleWarnStub.resetHistory();
 
-      el.isDragged = true;
-      await elementUpdated(el);
+      let dataTransfer: DataTransfer | boolean = false;
+      try {
+        dataTransfer = new DataTransfer();
+        // eslint-disable-next-line no-empty, @typescript-eslint/no-unused-vars
+      } catch (error) {}
+      if (dataTransfer) {
+        el.dispatchEvent(new DragEvent('dragover', { dataTransfer }));
+        await elementUpdated(el);
 
-      expect(warnedAbout('"isDragged"'), 'warns about isDragged').to.be.true;
+        expect(
+          warnedAbout('"isDragged"'),
+          'does not warn about isDragged from internal drag handling'
+        ).to.be.false;
+      }
     });
-    it('does not warn about `isDragged` when set back to `false`', async () => {
+    it('does not warn about `isFilled` when set via attribute binding', async () => {
       const el = await fixture<Dropzone>(html`
-        <sp-dropzone id="dropzone"></sp-dropzone>
+        <sp-dropzone id="dropzone" filled></sp-dropzone>
       `);
       await elementUpdated(el);
-      consoleWarnStub.resetHistory();
 
-      el.isDragged = true;
-      await elementUpdated(el);
-      consoleWarnStub.resetHistory();
-
-      el.isDragged = false;
-      await elementUpdated(el);
-
-      expect(warnedAbout('"isDragged"'), 'does not warn about isDragged').to.be
-        .false;
-    });
-    it('warns when deprecated `isFilled` is set to `true`', async () => {
-      const el = await fixture<Dropzone>(html`
-        <sp-dropzone id="dropzone"></sp-dropzone>
-      `);
-      await elementUpdated(el);
-      consoleWarnStub.resetHistory();
-
-      el.isFilled = true;
-      await elementUpdated(el);
-
-      expect(warnedAbout('"isFilled"'), 'warns about isFilled').to.be.true;
+      expect(
+        warnedAbout('"isFilled"'),
+        'does not warn about isFilled from the unchanged `filled` attribute'
+      ).to.be.false;
     });
     it('warns about the upcoming event name prefix change on dragover', async () => {
       const el = await fixture<Dropzone>(html`

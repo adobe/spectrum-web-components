@@ -454,10 +454,11 @@ No `DropzoneEventDetail` alias is exported. 2nd-gen is a clean break from 1st-ge
 - [x] Dev warning for missing accessible name — implemented in `Dropzone.ts` (SWC class), not base class.
   Correct per architecture (SWC layer owns ARIA/debug concerns); plan locates it in the base.
 - [x] Status text updates for dragged, filled+dragged, and filled states — implemented in `Dropzone.ts`
-  via `_updateStatusRegion()` in `updated()`, the sole writer. The base class's abstract `_onDragStateChange()`
-  hook is implemented as an intentional no-op in the SWC class (an earlier revision wrote the same text
-  synchronously from this hook in addition to `updated()`; that redundant write was removed as a fix during
-  Phase 8 review — see the gap-audit findings). Correct per architecture; plan locates status text in the base class.
+  via `_updateStatusRegion()` in `updated()`, the sole writer. An earlier revision also had a
+  `DropzoneBase` abstract `_onDragStateChange()` hook that wrote the same text synchronously on
+  drag-enter/leave in addition to `updated()`; that redundant write, and the now-unused hook itself
+  (abstract declaration, both call sites, and the SWC class's no-op override), were removed during
+  Phase 8 review — see the gap-audit findings. Correct per architecture; plan locates status text in the base class.
 - [x] Event handler methods made **private** (`_onDragOver`, `_onDragLeave`, `_onDrop`) — stricter than
   the plan's `protected` recommendation (B6/Q9), but more correct: no subclass should override
   individual handlers.

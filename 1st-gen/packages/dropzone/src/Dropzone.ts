@@ -13,7 +13,6 @@
 import {
   CSSResultArray,
   html,
-  PropertyValues,
   SpectrumElement,
   TemplateResult,
 } from '@spectrum-web-components/base';
@@ -81,6 +80,16 @@ export class Dropzone extends SpectrumElement {
   @property({ type: Boolean, attribute: 'filled' })
   public isFilled = false;
 
+  // No runtime warn for `isDragged`/`isFilled` above: both attributes (`dragged`/`filled`)
+  // are unchanged and still valid per B2/B3, and Lit's attribute-to-property sync
+  // routes through the same reactive property a consumer's own JS assignment would.
+  // `isDragged` is also set internally on every drag-over/drag-leave. A `changes.has()`
+  // guard in `updated()` can't distinguish any of those from a consumer explicitly
+  // writing `element.isDragged = ...`/`element.isFilled = ...`, so a warning there
+  // would fire for ordinary, unmigrated attribute/template-binding usage that the
+  // migration plan explicitly promises is unaffected. The `@deprecated` JSDoc above
+  // still documents the rename for IDE/type tooling.
+
   private debouncedDragLeave: number | null = null;
 
   public override connectedCallback(): void {
@@ -99,29 +108,6 @@ export class Dropzone extends SpectrumElement {
       window.__swc.warn(
         this,
         `<${this.localName}> "onDragOver", "onDragLeave", and "onDrop" are deprecated as public, overridable methods and will become non-public in a future release.`,
-        'https://opensource.adobe.com/spectrum-web-components/components/dropzone/',
-        { level: 'deprecation' }
-      );
-    }
-  }
-
-  protected override updated(changes: PropertyValues): void {
-    super.updated(changes);
-    if (!window.__swc?.DEBUG) {
-      return;
-    }
-    if (changes.has('isDragged') && this.isDragged) {
-      window.__swc.warn(
-        this,
-        `The "isDragged" property on <${this.localName}> has been deprecated and will be removed in a future release. Use "dragged" instead.`,
-        'https://opensource.adobe.com/spectrum-web-components/components/dropzone/',
-        { level: 'deprecation' }
-      );
-    }
-    if (changes.has('isFilled') && this.isFilled) {
-      window.__swc.warn(
-        this,
-        `The "isFilled" property on <${this.localName}> has been deprecated and will be removed in a future release. Use "filled" instead.`,
         'https://opensource.adobe.com/spectrum-web-components/components/dropzone/',
         { level: 'deprecation' }
       );
