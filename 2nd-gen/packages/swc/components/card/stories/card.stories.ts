@@ -70,7 +70,7 @@ const meta: Meta = {
       subtitle: 'Flexible container that summarizes an object.',
     },
     // design: { type: 'figma', url: 'https://www.figma.com/...' },
-    // stackblitz: { url: 'https://stackblitz.com/...' },
+    stackblitz: { url: 'https://stackblitz.com/edit/vitejs-vite-wn1hrzqo' },
   },
   tags: ['migrated'],
 };
