@@ -34,7 +34,7 @@ import meta, {
 
 export default {
   ...meta,
-  title: 'Close Button/Tests',
+  title: 'Close button/Tests',
   parameters: {
     ...meta.parameters,
     docs: { disable: true, page: null },
