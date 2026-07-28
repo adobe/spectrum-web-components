@@ -57,11 +57,8 @@
 /* ── Compact ──────────────────────────────────────── */
 
 :host([compact]:not([quiet])) .swc-ActionGroup {
-  gap: 0;
-}
-
-:host([compact]:not([quiet], [orientation="vertical"])) .swc-ActionGroup {
   flex-wrap: nowrap;
+  gap: 0;
 }
 
 :host([compact]:not([quiet])) ::slotted(*) {
@@ -69,6 +66,10 @@
   z-index: 0;
 }
 
+/* TODO(action-menu): when `swc-action-menu` ships, an open trigger
+   (`aria-expanded="true"`) may need the same z-index tier as `:hover` below,
+   so its border isn't subordinated to a hovered neighbor. Not implemented
+   yet — `swc-action-menu` doesn't exist in 2nd-gen to validate this against. */
 :host([compact]:not([quiet])) ::slotted(:hover) {
   z-index: 1;
 }
