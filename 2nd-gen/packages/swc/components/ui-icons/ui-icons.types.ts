@@ -45,7 +45,7 @@ export const SIZE_TO_STEP = {
  * the nearest available one.
  */
 export function uiStepFor(size: IconSize): UiStep {
-  return SIZE_TO_STEP[size];
+  return SIZE_TO_STEP[size] ?? SIZE_TO_STEP.m;
 }
 
 /**

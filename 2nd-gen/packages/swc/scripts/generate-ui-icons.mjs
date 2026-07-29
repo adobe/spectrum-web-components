@@ -78,6 +78,16 @@ function cleanSvg(raw, file) {
 const icons = new Map();
 const files = globSync('*.svg', { cwd: sourceDir }).sort();
 
+// Refuse to run without source SVGs. The source folders are git-ignored, so on a clean
+// checkout this would otherwise delete the committed icon-set and write an empty
+// registry, breaking every consumer.
+if (files.length === 0) {
+  throw new Error(
+    `No source SVGs found in ${sourceDir}. Download the icon set into that folder ` +
+      `before running the generator.`
+  );
+}
+
 for (const file of files) {
   const match = SOURCE_NAME.exec(file);
   if (!match) {
@@ -98,10 +108,9 @@ const names = [...icons.keys()].sort();
 // Ensure the output directory exists, then remove previously generated modules so
 // deletions in source propagate.
 mkdirSync(outDir, { recursive: true });
+// icon-set/ holds only generated modules, so clearing them all is safe.
 for (const stale of globSync('*.ts', { cwd: outDir })) {
-  if (stale !== 'ui-icons.types.ts') {
-    rmSync(path.join(outDir, stale));
-  }
+  rmSync(path.join(outDir, stale));
 }
 
 // Emit one module per logical icon.
