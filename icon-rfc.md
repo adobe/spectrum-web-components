@@ -18,8 +18,8 @@ custom SVGs. There are two families:
   components render them at a component-controlled size. They are built first
   because migrated components need them now.
 
-Art comes directly from the Adobe-internal A4U icon sets, committed into the repo
-as raw SVGs and converted by a build-time generator. Nothing a consumer touches
+Art comes directly from the Adobe-internal A4U icon sets, downloaded as raw SVGs
+(git-ignored) and converted by a build-time generator. Nothing a consumer touches
 requires Lit. Art is manually downloaded and added to this repo from a private source.
 
 ## 2. Goals and non-goals
@@ -47,7 +47,7 @@ requires Lit. Art is manually downloaded and added to this repo from a private s
    `TemplateResult`. (Internal UI icons do use `TemplateResult`; they are not a
    public contract.)
 4. **Color preserves `--swc-icon-color`** with a `currentColor` fallback.
-5. **Source is A4U**, downloaded manually and committed; the deprecated
+5. **Source is A4U**, downloaded manually (source SVGs are git-ignored); the deprecated
    spectrum-css packages are not a source.
 6. **Sequencing:** UI icons (internal) first, workflow icons second, on shared
    tooling.
@@ -375,10 +375,10 @@ component.
 
 **Implication:** workflow and UI use different size token scales, so a single
 `--swc-icon-size-m` cannot serve both; the frame resolves the box per family.
-Implemented as separate lit-style fragments: `ui-icon-sizes.css` sizes
-`<swc-ui-icon>` from the `ui-icon-*` scale and `workflow-icon-sizes.css` sizes the
-`<swc-icon>` frame from the `workflow-icon-*` scale, both feeding the shared
-`--swc-icon-inline-size` / `--swc-icon-block-size` box in `icon-base.css`.
+`<swc-ui-icon>` sizes its box from the `ui-icon-*` scale via
+`components/ui-icons/ui-icon-sizes.css`, layered over the default `workflow-icon-*`
+scale in the shared `icon-base.css`. A dedicated workflow sizing stylesheet is added
+when the workflow icon family lands.
 
 ## 8. Source and processing
 
@@ -397,9 +397,10 @@ can be committed and shipped.
 
 1. **Manual A4U download** (the only human step; no committed code points at the
    gated registry).
-2. **Commit the raw SVGs** into a source folder at the swc package root
-   (`icon-source/ui/`; `icon-source/workflow/` for the workflow family).
-3. **Generator** converts committed SVGs per family: workflow into SVG-string
+2. **Add the raw SVGs** to a source folder at the swc package root
+   (`icon-source/ui/`; `icon-source/workflow/` for the workflow family). The source
+   folders are git-ignored, so the raw SVGs are transient inputs, not committed.
+3. **Generator** converts the downloaded SVGs per family: workflow into SVG-string
    functions plus public per-icon elements; UI into Lit `html` `TemplateResult`
    bundles under `components/ui-icons/icon-set/`, consumed by the internal
    `<swc-ui-icon>` element (so components need no `unsafeSVG`).
@@ -408,10 +409,11 @@ can be committed and shipped.
    `var(--iconPrimary, …)` fill to `var(--swc-icon-color, currentColor)`. Files are
    grouped by the logical name parsed from the A4U filename
    `S2_Icon_UI<Name>_Size<step>_N.svg`, keyed by numeral step.
-4. **Record pulled A4U versions** in `icon-source/icon-source.json`, alongside the
-   committed SVGs (not in `package.json` dependencies).
-5. **Commit** SVGs, generated output, and metadata. External contributors and
-   public CI build only from committed art and never need A4U access.
+4. **Record pulled A4U versions** in `icon-source/icon-source.json` (not in
+   `package.json` dependencies).
+5. **Commit the generated output and metadata**; the raw SVGs stay git-ignored.
+   External contributors and public CI build only from the committed art and never
+   need A4U access.
 
 **Layout.** UI source SVGs live at `2nd-gen/packages/swc/icon-source/ui/`, with
 `icon-source.json` alongside them in `icon-source/`. The generated bundles and the
@@ -461,7 +463,7 @@ verified in Phase 7 against workflow icons and custom SVGs.
 
 | Phase                             | Deliverable                                                                                                                                                                                                                                                                   | Exit                                                                                                                            |
 | --------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
-| **1. UI icons, internal**         | Manual UI download + committed SVGs + `icon-source.json`; family-agnostic generator core; UI art as Lit `TemplateResult`s and the internal `<swc-ui-icon>` element (size-to-step selection).                                                                                  | Migrated components render UI icons via `<swc-ui-icon>`, sized by the component, off the 1st-gen packages, with no `unsafeSVG`. |
+| **1. UI icons, internal**         | Manual UI download + generated icon-set + `icon-source.json`; family-agnostic generator core; UI art as Lit `TemplateResult`s and the internal `<swc-ui-icon>` element (size-to-step selection).                                                                                  | Migrated components render UI icons via `<swc-ui-icon>`, sized by the component, off the 1st-gen packages, with no `unsafeSVG`. |
 | **2. Workflow-readiness gate**    | Confirm the Phase 1 generator, source layout, metadata, and refresh already accept a second family and a public-element output mode.                                                                                                                                          | Adding workflow is additive, not a rewrite.                                                                                     |
 | **3. Workflow icons, public**     | Manual workflow download; the `IconBase` + generic `<swc-icon>`; per-icon workflow functions and elements, reusing the generator core.                                                                                                                                        | A workflow icon works as element and function in HTML and a non-Lit framework.                                                  |
 | **4. Packaging and tree-shaking** | Published shapes: the `<swc-icon>` frame in swc, and the per-icon workflow elements and functions in the dedicated **icons** package; per-icon subpath exports for element and function; swc devDepends on the icons package for stories; optional additive Lit entry points. | A 3-icon sample bundle ships only those 3.                                                                                      |
@@ -490,7 +492,7 @@ verified in Phase 7 against workflow icons and custom SVGs.
 ### Resolved
 
 - **A4U as a dependency:** none. The A4U packages are private and this repo is open
-  source, so there is no concept of an A4U dependency here; only committed SVGs and
+  source, so there is no concept of an A4U dependency here; only the generated art and
   metadata live in the repo.
 - **Refresh automation:** periodic manual refresh is the baseline. Internal
   scheduled CI is optional and Adobe-side only.
@@ -572,10 +574,11 @@ follow-up.
 
 ### Deferred to implementation (no design decision)
 
-- **Per-family size tokens (UI resolved):** `<swc-ui-icon>` now sizes its
-  box from the `ui-icon-*` token scale via `ui-icon-sizes.css`, and the `<swc-icon>`
-  frame keeps the `workflow-icon-*` scale via `workflow-icon-sizes.css`. Concrete
-  workflow values are confirmed when workflow art lands (Phases 3–4).
+- **Per-family size tokens (UI resolved):** `<swc-ui-icon>` sizes its box from the
+  `ui-icon-*` scale via `components/ui-icons/ui-icon-sizes.css`; the `<swc-icon>` frame
+  uses the default `workflow-icon-*` scale in the shared `icon-base.css`. A dedicated
+  workflow sizing stylesheet and concrete values land with the workflow family
+  (Phases 3–4).
 - **Nearest-step fallback (resolved):** `resolveUiIconArt` renders the
   step that matches the size, or the nearest available step by numeral distance when
   that step is absent (ties resolve to the smaller step). All 10 initial UI icons ship

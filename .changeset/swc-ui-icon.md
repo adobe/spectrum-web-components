@@ -1,10 +1,12 @@
 ---
-'@adobe/spectrum-wc': minor
-'@adobe/spectrum-wc-core': minor
+'@adobe/spectrum-wc': major
+'@adobe/spectrum-wc-core': major
 ---
 
 Add the internal 2nd-gen UI icon system: the `<swc-ui-icon>` element plus a build-time generator for the S2 UI icon set.
 
 - **`<swc-ui-icon>`** (internal): `icon` selects the icon-set, `size` selects the matching optical step, and `accessible-label` drives host-owned accessibility; renders generated Lit templates with no `unsafeSVG` in consuming components.
-- **Generator** (`yarn generate:ui-icons`): converts committed A4U source SVGs into per-logical-icon template bundles under `components/ui-icons/icon-set/`, rewriting fills to `var(--swc-icon-color, currentColor)`.
-- **`IconBase`**: refactored to a behavior-only base (`size` + `accessible-label` + host-owned accessibility, with no render or styles); the `<swc-icon>` frame and `<swc-ui-icon>` both extend it and share `stylesheets/_lit-styles/icon-base.css`. The frame's `label` is renamed to `accessible-label`, and its accessibility moves from the slotted SVG to the host.
+- **Generator** (`yarn generate:ui-icons`): converts downloaded A4U source SVGs into per-logical-icon template bundles under `components/ui-icons/icon-set/`, rewriting fills to `var(--swc-icon-color, currentColor)`.
+- **`IconBase`**: refactored to a behavior-only base (`size` + `accessible-label` + host-owned accessibility, with no render or styles); the `<swc-icon>` frame and `<swc-ui-icon>` both extend it and share `stylesheets/_lit-styles/icon-base.css`.
+
+**Breaking:** the `<swc-icon>` frame's `label` property and attribute are renamed to `accessible-label`, and its accessibility moves from the slotted SVG to the host (`role="img"` plus `aria-label` when labeled, `aria-hidden` when decorative).
