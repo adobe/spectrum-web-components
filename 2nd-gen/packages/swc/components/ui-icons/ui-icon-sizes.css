@@ -11,10 +11,9 @@
  */
 
 /*
- * Box size for swc-ui-icon, from the UI-icon token scale (icon-rfc.md, section 7). Sets
- * the shared --swc-icon-inline-size / --swc-icon-block-size custom properties consumed by
- * icon-base.css. The default is medium; each size maps to its UI-icon token. Note the
- * box only sizes the container: swc-ui-icon selects the optically-tuned step for the
+ * Box size for swc-ui-icon, from the UI-icon token scale (see icon-rfc.md, section 7).
+ * Layered over icon-base.css to override its default box size with the ui-icon-* scale.
+ * The box only sizes the container: swc-ui-icon selects the optically-tuned step for the
  * size and does not scale one step to fake another.
  */
 :host {

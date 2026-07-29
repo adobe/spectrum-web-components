@@ -9,7 +9,7 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-import { CSSResultArray, html, TemplateResult } from 'lit';
+import { CSSResultArray, html, PropertyValues, TemplateResult } from 'lit';
 import { property } from 'lit/decorators.js';
 
 import { IconBase } from '@adobe/spectrum-wc-core/components/icon';
@@ -18,7 +18,7 @@ import { UI_ICONS, UiIconName } from './icon-set/index.js';
 import { resolveUiIconArt } from './ui-icons.types.js';
 
 import iconBaseStyles from '../../stylesheets/_lit-styles/icon-base.css';
-import uiIconSizeStyles from '../../stylesheets/_lit-styles/ui-icon-sizes.css';
+import uiIconSizeStyles from './ui-icon-sizes.css';
 
 /**
  * An internal icon renderer for Spectrum UI icons (chevrons, checkmarks, arrows, and
@@ -48,6 +48,15 @@ export class UiIcon extends IconBase {
 
   public static override get styles(): CSSResultArray {
     return [iconBaseStyles, uiIconSizeStyles];
+  }
+
+  protected override willUpdate(changed: PropertyValues<this>): void {
+    super.willUpdate(changed);
+    if (changed.has('icon') && this.icon && !UI_ICONS[this.icon]) {
+      console.warn(
+        `<swc-ui-icon>: unknown icon "${this.icon}"; nothing will render.`
+      );
+    }
   }
 
   protected override render(): TemplateResult {

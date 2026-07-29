@@ -13,8 +13,7 @@ import { CSSResultArray, html, TemplateResult } from 'lit';
 
 import { IconBase } from '@adobe/spectrum-wc-core/components/icon';
 
-import iconBaseStyles from '../../stylesheets/_lit-styles/icon-base.css';
-import workflowIconSizeStyles from '../../stylesheets/_lit-styles/workflow-icon-sizes.css';
+import styles from '../../stylesheets/_lit-styles/icon-base.css';
 
 /**
  * Minimal icon renderer that accepts slotted SVG markup.
@@ -45,7 +44,7 @@ export class Icon extends IconBase {
   // ──────────────────────────────
 
   public static override get styles(): CSSResultArray {
-    return [iconBaseStyles, workflowIconSizeStyles];
+    return [styles];
   }
 
   protected override render(): TemplateResult {
