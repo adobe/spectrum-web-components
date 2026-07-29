@@ -45,9 +45,7 @@ export const OverviewTest: Story = {
         expect(el.dismissible).toBe(true);
         expect(el.dismissLabel).toBe('');
         expect(el.getAttribute('role')).toBe('group');
-        expect(el.getAttribute('aria-label')).toBe(
-          'Hilton commercial assets'
-        );
+        expect(el.getAttribute('aria-label')).toBe('Hilton commercial assets');
 
         const dismissButton = el.shadowRoot?.querySelector<HTMLButtonElement>(
           '.swc-UploadArtifact-dismiss'

@@ -357,26 +357,26 @@ export class PromptField extends SpectrumElement {
       );
     if (dismissedArtifactWasRemoved) {
       this._pendingArtifactDismiss = undefined;
+      this._restoreArtifactFocusAfterDismiss(dismissedArtifact.index);
     }
     this.requestUpdate();
     void this.updateComplete.then(() => {
       requestAnimationFrame(() => {
         this._observeArtifactScrollViewport();
         this._updateArtifactScrollState();
-        if (dismissedArtifactWasRemoved && dismissedArtifact) {
-          this._restoreArtifactFocusAfterDismiss(dismissedArtifact.index);
-        }
       });
     });
   }
 
   private _handleArtifactDismiss(event: Event): void {
     const active = getActiveElement();
-    const artifact = event.composedPath().find(
-      (node): node is HTMLElement =>
-        node instanceof HTMLElement &&
-        (this._assignedArtifactElements ?? []).includes(node)
-    );
+    const artifact = event
+      .composedPath()
+      .find(
+        (node): node is HTMLElement =>
+          node instanceof HTMLElement &&
+          (this._assignedArtifactElements ?? []).includes(node)
+      );
     if (!artifact || !active || !deepContains(artifact, active)) {
       return;
     }

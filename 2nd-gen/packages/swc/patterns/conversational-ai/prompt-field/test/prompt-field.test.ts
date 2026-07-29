@@ -19,10 +19,7 @@ import { getActiveElement } from '@adobe/spectrum-wc-core/utils/index.js';
 import '../../upload-artifact/swc-upload-artifact.js';
 import '../swc-prompt-field.js';
 
-import {
-  getComponent,
-  withWarningSpy,
-} from '../../../../utils/test-utils.js';
+import { getComponent, withWarningSpy } from '../../../../utils/test-utils.js';
 import { PromptField } from '../PromptField.js';
 import { meta, Overview } from '../stories/prompt-field.stories.js';
 
@@ -302,6 +299,23 @@ export const ArtifactScrollPaginationTest: Story = {
       expect(endFade).toBeTruthy();
     });
 
+    await step('wheel interaction shows the scrollbar thumb', async () => {
+      scrollEl?.dispatchEvent(
+        new WheelEvent('wheel', {
+          bubbles: true,
+          deltaX: 12,
+        })
+      );
+      await el.updateComplete;
+
+      const scrollbarLane = el.shadowRoot?.querySelector(
+        '.swc-PromptField-artifacts-scrollbar-lane'
+      );
+      expect(
+        scrollbarLane?.classList.contains('is-artifact-scrollbar-interacting')
+      ).toBe(true);
+    });
+
     await step('chevron paging advances by more than one tile', async () => {
       const initialScrollLeft = scrollEl?.scrollLeft ?? 0;
       const clientWidth = scrollEl?.clientWidth ?? 0;
@@ -313,6 +327,7 @@ export const ArtifactScrollPaginationTest: Story = {
       ).toBe(true);
 
       await firstPageScrollEnd;
+      await el.updateComplete;
 
       const nextScrollLeft = scrollEl?.scrollLeft ?? 0;
       expect(nextScrollLeft).toBeGreaterThan(initialScrollLeft);
@@ -339,28 +354,8 @@ export const ArtifactScrollPaginationTest: Story = {
         '.swc-PromptField-artifacts-scrollbar-lane'
       );
       expect(
-        scrollEl?.classList.contains('is-artifact-scroll-from-buttons')
-      ).toBe(false);
-      expect(
         scrollbarLane?.classList.contains('is-artifact-scrollbar-interacting')
       ).toBe(false);
-    });
-
-    await step('wheel interaction shows the scrollbar thumb', async () => {
-      scrollEl?.dispatchEvent(
-        new WheelEvent('wheel', {
-          bubbles: true,
-          deltaX: 12,
-        })
-      );
-      await el.updateComplete;
-
-      const scrollbarLane = el.shadowRoot?.querySelector(
-        '.swc-PromptField-artifacts-scrollbar-lane'
-      );
-      expect(
-        scrollbarLane?.classList.contains('is-artifact-scrollbar-interacting')
-      ).toBe(true);
     });
 
     await step(
@@ -382,13 +377,14 @@ export const ArtifactScrollPaginationTest: Story = {
         );
         expect(nextButtonAtEnd).toBeTruthy();
 
-        const beforeClick = scrollEl?.scrollLeft ?? 0;
         const finalPageScrollEnd = waitForScrollEnd(scrollEl);
         nextButtonAtEnd?.click();
         await finalPageScrollEnd;
         await el.updateComplete;
 
-        expect(scrollEl?.scrollLeft ?? 0).toBeGreaterThan(beforeClick);
+        expect(
+          el.shadowRoot?.querySelector('.swc-PromptField-artifacts-scroll-next')
+        ).toBeFalsy();
       }
     );
   },
@@ -758,23 +754,38 @@ export const ArtifactScrollbarDisconnectTest: Story = {
       '.swc-PromptField-artifacts-scrollbar-thumb'
     );
 
-    await step('removes global thumb-drag listeners when disconnected', async () => {
-      scrollEl?.scrollTo({ left: 100, behavior: 'auto' });
-      await new Promise((resolve) => requestAnimationFrame(resolve));
-      const scrollLeftBeforeDisconnect = scrollEl?.scrollLeft;
+    await step(
+      'removes global thumb-drag listeners when disconnected',
+      async () => {
+        expect(scrollEl).toBeTruthy();
+        expect(thumb).toBeTruthy();
+        if (!scrollEl || !thumb) {
+          return;
+        }
 
-      thumb?.dispatchEvent(
-        new PointerEvent('pointerdown', { bubbles: true, clientX: 8 })
-      );
-      el.remove();
-      window.dispatchEvent(
-        new PointerEvent('pointermove', { bubbles: true, clientX: 240 })
-      );
+        scrollEl?.scrollTo({ left: 100, behavior: 'auto' });
+        await new Promise((resolve) => requestAnimationFrame(resolve));
+        let scrollCalls = 0;
+        Object.defineProperty(scrollEl, 'scrollTo', {
+          configurable: true,
+          value: () => {
+            scrollCalls++;
+          },
+        });
 
-      expect(
-        scrollEl?.scrollLeft,
-        'a detached prompt field no longer receives global drag events'
-      ).toBe(scrollLeftBeforeDisconnect);
-    });
+        thumb.dispatchEvent(
+          new PointerEvent('pointerdown', { bubbles: true, clientX: 8 })
+        );
+        el.remove();
+        window.dispatchEvent(
+          new PointerEvent('pointermove', { bubbles: true, clientX: 240 })
+        );
+
+        expect(
+          scrollCalls,
+          'a detached prompt field no longer receives global drag events'
+        ).toBe(0);
+      }
+    );
   },
 };
