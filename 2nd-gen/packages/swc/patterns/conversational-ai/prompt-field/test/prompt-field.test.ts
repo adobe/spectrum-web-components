@@ -19,7 +19,10 @@ import { getActiveElement } from '@adobe/spectrum-wc-core/utils/index.js';
 import '../../upload-artifact/swc-upload-artifact.js';
 import '../swc-prompt-field.js';
 
-import { getComponent } from '../../../../utils/test-utils.js';
+import {
+  getComponent,
+  withWarningSpy,
+} from '../../../../utils/test-utils.js';
 import { PromptField } from '../PromptField.js';
 import { meta, Overview } from '../stories/prompt-field.stories.js';
 
@@ -148,13 +151,7 @@ export const InteractionTest: Story = {
 export const LegalMissingWarningTest: Story = {
   render: () => nothing,
   play: async ({ canvasElement, step }) => {
-    const warnings: string[] = [];
-    const originalWarn = console.warn;
-    console.warn = (message?: unknown) => {
-      warnings.push(String(message));
-    };
-
-    try {
+    await withWarningSpy(async (warnCalls) => {
       render(
         html`
           <swc-prompt-field
@@ -176,30 +173,29 @@ export const LegalMissingWarningTest: Story = {
         'logs a development warning when the legal slot is empty',
         async () => {
           expect(
-            warnings.some(
-              (message) =>
-                message.includes('[swc-prompt-field]') &&
-                message.includes('legal slot is empty')
-            )
+            warnCalls.some(([, message]) =>
+              String(message).includes('legal slot is empty')
+            ),
+            'the empty legal slot emits a debug warning'
           ).toBe(true);
         }
       );
-    } finally {
-      console.warn = originalWarn;
-    }
+
+      el.innerHTML = '<p slot="legal">Approved legal copy.</p>';
+      await el.updateComplete;
+      await new Promise((resolve) => requestAnimationFrame(resolve));
+      expect(
+        warnCalls,
+        'valid legal content emits no additional warning'
+      ).toHaveLength(1);
+    });
   },
 };
 
 export const MixedArtifactWarningTest: Story = {
   render: () => nothing,
   play: async ({ canvasElement, step }) => {
-    const warnings: string[] = [];
-    const originalWarn = console.warn;
-    console.warn = (message?: unknown) => {
-      warnings.push(String(message));
-    };
-
-    try {
+    await withWarningSpy(async (warnCalls) => {
       render(
         html`
           <swc-prompt-field label="Prompt" value="Mixed attachments">
@@ -210,28 +206,34 @@ export const MixedArtifactWarningTest: Story = {
             <swc-upload-artifact slot="artifact" type="media">
               <div slot="thumbnail" role="img" aria-label="Preview"></div>
             </swc-upload-artifact>
+            <p slot="legal">Approved legal copy.</p>
           </swc-prompt-field>
         `,
         canvasElement
       );
 
       await getComponent<PromptField>(canvasElement, 'swc-prompt-field');
+      await new Promise((resolve) => requestAnimationFrame(resolve));
 
       await step(
         'logs a development warning when card and media artifacts are mixed',
         async () => {
           expect(
-            warnings.some(
-              (message) =>
-                message.includes('[swc-prompt-field]') &&
-                message.includes('card and media')
-            )
+            warnCalls.some(([, message]) =>
+              String(message).includes('card and media')
+            ),
+            'mixed card and media artifacts emit a debug warning'
           ).toBe(true);
         }
       );
-    } finally {
-      console.warn = originalWarn;
-    }
+
+      canvasElement.querySelector<HTMLElement>('[type="media"]')?.remove();
+      await new Promise((resolve) => requestAnimationFrame(resolve));
+      expect(
+        warnCalls,
+        'one artifact layout emits no additional warning'
+      ).toHaveLength(1);
+    });
   },
 };
 
@@ -303,13 +305,14 @@ export const ArtifactScrollPaginationTest: Story = {
     await step('chevron paging advances by more than one tile', async () => {
       const initialScrollLeft = scrollEl?.scrollLeft ?? 0;
       const clientWidth = scrollEl?.clientWidth ?? 0;
+      const firstPageScrollEnd = waitForScrollEnd(scrollEl);
       nextButton?.click();
       await el.updateComplete;
       expect(
         scrollEl?.classList.contains('is-artifact-scroll-from-buttons')
       ).toBe(true);
 
-      await new Promise((resolve) => window.setTimeout(resolve, 400));
+      await firstPageScrollEnd;
 
       const nextScrollLeft = scrollEl?.scrollLeft ?? 0;
       expect(nextScrollLeft).toBeGreaterThan(initialScrollLeft);
@@ -330,11 +333,6 @@ export const ArtifactScrollPaginationTest: Story = {
     });
 
     await step('chevron paging keeps the scrollbar thumb hidden', async () => {
-      await new Promise<void>((resolve) => {
-        const done = (): void => resolve();
-        scrollEl?.addEventListener('scrollend', done, { once: true });
-        window.setTimeout(done, 1500);
-      });
       await el.updateComplete;
 
       const scrollbarLane = el.shadowRoot?.querySelector(
@@ -385,13 +383,9 @@ export const ArtifactScrollPaginationTest: Story = {
         expect(nextButtonAtEnd).toBeTruthy();
 
         const beforeClick = scrollEl?.scrollLeft ?? 0;
+        const finalPageScrollEnd = waitForScrollEnd(scrollEl);
         nextButtonAtEnd?.click();
-
-        await new Promise<void>((resolve) => {
-          const done = (): void => resolve();
-          scrollEl?.addEventListener('scrollend', done, { once: true });
-          window.setTimeout(done, 1500);
-        });
+        await finalPageScrollEnd;
         await el.updateComplete;
 
         expect(scrollEl?.scrollLeft ?? 0).toBeGreaterThan(beforeClick);
@@ -403,10 +397,12 @@ export const ArtifactScrollPaginationTest: Story = {
 function waitForScrollEnd(
   scrollEl: HTMLDivElement | null | undefined
 ): Promise<void> {
+  if (!scrollEl) {
+    return Promise.resolve();
+  }
+
   return new Promise<void>((resolve) => {
-    const done = (): void => resolve();
-    scrollEl?.addEventListener('scrollend', done, { once: true });
-    window.setTimeout(done, 1500);
+    scrollEl.addEventListener('scrollend', () => resolve(), { once: true });
   });
 }
 
@@ -592,11 +588,8 @@ export const ArtifactFocusOrderTest: Story = {
     await step(
       'Tab from the "<" button is left to native default, not intercepted into a tile',
       async () => {
-        artifacts[artifacts.length - 1]?.focus();
-        await waitForScrollEnd(scrollEl);
-        await el.updateComplete;
-        dispatchKeydown(artifacts[artifacts.length - 1]!, 'ArrowLeft');
-        await waitForScrollEnd(scrollEl);
+        scrollEl?.scrollTo({ left: 200, behavior: 'auto' });
+        await new Promise((resolve) => requestAnimationFrame(resolve));
         await el.updateComplete;
 
         const prevButton = getPrevButton();
@@ -607,7 +600,7 @@ export const ArtifactFocusOrderTest: Story = {
 
         // The "<" chevron is a normal tab stop like any other outside the
         // strip: Tab/Shift+Tab from it is never intercepted, so the next
-        // real stop is always the container (region), never a tile directly.
+        // real stop is the container (region), never a tile directly.
         expect(event.defaultPrevented).toBe(false);
       }
     );
@@ -619,7 +612,7 @@ export const ArtifactFocusOrderTest: Story = {
         // wherever the previous step left the scroll offset (that position
         // is layout-dependent and varies across browsers).
         scrollEl?.scrollTo({ left: 0, behavior: 'auto' });
-        await waitForScrollEnd(scrollEl);
+        await new Promise((resolve) => requestAnimationFrame(resolve));
         await el.updateComplete;
 
         const nextButton = getNextButton();
@@ -636,7 +629,7 @@ export const ArtifactFocusOrderTest: Story = {
       'the "<" button disappearing while focused redirects focus to the first tile',
       async () => {
         scrollEl?.scrollTo({ left: 200, behavior: 'auto' });
-        await waitForScrollEnd(scrollEl);
+        await new Promise((resolve) => requestAnimationFrame(resolve));
         await el.updateComplete;
         expect(scrollEl?.scrollLeft ?? 0).toBeGreaterThan(0);
 
@@ -646,7 +639,7 @@ export const ArtifactFocusOrderTest: Story = {
         expect(getActiveElement()).toBe(prevButton);
 
         scrollEl?.scrollTo({ left: 0, behavior: 'auto' });
-        await waitForScrollEnd(scrollEl);
+        await new Promise((resolve) => requestAnimationFrame(resolve));
         await el.updateComplete;
 
         expect(getPrevButton()).toBeFalsy();
@@ -675,6 +668,28 @@ export const ArtifactFocusOrderTest: Story = {
         await el.updateComplete;
         expect(event.defaultPrevented).toBe(true);
         expect(getActiveElement()).toBe(getDismissButton(artifacts[0]!));
+      }
+    );
+
+    await step(
+      'dismissing a focused artifact restores focus to the nearest tile',
+      async () => {
+        const active = artifacts[1]!;
+        const dismiss = getDismissButton(active)!;
+        el.addEventListener(
+          'swc-upload-artifact-dismiss',
+          (event) => (event.target as HTMLElement).remove(),
+          { once: true }
+        );
+
+        dismiss.focus();
+        dismiss.click();
+        await new Promise((resolve) => requestAnimationFrame(resolve));
+        await el.updateComplete;
+
+        expect(getActiveElement(), 'focus moves to the replacement tile').toBe(
+          artifacts[2]
+        );
       }
     );
   },
@@ -707,7 +722,7 @@ export const ArtifactEnterAfterScrollTest: Story = {
       'entering the strip for the first time after scrolling lands on the first fully-visible tile, not tile 0',
       async () => {
         scrollEl?.scrollTo({ left: 300, behavior: 'auto' });
-        await waitForScrollEnd(scrollEl);
+        await new Promise((resolve) => requestAnimationFrame(resolve));
         await el.updateComplete;
         expect(scrollEl?.scrollLeft ?? 0).toBeGreaterThan(0);
 
@@ -721,5 +736,45 @@ export const ArtifactEnterAfterScrollTest: Story = {
         expect(artifacts.includes(active as HTMLElement)).toBe(true);
       }
     );
+  },
+};
+
+export const ArtifactScrollbarDisconnectTest: Story = {
+  render: () => nothing,
+  play: async ({ canvasElement, step }) => {
+    renderMultiArtifactPromptField(canvasElement);
+
+    const el = await getComponent<PromptField>(
+      canvasElement,
+      'swc-prompt-field'
+    );
+    await new Promise((resolve) => requestAnimationFrame(resolve));
+    await el.updateComplete;
+
+    const scrollEl = el.shadowRoot?.querySelector<HTMLDivElement>(
+      '.swc-PromptField-artifacts-scroll'
+    );
+    const thumb = el.shadowRoot?.querySelector<HTMLElement>(
+      '.swc-PromptField-artifacts-scrollbar-thumb'
+    );
+
+    await step('removes global thumb-drag listeners when disconnected', async () => {
+      scrollEl?.scrollTo({ left: 100, behavior: 'auto' });
+      await new Promise((resolve) => requestAnimationFrame(resolve));
+      const scrollLeftBeforeDisconnect = scrollEl?.scrollLeft;
+
+      thumb?.dispatchEvent(
+        new PointerEvent('pointerdown', { bubbles: true, clientX: 8 })
+      );
+      el.remove();
+      window.dispatchEvent(
+        new PointerEvent('pointermove', { bubbles: true, clientX: 240 })
+      );
+
+      expect(
+        scrollEl?.scrollLeft,
+        'a detached prompt field no longer receives global drag events'
+      ).toBe(scrollLeftBeforeDisconnect);
+    });
   },
 };

@@ -175,7 +175,6 @@
   padding-inline: token("spacing-75");
   overflow-x: auto;
   overflow-y: hidden;
-  scroll-behavior: smooth;
   scrollbar-width: none;
 }
 

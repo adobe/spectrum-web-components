@@ -78,6 +78,11 @@ export class UploadArtifact extends SpectrumElement {
     return [styles];
   }
 
+  protected override firstUpdated(_changed: PropertyValues<this>): void {
+    super.firstUpdated(_changed);
+    this.setAttribute('role', 'group');
+  }
+
   protected override willUpdate(_changed: PropertyValues<this>): void {
     this._syncHostAccessibleLabel();
   }

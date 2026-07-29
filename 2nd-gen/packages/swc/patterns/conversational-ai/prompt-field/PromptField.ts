@@ -216,6 +216,10 @@ export class PromptField extends SpectrumElement {
 
   private _artifactScrollbarThumbDragOffset = 0;
 
+  private _artifactScrollbarDragCleanup?: () => void;
+
+  private _pendingArtifactDismiss?: { artifact: HTMLElement; index: number };
+
   public static override get styles(): CSSResultArray {
     return [styles];
   }
@@ -241,6 +245,7 @@ export class PromptField extends SpectrumElement {
     if (this._artifactScrollbarInteractTimer !== undefined) {
       window.clearTimeout(this._artifactScrollbarInteractTimer);
     }
+    this._artifactScrollbarDragCleanup?.();
     super.disconnectedCallback();
   }
 
@@ -344,13 +349,63 @@ export class PromptField extends SpectrumElement {
   private _handleArtifactSlotChange(): void {
     this._warnIfMixedArtifactTypes();
     this._artifactNavigation.refresh();
+    const dismissedArtifact = this._pendingArtifactDismiss;
+    const dismissedArtifactWasRemoved =
+      dismissedArtifact !== undefined &&
+      !(this._assignedArtifactElements ?? []).includes(
+        dismissedArtifact.artifact
+      );
+    if (dismissedArtifactWasRemoved) {
+      this._pendingArtifactDismiss = undefined;
+    }
     this.requestUpdate();
     void this.updateComplete.then(() => {
       requestAnimationFrame(() => {
         this._observeArtifactScrollViewport();
         this._updateArtifactScrollState();
+        if (dismissedArtifactWasRemoved && dismissedArtifact) {
+          this._restoreArtifactFocusAfterDismiss(dismissedArtifact.index);
+        }
       });
     });
+  }
+
+  private _handleArtifactDismiss(event: Event): void {
+    const active = getActiveElement();
+    const artifact = event.composedPath().find(
+      (node): node is HTMLElement =>
+        node instanceof HTMLElement &&
+        (this._assignedArtifactElements ?? []).includes(node)
+    );
+    if (!artifact || !active || !deepContains(artifact, active)) {
+      return;
+    }
+
+    this._pendingArtifactDismiss = {
+      artifact,
+      index: (this._assignedArtifactElements ?? []).indexOf(artifact),
+    };
+  }
+
+  private _restoreArtifactFocusAfterDismiss(index: number): void {
+    const artifacts = this._assignedArtifactElements ?? [];
+    if (artifacts.length === 0) {
+      this.shadowRoot
+        ?.querySelector<HTMLTextAreaElement>('.swc-PromptField-textarea')
+        ?.focus();
+      return;
+    }
+
+    const target = artifacts[Math.min(index, artifacts.length - 1)];
+    if (artifacts.length === 1) {
+      target.tabIndex = 0;
+      target.focus();
+      return;
+    }
+
+    this._artifactStripEntered = true;
+    this._artifactNavigation.refresh();
+    this._focusArtifact(target);
   }
 
   private _handleArtifactScroll(): void {
@@ -430,10 +485,14 @@ export class PromptField extends SpectrumElement {
     );
   }
 
+  private _artifactScrollBehavior(): ScrollBehavior {
+    return this._prefersReducedMotion() ? 'auto' : 'smooth';
+  }
+
   private _focusArtifact(el: HTMLElement): void {
     this._artifactNavigation.setActiveItem(el);
     el.scrollIntoView({
-      behavior: this._prefersReducedMotion() ? 'auto' : 'smooth',
+      behavior: this._artifactScrollBehavior(),
       block: 'nearest',
       inline: 'nearest',
     });
@@ -452,7 +511,7 @@ export class PromptField extends SpectrumElement {
       this._artifactStripEntered = true;
     }
     activeElement.scrollIntoView({
-      behavior: this._prefersReducedMotion() ? 'auto' : 'smooth',
+      behavior: this._artifactScrollBehavior(),
       block: 'nearest',
       inline: 'nearest',
     });
@@ -739,12 +798,22 @@ export class PromptField extends SpectrumElement {
       this._showArtifactScrollbarFromInteraction();
     };
 
-    const onPointerUp = (): void => {
+    let onPointerUp: (() => void) | undefined;
+    const cleanup = (): void => {
       window.removeEventListener('pointermove', onPointerMove);
-      window.removeEventListener('pointerup', onPointerUp);
-      window.removeEventListener('pointercancel', onPointerUp);
+      if (onPointerUp) {
+        window.removeEventListener('pointerup', onPointerUp);
+        window.removeEventListener('pointercancel', onPointerUp);
+      }
+      if (this._artifactScrollbarDragCleanup === cleanup) {
+        this._artifactScrollbarDragCleanup = undefined;
+      }
     };
 
+    onPointerUp = (): void => cleanup();
+
+    this._artifactScrollbarDragCleanup?.();
+    this._artifactScrollbarDragCleanup = cleanup;
     window.addEventListener('pointermove', onPointerMove);
     window.addEventListener('pointerup', onPointerUp);
     window.addEventListener('pointercancel', onPointerUp);
@@ -768,6 +837,7 @@ export class PromptField extends SpectrumElement {
       this._artifactScrollFromButtons = false;
       this._artifactScrollButtonResetTimer = undefined;
       scrollEl?.removeEventListener('scrollend', reset);
+      this.requestUpdate();
     };
 
     scrollEl?.addEventListener('scrollend', reset, { once: true });
@@ -892,7 +962,10 @@ export class PromptField extends SpectrumElement {
         // land a subpixel short of maxScroll (unlike aligning to the first
         // tile's start, which is trivially exact at 0), leaving the next
         // chevron stuck visible since it compares against this same maxScroll.
-        scrollEl.scrollTo({ left: maxScroll, behavior: 'smooth' });
+        scrollEl.scrollTo({
+          left: maxScroll,
+          behavior: this._artifactScrollBehavior(),
+        });
         return;
       }
 
@@ -907,7 +980,7 @@ export class PromptField extends SpectrumElement {
         lastVisibleFraction >= 0.5 ? children[last + 1] : children[last];
 
       nextStart.scrollIntoView({
-        behavior: 'smooth',
+        behavior: this._artifactScrollBehavior(),
         block: 'nearest',
         inline: 'start',
       });
@@ -922,7 +995,7 @@ export class PromptField extends SpectrumElement {
 
     if (first <= 0) {
       children[0].scrollIntoView({
-        behavior: 'smooth',
+        behavior: this._artifactScrollBehavior(),
         block: 'nearest',
         inline: 'start',
       });
@@ -937,7 +1010,7 @@ export class PromptField extends SpectrumElement {
       firstVisibleFraction >= 0.5 ? children[first - 1] : children[first];
 
     prevEnd.scrollIntoView({
-      behavior: 'smooth',
+      behavior: this._artifactScrollBehavior(),
       block: 'nearest',
       inline: 'end',
     });
@@ -968,6 +1041,10 @@ export class PromptField extends SpectrumElement {
   private _warnedMissingLegalContent = false;
 
   private _warnIfMixedArtifactTypes(): void {
+    if (!window.__swc?.DEBUG) {
+      return;
+    }
+
     const elements = this._assignedArtifactElements ?? [];
     const types = new Set(
       elements
@@ -988,12 +1065,18 @@ export class PromptField extends SpectrumElement {
     }
 
     this._warnedMixedArtifactTypes = true;
-    console.warn(
-      '[swc-prompt-field] The artifact slot contains both card and media upload artifacts. Use one layout type per composer session (all card or all media). When uploads mix images and documents, normalize to media tiles with thumbnails and optional badges. See upload-artifact documentation.'
+    window.__swc.warn(
+      this,
+      'The artifact slot contains both card and media upload artifacts. Use one layout type per composer session (all card or all media). When uploads mix images and documents, normalize to media tiles with thumbnails and optional badges.',
+      'https://opensource.adobe.com/spectrum-web-components/patterns/conversational-ai/prompt-field/'
     );
   }
 
   private _warnIfMissingLegalContent(): void {
+    if (!window.__swc?.DEBUG) {
+      return;
+    }
+
     const elements = this._assignedLegalElements ?? [];
 
     if (elements.length > 0) {
@@ -1006,8 +1089,10 @@ export class PromptField extends SpectrumElement {
     }
 
     this._warnedMissingLegalContent = true;
-    console.warn(
-      '[swc-prompt-field] The legal slot is empty. Product implementations must provide Legal-approved disclaimer content via the legal slot. See prompt-field documentation.'
+    window.__swc.warn(
+      this,
+      'The legal slot is empty. Product implementations must provide Legal-approved disclaimer content via the legal slot.',
+      'https://opensource.adobe.com/spectrum-web-components/patterns/conversational-ai/prompt-field/'
     );
   }
 
@@ -1077,6 +1162,7 @@ export class PromptField extends SpectrumElement {
       return html`
         <div
           class="swc-PromptField-artifacts swc-PromptField-artifacts--single"
+          @swc-upload-artifact-dismiss=${this._handleArtifactDismiss}
         >
           <slot
             name="artifact"
@@ -1089,6 +1175,7 @@ export class PromptField extends SpectrumElement {
     return html`
       <div
         class="swc-PromptField-artifacts swc-PromptField-artifacts--multiple"
+        @swc-upload-artifact-dismiss=${this._handleArtifactDismiss}
       >
         <div
           class="swc-PromptField-artifacts-row"
