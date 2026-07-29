@@ -14,7 +14,7 @@ import { html } from 'lit';
 import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
-import { warningId } from '../spectrum-element.js';
+import { buildGroupedWarningArgs, warningId } from '../spectrum-element.js';
 
 export default {
   title: 'Utils/Dev validation/Dedup tests',
@@ -51,5 +51,67 @@ export const WarningIdTest: Story = {
         'swc-badge:api:high:bad variant'
       );
     });
+  },
+};
+
+// Builds a grouped-warning batch (the shape `window.__swc.warn` accumulates
+// within a microtask).
+const makeBatch = (
+  count: number,
+  numElements: number
+): Parameters<typeof buildGroupedWarningArgs>[0] => ({
+  message:
+    '<swc-badge> expects "variant" to be one of: neutral. Received "banana".',
+  url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-badge--docs',
+  localName: 'swc-badge',
+  type: 'api',
+  level: 'default',
+  listedIssues: '',
+  elements: Array.from({ length: numElements }, () =>
+    document.createElement('div')
+  ),
+  count,
+});
+
+const elementArgs = (args: unknown[]): HTMLElement[] =>
+  args.filter((arg): arg is HTMLElement => arg instanceof HTMLElement);
+
+const countFromArgs = (args: unknown[]): number =>
+  (args[args.length - 1] as { data: { count: number } }).data.count;
+
+// `buildGroupedWarningArgs` produces the exact arguments `window.__swc.warn`
+// passes to `console.warn` for a grouped warning. Testing it directly captures
+// the grouped output (count line + element refs)
+export const GroupedWarningTest: Story = {
+  play: async ({ step }) => {
+    await step('single element: "affected element", exactly one ref', () => {
+      const args = buildGroupedWarningArgs(makeBatch(1, 1), false);
+      expect(String(args[0])).toContain('Affected element:');
+      expect(elementArgs(args).length).toBe(1);
+      expect(countFromArgs(args)).toBe(1);
+    });
+
+    await step(
+      'multiple, default: count line names the total, one representative ref',
+      () => {
+        const args = buildGroupedWarningArgs(makeBatch(12, 10), false);
+        expect(String(args[0])).toContain('12 <swc-badge> elements affected:');
+        // The default path surfaces exactly one live element ref, whatever the
+        // count, so a table of N broken rows can't pin N DOM nodes.
+        expect(elementArgs(args).length).toBe(1);
+        expect(countFromArgs(args)).toBe(12);
+      }
+    );
+
+    await step(
+      'multiple, verbose: same count line, every collected ref',
+      () => {
+        const args = buildGroupedWarningArgs(makeBatch(12, 10), true);
+        expect(String(args[0])).toContain('12 <swc-badge> elements affected:');
+        // Verbose surfaces all collected refs; collection caps them at 10.
+        expect(elementArgs(args).length).toBe(10);
+        expect(countFromArgs(args)).toBe(12);
+      }
+    );
   },
 };

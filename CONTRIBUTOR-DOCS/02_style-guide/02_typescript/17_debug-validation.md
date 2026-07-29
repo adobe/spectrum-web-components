@@ -57,7 +57,7 @@ interface SWCDebug {
 }
 ```
 
-**Initialization:** The `window.__swc` object is automatically created when the first Spectrum Web Component loads, but only in development builds (`process.env.NODE_ENV === 'development'`). The initialization lives in `@adobe/spectrum-wc-core/element/spectrum-element.ts`. In production builds, `window.__swc` is not created, so all debug checks short-circuit via the optional chaining pattern (`window.__swc?.DEBUG`).
+**Initialization:** The `window.__swc` object is automatically created when the first Spectrum Web Component loads, for every environment except production (`process.env.NODE_ENV !== 'production'`, so `'development'`, `'staging'`, `'test'`, and unset all qualify). The initialization lives in `@adobe/spectrum-wc-core/element/spectrum-element.ts`. In production builds, `window.__swc` is not created, so all debug checks short-circuit via the optional chaining pattern (`window.__swc?.DEBUG`).
 
 Debug mode is enabled by default in development builds. To disable it, set `window.__swc.DEBUG = false` before components load. In production builds, debug checks are either stripped or short-circuit when `DEBUG` is false.
 
@@ -435,6 +435,17 @@ protected override updated(changes: PropertyValues): void {
 ```
 
 The non-default guard (`this.progress !== 0`) is what keeps the warning honest: without it, the warning fires at construction on every instance, including consumers who never touched the deprecated property.
+
+#### Exception: attribute-preserving property renames
+
+The `changes.has()` + non-default-value guard above assumes the *only* way the property's value changes is a consumer setting it directly. That assumption breaks when the rename is JS-property-only and the HTML attribute is unchanged and still valid (for example `isDragged` → `dragged`, where the `dragged` attribute name and behavior stay the same and only the JS property name changes). In that shape:
+
+- Lit's attribute-to-property sync fires the same property setter a direct JS assignment would, so a consumer who never touches the deprecated JS property (only the still-valid attribute, or a Lit template's `?attr=` binding) still triggers the "warning."
+- If the component also sets the property internally as part of its own normal operation (e.g. a drag-and-drop component setting `dragged` on every native `dragover`), the warning fires continuously during ordinary use, not just when the deprecated JS API is used.
+
+Neither the `changes.has()` guard nor a non-default-value check can distinguish "a consumer wrote `element.oldProp = x`" from "the attribute was parsed/reflected" or "the component set it internally," because both paths call the same reactive-property setter Lit itself observes. There is no general fix available today: `ReactiveElement`'s attribute-to-property sync is internal by the time `updated()` runs, so the two paths aren't observably different from a component's own `updated()` override.
+
+**When you hit this shape, skip the runtime warning and keep the `@deprecated` JSDoc only.** Note in a comment near the property why there's no paired warning, so a future reader doesn't assume it was forgotten. See `1st-gen/packages/dropzone/src/Dropzone.ts`'s `isDragged`/`isFilled` properties for a worked example and rationale comment.
 
 ### Referencing a replacement in the message
 
