@@ -22,7 +22,7 @@ import {
   STATUS_LIGHT_VALID_SIZES,
   STATUS_LIGHT_VARIANTS_COLOR,
   STATUS_LIGHT_VARIANTS_SEMANTIC,
-} from '@spectrum-web-components/core/components/status-light/index.js';
+} from '@adobe/spectrum-wc-core/components/status-light/index.js';
 
 import '@adobe/spectrum-wc/components/status-light/swc-status-light.js';
 
@@ -283,8 +283,11 @@ export const UnsupportedVariantWarningTest: Story = {
           warnCalls[0][0],
           'warning is emitted from the status light element'
         ).toBe(statusLight);
+        // The warn signature is warn(element, message, url, options), so
+        // [0] is the first call and [1] is its message.
+        const message = String(warnCalls[0]?.[1] ?? '');
         expect(
-          String(warnCalls[0][1] ?? ''),
+          message,
           'warning message references the variant attribute'
         ).toContain('variant');
       })

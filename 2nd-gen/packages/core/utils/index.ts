@@ -14,6 +14,7 @@ export { physicalSide } from './actual-placement.js';
 export { capitalize } from './capitalize.js';
 export { deepContains } from './deep-contains.js';
 export {
+  isDebug,
   validateAllowedChildren,
   validateEnum,
   validateRequiredSlot,
@@ -27,6 +28,7 @@ export {
 export { getActiveElement } from './get-active-element.js';
 export { focusableSelector, tabbableSelector } from './focusable-selectors.js';
 export { getLabelFromSlot } from './get-label-from-slot.js';
+export { isFocusVisibleInTree } from './is-focus-visible-in-tree.js';
 export {
   resolveTrigger,
   type ResolvedTrigger,

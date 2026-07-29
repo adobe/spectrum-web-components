@@ -10,7 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
-import type { ElementSize } from '@spectrum-web-components/core/mixins/index.js';
+import type { ElementSize } from '@adobe/spectrum-wc-core/mixins/index.js';
 
 // ──────────────────
 //     SHARED
@@ -32,6 +32,8 @@ export const CARD_VARIANTS = [
 ] as const;
 
 export const CARD_DENSITIES = ['compact', 'regular', 'spacious'] as const;
+
+export const SWC_CARD_CLICK_EVENT = 'swc-card-click' as const;
 
 // ──────────────────
 //     TYPES

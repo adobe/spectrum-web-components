@@ -11,6 +11,66 @@
  */
 
 /**
+ * The single place "warn in development" lives: the `DEBUG` gate plus the
+ * `window.__swc.warn` call. Every public helper below computes its own
+ * predicate and message, then defers the actual emit to this primitive, so
+ * there is one source of truth for how a warning is gated and dispatched.
+ *
+ * Note: this deliberately does **not** include the
+ * `process.env.NODE_ENV === 'production'` guard. That guard must stay in each
+ * public helper so a bundler can dead-code-eliminate the message construction
+ * inside that function for production builds; centralizing it here would leave
+ * each caller's message-building in the production bundle.
+ *
+ * @param element - The component instance the warning is attributed to.
+ * @param message - The warning message.
+ * @param url - Documentation URL for the component.
+ * @param options - Passed through to `window.__swc.warn`.
+ */
+function emitWarning(
+  element: HTMLElement,
+  message: string,
+  url: string,
+  options?: SWCWarningOptions
+): void {
+  if (!window.__swc?.DEBUG) {
+    return;
+  }
+  window.__swc.warn(element, message, url, options);
+}
+
+/**
+ * Whether dev-mode validation is active: `false` in production builds and in
+ * non-browser (SSR) environments, otherwise mirrors `window.__swc.DEBUG`.
+ *
+ * Use this to guard the *call site* of a warning whose condition or message is
+ * expensive to compute (for example a DOM traversal), so that work is skipped
+ * entirely when validation is off:
+ *
+ * ```ts
+ * if (isDebug()) {
+ *   this.warnAboutExpensiveThing(); // only traverses the DOM when validation runs
+ * }
+ * ```
+ *
+ * For cheap conditions, call `warnIf`/`validateEnum` directly; they already
+ * gate internally. This helper exists only to avoid paying call-site argument
+ * cost in the expensive cases. It checks `process.env.NODE_ENV` first so a
+ * bundler can dead-code-eliminate the guarded block in production, matching the
+ * other helpers in this file, and short-circuits when `window` is undefined so
+ * it is safe to call during server-side rendering.
+ */
+export function isDebug(): boolean {
+  if (process.env.NODE_ENV === 'production') {
+    return false;
+  }
+  if (typeof window === 'undefined') {
+    return false;
+  }
+  return Boolean(window.__swc?.DEBUG);
+}
+
+/**
  * Warns when `value` is not one of `valid`. Covers union-type/enum property
  * validation (e.g. `variant`, `size`).
  *
@@ -41,13 +101,10 @@ export function validateEnum<T extends string>(
   if (process.env.NODE_ENV === 'production') {
     return;
   }
-  if (!window.__swc?.DEBUG) {
-    return;
-  }
   if ((valid as readonly string[]).includes(value)) {
     return;
   }
-  window.__swc.warn(
+  emitWarning(
     element,
     `<${element.localName}> expects "${prop}" to be one of: ${valid.join(', ')}. Received "${value}".`,
     url,
@@ -77,10 +134,10 @@ export function warnIf(
   if (process.env.NODE_ENV === 'production') {
     return;
   }
-  if (!window.__swc?.DEBUG || !condition) {
+  if (!condition) {
     return;
   }
-  window.__swc.warn(element, message, url, options);
+  emitWarning(element, message, url, options);
 }
 
 /**
@@ -102,14 +159,11 @@ export function validateRequiredSlot(
   if (process.env.NODE_ENV === 'production') {
     return;
   }
-  if (!window.__swc?.DEBUG) {
-    return;
-  }
   const isEmpty = !slot || slot.assignedNodes({ flatten: true }).length === 0;
   if (!isEmpty) {
     return;
   }
-  window.__swc.warn(
+  emitWarning(
     element,
     `<${element.localName}> requires content in the "${slotName}" slot.`,
     url,
@@ -140,14 +194,14 @@ export function validateAllowedChildren(
   if (process.env.NODE_ENV === 'production') {
     return;
   }
-  if (!window.__swc?.DEBUG || !slot) {
+  if (!slot) {
     return;
   }
   const allowed = allowedTagNames.map((tag) => tag.toUpperCase());
   const allowedList = allowedTagNames.map((tag) => `<${tag}>`).join(', ');
   for (const el of slot.assignedElements()) {
     if (!allowed.includes(el.tagName)) {
-      window.__swc.warn(
+      emitWarning(
         element,
         `<${element.localName}> "${slotName}" slot received a <${el.tagName.toLowerCase()}> element. Only ${allowedList} elements are allowed.`,
         url,

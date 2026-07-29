@@ -13,11 +13,8 @@ import { PropertyValues, ReactiveElement } from 'lit';
 import { property } from 'lit/decorators.js';
 
 import { LanguageResolutionController } from '../controllers/language-resolution.js';
-import { validateEnum, warnIf } from '../utils/index.js';
-import {
-  ObserveSlotPresence,
-  type SlotPresenceObservingInterface,
-} from './observe-slot-presence.js';
+import { SlotPresenceController } from '../controllers/slot-presence-controller/index.js';
+import { isDebug, validateEnum, warnIf } from '../utils/index.js';
 import type { ElementSize } from './sized-mixin.js';
 
 type Constructor<T = Record<string, unknown>> = {
@@ -47,7 +44,7 @@ const DEFAULT_FORMAT_OPTIONS: Intl.NumberFormatOptions = { style: 'percent' };
 const LABEL_SLOT_SELECTOR = '[slot="label"]';
 const DESCRIPTION_SLOT_SELECTOR = '[slot="description"]';
 
-export interface LinearProgressInterface extends SlotPresenceObservingInterface {
+export interface LinearProgressInterface {
   value: number;
   minValue: number;
   maxValue: number;
@@ -82,12 +79,18 @@ export function LinearProgressMixin<T extends Constructor<ReactiveElement>>(
   constructor: T
 ): T & Constructor<LinearProgressInterface> {
   class LinearProgressElement
-    extends ObserveSlotPresence(constructor, [
-      LABEL_SLOT_SELECTOR,
-      DESCRIPTION_SLOT_SELECTOR,
-    ])
+    extends constructor
     implements LinearProgressInterface
   {
+    /**
+     * Observes the light-DOM `label` and `description` slots so the shadow-DOM
+     * containers and slots can be fully conditional.
+     */
+    private readonly slotPresence = new SlotPresenceController(this, [
+      LABEL_SLOT_SELECTOR,
+      DESCRIPTION_SLOT_SELECTOR,
+    ]);
+
     /**
      * Current value. Sanitized via `clampedValue` for rendering and
      * `aria-valuenow`.
@@ -148,6 +151,20 @@ export function LinearProgressMixin<T extends Constructor<ReactiveElement>>(
 
     /**
      * @internal
+     *
+     * Documentation URL used in DEBUG warnings. Derived from the custom
+     * element tag name so each concrete component gets an accurate link
+     * with no per-subclass override needed (e.g. `swc-meter` →
+     * `components-meter--docs`, `swc-progress-bar` →
+     * `components-progress-bar--docs`).
+     */
+    protected get docsHref(): string {
+      const name = this.localName.replace(/^swc-/, '');
+      return `https://spectrum-web-components.adobe.com/?path=/docs/components-${name}--docs`;
+    }
+
+    /**
+     * @internal
      */
     public get labelContainerId(): string {
       return `swc-linear-progress-label-${this._instanceId}`;
@@ -164,14 +181,14 @@ export function LinearProgressMixin<T extends Constructor<ReactiveElement>>(
      * @internal
      */
     public get hasLabelSlotContent(): boolean {
-      return this.getSlotContentPresence(LABEL_SLOT_SELECTOR);
+      return this.slotPresence.getPresence(LABEL_SLOT_SELECTOR);
     }
 
     /**
      * @internal
      */
     public get hasDescriptionSlotContent(): boolean {
-      return this.getSlotContentPresence(DESCRIPTION_SLOT_SELECTOR);
+      return this.slotPresence.getPresence(DESCRIPTION_SLOT_SELECTOR);
     }
 
     /**
@@ -268,7 +285,7 @@ export function LinearProgressMixin<T extends Constructor<ReactiveElement>>(
       // that determine it actually change, so the warning does not fire
       // on every property update during development.
       if (
-        window.__swc?.DEBUG &&
+        isDebug() &&
         (changes.has('accessibleLabel') || !this._hasWarnedNoAccessibleName)
       ) {
         this.warnMissingAccessibleName();
@@ -278,7 +295,7 @@ export function LinearProgressMixin<T extends Constructor<ReactiveElement>>(
       // range. The value is still clamped for rendering and ARIA, but the
       // clamp is otherwise silent, so flag it as a likely authoring error.
       if (
-        window.__swc?.DEBUG &&
+        isDebug() &&
         (changes.has('value') ||
           changes.has('minValue') ||
           changes.has('maxValue'))
@@ -325,7 +342,7 @@ export function LinearProgressMixin<T extends Constructor<ReactiveElement>>(
         this,
         true,
         `<${this.localName}> "value" (${value}) is outside the [${min}, ${max}] range and was clamped to ${this.clampedValue}.`,
-        'https://spectrum-web-components.adobe.com/?path=/docs/components-meter--docs',
+        this.docsHref,
         {
           issues: [
             'set "value" within the "min-value" and "max-value" range, or',
@@ -345,12 +362,12 @@ export function LinearProgressMixin<T extends Constructor<ReactiveElement>>(
         this,
         true,
         `<${this.localName}> requires an accessible name.`,
-        'https://spectrum-web-components.adobe.com/?path=/docs/components-meter--docs',
+        this.docsHref,
         {
           type: 'accessibility',
           issues: [
             'add visible label content via the "label" named slot, or',
-            'set the "accessible-label" attribute (or "accessibleLabel" property) when there is no visible label, for example a data grid of meters.',
+            'set the "accessible-label" attribute (or "accessibleLabel" property) when there is no visible label.',
           ],
         }
       );

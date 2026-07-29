@@ -1,0 +1,241 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Progress Bar/Migration guide" />
+
+# Progress bar migration guide
+
+Replace `<sp-progress-bar>` with `<swc-progress-bar>`, update the import, rename `progress` to `value`, and move the label into the `label` slot.
+
+## Installation
+
+```bash
+# Remove
+yarn remove @spectrum-web-components/progress-bar
+
+# Add
+yarn add @adobe/spectrum-wc
+```
+
+Update your import:
+
+```js
+// Before
+import '@spectrum-web-components/progress-bar/sp-progress-bar.js';
+
+// After
+import '@adobe/spectrum-wc/components/progress-bar/swc-progress-bar.js';
+```
+
+> `@adobe/spectrum-wc` is a monolithic package. Importing via subpath (e.g. `@adobe/spectrum-wc/components/progress-bar/swc-progress-bar.js`) registers and loads only that component's bundle.
+
+## What changed
+
+### Renamed
+
+| Area             | Spectrum 1 (`sp-progress-bar`)          | Spectrum 2 (`swc-progress-bar`)                                                                 |
+| ---------------- | --------------------------------------- | ----------------------------------------------------------------------------------------------- |
+| Tag              | `sp-progress-bar`                       | `swc-progress-bar`                                                                              |
+| Import path      | `@spectrum-web-components/progress-bar` | `@adobe/spectrum-wc/components/progress-bar/swc-progress-bar.js`                                |
+| Value            | `progress` (0–100)                      | `value` — see [step 3](#3-rename-progress-to-value)                                             |
+| Label            | `label` string attribute                | `label` named slot, or `accessible-label` — see [step 5](#5-move-the-label-into-the-label-slot) |
+| Label position   | `side-label` boolean                    | `label-position="side"` — see [step 4](#4-replace-side-label-with-label-position)               |
+| CSS custom props | `--mod-progressbar-*`                   | `--swc-linear-progress-*` (see [Styling](#styling))                                             |
+| Default `size`   | No reflected default (`noDefaultSize`)  | `'m'` — the `size` attribute is set by default                                                  |
+
+### Added in Spectrum 2
+
+| Addition                       | Notes                                                                                                  |
+| ------------------------------ | ------------------------------------------------------------------------------------------------------ |
+| `min-value` / `max-value`      | Arbitrary numeric range (default `0` / `100`). `value` is clamped into the range.                      |
+| `static-color="black"`         | Spectrum 1 supported `white` only.                                                                     |
+| `value-label` string attribute | Custom value text (e.g. `"1 of 4"`); overrides the auto-formatted percent. Ignored when indeterminate. |
+| `formatOptions` JS property    | `Intl.NumberFormatOptions` pass-through for the value text. Property only, no attribute.               |
+| `accessible-label` attribute   | Accessible-name fallback when there is no visible label (e.g. indeterminate spinners).                 |
+| `description` named slot       | Description text rendered below the bar and referenced by `aria-describedby`.                          |
+
+### Removed in Spectrum 2
+
+| Removed                                          | Replacement                                                                               |
+| ------------------------------------------------ | ----------------------------------------------------------------------------------------- |
+| `over-background` boolean                        | `static-color="white"` — see [step 6](#6-replace-over-background)                         |
+| `--mod-progressbar-*` properties                 | `--swc-linear-progress-*` where a mapping exists (see [Styling](#styling))                |
+| Raw `aria-label` / `aria-labelledby` on the host | `label` slot, or `accessible-label` — see [step 5](#5-move-the-label-into-the-label-slot) |
+| `role="progressbar"` on the host                 | `role="progressbar"` on the internal element. No consumer action                          |
+
+## Update your code
+
+### 1. Update the import
+
+```js
+// Before
+import '@spectrum-web-components/progress-bar/sp-progress-bar.js';
+// After
+import '@adobe/spectrum-wc/components/progress-bar/swc-progress-bar.js';
+```
+
+### 2. Rename the tag
+
+```html
+<!-- Before -->
+<sp-progress-bar></sp-progress-bar>
+<!-- After -->
+<swc-progress-bar></swc-progress-bar>
+```
+
+### 3. Rename `progress` to `value`
+
+```html
+<!-- Before -->
+<sp-progress-bar progress="50"></sp-progress-bar>
+<!-- After -->
+<swc-progress-bar value="50"></swc-progress-bar>
+```
+
+The default range is still `0`–`100`, so no other change is needed. Set `min-value` / `max-value` only if you need a custom range.
+
+### 4. Replace `side-label` with `label-position`
+
+```html
+<!-- Before -->
+<sp-progress-bar side-label progress="23"></sp-progress-bar>
+<!-- After -->
+<swc-progress-bar label-position="side" value="23"></swc-progress-bar>
+```
+
+The default (`label-position="top"`) is unchanged, so drop `side-label` entirely if you were not using it.
+
+### 5. Move the label into the `label` slot
+
+The `label` string attribute is removed. Put visible label text in the `label` named slot:
+
+```html
+<!-- Before -->
+<sp-progress-bar label="Generating images..." progress="58"></sp-progress-bar>
+<!-- After -->
+<swc-progress-bar value="58">
+  <span slot="label">Generating images...</span>
+</swc-progress-bar>
+```
+
+When there is no visible label, use `accessible-label` instead of `aria-label`. The `progressbar` role now lives on an internal element, so `aria-label` on the host no longer names the component:
+
+```html
+<!-- Before -->
+<sp-progress-bar aria-label="Loading" indeterminate></sp-progress-bar>
+<!-- After -->
+<swc-progress-bar accessible-label="Loading" indeterminate></swc-progress-bar>
+```
+
+### 6. Replace `over-background`
+
+```html
+<!-- Before -->
+<sp-progress-bar over-background progress="77"></sp-progress-bar>
+<!-- After -->
+<swc-progress-bar static-color="white" value="77"></swc-progress-bar>
+```
+
+### 7. (Optional) Adopt new attributes
+
+```html
+<!-- Before -->
+<swc-progress-bar value="1" min-value="0" max-value="4">
+  <span slot="label">Downloading</span>
+</swc-progress-bar>
+<!-- After: custom range, custom value text, and a description -->
+<swc-progress-bar value="1" min-value="0" max-value="4" value-label="1 of 4">
+  <span slot="label">Downloading</span>
+  <span slot="description">Estimated 2 minutes remaining</span>
+</swc-progress-bar>
+```
+
+## Accessibility
+
+- **Provide a name.** Move `label="…"` into the `label` slot, or set `accessible-label` when there is no visible label. See [step 5](#5-move-the-label-into-the-label-slot).
+- **Indeterminate bars** need `accessible-label` in place of the host `aria-label` used in Spectrum 1. See [step 5](#5-move-the-label-into-the-label-slot).
+- The `progressbar` role and all `aria-value*` attributes are set internally. Do not set `role` or `aria-value*` on `<swc-progress-bar>`.
+
+## Styling
+
+Spectrum 2 exposes the shared linear-progress custom properties on `<swc-progress-bar>`.
+
+{/* @todo Replace the inline-styled callouts in this section with `<swc-inline-alert>` once it is migrated to Spectrum 2. */}
+
+<div
+  style={{
+    borderLeft: '4px solid #dba842',
+    background: 'rgba(219, 168, 66, 0.12)',
+    padding: '12px 16px',
+    margin: '16px 0',
+    borderRadius: '4px',
+  }}
+>
+  <strong>⚠️ Breaking change.</strong> Spectrum 1{' '}
+  <code>{'--mod-progressbar-*'}</code> properties <strong>do not apply</strong>{' '}
+  to <code>{'<swc-progress-bar>'}</code>. Remove or replace every{' '}
+  <code>{'--mod-progressbar-*'}</code> override with the{' '}
+  <code>{'--swc-linear-progress-*'}</code> equivalents below. Not every Spectrum
+  1 property has a 1:1 replacement, so read the list below carefully.
+</div>
+
+### Removed `--mod-progressbar-*` properties
+
+| Removed (Spectrum 1)                                    | Replacement (Spectrum 2)               |
+| ------------------------------------------------------- | -------------------------------------- |
+| `--mod-progressbar-fill-color`                          | `--swc-linear-progress-fill-color`     |
+| `--mod-progressbar-track-color`                         | `--swc-linear-progress-track-color`    |
+| `--mod-progressbar-text-color`                          | `--swc-linear-progress-text-color`     |
+| `--mod-progressbar-thickness`                           | `--swc-linear-progress-thickness`      |
+| `--mod-progressbar-font-size`                           | `--swc-linear-progress-font-size`      |
+| `--mod-progressbar-spacing-top-to-text`                 | `--swc-linear-progress-top-to-text`    |
+| `--mod-progressbar-fill-color-white`                    | No replacement — retoken globally      |
+| `--mod-progressbar-label-and-value-white`               | No replacement — retoken globally      |
+| `--mod-progressbar-line-height`                         | No replacement                         |
+| `--mod-progressbar-line-height-cjk`                     | No replacement — applied via `:lang()` |
+| `--mod-progressbar-min-size`                            | No replacement                         |
+| `--mod-progressbar-max-size`                            | No replacement                         |
+| `--mod-progressbar-size-default`                        | No replacement                         |
+| `--mod-progressbar-spacing-label-to-progressbar`        | No replacement                         |
+| `--mod-progressbar-spacing-label-to-text`               | No replacement                         |
+| `--mod-progressbar-animation-duration-indeterminate`    | No replacement                         |
+| `--mod-progressbar-animation-ease-in-out-indeterminate` | No replacement                         |
+| `--mod-progressbar-fill-size-indeterminate`             | No replacement                         |
+
+### Public custom properties
+
+{/* @todo Replace the Description column with the `@cssproperty` JSDoc descriptions from `<swc-progress-bar>`'s CEM entry once they are added in a follow-up PR. */}
+
+| Custom property                     | Description                                                        |
+| ----------------------------------- | ------------------------------------------------------------------ |
+| `--swc-linear-progress-fill-color`  | Color of the bar fill. Defaults to the accent content color token. |
+| `--swc-linear-progress-track-color` | Color of the bar track.                                            |
+| `--swc-linear-progress-text-color`  | Color of the label and value text.                                 |
+| `--swc-linear-progress-thickness`   | Block size of the track and fill.                                  |
+| `--swc-linear-progress-font-size`   | Font size of the label and value text.                             |
+| `--swc-linear-progress-top-to-text` | Spacing between the bar and the text.                              |
+
+<div
+  style={{
+    borderLeft: '4px solid #e34850',
+    background: 'rgba(227, 72, 80, 0.10)',
+    padding: '12px 16px',
+    margin: '16px 0',
+    borderRadius: '4px',
+  }}
+>
+  <strong>🚫 Do not target internals.</strong> Internal classes,{' '}
+  <code>{'--_swc-linear-progress-*'}</code> private properties, and shadow DOM
+  are <strong>not public API</strong>. Styling applied to them will break
+  without warning on minor releases.
+</div>
+
+## Checklist
+
+- [ ] Update imports
+- [ ] Rename all `<sp-progress-bar>` to `<swc-progress-bar>`
+- [ ] Rename the `progress` attribute to `value`
+- [ ] Replace `side-label` with `label-position="side"`
+- [ ] Move `label="…"` into a `<span slot="label">`, or set `accessible-label` when there is no visible label
+- [ ] Replace host `aria-label` with `accessible-label`
+- [ ] Replace `over-background` with `static-color="white"`
+- [ ] Replace `--mod-progressbar-*` overrides with `--swc-linear-progress-*` equivalents

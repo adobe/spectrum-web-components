@@ -34,7 +34,7 @@ import meta, {
 // This file defines dev-only test stories that reuse the main story metadata.
 export default {
   ...meta,
-  title: 'Illustrated Message/Tests',
+  title: 'Illustrated message/Tests',
   parameters: {
     ...meta.parameters,
     docs: { disable: true, page: null },
@@ -196,6 +196,44 @@ export const DefaultSlotIllustrationTest: Story = {
           svg?.getAttribute('aria-hidden'),
           'aria-hidden on decorative svg'
         ).toBe('true');
+      }
+    );
+
+    await step(
+      'reveals the illustration wrapper when an illustration is slotted',
+      async () => {
+        const wrapper = illustratedMessage.shadowRoot?.querySelector(
+          '.swc-IllustratedMessage-illustration'
+        );
+        expect(wrapper?.hasAttribute('hidden'), 'wrapper has [hidden]').toBe(
+          false
+        );
+      }
+    );
+  },
+};
+
+export const IllustrationWrapperCollapsesWhenEmptyTest: Story = {
+  render: () => html`
+    <swc-illustrated-message>
+      <h2 slot="heading">Heading</h2>
+    </swc-illustrated-message>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const illustratedMessage = await getComponent<IllustratedMessage>(
+      canvasElement,
+      'swc-illustrated-message'
+    );
+
+    await step(
+      'hides the illustration wrapper when no illustration is slotted',
+      async () => {
+        const wrapper = illustratedMessage.shadowRoot?.querySelector(
+          '.swc-IllustratedMessage-illustration'
+        );
+        expect(wrapper?.hasAttribute('hidden'), 'wrapper has [hidden]').toBe(
+          true
+        );
       }
     );
   },
@@ -725,6 +763,54 @@ export const HeadingSlotEmptyNoWarningTest: Story = {
         await slotChanged;
 
         expect(warnCalls.length, 'no warning for empty heading slot').toBe(0);
+      })
+    );
+  },
+};
+
+export const HeadingSlotMultipleWarningTest: Story = {
+  render: () => html`
+    <swc-illustrated-message>
+      <h2 slot="heading">First heading</h2>
+    </swc-illustrated-message>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const illustratedMessage = await getComponent<IllustratedMessage>(
+      canvasElement,
+      'swc-illustrated-message'
+    );
+
+    await step('warns when the heading slot has more than one element', () =>
+      withWarningSpy(async (warnCalls) => {
+        const headingSlot =
+          illustratedMessage.shadowRoot?.querySelector<HTMLSlotElement>(
+            'slot[name="heading"]'
+          );
+        if (!headingSlot) {
+          return;
+        }
+
+        const slotChanged = new Promise<void>((resolve) =>
+          headingSlot.addEventListener('slotchange', () => resolve(), {
+            once: true,
+          })
+        );
+
+        const second = document.createElement('h2');
+        second.setAttribute('slot', 'heading');
+        second.textContent = 'Second heading';
+        illustratedMessage.appendChild(second);
+
+        await slotChanged;
+
+        expect(
+          warnCalls.length,
+          'warns for more than one heading element'
+        ).toBeGreaterThan(0);
+        const message = String(warnCalls[0]?.[1] ?? '');
+        expect(message, 'message references a single heading').toContain(
+          'single heading'
+        );
       })
     );
   },

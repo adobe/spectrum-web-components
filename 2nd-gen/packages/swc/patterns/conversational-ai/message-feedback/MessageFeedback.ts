@@ -13,8 +13,8 @@
 import { CSSResultArray, html, PropertyValues, TemplateResult } from 'lit';
 import { property, queryAll } from 'lit/decorators.js';
 
-import { FocusgroupNavigationController } from '@spectrum-web-components/core/controllers/index.js';
-import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
+import { FocusgroupNavigationController } from '@adobe/spectrum-wc-core/controllers/index.js';
+import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
 
 import '@adobe/spectrum-wc/components/icon/swc-icon.js';
 

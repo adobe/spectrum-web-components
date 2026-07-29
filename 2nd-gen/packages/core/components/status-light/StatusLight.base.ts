@@ -12,15 +12,13 @@
 import { PropertyValues } from 'lit';
 import { property } from 'lit/decorators.js';
 
-import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
-import { SizedMixin } from '@spectrum-web-components/core/mixins/index.js';
-import {
-  validateEnum,
-  warnIf,
-} from '@spectrum-web-components/core/utils/index.js';
+import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
+import { SizedMixin } from '@adobe/spectrum-wc-core/mixins/index.js';
+import { validateEnum, warnIf } from '@adobe/spectrum-wc-core/utils/index.js';
 
 import {
   STATUS_LIGHT_VALID_SIZES,
+  type StatusLightSize,
   type StatusLightVariant,
 } from './StatusLight.types.js';
 
@@ -34,6 +32,11 @@ export abstract class StatusLightBase extends SizedMixin(SpectrumElement, {
   validSizes: STATUS_LIGHT_VALID_SIZES,
   noDefaultSize: true,
 }) {
+  /**
+   * The size of the status light.
+   */
+  declare public size: StatusLightSize;
+
   // ─────────────────────────
   //     API TO OVERRIDE
   // ─────────────────────────

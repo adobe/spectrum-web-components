@@ -125,7 +125,7 @@ Attach the controller as a private field in the base class:
 import {
   LanguageResolutionController,
   languageResolverUpdatedSymbol,
-} from '@spectrum-web-components/core/controllers/language-resolution.js';
+} from '@adobe/spectrum-wc-core/controllers/language-resolution.js';
 
 export abstract class ProgressCircleBase extends SizedMixin(SpectrumElement) {
   // SHARED API section

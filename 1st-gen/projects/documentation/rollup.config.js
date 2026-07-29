@@ -246,10 +246,6 @@ export default async () => {
           find: '@swc-packages-internal',
           replacement: path.resolve('../../packages'),
         },
-        {
-          find: /^@spectrum-web-components\/core\/(.*)$/,
-          replacement: path.resolve('../../../2nd-gen/packages/core/dist/$1'),
-        },
       ],
     })
   );

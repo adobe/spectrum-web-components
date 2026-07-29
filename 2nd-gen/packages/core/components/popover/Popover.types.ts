@@ -13,7 +13,7 @@
 import {
   ALL_PLACEMENTS,
   type Placement,
-} from '@spectrum-web-components/core/controllers/index.js';
+} from '@adobe/spectrum-wc-core/controllers/index.js';
 
 // ─────────────────────────
 //     PLACEMENT

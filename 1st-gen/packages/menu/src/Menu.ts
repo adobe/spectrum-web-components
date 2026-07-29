@@ -1417,10 +1417,9 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     }
     if (key === ' ' || key === 'Enter') {
       event.preventDefault();
+      // `click()` already triggers `handleClick` -> `handlePointerBasedSelection`
+      // -> `selectOrToggleItem`, so calling it again here double-toggles selection.
       root?.focusElement?.click();
-      if (root) {
-        this.selectOrToggleItem(root);
-      }
       return;
     }
     this.navigateBetweenRelatedMenus(event as MenuItemKeydownEvent);

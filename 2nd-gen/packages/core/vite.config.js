@@ -80,6 +80,22 @@ function getEntries() {
     scanTsFiles(resolve(__dirname, 'controllers'), 'controllers')
   );
 
+  // Find all controllers/*/index.ts files. Without this, Rollup's
+  // preserveModules output can inline a controller's re-export barrel into
+  // the parent chunk and drop its standalone file, breaking that
+  // controller's package.json subpath export even though the barrel export
+  // (`controllers/index.js`) still works.
+  Object.assign(
+    entries,
+    scanSubdirIndexes(resolve(__dirname, 'controllers'), 'controllers')
+  );
+
+  // Find all directives/*.ts files
+  Object.assign(
+    entries,
+    scanTsFiles(resolve(__dirname, 'directives'), 'directives')
+  );
+
   // Find all utils/*.ts files
   Object.assign(entries, scanTsFiles(resolve(__dirname, 'utils'), 'utils'));
 
@@ -110,7 +126,7 @@ export default defineConfig({
           id.startsWith('@floating-ui/') ||
           id === 'colorjs.io' ||
           id.startsWith('colorjs.io/') ||
-          id.startsWith('@spectrum-web-components/core/')
+          id.startsWith('@adobe/spectrum-wc-core/')
         );
       },
       output: {

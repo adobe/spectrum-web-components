@@ -13,12 +13,12 @@
 import { PropertyValues } from 'lit';
 import { property, queryAssignedElements } from 'lit/decorators.js';
 
-import type { ButtonBase } from '@spectrum-web-components/core/components/button';
-import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
-import { SizedMixin } from '@spectrum-web-components/core/mixins/index.js';
-import { validateEnum } from '@spectrum-web-components/core/utils/index.js';
+import type { ButtonBase } from '@adobe/spectrum-wc-core/components/button';
+import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
+import { SizedMixin } from '@adobe/spectrum-wc-core/mixins/index.js';
+import { validateEnum } from '@adobe/spectrum-wc-core/utils/index.js';
 
-import { SlotAttributePropagationController } from '../../controllers/slot-attribute-propagation/index.js';
+import { SlotAttributePropagationController } from '../../controllers/slot-attribute-propagation-controller/index.js';
 import {
   BUTTON_GROUP_ALIGNMENTS,
   BUTTON_GROUP_ORIENTATIONS,

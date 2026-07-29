@@ -10,7 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
-import { defineElement } from '@spectrum-web-components/core/element/index.js';
+import { defineElement } from '@adobe/spectrum-wc-core/element/index.js';
 
 import { Accordion } from './Accordion.js';
 

@@ -246,20 +246,16 @@ In the **body**, point to the **Browse mode (document/scan mode)** section. Add 
 
 ## Pull request
 
-When the analysis doc is complete and ready for review, generate a GitHub PR description using the template below.
+When the analysis doc is complete and ready for review, generate a GitHub PR description using the template below. Always output the filled-in description inside a single fenced `markdown` code block so the user can copy it in one action.
 
 ### Variable substitution rules
 
-| Placeholder                                | Value                                                                 | Example                          |
-| ------------------------------------------ | --------------------------------------------------------------------- | -------------------------------- |
-| `{{component-name}}`                       | Package name, kebab-case                                              | `dropzone`, `picker-button`      |
-| `{{branch-name}}`                          | GitHub branch, format `<username>/swc-<jira-number>-<component>-a11y` | `nikkimk/swc-2146-dropzone-a11y` |
-| `{{component-a11y-migration-JIRA-ticket}}` | Jira ID for this component's a11y migration analysis ticket           | `SWC-2146`                       |
-| `{{component-readable-name}}`              | Human-readable name, first letter capitalized                         | `Dropzone`, `Color handle`       |
-
-The description's first bullet ends "for the 2nd-gen color handle" in the source template — replace "color handle" with `{{component-readable-name}}` when filling in.
-
-The Manual review test cases section contains a fixed reference to the color handle PR (`nikkimk/swc-2138-color-handle-a11y`). Keep that reference as-is; it is an anchor PR that all reviewers in this migration wave are expected to read.
+| Placeholder                                | Value                                                                 | Example                 |
+| ------------------------------------------ | --------------------------------------------------------------------- | ----------------------- |
+| `{{component-name}}`                       | Package name, kebab-case                                              | `icon`, `picker-button` |
+| `{{branch-name}}`                          | GitHub branch, format `<username>/swc-<jira-number>-<component>-a11y` | `nikkimk/icon-a11y`     |
+| `{{component-a11y-migration-JIRA-ticket}}` | Jira ID for this component's a11y migration analysis ticket           | `SWC-2146`              |
+| `{{component-readable-name}}`              | Human-readable name, first letter capitalized                         | `Icon`, `Color handle`  |
 
 ### PR settings
 

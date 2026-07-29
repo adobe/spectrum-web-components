@@ -14,7 +14,7 @@ import { html } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
-import '../index.js';
+import '../swc-upload-artifact.js';
 
 const { args, argTypes, template } = getStorybookHelpers('swc-upload-artifact');
 
@@ -31,7 +31,7 @@ argTypes.type = {
 /**
  * Shared upload artifact primitive used across conversational AI surfaces such as prompt field and user message.
  * Supports both **`card`** and **`media`** types with a unified slot model.
- * For several attachments at once, see **Multi-artifact** and **[Prompt field → Artifact](/docs/patterns-conversational-ai-prompt-field--readme#artifact)**.
+ * For several attachments at once, see **Multi-artifact** and **[Prompt field → Artifact](/docs/patterns-conversational-ai-prompt-field--docs#artifact)**.
  */
 const meta: Meta = {
   title: 'Conversational AI/Upload artifact',
@@ -41,12 +41,14 @@ const meta: Meta = {
   render: (args) => template(args),
   parameters: {
     docs: {
+      packagePath: 'patterns/conversational-ai/upload-artifact',
       subtitle:
         'Card and media tiles for attachments; combine multiple in a strip (see Multi-artifact gallery) or slot them into the prompt field artifact region.',
     },
     layout: 'padded',
   },
   excludeStories: ['meta'],
+  tags: ['migrated'],
 };
 
 export default meta;
@@ -138,6 +140,7 @@ export const MultiArtifact: Story = {
   `,
   tags: ['options'],
 };
+MultiArtifact.storyName = 'Multi artifact';
 
 export const Card: Story = {
   render: () => html`
@@ -179,3 +182,4 @@ export const TextOverflow: Story = {
   `,
   tags: ['options'],
 };
+TextOverflow.storyName = 'Text overflow';
