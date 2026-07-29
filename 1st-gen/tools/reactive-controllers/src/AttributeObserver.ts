@@ -26,8 +26,24 @@ type AttributeChangeListener = () => void;
 const registry = new Map<Element, Map<string, Set<AttributeChangeListener>>>();
 let sharedObserver: MutationObserver | undefined;
 
+function processRecords(records: MutationRecord[]): void {
+  for (const record of records) {
+    const listeners = registry
+      .get(record.target as Element)
+      ?.get(record.attributeName as string);
+    listeners?.forEach((listener) => listener());
+  }
+}
+
 function reconnect(): void {
-  sharedObserver?.disconnect();
+  if (sharedObserver) {
+    // `disconnect()` discards any records already queued but not yet
+    // delivered to the callback, so a mutation that lands right before an
+    // unrelated component's mount/unmount triggers `reconnect()` would
+    // otherwise be silently dropped. Drain and process them first.
+    processRecords(sharedObserver.takeRecords());
+    sharedObserver.disconnect();
+  }
 
   if (registry.size === 0) {
     sharedObserver = undefined;
@@ -35,14 +51,7 @@ function reconnect(): void {
   }
 
   if (!sharedObserver) {
-    sharedObserver = new MutationObserver((records) => {
-      for (const record of records) {
-        const listeners = registry
-          .get(record.target as Element)
-          ?.get(record.attributeName as string);
-        listeners?.forEach((listener) => listener());
-      }
-    });
+    sharedObserver = new MutationObserver(processRecords);
   }
 
   for (const [target, attributes] of registry) {
