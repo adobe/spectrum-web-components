@@ -211,6 +211,7 @@ export abstract class CardBase extends SizedMixin(SpectrumElement, {
         value: this.density,
         valid: DENSITIES,
         url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-card--docs',
+        options: { level: 'low' },
       });
     }
 
@@ -221,7 +222,7 @@ export abstract class CardBase extends SizedMixin(SpectrumElement, {
         !this.getTitleLinkElement(),
       `<${this.localName}> has "title-as-link" set but no link element was found in the "title" slot.`,
       'https://spectrum-web-components.adobe.com/?path=/docs/components-card--docs',
-      { issues: ['title-as-link'] }
+      { level: 'high', issues: ['title-as-link'] }
     );
 
     if (changedProperties.has('size')) {
