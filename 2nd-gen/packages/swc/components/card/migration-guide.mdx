@@ -1,0 +1,263 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Card/Migration guide" />
+
+# Card migration guide
+
+Replace `<sp-card>` with `<swc-card>` and update the import. The content model is now slot-only (no `heading`/`subheading` attributes), the two image slots consolidate to `preview`, and layout, whole-card linking, and selection work differently.
+
+## Installation
+
+```bash
+# Remove
+yarn remove @spectrum-web-components/card
+
+# Add
+yarn add @adobe/spectrum-wc
+```
+
+Update your import:
+
+```js
+// Before
+import '@spectrum-web-components/card/sp-card.js';
+
+// After
+import '@adobe/spectrum-wc/components/card/swc-card.js';
+```
+
+> `@adobe/spectrum-wc` is a monolithic package. Importing via subpath (e.g., `@adobe/spectrum-wc/components/card/swc-card.js`) registers and loads only that component's bundle.
+
+## What changed
+
+### Renamed
+
+| Area             | Spectrum 1 (`sp-card`)                | Spectrum 2 (`swc-card`)                                   |
+| ---------------- | ------------------------------------- | --------------------------------------------------------- |
+| Tag              | `sp-card`                             | `swc-card`                                                |
+| Import path      | `@spectrum-web-components/card`       | `@adobe/spectrum-wc/components/card/swc-card.js`          |
+| CSS custom props | `--spectrum-card-*` / `--mod-card-*`  | `--swc-card-*` (see [Styling](#styling))                  |
+| Title            | `heading` attribute or `heading` slot | `title` slot (see [step 3](#3-move-content-into-slots))   |
+| Cover image      | `cover-photo` slot                    | `preview` slot (see [step 3](#3-move-content-into-slots)) |
+| Default variant  | `standard`                            | `primary`                                                 |
+
+### Added in Spectrum 2
+
+| Addition                            | Notes                                                                                 |
+| ----------------------------------- | ------------------------------------------------------------------------------------- |
+| `size` attribute                    | `xs`, `s`, `m` (default), `l`, `xl`                                                   |
+| `density` attribute                 | `compact`, `regular` (default), `spacious`                                            |
+| `secondary` and `tertiary` variants | Additional style options alongside `primary` and `quiet`                              |
+| `collection` slot                   | One to three images shown in a row below the `preview`                                |
+| `media` slot                        | Overlay content (badge, avatar) layered over the preview/collection region            |
+| `title-as-link` attribute           | Extends a consumer-supplied `<a>` in the `title` slot across the whole card surface   |
+| `selectable` attribute              | Makes the card focusable and dispatches a `swc-card-click` event on click/Enter/Space |
+
+### Removed in Spectrum 2
+
+| Removed                                | Replacement                                                                                                                                     |
+| -------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| `heading` / `subheading` attributes    | `title` slot for the heading; `description` slot for supporting text                                                                            |
+| `heading` slot                         | `title` slot                                                                                                                                    |
+| `cover-photo` slot                     | `preview` slot                                                                                                                                  |
+| `variant="gallery"`                    | Automatic: a card renders the gallery layout when it has media but no `title`/`description`/`actions`/`footer`/default content                  |
+| `variant="standard"`                   | `variant="primary"` (the default)                                                                                                               |
+| `horizontal` attribute                 | No replacement                                                                                                                                  |
+| `asset` attribute (`file` / `folder`)  | No replacement; place an image in the `preview` slot                                                                                            |
+| `href` / `target` / `rel` / `download` | Put a real `<a>` in the `title` slot and set `title-as-link` (see [step 5](#5-replace-whole-card-linking))                                      |
+| `toggles` / `selected`                 | No built-in selection checkbox; `selectable` makes the card focusable and dispatches `swc-card-click` (see [step 6](#6-replace-card-selection)) |
+
+## Update your code
+
+### 1. Update the import
+
+```js
+// Before
+import '@spectrum-web-components/card/sp-card.js';
+// After
+import '@adobe/spectrum-wc/components/card/swc-card.js';
+```
+
+### 2. Rename the tag
+
+```html
+<!-- Before -->
+<sp-card>...</sp-card>
+<!-- After -->
+<swc-card>...</swc-card>
+```
+
+### 3. Move content into slots
+
+The `heading` and `subheading` attributes are gone. Put the heading in the `title` slot and supporting text in the `description` slot, and rename `cover-photo` to `preview`.
+
+```html
+<!-- Before -->
+<sp-card heading="Card title" subheading="JPG photo">
+  <img slot="cover-photo" src="preview.jpg" alt="" />
+  <div slot="footer">Footer</div>
+</sp-card>
+<!-- After -->
+<swc-card>
+  <img slot="preview" src="preview.jpg" alt="" />
+  <span slot="title">Card title</span>
+  <span slot="description">JPG photo</span>
+  <span slot="footer">Footer</span>
+</swc-card>
+```
+
+### 4. Update variants
+
+`variant="standard"` is now the default `primary`. The `gallery` variant no longer exists: the gallery layout is applied automatically when a card has media but no `title`, `description`, `actions`, `footer`, or default-slot content.
+
+```html
+<!-- Before -->
+<sp-card variant="standard" heading="Card title">
+  <img slot="cover-photo" src="preview.jpg" alt="" />
+</sp-card>
+<sp-card variant="gallery">
+  <img slot="preview" src="preview.jpg" alt="" />
+</sp-card>
+<!-- After -->
+<swc-card>
+  <img slot="preview" src="preview.jpg" alt="" />
+  <span slot="title">Card title</span>
+</swc-card>
+<swc-card>
+  <img slot="preview" src="preview.jpg" alt="Gallery image" />
+</swc-card>
+```
+
+### 5. Replace whole-card linking
+
+`swc-card` accepts no `href`. Put a real `<a>` in the `title` slot and set `title-as-link` to extend that link across the card surface.
+
+```html
+<!-- Before -->
+<sp-card heading="Card title" href="https://example.com" target="_blank">
+  <img slot="cover-photo" src="preview.jpg" alt="" />
+</sp-card>
+<!-- After -->
+<swc-card title-as-link>
+  <img slot="preview" src="preview.jpg" alt="" />
+  <a slot="title" href="https://example.com" target="_blank">Card title</a>
+</swc-card>
+```
+
+### 6. Replace card selection
+
+`toggles` and `selected` are removed and `swc-card` renders no selection checkbox. To make a card act as a selectable target, set `selectable` and listen for `swc-card-click`; you own the selected-state affordance.
+
+```html
+<!-- Before -->
+<sp-card toggles heading="Card title">
+  <img slot="preview" src="preview.jpg" alt="" />
+</sp-card>
+<!-- After -->
+<swc-card selectable>
+  <img slot="preview" src="preview.jpg" alt="" />
+  <span slot="title">Card title</span>
+</swc-card>
+```
+
+```js
+card.addEventListener('swc-card-click', () => {
+  /* toggle your own selected state */
+});
+```
+
+### 7. (Optional) Adopt size, density, and collection
+
+```html
+<!-- Before -->
+<swc-card>
+  <img slot="preview" src="preview.jpg" alt="" />
+  <span slot="title">Card title</span>
+</swc-card>
+<!-- After -->
+<swc-card size="l" density="compact">
+  <img slot="preview" src="preview.jpg" alt="" />
+  <img slot="collection" src="a.jpg" alt="" />
+  <img slot="collection" src="b.jpg" alt="" />
+  <img slot="collection" src="c.jpg" alt="" />
+  <span slot="title">Card title</span>
+</swc-card>
+```
+
+## Accessibility
+
+- Provide meaningful `alt` on `preview` and `collection` images, or `alt=""` for purely decorative images.
+- For a whole-card link, use `title-as-link` with a real `<a>` in the `title` slot; the anchor is the single tab stop. See [step 5](#5-replace-whole-card-linking). Prefer the anchor as the slotted element itself (`<a slot="title" href>`) so middle-click and modifier-click work across the card.
+- A `selectable` card is focusable and activates on Enter and Space, but sets no ARIA role. Set a role that matches your selection context if one is needed. See [step 6](#6-replace-card-selection).
+- Keep interactive controls in the `actions` slot or the content region; `title-as-link` and `selectable` do not intercept clicks on them.
+
+## Styling
+
+Spectrum 2 exposes a new set of public CSS custom properties on `<swc-card>`.
+
+{/* @todo Replace the inline-styled callouts in this section with `<swc-inline-alert>` once it is migrated to Spectrum 2. */}
+
+<div
+  style={{
+    borderLeft: '4px solid #dba842',
+    background: 'rgba(219, 168, 66, 0.12)',
+    padding: '12px 16px',
+    margin: '16px 0',
+    borderRadius: '4px',
+  }}
+>
+  <strong>⚠️ Breaking change.</strong> Spectrum 1{' '}
+  <code>{'--spectrum-card-*'}</code> and <code>{'--mod-card-*'}</code>{' '}
+  properties <strong>do not apply</strong> to <code>{'<swc-card>'}</code>.
+  Replace them with the <code>{'--swc-card-*'}</code> properties below. Not
+  every Spectrum 1 property has a 1:1 replacement, so read the list carefully.
+</div>
+
+{/* @todo Replace the Description column with the `@cssproperty` JSDoc descriptions from `<swc-card>`'s CEM entry once they are added in a follow-up PR. */}
+
+| Custom property                            | Description                                                                                      |
+| ------------------------------------------ | ------------------------------------------------------------------------------------------------ |
+| `--swc-card-base-max-inline-size`          | Maximum inline size of the card. Defaults to 280px, overridden per size.                         |
+| `--swc-card-base-border-radius`            | Corner radius of the card. Defaults to the extra-large corner-radius token, overridden per size. |
+| `--swc-card-base-box-shadow`               | Box shadow (elevation) of the card.                                                              |
+| `--swc-card-base-background-color`         | Background color of the card.                                                                    |
+| `--swc-card-base-preview-aspect-ratio`     | Aspect ratio of the `preview` slot. Defaults to 3/2.                                             |
+| `--swc-card-base-title-font-size`          | Font size of the `title` slot. Overridden per size.                                              |
+| `--swc-card-base-title-line-height`        | Line height of the `title` slot. Overridden per size.                                            |
+| `--swc-card-base-description-font-size`    | Font size of the `description` slot and default-slot content. Overridden per size.               |
+| `--swc-card-base-action-component-height`  | Height used to vertically balance slotted `actions` content. Overridden per size.                |
+| `--swc-card-base-content-header-gap`       | Column gap between the `title` and `actions` slots. Overridden per size.                         |
+| `--swc-card-base-content-padding`          | Padding of the content region. Overridden by density.                                            |
+| `--swc-card-base-content-padding-regular`  | Content padding at the default (regular) density, per size.                                      |
+| `--swc-card-base-content-padding-compact`  | Content padding at compact density, per size.                                                    |
+| `--swc-card-base-content-padding-spacious` | Content padding at spacious density, per size.                                                   |
+| `--swc-card-collection-item-aspect-ratio`  | Aspect ratio of each `collection` image. Defaults to 1 (square).                                 |
+| `--swc-card-collection-gap`                | Gap between collection images, and between the preview and the collection row.                   |
+| `--swc-card-gallery-preview-aspect-ratio`  | Aspect ratio of the `preview` image in the gallery layout. Defaults to 1 (square).               |
+
+<div
+  style={{
+    borderLeft: '4px solid #e34850',
+    background: 'rgba(227, 72, 80, 0.10)',
+    padding: '12px 16px',
+    margin: '16px 0',
+    borderRadius: '4px',
+  }}
+>
+  <strong>🚫 Do not target internals.</strong> Internal classes,{' '}
+  <code>{'--_swc-card-*'}</code> private properties, and shadow DOM are{' '}
+  <strong>not public API</strong>. Styling applied to them will break without
+  warning on minor releases.
+</div>
+
+## Checklist
+
+- [ ] Update imports
+- [ ] Rename all `<sp-card>` to `<swc-card>`
+- [ ] Move `heading`/`subheading` into the `title` and `description` slots
+- [ ] Rename `cover-photo` slots to `preview`
+- [ ] Replace `variant="standard"` with the default and remove `variant="gallery"`
+- [ ] Replace `href` linking with `title-as-link` and an `<a>` in the `title` slot
+- [ ] Replace `toggles`/`selected` with `selectable` plus your own selected-state handling
+- [ ] Replace `--spectrum-card-*` / `--mod-card-*` overrides with `--swc-card-*`
+- [ ] Add `alt` (or `alt=""`) to preview and collection images

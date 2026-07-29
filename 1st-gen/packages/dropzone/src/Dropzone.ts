@@ -20,6 +20,9 @@ import { property } from '@spectrum-web-components/base/src/decorators.js';
 
 import dropzoneStyles from './dropzone.css.js';
 
+/**
+ * @deprecated Not exported from `@spectrum-web-components/dropzone` in a future release. Use `DragEvent` directly.
+ */
 export type DropzoneEventDetail = DragEvent;
 
 export type DropEffects = 'copy' | 'move' | 'link' | 'none';
@@ -63,15 +66,29 @@ export class Dropzone extends SpectrumElement {
 
   /**
    * Indicates that files are currently being dragged over the dropzone.
+   *
+   * @deprecated The `isDragged` property will be replaced by `dragged` in a future release. The `dragged` attribute is unchanged.
    */
   @property({ type: Boolean, reflect: true, attribute: 'dragged' })
   public isDragged = false;
 
   /**
    * Set this property to indicate that the component is in a filled state.
+   *
+   * @deprecated The `isFilled` property will be replaced by `filled` in a future release. The `filled` attribute is unchanged.
    */
   @property({ type: Boolean, attribute: 'filled' })
   public isFilled = false;
+
+  // No runtime warn for `isDragged`/`isFilled` above: both attributes (`dragged`/`filled`)
+  // are unchanged and still valid per B2/B3, and Lit's attribute-to-property sync
+  // routes through the same reactive property a consumer's own JS assignment would.
+  // `isDragged` is also set internally on every drag-over/drag-leave. A `changes.has()`
+  // guard in `updated()` can't distinguish any of those from a consumer explicitly
+  // writing `element.isDragged = ...`/`element.isFilled = ...`, so a warning there
+  // would fire for ordinary, unmigrated attribute/template-binding usage that the
+  // migration plan explicitly promises is unaffected. The `@deprecated` JSDoc above
+  // still documents the rename for IDE/type tooling.
 
   private debouncedDragLeave: number | null = null;
 
@@ -81,6 +98,20 @@ export class Dropzone extends SpectrumElement {
     this.addEventListener('drop', this.onDrop);
     this.addEventListener('dragover', this.onDragOver);
     this.addEventListener('dragleave', this.onDragLeave);
+
+    if (
+      window.__swc?.DEBUG &&
+      (this.onDragOver !== Dropzone.prototype.onDragOver ||
+        this.onDragLeave !== Dropzone.prototype.onDragLeave ||
+        this.onDrop !== Dropzone.prototype.onDrop)
+    ) {
+      window.__swc.warn(
+        this,
+        `<${this.localName}> "onDragOver", "onDragLeave", and "onDrop" are deprecated as public, overridable methods and will become non-public in a future release.`,
+        'https://opensource.adobe.com/spectrum-web-components/components/dropzone/',
+        { level: 'deprecation' }
+      );
+    }
   }
 
   public override disconnectedCallback(): void {
@@ -93,6 +124,9 @@ export class Dropzone extends SpectrumElement {
     this.clearDebouncedDragLeave();
   }
 
+  /**
+   * @deprecated This method will become non-public in a future release. Overriding it is deprecated.
+   */
   public onDragOver(event: DragEvent): void {
     /**
      * Required for Chrome/Windows to consistently allow dropping.
@@ -125,6 +159,15 @@ export class Dropzone extends SpectrumElement {
 
     if (!this.isDragged) {
       this.isDragged = true;
+
+      if (window.__swc?.DEBUG) {
+        window.__swc.warn(
+          this,
+          `<${this.localName}> events will be renamed with a "swc-dropzone-" prefix in a future release (for example, "sp-dropzone-should-accept" becomes "swc-dropzone-should-accept").`,
+          'https://opensource.adobe.com/spectrum-web-components/components/dropzone/',
+          { level: 'deprecation' }
+        );
+      }
     }
 
     event.dataTransfer.dropEffect = this.dropEffect;
@@ -138,6 +181,9 @@ export class Dropzone extends SpectrumElement {
     );
   }
 
+  /**
+   * @deprecated This method will become non-public in a future release. Overriding it is deprecated.
+   */
   public onDragLeave(event: DragEvent): void {
     /**
      * Ignore internal dragleave events triggered while moving
@@ -162,6 +208,9 @@ export class Dropzone extends SpectrumElement {
     }, 100);
   }
 
+  /**
+   * @deprecated This method will become non-public in a future release. Overriding it is deprecated.
+   */
   public onDrop(event: DragEvent): void {
     /**
      * Prevent browser default behavior (opening files in browser).
