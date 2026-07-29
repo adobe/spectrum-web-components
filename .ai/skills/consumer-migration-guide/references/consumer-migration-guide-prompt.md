@@ -42,7 +42,7 @@ In "Update your code", present **numbered steps in the order the consumer perfor
 Before writing, verify claims against:
 
 - `1st-gen/packages/[component-name]/README.md` and public element files (`sp-*.ts`)
-- `2nd-gen/packages/swc/components/[component-name]/src/`, stories, and tests
+- `2nd-gen/packages/swc/components/[component-name]/`, stories, and tests
 
 If a claim is not confirmed by source, omit it.
 
