@@ -20,7 +20,7 @@ Keep the guide **short, direct, and scannable**. A consumer should be able to co
 - Attributes, properties, and accepted values
 - Slots and content-rendering properties
 - Events
-- Supported CSS custom properties (documented `--mod-*` and other public theming hooks)
+- Supported CSS custom properties (documented `--swc-*` and other public theming hooks)
 - Accessibility changes that affect consumer markup (e.g. where to place `aria-label`, when to hide decorative icons)
 - Observable behavior changes (focus, wrapping, positioning)
 
@@ -143,7 +143,7 @@ Cover only:
 - Include this JSX comment immediately above the table so future passes can replace the hand-written descriptions with the canonical copy once it lands:
 
   ```mdx
-  {/* @todo Replace the Description column with the `@cssproperty` JSDoc descriptions from `<swc-[component]>`'s CEM entry once they are added in a follow-up PR. */}
+  {/* @todo Replace the Description column with the `@cssprop` JSDoc descriptions from `<swc-[component]>`'s CEM entry once they are added in a follow-up PR. */}
   ```
 
 - **Required amber "breaking change" callout at the top** (immediately after the section intro sentence, before the property list) **if** the Spectrum 1 component used a different custom-property prefix (e.g. `--mod-*`) and Spectrum 2 does not. Tells consumers their Spectrum 1 overrides won't apply. Template:

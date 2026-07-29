@@ -95,7 +95,7 @@ The guide must be **short, direct, and consumer-focused**. Optimize for scannabi
 - Attributes, properties, and their values
 - Slots and slot names
 - Events
-- Supported CSS custom properties (`--mod-*` and documented theming hooks)
+- Supported CSS custom properties (`--swc-*` and documented theming hooks)
 - Accessibility expectations that affect the consumer's markup (e.g. `aria-label` on icon-only variants)
 - Behavior changes the consumer can observe (focus, wrapping, positioning)
 
