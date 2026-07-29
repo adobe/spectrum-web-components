@@ -373,7 +373,7 @@ protected handleHeadingSlotChange(event: Event): void {
 
 Use `{ level: 'deprecation' }` when a property or attribute has been superseded by a new API. This signals to consumers that they need to migrate, not just fix a configuration error.
 
-Every deprecated API needs a runtime warning, not only a `@deprecated` JSDoc tag. TypeScript and IDE tooling read the JSDoc, but consumers building against compiled output never see it. Pair each `@deprecated` tag with a `window.__swc.warn()` call so the deprecation also surfaces at runtime in development.
+Every deprecated API needs a runtime warning, not only a `@deprecated` JSDoc tag. TypeScript and IDE tooling read the JSDoc, but consumers building against compiled output never see it. Pair each `@deprecated` tag with a `warnIf(...)` call using `{ level: 'deprecation' }` so the deprecation also surfaces at runtime in development.
 
 **When to use deprecation warnings:**
 
@@ -386,14 +386,13 @@ Every deprecated API needs a runtime warning, not only a `@deprecated` JSDoc tag
 The key difference from other warnings is `{ level: 'deprecation' }` instead of `{ issues: [...] }`.
 
 ```ts
-if (window.__swc?.DEBUG) {
-  window.__swc.warn(
-    this,
-    `The "oldProp" property on <${this.localName}> has been deprecated and will be removed in a future release. Use "newProp" instead.`,
-    'https://opensource.adobe.com/spectrum-web-components/components/your-component/',
-    { level: 'deprecation' }
-  );
-}
+warnIf(
+  this,
+  this.oldProp !== undefined,
+  `The "oldProp" property on <${this.localName}> has been deprecated and will be removed in a future release. Use "newProp" instead.`,
+  'https://spectrum-web-components.adobe.com/?path=/docs/components-your-component--docs',
+  { level: 'deprecation' }
+);
 ```
 
 ### Where to place the warning
@@ -405,14 +404,13 @@ Place the warning where the deprecated API is actually used, guarded so it fires
 ```ts
 public set overBackground(value: boolean) {
   // ...existing setter work...
-  if (window.__swc?.DEBUG) {
-    window.__swc.warn(
-      this,
-      `The "over-background" attribute on <${this.localName}> has been deprecated and will be removed in a future release. Use "static-color='white'" instead.`,
-      'https://opensource.adobe.com/spectrum-web-components/components/progress-bar/',
-      { level: 'deprecation' }
-    );
-  }
+  warnIf(
+    this,
+    value,
+    `The "over-background" attribute on <${this.localName}> has been deprecated and will be removed in a future release. Use "static-color='white'" instead.`,
+    'https://spectrum-web-components.adobe.com/?path=/docs/components-progress-bar--docs',
+    { level: 'deprecation' }
+  );
 }
 ```
 
@@ -421,16 +419,13 @@ public set overBackground(value: boolean) {
 ```ts
 protected override updated(changes: PropertyValues): void {
   super.updated(changes);
-  if (window.__swc?.DEBUG) {
-    if (changes.has('progress') && this.progress !== 0) {
-      window.__swc.warn(
-        this,
-        `The "progress" property on <${this.localName}> has been deprecated and will be removed in a future release. Use the "value" attribute instead.`,
-        'https://opensource.adobe.com/spectrum-web-components/components/progress-bar/',
-        { level: 'deprecation' }
-      );
-    }
-  }
+  warnIf(
+    this,
+    changes.has('progress') && this.progress !== 0,
+    `The "progress" property on <${this.localName}> has been deprecated and will be removed in a future release. Use the "value" attribute instead.`,
+    'https://spectrum-web-components.adobe.com/?path=/docs/components-progress-bar--docs',
+    { level: 'deprecation' }
+  );
 }
 ```
 

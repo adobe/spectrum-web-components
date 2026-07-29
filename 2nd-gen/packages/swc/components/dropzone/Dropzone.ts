@@ -14,6 +14,7 @@ import { CSSResultArray, html, PropertyValues, TemplateResult } from 'lit';
 import { property } from 'lit/decorators.js';
 
 import { DropzoneBase } from '@adobe/spectrum-wc-core/components/dropzone';
+import { warnIf } from '@adobe/spectrum-wc-core/utils';
 
 import visuallyHiddenStyles from '../../stylesheets/_lit-styles/visually-hidden.css';
 import styles from './dropzone.css';
@@ -112,9 +113,7 @@ export class Dropzone extends DropzoneBase {
   public override connectedCallback(): void {
     super.connectedCallback();
     this.setAttribute('role', 'group');
-    if (window.__swc?.DEBUG) {
-      this._warnMissingAccessibleName();
-    }
+    this._warnMissingAccessibleName();
   }
 
   protected override updated(changes: PropertyValues): void {
@@ -124,7 +123,7 @@ export class Dropzone extends DropzoneBase {
       this._updateStatusRegion();
     }
 
-    if (window.__swc?.DEBUG && changes.has('dragged')) {
+    if (changes.has('dragged')) {
       this._warnMissingAccessibleName();
     }
   }
@@ -155,25 +154,12 @@ export class Dropzone extends DropzoneBase {
   }
 
   /** @internal */
-  private _hasWarnedNoAccessibleName = false;
-
-  /** @internal */
   private _warnMissingAccessibleName(): void {
-    if (
-      this.getAttribute('aria-label') ||
-      this.getAttribute('aria-labelledby')
-    ) {
-      this._hasWarnedNoAccessibleName = false;
-      return;
-    }
-    if (this._hasWarnedNoAccessibleName) {
-      return;
-    }
-    this._hasWarnedNoAccessibleName = true;
-    window.__swc?.warn(
+    warnIf(
       this,
+      !this.getAttribute('aria-label') && !this.getAttribute('aria-labelledby'),
       `<${this.localName}> requires an accessible name describing the upload purpose.`,
-      'https://opensource.adobe.com/spectrum-web-components/components/dropzone/#accessibility',
+      'https://spectrum-web-components.adobe.com/?path=/docs/components-dropzone--docs',
       {
         type: 'accessibility',
         issues: [
