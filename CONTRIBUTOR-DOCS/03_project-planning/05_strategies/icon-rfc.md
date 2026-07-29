@@ -1,4 +1,40 @@
+<!-- Generated breadcrumbs - DO NOT EDIT -->
+
+[CONTRIBUTOR-DOCS](../../README.md) / [Project planning](../README.md) / Strategies / RFC: 2nd-gen icon strategy (Spectrum 2)
+
+<!-- Document title (editable) -->
+
 # RFC: 2nd-gen icon strategy (Spectrum 2)
+
+<!-- Generated TOC - DO NOT EDIT -->
+
+<details open>
+<summary><strong>In this doc</strong></summary>
+
+- [1. Summary](#1-summary)
+- [2. Goals and non-goals](#2-goals-and-non-goals)
+- [3. Decisions](#3-decisions)
+- [4. Workflow icons vs UI icons vs `<swc-icon>`](#4-workflow-icons-vs-ui-icons-vs-swc-icon)
+- [5. What we deliver](#5-what-we-deliver)
+    - [5.1 Why a string function, not a Lit template](#51-why-a-string-function-not-a-lit-template)
+    - [5.2 Per-framework usage](#52-per-framework-usage)
+- [6. The `<swc-icon>` frame](#6-the-swc-icon-frame)
+    - [6.1 API](#61-api)
+    - [6.2 Accessibility](#62-accessibility)
+    - [6.3 Key risks and edge cases](#63-key-risks-and-edge-cases)
+    - [6.4 The three, side by side](#64-the-three-side-by-side)
+- [7. Sizing](#7-sizing)
+- [8. Source and processing](#8-source-and-processing)
+- [9. Phases of work](#9-phases-of-work)
+- [10. Alternatives considered](#10-alternatives-considered)
+- [11. Open questions](#11-open-questions)
+    - [Resolved](#resolved)
+    - [Still open](#still-open)
+    - [Deferred to implementation (no design decision)](#deferred-to-implementation-no-design-decision)
+
+</details>
+
+<!-- Document content (editable) -->
 
 |                |                                                                   |
 | -------------- | ----------------------------------------------------------------- |

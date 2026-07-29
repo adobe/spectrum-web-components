@@ -4,7 +4,7 @@ Raw SVG source for the icon generators, organized by icon family. These files ar
 **build inputs**, not published artifacts: a generator converts them into the committed
 art bundles, and consumers never import from here.
 
-See the icon strategy RFC (`icon-rfc.md` at the repo root, section 8) for the full
+See the icon strategy RFC (`CONTRIBUTOR-DOCS/03_project-planning/05_strategies/icon-rfc.md`, section 8) for the full
 pipeline.
 
 ## Families

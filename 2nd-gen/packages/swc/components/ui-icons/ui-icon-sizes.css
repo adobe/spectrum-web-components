@@ -11,7 +11,7 @@
  */
 
 /*
- * Box size for swc-ui-icon, from the UI-icon token scale (see icon-rfc.md, section 7).
+ * Box size for swc-ui-icon, from the UI-icon token scale (see CONTRIBUTOR-DOCS/03_project-planning/05_strategies/icon-rfc.md, section 7).
  * Layered over icon-base.css to override its default box size with the ui-icon-* scale.
  * The box only sizes the container: swc-ui-icon selects the optically-tuned step for the
  * size and does not scale one step to fake another.

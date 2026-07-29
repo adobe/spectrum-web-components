@@ -16,7 +16,7 @@
  * directly (ui-icon), and sets the default box size from the workflow-icon token scale.
  * swc-ui-icon overrides this with the UI-icon scale via its own ui-icon-sizes.css. A
  * dedicated workflow sizing stylesheet is added when the workflow icon family lands (see
- * icon-rfc.md, section 7).
+ * CONTRIBUTOR-DOCS/03_project-planning/05_strategies/icon-rfc.md, section 7).
  */
 :host {
   --swc-icon-inline-size: token("workflow-icon-medium");

@@ -28,7 +28,7 @@ export type UiStep = (typeof UI_STEPS)[number];
 export type UiIconArt = Partial<Record<UiStep, TemplateResult>>;
 
 /**
- * Fixed t-shirt size to numeral step map (see `icon-rfc.md`, section 7). Stable
+ * Fixed t-shirt size to numeral step map (see `CONTRIBUTOR-DOCS/03_project-planning/05_strategies/icon-rfc.md`, section 7). Stable
  * since Spectrum 1.
  */
 export const SIZE_TO_STEP = {
