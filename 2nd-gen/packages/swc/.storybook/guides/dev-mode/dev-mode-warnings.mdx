@@ -19,7 +19,7 @@ These warnings exist to catch configuration mistakes early, in your own developm
 
 ## Only in development
 
-These checks run behind a `window.__swc.DEBUG` flag, set when `process.env.NODE_ENV === 'development'`, plus an internal guard in each validation helper that skips its own logic when `process.env.NODE_ENV === 'production'`. Both are literal checks this package ships as-is (it does not pre-strip them), so whether your production build actually removes them depends on **your own build configuration** replacing `process.env.NODE_ENV` with `'production'` and minifying.
+These checks run behind a `window.__swc.DEBUG` flag, enabled whenever `process.env.NODE_ENV` is not `'production'` (so `'development'`, `'staging'`, `'test'`, or unset all enable it, and `DEBUG` can be toggled in any of them), plus an internal guard in each validation helper that skips its own logic when `process.env.NODE_ENV === 'production'`. Both are literal checks this package ships as-is (it does not pre-strip them), so whether your production build actually removes them depends on **your own build configuration** replacing `process.env.NODE_ENV` with `'production'` and minifying.
 
 Even in a well-configured production build, this removes the internal validation logic (the actual checks, message building, and console output), not the call sites themselves: every component still invokes a cheap property check that immediately no-ops, on every update.
 

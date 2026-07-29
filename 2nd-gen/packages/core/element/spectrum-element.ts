@@ -98,7 +98,9 @@ export function buildGroupedWarningArgs(
   return args;
 }
 
-if (process.env.NODE_ENV === 'development') {
+// Enabled in every environment except production (the ecosystem convention);
+// a production build strips this block via dead-code elimination.
+if (process.env.NODE_ENV !== 'production') {
   const ignoreWarningTypes = {
     default: false,
     accessibility: false,
