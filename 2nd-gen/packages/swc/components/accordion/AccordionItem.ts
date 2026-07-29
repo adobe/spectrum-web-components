@@ -109,7 +109,6 @@ export class AccordionItem extends AccordionItemBase {
           class="swc-AccordionItem-indicator"
           icon="chevron"
           size=${this.size ?? 'm'}
-          aria-hidden="true"
         ></swc-ui-icon>
         <span class="swc-AccordionItem-label">
           <slot name="label"></slot>
