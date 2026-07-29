@@ -106,19 +106,19 @@ import * as Stories from './stories/<unit>.stories';
 
 ### Per-story title rules
 
-Per-story `### Title` headings (in sections with `hideTitle=false`: Options, States, Behaviors, Full pattern) must match the story's rendered name exactly:
+Per-story `### Title` headings (in sections with `hideTitle=false`: Options, States, Behaviors, Full pattern) must match the story's rendered name exactly, and that rendered name must be sentence case (see "Documentation style" below):
 
 - If the story has an explicit `<Story>.storyName = '...'` override, use that exact string.
-- Otherwise, use Storybook's PascalCase → Title Case conversion of the export name (each word capitalized).
+- Otherwise, use the export name as rendered by Storybook. This only produces a valid title for single-word exports, where the default rendering is already sentence case (`Sizes` → `Sizes`). For multi-word exports, Storybook's default PascalCase → Title Case conversion capitalizes every word, which is **not** sentence case — add a `.storyName` override (see stories-format.md's story-naming pattern) so the rendered title is sentence case.
 
 Examples:
 
 | Export name                                                       | Rendered title          |
 | ----------------------------------------------------------------- | ----------------------- |
 | `Sizes`                                                           | `Sizes`                 |
-| `TextWrapping`                                                    | `Text Wrapping`         |
-| `InActionButton`                                                  | `In Action Button`      |
-| `ActivationModes`                                                 | `Activation Modes`      |
+| `TextWrapping` with `.storyName = 'Text wrapping'`                | `Text wrapping`         |
+| `InActionButton` with `.storyName = 'In action button'`           | `In action button`      |
+| `ActivationModes` with `.storyName = 'Activation modes'`          | `Activation modes`      |
 | `SemanticVariants` with `.storyName = 'Semantic variants'`        | `Semantic variants`     |
 | `NonSemanticVariants` with `.storyName = 'Non-semantic variants'` | `Non-semantic variants` |
 
@@ -955,7 +955,7 @@ When creating or updating documentation:
 - [ ] `<DocsHeader />` at the top, `<DocsFooter />` at the bottom
 - [ ] Sections appear in the canonical order (Anatomy → Usage → Options → States → Behaviors → Accessibility → Full pattern → Upcoming features → API → Appendix → Feedback) — skip sections that do not apply
 - [ ] Every section-tagged story is referenced via `<Canvas of={Stories.StoryName} />`
-- [ ] Per-story `### Title` headings match Storybook's rendered story names (PascalCase → Title Case, or explicit `storyName`)
+- [ ] Per-story `### Title` headings match Storybook's rendered story names and are sentence case (single-word exports render as-is; multi-word exports need an explicit `.storyName` override — see "Per-story title rules")
 - [ ] No `<Canvas>` references to untagged stories
 - [ ] Controllers: hand-authored `## API` section ahead of `<DocsFooter />`; `meta.tags` contains `'controller'` so `<ApiTable />` is omitted
 - [ ] Anatomy: parts listed as a flat, unordered list with no `###`/`####` subsections (components and patterns)
