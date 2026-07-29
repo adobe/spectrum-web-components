@@ -38,7 +38,7 @@
 
 |                |                                                                   |
 | -------------- | ----------------------------------------------------------------- |
-| **Status**     | Draft for review                                                  |
+| **Status**     | Accepted: Phase 0 (UI icons) in progress                          |
 | **Scope**      | Spectrum 2 (S2) icon delivery for 2nd-gen Spectrum Web Components |
 | **Supersedes** | 1st-gen `icon`, `iconset`, `icons`, `icons-workflow`, `icons-ui`  |
 
@@ -487,7 +487,7 @@ automation lives on the Adobe side.
 
 ## 9. Phases of work
 
-Sequenced UI-first. Phase 1 extracts the family-agnostic utilities (SVG cleanup, fill
+Sequenced UI-first. Phase 0 extracts the family-agnostic utilities (SVG cleanup, fill
 rewrite, kebab-casing, license and banner) into `icon-source/utils/`, so the workflow
 generator reuses them; each family keeps its own generator because their outputs differ
 (UI emits Lit `TemplateResult` bundles, workflow emits SVG-string functions and elements).
@@ -496,12 +496,13 @@ generator reuses them; each family keeps its own generator because their outputs
 a UI icon internally (pickers, menus, accordions, and similar) or exposes an icon
 slot must be repointed from the 1st-gen icon packages to this source as part of the
 migration, not deferred to a follow-up. Components that render UI icons internally
-are covered when Phase 1 lands their source; components that expose icon slots are
-verified in Phase 7 against workflow icons and custom SVGs.
+get their source in Phase 0 and are repointed in Phase 1; components that expose icon
+slots are verified in Phase 7 against workflow icons and custom SVGs.
 
 | Phase                             | Deliverable                                                                                                                                                                                                                                                                   | Exit                                                                                                                            |
 | --------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
-| **1. UI icons, internal**         | Manual UI download + generated icon-set + `icon-source.json`; UI generator plus shared utilities in `icon-source/utils/`; UI art as Lit `TemplateResult`s and the internal `<swc-ui-icon>` element (size-to-step selection).                                                                              | Migrated components render UI icons via `<swc-ui-icon>`, sized by the component, off the 1st-gen packages, with no `unsafeSVG`. |
+| **0. UI icons, internal (foundation)** | Manual UI download + generated icon-set + `icon-source.json`; UI generator plus shared utilities in `icon-source/utils/`; UI art as Lit `TemplateResult`s and the internal `<swc-ui-icon>` element (size-to-step selection); one migrated component (Accordion) converted as a proof of concept. | `<swc-ui-icon>` renders the UI set at the right optical step and a migrated component (Accordion) consumes it, off the 1st-gen packages, with no `unsafeSVG`. |
+| **1. Repoint components** | Repoint every remaining migrated component that renders a UI icon internally (pickers, menus, accordions, and similar) from the 1st-gen icon packages to `<swc-ui-icon>`. | No migrated component depends on the 1st-gen icon packages for UI icons, and no `unsafeSVG` remains in component code. |
 | **2. Workflow-readiness gate**    | Confirm the shared `icon-source/utils/` utilities, source layout, metadata, and refresh already support a second family and a public-element output mode.                                                                                                                                          | Adding workflow is additive, not a rewrite.                                                                                     |
 | **3. Workflow icons, public**     | Manual workflow download; the `IconBase` + generic `<swc-icon>`; per-icon workflow functions and elements, reusing the shared `icon-source/utils/` utilities.                                                                                                                                        | A workflow icon works as element and function in HTML and a non-Lit framework.                                                  |
 | **4. Packaging and tree-shaking** | Published shapes: the `<swc-icon>` frame in swc, and the per-icon workflow elements and functions in the dedicated **icons** package; per-icon subpath exports for element and function; swc devDepends on the icons package for stories; optional additive Lit entry points. | A 3-icon sample bundle ships only those 3.                                                                                      |
