@@ -9,8 +9,16 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
+
+/*
+ * Shared box styling for icon elements (the swc-icon frame and swc-ui-icon). Establishes
+ * a square box that the SVG fills, whether the SVG is slotted (frame) or rendered
+ * directly (ui-icon), and sets the default box size from the workflow-icon token scale.
+ * swc-ui-icon overrides this with the UI-icon scale via its own ui-icon-sizes.css. A
+ * dedicated workflow sizing stylesheet is added when the workflow icon family lands (see
+ * CONTRIBUTOR-DOCS/03_project-planning/05_strategies/icon-rfc.md, section 7).
+ */
 :host {
-  /* Default to size m (workflow-icon-size-100) like 1st-gen */
   --swc-icon-inline-size: token("workflow-icon-medium");
   --swc-icon-block-size: token("workflow-icon-medium");
 
