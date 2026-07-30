@@ -349,6 +349,17 @@ export class PromptField extends SpectrumElement {
   private _handleArtifactSlotChange(): void {
     this._warnIfMixedArtifactTypes();
     this._artifactNavigation.refresh();
+    // A single artifact has no row wrapper to act as its Tab stop (unlike the
+    // 2+ roving-tabindex strip), so it must carry its own tabindex directly;
+    // ponytail: reachable via Tab, not yet wired into arrow-key navigation.
+    const artifacts = this._assignedArtifactElements ?? [];
+    if (artifacts.length === 1) {
+      artifacts[0].tabIndex = 0;
+    } else {
+      for (const el of artifacts) {
+        el.tabIndex = -1;
+      }
+    }
     const dismissedArtifact = this._pendingArtifactDismiss;
     const dismissedArtifactWasRemoved =
       dismissedArtifact !== undefined &&

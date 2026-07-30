@@ -789,3 +789,33 @@ export const ArtifactScrollbarDisconnectTest: Story = {
     );
   },
 };
+
+export const SingleArtifactFocusTest: Story = {
+  render: () => nothing,
+  play: async ({ canvasElement, step }) => {
+    render(
+      html`
+        <swc-prompt-field label="Prompt" value="Review attachment.">
+          <swc-upload-artifact slot="artifact" type="card" dismissible>
+            <span slot="title">Brief.pdf</span>
+          </swc-upload-artifact>
+        </swc-prompt-field>
+      `,
+      canvasElement
+    );
+
+    const el = await getComponent<PromptField>(
+      canvasElement,
+      'swc-prompt-field'
+    );
+    await el.updateComplete;
+    await new Promise((resolve) => requestAnimationFrame(resolve));
+    await el.updateComplete;
+
+    const artifact = el.querySelector<HTMLElement>('[slot="artifact"]');
+
+    await step('a single artifact tile is reachable by Tab', async () => {
+      expect(artifact?.tabIndex).toBe(0);
+    });
+  },
+};

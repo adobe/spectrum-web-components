@@ -41,10 +41,9 @@
   position: absolute;
   z-index: 2;
   padding: 0;
-  color: token("gray-25");
   background: transparent;
   border: none;
-  cursor: pointer;
+  cursor: default;
 }
 
 .swc-UploadArtifact-dismiss-visual,
@@ -57,6 +56,7 @@
   flex: 0 0 auto;
   inline-size: var(--swc-upload-artifact-dismiss-icon-inline-size, 8px);
   block-size: var(--swc-upload-artifact-dismiss-icon-block-size, 8px);
+  color: token("gray-25");
 }
 
 .swc-UploadArtifact-dismiss[hidden] {
@@ -77,8 +77,13 @@
 }
 
 :host([type="card"]) .swc-UploadArtifact-dismiss {
-  inset-block-start: 0;
-  inset-inline-end: 0;
+  /* The surface is inset spacing-50 (2px) from the host, and its rounded
+   * corner's own visible tip sits a further radius * (1 - cos(45deg))
+   * inward from that box corner along the diagonal. Both terms shift the
+   * badge in from a flat -12px so its center lands on the tip of the
+   * curve, not the corner of the invisible bounding box. */
+  inset-block-start: calc(token("spacing-50") - 12px + token("corner-radius-medium-default") * 0.293);
+  inset-inline-end: calc(token("spacing-50") - 12px + token("corner-radius-medium-default") * 0.293);
   inline-size: 24px;
   block-size: 24px;
 }
@@ -99,9 +104,13 @@
 }
 
 :host([type="media"]) .swc-UploadArtifact-dismiss {
-  /* 32px hit target centered on the 20px visual at spacing-75 (4px) inset. */
-  inset-block-start: calc(token("spacing-75") - 6px);
-  inset-inline-end: calc(token("spacing-75") - 6px);
+  /* The surface is inset spacing-50 (2px) from the host, and its rounded
+   * corner's own visible tip sits a further radius * (1 - cos(45deg))
+   * inward from that box corner along the diagonal. Both terms shift the
+   * badge in from a flat -16px so its center lands on the tip of the
+   * curve, not the corner of the invisible bounding box. */
+  inset-block-start: calc(token("spacing-50") - 16px + token("corner-radius-medium-default") * 0.293);
+  inset-inline-end: calc(token("spacing-50") - 16px + token("corner-radius-medium-default") * 0.293);
   inline-size: 32px;
   block-size: 32px;
 }
@@ -113,6 +122,7 @@
   inline-size: 20px;
   block-size: 20px;
   background: token("transparent-black-700");
+  border: 1px solid transparent;
   border-radius: token("corner-radius-full");
 }
 

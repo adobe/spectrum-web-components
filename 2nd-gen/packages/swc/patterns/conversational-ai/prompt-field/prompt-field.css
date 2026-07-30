@@ -78,10 +78,6 @@
    Uploaded artifacts
    ───────────────────────────────────── */
 
-.swc-PromptField-artifacts[hidden] {
-  display: none !important;
-}
-
 .swc-PromptField-artifacts--single {
   display: flex;
   flex-wrap: wrap;
@@ -115,6 +111,12 @@
 
   --swc-prompt-field-artifact-scrollbar-size: 8px;
   --swc-prompt-field-artifact-scrollbar-gap: 4px;
+
+  /* Dismiss badges are centered on each tile's top-right corner (see
+   * upload-artifact.css), so half of the larger (32px media) badge floats
+   * above the tile. Reserve that much clearance above the row so the
+   * scroll container's overflow-y: hidden doesn't clip it flat. */
+  --swc-prompt-field-artifact-badge-clearance: 16px;
 }
 
 .swc-PromptField-artifacts-row {
@@ -128,7 +130,7 @@
   position: relative;
   flex: 1 1 auto;
   min-inline-size: 0;
-  block-size: calc(var(--swc-prompt-field-artifact-media-block-size, 68px) + var(--swc-prompt-field-artifact-scrollbar-gap, 4px) + var(--swc-prompt-field-artifact-scrollbar-size, 8px));
+  block-size: calc(var(--swc-prompt-field-artifact-badge-clearance, 0) + var(--swc-prompt-field-artifact-media-block-size, 68px) + var(--swc-prompt-field-artifact-scrollbar-gap, 4px) + var(--swc-prompt-field-artifact-scrollbar-size, 8px));
   margin-block-end: calc(-1 * (var(--swc-prompt-field-artifact-scrollbar-gap, 4px) + var(--swc-prompt-field-artifact-scrollbar-size, 8px)));
   border-radius: token("corner-radius-100");
   overflow: visible;
@@ -144,12 +146,17 @@
   outline-offset: token("focus-ring-gap");
 }
 
+/* Spans the badge-clearance strip too (not just the tile height): a
+ * scrolling tile's corner badge lives partly in that clearance zone, and a
+ * fade that stopped at the tile's own top edge would leave the badge's
+ * upper half unmasked while its lower half fades, splitting it visually
+ * in two. */
 .swc-PromptField-artifacts-fade {
   position: absolute;
   inset-block-start: 0;
   z-index: 3;
   inline-size: 16px;
-  block-size: var(--swc-prompt-field-artifact-media-block-size, 68px);
+  block-size: calc(var(--swc-prompt-field-artifact-badge-clearance, 0) + var(--swc-prompt-field-artifact-media-block-size, 68px));
   pointer-events: none;
 }
 
@@ -163,15 +170,17 @@
   background: linear-gradient(to left, var(--swc-prompt-field-artifact-fade-solid), transparent);
 }
 
-/* Horizontal padding only: the focus ring (upload-artifact.css) is drawn
- * inward now, so it never extends past the tile's own box and needs no
- * vertical clearance here. */
+/* padding-block-start reserves room for the dismiss badge, which is
+ * centered on each tile's top-right corner (upload-artifact.css) and so
+ * floats half outside the tile; overflow-y: hidden below would otherwise
+ * clip it flat. */
 .swc-PromptField-artifacts-scroll {
   -ms-overflow-style: none;
   box-sizing: border-box;
   inline-size: 100%;
   max-inline-size: 100%;
-  block-size: var(--swc-prompt-field-artifact-media-block-size, 68px);
+  block-size: calc(var(--swc-prompt-field-artifact-badge-clearance, 0) + var(--swc-prompt-field-artifact-media-block-size, 68px));
+  padding-block-start: var(--swc-prompt-field-artifact-badge-clearance, 0);
   padding-inline: token("spacing-75");
   overflow-x: auto;
   overflow-y: hidden;
