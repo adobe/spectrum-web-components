@@ -164,8 +164,7 @@ export class ActionButton extends PendingMixin(ButtonBase) {
   // state we just set.
   private _ariaForwardingInProgress = false;
 
-  protected override updated(changedProperties: PropertyValues): void {
-    super.updated(changedProperties);
+  protected override update(changedProperties: PropertyValues): void {
     if (
       changedProperties.has('staticColor') &&
       this.staticColor !== undefined
@@ -177,6 +176,7 @@ export class ActionButton extends PendingMixin(ButtonBase) {
         url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-action-button--docs',
       });
     }
+    super.update(changedProperties);
   }
 
   // ──────────────────────────────

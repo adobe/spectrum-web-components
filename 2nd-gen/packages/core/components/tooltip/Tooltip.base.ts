@@ -471,10 +471,7 @@ export abstract class TooltipBase
     if (this.disabled && this.open) {
       this.open = false;
     }
-  }
 
-  protected override updated(changedProperties: PropertyValues): void {
-    super.updated(changedProperties);
     if (changedProperties.has('variant')) {
       const constructor = this.constructor as typeof TooltipBase;
       validateEnum(this, {
@@ -493,6 +490,10 @@ export abstract class TooltipBase
         url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-tooltip--docs',
       });
     }
+  }
+
+  protected override updated(changedProperties: PropertyValues): void {
+    super.updated(changedProperties);
     if (changedProperties.has('offset')) {
       this.style.setProperty(
         '--_swc-tooltip-animation-distance',

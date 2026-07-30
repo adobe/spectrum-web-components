@@ -108,9 +108,7 @@ export abstract class IllustratedMessageBase extends SpectrumElement {
     return this.slotText.hasContent;
   }
 
-  protected override updated(changedProperties: PropertyValues): void {
-    super.updated(changedProperties);
-
+  protected override update(changedProperties: PropertyValues): void {
     if (changedProperties.has('size')) {
       validateEnum(this, {
         prop: 'size',
@@ -128,6 +126,8 @@ export abstract class IllustratedMessageBase extends SpectrumElement {
         url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-illustrated-message--docs',
       });
     }
+
+    super.update(changedProperties);
   }
 
   protected handleActionsSlotChange(): void {

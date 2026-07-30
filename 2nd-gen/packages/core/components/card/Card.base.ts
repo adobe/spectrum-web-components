@@ -181,19 +181,7 @@ export abstract class CardBase extends SizedMixin(SpectrumElement, {
       ?.addEventListener('slotchange', this.handleActionsSlotChange);
   }
 
-  protected override updated(changedProperties: PropertyValues): void {
-    super.updated(changedProperties);
-
-    if (changedProperties.has('selectable')) {
-      if (this.selectable) {
-        this.setAttribute('tabindex', '0');
-        this.addEventListener('keydown', this.handleSelectableKeydown);
-      } else {
-        this.removeAttribute('tabindex');
-        this.removeEventListener('keydown', this.handleSelectableKeydown);
-      }
-    }
-
+  protected override update(changedProperties: PropertyValues): void {
     const { VARIANTS, DENSITIES } = this.constructor as typeof CardBase;
 
     if (changedProperties.has('variant')) {
@@ -213,6 +201,22 @@ export abstract class CardBase extends SizedMixin(SpectrumElement, {
         url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-card--docs',
         options: { level: 'low' },
       });
+    }
+
+    super.update(changedProperties);
+  }
+
+  protected override updated(changedProperties: PropertyValues): void {
+    super.updated(changedProperties);
+
+    if (changedProperties.has('selectable')) {
+      if (this.selectable) {
+        this.setAttribute('tabindex', '0');
+        this.addEventListener('keydown', this.handleSelectableKeydown);
+      } else {
+        this.removeAttribute('tabindex');
+        this.removeEventListener('keydown', this.handleSelectableKeydown);
+      }
     }
 
     warnIf(
