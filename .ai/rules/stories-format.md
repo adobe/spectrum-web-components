@@ -408,9 +408,9 @@ Document every attribute/property not covered in Anatomy, States, or Behaviors. 
 | `Sizes`                   | All size variants                                 |
 | `SemanticVariants`        | Positive, informative, negative, notice, neutral  |
 | `NonSemanticVariants`     | Color-coded categories (seafoam, indigo, etc.)    |
-| `StaticColors`            | Static color pattern (see below)                  |
 | `Quiet/Subtle/Emphasized` | Quiet, subtle, emphasized variants                |
 | `Outline`                 | Outline variants                                  |
+| `StaticColors`            | Static color pattern (see below)                  |
 | `Positioning`             | Positioning modifiers (fixed, absolute, relative) |
 
 ```typescript
@@ -698,7 +698,7 @@ See `asset.stories.ts` for complete examples.
 - [ ] States: consolidated states, `['states']` tag, `flexLayout: 'row-wrap'` (if applicable)
 - [ ] Behaviors: `['behaviors']` tag (if applicable)
 - [ ] Accessibility: `['a11y']` tag (prose lives in MDX)
-- [ ] Static colors: three-story or combined-story pattern with `staticColorsDemo` (if applicable)
+- [ ] Static colors: single `StaticColors` story (flat or div-wrapped shape) with `staticColorsDemo` (if applicable)
 - [ ] No story-level JSDoc comments above any `export const`
 - [ ] No `section-order` parameter on any story
 - [ ] No `description-only` tag on any story
