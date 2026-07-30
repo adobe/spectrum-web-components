@@ -17,25 +17,12 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 import {
   BUTTON_STATIC_COLORS,
   ButtonBase,
-  type ButtonSize,
   type ButtonStaticColor,
 } from '@adobe/spectrum-wc-core/components/button';
 
-import {
-  Cross200Icon,
-  Cross300Icon,
-  Cross400Icon,
-  Cross500Icon,
-} from '../icon/elements/index.js';
+import '../ui-icons/swc-ui-icon.js';
 
 import styles from './close-button.css';
-
-const crossIconBySize: Record<ButtonSize, () => TemplateResult> = {
-  s: Cross200Icon,
-  m: Cross300Icon,
-  l: Cross400Icon,
-  xl: Cross500Icon,
-};
 
 /**
  * A compact dismiss control for dialogs, banners, toasts, and similar chrome.
@@ -109,7 +96,7 @@ export class CloseButton extends ButtonBase {
         aria-label=${ifDefined(this.accessibleLabel ?? undefined)}
       >
         <span class="swc-CloseButton-icon" aria-hidden="true">
-          ${crossIconBySize[this.size as ButtonSize]()}
+          <swc-ui-icon icon="cross" size=${this.size}></swc-ui-icon>
         </span>
       </button>
     `;
