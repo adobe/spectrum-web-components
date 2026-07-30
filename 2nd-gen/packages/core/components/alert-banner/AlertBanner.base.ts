@@ -51,16 +51,46 @@ export abstract class AlertBannerBase extends SpectrumElement {
   public dismissible = false;
 
   /**
-   * The variant applies specific styling for the `neutral`, `info`, and
-   * `negative` states. Warn-only: an invalid value is left in place and a
-   * dev-mode warning is emitted rather than being coerced.
+   * The variant applies specific styling when set to `negative` or `info`;
+   * `variant` attribute is removed when it's passed an invalid variant.
    */
-  @property({ type: String, reflect: true })
-  public variant: AlertBannerVariant = 'neutral';
+  @property({ type: String })
+  public set variant(variant: AlertBannerVariant) {
+    if (variant === this.variant) {
+      return;
+    }
+    const oldValue = this.variant;
+
+    if (this.isValidVariant(variant)) {
+      this.setAttribute('variant', variant);
+      this._variant = variant;
+    } else {
+      this.removeAttribute('variant');
+      this._variant = '';
+
+      validateEnum(this, {
+        prop: 'variant',
+        value: variant,
+        valid: ALERT_BANNER_VALID_VARIANTS,
+        url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-alert-banner--docs',
+      });
+    }
+    this.requestUpdate('variant', oldValue);
+  }
+
+  public get variant(): AlertBannerVariant {
+    return this._variant;
+  }
+
+  private _variant: AlertBannerVariant = '';
 
   // ──────────────────────
   //     IMPLEMENTATION
   // ──────────────────────
+
+  protected isValidVariant(variant: string): boolean {
+    return (ALERT_BANNER_VALID_VARIANTS as readonly string[]).includes(variant);
+  }
 
   protected abstract renderIcon(variant: string): TemplateResult;
 
@@ -85,16 +115,6 @@ export abstract class AlertBannerBase extends SpectrumElement {
     if (event.code === 'Escape' && this.dismissible) {
       this.shouldClose();
     }
-  }
-
-  protected override update(changes: PropertyValues): void {
-    validateEnum(this, {
-      prop: 'variant',
-      value: this.variant,
-      valid: ALERT_BANNER_VALID_VARIANTS,
-      url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-alert-banner--docs',
-    });
-    super.update(changes);
   }
 
   protected override updated(changes: PropertyValues): void {

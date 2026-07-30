@@ -16,4 +16,6 @@ export const ALERT_BANNER_VALID_VARIANTS = [
   'negative',
 ] as const satisfies readonly string[];
 
-export type AlertBannerVariant = (typeof ALERT_BANNER_VALID_VARIANTS)[number];
+export type AlertBannerVariant =
+  | (typeof ALERT_BANNER_VALID_VARIANTS)[number]
+  | '';
