@@ -13,9 +13,9 @@ permissions:
   pull-requests: read
 
 jobs:
-  # Detect whether the change touches anything that affects 1st-gen coverage.
-  # Root-level changes (not under 1st-gen/ or 2nd-gen/) count as 1st-gen too,
-  # so the report still runs when shared tooling/config changes.
+  # Detect whether the change touches 1st-gen sources. The 1st-gen coverage report
+  # only runs when files under 1st-gen/ change; 2nd-gen-only and root-level/shared
+  # changes skip it (skipped jobs report success in branch-protection checks).
   detect-changes:
     runs-on: ubuntu-latest
     outputs:
