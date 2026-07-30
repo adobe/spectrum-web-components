@@ -14,10 +14,9 @@ import { CSSResultArray, html, TemplateResult } from 'lit';
 import { property, state } from 'lit/decorators.js';
 import { ref } from 'lit/directives/ref.js';
 
-import { Chevron75Icon } from '@adobe/spectrum-wc/icon/elements/index.js';
 import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
 
-import '@adobe/spectrum-wc/components/icon/swc-icon.js';
+import '../../../components/ui-icons/swc-ui-icon.js';
 
 import { uniqueId } from '../../../utils/id.js';
 
@@ -119,15 +118,13 @@ export class MessageSources extends SpectrumElement {
           aria-controls=${this.panelId}
           @click=${this._handleToggle}
         >
-          <swc-icon
+          <swc-ui-icon
             class=${isExpanded
               ? 'swc-MessageSources-chevron swc-MessageSources-chevron--down'
               : 'swc-MessageSources-chevron'}
-            style="--swc-icon-inline-size:10px;--swc-icon-block-size:10px;"
-            aria-hidden="true"
-          >
-            ${Chevron75Icon()}
-          </swc-icon>
+            icon="chevron"
+            size="s"
+          ></swc-ui-icon>
           ${label}
         </button>
 

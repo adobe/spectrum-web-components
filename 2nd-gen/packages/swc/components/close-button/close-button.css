@@ -79,11 +79,10 @@
   block-size: var(--swc-close-button-icon-size, token("ui-icon-large"));
 }
 
-.swc-CloseButton-icon svg {
+.swc-CloseButton-icon swc-ui-icon {
   display: block;
   inline-size: 100%;
   block-size: 100%;
-  fill: currentcolor;
 }
 
 :host([size="s"]) {
