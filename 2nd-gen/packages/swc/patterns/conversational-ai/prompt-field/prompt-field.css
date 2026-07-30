@@ -48,14 +48,6 @@
   overflow: hidden;
 }
 
-/* Outer ring only for keyboard focus on the textarea (PromptField toggles
- * `.swc-PromptField-box--keyboard-focus`; `:focus-visible` alone cannot
- * distinguish Tab vs click on text inputs). */
-.swc-PromptField-box.swc-PromptField-box--keyboard-focus {
-  outline: token("focus-indicator-thickness") solid token("focus-indicator-color");
-  outline-offset: token("focus-ring-gap");
-}
-
 /* ─────────────────────────────────────
    Input area (artifact + text area)
    ───────────────────────────────────── */
@@ -69,8 +61,11 @@
   padding-inline: 0;
 }
 
-/* Figma: input area uses 8px top padding only when an artifact row is shown. */
+/* Figma: input area uses 8px top padding, and 8px (not the default 16px)
+ * between the artifact strip and the textarea, only when an artifact row
+ * is shown. */
 .swc-PromptField-input-area.has-artifact {
+  gap: token("spacing-100");
   padding-block-start: token("spacing-100");
 }
 
@@ -330,6 +325,12 @@
 .swc-PromptField-textarea:disabled {
   color: token("gray-500");
   cursor: default;
+}
+
+.swc-PromptField-textarea:focus-visible {
+  border-radius: token("corner-radius-75");
+  outline: token("focus-indicator-thickness") solid token("focus-indicator-color");
+  outline-offset: token("focus-ring-gap");
 }
 
 /* ─────────────────────────────────────

@@ -140,13 +140,6 @@ export class PromptField extends SpectrumElement {
   @queryAssignedElements({ slot: 'legal', flatten: true })
   private _assignedLegalElements!: HTMLElement[];
 
-  /** Next textarea focus follows pointerdown on the textarea (click/touch). */
-  private _textareaFocusFromPointer = false;
-
-  /** Outer card ring: Tab / non-pointer focus only (see prompt-field.css). */
-  @state()
-  private _promptBoxKeyboardFocusRing = false;
-
   @state()
   private _artifactScrollOverflow = false;
 
@@ -252,27 +245,6 @@ export class PromptField extends SpectrumElement {
         detail: { value: this.value },
       })
     );
-  }
-
-  private _handleTextareaPointerDown(event: PointerEvent): void {
-    const textarea = event.currentTarget as HTMLTextAreaElement;
-    if (textarea.matches(':focus')) {
-      this._promptBoxKeyboardFocusRing = false;
-      return;
-    }
-
-    this._textareaFocusFromPointer = true;
-  }
-
-  private _handleTextareaFocusIn(): void {
-    const showRing = !this._textareaFocusFromPointer;
-    this._textareaFocusFromPointer = false;
-    this._promptBoxKeyboardFocusRing = showRing;
-  }
-
-  private _handleTextareaFocusOut(): void {
-    this._promptBoxKeyboardFocusRing = false;
-    this._textareaFocusFromPointer = false;
   }
 
   private _handleTextareaKeydown(event: KeyboardEvent): void {
@@ -1253,11 +1225,7 @@ export class PromptField extends SpectrumElement {
 
     return html`
       <div class="swc-PromptField">
-        <div
-          class="swc-PromptField-box${this._promptBoxKeyboardFocusRing
-            ? ' swc-PromptField-box--keyboard-focus'
-            : ''}"
-        >
+        <div class="swc-PromptField-box">
           <div
             class="swc-PromptField-input-area${hasArtifacts
               ? ' has-artifact'
@@ -1291,9 +1259,6 @@ export class PromptField extends SpectrumElement {
                 })}
                 @input=${this._handleInput}
                 @keydown=${this._handleTextareaKeydown}
-                @pointerdown=${this._handleTextareaPointerDown}
-                @focusin=${this._handleTextareaFocusIn}
-                @focusout=${this._handleTextareaFocusOut}
               ></textarea>
             </div>
           </div>
