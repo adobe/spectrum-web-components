@@ -130,7 +130,7 @@ If a single-story section's rendered name _differs_ from the `## Section` headin
 
 ### Untagged stories do not appear
 
-Stories without any section tag (`anatomy`, `options`, `states`, `behaviors`, `a11y`, `upcoming`, `usage`, `appendix`, `full-pattern`, `api`) are not surfaced on the Docs page (subject to the global `'!autodocs'` / `'!dev'` exclusion in `preview.ts`). Do not author a `<Canvas of={...}>` for an untagged story in MDX; that would surface content production does not render.
+Stories without any section tag (`anatomy`, `options`, `states`, `behaviors`, `a11y`, `upcoming`, `appendix`, `full-pattern`, `api`) are not surfaced on the Docs page (subject to the global `'!autodocs'` / `'!dev'` exclusion in `preview.ts`). Do not author a `<Canvas of={...}>` for an untagged story in MDX; that would surface content production does not render.
 
 ### Self-check with `yarn lint:docs-pages`
 
