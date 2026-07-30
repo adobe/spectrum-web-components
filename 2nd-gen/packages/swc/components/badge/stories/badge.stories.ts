@@ -30,8 +30,11 @@ import {
 import '@adobe/spectrum-wc/components/badge/swc-badge.js';
 import '@adobe/spectrum-wc/components/icon/swc-icon.js';
 
-import { iconForSize } from '../../../.storybook/helpers/index.js';
-import * as Icons from '../../icon/elements/index.js';
+import {
+  AlertIcon,
+  Checkmark100Icon,
+  Cross100Icon,
+} from '../../icon/elements/index.js';
 
 // ────────────────
 //    METADATA
@@ -75,9 +78,8 @@ argTypes['icon-slot'] = {
   options: [undefined, 'Checkmark', 'Cross', 'Alert'],
   description:
     'Select a named icon to display in the icon slot. The control maps each name to ' +
-    'the correct size-paired icon element via the shared `iconForSize` helper. Only ' +
-    'UI icons currently available in 2nd-gen are offered. The full workflow icon set ' +
-    'is not yet ported.',
+    'an inline demo SVG wrapped in `<swc-icon>`, standing in for the workflow icon ' +
+    'package, which is not yet ported.',
 };
 
 argTypes.outline = {
@@ -127,6 +129,17 @@ export default meta;
 // ────────────────────
 //    HELPERS
 // ────────────────────
+
+// Demo icons standing in for the (not yet ported) workflow icon package. Reuse
+// the medium-step art from icon/elements (single source of truth for this
+// path data) but render it as one asset scaled to the `<swc-icon>` size box,
+// matching how a real workflow icon behaves (icon-rfc.md, section 7) rather
+// than swapping discrete per-step assets.
+const BADGE_DEMO_ICONS = {
+  Checkmark: Checkmark100Icon(),
+  Cross: Cross100Icon(),
+  Alert: AlertIcon(),
+};
 
 const sizeLabels = {
   s: 'Small',
@@ -194,10 +207,10 @@ export const Playground: Story = {
         ?outline=${args.outline}
         fixed=${args.fixed ?? nothing}
       >
-        ${iconKey
+        ${iconKey && iconKey in BADGE_DEMO_ICONS
           ? html`
               <swc-icon size=${size} slot="icon" aria-hidden="true">
-                ${iconForSize(Icons, iconKey, size)}
+                ${BADGE_DEMO_ICONS[iconKey as keyof typeof BADGE_DEMO_ICONS]}
               </swc-icon>
             `
           : nothing}
@@ -242,12 +255,12 @@ export const Anatomy: Story = {
         aria-label="Checkmark"
       >
         <swc-icon size=${size} slot="icon">
-          ${iconForSize(Icons, 'Checkmark', size)}
+          ${BADGE_DEMO_ICONS.Checkmark}
         </swc-icon>
       </swc-badge>
       <swc-badge variant=${args.variant} size=${size}>
         <swc-icon size=${size} slot="icon">
-          ${iconForSize(Icons, 'Checkmark', size)}
+          ${BADGE_DEMO_ICONS.Checkmark}
         </swc-icon>
         Icon and label
       </swc-badge>
@@ -272,7 +285,7 @@ export const Sizes: Story = {
         (size) => html`
           <swc-badge variant=${args.variant} size=${size}>
             <swc-icon size=${size} slot="icon">
-              ${iconForSize(Icons, 'Checkmark', size)}
+              ${BADGE_DEMO_ICONS.Checkmark}
             </swc-icon>
             ${sizeLabels[size]}
           </swc-badge>
@@ -302,7 +315,7 @@ export const Sizes: Story = {
             aria-label=${sizeLabels[size]}
           >
             <swc-icon size=${size} slot="icon">
-              ${iconForSize(Icons, 'Checkmark', size)}
+              ${BADGE_DEMO_ICONS.Checkmark}
             </swc-icon>
           </swc-badge>
         `
@@ -489,7 +502,7 @@ export const Accessibility: Story = {
     <!-- Icon + text: icon is decorative, aria-hidden="true" hides it from assistive technology -->
     <swc-badge variant="positive" size=${args.size}>
       <swc-icon size=${args.size} slot="icon" aria-hidden="true">
-        ${iconForSize(Icons, 'Checkmark', args.size)}
+        ${BADGE_DEMO_ICONS.Checkmark}
       </swc-icon>
       Approved
     </swc-badge>
@@ -502,7 +515,7 @@ export const Accessibility: Story = {
       aria-label="Approved"
     >
       <swc-icon size=${args.size} slot="icon">
-        ${iconForSize(Icons, 'Checkmark', args.size)}
+        ${BADGE_DEMO_ICONS.Checkmark}
       </swc-icon>
     </swc-badge>
   `,
