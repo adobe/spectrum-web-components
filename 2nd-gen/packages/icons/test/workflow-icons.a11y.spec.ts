@@ -31,11 +31,14 @@ test.describe('Workflow icons - accessibility', () => {
       'swc-icon-alert-triangle'
     );
 
-    // The labeled icon is exposed as an image carrying its accessible label.
+    // The labeled icon is exposed as a single image carrying its accessible label.
     await expect(page.getByRole('img', { name: 'Warning' })).toBeVisible();
+    await expect(page.getByRole('img', { name: 'Warning' })).toHaveCount(1);
 
-    // The decorative icon sets aria-hidden, so only the labeled icon is in the tree.
-    await expect(page.getByRole('img')).toHaveCount(1);
+    // The decorative icon (empty label) marks itself aria-hidden, so it is not exposed.
+    await expect(
+      page.locator('swc-icon-alert-triangle[accessible-label=""]')
+    ).toHaveAttribute('aria-hidden', 'true');
   });
 
   test('exposes each featured icon in the overview with its label', async ({
