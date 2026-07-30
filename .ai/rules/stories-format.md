@@ -173,7 +173,7 @@ See `.ai/rules/stories-documentation.md` for full per-section authoring patterns
  * This description is displayed in the Overview story. It should provide context about
  * what the component does and when to use it. If referencing other components, link to
  * their Storybook paths using relative URLs (e.g., `<swc-badge>` becomes
- * `[Badge](../?path=/docs/badge--overview)`).
+ * `[Badge](../?path=/docs/components-badge--docs)`).
  */
 const meta: Meta = {
   title: 'Component name',
@@ -198,7 +198,7 @@ const meta: Meta = {
 - **JSDoc description above meta**: Displayed in the Overview story. Can include markdown links to other components.
 - **`parameters.docs.subtitle`**: Displayed as the subtitle in the Overview story. Cannot include links (plain text only).
 - **Avoid repetition**: The subtitle and JSDoc description should complement each other, not duplicate content. The subtitle is a brief summary; the JSDoc provides fuller context.
-- **Component links**: When referencing other components in the JSDoc description, use relative Storybook paths: `[ComponentName](../?path=/docs/component-name--overview)`
+- **Component links**: When referencing other components in the JSDoc description, use relative Storybook paths: `[ComponentName](../?path=/docs/components-component-name--docs)`
 
 ### Internal attributes: exclude from the Storybook helper round-trip
 
@@ -563,7 +563,7 @@ Do **not** add JSDoc comments above any individual `export const Foo: Story = ..
 /**
  * A `<swc-badge>` is a non-interactive visual label that displays a status,
  * category, or attribute. For interactive labels, see
- * [Button](../?path=/docs/button--docs).
+ * [Button](../?path=/docs/components-button--docs).
  */
 const meta: Meta = {
   title: 'Badge',

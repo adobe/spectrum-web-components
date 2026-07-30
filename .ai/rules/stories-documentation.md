@@ -226,7 +226,7 @@ const allLabels = { ...semanticLabels, ...colorLabels };
 1. **JSDoc description above meta**: Provides the main description of what the component does and when to use it. This description:
    - Is displayed as the primary documentation for the Overview story
    - Can include markdown formatting and links to other components
-   - Should reference other components using Storybook paths: `[Badge](../?path=/docs/badge--readme)`
+   - Should reference other components using Storybook paths: `[Badge](../?path=/docs/components-badge--docs)`
    - Should provide fuller context than the subtitle
 
 2. **`parameters.docs.subtitle`**: Provides a brief summary displayed as the subtitle. This subtitle:
@@ -241,7 +241,7 @@ const allLabels = { ...semanticLabels, ...colorLabels };
 /**
  * A badge is a non-interactive visual label that displays a status, category, or attribute.
  * Badges can be used to highlight important information or to categorize items. For interactive
- * labels, see [Button](../?path=/docs/button--readme).
+ * labels, see [Button](../?path=/docs/components-button--docs).
  */
 const meta: Meta = {
   title: 'Badge',
@@ -902,7 +902,7 @@ After verifying accuracy:
 When referencing other components — whether in the meta-level JSDoc, the meta `parameters.docs.subtitle`, or anywhere in the per-unit MDX:
 
 - **Use Storybook paths**: Link to the component's docs page using relative paths
-- **Format**: `[ComponentName](../?path=/docs/components-component-name--docs)` (or `--readme` if that's the convention in your area)
+- **Format**: `[ComponentName](../?path=/docs/components-component-name--docs)`
 - **Component name format**: Use kebab-case in the path (e.g., `action-button`, `progress-circle`)
 - **Subtitle exception**: `parameters.docs.subtitle` is plain text and cannot include links.
 
