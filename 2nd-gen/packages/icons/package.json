@@ -32,7 +32,9 @@
   ],
   "sideEffects": [
     "**/swc-icon-*.js",
-    "**/elements.js"
+    "**/swc-icon-*.ts",
+    "**/elements.js",
+    "**/elements.ts"
   ],
   "scripts": {
     "analyze": "cem analyze --config cem.config.js",
