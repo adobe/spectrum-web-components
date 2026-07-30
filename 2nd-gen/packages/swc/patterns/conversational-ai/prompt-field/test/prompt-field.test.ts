@@ -849,9 +849,34 @@ export const SingleArtifactFocusTest: Story = {
     await el.updateComplete;
 
     const artifact = el.querySelector<HTMLElement>('[slot="artifact"]');
+    const getDismissButton = (): HTMLButtonElement | null | undefined =>
+      artifact?.shadowRoot?.querySelector<HTMLButtonElement>(
+        '.swc-UploadArtifact-dismiss'
+      );
 
     await step('a single artifact tile is reachable by Tab', async () => {
       expect(artifact?.tabIndex).toBe(0);
     });
+
+    await step('Tab from the tile reveals its Close button', async () => {
+      artifact?.focus();
+      const event = dispatchKeydown(artifact!, 'Tab');
+      await el.updateComplete;
+
+      expect(event.defaultPrevented).toBe(true);
+      expect(getActiveElement()).toBe(getDismissButton());
+    });
+
+    await step(
+      'Shift+Tab from the Close button returns focus to the tile',
+      async () => {
+        const dismiss = getDismissButton()!;
+        const event = dispatchKeydown(dismiss, 'Tab', { shiftKey: true });
+        await el.updateComplete;
+
+        expect(event.defaultPrevented).toBe(true);
+        expect(getActiveElement()).toBe(artifact);
+      }
+    );
   },
 };

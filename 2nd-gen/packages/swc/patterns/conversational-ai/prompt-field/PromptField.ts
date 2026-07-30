@@ -693,6 +693,51 @@ export class PromptField extends SpectrumElement {
   }
 
   /**
+   * A single artifact has no row wrapper or roving-tabindex controller (see
+   * `_handleArtifactRowKeydown`/`_handleArtifactTabKey`), so Tab from the
+   * tile would otherwise fall through to the next default tab stop (the
+   * textarea) and skip its Close button entirely.
+   */
+  private _handleSingleArtifactKeydown(event: KeyboardEvent): void {
+    if (event.key !== 'Tab') {
+      return;
+    }
+
+    const tile = (this._assignedArtifactElements ?? [])[0];
+    if (!tile) {
+      return;
+    }
+
+    const active = getActiveElement();
+    if (active === tile) {
+      if (event.shiftKey) {
+        return;
+      }
+      const dismiss = tile.shadowRoot?.querySelector<HTMLButtonElement>(
+        '.swc-UploadArtifact-dismiss'
+      );
+      if (dismiss && !dismiss.hidden) {
+        event.preventDefault();
+        dismiss.focus();
+      }
+      return;
+    }
+
+    if (!event.shiftKey || !active) {
+      return;
+    }
+    const root = active.getRootNode();
+    if (
+      root instanceof ShadowRoot &&
+      root.host === tile &&
+      active.classList.contains('swc-UploadArtifact-dismiss')
+    ) {
+      event.preventDefault();
+      tile.focus();
+    }
+  }
+
+  /**
    * Temporarily takes the strip container out of the Tab order so the
    * browser's own (un-prevented) Shift+Tab default action lands on the "<"
    * button (if rendered) or whatever precedes the strip, rather than
@@ -1174,6 +1219,7 @@ export class PromptField extends SpectrumElement {
         <div
           class="swc-PromptField-artifacts swc-PromptField-artifacts--single"
           @swc-upload-artifact-dismiss=${this._handleArtifactDismiss}
+          @keydown=${this._handleSingleArtifactKeydown}
         >
           <slot
             name="artifact"
