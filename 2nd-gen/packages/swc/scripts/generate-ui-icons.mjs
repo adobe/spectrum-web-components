@@ -1,0 +1,134 @@
+/**
+ * Copyright 2026 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+/**
+ * Generates the internal UI-icon art bundles for `<swc-ui-icon>` from the A4U source
+ * SVGs. This generator is UI-specific (it parses the UI filename form and emits Lit
+ * `TemplateResult` bundles); the family-agnostic pieces it uses (SVG cleanup, kebab
+ * casing, license and banner) live in `icon-source/utils/` so the future workflow
+ * generator can reuse them.
+ *
+ * Input:  icon-source/ui/S2_Icon_UI<Name>_Size<step>_N.svg
+ * Output: components/ui-icons/icon-set/<Name>.ts  (numeral step -> Lit `html` template)
+ *         components/ui-icons/icon-set/index.ts   (the UI_ICONS registry + UiIconName type)
+ *
+ * Run with `yarn generate:ui-icons`. Regenerate whenever the source SVGs change.
+ */
+import { globSync } from 'glob';
+import { mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+import {
+  generatedBanner,
+  LICENSE,
+  toKebab,
+} from '../icon-source/utils/format.mjs';
+import { cleanSvg } from '../icon-source/utils/svg.mjs';
+
+const scriptDir = path.dirname(fileURLToPath(import.meta.url));
+const packageRoot = path.resolve(scriptDir, '..');
+const sourceDir = path.join(packageRoot, 'icon-source', 'ui');
+const outDir = path.join(packageRoot, 'components', 'ui-icons', 'icon-set');
+
+// A4U source filename: S2_Icon_UI<LogicalName>_Size<numeralStep>_N.svg
+const SOURCE_NAME = /^S2_Icon_UI(?<name>.+?)_Size(?<step>\d+)_N\.svg$/;
+
+const GENERATED_BANNER = generatedBanner(
+  'yarn generate:ui-icons',
+  'icon-source/ui/'
+);
+
+// Collect: logical name -> { step -> cleaned svg string }.
+const icons = new Map();
+const files = globSync('*.svg', { cwd: sourceDir }).sort();
+
+// Refuse to run without source SVGs. The source folders are git-ignored, so on a clean
+// checkout this would otherwise delete the committed icon-set and write an empty
+// registry, breaking every consumer.
+if (files.length === 0) {
+  throw new Error(
+    `No source SVGs found in ${sourceDir}. Download the icon set into that folder ` +
+      `before running the generator.`
+  );
+}
+
+for (const file of files) {
+  const match = SOURCE_NAME.exec(file);
+  if (!match) {
+    console.warn(`Skipping unrecognized source file: ${file}`);
+    continue;
+  }
+  const { name } = match.groups;
+  const step = Number(match.groups.step);
+  const svg = cleanSvg(readFileSync(path.join(sourceDir, file), 'utf8'), file);
+  if (!icons.has(name)) {
+    icons.set(name, new Map());
+  }
+  icons.get(name).set(step, svg);
+}
+
+const names = [...icons.keys()].sort();
+
+// Ensure the output directory exists, then remove previously generated modules so
+// deletions in source propagate.
+mkdirSync(outDir, { recursive: true });
+// icon-set/ holds only generated modules, so clearing them all is safe.
+for (const stale of globSync('*.ts', { cwd: outDir })) {
+  rmSync(path.join(outDir, stale));
+}
+
+// Emit one module per logical icon.
+for (const name of names) {
+  const steps = [...icons.get(name).entries()].sort((a, b) => a[0] - b[0]);
+  const entries = steps
+    .map(([step, svg]) => `    ${step}: html\`${svg}\`,`)
+    .join('\n');
+  const module = `${LICENSE}
+${GENERATED_BANNER}
+import { html } from 'lit';
+
+import { UiIconArt } from '../ui-icons.types.js';
+
+export const ${name} = {
+${entries}
+} satisfies UiIconArt;
+`;
+  writeFileSync(path.join(outDir, `${name}.ts`), module);
+}
+
+// Emit the registry index.
+const imports = names
+  .map((name) => `import { ${name} } from './${name}.js';`)
+  .join('\n');
+const registry = names
+  .map((name) => `    '${toKebab(name)}': ${name},`)
+  .join('\n');
+const index = `${LICENSE}
+${GENERATED_BANNER}
+export * from '../ui-icons.types.js';
+
+import { UiIconArt } from '../ui-icons.types.js';
+${imports}
+
+/** Every internal UI icon, keyed by its \`icon\` attribute value. */
+export const UI_ICONS = {
+${registry}
+} as const satisfies Record<string, UiIconArt>;
+
+export type UiIconName = keyof typeof UI_ICONS;
+`;
+writeFileSync(path.join(outDir, 'index.ts'), index);
+
+console.log(
+  `Generated ${names.length} UI icon bundle(s) from ${files.length} source SVG(s): ${names.join(', ')}`
+);

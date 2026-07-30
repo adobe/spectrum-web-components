@@ -198,6 +198,44 @@ export const DefaultSlotIllustrationTest: Story = {
         ).toBe('true');
       }
     );
+
+    await step(
+      'reveals the illustration wrapper when an illustration is slotted',
+      async () => {
+        const wrapper = illustratedMessage.shadowRoot?.querySelector(
+          '.swc-IllustratedMessage-illustration'
+        );
+        expect(wrapper?.hasAttribute('hidden'), 'wrapper has [hidden]').toBe(
+          false
+        );
+      }
+    );
+  },
+};
+
+export const IllustrationWrapperCollapsesWhenEmptyTest: Story = {
+  render: () => html`
+    <swc-illustrated-message>
+      <h2 slot="heading">Heading</h2>
+    </swc-illustrated-message>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const illustratedMessage = await getComponent<IllustratedMessage>(
+      canvasElement,
+      'swc-illustrated-message'
+    );
+
+    await step(
+      'hides the illustration wrapper when no illustration is slotted',
+      async () => {
+        const wrapper = illustratedMessage.shadowRoot?.querySelector(
+          '.swc-IllustratedMessage-illustration'
+        );
+        expect(wrapper?.hasAttribute('hidden'), 'wrapper has [hidden]').toBe(
+          true
+        );
+      }
+    );
   },
 };
 

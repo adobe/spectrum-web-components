@@ -1,0 +1,120 @@
+/**
+ * Copyright 2026 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+:host {
+  display: block;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* ─────────────────────────────────────
+   Base wrapper, default (medium) size
+   ───────────────────────────────────── */
+
+.swc-Dropzone {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  gap: token("spacing-300");
+  align-items: center;
+  justify-content: center;
+  padding: var(--swc-dropzone-padding, token("spacing-400"));
+  background: var(--swc-dropzone-background-color, transparent);
+  border-radius: token("corner-radius-700");
+}
+
+/* ─────────────────────────────────────
+   SVG stroke border
+   ───────────────────────────────────── */
+
+/* Rounded-corner dashes require an SVG stroke; a CSS `border-style: dashed`
+   cannot reproduce the exact dash length/gap the design system specifies,
+   nor render evenly around a curved corner. */
+.swc-Dropzone-stroke {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  inline-size: 100%;
+  block-size: 100%;
+  pointer-events: none;
+}
+
+.swc-Dropzone-strokePath {
+  --_swc-dropzone-stroke-dash-length: 8px;
+  --_swc-dropzone-stroke-dash-gap: 6px;
+
+  rx: token("corner-radius-700");
+  ry: token("corner-radius-700");
+  inline-size: calc(100% - token("border-width-200"));
+  block-size: calc(100% - token("border-width-200"));
+  stroke: var(--swc-dropzone-border-color, token("gray-300"));
+  stroke-width: token("border-width-200");
+  stroke-dasharray: var(--_swc-dropzone-stroke-dash-length) var(--_swc-dropzone-stroke-dash-gap);
+}
+
+/* ─────────────────────────────────────
+   Sizes
+   ───────────────────────────────────── */
+
+:host([size="s"]) {
+  --swc-dropzone-padding: token("spacing-300");
+}
+
+:host([size="l"]) {
+  --swc-dropzone-padding: token("spacing-600");
+}
+
+/* ─────────────────────────────────────
+   Dragged state and focus-within
+   ───────────────────────────────────── */
+
+:host([dragged]),
+:host(:focus-within) {
+  --swc-dropzone-border-color: token("accent-visual-color");
+}
+
+:host([dragged]) .swc-Dropzone-strokePath,
+:host(:focus-within) .swc-Dropzone-strokePath {
+  stroke-dasharray: none;
+}
+
+:host([dragged]) {
+  --swc-dropzone-background-color: token("accent-subtle-background-color-default");
+  --swc-illustrated-message-illustration-color: token("accent-content-color-default");
+}
+
+::slotted(p) {
+  margin: 0;
+  text-align: center;
+}
+
+/* ─────────────────────────────────────
+   Forced colors
+   ───────────────────────────────────── */
+
+@media (forced-colors: active) {
+  .swc-Dropzone-strokePath {
+    stroke: ButtonText;
+  }
+
+  :host([dragged]) .swc-Dropzone,
+  :host(:focus-within) .swc-Dropzone {
+    background: Canvas;
+  }
+
+  :host([dragged]) .swc-Dropzone-strokePath,
+  :host(:focus-within) .swc-Dropzone-strokePath {
+    stroke: Highlight;
+  }
+}
