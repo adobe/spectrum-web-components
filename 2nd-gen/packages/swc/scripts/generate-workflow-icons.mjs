@@ -57,9 +57,13 @@ const outDir = path.resolve(swcRoot, '..', 'icons', 'src');
 // optical step. See icon-source/README.md ("Workflow icons").
 const SOURCE_NAME = /^S2_Icon_(?<name>.+?)_20_N\.svg$/;
 
-// The version tag used for `@since` on the generated elements; keep in sync with the
-// package version when the icons package first ships.
-const SINCE = '2.0.0-beta.2';
+// The `@since` version for generated elements, read from the icons package.json so it
+// tracks the package version (bumped by changesets) rather than a hand-maintained
+// constant. All 2nd-gen packages are version-locked, so this matches the core version
+// exported from core/element/version.ts too.
+const SINCE = JSON.parse(
+  readFileSync(path.resolve(swcRoot, '..', 'icons', 'package.json'), 'utf8')
+).version;
 
 const GENERATED_BANNER = generatedBanner(
   'yarn generate:workflow-icons',

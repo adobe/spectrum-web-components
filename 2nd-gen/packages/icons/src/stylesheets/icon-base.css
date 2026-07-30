@@ -18,6 +18,11 @@
  * the icons package depends only on core, so it cannot import that swc stylesheet and
  * ships its own copy. See CONTRIBUTOR-DOCS/03_project-planning/05_strategies/icon-rfc.md,
  * section 7.
+ *
+ * @todo Consolidate shared icon styling. This duplicates swc's _lit-styles/icon-base.css,
+ * and other shared lit-styles (for example the pending-spinner/pending-state styles) are
+ * likewise copied per package. Revisit a shared home for these once the dependency
+ * direction allows it.
  */
 :host {
   --swc-icon-inline-size: token("workflow-icon-medium");
