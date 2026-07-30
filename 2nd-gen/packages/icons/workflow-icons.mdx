@@ -1,0 +1,97 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+
+import * as Stories from './stories/workflow-icons.stories';
+
+<Meta of={Stories} />
+
+# Workflow icons
+
+Workflow icons are the public Spectrum 2 icons consumers pick from: stars, folders, arrows, and the like. They ship in the dedicated `@adobe/spectrum-wc-icons` package, which depends only on `@adobe/spectrum-wc-core` and nothing else.
+
+Each icon is delivered two ways, and neither couples a consumer to Lit:
+
+- a **per-icon custom element** (`<swc-icon-star>`) that renders in any framework with zero ceremony, and
+- a **per-icon SVG-string function** (`Icon_Star()`) as the tree-shakeable substrate.
+
+For a custom, non-Spectrum SVG, use the [Icon](../?path=/docs/components-icon--docs) frame instead.
+
+<Canvas of={Stories.Overview} />
+
+## Usage
+
+### Custom element (any framework, no Lit)
+
+Import the per-icon element by subpath; the import registers the tag as a side effect.
+
+```ts
+import '@adobe/spectrum-wc-icons/swc-icon-star.js';
+```
+
+```html
+<swc-icon-star accessible-label="Favorite"></swc-icon-star>
+```
+
+To register every icon at once (a gallery, an icon picker), import the register-all barrel. This is not tree-shakeable; prefer per-icon imports in application code.
+
+```ts
+import '@adobe/spectrum-wc-icons/elements.js';
+```
+
+### SVG-string function (build-time, SSR, custom composition)
+
+The function returns raw SVG markup with no element wrapper, so it works via `innerHTML`, React `dangerouslySetInnerHTML`, Vue `v-html`, or Lit `unsafeSVG`.
+
+```ts
+import { Icon_Star } from '@adobe/spectrum-wc-icons/Star.js';
+
+element.innerHTML = Icon_Star();
+```
+
+A frameless function returns only the SVG; supply your own box, or use the element, which carries the box, color, and accessibility.
+
+## Options
+
+### Sizes
+
+A workflow icon is one drawing scaled to a token box. `size` sets the box (`xs`–`xl`) and the drawing scales, so CSS resizing is safe.
+
+<Canvas of={Stories.Sizes} />
+
+### Color
+
+Icons follow the inherited CSS `color` by default. Set `--swc-icon-color` to override the icon color independently of text color.
+
+<Canvas of={Stories.Color} />
+
+## Gallery
+
+Every workflow icon in the set, at the medium (`m`) size. The label under each is its custom element tag.
+
+<Canvas of={Stories.Gallery} />
+
+## Accessibility
+
+Every icon element extends `IconBase`, so the host owns accessibility:
+
+- **Decorative by default.** With no `accessible-label`, the host is marked `aria-hidden="true"` and the icon is skipped by assistive technology. This is the common case, where a surrounding button or menu item already carries the name.
+- **Meaningful icons.** Set `accessible-label` and the host is exposed as an image (`role="img"` with that label). Reserve this for the genuinely icon-only case where nothing else names the icon.
+- The baked-in SVG is always presentational, so there is no double announcement.
+
+<Canvas of={Stories.Accessibility} />
+
+## API
+
+Every icon element shares the same API, inherited from `IconBase`:
+
+| Member                 | Type                                | Default        | Notes                                                                                  |
+| ---------------------- | ----------------------------------- | -------------- | -------------------------------------------------------------------------------------- |
+| `size`                 | `'xs' \| 's' \| 'm' \| 'l' \| 'xl'` | `'m'`          | Sizes the box; the single drawing scales to it.                                        |
+| `accessible-label`     | `string`                            | `''`           | Set: host gets `role="img"` + `aria-label`. Empty: host is `aria-hidden` (decorative). |
+| CSS `color`            | `<color>`                           | inherited      | Drives icon color via the `currentColor` fallback.                                     |
+| CSS `--swc-icon-color` | `<color>`                           | `currentColor` | Advanced color override, independent of text `color`.                                  |
+
+The SVG-string functions take no arguments and return the icon markup as a `string`.
+
+## Naming
+
+For an A4U logical name `<Name>` (PascalCase): the function is `Icon_<Name>()`, the element class is `Icon<Name>`, and the tag is `swc-icon-<kebab>`. For example `AddCircle` gives `Icon_AddCircle()`, `IconAddCircle`, and `<swc-icon-add-circle>`; a digit-led name like `3DAsset` gives `Icon_3DAsset()`, `Icon3DAsset`, and `<swc-icon-3d-asset>`.
