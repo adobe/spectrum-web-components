@@ -25,6 +25,7 @@
   gap: var(--swc-action-button-gap, token("base-gap-medium"));
   align-items: center;
   justify-content: center;
+  inline-size: 100%;
   min-block-size: var(--_swc-action-button-min-block-size);
   padding-inline: calc(var(--swc-action-button-edge-to-text, token("base-padding-horizontal-medium")) - var(--_swc-action-button-border-width));
   margin: 0;
@@ -37,7 +38,10 @@
   text-decoration: none;
   background-color: var(--swc-action-button-background-color-default, token("gray-100"));
   border: var(--_swc-action-button-border-width) solid var(--swc-action-button-border-color-default, transparent);
-  border-radius: var(--swc-action-button-border-radius, token("corner-radius-medium-size-medium"));
+  border-start-start-radius: var(--swc-action-button-border-start-start-radius, var(--swc-action-button-border-radius, token("corner-radius-medium-size-medium")));
+  border-start-end-radius: var(--swc-action-button-border-start-end-radius, var(--swc-action-button-border-radius, token("corner-radius-medium-size-medium")));
+  border-end-start-radius: var(--swc-action-button-border-end-start-radius, var(--swc-action-button-border-radius, token("corner-radius-medium-size-medium")));
+  border-end-end-radius: var(--swc-action-button-border-end-end-radius, var(--swc-action-button-border-radius, token("corner-radius-medium-size-medium")));
   overflow: visible;
   cursor: default;
   user-select: none;
@@ -73,6 +77,14 @@
 }
 
 .swc-ActionButton:disabled:is(*, :hover) {
+  color: var(--swc-action-button-content-color-disabled, token("disabled-content-color"));
+  background-color: var(--swc-action-button-background-color-disabled, token("disabled-background-color"));
+  border-color: var(--swc-action-button-border-color-disabled, transparent);
+  cursor: default;
+  transform: none;
+}
+
+.swc-ActionButton--true .swc-ActionButton:is(*, :hover) {
   color: var(--swc-action-button-content-color-disabled, token("disabled-content-color"));
   background-color: var(--swc-action-button-background-color-disabled, token("disabled-background-color"));
   border-color: var(--swc-action-button-border-color-disabled, transparent);
@@ -213,6 +225,11 @@
 @media (forced-colors: active) {
   .swc-ActionButton {
     border-color: ButtonBorder;
+  }
+  .swc-ActionButton--true {
+    --swc-action-button-background-color-disabled: ButtonFace;
+    --swc-action-button-content-color-disabled: GrayText;
+    --swc-action-button-border-color-disabled: GrayText;
   }
 }
 }

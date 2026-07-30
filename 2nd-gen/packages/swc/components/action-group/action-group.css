@@ -23,7 +23,7 @@
 /* ── Base component ───────────────────────────────── */
 
 .swc-ActionGroup {
-  --_swc-action-group-gap: var(--swc-action-group-gap, token("spacing-100"));
+  --_swc-action-group-gap: var(--swc-action-group-gap, token("group-gap-medium"));
 
   display: flex;
   flex-wrap: wrap;
@@ -43,9 +43,20 @@
 
 /* ── Sizes ────────────────────────────────────────── */
 
-:host([size="xs"]),
+:host([size="xs"]) {
+  --swc-action-group-gap: token("group-gap-extra-small");
+}
+
 :host([size="s"]) {
-  --swc-action-group-gap: token("spacing-75");
+  --swc-action-group-gap: token("group-gap-small");
+}
+
+:host([size="l"]) {
+  --swc-action-group-gap: token("group-gap-large");
+}
+
+:host([size="xl"]) {
+  --swc-action-group-gap: token("group-gap-extra-large");
 }
 
 /* ── Justified ────────────────────────────────────── */
@@ -57,8 +68,9 @@
 /* ── Compact ──────────────────────────────────────── */
 
 :host([compact]:not([quiet])) .swc-ActionGroup {
+  --swc-action-group-gap: token("group-gap-compact");
+
   flex-wrap: nowrap;
-  gap: 0;
 }
 
 :host([compact]:not([quiet])) ::slotted(*) {
