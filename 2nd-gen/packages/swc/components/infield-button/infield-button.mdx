@@ -9,7 +9,10 @@ import * as Stories from './stories/infield-button.stories';
 
 ## Anatomy
 
-An infield button consists of a single icon inside a pressable container. It has no text label; its accessible name comes from the required `accessible-label` attribute.
+An infield button consists of a single pressable icon container. It has no text label; the required `accessible-label` attribute provides the accessible name.
+
+- **icon slot**: Icon to display inside the button.
+- **accessible-label**: Required. Provides the accessible name applied as `aria-label` on the inner element.
 
 <Canvas of={Stories.Anatomy} />
 
@@ -29,16 +32,31 @@ The quiet treatment removes the background, leaving only the icon. Use it when t
 
 ## States
 
-### States
-
 Infield buttons support default, disabled, quiet, and quiet-disabled states. The disabled state removes interactivity while preserving layout. The parent field is responsible for disabling all slotted infield buttons when the field itself is disabled or pending.
 
 <Canvas of={Stories.States} />
 
 ## Accessibility
 
-Infield buttons are not in the tab order (`tabindex="-1"`). The parent field owns keyboard behavior and the visible focus ring. Each infield button must have an `accessible-label` attribute that describes its action (for example, "Open picker", "Clear search", "Increase quantity").
+### Features
+
+- **Not in the tab order**: Infield buttons set `tabindex="-1"` on the inner element. The parent field owns all keyboard behavior and supplies the only visible focus ring.
+- **Accessible label required**: Each button must have an `accessible-label` attribute. A development warning fires if the attribute is absent on an icon-only button.
+- **ARIA label**: The `accessible-label` value is applied as `aria-label` on the inner `<button>` element.
+
+### Best practices
+
+- Use action-describing labels (for example, `"Open country picker"`, `"Clear search"`, `"Increase quantity"`) rather than generic labels like `"Button"`.
+- Disable all infield buttons in a field when the parent field is pending or disabled; do not rely on the button's own `pending` state.
 
 <Canvas of={Stories.Accessibility} />
+
+## Upcoming features
+
+The following features are planned for future releases. No code changes are required today.
+
+| Feature                      | Description                                                                                                                                                         |
+| ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Form-associated button types | Support for `type="submit"` and `type="reset"` when used inside a `<form>`, via the `ElementInternals` API. The button currently always renders as `type="button"`. |
 
 <DocsFooter />

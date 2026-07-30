@@ -1,0 +1,236 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Infield button/Migration guide" />
+
+# Infield button migration guide
+
+Replace `<sp-infield-button>` with `<swc-infield-button>`, rename `label` to
+`accessible-label`, move icon content to the `icon` slot, and remove the
+`block` and `inline` attributes.
+
+## Installation
+
+```bash
+# Remove
+yarn remove @spectrum-web-components/infield-button
+
+# Add
+yarn add @adobe/spectrum-wc
+```
+
+Update your import:
+
+```js
+// Before
+import '@spectrum-web-components/infield-button/sp-infield-button.js';
+
+// After
+import '@adobe/spectrum-wc/components/infield-button/swc-infield-button.js';
+```
+
+> `@adobe/spectrum-wc` is a monolithic package. Importing via subpath (e.g.
+> `@adobe/spectrum-wc/components/infield-button/swc-infield-button.js`)
+> registers and loads only that component's bundle.
+
+## What changed
+
+### Renamed
+
+| Area                  | Spectrum 1 (`sp-infield-button`)          | Spectrum 2 (`swc-infield-button`)                                    |
+| --------------------- | ----------------------------------------- | -------------------------------------------------------------------- |
+| Tag                   | `sp-infield-button`                       | `swc-infield-button`                                                 |
+| Import path           | `@spectrum-web-components/infield-button` | `@adobe/spectrum-wc/components/infield-button/swc-infield-button.js` |
+| `label` attribute     | `label="…"`                               | `accessible-label="…"`                                               |
+| Icon content          | Default slot (no `slot` attribute)        | Named `icon` slot (`slot="icon"`)                                    |
+| CSS custom properties | `--mod-infield-button-*`                  | `--swc-infield-button-*`                                             |
+
+### Removed in Spectrum 2
+
+| Removed                                               | Replacement                                                                                               |
+| ----------------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
+| `block` attribute (`"start"` / `"end"`)               | None. Remove the attribute; the parent field container manages corner radius and layout.                  |
+| `inline` attribute (`"start"` / `"end"`)              | None. Remove the attribute; the parent field container manages inline group layout.                       |
+| `href`, `target`, `download`, `rel`, `referrerpolicy` | Use `<a>` or `<swc-button href="…">` for navigation in a field context.                                   |
+| All `--mod-infield-button-*` custom properties        | `--swc-infield-button-*` equivalents; not every property has a 1:1 replacement — see [Styling](#styling). |
+
+## Update your code
+
+### 1. Update the import
+
+```js
+// Before
+import '@spectrum-web-components/infield-button/sp-infield-button.js';
+
+// After
+import '@adobe/spectrum-wc/components/infield-button/swc-infield-button.js';
+```
+
+### 2. Rename the tag and `label` attribute
+
+```html
+<!-- Before -->
+<sp-infield-button label="Open country picker" size="m">
+  <sp-icon-chevron-down></sp-icon-chevron-down>
+</sp-infield-button>
+
+<!-- After -->
+<swc-infield-button accessible-label="Open country picker" size="m">
+  <svg slot="icon" aria-hidden="true" focusable="false" viewBox="0 0 10 10">
+    …
+  </svg>
+</swc-infield-button>
+```
+
+### 3. Move icons to the `icon` slot
+
+Icons must be placed in the named `icon` slot. Add `slot="icon"` to the icon
+element directly:
+
+```html
+<!-- Before -->
+<sp-infield-button label="Clear search">
+  <sp-icon-cross-large></sp-icon-cross-large>
+</sp-infield-button>
+
+<!-- After -->
+<swc-infield-button accessible-label="Clear search">
+  <svg slot="icon" aria-hidden="true" focusable="false" viewBox="0 0 10 10">
+    …
+  </svg>
+</swc-infield-button>
+```
+
+### 4. Remove `block` and `inline` attributes
+
+Remove these attributes from all buttons and let the parent field container
+control placement. In Spectrum 2, every `<swc-infield-button>` has a uniform
+corner radius regardless of position.
+
+**Stacked stepper buttons:**
+
+```html
+<!-- Before: block attribute controlled stacking -->
+<sp-infield-button block="start" label="Increment" size="m">
+  <sp-icon-add size="xxs"></sp-icon-add>
+</sp-infield-button>
+<sp-infield-button block="end" label="Decrement" size="m">
+  <sp-icon-remove size="xxs"></sp-icon-remove>
+</sp-infield-button>
+
+<!-- After: wrap in a flex container; no block/inline needed -->
+<div style="display: flex; flex-direction: column; gap: 2px;">
+  <swc-infield-button accessible-label="Increment" size="m">
+    <svg slot="icon" aria-hidden="true" focusable="false">…</svg>
+  </swc-infield-button>
+  <swc-infield-button accessible-label="Decrement" size="m">
+    <svg slot="icon" aria-hidden="true" focusable="false">…</svg>
+  </swc-infield-button>
+</div>
+```
+
+**Inline end-of-field button:**
+
+```html
+<!-- Before: inline attribute positioned the button -->
+<sp-infield-button inline="end" label="Open picker" size="m">
+  <sp-icon-chevron-down></sp-icon-chevron-down>
+</sp-infield-button>
+
+<!-- After: place the button directly in the field's flex container -->
+<swc-infield-button accessible-label="Open picker" size="m">
+  <svg slot="icon" aria-hidden="true" focusable="false">…</svg>
+</swc-infield-button>
+```
+
+### 5. Remove any link-style usage
+
+The `href`, `target`, `download`, `rel`, and `referrerpolicy` attributes are
+removed. Replace `<sp-infield-button href="…">` with a native link:
+
+```html
+<!-- Before -->
+<sp-infield-button href="/destination" label="Go to destination">
+  <sp-icon-arrow></sp-icon-arrow>
+</sp-infield-button>
+
+<!-- After -->
+<a href="/destination">Go to destination</a>
+```
+
+## Accessibility
+
+- **`accessible-label` is required** on every `<swc-infield-button>`. Omitting
+  it triggers a development warning. See
+  [step 2](#2-rename-the-tag-and-label-attribute).
+- Use an action-describing label (for example, `"Open country picker"`,
+  `"Clear search"`, `"Increase quantity"`) rather than a generic one like
+  `"Button"`.
+- Infield buttons are not in the tab order (`tabindex="-1"`). Keyboard access
+  to their actions must be provided by the parent field's keyboard handlers.
+
+## Styling
+
+Spectrum 2 exposes a new set of public CSS custom properties on
+`<swc-infield-button>`.
+
+{/* @todo Replace the inline-styled callouts in this section with `<swc-inline-alert>` once it is migrated to Spectrum 2. */}
+
+<div
+  style={{
+    borderLeft: '4px solid #dba842',
+    background: 'rgba(219, 168, 66, 0.12)',
+    padding: '12px 16px',
+    margin: '16px 0',
+    borderRadius: '4px',
+  }}
+>
+  <strong>⚠️ Breaking change.</strong> Spectrum 1{' '}
+  <code>{'--mod-infield-button-*'}</code> properties{' '}
+  <strong>do not apply</strong> to <code>{'<swc-infield-button>'}</code>. Remove
+  or replace every <code>{'--mod-infield-button-*'}</code> override with the{' '}
+  <code>{'--swc-infield-button-*'}</code> equivalents below. Not every Spectrum
+  1 property has a 1:1 replacement, so read the list below carefully.
+</div>
+
+{/* @todo Replace the Description column with the `@cssproperty` JSDoc descriptions from `<swc-infield-button>`'s CEM entry once they are added in a follow-up PR. */}
+
+| Custom property                                  | Description                                                                              |
+| ------------------------------------------------ | ---------------------------------------------------------------------------------------- |
+| `--swc-infield-button-padding`                   | Padding on all four sides of the button. Determines visible size together with the icon. |
+| `--swc-infield-button-icon-size`                 | Size of the slotted icon.                                                                |
+| `--swc-infield-button-background-color`          | Background color in the default state.                                                   |
+| `--swc-infield-button-background-color-hover`    | Background color on hover.                                                               |
+| `--swc-infield-button-background-color-active`   | Background color on press.                                                               |
+| `--swc-infield-button-background-color-focus`    | Background color when focused.                                                           |
+| `--swc-infield-button-background-color-disabled` | Background color when disabled.                                                          |
+| `--swc-infield-button-icon-color`                | Icon color in the default state.                                                         |
+| `--swc-infield-button-icon-color-hover`          | Icon color on hover.                                                                     |
+| `--swc-infield-button-icon-color-active`         | Icon color on press.                                                                     |
+| `--swc-infield-button-icon-color-focus`          | Icon color when focused.                                                                 |
+| `--swc-infield-button-icon-color-disabled`       | Icon color when disabled.                                                                |
+| `--swc-infield-button-down-state-transform`      | CSS transform applied on press. Set to `none` to disable the press animation.            |
+
+<div
+  style={{
+    borderLeft: '4px solid #e34850',
+    background: 'rgba(227, 72, 80, 0.10)',
+    padding: '12px 16px',
+    margin: '16px 0',
+    borderRadius: '4px',
+  }}
+>
+  <strong>🚫 Do not target internals.</strong> Internal classes,{' '}
+  <code>{'--_swc-infield-button-*'}</code> private properties, and shadow DOM
+  are <strong>not public API</strong>. Styling applied to them will break
+  without warning on minor releases.
+</div>
+
+## Checklist
+
+- [ ] Update the import
+- [ ] Rename all `<sp-infield-button>` to `<swc-infield-button>`
+- [ ] Rename `label="…"` to `accessible-label="…"` on every `<swc-infield-button>`
+- [ ] Move icon content to `slot="icon"`
+- [ ] Remove `block` and `inline` attributes; update the parent field's container layout
+- [ ] Remove any `href`-based infield button usage
+- [ ] Replace `--mod-infield-button-*` style overrides with `--swc-infield-button-*` equivalents
