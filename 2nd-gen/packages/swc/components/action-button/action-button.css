@@ -55,7 +55,9 @@
   user-select: none;
   transition-timing-function: token("animation-ease-in-out");
   transition-duration: token("animation-duration-100");
-  transition-property: outline, border-color, color, background-color, transform;
+
+  /* TODO: include outline in the transition-property, it has been removed because it transitions black to blue, will be fixed in SWC-2308 */
+  transition-property: border-color, color, background-color, transform;
 }
 
 /* ── States ───────────────────────────────────────── */
