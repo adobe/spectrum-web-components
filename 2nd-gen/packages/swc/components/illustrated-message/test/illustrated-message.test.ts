@@ -34,7 +34,7 @@ import meta, {
 // This file defines dev-only test stories that reuse the main story metadata.
 export default {
   ...meta,
-  title: 'Illustrated Message/Tests',
+  title: 'Illustrated message/Tests',
   parameters: {
     ...meta.parameters,
     docs: { disable: true, page: null },
@@ -196,6 +196,44 @@ export const DefaultSlotIllustrationTest: Story = {
           svg?.getAttribute('aria-hidden'),
           'aria-hidden on decorative svg'
         ).toBe('true');
+      }
+    );
+
+    await step(
+      'reveals the illustration wrapper when an illustration is slotted',
+      async () => {
+        const wrapper = illustratedMessage.shadowRoot?.querySelector(
+          '.swc-IllustratedMessage-illustration'
+        );
+        expect(wrapper?.hasAttribute('hidden'), 'wrapper has [hidden]').toBe(
+          false
+        );
+      }
+    );
+  },
+};
+
+export const IllustrationWrapperCollapsesWhenEmptyTest: Story = {
+  render: () => html`
+    <swc-illustrated-message>
+      <h2 slot="heading">Heading</h2>
+    </swc-illustrated-message>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const illustratedMessage = await getComponent<IllustratedMessage>(
+      canvasElement,
+      'swc-illustrated-message'
+    );
+
+    await step(
+      'hides the illustration wrapper when no illustration is slotted',
+      async () => {
+        const wrapper = illustratedMessage.shadowRoot?.querySelector(
+          '.swc-IllustratedMessage-illustration'
+        );
+        expect(wrapper?.hasAttribute('hidden'), 'wrapper has [hidden]').toBe(
+          true
+        );
       }
     );
   },

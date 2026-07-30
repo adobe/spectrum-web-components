@@ -11,8 +11,8 @@ import * as CloseButtonStories from './stories/close-button.stories';
 
 A close button consists of:
 
-1. **Button** — native `<button type="button">` with delegated focus; handles pointer and keyboard activation
-2. **Icon** — cross icon (`aria-hidden="true"`); size follows the `size` attribute
+1. **Button**: native `<button type="button">` with delegated focus; handles pointer and keyboard activation
+2. **Icon**: cross icon (`aria-hidden="true"`); size follows the `size` attribute
 
 <Canvas of={CloseButtonStories.Anatomy} />
 
@@ -31,10 +31,10 @@ Close buttons come in four sizes to fit various contexts:
 
 ### Static colors
 
-Use the `static-color` attribute when displaying over images or colored backgrounds:
+Use `static-color` when the close button needs to sit on top of a photo or colored background. It pins the close button's color to the chosen value, regardless of the active color theme:
 
-- **white** — use on dark or colored backgrounds for better contrast
-- **black** — use on light backgrounds for better contrast
+- **`white`**: use on dark color or image backgrounds
+- **`black`**: use on light color or image backgrounds
 
 <Canvas of={CloseButtonStories.StaticColors} />
 
@@ -52,16 +52,16 @@ The `<swc-close-button>` element implements several accessibility features:
 
 #### Keyboard navigation
 
-- **Tab** — moves focus to the inner dismiss button via delegated focus
-- **Enter** or **Space** — activates the dismiss action
-- **Focus indicator** — visible `:focus-visible` ring on keyboard focus
+- <kbd>Tab</kbd>: moves focus to the inner dismiss button via delegated focus
+- <kbd>Enter</kbd> or <kbd>Space</kbd>: activates the dismiss action
+- **Focus indicator**: visible `:focus-visible` ring on keyboard focus
 
 #### ARIA implementation
 
-1. **Native button** — renders a real `<button type="button">` inside the shadow root
-2. **Accessible name** — provided via `accessible-label` and forwarded as `aria-label` on the inner button
-3. **Decorative icon** — cross icon is marked `aria-hidden="true"` so screen readers announce the button name only
-4. **Disabled state** — `disabled` removes activation and applies disabled visuals on the inner button
+1. **Native button**: renders a real `<button type="button">` inside the shadow root
+2. **Accessible name**: provided via `accessible-label` and forwarded as `aria-label` on the inner button
+3. **Decorative icon**: cross icon is marked `aria-hidden="true"` so screen readers announce the button name only
+4. **Disabled state**: `disabled` removes activation and applies disabled visuals on the inner button
 
 #### Visual accessibility
 
@@ -71,7 +71,7 @@ The `<swc-close-button>` element implements several accessibility features:
 
 ### Best practices
 
-- Always provide a descriptive accessible name such as "Close" or "Close dialog" via `accessible-label` — not a clear/reset verb
+- Always provide a descriptive accessible name via `accessible-label`: for example, "Close" or "Close dialog", not a clear/reset verb
 - Use `static-color="white"` or `static-color="black"` when the default neutral icon lacks contrast on the background
 - Test keyboard focus order when placing close buttons in dialog headers or banner corners
 

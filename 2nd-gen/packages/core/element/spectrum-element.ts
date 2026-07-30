@@ -10,46 +10,11 @@
  * governing permissions and limitations under the License.
  */
 
-import { LitElement, ReactiveElement } from 'lit';
+import { LitElement } from 'lit';
 
-import { getActiveElement } from '../utils/get-active-element.js';
 import { coreVersion, version } from './version.js';
 
-type Constructor<T = Record<string, unknown>> = {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  new (...args: any[]): T;
-  prototype: T;
-};
-
-export interface SpectrumInterface {
-  shadowRoot: ShadowRoot;
-  hasVisibleFocusInTree(): boolean;
-}
-
-export function SpectrumMixin<T extends Constructor<ReactiveElement>>(
-  constructor: T
-): T & Constructor<SpectrumInterface> {
-  class SpectrumMixinElement extends constructor {
-    /**
-     * @internal
-     */
-    public override shadowRoot!: ShadowRoot;
-
-    /**
-     * @internal
-     */
-    public hasVisibleFocusInTree(): boolean {
-      const active = getActiveElement(
-        this.getRootNode() as Document | ShadowRoot
-      );
-
-      return active?.matches(':focus-visible') ?? false;
-    }
-  }
-  return SpectrumMixinElement;
-}
-
-export class SpectrumElement extends SpectrumMixin(LitElement) {
+export class SpectrumElement extends LitElement {
   /**
    * @internal
    */
@@ -59,13 +24,6 @@ export class SpectrumElement extends SpectrumMixin(LitElement) {
    * @internal
    */
   static CORE_VERSION = coreVersion;
-
-  /**
-   * @internal
-   */
-  public override get dir(): CSSStyleDeclaration['direction'] {
-    return getComputedStyle(this).direction ?? 'ltr';
-  }
 }
 
 if (process.env.NODE_ENV === 'development') {

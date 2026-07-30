@@ -299,13 +299,13 @@ function passesSuggestionPrefilter(query: string, candidate: string): boolean {
     return true;
   }
 
+  if (candidate.startsWith(query) || candidate.includes(query)) {
+    return true;
+  }
+
   const lenDelta = Math.abs(query.length - candidate.length);
   if (lenDelta > 5) {
     return false;
-  }
-
-  if (candidate.startsWith(query) || candidate.includes(query)) {
-    return true;
   }
 
   if (query[0] === candidate[0] && lenDelta <= 3) {

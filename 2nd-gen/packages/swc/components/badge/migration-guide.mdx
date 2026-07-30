@@ -26,19 +26,19 @@ import '@spectrum-web-components/badge/sp-badge.js';
 import '@adobe/spectrum-wc/components/badge/swc-badge.js';
 ```
 
-> `@adobe/spectrum-wc` is a monolithic package. Importing via subpath (e.g. `@adobe/spectrum-wc/components/badge/swc-badge.js`) registers and loads only that component's bundle.
+> `@adobe/spectrum-wc` is a monolithic package. Importing via subpath (e.g., `@adobe/spectrum-wc/components/badge/swc-badge.js`) registers and loads only that component's bundle.
 
 ## What changed
 
 ### Renamed
 
-| Area              | Spectrum 1 (`sp-badge`)                | Spectrum 2 (`swc-badge`)                                 |
-| ----------------- | -------------------------------------- | -------------------------------------------------------- |
-| Tag               | `sp-badge`                             | `swc-badge`                                              |
-| Import path       | `@spectrum-web-components/badge`       | `@adobe/spectrum-wc/components/badge/swc-badge.js`       |
-| CSS custom props  | `--mod-badge-*` / `--spectrum-badge-*` | `--swc-badge-*` (see [Styling](#styling))                |
-| Default `variant` | `'informative'`                        | `'neutral'` — see [step 2](#2-check-the-default-variant) |
-| Default `size`    | No reflected default (`noDefaultSize`) | `'s'` — the `size` attribute is set by default           |
+| Area              | Spectrum 1 (`sp-badge`)                | Spectrum 2 (`swc-badge`)                               |
+| ----------------- | -------------------------------------- | ------------------------------------------------------ |
+| Tag               | `sp-badge`                             | `swc-badge`                                            |
+| Import path       | `@spectrum-web-components/badge`       | `@adobe/spectrum-wc/components/badge/swc-badge.js`     |
+| CSS custom props  | `--mod-badge-*` / `--spectrum-badge-*` | `--swc-badge-*` (see [Styling](#styling))              |
+| Default `variant` | `'informative'`                        | `'neutral'` (see [step 2](#2-set-an-explicit-variant)) |
+| Default `size`    | No reflected default (`noDefaultSize`) | `'s'` (the `size` attribute is set by default)         |
 
 ### Added in Spectrum 2
 
@@ -53,8 +53,8 @@ import '@adobe/spectrum-wc/components/badge/swc-badge.js';
 
 | Removed                                                                           | Replacement                                                                                                                                                                                                                                          |
 | --------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `--mod-badge-*` custom properties (e.g. `--mod-badge-background-color-positive`)  | `--swc-badge-*` for semantic variants only — semantic per-variant overrides collapse into one `--swc-badge-background-color`. Non-semantic variants (`gray`, `red`, `seafoam`, etc.) no longer expose per-color overrides; retoken globally instead. |
-| `--highcontrast-badge-border-color`                                               | No 1:1 replacement — Spectrum 2 badge has no forced-colors override hook                                                                                                                                                                             |
+| `--mod-badge-*` custom properties (e.g., `--mod-badge-background-color-positive`) | `--swc-badge-*` for semantic variants only — semantic per-variant overrides collapse into one `--swc-badge-background-color`. Non-semantic variants (`gray`, `red`, `seafoam`, etc.) no longer expose per-color overrides; retoken globally instead. |
+| `--highcontrast-badge-border-color`                                               | No 1:1 replacement (Spectrum 2 badge has no forced-colors override hook)                                                                                                                                                                             |
 | Top-level exports `BADGE_VARIANTS`, `FIXED_VALUES`, `BadgeVariant`, `FixedValues` | Use `Badge.VARIANTS`, `Badge.FIXED_VALUES`, or `typeof Badge.prototype.variant`                                                                                                                                                                      |
 
 ## Update your code
@@ -176,7 +176,7 @@ Replace every `--mod-badge-*` property with its `--swc-badge-*` equivalent:
 | `--mod-badge-icon-text-spacing`             | `--swc-badge-gap`                                                                    |
 | `--mod-badge-icon-spacing-horizontal`       | No replacement                                                                       |
 | `--mod-badge-icon-only-spacing-horizontal`  | `--swc-badge-with-icon-only-padding-inline`                                          |
-| `--mod-badge-line-height-cjk`               | No replacement — S2 applies CJK line height via the `:lang()` selector automatically |
+| `--mod-badge-line-height-cjk`               | No replacement (S2 applies CJK line height via the `:lang()` selector automatically) |
 
 ### Public custom properties
 

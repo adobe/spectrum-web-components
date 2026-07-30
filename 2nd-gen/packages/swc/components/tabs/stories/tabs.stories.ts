@@ -89,6 +89,10 @@ export const meta: Meta = {
     stackblitz: {
       url: 'https://stackblitz.com/edit/vitejs-vite-5jtmpzjk?file=src%2Fmy-element.ts',
     },
+    // swc-tab and swc-tab-panel are the other two elements of this
+    // three-element component; surface their API tables alongside
+    // swc-tabs's on the docs page.
+    additionalApiTables: ['swc-tab', 'swc-tab-panel'],
   },
   tags: ['migrated'],
 };
@@ -252,6 +256,7 @@ export const DensityVariants: Story = {
   `,
   tags: ['options'],
 };
+DensityVariants.storyName = 'Density variants';
 
 export const Directions: Story = {
   render: () => html`
@@ -339,6 +344,7 @@ export const ActivationModes: Story = {
   `,
   tags: ['behaviors'],
 };
+ActivationModes.storyName = 'Activation modes';
 
 // ────────────────────────────────
 //    ACCESSIBILITY STORIES

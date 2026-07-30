@@ -21,6 +21,7 @@
     - [CSS custom properties](#css-custom-properties)
     - [Shadow DOM output (rendered HTML)](#shadow-dom-output-rendered-html)
 - [Dependencies](#dependencies)
+- [Open gen1 issues](#open-gen1-issues)
 - [Migration sequencing and prerequisites](#migration-sequencing-and-prerequisites)
     - [Dependency-aware recommendation](#dependency-aware-recommendation)
     - [User confirmation needed](#user-confirmation-needed)
@@ -169,6 +170,18 @@ The `:host([dialog])` selector in `popover.css` applies dialog padding when the 
 | `@spectrum-web-components/overlay` | 1.12.0 | Type import only (`Placement` from `overlay-types.js`). **Dropped in 2nd-gen.** The `Placement` type moves to `2nd-gen/packages/core/controllers/placement-controller/`. |
 
 1st-gen consumers (action-bar, action-menu, card, coachmark, combobox, contextual-help, menu, picker, slider, tooltip) import `@spectrum-web-components/popover` and use `<sp-popover>` to host their dropdown / menu / listbox / help surfaces — but they orchestrate behavior through `<sp-overlay>`. In 2nd-gen, external authors adopt first-party components (Picker, Action Menu, etc.) or use `<swc-popover>` with `for=` / `open`. First-party implementations decide per pattern: embed `<swc-popover>` in shadow when the built-in lifecycle fits, or wire `PlacementController` + shared `.swc-Popover` styles directly when it does not (e.g. combobox, submenus).
+
+---
+
+## Open gen1 issues
+
+| Jira | Type | Status (snapshot) | Summary | Notes |
+| ---- | ---- | ----------------- | ------- | ----- |
+| [SWC-917](https://jira.corp.adobe.com/browse/SWC-917) | Bug | To Do | Overlay popovers have incorrect tip placement in RTL | Addressed by S6 (logical placement classes). |
+| [SWC-932](https://jira.corp.adobe.com/browse/SWC-932) | Bug | To Do | When rendered inside a popover, arrow navigation within a Picker's items doesn't highlight the active option | GitHub mirror (#5555) of SWC-933. Picker-in-popover; Safari. |
+| [SWC-933](https://jira.corp.adobe.com/browse/SWC-933) | Bug | Blocked | When rendered inside a popover, arrow navigation within a Picker's items doesn't highlight the active option | Internal duplicate of SWC-932. |
+| [SWC-1336](https://jira.corp.adobe.com/browse/SWC-1336) | Bug | To Do | Overlay in focus region dismissed when clicking into its content (#5731) | Light-dismiss / focus-region behavior. |
+| [SWC-2031](https://jira.corp.adobe.com/browse/SWC-2031) | Bug | To Do | `sp-popover` renders ~30-40px below trigger on iOS WebKit | Positioning; mobile. |
 
 ---
 
@@ -481,7 +494,7 @@ On the resolved trigger (or its inner button), the component wires:
 
 **`aria-expanded`** — always present once a trigger is resolved (`"false"` when closed, `"true"` when open). Visibility state; the control relationship stays via `ariaControlsElements`.
 
-**`aria-haspopup="dialog"`** — set in **both** modes, since the surface is a dialog in both (see the dialog-surface amendment). Menu/listbox/combobox do not wrap `<swc-popover>`; they build on the shared `PlacementController` with their own roles, so they set their own `aria-haspopup` value on their own triggers. 
+**`aria-haspopup="dialog"`** — set in **both** modes, since the surface is a dialog in both (see the dialog-surface amendment). Menu/listbox/combobox do not wrap `<swc-popover>`; they build on the shared `PlacementController` with their own roles, so they set their own `aria-haspopup` value on their own triggers.
 This differs from the tooltip plan's `ariaDescribedByElements` wiring, which is open-only. Popover trigger relationships are durable across open/close cycles.
 
 ### Event lifecycle

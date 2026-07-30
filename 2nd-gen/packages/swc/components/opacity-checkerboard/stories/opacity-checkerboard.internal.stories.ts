@@ -74,7 +74,7 @@ class DemoOpacityCheckerboardSwatch extends LitElement {
   @property()
   public label = '';
 
-  /** CSS color for the fill layer, e.g. `rgba(255, 0, 0, 0.4)` or `transparent`. */
+  /** CSS color for the fill layer, e.g., `rgba(255, 0, 0, 0.4)` or `transparent`. */
   @property()
   public color = 'transparent';
 
@@ -121,7 +121,7 @@ interface OpacityCheckerboardProps {
 const SIZES = ['m', 's'] as const;
 
 const meta: Meta<OpacityCheckerboardProps> = {
-  title: 'Opacity Checkerboard',
+  title: 'Opacity checkerboard',
   component: 'demo-opacity-checkerboard-swatch',
   parameters: {
     docs: {
@@ -205,6 +205,7 @@ export const TransparentContent: Story = {
   parameters: { flexLayout: 'row-wrap' },
   tags: ['behaviors'],
 };
+TransparentContent.storyName = 'Transparent content';
 
 // ────────────────────────────────
 //    ACCESSIBILITY STORIES

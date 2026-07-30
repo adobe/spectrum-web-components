@@ -11,9 +11,9 @@ import * as ColorHandleStories from './stories/color-handle.stories';
 
 A color handle consists of:
 
-1. **Handle circle**: a round thumb sized to sit on a color-selection track, with a white separator border between two dark borders
-2. **Color fill**: the currently picked color, shown over an opacity checkerboard so transparency is visible (hidden when `fill` is `false`)
-3. **Built-in loupe**: an embedded `<swc-color-loupe>` that appears above the handle during touch interaction
+- **Handle circle**: a round thumb sized to sit on a color selection track, with a white separator border between two dark borders
+- **Color fill**: the currently picked color, shown over an opacity checkerboard so transparency is visible (hidden when `fill` is `false`)
+- **Built-in loupe**: an embedded `<swc-color-loupe>` that appears above the handle during touch interaction
 
 <Canvas of={ColorHandleStories.Anatomy} />
 
@@ -41,8 +41,6 @@ The `fill` boolean controls whether the inner color swatch is shown. It defaults
 <Canvas of={ColorHandleStories.Fill} />
 
 ## States
-
-### States
 
 The handle reflects three boolean states, all set by the parent color component:
 
