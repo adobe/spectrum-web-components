@@ -94,11 +94,7 @@
   z-index: 2;
 }
 
-/* Horizontal: adjacent buttons share the inline edge between them. */
-
-:host([compact]:not([quiet], [orientation="vertical"])) ::slotted(:not(:first-child)) {
-  margin-inline-start: calc(-1 * token("border-width-100"));
-}
+/* Horizontal: square off the corners where buttons meet. */
 
 :host([compact]:not([quiet], [orientation="vertical"])) ::slotted(:first-child:not(:last-child)) {
   --swc-action-button-border-start-end-radius: 0;
@@ -117,11 +113,7 @@
   --swc-action-button-border-end-end-radius: 0;
 }
 
-/* Vertical: adjacent buttons share the block edge between them. */
-
-:host([compact]:not([quiet])[orientation="vertical"]) ::slotted(:not(:first-child)) {
-  margin-block-start: calc(-1 * token("border-width-100"));
-}
+/* Vertical: square off the corners where buttons meet. */
 
 :host([compact]:not([quiet])[orientation="vertical"]) ::slotted(:first-child:not(:last-child)) {
   --swc-action-button-border-end-start-radius: 0;
