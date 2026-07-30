@@ -36,7 +36,7 @@
   background: currentcolor;
   opacity: 0;
 
-  /* grid placement, transform and border-radius are per-cell and set inline;
+  /* Grid placement, transform and border-radius are per-cell and set inline;
      see PixelLoader.ts. */
 }
 

@@ -16,7 +16,7 @@ import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
 import '../swc-pixel-loader.js';
 
-import { ICON_NAMES, PRESET_NAMES } from '../data.js';
+import { PIXEL_LOADER_ICON_NAMES, PIXEL_LOADER_PRESET_NAMES } from '../data.js';
 
 // ────────────────
 //    METADATA
@@ -27,13 +27,13 @@ const { args, argTypes, template } = getStorybookHelpers('swc-pixel-loader');
 argTypes.icon = {
   ...argTypes.icon,
   control: { type: 'select' },
-  options: ICON_NAMES,
+  options: PIXEL_LOADER_ICON_NAMES,
 };
 
 argTypes.preset = {
   ...argTypes.preset,
   control: { type: 'select' },
-  options: ['', ...PRESET_NAMES],
+  options: ['', ...PIXEL_LOADER_PRESET_NAMES],
 };
 
 /**
@@ -83,6 +83,17 @@ export const Overview: Story = {
   tags: ['overview'],
 };
 
+// ──────────────────────────
+//    ANATOMY STORIES
+// ──────────────────────────
+
+export const Anatomy: Story = {
+  args: {
+    icon: 'aiLogo',
+  },
+  tags: ['anatomy'],
+};
+
 // ──────────────────────────────
 //    OPTIONS STORIES
 // ──────────────────────────────
@@ -108,7 +119,7 @@ export const Icons: Story = {
 
 export const Presets: Story = {
   render: (args) => html`
-    ${PRESET_NAMES.map((preset) => template({ ...args, preset }))}
+    ${PIXEL_LOADER_PRESET_NAMES.map((preset) => template({ ...args, preset }))}
   `,
   tags: ['options'],
   parameters: { flexLayout: 'row-wrap' },

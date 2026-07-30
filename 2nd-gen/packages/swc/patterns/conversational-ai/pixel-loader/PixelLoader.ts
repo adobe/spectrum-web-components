@@ -26,7 +26,12 @@ import type {
   PixelLoaderIconName,
   PixelLoaderPresetName,
 } from './data.js';
-import { DURATION_MS, ICONS, PRESET_NAMES, PRESETS } from './data.js';
+import {
+  DURATION_MS,
+  ICONS,
+  PIXEL_LOADER_PRESET_NAMES,
+  PRESETS,
+} from './data.js';
 import {
   computeCornerRadii,
   CornerRadii,
@@ -35,7 +40,7 @@ import {
 
 import styles from './pixel-loader.css';
 
-export { ICON_NAMES, PRESET_NAMES } from './data.js';
+export { PIXEL_LOADER_ICON_NAMES, PIXEL_LOADER_PRESET_NAMES } from './data.js';
 export type { PixelLoaderIconName, PixelLoaderPresetName } from './data.js';
 
 /**
@@ -122,7 +127,7 @@ export class PixelLoader extends SpectrumElement {
   }
 
   private _isValidPreset(preset: string): preset is PixelLoaderPresetName {
-    return (PRESET_NAMES as readonly string[]).includes(preset);
+    return (PIXEL_LOADER_PRESET_NAMES as readonly string[]).includes(preset);
   }
 
   /**
@@ -240,7 +245,7 @@ export class PixelLoader extends SpectrumElement {
       <div
         class="swc-PixelLoader"
         style=${styleMap({ '--swc-pixel-loader-size': this.size })}
-        role="img"
+        role="progressbar"
         aria-label=${this.label}
       >
         ${cells.map((cell, index) => this._renderCell(cell, radii[index]))}

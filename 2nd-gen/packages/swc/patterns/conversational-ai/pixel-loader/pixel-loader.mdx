@@ -7,6 +7,15 @@ import * as PixelLoaderStories from './stories/pixel-loader.stories';
 
 <DocsHeader />
 
+## Anatomy
+
+A pixel loader consists of:
+
+- A **grid of pixel cells** that drop and fade into place to assemble the
+  active icon, then drop and fade away to disassemble it before the next loop
+
+<Canvas of={PixelLoaderStories.Anatomy} />
+
 ## Options
 
 ### Icons
@@ -35,10 +44,28 @@ no animation, matching the resting state used for `prefers-reduced-motion`.
 ## Accessibility
 
 This is a prototype implementation; accessibility semantics may evolve as the
-component matures. Currently the host renders with `role="img"` and an
-`aria-label` (via the `label` property, default `"Loading"`), and the
-animation is skipped entirely (rendering the settled state) when the user has
-requested reduced motion.
+component matures.
+
+### Features
+
+The `<swc-pixel-loader>` element implements the following accessibility
+features:
+
+- Host renders with `role="progressbar"`, with no `aria-valuenow` /
+  `aria-valuemin` / `aria-valuemax` since progress is always indeterminate
+- The `label` property (default `"Loading"`) sets the accessible name via
+  `aria-label`
+- The animation is skipped entirely (rendering the settled state) when the
+  user has requested reduced motion
+
+### Best practices
+
+- Always provide a descriptive `label` that explains what's loading (for
+  example `"Generating response"`) instead of relying on the default
+  `"Loading"`
+- Don't rely on the animation alone to convey that an operation is in
+  progress for long-running operations; pair it with a visible status message
+  elsewhere in the UI
 
 <Canvas of={PixelLoaderStories.Accessibility} />
 

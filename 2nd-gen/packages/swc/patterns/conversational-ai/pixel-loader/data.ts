@@ -959,7 +959,7 @@ const adobeE = buildCells(
   { staggerInterval: 2, stagger: 'grouped', rowOffset: -1 }
 );
 
-export const ICON_NAMES = [
+export const PIXEL_LOADER_ICON_NAMES = [
   'aiLogo',
   'brush',
   'eye',
@@ -992,7 +992,7 @@ export const ICON_NAMES = [
   'adobeE',
 ] as const;
 
-export type PixelLoaderIconName = (typeof ICON_NAMES)[number];
+export type PixelLoaderIconName = (typeof PIXEL_LOADER_ICON_NAMES)[number];
 
 export const ICONS: Record<PixelLoaderIconName, Cell[]> = {
   aiLogo,
@@ -1027,9 +1027,15 @@ export const ICONS: Record<PixelLoaderIconName, Cell[]> = {
   adobeE,
 };
 
-export const PRESET_NAMES = ['cc', 'dc', 'exp', 'analyze', 'mega'] as const;
+export const PIXEL_LOADER_PRESET_NAMES = [
+  'cc',
+  'dc',
+  'exp',
+  'analyze',
+  'mega',
+] as const;
 
-export type PixelLoaderPresetName = (typeof PRESET_NAMES)[number];
+export type PixelLoaderPresetName = (typeof PIXEL_LOADER_PRESET_NAMES)[number];
 
 export const PRESETS: Record<PixelLoaderPresetName, PixelLoaderIconName[]> = {
   cc: [
