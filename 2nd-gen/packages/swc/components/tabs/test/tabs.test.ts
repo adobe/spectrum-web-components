@@ -134,12 +134,14 @@ export const DirectionPropertyTest: Story = {
       ).toBe('horizontal');
     });
 
-    await step('invalid direction falls back to horizontal', async () => {
+    await step('invalid direction is left in place (warn-only)', async () => {
       tabs.direction = 'invalid' as Tabs['direction'];
       await tabs.updateComplete;
-      expect(tabs.direction, 'direction resets to horizontal').toBe(
-        'horizontal'
-      );
+      expect(tabs.direction, 'invalid direction persists').toBe('invalid');
+      expect(
+        tabs.getAttribute('direction'),
+        'invalid direction reflects to the attribute'
+      ).toBe('invalid');
     });
   },
 };
