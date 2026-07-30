@@ -138,14 +138,6 @@
   --swc-prompt-field-artifact-fade-solid: color-mix(in srgb, token("background-layer-2-color") 80%, transparent);
 }
 
-/* Container-level focus stop: Tab reaches the strip itself (between the "<"
- * and ">" buttons, which sit outside this ring), distinct from a tile's own
- * ring; Enter/Space then moves focus into a tile. */
-.swc-PromptField-artifacts-viewport:focus-visible {
-  outline: token("focus-indicator-thickness") solid token("focus-indicator-color");
-  outline-offset: token("focus-ring-gap");
-}
-
 /* Spans the badge-clearance strip too (not just the tile height): a
  * scrolling tile's corner badge lives partly in that clearance zone, and a
  * fade that stopped at the tile's own top edge would leave the badge's

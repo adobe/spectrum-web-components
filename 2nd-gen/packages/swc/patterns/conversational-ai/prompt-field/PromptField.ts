@@ -167,15 +167,11 @@ export class PromptField extends SpectrumElement {
   private _artifactScrollButtonResetTimer?: number;
 
   /**
-   * Roving tabindex + arrow-key focus movement across artifact tiles (Figma
-   * focus-order spec §3). One step per Arrow Left/Right; chevron buttons
-   * separately page by a full set (§6-7), unrelated to this controller.
-   *
-   * `getItems` returns no items until the strip has been "entered" (see
-   * `_artifactStripEntered`): the tiles must stay out of the Tab order so the
-   * container's own focus stop (`.swc-PromptField-artifacts-row`,
-   * `tabindex="0"`) is what Tab reaches first, with Enter/Space diving into
-   * the tiles from there.
+   * Roving tabindex + arrow-key focus movement across artifact tiles. The
+   * first (or last-active, via `memory`) tile always carries `tabindex="0"`,
+   * so it is Tab's first stop into the strip with no separate entry step;
+   * Arrow Left/Right move that roving stop one tile at a time. Chevron
+   * buttons separately page by a full set, unrelated to this controller.
    */
   private readonly _artifactNavigation = new FocusgroupNavigationController(
     this,
@@ -183,31 +179,10 @@ export class PromptField extends SpectrumElement {
       direction: 'horizontal',
       wrap: false,
       memory: true,
-      getItems: () =>
-        this._artifactStripEntered
-          ? (this._assignedArtifactElements ?? [])
-          : [],
+      getItems: () => this._assignedArtifactElements ?? [],
       onActiveItemChange: () => this.requestUpdate(),
     }
   );
-
-  /**
-   * Whether the user has "entered" the artifact strip past its container
-   * focus stop, via Enter/Space on the container or Arrow keys/Enter/Space on
-   * a tile (Figma focus-order spec §4). Gates whether tiles are in the Tab
-   * order at all, and whether Tab from the active tile reveals its Close
-   * button. Resets when focus leaves the strip entirely.
-   */
-  @state()
-  private _artifactStripEntered = false;
-
-  /**
-   * Whether the strip has ever been entered before. On the very first entry
-   * there is no roving-controller memory yet, so `_enterArtifactStrip` lands
-   * on the first fully-visible tile instead of always tile 0; on every entry
-   * after that, the controller's own memory of the last-active tile wins.
-   */
-  private _artifactStripHasBeenEntered = false;
 
   /** Set in `willUpdate` when a chevron about to disappear currently has focus; consumed in `updated`. */
   private _pendingArtifactFocusRedirect: 'first' | 'last' | null = null;
@@ -349,16 +324,14 @@ export class PromptField extends SpectrumElement {
   private _handleArtifactSlotChange(): void {
     this._warnIfMixedArtifactTypes();
     this._artifactNavigation.refresh();
-    // A single artifact has no row wrapper to act as its Tab stop (unlike the
-    // 2+ roving-tabindex strip), so it must carry its own tabindex directly;
-    // ponytail: reachable via Tab, not yet wired into arrow-key navigation.
+    // A single artifact has no row wrapper or roving-tabindex controller
+    // (that only manages 2+ tiles), so it must carry its own tabindex
+    // directly; ponytail: reachable via Tab, not yet wired into arrow-key
+    // navigation. For 2+ tiles, `refresh()` above already owns every tile's
+    // tabindex.
     const artifacts = this._assignedArtifactElements ?? [];
     if (artifacts.length === 1) {
       artifacts[0].tabIndex = 0;
-    } else {
-      for (const el of artifacts) {
-        el.tabIndex = -1;
-      }
     }
     const dismissedArtifact = this._pendingArtifactDismiss;
     const dismissedArtifactWasRemoved =
@@ -414,7 +387,6 @@ export class PromptField extends SpectrumElement {
       return;
     }
 
-    this._artifactStripEntered = true;
     this._artifactNavigation.refresh();
     this._focusArtifact(target);
   }
@@ -518,9 +490,6 @@ export class PromptField extends SpectrumElement {
     if (!activeElement || (source !== 'keyboard' && source !== 'focus')) {
       return;
     }
-    if (source === 'keyboard') {
-      this._artifactStripEntered = true;
-    }
     activeElement.scrollIntoView({
       behavior: this._artifactScrollBehavior(),
       block: 'nearest',
@@ -528,108 +497,7 @@ export class PromptField extends SpectrumElement {
     });
   };
 
-  /** Whether `node` is a focus target that belongs to the artifact strip (tiles, their dismiss buttons, or the chevrons). */
-  private _isArtifactStripFocusTarget(node: Node | null): boolean {
-    if (!node) {
-      return false;
-    }
-    const row = this.shadowRoot?.querySelector(
-      '.swc-PromptField-artifacts-row'
-    );
-    if (row && deepContains(row, node)) {
-      return true;
-    }
-    return (this._assignedArtifactElements ?? []).some((el) =>
-      deepContains(el, node)
-    );
-  }
-
-  private _handleArtifactRowFocusOut(event: FocusEvent): void {
-    if (!this._isArtifactStripFocusTarget(event.relatedTarget as Node | null)) {
-      this._artifactStripEntered = false;
-      // `getItems` returns [] while not entered, so the roving controller's
-      // own tabindex bookkeeping never touches these tiles again; clear their
-      // leftover tabindex from the last time the strip was entered directly
-      // so a tile can never be reached by a plain Tab into the strip.
-      for (const el of this._assignedArtifactElements ?? []) {
-        el.tabIndex = -1;
-      }
-    }
-  }
-
-  /** The first tile that is fully (not partially) within the current scroll viewport. */
-  private _firstFullyVisibleArtifact(): HTMLElement | null {
-    const scrollEl = this._artifactScrollEl;
-    if (!scrollEl) {
-      return null;
-    }
-    return (
-      (this._assignedArtifactElements ?? []).find(
-        (el) => this._getArtifactTileVisibleFraction(el, scrollEl) >= 0.999
-      ) ?? null
-    );
-  }
-
-  /**
-   * Moves focus into the artifact strip, entering it. Prefers the tile the
-   * roving controller already remembers as active (e.g. re-entering after
-   * tabbing away); otherwise lands on the first fully-visible tile for the
-   * strip's current scroll position rather than always tile 0, so entering
-   * after scrolling doesn't jump focus off-screen.
-   */
-  private _enterArtifactStrip(): void {
-    const artifacts = this._assignedArtifactElements ?? [];
-    if (artifacts.length === 0) {
-      return;
-    }
-    this._artifactStripEntered = true;
-    // Read before `refresh()`: with no prior memory, `refresh()` itself
-    // defaults to tile 0, which would make it indistinguishable from a
-    // genuinely-remembered tile 0 once read back afterward.
-    const isFirstEntry = !this._artifactStripHasBeenEntered;
-    this._artifactStripHasBeenEntered = true;
-    this._artifactNavigation.refresh();
-    const target = isFirstEntry
-      ? (this._firstFullyVisibleArtifact() ?? artifacts[0])
-      : (this._artifactNavigation.getActiveItem() ?? artifacts[0]);
-    this._focusArtifact(target);
-  }
-
   private _handleArtifactRowKeydown(event: KeyboardEvent): void {
-    const isEnterOrSpace = event.key === 'Enter' || event.key === ' ';
-    const isArrow = event.key === 'ArrowLeft' || event.key === 'ArrowRight';
-    const active = getActiveElement();
-    const stripContainer = this.shadowRoot?.querySelector(
-      '.swc-PromptField-artifacts-viewport'
-    );
-
-    if (isEnterOrSpace && active === stripContainer) {
-      event.preventDefault();
-      this._enterArtifactStrip();
-      return;
-    }
-
-    if (isEnterOrSpace || isArrow) {
-      const isTile = (this._assignedArtifactElements ?? []).includes(
-        active as HTMLElement
-      );
-      if (isTile) {
-        // Marks the strip as "entered" per the focus-order spec, even when an
-        // Arrow key is a no-op at the first/last tile boundary (the roving
-        // controller only fires its active-change event on an actual move,
-        // so relying on that alone misses this case). Opening a Spotlight
-        // preview on Enter/Space is a follow-up; for now this only unlocks
-        // Tab access to the tile's Close button.
-        this._artifactStripEntered = true;
-        if (isEnterOrSpace) {
-          event.preventDefault();
-        }
-      }
-      if (isEnterOrSpace) {
-        return;
-      }
-    }
-
     if (event.key !== 'Tab') {
       return;
     }
@@ -647,32 +515,27 @@ export class PromptField extends SpectrumElement {
     const nextButton = this.shadowRoot?.querySelector<HTMLButtonElement>(
       '.swc-PromptField-artifacts-scroll-next'
     );
+    const prevButton = this.shadowRoot?.querySelector<HTMLButtonElement>(
+      '.swc-PromptField-artifacts-scroll-prev'
+    );
 
-    // From the active thumbnail: Tab reveals its Close button, but only once
-    // the user has "entered" the strip (Arrow keys or Enter/Space).
+    // From the active tile: Tab reveals its Close button. Shift+Tab is left
+    // to native default, which (roving tabindex leaves every other tile at
+    // -1) exits the group entirely regardless of which tile is active.
     if (artifacts.includes(active as HTMLElement)) {
-      // Shift+Tab from the first tile exits the strip entirely rather than
-      // landing back on the container's own focus stop or the "<" button;
-      // there is no re-entry ring on the way out.
-      if (event.shiftKey && artifacts.indexOf(active as HTMLElement) === 0) {
-        this._skipArtifactStripContainerForShiftTab();
+      if (event.shiftKey) {
         return;
       }
-      if (!event.shiftKey && this._artifactStripEntered) {
-        const dismiss = (
-          active as HTMLElement
-        ).shadowRoot?.querySelector<HTMLButtonElement>(
-          '.swc-UploadArtifact-dismiss'
-        );
-        if (dismiss && !dismiss.hidden) {
-          event.preventDefault();
-          dismiss.focus();
-        }
+      const dismiss = this._artifactDismissButton(active as HTMLElement);
+      if (dismiss) {
+        event.preventDefault();
+        dismiss.focus();
       }
       return;
     }
 
-    // From a tile's Close button.
+    // From a tile's Close button: Tab moves to the Next chevron (if
+    // rendered); Shift+Tab returns to the tile.
     const root = active.getRootNode();
     if (
       root instanceof ShadowRoot &&
@@ -689,7 +552,41 @@ export class PromptField extends SpectrumElement {
         event.preventDefault();
         nextButton.focus();
       }
+      return;
     }
+
+    // From the Next chevron: Shift+Tab moves backward into the roving
+    // controller's current active tile (updated by `_scrollArtifactsByPage`
+    // after paging, so this lands in the newly displayed set rather than
+    // wherever focus was before the page turned) — its Close button when
+    // visible, mirroring the forward tile -> Close -> Next chain in reverse,
+    // otherwise the tile itself.
+    if (active === nextButton && event.shiftKey) {
+      const activeTile = this._artifactNavigation.getActiveItem();
+      if (activeTile) {
+        event.preventDefault();
+        (this._artifactDismissButton(activeTile) ?? activeTile).focus();
+      }
+      return;
+    }
+
+    // From the Prev chevron: plain Tab moves forward into the roving
+    // controller's current active tile, for the same reason as above.
+    if (active === prevButton && !event.shiftKey) {
+      const activeTile = this._artifactNavigation.getActiveItem();
+      if (activeTile) {
+        event.preventDefault();
+        activeTile.focus();
+      }
+    }
+  }
+
+  /** `tile`'s Close button, or `null` when absent or not currently shown. */
+  private _artifactDismissButton(tile: HTMLElement): HTMLButtonElement | null {
+    const dismiss = tile.shadowRoot?.querySelector<HTMLButtonElement>(
+      '.swc-UploadArtifact-dismiss'
+    );
+    return dismiss && !dismiss.hidden ? dismiss : null;
   }
 
   /**
@@ -735,26 +632,6 @@ export class PromptField extends SpectrumElement {
       event.preventDefault();
       tile.focus();
     }
-  }
-
-  /**
-   * Temporarily takes the strip container out of the Tab order so the
-   * browser's own (un-prevented) Shift+Tab default action lands on the "<"
-   * button (if rendered) or whatever precedes the strip, rather than
-   * re-triggering the container's own ring on the way out. Restores it on
-   * the next frame once the browser has already moved focus.
-   */
-  private _skipArtifactStripContainerForShiftTab(): void {
-    const stripContainer = this.shadowRoot?.querySelector<HTMLElement>(
-      '.swc-PromptField-artifacts-viewport'
-    );
-    if (!stripContainer) {
-      return;
-    }
-    stripContainer.tabIndex = -1;
-    requestAnimationFrame(() => {
-      stripContainer.tabIndex = 0;
-    });
   }
 
   private _captureArtifactChevronFocusRedirect(
@@ -1022,6 +899,11 @@ export class PromptField extends SpectrumElement {
           left: maxScroll,
           behavior: 'auto',
         });
+        // Points the roving tab stop at the now-visible last tile, without
+        // moving focus off the Next button, so Shift+Tab from Next lands in
+        // the newly displayed set rather than wherever focus was left before
+        // paging.
+        this._artifactNavigation.setActiveItem(children[children.length - 1]);
         return;
       }
 
@@ -1040,6 +922,8 @@ export class PromptField extends SpectrumElement {
         block: 'nearest',
         inline: 'start',
       });
+      // See the comment on the exact-maxScroll branch above.
+      this._artifactNavigation.setActiveItem(nextStart);
       return;
     }
 
@@ -1055,6 +939,11 @@ export class PromptField extends SpectrumElement {
         block: 'nearest',
         inline: 'start',
       });
+      // Points the roving tab stop at the now-visible first tile, without
+      // moving focus off the Prev button, so Tab from Prev lands in the
+      // newly displayed set rather than wherever focus was left before
+      // paging.
+      this._artifactNavigation.setActiveItem(children[0]);
       return;
     }
 
@@ -1070,6 +959,8 @@ export class PromptField extends SpectrumElement {
       block: 'nearest',
       inline: 'end',
     });
+    // See the comment on the "first <= 0" branch above.
+    this._artifactNavigation.setActiveItem(prevEnd);
   }
 
   private _updateArtifactScrollState(): void {
@@ -1237,7 +1128,6 @@ export class PromptField extends SpectrumElement {
         <div
           class="swc-PromptField-artifacts-row"
           @keydown=${this._handleArtifactRowKeydown}
-          @focusout=${this._handleArtifactRowFocusOut}
         >
           ${this._artifactScrollOverflow && this._artifactCanScrollPrev
             ? html`
@@ -1256,7 +1146,6 @@ export class PromptField extends SpectrumElement {
           <div
             class="swc-PromptField-artifacts-viewport"
             role="region"
-            tabindex="0"
             aria-label=${this.artifactStripLabel}
           >
             <div

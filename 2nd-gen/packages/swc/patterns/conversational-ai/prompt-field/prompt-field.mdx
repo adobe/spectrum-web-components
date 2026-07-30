@@ -113,12 +113,12 @@ The `<swc-prompt-field>` element implements the following accessibility features
 
 #### Artifact strip keyboard navigation
 
-The artifact strip is a `role="region"` landmark (labeled `artifact-strip-label`, default "Uploaded assets strip") with a container-level focus stop and roving-tabindex thumbnails:
+The artifact strip is a `role="region"` landmark (labeled `artifact-strip-label`, default "Uploaded assets strip") wrapping roving-tabindex thumbnails; the landmark itself is not a tab stop:
 
-- **Tab**: moves through the previous chevron when present, then the strip landmark, then the next chevron when present. Press Enter or Space on the landmark to enter the active thumbnail; once you've interacted with a thumbnail via Arrow keys or Enter/Space, Tab additionally reveals that tile's Close button before continuing
+- **Tab**: moves through the previous chevron when present, then directly to the active thumbnail (the first one, until Arrow keys move that roving stop elsewhere), then that thumbnail's Close button, then the next chevron when present, then out of the strip
 - **Arrow Left/Right**: move the active thumbnail one tile at a time and scroll it into view (distinct from the `<`/`>` chevrons, which page by a full set)
-- **Enter/Space** on a thumbnail: marks the strip as interacted with, unlocking Tab access to Close
-- **Shift+Tab** from Close: returns to the thumbnail; **Tab** from Close reaches the `>` chevron when more content is scrolled out of view, otherwise continues to the prompt textarea
+- **Shift+Tab** from Close: returns to the thumbnail; **Shift+Tab** from a thumbnail exits the strip entirely
+- Activating the `>` chevron (click, Enter, or Space) keeps focus on the chevron and scrolls the next set of tiles into view; **Shift+Tab** from it then moves into that newly displayed set (its active thumbnail's Close button when shown, otherwise the thumbnail). The `<` chevron is the mirror: activating it keeps focus there, and **Tab** moves into the newly displayed set
 - The `<`/`>` chevrons redirect focus to the nearest thumbnail instead of losing it if they disappear while focused (for example, paging all the way to one end)
 
 ### Best practices

@@ -491,87 +491,86 @@ export const ArtifactFocusOrderTest: Story = {
         '.swc-UploadArtifact-dismiss'
       );
 
-    await step('landmark region is the strip container tab stop', async () => {
-      const viewport = el.shadowRoot?.querySelector(
-        '.swc-PromptField-artifacts-viewport'
-      );
-      expect(viewport?.getAttribute('role')).toBe('region');
-      expect(viewport?.getAttribute('aria-label')).toBe(
-        'Uploaded assets strip'
-      );
-      expect((viewport as HTMLElement | null)?.tabIndex).toBe(0);
-    });
+    await step(
+      'the strip landmark is a region, but not itself a tab stop',
+      async () => {
+        const viewport = el.shadowRoot?.querySelector(
+          '.swc-PromptField-artifacts-viewport'
+        );
+        expect(viewport?.getAttribute('role')).toBe('region');
+        expect(viewport?.getAttribute('aria-label')).toBe(
+          'Uploaded assets strip'
+        );
+        expect((viewport as HTMLElement | null)?.hasAttribute('tabindex')).toBe(
+          false
+        );
+      }
+    );
 
     await step(
-      'before entering, tiles/dismiss buttons stay out of the tab order; ">" is a normal tab stop',
+      'the first tile carries tabindex 0 from the start; the rest and their Close buttons stay out of the tab order',
       async () => {
-        expect(artifacts.every((tile) => tile.tabIndex === -1)).toBe(true);
+        expect(artifacts[0]?.tabIndex).toBe(0);
+        expect(artifacts.slice(1).every((tile) => tile.tabIndex === -1)).toBe(
+          true
+        );
         expect(
           artifacts.every((tile) => getDismissButton(tile)?.tabIndex === -1)
         ).toBe(true);
-        expect(getNextButton()?.tabIndex).toBe(0);
       }
     );
 
-    await step(
-      'Enter on the container enters the strip at the first tile',
-      async () => {
-        const viewport = el.shadowRoot?.querySelector<HTMLElement>(
-          '.swc-PromptField-artifacts-viewport'
-        );
-        viewport?.focus();
-        const event = dispatchKeydown(viewport!, 'Enter');
-        await el.updateComplete;
+    await step('first Tab reaches the first tile directly', async () => {
+      textarea?.blur();
+      artifacts[0]?.focus();
+      expect(getActiveElement()).toBe(artifacts[0]);
+    });
 
-        expect(event.defaultPrevented).toBe(true);
-        expect(getActiveElement()).toBe(artifacts[0]);
-        expect(artifacts[0]?.tabIndex).toBe(0);
-      }
-    );
+    await step('second Tab reveals the tile’s Close button', async () => {
+      const event = dispatchKeydown(artifacts[0]!, 'Tab');
+      await el.updateComplete;
 
-    await step(
-      'Arrow Right moves the roving tab stop one tile and marks the strip entered',
-      async () => {
-        artifacts[0]?.focus();
-        dispatchKeydown(artifacts[0]!, 'ArrowRight');
-        await el.updateComplete;
-
-        expect(artifacts[0]?.tabIndex).toBe(-1);
-        expect(artifacts[1]?.tabIndex).toBe(0);
-        expect(getActiveElement()).toBe(artifacts[1]);
-      }
-    );
-
-    await step(
-      'Tab from the active (entered) tile reveals its Close button',
-      async () => {
-        const active = artifacts[1]!;
-        const event = dispatchKeydown(active, 'Tab');
-        await el.updateComplete;
-
-        expect(event.defaultPrevented).toBe(true);
-        expect(getActiveElement()).toBe(getDismissButton(active));
-      }
-    );
+      expect(event.defaultPrevented).toBe(true);
+      expect(getActiveElement()).toBe(getDismissButton(artifacts[0]!));
+    });
 
     await step(
       'Shift+Tab from the Close button returns focus to the tile',
       async () => {
-        const active = artifacts[1]!;
-        const dismiss = getDismissButton(active)!;
+        const dismiss = getDismissButton(artifacts[0]!)!;
         const event = dispatchKeydown(dismiss, 'Tab', { shiftKey: true });
         await el.updateComplete;
 
         expect(event.defaultPrevented).toBe(true);
-        expect(getActiveElement()).toBe(active);
+        expect(getActiveElement()).toBe(artifacts[0]);
+      }
+    );
+
+    await step('Arrow Right moves the roving tab stop one tile', async () => {
+      artifacts[0]?.focus();
+      dispatchKeydown(artifacts[0]!, 'ArrowRight');
+      await el.updateComplete;
+
+      expect(artifacts[0]?.tabIndex).toBe(-1);
+      expect(artifacts[1]?.tabIndex).toBe(0);
+      expect(getActiveElement()).toBe(artifacts[1]);
+    });
+
+    await step(
+      'Tab from any active tile (not just the first) reveals its Close button',
+      async () => {
+        const event = dispatchKeydown(artifacts[1]!, 'Tab');
+        await el.updateComplete;
+
+        expect(event.defaultPrevented).toBe(true);
+        expect(getActiveElement()).toBe(getDismissButton(artifacts[1]!));
       }
     );
 
     await step(
       'Tab from the Close button reaches the ">" button when more content is scrolled out of view',
       async () => {
-        const active = artifacts[1]!;
-        const dismiss = getDismissButton(active)!;
+        const dismiss = getDismissButton(artifacts[1]!)!;
         dismiss.focus();
         const event = dispatchKeydown(dismiss, 'Tab');
         await el.updateComplete;
@@ -584,73 +583,24 @@ export const ArtifactFocusOrderTest: Story = {
     );
 
     await step(
-      'focus leaving the strip resets "entered"; Tab from an untouched tile does not intercept',
+      'Tab from the ">" button (without activating it) moves forward, outside the strip',
       async () => {
-        textarea?.focus();
+        const nextButton = getNextButton()!;
+        nextButton.focus();
+        const event = dispatchKeydown(nextButton, 'Tab');
         await el.updateComplete;
 
-        artifacts[1]?.focus();
-        await el.updateComplete;
-        const event = dispatchKeydown(artifacts[1]!, 'Tab');
-
-        // Not "entered" (focus arrived via .focus(), not Arrow/Enter), so the
-        // Close button/">" intercept must not fire; native Tab is left alone.
         expect(event.defaultPrevented).toBe(false);
       }
     );
 
     await step(
-      'Enter marks the strip entered without moving focus off the tile',
+      'Shift+Tab from any active tile exits the strip to native default, not the Close button',
       async () => {
-        const active = artifacts[1]!;
-        active.focus();
-        const event = dispatchKeydown(active, 'Enter');
-        await el.updateComplete;
-
-        expect(event.defaultPrevented).toBe(true);
-        expect(getActiveElement()).toBe(active);
-
-        const tabEvent = dispatchKeydown(active, 'Tab');
-        await el.updateComplete;
-        expect(tabEvent.defaultPrevented).toBe(true);
-        expect(getActiveElement()).toBe(getDismissButton(active));
-      }
-    );
-
-    await step(
-      'Tab from the "<" button is left to native default, not intercepted into a tile',
-      async () => {
-        scrollEl?.scrollTo({ left: 200, behavior: 'auto' });
-        await new Promise((resolve) => requestAnimationFrame(resolve));
-        await el.updateComplete;
-
-        const prevButton = getPrevButton();
-        expect(prevButton).toBeTruthy();
-        prevButton?.focus();
-        const event = dispatchKeydown(prevButton!, 'Tab');
-        await el.updateComplete;
-
-        // The "<" chevron is a normal tab stop like any other outside the
-        // strip: Tab/Shift+Tab from it is never intercepted, so the next
-        // real stop is the container (region), never a tile directly.
-        expect(event.defaultPrevented).toBe(false);
-      }
-    );
-
-    await step(
-      'Shift+Tab from the ">" button is left to native default, not intercepted into a tile',
-      async () => {
-        // Force a known, deterministic scroll position rather than relying on
-        // wherever the previous step left the scroll offset (that position
-        // is layout-dependent and varies across browsers).
-        scrollEl?.scrollTo({ left: 0, behavior: 'auto' });
-        await new Promise((resolve) => requestAnimationFrame(resolve));
-        await el.updateComplete;
-
-        const nextButton = getNextButton();
-        expect(nextButton).toBeTruthy();
-        nextButton?.focus();
-        const event = dispatchKeydown(nextButton!, 'Tab', { shiftKey: true });
+        artifacts[3]?.focus();
+        const event = dispatchKeydown(artifacts[3]!, 'Tab', {
+          shiftKey: true,
+        });
         await el.updateComplete;
 
         expect(event.defaultPrevented).toBe(false);
@@ -680,30 +630,6 @@ export const ArtifactFocusOrderTest: Story = {
     );
 
     await step(
-      'a boundary Arrow key (no-op move) still marks the strip entered',
-      async () => {
-        // Leave and re-enter the first tile via .focus() (source: 'focus',
-        // not 'keyboard') so "entered" is genuinely false going into this.
-        textarea?.focus();
-        await el.updateComplete;
-        artifacts[0]?.focus();
-        await el.updateComplete;
-
-        // ArrowLeft at index 0 with wrap:false is a no-op for the roving
-        // controller (no active-change event fires), but the spec still
-        // counts pressing it as "entering" the strip.
-        dispatchKeydown(artifacts[0]!, 'ArrowLeft');
-        await el.updateComplete;
-        expect(getActiveElement()).toBe(artifacts[0]);
-
-        const event = dispatchKeydown(artifacts[0]!, 'Tab');
-        await el.updateComplete;
-        expect(event.defaultPrevented).toBe(true);
-        expect(getActiveElement()).toBe(getDismissButton(artifacts[0]!));
-      }
-    );
-
-    await step(
       'dismissing a focused artifact restores focus to the nearest tile',
       async () => {
         const active = artifacts[1]!;
@@ -727,7 +653,7 @@ export const ArtifactFocusOrderTest: Story = {
   },
 };
 
-export const ArtifactEnterAfterScrollTest: Story = {
+export const ArtifactChevronPagingFocusTest: Story = {
   render: () => nothing,
   play: async ({ canvasElement, step }) => {
     renderMultiArtifactPromptField(canvasElement);
@@ -746,26 +672,118 @@ export const ArtifactEnterAfterScrollTest: Story = {
     const scrollEl = el.shadowRoot?.querySelector<HTMLDivElement>(
       '.swc-PromptField-artifacts-scroll'
     );
-    const viewport = el.shadowRoot?.querySelector<HTMLElement>(
-      '.swc-PromptField-artifacts-viewport'
+    const getNextButton = (): HTMLButtonElement | null | undefined =>
+      el.shadowRoot?.querySelector<HTMLButtonElement>(
+        '.swc-PromptField-artifacts-scroll-next'
+      );
+    const getPrevButton = (): HTMLButtonElement | null | undefined =>
+      el.shadowRoot?.querySelector<HTMLButtonElement>(
+        '.swc-PromptField-artifacts-scroll-prev'
+      );
+    const visibleTiles = (): HTMLElement[] => {
+      const viewportRect = scrollEl!.getBoundingClientRect();
+      return artifacts.filter((tile) => {
+        const tileRect = tile.getBoundingClientRect();
+        return (
+          tileRect.right > viewportRect.left &&
+          tileRect.left < viewportRect.right
+        );
+      });
+    };
+
+    /** The tile owning the active element: the tile itself, or (if focus
+     * landed on its Close button) the shadow host of that button. */
+    const activeTile = (): HTMLElement | null => {
+      const active = getActiveElement();
+      if (!active) {
+        return null;
+      }
+      if (artifacts.includes(active as HTMLElement)) {
+        return active as HTMLElement;
+      }
+      const root = active.getRootNode();
+      if (
+        root instanceof ShadowRoot &&
+        artifacts.includes(root.host as HTMLElement)
+      ) {
+        return root.host as HTMLElement;
+      }
+      return null;
+    };
+
+    await step(
+      'activating Next keeps focus on Next, not on any tile',
+      async () => {
+        const nextButton = getNextButton()!;
+        nextButton.focus();
+        const scrollEnd = waitForScrollEnd(scrollEl);
+        nextButton.click();
+        await scrollEnd;
+        await el.updateComplete;
+
+        expect(getActiveElement()).toBe(nextButton);
+      }
     );
 
     await step(
-      'entering the strip for the first time after scrolling lands on the first fully-visible tile, not tile 0',
+      'Shift+Tab from Next lands in the newly displayed set of tiles, not wherever focus was before paging',
       async () => {
-        scrollEl?.scrollTo({ left: 300, behavior: 'auto' });
-        await new Promise((resolve) => requestAnimationFrame(resolve));
-        await el.updateComplete;
-        expect(scrollEl?.scrollLeft ?? 0).toBeGreaterThan(0);
+        const nextButton = getNextButton()!;
+        const currentlyVisible = visibleTiles();
+        expect(
+          currentlyVisible.includes(artifacts[0]!),
+          'sanity check: paging actually moved past the first tile'
+        ).toBe(false);
 
-        viewport?.focus();
-        const event = dispatchKeydown(viewport!, 'Enter');
+        const event = dispatchKeydown(nextButton, 'Tab', { shiftKey: true });
         await el.updateComplete;
 
         expect(event.defaultPrevented).toBe(true);
-        const active = getActiveElement();
-        expect(active).not.toBe(artifacts[0]);
-        expect(artifacts.includes(active as HTMLElement)).toBe(true);
+        expect(currentlyVisible.includes(activeTile()!)).toBe(true);
+      }
+    );
+
+    await step(
+      'Tab from Prev (after paging backward) lands in the newly displayed set of tiles',
+      async () => {
+        scrollEl?.scrollTo({ left: 0, behavior: 'auto' });
+        await new Promise((resolve) => requestAnimationFrame(resolve));
+        await el.updateComplete;
+
+        const nextButton = getNextButton()!;
+        const firstPage = waitForScrollEnd(scrollEl);
+        nextButton.click();
+        await firstPage;
+        await el.updateComplete;
+        const secondPage = waitForScrollEnd(scrollEl);
+        nextButton.click();
+        await secondPage;
+        await el.updateComplete;
+
+        const tilesBeforePagingBack = visibleTiles();
+
+        const prevButton = getPrevButton()!;
+        prevButton.focus();
+        const backPage = waitForScrollEnd(scrollEl);
+        prevButton.click();
+        await backPage;
+        await el.updateComplete;
+
+        expect(getActiveElement()).toBe(prevButton);
+
+        const tilesAfterPagingBack = visibleTiles();
+        expect(
+          tilesAfterPagingBack.some(
+            (tile) => !tilesBeforePagingBack.includes(tile)
+          ),
+          'sanity check: paging back actually revealed a different set of tiles'
+        ).toBe(true);
+
+        const event = dispatchKeydown(prevButton, 'Tab');
+        await el.updateComplete;
+
+        expect(event.defaultPrevented).toBe(true);
+        expect(tilesAfterPagingBack.includes(activeTile()!)).toBe(true);
       }
     );
   },
