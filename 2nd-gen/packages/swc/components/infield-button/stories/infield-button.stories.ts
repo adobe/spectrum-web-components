@@ -55,8 +55,7 @@ const crossIconSvg = `<svg slot="icon" xmlns="http://www.w3.org/2000/svg" viewBo
 // ──────────────────────────────────────────────────
 
 // Single function renders the labelled field wrapper for all three field types.
-// Wrapper: padding:6px on all sides, border-inline-end on input as separator.
-// Stepper places both buttons on the trailing edge (Figma spec).
+// Stepper: decrement | input | increment (standard stepper layout).
 //
 // TODO: Replace the native <label> and <input> elements with <swc-text-field>,
 // <swc-search>, and <swc-number-field> once those components are migrated to 2nd-gen.
@@ -83,7 +82,7 @@ const renderField = ({
   const inputStyle =
     'flex:1;border:none;outline:none;background:transparent;min-inline-size:0;color:inherit;';
 
-  const buttons =
+  const trailingButton =
     type === 'picker'
       ? html`
           <swc-infield-button
@@ -102,24 +101,7 @@ const renderField = ({
               ${unsafeHTML(crossIconSvg)}
             </swc-infield-button>
           `
-        : html`
-            <div style="display:flex;gap:6px;">
-              <swc-infield-button
-                accessible-label="Decrement ${label.toLowerCase()}"
-                size=${size}
-                ?disabled=${disabled}
-              >
-                ${unsafeHTML(removeIconSvg)}
-              </swc-infield-button>
-              <swc-infield-button
-                accessible-label="Increment ${label.toLowerCase()}"
-                size=${size}
-                ?disabled=${disabled}
-              >
-                ${unsafeHTML(addIconSvg)}
-              </swc-infield-button>
-            </div>
-          `;
+        : null;
 
   return html`
     <div
@@ -137,20 +119,42 @@ const renderField = ({
       <div
         style="display:flex;align-items:stretch;padding:6px;border:1px solid var(--spectrum-gray-300,#cacaca);border-radius:var(--spectrum-corner-radius-100,4px);overflow:hidden;"
       >
-        <input
-          id=${id}
-          type=${type === 'search'
-            ? 'search'
-            : type === 'stepper'
-              ? 'number'
-              : 'text'}
-          .value=${String(value)}
-          ?readonly=${type === 'picker'}
-          ?disabled=${disabled}
-          style=${inputStyle +
-          (type === 'stepper' ? '-moz-appearance:textfield;' : '')}
-        />
-        ${buttons}
+        ${type === 'stepper'
+          ? html`
+              <swc-infield-button
+                accessible-label="Decrement ${label.toLowerCase()}"
+                size=${size}
+                ?disabled=${disabled}
+              >
+                ${unsafeHTML(removeIconSvg)}
+              </swc-infield-button>
+              <input
+                id=${id}
+                type="number"
+                .value=${String(value)}
+                ?disabled=${disabled}
+                style=${inputStyle +
+                '-moz-appearance:textfield;text-align:center;'}
+              />
+              <swc-infield-button
+                accessible-label="Increment ${label.toLowerCase()}"
+                size=${size}
+                ?disabled=${disabled}
+              >
+                ${unsafeHTML(addIconSvg)}
+              </swc-infield-button>
+            `
+          : html`
+              <input
+                id=${id}
+                type=${type === 'search' ? 'search' : 'text'}
+                .value=${String(value)}
+                ?readonly=${type === 'picker'}
+                ?disabled=${disabled}
+                style=${inputStyle}
+              />
+              ${trailingButton}
+            `}
       </div>
     </div>
   `;
