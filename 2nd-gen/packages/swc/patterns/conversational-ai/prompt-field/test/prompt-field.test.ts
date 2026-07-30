@@ -390,6 +390,13 @@ export const ArtifactScrollPaginationTest: Story = {
   },
 };
 
+/**
+ * Resolves on the native `scrollend` event, or (as a cross-browser
+ * fallback) once `scrollLeft` stops changing across a few animation
+ * frames — WebKit's test runner doesn't reliably fire `scrollend` for
+ * `scrollIntoView`/`scrollTo` with `behavior: 'smooth'`, which would
+ * otherwise hang this indefinitely.
+ */
 function waitForScrollEnd(
   scrollEl: HTMLDivElement | null | undefined
 ): Promise<void> {
@@ -398,7 +405,36 @@ function waitForScrollEnd(
   }
 
   return new Promise<void>((resolve) => {
-    scrollEl.addEventListener('scrollend', () => resolve(), { once: true });
+    let settled = false;
+    const finish = (): void => {
+      if (settled) {
+        return;
+      }
+      settled = true;
+      resolve();
+    };
+
+    scrollEl.addEventListener('scrollend', finish, { once: true });
+
+    let lastScrollLeft = scrollEl.scrollLeft;
+    let stableFrames = 0;
+    const poll = (): void => {
+      if (settled) {
+        return;
+      }
+      if (scrollEl.scrollLeft === lastScrollLeft) {
+        stableFrames += 1;
+        if (stableFrames >= 3) {
+          finish();
+          return;
+        }
+      } else {
+        stableFrames = 0;
+        lastScrollLeft = scrollEl.scrollLeft;
+      }
+      requestAnimationFrame(poll);
+    };
+    requestAnimationFrame(poll);
   });
 }
 

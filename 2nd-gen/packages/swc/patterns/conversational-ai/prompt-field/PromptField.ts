@@ -975,7 +975,7 @@ export class PromptField extends SpectrumElement {
         // chevron stuck visible since it compares against this same maxScroll.
         scrollEl.scrollTo({
           left: maxScroll,
-          behavior: this._artifactScrollBehavior(),
+          behavior: 'auto',
         });
         return;
       }
