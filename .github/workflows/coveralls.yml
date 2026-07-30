@@ -30,8 +30,7 @@ jobs:
         with:
           files_yaml: |
             first_gen:
-              - '**'
-              - '!2nd-gen/**'
+              - '1st-gen/**'
 
   code-coverage-report:
     needs: detect-changes
