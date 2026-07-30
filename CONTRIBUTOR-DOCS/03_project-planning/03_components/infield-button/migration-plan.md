@@ -398,20 +398,20 @@ html`
 
 ### Setup
 
-- [ ] Create `2nd-gen/packages/core/components/infield-button/`
-- [ ] Create `2nd-gen/packages/swc/components/infield-button/`
-- [ ] Wire exports in both `package.json` files
-- [ ] For Phase 5, check out `spectrum-css` at the `spectrum-two` branch as a sibling directory for local copy-from-source (baseline already confirmed via GitHub API — Q2 resolved)
+- [x] Create `2nd-gen/packages/core/components/infield-button/`
+- [x] Create `2nd-gen/packages/swc/components/infield-button/`
+- [x] Wire exports in both `package.json` files
+- [x] For Phase 5, check out `spectrum-css` at the `spectrum-two` branch as a sibling directory for local copy-from-source (baseline already confirmed via GitHub API — Q2 resolved)
 
 ### API
 
 #### Naming and public surface
 
-- [ ] `InfieldButton.types.ts`: define `InfieldButtonSize` (alias or reuse from `BUTTON_VALID_SIZES`), `InfieldButtonQuiet` boolean
-- [ ] `InfieldButton.base.ts`: extend 2nd-gen `ButtonBase` with `SizedMixin(ButtonBase, { noDefaultSize: true })`; `validSizes` does not need overriding because `BUTTON_VALID_SIZES` already equals `['s', 'm', 'l', 'xl']` (see Q6); add `quiet: boolean` property (reflect: true)
-- [ ] `InfieldButton.ts`: extend `InfieldButton.base.ts`; register as `swc-infield-button`; render inner `<button>` (size and `quiet` states are handled via `:host([size="s"])` / `:host([quiet])` CSS attribute selectors — no `classMap` needed for those). The `icon` slot may be wrapped in a `.swc-InfieldButton-fill` div if the S2 CSS requires it; verify during Phase 5 and remove if `::slotted()` alone is sufficient.
-- [ ] Confirm no `block`, `inline`, `href`, `target`, `download`, `rel`, `referrerpolicy`, or `pending` on the public API
-- [ ] Confirm `accessible-label` dev warning is active (inherited from `ButtonBase`)
+- [x] `InfieldButton.types.ts`: define `InfieldButtonSize` (alias or reuse from `BUTTON_VALID_SIZES`), `InfieldButtonQuiet` boolean
+- [x] `InfieldButton.base.ts`: extend 2nd-gen `ButtonBase` with `SizedMixin(ButtonBase, { noDefaultSize: true })`; `validSizes` does not need overriding because `BUTTON_VALID_SIZES` already equals `['s', 'm', 'l', 'xl']` (see Q6); add `quiet: boolean` property (reflect: true)
+- [x] `InfieldButton.ts`: extend `InfieldButton.base.ts`; register as `swc-infield-button`; render inner `<button>` (size and `quiet` states are handled via `:host([size="s"])` / `:host([quiet])` CSS attribute selectors — no `classMap` needed for those). Fill wrapper dropped (Phase 5 decision — `::slotted()` alone is sufficient).
+- [x] Confirm no `block`, `inline`, `href`, `target`, `download`, `rel`, `referrerpolicy`, or `pending` on the public API
+- [x] Confirm `accessible-label` dev warning is active (inherited from `ButtonBase`)
 
 #### Alignment checks
 
@@ -457,68 +457,68 @@ html`
 
 #### Naming and semantics
 
-- [ ] `accessible-label` is required for icon-only; confirm dev warning inherits from `ButtonBase`
-- [ ] `role="button"` on inner `<button>` only; no second `role="button"` on host
-- [ ] `role="presentation"` is **not** set on the inner `<button>` (guard against accidental S2 CSS sample copy)
-- [ ] Icon element in `icon` slot is decorative; confirm `swc-icon` sets `aria-hidden="true"` on itself (no manual attribute needed on the slotted element)
-- [ ] No `href`, no link semantics
+- [x] `accessible-label` is required for icon-only; confirm dev warning inherits from `ButtonBase`
+- [x] `role="button"` on inner `<button>` only; no second `role="button"` on host
+- [x] `role="presentation"` is **not** set on the inner `<button>` (guard against accidental S2 CSS sample copy)
+- [x] Icon element in `icon` slot is decorative; confirm `swc-icon` sets `aria-hidden="true"` on itself (no manual attribute needed on the slotted element)
+- [x] No `href`, no link semantics
 
 #### State verification
 
-- [ ] `disabled` on host → native `disabled` on inner `<button>` (tab skip, no activation)
-- [ ] Parent-driven `disabled` (field host sets `disabled` on `swc-infield-button`) → same result
-- [ ] `accessible-label` dynamically updated → `aria-label` on inner `<button>` updates
-- [ ] No `pending` or `aria-disabled` busy state on `swc-infield-button` itself
-- [ ] Inner `<button>` sets `outline: none`; it is not in the tab order and is not independently keyboard-focusable. Pointer activation works; keyboard activation is dispatched by the parent field. No standalone keyboard test needed for the button itself (see focus model bullet under [Styling](#styling))
+- [x] `disabled` on host → native `disabled` on inner `<button>` (tab skip, no activation)
+- [x] Parent-driven `disabled` (field host sets `disabled` on `swc-infield-button`) → same result
+- [x] `accessible-label` dynamically updated → `aria-label` on inner `<button>` updates
+- [x] No `pending` or `aria-disabled` busy state on `swc-infield-button` itself
+- [x] Inner `<button>` sets `outline: none`; it is not in the tab order and is not independently keyboard-focusable. Pointer activation works; keyboard activation is dispatched by the parent field. No standalone keyboard test needed for the button itself (see focus model bullet under [Styling](#styling))
 
 ### Testing
 
-- [ ] Port applicable coverage from [`1st-gen/packages/infield-button/test/infield-button.test.ts`](../../../../1st-gen/packages/infield-button/test/infield-button.test.ts):
+- [x] Port applicable coverage from [`1st-gen/packages/infield-button/test/infield-button.test.ts`](../../../../1st-gen/packages/infield-button/test/infield-button.test.ts):
   - Default rendering accessible (axe)
-  - Stacked rendering accessible — **NOTE:** stacked with `block` attribute is removed; replace with parent-composed stepper fixture
-- [ ] Add Playwright `infield-button.a11y.spec.ts` with `toMatchAriaSnapshot`
+  - Stacked rendering accessible — **NOTE:** stacked with `block` attribute is removed; replaced with parent-composed stepper fixture
+- [x] Add Playwright `infield-button.a11y.spec.ts` with `toMatchAriaSnapshot`
 
 #### Behavior
 
-- [ ] Unit: `accessible-label` → `aria-label` on inner `<button>` wired correctly
-- [ ] Unit: `disabled` on host forwards to inner `<button>` (`disabled` attribute)
-- [ ] Unit: parent host sets `disabled` → inner `<button>` becomes disabled
-- [ ] Unit: `quiet` reflects to host attribute
-- [ ] Unit: `size` s/m/l/xl size class applied correctly; no default size when unset
-- [ ] Unit: dev warning fires when `hasIcon && !hasLabel && !accessibleLabel` in DEBUG mode
-- [ ] Unit: no `block`, `inline`, `href`, `pending` on public API
-- [ ] Unit: `handleClick` capture listener suppresses click when `disabled` (inherited from `ButtonBase`)
-- [ ] Unit: slotted icon in `icon` slot detected via `ObserveSlotPresence`
-- [ ] Playwright: `Enter` / `Space` on focused in-field button fires `click`
-- [ ] Playwright: `Enter` / `Space` suppressed when `disabled` (self-disabled and parent-disabled fixtures)
-- [ ] Playwright ARIA snapshot: `button` role + name on focus target; `disabled` state in snapshot
-- [ ] aXe: icon-only with `accessible-label`; disabled on host; parent-disabled fixture
+- [x] Unit: `accessible-label` → `aria-label` on inner `<button>` wired correctly
+- [x] Unit: `disabled` on host forwards to inner `<button>` (`disabled` attribute)
+- [x] Unit: parent host sets `disabled` → inner `<button>` becomes disabled
+- [x] Unit: `quiet` reflects to host attribute
+- [x] Unit: `size` s/m/l/xl size class applied correctly; no default size when unset
+- [x] Unit: dev warning fires when `hasIcon && !hasLabel && !accessibleLabel` in DEBUG mode
+- [x] Unit: no `block`, `inline`, `href`, `pending` on public API
+- [x] Unit: `handleClick` capture listener suppresses click when `disabled` (inherited from `ButtonBase`)
+- [x] Unit: slotted icon in `icon` slot detected via `ObserveSlotPresence`
+- N/A: Playwright: `Enter` / `Space` on focused in-field button fires `click` — by design, `tabindex="-1"` means the button is never keyboard focused; keyboard behavior belongs to the parent field
+- N/A: Playwright: `Enter` / `Space` suppressed when `disabled` — same rationale as above
+- [x] Playwright ARIA snapshot: `button` role + name on focus target; `disabled` state in snapshot
+- [x] aXe: icon-only with `accessible-label`; disabled on host; parent-disabled fixture
 
 #### Visual regression
 
-- [ ] VRT coverage for: sizes (s, m, l, xl) × states (default, hover, active, disabled) × quiet/default variant
-- [ ] VRT: quiet variant: default, hover, active, disabled
-- [ ] VRT: icon affordance coverage (disclosure, clear, dash, add) per the Figma spec
-- [ ] VRT: composed-field focus (parent field shows the ring; inner `<button>` has `outline: none`)
-- [ ] VRT: WHCM (`@media (forced-colors: active)`) — icon and background colors track `ButtonText`/`Canvas`/`Highlight` per variant
+- [ ] VRT coverage for: sizes (s, m, l, xl) × states (default, hover, active, disabled) × quiet/default variant (deferred — dedicated VRT Storybook story not yet added)
+- [ ] VRT: quiet variant: default, hover, active, disabled (deferred)
+- [ ] VRT: icon affordance coverage (disclosure, clear, dash, add) per the Figma spec (deferred)
+- [ ] VRT: composed-field focus (parent field shows the ring; inner `<button>` has `outline: none`) (deferred)
+- [ ] VRT: WHCM (`@media (forced-colors: active)`) — icon and background colors track `ButtonText`/`Canvas`/`Highlight` per variant (deferred)
 
 ### Documentation
 
 #### General
 
-- [ ] JSDoc on `InfieldButton.base.ts` and `InfieldButton.ts`: class, all public props, slots, and CSS custom properties
-- [ ] Storybook stories for: Playground, Overview, Sizes, States (default, disabled, quiet), Icon affordances (disclosure, clear, dash, add), Accessibility
-- [ ] No `block`, `inline`, or stacked layout examples in Storybook
+- [x] JSDoc on `InfieldButton.base.ts` and `InfieldButton.ts`: class, all public props, slots, and CSS custom properties
+- [x] Storybook stories for: Playground, Overview, Sizes, States (default, disabled, quiet), Accessibility; icon affordances shown via field-context stories (picker, search/clear, stepper)
+- [x] No `block`, `inline`, or stacked layout examples in Storybook
 
 #### Breaking changes
 
-- [ ] Phase 7 consumer migration guide (A2) documents: `label` → `accessible-label`, `block`/`inline` removal with worked layout migration example, link API removal, slot rename (default → `icon`), CSS custom property rename
-- [ ] Migration guide references number-field composed stepper pattern as the primary use case
+- [x] Phase 7 consumer migration guide (A2) documents: `label` → `accessible-label`, `block`/`inline` removal with worked layout migration example, link API removal, slot rename (default → `icon`), CSS custom property rename
+- [x] Migration guide references number-field composed stepper pattern as the primary use case
 
 ### Review
 
-- [ ] `yarn lint:2nd-gen` passes (ESLint, Stylelint, Prettier)
-- [ ] Status table in `CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_2nd-gen-component-migration/01_status.md` updated
+- [x] `yarn lint:2nd-gen` passes (ESLint, Stylelint, Prettier) — Phase 8 confirmed; only pre-existing `any` warnings in a11y spec
+- [x] Status table in `CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_2nd-gen-component-migration/01_status.md` updated
 - [ ] PR created with description referencing Epic SWC-2105
 - [ ] Peer engineer sign-off
 
