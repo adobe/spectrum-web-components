@@ -578,7 +578,7 @@ Example event listener:
 
 ```javascript
 component.addEventListener('change', (event) => {
-    console.log('Value changed:', event.target.value);
+  console.log('Value changed:', event.target.value);
 });
 ```
 
@@ -617,8 +617,8 @@ The `<swc-component-name>` element implements several accessibility features:
 1. **ARIA role**: Automatically sets `role="progressbar"` (or appropriate role)
 2. **Labeling**: Uses the `label` attribute as `aria-label`
 3. **States**:
-    - Sets `aria-valuenow` with current progress value
-    - Sets `aria-disabled="true"` when disabled
+   - Sets `aria-valuenow` with current progress value
+   - Sets `aria-disabled="true"` when disabled
 4. **Status communication**: Screen readers announce value changes
 
 #### Visual accessibility
