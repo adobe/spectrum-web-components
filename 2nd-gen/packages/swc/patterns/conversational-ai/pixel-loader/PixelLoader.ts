@@ -26,7 +26,7 @@ import type {
   PixelLoaderIconName,
   PixelLoaderPresetName,
 } from './data.js';
-import { DURATION_MS, ICONS, PRESETS } from './data.js';
+import { DURATION_MS, ICONS, PRESET_NAMES, PRESETS } from './data.js';
 import {
   computeCornerRadii,
   CornerRadii,
@@ -38,8 +38,6 @@ import styles from './pixel-loader.css';
 export { ICON_NAMES, PRESET_NAMES } from './data.js';
 export type { PixelLoaderIconName, PixelLoaderPresetName } from './data.js';
 
-const CORNER_RADIUS = '2px';
-
 /**
  * Prototype shell for the Conversational AI pixel loader pattern unit: an
  * assembling/disassembling "pixel-fall" icon animation for loading states.
@@ -49,6 +47,8 @@ const CORNER_RADIUS = '2px';
  * @element swc-pixel-loader
  */
 export class PixelLoader extends SpectrumElement {
+  private static readonly CORNER_RADIUS = '2px';
+
   /** Icon to display. Ignored while `preset` is set. */
   @property({ type: String, reflect: true })
   public icon: PixelLoaderIconName = 'aiLogo';
@@ -58,7 +58,7 @@ export class PixelLoader extends SpectrumElement {
    * single `icon`.
    */
   @property({ type: String, reflect: true })
-  public preset: PixelLoaderPresetName | undefined = undefined;
+  public preset?: PixelLoaderPresetName;
 
   /** Renders the fully-settled, non-animating appearance. */
   @property({ type: Boolean, reflect: true })
@@ -97,12 +97,21 @@ export class PixelLoader extends SpectrumElement {
   }
 
   protected override updated(changed: PropertyValues<this>): void {
+    super.updated(changed);
+
     if (changed.has('preset')) {
       this._presetIndex = 0;
       this._syncTicker();
     }
 
-    this._playCells();
+    if (
+      changed.has('icon') ||
+      changed.has('preset') ||
+      changed.has('paused') ||
+      changed.has('_presetIndex')
+    ) {
+      this._playCells();
+    }
   }
 
   private _prefersReducedMotion(): boolean {
@@ -112,27 +121,43 @@ export class PixelLoader extends SpectrumElement {
     );
   }
 
+  private _isValidPreset(preset: string): preset is PixelLoaderPresetName {
+    return (PRESET_NAMES as readonly string[]).includes(preset);
+  }
+
   /**
-   * Resolves `preset` against the known preset table, guarding against
-   * attribute values that don't match a `PixelLoaderPresetName` (e.g. an
-   * unset Storybook control arg serialized as the literal string
-   * `"undefined"` rather than the attribute being absent).
+   * Validated `preset`; guards against attribute values that don't match a
+   * `PixelLoaderPresetName` (e.g. an unset Storybook control arg serialized
+   * as the literal string `"undefined"` rather than the attribute being
+   * absent).
    */
+  private get _resolvedPreset(): PixelLoaderPresetName | undefined {
+    return this.preset && this._isValidPreset(this.preset)
+      ? this.preset
+      : undefined;
+  }
+
   private _presetIcons(): PixelLoaderIconName[] | undefined {
-    return this.preset ? PRESETS[this.preset] : undefined;
+    const preset = this._resolvedPreset;
+    return preset ? PRESETS[preset] : undefined;
   }
 
-  private get _activeIconName(): PixelLoaderIconName {
+  /**
+   * Resolves the cells for the icon currently on screen in one place, so
+   * `render()` and `_playCells()` each do a single preset lookup instead of
+   * separately deriving the active icon name, its cell list, and whether a
+   * preset is active.
+   */
+  private get _activeCells(): { cells: Cell[]; isPreset: boolean } {
     const icons = this._presetIcons();
-    if (icons) {
-      return icons[this._presetIndex % icons.length];
-    }
+    const iconName = icons
+      ? icons[this._presetIndex % icons.length]
+      : this.icon;
 
-    return this.icon;
-  }
-
-  private get _cells(): Cell[] {
-    return ICONS[this._activeIconName] ?? ICONS.aiLogo;
+    return {
+      cells: ICONS[iconName] ?? ICONS.aiLogo,
+      isPreset: Boolean(icons),
+    };
   }
 
   private _syncTicker(): void {
@@ -167,9 +192,8 @@ export class PixelLoader extends SpectrumElement {
       this.shadowRoot?.querySelectorAll<HTMLElement>('.swc-PixelLoader-cell') ??
         []
     );
-    const cells = this._cells;
+    const { cells, isPreset } = this._activeCells;
     const renderStatic = this.paused || this._prefersReducedMotion();
-    const isPreset = Boolean(this._presetIcons());
 
     cellEls.forEach((cellEl, index) => {
       const cell = cells[index];
@@ -199,14 +223,17 @@ export class PixelLoader extends SpectrumElement {
         style=${styleMap({
           'grid-column': String(cell.col + 1),
           'grid-row': String(cell.row + 1),
-          'border-radius': cornerRadiiToBorderRadius(radii, CORNER_RADIUS),
+          'border-radius': cornerRadiiToBorderRadius(
+            radii,
+            PixelLoader.CORNER_RADIUS
+          ),
         })}
       ></div>
     `;
   }
 
   protected override render(): TemplateResult {
-    const cells = this._cells;
+    const { cells } = this._activeCells;
     const radii = computeCornerRadii(cells);
 
     return html`
