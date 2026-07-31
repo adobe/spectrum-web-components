@@ -81,7 +81,7 @@ export const OpenMutationTest: Story = {
       const panel = el.shadowRoot?.querySelector<HTMLOListElement>(
         '.swc-MessageSources-list'
       );
-      const icon = el.shadowRoot?.querySelector('swc-icon');
+      const icon = el.shadowRoot?.querySelector('swc-ui-icon');
 
       expect(toggle?.textContent?.trim()).toBe('References');
       expect(panel?.getAttribute('aria-labelledby')).toBe(toggle?.id);
