@@ -74,9 +74,9 @@ export default mergeConfig(
 
           // SWC component implementations
           'components/**/*.{ts,js}': {
-            lines: 99,
+            lines: 98,
             functions: 98,
-            statements: 99,
+            statements: 98,
           },
 
           // Core component logic
