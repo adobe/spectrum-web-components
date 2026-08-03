@@ -1,6 +1,6 @@
 # Spectrum Web Components - Spectrum 1 Full API Reference
 
-> Generated 2026-07-24. For the link index see [llms.txt](https://opensource.adobe.com/spectrum-web-components/llms.txt).
+> Generated 2026-08-03. For the link index see [llms.txt](https://opensource.adobe.com/spectrum-web-components/llms.txt).
 
 All public `sp-*` components with their full attribute, slot, event, and CSS
 custom property tables. Useful when you want the entire API in one context window.
@@ -1225,12 +1225,12 @@ import '@spectrum-web-components/icon/sp-icon.js';
 
 ## Attributes
 
-| Name    | Type                  | Default | Description                    |
-| ------- | --------------------- | ------- | ------------------------------ |
-| `src`   | `string \| undefined` | -       |                                |
-| `name`  | `string \| undefined` | -       |                                |
-| `label` | `string`              | `''`    | Accessible label for the icon. |
-| `size`  | `string`              | -       | T-shirt icon size.             |
+| Name               | Type                  | Default | Description                                                       |
+| ------------------ | --------------------- | ------- | ----------------------------------------------------------------- |
+| `src`              | `string \| undefined` | -       |                                                                   |
+| `name`             | `string \| undefined` | -       |                                                                   |
+| `accessible-label` | `string`              | `''`    | Accessible label for the icon. When empty the icon is decorative. |
+| `size`             | `string`              | -       | T-shirt icon size.                                                |
 
 ## Events
 

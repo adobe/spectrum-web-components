@@ -9,12 +9,12 @@ import '@spectrum-web-components/icon/sp-icon.js';
 
 ## Attributes
 
-| Name    | Type                  | Default | Description                    |
-| ------- | --------------------- | ------- | ------------------------------ |
-| `src`   | `string \| undefined` | -       |                                |
-| `name`  | `string \| undefined` | -       |                                |
-| `label` | `string`              | `''`    | Accessible label for the icon. |
-| `size`  | `string`              | -       | T-shirt icon size.             |
+| Name               | Type                  | Default | Description                                                       |
+| ------------------ | --------------------- | ------- | ----------------------------------------------------------------- |
+| `src`              | `string \| undefined` | -       |                                                                   |
+| `name`             | `string \| undefined` | -       |                                                                   |
+| `accessible-label` | `string`              | `''`    | Accessible label for the icon. When empty the icon is decorative. |
+| `size`             | `string`              | -       | T-shirt icon size.                                                |
 
 ## Events
 
