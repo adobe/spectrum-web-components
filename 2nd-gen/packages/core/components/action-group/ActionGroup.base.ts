@@ -73,9 +73,15 @@ export abstract class ActionGroupBase extends SizedMixin(SpectrumElement, {
    * The layout direction of the action group.
    *
    * When set to `"vertical"`, the group stacks children vertically and
-   * `aria-orientation="vertical"` is applied to the host. When `"horizontal"`
-   * (the default), `aria-orientation` is omitted because horizontal is the
-   * implicit default for `role="group"`.
+   * `FocusgroupNavigationController` moves focus with the Up/Down arrow
+   * keys instead of Left/Right.
+   *
+   * Note: this property does NOT set `aria-orientation` on the host.
+   * `aria-orientation` is only a supported ARIA attribute on roles that
+   * expose it (`toolbar`, `listbox`, `menu`, etc.) — `role="group"` does
+   * not, regardless of the roving-tabindex keyboard model implemented in
+   * JS. Setting it fails axe's `aria-allowed-attr` rule. Matches the same
+   * decision already made for `swc-button-group`.
    *
    * @default horizontal
    */
@@ -169,14 +175,6 @@ export abstract class ActionGroupBase extends SizedMixin(SpectrumElement, {
         this.removeAttribute('aria-disabled');
       }
       this.propagateDisabledToChildren();
-    }
-
-    if (changed.has('orientation')) {
-      if (this.orientation === 'vertical') {
-        this.setAttribute('aria-orientation', 'vertical');
-      } else {
-        this.removeAttribute('aria-orientation');
-      }
     }
 
     if (window.__swc?.DEBUG) {
