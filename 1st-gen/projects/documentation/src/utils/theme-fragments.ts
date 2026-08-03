@@ -78,6 +78,34 @@ export const lazyStyleFragment = (
   }
 };
 
+export interface ThemeAttributeSource {
+  getAttribute(name: string): string | null;
+}
+
+/**
+ * Reads the `color`/`scale`/`system` attributes off a (real or fake)
+ * `sp-theme` element and returns the fragment requests they imply,
+ * applying the same `system` fallback `Theme` itself uses. Kept separate
+ * from `preloadThemeFragments` so the attribute/fallback/branching logic
+ * can be unit tested without a DOM.
+ */
+export const getThemeFragmentRequests = (
+  themeEl: ThemeAttributeSource
+): { name: Color | Scale; system: SystemVariant }[] => {
+  const system = (themeEl.getAttribute('system') ||
+    'spectrum') as SystemVariant;
+  const color = themeEl.getAttribute('color') as Color | null;
+  const scale = themeEl.getAttribute('scale') as Scale | null;
+  const requests: { name: Color | Scale; system: SystemVariant }[] = [];
+  if (color) {
+    requests.push({ name: color, system });
+  }
+  if (scale) {
+    requests.push({ name: scale, system });
+  }
+  return requests;
+};
+
 /**
  * Scans a snippet of markup for `sp-theme` elements and eagerly loads the
  * CSS fragments their `color`/`scale`/`system` attributes require. Without
@@ -86,17 +114,15 @@ export const lazyStyleFragment = (
  * back to the outer theme's styles because its fragment was never imported.
  */
 export const preloadThemeFragments = (html: string): void => {
+  // Most demos don't declare a theme at all; skip parsing the markup for
+  // them rather than paying for `createContextualFragment` on every demo.
+  if (!html.includes('sp-theme')) {
+    return;
+  }
   const fragment = document.createRange().createContextualFragment(html);
   fragment.querySelectorAll('sp-theme').forEach((themeEl) => {
-    const system = (themeEl.getAttribute('system') ||
-      'spectrum') as SystemVariant;
-    const color = themeEl.getAttribute('color') as Color | null;
-    const scale = themeEl.getAttribute('scale') as Scale | null;
-    if (color) {
-      lazyStyleFragment(color, system);
-    }
-    if (scale) {
-      lazyStyleFragment(scale, system);
-    }
+    getThemeFragmentRequests(themeEl).forEach(({ name, system }) =>
+      lazyStyleFragment(name, system)
+    );
   });
 };
