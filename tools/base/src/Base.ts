@@ -131,6 +131,7 @@ export function SpectrumMixin<T extends Constructor<ReactiveElement>>(
                 let dirParent = ((this as HTMLElement).assignedSlot ||
                     this.parentNode) as HTMLElement;
                 while (
+                    dirParent &&
                     dirParent !== document.documentElement &&
                     !canManageContentDirection(
                         dirParent as ContentDirectionManager
@@ -140,6 +141,12 @@ export function SpectrumMixin<T extends Constructor<ReactiveElement>>(
                         dirParent.parentNode || // DOM Element detected
                         (dirParent as unknown as ShadowRoot)
                             .host) as HTMLElement;
+                }
+                if (!dirParent) {
+                    // Ancestor chain was detached mid-walk (e.g. connectedCallback
+                    // firing during an ancestor's teardown); nothing to manage.
+                    super.connectedCallback();
+                    return;
                 }
                 this.dir =
                     dirParent.dir === 'rtl' ? dirParent.dir : this.dir || 'ltr';
