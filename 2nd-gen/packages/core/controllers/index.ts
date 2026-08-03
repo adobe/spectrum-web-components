@@ -15,6 +15,10 @@
  */
 
 export {
+  AttributeObserverController,
+  type AttributeObserverControllerOptions,
+} from './attribute-observer-controller/index.js';
+export {
   ColorController,
   type Color,
   type ColorTypes,

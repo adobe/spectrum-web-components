@@ -14,6 +14,7 @@ import { CSSResultArray, html, PropertyValues, TemplateResult } from 'lit';
 import { property } from 'lit/decorators.js';
 
 import { DropzoneBase } from '@adobe/spectrum-wc-core/components/dropzone';
+import { AttributeObserverController } from '@adobe/spectrum-wc-core/controllers';
 import { isDebug, warnIf } from '@adobe/spectrum-wc-core/utils';
 
 import visuallyHiddenStyles from '../../stylesheets/_lit-styles/visually-hidden.css';
@@ -110,12 +111,25 @@ export class Dropzone extends DropzoneBase {
     return this.shadowRoot?.querySelector('[role="status"]') ?? null;
   }
 
+  /**
+   * @internal
+   *
+   * The accessible name comes from `aria-label` / `aria-labelledby`, which are
+   * plain attributes rather than reactive properties, so a consumer changing
+   * them after connect would not otherwise trigger a re-render. This dev-only
+   * observer requests an update when they change so `_warnMissingAccessibleName`
+   * revalidates instead of running only once at connect.
+   */
+  public constructor() {
+    super();
+    new AttributeObserverController(this, ['aria-label', 'aria-labelledby'], {
+      debugOnly: true,
+    });
+  }
+
   public override connectedCallback(): void {
     super.connectedCallback();
     this.setAttribute('role', 'group');
-    if (isDebug()) {
-      this._warnMissingAccessibleName();
-    }
   }
 
   protected override updated(changes: PropertyValues): void {
@@ -125,7 +139,9 @@ export class Dropzone extends DropzoneBase {
       this._updateStatusRegion();
     }
 
-    if (isDebug() && changes.has('dragged')) {
+    // Runs on first render and on every update the observer requests when the
+    // aria attributes change, so the warning tracks the current accessible name.
+    if (isDebug()) {
       this._warnMissingAccessibleName();
     }
   }
@@ -156,24 +172,15 @@ export class Dropzone extends DropzoneBase {
   }
 
   /** @internal */
-  private _hasWarnedNoAccessibleName = false;
-
-  /** @internal */
   private _warnMissingAccessibleName(): void {
+    // Early return when a name is present so the message is not built on every
+    // render (this runs unconditionally in dev).
     if (
       this.getAttribute('aria-label') ||
       this.getAttribute('aria-labelledby')
     ) {
-      // Re-arm so a later removal warns again. Only observable under the
-      // per-instance dedup model proposed in the dev-warning dedup RFC; under
-      // today's per-message session dedup this flag is effectively a no-op.
-      this._hasWarnedNoAccessibleName = false;
       return;
     }
-    if (this._hasWarnedNoAccessibleName) {
-      return;
-    }
-    this._hasWarnedNoAccessibleName = true;
     warnIf(
       this,
       true,
