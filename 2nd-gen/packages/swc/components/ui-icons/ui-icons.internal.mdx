@@ -1,0 +1,44 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import { DocsFooter, DocsHeader } from '../../.storybook/blocks';
+
+import * as Stories from './stories/ui-icons.internal.stories';
+
+<Meta of={Stories} />
+
+<DocsHeader />
+
+UI icons are the small, functional glyphs Spectrum controls render internally, such
+as the chevron in a picker, the checkmark in a checkbox, or the arrow in a stepper.
+They are **internal**: consumers never import them. Each is generated from the
+committed A4U source SVGs into `components/ui-icons/icon-set/`, and the
+`<swc-ui-icon>` element renders one by name at the optical step matching its size.
+This page previews the set currently available to swc components.
+
+## Options
+
+### Available icons
+
+Every icon in the set, rendered at the medium (`100`) optical step. The label under
+each is its `icon` value in kebab-case, for example `chevron` or `corner-triangle`;
+that value selects which icon-set `<swc-ui-icon>` renders.
+
+<Canvas of={Stories.AvailableIcons} />
+
+### Optical sizes
+
+A UI icon is not one drawing scaled up and down. Each t-shirt size maps to a
+distinct, optically-tuned numeral step (`50`/`75`/`100`/`200`/`300` for
+`xs`/`s`/`m`/`l`/`xl`), and `<swc-ui-icon>` selects the step that matches its `size`
+rather than resizing a single drawing. The chevron across every size:
+
+<Canvas of={Stories.OpticalSizes} />
+
+## Accessibility
+
+UI icons are decorative by default: the surrounding control owns the accessible
+name, so `<swc-ui-icon>` sets `aria-hidden="true"` on itself when no
+`accessible-label` is given. Provide `accessible-label` only when the icon is the
+sole meaning of its container; the element then exposes itself as an image
+(`role="img"` with that label). The rendered SVG never carries its own semantics.
+
+<DocsFooter />

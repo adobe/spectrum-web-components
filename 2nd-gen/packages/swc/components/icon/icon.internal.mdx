@@ -65,15 +65,18 @@ Available shared icons in the current internal catalog. Use this story as a quic
 
 The `<swc-icon>` element implements several accessibility features:
 
-#### SVG labeling
+#### Host-owned semantics
 
-- Slotted SVGs receive `role="img"` and use `aria-label` when `label` is provided
-- When no label is provided, slotted SVGs are marked `aria-hidden="true"`
+- When `accessible-label` is set, the host is exposed as an image (`role="img"` with
+  that label)
+- When no `accessible-label` is provided, the host is marked `aria-hidden="true"` and
+  the icon is decorative
+- The slotted SVG is never given its own role, avoiding double-announcement
 
 ### Best practices
 
-- Always provide a descriptive `label` for informative icons
-- Use empty labels only for purely decorative icons
+- Always provide a descriptive `accessible-label` for informative icons
+- Omit `accessible-label` only for purely decorative icons
 - Keep labels short and specific (e.g., "Search" instead of "Icon")
 
 <Canvas of={IconStories.Accessibility} />
