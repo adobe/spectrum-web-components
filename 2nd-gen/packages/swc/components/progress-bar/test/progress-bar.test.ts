@@ -29,7 +29,7 @@ import { Indeterminate, Overview } from '../stories/progress-bar.stories.js';
 // This file defines dev-only test stories that reuse the main story metadata.
 export default {
   ...meta,
-  title: 'Progress Bar/Tests',
+  title: 'Progress bar/Tests',
   parameters: {
     ...meta.parameters,
     docs: { disable: true, page: null },
