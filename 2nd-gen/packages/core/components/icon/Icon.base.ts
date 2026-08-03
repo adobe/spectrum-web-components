@@ -10,7 +10,7 @@
  * governing permissions and limitations under the License.
  */
 import { PropertyValues } from 'lit';
-import { property, queryAssignedElements } from 'lit/decorators.js';
+import { property } from 'lit/decorators.js';
 
 import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
 import { SizedMixin } from '@adobe/spectrum-wc-core/mixins/index.js';
@@ -18,9 +18,16 @@ import { SizedMixin } from '@adobe/spectrum-wc-core/mixins/index.js';
 import { ICON_VALID_SIZES } from './Icon.types.js';
 
 /**
- * An icon renderer that displays slotted SVG markup.
+ * Shared behavior for icon elements: the `size` scale, the `accessibleLabel`, and
+ * host-owned accessibility. Concrete elements own their own `render()` and styles;
+ * this base carries no template and no CSS.
  *
- * @attribute {string} label - Accessible label for the icon.
+ * The host owns semantics: when `accessibleLabel` is set the host is exposed as an
+ * image (`role="img"` with that label); when empty (the default) the host is marked
+ * `aria-hidden` and the icon is decorative. The rendered or slotted SVG is never
+ * given its own role, avoiding double-announcement.
+ *
+ * @attribute {string} accessible-label - Accessible label for the icon.
  * @attribute {string} size - T-shirt icon size.
  */
 export abstract class IconBase extends SizedMixin(SpectrumElement, {
@@ -38,60 +45,35 @@ export abstract class IconBase extends SizedMixin(SpectrumElement, {
   // ──────────────────
 
   /**
-   * Accessible label for the icon.
+   * Accessible label for the icon. When empty the icon is decorative.
    */
-  @property({ type: String })
-  public label = '';
-
-  @queryAssignedElements({ flatten: true })
-  private defaultSlotElements!: Element[];
+  @property({ type: String, attribute: 'accessible-label' })
+  public accessibleLabel = '';
 
   // ──────────────────────
-  //     IMPLEMENTATION
+  //     ACCESSIBILITY
   // ──────────────────────
 
   protected override firstUpdated(changedProperties: PropertyValues): void {
     super.firstUpdated(changedProperties);
-    this.updateSlottedIcon();
     this.updateHostAccessibility();
   }
 
   protected override updated(changedProperties: PropertyValues): void {
     super.updated(changedProperties);
-    if (changedProperties.has('label')) {
-      this.updateSlottedIcon();
+    if (changedProperties.has('accessibleLabel')) {
       this.updateHostAccessibility();
     }
   }
 
-  protected handleSlotChange(): void {
-    this.updateSlottedIcon();
-  }
-
-  private updateSlottedIcon(): void {
-    const [slotted] = this.defaultSlotElements;
-    if (!slotted) {
-      return;
-    }
-    const svgElement =
-      slotted instanceof SVGElement ? slotted : slotted.querySelector?.('svg');
-    if (!svgElement) {
-      return;
-    }
-    svgElement.setAttribute('role', 'img');
-    if (this.label) {
-      svgElement.setAttribute('aria-label', this.label);
-      svgElement.removeAttribute('aria-hidden');
-    } else {
-      svgElement.setAttribute('aria-hidden', 'true');
-      svgElement.removeAttribute('aria-label');
-    }
-  }
-
   private updateHostAccessibility(): void {
-    if (this.label) {
+    if (this.accessibleLabel) {
+      this.setAttribute('role', 'img');
+      this.setAttribute('aria-label', this.accessibleLabel);
       this.removeAttribute('aria-hidden');
     } else {
+      this.removeAttribute('role');
+      this.removeAttribute('aria-label');
       this.setAttribute('aria-hidden', 'true');
     }
   }

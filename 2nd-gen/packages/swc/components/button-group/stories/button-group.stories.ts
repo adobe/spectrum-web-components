@@ -70,7 +70,7 @@ argTypes.disabled = {
 /**
  * A button group clusters related actions together, providing consistent spacing,
  * sizing, and orientation. It propagates `size` and `disabled` state to its slotted
- * [Button](../?path=/docs/components-button--overview) children and exposes `role="group"` for
+ * [Button](../?path=/docs/components-button--docs) children and exposes `role="group"` for
  * accessibility.
  *
  * Use button group when you have two or more related button actions that belong
