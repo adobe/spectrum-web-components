@@ -14,7 +14,7 @@ import { CSSResultArray, html, PropertyValues, TemplateResult } from 'lit';
 import { property } from 'lit/decorators.js';
 
 import { DropzoneBase } from '@adobe/spectrum-wc-core/components/dropzone';
-import { warnIf } from '@adobe/spectrum-wc-core/utils';
+import { isDebug, warnIf } from '@adobe/spectrum-wc-core/utils';
 
 import visuallyHiddenStyles from '../../stylesheets/_lit-styles/visually-hidden.css';
 import styles from './dropzone.css';
@@ -113,7 +113,9 @@ export class Dropzone extends DropzoneBase {
   public override connectedCallback(): void {
     super.connectedCallback();
     this.setAttribute('role', 'group');
-    this._warnMissingAccessibleName();
+    if (isDebug()) {
+      this._warnMissingAccessibleName();
+    }
   }
 
   protected override updated(changes: PropertyValues): void {
@@ -123,7 +125,7 @@ export class Dropzone extends DropzoneBase {
       this._updateStatusRegion();
     }
 
-    if (changes.has('dragged')) {
+    if (isDebug() && changes.has('dragged')) {
       this._warnMissingAccessibleName();
     }
   }
@@ -154,10 +156,27 @@ export class Dropzone extends DropzoneBase {
   }
 
   /** @internal */
+  private _hasWarnedNoAccessibleName = false;
+
+  /** @internal */
   private _warnMissingAccessibleName(): void {
+    if (
+      this.getAttribute('aria-label') ||
+      this.getAttribute('aria-labelledby')
+    ) {
+      // Re-arm so a later removal warns again. Only observable under the
+      // per-instance dedup model proposed in the dev-warning dedup RFC; under
+      // today's per-message session dedup this flag is effectively a no-op.
+      this._hasWarnedNoAccessibleName = false;
+      return;
+    }
+    if (this._hasWarnedNoAccessibleName) {
+      return;
+    }
+    this._hasWarnedNoAccessibleName = true;
     warnIf(
       this,
-      !this.getAttribute('aria-label') && !this.getAttribute('aria-labelledby'),
+      true,
       `<${this.localName}> requires an accessible name describing the upload purpose.`,
       'https://spectrum-web-components.adobe.com/?path=/docs/components-dropzone--docs',
       {

@@ -19,7 +19,11 @@ import {
 } from '@adobe/spectrum-wc-core/controllers/language-resolution.js';
 import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
 import { SizedMixin } from '@adobe/spectrum-wc-core/mixins/index.js';
-import { validateEnum, warnIf } from '@adobe/spectrum-wc-core/utils/index.js';
+import {
+  isDebug,
+  validateEnum,
+  warnIf,
+} from '@adobe/spectrum-wc-core/utils/index.js';
 
 import {
   PROGRESS_CIRCLE_VALID_SIZES,
@@ -233,6 +237,12 @@ export abstract class ProgressCircleBase extends SizedMixin(SpectrumElement, {
       });
     }
 
-    this.warnDeprecatedLightDomChildren();
+    // Guard the call site: `hasMeaningfulLightDomChildren` traverses the light
+    // DOM and the message is built eagerly as an argument, so both would run on
+    // every `updated()` (including production) if passed straight to `warnIf`.
+    // `isDebug()` skips that work entirely when validation is off.
+    if (isDebug()) {
+      this.warnDeprecatedLightDomChildren();
+    }
   }
 }
