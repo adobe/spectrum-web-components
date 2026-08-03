@@ -74,38 +74,52 @@ export default function (plop) {
 
   // The SWC package (`@adobe/spectrum-wc`) uses wildcard `exports`, so a new
   // SWC component needs no package.json edit. The core package
-  // (`@spectrum-web-components/core`) uses explicit per-component `exports`
-  // entries, so a new core component must add one. This is the deterministic,
-  // easy-to-forget wiring step humans skip; do it automatically.
+  // (`@spectrum-web-components/core`) uses explicit per-component entries in
+  // BOTH `exports` and `typesVersions`, so a new core component must add both.
+  // This is the deterministic, easy-to-forget wiring step humans skip; do it
+  // automatically.
   plop.setActionType('wire-core-export', (answers) => {
     const name = render('{{dashCase name}}', answers);
     const pkgPath = path.join(repoRoot, '2nd-gen/packages/core/package.json');
     const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf8'));
 
+    const before = JSON.stringify([pkg.exports, pkg.typesVersions]);
+
     const entry = {
       types: `./dist/components/${name}/index.d.ts`,
       import: `./dist/components/${name}/index.js`,
     };
-
-    const before = JSON.stringify(pkg.exports);
     pkg.exports[`./components/${name}`] = entry;
     pkg.exports[`./components/${name}/index.js`] = entry;
 
-    // Re-sort all export keys alphabetically. Core has no wildcard export
-    // keys, so order does not affect resolution; sorting keeps the diff
-    // minimal and the file deterministic.
-    pkg.exports = Object.fromEntries(
-      Object.keys(pkg.exports)
-        .sort()
-        .map((key) => [key, pkg.exports[key]])
-    );
+    // Mirror the export in `typesVersions` so `moduleResolution: node`
+    // consumers resolve the component's types from the subpath too. Without
+    // this, the `exports` entry alone leaves the component's types unresolved
+    // for those consumers.
+    const typesEntry = [`dist/components/${name}/index.d.ts`];
+    pkg.typesVersions ??= {};
+    pkg.typesVersions['*'] ??= {};
+    pkg.typesVersions['*'][`components/${name}`] = typesEntry;
+    pkg.typesVersions['*'][`components/${name}/index.js`] = typesEntry;
 
-    if (JSON.stringify(pkg.exports) === before) {
+    // Re-sort keys alphabetically. Core has no wildcard component keys, so
+    // order does not affect resolution; sorting keeps the diff minimal and the
+    // file deterministic.
+    const sortKeys = (obj) =>
+      Object.fromEntries(
+        Object.keys(obj)
+          .sort()
+          .map((key) => [key, obj[key]])
+      );
+    pkg.exports = sortKeys(pkg.exports);
+    pkg.typesVersions['*'] = sortKeys(pkg.typesVersions['*']);
+
+    if (JSON.stringify([pkg.exports, pkg.typesVersions]) === before) {
       return `core exports already wired for ./components/${name}`;
     }
 
     fs.writeFileSync(pkgPath, `${JSON.stringify(pkg, null, 2)}\n`);
-    return `wired core exports for ./components/${name}`;
+    return `wired core exports + typesVersions for ./components/${name}`;
   });
 
   // Format only the two generated directories so output lands pre-formatted
