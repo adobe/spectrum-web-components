@@ -188,7 +188,8 @@ No key currently exists to toggle collapse without moving to an extreme (1st-gen
 - [APG: slider pattern](https://www.w3.org/WAI/ARIA/apg/patterns/slider/) (large-step key convention referenced above)
 - [w3c/aria#1443 — resize handle ARIA semantics discussion](https://github.com/w3c/aria/issues/1443)
 - [Nord Health: Resizable handle component](https://nordhealth.design/components/resizable-handle/)
-- External context supplied alongside this analysis but not independently fetchable at the time of writing (blocked by the source site): [Stack Overflow — proper accessibility/ARIA role for a resize handle](https://stackoverflow.com/questions/42981485/proper-accessibility-or-aria-role-for-a-resize-handle), [Lenovo glossary — sizing handle](https://www.lenovo.com/us/en/glossary/sizing-handle/). Re-check these if they become reachable, before relying on any specific claim from them.
+- [Stack Overflow — proper accessibility/ARIA role for a resize handle](https://stackoverflow.com/questions/42981485/proper-accessibility-or-aria-role-for-a-resize-handle)
+- [Lenovo glossary — sizing handle](https://www.lenovo.com/us/en/glossary/sizing-handle/)
 - 1st-gen: [`sp-split-view`](../../../../1st-gen/packages/split-view/README.md)
 - [Divider accessibility migration analysis](../divider/accessibility-migration-analysis.md)
 - [Split view migration roadmap](./rendering-and-styling-migration-analysis.md) (once written)
