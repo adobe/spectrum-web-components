@@ -314,7 +314,7 @@ Source: [accessibility migration analysis](./accessibility-migration-analysis.md
 
 - **Host role:** `role="group"` is prescribed and fixed in all modes. Not author-overridable. A page-level `role="toolbar"` landmark goes on an outer wrapper, never on `swc-action-group`.
 - **Child roles:** `swc-action-button` stays `role="button"` only. No `role="radio"` or `role="checkbox"` on children.
-- **`aria-orientation`:** Set to `"vertical"` when `orientation="vertical"`; `"horizontal"` or omitted otherwise. Wired to `FocusgroupNavigationController` direction.
+- **`aria-orientation`:** Not set on the host. `role="group"` does not support `aria-orientation` per the ARIA spec, regardless of the roving-tabindex keyboard model `FocusgroupNavigationController` implements — setting it fails axe's `aria-allowed-attr` rule. Matches the decision already made for `swc-button-group`. Keyboard direction is driven entirely by the `orientation` property via `FocusgroupNavigationController.setOptions({ direction })`.
 - **`aria-disabled`:** When `disabled` is set on the group, the host receives `aria-disabled="true"` and each child receives `aria-disabled="true"`. Children remain in the Tab/Arrow sequence and are discoverable but must not activate. `ButtonBase.getForwardedButtonAttributes()` currently derives `aria-disabled` only from the component's own `pending` state — it does not forward a host-level `aria-disabled` attribute set by an external parent. **Decision (Phase 3):** add `aria-disabled` to action-button's `attributeChangedCallback` intercept, following the same pattern as `aria-haspopup`/`aria-expanded`.
 - **Group name:** `label` → `aria-label` on host. `aria-labelledby` remains valid. Labeling the group is recommended whenever the strip has a distinct purpose.
 - **`FormFieldMixin`:** Must not be applied. `swc-action-group` is a composite keyboard widget, not a form field. SWC-1612 is a ticket that uses `FormFieldMixin` for `sp-action-group`; that must not carry into the 2nd-gen migration. The `label` property could be mistaken for a field-label association, but it is used only to provide `aria-label` on the group — not for form association.
@@ -375,7 +375,7 @@ No `_lit-styles/` fragment needed — action-group renders only a slot; all layo
 - [x] Create `2nd-gen/packages/core/components/action-group/`
 - [x] Create `2nd-gen/packages/swc/components/action-group/`
 - [x] Wire exports in both `package.json` files
-- [ ] Check out `spectrum-css` at `spectrum-two` branch as sibling directory (required for Phase 5 styling)
+- [x] Check out `spectrum-css` at `spectrum-two` branch as sibling directory (required for Phase 5 styling)
 - [x] `FocusgroupNavigationController` confirmed available in this branch
 - [x] `swc-action-button` API confirmed: no `selected` property, no `aria-pressed`/`aria-checked` forwarding; compact uses CSS custom property cascade via `::slotted(:first-child)` / `::slotted(:last-child)` (action-button must expose `--swc-action-button-border-*-radius` fallbacks)
 
@@ -403,31 +403,31 @@ No `_lit-styles/` fragment needed — action-group renders only a slot; all layo
 
 > Follow the [CSS style guide](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/) as the source of truth for all styling work. Key references: [migration steps](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/04_spectrum-swc-migration.md), [custom properties](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md), [anti-patterns](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/05_anti-patterns.md).
 
-- [ ] Add `.swc-ActionGroup` to the internal semantic element in `render()`; keep layout styling off `:host` where possible
-- [ ] Copy S2 source from `spectrum-css` `spectrum-two` branch `components/action-group/index.css` (not `/dist`) into `action-group.css` as baseline
-- [ ] Translate `.spectrum-ActionGroup-item` child selectors to `::slotted(*)` equivalents for gap, margin, and border-between adjustments
-- [ ] Implement compact mode via CSS custom property cascade: use `::slotted(:first-child)` and `::slotted(:last-child)` to set `--swc-action-button-border-start-start-radius`, `--swc-action-button-border-start-end-radius`, `--swc-action-button-border-end-start-radius`, `--swc-action-button-border-end-end-radius`; all four reset to `0` on `::slotted(*)`, then outer corners restored on first and last children
+- [x] Add `.swc-ActionGroup` to the internal semantic element in `render()`; keep layout styling off `:host` where possible
+- [x] Copy S2 source from `spectrum-css` `spectrum-two` branch `components/action-group/index.css` (not `/dist`) into `action-group.css` as baseline
+- [x] Translate `.spectrum-ActionGroup-item` child selectors to `::slotted(*)` equivalents for gap, margin, and border-between adjustments
+- [x] Implement compact mode via CSS custom property cascade: set the four logical corner-radius properties (`--swc-action-button-border-start-start-radius`, `-start-end-radius`, `-end-start-radius`, `-end-end-radius`) directly per position — `::slotted(:first-child:not(:last-child))` zeroes only its two interior corners, `::slotted(:last-child:not(:first-child))` zeroes its two interior corners, and `::slotted(:not(:first-child, :last-child))` zeroes all four for middle children. A lone child (both first and last) matches none of these selectors and correctly keeps its natural full radius.
   - **Prerequisite:** `swc-action-button` must expose these four properties as `var(--swc-action-button-border-*-radius, token("corner-radius-100"))` fallbacks in its shadow CSS. This is a small addition to action-button's styling phase alongside action-group's compact mode.
-- [ ] Verify compact mode disables correctly when `quiet` is also set (same as 1st-gen: compact has no visual effect in quiet mode)
-- [ ] Verify `justified` layout (children fill available width)
-- [ ] Verify `orientation="vertical"` layout and compact + vertical combined mode
-- [ ] Add `@cssprop` JSDoc tags for each exposed `--swc-*` property
-- [ ] Pass stylelint (property order, `no-descending-specificity`, token validation)
+- [x] Verify compact mode disables correctly when `quiet` is also set (same as 1st-gen: compact has no visual effect in quiet mode)
+- [x] Verify `justified` layout (children fill available width)
+- [x] Verify `orientation="vertical"` layout and compact + vertical combined mode
+- [x] Add `@cssprop` JSDoc tags for each exposed `--swc-*` property
+- [x] Pass stylelint (property order, `no-descending-specificity`, token validation)
 
 #### Visual model and regressions
 
-- [ ] Verify all five sizes (xs, s, m, l, xl) render correctly with spacing and compact joins
-- [ ] Verify quiet + compact interaction (compact border-join is inactive in quiet mode)
-- [ ] Verify static-color on dark and light backgrounds
-- [ ] Verify forced-colors (high contrast) media query is present if applicable in S2 source
-- [ ] Pass stylelint
+- [ ] Verify all five sizes (xs, s, m, l, xl) render correctly with spacing and compact joins — sizes verified individually (`Sizes` story); compact joins verified separately (`Compact` story); no story yet exercises both together
+- [x] Verify quiet + compact interaction (compact border-join is inactive in quiet mode)
+- [x] Verify static-color on dark and light backgrounds
+- [skip] Verify forced-colors (high contrast) media query is present if applicable in S2 source — not applicable; the `spectrum-two` actiongroup source has no `@media (forced-colors: active)` block
+- [x] Pass stylelint
 
 ### Accessibility
 
 #### Naming and semantics
 
 - [x] Host always `role="group"`; never author-overridable; no `toolbar`, `radiogroup`, or other role
-- [x] `aria-orientation` reflects `orientation` value; wired to `FocusgroupNavigationController` direction
+- [x] `aria-orientation` is **not** set on the host — `role="group"` doesn't support it per the ARIA spec (matches `swc-button-group`); `FocusgroupNavigationController` direction is wired from the `orientation` property directly, independent of any ARIA attribute
 - [x] `label` → `aria-label` on host; empty `label` removes `aria-label`
 - [x] `swc-action-button` children stay `role="button"` only; no `role="radio"` or `role="checkbox"` assigned by action-group
 - [x] Group `disabled`: host `aria-disabled="true"`, children `aria-disabled="true"`; children remain keyboard-reachable (SWC-621)
@@ -437,7 +437,7 @@ No `_lit-styles/` fragment needed — action-group renders only a slot; all layo
 - [x] Roving tabindex: exactly one child has `tabindex="0"`, others `tabindex="-1"`
 - [x] Initial focus target is first enabled child (no selection concept in 2nd-gen)
 - [x] Mouse click updates `tabindex="0"` to clicked item (SWC-250 fix; port `it.skip` test)
-- [ ] Focus ring visible on focused child; no z-index stacking hides indicator (SWC-1342 fix) — Phase 5
+- [x] Focus ring visible on focused child; no z-index stacking hides indicator (SWC-1342 fix) — Phase 5
 - [skip] `change` fires after `selected` state is committed (SWC-889 fix) — `selects`/`selected` dropped
 - [skip] `selected` removal does not throw console error (SWC-282 fix) — `selected` dropped
 - [ ] `swc-action-menu` in group: open menu; arrow inside; Escape returns focus to menu trigger; roving continues from trigger — Phase 6
@@ -453,7 +453,7 @@ No `_lit-styles/` fragment needed — action-group renders only a slot; all layo
 
 - [ ] Host `role="group"` in all orientations and density combinations
 - [ ] `label` → `aria-label` on host; empty label removes it
-- [ ] `orientation="vertical"` → `aria-orientation="vertical"`; horizontal → `"horizontal"` or omitted
+- [ ] `aria-orientation` is never present on the host in either orientation (matches `swc-button-group`'s existing Playwright assertion pattern); `orientation="vertical"` still drives `FocusgroupNavigationController` direction
 - [ ] Roving tabindex: one `tabindex="0"`, rest `tabindex="-1"`; verified after slot change and after click
 - [ ] Group `disabled`: host `aria-disabled="true"`; all children `aria-disabled="true"`; Tab reaches group; arrow moves within; activation suppressed
 - [ ] Mouse click moves `tabindex="0"` to clicked child (SWC-250)
@@ -491,12 +491,13 @@ No `_lit-styles/` fragment needed — action-group renders only a slot; all layo
 - [ ] Status table in workstream doc updated
 - [ ] PR created with description referencing Epic SWC-2212
 - [ ] Peer engineer sign-off
+- [ ] All `TODO` comments added to code during implementation are audited and filed as follow-up Jira tickets under Epic SWC-2212 (see Deferred implementation tickets below) — do this once, at the end, after all `TODO`s for the migration are in
 
 ---
 
 ### Deferred implementation tickets
 
-Create these tickets before this migration PR closes. Link each to Epic SWC-2212.
+Create these tickets before this migration PR closes. Link each to Epic SWC-2212. Includes both known deferred work and any `TODO` comments left in code during implementation — audit the diff for `TODO` markers before closing out the migration and file one per item.
 
 - **`swc-action-menu` `aria-disabled` forwarding (Phase 6).** When `swc-action-group` is disabled it propagates `aria-disabled="true"` to all slotted children. `swc-action-button` already forwards that host attribute to its inner `<button>` and applies disabled appearance via `:host([aria-disabled="true"])` CSS. `swc-action-menu` will need the same treatment: observe `aria-disabled` in its `attributeChangedCallback`, forward the value to its inner trigger element, and add matching CSS (including forced-colors system color overrides). See the comment in `ActionGroupBase.propagateDisabledToChildren()` and the `swc-action-button` implementation for the pattern to follow.
 

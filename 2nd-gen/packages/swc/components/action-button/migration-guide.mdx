@@ -171,34 +171,38 @@ Spectrum 2 exposes a new set of public CSS custom properties on `<swc-action-but
 
 {/* @todo Replace the Description column with the `@cssproperty` JSDoc descriptions from `<swc-action-button>`'s CEM entry once they are added in a follow-up PR. */}
 
-| Custom property                                 | Description                                                            |
-| ----------------------------------------------- | ---------------------------------------------------------------------- |
-| `--swc-action-button-min-block-size`            | Minimum block size. Defaults to the medium component height token.     |
-| `--swc-action-button-border-radius`             | Corner radius.                                                         |
-| `--swc-action-button-font-size`                 | Font size of the label.                                                |
-| `--swc-action-button-gap`                       | Gap between the icon and label.                                        |
-| `--swc-action-button-edge-to-text`              | Inline padding from the edge to the label text.                        |
-| `--swc-action-button-edge-to-visual`            | Inline padding from the edge to the icon when a label is also present. |
-| `--swc-action-button-edge-to-visual-only`       | Inline padding from the edge to the icon when no label is present.     |
-| `--swc-action-button-icon-size`                 | Size (inline and block) of the slotted icon.                           |
-| `--swc-action-button-icon-inline-size`          | Inline size override for the slotted icon.                             |
-| `--swc-action-button-icon-block-size`           | Block size override for the slotted icon.                              |
-| `--swc-action-button-focus-indicator-color`     | Color of the focus ring outline.                                       |
-| `--swc-action-button-background-color-default`  | Background color in the default state.                                 |
-| `--swc-action-button-border-color-default`      | Border color in the default state.                                     |
-| `--swc-action-button-content-color-default`     | Text and icon color in the default state.                              |
-| `--swc-action-button-background-color-hover`    | Background color on hover.                                             |
-| `--swc-action-button-border-color-hover`        | Border color on hover.                                                 |
-| `--swc-action-button-content-color-hover`       | Text and icon color on hover.                                          |
-| `--swc-action-button-background-color-focus`    | Background color when focused.                                         |
-| `--swc-action-button-border-color-focus`        | Border color when focused.                                             |
-| `--swc-action-button-content-color-focus`       | Text and icon color when focused.                                      |
-| `--swc-action-button-background-color-down`     | Background color when pressed.                                         |
-| `--swc-action-button-border-color-down`         | Border color when pressed.                                             |
-| `--swc-action-button-content-color-down`        | Text and icon color when pressed.                                      |
-| `--swc-action-button-background-color-disabled` | Background color when disabled or pending.                             |
-| `--swc-action-button-border-color-disabled`     | Border color when disabled or pending.                                 |
-| `--swc-action-button-content-color-disabled`    | Text and icon color when disabled or pending.                          |
+| Custom property                                 | Description                                                                                                                                      |
+| ----------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `--swc-action-button-min-block-size`            | Minimum block size. Defaults to the medium component height token.                                                                               |
+| `--swc-action-button-border-radius`             | Corner radius applied to all four corners.                                                                                                       |
+| `--swc-action-button-border-start-start-radius` | Start-start corner override. Defaults to `--swc-action-button-border-radius`. Used by `swc-action-group` compact mode to reset interior corners. |
+| `--swc-action-button-border-start-end-radius`   | Start-end corner override. Defaults to `--swc-action-button-border-radius`. Used by `swc-action-group` compact mode to reset interior corners.   |
+| `--swc-action-button-border-end-start-radius`   | End-start corner override. Defaults to `--swc-action-button-border-radius`. Used by `swc-action-group` compact mode to reset interior corners.   |
+| `--swc-action-button-border-end-end-radius`     | End-end corner override. Defaults to `--swc-action-button-border-radius`. Used by `swc-action-group` compact mode to reset interior corners.     |
+| `--swc-action-button-font-size`                 | Font size of the label.                                                                                                                          |
+| `--swc-action-button-gap`                       | Gap between the icon and label.                                                                                                                  |
+| `--swc-action-button-edge-to-text`              | Inline padding from the edge to the label text.                                                                                                  |
+| `--swc-action-button-edge-to-visual`            | Inline padding from the edge to the icon when a label is also present.                                                                           |
+| `--swc-action-button-edge-to-visual-only`       | Inline padding from the edge to the icon when no label is present.                                                                               |
+| `--swc-action-button-icon-size`                 | Size (inline and block) of the slotted icon.                                                                                                     |
+| `--swc-action-button-icon-inline-size`          | Inline size override for the slotted icon.                                                                                                       |
+| `--swc-action-button-icon-block-size`           | Block size override for the slotted icon.                                                                                                        |
+| `--swc-action-button-focus-indicator-color`     | Color of the focus ring outline.                                                                                                                 |
+| `--swc-action-button-background-color-default`  | Background color in the default state.                                                                                                           |
+| `--swc-action-button-border-color-default`      | Border color in the default state.                                                                                                               |
+| `--swc-action-button-content-color-default`     | Text and icon color in the default state.                                                                                                        |
+| `--swc-action-button-background-color-hover`    | Background color on hover.                                                                                                                       |
+| `--swc-action-button-border-color-hover`        | Border color on hover.                                                                                                                           |
+| `--swc-action-button-content-color-hover`       | Text and icon color on hover.                                                                                                                    |
+| `--swc-action-button-background-color-focus`    | Background color when focused.                                                                                                                   |
+| `--swc-action-button-border-color-focus`        | Border color when focused.                                                                                                                       |
+| `--swc-action-button-content-color-focus`       | Text and icon color when focused.                                                                                                                |
+| `--swc-action-button-background-color-down`     | Background color when pressed.                                                                                                                   |
+| `--swc-action-button-border-color-down`         | Border color when pressed.                                                                                                                       |
+| `--swc-action-button-content-color-down`        | Text and icon color when pressed.                                                                                                                |
+| `--swc-action-button-background-color-disabled` | Background color when disabled or pending.                                                                                                       |
+| `--swc-action-button-border-color-disabled`     | Border color when disabled or pending.                                                                                                           |
+| `--swc-action-button-content-color-disabled`    | Text and icon color when disabled or pending.                                                                                                    |
 
 <div
   style={{
