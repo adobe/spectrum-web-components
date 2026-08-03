@@ -173,7 +173,7 @@ See `.ai/rules/stories-documentation.md` for full per-section authoring patterns
  * This description is displayed in the Overview story. It should provide context about
  * what the component does and when to use it. If referencing other components, link to
  * their Storybook paths using relative URLs (e.g., `<swc-badge>` becomes
- * `[Badge](../?path=/docs/badge--overview)`).
+ * `[Badge](../?path=/docs/components-badge--docs)`).
  */
 const meta: Meta = {
   title: 'Component name',
@@ -198,7 +198,7 @@ const meta: Meta = {
 - **JSDoc description above meta**: Displayed in the Overview story. Can include markdown links to other components.
 - **`parameters.docs.subtitle`**: Displayed as the subtitle in the Overview story. Cannot include links (plain text only).
 - **Avoid repetition**: The subtitle and JSDoc description should complement each other, not duplicate content. The subtitle is a brief summary; the JSDoc provides fuller context.
-- **Component links**: When referencing other components in the JSDoc description, use relative Storybook paths: `[ComponentName](../?path=/docs/component-name--overview)`
+- **Component links**: When referencing other components in the JSDoc description, use relative Storybook paths: `[ComponentName](../?path=/docs/components-component-name--docs)`
 
 ### Internal attributes: exclude from the Storybook helper round-trip
 
@@ -222,14 +222,13 @@ argTypes['internal-attribute'] = {
 
 These rules apply to every `title` field in meta objects and every `<Meta title="..." />` in MDX files.
 
-- **Component names are proper nouns — keep their title case.** `'Action Button'`, `'Illustrated Message'`, `'Color Loupe'`. Each word in the component name is capitalised.
-- **Everything else uses sentence case.** Page labels, section names, and group names that are not component names: `'Pattern overview'`, `'Migration guide'`.
+- **Use sentence case — including component names**, matching Spectrum's own docs (e.g. [Action bar](https://spectrum.adobe.com/page/action-bar/), [Color loupe](https://spectrum.adobe.com/page/color-loupe/)). Capitalize only the first word plus any proper nouns/acronyms: `'Action button'`, `'Illustrated message'`, `'Color loupe'`. Page labels, section names, and group names follow the same rule: `'Pattern overview'`, `'Migration guide'`.
 - **No filename as label.** Never use a bare filename (`README`, `CHANGELOG`) as a Storybook title or page name. Use a descriptive label: `'Pattern overview'`, `'Migration guide'`.
-- **Flatten single-component groups.** If a Storybook group contains only one component, do not nest it. Use a flat title (`'Color Loupe'`) rather than a group path (`'Color Components/Color Loupe'`).
+- **Flatten single-component groups.** If a Storybook group contains only one component, do not nest it. Use a flat title (`'Color loupe'`) rather than a group path (`'Color components/Color loupe'`).
 
 | ❌ Don't                         | ✅ Do                                  |
 | -------------------------------- | -------------------------------------- |
-| `'Color Components/Color Loupe'` | `'Color Loupe'` (flattened)            |
+| `'Color components/Color loupe'` | `'Color loupe'` (flattened)            |
 | `'Conversational AI/README'`     | `'Conversational AI/Pattern overview'` |
 | `'Badge/Migration Guide'`        | `'Badge/Migration guide'`              |
 | `'Pattern Overview'`             | `'Pattern overview'`                   |
@@ -409,9 +408,9 @@ Document every attribute/property not covered in Anatomy, States, or Behaviors. 
 | `Sizes`                   | All size variants                                 |
 | `SemanticVariants`        | Positive, informative, negative, notice, neutral  |
 | `NonSemanticVariants`     | Color-coded categories (seafoam, indigo, etc.)    |
-| `StaticColors`            | Static color pattern (see below)                  |
 | `Quiet/Subtle/Emphasized` | Quiet, subtle, emphasized variants                |
 | `Outline`                 | Outline variants                                  |
+| `StaticColors`            | Static color pattern (see below)                  |
 | `Positioning`             | Positioning modifiers (fixed, absolute, relative) |
 
 ```typescript
@@ -564,7 +563,7 @@ Do **not** add JSDoc comments above any individual `export const Foo: Story = ..
 /**
  * A `<swc-badge>` is a non-interactive visual label that displays a status,
  * category, or attribute. For interactive labels, see
- * [Button](../?path=/docs/button--docs).
+ * [Button](../?path=/docs/components-button--docs).
  */
 const meta: Meta = {
   title: 'Badge',
@@ -699,7 +698,7 @@ See `asset.stories.ts` for complete examples.
 - [ ] States: consolidated states, `['states']` tag, `flexLayout: 'row-wrap'` (if applicable)
 - [ ] Behaviors: `['behaviors']` tag (if applicable)
 - [ ] Accessibility: `['a11y']` tag (prose lives in MDX)
-- [ ] Static colors: three-story or combined-story pattern with `staticColorsDemo` (if applicable)
+- [ ] Static colors: single `StaticColors` story (flat or div-wrapped shape) with `staticColorsDemo` (if applicable)
 - [ ] No story-level JSDoc comments above any `export const`
 - [ ] No `section-order` parameter on any story
 - [ ] No `description-only` tag on any story
