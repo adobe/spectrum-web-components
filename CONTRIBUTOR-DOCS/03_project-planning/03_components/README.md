@@ -141,6 +141,8 @@
     - [Side navigation accessibility migration analysis](sidenav/accessibility-migration-analysis.md)
 - Slider
     - [Slider migration roadmap](slider/rendering-and-styling-migration-analysis.md)
+- Split View
+    - [Split view accessibility migration analysis](split-view/accessibility-migration-analysis.md)
 - Status Light
     - [Status light accessibility migration analysis](status-light/accessibility-migration-analysis.md)
     - [Status Light migration roadmap](status-light/rendering-and-styling-migration-analysis.md)
