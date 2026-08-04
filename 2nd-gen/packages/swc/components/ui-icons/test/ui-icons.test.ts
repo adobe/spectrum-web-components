@@ -186,6 +186,137 @@ export const LabelTogglingTest: Story = {
 };
 
 // ──────────────────────────────────────────────────────────────
+// TEST: RTL mirroring
+// ──────────────────────────────────────────────────────────────
+
+export const DirectionalIconMirrorsInRtlTest: Story = {
+  render: () => html`
+    <swc-ui-icon
+      icon="chevron"
+      dir="rtl"
+      accessible-label="Expand"
+    ></swc-ui-icon>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const icon = await getComponent<UiIcon>(canvasElement, 'swc-ui-icon');
+
+    await step('mirrors a curated directional icon under RTL', async () => {
+      expect(
+        getComputedStyle(icon).scale,
+        'chevron is horizontally mirrored in RTL'
+      ).toBe('-1 1');
+    });
+  },
+};
+
+// chevron and arrow are two independent :host() selector clauses in
+// ui-icon-direction.css, not one dynamically-generated rule, so each is
+// tested explicitly; a typo in one clause wouldn't be caught by testing
+// only the other.
+export const SecondDirectionalIconMirrorsInRtlTest: Story = {
+  render: () => html`
+    <swc-ui-icon icon="arrow" dir="rtl" accessible-label="Go"></swc-ui-icon>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const icon = await getComponent<UiIcon>(canvasElement, 'swc-ui-icon');
+
+    await step(
+      'mirrors the other curated directional icon under RTL',
+      async () => {
+        expect(
+          getComputedStyle(icon).scale,
+          'arrow is horizontally mirrored in RTL'
+        ).toBe('-1 1');
+      }
+    );
+  },
+};
+
+// Mirrors tabs.test.ts's SelectionIndicatorDirectionChangeTest pattern: real
+// consumers (AccordionItem, MessageSources, ResponseStatus) never set `dir`
+// directly on their <swc-ui-icon>; they rely on it inheriting from an
+// ancestor. Verified separately from the direct-attribute tests above since
+// :host(:dir(rtl)[icon="..."])'s selector-matching quirk (see
+// ui-icon-direction.css) makes it worth confirming inherited directionality
+// resolves the same way, not assuming it from spec compliance alone.
+export const DirectionalIconMirrorsWithInheritedRtlTest: Story = {
+  render: () => html`
+    <div id="direction-wrapper" dir="ltr">
+      <swc-ui-icon icon="chevron" accessible-label="Expand"></swc-ui-icon>
+    </div>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const icon = await getComponent<UiIcon>(canvasElement, 'swc-ui-icon');
+    const wrapper = canvasElement.querySelector(
+      '#direction-wrapper'
+    ) as HTMLElement;
+
+    await step('does not mirror while the ancestor is LTR', async () => {
+      expect(
+        getComputedStyle(icon).scale,
+        'chevron is unmirrored while the ancestor is LTR'
+      ).toBe('none');
+    });
+
+    await step(
+      'mirrors once an ancestor dir attribute flips to RTL at runtime',
+      async () => {
+        wrapper.setAttribute('dir', 'rtl');
+        await icon.updateComplete;
+        expect(
+          getComputedStyle(icon).scale,
+          'chevron mirrors once the ancestor is RTL, with no dir attribute of its own'
+        ).toBe('-1 1');
+      }
+    );
+
+    wrapper.setAttribute('dir', 'ltr');
+  },
+};
+
+export const DirectionalIconUnmirroredInLtrTest: Story = {
+  render: () => html`
+    <swc-ui-icon
+      icon="chevron"
+      dir="ltr"
+      accessible-label="Expand"
+    ></swc-ui-icon>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const icon = await getComponent<UiIcon>(canvasElement, 'swc-ui-icon');
+
+    await step('does not mirror under LTR', async () => {
+      expect(getComputedStyle(icon).scale, 'chevron is unmirrored in LTR').toBe(
+        'none'
+      );
+    });
+  },
+};
+
+export const NonDirectionalIconUnaffectedInRtlTest: Story = {
+  render: () => html`
+    <swc-ui-icon
+      icon="checkmark"
+      dir="rtl"
+      accessible-label="Done"
+    ></swc-ui-icon>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const icon = await getComponent<UiIcon>(canvasElement, 'swc-ui-icon');
+
+    await step(
+      'leaves a non-directional icon unmirrored under RTL',
+      async () => {
+        expect(
+          getComputedStyle(icon).scale,
+          'checkmark is not in the curated directional list, so it never flips'
+        ).toBe('none');
+      }
+    );
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
 // TEST: Edge cases
 // ──────────────────────────────────────────────────────────────
 
