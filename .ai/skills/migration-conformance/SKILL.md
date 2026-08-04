@@ -70,8 +70,8 @@ That rule is the authoritative source for what to check in each domain and which
 |            | `2nd-gen/packages/swc/components/[component]/[Component].ts`                 |
 |            | Any mixins, controllers, or directives added for this component              |
 | CSS        | `2nd-gen/packages/swc/components/[component]/[component].css`                |
-| Tests      | `2nd-gen/packages/swc/components/[component]/[component].test.ts`            |
-|            | `2nd-gen/packages/swc/components/[component]/[component].a11y.spec.ts`       |
+| Tests      | `2nd-gen/packages/swc/components/[component]/test/[component].test.ts`       |
+|            | `2nd-gen/packages/swc/components/[component]/test/[component].a11y.spec.ts`  |
 |            | Play functions within the stories file                                       |
 | Stories    | `2nd-gen/packages/swc/components/[component]/stories/[component].stories.ts` |
 

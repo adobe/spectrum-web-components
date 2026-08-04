@@ -60,7 +60,7 @@ argTypes['filled-content-slot'] = {
  * a required browse button or link that opens the OS file picker for keyboard users.
  */
 const meta: Meta = {
-  title: 'Drop Zone',
+  title: 'Drop zone',
   component: 'swc-dropzone',
   args,
   argTypes,

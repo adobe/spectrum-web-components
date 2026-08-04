@@ -58,7 +58,7 @@ args['accessible-label'] = 'Close';
  * [Button](../?path=/docs/components-button--docs).
  */
 const meta: Meta = {
-  title: 'Close Button',
+  title: 'Close button',
   component: 'swc-close-button',
   args,
   argTypes,
