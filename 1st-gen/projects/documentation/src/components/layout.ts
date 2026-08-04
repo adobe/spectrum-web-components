@@ -46,6 +46,7 @@ import '@spectrum-web-components/icons-workflow/icons/sp-icon-settings.js';
 import './adobe-logo.js';
 import './code-example.js';
 
+import { lazyStyleFragment } from '../utils/theme-fragments.js';
 import type { CodeExample } from './code-example.js';
 import { copyText } from './copy-to-clipboard.js';
 
@@ -84,63 +85,6 @@ const DEFAULT_DIR = (
 ) as HTMLElement['dir'];
 
 const isNarrowMediaQuery = matchMedia('screen and (max-width: 960px)');
-
-const lazyStyleFragment = (
-  name: Color | Scale,
-  system: SystemVariant
-): void => {
-  const fragmentName = `${name}-${system}`;
-  switch (fragmentName) {
-    case 'dark-spectrum':
-      import('@spectrum-web-components/theme/theme-dark.js');
-      break;
-    case 'darkest-spectrum':
-      import('@spectrum-web-components/theme/theme-dark.js');
-      break;
-    case 'light-spectrum':
-      import('@spectrum-web-components/theme/theme-light.js');
-      break;
-    case 'lightest-spectrum':
-      import('@spectrum-web-components/theme/theme-light.js');
-      break;
-    case 'medium-spectrum':
-      import('@spectrum-web-components/theme/scale-medium.js');
-      break;
-    case 'large-spectrum':
-      import('@spectrum-web-components/theme/scale-large.js');
-      break;
-    case 'dark-express':
-      import('@spectrum-web-components/theme/express/theme-dark.js');
-      break;
-    case 'darkest-express':
-      import('@spectrum-web-components/theme/express/theme-dark.js');
-      break;
-    case 'light-express':
-      import('@spectrum-web-components/theme/express/theme-light.js');
-      break;
-    case 'lightest-express':
-      import('@spectrum-web-components/theme/express/theme-light.js');
-      break;
-    case 'medium-express':
-      import('@spectrum-web-components/theme/express/scale-medium.js');
-      break;
-    case 'large-express':
-      import('@spectrum-web-components/theme/express/scale-large.js');
-      break;
-    case 'light-spectrum-two':
-      import('@spectrum-web-components/theme/spectrum-two/theme-light-core-tokens.js');
-      break;
-    case 'dark-spectrum-two':
-      import('@spectrum-web-components/theme/spectrum-two/theme-dark-core-tokens.js');
-      break;
-    case 'medium-spectrum-two':
-      import('@spectrum-web-components/theme/spectrum-two/scale-medium-core-tokens.js');
-      break;
-    case 'large-spectrum-two':
-      import('@spectrum-web-components/theme/spectrum-two/scale-large-core-tokens.js');
-      break;
-  }
-};
 
 const loadDefaults = () => {
   if (
