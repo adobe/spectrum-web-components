@@ -56,7 +56,7 @@
   flex: 0 0 auto;
   inline-size: var(--swc-upload-artifact-dismiss-icon-inline-size, 8px);
   block-size: var(--swc-upload-artifact-dismiss-icon-block-size, 8px);
-  color: token("gray-25");
+  color: token("gray-700");
 }
 
 .swc-UploadArtifact-dismiss[hidden] {
@@ -91,7 +91,7 @@
 :host([type="card"]) .swc-UploadArtifact-dismiss-visual {
   position: absolute;
   inset: token("spacing-50");
-  background: token("transparent-black-700");
+  background: token("gray-200");
   border-radius: token("corner-radius-full");
 }
 
@@ -121,7 +121,7 @@
   inset-inline-end: 6px;
   inline-size: 20px;
   block-size: 20px;
-  background: token("transparent-black-700");
+  background: token("gray-200");
   border: 1px solid transparent;
   border-radius: token("corner-radius-full");
 }
@@ -155,7 +155,7 @@
 
 :host([type="card"]) .swc-UploadArtifact-dismiss:hover .swc-UploadArtifact-dismiss-visual,
 :host([type="media"]) .swc-UploadArtifact-dismiss:hover .swc-UploadArtifact-dismiss-visual {
-  background: token("transparent-black-800");
+  background: token("gray-300");
 }
 
 .swc-UploadArtifact {
@@ -209,8 +209,8 @@
 :host([type="card"]) .swc-UploadArtifact-surface {
   gap: token("spacing-300");
   align-items: center;
-  min-block-size: var(--swc-upload-artifact-card-min-block-size, 68px);
-  padding: token("spacing-300");
+  min-block-size: var(--swc-upload-artifact-card-min-block-size, 72px);
+  padding: token("spacing-200");
 
   /* 2px margin leaves a real gap between the host edge and this surface so
    * the host's inward focus ring (below) lands in empty space instead of
@@ -230,11 +230,11 @@
 :host([type="card"]) .swc-UploadArtifact-thumbnail ::slotted(*) {
   box-sizing: border-box;
   flex-shrink: 0;
-  inline-size: var(--swc-upload-artifact-card-thumbnail-inline-size, 32px);
-  block-size: var(--swc-upload-artifact-card-thumbnail-block-size, 32px);
+  inline-size: var(--swc-upload-artifact-card-thumbnail-inline-size, 48px);
+  block-size: var(--swc-upload-artifact-card-thumbnail-block-size, 48px);
   background: token("gray-100");
   border: 1px solid transparent;
-  border-radius: token("corner-radius-75");
+  border-radius: token("corner-radius-large-default");
 }
 
 :host([type="card"]) .swc-UploadArtifact-meta {
@@ -266,8 +266,9 @@
 }
 
 :host([type="media"]) {
-  inline-size: var(--swc-upload-artifact-preview-size, 68px);
-  block-size: var(--swc-upload-artifact-preview-size, 68px);
+  inline-size: var(--swc-upload-artifact-preview-size, 72px);
+  block-size: var(--swc-upload-artifact-preview-size, 72px);
+  border-radius: token("corner-radius-large-default");
   overflow: visible;
 }
 
@@ -279,7 +280,7 @@
    * surface so the host's inward focus ring (below) lands in empty space
    * instead of being painted over by the surface, which renders on top of it. */
   inset: 2px;
-  border-radius: token("corner-radius-medium-default");
+  border-radius: token("corner-radius-large-default");
   box-shadow: token("drop-shadow-emphasized-default-x") token("drop-shadow-emphasized-default-y") token("drop-shadow-emphasized-default-blur") token("drop-shadow-emphasized-default-color");
   overflow: hidden;
 }
@@ -291,7 +292,7 @@
   block-size: 100%;
   background: token("gray-100");
   border: 1px solid transparent;
-  border-radius: token("corner-radius-medium-default");
+  border-radius: token("corner-radius-large-default");
   overflow: hidden;
 }
 
