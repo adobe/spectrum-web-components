@@ -86,7 +86,7 @@ These two rules share the same glob (`2nd-gen/**/stories/**`) and work as a pair
 - **stories-format**: File structure and technical conventions
   - Visual separators, meta configuration, required tags, layout parameters
   - `render` vs `args` patterns, `flexLayout` usage
-  - Static color three-story pattern, image asset conventions
+  - Static color single-story pattern, image asset conventions
 
 #### Component README
 

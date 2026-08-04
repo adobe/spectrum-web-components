@@ -53,9 +53,7 @@ import * as Stories from './stories/<unit>.stories';
 
 ## States
 
-### States
-
-...prose...
+...prose (single-story section whose story name matches the heading — no `### States`; see "Single-story sections")...
 
 <Canvas of={Stories.States} />
 
@@ -108,19 +106,19 @@ import * as Stories from './stories/<unit>.stories';
 
 ### Per-story title rules
 
-Per-story `### Title` headings (in sections with `hideTitle=false`: Options, States, Behaviors, Full pattern) must match the story's rendered name exactly:
+Per-story `### Title` headings (in sections with `hideTitle=false`: Options, States, Behaviors, Full pattern) must match the story's rendered name exactly, and that rendered name must be sentence case (see "Documentation style" below):
 
 - If the story has an explicit `<Story>.storyName = '...'` override, use that exact string.
-- Otherwise, use Storybook's PascalCase → Title Case conversion of the export name (each word capitalized).
+- Otherwise, use the export name as rendered by Storybook. This only produces a valid title for single-word exports, where the default rendering is already sentence case (`Sizes` → `Sizes`). For multi-word exports, Storybook's default PascalCase → Title Case conversion capitalizes every word, which is **not** sentence case — add a `.storyName` override (see stories-format.md's story-naming pattern) so the rendered title is sentence case.
 
 Examples:
 
 | Export name                                                       | Rendered title          |
 | ----------------------------------------------------------------- | ----------------------- |
 | `Sizes`                                                           | `Sizes`                 |
-| `TextWrapping`                                                    | `Text Wrapping`         |
-| `InActionButton`                                                  | `In Action Button`      |
-| `ActivationModes`                                                 | `Activation Modes`      |
+| `TextWrapping` with `.storyName = 'Text wrapping'`                | `Text wrapping`         |
+| `InActionButton` with `.storyName = 'In action button'`           | `In action button`      |
+| `ActivationModes` with `.storyName = 'Activation modes'`          | `Activation modes`      |
 | `SemanticVariants` with `.storyName = 'Semantic variants'`        | `Semantic variants`     |
 | `NonSemanticVariants` with `.storyName = 'Non-semantic variants'` | `Non-semantic variants` |
 
@@ -132,7 +130,7 @@ If a single-story section's rendered name _differs_ from the `## Section` headin
 
 ### Untagged stories do not appear
 
-Stories without any section tag (`anatomy`, `options`, `states`, `behaviors`, `a11y`, `upcoming`, `usage`, `appendix`, `full-pattern`, `api`) are not surfaced on the Docs page (subject to the global `'!autodocs'` / `'!dev'` exclusion in `preview.ts`). Do not author a `<Canvas of={...}>` for an untagged story in MDX; that would surface content production does not render.
+Stories without any section tag (`anatomy`, `options`, `states`, `behaviors`, `a11y`, `upcoming`, `appendix`, `full-pattern`, `api`) are not surfaced on the Docs page (subject to the global `'!autodocs'` / `'!dev'` exclusion in `preview.ts`). Do not author a `<Canvas of={...}>` for an untagged story in MDX; that would surface content production does not render.
 
 ### Self-check with `yarn lint:docs-pages`
 
@@ -228,7 +226,7 @@ const allLabels = { ...semanticLabels, ...colorLabels };
 1. **JSDoc description above meta**: Provides the main description of what the component does and when to use it. This description:
    - Is displayed as the primary documentation for the Overview story
    - Can include markdown formatting and links to other components
-   - Should reference other components using Storybook paths: `[Badge](../?path=/docs/badge--readme)`
+   - Should reference other components using Storybook paths: `[Badge](../?path=/docs/components-badge--docs)`
    - Should provide fuller context than the subtitle
 
 2. **`parameters.docs.subtitle`**: Provides a brief summary displayed as the subtitle. This subtitle:
@@ -243,7 +241,7 @@ const allLabels = { ...semanticLabels, ...colorLabels };
 /**
  * A badge is a non-interactive visual label that displays a status, category, or attribute.
  * Badges can be used to highlight important information or to categorize items. For interactive
- * labels, see [Button](../?path=/docs/button--readme).
+ * labels, see [Button](../?path=/docs/components-button--docs).
  */
 const meta: Meta = {
   title: 'Badge',
@@ -337,17 +335,22 @@ export const Anatomy: Story = {
 
 **Pattern for sizes**:
 
+```mdx
+### Sizes
+
+Component-names come in [X] sizes to fit various contexts:
+
+- **Small (`s`)**: Used for inline indicators or space-constrained areas
+- **Medium (`m`)**: Default size, used for typical use cases
+- **Large (`l`)**: Used for prominent displays or primary content areas
+- **Extra-large (`xl`)**: Maximum visibility (if applicable)
+
+All sizes shown below for comparison.
+
+<Canvas of={Stories.Sizes} />
+```
+
 ```typescript
-/**
- * Component-names come in [X] sizes to fit various contexts:
- *
- * - **Small (`s`)**: Used for inline indicators or space-constrained areas
- * - **Medium (`m`)**: Default size, used for typical use cases
- * - **Large (`l`)**: Used for prominent displays or primary content areas
- * - **Extra-large (`xl`)**: Maximum visibility (if applicable)
- *
- * All sizes shown below for comparison.
- */
 export const Sizes: Story = {
   render: (args) => html`
     ${template({ ...args, size: 's', label: 'Small' })}
@@ -363,19 +366,24 @@ export const Sizes: Story = {
 
 **Pattern for semantic variants**:
 
+```mdx
+### Semantic variants
+
+Semantic variants provide meaning through color:
+
+- **`accent`**: New, beta, prototype, draft
+- **`informative`**: Active, in use, live, published
+- **`neutral`**: Archived, deleted, paused, draft, not started, ended
+- **`positive`**: Approved, complete, success, new, purchased, licensed
+- **`notice`**: Needs approval, pending, scheduled
+- **`negative`**: Error, alert, rejected, failed
+
+All semantic variants shown below for comparison.
+
+<Canvas of={Stories.SemanticVariants} />
+```
+
 ```typescript
-/**
- * Semantic variants provide meaning through color:
- *
- * - **`accent`**: New, beta, prototype, draft
- * - **`informative`**: Active, in use, live, published
- * - **`neutral`**: Archived, deleted, paused, draft, not started, ended
- * - **`positive`**: Approved, complete, success, new, purchased, licensed
- * - **`notice`**: Needs approval, pending, scheduled
- * - **`negative`**: Error, alert, rejected, failed
- *
- * All semantic variants shown below for comparison.
- */
 export const SemanticVariants: Story = {
   render: (args) => html`
     ${template({ ...args, variant: 'positive', label: 'Positive' })}
@@ -389,6 +397,7 @@ export const SemanticVariants: Story = {
     flexLayout: 'row-wrap',
   },
 };
+SemanticVariants.storyName = 'Semantic variants';
 ```
 
 **Pattern for static color**: sourced from Spectrum's static color usage guidance (e.g. [Button](https://spectrum.adobe.com/page/button/#Static-color)). The component's color pins to the chosen value regardless of the active theme, and the choice of value depends on the background it sits over.
@@ -428,19 +437,24 @@ export const StaticColors: Story = {
 
 **Consolidation rule**: Combine all states into a **single States story** when possible (or minimal stories when states are complex).
 
-**Pattern**:
+**Pattern** (single States story; section heading and story name match — collapse to one heading, no `### States`; see "Single-story sections"):
+
+```mdx
+## States
+
+Components can exist in various states:
+
+- **Default**: Normal, interactive state
+- **Selected**: Item has been chosen or activated
+- **Disabled**: Functionality exists but is not available
+- **Error**: Validation failure or error condition
+
+All states shown below for comparison.
+
+<Canvas of={Stories.States} />
+```
 
 ```typescript
-/**
- * Components can exist in various states:
- *
- * - **Default**: Normal, interactive state
- * - **Selected**: Item has been chosen or activated
- * - **Disabled**: Functionality exists but is not available
- * - **Error**: Validation failure or error condition
- *
- * All states shown below for comparison.
- */
 export const States: Story = {
   render: (args) => html`
     ${template({ ...args, label: 'Default' })}
@@ -455,13 +469,18 @@ export const States: Story = {
 };
 ```
 
-**Pattern for complex states** (when animation or interaction is critical):
+**Pattern for complex states** (when animation or interaction is critical — states no longer combine into one story, so each gets its own per-story `### Title`):
+
+```mdx
+### Indeterminate
+
+The indeterminate state shows an animated loading indicator when progress is unknown or cannot be determined.
+The animation automatically loops until the state changes.
+
+<Canvas of={Stories.Indeterminate} />
+```
 
 ```typescript
-/**
- * The indeterminate state shows an animated loading indicator when progress is unknown or cannot be determined.
- * The animation automatically loops until the state changes.
- */
 export const Indeterminate: Story = {
   tags: ['states'],
   args: {
@@ -471,15 +490,13 @@ export const Indeterminate: Story = {
 };
 ```
 
-**Disabled state template**:
+**Disabled state note** (fold into the `## States` prose above, or use verbatim if Disabled needs its own `### Disabled` story):
 
-```typescript
-/**
- * A component in a disabled state shows that [functionality] exists, but is not available in that circumstance.
- * This can be used to maintain layout continuity and communicate that [functionality] may become available later.
- *
- * **ARIA support**: When disabled, the component automatically sets `aria-disabled="true"`.
- */
+```mdx
+A component in a disabled state shows that [functionality] exists, but is not available in that circumstance.
+This can be used to maintain layout continuity and communicate that [functionality] may become available later.
+
+**ARIA support**: When disabled, the component automatically sets `aria-disabled="true"`.
 ```
 
 ### Behaviors
@@ -490,18 +507,16 @@ export const Indeterminate: Story = {
 
 **Pattern for automatic behaviors**:
 
+```mdx
+### Text wrapping
+
+Long text content automatically wraps to multiple lines to fit the available space.
+When space is constrained, text truncates with an ellipsis (...).
+
+<Canvas of={Stories.TextWrapping} />
+```
+
 ```typescript
-/**
- * ### Text handling
- *
- * Long text content automatically wraps to multiple lines to fit the available space.
- * When space is constrained, text truncates with an ellipsis (...).
- *
- * ### Focus management
- *
- * When opened, focus is automatically trapped within the component.
- * When closed, focus returns to the triggering element.
- */
 export const TextWrapping: Story = {
   render: (args) => html`
     ${template({ 'default-slot': 'Short text' })}
@@ -515,60 +530,67 @@ export const TextWrapping: Story = {
     flexLayout: 'row-wrap',
   },
 };
+TextWrapping.storyName = 'Text wrapping';
 ```
 
 **Pattern for methods**:
 
-````typescript
-/**
- * ### Methods
- *
- * The component exposes the following public methods:
- *
- * - **open()**: Opens the component programmatically
- * - **close()**: Closes the component programmatically
- * - **toggle()**: Toggles between open and closed states
- * - **reset()**: Resets the component to its initial state
- *
- * Example usage:
- *
- * ```javascript
- * const component = document.querySelector('swc-component-name');
- * component.open();
- * ```
- */
+````mdx
+### Methods
+
+The component exposes the following public methods:
+
+- **open()**: Opens the component programmatically
+- **close()**: Closes the component programmatically
+- **toggle()**: Toggles between open and closed states
+- **reset()**: Resets the component to its initial state
+
+Example usage:
+
+```javascript
+const component = document.querySelector('swc-component-name');
+component.open();
+```
+
+<Canvas of={Stories.Methods} />
+````
+
+```typescript
 export const Methods: Story = {
   tags: ['behaviors'],
   // ... implementation
 };
-````
+```
 
 **Pattern for events**:
 
-````typescript
-/**
- * ### Events
- *
- * The component dispatches the following custom events:
- *
- * - **change**: Fired when the value changes (bubbles: true, composed: true)
- * - **input**: Fired during user input (bubbles: true, composed: true)
- * - **swc-opened**: Fired when the component opens (bubbles: true, composed: true)
- * - **swc-closed**: Fired when the component closes (bubbles: true, composed: true)
- *
- * Example event listener:
- *
- * ```javascript
- * component.addEventListener('change', (event) => {
- *     console.log('Value changed:', event.target.value);
- * });
- * ```
- */
+````mdx
+### Events
+
+The component dispatches the following custom events:
+
+- **change**: Fired when the value changes (bubbles: true, composed: true)
+- **input**: Fired during user input (bubbles: true, composed: true)
+- **swc-opened**: Fired when the component opens (bubbles: true, composed: true)
+- **swc-closed**: Fired when the component closes (bubbles: true, composed: true)
+
+Example event listener:
+
+```javascript
+component.addEventListener('change', (event) => {
+  console.log('Value changed:', event.target.value);
+});
+```
+
+<Canvas of={Stories.Events} />
+````
+
+```typescript
 export const Events: Story = {
   tags: ['behaviors'],
   // ... implementation
 };
-````
+```
 
 ### Accessibility
 
@@ -578,42 +600,45 @@ export const Events: Story = {
 
 **Pattern**:
 
+```mdx
+### Features
+
+The `<swc-component-name>` element implements several accessibility features:
+
+#### Keyboard navigation
+
+- <kbd>Tab</kbd>: Moves focus to/from the component
+- <kbd>Space</kbd> or <kbd>Enter</kbd>: Activates the component
+- <kbd>Arrow keys</kbd>: Navigate between items
+- <kbd>Escape</kbd>: Closes the component (if applicable)
+
+#### ARIA implementation
+
+1. **ARIA role**: Automatically sets `role="progressbar"` (or appropriate role)
+2. **Labeling**: Uses the `label` attribute as `aria-label`
+3. **States**:
+   - Sets `aria-valuenow` with current progress value
+   - Sets `aria-disabled="true"` when disabled
+4. **Status communication**: Screen readers announce value changes
+
+#### Visual accessibility
+
+- Progress is shown visually through multiple cues, not relying solely on color
+- High contrast mode is supported with appropriate color overrides
+- Static color variants ensure sufficient contrast on different backgrounds
+
+### Best practices
+
+- Always provide a descriptive `label` that explains what the component represents
+- Use meaningful, specific labels (e.g., "Uploading document" instead of "Loading")
+- Ensure sufficient color contrast between the component and its background
+- Use semantic variants when status has specific meaning
+- Test with screen readers to verify announcements are clear
+
+<Canvas of={Stories.Accessibility} />
+```
+
 ```typescript
-/**
- * ### Features
- *
- * The `<swc-component-name>` element implements several accessibility features:
- *
- * #### Keyboard navigation
- *
- * - <kbd>Tab</kbd>: Moves focus to/from the component
- * - <kbd>Space</kbd> or <kbd>Enter</kbd>: Activates the component
- * - <kbd>Arrow keys</kbd>: Navigate between items
- * - <kbd>Escape</kbd>: Closes the component (if applicable)
- *
- * #### ARIA implementation
- *
- * 1. **ARIA role**: Automatically sets `role="progressbar"` (or appropriate role)
- * 2. **Labeling**: Uses the `label` attribute as `aria-label`
- * 3. **States**:
- *     - Sets `aria-valuenow` with current progress value
- *     - Sets `aria-disabled="true"` when disabled
- * 4. **Status communication**: Screen readers announce value changes
- *
- * #### Visual accessibility
- *
- * - Progress is shown visually through multiple cues, not relying solely on color
- * - High contrast mode is supported with appropriate color overrides
- * - Static color variants ensure sufficient contrast on different backgrounds
- *
- * ### Best practices
- *
- * - Always provide a descriptive `label` that explains what the component represents
- * - Use meaningful, specific labels (e.g., "Uploading document" instead of "Loading")
- * - Ensure sufficient color contrast between the component and its background
- * - Use semantic variants when status has specific meaning
- * - Test with screen readers to verify announcements are clear
- */
 export const Accessibility: Story = {
   tags: ['a11y'],
   args: {
@@ -877,7 +902,7 @@ After verifying accuracy:
 When referencing other components — whether in the meta-level JSDoc, the meta `parameters.docs.subtitle`, or anywhere in the per-unit MDX:
 
 - **Use Storybook paths**: Link to the component's docs page using relative paths
-- **Format**: `[ComponentName](../?path=/docs/components-component-name--docs)` (or `--readme` if that's the convention in your area)
+- **Format**: `[ComponentName](../?path=/docs/components-component-name--docs)`
 - **Component name format**: Use kebab-case in the path (e.g., `action-button`, `progress-circle`)
 - **Subtitle exception**: `parameters.docs.subtitle` is plain text and cannot include links.
 
@@ -957,7 +982,7 @@ When creating or updating documentation:
 - [ ] `<DocsHeader />` at the top, `<DocsFooter />` at the bottom
 - [ ] Sections appear in the canonical order (Anatomy → Usage → Options → States → Behaviors → Accessibility → Full pattern → Upcoming features → API → Appendix → Feedback) — skip sections that do not apply
 - [ ] Every section-tagged story is referenced via `<Canvas of={Stories.StoryName} />`
-- [ ] Per-story `### Title` headings match Storybook's rendered story names (PascalCase → Title Case, or explicit `storyName`)
+- [ ] Per-story `### Title` headings match Storybook's rendered story names and are sentence case (single-word exports render as-is; multi-word exports need an explicit `.storyName` override — see "Per-story title rules")
 - [ ] No `<Canvas>` references to untagged stories
 - [ ] Controllers: hand-authored `## API` section ahead of `<DocsFooter />`; `meta.tags` contains `'controller'` so `<ApiTable />` is omitted
 - [ ] Anatomy: parts listed as a flat, unordered list with no `###`/`####` subsections (components and patterns)
