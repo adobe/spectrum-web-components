@@ -284,6 +284,11 @@ export default function (plop) {
           path: `${swcDir}/test/{{dashCase name}}.a11y.spec.ts`,
           templateFile: t('swc/a11y.spec.ts.hbs'),
         },
+        {
+          type: 'add',
+          path: `${swcDir}/test/vrt/{{dashCase name}}.vrt.ts`,
+          templateFile: path.join(here, 'templates/vrt/vrt.ts.hbs'),
+        },
         // ── wiring + formatting ──────────────────────────────────
         { type: 'wire-core-export' },
         { type: 'format-component' },

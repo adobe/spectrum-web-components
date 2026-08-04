@@ -14,14 +14,14 @@ variant/state API, the assertions, and the docs prose.
 
 | Generator   | Scaffolds                                               | Target                            |
 | ----------- | ------------------------------------------------------- | --------------------------------- |
-| `component` | Core base + SWC concrete + stories, docs, tests         | new component (`core` + `swc`)    |
+| `component` | Core base + SWC concrete + stories, docs, tests, VRT    | new component (`core` + `swc`)    |
 | `test`      | Unit (`*.test.ts`) + a11y (`*.a11y.spec.ts`) test files | **existing** component (retrofit) |
 | `vrt`       | A Chromatic VRT story (`test/vrt/<name>.vrt.ts`)        | **existing** component (retrofit) |
 
-`component` always emits a baseline `test` + `a11y` file. Use the standalone
-`test` and `vrt` generators to add coverage to a component that already exists
-(for example, one migrated before these generators landed) — `vrt` in particular
-fills a gap, since the `component` skeleton ships no `.vrt.ts`.
+`component` emits a baseline `test`, `a11y`, and `vrt` file as part of the
+skeleton. Use the standalone `test` and `vrt` generators to add (or refresh)
+that coverage on a component that already exists — for example, one migrated
+before these generators landed.
 
 ## Usage
 
