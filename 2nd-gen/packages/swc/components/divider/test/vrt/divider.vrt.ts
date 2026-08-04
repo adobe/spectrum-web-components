@@ -13,7 +13,12 @@
 import { html } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
-import { Divider } from '@adobe/spectrum-wc/divider';
+import {
+  DIVIDER_STATIC_COLORS,
+  DIVIDER_VALID_SIZES,
+  type DividerSize,
+  type DividerStaticColor,
+} from '@adobe/spectrum-wc-core/components/divider';
 
 import '@adobe/spectrum-wc/components/divider/swc-divider.js';
 
@@ -37,9 +42,9 @@ export default meta;
 
 // Helpers
 
-const HORIZONTAL_BLOCK_SIZE = { s: 16, m: 24, l: 32 } as const;
+const VERTICAL_BLOCK_SIZE = { s: 16, m: 24, l: 32 } as const;
 
-const renderHorizontal = (size: (typeof Divider.VALID_SIZES)[number]) => html`
+const renderHorizontal = (size: DividerSize) => html`
   <div style="inline-size: 200px;">
     <h4>Account settings</h4>
     <p>Update your personal details, password, and preferences.</p>
@@ -49,9 +54,9 @@ const renderHorizontal = (size: (typeof Divider.VALID_SIZES)[number]) => html`
   </div>
 `;
 
-const renderVertical = (size: (typeof Divider.VALID_SIZES)[number]) => html`
+const renderVertical = (size: DividerSize) => html`
   <div
-    style="display: flex; align-items: center; gap: 8px; block-size: ${HORIZONTAL_BLOCK_SIZE[
+    style="display: flex; align-items: center; gap: 8px; block-size: ${VERTICAL_BLOCK_SIZE[
       size
     ]}px;"
   >
@@ -63,13 +68,11 @@ const renderVertical = (size: (typeof Divider.VALID_SIZES)[number]) => html`
   </div>
 `;
 
-const renderStaticColorSample = (
-  staticColor: (typeof Divider.STATIC_COLORS)[number]
-) =>
+const renderStaticColorSample = (staticColor: DividerStaticColor) =>
   staticColorBackground(
     html`
       ${row(
-        Divider.VALID_SIZES.map(
+        DIVIDER_VALID_SIZES.map(
           (size) => html`
             <div style="inline-size: 200px;">
               <h4>Dashboard settings</h4>
@@ -86,10 +89,10 @@ const renderStaticColorSample = (
         'Horizontal'
       )}
       ${row(
-        Divider.VALID_SIZES.map(
+        DIVIDER_VALID_SIZES.map(
           (size) => html`
             <div
-              style="display: flex; align-items: center; gap: 8px; block-size: ${HORIZONTAL_BLOCK_SIZE[
+              style="display: flex; align-items: center; gap: 8px; block-size: ${VERTICAL_BLOCK_SIZE[
                 size
               ]}px;"
             >
@@ -116,9 +119,9 @@ const renderStaticColorSample = (
   );
 
 const permutationContent = () => html`
-  ${row(Divider.VALID_SIZES.map(renderHorizontal), 'Horizontal')}
-  ${row(Divider.VALID_SIZES.map(renderVertical), 'Vertical')}
-  ${Divider.STATIC_COLORS.map(renderStaticColorSample)}
+  ${row(DIVIDER_VALID_SIZES.map(renderHorizontal), 'Horizontal')}
+  ${row(DIVIDER_VALID_SIZES.map(renderVertical), 'Vertical')}
+  ${DIVIDER_STATIC_COLORS.map(renderStaticColorSample)}
 `;
 
 // VRT stories
