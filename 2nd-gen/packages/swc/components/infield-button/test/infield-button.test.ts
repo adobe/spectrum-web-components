@@ -116,6 +116,21 @@ export const OverviewTest: Story = {
           bare.getAttribute('size'),
           'size attribute is absent without an explicit parent-set value'
         ).toBeNull();
+
+        bare.setAttribute('size', 'l');
+        await bare.updateComplete;
+        expect(
+          bare.getAttribute('size'),
+          'size attribute reflects parent-set value'
+        ).toBe('l');
+
+        bare.removeAttribute('size');
+        await bare.updateComplete;
+        expect(
+          bare.hasAttribute('size'),
+          'removing a parent-provided size does not restore size="m"'
+        ).toBe(false);
+
         bare.remove();
       }
     );

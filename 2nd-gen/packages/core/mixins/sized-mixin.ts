@@ -35,6 +35,7 @@ export interface SizedElementInterface {
 
 export interface SizedElementConstructor {
   readonly VALID_SIZES: readonly ElementSize[];
+  readonly NO_DEFAULT_SIZE: boolean;
 }
 
 export function SizedMixin<T extends Constructor<ReactiveElement>>(
@@ -55,17 +56,30 @@ export function SizedMixin<T extends Constructor<ReactiveElement>>(
      */
     static readonly VALID_SIZES: readonly ElementSize[] = validSizes;
 
+    /**
+     * When true, the component does not auto-reflect a default size attribute.
+     * The parent is expected to supply the size. Subclasses of an already-sized
+     * base (e.g. InfieldButtonBase extends ButtonBase) can override this static
+     * to opt out of the inherited base's auto-set behavior without re-wrapping
+     * the mixin.
+     *
+     * @internal
+     */
+    static readonly NO_DEFAULT_SIZE: boolean = noDefaultSize ?? false;
+
     @property({ type: String })
     public get size(): ElementSize {
       return this._size || defaultSize;
     }
 
     public set size(value: ElementSize) {
-      const fallbackSize = noDefaultSize ? null : defaultSize;
+      const sizedConstructor = this
+        .constructor as unknown as SizedElementConstructor;
+      const fallbackSize = sizedConstructor.NO_DEFAULT_SIZE
+        ? null
+        : defaultSize;
       const size = (value ? value.toLocaleLowerCase() : value) as ElementSize;
-      const classValidSizes = (
-        this.constructor as unknown as SizedElementConstructor
-      ).VALID_SIZES;
+      const classValidSizes = sizedConstructor.VALID_SIZES;
       const validSize = (
         classValidSizes.includes(size) ? size : fallbackSize
       ) as ElementSize;
@@ -84,7 +98,11 @@ export function SizedMixin<T extends Constructor<ReactiveElement>>(
     private _size: ElementSize | null = defaultSize;
 
     protected override update(changes: PropertyValues): void {
-      if (!this.hasAttribute('size') && !noDefaultSize) {
+      if (
+        !this.hasAttribute('size') &&
+        !(this.constructor as unknown as SizedElementConstructor)
+          .NO_DEFAULT_SIZE
+      ) {
         this.setAttribute('size', this.size);
       }
       super.update(changes);

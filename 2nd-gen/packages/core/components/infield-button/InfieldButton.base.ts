@@ -10,7 +10,6 @@
  * governing permissions and limitations under the License.
  */
 
-import { type PropertyValues } from 'lit';
 import { property } from 'lit/decorators.js';
 
 import { ButtonBase } from '@adobe/spectrum-wc-core/components/button';
@@ -44,6 +43,13 @@ export abstract class InfieldButtonBase extends ButtonBase {
   static override readonly VALID_SIZES: readonly InfieldButtonSize[] =
     INFIELD_BUTTON_VALID_SIZES;
 
+  // The parent field owns sizing; infield buttons must not auto-reflect size="m"
+  // when no explicit size is provided. Overriding NO_DEFAULT_SIZE lets the
+  // SizedMixin setter and update() read this flag via this.constructor, so the
+  // decision cascades through the full prototype chain without closure leakage.
+  /** @internal */
+  static override readonly NO_DEFAULT_SIZE = true;
+
   // Infield buttons are clickable but never independently focusable. The parent field
   // owns keyboard behavior and supplies the only focus ring.
   static override shadowRootOptions: ShadowRootInit = {
@@ -61,42 +67,4 @@ export abstract class InfieldButtonBase extends ButtonBase {
    */
   @property({ type: Boolean, reflect: true })
   public quiet: boolean = false;
-
-  // ──────────────────────────────────────────
-  //     NO-DEFAULT-SIZE BEHAVIOR
-  // ──────────────────────────────────────────
-
-  // ButtonBase's SizedMixin has noDefaultSize=false and auto-reflects size="m" to
-  // the host attribute during every update() when no explicit size is present.
-  // InfieldButton must not own its size — the parent field supplies it via the size
-  // attribute. The flag below suppresses the mixin's attribute write and the
-  // corresponding attributeChangedCallback round-trip so the attribute stays absent
-  // until the parent explicitly sets it.
-  private _suppressSizeAutoSet = false;
-
-  public override attributeChangedCallback(
-    name: string,
-    oldValue: string | null,
-    newValue: string | null
-  ): void {
-    if (name === 'size' && this._suppressSizeAutoSet) {
-      return;
-    }
-    super.attributeChangedCallback(name, oldValue, newValue);
-  }
-
-  protected override update(changes: PropertyValues): void {
-    const hadSize = this.hasAttribute('size');
-    if (!hadSize) {
-      this._suppressSizeAutoSet = true;
-    }
-    super.update(changes);
-    this._suppressSizeAutoSet = false;
-    if (!hadSize && this.hasAttribute('size')) {
-      // super.update() auto-set size="m"; undo it so the DOM attribute stays absent.
-      this._suppressSizeAutoSet = true;
-      this.removeAttribute('size');
-      this._suppressSizeAutoSet = false;
-    }
-  }
 }
