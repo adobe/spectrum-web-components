@@ -32,7 +32,7 @@ mapping reference.
 Run the following command and select the skills you want to install from the list:
 
 ```bash
-npx skills add spectrum-web-components.adobe.com
+npx skills add https://spectrum-web-components.adobe.com
 ```
 
 - Choose **Gen1** if you are building with `sp-*` components. When prompting your AI client, mentioning `sp-*`, `@spectrum-web-components`, or "Spectrum 1" will activate this skill.
