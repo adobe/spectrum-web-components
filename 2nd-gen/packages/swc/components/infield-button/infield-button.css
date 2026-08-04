@@ -12,7 +12,7 @@
 
 /* ── Host (outer container) ───────────────────────── */
 
-/* No fixed sizing here — the button self-sizes from padding + icon. The
+/* No fixed sizing here; the button self-sizes from padding + icon. The
    consuming field controls the outer dimensions and any additional spacing. */
 
 :host {
@@ -48,10 +48,6 @@
   --_swc-infield-button-padding: var(--swc-infield-button-padding, token("accessory-item-padding-medium"));
   --_swc-infield-button-icon-size: var(--swc-infield-button-icon-size, token("workflow-icon-3x-small"));
 
-  /* Total block size: 2× padding + icon. Used as the perspective distance for
-     the press transform so the effect scales with component size. */
-  --_swc-infield-button-block-size: calc(var(--_swc-infield-button-padding) * 2 + var(--_swc-infield-button-icon-size));
-
   display: flex;
   align-items: center;
   justify-content: center;
@@ -65,7 +61,7 @@
   cursor: default;
   transition-timing-function: token("animation-ease-in-out");
   transition-duration: token("animation-duration-100");
-  transition-property: background-color, color, transform;
+  transition-property: background-color, color;
 }
 
 /* ── States ───────────────────────────────────────── */
@@ -78,8 +74,6 @@
 .swc-InfieldButton:active {
   color: var(--swc-infield-button-icon-color-active, token("neutral-content-color-down"));
   background-color: var(--swc-infield-button-background-color-active, token("gray-200"));
-  transform: var(--swc-infield-button-down-state-transform, perspective(var(--_swc-infield-button-block-size)) translate3d(0, 0, token("component-size-difference-down")));
-  will-change: transform;
 }
 
 /* Parent field owns the focus ring; inner button must not show its own. */
@@ -94,7 +88,6 @@
   color: var(--swc-infield-button-icon-color-disabled, token("disabled-content-color"));
   background-color: var(--swc-infield-button-background-color-disabled, token("disabled-background-color"));
   cursor: default;
-  transform: none;
 }
 
 /* ── Icon slot ────────────────────────────────────── */

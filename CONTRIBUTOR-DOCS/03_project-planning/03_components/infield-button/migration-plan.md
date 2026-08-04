@@ -321,8 +321,10 @@ Infield buttons are not independently focusable and are not in the tab order. Th
 **No link API:**
 `swc-infield-button` has no `href` or related anchor attributes. It is always `type="button"` in practice.
 
-**`noDefaultSize: true`:**
-The component does not pick a default size. The parent field host must set `size` (either by attribute or inherited context). This behavior is preserved from 1st-gen. `InfieldButton.base.ts` applies `SizedMixin(ButtonBase, { noDefaultSize: true })`; `validSizes` reuses `BUTTON_VALID_SIZES` (`['s', 'm', 'l', 'xl']`) from `ButtonBase` and does not need to be overridden (see Q6). In practice: `getAttribute('size')` returns `null` until the parent field sets it explicitly; the JS property has no useful fallback default. M is the Figma **reference** size for token documentation, not a component default.
+**`noDefaultSize: true` — known implementation constraint:**
+The component does not pick a default size; the parent field host must set `size`. This is the design intent. However, `ButtonBase` already uses `SizedMixin(SpectrumElement, { validSizes: BUTTON_VALID_SIZES })` without `noDefaultSize`, and its `update()` lifecycle auto-sets `size="m"` whenever the attribute is absent. Because `InfieldButtonBase extends ButtonBase`, this inner auto-set cannot be suppressed by double-wrapping — applying `SizedMixin(ButtonBase, { noDefaultSize: true })` on top still calls `super.update()` which triggers the inner mixin's auto-set. No other 2nd-gen component inherits from an already-SizedMixin'd class, so there is no established pattern for this case.
+
+**As-built behavior:** `getAttribute('size')` returns `'m'` (auto-set by ButtonBase) when no parent has set a size. This has no visual impact: the CSS has no explicit `:host([size="m"])` rule; medium-size defaults come from the base `.swc-InfieldButton` fallback token values. The semantics of "parent field must set size" are preserved by convention. M remains the Figma **reference** size for token documentation, not an intentional consumer default.
 
 ### Accessibility semantics notes (2nd-gen)
 
@@ -408,7 +410,7 @@ html`
 #### Naming and public surface
 
 - [x] `InfieldButton.types.ts`: define `InfieldButtonSize` (alias or reuse from `BUTTON_VALID_SIZES`), `InfieldButtonQuiet` boolean
-- [x] `InfieldButton.base.ts`: extend 2nd-gen `ButtonBase` with `SizedMixin(ButtonBase, { noDefaultSize: true })`; `validSizes` does not need overriding because `BUTTON_VALID_SIZES` already equals `['s', 'm', 'l', 'xl']` (see Q6); add `quiet: boolean` property (reflect: true)
+- [x] `InfieldButton.base.ts`: extend 2nd-gen `ButtonBase` directly (see `noDefaultSize` constraint note in behavioral semantics section above — double-wrapping `ButtonBase` with `SizedMixin` does not suppress the inner auto-set); `validSizes` override reuses `INFIELD_BUTTON_VALID_SIZES` (same values as `BUTTON_VALID_SIZES`; see Q6); add `quiet: boolean` property (reflect: true)
 - [x] `InfieldButton.ts`: extend `InfieldButton.base.ts`; register as `swc-infield-button`; render inner `<button>` (size and `quiet` states are handled via `:host([size="s"])` / `:host([quiet])` CSS attribute selectors — no `classMap` needed for those). Fill wrapper dropped (Phase 5 decision — `::slotted()` alone is sufficient).
 - [x] Confirm no `block`, `inline`, `href`, `target`, `download`, `rel`, `referrerpolicy`, or `pending` on the public API
 - [x] Confirm `accessible-label` dev warning is active (inherited from `ButtonBase`)
@@ -450,7 +452,7 @@ html`
 - [x] Focus model: the inner `<button>` sets `outline: none` (matches S2 source). Infield buttons are not independently focusable and not in the tab order — the parent field owns the visible focus ring and all keyboard behavior. Do not add a `:focus-visible` ring on the button. Verify via field-level stories that the parent field's focus ring is visible and meets WCAG 2.4.7.
 - [x] Forced colors: `@media (forced-colors: active)` block added at bottom of file with ButtonFace/ButtonText/ButtonBorder/Highlight/GrayText system colors for each state.
 - [x] Verify no `:lang(ja)`, `:lang(ko)`, `:lang(zh)` size modifiers needed (not present in S2 baseline)
-- [x] Add a `@cssprop` JSDoc tag to the primary SWC component class for every exposed `--swc-infield-button-*` property. Exposed: `--swc-infield-button-height`, `--swc-infield-button-icon-size`, `--swc-infield-button-border-radius`, four individual corner-radius properties, `--swc-infield-button-border-color`.
+- [x] Add a `@cssprop` JSDoc tag to the primary SWC component class for every exposed `--swc-infield-button-*` property. As-built set (supersedes the speculative initial list): `--swc-infield-button-padding`, `--swc-infield-button-icon-size`; background-color per state (default, hover, active, focus, disabled); icon-color per state (default, hover, active, focus, disabled). Height and border-radius are not exposed as custom properties — border-radius is hardcoded at `token("corner-radius-100")` (no consumer override needed; S2 spec uses a single value for all sizes). The four per-corner-radius properties and `--swc-infield-button-border-color` from the initial plan were 1st-gen artifacts that do not apply to the S2 single-border-radius model. Note: `--swc-infield-button-down-state-transform` was removed; S2 spectrum-css source has no active-state transform for this component.
 - [x] Pass stylelint (property order, `no-descending-specificity`, token validation)
 
 ### Accessibility
