@@ -42,11 +42,11 @@ import styles from './infield-button.css';
  * @cssprop --swc-infield-button-background-color - Background color in the default state.
  *   Defaults to `token("gray-100")`. Overridden to `transparent` by `[quiet]`.
  * @cssprop --swc-infield-button-background-color-hover - Background color on hover.
- *   Defaults to `token("gray-200")`.
+ *   Defaults to `token("gray-200")`. Overridden to `transparent` by `[quiet]`.
  * @cssprop --swc-infield-button-background-color-active - Background color on press.
- *   Defaults to `token("gray-200")`.
+ *   Defaults to `token("gray-200")`. Overridden to `transparent` by `[quiet]`.
  * @cssprop --swc-infield-button-background-color-focus - Background color when focused.
- *   Defaults to `token("gray-200")`.
+ *   Defaults to `token("gray-200")`. Overridden to `transparent` by `[quiet]`.
  * @cssprop --swc-infield-button-background-color-disabled - Background color when disabled.
  *   Defaults to `token("disabled-background-color")`. Overridden to `transparent` by `[quiet]`.
  * @cssprop --swc-infield-button-icon-color - Icon color in the default state.

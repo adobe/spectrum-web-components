@@ -35,6 +35,9 @@
 
 :host([quiet]) {
   --swc-infield-button-background-color: transparent;
+  --swc-infield-button-background-color-hover: transparent;
+  --swc-infield-button-background-color-active: transparent;
+  --swc-infield-button-background-color-focus: transparent;
   --swc-infield-button-background-color-disabled: transparent;
 }
 

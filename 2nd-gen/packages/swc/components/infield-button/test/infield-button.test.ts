@@ -102,6 +102,23 @@ export const OverviewTest: Story = {
         'host has no role attribute'
       ).toBeNull();
     });
+
+    await step(
+      'does not reflect size attribute when no parent has set it',
+      async () => {
+        const bare = document.createElement(
+          'swc-infield-button'
+        ) as InfieldButton;
+        bare.setAttribute('accessible-label', 'Bare button');
+        canvasElement.appendChild(bare);
+        await bare.updateComplete;
+        expect(
+          bare.getAttribute('size'),
+          'size attribute is absent without an explicit parent-set value'
+        ).toBeNull();
+        bare.remove();
+      }
+    );
   },
 };
 
