@@ -28,14 +28,18 @@ mkdirSync(resolve(__dirname, '../coverage'), { recursive: true });
 // - dev: full local Storybook, including docs and test stories
 // - build: production Storybook build, excluding internal and test stories
 // - ci-a11y: minimal component-only Storybook used by CI accessibility checks
-type StorybookMode = 'dev' | 'build' | 'ci-a11y';
+// - vrt: Chromatic-only build containing *just* .vrt.ts stories, so the
+//   Chromatic catalog never lists the non-VRT stories it skips snapshotting.
+type StorybookMode = 'dev' | 'build' | 'ci-a11y' | 'vrt';
 
 const storybookMode: StorybookMode =
   process.env.SWC_STORYBOOK_MODE === 'ci-a11y'
     ? 'ci-a11y'
-    : process.env.NODE_ENV === 'production'
-      ? 'build'
-      : 'dev';
+    : process.env.SWC_STORYBOOK_MODE === 'vrt'
+      ? 'vrt'
+      : process.env.NODE_ENV === 'production'
+        ? 'build'
+        : 'dev';
 
 // Custom indexer to allow .test.ts files to be treated as story files.
 const testStoryIndexer: Indexer = {
@@ -46,106 +50,124 @@ const testStoryIndexer: Indexer = {
   },
 };
 
-const COMPONENT_STORY_ROOT = {
+// Storybook derives each story's display name from its export name using
+// Title Case (e.g. ForcedColors -> "Forced Colors"), which doesn't match
+// this project's sentence-case convention. Rather than hand-adding a
+// `storyName` override to every multi-word export across every .vrt.ts
+// file, lowercase every word but the first (and any all-caps acronym) once
+// here, at index time.
+const sentenceCase = (name: string) => {
+  const [first, ...rest] = name.split(' ');
+  return [
+    first,
+    ...rest.map((word) => (/^[A-Z]+$/.test(word) ? word : word.toLowerCase())),
+  ].join(' ');
+};
+
+// Custom indexer to allow .vrt.ts files to be treated as story files.
+const vrtStoryIndexer: Indexer = {
+  test: /\.vrt\.ts$/,
+  createIndex: async (fileName, options) => {
+    const csfFile = await readCsf(fileName, options);
+    const { indexInputs } = csfFile.parse();
+    return indexInputs.map((input) =>
+      input.type === 'story' && input.name
+        ? { ...input, name: sentenceCase(input.name) }
+        : input
+    );
+  },
+};
+
+const COMPONENT_STORIES = {
   directory: '../components',
   titlePrefix: 'Components',
-} as const;
+};
 
-const PATTERN_STORY_ROOT = {
+const PATTERN_STORIES = {
   directory: '../patterns',
   titlePrefix: 'Patterns',
-} as const;
+};
 
-const CORE_STORY_ROOT = {
+const CORE_STORIES = {
   directory: '../../core',
   titlePrefix: 'Core',
-} as const;
+};
 
-const stories: StorybookConfig['stories'] = [
+const GUIDES = [
   {
-    ...COMPONENT_STORY_ROOT,
-    // Production-style builds exclude internal-only stories; local/dev keeps the full set.
-    files:
-      storybookMode === 'build'
-        ? '**/!(*.internal).stories.ts'
-        : '**/*.stories.ts',
+    directory: 'learn-about-swc',
+    // Keep learn-about docs minimal in production.
+    files: '*.mdx',
+    titlePrefix: 'Learn about SWC',
   },
   {
-    ...PATTERN_STORY_ROOT,
-    files: '**/*.stories.ts',
+    directory: 'guides',
+    files: '**/!(*documentation).mdx',
+    titlePrefix: 'Guides',
   },
+  { directory: 'resources', files: '**/*.mdx', titlePrefix: 'Resources' },
+];
+
+const CORE_AND_CONTRIBUTOR_DOCS = [
+  { ...CORE_STORIES, files: '**/*.mdx' },
+  { ...CORE_STORIES, files: '**/stories/*.stories.ts' },
   {
-    ...PATTERN_STORY_ROOT,
+    directory: 'contributor-docs',
     files: '**/*.mdx',
+    titlePrefix: 'Contributor docs',
   },
 ];
 
-/**
- * The CI a11y mode trims docs/guides
- * that can pull in 1st-gen-linked dependencies the test build does not need.
- */
-if (storybookMode !== 'ci-a11y') {
-  stories.push({
-    directory: '../components',
-    // Production-style builds exclude internal-only docs; local/dev keeps the full set.
-    files: storybookMode === 'build' ? '**/!(*.internal).mdx' : '**/*.mdx',
-    titlePrefix: 'Components',
-  });
+const TEST_FIXTURES = [
+  { ...COMPONENT_STORIES, files: '**/*.test.ts' },
+  { ...PATTERN_STORIES, files: '**/*.test.ts' },
+  { ...CORE_STORIES, files: '**/*.test.ts' },
+];
 
-  // Production Storybook excludes core and contributor docs entirely.
-  if (storybookMode !== 'build') {
-    stories.push(
-      {
-        ...CORE_STORY_ROOT,
-        files: '**/*.mdx',
-      },
-      {
-        ...CORE_STORY_ROOT,
-        files: '**/stories/*.stories.ts',
-      },
-      {
-        directory: 'contributor-docs',
-        files: '**/*.mdx',
-        titlePrefix: 'Contributor docs',
-      }
-    );
-  }
+const VRT_STORIES = [
+  { ...COMPONENT_STORIES, files: '**/*.vrt.ts' },
+  { ...PATTERN_STORIES, files: '**/*.vrt.ts' },
+];
 
-  stories.push(
-    {
-      directory: 'learn-about-swc',
-      // Keep learn-about docs minimal in production.
-      files: '*.mdx',
-      titlePrefix: 'Learn about SWC',
-    },
-    {
-      directory: 'guides',
-      files: '**/!(*documentation).mdx',
-      titlePrefix: 'Guides',
-    },
-    {
-      directory: 'resources',
-      files: '**/*.mdx',
-      titlePrefix: 'Resources',
-    }
-  );
-}
+// What each mode builds, spelled out per-mode rather than composed from
+// flags, so "what does build actually include?" is answered by reading one
+// array instead of tracing conditionals scattered through the file.
+const STORIES_BY_MODE: Record<StorybookMode, StorybookConfig['stories']> = {
+  // Full local Storybook: every story and doc, plus dev-only test fixtures.
+  dev: [
+    { ...COMPONENT_STORIES, files: '**/*.stories.ts' },
+    { ...PATTERN_STORIES, files: '**/*.stories.ts' },
+    { ...PATTERN_STORIES, files: '**/*.mdx' },
+    { ...COMPONENT_STORIES, files: '**/*.mdx' },
+    ...CORE_AND_CONTRIBUTOR_DOCS,
+    ...GUIDES,
+    ...TEST_FIXTURES,
+    ...VRT_STORIES,
+  ],
+  // Production build: same as dev, minus internal-only stories/docs, core
+  // controllers, contributor docs (both can pull in 1st-gen-linked
+  // dependencies production doesn't need), and .test.ts fixtures.
+  build: [
+    { ...COMPONENT_STORIES, files: '**/!(*.internal).stories.ts' },
+    { ...PATTERN_STORIES, files: '**/*.stories.ts' },
+    { ...PATTERN_STORIES, files: '**/*.mdx' },
+    { ...COMPONENT_STORIES, files: '**/!(*.internal).mdx' },
+    ...GUIDES,
+  ],
+  // CI accessibility checks: component/pattern stories only. addon-docs
+  // stays enabled (see `addons` below) so pattern .mdx still parses, but
+  // component docs, core, contributor docs, and guides are all skipped —
+  // they're not needed for axe checks.
+  'ci-a11y': [
+    { ...COMPONENT_STORIES, files: '**/*.stories.ts' },
+    { ...PATTERN_STORIES, files: '**/*.stories.ts' },
+    { ...PATTERN_STORIES, files: '**/*.mdx' },
+  ],
+  // Chromatic-only: just the hand-picked VRT stories.
+  vrt: VRT_STORIES,
+};
 
-// Test stories are dev-only fixtures and should not ship in production Storybook.
-if (storybookMode === 'dev') {
-  stories.push({
-    ...COMPONENT_STORY_ROOT,
-    files: '**/*.test.ts',
-  });
-  stories.push({
-    ...PATTERN_STORY_ROOT,
-    files: '**/*.test.ts',
-  });
-  stories.push({
-    ...CORE_STORY_ROOT,
-    files: '**/*.test.ts',
-  });
-}
+const stories = STORIES_BY_MODE[storybookMode];
 
 /**
  * ci-a11y mode needs docs (for MDX parsing); addon-a11y is excluded because
@@ -197,7 +219,22 @@ const config: StorybookConfig = {
   },
   staticDirs: ['../public', { from: '../coverage', to: '/coverage' }],
   addons,
-  experimental_indexers: storybookMode === 'dev' ? [testStoryIndexer] : [],
+  experimental_indexers: [testStoryIndexer, vrtStoryIndexer],
+  // Cross-link to the 1st-gen Storybook. Omitted from the minimal ci-a11y test
+  // build. Defaults to production; CI overrides this to the matching PR-preview
+  // URL when building a per-PR preview.
+  refs:
+    storybookMode === 'ci-a11y'
+      ? {}
+      : {
+          '1st-gen': {
+            title: 'SWC Gen1',
+            url:
+              process.env.SWC_GEN1_STORYBOOK_URL ||
+              'https://opensource.adobe.com/spectrum-web-components/storybook/',
+            expanded: false,
+          },
+        },
   viteFinal: async (config) => {
     return mergeConfig(config, {
       css: {

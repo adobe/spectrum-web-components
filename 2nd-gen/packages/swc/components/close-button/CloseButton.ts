@@ -45,7 +45,7 @@ const crossIconBySize: Record<ButtonSize, () => TemplateResult> = {
  * decorative (`aria-hidden="true"`).
  *
  * @element swc-close-button
- * @since 2.0.0
+ * @since 2.0.0-beta.2
  *
  * @example
  * ```html
@@ -59,7 +59,6 @@ const crossIconBySize: Record<ButtonSize, () => TemplateResult> = {
  *
  * @cssprop --swc-close-button-size - Inline and block size of the close button. Defaults to the medium component height token.
  * @cssprop --swc-close-button-icon-size - Size of the cross icon. Defaults to the medium cross icon token.
- * @cssprop --swc-close-button-border-radius - Corner radius. Defaults to the full corner radius token.
  * @cssprop --swc-close-button-icon-color-default - Cross icon color in the default state.
  * @cssprop --swc-close-button-icon-color-hover - Cross icon color when hovered.
  * @cssprop --swc-close-button-icon-color-down - Cross icon color when pressed.
@@ -92,10 +91,6 @@ export class CloseButton extends ButtonBase {
     return false;
   }
 
-  public override getResolvedAccessibleName(): string | null {
-    return this.accessibleLabel ?? null;
-  }
-
   // ──────────────────────────────
   //     RENDERING & STYLING
   // ──────────────────────────────
@@ -105,18 +100,16 @@ export class CloseButton extends ButtonBase {
   }
 
   protected override render(): TemplateResult {
-    const resolvedName = this.getResolvedAccessibleName();
-
     return html`
       <button
         class="swc-CloseButton"
         type="button"
         @click=${this.handleClick}
         ?disabled=${this.disabled}
-        aria-label=${ifDefined(resolvedName ?? undefined)}
+        aria-label=${ifDefined(this.accessibleLabel ?? undefined)}
       >
         <span class="swc-CloseButton-icon" aria-hidden="true">
-          ${crossIconBySize[this.size]()}
+          ${crossIconBySize[this.size as ButtonSize]()}
         </span>
       </button>
     `;

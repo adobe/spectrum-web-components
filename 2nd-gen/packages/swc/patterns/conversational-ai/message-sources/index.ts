@@ -9,16 +9,4 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-import { defineElement } from '@adobe/spectrum-wc-core/element/index.js';
-
-import { MessageSources } from './MessageSources.js';
-
 export * from './MessageSources.js';
-
-declare global {
-  interface HTMLElementTagNameMap {
-    'swc-message-sources': MessageSources;
-  }
-}
-
-defineElement('swc-message-sources', MessageSources);

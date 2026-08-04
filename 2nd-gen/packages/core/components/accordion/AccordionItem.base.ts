@@ -13,8 +13,8 @@
 import { PropertyValues } from 'lit';
 import { property, state } from 'lit/decorators.js';
 
+import { SlotPresenceController } from '@adobe/spectrum-wc-core/controllers/slot-presence-controller/index.js';
 import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
-import { ObserveSlotPresence } from '@adobe/spectrum-wc-core/mixins/observe-slot-presence.js';
 
 import {
   type AccordionHeadingLevel,
@@ -40,10 +40,19 @@ import {
  *   the toggle button so they remain independently interactive.
  * @slot - The panel content revealed when the item is open.
  */
-export abstract class AccordionItemBase extends ObserveSlotPresence(
-  SpectrumElement,
-  '[slot="actions"]'
-) {
+export abstract class AccordionItemBase extends SpectrumElement {
+  // ──────────────────────
+  //     CONTROLLERS
+  // ──────────────────────
+
+  /**
+   * Observes whether content is slotted into `[slot="actions"]` so the header
+   * can conditionally render the actions container.
+   *
+   * @internal
+   */
+  protected slotPresence = new SlotPresenceController(this, '[slot="actions"]');
+
   // ──────────────────
   //     PUBLIC API
   // ──────────────────
@@ -114,6 +123,16 @@ export abstract class AccordionItemBase extends ObserveSlotPresence(
   // ──────────────────────
   //     IMPLEMENTATION
   // ──────────────────────
+
+  /**
+   * @internal
+   * Whether content is slotted into `[slot="actions"]`. Consumed by the
+   * concrete element's `render()` to conditionally render the actions
+   * container.
+   */
+  protected get hasActions(): boolean {
+    return this.slotPresence.isPresent;
+  }
 
   /**
    * @internal

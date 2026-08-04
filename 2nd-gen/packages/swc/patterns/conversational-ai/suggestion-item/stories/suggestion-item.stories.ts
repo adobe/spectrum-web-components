@@ -14,7 +14,7 @@ import { html } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
-import '../index.js';
+import '../swc-suggestion-item.js';
 
 // ────────────────
 //    METADATA
@@ -37,11 +37,13 @@ const meta: Meta = {
   render: (args) => template(args),
   parameters: {
     docs: {
+      packagePath: 'patterns/conversational-ai/suggestion-item',
       subtitle: 'Interactive chip action used in suggestion groups.',
     },
     layout: 'padded',
   },
   excludeStories: ['meta'],
+  tags: ['migrated'],
 };
 
 export default meta;

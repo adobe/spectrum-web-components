@@ -9,16 +9,4 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-import { defineElement } from '@adobe/spectrum-wc-core/element/index.js';
-
-import { PromptField } from './PromptField.js';
-
 export * from './PromptField.js';
-
-declare global {
-  interface HTMLElementTagNameMap {
-    'swc-prompt-field': PromptField;
-  }
-}
-
-defineElement('swc-prompt-field', PromptField);

@@ -121,6 +121,9 @@ export default defineConfig({
         ...glob.sync(resolve(__dirname, 'components/*/index.ts')),
         ...glob.sync(resolve(__dirname, 'components/*/swc-*.ts')),
         ...glob.sync(resolve(__dirname, 'patterns/*/*/index.ts')),
+        ...glob.sync(resolve(__dirname, 'patterns/*/*/swc-*.ts')),
+        ...glob.sync(resolve(__dirname, 'patterns/*/*/*/index.ts')),
+        ...glob.sync(resolve(__dirname, 'patterns/*/*/*/swc-*.ts')),
       ].reduce(
         (entries, file) => {
           const name = file

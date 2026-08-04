@@ -35,7 +35,7 @@
 - Alert Banner
     - [Alert Banner migration roadmap](alert-banner/rendering-and-styling-migration-analysis.md)
 - Asset
-    - [Asset migration roadmap](asset/rendering-and-styling-migration-analysis.md)
+    - [Asset component plan](asset/component-plan.md)
 - Avatar
     - [Avatar accessibility migration analysis](avatar/accessibility-migration-analysis.md)
     - [Avatar — 2nd-Gen Migration Plan](avatar/migration-plan.md)
@@ -74,6 +74,7 @@
     - [Divider migration roadmap](divider/rendering-and-styling-migration-analysis.md)
 - Dropzone
     - [Dropzone accessibility migration analysis](dropzone/accessibility-migration-analysis.md)
+    - [Dropzone migration plan](dropzone/migration-plan.md)
     - [Dropzone migration roadmap](dropzone/rendering-and-styling-migration-analysis.md)
 - Field Group
     - [Field Group migration roadmap](field-group/rendering-and-styling-migration-analysis.md)

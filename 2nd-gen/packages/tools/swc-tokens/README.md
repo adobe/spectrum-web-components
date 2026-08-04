@@ -8,9 +8,9 @@ A stylesheet with typography classes can also be generated.
 
 ## Terminology
 
-- **Token** – A named design value (e.g. `gray-500`)
+- **Token** – A named design value (e.g., `gray-500`)
 - **Alias** – A reference to another token (`{gray-500}`)
-- **Set** – A token with multiple contextual values (e.g. `light` / `dark`)
+- **Set** – A token with multiple contextual values (e.g., `light` / `dark`)
 - **Resolved value** – A final primitive value
 - **Custom property** – A CSS variable (`var(--swc-gray-500)`)
 
@@ -76,12 +76,12 @@ This file is the source for the `deleted` key in the generated `tokens.json`. It
 
 ## Token and Alias Resolution
 
-Tokens from `@adobe/spectrum-tokens` appear in different shapes. Some define a flat `value`, while others define a `sets` object (e.g. `light` / `dark`, `desktop` / `mobile`).
+Tokens from `@adobe/spectrum-tokens` appear in different shapes. Some define a flat `value`, while others define a `sets` object (e.g., `light` / `dark`, `desktop` / `mobile`).
 
 Token values may be:
 
-- Static primitives (e.g. `16px`)
-- Aliases referencing another token (e.g. `{gray-500}`)
+- Static primitives (e.g., `16px`)
+- Aliases referencing another token (e.g., `{gray-500}`)
 - Composite values containing embedded aliases
 - Structured composite values such as arrays or objects that are serialized for CSS output
 
@@ -291,7 +291,7 @@ CSS computes custom property values at declaration time. For scale-aware tokens,
 By declaring scaling tokens under both `:root` and `.swc-theme`:
 
 - Tokens remain available globally by default
-- Consumers can locally override scale by applying `.swc-theme` plus a corresponding size class (e.g. `--swc-theme--sizeL`)
+- Consumers can locally override scale by applying `.swc-theme` plus a corresponding size class (e.g., `--swc-theme--sizeL`)
 
 Without this structure, scaling tokens would not recompute correctly when applied within a scoped theme or size container.
 
@@ -317,9 +317,9 @@ It acts as a read-only query interface over the processed token map produced by 
 
 - Looks up a token by name after all normalization and alias resolution rules have been applied
 - Returns the final CSS-safe value, which may be:
-  - A resolved primitive (e.g. rgb(0 0 0))
-  - A composed custom property (e.g. var(--swc-gray-700))
-  - A custom property referencing a serialized composite token (e.g. var(--swc-drop-shadow-dragged))
+  - A resolved primitive (e.g., rgb(0 0 0))
+  - A composed custom property (e.g., var(--swc-gray-700))
+  - A custom property referencing a serialized composite token (e.g., var(--swc-drop-shadow-dragged))
 - Throws an error if the requested token does not exist or is not resolvable
 
 > `lookupToken()` does not perform token parsing, normalization, or resolution itself. It only queries the already-processed token data.

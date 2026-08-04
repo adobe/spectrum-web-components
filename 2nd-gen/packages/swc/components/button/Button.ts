@@ -23,8 +23,7 @@ import {
   type ButtonStaticColor,
   type ButtonVariant,
 } from '@adobe/spectrum-wc-core/components/button';
-
-import { renderPendingSpinner } from './pending-spinner.js';
+import { PendingMixin } from '@adobe/spectrum-wc-core/mixins';
 
 import pendingSpinnerStyles from '../../stylesheets/_lit-styles/pending-spinner.css';
 import styles from './button.css';
@@ -40,6 +39,7 @@ import baseStyles from './button-base.css';
  * @slot icon - Leading icon displayed before the label.
  *
  * @cssprop --swc-button-min-block-size - Minimum block size of the button.
+ * @cssprop --swc-button-max-inline-size - Maximum inline size of the button. Defaults to `inherit` to support truncation.
  * @cssprop --swc-button-border-radius - Corner radius. Defaults to half the height (pill shape).
  * @cssprop --swc-button-padding-vertical - Block padding (adjusted for border width).
  * @cssprop --swc-button-edge-to-text - Inline padding from edge to text.
@@ -63,9 +63,11 @@ import baseStyles from './button-base.css';
  * @cssprop --swc-button-background-color-down - Background color when pressed.
  * @cssprop --swc-button-border-color-down - Border color when pressed.
  * @cssprop --swc-button-content-color-down - Text and icon color when pressed.
+ * @cssprop --swc-button-down-state-transform - Transform applied to the button when pressed. Set to `none` to disable the press animation.
  * @cssprop --swc-button-background-color-disabled - Background color when disabled or pending.
  * @cssprop --swc-button-border-color-disabled - Border color when disabled or pending.
  * @cssprop --swc-button-content-color-disabled - Text and icon color when disabled or pending.
+ * @cssprop --swc-button-down-state-transform - Transform applied to the button in the pressed (down) state. Defaults to a scale/translate effect; set to `none` to disable.
  *
  * @example
  * <swc-button>Save</swc-button>
@@ -73,7 +75,7 @@ import baseStyles from './button-base.css';
  * @example
  * <swc-button variant="secondary" fill-style="outline">Cancel</swc-button>
  */
-export class Button extends ButtonBase {
+export class Button extends PendingMixin(ButtonBase) {
   // ───────────────────
   //     API ADDITIONS
   // ───────────────────
@@ -146,9 +148,9 @@ export class Button extends ButtonBase {
       >
         <slot name="icon"></slot>
         <span class="swc-Button-label">
-          <slot></slot>
+          <slot @slotchange=${this.slotText.handleSlotChange}></slot>
         </span>
-        ${renderPendingSpinner(this.pending, this.pendingActive)}
+        ${this.renderPendingState()}
       </button>
     `;
   }

@@ -32,6 +32,8 @@ import styles from './tabs.css';
  * @slot - Tab items (`swc-tab` elements)
  * @slot tab-panel - Tab panel content (`swc-tab-panel` elements)
  *
+ * @cssprop --swc-tabs-indicator-color - Color of the selected tab indicator.
+ *
  * @example
  * <swc-tabs selected="1" accessible-label="Product details">
  *   <swc-tab tab-id="1">Overview</swc-tab>
@@ -39,6 +41,8 @@ import styles from './tabs.css';
  *   <swc-tab-panel tab-id="1">Product overview content</swc-tab-panel>
  *   <swc-tab-panel tab-id="2">Technical specifications</swc-tab-panel>
  * </swc-tabs>
+ *
+ * @cssprop --swc-tabs-indicator-color - Color of the selection indicator.
  */
 export class Tabs extends TabsBase {
   /**

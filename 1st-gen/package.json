@@ -55,7 +55,7 @@
     "pretest:bench": "yarn build:tests && test -f test/benchmark/cli.js ||:",
     "pretest:visual": "yarn build && yarn build",
     "process-icons": "wireit",
-    "start": "storybook",
+    "start": "yarn storybook",
     "storybook": "wireit",
     "storybook:build": "NODE_ENV=production storybook build -o projects/documentation/dist/storybook -c storybook",
     "storybook:quick": "run-p build:watch storybook:run",

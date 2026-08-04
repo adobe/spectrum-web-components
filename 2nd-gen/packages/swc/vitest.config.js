@@ -60,6 +60,7 @@ export default mergeConfig(
         exclude: [
           '**/*.test.ts',
           '**/*.stories.ts',
+          '**/*.vrt.ts',
           '**/.storybook/**',
           '**/utils/**',
           '**/node_modules/**',

@@ -489,7 +489,7 @@
   ========================= */
 .swc-Code {
   margin-block: var(--swc-monospace-margin-top, 0) var(--swc-monospace-margin-bottom, 0);
-  font-family: var(--swc-monospace-font-family, token("code-font"));
+  font-family: var(--swc-monospace-font-family, token("code-font")) !important;
   font-size: var(--swc-monospace-font-size, token("code-size-m"));
   font-weight: var(--swc-monospace-font-weight, token("regular-font-weight"));
   line-height: var(--swc-monospace-line-height, token("line-height-font-size-200"));

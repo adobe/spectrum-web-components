@@ -13,9 +13,10 @@
 import { PropertyValues } from 'lit';
 import { property } from 'lit/decorators.js';
 
+import { SlotTextController } from '@adobe/spectrum-wc-core/controllers/slot-text-controller/index.js';
 import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
 
-import { SlotAttributePropagationController } from '../../controllers/slot-attribute-propagation/index.js';
+import { SlotAttributePropagationController } from '../../controllers/slot-attribute-propagation-controller/index.js';
 import {
   ILLUSTRATED_MESSAGE_VALID_ORIENTATIONS,
   ILLUSTRATED_MESSAGE_VALID_SIZES,
@@ -70,6 +71,17 @@ export abstract class IllustratedMessageBase extends SpectrumElement {
   public orientation: IllustratedMessageOrientation = 'vertical';
 
   // ──────────────────────
+  //     CONTROLLERS
+  // ──────────────────────
+
+  /**
+   * Observes whether the default (illustration) slot has assigned content.
+   *
+   * @internal
+   */
+  protected slotText = new SlotTextController(this);
+
+  // ──────────────────────
   //     IMPLEMENTATION
   // ──────────────────────
 
@@ -81,6 +93,15 @@ export abstract class IllustratedMessageBase extends SpectrumElement {
       slotName: 'actions',
     }
   );
+
+  /**
+   * Whether the default (illustration) slot has assigned content, so
+   * rendering subclasses can collapse the illustration wrapper when no
+   * illustration is provided instead of reserving its fixed size.
+   */
+  protected get hasIllustration(): boolean {
+    return this.slotText.hasContent;
+  }
 
   protected override updated(changedProperties: PropertyValues): void {
     super.updated(changedProperties);

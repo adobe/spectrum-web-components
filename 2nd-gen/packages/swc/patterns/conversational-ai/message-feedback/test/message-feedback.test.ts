@@ -13,7 +13,7 @@
 import { expect, userEvent, within } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
-import '../index.js';
+import '../swc-message-feedback.js';
 
 import { getComponent } from '../../../../utils/test-utils.js';
 import { MessageFeedback } from '../MessageFeedback.js';
