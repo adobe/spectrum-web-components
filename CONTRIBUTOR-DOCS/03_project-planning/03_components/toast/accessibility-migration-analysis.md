@@ -12,6 +12,7 @@
 <summary><strong>In this doc</strong></summary>
 
 - [Overview](#overview)
+    - [Also read](#also-read)
     - [What a toast is](#what-a-toast-is)
     - [What it is not](#what-it-is-not)
     - [When to use something else](#when-to-use-something-else)
@@ -44,6 +45,10 @@
 ## Overview
 
 This doc covers how `swc-toast` should work for accessibility. It targets WCAG 2.2 Level AA. Until `swc-toast` exists under `2nd-gen/`, use `1st-gen/packages/toast/src/Toast.ts` (`<sp-toast>`) to validate behavior, and update this spec against the real 2nd-gen source when it ships.
+
+### Also read
+
+[Toast migration roadmap](./rendering-and-styling-migration-analysis.md) for layout, CSS, and DOM changes.
 
 ### What a toast is
 
@@ -311,4 +316,5 @@ See the 2nd-gen Storybook [Screen reader testing](../../../../2nd-gen/packages/s
 - [Sheri Byrne-Haber: Designing toast messages for accessibility](https://sheribyrnehaber.medium.com/designing-toast-messages-for-accessibility-fb610ac364be)
 - [USWDS: Accessible notifications discussion](https://github.com/uswds/uswds/discussions/5770)
 - [React Spectrum: Toast](https://react-spectrum.adobe.com/react-spectrum/Toast.html)
+- [Toast migration roadmap](./rendering-and-styling-migration-analysis.md)
 - [2nd-gen Storybook: Screen reader testing](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx)
