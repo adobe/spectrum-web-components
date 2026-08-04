@@ -67,7 +67,7 @@ export const OverviewTest: Story = {
       expect(
         group.getAttribute('aria-label'),
         'aria-label from accessible-label'
-      ).toBe('Text formatting');
+      ).toBe('Image adjustments');
     });
 
     await step('never sets aria-orientation', async () => {

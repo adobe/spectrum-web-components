@@ -1,0 +1,213 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Action group/Migration guide" />
+
+# Action group migration guide
+
+Replace `<sp-action-group>` with `<swc-action-group>`, update the import, rename `vertical` to `orientation` and `label` to `accessible-label`, and migrate any `selects`/`selected` usage to a dedicated selection component.
+
+## Installation
+
+```bash
+# Remove
+yarn remove @spectrum-web-components/action-group
+
+# Add
+yarn add @adobe/spectrum-wc
+```
+
+Update your import:
+
+```js
+// Before
+import '@spectrum-web-components/action-group/sp-action-group.js';
+
+// After
+import '@adobe/spectrum-wc/components/action-group/swc-action-group.js';
+```
+
+> `@adobe/spectrum-wc` is a monolithic package. Importing via subpath (e.g., `@adobe/spectrum-wc/components/action-group/swc-action-group.js`) registers and loads only that component's bundle.
+
+## What changed
+
+### Renamed
+
+| Area                       | Spectrum 1 (`sp-action-group`)          | Spectrum 2 (`swc-action-group`)                                      |
+| -------------------------- | --------------------------------------- | -------------------------------------------------------------------- |
+| Tag                        | `sp-action-group`                       | `swc-action-group`                                                   |
+| Import path                | `@spectrum-web-components/action-group` | `@adobe/spectrum-wc/components/action-group/swc-action-group.js`     |
+| Layout direction attribute | `vertical` (boolean)                    | `orientation="vertical"` (`orientation="horizontal"` is the default) |
+| Accessible name attribute  | `label`                                 | `accessible-label`                                                   |
+| CSS custom properties      | `--mod-actiongroup-*`                   | `--swc-action-group-gap` (see [Styling](#styling))                   |
+
+### Added in Spectrum 2
+
+| Addition                     | Notes                                                                                                  |
+| ---------------------------- | ------------------------------------------------------------------------------------------------------ |
+| `disabled` boolean attribute | Group-level disable. Sets `aria-disabled="true"` on the host and every child. Children stay focusable. |
+
+### Removed in Spectrum 2
+
+| Removed                                            | Replacement                                                                                                                                                                 |
+| -------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `selects`, `selected`                              | No replacement on `swc-action-group`. Use `swc-segmented-control` for exclusive choice or `swc-toggle-button-group` for toggle/multi-select, when those ship in Spectrum 2. |
+| `emphasized`                                       | No replacement (already deprecated on `sp-action-button` in Spectrum 1).                                                                                                    |
+| `role="toolbar"` / `role="radiogroup"` on the host | Host is always `role="group"`. Wrap one or more `swc-action-group` elements in your own `role="toolbar"` element if a toolbar landmark is needed.                           |
+| `role="radio"` / `role="checkbox"` on children     | Children are always `role="button"`.                                                                                                                                        |
+| `--mod-actiongroup-*`                              | `--swc-action-group-gap` (see [Styling](#styling)). Not a 1:1 replacement for every removed property.                                                                       |
+
+## Update your code
+
+### 1. Rename the tag
+
+```html
+<!-- Before -->
+<sp-action-group>
+  <sp-action-button>Crop</sp-action-button>
+</sp-action-group>
+
+<!-- After -->
+<swc-action-group>
+  <swc-action-button>Crop</swc-action-button>
+</swc-action-group>
+```
+
+### 2. Replace `vertical` with `orientation`
+
+```html
+<!-- Before -->
+<sp-action-group vertical>
+  <sp-action-button>Crop</sp-action-button>
+</sp-action-group>
+
+<!-- After -->
+<swc-action-group orientation="vertical">
+  <swc-action-button>Crop</swc-action-button>
+</swc-action-group>
+```
+
+### 3. Rename `label` to `accessible-label`
+
+```html
+<!-- Before -->
+<sp-action-group label="Image adjustments">
+  <sp-action-button>Crop</sp-action-button>
+</sp-action-group>
+
+<!-- After -->
+<swc-action-group accessible-label="Image adjustments">
+  <swc-action-button>Crop</swc-action-button>
+</swc-action-group>
+```
+
+### 4. Remove `selects` and `selected`
+
+`selects` and `selected` are removed. `<swc-action-group>` no longer manages selection state, and children are always `role="button"` (never `role="radio"` or `role="checkbox"`). There is no direct replacement on `swc-action-group` itself.
+
+```html
+<!-- Before: single-select radio-style group -->
+<sp-action-group selects="single" selected='["bold"]'>
+  <sp-action-button value="bold">Bold</sp-action-button>
+</sp-action-group>
+
+<!-- After: selection UX moves to a dedicated component -->
+<!-- Use swc-segmented-control for exclusive choice, or swc-toggle-button-group -->
+<!-- for toggle/multi-select, when those ship in Spectrum 2. -->
+```
+
+### 5. Remove `emphasized`
+
+`emphasized` is removed with no replacement. It was already deprecated on `sp-action-button` in Spectrum 1.
+
+```html
+<!-- Before -->
+<sp-action-group emphasized>
+  <sp-action-button>Crop</sp-action-button>
+</sp-action-group>
+
+<!-- After -->
+<swc-action-group>
+  <swc-action-button>Crop</swc-action-button>
+</swc-action-group>
+```
+
+### 6. (Optional) Adopt group-level `disabled`
+
+`disabled` is new in Spectrum 2. Setting it on the group disables every child at once instead of requiring a `disabled` attribute on each action button.
+
+```html
+<!-- Before (Spectrum 1: disable each child individually) -->
+<sp-action-group>
+  <sp-action-button disabled>Crop</sp-action-button>
+  <sp-action-button disabled>Rotate</sp-action-button>
+</sp-action-group>
+
+<!-- After (Spectrum 2: disable the whole group at once) -->
+<swc-action-group disabled>
+  <swc-action-button>Crop</swc-action-button>
+  <swc-action-button>Rotate</swc-action-button>
+</swc-action-group>
+```
+
+## Accessibility
+
+- **Host role** no longer switches between `toolbar`, `radiogroup`, and `group`. It is always `role="group"`. Update any code or tests that asserted a specific host role. If you relied on the toolbar role for a landmark, wrap the group in your own `role="toolbar"` element instead.
+- **Child roles** are always `role="button"`, never `role="radio"` or `role="checkbox"`. Update any tests asserting those roles. See [step 4](#4-remove-selects-and-selected).
+- **Selection semantics** moved out of `swc-action-group` entirely. See [step 4](#4-remove-selects-and-selected).
+- **Group `disabled`** uses `aria-disabled="true"`, not the native `disabled` attribute, so children remain keyboard-discoverable. See [step 6](#6-optional-adopt-group-level-disabled).
+
+## Styling
+
+Spectrum 2 exposes a much smaller custom-property surface than Spectrum 1. The full `--mod-actiongroup-*` modifier surface is not carried forward.
+
+{/* @todo Replace the inline-styled callouts in this section with `<swc-inline-alert>` once it is migrated to Spectrum 2. */}
+
+<div
+  style={{
+    borderLeft: '4px solid #dba842',
+    background: 'rgba(219, 168, 66, 0.12)',
+    padding: '12px 16px',
+    margin: '16px 0',
+    borderRadius: '4px',
+  }}
+>
+  <strong>⚠️ Breaking change.</strong> Spectrum 1{' '}
+  <code>{'--mod-actiongroup-*'}</code> properties <strong>do not apply</strong>{' '}
+  to <code>{'<swc-action-group>'}</code>. Remove every{' '}
+  <code>{'--mod-actiongroup-*'}</code> override. Only{' '}
+  <code>{'--swc-action-group-gap'}</code> is exposed in Spectrum 2, so most
+  Spectrum 1 overrides have no direct replacement.
+</div>
+
+{/* @todo Replace the Description column with the `@cssprop` JSDoc descriptions from `<swc-action-group>`'s CEM entry once they are added in a follow-up PR. */}
+
+| Custom property          | Description                                                                                                                               |
+| ------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| `--swc-action-group-gap` | Space between children. Scales with the `size` attribute across all five sizes. Defaults to the medium spacing token when no size is set. |
+
+<div
+  style={{
+    borderLeft: '4px solid #e34850',
+    background: 'rgba(227, 72, 80, 0.10)',
+    padding: '12px 16px',
+    margin: '16px 0',
+    borderRadius: '4px',
+  }}
+>
+  <strong>🚫 Do not target internals.</strong> Internal classes,{' '}
+  <code>{'--_swc-action-group-*'}</code> private properties, and shadow DOM are{' '}
+  <strong>not public API</strong>. Styling applied to them will break without
+  warning on minor releases.
+</div>
+
+## Checklist
+
+- [ ] Update imports from `@spectrum-web-components/action-group` to `@adobe/spectrum-wc`
+- [ ] Rename all `<sp-action-group>` to `<swc-action-group>`
+- [ ] Replace `vertical` with `orientation="vertical"`
+- [ ] Rename `label="..."` to `accessible-label="..."`
+- [ ] Remove `selects`/`selected` usage and migrate to `swc-segmented-control` or `swc-toggle-button-group` when available
+- [ ] Remove `emphasized` usage
+- [ ] Update tests or code that assert host role (`toolbar`/`radiogroup`) or child roles (`radio`/`checkbox`)
+- [ ] Remove or replace `--mod-actiongroup-*` overrides with `--swc-action-group-gap` where applicable
+- [ ] (Optional) Adopt group-level `disabled` instead of disabling children individually
