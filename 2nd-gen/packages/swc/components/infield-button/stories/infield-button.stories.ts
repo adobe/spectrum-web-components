@@ -186,7 +186,7 @@ const stepperField = (
  * increment/decrement (number field stepper pair).
  */
 const meta: Meta = {
-  title: 'Infield Button',
+  title: 'Infield button',
   component: 'swc-infield-button',
   args,
   argTypes,
