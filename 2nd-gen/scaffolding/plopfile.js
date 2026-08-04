@@ -22,20 +22,26 @@ const CORE_COMPONENTS = '2nd-gen/packages/core/components';
 const SWC_COMPONENTS = '2nd-gen/packages/swc/components';
 
 /**
- * 2nd-gen component scaffolder.
+ * 2nd-gen scaffolder.
  *
  * Mirrors the file layout and conventions described by the migration skills
- * (`migration-setup`, `stories-format`, `stories-documentation`) and the `badge`
- * reference component. It produces the deterministic Phase 2 skeleton so the
- * migration-setup skill only has to apply plan-specific architecture decisions
- * (the base-vs-concrete split) rather than author every file by hand.
+ * (`migration-setup`, `stories-format`, `stories-documentation`, `vrt-authoring`)
+ * and the `badge` / `button` reference units. It produces the deterministic
+ * skeleton so a human or an agent only has to apply the decisions that actually
+ * differ between units (the base-vs-concrete split, the real API, the
+ * assertions) rather than author every file by hand.
+ *
+ * Generators:
+ *   component — a custom-element component (core base + swc concrete + docs/tests)
+ *   test      — retrofit an existing component with unit + a11y test files
+ *   vrt       — retrofit an existing component with a Chromatic VRT story
  *
  * Built-in plop case helpers do most name derivation, plus the custom
- * `titleName` helper for the space-separated proper-noun title:
+ * `titleName` helper for the space-separated sentence-case title:
  *   {{dashCase name}}     -> action-button   (kebab tag, dir, css, file names)
  *   {{pascalCase name}}   -> ActionButton    (class names, CSS BEM block)
  *   {{constantCase name}} -> ACTION_BUTTON   (exported constant prefixes)
- *   {{titleName name}}    -> Action Button   (Storybook title, proper noun)
+ *   {{titleName name}}    -> Action button    (Storybook title, sentence case)
  *
  * @param {import('plop').NodePlopAPI} plop
  */
@@ -54,19 +60,37 @@ export default function (plop) {
   plop.setHelper('lb', () => '{');
   plop.setHelper('rb', () => '}');
 
-  // Space-separated Title Case for human-facing labels (Storybook titles,
-  // describe blocks, prose). plop's built-in `titleCase` keeps the dash
-  // ("action-button" -> "Action-Button"), but Spectrum treats component names
-  // as proper nouns rendered with spaces ("Action Button").
-  plop.setHelper('titleName', (text) =>
-    String(text)
+  // Space-separated sentence-case label for human-facing text (Storybook
+  // titles, describe blocks, prose). Spectrum titles are sentence case:
+  // capitalize only the first word ("action-button" -> "Action button").
+  // Authors re-capitalize any acronyms or proper nouns the scaffold can't know.
+  // plop's built-in `titleCase` can't do this (it keeps the dash and caps every
+  // word).
+  plop.setHelper('titleName', (text) => {
+    const words = String(text)
       .replace(/^(sp|swc)-/i, '')
       .replace(/([a-z0-9])([A-Z])/g, '$1 $2') // split camelCase
       .split(/[-_\s]+/)
       .filter(Boolean)
-      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-      .join(' ')
-  );
+      .map((word) => word.toLowerCase());
+    if (words.length === 0) {
+      return '';
+    }
+    words[0] = words[0].charAt(0).toUpperCase() + words[0].slice(1);
+    return words.join(' ');
+  });
+
+  // Shared prompt for the retrofit generators. A component name is entered in
+  // any form (`action-button`, `actionButton`, `Action Button`,
+  // `sp-action-button`); the case helpers normalize it.
+  const namePrompt = (message) => ({
+    type: 'input',
+    name: 'name',
+    message,
+    filter: (input) => input.trim().replace(/^(sp|swc)-/i, ''),
+    validate: (input) =>
+      input.trim().length > 0 || 'A name is required. You can rename it later.',
+  });
 
   // ──────────────────────
   //     CUSTOM ACTIONS
@@ -142,8 +166,42 @@ export default function (plop) {
     }
   });
 
+  // Retrofit generators (`test`, `vrt`) only make sense for a component that
+  // already exists. Fail loudly and early — before any file is written — when
+  // the target directory is missing, so a typo does not silently scaffold tests
+  // for a non-existent component.
+  plop.setActionType('assert-component-exists', (answers) => {
+    const name = render('{{dashCase name}}', answers);
+    const dir = path.join(repoRoot, SWC_COMPONENTS, name);
+    if (!fs.existsSync(dir)) {
+      throw new Error(
+        `Component "${name}" does not exist at ${SWC_COMPONENTS}/${name}. ` +
+          `Scaffold it first with: yarn plop component "${name}"`
+      );
+    }
+    return `found component ${name}`;
+  });
+
+  // Format the directories a retrofit generator wrote (a `test/` or `test/vrt/`
+  // subtree), scoped so the surrounding component files are left untouched.
+  // Config: { paths: string[] } — handlebars-templated repo-relative dirs.
+  plop.setActionType('format-dir', (answers, config) => {
+    const targets = (config.paths ?? [])
+      .map((p) => render(p, answers))
+      .join(' ');
+    try {
+      execSync(`yarn prettier --write ${targets}`, {
+        cwd: repoRoot,
+        stdio: 'ignore',
+      });
+      return `formatted ${targets}`;
+    } catch {
+      return `skipped formatting (run "yarn lint" manually)`;
+    }
+  });
+
   // ──────────────────
-  //     GENERATOR
+  //     GENERATORS
   // ──────────────────
 
   plop.setGenerator('component', {
@@ -229,6 +287,52 @@ export default function (plop) {
         // ── wiring + formatting ──────────────────────────────────
         { type: 'wire-core-export' },
         { type: 'format-component' },
+      ];
+    },
+  });
+
+  plop.setGenerator('test', {
+    description: 'Retrofit an existing component with unit + a11y test files',
+    prompts: [namePrompt('Component to add tests for (e.g. action-button):')],
+    actions: () => {
+      const swcDir = `${SWC_COMPONENTS}/{{dashCase name}}`;
+
+      return [
+        { type: 'assert-component-exists' },
+        {
+          type: 'add',
+          path: `${swcDir}/test/{{dashCase name}}.test.ts`,
+          templateFile: path.join(here, 'templates/test/test.ts.hbs'),
+          skipIfExists: true,
+        },
+        {
+          type: 'add',
+          path: `${swcDir}/test/{{dashCase name}}.a11y.spec.ts`,
+          templateFile: path.join(here, 'templates/test/a11y.spec.ts.hbs'),
+          skipIfExists: true,
+        },
+        { type: 'format-dir', paths: [`${swcDir}/test`] },
+      ];
+    },
+  });
+
+  plop.setGenerator('vrt', {
+    description: 'Retrofit an existing component with a Chromatic VRT story',
+    prompts: [
+      namePrompt('Component to add a VRT story for (e.g. action-button):'),
+    ],
+    actions: () => {
+      const swcDir = `${SWC_COMPONENTS}/{{dashCase name}}`;
+
+      return [
+        { type: 'assert-component-exists' },
+        {
+          type: 'add',
+          path: `${swcDir}/test/vrt/{{dashCase name}}.vrt.ts`,
+          templateFile: path.join(here, 'templates/vrt/vrt.ts.hbs'),
+          skipIfExists: true,
+        },
+        { type: 'format-dir', paths: [`${swcDir}/test/vrt`] },
       ];
     },
   });
