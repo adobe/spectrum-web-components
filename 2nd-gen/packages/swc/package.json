@@ -15,10 +15,6 @@
   },
   "type": "module",
   "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
-    },
     "./*": {
       "types": "./dist/components/*/index.d.ts",
       "import": "./dist/components/*/index.js"
@@ -65,8 +61,6 @@
       "import": "./dist/utils/*.js"
     }
   },
-  "main": "./dist/index.js",
-  "module": "./dist/index.js",
   "files": [
     "dist/"
   ],
@@ -159,5 +153,7 @@
   "customElements": "dist/custom-elements.json",
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "main": "./dist/index.js",
+  "module": "./dist/index.js"
 }
