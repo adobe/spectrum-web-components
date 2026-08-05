@@ -47,27 +47,38 @@ type HandleCase = {
 // negative margins, so each instance needs its own zero-size `position:
 // relative` anchor rather than sitting directly in the row's flex flow. The
 // box reserves headroom above the anchor point so an open loupe stays inside
-// the frame. Every instance also gets a visible caption: swatches otherwise
-// carry no text of their own, so the state/color under test would be
-// unidentifiable in a Chromatic diff without one.
-const renderHandle = (
-  label: string,
-  { color, open, disabled, focused, fill = true }: HandleCase = {}
-) => html`
+// the frame.
+const renderSwatch = ({
+  color,
+  open,
+  disabled,
+  focused,
+  fill = true,
+}: HandleCase = {}) => html`
+  <div
+    style="position: relative; display: flex; align-items: flex-end; justify-content: center; inline-size: 48px; block-size: 96px; padding-block-end: 12px;"
+  >
+    <swc-color-handle
+      color=${ifDefined(color)}
+      ?open=${open}
+      ?disabled=${disabled}
+      ?focused=${focused}
+      .fill=${fill}
+    ></swc-color-handle>
+  </div>
+`;
+
+// Adds a visible per-item caption below the swatch, on top of `renderSwatch`.
+// Only needed inside a multi-item row (color formats, adaptive contrast):
+// there the row heading names the axis but not which item is which, since the
+// swatch itself carries no text. Single-item state rows rely on `row()`'s own
+// heading instead and use `renderSwatch` directly, to avoid printing the same
+// label twice.
+const renderHandle = (label: string, handleCase: HandleCase = {}) => html`
   <div
     style="display: flex; flex-direction: column; align-items: center; gap: var(--swc-spacing-100);"
   >
-    <div
-      style="position: relative; display: flex; align-items: flex-end; justify-content: center; inline-size: 48px; block-size: 96px; padding-block-end: 12px;"
-    >
-      <swc-color-handle
-        color=${ifDefined(color)}
-        ?open=${open}
-        ?disabled=${disabled}
-        ?focused=${focused}
-        .fill=${fill}
-      ></swc-color-handle>
-    </div>
+    ${renderSwatch(handleCase)}
     <span class="swc-Detail swc-Detail--sizeM">${label}</span>
   </div>
 `;
@@ -113,7 +124,7 @@ const STATE_CASES: ReadonlyArray<{ label: string; handleCase: HandleCase }> = [
 
 const permutationContent = () => html`
   ${STATE_CASES.map(({ label, handleCase }) =>
-    row([renderHandle(label, handleCase)], label)
+    row([renderSwatch(handleCase)], label)
   )}
   ${row(
     COLOR_FORMATS.map(({ label, color }) => renderHandle(label, { color })),
@@ -158,15 +169,9 @@ export const Permutations: Story = {
 // forced-colors override.
 export const ForcedColors: Story = {
   render: () => html`
-    ${row([renderHandle('Default', { color: BASE_COLOR })], 'Default')}
-    ${row(
-      [renderHandle('Outline only', { color: BASE_COLOR, fill: false })],
-      'Outline only'
-    )}
-    ${row(
-      [renderHandle('Disabled', { color: BASE_COLOR, disabled: true })],
-      'Disabled'
-    )}
+    ${row([renderSwatch({ color: BASE_COLOR })], 'Default')}
+    ${row([renderSwatch({ color: BASE_COLOR, fill: false })], 'Outline only')}
+    ${row([renderSwatch({ color: BASE_COLOR, disabled: true })], 'Disabled')}
   `,
   parameters: forcedColorsVrtParameters,
 };
