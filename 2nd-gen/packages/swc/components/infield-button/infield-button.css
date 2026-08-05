@@ -50,6 +50,7 @@
 .swc-InfieldButton {
   --_swc-infield-button-padding: var(--swc-infield-button-padding, token("accessory-item-padding-medium"));
   --_swc-infield-button-icon-size: var(--swc-infield-button-icon-size, token("workflow-icon-3x-small"));
+  --_swc-infield-button-perspective-size: calc(var(--_swc-infield-button-padding) * 2 + var(--_swc-infield-button-icon-size));
 
   display: flex;
   align-items: center;
@@ -64,7 +65,7 @@
   cursor: default;
   transition-timing-function: token("animation-ease-in-out");
   transition-duration: token("animation-duration-100");
-  transition-property: background-color, color;
+  transition-property: background-color, color, transform;
 }
 
 /* ── States ───────────────────────────────────────── */
@@ -74,16 +75,18 @@
   background-color: var(--swc-infield-button-background-color-hover, token("gray-200"));
 }
 
-.swc-InfieldButton:active {
-  color: var(--swc-infield-button-icon-color-active, token("neutral-content-color-down"));
-  background-color: var(--swc-infield-button-background-color-active, token("gray-200"));
-}
-
 /* Parent field owns the focus ring; inner button must not show its own. */
 .swc-InfieldButton:focus-visible {
   color: var(--swc-infield-button-icon-color-focus, token("neutral-content-color-key-focus"));
   background-color: var(--swc-infield-button-background-color-focus, token("gray-200"));
   outline: none;
+}
+
+.swc-InfieldButton:active:not(:disabled) {
+  color: var(--swc-infield-button-icon-color-active, token("neutral-content-color-down"));
+  background-color: var(--swc-infield-button-background-color-active, token("gray-200"));
+  transform: var(--swc-infield-button-down-state-transform, perspective(var(--_swc-infield-button-perspective-size)) translate3d(0, 0, token("component-size-difference-down")));
+  will-change: transform;
 }
 
 /* Inflated specificity prevents hover from overriding disabled. */

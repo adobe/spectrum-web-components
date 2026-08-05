@@ -59,6 +59,9 @@ import styles from './infield-button.css';
  *   Defaults to `token("neutral-content-color-key-focus")`.
  * @cssprop --swc-infield-button-icon-color-disabled - Icon color when disabled.
  *   Defaults to `token("disabled-content-color")`.
+ * @cssprop --swc-infield-button-down-state-transform - CSS transform applied on press.
+ *   Defaults to `perspective(…) translate3d(0,0,token("component-size-difference-down"))`.
+ *   Set to `none` to disable the press animation.
  *
  * @example
  * <swc-infield-button accessible-label="Increment value" size="m">

@@ -142,21 +142,6 @@ corner radius regardless of position.
 </swc-infield-button>
 ```
 
-### 5. Remove any link-style usage
-
-The `href`, `target`, `download`, `rel`, and `referrerpolicy` attributes are
-removed. Replace `<sp-infield-button href="…">` with a native link:
-
-```html
-<!-- Before -->
-<sp-infield-button href="/destination" label="Go to destination">
-  <sp-icon-arrow></sp-icon-arrow>
-</sp-infield-button>
-
-<!-- After -->
-<a href="/destination">Go to destination</a>
-```
-
 ## Accessibility
 
 - **`accessible-label` is required** on every `<swc-infield-button>`. Omitting
@@ -232,5 +217,4 @@ Spectrum 2 exposes a new set of public CSS custom properties on
 - [ ] Rename `label="…"` to `accessible-label="…"` on every `<swc-infield-button>`
 - [ ] Move icon content to `slot="icon"`
 - [ ] Remove `block` and `inline` attributes; update the parent field's container layout
-- [ ] Remove any `href`-based infield button usage
 - [ ] Replace `--mod-infield-button-*` style overrides with `--swc-infield-button-*` equivalents

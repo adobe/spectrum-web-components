@@ -321,10 +321,10 @@ Infield buttons are not independently focusable and are not in the tab order. Th
 **No link API:**
 `swc-infield-button` has no `href` or related anchor attributes. It is always `type="button"` in practice.
 
-**`noDefaultSize: true` — known implementation constraint:**
-The component does not pick a default size; the parent field host must set `size`. This is the design intent. However, `ButtonBase` already uses `SizedMixin(SpectrumElement, { validSizes: BUTTON_VALID_SIZES })` without `noDefaultSize`, and its `update()` lifecycle auto-sets `size="m"` whenever the attribute is absent. Because `InfieldButtonBase extends ButtonBase`, this inner auto-set cannot be suppressed by double-wrapping — applying `SizedMixin(ButtonBase, { noDefaultSize: true })` on top still calls `super.update()` which triggers the inner mixin's auto-set. No other 2nd-gen component inherits from an already-SizedMixin'd class, so there is no established pattern for this case.
+**`noDefaultSize: true` — implemented via `NO_DEFAULT_SIZE` static:**
+The component does not pick a default size; the parent field host must set `size`. This is the design intent. The original `SizedMixin` captured `noDefaultSize` as a closure variable, which was silently broken for subclasses of an already-SizedMixin'd base — applying a second `SizedMixin(ButtonBase, { noDefaultSize: true })` wrapper still called `super.update()` in ButtonBase's mixin layer, where the closure captured `noDefaultSize=false`, and `size="m"` would be re-set whenever the attribute was absent or a parent called `removeAttribute('size')`.
 
-**As-built behavior:** `getAttribute('size')` returns `'m'` (auto-set by ButtonBase) when no parent has set a size. This has no visual impact: the CSS has no explicit `:host([size="m"])` rule; medium-size defaults come from the base `.swc-InfieldButton` fallback token values. The semantics of "parent field must set size" are preserved by convention. M remains the Figma **reference** size for token documentation, not an intentional consumer default.
+**As-built fix:** `SizedMixin` now exposes a `static readonly NO_DEFAULT_SIZE: boolean` on `SizedElement`, initialized from the constructor `noDefaultSize` option. The setter and `update()` read `this.constructor.NO_DEFAULT_SIZE` via the prototype chain instead of the closure variable. `InfieldButtonBase` declares `static override readonly NO_DEFAULT_SIZE = true`. This propagates correctly through the full prototype chain without any re-wrapping or lifecycle interception. When no parent has set `size`, `getAttribute('size')` is `null` — the contract is now enforced by the mixin, not by convention.
 
 ### Accessibility semantics notes (2nd-gen)
 
@@ -446,13 +446,13 @@ html`
 - [x] Map visual states to `token()`:
   - Default: background `token("gray-100")`, icon `token("neutral-content-color-default")`
   - Hover: background `token("gray-200")`, icon `token("neutral-content-color-hover")`
-  - Active/down: background `token("gray-200")`, icon `token("neutral-content-color-down")`. **No active transform** — `spectrum-css` S2 source has no transform on the active state; the plan entry was copied from button and does not apply.
+  - Active/down: background `token("gray-200")`, icon `token("neutral-content-color-down")`, plus a press-depth transform (perspective + translate3d) matching button/action-button. The transform is gated with `:not(:disabled)` so disabled buttons don't animate. Exposed via `--swc-infield-button-down-state-transform` (set to `none` to disable).
   - Disabled: background `token("disabled-background-color")`, icon `token("disabled-content-color")`
   - Quiet: `transparent` background for default, hover, active, and disabled (not the gray disabled color)
 - [x] Focus model: the inner `<button>` sets `outline: none` (matches S2 source). Infield buttons are not independently focusable and not in the tab order — the parent field owns the visible focus ring and all keyboard behavior. Do not add a `:focus-visible` ring on the button. Verify via field-level stories that the parent field's focus ring is visible and meets WCAG 2.4.7.
 - [x] Forced colors: `@media (forced-colors: active)` block added at bottom of file with ButtonFace/ButtonText/ButtonBorder/Highlight/GrayText system colors for each state.
 - [x] Verify no `:lang(ja)`, `:lang(ko)`, `:lang(zh)` size modifiers needed (not present in S2 baseline)
-- [x] Add a `@cssprop` JSDoc tag to the primary SWC component class for every exposed `--swc-infield-button-*` property. As-built set (supersedes the speculative initial list): `--swc-infield-button-padding`, `--swc-infield-button-icon-size`; background-color per state (default, hover, active, focus, disabled); icon-color per state (default, hover, active, focus, disabled). Height and border-radius are not exposed as custom properties — border-radius is hardcoded at `token("corner-radius-100")` (no consumer override needed; S2 spec uses a single value for all sizes). The four per-corner-radius properties and `--swc-infield-button-border-color` from the initial plan were 1st-gen artifacts that do not apply to the S2 single-border-radius model. Note: `--swc-infield-button-down-state-transform` was removed; S2 spectrum-css source has no active-state transform for this component.
+- [x] Add a `@cssprop` JSDoc tag to the primary SWC component class for every exposed `--swc-infield-button-*` property. As-built set: `--swc-infield-button-padding`, `--swc-infield-button-icon-size`; background-color per state (default, hover, active, focus, disabled); icon-color per state (default, hover, active, focus, disabled); `--swc-infield-button-down-state-transform` (press animation override, added during PR review to match button/action-button behavior). Height and border-radius are not exposed — border-radius is hardcoded at `token("corner-radius-100")`.
 - [x] Pass stylelint (property order, `no-descending-specificity`, token validation)
 
 ### Accessibility
@@ -514,7 +514,7 @@ html`
 
 #### Breaking changes
 
-- [x] Phase 7 consumer migration guide (A2) documents: `label` → `accessible-label`, `block`/`inline` removal with worked layout migration example, link API removal, slot rename (default → `icon`), CSS custom property rename
+- [x] Phase 7 consumer migration guide (A2) documents: `label` → `accessible-label`, `block`/`inline` removal with worked layout migration example, slot rename (default → `icon`), CSS custom property rename. Note: the B4 link API removal is listed in the "Removed in Spectrum 2" table but has no step-by-step migration section — `href` was never explicitly documented on `sp-infield-button` (only inherited via `ButtonBase`), so no migration step is needed per PR review feedback.
 - [x] Migration guide references number-field composed stepper pattern as the primary use case
 
 ### Review
