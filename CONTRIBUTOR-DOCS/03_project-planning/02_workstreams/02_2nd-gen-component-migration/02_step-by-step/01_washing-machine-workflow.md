@@ -31,6 +31,7 @@
     - [What to do](#what-to-do)
     - [Property migration scenarios](#property-migration-scenarios)
     - [API patterns (statics and warnings)](#api-patterns-statics-and-warnings)
+    - [Form participation (form fields only)](#form-participation-form-fields-only)
     - [What to check](#what-to-check)
     - [Common problems and solutions](#common-problems-and-solutions)
     - [Quality gate](#quality-gate)
@@ -356,6 +357,16 @@ Notes on the pattern:
 - The URL links to the component docs section that describes the new API.
 - `level: 'deprecation'` sorts the warning under the deprecation channel and lets consumers silence the whole class via `window.__swc.ignoreWarningLevels.deprecation = true`.
 
+### Form participation (form fields only)
+
+Applies when the component is a **form field** (text field, checkbox, radio, picker, combobox, and similar). Skip this for non-form components.
+
+2nd-gen form fields participate in forms through the **ElementInternals / form-associated custom element (FACE)** API rather than a nested light-DOM `<input>`. Before writing the API, read the approved [forms strategy](../../../05_strategies/forms-strategy-rfc.md) so property, slot, and event names match the shared naming table.
+
+1. Set `static formAssociated = true` on the base class and attach internals via `this.attachInternals()`. Mirror value and validity to the internals object (`setFormValue()`, `setValidity()`) instead of managing a hidden input.
+2. Name the public API from the forms strategy [naming table](../../../05_strategies/forms-strategy-rfc.md#4-naming-table): the value property, the label, help-text, and error-text surfaces, and the validation state property. Do not invent per-component names; align text-like fields and pickers to the same table.
+3. Expose the form lifecycle callbacks the strategy requires (`formResetCallback`, `formDisabledCallback`) on the base class so every field inherits them.
+
 ### What to check
 
 - [ ] All relevant 1st-gen props have a 2nd-gen home (base or SWC).
@@ -363,6 +374,7 @@ Notes on the pattern:
 - [ ] Internal helpers are marked `@internal`.
 - [ ] Static `readonly` arrays match types; used for validation, Storybook, and tests where applicable.
 - [ ] Invalid prop combinations emit `window.__swc.warn()` when debug is on (where the component has combination rules).
+- [ ] **Form fields:** the field is form-associated (`static formAssociated = true`); value and validity flow through `ElementInternals`, not a hidden `<input>`; and property, slot, and event names match the forms strategy naming table.
 
 ### Common problems and solutions
 
@@ -399,6 +411,7 @@ If you are renaming or removing a public prop or attribute, confirm with the tea
 6. **Native vs custom controls:** Native form control (e.g. Checkbox) → `delegatesFocus: true`. Custom control (e.g. Radio) → `role` and `aria-*` on host, manage focus/keyboard. See Checkbox and Radio as references.
 7. **Focus delegation on internal control:** When a component wraps a native form control inside its shadow DOM, set `delegatesFocus: true` via `static override shadowRootOptions = { ...ParentClass.shadowRootOptions, delegatesFocus: true }` so that focus lands on the internal control, not the host. This belongs in the base class if all subclasses share the same host-wraps-native-control structure. **Do not** override `createRenderRoot()` to set this option — doing so bypasses Lit’s `adoptStyles()`, silently preventing all component CSS from being injected into the shadow DOM. See [Rendering patterns: Shadow root customization](../../../../02_style-guide/02_typescript/09_rendering-patterns.md#shadow-root-customization).
 8. **Accessible name forwarding:** Attributes like `aria-label` on the host do not automatically apply to the internal control — either bind them explicitly in the render template (e.g. `aria-label=${this.getAttribute(‘aria-label’)}`) or derive the accessible name in a protected helper and forward it. See `ButtonBase.getResolvedAccessibleName()` as a reference. Note that implementing these patterns may require adding methods or modifying the render template, so Phase 4 often touches component class files, not only Storybook or docs.
+9. **Form field label, help text, and errors (form fields only):** Wire the accessible name and descriptions per the approved [forms strategy](../../../05_strategies/forms-strategy-rfc.md#33-idref-strategy-label-help-text-and-errors). The label associates via the field's labelling surface; help text and error text associate through `aria-describedby` and `aria-errormessage`. Because these are **IDREF** relationships that must cross the shadow boundary, follow the cross-root ARIA pattern from the forms strategy, not a raw `aria-describedby` pointing into another shadow root. See [semantic HTML and ARIA](../../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/semantic_html_aria.mdx).
 
 ### What to check
 
@@ -416,6 +429,7 @@ If you are renaming or removing a public prop or attribute, confirm with the tea
 | Unclear which pattern applies | Start from the component’s primary role (e.g. "combobox" → Combobox pattern). Consider splitting into more than one component (e.g. "sp-menu" into menu and listbox components). |
 | Focus trap in overlays | Use a shared focus-trap utility if the repo provides one; follow APG for modal/dialog. |
 | Custom controls | Ensure they have roles, names, and keyboard support; avoid div/span without semantics. |
+| Help text or error not announced | The describing text lives in a different shadow root; a bare `aria-describedby` IDREF does not cross the boundary. Use the cross-root pattern from the [forms strategy](../../../05_strategies/forms-strategy-rfc.md#33-idref-strategy-label-help-text-and-errors). |
 
 <details>
 <summary>**Stop and ask:** Custom events vs native events</summary>
@@ -431,6 +445,7 @@ Prefer native events when they give the right semantics (e.g. `click`). Add cust
 - [ ] Keyboard and ARIA implemented
 - [ ] a11y tests added
 - [ ] Screen reader testing performed
+- [ ] **Form fields:** axe-core passes in CI. Any known false positive (e.g. a role exposed through `ElementInternals` that axe cannot yet see) is handled per the forms strategy [axe policy](../../../05_strategies/forms-strategy-rfc.md#34-axe-core-policy): a story-level exclusion with a written rationale and an upstream tracking link, not a silent disable.
 
 ---
 
@@ -656,6 +671,7 @@ Use Badge as the reference implementation:
 
 ## Style guides and resources
 
+- **Forms strategy:** [2nd-gen forms strategy](../../../05_strategies/forms-strategy-rfc.md) — ElementInternals/FACE decision, label/help/error pattern, IDREF and cross-root rules, and axe policy for form fields.
 - **Workspace:** [spectrum-css](https://github.com/adobe/spectrum-css) cloned **next to** this repo—see [Workspace setup](#workspace-setup).
 - **TypeScript:** Team conventions; for 2nd-gen API patterns (static `readonly`, `window.__swc.warn`), see Phase 3 [API patterns](#api-patterns-statics-and-warnings) and 2nd-gen Badge (`core` + `swc`).
 - **CSS:** [2nd-gen CSS style guide (CONTRIBUTOR-DOCS)](../../../../02_style-guide/01_css/README.md) — component CSS, custom properties, Spectrum→SWC migration, anti-patterns, property order
