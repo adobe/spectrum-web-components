@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       tag:
-        description: 'NPM dist-tag'
+        description: 'NPM dist-tag for the planned release'
         required: false
         default: 'beta'
       dry_run:
@@ -14,20 +14,31 @@ on:
         default: false
   pull_request:
     types: [labeled, synchronize]
+  # Every push to main auto-publishes the `next` dist-tag: a continuous, throwaway snapshot
+  # of main (no commit back, no branch lock) so consumers can always pull the latest main
+  # build. Planned `beta` releases are cut manually via workflow_dispatch (pre-release mode,
+  # changelog, commit back to main). Per-step conditions below implement that split.
   push:
     branches:
       - main
 
+# Shares the exact group string with publish.yml (1st-gen) so the two release workflows
+# stay mutually exclusive on any shared ref: on a push to main both compute
+# publish-refs/heads/main, so one runs while the other queues. cancel-in-progress: false
+# queues rather than cancels; no ordering guarantee.
 concurrency:
-  group: publish-2nd-gen-${{ github.ref }}
+  group: publish-${{ github.ref }}
   cancel-in-progress: false
 
 jobs:
   check-changesets:
     runs-on: ubuntu-latest
+    # push to main -> auto `next` snapshot. workflow_dispatch -> planned `beta`, allowed
+    # only from main (a dispatch against any other ref is skipped). pull_request -> only
+    # via the snapshot-release label.
     if: >-
-      github.event_name == 'workflow_dispatch' ||
       github.event_name == 'push' ||
+      (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main') ||
       (github.event_name == 'pull_request' &&
       contains(github.event.pull_request.labels.*.name, 'snapshot-release'))
     outputs:
@@ -67,7 +78,8 @@ jobs:
       # checkout at all) so the race window is closed from the very start of the job,
       # not just from after checkout + dependency install.
       - name: Lock main during release
-        if: github.event_name != 'pull_request' && env.DRY_RUN != 'true'
+        # Only the planned beta release writes to main, so only it needs the lock.
+        if: github.event_name == 'workflow_dispatch' && env.DRY_RUN != 'true'
         env:
           GH_TOKEN: ${{ secrets.RELEASE_BOT_TOKEN }}
         run: |
@@ -99,17 +111,22 @@ jobs:
           INPUT_TAG: ${{ github.event.inputs.tag }}
         run: |
           if [ "$EVENT_NAME" == "pull_request" ]; then
-            # PRs with the snapshot-release label always use snapshot-test, same as
-            # 1st-gen's snapshot-release path - a separate, throwaway run either way.
+            # snapshot-release PRs: throwaway snapshot under the snapshot-test tag.
             WORKFLOW_TAG="snapshot-test"
+          elif [ "$EVENT_NAME" == "push" ]; then
+            # every push to main: continuous throwaway snapshot under the next tag.
+            WORKFLOW_TAG="next"
           else
+            # manual workflow_dispatch: planned pre-release, beta by default.
             WORKFLOW_TAG="${INPUT_TAG:-beta}"
           fi
           echo "tag=$WORKFLOW_TAG" >> $GITHUB_OUTPUT
           echo "Using npm tag: $WORKFLOW_TAG"
 
+      # Only the planned beta path (workflow_dispatch) enters persistent pre-release mode.
+      # push->next and PR->snapshot-test use --snapshot instead and never touch pre.json.
       - name: Enter changesets pre-release mode
-        if: github.event_name != 'pull_request' && !hashFiles('2nd-gen/.changeset/pre.json')
+        if: github.event_name == 'workflow_dispatch' && !hashFiles('2nd-gen/.changeset/pre.json')
         env:
           TAG: ${{ steps.extract-tag.outputs.tag }}
         working-directory: 2nd-gen
@@ -137,12 +154,13 @@ jobs:
           TAG: ${{ steps.extract-tag.outputs.tag }}
         working-directory: 2nd-gen
         run: |
-          if [ "$EVENT_NAME" == "pull_request" ]; then
-            # Throwaway snapshot version for PR testing only - never enters/touches
-            # the persistent pre-release (beta.N) state used by real main releases.
-            yarn changeset version --snapshot $TAG
-          else
+          if [ "$EVENT_NAME" == "workflow_dispatch" ]; then
+            # Planned beta: pre-release versioning (beta.N) against the persistent pre.json.
             yarn changeset version
+          else
+            # push->next and PR->snapshot-test: throwaway snapshot version ({tag}.{datetime}),
+            # never entering the persistent pre-release state.
+            yarn changeset version --snapshot $TAG
           fi
 
       - name: Capture released versions
@@ -177,7 +195,8 @@ jobs:
         run: yarn changeset publish --no-git-tag --tag $TAG
 
       - name: Commit and push changes
-        if: github.event_name != 'pull_request' && env.DRY_RUN != 'true'
+        # Only the planned beta release commits version bumps back to main.
+        if: github.event_name == 'workflow_dispatch' && env.DRY_RUN != 'true'
         env:
           RELEASE_BOT_TOKEN: ${{ secrets.RELEASE_BOT_TOKEN }}
         run: |
@@ -215,7 +234,7 @@ jobs:
           fi
 
       - name: Unlock main after release
-        if: always() && github.event_name != 'pull_request' && env.DRY_RUN != 'true'
+        if: always() && github.event_name == 'workflow_dispatch' && env.DRY_RUN != 'true'
         uses: ./.github/actions/release-branch-lock
         with:
           mode: unlock
