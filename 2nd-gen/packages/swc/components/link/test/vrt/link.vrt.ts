@@ -72,7 +72,9 @@ const stateCells = (modifiers: string) => [
 
 // Every axis link.css owns: the two color variants (default/secondary), the
 // standalone modifier (medium weight) and quiet standalone (underline dropped
-// until hover, so it's shown both at rest and forced-hovered), all four
+// until hover, so it's shown at rest, forced-hovered where the underline
+// returns, and forced-focus-visible where it stays hidden behind the focus
+// ring), all four
 // interaction states for both color variants (secondary overrides every
 // state's color token, so it can't share the default's state row), the CJK
 // line-height override, and the two static-color variants on their matching
@@ -102,6 +104,13 @@ const permutationContent = () => html`
         'Quiet · hover (underline)',
         {
           forceState: 'hover',
+        }
+      ),
+      link(
+        'swc-Link--standalone swc-Link--quiet',
+        'Quiet · focus-visible (no underline)',
+        {
+          forceState: 'focus-visible',
         }
       ),
     ],
