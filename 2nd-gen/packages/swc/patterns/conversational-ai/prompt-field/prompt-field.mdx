@@ -29,6 +29,8 @@ The `expanded` attribute controls the field's collapsed/expanded layout:
 
 Toggling `expanded` animates between the two layouts (disabled under `prefers-reduced-motion: reduce`).
 
+The textarea grows with content up to `max-rows` and, on small or embedded viewports, up to `--swc-prompt-field-max-block-size` (default `40vh`) if that's smaller — override the custom property to raise or lower this ceiling.
+
 <Canvas of={PromptFieldStories.Layout} />
 
 ### Modes
