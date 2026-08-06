@@ -44,40 +44,46 @@ type HandleCase = {
 };
 
 // The handle is `position: absolute` and centers itself on its coordinate via
-// negative margins, so each instance needs its own zero-size `position:
-// relative` anchor rather than sitting directly in the row's flex flow. The
-// box reserves headroom above the anchor point so an open loupe stays inside
-// the frame.
+// negative margins, so each instance needs its own `position: relative`
+// anchor rather than sitting directly in the row's flex flow. Only a handle
+// that actually shows its loupe (`open` and not `disabled`, which suppresses
+// it) bottom-anchors to reserve headroom above it; every other case
+// (including "disabled + open") centers the handle in a box just tall enough
+// for the grown/focused size, so slack splits evenly above and below.
 const renderSwatch = ({
   color,
   open,
   disabled,
   focused,
   fill = true,
-}: HandleCase = {}) => html`
-  <div
-    style="position: relative; display: flex; align-items: flex-end; justify-content: center; inline-size: 48px; block-size: 96px; padding-block-end: 12px;"
-  >
-    <swc-color-handle
-      color=${ifDefined(color)}
-      ?open=${open}
-      ?disabled=${disabled}
-      ?focused=${focused}
-      .fill=${fill}
-    ></swc-color-handle>
-  </div>
-`;
+}: HandleCase = {}) => {
+  const showsLoupe = open && !disabled;
+  return html`
+    <div
+      style="position: relative; display: flex; align-items: ${showsLoupe
+        ? 'flex-end'
+        : 'center'}; justify-content: center; inline-size: 48px; block-size: ${showsLoupe
+        ? '96px'
+        : '40px'}; padding-block-end: ${showsLoupe ? '12px' : '0'};"
+    >
+      <swc-color-handle
+        color=${ifDefined(color)}
+        ?open=${open}
+        ?disabled=${disabled}
+        ?focused=${focused}
+        .fill=${fill}
+      ></swc-color-handle>
+    </div>
+  `;
+};
 
-// Adds a visible per-item caption below the swatch, on top of `renderSwatch`.
-// Only needed inside a multi-item row (color formats, adaptive contrast):
-// there the row heading names the axis but not which item is which, since the
-// swatch itself carries no text. Single-item state rows rely on `row()`'s own
-// heading instead and use `renderSwatch` directly, to avoid printing the same
-// label twice.
+// Adds a visible per-item caption beside the swatch, centered relative to it,
+// on top of `renderSwatch`. Used everywhere a state/color needs to be
+// identifiable: single-item state rows pass the label here instead of to
+// `row()`, so the caption sits directly next to its swatch rather than above
+// the whole row.
 const renderHandle = (label: string, handleCase: HandleCase = {}) => html`
-  <div
-    style="display: flex; flex-direction: column; align-items: center; gap: var(--swc-spacing-100);"
-  >
+  <div style="display: flex; align-items: center; gap: var(--swc-spacing-100);">
     ${renderSwatch(handleCase)}
     <span class="swc-Detail swc-Detail--sizeM">${label}</span>
   </div>
@@ -124,7 +130,7 @@ const STATE_CASES: ReadonlyArray<{ label: string; handleCase: HandleCase }> = [
 
 const permutationContent = () => html`
   ${STATE_CASES.map(({ label, handleCase }) =>
-    row([renderSwatch(handleCase)], label)
+    row([renderHandle(label, handleCase)])
   )}
   ${row(
     COLOR_FORMATS.map(({ label, color }) => renderHandle(label, { color })),
@@ -169,9 +175,9 @@ export const Permutations: Story = {
 // forced-colors override.
 export const ForcedColors: Story = {
   render: () => html`
-    ${row([renderSwatch({ color: BASE_COLOR })], 'Default')}
-    ${row([renderSwatch({ color: BASE_COLOR, fill: false })], 'Outline only')}
-    ${row([renderSwatch({ color: BASE_COLOR, disabled: true })], 'Disabled')}
+    ${row([renderHandle('Default', { color: BASE_COLOR })])}
+    ${row([renderHandle('Outline only', { color: BASE_COLOR, fill: false })])}
+    ${row([renderHandle('Disabled', { color: BASE_COLOR, disabled: true })])}
   `,
   parameters: forcedColorsVrtParameters,
 };
