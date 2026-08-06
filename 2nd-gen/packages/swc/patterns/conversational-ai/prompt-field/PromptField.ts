@@ -10,7 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
-import { CSSResultArray, html, TemplateResult } from 'lit';
+import { CSSResultArray, html, nothing, TemplateResult } from 'lit';
 import { property, queryAssignedElements, state } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { styleMap } from 'lit/directives/style-map.js';
@@ -271,20 +271,11 @@ export class PromptField extends SpectrumElement {
     `;
   }
 
-  /**
-   * The send/stop button is rendered twice (inline row + action bar) so the
-   * collapsed/expanded crossfade can animate between them. `isInert` marks
-   * whichever copy isn't the currently active one, both so it's excluded
-   * from focus/AT and so `.swc-PromptField-send`/`-stop` stays a unique
-   * `:not([inert])` query for the active instance.
-   */
-  private _renderSendButton(isInert: boolean): TemplateResult {
+  private _renderSendButton(): TemplateResult {
     return html`
       <button
         class="swc-PromptField-send"
         ?disabled=${!this._isPopulated || this._isDisabled}
-        ?inert=${isInert}
-        aria-hidden=${ifDefined(isInert ? 'true' : undefined)}
         aria-label=${this.sendLabel}
         @click=${this._handleSendClick}
       >
@@ -293,12 +284,10 @@ export class PromptField extends SpectrumElement {
     `;
   }
 
-  private _renderStopButton(isInert: boolean): TemplateResult {
+  private _renderStopButton(): TemplateResult {
     return html`
       <button
         class="swc-PromptField-stop"
-        ?inert=${isInert}
-        aria-hidden=${ifDefined(isInert ? 'true' : undefined)}
         aria-label=${this.stopLabel}
         @click=${this._handleStopClick}
       >
@@ -374,11 +363,15 @@ export class PromptField extends SpectrumElement {
                   @focusin=${this._handleTextareaFocusIn}
                   @focusout=${this._handleTextareaFocusOut}
                 ></textarea>
-                <span class="swc-PromptField-input-row-action">
-                  ${showStop
-                    ? this._renderStopButton(this.expanded)
-                    : this._renderSendButton(this.expanded)}
-                </span>
+                ${!this.expanded
+                  ? html`
+                      <span class="swc-PromptField-input-row-action">
+                        ${showStop
+                          ? this._renderStopButton()
+                          : this._renderSendButton()}
+                      </span>
+                    `
+                  : nothing}
               </div>
             </div>
           </div>
@@ -399,9 +392,11 @@ export class PromptField extends SpectrumElement {
               </button>
             </div>
 
-            ${showStop
-              ? this._renderStopButton(!this.expanded)
-              : this._renderSendButton(!this.expanded)}
+            ${this.expanded
+              ? showStop
+                ? this._renderStopButton()
+                : this._renderSendButton()
+              : nothing}
           </div>
         </div>
         ${this._renderLegalFooter()}

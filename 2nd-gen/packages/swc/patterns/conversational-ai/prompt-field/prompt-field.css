@@ -101,10 +101,8 @@
    ───────────────────────────────────── */
 
 .swc-PromptField-input-row {
-  --_swc-prompt-field-input-row-gap: token("spacing-200");
-
   display: flex;
-  gap: var(--_swc-prompt-field-input-row-gap);
+  gap: token("spacing-200");
   align-items: center;
 }
 
@@ -118,35 +116,16 @@
   color: token("gray-700");
 }
 
-/* Collapsed layout renders the send/stop button inline in this row (via
- * .swc-PromptField-input-row-action below); expanded layout crossfades it
- * out in favor of the copy in the action bar. */
+/* Collapsed layout renders the send/stop button inline in this row; expanded
+ * layout renders it in the action bar below instead (see
+ * .swc-PromptField-input-row-action, only present when collapsed). */
 :host([expanded]) .swc-PromptField-input-row {
-  --_swc-prompt-field-input-row-gap: token("spacing-300");
+  gap: token("spacing-300");
 }
 
 .swc-PromptField-input-row-action {
   display: flex;
   flex: 0 0 auto;
-  inline-size: var(--swc-prompt-field-send-inline-size, 32px);
-  overflow: hidden;
-  opacity: 1;
-  transition:
-    opacity token("animation-duration-100") token("animation-ease-in-out"),
-    inline-size token("animation-duration-100") token("animation-ease-in-out"),
-    margin-inline-start token("animation-duration-100") token("animation-ease-in-out");
-}
-
-:host([expanded]) .swc-PromptField-input-row-action {
-  inline-size: 0;
-  margin-inline-start: calc(-1 * var(--_swc-prompt-field-input-row-gap));
-  opacity: 0;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .swc-PromptField-input-row-action {
-    transition: none;
-  }
 }
 
 /* ─────────────────────────────────────

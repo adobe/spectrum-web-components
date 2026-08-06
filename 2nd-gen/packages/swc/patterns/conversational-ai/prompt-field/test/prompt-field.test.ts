@@ -98,7 +98,7 @@ export const InteractionTest: Story = {
       });
 
       const sendBtn = el.shadowRoot?.querySelector<HTMLButtonElement>(
-        '.swc-PromptField-send:not([inert])'
+        '.swc-PromptField-send'
       );
       sendBtn?.click();
       expect(detail?.value).toBe('Summarize the API changes in this branch.');
@@ -134,7 +134,7 @@ export const InteractionTest: Story = {
       });
 
       const stopBtn = el.shadowRoot?.querySelector<HTMLButtonElement>(
-        '.swc-PromptField-stop:not([inert])'
+        '.swc-PromptField-stop'
       );
       stopBtn?.focus();
       await userEvent.keyboard('{Enter}');
