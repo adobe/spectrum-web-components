@@ -194,7 +194,12 @@
   inline-size: 100%;
   min-inline-size: 0;
   min-block-size: calc(token("font-size-100") * token("line-height-100") * var(--swc-prompt-field-textarea-min-rows, 1));
-  max-block-size: calc(token("font-size-100") * token("line-height-100") * var(--swc-prompt-field-textarea-max-rows, 4));
+
+  /* Whichever cap is smaller wins: max-rows on typical viewports, the vh
+   * ceiling on small/embedded ones where max-rows worth of text would
+   * otherwise overflow the viewport. Textareas scroll internally by
+   * default once content exceeds this, no extra overflow rule needed. */
+  max-block-size: min(calc(token("font-size-100") * token("line-height-100") * var(--swc-prompt-field-textarea-max-rows, 4)), var(--swc-prompt-field-max-block-size, 40vh));
   padding: 0;
   font-family: token("sans-serif-font");
   font-size: token("font-size-100");
