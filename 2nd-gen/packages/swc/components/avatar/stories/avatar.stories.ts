@@ -254,6 +254,17 @@ export const InActionButton: Story = {
         size=${args.size}
       ></swc-avatar>
     </swc-action-button>
+    <swc-action-button size="xl">
+      <span
+        style="display: inline-flex; align-items: center; gap: 8px; vertical-align: middle;"
+      >
+        <swc-avatar src=${args.src} alt="" decorative size="400"></swc-avatar>
+        Jane Doe
+      </span>
+    </swc-action-button>
+    <swc-action-button size="xl" accessible-label="Jane Doe">
+      <swc-avatar src=${args.src} alt="" decorative size="400"></swc-avatar>
+    </swc-action-button>
   `,
   args: {
     src: PLACEHOLDER_SRC,
