@@ -234,20 +234,18 @@ export const Disabled: Story = {
 export const InActionButton: Story = {
   render: (args) => html`
     <swc-action-button>
-      <span
-        style="display: inline-flex; align-items: center; gap: 8px; vertical-align: middle;"
-      >
-        <swc-avatar
-          src=${args.src}
-          alt=""
-          decorative
-          size=${args.size}
-        ></swc-avatar>
-        Jane Doe
-      </span>
+      <swc-avatar
+        slot="icon"
+        src=${args.src}
+        alt=""
+        decorative
+        size=${args.size}
+      ></swc-avatar>
+      Jane Doe
     </swc-action-button>
     <swc-action-button accessible-label="Jane Doe">
       <swc-avatar
+        slot="icon"
         src=${args.src}
         alt=""
         decorative
@@ -255,20 +253,28 @@ export const InActionButton: Story = {
       ></swc-avatar>
     </swc-action-button>
     <swc-action-button size="xl">
-      <span
-        style="display: inline-flex; align-items: center; gap: 8px; vertical-align: middle;"
-      >
-        <swc-avatar src=${args.src} alt="" decorative size="400"></swc-avatar>
-        Jane Doe
-      </span>
+      <swc-avatar
+        slot="icon"
+        src=${args.src}
+        alt=""
+        decorative
+        size=${args.size}
+      ></swc-avatar>
+      Jane Doe
     </swc-action-button>
     <swc-action-button size="xl" accessible-label="Jane Doe">
-      <swc-avatar src=${args.src} alt="" decorative size="400"></swc-avatar>
+      <swc-avatar
+        slot="icon"
+        src=${args.src}
+        alt=""
+        decorative
+        size=${args.size}
+      ></swc-avatar>
     </swc-action-button>
   `,
   args: {
     src: PLACEHOLDER_SRC,
-    size: '100',
+    size: '500',
   },
   tags: ['behaviors'],
   parameters: {
