@@ -234,7 +234,9 @@ export const Disabled: Story = {
 export const InActionButton: Story = {
   render: (args) => html`
     <swc-action-button>
-      <span style="display: inline-flex; align-items: center; gap: 8px;">
+      <span
+        style="display: inline-flex; align-items: center; gap: 8px; vertical-align: middle;"
+      >
         <swc-avatar
           src=${args.src}
           alt=""
