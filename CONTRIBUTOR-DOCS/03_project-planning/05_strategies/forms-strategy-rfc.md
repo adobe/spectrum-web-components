@@ -91,7 +91,7 @@ This proposal records the team's recommended direction for **2nd-gen form fields
 
 For value-bearing fields, the role element **defaults to the shadow DOM**, not the host. This is a deliberate design decision: keeping the role element inside the shadow root enables CSS encapsulation and lets slotted label and description content associate through same-root `aria-labelledby` / `aria-describedby` ID references, while external (light-DOM) label sources use cross-root element-reference properties (see [§3.3](#33-idref-strategy-label-help-text-and-errors)).
 
-- **Exception (button-like and radio-like controls):** these put the role on the **host** instead, via `ElementInternals` (`internals.role = 'button'` / `'radio'`). This is safe specifically because neither role needs to expose a *live value* to assistive technology the way a textbox or combobox trigger does; a radio's or button's full state is carried by `aria-checked` or the role itself, so there is no value-mirroring problem to solve on the host. It also collapses the focusable element, the role element, and (for radio) the roving-tabindex participant the group's focus controller drives into a single node, instead of splitting them across host and shadow root. Do not extend this exception to controls that carry a live value (textbox, combobox); see [Why not put the value-bearing role on the host?](#why-not-put-the-value-bearing-role-on-the-host) for why that case does not work the same way.
+- **Exception (button-like and radio-like controls):** these put the role on the **host** instead, via `ElementInternals` (`internals.role = 'button'` / `'radio'`). This is safe specifically because neither role needs to expose a *live value* to assistive technology the way a textbox or combobox trigger does; a radio's or button's full state is carried by `aria-checked` or the role itself, so there is no value-mirroring problem to solve on the host. It also collapses the focusable element, the role element, and (for radio) the roving-tabindex participant the group's focus controller drives into a single node, instead of splitting them across host and shadow root. Do not extend this exception to controls that carry a live value (textbox, combobox); see [Why not put the value-bearing role on the host?](#why-not-put-the-value-bearing-role-on-the-host) for why that case does not work the same way. Even with the role on the host, name these controls through `accessible-label` / `accessible-labelledby`, not raw `aria-label` (see [§3.3](#33-idref-strategy-label-help-text-and-errors)).
 - **Consequence:** because a value-bearing field's host has no role, an axe-core scan of the host alone reports a false positive; this is expected and handled by the axe policy in [§3.4](#34-axe-core-policy).
 
 #### Why not put the value-bearing role on the host?
@@ -100,14 +100,16 @@ A textbox or combobox exposes a **live value** to assistive technology, and that
 
 ### 3.3 IDREF strategy: label, help text, and errors
 
-The accessible name comes from the field's labelling surface; help text and error text associate through `aria-describedby` and `aria-errormessage`. A **`LabellingController`** owns this wiring so fields do not hand-roll it. It watches the shadow DOM slots, shows or hides the internal label element based on slot content presence, and keeps the ARIA relationships in sync as content changes.
+Hosts do **not** expose the raw `aria-label` / `aria-labelledby` attributes. Because of cross-root ARIA issues, and so consumers get one consistent API across every field instead of setting `aria-label` on the components that happen to support it (and then reaching for it on the ones that do not), fields expose the established **`accessible-label`** attribute for a string name and a proposed **`accessible-labelledby`** attribute for an ID reference. This holds even for host-role controls (button-like, radio-like); see [§3.2](#32-where-aria-roles-live).
+
+A **`LabellingController`** (in flight as part of the text field epic; *pending research*) owns the wiring so fields do not hand-roll it: it watches the shadow DOM slots, shows or hides the internal label element based on slot content presence, and keeps the ARIA relationships in sync as content changes. Help text and error text associate through `aria-describedby` and `aria-errormessage`.
 
 Two complementary sources feed the accessible name and description:
 
 - **Slotted content** (`slot="label"` / `slot="description"`) projects into the shadow DOM and wires through **same-root** `aria-labelledby` / `aria-describedby` pointing at the shadow-internal elements. This is a plain IDREF because both ends live in the same root.
-- **Light-DOM siblings** wire through `labelledby` / `describedby` properties (or attributes) that resolve element IDs and set the **cross-root element-reference properties** `ariaLabelledByElements` / `ariaDescribedByElements`, rather than a raw IDREF that cannot cross the shadow boundary.
+- **Light-DOM siblings** wire through the `accessible-labelledby` attribute, which resolves element IDs and, via the `LabellingController`, sets the **cross-root element-reference property** `ariaLabelledByElements`, rather than a raw IDREF that cannot cross the shadow boundary.
 
-When both sources exist, the shadow description appears first in the merged element-reference list. Error text associates the same way through `aria-errormessage`.
+When both sources exist, the shadow-internal label appears first in the merged element-reference list. Error text associates the same way through `aria-errormessage`.
 
 - **Reference:** [semantic HTML and ARIA guide](../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/semantic_html_aria.mdx).
 
@@ -139,12 +141,13 @@ The canonical surface for form fields. Contributors align Phase 3 (API) and Phas
 | Concern | Name / approach | Notes |
 |---------|-----------------|-------|
 | Form participation | `static formAssociated = true` + `attachInternals()`, wrapped by `FieldAssociationController` | Value submitted via `internals.setFormValue(value)`. |
-| Label surface | Default slot when the label is the component's only or primary content; named `slot="label"` when it is supplementary to other primary content | Primary-vs-supplementary rule; pending the slot-API research decision. |
+| Label surface (visible) | Default slot when the label is the component's only or primary content; named `slot="label"` when it is supplementary to other primary content | Primary-vs-supplementary rule; pending the slot-API research decision. |
+| Accessible name (no visible label) | `accessible-label` attribute | Established convention; do **not** expose raw `aria-label` on the host. |
 | Help / description surface | `slot="description"`, wired by `LabellingController` | Associates via `aria-describedby`. |
 | Error text surface | Error text wired by `LabellingController` | Associates via `aria-errormessage`. |
 | Disabled cascade | `formDisabledCallback(disabled)` | Receives cascade from ancestor `<fieldset disabled>` or owning form. |
 | Reset | `formResetCallback()` | Restores the field to its default value on form reset. |
-| Cross-root name / description from light DOM | `labelledby` / `describedby` properties → `ariaLabelledByElements` / `ariaDescribedByElements` | Element references, not raw IDREFs. |
+| Cross-root name from light DOM | `accessible-labelledby` attribute → `ariaLabelledByElements` via `LabellingController` *(pending research)* | Element references, not raw IDREFs; do **not** expose raw `aria-labelledby`. |
 
 | Component class | Role placement | Internals (FACE) | IDREF approach | axe note |
 |-----------------|----------------|------------------|----------------|----------|
@@ -169,7 +172,8 @@ These are active research spikes; their outcomes finalize the *pending research*
 
 - **Button activation:** whether a dedicated `ButtonAssociationController` is needed for button-like fields (clear button, a future submit button), or whether a native inner `<button>` already covers keyboard activation, role, and focusability.
 - **Grouped selection:** whether a dedicated `RadioGroupController` is needed for radio group (composing `SelectionController`, `FocusgroupNavigationController`, and `SlotAttributePropagationController`), or whether those primitives are composed inline.
-- **Label slot rule:** confirming the primary-vs-supplementary rule for default slot vs named `slot="label"` holds across all migrated components, and how it relates to a `label` attribute used for `aria-label`-only cases.
+- **Label slot rule:** confirming the primary-vs-supplementary rule for default slot vs named `slot="label"` holds across all migrated components, and how it relates to the `accessible-label` attribute used for no-visible-label cases.
+- **`accessible-labelledby` and `LabellingController`:** the cross-root label mapping is part of the in-flight text field epic and not yet in the codebase; the exact API and whether the controller wiring lands separately from the `accessible-labelledby` attribute is still under discussion.
 
 ---
 
