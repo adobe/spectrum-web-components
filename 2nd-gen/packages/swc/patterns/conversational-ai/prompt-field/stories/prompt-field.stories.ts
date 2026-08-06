@@ -167,6 +167,33 @@ export const Modes: Story = {
   tags: ['options'],
 };
 
+export const Layout: Story = {
+  render: () => html`
+    <div style="display:flex;flex-direction:column;gap:32px;">
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <swc-prompt-field
+          label="Prompt"
+          placeholder=${defaultPlaceholder}
+        ></swc-prompt-field>
+        <span class="swc-Detail swc-Detail--sizeS">
+          Collapsed (default) — single-line row with the send button inline
+        </span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <swc-prompt-field
+          expanded
+          label="Prompt"
+          placeholder=${defaultPlaceholder}
+        ></swc-prompt-field>
+        <span class="swc-Detail swc-Detail--sizeS">
+          expanded — action bar with upload button on its own row
+        </span>
+      </div>
+    </div>
+  `,
+  tags: ['options'],
+};
+
 export const Artifact: Story = {
   render: () => html`
     <div style="display:flex;flex-direction:column;gap:32px;">

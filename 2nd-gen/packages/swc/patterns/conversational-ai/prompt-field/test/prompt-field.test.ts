@@ -40,6 +40,7 @@ export const OverviewTest: Story = {
 
     await step('renders with default mode state', async () => {
       expect(el.mode).toBe('default');
+      expect(el.expanded).toBe(false);
       expect(el.label).toBe('Prompt');
       expect(el.sendLabel).toBe('Send');
       expect(el.stopLabel).toBe('Stop generating');
@@ -97,13 +98,16 @@ export const InteractionTest: Story = {
       });
 
       const sendBtn = el.shadowRoot?.querySelector<HTMLButtonElement>(
-        '.swc-PromptField-send'
+        '.swc-PromptField-send:not([inert])'
       );
       sendBtn?.click();
       expect(detail?.value).toBe('Summarize the API changes in this branch.');
     });
 
-    await step('upload button emits trigger event', async () => {
+    await step('upload button emits trigger event when expanded', async () => {
+      el.expanded = true;
+      await el.updateComplete;
+
       let fired = false;
       el.addEventListener(
         'swc-prompt-field-upload-click',
@@ -130,7 +134,7 @@ export const InteractionTest: Story = {
       });
 
       const stopBtn = el.shadowRoot?.querySelector<HTMLButtonElement>(
-        '.swc-PromptField-stop'
+        '.swc-PromptField-stop:not([inert])'
       );
       stopBtn?.focus();
       await userEvent.keyboard('{Enter}');

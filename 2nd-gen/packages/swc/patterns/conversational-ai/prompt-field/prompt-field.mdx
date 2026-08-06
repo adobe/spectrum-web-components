@@ -11,14 +11,25 @@ import * as PromptFieldStories from './stories/prompt-field.stories';
 
 A prompt field consists of:
 
-1. **Box**: white card container with shadow and 16px border radius.
-2. **Input area**: visible label + textarea.
-3. **Action bar**: upload trigger (left) and send/stop action (right).
+1. **Box**: white card container with shadow, collapsed to a single-line row by default or expanded into a taller card via the `expanded` attribute.
+2. **Input area**: visible label (expanded only) + textarea.
+3. **Action bar**: upload trigger (left) and send/stop action (right); shown on its own row only when `expanded`, otherwise the send/stop action sits inline with the textarea.
 4. **Footer**: optional legal content rendered below the prompt surface.
 
 <Canvas of={PromptFieldStories.Anatomy} />
 
 ## Options
+
+### Layout
+
+The `expanded` attribute controls the field's collapsed/expanded layout:
+
+- **Collapsed (default)**: single-line row; the send/stop button sits inline with the textarea and no upload button is shown.
+- **`expanded`**: taller card with a separate action bar below the textarea, showing the upload button alongside send/stop.
+
+Toggling `expanded` animates between the two layouts (disabled under `prefers-reduced-motion: reduce`).
+
+<Canvas of={PromptFieldStories.Layout} />
 
 ### Modes
 

@@ -37,15 +37,38 @@
    ───────────────────────────────────── */
 
 .swc-PromptField-box {
+  /* Single-line collapsed height (padding + one 32px control row). Only
+   * used for min-block-size below; the corner radius stays a constant
+   * token in both layouts rather than a computed stadium radius. */
+  --_swc-prompt-field-collapsed-block-size: calc(token("spacing-200") * 2 + token("spacing-500"));
+
   display: flex;
   flex-direction: column;
-  gap: token("spacing-300");
-  padding: token("spacing-300");
+  gap: 0;
+  min-block-size: var(--_swc-prompt-field-collapsed-block-size);
+  padding: token("spacing-200") token("spacing-300");
   background: token("background-layer-2-color");
   border: 1px solid transparent;
   border-radius: token("corner-radius-800");
   box-shadow: token("drop-shadow-emphasized-default-x") token("drop-shadow-emphasized-default-y") token("drop-shadow-emphasized-default-blur") token("drop-shadow-emphasized-default-color");
   overflow: hidden;
+  transition:
+    gap token("animation-duration-100") token("animation-ease-in-out"),
+    padding token("animation-duration-100") token("animation-ease-in-out"),
+    min-block-size token("animation-duration-100") token("animation-ease-in-out");
+}
+
+/* Expanded layout: taller card with the action bar on its own row below
+ * the textarea, instead of the collapsed single-line row above. */
+:host([expanded]) .swc-PromptField-box {
+  gap: token("spacing-300");
+  padding: token("spacing-300");
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .swc-PromptField-box {
+    transition: none;
+  }
 }
 
 /* Outer ring only for keyboard focus on the textarea (PromptField toggles
@@ -71,6 +94,59 @@
 /* Figma: input area uses 8px top padding only when an artifact row is shown. */
 .swc-PromptField-input-area.has-artifact {
   padding-block-start: token("spacing-100");
+}
+
+/* ─────────────────────────────────────
+   Input row (status icon + textarea + inline send/stop button)
+   ───────────────────────────────────── */
+
+.swc-PromptField-input-row {
+  --_swc-prompt-field-input-row-gap: token("spacing-200");
+
+  display: flex;
+  gap: var(--_swc-prompt-field-input-row-gap);
+  align-items: center;
+}
+
+.swc-PromptField-status-icon {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  inline-size: token("workflow-icon-medium");
+  block-size: token("workflow-icon-medium");
+  color: token("gray-700");
+}
+
+/* Collapsed layout renders the send/stop button inline in this row (via
+ * .swc-PromptField-input-row-action below); expanded layout crossfades it
+ * out in favor of the copy in the action bar. */
+:host([expanded]) .swc-PromptField-input-row {
+  --_swc-prompt-field-input-row-gap: token("spacing-300");
+}
+
+.swc-PromptField-input-row-action {
+  display: flex;
+  flex: 0 0 auto;
+  inline-size: var(--swc-prompt-field-send-inline-size, 32px);
+  overflow: hidden;
+  opacity: 1;
+  transition:
+    opacity token("animation-duration-100") token("animation-ease-in-out"),
+    inline-size token("animation-duration-100") token("animation-ease-in-out"),
+    margin-inline-start token("animation-duration-100") token("animation-ease-in-out");
+}
+
+:host([expanded]) .swc-PromptField-input-row-action {
+  inline-size: 0;
+  margin-inline-start: calc(-1 * var(--_swc-prompt-field-input-row-gap));
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .swc-PromptField-input-row-action {
+    transition: none;
+  }
 }
 
 /* ─────────────────────────────────────
@@ -135,7 +211,9 @@
 .swc-PromptField-textarea {
   field-sizing: content;
   display: block;
+  flex: 1 1 auto;
   inline-size: 100%;
+  min-inline-size: 0;
   min-block-size: calc(token("font-size-100") * token("line-height-100") * var(--swc-prompt-field-textarea-min-rows, 1));
   max-block-size: calc(token("font-size-100") * token("line-height-100") * var(--swc-prompt-field-textarea-max-rows, 4));
   padding: 0;
@@ -164,9 +242,39 @@
    ───────────────────────────────────── */
 
 .swc-PromptField-action-bar {
-  display: flex;
+  display: none;
   align-items: center;
   justify-content: space-between;
+}
+
+:host([expanded]) .swc-PromptField-action-bar {
+  display: flex;
+}
+
+/* calc-size() allows animating height: auto, which CSS transitions could not
+ * previously target (see accordion-item.css for the same pattern). Supported
+ * in Chrome/Edge 129+; other browsers keep the instant show/hide above. */
+@supports (height: calc-size(auto, size)) {
+  .swc-PromptField-action-bar {
+    display: flex;
+    height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition:
+      height token("animation-duration-100") token("animation-ease-in-out"),
+      opacity token("animation-duration-100") token("animation-ease-in-out");
+  }
+
+  :host([expanded]) .swc-PromptField-action-bar {
+    height: calc-size(auto, size);
+    opacity: 1;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .swc-PromptField-action-bar {
+      transition: none;
+    }
+  }
 }
 
 .swc-PromptField-leading-actions {

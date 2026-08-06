@@ -34,6 +34,22 @@ test.describe('PromptField - ARIA Snapshots', () => {
     );
     await expect(root).toMatchAriaSnapshot(`
       - textbox "Prompt"
+      - button "Send" [disabled]
+    `);
+  });
+
+  test('should have correct accessibility tree for expanded prompt field', async ({
+    page,
+  }) => {
+    const root = await gotoStory(
+      page,
+      'patterns-conversational-ai-prompt-field--layout',
+      'swc-prompt-field'
+    );
+    const expandedField = root.locator('swc-prompt-field').nth(1);
+    await expect(expandedField).toMatchAriaSnapshot(`
+      - text: Prompt
+      - textbox "Prompt"
       - button "Add attachment"
       - button "Send" [disabled]
     `);

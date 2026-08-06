@@ -20,8 +20,14 @@ import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
 import '@adobe/spectrum-wc/components/icon/swc-icon.js';
 
 import { uniqueId } from '../../../utils/id.js';
-import { ChevronUpIcon, PlusIcon, StopIcon } from '../utils/icons/index.js';
+import {
+  ChevronUpIcon,
+  PlusIcon,
+  StopIcon,
+  ThreeDotsIcon,
+} from '../utils/icons/index.js';
 
+import visuallyHiddenStyles from '../../../stylesheets/_lit-styles/visually-hidden.css';
 import styles from './prompt-field.css';
 
 export interface PromptFieldSubmitDetail {
@@ -54,6 +60,15 @@ export class PromptField extends SpectrumElement {
   /** Visual mode for the prompt field action/interaction state. */
   @property({ type: String, reflect: true })
   public mode: PromptFieldMode = 'default';
+
+  /**
+   * Renders the multiline layout with a separate action bar (upload button
+   * and send/stop button on their own row). Defaults to the single-line
+   * collapsed layout, where the send/stop button sits inline with the
+   * textarea.
+   */
+  @property({ type: Boolean, reflect: true })
+  public expanded = false;
 
   /** Accessible label shown above the textarea. */
   @property({ type: String })
@@ -106,7 +121,7 @@ export class PromptField extends SpectrumElement {
   private _promptBoxKeyboardFocusRing = false;
 
   public static override get styles(): CSSResultArray {
-    return [styles];
+    return [styles, visuallyHiddenStyles];
   }
 
   private _handleInput(event: Event): void {
@@ -256,11 +271,20 @@ export class PromptField extends SpectrumElement {
     `;
   }
 
-  private _renderSendButton(): TemplateResult {
+  /**
+   * The send/stop button is rendered twice (inline row + action bar) so the
+   * collapsed/expanded crossfade can animate between them. `isInert` marks
+   * whichever copy isn't the currently active one, both so it's excluded
+   * from focus/AT and so `.swc-PromptField-send`/`-stop` stays a unique
+   * `:not([inert])` query for the active instance.
+   */
+  private _renderSendButton(isInert: boolean): TemplateResult {
     return html`
       <button
         class="swc-PromptField-send"
         ?disabled=${!this._isPopulated || this._isDisabled}
+        ?inert=${isInert}
+        aria-hidden=${ifDefined(isInert ? 'true' : undefined)}
         aria-label=${this.sendLabel}
         @click=${this._handleSendClick}
       >
@@ -269,15 +293,29 @@ export class PromptField extends SpectrumElement {
     `;
   }
 
-  private _renderStopButton(): TemplateResult {
+  private _renderStopButton(isInert: boolean): TemplateResult {
     return html`
       <button
         class="swc-PromptField-stop"
+        ?inert=${isInert}
+        aria-hidden=${ifDefined(isInert ? 'true' : undefined)}
         aria-label=${this.stopLabel}
         @click=${this._handleStopClick}
       >
         <swc-icon aria-hidden="true">${StopIcon()}</swc-icon>
       </button>
+    `;
+  }
+
+  /**
+   * Placeholder leading icon reserving space for the pixel-loader
+   * idle/generating indicator, which is out of scope for this change.
+   */
+  private _renderStatusIcon(): TemplateResult {
+    return html`
+      <span class="swc-PromptField-status-icon" aria-hidden="true">
+        <swc-icon>${ThreeDotsIcon()}</swc-icon>
+      </span>
     `;
   }
 
@@ -299,40 +337,57 @@ export class PromptField extends SpectrumElement {
           >
             ${this._renderArtifact()}
             <div class="swc-PromptField-text-area">
-              <span id=${this.labelId} class="swc-PromptField-label">
+              <span
+                id=${this.labelId}
+                class="swc-PromptField-label${this.expanded
+                  ? ''
+                  : ' swc-VisuallyHidden'}"
+              >
                 ${this.label}
               </span>
-              <textarea
-                class="swc-PromptField-textarea"
-                .value=${this.value}
-                placeholder=${this.placeholder}
-                aria-labelledby=${this.labelId}
-                aria-label=${ifDefined(
-                  this.accessibleLabel.trim().length > 0
-                    ? this.accessibleLabel.trim()
-                    : undefined
-                )}
-                aria-placeholder=${ifDefined(this.placeholder || undefined)}
-                ?disabled=${this._isDisabled}
-                rows=${this._normalizedMinRows}
-                style=${styleMap({
-                  '--swc-prompt-field-textarea-min-rows': String(
-                    this._normalizedMinRows
-                  ),
-                  '--swc-prompt-field-textarea-max-rows': String(
-                    this._normalizedMaxRows
-                  ),
-                })}
-                @input=${this._handleInput}
-                @keydown=${this._handleTextareaKeydown}
-                @pointerdown=${this._handleTextareaPointerDown}
-                @focusin=${this._handleTextareaFocusIn}
-                @focusout=${this._handleTextareaFocusOut}
-              ></textarea>
+              <div class="swc-PromptField-input-row">
+                ${this._renderStatusIcon()}
+                <textarea
+                  class="swc-PromptField-textarea"
+                  .value=${this.value}
+                  placeholder=${this.placeholder}
+                  aria-labelledby=${this.labelId}
+                  aria-label=${ifDefined(
+                    this.accessibleLabel.trim().length > 0
+                      ? this.accessibleLabel.trim()
+                      : undefined
+                  )}
+                  aria-placeholder=${ifDefined(this.placeholder || undefined)}
+                  ?disabled=${this._isDisabled}
+                  rows=${this._normalizedMinRows}
+                  style=${styleMap({
+                    '--swc-prompt-field-textarea-min-rows': String(
+                      this._normalizedMinRows
+                    ),
+                    '--swc-prompt-field-textarea-max-rows': String(
+                      this._normalizedMaxRows
+                    ),
+                  })}
+                  @input=${this._handleInput}
+                  @keydown=${this._handleTextareaKeydown}
+                  @pointerdown=${this._handleTextareaPointerDown}
+                  @focusin=${this._handleTextareaFocusIn}
+                  @focusout=${this._handleTextareaFocusOut}
+                ></textarea>
+                <span class="swc-PromptField-input-row-action">
+                  ${showStop
+                    ? this._renderStopButton(this.expanded)
+                    : this._renderSendButton(this.expanded)}
+                </span>
+              </div>
             </div>
           </div>
 
-          <div class="swc-PromptField-action-bar">
+          <div
+            class="swc-PromptField-action-bar"
+            aria-hidden=${ifDefined(this.expanded ? undefined : 'true')}
+            .inert=${!this.expanded}
+          >
             <div class="swc-PromptField-leading-actions">
               <button
                 class="swc-PromptField-upload"
@@ -344,7 +399,9 @@ export class PromptField extends SpectrumElement {
               </button>
             </div>
 
-            ${showStop ? this._renderStopButton() : this._renderSendButton()}
+            ${showStop
+              ? this._renderStopButton(!this.expanded)
+              : this._renderSendButton(!this.expanded)}
           </div>
         </div>
         ${this._renderLegalFooter()}
