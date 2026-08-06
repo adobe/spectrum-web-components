@@ -34,7 +34,8 @@
 
 ## Summary
 
-This proposal records the team's recommended direction for **2nd-gen form fields** (text field, checkbox, radio, picker, combobox, and similar) before scaling migration. It synthesizes the proof-of-concept findings for text field and combobox as form-associated custom elements, plus the cross-root ARIA `referenceTarget` shim research. The core decisions are: form fields participate in forms through the **ElementInternals / form-associated custom element (FACE)** API; ARIA roles default to the **host** unless a control class needs otherwise; label, help text, and error text associate through **IDREF relationships** that use a cross-root-safe pattern; and **axe-core** exclusions are documented, not silent.
+This proposal records the team's recommended direction for **2nd-gen form fields** (text field, checkbox, radio, picker, combobox) before scaling migration. It synthesizes the proof-of-concept findings for text field and combobox as form-associated custom elements, plus the cross-root ARIA `referenceTarget` shim research. The core decisions are: form fields participate in forms through the **ElementInternals / form-associated custom element (FACE)** API; ARIA roles default to the **shadow DOM**, with an explicit host-role exception for button-like and radio-like controls (see [§3.2](#32-where-aria-roles-live)); label, help text, and error text associate through **IDREF relationships** that use a cross-root-safe pattern; and **axe-core** exclusions are documented, not silent.
+
 
 > **Scope:** Form-field API and accessibility direction only. This proposal does **not** implement the shared controllers or migrate a production component; those are follow-up work.
 
@@ -79,6 +80,7 @@ This proposal records the team's recommended direction for **2nd-gen form fields
 ## 3. Recommendations
 
 ### 3.1 Form participation: ElementInternals / FACE
+2nd-gen form fields are **form-associated custom elements**: set `static formAssociated = true`, attach internals with `this.attachInternals()`, and mirror value through `setFormValue()`. A `setValidity()` pass-through on `FieldAssociationController` is proposed but not yet implemented — *pending research*.
 
 2nd-gen form fields are **form-associated custom elements**: set `static formAssociated = true`, attach internals with `this.attachInternals()`, and mirror value and validity through `setFormValue()` and `setValidity()`. Do not nest a hidden light-DOM `<input>` to participate in forms.
 
@@ -89,8 +91,8 @@ This proposal records the team's recommended direction for **2nd-gen form fields
 ### 3.2 Where ARIA roles live
 
 The role element lives in the **shadow DOM**, not on the host. This is a deliberate design decision: keeping the role element inside the shadow root enables CSS encapsulation and lets slotted label and description content associate through same-root `aria-labelledby` / `aria-describedby` ID references, while external (light-DOM) label sources use cross-root element-reference properties (see [§3.3](#33-idref-strategy-label-help-text-and-errors)).
+- **Exception — button-like and radio-like controls:** these put the role on the **host** instead, via `ElementInternals` (`internals.role = 'button'` / `'radio'`). This is safe specifically because neither role needs to expose a *live value* to assistive technology the way a textbox or combobox trigger does — a radio's or button's full state is carried by `aria-checked` / the role itself, so there is no value-mirroring problem to solve on the host. It also collapses the focusable element, the role element, and (for radio) the roving-tabindex participant the group's focus controller drives into a single node, instead of splitting them across host and shadow root. Do not extend this exception to controls that carry a live value (textbox, combobox) — see the [host-role textfield counter-exploration](#why-not-on-the-host) for why that case doesn't work the same way.
 
-- **Default:** the inner control element in the shadow DOM carries the role.
 - **Consequence:** because the host has no role, an axe-core scan of the host alone reports a false positive; this is expected and handled by the axe policy in [§3.4](#34-axe-core-policy).
 
 ### 3.3 IDREF strategy: label, help text, and errors
@@ -143,8 +145,9 @@ The canonical surface for form fields. Contributors align Phase 3 (API) and Phas
 | Component class | Role placement | Internals (FACE) | IDREF approach | axe note |
 |-----------------|----------------|------------------|----------------|----------|
 | Text-like (text field) | inner control in shadow DOM | `FieldAssociationController` | `LabellingController` (slotted same-root + light-DOM element refs) | `label` false positive on host |
-| Picker / combobox | inner control in shadow DOM | `FieldAssociationController` | `LabellingController` | `aria-required-children` false positive on slotted options |
-| Button-like (clear / submit) | inner control in shadow DOM | `ButtonAssociationController` *(pending research)* | n/a | verify role and activation exposure manually |
+| Button-like (clear / submit) | **host**, via `ElementInternals` — [§3.2 exception](#32-where-aria-roles-live) | `ButtonAssociationController` *(pending research)* | n/a | verify role and activation exposure manually |
+| Grouped selection (radio group) | **host**, via `ElementInternals` — [§3.2 exception](#32-where-aria-roles-live): `role="radiogroup"` on the group, `role="radio"` on each item | per-item `FieldAssociationController`, coordinated by `RadioGroupController` *(pending research)* | per-item labelling | verify roving focus and group semantics manually |
+
 | Grouped selection (radio group) | host `role="radiogroup"`, items `role="radio"` | per-item `FieldAssociationController`, coordinated by `RadioGroupController` *(pending research)* | per-item labelling | verify roving focus and group semantics manually |
 
 ---

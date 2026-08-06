@@ -359,11 +359,11 @@ Notes on the pattern:
 
 ### Form participation (form fields only)
 
-Applies when the component is a **form field** (text field, checkbox, radio, picker, combobox, and similar). Skip this for non-form components.
+Applies when the component is a **form field** (text field, checkbox, radio, picker, combobox). Skip this for non-form components.
 
 2nd-gen form fields participate in forms through the **ElementInternals / form-associated custom element (FACE)** API rather than a nested light-DOM `<input>`. Before writing the API, read the approved [forms strategy](../../../05_strategies/forms-strategy-rfc.md) so property, slot, and event names match the shared naming table.
 
-1. Set `static formAssociated = true` on the base class and attach internals via `this.attachInternals()`. Mirror value and validity to the internals object (`setFormValue()`, `setValidity()`) instead of managing a hidden input.
+1. Set `static formAssociated = true` on the base class and attach internals via `this.attachInternals()`. Mirror value to the internals object (`setFormValue()`) instead of managing a hidden input. Validity reporting (`setValidity()`) is not yet available on the shared controller — see the forms strategy's open questions before hand-rolling it per component.
 2. Name the public API from the forms strategy [naming table](../../../05_strategies/forms-strategy-rfc.md#4-naming-table): the value property, the label, help-text, and error-text surfaces, and the validation state property. Do not invent per-component names; align text-like fields and pickers to the same table.
 3. Expose the form lifecycle callbacks the strategy requires (`formResetCallback`, `formDisabledCallback`) on the base class so every field inherits them.
 
@@ -374,7 +374,8 @@ Applies when the component is a **form field** (text field, checkbox, radio, pic
 - [ ] Internal helpers are marked `@internal`.
 - [ ] Static `readonly` arrays match types; used for validation, Storybook, and tests where applicable.
 - [ ] Invalid prop combinations emit `window.__swc.warn()` when debug is on (where the component has combination rules).
-- [ ] **Form fields:** the field is form-associated (`static formAssociated = true`); value and validity flow through `ElementInternals`, not a hidden `<input>`; and property, slot, and event names match the forms strategy naming table.
+- [ ] **Form fields:** the field is form-associated (`static formAssociated = true`); value flows through `ElementInternals` (`setFormValue()`), not a hidden `<input>`; and property, slot, and event names match the forms strategy naming table. (Validity reporting via `setValidity()` is pending — do not block on it.)
+
 
 ### Common problems and solutions
 
