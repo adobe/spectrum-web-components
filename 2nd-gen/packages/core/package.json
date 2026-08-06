@@ -87,6 +87,10 @@
       "types": "./dist/components/icon/index.d.ts",
       "import": "./dist/components/icon/index.js"
     },
+    "./components/infield-button": {
+      "types": "./dist/components/infield-button/index.d.ts",
+      "import": "./dist/components/infield-button/index.js"
+    },
     "./components/illustrated-message": {
       "types": "./dist/components/illustrated-message/index.d.ts",
       "import": "./dist/components/illustrated-message/index.js"
@@ -334,6 +338,9 @@
       ],
       "components/icon": [
         "dist/components/icon/index.d.ts"
+      ],
+      "components/infield-button": [
+        "dist/components/infield-button/index.d.ts"
       ],
       "components/illustrated-message": [
         "dist/components/illustrated-message/index.d.ts"
