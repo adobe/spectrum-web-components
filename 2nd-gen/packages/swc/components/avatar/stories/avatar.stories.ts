@@ -18,6 +18,7 @@ import { Avatar } from '@adobe/spectrum-wc/avatar';
 import { AVATAR_VALID_SIZES } from '@adobe/spectrum-wc-core/components/avatar/index.js';
 
 import '@adobe/spectrum-wc/components/avatar/swc-avatar.js';
+import '@adobe/spectrum-wc/components/action-button/swc-action-button.js';
 
 // ────────────────
 //    METADATA
@@ -231,26 +232,35 @@ export const Disabled: Story = {
 // ──────────────────────────────
 
 export const InActionButton: Story = {
-  // TODO: Replace <button> with <swc-action-button> once that component is migrated to 2nd-gen.
   render: (args) => html`
-    <button
-      type="button"
-      style="display:inline-flex;align-items:center;gap:8px;padding:4px 12px;cursor:pointer;"
-    >
+    <swc-action-button>
+      <span style="display: inline-flex; align-items: center; gap: 8px;">
+        <swc-avatar
+          src=${args.src}
+          alt=""
+          decorative
+          size=${args.size}
+        ></swc-avatar>
+        Jane Doe
+      </span>
+    </swc-action-button>
+    <swc-action-button accessible-label="Jane Doe">
       <swc-avatar
         src=${args.src}
-        alt=${args.alt}
+        alt=""
+        decorative
         size=${args.size}
       ></swc-avatar>
-      Jane Doe
-    </button>
+    </swc-action-button>
   `,
   args: {
     src: PLACEHOLDER_SRC,
-    alt: 'Jane Doe',
     size: '100',
   },
   tags: ['behaviors'],
+  parameters: {
+    flexLayout: 'row-wrap',
+  },
 };
 
 // ────────────────────────────────
