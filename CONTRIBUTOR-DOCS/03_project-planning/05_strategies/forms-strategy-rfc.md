@@ -80,9 +80,8 @@ This proposal records the team's recommended direction for **2nd-gen form fields
 ## 3. Recommendations
 
 ### 3.1 Form participation: ElementInternals / FACE
-2nd-gen form fields are **form-associated custom elements**: set `static formAssociated = true`, attach internals with `this.attachInternals()`, and mirror value through `setFormValue()`. A `setValidity()` pass-through on `FieldAssociationController` is proposed but not yet implemented — *pending research*.
 
-2nd-gen form fields are **form-associated custom elements**: set `static formAssociated = true`, attach internals with `this.attachInternals()`, and mirror value and validity through `setFormValue()` and `setValidity()`. Do not nest a hidden light-DOM `<input>` to participate in forms.
+2nd-gen form fields are **form-associated custom elements**: set `static formAssociated = true`, attach internals with `this.attachInternals()`, and mirror value through `setFormValue()`. Do not nest a hidden light-DOM `<input>` to participate in forms. A `setValidity()` pass-through on `FieldAssociationController` is proposed but not yet implemented (*pending research*); see [§6](#6-open-questions) before hand-rolling validity per component.
 
 - **Decision:** yes, adopt ElementInternals/FACE for form fields. The value is submitted via `internals.setFormValue(value)` on change, and the `formDisabledCallback(disabled)` lifecycle hook receives cascades from an ancestor `<fieldset disabled>` or an owning form.
 - **Shared controller:** a **`FieldAssociationController`** wraps `ElementInternals` to handle value submission, the disabled cascade, and form reset once, so text field, checkbox, and combobox do not each reimplement it.
@@ -90,10 +89,14 @@ This proposal records the team's recommended direction for **2nd-gen form fields
 
 ### 3.2 Where ARIA roles live
 
-The role element lives in the **shadow DOM**, not on the host. This is a deliberate design decision: keeping the role element inside the shadow root enables CSS encapsulation and lets slotted label and description content associate through same-root `aria-labelledby` / `aria-describedby` ID references, while external (light-DOM) label sources use cross-root element-reference properties (see [§3.3](#33-idref-strategy-label-help-text-and-errors)).
-- **Exception — button-like and radio-like controls:** these put the role on the **host** instead, via `ElementInternals` (`internals.role = 'button'` / `'radio'`). This is safe specifically because neither role needs to expose a *live value* to assistive technology the way a textbox or combobox trigger does — a radio's or button's full state is carried by `aria-checked` / the role itself, so there is no value-mirroring problem to solve on the host. It also collapses the focusable element, the role element, and (for radio) the roving-tabindex participant the group's focus controller drives into a single node, instead of splitting them across host and shadow root. Do not extend this exception to controls that carry a live value (textbox, combobox) — see the [host-role textfield counter-exploration](#why-not-on-the-host) for why that case doesn't work the same way.
+For value-bearing fields, the role element **defaults to the shadow DOM**, not the host. This is a deliberate design decision: keeping the role element inside the shadow root enables CSS encapsulation and lets slotted label and description content associate through same-root `aria-labelledby` / `aria-describedby` ID references, while external (light-DOM) label sources use cross-root element-reference properties (see [§3.3](#33-idref-strategy-label-help-text-and-errors)).
 
-- **Consequence:** because the host has no role, an axe-core scan of the host alone reports a false positive; this is expected and handled by the axe policy in [§3.4](#34-axe-core-policy).
+- **Exception (button-like and radio-like controls):** these put the role on the **host** instead, via `ElementInternals` (`internals.role = 'button'` / `'radio'`). This is safe specifically because neither role needs to expose a *live value* to assistive technology the way a textbox or combobox trigger does; a radio's or button's full state is carried by `aria-checked` or the role itself, so there is no value-mirroring problem to solve on the host. It also collapses the focusable element, the role element, and (for radio) the roving-tabindex participant the group's focus controller drives into a single node, instead of splitting them across host and shadow root. Do not extend this exception to controls that carry a live value (textbox, combobox); see [Why not put the value-bearing role on the host?](#why-not-put-the-value-bearing-role-on-the-host) for why that case does not work the same way.
+- **Consequence:** because a value-bearing field's host has no role, an axe-core scan of the host alone reports a false positive; this is expected and handled by the axe policy in [§3.4](#34-axe-core-policy).
+
+#### Why not put the value-bearing role on the host?
+
+A textbox or combobox exposes a **live value** to assistive technology, and that value must live on the element that carries the role. If the role were placed on the host via `ElementInternals` while the editable control stayed in the shadow DOM, the value and the role would sit on different nodes, and the accessible value would not track the control. Keeping the role on the inner shadow control keeps the role and its value on the same node. Button-like and radio-like controls do not hit this problem because they expose no live value (see the exception above), which is why the host-role shortcut is safe for them but not for value-bearing fields.
 
 ### 3.3 IDREF strategy: label, help text, and errors
 
@@ -114,9 +117,9 @@ Browsers currently lack a standardized path for axe-core to read ARIA relationsh
 
 **Known false positives** (valid patterns axe flags as violations):
 
-- **`label`** — "Form element does not have a label" on the host, because axe inspects the roleless host without following the shadow root to the inner control's cross-root label wiring.
-- **`aria-required-children`** — fires on a combobox-style component with slotted options because axe does not traverse the light-DOM slot to find the `role="option"` children.
-- **`duplicate-id-aria`** — fires on shadow DOM IDs, which cannot actually conflict across instances because they are shadow-scoped.
+- **`label`**: "Form element does not have a label" on the host, because axe inspects the roleless host without following the shadow root to the inner control's cross-root label wiring.
+- **`aria-required-children`**: fires on a combobox-style component with slotted options because axe does not traverse the light-DOM slot to find the `role="option"` children.
+- **`duplicate-id-aria`**: fires on shadow DOM IDs, which cannot actually conflict across instances because they are shadow-scoped.
 
 **Known blind spots** (real issues axe misses): a misconfigured `labelledby` that silently yields a missing label, and stale element references after a target is removed. Screen reader testing is authoritative for these; axe is supplementary.
 
@@ -140,15 +143,14 @@ The canonical surface for form fields. Contributors align Phase 3 (API) and Phas
 | Help / description surface | `slot="description"`, wired by `LabellingController` | Associates via `aria-describedby`. |
 | Error text surface | Error text wired by `LabellingController` | Associates via `aria-errormessage`. |
 | Disabled cascade | `formDisabledCallback(disabled)` | Receives cascade from ancestor `<fieldset disabled>` or owning form. |
+| Reset | `formResetCallback()` | Restores the field to its default value on form reset. |
 | Cross-root name / description from light DOM | `labelledby` / `describedby` properties → `ariaLabelledByElements` / `ariaDescribedByElements` | Element references, not raw IDREFs. |
 
 | Component class | Role placement | Internals (FACE) | IDREF approach | axe note |
 |-----------------|----------------|------------------|----------------|----------|
 | Text-like (text field) | inner control in shadow DOM | `FieldAssociationController` | `LabellingController` (slotted same-root + light-DOM element refs) | `label` false positive on host |
-| Button-like (clear / submit) | **host**, via `ElementInternals` — [§3.2 exception](#32-where-aria-roles-live) | `ButtonAssociationController` *(pending research)* | n/a | verify role and activation exposure manually |
-| Grouped selection (radio group) | **host**, via `ElementInternals` — [§3.2 exception](#32-where-aria-roles-live): `role="radiogroup"` on the group, `role="radio"` on each item | per-item `FieldAssociationController`, coordinated by `RadioGroupController` *(pending research)* | per-item labelling | verify roving focus and group semantics manually |
-
-| Grouped selection (radio group) | host `role="radiogroup"`, items `role="radio"` | per-item `FieldAssociationController`, coordinated by `RadioGroupController` *(pending research)* | per-item labelling | verify roving focus and group semantics manually |
+| Button-like (clear / submit) | **host**, via `ElementInternals` (see [§3.2 exception](#32-where-aria-roles-live)) | `ButtonAssociationController` *(pending research)* | n/a | verify role and activation exposure manually |
+| Grouped selection (radio group) | **host**, via `ElementInternals` (see [§3.2 exception](#32-where-aria-roles-live)): `role="radiogroup"` on the group, `role="radio"` on each item | per-item `FieldAssociationController`, coordinated by `RadioGroupController` *(pending research)* | per-item labelling | verify roving focus and group semantics manually |
 
 ---
 
