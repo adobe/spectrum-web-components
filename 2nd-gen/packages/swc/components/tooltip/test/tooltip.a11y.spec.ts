@@ -135,23 +135,19 @@ test.describe('Tooltip - ARIA Snapshots', () => {
   // Escape must dismiss the dismissible stack in reverse open order (LIFO),
   // whichever surface is on top. Only trusted (Playwright) input drives the
   // popover's native light-dismiss, so this cross-mechanism ordering can't run in
-  // a synthetic play function. Two orders cover both directions; tooltip-inside-
-  // popover is the same topology as "tooltip over popover" (nesting is covered by
-  // the vitest tests), so it is not repeated.
+  // a synthetic play function. Both orders share the CoexistenceWithPopover
+  // fixture and differ only in which surface is opened last (topmost).
   type Surface = 'popover' | 'tooltip';
   const orderedScenarios: Array<{
     name: string;
-    storyId: string;
     openOrder: readonly Surface[];
   }> = [
     {
       name: 'tooltip opened over a popover',
-      storyId: 'tooltip-tests--coexists-tooltip-opened-over-popover-test',
       openOrder: ['popover', 'tooltip'],
     },
     {
       name: 'popover opened over a tooltip',
-      storyId: 'tooltip-tests--coexists-popover-opened-over-tooltip-test',
       openOrder: ['tooltip', 'popover'],
     },
   ];
@@ -166,7 +162,7 @@ test.describe('Tooltip - ARIA Snapshots', () => {
       : (el as (Element & { open?: boolean }) | null)?.open === true;
   };
 
-  for (const { name, storyId, openOrder } of orderedScenarios) {
+  for (const { name, openOrder } of orderedScenarios) {
     // Escape dismisses in reverse open order: the last-opened surface registers
     // into the dismissible stack last, so it is topmost and closes first.
     const closeOrder = [...openOrder].reverse();
@@ -174,7 +170,11 @@ test.describe('Tooltip - ARIA Snapshots', () => {
     test(`Escape dismisses in reverse open order: ${name}`, async ({
       page,
     }) => {
-      await gotoStory(page, storyId, 'swc-button');
+      await gotoStory(
+        page,
+        'components-tooltip--coexistence-with-popover',
+        'swc-button'
+      );
 
       // Drive open state explicitly and in a fixed order so the assertion does
       // not depend on the story's play-function timing.
