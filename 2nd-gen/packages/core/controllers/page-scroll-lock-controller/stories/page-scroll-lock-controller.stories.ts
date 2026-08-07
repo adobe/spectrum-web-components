@@ -36,7 +36,6 @@ const meta: Meta = {
   component: 'demo-scroll-lock-host',
   render: () => html`
     <demo-scroll-lock-host></demo-scroll-lock-host>
-    ${scrollFiller}
   `,
   parameters: {
     docs: {
@@ -56,6 +55,10 @@ type Story = StoryObj;
 // ────────────────────
 
 export const Playground: Story = {
+  render: () => html`
+    <demo-scroll-lock-host></demo-scroll-lock-host>
+    ${scrollFiller}
+  `,
   tags: ['dev'],
 };
 
@@ -75,7 +78,6 @@ export const StackedLocks: Story = {
   render: () => html`
     <demo-scroll-lock-host></demo-scroll-lock-host>
     <demo-scroll-lock-host></demo-scroll-lock-host>
-    ${scrollFiller}
   `,
   tags: ['behaviors'],
   parameters: { flexLayout: 'row-wrap' },
