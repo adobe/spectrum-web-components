@@ -10,7 +10,7 @@
  * governing permissions and limitations under the License.
  */
 import { html } from 'lit';
-import { expect, userEvent, waitFor } from '@storybook/test';
+import { expect, spyOn, userEvent, waitFor } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import { Popover } from '@adobe/spectrum-wc/popover';
@@ -1125,6 +1125,23 @@ export const FocusRestoreOnCloseTest: Story = {
           document.activeElement,
           'focus is left where the user moved it'
         ).toBe(other);
+      }
+    );
+
+    await step(
+      'focus is restored with preventScroll so an off-screen trigger is not scrolled back into view',
+      async () => {
+        await userEvent.click(trigger);
+        await waitFor(() => expect(popover.open).toBe(true));
+        (popover.querySelector('#restore-inside') as HTMLElement).focus();
+        const focusSpy = spyOn(trigger, 'focus');
+        // On touch (iPad), a tap outside on non-interactive content does not blur
+        // the popover, so focus is still inside when it closes and restoration
+        // runs; a bare `.focus()` would scroll a scrolled-away trigger back.
+        popover.open = false;
+        await waitFor(() => expect(focusSpy).toHaveBeenCalled());
+        expect(focusSpy).toHaveBeenCalledWith({ preventScroll: true });
+        focusSpy.mockRestore();
       }
     );
   },
