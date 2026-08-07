@@ -1593,13 +1593,10 @@ export const CoexistsTooltipInsidePopoverTest: Story = {
   },
 };
 
-// A tooltip open on top of a popover joins the dismissible stack as the topmost
-// entry, so Escape must dismiss the tooltip only and leave the popover open. This
-// synthetic-input story guards the JS side: dismissible-stack registration, the
-// `isTopDismissible` gate, and `stopPropagation()` in `handleKeyDown`. Synthetic
-// Escape does not drive native popover light-dismiss (trusted input only), so the
-// second-Escape-closes-the-popover leg is covered by the trusted-input test in
-// tooltip.a11y.spec.ts; here we only assert the popover survives the first Escape.
+// A tooltip on top of a popover is the topmost dismissible, so Escape must close
+// the tooltip only. Guards the JS side (stack registration, `isTopDismissible`
+// gate, `stopPropagation()`). Synthetic Escape can't drive the popover's native
+// dismiss, so the second-Escape leg lives in tooltip.a11y.spec.ts.
 export const EscapeClosesTopmostTooltipTest: Story = {
   render: () => html`
     <button id="tt-esc-order-popover-trigger">Open popover</button>

@@ -455,28 +455,19 @@ export abstract class TooltipBase
   };
 
   // Escape-to-close. Registered on `document` (capture) only while open (see
-  // updated()), not for the whole connected lifetime: the tooltip is
-  // non-interactive and never receives focus, so a host-level keydown would not
-  // fire, and scoping to the open state keeps the listener active only when it
-  // can do anything. This is the sole Escape mechanism: `popover="manual"`
-  // (chosen so the tooltip coexists with an open popover) provides no native
-  // light-dismiss, so unlike an `auto` popover the browser will not close the
-  // tooltip on Escape for us.
+  // updated()); `popover="manual"` gets no native light-dismiss, so this is the
+  // sole Escape mechanism.
   private readonly handleKeyDown = (event: KeyboardEvent): void => {
     if (event.key !== 'Escape' || !this.open) {
       return;
     }
-    // Honor the dismissible stack so Escape dismisses the topmost surface first:
-    // if something opened on top of this tooltip, let that layer handle the key.
+    // Only the topmost dismissible handles Escape; a surface above us gets it first.
     if (!isTopDismissible(this)) {
       return;
     }
-    // A `manual` tooltip is not in the browser's auto-popover stack, so a bare
-    // Escape would still trigger native light-dismiss on any `popover="auto"`
-    // surface open underneath (e.g. an `<swc-popover>` the user is working in).
-    // Cancel that default action, in the capture phase before it runs, so only
-    // the topmost surface (this tooltip) closes; the next Escape, once this
-    // tooltip is gone, closes the popover.
+    // A `manual` tooltip is outside the browser's auto-popover stack, so cancel
+    // the native default (capture phase, before it runs) to keep an `auto`
+    // popover underneath open; a later Escape, once we are gone, closes it.
     event.preventDefault();
     event.stopPropagation();
     this.open = false;
@@ -523,12 +514,10 @@ export abstract class TooltipBase
     const openChanged = changedProperties.has('open');
     if (openChanged) {
       if (this.open) {
-        // Join the dismissible stack while open so Escape dismisses the topmost
-        // surface first (see handleKeyDown); removed on close below.
+        // Join the dismissible stack and Escape handling while open (both torn
+        // down on close below). Capture phase so preventDefault() beats the
+        // native popover light-dismiss (see handleKeyDown).
         registerDismissible(this);
-        // Register Escape handling only while open; removed on close below.
-        // Capture phase so preventDefault() runs before the browser's native
-        // popover light-dismiss default action.
         document.addEventListener('keydown', this.handleKeyDown, {
           capture: true,
         });
@@ -597,9 +586,8 @@ export abstract class TooltipBase
     this.removeEventListener('beforetoggle', this.handleBeforeToggle);
     this.removeEventListener('toggle', this.handleToggle);
     this.removeEventListener('transitionend', this.handleTransitionEnd);
-    // Defensive: the dismissible-stack entry and keydown listener are normally
-    // cleared on close, but a tooltip disconnected while open would still have
-    // them registered.
+    // Defensive: clear the stack entry and keydown listener in case the tooltip
+    // is disconnected while still open (normally cleared on close).
     unregisterDismissible(this);
     document.removeEventListener('keydown', this.handleKeyDown, {
       capture: true,

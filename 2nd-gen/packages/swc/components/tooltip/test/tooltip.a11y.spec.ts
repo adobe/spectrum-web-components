@@ -132,22 +132,12 @@ test.describe('Tooltip - ARIA Snapshots', () => {
     expect(open, 'tooltip.open is false after Escape').toBe(false);
   });
 
-  // Trusted Escape ordering across the dismissible stack. A `<swc-popover>` is
-  // `popover="auto"` (native light-dismiss); a `<swc-tooltip>` is `manual` and
-  // thus outside the browser's auto-popover stack. Escape must dismiss the
-  // topmost surface first and leave every surface below it open; a LIFO close
-  // order that is the reverse of the open order, regardless of which surface is
-  // on top. While the tooltip is topmost its capture-phase handler cancels the
-  // native popover dismiss so the popover the user is working in survives; once
-  // the tooltip closes, the next Escape reaches the popover. Only trusted
-  // (Playwright) input drives native popover light-dismiss, so this
-  // cross-mechanism ordering cannot be exercised from a synthetic play function.
-  //
-  // Two ordered scenarios prove both directions. The tooltip-inside-popover
-  // story is the same stack topology as "tooltip opened over a popover" (tooltip
-  // topmost); its DOM nesting is covered by the vitest coexistence tests, and it
-  // has no top-level visible custom element to wait on, so it is not repeated
-  // here.
+  // Escape must dismiss the dismissible stack in reverse open order (LIFO),
+  // whichever surface is on top. Only trusted (Playwright) input drives the
+  // popover's native light-dismiss, so this cross-mechanism ordering can't run in
+  // a synthetic play function. Two orders cover both directions; tooltip-inside-
+  // popover is the same topology as "tooltip over popover" (nesting is covered by
+  // the vitest tests), so it is not repeated.
   type Surface = 'popover' | 'tooltip';
   const orderedScenarios: Array<{
     name: string;
@@ -166,10 +156,9 @@ test.describe('Tooltip - ARIA Snapshots', () => {
     },
   ];
 
-  // A popover reports visibility through its reconciled `open` property (its
-  // inner `<div popover="auto">`, not the `display: contents` host, is what
-  // matches `:popover-open`); a manual tooltip reports it through `:popover-open`
-  // on the host itself.
+  // Read visibility per surface: the popover via its reconciled `open` (its host
+  // is `display: contents`, so it never matches `:popover-open`), the tooltip via
+  // `:popover-open` on the host.
   const surfaceIsOpen = (kind: Surface): boolean => {
     const el = document.querySelector(`swc-${kind}`);
     return kind === 'tooltip'
