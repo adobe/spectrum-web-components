@@ -68,6 +68,7 @@
     - Search
     - Sidenav
     - Slider
+    - Split View
     - Status Light
     - Swatch
     - Swatch Group

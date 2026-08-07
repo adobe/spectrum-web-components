@@ -184,7 +184,7 @@ export class ActionButton extends PendingMixin(ButtonBase) {
       >
         <slot name="icon"></slot>
         <span class="swc-ActionButton-label">
-          <slot></slot>
+          <slot @slotchange=${this.slotText.handleSlotChange}></slot>
         </span>
         ${this.renderPendingState()}
       </button>

@@ -18,7 +18,7 @@ import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { PageScrollLockController } from '../index.js';
 
 export default {
-  title: 'Controllers/Page scroll lock/Tests',
+  title: 'Controllers/Page scroll lock controller/Tests',
   tags: ['!autodocs', 'dev'],
   render: () => html`
     <div></div>

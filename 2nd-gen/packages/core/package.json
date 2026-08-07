@@ -87,6 +87,10 @@
       "types": "./dist/components/icon/index.d.ts",
       "import": "./dist/components/icon/index.js"
     },
+    "./components/infield-button": {
+      "types": "./dist/components/infield-button/index.d.ts",
+      "import": "./dist/components/infield-button/index.js"
+    },
     "./components/illustrated-message": {
       "types": "./dist/components/illustrated-message/index.d.ts",
       "import": "./dist/components/illustrated-message/index.js"
@@ -158,6 +162,10 @@
     "./controllers/live-selection-controller/index.js": {
       "types": "./dist/controllers/live-selection-controller/index.d.ts",
       "import": "./dist/controllers/live-selection-controller/index.js"
+    },
+    "./controllers/page-scroll-lock-controller.js": {
+      "types": "./dist/controllers/page-scroll-lock-controller/index.d.ts",
+      "import": "./dist/controllers/page-scroll-lock-controller/index.js"
     },
     "./controllers/pending-controller": {
       "types": "./dist/controllers/pending-controller/index.d.ts",
@@ -335,6 +343,9 @@
       "components/icon": [
         "dist/components/icon/index.d.ts"
       ],
+      "components/infield-button": [
+        "dist/components/infield-button/index.d.ts"
+      ],
       "components/illustrated-message": [
         "dist/components/illustrated-message/index.d.ts"
       ],
@@ -382,6 +393,9 @@
       ],
       "controllers/live-selection-controller/index.js": [
         "dist/controllers/live-selection-controller/index.d.ts"
+      ],
+      "controllers/page-scroll-lock-controller.js": [
+        "dist/controllers/page-scroll-lock-controller/index.d.ts"
       ],
       "controllers/pending-controller": [
         "dist/controllers/pending-controller/index.d.ts"
