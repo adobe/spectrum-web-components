@@ -61,12 +61,7 @@ export class PromptField extends SpectrumElement {
   @property({ type: String, reflect: true })
   public mode: PromptFieldMode = 'default';
 
-  /**
-   * Renders the single-line layout, where the send/stop button sits inline
-   * with the textarea and no upload button is shown. Defaults to the
-   * multiline layout, with a separate action bar (upload button and
-   * send/stop button on their own row).
-   */
+  /** Renders the single-line layout instead of the default multiline layout with an action bar. */
   @property({ type: Boolean, reflect: true })
   public collapsed = false;
 
@@ -296,15 +291,40 @@ export class PromptField extends SpectrumElement {
     `;
   }
 
-  /**
-   * Placeholder leading icon reserving space for the pixel-loader
-   * idle/generating indicator, which is out of scope for this change.
-   */
+  /** Placeholder for the future pixel-loader idle/generating indicator. */
   private _renderStatusIcon(): TemplateResult {
     return html`
       <span class="swc-PromptField-status-icon" aria-hidden="true">
         <swc-icon>${ThreeDotsIcon()}</swc-icon>
       </span>
+    `;
+  }
+
+  /** Always mounted (unlike the send/stop button) so calc-size() can animate its height; inert while collapsed. */
+  private _renderActionBar(showStop: boolean): TemplateResult {
+    return html`
+      <div
+        class="swc-PromptField-action-bar"
+        aria-hidden=${ifDefined(this.collapsed ? 'true' : undefined)}
+        .inert=${this.collapsed}
+      >
+        <div class="swc-PromptField-leading-actions">
+          <button
+            class="swc-PromptField-upload"
+            aria-label=${this.uploadLabel}
+            ?disabled=${this._isDisabled}
+            @click=${this._handleUploadClick}
+          >
+            <swc-icon aria-hidden="true">${PlusIcon()}</swc-icon>
+          </button>
+        </div>
+
+        ${!this.collapsed
+          ? showStop
+            ? this._renderStopButton()
+            : this._renderSendButton()
+          : nothing}
+      </div>
     `;
   }
 
@@ -376,28 +396,7 @@ export class PromptField extends SpectrumElement {
             </div>
           </div>
 
-          <div
-            class="swc-PromptField-action-bar"
-            aria-hidden=${ifDefined(this.collapsed ? 'true' : undefined)}
-            .inert=${this.collapsed}
-          >
-            <div class="swc-PromptField-leading-actions">
-              <button
-                class="swc-PromptField-upload"
-                aria-label=${this.uploadLabel}
-                ?disabled=${this._isDisabled}
-                @click=${this._handleUploadClick}
-              >
-                <swc-icon aria-hidden="true">${PlusIcon()}</swc-icon>
-              </button>
-            </div>
-
-            ${!this.collapsed
-              ? showStop
-                ? this._renderStopButton()
-                : this._renderSendButton()
-              : nothing}
-          </div>
+          ${this._renderActionBar(showStop)}
         </div>
         ${this._renderLegalFooter()}
       </div>
