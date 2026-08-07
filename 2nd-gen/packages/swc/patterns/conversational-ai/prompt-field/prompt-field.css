@@ -37,34 +37,26 @@
    ───────────────────────────────────── */
 
 .swc-PromptField-box {
-  /* Single-line collapsed height: padding + one 32px control row. */
-  --_swc-prompt-field-collapsed-block-size: calc(token("spacing-200") * 2 + token("spacing-500"));
-
   display: flex;
   flex-direction: column;
-  gap: token("spacing-300");
-  min-block-size: var(--_swc-prompt-field-collapsed-block-size);
   padding: token("spacing-300");
   background: token("background-layer-2-color");
   border: 1px solid transparent;
   border-radius: token("corner-radius-800");
   box-shadow: token("drop-shadow-emphasized-default-x") token("drop-shadow-emphasized-default-y") token("drop-shadow-emphasized-default-blur") token("drop-shadow-emphasized-default-color");
   overflow: hidden;
-  transition:
-    gap token("animation-duration-100") token("animation-ease-in-out"),
-    padding token("animation-duration-100") token("animation-ease-in-out"),
-    min-block-size token("animation-duration-100") token("animation-ease-in-out");
 }
 
-/* Collapsed: single-line row with the send/stop button inline. */
-:host([collapsed]) .swc-PromptField-box {
-  gap: 0;
-  padding: token("spacing-200") token("spacing-300");
-}
-
-@media (prefers-reduced-motion: reduce) {
+@supports (height: calc-size(auto, size)) {
   .swc-PromptField-box {
-    transition: none;
+    height: calc-size(auto, size);
+    transition: height token("animation-duration-100") token("animation-ease-in-out");
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .swc-PromptField-box {
+      transition: none;
+    }
   }
 }
 
@@ -85,7 +77,6 @@
   flex-direction: column;
   gap: token("spacing-300");
   padding-block-start: 0;
-  padding-inline: token("spacing-100");
 }
 
 /* Figma: input area uses 8px top padding only when an artifact row is shown. */
@@ -94,13 +85,29 @@
 }
 
 /* ─────────────────────────────────────
-   Input row (status icon + textarea + inline send/stop button)
+   Controls (status icon, textarea, upload button, send/stop button)
    ───────────────────────────────────── */
 
-.swc-PromptField-input-row {
+.swc-PromptField-controls {
   display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  column-gap: token("spacing-300");
+}
+
+/* Icon + textarea as one grouped unit, decoupled from the outer
+ * text-group-to-send gap above. */
+.swc-PromptField-text-group {
+  display: flex;
+  flex: 1 1 0%;
   gap: token("spacing-200");
   align-items: center;
+  min-inline-size: 0;
+
+  /* Temporary: the real pixel loader will set this height itself. */
+  min-block-size: 24px;
+  padding-inline-start: token("spacing-75");
 }
 
 .swc-PromptField-status-icon {
@@ -113,9 +120,20 @@
   color: token("gray-700");
 }
 
-.swc-PromptField-input-row-action {
-  display: flex;
-  flex: 0 0 auto;
+/* Zero-size marker: flex-basis 100% forces the next sibling onto a new
+ * line without claiming that line's width itself (unlike giving the
+ * sibling its own flex-basis: 100%, which would push everything after
+ * it to a third line instead of sharing line 2). */
+.swc-PromptField-line-break {
+  flex-basis: 0%;
+  inline-size: 0;
+  block-size: 0;
+  margin-inline-end: calc(-1 * token("spacing-300"));
+}
+
+:host(:not([collapsed])) .swc-PromptField-line-break {
+  flex-basis: 100%;
+  margin-inline-end: 0;
 }
 
 /* ─────────────────────────────────────
@@ -159,39 +177,21 @@
 }
 
 /* ─────────────────────────────────────
-   Text area (label + textarea)
+   Textarea
    ───────────────────────────────────── */
-
-.swc-PromptField-text-area {
-  display: flex;
-  flex-direction: column;
-  gap: token("spacing-75");
-}
-
-.swc-PromptField-label {
-  display: block;
-  font-family: token("sans-serif-font");
-  font-size: token("font-size-100");
-  font-weight: token("regular-font-weight");
-  line-height: token("line-height-100");
-  color: token("neutral-subdued-content-color-default");
-}
 
 .swc-PromptField-textarea {
   field-sizing: content;
   display: block;
-  flex: 1 1 auto;
-  inline-size: 100%;
+  flex: 1 1 0%;
   min-inline-size: 0;
-  min-block-size: calc(token("font-size-100") * token("line-height-100") * var(--swc-prompt-field-textarea-min-rows, 1));
-
-  /* Smaller of max-rows or the vh ceiling wins. */
-  max-block-size: min(calc(token("font-size-100") * token("line-height-100") * var(--swc-prompt-field-textarea-max-rows, 4)), var(--swc-prompt-field-max-block-size, 40vh));
+  min-block-size: calc(token("font-size-200") * token("line-height-200"));
+  max-block-size: var(--swc-prompt-field-max-block-size, 40vh);
   padding: 0;
   font-family: token("sans-serif-font");
-  font-size: token("font-size-100");
+  font-size: token("font-size-200");
   font-weight: token("regular-font-weight");
-  line-height: token("line-height-100");
+  line-height: token("line-height-200");
   color: token("gray-900");
   background: transparent;
   border: none;
@@ -208,48 +208,39 @@
   cursor: default;
 }
 
-/* ─────────────────────────────────────
-   Action bar
-   ───────────────────────────────────── */
-
-.swc-PromptField-action-bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+/* Behaves like a single-line <input>: text scrolls horizontally instead of wrapping. */
+:host([collapsed]) .swc-PromptField-textarea {
+  white-space: pre;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
 }
 
-:host([collapsed]) .swc-PromptField-action-bar {
+:host([collapsed]) .swc-PromptField-textarea::-webkit-scrollbar {
   display: none;
 }
 
-/* calc-size() animates height: auto (see accordion-item.css); unsupported browsers keep instant show/hide. */
-@supports (height: calc-size(auto, size)) {
-  .swc-PromptField-action-bar {
-    display: flex;
-    height: calc-size(auto, size);
-    overflow: hidden;
-    opacity: 1;
-    transition:
-      height token("animation-duration-100") token("animation-ease-in-out"),
-      opacity token("animation-duration-100") token("animation-ease-in-out");
-  }
-
-  :host([collapsed]) .swc-PromptField-action-bar {
-    height: 0;
-    opacity: 0;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .swc-PromptField-action-bar {
-      transition: none;
-    }
-  }
-}
-
 .swc-PromptField-leading-actions {
-  display: inline-flex;
+  display: flex;
+  flex: 0 0 auto;
   gap: token("spacing-75");
   align-items: center;
+  max-inline-size: var(--swc-prompt-field-upload-inline-size, 32px);
+  margin-block-start: token("spacing-500");
+  overflow: hidden;
+  transition: max-inline-size token("animation-duration-100") token("animation-ease-in-out");
+}
+
+:host([collapsed]) .swc-PromptField-leading-actions {
+  max-inline-size: 0;
+  margin-block-start: 0;
+  margin-inline-end: calc(-1 * token("spacing-300"));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .swc-PromptField-leading-actions {
+    transition: none;
+  }
 }
 
 .swc-PromptField-file-input {
@@ -353,6 +344,14 @@
 .swc-PromptField-stop swc-icon {
   --swc-icon-inline-size: token("workflow-icon-medium");
   --swc-icon-block-size: token("workflow-icon-medium");
+}
+
+/* Matches leading-actions' margin-block-start so both stay vertically
+ * centered together on the wrapped line, instead of align-items: center
+ * centering each one independently against a different margin box. */
+:host(:not([collapsed])) .swc-PromptField-send,
+:host(:not([collapsed])) .swc-PromptField-stop {
+  margin-block-start: token("spacing-500");
 }
 
 /* ─────────────────────────────────────

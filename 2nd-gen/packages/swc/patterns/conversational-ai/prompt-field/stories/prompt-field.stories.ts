@@ -26,16 +26,6 @@ const { args, argTypes, template } = getStorybookHelpers('swc-prompt-field');
 const defaultPlaceholder =
   'Ready to get started? Ask a question, share an idea, or add a task.';
 
-argTypes.mode = {
-  ...argTypes.mode,
-  control: { type: 'select' },
-  options: ['default', 'loading', 'disabled'],
-  table: {
-    category: 'attributes',
-    defaultValue: { summary: 'default' },
-  },
-};
-
 /**
  * The prompt entry surface for conversational AI flows.
  * Uses an uncontrolled-with-mirror model: it updates internal draft state first,
@@ -71,7 +61,6 @@ export const Playground: Story = {
     label: 'Prompt',
     placeholder: defaultPlaceholder,
     value: '',
-    mode: 'default',
   },
   tags: ['dev'],
 };
@@ -85,7 +74,6 @@ export const Overview: Story = {
     label: 'Prompt',
     placeholder: defaultPlaceholder,
     value: '',
-    mode: 'default',
   },
   tags: ['overview'],
 };
@@ -120,52 +108,6 @@ export const Anatomy: Story = {
 // ──────────────────────────
 //    OPTIONS STORIES
 // ──────────────────────────
-
-export const Modes: Story = {
-  render: () => html`
-    <div style="display:flex;flex-direction:column;gap:32px;">
-      <div style="display:flex;flex-direction:column;gap:8px;">
-        <swc-prompt-field
-          label="Prompt"
-          placeholder=${defaultPlaceholder}
-        ></swc-prompt-field>
-        <span class="swc-Detail swc-Detail--sizeS">
-          mode="default" with empty value
-        </span>
-      </div>
-      <div style="display:flex;flex-direction:column;gap:8px;">
-        <swc-prompt-field
-          label="Prompt"
-          value="Summarize the API changes in this branch."
-        ></swc-prompt-field>
-        <span class="swc-Detail swc-Detail--sizeS">
-          mode="default" with entered value
-        </span>
-      </div>
-      <div style="display:flex;flex-direction:column;gap:8px;">
-        <swc-prompt-field
-          mode="loading"
-          label="Prompt"
-          value="Summarize the API changes in this branch."
-        ></swc-prompt-field>
-        <span class="swc-Detail swc-Detail--sizeS">
-          mode="loading" (input remains editable)
-        </span>
-      </div>
-      <div style="display:flex;flex-direction:column;gap:8px;">
-        <swc-prompt-field
-          mode="disabled"
-          label="Prompt"
-          value="This input is disabled."
-        ></swc-prompt-field>
-        <span class="swc-Detail swc-Detail--sizeS">
-          mode="disabled" (input and controls disabled)
-        </span>
-      </div>
-    </div>
-  `,
-  tags: ['options'],
-};
 
 export const Layout: Story = {
   render: () => html`
@@ -272,6 +214,52 @@ export const Artifact: Story = {
     </div>
   `,
   tags: ['options'],
+};
+
+// ──────────────────────────
+//    STATES STORIES
+// ──────────────────────────
+
+export const States: Story = {
+  render: () => html`
+    <div style="display:flex;flex-direction:column;gap:32px;">
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <swc-prompt-field
+          label="Prompt"
+          placeholder=${defaultPlaceholder}
+        ></swc-prompt-field>
+        <span class="swc-Detail swc-Detail--sizeS">Default, empty value</span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <swc-prompt-field
+          label="Prompt"
+          value="Summarize the API changes in this branch."
+        ></swc-prompt-field>
+        <span class="swc-Detail swc-Detail--sizeS">Default, entered value</span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <swc-prompt-field
+          generating
+          label="Prompt"
+          value="Summarize the API changes in this branch."
+        ></swc-prompt-field>
+        <span class="swc-Detail swc-Detail--sizeS">
+          generating (input remains editable, send is replaced by stop)
+        </span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <swc-prompt-field
+          disabled
+          label="Prompt"
+          value="This input is disabled."
+        ></swc-prompt-field>
+        <span class="swc-Detail swc-Detail--sizeS">
+          disabled (input and controls disabled)
+        </span>
+      </div>
+    </div>
+  `,
+  tags: ['states'],
 };
 
 // ──────────────────────────
@@ -474,7 +462,6 @@ export const Accessibility: Story = {
     label: 'Prompt',
     placeholder: defaultPlaceholder,
     value: '',
-    mode: 'default',
   },
   tags: ['a11y'],
 };

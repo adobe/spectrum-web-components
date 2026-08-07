@@ -12,7 +12,7 @@ import * as PromptFieldStories from './stories/prompt-field.stories';
 A prompt field consists of:
 
 1. **Box**: white card container with shadow, a taller multiline card by default or collapsed to a single-line row via the `collapsed` attribute.
-2. **Input area**: visible label + textarea.
+2. **Input area**: visually hidden label + textarea.
 3. **Action bar**: upload trigger (left) and send/stop action (right); shown on its own row by default, otherwise (when `collapsed`) the send/stop action sits inline with the textarea instead.
 4. **Footer**: optional legal content rendered below the prompt surface.
 
@@ -29,21 +29,9 @@ The `collapsed` attribute controls the field's expanded/collapsed layout:
 
 Toggling `collapsed` animates between the two layouts (disabled under `prefers-reduced-motion: reduce`).
 
-The textarea grows with content up to `max-rows` and, on small or embedded viewports, up to `--swc-prompt-field-max-block-size` (default `40vh`) if that's smaller — override the custom property to raise or lower this ceiling.
+The textarea grows with content up to `--swc-prompt-field-max-block-size` (default `40vh`) — override the custom property to raise or lower this ceiling.
 
 <Canvas of={PromptFieldStories.Layout} />
-
-### Modes
-
-The `mode` attribute controls interaction and action state:
-
-- **`default`**: send button shown, normal interactivity
-- **`loading`**: stop button shown while generation is in progress
-- **`disabled`**: input/upload/send are disabled
-
-The send button enablement is derived internally from prompt content (value or artifact).
-
-<Canvas of={PromptFieldStories.Modes} />
 
 ### Artifact
 
@@ -65,6 +53,14 @@ Upload button behavior:
 Artifacts own dismiss behavior via **`dismissible`** and emit **`swc-upload-artifact-dismiss`**.
 
 <Canvas of={PromptFieldStories.Artifact} />
+
+## States
+
+- **Default**: send button shown, normal interactivity; enabled once there's prompt content (value or artifact)
+- **`generating`**: stop button shown in place of send while a response is in progress; the input remains editable
+- **`disabled`**: input, upload, and send/stop are all disabled
+
+<Canvas of={PromptFieldStories.States} />
 
 ## Behaviors
 
@@ -88,7 +84,7 @@ The `<swc-prompt-field>` element implements the following accessibility features
 
 #### Label association
 
-- The `<textarea>` uses `aria-labelledby` when label text is visible
+- The `<textarea>` uses `aria-labelledby`, pointing to a visually hidden label
 - `accessible-label` can override the accessible name when needed
 - All icon buttons carry descriptive `aria-label` attributes
 - The send button uses `disabled` natively when the prompt has no content
