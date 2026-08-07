@@ -86,6 +86,7 @@ type MeterCase = {
   valueLabel?: string;
   formatOptions?: Intl.NumberFormatOptions;
   lang?: string;
+  style?: string;
 };
 
 // `formatOptions` is a JS-only property (no attribute), so it's set via a
@@ -105,6 +106,7 @@ const renderMeter = ({
   valueLabel,
   formatOptions,
   lang,
+  style,
 }: MeterCase) => html`
   <swc-meter
     size=${size ?? nothing}
@@ -117,6 +119,7 @@ const renderMeter = ({
     accessible-label=${accessibleLabel ?? nothing}
     value-label=${valueLabel ?? nothing}
     lang=${lang ?? nothing}
+    style=${style ?? nothing}
     .formatOptions=${formatOptions}
   >
     ${label
@@ -219,6 +222,7 @@ const permutationContent = () => html`
       renderMeter({
         label:
           'A label long enough to wrap onto multiple lines within the available inline space',
+        style: 'max-inline-size: 200px;',
       }),
     ],
     'Wrapping'
@@ -251,8 +255,6 @@ const permutationContent = () => html`
 
 // VRT stories
 
-// Rendered once in light/ltr and once in dark/rtl (that combination covers
-// both axes), all still in a single story so it costs one snapshot.
 export const Permutations: Story = {
   render: () => html`
     ${theme(permutationContent(), 'light', 'ltr')}
@@ -261,12 +263,6 @@ export const Permutations: Story = {
   parameters: vrtParameters,
 };
 
-// `forced-colors` replaces the whole page palette, so it can't be scoped to
-// a subtree the way theme()'s light/dark split is, and needs its own
-// snapshot rather than folding into Permutations. Confirms the
-// `@media (forced-colors: active)` override in linear-progress-base.css
-// (ButtonFace track, ButtonText fill) applies regardless of variant or
-// static-color.
 export const ForcedColors: Story = {
   render: () => theme(permutationContent(), 'light', 'ltr'),
   parameters: forcedColorsVrtParameters,

@@ -48,7 +48,13 @@ type MeterPropertyCase = CustomPropertyCase<`--swc-linear-progress-${string}`>;
 const MOD_PROPERTY_CASES: readonly MeterPropertyCase[] = [
   { property: '--swc-linear-progress-fill-color', value: 'magenta' },
   { property: '--swc-linear-progress-track-color', value: 'magenta' },
-  { property: '--swc-linear-progress-text-color', value: 'magenta' },
+  // `magenta` text on the default light background fails WCAG contrast
+  // (~2.3:1, well under the 4.5:1 AA minimum for normal text), which the
+  // axe check run against this `dev`-tagged story would flag. `darkmagenta`
+  // (~7.5:1 on white) stays obviously different from the default subdued
+  // gray while passing contrast. `fill-color`/`track-color` above aren't
+  // text colors, so they aren't subject to this check.
+  { property: '--swc-linear-progress-text-color', value: 'darkmagenta' },
   { property: '--swc-linear-progress-thickness', value: '40px' },
   { property: '--swc-linear-progress-font-size', value: '32px' },
   { property: '--swc-linear-progress-top-to-text', value: '40px' },
