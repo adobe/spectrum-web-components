@@ -475,7 +475,7 @@ export abstract class TooltipBase
     // Escape would still trigger native light-dismiss on any `popover="auto"`
     // surface open underneath (e.g. an `<swc-popover>` the user is working in).
     // Cancel that default action, in the capture phase before it runs, so only
-    // the topmost surface — this tooltip — closes; the next Escape, once this
+    // the topmost surface (this tooltip) closes; the next Escape, once this
     // tooltip is gone, closes the popover.
     event.preventDefault();
     event.stopPropagation();

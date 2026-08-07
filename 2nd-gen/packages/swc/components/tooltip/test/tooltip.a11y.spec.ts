@@ -134,70 +134,114 @@ test.describe('Tooltip - ARIA Snapshots', () => {
 
   // Trusted Escape ordering across the dismissible stack. A `<swc-popover>` is
   // `popover="auto"` (native light-dismiss); a `<swc-tooltip>` is `manual` and
-  // thus outside the browser's auto-popover stack. When both are open with the
-  // tooltip on top, one Escape must close only the tooltip — the tooltip's
-  // capture-phase handler cancels the native popover dismiss so the popover the
-  // user is working in survives — and a second Escape then closes the popover.
-  // Only trusted (Playwright) input drives native popover light-dismiss, so this
+  // thus outside the browser's auto-popover stack. Escape must dismiss the
+  // topmost surface first and leave every surface below it open; a LIFO close
+  // order that is the reverse of the open order, regardless of which surface is
+  // on top. While the tooltip is topmost its capture-phase handler cancels the
+  // native popover dismiss so the popover the user is working in survives; once
+  // the tooltip closes, the next Escape reaches the popover. Only trusted
+  // (Playwright) input drives native popover light-dismiss, so this
   // cross-mechanism ordering cannot be exercised from a synthetic play function.
-  test('Escape closes the topmost surface first, leaving the popover open', async ({
-    page,
-  }) => {
-    await gotoStory(
+  //
+  // Two ordered scenarios prove both directions. The tooltip-inside-popover
+  // story is the same stack topology as "tooltip opened over a popover" (tooltip
+  // topmost); its DOM nesting is covered by the vitest coexistence tests, and it
+  // has no top-level visible custom element to wait on, so it is not repeated
+  // here.
+  type Surface = 'popover' | 'tooltip';
+  const orderedScenarios: Array<{
+    name: string;
+    storyId: string;
+    openOrder: readonly Surface[];
+  }> = [
+    {
+      name: 'tooltip opened over a popover',
+      storyId: 'tooltip-tests--coexists-tooltip-opened-over-popover-test',
+      openOrder: ['popover', 'tooltip'],
+    },
+    {
+      name: 'popover opened over a tooltip',
+      storyId: 'tooltip-tests--coexists-popover-opened-over-tooltip-test',
+      openOrder: ['tooltip', 'popover'],
+    },
+  ];
+
+  // A popover reports visibility through its reconciled `open` property (its
+  // inner `<div popover="auto">`, not the `display: contents` host, is what
+  // matches `:popover-open`); a manual tooltip reports it through `:popover-open`
+  // on the host itself.
+  const surfaceIsOpen = (kind: Surface): boolean => {
+    const el = document.querySelector(`swc-${kind}`);
+    return kind === 'tooltip'
+      ? el?.matches(':popover-open') === true
+      : (el as (Element & { open?: boolean }) | null)?.open === true;
+  };
+
+  for (const { name, storyId, openOrder } of orderedScenarios) {
+    // Escape dismisses in reverse open order: the last-opened surface registers
+    // into the dismissible stack last, so it is topmost and closes first.
+    const closeOrder = [...openOrder].reverse();
+
+    test(`Escape dismisses in reverse open order: ${name}`, async ({
       page,
-      'tooltip-tests--coexists-popover-opened-over-tooltip-test',
-      'swc-popover'
-    );
+    }) => {
+      await gotoStory(page, storyId, 'swc-button');
 
-    // Drive the state explicitly (open popover first, then tooltip on top) so
-    // the assertion does not depend on the story's play-function timing. The
-    // tooltip registers into the dismissible stack last, making it topmost.
-    await page.evaluate(async () => {
-      const popover = document.querySelector('swc-popover') as HTMLElement & {
-        open: boolean;
-        updateComplete: Promise<unknown>;
-      };
-      const tooltip = document.querySelector('swc-tooltip') as HTMLElement & {
-        open: boolean;
-        updateComplete: Promise<unknown>;
-      };
-      popover.open = true;
-      await popover.updateComplete;
-      tooltip.open = true;
-      await tooltip.updateComplete;
+      // Drive open state explicitly and in a fixed order so the assertion does
+      // not depend on the story's play-function timing.
+      await page.evaluate(
+        async (order: Surface[]) => {
+          for (const kind of order) {
+            const el = document.querySelector(`swc-${kind}`) as
+              | (HTMLElement & {
+                  open: boolean;
+                  updateComplete: Promise<unknown>;
+                })
+              | null;
+            if (!el) {
+              continue;
+            }
+            el.open = true;
+            await el.updateComplete;
+          }
+        },
+        [...openOrder]
+      );
+      await page.waitForFunction(
+        () =>
+          (document.querySelector('swc-popover') as { open?: boolean })
+            ?.open === true &&
+          document.querySelector('swc-tooltip')?.matches(':popover-open') ===
+            true
+      );
+
+      // One Escape per surface: each must close exactly the topmost remaining
+      // surface and leave every surface still below it open.
+      for (let i = 0; i < closeOrder.length; i++) {
+        const closing = closeOrder[i];
+        const stillOpen = closeOrder.slice(i + 1);
+
+        await page.keyboard.press('Escape');
+        await page.waitForFunction((kind: Surface) => {
+          const el = document.querySelector(`swc-${kind}`);
+          return kind === 'tooltip'
+            ? !el?.matches(':popover-open')
+            : (el as (Element & { open?: boolean }) | null)?.open === false;
+        }, closing);
+
+        expect(
+          await page.evaluate(surfaceIsOpen, closing),
+          `${closing} closed on Escape #${i + 1}`
+        ).toBe(false);
+        for (const other of stillOpen) {
+          expect(
+            await page.evaluate(surfaceIsOpen, other),
+            `${other} stays open after Escape #${i + 1}`
+          ).toBe(true);
+        }
+      }
     });
-    await page.waitForFunction(
-      () =>
-        (document.querySelector('swc-popover') as { open?: boolean })?.open ===
-          true &&
-        document.querySelector('swc-tooltip')?.matches(':popover-open') === true
-    );
-
-    // First Escape: only the tooltip closes; the popover stays open.
-    await page.keyboard.press('Escape');
-    await page.waitForFunction(
-      () => !document.querySelector('swc-tooltip')?.matches(':popover-open')
-    );
-    const popoverStillOpen = await page.evaluate(
-      () => (document.querySelector('swc-popover') as { open?: boolean })?.open
-    );
-    expect(
-      popoverStillOpen,
-      'popover survives the Escape that closed the tooltip'
-    ).toBe(true);
-
-    // Second Escape: now the popover is topmost, native light-dismiss closes it.
-    await page.keyboard.press('Escape');
-    await page.waitForFunction(
-      () =>
-        (document.querySelector('swc-popover') as { open?: boolean })?.open ===
-        false
-    );
-    const popoverClosed = await page.evaluate(
-      () => (document.querySelector('swc-popover') as { open?: boolean })?.open
-    );
-    expect(popoverClosed, 'popover closes on the second Escape').toBe(false);
-  });
+  }
 
   test('all variant triggers are accessible', async ({ page }) => {
     const root = await gotoStory(
