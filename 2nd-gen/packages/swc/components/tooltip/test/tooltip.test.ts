@@ -1544,3 +1544,51 @@ export const CoexistsPopoverOpenedOverTooltipTest: Story = {
     );
   },
 };
+
+// The realistic case: a tooltip on a control that lives *inside* the popover's
+// slotted content. The tooltip trigger is a DOM descendant of the open popover,
+// so hovering it must show the tooltip without collapsing the popover it sits
+// in. With popover="manual" the tooltip never joins the popover's auto group.
+export const CoexistsTooltipInsidePopoverTest: Story = {
+  render: () => html`
+    <button id="tt-inside-popover-trigger">Open popover</button>
+    <swc-popover for="tt-inside-popover-trigger">
+      <swc-button id="tt-inside-tooltip-trigger">Hover me</swc-button>
+      <swc-tooltip for="tt-inside-tooltip-trigger" delay="0" placement="top">
+        Tooltip text
+      </swc-tooltip>
+    </swc-popover>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const popover = await getComponent<Popover>(canvasElement, 'swc-popover');
+    const tooltip = await getComponent<Tooltip>(canvasElement, 'swc-tooltip');
+    const popoverTrigger = canvasElement.querySelector(
+      '#tt-inside-popover-trigger'
+    ) as HTMLButtonElement;
+    await popover.updateComplete;
+
+    await step('opens the popover via its trigger', async () => {
+      await userEvent.click(popoverTrigger);
+      await waitFor(() => expect(popover.open).toBe(true), { timeout: 1000 });
+    });
+
+    await step(
+      'hovering a control inside the popover shows the tooltip and keeps the popover open',
+      async () => {
+        const innerTrigger = canvasElement.querySelector(
+          '#tt-inside-tooltip-trigger'
+        ) as Button;
+        await hoverOpen(innerTrigger, tooltip);
+        expect(tooltip.open, 'tooltip is open after hover').toBe(true);
+        expect(
+          tooltip.matches(':popover-open'),
+          'tooltip is in the top layer'
+        ).toBe(true);
+        expect(
+          popover.open,
+          'the popover the tooltip lives in stays open'
+        ).toBe(true);
+      }
+    );
+  },
+};
