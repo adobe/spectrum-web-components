@@ -25,13 +25,17 @@
  *   `hasContent` current as content is added, removed, or edited in place.
  */
 
-import { html } from 'lit';
+import { html, nothing } from 'lit';
 import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import './demo-hosts.js';
 
-import type { DemoSlotTextHost, DemoSlotTextNamedHost } from './demo-hosts.js';
+import type {
+  DemoSlotTextHost,
+  DemoSlotTextNamedHost,
+  DemoSlotTextStaticHost,
+} from './demo-hosts.js';
 import textMeta from './slot-text-controller.stories.js';
 
 // ─────────────────────────
@@ -167,6 +171,51 @@ export const DynamicContentTest: Story = {
   },
 };
 DynamicContentTest.storyName = 'Dynamic content';
+
+// ──────────────────────────────────────────────────────────────────────────
+//     Comment markers in the default slot are not content
+// ──────────────────────────────────────────────────────────────────────────
+
+export const CommentMarkerTest: Story = {
+  // A `${cond ? nothing : label}` binding leaves a Lit child-part marker
+  // (a comment node with non-empty data) as a light-DOM child of the host,
+  // assigned to the default slot. It must not be misread as label text — the
+  // regression that made an icon-only `swc-action-button` (avatar in the icon
+  // slot, conditional label) fail to apply its icon-only presentation.
+  //
+  // Uses the static host (no `@slotchange`) so the controller's initial
+  // `host.childNodes` scan is the only signal — matching action-button. The
+  // slotchange path would mask the bug, since comment nodes are not slottable
+  // and never appear in `assignedNodes()`.
+  render: () => {
+    const showLabel = false;
+    return html`
+      <demo-slot-text-static-host>
+        ${showLabel ? 'Verified' : nothing}
+      </demo-slot-text-static-host>
+    `;
+  },
+  play: async ({ canvasElement, step }) => {
+    const host = canvasElement.querySelector<DemoSlotTextStaticHost>(
+      'demo-slot-text-static-host'
+    );
+    if (!host) {
+      throw new Error('demo-slot-text-static-host not found');
+    }
+    await host.updateComplete;
+
+    await step(
+      'a Lit comment marker in the default slot is not counted as content',
+      async () => {
+        expect(
+          host.hasContent,
+          'hasContent is false when only a comment marker is present'
+        ).toBe(false);
+      }
+    );
+  },
+};
+CommentMarkerTest.storyName = 'Comment marker is not content';
 
 // ──────────────────────────────────────────────────────────────────────────
 //     Named slot ignores bare text nodes
