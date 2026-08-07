@@ -281,13 +281,11 @@ export function LinearProgressMixin<T extends Constructor<ReactiveElement>>(
       // reflected in this render cycle. No second `requestUpdate()`
       // needed here.
 
-      // Only re-evaluate the accessible-name fallback when the inputs
-      // that determine it actually change, so the warning does not fire
-      // on every property update during development.
-      if (
-        isDebug() &&
-        (changes.has('accessibleLabel') || !this._hasWarnedNoAccessibleName)
-      ) {
+      // The accessible name can come from the `accessibleLabel` property or the
+      // label slot (tracked by a slot controller that requests an update without
+      // surfacing a changed property), so re-check on every dev render and let
+      // the warning dedup handle repeats rather than gating on one property.
+      if (isDebug()) {
         this.warnMissingAccessibleName();
       }
 
@@ -322,22 +320,15 @@ export function LinearProgressMixin<T extends Constructor<ReactiveElement>>(
       }
     }
 
-    private _hasWarnedNoAccessibleName = false;
-
-    private _hasWarnedValueOutOfRange = false;
-
     private warnValueOutOfRange(): void {
       const value = this.value;
       const min = this.sanitizedMin;
       const max = this.sanitizedMax;
+      // Early return when the value is valid so the message is not built on
+      // every in-range render.
       if (!Number.isFinite(value) || (value >= min && value <= max)) {
-        this._hasWarnedValueOutOfRange = false;
         return;
       }
-      if (this._hasWarnedValueOutOfRange) {
-        return;
-      }
-      this._hasWarnedValueOutOfRange = true;
       warnIf(
         this,
         true,
@@ -353,11 +344,11 @@ export function LinearProgressMixin<T extends Constructor<ReactiveElement>>(
     }
 
     private warnMissingAccessibleName(): void {
+      // Early return when a name is present so the message is not built on
+      // every render (this runs unconditionally in dev).
       if (this.hasLabelSlotContent || this.accessibleLabel) {
-        this._hasWarnedNoAccessibleName = false;
         return;
       }
-      this._hasWarnedNoAccessibleName = true;
       warnIf(
         this,
         true,
