@@ -13,8 +13,6 @@
 :host {
   display: inline-flex;
   place-self: start;
-  inline-size: var(--swc-avatar-size, token("avatar-size-500"));
-  block-size: var(--swc-avatar-size, token("avatar-size-500"));
   vertical-align: middle;
 }
 
@@ -96,8 +94,8 @@
 
 .swc-Avatar {
   display: inline-block;
-  inline-size: 100%;
-  block-size: 100%;
+  inline-size: var(--swc-avatar-size, token("avatar-size-500"));
+  block-size: var(--swc-avatar-size, token("avatar-size-500"));
   border-radius: token("corner-radius-full");
   user-select: none;
 }
@@ -106,8 +104,8 @@
 
 .swc-Avatar-image {
   display: block;
-  inline-size: 100%;
-  block-size: 100%;
+  inline-size: var(--swc-avatar-size, token("avatar-size-500"));
+  block-size: var(--swc-avatar-size, token("avatar-size-500"));
   border-radius: token("corner-radius-full");
   object-fit: cover;
 }

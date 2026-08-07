@@ -114,6 +114,10 @@ slot[name="icon"]::slotted(*),
 slot[name="icon"]::slotted(*) {
   color: inherit;
   fill: currentcolor;
+
+  /* Lets a slotted <swc-avatar> track the icon slot's own size instead of
+     requiring consumers to pair its size attribute with the button's size. */
+  --swc-avatar-size: var(--_swc-action-button-icon-size);
 }
 
 /* ── Sizes ────────────────────────────────────────── */
