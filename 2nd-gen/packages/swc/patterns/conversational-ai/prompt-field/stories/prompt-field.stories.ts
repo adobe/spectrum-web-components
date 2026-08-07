@@ -176,17 +176,17 @@ export const Layout: Story = {
           placeholder=${defaultPlaceholder}
         ></swc-prompt-field>
         <span class="swc-Detail swc-Detail--sizeS">
-          Collapsed (default) — single-line row with the send button inline
+          Expanded (default) — action bar with upload button on its own row
         </span>
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;">
         <swc-prompt-field
-          expanded
+          collapsed
           label="Prompt"
           placeholder=${defaultPlaceholder}
         ></swc-prompt-field>
         <span class="swc-Detail swc-Detail--sizeS">
-          expanded — action bar with upload button on its own row
+          collapsed — single-line row with the send button inline
         </span>
       </div>
     </div>

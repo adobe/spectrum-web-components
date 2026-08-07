@@ -62,13 +62,13 @@ export class PromptField extends SpectrumElement {
   public mode: PromptFieldMode = 'default';
 
   /**
-   * Renders the multiline layout with a separate action bar (upload button
-   * and send/stop button on their own row). Defaults to the single-line
-   * collapsed layout, where the send/stop button sits inline with the
-   * textarea.
+   * Renders the single-line layout, where the send/stop button sits inline
+   * with the textarea and no upload button is shown. Defaults to the
+   * multiline layout, with a separate action bar (upload button and
+   * send/stop button on their own row).
    */
   @property({ type: Boolean, reflect: true })
-  public expanded = false;
+  public collapsed = false;
 
   /** Accessible label shown above the textarea. */
   @property({ type: String })
@@ -328,9 +328,9 @@ export class PromptField extends SpectrumElement {
             <div class="swc-PromptField-text-area">
               <span
                 id=${this.labelId}
-                class="swc-PromptField-label${this.expanded
-                  ? ''
-                  : ' swc-VisuallyHidden'}"
+                class="swc-PromptField-label${this.collapsed
+                  ? ' swc-VisuallyHidden'
+                  : ''}"
               >
                 ${this.label}
               </span>
@@ -363,7 +363,7 @@ export class PromptField extends SpectrumElement {
                   @focusin=${this._handleTextareaFocusIn}
                   @focusout=${this._handleTextareaFocusOut}
                 ></textarea>
-                ${!this.expanded
+                ${this.collapsed
                   ? html`
                       <span class="swc-PromptField-input-row-action">
                         ${showStop
@@ -378,8 +378,8 @@ export class PromptField extends SpectrumElement {
 
           <div
             class="swc-PromptField-action-bar"
-            aria-hidden=${ifDefined(this.expanded ? undefined : 'true')}
-            .inert=${!this.expanded}
+            aria-hidden=${ifDefined(this.collapsed ? 'true' : undefined)}
+            .inert=${this.collapsed}
           >
             <div class="swc-PromptField-leading-actions">
               <button
@@ -392,7 +392,7 @@ export class PromptField extends SpectrumElement {
               </button>
             </div>
 
-            ${this.expanded
+            ${!this.collapsed
               ? showStop
                 ? this._renderStopButton()
                 : this._renderSendButton()

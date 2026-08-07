@@ -40,7 +40,7 @@ export const OverviewTest: Story = {
 
     await step('renders with default mode state', async () => {
       expect(el.mode).toBe('default');
-      expect(el.expanded).toBe(false);
+      expect(el.collapsed).toBe(false);
       expect(el.label).toBe('Prompt');
       expect(el.sendLabel).toBe('Send');
       expect(el.stopLabel).toBe('Stop generating');
@@ -104,10 +104,7 @@ export const InteractionTest: Story = {
       expect(detail?.value).toBe('Summarize the API changes in this branch.');
     });
 
-    await step('upload button emits trigger event when expanded', async () => {
-      el.expanded = true;
-      await el.updateComplete;
-
+    await step('upload button emits trigger event', async () => {
       let fired = false;
       el.addEventListener(
         'swc-prompt-field-upload-click',

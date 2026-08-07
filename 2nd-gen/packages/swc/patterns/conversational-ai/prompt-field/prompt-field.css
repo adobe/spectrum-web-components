@@ -44,9 +44,9 @@
 
   display: flex;
   flex-direction: column;
-  gap: 0;
+  gap: token("spacing-300");
   min-block-size: var(--_swc-prompt-field-collapsed-block-size);
-  padding: token("spacing-200") token("spacing-300");
+  padding: token("spacing-300");
   background: token("background-layer-2-color");
   border: 1px solid transparent;
   border-radius: token("corner-radius-800");
@@ -58,11 +58,11 @@
     min-block-size token("animation-duration-100") token("animation-ease-in-out");
 }
 
-/* Expanded layout: taller card with the action bar on its own row below
- * the textarea, instead of the collapsed single-line row above. */
-:host([expanded]) .swc-PromptField-box {
-  gap: token("spacing-300");
-  padding: token("spacing-300");
+/* Collapsed layout: single-line row with the send/stop button inline,
+ * instead of the default multiline card with the action bar below. */
+:host([collapsed]) .swc-PromptField-box {
+  gap: 0;
+  padding: token("spacing-200") token("spacing-300");
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -102,7 +102,7 @@
 
 .swc-PromptField-input-row {
   display: flex;
-  gap: token("spacing-200");
+  gap: token("spacing-300");
   align-items: center;
 }
 
@@ -116,11 +116,11 @@
   color: token("gray-700");
 }
 
-/* Collapsed layout renders the send/stop button inline in this row; expanded
- * layout renders it in the action bar below instead (see
- * .swc-PromptField-input-row-action, only present when collapsed). */
-:host([expanded]) .swc-PromptField-input-row {
-  gap: token("spacing-300");
+/* Collapsed layout renders the send/stop button inline in this row (see
+ * .swc-PromptField-input-row-action, only present when collapsed); default
+ * multiline layout renders it in the action bar below instead. */
+:host([collapsed]) .swc-PromptField-input-row {
+  gap: token("spacing-200");
 }
 
 .swc-PromptField-input-row-action {
@@ -226,13 +226,13 @@
    ───────────────────────────────────── */
 
 .swc-PromptField-action-bar {
-  display: none;
+  display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
-:host([expanded]) .swc-PromptField-action-bar {
-  display: flex;
+:host([collapsed]) .swc-PromptField-action-bar {
+  display: none;
 }
 
 /* calc-size() allows animating height: auto, which CSS transitions could not
@@ -241,17 +241,17 @@
 @supports (height: calc-size(auto, size)) {
   .swc-PromptField-action-bar {
     display: flex;
-    height: 0;
+    height: calc-size(auto, size);
     overflow: hidden;
-    opacity: 0;
+    opacity: 1;
     transition:
       height token("animation-duration-100") token("animation-ease-in-out"),
       opacity token("animation-duration-100") token("animation-ease-in-out");
   }
 
-  :host([expanded]) .swc-PromptField-action-bar {
-    height: calc-size(auto, size);
-    opacity: 1;
+  :host([collapsed]) .swc-PromptField-action-bar {
+    height: 0;
+    opacity: 0;
   }
 
   @media (prefers-reduced-motion: reduce) {
