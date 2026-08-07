@@ -1,6 +1,6 @@
 {/* Copyright 2026 Adobe. All rights reserved. This file is licensed to you under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License. */}
 
-import { Meta } from '@storybook/addon-docs/blocks';
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
 import { DocsFooter, DocsHeader } from '../../../swc/.storybook/blocks';
 
 import * as Stories from './stories/page-scroll-lock-controller.stories';
@@ -53,7 +53,11 @@ class SwcModalSurface extends LitElement {
 
 Toggling the lock sets `overflow: hidden` on `document.documentElement`; toggling it off restores the original value. `PageScrollLockController` has no host interface requirement: any Lit `ReactiveElement` can construct one directly and call `lock()` / `unlock()`.
 
-The lock is reference-counted at module scope. With multiple hosts locking and unlocking independently, for example stacked modal surfaces, the original `overflow` is captured once on the first lock and restored once the last lock releases. An inner surface releasing first keeps the page locked until the outer surface also releases.
+### Stacked locks
+
+The lock is reference-counted at module scope. With multiple hosts locking and unlocking independently, for example stacked modal surfaces, the original `overflow` is captured once on the first lock and restored once the last lock releases. Lock both hosts below, then unlock one: the page stays locked until the second host also releases.
+
+<Canvas of={Stories.StackedLocks} />
 
 ## Accessibility
 

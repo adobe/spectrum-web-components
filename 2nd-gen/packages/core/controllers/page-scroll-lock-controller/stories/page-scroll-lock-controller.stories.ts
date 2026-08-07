@@ -66,3 +66,17 @@ export const Playground: Story = {
 export const Overview: Story = {
   tags: ['overview'],
 };
+
+// ──────────────────────────────
+//    BEHAVIORS STORIES
+// ──────────────────────────────
+
+export const StackedLocks: Story = {
+  render: () => html`
+    <demo-scroll-lock-host></demo-scroll-lock-host>
+    <demo-scroll-lock-host></demo-scroll-lock-host>
+    ${scrollFiller}
+  `,
+  tags: ['behaviors'],
+};
+StackedLocks.storyName = 'Stacked locks';
