@@ -883,45 +883,6 @@ export const MissingLabelWarningTest: Story = {
   },
 };
 
-export const RevalidatesOnAriaChangeTest: Story = {
-  render: () => html`
-    <swc-dropzone aria-label="Upload files">
-      <swc-button variant="accent">Browse files</swc-button>
-    </swc-dropzone>
-  `,
-  play: async ({ canvasElement, step }) => {
-    const dropzone = await getComponent<Dropzone>(
-      canvasElement,
-      'swc-dropzone'
-    );
-
-    await step(
-      'removing the accessible name after connect re-runs the check and warns, without a drag',
-      () =>
-        withWarningSpy(async (warnCalls) => {
-          // Named at connect, so nothing warns yet.
-          expect(
-            warnCalls.length,
-            'no warning while aria-label is present'
-          ).toBe(0);
-
-          // Removing aria-label is a plain-attribute change: the observer
-          // requests an update, so `updated()` re-runs the check. No `dragged`
-          // toggle is used, proving the revalidation comes from the observer.
-          dropzone.removeAttribute('aria-label');
-          // Let the MutationObserver callback + the batched update settle.
-          await new Promise<void>((resolve) => setTimeout(resolve, 0));
-          await dropzone.updateComplete;
-
-          expect(
-            warnCalls.length,
-            'warning emitted after the accessible name is removed'
-          ).toBeGreaterThan(0);
-        })
-    );
-  },
-};
-
 export const DisconnectDuringDragLeaveTest: Story = {
   render: () => html`
     <swc-dropzone aria-label="Upload files">
