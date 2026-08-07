@@ -1,0 +1,69 @@
+/**
+ * Copyright 2026 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+/*
+ * Shared box styling for icon elements (the swc-icon frame and swc-ui-icon). Establishes
+ * a square box that the SVG fills, whether the SVG is slotted (frame) or rendered
+ * directly (ui-icon), and sets the default box size from the workflow-icon token scale.
+ * swc-ui-icon overrides this with the UI-icon scale via its own ui-icon-sizes.css. A
+ * dedicated workflow sizing stylesheet is added when the workflow icon family lands (see
+ * CONTRIBUTOR-DOCS/03_project-planning/05_strategies/icon-rfc.md, section 7).
+ */
+:host {
+  --swc-icon-inline-size: token("workflow-icon-medium");
+  --swc-icon-block-size: token("workflow-icon-medium");
+
+  display: inline-flex;
+  inline-size: var(--swc-icon-inline-size);
+  block-size: var(--swc-icon-block-size);
+  color: var(--swc-icon-color, currentColor);
+}
+
+:host([size="xs"]) {
+  --swc-icon-inline-size: token("workflow-icon-extra-small");
+  --swc-icon-block-size: token("workflow-icon-extra-small");
+}
+
+:host([size="s"]) {
+  --swc-icon-inline-size: token("workflow-icon-small");
+  --swc-icon-block-size: token("workflow-icon-small");
+}
+
+:host([size="m"]) {
+  --swc-icon-inline-size: token("workflow-icon-medium");
+  --swc-icon-block-size: token("workflow-icon-medium");
+}
+
+:host([size="l"]) {
+  --swc-icon-inline-size: token("workflow-icon-large");
+  --swc-icon-block-size: token("workflow-icon-large");
+}
+
+:host([size="xl"]) {
+  --swc-icon-inline-size: token("workflow-icon-extra-large");
+  --swc-icon-block-size: token("workflow-icon-extra-large");
+}
+
+.swc-Icon {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+}
+
+svg,
+.swc-Icon > svg,
+::slotted(*) {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+  fill: currentcolor;
+}

@@ -26,7 +26,7 @@ import '@spectrum-web-components/meter/sp-meter.js';
 import '@adobe/spectrum-wc/components/meter/swc-meter.js';
 ```
 
-> `@adobe/spectrum-wc` is a monolithic package. Importing via subpath (e.g. `@adobe/spectrum-wc/components/meter/swc-meter.js`) registers and loads only that component's bundle.
+> `@adobe/spectrum-wc` is a monolithic package. Importing via subpath (e.g., `@adobe/spectrum-wc/components/meter/swc-meter.js`) registers and loads only that component's bundle.
 
 ## What changed
 
@@ -36,9 +36,9 @@ import '@adobe/spectrum-wc/components/meter/swc-meter.js';
 | ---------------- | --------------------------------------- | ------------------------------------------------------------------------------------- |
 | Tag              | `sp-meter`                              | `swc-meter`                                                                           |
 | Import path      | `@spectrum-web-components/meter`        | `@adobe/spectrum-wc/components/meter/swc-meter.js`                                    |
-| Value            | `progress` (number, 0–100)              | `value` (number, default 0) — see [step 3](#3-rename-progress-to-value)               |
-| Label position   | `side-label` (boolean)                  | `label-position` (`'top'` default, `'side'`) — see [step 4](#4-replace-side-label)    |
-| Label            | `label` attribute or default slot       | `label` named slot, or `accessible-label` — see [step 5](#5-drop-the-label-attribute) |
+| Value            | `progress` (number, 0–100)              | `value` (number, default 0, see [step 3](#3-rename-progress-to-value))                |
+| Label position   | `side-label` (boolean)                  | `label-position` (`'top'` default, `'side'`, see [step 4](#4-replace-side-label))     |
+| Label            | `label` attribute or default slot       | `label` named slot, or `accessible-label` (see [step 5](#5-drop-the-label-attribute)) |
 | Default variant  | `''` (rendered informative by behavior) | `'informative'` (named default)                                                       |
 | CSS custom props | `--mod-progressbar-*` / `--mod-meter-*` | `--swc-linear-progress-*` (see [Styling](#styling))                                   |
 
@@ -186,7 +186,7 @@ Spectrum 2 exposes a small set of public custom properties on `<swc-meter>` thro
 | `--mod-progressbar-font-size`                                   | `--swc-linear-progress-font-size`                                                                                                                     |
 | `--mod-progressbar-spacing-top-to-text`                         | `--swc-linear-progress-top-to-text`                                                                                                                   |
 | `--mod-meter-min-width` / `-max-width` / `-inline-size`         | No replacement                                                                                                                                        |
-| `--mod-progressbar-fill-color-white` / `-label-and-value-white` | No replacement — handled by `static-color`                                                                                                            |
+| `--mod-progressbar-fill-color-white` / `-label-and-value-white` | No replacement (handled by `static-color`)                                                                                                            |
 | `--mod-progressbar-line-height` / `-line-height-cjk`            | No replacement                                                                                                                                        |
 
 ### Public custom properties

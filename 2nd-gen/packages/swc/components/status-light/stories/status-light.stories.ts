@@ -186,6 +186,7 @@ export const SemanticVariants: Story = {
   `,
   tags: ['options'],
 };
+SemanticVariants.storyName = 'Semantic variants';
 
 export const NonSemanticVariants: Story = {
   render: (args) => html`
@@ -217,6 +218,7 @@ export const TextWrapping: Story = {
   `,
   tags: ['behaviors'],
 };
+TextWrapping.storyName = 'Text wrapping';
 
 // ────────────────────────────────
 //    ACCESSIBILITY STORIES

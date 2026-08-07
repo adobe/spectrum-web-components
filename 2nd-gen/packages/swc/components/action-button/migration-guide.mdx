@@ -1,8 +1,8 @@
 import { Meta } from '@storybook/addon-docs/blocks';
 
-<Meta title="Action Button/Migration guide" />
+<Meta title="Action button/Migration guide" />
 
-# Action Button migration guide
+# Action button migration guide
 
 Replace `<sp-action-button>` with `<swc-action-button>`, update the import, rename `label` to `accessible-label`, and migrate any toggle or link usage to the appropriate replacement pattern.
 
@@ -26,7 +26,7 @@ import '@spectrum-web-components/action-button/sp-action-button.js';
 import '@adobe/spectrum-wc/components/action-button/swc-action-button.js';
 ```
 
-> `@adobe/spectrum-wc` is a monolithic package. Importing via subpath (e.g. `@adobe/spectrum-wc/components/action-button/swc-action-button.js`) registers and loads only that component's bundle.
+> `@adobe/spectrum-wc` is a monolithic package. Importing via subpath (e.g., `@adobe/spectrum-wc/components/action-button/swc-action-button.js`) registers and loads only that component's bundle.
 
 ## What changed
 

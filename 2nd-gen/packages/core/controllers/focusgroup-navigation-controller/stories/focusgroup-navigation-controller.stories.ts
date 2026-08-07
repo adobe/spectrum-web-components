@@ -126,6 +126,7 @@ export const HorizontalToolbar: Story = {
   `,
   tags: ['behaviors'],
 };
+HorizontalToolbar.storyName = 'Horizontal toolbar';
 
 export const BothAxesLinear: Story = {
   render: () => html`
@@ -136,6 +137,7 @@ export const BothAxesLinear: Story = {
   `,
   tags: ['behaviors'],
 };
+BothAxesLinear.storyName = 'Both axes linear';
 
 export const VerticalMenu: Story = {
   render: () => html`
@@ -146,6 +148,7 @@ export const VerticalMenu: Story = {
   `,
   tags: ['behaviors'],
 };
+VerticalMenu.storyName = 'Vertical menu';
 
 export const SkipDisabledMenu: Story = {
   render: () => html`
@@ -156,6 +159,7 @@ export const SkipDisabledMenu: Story = {
   `,
   tags: ['behaviors'],
 };
+SkipDisabledMenu.storyName = 'Skip disabled menu';
 
 export const Grid: Story = {
   render: () => html`
@@ -172,6 +176,7 @@ export const ProgrammaticFocus: Story = {
   `,
   tags: ['behaviors'],
 };
+ProgrammaticFocus.storyName = 'Programmatic focus';
 
 export const TextPrefixFocus: Story = {
   render: () => html`
@@ -179,3 +184,4 @@ export const TextPrefixFocus: Story = {
   `,
   tags: ['behaviors'],
 };
+TextPrefixFocus.storyName = 'Text prefix focus';

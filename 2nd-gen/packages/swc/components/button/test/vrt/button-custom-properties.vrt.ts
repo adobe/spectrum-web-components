@@ -121,6 +121,11 @@ const MOD_PROPERTY_CASES: readonly ModPropertyCase[] = [
     forceState: 'active',
   },
   {
+    property: '--swc-button-down-state-transform',
+    value: 'rotate(15deg)',
+    forceState: 'active',
+  },
+  {
     property: '--swc-button-background-color-disabled',
     value: 'magenta',
     disabled: true,

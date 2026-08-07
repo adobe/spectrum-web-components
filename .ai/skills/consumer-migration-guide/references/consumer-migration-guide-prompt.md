@@ -20,7 +20,7 @@ Keep the guide **short, direct, and scannable**. A consumer should be able to co
 - Attributes, properties, and accepted values
 - Slots and content-rendering properties
 - Events
-- Supported CSS custom properties (documented `--mod-*` and other public theming hooks)
+- Supported CSS custom properties (documented `--swc-*` and other public theming hooks)
 - Accessibility changes that affect consumer markup (e.g. where to place `aria-label`, when to hide decorative icons)
 - Observable behavior changes (focus, wrapping, positioning)
 
@@ -42,7 +42,7 @@ In "Update your code", present **numbered steps in the order the consumer perfor
 Before writing, verify claims against:
 
 - `1st-gen/packages/[component-name]/README.md` and public element files (`sp-*.ts`)
-- `2nd-gen/packages/swc/components/[component-name]/src/`, stories, and tests
+- `2nd-gen/packages/swc/components/[component-name]/`, stories, and tests
 
 If a claim is not confirmed by source, omit it.
 
@@ -66,7 +66,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
 # [Component name] migration guide
 ```
 
-- Use title case for `[Component name]` — component names are proper nouns (for example `Badge`, `Action Button`).
+- Use sentence case for `[Component name]` (for example `Badge`, `Action button`).
 - Do **not** prefix `<Meta title>` with `Components/` — `titlePrefix` supplies it.
 - Use sentence case for all other headings.
 - Prefer tables, bullets, and fenced code blocks over prose.
@@ -143,7 +143,7 @@ Cover only:
 - Include this JSX comment immediately above the table so future passes can replace the hand-written descriptions with the canonical copy once it lands:
 
   ```mdx
-  {/* @todo Replace the Description column with the `@cssproperty` JSDoc descriptions from `<swc-[component]>`'s CEM entry once they are added in a follow-up PR. */}
+  {/* @todo Replace the Description column with the `@cssprop` JSDoc descriptions from `<swc-[component]>`'s CEM entry once they are added in a follow-up PR. */}
   ```
 
 - **Required amber "breaking change" callout at the top** (immediately after the section intro sentence, before the property list) **if** the Spectrum 1 component used a different custom-property prefix (e.g. `--mod-*`) and Spectrum 2 does not. Tells consumers their Spectrum 1 overrides won't apply. Template:

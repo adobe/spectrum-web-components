@@ -11,14 +11,9 @@ import * as BadgeStories from './stories/badge.stories';
 
 A badge consists of:
 
-1. **Container** — colored background with rounded corners
-2. **Label** — text content describing the status or category (required)
-3. **Icon** (optional) — visual indicator positioned before the label
-
-### Content
-
-- **Default slot**: text content describing the status or category (required for accessibility)
-- **icon slot**: optional visual indicator positioned before the label
+- **Container**: colored background with rounded corners
+- **Label** (required), provided through the default slot: text content describing the status or category
+- **Icon** (optional), provided through the `icon` slot: visual indicator positioned before the label
 
 <Canvas of={BadgeStories.Anatomy} />
 
@@ -40,16 +35,16 @@ The `s` size is the default. Use larger sizes sparingly to create a hierarchy of
 ### Semantic variants
 
 Semantic variants provide meaning through color and should be used when status has specific significance.
-These variants align consistently with other design system components that use the same semantic meanings.
+These colors are shared with other Spectrum components that carry the same meanings.
 
 Use these variants for the following statuses:
 
-- **accent**: new, beta, prototype, draft
-- **informative**: active, in use, live, published
-- **neutral**: archived, deleted, paused, not started, ended
-- **positive**: approved, complete, success, purchased, licensed
-- **notice**: pending, expiring soon, limited, deprecated
-- **negative**: rejected, error, alert, failed
+- **`accent`**: new, beta, prototype, draft
+- **`informative`**: active, in use, live, published
+- **`neutral`**: archived, deleted, paused, not started, ended
+- **`positive`**: approved, complete, success, purchased, licensed
+- **`notice`**: pending, expiring soon, limited, deprecated
+- **`negative`**: rejected, error, alert, failed
 
 <Canvas of={BadgeStories.SemanticVariants} />
 
@@ -73,7 +68,7 @@ Use non-semantic variants when:
 The `outline` style provides a bordered appearance with a transparent background.
 This style reduces visual weight while maintaining semantic meaning.
 
-> **Important**: The outline style is only valid for semantic variants (`accent`, `informative`, `neutral`, `positive`, `notice`, `negative`).
+> ⚠️ **Important:** The `outline` style is only valid for semantic variants (`accent`, `informative`, `neutral`, `positive`, `notice`, `negative`).
 > Attempting to use `outline` with non-semantic color variants will not apply the style.
 
 <Canvas of={BadgeStories.Outline} />
@@ -81,9 +76,9 @@ This style reduces visual weight while maintaining semantic meaning.
 ### Subtle
 
 The `subtle` style reduces visual prominence with a softer background fill.
-Unlike outline, subtle is available for **all** variants (semantic and non-semantic).
+Unlike `outline`, `subtle` is available for **all** variants (semantic and non-semantic).
 
-Use the subtle style when:
+Use the `subtle` style when:
 
 - Multiple badges appear together and need less visual competition
 - Status is secondary to main content
@@ -97,10 +92,10 @@ The `fixed` attribute adjusts border radius based on edge positioning, creating 
 
 Fixed positioning options:
 
-- **block-start**: top edge (removes top-left and top-right border radius)
-- **block-end**: bottom edge (removes bottom-left and bottom-right border radius)
-- **inline-start**: left edge (removes top-left and bottom-left border radius)
-- **inline-end**: right edge (removes top-right and bottom-right border radius)
+- **`block-start`**: top edge (removes top-left and top-right border radius)
+- **`block-end`**: bottom edge (removes bottom-left and bottom-right border radius)
+- **`inline-start`**: left edge (removes top-left and bottom-left border radius)
+- **`inline-end`**: right edge (removes top-right and bottom-right border radius)
 
 This is purely visual styling: actual positioning must be handled separately with CSS.
 
@@ -108,7 +103,7 @@ This is purely visual styling: actual positioning must be handled separately wit
 
 ## Behaviors
 
-### Text Wrapping
+### Text wrapping
 
 When a badge's label is too long for the available horizontal space, it wraps to form multiple lines.
 Text wrapping can be controlled by applying a `max-inline-size` constraint to the badge.
@@ -143,7 +138,7 @@ The `<swc-badge>` element implements several accessibility features:
 - Screen readers will announce the badge content as static text
 - No keyboard interaction is required or expected
 
-> **Important**: In focus mode, only interactive elements and their associated labels/descriptions are announced. If content is not a label or description for a focusable element, it will not be read. For non-interactive content, screen reader users must [switch to Browse mode](https://swcpreviews.z13.web.core.windows.net/pr-6122/docs/second-gen-storybook/?path=/docs/guides-accessibility-guides-screen-reader-testing--readme#screen-reader-modes). This is expected behavior, not a bug: ensure you test both modes when evaluating component accessibility.
+> ⚠️ **Important:** In focus mode, only interactive elements and their associated labels/descriptions are announced. If content is not a label or description for a focusable element, it will not be read. For non-interactive content, screen reader users must [switch to browse mode](/docs/guides-accessibility-screen-reader-testing--docs#screen-reader-modes). This is expected behavior, not a bug. Ensure you test both modes when evaluating component accessibility.
 
 ### Text label
 
@@ -159,7 +154,7 @@ Apply `aria-hidden="true"` to the `<swc-icon>` so screen readers only announce t
 When space is limited and no visible label is shown, the badge **must** have an accessible name.
 Set `role="img"` and `aria-label` directly on the `<swc-badge>` element to describe the badge's meaning.
 `role="img"` is required because custom elements have no implicit ARIA role: without it, `aria-label` is not permitted by the ARIA specification and will fail automated accessibility checks.
-Without both attributes, the badge has no accessible name and fails WCAG 1.1.1.
+Without both attributes, the badge has no accessible name and fails [WCAG 1.1.1](https://www.w3.org/WAI/WCAG22/Understanding/non-text-content.html).
 
 ### Best practices
 

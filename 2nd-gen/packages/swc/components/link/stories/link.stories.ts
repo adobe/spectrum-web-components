@@ -203,6 +203,7 @@ export const LinkList: Story = {
   },
   tags: ['options'],
 };
+LinkList.storyName = 'Link list';
 
 export const StaticColors: Story = {
   render: (args) => html`
@@ -226,7 +227,6 @@ export const StaticColors: Story = {
   parameters: {
     flexLayout: false,
     staticColorsDemo: true,
-    'section-order': 2,
   },
 };
 StaticColors.storyName = 'Static colors';

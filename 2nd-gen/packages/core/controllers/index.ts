@@ -60,3 +60,8 @@ export {
   SlotAttributePropagationController,
   type SlotAttributePropagationControllerOptions,
 } from './slot-attribute-propagation-controller/index.js';
+export { SlotPresenceController } from './slot-presence-controller/index.js';
+export {
+  SlotTextController,
+  type SlotTextConfig,
+} from './slot-text-controller/index.js';

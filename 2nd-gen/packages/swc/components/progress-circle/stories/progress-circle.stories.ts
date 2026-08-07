@@ -174,6 +174,7 @@ export const StaticColors: Story = {
     },
   },
 };
+StaticColors.storyName = 'Static colors';
 
 // ──────────────────────────
 //    STATES STORIES

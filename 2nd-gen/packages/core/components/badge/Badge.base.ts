@@ -12,10 +12,10 @@
 import { PropertyValues } from 'lit';
 import { property } from 'lit/decorators.js';
 
+import { SlotPresenceController } from '@adobe/spectrum-wc-core/controllers/slot-presence-controller/index.js';
+import { SlotTextController } from '@adobe/spectrum-wc-core/controllers/slot-text-controller/index.js';
 import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
 import { SizedMixin } from '@adobe/spectrum-wc-core/mixins/index.js';
-import { ObserveSlotPresence } from '@adobe/spectrum-wc-core/mixins/observe-slot-presence.js';
-import { ObserveSlotText } from '@adobe/spectrum-wc-core/mixins/observe-slot-text.js';
 
 import {
   BADGE_VALID_SIZES,
@@ -34,16 +34,11 @@ import {
  *
  * @slot - Text label of the badge.
  * @slot icon - Optional icon that appears to the left of the label
- *
- * @todo review the mixin composition here. We currently have 3 levels of mixins on this class, but the mixin composition guide recommends a maximum of 2.
  */
-export abstract class BadgeBase extends SizedMixin(
-  ObserveSlotText(ObserveSlotPresence(SpectrumElement, '[slot="icon"]'), ''),
-  {
-    validSizes: BADGE_VALID_SIZES,
-    defaultSize: 's',
-  }
-) {
+export abstract class BadgeBase extends SizedMixin(SpectrumElement, {
+  validSizes: BADGE_VALID_SIZES,
+  defaultSize: 's',
+}) {
   /**
    * The size of the badge.
    *
@@ -131,6 +126,26 @@ export abstract class BadgeBase extends SizedMixin(
   public outline: boolean = false;
 
   // ──────────────────────
+  //     CONTROLLERS
+  // ──────────────────────
+
+  /**
+   * Observes whether an icon is slotted into `[slot="icon"]`.
+   *
+   * @internal
+   */
+  protected slotPresence = new SlotPresenceController(this, '[slot="icon"]');
+
+  /**
+   * Observes whether the default slot has meaningful text content. The default
+   * slot must bind `@slotchange=${this.slotText.handleSlotChange}` for changes
+   * after the first render to be tracked.
+   *
+   * @internal
+   */
+  protected slotText = new SlotTextController(this);
+
+  // ──────────────────────
   //     IMPLEMENTATION
   // ──────────────────────
 
@@ -140,7 +155,18 @@ export abstract class BadgeBase extends SizedMixin(
    * Used for rendering gap when the badge has an icon.
    */
   protected get hasIcon(): boolean {
-    return this.slotContentIsPresent;
+    return this.slotPresence.isPresent;
+  }
+
+  /**
+   * Whether the default slot has meaningful text content. Consumed by the
+   * concrete element's `render()` to toggle icon-only presentation (the
+   * `swc-Badge--no-label` class and its icon-only padding tokens).
+   *
+   * @internal
+   */
+  protected get slotHasContent(): boolean {
+    return this.slotText.hasContent;
   }
 
   protected override update(changedProperties: PropertyValues): void {
