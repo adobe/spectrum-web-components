@@ -10,7 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
-import { css, html, LitElement, type TemplateResult } from 'lit';
+import { html, LitElement, type TemplateResult } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 
 import { PageScrollLockController } from '../index.js';
@@ -31,20 +31,6 @@ declare global {
  */
 @customElement('demo-scroll-lock-host')
 export class DemoScrollLockHost extends LitElement {
-  static override styles = css`
-    :host {
-      display: block;
-    }
-
-    button {
-      font: inherit;
-      padding: 6px 16px;
-      border: 1px solid rgb(0 0 0 / 20%);
-      border-radius: 16px;
-      cursor: pointer;
-    }
-  `;
-
   /** Whether this host currently holds a page scroll lock. */
   @property({ type: Boolean, reflect: true })
   public locked = false;

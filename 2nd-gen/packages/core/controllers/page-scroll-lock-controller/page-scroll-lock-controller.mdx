@@ -1,6 +1,6 @@
 {/* Copyright 2026 Adobe. All rights reserved. This file is licensed to you under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License. */}
 
-import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import { Meta } from '@storybook/addon-docs/blocks';
 import { DocsFooter, DocsHeader } from '../../../swc/.storybook/blocks';
 
 import * as Stories from './stories/page-scroll-lock-controller.stories';
@@ -55,8 +55,6 @@ Toggling the lock sets `overflow: hidden` on `document.documentElement`; togglin
 
 The lock is reference-counted at module scope. With multiple hosts locking and unlocking independently, for example stacked modal surfaces, the original `overflow` is captured once on the first lock and restored once the last lock releases. An inner surface releasing first keeps the page locked until the outer surface also releases.
 
-<Canvas of={Stories.LockUnlock} />
-
 ## Accessibility
 
 ### Features
@@ -68,8 +66,6 @@ The lock is reference-counted at module scope. With multiple hosts locking and u
 - Only lock page scroll for true modal surfaces (dialogs, modal popovers, trays that block interaction with the rest of the page). Non-modal surfaces like tooltips or hint popovers should not lock scroll.
 - Call `lock()` / `unlock()` from a single lifecycle path (for example `updated()` keyed off an `open` property) rather than scattered call sites, so the host's lock state can't drift out of sync with its visible state.
 - Rely on `hostDisconnected()` for cleanup; there is no need to call `unlock()` manually when a host is removed from the DOM.
-
-<Canvas of={Stories.Accessibility} />
 
 ## API
 

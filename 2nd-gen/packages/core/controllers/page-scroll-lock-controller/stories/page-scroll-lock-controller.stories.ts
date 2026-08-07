@@ -66,20 +66,3 @@ export const Playground: Story = {
 export const Overview: Story = {
   tags: ['overview'],
 };
-
-// ──────────────────────────────
-//    BEHAVIORS STORIES
-// ──────────────────────────────
-
-export const LockUnlock: Story = {
-  tags: ['behaviors'],
-};
-LockUnlock.storyName = 'Lock and unlock';
-
-// ────────────────────────────────
-//    ACCESSIBILITY STORIES
-// ────────────────────────────────
-
-export const Accessibility: Story = {
-  tags: ['a11y'],
-};
