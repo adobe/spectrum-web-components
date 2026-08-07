@@ -226,19 +226,27 @@ const staticColorsContent = () =>
 
 const permutationContent = () => html`
   ${treatmentRows()} ${justifiedContent()} ${disabledContent()}
-  ${focusRingContent()} ${staticColorsContent()}
+  ${staticColorsContent()}
 `;
 
 // VRT stories
 
 // Default/compact/quiet swept across every size, the quiet+compact boolean
-// interaction, justified, disabled, the compact focus-ring z-index tier, and
-// static colors on their contrast backgrounds. Rendered once in light/ltr and
-// once in dark/rtl (single story, one snapshot, both axes covered).
+// interaction, justified, disabled, and static colors on their contrast
+// backgrounds. Rendered once in light/ltr and once in dark/rtl (single
+// story, one snapshot, both axes covered).
+//
+// The focus-ring row is appended once, separately, rather than folded into
+// the content above: real DOM focus is exclusive to a single element, so
+// duplicating that row into both theme copies (the way everything else here
+// is duplicated) would only ever let one copy show the effect while the
+// other silently renders the unfocused default — implying both were
+// verified when only one was.
 export const Permutations: Story = {
   render: () => html`
     ${theme(permutationContent(), 'light', 'ltr')}
     ${theme(permutationContent(), 'dark', 'rtl')}
+    ${theme(focusRingContent(), 'light', 'ltr')}
   `,
   parameters: vrtParameters,
   play: focusMiddleChild,
@@ -248,7 +256,10 @@ export const Permutations: Story = {
 // its action-button children do; this confirms the composite still renders
 // correctly (borders, focus ring, layout) under forced-colors.
 export const ForcedColors: Story = {
-  render: () => theme(permutationContent(), 'light', 'ltr'),
+  render: () => html`
+    ${theme(permutationContent(), 'light', 'ltr')}
+    ${theme(focusRingContent(), 'light', 'ltr')}
+  `,
   parameters: forcedColorsVrtParameters,
   play: focusMiddleChild,
 };
