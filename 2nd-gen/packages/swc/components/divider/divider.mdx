@@ -31,7 +31,7 @@ Dividers come in three sizes to fit various contexts:
 
 The default **horizontal** divider separates vertically stacked content, such as sections beneath headings. To separate side-by-side content in a flex row (e.g., navigation breadcrumbs, toolbars), use the `vertical` attribute to render a **vertical** divider.
 
-Vertical dividers require the parent to have an **explicit height** (`block-size`). Without it, `block-size: 100%` resolves to zero and the divider is invisible.
+A vertical divider automatically stretches to fill the height of its flex row or `grid-auto-flow: column` grid. The parent doesn't need an explicit height.
 
 <Canvas of={DividerStories.Orientation} />
 
@@ -42,7 +42,7 @@ Use `static-color` when the divider needs to sit on top of a photo or colored ba
 - **`white`**: use on dark color or image backgrounds
 - **`black`**: use on light color or image backgrounds
 
-Each static color panel shows **horizontal** dividers at sizes `s`, `m`, and `l`, and **vertical** dividers at the same sizes (vertical rows use an explicit `block-size` so the line is visible).
+Each static color panel shows **horizontal** dividers at sizes `s`, `m`, and `l`, and **vertical** dividers at the same sizes.
 
 <Canvas of={DividerStories.StaticColors} />
 
