@@ -45,7 +45,7 @@ Additional attributes control positioning behavior: `offset` sets the pixel gap 
 
 The tooltip is closed by default. Setting `open` to `true` calls `showPopover()`, placing the bubble in the browser's top layer via the Popover API. The `open` attribute reflects the current visibility state.
 
-Because the component uses `popover="manual"`, a tooltip coexists with any other open popover in the document: opening a tooltip does not dismiss an open `<swc-popover>`, menu, picker, or select, and opening one of those does not dismiss the tooltip. This lets a hover tooltip appear over a control while a popover the user is working in stays open. Set the `manual` property to additionally opt out of automatic hover and focus wiring and manage `open` directly while retaining ARIA relationship wiring.
+Because the component uses `popover="manual"`, a tooltip stays outside the browser's auto light-dismiss group: opening a tooltip does not dismiss an open `<swc-popover>`, menu, picker, or select, and opening one of those does not force the tooltip closed. This lets a hover tooltip appear over a control while a popover the user is working in stays open. The tooltip still closes on its own triggers (pointer leaving the trigger, focus moving away, or Escape); coexistence only means the popover auto-stack no longer tears it down. Set the `manual` property to additionally opt out of automatic hover and focus wiring and manage `open` directly while retaining ARIA relationship wiring.
 
 <Canvas of={TooltipStories.Open} />
 

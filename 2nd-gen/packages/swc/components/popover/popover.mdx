@@ -51,7 +51,7 @@ The arrow (tip) points at the trigger and is shown by default. Set `hide-arrow` 
 
 `open` is the single source of truth for visibility: the popover is either open or closed. Toggling the trigger, pressing `Escape`, or clicking outside (default mode) all reconcile back to `open`. There are no disabled or selected states.
 
-Because the default mode uses `popover="auto"`, opening a popover dismisses any other open auto popover in the document, including menus, pickers, and other popovers. Tooltips are the exception among top-layer surfaces: `<swc-tooltip>` uses `popover="manual"`, so a hover tooltip coexists with an open popover rather than dismissing it or being dismissed by it. Nested popovers are also exempt: a popover opened from inside another forms an ancestor chain and stays open together.
+Because the default mode uses `popover="auto"`, opening a popover dismisses any other open auto popover in the document, including menus, pickers, and other popovers. Tooltips are the exception among top-layer surfaces: `<swc-tooltip>` uses `popover="manual"`, so a hover tooltip coexists with an open popover rather than light-dismissing it or being light-dismissed by it (the tooltip still closes on its own triggers, such as the pointer leaving the trigger). Nested popovers are also exempt: a popover opened from inside another forms an ancestor chain and stays open together.
 
 <Canvas of={Stories.States} />
 
