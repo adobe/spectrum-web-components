@@ -10,7 +10,8 @@
  * governing permissions and limitations under the License.
  */
 
-import { html } from 'lit';
+import { html, nothing } from 'lit';
+import { ifDefined } from 'lit/directives/if-defined.js';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import {
@@ -19,6 +20,7 @@ import {
 } from '@adobe/spectrum-wc-core/components/action-button';
 
 import '@adobe/spectrum-wc/components/action-button/swc-action-button.js';
+import '@adobe/spectrum-wc/components/avatar/swc-avatar.js';
 
 import {
   createPermutations,
@@ -156,6 +158,33 @@ const renderIconOnlyPermutation = ({
   </swc-action-button>
 `;
 
+// A slotted <swc-avatar> as the icon. action-button.css sets
+// `--swc-avatar-size: var(--_swc-action-button-icon-size)` on the icon slot, so
+// the avatar tracks each button size without the consumer restating a size on
+// the avatar. Written as direct markup (not template()) for the same icon-slot
+// parsing reason as icon-only above, and rendered across every size because
+// size is the axis this scaling actually drives. A fixed picsum id keeps the
+// image deterministic for Chromatic (matching the docs stories).
+const AVATAR_ICON_SRC = 'https://picsum.photos/id/64/500/500';
+
+const renderAvatarActionButton = (
+  size: (typeof ACTION_BUTTON_VALID_SIZES)[number],
+  iconOnly: boolean
+) => html`
+  <swc-action-button
+    size=${size}
+    accessible-label=${ifDefined(iconOnly ? 'Jane Doe' : undefined)}
+  >
+    <swc-avatar
+      slot="icon"
+      src=${AVATAR_ICON_SRC}
+      alt=""
+      decorative
+    ></swc-avatar>
+    ${iconOnly ? nothing : 'Jane Doe'}
+  </swc-action-button>
+`;
+
 const forceActionButtonStates = forcePseudoStates(
   'swc-action-button[data-force-state]',
   '.swc-ActionButton'
@@ -184,6 +213,17 @@ const permutationContent = () => html`
   ${row(
     ICON_ONLY_PERMUTATIONS.map(renderIconOnlyPermutation),
     'Icon-only anatomy'
+  )}
+  ${row(
+    [
+      ...ACTION_BUTTON_VALID_SIZES.map((size) =>
+        renderAvatarActionButton(size, false)
+      ),
+      ...ACTION_BUTTON_VALID_SIZES.map((size) =>
+        renderAvatarActionButton(size, true)
+      ),
+    ],
+    'Avatar icon'
   )}
   ${row(
     [
