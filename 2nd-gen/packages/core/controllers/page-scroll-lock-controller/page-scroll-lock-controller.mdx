@@ -71,8 +71,6 @@ The lock is reference-counted at module scope. With multiple hosts locking and u
 - Call `lock()` / `unlock()` from a single lifecycle path (for example `updated()` keyed off an `open` property) rather than scattered call sites, so the host's lock state can't drift out of sync with its visible state.
 - Rely on `hostDisconnected()` for cleanup; there is no need to call `unlock()` manually when a host is removed from the DOM.
 
-<Canvas of={Stories.Accessibility} />
-
 ## API
 
 ### Constructor
