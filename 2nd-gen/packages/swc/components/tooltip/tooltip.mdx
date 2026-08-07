@@ -129,8 +129,11 @@ Prefer adding an accessible name directly to the trigger when possible: `aria-la
 #### Keyboard behavior
 
 - <kbd>Escape</kbd>: closes the tooltip; focus remains on the trigger. Handled
-  by the component's own Escape listener (registered while open), since
-  `popover="manual"` provides no native light-dismiss.
+by the component's own Escape listener (registered while open), since
+`popover="manual"` provides no native light-dismiss. When a tooltip is open on
+top of an `<swc-popover>`, the tooltip joins the shared dismissible stack:
+<kbd>Escape</kbd> closes the topmost surface first, so it dismisses the tooltip
+and leaves the popover open; a second <kbd>Escape</kbd> closes the popover.
 - Tooltip text is never in the tab order; focus always stays on the trigger.
 
 #### High contrast mode

@@ -1592,3 +1592,55 @@ export const CoexistsTooltipInsidePopoverTest: Story = {
     );
   },
 };
+
+// A tooltip open on top of a popover joins the dismissible stack as the topmost
+// entry, so Escape must dismiss the tooltip only and leave the popover open. This
+// synthetic-input story guards the JS side: dismissible-stack registration, the
+// `isTopDismissible` gate, and `stopPropagation()` in `handleKeyDown`. Synthetic
+// Escape does not drive native popover light-dismiss (trusted input only), so the
+// second-Escape-closes-the-popover leg is covered by the trusted-input test in
+// tooltip.a11y.spec.ts; here we only assert the popover survives the first Escape.
+export const EscapeClosesTopmostTooltipTest: Story = {
+  render: () => html`
+    <button id="tt-esc-order-popover-trigger">Open popover</button>
+    <swc-popover for="tt-esc-order-popover-trigger">
+      Popover content
+    </swc-popover>
+    <swc-button id="tt-esc-order-tooltip-trigger">Trigger</swc-button>
+    <swc-tooltip for="tt-esc-order-tooltip-trigger" placement="top">
+      Tooltip text
+    </swc-tooltip>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const popover = await getComponent<Popover>(canvasElement, 'swc-popover');
+    const tooltip = await getComponent<Tooltip>(canvasElement, 'swc-tooltip');
+    const popoverTrigger = canvasElement.querySelector(
+      '#tt-esc-order-popover-trigger'
+    ) as HTMLButtonElement;
+    await popover.updateComplete;
+
+    await step('opens the popover, then the tooltip on top of it', async () => {
+      await userEvent.click(popoverTrigger);
+      await waitFor(() => expect(popover.open).toBe(true), { timeout: 1000 });
+      // Opened last, so the tooltip is the topmost dismissible.
+      await openTooltip(tooltip);
+      expect(tooltip.open, 'tooltip is open').toBe(true);
+    });
+
+    await step(
+      'Escape closes only the topmost tooltip and leaves the popover open',
+      async () => {
+        await userEvent.keyboard('{Escape}');
+        await waitFor(
+          () => expect(tooltip.matches(':popover-open')).toBe(false),
+          { timeout: 1000 }
+        );
+        expect(tooltip.open, 'tooltip closed on Escape').toBe(false);
+        expect(
+          popover.open,
+          'popover is not dismissed by the Escape that closed the tooltip'
+        ).toBe(true);
+      }
+    );
+  },
+};
