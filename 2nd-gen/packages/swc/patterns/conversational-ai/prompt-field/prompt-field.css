@@ -42,22 +42,9 @@
   padding: token("spacing-300");
   background: token("background-layer-2-color");
   border: 1px solid transparent;
-  border-radius: token("corner-radius-800");
+  border-radius: 24px;
   box-shadow: token("drop-shadow-emphasized-default-x") token("drop-shadow-emphasized-default-y") token("drop-shadow-emphasized-default-blur") token("drop-shadow-emphasized-default-color");
   overflow: hidden;
-}
-
-@supports (height: calc-size(auto, size)) {
-  .swc-PromptField-box {
-    height: calc-size(auto, size);
-    transition: height token("animation-duration-100") token("animation-ease-in-out");
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .swc-PromptField-box {
-      transition: none;
-    }
-  }
 }
 
 /* Outer ring only for keyboard focus on the textarea (PromptField toggles
@@ -228,19 +215,12 @@
   max-inline-size: var(--swc-prompt-field-upload-inline-size, 32px);
   margin-block-start: token("spacing-500");
   overflow: hidden;
-  transition: max-inline-size token("animation-duration-100") token("animation-ease-in-out");
 }
 
 :host([collapsed]) .swc-PromptField-leading-actions {
   max-inline-size: 0;
   margin-block-start: 0;
   margin-inline-end: calc(-1 * token("spacing-300"));
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .swc-PromptField-leading-actions {
-    transition: none;
-  }
 }
 
 .swc-PromptField-file-input {
