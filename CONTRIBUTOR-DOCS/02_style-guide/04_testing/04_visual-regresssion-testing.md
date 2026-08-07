@@ -39,6 +39,8 @@ Author dense visual coverage in `test/vrt/*.vrt.ts` for components and patterns.
 
 Aim for maximum meaningful coverage: include every size, variant, state, anatomy, theme, static-color, global-style, custom-property, and component-specific visual axis that can produce a useful visual difference. Cover CJK language rendering explicitly when text metrics can change, e.g. `lang="ja"` / `lang="ko"` / `lang="zh"` line-height, wrapping, or truncation. Skip only impossible, unsupported, or truly redundant combinations.
 
+One common source of "truly redundant" coverage: a visual axis that a component only passes through to a slotted or composed child, with no CSS of its own for that axis (e.g. a layout component that forwards `static-color` to its children but has no color rules itself). That axis is already covered by the child component's own VRT file; re-testing it here only re-renders the child's existing coverage under a layout that does not affect it. Cover the axis in this component's own VRT file only when this component's own CSS does something with that state, such as a layout or stacking change that applies only in that state.
+
 Use this shape:
 
 - `test/vrt/<component>.vrt.ts` for permutations, states, static colors, forced colors, wrapping, and anatomy.

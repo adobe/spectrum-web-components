@@ -12,6 +12,7 @@ This skill is the quick reference. The authoritative guide is `CONTRIBUTOR-DOCS/
 - Put VRT stories in `2nd-gen/packages/swc/components/<component>/test/vrt/*.vrt.ts` or `2nd-gen/packages/swc/patterns/<pattern>/test/vrt/*.vrt.ts`.
 - Keep docs stories for examples; keep `.vrt.ts` stories for dense visual coverage.
 - Aim for maximum meaningful coverage: include every size, variant, state, anatomy, theme, static-color, global-style, custom-property, and component-specific visual axis that can produce a useful visual difference. Cover CJK language rendering explicitly when text metrics can change, e.g. `lang="ja"` / `lang="ko"` / `lang="zh"` line-height, wrapping, or truncation. Skip only impossible, unsupported, or truly redundant combinations.
+- Don't cover a visual axis your component only forwards to a slotted or composed child with no CSS of its own for it (e.g. a layout component passing `static-color` through to its children); that's already covered by the child's own VRT file. Only cover it here if this component's own CSS does something with that state.
 - Use shared helpers from `.storybook/helpers`: `createPermutations`, `groupPermutationsBy`, `row`, `theme`, `staticColorBackground`, `forcePseudoStates` (and `forcePseudoState` for forcing state on individual slotted elements), `vrtParameters`, and `forcedColorsVrtParameters`.
 - Keep unit files data-driven: local case lists and renderers only. Move reusable mechanics to `.storybook/helpers`.
 

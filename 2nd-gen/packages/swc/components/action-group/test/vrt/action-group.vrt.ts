@@ -15,11 +15,9 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import {
-  ACTION_GROUP_STATIC_COLORS,
   ACTION_GROUP_VALID_SIZES,
   type ActionGroupOrientation,
   type ActionGroupSize,
-  type ActionGroupStaticColor,
 } from '@adobe/spectrum-wc-core/components/action-group';
 
 import '@adobe/spectrum-wc/components/action-group/swc-action-group.js';
@@ -30,7 +28,6 @@ import {
   forcedColorsVrtParameters,
   groupPermutationsBy,
   row,
-  staticColorBackground,
   theme,
   vrtParameters,
 } from '../../../../.storybook/helpers/index.js';
@@ -56,7 +53,6 @@ type GroupCase = {
   quiet?: boolean;
   justified?: boolean;
   disabled?: boolean;
-  staticColor?: ActionGroupStaticColor;
   accessibleLabel?: string;
   labels?: readonly string[];
   focusTargetIndex?: number;
@@ -70,7 +66,6 @@ const renderGroup = ({
   quiet = false,
   justified = false,
   disabled = false,
-  staticColor,
   accessibleLabel = 'Edit actions',
   labels = LABELS,
   focusTargetIndex,
@@ -84,7 +79,6 @@ const renderGroup = ({
     ?quiet=${quiet}
     ?justified=${justified}
     ?disabled=${disabled}
-    static-color=${ifDefined(staticColor)}
     style=${ifDefined(style)}
   >
     ${labels.map(
@@ -216,25 +210,21 @@ const focusMiddleChild = ({
   canvasElement.querySelector<HTMLElement>('[data-vrt-focus-target]')?.focus();
 };
 
-const staticColorsContent = () =>
-  ACTION_GROUP_STATIC_COLORS.map((staticColor) =>
-    staticColorBackground(
-      row([renderGroup({ staticColor })], `Static ${staticColor}`),
-      staticColor
-    )
-  );
-
 const permutationContent = () => html`
   ${treatmentRows()} ${justifiedContent()} ${disabledContent()}
-  ${staticColorsContent()}
 `;
 
 // VRT stories
 
 // Default/compact/quiet swept across every size, the quiet+compact boolean
-// interaction, justified, disabled, and static colors on their contrast
-// backgrounds. Rendered once in light/ltr and once in dark/rtl (single
-// story, one snapshot, both axes covered).
+// interaction, justified, and disabled. Rendered once in light/ltr and once
+// in dark/rtl (single story, one snapshot, both axes covered).
+//
+// Static-color rendering is intentionally not covered here: `static-color`
+// only ever propagates through to slotted `swc-action-button` children —
+// action-group has no static-color-specific CSS of its own, so this would
+// only re-verify action-button's own static-color VRT coverage under a
+// layout that doesn't affect it. See `.ai/skills/vrt-authoring/SKILL.md`.
 //
 // The focus-ring row is appended once, separately, rather than folded into
 // the content above: real DOM focus is exclusive to a single element, so
