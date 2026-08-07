@@ -99,7 +99,7 @@
 
 .swc-PromptField-input-row {
   display: flex;
-  gap: token("spacing-300");
+  gap: token("spacing-200");
   align-items: center;
 }
 
@@ -111,11 +111,6 @@
   inline-size: token("workflow-icon-medium");
   block-size: token("workflow-icon-medium");
   color: token("gray-700");
-}
-
-/* Collapsed renders the send/stop button inline here instead of in the action bar. */
-:host([collapsed]) .swc-PromptField-input-row {
-  gap: token("spacing-200");
 }
 
 .swc-PromptField-input-row-action {
