@@ -31,7 +31,7 @@ Dividers come in three sizes to fit various contexts:
 
 The default **horizontal** divider separates vertically stacked content, such as sections beneath headings. To separate side-by-side content in a flex row (e.g., navigation breadcrumbs, toolbars), use the `vertical` attribute to render a **vertical** divider.
 
-Vertical dividers use `align-self: stretch` to fill the height of a flex row or `grid-auto-flow: column` grid; no explicit height is needed on the parent.
+A vertical divider automatically stretches to fill the height of its flex row or `grid-auto-flow: column` grid. The parent doesn't need an explicit height.
 
 <Canvas of={DividerStories.Orientation} />
 
