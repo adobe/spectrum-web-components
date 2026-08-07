@@ -42,8 +42,6 @@ export default meta;
 
 // Helpers
 
-const VERTICAL_BLOCK_SIZE = { s: 16, m: 24, l: 32 } as const;
-
 const renderHorizontal = (size: DividerSize) => html`
   <div style="inline-size: 200px;">
     <h4>Account settings</h4>
@@ -55,11 +53,7 @@ const renderHorizontal = (size: DividerSize) => html`
 `;
 
 const renderVertical = (size: DividerSize) => html`
-  <div
-    style="display: flex; align-items: center; gap: 8px; block-size: ${VERTICAL_BLOCK_SIZE[
-      size
-    ]}px;"
-  >
+  <div style="display: flex; align-items: center; gap: 8px;">
     <span>Cut</span>
     <swc-divider size=${size} vertical></swc-divider>
     <span>Copy</span>
@@ -91,11 +85,7 @@ const renderStaticColorSample = (staticColor: DividerStaticColor) =>
       ${row(
         DIVIDER_VALID_SIZES.map(
           (size) => html`
-            <div
-              style="display: flex; align-items: center; gap: 8px; block-size: ${VERTICAL_BLOCK_SIZE[
-                size
-              ]}px;"
-            >
+            <div style="display: flex; align-items: center; gap: 8px;">
               <span>Cut</span>
               <swc-divider
                 size=${size}
