@@ -60,9 +60,11 @@
 }
 
 /* @global-exclude: fills a shadow-DOM host stretched by an ancestor flex layout (e.g. vertical swc-action-group); plain elements via global classes already stretch natively */
+/* stylelint-disable-next-line no-duplicate-selectors -- re-opens .swc-ActionButton so the @global-exclude fence (see vite-global-elements-css) can strip just this declaration from the generated global stylesheet without excluding the rest of the class's rules */
 .swc-ActionButton {
   inline-size: 100%;
 }
+
 /* @global-exclude-end */
 
 /* ── States ───────────────────────────────────────── */

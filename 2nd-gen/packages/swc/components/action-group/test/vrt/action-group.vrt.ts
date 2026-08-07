@@ -171,6 +171,31 @@ const treatmentRows = () =>
       )
   );
 
+// Compact's corner-rounding CSS has three distinct selector paths
+// (`::slotted(:first-child:not(:last-child))`, `:last-child:not(:first-child)`,
+// and `:not(:first-child, :last-child)`), and a lone child matches none of
+// them. One size is enough here since the count, not the size, is what
+// exercises the different selectors:
+// - 1 button: matches none of the three selectors, keeps its full natural
+//   radius on every corner.
+// - 2 buttons: only the first/last selectors ever match; there is no
+//   "middle" case with two children.
+// - 4 buttons: exercises the middle-child selector against two children at
+//   once, not just one.
+const COMPACT_BUTTON_COUNT_LABELS: Record<number, readonly string[]> = {
+  1: ['Cut'],
+  2: ['Cut', 'Copy'],
+  4: ['Cut', 'Copy', 'Paste', 'Delete'],
+};
+
+const compactButtonCountContent = () =>
+  row(
+    [1, 2, 4].map((count) =>
+      renderGroup({ compact: true, labels: COMPACT_BUTTON_COUNT_LABELS[count] })
+    ),
+    'Compact (1, 2, 4 buttons)'
+  );
+
 // `justified` stretches each action-button to fill leftover width
 // (`::slotted(*) { flex: 1 1 0%; }`), but only if the host is wider than its
 // buttons' combined natural width plus gaps.
@@ -211,7 +236,8 @@ const focusMiddleChild = ({
 };
 
 const permutationContent = () => html`
-  ${treatmentRows()} ${justifiedContent()} ${disabledContent()}
+  ${treatmentRows()} ${compactButtonCountContent()} ${justifiedContent()}
+  ${disabledContent()}
 `;
 
 // VRT stories
