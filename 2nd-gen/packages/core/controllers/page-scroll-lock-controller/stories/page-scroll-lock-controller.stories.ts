@@ -78,5 +78,14 @@ export const StackedLocks: Story = {
     ${scrollFiller}
   `,
   tags: ['behaviors'],
+  parameters: { flexLayout: 'row-wrap' },
 };
 StackedLocks.storyName = 'Stacked locks';
+
+// ────────────────────────────────
+//    ACCESSIBILITY STORIES
+// ────────────────────────────────
+
+export const Accessibility: Story = {
+  tags: ['a11y'],
+};
