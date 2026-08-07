@@ -13,6 +13,8 @@
 import { html } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
+import '@adobe/spectrum-wc/components/avatar/swc-avatar.js';
+
 import {
   FORCED_STATES,
   forcePseudoStates,
@@ -62,6 +64,22 @@ const asLinkAndButton = (classes: string, label: string) => [
     </button>
   `,
 ];
+
+// A <swc-avatar> carrying the `.swc-ActionButton-icon` class, which the global
+// stylesheet gives `--swc-avatar-size: var(--_swc-action-button-icon-size)` so
+// the avatar tracks the button size — the class-based counterpart to the
+// shadow-DOM ::slotted rule covered in action-button.vrt.ts. A fixed picsum id
+// keeps the image deterministic for Chromatic (matching the docs stories).
+const AVATAR_ICON_SRC = 'https://picsum.photos/id/64/500/500';
+
+const globalAvatarIcon = html`
+  <swc-avatar
+    class="swc-ActionButton-icon"
+    src=${AVATAR_ICON_SRC}
+    alt=""
+    decorative
+  ></swc-avatar>
+`;
 
 // Medium is the default (no size class); the rest map to their modifier class.
 const SIZE_CASES = [
@@ -125,6 +143,33 @@ const globalStylesContent = () => html`
       `,
     ],
     'Anatomy'
+  )}
+  ${row(
+    [
+      ...SIZE_CASES.map(
+        ({ classes, label }) => html`
+          <button
+            type="button"
+            class="swc-ActionButton swc-ActionButton--hasIcon ${classes}"
+          >
+            ${globalAvatarIcon}
+            <span class="swc-ActionButton-label">${label}</span>
+          </button>
+        `
+      ),
+      ...SIZE_CASES.map(
+        ({ classes }) => html`
+          <button
+            type="button"
+            class="swc-ActionButton swc-ActionButton--iconOnly ${classes}"
+            aria-label="Jane Doe"
+          >
+            ${globalAvatarIcon}
+          </button>
+        `
+      ),
+    ],
+    'Avatar icon'
   )}
   ${staticColorBackground(
     row(
