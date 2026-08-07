@@ -220,10 +220,13 @@ export abstract class TooltipBase
   }
 
   // Reflects the browser's actual popover state. Used in updated() to reconcile
-  // `open` against native light-dismiss: when the browser closes the popover
-  // (e.g. Escape or outside click), `open` is synced by the toggle listener
-  // without re-invoking the Popover API, and the guard prevents a redundant
-  // hidePopover() (which would throw on an already-closed popover).
+  // `open` against the native popover state: when a `toggle` event syncs `open`
+  // (the toggle listener sets it without re-invoking the Popover API), this
+  // guard prevents a redundant showPopover()/hidePopover() call in the following
+  // update (hidePopover() would throw on an already-closed popover). Under
+  // `popover="manual"` the browser never closes the tooltip on its own, so the
+  // only driver is the component itself, but the guard is still needed to keep
+  // the `open`-driven and toggle-driven paths from double-invoking the API.
   private get isPopoverOpen(): boolean {
     return this.matches(':popover-open');
   }
@@ -449,11 +452,10 @@ export abstract class TooltipBase
   // Escape-to-close. Registered on `document` only while open (see updated()),
   // not for the whole connected lifetime: the tooltip is non-interactive and
   // never receives focus, so a host-level keydown would not fire, and scoping to
-  // the open state keeps at most one listener active at a time (popover="auto"
-  // permits one open tooltip). Under `popover="auto"` this duplicates the
-  // browser's native Escape light-dismiss; it is kept as a mode-independent
-  // handler so a `manual` tooltip (which gets no native light-dismiss, e.g. one
-  // that coexists with an open popover) still closes on Escape.
+  // the open state keeps the listener active only when it can do anything. This
+  // is the sole Escape mechanism: `popover="manual"` (chosen so the tooltip
+  // coexists with an open popover) provides no native light-dismiss, so unlike
+  // an `auto` popover the browser will not close the tooltip on Escape for us.
   private readonly handleKeyDown = (event: KeyboardEvent): void => {
     if (event.key === 'Escape' && this.open) {
       this.open = false;
@@ -546,7 +548,15 @@ export abstract class TooltipBase
   public override connectedCallback(): void {
     super.connectedCallback();
     this.setAttribute('role', 'tooltip');
-    this.setAttribute('popover', 'auto');
+    // `manual`, not `auto`: a tooltip must coexist with an open `swc-popover`
+    // (or menu/picker/select). Under `popover="auto"` the native light-dismiss
+    // group closes every other open auto popover the moment a tooltip opens on
+    // hover, tearing down an open popover the user is still working in. `manual`
+    // takes the tooltip out of that group. The behaviors `manual` drops are
+    // already handled internally: Escape via handleKeyDown (registered while
+    // open) and close-on-leave via HoverController; show/hide is driven
+    // explicitly through showPopover()/hidePopover() in updated().
+    this.setAttribute('popover', 'manual');
     this.addEventListener('beforetoggle', this.handleBeforeToggle);
     this.addEventListener('toggle', this.handleToggle);
     this.addEventListener('transitionend', this.handleTransitionEnd);

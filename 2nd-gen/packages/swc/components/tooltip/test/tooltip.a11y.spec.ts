@@ -100,9 +100,11 @@ test.describe('Tooltip - ARIA Snapshots', () => {
     `);
   });
 
-  // Trusted (Playwright) Escape exercises the real native `popover="auto"` dismissal.
-  // The synthetic-input counterpart (JS `handleKeyDown` backstop) is EscapeClosesTest in
-  // tooltip.test.ts; trusted input cannot run in a dev-indexed play function, so it lives here.
+  // `popover="manual"` has no native Escape light-dismiss, so closing on Escape
+  // is entirely the component's own document `handleKeyDown`. This exercises it
+  // under trusted (Playwright) input; EscapeClosesTest in tooltip.test.ts covers
+  // the synthetic-input path. Trusted input cannot run in a dev-indexed play
+  // function, so this case lives here.
   test('Escape closes an open tooltip', async ({ page }) => {
     await gotoStory(page, 'components-tooltip--overview', 'swc-button');
 
