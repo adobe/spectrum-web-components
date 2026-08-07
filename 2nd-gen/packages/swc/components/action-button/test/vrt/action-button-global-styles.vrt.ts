@@ -157,15 +157,17 @@ const globalStylesContent = () => html`
           </button>
         `
       ),
-      html`
-        <button
-          type="button"
-          class="swc-ActionButton swc-ActionButton--iconOnly"
-          aria-label="Jane Doe"
-        >
-          ${globalAvatarIcon}
-        </button>
-      `,
+      ...SIZE_CASES.map(
+        ({ classes }) => html`
+          <button
+            type="button"
+            class="swc-ActionButton swc-ActionButton--iconOnly ${classes}"
+            aria-label="Jane Doe"
+          >
+            ${globalAvatarIcon}
+          </button>
+        `
+      ),
     ],
     'Avatar icon'
   )}
