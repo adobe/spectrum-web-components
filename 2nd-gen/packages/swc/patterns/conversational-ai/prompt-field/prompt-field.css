@@ -15,7 +15,7 @@
   inline-size: 100%;
 
   /* Spike: shared timing for the collapse/expand transition (see .swc-PromptField-box). */
-  --swc-prompt-field-spike-duration: 160ms;
+  --swc-prompt-field-spike-duration: 240ms;
   --swc-prompt-field-spike-easing: cubic-bezier(0.8, 0, 0.2, 1);
 }
 
@@ -89,12 +89,16 @@
   display: grid;
   grid-template-rows: auto 0fr;
   grid-template-columns: 1fr auto;
-  transition: grid-template-rows var(--swc-prompt-field-spike-duration) var(--swc-prompt-field-spike-easing);
+  row-gap: 0;
+  transition:
+    grid-template-rows var(--swc-prompt-field-spike-duration) var(--swc-prompt-field-spike-easing),
+    row-gap var(--swc-prompt-field-spike-duration) var(--swc-prompt-field-spike-easing);
   column-gap: token("spacing-300");
 }
 
 :host(:not([collapsed])) .swc-PromptField-controls {
   grid-template-rows: auto 1fr;
+  row-gap: token("spacing-500");
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -112,9 +116,7 @@
   gap: token("spacing-200");
   align-items: center;
   min-inline-size: 0;
-
-  /* Temporary: the real pixel loader will set this height itself. */
-  min-block-size: 24px;
+  min-block-size: 32px;
   padding-inline-start: token("spacing-75");
 }
 
@@ -212,10 +214,10 @@
   display: none;
 }
 
-/* Row 2's grid track animates 0fr <-> 1fr. The gap above the button is a
- * margin on the child (.swc-PromptField-upload), not padding on this item:
- * padding on an overflow: hidden grid item still counts toward its own
- * minimum size and stops the track from reaching a true 0fr. */
+/* Row 2's grid track animates 0fr <-> 1fr; the gap above it is
+ * .swc-PromptField-controls's own row-gap, not a margin or padding here:
+ * either of those on an overflow: hidden grid item still counts toward its
+ * own minimum size and stops the track from reaching a true 0fr. */
 .swc-PromptField-leading-actions {
   display: flex;
   grid-row: 2;
@@ -239,7 +241,6 @@
   inline-size: var(--swc-prompt-field-upload-inline-size, 32px);
   block-size: var(--swc-prompt-field-upload-block-size, 32px);
   padding: 0;
-  margin-block-start: token("spacing-500");
   color: token("gray-800");
   background: transparent;
   border: 1px solid transparent;
@@ -289,14 +290,12 @@
   border-radius: token("corner-radius-full");
 }
 
-/* Spans both grid rows and centers on whatever their combined height
- * currently is, so it re-centers on its own as row 2 grows/shrinks instead
- * of needing a margin/position jump between two fixed states. */
+/* Spans both grid rows, flush with their bottom: matches the upload button when expanded, row 1's center when row 2 is 0. */
 .swc-PromptField-send,
 .swc-PromptField-stop {
   grid-row: 1 / 3;
   grid-column: 2;
-  align-self: center;
+  align-self: end;
   transition: background token("animation-duration-100") ease;
 }
 
