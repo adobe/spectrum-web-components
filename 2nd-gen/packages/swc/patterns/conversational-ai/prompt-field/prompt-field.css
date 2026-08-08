@@ -85,9 +85,11 @@
  * height in this engine (verified in isolation); 0fr <-> 1fr does. The box
  * needs no height transition of its own: it's a plain flex column sized to
  * this grid's content, so it naturally follows every frame of this animation. */
+
+/* Row 1 is a fixed 32px, not auto: an auto track next to one animating via fr briefly overshoots mid-transition in this engine (verified in isolation), bobbing row 1's content. */
 .swc-PromptField-controls {
   display: grid;
-  grid-template-rows: auto 0fr;
+  grid-template-rows: 32px 0fr;
   grid-template-columns: 1fr auto;
   row-gap: 0;
   transition:
@@ -97,7 +99,7 @@
 }
 
 :host(:not([collapsed])) .swc-PromptField-controls {
-  grid-template-rows: auto 1fr;
+  grid-template-rows: 32px 1fr;
   row-gap: token("spacing-500");
 }
 
