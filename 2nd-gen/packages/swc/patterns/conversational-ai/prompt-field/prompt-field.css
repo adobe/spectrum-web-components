@@ -80,8 +80,8 @@
   grid-template-columns: 1fr auto;
   row-gap: 0;
   transition:
-    grid-template-rows token("animation-duration-500") cubic-bezier(0.8, 0, 0.2, 1),
-    row-gap token("animation-duration-500") cubic-bezier(0.8, 0, 0.2, 1);
+    grid-template-rows token("animation-duration-200") cubic-bezier(0.8, 0, 0.2, 1),
+    row-gap token("animation-duration-200") cubic-bezier(0.8, 0, 0.2, 1);
   column-gap: token("spacing-300");
 }
 
