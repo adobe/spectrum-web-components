@@ -320,7 +320,6 @@ export class PromptField extends SpectrumElement {
                   @focusout=${this._handleTextareaFocusOut}
                 ></textarea>
               </div>
-              <span class="swc-PromptField-line-break" aria-hidden="true"></span>
               <div
                 class="swc-PromptField-leading-actions"
                 aria-hidden=${ifDefined(this.collapsed ? 'true' : undefined)}
