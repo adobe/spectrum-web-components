@@ -13,10 +13,6 @@
 :host {
   display: block;
   inline-size: 100%;
-
-  /* Spike: shared timing for the collapse/expand transition (see .swc-PromptField-box). */
-  --swc-prompt-field-spike-duration: 240ms;
-  --swc-prompt-field-spike-easing: cubic-bezier(0.8, 0, 0.2, 1);
 }
 
 *,
@@ -51,9 +47,7 @@
   overflow: hidden;
 }
 
-/* Outer ring only for keyboard focus on the textarea (PromptField toggles
- * `.swc-PromptField-box--keyboard-focus`; `:focus-visible` alone cannot
- * distinguish Tab vs click on text inputs). */
+/* Keyboard-only focus ring; PromptField toggles this class since :focus-visible alone can't tell Tab from a click. */
 .swc-PromptField-box.swc-PromptField-box--keyboard-focus {
   outline: token("focus-indicator-thickness") solid token("focus-indicator-color");
   outline-offset: token("focus-ring-gap");
@@ -79,27 +73,20 @@
    Controls (status icon, textarea, upload button, send/stop button)
    ───────────────────────────────────── */
 
-/* Spike: grid (not flex-wrap) so the row 2 <-> row 1 reflow is a smooth
- * grid-template-rows fr interpolation instead of a discrete flex-wrap jump.
- * calc-size(auto, size) does not smoothly animate a flex-wrap-driven auto
- * height in this engine (verified in isolation); 0fr <-> 1fr does. The box
- * needs no height transition of its own: it's a plain flex column sized to
- * this grid's content, so it naturally follows every frame of this animation. */
-
-/* Row 1 is a fixed 32px, not auto: an auto track next to one animating via fr briefly overshoots mid-transition in this engine (verified in isolation), bobbing row 1's content. */
+/* Spike: grid instead of flex-wrap animates the row 2 <-> row 1 reflow via grid-template-rows fr (0fr <-> 1fr), since calc-size(auto, size) doesn't smoothly animate a flex-wrap-driven height in this engine. Row 1 is a fixed size, not auto: an auto track next to an animating fr track briefly overshoots mid-transition here, bobbing row 1's content. */
 .swc-PromptField-controls {
   display: grid;
-  grid-template-rows: 32px 0fr;
+  grid-template-rows: var(--swc-prompt-field-send-block-size, 32px) 0fr;
   grid-template-columns: 1fr auto;
   row-gap: 0;
   transition:
-    grid-template-rows var(--swc-prompt-field-spike-duration) var(--swc-prompt-field-spike-easing),
-    row-gap var(--swc-prompt-field-spike-duration) var(--swc-prompt-field-spike-easing);
+    grid-template-rows token("animation-duration-500") cubic-bezier(0.8, 0, 0.2, 1),
+    row-gap token("animation-duration-500") cubic-bezier(0.8, 0, 0.2, 1);
   column-gap: token("spacing-300");
 }
 
 :host(:not([collapsed])) .swc-PromptField-controls {
-  grid-template-rows: 32px 1fr;
+  grid-template-rows: var(--swc-prompt-field-send-block-size, 32px) 1fr;
   row-gap: token("spacing-500");
 }
 
@@ -118,7 +105,7 @@
   gap: token("spacing-200");
   align-items: center;
   min-inline-size: 0;
-  min-block-size: 32px;
+  min-block-size: var(--swc-prompt-field-send-block-size, 32px);
   padding-inline-start: token("spacing-75");
 }
 
@@ -216,10 +203,7 @@
   display: none;
 }
 
-/* Row 2's grid track animates 0fr <-> 1fr; the gap above it is
- * .swc-PromptField-controls's own row-gap, not a margin or padding here:
- * either of those on an overflow: hidden grid item still counts toward its
- * own minimum size and stops the track from reaching a true 0fr. */
+/* Gap above the button is .controls's row-gap, not margin/padding here: either would count toward this item's own min size and block a true 0fr. */
 .swc-PromptField-leading-actions {
   display: flex;
   grid-row: 2;
