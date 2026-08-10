@@ -42,11 +42,10 @@
 }
 
 :host([vertical]) {
-  block-size: 100%;
+  align-self: stretch;
 }
 
 .swc-Divider--vertical {
-  align-self: flex-start;
   inline-size: var(--_swc-divider-thickness);
   block-size: 100%;
   min-block-size: min(100%, token("divider-vertical-minimum-height"));

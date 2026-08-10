@@ -121,7 +121,13 @@ export class SlotTextController implements ReactiveController {
       if (this.slotName) {
         return false;
       }
-      return node.textContent ? node.textContent.trim().length > 0 : false;
+      // Only real text nodes count. Comment nodes (e.g. Lit's child-part
+      // markers left behind by a `${cond ? nothing : label}` binding) also
+      // lack a `tagName`, and their `textContent` is the marker data, which
+      // would otherwise be misread as label text.
+      return node.nodeType === Node.TEXT_NODE && node.textContent
+        ? node.textContent.trim().length > 0
+        : false;
     });
 
     if (hasContent !== this._hasContent) {
@@ -164,7 +170,13 @@ export class SlotTextController implements ReactiveController {
       if (this.slotName) {
         return false;
       }
-      return node.textContent ? node.textContent.trim().length > 0 : false;
+      // Only real text nodes count. Comment nodes (e.g. Lit's child-part
+      // markers left behind by a `${cond ? nothing : label}` binding) also
+      // lack a `tagName`, and their `textContent` is the marker data, which
+      // would otherwise be misread as label text.
+      return node.nodeType === Node.TEXT_NODE && node.textContent
+        ? node.textContent.trim().length > 0
+        : false;
     });
     this._hasContent = relevant.length > 0;
   }
