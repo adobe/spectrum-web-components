@@ -11,7 +11,12 @@
  */
 import type { StoryContext } from '@storybook/web-components';
 
+import customElements from '../../dist/custom-elements.json';
+
 const PATTERN_TITLE_PREFIX = 'Patterns/Conversational AI/';
+
+// Attribute names declared as `boolean` on every custom element that has them.
+const BOOLEAN_ATTRIBUTE_NAMES = computeBooleanAttributeNames(customElements);
 
 /**
  * Format source snippets for Storybook code panel.
@@ -26,7 +31,43 @@ export async function transformDocsSource(
     ? extractHtmlTemplate(source)
     : source;
 
-  return formatHtml(normalizedSource);
+  const formatted = await formatHtml(normalizedSource);
+  return collapseBooleanAttributes(formatted);
+}
+
+function computeBooleanAttributeNames(
+  manifest: typeof customElements
+): Set<string> {
+  const booleanNames = new Set<string>();
+  const nonBooleanNames = new Set<string>();
+
+  for (const mod of manifest.modules ?? []) {
+    for (const decl of mod.declarations ?? []) {
+      for (const attr of 'attributes' in decl ? (decl.attributes ?? []) : []) {
+        const type = attr.type?.text?.trim();
+        if (type === 'boolean') {
+          booleanNames.add(attr.name);
+        } else {
+          nonBooleanNames.add(attr.name);
+        }
+      }
+    }
+  }
+
+  for (const name of nonBooleanNames) {
+    booleanNames.delete(name);
+  }
+
+  return booleanNames;
+}
+
+function collapseBooleanAttributes(source: string): string {
+  let result = source;
+  for (const name of BOOLEAN_ATTRIBUTE_NAMES) {
+    const pattern = new RegExp(`(^|\\s)${name}=""`, 'gm');
+    result = result.replace(pattern, `$1${name}`);
+  }
+  return result;
 }
 
 function shouldNormalizePatternSource(storyContext?: StoryContext): boolean {
