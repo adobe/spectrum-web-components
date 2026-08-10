@@ -55,6 +55,18 @@ type BatchedWarning = {
   listedIssues: string;
   elements: HTMLElement[];
   count: number;
+
+  /**
+   * Elements already counted in this batch, keyed by identity. A repeated
+   * `warn()` for an element already here does not bump `count` again.
+   */
+  countedElements?: Set<HTMLElement>;
+
+  /**
+   * Whether the dev-mode warning (the only warning with no element) has been
+   * counted, so repeats of it collapse to one.
+   */
+  countedDevModeWarning?: boolean;
 };
 
 /**
@@ -96,6 +108,46 @@ export function buildGroupedWarningArgs(
     data: { localName, type, level, count },
   });
   return args;
+}
+
+/**
+ * Records one warning occurrence into its batch, counting by element identity:
+ * `count` becomes the number of distinct elements with this warning, not the
+ * number of `warn()` calls. A host that warns once per child (same message,
+ * same element) still counts as one affected element. `count` is uncapped;
+ * `maxDisplayed` only limits how many element refs are kept for display.
+ *
+ * @param batch - Grouped-warning batch to record into.
+ * @param element - Element the warning is about, or `undefined` for the
+ *   dev-mode warning, which is not about a specific element.
+ * @param maxDisplayed - Cap on element refs kept for display; does not affect
+ *   `count`.
+ * @internal
+ */
+export function recordAffectedElement(
+  batch: BatchedWarning,
+  element: HTMLElement | undefined,
+  maxDisplayed: number
+): void {
+  if (!element) {
+    // The dev-mode warning is the only warning with no element; count it once
+    // however often it fires.
+    if (batch.countedDevModeWarning) {
+      return;
+    }
+    batch.countedDevModeWarning = true;
+    batch.count += 1;
+    return;
+  }
+  const countedElements = (batch.countedElements ??= new Set<HTMLElement>());
+  if (countedElements.has(element)) {
+    return; // this element is already counted for the batch
+  }
+  countedElements.add(element);
+  batch.count += 1;
+  if (batch.elements.length < maxDisplayed) {
+    batch.elements.push(element);
+  }
 }
 
 // Enabled in every environment except production (the ecosystem convention);
@@ -192,10 +244,7 @@ if (process.env.NODE_ENV !== 'production') {
         };
         batchedWarnings.set(id, batch);
       }
-      batch.count += 1;
-      if (element && batch.elements.length < WARNING_ELEMENT_CAP) {
-        batch.elements.push(element);
-      }
+      recordAffectedElement(batch, element, WARNING_ELEMENT_CAP);
       if (!flushScheduled) {
         flushScheduled = true;
         queueMicrotask(flushWarnings);
