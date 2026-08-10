@@ -45,10 +45,11 @@ const sizeLabels = {
   xl: 'Extra-large',
 } as const satisfies Record<InfieldButtonSize, string>;
 
-const chevronIconSvg = `<svg slot="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M5 7.376 1.281 3.656l.875-.875L5 5.625l2.844-2.844.875.875Z"/></svg>`;
-const addIconSvg = `<svg slot="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36" aria-hidden="true" focusable="false"><path d="M16 16V4.5a2 2 0 0 1 4 0V16h11.5a2 2 0 0 1 0 4H20v11.5a2 2 0 0 1-4 0V20H4.5a2 2 0 0 1 0-4Z"/></svg>`;
-const removeIconSvg = `<svg slot="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36" aria-hidden="true" focusable="false"><rect x="4" y="16" width="28" height="4" rx="2"/></svg>`;
-const crossIconSvg = `<svg slot="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36" aria-hidden="true" focusable="false"><path d="M20.5 18l8.2-8.2a1.8 1.8 0 1 0-2.5-2.5L18 15.5 9.8 7.3a1.8 1.8 0 0 0-2.5 2.5L15.5 18l-8.2 8.2a1.8 1.8 0 1 0 2.5 2.5L18 20.5l8.2 8.2a1.8 1.8 0 1 0 2.5-2.5Z"/></svg>`;
+// S2 UI chevron (right-pointing) rotated 90° clockwise to point down for picker disclosure.
+const chevronIconSvg = `<svg slot="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10" aria-hidden="true" focusable="false" style="rotate: 90deg;"><path fill="currentColor" d="M3.375 9.375a.628.628 0 0 1-.442-1.067L6.24 5 2.933 1.692a.626.626 0 0 1 .885-.885l3.75 3.75a.63.63 0 0 1 0 .885l-3.75 3.75a.62.62 0 0 1-.443.183"/></svg>`;
+const addIconSvg = `<svg slot="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path fill="currentColor" d="M8.125 4.375h-2.5v-2.5a.626.626 0 0 0-1.25 0v2.5h-2.5a.626.626 0 0 0 0 1.25h2.5v2.5a.626.626 0 0 0 1.25 0v-2.5h2.5a.626.626 0 0 0 0-1.25"/></svg>`;
+const removeIconSvg = `<svg slot="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path fill="currentColor" d="M8.125 5.625h-6.25a.626.626 0 0 1 0-1.25h6.25a.626.626 0 0 1 0 1.25"/></svg>`;
+const crossIconSvg = `<svg slot="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path fill="currentColor" d="m5.885 5 2.307-2.308a.626.626 0 0 0-.885-.885L5 4.116 2.692 1.808a.626.626 0 0 0-.884.884L4.115 5 1.808 7.308a.63.63 0 0 0 0 .884.623.623 0 0 0 .884 0L5 5.885l2.308 2.307a.623.623 0 0 0 .884 0 .63.63 0 0 0 0-.884z"/></svg>`;
 
 // ──────────────────────────────────────────────────
 //    REUSABLE FIELD TEMPLATE
