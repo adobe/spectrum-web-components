@@ -47,7 +47,7 @@ This doc tells you how **`swc-text-area`** should work for **accessibility**. It
 ### What it is
 
 - A **multi-line text input** for longer, open-ended text (comments, descriptions). The accessible semantics come from a real `<textarea>` in the component's shadow root; `swc-text-area` does not set a host-level ARIA role.
-- Optionally grows vertically to fit its content (`grows`), and is normally paired with an external `swc-field-label` and, optionally, help text or an error message — the same label/help-text association model as `swc-text-field`.
+- Optionally grows vertically to fit its content (`grows`). Its visible label, help text, and error message render directly inside `swc-text-area`'s own shadow root via the `LabellingController` — the same in-shadow label/help-text model as `swc-text-field`, not an externally associated `swc-field-label`/`swc-help-text` component.
 
 ### When to use something else
 
@@ -57,12 +57,11 @@ This doc tells you how **`swc-text-area`** should work for **accessibility**. It
 ### What it is not
 
 - Not a rich-text or code editor. It is a plain-text `<textarea>` with Spectrum styling and validation wiring, not a formatting or syntax-highlighting surface.
-- Does not carry `swc-text-field`'s truncated-value hover/focus tooltip. That feature is single-line only in 1st-gen (explicitly skipped when `multiline` is set) because a multiline field wraps its content instead of clipping it — there is no truncated value to reveal.
+- Does not need `swc-text-field`'s native-`title` truncation treatment. A multiline field wraps its content instead of clipping it, so there is no truncated single line of value to reveal in the first place.
 
 ### Related
 
-- [`swc-field-label`](#) (not yet migrated) — same cross-root association problem as `swc-text-field`; see [Shadow DOM and cross-root ARIA Issues](#shadow-dom-and-cross-root-aria-issues).
-- [`swc-help-text`](#) (not yet migrated) — renders help text and error messages inside the field's own shadow root, same as `swc-text-field`.
+- 1st-gen [`sp-field-label`](../../../../1st-gen/packages/field-label/README.md) and [`sp-help-text`](../../../../1st-gen/packages/help-text/README.md) are being retired as standalone 2nd-gen components for this use case, same as for `swc-text-field`. Their visual output moves into the shared render directive `LabellingController` calls from inside `swc-text-area`'s own template — see [`swc-text-field`'s Related section](../text-field/accessibility-migration-analysis.md#related) for the full explanation and the [SWC-1316](https://jira.corp.adobe.com/browse/SWC-1316) predecessor work.
 - [`LabellingController`](https://jira.corp.adobe.com/browse/SWC-2466) and [`FieldAssociationController`](https://jira.corp.adobe.com/browse/SWC-2467) — the same two shared controllers `swc-text-field` depends on; `swc-text-area` should use the exact same integration, not a parallel one.
 
 ---
@@ -127,24 +126,25 @@ Component tag may change until API freeze. `swc-text-area` covers only the multi
 | **Accessible name, description, live region, validation icon, character count** | Identical policy to [`swc-text-field`](../text-field/accessibility-migration-analysis.md#aria-roles-states-and-properties) — same `LabellingController`/single-writer rule, same "no `aria-live="assertive"` by default," same decorative validation icon. Do not create a second, parallel implementation of any of this for multiline; both components should call into the same controllers. |
 | **`pattern` has no native support on `<textarea>`** | The native `<textarea>` element does not support the `pattern` attribute or constraint at all — this is a browser/spec limitation, not a bug. 1st-gen already works around this by running a manual regex check in `checkValidity()` when `multiline` is set. 2nd-gen must keep this JS-side emulation **and** feed its result into `internals.setValidity()` (via the `FieldAssociationController`) so the form's native validity state, `:invalid` styling, and `invalid` event fire correctly — otherwise a `pattern`-constrained `swc-text-area` would silently never register as invalid through the native form-validation path. |
 | **`grows` auto-sizing sizer** | When `grows` is set with an unset `rows`, an invisible sizer element mirrors the value purely for CSS measurement purposes. It must stay `aria-hidden="true"` and must never end up with its own accessible name or role — it exists only so the browser can compute layout, and duplicating the value into the tree a second time (even hidden) is worth double-checking on every markup change so it never accidentally becomes exposed. |
-| **No truncation tooltip** | Do not port `swc-text-field`'s hover/focus truncation tooltip to `swc-text-area`. Multiline text wraps instead of clipping, so there is no truncated value to reveal; 1st-gen's tooltip controller already explicitly skips setup when `multiline` is set — keep that scoping in 2nd-gen. |
+| **No truncation handling needed** | `swc-text-field` drops its custom truncation tooltip entirely in favor of a native `title` attribute (see [that doc](../text-field/accessibility-migration-analysis.md#aria-roles-states-and-properties)); `swc-text-area` doesn't need even that. Multiline text wraps instead of clipping, so there is no truncated single line of value to reveal in the first place. 1st-gen's tooltip controller already explicitly skips setup when `multiline` is set — there is nothing to carry forward here either way. |
 | **Reflow across languages** | Verify `rows`/`grows` sizing does not force an unwanted scrollbar at small row counts in CJK text ([SWC-779](https://jira.corp.adobe.com/browse/SWC-779)) and that `grows` sizing is accurate when `value` is empty or unset ([SWC-1520](https://jira.corp.adobe.com/browse/SWC-1520), [SWC-1035](https://jira.corp.adobe.com/browse/SWC-1035)) — these are functional bugs with a real [reflow (1.4.10)](https://www.w3.org/WAI/WCAG22/Understanding/reflow.html) consequence, not purely cosmetic ones. |
 
 ### Shadow DOM and cross-root ARIA Issues
 
-Same issue and same fix as [`swc-text-field`](../text-field/accessibility-migration-analysis.md#shadow-dom-and-cross-root-aria-issues): the external `swc-field-label` must label an input living in `swc-text-area`'s own shadow root, which today (1st-gen) is done via an imperative, cross-shadow-root `setAttribute('aria-label', …)` reach-in rather than an IDREF (IDREFs cannot cross disconnected shadow trees). The `LabellingController` ([SWC-2466](https://jira.corp.adobe.com/browse/SWC-2466)) should use the `ariaLabelledByElements` element-reference API for both `swc-text-field` and `swc-text-area` — one implementation, not two. Same-root `aria-describedby` for help text/error message continues to work fine since the `<textarea>` and the help-text container both live in the field's own shadow root.
+**None — same resolution as [`swc-text-field`](../text-field/accessibility-migration-analysis.md#shadow-dom-and-cross-root-aria-issues), not a parallel one.** 1st-gen has the same cross-root problem for `sp-textfield[multiline]` as for single-line: `sp-field-label` labels the field by reaching into its shadow root and mutating the inner `<textarea>`'s `aria-label` directly. 2nd-gen removes the boundary itself: the `LabellingController` renders label, required indicator, help text, and error message inside `swc-text-area`'s own shadow root via the same shared render directive `swc-text-field` uses — one implementation serving both components, not two. Label, `<textarea>`, and help-text/error container are therefore always same-root, so a real `<label for>`/`id` pair for the slotted-label case, `aria-label` for the `accessible-label`-property case, and same-root `aria-describedby`/`aria-errormessage` for help text and errors, all work without any element-reference API. See the linked section for the full explanation of why this is a genuine fix, not an assumption.
 
 ### Accessibility tree expectations
 
-- **Labeled, with a value:** name from the associated `swc-field-label` (or `label` fallback); role `textbox`; `aria-multiline="true"` (implicit, browser-supplied); value is the current multi-line text, wrapped as authored.
+- **Labeled, with a value:** name from the slotted visible label (rendered as a same-root `<label>`) or, when no visible label is slotted, the `accessible-label` property (rendered as `aria-label`); role `textbox`; `aria-multiline="true"` (implicit, browser-supplied); value is the current multi-line text, wrapped as authored.
 - **Labeled, placeholder only, no value:** same rule as `swc-text-field` — the name never comes from the placeholder alone.
-- **Invalid, including `pattern` failures:** `aria-invalid="true"`; error text visible and `aria-describedby`-linked; validity must reflect a `pattern` failure even though the browser itself cannot check `pattern` on a `<textarea>` (see **`pattern` has no native support** above) — the manually computed result must still reach `internals.setValidity()`.
+- **Invalid, including `pattern` failures:** `aria-invalid="true"`; error text visible and reachable via `aria-describedby`/`aria-errormessage`; validity must reflect a `pattern` failure even though the browser itself cannot check `pattern` on a `<textarea>` (see **`pattern` has no native support** above) — the manually computed result must still reach `internals.setValidity()`.
 - **`grows` sizer:** never appears as its own node with a name or role; purely a hidden layout-measurement aid.
 - **Disabled vs. readonly:** same distinction as `swc-text-field` — `disabled` removed from the tab order, `readonly` stays focusable and selectable but non-editable.
 
 ### Keyboard and focus
 
 - **Tab stop:** one Tab stop, `delegatesFocus: true` onto the real `<textarea>`, same as `swc-text-field`.
+- **Click-to-focus on the label:** same simplification as `swc-text-field` — a real `<label for>` in the same shadow root as the `<textarea>` gives click-to-focus for free, no manual cross-root `focus()` forwarding needed.
 - **Text editing:** arrow keys move the caret across wrapped lines, <kbd>Home</kbd>/<kbd>End</kbd> jump to the start/end of the *visual* line (native `<textarea>` behavior), select-all and undo/redo work natively.
 - **<kbd>Enter</kbd> inserts a newline, it does not submit the form.** This is the opposite of `swc-text-field`'s native <kbd>Enter</kbd>-submits behavior, and it is also native `<textarea>` behavior — do not add custom key handling to make <kbd>Enter</kbd> submit the form from inside a `swc-text-area`; that would surprise both sighted and AT users expecting standard multiline editing.
 - **Readonly vs. disabled:** same distinction as `swc-text-field` — keep it.
@@ -158,7 +158,7 @@ Same issue and same fix as [`swc-text-field`](../text-field/accessibility-migrat
 
 | Kind of test | What to check |
 | --- | --- |
-| **Unit** | Same checks as [`swc-text-field`](../text-field/accessibility-migration-analysis.md#automated-tests) (name/description wiring, single-writer accessible name, `FieldAssociationController` form participation), plus: a `pattern`-constrained `swc-text-area` correctly reports invalid through `internals.validity` (not just through the component's own `checkValidity()`), and the `grows` sizer never gains an accessible name or role. |
+| **Unit** | Same checks as [`swc-text-field`](../text-field/accessibility-migration-analysis.md#automated-tests) (same-root label/help-text rendering with unique ids, `aria-errormessage` only while invalid, `FieldAssociationController` form participation), plus: a `pattern`-constrained `swc-text-area` correctly reports invalid through `internals.validity` (not just through the component's own `checkValidity()`), and the `grows` sizer never gains an accessible name or role. |
 | **aXe + Storybook** | Same unlabeled-field dev-warning and error/disabled/readonly stories as `swc-text-field`. Add a CJK-content story to catch reflow regressions like [SWC-779](https://jira.corp.adobe.com/browse/SWC-779). |
 | **Playwright ARIA snapshots** | `role=textbox` with `aria-multiline="true"` (implicit) across label positions and states, matching the design spec's state matrix for text area. |
 | **Manual keyboard** | Tab order, <kbd>Enter</kbd> inserts a newline (does not submit), caret movement across wrapped lines, `grows` resizing behaves correctly with an empty value ([SWC-1035](https://jira.corp.adobe.com/browse/SWC-1035)). |
@@ -167,10 +167,12 @@ Same issue and same fix as [`swc-text-field`](../text-field/accessibility-migrat
 
 ## Summary checklist
 
-- [ ] Shares the same `LabellingController`/`FieldAssociationController` integration as `swc-text-field` — no parallel, divergent implementation for multiline.
+- [ ] Shares the same `LabellingController`/`FieldAssociationController` integration as `swc-text-field` — no parallel, divergent implementation for multiline. Label, required indicator, help text, and error message render inside `swc-text-area`'s own shadow root, not via an external `swc-field-label`/`swc-help-text` component.
+- [ ] `aria-errormessage` points at the error-message element while `invalid` is `true`, in addition to `aria-describedby` — same as `swc-text-field`.
+- [ ] `accessible-label` and a slotted visible label are never set with conflicting text at the same time — same [WCAG 2.5.3](https://www.w3.org/WAI/WCAG22/Understanding/label-in-name.html) risk as `swc-text-field`.
 - [ ] `pattern` validation is emulated in JS (native `<textarea>` has no `pattern` support) and its result is fed into `internals.setValidity()`, not just the component's own `checkValidity()`.
 - [ ] `grows` sizer element stays `aria-hidden="true"` with no accessible name or role.
-- [ ] No truncation tooltip ported from `swc-text-field` — multiline wraps instead of clipping.
+- [ ] No custom truncation tooltip and no native-`title` truncation treatment either — multiline wraps instead of clipping, so neither is needed.
 - [ ] `aria-multiline` is never set explicitly by component code; it stays a native, implicit mapping.
 - [ ] <kbd>Enter</kbd> inserts a newline and does not submit the form.
 - [ ] Reflow regressions from 1st-gen ([SWC-779](https://jira.corp.adobe.com/browse/SWC-779) CJK scrollbar, [SWC-1520](https://jira.corp.adobe.com/browse/SWC-1520)/[SWC-1035](https://jira.corp.adobe.com/browse/SWC-1035) inaccurate `grows`/positioning) are verified fixed, not just re-implemented as-is.
@@ -180,8 +182,10 @@ Same issue and same fix as [`swc-text-field`](../text-field/accessibility-migrat
 ## References
 
 - [Web component form strategy demos](https://github.com/nikkimk/web-component-form-strategy-demos/tree/main) — labelling, form-association, and ARIA-role-placement recommendations this doc follows.
+- [Forms RFC (approved)](https://rfc-hub.adobe.io/rfcs/07afc8e3-960a-4fa6-a25a-361c28d2203d?from=%2F%3Fstatus%3DApproved) — approved architecture this doc's `LabellingController`/`FieldAssociationController` guidance is based on (internal, SSO-gated — not independently fetchable while drafting this doc; verify directly if you have access).
 - [WAI-ARIA](https://www.w3.org/TR/wai-aria-1.2/), [WCAG 2.2](https://www.w3.org/TR/WCAG22/), [APG: read me first](https://www.w3.org/WAI/ARIA/apg/practices/read-me-first/)
 - [React Spectrum: TextArea](https://react-spectrum.adobe.com/TextArea)
+- [`renderPendingSpinner` (this repo)](../../../../2nd-gen/packages/core/directives/pending-spinner/src/pending-spinner.ts) — the shared-directive structural precedent `LabellingController` follows
 - [Spectrum 2: Text field](https://s2.spectrum.corp.adobe.com/page/text-field/), [Spectrum 2: Field label](https://s2.spectrum.corp.adobe.com/page/field-label/) (internal, SSO-gated — verify directly if you have access; not independently fetchable while drafting this doc)
 - 1st-gen: [`sp-textfield`](../../../../1st-gen/packages/textfield/README.md) (see `textarea.md` in that package for the informal 1st-gen "textarea" spec), [`sp-field-label`](../../../../1st-gen/packages/field-label/README.md), [`sp-help-text`](../../../../1st-gen/packages/help-text/README.md)
 - [Textfield and Textarea migration roadmap (this repo)](../textfield/rendering-and-styling-migration-analysis.md)
