@@ -100,14 +100,14 @@ A textbox or combobox exposes a **live value** to assistive technology, and that
 
 ### 3.3 IDREF strategy: label, help text, and errors
 
-Hosts do **not** expose the raw `aria-label` / `aria-labelledby` attributes. Because of cross-root ARIA issues, and so consumers get one consistent API across every field instead of setting `aria-label` on the components that happen to support it (and then reaching for it on the ones that do not), fields expose the established **`accessible-label`** attribute for a string name and a proposed **`accessible-labelledby`** attribute for an ID reference. This holds even for host-role controls (button-like, radio-like); see [§3.2](#32-where-aria-roles-live).
+Hosts do **not** expose the raw `aria-label` / `aria-labelledby` attributes. Because of cross-root ARIA issues, and so consumers get one consistent API across every field instead of setting `aria-label` on the components that happen to support it (and then reaching for it on the ones that do not), fields expose the established **`accessible-label`** attribute for a string name, and the proposed **`accessible-labelledby`** / **`accessible-describedby`** attributes (properties `accessibleLabelledby` / `accessibleDescribedby`) for ID references to a name and a description respectively. This holds even for host-role controls (button-like, radio-like); see [§3.2](#32-where-aria-roles-live).
 
 A **`LabellingController`** (in flight as part of the text field epic; *pending research*) owns the wiring so fields do not hand-roll it: it watches the shadow DOM slots, shows or hides the internal label element based on slot content presence, and keeps the ARIA relationships in sync as content changes. Help text and error text associate through `aria-describedby` and `aria-errormessage`.
 
 Two complementary sources feed the accessible name and description:
 
 - **Slotted content** (`slot="label"` / `slot="description"`) projects into the shadow DOM and wires through **same-root** `aria-labelledby` / `aria-describedby` pointing at the shadow-internal elements. This is a plain IDREF because both ends live in the same root.
-- **Light-DOM siblings** wire through the `accessible-labelledby` attribute, which resolves element IDs and, via the `LabellingController`, sets the **cross-root element-reference property** `ariaLabelledByElements`, rather than a raw IDREF that cannot cross the shadow boundary.
+- **Light-DOM siblings** wire through the `accessible-labelledby` and `accessible-describedby` attributes, which resolve element IDs and, via the `LabellingController`, set the **cross-root element-reference properties** `ariaLabelledByElements` / `ariaDescribedByElements`, rather than raw IDREFs that cannot cross the shadow boundary.
 
 When both sources exist, the shadow-internal label appears first in the merged element-reference list. Error text associates the same way through `aria-errormessage`.
 
@@ -123,7 +123,7 @@ Browsers currently lack a standardized path for axe-core to read ARIA relationsh
 - **`aria-required-children`**: fires on a combobox-style component with slotted options because axe does not traverse the light-DOM slot to find the `role="option"` children.
 - **`duplicate-id-aria`**: fires on shadow DOM IDs, which cannot actually conflict across instances because they are shadow-scoped.
 
-**Known blind spots** (real issues axe misses): a misconfigured `labelledby` that silently yields a missing label, and stale element references after a target is removed. Screen reader testing is authoritative for these; axe is supplementary.
+**Known blind spots** (real issues axe misses): a misconfigured `accessible-labelledby` that silently yields a missing label, and stale element references after a target is removed. Screen reader testing is authoritative for these; axe is supplementary.
 
 **Policy:**
 
@@ -147,7 +147,8 @@ The canonical surface for form fields. Contributors align Phase 3 (API) and Phas
 | Error text surface | Error text wired by `LabellingController` | Associates via `aria-errormessage`. |
 | Disabled cascade | `formDisabledCallback(disabled)` | Receives cascade from ancestor `<fieldset disabled>` or owning form. |
 | Reset | `formResetCallback()` | Restores the field to its default value on form reset. |
-| Cross-root name from light DOM | `accessible-labelledby` attribute → `ariaLabelledByElements` via `LabellingController` *(pending research)* | Element references, not raw IDREFs; do **not** expose raw `aria-labelledby`. |
+| Cross-root name from light DOM | `accessible-labelledby` attribute (property `accessibleLabelledby`) → `ariaLabelledByElements` via `LabellingController` *(pending research)* | Element references, not raw IDREFs; do **not** expose raw `aria-labelledby`. |
+| Cross-root description from light DOM | `accessible-describedby` attribute (property `accessibleDescribedby`) → `ariaDescribedByElements` via `LabellingController` *(pending research)* | Element references, not raw IDREFs; do **not** expose raw `aria-describedby`. |
 
 | Component class | Role placement | Internals (FACE) | IDREF approach | axe note |
 |-----------------|----------------|------------------|----------------|----------|
@@ -173,7 +174,7 @@ These are active research spikes; their outcomes finalize the *pending research*
 - **Button activation:** whether a dedicated `ButtonAssociationController` is needed for button-like fields (clear button, a future submit button), or whether a native inner `<button>` already covers keyboard activation, role, and focusability.
 - **Grouped selection:** whether a dedicated `RadioGroupController` is needed for radio group (composing `SelectionController`, `FocusgroupNavigationController`, and `SlotAttributePropagationController`), or whether those primitives are composed inline.
 - **Label slot rule:** confirming the primary-vs-supplementary rule for default slot vs named `slot="label"` holds across all migrated components, and how it relates to the `accessible-label` attribute used for no-visible-label cases.
-- **`accessible-labelledby` and `LabellingController`:** the cross-root label mapping is part of the in-flight text field epic and not yet in the codebase; the exact API and whether the controller wiring lands separately from the `accessible-labelledby` attribute is still under discussion.
+- **`accessible-labelledby` / `accessible-describedby` and `LabellingController`:** the cross-root name and description mappings are part of the in-flight text field epic and not yet in the codebase; the exact API and whether the controller wiring lands separately from the attributes is still under discussion.
 
 ---
 
