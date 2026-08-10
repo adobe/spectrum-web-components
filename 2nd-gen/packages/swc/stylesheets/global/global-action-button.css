@@ -25,6 +25,7 @@
   gap: var(--swc-action-button-gap, token("base-gap-medium"));
   align-items: center;
   justify-content: center;
+  inline-size: inherit;
   min-block-size: var(--_swc-action-button-min-block-size);
   padding-inline: calc(var(--swc-action-button-edge-to-text, token("base-padding-horizontal-medium")) - var(--_swc-action-button-border-width));
   margin: 0;

@@ -33,6 +33,7 @@
   gap: var(--swc-action-button-gap, token("base-gap-medium"));
   align-items: center;
   justify-content: center;
+  inline-size: inherit;
   min-block-size: var(--_swc-action-button-min-block-size);
   padding-inline: calc(var(--swc-action-button-edge-to-text, token("base-padding-horizontal-medium")) - var(--_swc-action-button-border-width));
   margin: 0;
@@ -58,14 +59,6 @@
   /* TODO: include outline in the transition-property, it has been removed because it transitions black to blue, will be fixed in SWC-2308 */
   transition-property: border-color, color, background-color, transform;
 }
-
-/* @global-exclude: fills a shadow-DOM host stretched by an ancestor flex layout (e.g. vertical swc-action-group); plain elements via global classes already stretch natively */
-/* stylelint-disable-next-line no-duplicate-selectors -- re-opens .swc-ActionButton so the @global-exclude fence (see vite-global-elements-css) can strip just this declaration from the generated global stylesheet without excluding the rest of the class's rules */
-.swc-ActionButton {
-  inline-size: 100%;
-}
-
-/* @global-exclude-end */
 
 /* ── States ───────────────────────────────────────── */
 

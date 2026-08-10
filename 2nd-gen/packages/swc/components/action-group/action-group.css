@@ -41,6 +41,10 @@
   flex-direction: column;
 }
 
+:host([orientation="vertical"]) ::slotted(*) {
+  inline-size: 100%;
+}
+
 /* ── Sizes ────────────────────────────────────────── */
 
 :host([size="xs"]) {
@@ -63,6 +67,7 @@
 
 :host([justified]) ::slotted(*) {
   flex: 1 1 0%;
+  inline-size: 100%;
 }
 
 /* ── Compact ──────────────────────────────────────── */
