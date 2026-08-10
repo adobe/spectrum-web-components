@@ -209,11 +209,15 @@
 .swc-PromptField-leading-actions {
   display: grid;
   grid-template-rows: 0fr;
-  transition: grid-template-rows token("animation-duration-200") cubic-bezier(0.8, 0, 0.2, 1);
+  opacity: 0;
+  transition:
+    grid-template-rows token("animation-duration-200") cubic-bezier(0.8, 0, 0.2, 1),
+    opacity token("animation-duration-200") cubic-bezier(0.8, 0, 0.2, 1);
 }
 
 :host(:not([collapsed])) .swc-PromptField-leading-actions {
   grid-template-rows: 1fr;
+  opacity: 1;
 }
 
 @media (prefers-reduced-motion: reduce) {
