@@ -13,18 +13,15 @@
 import { CSSResultArray, html, TemplateResult } from 'lit';
 import { property, queryAssignedElements, state } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
+import { styleMap } from 'lit/directives/style-map.js';
 
 import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
 
 import '@adobe/spectrum-wc/components/icon/swc-icon.js';
+import '../../../components/ui-icons/swc-ui-icon.js';
 
 import { uniqueId } from '../../../utils/id.js';
-import {
-  ChevronUpIcon,
-  PlusIcon,
-  StopIcon,
-  ThreeDotsIcon,
-} from '../utils/icons/index.js';
+import { ChevronUpIcon, PlusIcon, StopIcon } from '../utils/icons/index.js';
 
 import visuallyHiddenStyles from '../../../stylesheets/_lit-styles/visually-hidden.css';
 import styles from './prompt-field.css';
@@ -94,6 +91,14 @@ export class PromptField extends SpectrumElement {
   /** The current textarea value; internally updated and externally mirrorable. */
   @property({ type: String })
   public value = '';
+
+  /** Minimum visible textarea rows before growth; unset relies on the natural single-line height. */
+  @property({ type: Number, attribute: 'min-rows' })
+  public minRows?: number;
+
+  /** Maximum visible textarea rows before internal scrolling; unset relies on max-block-size alone. */
+  @property({ type: Number, attribute: 'max-rows' })
+  public maxRows?: number;
 
   @queryAssignedElements({ slot: 'artifact', flatten: true })
   private _assignedArtifactElements!: HTMLElement[];
@@ -202,6 +207,22 @@ export class PromptField extends SpectrumElement {
     );
   }
 
+  private get _normalizedMinRows(): number {
+    if (this.collapsed) {
+      return 1;
+    }
+    return this.minRows ? Math.max(1, Math.floor(this.minRows)) : 1;
+  }
+
+  private get _normalizedMaxRows(): number | undefined {
+    if (this.collapsed) {
+      return 1;
+    }
+    return this.maxRows
+      ? Math.max(this._normalizedMinRows, Math.floor(this.maxRows))
+      : undefined;
+  }
+
   private _handleLegalSlotChange(): void {
     this.requestUpdate();
   }
@@ -269,7 +290,7 @@ export class PromptField extends SpectrumElement {
   private _renderStatusIcon(): TemplateResult {
     return html`
       <span class="swc-PromptField-status-icon" aria-hidden="true">
-        <swc-icon>${ThreeDotsIcon()}</swc-icon>
+        <swc-ui-icon icon="asterisk" size="xl"></swc-ui-icon>
       </span>
     `;
   }
@@ -312,7 +333,16 @@ export class PromptField extends SpectrumElement {
                   )}
                   aria-placeholder=${ifDefined(this.placeholder || undefined)}
                   ?disabled=${this.disabled}
-                  rows="1"
+                  rows=${this._normalizedMinRows}
+                  style=${styleMap({
+                    '--swc-prompt-field-textarea-min-rows': String(
+                      this._normalizedMinRows
+                    ),
+                    '--swc-prompt-field-textarea-max-rows':
+                      this._normalizedMaxRows !== undefined
+                        ? String(this._normalizedMaxRows)
+                        : undefined,
+                  })}
                   @input=${this._handleInput}
                   @keydown=${this._handleTextareaKeydown}
                   @pointerdown=${this._handleTextareaPointerDown}
@@ -325,14 +355,16 @@ export class PromptField extends SpectrumElement {
                 aria-hidden=${ifDefined(this.collapsed ? 'true' : undefined)}
                 .inert=${this.collapsed}
               >
-                <button
-                  class="swc-PromptField-upload"
-                  aria-label=${this.uploadLabel}
-                  ?disabled=${this.disabled}
-                  @click=${this._handleUploadClick}
-                >
-                  <swc-icon aria-hidden="true">${PlusIcon()}</swc-icon>
-                </button>
+                <div class="swc-PromptField-leading-actions-row">
+                  <button
+                    class="swc-PromptField-upload"
+                    aria-label=${this.uploadLabel}
+                    ?disabled=${this.disabled}
+                    @click=${this._handleUploadClick}
+                  >
+                    <swc-icon aria-hidden="true">${PlusIcon()}</swc-icon>
+                  </button>
+                </div>
               </div>
               ${showStop ? this._renderStopButton() : this._renderSendButton()}
             </div>

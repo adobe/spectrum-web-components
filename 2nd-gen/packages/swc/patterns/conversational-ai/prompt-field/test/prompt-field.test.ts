@@ -51,6 +51,28 @@ export const OverviewTest: Story = {
       const textarea =
         el.shadowRoot?.querySelector<HTMLTextAreaElement>('textarea');
       expect(textarea?.rows).toBe(1);
+      expect(el.minRows).toBeUndefined();
+      expect(el.maxRows).toBeUndefined();
+    });
+
+    await step('min-rows and max-rows apply when set', async () => {
+      el.minRows = 3;
+      el.maxRows = 6;
+      await el.updateComplete;
+
+      const textarea =
+        el.shadowRoot?.querySelector<HTMLTextAreaElement>('textarea');
+      expect(textarea?.rows).toBe(3);
+      expect(
+        textarea?.style.getPropertyValue('--swc-prompt-field-textarea-min-rows')
+      ).toBe('3');
+      expect(
+        textarea?.style.getPropertyValue('--swc-prompt-field-textarea-max-rows')
+      ).toBe('6');
+
+      el.minRows = undefined;
+      el.maxRows = undefined;
+      await el.updateComplete;
     });
 
     await step('legal slot renders custom legal content', async () => {

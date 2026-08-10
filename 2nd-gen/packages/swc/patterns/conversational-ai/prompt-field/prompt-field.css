@@ -73,21 +73,17 @@
    Controls (status icon, textarea, upload button, send/stop button)
    ───────────────────────────────────── */
 
-/* Spike: grid instead of flex-wrap animates the row 2 <-> row 1 reflow via grid-template-rows fr (0fr <-> 1fr), since calc-size(auto, size) doesn't smoothly animate a flex-wrap-driven height in this engine. Row 1 is a fixed size, not auto: an auto track next to an animating fr track briefly overshoots mid-transition here, bobbing row 1's content. */
+/* Spike: text-group stays plain flex flow (not a grid track) so it can grow past one line; only leading-actions' own reveal animates, in its own grid below. */
 .swc-PromptField-controls {
-  display: grid;
-  grid-template-rows: var(--swc-prompt-field-send-block-size, 32px) 0fr;
-  grid-template-columns: 1fr auto;
-  row-gap: 0;
-  transition:
-    grid-template-rows token("animation-duration-200") cubic-bezier(0.8, 0, 0.2, 1),
-    row-gap token("animation-duration-200") cubic-bezier(0.8, 0, 0.2, 1);
-  column-gap: token("spacing-300");
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  gap: 0;
+  transition: gap token("animation-duration-200") cubic-bezier(0.8, 0, 0.2, 1);
 }
 
 :host(:not([collapsed])) .swc-PromptField-controls {
-  grid-template-rows: var(--swc-prompt-field-send-block-size, 32px) 1fr;
-  row-gap: token("spacing-500");
+  gap: token("spacing-500");
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -96,23 +92,22 @@
   }
 }
 
-/* Icon + textarea as one grouped unit, decoupled from the outer
- * text-group-to-send gap above. */
+/* Right padding clears the absolutely positioned send/stop button below, so multi-line text doesn't run under it. */
 .swc-PromptField-text-group {
   display: flex;
-  grid-row: 1;
-  grid-column: 1;
   gap: token("spacing-200");
   align-items: center;
   min-inline-size: 0;
   min-block-size: var(--swc-prompt-field-send-block-size, 32px);
   padding-inline-start: token("spacing-75");
+  padding-inline-end: calc(var(--swc-prompt-field-send-inline-size, 32px) + token("spacing-300"));
 }
 
 .swc-PromptField-status-icon {
   display: flex;
   flex: 0 0 auto;
   align-items: center;
+  align-self: start;
   justify-content: center;
   inline-size: token("workflow-icon-medium");
   block-size: token("workflow-icon-medium");
@@ -168,8 +163,8 @@
   display: block;
   flex: 1 1 0%;
   min-inline-size: 0;
-  min-block-size: calc(token("font-size-200") * token("line-height-200"));
-  max-block-size: var(--swc-prompt-field-max-block-size, 40vh);
+  min-block-size: calc(token("font-size-200") * token("line-height-200") * var(--swc-prompt-field-textarea-min-rows, 1));
+  max-block-size: min(calc(token("font-size-200") * token("line-height-200") * var(--swc-prompt-field-textarea-max-rows, 999)), var(--swc-prompt-field-max-block-size, 40vh));
   padding: 0;
   font-family: token("sans-serif-font");
   font-size: token("font-size-200");
@@ -180,6 +175,13 @@
   border: none;
   resize: none;
   outline: none;
+}
+
+/* If an ancestor sets container-type (e.g. a chat panel with a fixed height), cap growth to a fraction of that container instead of the viewport. */
+@container (min-block-size: 0) {
+  .swc-PromptField-textarea {
+    max-block-size: min(calc(token("font-size-200") * token("line-height-200") * var(--swc-prompt-field-textarea-max-rows, 999)), var(--swc-prompt-field-max-block-size, 40cqb));
+  }
 }
 
 .swc-PromptField-textarea::placeholder {
@@ -203,11 +205,25 @@
   display: none;
 }
 
-/* Gap above the button is .controls's row-gap, not margin/padding here: either would count toward this item's own min size and block a true 0fr. */
+/* Own single-row grid animates 0fr <-> 1fr; overflow/min-block-size live on the row wrapper below, not here, since 0fr only resolves to a true 0 on the grid item, not the container. */
 .swc-PromptField-leading-actions {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows token("animation-duration-200") cubic-bezier(0.8, 0, 0.2, 1);
+}
+
+:host(:not([collapsed])) .swc-PromptField-leading-actions {
+  grid-template-rows: 1fr;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .swc-PromptField-leading-actions {
+    transition: none;
+  }
+}
+
+.swc-PromptField-leading-actions-row {
   display: flex;
-  grid-row: 2;
-  grid-column: 1;
   gap: token("spacing-75");
   align-items: center;
   min-block-size: 0;
@@ -276,12 +292,12 @@
   border-radius: token("corner-radius-full");
 }
 
-/* Spans both grid rows, flush with their bottom: matches the upload button when expanded, row 1's center when row 2 is 0. */
+/* Anchored to .controls's own bottom-right, so it re-aligns on its own as .controls grows or shrinks with either row's content. */
 .swc-PromptField-send,
 .swc-PromptField-stop {
-  grid-row: 1 / 3;
-  grid-column: 2;
-  align-self: end;
+  position: absolute;
+  inset-block-end: 0;
+  inset-inline-end: 0;
   transition: background token("animation-duration-100") ease;
 }
 

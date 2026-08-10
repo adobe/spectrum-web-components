@@ -27,9 +27,9 @@ The `collapsed` attribute controls the field's expanded/collapsed layout:
 - **Expanded (default)**: taller card with a separate action bar below the textarea, showing the upload button alongside send/stop.
 - **`collapsed`**: single-line row; the send/stop button sits inline with the textarea and no upload button is shown.
 
-Toggling `collapsed` switches between the two layouts instantly.
+Toggling `collapsed` animates between the two layouts.
 
-The textarea grows with content up to `--swc-prompt-field-max-block-size` (default `40vh`) — override the custom property to raise or lower this ceiling.
+The textarea grows with content up to `--swc-prompt-field-max-block-size` (default `40vh`, or `40cqb` when a sized ancestor sets `container-type`) — override the custom property to raise or lower this ceiling. `min-rows`/`max-rows` add an optional row-count cap on top of this; unset, only `--swc-prompt-field-max-block-size` applies.
 
 <Canvas of={PromptFieldStories.Layout} />
 
