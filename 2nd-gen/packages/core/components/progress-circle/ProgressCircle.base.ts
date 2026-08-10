@@ -172,16 +172,6 @@ export abstract class ProgressCircleBase extends SizedMixin(SpectrumElement, {
       }
     }
 
-    if (changes.has('staticColor') && this.staticColor !== undefined) {
-      const constructor = this.constructor as typeof ProgressCircleBase;
-      validateEnum(this, {
-        prop: 'static-color',
-        value: this.staticColor,
-        valid: constructor.STATIC_COLORS,
-        url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-progress-circle--docs',
-      });
-    }
-
     super.willUpdate(changes);
   }
 
