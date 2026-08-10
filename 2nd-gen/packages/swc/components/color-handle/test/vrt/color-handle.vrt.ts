@@ -136,10 +136,9 @@ const permutationContent = () => html`
     COLOR_FORMATS.map(({ label, color }) => renderHandle(label, { color })),
     'Color formats'
   )}
-  ${row(
-    [renderHandle('Transparent fill', { color: 'rgba(20, 115, 230, 0.4)' })],
-    'Transparent fill'
-  )}
+  ${row([
+    renderHandle('Transparent fill', { color: 'rgba(20, 115, 230, 0.4)' }),
+  ])}
   ${row(
     ADAPTIVE_CONTRAST_CASES.map(({ label, color }) =>
       renderHandle(label, { color })
