@@ -76,6 +76,8 @@
     - Tabs
     - Tag
     - Tags
+    - Text Area
+    - Text Field
     - Textfield
     - Thumbnail
     - Toast
