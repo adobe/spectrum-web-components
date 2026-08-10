@@ -177,7 +177,7 @@
   outline: none;
 }
 
-/* If an ancestor sets container-type (e.g. a chat panel with a fixed height), cap growth to a fraction of that container instead of the viewport. This is a plain size container query (min-block-size is a size feature, not a style() query), so it needs no special syntax; it simply fails to match when there is no queryable ancestor with container-type: size, which is what produces the vh fallback above. Verified in Chromium: with a container-type: size ancestor this block resolves 40cqb against it; without one, only the 40vh rule above applies. */
+/* Size query (not style()); simply doesn't match without a container-type: size ancestor, hence the vh fallback above. */
 @container (min-block-size: 0) {
   .swc-PromptField-textarea {
     max-block-size: min(calc(token("font-size-200") * token("line-height-200") * var(--swc-prompt-field-textarea-max-rows, 999)), var(--swc-prompt-field-max-block-size, 40cqb));
