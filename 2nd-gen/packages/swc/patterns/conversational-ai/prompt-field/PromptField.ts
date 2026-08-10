@@ -59,7 +59,7 @@ export class PromptField extends SpectrumElement {
   @property({ type: Boolean, reflect: true })
   public generating = false;
 
-  /** Renders the single-line layout instead of the default multiline layout with an action bar. */
+  /** Starts as a single-line layout with send/stop inline instead of the default layout with a separate action bar; the textarea still wraps and grows with content either way. */
   @property({ type: Boolean, reflect: true })
   public collapsed = false;
 
@@ -208,16 +208,10 @@ export class PromptField extends SpectrumElement {
   }
 
   private get _normalizedMinRows(): number {
-    if (this.collapsed) {
-      return 1;
-    }
     return this.minRows ? Math.max(1, Math.floor(this.minRows)) : 1;
   }
 
   private get _normalizedMaxRows(): number | undefined {
-    if (this.collapsed) {
-      return 1;
-    }
     return this.maxRows
       ? Math.max(this._normalizedMinRows, Math.floor(this.maxRows))
       : undefined;

@@ -11,7 +11,7 @@ import * as PromptFieldStories from './stories/prompt-field.stories';
 
 A prompt field consists of:
 
-1. **Box**: white card container with shadow, a taller multiline card by default or collapsed to a single-line row via the `collapsed` attribute.
+1. **Box**: white card container with shadow, starting as a taller multiline card by default or a single-line row via the `collapsed` attribute.
 2. **Input area**: visually hidden label + textarea.
 3. **Action bar**: upload trigger (left) and send/stop action (right); shown on its own row by default, otherwise (when `collapsed`) the send/stop action sits inline with the textarea instead.
 4. **Footer**: optional legal content rendered below the prompt surface.
@@ -25,7 +25,7 @@ A prompt field consists of:
 The `collapsed` attribute controls the field's expanded/collapsed layout:
 
 - **Expanded (default)**: taller card with a separate action bar below the textarea, showing the upload button alongside send/stop.
-- **`collapsed`**: single-line row; the send/stop button sits inline with the textarea and no upload button is shown.
+- **`collapsed`**: starts as a single-line row with the send/stop button inline with the textarea and no upload button shown; the textarea still wraps and grows with content like the expanded layout, it just starts more compact.
 
 Toggling `collapsed` animates between the two layouts.
 
