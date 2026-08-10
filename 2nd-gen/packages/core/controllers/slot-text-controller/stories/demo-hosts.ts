@@ -20,6 +20,7 @@ declare global {
   interface HTMLElementTagNameMap {
     'demo-slot-text-host': DemoSlotTextHost;
     'demo-slot-text-named-host': DemoSlotTextNamedHost;
+    'demo-slot-text-static-host': DemoSlotTextStaticHost;
   }
 }
 
@@ -86,6 +87,26 @@ export class DemoSlotTextHost extends AbstractSlotTextHost {
       >
         <slot @slotchange=${this.slotText.handleSlotChange}></slot>
       </span>
+    `;
+  }
+}
+
+/**
+ * @internal
+ *
+ * Storybook/test-only host that does **not** bind `@slotchange` on its default
+ * slot, mirroring a consumer like `swc-action-button` whose label detection
+ * therefore relies solely on the controller's initial `host.childNodes` scan.
+ * Used to verify that a comment node (e.g. a Lit `${cond ? nothing : label}`
+ * child-part marker) is not miscounted as label content — a case the
+ * slotchange path masks because comment nodes are not slottable, so
+ * `assignedNodes()` never returns them.
+ */
+@customElement('demo-slot-text-static-host')
+export class DemoSlotTextStaticHost extends AbstractSlotTextHost {
+  protected override render(): TemplateResult {
+    return html`
+      <slot></slot>
     `;
   }
 }
