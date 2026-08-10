@@ -56,6 +56,7 @@ export const OverviewTest: Story = {
         expect(dismissButton?.getAttribute('aria-label')).toBe(
           'Remove Hilton commercial assets'
         );
+        expect(dismissButton?.tabIndex).toBe(0);
         expect(dismissIcon?.getAttribute('aria-hidden')).toBe('true');
       }
     );
@@ -129,6 +130,34 @@ export const DismissEventTest: Story = {
         expect(spaceCount).toBe(1);
       }
     );
+  },
+};
+
+export const DismissSizeOverrideTest: Story = {
+  render: () => html`
+    <swc-upload-artifact
+      dismissible
+      style="--swc-upload-artifact-dismiss-inline-size: 40px; --swc-upload-artifact-dismiss-block-size: 36px;"
+    >
+      Hilton commercial assets
+    </swc-upload-artifact>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const el = await getComponent<UploadArtifact>(
+      canvasElement,
+      'swc-upload-artifact'
+    );
+
+    await step('consumer dismiss-size overrides are preserved', async () => {
+      const dismissButton = el.shadowRoot?.querySelector<HTMLButtonElement>(
+        '.swc-UploadArtifact-dismiss'
+      );
+      const dismissButtonStyle =
+        dismissButton && getComputedStyle(dismissButton);
+
+      expect(dismissButtonStyle?.inlineSize).toBe('40px');
+      expect(dismissButtonStyle?.blockSize).toBe('36px');
+    });
   },
 };
 

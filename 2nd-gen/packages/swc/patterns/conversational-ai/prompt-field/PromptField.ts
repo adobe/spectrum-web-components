@@ -23,7 +23,6 @@ import {
   queryAssignedElements,
   state,
 } from 'lit/decorators.js';
-import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { styleMap } from 'lit/directives/style-map.js';
 
@@ -151,20 +150,13 @@ export class PromptField extends SpectrumElement {
 
   private _artifactScrollObserver?: ResizeObserver;
 
-  @state()
-  private _artifactScrollFromButtons = false;
-
-  @state()
-  private _artifactScrollbarInteracting = false;
-
-  private _artifactScrollButtonResetTimer?: number;
-
   /**
    * Roving tabindex + arrow-key focus movement across artifact tiles. The
    * first (or last-active, via `memory`) tile always carries `tabindex="0"`,
    * so it is Tab's first stop into the strip with no separate entry step;
    * Arrow Left/Right move that roving stop one tile at a time. Chevron
-   * buttons separately page by a full set, unrelated to this controller.
+   * buttons separately page by the scroll viewport, unrelated to this
+   * controller.
    */
   private readonly _artifactNavigation = new FocusgroupNavigationController(
     this,
@@ -179,12 +171,6 @@ export class PromptField extends SpectrumElement {
 
   /** Set in `willUpdate` when a chevron about to disappear currently has focus; consumed in `updated`. */
   private _pendingArtifactFocusRedirect: 'first' | 'last' | null = null;
-
-  private _artifactScrollbarInteractTimer?: number;
-
-  private _artifactScrollbarThumbDragOffset = 0;
-
-  private _artifactScrollbarDragCleanup?: () => void;
 
   private _pendingArtifactDismiss?: { artifact: HTMLElement; index: number };
 
@@ -207,13 +193,6 @@ export class PromptField extends SpectrumElement {
     );
     this._artifactScrollObserver?.disconnect();
     this._artifactScrollObserver = undefined;
-    if (this._artifactScrollButtonResetTimer !== undefined) {
-      window.clearTimeout(this._artifactScrollButtonResetTimer);
-    }
-    if (this._artifactScrollbarInteractTimer !== undefined) {
-      window.clearTimeout(this._artifactScrollbarInteractTimer);
-    }
-    this._artifactScrollbarDragCleanup?.();
     super.disconnectedCallback();
   }
 
@@ -224,15 +203,6 @@ export class PromptField extends SpectrumElement {
   protected override updated(): void {
     this._warnIfMissingLegalContent();
     this._applyArtifactChevronFocusRedirect();
-
-    if ((this._assignedArtifactElements?.length ?? 0) < 2) {
-      this._artifactScrollObserver?.disconnect();
-      return;
-    }
-
-    requestAnimationFrame(() => {
-      this._observeArtifactScrollViewport();
-    });
   }
 
   private _handleInput(event: Event): void {
@@ -366,71 +336,6 @@ export class PromptField extends SpectrumElement {
   private _handleArtifactScroll(): void {
     this._updateArtifactScrollState();
     this.requestUpdate();
-  }
-
-  private _getArtifactScrollbarThumbStyle(): Record<string, string> {
-    const scrollEl = this._artifactScrollEl;
-    if (!scrollEl) {
-      return { width: '0px', insetInlineStart: '0px' };
-    }
-
-    const { scrollWidth, clientWidth, scrollLeft } = scrollEl;
-    const tolerance = 1;
-    if (scrollWidth <= clientWidth + tolerance) {
-      return { width: '0px', insetInlineStart: '0px' };
-    }
-
-    const thumbWidth = Math.max((clientWidth / scrollWidth) * clientWidth, 24);
-    const maxScroll = this._getArtifactMaxScroll(scrollEl);
-    const maxThumbOffset = Math.max(0, clientWidth - thumbWidth);
-    const thumbOffset =
-      maxScroll > 0 ? (scrollLeft / maxScroll) * maxThumbOffset : 0;
-
-    return {
-      width: `${thumbWidth}px`,
-      insetInlineStart: `${thumbOffset}px`,
-    };
-  }
-
-  private _setArtifactScrollFromThumbOffset(
-    thumbOffset: number,
-    trackWidth: number
-  ): void {
-    const scrollEl = this._artifactScrollEl;
-    if (!scrollEl) {
-      return;
-    }
-
-    const thumbWidth = Math.max(
-      (scrollEl.clientWidth / scrollEl.scrollWidth) * scrollEl.clientWidth,
-      24
-    );
-    const maxThumbOffset = Math.max(0, trackWidth - thumbWidth);
-    const clampedOffset = Math.max(0, Math.min(maxThumbOffset, thumbOffset));
-    const maxScroll = this._getArtifactMaxScroll(scrollEl);
-    const ratio = maxThumbOffset > 0 ? clampedOffset / maxThumbOffset : 0;
-
-    scrollEl.scrollLeft = ratio * maxScroll;
-    this._updateArtifactScrollState();
-    this.requestUpdate();
-  }
-
-  private _showArtifactScrollbarFromInteraction(): void {
-    if (this._artifactScrollFromButtons) {
-      return;
-    }
-
-    this._artifactScrollbarInteracting = true;
-
-    if (this._artifactScrollbarInteractTimer !== undefined) {
-      window.clearTimeout(this._artifactScrollbarInteractTimer);
-    }
-
-    this._artifactScrollbarInteractTimer = window.setTimeout(() => {
-      this._artifactScrollbarInteracting = false;
-      this._artifactScrollbarInteractTimer = undefined;
-      this.requestUpdate();
-    }, 1000);
   }
 
   private _prefersReducedMotion(): boolean {
@@ -654,101 +559,6 @@ export class PromptField extends SpectrumElement {
     }
   }
 
-  private _handleArtifactWheel(event: WheelEvent): void {
-    if (Math.abs(event.deltaX) > 0 || Math.abs(event.deltaY) > 0) {
-      this._showArtifactScrollbarFromInteraction();
-      this.requestUpdate();
-    }
-  }
-
-  private _handleArtifactScrollbarLanePointerDown(event: PointerEvent): void {
-    if (this._artifactScrollFromButtons) {
-      return;
-    }
-
-    const lane = event.currentTarget as HTMLElement;
-    const laneRect = lane.getBoundingClientRect();
-    const thumbStyle = this._getArtifactScrollbarThumbStyle();
-    const thumbWidth = Number.parseFloat(thumbStyle.width) || 0;
-    const clickOffset = event.clientX - laneRect.left - thumbWidth / 2;
-
-    this._setArtifactScrollFromThumbOffset(clickOffset, laneRect.width);
-    this._showArtifactScrollbarFromInteraction();
-  }
-
-  private _handleArtifactScrollbarThumbPointerDown(event: PointerEvent): void {
-    event.stopPropagation();
-
-    if (this._artifactScrollFromButtons) {
-      return;
-    }
-
-    const thumb = event.currentTarget as HTMLElement;
-    const lane = thumb.parentElement;
-    if (!lane) {
-      return;
-    }
-
-    const thumbRect = thumb.getBoundingClientRect();
-    this._artifactScrollbarThumbDragOffset = event.clientX - thumbRect.left;
-    this._showArtifactScrollbarFromInteraction();
-
-    const onPointerMove = (moveEvent: PointerEvent): void => {
-      const laneRect = lane.getBoundingClientRect();
-      const thumbOffset =
-        moveEvent.clientX -
-        laneRect.left -
-        this._artifactScrollbarThumbDragOffset;
-      this._setArtifactScrollFromThumbOffset(thumbOffset, laneRect.width);
-      this._showArtifactScrollbarFromInteraction();
-    };
-
-    let onPointerUp: (() => void) | undefined;
-    const cleanup = (): void => {
-      window.removeEventListener('pointermove', onPointerMove);
-      if (onPointerUp) {
-        window.removeEventListener('pointerup', onPointerUp);
-        window.removeEventListener('pointercancel', onPointerUp);
-      }
-      if (this._artifactScrollbarDragCleanup === cleanup) {
-        this._artifactScrollbarDragCleanup = undefined;
-      }
-    };
-
-    onPointerUp = (): void => cleanup();
-
-    this._artifactScrollbarDragCleanup?.();
-    this._artifactScrollbarDragCleanup = cleanup;
-    window.addEventListener('pointermove', onPointerMove);
-    window.addEventListener('pointerup', onPointerUp);
-    window.addEventListener('pointercancel', onPointerUp);
-  }
-
-  private _markArtifactScrollFromButtons(): void {
-    const scrollEl = this._artifactScrollEl;
-    this._artifactScrollFromButtons = true;
-    this._artifactScrollbarInteracting = false;
-
-    if (this._artifactScrollbarInteractTimer !== undefined) {
-      window.clearTimeout(this._artifactScrollbarInteractTimer);
-      this._artifactScrollbarInteractTimer = undefined;
-    }
-
-    if (this._artifactScrollButtonResetTimer !== undefined) {
-      window.clearTimeout(this._artifactScrollButtonResetTimer);
-    }
-
-    const reset = (): void => {
-      this._artifactScrollFromButtons = false;
-      this._artifactScrollButtonResetTimer = undefined;
-      scrollEl?.removeEventListener('scrollend', reset);
-      this.requestUpdate();
-    };
-
-    scrollEl?.addEventListener('scrollend', reset, { once: true });
-    this._artifactScrollButtonResetTimer = window.setTimeout(reset, 600);
-  }
-
   private _observeArtifactScrollViewport(): void {
     const scrollEl = this._artifactScrollEl;
     if (!scrollEl) {
@@ -770,77 +580,30 @@ export class PromptField extends SpectrumElement {
     this._updateArtifactScrollState();
   }
 
-  private _getArtifactScrollOffset(child: HTMLElement): number {
-    const scrollEl = this._artifactScrollEl;
-    if (!scrollEl) {
-      return 0;
-    }
-
-    return (
-      child.getBoundingClientRect().left -
-      scrollEl.getBoundingClientRect().left +
-      scrollEl.scrollLeft
-    );
+  private _isRtl(): boolean {
+    return getComputedStyle(this).direction === 'rtl';
   }
 
-  private _getArtifactTileWidth(child: HTMLElement): number {
-    return child.getBoundingClientRect().width || child.offsetWidth;
-  }
-
-  private _getVisibleArtifactRange(): { first: number; last: number } {
+  private _getArtifactAtPageStart(direction: -1 | 1): HTMLElement {
     const scrollEl = this._artifactScrollEl;
     const children = this._assignedArtifactElements ?? [];
-    if (!scrollEl || !children.length) {
-      return { first: 0, last: 0 };
+    if (!scrollEl) {
+      return children[0]!;
     }
 
-    const scrollLeft = scrollEl.scrollLeft;
-    const viewportRight = scrollLeft + scrollEl.clientWidth;
-    const tolerance = 1;
-    let first = -1;
-    let last = -1;
+    const scrollRect = scrollEl.getBoundingClientRect();
+    const rtl = this._isRtl();
+    const pageStart = rtl
+      ? scrollRect.right - direction * scrollEl.clientWidth
+      : scrollRect.left + direction * scrollEl.clientWidth;
 
-    for (let i = 0; i < children.length; i += 1) {
-      const offset = this._getArtifactScrollOffset(children[i]);
-      const right = offset + this._getArtifactTileWidth(children[i]);
-      if (
-        right > scrollLeft + tolerance &&
-        offset < viewportRight - tolerance
-      ) {
-        if (first === -1) {
-          first = i;
-        }
-        last = i;
-      }
-    }
-
-    return {
-      first: first === -1 ? 0 : first,
-      last: last === -1 ? children.length - 1 : last,
-    };
-  }
-
-  private _getArtifactMaxScroll(scrollEl: HTMLDivElement): number {
-    return Math.max(0, scrollEl.scrollWidth - scrollEl.clientWidth);
-  }
-
-  private _getArtifactTileVisibleFraction(
-    child: HTMLElement,
-    scrollEl: HTMLDivElement
-  ): number {
-    const tileWidth = this._getArtifactTileWidth(child);
-    if (!tileWidth) {
-      return 0;
-    }
-
-    const offset = this._getArtifactScrollOffset(child);
-    const right = offset + tileWidth;
-    const scrollLeft = scrollEl.scrollLeft;
-    const viewportRight = scrollLeft + scrollEl.clientWidth;
-    const visibleWidth =
-      Math.min(right, viewportRight) - Math.max(offset, scrollLeft);
-
-    return Math.max(0, visibleWidth) / tileWidth;
+    return (
+      children.find((child) =>
+        rtl
+          ? child.getBoundingClientRect().right <= pageStart + 1
+          : child.getBoundingClientRect().left >= pageStart - 1
+      ) ?? children[children.length - 1]
+    );
   }
 
   private _scrollArtifactsByPage(direction: -1 | 1): void {
@@ -850,89 +613,21 @@ export class PromptField extends SpectrumElement {
       return;
     }
 
-    const tolerance = 1;
-    const maxScroll = this._getArtifactMaxScroll(scrollEl);
-    const { first, last } = this._getVisibleArtifactRange();
-
-    if (direction === 1) {
-      if (scrollEl.scrollLeft >= maxScroll - tolerance) {
-        return;
-      }
-
-      this._markArtifactScrollFromButtons();
-
-      if (last >= children.length - 1) {
-        // Land on the exact numeric maxScroll rather than a geometry-based
-        // scrollIntoView alignment: aligning the last tile's end edge can
-        // land a subpixel short of maxScroll (unlike aligning to the first
-        // tile's start, which is trivially exact at 0), leaving the next
-        // chevron stuck visible since it compares against this same maxScroll.
-        scrollEl.scrollTo({
-          left: maxScroll,
-          behavior: 'auto',
-        });
-        // Points the roving tab stop at the now-visible last tile, without
-        // moving focus off the Next button, so Shift+Tab from Next lands in
-        // the newly displayed set rather than wherever focus was left before
-        // paging.
-        this._artifactNavigation.setActiveItem(children[children.length - 1]);
-        return;
-      }
-
-      // last < children.length - 1 here (the "already at the end" case
-      // returned above), so an ambiguous edge tile (< 50% visible) is
-      // carried over as the next page's anchor; otherwise page fully.
-      const lastVisibleFraction = this._getArtifactTileVisibleFraction(
-        children[last],
-        scrollEl
-      );
-      const nextStart =
-        lastVisibleFraction >= 0.5 ? children[last + 1] : children[last];
-
-      nextStart.scrollIntoView({
-        behavior: this._artifactScrollBehavior(),
-        block: 'nearest',
-        inline: 'start',
-      });
-      // See the comment on the exact-maxScroll branch above.
-      this._artifactNavigation.setActiveItem(nextStart);
-      return;
-    }
-
-    if (first <= 0 && scrollEl.scrollLeft <= tolerance) {
-      return;
-    }
-
-    this._markArtifactScrollFromButtons();
-
-    if (first <= 0) {
-      children[0].scrollIntoView({
-        behavior: this._artifactScrollBehavior(),
-        block: 'nearest',
-        inline: 'start',
-      });
-      // Points the roving tab stop at the now-visible first tile, without
-      // moving focus off the Prev button, so Tab from Prev lands in the
-      // newly displayed set rather than wherever focus was left before
-      // paging.
-      this._artifactNavigation.setActiveItem(children[0]);
-      return;
-    }
-
-    const firstVisibleFraction = this._getArtifactTileVisibleFraction(
-      children[first],
-      scrollEl
-    );
-    const prevEnd =
-      firstVisibleFraction >= 0.5 ? children[first - 1] : children[first];
-
-    prevEnd.scrollIntoView({
+    scrollEl.scrollBy({
+      left: direction * scrollEl.clientWidth * (this._isRtl() ? -1 : 1),
       behavior: this._artifactScrollBehavior(),
-      block: 'nearest',
-      inline: 'end',
     });
-    // See the comment on the "first <= 0" branch above.
-    this._artifactNavigation.setActiveItem(prevEnd);
+    this._artifactNavigation.setActiveItem(
+      this._getArtifactAtPageStart(direction)
+    );
+  }
+
+  private _handleArtifactScrollPrev(): void {
+    this._scrollArtifactsByPage(-1);
+  }
+
+  private _handleArtifactScrollNext(): void {
+    this._scrollArtifactsByPage(1);
   }
 
   private _updateArtifactScrollState(): void {
@@ -944,15 +639,31 @@ export class PromptField extends SpectrumElement {
       return;
     }
 
-    const { scrollLeft, scrollWidth, clientWidth } = scrollEl;
+    const { scrollWidth, clientWidth } = scrollEl;
     const tolerance = 1;
     const overflow = scrollWidth > clientWidth + tolerance;
-    const maxScroll = this._getArtifactMaxScroll(scrollEl);
+    const children = this._assignedArtifactElements ?? [];
+    const firstArtifact = children[0];
+    const lastArtifact = children[children.length - 1];
 
     this._artifactScrollOverflow = overflow;
-    this._artifactCanScrollPrev = overflow && scrollLeft > tolerance;
-    this._artifactCanScrollNext =
-      overflow && scrollLeft < maxScroll - tolerance;
+    if (!overflow || !firstArtifact || !lastArtifact) {
+      this._artifactCanScrollPrev = false;
+      this._artifactCanScrollNext = false;
+      return;
+    }
+
+    const scrollRect = scrollEl.getBoundingClientRect();
+    const firstRect = firstArtifact.getBoundingClientRect();
+    const lastRect = lastArtifact.getBoundingClientRect();
+    const rtl = this._isRtl();
+
+    this._artifactCanScrollPrev = rtl
+      ? firstRect.right > scrollRect.right + tolerance
+      : firstRect.left < scrollRect.left - tolerance;
+    this._artifactCanScrollNext = rtl
+      ? lastRect.left < scrollRect.left - tolerance
+      : lastRect.right > scrollRect.right + tolerance;
   }
 
   private _warnedMixedArtifactTypes = false;
@@ -1107,7 +818,7 @@ export class PromptField extends SpectrumElement {
                   type="button"
                   class="swc-PromptField-artifacts-scroll-prev"
                   aria-label=${this.artifactScrollPrevLabel}
-                  @click=${() => this._scrollArtifactsByPage(-1)}
+                  @click=${this._handleArtifactScrollPrev}
                 >
                   <swc-icon size="s" aria-hidden="true">
                     ${Chevron75Icon()}
@@ -1121,15 +832,9 @@ export class PromptField extends SpectrumElement {
             aria-label=${this.artifactStripLabel}
           >
             <div
-              class=${classMap({
-                'swc-PromptField-artifacts-scroll': true,
-                'is-artifact-scroll-from-buttons':
-                  this._artifactScrollFromButtons,
-              })}
+              class="swc-PromptField-artifacts-scroll"
               tabindex="-1"
               @scroll=${this._handleArtifactScroll}
-              @wheel=${this._handleArtifactWheel}
-              @touchstart=${this._showArtifactScrollbarFromInteraction}
             >
               <div class="swc-PromptField-artifacts-tiles">
                 <slot
@@ -1138,26 +843,6 @@ export class PromptField extends SpectrumElement {
                 ></slot>
               </div>
             </div>
-            ${this._artifactScrollOverflow
-              ? html`
-                  <div
-                    class=${classMap({
-                      'swc-PromptField-artifacts-scrollbar-lane': true,
-                      'is-artifact-scrollbar-interacting':
-                        this._artifactScrollbarInteracting &&
-                        !this._artifactScrollFromButtons,
-                    })}
-                    @pointerdown=${this._handleArtifactScrollbarLanePointerDown}
-                  >
-                    <div
-                      class="swc-PromptField-artifacts-scrollbar-thumb"
-                      style=${styleMap(this._getArtifactScrollbarThumbStyle())}
-                      @pointerdown=${this
-                        ._handleArtifactScrollbarThumbPointerDown}
-                    ></div>
-                  </div>
-                `
-              : nothing}
             ${this._artifactCanScrollPrev
               ? html`
                   <div
@@ -1181,7 +866,7 @@ export class PromptField extends SpectrumElement {
                   type="button"
                   class="swc-PromptField-artifacts-scroll-next"
                   aria-label=${this.artifactScrollNextLabel}
-                  @click=${() => this._scrollArtifactsByPage(1)}
+                  @click=${this._handleArtifactScrollNext}
                 >
                   <swc-icon size="s" aria-hidden="true">
                     ${Chevron75Icon()}

@@ -334,10 +334,9 @@ export const MultiArtifactScroll: Story = {
     <div style="display:flex;flex-direction:column;gap:16px;inline-size:100%;">
       <p class="swc-Detail swc-Detail--sizeS" style="margin:0;">
         Full-width composer with twelve media tiles. Chevron controls flank the
-        strip when scrolling is possible; each click advances by one set with
-        the last visible tile anchoring the next view. Edge fades signal
-        overflow. An overlay scrollbar lane below the tiles appears during
-        wheel, touch, or drag.
+        strip when scrolling is possible; each click advances by one viewport
+        width and settles on a tile boundary. Edge fades signal overflow. An
+        overflowing strip uses the platform's native scrollbar.
       </p>
       <swc-prompt-field label="Prompt" value="Review these storyboard frames.">
         ${multiArtifactScrollGradients.map(

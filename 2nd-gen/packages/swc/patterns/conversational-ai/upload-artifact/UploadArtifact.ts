@@ -11,9 +11,10 @@
  */
 
 import { CSSResultArray, html, PropertyValues, TemplateResult } from 'lit';
-import { property, queryAssignedElements } from 'lit/decorators.js';
+import { property, query, queryAssignedElements } from 'lit/decorators.js';
 
 import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
+import { getLabelFromSlot } from '@adobe/spectrum-wc-core/utils/index.js';
 
 import { CrossIcon } from '../utils/icons/index.js';
 
@@ -24,10 +25,9 @@ import styles from './upload-artifact.css';
  * Do not mix `type="card"` and `type="media"` in the same attachment strip.
  * When uploads mix images and documents, normalize to one layout (typically all `type="media"` with thumbnails and optional badges).
  *
- * Not independently keyboard-reachable: this tile has no default `tabindex` of its
- * own. `swc-prompt-field` manages roving `tabindex`, focus, and the dismiss button's
- * Tab-key reachability for tiles slotted into its `artifact` slot. Standalone usage
- * outside that context should set `tabIndex` itself if keyboard access is needed.
+ * This tile has no default `tabindex` of its own. Its dismiss button is natively
+ * tabbable when used standalone; `swc-prompt-field` manages its Tab-key sequence
+ * for tiles slotted into its `artifact` slot.
  *
  * @element swc-upload-artifact
  *
@@ -71,8 +71,8 @@ export class UploadArtifact extends SpectrumElement {
   @queryAssignedElements({ slot: 'badge', flatten: true })
   private _assignedBadge!: HTMLElement[];
 
-  @queryAssignedElements({ slot: 'title', flatten: true })
-  private _assignedTitle!: HTMLElement[];
+  @query('slot[name="title"]')
+  private _titleSlot?: HTMLSlotElement;
 
   public static override get styles(): CSSResultArray {
     return [styles];
@@ -88,10 +88,7 @@ export class UploadArtifact extends SpectrumElement {
   }
 
   private _titleText(): string {
-    return this._assignedTitle
-      .map((element) => element.textContent?.trim() ?? '')
-      .filter(Boolean)
-      .join(' ');
+    return this._titleSlot ? (getLabelFromSlot('', this._titleSlot) ?? '') : '';
   }
 
   private _syncHostAccessibleLabel(): void {
@@ -139,7 +136,7 @@ export class UploadArtifact extends SpectrumElement {
     return html`
       <button
         class="swc-UploadArtifact-dismiss"
-        tabindex="-1"
+        tabindex=${this.closest('swc-prompt-field') ? -1 : undefined}
         aria-label=${this._resolvedDismissLabel()}
         ?hidden=${!this.dismissible}
         @click=${this._handleDismissClick}

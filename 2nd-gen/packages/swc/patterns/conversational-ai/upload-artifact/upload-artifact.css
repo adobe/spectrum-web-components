@@ -11,6 +11,8 @@
  */
 
 :host {
+  --swc-upload-artifact-focus-indicator-color: #4b4efc;
+
   display: block;
   position: relative;
   max-inline-size: 100%;
@@ -27,8 +29,8 @@
  * ring a real empty gap to sit in, instead of being painted over by that
  * (opaque) surface. */
 :host(:focus-visible) {
-  outline: 2px solid #4b4efc;
-  outline-offset: -2px;
+  outline: token("focus-indicator-thickness") solid var(--swc-upload-artifact-focus-indicator-color);
+  outline-offset: calc(token("focus-indicator-thickness") * -1);
 }
 
 *,
@@ -71,21 +73,21 @@
   /* Round to match the visible circular icon: the hit target (24px card /
    * 32px media) is deliberately larger than the 20px visible icon, so an
    * unrounded ring at the box's own edge reads as a square around the whole
-   * touch area rather than a ring around the icon. */
+  * touch area rather than a ring around the icon. */
   border-radius: token("corner-radius-full");
-  outline: 2px solid #4b4efc;
+  outline: token("focus-indicator-thickness") solid var(--swc-upload-artifact-focus-indicator-color);
 }
 
 :host([type="card"]) .swc-UploadArtifact-dismiss {
   /* The surface is inset spacing-50 (2px) from the host, and its rounded
    * corner's own visible tip sits a further radius * (1 - cos(45deg))
    * inward from that box corner along the diagonal. Both terms shift the
-   * badge in from a flat -12px so its center lands on the tip of the
-   * curve, not the corner of the invisible bounding box. */
-  inset-block-start: calc(token("spacing-50") - 12px + token("corner-radius-medium-default") * 0.293);
-  inset-inline-end: calc(token("spacing-50") - 12px + token("corner-radius-medium-default") * 0.293);
-  inline-size: 24px;
-  block-size: 24px;
+   * badge in by half its resolved hit-target size so its center lands on the
+   * tip of the curve, not the corner of the invisible bounding box. */
+  inset-block-start: calc(token("spacing-50") - var(--swc-upload-artifact-dismiss-block-size, 24px) * 0.5 + token("corner-radius-medium-default") * 0.293);
+  inset-inline-end: calc(token("spacing-50") - var(--swc-upload-artifact-dismiss-inline-size, 24px) * 0.5 + token("corner-radius-medium-default") * 0.293);
+  inline-size: var(--swc-upload-artifact-dismiss-inline-size, 24px);
+  block-size: var(--swc-upload-artifact-dismiss-block-size, 24px);
 }
 
 :host([type="card"]) .swc-UploadArtifact-dismiss-visual {
@@ -107,12 +109,12 @@
   /* The surface is inset spacing-50 (2px) from the host, and its rounded
    * corner's own visible tip sits a further radius * (1 - cos(45deg))
    * inward from that box corner along the diagonal. Both terms shift the
-   * badge in from a flat -16px so its center lands on the tip of the
-   * curve, not the corner of the invisible bounding box. */
-  inset-block-start: calc(token("spacing-50") - 16px + token("corner-radius-medium-default") * 0.293);
-  inset-inline-end: calc(token("spacing-50") - 16px + token("corner-radius-medium-default") * 0.293);
-  inline-size: 32px;
-  block-size: 32px;
+   * badge in by half its resolved hit-target size so its center lands on the
+   * tip of the curve, not the corner of the invisible bounding box. */
+  inset-block-start: calc(token("spacing-50") - var(--swc-upload-artifact-dismiss-block-size, 32px) * 0.5 + token("corner-radius-medium-default") * 0.293);
+  inset-inline-end: calc(token("spacing-50") - var(--swc-upload-artifact-dismiss-inline-size, 32px) * 0.5 + token("corner-radius-medium-default") * 0.293);
+  inline-size: var(--swc-upload-artifact-dismiss-inline-size, 32px);
+  block-size: var(--swc-upload-artifact-dismiss-block-size, 32px);
 }
 
 :host([type="media"]) .swc-UploadArtifact-dismiss-visual {

@@ -237,10 +237,13 @@ export const MixedArtifactWarningTest: Story = {
 const artifactScrollGradient =
   'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
 
-function renderMultiArtifactPromptField(canvasElement: HTMLElement): void {
+function renderMultiArtifactPromptField(
+  canvasElement: HTMLElement,
+  direction?: 'rtl'
+): void {
   render(
     html`
-      <div style="inline-size:480px;">
+      <div style="inline-size:480px;" dir=${direction ?? nothing}>
         <swc-prompt-field label="Prompt" value="Review attachments.">
           ${Array.from({ length: 14 }, (_, index) => index).map(
             (index) => html`
@@ -289,6 +292,16 @@ export const ArtifactScrollPaginationTest: Story = {
         expect(
           (scrollEl?.scrollWidth ?? 0) > (scrollEl?.clientWidth ?? 0)
         ).toBe(true);
+        expect(
+          el.shadowRoot?.querySelector(
+            '.swc-PromptField-artifacts-scrollbar-lane'
+          )
+        ).toBeNull();
+
+        el.artifactScrollPrevLabel = 'Show earlier attachments';
+        el.artifactScrollNextLabel = 'Show later attachments';
+        await el.updateComplete;
+        expect(nextButton?.ariaLabel).toBe('Show later attachments');
       }
     );
 
@@ -299,94 +312,101 @@ export const ArtifactScrollPaginationTest: Story = {
       expect(endFade).toBeTruthy();
     });
 
-    await step('wheel interaction shows the scrollbar thumb', async () => {
-      scrollEl?.dispatchEvent(
-        new WheelEvent('wheel', {
-          bubbles: true,
-          deltaX: 12,
-        })
-      );
-      await el.updateComplete;
-
-      const scrollbarLane = el.shadowRoot?.querySelector(
-        '.swc-PromptField-artifacts-scrollbar-lane'
-      );
-      expect(
-        scrollbarLane?.classList.contains('is-artifact-scrollbar-interacting')
-      ).toBe(true);
-    });
-
-    await step('chevron paging advances by more than one tile', async () => {
-      const initialScrollLeft = scrollEl?.scrollLeft ?? 0;
-      const clientWidth = scrollEl?.clientWidth ?? 0;
-      const firstPageScrollEnd = waitForScrollEnd(scrollEl);
-      nextButton?.click();
-      await el.updateComplete;
-      expect(
-        scrollEl?.classList.contains('is-artifact-scroll-from-buttons')
-      ).toBe(true);
-
-      await firstPageScrollEnd;
-      await el.updateComplete;
-
-      const nextScrollLeft = scrollEl?.scrollLeft ?? 0;
-      expect(nextScrollLeft).toBeGreaterThan(initialScrollLeft);
-
-      const tileWidth =
-        scrollEl
-          ?.querySelector('slot')
-          ?.assignedElements({ flatten: true })[0]
-          ?.getBoundingClientRect().width ?? 68;
-      expect(nextScrollLeft - initialScrollLeft).toBeGreaterThan(tileWidth);
-
-      // The whole visible set should page forward together (only the one
-      // edge tile that was under 50% visible may be carried over) rather
-      // than nudging by a single tile's worth of scroll.
-      expect(nextScrollLeft - initialScrollLeft).toBeGreaterThan(
-        clientWidth - 2 * tileWidth
-      );
-    });
-
-    await step('chevron paging keeps the scrollbar thumb hidden', async () => {
-      await el.updateComplete;
-
-      const scrollbarLane = el.shadowRoot?.querySelector(
-        '.swc-PromptField-artifacts-scrollbar-lane'
-      );
-      expect(
-        scrollbarLane?.classList.contains('is-artifact-scrollbar-interacting')
-      ).toBe(false);
-    });
-
     await step(
-      'chevron paging reaches the end when the last tile is only partially visible',
+      'chevron paging advances by one viewport with CSS Scroll Snap',
       async () => {
-        const maxScroll = Math.max(
-          0,
-          (scrollEl?.scrollWidth ?? 0) - (scrollEl?.clientWidth ?? 0)
-        );
-        scrollEl?.scrollTo({
-          left: Math.max(0, maxScroll - 10),
-          behavior: 'auto',
-        });
-        await new Promise((resolve) => requestAnimationFrame(resolve));
+        const initialScrollLeft = scrollEl?.scrollLeft ?? 0;
+        const clientWidth = scrollEl?.clientWidth ?? 0;
+        const firstPageScrollEnd = waitForScrollEnd(scrollEl);
+        nextButton?.click();
         await el.updateComplete;
 
-        const nextButtonAtEnd = el.shadowRoot?.querySelector<HTMLButtonElement>(
-          '.swc-PromptField-artifacts-scroll-next'
-        );
-        expect(nextButtonAtEnd).toBeTruthy();
-
-        const finalPageScrollEnd = waitForScrollEnd(scrollEl);
-        nextButtonAtEnd?.click();
-        await finalPageScrollEnd;
+        await firstPageScrollEnd;
         await el.updateComplete;
 
+        const nextScrollLeft = scrollEl?.scrollLeft ?? 0;
+        expect(scrollEl?.clientWidth).toBe(clientWidth);
+        expect(nextScrollLeft).toBeGreaterThan(initialScrollLeft);
+        expect(nextScrollLeft - initialScrollLeft).toBeGreaterThan(
+          clientWidth / 2
+        );
         expect(
-          el.shadowRoot?.querySelector('.swc-PromptField-artifacts-scroll-next')
-        ).toBeFalsy();
+          el.shadowRoot?.querySelector<HTMLButtonElement>(
+            '.swc-PromptField-artifacts-scroll-prev'
+          )?.ariaLabel
+        ).toBe('Show earlier attachments');
+
+        const tiles = scrollEl
+          ?.querySelector('slot')
+          ?.assignedElements({ flatten: true }) as HTMLElement[] | undefined;
+        expect(getComputedStyle(scrollEl!).scrollSnapType).toContain(
+          'mandatory'
+        );
+        expect(getComputedStyle(tiles![0]!).scrollSnapAlign).toContain('start');
       }
     );
+
+    await step('scrolling to the end removes the Next chevron', async () => {
+      const maxScroll = Math.max(
+        0,
+        (scrollEl?.scrollWidth ?? 0) - (scrollEl?.clientWidth ?? 0)
+      );
+      scrollEl?.scrollTo({
+        left: maxScroll,
+        behavior: 'auto',
+      });
+      await new Promise((resolve) => requestAnimationFrame(resolve));
+      await el.updateComplete;
+
+      const nextButtonAtEnd = el.shadowRoot?.querySelector<HTMLButtonElement>(
+        '.swc-PromptField-artifacts-scroll-next'
+      );
+      expect(nextButtonAtEnd).toBeFalsy();
+    });
+  },
+};
+
+export const ArtifactScrollRTLTest: Story = {
+  render: () => nothing,
+  play: async ({ canvasElement, step }) => {
+    renderMultiArtifactPromptField(canvasElement, 'rtl');
+
+    const el = await getComponent<PromptField>(
+      canvasElement,
+      'swc-prompt-field'
+    );
+    await el.updateComplete;
+    await new Promise((resolve) => requestAnimationFrame(resolve));
+    await el.updateComplete;
+
+    const scrollEl = el.shadowRoot?.querySelector<HTMLDivElement>(
+      '.swc-PromptField-artifacts-scroll'
+    );
+    const getPrevButton = (): HTMLButtonElement | null | undefined =>
+      el.shadowRoot?.querySelector<HTMLButtonElement>(
+        '.swc-PromptField-artifacts-scroll-prev'
+      );
+    const getNextButton = (): HTMLButtonElement | null | undefined =>
+      el.shadowRoot?.querySelector<HTMLButtonElement>(
+        '.swc-PromptField-artifacts-scroll-next'
+      );
+    const firstArtifact = el.querySelector<HTMLElement>('[slot="artifact"]');
+
+    await step('the next chevron pages forward in RTL', async () => {
+      expect(getComputedStyle(el).direction).toBe('rtl');
+      expect(getPrevButton()).toBeFalsy();
+
+      const scrollEnd = waitForScrollEnd(scrollEl);
+      getNextButton()?.click();
+      await scrollEnd;
+      await el.updateComplete;
+
+      expect(getPrevButton()).toBeTruthy();
+      expect(
+        firstArtifact!.getBoundingClientRect().left >=
+          scrollEl!.getBoundingClientRect().right
+      ).toBe(true);
+    });
   },
 };
 
@@ -784,61 +804,6 @@ export const ArtifactChevronPagingFocusTest: Story = {
 
         expect(event.defaultPrevented).toBe(true);
         expect(tilesAfterPagingBack.includes(activeTile()!)).toBe(true);
-      }
-    );
-  },
-};
-
-export const ArtifactScrollbarDisconnectTest: Story = {
-  render: () => nothing,
-  play: async ({ canvasElement, step }) => {
-    renderMultiArtifactPromptField(canvasElement);
-
-    const el = await getComponent<PromptField>(
-      canvasElement,
-      'swc-prompt-field'
-    );
-    await new Promise((resolve) => requestAnimationFrame(resolve));
-    await el.updateComplete;
-
-    const scrollEl = el.shadowRoot?.querySelector<HTMLDivElement>(
-      '.swc-PromptField-artifacts-scroll'
-    );
-    const thumb = el.shadowRoot?.querySelector<HTMLElement>(
-      '.swc-PromptField-artifacts-scrollbar-thumb'
-    );
-
-    await step(
-      'removes global thumb-drag listeners when disconnected',
-      async () => {
-        expect(scrollEl).toBeTruthy();
-        expect(thumb).toBeTruthy();
-        if (!scrollEl || !thumb) {
-          return;
-        }
-
-        scrollEl?.scrollTo({ left: 100, behavior: 'auto' });
-        await new Promise((resolve) => requestAnimationFrame(resolve));
-        let scrollCalls = 0;
-        Object.defineProperty(scrollEl, 'scrollTo', {
-          configurable: true,
-          value: () => {
-            scrollCalls++;
-          },
-        });
-
-        thumb.dispatchEvent(
-          new PointerEvent('pointerdown', { bubbles: true, clientX: 8 })
-        );
-        el.remove();
-        window.dispatchEvent(
-          new PointerEvent('pointermove', { bubbles: true, clientX: 240 })
-        );
-
-        expect(
-          scrollCalls,
-          'a detached prompt field no longer receives global drag events'
-        ).toBe(0);
       }
     );
   },

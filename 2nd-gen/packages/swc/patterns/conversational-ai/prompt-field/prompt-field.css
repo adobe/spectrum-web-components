@@ -48,6 +48,10 @@
   overflow: hidden;
 }
 
+.swc-PromptField-box:has(.swc-PromptField-input-area.has-artifact) {
+  padding-block-start: token("spacing-100");
+}
+
 /* ─────────────────────────────────────
    Input area (artifact + text area)
    ───────────────────────────────────── */
@@ -61,12 +65,9 @@
   padding-inline: 0;
 }
 
-/* Figma: input area uses 8px top padding, and 8px (not the default 16px)
- * between the artifact strip and the textarea, only when an artifact row
- * is shown. */
+/* Keep the compact 8px gap between the artifact strip and textarea. */
 .swc-PromptField-input-area.has-artifact {
   gap: token("spacing-100");
-  padding-block-start: token("spacing-100");
 }
 
 /* ─────────────────────────────────────
@@ -104,9 +105,6 @@
 .swc-PromptField-artifacts--multiple {
   min-inline-size: 0;
 
-  --swc-prompt-field-artifact-scrollbar-size: 8px;
-  --swc-prompt-field-artifact-scrollbar-gap: 4px;
-
   /* Dismiss badges are centered on each tile's top-right corner (see
    * upload-artifact.css), so half of the larger (32px media) badge floats
    * above the tile. Reserve that much clearance above the row so the
@@ -115,9 +113,7 @@
 }
 
 .swc-PromptField-artifacts-row {
-  display: flex;
-  gap: token("spacing-100");
-  align-items: center;
+  position: relative;
   inline-size: 100%;
 }
 
@@ -125,12 +121,10 @@
   position: relative;
   flex: 1 1 auto;
   min-inline-size: 0;
-  block-size: calc(var(--swc-prompt-field-artifact-badge-clearance, 0) + var(--swc-prompt-field-artifact-media-block-size, 68px) + var(--swc-prompt-field-artifact-scrollbar-gap, 4px) + var(--swc-prompt-field-artifact-scrollbar-size, 8px));
-  margin-block-end: calc(-1 * (var(--swc-prompt-field-artifact-scrollbar-gap, 4px) + var(--swc-prompt-field-artifact-scrollbar-size, 8px)));
   border-radius: token("corner-radius-100");
   overflow: visible;
 
-  --swc-prompt-field-artifact-fade-solid: color-mix(in srgb, token("background-layer-2-color") 80%, transparent);
+  --swc-prompt-field-artifact-fade-solid: token("background-layer-2-color");
 }
 
 /* Spans the badge-clearance strip too (not just the tile height): a
@@ -142,7 +136,7 @@
   position: absolute;
   inset-block-start: 0;
   z-index: 3;
-  inline-size: 16px;
+  inline-size: calc(var(--swc-prompt-field-artifact-scroll-button-inline-size, 32px) + token("spacing-100"));
   block-size: calc(var(--swc-prompt-field-artifact-badge-clearance, 0) + var(--swc-prompt-field-artifact-media-block-size, 68px));
   pointer-events: none;
 }
@@ -157,25 +151,37 @@
   background: linear-gradient(to left, var(--swc-prompt-field-artifact-fade-solid), transparent);
 }
 
+:host(:dir(rtl)) .swc-PromptField-artifacts-fade--start {
+  background: linear-gradient(to left, var(--swc-prompt-field-artifact-fade-solid), transparent);
+}
+
+:host(:dir(rtl)) .swc-PromptField-artifacts-fade--end {
+  background: linear-gradient(to right, var(--swc-prompt-field-artifact-fade-solid), transparent);
+}
+
 /* padding-block-start reserves room for the dismiss badge, which is
  * centered on each tile's top-right corner (upload-artifact.css) and so
  * floats half outside the tile; overflow-y: hidden below would otherwise
  * clip it flat. */
 .swc-PromptField-artifacts-scroll {
-  -ms-overflow-style: none;
   box-sizing: border-box;
   inline-size: 100%;
   max-inline-size: 100%;
-  block-size: calc(var(--swc-prompt-field-artifact-badge-clearance, 0) + var(--swc-prompt-field-artifact-media-block-size, 68px));
   padding-block-start: var(--swc-prompt-field-artifact-badge-clearance, 0);
   padding-inline: token("spacing-75");
   overflow-x: auto;
   overflow-y: hidden;
-  scrollbar-width: none;
+  scroll-snap-type: inline mandatory;
+  scroll-padding-inline: token("spacing-75");
+  scrollbar-color: token("gray-400") transparent;
 }
 
 .swc-PromptField-artifacts-scroll::-webkit-scrollbar {
-  display: none;
+  background: transparent;
+}
+
+.swc-PromptField-artifacts-scroll::-webkit-scrollbar-track {
+  background: transparent;
 }
 
 .swc-PromptField-artifacts-tiles {
@@ -185,34 +191,6 @@
   inline-size: max-content;
   min-inline-size: 100%;
   block-size: var(--swc-prompt-field-artifact-media-block-size, 68px);
-}
-
-.swc-PromptField-artifacts-scrollbar-lane {
-  position: absolute;
-  inset-block-end: 0;
-  inset-inline: 0;
-  block-size: var(--swc-prompt-field-artifact-scrollbar-size, 8px);
-  border-radius: calc(var(--swc-prompt-field-artifact-scrollbar-size, 8px) / 2);
-  touch-action: none;
-  cursor: pointer;
-}
-
-.swc-PromptField-artifacts-scrollbar-thumb {
-  position: absolute;
-  inset-block-start: 0;
-  block-size: var(--swc-prompt-field-artifact-scrollbar-size, 8px);
-  background: transparent;
-  border-radius: calc(var(--swc-prompt-field-artifact-scrollbar-size, 8px) / 2);
-  touch-action: none;
-  cursor: grab;
-}
-
-.swc-PromptField-artifacts-scrollbar-thumb:active {
-  cursor: grabbing;
-}
-
-.swc-PromptField-artifacts-scrollbar-lane.is-artifact-scrollbar-interacting .swc-PromptField-artifacts-scrollbar-thumb {
-  background: token("gray-600");
 }
 
 .swc-PromptField-artifacts-tiles > slot {
@@ -225,6 +203,7 @@
 
 .swc-PromptField-artifacts-tiles > slot::slotted(*) {
   flex: 0 0 auto;
+  scroll-snap-align: start;
 }
 
 .swc-PromptField-artifacts-tiles > slot::slotted([type="card"]) {
@@ -245,6 +224,9 @@
 .swc-PromptField-artifacts-scroll-prev,
 .swc-PromptField-artifacts-scroll-next {
   display: inline-flex;
+  position: absolute;
+  inset-block-start: 50%;
+  z-index: 4;
   flex: 0 0 auto;
   align-items: center;
   justify-content: center;
@@ -252,32 +234,93 @@
   block-size: var(--swc-prompt-field-artifact-scroll-button-block-size, 32px);
   padding: 0;
   color: token("gray-800");
-  background: token("gray-100");
+  background: var(--_swc-prompt-field-artifact-scroll-button-background);
   border: 1px solid transparent;
   border-radius: token("corner-radius-800");
   cursor: pointer;
+  transform: translateY(-50%);
+
+  --_swc-prompt-field-artifact-scroll-button-background: token("gray-100");
+  --_swc-prompt-field-artifact-scroll-icon-transform: none;
+}
+
+.swc-PromptField-artifacts-scroll-prev::before,
+.swc-PromptField-artifacts-scroll-next::before {
+  position: absolute;
+  inset-block-start: calc((var(--swc-prompt-field-artifact-scroll-button-block-size, 32px) - var(--swc-prompt-field-artifact-badge-clearance, 0) - var(--swc-prompt-field-artifact-media-block-size, 68px)) / 2);
+  z-index: 0;
+  inline-size: calc(var(--swc-prompt-field-artifact-scroll-button-inline-size, 32px) + token("spacing-400"));
+  block-size: calc(var(--swc-prompt-field-artifact-badge-clearance, 0) + var(--swc-prompt-field-artifact-media-block-size, 68px));
+  pointer-events: none;
+  content: "";
+}
+
+.swc-PromptField-artifacts-scroll-prev::after,
+.swc-PromptField-artifacts-scroll-next::after {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: var(--_swc-prompt-field-artifact-scroll-button-background);
+  border-radius: inherit;
+  pointer-events: none;
+  content: "";
+}
+
+.swc-PromptField-artifacts-scroll-prev {
+  inset-inline-start: 0;
+
+  --_swc-prompt-field-artifact-scroll-icon-transform: scaleX(-1);
+}
+
+.swc-PromptField-artifacts-scroll-prev::before {
+  inset-inline-start: 0;
+  background: linear-gradient(to right, token("background-layer-2-color") 0%, token("background-layer-2-color") 50%, transparent 100%);
+}
+
+.swc-PromptField-artifacts-scroll-next {
+  inset-inline-end: 0;
+}
+
+.swc-PromptField-artifacts-scroll-next::before {
+  inset-inline-end: 0;
+  background: linear-gradient(to left, token("background-layer-2-color") 0%, token("background-layer-2-color") 50%, transparent 100%);
+}
+
+:host(:dir(rtl)) .swc-PromptField-artifacts-scroll-prev::before {
+  background: linear-gradient(to left, token("background-layer-2-color") 0%, token("background-layer-2-color") 50%, transparent 100%);
+}
+
+:host(:dir(rtl)) .swc-PromptField-artifacts-scroll-next::before {
+  background: linear-gradient(to right, token("background-layer-2-color") 0%, token("background-layer-2-color") 50%, transparent 100%);
 }
 
 .swc-PromptField-artifacts-scroll-prev:hover,
 .swc-PromptField-artifacts-scroll-next:hover {
-  background: token("gray-200");
+  --_swc-prompt-field-artifact-scroll-button-background: token("gray-200");
 }
 
 .swc-PromptField-artifacts-scroll-prev swc-icon,
 .swc-PromptField-artifacts-scroll-next swc-icon {
   display: inline-flex;
+  position: relative;
+  z-index: 2;
   align-items: center;
   justify-content: center;
-}
-
-.swc-PromptField-artifacts-scroll-prev swc-icon {
-  transform: scaleX(-1);
+  transform: var(--_swc-prompt-field-artifact-scroll-icon-transform);
 }
 
 .swc-PromptField-artifacts-scroll-prev:focus-visible,
 .swc-PromptField-artifacts-scroll-next:focus-visible {
   outline: token("focus-indicator-thickness") solid token("focus-indicator-color");
   outline-offset: token("focus-ring-gap");
+}
+
+:host(:dir(rtl)) .swc-PromptField-artifacts-scroll-prev {
+  --_swc-prompt-field-artifact-scroll-icon-transform: none;
+}
+
+:host(:dir(rtl)) .swc-PromptField-artifacts-scroll-next {
+  --_swc-prompt-field-artifact-scroll-icon-transform: scaleX(-1);
 }
 
 /* ─────────────────────────────────────
