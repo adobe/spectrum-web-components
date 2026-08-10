@@ -807,7 +807,9 @@ export abstract class PopoverBase extends SpectrumElement {
       this._dispatchClose(source);
       this._closeTeardown();
       if (restoreFocusToTrigger) {
-        this._interactiveElement?.focus();
+        // `preventScroll` so restoring focus does not scroll a trigger that the
+        // user scrolled out of view back into it (matches `_focusSurface`).
+        this._interactiveElement?.focus({ preventScroll: true });
       }
     }
   };
