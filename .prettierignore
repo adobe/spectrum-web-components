@@ -20,3 +20,6 @@
 # Documentation infrastructure scripts maintained by AI agents
 CONTRIBUTOR-DOCS/
 templates/
+
+# Generated Claude Code rules adapter (see .ai/scripts/build-claude.js)
+CLAUDE.md

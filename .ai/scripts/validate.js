@@ -15,7 +15,7 @@
 /**
  * Entry point for AI tooling CI validation.
  *
- * Runs five checks:
+ * Runs six checks:
  *   1. Story tags — valid tags in 2nd-gen *.stories.ts files
  *   2. AGENTS.md paths — relative links in AGENTS.md files resolve to real files
  *   3. Config schema — .ai/config.json structure and regex validity
@@ -23,6 +23,7 @@
  *   5. Docs pages — per-unit MDX docs pages for 2nd-gen components, internal
  *      components, patterns, and controllers conform to the per-unit MDX
  *      authoring standards in `.ai/rules/stories-documentation.md`
+ *   6. Claude adapter — root CLAUDE.md is in sync with .ai/rules/ frontmatter
  *
  * Exits with code 1 if any check has errors; warnings are printed but do not fail.
  *
@@ -31,6 +32,7 @@
  */
 
 import { validateDocsPages } from '../../scripts/validate-docs-pages.js';
+import { validateClaudeAdapter } from './build-claude.js';
 import { validateAgentsPaths } from './validate-agents-paths.js';
 import { validateConfigSchema } from './validate-config-schema.js';
 import { validateStoryTags } from './validate-story-tags.js';
@@ -102,6 +104,11 @@ printSection(
   [],
   docsPages.fileCount
 );
+
+// 6. Claude adapter
+const claude = validateClaudeAdapter();
+totalErrors += claude.errors.length;
+printSection('Claude adapter (CLAUDE.md)', claude.errors, [], claude.fileCount);
 
 // Summary
 console.log('');

@@ -26,7 +26,7 @@ Coding agents working in this repository should treat **`.ai/`** as the canonica
 
 ## IDE-specific folders
 
-Some editors load extra project config from their own directories (for example `.cursor/` and `.claude/`). Those locations are thin adapters that symlink back to `.ai/`. **`.ai/` remains the portable source of truth** for rules and skills documented here. If instructions conflict, prefer **`.ai/README.md`** and the files under **`.ai/rules/`** and **`.ai/skills/`**.
+Some editors load extra project config from their own directories (for example `.cursor/` and `.claude/`). Those locations are thin adapters generated from or symlinked back to `.ai/`: Cursor symlinks the rules per file, while Claude Code compiles them into a root `CLAUDE.md` (run `yarn build:claude`). **`.ai/` remains the portable source of truth** for rules and skills documented here. If instructions conflict, prefer **`.ai/README.md`** and the files under **`.ai/rules/`** and **`.ai/skills/`**.
 
 ## Non-trivial changes
 

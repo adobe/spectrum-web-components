@@ -393,11 +393,11 @@ Canonical content lives in **`.ai/`** (this directory). Tool-specific directorie
 └── *.mdc → ../../.ai/rules/*.md  (per-file symlinks; Cursor expects .mdc)
 .cursor/skills/ → ../.ai/skills/  (directory symlink)
 
-.claude/rules/ → ../.ai/rules/    (directory symlink; Claude Code reads .md)
+CLAUDE.md                         ← generated from .ai/rules/ frontmatter (Claude rules adapter)
 .claude/skills/ → ../.ai/skills/  (directory symlink)
 ```
 
-Editing any `.ai/rules/*.md` file immediately updates what both Cursor and Claude Code see — no sync step required.
+Editing any `.ai/rules/*.md` file immediately updates what Cursor sees — no sync step required. Claude Code cannot honor the rule frontmatter (it would inline every file into every session), so rules are compiled into a root `CLAUDE.md` instead of symlinked. Always-active rules are `@`-imported; on-demand rules are listed with a trigger so Claude reads them only when a task matches. Regenerate with `yarn build:claude` after editing any rule; `yarn lint:ai` fails if `CLAUDE.md` drifts from the frontmatter.
 
 ### Adding a new rule
 
@@ -408,7 +408,7 @@ Editing any `.ai/rules/*.md` file immediately updates what both Cursor and Claud
    ln -s “../../.ai/rules/rule-name.md” “.cursor/rules/rule-name.mdc”
    ```
 
-   `.claude/rules/` is a directory symlink pointing at `.ai/rules/`, so it picks up the new file automatically — no extra step needed.
+   For Claude Code, run `yarn build:claude` to regenerate the root `CLAUDE.md` from the updated frontmatter. CI (`yarn lint:ai`) fails if you forget.
 
 3. Register it in the tables in this README (rules catalog) and in [`AGENTS.md`](../AGENTS.md).
 
@@ -428,18 +428,21 @@ If a symlink is accidentally deleted or broken (e.g. after a file was deleted an
 
 ##### Claude Code
 
+Claude Code uses a generated `CLAUDE.md` for rules (not a symlink) and a directory symlink for skills:
+
 ```sh
 mkdir -p .claude
-ln -s ../.ai/rules .claude/rules
 ln -s ../.ai/skills .claude/skills
+yarn build:claude   # regenerates the root CLAUDE.md rules adapter
 ```
 
-Claude Code reads `.md` files, so directory-level symlinks work directly. Verify:
+Verify:
 
 ```sh
 ls -la .claude/
-# rules -> ../.ai/rules
 # skills -> ../.ai/skills
+node .ai/scripts/build-claude.js --check
+# CLAUDE.md is up to date.
 ```
 
 ##### Cursor

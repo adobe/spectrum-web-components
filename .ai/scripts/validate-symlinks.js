@@ -14,8 +14,11 @@
  *
  * Cursor rules: per-file symlinks (.cursor/rules/<name>.mdc → ../../.ai/rules/<name>.md)
  * Cursor skills: directory symlink (.cursor/skills → ../.ai/skills)
- * Claude rules: directory symlink (.claude/rules → ../.ai/rules)
  * Claude skills: directory symlink (.claude/skills → ../.ai/skills)
+ *
+ * Claude has no rules symlink: Claude Code cannot honor the rule frontmatter and
+ * would inline every file, so rules are compiled into a root CLAUDE.md instead.
+ * That adapter is validated by validateClaudeAdapter() in build-claude.js.
  *
  * Returns { errors, fileCount } for integration with validate.js.
  */
@@ -107,8 +110,7 @@ export function validateSymlinks() {
 
   const ruleChecks = checkCursorRuleSymlinks(errors);
   checkDirectorySymlink(join(ROOT, '.cursor/skills'), '../.ai/skills', errors);
-  checkDirectorySymlink(join(ROOT, '.claude/rules'), '../.ai/rules', errors);
   checkDirectorySymlink(join(ROOT, '.claude/skills'), '../.ai/skills', errors);
 
-  return { errors, fileCount: ruleChecks + 3 };
+  return { errors, fileCount: ruleChecks + 2 };
 }
