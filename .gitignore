@@ -169,3 +169,6 @@ debug-storybook.log
 !.yarn/releases
 !.yarn/sdks
 !.yarn/version
+
+# Subagent-driven-development scratch workspace (gitignored, not part of any plan diff)
+.superpowers/
