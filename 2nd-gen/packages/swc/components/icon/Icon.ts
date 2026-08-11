@@ -19,6 +19,7 @@ import styles from '../../stylesheets/_lit-styles/icon-base.css';
  * Minimal icon renderer that accepts slotted SVG markup.
  *
  * @element swc-icon
+ * @status internal
  * @since 2.0.0-beta.1
  *
  * @example
