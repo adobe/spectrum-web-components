@@ -1,4 +1,4 @@
-# AI and agent documentation
+# AI and agent documentation - rohit
 
 Coding agents should start with [`AGENTS.md`](../AGENTS.md) at the repository root. It summarizes how to use this directory as the canonical source for rules and skills.
 
