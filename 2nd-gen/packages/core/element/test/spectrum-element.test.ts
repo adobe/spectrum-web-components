@@ -14,7 +14,11 @@ import { html } from 'lit';
 import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
-import { buildGroupedWarningArgs, warningId } from '../spectrum-element.js';
+import {
+  buildGroupedWarningArgs,
+  recordAffectedElement,
+  warningId,
+} from '../spectrum-element.js';
 
 export default {
   title: 'Utils/Dev validation/Dedup tests',
@@ -113,5 +117,69 @@ export const GroupedWarningTest: Story = {
         expect(countFromArgs(args)).toBe(12);
       }
     );
+  },
+};
+
+// `recordAffectedElement` accumulates one `warn()` occurrence into its batch.
+// It deduplicates by element identity so `count` reflects distinct affected
+// elements, not the number of `warn()` calls.
+export const WarningCountDedupTest: Story = {
+  play: async ({ step }) => {
+    const WARNING_ELEMENT_CAP = 10;
+
+    await step(
+      'one host warned repeatedly (e.g. several same-tag bad children) counts once',
+      () => {
+        const batch = makeBatch(0, 0);
+        const host = document.createElement('div');
+        // Simulate validateAllowedChildren emitting for three same-tag children
+        // on the same host: identical message, same element, same microtask.
+        recordAffectedElement(batch, host, WARNING_ELEMENT_CAP);
+        recordAffectedElement(batch, host, WARNING_ELEMENT_CAP);
+        recordAffectedElement(batch, host, WARNING_ELEMENT_CAP);
+        expect(batch.count).toBe(1);
+        expect(batch.elements.length).toBe(1);
+      }
+    );
+
+    await step('distinct elements each count once', () => {
+      const batch = makeBatch(0, 0);
+      recordAffectedElement(
+        batch,
+        document.createElement('div'),
+        WARNING_ELEMENT_CAP
+      );
+      recordAffectedElement(
+        batch,
+        document.createElement('div'),
+        WARNING_ELEMENT_CAP
+      );
+      expect(batch.count).toBe(2);
+      expect(batch.elements.length).toBe(2);
+    });
+
+    await step(
+      'distinct elements past the cap still count, display list stays capped',
+      () => {
+        const batch = makeBatch(0, 0);
+        for (let i = 0; i < 15; i += 1) {
+          recordAffectedElement(
+            batch,
+            document.createElement('div'),
+            WARNING_ELEMENT_CAP
+          );
+        }
+        expect(batch.count).toBe(15);
+        expect(batch.elements.length).toBe(WARNING_ELEMENT_CAP);
+      }
+    );
+
+    await step('the dev-mode warning counts once even if repeated', () => {
+      const batch = makeBatch(0, 0);
+      recordAffectedElement(batch, undefined, WARNING_ELEMENT_CAP);
+      recordAffectedElement(batch, undefined, WARNING_ELEMENT_CAP);
+      expect(batch.count).toBe(1);
+      expect(batch.elements.length).toBe(0);
+    });
   },
 };

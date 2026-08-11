@@ -47,13 +47,17 @@
 }
 
 /* Shared positioning for the stacked loupe layers (the transparency
-   checkerboard and the color fill). Both sit inset by the loupe border. The
-   checkerboard pattern itself comes from the shared `.swc-OpacityCheckerboard`
-   fragment added to the styles array. */
+   checkerboard and the color fill). Both sit inset by the loupe border,
+   matching the SVG outline's own `translate(2, 2)` (see ColorLoupe.ts),
+   which is a physical offset that SVG never mirrors for RTL. `top`/`left`
+   are used here instead of logical `inset-block-start`/`inset-inline-start`
+   so the fill stays physically aligned with that outline in both
+   directions; the checkerboard pattern itself comes from the shared
+   `.swc-OpacityCheckerboard` fragment added to the styles array. */
 .swc-ColorLoupe-layer {
   position: absolute;
-  inset-block-start: 2px;
-  inset-inline-start: 2px;
+  top: token("color-loupe-outer-border-width");
+  left: token("color-loupe-outer-border-width");
   inline-size: 100%;
   block-size: 100%;
 }
