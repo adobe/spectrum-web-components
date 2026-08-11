@@ -79,7 +79,7 @@
   position: relative;
   flex-direction: column;
   gap: 0;
-  transition: gap token("animation-duration-200") cubic-bezier(0.8, 0, 0.2, 1);
+  transition: gap token("animation-duration-200") token("animation-ease-in-out");
 }
 
 :host(:not([collapsed])) .swc-PromptField-controls {
@@ -199,8 +199,8 @@
   grid-template-rows: 0fr;
   opacity: 0;
   transition:
-    grid-template-rows token("animation-duration-200") cubic-bezier(0.8, 0, 0.2, 1),
-    opacity token("animation-duration-100") cubic-bezier(0.8, 0, 0.2, 1);
+    grid-template-rows token("animation-duration-200") token("animation-ease-in-out"),
+    opacity token("animation-duration-100") token("animation-ease-in-out");
 }
 
 :host(:not([collapsed])) .swc-PromptField-leading-actions {
