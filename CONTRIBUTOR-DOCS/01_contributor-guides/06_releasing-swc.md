@@ -17,8 +17,9 @@
     - [Understand the versioning strategy](#understand-the-versioning-strategy)
 - [Release types](#release-types)
     - [Snapshot release (for testing a PR)](#snapshot-release-for-testing-a-pr)
-    - [Pre-release (next, beta, rc, etc.)](#pre-release-next-beta-rc-etc)
-    - [Production release (latest)](#production-release-latest)
+    - [Pre-release (`next` throwaway snapshot)](#pre-release-next-throwaway-snapshot)
+    - [Planned release (Version PR)](#planned-release-version-pr)
+    - [Production release (1st-gen `latest`)](#production-release-1st-gen-latest)
 - [Approving the publish job](#approving-the-publish-job)
 - [Verifying the release](#verifying-the-release)
 - [Publishing the documentation site](#publishing-the-documentation-site)
@@ -28,14 +29,14 @@
 
 <!-- Document content (editable) -->
 
-> ⚠️ **This page is out of date and pending a rewrite.** It still describes a single combined release workflow. As of the gen1/gen2 release-architecture split, 1st-gen and 2nd-gen release from **two separate workflows** with their own changeset folders:
+> ⚠️ **This page is out of date and pending a rewrite.** It still describes the release-branch-lock/direct-push model. As of the Version-PR split, both generations release via a bot-opened pull request instead of a direct push to `main`:
 >
-> | | Workflow | Changesets | Branch | Ships to |
+> | | Workflow | Changesets | Real-release branch | Ships to |
 > |---|---|---|---|---|
-> | 1st-gen | `.github/workflows/publish.yml` | `1st-gen/.changeset/` | `main` | `next` / `latest` |
-> | 2nd-gen | `.github/workflows/publish-2nd-gen.yml` | `2nd-gen/.changeset/` | `gen2-beta` | `beta` (pre-release mode) |
+> | 1st-gen | `.github/workflows/publish.yml` | `1st-gen/.changeset/` | `changeset-release/main` → PR to `main` | `latest` |
+> | 2nd-gen | `.github/workflows/publish-2nd-gen.yml` | `2nd-gen/.changeset/` | `changeset-release/main` → PR to `main` | `beta` (persistent pre-release) |
 >
-> The sections below (package groups, versioning strategy, release types) still describe the old single-workflow model and should not be relied on until this page is rewritten to match.
+> The sections below still describe the old branch-lock/direct-push model in places and should not be relied on until this page is rewritten to match.
 
 ## Overview
 
@@ -111,67 +112,56 @@ yarn add @spectrum-web-components/button@snapshot-test
 
 ---
 
-### Pre-release (next, beta, rc, etc.)
+### Pre-release (`next` throwaway snapshot)
 
-Use this to publish to a dist-tag other than `latest` — for example, before a new major version is ready, or for nightly builds.
-
-**How to trigger:**
-
-1. Go to the repository on GitHub.
-2. Navigate to **Actions → Publish Packages**.
-3. Click **Run workflow**.
-4. Optionally enter a dist-tag in the **NPM dist-tag** field (e.g., `beta`, `rc`, `next`). If left blank, the default is `next`.
-5. Click **Run workflow**.
-
-> **Note:** Pushes to `main` also automatically trigger a `next` pre-release if changesets are present.
+Every push to `main` also publishes a throwaway `next` snapshot for both generations — this is unrelated to the Version PR flow below and never touches `main`'s protection or history.
 
 **What gets published:**
 
 ```
 @spectrum-web-components/button@1.2.3-next.20260101120000
+@adobe/spectrum-wc@0.0.0-next-20260101120000
 ```
 
 **Install a pre-release version:**
 
 ```bash
 yarn add @spectrum-web-components/button@next
-yarn add @spectrum-web-components/button@beta
+```
+
+### Planned release (Version PR)
+
+Both generations use [`changesets/action`](https://github.com/changesets/action) to turn pending changesets into a pull request instead of pushing version bumps directly to `main`.
+
+**How it works:**
+
+1. Every push to `main` that has pending changesets (in `1st-gen/.changeset/` or `2nd-gen/.changeset/`) opens or updates a bot-authored pull request titled `chore: release <gen> packages` against `main`, containing the version bumps and changelog entries `yarn changeset version` would produce.
+2. A reviewer reviews and merges that pull request like any other PR — this is the audit trail: the exact diff that will ship is visible and approved before anything is published.
+3. Merging the Version PR is itself a push to `main`. That push has no pending changesets left (the merged PR consumed them), so the same workflow instead runs the generation's publish script: builds, `yarn changeset publish`, and (1st-gen only) builds and publishes the React wrappers and creates a git tag.
+
+**Gen2's `beta` channel** is a persistent pre-release (`2nd-gen/.changeset/pre.json`, entered automatically the first time the Version PR flow runs) — there is no `latest` channel for 2nd-gen yet. Gen1's Version PR ships straight to `latest`.
+
+**Install a pre-release version:**
+
+```bash
+yarn add @adobe/spectrum-wc@beta
 ```
 
 ---
 
-### Production release (latest)
+### Production release (1st-gen `latest`)
 
-Use this to cut an official release. This publishes to the `latest` dist-tag, commits the version bumps and changelogs back to `main`, and creates a git tag.
-
-> ⚠️ **The `latest` tag can only be published from the `main` branch.** If you attempt it from any other branch, the workflow will fail with an error.
-
-**How to trigger:**
-
-1. Make sure all PRs for the release are merged into `main`.
-2. Go to **Actions → Publish Packages**.
-3. Click **Run workflow**.
-4. Enter `latest` in the **NPM dist-tag** field.
-5. Click **Run workflow**.
-
-**What the workflow does after publishing:**
-
-- Commits all version bumps and generated changelogs with the message `chore: release packages #publish`.
-- Pushes the commit to `main`.
-- Creates git tags (e.g., `v1.2.3`) via `1st-gen/scripts/create-git-tag.js`.
+There is no manual trigger for this anymore. Merge the open Version PR (see "Planned release" above) — the resulting push to `main` publishes to `latest`, commits nothing further back (the version bumps already landed via the merged PR), and creates a git tag via `1st-gen/scripts/create-git-tag.js`.
 
 ---
 
 ## Approving the publish job
 
-The `publish` job runs in a protected GitHub Environment called `npm-publish`. Depending on the environment configuration, **a designated reviewer may need to approve the deployment** before the job proceeds.
-
-If approval is required:
-
-1. You will see a **"Waiting for approval"** status on the workflow run.
-2. A reviewer navigates to the workflow run on GitHub and clicks **Review deployments → Approve and deploy**.
+The `release` job runs in a protected GitHub Environment called `npm-publish`. Depending on the environment configuration, **a designated reviewer may need to approve the deployment** before the job proceeds — this applies both when it opens/updates the Version PR and when it runs the actual publish after that PR merges.
 
 This is intentional — it prevents accidental or unauthorized npm publishes.
+
+Note the review point has effectively doubled: a human approves the **code diff** by merging the Version PR, and (if environment protection is configured) a human separately approves the **deployment** that runs after the merge.
 
 ---
 
@@ -220,3 +210,7 @@ gh workflow run publish-docs-site.yml --ref main
 - **A React wrapper package failed to publish mid-run** — The workflow retries each package up to 3 times with exponential backoff (2s, 4s). If it still fails after 3 attempts, the workflow exits. Re-triggering the workflow is safe — changeset will skip already-published packages.
 
 - **The workflow ran but versions weren't bumped on `main`** — Version commits and git tags are only created for `latest` releases. Pre-releases (`next`, `beta`, `snapshot-test`, etc.) intentionally skip the commit and tag steps.
+
+- **A Version PR opened but nothing happens after I merge it** — Confirm the merge actually landed on `main` (not squashed into a differently-named branch) and that `1st-gen/.changeset/*.md` / `2nd-gen/.changeset/*.md` are empty afterward (the merge should have deleted them). If changesets remain, the next push will just update the Version PR again instead of publishing.
+
+- **The publish step ran again on an unrelated push and did nothing** — Expected. `changesets/action` runs its publish script on every push to `main` where no changesets are pending, not only immediately after a Version PR merge. `yarn changeset publish` and the git-tag check in `publish.yml`'s publish script are both designed to no-op safely when there's nothing new to release.
