@@ -21,6 +21,7 @@ jobs:
   check-changesets:
     runs-on: ubuntu-latest
     if: >-
+      github.event_name == 'push' ||
       github.event_name == 'workflow_dispatch' ||
       (github.event_name == 'pull_request' &&
       contains(github.event.pull_request.labels.*.name, 'snapshot-release'))
@@ -44,9 +45,12 @@ jobs:
             echo "Found $COUNT 2nd-gen changeset(s)"
           fi
 
-  # Throwaway snapshot publish: workflow_dispatch (manual snapshot) and
-  # snapshot-release-labeled PRs. Never touches main, never commits, never opens a PR,
-  # never enters persistent pre-release mode.
+  # Throwaway snapshot publish: every push to main (continuous `next`), manual
+  # workflow_dispatch, and snapshot-release-labeled PRs. Never touches main, never
+  # commits, never opens a PR, never enters persistent pre-release mode. Runs alongside
+  # (not instead of) the `release` job below - both are triggered by the same push event
+  # but never conflict (separate jobs/runners, and the run-level concurrency group only
+  # dedupes overlapping *workflow runs*, not jobs within one run).
   snapshot:
     needs: check-changesets
     if: needs.check-changesets.outputs.has_changesets == 'true'
