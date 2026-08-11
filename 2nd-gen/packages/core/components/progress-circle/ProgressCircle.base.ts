@@ -171,6 +171,7 @@ export abstract class ProgressCircleBase extends SizedMixin(SpectrumElement, {
         this.progress = clamped;
       }
     }
+
     super.willUpdate(changes);
   }
 

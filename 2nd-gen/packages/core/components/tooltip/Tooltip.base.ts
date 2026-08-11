@@ -471,6 +471,25 @@ export abstract class TooltipBase
     if (this.disabled && this.open) {
       this.open = false;
     }
+
+    if (changedProperties.has('variant')) {
+      const constructor = this.constructor as typeof TooltipBase;
+      validateEnum(this, {
+        prop: 'variant',
+        value: this.variant,
+        valid: constructor.VARIANTS,
+        url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-tooltip--docs',
+      });
+    }
+    if (changedProperties.has('placement')) {
+      const constructor = this.constructor as typeof TooltipBase;
+      validateEnum(this, {
+        prop: 'placement',
+        value: this.placement,
+        valid: constructor.PLACEMENTS,
+        url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-tooltip--docs',
+      });
+    }
   }
 
   protected override updated(changedProperties: PropertyValues): void {

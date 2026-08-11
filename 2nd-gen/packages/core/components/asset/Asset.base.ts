@@ -52,8 +52,7 @@ export abstract class AssetBase extends SpectrumElement {
   //     IMPLEMENTATION
   // ──────────────────────
 
-  protected override updated(changes: PropertyValues): void {
-    super.updated(changes);
+  protected override update(changes: PropertyValues): void {
     if (typeof this.variant !== 'undefined') {
       const constructor = this.constructor as typeof AssetBase;
       validateEnum(this, {
@@ -63,5 +62,6 @@ export abstract class AssetBase extends SpectrumElement {
         url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-asset--docs',
       });
     }
+    super.update(changes);
   }
 }

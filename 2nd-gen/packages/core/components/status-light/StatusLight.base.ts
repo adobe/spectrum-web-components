@@ -98,8 +98,7 @@ export abstract class StatusLightBase extends SizedMixin(SpectrumElement, {
   //     IMPLEMENTATION
   // ──────────────────────
 
-  protected override updated(changes: PropertyValues): void {
-    super.updated(changes);
+  protected override update(changes: PropertyValues): void {
     const constructor = this.constructor as typeof StatusLightBase;
     // @ts-expect-error -- intentional runtime guard: 1st-gen consumers may pass 'accent'
     if (this.variant === 'accent') {
@@ -125,5 +124,7 @@ export abstract class StatusLightBase extends SizedMixin(SpectrumElement, {
       'https://spectrum-web-components.adobe.com/?path=/docs/status-light-migration-guide--docs',
       { level: 'deprecation' }
     );
+
+    super.update(changes);
   }
 }
