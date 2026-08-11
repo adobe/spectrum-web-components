@@ -105,33 +105,62 @@ const ICON_ANATOMY_PERMUTATIONS: readonly IconAnatomyCase[] =
     }))
   );
 
+const SIZE_LABELS = {
+  s: 'Small',
+  m: 'Medium',
+  l: 'Large',
+  xl: 'Extra-large',
+} as const satisfies Record<BadgeSize, string>;
+
+const CONTENT_LABELS = {
+  'label-only': 'Label only',
+  'icon-and-label': 'Icon + label',
+  'icon-only': 'Icon only',
+} as const satisfies Record<IconAnatomyCase['content'], string>;
+
+// icon-only items have no visible text of their own (label is aria-only via
+// aria-label), so every item gets a visible caption underneath - otherwise a
+// reviewer can't tell which size/content combination a given item is from
+// the snapshot alone (same reasoning as progress-circle.vrt.ts's
+// renderSizedCircle caption).
 const renderIconAnatomy = ({ size, content }: IconAnatomyCase) => {
-  if (content === 'label-only') {
+  const caption = `${SIZE_LABELS[size]} · ${CONTENT_LABELS[content]}`;
+  const badge = (() => {
+    if (content === 'label-only') {
+      return html`
+        <swc-badge variant="neutral" size=${size}>Archived</swc-badge>
+      `;
+    }
+    if (content === 'icon-only') {
+      return html`
+        <swc-badge
+          variant="neutral"
+          size=${size}
+          role="img"
+          aria-label="Archived"
+        >
+          <swc-icon size=${size} slot="icon">
+            ${iconForSize(Icons, 'Checkmark', size)}
+          </swc-icon>
+        </swc-badge>
+      `;
+    }
     return html`
-      <swc-badge variant="neutral" size=${size}>Archived</swc-badge>
-    `;
-  }
-  if (content === 'icon-only') {
-    return html`
-      <swc-badge
-        variant="neutral"
-        size=${size}
-        role="img"
-        aria-label="Archived"
-      >
-        <swc-icon size=${size} slot="icon">
+      <swc-badge variant="neutral" size=${size}>
+        <swc-icon size=${size} slot="icon" aria-hidden="true">
           ${iconForSize(Icons, 'Checkmark', size)}
         </swc-icon>
+        Archived
       </swc-badge>
     `;
-  }
+  })();
   return html`
-    <swc-badge variant="neutral" size=${size}>
-      <swc-icon size=${size} slot="icon" aria-hidden="true">
-        ${iconForSize(Icons, 'Checkmark', size)}
-      </swc-icon>
-      Archived
-    </swc-badge>
+    <div
+      style="display: flex; flex-direction: column; align-items: center; gap: var(--swc-spacing-100);"
+    >
+      ${badge}
+      <span class="swc-Detail swc-Detail--sizeM">${caption}</span>
+    </div>
   `;
 };
 
