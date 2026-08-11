@@ -94,6 +94,7 @@
   position: absolute;
   inset: token("spacing-50");
   background: token("gray-200");
+  border: 1px solid transparent;
   border-radius: token("corner-radius-full");
 }
 
@@ -380,4 +381,15 @@
 
 :host([type="media"]) .swc-UploadArtifact-subtitle {
   line-height: token("line-height-font-size-75");
+}
+
+/* The dismiss button's visible circle is a decorative <span>, not a real
+ * border on the button itself, so forced-colors mode has nothing to key
+ * off of by default and the circle's background can disappear entirely.
+ * The transparent border declared alongside `background` above exists so
+ * this rule has something to color in; it's a no-op outside forced-colors. */
+@media (forced-colors: active) {
+  .swc-UploadArtifact-dismiss-visual {
+    border-color: ButtonBorder;
+  }
 }

@@ -26,6 +26,7 @@ import {
 import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { styleMap } from 'lit/directives/style-map.js';
+import { ResizeController } from '@lit-labs/observers/resize-controller.js';
 
 import { Chevron75Icon } from '@adobe/spectrum-wc/icon/elements/index.js';
 import {
@@ -149,7 +150,18 @@ export class PromptField extends SpectrumElement {
   @state()
   private _artifactCanScrollNext = false;
 
-  private _artifactScrollObserver?: ResizeObserver;
+  // Observed targets accumulate across slot changes (dismissed tiles are
+  // never explicitly unobserved); the browser drops a target's callbacks
+  // once it leaves the DOM, so this is a bounded, harmless handful of
+  // stale references for a chat composer's tile count, not an unbounded
+  // leak. Revisit with explicit unobserve() bookkeeping if this is ever
+  // reused somewhere with much larger, longer-lived tile counts.
+  private readonly _artifactScrollObserver = new ResizeController(this, {
+    target: null,
+    callback: () => {
+      this._updateArtifactScrollState();
+    },
+  });
 
   /**
    * Roving tabindex + arrow-key focus movement across artifact tiles. The
@@ -191,8 +203,6 @@ export class PromptField extends SpectrumElement {
       focusgroupNavigationActiveChange,
       this._handleArtifactActiveChange as EventListener
     );
-    this._artifactScrollObserver?.disconnect();
-    this._artifactScrollObserver = undefined;
     super.disconnectedCallback();
   }
 
@@ -371,12 +381,14 @@ export class PromptField extends SpectrumElement {
       return;
     }
 
-    const firstVisible = artifacts.find((artifact) =>
-      this._isArtifactVisible(artifact, scrollEl)
+    const scrollRect = scrollEl.getBoundingClientRect();
+    const scrollStyle = getComputedStyle(scrollEl);
+    const visibleStart = this._isRtl()
+      ? scrollRect.right - (parseFloat(scrollStyle.scrollPaddingRight) || 0)
+      : scrollRect.left + (parseFloat(scrollStyle.scrollPaddingLeft) || 0);
+    this._artifactNavigation.setActiveItem(
+      this._findArtifactAtOrPastBoundary(visibleStart)
     );
-    if (firstVisible) {
-      this._artifactNavigation.setActiveItem(firstVisible);
-    }
   }
 
   /**
@@ -630,17 +642,9 @@ export class PromptField extends SpectrumElement {
   private _observeArtifactScrollViewport(): void {
     const scrollEl = this._artifactScrollEl;
     if (!scrollEl) {
-      this._artifactScrollObserver?.disconnect();
       return;
     }
 
-    if (!this._artifactScrollObserver) {
-      this._artifactScrollObserver = new ResizeObserver(() => {
-        this._updateArtifactScrollState();
-      });
-    }
-
-    this._artifactScrollObserver.disconnect();
     this._artifactScrollObserver.observe(scrollEl);
     for (const element of this._assignedArtifactElements ?? []) {
       this._artifactScrollObserver.observe(element);
@@ -652,25 +656,25 @@ export class PromptField extends SpectrumElement {
     return getComputedStyle(this).direction === 'rtl';
   }
 
-  private _getArtifactAtPageStart(direction: -1 | 1): HTMLElement {
-    const scrollEl = this._artifactScrollEl;
+  /**
+   * First artifact whose leading (reading-direction-start) edge is at or
+   * past the physical viewport x-coordinate `boundary`. Falls back to the
+   * last artifact if none qualify. Shared by `_scrollArtifactsByPage`
+   * (`boundary` is where the next/previous page will start) and
+   * `_syncArtifactActiveItemToVisible` (`boundary` is the visible
+   * window's own start edge) so both "find the first artifact at a given
+   * point" needs go through one RTL-aware comparison instead of two.
+   */
+  private _findArtifactAtOrPastBoundary(boundary: number): HTMLElement {
     const children = this._assignedArtifactElements ?? [];
-    if (!scrollEl) {
-      return children[0]!;
-    }
-
-    const scrollRect = scrollEl.getBoundingClientRect();
     const rtl = this._isRtl();
-    const pageStart = rtl
-      ? scrollRect.right - direction * scrollEl.clientWidth
-      : scrollRect.left + direction * scrollEl.clientWidth;
-
+    const tolerance = 1;
     return (
       children.find((child) =>
         rtl
-          ? child.getBoundingClientRect().right <= pageStart + 1
-          : child.getBoundingClientRect().left >= pageStart - 1
-      ) ?? children[children.length - 1]
+          ? child.getBoundingClientRect().right <= boundary + tolerance
+          : child.getBoundingClientRect().left >= boundary - tolerance
+      ) ?? children[children.length - 1]!
     );
   }
 
@@ -685,8 +689,13 @@ export class PromptField extends SpectrumElement {
       left: direction * scrollEl.clientWidth * (this._isRtl() ? -1 : 1),
       behavior: this._artifactScrollBehavior(),
     });
+
+    const scrollRect = scrollEl.getBoundingClientRect();
+    const pageStart = this._isRtl()
+      ? scrollRect.right - direction * scrollEl.clientWidth
+      : scrollRect.left + direction * scrollEl.clientWidth;
     this._artifactNavigation.setActiveItem(
-      this._getArtifactAtPageStart(direction)
+      this._findArtifactAtOrPastBoundary(pageStart)
     );
   }
 

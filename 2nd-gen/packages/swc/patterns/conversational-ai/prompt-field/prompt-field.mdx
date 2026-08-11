@@ -52,7 +52,7 @@ This rule is about **component layout**, not file MIME type. You can attach many
 
 - **Document-only uploads** where title and subtitle carry meaning → all **`type="card"`**
 - **Visual previews** (photos, storyboard frames) → all **`type="media"`**
-- **Mixed images and documents in one batch** → normalize to all **`type="media"`**: image previews in `thumbnail`, and document tiles with a preview or icon in `thumbnail` plus an optional **`badge`** (for example, "PDF"). See **[Media with badge](/docs/patterns-conversational-ai-upload-artifact--readme#media-with-badge)**.
+- **Mixed images and documents in one batch** → normalize to all **`type="media"`**: image previews in `thumbnail`, and document tiles with a preview or icon in `thumbnail` plus an optional **`badge`** (for example, "PDF"). See **[Media with badge](/docs/patterns-conversational-ai-upload-artifact--docs#media-with-badge)**.
 
 **Populate the attachment strip** by slotting **one `<swc-upload-artifact>` per file**, each with **`slot="artifact"`** (same slot name repeated).
 
@@ -69,9 +69,9 @@ Artifacts own dismiss behavior via **`dismissible`** and emit **`swc-upload-arti
 
 ### Multi-artifact scroll
 
-When several attachments exceed the composer width, the strip scrolls horizontally at full width. Chevron buttons flank the strip (32px gray circles) and render only when scrolling is possible in that direction. Each click advances by one **set** of tiles: the last visible tile becomes the first tile in the next set so the carousel keeps continuity. On the final set, the strip right-aligns to stay full. Edge fades on both sides signal overflow and hide at the ends of the list.
+When several attachments exceed the composer width, the strip scrolls horizontally at full width. Chevron buttons flank the strip (32px gray circles) and render only when scrolling is possible in that direction. Each click advances by one viewport width and settles on a tile boundary; the browser's native scroll clamping keeps the final page from overshooting the end. Edge fades on both sides signal overflow and hide at the ends of the list.
 
-Trackpad, wheel, touch scrolling, and the overlay scrollbar lane below the tiles all work on the artifact strip. The lane is always reserved in the gap below the tiles so composer height stays fixed; the thumb appears only during physical interaction (wheel, touch, or dragging the scrollbar). Chevron paging does not reveal the scrollbar.
+Trackpad, wheel, touch scrolling, and the platform's native scrollbar all work on the artifact strip. Chevron paging does not reveal the scrollbar.
 
 <Canvas of={PromptFieldStories.MultiArtifactScroll} />
 
