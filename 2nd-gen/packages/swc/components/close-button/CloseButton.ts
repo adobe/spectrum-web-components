@@ -88,6 +88,11 @@ export class CloseButton extends ButtonBase {
   }
 
   protected override render(): TemplateResult {
+    // The wrapping .swc-CloseButton-icon span already sets the rendered box via
+    // --swc-close-button-icon-size; "size" on swc-ui-icon only selects which
+    // optically-tuned glyph step it renders, per the RFC's fixed size-to-step
+    // map (CONTRIBUTOR-DOCS/03_project-planning/05_strategies/icon-rfc.md, section 7).
+    // Passing the button's own size is the documented pattern for that mapping.
     return html`
       <button
         class="swc-CloseButton"
