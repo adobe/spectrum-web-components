@@ -13,6 +13,15 @@
 :host {
   display: block;
   inline-size: 100%;
+
+  /* @property's initial-value alone does not reach elements when the @property rule is
+     declared inside the same shadow root that uses it (verified empirically: reading
+     the property, or any other property that references it via var() inside
+     oklch(from ...), returns an empty/invalid value in this Chromium version, and
+     box-shadow/background properties that depend on it silently compute to "none").
+     An explicit declaration here is required in addition to the @property rule below,
+     kept in sync with its initial-value. */
+  --swc-prompt-field-brand: oklch(73.58% 0.2376 322.4deg);
 }
 
 *,
@@ -38,13 +47,38 @@
 
 .swc-PromptField-box {
   display: flex;
+  position: relative;
+  flex: 1 1 auto;
   flex-direction: column;
+  min-inline-size: 0;
   padding: token("spacing-300");
-  background: token("background-layer-2-color");
+  background: radial-gradient(circle at right bottom in oklch, var(--swc-prompt-field-bg-stop-1) 0%, var(--swc-prompt-field-bg-stop-2) 35%, var(--swc-prompt-field-bg-stop-3) 82%, var(--swc-prompt-field-bg-stop-4) 100%);
   border: 1px solid transparent;
   border-radius: 24px;
-  box-shadow: token("drop-shadow-emphasized-default-x") token("drop-shadow-emphasized-default-y") token("drop-shadow-emphasized-default-blur") token("drop-shadow-emphasized-default-color");
+
+  /* prettier-ignore */
+  box-shadow: var(--swc-prompt-field-prominent-outer-glow, 0 0 0 0 transparent,) 0 -3px 10px 1px var(--swc-prompt-field-drop-shadow-color);
   overflow: hidden;
+  transition:
+    --swc-prompt-field-con-hue-opacity 700ms cubic-bezier(0.32, 0.72, 0, 1),
+    --swc-prompt-field-bg-stop-1 700ms cubic-bezier(0.32, 0.72, 0, 1),
+    --swc-prompt-field-bg-stop-2 700ms cubic-bezier(0.32, 0.72, 0, 1),
+    --swc-prompt-field-bg-stop-3 700ms cubic-bezier(0.32, 0.72, 0, 1),
+    --swc-prompt-field-bg-stop-4 700ms cubic-bezier(0.32, 0.72, 0, 1),
+    box-shadow 700ms cubic-bezier(0.32, 0.72, 0, 1);
+
+  /* Base (unconditional) plumbing: brand-tinted border/drop-shadow, used as-is by
+     balanced/prominent at rest; subtle and :focus-within override both to neutral/
+     transparent below. */
+  --swc-prompt-field-border-color: light-dark(oklch(from var(--swc-prompt-field-brand) 73.58% 0.2376 h / 10%), rgb(255 255 255 / 5%));
+  --swc-prompt-field-drop-shadow-color: light-dark(oklch(from var(--swc-prompt-field-brand) 58.26% 0.2265 calc(h - 0.4) / 5%), oklch(from var(--swc-prompt-field-brand) 66.17% 0.2508 calc(h - 0.5) / 5%));
+  --swc-prompt-field-inset-shadow-color: rgb(255 255 255 / 50%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .swc-PromptField-box {
+    transition: none;
+  }
 }
 
 /* Keyboard-only focus ring; PromptField toggles this class since :focus-visible alone can't tell Tab from a click. */
@@ -52,6 +86,452 @@
   outline: token("focus-indicator-thickness") solid token("focus-indicator-color");
   outline-offset: token("focus-ring-gap");
 }
+
+/* ─────────────────────────────────────
+   AI brand treatment (variables only; no consuming rules yet)
+   ───────────────────────────────────── */
+
+/* Every hue-bearing value below derives from this one brand anchor via OKLCH relative
+   color syntax (oklch(from var(--swc-prompt-field-brand) ...)), so retheming means
+   overriding this single property. Default value derived from the reference
+   implementation's brand anchor token (outer-border.gradient.ob-hue.stop-1.light),
+   converted to OKLCH the same way the reference's defaultBrand() does: L/C rounded to
+   4 decimals, H rounded to 1 decimal. Interim hardcoded value pending formal delivery
+   from the tokens team (see PR #6585 discussion on border-radius for the same caveat). */
+@property --swc-prompt-field-brand {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: oklch(73.58% 0.2376 322.4deg);
+}
+
+/* Ambient hue-sweep opacity (idle vs. generating, per variant, hover). */
+@property --swc-prompt-field-con-hue-opacity {
+  syntax: "<percentage>";
+  inherits: true;
+  initial-value: 0%;
+}
+
+/* Card wash gradient stops (idle vs. generating, per variant, hover). */
+@property --swc-prompt-field-bg-stop-1 {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #0000;
+}
+
+@property --swc-prompt-field-bg-stop-2 {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #0000;
+}
+
+@property --swc-prompt-field-bg-stop-3 {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #0000;
+}
+
+@property --swc-prompt-field-bg-stop-4 {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #0000;
+}
+
+/* Outer ring gradient stops. Kept as separate properties from the card's own
+   --bg-stop-1..4 above for naming clarity (the reference reuses one set of
+   properties for both, relying on them living on different elements); functionally
+   equivalent. --swc-prompt-field-outer-hue (the ring's glow-shadow tint) is
+   deliberately NOT registered here, matching the reference: it feeds directly into
+   a box-shadow layer, and box-shadow's own transition already interpolates shadow
+   colors, so no @property typing is needed for it to animate smoothly. */
+@property --swc-prompt-field-outer-stop-1 {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #0000;
+}
+
+@property --swc-prompt-field-outer-stop-2 {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #0000;
+}
+
+@property --swc-prompt-field-outer-stop-3 {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #0000;
+}
+
+/* ─────────────────────────────────────
+   AI brand treatment: color-independent structure
+   ───────────────────────────────────── */
+
+/* Everything in this section is either pure geometry/motion (no color dependency at
+   all) or uses OBVIOUS placeholder colors instead of the real brand-derived values, so
+   the state machine (variant × generating × hover × focus) can be verified by eye
+   before the harder-to-judge real opacity ramps go in. See research.md for why: the
+   previous attempt's real bugs (hover beating focus, subtle's ring only on hover) were
+   masked by subtle colors and easy to miss; obvious placeholders make cascade mistakes
+   impossible to miss. Placeholders get replaced with the derivation script's real
+   output in the next phase; the structural/geometric/motion pieces do not change. */
+/* stylelint-disable no-descending-specificity -- flagged pairs are mutually exclusive variant/state attribute combinations on :host, never simultaneously active, so there is no real override ambiguity for the linter to protect against. */
+
+/* Padded gradient ring around the card. border-radius is padding (6px) + the card's own
+   24px, so the ring reads as a constant-width band regardless of the card's corner
+   radius; this relationship, and the 6px padding itself, are pure geometry. */
+.swc-PromptField-outer-border {
+  display: flex;
+  padding: 6px;
+  container-type: inline-size;
+
+  /* Base (unconditional) plumbing: brand-tinted drop-shadow, used as-is by
+     balanced/prominent at rest; subtle and :focus-within override it below. */
+  --swc-prompt-field-outer-shadow: light-dark(oklch(from var(--swc-prompt-field-brand) 73.58% 0.2376 h / 10%), oklch(from var(--swc-prompt-field-brand) 66.17% 0.2508 calc(h - 0.5) / 0%));
+
+  background: linear-gradient(to right in oklch, var(--swc-prompt-field-outer-stop-1) 0%, var(--swc-prompt-field-outer-stop-2) 37%, var(--swc-prompt-field-outer-stop-3) 77%);
+  border-radius: 30px;
+  box-shadow:
+    0 2px 4px var(--swc-prompt-field-outer-shadow),
+    0 6px 16px -10px var(--swc-prompt-field-outer-hue);
+  transition:
+    --swc-prompt-field-outer-stop-1 700ms cubic-bezier(0.32, 0.72, 0, 1),
+    --swc-prompt-field-outer-stop-2 700ms cubic-bezier(0.32, 0.72, 0, 1),
+    --swc-prompt-field-outer-stop-3 700ms cubic-bezier(0.32, 0.72, 0, 1),
+    box-shadow 700ms cubic-bezier(0.32, 0.72, 0, 1);
+
+  /* Subtle: real brand-derived values (see research.md / .brand-derivation-output.txt).
+     Flat neutral ring at rest; colored ring on hover. Balanced/prominent below remain
+     PLACEHOLDER pending their own real-color pass. */
+  :host([variant="subtle"]) & {
+    --swc-prompt-field-outer-shadow: rgb(0 0 0 / 5%);
+    --swc-prompt-field-outer-hue: transparent;
+    --swc-prompt-field-outer-stop-1: light-dark(rgb(255 255 255), rgb(255 255 255 / 2%));
+    --swc-prompt-field-outer-stop-2: light-dark(rgb(255 255 255), rgb(255 255 255 / 2%));
+    --swc-prompt-field-outer-stop-3: light-dark(rgb(255 255 255), rgb(255 255 255 / 2%));
+
+    &:hover {
+      --swc-prompt-field-outer-shadow: light-dark(oklch(from var(--swc-prompt-field-brand) 73.58% 0.2376 h / 10%), oklch(from var(--swc-prompt-field-brand) 66.17% 0.2508 calc(h - 0.5) / 0%));
+      --swc-prompt-field-outer-hue: light-dark(oklch(from oklch(from var(--swc-prompt-field-brand) 67.5% 0.2134 calc(h - 292.3) / 50%) l c h / 20%), oklch(from oklch(from var(--swc-prompt-field-brand) 23.87% 0.1407 calc(h - 38.8)) l c h / 0%));
+      --swc-prompt-field-outer-stop-1: light-dark(oklch(from oklch(from var(--swc-prompt-field-brand) 73.58% 0.2376 h / 60%) l c h / 2%), rgb(255 255 255 / 2%));
+      --swc-prompt-field-outer-stop-2: light-dark(oklch(from oklch(from var(--swc-prompt-field-brand) 67.5% 0.2134 calc(h - 292.3) / 50%) l c h / 2%), rgb(255 255 255 / 2%));
+      --swc-prompt-field-outer-stop-3: light-dark(oklch(from oklch(from var(--swc-prompt-field-brand) 78.78% 0.1692 calc(h - 254) / 40%) l c h / 2%), rgb(255 255 255 / 2%));
+    }
+  }
+
+  :host([variant="balanced"]) & {
+    --swc-prompt-field-outer-stop-1: hotpink;
+    --swc-prompt-field-outer-stop-2: hotpink;
+    --swc-prompt-field-outer-stop-3: hotpink;
+  }
+
+  :host([variant="prominent"]) & {
+    --swc-prompt-field-outer-stop-1: blueviolet;
+    --swc-prompt-field-outer-stop-2: blueviolet;
+    --swc-prompt-field-outer-stop-3: blueviolet;
+  }
+
+  /* Typing recedes the treatment, but only while idle; generating keeps showing through
+     focus (matches the reference). Verified empirically, not assumed (see research.md):
+     :not(...) MUST live inside :host(...)'s own argument, not chained after it
+     (":host(:focus-within):not(x)") -- that form's compound selector fails to match its
+     host at all in Chromium, despite Element.matches() on the identical selector string
+     reporting true. Once fixed, plain source order (this rule is declared last) is
+     sufficient for focus to beat the hover rules above; no specificity boost needed.
+     Matches the reference's literal value exactly (pure white in light mode): the
+     visible "double border" on focus comes from the box's own inset 1px border-color
+     hairline (see .swc-PromptField-box's focus rule below), not from any contrast
+     between the ring's fill and the box's interior. */
+  :host(:focus-within:not([generating])) & {
+    --swc-prompt-field-outer-shadow: light-dark(rgb(0 0 0 / 5%), rgb(0 0 0 / 3%));
+    --swc-prompt-field-outer-hue: transparent;
+    --swc-prompt-field-outer-stop-1: light-dark(rgb(255 255 255), rgb(255 255 255 / 2%));
+    --swc-prompt-field-outer-stop-2: light-dark(rgb(255 255 255), rgb(255 255 255 / 2%));
+    --swc-prompt-field-outer-stop-3: light-dark(rgb(255 255 255), rgb(255 255 255 / 2%));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .swc-PromptField-outer-border {
+    transition: none;
+  }
+}
+
+/* Soft inset border + highlight, painted on a separate layer so .swc-PromptField-box's
+   own overflow: hidden can keep clipping outward content without also clipping this. The
+   two static "inset 0 -5px .../inset 0 24px ..." layers are a neutral top/bottom sheen
+   present in every state and variant (not brand-dependent); the earlier attempt at this
+   treatment omitted them entirely, so they're included here for the first time. */
+.swc-PromptField-inset-shadow {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+
+  /* prettier-ignore */
+  box-shadow:
+    var(--swc-prompt-field-prominent-inset-glow, inset 0 0 0 0 transparent,) inset 0 0 0 1px var(--swc-prompt-field-border-color),
+    inset 0 6px 15px 0 var(--swc-prompt-field-inset-shadow-color),
+    inset 0 0 0 0 transparent,
+    inset 0 -5px 21.6px 0 rgb(255 255 255 / 50%),
+    inset 0 24px 32px 0 rgb(255 255 255 / 50%);
+  pointer-events: none;
+  transition: box-shadow 700ms cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .swc-PromptField-inset-shadow {
+    transition: none;
+  }
+}
+
+:host([generating]) .swc-PromptField-inset-shadow {
+  /* prettier-ignore */
+  box-shadow:
+    var(--swc-prompt-field-prominent-inset-glow, inset 0 0 0 0 transparent,) inset 0 0 0 1px var(--swc-prompt-field-border-color),
+    inset 0 6px 15px 0 var(--swc-prompt-field-inset-shadow-color),
+    inset 0 -32px 100px -50px light-dark(rgb(254 246 255), oklch(from var(--swc-prompt-field-brand) 44.18% 0.1934 calc(h - 1.8))),
+    inset 0 -5px 21.6px 0 rgb(255 255 255 / 50%),
+    inset 0 24px 32px 0 rgb(255 255 255 / 50%);
+}
+
+/* Static top gloss. This is NOT brand-dependent in the reference either (it's a neutral
+   white/black wash), so these are real final values, not placeholders. */
+.swc-PromptField-gloss {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom in oklch, light-dark(oklch(from white l c h / 75%), oklch(from black l c h / 40%)) 0% 37%, light-dark(oklch(from white l c h / 15%), oklch(from black l c h / 12%)) 83% 100%);
+  pointer-events: none;
+}
+
+/* Ambient hue sweep behind the card, animated only while generating. Rotation and
+   translation scale with the card's own width via atan()/clamp() so the motion reads
+   proportionally at any size; this responsive formula is pure geometry, independent of
+   the sweep's color. Colors are real brand-derived values (see research.md): the
+   gradient's own color doesn't change per state/variant in the reference, only its
+   opacity does (via --swc-prompt-field-con-hue-opacity, set elsewhere per variant ×
+   state × hover). con-hue.generating.stop-2's light value is a near-neutral token
+   (chroma below the brand-conversion threshold), so it's kept as a literal color
+   rather than a brand-relative expression, matching the reference's own behavior. */
+.swc-PromptField-hue-sweep {
+  position: absolute;
+  inset: -44px;
+  background:
+    radial-gradient(50% 50% at -20% 100% in oklch, oklch(from light-dark(oklch(from var(--swc-prompt-field-brand) 95.17% 0.0271 calc(h + 32.1)), oklch(from var(--swc-prompt-field-brand) 50.12% 0.1912 calc(h - 313.3))) l c h / var(--swc-prompt-field-con-hue-opacity)), transparent), radial-gradient(70% 60% at 5% 80% in oklch, oklch(from light-dark(rgb(254 246 255), oklch(from var(--swc-prompt-field-brand) 44.18% 0.1934 calc(h - 1.8))) l c h / var(--swc-prompt-field-con-hue-opacity)), transparent),
+    radial-gradient(70% 50% at 40% 80% in oklch, oklch(from light-dark(oklch(from var(--swc-prompt-field-brand) 95.64% 0.036 calc(h + 0.6)), oklch(from var(--swc-prompt-field-brand) 31.55% 0.1704 calc(h - 24.5))) l c h / var(--swc-prompt-field-con-hue-opacity)), transparent);
+  pointer-events: none;
+
+  --swc-prompt-field-rotation: 7deg;
+  --swc-prompt-field-translation: 44px;
+}
+
+@supports (rotate: atan(1px / 1cqw)) {
+  .swc-PromptField-hue-sweep {
+    --swc-prompt-field-rotation: atan(30px / 50cqw);
+    --swc-prompt-field-translation: clamp(44px, 44px * (800px / 100cqw), 72px);
+  }
+}
+
+:host([generating]) .swc-PromptField-hue-sweep {
+  animation:
+    swc-prompt-field-hue-translate 2s linear infinite,
+    swc-prompt-field-hue-rotate 3s linear infinite,
+    swc-prompt-field-hue-scale 4s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :host([generating]) .swc-PromptField-hue-sweep {
+    animation: none;
+  }
+}
+
+@keyframes swc-prompt-field-hue-rotate {
+  0% {
+    rotate: 0deg;
+  }
+
+  25% {
+    rotate: var(--swc-prompt-field-rotation);
+  }
+
+  50% {
+    rotate: 0deg;
+  }
+
+  75% {
+    rotate: calc(-1 * var(--swc-prompt-field-rotation));
+  }
+
+  100% {
+    rotate: 0deg;
+  }
+}
+
+@keyframes swc-prompt-field-hue-translate {
+  0% {
+    translate: 0 0;
+  }
+
+  50% {
+    translate: 0 var(--swc-prompt-field-translation);
+  }
+
+  100% {
+    translate: 0 0;
+  }
+}
+
+@keyframes swc-prompt-field-hue-scale {
+  0% {
+    scale: 1 1;
+  }
+
+  50% {
+    scale: 3 1;
+  }
+
+  100% {
+    scale: 1 1;
+  }
+}
+
+/* State skeleton for the card wash: verifies variant × generating × hover × focus
+   cascade behavior. Subtle uses real brand-derived values (see research.md /
+   .brand-derivation-output.txt); balanced/prominent below remain OBVIOUS PLACEHOLDER
+   colors pending their own real-color pass. */
+:host([variant="subtle"]:not([generating])) .swc-PromptField-box {
+  --swc-prompt-field-con-hue-opacity: 0%;
+  --swc-prompt-field-bg-stop-1: light-dark(white, token("gray-75"));
+  --swc-prompt-field-bg-stop-2: light-dark(white, token("gray-75"));
+  --swc-prompt-field-bg-stop-3: light-dark(white, token("gray-75"));
+  --swc-prompt-field-bg-stop-4: light-dark(white, token("gray-75"));
+  --swc-prompt-field-border-color: light-dark(rgb(0 0 0 / 5%), rgb(255 255 255 / 5%));
+  --swc-prompt-field-drop-shadow-color: transparent;
+}
+
+:host([variant="subtle"]:not([generating])) :where(.swc-PromptField-outer-border:hover) .swc-PromptField-box {
+  --swc-prompt-field-con-hue-opacity: 12.5%;
+  --swc-prompt-field-bg-stop-1: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand) 95.18% 0.0231 calc(h - 44.5)) 30%), color-mix(in oklch, token("gray-75"), rgb(0 0 0) 40%));
+  --swc-prompt-field-bg-stop-2: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand) 91.32% 0.0721 calc(h + 0.1)) 30%), color-mix(in oklch, token("gray-75"), oklch(from var(--swc-prompt-field-brand) 23.87% 0.1407 calc(h - 38.8)) 40%));
+  --swc-prompt-field-bg-stop-3: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand) 95.52% 0.0222 calc(h - 294.6)) 30%), color-mix(in oklch, token("gray-75"), oklch(from var(--swc-prompt-field-brand) 23.18% 0.1116 calc(h - 3.1)) 40%));
+  --swc-prompt-field-bg-stop-4: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand) 95.08% 0.0433 calc(h - 243.9)) 30%), color-mix(in oklch, token("gray-75"), oklch(from var(--swc-prompt-field-brand) 22.42% 0.072 calc(h - 288.8)) 40%));
+  --swc-prompt-field-border-color: light-dark(oklch(from var(--swc-prompt-field-brand) 73.58% 0.2376 h / 10%), rgb(255 255 255 / 5%));
+  --swc-prompt-field-drop-shadow-color: light-dark(oklch(from var(--swc-prompt-field-brand) 58.26% 0.2265 calc(h - 0.4) / 5%), oklch(from var(--swc-prompt-field-brand) 66.17% 0.2508 calc(h - 0.5) / 5%));
+}
+
+:host([variant="balanced"]:not([generating])) .swc-PromptField-box {
+  --swc-prompt-field-con-hue-opacity: 20%;
+  --swc-prompt-field-bg-stop-1: pink;
+  --swc-prompt-field-bg-stop-2: pink;
+  --swc-prompt-field-bg-stop-3: pink;
+  --swc-prompt-field-bg-stop-4: pink;
+}
+
+:host([variant="balanced"]:not([generating])) :where(.swc-PromptField-outer-border:hover) .swc-PromptField-box {
+  --swc-prompt-field-con-hue-opacity: 40%;
+  --swc-prompt-field-bg-stop-1: hotpink;
+  --swc-prompt-field-bg-stop-2: hotpink;
+  --swc-prompt-field-bg-stop-3: hotpink;
+  --swc-prompt-field-bg-stop-4: hotpink;
+}
+
+:host([variant="prominent"]:not([generating])) .swc-PromptField-box {
+  --swc-prompt-field-con-hue-opacity: 60%;
+  --swc-prompt-field-bg-stop-1: plum;
+  --swc-prompt-field-bg-stop-2: plum;
+  --swc-prompt-field-bg-stop-3: plum;
+  --swc-prompt-field-bg-stop-4: plum;
+}
+
+:host([variant="prominent"]:not([generating])) :where(.swc-PromptField-outer-border:hover) .swc-PromptField-box {
+  --swc-prompt-field-con-hue-opacity: 100%;
+  --swc-prompt-field-bg-stop-1: blueviolet;
+  --swc-prompt-field-bg-stop-2: blueviolet;
+  --swc-prompt-field-bg-stop-3: blueviolet;
+  --swc-prompt-field-bg-stop-4: blueviolet;
+}
+
+:host([variant="subtle"][generating]) .swc-PromptField-box {
+  --swc-prompt-field-con-hue-opacity: 20%;
+  --swc-prompt-field-bg-stop-1: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand) 90.63% 0.0456 calc(h - 45.1)) 20%), color-mix(in oklch, token("gray-75"), rgb(0 0 0) 20%));
+  --swc-prompt-field-bg-stop-2: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand) 95.64% 0.036 calc(h + 0.6)) 20%), color-mix(in oklch, token("gray-75"), oklch(from var(--swc-prompt-field-brand) 26.65% 0.1587 calc(h - 40.2)) 20%));
+  --swc-prompt-field-bg-stop-3: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand) 95.08% 0.0433 calc(h - 243.9)) 20%), color-mix(in oklch, token("gray-75"), oklch(from var(--swc-prompt-field-brand) 25.8% 0.0855 calc(h - 290.4)) 20%));
+  --swc-prompt-field-bg-stop-4: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand) 85.78% 0.1222 calc(h + 0.4)) 20%), color-mix(in oklch, token("gray-75"), oklch(from var(--swc-prompt-field-brand) 37.57% 0.1726 calc(h - 2.6)) 20%));
+  --swc-prompt-field-spread-shadow-opacity: 30%;
+}
+
+:host([variant="subtle"][generating]) :where(.swc-PromptField-outer-border:hover) .swc-PromptField-box {
+  --swc-prompt-field-con-hue-opacity: 75%;
+  --swc-prompt-field-bg-stop-1: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand) 90.63% 0.0456 calc(h - 45.1)) 20%), color-mix(in oklch, token("gray-75"), rgb(0 0 0) 20%));
+  --swc-prompt-field-bg-stop-2: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand) 95.64% 0.036 calc(h + 0.6)) 20%), color-mix(in oklch, token("gray-75"), oklch(from var(--swc-prompt-field-brand) 26.65% 0.1587 calc(h - 40.2)) 20%));
+  --swc-prompt-field-bg-stop-3: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand) 95.08% 0.0433 calc(h - 243.9)) 20%), color-mix(in oklch, token("gray-75"), oklch(from var(--swc-prompt-field-brand) 25.8% 0.0855 calc(h - 290.4)) 20%));
+  --swc-prompt-field-bg-stop-4: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand) 85.78% 0.1222 calc(h + 0.4)) 20%), color-mix(in oklch, token("gray-75"), oklch(from var(--swc-prompt-field-brand) 37.57% 0.1726 calc(h - 2.6)) 20%));
+  --swc-prompt-field-spread-shadow-opacity: 30%;
+}
+
+:host([variant="balanced"][generating]) .swc-PromptField-box {
+  --swc-prompt-field-con-hue-opacity: 60%;
+  --swc-prompt-field-bg-stop-1: crimson;
+  --swc-prompt-field-bg-stop-2: crimson;
+  --swc-prompt-field-bg-stop-3: crimson;
+  --swc-prompt-field-bg-stop-4: crimson;
+}
+
+:host([variant="prominent"][generating]) .swc-PromptField-box {
+  --swc-prompt-field-con-hue-opacity: 100%;
+  --swc-prompt-field-bg-stop-1: indigo;
+  --swc-prompt-field-bg-stop-2: indigo;
+  --swc-prompt-field-bg-stop-3: indigo;
+  --swc-prompt-field-bg-stop-4: indigo;
+}
+
+/* Typing recedes the treatment to flat white, but only while idle; generating's wash
+   persists through focus (matches the reference's own idle-only gating). :not(...) must
+   live inside :host(...)'s own argument (see the outer-ring rule above for why). Plain
+   source order (declared last) is sufficient for focus to beat the hover rules above. */
+:host(:focus-within:not([generating])) .swc-PromptField-box {
+  --swc-prompt-field-con-hue-opacity: 0%;
+  --swc-prompt-field-bg-stop-1: light-dark(white, token("gray-75"));
+  --swc-prompt-field-bg-stop-2: light-dark(white, token("gray-75"));
+  --swc-prompt-field-bg-stop-3: light-dark(white, token("gray-75"));
+  --swc-prompt-field-bg-stop-4: light-dark(white, token("gray-75"));
+  --swc-prompt-field-border-color: light-dark(rgb(0 0 0 / 5%), rgb(255 255 255 / 5%));
+  --swc-prompt-field-inset-shadow-color: transparent;
+  --swc-prompt-field-drop-shadow-color: transparent;
+
+  /* Trailing comma is baked into the value on purpose: box-shadow: var(--x, ) <shadow2>
+     needs "<shadow1>, <shadow2>" when --x is set, and "<shadow2>" alone (empty
+     fallback) when it isn't; the comma has to live inside the variable's own value
+     for both cases to produce valid box-shadow syntax. Omitting it here previously made
+     the WHOLE box-shadow property invalid (two shadow segments with no separator),
+     which computed to "none" instead of the intended flattened-but-still-transparent
+     shadow -- caught by comparing computed box-shadow at idle vs. focus, not by eye.
+     prettier-ignore is required on both declarations below: Prettier silently strips a
+     trailing comma before `;` in a custom-property value (verified empirically), which
+     re-breaks this exact bug on the next format-on-save/CI run if left unprotected.
+     The var()'s own fallback (at each of this variable's consuming sites) must ALSO be a
+     same-shaped placeholder shadow, not empty -- an empty fallback makes the idle shadow
+     list one item SHORTER than the focused list, which shifts every later shadow's index
+     by one during the box-shadow transition and made the real border-color hairline
+     briefly interpolate against this glow layer instead of itself on blur (visible as
+     the border flashing transparent). Confirmed via research.md's "Found #5". */
+
+  /* prettier-ignore */
+  --swc-prompt-field-prominent-outer-glow: 0 20px 20px -24px transparent,;
+
+  /* prettier-ignore */
+  --swc-prompt-field-prominent-inset-glow: inset 0 -20px 20px -24px transparent,;
+}
+
+/* Generating-only extra outward glow, layered under the base drop shadow (see the base
+   .swc-PromptField-box box-shadow above); --spread-shadow-opacity is set per variant
+   above (subtle's real value is wired; balanced/prominent fall back to 50% until their
+   own real-color pass). */
+:host([generating]) .swc-PromptField-box {
+  /* prettier-ignore */
+  box-shadow:
+    var(--swc-prompt-field-prominent-outer-glow, 0 0 0 0 transparent,) 0 -3px 10px 1px var(--swc-prompt-field-drop-shadow-color),
+    0 6px 83px rgb(from light-dark(oklch(from var(--swc-prompt-field-brand) 85.68% 0.0856 calc(h + 35.2)), oklch(from var(--swc-prompt-field-brand) 26.22% 0.105 calc(h - 314.8))) r g b / var(--swc-prompt-field-spread-shadow-opacity, 50%));
+}
+
+/* stylelint-enable no-descending-specificity */
 
 /* ─────────────────────────────────────
    Input area (artifact + text area)
