@@ -346,23 +346,28 @@ export const ArtifactScrollPaginationTest: Story = {
       }
     );
 
-    await step('scrolling to the end removes the Next chevron', async () => {
-      const maxScroll = Math.max(
-        0,
-        (scrollEl?.scrollWidth ?? 0) - (scrollEl?.clientWidth ?? 0)
-      );
-      scrollEl?.scrollTo({
-        left: maxScroll,
-        behavior: 'auto',
-      });
-      await new Promise((resolve) => requestAnimationFrame(resolve));
-      await el.updateComplete;
+    await step(
+      'scrolling to the end disables (not removes) the Next chevron, so a focused chevron is never blurred by unmounting',
+      async () => {
+        const maxScroll = Math.max(
+          0,
+          (scrollEl?.scrollWidth ?? 0) - (scrollEl?.clientWidth ?? 0)
+        );
+        scrollEl?.scrollTo({
+          left: maxScroll,
+          behavior: 'auto',
+        });
+        await new Promise((resolve) => requestAnimationFrame(resolve));
+        await el.updateComplete;
 
-      const nextButtonAtEnd = el.shadowRoot?.querySelector<HTMLButtonElement>(
-        '.swc-PromptField-artifacts-scroll-next'
-      );
-      expect(nextButtonAtEnd).toBeFalsy();
-    });
+        const nextButtonAtEnd = el.shadowRoot?.querySelector<HTMLButtonElement>(
+          '.swc-PromptField-artifacts-scroll-next'
+        );
+        expect(nextButtonAtEnd).toBeTruthy();
+        expect(nextButtonAtEnd?.getAttribute('aria-disabled')).toBe('true');
+        expect(nextButtonAtEnd?.tabIndex).toBe(-1);
+      }
+    );
   },
 };
 
@@ -394,14 +399,14 @@ export const ArtifactScrollRTLTest: Story = {
 
     await step('the next chevron pages forward in RTL', async () => {
       expect(getComputedStyle(el).direction).toBe('rtl');
-      expect(getPrevButton()).toBeFalsy();
+      expect(getPrevButton()?.getAttribute('aria-disabled')).toBe('true');
 
       const scrollEnd = waitForScrollEnd(scrollEl);
       getNextButton()?.click();
       await scrollEnd;
       await el.updateComplete;
 
-      expect(getPrevButton()).toBeTruthy();
+      expect(getPrevButton()?.getAttribute('aria-disabled')).toBe('false');
       expect(
         firstArtifact!.getBoundingClientRect().left >=
           scrollEl!.getBoundingClientRect().right
@@ -628,7 +633,7 @@ export const ArtifactFocusOrderTest: Story = {
     );
 
     await step(
-      'the "<" button disappearing while focused redirects focus to the first tile',
+      'the "<" button becoming disabled while focused keeps focus on it, rather than moving it anywhere',
       async () => {
         scrollEl?.scrollTo({ left: 200, behavior: 'auto' });
         await new Promise((resolve) => requestAnimationFrame(resolve));
@@ -636,7 +641,7 @@ export const ArtifactFocusOrderTest: Story = {
         expect(scrollEl?.scrollLeft ?? 0).toBeGreaterThan(0);
 
         const prevButton = getPrevButton();
-        expect(prevButton).toBeTruthy();
+        expect(prevButton?.getAttribute('aria-disabled')).toBe('false');
         prevButton?.focus();
         expect(getActiveElement()).toBe(prevButton);
 
@@ -644,8 +649,8 @@ export const ArtifactFocusOrderTest: Story = {
         await new Promise((resolve) => requestAnimationFrame(resolve));
         await el.updateComplete;
 
-        expect(getPrevButton()).toBeFalsy();
-        expect(getActiveElement()).toBe(artifacts[0]);
+        expect(getPrevButton()?.getAttribute('aria-disabled')).toBe('true');
+        expect(getActiveElement()).toBe(prevButton);
       }
     );
 

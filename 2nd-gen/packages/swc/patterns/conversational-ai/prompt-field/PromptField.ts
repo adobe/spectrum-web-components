@@ -10,13 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
-import {
-  CSSResultArray,
-  html,
-  nothing,
-  PropertyValues,
-  TemplateResult,
-} from 'lit';
+import { CSSResultArray, html, nothing, TemplateResult } from 'lit';
 import {
   property,
   query,
@@ -181,9 +175,6 @@ export class PromptField extends SpectrumElement {
     }
   );
 
-  /** Set in `willUpdate` when a chevron about to disappear currently has focus; consumed in `updated`. */
-  private _pendingArtifactFocusRedirect: 'first' | 'last' | null = null;
-
   private _pendingArtifactDismiss?: { artifact: HTMLElement; index: number };
 
   public static override get styles(): CSSResultArray {
@@ -206,13 +197,8 @@ export class PromptField extends SpectrumElement {
     super.disconnectedCallback();
   }
 
-  protected override willUpdate(changed: PropertyValues<this>): void {
-    this._captureArtifactChevronFocusRedirect(changed);
-  }
-
   protected override updated(): void {
     this._warnIfMissingLegalContent();
-    this._applyArtifactChevronFocusRedirect();
   }
 
   private _handleInput(event: Event): void {
@@ -351,14 +337,13 @@ export class PromptField extends SpectrumElement {
   /**
    * `scrollend`, not `scroll`: paging/scrollbar-drag animate over several
    * frames, and `scroll` fires on every one of them. Checking visibility
-   * mid-animation can see a tile transiently pass through the visible
-   * region and lock it in as active before the scroll settles on its
-   * actual destination (`_scrollArtifactsByPage` already sets the correct
-   * active tile up front, but this can still race and clobber it).
-   * `scrollend` only fires once scrolling has actually stopped.
+   * mid-animation can lock in a tile that's only transiently passing
+   * through the visible region.
    */
   private _handleArtifactScrollEnd(): void {
-    this._syncArtifactActiveItemToVisible();
+    void this.updateComplete.then(() =>
+      this._syncArtifactActiveItemToVisible()
+    );
   }
 
   /**
@@ -505,7 +490,7 @@ export class PromptField extends SpectrumElement {
         tile.focus();
         return;
       }
-      if (nextButton) {
+      if (nextButton && this._artifactCanScrollNext) {
         event.preventDefault();
         nextButton.focus();
       }
@@ -591,54 +576,6 @@ export class PromptField extends SpectrumElement {
     }
   }
 
-  private _captureArtifactChevronFocusRedirect(
-    changed: PropertyValues<this>
-  ): void {
-    const active = getActiveElement();
-
-    if (
-      changed.has('_artifactCanScrollPrev') &&
-      changed.get('_artifactCanScrollPrev') === true &&
-      !this._artifactCanScrollPrev
-    ) {
-      const prevButton = this.shadowRoot?.querySelector(
-        '.swc-PromptField-artifacts-scroll-prev'
-      );
-      if (active === prevButton) {
-        this._pendingArtifactFocusRedirect = 'first';
-      }
-    }
-
-    if (
-      changed.has('_artifactCanScrollNext') &&
-      changed.get('_artifactCanScrollNext') === true &&
-      !this._artifactCanScrollNext
-    ) {
-      const nextButton = this.shadowRoot?.querySelector(
-        '.swc-PromptField-artifacts-scroll-next'
-      );
-      if (active === nextButton) {
-        this._pendingArtifactFocusRedirect = 'last';
-      }
-    }
-  }
-
-  private _applyArtifactChevronFocusRedirect(): void {
-    if (!this._pendingArtifactFocusRedirect) {
-      return;
-    }
-
-    const artifacts = this._assignedArtifactElements ?? [];
-    const target =
-      this._pendingArtifactFocusRedirect === 'first'
-        ? artifacts[0]
-        : artifacts[artifacts.length - 1];
-    this._pendingArtifactFocusRedirect = null;
-    if (target) {
-      this._focusArtifact(target);
-    }
-  }
-
   private _observeArtifactScrollViewport(): void {
     const scrollEl = this._artifactScrollEl;
     if (!scrollEl) {
@@ -699,11 +636,21 @@ export class PromptField extends SpectrumElement {
     );
   }
 
+  // aria-disabled, not disabled: a chevron the user just activated stays
+  // focused instead of being blurred by the browser's own disabled-element
+  // handling. That leaves it keyboard-activatable in the brief window
+  // before its aria-disabled state actually updates, hence these guards.
   private _handleArtifactScrollPrev(): void {
+    if (!this._artifactCanScrollPrev) {
+      return;
+    }
     this._scrollArtifactsByPage(-1);
   }
 
   private _handleArtifactScrollNext(): void {
+    if (!this._artifactCanScrollNext) {
+      return;
+    }
     this._scrollArtifactsByPage(1);
   }
 
@@ -889,12 +836,14 @@ export class PromptField extends SpectrumElement {
           class="swc-PromptField-artifacts-row"
           @keydown=${this._handleArtifactRowKeydown}
         >
-          ${this._artifactScrollOverflow && this._artifactCanScrollPrev
+          ${this._artifactScrollOverflow
             ? html`
                 <button
                   type="button"
                   class="swc-PromptField-artifacts-scroll-prev"
                   aria-label=${this.artifactScrollPrevLabel}
+                  aria-disabled=${!this._artifactCanScrollPrev}
+                  tabindex=${this._artifactCanScrollPrev ? nothing : -1}
                   @click=${this._handleArtifactScrollPrev}
                 >
                   <swc-icon size="s" aria-hidden="true">
@@ -942,12 +891,14 @@ export class PromptField extends SpectrumElement {
                 `
               : nothing}
           </div>
-          ${this._artifactScrollOverflow && this._artifactCanScrollNext
+          ${this._artifactScrollOverflow
             ? html`
                 <button
                   type="button"
                   class="swc-PromptField-artifacts-scroll-next"
                   aria-label=${this.artifactScrollNextLabel}
+                  aria-disabled=${!this._artifactCanScrollNext}
+                  tabindex=${this._artifactCanScrollNext ? nothing : -1}
                   @click=${this._handleArtifactScrollNext}
                 >
                   <swc-icon size="s" aria-hidden="true">
