@@ -18,6 +18,11 @@ import {
   type ElementSize,
   SizedMixin,
 } from '@adobe/spectrum-wc-core/mixins/index.js';
+import {
+  isDebug,
+  validateEnum,
+  warnIf,
+} from '@adobe/spectrum-wc-core/utils/index.js';
 
 import { SlotAttributePropagationController } from '../../controllers/slot-attribute-propagation-controller/index.js';
 import { SlotTextController } from '../../controllers/slot-text-controller/index.js';
@@ -189,49 +194,39 @@ export abstract class CardBase extends SizedMixin(SpectrumElement, {
       }
     }
 
-    if (window.__swc?.DEBUG) {
-      const { VARIANTS, DENSITIES } = this.constructor as typeof CardBase;
+    const { VARIANTS, DENSITIES } = this.constructor as typeof CardBase;
 
-      if (
-        changedProperties.has('variant') &&
-        !VARIANTS.includes(this.variant)
-      ) {
-        window.__swc.warn(
-          this,
-          `<${this.localName}> received an invalid "variant" value of "${this.variant}". Valid values are ${VARIANTS.join(', ')}.`,
-          'https://opensource.adobe.com/spectrum-web-components/components/card/',
-          { issues: [`variant="${this.variant}"`] }
-        );
-      }
+    if (changedProperties.has('variant')) {
+      validateEnum(this, {
+        prop: 'variant',
+        value: this.variant,
+        valid: VARIANTS,
+        url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-card--docs',
+      });
+    }
 
-      if (
-        changedProperties.has('density') &&
-        !DENSITIES.includes(this.density)
-      ) {
-        window.__swc.warn(
-          this,
-          `<${this.localName}> received an invalid "density" value of "${this.density}". Valid values are ${DENSITIES.join(', ')}.`,
-          'https://opensource.adobe.com/spectrum-web-components/components/card/',
-          { level: 'low', issues: [`density="${this.density}"`] }
-        );
-      }
+    if (changedProperties.has('density')) {
+      validateEnum(this, {
+        prop: 'density',
+        value: this.density,
+        valid: DENSITIES,
+        url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-card--docs',
+        options: { level: 'low' },
+      });
+    }
 
-      if (
-        changedProperties.has('titleAsLink') &&
+    warnIf(
+      this,
+      changedProperties.has('titleAsLink') &&
         this.titleAsLink &&
-        !this.getTitleLinkElement()
-      ) {
-        window.__swc.warn(
-          this,
-          `<${this.localName}> has "title-as-link" set but no link element was found in the "title" slot.`,
-          'https://opensource.adobe.com/spectrum-web-components/components/card/',
-          { level: 'high', issues: ['title-as-link'] }
-        );
-      }
+        !this.getTitleLinkElement(),
+      `<${this.localName}> has "title-as-link" set but no link element was found in the "title" slot.`,
+      'https://spectrum-web-components.adobe.com/?path=/docs/components-card--docs',
+      { level: 'high', issues: ['title-as-link'] }
+    );
 
-      if (changedProperties.has('size')) {
-        this.checkActionsSupport();
-      }
+    if (changedProperties.has('size')) {
+      this.checkActionsSupport();
     }
   }
 
@@ -270,19 +265,18 @@ export abstract class CardBase extends SizedMixin(SpectrumElement, {
    * CSS, not here.
    */
   private checkActionsSupport(): void {
-    if (
-      window.__swc?.DEBUG &&
-      !this.actionsSupported &&
-      (this.getActionsSlotElement()?.assignedElements({ flatten: true })
-        .length ?? 0) > 0
-    ) {
-      window.__swc.warn(
-        this,
-        `<${this.localName}> has content in the "actions" slot, but actions are not supported for this card (size="${this.size}").`,
-        'https://opensource.adobe.com/spectrum-web-components/components/card/',
-        { level: 'medium', issues: ['actions'] }
-      );
+    if (!isDebug()) {
+      return;
     }
+    warnIf(
+      this,
+      !this.actionsSupported &&
+        (this.getActionsSlotElement()?.assignedElements({ flatten: true })
+          .length ?? 0) > 0,
+      `<${this.localName}> has content in the "actions" slot, but actions are not supported for this card (size="${this.size}").`,
+      'https://spectrum-web-components.adobe.com/?path=/docs/components-card--docs',
+      { level: 'medium', issues: ['actions'] }
+    );
   }
 
   /**

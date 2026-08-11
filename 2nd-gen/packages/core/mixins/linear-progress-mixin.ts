@@ -14,6 +14,7 @@ import { property } from 'lit/decorators.js';
 
 import { LanguageResolutionController } from '../controllers/language-resolution.js';
 import { SlotPresenceController } from '../controllers/slot-presence-controller/index.js';
+import { isDebug, validateEnum, warnIf } from '../utils/index.js';
 import type { ElementSize } from './sized-mixin.js';
 
 type Constructor<T = Record<string, unknown>> = {
@@ -284,7 +285,7 @@ export function LinearProgressMixin<T extends Constructor<ReactiveElement>>(
       // that determine it actually change, so the warning does not fire
       // on every property update during development.
       if (
-        window.__swc?.DEBUG &&
+        isDebug() &&
         (changes.has('accessibleLabel') || !this._hasWarnedNoAccessibleName)
       ) {
         this.warnMissingAccessibleName();
@@ -294,12 +295,30 @@ export function LinearProgressMixin<T extends Constructor<ReactiveElement>>(
       // range. The value is still clamped for rendering and ARIA, but the
       // clamp is otherwise silent, so flag it as a likely authoring error.
       if (
-        window.__swc?.DEBUG &&
+        isDebug() &&
         (changes.has('value') ||
           changes.has('minValue') ||
           changes.has('maxValue'))
       ) {
         this.warnValueOutOfRange();
+      }
+
+      if (changes.has('labelPosition')) {
+        validateEnum(this, {
+          prop: 'label-position',
+          value: this.labelPosition,
+          valid: LINEAR_PROGRESS_LABEL_POSITIONS,
+          url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-meter--docs',
+        });
+      }
+
+      if (changes.has('staticColor') && this.staticColor !== undefined) {
+        validateEnum(this, {
+          prop: 'static-color',
+          value: this.staticColor,
+          valid: LINEAR_PROGRESS_STATIC_COLORS,
+          url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-meter--docs',
+        });
       }
     }
 
@@ -319,8 +338,9 @@ export function LinearProgressMixin<T extends Constructor<ReactiveElement>>(
         return;
       }
       this._hasWarnedValueOutOfRange = true;
-      window.__swc?.warn(
+      warnIf(
         this,
+        true,
         `<${this.localName}> "value" (${value}) is outside the [${min}, ${max}] range and was clamped to ${this.clampedValue}.`,
         this.docsHref,
         {
@@ -338,8 +358,9 @@ export function LinearProgressMixin<T extends Constructor<ReactiveElement>>(
         return;
       }
       this._hasWarnedNoAccessibleName = true;
-      window.__swc?.warn(
+      warnIf(
         this,
+        true,
         `<${this.localName}> requires an accessible name.`,
         this.docsHref,
         {

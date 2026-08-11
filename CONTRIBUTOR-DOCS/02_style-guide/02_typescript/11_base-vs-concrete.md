@@ -135,18 +135,26 @@ export class Badge extends BadgeBase {
 // ❌ Bad — validation belongs in the base class
 export class Badge extends BadgeBase {
   protected override update(changedProperties: PropertyValues): void {
+    validateEnum(this, {
+      prop: 'variant',
+      value: this.variant,
+      valid: BadgeBase.VARIANTS,
+      url: '…',
+    });
     super.update(changedProperties);
-    if (!this.constructor.VARIANTS.includes(this.variant)) { ... }
   }
 }
 
 // ✅ Good — validation is in the base class
 export abstract class BadgeBase extends SizedMixin(...) {
   protected override update(changedProperties: PropertyValues): void {
+    validateEnum(this, {
+      prop: 'variant',
+      value: this.variant,
+      valid: BadgeBase.VARIANTS,
+      url: '…',
+    });
     super.update(changedProperties);
-    if (window.__swc?.DEBUG) {
-      if (!this.constructor.VARIANTS.includes(this.variant)) { ... }
-    }
   }
 }
 ```

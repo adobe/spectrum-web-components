@@ -16,6 +16,7 @@ import { SlotPresenceController } from '@adobe/spectrum-wc-core/controllers/slot
 import { SlotTextController } from '@adobe/spectrum-wc-core/controllers/slot-text-controller/index.js';
 import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
 import { SizedMixin } from '@adobe/spectrum-wc-core/mixins/index.js';
+import { validateEnum, warnIf } from '@adobe/spectrum-wc-core/utils/index.js';
 
 import {
   BADGE_VALID_SIZES,
@@ -170,34 +171,23 @@ export abstract class BadgeBase extends SizedMixin(SpectrumElement, {
   }
 
   protected override update(changedProperties: PropertyValues): void {
-    if (window.__swc?.DEBUG) {
-      const constructor = this.constructor as typeof BadgeBase;
-      if (!constructor.VARIANTS.includes(this.variant)) {
-        window.__swc.warn(
-          this,
-          `<${this.localName}> element expects the "variant" attribute to be one of the following:`,
-          'https://opensource.adobe.com/spectrum-web-components/components/badge/#variants',
-          {
-            issues: [...constructor.VARIANTS],
-          }
-        );
-      }
-      // Check outline property if it exists (S2 only)
-      if (
-        'outline' in this &&
+    const constructor = this.constructor as typeof BadgeBase;
+    validateEnum(this, {
+      prop: 'variant',
+      value: this.variant,
+      valid: constructor.VARIANTS,
+      url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-badge--docs',
+    });
+    // Check outline property if it exists (S2 only)
+    warnIf(
+      this,
+      'outline' in this &&
         (this as { outline: boolean }).outline === true &&
-        !constructor.VARIANTS_SEMANTIC.includes(this.variant)
-      ) {
-        window.__swc.warn(
-          this,
-          `<${this.localName}> element only supports the outline styling if the variant is a semantic color variant.`,
-          'https://opensource.adobe.com/spectrum-web-components/components/badge/#variants',
-          {
-            issues: [...constructor.VARIANTS_SEMANTIC],
-          }
-        );
-      }
-    }
+        !constructor.VARIANTS_SEMANTIC.includes(this.variant),
+      `<${this.localName}> element only supports the outline styling if the variant is a semantic color variant.`,
+      'https://spectrum-web-components.adobe.com/?path=/docs/components-badge--docs',
+      { issues: [...constructor.VARIANTS_SEMANTIC] }
+    );
     super.update(changedProperties);
   }
 }
