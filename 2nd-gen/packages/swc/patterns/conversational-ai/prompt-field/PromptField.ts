@@ -330,17 +330,18 @@ export class PromptField extends SpectrumElement {
   }
 
   private _handleArtifactScroll(): void {
-    this._updateArtifactScrollState();
     this.requestUpdate();
   }
 
   /**
    * `scrollend`, not `scroll`: paging/scrollbar-drag animate over several
-   * frames, and `scroll` fires on every one of them. Checking visibility
-   * mid-animation can lock in a tile that's only transiently passing
-   * through the visible region.
+   * frames, and `scroll` fires on every one of them. Reacting mid-gesture
+   * can lock in a tile that's only transiently passing through the
+   * visible region as active, or flip the chevrons' aria-disabled state
+   * back and forth for no reason a user would ever see settled.
    */
   private _handleArtifactScrollEnd(): void {
+    this._updateArtifactScrollState();
     void this.updateComplete.then(() =>
       this._syncArtifactActiveItemToVisible()
     );
@@ -403,21 +404,9 @@ export class PromptField extends SpectrumElement {
     );
   }
 
-  private _prefersReducedMotion(): boolean {
-    return (
-      typeof window.matchMedia === 'function' &&
-      window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    );
-  }
-
-  private _artifactScrollBehavior(): ScrollBehavior {
-    return this._prefersReducedMotion() ? 'auto' : 'smooth';
-  }
-
   private _focusArtifact(el: HTMLElement): void {
     this._artifactNavigation.setActiveItem(el);
     el.scrollIntoView({
-      behavior: this._artifactScrollBehavior(),
       block: 'nearest',
       inline: 'nearest',
     });
@@ -433,7 +422,6 @@ export class PromptField extends SpectrumElement {
       return;
     }
     activeElement.scrollIntoView({
-      behavior: this._artifactScrollBehavior(),
       block: 'nearest',
       inline: 'nearest',
     });
@@ -624,7 +612,6 @@ export class PromptField extends SpectrumElement {
 
     scrollEl.scrollBy({
       left: direction * scrollEl.clientWidth * (this._isRtl() ? -1 : 1),
-      behavior: this._artifactScrollBehavior(),
     });
 
     const scrollRect = scrollEl.getBoundingClientRect();

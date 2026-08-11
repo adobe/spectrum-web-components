@@ -355,7 +355,7 @@ export const ArtifactScrollPaginationTest: Story = {
         );
         scrollEl?.scrollTo({
           left: maxScroll,
-          behavior: 'auto',
+          behavior: 'instant',
         });
         await new Promise((resolve) => requestAnimationFrame(resolve));
         await el.updateComplete;
@@ -635,7 +635,7 @@ export const ArtifactFocusOrderTest: Story = {
     await step(
       'the "<" button becoming disabled while focused keeps focus on it, rather than moving it anywhere',
       async () => {
-        scrollEl?.scrollTo({ left: 200, behavior: 'auto' });
+        scrollEl?.scrollTo({ left: 200, behavior: 'instant' });
         await new Promise((resolve) => requestAnimationFrame(resolve));
         await el.updateComplete;
         expect(scrollEl?.scrollLeft ?? 0).toBeGreaterThan(0);
@@ -645,7 +645,7 @@ export const ArtifactFocusOrderTest: Story = {
         prevButton?.focus();
         expect(getActiveElement()).toBe(prevButton);
 
-        scrollEl?.scrollTo({ left: 0, behavior: 'auto' });
+        scrollEl?.scrollTo({ left: 0, behavior: 'instant' });
         await new Promise((resolve) => requestAnimationFrame(resolve));
         await el.updateComplete;
 
@@ -771,7 +771,7 @@ export const ArtifactChevronPagingFocusTest: Story = {
     await step(
       'Tab from Prev (after paging backward) lands in the newly displayed set of tiles',
       async () => {
-        scrollEl?.scrollTo({ left: 0, behavior: 'auto' });
+        scrollEl?.scrollTo({ left: 0, behavior: 'instant' });
         await new Promise((resolve) => requestAnimationFrame(resolve));
         await el.updateComplete;
 

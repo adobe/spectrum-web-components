@@ -171,6 +171,7 @@
   padding-inline: token("spacing-75");
   overflow-x: auto;
   overflow-y: hidden;
+  scroll-behavior: smooth;
   scroll-snap-type: inline mandatory;
   scroll-padding-inline: token("spacing-75");
   scrollbar-color: token("gray-400") transparent;
@@ -546,4 +547,10 @@
 
 .swc-PromptField-legal-disclaimer a {
   color: inherit;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .swc-PromptField-artifacts-scroll {
+    scroll-behavior: auto;
+  }
 }
