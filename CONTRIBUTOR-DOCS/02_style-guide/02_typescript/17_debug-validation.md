@@ -140,7 +140,7 @@ protected override updated(changed: PropertyValues<this>): void {
     this,
     !this.accessibleLabel && !hasLabelSlotContent,
     `<${this.localName}> requires either slotted label content or an "accessible-label" attribute.`,
-    'https://spectrum-web-components.adobe.com/?path=/docs/components-example--docs',
+    'https://spectrum-web-components.adobe.com/?path=/docs/components-tabs--docs',
     { type: 'accessibility', level: 'high' }
   );
 }
@@ -348,7 +348,7 @@ protected handleLabelSlotChange(event: Event): void {
     this,
     event.target as HTMLSlotElement,
     'label',
-    'https://spectrum-web-components.adobe.com/?path=/docs/components-example--docs'
+    'https://spectrum-web-components.adobe.com/?path=/docs/components-tabs--docs'
   );
 }
 ```
