@@ -31,15 +31,17 @@ Toggling `collapsed` animates between the two layouts.
 
 The textarea grows with content up to `--swc-prompt-field-max-block-size` (default `40vh`). Override the custom property to raise or lower this ceiling.
 
-To cap growth relative to a surrounding panel instead of the viewport, wrap the prompt field in an ancestor with `container-type: size`:
+Prefer a container-relative cap where the prompt field sits inside a sized panel. Give an ancestor `container-type: size` and set the cap to `40cqb` (40% of that ancestor's block size):
 
 ```html
 <div style="container-type: size; block-size: 400px;">
-  <swc-prompt-field></swc-prompt-field>
+  <swc-prompt-field
+    style="--swc-prompt-field-max-block-size: 40cqb;"
+  ></swc-prompt-field>
 </div>
 ```
 
-With a sized ancestor present, the default becomes `40cqb` (40% of that ancestor's block size) instead of `40vh`. The prompt field cannot use its own box as the container: the textarea's height would then depend on a container whose height depends on the textarea, and browsers ignore that circular reference, so the sizing must come from something the prompt field is inside of.
+The prompt field cannot be its own container: the textarea's height would then depend on a container whose height depends on the textarea, a circular reference browsers ignore, so the cap must resolve against something the prompt field is inside of.
 
 `min-rows`/`max-rows` add an optional row-count cap on top of this. Unset, only `--swc-prompt-field-max-block-size` applies.
 

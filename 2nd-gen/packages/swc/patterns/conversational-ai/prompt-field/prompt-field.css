@@ -177,13 +177,6 @@
   outline: none;
 }
 
-/* Size query (not style()); simply doesn't match without a container-type: size ancestor, hence the vh fallback above. */
-@container (min-block-size: 0) {
-  .swc-PromptField-textarea {
-    max-block-size: min(calc(token("font-size-200") * token("line-height-200") * var(--swc-prompt-field-textarea-max-rows, 999)), var(--swc-prompt-field-max-block-size, 40cqb));
-  }
-}
-
 .swc-PromptField-textarea::placeholder {
   color: token("gray-600");
 }
