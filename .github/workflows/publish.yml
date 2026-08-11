@@ -96,8 +96,20 @@ jobs:
       - name: Build all packages
         run: yarn build
 
+      - name: Generate custom elements manifests
+        run: yarn workspace @spectrum-web-components/1st-gen custom-element-json
+
+      - name: Confirm build artifacts
+        run: yarn workspace @spectrum-web-components/1st-gen build:confirm
+
       - name: Version 1st-gen packages (snapshot)
         run: (cd 1st-gen && yarn changeset version --snapshot ${{ steps.extract-tag.outputs.tag }})
+
+      - name: Capture released versions
+        id: versions
+        run: |
+          BUNDLE_VERSION=$(node -p "require('./1st-gen/tools/bundle/package.json').version")
+          echo "bundle=$BUNDLE_VERSION" >> $GITHUB_OUTPUT
 
       - name: Refresh lockfile and rebuild
         run: |
@@ -109,6 +121,95 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.ADOBE_BOT_NPM_TOKEN }}
         run: (cd 1st-gen && yarn changeset publish --no-git-tag --tag ${{ steps.extract-tag.outputs.tag }})
+
+      # Gated only by this job running at all (needs.check-changesets.outputs.has_changesets
+      # == 'true' at the job level) - the old workflow's separate has_1st_gen_changesets
+      # output was always identical to has_changesets for this gen1-only workflow, so no
+      # extra conditional is needed here.
+      - name: Build React wrappers
+        run: yarn workspace @spectrum-web-components/1st-gen build:react
+
+      - name: Publish React wrappers
+        env:
+          TAG: ${{ steps.extract-tag.outputs.tag }}
+        run: |
+          PUBLISH_CMD="npm publish --tag $TAG --access public"
+
+          retry_publish() {
+            local dir=$1
+            local max_attempts=3
+            local attempt=1
+
+            while [ $attempt -le $max_attempts ]; do
+              echo "Publishing $dir (attempt $attempt/$max_attempts)..."
+              if (cd "$dir" && $PUBLISH_CMD); then
+                echo "✓ Successfully published $dir"
+                return 0
+              else
+                if [ $attempt -lt $max_attempts ]; then
+                  local wait_time=$((2 ** attempt))
+                  echo "✗ Publish failed, retrying in ${wait_time}s..."
+                  sleep $wait_time
+                else
+                  echo "✗ Failed to publish $dir after $max_attempts attempts"
+                  return 1
+                fi
+              fi
+              attempt=$((attempt + 1))
+            done
+          }
+
+          cd 1st-gen/react
+          for dir in */; do
+            retry_publish "$dir" || exit 1
+          done
+
+      - name: Publish summary
+        if: always()
+        env:
+          TAG: ${{ steps.extract-tag.outputs.tag }}
+          EVENT_NAME: ${{ github.event_name }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          PR_TITLE: ${{ github.event.pull_request.title }}
+          PR_AUTHOR: ${{ github.event.pull_request.user.login }}
+          HEAD_REF: ${{ github.head_ref }}
+          BASE_REF: ${{ github.base_ref }}
+          ACTOR: ${{ github.actor }}
+          AUTH_OUTCOME: ${{ steps.npm-auth.outcome }}
+          BUNDLE_VERSION: ${{ steps.versions.outputs.bundle }}
+        run: |
+          echo "## Publish summary (snapshot)" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          if [ "$EVENT_NAME" == "pull_request" ]; then
+            echo "| Field | Value |" >> $GITHUB_STEP_SUMMARY
+            echo "|-------|-------|" >> $GITHUB_STEP_SUMMARY
+            echo "| **Trigger** | Pull request |" >> $GITHUB_STEP_SUMMARY
+            echo "| **PR** | #${PR_NUMBER} — ${PR_TITLE} |" >> $GITHUB_STEP_SUMMARY
+            echo "| **Branch** | \`${HEAD_REF}\` → \`${BASE_REF}\` |" >> $GITHUB_STEP_SUMMARY
+            echo "| **NPM tag** | \`${TAG}\` |" >> $GITHUB_STEP_SUMMARY
+            echo "| **Author** | @${PR_AUTHOR} |" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "| Field | Value |" >> $GITHUB_STEP_SUMMARY
+            echo "|-------|-------|" >> $GITHUB_STEP_SUMMARY
+            echo "| **Trigger** | Manual dispatch |" >> $GITHUB_STEP_SUMMARY
+            echo "| **NPM tag** | \`${TAG}\` |" >> $GITHUB_STEP_SUMMARY
+            echo "| **Actor** | @${ACTOR} |" >> $GITHUB_STEP_SUMMARY
+          fi
+
+          if [ -n "$BUNDLE_VERSION" ]; then
+            echo "## Versions released" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "| Generation | Package | Version |" >> $GITHUB_STEP_SUMMARY
+            echo "|------------|---------|---------|" >> $GITHUB_STEP_SUMMARY
+            echo "| 1st gen | \`@spectrum-web-components/bundle\` | \`${BUNDLE_VERSION}\` |" >> $GITHUB_STEP_SUMMARY
+          fi
+
+          if [ "$AUTH_OUTCOME" == "success" ]; then
+            echo "✅ Publish completed with tag \`${TAG}\`" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "❌ Publish failed — NPM authentication did not succeed" >> $GITHUB_STEP_SUMMARY
+          fi
 
   # Real release: version-PR-then-publish, driven entirely by changesets/action.
   # Every push to main either opens/updates the Version PR (changesets pending) or
