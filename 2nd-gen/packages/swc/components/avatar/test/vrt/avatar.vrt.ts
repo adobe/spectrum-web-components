@@ -45,6 +45,24 @@ const renderAvatar = (size: AvatarSize) => html`
   <swc-avatar src=${PLACEHOLDER_SRC} alt="Jane Doe" size=${size}></swc-avatar>
 `;
 
+// `alt` is aria-only (no visible text), and sizes are plain numbers with no
+// named s/m/l equivalent, so a visible caption is added underneath -
+// otherwise a reviewer can't tell which rendered avatar corresponds to which
+// size value from the snapshot alone (same reasoning as
+// color-handle.vrt.ts's renderHandle and progress-circle.vrt.ts's
+// renderSizedCircle captions).
+const captioned = (content: unknown, label: string) => html`
+  <div
+    style="display: flex; flex-direction: column; align-items: center; gap: var(--swc-spacing-100);"
+  >
+    ${content}
+    <span class="swc-Detail swc-Detail--sizeM">${label}</span>
+  </div>
+`;
+
+const renderSizedAvatar = (size: AvatarSize) =>
+  captioned(renderAvatar(size), `${size}`);
+
 // Outline needs a contrasting backdrop to read, same as avatar.stories.ts's
 // own Outline story: the outline color/width tokens are subtle against the
 // default page background.
@@ -60,6 +78,9 @@ const renderOutline = (size: AvatarSize) => html`
     ></swc-avatar>
   </div>
 `;
+
+const renderCaptionedOutline = (size: AvatarSize) =>
+  captioned(renderOutline(size), `${size}`);
 
 const renderDisabled = () => html`
   <swc-avatar
@@ -77,14 +98,14 @@ const renderDisabled = () => html`
 // focusable, no :hover/:focus/:active rules in avatar.css), so neither story
 // below needs forcePseudoStates.
 const permutationContent = () => html`
-  ${row(AVATAR_VALID_SIZES.map(renderAvatar), 'Sizes')}
-  ${row([renderOutline(500), renderOutline(1000)], 'Outline')}
+  ${row(AVATAR_VALID_SIZES.map(renderSizedAvatar), 'Sizes')}
+  ${row([renderCaptionedOutline(500), renderCaptionedOutline(1000)], 'Outline')}
   ${row([renderDisabled()], 'Disabled')}
 `;
 
 const forcedColorsContent = () => html`
   ${row([renderAvatar(500)], 'Default')}
-  ${row([renderOutline(500), renderOutline(1000)], 'Outline')}
+  ${row([renderCaptionedOutline(500), renderCaptionedOutline(1000)], 'Outline')}
   ${row([renderDisabled()], 'Disabled')}
 `;
 
