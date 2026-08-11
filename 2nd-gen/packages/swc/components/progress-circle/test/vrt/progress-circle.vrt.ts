@@ -89,13 +89,21 @@ const progressLabel = (progress: number | null) =>
 // cross-check (same reasoning meter.vrt.ts gives for keeping its size and
 // variant rows independent), so each gets its own single-axis row instead of
 // a crossed matrix.
+// `label` on the circle itself is aria-only (no visible text), so each size
+// gets a visible caption underneath - otherwise a reviewer can't tell which
+// rendered circle is s/m/l from the snapshot alone (same reasoning as
+// color-handle.vrt.ts's renderHandle caption).
+const renderSizedCircle = (size: ProgressCircleSize) => html`
+  <div
+    style="display: flex; flex-direction: column; align-items: center; gap: var(--swc-spacing-100);"
+  >
+    ${renderProgressCircle({ size, progress: 50, label: SIZE_LABELS[size] })}
+    <span class="swc-Detail swc-Detail--sizeM">${SIZE_LABELS[size]}</span>
+  </div>
+`;
+
 const sizesRow = () =>
-  row(
-    PROGRESS_CIRCLE_VALID_SIZES.map((size) =>
-      renderProgressCircle({ size, progress: 50, label: SIZE_LABELS[size] })
-    ),
-    'Sizes'
-  );
+  row(PROGRESS_CIRCLE_VALID_SIZES.map(renderSizedCircle), 'Sizes');
 
 // One row per state instead of one combined row: indeterminate's frozen
 // animation frame can coincidentally match a determinate value's rendered
