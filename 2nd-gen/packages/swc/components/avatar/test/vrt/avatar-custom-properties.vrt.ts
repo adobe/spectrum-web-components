@@ -45,12 +45,22 @@ const PLACEHOLDER_SRC = 'https://picsum.photos/id/64/500/500';
 type AvatarPropertyCase = CustomPropertyCase<`--swc-avatar-${string}`> & {
   outline?: boolean;
   disabled?: boolean;
+  // Fixed style applied to both the default and modified renders. Used by
+  // --swc-avatar-outline-width to pin a visible outline color, since the
+  // default token color is too pale against the light background to reveal
+  // a width change on its own.
+  baseStyle?: string;
 };
 
 const AVATAR_PROPERTY_CASES: readonly AvatarPropertyCase[] = [
   { property: '--swc-avatar-size', value: '120px' },
   { property: '--swc-avatar-outline-color', value: 'magenta', outline: true },
-  { property: '--swc-avatar-outline-width', value: '8px', outline: true },
+  {
+    property: '--swc-avatar-outline-width',
+    value: '8px',
+    outline: true,
+    baseStyle: '--swc-avatar-outline-color: magenta;',
+  },
   {
     property: '--swc-avatar-opacity-disabled',
     value: '1',
@@ -59,17 +69,20 @@ const AVATAR_PROPERTY_CASES: readonly AvatarPropertyCase[] = [
 ];
 
 const renderPropertyCase = (
-  { outline, disabled }: AvatarPropertyCase,
+  { outline, disabled, baseStyle }: AvatarPropertyCase,
   style?: string
-) => html`
-  <swc-avatar
-    src=${PLACEHOLDER_SRC}
-    alt="Jane Doe"
-    ?outline=${outline}
-    ?disabled=${disabled}
-    style=${style ?? nothing}
-  ></swc-avatar>
-`;
+) => {
+  const combinedStyle = [baseStyle, style].filter(Boolean).join(' ');
+  return html`
+    <swc-avatar
+      src=${PLACEHOLDER_SRC}
+      alt="Jane Doe"
+      ?outline=${outline}
+      ?disabled=${disabled}
+      style=${combinedStyle || nothing}
+    ></swc-avatar>
+  `;
+};
 
 const modPropertiesContent = () =>
   customPropertyRows(AVATAR_PROPERTY_CASES, renderPropertyCase);
