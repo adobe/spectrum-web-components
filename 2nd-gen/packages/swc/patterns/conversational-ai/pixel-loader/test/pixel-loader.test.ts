@@ -16,6 +16,7 @@ import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import '../swc-pixel-loader.js';
 
 import { getComponent } from '../../../../utils/test-utils.js';
+import { ICONS, PRESETS } from '../data.js';
 import { PixelLoader } from '../PixelLoader.js';
 import { meta, Overview } from '../stories/pixel-loader.stories.js';
 
@@ -28,6 +29,26 @@ export default {
   },
   tags: ['!autodocs', 'dev'],
 } as Meta;
+
+// Queries the inner progressbar container from the loader's shadow root.
+function container(el: PixelLoader): HTMLElement {
+  const root = el.shadowRoot?.querySelector<HTMLElement>('.swc-PixelLoader');
+  if (!root) {
+    throw new Error('swc-pixel-loader: expected .swc-PixelLoader container');
+  }
+  return root;
+}
+
+// Queries the rendered pixel cells from the loader's shadow root.
+function cells(el: PixelLoader): HTMLElement[] {
+  return Array.from(
+    el.shadowRoot?.querySelectorAll<HTMLElement>('.swc-PixelLoader-cell') ?? []
+  );
+}
+
+const prefersReducedMotion = (): boolean =>
+  typeof window.matchMedia === 'function' &&
+  window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 // ──────────────────────────────────────────────────────────────
 // TEST: Defaults
@@ -43,6 +64,140 @@ export const OverviewTest: Story = {
 
     await step('renders and upgrades as swc-pixel-loader', async () => {
       expect(el).toBeInstanceOf(PixelLoader);
+    });
+
+    await step('exposes the documented defaults', async () => {
+      expect(el.icon).toBe('aiLogo');
+      expect(el.preset).toBeUndefined();
+      expect(el.paused).toBe(false);
+      expect(el.label).toBe('Loading');
+    });
+
+    await step('renders one cell per cell in the active icon', async () => {
+      expect(cells(el)).toHaveLength(ICONS.aiLogo.length);
+    });
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Icon and preset
+// ──────────────────────────────────────────────────────────────
+
+export const IconTest: Story = {
+  ...Overview,
+  play: async ({ canvasElement, step }) => {
+    const el = await getComponent<PixelLoader>(
+      canvasElement,
+      'swc-pixel-loader'
+    );
+
+    await step('icon reflects to the host attribute', async () => {
+      el.icon = 'hourglass';
+      await el.updateComplete;
+      expect(el.getAttribute('icon')).toBe('hourglass');
+    });
+
+    await step('changing icon re-renders the matching cell grid', async () => {
+      expect(cells(el)).toHaveLength(ICONS.hourglass.length);
+    });
+
+    await step(
+      'preset overrides icon and drives the rendered glyph',
+      async () => {
+        // `analyze` starts on `flower`, whose cell count differs from `aiLogo`,
+        // so a matching count proves the preset (not `icon`) is on screen.
+        el.icon = 'aiLogo';
+        el.preset = 'analyze';
+        await el.updateComplete;
+
+        const firstPresetIcon = PRESETS.analyze[0];
+        expect(el.getAttribute('preset')).toBe('analyze');
+        expect(cells(el)).toHaveLength(ICONS[firstPresetIcon].length);
+      }
+    );
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Accessibility wiring
+// ──────────────────────────────────────────────────────────────
+
+export const AccessibilityTest: Story = {
+  ...Overview,
+  play: async ({ canvasElement, step }) => {
+    const el = await getComponent<PixelLoader>(
+      canvasElement,
+      'swc-pixel-loader'
+    );
+
+    await step('exposes an indeterminate progressbar', async () => {
+      const root = container(el);
+      expect(root.getAttribute('role')).toBe('progressbar');
+      expect(root.hasAttribute('aria-valuenow')).toBe(false);
+    });
+
+    await step('label drives the accessible name', async () => {
+      expect(container(el).getAttribute('aria-label')).toBe('Loading');
+
+      el.label = 'Generating response';
+      await el.updateComplete;
+      expect(container(el).getAttribute('aria-label')).toBe(
+        'Generating response'
+      );
+    });
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Paused / static render
+// ──────────────────────────────────────────────────────────────
+
+export const PausedTest: Story = {
+  ...Overview,
+  play: async ({ canvasElement, step }) => {
+    const el = await getComponent<PixelLoader>(
+      canvasElement,
+      'swc-pixel-loader'
+    );
+
+    await step(
+      'paused reflects and renders the settled appearance',
+      async () => {
+        el.paused = true;
+        await el.updateComplete;
+
+        expect(el.hasAttribute('paused')).toBe(true);
+        const [first] = cells(el);
+        expect(first.style.opacity).toBe('1');
+        expect(first.getAnimations()).toHaveLength(0);
+      }
+    );
+
+    await step(
+      'a paused preset freezes on one icon instead of running the ticker',
+      async () => {
+        el.preset = 'mega';
+        await el.updateComplete;
+
+        // With the ticker suppressed, the settled first icon stays on screen.
+        const firstPresetIcon = PRESETS.mega[0];
+        expect(cells(el)).toHaveLength(ICONS[firstPresetIcon].length);
+        expect(
+          cells(el).every((cell) => cell.getAnimations().length === 0)
+        ).toBe(true);
+      }
+    );
+
+    await step('unpausing restarts the cell animation', async () => {
+      if (prefersReducedMotion()) {
+        return;
+      }
+      el.preset = undefined;
+      el.paused = false;
+      await el.updateComplete;
+
+      const [first] = cells(el);
+      expect(first.getAnimations().length).toBeGreaterThan(0);
     });
   },
 };

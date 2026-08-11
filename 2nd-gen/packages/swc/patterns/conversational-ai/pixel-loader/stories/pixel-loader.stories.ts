@@ -37,9 +37,8 @@ argTypes.preset = {
 };
 
 /**
- * Prototype implementation of the Conversational AI pixel loader pattern
- * unit: an assembling/disassembling "pixel-fall" icon animation for loading
- * states, ported from the design spec.
+ * The Conversational AI pixel loader: an assembling/disassembling "pixel-fall"
+ * icon animation for loading and generating states.
  */
 const meta: Meta = {
   title: 'Conversational AI/Pixel loader',

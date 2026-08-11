@@ -23,8 +23,8 @@ const cornerRadiiCache = new WeakMap<readonly Cell[], CornerRadii[]>();
 
 /**
  * A cell's corner is rounded only when both orthogonal neighbors adjacent to
- * that corner are empty (per the design spec, section 3). Adjacent filled
- * cells join into flat edges; only outward-facing corners round.
+ * that corner are empty. Adjacent filled cells join into flat edges; only
+ * outward-facing corners round.
  *
  * Cached by `cells` identity: every icon's cell list is a stable, unchanging
  * array (see `data.ts`), so this only does real work once per icon rather

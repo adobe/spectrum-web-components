@@ -44,10 +44,9 @@ export { PIXEL_LOADER_ICON_NAMES, PIXEL_LOADER_PRESET_NAMES } from './data.js';
 export type { PixelLoaderIconName, PixelLoaderPresetName } from './data.js';
 
 /**
- * Prototype shell for the Conversational AI pixel loader pattern unit: an
- * assembling/disassembling "pixel-fall" icon animation for loading states.
- * Ported from the design spec; see that document for the full behavioral
- * spec.
+ * The Conversational AI pixel loader: an assembling/disassembling "pixel-fall"
+ * icon animation for loading and generating states. A grid of cells drops in to
+ * assemble the active icon, holds, then drops away before the next loop.
  *
  * @element swc-pixel-loader
  */
@@ -68,10 +67,6 @@ export class PixelLoader extends SpectrumElement {
   /** Renders the fully-settled, non-animating appearance. */
   @property({ type: Boolean, reflect: true })
   public paused = false;
-
-  /** Rendered size, in any valid CSS length. */
-  @property({ type: String, reflect: true })
-  public size = '56px';
 
   /** Accessible label for the loading indicator. */
   @property({ type: String, reflect: true })
@@ -106,6 +101,11 @@ export class PixelLoader extends SpectrumElement {
 
     if (changed.has('preset')) {
       this._presetIndex = 0;
+    }
+
+    // Resync on `paused` too: pausing (or reduced motion) must stop the preset
+    // ticker so a frozen loader holds one icon instead of cycling on a timer.
+    if (changed.has('preset') || changed.has('paused')) {
       this._syncTicker();
     }
 
@@ -124,6 +124,15 @@ export class PixelLoader extends SpectrumElement {
       typeof window.matchMedia === 'function' &&
       window.matchMedia('(prefers-reduced-motion: reduce)').matches
     );
+  }
+
+  /**
+   * Whether the loader should render its frozen, non-animating appearance:
+   * when explicitly `paused`, or when the user has requested reduced motion.
+   * Both suppress the cell animation and the preset ticker.
+   */
+  private get _isStatic(): boolean {
+    return this.paused || this._prefersReducedMotion();
   }
 
   private _isValidPreset(preset: string): preset is PixelLoaderPresetName {
@@ -169,7 +178,7 @@ export class PixelLoader extends SpectrumElement {
     this._stopTicker();
 
     const icons = this._presetIcons();
-    if (!icons || !this.isConnected) {
+    if (!icons || !this.isConnected || this._isStatic) {
       return;
     }
 
@@ -198,7 +207,7 @@ export class PixelLoader extends SpectrumElement {
         []
     );
     const { cells, isPreset } = this._activeCells;
-    const renderStatic = this.paused || this._prefersReducedMotion();
+    const renderStatic = this._isStatic;
 
     cellEls.forEach((cellEl, index) => {
       const cell = cells[index];
@@ -242,12 +251,7 @@ export class PixelLoader extends SpectrumElement {
     const radii = computeCornerRadii(cells);
 
     return html`
-      <div
-        class="swc-PixelLoader"
-        style=${styleMap({ '--swc-pixel-loader-size': this.size })}
-        role="progressbar"
-        aria-label=${this.label}
-      >
+      <div class="swc-PixelLoader" role="progressbar" aria-label=${this.label}>
         ${cells.map((cell, index) => this._renderCell(cell, radii[index]))}
       </div>
     `;

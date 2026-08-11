@@ -17,17 +17,17 @@ import { TOTAL_FRAMES } from './data.js';
  * Per-cell entry/exit choreography, driven via the Web Animations API rather
  * than static CSS `@keyframes`.
  *
- * A prior static-`@keyframes` + `animation-delay` design (per the initial
- * implementation research) breaks down here: `exitStart` is not a fixed
- * frame-offset from `stagger` (it depends on `maxStagger` per icon), so the
- * "hold" duration between settle and exit varies per cell. Two independent,
- * infinitely-looping CSS animations targeting the same `transform`/`opacity`
- * properties can't express that — whichever animation is listed last in the
- * `animation` shorthand permanently wins once both are "in effect", masking
- * the other's contribution in every subsequent cycle. A single
- * `Element.animate()` call per cell, with one merged keyframe list computed
- * from that cell's own data, avoids the conflict entirely (one authoritative
- * timeline per element) while still running on the compositor.
+ * A static-`@keyframes` + `animation-delay` design breaks down here:
+ * `exitStart` is not a fixed frame-offset from `stagger` (it depends on
+ * `maxStagger` per icon), so the "hold" duration between settle and exit
+ * varies per cell. Two independent, infinitely-looping CSS animations
+ * targeting the same `transform`/`opacity` properties can't express that;
+ * whichever animation is listed last in the `animation` shorthand permanently
+ * wins once both are "in effect", masking the other's contribution in every
+ * subsequent cycle. A single `Element.animate()` call per cell, with one
+ * merged keyframe list computed from that cell's own data, avoids the conflict
+ * entirely (one authoritative timeline per element) while still running on the
+ * compositor.
  */
 
 const Y_START = -26;
@@ -46,10 +46,10 @@ function frameOffset(frame: number): number {
 
 /**
  * Builds the merged transform/opacity keyframe list for one cell's full
- * assemble → hold → disassemble cycle (per the design spec, sections 5-7).
- * Keyframes are sorted by offset; each property is interpolated
- * independently from only the keyframes that specify it, per the Web
- * Animations spec, so transform and opacity stops can interleave freely.
+ * assemble, hold, and disassemble cycle. Keyframes are sorted by offset; each
+ * property is interpolated independently from only the keyframes that specify
+ * it, per the Web Animations spec, so transform and opacity stops can
+ * interleave freely.
  */
 export function buildCellKeyframes(cell: Cell): Keyframe[] {
   const keyframes: Keyframe[] = [
@@ -85,6 +85,6 @@ export function buildCellKeyframes(cell: Cell): Keyframe[] {
   return keyframes.sort((a, b) => (a.offset as number) - (b.offset as number));
 }
 
-/** Fully settled appearance: full opacity, zero Y-offset (section 11). */
+/** Fully settled appearance: full opacity, zero Y-offset. */
 export const SETTLED_TRANSFORM = `translateY(${Y_SETTLED}px)`;
 export const SETTLED_OPACITY = 1;

@@ -21,6 +21,8 @@
 }
 
 .swc-PixelLoader {
+  /* Size is not a public attribute; consumers override the rendered size by
+     setting the --swc-pixel-loader-size custom property in their own CSS. */
   --_swc-pixel-loader-size: var(--swc-pixel-loader-size, 56px);
 
   display: grid;

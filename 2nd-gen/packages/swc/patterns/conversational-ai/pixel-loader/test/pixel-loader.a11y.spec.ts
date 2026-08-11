@@ -14,10 +14,8 @@ import { expect, test } from '@playwright/test';
 
 import { gotoStory } from '../../../../utils/a11y-helpers.js';
 
-// This unit is an unimplemented prototype shell, so there is no ARIA tree yet
-// to snapshot. Replace with `toMatchAriaSnapshot` assertions once real markup lands.
 test.describe('PixelLoader - ARIA Snapshots', () => {
-  test('renders and upgrades without accessibility violations', async ({
+  test('exposes an indeterminate progressbar with an accessible label', async ({
     page,
   }) => {
     const root = await gotoStory(
@@ -25,6 +23,9 @@ test.describe('PixelLoader - ARIA Snapshots', () => {
       'patterns-conversational-ai-pixel-loader--overview',
       'swc-pixel-loader'
     );
-    await expect(root.locator('swc-pixel-loader')).toBeVisible();
+
+    await expect(root.locator('swc-pixel-loader')).toMatchAriaSnapshot(`
+      - progressbar "Loading"
+    `);
   });
 });
