@@ -353,11 +353,12 @@ export const ArtifactScrollPaginationTest: Story = {
           0,
           (scrollEl?.scrollWidth ?? 0) - (scrollEl?.clientWidth ?? 0)
         );
+        const scrollEnd = waitForScrollEnd(scrollEl);
         scrollEl?.scrollTo({
           left: maxScroll,
           behavior: 'instant',
         });
-        await new Promise((resolve) => requestAnimationFrame(resolve));
+        await scrollEnd;
         await el.updateComplete;
 
         const nextButtonAtEnd = el.shadowRoot?.querySelector<HTMLButtonElement>(
@@ -635,8 +636,9 @@ export const ArtifactFocusOrderTest: Story = {
     await step(
       'the "<" button becoming disabled while focused keeps focus on it, rather than moving it anywhere',
       async () => {
+        const firstScrollEnd = waitForScrollEnd(scrollEl);
         scrollEl?.scrollTo({ left: 200, behavior: 'instant' });
-        await new Promise((resolve) => requestAnimationFrame(resolve));
+        await firstScrollEnd;
         await el.updateComplete;
         expect(scrollEl?.scrollLeft ?? 0).toBeGreaterThan(0);
 
@@ -645,8 +647,9 @@ export const ArtifactFocusOrderTest: Story = {
         prevButton?.focus();
         expect(getActiveElement()).toBe(prevButton);
 
+        const secondScrollEnd = waitForScrollEnd(scrollEl);
         scrollEl?.scrollTo({ left: 0, behavior: 'instant' });
-        await new Promise((resolve) => requestAnimationFrame(resolve));
+        await secondScrollEnd;
         await el.updateComplete;
 
         expect(getPrevButton()?.getAttribute('aria-disabled')).toBe('true');

@@ -144,6 +144,17 @@ export class PromptField extends SpectrumElement {
   @state()
   private _artifactCanScrollNext = false;
 
+  // `scrollend` support isn't a reliable gate on its own: browsers that
+  // report support (feature-detected via `'onscrollend' in window`) can
+  // still skip firing it for particular scroll triggers (observed on both
+  // this project's WebKit and Firefox test runners). So this always races
+  // a poll against the real event instead of trusting either alone —
+  // bumped on every `scroll` tick, on a real `scrollend`, and on
+  // disconnect, so a stale poll (superseded by a newer scroll, a real
+  // `scrollend` winning first, or the host going away) is a no-op instead
+  // of firing late.
+  private _artifactScrollFallbackGeneration = 0;
+
   // Observed targets accumulate across slot changes (dismissed tiles are
   // never explicitly unobserved); the browser drops a target's callbacks
   // once it leaves the DOM, so this is a bounded, harmless handful of
@@ -194,6 +205,7 @@ export class PromptField extends SpectrumElement {
       focusgroupNavigationActiveChange,
       this._handleArtifactActiveChange as EventListener
     );
+    this._artifactScrollFallbackGeneration++;
     super.disconnectedCallback();
   }
 
@@ -329,8 +341,38 @@ export class PromptField extends SpectrumElement {
     this._focusArtifact(target);
   }
 
+  // Restarts a poll on every `scroll` tick that settles once `scrollLeft`
+  // holds steady for a few frames — racing the real `scrollend` listener
+  // below, not gated behind feature detection (see
+  // `_artifactScrollFallbackGeneration`'s doc for why). A fixed setTimeout
+  // delay would race against a real scroll's own frame cadence instead
+  // (fire early mid-gesture, or late enough to feel unresponsive); polling
+  // for actual stability can't.
   private _handleArtifactScroll(): void {
-    this.requestUpdate();
+    const scrollEl = this._artifactScrollEl;
+    if (!scrollEl) {
+      return;
+    }
+
+    const generation = ++this._artifactScrollFallbackGeneration;
+    let lastScrollLeft = scrollEl.scrollLeft;
+    let stableFrames = 0;
+    const poll = (): void => {
+      if (generation !== this._artifactScrollFallbackGeneration) {
+        return;
+      }
+      if (scrollEl.scrollLeft !== lastScrollLeft) {
+        lastScrollLeft = scrollEl.scrollLeft;
+        stableFrames = 0;
+      } else if (++stableFrames < 3) {
+        // not yet settled
+      } else {
+        this._handleArtifactScrollEnd();
+        return;
+      }
+      requestAnimationFrame(poll);
+    };
+    requestAnimationFrame(poll);
   }
 
   /**
@@ -339,8 +381,14 @@ export class PromptField extends SpectrumElement {
    * can lock in a tile that's only transiently passing through the
    * visible region as active, or flip the chevrons' aria-disabled state
    * back and forth for no reason a user would ever see settled.
+   *
+   * Also reachable from `_handleArtifactScroll`'s poll, which is why this
+   * bumps the generation counter itself: whichever of the two (a real
+   * `scrollend`, or the poll settling) happens first wins, and that
+   * invalidates the other so it can't also fire.
    */
   private _handleArtifactScrollEnd(): void {
+    this._artifactScrollFallbackGeneration++;
     this._updateArtifactScrollState();
     void this.updateComplete.then(() =>
       this._syncArtifactActiveItemToVisible()
@@ -362,40 +410,42 @@ export class PromptField extends SpectrumElement {
       return;
     }
 
+    const { left, right } = this._artifactVisibleBounds(scrollEl);
     const active = this._artifactNavigation.getActiveItem();
-    if (active && this._isArtifactVisible(active, scrollEl)) {
+    if (active && this._isArtifactVisible(active, left, right)) {
       return;
     }
 
-    const scrollRect = scrollEl.getBoundingClientRect();
-    const scrollStyle = getComputedStyle(scrollEl);
-    const visibleStart = this._isRtl()
-      ? scrollRect.right - (parseFloat(scrollStyle.scrollPaddingRight) || 0)
-      : scrollRect.left + (parseFloat(scrollStyle.scrollPaddingLeft) || 0);
     this._artifactNavigation.setActiveItem(
-      this._findArtifactAtOrPastBoundary(visibleStart)
+      this._findArtifactAtOrPastBoundary(this._isRtl() ? right : left)
     );
   }
 
   /**
-   * A tile clear of the chevron overlays on both sides, not just inside
-   * the scroll container's own clipping bounds. Reads the same
-   * `scroll-padding-inline` the `has-scroll-prev`/`has-scroll-next` CSS
-   * rules set (prompt-field.css) as the single source of truth for how
-   * much clearance a visible chevron needs, instead of duplicating that
-   * math here.
+   * The scroll viewport's own bounds, clear of the chevron overlays on
+   * both sides. Reads the same `scroll-padding-inline` the
+   * `has-scroll-prev`/`has-scroll-next` CSS rules set (prompt-field.css)
+   * as the single source of truth for how much clearance a visible
+   * chevron needs, instead of duplicating that math here.
    */
-  private _isArtifactVisible(
-    artifact: HTMLElement,
-    scrollEl: HTMLElement
-  ): boolean {
+  private _artifactVisibleBounds(scrollEl: HTMLElement): {
+    left: number;
+    right: number;
+  } {
     const scrollRect = scrollEl.getBoundingClientRect();
     const scrollStyle = getComputedStyle(scrollEl);
-    const paddingLeft = parseFloat(scrollStyle.scrollPaddingLeft) || 0;
-    const paddingRight = parseFloat(scrollStyle.scrollPaddingRight) || 0;
-    const visibleLeft = scrollRect.left + paddingLeft;
-    const visibleRight = scrollRect.right - paddingRight;
+    return {
+      left: scrollRect.left + (parseFloat(scrollStyle.scrollPaddingLeft) || 0),
+      right:
+        scrollRect.right - (parseFloat(scrollStyle.scrollPaddingRight) || 0),
+    };
+  }
 
+  private _isArtifactVisible(
+    artifact: HTMLElement,
+    visibleLeft: number,
+    visibleRight: number
+  ): boolean {
     const rect = artifact.getBoundingClientRect();
     const tolerance = 1;
     return (
