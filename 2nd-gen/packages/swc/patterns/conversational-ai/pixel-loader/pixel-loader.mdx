@@ -32,6 +32,18 @@ looping a single icon forever.
 
 <Canvas of={PixelLoaderStories.Presets} />
 
+### Sizing
+
+The loader has no `size` attribute. Set its rendered size by overriding the
+`--swc-pixel-loader-size` custom property in your own CSS (it defaults to
+56px):
+
+```css
+swc-pixel-loader {
+  --swc-pixel-loader-size: 24px;
+}
+```
+
 ## States
 
 ### States

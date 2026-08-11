@@ -201,3 +201,48 @@ export const PausedTest: Story = {
     });
   },
 };
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Reduced-motion live toggle
+// ──────────────────────────────────────────────────────────────
+
+// Reaches the private reduced-motion query and its change handler so the OS
+// setting can be simulated deterministically (the harness cannot flip the real
+// `prefers-reduced-motion` media query).
+type ReducedMotionInternals = {
+  _reducedMotionQuery: { matches: boolean } | null;
+  _handleReducedMotionChange: () => void;
+};
+
+export const ReducedMotionTest: Story = {
+  ...Overview,
+  play: async ({ canvasElement, step }) => {
+    const el = await getComponent<PixelLoader>(
+      canvasElement,
+      'swc-pixel-loader'
+    );
+
+    const internals = el as unknown as ReducedMotionInternals;
+    const query = { matches: false };
+    internals._reducedMotionQuery = query;
+
+    await step('toggling reduced motion on freezes the loader', async () => {
+      query.matches = true;
+      internals._handleReducedMotionChange();
+      await el.updateComplete;
+
+      const [first] = cells(el);
+      expect(first.style.opacity).toBe('1');
+      expect(first.getAnimations()).toHaveLength(0);
+    });
+
+    await step('toggling reduced motion off resumes animation', async () => {
+      query.matches = false;
+      internals._handleReducedMotionChange();
+      await el.updateComplete;
+
+      const [first] = cells(el);
+      expect(first.getAnimations().length).toBeGreaterThan(0);
+    });
+  },
+};

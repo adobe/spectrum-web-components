@@ -49,6 +49,9 @@ export type { PixelLoaderIconName, PixelLoaderPresetName } from './data.js';
  * assemble the active icon, holds, then drops away before the next loop.
  *
  * @element swc-pixel-loader
+ *
+ * @cssprop --swc-pixel-loader-size - Rendered inline and block size of the loader. Defaults to 56px. There is no `size` attribute; set this custom property to resize the loader.
+ * @cssprop --swc-pixel-loader-color - Color of the pixel cells. Defaults to `currentcolor`, so the loader inherits the surrounding text color unless overridden.
  */
 export class PixelLoader extends SpectrumElement {
   private static readonly CORNER_RADIUS = '2px';
@@ -79,6 +82,8 @@ export class PixelLoader extends SpectrumElement {
 
   private _ticker: number | null = null;
 
+  private _reducedMotionQuery: MediaQueryList | null = null;
+
   public static override get styles(): CSSResultArray {
     return [styles];
   }
@@ -86,15 +91,42 @@ export class PixelLoader extends SpectrumElement {
   public override connectedCallback(): void {
     super.connectedCallback();
 
+    if (
+      this._reducedMotionQuery === null &&
+      typeof window.matchMedia === 'function'
+    ) {
+      this._reducedMotionQuery = window.matchMedia(
+        '(prefers-reduced-motion: reduce)'
+      );
+    }
+    this._reducedMotionQuery?.addEventListener(
+      'change',
+      this._handleReducedMotionChange
+    );
+
     this._syncTicker();
   }
 
   public override disconnectedCallback(): void {
+    this._reducedMotionQuery?.removeEventListener(
+      'change',
+      this._handleReducedMotionChange
+    );
     this._stopTicker();
     this._cancelAnimations();
 
     super.disconnectedCallback();
   }
+
+  /**
+   * Re-evaluates the static condition when the user toggles the OS
+   * reduced-motion setting while the loader is mounted: stops or restarts the
+   * preset ticker and re-renders the cells to match the new preference.
+   */
+  private _handleReducedMotionChange = (): void => {
+    this._syncTicker();
+    this._playCells();
+  };
 
   protected override updated(changed: PropertyValues<this>): void {
     super.updated(changed);
@@ -120,6 +152,10 @@ export class PixelLoader extends SpectrumElement {
   }
 
   private _prefersReducedMotion(): boolean {
+    if (this._reducedMotionQuery) {
+      return this._reducedMotionQuery.matches;
+    }
+
     return (
       typeof window.matchMedia === 'function' &&
       window.matchMedia('(prefers-reduced-motion: reduce)').matches
