@@ -16,7 +16,7 @@ import { ref } from 'lit/directives/ref.js';
 
 import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
 
-import '../../../components/ui-icons/swc-ui-icon.js';
+import '@adobe/spectrum-wc/components/ui-icons/swc-ui-icon.js';
 
 import { uniqueId } from '../../../utils/id.js';
 

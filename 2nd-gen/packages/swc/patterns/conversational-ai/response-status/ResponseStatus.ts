@@ -23,7 +23,7 @@ import { MutationController } from '@lit-labs/observers/mutation-controller.js';
 import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
 
 import '@adobe/spectrum-wc/components/icon/swc-icon.js';
-import '../../../components/ui-icons/swc-ui-icon.js';
+import '@adobe/spectrum-wc/components/ui-icons/swc-ui-icon.js';
 
 import { uniqueId } from '../../../utils/id.js';
 import {
