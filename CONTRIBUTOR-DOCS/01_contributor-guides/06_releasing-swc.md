@@ -33,8 +33,8 @@
 >
 > | | Workflow | Changesets | Real-release branch | Ships to |
 > |---|---|---|---|---|
-> | 1st-gen | `.github/workflows/publish.yml` | `1st-gen/.changeset/` | `changeset-release/main` → PR to `main` | `latest` |
-> | 2nd-gen | `.github/workflows/publish-2nd-gen.yml` | `2nd-gen/.changeset/` | `changeset-release/main` → PR to `main` | `beta` (persistent pre-release) |
+> | 1st-gen | `.github/workflows/publish.yml` | `1st-gen/.changeset/` | `changeset-release/1st-gen` → PR to `main` | `latest` |
+> | 2nd-gen | `.github/workflows/publish-2nd-gen.yml` | `2nd-gen/.changeset/` | `changeset-release/2nd-gen` → PR to `main` | `beta` (persistent pre-release) |
 >
 > The sections below still describe the old branch-lock/direct-push model in places and should not be relied on until this page is rewritten to match.
 
@@ -131,7 +131,7 @@ yarn add @spectrum-web-components/button@next
 
 ### Planned release (Version PR)
 
-Both generations use [`changesets/action`](https://github.com/changesets/action) to turn pending changesets into a pull request instead of pushing version bumps directly to `main`.
+Both generations run `yarn changeset version` directly and open/update a dedicated Version PR via [`peter-evans/create-pull-request`](https://github.com/peter-evans/create-pull-request) — each generation gets its own branch (`changeset-release/1st-gen` / `changeset-release/2nd-gen`) so the two never collide on the same branch name.
 
 **How it works:**
 
@@ -213,4 +213,4 @@ gh workflow run publish-docs-site.yml --ref main
 
 - **A Version PR opened but nothing happens after I merge it** — Confirm the merge actually landed on `main` (not squashed into a differently-named branch) and that `1st-gen/.changeset/*.md` / `2nd-gen/.changeset/*.md` are empty afterward (the merge should have deleted them). If changesets remain, the next push will just update the Version PR again instead of publishing.
 
-- **The publish step ran again on an unrelated push and did nothing** — Expected. `changesets/action` runs its publish script on every push to `main` where no changesets are pending, not only immediately after a Version PR merge. `yarn changeset publish` and the git-tag check in `publish.yml`'s publish script are both designed to no-op safely when there's nothing new to release.
+- **The publish step ran again on an unrelated push and did nothing** — Expected. The `release` job's `if: needs.check-changesets.outputs.has_changesets == 'false'` branch runs the publish steps on every push to `main` where no changesets are pending, not only immediately after a Version PR merge. `yarn changeset publish` and the git-tag check in `publish.yml`'s publish step are both designed to no-op safely when there's nothing new to release.

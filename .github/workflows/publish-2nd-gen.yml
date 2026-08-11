@@ -138,17 +138,26 @@ jobs:
             echo "❌ Publish failed — NPM authentication did not succeed" >> $GITHUB_STEP_SUMMARY
           fi
 
-  # Real release: version-PR-then-publish for the persistent `beta` pre-release channel,
-  # driven entirely by changesets/action. Every push to main either opens/updates the
-  # Version PR (changesets pending) or publishes (no changesets pending, because that PR
-  # was just merged). 2nd-gen has no `latest` channel yet - `beta` is the only real release.
+  # Real release: version-then-PR for the persistent `beta` pre-release channel, then
+  # publish once that PR merges. Every push to main either versions and opens/updates a
+  # dedicated Version PR (changesets pending) or publishes (no changesets pending,
+  # because that PR was just merged). 2nd-gen has no `latest` channel yet - `beta` is the
+  # only real release.
+  #
+  # This does NOT use changesets/action's own built-in PR management - see the identical
+  # comment above the `release:` job in publish.yml for why: changesets/action's PR
+  # branch name is derived only from the base branch, and both this workflow and
+  # publish.yml target `main`, so two changesets/action calls would collide on the same
+  # branch name and overwrite each other's Version PR content. peter-evans/create-pull-request@v6's
+  # explicit `branch:` input avoids that.
   release:
+    needs: check-changesets
     if: github.event_name == 'push'
     runs-on: ubuntu-latest
     environment: npm-publish
     permissions:
-      contents: write # changesets/action commits the Version PR branch
-      pull-requests: write # changesets/action opens/updates the Version PR
+      contents: write # commits the Version PR branch
+      pull-requests: write # opens/updates the Version PR
     env:
       YARN_ENABLE_IMMUTABLE_INSTALLS: false
     steps:
@@ -169,37 +178,55 @@ jobs:
       - name: Build all packages
         run: yarn build
 
-      - name: Version or publish 2nd-gen packages
-        id: changesets
-        uses: changesets/action@v1
-        with:
-          cwd: 2nd-gen
-          commit: 'chore: release 2nd-gen packages'
-          title: 'chore: release 2nd-gen packages (beta)'
-          version: |
-            if [ ! -f .changeset/pre.json ]; then
-              yarn changeset pre enter beta
-            fi
-            yarn changeset version
-          publish: |
-            yarn install --refresh-lockfile
-            yarn build
-            yarn changeset publish --no-git-tag --tag beta
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NODE_AUTH_TOKEN: ${{ secrets.ADOBE_BOT_NPM_TOKEN }}
+      - name: Version 2nd-gen packages
+        if: needs.check-changesets.outputs.has_changesets == 'true'
+        run: |
+          if [ ! -f 2nd-gen/.changeset/pre.json ]; then
+            (cd 2nd-gen && yarn changeset pre enter beta)
+          fi
+          (cd 2nd-gen && yarn changeset version)
 
-      - name: Publish summary
-        if: always()
-        env:
-          PUBLISHED: ${{ steps.changesets.outputs.published }}
-          PR_NUMBER: ${{ steps.changesets.outputs.pullRequestNumber }}
+      - name: Open or update the 2nd-gen Version PR
+        if: needs.check-changesets.outputs.has_changesets == 'true'
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: 'chore: release 2nd-gen packages'
+          title: 'chore: release 2nd-gen packages (beta)'
+          branch: changeset-release/2nd-gen
+          base: main
+          delete-branch: true
+          add-paths: |
+            2nd-gen
+            yarn.lock
+
+      - name: Version PR summary
+        if: needs.check-changesets.outputs.has_changesets == 'true'
         run: |
           echo "## Publish summary (2nd-gen)" >> $GITHUB_STEP_SUMMARY
-          if [ "$PUBLISHED" == "true" ]; then
-            echo "✅ Published a new beta release" >> $GITHUB_STEP_SUMMARY
-          elif [ -n "$PR_NUMBER" ] && [ "$PR_NUMBER" != "null" ]; then
-            echo "📝 Version PR #${PR_NUMBER} opened/updated - nothing published yet" >> $GITHUB_STEP_SUMMARY
+          echo "📝 Version PR opened/updated at \`changeset-release/2nd-gen\` - nothing published yet" >> $GITHUB_STEP_SUMMARY
+
+      # No pending changesets: either nothing to do, or the Version PR above was just
+      # merged - publish whatever is now on main. `yarn changeset publish` is itself
+      # idempotent (skips already-registry-published versions), so no extra guard is
+      # needed here the way gen1 needs one for its raw `npm publish` React-wrapper calls.
+      - name: Publish 2nd-gen packages
+        if: needs.check-changesets.outputs.has_changesets == 'false' && steps.npm-auth.outcome == 'success'
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.ADOBE_BOT_NPM_TOKEN }}
+        run: |
+          yarn install --refresh-lockfile
+          yarn build
+          (cd 2nd-gen && yarn changeset publish --no-git-tag --tag beta)
+
+      - name: Publish summary
+        if: needs.check-changesets.outputs.has_changesets == 'false' && always()
+        env:
+          AUTH_OUTCOME: ${{ steps.npm-auth.outcome }}
+        run: |
+          echo "## Publish summary (2nd-gen)" >> $GITHUB_STEP_SUMMARY
+          if [ "$AUTH_OUTCOME" == "success" ]; then
+            echo "✅ Publish step ran - check the changeset publish output above for what shipped" >> $GITHUB_STEP_SUMMARY
           else
-            echo "ℹ️ No pending changesets and nothing new to publish" >> $GITHUB_STEP_SUMMARY
+            echo "❌ Publish failed — NPM authentication did not succeed" >> $GITHUB_STEP_SUMMARY
           fi

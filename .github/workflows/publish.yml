@@ -216,18 +216,28 @@ jobs:
             echo "❌ Publish failed — NPM authentication did not succeed" >> $GITHUB_STEP_SUMMARY
           fi
 
-  # Real release: version-PR-then-publish, driven entirely by changesets/action.
-  # Every push to main either opens/updates the Version PR (changesets pending) or
-  # publishes (no changesets pending, because that PR was just merged). No direct
-  # write to main outside of a reviewed PR merge; no branch lock needed.
+  # Real release: version-then-PR, then publish once that PR merges. Every push to main
+  # either versions and opens/updates a dedicated Version PR (changesets pending) or
+  # publishes (no changesets pending, because that PR was just merged). No direct write
+  # to main outside of a reviewed PR merge; no branch lock needed.
+  #
+  # This does NOT use changesets/action's own built-in PR management. That action derives
+  # its PR branch name solely from the base branch (`changeset-release/<baseBranch>`) with
+  # no per-cwd namespacing - since this workflow and publish-2nd-gen.yml both target the
+  # same `main` base, two changesets/action calls would both compute the identical branch
+  # name `changeset-release/main` and silently overwrite each other's Version PR content
+  # whenever both generations have pending changesets (not just under a race - any two
+  # pushes, even hours apart, collide the same way). peter-evans/create-pull-request@v6
+  # takes an explicit `branch:` input, so each generation gets its own dedicated branch.
   release:
+    needs: check-changesets
     if: github.event_name == 'push'
     runs-on: ubuntu-latest
     environment: npm-publish
     permissions:
       id-token: write # Required for OIDC trusted publishing (1st-gen)
-      contents: write # changesets/action commits the Version PR branch + (script) pushes the release git tag
-      pull-requests: write # changesets/action opens/updates the Version PR
+      contents: write # commits the Version PR branch + pushes the release git tag
+      pull-requests: write # opens/updates the Version PR
     env:
       YARN_ENABLE_IMMUTABLE_INSTALLS: false
     steps:
@@ -261,55 +271,81 @@ jobs:
       - name: Confirm build artifacts
         run: yarn workspace @spectrum-web-components/1st-gen build:confirm
 
-      - name: Version or publish 1st-gen packages
-        id: changesets
-        uses: changesets/action@v1
+      - name: Version 1st-gen packages
+        if: needs.check-changesets.outputs.has_changesets == 'true'
+        run: |
+          yarn workspace @spectrum-web-components/1st-gen changelog:global
+          (cd 1st-gen && yarn changeset version)
+
+      - name: Open or update the 1st-gen Version PR
+        if: needs.check-changesets.outputs.has_changesets == 'true'
+        uses: peter-evans/create-pull-request@v6
         with:
-          cwd: 1st-gen
-          commit: 'chore: release 1st-gen packages'
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: 'chore: release 1st-gen packages'
           title: 'chore: release 1st-gen packages'
-          version: yarn changelog:global && yarn changeset version
-          publish: |
-            RELEASED_VERSION=$(node -p "require('./packages/button/package.json').version")
-            if git rev-parse "v$RELEASED_VERSION" >/dev/null 2>&1; then
-              echo "v$RELEASED_VERSION already released - nothing to do."
-              exit 0
-            fi
-            (cd .. && yarn install --refresh-lockfile && yarn build)
-            yarn changeset publish --no-git-tag
-            yarn build:react
-            cd react
-            for dir in */; do
-              attempt=1
-              max_attempts=3
-              until (cd "$dir" && npm publish --access public); do
-                if [ $attempt -ge $max_attempts ]; then
-                  echo "✗ Failed to publish $dir after $max_attempts attempts"
-                  exit 1
-                fi
-                wait_time=$((2 ** attempt))
-                echo "✗ Publish failed for $dir, retrying in ${wait_time}s..."
-                sleep $wait_time
-                attempt=$((attempt + 1))
-              done
-            done
-            cd ..
-            node ./scripts/create-git-tag.js
+          branch: changeset-release/1st-gen
+          base: main
+          delete-branch: true
+          add-paths: |
+            1st-gen
+            yarn.lock
+
+      - name: Version PR summary
+        if: needs.check-changesets.outputs.has_changesets == 'true'
+        run: |
+          echo "## Publish summary (1st-gen)" >> $GITHUB_STEP_SUMMARY
+          echo "📝 Version PR opened/updated at \`changeset-release/1st-gen\` - nothing published yet" >> $GITHUB_STEP_SUMMARY
+
+      # No pending changesets: either nothing to do, or the Version PR above was just
+      # merged (its changesets were consumed) - publish whatever is now on main. The
+      # git-tag-existence guard is what makes this safe to re-run on every subsequent
+      # ordinary push once a release has gone out (changeset publish is separately
+      # idempotent for the changeset-tracked packages, but the raw `npm publish` calls
+      # for React wrappers are not, so the tag check guards the whole script).
+      - name: Publish 1st-gen packages
+        if: needs.check-changesets.outputs.has_changesets == 'false'
+        id: publish
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NODE_AUTH_TOKEN: ${{ secrets.ADOBE_BOT_NPM_TOKEN }}
+        run: |
+          RELEASED_VERSION=$(node -p "require('./1st-gen/packages/button/package.json').version")
+          if git rev-parse "v$RELEASED_VERSION" >/dev/null 2>&1; then
+            echo "v$RELEASED_VERSION already released - nothing to do."
+            echo "published=false" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+          yarn install --refresh-lockfile
+          yarn build
+          (cd 1st-gen && yarn changeset publish --no-git-tag)
+          yarn workspace @spectrum-web-components/1st-gen build:react
+          cd 1st-gen/react
+          for dir in */; do
+            attempt=1
+            max_attempts=3
+            until (cd "$dir" && npm publish --access public); do
+              if [ $attempt -ge $max_attempts ]; then
+                echo "✗ Failed to publish $dir after $max_attempts attempts"
+                exit 1
+              fi
+              wait_time=$((2 ** attempt))
+              echo "✗ Publish failed for $dir, retrying in ${wait_time}s..."
+              sleep $wait_time
+              attempt=$((attempt + 1))
+            done
+          done
+          cd ../..
+          node ./1st-gen/scripts/create-git-tag.js
+          echo "published=true" >> $GITHUB_OUTPUT
 
       - name: Publish summary
-        if: always()
+        if: needs.check-changesets.outputs.has_changesets == 'false' && always()
         env:
-          PUBLISHED: ${{ steps.changesets.outputs.published }}
-          PR_NUMBER: ${{ steps.changesets.outputs.pullRequestNumber }}
+          PUBLISHED: ${{ steps.publish.outputs.published }}
         run: |
           echo "## Publish summary (1st-gen)" >> $GITHUB_STEP_SUMMARY
           if [ "$PUBLISHED" == "true" ]; then
             echo "✅ Published a new release" >> $GITHUB_STEP_SUMMARY
-          elif [ -n "$PR_NUMBER" ] && [ "$PR_NUMBER" != "null" ]; then
-            echo "📝 Version PR #${PR_NUMBER} opened/updated - nothing published yet" >> $GITHUB_STEP_SUMMARY
           else
             echo "ℹ️ No pending changesets and nothing new to publish" >> $GITHUB_STEP_SUMMARY
           fi
