@@ -136,18 +136,18 @@
   position: absolute;
   inset-block-start: 0;
   z-index: 3;
-  inline-size: calc(var(--swc-prompt-field-artifact-scroll-button-inline-size, 32px) + token("spacing-100"));
+  inline-size: token("spacing-400");
   block-size: calc(var(--swc-prompt-field-artifact-badge-clearance, 0) + var(--swc-prompt-field-artifact-media-block-size, 68px));
   pointer-events: none;
 }
 
 .swc-PromptField-artifacts-fade--start {
-  inset-inline-start: 0;
+  inset-inline-start: calc(var(--swc-prompt-field-artifact-scroll-button-inline-size, 32px) + (token("spacing-400") / 2));
   background: linear-gradient(to right, var(--swc-prompt-field-artifact-fade-solid), transparent);
 }
 
 .swc-PromptField-artifacts-fade--end {
-  inset-inline-end: 0;
+  inset-inline-end: calc(var(--swc-prompt-field-artifact-scroll-button-inline-size, 32px) + (token("spacing-400") / 2));
   background: linear-gradient(to left, var(--swc-prompt-field-artifact-fade-solid), transparent);
 }
 
@@ -174,6 +174,22 @@
   scroll-snap-type: inline mandatory;
   scroll-padding-inline: token("spacing-75");
   scrollbar-color: token("gray-400") transparent;
+}
+
+/* Chevrons and their opaque mask are overlay siblings positioned outside
+ * this scroll container, not part of its own clipping bounds, so the
+ * native scrollIntoView() call in _focusArtifact() (PromptField.ts) has no
+ * awareness of them: it can treat a tile as "already in view" while a
+ * chevron is still visually covering it, leaving keyboard focus (and its
+ * ring) hidden behind an opaque circle. Reserving that much scroll-padding
+ * on the side a chevron is showing makes the browser bring a tile fully
+ * clear of it before considering it in view. */
+.swc-PromptField-artifacts-scroll.has-scroll-prev {
+  scroll-padding-inline-start: calc(var(--swc-prompt-field-artifact-scroll-button-inline-size, 32px) + token("spacing-400") + token("spacing-75"));
+}
+
+.swc-PromptField-artifacts-scroll.has-scroll-next {
+  scroll-padding-inline-end: calc(var(--swc-prompt-field-artifact-scroll-button-inline-size, 32px) + token("spacing-400") + token("spacing-75"));
 }
 
 .swc-PromptField-artifacts-scroll::-webkit-scrollbar {
@@ -225,7 +241,7 @@
 .swc-PromptField-artifacts-scroll-next {
   display: inline-flex;
   position: absolute;
-  inset-block-start: 50%;
+  inset-block-start: calc((var(--swc-prompt-field-artifact-badge-clearance, 0) + var(--swc-prompt-field-artifact-media-block-size, 68px)) / 2);
   z-index: 4;
   flex: 0 0 auto;
   align-items: center;
@@ -244,12 +260,25 @@
   --_swc-prompt-field-artifact-scroll-icon-transform: none;
 }
 
+/* inline-size matches the fade's own inset (button + half of spacing-400)
+ * so the mask's inner edge lines up exactly with where the fade begins,
+ * with no dead opaque zone between them; the extra 2px and the outer edge
+ * (inset-inline-start/end below) overlapping 2px past the row's own edge
+ * are unrelated to that and only guard against calc()-derived positions
+ * not landing on a clean device pixel, which can leave a 1px unpainted
+ * sliver at a mask boundary that touches its edge exactly.
+ *
+ * z-index: -1, not 0: the button's own :focus-visible outline paints with
+ * its background/border layer, before z-index: 0 positioned descendants,
+ * so a z-index: 0 mask paints over (hides) the outline. A negative z-index
+ * puts this mask in the layer painted before that, so the outline is never
+ * covered. */
 .swc-PromptField-artifacts-scroll-prev::before,
 .swc-PromptField-artifacts-scroll-next::before {
   position: absolute;
   inset-block-start: calc((var(--swc-prompt-field-artifact-scroll-button-block-size, 32px) - var(--swc-prompt-field-artifact-badge-clearance, 0) - var(--swc-prompt-field-artifact-media-block-size, 68px)) / 2);
-  z-index: 0;
-  inline-size: calc(var(--swc-prompt-field-artifact-scroll-button-inline-size, 32px) + token("spacing-400"));
+  z-index: -1;
+  inline-size: calc(var(--swc-prompt-field-artifact-scroll-button-inline-size, 32px) + (token("spacing-400") / 2) + 2px);
   block-size: calc(var(--swc-prompt-field-artifact-badge-clearance, 0) + var(--swc-prompt-field-artifact-media-block-size, 68px));
   pointer-events: none;
   content: "";
@@ -273,8 +302,8 @@
 }
 
 .swc-PromptField-artifacts-scroll-prev::before {
-  inset-inline-start: 0;
-  background: linear-gradient(to right, token("background-layer-2-color") 0%, token("background-layer-2-color") 50%, transparent 100%);
+  inset-inline-start: -2px;
+  background: token("background-layer-2-color");
 }
 
 .swc-PromptField-artifacts-scroll-next {
@@ -282,16 +311,8 @@
 }
 
 .swc-PromptField-artifacts-scroll-next::before {
-  inset-inline-end: 0;
-  background: linear-gradient(to left, token("background-layer-2-color") 0%, token("background-layer-2-color") 50%, transparent 100%);
-}
-
-:host(:dir(rtl)) .swc-PromptField-artifacts-scroll-prev::before {
-  background: linear-gradient(to left, token("background-layer-2-color") 0%, token("background-layer-2-color") 50%, transparent 100%);
-}
-
-:host(:dir(rtl)) .swc-PromptField-artifacts-scroll-next::before {
-  background: linear-gradient(to right, token("background-layer-2-color") 0%, token("background-layer-2-color") 50%, transparent 100%);
+  inset-inline-end: -2px;
+  background: token("background-layer-2-color");
 }
 
 .swc-PromptField-artifacts-scroll-prev:hover,

@@ -12,6 +12,7 @@
 
 import { CSSResultArray, html, PropertyValues, TemplateResult } from 'lit';
 import { property, query, queryAssignedElements } from 'lit/decorators.js';
+import { ifDefined } from 'lit/directives/if-defined.js';
 
 import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
 import { getLabelFromSlot } from '@adobe/spectrum-wc-core/utils/index.js';
@@ -136,7 +137,7 @@ export class UploadArtifact extends SpectrumElement {
     return html`
       <button
         class="swc-UploadArtifact-dismiss"
-        tabindex=${this.closest('swc-prompt-field') ? -1 : undefined}
+        tabindex=${ifDefined(this.closest('swc-prompt-field') ? -1 : undefined)}
         aria-label=${this._resolvedDismissLabel()}
         ?hidden=${!this.dismissible}
         @click=${this._handleDismissClick}

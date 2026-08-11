@@ -23,6 +23,7 @@ import {
   queryAssignedElements,
   state,
 } from 'lit/decorators.js';
+import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { styleMap } from 'lit/directives/style-map.js';
 
@@ -165,7 +166,6 @@ export class PromptField extends SpectrumElement {
       wrap: false,
       memory: true,
       getItems: () => this._assignedArtifactElements ?? [],
-      onActiveItemChange: () => this.requestUpdate(),
     }
   );
 
@@ -336,6 +336,74 @@ export class PromptField extends SpectrumElement {
   private _handleArtifactScroll(): void {
     this._updateArtifactScrollState();
     this.requestUpdate();
+  }
+
+  /**
+   * `scrollend`, not `scroll`: paging/scrollbar-drag animate over several
+   * frames, and `scroll` fires on every one of them. Checking visibility
+   * mid-animation can see a tile transiently pass through the visible
+   * region and lock it in as active before the scroll settles on its
+   * actual destination (`_scrollArtifactsByPage` already sets the correct
+   * active tile up front, but this can still race and clobber it).
+   * `scrollend` only fires once scrolling has actually stopped.
+   */
+  private _handleArtifactScrollEnd(): void {
+    this._syncArtifactActiveItemToVisible();
+  }
+
+  /**
+   * `memory` keeps the roving tab stop on whichever tile was last active,
+   * with no awareness of scroll position. Left alone, Tab from a chevron
+   * (or back into the strip generally) can land on a tile that's no longer
+   * visible, having scrolled out from under it. Re-point the roving stop
+   * at a currently visible tile whenever the strip scrolls, so Tab always
+   * lands somewhere the user can see.
+   */
+  private _syncArtifactActiveItemToVisible(): void {
+    const scrollEl = this._artifactScrollEl;
+    const artifacts = this._assignedArtifactElements ?? [];
+    if (!scrollEl || artifacts.length < 2) {
+      return;
+    }
+
+    const active = this._artifactNavigation.getActiveItem();
+    if (active && this._isArtifactVisible(active, scrollEl)) {
+      return;
+    }
+
+    const firstVisible = artifacts.find((artifact) =>
+      this._isArtifactVisible(artifact, scrollEl)
+    );
+    if (firstVisible) {
+      this._artifactNavigation.setActiveItem(firstVisible);
+    }
+  }
+
+  /**
+   * A tile clear of the chevron overlays on both sides, not just inside
+   * the scroll container's own clipping bounds. Reads the same
+   * `scroll-padding-inline` the `has-scroll-prev`/`has-scroll-next` CSS
+   * rules set (prompt-field.css) as the single source of truth for how
+   * much clearance a visible chevron needs, instead of duplicating that
+   * math here.
+   */
+  private _isArtifactVisible(
+    artifact: HTMLElement,
+    scrollEl: HTMLElement
+  ): boolean {
+    const scrollRect = scrollEl.getBoundingClientRect();
+    const scrollStyle = getComputedStyle(scrollEl);
+    const paddingLeft = parseFloat(scrollStyle.scrollPaddingLeft) || 0;
+    const paddingRight = parseFloat(scrollStyle.scrollPaddingRight) || 0;
+    const visibleLeft = scrollRect.left + paddingLeft;
+    const visibleRight = scrollRect.right - paddingRight;
+
+    const rect = artifact.getBoundingClientRect();
+    const tolerance = 1;
+    return (
+      rect.left >= visibleLeft - tolerance &&
+      rect.right <= visibleRight + tolerance
+    );
   }
 
   private _prefersReducedMotion(): boolean {
@@ -832,9 +900,14 @@ export class PromptField extends SpectrumElement {
             aria-label=${this.artifactStripLabel}
           >
             <div
-              class="swc-PromptField-artifacts-scroll"
+              class=${classMap({
+                'swc-PromptField-artifacts-scroll': true,
+                'has-scroll-prev': this._artifactCanScrollPrev,
+                'has-scroll-next': this._artifactCanScrollNext,
+              })}
               tabindex="-1"
               @scroll=${this._handleArtifactScroll}
+              @scrollend=${this._handleArtifactScrollEnd}
             >
               <div class="swc-PromptField-artifacts-tiles">
                 <slot
