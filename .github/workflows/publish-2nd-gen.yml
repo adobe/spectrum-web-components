@@ -4,28 +4,15 @@ on:
   workflow_dispatch:
     inputs:
       tag:
-        description: 'NPM dist-tag for the planned release'
+        description: 'NPM dist-tag for a throwaway snapshot (e.g., next, snapshot-test)'
         required: false
-        default: 'beta'
-      dry_run:
-        description: 'Version packages and report the diff, but do not publish or push'
-        type: boolean
-        required: false
-        default: false
+        default: 'next'
   pull_request:
     types: [labeled, synchronize]
-  # Every push to main auto-publishes the `next` dist-tag: a continuous, throwaway snapshot
-  # of main (no commit back, no branch lock) so consumers can always pull the latest main
-  # build. Planned `beta` releases are cut manually via workflow_dispatch (pre-release mode,
-  # changelog, commit back to main). Per-step conditions below implement that split.
   push:
     branches:
       - main
 
-# Shares the exact group string with publish.yml (1st-gen) so the two release workflows
-# stay mutually exclusive on any shared ref: on a push to main both compute
-# publish-refs/heads/main, so one runs while the other queues. cancel-in-progress: false
-# queues rather than cancels; no ordering guarantee.
 concurrency:
   group: publish-${{ github.ref }}
   cancel-in-progress: false
@@ -33,12 +20,8 @@ concurrency:
 jobs:
   check-changesets:
     runs-on: ubuntu-latest
-    # push to main -> auto `next` snapshot. workflow_dispatch -> planned `beta`, allowed
-    # only from main (a dispatch against any other ref is skipped). pull_request -> only
-    # via the snapshot-release label.
     if: >-
-      github.event_name == 'push' ||
-      (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main') ||
+      github.event_name == 'workflow_dispatch' ||
       (github.event_name == 'pull_request' &&
       contains(github.event.pull_request.labels.*.name, 'snapshot-release'))
     outputs:
@@ -55,41 +38,23 @@ jobs:
           COUNT=$(ls -1 2nd-gen/.changeset/*.md 2>/dev/null | grep -v README | wc -l | tr -d ' ')
           if [ "$COUNT" -eq 0 ]; then
             echo "has_changesets=false" >> $GITHUB_OUTPUT
-            echo "No 2nd-gen changesets found - skipping publish"
+            echo "No 2nd-gen changesets found - skipping snapshot publish"
           else
             echo "has_changesets=true" >> $GITHUB_OUTPUT
             echo "Found $COUNT 2nd-gen changeset(s)"
           fi
 
-  publish:
+  # Throwaway snapshot publish: workflow_dispatch (manual snapshot) and
+  # snapshot-release-labeled PRs. Never touches main, never commits, never opens a PR,
+  # never enters persistent pre-release mode.
+  snapshot:
     needs: check-changesets
     if: needs.check-changesets.outputs.has_changesets == 'true'
     runs-on: ubuntu-latest
     environment: npm-publish
-    permissions:
-      contents: write # Required for git push (via RELEASE_BOT_TOKEN below)
     env:
       YARN_ENABLE_IMMUTABLE_INSTALLS: false
-      DRY_RUN: ${{ github.event.inputs.dry_run || 'false' }}
     steps:
-      # Locked before checkout via a raw gh api call (not the composite action - `uses:`
-      # doesn't support expressions, so it can't be pinned to github.sha, and a literal
-      # @main ref would 404 until this action is merged there; a raw call needs no repo
-      # checkout at all) so the race window is closed from the very start of the job,
-      # not just from after checkout + dependency install.
-      - name: Lock main during release
-        # Only the planned beta release writes to main, so only it needs the lock.
-        if: github.event_name == 'workflow_dispatch' && env.DRY_RUN != 'true'
-        env:
-          GH_TOKEN: ${{ secrets.RELEASE_BOT_TOKEN }}
-        run: |
-          gh api "repos/${{ github.repository }}/branches/main/protection/required_status_checks/contexts" \
-            -X POST --input - <<< '{"contexts":["release/in-progress"]}' \
-            || echo "No branch protection on main (or insufficient access) - skipping lock. Concurrent-merge protection during this release is not active."
-
-      # head.ref (no repository:) resolves against the base repo - fine for same-repo
-      # snapshot-release PRs, which is the only way this workflow's pull_request
-      # trigger fires; would need a fork-aware checkout if that ever changes.
       - name: Checkout
         uses: actions/checkout@v4
         with:
@@ -99,69 +64,31 @@ jobs:
       - name: Setup job and install dependencies
         uses: ./.github/actions/setup-job
 
-      - name: Set Git identity
-        run: |
-          git config --global user.email "support+actions@github.com"
-          git config --global user.name "github-actions-bot"
-
-      - name: Determine release tag
+      - name: Determine snapshot tag
         id: extract-tag
         env:
           EVENT_NAME: ${{ github.event_name }}
           INPUT_TAG: ${{ github.event.inputs.tag }}
         run: |
           if [ "$EVENT_NAME" == "pull_request" ]; then
-            # snapshot-release PRs: throwaway snapshot under the snapshot-test tag.
             WORKFLOW_TAG="snapshot-test"
-          elif [ "$EVENT_NAME" == "push" ]; then
-            # every push to main: continuous throwaway snapshot under the next tag.
-            WORKFLOW_TAG="next"
           else
-            # manual workflow_dispatch: planned pre-release, beta by default.
-            WORKFLOW_TAG="${INPUT_TAG:-beta}"
+            WORKFLOW_TAG="${INPUT_TAG:-next}"
           fi
           echo "tag=$WORKFLOW_TAG" >> $GITHUB_OUTPUT
-          echo "Using npm tag: $WORKFLOW_TAG"
-
-      # Only the planned beta path (workflow_dispatch) enters persistent pre-release mode.
-      # push->next and PR->snapshot-test use --snapshot instead and never touch pre.json.
-      - name: Enter changesets pre-release mode
-        if: github.event_name == 'workflow_dispatch' && !hashFiles('2nd-gen/.changeset/pre.json')
-        env:
-          TAG: ${{ steps.extract-tag.outputs.tag }}
-        working-directory: 2nd-gen
-        run: yarn changeset pre enter $TAG
 
       - name: Verify NPM authentication
         id: npm-auth
-        # setup-node (in setup-job) already wrote an .npmrc that npm reads via
-        # NPM_CONFIG_USERCONFIG and that authenticates through ${NODE_AUTH_TOKEN};
-        # just point that at the real token. Writing ~/.npmrc here is a no-op because
-        # the userconfig override wins.
         env:
           NODE_AUTH_TOKEN: ${{ secrets.ADOBE_BOT_NPM_TOKEN }}
-        run: |
-          npm whoami --registry=https://registry.npmjs.org
-          echo "✓ NPM authentication configured for 2nd-gen (Adobe namespace)"
+        run: npm whoami --registry=https://registry.npmjs.org
 
       - name: Build all packages
         run: yarn build
 
-      - name: Version packages
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          EVENT_NAME: ${{ github.event_name }}
-          TAG: ${{ steps.extract-tag.outputs.tag }}
+      - name: Version packages (snapshot)
         working-directory: 2nd-gen
-        run: |
-          if [ "$EVENT_NAME" == "workflow_dispatch" ]; then
-            # Planned beta: pre-release versioning (beta.N) against the persistent pre.json.
-            yarn changeset version
-          else
-            # push->next and PR->snapshot-test: throwaway snapshot version ({tag}.{datetime}),
-            # never entering the persistent pre-release state.
-            yarn changeset version --snapshot $TAG
-          fi
+        run: yarn changeset version --snapshot ${{ steps.extract-tag.outputs.tag }}
 
       - name: Capture released versions
         id: versions
@@ -171,40 +98,17 @@ jobs:
           echo "core=$CORE_VERSION" >> $GITHUB_OUTPUT
           echo "swc=$SWC_VERSION" >> $GITHUB_OUTPUT
 
-      - name: Report dry-run diff
-        if: env.DRY_RUN == 'true'
-        run: |
-          echo "## Dry run - 2nd-gen version diff" >> $GITHUB_STEP_SUMMARY
-          echo '```diff' >> $GITHUB_STEP_SUMMARY
-          git diff --stat -- 2nd-gen/ >> $GITHUB_STEP_SUMMARY
-          echo '```' >> $GITHUB_STEP_SUMMARY
-          echo "Dry run requested - no packages were published and main was not modified." >> $GITHUB_STEP_SUMMARY
-
       - name: Refresh lockfile and rebuild
-        if: env.DRY_RUN != 'true'
         run: |
           yarn install --refresh-lockfile
           yarn build
 
       - name: Publish all packages
-        if: env.DRY_RUN != 'true' && steps.npm-auth.outcome == 'success'
+        if: steps.npm-auth.outcome == 'success'
         env:
           NODE_AUTH_TOKEN: ${{ secrets.ADOBE_BOT_NPM_TOKEN }}
-          TAG: ${{ steps.extract-tag.outputs.tag }}
         working-directory: 2nd-gen
-        run: yarn changeset publish --no-git-tag --tag $TAG
-
-      - name: Commit and push changes
-        # Only the planned beta release commits version bumps back to main.
-        if: github.event_name == 'workflow_dispatch' && env.DRY_RUN != 'true'
-        env:
-          RELEASE_BOT_TOKEN: ${{ secrets.RELEASE_BOT_TOKEN }}
-        run: |
-          git add 2nd-gen yarn.lock
-          git commit --no-verify -m "chore: release 2nd-gen packages #publish" || echo "No changes to commit"
-          git remote set-url origin "https://x-access-token:${RELEASE_BOT_TOKEN}@github.com/${{ github.repository }}.git"
-          git pull --rebase origin main
-          git push origin HEAD:main
+        run: yarn changeset publish --no-git-tag --tag ${{ steps.extract-tag.outputs.tag }}
 
       - name: Publish summary
         if: always()
@@ -215,28 +119,83 @@ jobs:
           SWC_VERSION: ${{ steps.versions.outputs.swc }}
           AUTH_OUTCOME: ${{ steps.npm-auth.outcome }}
         run: |
-          echo "## Publish summary (2nd-gen)" >> $GITHUB_STEP_SUMMARY
+          echo "## Publish summary (2nd-gen snapshot)" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "| Field | Value |" >> $GITHUB_STEP_SUMMARY
           echo "|-------|-------|" >> $GITHUB_STEP_SUMMARY
           echo "| **Trigger** | \`${EVENT_NAME}\` |" >> $GITHUB_STEP_SUMMARY
           echo "| **NPM tag** | \`${TAG}\` |" >> $GITHUB_STEP_SUMMARY
-          echo "| **Dry run** | \`${DRY_RUN}\` |" >> $GITHUB_STEP_SUMMARY
           [ -n "$CORE_VERSION" ] && echo "| **@adobe/spectrum-wc-core** | \`${CORE_VERSION}\` |" >> $GITHUB_STEP_SUMMARY
           [ -n "$SWC_VERSION" ] && echo "| **@adobe/spectrum-wc** | \`${SWC_VERSION}\` |" >> $GITHUB_STEP_SUMMARY
 
-          if [ "$DRY_RUN" == "true" ]; then
-            echo "🔎 Dry run only — nothing published or pushed" >> $GITHUB_STEP_SUMMARY
-          elif [ "$AUTH_OUTCOME" == "success" ]; then
+          if [ "$AUTH_OUTCOME" == "success" ]; then
             echo "✅ Publish completed with tag \`${TAG}\`" >> $GITHUB_STEP_SUMMARY
           else
             echo "❌ Publish failed — NPM authentication did not succeed" >> $GITHUB_STEP_SUMMARY
           fi
 
-      - name: Unlock main after release
-        if: always() && github.event_name == 'workflow_dispatch' && env.DRY_RUN != 'true'
-        uses: ./.github/actions/release-branch-lock
+  # Real release: version-PR-then-publish for the persistent `beta` pre-release channel,
+  # driven entirely by changesets/action. Every push to main either opens/updates the
+  # Version PR (changesets pending) or publishes (no changesets pending, because that PR
+  # was just merged). 2nd-gen has no `latest` channel yet - `beta` is the only real release.
+  release:
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    environment: npm-publish
+    permissions:
+      contents: write # changesets/action commits the Version PR branch
+      pull-requests: write # changesets/action opens/updates the Version PR
+    env:
+      YARN_ENABLE_IMMUTABLE_INSTALLS: false
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
         with:
-          mode: unlock
-          branch: main
-          token: ${{ secrets.RELEASE_BOT_TOKEN }}
+          fetch-depth: 0
+
+      - name: Setup job and install dependencies
+        uses: ./.github/actions/setup-job
+
+      - name: Verify NPM authentication
+        id: npm-auth
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.ADOBE_BOT_NPM_TOKEN }}
+        run: npm whoami --registry=https://registry.npmjs.org
+
+      - name: Build all packages
+        run: yarn build
+
+      - name: Version or publish 2nd-gen packages
+        id: changesets
+        uses: changesets/action@v1
+        with:
+          cwd: 2nd-gen
+          commit: 'chore: release 2nd-gen packages'
+          title: 'chore: release 2nd-gen packages (beta)'
+          version: |
+            if [ ! -f .changeset/pre.json ]; then
+              yarn changeset pre enter beta
+            fi
+            yarn changeset version
+          publish: |
+            yarn install --refresh-lockfile
+            yarn build
+            yarn changeset publish --no-git-tag --tag beta
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.ADOBE_BOT_NPM_TOKEN }}
+
+      - name: Publish summary
+        if: always()
+        env:
+          PUBLISHED: ${{ steps.changesets.outputs.published }}
+          PR_NUMBER: ${{ steps.changesets.outputs.pullRequestNumber }}
+        run: |
+          echo "## Publish summary (2nd-gen)" >> $GITHUB_STEP_SUMMARY
+          if [ "$PUBLISHED" == "true" ]; then
+            echo "✅ Published a new beta release" >> $GITHUB_STEP_SUMMARY
+          elif [ -n "$PR_NUMBER" ] && [ "$PR_NUMBER" != "null" ]; then
+            echo "📝 Version PR #${PR_NUMBER} opened/updated - nothing published yet" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "ℹ️ No pending changesets and nothing new to publish" >> $GITHUB_STEP_SUMMARY
+          fi
