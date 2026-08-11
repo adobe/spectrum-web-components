@@ -135,7 +135,7 @@ Both generations use [`changesets/action`](https://github.com/changesets/action)
 
 **How it works:**
 
-1. Every push to `main` that has pending changesets (in `1st-gen/.changeset/` or `2nd-gen/.changeset/`) opens or updates a bot-authored pull request titled `chore: release <gen> packages` against `main`, containing the version bumps and changelog entries `yarn changeset version` would produce.
+1. Every push to `main` that has pending changesets (in `1st-gen/.changeset/` or `2nd-gen/.changeset/`) opens or updates a bot-authored pull request against `main`. The PR title is `chore: release 1st-gen packages` for 1st-gen or `chore: release 2nd-gen packages (beta)` for 2nd-gen (note the `(beta)` suffix). The PR contains the version bumps and changelog entries `yarn changeset version` would produce.
 2. A reviewer reviews and merges that pull request like any other PR — this is the audit trail: the exact diff that will ship is visible and approved before anything is published.
 3. Merging the Version PR is itself a push to `main`. That push has no pending changesets left (the merged PR consumed them), so the same workflow instead runs the generation's publish script: builds, `yarn changeset publish`, and (1st-gen only) builds and publishes the React wrappers and creates a git tag.
 
