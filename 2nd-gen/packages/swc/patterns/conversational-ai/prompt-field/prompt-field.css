@@ -57,7 +57,7 @@
   box-shadow:
     0 20px 20px -24px var(--swc-prompt-field-prominent-outer-glow-color, transparent),
     0 -3px 10px 1px var(--swc-prompt-field-drop-shadow-color);
-  overflow: hidden;
+  overflow: clip;
   transition:
     --swc-prompt-field-con-hue-opacity 700ms cubic-bezier(0.32, 0.72, 0, 1),
     --swc-prompt-field-bg-stop-1 700ms cubic-bezier(0.32, 0.72, 0, 1),
