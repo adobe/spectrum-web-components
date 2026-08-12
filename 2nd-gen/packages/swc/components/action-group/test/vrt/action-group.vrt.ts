@@ -241,10 +241,11 @@ const focusRingContent = () =>
     'Focus ring (compact, not clipped by neighbors)'
   );
 
-// A sized column-flex parent stretches each host to the same inline size
-// (`align-items: stretch`). That is how two vertical groups share a width;
-// each group cannot see the other's labels. The second group uses a longer
-// label so fill-vs-hug is visible if the inner box stops following the host.
+// An `inline-flex` column hugs the widest group, then `align-items: stretch`
+// plus the group's `min-inline-size: 100%` make the shorter group match.
+// A block-level `display: flex` parent would stretch both groups to the
+// page instead. The second group uses a longer label so a hug regression
+// (uneven right edges) is visible.
 const toolbarContent = () =>
   row(
     html`
@@ -252,7 +253,7 @@ const toolbarContent = () =>
         role="toolbar"
         aria-label="Document actions"
         aria-orientation="vertical"
-        style="display: flex; flex-direction: column; gap: var(--swc-spacing-400); inline-size: 200px;"
+        style="display: inline-flex; flex-direction: column; gap: var(--swc-spacing-400);"
       >
         ${renderGroup({
           orientation: 'vertical',
@@ -265,7 +266,7 @@ const toolbarContent = () =>
         })}
       </div>
     `,
-    'Toolbar (vertical, parent-sized)'
+    'Toolbar (vertical)'
   );
 
 const focusMiddleChild = ({
@@ -284,7 +285,7 @@ const permutationContent = () => html`
 // VRT stories
 
 // Default/compact/quiet swept across every size, the quiet+compact boolean
-// interaction, justified, disabled, and a parent-sized vertical toolbar.
+// interaction, justified, disabled, and a vertical toolbar.
 // Rendered once in light/ltr and once
 // in dark/rtl (single story, one snapshot, both axes covered).
 //
