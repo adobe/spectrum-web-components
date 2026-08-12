@@ -617,7 +617,7 @@
 }
 
 :host(:not([collapsed])) .swc-PromptField-controls {
-  gap: token("spacing-500");
+  gap: token("spacing-300");
 }
 
 @media (prefers-reduced-motion: reduce) {
