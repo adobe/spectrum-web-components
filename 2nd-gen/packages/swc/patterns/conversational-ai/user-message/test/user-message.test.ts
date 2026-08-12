@@ -40,9 +40,9 @@ export const OverviewTest: Story = {
       'swc-user-message'
     );
 
-    await step('uses copy type by default', async () => {
-      expect(el.type).toBe('copy');
-      expect(el.getAttribute('type')).toBe('copy');
+    await step('renders a default slot with no attachments class', async () => {
+      expect(el.classList.contains('has-attachments')).toBe(false);
+      expect(el.shadowRoot?.querySelector('slot:not([name])')).toBeTruthy();
     });
   },
 };
@@ -56,9 +56,8 @@ export const TypeAndSlotTest: Story = {
     );
 
     await step(
-      'a single card attachment reflects "attachments" on the host and gets the hero row',
+      'a single card attachment marks the host and gets the hero row',
       async () => {
-        el.type = 'attachments';
         el.innerHTML = `
         <swc-user-message-attachment type="card">
           <div slot="thumbnail" role="img" aria-label="File preview"></div>
@@ -84,7 +83,7 @@ export const TypeAndSlotTest: Story = {
         const subtitle = attachment.shadowRoot?.querySelector(
           '.swc-UserMessageAttachment-subtitle'
         );
-        expect(el.getAttribute('type')).toBe('attachments');
+        expect(el.classList.contains('has-attachments')).toBe(true);
         expect(heroFilesBox).toBeTruthy();
         expect(title).toBeTruthy();
         expect(subtitle).toBeTruthy();
@@ -94,7 +93,6 @@ export const TypeAndSlotTest: Story = {
     await step(
       'a single media attachment gets the hero grid tile',
       async () => {
-        el.type = 'attachments';
         el.innerHTML = `
         <swc-user-message-attachment type="media">
           <div slot="thumbnail" role="img" aria-label="Preview"></div>
@@ -109,14 +107,15 @@ export const TypeAndSlotTest: Story = {
         const heroMediaBox = el.shadowRoot?.querySelector(
           '.swc-UserMessage-attachments-media--single'
         );
-        expect(el.getAttribute('type')).toBe('attachments');
+        expect(el.classList.contains('has-attachments')).toBe(true);
         expect(heroMediaBox).toBeTruthy();
       }
     );
 
-    await step('copy type uses the default slot text path', async () => {
-      el.type = 'copy';
+    await step('plain text uses the default slot text path', async () => {
       el.innerHTML = `Can you summarize this document?`;
+      await el.updateComplete;
+      await new Promise((resolve) => requestAnimationFrame(resolve));
       await el.updateComplete;
 
       const textSlot =
@@ -127,14 +126,14 @@ export const TypeAndSlotTest: Story = {
         .join('')
         .trim();
 
-      expect(el.getAttribute('type')).toBe('copy');
+      expect(el.classList.contains('has-attachments')).toBe(false);
       expect(assignedText).toBe('Can you summarize this document?');
     });
   },
 };
 
-export const DefaultSlotHiddenForAttachmentTypesTest: Story = {
-  name: 'Default slot not used for attachments',
+export const MixedCopyAndAttachmentsTest: Story = {
+  name: 'Copy text and attachments render together',
   ...Overview,
   play: async ({ canvasElement, step }) => {
     const el = await getComponent<UserMessage>(
@@ -143,38 +142,27 @@ export const DefaultSlotHiddenForAttachmentTypesTest: Story = {
     );
 
     await step(
-      'type="attachments": no unnamed slot; unslotted children are not shown',
+      'text alongside an attachment is assigned to the default slot, not dropped',
       async () => {
-        el.type = 'attachments';
         el.innerHTML = `
-        <p data-test-default-slotted>Default copy that must not appear in the bubble for attachments type.</p>
+        <p data-test-default-slotted>Reviewed the attached file, thoughts?</p>
         <swc-user-message-attachment type="media">
           <div slot="thumbnail" role="img" aria-label="Preview"></div>
         </swc-user-message-attachment>
       `;
         await el.updateComplete;
-
-        expect(el.shadowRoot?.querySelector('slot:not([name])')).toBeNull();
-
-        const leaked = el.querySelector<HTMLElement>(
-          '[data-test-default-slotted]'
-        );
-        expect(leaked).toBeTruthy();
-        const { width, height } = leaked!.getBoundingClientRect();
-        expect(width * height).toBe(0);
-      }
-    );
-
-    await step(
-      'type="copy" keeps an unnamed (default) slot in the shadow root',
-      async () => {
-        el.type = 'copy';
-        el.innerHTML = 'Visible copy text';
+        await new Promise((resolve) => requestAnimationFrame(resolve));
         await el.updateComplete;
 
-        const defaultSlot =
+        const textSlot =
           el.shadowRoot?.querySelector<HTMLSlotElement>('slot:not([name])');
-        expect(defaultSlot).toBeTruthy();
+        expect(textSlot).toBeTruthy();
+        expect(
+          textSlot
+            ?.assignedNodes({ flatten: true })
+            .includes(el.querySelector('[data-test-default-slotted]')!)
+        ).toBe(true);
+        expect(el.classList.contains('has-attachments')).toBe(true);
       }
     );
   },
@@ -215,7 +203,6 @@ export const AttachmentsGroupingTest: Story = {
     await step(
       'media count at or below the visible limit renders no disclosure',
       async () => {
-        el.type = 'attachments';
         el.open = false;
         el.innerHTML = attachmentsMarkup(4, 1);
         await el.updateComplete;
@@ -257,7 +244,6 @@ export const AttachmentsGroupingTest: Story = {
     await step(
       'media count above the visible limit hides overflow tiles and shows the disclosure',
       async () => {
-        el.type = 'attachments';
         el.open = false;
         el.innerHTML = attachmentsMarkup(6, 0);
         await el.updateComplete;
@@ -343,7 +329,7 @@ export const LongTextWrapTest: Story = {
       style="max-inline-size: 640px; margin-block-start: 32px; padding-inline: 1px;"
     >
       <swc-conversation-turn type="user">
-        <swc-user-message type="attachments">
+        <swc-user-message>
           <swc-user-message-attachment type="card">
             <div
               slot="thumbnail"

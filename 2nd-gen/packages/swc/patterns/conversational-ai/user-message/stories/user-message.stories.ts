@@ -25,16 +25,6 @@ const { args, argTypes, template } = getStorybookHelpers('swc-user-message');
 delete (args as Record<string, unknown>).content;
 delete (argTypes as Record<string, unknown>).content;
 
-argTypes.type = {
-  ...argTypes.type,
-  control: { type: 'select' },
-  options: ['copy', 'attachments'],
-  table: {
-    category: 'attributes',
-    defaultValue: { summary: 'copy' },
-  },
-};
-
 // Wraps a single swc-user-message in a conversation turn for proper alignment.
 const withUserTurn = (story: () => unknown) => html`
   <swc-conversation-turn type="user">${story()}</swc-conversation-turn>
@@ -74,7 +64,6 @@ export default meta;
 
 export const Playground: Story = {
   args: {
-    type: 'copy',
     'default-slot':
       'Can you help me create a 45-minute presentation, with animations, for an executive update?',
   },
@@ -88,7 +77,6 @@ export const Playground: Story = {
 
 export const Overview: Story = {
   args: {
-    type: 'copy',
     'default-slot':
       'Can you help me create a 45-minute presentation, with animations, for an executive update?',
   },
@@ -128,7 +116,7 @@ export const Content: Story = {
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;">
         <swc-conversation-turn type="user">
-          <swc-user-message type="attachments">
+          <swc-user-message>
             <swc-user-message-attachment type="card">
               <div
                 slot="thumbnail"
@@ -145,7 +133,7 @@ export const Content: Story = {
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;">
         <swc-conversation-turn type="user">
-          <swc-user-message type="attachments">
+          <swc-user-message>
             <swc-user-message-attachment type="media">
               <div
                 slot="thumbnail"
@@ -176,7 +164,7 @@ const mediaAttachment = (src: string, alt: string) => html`
 export const Attachments: Story = {
   render: () => html`
     <swc-conversation-turn type="user">
-      <swc-user-message type="attachments">
+      <swc-user-message>
         ${mediaAttachment(
           'https://picsum.photos/id/64/240/240',
           'User portrait'
@@ -210,7 +198,7 @@ export const AttachmentsDisclosure: Story = {
   render: () => html`
     <div style="min-block-size:300px;">
       <swc-conversation-turn type="user">
-        <swc-user-message type="attachments">
+        <swc-user-message>
           ${mediaAttachment('https://picsum.photos/id/64/240/240', 'Photo 1')}
           ${mediaAttachment('https://picsum.photos/id/823/240/240', 'Photo 2')}
           ${mediaAttachment('https://picsum.photos/id/56/240/240', 'Photo 3')}
@@ -231,7 +219,6 @@ AttachmentsDisclosure.storyName = 'Show all / show less';
 
 export const Accessibility: Story = {
   args: {
-    type: 'copy',
     'default-slot':
       'Can you help me create a 45-minute presentation, with animations, for an executive update?',
   },

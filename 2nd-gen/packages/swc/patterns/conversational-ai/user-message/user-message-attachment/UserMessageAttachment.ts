@@ -18,7 +18,7 @@ import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
 import styles from './user-message-attachment.css';
 
 /**
- * One attachment tile inside `<swc-user-message type="attachments">`.
+ * One attachment tile slotted into `<swc-user-message>`.
  *
  * A deliberately minimal, presentation-only tile: no dismiss affordance, no
  * actions slot. `swc-user-message` owns all grouping (media grid vs. stacked
@@ -71,22 +71,37 @@ export class UserMessageAttachment extends SpectrumElement {
     this.requestUpdate();
   }
 
-  private _renderBadge(): TemplateResult {
-    if (!this._hasBadgeContent()) {
-      return html`
-        <slot
-          name="badge"
-          hidden
-          @slotchange=${this._handleBadgeSlotChange}
-        ></slot>
-      `;
-    }
-
-    return html`
-      <div class="swc-UserMessageAttachment-badge">
-        <slot name="badge" @slotchange=${this._handleBadgeSlotChange}></slot>
-      </div>
+  /**
+   * A named slot that stays in the DOM (hidden, for `slotchange` detection)
+   * when empty, and is wrapped in `wrapClass` once content is slotted.
+   */
+  private _renderConditionalSlot(
+    name: string,
+    hasContent: boolean,
+    onSlotChange: () => void,
+    wrapClass: string
+  ): TemplateResult {
+    const slot = html`
+      <slot
+        name=${name}
+        ?hidden=${!hasContent}
+        @slotchange=${onSlotChange}
+      ></slot>
     `;
+    return hasContent
+      ? html`
+          <div class=${wrapClass}>${slot}</div>
+        `
+      : slot;
+  }
+
+  private _renderBadge(): TemplateResult {
+    return this._renderConditionalSlot(
+      'badge',
+      this._hasBadgeContent(),
+      this._handleBadgeSlotChange,
+      'swc-UserMessageAttachment-badge'
+    );
   }
 
   /**
@@ -96,36 +111,27 @@ export class UserMessageAttachment extends SpectrumElement {
    * has one, same as `type="card"`.
    */
   private _renderMediaMeta(): TemplateResult {
-    if (!this._hasMediaMetaContent()) {
+    const hasContent = this._hasMediaMetaContent();
+    const title = this._renderConditionalSlot(
+      'title',
+      hasContent,
+      this._handleMediaMetaSlotChange,
+      'swc-UserMessageAttachment-title'
+    );
+    const subtitle = this._renderConditionalSlot(
+      'subtitle',
+      hasContent,
+      this._handleMediaMetaSlotChange,
+      'swc-UserMessageAttachment-subtitle'
+    );
+
+    if (!hasContent) {
       return html`
-        <slot
-          name="title"
-          hidden
-          @slotchange=${this._handleMediaMetaSlotChange}
-        ></slot>
-        <slot
-          name="subtitle"
-          hidden
-          @slotchange=${this._handleMediaMetaSlotChange}
-        ></slot>
+        ${title}${subtitle}
       `;
     }
-
     return html`
-      <div class="swc-UserMessageAttachment-meta">
-        <div class="swc-UserMessageAttachment-title">
-          <slot
-            name="title"
-            @slotchange=${this._handleMediaMetaSlotChange}
-          ></slot>
-        </div>
-        <div class="swc-UserMessageAttachment-subtitle">
-          <slot
-            name="subtitle"
-            @slotchange=${this._handleMediaMetaSlotChange}
-          ></slot>
-        </div>
-      </div>
+      <div class="swc-UserMessageAttachment-meta">${title}${subtitle}</div>
     `;
   }
 

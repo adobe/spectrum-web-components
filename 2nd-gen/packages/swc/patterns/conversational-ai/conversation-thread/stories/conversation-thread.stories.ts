@@ -507,7 +507,7 @@ class ConversationFullPatternDemo extends LitElement {
           ${artifacts.length > 0
             ? html`
                 <swc-conversation-turn type="user">
-                  <swc-user-message type="attachments">
+                  <swc-user-message>
                     ${artifacts.map(
                       (artifact) => html`
                         <swc-user-message-attachment type="media">

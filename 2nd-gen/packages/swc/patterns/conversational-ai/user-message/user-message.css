@@ -48,7 +48,7 @@
  * independent boxes (see `.swc-UserMessage-attachments-media` and each
  * `swc-user-message-attachment[type="card"]`'s own surface), never merged
  * into one shared box. */
-:host([type="attachments"]) {
+:host(.has-attachments) {
   inline-size: fit-content;
   max-inline-size: 536px;
   padding: 0;

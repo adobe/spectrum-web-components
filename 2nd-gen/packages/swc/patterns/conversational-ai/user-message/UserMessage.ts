@@ -25,18 +25,17 @@ import { UserMessageAttachment } from './user-message-attachment/UserMessageAtta
 
 import styles from './user-message.css';
 
-export type UserMessageType = 'copy' | 'attachments';
-
 /** Grid tiles beyond this count collapse behind "Show all" by default. */
 const VISIBLE_MEDIA_COUNT = 4;
 
 /**
  * User-authored conversation bubble for conversational AI pattern exploration.
- * Default slot content is rendered only when `type="copy"` and ignored otherwise.
+ * The default slot always renders message copy text. Any slotted
+ * `<swc-user-message-attachment>` children are detected automatically and
+ * grouped below the text — no mode attribute needed.
  *
- * `type="attachments"` accepts one or more `<swc-user-message-attachment>`
- * children — a single attachment (media or card) is a common case, not a
- * special one, and gets a larger "hero" tile size than a grouped attachment:
+ * A single attachment (media or card) is a common case, not a special one,
+ * and gets a larger "hero" tile size than a grouped attachment:
  * `type="media"` attachments lay out in a 4-column grid — beyond
  * {@link VISIBLE_MEDIA_COUNT}, the last visible tile gets a "View all (N)"
  * scrim overlay instead of being grouped with a separate control — and
@@ -46,21 +45,14 @@ const VISIBLE_MEDIA_COUNT = 4;
  * presentation-only.
  *
  * @element swc-user-message
- * @slot - Message copy content when `type="copy"`.
- * @slot - `<swc-user-message-attachment>` elements when `type="attachments"`.
- * @fires swc-user-message-toggle - Dispatched when the "Show all/less" disclosure is toggled (`type="attachments"` only).
+ * @slot - Message copy text, and/or `<swc-user-message-attachment>` elements.
+ * @fires swc-user-message-toggle - Dispatched when the "Show all/less" disclosure is toggled.
  * Detail: `{ open: boolean }`
  */
 export class UserMessage extends SpectrumElement {
   private readonly attachmentsPanelId = uniqueId('swc-user-message-panel');
 
-  /**
-   * Visual content type for the user message bubble.
-   */
-  @property({ type: String, reflect: true })
-  public type: UserMessageType = 'copy';
-
-  /** Whether the attachments grid's "Show all" disclosure is open (`type="attachments"` only). */
+  /** Whether the attachments grid's "Show all" disclosure is open. */
   @property({ type: Boolean, reflect: true })
   public open = false;
 
@@ -123,17 +115,10 @@ export class UserMessage extends SpectrumElement {
   private _isAttachmentElement(
     element: Element
   ): element is UserMessageAttachment {
-    return (
-      element instanceof UserMessageAttachment ||
-      element.localName === 'swc-user-message-attachment'
-    );
+    return element instanceof UserMessageAttachment;
   }
 
   private _routeAttachments(): void {
-    if (this.type !== 'attachments') {
-      return;
-    }
-
     const attachments = Array.from(this.children).filter(
       (element): element is UserMessageAttachment =>
         this._isAttachmentElement(element)
@@ -167,54 +152,35 @@ export class UserMessage extends SpectrumElement {
   }
 
   /**
-   * Explicitly places every visible tile in the grid (row/column) instead of
-   * leaving it to implicit auto-placement, for two reasons:
-   *
-   * 1. A trailing row shorter than {@link VISIBLE_MEDIA_COUNT} columns should
-   *    hug the end of the grid (empty cells on the start side), not the
-   *    start (default auto-placement fills from the start).
-   * 2. The "View all" overlay (`.swc-UserMessage-attachments-overflow`) is
-   *    explicitly positioned at row 1 / column {@link VISIBLE_MEDIA_COUNT}
-   *    so it can stack on top of the last visible tile. Per the CSS Grid
-   *    placement algorithm, explicitly-positioned items reserve their cell
-   *    *before* auto-placed items are laid out, so leaving the 4th tile to
-   *    auto-placement pushes it into row 2 instead of under the overlay.
-   *    Explicit placement here avoids that fight entirely.
+   * The "View all" overlay (`.swc-UserMessage-attachments-overflow`) stays in
+   * the DOM at row 1 / column {@link VISIBLE_MEDIA_COUNT} even while hidden
+   * (it fades, rather than being removed). Per the CSS Grid placement
+   * algorithm, that explicitly-positioned cell is reserved *before*
+   * auto-placed items are laid out, so leaving row 1 to auto-placement would
+   * skip that cell and push the real 4th tile into row 2. Only row 1 needs
+   * explicit placement to route around that; later rows auto-flow normally.
    */
   private _alignMediaGrid(
     mediaAttachments: UserMessageAttachment[],
     hasOverflow: boolean
   ): void {
-    const visible = mediaAttachments.filter(
+    const visibleCount = mediaAttachments.filter(
       (_el, index) =>
         !(hasOverflow && !this.open && index >= VISIBLE_MEDIA_COUNT)
+    ).length;
+    this._mediaColumnCount = Math.max(
+      1,
+      Math.min(visibleCount, VISIBLE_MEDIA_COUNT)
     );
-    const total = visible.length;
-    const columnCount = Math.max(1, Math.min(total, VISIBLE_MEDIA_COUNT));
-    this._mediaColumnCount = columnCount;
 
-    mediaAttachments.forEach((el) => {
-      el.style.removeProperty('grid-row-start');
-      el.style.removeProperty('grid-column-start');
-    });
-
-    visible.forEach((el, index) => {
-      const row = Math.floor(index / VISIBLE_MEDIA_COUNT);
-      const isLastRow = row === Math.floor((total - 1) / VISIBLE_MEDIA_COUNT);
-      const itemsInThisRow = isLastRow
-        ? total - row * VISIBLE_MEDIA_COUNT
-        : VISIBLE_MEDIA_COUNT;
-      // Offset against the grid's actual column count (`columnCount`), not
-      // the constant VISIBLE_MEDIA_COUNT: when there's only a single row
-      // (total <= VISIBLE_MEDIA_COUNT) the container itself shrinks to fit
-      // that row exactly, so there's no leftover space to offset into —
-      // using the constant here would place items past the declared column
-      // count and force CSS Grid to fabricate an extra implicit column.
-      const columnOffset = isLastRow ? columnCount - itemsInThisRow : 0;
-      const posInRow = index - row * VISIBLE_MEDIA_COUNT;
-
-      el.style.gridRowStart = String(row + 1);
-      el.style.gridColumnStart = String(columnOffset + posInRow + 1);
+    mediaAttachments.forEach((el, index) => {
+      if (index < VISIBLE_MEDIA_COUNT) {
+        el.style.gridRowStart = '1';
+        el.style.gridColumnStart = String(index + 1);
+      } else {
+        el.style.removeProperty('grid-row-start');
+        el.style.removeProperty('grid-column-start');
+      }
     });
   }
 
@@ -317,13 +283,20 @@ export class UserMessage extends SpectrumElement {
     `;
   }
 
-  protected override render(): TemplateResult {
-    if (this.type === 'copy') {
-      return html`
-        <slot></slot>
-      `;
-    }
+  private get _hasAttachments(): boolean {
+    return this._mediaCount > 0 || this._cardCount > 0;
+  }
 
-    return this._renderAttachments();
+  /** Toggles a host class (not a reflected property) so CSS can key off attachment
+   *  presence without round-tripping it through an attribute consumers might set. */
+  protected override updated(): void {
+    this.classList.toggle('has-attachments', this._hasAttachments);
+  }
+
+  protected override render(): TemplateResult {
+    return html`
+      <slot></slot>
+      ${this._hasAttachments ? this._renderAttachments() : ''}
+    `;
   }
 }
