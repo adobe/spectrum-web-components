@@ -38,7 +38,7 @@
   ],
   "scripts": {
     "analyze": "cem analyze --config cem.config.js",
-    "build": "vite build && yarn analyze",
+    "build": "vite build && yarn analyze && yarn verify:tree-shaking",
     "clean": "rimraf dist",
     "dev": "vite build --watch",
     "prepublishOnly": "yarn build",
@@ -71,10 +71,10 @@
     "adobe-spectrum",
     "web components",
     "web-components",
-    "icons",
-    "workflow-icons",
     "lit-element",
-    "lit-html"
+    "lit-html",
+    "component",
+    "css"
   ],
   "customElements": "dist/custom-elements.json",
   "publishConfig": {
