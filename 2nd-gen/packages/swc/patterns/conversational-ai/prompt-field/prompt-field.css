@@ -53,7 +53,6 @@
   min-inline-size: 0;
   padding: token("spacing-300");
   background: radial-gradient(circle at right bottom in oklch, var(--swc-prompt-field-bg-stop-1) 0%, var(--swc-prompt-field-bg-stop-2) 35%, var(--swc-prompt-field-bg-stop-3) 82%, var(--swc-prompt-field-bg-stop-4) 100%);
-  border: 1px solid transparent;
   border-radius: 24px;
 
   /* prettier-ignore */
