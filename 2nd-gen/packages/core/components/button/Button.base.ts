@@ -136,10 +136,7 @@ export abstract class ButtonBase extends SizedMixin(SpectrumElement, {
    * listener (capture) and inner `@click` binding both call this handler.
    */
   protected readonly handleClick = (event: Event): void => {
-    if (
-      this.disabled ||
-      this.getAttribute('aria-disabled') === 'true'
-    ) {
+    if (this.disabled || this.getAttribute('aria-disabled') === 'true') {
       event.preventDefault();
       event.stopImmediatePropagation();
     }
