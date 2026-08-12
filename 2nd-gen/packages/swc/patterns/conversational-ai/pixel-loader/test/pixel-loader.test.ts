@@ -50,6 +50,23 @@ const prefersReducedMotion = (): boolean =>
   typeof window.matchMedia === 'function' &&
   window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+// Waits for the rendered cell count to reach `count`, allowing for the
+// deferred "finish the current build, then swap" icon transition.
+async function waitForCellCount(
+  el: PixelLoader,
+  count: number,
+  tries = 90
+): Promise<void> {
+  for (let i = 0; i < tries; i += 1) {
+    await el.updateComplete;
+    if (cells(el).length === count) {
+      return;
+    }
+    await new Promise((resolve) => requestAnimationFrame(resolve));
+  }
+  throw new Error(`swc-pixel-loader: cell count did not reach ${count}`);
+}
+
 // ──────────────────────────────────────────────────────────────
 // TEST: Defaults
 // ──────────────────────────────────────────────────────────────
@@ -97,10 +114,6 @@ export const IconTest: Story = {
       expect(el.getAttribute('icon')).toBe('hourglass');
     });
 
-    await step('changing icon re-renders the matching cell grid', async () => {
-      expect(cells(el)).toHaveLength(ICONS.hourglass.length);
-    });
-
     await step(
       'preset overrides icon and drives the rendered glyph',
       async () => {
@@ -113,6 +126,44 @@ export const IconTest: Story = {
         const firstPresetIcon = PRESETS.analyze[0];
         expect(el.getAttribute('preset')).toBe('analyze');
         expect(cells(el)).toHaveLength(ICONS[firstPresetIcon].length);
+      }
+    );
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Finish-then-swap icon transition
+// ──────────────────────────────────────────────────────────────
+
+export const FinishThenSwapTest: Story = {
+  ...Overview,
+  play: async ({ canvasElement, step }) => {
+    const el = await getComponent<PixelLoader>(
+      canvasElement,
+      'swc-pixel-loader'
+    );
+
+    // Finishing only applies while a build is actually animating.
+    if (prefersReducedMotion()) {
+      return;
+    }
+
+    await step('a mid-build icon change defers the swap', async () => {
+      // aiLogo is mid-build; request a larger icon.
+      el.icon = 'hourglass';
+      await el.updateComplete;
+
+      // The requested icon reflects immediately, but the grid keeps showing the
+      // previous icon while its build finishes, rather than snapping.
+      expect(el.icon).toBe('hourglass');
+      expect(cells(el)).toHaveLength(ICONS.aiLogo.length);
+    });
+
+    await step(
+      'the requested icon appears once the current build settles',
+      async () => {
+        await waitForCellCount(el, ICONS.hourglass.length);
+        expect(cells(el)).toHaveLength(ICONS.hourglass.length);
       }
     );
   },
@@ -265,23 +316,38 @@ export const ReducedMotionTest: Story = {
     const query = { matches: false };
     internals._reducedMotionQuery = query;
 
-    await step('toggling reduced motion on freezes the loader', async () => {
-      query.matches = true;
-      internals._handleReducedMotionChange();
-      await el.updateComplete;
+    const keyframesOf = (cell: HTMLElement): Keyframe[] => {
+      const [animation] = cell.getAnimations();
+      expect(animation).toBeDefined();
+      return (animation.effect as KeyframeEffect | null)?.getKeyframes() ?? [];
+    };
 
-      const [first] = cells(el);
-      expect(first.style.opacity).toBe('1');
-      expect(first.getAnimations()).toHaveLength(0);
-    });
+    await step(
+      'reduced motion keeps animating with an opacity-only fade',
+      async () => {
+        query.matches = true;
+        internals._handleReducedMotionChange();
+        await el.updateComplete;
 
-    await step('toggling reduced motion off resumes animation', async () => {
-      query.matches = false;
-      internals._handleReducedMotionChange();
-      await el.updateComplete;
+        const [first] = cells(el);
+        // Still animating (not frozen), but with no falling transform.
+        const keyframes = keyframesOf(first);
+        expect(keyframes.some((frame) => 'opacity' in frame)).toBe(true);
+        expect(keyframes.every((frame) => !('transform' in frame))).toBe(true);
+      }
+    );
 
-      const [first] = cells(el);
-      expect(first.getAnimations().length).toBeGreaterThan(0);
-    });
+    await step(
+      'leaving reduced motion restores the falling build',
+      async () => {
+        query.matches = false;
+        internals._handleReducedMotionChange();
+        await el.updateComplete;
+
+        const [first] = cells(el);
+        const keyframes = keyframesOf(first);
+        expect(keyframes.some((frame) => 'transform' in frame)).toBe(true);
+      }
+    );
   },
 };

@@ -85,6 +85,21 @@ export function buildCellKeyframes(cell: Cell): Keyframe[] {
   return keyframes.sort((a, b) => (a.offset as number) - (b.offset as number));
 }
 
+/**
+ * Reduced-motion variant: the same staggered fade-in and fade-out as the full
+ * build, but with no `translateY` fall. Pixels appear and disappear in place so
+ * the loader still communicates ongoing activity without the large motion that
+ * `prefers-reduced-motion` asks us to avoid.
+ */
+export function buildReducedMotionKeyframes(cell: Cell): Keyframe[] {
+  return [
+    { offset: frameOffset(cell.fadeIn[0]), opacity: 0, easing: EASE_FADE },
+    { offset: frameOffset(cell.fadeIn[1]), opacity: 1 },
+    { offset: frameOffset(cell.fadeOut[0]), opacity: 1, easing: EASE_FADE },
+    { offset: frameOffset(cell.fadeOut[1]), opacity: 0 },
+  ];
+}
+
 /** Fully settled appearance: full opacity, zero Y-offset. */
 export const SETTLED_TRANSFORM = `translateY(${Y_SETTLED}px)`;
 export const SETTLED_OPACITY = 1;

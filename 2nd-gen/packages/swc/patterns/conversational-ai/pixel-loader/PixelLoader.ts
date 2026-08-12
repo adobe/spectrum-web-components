@@ -18,6 +18,7 @@ import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
 
 import {
   buildCellKeyframes,
+  buildReducedMotionKeyframes,
   SETTLED_OPACITY,
   SETTLED_TRANSFORM,
 } from './animation.js';
@@ -56,6 +57,11 @@ export type { PixelLoaderIconName, PixelLoaderPresetName } from './data.js';
 export class PixelLoader extends SpectrumElement {
   private static readonly CORNER_RADIUS = '2px';
 
+  /** Duration of the "finish the current build" ease before an icon swap. */
+  private static readonly FINISH_MS = 200;
+
+  private static readonly EASE_FINISH = 'cubic-bezier(0.333, 0, 0.833, 1)';
+
   /** Icon to display. Ignored while `preset` is set. */
   @property({ type: String, reflect: true })
   public icon: PixelLoaderIconName = 'aiLogo';
@@ -83,6 +89,17 @@ export class PixelLoader extends SpectrumElement {
   private _ticker: number | null = null;
 
   private _reducedMotionQuery: MediaQueryList | null = null;
+
+  /**
+   * Icon currently on screen. Decoupled from the public `icon` so a mid-build
+   * icon change can finish the current build before swapping (see
+   * `_finishThenSwap`).
+   */
+  @state()
+  private _displayedIcon: PixelLoaderIconName = 'aiLogo';
+
+  /** Guards stale finish-then-swap completions against a newer change. */
+  private _finishToken = 0;
 
   public static override get styles(): CSSResultArray {
     return [styles];
@@ -128,6 +145,20 @@ export class PixelLoader extends SpectrumElement {
     this._playCells();
   };
 
+  protected override willUpdate(changed: PropertyValues<this>): void {
+    // Removing the preset returns to single-icon mode: show the requested icon
+    // right away rather than trying to finish a preset build that isn't there.
+    if (changed.has('preset') && !this._resolvedPreset) {
+      this._displayedIcon = this.icon;
+    }
+
+    // Commit an icon change before render unless a live build should finish
+    // first; the deferred case is handled in `updated` via `_finishThenSwap`.
+    if (changed.has('icon') && this._shouldCommitIconImmediately()) {
+      this._displayedIcon = this.icon;
+    }
+  }
+
   protected override updated(changed: PropertyValues<this>): void {
     super.updated(changed);
 
@@ -135,17 +166,23 @@ export class PixelLoader extends SpectrumElement {
       this._presetIndex = 0;
     }
 
-    // Resync on `paused` too: pausing (or reduced motion) must stop the preset
-    // ticker so a frozen loader holds one icon instead of cycling on a timer.
+    // Resync on `paused` too: pausing must stop the preset ticker so a frozen
+    // loader holds one icon instead of cycling on a timer.
     if (changed.has('preset') || changed.has('paused')) {
       this._syncTicker();
     }
 
+    // A single-icon change willUpdate did not commit means a build is in
+    // flight: let the current icon finish, then swap to the requested icon.
+    if (changed.has('icon') && this._displayedIcon !== this.icon) {
+      this._finishThenSwap();
+    }
+
     if (
-      changed.has('icon') ||
       changed.has('preset') ||
       changed.has('paused') ||
-      changed.has('_presetIndex')
+      changed.has('_presetIndex') ||
+      (changed.has('_displayedIcon') && !this._resolvedPreset)
     ) {
       this._playCells();
     }
@@ -160,15 +197,6 @@ export class PixelLoader extends SpectrumElement {
       typeof window.matchMedia === 'function' &&
       window.matchMedia('(prefers-reduced-motion: reduce)').matches
     );
-  }
-
-  /**
-   * Whether the loader should render its frozen, non-animating appearance:
-   * when explicitly `paused`, or when the user has requested reduced motion.
-   * Both suppress the cell animation and the preset ticker.
-   */
-  private get _isStatic(): boolean {
-    return this.paused || this._prefersReducedMotion();
   }
 
   private _isValidPreset(preset: string): preset is PixelLoaderPresetName {
@@ -202,7 +230,7 @@ export class PixelLoader extends SpectrumElement {
     const icons = this._presetIcons();
     const iconName = icons
       ? icons[this._presetIndex % icons.length]
-      : this.icon;
+      : this._displayedIcon;
 
     return {
       cells: ICONS[iconName] ?? ICONS.aiLogo,
@@ -213,8 +241,10 @@ export class PixelLoader extends SpectrumElement {
   private _syncTicker(): void {
     this._stopTicker();
 
+    // Reduced motion still cycles (the fade communicates activity); only an
+    // explicit `paused` stops the ticker.
     const icons = this._presetIcons();
-    if (!icons || !this.isConnected || this._isStatic) {
+    if (!icons || !this.isConnected || this.paused) {
       return;
     }
 
@@ -235,15 +265,75 @@ export class PixelLoader extends SpectrumElement {
     this._animations = [];
   }
 
-  private _playCells(): void {
-    this._cancelAnimations();
-
-    const cellEls = Array.from(
+  private _cellEls(): HTMLElement[] {
+    return Array.from(
       this.shadowRoot?.querySelectorAll<HTMLElement>('.swc-PixelLoader-cell') ??
         []
     );
+  }
+
+  private _shouldCommitIconImmediately(): boolean {
+    // Nothing to finish when a preset drives the display, when the loader is
+    // paused (frozen), when no build is running, or when the icon already
+    // matches.
+    return (
+      Boolean(this._resolvedPreset) ||
+      this.paused ||
+      this._animations.length === 0 ||
+      this._displayedIcon === this.icon
+    );
+  }
+
+  /**
+   * Eases the current icon from its in-progress frame to the settled state,
+   * then swaps to the requested `icon` and builds it. This softens a mid-build
+   * icon change into "finish assembling, then transition" instead of a snap.
+   */
+  private _finishThenSwap(): void {
+    const cellEls = this._cellEls();
+
+    // Snapshot each pixel's current animated value onto inline styles, cancel
+    // the loop, then ease from that value to settled.
+    this._animations.forEach((animation) => {
+      try {
+        animation.commitStyles();
+      } catch {
+        // The animation has no rendered target; nothing to snapshot.
+      }
+    });
+    this._cancelAnimations();
+
+    const finishing = cellEls.map((cellEl) =>
+      cellEl.animate(
+        [{ opacity: SETTLED_OPACITY, transform: SETTLED_TRANSFORM }],
+        {
+          duration: PixelLoader.FINISH_MS,
+          easing: PixelLoader.EASE_FINISH,
+          fill: 'forwards',
+        }
+      )
+    );
+    this._animations = finishing;
+
+    const token = ++this._finishToken;
+    void Promise.all(
+      finishing.map((animation) => animation.finished.catch(() => undefined))
+    ).then(() => {
+      if (token === this._finishToken && this._displayedIcon !== this.icon) {
+        this._displayedIcon = this.icon;
+      }
+    });
+  }
+
+  private _playCells(): void {
+    this._cancelAnimations();
+
+    const cellEls = this._cellEls();
     const { cells, isPreset } = this._activeCells;
-    const renderStatic = this._isStatic;
+    // `paused` freezes on the settled frame; reduced motion still animates, but
+    // with an opacity-only fade (no falling transform).
+    const renderStatic = this.paused;
+    const reducedMotion = this._prefersReducedMotion();
 
     cellEls.forEach((cellEl, index) => {
       const cell = cells[index];
@@ -267,7 +357,10 @@ export class PixelLoader extends SpectrumElement {
         return;
       }
 
-      const animation = cellEl.animate(buildCellKeyframes(cell), {
+      const keyframes = reducedMotion
+        ? buildReducedMotionKeyframes(cell)
+        : buildCellKeyframes(cell);
+      const animation = cellEl.animate(keyframes, {
         duration: DURATION_MS,
         iterations: isPreset ? 1 : Infinity,
         fill: 'forwards',

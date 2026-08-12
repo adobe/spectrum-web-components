@@ -49,7 +49,9 @@ swc-pixel-loader {
 ### States
 
 `paused` renders the fully-settled appearance (full opacity, no offset) with
-no animation, matching the resting state used for `prefers-reduced-motion`.
+no animation. This is distinct from reduced motion: `paused` freezes the
+loader entirely, whereas `prefers-reduced-motion` keeps it animating with a
+gentler opacity-only fade (see Accessibility).
 
 <Canvas of={PixelLoaderStories.States} />
 
@@ -64,8 +66,10 @@ features:
   `aria-valuemin` / `aria-valuemax` since progress is always indeterminate
 - The `label` property (default `"Loading"`) sets the accessible name via
   `aria-label`
-- The animation is skipped entirely (rendering the settled state) when the
-  user has requested reduced motion
+- When the user has requested reduced motion, the falling build is replaced
+  by a gentler opacity-only fade (pixels fade in and out in place, with no
+  translate) so the loader still conveys ongoing activity without large
+  motion. Only `paused` stops the animation entirely.
 
 ### Best practices
 
