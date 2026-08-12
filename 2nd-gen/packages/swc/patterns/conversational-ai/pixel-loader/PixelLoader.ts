@@ -247,6 +247,16 @@ export class PixelLoader extends SpectrumElement {
 
     cellEls.forEach((cellEl, index) => {
       const cell = cells[index];
+
+      // Clear any inline transform/opacity a previous render left behind. The
+      // static path writes these inline, and a stale value would otherwise
+      // become the Web Animations implicit offset-0 keyframe on the next play,
+      // starting the build from the settled frame instead of the CSS base
+      // (opacity 0). That is the "artifact from the previous cycle" seen when
+      // toggling `paused`.
+      cellEl.style.removeProperty('transform');
+      cellEl.style.removeProperty('opacity');
+
       if (!cell) {
         return;
       }

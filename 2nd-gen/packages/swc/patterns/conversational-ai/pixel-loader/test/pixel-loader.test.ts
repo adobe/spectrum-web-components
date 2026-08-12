@@ -119,6 +119,40 @@ export const IconTest: Story = {
 };
 
 // ──────────────────────────────────────────────────────────────
+// TEST: Build direction
+// ──────────────────────────────────────────────────────────────
+
+export const BuildDirectionTest: Story = {
+  ...Overview,
+  play: async ({ step }) => {
+    await step('generated icons assemble from the bottom row up', async () => {
+      // `brush` uses rowOffset 0, so its cell `row` values match source rows.
+      // The bottom row (largest row index) must start its entry, and its exit,
+      // before the top row, matching the hand-authored aiLogo direction.
+      const brush = ICONS.brush;
+      const bottomRow = Math.max(...brush.map((cell) => cell.row));
+      const topRow = Math.min(...brush.map((cell) => cell.row));
+
+      const earliestStagger = (row: number): number =>
+        Math.min(
+          ...brush
+            .filter((cell) => cell.row === row)
+            .map((cell) => cell.stagger)
+        );
+      const earliestExit = (row: number): number =>
+        Math.min(
+          ...brush
+            .filter((cell) => cell.row === row)
+            .map((cell) => cell.exitStart)
+        );
+
+      expect(earliestStagger(bottomRow)).toBeLessThan(earliestStagger(topRow));
+      expect(earliestExit(bottomRow)).toBeLessThan(earliestExit(topRow));
+    });
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
 // TEST: Accessibility wiring
 // ──────────────────────────────────────────────────────────────
 
@@ -198,6 +232,11 @@ export const PausedTest: Story = {
 
       const [first] = cells(el);
       expect(first.getAnimations().length).toBeGreaterThan(0);
+
+      // The settled inline styles from the paused frame must be cleared so the
+      // animation restarts from the CSS base instead of leaving artifacts.
+      expect(first.style.opacity).toBe('');
+      expect(first.style.transform).toBe('');
     });
   },
 };

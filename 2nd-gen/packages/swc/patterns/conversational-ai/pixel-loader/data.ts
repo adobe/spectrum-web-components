@@ -61,8 +61,12 @@ function computeStaggerValues(
     return positions.map((_, index) => index * interval);
   }
 
+  // Sort rows bottom-to-top (highest row index, the visual bottom, first) so
+  // the icon assembles from the bottom up and the earliest exit starts at the
+  // bottom, matching the hand-authored `aiLogo`. Ascending order would build
+  // and clear top-down, reversing the intended motion.
   const rows = Array.from(new Set(positions.map(([, row]) => row))).sort(
-    (a, b) => a - b
+    (a, b) => b - a
   );
 
   if (mode === 'by-row') {
