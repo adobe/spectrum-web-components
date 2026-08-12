@@ -374,7 +374,7 @@ export const Justified: Story = {
     >
       <swc-action-button>Crop</swc-action-button>
       <swc-action-button>Rotate</swc-action-button>
-      <swc-action-button>Flip</swc-action-button>
+      <swc-action-button>Generate</swc-action-button>
     </swc-action-group>
   `,
   tags: ['options'],

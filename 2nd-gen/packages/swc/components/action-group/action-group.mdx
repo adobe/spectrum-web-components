@@ -62,6 +62,8 @@ Setting `static-color` on the group propagates that value to every slotted `swc-
 
 The `disabled` attribute sets `aria-disabled="true"` on the host and propagates `aria-disabled="true"` to every slotted child. Children remain in the <kbd>Tab</kbd> and arrow-key sequence so screen reader users can still discover the group. Activation is suppressed rather than removing the group from the keyboard sequence entirely.
 
+Disabling an individual `swc-action-button` child directly, using its own `disabled` attribute rather than the group's, behaves differently: that child can no longer receive focus, and arrow-key navigation skips over it, while the rest of the group is unaffected.
+
 <Canvas of={ActionGroupStories.Disabled} />
 
 ## Accessibility
