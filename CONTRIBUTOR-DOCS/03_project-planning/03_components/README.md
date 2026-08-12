@@ -103,6 +103,7 @@
     - [Link migration roadmap](link/rendering-and-styling-migration-analysis.md)
 - Menu
     - [Menu accessibility migration analysis](menu/accessibility-migration-analysis.md)
+    - [Menu migration plan](menu/migration-plan.md)
     - [Menu migration roadmap](menu/rendering-and-styling-migration-analysis.md)
 - Menu Group
     - [Menu group accessibility migration analysis](menu-group/accessibility-migration-analysis.md)
