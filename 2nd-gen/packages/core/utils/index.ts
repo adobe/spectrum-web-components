@@ -14,6 +14,13 @@ export { physicalSide } from './actual-placement.js';
 export { capitalize } from './capitalize.js';
 export { deepContains } from './deep-contains.js';
 export {
+  isDebug,
+  validateAllowedChildren,
+  validateEnum,
+  validateRequiredSlot,
+  warnIf,
+} from './dev-validation.js';
+export {
   isTopDismissible,
   registerDismissible,
   unregisterDismissible,
