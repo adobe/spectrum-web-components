@@ -110,37 +110,19 @@
 
 /* ── Disclosure indicator (chevron) ─────────────────────────────────── */
 
-/* Default size (m): Chevron100 */
+/* swc-ui-icon maps the item size to the correct optical step and sizes its own box
+ * from the ui-icon-* token scale, so the accordion only passes size. Rotation and RTL
+ * mirroring remain here as accordion-specific behavior. */
 .swc-AccordionItem-indicator {
-  --swc-icon-inline-size: token("ui-icon-medium");
-  --swc-icon-block-size: token("ui-icon-medium");
-
   flex-shrink: 0;
   rotate: 0deg;
   transition: rotate token("animation-duration-100") token("animation-ease-in-out");
 }
 
-/* Mirror for RTL so the chevron points left */
+/* Mirror for RTL so the chevron points left. The UI icon element does not yet mirror
+ * directional icons itself, so the accordion handles RTL mirroring for now. */
 :dir(rtl) .swc-AccordionItem-indicator {
   scale: -1 1;
-}
-
-/* Size: small, Chevron75 */
-:host([size="s"]) .swc-AccordionItem-indicator {
-  --swc-icon-inline-size: token("ui-icon-small");
-  --swc-icon-block-size: token("ui-icon-small");
-}
-
-/* Size: large, Chevron200 */
-:host([size="l"]) .swc-AccordionItem-indicator {
-  --swc-icon-inline-size: token("ui-icon-large");
-  --swc-icon-block-size: token("ui-icon-large");
-}
-
-/* Size: extra-large, Chevron300 */
-:host([size="xl"]) .swc-AccordionItem-indicator {
-  --swc-icon-inline-size: token("ui-icon-extra-large");
-  --swc-icon-block-size: token("ui-icon-extra-large");
 }
 
 :host([open]) .swc-AccordionItem-indicator {

@@ -105,6 +105,7 @@
 .swc-ActionButton-icon {
   color: inherit;
   fill: currentcolor;
+  --swc-avatar-size: var(--_swc-action-button-icon-size);
 }
 
 .swc-ActionButton--sizeXs {

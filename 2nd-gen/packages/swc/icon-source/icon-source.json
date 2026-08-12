@@ -1,0 +1,8 @@
+{
+  "_comment": "Records the Adobe A4U icon-set versions pulled for generation. Updated on each manual re-download. A4U is a private registry and is never a dependency of this repo; the raw SVGs are git-ignored, so only the generated art and this metadata live in the tree. See CONTRIBUTOR-DOCS/03_project-planning/05_strategies/icon-rfc.md section 8. The workflow family is added here when it is scaffolded.",
+  "ui": {
+    "pulledAt": "22/07/2026",
+    "set": "S2 UI Icon Global Set",
+    "version": "2.0.1"
+  }
+}

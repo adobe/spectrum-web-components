@@ -16,8 +16,10 @@ import { property } from 'lit/decorators.js';
 import { LiveSelectionController } from '@adobe/spectrum-wc-core/controllers/index.js';
 import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
 import { SizedMixin } from '@adobe/spectrum-wc-core/mixins/index.js';
+import { validateEnum } from '@adobe/spectrum-wc-core/utils/index.js';
 
 import {
+  ACCORDION_DENSITIES,
   ACCORDION_VALID_SIZES,
   type AccordionDensity,
   type AccordionHeadingLevel,
@@ -132,6 +134,14 @@ export abstract class AccordionBase extends SizedMixin(SpectrumElement, {
   }
 
   protected override update(changedProperties: PropertyValues): void {
+    if (changedProperties.has('density')) {
+      validateEnum(this, {
+        prop: 'density',
+        value: this.density,
+        valid: ACCORDION_DENSITIES,
+        url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-accordion--docs',
+      });
+    }
     if (changedProperties.has('level')) {
       const clamped = Math.min(
         6,

@@ -75,9 +75,21 @@
       "types": "./dist/components/divider/index.d.ts",
       "import": "./dist/components/divider/index.js"
     },
+    "./components/dropzone": {
+      "types": "./dist/components/dropzone/index.d.ts",
+      "import": "./dist/components/dropzone/index.js"
+    },
+    "./components/dropzone/index.js": {
+      "types": "./dist/components/dropzone/index.d.ts",
+      "import": "./dist/components/dropzone/index.js"
+    },
     "./components/icon": {
       "types": "./dist/components/icon/index.d.ts",
       "import": "./dist/components/icon/index.js"
+    },
+    "./components/infield-button": {
+      "types": "./dist/components/infield-button/index.d.ts",
+      "import": "./dist/components/infield-button/index.js"
     },
     "./components/illustrated-message": {
       "types": "./dist/components/illustrated-message/index.d.ts",
@@ -150,6 +162,10 @@
     "./controllers/live-selection-controller/index.js": {
       "types": "./dist/controllers/live-selection-controller/index.d.ts",
       "import": "./dist/controllers/live-selection-controller/index.js"
+    },
+    "./controllers/page-scroll-lock-controller.js": {
+      "types": "./dist/controllers/page-scroll-lock-controller/index.d.ts",
+      "import": "./dist/controllers/page-scroll-lock-controller/index.js"
     },
     "./controllers/pending-controller": {
       "types": "./dist/controllers/pending-controller/index.d.ts",
@@ -318,8 +334,17 @@
       "components/divider/index.js": [
         "dist/components/divider/index.d.ts"
       ],
+      "components/dropzone": [
+        "dist/components/dropzone/index.d.ts"
+      ],
+      "components/dropzone/index.js": [
+        "dist/components/dropzone/index.d.ts"
+      ],
       "components/icon": [
         "dist/components/icon/index.d.ts"
+      ],
+      "components/infield-button": [
+        "dist/components/infield-button/index.d.ts"
       ],
       "components/illustrated-message": [
         "dist/components/illustrated-message/index.d.ts"
@@ -368,6 +393,9 @@
       ],
       "controllers/live-selection-controller/index.js": [
         "dist/controllers/live-selection-controller/index.d.ts"
+      ],
+      "controllers/page-scroll-lock-controller.js": [
+        "dist/controllers/page-scroll-lock-controller/index.d.ts"
       ],
       "controllers/pending-controller": [
         "dist/controllers/pending-controller/index.d.ts"

@@ -33,6 +33,8 @@ export const CARD_VARIANTS = [
 
 export const CARD_DENSITIES = ['compact', 'regular', 'spacious'] as const;
 
+export const SWC_CARD_CLICK_EVENT = 'swc-card-click' as const;
+
 // ──────────────────
 //     TYPES
 // ──────────────────

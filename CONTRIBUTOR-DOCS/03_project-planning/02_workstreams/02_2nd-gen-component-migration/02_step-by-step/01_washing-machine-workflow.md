@@ -31,6 +31,7 @@
     - [What to do](#what-to-do)
     - [Property migration scenarios](#property-migration-scenarios)
     - [API patterns (statics and warnings)](#api-patterns-statics-and-warnings)
+    - [Form participation (form fields only)](#form-participation-form-fields-only)
     - [What to check](#what-to-check)
     - [Common problems and solutions](#common-problems-and-solutions)
     - [Quality gate](#quality-gate)
@@ -275,6 +276,7 @@ See [Step 2](02_factor-rendering-out-of-1st-gen-component.md) and [Step 3](03_mo
 2. **Define types** in `Component.types.ts`; put shared API in base (core), SWC-only in concrete class.
 3. **Mark internal API** with JSDoc `@internal`; add JSDoc for public props/slots.
 4. **Implement static readonly arrays and debug warnings** — follow [API patterns (statics and warnings)](#api-patterns-statics-and-warnings) below; reference implementation: 2nd-gen Badge (`Badge.base.ts`, `Badge.ts`).
+5. **Apply dev-warning validation for every applicable category**: union/enum values, required properties, conditionally required properties, mutually exclusive/no-effect property combinations, required slots, and allowed children. Use the shared helpers in `@spectrum-web-components/core/utils` (`validateEnum`, `warnIf`, `validateRequiredSlot`, `validateAllowedChildren`) rather than hand-rolled `window.__swc.warn()` checks. See [Debug and validation](../../../../02_style-guide/02_typescript/17_debug-validation.md#reusable-validation-helpers).
 
 ### Property migration scenarios
 
@@ -302,6 +304,27 @@ Follow team **TypeScript conventions** for naming and structure; use **Badge** a
 **`window.__swc.warn()` (debug-only)**
 
 - When `window.__swc?.DEBUG` is enabled, warn on invalid API combinations (e.g. incompatible variant + outline) so developers catch mistakes without affecting production. See `Badge.base.ts` (`update()` and `window.__swc.warn(...)` with structured issue metadata).
+
+**Dev-warning validation categories (use the shared helpers)**
+
+Do not write `includes()` + `window.__swc.warn()` checks by hand. Import the
+shared helpers from `@spectrum-web-components/core/utils` instead
+(`validateEnum`, `warnIf`, `validateRequiredSlot`, `validateAllowedChildren`).
+Every component should be checked against each applicable category:
+
+| Category | Helper | Example |
+|---|---|---|
+| Union types / enum values | `validateEnum` | `variant`, `size` |
+| Required properties | `warnIf` | `accessibleLabel` with no accessible name available |
+| Conditionally required properties | `warnIf` | `accessibleLabel` required only when no label slot content is provided |
+| Mutually exclusive / no-effect combinations | `warnIf` | `outline` has no effect without a semantic `variant` |
+| Required slots | `validateRequiredSlot` | a slot that must have assigned content |
+| Allowed children | `validateAllowedChildren` | a heading slot that only accepts `<h2>`-`<h6>` |
+| Component-specific quirks | `warnIf` (called directly, no dedicated helper) | anything that doesn't fit the categories above |
+
+Full worked examples for each category are in
+[Reusable validation helpers](../../../../02_style-guide/02_typescript/17_debug-validation.md#reusable-validation-helpers)
+and [Slot validation](../../../../02_style-guide/02_typescript/17_debug-validation.md#slot-validation).
 
 **Deprecating 1st-gen APIs during migration**
 
@@ -356,6 +379,12 @@ Notes on the pattern:
 - The URL links to the component docs section that describes the new API.
 - `level: 'deprecation'` sorts the warning under the deprecation channel and lets consumers silence the whole class via `window.__swc.ignoreWarningLevels.deprecation = true`.
 
+### Form participation (form fields only)
+
+Applies when the component is a **form field** (text field, checkbox, radio, picker, combobox). Skip this for non-form components.
+
+Wire the field per the approved [forms strategy](../../../05_strategies/forms-strategy-rfc.md): form participation through the **ElementInternals / form-associated custom element (FACE)** API (not a nested light-DOM `<input>`) and the form lifecycle callbacks. Name the public API from its [naming table](../../../05_strategies/forms-strategy-rfc.md#4-naming-table) so property, slot, and event names match; do not invent per-component names, and align text-like fields and pickers to the same table.
+
 ### What to check
 
 - [ ] All relevant 1st-gen props have a 2nd-gen home (base or SWC).
@@ -363,6 +392,10 @@ Notes on the pattern:
 - [ ] Internal helpers are marked `@internal`.
 - [ ] Static `readonly` arrays match types; used for validation, Storybook, and tests where applicable.
 - [ ] Invalid prop combinations emit `window.__swc.warn()` when debug is on (where the component has combination rules).
+- [ ] Every applicable dev-warning category is covered: enum values, required properties, conditionally required properties, mutually exclusive/no-effect combinations, required slots, allowed children.
+- [ ] Dev-warning checks use the shared helpers (`validateEnum`, `warnIf`, `validateRequiredSlot`, `validateAllowedChildren`) rather than hand-rolled `includes()` + `warn()` code.
+- [ ] **Form fields:** the field is form-associated (`static formAssociated = true`); value flows through `ElementInternals` (`setFormValue()`), not a hidden `<input>`; and property, slot, and event names match the forms strategy naming table. (Validity reporting via `setValidity()` is pending — do not block on it.)
+
 
 ### Common problems and solutions
 
@@ -382,6 +415,7 @@ If you are renaming or removing a public prop or attribute, confirm with the tea
 
 - [ ] Public API is documented; types are in core; base holds behavior; SWC holds rendering.
 - [ ] Static readonly pattern, debug warnings, and 1st-gen deprecation notices align with Badge (or equivalent) and TypeScript conventions.
+- [ ] Dev-warning validation uses the shared `core/utils` helpers for every applicable category (see table above), not hand-rolled checks.
 
 ---
 
@@ -399,6 +433,7 @@ If you are renaming or removing a public prop or attribute, confirm with the tea
 6. **Native vs custom controls:** Native form control (e.g. Checkbox) → `delegatesFocus: true`. Custom control (e.g. Radio) → `role` and `aria-*` on host, manage focus/keyboard. See Checkbox and Radio as references.
 7. **Focus delegation on internal control:** When a component wraps a native form control inside its shadow DOM, set `delegatesFocus: true` via `static override shadowRootOptions = { ...ParentClass.shadowRootOptions, delegatesFocus: true }` so that focus lands on the internal control, not the host. This belongs in the base class if all subclasses share the same host-wraps-native-control structure. **Do not** override `createRenderRoot()` to set this option — doing so bypasses Lit’s `adoptStyles()`, silently preventing all component CSS from being injected into the shadow DOM. See [Rendering patterns: Shadow root customization](../../../../02_style-guide/02_typescript/09_rendering-patterns.md#shadow-root-customization).
 8. **Accessible name forwarding:** Attributes like `aria-label` on the host do not automatically apply to the internal control — either bind them explicitly in the render template (e.g. `aria-label=${this.getAttribute(‘aria-label’)}`) or derive the accessible name in a protected helper and forward it. See `ButtonBase.getResolvedAccessibleName()` as a reference. Note that implementing these patterns may require adding methods or modifying the render template, so Phase 4 often touches component class files, not only Storybook or docs.
+9. **Form field label, help text, and errors (form fields only):** Wire the accessible name, help text, and error text per the approved [forms strategy](../../../05_strategies/forms-strategy-rfc.md#33-idref-strategy-label-help-text-and-errors), which covers the labelling surface, `aria-describedby` / `aria-errormessage`, and the cross-root IDREF pattern. See also [semantic HTML and ARIA](../../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/semantic_html_aria.mdx).
 
 ### What to check
 
@@ -408,6 +443,7 @@ If you are renaming or removing a public prop or attribute, confirm with the tea
 - [ ] Component behaves as expected with screen reader. 
 - [ ] Keyboard and focus behavior are implemented and tested.
 - [ ] No accessibility regressions vs 1st-gen.
+- [ ] Accessible-name validation (required or conditionally required `accessibleLabel`/label slot, required label/heading slots, allowed slot children) uses the shared `core/utils` helpers with `{ type: 'accessibility' }`. See [Reusable validation helpers](../../../../02_style-guide/02_typescript/17_debug-validation.md#reusable-validation-helpers) and [Slot validation](../../../../02_style-guide/02_typescript/17_debug-validation.md#slot-validation).
 
 ### Common problems and solutions
 
@@ -416,6 +452,7 @@ If you are renaming or removing a public prop or attribute, confirm with the tea
 | Unclear which pattern applies | Start from the component’s primary role (e.g. "combobox" → Combobox pattern). Consider splitting into more than one component (e.g. "sp-menu" into menu and listbox components). |
 | Focus trap in overlays | Use a shared focus-trap utility if the repo provides one; follow APG for modal/dialog. |
 | Custom controls | Ensure they have roles, names, and keyboard support; avoid div/span without semantics. |
+| Help text or error not announced | The describing text lives in a different shadow root; a bare `aria-describedby` IDREF does not cross the boundary. Use the cross-root pattern from the [forms strategy](../../../05_strategies/forms-strategy-rfc.md#33-idref-strategy-label-help-text-and-errors). |
 
 <details>
 <summary>**Stop and ask:** Custom events vs native events</summary>
@@ -431,6 +468,7 @@ Prefer native events when they give the right semantics (e.g. `click`). Add cust
 - [ ] Keyboard and ARIA implemented
 - [ ] a11y tests added
 - [ ] Screen reader testing performed
+- [ ] **Form fields:** axe-core passes in CI. Any known false positive (e.g. a role exposed through `ElementInternals` that axe cannot yet see) is handled per the forms strategy [axe policy](../../../05_strategies/forms-strategy-rfc.md#34-axe-core-policy): a story-level exclusion with a written rationale and an upstream tracking link, not a silent disable.
 
 ---
 
@@ -492,6 +530,7 @@ For troubleshooting and detailed patterns (e.g. 1st-gen Constructable Stylesheet
 3. **Storybook play functions:** Add play functions for defaults, variants, keyboard.
 4. **Visual regression stories:** Add dedicated `test/vrt/*.vrt.ts` stories for dense visual coverage. See [Visual regression testing](../../../../02_style-guide/04_testing/04_visual-regresssion-testing.md).
 5. **Coverage:** Main props, variants, user actions, visual states, global styles, and public custom properties when applicable.
+6. **Dev-warning tests:** For every dev-warning check added in Phase 3/4, add a pair of test cases (fires for the invalid/missing case, silent for the valid case) using `withWarningSpy` from `@spectrum-web-components/swc/utils/test-utils`. See the **Testing deprecation warnings** pattern in [Debug and validation](../../../../02_style-guide/02_typescript/17_debug-validation.md#testing-deprecation-warnings), which applies to all warning categories, not just deprecations.
 
 Follow the two-file layout (`test/<component>.test.ts`, `test/<component>.a11y.spec.ts`). See the [2nd gen testing conventions](../../../../01_contributor-guides/11_2ndgen_testing.md) and reference implementations in `link/test/`, `checkbox/test/`, `badge/test/`, etc.
 
@@ -502,6 +541,7 @@ Follow the two-file layout (`test/<component>.test.ts`, `test/<component>.a11y.s
 - [ ] Unit tests pass; a11y tests pass.
 - [ ] Critical paths (render, props, slots, events) are covered.
 - [ ] Tests follow the project [testing conventions](../../../../01_contributor-guides/11_2ndgen_testing.md).
+- [ ] Every dev-warning check has a fires/does-not-fire test pair via `withWarningSpy`.
 
 ### Common problems and solutions
 
@@ -656,6 +696,7 @@ Use Badge as the reference implementation:
 
 ## Style guides and resources
 
+- **Forms strategy:** [2nd-gen forms strategy](../../../05_strategies/forms-strategy-rfc.md) — ElementInternals/FACE decision, label/help/error pattern, IDREF and cross-root rules, and axe policy for form fields.
 - **Workspace:** [spectrum-css](https://github.com/adobe/spectrum-css) cloned **next to** this repo—see [Workspace setup](#workspace-setup).
 - **TypeScript:** Team conventions; for 2nd-gen API patterns (static `readonly`, `window.__swc.warn`), see Phase 3 [API patterns](#api-patterns-statics-and-warnings) and 2nd-gen Badge (`core` + `swc`).
 - **CSS:** [2nd-gen CSS style guide (CONTRIBUTOR-DOCS)](../../../../02_style-guide/01_css/README.md) — component CSS, custom properties, Spectrum→SWC migration, anti-patterns, property order
