@@ -372,4 +372,32 @@ export const Justified: Story = {
 //    ACCESSIBILITY STORIES
 // ────────────────────────────────
 
+// Outer `role="toolbar"` landmark wrapping two named `role="group"` clusters,
+// per the APG toolbar example and the migration plan's accessibility
+// section. `swc-action-group` never sets `role="toolbar"` itself; that role
+// belongs on this wrapper only, since the host role is fixed to `"group"`
+// and not author-overridable. Backs the `ToolbarComposition` ARIA-snapshot
+// assertion in `action-group.a11y.spec.ts`.
+export const ToolbarComposition: Story = {
+  render: () => html`
+    <div
+      role="toolbar"
+      aria-label="Document actions"
+      style="display: flex; gap: var(--swc-spacing-400);"
+    >
+      <swc-action-group accessible-label="Edit actions">
+        <swc-action-button>Cut</swc-action-button>
+        <swc-action-button>Copy</swc-action-button>
+        <swc-action-button>Paste</swc-action-button>
+      </swc-action-group>
+      <swc-action-group accessible-label="View actions">
+        <swc-action-button>Zoom in</swc-action-button>
+        <swc-action-button>Zoom out</swc-action-button>
+      </swc-action-group>
+    </div>
+  `,
+  tags: ['a11y'],
+};
+ToolbarComposition.storyName = 'Toolbar wrapper composition';
+
 // TODO: will complete in separate documentation pass of phase 7
