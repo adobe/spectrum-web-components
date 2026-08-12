@@ -33,6 +33,7 @@
 - [Open gen1 issues](#open-gen1-issues)
 - [Migration sequencing and prerequisites](#migration-sequencing-and-prerequisites)
     - [Dependency-aware recommendation](#dependency-aware-recommendation)
+    - [Implementation phasing](#implementation-phasing)
     - [Related components and ordering notes](#related-components-and-ordering-notes)
     - [User confirmation needed](#user-confirmation-needed)
 - [Changes overview](#changes-overview)
@@ -76,6 +77,7 @@
 - **Scope tension found in the Figma source:** the Menu group / Menu item property tables in the reviewed Figma file already model `Selection: None | Single | Multi-select (checkbox) | Multi-select (switch)`, `Unavailable`, `Show thumbnail`, and `Show highlight badge` as first-class menu item properties. The a11y analysis explicitly defers selectable menu items (checkboxes/radios) pending a product decision ([Migration scope](./accessibility-migration-analysis.md#migration-scope-current)). These two sources disagree on whether selection is in scope now — see [Q2](#design).
 - Large chunks of 1st-gen `Menu.ts` implement mobile drilldown (`mobileView`, `mobileBackLabel`, submenu projection/restoration, touch/scroll heuristics). The a11y analysis puts mobile tray out of scope for the current migration; this plan treats that code as **not carried forward**, with no replacement timeline yet defined.
 - `sp-menu`'s selection engine (`selects`, `value`, `selectedItems`, `selectOrToggleItem`) is consumed indirectly by `picker`, `combobox`, and `action-menu` today (all import or extend `sp-menu`). Deferring selection entirely as "Additive" may block those components' own future migrations — see [Q11](#scope-and-prerequisites).
+- **Recommended implementation phasing:** ship `swc-menu` in two stages rather than one — Phase A covers the full menu-button host without selection (trigger, `swc-popover` anchoring, items, submenus, all Must-ship breaking changes), Phase B adds the selection engine. This reduces what reviewers validate per PR and lets Phase A land without waiting on [Q2](#design)/[Q11](#scope-and-prerequisites) to resolve. See [Implementation phasing](#implementation-phasing).
 - In-menu keyboard movement moves from `RovingTabindexController` to `FocusgroupNavigationController` ([PR #6129](https://github.com/adobe/spectrum-web-components/pull/6129)), matching the approach already recommended for `swc-action-menu`.
 - The Figma source reviewed for this plan is a file titled **"🚫 S2 - Web (Deprecated)"**, not the canonical `S2 / Web (Desktop scale)` file named in the ticket — see [Q1](#design).
 
@@ -325,6 +327,15 @@ Two prose constraints from the React Spectrum docs are not yet reflected in the 
 
 `swc-menu-item`'s `submenu` slot (cascading submenus) also anchors via `swc-popover` per the a11y analysis, so submenu behavior specifically is blocked on the same prerequisite.
 
+### Implementation phasing
+
+Beyond sequencing against other components, `swc-menu`'s own implementation is recommended to ship in two stages rather than as one large PR:
+
+- **Phase A — menu-button host, no selection.** Trigger, `swc-popover` anchoring, shadow-internal `role="menu"`, `swc-menu-item`/`swc-menu-group`/`swc-menu-separator` composition, submenus, disabled rows, link items, and all of [B1–B8](#must-ship--breaking-or-a11y-required). This is reviewable against the menu-button APG pattern alone, without also validating a selection state machine.
+- **Phase B — selection engine.** [A2](#additive--ships-when-ready-zero-breakage-for-consumers-already-on-2nd-gen): single/multiple selection, checkbox/switch visuals, `menuitemcheckbox`/`menuitemradio` ARIA, `shouldCloseOnSelect`, `escapeKeyBehavior`. Ships once [Q2](#design) (Figma vs. a11y-doc conflict) is resolved.
+
+This phasing holds regardless of how [Q11](#scope-and-prerequisites) resolves: if `picker`/`combobox`/`action-menu` turn out to need baseline single-select sooner than "later," the fix is to pull a minimal single-select (no checkbox/switch visuals, no multi-select) into Phase A rather than collapsing the phases back into one — the review-complexity benefit of splitting out the richer selection UX still applies. If those consumers do not need it soon, Phase B can wait for a separate follow-up ticket under the epic with no schedule pressure.
+
 ### Related components and ordering notes
 
 - **`swc-popover`** — hard prerequisite for anchored placement (host trigger and submenus). Not yet started.
@@ -350,6 +361,8 @@ Two prose constraints from the React Spectrum docs are not yet reflected in the 
 > - **Accessibility is non-negotiable** — all a11y requirements ship as part of this migration.
 > - **Breaking changes** are assessed on merit — some must ship now to avoid a second, more disruptive migration event later.
 > - **Additive changes** can be deferred and will not cause consumer breakage when they do ship.
+
+**Recommended phasing:** the Must-ship items below (B1–B8) are Phase A — a full menu-button host without selection. [A2](#additive--ships-when-ready-zero-breakage-for-consumers-already-on-2nd-gen) (the selection engine) is Phase B, shipped as a follow-up once [Q2](#design) resolves. See [Implementation phasing](#implementation-phasing) for the full rationale, including how this holds up even if [Q11](#scope-and-prerequisites) resolves in favor of an earlier baseline single-select.
 
 ### Must ship — breaking or a11y-required
 
@@ -498,9 +511,16 @@ Because `swc-menu` structurally parallels `swc-action-menu` (trigger + popover +
 
 #### Naming and public surface
 
+**Phase A (this migration, no selection):**
+
 - [ ] `Menu.types.ts`: define allowed slot children (`swc-menu-item`, `swc-menu-group`, `swc-menu-separator`), size union (pending [xl decision](#must-ship--breaking-or-a11y-required)), and open/close state shape
-- [ ] `Menu.base.ts`: retain open/close orchestration, accessible-name handling, and disallowed-child warnings; do not retain 1st-gen's `selects`/`value`/`selectedItems` unless [Q2](#design)/[Q11](#scope-and-prerequisites) resolve in favor of shipping baseline selection now
+- [ ] `Menu.base.ts`: retain open/close orchestration, accessible-name handling, and disallowed-child warnings; do not retain 1st-gen's `selects`/`value`/`selectedItems` — those move to Phase B (see [Implementation phasing](#implementation-phasing)), unless [Q11](#scope-and-prerequisites) resolves in favor of pulling a minimal baseline single-select into Phase A
 - [ ] Decide and document whether `swc-menu-group` shares a base class with `swc-menu` or is fully independent, resolving the 1st-gen `MenuGroup extends Menu` inheritance question ([B1](#must-ship--breaking-or-a11y-required))
+
+**Phase B (follow-up ticket, selection):**
+
+- [ ] `Menu.types.ts`/`Menu.base.ts`: add `selects`/`value`/`selectedItems`/`selectOrToggleItem`-equivalent API once [Q2](#design) resolves
+- [ ] File a follow-up ticket under Epic [SWC-1980](https://jira.corp.adobe.com/browse/SWC-1980) for Phase B before closing out Phase A's review
 
 #### Alignment checks
 
@@ -610,7 +630,7 @@ During drafting, this section tracks active blockers and open questions. In the 
 | # | Item | Blocking? | Status | Owner |
 | --- | --- | --- | --- | --- |
 | Q10 | Migration order among `swc-menu`, `swc-menu-item`, `swc-menu-group`, `swc-menu-separator`, and `swc-popover` is not yet decided. Each component either has or will have its own plan; sequencing affects all of them. | Yes | Open | Ticket owner |
-| Q11 | `picker`, `combobox`, and `action-menu` currently depend on `sp-menu`/`MenuItem` (including, for at least some of them, its selection engine). Determine whether their future 2nd-gen migrations require `swc-menu` to ship baseline single-select now, which would move [A2](#additive--ships-when-ready-zero-breakage-for-consumers-already-on-2nd-gen) from Additive to Must-ship. | Yes | Open | Architecture reviewer + ticket owner |
+| Q11 | `picker`, `combobox`, and `action-menu` currently depend on `sp-menu`/`MenuItem` (including, for at least some of them, its selection engine). Determine whether their future 2nd-gen migrations require `swc-menu` to ship baseline single-select now, which would move [A2](#additive--ships-when-ready-zero-breakage-for-consumers-already-on-2nd-gen) from Additive to Must-ship. | Partially — no longer blocks starting Phase A | Open — does not block Phase A ([Implementation phasing](#implementation-phasing)) regardless of answer; only changes whether a minimal single-select is pulled into Phase A or deferred to Phase B | Architecture reviewer + ticket owner |
 | Q12 | Confirm whether 1st-gen's mobile drilldown/tray implementation ([A8](#additive--ships-when-ready-zero-breakage-for-consumers-already-on-2nd-gen)) is dropped with a committed future-epic replacement, or dropped with no replacement plan yet. | No | Open | Design + ticket owner |
 | Q13 | Obtain the gen1 Jira issues table for `component = "Menu"` (excluding `a11y`/`gen2` labels and Epic/Initiative types) — no Jira query access was available while drafting this plan; see [Open gen1 issues](#open-gen1-issues). | Yes (for review-readiness) | Open | Ticket owner |
 
