@@ -4,17 +4,31 @@ on:
   workflow_dispatch:
     inputs:
       tag:
-        description: 'NPM dist-tag for a throwaway snapshot (e.g., next, snapshot-test)'
+        description: 'NPM dist-tag for a throwaway snapshot'
         required: false
         default: 'next'
+        type: choice
+        options:
+          - next
+          - snapshot-test
   pull_request:
     types: [labeled, synchronize]
   push:
     branches:
       - main
 
+# 1st-gen-scoped group: this and publish-2nd-gen.yml used to share the literal string
+# `publish-${{ github.ref }}`, which is a repo-wide concurrency key, not scoped to the
+# workflow file it's declared in - so the two workflows' entire runs (not just their
+# release jobs) serialized against each other on every push to main. That made sense
+# under the old shared-changeset/direct-push model (both workflows wrote to the same
+# main branch and had to avoid racing), but it directly works against this redesign's
+# goal of fully independent gen1/gen2 release streams: neither writes to anything the
+# other touches anymore (separate Version PR branches, separate dist-tags, separate npm
+# packages), so there's nothing left to protect by blocking one generation's run behind
+# the other's.
 concurrency:
-  group: publish-${{ github.ref }}
+  group: publish-1st-gen-${{ github.ref }}
   cancel-in-progress: false
 
 jobs:
@@ -276,12 +290,12 @@ jobs:
         run: |
           yarn workspace @spectrum-web-components/1st-gen changelog:global
           (cd 1st-gen && yarn changeset version)
+          yarn install --refresh-lockfile
 
       - name: Open or update the 1st-gen Version PR
         if: needs.check-changesets.outputs.has_changesets == 'true'
         uses: peter-evans/create-pull-request@v6
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
           commit-message: 'chore: release 1st-gen packages'
           title: 'chore: release 1st-gen packages'
           branch: changeset-release/1st-gen

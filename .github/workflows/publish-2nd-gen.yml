@@ -4,17 +4,23 @@ on:
   workflow_dispatch:
     inputs:
       tag:
-        description: 'NPM dist-tag for a throwaway snapshot (e.g., next, snapshot-test)'
+        description: 'NPM dist-tag for a throwaway snapshot'
         required: false
         default: 'next'
+        type: choice
+        options:
+          - next
+          - snapshot-test
   pull_request:
     types: [labeled, synchronize]
   push:
     branches:
       - main
 
+# 2nd-gen-scoped group: see the identical comment in publish.yml for why this is no
+# longer shared with that workflow's group string.
 concurrency:
-  group: publish-${{ github.ref }}
+  group: publish-2nd-gen-${{ github.ref }}
   cancel-in-progress: false
 
 jobs:
@@ -185,12 +191,12 @@ jobs:
             (cd 2nd-gen && yarn changeset pre enter beta)
           fi
           (cd 2nd-gen && yarn changeset version)
+          yarn install --refresh-lockfile
 
       - name: Open or update the 2nd-gen Version PR
         if: needs.check-changesets.outputs.has_changesets == 'true'
         uses: peter-evans/create-pull-request@v6
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
           commit-message: 'chore: release 2nd-gen packages'
           title: 'chore: release 2nd-gen packages (beta)'
           branch: changeset-release/2nd-gen
