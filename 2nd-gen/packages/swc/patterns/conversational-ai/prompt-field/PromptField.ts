@@ -47,6 +47,8 @@ export interface PromptFieldSubmitDetail {
  * @fires swc-prompt-field-stop - Dispatched when stop generation is requested while generating.
  * @fires swc-prompt-field-upload-click - Dispatched when upload affordance is activated.
  * Consumers should handle file picker flow externally.
+ *
+ * @cssprop --swc-prompt-field-brand - Brand hue driving the AI treatment's ring, wash, and glow colors. Defaults to a fuchsia OKLCH value; only the hue is meaningfully used, lightness/chroma come from each layer's own derived values.
  */
 export class PromptField extends SpectrumElement {
   private readonly labelId = uniqueId('swc-prompt-field-label');
