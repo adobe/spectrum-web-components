@@ -90,6 +90,7 @@ Only one child is in the <kbd>Tab</kbd> sequence at a time. Arrow keys move that
 - Put `role="toolbar"` and a label on that wrapper element, not on `swc-action-group`. Nesting multiple named groups inside one outer toolbar is the supported pattern for grouping related clusters of actions.
 - If the wrapper stacks its groups vertically, also set `aria-orientation="vertical"` on the wrapper itself. `role="toolbar"` defaults to horizontal per the [ARIA `aria-orientation` reference](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Attributes/aria-orientation), and assistive technology assumes that until told otherwise.
 - Each inner `swc-action-group`'s own `orientation` attribute is unrelated to the wrapper's `aria-orientation`: it only controls that group's own arrow-key direction, not the wrapper's ARIA state.
+- If the wrapper stacks vertical groups and you want them to share a width, set the wrapper's `display` to `inline-flex` with `flex-direction: column` and no explicit `inline-size`. Every group then shrinks to fit the longest label across all of them. A block-level `display: flex` wrapper stretches every group to the wrapper's own width instead. Give the wrapper an explicit `inline-size` for a fixed toolbar width, and each `swc-action-group` fills it automatically.
 
 The first example below is a standalone group with no wrapper at all. `role="toolbar"` and `aria-orientation` are optional, wrapper-only additions, not requirements for using `swc-action-group`.
 
