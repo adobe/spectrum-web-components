@@ -40,8 +40,8 @@ function emitWarning(
 }
 
 /**
- * Whether dev-mode validation is active: `false` in production builds,
- * otherwise mirrors `window.__swc.DEBUG`.
+ * Whether dev-mode validation is active: `false` in production builds and in
+ * non-browser (SSR) environments, otherwise mirrors `window.__swc.DEBUG`.
  *
  * Use this to guard the *call site* of a warning whose condition or message is
  * expensive to compute (for example a DOM traversal), so that work is skipped
@@ -57,10 +57,14 @@ function emitWarning(
  * gate internally. This helper exists only to avoid paying call-site argument
  * cost in the expensive cases. It checks `process.env.NODE_ENV` first so a
  * bundler can dead-code-eliminate the guarded block in production, matching the
- * other helpers in this file.
+ * other helpers in this file, and short-circuits when `window` is undefined so
+ * it is safe to call during server-side rendering.
  */
 export function isDebug(): boolean {
   if (process.env.NODE_ENV === 'production') {
+    return false;
+  }
+  if (typeof window === 'undefined') {
     return false;
   }
   return Boolean(window.__swc?.DEBUG);
